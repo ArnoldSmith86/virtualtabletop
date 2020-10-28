@@ -1,0 +1,30 @@
+{
+  "name": "virtualtabletop",
+  "version": "0.1.0",
+  "description": "a virtual surface in the browser on which you can play board, dice and card games",
+  "main": "server.mjs",
+  "scripts": {
+    "start": "nodemon server.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArnoldSmith86/virtualtabletop.git"
+  },
+  "keywords": [
+    "virtual",
+    "tabletop",
+    "board",
+    "card",
+    "dice"
+  ],
+  "author": "Castux, ArnoldSmith86, RaphaelAlvez, larkob",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/ArnoldSmith86/virtualtabletop/issues"
+  },
+  "homepage": "https://github.com/ArnoldSmith86/virtualtabletop#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.6"
+  }
+}
