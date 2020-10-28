@@ -11,7 +11,7 @@ This assumes a Debian based Linux. If you use something else, you probably know 
 curl -sL https://deb.nodesource.com/setup_15.x | sudo -E bash -    # adds a repository for Node.js v15
 sudo apt install -y git nodejs                                     # installs the required software
 git clone https://github.com/ArnoldSmith86/virtualtabletop.git     # downloads everything in this repository
-cd virtualtabletop                                                 # changes the directory
+cd virtualtabletop                                                 # changes to the newly created directory
 npm install                                                        # uses the Node.js package manager to install all dependencies
 ```
 
