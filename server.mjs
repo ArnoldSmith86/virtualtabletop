@@ -12,7 +12,7 @@ const server = http.Server(app);
 
 app.use('/', express.static(__dirname + '/client'));
 
-app.get('/quit', function(req, res) {
+app.post('/quit', function(req, res) {
   process.exit();
 });
 
