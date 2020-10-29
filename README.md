@@ -4,6 +4,8 @@ This project aims to create a virtual tabletop in the browser where you can (re)
 
 ## Links
 
+I'm currently hosting an [online instance](http://212.47.248.129) but it's far from anything playable.
+
 This project is inspired by [playingcards.io](https://playingcards.io).
 
 Come join our [Discord server](https://discord.gg/xWxz9Gd) if you want to discuss the project.
@@ -26,6 +28,12 @@ Now you can start the server by typing:
 
 ```
 npm start
+```
+
+If that doesn't work, try:
+
+```
+node server.mjs
 ```
 
 This will serve the project at [localhost:8272](http://localhost:8272)

@@ -6,7 +6,7 @@ export default class WebSocket {
   connections = [];
 
   constructor(port, newPlayerCallback) {
-    this.server = new ws.Server({ port: 8273 });
+    this.server = new ws.Server({ port });
     this.newPlayerCallback = newPlayerCallback;
 
     this.server.on('connection', this.newConnection);

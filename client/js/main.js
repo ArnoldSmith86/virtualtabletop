@@ -1,4 +1,4 @@
-const url = 'ws://localhost:8273';
+const url = `ws://${location.hostname}:8273`;
 const connection = new WebSocket(url);
 
 connection.onopen = () => {
@@ -10,7 +10,6 @@ connection.onerror = (error) => {
 };
 
 connection.onmessage = (e) => {
-  console.log(`from server: ${e.data}`);
   const { func, args } = JSON.parse(e.data);
   fromServer(func, args);
 };
