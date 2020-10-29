@@ -2,7 +2,13 @@
 
 This project aims to create a virtual tabletop in the browser where you can (re)create all board, dice and card games and play them without registration over the internet.
 
-It is inspired by [playingcards.io](https://playingcards.io).
+## Links
+
+This project is inspired by [playingcards.io](https://playingcards.io).
+
+Come join our [Discord server](https://discord.gg/xWxz9Gd) if you want to discuss the project.
+
+This project started after [a reddit post](https://www.reddit.com/r/PlayingCardsIO/comments/jiajth/mildly_ot_feature_requests_for_a_pcio_clone/) in our [playingcardsio subreddit](https://www.reddit.com/r/PlayingCardsIO/).
 
 ## Download this repository and get all dependencies
 
