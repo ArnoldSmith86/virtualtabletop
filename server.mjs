@@ -13,7 +13,7 @@ const server = http.Server(app);
 app.use('/', express.static(__dirname + '/client'));
 
 app.get('/', function(req, res) {
-  res.redirect(Math.random().toString(36).substring(7));
+  res.redirect(Math.random().toString(36).substring(3, 7));
 });
 
 app.get('/:id', function(req, res) {

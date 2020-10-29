@@ -4,12 +4,20 @@ export default class Connection {
     this.connection = connection;
     this.newPlayerCallback = newPlayerCallback;
 
+    this.messageHandlers = [];
+
     connection.on('message', this.messageReceived);
+  }
+
+  addMessageHandler(callback) {
+    this.messageHandlers.push(callback);
   }
 
   fromClient(func, args) {
     if(func == "room")
       this.newPlayerCallback(this, args);
+    for(const handler of this.messageHandlers)
+      handler(func, args);
   }
 
   messageReceived = message => {

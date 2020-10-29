@@ -1,3 +1,16 @@
-h1 {
-  color: red;
+.surface {
+  width: 1600px;
+  height: 1000px;
+  background: #333;
+  touch-action: none;
+  overflow: hidden;
+}
+
+.widget {
+  height: 100px;
+  width: 100px;
+  background: blue;
+  touch-action: none;
+  user-select: none;
+  -moz-user-select: none;
 }

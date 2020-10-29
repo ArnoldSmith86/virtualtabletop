@@ -18,6 +18,8 @@ connection.onmessage = (e) => {
 function fromServer(func, args) {
   if(func == "log")
     console.log.call(args);
+  if(func == "translate")
+    widgets.get(args.id).setPositionFromServer(args.pos[0], args.pos[1]);
 }
 
 function toServer(func, args) {
@@ -26,4 +28,11 @@ function toServer(func, args) {
 
 window.addEventListener('mousemove', function(event) {
   toServer('mouse', [ event.clientX, event.clientY ]);
+});
+
+const widgets = new Map();
+
+window.addEventListener('DOMContentLoaded', () => {
+  for(const widget of document.querySelectorAll(".widget"))
+    widgets.set(widget.id, new Draggable(widget));
 });
