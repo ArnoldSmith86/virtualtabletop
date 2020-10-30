@@ -3,14 +3,6 @@ class Draggable {
     this.domElement = domElement;
     this.containerDomElement = containerDomElement || domElement.parentElement;
 
-    this.active = false;
-    this.currentX;
-    this.currentY;
-    this.initialX;
-    this.initialY;
-    this.xOffset = 0;
-    this.yOffset = 0;
-
     this.containerDomElement.addEventListener("touchstart", e => this.dragStart(e), false);
     this.containerDomElement.addEventListener("touchend",   e => this.dragEnd(e),   false);
     this.containerDomElement.addEventListener("touchmove",  e => this.drag(e),      false);
@@ -21,64 +13,43 @@ class Draggable {
   }
 
   dragStart(e) {
-    this.getScale();
+    if(e.target !== this.domElement)
+      return;
 
-    if(e.type === "touchstart") {
-      this.initialX = e.touches[0].clientX - this.xOffset;
-      this.initialY = e.touches[0].clientY - this.yOffset;
-    } else {
-      this.initialX = e.clientX - this.xOffset;
-      this.initialY = e.clientY - this.yOffset;
-    }
+    const rect  = this.domElement.getBoundingClientRect();
+    const event = e.type === "touchstart" ? e.touches[0] : e;
 
-    if(e.target === this.domElement) {
-      this.active = true;
-    }
-  }
+    this.offsetMouseToObject = { x: rect.left - event.clientX, y: rect.top  - event.clientY };
+    this.scale = getComputedStyle(document.documentElement).getPropertyValue('--scale');
+    this.containerRect = this.containerDomElement.getBoundingClientRect();
 
-  dragEnd(e) {
-    this.initialX = this.currentX;
-    this.initialY = this.currentY;
-
-    this.active = false;
+    this.active = true;
   }
 
   drag(e) {
     if(this.active) {
-
       e.preventDefault();
 
-      if(e.type === "touchmove") {
-        this.currentX = e.touches[0].clientX - this.initialX;
-        this.currentY = e.touches[0].clientY - this.initialY;
-      } else {
-        this.currentX = e.clientX - this.initialX;
-        this.currentY = e.clientY - this.initialY;
-      }
+      const { clientX, clientY } = e.type === "touchstart" ? e.touches[0] : e;
 
-      this.xOffset = this.currentX;
-      this.yOffset = this.currentY;
+      const x = (clientX + this.offsetMouseToObject.x - this.containerRect.left) / this.scale;
+      const y = (clientY + this.offsetMouseToObject.y - this.containerRect.top ) / this.scale;
 
-      this.setTranslate(this.xOffset, this.yOffset, this.domElement);
-      toServer("translate", { id: this.domElement.id, pos: [ this.currentX, this.currentY ]});
+      this.setTranslate(x, y, this.domElement);
+      toServer("translate", { id: this.domElement.id, pos: [ x, y ]});
     }
   }
 
-  getScale() {
-    this.scale = getComputedStyle(document.documentElement).getPropertyValue('--scale');
+  dragEnd(e) {
+    this.active = false;
   }
 
-  setTranslate(xPos, yPos, el) {
-    el.style.transform = "translate(" + (xPos / this.scale) + "px, " + (yPos / this.scale) + "px)";
+  setTranslate(x, y, el) {
+    el.style.transform = `translate(${x}px, ${y}px)`;
   }
 
   setPositionFromServer(x, y) {
-    if(!this.active) {
-      this.xOffset = x;
-      this.yOffset = y;
-
-      this.getScale();
+    if(!this.active)
       this.setTranslate(x, y, this.domElement);
-    }
   }
 }
