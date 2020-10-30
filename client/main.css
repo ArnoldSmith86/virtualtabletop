@@ -1,13 +1,53 @@
+:root {
+  --scale: 1;
+}
+
+body {
+  background: #484848;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+#toolbar {
+  background: #52bbae;
+  height: 44px;
+  width: 100%;
+  position: fixed;
+}
+
+#add {
+  transform: scale(2);
+  transform-origin: left top;
+  margin: 6px;
+}
+
+#edit {
+  display: none;
+  position: fixed;
+  background: #ccc;
+  margin: 25vh 25vw;
+  width: 50%;
+  height: 50%;
+  padding: 5px;
+}
+
 textarea {
-  width: 800px;
-  height: 200px;
+  width: calc(100% - 4px);
+  height: calc(100% - 30px);
+}
+
+#room {
+  transform: scale(var(--scale));
+  transform-origin: left top;
+  position: fixed;
 }
 
 .surface {
   position: relative;
   width: 1600px;
   height: 1000px;
-  background: #333;
+  background: #f0f0f0;
   touch-action: none;
   overflow: hidden;
 }

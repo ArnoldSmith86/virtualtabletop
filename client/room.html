@@ -4,7 +4,6 @@
 <head>
   <meta charset="utf-8">
   <title>virtualtabletop</title>
-  <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
   <link rel="stylesheet" href="main.css">
@@ -12,15 +11,27 @@
 
 <body>
 
+  <div id="toolbar">
+    <svg id="add" class="toolbarButton">
+      <g transform="translate(-52.11 -598.48)">
+        <path style="fill:#ffffff" d="m58.017 598.48v5.9062h-5.9062v4.1875h5.9062v5.9062h4.1875v-5.9062h5.9062v-4.1875h-5.9062v-5.9062h-4.1875z" />
+      </g>
+    </svg>
+  </div>
+
   <div id="room">
     <div class="surface"></div>
   </div>
-  <textarea id="widgetText">
-    {
-      "image": "https://upload.wikimedia.org/wikipedia/commons/4/49/Aceofspades.svg"
-    }
-  </textarea>
-  <button id="addWidget">Add widget</button>
+
+  <div id="edit">
+    <textarea id="widgetText">
+      {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/8/87/AH.svg"
+      }
+    </textarea>
+    <button id="addWidget">Add widget</button>
+  </div>
+
   <script src="js/draggable.js"></script>
   <script src="js/widget.js"></script>
   <script src="js/basicwidget.js"></script>

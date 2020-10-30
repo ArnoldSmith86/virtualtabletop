@@ -21,6 +21,8 @@ class Draggable {
   }
 
   dragStart(e) {
+    this.getScale();
+
     if(e.type === "touchstart") {
       this.initialX = e.touches[0].clientX - this.xOffset;
       this.initialY = e.touches[0].clientY - this.yOffset;
@@ -57,13 +59,17 @@ class Draggable {
       this.xOffset = this.currentX;
       this.yOffset = this.currentY;
 
-      this.setTranslate(this.currentX, this.currentY, this.domElement);
+      this.setTranslate(this.xOffset, this.yOffset, this.domElement);
       toServer("translate", { id: this.domElement.id, pos: [ this.currentX, this.currentY ]});
     }
   }
 
+  getScale() {
+    this.scale = getComputedStyle(document.documentElement).getPropertyValue('--scale');
+  }
+
   setTranslate(xPos, yPos, el) {
-    el.style.transform = "translate(" + xPos + "px, " + yPos + "px)";
+    el.style.transform = "translate(" + (xPos / this.scale) + "px, " + (yPos / this.scale) + "px)";
   }
 
   setPositionFromServer(x, y) {
@@ -71,6 +77,7 @@ class Draggable {
       this.xOffset = x;
       this.yOffset = y;
 
+      this.getScale();
       this.setTranslate(x, y, this.domElement);
     }
   }
