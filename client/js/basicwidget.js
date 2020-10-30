@@ -2,6 +2,7 @@ class BasicWidget extends Widget {
   constructor(object, surface) {
     super(object, surface);
 
-    this.domElement.style.backgroundImage = `url(${object.image})`;
+    if(object.image)
+      this.domElement.style.backgroundImage = `url(${object.image})`;
   }
 }
