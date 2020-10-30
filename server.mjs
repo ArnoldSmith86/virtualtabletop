@@ -46,5 +46,7 @@ const ws = new WebSocket(8273, function(connection, roomID) {
   process.on(eventType, function() {
     for(const [ _, room ] of activeRooms)
       room.unload();
+    if(eventType != 'exit')
+      process.exit();
   });
 })
