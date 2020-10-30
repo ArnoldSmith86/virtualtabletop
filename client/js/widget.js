@@ -4,6 +4,7 @@ class Widget extends Draggable {
 
     div.id = object.id;
     div.className = 'widget';
+    div.style.cssText = object.css || '';
     div.style.width = (object.width || 103) + 'px';
     div.style.height = (object.height || 160) + 'px';
 
