@@ -7,7 +7,9 @@ export default class Player {
   }
 
   messageReceived = (func, args) => {
-    if(func == "translate")
+    if(func == 'add')
+      this.room.addWidget(this, args);
+    if(func == 'translate')
       this.room.translateWidget(this, args.id, args.pos);
   }
 

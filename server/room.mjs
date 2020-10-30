@@ -1,6 +1,6 @@
 export default class Room {
   players = [];
-  state = 1;
+  state = {};
 
   constructor(id) {
     this.id = id;
@@ -8,12 +8,23 @@ export default class Room {
 
   addPlayer(player) {
     this.players.push(player);
-    player.send("roomState", this.state);
+    player.send('state', this.state);
+  }
+
+  addWidget(player, widget) {
+    this.state[widget.id] = widget;
+    this.broadcast('add', widget);
+  }
+
+  broadcast(func, args) {
+    console.log(this.id, func, args);
+    for(const iPlayer of this.players)
+      iPlayer.send(func, args);
   }
 
   translateWidget(player, widgetID, position) {
-    console.log("translate", this.id, widgetID, position);
-    for(const iPlayer of this.players)
-      iPlayer.send("translate", { id: widgetID, pos: position });
+    this.state[widgetID].x = position[0];
+    this.state[widgetID].y = position[1];
+    this.broadcast('translate', { id: widgetID, pos: position });
   }
 }

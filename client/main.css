@@ -1,4 +1,10 @@
+textarea {
+  width: 800px;
+  height: 200px;
+}
+
 .surface {
+  position: relative;
   width: 1600px;
   height: 1000px;
   background: #333;
@@ -7,9 +13,10 @@
 }
 
 .widget {
-  height: 100px;
-  width: 100px;
-  background: blue;
+  position: absolute;
+  background-size: contain;
+  background-repeat:no-repeat;
+  background-position: center center;
   touch-action: none;
   user-select: none;
   -moz-user-select: none;

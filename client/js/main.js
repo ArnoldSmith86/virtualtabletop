@@ -14,10 +14,17 @@ connection.onmessage = (e) => {
   fromServer(func, args);
 };
 
+function addWidget(widget) {
+  widgets.set(widget.id, new BasicWidget(widget, document.querySelector('.surface')));
+}
+
 function fromServer(func, args) {
-  if(func == "log")
-    console.log.call(args);
-  if(func == "translate")
+  if(func == 'add')
+    addWidget(args);
+  if(func == 'state')
+    for(const widgetID in args)
+      addWidget(args[widgetID]);
+  if(func == 'translate')
     widgets.get(args.id).setPositionFromServer(args.pos[0], args.pos[1]);
 }
 
@@ -31,7 +38,14 @@ window.addEventListener('mousemove', function(event) {
 
 const widgets = new Map();
 
-window.addEventListener('DOMContentLoaded', () => {
-  for(const widget of document.querySelectorAll(".widget"))
-    widgets.set(widget.id, new Draggable(widget));
+function objectToWidget(o) {
+  if(!o.id)
+    o.id = Math.random().toString(36).substring(3, 7);
+  toServer('add', o);
+}
+
+window.addEventListener('DOMContentLoaded', function() {
+  document.querySelector('#addWidget').addEventListener('click', function() {
+    objectToWidget(JSON.parse(document.querySelector('#widgetText').value));
+  });
 });
