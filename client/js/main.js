@@ -21,9 +21,12 @@ function addWidget(widget) {
 function fromServer(func, args) {
   if(func == 'add')
     addWidget(args);
-  if(func == 'state')
+  if(func == 'state') {
+    for(const widget of document.querySelectorAll('.widget'))
+      widget.parentNode.removeChild(widget);
     for(const widgetID in args)
       addWidget(args[widgetID]);
+  }
   if(func == 'translate')
     widgets.get(args.id).setPositionFromServer(args.pos[0], args.pos[1]);
 }
@@ -66,15 +69,33 @@ function setScale() {
   }
 }
 
+function on(selector, eventName, callback) {
+  document.querySelector(selector).addEventListener(eventName, callback);
+}
+
 window.addEventListener('DOMContentLoaded', function() {
-  document.querySelector('#add').addEventListener('click', function() {
+  on('#add', 'click', function() {
     const style = document.querySelector('#edit').style;
     style.display = style.display === 'block' ? 'none' : 'block';
   });
-  document.querySelector('#addWidget').addEventListener('click', function() {
+
+  on('#upload', 'click', function() {
+    const upload = document.createElement('input');
+    upload.type = 'file';
+    upload.addEventListener('change', function(e) {
+      var req = new XMLHttpRequest();
+      req.open("PUT", self.location.pathname, true);
+      req.setRequestHeader('Content-Type', 'application/octet-stream');
+      req.send(e.target.files[0]);
+    });
+    upload.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+  });
+
+  on('#addWidget', 'click', function() {
     objectToWidget(JSON.parse(document.querySelector('#widgetText').value));
     document.querySelector('#edit').style.display = 'none';
   });
+
   setScale();
 });
 

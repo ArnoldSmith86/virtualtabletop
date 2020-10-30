@@ -16,10 +16,12 @@ body {
   position: fixed;
 }
 
-#add {
-  transform: scale(2);
-  transform-origin: left top;
-  margin: 6px;
+.toolbarButton {
+  margin: 3px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: 36px;
 }
 
 #edit {
