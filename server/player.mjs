@@ -4,6 +4,11 @@ export default class Player {
     this.room = room;
 
     connection.addMessageHandler(this.messageReceived);
+    connection.addCloseHandler(this.connectionClosed);
+  }
+
+  connectionClosed = (func, args) => {
+    this.room.removePlayer(this);
   }
 
   messageReceived = (func, args) => {

@@ -1,3 +1,4 @@
+import fs from 'fs';
 import path from 'path';
 import express from 'express';
 import http from 'http';
@@ -9,6 +10,8 @@ import Room from './server/room.mjs';
 const __dirname = path.resolve();
 const app = express();
 const server = http.Server(app);
+
+fs.mkdirSync(__dirname + '/save/rooms', { recursive: true });
 
 app.use('/', express.static(__dirname + '/client'));
 
@@ -29,9 +32,19 @@ server.listen(process.env.PORT || 8272, function() {
 });
 
 const activeRooms = new Map();
-const ws = new WebSocket(8273, function(connection, room) {
-  if(!activeRooms.has(room))
-    activeRooms.set(room, new Room(room));
-  console.log(`adding player to room ${room}`);
-  activeRooms.get(room).addPlayer(new Player(connection, activeRooms.get(room)));
+const ws = new WebSocket(8273, function(connection, roomID) {
+  if(!activeRooms.has(roomID)) {
+    activeRooms.set(roomID, new Room(roomID, function() {
+      activeRooms.delete(roomID);
+    }));
+  }
+  console.log(`adding player to room ${roomID}`);
+  activeRooms.get(roomID).addPlayer(new Player(connection, activeRooms.get(roomID)));
 });
+
+['exit', 'SIGINT', 'SIGUSR1', 'SIGUSR2', 'uncaughtException', 'SIGTERM'].forEach((eventType) => {
+  process.on(eventType, function() {
+    for(const [ _, room ] of activeRooms)
+      room.unload();
+  });
+})

@@ -4,9 +4,15 @@ export default class Connection {
     this.connection = connection;
     this.newPlayerCallback = newPlayerCallback;
 
+    this.closeHandlers = [];
     this.messageHandlers = [];
 
+    connection.on('close', this.closeReceived);
     connection.on('message', this.messageReceived);
+  }
+
+  addCloseHandler(callback) {
+    this.closeHandlers.push(callback);
   }
 
   addMessageHandler(callback) {
@@ -24,6 +30,11 @@ export default class Connection {
     console.log(`from client: ${message}`);
     const { func, args } = JSON.parse(message);
     this.fromClient(func, args);
+  }
+
+  closeReceived = _ => {
+    for(const handler of this.closeHandlers)
+      handler();
   }
 
   toClient(func, args) {
