@@ -32,8 +32,8 @@ class Draggable {
 
       const { clientX, clientY } = e.type === "touchstart" ? e.touches[0] : e;
 
-      const x = (clientX + this.offsetMouseToObject.x - this.containerRect.left) / this.scale;
-      const y = (clientY + this.offsetMouseToObject.y - this.containerRect.top ) / this.scale;
+      const x = Math.floor((clientX + this.offsetMouseToObject.x - this.containerRect.left) / this.scale);
+      const y = Math.floor((clientY + this.offsetMouseToObject.y - this.containerRect.top ) / this.scale);
 
       this.setTranslate(x, y, this.domElement);
       toServer("translate", { id: this.domElement.id, pos: [ x, y ]});
