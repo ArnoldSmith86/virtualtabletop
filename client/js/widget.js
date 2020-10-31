@@ -4,9 +4,11 @@ class Widget extends Draggable {
 
     div.id = object.id;
     div.className = 'widget';
+    div.innerHTML = object.content || '';
     div.style.cssText = object.css || '';
     div.style.width = (object.width || 103) + 'px';
     div.style.height = (object.height || 160) + 'px';
+    div.style.zIndex = (object.z || 0);
 
     surface.appendChild(div);
     super(div, surface);
