@@ -1,18 +1,31 @@
-const url = `ws://${location.hostname}:8273`;
-const connection = new WebSocket(url);
+let lastTimeout = 1000;
+let connection;
 
-connection.onopen = () => {
-  toServer('room', self.location.pathname.substr(1));
-};
+function startWebSocket() {
+  const url = `ws://${location.hostname}:8273`;
+  console.log(`connecting to ${url}`);
+  connection = new WebSocket(url);
 
-connection.onerror = (error) => {
-  console.log(`WebSocket error: ${error}`);
-};
+  connection.onopen = () => {
+    toServer('room', self.location.pathname.substr(1));
+  };
 
-connection.onmessage = (e) => {
-  const { func, args } = JSON.parse(e.data);
-  fromServer(func, args);
-};
+  connection.onerror = (error) => {
+    console.log(`WebSocket error: ${error}`);
+    setTimeout(startWebSocket, lastTimeout *= 2);
+  };
+
+  connection.onclose = () => {
+    console.log(`WebSocket closed`);
+    setTimeout(startWebSocket, lastTimeout *= 2);
+  };
+
+  connection.onmessage = (e) => {
+    const { func, args } = JSON.parse(e.data);
+    fromServer(func, args);
+  };
+}
+startWebSocket();
 
 function addWidget(widget) {
   widgets.set(widget.id, new BasicWidget(widget, document.querySelector('.surface')));
