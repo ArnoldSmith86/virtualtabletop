@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import zip from 'node-zip';
+import JSZip from 'jszip';
 
 const checkersColors = {
   default: [ '#000000', '#525252' ],
@@ -13,9 +13,9 @@ const checkersColors = {
   orange:  [ '#e2a633', '#ecc375' ]
 }
 
-export default function convertPCIO(content) {
-  const zip = new JSZip(content);
-  const widgets = JSON.parse(zip.files['widgets.json'].asText());
+export default async function convertPCIO(content) {
+  const zip = await JSZip.loadAsync(content);
+  const widgets = JSON.parse(await zip.files['widgets.json'].async('string'));
 
   const nameMap = {};
   for(const filename in zip.files) {
@@ -23,7 +23,7 @@ export default function convertPCIO(content) {
       const targetFile = '/assets/' + zip.files[filename]._data.crc32 + '_' + zip.files[filename]._data.uncompressedSize;
       nameMap['package://' + filename] = targetFile;
       if(!fs.existsSync(path.resolve() + '/save' + targetFile))
-        fs.writeFileSync(path.resolve() + '/save' + targetFile, zip.files[filename]._data.getContent());
+        fs.writeFileSync(path.resolve() + '/save' + targetFile, await zip.files[filename].async('nodebuffer'));
     }
   }
 

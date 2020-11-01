@@ -37,7 +37,7 @@ app.get('/:id', function(req, res) {
 });
 
 app.put('/:id', function(req, res) {
-  activeRooms.get(req.params.id).setState(PCIO(req.body));
+  PCIO(req.body).then(state => activeRooms.get(req.params.id).setState(state));
   res.send();
 });
 
