@@ -15,7 +15,7 @@ const checkersColors = {
 
 export default function convertPCIO(content) {
   const zip = new JSZip(content);
-  const widgets = JSON.parse(zip.files['widgets.json']._data.getContent().toString('utf-8'));
+  const widgets = JSON.parse(zip.files['widgets.json'].asText());
 
   const nameMap = {};
   for(const filename in zip.files) {
