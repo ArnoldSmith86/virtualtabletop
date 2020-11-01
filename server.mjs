@@ -13,9 +13,12 @@ const __dirname = path.resolve();
 const app = express();
 const server = http.Server(app);
 
+fs.mkdirSync(__dirname + '/save/assets', { recursive: true });
 fs.mkdirSync(__dirname + '/save/rooms', { recursive: true });
 
 app.use('/', express.static(__dirname + '/client'));
+
+app.use('/assets', express.static(__dirname + '/save/assets'));
 
 app.post('/quit', function(req, res) {
   process.exit();

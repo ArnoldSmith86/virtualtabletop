@@ -1,3 +1,5 @@
+import fs from 'fs';
+import path from 'path';
 import zip from 'node-zip';
 
 const checkersColors = {
@@ -14,6 +16,16 @@ const checkersColors = {
 export default function convertPCIO(content) {
   const zip = new JSZip(content);
   const widgets = JSON.parse(zip.files['widgets.json']._data.getContent().toString('utf-8'));
+
+  const nameMap = {};
+  for(const filename in zip.files) {
+    if(filename.match(/^userassets/) && zip.files[filename]._data && zip.files[filename]._data.uncompressedSize < 2097152) {
+      const targetFile = '/assets/' + zip.files[filename]._data.crc32 + '_' + zip.files[filename]._data.uncompressedSize;
+      nameMap['package://' + filename] = targetFile;
+      if(!fs.existsSync(path.resolve() + '/save' + targetFile))
+        fs.writeFileSync(path.resolve() + '/save' + targetFile, zip.files[filename]._data.getContent());
+    }
+  }
 
   const byID = {};
   const output = {};
@@ -54,6 +66,9 @@ export default function convertPCIO(content) {
     } else {
       w.css = 'background: repeating-linear-gradient(45deg, red, red 10px, darkred 10px, darkred 20px);';
     }
+
+    if(w.image)
+      w.image = nameMap[w.image] || w.image;
 
     output[widget.id] = w;
   }
