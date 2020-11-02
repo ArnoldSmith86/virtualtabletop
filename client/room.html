@@ -14,12 +14,14 @@
   <div id="toolbar">
     <button id="editButton" data-overlay="editOverlay" class="toolbarButton">➕</button>
     <button id="uploadButton" class="toolbarButton">⬆️</button>
+    <button id="playersButton" data-overlay="playerOverlay" class="toolbarButton">👪</button>
   </div>
 
   <div id="roomArea">
     <div id="room">
       <div class="surface"></div>
     </div>
+
     <div id="editOverlay" class="overlay">
       <h1>Add widget</h1>
       <textarea id="widgetText">
@@ -28,6 +30,10 @@
         }
       </textarea><br>
       <button id="addWidget">Add widget</button>
+    </div>
+
+    <div id="playerOverlay" class="overlay">
+      <h1>Players</h1>
     </div>
   </div>
 
