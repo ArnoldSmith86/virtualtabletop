@@ -1,13 +1,18 @@
 let lastTimeout = 1000;
 let connection;
 
+const roomID = self.location.pathname.substr(1);
+
+let playerName = localStorage.getItem('playerName') || 'Guest' + Math.floor(Math.random()*1000);
+localStorage.setItem('playerName', playerName);
+
 function startWebSocket() {
   const url = `ws://${location.hostname}:8273`;
   console.log(`connecting to ${url}`);
   connection = new WebSocket(url);
 
   connection.onopen = () => {
-    toServer('room', self.location.pathname.substr(1));
+    toServer('room', { playerName, roomID });
   };
 
   connection.onerror = (error) => {
@@ -31,6 +36,26 @@ function addWidget(widget) {
   widgets.set(widget.id, new BasicWidget(widget, document.querySelector('.surface')));
 }
 
+function fillPlayerList(players) {
+  for(const entry of document.querySelectorAll('#playerList > div'))
+    entry.parentNode.removeChild(entry);
+  for(const player in players) {
+    const div = document.createElement('div');
+    const span = document.createElement('span');
+    const text = document.createTextNode(player);
+
+    span.className = 'teamColor';
+    span.style.backgroundColor = players[player];
+
+    div.appendChild(span);
+    div.appendChild(text);
+    if(player == playerName)
+      div.className = 'myPlayerEntry';
+
+    document.querySelector('#playerList').appendChild(div);
+  }
+}
+
 function fromServer(func, args) {
   if(func == 'add')
     addWidget(args);
@@ -38,7 +63,9 @@ function fromServer(func, args) {
     for(const widget of document.querySelectorAll('.widget'))
       widget.parentNode.removeChild(widget);
     for(const widgetID in args)
-      addWidget(args[widgetID]);
+      if(widgetID != '_meta')
+        addWidget(args[widgetID]);
+    fillPlayerList(args._meta.players)
   }
   if(func == 'translate')
     widgets.get(args.id).setPositionFromServer(args.pos[0], args.pos[1]);

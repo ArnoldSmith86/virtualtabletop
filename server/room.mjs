@@ -13,7 +13,12 @@ export default class Room {
   }
 
   addPlayer(player) {
+    console.log(`adding player ${player.name} to room ${this.id}`);
     this.players.push(player);
+
+    if(!this.state._meta.players[player.name])
+      this.state._meta.players[player.name] = 'red';
+
     player.send('state', this.state);
   }
 
@@ -35,9 +40,12 @@ export default class Room {
     } catch {
       this.state = {};
     }
+    if(!this.state._meta)
+      this.state._meta = { players: {} };
   }
 
   removePlayer(player) {
+    console.log(`removing player ${player.name} from room ${this.id}`);
     this.players = this.players.filter(e => e != player);
     if(this.players.length == 0) {
       this.unload();
@@ -46,7 +54,9 @@ export default class Room {
   }
 
   setState(state) {
+    const meta = this.state._meta;
     this.state = state;
+    this.state._meta = meta;
     this.broadcast('state', state);
   }
 

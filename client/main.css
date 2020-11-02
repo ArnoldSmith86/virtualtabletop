@@ -58,6 +58,7 @@ body {
 }
 
 .overlay {
+  color: white;
   display: none;
   position: absolute;
   left: 0;
@@ -71,8 +72,17 @@ body {
 }
 
 .overlay h1 {
-  color: white;
   text-align: center;
+}
+
+.myPlayerEntry {
+  font-weight: bold;
+}
+.teamColor {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  border-radius: 20px;
 }
 
 #editOverlay textarea {

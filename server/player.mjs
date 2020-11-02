@@ -1,6 +1,7 @@
 export default class Player {
-  constructor(connection, room) {
+  constructor(connection, name, room) {
     this.connection = connection;
+    this.name = name;
     this.room = room;
 
     connection.addMessageHandler(this.messageReceived);

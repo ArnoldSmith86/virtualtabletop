@@ -46,21 +46,20 @@ server.listen(process.env.PORT || 8272, function() {
 });
 
 const activeRooms = new Map();
-const ws = new WebSocket(8273, function(connection, roomID) {
+const ws = new WebSocket(8273, function(connection, { playerName, roomID }) {
   if(!activeRooms.has(roomID)) {
     activeRooms.set(roomID, new Room(roomID, function() {
       activeRooms.delete(roomID);
     }));
   }
-  console.log(`adding player to room ${roomID}`);
-  activeRooms.get(roomID).addPlayer(new Player(connection, activeRooms.get(roomID)));
+  activeRooms.get(roomID).addPlayer(new Player(connection, playerName, activeRooms.get(roomID)));
 });
 
-['exit', 'SIGINT', 'SIGUSR1', 'SIGUSR2', 'uncaughtException', 'SIGTERM'].forEach((eventType) => {
+['exit', 'SIGINT', 'SIGUSR1', 'SIGUSR2', 'SIGTERM'].forEach((eventType) => {
   process.on(eventType, function() {
     for(const [ _, room ] of activeRooms)
       room.unload();
     if(eventType != 'exit')
       process.exit();
   });
-})
+});
