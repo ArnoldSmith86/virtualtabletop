@@ -1,5 +1,8 @@
 :root {
   --scale: 1;
+  --roomWidth: 1600px;
+  --roomHeight: 1000px;
+  --toolbarSize: 44px;
 }
 
 body {
@@ -12,9 +15,38 @@ body {
 
 #toolbar {
   background: #52bbae;
-  height: 44px;
+  height: var(--toolbarSize);
   width: 100%;
   position: fixed;
+
+  top: calc((100vh - var(--roomHeight) * var(--scale)) / 2 + var(--roomHeight) * var(--scale) - var(--toolbarSize) / 2 - 1px);
+  left: 0;
+  width: 100%;
+  height: var(--toolbarSize);
+}
+
+#roomArea {
+  position: fixed;
+  overflow: hidden;
+  width: calc(var(--roomWidth) * var(--scale));
+  height: calc(var(--roomHeight) * var(--scale));
+
+  top: calc((100vh - var(--roomHeight) * var(--scale)) / 2 - var(--toolbarSize) / 2);
+  left: 0;
+}
+
+@media (min-aspect-ratio: 1600/1000) {
+  #toolbar {
+    top: 0;
+    left: calc((100vw - var(--roomWidth) * var(--scale)) / 2 - var(--toolbarSize) / 2 + 1px);
+    width: var(--toolbarSize);
+    height: 100%;
+  }
+
+  #roomArea {
+    top: 0;
+    left: calc((100vw - var(--roomWidth) * var(--scale)) / 2 + var(--toolbarSize) / 2);
+  }
 }
 
 .toolbarButton {
@@ -22,34 +54,44 @@ body {
   padding: 0;
   border: 0;
   background: none;
-  font-size: 36px;
+  font-size: calc(var(--toolbarSize) - 8px);
 }
 
-#edit {
+.overlay {
   display: none;
-  position: fixed;
-  background: #ccc;
-  margin: 25vh 25vw;
-  width: 50%;
-  height: 50%;
-  padding: 5px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  flex-direction: column;
+  padding: 5% 10%;
+  box-sizing: border-box;
 }
 
-textarea {
-  width: calc(100% - 4px);
-  height: calc(100% - 30px);
+.overlay h1 {
+  color: white;
+  text-align: center;
+}
+
+#editOverlay textarea {
+  height: 100%;
 }
 
 #room {
   transform: scale(var(--scale));
   transform-origin: left top;
-  position: fixed;
+}
+
+#roomArea.hasOverlay #room {
+  filter: blur(5px);
 }
 
 .surface {
   position: relative;
-  width: 1600px;
-  height: 1000px;
+  width: var(--roomWidth);
+  height: var(--roomHeight);
   background: #f0f0f0;
   touch-action: none;
   overflow: hidden;

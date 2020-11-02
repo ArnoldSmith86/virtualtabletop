@@ -12,21 +12,23 @@
 <body>
 
   <div id="toolbar">
-    <button id="add" class="toolbarButton">➕</button>
-    <button id="upload" class="toolbarButton">⬆️</button>
+    <button id="editButton" data-overlay="editOverlay" class="toolbarButton">➕</button>
+    <button id="uploadButton" class="toolbarButton">⬆️</button>
   </div>
 
-  <div id="room">
-    <div class="surface"></div>
-  </div>
-
-  <div id="edit">
-    <textarea id="widgetText">
-      {
-        "image": "https://upload.wikimedia.org/wikipedia/commons/8/87/AH.svg"
-      }
-    </textarea>
-    <button id="addWidget">Add widget</button>
+  <div id="roomArea">
+    <div id="room">
+      <div class="surface"></div>
+    </div>
+    <div id="editOverlay" class="overlay">
+      <h1>Add widget</h1>
+      <textarea id="widgetText">
+        {
+          "image": "https://upload.wikimedia.org/wikipedia/commons/8/87/AH.svg"
+        }
+      </textarea><br>
+      <button id="addWidget">Add widget</button>
+    </div>
   </div>
 
   <script src="js/draggable.js"></script>

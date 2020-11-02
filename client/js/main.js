@@ -61,43 +61,35 @@ function objectToWidget(o) {
 }
 
 function setScale() {
-  if(window.innerWidth/window.innerHeight < 1600/1044) {
-    const scale = window.innerWidth/1600;
-    document.documentElement.style.setProperty('--scale', scale);
-    document.querySelector('#room').style.top  = ((window.innerHeight - 1000*scale)/2 - 22) + 'px';
-    document.querySelector('#room').style.left = '0';
-    document.querySelector('#toolbar').style.top  = ((window.innerHeight - 1000*scale)/2 + 1000*scale - 23) + 'px';
-    document.querySelector('#toolbar').style.left = '0';
-    document.querySelector('#toolbar').style.width = '100%';
-    document.querySelector('#toolbar').style.height = '44px';
-  } else {
-    const scale = window.innerHeight/1000;
-    document.documentElement.style.setProperty('--scale', scale);
-    document.querySelector('#room').style.top  = '0';
-    document.querySelector('#room').style.left = ((window.innerWidth - 1600*scale)/2 + 22) + 'px';
-    document.querySelector('#toolbar').style.top  = '0';
-    document.querySelector('#toolbar').style.left = ((window.innerWidth - 1600*scale)/2 - 21) + 'px';
-    document.querySelector('#toolbar').style.width = '44px';
-    document.querySelector('#toolbar').style.height = '100%';
-  }
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+  document.documentElement.style.setProperty('--scale', w/h < 1600/1000 ? w/1600 : h/1000);
 }
 
 function on(selector, eventName, callback) {
-  document.querySelector(selector).addEventListener(eventName, callback);
+  for(const d of document.querySelectorAll(selector))
+    d.addEventListener(eventName, callback);
 }
 
 window.addEventListener('DOMContentLoaded', function() {
-  on('#add', 'click', function() {
-    const style = document.querySelector('#edit').style;
-    style.display = style.display === 'block' ? 'none' : 'block';
+  on('.toolbarButton', 'click', function(e) {
+    const overlay = e.target.dataset.overlay;
+    if(overlay) {
+      for(const d of document.querySelectorAll('.overlay'))
+        if(d.id != overlay)
+          d.style.display = 'none';
+      const style = document.querySelector(`#${overlay}`).style;
+      style.display = style.display === 'flex' ? 'none' : 'flex';
+      document.querySelector('#roomArea').className = style.display === 'flex' ? 'hasOverlay' : '';
+    }
   });
 
-  on('#upload', 'click', function() {
+  on('#uploadButton', 'click', function() {
     const upload = document.createElement('input');
     upload.type = 'file';
     upload.addEventListener('change', function(e) {
       var req = new XMLHttpRequest();
-      req.open("PUT", self.location.pathname, true);
+      req.open('PUT', self.location.pathname, true);
       req.setRequestHeader('Content-Type', 'application/octet-stream');
       req.send(e.target.files[0]);
     });
@@ -106,7 +98,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
   on('#addWidget', 'click', function() {
     objectToWidget(JSON.parse(document.querySelector('#widgetText').value));
-    document.querySelector('#edit').style.display = 'none';
+    document.querySelector('.toolbarButton').dispatchEvent(new MouseEvent('click', {bubbles: true}));
   });
 
   setScale();
