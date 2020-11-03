@@ -1,6 +1,7 @@
 export default class Player {
-  constructor(connection, room) {
+  constructor(connection, name, room) {
     this.connection = connection;
+    this.name = name;
     this.room = room;
 
     connection.addMessageHandler(this.messageReceived);
@@ -14,8 +15,17 @@ export default class Player {
   messageReceived = (func, args) => {
     if(func == 'add')
       this.room.addWidget(this, args);
+    if(func == 'playerColor')
+      this.room.recolorPlayer(this, args.player, args.color);
+    if(func == 'rename')
+      this.room.renamePlayer(this, args.oldName, args.newName);
     if(func == 'translate')
       this.room.translateWidget(this, args.id, args.pos);
+  }
+
+  rename(newName) {
+    this.name = newName;
+    this.send('rename', newName);
   }
 
   send(func, args) {

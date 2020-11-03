@@ -27,7 +27,6 @@ export default class Connection {
   }
 
   messageReceived = message => {
-    console.log(`from client: ${message}`);
     const { func, args } = JSON.parse(message);
     this.fromClient(func, args);
   }
