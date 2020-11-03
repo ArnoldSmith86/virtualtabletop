@@ -5,11 +5,17 @@ import Connection from './connection.mjs';
 export default class WebSocket {
   connections = [];
 
-  constructor(port, newPlayerCallback) {
-    this.server = new ws.Server({ port });
+  constructor(server, newPlayerCallback) {
+    this.server = new ws.Server({ noServer: true });
     this.newPlayerCallback = newPlayerCallback;
 
     this.server.on('connection', this.newConnection);
+
+    server.on('upgrade', (request, socket, head) => {
+      this.server.handleUpgrade(request, socket, head, socket => {
+        this.server.emit('connection', socket, request);
+      });
+    });
   }
 
   newConnection = ws => {

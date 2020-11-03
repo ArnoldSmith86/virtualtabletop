@@ -2,7 +2,7 @@ let lastTimeout = 1000;
 let connection;
 
 function startWebSocket() {
-  const url = `ws://${location.hostname}:8273`;
+  const url = `ws://${location.host}`;
   console.log(`connecting to ${url}`);
   connection = new WebSocket(url);
 
