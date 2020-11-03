@@ -78,6 +78,9 @@ body {
 .myPlayerEntry .playerName {
   font-weight: bold;
 }
+.inactivePlayerEntry {
+  opacity: 0.6;
+}
 .teamColor {
   width: 20px;
   height: 20px;

@@ -55,6 +55,8 @@ function fillPlayerList(players, activePlayers) {
     });
     if(player == playerName)
       entry.className = 'myPlayerEntry';
+    if(activePlayers.indexOf(player) == -1)
+      entry.className = 'inactivePlayerEntry';
 
     document.querySelector('#playerList').appendChild(entry);
   }
