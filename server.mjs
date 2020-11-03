@@ -47,7 +47,6 @@ server.listen(process.env.PORT || 8272, function() {
 
 const activeRooms = new Map();
 const ws = new WebSocket(server, function(connection, { playerName, roomID }) {
-const ws = new WebSocket(8273, function(connection, { playerName, roomID }) {
   if(!activeRooms.has(roomID)) {
     activeRooms.set(roomID, new Room(roomID, function() {
       activeRooms.delete(roomID);
