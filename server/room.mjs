@@ -20,6 +20,7 @@ export default class Room {
       this.state._meta.players[player.name] = 'red';
 
     player.send('state', this.state);
+    this.sendMetaUpdate();
   }
 
   addWidget(player, widget) {
@@ -29,8 +30,8 @@ export default class Room {
 
   broadcast(func, args) {
     console.log(this.id, func, args);
-    for(const iPlayer of this.players)
-      iPlayer.send(func, args);
+    for(const player of this.players)
+      player.send(func, args);
   }
 
   load() {
@@ -51,6 +52,22 @@ export default class Room {
       this.unload();
       this.unloadCallback();
     }
+    this.sendMetaUpdate();
+  }
+
+  renamePlayer(renamingPlayer, oldName, newName) {
+    this.state._meta.players[newName] = this.state._meta.players[newName] || this.state._meta.players[oldName];
+    delete this.state._meta.players[oldName];
+
+    for(const player of this.players)
+      if(player.name == oldName)
+        player.rename(newName);
+
+    this.sendMetaUpdate();
+  }
+
+  sendMetaUpdate() {
+    this.broadcast('meta', { meta: this.state._meta, activePlayers: this.players.map(p=>p.name) });
   }
 
   setState(state) {

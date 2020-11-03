@@ -75,7 +75,7 @@ body {
   text-align: center;
 }
 
-.myPlayerEntry {
+.myPlayerEntry .playerName {
   font-weight: bold;
 }
 .teamColor {
@@ -83,6 +83,14 @@ body {
   height: 20px;
   display: inline-block;
   border-radius: 20px;
+}
+.playerName {
+  border: none;
+  padding: 0;
+  margin: 0;
+  color: white;
+  background: none;
+  font-size: 16px;
 }
 
 #editOverlay textarea {

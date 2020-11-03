@@ -15,8 +15,15 @@ export default class Player {
   messageReceived = (func, args) => {
     if(func == 'add')
       this.room.addWidget(this, args);
+    if(func == 'rename')
+      this.room.renamePlayer(this, args.oldName, args.newName);
     if(func == 'translate')
       this.room.translateWidget(this, args.id, args.pos);
+  }
+
+  rename(newName) {
+    this.name = newName;
+    this.send('rename', newName);
   }
 
   send(func, args) {

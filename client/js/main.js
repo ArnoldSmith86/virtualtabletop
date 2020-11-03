@@ -36,36 +36,45 @@ function addWidget(widget) {
   widgets.set(widget.id, new BasicWidget(widget, document.querySelector('.surface')));
 }
 
-function fillPlayerList(players) {
+function domByTemplate(id) {
+  const div = document.createElement('div');
+  div.innerHTML = document.getElementById(id).innerHTML;
+  return div;
+}
+
+function fillPlayerList(players, activePlayers) {
   for(const entry of document.querySelectorAll('#playerList > div'))
     entry.parentNode.removeChild(entry);
   for(const player in players) {
-    const div = document.createElement('div');
-    const span = document.createElement('span');
-    const text = document.createTextNode(player);
-
-    span.className = 'teamColor';
-    span.style.backgroundColor = players[player];
-
-    div.appendChild(span);
-    div.appendChild(text);
+    const entry = domByTemplate('template-playerlist-entry');
+    entry.querySelector('.teamColor').style.backgroundColor = players[player];
+    entry.querySelector('.playerName').dataset.initialValue = player;
+    entry.querySelector('.playerName').value = player;
+    entry.querySelector('.playerName').addEventListener('change', function(e) {
+      toServer('rename', { oldName: e.target.dataset.initialValue, newName: e.target.value });
+    });
     if(player == playerName)
-      div.className = 'myPlayerEntry';
+      entry.className = 'myPlayerEntry';
 
-    document.querySelector('#playerList').appendChild(div);
+    document.querySelector('#playerList').appendChild(entry);
   }
 }
 
 function fromServer(func, args) {
   if(func == 'add')
     addWidget(args);
+  if(func == 'meta')
+    fillPlayerList(args.meta.players, args.activePlayers);
+  if(func == 'rename') {
+    playerName = args;
+    localStorage.setItem('playerName', playerName);
+  }
   if(func == 'state') {
     for(const widget of document.querySelectorAll('.widget'))
       widget.parentNode.removeChild(widget);
     for(const widgetID in args)
       if(widgetID != '_meta')
         addWidget(args[widgetID]);
-    fillPlayerList(args._meta.players)
   }
   if(func == 'translate')
     widgets.get(args.id).setPositionFromServer(args.pos[0], args.pos[1]);
