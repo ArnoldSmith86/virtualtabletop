@@ -15,6 +15,8 @@ export default class Player {
   messageReceived = (func, args) => {
     if(func == 'add')
       this.room.addWidget(this, args);
+    if(func == 'playerColor')
+      this.room.recolorPlayer(this, args.player, args.color);
     if(func == 'rename')
       this.room.renamePlayer(this, args.oldName, args.newName);
     if(func == 'translate')

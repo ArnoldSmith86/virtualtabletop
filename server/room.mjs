@@ -17,7 +17,7 @@ export default class Room {
     this.players.push(player);
 
     if(!this.state._meta.players[player.name])
-      this.state._meta.players[player.name] = 'red';
+      this.state._meta.players[player.name] = '#ff0000';
 
     player.send('state', this.state);
     this.sendMetaUpdate();
@@ -43,6 +43,11 @@ export default class Room {
     }
     if(!this.state._meta)
       this.state._meta = { players: {} };
+  }
+
+  recolorPlayer(renamingPlayer, playerName, color) {
+    this.state._meta.players[playerName] = color;
+    this.sendMetaUpdate();
   }
 
   removePlayer(player) {

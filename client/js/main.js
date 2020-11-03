@@ -47,11 +47,13 @@ function fillPlayerList(players, activePlayers) {
     entry.parentNode.removeChild(entry);
   for(const player in players) {
     const entry = domByTemplate('template-playerlist-entry');
-    entry.querySelector('.teamColor').style.backgroundColor = players[player];
-    entry.querySelector('.playerName').dataset.initialValue = player;
+    entry.querySelector('.teamColor').value = players[player];
     entry.querySelector('.playerName').value = player;
+    entry.querySelector('.teamColor').addEventListener('change', function(e) {
+      toServer('playerColor', { player, color: e.target.value });
+    });
     entry.querySelector('.playerName').addEventListener('change', function(e) {
-      toServer('rename', { oldName: e.target.dataset.initialValue, newName: e.target.value });
+      toServer('rename', { oldName: player, newName: e.target.value });
     });
     if(player == playerName)
       entry.className = 'myPlayerEntry';
