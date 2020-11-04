@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import zlib from 'zlib';
 
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -23,6 +24,7 @@ fs.mkdirSync(__dirname + '/save/assets', { recursive: true });
 fs.mkdirSync(__dirname + '/save/rooms', { recursive: true });
 
 let roomHTML = fs.readFileSync(__dirname + '/client/room.html', {encoding:'utf8'});
+let gzippedRoomHTML = '';
 minify({
   compressor: cleanCSS,
   input: 'client/main.css',
@@ -46,6 +48,7 @@ minify({
   })
 }).then(function(min) {
   roomHTML = min;
+  zlib.gzip(min, (err, buffer) => gzippedRoomHTML = buffer);
 });
 
 app.use('/', express.static(__dirname + '/client'));
@@ -65,7 +68,13 @@ app.get('/', function(req, res) {
 });
 
 app.get('/:id', function(req, res) {
-  res.send(roomHTML);
+  if(req.headers['accept-encoding'].match(/\bgzip\b/)) {
+    res.setHeader('Content-Encoding', 'gzip');
+    res.setHeader('Content-Type', 'text/html');
+    res.send(gzippedRoomHTML);
+  } else {
+    res.send(roomHTML);
+  }
 });
 
 app.put('/:id', function(req, res) {
