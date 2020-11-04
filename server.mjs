@@ -1,8 +1,14 @@
 import fs from 'fs';
 import path from 'path';
+
 import express from 'express';
 import bodyParser from 'body-parser';
 import http from 'http';
+
+import minify from '@node-minify/core';
+import cleanCSS from '@node-minify/clean-css';
+import uglifyES from '@node-minify/uglify-es';
+import htmlMinifier from '@node-minify/html-minifier';
 
 import WebSocket from './server/websocket.mjs';
 import Player from './server/player.mjs';
@@ -15,6 +21,32 @@ const server = http.Server(app);
 
 fs.mkdirSync(__dirname + '/save/assets', { recursive: true });
 fs.mkdirSync(__dirname + '/save/rooms', { recursive: true });
+
+let roomHTML = fs.readFileSync(__dirname + '/client/room.html', {encoding:'utf8'});
+minify({
+  compressor: cleanCSS,
+  input: 'client/main.css',
+  output: '/tmp/out.css'
+}).then(function(min) {
+  roomHTML = roomHTML.replace(/ \{\{CSS\}\} /, min);
+  return minify({
+    compressor: uglifyES,
+    input: [
+      'client/js/draggable.js',
+      'client/js/widget.js',
+      'client/js/basicwidget.js',
+      'client/js/main.js'
+    ],
+    output: '/tmp/out.js'
+  });
+}).then(function(min) {
+  return minify({
+    compressor: htmlMinifier,
+    content: roomHTML.replace(/ \{\{JS\}\} /, min)
+  })
+}).then(function(min) {
+  roomHTML = min;
+});
 
 app.use('/', express.static(__dirname + '/client'));
 
@@ -33,7 +65,7 @@ app.get('/', function(req, res) {
 });
 
 app.get('/:id', function(req, res) {
-  res.sendFile(__dirname + '/client/room.html');
+  res.send(roomHTML);
 });
 
 app.put('/:id', function(req, res) {
