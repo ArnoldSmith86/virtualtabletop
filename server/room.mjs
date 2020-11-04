@@ -1,6 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 
+import PCIO from './pcioimport.mjs';
+
 export default class Room {
   players = [];
   state = {};
@@ -23,6 +25,27 @@ export default class Room {
     this.sendMetaUpdate();
   }
 
+  addState(player, type, src, meta) {
+    const room = this;
+    (async function() {
+      let state = room.state;
+      if(type == 'file')
+        state = await PCIO(Buffer.from(src.replace(/^data.*?,/, ''), 'base64'));
+
+      meta.id = Math.random().toString(36).substring(3, 7);
+
+      if(type == 'link') {
+        meta.src = src;
+      } else {
+        fs.writeFileSync(path.resolve() + '/save/states/' + room.id + '-' + meta.id + '.json', JSON.stringify(state));
+      }
+
+      meta.type = type;
+      room.state._meta.states.push(meta);
+      room.sendMetaUpdate();
+    })();
+  }
+
   addWidget(player, widget) {
     this.state[widget.id] = widget;
     this.broadcast('add', widget);
@@ -34,15 +57,29 @@ export default class Room {
       player.send(func, args);
   }
 
-  load() {
+  load(file) {
+    if(!file)
+      file = path.resolve() + '/save/rooms/' + this.id + '.json';
+
     console.log(`loading room ${this.id}`);
     try {
-      this.state = JSON.parse(fs.readFileSync(path.resolve() + '/save/rooms/' + this.id + '.json'));
+      this.state = JSON.parse(fs.readFileSync(file));
     } catch {
       this.state = {};
     }
     if(!this.state._meta)
-      this.state._meta = { players: {} };
+      this.state._meta = {};
+    if(!this.state._meta.players)
+      this.state._meta.players = {};
+    if(!this.state._meta.states)
+      this.state._meta.states = [];
+  }
+
+  loadState(player, stateID) {
+    const meta = this.state._meta;
+    this.load(path.resolve() + '/save/states/' + this.id + '-' + meta.states.filter(s=>s.id==stateID)[0].id + '.json');
+    this.state._meta = meta;
+    this.broadcast('state', this.state);
   }
 
   recolorPlayer(renamingPlayer, playerName, color) {
@@ -57,6 +94,11 @@ export default class Room {
       this.unload();
       this.unloadCallback();
     }
+    this.sendMetaUpdate();
+  }
+
+  removeState(player, stateID) {
+    this.state._meta.states = this.state._meta.states.filter(s=>s.id!=stateID);
     this.sendMetaUpdate();
   }
 

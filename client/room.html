@@ -12,9 +12,10 @@
 <body>
 
   <div id="toolbar">
+    <button id="statesButton" data-overlay="statesOverlay" class="toolbarButton smallIcons">🎲♠️<br>🃏🀄️</button>
+    <button id="playersButton" data-overlay="playerOverlay" class="toolbarButton">👪</button>
     <button id="editButton" data-overlay="editOverlay" class="toolbarButton">➕</button>
     <button id="uploadButton" class="toolbarButton">⬆️</button>
-    <button id="playersButton" data-overlay="playerOverlay" class="toolbarButton">👪</button>
   </div>
 
   <div id="roomArea">
@@ -38,6 +39,39 @@
         <script id="template-playerlist-entry" type="text/template">
           <input type="color" class="teamColor"></span> <input class="playerName" />
         </script>
+      </div>
+    </div>
+
+    <div id="statesOverlay" class="overlay">
+      <h1>Games</h1>
+      <div id="statesList">
+        <script id="template-stateslist-entry" type="text/template">
+          <img>
+          <div class="details">
+            <em><a class="bgg">Name (Year)</a></em>
+            <em><a class="rules">Rules</a></em>
+            <p>👪 <span class="players">0</span> ⌛ <span class="time">0</span> minutes</p>
+            <p><button class="play">▶️</button><button class="download">⬇️</button><button class="remove">❌</button></p>
+          </div>
+        </script>
+        <div id="addState" class="roomState">
+          <div class="image">➕</div>
+          <div class="details">
+            <input placeholder="Name"/>
+            <input placeholder="Year"/>
+            <input placeholder="Rules link"/>
+            <input placeholder="Players"/>
+            <input placeholder="Mode"/>
+            <input placeholder="Time"/>
+            <input placeholder="BordGameGeek link"/>
+            <input placeholder="Image"/>
+            <div class="buttons">
+              <button class="create">➕ Current room state</button>
+              <button class="upload">⬆️ Upload room state</button>
+              <button class="link">🔗 Link to room state</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

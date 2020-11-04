@@ -36,6 +36,14 @@ function addWidget(widget) {
   widgets.set(widget.id, new BasicWidget(widget, document.querySelector('.surface')));
 }
 
+function $(selector, parent) {
+  return $a(selector, parent)[0];
+}
+
+function $a(selector, parent) {
+  return (parent || document).querySelectorAll(selector);
+}
+
 function domByTemplate(id) {
   const div = document.createElement('div');
   div.innerHTML = document.getElementById(id).innerHTML;
@@ -47,12 +55,12 @@ function fillPlayerList(players, activePlayers) {
     entry.parentNode.removeChild(entry);
   for(const player in players) {
     const entry = domByTemplate('template-playerlist-entry');
-    entry.querySelector('.teamColor').value = players[player];
-    entry.querySelector('.playerName').value = player;
-    entry.querySelector('.teamColor').addEventListener('change', function(e) {
+    $('.teamColor', entry).value = players[player];
+    $('.playerName', entry).value = player;
+    $('.teamColor', entry).addEventListener('change', function(e) {
       toServer('playerColor', { player, color: e.target.value });
     });
-    entry.querySelector('.playerName').addEventListener('change', function(e) {
+    $('.playerName', entry).addEventListener('change', function(e) {
       toServer('rename', { oldName: player, newName: e.target.value });
     });
     if(player == playerName)
@@ -64,11 +72,51 @@ function fillPlayerList(players, activePlayers) {
   }
 }
 
+function fillStatesList(states, activePlayers) {
+  const addDiv = $('#addState');
+  addDiv.parentElement.removeChild(addDiv);
+  for(const entry of document.querySelectorAll('#statesList > div'))
+    entry.parentNode.removeChild(entry);
+  for(const state of states) {
+    const entry = domByTemplate('template-stateslist-entry');
+    entry.className = 'roomState';
+    $('img', entry).src = state.image;
+    $('.bgg', entry).textContent = `${state.name} (${state.year})`;
+    $('.bgg', entry).href = state.bgg;
+    $('.rules', entry).href = state.rules;
+    $('.players', entry).textContent = `${state.players} (${state.mode})`;
+    $('.time', entry).textContent = state.time;
+
+    $('.play', entry).addEventListener('click', _=>toServer('loadState', state.id));
+    $('.remove', entry).addEventListener('click', _=>toServer('removeState', state.id));
+
+    $('#statesList').appendChild(entry);
+  }
+  $('#statesList').appendChild(addDiv);
+}
+
+function addState(type, src) {
+  if(type == 'url' && (!src || !src.match(/^http/)))
+    return;
+  toServer('addState', { type, src, meta: {
+    name:    $('#addState [placeholder=Name]').value,
+    image:   $('#addState [placeholder=Image]').value,
+    rules:   $('#addState [placeholder="Rules link"]').value,
+    bgg:     $('#addState [placeholder="BordGameGeek link"]').value,
+    year:    $('#addState [placeholder=Year]').value,
+    mode:    $('#addState [placeholder=Mode]').value,
+    players: $('#addState [placeholder=Players]').value,
+    time:    $('#addState [placeholder=Time]').value
+  }});
+}
+
 function fromServer(func, args) {
   if(func == 'add')
     addWidget(args);
-  if(func == 'meta')
+  if(func == 'meta') {
     fillPlayerList(args.meta.players, args.activePlayers);
+    fillStatesList(args.meta.states, args.activePlayers);
+  }
   if(func == 'rename') {
     playerName = args;
     localStorage.setItem('playerName', playerName);
@@ -111,6 +159,22 @@ function on(selector, eventName, callback) {
     d.addEventListener(eventName, callback);
 }
 
+function selectFile(getContents) {
+  return new Promise((resolve, reject) => {
+    const upload = document.createElement('input');
+    upload.type = 'file';
+    upload.addEventListener('change', function(e) {
+      if(!getContents)
+        resolve(e.target.files[0]);
+
+      const reader = new FileReader();
+      reader.addEventListener('load', e=>resolve(e.target.result));
+      reader.readAsDataURL(e.target.files[0]);
+    });
+    upload.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+  });
+}
+
 window.addEventListener('DOMContentLoaded', function() {
   on('.toolbarButton', 'click', function(e) {
     const overlay = e.target.dataset.overlay;
@@ -125,21 +189,22 @@ window.addEventListener('DOMContentLoaded', function() {
   });
 
   on('#uploadButton', 'click', function() {
-    const upload = document.createElement('input');
-    upload.type = 'file';
-    upload.addEventListener('change', function(e) {
+    selectFile().then(function(file) {
       var req = new XMLHttpRequest();
       req.open('PUT', self.location.pathname, true);
       req.setRequestHeader('Content-Type', 'application/octet-stream');
-      req.send(e.target.files[0]);
+      req.send(file);
     });
-    upload.dispatchEvent(new MouseEvent('click', {bubbles: true}));
   });
 
   on('#addWidget', 'click', function() {
     objectToWidget(JSON.parse(document.querySelector('#widgetText').value));
     document.querySelector('.toolbarButton').dispatchEvent(new MouseEvent('click', {bubbles: true}));
   });
+
+  on('#addState .create', 'click', _=>addState('state'));
+  on('#addState .upload', 'click', _=>selectFile(true).then(f=>addState('file', f)));
+  on('#addState .link',   'click', _=>addState('url', prompt('Enter shared URL:')));
 
   setScale();
 });
