@@ -17,6 +17,8 @@ export default class Player {
       this.room.addWidget(this, args);
     if(func == 'addState')
       this.room.addState(this, args.type, args.src, args.meta);
+    if(func == 'loadState')
+      this.room.loadState(this, args);
     if(func == 'playerColor')
       this.room.recolorPlayer(this, args.player, args.color);
     if(func == 'rename')

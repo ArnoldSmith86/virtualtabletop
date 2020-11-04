@@ -57,10 +57,13 @@ export default class Room {
       player.send(func, args);
   }
 
-  load() {
+  load(file) {
+    if(!file)
+      file = path.resolve() + '/save/rooms/' + this.id + '.json';
+
     console.log(`loading room ${this.id}`);
     try {
-      this.state = JSON.parse(fs.readFileSync(path.resolve() + '/save/rooms/' + this.id + '.json'));
+      this.state = JSON.parse(fs.readFileSync(file));
     } catch {
       this.state = {};
     }
@@ -70,6 +73,13 @@ export default class Room {
       this.state._meta.players = {};
     if(!this.state._meta.states)
       this.state._meta.states = [];
+  }
+
+  loadState(player, stateID) {
+    const meta = this.state._meta;
+    this.load(path.resolve() + '/save/states/' + this.id + '-' + meta.states.filter(s=>s.id==stateID)[0].id + '.json');
+    this.state._meta = meta;
+    this.broadcast('state', this.state);
   }
 
   recolorPlayer(renamingPlayer, playerName, color) {

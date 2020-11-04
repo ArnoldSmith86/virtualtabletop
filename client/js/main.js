@@ -86,6 +86,11 @@ function fillStatesList(states, activePlayers) {
     $('.rules', entry).href = state.rules;
     $('.players', entry).textContent = `${state.players} (${state.mode})`;
     $('.time', entry).textContent = state.time;
+
+    $('.play', entry).addEventListener('click', function(e) {
+      toServer('loadState', state.id);
+    });
+
     $('#statesList').appendChild(entry);
   }
   $('#statesList').appendChild(addDiv);
