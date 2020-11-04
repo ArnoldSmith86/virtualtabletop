@@ -36,6 +36,14 @@ function addWidget(widget) {
   widgets.set(widget.id, new BasicWidget(widget, document.querySelector('.surface')));
 }
 
+function $(selector, parent) {
+  return $a(selector, parent)[0];
+}
+
+function $a(selector, parent) {
+  return (parent || document).querySelectorAll(selector);
+}
+
 function domByTemplate(id) {
   const div = document.createElement('div');
   div.innerHTML = document.getElementById(id).innerHTML;
@@ -47,12 +55,12 @@ function fillPlayerList(players, activePlayers) {
     entry.parentNode.removeChild(entry);
   for(const player in players) {
     const entry = domByTemplate('template-playerlist-entry');
-    entry.querySelector('.teamColor').value = players[player];
-    entry.querySelector('.playerName').value = player;
-    entry.querySelector('.teamColor').addEventListener('change', function(e) {
+    $('.teamColor', entry).value = players[player];
+    $('.playerName', entry).value = player;
+    $('.teamColor', entry).addEventListener('change', function(e) {
       toServer('playerColor', { player, color: e.target.value });
     });
-    entry.querySelector('.playerName').addEventListener('change', function(e) {
+    $('.playerName', entry).addEventListener('change', function(e) {
       toServer('rename', { oldName: player, newName: e.target.value });
     });
     if(player == playerName)
@@ -64,11 +72,50 @@ function fillPlayerList(players, activePlayers) {
   }
 }
 
+function fillStatesList(states, activePlayers) {
+  for(const entry of document.querySelectorAll('#statesList > div'))
+    entry.parentNode.removeChild(entry);
+  for(const state of states) {
+    const entry = domByTemplate('template-stateslist-entry');
+    entry.className = 'roomState';
+    $('img', entry).src = state.image;
+    $('.bgg', entry).textContent = `${state.name} (${state.year})`;
+    $('.bgg', entry).href = state.bgg;
+    $('.rules', entry).href = state.rules;
+    $('.players', entry).textContent = `${state.players} (${state.mode})`;
+    $('.time', entry).textContent = state.time;
+    document.querySelector('#statesList').appendChild(entry);
+  }
+}
+
 function fromServer(func, args) {
   if(func == 'add')
     addWidget(args);
-  if(func == 'meta')
+  if(func == 'meta') {
     fillPlayerList(args.meta.players, args.activePlayers);
+    fillStatesList([
+      {
+        name: 'Connect Four',
+        image: 'https://cf.geekdo-images.com/imagepage/img/_7cz6Ggzoh82kUPgTFrIJTT9Bnc=/fit-in/900x600/filters:no_upscale():strip_icc()/pic3075900.jpg',
+        rules: 'https://howdoyouplayit.com/connect-4-board-game-rules-play/',
+        bgg: 'https://boardgamegeek.com/boardgame/2719/connect-four',
+        year: 1974,
+        mode: 'vs',
+        players: '2',
+        time: 10
+      },
+      {
+        name: 'Nine Men\'s Morris',
+        image: 'https://cf.geekdo-images.com/imagepage/img/Py--bgvqEmBVFrvhqBNM_Gz5ASA=/fit-in/900x600/filters:no_upscale():strip_icc()/pic438639.jpg',
+        rules: 'https://www.thesprucecrafts.com/nine-mens-morris-board-game-rules-412542',
+        bgg: 'https://boardgamegeek.com/boardgame/3886/nine-mens-morris',
+        year: -1400,
+        mode: 'vs',
+        players: '2',
+        time: 20
+      }
+    ], args.activePlayers);
+  }
   if(func == 'rename') {
     playerName = args;
     localStorage.setItem('playerName', playerName);
