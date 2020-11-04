@@ -4,7 +4,7 @@
   "description": "a virtual surface in the browser on which you can play board, dice and card games",
   "main": "server.mjs",
   "scripts": {
-    "start": "nodemon --ignore save server.mjs"
+    "start": "nodemon -e js,mjs,css,html --ignore save server.mjs"
   },
   "repository": {
     "type": "git",
