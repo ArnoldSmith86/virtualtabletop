@@ -73,6 +73,8 @@ function fillPlayerList(players, activePlayers) {
 }
 
 function fillStatesList(states, activePlayers) {
+  const addDiv = $('#addState');
+  addDiv.parentElement.removeChild(addDiv);
   for(const entry of document.querySelectorAll('#statesList > div'))
     entry.parentNode.removeChild(entry);
   for(const state of states) {
@@ -84,8 +86,24 @@ function fillStatesList(states, activePlayers) {
     $('.rules', entry).href = state.rules;
     $('.players', entry).textContent = `${state.players} (${state.mode})`;
     $('.time', entry).textContent = state.time;
-    document.querySelector('#statesList').appendChild(entry);
+    $('#statesList').appendChild(entry);
   }
+  $('#statesList').appendChild(addDiv);
+}
+
+function addState(type, src) {
+  if(type == 'url' && (!src || !src.match(/^http/)))
+    return;
+  toServer('addState', { type, src, meta: {
+    name:    $('#addState [placeholder=Name]').value,
+    image:   $('#addState [placeholder=Image]').value,
+    rules:   $('#addState [placeholder="Rules link"]').value,
+    bgg:     $('#addState [placeholder="BordGameGeek link"]').value,
+    year:    $('#addState [placeholder=Year]').value,
+    mode:    $('#addState [placeholder=Mode]').value,
+    players: $('#addState [placeholder=Players]').value,
+    time:    $('#addState [placeholder=Time]').value
+  }});
 }
 
 function fromServer(func, args) {
@@ -93,28 +111,7 @@ function fromServer(func, args) {
     addWidget(args);
   if(func == 'meta') {
     fillPlayerList(args.meta.players, args.activePlayers);
-    fillStatesList([
-      {
-        name: 'Connect Four',
-        image: 'https://cf.geekdo-images.com/imagepage/img/_7cz6Ggzoh82kUPgTFrIJTT9Bnc=/fit-in/900x600/filters:no_upscale():strip_icc()/pic3075900.jpg',
-        rules: 'https://howdoyouplayit.com/connect-4-board-game-rules-play/',
-        bgg: 'https://boardgamegeek.com/boardgame/2719/connect-four',
-        year: 1974,
-        mode: 'vs',
-        players: '2',
-        time: 10
-      },
-      {
-        name: 'Nine Men\'s Morris',
-        image: 'https://cf.geekdo-images.com/imagepage/img/Py--bgvqEmBVFrvhqBNM_Gz5ASA=/fit-in/900x600/filters:no_upscale():strip_icc()/pic438639.jpg',
-        rules: 'https://www.thesprucecrafts.com/nine-mens-morris-board-game-rules-412542',
-        bgg: 'https://boardgamegeek.com/boardgame/3886/nine-mens-morris',
-        year: -1400,
-        mode: 'vs',
-        players: '2',
-        time: 20
-      }
-    ], args.activePlayers);
+    fillStatesList(args.meta.states, args.activePlayers);
   }
   if(func == 'rename') {
     playerName = args;
@@ -158,6 +155,22 @@ function on(selector, eventName, callback) {
     d.addEventListener(eventName, callback);
 }
 
+function selectFile(getContents) {
+  return new Promise((resolve, reject) => {
+    const upload = document.createElement('input');
+    upload.type = 'file';
+    upload.addEventListener('change', function(e) {
+      if(!getContents)
+        resolve(e.target.files[0]);
+
+      const reader = new FileReader();
+      reader.addEventListener('load', e=>resolve(e.target.result));
+      reader.readAsDataURL(e.target.files[0]);
+    });
+    upload.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+  });
+}
+
 window.addEventListener('DOMContentLoaded', function() {
   on('.toolbarButton', 'click', function(e) {
     const overlay = e.target.dataset.overlay;
@@ -172,21 +185,22 @@ window.addEventListener('DOMContentLoaded', function() {
   });
 
   on('#uploadButton', 'click', function() {
-    const upload = document.createElement('input');
-    upload.type = 'file';
-    upload.addEventListener('change', function(e) {
+    selectFile().then(function(file) {
       var req = new XMLHttpRequest();
       req.open('PUT', self.location.pathname, true);
       req.setRequestHeader('Content-Type', 'application/octet-stream');
-      req.send(e.target.files[0]);
+      req.send(file);
     });
-    upload.dispatchEvent(new MouseEvent('click', {bubbles: true}));
   });
 
   on('#addWidget', 'click', function() {
     objectToWidget(JSON.parse(document.querySelector('#widgetText').value));
     document.querySelector('.toolbarButton').dispatchEvent(new MouseEvent('click', {bubbles: true}));
   });
+
+  on('#addState .create', 'click', _=>addState('state'));
+  on('#addState .upload', 'click', _=>selectFile(true).then(f=>addState('file', f)));
+  on('#addState .link',   'click', _=>addState('url', prompt('Enter shared URL:')));
 
   setScale();
 });

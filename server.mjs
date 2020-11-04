@@ -14,7 +14,8 @@ const app = express();
 const server = http.Server(app);
 
 fs.mkdirSync(__dirname + '/save/assets', { recursive: true });
-fs.mkdirSync(__dirname + '/save/rooms', { recursive: true });
+fs.mkdirSync(__dirname + '/save/rooms',  { recursive: true });
+fs.mkdirSync(__dirname + '/save/states', { recursive: true });
 
 app.use('/', express.static(__dirname + '/client'));
 

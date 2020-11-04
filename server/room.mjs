@@ -1,6 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 
+import PCIO from './pcioimport.mjs';
+
 export default class Room {
   players = [];
   state = {};
@@ -23,6 +25,27 @@ export default class Room {
     this.sendMetaUpdate();
   }
 
+  addState(player, type, src, meta) {
+    const room = this;
+    (async function() {
+      let state = room.state;
+      if(type == 'file')
+        state = await PCIO(Buffer.from(src.replace(/^data.*?,/, ''), 'base64'));
+
+      meta.id = Math.random().toString(36).substring(3, 7);
+
+      if(type == 'link') {
+        meta.src = src;
+      } else {
+        fs.writeFileSync(path.resolve() + '/save/states/' + room.id + '-' + meta.id + '.json', JSON.stringify(state));
+      }
+
+      meta.type = type;
+      room.state._meta.states.push(meta);
+      room.sendMetaUpdate();
+    })();
+  }
+
   addWidget(player, widget) {
     this.state[widget.id] = widget;
     this.broadcast('add', widget);
@@ -42,7 +65,11 @@ export default class Room {
       this.state = {};
     }
     if(!this.state._meta)
-      this.state._meta = { players: {} };
+      this.state._meta = {};
+    if(!this.state._meta.players)
+      this.state._meta.players = {};
+    if(!this.state._meta.states)
+      this.state._meta.states = [];
   }
 
   recolorPlayer(renamingPlayer, playerName, color) {
