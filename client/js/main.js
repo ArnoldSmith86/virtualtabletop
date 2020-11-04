@@ -87,9 +87,8 @@ function fillStatesList(states, activePlayers) {
     $('.players', entry).textContent = `${state.players} (${state.mode})`;
     $('.time', entry).textContent = state.time;
 
-    $('.play', entry).addEventListener('click', function(e) {
-      toServer('loadState', state.id);
-    });
+    $('.play', entry).addEventListener('click', _=>toServer('loadState', state.id));
+    $('.remove', entry).addEventListener('click', _=>toServer('removeState', state.id));
 
     $('#statesList').appendChild(entry);
   }

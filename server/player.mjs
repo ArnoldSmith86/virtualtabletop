@@ -21,6 +21,8 @@ export default class Player {
       this.room.loadState(this, args);
     if(func == 'playerColor')
       this.room.recolorPlayer(this, args.player, args.color);
+    if(func == 'removeState')
+      this.room.removeState(this, args);
     if(func == 'rename')
       this.room.renamePlayer(this, args.oldName, args.newName);
     if(func == 'translate')

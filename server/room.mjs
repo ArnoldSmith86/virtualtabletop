@@ -97,6 +97,11 @@ export default class Room {
     this.sendMetaUpdate();
   }
 
+  removeState(player, stateID) {
+    this.state._meta.states = this.state._meta.states.filter(s=>s.id!=stateID);
+    this.sendMetaUpdate();
+  }
+
   renamePlayer(renamingPlayer, oldName, newName) {
     this.state._meta.players[newName] = this.state._meta.players[newName] || this.state._meta.players[oldName];
     delete this.state._meta.players[oldName];
