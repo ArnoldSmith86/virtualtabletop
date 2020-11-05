@@ -28,7 +28,10 @@ let roomHTML = fs.readFileSync(__dirname + '/client/room.html', {encoding:'utf8'
 let gzippedRoomHTML = '';
 minify({
   compressor: cleanCSS,
-  input: 'client/main.css',
+  input: [
+    'client/css/layout.css',
+    'client/css/spinner.css'
+  ],
   output: '/tmp/out.css'
 }).then(function(min) {
   roomHTML = roomHTML.replace(/ \{\{CSS\}\} /, min);
@@ -38,6 +41,7 @@ minify({
       'client/js/draggable.js',
       'client/js/widget.js',
       'client/js/basicwidget.js',
+      'client/js/spinner.js',
       'client/js/main.js'
     ],
     output: '/tmp/out.js'

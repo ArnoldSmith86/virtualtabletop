@@ -136,4 +136,9 @@ export default class Room {
     if(json != '{}')
       fs.writeFileSync(path.resolve() + '/save/rooms/' + this.id + '.json', json);
   }
+
+  updateWidget(player, widget) {
+    this.state[widget.id] = widget;
+    this.broadcast('update', widget);
+  }
 }

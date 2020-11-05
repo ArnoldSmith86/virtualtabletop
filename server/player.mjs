@@ -27,6 +27,8 @@ export default class Player {
       this.room.renamePlayer(this, args.oldName, args.newName);
     if(func == 'translate')
       this.room.translateWidget(this, args.id, args.pos);
+    if(func == 'update')
+      this.room.updateWidget(this, args);
   }
 
   rename(newName) {

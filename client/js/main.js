@@ -33,7 +33,10 @@ function startWebSocket() {
 startWebSocket();
 
 function addWidget(widget) {
-  widgets.set(widget.id, new BasicWidget(widget, document.querySelector('.surface')));
+  if(widget.type == 'spinner')
+    widgets.set(widget.id, new Spinner(widget, document.querySelector('.surface')));
+  else
+    widgets.set(widget.id, new BasicWidget(widget, document.querySelector('.surface')));
 }
 
 function $(selector, parent) {
@@ -130,6 +133,8 @@ function fromServer(func, args) {
   }
   if(func == 'translate')
     widgets.get(args.id).setPositionFromServer(args.pos[0], args.pos[1]);
+  if(func == 'update')
+    widgets.get(args.id).receiveUpdate(args);
 }
 
 function toServer(func, args) {

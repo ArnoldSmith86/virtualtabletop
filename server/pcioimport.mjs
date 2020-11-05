@@ -42,8 +42,10 @@ export default async function convertPCIO(content) {
     w.x = widget.x;
     w.y = widget.y;
     w.z = widget.z;
-    w.width  = widget.width;
-    w.height = widget.height;
+    if(widget.width)
+      w.width  = widget.width;
+    if(widget.height)
+      w.height = widget.height;
 
     if(widget.type == 'gamePiece' && widget.pieceType == 'checkers') {
       w.width  = 90;
@@ -63,6 +65,10 @@ export default async function convertPCIO(content) {
       w.content = widget.label;
       w.width  = widget.width || 80;
       w.height = widget.height || 80;
+    } else if(widget.type == 'spinner') {
+      w.type = widget.type;
+      w.options = widget.options;
+      w.value = widget.value;
     } else {
       w.css = 'background: repeating-linear-gradient(45deg, red, red 10px, darkred 10px, darkred 20px);';
     }

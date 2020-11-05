@@ -47,9 +47,4 @@ class Draggable {
   setTranslate(x, y, el) {
     el.style.transform = `translate(${x}px, ${y}px)`;
   }
-
-  setPositionFromServer(x, y) {
-    if(!this.active)
-      this.setTranslate(x, y, this.domElement);
-  }
 }
