@@ -30,7 +30,9 @@ minify({
   compressor: cleanCSS,
   input: [
     'client/css/layout.css',
-    'client/css/spinner.css'
+    'client/css/overlays/players.css',
+    'client/css/overlays/states.css',
+    'client/css/widgets/spinner.css'
   ],
   output: '/tmp/out.css'
 }).then(function(min) {

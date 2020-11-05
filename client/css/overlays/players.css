@@ -1,0 +1,26 @@
+.myPlayerEntry .playerName {
+  font-weight: bold;
+}
+
+.inactivePlayerEntry {
+  opacity: 0.5;
+}
+
+.teamColor {
+  border: none;
+  padding: 0;
+  margin: 0;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  border-radius: 20px;
+}
+
+.playerName {
+  border: none;
+  padding: 0;
+  margin: 0;
+  color: white;
+  background: none;
+  font-size: 16px;
+}
