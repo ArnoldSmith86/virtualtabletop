@@ -40,11 +40,15 @@ minify({
   return minify({
     compressor: uglifyES,
     input: [
+      'client/js/domhelpers.js',
       'client/js/draggable.js',
-      'client/js/widget.js',
-      'client/js/basicwidget.js',
-      'client/js/spinner.js',
-      'client/js/main.js'
+      'client/js/widgets/widget.js',
+      'client/js/widgets/basicwidget.js',
+      'client/js/widgets/spinner.js',
+      'client/js/overlays/players.js',
+      'client/js/overlays/states.js',
+      'client/js/main.js',
+      'client/js/connection.js'
     ],
     output: '/tmp/out.js'
   });
