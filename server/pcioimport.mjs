@@ -56,7 +56,7 @@ export default async function convertPCIO(content) {
     } else if(widget.type == 'cardPile') {
       w.css = 'background:white; box-sizing: border-box; border-top: 1px solid #d8d8d8; border-left: 1px solid #d8d8d8; border-bottom: 1px solid #ccc; border-right: 1px solid #ccc; background: #fff; border-radius: 8px;';
       w.movable = false;
-      w.layer = -1;
+      w.layer = -2;
     } else if(widget.type == 'card') {
       w.width = byID[widget.deck].cardWidth;
       w.height = byID[widget.deck].cardHeight;
@@ -64,13 +64,14 @@ export default async function convertPCIO(content) {
     } else if(widget.type == 'board') {
       w.image = widget.boardImage;
       w.movable = false;
-      w.layer = -2;
+      w.layer = -3;
     } else if(widget.type == 'automationButton') {
       w.css = 'box-sizing: border-box; border-radius: 800px; background: #a9e9e2; color: #6d6d6d; border: 3px solid #93d0c9; display:flex;justify-content:center;align-items:center;';
       w.content = widget.label;
       w.width  = widget.width || 80;
       w.height = widget.height || 80;
       w.movable = false;
+      w.layer = -1;
     } else if(widget.type == 'spinner') {
       w.type = widget.type;
       w.options = widget.options;
