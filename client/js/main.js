@@ -34,13 +34,13 @@ startWebSocket();
 
 function addWidget(widget) {
   if(widget.type == 'spinner')
-    widgets.set(widget.id, new Spinner(widget, document.querySelector('.surface')));
+    widgets.set(widget.id, new Spinner(widget, $('.surface')));
   else
-    widgets.set(widget.id, new BasicWidget(widget, document.querySelector('.surface')));
+    widgets.set(widget.id, new BasicWidget(widget, $('.surface')));
 }
 
 function $(selector, parent) {
-  return $a(selector, parent)[0];
+  return (parent || document).querySelector(selector);
 }
 
 function $a(selector, parent) {
@@ -54,7 +54,7 @@ function domByTemplate(id) {
 }
 
 function fillPlayerList(players, activePlayers) {
-  for(const entry of document.querySelectorAll('#playerList > div'))
+  for(const entry of $a('#playerList > div'))
     entry.parentNode.removeChild(entry);
   for(const player in players) {
     const entry = domByTemplate('template-playerlist-entry');
@@ -71,14 +71,14 @@ function fillPlayerList(players, activePlayers) {
     if(activePlayers.indexOf(player) == -1)
       entry.className = 'inactivePlayerEntry';
 
-    document.querySelector('#playerList').appendChild(entry);
+    $('#playerList').appendChild(entry);
   }
 }
 
 function fillStatesList(states, activePlayers) {
   const addDiv = $('#addState');
   addDiv.parentElement.removeChild(addDiv);
-  for(const entry of document.querySelectorAll('#statesList > div'))
+  for(const entry of $a('#statesList > div'))
     entry.parentNode.removeChild(entry);
   for(const state of states) {
     const entry = domByTemplate('template-stateslist-entry');
@@ -125,7 +125,7 @@ function fromServer(func, args) {
     localStorage.setItem('playerName', playerName);
   }
   if(func == 'state') {
-    for(const widget of document.querySelectorAll('.widget'))
+    for(const widget of $a('.widget'))
       widget.parentNode.removeChild(widget);
     for(const widgetID in args)
       if(widgetID != '_meta')
@@ -160,7 +160,7 @@ function setScale() {
 }
 
 function on(selector, eventName, callback) {
-  for(const d of document.querySelectorAll(selector))
+  for(const d of $a(selector))
     d.addEventListener(eventName, callback);
 }
 
@@ -184,12 +184,12 @@ window.addEventListener('DOMContentLoaded', function() {
   on('.toolbarButton', 'click', function(e) {
     const overlay = e.target.dataset.overlay;
     if(overlay) {
-      for(const d of document.querySelectorAll('.overlay'))
+      for(const d of $a('.overlay'))
         if(d.id != overlay)
           d.style.display = 'none';
-      const style = document.querySelector(`#${overlay}`).style;
+      const style = $(`#${overlay}`).style;
       style.display = style.display === 'flex' ? 'none' : 'flex';
-      document.querySelector('#roomArea').className = style.display === 'flex' ? 'hasOverlay' : '';
+      $('#roomArea').className = style.display === 'flex' ? 'hasOverlay' : '';
     }
   });
 
@@ -203,8 +203,8 @@ window.addEventListener('DOMContentLoaded', function() {
   });
 
   on('#addWidget', 'click', function() {
-    objectToWidget(JSON.parse(document.querySelector('#widgetText').value));
-    document.querySelector('.toolbarButton').dispatchEvent(new MouseEvent('click', {bubbles: true}));
+    objectToWidget(JSON.parse($('#widgetText').value));
+    $('.toolbarButton').dispatchEvent(new MouseEvent('click', {bubbles: true}));
   });
 
   on('#addState .create', 'click', _=>addState('state'));
