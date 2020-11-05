@@ -1,17 +1,37 @@
 const roomID = self.location.pathname.substr(1);
+const widgets = new Map();
+const dropTargets = new Map();
 
 function addWidget(widget) {
+  let w;
   if(widget.type == 'spinner')
-    widgets.set(widget.id, new Spinner(widget, $('.surface')));
+    w = new Spinner(widget, $('.surface'));
   else
-    widgets.set(widget.id, new BasicWidget(widget, $('.surface')));
+    w = new BasicWidget(widget, $('.surface'));
+  widgets.set(widget.id, w);
+  if(widget.dropTarget)
+    dropTargets.set(widget.id, w);
+}
+
+function getValidDropTargets(widget) {
+  const targets = [];
+  for(const t of dropTargets) {
+    let isValid = true;
+    for(const key in t.dropTarget) {
+      if(widget[key] != t.dropTarget[key]) {
+        isValid = false;
+        break;
+      }
+    }
+    if(isValid)
+      targets.push(t);
+  }
+  return targets;
 }
 
 window.addEventListener('mousemove', function(event) {
   toServer('mouse', [ event.clientX, event.clientY ]);
 });
-
-const widgets = new Map();
 
 function getMaxZ(layer) {
   let maxZ = -1;
@@ -38,6 +58,8 @@ onLoad(function() {
   onMessage('state', function(args) {
     for(const widget of $a('.widget'))
       widget.parentNode.removeChild(widget);
+    widgets.clear();
+    dropTargets.clear();
     for(const widgetID in args)
       if(widgetID != '_meta')
         addWidget(args[widgetID]);

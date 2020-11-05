@@ -57,10 +57,12 @@ export default async function convertPCIO(content) {
       w.css = 'background:white; box-sizing: border-box; border-top: 1px solid #d8d8d8; border-left: 1px solid #d8d8d8; border-bottom: 1px solid #ccc; border-right: 1px solid #ccc; background: #fff; border-radius: 8px;';
       w.movable = false;
       w.layer = -2;
+      w.dropTarget = { 'type': 'card' };
     } else if(widget.type == 'card') {
       w.width = byID[widget.deck].cardWidth;
       w.height = byID[widget.deck].cardHeight;
       w.image = byID[widget.deck].cardTypes[widget.cardType].image;
+      w.type = widget.type;
     } else if(widget.type == 'board') {
       w.image = widget.boardImage;
       w.movable = false;

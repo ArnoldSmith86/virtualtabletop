@@ -42,7 +42,10 @@ class Draggable {
   }
 
   dragEnd(e) {
-    this.active = false;
+    if(this.active) {
+      this.active = false;
+      this.onDragEnd();
+    }
   }
 
   setTranslate(x, y, el) {

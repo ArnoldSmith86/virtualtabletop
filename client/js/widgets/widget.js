@@ -8,10 +8,61 @@ class Widget extends Draggable {
 
   onDragStart() {
     this.dragZ = getMaxZ(this.sourceObject.layer || 0) + 1;
+    this.dropTargets = getValidDropTargets(this.sourceObject);
+    this.hoverTargetDistance = 99999;
+    this.hoverTarget = null;
+    for(const [ _, t ] of this.dropTargets)
+      t.domElement.classList.add('droppable');
   }
 
   onDrag(x, y) {
-    toServer("translate", { id: this.domElement.id, pos: [ x, y, this.dragZ ]});
+    toServer("translate", { id: this.sourceObject.id, pos: [ x, y, this.dragZ ]});
+    const myCenter = center(this.sourceObject);
+
+    this.hoverTargetChanged = false;
+    if(this.hoverTarget) {
+      if(overlap(this.sourceObject, this.hoverTarget.sourceObject)) {
+        this.hoverTargetDistance = distance(myCenter, this.hoverTargetCenter);
+      } else {
+        this.hoverTargetDistance = 99999;
+        this.hoverTarget = null;
+        this.hoverTargetChanged = true;
+      }
+    }
+
+    for(const [ _, t ] of this.dropTargets) {
+      const tCenter = center(t.sourceObject);
+      const d = distance(myCenter, tCenter);
+      if(d < this.hoverTargetDistance) {
+        if(overlap(this.sourceObject, t.sourceObject)) {
+          this.hoverTarget = t;
+          this.hoverTargetCenter = tCenter;
+          this.hoverTargetDistance = d;
+          this.hoverTargetChanged = true;
+        }
+      }
+    }
+
+    if(this.hoverTargetChanged) {
+      if(this.lastHoverTarget)
+        this.lastHoverTarget.domElement.classList.remove('droptarget');
+      if(this.hoverTarget)
+        this.hoverTarget.domElement.classList.add('droptarget');
+      this.lastHoverTarget = this.hoverTarget;
+    }
+  }
+
+  onDragEnd() {
+    for(const [ _, t ] of this.dropTargets)
+      t.domElement.classList.remove('droppable');
+    if(this.hoverTarget) {
+      this.sourceObject.x = this.hoverTarget.sourceObject.x+4;
+      this.sourceObject.y = this.hoverTarget.sourceObject.y+4;
+      this.sourceObject.z = this.dragZ;
+      this.sourceObject.parent = this.hoverTarget.sourceObject.id;
+      this.sendUpdate();
+      this.hoverTarget.domElement.classList.remove('droptarget');
+    }
   }
 
   receiveUpdate(object) {

@@ -111,3 +111,7 @@ body {
   user-select: none;
   -moz-user-select: none;
 }
+
+.widget.droppable.droptarget {
+  border-color: #333 !important;
+}
