@@ -13,7 +13,7 @@ class Draggable {
   }
 
   dragStart(e) {
-    if(e.target !== this.domElement)
+    if(e.target !== this.domElement || this.isDraggable === false)
       return;
 
     const rect  = this.domElement.getBoundingClientRect();
@@ -24,6 +24,7 @@ class Draggable {
     this.containerRect = this.containerDomElement.getBoundingClientRect();
 
     this.active = true;
+    this.onDragStart();
   }
 
   drag(e) {
@@ -36,7 +37,7 @@ class Draggable {
       const y = Math.floor((clientY + this.offsetMouseToObject.y - this.containerRect.top ) / this.scale);
 
       this.setTranslate(x, y, this.domElement);
-      toServer("translate", { id: this.domElement.id, pos: [ x, y ]});
+      this.onDrag(x, y);
     }
   }
 

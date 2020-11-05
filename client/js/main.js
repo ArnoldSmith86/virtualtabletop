@@ -13,6 +13,14 @@ window.addEventListener('mousemove', function(event) {
 
 const widgets = new Map();
 
+function getMaxZ(layer) {
+  let maxZ = -1;
+  for(const [ id, widget ] of widgets)
+    if((widget.sourceObject.layer || 0) == layer)
+      maxZ = Math.max(maxZ, widget.sourceObject.z || 0);
+  return maxZ;
+}
+
 function objectToWidget(o) {
   if(!o.id)
     o.id = Math.random().toString(36).substring(3, 7);
@@ -35,7 +43,7 @@ onLoad(function() {
         addWidget(args[widgetID]);
   });
   onMessage('translate', function(args) {
-    widgets.get(args.id).setPositionFromServer(args.pos[0], args.pos[1]);
+    widgets.get(args.id).setPositionFromServer(...args.pos);
   });
   onMessage('update', function(args) {
     widgets.get(args.id).receiveUpdate(args);

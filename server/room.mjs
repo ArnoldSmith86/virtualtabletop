@@ -127,6 +127,7 @@ export default class Room {
   translateWidget(player, widgetID, position) {
     this.state[widgetID].x = position[0];
     this.state[widgetID].y = position[1];
+    this.state[widgetID].z = position[2];
     this.broadcast('translate', { id: widgetID, pos: position });
   }
 
