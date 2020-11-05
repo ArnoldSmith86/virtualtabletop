@@ -36,7 +36,9 @@ function addState(type, src) {
   }});
 }
 
-window.addEventListener('DOMContentLoaded', function() {
+onLoad(function() {
+  onMessage('meta', args=>fillStatesList(args.meta.states, args.activePlayers));
+
   on('#addState .create', 'click', _=>addState('state'));
   on('#addState .upload', 'click', _=>selectFile(true).then(f=>addState('file', f)));
   on('#addState .link',   'click', _=>addState('url', prompt('Enter shared URL:')));

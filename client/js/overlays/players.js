@@ -22,3 +22,11 @@ function fillPlayerList(players, activePlayers) {
     $('#playerList').appendChild(entry);
   }
 }
+
+onLoad(function() {
+  onMessage('meta', args=>fillPlayerList(args.meta.players, args.activePlayers));
+  onMessage('rename', function(args) {
+    playerName = args;
+    localStorage.setItem('playerName', playerName);
+  });
+});

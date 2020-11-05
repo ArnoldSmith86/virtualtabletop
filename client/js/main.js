@@ -25,7 +25,22 @@ function setScale() {
   document.documentElement.style.setProperty('--scale', w/h < 1600/1000 ? w/1600 : h/1000);
 }
 
-window.addEventListener('DOMContentLoaded', function() {
+onLoad(function() {
+  onMessage('add', addWidget);
+  onMessage('state', function(args) {
+    for(const widget of $a('.widget'))
+      widget.parentNode.removeChild(widget);
+    for(const widgetID in args)
+      if(widgetID != '_meta')
+        addWidget(args[widgetID]);
+  });
+  onMessage('translate', function(args) {
+    widgets.get(args.id).setPositionFromServer(args.pos[0], args.pos[1]);
+  });
+  onMessage('update', function(args) {
+    widgets.get(args.id).receiveUpdate(args);
+  });
+
   on('.toolbarButton', 'click', function(e) {
     const overlay = e.target.dataset.overlay;
     if(overlay) {

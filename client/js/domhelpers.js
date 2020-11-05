@@ -17,6 +17,10 @@ function on(selector, eventName, callback) {
     d.addEventListener(eventName, callback);
 }
 
+function onLoad(callback) {
+  window.addEventListener('DOMContentLoaded', callback);
+}
+
 function selectFile(getContents) {
   return new Promise((resolve, reject) => {
     const upload = document.createElement('input');
