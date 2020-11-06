@@ -3,6 +3,7 @@ import path from 'path';
 import zlib from 'zlib';
 
 import minify from '@node-minify/core';
+import noCompress from '@node-minify/no-compress';
 import cleanCSS from '@node-minify/clean-css';
 import uglifyES from '@node-minify/uglify-es';
 import htmlMinifier from '@node-minify/html-minifier';
@@ -23,7 +24,7 @@ export default function minifyRoom() {
     }).then(function(min) {
       roomHTML = roomHTML.replace(/ \{\{CSS\}\} /, min);
       return minify({
-        compressor: uglifyES,
+        compressor: process.env.NOCOMPRESS ? noCompress : uglifyES,
         input: [
           'client/js/domhelpers.js',
           'client/js/connection.js',
