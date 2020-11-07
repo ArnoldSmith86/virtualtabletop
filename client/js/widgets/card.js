@@ -4,10 +4,9 @@ class Card extends Widget {
     this.deck = deck;
     deck.addCard(this);
     this.receiveUpdate(this.sourceObject);
-    this.domElement.addEventListener('click', e=>this.click(e));
   }
 
-  click(e) {
+  click() {
     this.sourceObject.activeFace = ((this.sourceObject.activeFace || 0) + 1) % this.deck.sourceObject.faceTemplates.length;
     this.sendUpdate();
   }

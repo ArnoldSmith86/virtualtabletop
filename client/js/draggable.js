@@ -19,6 +19,7 @@ class Draggable {
     const rect  = this.domElement.getBoundingClientRect();
     const event = e.type === "touchstart" ? e.touches[0] : e;
 
+    this.dragStartEvent = event;
     this.offsetMouseToObject = { x: rect.left - event.clientX, y: rect.top - event.clientY };
     this.scale = getComputedStyle(document.documentElement).getPropertyValue('--scale');
     this.containerRect = this.containerDomElement.getBoundingClientRect();
@@ -45,6 +46,10 @@ class Draggable {
     if(this.active) {
       this.active = false;
       this.onDragEnd();
+
+      const { clientX, clientY } = e.type === "touchend" ? e.touches[0] : e;
+      if(this.click && clientX == this.dragStartEvent.clientX && clientY == this.dragStartEvent.clientY)
+        this.click();
     }
   }
 
