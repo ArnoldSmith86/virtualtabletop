@@ -27,13 +27,10 @@ export default async function convertPCIO(content) {
     }
   }
 
-  const byID = {};
   const output = {};
-  for(const widget of widgets)
-    byID[widget.id] = widget;
 
   for(const widget of widgets) {
-    if([ 'cardDeck', 'hand' ].indexOf(widget.type) > -1)
+    if([ 'hand' ].indexOf(widget.type) > -1)
       continue;
 
     const w = {};
@@ -58,11 +55,30 @@ export default async function convertPCIO(content) {
       w.movable = false;
       w.layer = -2;
       w.dropTarget = { 'type': 'card' };
+      w.width = widget.width || 111;
+      w.height = widget.height || 168;
+    } else if(widget.type == 'cardDeck') {
+      w.type = 'deck';
+      w.cardTypes = widget.cardTypes;
+      w.faceTemplates = [
+        widget.backTemplate,
+        widget.faceTemplate
+      ];
+      w.cardWidth = widget.cardWidth;
+      w.cardHeight = widget.cardHeight;
+
+      for(const face of w.faceTemplates)
+        for(const object of face.objects)
+          object.value = nameMap[object.value] || object.value;
+      for(const type in w.cardTypes)
+        for(const key in w.cardTypes[type])
+          w.cardTypes[type][key] = nameMap[w.cardTypes[type][key]] || w.cardTypes[type][key];
     } else if(widget.type == 'card') {
-      w.width = byID[widget.deck].cardWidth;
-      w.height = byID[widget.deck].cardHeight;
-      w.image = byID[widget.deck].cardTypes[widget.cardType].image;
-      w.type = widget.type;
+      w.type = 'card';
+      w.deck = widget.deck;
+      w.cardType = widget.cardType;
+      w.parent = widget.parent;
+      w.activeFace = widget.faceup ? 1 : 0;
     } else if(widget.type == 'board') {
       w.image = widget.boardImage;
       w.movable = false;

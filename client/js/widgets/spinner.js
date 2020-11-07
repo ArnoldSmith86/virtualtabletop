@@ -12,7 +12,7 @@ class Spinner extends Widget {
 
   receiveUpdate(object) {
     super.receiveUpdate(object);
-    this.domElement.className += ' spinner';
+    this.domElement.classList.add('spinner');
     this.domElement.textContent = typeof object.value == 'undefined' && '🎲' || object.value;
   }
 }

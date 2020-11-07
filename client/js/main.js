@@ -2,9 +2,24 @@ const roomID = self.location.pathname.substr(1);
 const widgets = new Map();
 const dropTargets = new Map();
 
+const deferredCards = {};
+
 function addWidget(widget) {
   let w;
-  if(widget.type == 'spinner')
+  if(widget.type == 'card') {
+    if(widgets.has(widget.deck)) {
+      w = new Card(widget, $('.surface'), widgets.get(widget.deck));
+    } else {
+      if(!deferredCards[widget.deck])
+        deferredCards[widget.deck] = [];
+      deferredCards[widget.deck].push(widget);
+    }
+  } else if(widget.type == 'deck') {
+    w = new Deck(widget, $('.surface'));
+    for(const c of deferredCards[widget.id] || [])
+      widgets.set(c.id, new Card(c, $('.surface'), w));
+    delete deferredCards[widget.id];
+  } else if(widget.type == 'spinner')
     w = new Spinner(widget, $('.surface'));
   else
     w = new BasicWidget(widget, $('.surface'));

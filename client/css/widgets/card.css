@@ -1,0 +1,14 @@
+.card {
+  overflow: hidden;
+}
+
+.card div {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: absolute;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  box-sizing: border-box;
+}

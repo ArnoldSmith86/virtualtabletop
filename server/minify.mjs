@@ -16,8 +16,11 @@ export default function minifyRoom() {
       compressor: cleanCSS,
       input: [
         'client/css/layout.css',
+
         'client/css/overlays/players.css',
         'client/css/overlays/states.css',
+
+        'client/css/widgets/card.css',
         'client/css/widgets/spinner.css'
       ],
       output: '/tmp/out.css'
@@ -31,10 +34,15 @@ export default function minifyRoom() {
           'client/js/geometry.js',
           'client/js/draggable.js',
           'client/js/widgets/widget.js',
+
           'client/js/widgets/basicwidget.js',
+          'client/js/widgets/card.js',
+          'client/js/widgets/deck.js',
           'client/js/widgets/spinner.js',
+
           'client/js/overlays/players.js',
           'client/js/overlays/states.js',
+
           'client/js/main.js'
         ],
         output: '/tmp/out.js'

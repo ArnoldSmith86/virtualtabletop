@@ -17,11 +17,11 @@ class Widget extends Draggable {
 
   onDrag(x, y) {
     toServer("translate", { id: this.sourceObject.id, pos: [ x, y, this.dragZ ]});
-    const myCenter = center(this.sourceObject);
+    const myCenter = center(this);
 
     this.hoverTargetChanged = false;
     if(this.hoverTarget) {
-      if(overlap(this.sourceObject, this.hoverTarget.sourceObject)) {
+      if(overlap(this, this.hoverTarget)) {
         this.hoverTargetDistance = distance(myCenter, this.hoverTargetCenter);
       } else {
         this.hoverTargetDistance = 99999;
@@ -31,10 +31,10 @@ class Widget extends Draggable {
     }
 
     for(const [ _, t ] of this.dropTargets) {
-      const tCenter = center(t.sourceObject);
+      const tCenter = center(t);
       const d = distance(myCenter, tCenter);
       if(d < this.hoverTargetDistance) {
-        if(overlap(this.sourceObject, t.sourceObject)) {
+        if(overlap(this, t)) {
           this.hoverTarget = t;
           this.hoverTargetCenter = tCenter;
           this.hoverTargetDistance = d;
@@ -56,8 +56,8 @@ class Widget extends Draggable {
     for(const [ _, t ] of this.dropTargets)
       t.domElement.classList.remove('droppable');
     if(this.hoverTarget) {
-      this.sourceObject.x = this.hoverTarget.sourceObject.x+4;
-      this.sourceObject.y = this.hoverTarget.sourceObject.y+4;
+      this.sourceObject.x = this.x = this.hoverTarget.sourceObject.x+4;
+      this.sourceObject.y = this.y = this.hoverTarget.sourceObject.y+4;
       this.sourceObject.z = this.dragZ;
       this.sourceObject.parent = this.hoverTarget.sourceObject.id;
       this.sendUpdate();
@@ -73,9 +73,9 @@ class Widget extends Draggable {
     if(object.css)
       this.domElement.style.cssText = object.css || '';
     if(object.width)
-      this.domElement.style.width = object.width + 'px';
+      this.domElement.style.width = (this.width = object.width) + 'px';
     if(object.height)
-      this.domElement.style.height = object.height + 'px';
+      this.domElement.style.height = (this.height = object.height) + 'px';
 
     this.isDraggable = this.sourceObject.movable !== false;
     this.setPositionFromServer(object.x || 0, object.y || 0, object.z || 0)
@@ -86,8 +86,8 @@ class Widget extends Draggable {
   }
 
   setPositionFromServer(x, y, z) {
-    this.sourceObject.x = x;
-    this.sourceObject.y = y;
+    this.sourceObject.x = this.x = x;
+    this.sourceObject.y = this.y = y;
     this.sourceObject.z = z;
     this.domElement.style.zIndex = (((this.sourceObject.layer || 0) + 10) * 100000) + z;
     if(!this.active)

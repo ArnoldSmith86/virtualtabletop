@@ -105,7 +105,7 @@ body {
 .widget {
   position: absolute;
   background-size: contain;
-  background-repeat:no-repeat;
+  background-repeat: no-repeat;
   background-position: center center;
   touch-action: none;
   user-select: none;

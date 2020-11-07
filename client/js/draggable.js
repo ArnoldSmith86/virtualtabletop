@@ -13,7 +13,7 @@ class Draggable {
   }
 
   dragStart(e) {
-    if(e.target !== this.domElement || this.isDraggable === false)
+    if(e.target !== this.domElement && e.target.parentNode.parentNode !== this.domElement || this.isDraggable === false)
       return;
 
     const rect  = this.domElement.getBoundingClientRect();
