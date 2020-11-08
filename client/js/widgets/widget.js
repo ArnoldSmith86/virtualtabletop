@@ -7,7 +7,7 @@ class Widget extends Draggable {
   }
 
   children() {
-    return Array.from(widgets.values()).filter(w=>w.sourceObject.parent==this.sourceObject.id).sort((a,b)=>b.sourceObject.z-a.sourceObject.z);
+    return Array.from(widgets.values()).filter(w=>w.sourceObject.parent==this.sourceObject.id&&w.sourceObject.type!='deck').sort((a,b)=>b.sourceObject.z-a.sourceObject.z);
   }
 
   moveToPile(pile) {

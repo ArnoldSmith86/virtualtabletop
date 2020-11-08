@@ -13,8 +13,20 @@ class Button extends Widget {
             c.sourceObject.activeFace = 1;
           if(a[4] == 'faceDown')
             c.sourceObject.activeFace = 0;
-          c.moveToPile(target)
+          c.moveToPile(target);
         })));
+      }
+
+      if(a[0] == 'RECALL') {
+        this.toA(a[1]).forEach(pile=>{
+          const deck = this.wFilter(w=>w.sourceObject.type=='deck'&&w.sourceObject.parent==pile)[0];
+          if(deck) {
+            this.wFilter(w=>w.sourceObject.deck==deck.sourceObject.id).forEach(c=>{
+              c.sourceObject.activeFace = 0;
+              c.moveToPile(widgets.get(pile));
+            });
+          }
+        });
       }
 
       if(a[0] == 'SHUFFLE')
@@ -30,7 +42,15 @@ class Button extends Widget {
     this.domElement.textContent = this.sourceObject.label;
   }
 
+  toA(ids) {
+    return typeof ids == 'string' ? [ ids ] : ids;
+  }
+
   w(ids, callback) {
-    return Array.from(widgets.values()).filter(w=>(typeof ids == 'string' ? [ ids ] : ids).indexOf(w.sourceObject.id) != -1).forEach(callback);
+    return this.wFilter(w=>this.toA(ids).indexOf(w.sourceObject.id) != -1).forEach(callback);
+  }
+
+  wFilter(callback) {
+    return Array.from(widgets.values()).filter(callback);
   }
 }

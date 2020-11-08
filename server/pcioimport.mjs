@@ -57,8 +57,27 @@ export default async function convertPCIO(content) {
       w.dropTarget = { 'type': 'card' };
       w.width = widget.width || 111;
       w.height = widget.height || 168;
+
+      if(widget.hasShuffleButton) {
+        output[widget.id + '_shuffleButton'] = {
+          id: widget.id + '_shuffleButton',
+          x: widget.x,
+          y: widget.y + 1.02*(widget.height || 168),
+          width: widget.width || 111,
+          height: 32,
+          type:  'button',
+          label: 'Recall & Shuffle',
+          layer: -1,
+
+          clickRoutine: [
+            [ "RECALL", widget.id ],
+            [ "SHUFFLE", widget.id ]
+          ]
+        };
+      }
     } else if(widget.type == 'cardDeck') {
       w.type = 'deck';
+      w.parent = widget.parent;
       w.cardTypes = widget.cardTypes;
       w.faceTemplates = [
         widget.backTemplate,
