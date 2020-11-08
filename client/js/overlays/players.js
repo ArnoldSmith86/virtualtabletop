@@ -33,7 +33,7 @@ function fillPlayerList(players, activePlayers) {
 
     $('#playerList').appendChild(entry);
 
-    if(player != playerName)
+    if(player != playerName && activePlayers.indexOf(player) != -1)
       addPlayerCursor(player, players[player]);
   }
 }
