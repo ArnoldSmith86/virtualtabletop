@@ -84,12 +84,40 @@ export default async function convertPCIO(content) {
       w.movable = false;
       w.layer = -3;
     } else if(widget.type == 'automationButton') {
-      w.css = 'box-sizing: border-box; border-radius: 800px; background: #a9e9e2; color: #6d6d6d; border: 3px solid #93d0c9; display:flex;justify-content:center;align-items:center;';
-      w.content = widget.label;
-      w.width  = widget.width || 80;
-      w.height = widget.height || 80;
-      w.movable = false;
+      w.type = 'button';
+      w.label = widget.label;
       w.layer = -1;
+
+      w.clickRoutine = [];
+      for(let c of widget.clickRoutine) {
+        if(c.func == "MOVE_CARDS_BETWEEN_HOLDERS") {
+          var moveFlip = c.args.moveFlip && c.args.moveFlip.value;
+          c = [ "MOVE", c.args.from.value, (c.args.quantity || { value: 1 }).value, c.args.to.value ];
+          if(c[1].length == 1)
+            c[1] = c[1][0];
+          if(c[3].length == 1)
+            c[3] = c[3][0];
+        }
+        if(c.func == "SHUFFLE_CARDS") {
+          c = [ "SHUFFLE", c.args.holders.value ];
+          if(c[1].length == 1)
+            c[1] = c[1][0];
+        }
+        if(c.func == "FLIP_CARDS") {
+          c = [ "FLIP", c.args.flipMode.value, c.args.holders.value ];
+          if(c[2].length == 1)
+            c[2] = c[2][0];
+        }
+        if(c.func == "CHANGE_COUNTER") {
+          c = [ "COUNTER", c.args.counters.value, c.args.changeMode.value, c.args.changeNumber.value ];
+          if(c[1].length == 1)
+            c[1] = c[1][0];
+        }
+        if(moveFlip && moveFlip != "none")
+          c[4] = moveFlip;
+        w.clickRoutine.push(c);
+      }
+
     } else if(widget.type == 'spinner') {
       w.type = widget.type;
       w.options = widget.options;

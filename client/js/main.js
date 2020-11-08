@@ -24,6 +24,8 @@ function addWidget(widget) {
     delete deferredCards[widget.id];
   } else if(widget.type == 'spinner')
     w = new Spinner(widget, $('.surface'));
+  else if(widget.type == 'button')
+    w = new Button(widget, $('.surface'));
   else
     w = new BasicWidget(widget, $('.surface'));
   widgets.set(widget.id, w);

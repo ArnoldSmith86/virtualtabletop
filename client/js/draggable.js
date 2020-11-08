@@ -13,7 +13,7 @@ class Draggable {
   }
 
   dragStart(e) {
-    if(e.target !== this.domElement && e.target.parentNode.parentNode !== this.domElement || this.isDraggable === false)
+    if(e.target !== this.domElement && e.target.parentNode.parentNode !== this.domElement)
       return;
 
     const rect  = this.domElement.getBoundingClientRect();
@@ -28,7 +28,7 @@ class Draggable {
   }
 
   drag(e) {
-    if(this.active) {
+    if(this.active && this.isDraggable !== false) {
       e.preventDefault();
 
       const { clientX, clientY } = e.type === "touchmove" ? e.touches[0] : e;

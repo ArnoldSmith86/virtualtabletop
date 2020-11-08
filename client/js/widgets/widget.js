@@ -6,6 +6,18 @@ class Widget extends Draggable {
     this.receiveUpdate(object);
   }
 
+  children() {
+    return Array.from(widgets.values()).filter(w=>w.sourceObject.parent==this.sourceObject.id).sort((a,b)=>b.sourceObject.z-a.sourceObject.z);
+  }
+
+  moveToPile(pile) {
+    this.sourceObject.x = this.x = pile.sourceObject.x+4;
+    this.sourceObject.y = this.y = pile.sourceObject.y+4;
+    this.sourceObject.z = getMaxZ(this.sourceObject.layer || 0) + 1;
+    this.sourceObject.parent = pile.sourceObject.id;
+    this.sendUpdate();
+  }
+
   onDragStart() {
     this.dragZ = getMaxZ(this.sourceObject.layer || 0) + 1;
     this.dropTargets = getValidDropTargets(this.sourceObject);
@@ -56,11 +68,7 @@ class Widget extends Draggable {
     for(const [ _, t ] of this.dropTargets)
       t.domElement.classList.remove('droppable');
     if(this.hoverTarget) {
-      this.sourceObject.x = this.x = this.hoverTarget.sourceObject.x+4;
-      this.sourceObject.y = this.y = this.hoverTarget.sourceObject.y+4;
-      this.sourceObject.z = this.dragZ;
-      this.sourceObject.parent = this.hoverTarget.sourceObject.id;
-      this.sendUpdate();
+      this.moveToPile(this.hoverTarget);
       this.hoverTarget.domElement.classList.remove('droptarget');
     }
   }
@@ -92,5 +100,10 @@ class Widget extends Draggable {
     this.domElement.style.zIndex = (((this.sourceObject.layer || 0) + 10) * 100000) + z;
     if(!this.active)
       this.setTranslate(x, y, this.domElement);
+  }
+
+  setZ(z) {
+    this.sourceObject.z = z;
+    toServer("translate", { id: this.sourceObject.id, pos: [ this.x, this.y, z ]});
   }
 }

@@ -1,7 +1,6 @@
 class Spinner extends Widget {
   constructor(object, surface) {
     super(object, surface);
-    const div = document.createElement('div');
   }
 
   click() {
