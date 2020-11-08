@@ -21,7 +21,6 @@ class Draggable {
 
     this.dragStartEvent = event;
     this.offsetMouseToObject = { x: rect.left - event.clientX, y: rect.top - event.clientY };
-    this.scale = getComputedStyle(document.documentElement).getPropertyValue('--scale');
     this.containerRect = this.containerDomElement.getBoundingClientRect();
 
     this.active = true;
@@ -34,8 +33,8 @@ class Draggable {
 
       const { clientX, clientY } = e.type === "touchmove" ? e.touches[0] : e;
 
-      const x = Math.floor((clientX + this.offsetMouseToObject.x - this.containerRect.left) / this.scale);
-      const y = Math.floor((clientY + this.offsetMouseToObject.y - this.containerRect.top ) / this.scale);
+      const x = Math.floor((clientX + this.offsetMouseToObject.x - this.containerRect.left) / scale);
+      const y = Math.floor((clientY + this.offsetMouseToObject.y - this.containerRect.top ) / scale);
 
       this.setTranslate(x, y, this.domElement);
       this.onDrag(x, y);

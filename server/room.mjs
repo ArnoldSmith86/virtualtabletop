@@ -82,6 +82,10 @@ export default class Room {
     this.broadcast('state', this.state);
   }
 
+  mouseMove(player, coords) {
+    this.broadcast('mouse', { player: player.name, coords });
+  }
+
   recolorPlayer(renamingPlayer, playerName, color) {
     this.state._meta.players[playerName] = color;
     this.sendMetaUpdate();

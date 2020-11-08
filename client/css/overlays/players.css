@@ -24,3 +24,13 @@
   background: none;
   font-size: 16px;
 }
+
+.cursor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(20px * var(--scale));
+  height: calc(20px * var(--scale));
+  border-radius: 100%;
+  opacity: 0.2;
+}

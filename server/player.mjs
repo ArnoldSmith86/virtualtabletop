@@ -19,6 +19,8 @@ export default class Player {
       this.room.addState(this, args.type, args.src, args.meta);
     if(func == 'loadState')
       this.room.loadState(this, args);
+    if(func == 'mouse')
+      this.room.mouseMove(this, args);
     if(func == 'playerColor')
       this.room.recolorPlayer(this, args.player, args.color);
     if(func == 'removeState')

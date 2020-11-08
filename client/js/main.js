@@ -2,6 +2,9 @@ const roomID = self.location.pathname.substr(1);
 const widgets = new Map();
 const dropTargets = new Map();
 
+let scale = 1;
+let roomRectangle;
+
 const deferredCards = {};
 
 function addWidget(widget) {
@@ -44,10 +47,6 @@ function getValidDropTargets(widget) {
   return targets;
 }
 
-window.addEventListener('mousemove', function(event) {
-  toServer('mouse', [ event.clientX, event.clientY ]);
-});
-
 function getMaxZ(layer) {
   let maxZ = -1;
   for(const [ id, widget ] of widgets)
@@ -65,7 +64,9 @@ function objectToWidget(o) {
 function setScale() {
   const w = window.innerWidth;
   const h = window.innerHeight;
-  document.documentElement.style.setProperty('--scale', w/h < 1600/1000 ? w/1600 : h/1000);
+  scale = w/h < 1600/1000 ? w/1600 : h/1000;
+  document.documentElement.style.setProperty('--scale', scale);
+  roomRectangle = $('#roomArea').getBoundingClientRect();
 }
 
 onLoad(function() {
