@@ -16,21 +16,24 @@ function addWidget(widget) {
       if(!deferredCards[widget.deck])
         deferredCards[widget.deck] = [];
       deferredCards[widget.deck].push(widget);
+      return;
     }
   } else if(widget.type == 'deck') {
     w = new Deck(widget, $('.surface'));
-    for(const c of deferredCards[widget.id] || [])
-      widgets.set(c.id, new Card(c, $('.surface'), w));
-    delete deferredCards[widget.id];
   } else if(widget.type == 'spinner')
     w = new Spinner(widget, $('.surface'));
   else if(widget.type == 'button')
     w = new Button(widget, $('.surface'));
   else
     w = new BasicWidget(widget, $('.surface'));
+
   widgets.set(widget.id, w);
   if(widget.dropTarget)
     dropTargets.set(widget.id, w);
+
+  for(const c of deferredCards[widget.id] || [])
+    addWidget(c);
+  delete deferredCards[widget.id];
 }
 
 function getValidDropTargets(widget) {
