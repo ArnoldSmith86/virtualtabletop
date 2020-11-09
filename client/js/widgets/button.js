@@ -6,12 +6,24 @@ class Button extends Widget {
   click() {
     for(const a of this.sourceObject.clickRoutine) {
 
+      if(a[0] == 'FLIP') {
+        this.w(a[2], pile=>{
+          let cards = pile.children();
+          if(a[1] == 'card')
+            cards = [ cards[0] ];
+          if(a[3])
+            cards.forEach(c=>c.flip(a[3] == 'faceDown' ? 0 : 1));
+          else
+            cards.forEach(c=>c.flip());
+        });
+      }
+
       if(a[0] == 'MOVE') {
         this.w(a[1], source=>this.w(a[3], target=>source.children().slice(0, a[2]).reverse().forEach(c=> {
           if(a[4] == 'faceUp')
-            c.sourceObject.activeFace = 1;
+            c.flip(1);
           if(a[4] == 'faceDown')
-            c.sourceObject.activeFace = 0;
+            c.flip(0);
           c.moveToPile(target);
         })));
       }
@@ -19,12 +31,8 @@ class Button extends Widget {
       if(a[0] == 'RECALL') {
         this.toA(a[1]).forEach(pile=>{
           const deck = this.wFilter(w=>w.sourceObject.type=='deck'&&w.sourceObject.parent==pile)[0];
-          if(deck) {
-            this.wFilter(w=>w.sourceObject.deck==deck.sourceObject.id).forEach(c=>{
-              c.sourceObject.activeFace = 0;
-              c.moveToPile(widgets.get(pile));
-            });
-          }
+          if(deck)
+            this.wFilter(w=>w.sourceObject.deck==deck.sourceObject.id).forEach(c=>c.moveToPile(widgets.get(pile)));
         });
       }
 

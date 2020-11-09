@@ -7,7 +7,14 @@ class Card extends Widget {
   }
 
   click() {
-    this.sourceObject.activeFace = ((this.sourceObject.activeFace || 0) + 1) % this.deck.sourceObject.faceTemplates.length;
+    this.flip();
+  }
+
+  flip(setFlip) {
+    if(typeof setFlip !== 'undefined')
+      this.sourceObject.activeFace = setFlip;
+    else
+      this.sourceObject.activeFace = ((this.sourceObject.activeFace || 0) + 1) % this.deck.sourceObject.faceTemplates.length;
     this.sendUpdate();
   }
 

@@ -104,6 +104,7 @@ export default async function convertPCIO(content) {
 
           clickRoutine: [
             [ "RECALL", widget.id ],
+            [ "FLIP", 'pile', widget.id, 'faceDown' ],
             [ "SHUFFLE", widget.id ]
           ]
         };
@@ -144,12 +145,14 @@ export default async function convertPCIO(content) {
       w.clickRoutine = [];
       for(let c of widget.clickRoutine) {
         if(c.func == "MOVE_CARDS_BETWEEN_HOLDERS") {
-          var moveFlip = c.args.moveFlip && c.args.moveFlip.value;
+          const moveFlip = c.args.moveFlip && c.args.moveFlip.value;
           c = [ "MOVE", c.args.from.value, (c.args.quantity || { value: 1 }).value, c.args.to.value ];
           if(c[1].length == 1)
             c[1] = c[1][0];
           if(c[3].length == 1)
             c[3] = c[3][0];
+          if(moveFlip && moveFlip != "none")
+            c[4] = moveFlip;
         }
         if(c.func == "SHUFFLE_CARDS") {
           c = [ "SHUFFLE", c.args.holders.value ];
@@ -157,17 +160,18 @@ export default async function convertPCIO(content) {
             c[1] = c[1][0];
         }
         if(c.func == "FLIP_CARDS") {
-          c = [ "FLIP", c.args.flipMode.value, c.args.holders.value ];
+          const flipFace = c.args.flipFace;
+          c = [ "FLIP", c.args.flipMode ? c.args.flipMode.value : 'card', c.args.holders.value ];
           if(c[2].length == 1)
             c[2] = c[2][0];
+          if(flipFace)
+            c.push(flipFace.value);
         }
         if(c.func == "CHANGE_COUNTER") {
           c = [ "COUNTER", c.args.counters.value, c.args.changeMode.value, c.args.changeNumber.value ];
           if(c[1].length == 1)
             c[1] = c[1][0];
         }
-        if(moveFlip && moveFlip != "none")
-          c[4] = moveFlip;
         w.clickRoutine.push(c);
       }
 
