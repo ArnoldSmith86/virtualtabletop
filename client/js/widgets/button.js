@@ -32,7 +32,6 @@ class Button extends Widget {
         this.w(a[1], pile=>pile.children().forEach(c=>c.setZ(Math.floor(Math.random()*10000))));
 
     }
-    this.sendUpdate();
   }
 
   receiveUpdate(object) {
