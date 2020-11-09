@@ -23,7 +23,7 @@ class Widget extends Draggable {
     this.dropTargets = getValidDropTargets(this.sourceObject);
     this.hoverTargetDistance = 99999;
     this.hoverTarget = null;
-    for(const [ _, t ] of this.dropTargets)
+    for(const t of this.dropTargets)
       t.domElement.classList.add('droppable');
   }
 
@@ -42,7 +42,7 @@ class Widget extends Draggable {
       }
     }
 
-    for(const [ _, t ] of this.dropTargets) {
+    for(const t of this.dropTargets) {
       const tCenter = center(t);
       const d = distance(myCenter, tCenter);
       if(d < this.hoverTargetDistance) {
@@ -65,7 +65,7 @@ class Widget extends Draggable {
   }
 
   onDragEnd() {
-    for(const [ _, t ] of this.dropTargets)
+    for(const t of this.dropTargets)
       t.domElement.classList.remove('droppable');
     if(this.hoverTarget) {
       this.moveToPile(this.hoverTarget);

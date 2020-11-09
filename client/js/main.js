@@ -35,10 +35,10 @@ function addWidget(widget) {
 
 function getValidDropTargets(widget) {
   const targets = [];
-  for(const t of dropTargets) {
+  for(const [ _, t ] of dropTargets) {
     let isValid = true;
-    for(const key in t.dropTarget) {
-      if(widget[key] != t.dropTarget[key]) {
+    for(const key in t.sourceObject.dropTarget) {
+      if(widget[key] != t.sourceObject.dropTarget[key]) {
         isValid = false;
         break;
       }
