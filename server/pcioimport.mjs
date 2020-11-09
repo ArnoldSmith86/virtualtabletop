@@ -11,7 +11,16 @@ const checkersColors = {
   yellow:  [ '#e0cb0b', '#eadc59' ],
   green:   [ '#23ca5b', '#6adb90' ],
   orange:  [ '#e2a633', '#ecc375' ]
-}
+};
+const classicURLs = {
+  black:   'https://svgshare.com/i/Q1P.svg',
+  blue:    'https://svgshare.com/i/PzK.svg',
+  purple:  'https://svgshare.com/i/Q0v.svg',
+  red:     'https://svgshare.com/i/Pzi.svg',
+  yellow:  'https://svgshare.com/i/Pzg.svg',
+  green:   'https://svgshare.com/i/Q0h.svg',
+  orange:  'https://svgshare.com/i/Q0i.svg'
+};
 
 export default async function convertPCIO(content) {
   const zip = await JSZip.loadAsync(content);
@@ -49,6 +58,11 @@ export default async function convertPCIO(content) {
       w.height = 90;
       const [ c1, c2 ] = checkersColors[widget.color] || checkersColors.default;
       w.css = `box-sizing: border-box; background: radial-gradient(circle, ${c1} 0%, ${c1} 33%, ${c2} 33%, ${c2} 46%, ${c1} 46%, ${c1} 58%, rgba(0, 0, 0, 0) 58%);`;
+      w.layer = 1;
+    } else if(widget.type == 'gamePiece' && widget.pieceType == 'classic') {
+      w.width  = 90;
+      w.height = 90;
+      w.image = classicURLs[widget.color];
       w.layer = 1;
     } else if(widget.type == 'cardPile') {
       w.css = 'background:white; box-sizing: border-box; border-top: 1px solid #d8d8d8; border-left: 1px solid #d8d8d8; border-bottom: 1px solid #ccc; border-right: 1px solid #ccc; background: #fff; border-radius: 8px;';
