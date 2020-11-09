@@ -130,6 +130,7 @@ export default async function convertPCIO(content) {
       w.image = widget.boardImage;
       w.movable = false;
       w.layer = -3;
+      w.z = 10000 - w.z;
     } else if(widget.type == 'automationButton') {
       w.type = 'button';
       w.label = widget.label;
