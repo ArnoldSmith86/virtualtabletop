@@ -64,6 +64,11 @@ export default async function convertPCIO(content) {
       w.height = 90;
       w.image = classicURLs[widget.color];
       w.layer = 1;
+    } else if(widget.type == 'gamePiece' && widget.pieceType == 'pin') {
+      w.width  = 35.85;
+      w.height = 43.83;
+      w.image = `https://playingcards.io/img/pieces/pin-${widget.color}.svg`;
+      w.layer = 1;
     } else if(widget.type == 'cardPile') {
       w.css = 'background:white; box-sizing: border-box; border-top: 1px solid #d8d8d8; border-left: 1px solid #d8d8d8; border-bottom: 1px solid #ccc; border-right: 1px solid #ccc; background: #fff; border-radius: 8px;';
       w.movable = false;
