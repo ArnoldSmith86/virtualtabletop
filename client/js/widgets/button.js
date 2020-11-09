@@ -1,7 +1,6 @@
 class Button extends Widget {
   constructor(object, surface) {
     super(object, surface);
-    this.isDraggable = false;
   }
 
   click() {
@@ -38,6 +37,7 @@ class Button extends Widget {
 
   receiveUpdate(object) {
     super.receiveUpdate(object);
+    this.isDraggable = false;
     this.domElement.classList.add('button');
     this.domElement.textContent = this.sourceObject.label;
   }
