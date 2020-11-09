@@ -36,6 +36,12 @@ export default async function convertPCIO(content) {
     }
   }
 
+  function mapName(name) {
+    if(name.match(/^\/img\//))
+      name = 'https://playingcards.io' + name;
+    return nameMap[name] || name;
+  }
+
   const output = {};
 
   for(const widget of widgets) {
@@ -107,10 +113,10 @@ export default async function convertPCIO(content) {
 
       for(const face of w.faceTemplates)
         for(const object of face.objects)
-          object.value = nameMap[object.value] || object.value;
+          object.value = mapName(object.value);
       for(const type in w.cardTypes)
         for(const key in w.cardTypes[type])
-          w.cardTypes[type][key] = nameMap[w.cardTypes[type][key]] || w.cardTypes[type][key];
+          w.cardTypes[type][key] = mapName(w.cardTypes[type][key]);
     } else if(widget.type == 'card') {
       w.type = 'card';
       w.deck = widget.deck;
@@ -165,7 +171,7 @@ export default async function convertPCIO(content) {
     }
 
     if(w.image)
-      w.image = nameMap[w.image] || w.image;
+      w.image = mapName(w.image);
 
     output[widget.id] = w;
   }
