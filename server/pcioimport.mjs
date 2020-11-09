@@ -42,6 +42,11 @@ export default async function convertPCIO(content) {
     return nameMap[name] || name;
   }
 
+  const pileHasDeck = {};
+  for(const widget of widgets)
+    if(widget.type == 'cardDeck' && widget.parent)
+      pileHasDeck[widget.parent] = true;
+
   const output = {};
 
   for(const widget of widgets) {
@@ -86,7 +91,7 @@ export default async function convertPCIO(content) {
       w.width = widget.width || 111;
       w.height = widget.height || 168;
 
-      if(widget.hasShuffleButton) {
+      if(widget.hasShuffleButton && pileHasDeck[widget.id]) {
         output[widget.id + '_shuffleButton'] = {
           id: widget.id + '_shuffleButton',
           x: widget.x,
