@@ -37,7 +37,7 @@ MinifyRoom().then(function(result) {
   });
 
   app.get('/:id', function(req, res) {
-    if(req.headers['accept-encoding'].match(/\bgzip\b/)) {
+    if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
       res.setHeader('Content-Encoding', 'gzip');
       res.setHeader('Content-Type', 'text/html');
       res.send(result.gzipped);
