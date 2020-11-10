@@ -100,6 +100,7 @@ export default async function convertPCIO(content) {
           type: 'label',
           text: widget.label,
           css: 'text-align: center; font-size: 16px;',
+          movable: false,
           layer: -3
         };
       }
