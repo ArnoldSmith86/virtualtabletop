@@ -113,5 +113,5 @@ body {
 }
 
 .widget.droppable.droptarget {
-  border-color: #333 !important;
+  border: 1px solid #333 !important;
 }
