@@ -22,6 +22,8 @@ function addWidget(widget) {
     w = new Deck(widget, $('.surface'));
   } else if(widget.type == 'spinner')
     w = new Spinner(widget, $('.surface'));
+  else if(widget.type == 'label')
+    w = new Label(widget, $('.surface'));
   else if(widget.type == 'button')
     w = new Button(widget, $('.surface'));
   else

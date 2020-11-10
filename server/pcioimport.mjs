@@ -132,10 +132,17 @@ export default async function convertPCIO(content) {
       w.cardType = widget.cardType;
       w.parent = widget.parent;
       w.activeFace = widget.faceup ? 1 : 0;
+    } else if(widget.type == 'labelText') {
+      const weight = widget.bold ? 'bold' : 'normal';
+      w.type = 'label';
+      w.text = widget.labelContent;
+      w.css = `font-size: ${widget.textSize}px; font-weight: ${weight}; text-align: ${widget.textAlign}`;
+      w.movable = false;
+      w.layer = -3;
     } else if(widget.type == 'board') {
       w.image = widget.boardImage;
       w.movable = false;
-      w.layer = -3;
+      w.layer = -4;
       w.z = 10000 - w.z;
     } else if(widget.type == 'automationButton') {
       w.type = 'button';
