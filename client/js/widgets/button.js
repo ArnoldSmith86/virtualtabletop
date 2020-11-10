@@ -6,6 +6,9 @@ class Button extends Widget {
   click() {
     for(const a of this.sourceObject.clickRoutine) {
 
+      if(a[0] == 'LABEL')
+        this.w(a[1], label=>label.setText(a[3], a[2]));
+
       if(a[0] == 'FLIP') {
         this.w(a[2], pile=>{
           let cards = pile.children();

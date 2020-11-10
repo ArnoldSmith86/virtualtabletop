@@ -99,7 +99,6 @@ export default async function convertPCIO(content) {
           width: widget.width || 111,
           type: 'label',
           text: widget.label,
-          css: 'text-align: center; font-size: 16px;',
           movable: false,
           layer: -3
         };
@@ -146,6 +145,48 @@ export default async function convertPCIO(content) {
       w.cardType = widget.cardType;
       w.parent = widget.parent;
       w.activeFace = widget.faceup ? 1 : 0;
+    } else if(widget.type == 'counter') {
+      w.type = 'label';
+      w.text = widget.counterValue;
+      w.css = 'font-size: 30px;';
+      w.movable = false;
+      w.layer = -3;
+      if(!w.width)
+        w.width = 140;
+      if(!w.height)
+        w.height = 44;
+
+      function addCounterButton(suffix, x, label, value) {
+        output[widget.id + suffix] = {
+          id: widget.id + suffix,
+          x,
+          y: widget.y,
+          width: w.height - 4,
+          height: w.height - 4,
+          type: 'button',
+          label,
+          layer: -1,
+
+          clickRoutine: [
+            [ "LABEL", widget.id, 'inc', value ]
+          ]
+        };
+      }
+      addCounterButton('_decrementButton', widget.x,                      '-', -1);
+      addCounterButton('_incrementButton', widget.x + w.width - w.height, '+',  1);
+
+      if(widget.label) {
+        output[widget.id + 'label'] = {
+          id: widget.id + 'label',
+          x: widget.x,
+          y: widget.y - 20,
+          width: w.width,
+          type: 'label',
+          text: widget.label,
+          movable: false,
+          layer: -3
+        };
+      }
     } else if(widget.type == 'labelText') {
       const weight = widget.bold ? 'bold' : 'normal';
       w.type = 'label';
@@ -189,7 +230,7 @@ export default async function convertPCIO(content) {
             c.push(flipFace.value);
         }
         if(c.func == "CHANGE_COUNTER") {
-          c = [ "COUNTER", c.args.counters.value, c.args.changeMode.value, c.args.changeNumber.value ];
+          c = [ "LABEL", c.args.counters.value, c.args.changeMode ? c.args.changeMode.value : 'set', c.args.changeNumber ? c.args.changeNumber.value : 0 ];
           if(c[1].length == 1)
             c[1] = c[1][0];
         }
