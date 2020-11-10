@@ -11,8 +11,8 @@ class Widget extends Draggable {
   }
 
   moveToPile(pile) {
-    this.sourceObject.x = this.x = pile.sourceObject.x+4;
-    this.sourceObject.y = this.y = pile.sourceObject.y+4;
+    this.sourceObject.x = this.x = pile.sourceObject.x+(pile.sourceObject.dropOffsetX || 4);
+    this.sourceObject.y = this.y = pile.sourceObject.y+(pile.sourceObject.dropOffsetY || 4);
     this.sourceObject.z = getMaxZ(this.sourceObject.layer || 0) + 1;
     this.sourceObject.parent = pile.sourceObject.id;
     this.sendUpdate();
