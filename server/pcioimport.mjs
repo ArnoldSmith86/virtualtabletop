@@ -91,6 +91,19 @@ export default async function convertPCIO(content) {
       w.width = widget.width || 111;
       w.height = widget.height || 168;
 
+      if(widget.label) {
+        output[widget.id + 'label'] = {
+          id: widget.id + 'label',
+          x: widget.x,
+          y: widget.y - 20,
+          width: widget.width || 111,
+          type: 'label',
+          text: widget.label,
+          css: 'text-align: center; font-size: 16px;',
+          layer: -3
+        };
+      }
+
       if(widget.hasShuffleButton && pileHasDeck[widget.id]) {
         output[widget.id + '_shuffleButton'] = {
           id: widget.id + '_shuffleButton',
@@ -98,7 +111,7 @@ export default async function convertPCIO(content) {
           y: widget.y + 1.02*(widget.height || 168),
           width: widget.width || 111,
           height: 32,
-          type:  'button',
+          type: 'button',
           label: 'Recall & Shuffle',
           layer: -1,
 
@@ -136,7 +149,7 @@ export default async function convertPCIO(content) {
       const weight = widget.bold ? 'bold' : 'normal';
       w.type = 'label';
       w.text = widget.labelContent;
-      w.css = `font-size: ${widget.textSize}px; font-weight: ${weight}; text-align: ${widget.textAlign}`;
+      w.css = `font-size: ${widget.textSize}px; font-weight: ${weight}; text-align: ${widget.textAlign};`;
       w.movable = false;
       w.layer = -3;
     } else if(widget.type == 'board') {
