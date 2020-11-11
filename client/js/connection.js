@@ -38,4 +38,8 @@ function toServer(func, args) {
   connection.send(JSON.stringify({ func, args }));
 }
 
+function log(str) {
+  toServer('log', str);
+}
+
 onLoad(startWebSocket);

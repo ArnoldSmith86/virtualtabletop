@@ -136,3 +136,5 @@ onLoad(function() {
 window.onresize = function(event) {
   setScale();
 }
+
+window.onerror = (msg, url, line, col)=>log(`ERROR: ${msg} - line ${line} - column ${col}`);
