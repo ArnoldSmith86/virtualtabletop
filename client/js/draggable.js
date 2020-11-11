@@ -13,6 +13,7 @@ class Draggable {
   }
 
   dragStart(e) {
+    e.preventDefault();
     if(e.target !== this.domElement && e.target.parentNode.parentNode !== this.domElement)
       return;
 
@@ -28,9 +29,8 @@ class Draggable {
   }
 
   drag(e) {
+    e.preventDefault();
     if(this.active && this.isDraggable !== false) {
-      e.preventDefault();
-
       const { clientX, clientY } = e.type === "touchmove" ? e.touches[0] : e;
 
       const x = Math.floor((clientX + this.offsetMouseToObject.x - this.containerRect.left) / scale);
@@ -42,11 +42,12 @@ class Draggable {
   }
 
   dragEnd(e) {
+    e.preventDefault();
     if(this.active) {
       this.active = false;
       this.onDragEnd();
 
-      const { clientX, clientY } = e.type === "touchend" ? e.touches[0] : e;
+      const { clientX, clientY } = e.type === "touchend" ? e.changedTouches[0] : e;
       if(this.click && clientX == this.dragStartEvent.clientX && clientY == this.dragStartEvent.clientY)
         this.click();
     }
