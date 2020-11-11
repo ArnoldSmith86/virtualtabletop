@@ -11,11 +11,15 @@ class Widget extends Draggable {
   }
 
   moveToPile(pile) {
-    this.sourceObject.x = this.x = pile.sourceObject.x+(pile.sourceObject.dropOffsetX || 4);
-    this.sourceObject.y = this.y = pile.sourceObject.y+(pile.sourceObject.dropOffsetY || 4);
-    this.sourceObject.z = getMaxZ(this.sourceObject.layer || 0) + 1;
-    this.sourceObject.parent = pile.sourceObject.id;
-    this.sendUpdate();
+    const p = pile.sourceObject;
+    this.sourceObject.parent = p.id;
+    this.setPosition(p.x+(p.dropOffsetX || 4), p.y+(p.dropOffsetY || 4), getMaxZ(this.sourceObject.layer || 0) + 1, false);
+
+    if(pile.receiveCard) {
+      pile.receiveCard(this);
+    } else {
+      this.sendUpdate();
+    }
   }
 
   onDragStart() {
@@ -28,7 +32,7 @@ class Widget extends Draggable {
   }
 
   onDrag(x, y) {
-    toServer("translate", { id: this.sourceObject.id, pos: [ x, y, this.dragZ ]});
+    this.setPosition(x, y, this.dragZ);
     const myCenter = center(this);
 
     this.hoverTargetChanged = false;
@@ -93,6 +97,14 @@ class Widget extends Draggable {
     toServer('update', this.sourceObject);
   }
 
+  setPosition(x, y, z, send=true) {
+    this.sourceObject.x = this.x = x;
+    this.sourceObject.y = this.y = y;
+    this.sourceObject.z = z;
+    if(send)
+      toServer("translate", { id: this.sourceObject.id, pos: [ x, y, z ]});
+  }
+
   setPositionFromServer(x, y, z) {
     this.sourceObject.x = this.x = x;
     this.sourceObject.y = this.y = y;
@@ -103,7 +115,6 @@ class Widget extends Draggable {
   }
 
   setZ(z) {
-    this.sourceObject.z = z;
-    toServer("translate", { id: this.sourceObject.id, pos: [ this.x, this.y, z ]});
+    this.setPosition(this.x, this.y, z);
   }
 }
