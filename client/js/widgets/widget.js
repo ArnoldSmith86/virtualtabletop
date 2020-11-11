@@ -24,7 +24,7 @@ class Widget extends Draggable {
   moveToPile(pile) {
     const p = pile.sourceObject;
     this.sourceObject.parent = p.id;
-    this.setPosition(p.x+(p.dropOffsetX || 4), p.y+(p.dropOffsetY || 4), getMaxZ(this.sourceObject.layer || 0) + 1, false);
+    this.setPosition(p.x+(p.dropOffsetX || 4), p.y+(p.dropOffsetY || 4), getMaxZ(this.sourceObject.layer || 0) + 1);
 
     if(pile.receiveCard) {
       pile.receiveCard(this);
@@ -120,7 +120,7 @@ class Widget extends Draggable {
   setPosition(x, y, z, send=true) {
     this.sourceObject.x = this.x = x;
     this.sourceObject.y = this.y = y;
-    this.sourceObject.z = z;
+    this.sourceObject.z = this.z = z;
     if(send)
       toServer("translate", { id: this.sourceObject.id, pos: [ x, y, z ]});
   }

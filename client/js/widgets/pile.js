@@ -14,6 +14,9 @@ class Pile extends Widget {
     if(card && typeof this.sourceObject.flipEnter != 'undefined' && card.flip)
       card.flip(this.sourceObject.flipEnter, false);
 
+    if(!o.stackOffsetX && !o.stackOffsetY)
+      return;
+
     let xOffset = 0;
     let yOffset = 0;
     let z = 1;
