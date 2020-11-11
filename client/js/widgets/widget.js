@@ -22,12 +22,15 @@ class Widget extends Draggable {
   }
 
   moveToPile(pile) {
+    const thisX = this.x;
+    const thisY = this.y;
+
     const p = pile.sourceObject;
     this.sourceObject.parent = p.id;
     this.setPosition(p.x+(p.dropOffsetX || 4), p.y+(p.dropOffsetY || 4), getMaxZ(this.sourceObject.layer || 0) + 1);
 
     if(pile.receiveCard) {
-      pile.receiveCard(this);
+      pile.receiveCard(this, [ thisX, thisY ]);
     } else {
       this.sendUpdate();
     }

@@ -5,7 +5,7 @@ class Pile extends Widget {
     this.receiveCard(null);
   }
 
-  receiveCard(card) {
+  receiveCard(card, pos) {
     const o = this.sourceObject;
 
     if(o.childrenPerOwner && card)
@@ -21,7 +21,15 @@ class Pile extends Widget {
     let yOffset = 0;
     let z = 1;
 
-    for(const child of this.children().filter(c=>!c.sourceObject.owner || c.sourceObject.owner==playerName).reverse()) {
+    // get children sorted by X or Y position
+    // replace coordinates of the received card to its previous coordinates so it gets dropped at the correct position
+    const children = this.children().filter(c=>!c.sourceObject.owner || c.sourceObject.owner==playerName).sort(function(a, b) {
+      if(o.stackOffsetX)
+        return (a == card ? pos[0] : a.x) - (b == card ? pos[0] : b.x);
+      return (a == card ? pos[1] : a.y) - (b == card ? pos[1] : b.y);
+    });
+
+    for(const child of children) {
       const newX = o.x+(o.dropOffsetX || 4)+xOffset;
       const newY = o.y+(o.dropOffsetY || 4)+yOffset;
       const newZ = z++;
