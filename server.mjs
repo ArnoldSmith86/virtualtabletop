@@ -19,6 +19,14 @@ fs.mkdirSync(__dirname + '/save/assets', { recursive: true });
 fs.mkdirSync(__dirname + '/save/rooms',  { recursive: true });
 fs.mkdirSync(__dirname + '/save/states', { recursive: true });
 
+function ensureRoomIsLoaded(id) {
+  if(!activeRooms.has(id)) {
+    activeRooms.set(id, new Room(id, function() {
+      activeRooms.delete(id);
+    }));
+  }
+}
+
 MinifyRoom().then(function(result) {
   app.use('/', express.static(__dirname + '/client'));
 
@@ -47,6 +55,7 @@ MinifyRoom().then(function(result) {
   });
 
   app.put('/:id', function(req, res) {
+    ensureRoomIsLoaded(req.params.id);
     PCIO(req.body).then(state => activeRooms.get(req.params.id).setState(state));
     res.send();
   });
@@ -58,11 +67,7 @@ MinifyRoom().then(function(result) {
 
 const activeRooms = new Map();
 const ws = new WebSocket(server, function(connection, { playerName, roomID }) {
-  if(!activeRooms.has(roomID)) {
-    activeRooms.set(roomID, new Room(roomID, function() {
-      activeRooms.delete(roomID);
-    }));
-  }
+  ensureRoomIsLoaded(roomID);
   activeRooms.get(roomID).addPlayer(new Player(connection, playerName, activeRooms.get(roomID)));
 });
 
