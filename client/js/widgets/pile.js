@@ -1,8 +1,12 @@
 class Pile extends Widget {
+  dispenseCard(card) {
+    this.receiveCard(null);
+  }
+
   receiveCard(card) {
     const o = this.sourceObject;
 
-    if(o.childrenPerOwner)
+    if(o.childrenPerOwner && card)
       card.sourceObject.owner = playerName;
 
     let xOffset = 0;

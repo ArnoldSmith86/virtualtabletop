@@ -10,6 +10,17 @@ class Widget extends Draggable {
     return Array.from(widgets.values()).filter(w=>w.sourceObject.parent==this.sourceObject.id&&w.sourceObject.type!='deck').sort((a,b)=>b.sourceObject.z-a.sourceObject.z);
   }
 
+  checkParent(forceDetach) {
+    if(this.currentParent && (forceDetach || !overlap(this, this.currentParent))) {
+      delete this.sourceObject.parent;
+      delete this.sourceObject.owner;
+      if(this.currentParent.dispenseCard)
+        this.currentParent.dispenseCard(this);
+      delete this.currentParent;
+      this.sendUpdate();
+    }
+  }
+
   moveToPile(pile) {
     const p = pile.sourceObject;
     this.sourceObject.parent = p.id;
@@ -25,6 +36,7 @@ class Widget extends Draggable {
   onDragStart() {
     this.dragZ = getMaxZ(this.sourceObject.layer || 0) + 1;
     this.dropTargets = getValidDropTargets(this.sourceObject);
+    this.currentParent = widgets.get(this.sourceObject.parent);
     this.hoverTargetDistance = 99999;
     this.hoverTarget = null;
     for(const t of this.dropTargets)
@@ -34,6 +46,8 @@ class Widget extends Draggable {
   onDrag(x, y) {
     this.setPosition(x, y, this.dragZ);
     const myCenter = center(this);
+
+    this.checkParent();
 
     this.hoverTargetChanged = false;
     if(this.hoverTarget) {
@@ -72,7 +86,10 @@ class Widget extends Draggable {
     for(const t of this.dropTargets)
       t.domElement.classList.remove('droppable');
 
+    this.checkParent();
+
     if(this.hoverTarget) {
+      this.checkParent(true);
       this.moveToPile(this.hoverTarget);
       this.hoverTarget.domElement.classList.remove('droptarget');
     }
