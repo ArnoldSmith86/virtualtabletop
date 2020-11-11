@@ -82,7 +82,8 @@ onLoad(function() {
   onMessage('add', addWidget);
   onMessage('state', function(args) {
     for(const widget of $a('.widget'))
-      widget.parentNode.removeChild(widget);
+      if(widget.id != 'enlarged')
+        widget.parentNode.removeChild(widget);
     widgets.clear();
     dropTargets.clear();
     for(const widgetID in args)

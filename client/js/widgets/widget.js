@@ -4,6 +4,10 @@ class Widget extends Draggable {
     super(div, surface);
     surface.appendChild(div);
     this.receiveUpdate(object);
+
+    this.domElement.addEventListener('contextmenu', e => this.showEnlarged(e), false);
+    this.domElement.addEventListener('mouseenter',  e => this.showEnlarged(e), false);
+    this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
   }
 
   children() {
@@ -19,6 +23,10 @@ class Widget extends Draggable {
       delete this.currentParent;
       this.sendUpdate();
     }
+  }
+
+  hideEnlarged() {
+    $('#enlarged').classList.add('hidden');
   }
 
   moveToPile(pile) {
@@ -96,10 +104,14 @@ class Widget extends Draggable {
       this.moveToPile(this.hoverTarget);
       this.hoverTarget.domElement.classList.remove('droptarget');
     }
+
+    this.hideEnlarged();
   }
 
   receiveUpdate(object) {
     this.sourceObject = object;
+
+    this.enlarge = object.enlarge;
 
     this.domElement.id = object.id;
     this.domElement.className = 'widget';
@@ -139,5 +151,18 @@ class Widget extends Draggable {
 
   setZ(z) {
     this.setPosition(this.x, this.y, z);
+  }
+
+  showEnlarged(event) {
+    if(this.enlarge) {
+      const e = $('#enlarged');
+      e.innerHTML = this.domElement.innerHTML;
+      e.className = this.domElement.className;
+      e.style.cssText = this.domElement.style.cssText;
+      e.style.display = this.domElement.style.display;
+      if(this.x < 600)
+        e.classList.add('right');
+    }
+    event.preventDefault();
   }
 }

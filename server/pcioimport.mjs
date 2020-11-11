@@ -142,6 +142,8 @@ export default async function convertPCIO(content) {
       ];
       w.cardWidth = widget.cardWidth;
       w.cardHeight = widget.cardHeight;
+      if(widget.enlarge)
+        w.enlarge = true;
 
       for(const face of w.faceTemplates)
         for(const object of face.objects)

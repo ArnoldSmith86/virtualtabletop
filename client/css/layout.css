@@ -114,3 +114,22 @@ body {
 .widget.foreign {
   display: none !important;
 }
+
+#enlarged {
+  opacity: 1;
+  top: 5vh;
+  left: 5vw;
+  transition: opacity 200ms ease;
+  transition-delay: 400ms, 400ms;
+  transform: scale(calc(4 * var(--scale))) !important;
+  transform-origin: top left;
+}
+#enlarged.right {
+  left: unset;
+  right: 5vw;
+  transform-origin: top right;
+}
+#enlarged.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
