@@ -50,9 +50,6 @@ export default async function convertPCIO(content) {
   const output = {};
 
   for(const widget of widgets) {
-    if([ 'hand' ].indexOf(widget.type) > -1)
-      continue;
-
     const w = {};
 
     w.id = widget.id;
@@ -83,6 +80,15 @@ export default async function convertPCIO(content) {
     } else if(widget.type == 'gamePiece') {
       w.image = `https://playingcards.io/img/pieces/${widget.color}-${widget.pieceType}.svg`;
       w.layer = 1;
+    } else if(widget.type == 'hand') {
+      w.type = 'pile';
+      w.movable = false;
+      w.layer = -2;
+      w.dropTarget = { 'type': 'card' };
+      w.dropOffsetX = 10;
+      w.dropOffsetY = 14;
+      w.width = widget.width || 1500;
+      w.height = widget.height || 180;
     } else if(widget.type == 'cardPile') {
       w.type = 'pile';
       w.movable = false;
@@ -92,8 +98,8 @@ export default async function convertPCIO(content) {
       w.height = widget.height || 168;
 
       if(widget.label) {
-        output[widget.id + 'label'] = {
-          id: widget.id + 'label',
+        output[widget.id + '_label'] = {
+          id: widget.id + '_label',
           x: widget.x,
           y: widget.y - 20,
           width: widget.width || 111,
