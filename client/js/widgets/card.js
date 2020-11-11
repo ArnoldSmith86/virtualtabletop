@@ -10,12 +10,13 @@ class Card extends Widget {
     this.flip();
   }
 
-  flip(setFlip) {
+  flip(setFlip, send=true) {
     if(typeof setFlip !== 'undefined')
       this.sourceObject.activeFace = setFlip;
     else
       this.sourceObject.activeFace = ((this.sourceObject.activeFace || 0) + 1) % this.deck.sourceObject.faceTemplates.length;
-    this.sendUpdate();
+    if(send)
+      this.sendUpdate();
   }
 
   receiveUpdate(object) {

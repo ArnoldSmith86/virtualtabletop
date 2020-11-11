@@ -1,5 +1,7 @@
 class Pile extends Widget {
   dispenseCard(card) {
+    if(typeof this.sourceObject.flipLeave != 'undefined' && card.flip)
+      card.flip(this.sourceObject.flipLeave, false);
     this.receiveCard(null);
   }
 
@@ -8,6 +10,9 @@ class Pile extends Widget {
 
     if(o.childrenPerOwner && card)
       card.sourceObject.owner = playerName;
+
+    if(card && typeof this.sourceObject.flipEnter != 'undefined' && card.flip)
+      card.flip(this.sourceObject.flipEnter, false);
 
     let xOffset = 0;
     let yOffset = 0;
