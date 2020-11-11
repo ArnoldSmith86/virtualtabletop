@@ -88,6 +88,7 @@ export default async function convertPCIO(content) {
       w.dropOffsetX = 10;
       w.dropOffsetY = 14;
       w.stackOffsetX = 40;
+      w.childrenPerOwner = true;
       w.width = widget.width || 1500;
       w.height = widget.height || 180;
     } else if(widget.type == 'cardPile') {

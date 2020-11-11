@@ -1,12 +1,17 @@
 class Pile extends Widget {
   receiveCard(card) {
+    const o = this.sourceObject;
+
+    if(o.childrenPerOwner)
+      card.sourceObject.owner = playerName;
+
     let xOffset = 0;
     let yOffset = 0;
     let z = 1;
 
-    for(const child of this.children().reverse()) {
-      const newX = this.sourceObject.x+(this.sourceObject.dropOffsetX || 4)+xOffset;
-      const newY = this.sourceObject.y+(this.sourceObject.dropOffsetY || 4)+yOffset;
+    for(const child of this.children().filter(c=>!c.sourceObject.owner || c.sourceObject.owner==playerName).reverse()) {
+      const newX = o.x+(o.dropOffsetX || 4)+xOffset;
+      const newY = o.y+(o.dropOffsetY || 4)+yOffset;
       const newZ = z++;
 
       if(newX != child.x || newY != child.y || newZ != child.z)
@@ -14,8 +19,8 @@ class Pile extends Widget {
       if(child == card)
         child.sendUpdate();
 
-      xOffset += this.sourceObject.stackOffsetX || 0;
-      yOffset += this.sourceObject.stackOffsetY || 0;
+      xOffset += o.stackOffsetX || 0;
+      yOffset += o.stackOffsetY || 0;
     }
   }
 

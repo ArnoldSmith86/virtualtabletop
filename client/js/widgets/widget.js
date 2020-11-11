@@ -71,6 +71,7 @@ class Widget extends Draggable {
   onDragEnd() {
     for(const t of this.dropTargets)
       t.domElement.classList.remove('droppable');
+
     if(this.hoverTarget) {
       this.moveToPile(this.hoverTarget);
       this.hoverTarget.domElement.classList.remove('droptarget');
@@ -88,6 +89,8 @@ class Widget extends Draggable {
       this.domElement.style.width = (this.width = object.width) + 'px';
     if(object.height)
       this.domElement.style.height = (this.height = object.height) + 'px';
+    if(object.owner && object.owner != playerName)
+      this.domElement.classList.add('foreign');
 
     this.isDraggable = this.sourceObject.movable !== false;
     this.setPositionFromServer(object.x || 0, object.y || 0, object.z || 0)

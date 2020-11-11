@@ -111,3 +111,6 @@ body {
   user-select: none;
   -moz-user-select: none;
 }
+.widget.foreign {
+  display: none !important;
+}
