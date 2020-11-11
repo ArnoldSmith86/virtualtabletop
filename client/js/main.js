@@ -115,6 +115,13 @@ onLoad(function() {
     });
   });
 
+  on('#fullscreenButton', 'click', function() {
+    if(!document.fullscreenElement)
+      document.documentElement.requestFullscreen();
+    else
+      document.exitFullscreen();
+  });
+
   on('#addWidget', 'click', function() {
     objectToWidget(JSON.parse($('#widgetText').value));
     $('.toolbarButton').dispatchEvent(new MouseEvent('click', {bubbles: true}));
