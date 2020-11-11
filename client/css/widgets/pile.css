@@ -1,0 +1,12 @@
+.pile.default {
+  background: white;
+  box-sizing: border-box;
+  border: calc(1px / var(--scale)) solid #333;
+  border-color: #d8d8d8 #ccc #ccc #d8d8d8;
+  background: #fff;
+  border-radius: 8px;
+}
+
+.widget.droppable.droptarget {
+  border: calc(1px / var(--scale)) solid #333 !important;
+}

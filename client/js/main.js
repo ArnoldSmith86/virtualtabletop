@@ -20,6 +20,8 @@ function addWidget(widget) {
     }
   } else if(widget.type == 'deck') {
     w = new Deck(widget, $('.surface'));
+  } else if(widget.type == 'pile') {
+    w = new Pile(widget, $('.surface'));
   } else if(widget.type == 'spinner')
     w = new Spinner(widget, $('.surface'));
   else if(widget.type == 'label')

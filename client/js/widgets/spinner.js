@@ -1,8 +1,4 @@
 class Spinner extends Widget {
-  constructor(object, surface) {
-    super(object, surface);
-  }
-
   click() {
     this.sourceObject.value = this.sourceObject.options[this.sourceObject.options.length * Math.random() | 0];
     this.sendUpdate();
