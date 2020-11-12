@@ -6,6 +6,19 @@ function objectToWidget(o) {
   toServer('add', o);
 }
 
+function editClick(e) {
+  if(edit) {
+    const target = widgets.get(e.target.id);
+    const { clientX, clientY } = e.type === "touchend" ? e.changedTouches[0] : e;
+
+    if(target.dragStartEvent.clientX == clientX && target.dragStartEvent.clientY == clientY) {
+      $('#editWidgetJSON').dataset.id = e.target.id;
+      $('#editWidgetJSON').value = JSON.stringify(target.sourceObject, null, '  ');
+      showOverlay('editOverlay');
+    }
+  }
+}
+
 onLoad(function() {
   on('#editButton', 'click', function() {
     if(edit)
@@ -32,14 +45,6 @@ onLoad(function() {
     showOverlay();
   });
 
-  on('#room', 'click', function(e) {
-    if(edit) {
-      const target = widgets.get(e.target.id);
-      if(target.dragStartEvent.clientX == e.clientX && target.dragStartEvent.clientY == e.clientY) {
-        $('#editWidgetJSON').dataset.id = e.target.id;
-        $('#editWidgetJSON').value = JSON.stringify(target.sourceObject, null, '  ');
-        showOverlay('editOverlay');
-      }
-    }
-  });
+  on('#room', 'mouseup',  editClick);
+  on('#room', 'touchend', editClick);
 });
