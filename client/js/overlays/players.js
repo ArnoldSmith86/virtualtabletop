@@ -39,7 +39,7 @@ function fillPlayerList(players, activePlayers) {
 }
 
 window.addEventListener('mousemove', function(event) {
-  toServer('mouse', [ (event.clientX - roomRectangle.left)/scale, (event.clientY - roomRectangle.top)/scale ]);
+  toServer('mouse', [ Math.floor((event.clientX - roomRectangle.left)/scale), Math.floor((event.clientY - roomRectangle.top)/scale) ]);
 });
 
 onLoad(function() {
