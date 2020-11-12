@@ -30,7 +30,7 @@ class Draggable {
 
   drag(e) {
     e.preventDefault();
-    if(this.active && this.isDraggable !== false) {
+    if(this.active && (this.isDraggable !== false || edit)) {
       const { clientX, clientY } = e.type === "touchmove" ? e.touches[0] : e;
 
       const x = Math.floor((clientX + this.offsetMouseToObject.x - this.containerRect.left) / scale);
@@ -48,7 +48,7 @@ class Draggable {
       this.onDragEnd();
 
       const { clientX, clientY } = e.type === "touchend" ? e.changedTouches[0] : e;
-      if(this.click && clientX == this.dragStartEvent.clientX && clientY == this.dragStartEvent.clientY)
+      if(this.click && clientX == this.dragStartEvent.clientX && clientY == this.dragStartEvent.clientY && !edit)
         this.click();
     }
   }

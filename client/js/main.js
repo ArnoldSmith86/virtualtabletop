@@ -3,6 +3,7 @@ const widgets = new Map();
 const dropTargets = new Map();
 
 let scale = 1;
+let edit = false;
 let roomRectangle;
 
 const deferredCards = {};
@@ -107,6 +108,14 @@ onLoad(function() {
       style.display = style.display === 'flex' ? 'none' : 'flex';
       $('#roomArea').className = style.display === 'flex' ? 'hasOverlay' : '';
     }
+  });
+
+  on('#editButton', 'click', function() {
+    if(edit)
+      $('body').classList.remove('edit');
+    else
+      $('body').classList.add('edit');
+    edit = !edit;
   });
 
   on('#uploadButton', 'click', function() {
