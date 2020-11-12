@@ -38,7 +38,7 @@ class Widget extends Draggable {
     this.setPosition(p.x+(p.dropOffsetX || 4), p.y+(p.dropOffsetY || 4), getMaxZ(this.sourceObject.layer || 0) + 1);
 
     if(pile.receiveCard) {
-      pile.receiveCard(this, [ thisX, thisY ]);
+      pile.receiveCard(this, [ thisX, thisY ], this.currentParent != pile);
     } else {
       this.sendUpdate();
     }
@@ -100,7 +100,8 @@ class Widget extends Draggable {
     this.checkParent();
 
     if(this.hoverTarget) {
-      this.checkParent(true);
+      if(this.currentParent != this.hoverTarget)
+        this.checkParent(true);
       this.moveToPile(this.hoverTarget);
       this.hoverTarget.domElement.classList.remove('droptarget');
     }

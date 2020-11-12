@@ -5,13 +5,13 @@ class Pile extends Widget {
     this.receiveCard(null);
   }
 
-  receiveCard(card, pos) {
+  receiveCard(card, pos, parentChanged) {
     const o = this.sourceObject;
 
     if(o.childrenPerOwner && card)
       card.sourceObject.owner = playerName;
 
-    if(card && typeof this.sourceObject.flipEnter != 'undefined' && card.flip)
+    if(card && parentChanged && typeof this.sourceObject.flipEnter != 'undefined' && card.flip)
       card.flip(this.sourceObject.flipEnter, !o.stackOffsetX && !o.stackOffsetY);
 
     if(!o.stackOffsetX && !o.stackOffsetY)
