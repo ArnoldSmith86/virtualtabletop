@@ -81,6 +81,8 @@ export default async function convertPCIO(content) {
       w.image = `https://playingcards.io/img/pieces/${widget.color}-${widget.pieceType}.svg`;
       w.layer = 1;
     } else if(widget.type == 'hand') {
+      if(widget.enabled === false)
+        continue;
       w.type = 'pile';
       w.movable = false;
       w.layer = -2;
