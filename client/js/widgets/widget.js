@@ -35,6 +35,7 @@ class Widget extends Draggable {
 
     const p = pile.sourceObject;
     this.sourceObject.parent = p.id;
+    delete this.sourceObject.owner;
     this.setPosition(p.x+(p.dropOffsetX || 4), p.y+(p.dropOffsetY || 4), getMaxZ(this.sourceObject.layer || 0) + 1);
 
     if(pile.receiveCard) {
