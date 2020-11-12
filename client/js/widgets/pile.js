@@ -17,10 +17,6 @@ class Pile extends Widget {
     if(!o.stackOffsetX && !o.stackOffsetY)
       return;
 
-    let xOffset = 0;
-    let yOffset = 0;
-    let z = 1;
-
     // get children sorted by X or Y position
     // replace coordinates of the received card to its previous coordinates so it gets dropped at the correct position
     const children = this.children().filter(c=>!c.sourceObject.owner || c.sourceObject.owner==playerName).sort(function(a, b) {
@@ -28,6 +24,14 @@ class Pile extends Widget {
         return (a == card ? pos[0] : a.x) - (b == card ? pos[0] : b.x);
       return (a == card ? pos[1] : a.y) - (b == card ? pos[1] : b.y);
     });
+    this.rearrangeChildren(children, card);
+  }
+
+  rearrangeChildren(children, card) {
+    const o = this.sourceObject;
+    let xOffset = 0;
+    let yOffset = 0;
+    let z = 1;
 
     for(const child of children) {
       const newX = o.x+(o.dropOffsetX || 4)+xOffset;
@@ -49,5 +53,17 @@ class Pile extends Widget {
     this.domElement.classList.add('pile');
     if(!this.sourceObject.transparent)
       this.domElement.classList.add('default');
+  }
+
+  updateAfterShuffle() {
+    if(!this.sourceObject.stackOffsetX && !this.sourceObject.stackOffsetY)
+      return;
+
+    const children = this.children();
+    for(const owner of new Set(children.map(c=>c.sourceObject.owner))) {
+      this.rearrangeChildren(children.filter(c=>!c.sourceObject.owner || c.sourceObject.owner==owner).sort(function(a, b) {
+        return a.z - b.z;
+      }));
+    }
   }
 }

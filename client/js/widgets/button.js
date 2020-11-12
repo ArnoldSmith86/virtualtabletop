@@ -39,8 +39,12 @@ class Button extends Widget {
         });
       }
 
-      if(a[0] == 'SHUFFLE')
-        this.w(a[1], pile=>pile.children().forEach(c=>c.setZ(Math.floor(Math.random()*10000))));
+      if(a[0] == 'SHUFFLE') {
+        this.w(a[1], pile=>{
+          pile.children().forEach(c=>c.setZ(Math.floor(Math.random()*10000)));
+          pile.updateAfterShuffle();
+        });
+      }
 
     }
   }
