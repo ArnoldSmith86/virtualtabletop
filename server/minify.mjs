@@ -17,6 +17,8 @@ export default function minifyRoom() {
       input: [
         'client/css/layout.css',
 
+        'client/css/editmode.css',
+
         'client/css/overlays/players.css',
         'client/css/overlays/states.css',
 
@@ -35,6 +37,7 @@ export default function minifyRoom() {
         input: [
           'client/js/domhelpers.js',
           'client/js/connection.js',
+          'client/js/editmode.js',
           'client/js/geometry.js',
           'client/js/draggable.js',
           'client/js/widgets/widget.js',

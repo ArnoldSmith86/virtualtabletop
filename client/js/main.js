@@ -3,7 +3,6 @@ const widgets = new Map();
 const dropTargets = new Map();
 
 let scale = 1;
-let edit = false;
 let roomRectangle;
 
 const deferredCards = {};
@@ -71,6 +70,19 @@ function objectToWidget(o) {
   toServer('add', o);
 }
 
+function showOverlay(id) {
+  for(const d of $a('.overlay'))
+    if(d.id != id)
+      d.style.display = 'none';
+  if(id) {
+    const style = $(`#${id}`).style;
+    style.display = style.display === 'flex' ? 'none' : 'flex';
+    $('#roomArea').className = style.display === 'flex' ? 'hasOverlay' : '';
+  } else {
+    $('#roomArea').className = '';
+  }
+}
+
 function setScale() {
   const w = window.innerWidth;
   const h = window.innerHeight;
@@ -97,25 +109,15 @@ onLoad(function() {
   onMessage('update', function(args) {
     widgets.get(args.id).receiveUpdate(args);
   });
+  onMessage('remove', function(args) {
+    widgets.get(args).remove();
+    widgets.delete(args);
+  });
 
   on('.toolbarButton', 'click', function(e) {
     const overlay = e.target.dataset.overlay;
-    if(overlay) {
-      for(const d of $a('.overlay'))
-        if(d.id != overlay)
-          d.style.display = 'none';
-      const style = $(`#${overlay}`).style;
-      style.display = style.display === 'flex' ? 'none' : 'flex';
-      $('#roomArea').className = style.display === 'flex' ? 'hasOverlay' : '';
-    }
-  });
-
-  on('#editButton', 'click', function() {
-    if(edit)
-      $('body').classList.remove('edit');
-    else
-      $('body').classList.add('edit');
-    edit = !edit;
+    if(overlay)
+      showOverlay(overlay);
   });
 
   on('#uploadButton', 'click', function() {
@@ -133,12 +135,6 @@ onLoad(function() {
     else
       document.exitFullscreen();
   });
-
-  on('#addWidget', 'click', function() {
-    objectToWidget(JSON.parse($('#widgetText').value));
-    $('.toolbarButton').dispatchEvent(new MouseEvent('click', {bubbles: true}));
-  });
-
   setScale();
 });
 

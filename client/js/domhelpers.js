@@ -1,5 +1,5 @@
 function $(selector, parent) {
-  return (parent || document).querySelector(selector, parent);
+  return (parent || document).querySelector(selector);
 }
 
 function $a(selector, parent) {

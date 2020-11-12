@@ -1,0 +1,18 @@
+#addOverlay textarea, #editOverlay textarea {
+  height: 100%;
+}
+
+body.edit .surface {
+  background-size: 30px 30px;
+
+  background-image:
+    repeating-linear-gradient(        #e0e0e0, #e0e0e0 1px, transparent 2px, transparent 30px),
+    repeating-linear-gradient(-90deg, #e0e0e0, #e0e0e0 1px, transparent 2px, transparent 30px);
+}
+
+body.edit .widget {
+  background: none !important;
+  border: 3px solid var(--editColor);
+  color: var(--editColor);
+  box-sizing: border-box;
+}

@@ -25,6 +25,8 @@ export default class Player {
       this.room.mouseMove(this, args);
     if(func == 'playerColor')
       this.room.recolorPlayer(this, args.player, args.color);
+    if(func == 'remove')
+      this.room.removeWidget(this, args);
     if(func == 'removeState')
       this.room.removeState(this, args);
     if(func == 'rename')

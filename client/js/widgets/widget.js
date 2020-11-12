@@ -128,6 +128,10 @@ class Widget extends Draggable {
     this.setPositionFromServer(object.x || 0, object.y || 0, object.z || 0)
   }
 
+  remove() {
+    this.domElement.parentNode.removeChild(this.domElement);
+  }
+
   sendUpdate() {
     toServer('update', this.sourceObject);
   }

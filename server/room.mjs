@@ -106,6 +106,11 @@ export default class Room {
     this.sendMetaUpdate();
   }
 
+  removeWidget(player, widgetID) {
+    delete this.state[widgetID];
+    this.broadcast('remove', widgetID);
+  }
+
   renamePlayer(renamingPlayer, oldName, newName) {
     this.state._meta.players[newName] = this.state._meta.players[newName] || this.state._meta.players[oldName];
     delete this.state._meta.players[oldName];

@@ -1,8 +1,6 @@
 class Deck extends Widget {
   constructor(object, surface) {
     super(object, surface);
-    const div = document.createElement('div');
-    this.domElement.addEventListener('click', e=>this.click(e));
     this.cards = {};
     this.domElement.textContent = 0;
   }
