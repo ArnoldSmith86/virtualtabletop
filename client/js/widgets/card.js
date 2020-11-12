@@ -43,7 +43,7 @@ class Card extends Widget {
         objectDiv.style.cssText = `left: ${object.x}px; top: ${object.y}px; width: ${object.w}px; height: ${object.h}px; font-size: ${object.fontSize}px; text-align: ${object.textAlign}`;
         if(object.type == 'image') {
           objectDiv.style.backgroundImage = `url(${value})`;
-          objectDiv.style.backgroundColor = object.color;
+          objectDiv.style.backgroundColor = object.color || 'white';
         } else {
           objectDiv.textContent = value;
           objectDiv.style.color = object.color;
