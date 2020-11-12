@@ -1,7 +1,7 @@
 class Pile extends Widget {
   dispenseCard(card) {
     if(typeof this.sourceObject.flipLeave != 'undefined' && card.flip)
-      card.flip(this.sourceObject.flipLeave, false);
+      card.flip(this.sourceObject.flipLeave);
     this.receiveCard(null);
   }
 
@@ -12,7 +12,7 @@ class Pile extends Widget {
       card.sourceObject.owner = playerName;
 
     if(card && typeof this.sourceObject.flipEnter != 'undefined' && card.flip)
-      card.flip(this.sourceObject.flipEnter, false);
+      card.flip(this.sourceObject.flipEnter, !o.stackOffsetX && !o.stackOffsetY);
 
     if(!o.stackOffsetX && !o.stackOffsetY)
       return;
