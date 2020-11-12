@@ -127,11 +127,17 @@ class Widget extends Draggable {
       this.domElement.classList.add('foreign');
 
     this.isDraggable = this.sourceObject.movable !== false;
-    this.setPositionFromServer(object.x || 0, object.y || 0, object.z || 0)
+    this.extraTransform = object.rotation ? `rotate(${object.rotation}deg)` : '';
+    this.setPositionFromServer(object.x || 0, object.y || 0, object.z || 0);
   }
 
   remove() {
     this.domElement.parentNode.removeChild(this.domElement);
+  }
+
+  rotate(degrees) {
+    this.sourceObject.rotation = ((this.sourceObject.rotation || 0) + degrees) % 360;
+    this.sendUpdate();
   }
 
   sendUpdate() {

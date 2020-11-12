@@ -3,6 +3,8 @@ class Draggable {
     this.domElement = domElement;
     this.containerDomElement = containerDomElement || domElement.parentElement;
 
+    this.extraTransform = '';
+
     this.containerDomElement.addEventListener("touchstart", e => this.dragStart(e), false);
     this.containerDomElement.addEventListener("touchend",   e => this.dragEnd(e),   false);
     this.containerDomElement.addEventListener("touchmove",  e => this.drag(e),      false);
@@ -54,6 +56,6 @@ class Draggable {
   }
 
   setTranslate(x, y, el) {
-    el.style.transform = `translate(${x}px, ${y}px)`;
+    el.style.transform = `translate(${x}px, ${y}px) ${this.extraTransform}`;
   }
 }

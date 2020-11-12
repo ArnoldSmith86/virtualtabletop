@@ -39,6 +39,15 @@ class Button extends Widget {
         });
       }
 
+      if(a[0] == 'ROTATE') {
+        this.w(a[2], pile=>{
+          let cards = pile.children();
+          if(a[1] == 'card')
+            cards = [ cards[0] ];
+          cards.forEach(c=>c.rotate(a[3]));
+        });
+      }
+
       if(a[0] == 'SHUFFLE') {
         this.w(a[1], pile=>{
           pile.children().forEach(c=>c.setZ(Math.floor(Math.random()*10000)));
