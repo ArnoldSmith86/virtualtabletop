@@ -64,12 +64,6 @@ function getMaxZ(layer) {
   return maxZ;
 }
 
-function objectToWidget(o) {
-  if(!o.id)
-    o.id = Math.random().toString(36).substring(3, 7);
-  toServer('add', o);
-}
-
 function showOverlay(id) {
   for(const d of $a('.overlay'))
     if(d.id != id)

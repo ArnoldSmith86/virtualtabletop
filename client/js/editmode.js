@@ -1,5 +1,11 @@
 let edit = false;
 
+function objectToWidget(o) {
+  if(!o.id)
+    o.id = Math.random().toString(36).substring(3, 7);
+  toServer('add', o);
+}
+
 onLoad(function() {
   on('#editButton', 'click', function() {
     if(edit)
