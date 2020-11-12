@@ -106,7 +106,7 @@ export default async function convertPCIO(content) {
           id: widget.id + '_label',
           x: widget.x,
           y: widget.y - 20,
-          width: widget.width || 111,
+          width: w.width,
           type: 'label',
           text: widget.label,
           movable: false,
@@ -118,11 +118,11 @@ export default async function convertPCIO(content) {
         output[widget.id + '_shuffleButton'] = {
           id: widget.id + '_shuffleButton',
           x: widget.x,
-          y: widget.y + 1.02*(widget.height || 168),
-          width: widget.width || 111,
+          y: widget.y + 1.02*w.height,
+          width: w.width,
           height: 32,
           type: 'button',
-          label: 'Recall & Shuffle',
+          label: w.width < 70 ? 'R&S' : 'Recall & Shuffle',
           layer: -1,
 
           clickRoutine: [
