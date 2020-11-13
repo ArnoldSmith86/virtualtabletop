@@ -52,7 +52,10 @@ onLoad(function() {
     }
   });
   onMessage('rename', function(args) {
+    const oldName = playerName;
     playerName = args;
     localStorage.setItem('playerName', playerName);
+    for(const [ id, widget ] of widgets)
+      widget.updateOwner(oldName, playerName);
   });
 });

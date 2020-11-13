@@ -177,4 +177,11 @@ class Widget extends Draggable {
     }
     event.preventDefault();
   }
+
+  updateOwner(oldName, newName) {
+    if(this.sourceObject.owner && this.sourceObject.owner == oldName)
+      this.domElement.classList.add('foreign');
+    if(this.sourceObject.owner && this.sourceObject.owner == newName)
+      this.domElement.classList.remove('foreign');
+  }
 }
