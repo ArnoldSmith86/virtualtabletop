@@ -33,6 +33,11 @@ class Widget extends Draggable {
     const thisX = this.x;
     const thisY = this.y;
 
+    if(this.sourceObject.parent && !this.currentParent)
+      this.currentParent = widgets.get(this.sourceObject.parent);
+    if(this.currentParent != pile)
+      this.checkParent(true);
+
     const p = pile.sourceObject;
     this.sourceObject.parent = p.id;
     delete this.sourceObject.owner;
@@ -101,8 +106,6 @@ class Widget extends Draggable {
     this.checkParent();
 
     if(this.hoverTarget) {
-      if(this.currentParent != this.hoverTarget)
-        this.checkParent(true);
       this.moveToPile(this.hoverTarget);
       this.hoverTarget.domElement.classList.remove('droptarget');
     }
