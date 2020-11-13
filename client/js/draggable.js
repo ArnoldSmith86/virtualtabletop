@@ -12,6 +12,7 @@ class Draggable {
     this.containerDomElement.addEventListener("mousedown",  e => this.dragStart(e), false);
     this.containerDomElement.addEventListener("mouseup",    e => this.dragEnd(e),   false);
     this.containerDomElement.addEventListener("mousemove",  e => this.drag(e),      false);
+    this.containerDomElement.addEventListener("mouseleave", e => this.dragEnd(e),   false);
   }
 
   dragStart(e) {
