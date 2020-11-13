@@ -9,9 +9,9 @@ class Label extends Widget {
 
   setText(text, mode) {
     if(!mode || mode == 'set')
-      this.sourceObject.text = text;
+      this.p('text', text);
     else
-      this.sourceObject.text += (mode == 'dec' ? -1 : 1) * text;
+      this.p('text', this.p('text') + (mode == 'dec' ? -1 : 1) * text);
     this.sendUpdate();
   }
 }

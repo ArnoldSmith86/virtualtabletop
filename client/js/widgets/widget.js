@@ -2,6 +2,23 @@ class Widget extends Draggable {
   constructor(object, surface) {
     const div = document.createElement('div');
     super(div, surface);
+
+    this.defaults = {
+      x: 200,
+      y: 100,
+      z: 0,
+      width: 100,
+      height: 100,
+      layer: 0,
+      rotation: 0,
+
+      css: '',
+      movable: true,
+
+      dropOffsetX: 0,
+      dropOffsetY: 0
+    };
+
     surface.appendChild(div);
     this.receiveUpdate(object);
 
@@ -11,13 +28,13 @@ class Widget extends Draggable {
   }
 
   children() {
-    return Array.from(widgets.values()).filter(w=>w.sourceObject.parent==this.sourceObject.id&&w.sourceObject.type!='deck').sort((a,b)=>b.sourceObject.z-a.sourceObject.z);
+    return Array.from(widgets.values()).filter(w=>w.p('parent')==this.p('id')&&w.p('type')!='deck').sort((a,b)=>b.p('z')-a.p('z'));
   }
 
   checkParent(forceDetach) {
     if(this.currentParent && (forceDetach || !overlap(this, this.currentParent))) {
-      delete this.sourceObject.parent;
-      delete this.sourceObject.owner;
+      this.p('parent', null);
+      this.p('owner',  null);
       if(this.currentParent.dispenseCard)
         this.currentParent.dispenseCard(this);
       delete this.currentParent;
@@ -30,18 +47,17 @@ class Widget extends Draggable {
   }
 
   moveToPile(pile) {
-    const thisX = this.x;
-    const thisY = this.y;
+    const thisX = this.p('x');
+    const thisY = this.p('y');
 
-    if(this.sourceObject.parent && !this.currentParent)
-      this.currentParent = widgets.get(this.sourceObject.parent);
+    if(this.p('parent') && !this.currentParent)
+      this.currentParent = widgets.get(this.p('parent'));
     if(this.currentParent != pile)
       this.checkParent(true);
 
-    const p = pile.sourceObject;
-    this.sourceObject.parent = p.id;
-    delete this.sourceObject.owner;
-    this.setPosition(p.x+(p.dropOffsetX || 4), p.y+(p.dropOffsetY || 4), getMaxZ(this.sourceObject.layer || 0) + 1);
+    this.p('parent', pile.p('id'));
+    this.p('owner',  null);
+    this.setPosition(pile.p('x')+pile.p('dropOffsetX'), pile.p('y')+pile.p('dropOffsetY'), getMaxZ(this.p('layer')) + 1);
 
     if(pile.receiveCard) {
       pile.receiveCard(this, [ thisX, thisY ], this.currentParent != pile);
@@ -51,9 +67,9 @@ class Widget extends Draggable {
   }
 
   onDragStart() {
-    this.dragZ = getMaxZ(this.sourceObject.layer || 0) + 1;
-    this.dropTargets = getValidDropTargets(this.sourceObject);
-    this.currentParent = widgets.get(this.sourceObject.parent);
+    this.dragZ = getMaxZ(this.p('layer')) + 1;
+    this.dropTargets = getValidDropTargets(this);
+    this.currentParent = widgets.get(this.p('parent'));
     this.hoverTargetDistance = 99999;
     this.hoverTarget = null;
     for(const t of this.dropTargets)
@@ -113,25 +129,41 @@ class Widget extends Draggable {
     this.hideEnlarged();
   }
 
+  p(property, value) {
+    if(value === undefined)
+      return this.propertyGet(property);
+    else
+      this.propertySet(property, value);
+  }
+
+  propertyGet(property) {
+    if(this.sourceObject[property] !== undefined)
+      return this.sourceObject[property];
+    else
+      return this.defaults[property];
+  }
+
+  propertySet(property, value) {
+    if(value === null)
+      delete this.sourceObject[property];
+    else
+      this.sourceObject[property] = value;
+  }
+
   receiveUpdate(object) {
     this.sourceObject = object;
 
-    this.enlarge = object.enlarge;
-
-    this.domElement.id = object.id;
+    this.domElement.id = this.p('id');
     this.domElement.className = 'widget';
-    if(object.css)
-      this.domElement.style.cssText = object.css || '';
-    if(object.width)
-      this.domElement.style.width = (this.width = object.width) + 'px';
-    if(object.height)
-      this.domElement.style.height = (this.height = object.height) + 'px';
-    if(object.owner && object.owner != playerName)
+    this.domElement.style.cssText = this.p('css');
+    this.domElement.style.width = this.p('width') + 'px';
+    this.domElement.style.height = this.p('height') + 'px';
+    if(this.p('owner') && this.p('owner') != playerName)
       this.domElement.classList.add('foreign');
 
-    this.isDraggable = this.sourceObject.movable !== false;
-    this.extraTransform = object.rotation ? `rotate(${object.rotation}deg)` : '';
-    this.setPositionFromServer(object.x || 0, object.y || 0, object.z || 0);
+    this.isDraggable = this.p('movable');
+    this.extraTransform = this.p('rotation') ? `rotate(${this.p('rotation')}deg)` : '';
+    this.setPositionFromServer(this.p('x'), this.p('y'), this.p('z'));
   }
 
   remove() {
@@ -139,7 +171,7 @@ class Widget extends Draggable {
   }
 
   rotate(degrees) {
-    this.sourceObject.rotation = ((this.sourceObject.rotation || 0) + degrees) % 360;
+    this.p('rotation', (this.p('rotation') + degrees) % 360);
     this.sendUpdate();
   }
 
@@ -148,43 +180,44 @@ class Widget extends Draggable {
   }
 
   setPosition(x, y, z, send=true) {
-    this.sourceObject.x = this.x = x;
-    this.sourceObject.y = this.y = y;
-    this.sourceObject.z = this.z = z;
+    this.p('x', x);
+    this.p('y', y);
+    this.p('z', z);
     if(send)
-      toServer("translate", { id: this.sourceObject.id, pos: [ x, y, z ]});
+      toServer("translate", { id: this.p('id'), pos: [ x, y, z ]});
   }
 
   setPositionFromServer(x, y, z) {
-    this.sourceObject.x = this.x = x;
-    this.sourceObject.y = this.y = y;
-    this.sourceObject.z = z;
-    this.domElement.style.zIndex = (((this.sourceObject.layer || 0) + 10) * 100000) + z;
+    this.p('x', x);
+    this.p('y', y);
+    this.p('z', z);
+    this.domElement.style.zIndex = ((this.p('layer') + 10) * 100000) + z;
     if(!this.active)
       this.setTranslate(x, y, this.domElement);
   }
 
   setZ(z) {
-    this.setPosition(this.x, this.y, z);
+    this.setPosition(this.p('x'), this.p('y'), z);
   }
 
   showEnlarged(event) {
-    if(this.enlarge) {
+    if(this.p('enlarge')) {
       const e = $('#enlarged');
       e.innerHTML = this.domElement.innerHTML;
       e.className = this.domElement.className;
       e.style.cssText = this.domElement.style.cssText;
       e.style.display = this.domElement.style.display;
-      if(this.x < 600)
+      if(this.p('x') < 600)
         e.classList.add('right');
     }
     event.preventDefault();
   }
 
   updateOwner(oldName, newName) {
-    if(this.sourceObject.owner && this.sourceObject.owner == oldName)
+    const o = this.p('owner');
+    if(o && o == oldName)
       this.domElement.classList.add('foreign');
-    if(this.sourceObject.owner && this.sourceObject.owner == newName)
+    if(o && o == newName)
       this.domElement.classList.remove('foreign');
   }
 }

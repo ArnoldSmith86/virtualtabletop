@@ -4,7 +4,7 @@ class Button extends Widget {
   }
 
   click() {
-    for(const a of this.sourceObject.clickRoutine) {
+    for(const a of this.p('clickRoutine')) {
 
       if(a[0] == 'LABEL')
         this.w(a[1], label=>label.setText(a[3], a[2]));
@@ -33,9 +33,9 @@ class Button extends Widget {
 
       if(a[0] == 'RECALL') {
         this.toA(a[1]).forEach(pile=>{
-          const deck = this.wFilter(w=>w.sourceObject.type=='deck'&&w.sourceObject.parent==pile)[0];
+          const deck = this.wFilter(w=>w.p('type')=='deck'&&w.p('parent')==pile)[0];
           if(deck)
-            this.wFilter(w=>w.sourceObject.deck==deck.sourceObject.id).forEach(c=>c.moveToPile(widgets.get(pile)));
+            this.wFilter(w=>w.p('deck')==deck.p('id')).forEach(c=>c.moveToPile(widgets.get(pile)));
         });
       }
 
@@ -62,7 +62,7 @@ class Button extends Widget {
     super.receiveUpdate(object);
     this.isDraggable = false;
     this.domElement.classList.add('button');
-    this.domElement.textContent = this.sourceObject.label;
+    this.domElement.textContent = this.p('label');
   }
 
   toA(ids) {
@@ -70,7 +70,7 @@ class Button extends Widget {
   }
 
   w(ids, callback) {
-    return this.wFilter(w=>this.toA(ids).indexOf(w.sourceObject.id) != -1).forEach(callback);
+    return this.wFilter(w=>this.toA(ids).indexOf(w.p('id')) != -1).forEach(callback);
   }
 
   wFilter(callback) {

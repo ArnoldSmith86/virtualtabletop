@@ -1,6 +1,7 @@
 class Card extends Widget {
   constructor(object, surface, deck) {
     super(object, surface);
+
     this.deck = deck;
     deck.addCard(this);
     this.receiveUpdate(this.sourceObject);
@@ -12,21 +13,32 @@ class Card extends Widget {
 
   flip(setFlip, send=true) {
     if(typeof setFlip !== 'undefined')
-      this.sourceObject.activeFace = setFlip;
+      this.p('activeFace', setFlip);
     else
-      this.sourceObject.activeFace = ((this.sourceObject.activeFace || 0) + 1) % this.deck.sourceObject.faceTemplates.length;
+      this.p('activeFace', (this.p('activeFace') + 1) % this.deck.p('faceTemplates').length);
     if(send)
       this.sendUpdate();
+  }
+
+  propertyGet(property) {
+    if(this.sourceObject[property] !== undefined)
+      return this.sourceObject[property];
+
+    const d = this.deck && this.deck.cardPropertyGet(this.p('cardType'), property);
+    if(d !== undefined)
+      return d;
+
+    return this.defaults[property];
   }
 
   receiveUpdate(object) {
     super.receiveUpdate(object);
     this.domElement.classList.add('card');
     if(this.deck && !this.domElement.innerHTML) {
-      this.domElement.style.width = (this.width = this.deck.sourceObject.cardWidth || 103) + 'px';
-      this.domElement.style.height = (this.height = this.deck.sourceObject.cardHeight || 160) + 'px';
+      this.domElement.style.width = this.p('width') + 'px';
+      this.domElement.style.height = this.p('height') + 'px';
 
-      for(const face of this.deck.sourceObject.faceTemplates) {
+      for(const face of this.deck.p('faceTemplates')) {
         const faceDiv = document.createElement('div');
 
         faceDiv.style.border = face.includeBorder ? '1px black solid' : 'none';
@@ -34,7 +46,7 @@ class Card extends Widget {
 
         for(const object of face.objects) {
           const objectDiv = document.createElement('div');
-          const value = object.valueType == 'static' ? object.value : this.deck.sourceObject.cardTypes[this.sourceObject.cardType][object.value];
+          const value = object.valueType == 'static' ? object.value : this.p(object.value);
           objectDiv.style.cssText = `left: ${object.x}px; top: ${object.y}px; width: ${object.w}px; height: ${object.h}px; font-size: ${object.fontSize}px; text-align: ${object.textAlign}`;
           if(object.type == 'image') {
             objectDiv.style.backgroundImage = `url(${value})`;
@@ -49,11 +61,8 @@ class Card extends Widget {
       }
     }
 
-    if(this.deck && typeof this.enlarge == 'undefined' && this.deck.sourceObject.enlarge)
-      this.enlarge = this.deck.sourceObject.enlarge;
-
     for(let i=0; i<this.domElement.children.length; ++i) {
-      if(i == (this.sourceObject.activeFace || 0))
+      if(i == this.p('activeFace'))
         this.domElement.children[i].classList.add('active');
       else
         this.domElement.children[i].classList.remove('active');

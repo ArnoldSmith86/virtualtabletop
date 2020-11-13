@@ -1,5 +1,5 @@
 function center(r) {
-  return [ r.x+r.width/2, r.y+r.height/2 ];
+  return [ r.p('x')+r.p('width')/2, r.p('y')+r.p('height')/2 ];
 }
 
 function distance(a, b) {
@@ -7,5 +7,5 @@ function distance(a, b) {
 }
 
 function overlap(a, b) {
-  return !(a.y+a.height <= b.y || a.y >= b.y+b.height || a.x+a.width <= b.x || a.x >= b.x+b.width);
+  return !(a.p('y')+a.p('height') <= b.p('y') || a.p('y') >= b.p('y')+b.p('height') || a.p('x')+a.p('width') <= b.p('x') || a.p('x') >= b.p('x')+b.p('width'));
 }

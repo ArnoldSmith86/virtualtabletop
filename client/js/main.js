@@ -44,8 +44,8 @@ function getValidDropTargets(widget) {
   const targets = [];
   for(const [ _, t ] of dropTargets) {
     let isValid = true;
-    for(const key in t.sourceObject.dropTarget) {
-      if(widget[key] != t.sourceObject.dropTarget[key]) {
+    for(const key in t.p('dropTarget')) {
+      if(widget.p(key) != t.p('dropTarget')[key]) {
         isValid = false;
         break;
       }
@@ -59,8 +59,8 @@ function getValidDropTargets(widget) {
 function getMaxZ(layer) {
   let maxZ = -1;
   for(const [ id, widget ] of widgets)
-    if((widget.sourceObject.layer || 0) == layer)
-      maxZ = Math.max(maxZ, widget.sourceObject.z || 0);
+    if(widget.p('layer') == layer)
+      maxZ = Math.max(maxZ, widget.p('z') || 0);
   return maxZ;
 }
 
@@ -90,7 +90,7 @@ onLoad(function() {
   onMessage('state', function(args) {
     for(const widget of $a('.widget'))
       if(widget.id != 'enlarged')
-        widget.parentNode.removeChild(widget);
+        widget.remove();
     widgets.clear();
     dropTargets.clear();
     for(const widgetID in args)
