@@ -23,9 +23,6 @@ class Card extends Widget {
     super.receiveUpdate(object);
     this.domElement.classList.add('card');
     if(this.deck && !this.domElement.innerHTML) {
-      if(typeof this.enlarge == 'undefined' && this.deck.sourceObject.enlarge)
-        this.enlarge = this.deck.sourceObject.enlarge;
-
       this.domElement.style.width = (this.width = this.deck.sourceObject.cardWidth || 103) + 'px';
       this.domElement.style.height = (this.height = this.deck.sourceObject.cardHeight || 160) + 'px';
 
@@ -51,6 +48,10 @@ class Card extends Widget {
         this.domElement.appendChild(faceDiv);
       }
     }
+
+    if(this.deck && typeof this.enlarge == 'undefined' && this.deck.sourceObject.enlarge)
+      this.enlarge = this.deck.sourceObject.enlarge;
+
     for(let i=0; i<this.domElement.children.length; ++i) {
       if(i == (this.sourceObject.activeFace || 0))
         this.domElement.children[i].classList.add('active');
