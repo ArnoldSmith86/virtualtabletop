@@ -20,7 +20,7 @@ class Card extends Widget {
   }
 
   flip(setFlip) {
-    if(typeof setFlip !== 'undefined')
+    if(setFlip !== undefined && setFlip !== null)
       this.p('activeFace', setFlip);
     else
       this.p('activeFace', (this.p('activeFace') + 1) % this.deck.p('faceTemplates').length);

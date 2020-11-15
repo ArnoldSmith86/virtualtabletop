@@ -15,50 +15,38 @@ class Button extends Widget {
   click() {
     for(const a of this.p('clickRoutine')) {
 
-      if(a[0] == 'LABEL')
-        this.w(a[1], label=>label.setText(a[3], a[2]));
-
-      if(a[0] == 'FLIP') {
-        this.w(a[2], holder=>{
-          let cards = holder.children();
-          if(a[1] == 'card')
-            cards = [ cards[0] ];
-          if(a[3])
-            cards.forEach(c=>c.flip(a[3] == 'faceDown' ? 0 : 1));
-          else
-            cards.forEach(c=>c.flip());
-        });
+      if(a.func == 'FLIP') {
+        this.w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>c.flip(a.face)));
       }
 
-      if(a[0] == 'MOVE') {
-        this.w(a[1], source=>this.w(a[3], target=>source.children().slice(0, a[2]).reverse().forEach(c=> {
-          if(a[4] == 'faceUp')
-            c.flip(1);
-          if(a[4] == 'faceDown')
-            c.flip(0);
+      if(a.func == 'LABEL') {
+        this.w(a.label, label=>label.setText(a.value !== undefined ? a.value : 0, a.mode || 'set'));
+      }
+
+      if(a.func == 'MOVE') {
+        this.w(a.from, source=>this.w(a.to, target=>source.children().slice(0, (a.count !== undefined ? a.count : 1) || 999999).reverse().forEach(c=> {
+          if(a.face !== undefined && a.face !== null)
+            c.flip(a.face);
           c.moveToHolder(target);
         })));
       }
 
-      if(a[0] == 'RECALL') {
-        this.toA(a[1]).forEach(holder=>{
+      if(a.func == 'RECALL') {
+        this.toA(a.holder).forEach(holder=>{
           const deck = this.wFilter(w=>w.p('type')=='deck'&&w.p('parent')==holder)[0];
           if(deck)
             this.wFilter(w=>w.p('deck')==deck.p('id')).forEach(c=>c.moveToHolder(widgets.get(holder)));
         });
       }
 
-      if(a[0] == 'ROTATE') {
-        this.w(a[2], holder=>{
-          let cards = holder.children();
-          if(a[1] == 'card')
-            cards = [ cards[0] ];
-          cards.forEach(c=>c.rotate(a[3]));
-        });
+      if(a.func == 'ROTATE') {
+        this.w(a.holder, holder=>holder.children().slice(0, (a.count !== undefined ? a.count : 1) || 999999).forEach(c=>{
+          c.rotate(a.angle !== undefined ? a.angle : 90);
+        }));
       }
 
-      if(a[0] == 'SHUFFLE') {
-        this.w(a[1], holder=>{
+      if(a.func == 'SHUFFLE') {
+        this.w(a.holder, holder=>{
           holder.children().forEach(c=>c.p('z', Math.floor(Math.random()*10000)));
           holder.updateAfterShuffle();
         });

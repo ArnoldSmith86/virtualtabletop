@@ -119,9 +119,9 @@ export default async function convertPCIO(content) {
           label: w.width < 70 ? 'R&S' : 'Recall & Shuffle',
 
           clickRoutine: [
-            [ "RECALL", widget.id ],
-            [ "FLIP", 'pile', widget.id, 'faceDown' ],
-            [ "SHUFFLE", widget.id ]
+            { func: 'RECALL',  holder: widget.id },
+            { func: 'FLIP',    holder: widget.id, face: 0 },
+            { func: 'SHUFFLE', holder: widget.id }
           ]
         };
       }
@@ -172,7 +172,7 @@ export default async function convertPCIO(content) {
           label,
 
           clickRoutine: [
-            [ "LABEL", widget.id, 'inc', value ]
+            { func: 'LABEL', label: widget.id, mode: 'inc', value }
           ]
         };
       }
@@ -208,33 +208,58 @@ export default async function convertPCIO(content) {
 
       w.clickRoutine = [];
       for(let c of widget.clickRoutine) {
-        if(c.func == "MOVE_CARDS_BETWEEN_HOLDERS") {
+        if(c.func == 'MOVE_CARDS_BETWEEN_HOLDERS') {
           const moveFlip = c.args.moveFlip && c.args.moveFlip.value;
-          c = [ "MOVE", c.args.from.value, (c.args.quantity || { value: 1 }).value, c.args.to.value ];
-          if(c[1].length == 1)
-            c[1] = c[1][0];
-          if(c[3].length == 1)
-            c[3] = c[3][0];
-          if(moveFlip && moveFlip != "none")
-            c[4] = moveFlip;
+          c = {
+            func:  'MOVE',
+            from:  c.args.from.value,
+            count: (c.args.quantity || { value: 1 }).value,
+            to:    c.args.to.value
+          };
+          if(c.from.length == 1)
+            c.from = c.from[0];
+          if(c.count == 1)
+            delete c.count;
+          if(c.to.length == 1)
+            c.to = c.to[0];
+          if(moveFlip && moveFlip != 'none')
+            c.face = moveFlip == 'faceDown' ? 0 : 1;
         }
-        if(c.func == "SHUFFLE_CARDS") {
-          c = [ "SHUFFLE", c.args.holders.value ];
-          if(c[1].length == 1)
-            c[1] = c[1][0];
+        if(c.func == 'SHUFFLE_CARDS') {
+          c = {
+            func:   'SHUFFLE',
+            holder: c.args.holders.value
+          };
+          if(c.holder.length == 1)
+            c.holder = c.holder[0];
         }
         if(c.func == "FLIP_CARDS") {
           const flipFace = c.args.flipFace;
-          c = [ "FLIP", c.args.flipMode ? c.args.flipMode.value : 'card', c.args.holders.value ];
-          if(c[2].length == 1)
-            c[2] = c[2][0];
+          c = {
+            func:   'FLIP',
+            holder: c.args.holders.value,
+            count:  c.args.flipMode || c.args.flipMode.value == 'pile' ? 0 : 1
+          };
+          if(c.holder.length == 1)
+            c.holder = c.holder[0];
+          if(!c.count)
+            delete c.count;
           if(flipFace)
-            c.push(flipFace.value);
+            c.face = flipFace.value == 'faceDown' ? 0 : 1;
         }
         if(c.func == "CHANGE_COUNTER") {
-          c = [ "LABEL", c.args.counters.value, c.args.changeMode ? c.args.changeMode.value : 'set', c.args.changeNumber ? c.args.changeNumber.value : 0 ];
-          if(c[1].length == 1)
-            c[1] = c[1][0];
+          c = {
+            func: 'LABEL',
+            label: c.args.counters.value,
+            mode:  c.args.changeMode ? c.args.changeMode.value : 'set',
+            value: c.args.changeNumber ? c.args.changeNumber.value : 0
+          };
+          if(c.label.length == 1)
+            c.label = c.label[0];
+          if(c.mode == 'set')
+            delete c.mode;
+          if(c.value === 0)
+            delete c.value;
         }
         w.clickRoutine.push(c);
       }
