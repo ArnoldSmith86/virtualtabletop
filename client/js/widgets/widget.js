@@ -179,7 +179,7 @@ class Widget extends Draggable {
   }
 
   remove() {
-    this.domElement.parentNode.removeChild(this.domElement);
+    removeFromDOM(this.domElement);
   }
 
   rotate(degrees) {

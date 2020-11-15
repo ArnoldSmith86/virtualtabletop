@@ -10,11 +10,7 @@ function addPlayerCursor(playerName, playerColor) {
 }
 
 function fillPlayerList(players, activePlayers) {
-  for(const entry of $a('#playerList > div'))
-    entry.parentNode.removeChild(entry);
-
-  for(const c of $a('#roomArea > .cursor'))
-    c.parentNode.removeChild(c);
+  removeFromDOM('#playerList > div, #roomArea > .cursor');
 
   for(const player in players) {
     const entry = domByTemplate('template-playerlist-entry');

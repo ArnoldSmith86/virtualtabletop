@@ -1,7 +1,7 @@
 class Draggable {
   constructor(domElement, containerDomElement) {
     this.domElement = domElement;
-    this.containerDomElement = containerDomElement || domElement.parentElement;
+    this.containerDomElement = containerDomElement || domElement.parentNode;
 
     this.extraTransform = '';
 

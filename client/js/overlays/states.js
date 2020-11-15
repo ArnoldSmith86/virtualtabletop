@@ -1,8 +1,8 @@
 function fillStatesList(states, activePlayers) {
   const addDiv = $('#addState');
-  addDiv.parentElement.removeChild(addDiv);
-  for(const entry of $a('#statesList > div'))
-    entry.parentNode.removeChild(entry);
+  removeFromDOM(addDiv);
+  removeFromDOM('#statesList > div');
+
   for(const state of states) {
     const entry = domByTemplate('template-stateslist-entry');
     entry.className = 'roomState';

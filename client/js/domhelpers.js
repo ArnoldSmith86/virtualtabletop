@@ -6,6 +6,15 @@ function $a(selector, parent) {
   return (parent || document).querySelectorAll(selector);
 }
 
+function removeFromDOM(node) {
+  if(typeof node == 'string') {
+    for(const c of $a(node))
+      removeFromDOM(c);
+  } else {
+    node.parentNode.removeChild(node);
+  }
+}
+
 function domByTemplate(id) {
   const div = document.createElement('div');
   div.innerHTML = document.getElementById(id).innerHTML;
