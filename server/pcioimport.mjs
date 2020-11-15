@@ -87,8 +87,8 @@ export default async function convertPCIO(content) {
       w.type = 'holder';
       w.dropOffsetX = 10;
       w.dropOffsetY = 14;
-      w.flipEnter = 1;
-      w.flipLeave = 0;
+      w.onEnter = { activeFace: 1 };
+      w.onLeave = { activeFace: 0 };
       w.stackOffsetX = 40;
       w.childrenPerOwner = true;
       w.width = widget.width || 1500;

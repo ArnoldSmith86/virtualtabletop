@@ -12,8 +12,8 @@ class Holder extends Widget {
       dropOffsetX: 4,
       dropOffsetY: 4,
 
-      flipEnter: undefined,
-      flipLeave: undefined,
+      onEnter: {},
+      onLeave: {},
 
       stackOffsetX: 0,
       stackOffsetY: 0
@@ -22,8 +22,8 @@ class Holder extends Widget {
   }
 
   dispenseCard(card) {
-    if(this.p('flipLeave') !== undefined && card.flip)
-      card.flip(this.p('flipLeave'));
+    for(const property in this.p('onLeave'))
+      card.p(property, this.p('onLeave')[property]);
     this.receiveCard(null);
   }
 
@@ -31,8 +31,9 @@ class Holder extends Widget {
     if(this.p('childrenPerOwner') && card)
       card.p('owner', playerName);
 
-    if(card && parentChanged && this.p('flipEnter') !== undefined && card.flip)
-      card.flip(this.p('flipEnter'), !this.p('stackOffsetX') && !this.p('stackOffsetY'));
+    if(card && parentChanged)
+      for(const property in this.p('onEnter'))
+        card.p(property, this.p('onEnter')[property]);
 
     if(!this.p('stackOffsetX') && !this.p('stackOffsetY'))
       return;
