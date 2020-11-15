@@ -23,6 +23,5 @@ class Label extends Widget {
       this.p('text', text);
     else
       this.p('text', this.p('text') + (mode == 'dec' ? -1 : 1) * text);
-    this.sendUpdate();
   }
 }

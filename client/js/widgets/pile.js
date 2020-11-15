@@ -57,10 +57,7 @@ class Pile extends Widget {
       const newY = this.p('y') + this.p('dropOffsetY') + yOffset;
       const newZ = z++;
 
-      if(newX != child.p('x') || newY != child.p('y') || newZ != child.p('z'))
-        child.setPosition(newX, newY, newZ, child != card);
-      if(child == card)
-        child.sendUpdate();
+      child.setPosition(newX, newY, newZ);
 
       xOffset += this.p('stackOffsetX');
       yOffset += this.p('stackOffsetY');

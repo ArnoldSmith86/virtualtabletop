@@ -14,7 +14,6 @@ class Spinner extends Widget {
 
   click() {
     this.p('value', this.p('options')[this.p('options').length * Math.random() | 0]);
-    this.sendUpdate();
   }
 
   receiveUpdate(object) {

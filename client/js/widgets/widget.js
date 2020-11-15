@@ -27,6 +27,10 @@ class Widget extends Draggable {
     this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
   }
 
+  applyDelta(delta) {
+    this.receiveUpdate(Object.assign(this.sourceObject, delta));
+  }
+
   children() {
     return Array.from(widgets.values()).filter(w=>w.p('parent')==this.p('id')&&w.p('type')!='deck').sort((a,b)=>b.p('z')-a.p('z'));
   }
@@ -38,7 +42,6 @@ class Widget extends Draggable {
       if(this.currentParent.dispenseCard)
         this.currentParent.dispenseCard(this);
       delete this.currentParent;
-      this.sendUpdate();
     }
   }
 
@@ -59,11 +62,8 @@ class Widget extends Draggable {
     this.p('owner',  null);
     this.setPosition(pile.p('x')+pile.p('dropOffsetX'), pile.p('y')+pile.p('dropOffsetY'), getMaxZ(this.p('layer')) + 1);
 
-    if(pile.receiveCard) {
+    if(pile.receiveCard)
       pile.receiveCard(this, [ thisX, thisY ], this.currentParent != pile);
-    } else {
-      this.sendUpdate();
-    }
   }
 
   onDragStart() {
@@ -144,14 +144,24 @@ class Widget extends Draggable {
   }
 
   propertySet(property, value) {
+    if(value === this.defaults[property])
+      value = null;
+    if(this.sourceObject[property] === value || this.sourceObject[property] === undefined && value === null)
+      return;
+
     if(value === null)
       delete this.sourceObject[property];
     else
       this.sourceObject[property] = value;
+    sendPropertyUpdate(this.p('id'), property, value);
+    this.receiveUpdate(this.sourceObject);
   }
 
   receiveUpdate(object) {
     this.sourceObject = object;
+    for(const i in object)
+      if(object[i] === null)
+        delete this.sourceObject[i];
 
     this.domElement.id = this.p('id');
     this.domElement.className = 'widget';
@@ -163,7 +173,9 @@ class Widget extends Draggable {
 
     this.isDraggable = this.p('movable');
     this.extraTransform = this.p('rotation') ? `rotate(${this.p('rotation')}deg)` : '';
-    this.setPositionFromServer(this.p('x'), this.p('y'), this.p('z'));
+
+    this.domElement.style.zIndex = ((this.p('layer') + 10) * 100000) + this.p('z');
+    this.setTranslate(this.p('x'), this.p('y'), this.domElement);
   }
 
   remove() {
@@ -172,32 +184,12 @@ class Widget extends Draggable {
 
   rotate(degrees) {
     this.p('rotation', (this.p('rotation') + degrees) % 360);
-    this.sendUpdate();
   }
 
-  sendUpdate() {
-    toServer('update', this.sourceObject);
-  }
-
-  setPosition(x, y, z, send=true) {
+  setPosition(x, y, z) {
     this.p('x', x);
     this.p('y', y);
     this.p('z', z);
-    if(send)
-      toServer("translate", { id: this.p('id'), pos: [ x, y, z ]});
-  }
-
-  setPositionFromServer(x, y, z) {
-    this.p('x', x);
-    this.p('y', y);
-    this.p('z', z);
-    this.domElement.style.zIndex = ((this.p('layer') + 10) * 100000) + z;
-    if(!this.active)
-      this.setTranslate(x, y, this.domElement);
-  }
-
-  setZ(z) {
-    this.setPosition(this.p('x'), this.p('y'), z);
   }
 
   showEnlarged(event) {

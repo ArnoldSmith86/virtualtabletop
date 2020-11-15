@@ -40,7 +40,9 @@ class Draggable {
       const y = Math.floor((clientY + this.offsetMouseToObject.y - this.containerRect.top ) / scale);
 
       this.setTranslate(x, y, this.domElement);
+      batchStart();
       this.onDrag(x, y);
+      batchEnd();
     }
   }
 
@@ -48,11 +50,13 @@ class Draggable {
     e.preventDefault();
     if(this.active) {
       this.active = false;
+      batchStart();
       this.onDragEnd();
 
       const { clientX, clientY } = e.type === "touchend" ? e.changedTouches[0] : e;
       if(this.click && clientX == this.dragStartEvent.clientX && clientY == this.dragStartEvent.clientY && !edit)
         this.click();
+      batchEnd();
     }
   }
 

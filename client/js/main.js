@@ -1,44 +1,7 @@
-const roomID = self.location.pathname.substr(1);
-const widgets = new Map();
-const dropTargets = new Map();
-
 let scale = 1;
 let roomRectangle;
 
-const deferredCards = {};
-
-function addWidget(widget) {
-  let w;
-  if(widget.type == 'card') {
-    if(widgets.has(widget.deck)) {
-      w = new Card(widget, $('.surface'), widgets.get(widget.deck));
-    } else {
-      if(!deferredCards[widget.deck])
-        deferredCards[widget.deck] = [];
-      deferredCards[widget.deck].push(widget);
-      return;
-    }
-  } else if(widget.type == 'deck') {
-    w = new Deck(widget, $('.surface'));
-  } else if(widget.type == 'pile') {
-    w = new Pile(widget, $('.surface'));
-  } else if(widget.type == 'spinner')
-    w = new Spinner(widget, $('.surface'));
-  else if(widget.type == 'label')
-    w = new Label(widget, $('.surface'));
-  else if(widget.type == 'button')
-    w = new Button(widget, $('.surface'));
-  else
-    w = new BasicWidget(widget, $('.surface'));
-
-  widgets.set(widget.id, w);
-  if(w.p('dropTarget'))
-    dropTargets.set(widget.id, w);
-
-  for(const c of deferredCards[widget.id] || [])
-    addWidget(c);
-  delete deferredCards[widget.id];
-}
+const dropTargets = new Map();
 
 function getValidDropTargets(widget) {
   const targets = [];
@@ -86,28 +49,6 @@ function setScale() {
 }
 
 onLoad(function() {
-  onMessage('add', addWidget);
-  onMessage('state', function(args) {
-    for(const widget of $a('.widget'))
-      if(widget.id != 'enlarged')
-        widget.remove();
-    widgets.clear();
-    dropTargets.clear();
-    for(const widgetID in args)
-      if(widgetID != '_meta')
-        addWidget(args[widgetID]);
-  });
-  onMessage('translate', function(args) {
-    widgets.get(args.id).setPositionFromServer(...args.pos);
-  });
-  onMessage('update', function(args) {
-    widgets.get(args.id).receiveUpdate(args);
-  });
-  onMessage('remove', function(args) {
-    widgets.get(args).remove();
-    widgets.delete(args);
-  });
-
   on('.toolbarButton', 'click', function(e) {
     const overlay = e.target.dataset.overlay;
     if(overlay)

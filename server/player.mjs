@@ -13,10 +13,10 @@ export default class Player {
   }
 
   messageReceived = (func, args) => {
-    if(func == 'add')
-      this.room.addWidget(this, args);
     if(func == 'addState')
       this.room.addState(this, args.type, args.src, args.meta);
+    if(func == 'delta')
+      this.room.receiveDelta(this, args);
     if(func == 'loadState')
       this.room.loadState(this, args);
     if(func == 'log')
@@ -25,16 +25,10 @@ export default class Player {
       this.room.mouseMove(this, args);
     if(func == 'playerColor')
       this.room.recolorPlayer(this, args.player, args.color);
-    if(func == 'remove')
-      this.room.removeWidget(this, args);
     if(func == 'removeState')
       this.room.removeState(this, args);
     if(func == 'rename')
       this.room.renamePlayer(this, args.oldName, args.newName);
-    if(func == 'translate')
-      this.room.translateWidget(this, args.id, args.pos);
-    if(func == 'update')
-      this.room.updateWidget(this, args);
   }
 
   rename(newName) {

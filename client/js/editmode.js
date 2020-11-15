@@ -1,9 +1,10 @@
 let edit = false;
 
-function objectToWidget(o) {
-  if(!o.id)
-    o.id = Math.random().toString(36).substring(3, 7);
-  toServer('add', o);
+function addWidgetLocal(widget) {
+  if(!widget.id)
+    widget.id = Math.random().toString(36).substring(3, 7);
+  addWidget(widget);
+  sendPropertyUpdate(widget.id, widget);
 }
 
 function editClick(e) {
@@ -19,6 +20,11 @@ function editClick(e) {
   }
 }
 
+function removeWidgetLocal(widgetID) {
+  removeWidget(widgetID);
+  sendPropertyUpdate(widgetID, null);
+}
+
 onLoad(function() {
   on('#editButton', 'click', function() {
     if(edit)
@@ -30,18 +36,18 @@ onLoad(function() {
   });
 
   on('#addWidget', 'click', function() {
-    objectToWidget(JSON.parse($('#widgetText').value));
+    addWidgetLocal(JSON.parse($('#widgetText').value));
     showOverlay();
   });
 
   on('#updateWidget', 'click', function() {
-    widgets.get($('#editWidgetJSON').dataset.id).sourceObject = JSON.parse($('#editWidgetJSON').value);
-    widgets.get($('#editWidgetJSON').dataset.id).sendUpdate();
+    removeWidgetLocal($('#editWidgetJSON').dataset.id);
+    addWidgetLocal(JSON.parse($('#editWidgetJSON').value));
     showOverlay();
   });
 
   on('#removeWidget', 'click', function() {
-    toServer('remove', $('#editWidgetJSON').dataset.id);
+    removeWidgetLocal($('#editWidgetJSON').dataset.id);
     showOverlay();
   });
 

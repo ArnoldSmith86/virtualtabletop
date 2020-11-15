@@ -46,15 +46,11 @@ export default class Room {
     })();
   }
 
-  addWidget(player, widget) {
-    this.state[widget.id] = widget;
-    this.broadcast('add', widget);
-  }
-
-  broadcast(func, args) {
+  broadcast(func, args, exceptPlayer) {
     console.log(this.id, func, args);
     for(const player of this.players)
-      player.send(func, args);
+      if(player != exceptPlayer)
+        player.send(func, args);
   }
 
   load(file) {
@@ -86,6 +82,25 @@ export default class Room {
     this.broadcast('mouse', { player: player.name, coords });
   }
 
+  receiveDelta(player, delta) {
+    for(const widgetID in delta.s) {
+      if(delta.s[widgetID] === null) {
+        delete this.state[widgetID];
+      } else if(this.state[widgetID] === undefined) {
+        this.state[widgetID] = delta.s[widgetID];
+      } else {
+        for(const property in delta.s[widgetID]) {
+          if(delta.s[widgetID][property] === null) {
+            delete this.state[widgetID][property];
+          } else {
+            this.state[widgetID][property] = delta.s[widgetID][property];
+          }
+        }
+      }
+    }
+    this.broadcast('delta', delta, player);
+  }
+
   recolorPlayer(renamingPlayer, playerName, color) {
     this.state._meta.players[playerName] = color;
     this.sendMetaUpdate();
@@ -104,11 +119,6 @@ export default class Room {
   removeState(player, stateID) {
     this.state._meta.states = this.state._meta.states.filter(s=>s.id!=stateID);
     this.sendMetaUpdate();
-  }
-
-  removeWidget(player, widgetID) {
-    delete this.state[widgetID];
-    this.broadcast('remove', widgetID);
   }
 
   renamePlayer(renamingPlayer, oldName, newName) {
@@ -133,22 +143,10 @@ export default class Room {
     this.broadcast('state', state);
   }
 
-  translateWidget(player, widgetID, position) {
-    this.state[widgetID].x = position[0];
-    this.state[widgetID].y = position[1];
-    this.state[widgetID].z = position[2];
-    this.broadcast('translate', { id: widgetID, pos: position });
-  }
-
   unload() {
     console.log(`unloading room ${this.id}`);
     const json = JSON.stringify(this.state);
     if(json != '{}')
       fs.writeFileSync(path.resolve() + '/save/rooms/' + this.id + '.json', json);
-  }
-
-  updateWidget(player, widget) {
-    this.state[widget.id] = widget;
-    this.broadcast('update', widget);
   }
 }

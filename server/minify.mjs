@@ -37,6 +37,7 @@ export default function minifyRoom() {
         input: [
           'client/js/domhelpers.js',
           'client/js/connection.js',
+          'client/js/serverstate.js',
           'client/js/editmode.js',
           'client/js/geometry.js',
           'client/js/draggable.js',

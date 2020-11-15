@@ -19,13 +19,11 @@ class Card extends Widget {
     this.flip();
   }
 
-  flip(setFlip, send=true) {
+  flip(setFlip) {
     if(typeof setFlip !== 'undefined')
       this.p('activeFace', setFlip);
     else
       this.p('activeFace', (this.p('activeFace') + 1) % this.deck.p('faceTemplates').length);
-    if(send)
-      this.sendUpdate();
   }
 
   propertyGet(property) {
