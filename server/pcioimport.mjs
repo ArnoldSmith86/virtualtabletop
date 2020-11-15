@@ -42,6 +42,13 @@ export default async function convertPCIO(content) {
     return nameMap[name] || name;
   }
 
+  function addDimensions(w, widget, defaultWidth=100, defaultHeight=100) {
+    if(widget.width != defaultWidth)
+      w.width = widget.width;
+    if(widget.height != defaultHeight)
+      w.height = widget.height;
+  }
+
   const pileHasDeck = {};
   for(const widget of widgets)
     if(widget.type == 'cardDeck' && widget.parent)
@@ -55,38 +62,29 @@ export default async function convertPCIO(content) {
     w.id = widget.id;
     w.x = widget.x;
     w.y = widget.y;
-    w.z = widget.z;
-    if(widget.width)
-      w.width  = widget.width;
-    if(widget.height)
-      w.height = widget.height;
+    if(widget.z)
+      w.z = widget.z;
 
     if(widget.type == 'gamePiece' && widget.pieceType == 'checkers') {
       w.width  = 90;
       w.height = 90;
       const [ c1, c2 ] = checkersColors[widget.color] || checkersColors.default;
       w.css = `box-sizing: border-box; background: radial-gradient(circle, ${c1} 0%, ${c1} 33%, ${c2} 33%, ${c2} 46%, ${c1} 46%, ${c1} 58%, rgba(0, 0, 0, 0) 58%);`;
-      w.layer = 1;
     } else if(widget.type == 'gamePiece' && widget.pieceType == 'classic') {
       w.width  = 90;
       w.height = 90;
       w.image = classicURLs[widget.color];
-      w.layer = 1;
     } else if(widget.type == 'gamePiece' && widget.pieceType == 'pin') {
       w.width  = 35.85;
       w.height = 43.83;
       w.image = `https://playingcards.io/img/pieces/pin-${widget.color}.svg`;
-      w.layer = 1;
     } else if(widget.type == 'gamePiece') {
       w.image = `https://playingcards.io/img/pieces/${widget.color}-${widget.pieceType}.svg`;
-      w.layer = 1;
+      addDimensions(w, widget);
     } else if(widget.type == 'hand') {
       if(widget.enabled === false)
         continue;
       w.type = 'pile';
-      w.movable = false;
-      w.layer = -2;
-      w.dropTarget = { 'type': 'card' };
       w.dropOffsetX = 10;
       w.dropOffsetY = 14;
       w.flipEnter = 1;
@@ -97,22 +95,16 @@ export default async function convertPCIO(content) {
       w.height = widget.height || 180;
     } else if(widget.type == 'cardPile') {
       w.type = 'pile';
-      w.movable = false;
-      w.layer = -2;
-      w.dropTarget = { 'type': 'card' };
-      w.width = widget.width || 111;
-      w.height = widget.height || 168;
+      addDimensions(w, widget, 111, 168);
 
       if(widget.label) {
         output[widget.id + '_label'] = {
           id: widget.id + '_label',
           x: widget.x,
           y: widget.y - 20,
-          width: w.width,
+          width: w.width || 111,
           type: 'label',
-          text: widget.label,
-          movable: false,
-          layer: -3
+          text: widget.label
         };
       }
 
@@ -120,12 +112,11 @@ export default async function convertPCIO(content) {
         output[widget.id + '_shuffleButton'] = {
           id: widget.id + '_shuffleButton',
           x: widget.x,
-          y: widget.y + 1.02*w.height,
-          width: w.width,
+          y: widget.y + 1.02*(w.height || 168),
+          width: w.width || 111,
           height: 32,
           type: 'button',
           label: w.width < 70 ? 'R&S' : 'Recall & Shuffle',
-          layer: -1,
 
           clickRoutine: [
             [ "RECALL", widget.id ],
@@ -161,17 +152,14 @@ export default async function convertPCIO(content) {
       w.deck = widget.deck;
       w.cardType = widget.cardType;
       w.parent = widget.parent;
-      w.activeFace = widget.faceup ? 1 : 0;
+      if(widget.faceup)
+        w.activeFace = 1;
     } else if(widget.type == 'counter') {
       w.type = 'label';
       w.text = widget.counterValue;
       w.css = 'font-size: 30px;';
-      w.movable = false;
-      w.layer = -3;
-      if(!w.width)
-        w.width = 140;
-      if(!w.height)
-        w.height = 44;
+      w.width = widget.width || 140;
+      w.height = widget.height || 44;
 
       function addCounterButton(suffix, x, label, value) {
         output[widget.id + suffix] = {
@@ -182,7 +170,6 @@ export default async function convertPCIO(content) {
           height: w.height - 4,
           type: 'button',
           label,
-          layer: -1,
 
           clickRoutine: [
             [ "LABEL", widget.id, 'inc', value ]
@@ -199,9 +186,7 @@ export default async function convertPCIO(content) {
           y: widget.y - 20,
           width: w.width,
           type: 'label',
-          text: widget.label,
-          movable: false,
-          layer: -3
+          text: widget.label
         };
       }
     } else if(widget.type == 'labelText') {
@@ -209,17 +194,17 @@ export default async function convertPCIO(content) {
       w.type = 'label';
       w.text = widget.labelContent;
       w.css = `font-size: ${widget.textSize}px; font-weight: ${weight}; text-align: ${widget.textAlign};`;
-      w.movable = false;
-      w.layer = -3;
+      addDimensions(w, widget);
     } else if(widget.type == 'board') {
       w.image = widget.boardImage;
       w.movable = false;
       w.layer = -4;
       w.z = 10000 - w.z;
+      addDimensions(w, widget);
     } else if(widget.type == 'automationButton') {
       w.type = 'button';
       w.label = widget.label;
-      w.layer = -1;
+      addDimensions(w, widget, 80, 80);
 
       w.clickRoutine = [];
       for(let c of widget.clickRoutine) {
@@ -256,8 +241,11 @@ export default async function convertPCIO(content) {
 
     } else if(widget.type == 'spinner') {
       w.type = widget.type;
-      w.options = widget.options;
-      w.value = widget.value;
+      if(widget.options && JSON.stringify(widget.options) != JSON.stringify([ 1, 2, 3, 4, 5, 6 ]))
+        w.options = widget.options;
+      if(widget.value && widget.value != '🎲')
+        w.value = widget.value;
+      addDimensions(w, widget, 110, 110);
     } else {
       w.css = 'background: repeating-linear-gradient(45deg, red, red 10px, darkred 10px, darkred 20px);';
     }

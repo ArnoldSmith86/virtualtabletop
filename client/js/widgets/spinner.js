@@ -3,9 +3,13 @@ class Spinner extends Widget {
     super(object, surface);
 
     Object.assign(this.defaults, {
+      width: 110,
+      height: 110,
+
       options: [ 1, 2, 3, 4, 5, 6 ],
       value: '🎲'
     });
+    this.receiveUpdate(object);
   }
 
   click() {

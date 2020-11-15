@@ -32,7 +32,7 @@ function addWidget(widget) {
     w = new BasicWidget(widget, $('.surface'));
 
   widgets.set(widget.id, w);
-  if(widget.dropTarget)
+  if(w.p('dropTarget'))
     dropTargets.set(widget.id, w);
 
   for(const c of deferredCards[widget.id] || [])

@@ -1,6 +1,15 @@
 class Button extends Widget {
   constructor(object, surface) {
     super(object, surface);
+
+    Object.assign(this.defaults, {
+      width: 80,
+      height: 80,
+
+      layer: -1,
+      clickRoutine: []
+    });
+    this.receiveUpdate(object);
   }
 
   click() {

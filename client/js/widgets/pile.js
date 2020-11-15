@@ -3,13 +3,22 @@ class Pile extends Widget {
     super(object, surface);
 
     Object.assign(this.defaults, {
+      width: 111,
+      height: 168,
+      movable: false,
+      layer: -2,
+
+      dropTarget: { 'type': 'card' },
+      dropOffsetX: 4,
+      dropOffsetY: 4,
+
       flipEnter: undefined,
       flipLeave: undefined,
+
       stackOffsetX: 0,
-      stackOffsetY: 0,
-      dropOffsetX: 4,
-      dropOffsetY: 4
+      stackOffsetY: 0
     });
+    this.receiveUpdate(object);
   }
 
   dispenseCard(card) {

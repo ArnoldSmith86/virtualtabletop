@@ -2,6 +2,14 @@ class Card extends Widget {
   constructor(object, surface, deck) {
     super(object, surface);
 
+    Object.assign(this.defaults, {
+      width: 103,
+      height: 160,
+
+      activeFace: 0,
+      enlarge: false
+    });
+
     this.deck = deck;
     deck.addCard(this);
     this.receiveUpdate(this.sourceObject);

@@ -3,13 +3,7 @@ class Deck extends Widget {
     super(object, surface);
 
     Object.assign(this.defaults, {
-      cardDefaults: {
-        width: 103,
-        height: 160,
-
-        activeFace: 0,
-        enlarge: false
-      }
+      cardDefaults: {}
     });
 
     this.cards = {};
