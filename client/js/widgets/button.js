@@ -19,8 +19,8 @@ class Button extends Widget {
         this.w(a[1], label=>label.setText(a[3], a[2]));
 
       if(a[0] == 'FLIP') {
-        this.w(a[2], pile=>{
-          let cards = pile.children();
+        this.w(a[2], holder=>{
+          let cards = holder.children();
           if(a[1] == 'card')
             cards = [ cards[0] ];
           if(a[3])
@@ -36,21 +36,21 @@ class Button extends Widget {
             c.flip(1);
           if(a[4] == 'faceDown')
             c.flip(0);
-          c.moveToPile(target);
+          c.moveToHolder(target);
         })));
       }
 
       if(a[0] == 'RECALL') {
-        this.toA(a[1]).forEach(pile=>{
-          const deck = this.wFilter(w=>w.p('type')=='deck'&&w.p('parent')==pile)[0];
+        this.toA(a[1]).forEach(holder=>{
+          const deck = this.wFilter(w=>w.p('type')=='deck'&&w.p('parent')==holder)[0];
           if(deck)
-            this.wFilter(w=>w.p('deck')==deck.p('id')).forEach(c=>c.moveToPile(widgets.get(pile)));
+            this.wFilter(w=>w.p('deck')==deck.p('id')).forEach(c=>c.moveToHolder(widgets.get(holder)));
         });
       }
 
       if(a[0] == 'ROTATE') {
-        this.w(a[2], pile=>{
-          let cards = pile.children();
+        this.w(a[2], holder=>{
+          let cards = holder.children();
           if(a[1] == 'card')
             cards = [ cards[0] ];
           cards.forEach(c=>c.rotate(a[3]));
@@ -58,9 +58,9 @@ class Button extends Widget {
       }
 
       if(a[0] == 'SHUFFLE') {
-        this.w(a[1], pile=>{
-          pile.children().forEach(c=>c.p('z', Math.floor(Math.random()*10000)));
-          pile.updateAfterShuffle();
+        this.w(a[1], holder=>{
+          holder.children().forEach(c=>c.p('z', Math.floor(Math.random()*10000)));
+          holder.updateAfterShuffle();
         });
       }
 

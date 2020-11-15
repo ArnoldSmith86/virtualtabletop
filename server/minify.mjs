@@ -25,8 +25,8 @@ export default function minifyRoom() {
         'client/css/widgets/button.css',
         'client/css/widgets/card.css',
         'client/css/widgets/deck.css',
+        'client/css/widgets/holder.css',
         'client/css/widgets/label.css',
-        'client/css/widgets/pile.css',
         'client/css/widgets/spinner.css'
       ],
       output: '/tmp/out.css'
@@ -47,8 +47,8 @@ export default function minifyRoom() {
           'client/js/widgets/button.js',
           'client/js/widgets/card.js',
           'client/js/widgets/deck.js',
+          'client/js/widgets/holder.js',
           'client/js/widgets/label.js',
-          'client/js/widgets/pile.js',
           'client/js/widgets/spinner.js',
 
           'client/js/overlays/players.js',

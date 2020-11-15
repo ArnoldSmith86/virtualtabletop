@@ -84,7 +84,7 @@ export default async function convertPCIO(content) {
     } else if(widget.type == 'hand') {
       if(widget.enabled === false)
         continue;
-      w.type = 'pile';
+      w.type = 'holder';
       w.dropOffsetX = 10;
       w.dropOffsetY = 14;
       w.flipEnter = 1;
@@ -94,7 +94,7 @@ export default async function convertPCIO(content) {
       w.width = widget.width || 1500;
       w.height = widget.height || 180;
     } else if(widget.type == 'cardPile') {
-      w.type = 'pile';
+      w.type = 'holder';
       addDimensions(w, widget, 111, 168);
 
       if(widget.label) {

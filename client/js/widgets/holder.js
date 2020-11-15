@@ -1,4 +1,4 @@
-class Pile extends Widget {
+class Holder extends Widget {
   constructor(object, surface) {
     super(object, surface);
 
@@ -66,7 +66,7 @@ class Pile extends Widget {
 
   receiveUpdate(object) {
     super.receiveUpdate(object);
-    this.domElement.classList.add('pile');
+    this.domElement.classList.add('holder');
     if(!this.p('transparent'))
       this.domElement.classList.add('default');
   }

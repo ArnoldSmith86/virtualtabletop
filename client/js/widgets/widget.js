@@ -49,21 +49,21 @@ class Widget extends Draggable {
     $('#enlarged').classList.add('hidden');
   }
 
-  moveToPile(pile) {
+  moveToHolder(holder) {
     const thisX = this.p('x');
     const thisY = this.p('y');
 
     if(this.p('parent') && !this.currentParent)
       this.currentParent = widgets.get(this.p('parent'));
-    if(this.currentParent != pile)
+    if(this.currentParent != holder)
       this.checkParent(true);
 
-    this.p('parent', pile.p('id'));
+    this.p('parent', holder.p('id'));
     this.p('owner',  null);
-    this.setPosition(pile.p('x')+pile.p('dropOffsetX'), pile.p('y')+pile.p('dropOffsetY'), getMaxZ(this.p('layer')) + 1);
+    this.setPosition(holder.p('x')+holder.p('dropOffsetX'), holder.p('y')+holder.p('dropOffsetY'), getMaxZ(this.p('layer')) + 1);
 
-    if(pile.receiveCard)
-      pile.receiveCard(this, [ thisX, thisY ], this.currentParent != pile);
+    if(holder.receiveCard)
+      holder.receiveCard(this, [ thisX, thisY ], this.currentParent != holder);
   }
 
   onDragStart() {
@@ -122,7 +122,7 @@ class Widget extends Draggable {
     this.checkParent();
 
     if(this.hoverTarget) {
-      this.moveToPile(this.hoverTarget);
+      this.moveToHolder(this.hoverTarget);
       this.hoverTarget.domElement.classList.remove('droptarget');
     }
 
