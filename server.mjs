@@ -56,7 +56,7 @@ MinifyRoom().then(function(result) {
 
   app.put('/:id', function(req, res) {
     ensureRoomIsLoaded(req.params.id);
-    PCIO(req.body).then(state => activeRooms.get(req.params.id).setState(state));
+    PCIO(req.body).then(state => activeRooms.get(req.params.id).setState(state)).catch(e=>console.log("ERROR IMPORTING PCIO: " + e));
     res.send();
   });
 
