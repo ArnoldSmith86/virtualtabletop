@@ -1,15 +1,24 @@
 class Button extends Widget {
-  constructor(object, surface) {
-    super(object, surface);
+  constructor(id) {
+    super(id);
 
-    Object.assign(this.defaults, {
+    this.addDefaults({
       width: 80,
       height: 80,
 
+      classes: 'widget button',
       layer: -1,
+      movable: false,
+
+      text: '',
       clickRoutine: []
     });
-    this.receiveUpdate(object);
+  }
+
+  applyDeltaToDOM(delta) {
+    super.applyDeltaToDOM(delta);
+    if(delta.text !== undefined)
+      this.domElement.textContent = delta.text;
   }
 
   click() {
@@ -53,13 +62,6 @@ class Button extends Widget {
       }
 
     }
-  }
-
-  receiveUpdate(object) {
-    super.receiveUpdate(object);
-    this.isDraggable = false;
-    this.domElement.classList.add('button');
-    this.domElement.textContent = this.p('label');
   }
 
   toA(ids) {

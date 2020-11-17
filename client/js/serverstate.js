@@ -16,6 +16,7 @@ function addWidget(widget) {
     return;
   }
 
+  const id = widget.id;
   let w;
 
   let parent = $('.surface');
@@ -24,7 +25,7 @@ function addWidget(widget) {
 
   if(widget.type == 'card') {
     if(widgets.has(widget.deck)) {
-      w = new Card(widget, parent, widgets.get(widget.deck));
+      w = new Card(id);
     } else {
       if(!deferredCards[widget.deck])
         deferredCards[widget.deck] = [];
@@ -32,19 +33,20 @@ function addWidget(widget) {
       return;
     }
   } else if(widget.type == 'deck') {
-    w = new Deck(widget, parent);
+    w = new Deck(id);
   } else if(widget.type == 'holder') {
-    w = new Holder(widget, parent);
+    w = new Holder(id);
   } else if(widget.type == 'spinner')
-    w = new Spinner(widget, parent);
+    w = new Spinner(id);
   else if(widget.type == 'label')
-    w = new Label(widget, parent);
+    w = new Label(id);
   else if(widget.type == 'button')
-    w = new Button(widget, parent);
+    w = new Button(id);
   else
-    w = new BasicWidget(widget, parent);
+    w = new BasicWidget(id);
 
   widgets.set(widget.id, w);
+  w.applyDelta(widget);
   if(w.p('dropTarget'))
     dropTargets.set(widget.id, w);
 
@@ -63,10 +65,7 @@ function batchStart() {
 
 function batchEnd() {
   --batchDepth;
-  if(!batchDepth) {
-    toServer('delta', delta);
-    delta = { s: {} };
-  }
+  sendDelta();
 }
 
 function receiveDelta(delta) {
@@ -86,6 +85,14 @@ function removeWidget(widgetID) {
   widgets.delete(widgetID);
 }
 
+function sendDelta() {
+  if(!batchDepth) {
+    receiveDelta(delta);
+    toServer('delta', delta);
+    delta = { s: {} };
+  }
+}
+
 function sendPropertyUpdate(widgetID, property, value) {
   if(property === null || typeof property === 'object') {
     delta.s[widgetID] = property;
@@ -94,10 +101,7 @@ function sendPropertyUpdate(widgetID, property, value) {
       delta.s[widgetID] = {};
     delta.s[widgetID][property] = value;
   }
-  if(!batchDepth) {
-    toServer('delta', delta);
-    delta = { s: {} };
-  }
+  sendDelta();
 }
 
 onLoad(function() {

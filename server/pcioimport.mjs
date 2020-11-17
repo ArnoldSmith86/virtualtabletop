@@ -127,7 +127,7 @@ export default async function convertPCIO(content) {
           width: w.width || 111,
           height: 32,
           type: 'button',
-          label: w.width < 70 ? 'R&S' : 'Recall & Shuffle',
+          text: w.width < 70 ? 'R&S' : 'Recall & Shuffle',
 
           clickRoutine: [
             { func: 'RECALL',  holder: widget.id },
@@ -172,7 +172,7 @@ export default async function convertPCIO(content) {
       w.width = widget.width || 140;
       w.height = widget.height || 44;
 
-      function addCounterButton(suffix, x, label, value) {
+      function addCounterButton(suffix, x, text, value) {
         output[widget.id + suffix] = {
           id: widget.id + suffix,
           x,
@@ -180,7 +180,7 @@ export default async function convertPCIO(content) {
           width: w.height - 4,
           height: w.height - 4,
           type: 'button',
-          label,
+          text,
 
           clickRoutine: [
             { func: 'LABEL', label: widget.id, mode: 'inc', value }
@@ -214,7 +214,8 @@ export default async function convertPCIO(content) {
       addDimensions(w, widget);
     } else if(widget.type == 'automationButton') {
       w.type = 'button';
-      w.label = widget.label;
+      if(widget.label !== '')
+        w.text = widget.label;
       addDimensions(w, widget, 80, 80);
 
       w.clickRoutine = [];

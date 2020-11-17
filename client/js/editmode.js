@@ -3,7 +3,6 @@ let edit = false;
 function addWidgetLocal(widget) {
   if(!widget.id)
     widget.id = Math.random().toString(36).substring(3, 7);
-  addWidget(widget);
   sendPropertyUpdate(widget.id, widget);
 }
 
@@ -14,14 +13,14 @@ function editClick(e) {
 
     if(target.dragStartEvent.clientX == clientX && target.dragStartEvent.clientY == clientY) {
       $('#editWidgetJSON').dataset.id = e.target.id;
-      $('#editWidgetJSON').value = JSON.stringify(target.sourceObject, null, '  ');
+      $('#editWidgetJSON').dataset.type = target.p('type');
+      $('#editWidgetJSON').value = JSON.stringify(target.state, null, '  ');
       showOverlay('editOverlay');
     }
   }
 }
 
 function removeWidgetLocal(widgetID) {
-  removeWidget(widgetID);
   sendPropertyUpdate(widgetID, null);
 }
 
@@ -41,8 +40,12 @@ onLoad(function() {
   });
 
   on('#updateWidget', 'click', function() {
-    removeWidgetLocal($('#editWidgetJSON').dataset.id);
-    addWidgetLocal(JSON.parse($('#editWidgetJSON').value));
+    const oldID = $('#editWidgetJSON').dataset.id;
+    const oldType = $('#editWidgetJSON').dataset.type;
+    const widget = JSON.parse($('#editWidgetJSON').value);
+    if(widget.id !== oldID || widget.type !== oldType)
+      removeWidgetLocal(oldID);
+    addWidgetLocal(widget);
     showOverlay();
   });
 

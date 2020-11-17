@@ -1,9 +1,10 @@
 class Widget extends StateManaged {
-  constructor(object, parent) {
+  constructor(id) {
     const div = document.createElement('div');
+    div.id = id;
     super(div, $('.surface'));
 
-    this.defaults = {
+    this.addDefaults({
       x: 200,
       y: 100,
       z: 0,
@@ -11,25 +12,54 @@ class Widget extends StateManaged {
       height: 100,
       layer: 0,
       rotation: 0,
+      scale: 1,
 
+      classes: 'widget',
       css: '',
       movable: true,
 
+      parent: null,
+      owner: null,
       dropOffsetX: 0,
       dropOffsetY: 0,
       inheritChildZ: false
-    };
-
-    (parent.domElement || parent).appendChild(div);
-    this.receiveUpdate(object);
+    });
 
     this.domElement.addEventListener('contextmenu', e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseenter',  e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
   }
 
-  children() {
-    return Array.from(widgets.values()).filter(w=>w.p('parent')==this.p('id')&&w.p('type')!='deck').sort((a,b)=>b.p('z')-a.p('z'));
+  applyCSS(delta) {
+    for(const property of this.cssProperties()) {
+      if(delta[property] !== undefined) {
+        this.domElement.style.cssText = this.css();
+        return;
+      }
+    }
+
+    for(const property of this.cssTransformProperties()) {
+      if(delta[property] !== undefined) {
+        this.domElement.style.transform = this.cssTransform();
+        return;
+      }
+    }
+  }
+
+  applyDeltaToDOM(delta) {
+    if(delta.classes !== undefined || delta.owner !== undefined)
+      this.domElement.className = this.classes();
+    this.applyCSS(delta);
+
+    if(delta.movable !== undefined)
+      this.isDraggable = delta.movable;
+
+    if(delta.parent !== undefined) {
+      if(delta.parent === null)
+        $('#topSurface').appendChild(this.domElement);
+      else
+        widgets.get(delta.parent).domElement.appendChild(this.domElement);
+    }
   }
 
   calculateZ() {
@@ -44,15 +74,57 @@ class Widget extends StateManaged {
     return ((layer + 10) * 100000) + z;
   }
 
+  children() {
+    return Array.from(widgets.values()).filter(w=>w.p('parent')==this.p('id')&&w.p('type')!='deck').sort((a,b)=>b.p('z')-a.p('z'));
+  }
+
   checkParent(forceDetach) {
     if(this.currentParent && (forceDetach || !overlap(this, this.currentParent))) {
       this.p('parent', null);
       this.p('owner',  null);
       if(this.currentParent.dispenseCard)
         this.currentParent.dispenseCard(this);
-      this.currentParent.receiveUpdate(this.currentParent.sourceObject);
       delete this.currentParent;
     }
+  }
+
+  classes() {
+    let className = this.p('classes');
+
+    if(this.p('owner') && this.p('owner') != playerName)
+      className += ' foreign';
+
+    return className;
+  }
+
+  css() {
+    let css = this.p('css');
+
+    css += '; width:'  + this.p('width')  + 'px';
+    css += '; height:' + this.p('height') + 'px';
+    css += '; z-index:' + this.calculateZ();
+    css += '; transform:' + this.cssTransform();
+
+    return css;
+  }
+
+  cssProperties() {
+    return [ 'height', 'inheritChildZ', 'layer', 'width', 'z' ];
+  }
+
+  cssTransform() {
+    let transform = `translate(${this.p('x')}px, ${this.p('y')}px)`;
+
+    if(this.p('rotation'))
+      transform += ` rotate(${this.p('rotation')}deg)`;
+    if(this.p('scale') != 1)
+      transform += ` scale(${this.p('scale')})`;
+
+    return transform;
+  }
+
+  cssTransformProperties() {
+    return [ 'rotate', 'scale', 'x', 'y' ];
   }
 
   hideEnlarged() {
@@ -71,8 +143,6 @@ class Widget extends StateManaged {
     this.containerDomElement = holder.domElement;
     this.containerDomElement.appendChild(this.domElement);
 
-    holder.receiveUpdate(holder.sourceObject); // FIXME: this removes droppable and belongs somewhere else anyway
-
     const thisX = this.p('x') - holder.p('x');
     const thisY = this.p('y') - holder.p('y');
 
@@ -89,6 +159,7 @@ class Widget extends StateManaged {
     this.hoverTargetDistance = 99999;
     this.hoverTarget = null;
 
+    //this.p('parent', null);
     this.containerDomElement = $('.surface');
     this.containerDomElement.appendChild(this.domElement);
 
@@ -147,27 +218,6 @@ class Widget extends StateManaged {
     }
 
     this.hideEnlarged();
-  }
-
-  receiveUpdate(object) {
-    this.sourceObject = object;
-    for(const i in object)
-      if(object[i] === null)
-        delete this.sourceObject[i];
-
-    this.domElement.id = this.p('id');
-    this.domElement.className = 'widget';
-    this.domElement.style.cssText = this.p('css');
-    this.domElement.style.width = this.p('width') + 'px';
-    this.domElement.style.height = this.p('height') + 'px';
-    if(this.p('owner') && this.p('owner') != playerName)
-      this.domElement.classList.add('foreign');
-
-    this.isDraggable = this.p('movable');
-    this.extraTransform = this.p('rotation') ? `rotate(${this.p('rotation')}deg)` : '';
-
-    this.domElement.style.zIndex = this.calculateZ();
-    this.setTranslate(this.p('x'), this.p('y'), this.domElement);
   }
 
   remove() {

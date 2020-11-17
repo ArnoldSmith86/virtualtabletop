@@ -1,21 +1,20 @@
 class Label extends Widget {
-  constructor(object, surface) {
-    super(object, surface);
+  constructor(id) {
+    super(id);
 
-    Object.assign(this.defaults, {
+    this.addDefaults({
       movable: false,
       layer: -3,
+      classes: 'widget label',
 
       text: ''
     });
-    this.receiveUpdate(object);
   }
 
-  receiveUpdate(object) {
-    super.receiveUpdate(object);
-
-    this.domElement.classList.add('label');
-    this.domElement.textContent = this.p('text');
+  applyDeltaToDOM(delta) {
+    super.applyDeltaToDOM(delta);
+    if(delta.text !== undefined)
+      this.domElement.textContent = delta.text;
   }
 
   setText(text, mode) {

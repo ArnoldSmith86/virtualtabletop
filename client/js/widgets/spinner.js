@@ -1,24 +1,24 @@
 class Spinner extends Widget {
-  constructor(object, surface) {
-    super(object, surface);
+  constructor(id) {
+    super(id);
 
-    Object.assign(this.defaults, {
+    this.addDefaults({
       width: 110,
       height: 110,
+      classes: 'widget spinner',
 
       options: [ 1, 2, 3, 4, 5, 6 ],
       value: '🎲'
     });
-    this.receiveUpdate(object);
+  }
+
+  applyDeltaToDOM(delta) {
+    super.applyDeltaToDOM(delta);
+    if(delta.value !== undefined)
+      this.domElement.textContent = delta.value;
   }
 
   click() {
     this.p('value', this.p('options')[this.p('options').length * Math.random() | 0]);
-  }
-
-  receiveUpdate(object) {
-    super.receiveUpdate(object);
-    this.domElement.classList.add('spinner');
-    this.domElement.textContent = this.p('value');
   }
 }

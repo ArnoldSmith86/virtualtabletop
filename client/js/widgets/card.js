@@ -1,22 +1,79 @@
 class Card extends Widget {
-  constructor(object, surface, deck) {
-    super(object, surface);
+  constructor(id) {
+    super(id);
 
-    Object.assign(this.defaults, {
+    this.addDefaults({
       width: 103,
       height: 160,
+      classes: 'widget card',
 
       activeFace: 0,
-      enlarge: false
+      enlarge: false,
+      deck: null
     });
 
-    this.deck = deck;
-    deck.addCard(this);
-    this.receiveUpdate(this.sourceObject);
+    this.deck = null;
+  }
+
+  applyDeltaToDOM(delta) {
+    if(delta.deck !== undefined) {
+      if(this.deck) {
+        this.domElement.innerHTML = '';
+        this.deck.removeCard(this);
+      }
+      if(delta.deck) {
+        this.deck = widgets.get(delta.deck);
+        this.deck.addCard(this);
+        this.createFaces(this.deck.p('faceTemplates'));
+      } else {
+        this.deck = null;
+      }
+    }
+
+    if(delta.deck !== undefined || delta.activeFace !== undefined) {
+      for(let i=0; i<this.domElement.children.length; ++i) {
+        if(i == this.p('activeFace'))
+          this.domElement.children[i].classList.add('active');
+        else
+          this.domElement.children[i].classList.remove('active');
+      }
+    }
+
+    super.applyDeltaToDOM(delta);
   }
 
   click() {
     this.flip();
+  }
+
+  createFaces(faceTemplates) {
+    for(const face of faceTemplates) {
+      const faceDiv = document.createElement('div');
+
+      faceDiv.style.border = face.includeBorder ? '1px black solid' : 'none';
+      faceDiv.style.borderRadius = face.includeRadius ? '8px' : '0';
+
+      for(const object of face.objects) {
+        const objectDiv = document.createElement('div');
+        const value = object.valueType == 'static' ? object.value : this.p(object.value);
+        objectDiv.style.cssText = `left: ${object.x}px; top: ${object.y}px; width: ${object.w}px; height: ${object.h}px; font-size: ${object.fontSize}px; text-align: ${object.textAlign}`;
+        if(object.type == 'image') {
+          objectDiv.style.backgroundImage = `url(${value})`;
+          objectDiv.style.backgroundColor = object.color || 'white';
+        } else {
+          objectDiv.textContent = value;
+          objectDiv.style.color = object.color;
+        }
+        faceDiv.appendChild(objectDiv);
+      }
+      this.domElement.appendChild(faceDiv);
+    }
+  }
+
+  cssProperties() {
+    const p = super.cssProperties();
+    p.push('deck');
+    return p;
   }
 
   flip(setFlip) {
@@ -26,52 +83,10 @@ class Card extends Widget {
       this.p('activeFace', (this.p('activeFace') + 1) % this.deck.p('faceTemplates').length);
   }
 
-  propertyGet(property) {
-    if(this.sourceObject[property] !== undefined)
-      return this.sourceObject[property];
-
-    const d = this.deck && this.deck.cardPropertyGet(this.p('cardType'), property);
+  getDefaultValue(property) {
+    const d = this.deck && this.deck.cardPropertyGet(this.p('cardType'), property) || undefined;
     if(d !== undefined)
       return d;
-
-    return this.defaults[property];
-  }
-
-  receiveUpdate(object) {
-    super.receiveUpdate(object);
-    this.domElement.classList.add('card');
-    if(this.deck && !this.domElement.innerHTML) {
-      this.domElement.style.width = this.p('width') + 'px';
-      this.domElement.style.height = this.p('height') + 'px';
-
-      for(const face of this.deck.p('faceTemplates')) {
-        const faceDiv = document.createElement('div');
-
-        faceDiv.style.border = face.includeBorder ? '1px black solid' : 'none';
-        faceDiv.style.borderRadius = face.includeRadius ? '8px' : '0';
-
-        for(const object of face.objects) {
-          const objectDiv = document.createElement('div');
-          const value = object.valueType == 'static' ? object.value : this.p(object.value);
-          objectDiv.style.cssText = `left: ${object.x}px; top: ${object.y}px; width: ${object.w}px; height: ${object.h}px; font-size: ${object.fontSize}px; text-align: ${object.textAlign}`;
-          if(object.type == 'image') {
-            objectDiv.style.backgroundImage = `url(${value})`;
-            objectDiv.style.backgroundColor = object.color || 'white';
-          } else {
-            objectDiv.textContent = value;
-            objectDiv.style.color = object.color;
-          }
-          faceDiv.appendChild(objectDiv);
-        }
-        this.domElement.appendChild(faceDiv);
-      }
-    }
-
-    for(let i=0; i<this.domElement.children.length; ++i) {
-      if(i == this.p('activeFace'))
-        this.domElement.children[i].classList.add('active');
-      else
-        this.domElement.children[i].classList.remove('active');
-    }
+    return super.getDefaultValue(property);
   }
 }

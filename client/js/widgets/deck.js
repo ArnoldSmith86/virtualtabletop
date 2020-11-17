@@ -1,8 +1,9 @@
 class Deck extends Widget {
-  constructor(object, surface) {
-    super(object, surface);
+  constructor(id) {
+    super(id);
 
-    Object.assign(this.defaults, {
+    this.addDefaults({
+      classes: 'widget deck',
       cardDefaults: {}
     });
 
@@ -18,14 +19,12 @@ class Deck extends Widget {
   cardPropertyGet(cardType, property) {
     if(this.p('cardTypes')[cardType][property] !== undefined)
       return this.p('cardTypes')[cardType][property];
-    if(this.p('cardDefaults')[property] !== undefined)
-      return this.p('cardDefaults')[property];
-    else
-      return this.defaults.cardDefaults[property];
+
+    return this.p('cardDefaults')[property];
   }
 
-  receiveUpdate(object) {
-    super.receiveUpdate(object);
-    this.domElement.classList.add('deck');
+  removeCard(card) {
+    delete this.cards[card.p('id')];
+    --this.domElement.textContent;
   }
 }

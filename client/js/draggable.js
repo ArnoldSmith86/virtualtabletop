@@ -40,7 +40,6 @@ class Draggable {
       const x = Math.floor((clientX + this.offsetMouseToObject.x - this.containerRect.left) / scale);
       const y = Math.floor((clientY + this.offsetMouseToObject.y - this.containerRect.top ) / scale);
 
-      this.setTranslate(x, y, this.domElement);
       batchStart();
       this.onDrag(x, y);
       batchEnd();
@@ -59,9 +58,5 @@ class Draggable {
         this.click();
       batchEnd();
     }
-  }
-
-  setTranslate(x, y, el) {
-    el.style.transform = `translate(${x}px, ${y}px) ${this.extraTransform}`;
   }
 }

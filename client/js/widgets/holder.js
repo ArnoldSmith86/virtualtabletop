@@ -2,11 +2,12 @@ class Holder extends Widget {
   constructor(object, surface) {
     super(object, surface);
 
-    Object.assign(this.defaults, {
+    this.addDefaults({
       width: 111,
       height: 168,
       movable: false,
       layer: -2,
+      classes: 'widget holder default',
 
       dropTarget: { 'type': 'card' },
       dropOffsetX: 4,
@@ -18,7 +19,6 @@ class Holder extends Widget {
       stackOffsetX: 0,
       stackOffsetY: 0
     });
-    this.receiveUpdate(object);
   }
 
   dispenseCard(card) {
@@ -63,13 +63,6 @@ class Holder extends Widget {
       xOffset += this.p('stackOffsetX');
       yOffset += this.p('stackOffsetY');
     }
-  }
-
-  receiveUpdate(object) {
-    super.receiveUpdate(object);
-    this.domElement.classList.add('holder');
-    if(!this.p('transparent'))
-      this.domElement.classList.add('default');
   }
 
   updateAfterShuffle() {

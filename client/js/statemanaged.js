@@ -1,6 +1,30 @@
 class StateManaged extends Draggable {
+  constructor(domElement, containerDomElement) {
+    super(domElement, containerDomElement);
+    this.defaults = {};
+    this.state = {};
+  }
+
+  addDefaults(defaults) {
+    Object.assign(this.defaults, defaults);
+    this.applyDeltaToDOM(defaults);
+  }
+
   applyDelta(delta) {
-    this.receiveUpdate(Object.assign(this.sourceObject, delta));
+    const deltaForDOM = {};
+    for(const i in delta) {
+      if(delta[i] === null) {
+        delete this.state[i];
+        deltaForDOM[i] = this.getDefaultValue(i);
+      } else {
+        deltaForDOM[i] = this.state[i] = delta[i];
+      }
+    }
+    this.applyDeltaToDOM(deltaForDOM);
+  }
+
+  getDefaultValue(key) {
+    return this.defaults[key];
   }
 
   p(property, value) {
@@ -11,24 +35,23 @@ class StateManaged extends Draggable {
   }
 
   propertyGet(property) {
-    if(this.sourceObject[property] !== undefined)
-      return this.sourceObject[property];
+    if(this.state[property] !== undefined)
+      return this.state[property];
     else
-      return this.defaults[property];
+      return this.getDefaultValue(property);
   }
 
   propertySet(property, value) {
     if(value === this.defaults[property])
       value = null;
-    if(this.sourceObject[property] === value || this.sourceObject[property] === undefined && value === null)
+    if(this.state[property] === value || this.state[property] === undefined && value === null)
       return;
 
     if(value === null)
-      delete this.sourceObject[property];
+      delete this.state[property];
     else
-      this.sourceObject[property] = value;
+      this.state[property] = value;
     sendPropertyUpdate(this.p('id'), property, value);
-    this.receiveUpdate(this.sourceObject);
   }
 
   setPosition(x, y, z) {

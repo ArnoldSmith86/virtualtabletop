@@ -1,15 +1,24 @@
 class BasicWidget extends Widget {
-  constructor(object, surface) {
-    super(object, surface);
+  constructor(id) {
+    super(id);
 
-    Object.assign(this.defaults, {
+    this.addDefaults({
       layer: 1
     });
-    this.receiveUpdate(object);
   }
 
-  receiveUpdate(object) {
-    super.receiveUpdate(object);
-    this.domElement.style.backgroundImage = object.image ? `url(${object.image})` : '';
+  css() {
+    let css = super.css();
+
+    if(this.p('image'))
+      css += '; background-image: url("' + this.p('image') + '")';
+
+    return css;
+  }
+
+  cssProperties() {
+    const p = super.cssProperties();
+    p.push('image');
+    return p;
   }
 }
