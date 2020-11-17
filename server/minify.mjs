@@ -41,6 +41,7 @@ export default function minifyRoom() {
           'client/js/editmode.js',
           'client/js/geometry.js',
           'client/js/draggable.js',
+          'client/js/statemanaged.js',
           'client/js/widgets/widget.js',
 
           'client/js/widgets/basicwidget.js',

@@ -1,4 +1,4 @@
-class Widget extends Draggable {
+class Widget extends StateManaged {
   constructor(object, parent) {
     const div = document.createElement('div');
     super(div, $('.surface'));
@@ -26,10 +26,6 @@ class Widget extends Draggable {
     this.domElement.addEventListener('contextmenu', e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseenter',  e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
-  }
-
-  applyDelta(delta) {
-    this.receiveUpdate(Object.assign(this.sourceObject, delta));
   }
 
   children() {
@@ -153,34 +149,6 @@ class Widget extends Draggable {
     this.hideEnlarged();
   }
 
-  p(property, value) {
-    if(value === undefined)
-      return this.propertyGet(property);
-    else
-      this.propertySet(property, value);
-  }
-
-  propertyGet(property) {
-    if(this.sourceObject[property] !== undefined)
-      return this.sourceObject[property];
-    else
-      return this.defaults[property];
-  }
-
-  propertySet(property, value) {
-    if(value === this.defaults[property])
-      value = null;
-    if(this.sourceObject[property] === value || this.sourceObject[property] === undefined && value === null)
-      return;
-
-    if(value === null)
-      delete this.sourceObject[property];
-    else
-      this.sourceObject[property] = value;
-    sendPropertyUpdate(this.p('id'), property, value);
-    this.receiveUpdate(this.sourceObject);
-  }
-
   receiveUpdate(object) {
     this.sourceObject = object;
     for(const i in object)
@@ -208,12 +176,6 @@ class Widget extends Draggable {
 
   rotate(degrees) {
     this.p('rotation', (this.p('rotation') + degrees) % 360);
-  }
-
-  setPosition(x, y, z) {
-    this.p('x', x);
-    this.p('y', y);
-    this.p('z', z);
   }
 
   showEnlarged(event) {
