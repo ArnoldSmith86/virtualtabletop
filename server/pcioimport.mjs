@@ -54,6 +54,10 @@ export default async function convertPCIO(content) {
     if(widget.type == 'cardDeck' && widget.parent)
       pileHasDeck[widget.parent] = true;
 
+  const byID = {};
+  for(const widget of widgets)
+    byID[widget.id] = widget;
+
   const output = {};
 
   for(const widget of widgets) {
@@ -64,6 +68,11 @@ export default async function convertPCIO(content) {
     w.y = widget.y;
     if(widget.z)
       w.z = widget.z;
+
+    if(widget.parent) {
+      w.x -= byID[widget.parent].x;
+      w.y -= byID[widget.parent].y;
+    }
 
     if(widget.type == 'gamePiece' && widget.pieceType == 'checkers') {
       w.width  = 90;
@@ -90,11 +99,13 @@ export default async function convertPCIO(content) {
       w.onEnter = { activeFace: 1 };
       w.onLeave = { activeFace: 0 };
       w.stackOffsetX = 40;
+      w.inheritChildZ = true;
       w.childrenPerOwner = true;
       w.width = widget.width || 1500;
       w.height = widget.height || 180;
     } else if(widget.type == 'cardPile') {
       w.type = 'holder';
+      w.inheritChildZ = true;
       addDimensions(w, widget, 111, 168);
 
       if(widget.label) {

@@ -54,8 +54,8 @@ class Holder extends Widget {
     let z = 1;
 
     for(const child of children) {
-      const newX = this.p('x') + this.p('dropOffsetX') + xOffset;
-      const newY = this.p('y') + this.p('dropOffsetY') + yOffset;
+      const newX = this.p('dropOffsetX') + xOffset;
+      const newY = this.p('dropOffsetY') + yOffset;
       const newZ = z++;
 
       child.setPosition(newX, newY, newZ);

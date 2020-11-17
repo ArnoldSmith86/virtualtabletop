@@ -25,10 +25,11 @@ class Draggable {
 
     this.dragStartEvent = event;
     this.offsetMouseToObject = { x: rect.left - event.clientX, y: rect.top - event.clientY };
-    this.containerRect = this.containerDomElement.getBoundingClientRect();
 
     this.active = true;
     this.onDragStart();
+    this.containerRect = this.containerDomElement.getBoundingClientRect();
+    this.drag(event);
   }
 
   drag(e) {

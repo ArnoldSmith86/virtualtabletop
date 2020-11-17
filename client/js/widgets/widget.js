@@ -1,7 +1,7 @@
 class Widget extends Draggable {
-  constructor(object, surface) {
+  constructor(object, parent) {
     const div = document.createElement('div');
-    super(div, surface);
+    super(div, $('.surface'));
 
     this.defaults = {
       x: 200,
@@ -16,10 +16,11 @@ class Widget extends Draggable {
       movable: true,
 
       dropOffsetX: 0,
-      dropOffsetY: 0
+      dropOffsetY: 0,
+      inheritChildZ: false
     };
 
-    surface.appendChild(div);
+    (parent.domElement || parent).appendChild(div);
     this.receiveUpdate(object);
 
     this.domElement.addEventListener('contextmenu', e => this.showEnlarged(e), false);
@@ -35,12 +36,25 @@ class Widget extends Draggable {
     return Array.from(widgets.values()).filter(w=>w.p('parent')==this.p('id')&&w.p('type')!='deck').sort((a,b)=>b.p('z')-a.p('z'));
   }
 
+  calculateZ() {
+    let layer = this.p('layer');
+    let z = this.p('z');
+    if(this.p('inheritChildZ')) {
+      for(const child of this.children()) {
+        layer = Math.max(layer, child.p('layer'));
+        z     = Math.max(z,     child.p('z'));
+      }
+    }
+    return ((layer + 10) * 100000) + z;
+  }
+
   checkParent(forceDetach) {
     if(this.currentParent && (forceDetach || !overlap(this, this.currentParent))) {
       this.p('parent', null);
       this.p('owner',  null);
       if(this.currentParent.dispenseCard)
         this.currentParent.dispenseCard(this);
+      this.currentParent.receiveUpdate(this.currentParent.sourceObject);
       delete this.currentParent;
     }
   }
@@ -50,9 +64,6 @@ class Widget extends Draggable {
   }
 
   moveToHolder(holder) {
-    const thisX = this.p('x');
-    const thisY = this.p('y');
-
     if(this.p('parent') && !this.currentParent)
       this.currentParent = widgets.get(this.p('parent'));
     if(this.currentParent != holder)
@@ -60,24 +71,37 @@ class Widget extends Draggable {
 
     this.p('parent', holder.p('id'));
     this.p('owner',  null);
-    this.setPosition(holder.p('x')+holder.p('dropOffsetX'), holder.p('y')+holder.p('dropOffsetY'), getMaxZ(this.p('layer')) + 1);
+
+    this.containerDomElement = holder.domElement;
+    this.containerDomElement.appendChild(this.domElement);
+
+    holder.receiveUpdate(holder.sourceObject); // FIXME: this removes droppable and belongs somewhere else anyway
+
+    const thisX = this.p('x') - holder.p('x');
+    const thisY = this.p('y') - holder.p('y');
+
+    this.setPosition(holder.p('dropOffsetX'), holder.p('dropOffsetY'), getMaxZ(this.p('layer')) + 1);
 
     if(holder.receiveCard)
       holder.receiveCard(this, [ thisX, thisY ], this.currentParent != holder);
   }
 
   onDragStart() {
-    this.dragZ = getMaxZ(this.p('layer')) + 1;
+    this.p('z', getMaxZ(this.p('layer')) + 1);
     this.dropTargets = getValidDropTargets(this);
     this.currentParent = widgets.get(this.p('parent'));
     this.hoverTargetDistance = 99999;
     this.hoverTarget = null;
+
+    this.containerDomElement = $('.surface');
+    this.containerDomElement.appendChild(this.domElement);
+
     for(const t of this.dropTargets)
       t.domElement.classList.add('droppable');
   }
 
   onDrag(x, y) {
-    this.setPosition(x, y, this.dragZ);
+    this.setPosition(x, y, this.p('z'));
     const myCenter = center(this);
 
     this.checkParent();
@@ -174,7 +198,7 @@ class Widget extends Draggable {
     this.isDraggable = this.p('movable');
     this.extraTransform = this.p('rotation') ? `rotate(${this.p('rotation')}deg)` : '';
 
-    this.domElement.style.zIndex = ((this.p('layer') + 10) * 100000) + this.p('z');
+    this.domElement.style.zIndex = this.calculateZ();
     this.setTranslate(this.p('x'), this.p('y'), this.domElement);
   }
 

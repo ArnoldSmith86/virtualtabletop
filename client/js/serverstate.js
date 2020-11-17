@@ -3,15 +3,28 @@ const roomID = self.location.pathname.substr(1);
 const widgets = new Map();
 
 const deferredCards = {};
+const deferredChildren = {};
 
 let delta = { s: {} };
 let batchDepth = 0;
 
 function addWidget(widget) {
+  if(widget.parent && !widgets.has(widget.parent)) {
+    if(!deferredChildren[widget.parent])
+      deferredChildren[widget.parent] = [];
+    deferredChildren[widget.parent].push(widget);
+    return;
+  }
+
   let w;
+
+  let parent = $('.surface');
+  if(widget.parent)
+    parent = widgets.get(widget.parent);
+
   if(widget.type == 'card') {
     if(widgets.has(widget.deck)) {
-      w = new Card(widget, $('.surface'), widgets.get(widget.deck));
+      w = new Card(widget, parent, widgets.get(widget.deck));
     } else {
       if(!deferredCards[widget.deck])
         deferredCards[widget.deck] = [];
@@ -19,17 +32,17 @@ function addWidget(widget) {
       return;
     }
   } else if(widget.type == 'deck') {
-    w = new Deck(widget, $('.surface'));
+    w = new Deck(widget, parent);
   } else if(widget.type == 'holder') {
-    w = new Holder(widget, $('.surface'));
+    w = new Holder(widget, parent);
   } else if(widget.type == 'spinner')
-    w = new Spinner(widget, $('.surface'));
+    w = new Spinner(widget, parent);
   else if(widget.type == 'label')
-    w = new Label(widget, $('.surface'));
+    w = new Label(widget, parent);
   else if(widget.type == 'button')
-    w = new Button(widget, $('.surface'));
+    w = new Button(widget, parent);
   else
-    w = new BasicWidget(widget, $('.surface'));
+    w = new BasicWidget(widget, parent);
 
   widgets.set(widget.id, w);
   if(w.p('dropTarget'))
@@ -38,6 +51,10 @@ function addWidget(widget) {
   for(const c of deferredCards[widget.id] || [])
     addWidget(c);
   delete deferredCards[widget.id];
+
+  for(const c of deferredChildren[widget.id] || [])
+    addWidget(c);
+  delete deferredChildren[widget.id];
 }
 
 function batchStart() {
