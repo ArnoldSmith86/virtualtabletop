@@ -51,6 +51,8 @@ class Widget extends StateManaged {
     if(delta.classes !== undefined || delta.owner !== undefined)
       this.domElement.className = this.classes();
     this.applyCSS(delta);
+    if(delta.z !== undefined)
+      this.domElement.style.zIndex = this.calculateZ();
 
     if(delta.movable !== undefined)
       this.isDraggable = delta.movable;
@@ -110,7 +112,7 @@ class Widget extends StateManaged {
   }
 
   cssProperties() {
-    return [ 'height', 'inheritChildZ', 'layer', 'width', 'z' ];
+    return [ 'height', 'inheritChildZ', 'layer', 'width' ];
   }
 
   cssTransform() {
