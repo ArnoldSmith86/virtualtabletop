@@ -68,13 +68,15 @@ export default async function convertPCIO(content) {
     if(widget.type == 'gamePiece' && widget.pieceType == 'checkers') {
       w.width  = 90;
       w.height = 90;
+      w.classes = 'widget checkersPiece';
       const [ c1, c2 ] = checkersColors[widget.color] || checkersColors.default;
-      w.css = `box-sizing: border-box; background: radial-gradient(circle, ${c1} 0%, ${c1} 33%, ${c2} 33%, ${c2} 46%, ${c1} 46%, ${c1} 58%, rgba(0, 0, 0, 0) 58%);`;
+      w.color = c1;
+      w.color2 = c2;
     } else if(widget.type == 'gamePiece' && widget.pieceType == 'classic') {
       w.width  = 90;
       w.height = 90;
-      w.classes = 'widget classicPiece'
-      w.color = checkersColors[widget.color || 'default'][0];
+      w.classes = 'widget classicPiece';
+      w.color = (checkersColors[widget.color] || checkersColors.default)[0];
     } else if(widget.type == 'gamePiece' && widget.pieceType == 'pin') {
       w.width  = 35.85;
       w.height = 43.83;

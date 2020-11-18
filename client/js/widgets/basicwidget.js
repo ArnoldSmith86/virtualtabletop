@@ -3,6 +3,8 @@ class BasicWidget extends Widget {
     super(id);
 
     this.addDefaults({
+      color: 'black',
+      color2: 'black',
       layer: 1
     });
   }
@@ -12,6 +14,8 @@ class BasicWidget extends Widget {
 
     if(this.p('color'))
       css += '; --color:' + this.p('color');
+    if(this.p('color2'))
+      css += '; --color2:' + this.p('color2');
     if(this.p('image'))
       css += '; background-image: url("' + this.p('image') + '")';
 
@@ -21,6 +25,7 @@ class BasicWidget extends Widget {
   cssProperties() {
     const p = super.cssProperties();
     p.push('color');
+    p.push('color2');
     p.push('image');
     return p;
   }
