@@ -83,6 +83,7 @@ function receiveDelta(delta) {
 function removeWidget(widgetID) {
   widgets.get(widgetID).remove();
   widgets.delete(widgetID);
+  dropTargets.delete(widgetID);
 }
 
 function sendDelta() {
