@@ -12,6 +12,7 @@ class Holder extends Widget {
       dropTarget: { 'type': 'card' },
       dropOffsetX: 4,
       dropOffsetY: 4,
+      alignChildren: true,
 
       onEnter: {},
       onLeave: {},

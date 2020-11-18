@@ -95,11 +95,15 @@ export default async function convertPCIO(content) {
       if(widget.enabled === false)
         continue;
       w.type = 'holder';
-      w.dropOffsetX = 10;
-      w.dropOffsetY = 14;
       w.onEnter = { activeFace: 1 };
       w.onLeave = { activeFace: 0 };
-      w.stackOffsetX = 40;
+      if(widget.id == 'hand') {
+        w.dropOffsetX = 10;
+        w.dropOffsetY = 14;
+        w.stackOffsetX = 40;
+      } else {
+        w.alignChildren = false;
+      }
       w.inheritChildZ = true;
       w.childrenPerOwner = true;
       w.width = widget.width || 1500;

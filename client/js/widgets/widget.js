@@ -144,7 +144,10 @@ class Widget extends StateManaged {
     const thisX = this.p('x') - holder.p('x');
     const thisY = this.p('y') - holder.p('y');
 
-    this.setPosition(holder.p('dropOffsetX'), holder.p('dropOffsetY'), getMaxZ(this.p('layer')) + 1);
+    if(holder.p('alignChildren'))
+      this.setPosition(holder.p('dropOffsetX'), holder.p('dropOffsetY'), this.p('z'));
+    else
+      this.setPosition(thisX, thisY, this.p('z'));
 
     if(holder.receiveCard)
       holder.receiveCard(this, [ thisX, thisY ], this.currentParent != holder);
