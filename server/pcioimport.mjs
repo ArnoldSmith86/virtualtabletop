@@ -55,8 +55,10 @@ export default async function convertPCIO(content) {
     const w = {};
 
     w.id = widget.id;
-    w.x = widget.x;
-    w.y = widget.y;
+    if(widget.x)
+      w.x = widget.x;
+    if(widget.y)
+      w.y = widget.y;
     if(widget.z)
       w.z = widget.z;
 

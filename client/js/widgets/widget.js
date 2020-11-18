@@ -6,8 +6,8 @@ class Widget extends StateManaged {
     this.domElement = div;
 
     this.addDefaults({
-      x: 200,
-      y: 100,
+      x: 0,
+      y: 0,
       z: 0,
       width: 100,
       height: 100,
