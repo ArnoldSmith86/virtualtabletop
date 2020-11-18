@@ -1,6 +1,5 @@
-class StateManaged extends Draggable {
-  constructor(domElement, containerDomElement) {
-    super(domElement, containerDomElement);
+class StateManaged {
+  constructor() {
     this.defaults = {};
     this.state = {};
   }

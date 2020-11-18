@@ -6,18 +6,11 @@ function addWidgetLocal(widget) {
   sendPropertyUpdate(widget.id, widget);
 }
 
-function editClick(e) {
-  if(edit) {
-    const target = widgets.get(e.target.id);
-    const { clientX, clientY } = e.type === "touchend" ? e.changedTouches[0] : e;
-
-    if(target.dragStartEvent.clientX == clientX && target.dragStartEvent.clientY == clientY) {
-      $('#editWidgetJSON').dataset.id = e.target.id;
-      $('#editWidgetJSON').dataset.type = target.p('type');
-      $('#editWidgetJSON').value = JSON.stringify(target.state, null, '  ');
-      showOverlay('editOverlay');
-    }
-  }
+function editClick(widget) {
+  $('#editWidgetJSON').dataset.id = widget.p('id');
+  $('#editWidgetJSON').dataset.type = widget.p('type');
+  $('#editWidgetJSON').value = JSON.stringify(widget.state, null, '  ');
+  showOverlay('editOverlay');
 }
 
 function removeWidgetLocal(widgetID) {
@@ -53,7 +46,4 @@ onLoad(function() {
     removeWidgetLocal($('#editWidgetJSON').dataset.id);
     showOverlay();
   });
-
-  on('#room', 'mouseup',  editClick);
-  on('#room', 'touchend', editClick);
 });

@@ -2,7 +2,8 @@ class Widget extends StateManaged {
   constructor(id) {
     const div = document.createElement('div');
     div.id = id;
-    super(div, $('.surface'));
+    super();
+    this.domElement = div;
 
     this.addDefaults({
       x: 200,
@@ -140,9 +141,6 @@ class Widget extends StateManaged {
     this.p('parent', holder.p('id'));
     this.p('owner',  null);
 
-    this.containerDomElement = holder.domElement;
-    this.containerDomElement.appendChild(this.domElement);
-
     const thisX = this.p('x') - holder.p('x');
     const thisY = this.p('y') - holder.p('y');
 
@@ -152,23 +150,21 @@ class Widget extends StateManaged {
       holder.receiveCard(this, [ thisX, thisY ], this.currentParent != holder);
   }
 
-  onDragStart() {
+  moveStart() {
     this.p('z', getMaxZ(this.p('layer')) + 1);
     this.dropTargets = getValidDropTargets(this);
     this.currentParent = widgets.get(this.p('parent'));
     this.hoverTargetDistance = 99999;
     this.hoverTarget = null;
 
-    //this.p('parent', null);
-    this.containerDomElement = $('.surface');
-    this.containerDomElement.appendChild(this.domElement);
+    this.p('parent', null);
 
     for(const t of this.dropTargets)
       t.domElement.classList.add('droppable');
   }
 
-  onDrag(x, y) {
-    this.setPosition(x, y, this.p('z'));
+  move(x, y) {
+    this.setPosition(Math.max(0, Math.min(1600, x)) - this.p('width')/2, Math.max(0, Math.min(1000, y)) - this.p('height')/2, this.p('z'));
     const myCenter = center(this);
 
     this.checkParent();
@@ -206,7 +202,7 @@ class Widget extends StateManaged {
     }
   }
 
-  onDragEnd() {
+  moveEnd() {
     for(const t of this.dropTargets)
       t.domElement.classList.remove('droppable');
 

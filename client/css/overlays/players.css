@@ -33,4 +33,5 @@
   height: calc(20px * var(--scale));
   border-radius: 100%;
   opacity: 0.2;
+  pointer-events: none;
 }
