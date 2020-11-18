@@ -197,7 +197,6 @@ export default async function convertPCIO(content) {
           parent: widget.id,
           y: -20,
           width: w.width,
-          height: 20,
           type: 'label',
           text: widget.label
         };
@@ -207,7 +206,7 @@ export default async function convertPCIO(content) {
       w.type = 'label';
       w.text = widget.labelContent;
       w.css = `font-size: ${widget.textSize}px; font-weight: ${weight}; text-align: ${widget.textAlign};`;
-      addDimensions(w, widget);
+      addDimensions(w, widget, 100, 20);
     } else if(widget.type == 'board') {
       w.image = widget.boardImage;
       w.movable = false;

@@ -3,6 +3,7 @@ class Label extends Widget {
     super(id);
 
     this.addDefaults({
+      height: 20,
       movable: false,
       layer: -3,
       classes: 'widget label',
