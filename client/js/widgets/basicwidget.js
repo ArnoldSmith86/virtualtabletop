@@ -10,6 +10,8 @@ class BasicWidget extends Widget {
   css() {
     let css = super.css();
 
+    if(this.p('color'))
+      css += '; --color:' + this.p('color');
     if(this.p('image'))
       css += '; background-image: url("' + this.p('image') + '")';
 
@@ -18,6 +20,7 @@ class BasicWidget extends Widget {
 
   cssProperties() {
     const p = super.cssProperties();
+    p.push('color');
     p.push('image');
     return p;
   }

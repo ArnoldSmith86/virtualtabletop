@@ -74,7 +74,7 @@ export default async function convertPCIO(content) {
       w.width  = 90;
       w.height = 90;
       w.classes = 'widget classicPiece'
-      w.css = `background: ${checkersColors[widget.color || 'default'][0]};`;
+      w.color = checkersColors[widget.color || 'default'][0];
     } else if(widget.type == 'gamePiece' && widget.pieceType == 'pin') {
       w.width  = 35.85;
       w.height = 43.83;
