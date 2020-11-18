@@ -230,6 +230,10 @@ export default async function convertPCIO(content) {
             delete c.count;
           if(c.to.length == 1)
             c.to = c.to[0];
+          if(c.to == 'hand') {
+            delete c.to;
+            c.func = 'MOVEXY';
+          }
           if(moveFlip && moveFlip != 'none')
             c.face = moveFlip == 'faceDown' ? 0 : 1;
         }

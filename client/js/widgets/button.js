@@ -40,6 +40,15 @@ class Button extends Widget {
         })));
       }
 
+      if(a.func == 'MOVEXY') {
+        this.w(a.from, source=>source.children().slice(0, (a.count !== undefined ? a.count : 1) || 999999).reverse().forEach(c=> {
+          if(a.face !== undefined && a.face !== null)
+            c.flip(a.face);
+          c.p('parent', null);
+          c.setPosition(a.x || 0, a.y || 0, a.z || c.p('z'));
+        }));
+      }
+
       if(a.func == 'RECALL') {
         this.toA(a.holder).forEach(holder=>{
           const deck = this.wFilter(w=>w.p('type')=='deck'&&w.p('parent')==holder)[0];
