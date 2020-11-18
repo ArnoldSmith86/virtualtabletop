@@ -13,7 +13,7 @@ body.edit .deck {
   font-size: 200%;
 }
 
-body.edit .deck:before, body.edit .deck:after {
+body.edit .deck::before, body.edit .deck::after {
   position: absolute;
   width: 15px;
   height: 25px;
@@ -23,7 +23,7 @@ body.edit .deck:before, body.edit .deck:after {
   content: "";
 }
 
-body.edit .deck:after {
+body.edit .deck::after {
   top: 15px;
   left: 35px;
 }

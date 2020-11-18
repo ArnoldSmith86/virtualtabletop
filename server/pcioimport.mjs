@@ -2,15 +2,15 @@ import fs from 'fs';
 import path from 'path';
 import JSZip from 'jszip';
 
-const checkersColors = {
-  default: [ '#000000', '#525252' ],
-  black:   [ '#4a4a4a', '#848484' ],
-  blue:    [ '#4c5fea', '#8693f1' ],
-  purple:  [ '#bc5bee', '#d290f4' ],
-  red:     [ '#e84242', '#f07f7f' ],
-  yellow:  [ '#e0cb0b', '#eadc59' ],
-  green:   [ '#23ca5b', '#6adb90' ],
-  orange:  [ '#e2a633', '#ecc375' ]
+const pieceColors = {
+  default: '#000000',
+  black:   '#4a4a4a',
+  blue:    '#4c5fea',
+  purple:  '#bc5bee',
+  red:     '#e84242',
+  yellow:  '#e0cb0b',
+  green:   '#23ca5b',
+  orange:  '#e2a633'
 };
 
 export default async function convertPCIO(content) {
@@ -68,17 +68,17 @@ export default async function convertPCIO(content) {
     }
 
     if(widget.type == 'gamePiece' && widget.pieceType == 'checkers') {
-      w.width  = 90;
-      w.height = 90;
+      w.width  = 73.5;
+      w.height = 73.5;
+      w.x = (w.x || 0) + 8.25;
+      w.y = (w.y || 0) + 8.25;
       w.classes = 'widget checkersPiece';
-      const [ c1, c2 ] = checkersColors[widget.color] || checkersColors.default;
-      w.color = c1;
-      w.color2 = c2;
+      w.color = pieceColors[widget.color] || pieceColors.default;
     } else if(widget.type == 'gamePiece' && widget.pieceType == 'classic') {
       w.width  = 90;
       w.height = 90;
       w.classes = 'widget classicPiece';
-      w.color = (checkersColors[widget.color] || checkersColors.default)[0];
+      w.color = pieceColors[widget.color] || pieceColors.default;
     } else if(widget.type == 'gamePiece' && widget.pieceType == 'pin') {
       w.width  = 35.85;
       w.height = 43.83;

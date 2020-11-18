@@ -3,7 +3,7 @@
   border-radius: 800px;
   background: #a9e9e2;
   color: #6d6d6d;
-  border: 3px solid #93d0c9;
+  border: 4px solid #93d0c9;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,6 +11,6 @@
 }
 
 .button:hover {
-  border: 3px solid #83c0b9;
+  border-color: #83c0b9;
 }
 

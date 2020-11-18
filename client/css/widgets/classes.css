@@ -6,7 +6,28 @@ body.edit .widget.classicPiece {
   mask-image: none;
 }
 
-.checkersPiece {
+.checkersPiece, .checkersPiece::before, .checkersPiece::after {
   box-sizing: border-box;
-  background: radial-gradient(circle, var(--color) 0%, var(--color) 33%, var(--color2) 33%, var(--color2) 46%, var(--color) 46%, var(--color) 58%, rgba(0, 0, 0, 0) 58%);
+  border-radius: 50%;
+  background: var(--color);
+}
+
+.checkersPiece::before, .checkersPiece::after {
+  content: "";
+  background: rgba(255,255,255,.32);
+  width: 79%;
+  height: 79%;
+  position: absolute;
+  border-radius: 50%;
+  top: 10.5%;
+  left: 10.5%;
+  box-sizing: border-box;
+}
+
+.checkersPiece::after {
+  background: var(--color);
+  width: 57%;
+  height: 57%;
+  top: 21.5%;
+  left: 21.5%;
 }
