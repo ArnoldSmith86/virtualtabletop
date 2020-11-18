@@ -250,7 +250,7 @@ export default async function convertPCIO(content) {
           c = {
             func:   'FLIP',
             holder: c.args.holders.value,
-            count:  c.args.flipMode || c.args.flipMode.value == 'pile' ? 0 : 1
+            count:  !c.args.flipMode || c.args.flipMode.value == 'pile' ? 0 : 1
           };
           if(c.holder.length == 1)
             c.holder = c.holder[0];
