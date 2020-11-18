@@ -6,6 +6,7 @@ const deferredCards = {};
 const deferredChildren = {};
 
 let delta = { s: {} };
+let deltaChanged = false;
 let batchDepth = 0;
 
 function addWidget(widget) {
@@ -88,9 +89,12 @@ function removeWidget(widgetID) {
 
 function sendDelta() {
   if(!batchDepth) {
-    receiveDelta(delta);
-    toServer('delta', delta);
+    if(deltaChanged) {
+      receiveDelta(delta);
+      toServer('delta', delta);
+    }
     delta = { s: {} };
+    deltaChanged = false;
   }
 }
 
@@ -102,6 +106,7 @@ function sendPropertyUpdate(widgetID, property, value) {
       delta.s[widgetID] = {};
     delta.s[widgetID][property] = value;
   }
+  deltaChanged = true;
   sendDelta();
 }
 
