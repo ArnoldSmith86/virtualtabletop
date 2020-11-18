@@ -27,8 +27,8 @@
 
 .cursor {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: calc(-10px * var(--scale));
+  left: calc(-10px * var(--scale));
   width: calc(20px * var(--scale));
   height: calc(20px * var(--scale));
   border-radius: 100%;
