@@ -12,7 +12,9 @@ function eventCoords(name, e) {
   return [ coords.clientX, coords.clientY ];
 }
 
-function testHandler(name, e) {
+function inputHandler(name, e) {
+  e.preventDefault();
+
   let target = e.target;
   while(target && (!target.id || !widgets.has(target.id)))
     target = target.parentNode;
@@ -65,6 +67,6 @@ function testHandler(name, e) {
 
 onLoad(function() {
   [ 'touchstart', 'touchend', 'touchmove', 'mousedown', 'mousemove', 'mouseup', 'contextmenu' ].forEach(function(event) {
-    window.addEventListener(event, e => testHandler(event, e));
+    window.addEventListener(event, e => inputHandler(event, e));
   });
 });
