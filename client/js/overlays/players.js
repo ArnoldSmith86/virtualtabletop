@@ -6,6 +6,7 @@ function addPlayerCursor(playerName, playerColor) {
   playerCursors[playerName] = document.createElement('div');
   playerCursors[playerName].className = 'cursor';
   playerCursors[playerName].style.backgroundColor = playerColor;
+  playerCursors[playerName].style.transform = `translate(-50px, -50px)`;
   $('#roomArea').appendChild(playerCursors[playerName]);
 }
 
