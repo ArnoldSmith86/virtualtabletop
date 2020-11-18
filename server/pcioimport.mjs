@@ -111,8 +111,8 @@ export default async function convertPCIO(content) {
       if(widget.label) {
         output[widget.id + '_label'] = {
           id: widget.id + '_label',
-          x: widget.x,
-          y: widget.y - 20,
+          parent: widget.id,
+          y: -20,
           width: w.width || 111,
           type: 'label',
           text: widget.label
@@ -122,8 +122,8 @@ export default async function convertPCIO(content) {
       if(widget.hasShuffleButton && pileHasDeck[widget.id]) {
         output[widget.id + '_shuffleButton'] = {
           id: widget.id + '_shuffleButton',
-          x: widget.x,
-          y: widget.y + 1.02*(w.height || 168),
+          parent: widget.id,
+          y: 1.02*(w.height || 168),
           width: w.width || 111,
           height: 32,
           type: 'button',
@@ -175,8 +175,7 @@ export default async function convertPCIO(content) {
       function addCounterButton(suffix, x, text, value) {
         output[widget.id + suffix] = {
           id: widget.id + suffix,
-          x,
-          y: widget.y,
+          parent: widget.id,
           width: w.height - 4,
           height: w.height - 4,
           type: 'button',
@@ -186,16 +185,19 @@ export default async function convertPCIO(content) {
             { func: 'LABEL', label: widget.id, mode: 'inc', value }
           ]
         };
+        if(x)
+          output[widget.id + suffix].x = x;
       }
-      addCounterButton('_decrementButton', widget.x,                      '-', -1);
-      addCounterButton('_incrementButton', widget.x + w.width - w.height, '+',  1);
+      addCounterButton('_decrementButton', 0,                  '-', -1);
+      addCounterButton('_incrementButton', w.width - w.height, '+',  1);
 
       if(widget.label) {
         output[widget.id + 'label'] = {
           id: widget.id + 'label',
-          x: widget.x,
-          y: widget.y - 20,
+          parent: widget.id,
+          y: -20,
           width: w.width,
+          height: 20,
           type: 'label',
           text: widget.label
         };

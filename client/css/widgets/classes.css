@@ -8,5 +8,5 @@ body.edit .widget.classicPiece {
 
 .checkersPiece {
   box-sizing: border-box;
-  background: radial-gradient(circle, var(--color) 0%, var(--color) 33%, var(--color2) 33%, var(--color2) 46%, var(--color) 46%, var(--color) 58%, rgba(0, 0, 0, 0) 58%);`;
+  background: radial-gradient(circle, var(--color) 0%, var(--color) 33%, var(--color2) 33%, var(--color2) 46%, var(--color) 46%, var(--color) 58%, rgba(0, 0, 0, 0) 58%);
 }
