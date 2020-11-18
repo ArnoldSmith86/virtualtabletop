@@ -12,16 +12,6 @@ const checkersColors = {
   green:   [ '#23ca5b', '#6adb90' ],
   orange:  [ '#e2a633', '#ecc375' ]
 };
-const classicURLs = {
-  default: 'https://svgshare.com/i/PzL.svg',
-  black:   'https://svgshare.com/i/Q1P.svg',
-  blue:    'https://svgshare.com/i/PzK.svg',
-  purple:  'https://svgshare.com/i/Q0v.svg',
-  red:     'https://svgshare.com/i/Pzi.svg',
-  yellow:  'https://svgshare.com/i/Pzg.svg',
-  green:   'https://svgshare.com/i/Q0h.svg',
-  orange:  'https://svgshare.com/i/Q0i.svg'
-};
 
 export default async function convertPCIO(content) {
   const zip = await JSZip.loadAsync(content);
@@ -83,7 +73,8 @@ export default async function convertPCIO(content) {
     } else if(widget.type == 'gamePiece' && widget.pieceType == 'classic') {
       w.width  = 90;
       w.height = 90;
-      w.image = classicURLs[widget.color] || classicURLs.default;
+      w.classes = 'widget classicPiece'
+      w.css = `background: ${checkersColors[widget.color || 'default'][0]};`;
     } else if(widget.type == 'gamePiece' && widget.pieceType == 'pin') {
       w.width  = 35.85;
       w.height = 43.83;
