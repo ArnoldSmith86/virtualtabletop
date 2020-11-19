@@ -14,8 +14,12 @@ class Label extends Widget {
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
-    if(delta.text !== undefined)
-      this.domElement.textContent = delta.text;
+    if(delta.text !== undefined) {
+      if(this.domElement.childNodes[0])
+        this.domElement.childNodes[0].nodeValue = delta.text;
+      else
+        this.domElement.textContent = delta.text;
+    }
   }
 
   setText(text, mode) {
