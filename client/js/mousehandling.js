@@ -48,15 +48,14 @@ function inputHandler(name, e) {
         const targetRect = target.getBoundingClientRect();
         mouseStatus[target.id] = {
           status: 'moving',
-          room:   $('#room').getBoundingClientRect(),
           offset: [ coords[0] - (targetRect.left + targetRect.width/2), coords[1] - (targetRect.top + targetRect.height/2) ],
           widget: widgets.get(target.id)
         };
         if(edit || mouseStatus[target.id].widget.p('movable'))
           mouseStatus[target.id].widget.moveStart();
       }
-      const x = Math.floor((coords[0] - mouseStatus[target.id].room.left - mouseStatus[target.id].offset[0]) / scale);
-      const y = Math.floor((coords[1] - mouseStatus[target.id].room.top  - mouseStatus[target.id].offset[1]) / scale);
+      const x = Math.floor((coords[0] - roomRectangle.left - mouseStatus[target.id].offset[0]) / scale);
+      const y = Math.floor((coords[1] - roomRectangle.top  - mouseStatus[target.id].offset[1]) / scale);
       if(edit || mouseStatus[target.id].widget.p('movable'))
         mouseStatus[target.id].widget.move(x, y);
       batchEnd();
@@ -65,6 +64,8 @@ function inputHandler(name, e) {
 
   if(name == 'mouseup')
     mouseTarget = null;
+  if(name == 'mousemove' || name == 'touchmove')
+    toServer('mouse', [ Math.floor((coords[0] - roomRectangle.left)/scale), Math.floor((coords[1] - roomRectangle.top)/scale) ]);
 }
 
 onLoad(function() {

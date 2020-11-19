@@ -35,10 +35,6 @@ function fillPlayerList(players, activePlayers) {
   }
 }
 
-window.addEventListener('mousemove', function(event) {
-  toServer('mouse', [ Math.floor((event.clientX - roomRectangle.left)/scale), Math.floor((event.clientY - roomRectangle.top)/scale) ]);
-});
-
 onLoad(function() {
   onMessage('meta', args=>fillPlayerList(args.meta.players, args.activePlayers));
   onMessage('mouse', function(args) {
