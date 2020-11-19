@@ -118,6 +118,8 @@ export default async function convertPCIO(content) {
           type: 'label',
           text: widget.label
         };
+        if(widget.allowPlayerEditLabel)
+          output[widget.id + '_label'].editable = true;
       }
 
       if(widget.hasShuffleButton && pileHasDeck[widget.id]) {
@@ -168,10 +170,11 @@ export default async function convertPCIO(content) {
         w.activeFace = 1;
     } else if(widget.type == 'counter') {
       w.type = 'label';
-      w.text = widget.counterValue;
-      w.css = 'font-size: 30px;';
       w.width = widget.width || 140;
       w.height = widget.height || 44;
+      w.css = 'font-size: 30px;';
+      w.text = widget.counterValue;
+      w.editable = true;
 
       function addCounterButton(suffix, x, text, value) {
         output[widget.id + suffix] = {

@@ -1,7 +1,17 @@
 .label {
+  font-size: 16px;
+}
+
+.label input {
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
   color: #6d6d6d;
   text-align: center;
-  font-size: 16px;
+  font-size: inherit;
+  width: 100%;
+  height: 100%;
 }
 
 body.edit .widget.label {
