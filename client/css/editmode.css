@@ -16,3 +16,8 @@ body.edit .widget {
   color: var(--editColor);
   box-sizing: border-box;
 }
+
+body.edit .widget > .widget {
+  left: -3px;
+  top: -3px;
+}

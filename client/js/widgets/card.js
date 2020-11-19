@@ -56,7 +56,9 @@ class Card extends Widget {
       for(const object of face.objects) {
         const objectDiv = document.createElement('div');
         const value = object.valueType == 'static' ? object.value : this.p(object.value);
-        objectDiv.style.cssText = `left: ${object.x}px; top: ${object.y}px; width: ${object.w}px; height: ${object.h}px; font-size: ${object.fontSize}px; text-align: ${object.textAlign}`;
+        const x = face.includeBorder ? object.x-1 : object.x;
+        const y = face.includeBorder ? object.y-1 : object.y;
+        objectDiv.style.cssText = `left: ${x}px; top: ${y}px; width: ${object.w}px; height: ${object.h}px; font-size: ${object.fontSize}px; text-align: ${object.textAlign}`;
         if(object.type == 'image') {
           objectDiv.style.backgroundImage = `url(${value})`;
           objectDiv.style.backgroundColor = object.color || 'white';
