@@ -31,7 +31,7 @@ class Label extends Widget {
 
   setText(text, mode) {
     if(!mode || mode == 'set')
-      this.p('text', text.match(/^[-+]?[0-9.]+$/) ? +text : text);
+      this.p('text', typeof text != 'string' || text.match(/^[-+]?[0-9.]+$/) ? +text : text);
     else
       this.p('text', this.p('text') + (mode == 'dec' ? -1 : 1) * text);
   }
