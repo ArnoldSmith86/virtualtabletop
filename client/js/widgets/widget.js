@@ -122,7 +122,7 @@ class Widget extends StateManaged {
   }
 
   cssProperties() {
-    return [ 'height', 'inheritChildZ', 'layer', 'width' ];
+    return [ 'css', 'height', 'inheritChildZ', 'layer', 'width' ];
   }
 
   cssTransform() {
