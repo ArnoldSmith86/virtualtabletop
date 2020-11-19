@@ -78,7 +78,7 @@ class Widget extends StateManaged {
   }
 
   children() {
-    return Array.from(widgets.values()).filter(w=>w.p('parent')==this.p('id')&&w.p('type')!='deck'&&w.p('type')!='label'&&w.p('type')!='button').sort((a,b)=>b.p('z')-a.p('z'));
+    return Array.from(this.domElement.childNodes).filter(n=>!!n.id).map(n=>widgets.get(n.id)).filter(w=>w.p('parent')==this.p('id')).sort((a,b)=>b.p('z')-a.p('z'));
   }
 
   checkParent(forceDetach) {

@@ -28,6 +28,15 @@ class Holder extends Widget {
     this.receiveCard(null);
   }
 
+  children() {
+    return super.children().filter(w=>{
+      for(const p in this.p('dropTarget'))
+        if(w.p(p) != this.p('dropTarget')[p])
+          return false;
+      return true;
+    });
+  }
+
   receiveCard(card, pos, parentChanged) {
     if(this.p('childrenPerOwner') && card)
       card.p('owner', playerName);
