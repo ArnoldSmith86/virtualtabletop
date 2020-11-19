@@ -82,7 +82,8 @@ export default async function convertPCIO(content) {
     } else if(widget.type == 'gamePiece' && widget.pieceType == 'pin') {
       w.width  = 35.85;
       w.height = 43.83;
-      w.image = `https://playingcards.io/img/pieces/pin-${widget.color}.svg`;
+      w.classes = 'widget pinPiece';
+      w.color = pieceColors[widget.color] || pieceColors.default;
     } else if(widget.type == 'gamePiece') {
       w.image = `https://playingcards.io/img/pieces/${widget.color}-${widget.pieceType}.svg`;
       addDimensions(w, widget);

@@ -12,9 +12,11 @@ body.edit .widget.classicPiece {
   background: var(--color);
 }
 
-.checkersPiece::before, .checkersPiece::after {
+.checkersPiece::before, .checkersPiece::after, .pinPiece::before, .pinPiece::after {
   content: "";
   background: rgba(255,255,255,.32);
+  background-size: 50px 50px;
+  background-position: -17px -14px;
   width: 79%;
   height: 79%;
   position: absolute;
@@ -30,4 +32,26 @@ body.edit .widget.classicPiece {
   height: 57%;
   top: 21.5%;
   left: 21.5%;
+}
+
+.pinPiece::before {
+  border: 3px solid #3f3b38;
+  background-color: var(--color);
+  background-image: linear-gradient(90deg, rgba(255,255,255,.32), rgba(0,0,0,.16));
+  background-position: -17px 14px;
+  border-radius: 0;
+  top: 9px;
+  left: 15px;
+  width: 14px;
+  transform: rotate(-30deg);
+}
+
+.pinPiece::after {
+  border: 3px solid #3f3b38;
+  background-color: var(--color);
+  background-image: radial-gradient(circle, rgba(255,255,255,.32), rgba(0,0,0,.16));
+  width: 35.85px;
+  height: 35.85px;
+  left: 0;
+  top: 0;
 }
