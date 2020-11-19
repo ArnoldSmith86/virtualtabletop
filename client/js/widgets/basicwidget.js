@@ -4,6 +4,7 @@ class BasicWidget extends Widget {
 
     this.addDefaults({
       faces: [ {} ],
+      faceCycle: 'ordered',
       activeFace: 0,
       color: 'black',
       layer: 1,
@@ -45,11 +46,11 @@ class BasicWidget extends Widget {
     if(setFlip !== undefined && setFlip !== null)
       this.p('activeFace', setFlip);
     else
-      this.p('activeFace', (this.p('activeFace') + 1) % this.p('faces').length);
+      this.p('activeFace', Math.floor(this.p('activeFace') + (this.p('faceCycle') == 'random' ? Math.random()*99999 : 1)) % this.p('faces').length);
   }
 
   getDefaultValue(property) {
-    if(property == 'faces' || property == 'activeFace' || !this.p('faces'))
+    if(property == 'faces' || property == 'activeFace' || !this.p('faces') || !this.p('faces')[this.p('activeFace')])
       return super.getDefaultValue(property);
     const d = this.p('faces')[this.p('activeFace')][property];
     if(d !== undefined)
