@@ -30,7 +30,23 @@ function ensureRoomIsLoaded(id) {
 MinifyRoom().then(function(result) {
   app.use('/', express.static(__dirname + '/client'));
 
-  app.use('/assets', express.static(__dirname + '/save/assets'));
+  app.get('/assets/:name', function(req, res) {
+    fs.readFile(__dirname + '/save/assets/' + req.params.name, function(err, content) {
+      if(content[0] == 0xff)
+        res.setHeader('Content-Type', 'image/jpeg');
+      else if(content[0] == 0x89)
+        res.setHeader('Content-Type', 'image/png');
+      else if(content[0] == 0x3c)
+        res.setHeader('Content-Type', 'image/svg+xml');
+      else if(content[0] == 0x47)
+        res.setHeader('Content-Type', 'image/gif');
+      else if(content[0] == 0x52)
+        res.setHeader('Content-Type', 'image/webp');
+      else
+        console.log('WARNING: Unknown file type of asset ' + req.params.name);
+      res.send(content);
+    });
+  });
 
   app.post('/quit', function(req, res) {
     process.exit();
