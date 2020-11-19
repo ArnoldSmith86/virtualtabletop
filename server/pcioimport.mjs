@@ -72,8 +72,13 @@ export default async function convertPCIO(content) {
       w.height = 73.5;
       w.x = (w.x || 0) + 8.25;
       w.y = (w.y || 0) + 8.25;
-      w.classes = 'widget checkersPiece';
+      w.faces = [
+        { classes: 'widget checkersPiece' },
+        { classes: 'widget checkersPiece crowned' }
+      ];
       w.color = pieceColors[widget.color] || pieceColors.default;
+      if(widget.kinged)
+        w.activeFace = 1;
     } else if(widget.type == 'gamePiece' && widget.pieceType == 'classic') {
       w.width  = 90;
       w.height = 90;

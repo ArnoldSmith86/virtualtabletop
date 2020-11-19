@@ -36,6 +36,16 @@ body.edit .widget.classicPiece {
   left: 21.5%;
 }
 
+.checkersPiece.crowned::after {
+  content: "♛";
+  font-size: 40px;
+  color: rgba(255,255,255,.32);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
 .pinPiece::before {
   border: 3px solid #3f3b38;
   background-color: var(--color);
