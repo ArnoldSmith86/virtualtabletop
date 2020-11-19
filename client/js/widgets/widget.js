@@ -236,7 +236,7 @@ class Widget extends StateManaged {
       e.className = this.domElement.className;
       e.style.cssText = this.domElement.style.cssText;
       e.style.display = this.domElement.style.display;
-      if(this.p('x') < 600)
+      if(this.domElement.getBoundingClientRect().left < window.innerWidth/2)
         e.classList.add('right');
     }
     event.preventDefault();
