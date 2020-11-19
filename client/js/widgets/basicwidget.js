@@ -6,7 +6,8 @@ class BasicWidget extends Widget {
       faces: [ {} ],
       activeFace: 0,
       color: 'black',
-      layer: 1
+      layer: 1,
+      text: ''
     });
   }
 
@@ -14,6 +15,8 @@ class BasicWidget extends Widget {
     super.applyDeltaToDOM(delta);
     if(delta.activeFace !== undefined || delta.faces !== undefined)
       this.applyDelta(this.p('faces')[this.p('activeFace')]);
+    if(delta.text !== undefined)
+      this.domElement.textContent = delta.text;
   }
 
   click() {
