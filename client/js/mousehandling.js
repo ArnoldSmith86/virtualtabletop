@@ -14,7 +14,8 @@ function eventCoords(name, e) {
 
 function inputHandler(name, e) {
   if([ "TEXTAREA", "INPUT", "BUTTON", "OPTION" ].indexOf(e.target.tagName) != -1)
-    return;
+    if(!edit || !e.target.parentNode || !e.target.parentNode.className.match(/label/))
+      return;
   e.preventDefault();
 
   let target = e.target;
