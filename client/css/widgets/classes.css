@@ -49,7 +49,7 @@ body.edit .widget.classicPiece {
 .pinPiece::after {
   border: 3px solid #3f3b38;
   background-color: var(--color);
-  background-image: radial-gradient(circle, rgba(255,255,255,.32), rgba(0,0,0,.16));
+  background-image: radial-gradient(circle, rgba(255,255,255,.32), rgba(255,255,255,0) 30%, rgba(0,0,0,.16));
   width: 35.85px;
   height: 35.85px;
   left: 0;
