@@ -118,7 +118,6 @@ export default async function convertPCIO(content) {
         output[widget.id + '_label'] = {
           id: widget.id + '_label',
           parent: widget.id,
-          movable: false,
           y: -20,
           width: w.width || 111,
           type: 'label',
@@ -132,7 +131,6 @@ export default async function convertPCIO(content) {
         output[widget.id + '_shuffleButton'] = {
           id: widget.id + '_shuffleButton',
           parent: widget.id,
-          movable: false,
           y: 1.02*(w.height || 168),
           width: w.width || 111,
           height: 32,
@@ -187,7 +185,6 @@ export default async function convertPCIO(content) {
         output[widget.id + suffix] = {
           id: widget.id + suffix,
           parent: widget.id,
-          movable: false,
           width: w.height - 4,
           height: w.height - 4,
           type: 'button',
@@ -207,7 +204,6 @@ export default async function convertPCIO(content) {
         output[widget.id + 'label'] = {
           id: widget.id + 'label',
           parent: widget.id,
-          movable: false,
           y: -20,
           width: w.width,
           type: 'label',
