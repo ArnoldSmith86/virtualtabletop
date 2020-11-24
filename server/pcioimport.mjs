@@ -52,7 +52,7 @@ export default async function convertPCIO(content) {
   const cardsPerCoordinates = {};
   for(const widget of widgets)
     if(widget.type == 'card')
-      cardsPerCoordinates[widget.x + ',' + widget.y] = (cardsPerCoordinates[widget.x + ',' + widget.y] || 0) + 1;
+      cardsPerCoordinates[widget.x + ',' + widget.y + ',' + widget.parent] = (cardsPerCoordinates[widget.x + ',' + widget.y + ',' + widget.parent] || 0) + 1;
 
   const output = {};
 
@@ -64,7 +64,7 @@ export default async function convertPCIO(content) {
         id,
         type: 'pile',
         x: +coord.replace(/,.*/, ''),
-        y: +coord.replace(/.*,/, '')
+        y: +coord.replace(/.*?,/, '').replace(/,.*/, '')
       };
     }
   }
@@ -189,16 +189,17 @@ export default async function convertPCIO(content) {
       w.deck = widget.deck;
       w.cardType = widget.cardType;
 
-      if(piles[widget.x + ',' + widget.y]) {
-        piles[widget.x + ',' + widget.y].x = w.x;
-        piles[widget.x + ',' + widget.y].y = w.y;
-        piles[widget.x + ',' + widget.y].width = byID[w.deck].cardWidth || 103;
-        piles[widget.x + ',' + widget.y].height = byID[w.deck].cardHeight || 160;
-        piles[widget.x + ',' + widget.y].parent = widget.parent;
+      const pile = piles[widget.x + ',' + widget.y + ',' + widget.parent];
+      if(pile) {
+        pile.x = w.x;
+        pile.y = w.y;
+        pile.width = byID[w.deck].cardWidth || 103;
+        pile.height = byID[w.deck].cardHeight || 160;
+        pile.parent = widget.parent;
 
         delete w.x;
         delete w.y;
-        w.parent = piles[widget.x + ',' + widget.y].id;
+        w.parent = pile.id;
       } else {
         w.parent = widget.parent;
       }
