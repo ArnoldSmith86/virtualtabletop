@@ -30,7 +30,10 @@ function inputHandler(name, e) {
 
   if(target && target.id) {
     if(name == 'mousedown' || name == 'touchstart') {
-      mouseStatus[target.id] = { status: 'initial' };
+      mouseStatus[target.id] = {
+        status: 'initial',
+        downCoords: coords
+      };
     } else if(name == 'mouseup' || name == 'touchend') {
       batchStart();
       if(mouseStatus[target.id].status == 'initial') {
@@ -47,9 +50,10 @@ function inputHandler(name, e) {
       batchStart();
       if(mouseStatus[target.id].status == 'initial') {
         const targetRect = target.getBoundingClientRect();
+        const downCoords = mouseStatus[target.id].downCoords;
         mouseStatus[target.id] = {
           status: 'moving',
-          offset: [ coords[0] - (targetRect.left + targetRect.width/2), coords[1] - (targetRect.top + targetRect.height/2) ],
+          offset: [ downCoords[0] - (targetRect.left + targetRect.width/2), downCoords[1] - (targetRect.top + targetRect.height/2) ],
           widget: widgets.get(target.id)
         };
         if(edit || mouseStatus[target.id].widget.p('movable'))
