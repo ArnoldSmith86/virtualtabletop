@@ -33,11 +33,18 @@ class Button extends Widget {
       }
 
       if(a.func == 'MOVE') {
-        this.w(a.from, source=>this.w(a.to, target=>source.children().slice(0, (a.count !== undefined ? a.count : 1) || 999999).reverse().forEach(c=> {
-          if(a.face !== undefined && a.face !== null && c.flip)
-            c.flip(a.face);
-          c.moveToHolder(target);
-        })));
+        const count = (a.count !== undefined ? a.count : 1) || 999999;
+
+        if(typeof a.from == 'string' && typeof a.to == 'string' && !widgets.get(a.to).children().length && widgets.get(a.from).children().length <= count) {
+          // this is a hacky shortcut to avoid removing and creating card piles when moving all children to an empty holder
+          Widget.prototype.children.call(widgets.get(a.from)).forEach(c=>c.p('parent', a.to));
+        } else {
+          this.w(a.from, source=>this.w(a.to, target=>source.children().slice(0, count).reverse().forEach(c=> {
+            if(a.face !== undefined && a.face !== null && c.flip)
+              c.flip(a.face);
+            c.moveToHolder(target);
+          })));
+        }
       }
 
       if(a.func == 'MOVEXY') {
