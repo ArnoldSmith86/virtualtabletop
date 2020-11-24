@@ -97,6 +97,10 @@ class Widget extends StateManaged {
     }
   }
 
+  bringToFront() {
+    this.p('z', getMaxZ(this.p('layer')) + 1);
+  }
+
   calculateZ() {
     let z = ((this.p('layer') + 10) * 100000) + this.p('z');
     if(this.p('inheritChildZ'))
@@ -163,6 +167,7 @@ class Widget extends StateManaged {
   }
 
   moveToHolder(holder) {
+    this.bringToFront();
     if(this.p('parent') && !this.currentParent)
       this.currentParent = widgets.get(this.p('parent'));
     if(this.currentParent != holder)
@@ -173,7 +178,7 @@ class Widget extends StateManaged {
   }
 
   moveStart() {
-    this.p('z', getMaxZ(this.p('layer')) + 1);
+    this.bringToFront();
     this.dropTargets = this.validDropTargets();
     this.currentParent = widgets.get(this.p('parent'));
     this.hoverTargetDistance = 99999;
