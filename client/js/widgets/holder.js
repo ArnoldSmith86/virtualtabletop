@@ -22,12 +22,6 @@ class Holder extends Widget {
     });
   }
 
-  dispenseCard(card) {
-    for(const property in this.p('onLeave'))
-      card.p(property, this.p('onLeave')[property]);
-    this.receiveCard(null);
-  }
-
   children() {
     let children = this.childrenFilter(super.children(), true);
     if(children.length == 1 && children[0].p('type') == 'pile')
@@ -46,21 +40,30 @@ class Holder extends Widget {
     });
   }
 
+  dispenseCard(card) {
+    for(const property in this.p('onLeave'))
+      card.p(property, this.p('onLeave')[property]);
+    this.receiveCard(null);
+  }
+
   onChildAdd(child) {
+    super.onChildAdd(child);
     if(this.p('childrenPerOwner'))
       child.p('owner', playerName);
 
     if(this != child.currentParent) // FIXME: this isn't exactly pretty
       for(const property in this.p('onEnter'))
         child.p(property, this.p('onEnter')[property]);
+  }
 
+  onChildAddAlign(child) {
     if(this.onChildAddManagePile(child))
       return true;
 
     if(this.p('stackOffsetX') || this.p('stackOffsetY'))
       this.receiveCard(child, [ child.p('x') - this.absoluteCoord('x'), child.p('y') - this.absoluteCoord('y') ]);
     else
-      super.onChildAdd(child);
+      super.onChildAddAlign(child);
   }
 
   onChildAddManagePile(child) {

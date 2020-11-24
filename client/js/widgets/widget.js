@@ -4,6 +4,7 @@ class Widget extends StateManaged {
     div.id = id;
     super();
     this.domElement = div;
+    this.childArray = [];
 
     this.addDefaults({
       x: 0,
@@ -36,10 +37,13 @@ class Widget extends StateManaged {
   }
 
   applyChildAdd(child) {
+    this.childArray = this.childArray.filter(c=>c!=child);
+    this.childArray.push(child);
     this.applyZ();
   }
 
   applyChildRemove(child) {
+    this.childArray = this.childArray.filter(c=>c!=child);
     this.applyZ();
   }
 
@@ -110,7 +114,7 @@ class Widget extends StateManaged {
   }
 
   children() {
-    return Array.from(widgets.values()).filter(w=>w.p('parent')==this.p('id')).sort((a,b)=>b.p('z')-a.p('z'));
+    return this.childArray.sort((a,b)=>b.p('z')-a.p('z'));
   }
 
   checkParent(forceDetach) {
@@ -247,6 +251,12 @@ class Widget extends StateManaged {
   }
 
   onChildAdd(child) {
+    this.childArray = this.childArray.filter(c=>c!=child);
+    this.childArray.push(child);
+    this.onChildAddAlign(child);
+  }
+
+  onChildAddAlign(child) {
     const childX = child.p('x') - this.absoluteCoord('x');
     const childY = child.p('y') - this.absoluteCoord('y');
 
@@ -257,7 +267,7 @@ class Widget extends StateManaged {
   }
 
   onChildRemove(child) {
-    // NOOP but overridden in inheriting classes
+    this.childArray = this.childArray.filter(c=>c!=child);
   }
 
   onPropertyChange(property, oldValue, newValue) {
