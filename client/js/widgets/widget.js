@@ -31,6 +31,18 @@ class Widget extends StateManaged {
     this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
   }
 
+  absoluteCoord(coord) {
+    return this.p(coord) + (this.p('parent') ? widgets.get(this.p('parent')).p(coord) : 0);
+  }
+
+  applyChildAdd(child) {
+    this.applyZ();
+  }
+
+  applyChildRemove(child) {
+    this.applyZ();
+  }
+
   applyCSS(delta) {
     for(const property of this.cssProperties()) {
       if(delta[property] !== undefined) {
@@ -52,39 +64,45 @@ class Widget extends StateManaged {
       this.domElement.className = this.classes();
     this.applyCSS(delta);
     if(delta.z !== undefined)
-      this.domElement.style.zIndex = this.calculateZ();
+      this.applyZ(true);
 
     if(delta.movable !== undefined)
       this.isDraggable = delta.movable;
 
     if(delta.parent !== undefined) {
-      if(this.domElement.parentNode && widgets.has(this.domElement.parentNode.id)) {
-        const oldParent = widgets.get(this.domElement.parentNode.id);
-        oldParent.domElement.style.zIndex = oldParent.calculateZ();
-      }
+      if(this.domElement.parentNode && widgets.has(this.domElement.parentNode.id))
+        widgets.get(this.domElement.parentNode.id).applyChildRemove(this);
 
       if(delta.parent === null)
         $('#topSurface').appendChild(this.domElement);
       else
         widgets.get(delta.parent).domElement.appendChild(this.domElement);
 
-      if(delta.parent !== null) {
-        const newParent = widgets.get(delta.parent);
-        newParent.domElement.style.zIndex = newParent.calculateZ();
-      }
+      if(delta.parent !== null)
+        widgets.get(delta.parent).applyChildAdd(this);
+    }
+  }
+
+  applyRemove() {
+    if(this.p('parent'))
+      widgets.get(this.p('parent')).applyChildRemove(this);
+    removeFromDOM(this.domElement);
+  }
+
+  applyZ(force) {
+    if(this.p('inheritChildZ') || force) {
+      this.domElement.style.zIndex = this.calculateZ();
+      if(this.p('parent') && this.p('inheritChildZ'))
+        widgets.get(this.p('parent')).applyZ();
     }
   }
 
   calculateZ() {
-    let layer = this.p('layer');
-    let z = this.p('z');
-    if(this.p('inheritChildZ')) {
-      for(const child of this.children()) {
-        layer = Math.max(layer, child.p('layer'));
-        z     = Math.max(z,     child.p('z'));
-      }
-    }
-    return ((layer + 10) * 100000) + z;
+    let z = ((this.p('layer') + 10) * 100000) + this.p('z');
+    if(this.p('inheritChildZ'))
+      for(const child of this.children())
+        z = Math.max(z, child.calculateZ());
+    return z;
   }
 
   children() {
@@ -150,24 +168,13 @@ class Widget extends StateManaged {
     if(this.currentParent != holder)
       this.checkParent(true);
 
-    this.p('parent', holder.p('id'));
     this.p('owner',  null);
-
-    const thisX = this.p('x') - holder.p('x');
-    const thisY = this.p('y') - holder.p('y');
-
-    if(holder.p('alignChildren'))
-      this.setPosition(holder.p('dropOffsetX'), holder.p('dropOffsetY'), this.p('z'));
-    else
-      this.setPosition(thisX, thisY, this.p('z'));
-
-    if(holder.receiveCard)
-      holder.receiveCard(this, [ thisX, thisY ], this.currentParent != holder);
+    this.p('parent', holder.p('id'));
   }
 
   moveStart() {
     this.p('z', getMaxZ(this.p('layer')) + 1);
-    this.dropTargets = getValidDropTargets(this);
+    this.dropTargets = this.validDropTargets();
     this.currentParent = widgets.get(this.p('parent'));
     this.hoverTargetDistance = 99999;
     this.hoverTarget = null;
@@ -231,8 +238,27 @@ class Widget extends StateManaged {
     this.hideEnlarged();
   }
 
-  remove() {
-    removeFromDOM(this.domElement);
+  onChildAdd(child) {
+    const childX = child.p('x') - this.absoluteCoord('x');
+    const childY = child.p('y') - this.absoluteCoord('y');
+
+    if(this.p('alignChildren'))
+      child.setPosition(this.p('dropOffsetX'), this.p('dropOffsetY'), child.p('z'));
+    else
+      child.setPosition(childX, childY, child.p('z'));
+  }
+
+  onChildRemove(child) {
+    // NOOP but overridden in inheriting classes
+  }
+
+  onPropertyChange(property, oldValue, newValue) {
+    if(property == 'parent') {
+      if(oldValue)
+        widgets.get(oldValue).onChildRemove(this);
+      if(newValue)
+        widgets.get(newValue).onChildAdd(this);
+    }
   }
 
   rotate(degrees) {
@@ -258,5 +284,9 @@ class Widget extends StateManaged {
       this.domElement.classList.add('foreign');
     if(o && o == newName)
       this.domElement.classList.remove('foreign');
+  }
+
+  validDropTargets() {
+    return getValidDropTargets(this);
   }
 }

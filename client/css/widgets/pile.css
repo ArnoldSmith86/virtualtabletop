@@ -1,0 +1,20 @@
+.pile .handle {
+  position: absolute;
+  left: -15px;
+  top: -15px;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  background: #e4e4e4;
+  color: #6d6d6d;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 9999999;
+}
+
+body.edit .pile {
+  display: none;
+}

@@ -46,11 +46,13 @@ class StateManaged {
     if(this.state[property] === value || this.state[property] === undefined && value === null)
       return;
 
+    const oldValue = this.state[property];
     if(value === null)
       delete this.state[property];
     else
       this.state[property] = value;
     sendPropertyUpdate(this.p('id'), property, value);
+    this.onPropertyChange(property, oldValue, value);
   }
 
   setPosition(x, y, z) {

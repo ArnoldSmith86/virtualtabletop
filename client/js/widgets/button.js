@@ -34,7 +34,7 @@ class Button extends Widget {
 
       if(a.func == 'MOVE') {
         this.w(a.from, source=>this.w(a.to, target=>source.children().slice(0, (a.count !== undefined ? a.count : 1) || 999999).reverse().forEach(c=> {
-          if(a.face !== undefined && a.face !== null)
+          if(a.face !== undefined && a.face !== null && c.flip)
             c.flip(a.face);
           c.moveToHolder(target);
         })));

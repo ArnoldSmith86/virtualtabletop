@@ -29,7 +29,16 @@ class Holder extends Widget {
   }
 
   children() {
-    return super.children().filter(w=>{
+    let children = this.childrenFilter(super.children(), true);
+    if(children.length == 1 && children[0].p('type') == 'pile')
+      children = this.childrenFilter(children[0].children(), false);
+    return children;
+  }
+
+  childrenFilter(children, acceptPiles) {
+    return children.filter(w=>{
+      if(acceptPiles && w.p('type') == 'pile')
+        return true;
       for(const p in this.p('dropTarget'))
         if(w.p(p) != this.p('dropTarget')[p])
           return false;
@@ -37,17 +46,59 @@ class Holder extends Widget {
     });
   }
 
-  receiveCard(card, pos, parentChanged) {
-    if(this.p('childrenPerOwner') && card)
-      card.p('owner', playerName);
+  onChildAdd(child) {
+    if(this.p('childrenPerOwner'))
+      child.p('owner', playerName);
 
-    if(card && parentChanged)
+    if(this != child.currentParent) // FIXME: this isn't exactly pretty
       for(const property in this.p('onEnter'))
-        card.p(property, this.p('onEnter')[property]);
+        child.p(property, this.p('onEnter')[property]);
 
-    if(!this.p('stackOffsetX') && !this.p('stackOffsetY'))
-      return;
+    if(this.onChildAddManagePile(child))
+      return true;
 
+    if(this.p('stackOffsetX') || this.p('stackOffsetY'))
+      this.receiveCard(child, [ child.p('x') - this.absoluteCoord('x'), child.p('y') - this.absoluteCoord('y') ]);
+    else
+      super.onChildAdd(child);
+  }
+
+  onChildAddManagePile(child) {
+    if(this.p('alignChildren') && (this.p('stackOffsetX') || this.p('stackOffsetY')) && child.p('type') == 'pile') {
+      child.children().forEach(w=>w.p('parent', this.p('id')));
+      return true;
+    }
+    if(this.p('childrenPerOwner') || !this.p('alignChildren') || this.p('stackOffsetX') || this.p('stackOffsetY'))
+      return false;
+
+    const children = this.childrenFilter(super.children(), true);
+    if(children.length == 2) {
+      const piles = children.filter(w=>w.p('type') == 'pile');
+      if(piles.length == 2) {
+        piles[0].children().forEach(w=>w.p('parent', piles[1].p('id')));
+      } else if(piles.length == 1) {
+        piles[0].p('x', this.p('dropOffsetX'));
+        piles[0].p('y', this.p('dropOffsetY'));
+        children.filter(w=>w.p('type') != 'pile')[0].p('parent', piles[0].p('id'));
+      } else {
+        const pile = {
+          type: 'pile',
+          parent: this.p('id'),
+          x: this.p('dropOffsetX'),
+          y: this.p('dropOffsetY'),
+          width: children[0].p('width'),
+          height: children[0].p('height')
+        };
+        addWidgetLocal(pile);
+        children.forEach(c=>c.p('parent', pile.id));
+      }
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  receiveCard(card, pos) {
     // get children sorted by X or Y position
     // replace coordinates of the received card to its previous coordinates so it gets dropped at the correct position
     const children = this.children().filter(c=>!c.p('owner') || c.p('owner')==playerName).sort((a, b)=>{

@@ -33,6 +33,8 @@ function addWidget(widget) {
       deferredCards[widget.deck].push(widget);
       return;
     }
+  } else if(widget.type == 'pile') {
+    w = new Pile(id);
   } else if(widget.type == 'deck') {
     w = new Deck(id);
   } else if(widget.type == 'holder') {
@@ -82,13 +84,13 @@ function receiveDelta(delta) {
 }
 
 function removeWidget(widgetID) {
-  widgets.get(widgetID).remove();
+  widgets.get(widgetID).applyRemove();
   widgets.delete(widgetID);
   dropTargets.delete(widgetID);
 }
 
-function sendDelta() {
-  if(!batchDepth) {
+function sendDelta(force) {
+  if(!batchDepth || force) {
     if(deltaChanged) {
       receiveDelta(delta);
       toServer('delta', delta);
@@ -104,7 +106,8 @@ function sendPropertyUpdate(widgetID, property, value) {
   } else {
     if(delta.s[widgetID] === undefined)
       delta.s[widgetID] = {};
-    delta.s[widgetID][property] = value;
+    if(delta.s[widgetID] !== null)
+      delta.s[widgetID][property] = value;
   }
   deltaChanged = true;
   sendDelta();
@@ -115,7 +118,7 @@ onLoad(function() {
   onMessage('state', function(args) {
     for(const widget of $a('.widget'))
       if(widget.id != 'enlarged')
-        widget.remove();
+        widgets.get(widget.id).applyRemove();
     widgets.clear();
     dropTargets.clear();
     for(const widgetID in args)

@@ -4,6 +4,7 @@ function addWidgetLocal(widget) {
   if(!widget.id)
     widget.id = Math.random().toString(36).substring(3, 7);
   sendPropertyUpdate(widget.id, widget);
+  sendDelta(true);
 }
 
 function editClick(widget) {
