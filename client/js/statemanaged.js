@@ -20,6 +20,9 @@ class StateManaged {
       }
     }
     this.applyDeltaToDOM(deltaForDOM);
+
+    if(delta.z)
+      updateMaxZ(this.p('layer'), delta.z);
   }
 
   getDefaultValue(key) {
@@ -45,6 +48,9 @@ class StateManaged {
       value = null;
     if(this.state[property] === value || this.state[property] === undefined && value === null)
       return;
+
+    if(property == 'z')
+      updateMaxZ(this.p('layer'), value);
 
     const oldValue = this.state[property];
     if(value === null)

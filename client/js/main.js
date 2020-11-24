@@ -1,6 +1,7 @@
 let scale = 1;
 let roomRectangle;
 
+let maxZ = {};
 const dropTargets = new Map();
 
 function getValidDropTargets(widget) {
@@ -20,11 +21,11 @@ function getValidDropTargets(widget) {
 }
 
 function getMaxZ(layer) {
-  let maxZ = -1;
-  for(const [ id, widget ] of widgets)
-    if(widget.p('layer') == layer)
-      maxZ = Math.max(maxZ, widget.p('z') || 0);
-  return maxZ;
+  return maxZ[layer] || 0;
+}
+
+function updateMaxZ(layer, z) {
+  maxZ[layer] = Math.max(maxZ[layer] || 0, z);
 }
 
 function showOverlay(id) {

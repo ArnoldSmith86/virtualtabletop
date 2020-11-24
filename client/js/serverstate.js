@@ -121,6 +121,7 @@ onLoad(function() {
         widgets.get(widget.id).applyRemove();
     widgets.clear();
     dropTargets.clear();
+    maxZ = {};
     for(const widgetID in args)
       if(widgetID != '_meta')
         addWidget(args[widgetID]);
