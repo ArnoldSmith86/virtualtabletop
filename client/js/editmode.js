@@ -47,7 +47,7 @@ onLoad(function() {
   });
 
   on('#removeWidget', 'click', function() {
-    removeWidgetLocal($('#editWidgetJSON').dataset.id);
+    removeWidgetLocal(JSON.parse($('#editWidgetJSON').dataset.previousState).id);
     showOverlay();
   });
 });
