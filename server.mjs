@@ -29,6 +29,7 @@ function ensureRoomIsLoaded(id) {
 
 MinifyRoom().then(function(result) {
   app.use('/', express.static(__dirname + '/client'));
+  app.use('/i', express.static(__dirname + '/assets'));
 
   app.get('/assets/:name', function(req, res) {
     fs.readFile(__dirname + '/save/assets/' + req.params.name, function(err, content) {

@@ -28,8 +28,21 @@ export default async function convertPCIO(content) {
   }
 
   function mapName(name) {
-    if(name.match(/^\/img\//))
+    if(name.match(/^\/img\//)) {
       name = 'https://playingcards.io' + name;
+
+      name = name.replace('https://playingcards.io/img/cardback-red.svg',                        '/i/cards-default/2B.svg');
+      name = name.replace(/https:\/\/playingcards\.io\/img\/cards(?:-french)?\/joker-black.svg/, '/i/cards-default/2J.svg');
+      name = name.replace(/https:\/\/playingcards\.io\/img\/cards(?:-french)?\/joker-red.svg/,   '/i/cards-default/1J.svg');
+
+      const regex = /https:\/\/playingcards\.io\/img\/cards(?:-french)?\/(hearts|spades|diamonds|clubs)-([2-9jqka]|10).svg/;
+      const match = regex.exec(name);
+      if(match) {
+        const face = match[2].toUpperCase().replace(/10/, "T");
+        const suit = match[1][0].toUpperCase();
+        name = `/i/cards-default/${face}${suit}.svg`;
+      }
+    }
     return nameMap[name] || name;
   }
 
