@@ -190,6 +190,8 @@ export default async function convertPCIO(content) {
         w.cardDefaults.height = widget.cardHeight;
       if(widget.enlarge)
         w.cardDefaults.enlarge = true;
+      if(widget.cardOverlapH === 0)
+        w.cardDefaults.overlap = false;
 
       for(const face of w.faceTemplates)
         for(const object of face.objects)

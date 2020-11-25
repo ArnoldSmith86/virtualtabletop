@@ -124,8 +124,8 @@ class Holder extends Widget {
 
       child.setPosition(newX, newY, newZ);
 
-      xOffset += this.p('stackOffsetX');
-      yOffset += this.p('stackOffsetY');
+      xOffset += !child.p('overlap') && this.p('stackOffsetX') ? child.p('width' ) + 4 : this.p('stackOffsetX');
+      yOffset += !child.p('overlap') && this.p('stackOffsetY') ? child.p('height') + 4 : this.p('stackOffsetY');
     }
   }
 

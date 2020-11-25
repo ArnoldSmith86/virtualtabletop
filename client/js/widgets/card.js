@@ -9,6 +9,7 @@ class Card extends Widget {
 
       activeFace: 0,
       enlarge: false,
+      overlap: true,
       deck: null
     });
 
@@ -86,9 +87,11 @@ class Card extends Widget {
   }
 
   getDefaultValue(property) {
-    const d = this.deck && this.deck.cardPropertyGet(this.p('cardType'), property) || undefined;
-    if(d !== undefined)
-      return d;
+    if(this.deck) {
+      const d = this.deck.cardPropertyGet(this.p('cardType'), property);
+      if(d !== undefined)
+        return d;
+    }
     return super.getDefaultValue(property);
   }
 }
