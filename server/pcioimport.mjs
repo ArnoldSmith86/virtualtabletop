@@ -149,10 +149,13 @@ export default async function convertPCIO(content) {
         output[widget.id + '_label'] = {
           id: widget.id + '_label',
           parent: widget.id,
-          y: -20,
-          width: w.width || 111,
+          x: -(w.width || 111) * 0.1,
+          y: -40,
+          width: (w.width || 111) * 1.2,
+          height: 40,
           type: 'label',
-          text: widget.label
+          text: widget.label,
+          twoRowBottomAlign: true
         };
         if(widget.allowPlayerEditLabel)
           output[widget.id + '_label'].editable = true;

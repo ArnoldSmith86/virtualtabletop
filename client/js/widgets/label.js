@@ -1,7 +1,7 @@
 class Label extends Widget {
   constructor(id) {
     super(id);
-    this.input = document.createElement('input');
+    this.input = document.createElement('textarea');
 
     this.addDefaults({
       height: 20,
@@ -10,7 +10,8 @@ class Label extends Widget {
       classes: 'widget label',
 
       text: '',
-      editable: false
+      editable: false,
+      twoRowBottomAlign: false
     });
 
     this.domElement.appendChild(this.input);
@@ -19,8 +20,17 @@ class Label extends Widget {
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
-    if(delta.text !== undefined)
+    if(delta.text !== undefined) {
       this.input.value = delta.text;
+      if(this.p('twoRowBottomAlign')) {
+        this.input.style.height = '20px';
+        this.input.style.paddingTop = '';
+        if(this.input.scrollHeight == 20) // this.p('height'))
+          this.input.style.paddingTop = '20px';
+        else
+          this.input.style.height = '40px';
+      }
+    }
     if(delta.editable !== undefined) {
       if(delta.editable)
         this.input.removeAttribute("readonly");
