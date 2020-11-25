@@ -20,3 +20,8 @@
 body.edit .widget.label {
   border: none;
 }
+
+body.edit .widget.label > * {
+  left: 0;
+  top: 0;
+}
