@@ -47,9 +47,9 @@ export default async function convertPCIO(content) {
   }
 
   function addDimensions(w, widget, defaultWidth=100, defaultHeight=100) {
-    if(widget.width != defaultWidth)
+    if(widget.width != defaultWidth && widget.width !== undefined)
       w.width = widget.width;
-    if(widget.height != defaultHeight)
+    if(widget.height != defaultHeight && widget.height !== undefined)
       w.height = widget.height;
   }
 
