@@ -197,6 +197,8 @@ export default async function convertPCIO(content) {
         w.cardDefaults.enlarge = true;
       if(widget.cardOverlapH === 0)
         w.cardDefaults.overlap = false;
+      if(widget.onRemoveFromHand === null)
+        w.cardDefaults.ignoreOnLeave = true;
 
       for(const face of w.faceTemplates) {
         for(const object of face.objects) {

@@ -10,6 +10,8 @@ class Card extends Widget {
       activeFace: 0,
       enlarge: false,
       overlap: true,
+      ignoreOnLeave: false,
+
       deck: null
     });
 
