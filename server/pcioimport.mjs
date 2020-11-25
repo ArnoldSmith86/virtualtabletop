@@ -193,9 +193,13 @@ export default async function convertPCIO(content) {
       if(widget.cardOverlapH === 0)
         w.cardDefaults.overlap = false;
 
-      for(const face of w.faceTemplates)
-        for(const object of face.objects)
+      for(const face of w.faceTemplates) {
+        for(const object of face.objects) {
           object.value = mapName(object.value);
+          if(object.value == '/i/cards-default/2B.svg')
+            object.color = '#ffffff';
+        }
+      }
       for(const type in w.cardTypes)
         for(const key in w.cardTypes[type])
           w.cardTypes[type][key] = mapName(w.cardTypes[type][key]);
