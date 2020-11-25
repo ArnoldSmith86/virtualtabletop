@@ -164,7 +164,7 @@ class Widget extends StateManaged {
   }
 
   cssTransformProperties() {
-    return [ 'rotate', 'scale', 'x', 'y' ];
+    return [ 'rotation', 'scale', 'x', 'y' ];
   }
 
   hideEnlarged() {
