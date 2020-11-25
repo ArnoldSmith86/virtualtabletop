@@ -41,7 +41,7 @@ function inputHandler(name, e) {
           editClick(widgets.get(target.id));
         else if(widgets.get(target.id).click)
           widgets.get(target.id).click();
-      } else if(edit || mouseStatus[target.id].widget.p('movable')) {
+      } else if(mouseStatus[target.id].widget.p(edit ? 'movableInEdit' : 'movable')) {
         mouseStatus[target.id].widget.moveEnd();
       }
       delete mouseStatus[target.id];
@@ -56,12 +56,12 @@ function inputHandler(name, e) {
           offset: [ downCoords[0] - (targetRect.left + targetRect.width/2), downCoords[1] - (targetRect.top + targetRect.height/2) ],
           widget: widgets.get(target.id)
         };
-        if(edit || mouseStatus[target.id].widget.p('movable'))
+        if(mouseStatus[target.id].widget.p(edit ? 'movableInEdit' : 'movable'))
           mouseStatus[target.id].widget.moveStart();
       }
       const x = Math.floor((coords[0] - roomRectangle.left - mouseStatus[target.id].offset[0]) / scale);
       const y = Math.floor((coords[1] - roomRectangle.top  - mouseStatus[target.id].offset[1]) / scale);
-      if(edit || mouseStatus[target.id].widget.p('movable'))
+      if(mouseStatus[target.id].widget.p(edit ? 'movableInEdit' : 'movable'))
         mouseStatus[target.id].widget.move(x, y);
       batchEnd();
     }

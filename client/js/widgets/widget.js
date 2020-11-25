@@ -19,6 +19,7 @@ class Widget extends StateManaged {
       classes: 'widget',
       css: '',
       movable: true,
+      movableInEdit: true,
 
       parent: null,
       owner: null,

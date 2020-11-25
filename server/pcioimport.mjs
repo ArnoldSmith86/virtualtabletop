@@ -155,7 +155,8 @@ export default async function convertPCIO(content) {
           height: 40,
           type: 'label',
           text: widget.label,
-          twoRowBottomAlign: true
+          twoRowBottomAlign: true,
+          movableInEdit: false
         };
         if(widget.allowPlayerEditLabel)
           output[widget.id + '_label'].editable = true;
@@ -170,6 +171,7 @@ export default async function convertPCIO(content) {
           height: 32,
           type: 'button',
           text: w.width < 70 ? 'R&S' : 'Recall & Shuffle',
+          movableInEdit: false,
 
           clickRoutine: [
             { func: 'RECALL',  holder: widget.id },
@@ -243,6 +245,7 @@ export default async function convertPCIO(content) {
           width: w.height - 4,
           height: w.height - 4,
           type: 'button',
+          movableInEdit: false,
           text,
 
           clickRoutine: [
@@ -259,6 +262,7 @@ export default async function convertPCIO(content) {
         output[widget.id + 'label'] = {
           id: widget.id + 'label',
           parent: widget.id,
+          movableInEdit: false,
           y: -20,
           width: w.width,
           type: 'label',
