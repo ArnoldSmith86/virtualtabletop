@@ -8,9 +8,8 @@ function addWidgetLocal(widget) {
 }
 
 function editClick(widget) {
-  $('#editWidgetJSON').dataset.id = widget.p('id');
-  $('#editWidgetJSON').dataset.type = widget.p('type');
   $('#editWidgetJSON').value = JSON.stringify(widget.state, null, '  ');
+  $('#editWidgetJSON').dataset.previousState = $('#editWidgetJSON').value;
   showOverlay('editOverlay');
 }
 
@@ -34,11 +33,15 @@ onLoad(function() {
   });
 
   on('#updateWidget', 'click', function() {
-    const oldID = $('#editWidgetJSON').dataset.id;
-    const oldType = $('#editWidgetJSON').dataset.type;
+    const previousState = JSON.parse($('#editWidgetJSON').dataset.previousState);
     const widget = JSON.parse($('#editWidgetJSON').value);
-    if(widget.id !== oldID || widget.type !== oldType)
-      removeWidgetLocal(oldID);
+    if(widget.id !== previousState.id || widget.type !== previousState.type) {
+      removeWidgetLocal(previousState.id);
+    } else {
+      for(const key in previousState)
+        if(widget[key] === undefined)
+          widget[key] = null;
+    }
     addWidgetLocal(widget);
     showOverlay();
   });
