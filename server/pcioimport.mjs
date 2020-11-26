@@ -266,6 +266,9 @@ export default async function convertPCIO(content) {
         for(const key in w.cardTypes[type])
           w.cardTypes[type][key] = mapName(w.cardTypes[type][key]);
     } else if(widget.type == 'card') {
+      if(!byID[widget.deck]) // orphan card without deck
+        continue;
+
       w.type = 'card';
       w.deck = widget.deck;
       w.cardType = widget.cardType;
