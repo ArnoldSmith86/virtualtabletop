@@ -256,6 +256,7 @@ export default async function convertPCIO(content) {
         w.activeFace = 1;
     } else if(widget.type == 'counter') {
       w.type = 'label';
+      w.y += 5;
       w.width = widget.width || 140;
       w.height = widget.height || 44;
       w.css = 'font-size: 30px;';
@@ -266,8 +267,10 @@ export default async function convertPCIO(content) {
         output[widget.id + suffix] = {
           id: widget.id + suffix,
           parent: widget.id,
-          width: w.height - 4,
-          height: w.height - 4,
+          x: 4,
+          y: -2,
+          width: w.height - 8,
+          height: w.height - 8,
           type: 'button',
           movableInEdit: false,
           text,
@@ -277,7 +280,7 @@ export default async function convertPCIO(content) {
           ]
         };
         if(x)
-          output[widget.id + suffix].x = x;
+          output[widget.id + suffix].x += x;
       }
       addCounterButton('_decrementButton', 0,                  '-', -1);
       addCounterButton('_incrementButton', w.width - w.height, '+',  1);
@@ -287,7 +290,7 @@ export default async function convertPCIO(content) {
           id: widget.id + 'label',
           parent: widget.id,
           movableInEdit: false,
-          y: -20,
+          y: -28,
           width: w.width,
           type: 'label',
           text: widget.label
