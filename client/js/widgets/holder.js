@@ -95,7 +95,7 @@ class Holder extends Widget {
           height: children[0].p('height')
         };
         addWidgetLocal(pile);
-        children.forEach(c=>c.p('parent', pile.id));
+        children.reverse().forEach(c=>c.p('parent', pile.id));
       }
       return true;
     } else {
