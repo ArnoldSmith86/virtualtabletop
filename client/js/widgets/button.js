@@ -44,7 +44,7 @@ class Button extends Widget {
       if(a.func == 'INPUT') {
         try {
           Object.assign(variables, await this.showInputOverlay(a));
-        } catch {
+        } catch(e) {
           batchEnd();
           return;
         }
