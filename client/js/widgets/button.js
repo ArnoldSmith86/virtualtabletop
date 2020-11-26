@@ -21,11 +21,33 @@ class Button extends Widget {
       this.domElement.textContent = delta.text;
   }
 
-  click() {
-    for(const a of this.p('clickRoutine')) {
+  async click() {
+    batchStart();
+
+    const variables = {};
+
+    for(const original of this.p('clickRoutine')) {
+      const a = { ...original };
+
+      if(a.applyVariables)
+        for(const v of a.applyVariables)
+          a[v.parameter] = variables[v.variable];
+      if(a.skip)
+        continue;
+
+
 
       if(a.func == 'FLIP') {
         this.w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>c.flip(a.face)));
+      }
+
+      if(a.func == 'INPUT') {
+        try {
+          Object.assign(variables, await this.showInputOverlay(a));
+        } catch {
+          batchEnd();
+          return;
+        }
       }
 
       if(a.func == 'LABEL') {
@@ -61,8 +83,12 @@ class Button extends Widget {
       if(a.func == 'RECALL') {
         this.toA(a.holder).forEach(holder=>{
           const deck = this.wFilter(w=>w.p('type')=='deck'&&w.p('parent')==holder)[0];
-          if(deck)
-            this.wFilter(w=>w.p('deck')==deck.p('id')).forEach(c=>c.moveToHolder(widgets.get(holder)));
+          if(deck) {
+            let cards = this.wFilter(w=>w.p('deck')==deck.p('id'));
+            if(a.owned === false)
+              cards = cards.filter(c=>!c.p('owner'));
+            cards.forEach(c=>c.moveToHolder(widgets.get(holder)));
+          }
         });
       }
 
@@ -80,6 +106,66 @@ class Button extends Widget {
       }
 
     }
+
+    batchEnd();
+  }
+
+  evaluateInputOverlay(o, resolve, reject, go) {
+    const result = {};
+    for(const field of o.fields) {
+
+      if(field.type == 'checkbox') {
+        result[field.variable] = document.getElementById(this.p('id') + ';' + field.variable).checked;
+      }
+
+    }
+
+    showOverlay(null);
+    if(go)
+      resolve(result);
+    else
+      reject(result);
+  }
+
+  async showInputOverlay(o) {
+    return new Promise((resolve, reject) => {
+      $('#buttonInputOverlay h1').textContent = o.header || "Button Input";
+      $('#buttonInputFields').innerHTML = '';
+
+      for(const field of o.fields) {
+
+        if(field.type == 'checkbox') {
+          const checkbox = document.createElement('input');
+          const label    = document.createElement('label');
+          checkbox.type = 'checkbox';
+          label.textContent = field.label;
+          $('#buttonInputFields').appendChild(checkbox);
+          $('#buttonInputFields').appendChild(label);
+          label.htmlFor = checkbox.id = this.p('id') + ';' + field.variable;
+        }
+
+        if(field.type == 'text') {
+          const p = document.createElement('p');
+          p.textContent = field.text;
+          $('#buttonInputFields').appendChild(p);
+        }
+
+      }
+
+      const goHandler = e=>{
+        this.evaluateInputOverlay(o, resolve, reject, true)
+        $('#buttonInputGo').removeEventListener('click', goHandler);
+        $('#buttonInputCancel').removeEventListener('click', cancelHandler);
+      };
+      const cancelHandler = e=>{
+        this.evaluateInputOverlay(o, resolve, reject, false)
+        $('#buttonInputGo').removeEventListener('click', goHandler);
+        $('#buttonInputCancel').removeEventListener('click', cancelHandler);
+      };
+      on('#buttonInputGo', 'click', goHandler);
+      on('#buttonInputCancel', 'click', cancelHandler);
+      showOverlay('buttonInputOverlay');
+    });
   }
 
   toA(ids) {

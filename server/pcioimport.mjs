@@ -56,7 +56,7 @@ export default async function convertPCIO(content) {
   const pileHasDeck = {};
   for(const widget of widgets)
     if(widget.type == 'cardDeck' && widget.parent)
-      pileHasDeck[widget.parent] = true;
+      pileHasDeck[widget.parent] = widget;
 
   const byID = {};
   for(const widget of widgets)
@@ -163,6 +163,28 @@ export default async function convertPCIO(content) {
       }
 
       if(widget.hasShuffleButton && pileHasDeck[widget.id]) {
+        function recallConfirmation(cR) {
+          if(pileHasDeck[widget.id].confirmRecall || pileHasDeck[widget.id].confirmRecallAll !== false) {
+            cR[0].applyVariables = [ { parameter: 'owned', variable: 'owned' } ];
+            cR.unshift({
+              func: 'INPUT',
+              header: 'Recalling cards...',
+              fields: [
+                {
+                  type: 'text',
+                  text: "You're about to recall all cards belonging into this holder. Are you sure?"
+                },
+                {
+                  type: 'checkbox',
+                  label: 'Recall player-owned cards',
+                  variable: 'owned'
+                }
+              ]
+            });
+          }
+          return cR;
+        }
+
         output[widget.id + '_shuffleButton'] = {
           id: widget.id + '_shuffleButton',
           parent: widget.id,
@@ -173,11 +195,11 @@ export default async function convertPCIO(content) {
           text: w.width < 70 ? 'R&S' : 'Recall & Shuffle',
           movableInEdit: false,
 
-          clickRoutine: [
+          clickRoutine: recallConfirmation([
             { func: 'RECALL',  holder: widget.id },
             { func: 'FLIP',    holder: widget.id, face: 0 },
             { func: 'SHUFFLE', holder: widget.id }
-          ]
+          ])
         };
       }
     } else if(widget.type == 'cardDeck') {
