@@ -86,9 +86,12 @@ export default async function convertPCIO(content) {
     byID[widget.id] = widget;
 
   const cardsPerCoordinates = {};
-  for(const widget of widgets)
-    if(widget.type == 'card')
-      cardsPerCoordinates[widget.x + ',' + widget.y + ',' + widget.parent] = (cardsPerCoordinates[widget.x + ',' + widget.y + ',' + widget.parent] || 0) + 1;
+  for(const widget of widgets) {
+    if(widget.type == 'card') {
+      const index = widget.x + ',' + widget.y + ',' + widget.parent + ',' + widget.owner;
+      cardsPerCoordinates[index] = (cardsPerCoordinates[index] || 0) + 1;
+    }
+  }
 
   const output = {};
 
@@ -278,7 +281,7 @@ export default async function convertPCIO(content) {
         w.y = (w.y || 0) - 4;
       }
 
-      const pile = piles[widget.x + ',' + widget.y + ',' + widget.parent];
+      const pile = piles[widget.x + ',' + widget.y + ',' + widget.parent + ',' + widget.owner];
       if(pile) {
         pile.x = w.x;
         if(pile.x == 4)
@@ -293,7 +296,7 @@ export default async function convertPCIO(content) {
         delete w.x;
         delete w.y;
         w.parent = pile.id;
-      } else {
+      } else if(widget.parent) {
         w.parent = widget.parent;
       }
 
@@ -304,6 +307,8 @@ export default async function convertPCIO(content) {
 
       if(widget.faceup)
         w.activeFace = 1;
+      if(widget.owner)
+        w.owner = widget.owner;
     } else if(widget.type == 'counter') {
       w.type = 'label';
       w.y += 5;
