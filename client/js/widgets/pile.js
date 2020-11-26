@@ -6,6 +6,8 @@ class Pile extends Widget {
 
     this.addDefaults({
       classes: 'widget pile',
+      x: 4,
+      y: 4,
       width: 1,
       height: 1,
       alignChildren: true,

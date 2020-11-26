@@ -58,6 +58,29 @@ export default async function convertPCIO(content) {
     if(widget.type == 'cardDeck' && widget.parent)
       pileHasDeck[widget.parent] = widget;
 
+  const pileOverlaps = {};
+  for(const wi1 of widgets) {
+    if(wi1.type == 'cardPile' && !pileOverlaps[wi1.id]) {
+      const x1 = wi1.x      || 0;
+      const y1 = wi1.y      || 0;
+      const w1 = wi1.width  || 111;
+      const h1 = wi1.height || 168;
+      for(const wi2 of widgets) {
+        if(wi2.type == 'cardPile' && wi1.id != wi2.id) {
+          const x2 = wi2.x      || 0;
+          const y2 = wi2.y      || 0;
+          const w2 = wi2.width  || 111;
+          const h2 = wi2.height || 168;
+          if(!(y1+h1 <= y2 || y1 >= y2+h2 || x1+w1 <= x2 || x1 >= x2+w2)) {
+            pileOverlaps[wi1.id] = true;
+            pileOverlaps[wi2.id] = true;
+            break;
+          }
+        }
+      }
+    }
+  }
+
   const byID = {};
   for(const widget of widgets)
     byID[widget.id] = widget;
@@ -94,8 +117,8 @@ export default async function convertPCIO(content) {
       w.z = widget.z;
 
     if(widget.parent) {
-      w.x -= byID[widget.parent].x;
-      w.y -= byID[widget.parent].y;
+      w.x = (w.x || 0) - (byID[widget.parent].x || 0);
+      w.y = (w.y || 0) - (byID[widget.parent].y || 0);
     }
 
     if(widget.type == 'gamePiece' && widget.pieceType == 'checkers') {
@@ -144,6 +167,15 @@ export default async function convertPCIO(content) {
       w.type = 'holder';
       w.inheritChildZ = true;
       addDimensions(w, widget, 111, 168);
+
+      if(pileOverlaps[w.id]) {
+        w.x += 4;
+        w.y += 4;
+        w.width = (w.width || 111) - 8;
+        w.height = (w.height || 168) - 8;
+        w.dropOffsetX = 0;
+        w.dropOffsetY = 0;
+      }
 
       if(widget.label) {
         output[widget.id + '_label'] = {
@@ -204,7 +236,8 @@ export default async function convertPCIO(content) {
       }
     } else if(widget.type == 'cardDeck') {
       w.type = 'deck';
-      w.parent = widget.parent;
+      if(widget.parent)
+        w.parent = widget.parent;
       w.cardTypes = widget.cardTypes;
       w.faceTemplates = [
         widget.backTemplate,
@@ -237,10 +270,19 @@ export default async function convertPCIO(content) {
       w.deck = widget.deck;
       w.cardType = widget.cardType;
 
+      if(pileOverlaps[widget.parent]) {
+        w.x = (w.x || 0) - 4;
+        w.y = (w.y || 0) - 4;
+      }
+
       const pile = piles[widget.x + ',' + widget.y + ',' + widget.parent];
       if(pile) {
         pile.x = w.x;
+        if(pile.x == 4)
+          delete pile.x;
         pile.y = w.y;
+        if(pile.y == 4)
+          delete pile.y;
         pile.width = byID[w.deck].cardWidth || 103;
         pile.height = byID[w.deck].cardHeight || 160;
         pile.parent = widget.parent;
@@ -251,6 +293,11 @@ export default async function convertPCIO(content) {
       } else {
         w.parent = widget.parent;
       }
+
+      if(w.x === 0)
+        delete w.x;
+      if(w.y === 0)
+        delete w.y;
 
       if(widget.faceup)
         w.activeFace = 1;
