@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 import PCIO from './pcioimport.mjs';
+import JSZip from 'jszip';
 
 export default class Room {
   players = [];
@@ -78,6 +79,28 @@ export default class Room {
     for(const player of this.players)
       if(player != exceptPlayer)
         player.send(func, args);
+  }
+
+  async download(stateID, variantID) {
+    const zip = new JSZip();
+
+    for(const vID of variantID ? [ variantID ] : Object.keys(this.state._meta.states[stateID].variants)) {
+      const filename = path.resolve() + '/save/states/' + this.id + '-' + stateID + '-' + vID + '.json';
+      const d = await fs.promises.readFile(filename);
+      const state = JSON.parse(d);
+      state._meta = { version: this.state._meta.version, info: { ...this.state._meta.states[stateID] } };
+      Object.assign(state._meta.info, state._meta.info.variants[vID]);
+      delete state._meta.info.variants;
+
+      zip.file(`${vID}.json`, JSON.stringify(state));
+    }
+
+    const zipBuffer = await zip.generateAsync({type:'nodebuffer', compression: 'DEFLATE'});
+    return {
+      name: this.state._meta.states[stateID].name + '.vtt',
+      type: 'application/zip',
+      content: zipBuffer
+    };
   }
 
   editState(player, id, meta) {

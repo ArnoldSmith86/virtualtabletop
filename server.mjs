@@ -27,6 +27,15 @@ function ensureRoomIsLoaded(id) {
   }
 }
 
+function downloadState(res, roomID, stateID, variantID) {
+  ensureRoomIsLoaded(roomID);
+  activeRooms.get(roomID).download(stateID, variantID).then(function(d) {
+    res.setHeader('Content-Type', d.type);
+    res.setHeader('Content-Disposition', `attachment; filename="${d.name}"`);
+    res.send(d.content);
+  });
+}
+
 MinifyRoom().then(function(result) {
   app.use('/', express.static(__dirname + '/client'));
   app.use('/i', express.static(__dirname + '/assets'));
@@ -59,6 +68,14 @@ MinifyRoom().then(function(result) {
 
   app.get('/', function(req, res) {
     res.redirect(Math.random().toString(36).substring(3, 7));
+  });
+
+  app.get('/dl/:room/:state/:variant', function(req, res) {
+    downloadState(res, req.params.room, req.params.state, req.params.variant);
+  });
+
+  app.get('/dl/:room/:state', function(req, res) {
+    downloadState(res, req.params.room, req.params.state);
   });
 
   app.get('/:id', function(req, res) {

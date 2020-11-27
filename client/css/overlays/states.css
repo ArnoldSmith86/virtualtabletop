@@ -69,3 +69,7 @@
   width: 200px;
   display: inline-block;
 }
+
+#variantsEditList > div {
+  margin-bottom: 30px;
+}

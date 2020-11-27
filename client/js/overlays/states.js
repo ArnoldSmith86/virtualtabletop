@@ -14,6 +14,14 @@ function addState(e, type, src) {
   }
 }
 
+function downloadState(variantID) {
+  const stateID = $('#stateEditOverlay').dataset.id;
+  let url = `/dl/${roomID}/${stateID}`;
+  if(variantID)
+    url += `/${variantID}`;
+  window.location.href = url;
+}
+
 function editState() {
   const variants = {};
   for(const variant of $a('#variantsEditList > div')) {
@@ -95,6 +103,7 @@ function fillEditState(state) {
     $('.statePlayers', vEntry).value = variant.players;
     $('.stateVariant', vEntry).value = variant.variant;
 
+    $('.download', vEntry).addEventListener('click', _=>downloadState(variantID));
     $('.remove', vEntry).addEventListener('click', _=>removeFromDOM(vEntry));
     $('#variantsEditList').appendChild(vEntry);
   }
@@ -115,6 +124,7 @@ onLoad(function() {
   on('#addState .upload, #addVariant .upload', 'click', e=>selectFile(true).then(f=>addState(e, 'file', f)));
   on('#addState .link,   #addVariant .link',   'click', e=>addState(e, 'url', prompt('Enter shared URL:')));
 
-  on('#stateEditOverlay .save',   'click', editState);
-  on('#stateEditOverlay .remove', 'click', removeState);
+  on('#stateEditOverlay .save',     'click', editState);
+  on('#stateEditOverlay .download', 'click', _=>downloadState());
+  on('#stateEditOverlay .remove',   'click', removeState);
 });
