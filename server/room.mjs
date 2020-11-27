@@ -25,23 +25,50 @@ export default class Room {
     this.sendMetaUpdate();
   }
 
-  addState(player, type, src, meta) {
+  addState(player, id, type, src, addAsVariant) {
+    const stateID = addAsVariant || id;
+    const variantID = id;
+
     const room = this;
     (async function() {
       let state = room.state;
       if(type == 'file')
         state = await PCIO(Buffer.from(src.replace(/^data.*?,/, ''), 'base64'));
 
-      meta.id = Math.random().toString(36).substring(3, 7);
+      const meta = (state._meta || {}).info || {
+        name: 'Unnamed',
+        image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mOs+Q8AAf0BfcpIqy8AAAAASUVORK5CYII=',
+        rules: '',
+        bgg: '',
+        year: 0,
+        mode: 'vs',
+        time: 30,
+        players: '2-4',
+        language: 'US',
+        variant: ''
+      };
 
-      if(type == 'link') {
-        meta.src = src;
+      fs.writeFileSync(path.resolve() + '/save/states/' + room.id + '-' + stateID + '-' + variantID + '.json', JSON.stringify(state));
+
+      const variant = {
+        players: meta.players,
+        language: meta.language,
+        variant: meta.variant,
+        type
+      };
+      if(type == 'link')
+        variant.src = src;
+      delete meta.players;
+      delete meta.language;
+      delete meta.variant;
+
+      if(addAsVariant) {
+        room.state._meta.states[stateID].variants[variantID] = variant;
       } else {
-        fs.writeFileSync(path.resolve() + '/save/states/' + room.id + '-' + meta.id + '.json', JSON.stringify(state));
+        meta.variants = {};
+        meta.variants[variantID] = variant;
+        room.state._meta.states[stateID] = meta;
       }
-
-      meta.type = type;
-      room.state._meta.states.push(meta);
       room.sendMetaUpdate();
     })();
   }
@@ -51,6 +78,11 @@ export default class Room {
     for(const player of this.players)
       if(player != exceptPlayer)
         player.send(func, args);
+  }
+
+  editState(player, id, meta) {
+    Object.assign(this.state._meta.states[id], meta);
+    this.sendMetaUpdate();
   }
 
   load(file) {
@@ -65,15 +97,17 @@ export default class Room {
     }
     if(!this.state._meta)
       this.state._meta = {};
+    if(this.state._meta.version === undefined)
+      this.state._meta.version = 0;
     if(!this.state._meta.players)
       this.state._meta.players = {};
-    if(!this.state._meta.states)
-      this.state._meta.states = [];
+    if(!this.state._meta.states || Array.isArray(this.state._meta.states))
+      this.state._meta.states = {};
   }
 
-  loadState(player, stateID) {
+  loadState(player, stateID, variantID) {
     const meta = this.state._meta;
-    this.load(path.resolve() + '/save/states/' + this.id + '-' + meta.states.filter(s=>s.id==stateID)[0].id + '.json');
+    this.load(path.resolve() + '/save/states/' + this.id + '-' + stateID + '-' + variantID + '.json');
     this.state._meta = meta;
     this.broadcast('state', this.state);
   }
@@ -117,7 +151,7 @@ export default class Room {
   }
 
   removeState(player, stateID) {
-    this.state._meta.states = this.state._meta.states.filter(s=>s.id!=stateID);
+    delete this.state._meta.states[stateID];
     this.sendMetaUpdate();
   }
 

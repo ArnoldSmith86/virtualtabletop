@@ -14,11 +14,13 @@ export default class Player {
 
   messageReceived = (func, args) => {
     if(func == 'addState')
-      this.room.addState(this, args.type, args.src, args.meta);
+      this.room.addState(this, args.id, args.type, args.src, args.addAsVariant);
     if(func == 'delta')
       this.room.receiveDelta(this, args);
+    if(func == 'editState')
+      this.room.editState(this, args.id, args.meta);
     if(func == 'loadState')
-      this.room.loadState(this, args);
+      this.room.loadState(this, args.stateID, args.variantID);
     if(func == 'log')
       console.log(args);
     if(func == 'mouse')

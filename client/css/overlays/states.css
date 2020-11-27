@@ -1,4 +1,8 @@
-#statesList {
+#statesOverlay {
+  padding: 2%;
+}
+
+#statesList, #stateEditOverlay {
   overflow: auto;
 }
 
@@ -28,8 +32,9 @@
   font-style: normal;
 }
 
-.roomState .details {
+.roomState .details, .roomState .buttons {
   display: none;
+  overflow: auto;
 }
 
 #addState .image {
@@ -58,4 +63,9 @@
 
 .roomState:hover > img, #addState:hover .image {
   filter: blur(5px);
+}
+
+#stateEditOverlay label {
+  width: 200px;
+  display: inline-block;
 }

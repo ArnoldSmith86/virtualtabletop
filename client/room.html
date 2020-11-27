@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
@@ -64,31 +64,55 @@
         <script id="template-stateslist-entry" type="text/template">
           <img>
           <div class="details">
-            <em><a class="bgg">Name (Year)</a></em>
-            <em><a class="rules">Rules</a></em>
-            <p>👪 <span class="players">0</span> ⌛ <span class="time">0</span> minutes</p>
-            <p><button class="play">▶️</button><button class="download">⬇️</button><button class="remove">❌</button></p>
+            <em><a class="bgg" target="_blank">Name (Year)</a></em>
+            <em>⌛ <span class="time">0</span> minutes - <a class="rules" target="_blank">Rules</a></em>
+            <div class="variantsList"></div>
+            <p><button class="save" disabled>💾 Save in-progress game</button><button class="edit">✏️ Edit</button></p>
           </div>
+        </script>
+        <script id="template-variantslist-entry" type="text/template">
+          <button class="play">▶️ Play: <span class="language">🇺🇸</span> 👪 <span class="players">0</span><br><span class="variant"></span></button>
         </script>
         <div id="addState" class="roomState">
           <div class="image">➕</div>
-          <div class="details">
-            <input placeholder="Name"/>
-            <input placeholder="Year"/>
-            <input placeholder="Rules link"/>
-            <input placeholder="Players"/>
-            <input placeholder="Mode"/>
-            <input placeholder="Time"/>
-            <input placeholder="BordGameGeek link"/>
-            <input placeholder="Image"/>
-            <div class="buttons">
-              <button class="create">➕ Current room state</button>
-              <button class="upload">⬆️ Upload room state</button>
-              <button class="link">🔗 Link to room state</button>
-            </div>
+          <div class="buttons">
+            <button class="create">➕ Use current room state</button>
+            <button class="library" disabled>📚 Public library</button>
+            <button class="link" disabled>🔗 Enter link</button>
+            <button class="upload">⬆️ Upload file</button>
           </div>
         </div>
       </div>
+    </div>
+
+    <div id="stateEditOverlay" class="overlay">
+      <h1>Edit game</h1>
+      <div class="details">
+        <div class="input"><label for="stateName">Name:</label> <input id="stateName"/></div>
+        <div class="input"><label for="stateYear">Year:</label> <input id="stateYear"/></div>
+        <div class="input"><label for="stateRules">Rules link:</label> <input id="stateRules"/></div>
+        <div class="input"><label for="stateMode">Mode:</label> <input id="stateMode"/></div>
+        <div class="input"><label for="stateTime">Time:</label> <input id="stateTime"/></div>
+        <div class="input"><label for="stateBGG">BordGameGeek link:</label> <input id="stateBGG"/></div>
+        <div class="input"><label for="stateImage">Image URL:</label> <input id="stateImage"/></div>
+      </div>
+      <h2>Variants</h2>
+      <div id="variantsEditList">
+        <script id="template-variantseditlist-entry" type="text/template">
+          <div class="input"><label>Language (country code):</label> <input class="stateLanguage"/></div>
+          <div class="input"><label>Players:</label> <input class="statePlayers"/></div>
+          <div class="input"><label>Variant:</label> <input class="stateVariant"/></div>
+          <button class="remove">❌ Remove variant</button>
+        </script>
+      </div>
+      <div id="addVariant" class="buttons">
+        Add variant:
+        <button class="create">➕ Use current room state</button>
+        <button class="library" disabled>📚 Public library</button>
+        <button class="link" disabled>🔗 Enter link</button>
+        <button class="upload">⬆️ Upload file</button>
+      </div>
+      <p><button class="save">✔️ Save</button><button class="download" disabled>⬇️ Download</button><button class="remove">❌ Remove</button></p>
     </div>
   </div>
 

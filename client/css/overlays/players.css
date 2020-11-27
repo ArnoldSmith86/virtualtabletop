@@ -1,3 +1,7 @@
+#playerList {
+  overflow: auto;
+}
+
 .myPlayerEntry .playerName {
   font-weight: bold;
 }
