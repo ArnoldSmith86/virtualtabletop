@@ -56,15 +56,6 @@ onLoad(function() {
       showOverlay(overlay);
   });
 
-  on('#uploadButton', 'click', function() {
-    selectFile().then(function(file) {
-      var req = new XMLHttpRequest();
-      req.open('PUT', self.location.pathname, true);
-      req.setRequestHeader('Content-Type', 'application/octet-stream');
-      req.send(file);
-    });
-  });
-
   on('#fullscreenButton', 'click', function() {
     if(!document.fullscreenElement)
       document.documentElement.requestFullscreen();

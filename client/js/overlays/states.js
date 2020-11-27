@@ -77,7 +77,8 @@ function fillStatesList(states, activePlayers) {
 
     if(state.id == waitingForStateCreation) {
       waitingForStateCreation = null;
-      fillEditState(state);
+      if(state.name == 'Unnamed' || $('#stateEditOverlay').style.display == 'flex')
+        fillEditState(state);
     }
   }
   $('#statesList').appendChild(addDiv);

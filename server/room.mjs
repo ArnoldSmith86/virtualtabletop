@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 
-import PCIO from './pcioimport.mjs';
 import JSZip from 'jszip';
+import FileLoader from './fileloader.mjs';
 
 export default class Room {
   players = [];
@@ -28,47 +28,57 @@ export default class Room {
 
   addState(player, id, type, src, addAsVariant) {
     const stateID = addAsVariant || id;
-    const variantID = id;
+    let variantID = id;
 
     const room = this;
     (async function() {
-      let state = room.state;
-      if(type == 'file')
-        state = await PCIO(Buffer.from(src.replace(/^data.*?,/, ''), 'base64'));
+      let states = [ room.state ];
+      try {
+        if(type == 'file')
+          states = await FileLoader.readStatesFromFile(Buffer.from(src.replace(/^data.*?,/, ''), 'base64'));
+      } catch(e) {
+        console.log("ERROR LOADING FILE: " + e);
+        return;
+      }
 
-      const meta = (state._meta || {}).info || {
-        name: 'Unnamed',
-        image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mOs+Q8AAf0BfcpIqy8AAAAASUVORK5CYII=',
-        rules: '',
-        bgg: '',
-        year: 0,
-        mode: 'vs',
-        time: 30,
-        players: '2-4',
-        language: 'US',
-        variant: ''
-      };
+      for(const state of states) {
+        const meta = (state._meta || {}).info || {
+          name: 'Unnamed',
+          image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mOs+Q8AAf0BfcpIqy8AAAAASUVORK5CYII=',
+          rules: '',
+          bgg: '',
+          year: 0,
+          mode: 'vs',
+          time: 30,
+          players: '2-4',
+          language: 'US',
+          variant: ''
+        };
 
-      fs.writeFileSync(path.resolve() + '/save/states/' + room.id + '-' + stateID + '-' + variantID + '.json', JSON.stringify(state));
+        fs.writeFileSync(path.resolve() + '/save/states/' + room.id + '-' + stateID + '-' + variantID + '.json', JSON.stringify(state));
 
-      const variant = {
-        players: meta.players,
-        language: meta.language,
-        variant: meta.variant,
-        type
-      };
-      if(type == 'link')
-        variant.src = src;
-      delete meta.players;
-      delete meta.language;
-      delete meta.variant;
+        const variant = {
+          players: meta.players,
+          language: meta.language,
+          variant: meta.variant,
+          type
+        };
+        if(type == 'link')
+          variant.src = src;
+        delete meta.players;
+        delete meta.language;
+        delete meta.variant;
 
-      if(addAsVariant) {
-        room.state._meta.states[stateID].variants[variantID] = variant;
-      } else {
-        meta.variants = {};
-        meta.variants[variantID] = variant;
-        room.state._meta.states[stateID] = meta;
+        if(addAsVariant) {
+          room.state._meta.states[stateID].variants[variantID] = variant;
+        } else {
+          meta.variants = {};
+          meta.variants[variantID] = variant;
+          room.state._meta.states[stateID] = meta;
+        }
+
+        addAsVariant = true;
+        variantID = Math.random().toString(36).substring(3, 7);
       }
       room.sendMetaUpdate();
     })();

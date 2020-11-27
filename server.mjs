@@ -8,7 +8,6 @@ import http from 'http';
 import WebSocket  from './server/websocket.mjs';
 import Player     from './server/player.mjs';
 import Room       from './server/room.mjs';
-import PCIO       from './server/pcioimport.mjs';
 import MinifyRoom from './server/minify.mjs';
 
 const __dirname = path.resolve();
@@ -86,12 +85,6 @@ MinifyRoom().then(function(result) {
     } else {
       res.send(result.min);
     }
-  });
-
-  app.put('/:id', function(req, res) {
-    ensureRoomIsLoaded(req.params.id);
-    PCIO(req.body).then(state => activeRooms.get(req.params.id).setState(state)).catch(e=>console.log("ERROR IMPORTING PCIO: " + e));
-    res.send();
   });
 
   server.listen(process.env.PORT || 8272, function() {
