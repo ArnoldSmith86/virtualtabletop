@@ -10,7 +10,8 @@ const pieceColors = {
   red:     '#e84242',
   yellow:  '#e0cb0b',
   green:   '#23ca5b',
-  orange:  '#e2a633'
+  orange:  '#e2a633',
+  white:   '#ffffff'
 };
 
 export default async function convertPCIO(content) {
