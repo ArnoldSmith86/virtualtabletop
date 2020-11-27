@@ -24,6 +24,7 @@ body {
   left: 0;
   width: 100%;
   height: var(--toolbarSize);
+  z-index: 2;
 }
 
 #roomArea {
@@ -34,6 +35,7 @@ body {
 
   top: calc((100vh - var(--roomHeight) * var(--scale)) / 2 - var(--toolbarSize) / 2);
   left: 0;
+  z-index: 1;
 }
 
 @media (min-aspect-ratio: 1600/1000) {
@@ -51,16 +53,46 @@ body {
 }
 
 .toolbarButton {
-  margin: 3px;
-  padding: 0;
+  display: inline-block;
+  position: relative;
+  width: calc(var(--toolbarSize) - 4px);
+  height: calc(var(--toolbarSize) - 4px);
+  margin: 2px 2px 0 2px;
+  padding: 2px;
   border: 0;
+  border-radius: 4px;
   background: none;
-  font-size: calc(var(--toolbarSize) - 8px);
-  vertical-align: middle;
+  font-size: calc(var(--toolbarSize) - 12px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.toolbarButton:hover {
+  background-color: rgba(0,0,0,0.1);
+}
+.toolbarButton:focus {
+  outline-style: none;
+  box-shadow: none;
+  border-color: transparent;
+}
+.toolbarButton .tooltip {
+  display: none;
+  position: absolute;
+  left: calc(100% + 4px);
+  width: calc(var(--toolbarSize) - 9px);
+  padding: 2px;
+  font-size: 14px;
+  color: white;
+  background: black;
+  border-radius: 4px;
+  width: 100px;
+  height: 18px;
+  opacity: 0.9;
 }
 
-.toolbarButton.smallIcons {
-  font-size: calc((var(--toolbarSize) - 8px) / 2);
+.toolbarButton:hover .tooltip {
+  display: block;
 }
 
 .overlay {
