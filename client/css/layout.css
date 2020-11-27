@@ -38,22 +38,7 @@ body {
   z-index: 1;
 }
 
-@media (min-aspect-ratio: 1600/1000) {
-  #toolbar {
-    top: 0;
-    left: calc((100vw - var(--roomWidth) * var(--scale)) / 2 - var(--toolbarSize) / 2 + 1px);
-    width: var(--toolbarSize);
-    height: 100%;
-  }
-
-  #roomArea {
-    top: 0;
-    left: calc((100vw - var(--roomWidth) * var(--scale)) / 2 + var(--toolbarSize) / 2);
-  }
-}
-
 .toolbarButton {
-  display: inline-block;
   position: relative;
   width: calc(var(--toolbarSize) - 4px);
   height: calc(var(--toolbarSize) - 4px);
@@ -63,7 +48,7 @@ body {
   border-radius: 4px;
   background: none;
   font-size: calc(var(--toolbarSize) - 12px);
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -79,8 +64,8 @@ body {
 .toolbarButton .tooltip {
   display: none;
   position: absolute;
-  left: calc(100% + 4px);
-  width: calc(var(--toolbarSize) - 9px);
+  left: 0;
+  top: -26px;
   padding: 2px;
   font-size: 14px;
   color: white;
@@ -93,6 +78,25 @@ body {
 
 .toolbarButton:hover .tooltip {
   display: block;
+}
+
+@media (min-aspect-ratio: 1600/1000) {
+  #toolbar {
+    top: 0;
+    left: calc((100vw - var(--roomWidth) * var(--scale)) / 2 - var(--toolbarSize) / 2 + 1px);
+    width: var(--toolbarSize);
+    height: 100%;
+  }
+
+  .toolbarButton .tooltip {
+    top: unset;
+    left: calc(100% + 4px);
+  }
+
+  #roomArea {
+    top: 0;
+    left: calc((100vw - var(--roomWidth) * var(--scale)) / 2 + var(--toolbarSize) / 2);
+  }
 }
 
 .overlay {
