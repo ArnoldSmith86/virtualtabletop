@@ -3,7 +3,9 @@ let connection;
 let messageCallbacks = {};
 
 function startWebSocket() {
-  const url = `ws://${location.host}`;
+  let url = `ws://${location.host}`;
+  if(location.protocol == 'https:')
+    url = `wss://${location.host}`;
   console.log(`connecting to ${url}`);
   connection = new WebSocket(url);
 
