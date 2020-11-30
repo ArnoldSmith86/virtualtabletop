@@ -6,7 +6,7 @@
   overflow: auto;
 }
 
-.roomState {
+.roomState, #addState {
   color: black;
   display: inline-block;
   width: 260px;
@@ -25,6 +25,10 @@
   background: rgba(255, 255, 255, 0.5);
 }
 
+#addState div {
+  position: absolute;
+}
+
 .roomState a {
   color: black;
   font-weight: bolder;
@@ -32,24 +36,32 @@
   font-style: normal;
 }
 
-.roomState .details, .roomState .buttons {
+.roomState .details, #addState .buttons {
   display: none;
   overflow: auto;
 }
 
 #addState .image {
-  font-size: 200px;
+  font-size: 150px;
   opacity: 0.7;
 }
 
-#addState input {
-  width: 80px;
+#addState button {
+  width: 160px;
 }
 
-.roomState > img, #addState .image {
+.roomState > img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+#addState {
+  background: rgba(255, 255, 255, 0.5);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .roomState em {
@@ -57,7 +69,7 @@
   margin-bottom: 20px;
 }
 
-.roomState:hover > div, .roomState > div > a {
+.roomState:hover > div, #addState:hover > div, .roomState > div > a {
   display: block;
 }
 
