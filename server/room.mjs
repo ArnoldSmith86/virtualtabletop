@@ -37,7 +37,9 @@ export default class Room {
         if(type == 'file')
           states = await FileLoader.readStatesFromFile(Buffer.from(src.replace(/^data.*?,/, ''), 'base64'));
       } catch(e) {
-        console.log("ERROR LOADING FILE: " + e);
+        console.log('ERROR LOADING FILE: ' + e);
+        fs.writeFileSync(path.resolve() + '/save/errors/' + Math.random().toString(36).substring(3, 7), Buffer.from(src.replace(/^data.*?,/, ''), 'base64'));
+        player.send('error', e.toString());
         return;
       }
 

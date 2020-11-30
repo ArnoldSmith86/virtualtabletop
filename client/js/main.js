@@ -63,6 +63,8 @@ onLoad(function() {
       document.exitFullscreen();
   });
   setScale();
+
+  onMessage('error', alert);
 });
 
 window.onresize = function(event) {
