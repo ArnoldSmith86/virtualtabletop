@@ -101,6 +101,22 @@ class Button extends Widget {
         }));
       }
 
+      if(a.func == 'SORT') {
+        this.w(a.holder, holder=>{
+          let z = 1;
+          let children = holder.children().sort((w1,w2)=>{
+            if(typeof w1.p(a.key) == 'number')
+              return w1.p(a.key) - w2.p(a.key);
+            else
+              return w1.p(a.key).localeCompare(w2.p(a.key));
+          });
+          if(a.reverse)
+            children = children.reverse();
+          children.forEach(c=>c.p('z', ++z));
+          holder.updateAfterShuffle();
+        });
+      }
+
       if(a.func == 'SHUFFLE') {
         this.w(a.holder, holder=>{
           holder.children().forEach(c=>c.p('z', Math.floor(Math.random()*10000)));
