@@ -94,7 +94,13 @@ export default async function convertPCIO(content) {
     }
   }
 
-  const output = {};
+  const output = {
+    _meta: {
+      version: 1,
+      players: {},
+      states: {}
+    }
+  };
 
   const piles = {};
   for(const coord in cardsPerCoordinates) {
