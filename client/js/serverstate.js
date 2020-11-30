@@ -53,8 +53,9 @@ function addWidget(widget) {
   if(w.p('dropTarget'))
     dropTargets.set(widget.id, w);
 
-  for(const c of deferredCards[widget.id] || [])
-    addWidget(c);
+  if(widget.type == 'deck')
+    for(const c of deferredCards[widget.id] || [])
+      addWidget(c);
   delete deferredCards[widget.id];
 
   for(const c of deferredChildren[widget.id] || [])
