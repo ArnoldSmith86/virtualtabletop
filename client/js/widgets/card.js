@@ -8,9 +8,6 @@ class Card extends Widget {
       classes: 'widget card',
 
       activeFace: 0,
-      enlarge: false,
-      overlap: true,
-      ignoreOnLeave: false,
 
       deck: null
     });
@@ -53,15 +50,15 @@ class Card extends Widget {
     for(const face of faceTemplates) {
       const faceDiv = document.createElement('div');
 
-      faceDiv.style.border = face.includeBorder ? '1px black solid' : 'none';
-      faceDiv.style.borderRadius = face.includeRadius ? '8px' : '0';
+      faceDiv.style.border = face.border ? face.border + 'px black solid' : 'none';
+      faceDiv.style.borderRadius = face.radius ? face.radius + 'px' : '0';
 
       for(const object of face.objects) {
         const objectDiv = document.createElement('div');
         const value = object.valueType == 'static' ? object.value : this.p(object.value);
-        const x = face.includeBorder ? object.x-1 : object.x;
-        const y = face.includeBorder ? object.y-1 : object.y;
-        objectDiv.style.cssText = `left: ${x}px; top: ${y}px; width: ${object.w}px; height: ${object.h}px; font-size: ${object.fontSize}px; text-align: ${object.textAlign}`;
+        const x = face.border ? object.x-face.border : object.x;
+        const y = face.border ? object.y-face.border : object.y;
+        objectDiv.style.cssText = `left: ${x}px; top: ${y}px; width: ${object.width}px; height: ${object.height}px; font-size: ${object.fontSize}px; text-align: ${object.textAlign}`;
         if(object.type == 'image') {
           objectDiv.style.backgroundImage = `url(${value})`;
           objectDiv.style.backgroundColor = object.color || 'white';

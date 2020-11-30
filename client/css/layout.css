@@ -156,7 +156,6 @@ body {
   left: 5vw;
   transition: opacity 200ms ease;
   transition-delay: 400ms, 400ms;
-  transform: scale(calc(4 * var(--scale))) !important;
   transform-origin: top left;
   pointer-events: none;
 }

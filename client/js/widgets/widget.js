@@ -21,6 +21,10 @@ class Widget extends StateManaged {
       movable: true,
       movableInEdit: true,
 
+      enlarge: false,
+      overlap: true,
+      ignoreOnLeave: false,
+
       parent: null,
       owner: null,
       dropOffsetX: 0,
@@ -291,6 +295,7 @@ class Widget extends StateManaged {
       e.className = this.domElement.className;
       e.style.cssText = this.domElement.style.cssText;
       e.style.display = this.domElement.style.display;
+      e.style.transform = `scale(calc(${this.p('enlarge')} * var(--scale)))`;
       if(this.domElement.getBoundingClientRect().left < window.innerWidth/2)
         e.classList.add('right');
     }

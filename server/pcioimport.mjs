@@ -99,7 +99,7 @@ export default async function convertPCIO(content) {
   const piles = {};
   for(const coord in cardsPerCoordinates) {
     if(cardsPerCoordinates[coord] > 1) {
-      const id = Math.random().toString(36).substring(3, 7);;
+      const id = Math.random().toString(36).substring(3, 7);
       output[id] = piles[coord] = {
         id,
         type: 'pile',
@@ -253,15 +253,23 @@ export default async function convertPCIO(content) {
       if(widget.cardHeight && widget.cardHeight != 160)
         w.cardDefaults.height = widget.cardHeight;
       if(widget.enlarge)
-        w.cardDefaults.enlarge = true;
+        w.cardDefaults.enlarge = 3;
       if(widget.cardOverlapH === 0)
         w.cardDefaults.overlap = false;
       if(widget.onRemoveFromHand === null)
         w.cardDefaults.ignoreOnLeave = true;
 
       for(const face of w.faceTemplates) {
+        face.border = face.includeBorder ? 1 : false;
+        face.radius = face.includeRadius ? 8 : false;
+        delete face.includeBorder;
+        delete face.includeRadius;
         for(const object of face.objects) {
           object.value = mapName(object.value);
+          object.width = object.w;
+          object.height = object.h;
+          delete object.w;
+          delete object.h;
           if(object.value == '/i/cards-default/2B.svg')
             object.color = '#ffffff';
         }
