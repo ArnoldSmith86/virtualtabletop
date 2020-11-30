@@ -125,17 +125,17 @@ export default class Room {
     console.log(`loading room ${this.id}`);
     try {
       this.state = JSON.parse(fs.readFileSync(file));
-    } catch {
-      this.state = {};
+      if(this.state._meta.version !== 1)
+        throw 'File version is not supported';
+    } catch(e) {
+      this.state = {
+        _meta: {
+          version: 1,
+          players: {},
+          states: {}
+        }
+      };
     }
-    if(!this.state._meta)
-      this.state._meta = {};
-    if(this.state._meta.version === undefined)
-      this.state._meta.version = 0;
-    if(!this.state._meta.players)
-      this.state._meta.players = {};
-    if(!this.state._meta.states || Array.isArray(this.state._meta.states))
-      this.state._meta.states = {};
   }
 
   loadState(player, stateID, variantID) {

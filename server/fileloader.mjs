@@ -16,7 +16,7 @@ export default {
       for(const filename in zip.files) {
         if(filename.match(/\.json$/) && zip.files[filename]._data && zip.files[filename]._data.uncompressedSize < 2097152) {
           const state = JSON.parse(await zip.files[filename].async('string'));
-          if(state._meta.version === 0)
+          if(state._meta.version === 1)
             states.push(state);
         }
       }
