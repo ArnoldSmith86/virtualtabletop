@@ -247,7 +247,11 @@ export default async function convertPCIO(content) {
         widget.backTemplate,
         widget.faceTemplate
       ];
-      w.cardDefaults = {};
+      w.cardDefaults = {
+        pilesWith: {
+          type: 'card'
+        }
+      };
       if(widget.cardWidth && widget.cardWidth != 103)
         w.cardDefaults.width = widget.cardWidth;
       if(widget.cardHeight && widget.cardHeight != 160)
