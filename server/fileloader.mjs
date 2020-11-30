@@ -17,8 +17,9 @@ export default {
           if(zip.files[filename]._data.uncompressedSize >= 2097152)
             throw `filename is bigger than 2 MiB.`;
           const state = JSON.parse(await zip.files[filename].async('string'));
-          if(state._meta.version === 1)
-            states.push(state);
+          if(state._meta.version !== 1)
+            throw `Found a valid JSON file but version ${state._meta.version} is not supported.`;
+          states.push(state);
         }
       }
       if(!states.length)
