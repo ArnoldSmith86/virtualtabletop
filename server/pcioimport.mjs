@@ -391,6 +391,8 @@ export default async function convertPCIO(content) {
       w.clickRoutine = [];
       for(let c of widget.clickRoutine) {
         if(c.func == 'MOVE_CARDS_BETWEEN_HOLDERS') {
+          if(!c.args.from || !c.args.to)
+            continue;
           const moveFlip = c.args.moveFlip && c.args.moveFlip.value;
           c = {
             func:  'MOVE',
