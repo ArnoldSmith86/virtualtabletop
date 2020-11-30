@@ -7,7 +7,7 @@ class Label extends Widget {
       height: 20,
       movable: false,
       layer: -2,
-      classes: 'widget label',
+      typeClasses: 'widget label',
 
       text: '',
       editable: false,

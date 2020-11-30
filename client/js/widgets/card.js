@@ -5,7 +5,7 @@ class Card extends Widget {
     this.addDefaults({
       width: 103,
       height: 160,
-      classes: 'widget card',
+      typeClasses: 'widget card',
 
       activeFace: 0,
 

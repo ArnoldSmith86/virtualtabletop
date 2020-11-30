@@ -7,7 +7,7 @@ class Holder extends Widget {
       height: 168,
       movable: false,
       layer: -3,
-      classes: 'widget holder default',
+      typeClasses: 'widget holder',
 
       dropTarget: { 'type': 'card' },
       dropOffsetX: 4,

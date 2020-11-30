@@ -16,7 +16,8 @@ class Widget extends StateManaged {
       rotation: 0,
       scale: 1,
 
-      classes: 'widget',
+      typeClasses: 'widget',
+      classes: '',
       css: '',
       movable: true,
       movableInEdit: true,
@@ -69,7 +70,7 @@ class Widget extends StateManaged {
   }
 
   applyDeltaToDOM(delta) {
-    if(delta.classes !== undefined || delta.owner !== undefined)
+    if(delta.classes !== undefined || delta.typeClasses !== undefined || delta.owner !== undefined)
       this.domElement.className = this.classes();
     this.applyCSS(delta);
     if(delta.z !== undefined)
@@ -133,7 +134,7 @@ class Widget extends StateManaged {
   }
 
   classes() {
-    let className = this.p('classes');
+    let className = this.p('typeClasses') + ' ' + this.p('classes');
 
     if(this.p('owner') && this.p('owner') != playerName)
       className += ' foreign';

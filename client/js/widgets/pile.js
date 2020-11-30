@@ -5,7 +5,7 @@ class Pile extends Widget {
     this.handle.className = 'handle';
 
     this.addDefaults({
-      classes: 'widget pile',
+      typeClasses: 'widget pile',
       x: 4,
       y: 4,
       width: 1,

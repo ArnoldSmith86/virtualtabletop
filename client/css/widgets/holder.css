@@ -1,4 +1,4 @@
-.holder.default {
+.holder {
   background: white;
   box-sizing: border-box;
   border: calc(1px / var(--scale)) solid #333;
@@ -6,9 +6,19 @@
   border-radius: 8px;
 }
 
-.holder.default > .widget {
+.holder > .widget {
   left: -1px;
   top: -1px;
+}
+
+.holder.transparent {
+  background: none;
+  border: none;
+}
+
+.holder.transparent > .widget {
+  left: 0;
+  top: 0;
 }
 
 .widget.droppable.droptarget {

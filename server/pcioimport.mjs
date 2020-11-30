@@ -131,8 +131,8 @@ export default async function convertPCIO(content) {
       w.x = (w.x || 0) + 8.25;
       w.y = (w.y || 0) + 8.25;
       w.faces = [
-        { classes: 'widget checkersPiece' },
-        { classes: 'widget checkersPiece crowned' }
+        { classes: 'checkersPiece' },
+        { classes: 'checkersPiece crowned' }
       ];
       w.color = pieceColors[widget.color] || pieceColors.default;
       if(widget.kinged)
@@ -140,12 +140,12 @@ export default async function convertPCIO(content) {
     } else if(widget.type == 'gamePiece' && widget.pieceType == 'classic') {
       w.width  = 90;
       w.height = 90;
-      w.classes = 'widget classicPiece';
+      w.classes = 'classicPiece';
       w.color = pieceColors[widget.color] || pieceColors.default;
     } else if(widget.type == 'gamePiece' && widget.pieceType == 'pin') {
       w.width  = 35.85;
       w.height = 43.83;
-      w.classes = 'widget pinPiece';
+      w.classes = 'pinPiece';
       w.color = pieceColors[widget.color] || pieceColors.default;
     } else if(widget.type == 'gamePiece') {
       w.image = `https://playingcards.io/img/pieces/${widget.color}-${widget.pieceType}.svg`;

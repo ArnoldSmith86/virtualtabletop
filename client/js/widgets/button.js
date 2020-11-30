@@ -6,7 +6,7 @@ class Button extends Widget {
       width: 80,
       height: 80,
 
-      classes: 'widget button',
+      typeClasses: 'widget button',
       layer: -1,
       movable: false,
 

@@ -3,7 +3,7 @@ class Deck extends Widget {
     super(id);
 
     this.addDefaults({
-      classes: 'widget deck',
+      typeClasses: 'widget deck',
       cardDefaults: {}
     });
 
