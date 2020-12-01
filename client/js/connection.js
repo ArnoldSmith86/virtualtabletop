@@ -15,7 +15,6 @@ function startWebSocket() {
 
   connection.onerror = (error) => {
     console.log(`WebSocket error: ${error}`);
-    setTimeout(startWebSocket, lastTimeout *= 2);
   };
 
   connection.onclose = () => {
