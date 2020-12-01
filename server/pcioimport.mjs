@@ -376,6 +376,7 @@ export default async function convertPCIO(content) {
       w.text = widget.labelContent;
       w.css = `font-size: ${widget.textSize}px; font-weight: ${weight}; text-align: ${widget.textAlign};`;
       addDimensions(w, widget, 100, 20);
+      w.height = widget.textSize * 3.5;
     } else if(widget.type == 'board') {
       w.image = widget.boardImage;
       w.movable = false;
