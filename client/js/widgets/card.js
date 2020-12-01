@@ -60,7 +60,8 @@ class Card extends Widget {
         const y = face.border ? object.y-face.border : object.y;
         objectDiv.style.cssText = `left: ${x}px; top: ${y}px; width: ${object.width}px; height: ${object.height}px; font-size: ${object.fontSize}px; text-align: ${object.textAlign}`;
         if(object.type == 'image') {
-          objectDiv.style.backgroundImage = `url(${value})`;
+          if(value)
+            objectDiv.style.backgroundImage = `url(${value})`;
           objectDiv.style.backgroundColor = object.color || 'white';
         } else {
           objectDiv.textContent = value;
