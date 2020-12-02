@@ -8,7 +8,7 @@
 
 .roomState, #addState {
   color: black;
-  display: inline-block;
+  float: left;
   width: 260px;
   height: 260px;
   position: relative;
