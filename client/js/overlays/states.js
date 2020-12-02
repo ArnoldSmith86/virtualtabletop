@@ -28,7 +28,9 @@ function editState() {
     variants[variant.dataset.id] = {
       players: $('.statePlayers', variant).value,
       language: $('.stateLanguage', variant).value,
-      variant: $('.stateVariant', variant).value
+      variant: $('.stateVariant', variant).value,
+      link: $('.stateLink', variant).value,
+      etag: $('.stateEtag', variant).value
     };
   }
   toServer('editState', { id: $('#stateEditOverlay').dataset.id, meta: {
@@ -103,6 +105,9 @@ function fillEditState(state) {
     $('.stateLanguage', vEntry).value = variant.language;
     $('.statePlayers', vEntry).value = variant.players;
     $('.stateVariant', vEntry).value = variant.variant;
+    $('.stateLink', vEntry).value = variant.link || '';
+    $('.stateEtag', vEntry).value = variant.etag;
+    $('.stateLink', vEntry).parentNode.style.display = variant.link ? 'block' : 'none';
 
     $('.download', vEntry).addEventListener('click', _=>downloadState(variantID));
     $('.remove', vEntry).addEventListener('click', _=>removeFromDOM(vEntry));
@@ -123,7 +128,7 @@ onLoad(function() {
 
   on('#addState .create, #addVariant .create', 'click', e=>addState(e, 'state'));
   on('#addState .upload, #addVariant .upload', 'click', e=>selectFile(true).then(f=>addState(e, 'file', f)));
-  on('#addState .link,   #addVariant .link',   'click', e=>addState(e, 'url', prompt('Enter shared URL:')));
+  on('#addState .link,   #addVariant .link',   'click', e=>addState(e, 'link', prompt('Enter shared URL:')));
 
   on('#stateEditOverlay .save',     'click', editState);
   on('#stateEditOverlay .download', 'click', _=>downloadState());

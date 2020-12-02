@@ -64,6 +64,7 @@ onLoad(function() {
   });
   setScale();
 
+  onMessage('warning', alert);
   onMessage('error', alert);
 });
 

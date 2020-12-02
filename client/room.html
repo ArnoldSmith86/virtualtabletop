@@ -77,7 +77,7 @@
           <div class="buttons">
             <button class="create">➕ Use current room state</button>
             <button class="library" disabled>📚 Public library</button>
-            <button class="link" disabled>🔗 Enter link</button>
+            <button class="link">🔗 Enter link</button>
             <button class="upload">⬆️ Upload file</button>
           </div>
         </div>
@@ -101,6 +101,8 @@
           <div class="input"><label>Language (country code):</label> <input class="stateLanguage"/></div>
           <div class="input"><label>Players:</label> <input class="statePlayers"/></div>
           <div class="input"><label>Variant:</label> <input class="stateVariant"/></div>
+          <div class="input"><label>Update link:</label> <input class="stateLink"/></div>
+          <div class="input" style="display: none"><label>Etag:</label> <input class="stateEtag"/></div>
           <button class="download">⬇️ Download variant</button>
           <button class="remove">❌ Remove variant</button>
         </script>
@@ -109,7 +111,7 @@
         Add variant:
         <button class="create">➕ Use current room state</button>
         <button class="library" disabled>📚 Public library</button>
-        <button class="link" disabled>🔗 Enter link</button>
+        <button class="link">🔗 Enter link</button>
         <button class="upload">⬆️ Upload file</button>
       </div>
       <p><button class="save">✔️ Save</button><button class="download">⬇️ Download</button><button class="remove">❌ Remove</button></p>

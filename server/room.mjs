@@ -26,64 +26,68 @@ export default class Room {
     this.sendMetaUpdate();
   }
 
-  addState(player, id, type, src, addAsVariant) {
+  async addState(player, id, type, src, addAsVariant) {
     const stateID = addAsVariant || id;
     let variantID = id;
 
-    const room = this;
-    (async function() {
-      let states = [ room.state ];
-      try {
-        if(type == 'file')
-          states = await FileLoader.readStatesFromFile(Buffer.from(src.replace(/^data.*?,/, ''), 'base64'));
-      } catch(e) {
-        console.log('ERROR LOADING FILE: ' + e);
-        fs.writeFileSync(path.resolve() + '/save/errors/' + Math.random().toString(36).substring(3, 7), Buffer.from(src.replace(/^data.*?,/, ''), 'base64'));
-        player.send('error', e.toString());
-        return;
+    let states = [ this.state ];
+    let etag = null;
+    try {
+      if(type == 'file')
+        states = await FileLoader.readStatesFromFile(Buffer.from(src.replace(/^data.*?,/, ''), 'base64'));
+      if(type == 'link') {
+        ({ states, etag } = await FileLoader.downloadLink(src));
+        if(!etag)
+          player.send('warning', 'This link does not provide an Etag header. It will not auto-check for new versions.');
+      }
+    } catch(e) {
+      console.log('ERROR LOADING FILE: ' + e);
+      fs.writeFileSync(path.resolve() + '/save/errors/' + Math.random().toString(36).substring(3, 7), Buffer.from(src.replace(/^data.*?,/, ''), 'base64'));
+      player.send('error', e.toString());
+      return;
+    }
+
+    for(const state of states) {
+      const meta = (state._meta || {}).info || {
+        name: 'Unnamed',
+        image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mOs+Q8AAf0BfcpIqy8AAAAASUVORK5CYII=',
+        rules: '',
+        bgg: '',
+        year: 0,
+        mode: 'vs',
+        time: 30,
+        players: '2-4',
+        language: 'US',
+        variant: ''
+      };
+
+      fs.writeFileSync(path.resolve() + '/save/states/' + this.id + '-' + stateID + '-' + variantID + '.json', JSON.stringify(state));
+
+      const variant = {
+        players: meta.players,
+        language: meta.language,
+        variant: meta.variant
+      };
+      if(type == 'link') {
+        variant.link = src;
+        variant.etag = etag;
+      }
+      delete meta.players;
+      delete meta.language;
+      delete meta.variant;
+
+      if(addAsVariant) {
+        this.state._meta.states[stateID].variants[variantID] = variant;
+      } else {
+        meta.variants = {};
+        meta.variants[variantID] = variant;
+        this.state._meta.states[stateID] = meta;
       }
 
-      for(const state of states) {
-        const meta = (state._meta || {}).info || {
-          name: 'Unnamed',
-          image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mOs+Q8AAf0BfcpIqy8AAAAASUVORK5CYII=',
-          rules: '',
-          bgg: '',
-          year: 0,
-          mode: 'vs',
-          time: 30,
-          players: '2-4',
-          language: 'US',
-          variant: ''
-        };
-
-        fs.writeFileSync(path.resolve() + '/save/states/' + room.id + '-' + stateID + '-' + variantID + '.json', JSON.stringify(state));
-
-        const variant = {
-          players: meta.players,
-          language: meta.language,
-          variant: meta.variant,
-          type
-        };
-        if(type == 'link')
-          variant.src = src;
-        delete meta.players;
-        delete meta.language;
-        delete meta.variant;
-
-        if(addAsVariant) {
-          room.state._meta.states[stateID].variants[variantID] = variant;
-        } else {
-          meta.variants = {};
-          meta.variants[variantID] = variant;
-          room.state._meta.states[stateID] = meta;
-        }
-
-        addAsVariant = true;
-        variantID = Math.random().toString(36).substring(3, 7);
-      }
-      room.sendMetaUpdate();
-    })();
+      addAsVariant = true;
+      variantID = Math.random().toString(36).substring(3, 7);
+    }
+    this.sendMetaUpdate();
   }
 
   broadcast(func, args, exceptPlayer) {
@@ -140,9 +144,25 @@ export default class Room {
     }
   }
 
-  loadState(player, stateID, variantID) {
+  async loadState(player, stateID, variantID) {
+    const filename = path.resolve() + '/save/states/' + this.id + '-' + stateID + '-' + variantID + '.json';
     const meta = this.state._meta;
-    this.load(path.resolve() + '/save/states/' + this.id + '-' + stateID + '-' + variantID + '.json');
+    const variantInfo = meta.states[stateID].variants[variantID];
+
+    if(variantInfo.link && variantInfo.etag) {
+      try {
+        const { states, etag } = await FileLoader.downloadLink(variantInfo.link, variantInfo.etag);
+        if(etag != variantInfo.etag) {
+          fs.writeFileSync(filename, JSON.stringify(states[0]));
+          variantInfo.etag = etag;
+          this.sendMetaUpdate();
+        }
+      } catch(e) {
+        player.send('error', 'Updating state from link failed (will use the previous version): ' + e.toString());
+      }
+    }
+
+    this.load(filename);
     this.state._meta = meta;
     this.broadcast('state', this.state);
   }
