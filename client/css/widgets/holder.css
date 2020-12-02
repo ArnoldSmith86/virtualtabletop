@@ -6,7 +6,7 @@
   border-radius: 8px;
 }
 
-.holder > .widget {
+.holder > .widget, .widget.droppable.droptarget.holder.transparent > .widget {
   left: -1px;
   top: -1px;
 }
