@@ -27,10 +27,11 @@ export default class Room {
   }
 
   async addState(player, id, type, src, addAsVariant) {
-    const stateID = addAsVariant || id;
+    const initialAddAsVariant = addAsVariant;
+    let stateID = addAsVariant || id;
     let variantID = id;
 
-    let states = [ this.state ];
+    let states = { room: [ this.state ] };
     let etag = null;
     try {
       if(type == 'file')
@@ -47,44 +48,53 @@ export default class Room {
       return;
     }
 
-    for(const state of states) {
-      const meta = (state._meta || {}).info || {
-        name: 'Unnamed',
-        image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mOs+Q8AAf0BfcpIqy8AAAAASUVORK5CYII=',
-        rules: '',
-        bgg: '',
-        year: 0,
-        mode: 'vs',
-        time: 30,
-        players: '2-4',
-        language: 'US',
-        variant: ''
-      };
+    for(const state in states) {
+      for(const v in states[state]) {
+        const variant = states[state][v];
+        const meta = (variant._meta || {}).info || {
+          name: 'Unnamed',
+          image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mOs+Q8AAf0BfcpIqy8AAAAASUVORK5CYII=',
+          rules: '',
+          bgg: '',
+          year: 0,
+          mode: 'vs',
+          time: 30,
+          players: '2-4',
+          language: 'US',
+          variant: ''
+        };
 
-      fs.writeFileSync(path.resolve() + '/save/states/' + this.id + '-' + stateID + '-' + variantID + '.json', JSON.stringify(state));
+        fs.writeFileSync(path.resolve() + '/save/states/' + this.id + '-' + stateID + '-' + variantID + '.json', JSON.stringify(variant));
 
-      const variant = {
-        players: meta.players,
-        language: meta.language,
-        variant: meta.variant
-      };
-      if(type == 'link') {
-        variant.link = src;
-        variant.etag = etag;
+        const variantMeta = {
+          players: meta.players,
+          language: meta.language,
+          variant: meta.variant
+        };
+        if(type == 'link') {
+          variantMeta.link = src;
+          variantMeta.etag = etag;
+        }
+        delete meta.players;
+        delete meta.language;
+        delete meta.variant;
+
+        if(addAsVariant) {
+          this.state._meta.states[stateID].variants[variantID] = variantMeta;
+        } else {
+          meta.variants = {};
+          meta.variants[variantID] = variantMeta;
+          this.state._meta.states[stateID] = meta;
+        }
+
+        addAsVariant = true;
+        variantID = Math.random().toString(36).substring(3, 7);
       }
-      delete meta.players;
-      delete meta.language;
-      delete meta.variant;
 
-      if(addAsVariant) {
-        this.state._meta.states[stateID].variants[variantID] = variant;
-      } else {
-        meta.variants = {};
-        meta.variants[variantID] = variant;
-        this.state._meta.states[stateID] = meta;
+      if(!initialAddAsVariant) {
+        addAsVariant = false;
+        stateID = Math.random().toString(36).substring(3, 7);
       }
-
-      addAsVariant = true;
       variantID = Math.random().toString(36).substring(3, 7);
     }
     this.sendMetaUpdate();

@@ -18,24 +18,40 @@ async function downloadLink(link, requestEtag) {
 
 async function readStatesFromFile(buffer) {
   const zip = await JSZip.loadAsync(buffer);
+
+  if(zip.files['widgets.json'])
+    return { 'PCIO': await readVariantsFromFile(buffer) };
+
+  const states = [];
+  for(const filename in zip.files) {
+    if(filename.match(/^[^\/]+\.json$/) && zip.files[filename]._data)
+      return { 'VTT': await readVariantsFromFile(buffer) };
+    if(filename.match(/^[^\/]+\.vtt$/) && zip.files[filename]._data)
+      states[filename] = await readVariantsFromFile(await zip.files[filename].async('nodebuffer'));
+  }
+  return states;
+}
+
+async function readVariantsFromFile(buffer) {
+  const zip = await JSZip.loadAsync(buffer);
   if(zip.files['widgets.json']) {
     const pcio = await PCIO(buffer);
-    return [ pcio ];
+    return { 'PCIO': pcio };
   } else {
-    const states = [];
+    const variants = {};
     for(const filename in zip.files) {
       if(filename.match(/^[^\/]+\.json$/) && zip.files[filename]._data) {
         if(zip.files[filename]._data.uncompressedSize >= 2097152)
-          throw `filename is bigger than 2 MiB.`;
-        const state = JSON.parse(await zip.files[filename].async('string'));
-        if(state._meta.version !== 1)
-          throw `Found a valid JSON file but version ${state._meta.version} is not supported.`;
-        states.push(state);
+          throw `${filename} is bigger than 2 MiB.`;
+        const variant = JSON.parse(await zip.files[filename].async('string'));
+        if(variant._meta.version !== 1)
+          throw `Found a valid JSON file but version ${variant._meta.version} is not supported.`;
+        variants[filename] = variant;
       }
     }
-    if(!states.length)
+    if(!Object.keys(variants).length)
       throw 'Did not find any JSON files in the ZIP file.';
-    return states;
+    return variants;
   }
 }
 
