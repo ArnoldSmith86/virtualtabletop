@@ -16,7 +16,9 @@ function addState(e, type, src) {
 
 function downloadState(variantID) {
   const stateID = $('#stateEditOverlay').dataset.id;
-  let url = `/dl/${roomID}/${stateID}`;
+  let url = `/dl/${roomID}`
+  if(variantID !== null)
+    url += `/${stateID}`;
   if(variantID)
     url += `/${variantID}`;
   window.location.href = url;
@@ -129,6 +131,8 @@ onLoad(function() {
   on('#addState .create, #addVariant .create', 'click', e=>addState(e, 'state'));
   on('#addState .upload, #addVariant .upload', 'click', e=>selectFile(true).then(f=>addState(e, 'file', f)));
   on('#addState .link,   #addVariant .link',   'click', e=>addState(e, 'link', prompt('Enter shared URL:')));
+
+  on('#addState .download', 'click', _=>downloadState(null));
 
   on('#stateEditOverlay .save',     'click', editState);
   on('#stateEditOverlay .download', 'click', _=>downloadState());

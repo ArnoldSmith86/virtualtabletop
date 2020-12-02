@@ -100,6 +100,20 @@ export default class Room {
   async download(stateID, variantID) {
     const zip = new JSZip();
 
+    if(!stateID && !variantID) {
+      for(const sID in this.state._meta.states) {
+        const state = await this.download(sID);
+        zip.file(state.name, state.content);
+      }
+
+      const zipBuffer = await zip.generateAsync({type:'nodebuffer'});
+      return {
+        name: this.id + '.vttc',
+        type: 'application/zip',
+        content: zipBuffer
+      };
+    }
+
     for(const vID of variantID ? [ variantID ] : Object.keys(this.state._meta.states[stateID].variants)) {
       const filename = path.resolve() + '/save/states/' + this.id + '-' + stateID + '-' + vID + '.json';
       const d = await fs.promises.readFile(filename);

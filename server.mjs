@@ -78,6 +78,10 @@ MinifyRoom().then(function(result) {
     downloadState(res, req.params.room, req.params.state);
   });
 
+  app.get('/dl/:room', function(req, res) {
+    downloadState(res, req.params.room);
+  });
+
   app.get('/:id', function(req, res) {
     if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
       res.setHeader('Content-Encoding', 'gzip');
