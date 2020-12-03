@@ -72,4 +72,9 @@ window.onresize = function(event) {
   setScale();
 }
 
+window.onkeyup = function(event) {
+  if(event.key == 'Escape')
+    showOverlay();
+}
+
 window.onerror = (msg, url, line, col)=>log(`ERROR: ${msg} - line ${line} - column ${col}`);
