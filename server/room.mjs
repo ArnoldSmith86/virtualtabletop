@@ -35,12 +35,9 @@ export default class Room {
     let etag = null;
     try {
       if(type == 'file')
-        states = await FileLoader.readStatesFromFile(Buffer.from(src.replace(/^data.*?,/, ''), 'base64'));
-      if(type == 'link') {
-        ({ states, etag } = await FileLoader.downloadLink(src));
-        if(!etag)
-          player.send('warning', 'This link does not provide an Etag header. It will not auto-check for new versions.');
-      }
+        states = await FileLoader.readStatesFromBuffer(Buffer.from(src.replace(/^data.*?,/, ''), 'base64'));
+      if(type == 'link')
+        states = await FileLoader.readStatesFromLink(src);
     } catch(e) {
       console.log('ERROR LOADING FILE: ' + e);
       fs.writeFileSync(path.resolve() + '/save/errors/' + Math.random().toString(36).substring(3, 7), Buffer.from(src.replace(/^data.*?,/, ''), 'base64'));
@@ -61,10 +58,12 @@ export default class Room {
           time: 30,
           players: '2-4',
           language: 'US',
-          variant: ''
+          variant: '',
+          link: ''
         };
 
-        fs.writeFileSync(path.resolve() + '/save/states/' + this.id + '-' + stateID + '-' + variantID + '.json', JSON.stringify(variant));
+        if(type != 'link')
+          fs.writeFileSync(path.resolve() + '/save/states/' + this.id + '-' + stateID + '-' + variantID + '.json', JSON.stringify(variant));
 
         const variantMeta = {
           players: meta.players,
@@ -72,8 +71,11 @@ export default class Room {
           variant: meta.variant
         };
         if(type == 'link') {
-          variantMeta.link = src;
-          variantMeta.etag = etag;
+          const baseLink = src.replace(/#.*/, '');
+          meta.link = `${baseLink}#${state}`;
+          variantMeta.link = `${meta.link}/${v}`;
+          if(src.match(/#.*\//))
+            meta.link = variantMeta.link;
         }
         delete meta.players;
         delete meta.language;
@@ -157,16 +159,17 @@ export default class Room {
     return JSON.stringify(state).match(/\/assets\/-?[0-9]+_[0-9]+/g) || [];
   }
 
-  load(file) {
-    if(!file)
-      file = path.resolve() + '/save/rooms/' + this.id + '.json';
-
+  async load(fileOrLink) {
     console.log(`loading room ${this.id}`);
     try {
-      this.state = JSON.parse(fs.readFileSync(file));
-      if(this.state._meta.version !== 1)
-        throw 'File version is not supported';
+      if(!fileOrLink)
+        this.state = JSON.parse(fs.readFileSync(path.resolve() + '/save/rooms/' + this.id + '.json'));
+      else if(fileOrLink.match(/^http/))
+        this.setState(await FileLoader.readVariantFromLink(fileOrLink));
+      else
+        this.setState(JSON.parse(fs.readFileSync(fileOrLink)));
     } catch(e) {
+      console.log(`RESETTING ROOM ${this.id} because of "${e.toString()}"`);
       this.state = {
         _meta: {
           version: 1,
@@ -178,24 +181,16 @@ export default class Room {
   }
 
   async loadState(player, stateID, variantID) {
-    const filename = path.resolve() + '/save/states/' + this.id + '-' + stateID + '-' + variantID + '.json';
     const meta = this.state._meta;
     const variantInfo = meta.states[stateID].variants[variantID];
 
-    if(variantInfo.link && variantInfo.etag) {
-      try {
-        const { states, etag } = await FileLoader.downloadLink(variantInfo.link, variantInfo.etag);
-        if(etag != variantInfo.etag) {
-          fs.writeFileSync(filename, JSON.stringify(states[0]));
-          variantInfo.etag = etag;
-          this.sendMetaUpdate();
-        }
-      } catch(e) {
-        player.send('error', 'Updating state from link failed (will use the previous version): ' + e.toString());
-      }
+    if(variantInfo.link) {
+      this.load(variantInfo.link);
+    } else {
+      const filename = path.resolve() + '/save/states/' + this.id + '-' + stateID + '-' + variantID + '.json';
+      this.load(filename);
     }
 
-    this.load(filename);
     this.state._meta = meta;
     this.broadcast('state', this.state);
   }

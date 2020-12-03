@@ -17,6 +17,7 @@ const server = http.Server(app);
 fs.mkdirSync(__dirname + '/save/assets', { recursive: true });
 fs.mkdirSync(__dirname + '/save/rooms',  { recursive: true });
 fs.mkdirSync(__dirname + '/save/states', { recursive: true });
+fs.mkdirSync(__dirname + '/save/links',  { recursive: true });
 fs.mkdirSync(__dirname + '/save/errors', { recursive: true });
 
 function ensureRoomIsLoaded(id) {

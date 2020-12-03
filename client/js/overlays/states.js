@@ -31,8 +31,7 @@ function editState() {
       players: $('.statePlayers', variant).value,
       language: $('.stateLanguage', variant).value,
       variant: $('.stateVariant', variant).value,
-      link: $('.stateLink', variant).value,
-      etag: $('.stateEtag', variant).value
+      link: $('.stateLink', variant).value
     };
   }
   toServer('editState', { id: $('#stateEditOverlay').dataset.id, meta: {
@@ -43,6 +42,7 @@ function editState() {
     year:    $('#stateYear').value,
     mode:    $('#stateMode').value,
     time:    $('#stateTime').value,
+    link:    $('#stateLink').value,
     variants
   }});
   showOverlay('statesOverlay');
@@ -98,6 +98,8 @@ function fillEditState(state) {
   $('#stateYear').value = state.year;
   $('#stateMode').value = state.mode;
   $('#stateTime').value = state.time;
+  $('#stateLink').value = state.link || '';
+  $('#stateLink').parentNode.style.display = state.link ? 'block' : 'none';
 
   removeFromDOM('#variantsEditList > div');
   for(const variantID in state.variants) {
@@ -108,7 +110,6 @@ function fillEditState(state) {
     $('.statePlayers', vEntry).value = variant.players;
     $('.stateVariant', vEntry).value = variant.variant;
     $('.stateLink', vEntry).value = variant.link || '';
-    $('.stateEtag', vEntry).value = variant.etag;
     $('.stateLink', vEntry).parentNode.style.display = variant.link ? 'block' : 'none';
 
     $('.download', vEntry).addEventListener('click', _=>downloadState(variantID));
