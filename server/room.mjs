@@ -108,6 +108,7 @@ export default class Room {
   }
 
   async download(stateID, variantID) {
+    const includeAssets = true;
     const zip = new JSZip();
 
     if(!stateID && !variantID) {
@@ -133,6 +134,10 @@ export default class Room {
       delete state._meta.info.variants;
 
       zip.file(`${vID}.json`, JSON.stringify(state));
+      if(includeAssets)
+        for(const asset of this.getAssetList(state))
+          if(fs.existsSync(path.resolve() + '/save' + asset))
+            zip.file(asset, fs.readFileSync(path.resolve() + '/save' + asset));
     }
 
     const zipBuffer = await zip.generateAsync({type:'nodebuffer', compression: 'DEFLATE'});
@@ -146,6 +151,10 @@ export default class Room {
   editState(player, id, meta) {
     Object.assign(this.state._meta.states[id], meta);
     this.sendMetaUpdate();
+  }
+
+  getAssetList(state) {
+    return JSON.stringify(state).match(/\/assets\/-?[0-9]+_[0-9]+/g) || [];
   }
 
   load(file) {

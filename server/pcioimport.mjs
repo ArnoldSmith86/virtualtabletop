@@ -20,7 +20,7 @@ export default async function convertPCIO(content) {
 
   const nameMap = {};
   for(const filename in zip.files) {
-    if(filename.match(/^userassets/) && zip.files[filename]._data && zip.files[filename]._data.uncompressedSize < 2097152) {
+    if(filename.match(/^\/?userassets/) && zip.files[filename]._data && zip.files[filename]._data.uncompressedSize < 2097152) {
       const targetFile = '/assets/' + zip.files[filename]._data.crc32 + '_' + zip.files[filename]._data.uncompressedSize;
       nameMap['package://' + filename] = targetFile;
       if(!fs.existsSync(path.resolve() + '/save' + targetFile))

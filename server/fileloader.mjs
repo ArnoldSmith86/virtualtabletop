@@ -40,6 +40,7 @@ async function readVariantsFromFile(buffer) {
   } else {
     const variants = {};
     for(const filename in zip.files) {
+
       if(filename.match(/^[^\/]+\.json$/) && zip.files[filename]._data) {
         if(zip.files[filename]._data.uncompressedSize >= 2097152)
           throw `${filename} is bigger than 2 MiB.`;
@@ -48,6 +49,13 @@ async function readVariantsFromFile(buffer) {
           throw `Found a valid JSON file but version ${variant._meta.version} is not supported.`;
         variants[filename] = variant;
       }
+
+      if(filename.match(/^\/?assets/) && zip.files[filename]._data && zip.files[filename]._data.uncompressedSize < 2097152) {
+        const targetFile = '/assets/' + zip.files[filename]._data.crc32 + '_' + zip.files[filename]._data.uncompressedSize;
+        if(!fs.existsSync(path.resolve() + '/save' + targetFile))
+          fs.writeFileSync(path.resolve() + '/save' + targetFile, await zip.files[filename].async('nodebuffer'));
+      }
+
     }
     if(!Object.keys(variants).length)
       throw 'Did not find any JSON files in the ZIP file.';
