@@ -15,8 +15,8 @@ function removeFromDOM(node) {
   }
 }
 
-function domByTemplate(id) {
-  const div = document.createElement('div');
+function domByTemplate(id, type) {
+  const div = document.createElement(type || 'div');
   div.innerHTML = document.getElementById(id).innerHTML;
   return div;
 }

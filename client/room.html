@@ -76,13 +76,24 @@
           <div class="image">➕</div>
           <div class="buttons">
             <button class="create">➕ Use current room state</button>
-            <button class="library" disabled>📚 Public library</button>
+            <button class="library">📚 Public library</button>
             <button class="link">🔗 Enter link</button>
             <button class="upload">⬆️ Upload file</button>
             <button class="download">⬇️ Download all</button>
           </div>
         </div>
       </div>
+    </div>
+
+    <div id="libraryOverlay" class="overlay">
+      <h1>Public library</h1>
+      <table id="libraryList">
+        <tr><th></th><th>Game</th><th>Similar to</th><th>Players</th><th>Language</th></tr>
+        <script id="template-librarylist-entry" type="text/template">
+          <td><button class="add">➕ Add</button></td><td class="name">Chess</td><td><a target="_blank">Chess</a></td><td class="players">2</td><td class="language">🇺🇳</td>
+        </script>
+      </table>
+      <p>Loading...</p>
     </div>
 
     <div id="stateEditOverlay" class="overlay">
@@ -111,7 +122,7 @@
       <div id="addVariant" class="buttons">
         Add variant:
         <button class="create">➕ Use current room state</button>
-        <button class="library" disabled>📚 Public library</button>
+        <button class="library">📚 Public library</button>
         <button class="link">🔗 Enter link</button>
         <button class="upload">⬆️ Upload file</button>
       </div>

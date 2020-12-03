@@ -40,6 +40,7 @@ function downloadState(res, roomID, stateID, variantID) {
 MinifyRoom().then(function(result) {
   app.use('/', express.static(__dirname + '/client'));
   app.use('/i', express.static(__dirname + '/assets'));
+  app.use('/library.json', express.static(__dirname + '/library.json'));
 
   app.get('/assets/:name', function(req, res) {
     fs.readFile(__dirname + '/save/assets/' + req.params.name, function(err, content) {

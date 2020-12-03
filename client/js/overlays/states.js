@@ -14,6 +14,16 @@ function addState(e, type, src) {
   }
 }
 
+function addStateFromLibrary(e) {
+  pickStateFromLibrary().then(url=>{
+    if(e.target.parentNode == $('#addVariant'))
+      showOverlay('stateEditOverlay');
+    else
+      showOverlay('statesOverlay');
+    addState(e, 'link', url);
+  });
+}
+
 function downloadState(variantID) {
   const stateID = $('#stateEditOverlay').dataset.id;
   let url = `/dl/${roomID}`
@@ -121,6 +131,37 @@ function fillEditState(state) {
   showOverlay('stateEditOverlay');
 }
 
+async function pickStateFromLibrary() {
+  showOverlay('libraryOverlay');
+  await populateLibrary();
+
+  return new Promise((resolve, reject) => {
+    on('#libraryOverlay .add', 'click', function() {
+      resolve(this.dataset.url);
+    });
+  });
+}
+
+async function populateLibrary() {
+  if(!$('#libraryList.populated')) {
+    const library = await fetch('/library.json');
+    for(const entry of await library.json()) {
+      const lEntry = domByTemplate('template-librarylist-entry', 'tr');
+
+      $('.name', lEntry).textContent = entry.name;
+      $('.players', lEntry).textContent = entry.players;
+      $('.language', lEntry).textContent = entry.language;
+      $('a', lEntry).textContent = entry['similar name'];
+      $('a', lEntry).href = entry['similar link'];
+      $('button.add', lEntry).dataset.url = entry.link;
+
+      $('#libraryList').appendChild(lEntry);
+    }
+    $('#libraryList').classList.add('populated');
+    removeFromDOM('#libraryOverlay > p');
+  }
+}
+
 function removeState() {
   toServer('removeState', $('#stateEditOverlay').dataset.id);
   showOverlay('statesOverlay');
@@ -129,9 +170,10 @@ function removeState() {
 onLoad(function() {
   onMessage('meta', args=>fillStatesList(args.meta.states, args.activePlayers));
 
-  on('#addState .create, #addVariant .create', 'click', e=>addState(e, 'state'));
-  on('#addState .upload, #addVariant .upload', 'click', e=>selectFile(true).then(f=>addState(e, 'file', f)));
-  on('#addState .link,   #addVariant .link',   'click', e=>addState(e, 'link', prompt('Enter shared URL:')));
+  on('#addState .create,  #addVariant .create',  'click', e=>addState(e, 'state'));
+  on('#addState .upload,  #addVariant .upload',  'click', e=>selectFile(true).then(f=>addState(e, 'file', f)));
+  on('#addState .link,    #addVariant .link',    'click', e=>addState(e, 'link', prompt('Enter shared URL:')));
+  on('#addState .library, #addVariant .library', 'click', e=>addStateFromLibrary(e));
 
   on('#addState .download', 'click', _=>downloadState(null));
 

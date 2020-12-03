@@ -85,3 +85,12 @@
 #variantsEditList > div {
   margin-bottom: 30px;
 }
+
+#libraryList td, #libraryList th {
+  padding: 6px;
+}
+
+#libraryList a {
+  color: white;
+  font-weight: bold;
+}
