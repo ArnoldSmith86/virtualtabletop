@@ -41,7 +41,8 @@ function editState() {
       players: $('.statePlayers', variant).value,
       language: $('.stateLanguage', variant).value,
       variant: $('.stateVariant', variant).value,
-      link: $('.stateLink', variant).value
+      link: $('.stateLink', variant).value,
+      attribution: $('.stateAttribution', variant).value
     };
   }
   toServer('editState', { id: $('#stateEditOverlay').dataset.id, meta: {
@@ -120,6 +121,7 @@ function fillEditState(state) {
     $('.statePlayers', vEntry).value = variant.players;
     $('.stateVariant', vEntry).value = variant.variant;
     $('.stateLink', vEntry).value = variant.link || '';
+    $('.stateAttribution', vEntry).value = variant.attribution || '';
     $('.stateLink', vEntry).parentNode.style.display = variant.link ? 'block' : 'none';
 
     $('.download', vEntry).addEventListener('click', _=>downloadState(variantID));

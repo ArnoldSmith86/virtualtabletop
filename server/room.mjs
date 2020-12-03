@@ -59,7 +59,8 @@ export default class Room {
           players: '2-4',
           language: 'US',
           variant: '',
-          link: ''
+          link: '',
+          attribution: ''
         };
 
         if(type != 'link')
@@ -68,7 +69,8 @@ export default class Room {
         const variantMeta = {
           players: meta.players,
           language: meta.language,
-          variant: meta.variant
+          variant: meta.variant,
+          attribution: meta.attribution
         };
         if(type == 'link') {
           const baseLink = src.replace(/#.*/, '');
@@ -80,6 +82,7 @@ export default class Room {
         delete meta.players;
         delete meta.language;
         delete meta.variant;
+        delete meta.attribution;
 
         if(addAsVariant) {
           this.state._meta.states[stateID].variants[variantID] = variantMeta;
