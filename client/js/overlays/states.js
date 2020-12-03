@@ -151,6 +151,7 @@ async function populateLibrary() {
       $('.name', lEntry).textContent = entry.name;
       $('.players', lEntry).textContent = entry.players;
       $('.language', lEntry).textContent = entry.language;
+      $('.notes', lEntry).textContent = entry.notes;
       $('a', lEntry).textContent = entry['similar name'];
       $('a', lEntry).href = entry['similar link'];
       $('button.add', lEntry).dataset.url = entry.link;
