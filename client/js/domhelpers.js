@@ -40,7 +40,10 @@ function selectFile(getContents) {
 
       const reader = new FileReader();
       reader.addEventListener('load', e=>resolve(e.target.result));
-      reader.readAsDataURL(e.target.files[0]);
+      if(getContents == 'BINARY')
+        reader.readAsArrayBuffer(e.target.files[0]);
+      else
+        reader.readAsDataURL(e.target.files[0]);
     });
     upload.dispatchEvent(new MouseEvent('click', {bubbles: true}));
   });

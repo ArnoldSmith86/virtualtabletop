@@ -181,4 +181,6 @@ onLoad(function() {
   on('#stateEditOverlay .save',     'click', editState);
   on('#stateEditOverlay .download', 'click', _=>downloadState());
   on('#stateEditOverlay .remove',   'click', removeState);
+
+  on('#stateEditOverlay .uploadAsset', 'click', _=>uploadAsset().then(asset=>$('#stateImage').value=asset));
 });

@@ -49,6 +49,20 @@ function setScale() {
   roomRectangle = $('#roomArea').getBoundingClientRect();
 }
 
+async function uploadAsset() {
+  return selectFile('BINARY').then(async function(contents) {
+    const response = await fetch('/asset', {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/octet-stream'
+      },
+      body: contents
+    });
+
+    return response.text();
+  });
+}
+
 onLoad(function() {
   on('.toolbarButton', 'click', function(e) {
     const overlay = e.target.dataset.overlay;

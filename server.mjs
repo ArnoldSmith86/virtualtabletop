@@ -4,6 +4,7 @@ import path from 'path';
 import express from 'express';
 import bodyParser from 'body-parser';
 import http from 'http';
+import CRC32 from 'crc-32';
 
 import WebSocket  from './server/websocket.mjs';
 import Player     from './server/player.mjs';
@@ -64,10 +65,6 @@ MinifyRoom().then(function(result) {
     process.exit();
   });
 
-  app.use(bodyParser.raw({
-    limit: '100mb'
-  }))
-
   app.get('/', function(req, res) {
     res.redirect(Math.random().toString(36).substring(3, 7));
   });
@@ -92,6 +89,17 @@ MinifyRoom().then(function(result) {
     } else {
       res.send(result.min);
     }
+  });
+
+  app.use(bodyParser.raw({
+    limit: '100mb'
+  }))
+
+  app.put('/asset', function(req, res) {
+    const filename = `/assets/${CRC32.buf(req.body)}_${req.body.length}`;
+    if(!fs.existsSync(path.resolve() + '/save' + filename))
+      fs.writeFileSync(path.resolve() + '/save' + filename, req.body);
+    res.send(filename);
   });
 
   server.listen(process.env.PORT || 8272, function() {
