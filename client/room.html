@@ -127,7 +127,18 @@
         <button class="link">🔗 Enter link</button>
         <button class="upload">⬆️ Upload file</button>
       </div>
-      <p><button class="save">✔️ Save</button><button class="download">⬇️ Download</button><button class="remove">❌ Remove</button></p>
+      <p><button class="save">✔️ Save</button><button class="share">🔗 Share link</button><button class="download">⬇️ Download</button><button class="remove">❌ Remove</button></p>
+    </div>
+
+    <div id="shareLinkOverlay" class="overlay">
+      <h1>Share link</h1>
+      <p>You can share this link with others so they can add your game to their library.</p>
+      <p>The link does not expire.</p>
+      <p>Keep in mind that you change their game whenever you change this game in your library.</p>
+      <p>In-progress save games are not included and will stay private to your room.</p>
+      <p>There is no way for people with this link to find your room.</p>
+      <input id="sharedLink" value="Loading link..."/>
+      <button id="shareOK">OK</button>
     </div>
   </div>
 

@@ -5,8 +5,8 @@ import JSZip from 'jszip';
 
 import PCIO from './pcioimport.mjs';
 
-const filename = path.resolve() + '/save/links.json';
 const dirname = path.resolve() + '/save/links';
+const filename = dirname + '.json';
 const linkStatus = fs.existsSync(filename) ? JSON.parse(fs.readFileSync(filename)) : {};
 
 async function downloadLink(link) {

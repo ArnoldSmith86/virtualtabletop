@@ -170,6 +170,16 @@ function removeState() {
   showOverlay('statesOverlay');
 }
 
+async function shareLink() {
+  showOverlay('shareLinkOverlay');
+  let url = $('#stateLink').value;
+  if(!url) {
+    url = await fetch(`/share/${roomID}/${$('#stateEditOverlay').dataset.id}`);
+    url = `${location.origin}${await url.text()}/${$('#stateName').value}.vtt`;
+  }
+  $('#sharedLink').value = url;
+}
+
 onLoad(function() {
   onMessage('meta', args=>fillStatesList(args.meta.states, args.activePlayers));
 
@@ -185,4 +195,7 @@ onLoad(function() {
   on('#stateEditOverlay .remove',   'click', removeState);
 
   on('#stateEditOverlay .uploadAsset', 'click', _=>uploadAsset().then(asset=>$('#stateImage').value=asset));
+  on('#stateEditOverlay .share', 'click', _=>shareLink());
+
+  on('#shareOK', 'click', _=>showOverlay('stateEditOverlay'));
 });

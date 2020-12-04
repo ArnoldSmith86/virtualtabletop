@@ -11,15 +11,17 @@ import Player     from './server/player.mjs';
 import Room       from './server/room.mjs';
 import MinifyRoom from './server/minify.mjs';
 
-const __dirname = path.resolve();
 const app = express();
 const server = http.Server(app);
 
-fs.mkdirSync(__dirname + '/save/assets', { recursive: true });
-fs.mkdirSync(__dirname + '/save/rooms',  { recursive: true });
-fs.mkdirSync(__dirname + '/save/states', { recursive: true });
-fs.mkdirSync(__dirname + '/save/links',  { recursive: true });
-fs.mkdirSync(__dirname + '/save/errors', { recursive: true });
+const savedir = path.resolve() + '/save';
+const sharedLinks = fs.existsSync(savedir + '/shares.json') ? JSON.parse(fs.readFileSync(savedir + '/shares.json')) : {};
+
+fs.mkdirSync(savedir + '/assets', { recursive: true });
+fs.mkdirSync(savedir + '/rooms',  { recursive: true });
+fs.mkdirSync(savedir + '/states', { recursive: true });
+fs.mkdirSync(savedir + '/links',  { recursive: true });
+fs.mkdirSync(savedir + '/errors', { recursive: true });
 
 function ensureRoomIsLoaded(id) {
   if(!activeRooms.has(id)) {
@@ -39,12 +41,12 @@ function downloadState(res, roomID, stateID, variantID) {
 }
 
 MinifyRoom().then(function(result) {
-  app.use('/', express.static(__dirname + '/client'));
-  app.use('/i', express.static(__dirname + '/assets'));
-  app.use('/library.json', express.static(__dirname + '/library.json'));
+  app.use('/', express.static(path.resolve() + '/client'));
+  app.use('/i', express.static(path.resolve() + '/assets'));
+  app.use('/library.json', express.static(path.resolve() + '/library.json'));
 
   app.get('/assets/:name', function(req, res) {
-    fs.readFile(__dirname + '/save/assets/' + req.params.name, function(err, content) {
+    fs.readFile(savedir + '/assets/' + req.params.name, function(err, content) {
       if(content[0] == 0xff)
         res.setHeader('Content-Type', 'image/jpeg');
       else if(content[0] == 0x89)
@@ -79,6 +81,26 @@ MinifyRoom().then(function(result) {
 
   app.get('/dl/:room', function(req, res) {
     downloadState(res, req.params.room);
+  });
+
+  app.get('/s/:link/:junk', function(req, res) {
+    if(!sharedLinks[`/s/${req.params.link}`])
+      return res.status(404);
+
+    const tokens = sharedLinks[`/s/${req.params.link}`].split('/');
+    downloadState(res, tokens[2], tokens[3]);
+  });
+
+  app.get('/share/:room/:state', function(req, res) {
+    const target = `/dl/${req.params.room}/${req.params.state}`;
+    for(const link in sharedLinks)
+      if(sharedLinks[link] == target)
+        return res.send(link);
+
+    const newLink = `/s/${Math.random().toString(36).substring(3, 11)}`;
+    sharedLinks[newLink] = target;
+    fs.writeFileSync(savedir + '/shares.json', JSON.stringify(sharedLinks));
+    res.send(newLink);
   });
 
   app.get('/:id', function(req, res) {
