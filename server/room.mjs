@@ -143,7 +143,7 @@ export default class Room {
       Object.assign(state._meta.info, state._meta.info.variants[vID]);
       delete state._meta.info.variants;
 
-      zip.file(`${vID}.json`, JSON.stringify(state));
+      zip.file(`${vID}.json`, JSON.stringify(state, null, '  '));
       if(includeAssets)
         for(const asset of this.getAssetList(state))
           if(fs.existsSync(path.resolve() + '/save' + asset))
