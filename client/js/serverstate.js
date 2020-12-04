@@ -117,7 +117,7 @@ function sendPropertyUpdate(widgetID, property, value) {
 onLoad(function() {
   onMessage('delta', receiveDelta);
   onMessage('state', function(args) {
-    for(const widget of $a('.widget'))
+    for(const widget of $a('#room .widget'))
       if(widget.id != 'enlarged')
         widgets.get(widget.id).applyRemove();
     widgets.clear();

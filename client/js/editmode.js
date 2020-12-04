@@ -13,6 +13,76 @@ function editClick(widget) {
   showOverlay('editOverlay');
 }
 
+function addWidgetToAddWidgetOverlay(w, wi) {
+  w.applyDelta(wi);
+  w.domElement.addEventListener('click', _=>{
+    const toAdd = {...wi};
+    toAdd.z = getMaxZ(w.p('layer')) + 1;
+    addWidgetLocal(toAdd);
+    showOverlay();
+  });
+  $('#addOverlay').appendChild(w.domElement);
+}
+
+function populateAddWidgetOverlay() {
+  addWidgetToAddWidgetOverlay(new BasicWidget('add-pin'), {
+    classes: 'pinPiece',
+    color: 'red',
+    width: 35.85,
+    height: 43.83,
+    x: 120,
+    y: 300
+  });
+
+  addWidgetToAddWidgetOverlay(new BasicWidget('add-checkers'), {
+    faces: [
+      { classes: "checkersPiece"         },
+      { classes: "checkersPiece crowned" }
+    ],
+    color: 'red',
+    width: 73.5,
+    height: 73.5,
+    x: 200,
+    y: 300
+  });
+
+  addWidgetToAddWidgetOverlay(new BasicWidget('add-classic'), {
+    classes: 'classicPiece',
+    color: 'red',
+    width: 90,
+    height: 90,
+    x: 300,
+    y: 300
+  });
+
+  addWidgetToAddWidgetOverlay(new Holder('add-holder'), {
+    type: 'holder',
+    x: 120,
+    y: 400
+  });
+
+  addWidgetToAddWidgetOverlay(new Button('add-button'), {
+    type: 'button',
+    text: 'DEAL',
+    clickRoutine: [],
+    x: 300,
+    y: 400
+  });
+
+  addWidgetToAddWidgetOverlay(new Spinner('add-spinner'), {
+    type: 'spinner',
+    x: 400,
+    y: 400
+  });
+
+  addWidgetToAddWidgetOverlay(new Label('add-label'), {
+    type: 'label',
+    text: 'Label',
+    x: 500,
+    y: 400
+  });
+}
+
 function removeWidgetLocal(widgetID) {
   sendPropertyUpdate(widgetID, null);
 }
@@ -26,6 +96,8 @@ onLoad(function() {
     edit = !edit;
     showOverlay();
   });
+
+  on('#addCustomWidgetOverlay', 'click', _=>showOverlay('addCustomOverlay'));
 
   on('#addWidget', 'click', function() {
     addWidgetLocal(JSON.parse($('#widgetText').value));
@@ -50,4 +122,6 @@ onLoad(function() {
     removeWidgetLocal(JSON.parse($('#editWidgetJSON').dataset.previousState).id);
     showOverlay();
   });
+
+  populateAddWidgetOverlay();
 });

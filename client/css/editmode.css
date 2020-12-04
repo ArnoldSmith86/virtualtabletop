@@ -1,4 +1,11 @@
-#addOverlay textarea, #editOverlay textarea {
+#addOverlay {
+  width: var(--roomWidth);
+  height: var(--roomHeight);
+  transform: scale(var(--scale));
+  transform-origin: left top;
+}
+
+#addCustomOverlay textarea, #editOverlay textarea {
   height: 100%;
 }
 
