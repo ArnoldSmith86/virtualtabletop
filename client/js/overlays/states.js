@@ -1,7 +1,7 @@
 let waitingForStateCreation = null;
 
 function addState(e, type, src) {
-  if(type == 'url' && (!src || !src.match(/^http/)))
+  if(type == 'link' && (!src || !src.match(/^http/)))
     return;
   const id = Math.random().toString(36).substring(3, 7);
 

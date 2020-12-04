@@ -40,7 +40,9 @@ export default class Room {
         states = await FileLoader.readStatesFromLink(src);
     } catch(e) {
       console.log('ERROR LOADING FILE: ' + e);
-      fs.writeFileSync(path.resolve() + '/save/errors/' + Math.random().toString(36).substring(3, 7), Buffer.from(src.replace(/^data.*?,/, ''), 'base64'));
+      try {
+        fs.writeFileSync(path.resolve() + '/save/errors/' + Math.random().toString(36).substring(3, 7), Buffer.from(src.replace(/^data.*?,/, ''), 'base64'));
+      } catch(e) {}
       player.send('error', e.toString());
       return;
     }
