@@ -65,7 +65,10 @@ export default function minifyRoom() {
     }).then(function(min) {
       return minify({
         compressor: htmlMinifier,
-        content: roomHTML.replace(/ \{\{JS\}\} /, min)
+        content: roomHTML.replace(/ \{\{JS\}\} /, min),
+        options: {
+          conservativeCollapse: true
+        }
       })
     }).then(function(min) {
       roomHTML = min;
