@@ -142,6 +142,7 @@ export default class Room {
       state._meta = { version: this.state._meta.version, info: { ...this.state._meta.states[stateID] } };
       Object.assign(state._meta.info, state._meta.info.variants[vID]);
       delete state._meta.info.variants;
+      delete state._meta.info.link;
 
       zip.file(`${vID}.json`, JSON.stringify(state, null, '  '));
       if(includeAssets)
