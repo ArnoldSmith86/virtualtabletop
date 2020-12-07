@@ -3,6 +3,7 @@
   --roomWidth: 1600px;
   --roomHeight: 1000px;
   --toolbarSize: 44px;
+  --roomColor: #f0f0f0;
   --editColor: #7ba5f5;
 }
 
@@ -135,7 +136,7 @@ body {
   position: relative;
   width: var(--roomWidth);
   height: var(--roomHeight);
-  background: #f0f0f0;
+  background: var(--roomColor);
   touch-action: none;
   overflow: hidden;
 }

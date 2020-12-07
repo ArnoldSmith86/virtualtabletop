@@ -3,6 +3,20 @@
   height: var(--roomHeight);
   transform: scale(var(--scale));
   transform-origin: left top;
+  flex-direction: row;
+  padding: 0;
+}
+
+#addOverlay > .category {
+  background: var(--roomColor);
+  width: 100%;
+  border-radius: 32px;
+  margin: 20px;
+  text-align: center;
+}
+
+#addOverlay > .category > h2 {
+  color: black;
 }
 
 #addCustomOverlay textarea, #editOverlay textarea {

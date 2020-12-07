@@ -1,6 +1,7 @@
 .spinner {
   font-size: 60px;
   background: white;
+  color: black;
   border-radius: 100%;
   display: flex;
   justify-content: center;

@@ -128,71 +128,118 @@ function addWidgetToAddWidgetOverlay(w, wi) {
 }
 
 function populateAddWidgetOverlay() {
-  addWidgetToAddWidgetOverlay(new BasicWidget('add-pin'), {
-    classes: 'pinPiece',
-    color: 'red',
-    width: 35.85,
-    height: 43.83,
-    x: 120,
-    y: 300
-  });
-
-  addWidgetToAddWidgetOverlay(new BasicWidget('add-checkers'), {
-    faces: [
-      { classes: "checkersPiece"         },
-      { classes: "checkersPiece crowned" }
-    ],
-    color: 'red',
-    width: 73.5,
-    height: 73.5,
-    x: 200,
-    y: 300
-  });
-
-  addWidgetToAddWidgetOverlay(new BasicWidget('add-classic'), {
-    classes: 'classicPiece',
-    color: 'red',
-    width: 90,
-    height: 90,
-    x: 300,
-    y: 300
-  });
-
+  const x = 20+140-111/2;
   addWidgetToAddWidgetOverlay(new Holder('add-holder'), {
     type: 'holder',
-    x: 120,
-    y: 400
+    x,
+    y: 300
   });
 
-  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', 120, 600), function() {
-    for(const w of generateCardDeckWidgets(Math.random().toString(36).substring(3, 7), 120, 600))
+  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', x, 500), function() {
+    for(const w of generateCardDeckWidgets(Math.random().toString(36).substring(3, 7), x, 500))
       addWidgetLocal(w);
+  });
+
+  let y = 100;
+  for(const color of [ '#000000','#4a4a4a','#4c5fea','#bc5bee','#e84242','#e0cb0b','#23ca5b','#e2a633','#ffffff' ]) {
+    addWidgetToAddWidgetOverlay(new BasicWidget('add-pin-'+color), {
+      classes: 'pinPiece',
+      color,
+      width: 35.85,
+      height: 43.83,
+      x: 380,
+      y
+    });
+
+    addWidgetToAddWidgetOverlay(new BasicWidget('add-checkers-'+color), {
+      faces: [
+        { classes: "checkersPiece"         },
+        { classes: "checkersPiece crowned" }
+      ],
+      color,
+      width: 73.5,
+      height: 73.5,
+      x: 440,
+      y: y + (43.83 - 73.5)/2
+    });
+
+    addWidgetToAddWidgetOverlay(new BasicWidget('add-classic-'+color), {
+      classes: 'classicPiece',
+      color,
+      width: 90,
+      height: 90,
+      x: 510,
+      y: y + (43.83 - 90)/2
+    });
+    y += 88;
+  }
+
+  const centerStyle = 'color:black;display:flex;justify-content:center;align-items:center;text-align:center;';
+  addWidgetToAddWidgetOverlay(new BasicWidget('add-unicodeS'), {
+    text: '🐻',
+    css: 'font-size:25px;'+centerStyle,
+    width: 25,
+    height: 25,
+    x: 380,
+    y: y + 5
+  });
+
+  addWidgetToAddWidgetOverlay(new BasicWidget('add-unicodeM'), {
+    text: '🔥',
+    css: 'font-size:50px;'+centerStyle,
+    width: 50,
+    height: 50,
+    x: 440,
+    y
+  });
+
+  addWidgetToAddWidgetOverlay(new BasicWidget('add-unicodeL'), {
+    text: '♞',
+    css: 'font-size:100px;'+centerStyle,
+    x: 500,
+    y: y - 25
   });
 
   addWidgetToAddWidgetOverlay(new Button('add-button'), {
     type: 'button',
     text: 'DEAL',
     clickRoutine: [],
-    x: 300,
-    y: 400
+    x: 810,
+    y: 300
   });
 
-  addWidgetToAddWidgetOverlay(new Spinner('add-spinner'), {
-    type: 'spinner',
-    x: 400,
-    y: 400
-  });
+  y = 100;
+  for(const sides of [ 2, 4, 6, 8, 10, 12, 20 ]) {
+    addWidgetToAddWidgetOverlay(new Spinner('add-spinner'+sides), {
+      type: 'spinner',
+      value: sides,
+      options: Array.from({length: sides}, (_, i) => i + 1),
+      x: 675,
+      y: y
+    });
+    y += 120;
+  }
 
-  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 400, 600), function() {
-    for(const w of generateCounterWidgets(Math.random().toString(36).substring(3, 7), 400, 600))
+  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 780, 700), function() {
+    for(const w of generateCounterWidgets(Math.random().toString(36).substring(3, 7), 780, 700))
       addWidgetLocal(w);
   });
 
   addWidgetToAddWidgetOverlay(new Label('add-label'), {
     type: 'label',
     text: 'Label',
-    x: 500,
+    x: 1000,
     y: 400
+  });
+
+  addWidgetToAddWidgetOverlay(new Label('add-heading'), {
+    type: 'label',
+    text: 'Heading',
+    css: 'font-size: 30px',
+    height: 100,
+    width: 200,
+    x: 1000,
+    y: 600
   });
 }
 
