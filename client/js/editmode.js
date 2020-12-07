@@ -13,12 +13,90 @@ function editClick(widget) {
   showOverlay('editOverlay');
 }
 
+function generateCardDeckWidgets(id, x, y) {
+  const widgets = [
+    { type:'holder', id, x, y, dropTarget: { deck: id+'D' } },
+    { type:'pile', id: id+'P', parent: id },
+    {
+      id: id+'B',
+      parent: id,
+      y: 171.36,
+      width: 111,
+      height: 40,
+      type: 'button',
+      text: 'Recall & Shuffle',
+      movableInEdit: false,
+
+      clickRoutine: [
+        { func: 'RECALL',  holder: id },
+        { func: 'FLIP',    holder: id, face: 0 },
+        { func: 'SHUFFLE', holder: id }
+      ]
+    }
+  ];
+
+  const types = {};
+  const cards = [];
+
+  [ '1J', '2J' ].forEach(c=>types[c] = { image:`/i/cards-default/${c}.svg` });
+
+  [ 'C', 'D', 'H', 'S' ].forEach(function(s) {
+    [ 'A', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K' ].forEach(function(n) {
+      types[n+s] = { image:`/i/cards-default/${n}${s}.svg` };
+      cards.push({ id:id+n+s, parent:id+'P', deck:id+'D', type:'card', cardType:n+s });
+    });
+  });
+
+  const front = { type:'image', x:0, y:0, width:103, height:160, valueType:'dynamic', value:'image' };
+  const back  = { ...front };
+  back.valueType = 'static';
+  back.value = '/i/cards-default/2B.svg';
+  widgets.push({
+    type: 'deck',
+    id: id+'D',
+    parent: id,
+    cardTypes: types,
+    faceTemplates: [ {
+      border: false, radius: 8, objects: [ back  ]
+    }, {
+      border: false, radius: 8, objects: [ front ]
+    } ]
+  });
+
+  cards.forEach(function(c) {
+    widgets.push(c);
+  });
+
+  return widgets;
+}
+
+function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
+  for(const wi of widgetsToAdd) {
+    let w = null;
+    if(wi.type == 'button') w = new Button(wi.id);
+    if(wi.type == 'card')   w = new Card(wi.id);
+    if(wi.type == 'deck')   w = new Deck(wi.id);
+    if(wi.type == 'holder') w = new Holder(wi.id);
+    if(wi.type == 'pile')   w = new Pile(wi.id);
+    widgets.set(wi.id, w);
+    w.applyDelta(wi);
+    if(!wi.parent) {
+      w.domElement.addEventListener('click', _=>{
+        onClick();
+        showOverlay();
+      });
+      $('#addOverlay').appendChild(w.domElement);
+    }
+  }
+}
+
 function addWidgetToAddWidgetOverlay(w, wi) {
   w.applyDelta(wi);
   w.domElement.addEventListener('click', _=>{
     const toAdd = {...wi};
     toAdd.z = getMaxZ(w.p('layer')) + 1;
     addWidgetLocal(toAdd);
+
     showOverlay();
   });
   $('#addOverlay').appendChild(w.domElement);
@@ -59,6 +137,11 @@ function populateAddWidgetOverlay() {
     type: 'holder',
     x: 120,
     y: 400
+  });
+
+  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', 120, 600), function() {
+    for(const w of generateCardDeckWidgets(Math.random().toString(36).substring(3, 7), 120, 600))
+      addWidgetLocal(w);
   });
 
   addWidgetToAddWidgetOverlay(new Button('add-button'), {
