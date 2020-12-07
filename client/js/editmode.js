@@ -70,6 +70,30 @@ function generateCardDeckWidgets(id, x, y) {
   return widgets;
 }
 
+function generateCounterWidgets(id, x, y) {
+  const r = { func: 'LABEL', label: id, mode: 'dec', value: 1 };
+
+  const down = {
+    id: id+'D',
+    parent: id,
+    x: 4,
+    y: -2,
+    width: 36,
+    height: 36,
+    type: 'button',
+    movableInEdit: false,
+    text: '-',
+
+    clickRoutine: [ r ]
+  };
+
+  return [
+    { type:'label', text: 0, id, x, y, width: 140, height: 44, css:'font-size: 30px;', editable: true },
+    down,
+    Object.assign({ ...down }, { id: id+'U', text: '+', x: 100, clickRoutine: [ Object.assign({ ...r }, { mode: 'inc' }) ] })
+  ];
+}
+
 function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
   for(const wi of widgetsToAdd) {
     let w = null;
@@ -77,6 +101,7 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
     if(wi.type == 'card')   w = new Card(wi.id);
     if(wi.type == 'deck')   w = new Deck(wi.id);
     if(wi.type == 'holder') w = new Holder(wi.id);
+    if(wi.type == 'label')  w = new Label(wi.id);
     if(wi.type == 'pile')   w = new Pile(wi.id);
     widgets.set(wi.id, w);
     w.applyDelta(wi);
@@ -156,6 +181,11 @@ function populateAddWidgetOverlay() {
     type: 'spinner',
     x: 400,
     y: 400
+  });
+
+  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 400, 600), function() {
+    for(const w of generateCounterWidgets(Math.random().toString(36).substring(3, 7), 400, 600))
+      addWidgetLocal(w);
   });
 
   addWidgetToAddWidgetOverlay(new Label('add-label'), {
