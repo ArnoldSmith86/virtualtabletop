@@ -236,7 +236,7 @@ function populateAddWidgetOverlay() {
     type: 'label',
     text: 'Heading',
     css: 'font-size: 30px',
-    height: 100,
+    height: 42,
     width: 200,
     x: 1000,
     y: 600

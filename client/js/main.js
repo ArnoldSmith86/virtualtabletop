@@ -1,5 +1,6 @@
 let scale = 1;
 let roomRectangle;
+let overlayActive = false;
 
 let maxZ = {};
 const dropTargets = new Map();
@@ -39,6 +40,7 @@ function showOverlay(id) {
   } else {
     $('#roomArea').className = '';
   }
+  overlayActive = !!id;
 }
 
 function setScale() {
