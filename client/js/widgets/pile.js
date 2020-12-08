@@ -28,6 +28,18 @@ class Pile extends Widget {
     --this.handle.textContent;
   }
 
+  applyDeltaToDOM(delta) {
+    super.applyDeltaToDOM(delta);
+    for(const e of [ [ 'x', 'right' ], [ 'y', 'bottom' ] ]) {
+      if(this.handle && (delta[e[0]] !== undefined || delta.parent !== undefined)) {
+        if(this.absoluteCoord(e[0]) < 20)
+          this.handle.classList.add(e[1]);
+        else
+          this.handle.classList.remove(e[1]);
+      }
+    }
+  }
+
   click() {
     this.children().forEach(w=>w.click&&w.click());
   }
