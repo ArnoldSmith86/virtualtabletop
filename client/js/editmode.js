@@ -247,6 +247,24 @@ function removeWidgetLocal(widgetID) {
   sendPropertyUpdate(widgetID, null);
 }
 
+function uploadWidget(preset) {
+  uploadAsset().then(function(asset) {
+    if(preset == 'board') {
+      addWidgetLocal({
+        image: asset,
+        movable: false,
+        layer: -4
+      });
+    }
+    if(preset == 'token') {
+      addWidgetLocal({
+        image: asset
+      });
+    }
+    showOverlay();
+  });
+}
+
 onLoad(function() {
   on('#editButton', 'click', function() {
     if(edit)
@@ -258,6 +276,8 @@ onLoad(function() {
   });
 
   on('#addCustomWidgetOverlay', 'click', _=>showOverlay('addCustomOverlay'));
+  on('#uploadBoard', 'click', _=>uploadWidget('board'));
+  on('#uploadToken', 'click', _=>uploadWidget('token'));
 
   on('#addWidget', 'click', function() {
     addWidgetLocal(JSON.parse($('#widgetText').value));
