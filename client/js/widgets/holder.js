@@ -80,10 +80,12 @@ class Holder extends Widget {
     if(children.length == 2) {
       const piles = children.filter(w=>w.p('type') == 'pile');
       if(piles.length == 2) {
-        piles[0].children().forEach(w=>w.p('parent', piles[1].p('id')));
+        piles[0].children().reverse().forEach(w=>{w.p('parent', piles[1].p('id')); w.bringToFront()});
       } else if(piles.length == 1) {
         piles[0].p('x', this.p('dropOffsetX'));
         piles[0].p('y', this.p('dropOffsetY'));
+        if(piles[0] == child)
+          piles[0].children().reverse().forEach(w=>w.bringToFront());
         children.filter(w=>w.p('type') != 'pile')[0].p('parent', piles[0].p('id'));
       } else {
         const pile = {
