@@ -37,10 +37,11 @@ function showOverlay(id) {
     const style = $(`#${id}`).style;
     style.display = style.display === 'flex' ? 'none' : 'flex';
     $('#roomArea').className = style.display === 'flex' ? 'hasOverlay' : '';
+    overlayActive = style.display === 'flex';
   } else {
     $('#roomArea').className = '';
+    overlayActive = false;
   }
-  overlayActive = !!id;
 }
 
 function setScale() {
