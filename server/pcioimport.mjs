@@ -415,6 +415,8 @@ export default async function convertPCIO(content) {
             c.face = moveFlip == 'faceDown' ? 0 : 1;
         }
         if(c.func == 'SHUFFLE_CARDS') {
+          if(!c.args.holders)
+            continue;
           c = {
             func:   'SHUFFLE',
             holder: c.args.holders.value
@@ -423,6 +425,8 @@ export default async function convertPCIO(content) {
             c.holder = c.holder[0];
         }
         if(c.func == "FLIP_CARDS") {
+          if(!c.args.holders)
+            continue;
           const flipFace = c.args.flipFace;
           c = {
             func:   'FLIP',
@@ -437,6 +441,8 @@ export default async function convertPCIO(content) {
             c.face = flipFace.value == 'faceDown' ? 0 : 1;
         }
         if(c.func == "CHANGE_COUNTER") {
+          if(!c.args.counters)
+            continue;
           c = {
             func: 'LABEL',
             label: c.args.counters.value,
