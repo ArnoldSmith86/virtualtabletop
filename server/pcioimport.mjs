@@ -126,6 +126,9 @@ export default async function convertPCIO(content) {
     if(widget.z)
       w.z = widget.z;
 
+    if(widget.parent && !byID[widget.parent])
+      widget.parent = null;
+
     if(widget.parent) {
       w.x = (w.x || 0) - (byID[widget.parent].x || 0);
       w.y = (w.y || 0) - (byID[widget.parent].y || 0);
