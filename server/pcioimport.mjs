@@ -60,7 +60,7 @@ export default async function convertPCIO(content) {
 
   for(const widget of widgets) {
     if(widget.type == 'board')
-      lowestBoardZ = Math.min(lowestBoardZ, widget.z || 999);
+      lowestBoardZ = Math.min(lowestBoardZ, typeof widget.z != 'number' ? 999 : widget.z);
 
     if(widget.type == 'cardDeck' && widget.parent)
       pileHasDeck[widget.parent] = widget;
