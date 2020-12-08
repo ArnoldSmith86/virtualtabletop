@@ -55,25 +55,29 @@ export default async function convertPCIO(content) {
   }
 
   const pileHasDeck = {};
-  for(const widget of widgets)
+  const pileOverlaps = {};
+  let lowestBoardZ = 999999;
+
+  for(const widget of widgets) {
+    if(widget.type == 'board')
+      lowestBoardZ = Math.min(lowestBoardZ, widget.z || 999);
+
     if(widget.type == 'cardDeck' && widget.parent)
       pileHasDeck[widget.parent] = widget;
 
-  const pileOverlaps = {};
-  for(const wi1 of widgets) {
-    if(wi1.type == 'cardPile' && !pileOverlaps[wi1.id]) {
-      const x1 = wi1.x      || 0;
-      const y1 = wi1.y      || 0;
-      const w1 = wi1.width  || 111;
-      const h1 = wi1.height || 168;
+    if(widget.type == 'cardPile' && !pileOverlaps[widget.id]) {
+      const x1 = widget.x      || 0;
+      const y1 = widget.y      || 0;
+      const w1 = widget.width  || 111;
+      const h1 = widget.height || 168;
       for(const wi2 of widgets) {
-        if(wi2.type == 'cardPile' && wi1.id != wi2.id) {
+        if(wi2.type == 'cardPile' && widget.id != wi2.id) {
           const x2 = wi2.x      || 0;
           const y2 = wi2.y      || 0;
           const w2 = wi2.width  || 111;
           const h2 = wi2.height || 168;
           if(!(y1+h1 <= y2 || y1 >= y2+h2 || x1+w1 <= x2 || x1 >= x2+w2)) {
-            pileOverlaps[wi1.id] = true;
+            pileOverlaps[widget.id] = true;
             pileOverlaps[wi2.id] = true;
             break;
           }
@@ -165,6 +169,8 @@ export default async function convertPCIO(content) {
       w.type = 'holder';
       w.onEnter = { activeFace: 1 };
       w.onLeave = { activeFace: 0 };
+      if(lowestBoardZ*1.5 < w.z)
+        w.classes = 'transparent';
       if(widget.id == 'hand') {
         w.dropOffsetX = 10;
         w.dropOffsetY = 14;
@@ -179,6 +185,8 @@ export default async function convertPCIO(content) {
     } else if(widget.type == 'cardPile') {
       w.type = 'holder';
       w.inheritChildZ = true;
+      if(lowestBoardZ*3 < w.z)
+        w.classes = 'transparent';
       addDimensions(w, widget, 111, 168);
 
       if(pileOverlaps[w.id]) {
