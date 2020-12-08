@@ -41,7 +41,34 @@ class Pile extends Widget {
   }
 
   click() {
-    this.children().forEach(w=>w.click&&w.click());
+    $('#pileOverlay').innerHTML = `<p>${this.handle.textContent} cards</p><p>Drag the handle with the number to drag the entire pile.</p>`;
+
+    const flipButton = document.createElement('button');
+    flipButton.textContent = 'Flip pile';
+    let z=1;
+    flipButton.addEventListener('click', e=>{
+      batchStart();
+      this.children().forEach(c=>{
+        c.p('z', z++);
+        if(c.flip)
+          c.flip();
+      });
+      showOverlay();
+      batchEnd();
+    });
+    $('#pileOverlay').appendChild(flipButton);
+
+    const shuffleButton = document.createElement('button');
+    shuffleButton.textContent = 'Shuffle pile';
+    shuffleButton.addEventListener('click', e=>{
+      batchStart();
+      this.children().forEach(c=>c.p('z', Math.floor(Math.random()*10000)));
+      showOverlay();
+      batchEnd();
+    });
+    $('#pileOverlay').appendChild(shuffleButton);
+
+    showOverlay('pileOverlay');
   }
 
   onChildRemove(child) {

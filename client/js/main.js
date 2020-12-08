@@ -67,6 +67,8 @@ async function uploadAsset() {
 }
 
 onLoad(function() {
+  on('#pileOverlay', 'click', e=>e.target.id=='pileOverlay'&&showOverlay());
+
   on('.toolbarButton', 'click', function(e) {
     const overlay = e.target.dataset.overlay;
     if(overlay)
