@@ -276,6 +276,24 @@ onLoad(function() {
   });
 
   on('#addCustomWidgetOverlay', 'click', _=>showOverlay('addCustomOverlay'));
+
+  on('#addHand', 'click', function() {
+    addWidgetLocal({
+      type: 'holder',
+      onEnter: { activeFace: 1 },
+      onLeave: { activeFace: 0 },
+      dropOffsetX: 10,
+      dropOffsetY: 14,
+      stackOffsetX: 40,
+      childrenPerOwner: true,
+      x: 50,
+      y: 820,
+      width: 1500,
+      height: 180
+    });
+    showOverlay();
+  });
+
   on('#uploadBoard', 'click', _=>uploadWidget('board'));
   on('#uploadToken', 'click', _=>uploadWidget('token'));
 
