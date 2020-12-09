@@ -36,7 +36,8 @@ function onMessage(func, callback) {
 }
 
 function toServer(func, args) {
-  connection.send(JSON.stringify({ func, args }));
+  if(connection.readyState === WebSocket.OPEN)
+    connection.send(JSON.stringify({ func, args }));
 }
 
 function log(str) {
