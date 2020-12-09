@@ -174,8 +174,9 @@ async function shareLink() {
   showOverlay('shareLinkOverlay');
   let url = $('#stateLink').value;
   if(!url) {
+    const name = $('#stateName').value.replace(/[^A-Za-z0-9.-]/g, '_');
     url = await fetch(`/share/${roomID}/${$('#stateEditOverlay').dataset.id}`);
-    url = `${location.origin}${await url.text()}/${$('#stateName').value}.vtt`;
+    url = `${location.origin}${await url.text()}/${name}.vtt`;
   }
   $('#sharedLink').value = url;
 }
