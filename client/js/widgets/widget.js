@@ -91,6 +91,9 @@ class Widget extends StateManaged {
       if(delta.parent !== null)
         widgets.get(delta.parent).applyChildAdd(this);
     }
+
+    if($('#enlarged').dataset.id == this.p('id') && !$('#enlarged').className.match(/hidden/))
+      this.showEnlarged();
   }
 
   applyRemove() {
@@ -294,13 +297,15 @@ class Widget extends StateManaged {
       const e = $('#enlarged');
       e.innerHTML = this.domElement.innerHTML;
       e.className = this.domElement.className;
+      e.dataset.id = this.p('id');
       e.style.cssText = this.domElement.style.cssText;
       e.style.display = this.domElement.style.display;
       e.style.transform = `scale(calc(${this.p('enlarge')} * var(--scale)))`;
       if(this.domElement.getBoundingClientRect().left < window.innerWidth/2)
         e.classList.add('right');
     }
-    event.preventDefault();
+    if(event)
+      event.preventDefault();
   }
 
   updateOwner(oldName, newName) {
