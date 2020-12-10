@@ -3,8 +3,12 @@ class Deck extends Widget {
     super(id);
 
     this.addDefaults({
+      width: 86,
+      height: 86,
       typeClasses: 'widget deck',
-      cardDefaults: {}
+      cardDefaults: {},
+      cardTypes: {},
+      faceTemplates: []
     });
 
     this.cards = {};

@@ -9,10 +9,11 @@ class Holder extends Widget {
       layer: -3,
       typeClasses: 'widget holder',
 
-      dropTarget: { 'type': 'card' },
+      dropTarget: { type: 'card' },
       dropOffsetX: 4,
       dropOffsetY: 4,
       alignChildren: true,
+      childrenPerOwner: false,
 
       onEnter: {},
       onLeave: {},
