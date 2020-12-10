@@ -108,7 +108,6 @@ export default class Room {
   }
 
   broadcast(func, args, exceptPlayer) {
-    console.log(this.id, func, args);
     for(const player of this.players)
       if(player != exceptPlayer)
         player.send(func, args);
