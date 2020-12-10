@@ -16,7 +16,7 @@ function editClick(widget) {
 function generateCardDeckWidgets(id, x, y) {
   const widgets = [
     { type:'holder', id, x, y, dropTarget: { deck: id+'D' } },
-    { type:'pile', id: id+'P', parent: id },
+    { type:'pile', id: id+'P', parent: id, width:103, height:160 },
     {
       id: id+'B',
       parent: id,
