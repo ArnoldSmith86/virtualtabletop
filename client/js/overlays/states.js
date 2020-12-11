@@ -139,14 +139,17 @@ async function pickStateFromLibrary() {
 
   return new Promise((resolve, reject) => {
     on('#libraryOverlay .add', 'click', function() {
-      resolve(this.dataset.url);
+      if(this.dataset.url.match(/^http/))
+        resolve(this.dataset.url);
+      else
+        resolve(location.origin + '/library/' + this.dataset.url);
     });
   });
 }
 
 async function populateLibrary() {
   if(!$('#libraryList.populated')) {
-    const library = await fetch('/library.json');
+    const library = await fetch('/library/library.json');
     for(const entry of await library.json()) {
       const lEntry = domByTemplate('template-librarylist-entry', 'tr');
 
