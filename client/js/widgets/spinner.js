@@ -32,7 +32,7 @@ class Spinner extends Widget {
   }
 
   click() {
-    const angle = Math.floor(Math.random()*360*10);
+    const angle = this.p('angle') + Math.floor((2+Math.random())*360);
     const o = this.p('options');
     this.p('angle', angle);
     this.p('value', o[Math.floor(angle/(360/o.length))%o.length]);
