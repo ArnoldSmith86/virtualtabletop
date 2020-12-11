@@ -19,6 +19,10 @@
   color: black;
 }
 
+#addOverlay .widget, #addOverlay textarea {
+  cursor: pointer;
+}
+
 #addCustomOverlay textarea, #editOverlay textarea {
   height: 100%;
 }
