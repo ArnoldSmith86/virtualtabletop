@@ -69,7 +69,7 @@ function fillStatesList(states, activePlayers) {
     state.id = kvp[0];
 
     const entry = domByTemplate('template-stateslist-entry');
-    entry.className = 'roomState';
+    entry.className = state.image ? 'roomState' : 'roomState noImage';
     $('img', entry).src = state.image;
     $('.bgg', entry).textContent = `${state.name} (${state.year})`;
     $('.bgg', entry).href = state.bgg;

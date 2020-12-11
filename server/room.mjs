@@ -52,7 +52,7 @@ export default class Room {
         const variant = states[state][v];
         const meta = (variant._meta || {}).info || {
           name: 'Unnamed',
-          image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mOs+Q8AAf0BfcpIqy8AAAAASUVORK5CYII=',
+          image: '',
           rules: '',
           bgg: '',
           year: 0,
