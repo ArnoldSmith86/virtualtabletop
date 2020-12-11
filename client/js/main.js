@@ -76,10 +76,17 @@ onLoad(function() {
   });
 
   on('#fullscreenButton', 'click', function() {
-    if(!document.fullscreenElement)
-      document.documentElement.requestFullscreen();
-    else
-      document.exitFullscreen();
+    if(document.documentElement.requestFullscreen) {
+      if(!document.fullscreenElement)
+        document.documentElement.requestFullscreen();
+      else
+        document.exitFullscreen();
+    } else if(document.documentElement.webkitRequestFullscreen) {
+      if(!document.webkitFullscreenElement)
+        document.documentElement.webkitRequestFullScreen();
+      else
+        document.webkitExitFullscreen();
+    }
   });
   setScale();
 
