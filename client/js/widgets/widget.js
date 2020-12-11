@@ -228,10 +228,10 @@ class Widget extends StateManaged {
       const d = distance(myCenter, tCenter);
       if(d < this.hoverTargetDistance) {
         if(overlap(this, t)) {
+          this.hoverTargetChanged = this.hoverTarget != t;
           this.hoverTarget = t;
           this.hoverTargetCenter = tCenter;
           this.hoverTargetDistance = d;
-          this.hoverTargetChanged = true;
         }
       }
     }
