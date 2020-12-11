@@ -185,7 +185,7 @@ onLoad(function() {
   onMessage('meta', args=>fillStatesList(args.meta.states, args.activePlayers));
 
   on('#addState .create,  #addVariant .create',  'click', e=>addState(e, 'state'));
-  on('#addState .upload,  #addVariant .upload',  'click', e=>selectFile(true).then(f=>addState(e, 'file', f)));
+  on('#addState .upload,  #addVariant .upload',  'click', e=>selectFile(true, f=>addState(e, 'file', f)));
   on('#addState .link,    #addVariant .link',    'click', e=>addState(e, 'link', prompt('Enter shared URL:')));
   on('#addState .library, #addVariant .library', 'click', e=>addStateFromLibrary(e));
 

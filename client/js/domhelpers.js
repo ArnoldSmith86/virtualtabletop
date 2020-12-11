@@ -30,21 +30,29 @@ function onLoad(callback) {
   window.addEventListener('DOMContentLoaded', callback);
 }
 
-function selectFile(getContents) {
+function selectFile(getContents, multipleCallback) {
   return new Promise((resolve, reject) => {
     const upload = document.createElement('input');
     upload.type = 'file';
+    upload.setAttribute('multiple', !!multipleCallback);
     upload.addEventListener('change', function(e) {
       if(!getContents)
         resolve(e.target.files[0]);
 
-      const name = e.target.files[0].name;
-      const reader = new FileReader();
-      reader.addEventListener('load', a=>resolve({ content: a.target.result, name }));
-      if(getContents == 'BINARY')
-        reader.readAsArrayBuffer(e.target.files[0]);
-      else
-        reader.readAsDataURL(e.target.files[0]);
+      for(const file of e.target.files) {
+        const name = file.name;
+        const reader = new FileReader();
+        reader.addEventListener('load', function(e) {
+          if(multipleCallback)
+            multipleCallback({ content: e.target.result, name });
+          else
+            resolve({ content: e.target.result, name });
+        });
+        if(getContents == 'BINARY')
+          reader.readAsArrayBuffer(file);
+        else
+          reader.readAsDataURL(file);
+      }
     });
     upload.dispatchEvent(new MouseEvent('click', {bubbles: true}));
   });
