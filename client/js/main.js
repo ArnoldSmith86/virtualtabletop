@@ -53,13 +53,13 @@ function setScale() {
 }
 
 async function uploadAsset() {
-  return selectFile('BINARY').then(async function(contents) {
+  return selectFile('BINARY').then(async function(file) {
     const response = await fetch('/asset', {
       method: 'PUT',
       headers: {
         'Content-type': 'application/octet-stream'
       },
-      body: contents
+      body: file.content
     });
 
     return response.text();
