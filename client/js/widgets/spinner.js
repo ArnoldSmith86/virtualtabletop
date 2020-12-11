@@ -57,7 +57,7 @@ class Spinner extends Widget {
       const text = document.createElementNS(ns, 'text');
       text.setAttribute('x', 50 + Math.sin(0.5*Math.PI-2*Math.PI/options.length*(+i+0.5))*38);
       text.setAttribute('y', 50 + Math.cos(0.5*Math.PI-2*Math.PI/options.length*(+i+0.5))*38);
-      text.setAttribute('dominant-baseline', 'middle');
+      text.setAttribute('dominant-baseline', 'central');
       text.setAttribute('text-anchor', 'middle');
       text.setAttribute('font-size', 20-options.length/2);
       text.textContent = options[i];
