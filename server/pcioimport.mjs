@@ -56,30 +56,32 @@ export default async function convertPCIO(content) {
 
   const pileHasDeck = {};
   const pileOverlaps = {};
-  let lowestBoardZ = 999999;
+  const pileTransparent = {};
 
   for(const widget of widgets) {
-    if(widget.type == 'board')
-      lowestBoardZ = Math.min(lowestBoardZ, typeof widget.z != 'number' ? 999 : widget.z);
-
     if(widget.type == 'cardDeck' && widget.parent)
       pileHasDeck[widget.parent] = widget;
 
-    if(widget.type == 'cardPile' && !pileOverlaps[widget.id]) {
+    if(widget.type == 'cardPile' || widget.type == 'hand') {
       const x1 = widget.x      || 0;
       const y1 = widget.y      || 0;
-      const w1 = widget.width  || 111;
-      const h1 = widget.height || 168;
+      const w1 = widget.width  || (widget.type == 'hand' ? 1500 : 111);
+      const h1 = widget.height || (widget.type == 'hand' ?  180 : 168);
       for(const wi2 of widgets) {
-        if(wi2.type == 'cardPile' && widget.id != wi2.id) {
+        if((wi2.type == 'cardPile' || wi2.type == 'board') && widget.id != wi2.id) {
           const x2 = wi2.x      || 0;
           const y2 = wi2.y      || 0;
           const w2 = wi2.width  || 111;
           const h2 = wi2.height || 168;
           if(!(y1+h1 <= y2 || y1 >= y2+h2 || x1+w1 <= x2 || x1 >= x2+w2)) {
-            pileOverlaps[widget.id] = true;
-            pileOverlaps[wi2.id] = true;
-            break;
+            if(wi2.type == 'board') {
+              const factor = widget.type == 'hand' ? 1.5 : 3;
+              if(wi2.z*factor < widget.z)
+                pileTransparent[widget.id] = true;
+            } else if(widget.type == 'cardPile') {
+              pileOverlaps[widget.id] = true;
+              pileOverlaps[wi2.id] = true;
+            }
           }
         }
       }
@@ -169,7 +171,7 @@ export default async function convertPCIO(content) {
       w.type = 'holder';
       w.onEnter = { activeFace: 1 };
       w.onLeave = { activeFace: 0 };
-      if(lowestBoardZ*1.5 < w.z)
+      if(pileTransparent[w.id])
         w.classes = 'transparent';
       if(widget.id == 'hand') {
         w.dropOffsetX = 10;
@@ -185,7 +187,7 @@ export default async function convertPCIO(content) {
     } else if(widget.type == 'cardPile') {
       w.type = 'holder';
       w.inheritChildZ = true;
-      if(lowestBoardZ*3 < w.z)
+      if(pileTransparent[w.id])
         w.classes = 'transparent';
       addDimensions(w, widget, 111, 168);
 
