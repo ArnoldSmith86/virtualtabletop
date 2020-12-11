@@ -14,7 +14,7 @@ export default class Player {
 
   messageReceived = (func, args) => {
     if(func == 'addState')
-      this.room.addState(this, args.id, args.type, args.src, args.addAsVariant);
+      this.room.addState(this, args.id, args.type, args.src, args.addAsVariant, args.name);
     if(func == 'delta')
       this.room.receiveDelta(this, args);
     if(func == 'editState')

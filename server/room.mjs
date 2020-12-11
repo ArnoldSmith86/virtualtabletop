@@ -35,7 +35,7 @@ export default class Room {
     let etag = null;
     try {
       if(type == 'file')
-        states = await FileLoader.readStatesFromBuffer(Buffer.from(src.replace(/^data.*?,/, ''), 'base64'));
+        states = await FileLoader.readStatesFromBuffer(Buffer.from(src.content.replace(/^data.*?,/, ''), 'base64'));
       if(type == 'link')
         states = await FileLoader.readStatesFromLink(src);
     } catch(e) {
@@ -49,9 +49,13 @@ export default class Room {
 
     for(const state in states) {
       for(const v in states[state]) {
+        let name = type == 'file' && src.name || 'Unnamed';
+        if(state.match(/\.pcio$/))
+          name = state;
+
         const variant = states[state][v];
         const meta = (variant._meta || {}).info || {
-          name: 'Unnamed',
+          name: name.replace(/\.pcio/, ''),
           image: '',
           rules: '',
           bgg: '',

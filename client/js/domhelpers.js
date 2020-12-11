@@ -39,7 +39,7 @@ function selectFile(getContents) {
         resolve(e.target.files[0]);
 
       const reader = new FileReader();
-      reader.addEventListener('load', e=>resolve(e.target.result));
+      reader.addEventListener('load', a=>resolve({ content: a.target.result, name: e.target.files[0].name }));
       if(getContents == 'BINARY')
         reader.readAsArrayBuffer(e.target.files[0]);
       else
