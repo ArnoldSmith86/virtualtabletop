@@ -257,6 +257,7 @@ class Widget extends StateManaged {
     }
 
     this.hideEnlarged();
+    this.updatePiles();
   }
 
   onChildAdd(child) {
@@ -285,6 +286,7 @@ class Widget extends StateManaged {
         widgets.get(oldValue).onChildRemove(this);
       if(newValue)
         widgets.get(newValue).onChildAdd(this);
+      this.updatePiles();
     }
   }
 
@@ -314,6 +316,46 @@ class Widget extends StateManaged {
       this.domElement.classList.add('foreign');
     if(o && o == newName)
       this.domElement.classList.remove('foreign');
+  }
+
+  updatePiles() {
+    if(this.p('parent') && widgets.get(this.p('parent')).p('type') == 'pile')
+      return;
+
+    for(const widget of Array.from(widgets.values())) {
+      if(widget != this && widget.p('parent') == this.p('parent') && Math.abs(widget.p('x')-this.p('x')) < 10 && Math.abs(widget.p('y')-this.p('y')) < 10) {
+        if(widget.p('type') == 'card' && this.p('type') == 'card') {
+          const pile = {
+            type: 'pile',
+            parent: this.p('parent'),
+            x: widget.p('x'),
+            y: widget.p('y'),
+            width: this.p('width'),
+            height: this.p('height')
+          };
+          addWidgetLocal(pile);
+          this.p('parent', pile.id);
+          widget.p('parent', pile.id);
+          break;
+        }
+        if(widget.p('type') == 'pile' && this.p('type') == 'pile') {
+          this.children().reverse().forEach(w=>{w.p('parent', widget.p('id')); w.bringToFront()});
+          break;
+        }
+        if(widget.p('type') == 'card' && this.p('type') == 'pile') {
+          this.children().reverse().forEach(w=>w.bringToFront());
+          this.p('x', widget.p('x'));
+          this.p('y', widget.p('y'));
+          widget.p('parent', this.p('id'));
+          break;
+        }
+        if(widget.p('type') == 'pile' && this.p('type') == 'card') {
+          this.bringToFront();
+          this.p('parent', widget.p('id'));
+          break;
+        }
+      }
+    }
   }
 
   validDropTargets() {

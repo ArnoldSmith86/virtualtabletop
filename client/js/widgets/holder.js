@@ -60,50 +60,15 @@ class Holder extends Widget {
   }
 
   onChildAddAlign(child) {
-    if(this.onChildAddManagePile(child))
+    if(this.p('alignChildren') && (this.p('stackOffsetX') || this.p('stackOffsetY')) && child.p('type') == 'pile') {
+      child.children().forEach(w=>w.p('parent', this.p('id')));
       return true;
+    }
 
     if(this.p('stackOffsetX') || this.p('stackOffsetY'))
       this.receiveCard(child, [ child.p('x') - this.absoluteCoord('x'), child.p('y') - this.absoluteCoord('y') ]);
     else
       super.onChildAddAlign(child);
-  }
-
-  onChildAddManagePile(child) {
-    if(this.p('alignChildren') && (this.p('stackOffsetX') || this.p('stackOffsetY')) && child.p('type') == 'pile') {
-      child.children().forEach(w=>w.p('parent', this.p('id')));
-      return true;
-    }
-    if(this.p('childrenPerOwner') || !this.p('alignChildren') || this.p('stackOffsetX') || this.p('stackOffsetY'))
-      return false;
-
-    const children = this.childrenFilter(super.children(), true);
-    if(children.length == 2) {
-      const piles = children.filter(w=>w.p('type') == 'pile');
-      if(piles.length == 2) {
-        piles[0].children().reverse().forEach(w=>{w.p('parent', piles[1].p('id')); w.bringToFront()});
-      } else if(piles.length == 1) {
-        piles[0].p('x', this.p('dropOffsetX'));
-        piles[0].p('y', this.p('dropOffsetY'));
-        if(piles[0] == child)
-          piles[0].children().reverse().forEach(w=>w.bringToFront());
-        children.filter(w=>w.p('type') != 'pile')[0].p('parent', piles[0].p('id'));
-      } else {
-        const pile = {
-          type: 'pile',
-          parent: this.p('id'),
-          x: this.p('dropOffsetX'),
-          y: this.p('dropOffsetY'),
-          width: children[0].p('width'),
-          height: children[0].p('height')
-        };
-        addWidgetLocal(pile);
-        children.reverse().forEach(c=>c.p('parent', pile.id));
-      }
-      return true;
-    } else {
-      return false;
-    }
   }
 
   receiveCard(card, pos) {
