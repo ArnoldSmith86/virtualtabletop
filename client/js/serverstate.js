@@ -7,6 +7,7 @@ const deferredChildren = {};
 
 let delta = { s: {} };
 let deltaChanged = false;
+let deltaID = 0;
 let batchDepth = 0;
 
 function addWidget(widget) {
@@ -84,6 +85,11 @@ function receiveDelta(delta) {
   }
 }
 
+function receiveDeltaFromServer(delta) {
+  deltaID = delta.id;
+  receiveDelta(delta);
+}
+
 function removeWidget(widgetID) {
   widgets.get(widgetID).applyRemove();
   widgets.delete(widgetID);
@@ -94,6 +100,7 @@ function sendDelta(force) {
   if(!batchDepth || force) {
     if(deltaChanged) {
       receiveDelta(delta);
+      delta.id = deltaID;
       toServer('delta', delta);
     }
     delta = { s: {} };
@@ -115,8 +122,10 @@ function sendPropertyUpdate(widgetID, property, value) {
 }
 
 onLoad(function() {
-  onMessage('delta', receiveDelta);
+  onMessage('delta', receiveDeltaFromServer);
   onMessage('state', function(args) {
+    mouseTarget = null;
+    deltaID = args._meta.deltaID;
     for(const widget of $a('#room .widget'))
       if(widget.id != 'enlarged')
         widgets.get(widget.id).applyRemove();
@@ -132,6 +141,7 @@ onLoad(function() {
     }
     if(isEmpty)
       showOverlay('statesOverlay');
+    toServer('confirm');
   });
   setScale();
 });

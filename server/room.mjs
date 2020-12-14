@@ -7,6 +7,7 @@ import FileLoader from './fileloader.mjs';
 export default class Room {
   players = [];
   state = {};
+  deltaID = 0;
 
   constructor(id, unloadCallback) {
     this.id = id;
@@ -22,6 +23,7 @@ export default class Room {
     if(!this.state._meta.players[player.name])
       this.state._meta.players[player.name] = '#ff0000';
 
+    this.state._meta.deltaID = this.deltaID;
     player.send('state', this.state);
     this.sendMetaUpdate();
   }
@@ -225,7 +227,14 @@ export default class Room {
         }
       }
     }
+    delta.id = ++this.deltaID;
     this.broadcast('delta', delta, player);
+  }
+
+  receiveInvalidDelta(player, delta) {
+    console.log(`WARNING: received invalid delta from player ${player.name} - sending game state at ${this.deltaID}`);
+    this.state._meta.deltaID = ++this.deltaID;
+    player.send('state', this.state);
   }
 
   recolorPlayer(renamingPlayer, playerName, color) {

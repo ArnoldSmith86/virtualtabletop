@@ -4,6 +4,9 @@ export default class Player {
     this.name = name;
     this.room = room;
 
+    this.latestDeltaIDbyDifferentPlayer = this.room.deltaID;
+    this.waitingForStateConfirmation = false;
+
     connection.addMessageHandler(this.messageReceived);
     connection.addCloseHandler(this.connectionClosed);
   }
@@ -15,8 +18,10 @@ export default class Player {
   messageReceived = (func, args) => {
     if(func == 'addState')
       this.room.addState(this, args.id, args.type, args.src, args.addAsVariant, args.name);
+    if(func == 'confirm')
+      this.waitingForStateConfirmation = false;
     if(func == 'delta')
-      this.room.receiveDelta(this, args);
+      this.receiveDelta(args);
     if(func == 'editState')
       this.room.editState(this, args.id, args.meta);
     if(func == 'loadState')
@@ -33,12 +38,25 @@ export default class Player {
       this.room.renamePlayer(this, args.oldName, args.newName);
   }
 
+  receiveDelta(delta) {
+    if(this.waitingForStateConfirmation)
+      return;
+    if(delta.id >= this.latestDeltaIDbyDifferentPlayer) {
+      this.room.receiveDelta(this, delta);
+    } else {
+      this.waitingForStateConfirmation = true;
+      this.room.receiveInvalidDelta(this, delta);
+    }
+  }
+
   rename(newName) {
     this.name = newName;
     this.send('rename', newName);
   }
 
   send(func, args) {
+    if(func == 'delta')
+      this.latestDeltaIDbyDifferentPlayer = args.id;
     this.connection.toClient(func, args);
   }
 }
