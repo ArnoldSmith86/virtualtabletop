@@ -195,8 +195,7 @@ export default class Room {
   }
 
   async loadState(player, stateID, variantID) {
-    const meta = this.state._meta;
-    const variantInfo = meta.states[stateID].variants[variantID];
+    const variantInfo = this.state._meta.states[stateID].variants[variantID];
 
     if(variantInfo.link) {
       this.load(variantInfo.link);
@@ -204,9 +203,6 @@ export default class Room {
       const filename = path.resolve() + '/save/states/' + this.id + '-' + stateID + '-' + variantID + '.json';
       this.load(filename);
     }
-
-    this.state._meta = meta;
-    this.broadcast('state', this.state);
   }
 
   mouseMove(player, coords) {

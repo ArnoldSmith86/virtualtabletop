@@ -123,9 +123,15 @@ onLoad(function() {
     widgets.clear();
     dropTargets.clear();
     maxZ = {};
-    for(const widgetID in args)
-      if(widgetID != '_meta')
+    let isEmpty = true;
+    for(const widgetID in args) {
+      if(widgetID != '_meta') {
         addWidget(args[widgetID]);
+        isEmpty = false;
+      }
+    }
+    if(isEmpty)
+      showOverlay('statesOverlay');
   });
   setScale();
 });

@@ -5,7 +5,7 @@ function addState(e, type, src) {
     return;
   const id = Math.random().toString(36).substring(3, 7);
 
-  if(e.target.parentNode == $('#addVariant')) {
+  if(e && e.target.parentNode == $('#addVariant')) {
     waitingForStateCreation = $('#stateEditOverlay').dataset.id;
     toServer('addState', { id, type, src, addAsVariant: $('#stateEditOverlay').dataset.id });
   } else {
@@ -21,7 +21,7 @@ function addStateFromLibrary(e) {
     else
       showOverlay('statesOverlay');
     addState(e, 'link', url);
-  });
+  }).catch(e=>!1);
 }
 
 function downloadState(variantID) {
@@ -64,7 +64,10 @@ function fillStatesList(states, activePlayers) {
   removeFromDOM(addDiv);
   removeFromDOM('#statesList > div');
 
+  let isEmpty = true;
   for(const kvp of Object.entries(states).sort((a, b) => a[1].name.localeCompare(b[1].name))) {
+    isEmpty = false;
+
     const state = kvp[1];
     state.id = kvp[0];
 
@@ -83,7 +86,7 @@ function fillStatesList(states, activePlayers) {
       $('.players', vEntry).textContent = variant.players;
       $('.variant', vEntry).textContent = variant.variant;
 
-      $('.play', vEntry).addEventListener('click', _=>{ toServer('loadState', { stateID: state.id, variantID }); showOverlay(null); });
+      $('.play', vEntry).addEventListener('click', _=>{ toServer('loadState', { stateID: state.id, variantID }); showOverlay(); });
       $('.variantsList', entry).appendChild(vEntry);
     }
 
@@ -97,6 +100,21 @@ function fillStatesList(states, activePlayers) {
     }
   }
   $('#statesList').appendChild(addDiv);
+
+  fillStatesWelcome(isEmpty);
+}
+
+function fillStatesWelcome(isEmpty) {
+  if(isEmpty) {
+    $('#statesOverlay').classList.add('empty');
+    $('#statesOverlay').appendChild($('#libraryList'));
+    pickStateFromLibrary(false).then(url=>{
+      addState(null, 'link', url);
+    }).catch(e=>!1);
+  } else {
+    $('#statesOverlay').classList.remove('empty');
+    $('#libraryOverlay').appendChild($('#libraryList'));
+  }
 }
 
 function fillEditState(state) {
@@ -133,12 +151,18 @@ function fillEditState(state) {
   showOverlay('stateEditOverlay');
 }
 
-async function pickStateFromLibrary() {
-  showOverlay('libraryOverlay');
+let previousLibraryRejection = null;
+async function pickStateFromLibrary(changeOverlay) {
+  if(changeOverlay !== false)
+    showOverlay('libraryOverlay');
   await populateLibrary();
 
+  if(previousLibraryRejection)
+    previousLibraryRejection();
+
   return new Promise((resolve, reject) => {
-    on('#libraryOverlay .add', 'click', function() {
+    previousLibraryRejection = reject;
+    on('#libraryList .add', 'click', function() {
       if(this.dataset.url.match(/^http/))
         resolve(this.dataset.url);
       else
@@ -188,9 +212,10 @@ onLoad(function() {
   onMessage('meta', args=>fillStatesList(args.meta.states, args.activePlayers));
 
   on('#addState .create,  #addVariant .create',  'click', e=>addState(e, 'state'));
-  on('#addState .upload,  #addVariant .upload',  'click', e=>selectFile(true, f=>addState(e, 'file', f)));
-  on('#addState .link,    #addVariant .link',    'click', e=>addState(e, 'link', prompt('Enter shared URL:')));
   on('#addState .library, #addVariant .library', 'click', e=>addStateFromLibrary(e));
+
+  on('#addState .upload, #emptyRoom .upload, #addVariant .upload',  'click', e=>selectFile(true, f=>addState(e, 'file', f)));
+  on('#addState .link,   #emptyRoom .link,   #addVariant .link',    'click', e=>addState(e, 'link', prompt('Enter shared URL:')));
 
   on('#addState .download', 'click', _=>downloadState(null));
 

@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>virtualtabletop</title>
+  <title>VirtualTabletop.io</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <link rel="shortcut icon" href="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="/>
   <style> {{CSS}} </style>
@@ -85,8 +85,18 @@
       </div>
     </div>
 
-    <div id="statesOverlay" class="overlay">
+    <div id="statesOverlay" class="overlay empty">
       <h1>Games</h1>
+      <div id="emptyRoom">
+        <h1>VirtualTabletop.io</h1>
+        <p>This is an empty room. You can add games to it and play them with your friends and family by sharing the link.</p>
+        <p>Bring your own voice chat. We recommend <a href="https://meet.jit.si/">Jitsi Meet</a> because it's free software and requires no accounts.</p>
+        <div>
+          <div><p>Do you have a *.vtt or *.pcio file?</p><button class="upload">⬆️ Upload files</button></div>
+          <div><p>Do you have a link to one?</p><button class="link">🔗 Enter link</button></div>
+        </div>
+        <p>If you don't, you can create your own game or add one from the public library:</p>
+      </div>
       <div id="statesList">
         <script id="template-stateslist-entry" type="text/template">
           <img>
@@ -106,7 +116,7 @@
             <button class="create">➕ Use current room state</button>
             <button class="library">📚 Public library</button>
             <button class="link">🔗 Enter link</button>
-            <button class="upload">⬆️ Upload file</button>
+            <button class="upload">⬆️ Upload files</button>
             <button class="download">⬇️ Download all</button>
           </div>
         </div>
