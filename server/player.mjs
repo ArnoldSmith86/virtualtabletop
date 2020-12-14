@@ -27,7 +27,7 @@ export default class Player {
     if(func == 'loadState')
       this.room.loadState(this, args.stateID, args.variantID);
     if(func == 'log')
-      console.log(args);
+      console.log(new Date().toISOString(), this.name, args);
     if(func == 'mouse')
       this.room.mouseMove(this, args);
     if(func == 'playerColor')

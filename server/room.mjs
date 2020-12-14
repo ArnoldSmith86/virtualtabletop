@@ -17,7 +17,7 @@ export default class Room {
   }
 
   addPlayer(player) {
-    console.log(`adding player ${player.name} to room ${this.id}`);
+    console.log(new Date().toISOString(), `adding player ${player.name} to room ${this.id}`);
     this.players.push(player);
 
     if(!this.state._meta.players[player.name])
@@ -41,7 +41,7 @@ export default class Room {
       if(type == 'link')
         states = await FileLoader.readStatesFromLink(src);
     } catch(e) {
-      console.log('ERROR LOADING FILE: ' + e);
+      console.log(new Date().toISOString(), 'ERROR LOADING FILE: ' + e);
       try {
         fs.writeFileSync(path.resolve() + '/save/errors/' + Math.random().toString(36).substring(3, 7), Buffer.from(src.replace(/^data.*?,/, ''), 'base64'));
       } catch(e) {}
@@ -176,7 +176,7 @@ export default class Room {
   }
 
   async load(fileOrLink) {
-    console.log(`loading room ${this.id}`);
+    console.log(new Date().toISOString(), `loading room ${this.id}`);
     try {
       if(!fileOrLink)
         this.state = JSON.parse(fs.readFileSync(path.resolve() + '/save/rooms/' + this.id + '.json'));
@@ -185,7 +185,7 @@ export default class Room {
       else
         this.setState(JSON.parse(fs.readFileSync(fileOrLink)));
     } catch(e) {
-      console.log(`RESETTING ROOM ${this.id} because of "${e.toString()}"`);
+      console.log(new Date().toISOString(), `RESETTING ROOM ${this.id} because of "${e.toString()}"`);
       this.state = {
         _meta: {
           version: 1,
@@ -232,7 +232,7 @@ export default class Room {
   }
 
   receiveInvalidDelta(player, delta) {
-    console.log(`WARNING: received invalid delta from player ${player.name} - sending game state at ${this.deltaID}`);
+    console.log(new Date().toISOString(), `WARNING: received invalid delta from player ${player.name} - sending game state at ${this.deltaID}`);
     this.state._meta.deltaID = ++this.deltaID;
     player.send('state', this.state);
   }
@@ -243,7 +243,7 @@ export default class Room {
   }
 
   removePlayer(player) {
-    console.log(`removing player ${player.name} from room ${this.id}`);
+    console.log(new Date().toISOString(), `removing player ${player.name} from room ${this.id}`);
     this.players = this.players.filter(e => e != player);
     if(this.players.length == 0) {
       this.unload();
@@ -280,7 +280,7 @@ export default class Room {
   }
 
   unload() {
-    console.log(`unloading room ${this.id}`);
+    console.log(new Date().toISOString(), `unloading room ${this.id}`);
     const json = JSON.stringify(this.state);
     if(json != '{}')
       fs.writeFileSync(path.resolve() + '/save/rooms/' + this.id + '.json', json);

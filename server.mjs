@@ -58,7 +58,7 @@ MinifyRoom().then(function(result) {
       else if(content[0] == 0x52)
         res.setHeader('Content-Type', 'image/webp');
       else
-        console.log('WARNING: Unknown file type of asset ' + req.params.name);
+        console.log(new Date().toISOString(), 'WARNING: Unknown file type of asset ' + req.params.name);
       res.send(content);
     });
   });
@@ -125,7 +125,7 @@ MinifyRoom().then(function(result) {
   });
 
   server.listen(process.env.PORT || 8272, function() {
-    console.log('Listening on ' + server.address().port);
+    console.log(new Date().toISOString(), 'Listening on ' + server.address().port);
   });
 });
 

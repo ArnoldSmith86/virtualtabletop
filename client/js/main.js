@@ -103,4 +103,7 @@ window.onkeyup = function(event) {
     showOverlay();
 }
 
-window.onerror = (msg, url, line, col)=>log(`ERROR: ${msg} - line ${line} - column ${col}`);
+window.onerror = function(msg, url, line, col, err) {
+  log(`ERROR ${msg} < ${err.stack.trim().replace(/\n/g, ' < ')}`);
+  location.reload();
+}
