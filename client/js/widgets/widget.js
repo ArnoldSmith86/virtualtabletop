@@ -324,6 +324,9 @@ class Widget extends StateManaged {
 
     for(const widget of Array.from(widgets.values())) {
       if(widget != this && widget.p('parent') == this.p('parent') && Math.abs(widget.p('x')-this.p('x')) < 10 && Math.abs(widget.p('y')-this.p('y')) < 10) {
+        if(widget.p('owner') !== this.p('owner'))
+          continue;
+
         if(widget.p('type') == 'card' && this.p('type') == 'card') {
           const pile = {
             type: 'pile',
