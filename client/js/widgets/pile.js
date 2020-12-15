@@ -80,6 +80,7 @@ class Pile extends Widget {
       const y = this.p('y');
 
       this.p('parent', null);
+      this.removed = true;
       removeWidgetLocal(this.p('id'));
 
       c.p('x', c.p('x') + x);

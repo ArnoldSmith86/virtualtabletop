@@ -345,14 +345,14 @@ class Widget extends StateManaged {
           this.children().reverse().forEach(w=>{w.p('parent', widget.p('id')); w.bringToFront()});
           break;
         }
-        if(widget.p('type') == 'card' && this.p('type') == 'pile') {
+        if(widget.p('type') == 'card' && this.p('type') == 'pile' && !this.removed) {
           this.children().reverse().forEach(w=>w.bringToFront());
           this.p('x', widget.p('x'));
           this.p('y', widget.p('y'));
           widget.p('parent', this.p('id'));
           break;
         }
-        if(widget.p('type') == 'pile' && this.p('type') == 'card') {
+        if(widget.p('type') == 'pile' && this.p('type') == 'card' && !widget.removed) {
           this.bringToFront();
           this.p('parent', widget.p('id'));
           break;
