@@ -6,6 +6,7 @@ export default class Player {
 
     this.latestDeltaIDbyDifferentPlayer = this.room.deltaID;
     this.waitingForStateConfirmation = false;
+    this.possiblyConflictingDeltas = [];
 
     connection.addMessageHandler(this.messageReceived);
     connection.addCloseHandler(this.connectionClosed);
@@ -41,12 +42,21 @@ export default class Player {
   receiveDelta(delta) {
     if(this.waitingForStateConfirmation)
       return;
-    if(delta.id >= this.latestDeltaIDbyDifferentPlayer) {
-      this.room.receiveDelta(this, delta);
-    } else {
-      this.waitingForStateConfirmation = true;
-      this.room.receiveInvalidDelta(this, delta);
+
+    if(delta.id < this.latestDeltaIDbyDifferentPlayer) {
+      for(const conflictDelta of this.possiblyConflictingDeltas) {
+        for(const widgetID in delta.s) {
+          if(conflictDelta.s[widgetID] !== undefined) {
+            this.waitingForStateConfirmation = true;
+            this.room.receiveInvalidDelta(this, delta);
+            return;
+          }
+        }
+      }
     }
+
+    this.possiblyConflictingDeltas = [];
+    this.room.receiveDelta(this, delta);
   }
 
   rename(newName) {
@@ -55,8 +65,10 @@ export default class Player {
   }
 
   send(func, args) {
-    if(func == 'delta')
+    if(func == 'delta') {
+      this.possiblyConflictingDeltas.push(args);
       this.latestDeltaIDbyDifferentPlayer = args.id;
+    }
     this.connection.toClient(func, args);
   }
 }
