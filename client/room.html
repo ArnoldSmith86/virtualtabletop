@@ -6,6 +6,7 @@
   <title>VirtualTabletop.io</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <link rel="shortcut icon" href="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="/>
+  <base target="_blank">
   <style> {{CSS}} </style>
 </head>
 
@@ -30,7 +31,7 @@
 
     <div id="editOverlay" class="overlay">
       <h1>Edit widget</h1>
-      <p>We will add a simpler editor but for now you have to manually edit the JSON here. Please check <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widget-Properties" target="_blank">our GitHub wiki for a description of all the properties</a>.</p>
+      <p>We will add a simpler editor but for now you have to manually edit the JSON here. Please check <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widget-Properties">our GitHub wiki for a description of all the properties</a>.</p>
       <textarea id="editWidgetJSON"></textarea>
       <button id="updateWidget">Update widget</button>
       <button id="removeWidget">Remove widget</button>
@@ -60,7 +61,7 @@
 
     <div id="addCustomOverlay" class="overlay">
       <h1>Add custom widget</h1>
-      <p>Please check <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widget-Properties" target="_blank">our GitHub wiki for a description of all the properties</a>.</p>
+      <p>Please check <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widget-Properties">our GitHub wiki for a description of all the properties</a>.</p>
       <textarea id="widgetText">
         {
           "image": "/i/cards-default/AS.svg"
@@ -90,7 +91,7 @@
       <div id="emptyRoom">
         <h1>VirtualTabletop.io</h1>
         <p>This is an empty room. You can add games to it and play them with your friends and family by sharing the link.</p>
-        <p>Bring your own voice chat. We recommend <a href="https://meet.jit.si/" target="_blank">Jitsi Meet</a> because it's free software, runs in the browser and requires no accounts.</p>
+        <p>Bring your own voice chat. We recommend <a href="https://meet.jit.si/">Jitsi Meet</a> because it's free software, runs in the browser and requires no accounts.</p>
         <div>
           <div><p>Do you have a *.vtt or *.pcio file?</p><button class="upload">⬆️ Upload files</button></div>
           <div><p>Do you have a link to one?</p><button class="link">🔗 Enter link</button></div>
@@ -101,8 +102,8 @@
         <script id="template-stateslist-entry" type="text/template">
           <img>
           <div class="details">
-            <em><a class="bgg" target="_blank">Name (Year)</a></em>
-            <em>⌛ <span class="time">0</span> minutes - <a class="rules" target="_blank">Rules</a></em>
+            <em><a class="bgg">Name (Year)</a></em>
+            <em>⌛ <span class="time">0</span> minutes - <a class="rules">Rules</a></em>
             <div class="variantsList"></div>
             <p><button class="save" disabled>💾 Save in-progress game</button><button class="edit">✏️ Edit</button></p>
           </div>
@@ -128,7 +129,7 @@
       <table id="libraryList">
         <tr><th></th><th>Game</th><th>Similar to</th><th>Players</th><th>Language</th><th>Notes</th></tr>
         <script id="template-librarylist-entry" type="text/template">
-          <td><button class="add">➕ Add</button></td><td class="name">Chess</td><td><a target="_blank">Chess</a></td><td class="players">2</td><td class="language">🇺🇳</td><td class="notes"></td>
+          <td><button class="add">➕ Add</button></td><td class="name">Chess</td><td><a>Chess</a></td><td class="players">2</td><td class="language">🇺🇳</td><td class="notes"></td>
         </script>
       </table>
       <p>Loading...</p>
