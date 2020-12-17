@@ -30,6 +30,12 @@ class Pile extends Widget {
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
+    if(this.handle && (delta.width !== undefined || delta.height !== undefined)) {
+      if(this.p('width') < 50 || this.p('height') < 50)
+        this.handle.classList.add('small');
+      else
+        this.handle.classList.remove('small');
+    }
     for(const e of [ [ 'x', 'right', 1600-this.p('width')-20 ], [ 'y', 'bottom', 20 ] ]) {
       if(this.handle && (delta[e[0]] !== undefined || delta.parent !== undefined)) {
         if(this.absoluteCoord(e[0]) < e[2])
