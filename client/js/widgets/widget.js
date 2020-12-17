@@ -128,7 +128,7 @@ class Widget extends StateManaged {
   }
 
   checkParent(forceDetach) {
-    if(this.currentParent && (forceDetach || !overlap(this, this.currentParent))) {
+    if(this.currentParent && (forceDetach || !overlap(this.domElement, this.currentParent.domElement))) {
       this.p('parent', null);
       this.p('owner',  null);
       if(this.currentParent.dispenseCard)
@@ -209,13 +209,13 @@ class Widget extends StateManaged {
     const newY = Math.max(0-this.p('height')*0.25, Math.min(1000+this.p('height')*0.25, y)) - this.p('height')/2;
 
     this.setPosition(newX, newY, this.p('z'));
-    const myCenter = center(this);
+    const myCenter = center(this.domElement);
 
     this.checkParent();
 
     this.hoverTargetChanged = false;
     if(this.hoverTarget) {
-      if(overlap(this, this.hoverTarget)) {
+      if(overlap(this.domElement, this.hoverTarget.domElement)) {
         this.hoverTargetDistance = distance(myCenter, this.hoverTargetCenter);
       } else {
         this.hoverTargetDistance = 99999;
@@ -225,10 +225,10 @@ class Widget extends StateManaged {
     }
 
     for(const t of this.dropTargets) {
-      const tCenter = center(t);
+      const tCenter = center(t.domElement);
       const d = distance(myCenter, tCenter);
       if(d < this.hoverTargetDistance) {
-        if(overlap(this, t)) {
+        if(overlap(this.domElement, t.domElement)) {
           this.hoverTargetChanged = this.hoverTarget != t;
           this.hoverTarget = t;
           this.hoverTargetCenter = tCenter;

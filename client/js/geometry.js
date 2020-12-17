@@ -1,5 +1,6 @@
-function center(r) {
-  return [ r.p('x')+r.p('width')/2, r.p('y')+r.p('height')/2 ];
+function center(e) {
+  const rect = e.getBoundingClientRect();
+  return [ rect.left + rect.width/2, rect.top + rect.height/2 ];
 }
 
 function distance(a, b) {
@@ -7,5 +8,8 @@ function distance(a, b) {
 }
 
 function overlap(a, b) {
-  return !(a.p('y')+a.p('height') <= b.p('y') || a.p('y') >= b.p('y')+b.p('height') || a.p('x')+a.p('width') <= b.p('x') || a.p('x') >= b.p('x')+b.p('width'));
+  const aR = a.getBoundingClientRect();
+  const bR = b.getBoundingClientRect();
+
+  return !(aR.top+aR.height <= bR.top || aR.top >= bR.top+bR.height || aR.left+aR.width <= bR.left || aR.left >= bR.left+bR.width);
 }
