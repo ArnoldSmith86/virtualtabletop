@@ -76,8 +76,8 @@ class Holder extends Widget {
     // replace coordinates of the received card to its previous coordinates so it gets dropped at the correct position
     const children = this.children().filter(c=>!c.p('owner') || c.p('owner')==playerName).sort((a, b)=>{
       if(this.p('stackOffsetX'))
-        return (a == card ? pos[0] : a.p('x')) - (b == card ? pos[0] : b.p('x'));
-      return (a == card ? pos[1] : a.p('y')) - (b == card ? pos[1] : b.p('y'));
+        return this.p('stackOffsetX') * ((a == card ? pos[0] : a.p('x')) - (b == card ? pos[0] : b.p('x')));
+      return this.p('stackOffsetY') * ((a == card ? pos[1] : a.p('y')) - (b == card ? pos[1] : b.p('y')));
     });
     this.rearrangeChildren(children, card);
   }
