@@ -32,6 +32,7 @@ function inputHandler(name, e) {
 
   if(target && target.id) {
     if(name == 'mousedown' || name == 'touchstart') {
+      document.activeElement.blur();
       mouseStatus[target.id] = {
         status: 'initial',
         downCoords: coords
