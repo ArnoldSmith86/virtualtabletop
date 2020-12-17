@@ -22,6 +22,7 @@ class Widget extends StateManaged {
       movable: true,
       movableInEdit: true,
 
+      grid: [],
       enlarge: false,
       overlap: true,
       ignoreOnLeave: false,
@@ -292,6 +293,35 @@ class Widget extends StateManaged {
 
   rotate(degrees) {
     this.p('rotation', (this.p('rotation') + degrees) % 360);
+  }
+
+  setPosition(x, y, z) {
+    if(this.p('grid').length && !this.p('parent')) {
+      let closest = null;
+      let closestDistance = 999999;
+
+      for(const grid of this.p('grid')) {
+        if(x < (grid.minX || -99999) || x > (grid.maxX || 99999))
+          continue;
+        if(y < (grid.minY || -99999) || y > (grid.maxY || 99999))
+          continue;
+        const distance = ((x + grid.x/2 - (grid.offsetX || 0)) % grid.x) + ((y + grid.y/2 - (grid.offsetY || 0)) % grid.y);
+        if(distance < closestDistance) {
+          closest = grid;
+          closestDistance = distance;
+        }
+      }
+
+      if(closest) {
+        x = x + closest.x/2 - (x - (closest.offsetX || 0)) % closest.x;
+        y = y + closest.y/2 - (y - (closest.offsetY || 0)) % closest.y;
+        if(closest.rotation !== undefined)
+          this.p('rotation', closest.rotation);
+      }
+
+      this.snappingToGrid = false;
+    }
+    super.setPosition(x, y, z);
   }
 
   showEnlarged(event) {
