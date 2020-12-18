@@ -262,6 +262,8 @@ function uploadWidget(preset) {
       addWidgetLocal({
         image: asset,
         movable: false,
+        width: 1600,
+        height: 1000,
         layer: -4
       });
     }
