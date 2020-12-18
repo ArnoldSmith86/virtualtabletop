@@ -51,6 +51,9 @@ class Holder extends Widget {
 
   onChildAdd(child) {
     super.onChildAdd(child);
+    if(child.p('type') == 'deck')
+      return;
+
     if(this.p('childrenPerOwner'))
       child.p('owner', playerName);
 
@@ -60,6 +63,9 @@ class Holder extends Widget {
   }
 
   onChildAddAlign(child) {
+    if(child.p('type') == 'deck')
+      return super.onChildAddAlign(child);
+
     if(this.p('alignChildren') && (this.p('stackOffsetX') || this.p('stackOffsetY')) && child.p('type') == 'pile') {
       child.children().forEach(w=>w.p('parent', this.p('id')));
       return true;

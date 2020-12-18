@@ -24,3 +24,7 @@
 .widget.droppable.droptarget {
   border: calc(1px / var(--scale)) solid #333 !important;
 }
+
+body.edit .widget.droppable.droptarget {
+  border-width: 3px !important;
+}

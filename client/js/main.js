@@ -10,7 +10,7 @@ function getValidDropTargets(widget) {
   for(const [ _, t ] of dropTargets) {
     let isValid = true;
     for(const key in t.p('dropTarget')) {
-      if(widget.p(key) != t.p('dropTarget')[key]) {
+      if(widget.p(key) != t.p('dropTarget')[key] && (key != 'type' || widget.p(key) != 'deck' || t.p('dropTarget')[key] != 'card')) {
         isValid = false;
         break;
       }
