@@ -47,7 +47,7 @@ function generateCardDeckWidgets(id, x, y) {
     });
   });
 
-  const front = { type:'image', x:0, y:0, width:103, height:160, valueType:'dynamic', value:'image' };
+  const front = { type:'image', x:0, y:0, width:103, height:160, valueType:'dynamic', value:'image', color:'transparent' };
   const back  = { ...front };
   back.valueType = 'static';
   back.value = '/i/cards-default/2B.svg';
@@ -57,9 +57,9 @@ function generateCardDeckWidgets(id, x, y) {
     parent: id,
     cardTypes: types,
     faceTemplates: [ {
-      border: false, radius: 8, objects: [ back  ]
+      border: false, radius: false, objects: [ back  ]
     }, {
-      border: false, radius: 8, objects: [ front ]
+      border: false, radius: false, objects: [ front ]
     } ]
   });
 
