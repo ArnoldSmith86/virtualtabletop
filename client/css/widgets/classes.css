@@ -5,7 +5,18 @@
   background: var(--color);
 }
 body.edit .widget.classicPiece {
-  mask-image: none;
+  border: none;
+  background: var(--editColor) !important;
+}
+body.edit .widget.classicPiece::after {
+  content: "";
+  position: absolute;
+  background: var(--color) !important;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  left: 38px;
+  top: 9px;
 }
 
 .checkersPiece, .checkersPiece::before, .checkersPiece::after {
@@ -46,6 +57,19 @@ body.edit .widget.classicPiece {
   text-align: center;
 }
 
+body.edit .widget.checkersPiece {
+  border-width: 10px;
+}
+body.edit .widget.checkersPiece::before {
+  display: none;
+}
+body.edit .widget.checkersPiece::after {
+  width: 20%;
+  height: 20%;
+  top: 40%;
+  left: 40%;
+}
+
 .pinPiece::before {
   border: 3px solid #3f3b38;
   background-color: var(--color);
@@ -66,4 +90,15 @@ body.edit .widget.classicPiece {
   height: 35.85px;
   left: 0;
   top: 0;
+}
+
+body.edit .widget.pinPiece {
+  border: none;
+}
+body.edit .widget.pinPiece::before, body.edit .widget.pinPiece::after {
+  border: 3px solid var(--editColor);
+  background: none;
+}
+body.edit .widget.pinPiece::after {
+  background-image: radial-gradient(circle, var(--color), var(--color) 20%, var(--roomColor) 30%);
 }
