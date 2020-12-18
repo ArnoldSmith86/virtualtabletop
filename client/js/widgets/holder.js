@@ -105,6 +105,10 @@ class Holder extends Widget {
     }
   }
 
+  supportsPiles() {
+    return !this.p('stackOffsetX') && !this.p('stackOffsetY');
+  }
+
   updateAfterShuffle() {
     if(!this.p('stackOffsetX') && !this.p('stackOffsetY'))
       return;

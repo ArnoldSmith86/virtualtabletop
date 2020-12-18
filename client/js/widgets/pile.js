@@ -95,6 +95,10 @@ class Pile extends Widget {
     }
   }
 
+  supportsPiles() {
+    return false;
+  }
+
   validDropTargets() {
     return getValidDropTargets(this.children()[0]);
   }

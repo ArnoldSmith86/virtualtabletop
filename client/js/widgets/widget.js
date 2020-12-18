@@ -340,6 +340,10 @@ class Widget extends StateManaged {
       event.preventDefault();
   }
 
+  supportsPiles() {
+    return true;
+  }
+
   updateOwner(oldName, newName) {
     const o = this.p('owner');
     if(o && o == oldName)
@@ -349,7 +353,7 @@ class Widget extends StateManaged {
   }
 
   updatePiles() {
-    if(this.p('parent') && widgets.get(this.p('parent')).p('type') == 'pile')
+    if(this.p('parent') && !widgets.get(this.p('parent')).supportsPiles())
       return;
 
     for(const [ widgetID, widget ] of widgets) {
