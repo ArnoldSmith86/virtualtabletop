@@ -55,6 +55,8 @@ function generateCardDeckWidgets(id, x, y) {
     type: 'deck',
     id: id+'D',
     parent: id,
+    x: 12,
+    y: 41,
     cardTypes: types,
     faceTemplates: [ {
       border: false, radius: false, objects: [ back  ]
