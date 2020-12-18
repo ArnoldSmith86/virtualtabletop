@@ -3,9 +3,13 @@ class BasicWidget extends Widget {
     super(id);
 
     this.addDefaults({
+      typeClasses: 'widget basic',
+
       faces: [ {} ],
       faceCycle: 'ordered',
       activeFace: 0,
+
+      image: '',
       color: 'black',
       layer: 1,
       text: ''
@@ -18,6 +22,21 @@ class BasicWidget extends Widget {
       this.applyDelta(this.p('faces')[this.p('activeFace')]);
     if(delta.text !== undefined)
       this.domElement.textContent = delta.text;
+  }
+
+  classes() {
+    let className = super.classes();
+
+    if(this.p('image'))
+      className += ' hasImage';
+
+    return className;
+  }
+
+  classesProperties() {
+    const p = super.classesProperties();
+    p.push('image');
+    return p;
   }
 
   click() {

@@ -36,7 +36,7 @@ body.edit .surface {
 }
 
 body.edit .widget {
-  background: none !important;
+  background-color: transparent !important;
   border: 3px solid var(--editColor);
   color: var(--editColor);
   box-sizing: border-box;

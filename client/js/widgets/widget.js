@@ -55,6 +55,13 @@ class Widget extends StateManaged {
   }
 
   applyCSS(delta) {
+    for(const property of this.classesProperties()) {
+      if(delta[property] !== undefined) {
+        this.domElement.className = this.classes();
+        break;
+      }
+    }
+
     for(const property of this.cssProperties()) {
       if(delta[property] !== undefined) {
         this.domElement.style.cssText = this.css();
@@ -71,8 +78,6 @@ class Widget extends StateManaged {
   }
 
   applyDeltaToDOM(delta) {
-    if(delta.classes !== undefined || delta.typeClasses !== undefined || delta.owner !== undefined)
-      this.domElement.className = this.classes();
     this.applyCSS(delta);
     if(delta.z !== undefined)
       this.applyZ(true);
@@ -144,6 +149,10 @@ class Widget extends StateManaged {
       className += ' foreign';
 
     return className;
+  }
+
+  classesProperties() {
+    return [ 'classes', 'owner', 'typeClasses' ];
   }
 
   css() {

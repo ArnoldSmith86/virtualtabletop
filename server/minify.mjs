@@ -22,6 +22,7 @@ export default function minifyRoom() {
         'client/css/overlays/players.css',
         'client/css/overlays/states.css',
 
+        'client/css/widgets/basicwidget.css',
         'client/css/widgets/button.css',
         'client/css/widgets/card.css',
         'client/css/widgets/classes.css',
