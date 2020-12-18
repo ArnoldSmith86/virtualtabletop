@@ -66,10 +66,13 @@ class Button extends Widget {
           this.w(a.from, source=>this.w(a.to, target=>source.children().slice(0, count).reverse().forEach(c=> {
             if(a.face !== undefined && a.face !== null && c.flip)
               c.flip(a.face);
-            if(source == target)
+            if(source == target) {
               c.bringToFront();
-            else
+            } else {
+              c.movedByButton = true;
               c.moveToHolder(target);
+              delete c.movedByButton;
+            }
           })));
         }
       }

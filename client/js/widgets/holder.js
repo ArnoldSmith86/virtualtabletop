@@ -71,10 +71,12 @@ class Holder extends Widget {
       return true;
     }
 
-    if(this.p('stackOffsetX') || this.p('stackOffsetY'))
-      this.receiveCard(child, [ child.p('x') - this.absoluteCoord('x'), child.p('y') - this.absoluteCoord('y') ]);
-    else
+    if(!this.p('stackOffsetX') && !this.p('stackOffsetY'))
       super.onChildAddAlign(child);
+    else if(child.movedByButton)
+      this.receiveCard(child, [ this.p('stackOffsetX')*999999, this.p('stackOffsetY')*999999 ]);
+    else
+      this.receiveCard(child, [ child.p('x') - this.absoluteCoord('x'), child.p('y') - this.absoluteCoord('y') ]);
   }
 
   receiveCard(card, pos) {
