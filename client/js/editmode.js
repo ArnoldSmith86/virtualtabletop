@@ -243,8 +243,15 @@ function populateAddWidgetOverlay() {
   });
 }
 
-function removeWidgetLocal(widgetID) {
-  sendPropertyUpdate(widgetID, null);
+function removeWidgetLocal(widgetID, removeChildren) {
+  if(removeChildren)
+    for(const [ childWidgetID, childWidget ] of widgets)
+      if(childWidget.p('parent') == widgetID || childWidget.p('deck') == widgetID)
+        removeWidgetLocal(childWidgetID, removeChildren);
+  if(widgets.has(widgetID)) {
+    widgets.get(widgetID).p('parent', null);
+    sendPropertyUpdate(widgetID, null);
+  }
 }
 
 function uploadWidget(preset) {
@@ -317,7 +324,7 @@ onLoad(function() {
   });
 
   on('#removeWidget', 'click', function() {
-    removeWidgetLocal(JSON.parse($('#editWidgetJSON').dataset.previousState).id);
+    removeWidgetLocal(JSON.parse($('#editWidgetJSON').dataset.previousState).id, true);
     showOverlay();
   });
 

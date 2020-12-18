@@ -40,14 +40,15 @@ function addWidget(widget) {
     w = new Deck(id);
   } else if(widget.type == 'holder') {
     w = new Holder(id);
-  } else if(widget.type == 'spinner')
+  } else if(widget.type == 'spinner') {
     w = new Spinner(id);
-  else if(widget.type == 'label')
+  } else if(widget.type == 'label') {
     w = new Label(id);
-  else if(widget.type == 'button')
+  } else if(widget.type == 'button') {
     w = new Button(id);
-  else
+  } else {
     w = new BasicWidget(id);
+  }
 
   widgets.set(widget.id, w);
   w.applyDelta(widget);

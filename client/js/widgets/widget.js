@@ -352,7 +352,7 @@ class Widget extends StateManaged {
     if(this.p('parent') && widgets.get(this.p('parent')).p('type') == 'pile')
       return;
 
-    for(const widget of Array.from(widgets.values())) {
+    for(const [ widgetID, widget ] of widgets) {
       if(widget != this && widget.p('parent') == this.p('parent') && Math.abs(widget.p('x')-this.p('x')) < 10 && Math.abs(widget.p('y')-this.p('y')) < 10) {
         if(widget.p('owner') !== this.p('owner'))
           continue;
