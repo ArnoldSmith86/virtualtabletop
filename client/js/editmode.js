@@ -312,7 +312,15 @@ onLoad(function() {
   on('#updateWidget', 'click', function() {
     const previousState = JSON.parse($('#editWidgetJSON').dataset.previousState);
     const widget = JSON.parse($('#editWidgetJSON').value);
+
+    const children = Widget.prototype.children.call(widgets.get(previousState.id));
+    const cards = Array.from(widgets.values()).filter(w=>w.p('deck')==previousState.id);
+
     if(widget.id !== previousState.id || widget.type !== previousState.type) {
+      for(const child of children)
+        sendPropertyUpdate(child.p('id'), 'parent', null);
+      for(const card of cards)
+        sendPropertyUpdate(card.p('id'), 'deck', null);
       removeWidgetLocal(previousState.id);
     } else {
       for(const key in previousState)
@@ -320,6 +328,12 @@ onLoad(function() {
           widget[key] = null;
     }
     addWidgetLocal(widget);
+
+    for(const child of children)
+      sendPropertyUpdate(child.p('id'), 'parent', widget.id);
+    for(const card of cards)
+      sendPropertyUpdate(card.p('id'), 'deck', widget.id);
+
     showOverlay();
   });
 
