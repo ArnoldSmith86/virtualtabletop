@@ -67,7 +67,13 @@ class Holder extends Widget {
       return super.onChildAddAlign(child);
 
     if(this.p('alignChildren') && (this.p('stackOffsetX') || this.p('stackOffsetY')) && child.p('type') == 'pile') {
-      child.children().forEach(w=>w.p('parent', this.p('id')));
+      let i=1;
+      child.children().slice(0, -1).forEach(w=>{
+        w.p('x', w.p('x') + child.p('x') + i);
+        w.p('y', w.p('y') + child.p('y') + i);
+        w.p('parent', this.p('id'));
+        ++i;
+      });
       return true;
     }
 
