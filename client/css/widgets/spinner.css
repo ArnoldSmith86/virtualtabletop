@@ -32,10 +32,23 @@
   background: #52bbae;
   color: white;
   border-radius: 100%;
-  transition: 0.25s;
+  transition: opacity 0.25s;
   opacity: 1;
 }
 
 .spinner div.value.hidden {
   opacity: 0;
+}
+
+body.edit .spinner {
+  border-radius: 100%;
+}
+
+body.edit .spinner svg.background, body.edit .spinner div.spinner {
+  display: none;
+}
+
+body.edit .spinner div.value {
+  color: var(--editColor);
+  background: transparent;
 }
