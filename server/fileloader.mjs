@@ -47,7 +47,7 @@ async function readStatesFromBuffer(buffer) {
   for(const filename in zip.files) {
     if(filename.match(/^[^\/]+\.json$/) && zip.files[filename]._data)
       return { 'VTT': await readVariantsFromBuffer(buffer) };
-    if(filename.match(/^[^\/]+\.(vtt|pcio)$/) && zip.files[filename]._data)
+    if(filename.match(/\.(vtt|pcio)$/) && zip.files[filename]._data)
       states[filename] = await readVariantsFromBuffer(await zip.files[filename].async('nodebuffer'));
   }
   return states;
