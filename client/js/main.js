@@ -2,6 +2,8 @@ let scale = 1;
 let roomRectangle;
 let overlayActive = false;
 
+let urlProperties = {};
+
 let maxZ = {};
 const dropTargets = new Map();
 
@@ -41,6 +43,25 @@ function showOverlay(id) {
   } else {
     $('#roomArea').className = '';
     overlayActive = false;
+  }
+}
+
+function checkURLproperties() {
+  try {
+    urlProperties = JSON.parse(decodeURIComponent(location.hash.substr(1)));
+  } catch(e) {}
+
+  if(urlProperties.hideToolbar) {
+    $('#toolbar').style.display = 'none';
+    document.documentElement.style.setProperty('--toolbarSize', 0);
+  }
+  if(urlProperties.askID) {
+    on('#askIDoverlay button', 'click', function() {
+      roomID = urlProperties.askID + $('#enteredID').value;
+      toServer('room', { playerName, roomID });
+      showOverlay();
+    });
+    showOverlay('askIDoverlay');
   }
 }
 
@@ -88,7 +109,9 @@ onLoad(function() {
         document.webkitExitFullscreen();
     }
   });
+  checkURLproperties();
   setScale();
+  startWebSocket();
 
   onMessage('warning', alert);
   onMessage('error', alert);

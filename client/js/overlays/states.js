@@ -105,7 +105,11 @@ function fillStatesList(states, activePlayers) {
 }
 
 function fillStatesWelcome(isEmpty) {
-  if(isEmpty) {
+  if(isEmpty && urlProperties.load) {
+    addState(null, 'link', urlProperties.load);
+  } else if(!widgets.size && urlProperties.load) {
+    $('.play').click();
+  } else if(isEmpty) {
     $('#statesOverlay').classList.add('empty');
     $('#statesOverlay').appendChild($('#libraryList'));
     pickStateFromLibrary(false).then(url=>{

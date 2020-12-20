@@ -10,7 +10,8 @@ function startWebSocket() {
   connection = new WebSocket(url);
 
   connection.onopen = () => {
-    toServer('room', { playerName, roomID });
+    if(!urlProperties.askID)
+      toServer('room', { playerName, roomID });
   };
 
   connection.onerror = (error) => {
@@ -43,5 +44,3 @@ function toServer(func, args) {
 function log(str) {
   toServer('log', str);
 }
-
-onLoad(startWebSocket);

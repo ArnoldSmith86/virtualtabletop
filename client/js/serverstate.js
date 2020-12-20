@@ -1,4 +1,4 @@
-const roomID = self.location.pathname.substr(1);
+let roomID = self.location.pathname.substr(1);
 
 const widgets = new Map();
 
@@ -140,7 +140,7 @@ onLoad(function() {
         isEmpty = false;
       }
     }
-    if(isEmpty)
+    if(isEmpty && !urlProperties.load && !urlProperties.askID)
       showOverlay('statesOverlay');
     toServer('confirm');
   });
