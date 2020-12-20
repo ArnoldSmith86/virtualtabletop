@@ -9,14 +9,20 @@ class Spinner extends Widget {
 
       options: [ 1, 2, 3, 4, 5, 6 ],
       value: '🎲',
-      angle: 0
+      angle: 0,
+
+      backgroundCSS: '',
+      spinnerCSS: '',
+      valueCSS: ''
     });
   }
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
-    if(delta.options !== undefined)
+
+    if(delta.options !== undefined || delta.backgroundCSS !== undefined || delta.spinnerCSS !== undefined || delta.valueCSS !== undefined)
       this.createChildNodes();
+
     if(delta.width !== undefined || delta.height !== undefined)
       this.domElement.style.fontSize = `${Math.min(this.p('width'), this.p('height')) * 0.4}px`;
     if(delta.angle !== undefined && this.spinner || delta.value !== undefined && this.value) {
@@ -43,6 +49,7 @@ class Spinner extends Widget {
 
     const bg = document.createElementNS(ns, 'svg');
     bg.setAttribute('class', 'background');
+    bg.setAttribute('style', this.p('backgroundCSS'));
     bg.setAttribute('viewBox', '0 0 100 100');
 
     const options = this.p('options');
@@ -70,10 +77,12 @@ class Spinner extends Widget {
 
     this.spinner = document.createElement('div');
     this.spinner.setAttribute('class', 'spinner');
+    this.spinner.setAttribute('style', this.p('spinnerCSS'));
     this.domElement.appendChild(this.spinner);
 
     this.value = document.createElement('div');
     this.value.setAttribute('class', 'value');
+    this.value.setAttribute('style', this.p('valueCSS'));
     this.value.textContent = this.p('value');
     this.domElement.appendChild(this.value);
   }
