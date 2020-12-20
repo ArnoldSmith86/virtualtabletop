@@ -77,7 +77,7 @@ class Holder extends Widget {
       return true;
     }
 
-    if(!this.p('stackOffsetX') && !this.p('stackOffsetY'))
+    if(!this.p('alignChildren') || !this.p('stackOffsetX') && !this.p('stackOffsetY'))
       super.onChildAddAlign(child);
     else if(child.movedByButton)
       this.receiveCard(child, [ this.p('stackOffsetX')*999999, this.p('stackOffsetY')*999999 ]);
@@ -114,7 +114,7 @@ class Holder extends Widget {
   }
 
   supportsPiles() {
-    return !this.p('stackOffsetX') && !this.p('stackOffsetY');
+    return !this.p('alignChildren') || !this.p('stackOffsetX') && !this.p('stackOffsetY');
   }
 
   updateAfterShuffle() {
