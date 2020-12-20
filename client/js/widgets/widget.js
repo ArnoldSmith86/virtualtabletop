@@ -270,15 +270,20 @@ class Widget extends StateManaged {
     this.updatePiles();
   }
 
-  onChildAdd(child) {
+  onChildAdd(child, oldParentID) {
     this.childArray = this.childArray.filter(c=>c!=child);
     this.childArray.push(child);
-    this.onChildAddAlign(child);
+    this.onChildAddAlign(child, oldParentID);
   }
 
-  onChildAddAlign(child) {
-    const childX = child.p('x') - this.absoluteCoord('x');
-    const childY = child.p('y') - this.absoluteCoord('y');
+  onChildAddAlign(child, oldParentID) {
+    let childX = child.p('x');
+    let childY = child.p('y');
+
+    if(!oldParentID) {
+      childX -= this.absoluteCoord('x');
+      childY -= this.absoluteCoord('y');
+    }
 
     if(this.p('alignChildren'))
       child.setPosition(this.p('dropOffsetX'), this.p('dropOffsetY'), child.p('z'));
@@ -295,7 +300,7 @@ class Widget extends StateManaged {
       if(oldValue)
         widgets.get(oldValue).onChildRemove(this);
       if(newValue)
-        widgets.get(newValue).onChildAdd(this);
+        widgets.get(newValue).onChildAdd(this, oldValue);
       this.updatePiles();
     }
   }

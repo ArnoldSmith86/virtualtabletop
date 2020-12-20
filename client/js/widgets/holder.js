@@ -49,8 +49,8 @@ class Holder extends Widget {
       this.receiveCard(null);
   }
 
-  onChildAdd(child) {
-    super.onChildAdd(child);
+  onChildAdd(child, oldParentID) {
+    super.onChildAdd(child, oldParentID);
     if(child.p('type') == 'deck')
       return;
 
@@ -62,9 +62,9 @@ class Holder extends Widget {
         child.p(property, this.p('onEnter')[property]);
   }
 
-  onChildAddAlign(child) {
+  onChildAddAlign(child, oldParentID) {
     if(child.p('type') == 'deck')
-      return super.onChildAddAlign(child);
+      return super.onChildAddAlign(child, oldParentID);
 
     if(this.p('alignChildren') && (this.p('stackOffsetX') || this.p('stackOffsetY')) && child.p('type') == 'pile') {
       let i=1;
@@ -78,7 +78,7 @@ class Holder extends Widget {
     }
 
     if(!this.p('alignChildren') || !this.p('stackOffsetX') && !this.p('stackOffsetY'))
-      super.onChildAddAlign(child);
+      super.onChildAddAlign(child, oldParentID);
     else if(child.movedByButton)
       this.receiveCard(child, [ this.p('stackOffsetX')*999999, this.p('stackOffsetY')*999999 ]);
     else
