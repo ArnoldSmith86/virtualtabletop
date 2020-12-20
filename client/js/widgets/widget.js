@@ -123,7 +123,7 @@ class Widget extends StateManaged {
   calculateZ() {
     let z = ((this.p('layer') + 10) * 100000) + this.p('z');
     if(this.p('inheritChildZ'))
-      for(const child of this.children())
+      for(const child of this.children().filter(c=>!c.p('owner') || c.p('owner')==playerName))
         z = Math.max(z, child.calculateZ());
     return z;
   }
