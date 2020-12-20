@@ -293,6 +293,7 @@ class Widget extends StateManaged {
 
   onChildRemove(child) {
     this.childArray = this.childArray.filter(c=>c!=child);
+    this.applyZ();
   }
 
   onPropertyChange(property, oldValue, newValue) {
