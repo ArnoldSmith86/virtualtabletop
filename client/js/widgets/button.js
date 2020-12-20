@@ -82,7 +82,9 @@ class Button extends Widget {
           if(a.face !== undefined && a.face !== null)
             c.flip(a.face);
           c.p('parent', null);
+          c.bringToFront();
           c.setPosition(a.x || 0, a.y || 0, a.z || c.p('z'));
+          c.updatePiles();
         }));
       }
 
