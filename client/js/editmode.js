@@ -17,8 +17,6 @@ function populateEditOptionsDeck(widget) {
     $('.id', entry).value = typeID;
     $('.id', entry).dataset.oldID = typeID;
 
-    $('.dec', entry).addEventListener('click', _=>--$('.count', entry).value);
-    $('.inc', entry).addEventListener('click', _=>++$('.count', entry).value);
     $('.count', entry).value = $('.count', entry).dataset.oldValue = widgetFilter(w=>w.p('deck')==widget.id&&w.p('cardType')==typeID).length;
 
     const propertiesAdded = [];
