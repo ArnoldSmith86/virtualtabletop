@@ -7,9 +7,91 @@ function addWidgetLocal(widget) {
   sendDelta(true);
 }
 
+function populateEditOptionsDeck(widget) {
+  removeFromDOM('#cardTypesList tr.cardType');
+  for(const typeID in widget.cardTypes) {
+    const type = widget.cardTypes[typeID];
+    const entry = domByTemplate('template-cardtypeslist-entry', 'tr');
+    entry.className = 'cardType';
+
+    $('.id', entry).value = typeID;
+    $('.id', entry).dataset.oldID = typeID;
+
+    $('.dec', entry).addEventListener('click', _=>--$('.count', entry).value);
+    $('.inc', entry).addEventListener('click', _=>++$('.count', entry).value);
+    $('.count', entry).value = $('.count', entry).dataset.oldValue = widgetFilter(w=>w.p('deck')==widget.id&&w.p('cardType')==typeID).length;
+
+    const propertiesAdded = [];
+    for(const face of widget.faceTemplates) {
+      for(const object of face.objects) {
+        if(object.valueType == 'dynamic' && propertiesAdded.indexOf(object.value) == -1) {
+          propertiesAdded.push(object.value);
+          const oEntry = domByTemplate('template-cardtypeslist-property-entry');
+          $('label', oEntry).textContent = object.value;
+          $('input', oEntry).value = type[object.value];
+
+          if(object.type == 'image')
+            $('.uploadAsset', oEntry).addEventListener('click', _=>uploadAsset().then(asset=>$('input', oEntry).value=asset));
+          else
+            $('.uploadAsset', oEntry).style.display = 'none';
+
+          $('.properties', entry).appendChild(oEntry);
+        }
+      }
+    }
+
+    $('#cardTypesList').appendChild(entry);
+  }
+}
+
+function applyEditOptionsDeck(widget) {
+  for(const type of $a('#cardTypesList tr.cardType')) {
+    const id = $('.id', type).value;
+    const oldID = $('.id', type).dataset.oldID;
+
+    if(id != oldID) {
+      widget.cardTypes[id] = widget.cardTypes[oldID];
+      delete widget.cardTypes[oldID];
+      widgetFilter(w=>w.p('deck')==widget.id&&w.p('cardType')==oldID).forEach(w=>w.p('cardType', id));
+    }
+
+    for(let i=0; i<$('.count', type).value-$('.count', type).dataset.oldValue; ++i) {
+      const card = { deck:widget.id, type:'card', cardType:id };
+      addWidgetLocal(card);
+      if(widget.parent)
+        widgets.get(card.id).moveToHolder(widgets.get(widget.parent));
+    }
+    for(let i=0; i<$('.count', type).dataset.oldValue-$('.count', type).value; ++i) {
+      const card = widgetFilter(w=>w.p('deck')==widget.id&&w.p('cardType')==id)[0];
+      removeWidgetLocal(card.p('id'));
+    }
+
+    for(const object of $a('.properties > div', type))
+      widget.cardTypes[id][$('label', object).textContent] = $('input', object).value;
+  }
+}
+
+function applyEditOptions(widget) {
+  if(widget.type == 'deck')
+    applyEditOptionsDeck(widget);
+}
+
 function editClick(widget) {
   $('#editWidgetJSON').value = JSON.stringify(widget.state, null, '  ');
   $('#editWidgetJSON').dataset.previousState = $('#editWidgetJSON').value;
+
+  $a('#editOverlay > div').forEach(d=>d.style.display = 'none');
+
+  const type = widget.state.type;
+  const typeSpecific = $(`#editOverlay > .${type}Edit`);
+
+  if(!typeSpecific)
+    return showOverlay('editJSONoverlay');
+
+  typeSpecific.style.display = 'block';
+  if(type == 'deck')
+    populateEditOptionsDeck(widget.state);
+
   showOverlay('editOverlay');
 }
 
@@ -251,6 +333,7 @@ function removeWidgetLocal(widgetID, removeChildren) {
       if(childWidget.p('parent') == widgetID || childWidget.p('deck') == widgetID)
         removeWidgetLocal(childWidgetID, removeChildren);
   if(widgets.has(widgetID)) {
+    widgets.get(widgetID).p('deck', null);
     widgets.get(widgetID).p('parent', null);
     sendPropertyUpdate(widgetID, null);
   }
@@ -313,12 +396,15 @@ onLoad(function() {
     showOverlay();
   });
 
-  on('#updateWidget', 'click', function() {
+  on('#updateWidget, #updateWidgetJSON', 'click', function(e) {
     const previousState = JSON.parse($('#editWidgetJSON').dataset.previousState);
     const widget = JSON.parse($('#editWidgetJSON').value);
 
+    if(e.target == $('#updateWidget'))
+      applyEditOptions(widget);
+
     const children = Widget.prototype.children.call(widgets.get(previousState.id));
-    const cards = Array.from(widgets.values()).filter(w=>w.p('deck')==previousState.id);
+    const cards = widgetFilter(w=>w.p('deck')==previousState.id);
 
     if(widget.id !== previousState.id || widget.type !== previousState.type) {
       for(const child of children)
@@ -341,10 +427,12 @@ onLoad(function() {
     showOverlay();
   });
 
-  on('#removeWidget', 'click', function() {
+  on('#removeWidget, #removeWidgetJSON', 'click', function() {
     removeWidgetLocal(JSON.parse($('#editWidgetJSON').dataset.previousState).id, true);
     showOverlay();
   });
+
+  on('#manualEdit', 'click', _=>showOverlay('editJSONoverlay'));
 
   populateAddWidgetOverlay();
 });

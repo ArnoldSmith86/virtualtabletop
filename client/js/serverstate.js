@@ -122,6 +122,10 @@ function sendPropertyUpdate(widgetID, property, value) {
   sendDelta();
 }
 
+function widgetFilter(callback) {
+  return Array.from(widgets.values()).filter(callback);
+}
+
 onLoad(function() {
   onMessage('delta', receiveDeltaFromServer);
   onMessage('state', function(args) {

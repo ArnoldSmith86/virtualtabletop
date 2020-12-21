@@ -90,9 +90,9 @@ class Button extends Widget {
 
       if(a.func == 'RECALL') {
         this.toA(a.holder).forEach(holder=>{
-          const deck = this.wFilter(w=>w.p('type')=='deck'&&w.p('parent')==holder)[0];
+          const deck = widgetFilter(w=>w.p('type')=='deck'&&w.p('parent')==holder)[0];
           if(deck) {
-            let cards = this.wFilter(w=>w.p('deck')==deck.p('id'));
+            let cards = widgetFilter(w=>w.p('deck')==deck.p('id'));
             if(a.owned === false)
               cards = cards.filter(c=>!c.p('owner'));
             cards.forEach(c=>c.moveToHolder(widgets.get(holder)));
@@ -197,10 +197,6 @@ class Button extends Widget {
   }
 
   w(ids, callback) {
-    return this.wFilter(w=>this.toA(ids).indexOf(w.p('id')) != -1).forEach(callback);
-  }
-
-  wFilter(callback) {
-    return Array.from(widgets.values()).filter(callback);
+    return widgetFilter(w=>this.toA(ids).indexOf(w.p('id')) != -1).forEach(callback);
   }
 }

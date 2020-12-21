@@ -23,8 +23,12 @@
   cursor: pointer;
 }
 
-#addCustomOverlay textarea, #editOverlay textarea {
+#addCustomOverlay textarea, #editJSONoverlay textarea {
   height: 100%;
+}
+
+#editOverlay {
+  overflow: auto;
 }
 
 body.edit .surface {
@@ -45,4 +49,24 @@ body.edit .widget {
 body.edit .widget > .widget {
   left: -3px;
   top: -3px;
+}
+
+#cardTypesList > tr:nth-child(even) {
+  background: #00000022;
+}
+
+#cardTypesList td {
+  padding: 10px;
+  vertical-align: top;
+}
+
+#cardTypesList label {
+  display: inline-block;
+  width: 100px;
+  text-align: right;
+}
+
+#cardTypesList .count {
+  width: 30px;
+  text-align: right;
 }

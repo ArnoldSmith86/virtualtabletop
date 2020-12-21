@@ -37,10 +37,28 @@
 
     <div id="editOverlay" class="overlay">
       <h1>Edit widget</h1>
-      <p>We will add a simpler editor but for now you have to manually edit the JSON here. Please check <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Creating-Games">our GitHub wiki for documentation</a>.</p>
-      <textarea id="editWidgetJSON"></textarea>
+      <div class="deckEdit">
+        <table id="cardTypesList">
+          <tr><th>ID</th><th>Properties</th><th>Count</th></tr>
+          <script id="template-cardtypeslist-entry" type="text/template">
+            <td><input class="id" value="example"></td><td class="properties"></td><td><button class="dec">-1</button><input class="count" value="example"><button class="inc">+1</button></td>
+          </script>
+          <script id="template-cardtypeslist-property-entry" type="text/template">
+            <label>Example:</label> <input><button class="uploadAsset">⬆️ Upload</button><br>
+          </script>
+        </table>
+      </div>
       <button id="updateWidget">Update widget</button>
       <button id="removeWidget">Remove widget</button>
+      <button id="manualEdit">Advanced: manually edit JSON (changes above will be discarded)</button>
+    </div>
+
+    <div id="editJSONoverlay" class="overlay">
+      <h1>Edit widget JSON</h1>
+      <p>Please check <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Creating-Games">our GitHub wiki for documentation</a>.</p>
+      <textarea id="editWidgetJSON"></textarea>
+      <button id="updateWidgetJSON">Update widget</button>
+      <button id="removeWidgetJSON">Remove widget</button>
     </div>
 
     <div id="addOverlay" class="overlay">
