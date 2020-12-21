@@ -19,6 +19,11 @@ function addWidget(widget) {
   }
 
   const id = widget.id;
+  if(!id) {
+    console.error(`Could not add widget!`, widget, 'widget without ID');
+    return;
+  }
+
   let w;
 
   let parent = $('.surface');
@@ -50,8 +55,14 @@ function addWidget(widget) {
     w = new BasicWidget(id);
   }
 
-  widgets.set(widget.id, w);
-  w.applyDelta(widget);
+  try {
+    widgets.set(widget.id, w);
+    w.applyInitialDelta(widget);
+  } catch(e) {
+    console.error(`Could not add widget!`, widget, e);
+    removeWidget(widget.id);
+    return;
+  }
   if(w.p('dropTarget'))
     dropTargets.set(widget.id, w);
 

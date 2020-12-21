@@ -9,7 +9,8 @@ class Card extends Widget {
 
       activeFace: 0,
 
-      deck: null
+      deck: null,
+      cardType: null
     });
 
     this.deck = null;
@@ -40,6 +41,16 @@ class Card extends Widget {
     }
 
     super.applyDeltaToDOM(delta);
+  }
+
+  applyInitialDelta(delta) {
+    if(!delta.deck)
+      throw `card ${delta.id} requires property deck`;
+    if(!delta.cardType)
+      throw `card ${delta.id} requires property cardType`;
+    if(!widgets.get(delta.deck).p('cardTypes')[delta.cardType])
+      throw `card type "${delta.cardType}" not found in deck "${delta.deck}"`;
+    super.applyInitialDelta(delta);
   }
 
   click() {

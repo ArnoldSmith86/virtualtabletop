@@ -25,6 +25,10 @@ class StateManaged {
       updateMaxZ(this.p('layer'), delta.z);
   }
 
+  applyInitialDelta(delta) {
+    this.applyDelta(delta);
+  }
+
   getDefaultValue(key) {
     return this.defaults[key];
   }
