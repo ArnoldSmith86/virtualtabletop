@@ -26,7 +26,7 @@ function populateEditOptionsDeck(widget) {
           propertiesAdded.push(object.value);
           const oEntry = domByTemplate('template-cardtypeslist-property-entry');
           $('label', oEntry).textContent = object.value;
-          $('input', oEntry).value = type[object.value];
+          $('input', oEntry).value = type[object.value] || '';
 
           if(object.type == 'image')
             $('.uploadAsset', oEntry).addEventListener('click', _=>uploadAsset().then(asset=>$('input', oEntry).value=asset));
