@@ -51,10 +51,6 @@ body.edit .widget > .widget {
   top: -3px;
 }
 
-#cardTypesList > tr:nth-child(even) {
-  background: #00000022;
-}
-
 #cardTypesList td {
   padding: 10px;
   vertical-align: top;

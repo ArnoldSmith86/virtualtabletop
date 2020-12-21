@@ -123,6 +123,10 @@ body {
   font-weight: bold;
 }
 
+.overlay tr:nth-child(even) {
+  background: #00000022;
+}
+
 #room {
   transform: scale(var(--scale));
   transform-origin: left top;
