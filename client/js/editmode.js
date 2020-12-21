@@ -428,8 +428,10 @@ onLoad(function() {
   });
 
   on('#removeWidget, #removeWidgetJSON', 'click', function() {
-    removeWidgetLocal(JSON.parse($('#editWidgetJSON').dataset.previousState).id, true);
-    showOverlay();
+    if(confirm('Really remove?')) {
+      removeWidgetLocal(JSON.parse($('#editWidgetJSON').dataset.previousState).id, true);
+      showOverlay();
+    }
   });
 
   on('#manualEdit', 'click', _=>showOverlay('editJSONoverlay'));
