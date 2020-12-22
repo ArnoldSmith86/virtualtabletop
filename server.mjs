@@ -35,7 +35,7 @@ function downloadState(res, roomID, stateID, variantID) {
   ensureRoomIsLoaded(roomID);
   activeRooms.get(roomID).download(stateID, variantID).then(function(d) {
     res.setHeader('Content-Type', d.type);
-    res.setHeader('Content-Disposition', `attachment; filename="${d.name}"`);
+    res.setHeader('Content-Disposition', `attachment; filename="${d.name.replace(/[^A-Za-z0-9._-]/g, '_')}"`);
     res.send(d.content);
   });
 }
