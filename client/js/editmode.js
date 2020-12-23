@@ -425,6 +425,17 @@ onLoad(function() {
     showOverlay();
   });
 
+  on('#duplicateWidget, #duplicateWidgetJSON', 'click', function() {
+    const widget = JSON.parse($('#editWidgetJSON').dataset.previousState);
+    delete widget.id;
+    if(widget.x)
+      widget.x += 20;
+    if(widget.y)
+      widget.y += 20;
+    addWidgetLocal(widget);
+    showOverlay();
+  });
+
   on('#removeWidget, #removeWidgetJSON', 'click', function() {
     if(confirm('Really remove?')) {
       removeWidgetLocal(JSON.parse($('#editWidgetJSON').dataset.previousState).id, true);
