@@ -40,7 +40,7 @@ class Widget extends StateManaged {
   }
 
   absoluteCoord(coord) {
-    return this.p(coord) + (this.p('parent') ? widgets.get(this.p('parent')).p(coord) : 0);
+    return this.p(coord) + (this.p('parent') ? widgets.get(this.p('parent')).absoluteCoord(coord) : 0);
   }
 
   applyChildAdd(child) {
