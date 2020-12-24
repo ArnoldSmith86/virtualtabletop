@@ -83,6 +83,21 @@ MinifyRoom().then(function(result) {
     downloadState(res, req.params.room);
   });
 
+  app.get('/state/:room', function(req, res) {
+    res.setHeader('Content-Type', 'application/json');
+    ensureRoomIsLoaded(req.params.room);
+    const state = {...activeRooms.get(req.params.room).state};
+    delete state._meta;
+    res.send(JSON.stringify(state));
+  });
+
+  app.use(bodyParser.json());
+  app.put('/state/:room', function(req, res) {
+    ensureRoomIsLoaded(req.params.room);
+    activeRooms.get(req.params.room).setState(req.body);
+    res.send('OK');
+  });
+
   app.get('/s/:link/:junk', function(req, res) {
     if(!sharedLinks[`/s/${req.params.link}`])
       return res.status(404);
@@ -115,7 +130,7 @@ MinifyRoom().then(function(result) {
 
   app.use(bodyParser.raw({
     limit: '100mb'
-  }))
+  }));
 
   app.put('/asset', function(req, res) {
     const filename = `/assets/${CRC32.buf(req.body)}_${req.body.length}`;
