@@ -93,9 +93,13 @@ MinifyRoom().then(function(result) {
 
   app.use(bodyParser.json());
   app.put('/state/:room', function(req, res) {
-    ensureRoomIsLoaded(req.params.room);
-    activeRooms.get(req.params.room).setState(req.body);
-    res.send('OK');
+    if(typeof req.body == 'object') {
+      ensureRoomIsLoaded(req.params.room);
+      activeRooms.get(req.params.room).setState(req.body);
+      res.send('OK');
+    } else {
+      res.send('not a valid JSON object');
+    }
   });
 
   app.get('/s/:link/:junk', function(req, res) {
