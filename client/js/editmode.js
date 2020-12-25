@@ -47,21 +47,21 @@ function applyEditOptionsDeck(widget) {
     const id = $('.id', type).value;
     const oldID = $('.id', type).dataset.oldID;
 
-    if(id != oldID) {
-      widget.cardTypes[id] = widget.cardTypes[oldID];
-      delete widget.cardTypes[oldID];
-      widgetFilter(w=>w.p('deck')==widget.id&&w.p('cardType')==oldID).forEach(w=>w.p('cardType', id));
-    }
-
     for(let i=0; i<$('.count', type).value-$('.count', type).dataset.oldValue; ++i) {
-      const card = { deck:widget.id, type:'card', cardType:id };
+      const card = { deck:widget.id, type:'card', cardType:oldID };
       addWidgetLocal(card);
       if(widget.parent)
         widgets.get(card.id).moveToHolder(widgets.get(widget.parent));
     }
     for(let i=0; i<$('.count', type).dataset.oldValue-$('.count', type).value; ++i) {
-      const card = widgetFilter(w=>w.p('deck')==widget.id&&w.p('cardType')==id)[0];
+      const card = widgetFilter(w=>w.p('deck')==widget.id&&w.p('cardType')==oldID)[0];
       removeWidgetLocal(card.p('id'));
+    }
+
+    if(id != oldID) {
+      widget.cardTypes[id] = widget.cardTypes[oldID];
+      delete widget.cardTypes[oldID];
+      widgetFilter(w=>w.p('deck')==widget.id&&w.p('cardType')==oldID).forEach(w=>w.p('cardType', id));
     }
 
     for(const object of $a('.properties > div', type))
