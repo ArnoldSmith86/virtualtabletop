@@ -17,6 +17,20 @@ function getValidDropTargets(widget) {
         break;
       }
     }
+
+    let tt = t;
+    while(true) {
+      if(widget == tt) {
+        isValid = false;
+        break;
+      }
+
+      if(tt.p('parent'))
+        tt = widgets.get(tt.p('parent'));
+      else
+        break;
+    }
+
     if(isValid)
       targets.push(t);
   }
