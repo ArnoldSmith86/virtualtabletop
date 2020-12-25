@@ -184,6 +184,9 @@ export default class Room {
         this.setState(await FileLoader.readVariantFromLink(fileOrLink));
       else
         this.setState(JSON.parse(fs.readFileSync(fileOrLink)));
+
+      if(!this.state._meta || this.state._meta.version !== 1)
+        throw 'Room state has invalid meta information.';
     } catch(e) {
       console.log(new Date().toISOString(), `RESETTING ROOM ${this.id} because of "${e.toString()}"`);
       this.state = {
