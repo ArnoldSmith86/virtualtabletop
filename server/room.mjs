@@ -93,7 +93,10 @@ export default class Room {
         delete meta.attribution;
 
         if(addAsVariant) {
-          this.state._meta.states[stateID].variants[variantID] = variantMeta;
+          if(!this.state._meta.states[stateID].variants[variantID])
+            this.state._meta.states[stateID].variants[variantID] = variantMeta;
+          else if(type != 'link')
+            delete this.state._meta.states[stateID].variants[variantID].link;
         } else {
           meta.variants = {};
           meta.variants[variantID] = variantMeta;

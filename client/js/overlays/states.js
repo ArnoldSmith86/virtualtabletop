@@ -1,11 +1,13 @@
 let waitingForStateCreation = null;
+let variantIDjustUpdated = null;
 
-function addState(e, type, src) {
+function addState(e, type, src, id) {
   if(type == 'link' && (!src || !src.match(/^http/)))
     return;
-  const id = Math.random().toString(36).substring(3, 7);
+  if(!id)
+    id = Math.random().toString(36).substring(3, 7);
 
-  if(e && e.target.parentNode == $('#addVariant')) {
+  if(e && (e.target.parentNode == $('#addVariant') || e.target.className == 'update')) {
     waitingForStateCreation = $('#stateEditOverlay').dataset.id;
     toServer('addState', { id, type, src, addAsVariant: $('#stateEditOverlay').dataset.id });
   } else {
@@ -146,6 +148,15 @@ function fillEditState(state) {
     $('.stateAttribution', vEntry).value = variant.attribution || '';
     $('.stateLink', vEntry).parentNode.style.display = variant.link ? 'block' : 'none';
 
+    if(variantID == variantIDjustUpdated) {
+      variantIDjustUpdated = null;
+      $('.update', vEntry).textContent = '✔️ Done';
+      $('.update', vEntry).disabled = true;
+    }
+    $('.update', vEntry).addEventListener('click', e=>{
+      addState(e, 'state', undefined, variantID);
+      variantIDjustUpdated = variantID;
+    });
     $('.download', vEntry).addEventListener('click', _=>downloadState(variantID));
     $('.remove', vEntry).addEventListener('click', _=>removeFromDOM(vEntry));
     $('#variantsEditList').appendChild(vEntry);
