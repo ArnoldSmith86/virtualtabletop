@@ -48,6 +48,14 @@ class Button extends Widget {
         this.w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>c.flip(a.face)));
       }
 
+      if(a.func == 'GET') {
+        try {
+          variables[a.variable || a.property || 'id'] = collections[a.collection || 'DEFAULT'][0].p(a.property || 'id');
+        } catch(e) {
+          variables[a.variable || a.property || 'id'] = 'ERROR';
+        }
+      }
+
       if(a.func == 'INPUT') {
         try {
           Object.assign(variables, await this.showInputOverlay(a));
