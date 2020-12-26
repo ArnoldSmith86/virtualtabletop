@@ -22,6 +22,12 @@ class Button extends Widget {
   }
 
   async click() {
+    function setDefaults(routine, defaults) {
+      for(const key in defaults)
+        if(routine[key] === undefined)
+          routine[key] = defaults[key];
+    }
+
     batchStart();
 
     const variables = {};
@@ -86,6 +92,11 @@ class Button extends Widget {
           c.setPosition(a.x || 0, a.y || 0, a.z || c.p('z'));
           c.updatePiles();
         }));
+      }
+
+      if(a.func == 'RANDOM') {
+        setDefaults(a, { min: 1, max: 10, variable: 'RANDOM' });
+        variables[a.variable] = Math.floor(a.min + Math.random() * (a.max - a.min + 1));
       }
 
       if(a.func == 'RECALL') {
