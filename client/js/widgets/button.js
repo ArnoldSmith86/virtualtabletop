@@ -52,6 +52,14 @@ class Button extends Widget {
           w.click();
       }
 
+      if(a.func == 'COUNT') {
+        try {
+          variables[a.variable || 'COUNT'] = collections[a.collection || 'DEFAULT'].length;
+        } catch(e) {
+          variables[a.variable || 'COUNT'] = 'ERROR';
+        }
+      }
+
       if(a.func == 'FLIP') {
         this.w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>c.flip(a.face)));
       }
