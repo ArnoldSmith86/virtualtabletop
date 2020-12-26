@@ -31,6 +31,7 @@ class Button extends Widget {
     batchStart();
 
     const variables = {};
+    const collections = {};
 
     for(const original of this.p('clickRoutine')) {
       const a = { ...original };
@@ -115,6 +116,36 @@ class Button extends Widget {
         this.w(a.holder, holder=>holder.children().slice(0, (a.count !== undefined ? a.count : 1) || 999999).forEach(c=>{
           c.rotate(a.angle !== undefined ? a.angle : 90);
         }));
+      }
+
+      if(a.func == 'SELECT') {
+        setDefaults(a, { property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'add', source: 'all' });
+        collections[a.collection] = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(function(w) {
+          if(a.relation === '<')
+            return w.p(a.property) < a.value;
+          if(a.relation === '<=')
+            return w.p(a.property) <= a.value;
+          if(a.relation === '==')
+            return w.p(a.property) === a.value;
+          if(a.relation === '!=')
+            return w.p(a.property) != a.value;
+          if(a.relation === '>=')
+            return w.p(a.property) >= a.value;
+          if(a.relation === '>')
+            return w.p(a.property) > a.value;
+        }).slice(0, a.max).concat(a.mode == 'add' ? collections[a.collection] || [] : []);
+      }
+
+      if(a.func == 'SET') {
+        setDefaults(a, { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
+        for(const w of collections[a.collection]) {
+          if(a.relation === '=')
+            w.p(a.property, a.value);
+          if(a.relation === '+')
+            w.p(a.property, w.p(a.property) + a.value);
+          if(a.relation === '-')
+            w.p(a.property, w.p(a.property) - a.value);
+        }
       }
 
       if(a.func == 'SORT') {
