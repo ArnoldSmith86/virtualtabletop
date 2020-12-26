@@ -44,6 +44,11 @@ class Button extends Widget {
 
 
 
+      if(a.func == 'CLICK') {
+        for(const w of collections[a.collection || 'DEFAULT'])
+          w.click();
+      }
+
       if(a.func == 'FLIP') {
         this.w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>c.flip(a.face)));
       }
