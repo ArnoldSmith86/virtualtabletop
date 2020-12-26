@@ -131,6 +131,8 @@ export default async function convertPCIO(content) {
       w.y = widget.y;
     if(widget.z)
       w.z = widget.z;
+    if(widget.r)
+      w.rotation = widget.r;
 
     if(widget.parent && !byID[widget.parent])
       widget.parent = null;
