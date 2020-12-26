@@ -43,13 +43,13 @@ function inputHandler(name, e) {
       const ms = mouseStatus[target.id];
       const timeSinceStart = +new Date() - ms.start;
       const pixelsMoved = ms.coords ? Math.abs(ms.coords[0] - ms.downCoords[0]) + Math.abs(ms.coords[1] - ms.downCoords[1]) : 0;
+      if(ms.status != 'initial' && ms.widget.p(edit ? 'movableInEdit' : 'movable'))
+        ms.widget.moveEnd();
       if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
         if(edit)
           editClick(widgets.get(target.id));
         else if(widgets.get(target.id).click)
           widgets.get(target.id).click();
-      } else if(ms.widget.p(edit ? 'movableInEdit' : 'movable')) {
-        ms.widget.moveEnd();
       }
       delete mouseStatus[target.id];
       batchEnd();
