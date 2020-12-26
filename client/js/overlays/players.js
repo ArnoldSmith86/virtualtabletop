@@ -1,5 +1,6 @@
 let playerCursors = {};
 let playerName = localStorage.getItem('playerName') || 'Guest' + Math.floor(Math.random()*1000);
+let playerColor = 'red';
 localStorage.setItem('playerName', playerName);
 
 function addPlayerCursor(playerName, playerColor) {
@@ -23,8 +24,10 @@ function fillPlayerList(players, activePlayers) {
     $('.playerName', entry).addEventListener('change', function(e) {
       toServer('rename', { oldName: player, newName: e.target.value });
     });
-    if(player == playerName)
+    if(player == playerName) {
       entry.className = 'myPlayerEntry';
+      playerColor = players[player];
+    }
     if(activePlayers.indexOf(player) == -1)
       entry.className = 'inactivePlayerEntry';
 

@@ -30,7 +30,10 @@ class Button extends Widget {
 
     batchStart();
 
-    const variables = {};
+    const variables = {
+      playerName,
+      playerColor
+    };
     const collections = {};
 
     for(const original of this.p('clickRoutine')) {
