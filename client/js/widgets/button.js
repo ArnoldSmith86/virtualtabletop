@@ -208,6 +208,10 @@ class Button extends Widget {
         result[field.variable] = document.getElementById(this.p('id') + ';' + field.variable).checked;
       }
 
+      if(field.type == 'color' || field.type == 'number' || field.type == 'string') {
+        result[field.variable] = document.getElementById(this.p('id') + ';' + field.variable).value;
+      }
+
     }
 
     showOverlay(null);
@@ -224,22 +228,59 @@ class Button extends Widget {
 
       for(const field of o.fields) {
 
+        const dom = document.createElement('div');
+
         if(field.type == 'checkbox') {
           const checkbox = document.createElement('input');
           const label    = document.createElement('label');
           checkbox.type = 'checkbox';
           label.textContent = field.label;
-          $('#buttonInputFields').appendChild(checkbox);
-          $('#buttonInputFields').appendChild(label);
+          dom.appendChild(checkbox);
+          dom.appendChild(label);
           label.htmlFor = checkbox.id = this.p('id') + ';' + field.variable;
+        }
+
+        if(field.type == 'color') {
+          const input = document.createElement('input');
+          const label = document.createElement('label');
+          input.type = 'color';
+          input.value = field.value || '#ff0000';
+          label.textContent = field.label;
+          dom.appendChild(label);
+          dom.appendChild(input);
+          label.htmlFor = input.id = this.p('id') + ';' + field.variable;
+        }
+
+        if(field.type == 'number') {
+          const input = document.createElement('input');
+          const label = document.createElement('label');
+          input.type = 'number';
+          input.value = field.value || 1;
+          input.min = field.min || 1;
+          input.max = field.max || 10;
+          label.textContent = field.label;
+          dom.appendChild(label);
+          dom.appendChild(input);
+          label.htmlFor = input.id = this.p('id') + ';' + field.variable;
+        }
+
+        if(field.type == 'string') {
+          const input = document.createElement('input');
+          const label = document.createElement('label');
+          input.value = field.value || "";
+          label.textContent = field.label;
+          dom.appendChild(label);
+          dom.appendChild(input);
+          label.htmlFor = input.id = this.p('id') + ';' + field.variable;
         }
 
         if(field.type == 'text') {
           const p = document.createElement('p');
           p.textContent = field.text;
-          $('#buttonInputFields').appendChild(p);
+          dom.appendChild(p);
         }
 
+        $('#buttonInputFields').appendChild(dom);
       }
 
       const goHandler = e=>{
