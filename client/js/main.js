@@ -54,6 +54,11 @@ function showOverlay(id) {
     style.display = style.display === 'flex' ? 'none' : 'flex';
     $('#roomArea').className = style.display === 'flex' ? 'hasOverlay' : '';
     overlayActive = style.display === 'flex';
+
+    //Hack to focus on the Go button for the input overlay
+    if (id == 'buttonInputOverlay') {
+      $('#buttonInputGo').focus();
+    }
   } else {
     $('#roomArea').className = '';
     overlayActive = false;
