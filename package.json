@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "description": "a virtual surface in the browser on which you can play board, dice and card games",
   "main": "server.mjs",
+  "type": "module",
   "scripts": {
     "start": "nodemon -e js,mjs,css,html --ignore save server.mjs",
     "debug": "NOCOMPRESS=1 npm start",
-    "test": "jest"
+    "test": "node --experimental-vm-modules node_modules/.bin/jest"
   },
   "repository": {
     "type": "git",
@@ -40,5 +41,11 @@
   },
   "devDependencies": {
     "jest": "^26.6.3"
+  },
+  "jest": {
+    "verbose": true,
+    "extraGlobals": [
+      "document"
+    ]
   }
 }
