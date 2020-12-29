@@ -1,3 +1,5 @@
+import { Widget } from './widget.js';
+
 class Button extends Widget {
   constructor(id) {
     super(id);
@@ -402,3 +404,7 @@ class Button extends Widget {
     return widgetFilter(w=>this.toA(ids).indexOf(w.p('id')) != -1).forEach(callback);
   }
 }
+
+export {
+  Button
+};

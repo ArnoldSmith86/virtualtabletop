@@ -1,3 +1,5 @@
+import { StateManaged } from '../statemanaged.js'
+
 class Widget extends StateManaged {
   constructor(id) {
     const div = document.createElement('div');
@@ -426,3 +428,7 @@ class Widget extends StateManaged {
     return getValidDropTargets(this);
   }
 }
+
+export {
+  Widget
+};

@@ -71,3 +71,7 @@ class StateManaged {
     this.p('z', z);
   }
 }
+
+export {
+  StateManaged
+};
