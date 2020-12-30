@@ -68,7 +68,10 @@ function showOverlay(id) {
 function checkURLproperties() {
   try {
     urlProperties = JSON.parse(decodeURIComponent(location.hash.substr(1)));
-  } catch(e) {}
+  } catch(e) {
+    console.error('Could not parse URL parameters.', e);
+    urlProperties = {};
+  }
 
   if(urlProperties.hideToolbar) {
     $('#toolbar').style.display = 'none';
@@ -82,6 +85,15 @@ function checkURLproperties() {
       showOverlay();
     });
     showOverlay('askIDoverlay');
+  }
+  if(urlProperties.css) {
+    const link = document.createElement('link');
+
+    link.type = 'text/css';
+    link.rel = 'stylesheet';
+    link.href = urlProperties.css;
+
+    document.head.appendChild(link);
   }
 }
 
