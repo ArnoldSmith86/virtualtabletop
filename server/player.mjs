@@ -48,7 +48,7 @@ export default class Player {
         for(const widgetID in delta.s) {
           if(conflictDelta.s[widgetID] !== undefined) {
             this.waitingForStateConfirmation = true;
-            this.room.receiveInvalidDelta(this, delta);
+            this.room.receiveInvalidDelta(this, delta, widgetID);
             return;
           }
         }

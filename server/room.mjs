@@ -237,8 +237,8 @@ export default class Room {
     this.broadcast('delta', delta, player);
   }
 
-  receiveInvalidDelta(player, delta) {
-    console.log(new Date().toISOString(), `WARNING: received invalid delta from player ${player.name} - sending game state at ${this.deltaID}`);
+  receiveInvalidDelta(player, delta, widgetID) {
+    console.log(new Date().toISOString(), `WARNING: received conflicting delta data for widget ${widgetID} from player ${player.name} in room ${this.id} - sending game state at ${this.deltaID}`);
     this.state._meta.deltaID = ++this.deltaID;
     player.send('state', this.state);
   }
