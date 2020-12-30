@@ -39,3 +39,15 @@ node server.mjs
 ```
 
 This will serve the project at [localhost:8272](http://localhost:8272).
+
+## Debug
+
+To debug client-side code, first start the server so that it doesn't compress the code:
+
+    npm run debug
+
+In your browser, refresh to have it re-download the client code.
+Press F12 to show the developer tools.
+
+In Chromium, select the Sources tab, then the select the file for the room.
+Press Ctrl-f to search for the code you want to set a breakpoint for an step through.
