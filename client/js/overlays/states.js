@@ -238,7 +238,10 @@ onLoad(function() {
   on('#stateEditOverlay .download', 'click', _=>downloadState());
   on('#stateEditOverlay .remove',   'click', removeState);
 
-  on('#stateEditOverlay .uploadAsset', 'click', _=>uploadAsset().then(asset=>$('#stateImage').value=asset));
+  on('#stateEditOverlay .uploadAsset', 'click', _=>uploadAsset().then(function(asset) {
+    if(asset)
+      $('#stateImage').value = asset;
+  }));
   on('#stateEditOverlay .share', 'click', _=>shareLink());
 
   on('#shareOK', 'click', _=>showOverlay('stateEditOverlay'));

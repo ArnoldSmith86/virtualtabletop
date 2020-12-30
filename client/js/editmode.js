@@ -28,10 +28,14 @@ function populateEditOptionsDeck(widget) {
           $('label', oEntry).textContent = object.value;
           $('input', oEntry).value = type[object.value] || '';
 
-          if(object.type == 'image')
-            $('.uploadAsset', oEntry).addEventListener('click', _=>uploadAsset().then(asset=>$('input', oEntry).value=asset));
-          else
+          if(object.type == 'image') {
+            $('.uploadAsset', oEntry).addEventListener('click', _=>uploadAsset().then(function(asset) {
+              if(asset)
+                $('input', oEntry).value = asset;
+            }));
+          } else {
             $('.uploadAsset', oEntry).style.display = 'none';
+          }
 
           $('.properties', entry).appendChild(oEntry);
         }
@@ -339,7 +343,7 @@ function removeWidgetLocal(widgetID, removeChildren) {
 
 function uploadWidget(preset) {
   uploadAsset().then(function(asset) {
-    if(preset == 'board') {
+    if(asset && preset == 'board') {
       addWidgetLocal({
         image: asset,
         movable: false,
@@ -348,7 +352,7 @@ function uploadWidget(preset) {
         layer: -4
       });
     }
-    if(preset == 'token') {
+    if(asset && preset == 'token') {
       addWidgetLocal({
         image: asset
       });
