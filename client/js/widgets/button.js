@@ -53,19 +53,10 @@ class Button extends Widget {
       }
 
       if(a.func == 'COUNT') {
-        const varName = a.variable || 'COUNT'
-        const collName = a.collection || 'DEFAULT'
         try {
-          if(a.sum) {
-            variables[varName] = 0
-            for(const widget of collections[collName]) {
-              variables[varName] += Number(widget.p(a.sum) || 0)
-            }
-          } else {
-            variables[varName] = collections[collName].length;
-          }
+          variables[a.variable || 'COUNT'] = collections[a.collection || 'DEFAULT'].length;
         } catch(e) {
-          variables[varName] = 'ERROR';
+          variables[a.variable || 'COUNT'] = 'ERROR';
         }
       }
 
@@ -74,10 +65,23 @@ class Button extends Widget {
       }
 
       if(a.func == 'GET') {
+        setDefaults(a, { variable: a.property || 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first' });
         try {
-          variables[a.variable || a.property || 'id'] = collections[a.collection || 'DEFAULT'][0].p(a.property || 'id');
+          switch(a.aggregation) {
+          case 'first':
+            variables[a.variable] = collections[a.collection][0].p(a.property);
+            break;
+          case 'sum':
+            variables[a.variable] = 0;
+            for(const widget of collections[a.collection]) {
+              variables[a.variable] += Number(widget.p(a.property) || 0);
+            }
+            break;
+          default:
+            variables[a.variable] = `ERROR: unsupported aggregation '${a.aggregation}'`;
+          }
         } catch(e) {
-          variables[a.variable || a.property || 'id'] = 'ERROR';
+          variables[a.variable] = `ERROR: '${e}'`;
         }
       }
 
@@ -203,7 +207,6 @@ class Button extends Widget {
           holder.updateAfterShuffle();
         });
       }
-
     }
 
     batchEnd();
