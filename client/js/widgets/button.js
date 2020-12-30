@@ -53,10 +53,19 @@ class Button extends Widget {
       }
 
       if(a.func == 'COUNT') {
+        const varName = a.variable || 'COUNT'
+        const collName = a.collection || 'DEFAULT'
         try {
-          variables[a.variable || 'COUNT'] = collections[a.collection || 'DEFAULT'].length;
+          if(a.sum) {
+            variables[varName] = 0
+            for(const widget of collections[collName]) {
+              variables[varName] += Number(widget.p(a.sum) || 0)
+            }
+          } else {
+            variables[varName] = collections[collName].length;
+          }
         } catch(e) {
-          variables[a.variable || 'COUNT'] = 'ERROR';
+          variables[varName] = 'ERROR';
         }
       }
 
