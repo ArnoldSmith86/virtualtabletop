@@ -102,8 +102,13 @@ async function uploadAsset() {
       body: file.content
     });
 
+    if(response.status == 413)
+      throw 'File is too big.';
+    else if(!response.ok)
+      throw `${response.status} - ${response.statusText}`;
+
     return response.text();
-  });
+  }).catch(e=>alert(`Uploading failed: ${e.toString()}`));
 }
 
 onLoad(function() {
