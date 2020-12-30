@@ -231,13 +231,14 @@ class Button extends Widget {
         const dom = document.createElement('div');
 
         if(field.type == 'checkbox') {
-          const checkbox = document.createElement('input');
-          const label    = document.createElement('label');
-          checkbox.type = 'checkbox';
+          const input = document.createElement('input');
+          const label = document.createElement('label');
+          input.type = 'checkbox';
+          input.checked = field.value || false;
           label.textContent = field.label;
-          dom.appendChild(checkbox);
+          dom.appendChild(input);
           dom.appendChild(label);
-          label.htmlFor = checkbox.id = this.p('id') + ';' + field.variable;
+          label.htmlFor = input.id = this.p('id') + ';' + field.variable;
         }
 
         if(field.type == 'color') {
