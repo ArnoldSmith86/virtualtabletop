@@ -10,8 +10,10 @@ function startWebSocket() {
   connection = new WebSocket(url);
 
   connection.onopen = () => {
-    if(!urlProperties.askID)
+    if(!urlProperties.askID) {
       toServer('room', { playerName, roomID });
+      $('#ghetto-link').href += `#${roomID}`;
+    }
   };
 
   connection.onerror = (error) => {
