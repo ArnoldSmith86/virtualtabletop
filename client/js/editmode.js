@@ -73,9 +73,36 @@ function applyEditOptionsDeck(widget) {
   }
 }
 
+function populateEditOptionsHolder(widget) {
+  $('#resizeHolderToChildren').checked = false;
+  $('#transparentHolder').checked = widget.classes && !!widget.classes.match(/transparent/);
+}
+
+function applyEditOptionsHolder(widget) {
+  if($('#transparentHolder').checked && !widget.classes)
+    widget.classes = 'transparent';
+  else if($('#transparentHolder').checked && !widget.classes.match(/(^| )transparent($| )/))
+    widget.classes += ' transparent';
+  else if(!$('#transparentHolder').checked && widget.classes && widget.classes.match(/(^| )transparent($| )/))
+    widget.classes = widget.classes.replace(/(^| )transparent($| )/, '');
+  if(widget.classes === '')
+    delete widget.classes;
+
+  if($('#resizeHolderToChildren').checked) {
+    const w = widgets.get(widget.id);
+    const children = w.children();
+    if(children.length) {
+      widget.width  = children[0].p('width')  + 2*w.p('dropOffsetX');
+      widget.height = children[0].p('height') + 2*w.p('dropOffsetY');
+    }
+  }
+}
+
 function applyEditOptions(widget) {
   if(widget.type == 'deck')
     applyEditOptionsDeck(widget);
+  if(widget.type == 'holder')
+    applyEditOptionsHolder(widget);
 }
 
 function editClick(widget) {
@@ -93,6 +120,8 @@ function editClick(widget) {
   typeSpecific.style.display = 'block';
   if(type == 'deck')
     populateEditOptionsDeck(widget.state);
+  if(type == 'holder')
+    populateEditOptionsHolder(widget.state);
 
   showOverlay('editOverlay');
 }
