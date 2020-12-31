@@ -400,7 +400,12 @@ onLoad(function() {
 
   on('#updateWidget, #updateWidgetJSON', 'click', function(e) {
     const previousState = JSON.parse($('#editWidgetJSON').dataset.previousState);
-    const widget = JSON.parse($('#editWidgetJSON').value);
+    try {
+      var widget = JSON.parse($('#editWidgetJSON').value);
+    } catch(e) {
+      alert(e.toString());
+      return;
+    }
 
     if(e.target == $('#updateWidget'))
       applyEditOptions(widget);
