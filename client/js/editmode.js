@@ -398,6 +398,14 @@ onLoad(function() {
     showOverlay();
   });
 
+  on('#decrementAllCardTypes', 'click', function() {
+    $a('#cardTypesList .count').forEach(i=>--i.value);
+  });
+
+  on('#incrementAllCardTypes', 'click', function() {
+    $a('#cardTypesList .count').forEach(i=>++i.value);
+  });
+
   on('#updateWidget, #updateWidgetJSON', 'click', function(e) {
     const previousState = JSON.parse($('#editWidgetJSON').dataset.previousState);
     try {
