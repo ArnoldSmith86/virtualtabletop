@@ -30,6 +30,11 @@ class Button extends Widget {
 
     batchStart();
 
+    if(this.p('debug')) {
+      $('#debugButtonOutput').textContent = '';
+      showOverlay('debugButtonOverlay');
+    }
+
     const variables = {
       playerName,
       playerColor
@@ -206,6 +211,15 @@ class Button extends Widget {
           holder.children().forEach(c=>c.p('z', Math.floor(Math.random()*10000)));
           holder.updateAfterShuffle();
         });
+      }
+
+      if(this.p('debug')) {
+        $('#debugButtonOutput').textContent += '\n\n\nOPERATION: \n' + JSON.stringify(a, null, '  ');
+        $('#debugButtonOutput').textContent += '\n\n\nVARIABLES: \n' + JSON.stringify(variables, null, '  ');
+        $('#debugButtonOutput').textContent += '\n\nCOLLECTIONS: \n';
+        for(const name in collections) {
+          $('#debugButtonOutput').textContent += '  ' + name + ': ' + collections[name].map(w=>`${w.p('id')} (${w.p('type')})`).join(', ') + '\n';
+        }
       }
     }
 

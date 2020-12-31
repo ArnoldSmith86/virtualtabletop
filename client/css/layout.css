@@ -127,6 +127,10 @@ body {
   background: #00000022;
 }
 
+#debugButtonOverlay pre {
+  overflow: auto;
+}
+
 #room {
   transform: scale(var(--scale));
   transform-origin: left top;
