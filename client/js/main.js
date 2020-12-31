@@ -67,7 +67,8 @@ function showOverlay(id) {
 
 function checkURLproperties() {
   try {
-    urlProperties = JSON.parse(decodeURIComponent(location.hash.substr(1)));
+    if(location.hash)
+      urlProperties = JSON.parse(decodeURIComponent(location.hash.substr(1)));
   } catch(e) {
     console.error('Could not parse URL parameters.', e);
     urlProperties = {};
