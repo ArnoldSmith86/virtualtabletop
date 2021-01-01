@@ -88,7 +88,7 @@ MinifyRoom().then(function(result) {
     ensureRoomIsLoaded(req.params.room);
     const state = {...activeRooms.get(req.params.room).state};
     delete state._meta;
-    res.send(JSON.stringify(state));
+    res.send(JSON.stringify(state, null, '  '));
   });
 
   app.use(bodyParser.json());
