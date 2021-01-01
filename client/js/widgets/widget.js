@@ -372,10 +372,12 @@ class Widget extends StateManaged {
       return;
 
     for(const [ widgetID, widget ] of widgets) {
+      // check if this widget is closer than 10px from another widget in the same parent
       if(widget != this && widget.p('parent') == this.p('parent') && Math.abs(widget.p('x')-this.p('x')) < 10 && Math.abs(widget.p('y')-this.p('y')) < 10) {
         if(widget.p('owner') !== this.p('owner'))
           continue;
 
+        // if a card gets dropped onto a card, they create a new pile and are added to it
         if(widget.p('type') == 'card' && this.p('type') == 'card') {
           const pile = {
             type: 'pile',
@@ -390,10 +392,14 @@ class Widget extends StateManaged {
           widget.p('parent', pile.id);
           break;
         }
+
+        // if a pile gets dropped onto a pile, all children of one pile are moved to the other (the empty one destroys itself)
         if(widget.p('type') == 'pile' && this.p('type') == 'pile') {
           this.children().reverse().forEach(w=>{w.p('parent', widget.p('id')); w.bringToFront()});
           break;
         }
+
+        // if a pile gets dropped onto a card, the card is added to the pile but the pile is moved to the original position of the card
         if(widget.p('type') == 'card' && this.p('type') == 'pile' && !this.removed) {
           this.children().reverse().forEach(w=>w.bringToFront());
           this.p('x', widget.p('x'));
@@ -401,6 +407,8 @@ class Widget extends StateManaged {
           widget.p('parent', this.p('id'));
           break;
         }
+
+        // if a card gets dropped onto a pile, it simply gets added to the pile
         if(widget.p('type') == 'pile' && this.p('type') == 'card' && !widget.removed) {
           this.bringToFront();
           this.p('parent', widget.p('id'));
