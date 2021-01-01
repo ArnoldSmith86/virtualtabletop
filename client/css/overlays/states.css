@@ -123,6 +123,10 @@
   margin-bottom: 30px;
 }
 
+#libraryOverlay {
+  overflow: auto;
+}
+
 #libraryList td, #libraryList th {
   padding: 6px;
 }
