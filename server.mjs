@@ -91,7 +91,9 @@ MinifyRoom().then(function(result) {
     res.send(JSON.stringify(state, null, '  '));
   });
 
-  app.use(bodyParser.json());
+  app.use(bodyParser.json({
+    limit: '10mb'
+  }));
   app.put('/state/:room', function(req, res) {
     if(typeof req.body == 'object') {
       ensureRoomIsLoaded(req.params.room);
