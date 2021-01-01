@@ -11,7 +11,8 @@ class Button extends Widget {
       movable: false,
 
       text: '',
-      clickRoutine: []
+      clickRoutine: [],
+      debug: false
     });
   }
 
@@ -28,12 +29,24 @@ class Button extends Widget {
           routine[key] = defaults[key];
     }
 
+    function isValidCollection(collection) {
+      if(Array.isArray(collections[collection]))
+        return true;
+      problems.push(`Collection ${collection} does not exist.`);
+    }
+
+    function isValidID(id) {
+      if(Array.isArray(id))
+        return !id.map(i=>isValidID(i, problems)).filter(r=>r!==true).length;
+      if(widgets.has(id))
+        return true;
+      problems.push(`Widget ID ${id} does not exist.`);
+    }
+
     batchStart();
 
-    if(this.p('debug')) {
+    if(this.p('debug'))
       $('#debugButtonOutput').textContent = '';
-      showOverlay('debugButtonOverlay');
-    }
 
     const variables = {
       playerName,
@@ -43,6 +56,7 @@ class Button extends Widget {
 
     for(const original of this.p('clickRoutine')) {
       const a = { ...original };
+      var problems = [];
 
       if(a.applyVariables)
         for(const v of a.applyVariables)
@@ -53,40 +67,44 @@ class Button extends Widget {
 
 
       if(a.func == 'CLICK') {
-        for(const w of collections[a.collection || 'DEFAULT'])
-          w.click();
+        setDefaults(a, { collection: 'DEFAULT' });
+        if(isValidCollection(a.collection))
+          for(const w of collections[a.collection])
+            w.click();
       }
 
       if(a.func == 'COUNT') {
-        try {
-          variables[a.variable || 'COUNT'] = collections[a.collection || 'DEFAULT'].length;
-        } catch(e) {
-          variables[a.variable || 'COUNT'] = 'ERROR';
-        }
+        setDefaults(a, { collection: 'DEFAULT', variable: 'COUNT' });
+        if(isValidCollection(a.collection))
+          variables[a.variable] = collections[a.collection].length;
       }
 
       if(a.func == 'FLIP') {
-        this.w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>c.flip(a.face)));
+        setDefaults(a, { count: 0, face: null });
+        if(isValidID(a.holder))
+          this.w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>c.flip&&c.flip(a.face)));
       }
 
       if(a.func == 'GET') {
         setDefaults(a, { variable: a.property || 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first' });
-        try {
-          switch(a.aggregation) {
-          case 'first':
-            variables[a.variable] = collections[a.collection][0].p(a.property);
-            break;
-          case 'sum':
-            variables[a.variable] = 0;
-            for(const widget of collections[a.collection]) {
-              variables[a.variable] += Number(widget.p(a.property) || 0);
+        if(isValidCollection(a.collection)) {
+          if(!collections[a.collection].length) {
+            problems.push(`Collection ${a.collection} is empty.`);
+          } else {
+            switch(a.aggregation) {
+            case 'first':
+              variables[a.variable] = collections[a.collection][0].p(a.property);
+              break;
+            case 'sum':
+              variables[a.variable] = 0;
+              for(const widget of collections[a.collection]) {
+                variables[a.variable] += Number(widget.p(a.property) || 0);
+              }
+              break;
+            default:
+              problems.push(`Aggregation ${a.aggregation} is unsupported.`);
             }
-            break;
-          default:
-            variables[a.variable] = `ERROR: unsupported aggregation '${a.aggregation}'`;
           }
-        } catch(e) {
-          variables[a.variable] = `ERROR: '${e}'`;
         }
       }
 
@@ -94,47 +112,57 @@ class Button extends Widget {
         try {
           Object.assign(variables, await this.showInputOverlay(a));
         } catch(e) {
+          problems.push(`Exception: ${e.toString()}`);
           batchEnd();
           return;
         }
       }
 
       if(a.func == 'LABEL') {
-        this.w(a.label, label=>label.setText(a.value !== undefined ? a.value : 0, a.mode || 'set'));
+        setDefaults(a, { value: 0, mode: 'set' });
+        if([ 'set', 'dec', 'inc' ].indexOf(a.mode) == -1)
+          problems.push(`Warning: Mode ${a.mode} will be interpreted as add.`);
+        this.w(a.label, label=>label.setText(a.value, a.mode));
       }
 
       if(a.func == 'MOVE') {
-        const count = (a.count !== undefined ? a.count : 1) || 999999;
+        setDefaults(a, { count: 1, face: null });
+        const count = a.count || 999999;
 
-        if(a.face === undefined && typeof a.from == 'string' && typeof a.to == 'string' && !widgets.get(a.to).children().length && widgets.get(a.from).children().length <= count) {
-          // this is a hacky shortcut to avoid removing and creating card piles when moving all children to an empty holder
-          Widget.prototype.children.call(widgets.get(a.from)).filter(
-            w => w.p('type') != 'label' && w.p('type') != 'button' && w.p('type') != 'deck'
-          ).forEach(c=>c.p('parent', a.to));
-        } else {
-          this.w(a.from, source=>this.w(a.to, target=>source.children().slice(0, count).reverse().forEach(c=> {
-            if(a.face !== undefined && a.face !== null && c.flip)
-              c.flip(a.face);
-            if(source == target) {
-              c.bringToFront();
-            } else {
-              c.movedByButton = true;
-              c.moveToHolder(target);
-              delete c.movedByButton;
-            }
-          })));
+        if(isValidID(a.from) && isValidID(a.to)) {
+          if(a.face === null && typeof a.from == 'string' && typeof a.to == 'string' && !widgets.get(a.to).children().length && widgets.get(a.from).children().length <= count) {
+            // this is a hacky shortcut to avoid removing and creating card piles when moving all children to an empty holder
+            Widget.prototype.children.call(widgets.get(a.from)).filter(
+              w => w.p('type') != 'label' && w.p('type') != 'button' && w.p('type') != 'deck'
+            ).forEach(c=>c.p('parent', a.to));
+          } else {
+            this.w(a.from, source=>this.w(a.to, target=>source.children().slice(0, count).reverse().forEach(c=> {
+              if(a.face !== null && c.flip)
+                c.flip(a.face);
+              if(source == target) {
+                c.bringToFront();
+              } else {
+                c.movedByButton = true;
+                c.moveToHolder(target);
+                delete c.movedByButton;
+              }
+            })));
+          }
         }
       }
 
       if(a.func == 'MOVEXY') {
-        this.w(a.from, source=>source.children().slice(0, (a.count !== undefined ? a.count : 1) || 999999).reverse().forEach(c=> {
-          if(a.face !== undefined && a.face !== null)
-            c.flip(a.face);
-          c.p('parent', null);
-          c.bringToFront();
-          c.setPosition(a.x || 0, a.y || 0, a.z || c.p('z'));
-          c.updatePiles();
-        }));
+        setDefaults(a, { count: 1, face: null, x: 0, y: 0, z: c.p('z') });
+        if(isValidID(a.from)) {
+          this.w(a.from, source=>source.children().slice(0, a.count || 999999).reverse().forEach(c=> {
+            if(a.face !== null && c.flip)
+              c.flip(a.face);
+            c.p('parent', null);
+            c.bringToFront();
+            c.setPosition(a.x, a.y, a.z);
+            c.updatePiles();
+          }));
+        }
       }
 
       if(a.func == 'RANDOM') {
@@ -143,85 +171,114 @@ class Button extends Widget {
       }
 
       if(a.func == 'RECALL') {
-        this.toA(a.holder).forEach(holder=>{
-          const deck = widgetFilter(w=>w.p('type')=='deck'&&w.p('parent')==holder)[0];
-          if(deck) {
-            let cards = widgetFilter(w=>w.p('deck')==deck.p('id'));
-            if(a.owned === false)
-              cards = cards.filter(c=>!c.p('owner'));
-            cards.forEach(c=>c.moveToHolder(widgets.get(holder)));
-          }
-        });
+        setDefaults(a, { owned: true });
+        if(isValidID(a.holder)) {
+          this.toA(a.holder).forEach(holder=>{
+            const deck = widgetFilter(w=>w.p('type')=='deck'&&w.p('parent')==holder);
+            if(deck.length) {
+              let cards = widgetFilter(w=>w.p('deck')==deck[0].p('id'));
+              if(!a.owned)
+                cards = cards.filter(c=>!c.p('owner'));
+              cards.forEach(c=>c.moveToHolder(widgets.get(holder)));
+            } else {
+              problems.push(`Holder ${holder} does not have a deck.`);
+            }
+          });
+        }
       }
 
       if(a.func == 'ROTATE') {
-        this.w(a.holder, holder=>holder.children().slice(0, (a.count !== undefined ? a.count : 1) || 999999).forEach(c=>{
-          c.rotate(a.angle !== undefined ? a.angle : 90);
-        }));
+        setDefaults(a, { count: 1, angle: 90 });
+        if(isValidID(a.holder)) {
+          this.w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>{
+            c.rotate(a.angle);
+          }));
+        }
       }
 
       if(a.func == 'SELECT') {
         setDefaults(a, { property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'add', source: 'all' });
-        collections[a.collection] = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(function(w) {
-          if(a.relation === '<')
-            return w.p(a.property) < a.value;
-          if(a.relation === '<=')
-            return w.p(a.property) <= a.value;
-          if(a.relation === '==')
+        if(a.source == 'all' || isValidCollection(a.source)) {
+          if([ 'add', 'set' ].indexOf(a.mode) == -1)
+            problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
+          collections[a.collection] = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(function(w) {
+            if(a.relation === '<')
+              return w.p(a.property) < a.value;
+            else if(a.relation === '<=')
+              return w.p(a.property) <= a.value;
+            else if(a.relation === '!=')
+              return w.p(a.property) != a.value;
+            else if(a.relation === '>=')
+              return w.p(a.property) >= a.value;
+            else if(a.relation === '>')
+              return w.p(a.property) > a.value;
+            if(a.relation != '==')
+              problems.push(`Warning: Relation ${a.relation} interpreted as ==.`);
             return w.p(a.property) === a.value;
-          if(a.relation === '!=')
-            return w.p(a.property) != a.value;
-          if(a.relation === '>=')
-            return w.p(a.property) >= a.value;
-          if(a.relation === '>')
-            return w.p(a.property) > a.value;
-        }).slice(0, a.max).concat(a.mode == 'add' ? collections[a.collection] || [] : []);
+          }).slice(0, a.max).concat(a.mode == 'add' ? collections[a.collection] || [] : []);
+        }
       }
 
       if(a.func == 'SET') {
         setDefaults(a, { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
-        for(const w of collections[a.collection]) {
-          if(a.relation === '=')
-            w.p(a.property, a.value);
-          if(a.relation === '+')
-            w.p(a.property, w.p(a.property) + a.value);
-          if(a.relation === '-')
-            w.p(a.property, w.p(a.property) - a.value);
+        if(isValidCollection(a.collection)) {
+          if([ '+', '-', '=' ].indexOf(a.relation) == -1)
+            problems.push(`Warning: Relation ${a.relation} interpreted as =.`);
+          for(const w of collections[a.collection]) {
+            if(a.relation === '+')
+              w.p(a.property, w.p(a.property) + a.value);
+            else if(a.relation === '-')
+              w.p(a.property, w.p(a.property) - a.value);
+            else
+              w.p(a.property, a.value);
+          }
         }
       }
 
       if(a.func == 'SORT') {
-        this.w(a.holder, holder=>{
-          let z = 1;
-          let children = holder.children().sort((w1,w2)=>{
-            if(typeof w1.p(a.key) == 'number')
-              return w1.p(a.key) - w2.p(a.key);
-            else
-              return w1.p(a.key).localeCompare(w2.p(a.key));
+        setDefaults(a, { key: 'value', reverse: false });
+        if(isValidID(a.holder)) {
+          this.w(a.holder, holder=>{
+            let z = 1;
+            let children = holder.children().sort((w1,w2)=>{
+              if(typeof w1.p(a.key) == 'number')
+                return w1.p(a.key) - w2.p(a.key);
+              else
+                return w1.p(a.key).localeCompare(w2.p(a.key));
+            });
+            if(a.reverse)
+              children = children.reverse();
+            children.forEach(c=>c.p('z', ++z));
+            holder.updateAfterShuffle();
           });
-          if(a.reverse)
-            children = children.reverse();
-          children.forEach(c=>c.p('z', ++z));
-          holder.updateAfterShuffle();
-        });
+        }
       }
 
       if(a.func == 'SHUFFLE') {
-        this.w(a.holder, holder=>{
-          holder.children().forEach(c=>c.p('z', Math.floor(Math.random()*10000)));
-          holder.updateAfterShuffle();
-        });
+        if(isValidID(a.holder)) {
+          this.w(a.holder, holder=>{
+            holder.children().forEach(c=>c.p('z', Math.floor(Math.random()*10000)));
+            holder.updateAfterShuffle();
+          });
+        }
       }
 
       if(this.p('debug')) {
         $('#debugButtonOutput').textContent += '\n\n\nOPERATION: \n' + JSON.stringify(a, null, '  ');
+        if(problems.length)
+          $('#debugButtonOutput').textContent += '\n\nPROBLEMS: \n' + problems.join('\n');
         $('#debugButtonOutput').textContent += '\n\n\nVARIABLES: \n' + JSON.stringify(variables, null, '  ');
         $('#debugButtonOutput').textContent += '\n\nCOLLECTIONS: \n';
         for(const name in collections) {
           $('#debugButtonOutput').textContent += '  ' + name + ': ' + collections[name].map(w=>`${w.p('id')} (${w.p('type')})`).join(', ') + '\n';
         }
+      } else if(problems.length) {
+        console.log(problems);
       }
     }
+
+    if(this.p('debug'))
+      showOverlay('debugButtonOverlay');
 
     batchEnd();
   }
