@@ -86,16 +86,20 @@ class Widget extends StateManaged {
       this.isDraggable = delta.movable;
 
     if(delta.parent !== undefined) {
-      if(this.domElement.parentNode && widgets.has(this.domElement.parentNode.id))
-        widgets.get(this.domElement.parentNode.id).applyChildRemove(this);
+      if(this.currentParent)
+        this.currentParent.applyChildRemove(this);
 
       if(delta.parent === null)
         $('#topSurface').appendChild(this.domElement);
       else
         widgets.get(delta.parent).domElement.appendChild(this.domElement);
 
-      if(delta.parent !== null)
-        widgets.get(delta.parent).applyChildAdd(this);
+      if(delta.parent !== null) {
+        this.currentParent = widgets.get(delta.parent);
+        this.currentParent.applyChildAdd(this);
+      } else {
+        delete this.currentParent;
+      }
     }
 
     if($('#enlarged').dataset.id == this.p('id') && !$('#enlarged').className.match(/hidden/))
