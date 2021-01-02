@@ -152,14 +152,14 @@ class Button extends Widget {
       }
 
       if(a.func == 'MOVEXY') {
-        setDefaults(a, { count: 1, face: null, x: 0, y: 0, z: c.p('z') });
+        setDefaults(a, { count: 1, face: null, x: 0, y: 0 });
         if(isValidID(a.from)) {
           this.w(a.from, source=>source.children().slice(0, a.count || 999999).reverse().forEach(c=> {
             if(a.face !== null && c.flip)
               c.flip(a.face);
             c.p('parent', null);
             c.bringToFront();
-            c.setPosition(a.x, a.y, a.z);
+            c.setPosition(a.x, a.y, a.z || c.p('z'));
             c.updatePiles();
           }));
         }
