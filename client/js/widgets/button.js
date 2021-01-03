@@ -58,11 +58,22 @@ class Button extends Widget {
       const a = { ...original };
       var problems = [];
 
-      if(a.applyVariables)
-        for(const v of a.applyVariables)
-          a[v.parameter] = variables[v.variable];
-      if(a.skip)
+      if(a.applyVariables) {
+        if(Array.isArray(a.applyVariables)) {
+          for(const v of a.applyVariables) {
+            if(v.parameter && v.variable)
+              a[v.parameter] = variables[v.variable];
+            else
+              problems.push('Entry in parameter applyVariables does not contain "parameter" and "variable".');
+          }
+        } else {
+          problems.push('Parameter applyVariables is not an array.');
+        }
+      }
+      if(a.skip) {
+        $('#debugButtonOutput').textContent += '\n\n\nOPERATION SKIPPED: \n' + JSON.stringify(a, null, '  ');
         continue;
+      }
 
 
 
