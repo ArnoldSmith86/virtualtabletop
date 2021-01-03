@@ -143,7 +143,7 @@ class Button extends Widget {
         if(isValidID(a.from) && isValidID(a.to)) {
           const item = widgets.get(a.from)
           const dest = widgets.get(a.to)
-          if (item.p('type') == null && dest.p('type') == 'holder') {
+          if (item && item.p('type') == null && dest.p('type') == 'holder') {
             item.moveToHolder(dest);
           } else if(a.face === null && typeof a.from == 'string' && typeof a.to == 'string' && !widgets.get(a.to).children().length && widgets.get(a.from).children().length <= count) {
             // this is a hacky shortcut to avoid removing and creating card piles when moving all children to an empty holder
@@ -170,7 +170,7 @@ class Button extends Widget {
         setDefaults(a, { count: 1, face: null, x: 0, y: 0});
         if(isValidID(a.from)) {
           const item = widgets.get(a.from)
-          if (item.p('type') == null) {
+          if (item && item.p('type') == null) {
             item.setPosition(a.x, a.y, a.z || item.p('z'))
           } else {
             this.w(a.from, source=>source.children().slice(0, a.count || 999999).reverse().forEach(c=> {
