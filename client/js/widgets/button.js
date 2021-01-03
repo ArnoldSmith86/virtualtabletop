@@ -4,7 +4,7 @@ import { playerName, playerColor } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { Widget } from './widget.js';
 
-class Button extends Widget {
+export class Button extends Widget {
   constructor(id) {
     super(id);
 
@@ -423,7 +423,3 @@ class Button extends Widget {
     return widgetFilter(w=>this.toA(ids).indexOf(w.p('id')) != -1).forEach(callback);
   }
 }
-
-export {
-  Button
-};
