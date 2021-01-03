@@ -39,7 +39,6 @@ describe("Scenarios: Counting widgets", () => {
 
   describe("Given a button that counts widgets with property 'countThis'", () => {
     beforeEach(() => {
-      console.log('before');
       testButton.p('id', "test-button");
       testButton.p('clickRoutine', [
         {
