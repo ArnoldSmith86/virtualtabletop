@@ -1,10 +1,12 @@
-import { StateManaged } from '../statemanaged.js'
+import { $ } from '../domhelpers.js';
+import { StateManaged } from '../statemanaged.js';
 
-class Widget extends StateManaged {
+export class Widget extends StateManaged {
   constructor(id) {
     const div = document.createElement('div');
     div.id = id;
     super();
+    this.id = id;
     this.domElement = div;
     this.childArray = [];
 
@@ -428,7 +430,3 @@ class Widget extends StateManaged {
     return getValidDropTargets(this);
   }
 }
-
-export {
-  Widget
-};

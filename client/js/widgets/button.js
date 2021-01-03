@@ -1,3 +1,7 @@
+import { $ } from '../domhelpers.js';
+import { showOverlay } from '../main.js';
+import { playerName, playerColor } from '../overlays/players.js';
+import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { Widget } from './widget.js';
 
 class Button extends Widget {
@@ -60,6 +64,7 @@ class Button extends Widget {
       const a = { ...original };
       var problems = [];
 
+      if (this.p('debug')) console.log(`${this.id}: ${JSON.stringify(original)}`);
       if(a.applyVariables) {
         if(Array.isArray(a.applyVariables)) {
           for(const v of a.applyVariables) {
@@ -84,23 +89,31 @@ class Button extends Widget {
         if(isValidCollection(a.collection))
           for(const w of collections[a.collection])
             w.click();
+        else
+          problems.push(`Invalid collection: ${a.collection}`);
       }
 
       if(a.func == 'COUNT') {
         setDefaults(a, { collection: 'DEFAULT', variable: 'COUNT' });
         if(isValidCollection(a.collection))
           variables[a.variable] = collections[a.collection].length;
+        else
+          problems.push(`Invalid collection: ${a.collection}`);
       }
 
       if(a.func == 'FLIP') {
         setDefaults(a, { count: 0, face: null });
         if(isValidID(a.holder))
           this.w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>c.flip&&c.flip(a.face)));
+        else
+          problems.push(`Holder has invalid ID: ${a.holder}`);
       }
 
       if(a.func == 'GET') {
         setDefaults(a, { variable: a.property || 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first' });
-        if(isValidCollection(a.collection)) {
+        if(! isValidCollection(a.collection)) {
+          problems.push(`Invalid collection: ${a.collection}`);
+        } else {
           if(!collections[a.collection].length) {
             problems.push(`Collection ${a.collection} is empty.`);
           } else {
@@ -135,7 +148,10 @@ class Button extends Widget {
         setDefaults(a, { value: 0, mode: 'set' });
         if([ 'set', 'dec', 'inc' ].indexOf(a.mode) == -1)
           problems.push(`Warning: Mode ${a.mode} will be interpreted as add.`);
-        this.w(a.label, label=>label.setText(a.value, a.mode));
+        this.w(a.label, label=> {
+          if (this.p('debug')) console.log(`changing ${a.label} ${a.mode} ${a.value}`)
+          label.setText(a.value, a.mode)
+        });
       }
 
       if(a.func == 'MOVE') {
@@ -277,14 +293,17 @@ class Button extends Widget {
       }
 
       if(this.p('debug')) {
-        $('#debugButtonOutput').textContent += '\n\n\nOPERATION: \n' + JSON.stringify(a, null, '  ');
+        var msg = ''
+        msg += '\n\n\nOPERATION: \n' + JSON.stringify(a, null, '  ');
         if(problems.length)
-          $('#debugButtonOutput').textContent += '\n\nPROBLEMS: \n' + problems.join('\n');
-        $('#debugButtonOutput').textContent += '\n\n\nVARIABLES: \n' + JSON.stringify(variables, null, '  ');
-        $('#debugButtonOutput').textContent += '\n\nCOLLECTIONS: \n';
+          msg += '\n\nPROBLEMS: \n' + problems.join('\n');
+        msg += '\n\n\nVARIABLES: \n' + JSON.stringify(variables, null, '  ');
+        msg += '\n\nCOLLECTIONS: \n';
         for(const name in collections) {
-          $('#debugButtonOutput').textContent += '  ' + name + ': ' + collections[name].map(w=>`${w.p('id')} (${w.p('type')})`).join(', ') + '\n';
+          msg += '  ' + name + ': ' + collections[name].map(w=>`${w.p('id')} (${w.p('type')})`).join(', ') + '\n';
         }
+        $('#debugButtonOutput').textContent += msg
+        console.log(msg);
       } else if(problems.length) {
         console.log(problems);
       }

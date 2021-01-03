@@ -1,4 +1,6 @@
-class Label extends Widget {
+import { Widget } from './widget.js';
+
+export class Label extends Widget {
   constructor(id) {
     super(id);
     this.input = document.createElement('textarea');
@@ -42,7 +44,7 @@ class Label extends Widget {
   setText(text, mode) {
     if(!mode || mode == 'set')
       this.p('text', typeof text != 'string' || text.match(/^[-+]?[0-9.]+$/) ? +text : text);
-    else 
+    else
       this.p('text', (parseInt(this.p('text')) || 0) + (mode == 'dec' ? -1 : 1) * text);
   }
 }

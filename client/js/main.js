@@ -1,3 +1,6 @@
+import { $, $a, onLoad } from './domhelpers.js';
+import { startWebSocket } from './connection.js';
+
 let scale = 1;
 let roomRectangle;
 let overlayActive = false;
@@ -45,7 +48,7 @@ function updateMaxZ(layer, z) {
   maxZ[layer] = Math.max(maxZ[layer] || 0, z);
 }
 
-function showOverlay(id) {
+export function showOverlay(id) {
   for(const d of $a('.overlay'))
     if(d.id != id)
       d.style.display = 'none';

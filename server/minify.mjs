@@ -64,9 +64,10 @@ export default function minifyRoom() {
         output: '/tmp/out.js'
       });
     }).then(function(min) {
+      const minNoImports = min.replace(/\bimport[^;]*\.\/[^;]*;/g, "")
       return minify({
         compressor: htmlMinifier,
-        content: roomHTML.replace(/ \{\{JS\}\} /, min),
+        content: roomHTML.replace(/ \{\{JS\}\} /, minNoImports),
         options: {
           conservativeCollapse: true
         }
