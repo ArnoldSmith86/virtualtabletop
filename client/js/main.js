@@ -8,7 +8,7 @@ let overlayActive = false;
 let urlProperties = {};
 
 let maxZ = {};
-const dropTargets = new Map();
+export const dropTargets = new Map();
 
 function getValidDropTargets(widget) {
   const targets = [];

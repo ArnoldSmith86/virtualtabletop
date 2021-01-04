@@ -89,24 +89,18 @@ export class Button extends Widget {
         if(isValidCollection(a.collection))
           for(const w of collections[a.collection])
             w.click();
-        else
-          problems.push(`Invalid collection: ${a.collection}`);
       }
 
       if(a.func == 'COUNT') {
         setDefaults(a, { collection: 'DEFAULT', variable: 'COUNT' });
         if(isValidCollection(a.collection))
           variables[a.variable] = collections[a.collection].length;
-        else
-          problems.push(`Invalid collection: ${a.collection}`);
       }
 
       if(a.func == 'FLIP') {
         setDefaults(a, { count: 0, face: null });
         if(isValidID(a.holder))
           this.w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>c.flip&&c.flip(a.face)));
-        else
-          problems.push(`Holder has invalid ID: ${a.holder}`);
       }
 
       if(a.func == 'GET') {
@@ -293,7 +287,7 @@ export class Button extends Widget {
       }
 
       if(this.p('debug')) {
-        var msg = ''
+        let msg = ''
         msg += '\n\n\nOPERATION: \n' + JSON.stringify(a, null, '  ');
         if(problems.length)
           msg += '\n\nPROBLEMS: \n' + problems.join('\n');

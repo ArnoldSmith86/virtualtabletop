@@ -1,4 +1,4 @@
-import { $ } from '../domhelpers.js';
+import { $, removeFromDOM } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 
 export class Widget extends StateManaged {
