@@ -136,6 +136,63 @@ class Button extends Widget {
         this.w(a.label, label=>label.setText(a.value, a.mode));
       }
 
+      if(a.func == 'MATH') {
+        setDefaults(a, { operation: '+', operand1: 1, operand2: 1, variable: 'MATH' });
+        const x = a.operand1;
+        const y = a.operand2;
+        const v = a.variable;
+        switch(a.operation) {
+        case '+':  variables[v] = x + y;  break;
+        case '-':  variables[v] = x - y;  break;
+        case '*':  variables[v] = x * y;  break;
+        case '/':  variables[v] = x / y;  break;
+        case '%':  variables[v] = x % y;  break;
+        case '<':  variables[v] = x < y;  break;
+        case '<=': variables[v] = x <= y; break;
+        case '==': variables[v] = x == y; break;
+        case '!=': variables[v] = x != y; break;
+        case '>=': variables[v] = x >= y; break;
+        case '>':  variables[v] = x > y;  break;
+        case 'hypot':
+        case 'max':
+        case 'min':
+        case 'pow':
+          variables[v] = Math[a.operation](x, y);
+          break;
+        case 'sin':
+        case 'cos':
+        case 'tan':
+          variables[v] = Math[a.operation](x * Math.PI/180);
+          break;
+        case 'abs':
+        case 'cbrt':
+        case 'ceil':
+        case 'exp':
+        case 'floor':
+        case 'log':
+        case 'log10':
+        case 'log2':
+        case 'round':
+        case 'sign':
+        case 'sqrt':
+        case 'trunc':
+          variables[v] = Math[a.operation](x);
+          break;
+        case 'E':
+        case 'LN2':
+        case 'LN10':
+        case 'LOG2E':
+        case 'LOG10E':
+        case 'PI':
+        case 'SQRT1_2':
+        case 'SQRT2':
+          variables[v] = Math[a.operation];
+          break;
+        default:
+          problems.push(`Operation ${a.operation} is unsupported.`);
+        }
+      }
+
       if(a.func == 'MOVE') {
         setDefaults(a, { count: 1, face: null });
         const count = a.count || 999999;
