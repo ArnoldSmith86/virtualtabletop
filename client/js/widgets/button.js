@@ -147,6 +147,7 @@ class Button extends Widget {
           case '+':  variables[v] = x + y;  break;
           case '-':  variables[v] = x - y;  break;
           case '*':  variables[v] = x * y;  break;
+          case '**': variables[v] = x ** y; break;
           case '/':  variables[v] = x / y;  break;
           case '%':  variables[v] = x % y;  break;
           case '<':  variables[v] = x < y;  break;
@@ -155,6 +156,9 @@ class Button extends Widget {
           case '!=': variables[v] = x != y; break;
           case '>=': variables[v] = x >= y; break;
           case '>':  variables[v] = x > y;  break;
+          case '&&': variables[v] = x && y; break;
+          case '||': variables[v] = x || y; break;
+          case '!':  variables[v] = !x;     break;
           case 'hypot':
           case 'max':
           case 'min':
