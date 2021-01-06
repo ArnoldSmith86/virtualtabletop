@@ -10,6 +10,9 @@ const dropTargets = new Map();
 function getValidDropTargets(widget) {
   const targets = [];
   for(const [ _, t ] of dropTargets) {
+    if(t.p('dropLimit') > -1 && t.p('dropLimit') <= t.children().length)
+      continue;
+
     let isValid = true;
     for(const key in t.p('dropTarget')) {
       if(widget.p(key) != t.p('dropTarget')[key] && (key != 'type' || widget.p(key) != 'deck' || t.p('dropTarget')[key] != 'card')) {
@@ -19,7 +22,7 @@ function getValidDropTargets(widget) {
     }
 
     let tt = t;
-    while(true) {
+    while(isValid) {
       if(widget == tt) {
         isValid = false;
         break;
