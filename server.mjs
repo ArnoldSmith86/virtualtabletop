@@ -47,6 +47,12 @@ MinifyRoom().then(function(result) {
 
   app.get('/assets/:name', function(req, res) {
     fs.readFile(savedir + '/assets/' + req.params.name, function(err, content) {
+      if(!content) {
+        res.sendStatus(404);
+        console.log(new Date().toISOString(), 'WARNING: Could not load asset ' + req.params.name);
+        return;
+      }
+
       if(content[0] == 0xff)
         res.setHeader('Content-Type', 'image/jpeg');
       else if(content[0] == 0x89)
@@ -59,6 +65,7 @@ MinifyRoom().then(function(result) {
         res.setHeader('Content-Type', 'image/webp');
       else
         console.log(new Date().toISOString(), 'WARNING: Unknown file type of asset ' + req.params.name);
+
       res.send(content);
     });
   });

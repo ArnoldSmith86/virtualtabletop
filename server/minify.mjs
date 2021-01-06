@@ -1,4 +1,5 @@
 import fs from 'fs';
+import os from 'os';
 import path from 'path';
 import zlib from 'zlib';
 
@@ -32,7 +33,7 @@ export default function minifyRoom() {
         'client/css/widgets/pile.css',
         'client/css/widgets/spinner.css'
       ],
-      output: '/tmp/out.css'
+      output: os.tmpdir() + '/out.css'
     }).then(function(min) {
       roomHTML = roomHTML.replace(/ \{\{CSS\}\} /, min);
       return minify({
@@ -61,7 +62,7 @@ export default function minifyRoom() {
 
           'client/js/main.js'
         ],
-        output: '/tmp/out.js'
+        output: os.tmpdir() + '/out.js'
       });
     }).then(function(min) {
       const minNoImports = min.replace(/\bimport[^;]*\.\/[^;]*;/g, "")
