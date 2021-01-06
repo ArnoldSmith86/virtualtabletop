@@ -53,6 +53,9 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
+  background-size: 80% 80%;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 .toolbarButton:hover {
   background-color: rgba(0,0,0,0.1);
@@ -182,4 +185,28 @@ body {
 #enlarged.hidden {
   opacity: 0;
   visibility: hidden;
+}
+
+#statesButton {
+	background-image:url(/i/icons-white/chess-solid-svg.svg);
+}
+
+#playersButton {
+	background-image:url(/i/icons-white/user-friends-solid-svg.svg);
+}
+
+#editButton {
+	background-image:url(/i/icons-white/edit-regular-svg.svg);
+}
+
+#addButton {
+	background-image:url(/i/icons-white/plus-solid-svg.svg);
+}
+
+#fullscreenButton {
+	background-image:url(/i/icons-white/expand-solid-svg.svg);
+}
+
+#aboutButton {
+	background-image:url(/i/icons-white/info-circle-solid-svg.svg);
 }
