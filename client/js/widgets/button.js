@@ -182,6 +182,36 @@ class Button extends Widget {
           case 'substr':
             variables[v] = x[a.operation](y, z);
             break;
+
+          // Array operations
+          // 'length' should work the same as for strings
+          case 'from':
+          case 'isArray':
+            variables[v] = Array[a.operation](x);
+            break;
+          case 'concatArray':
+            variables[v] = x.concat(y);
+            break;
+          case 'pop':
+          case 'reverse':
+          case 'shift':
+          case 'sort':
+            variables[v] = x[a.operation]();
+            break;
+          case 'findIndex':
+          case 'includes':
+          case 'indexOf':
+          case 'join':
+          case 'lastIndexOf':
+            variables[v] = x[a.operation](y);
+            break;
+          case 'slice':
+            variables[v] = x[a.operation](y, z);
+            break;
+          case 'push':
+          case 'unshift':
+            variables[v][a.operation](x);
+            break;
           default:
             problems.push(`Operation ${a.operation} is unsupported.`);
           }
