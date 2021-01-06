@@ -85,9 +85,10 @@ class Button extends Widget {
       }
 
       if(a.func == 'COMPUTE') {
-        setDefaults(a, { operation: '+', operand1: 1, operand2: 1, variable: 'COMPUTE' });
+        setDefaults(a, { operation: '+', operand1: 1, operand2: 1, operand3: 1, variable: 'COMPUTE' });
         const x = a.operand1;
         const y = a.operand2;
+        const z = a.operand3;
         const v = a.variable;
 
         try {
@@ -107,6 +108,8 @@ class Button extends Widget {
           case '&&': variables[v] = x && y; break;
           case '||': variables[v] = x || y; break;
           case '!':  variables[v] = !x;     break;
+
+          // Math operations
           case 'hypot':
           case 'max':
           case 'min':
@@ -142,6 +145,43 @@ class Button extends Widget {
           case 'SQRT2':
             variables[v] = Math[a.operation];
             break;
+
+          // String operations
+          case 'length':
+            variables[v] = x.length;
+            break;
+          case 'toLowerCase':
+          case 'toUpperCase':
+          case 'trim':
+          case 'trimStart':
+          case 'trimEnd':
+            variables[v] = x[a.operation]();
+            break;
+          case 'charAt':
+          case 'charCodeAt':
+          case 'codePointAt':
+          case 'concat':
+          case 'includes':
+          case 'endsWith':
+          case 'indexOf':
+          case 'lastIndexOf':
+          case 'localeCompare':
+          case 'match':
+          case 'padEnd':
+          case 'padStart':
+          case 'repeat':
+          case 'search':
+          case 'split':
+          case 'startsWith':
+          case 'toLocaleLowerCase':
+          case 'toLocaleUpperCase':
+            variables[v] = x[a.operation](y);
+            break;
+          case 'replace':
+          case 'replaceAll':
+          case 'substr':
+            variables[v] = x[a.operation](y, z);
+            break;
           default:
             problems.push(`Operation ${a.operation} is unsupported.`);
           }
@@ -150,7 +190,7 @@ class Button extends Widget {
           problems.push(`Exception: ${e.toString()}`);
         }
 
-        if(variables[v] === null || !isFinite(variables[v])) {
+        if(variables[v] === null || typeof variables[v] === 'number' && !isFinite(variables[v])) {
           variables[v] = 0;
           problems.push(`The operation evaluated to null, Infinity or NaN. Setting the variable to 0.`);
         }
