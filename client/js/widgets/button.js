@@ -86,9 +86,10 @@ class Button extends Widget {
 
       if(a.func == 'COMPUTE') {
         setDefaults(a, { operation: '+', operand1: 1, operand2: 1, operand3: 1, variable: 'COMPUTE' });
-        const x = a.operand1;
-        const y = a.operand2;
-        const z = a.operand3;
+        const toNum = s=>typeof s == 'string' && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s;
+        const x = toNum(a.operand1);
+        const y = toNum(a.operand2);
+        const z = toNum(a.operand3);
         const v = a.variable;
 
         try {

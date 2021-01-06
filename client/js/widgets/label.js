@@ -44,7 +44,7 @@ class Label extends Widget {
       this.p('text', (parseInt(this.p('text')) || 0) + (mode == 'dec' ? -1 : 1) * text);
     else if(Array.isArray(text))
       this.p('text', text.join(', '));
-    else if(typeof text == 'string' && text.match(/^[-+]?[0-9]+(\.?[0-9]+)$/))
+    else if(typeof text == 'string' && text.match(/^[-+]?[0-9]+(\.[0-9]+)?$/))
       this.p('text', +text);
     else
       this.p('text', text);
