@@ -131,13 +131,17 @@ export class Widget extends StateManaged {
   calculateZ() {
     let z = ((this.p('layer') + 10) * 100000) + this.p('z');
     if(this.p('inheritChildZ'))
-      for(const child of this.children().filter(c=>!c.p('owner') || c.p('owner')==playerName))
+      for(const child of this.childrenOwned())
         z = Math.max(z, child.calculateZ());
     return z;
   }
 
   children() {
     return this.childArray.sort((a,b)=>b.p('z')-a.p('z'));
+  }
+
+  childrenOwned() {
+    return this.children().filter(c=>!c.p('owner') || c.p('owner')==playerName);
   }
 
   checkParent(forceDetach) {
@@ -153,7 +157,9 @@ export class Widget extends StateManaged {
   classes() {
     let className = this.p('typeClasses') + ' ' + this.p('classes');
 
-    if(this.p('owner') && this.p('owner') != playerName)
+    if(Array.isArray(this.p('owner')) && this.p('owner').indexOf(playerName) == -1)
+      className += ' foreign';
+    if(typeof this.p('owner') == 'string' && this.p('owner') != playerName)
       className += ' foreign';
 
     return className;
@@ -368,11 +374,7 @@ export class Widget extends StateManaged {
   }
 
   updateOwner(oldName, newName) {
-    const o = this.p('owner');
-    if(o && o == oldName)
-      this.domElement.classList.add('foreign');
-    if(o && o == newName)
-      this.domElement.classList.remove('foreign');
+    this.domElement.className = this.classes();
   }
 
   updatePiles() {
