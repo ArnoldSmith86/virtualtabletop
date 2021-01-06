@@ -151,7 +151,7 @@ function generateCardDeckWidgets(id, x, y) {
   const types = {};
   const cards = [];
 
-  [ {label:'1J', color: "🃏", suit: "T", alternating:"5J", rank: "Jo"}, {label:'2J', color: "🃏", suit: "T", alternating:"5J", rank: "Jo"}].forEach(c=>types[c.suit+" "+c.label] = { image:`/i/cards-default/${c.label}.svg` , suit:c.color, suitColor:c.color, suitAlt:c.alternating, rank:c.rank, rankA:c.rank});
+  [ {label:'1J', color: "🃏", alternating:"5J", rank: "Jo"}, {label:'2J', color: "🃏", alternating:"5J", rank: "Jo"}].forEach(c=>types[c.label] = { image:`/i/cards-default/${c.label}.svg` , suit:c.color, suitColor:c.color, suitAlt:c.alternating, rank:c.rank, rankA:c.rank});
 
   [ {label:'C', color: "♣", alternating:"1♣"}, {label:'D', color: "♦", alternating:"4♦"}, {label:'H', color: "♥", alternating:"2♥"}, {label:'S', color: "♠", alternating:"3♠"} ].forEach(function(s) {
     [ {label:'A', rank: "01", rankA:"5A"}, {label:'2', rank: "02", rankA:"02"},{label:'3', rank: "03", rankA:"03"},{label:'4', rank: "04", rankA:"04"},{label:'5', rank: "05", rankA:"05"},{label:'6', rank: "06", rankA:"06"},{label:'7', rank: "07", rankA:"07"},{label:'8', rank: "08", rankA:"08"},{label:'9', rank: "09", rankA:"09"},{label:'T', rank: "10", rankA:"10"},{label:'J', rank: "2J", rankA:"2J"},{label:'Q', rank: "3Q", rankA:"3Q"},{label:'K', rank: "4K", rankA:"4K"}].forEach(function(n) {
