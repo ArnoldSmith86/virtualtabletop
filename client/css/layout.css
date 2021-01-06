@@ -5,6 +5,7 @@
   --toolbarSize: 44px;
   --roomColor: #f0f0f0;
   --editColor: #7ba5f5;
+  --VTTblue: #1f5ca6;
 }
 
 body {
@@ -12,11 +13,11 @@ body {
   padding: 0;
   margin: 0;
   overflow: hidden;
-  font-family: ubuntu, sans;
+  font-family: 'Roboto', sans-serif;
 }
 
 #toolbar {
-  background: #52bbae;
+  background: var(--VTTblue);
   height: var(--toolbarSize);
   width: 100%;
   position: fixed;
@@ -73,11 +74,10 @@ body {
   padding: 2px;
   font-size: 14px;
   color: white;
-  background: black;
+  background:var(--VTTblue);
   border-radius: 4px;
   width: 100px;
   height: 18px;
-  opacity: 0.9;
 }
 
 .toolbarButton:hover .tooltip {
