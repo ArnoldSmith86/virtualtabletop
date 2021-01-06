@@ -17,7 +17,7 @@ export function addWidget(widget, instance) {
   if(widget.parent && !widgets.has(widget.parent)) {
     if(!deferredChildren[widget.parent])
       deferredChildren[widget.parent] = [];
-    deferredChildren[widget.parent].push(widget); //TODO: save instance
+    deferredChildren[widget.parent].push(widget);
     return;
   }
 
