@@ -84,60 +84,8 @@ class Button extends Widget {
             w.click();
       }
 
-      if(a.func == 'COUNT') {
-        setDefaults(a, { collection: 'DEFAULT', variable: 'COUNT' });
-        if(isValidCollection(a.collection))
-          variables[a.variable] = collections[a.collection].length;
-      }
-
-      if(a.func == 'FLIP') {
-        setDefaults(a, { count: 0, face: null });
-        if(isValidID(a.holder))
-          this.w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>c.flip&&c.flip(a.face)));
-      }
-
-      if(a.func == 'GET') {
-        setDefaults(a, { variable: a.property || 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first' });
-        if(isValidCollection(a.collection)) {
-          if(!collections[a.collection].length) {
-            problems.push(`Collection ${a.collection} is empty.`);
-          } else {
-            switch(a.aggregation) {
-            case 'first':
-              variables[a.variable] = collections[a.collection][0].p(a.property);
-              break;
-            case 'sum':
-              variables[a.variable] = 0;
-              for(const widget of collections[a.collection]) {
-                variables[a.variable] += Number(widget.p(a.property) || 0);
-              }
-              break;
-            default:
-              problems.push(`Aggregation ${a.aggregation} is unsupported.`);
-            }
-          }
-        }
-      }
-
-      if(a.func == 'INPUT') {
-        try {
-          Object.assign(variables, await this.showInputOverlay(a));
-        } catch(e) {
-          problems.push(`Exception: ${e.toString()}`);
-          batchEnd();
-          return;
-        }
-      }
-
-      if(a.func == 'LABEL') {
-        setDefaults(a, { value: 0, mode: 'set' });
-        if([ 'set', 'dec', 'inc' ].indexOf(a.mode) == -1)
-          problems.push(`Warning: Mode ${a.mode} will be interpreted as add.`);
-        this.w(a.label, label=>label.setText(a.value, a.mode));
-      }
-
-      if(a.func == 'MATH') {
-        setDefaults(a, { operation: '+', operand1: 1, operand2: 1, variable: 'MATH' });
+      if(a.func == 'COMPUTE') {
+        setDefaults(a, { operation: '+', operand1: 1, operand2: 1, variable: 'COMPUTE' });
         const x = a.operand1;
         const y = a.operand2;
         const v = a.variable;
@@ -206,6 +154,58 @@ class Button extends Widget {
           variables[v] = 0;
           problems.push(`The operation evaluated to null, Infinity or NaN. Setting the variable to 0.`);
         }
+      }
+
+      if(a.func == 'COUNT') {
+        setDefaults(a, { collection: 'DEFAULT', variable: 'COUNT' });
+        if(isValidCollection(a.collection))
+          variables[a.variable] = collections[a.collection].length;
+      }
+
+      if(a.func == 'FLIP') {
+        setDefaults(a, { count: 0, face: null });
+        if(isValidID(a.holder))
+          this.w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>c.flip&&c.flip(a.face)));
+      }
+
+      if(a.func == 'GET') {
+        setDefaults(a, { variable: a.property || 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first' });
+        if(isValidCollection(a.collection)) {
+          if(!collections[a.collection].length) {
+            problems.push(`Collection ${a.collection} is empty.`);
+          } else {
+            switch(a.aggregation) {
+            case 'first':
+              variables[a.variable] = collections[a.collection][0].p(a.property);
+              break;
+            case 'sum':
+              variables[a.variable] = 0;
+              for(const widget of collections[a.collection]) {
+                variables[a.variable] += Number(widget.p(a.property) || 0);
+              }
+              break;
+            default:
+              problems.push(`Aggregation ${a.aggregation} is unsupported.`);
+            }
+          }
+        }
+      }
+
+      if(a.func == 'INPUT') {
+        try {
+          Object.assign(variables, await this.showInputOverlay(a));
+        } catch(e) {
+          problems.push(`Exception: ${e.toString()}`);
+          batchEnd();
+          return;
+        }
+      }
+
+      if(a.func == 'LABEL') {
+        setDefaults(a, { value: 0, mode: 'set' });
+        if([ 'set', 'dec', 'inc' ].indexOf(a.mode) == -1)
+          problems.push(`Warning: Mode ${a.mode} will be interpreted as add.`);
+        this.w(a.label, label=>label.setText(a.value, a.mode));
       }
 
       if(a.func == 'MOVE') {
