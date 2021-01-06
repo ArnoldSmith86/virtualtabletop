@@ -12,7 +12,19 @@ Come join our [Discord server](https://discord.gg/xWxz9Gd) if you want to discus
 
 This project started after [a reddit post](https://www.reddit.com/r/PlayingCardsIO/comments/jiajth/mildly_ot_feature_requests_for_a_pcio_clone/) in our [playingcardsio subreddit](https://www.reddit.com/r/PlayingCardsIO/).
 
+## License
+
+The project is licensed under [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html).
+
+The cards in [assets/cards-default](https://github.com/ArnoldSmith86/virtualtabletop/tree/main/assets/cards-default) were [created by Adrian Kennard](https://www.me.uk/cards/) and released under CC0 Public Domain license.
+
+The cards in [assets/cards-plastic](https://github.com/ArnoldSmith86/virtualtabletop/tree/main/assets/cards-plastic) have their own [license.txt file](https://github.com/ArnoldSmith86/virtualtabletop/blob/main/assets/cards-plastic/license.txt).
+
+The games in the public library have their license information and attributions inside their `attribution` metadata field. You can read by adding the game to your game library and clicking `Edit`.
+
 ## Download this repository and get all dependencies
+
+### Linux
 
 This assumes a Debian based Linux. If you use something else, you probably know what you need to change.
 
@@ -23,6 +35,14 @@ git clone --recurse-submodules https://github.com/ArnoldSmith86/virtualtabletop.
 cd virtualtabletop                                                                      # changes to the newly created directory
 npm install                                                                             # uses the Node.js package manager to install all dependencies
 ```
+
+### Windows
+
+1. Install [Git](https://git-scm.com/download/win) (or the [GitHub app](https://desktop.github.com/)) and [Node.js](https://nodejs.org/en/download/current/).
+2. Open the command prompt and [cd](https://www.digitalcitizen.life/command-prompt-how-use-basic-commands/) to a directory where you want the project to live.
+3. Do `git clone --recurse-submodules https://github.com/ArnoldSmith86/virtualtabletop.git` which downloads the project (or use the GitHub app to do this).
+4. Do `cd virtualtabletop` to get into the project directory git created.
+5. Do `npm install` so Node.js downloads all the dependencies of the project.
 
 ## Starting the server
 
