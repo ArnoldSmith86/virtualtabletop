@@ -135,8 +135,8 @@
         <p>This is an empty room. You can add games to it and play them with your friends and family by sharing the link.</p>
         <p>Bring your own voice chat. We recommend <a href="https://meet.jit.si/">Jitsi Meet</a> because it's free software, runs in the browser and requires no accounts.</p>
         <div>
-          <div><p>Do you have a *.vtt or *.pcio file?</p><button class="upload">⬆️ Upload files</button></div>
-          <div><p>Do you have a link to one?</p><button class="link">🔗 Enter link</button></div>
+          <div><p>Do you have a *.vtt or *.pcio file?</p><button class="prettyButton upload">Upload files</button></div>
+          <div><p>Do you have a link to one?</p><button class="prettyButton link">Enter link</button></div>
         </div>
         <p>If you don't, you can create your own game or add one from the public library:</p>
       </div>
@@ -147,7 +147,7 @@
             <em><a class="bgg">Name (Year)</a></em>
             <em>⌛ <span class="time">0</span> minutes - <a class="rules">Rules</a></em>
             <div class="variantsList"></div>
-            <p><button class="save" disabled>💾 Save in-progress game</button><button class="edit">✏️ Edit</button></p>
+            <p><button class="saveProgress" disabled>💾 Save in-progress game</button><button class="prettyButton  edit">Edit</button></p>
           </div>
         </script>
         <script id="template-variantslist-entry" type="text/template">
@@ -156,11 +156,11 @@
         <div id="addState">
           <div class="image">➕</div>
           <div class="buttons">
-            <button class="create">➕ Use current room state</button>
-            <button class="library">📚 Public library</button>
-            <button class="link">🔗 Enter link</button>
-            <button class="upload">⬆️ Upload files</button>
-            <button class="download">⬇️ Download all</button>
+            <button class="prettyButton gameMenu create">Save room state</button>
+            <button class="prettyButton gameMenu library">Public library</button>
+            <button class="prettyButton gameMenu link">Enter link</button>
+            <button class="prettyButton gameMenu upload">Upload files</button>
+            <button class="prettyButton gameMenu download">Download all</button>
           </div>
         </div>
       </div>
@@ -186,7 +186,7 @@
         <div class="input"><label for="stateMode">Mode:</label> <input id="stateMode"/></div>
         <div class="input"><label for="stateTime">Time:</label> <input id="stateTime"/></div>
         <div class="input"><label for="stateBGG">BordGameGeek link:</label> <input id="stateBGG"/></div>
-        <div class="input"><label for="stateImage">Image URL:</label> <input id="stateImage"/><button class="uploadAsset">⬆️ Upload</button></div>
+        <div class="input"><label for="stateImage">Image URL:</label> <input id="stateImage"/><button class="prettyButton uploadAsset">Upload</button></div>
         <div class="input"><label for="stateLink">Update link:</label> <input id="stateLink"/></div>
       </div>
       <h2>Variants</h2>
@@ -197,19 +197,19 @@
           <div class="input"><label>Variant:</label> <input class="stateVariant"/></div>
           <div class="input"><label>Attribution:</label> <textarea class="stateAttribution"></textarea></div>
           <div class="input"><label>Update link:</label> <input class="stateLink"/></div>
-          <button class="update">🔃 Update variant using current room state</button>
-          <button class="download">⬇️ Download variant</button>
-          <button class="remove">❌ Remove variant</button>
+          <button class="prettyButton update">Update variant using current room state</button>
+          <button class="prettyButton download">Download variant</button>
+          <button class="prettyButton remove">Remove variant</button>
         </script>
       </div>
       <div id="addVariant" class="buttons">
         Add variant:
-        <button class="create">➕ Use current room state</button>
-        <button class="library">📚 Public library</button>
-        <button class="link">🔗 Enter link</button>
-        <button class="upload">⬆️ Upload file</button>
+        <button class="prettyButton create">Use current room state</button>
+        <button class="prettyButton library">Public library</button>
+        <button class="prettyButton link">Enter link</button>
+        <button class="prettyButton upload">Upload file</button>
       </div>
-      <p><button class="save">✔️ Save</button><button class="share">🔗 Share link</button><button class="download">⬇️ Download</button><button class="remove">❌ Remove</button></p>
+      <p><button class="prettyButton save">Save</button><button class="prettyButton share">Share link</button><button class="prettyButton download">Download</button><button class="prettyButton remove">Remove</button></p>
     </div>
 
     <div id="shareLinkOverlay" class="overlay">
