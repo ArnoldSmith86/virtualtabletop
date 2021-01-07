@@ -1,4 +1,6 @@
-class Label extends Widget {
+import { Widget } from './widget.js';
+
+export class Label extends Widget {
   constructor(id) {
     super(id);
     this.input = document.createElement('textarea');

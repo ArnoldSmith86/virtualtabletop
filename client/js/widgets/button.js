@@ -1,4 +1,10 @@
-class Button extends Widget {
+import { $ } from '../domhelpers.js';
+import { showOverlay } from '../main.js';
+import { playerName, playerColor } from '../overlays/players.js';
+import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
+import { Widget } from './widget.js';
+
+export class Button extends Widget {
   constructor(id) {
     super(id);
 
@@ -58,6 +64,7 @@ class Button extends Widget {
       const a = { ...original };
       var problems = [];
 
+      if (this.p('debug')) console.log(`${this.id}: ${JSON.stringify(original)}`);
       if(a.applyVariables) {
         if(Array.isArray(a.applyVariables)) {
           for(const v of a.applyVariables) {
@@ -241,7 +248,9 @@ class Button extends Widget {
 
       if(a.func == 'GET') {
         setDefaults(a, { variable: a.property || 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first' });
-        if(isValidCollection(a.collection)) {
+        if(! isValidCollection(a.collection)) {
+          problems.push(`Invalid collection: ${a.collection}`);
+        } else {
           if(!collections[a.collection].length) {
             problems.push(`Collection ${a.collection} is empty.`);
           } else {
@@ -276,7 +285,10 @@ class Button extends Widget {
         setDefaults(a, { value: 0, mode: 'set' });
         if([ 'set', 'dec', 'inc' ].indexOf(a.mode) == -1)
           problems.push(`Warning: Mode ${a.mode} will be interpreted as add.`);
-        this.w(a.label, label=>label.setText(a.value, a.mode));
+        this.w(a.label, label=> {
+          if (this.p('debug')) console.log(`changing ${a.label} ${a.mode} ${a.value}`)
+          label.setText(a.value, a.mode)
+        });
       }
 
       if(a.func == 'MOVE') {
@@ -418,14 +430,17 @@ class Button extends Widget {
       }
 
       if(this.p('debug')) {
-        $('#debugButtonOutput').textContent += '\n\n\nOPERATION: \n' + JSON.stringify(a, null, '  ');
+        let msg = ''
+        msg += '\n\n\nOPERATION: \n' + JSON.stringify(a, null, '  ');
         if(problems.length)
-          $('#debugButtonOutput').textContent += '\n\nPROBLEMS: \n' + problems.join('\n');
-        $('#debugButtonOutput').textContent += '\n\n\nVARIABLES: \n' + JSON.stringify(variables, null, '  ');
-        $('#debugButtonOutput').textContent += '\n\nCOLLECTIONS: \n';
+          msg += '\n\nPROBLEMS: \n' + problems.join('\n');
+        msg += '\n\n\nVARIABLES: \n' + JSON.stringify(variables, null, '  ');
+        msg += '\n\nCOLLECTIONS: \n';
         for(const name in collections) {
-          $('#debugButtonOutput').textContent += '  ' + name + ': ' + collections[name].map(w=>`${w.p('id')} (${w.p('type')})`).join(', ') + '\n';
+          msg += '  ' + name + ': ' + collections[name].map(w=>`${w.p('id')} (${w.p('type')})`).join(', ') + '\n';
         }
+        $('#debugButtonOutput').textContent += msg
+        console.log(msg);
       } else if(problems.length) {
         console.log(problems);
       }
