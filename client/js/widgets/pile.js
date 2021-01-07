@@ -91,7 +91,8 @@ class Pile extends Widget {
       this.children().reverse().slice(0, splitInput.value).forEach(c=>{
         c.p('parent', null);
         c.p('x', this.absoluteCoord('x'));
-        c.p('y', this.absoluteCoord('y') - 60);
+        const y = this.absoluteCoord('y');
+        c.p('y', y < 100 ? y+60 : y-60);
         c.updatePiles();
       });
       this.bringToFront();
