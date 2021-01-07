@@ -7,6 +7,7 @@ export default {
   coverageDirectory: "coverage",
   coverageProvider: "v8",
   projects: ["<rootDir>/client"],
-  testEnvironment: "jest-environment-jsdom-global"
-  //testURL: "http://localhost:8272/testroom"
+  setupFilesAfterEnv: ['<rootDir>/tests/client/setup.js'],
+  testEnvironment: "jest-environment-jsdom-global",
+  verbose: true
 };
