@@ -11,7 +11,8 @@ function getValidDropTargets(widget) {
   const targets = [];
   for(const [ _, t ] of dropTargets) {
     if(t.p('dropLimit') > -1 && t.p('dropLimit') <= t.children().length)
-      continue;
+      if(t.p('dropLimit') < t.children().length || t.children().indexOf(widget) == -1)
+        continue;
 
     let isValid = true;
     for(const key in t.p('dropTarget')) {
