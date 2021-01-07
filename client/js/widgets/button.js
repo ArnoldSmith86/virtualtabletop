@@ -87,8 +87,8 @@ export class Button extends Widget {
       if(a.func == 'CLICK') {
         setDefaults(a, { collection: 'DEFAULT', count: 1 });
         if(isValidCollection(a.collection))
-          for(const w of collections[a.collection])
-            for(let i=0; i<a.count; ++i)
+          for(let i=0; i<a.count; ++i)
+            for(const w of collections[a.collection])
               w.click();
       }
 
