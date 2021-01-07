@@ -1,6 +1,9 @@
+import { toServer } from './connection.js';
+import { $, $a, onLoad } from './domhelpers.js';
+
 let roomID = self.location.pathname.substr(1);
 
-const widgets = new Map();
+export const widgets = new Map();
 
 const deferredCards = {};
 const deferredChildren = {};
@@ -10,7 +13,7 @@ let deltaChanged = false;
 let deltaID = 0;
 let batchDepth = 0;
 
-function addWidget(widget) {
+export function addWidget(widget, instance) {
   if(widget.parent && !widgets.has(widget.parent)) {
     if(!deferredChildren[widget.parent])
       deferredChildren[widget.parent] = [];
@@ -30,7 +33,9 @@ function addWidget(widget) {
   if(widget.parent)
     parent = widgets.get(widget.parent);
 
-  if(widget.type == 'card') {
+  if(instance != undefined) {
+    w = instance;
+  } else if(widget.type == 'card') {
     if(widgets.has(widget.deck)) {
       w = new Card(id);
     } else {
@@ -76,11 +81,11 @@ function addWidget(widget) {
   delete deferredChildren[widget.id];
 }
 
-function batchStart() {
+export function batchStart() {
   ++batchDepth;
 }
 
-function batchEnd() {
+export function batchEnd() {
   --batchDepth;
   sendDelta();
 }
@@ -125,7 +130,7 @@ function sendDelta(force) {
   }
 }
 
-function sendPropertyUpdate(widgetID, property, value) {
+export function sendPropertyUpdate(widgetID, property, value) {
   if(property === null || typeof property === 'object') {
     delta.s[widgetID] = property;
   } else {
@@ -138,7 +143,7 @@ function sendPropertyUpdate(widgetID, property, value) {
   sendDelta();
 }
 
-function widgetFilter(callback) {
+export function widgetFilter(callback) {
   return Array.from(widgets.values()).filter(callback);
 }
 
