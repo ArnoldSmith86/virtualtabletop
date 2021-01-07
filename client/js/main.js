@@ -10,7 +10,9 @@ const dropTargets = new Map();
 function getValidDropTargets(widget) {
   const targets = [];
   for(const [ _, t ] of dropTargets) {
+    // if the holder has a drop limit and it's reached, skip the holder
     if(t.p('dropLimit') > -1 && t.p('dropLimit') <= t.children().length)
+      // don't skip it if it's exactly at the limit and the dragged widget is already its child
       if(t.p('dropLimit') < t.children().length || t.children().indexOf(widget) == -1)
         continue;
 
