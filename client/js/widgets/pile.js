@@ -74,12 +74,16 @@ class Pile extends Widget {
     });
     $('#pileOverlay').appendChild(shuffleButton);
 
+    const childCount = this.children().length;
+    const countDiv = document.createElement('div');
+    countDiv.textContent = `/ ${childCount}`;
+    $('#pileOverlay').appendChild(countDiv);
     const splitInput = document.createElement('input');
     splitInput.type = 'number';
-    splitInput.value = Math.floor(this.children().length/2);
+    splitInput.value = Math.floor(childCount/2);
     splitInput.min = 0;
-    splitInput.max = this.children().length;
-    $('#pileOverlay').appendChild(splitInput);
+    splitInput.max = childCount;
+    countDiv.prepend(splitInput);
     const splitButton = document.createElement('button');
     splitButton.textContent = 'Split pile';
     splitButton.addEventListener('click', e=>{
