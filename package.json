@@ -3,9 +3,14 @@
   "version": "0.1.0",
   "description": "a virtual surface in the browser on which you can play board, dice and card games",
   "main": "server.mjs",
+  "type": "module",
   "scripts": {
-    "start": "nodemon -e js,mjs,css,html --ignore save server.mjs",
-    "debug": "NOCOMPRESS=1 npm start"
+    "clean": "rm -rf coverage",
+    "clobber": "npm clean && rm -rf save",
+    "debug": "NOCOMPRESS=1 npm start",
+    "start": "nodemon -e js,mjs,css,html --ignore save --ignore coverage --ignore tests server.mjs",
+    "test": "node --experimental-vm-modules node_modules/.bin/jest --coverage",
+    "test-cont": "nodemon -e js,mjs,css,html --ignore save --ignore coverage --experimental-vm-modules node_modules/.bin/jest"
   },
   "repository": {
     "type": "git",
@@ -36,5 +41,10 @@
     "node-fetch": "^2.6.1",
     "nodemon": "^2.0.6",
     "ws": "^7.4.2"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3",
+    "jest-environment-jsdom": "^26.6.2",
+    "jest-environment-jsdom-global": "^2.0.4"
   }
 }

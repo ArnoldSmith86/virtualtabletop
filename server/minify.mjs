@@ -48,6 +48,9 @@ export default function minifyRoom() {
           'client/js/statemanaged.js',
           'client/js/widgets/widget.js',
 
+          'client/js/overlays/players.js',
+          'client/js/overlays/states.js',
+
           'client/js/widgets/basicwidget.js',
           'client/js/widgets/button.js',
           'client/js/widgets/card.js',
@@ -57,17 +60,15 @@ export default function minifyRoom() {
           'client/js/widgets/pile.js',
           'client/js/widgets/spinner.js',
 
-          'client/js/overlays/players.js',
-          'client/js/overlays/states.js',
-
           'client/js/main.js'
         ],
         output: os.tmpdir() + '/out.js'
       });
     }).then(function(min) {
+      const minNoImports = min.replace(/\bimport[^;]*\.\/[^;]*;/g, "")
       return minify({
         compressor: htmlMinifier,
-        content: roomHTML.replace(/ \{\{JS\}\} /, min),
+        content: roomHTML.replace(/ \{\{JS\}\} /, minNoImports),
         options: {
           conservativeCollapse: true
         }
