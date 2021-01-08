@@ -47,7 +47,7 @@ Using [brew](https://brew.sh/):
 
 ### Windows
 
-1. Install [Git](https://git-scm.com/download/win) (or the [GitHub app](https://desktop.github.com/)) and [Node.js](https://nodejs.org/en/download/current/).
+1. Install [Git](https://git-scm.com/download/win) (or the [GitHub Desktop](https://desktop.github.com/)) and [Node.js](https://nodejs.org/en/download/current/).
 2. Open the command prompt and [cd](https://www.digitalcitizen.life/command-prompt-how-use-basic-commands/) to a directory where you want the project to live.
 3. Do `git clone --recurse-submodules https://github.com/ArnoldSmith86/virtualtabletop.git` which downloads the project (or use the GitHub app to do this).
 4. Do `cd virtualtabletop` to get into the project directory git created.
@@ -55,7 +55,7 @@ Using [brew](https://brew.sh/):
 
 If you use "GitHub Desktop" you should follow these steps:
 
-1. Install GitHub Desktop
+1. Install [GitHub Desktop](https://desktop.github.com/) and [Node.js](https://nodejs.org/en/download/current/)
 2. Follow steps to setup the program
 3. Go to Current repository -> Add -> Clone a repository and select this one or your fork. At the botton there should be a local path to where github will clone the repository. Get that. If you use the default one it should look like this: C:\Users\(your username)\Documents\GitHub
 4. Open cmd ( windows+R -> CMD -> enter) and enter 'cd (local path of your clone)'
