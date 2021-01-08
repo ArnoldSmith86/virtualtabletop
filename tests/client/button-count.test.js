@@ -33,10 +33,8 @@ describe("Scenarios: Counting widgets", () => {
       ]);
     });
     describe("When clicked", () => {
-      test("Then it does not throw an error", () => {
-        expect(async () => {
-          await testButton.click();
-        }).not.toThrow();
+      test("Then it does not throw an error", async () => {
+        await expect(testButton.click()).resolves.toBeUndefined();
       });
     });
   });
