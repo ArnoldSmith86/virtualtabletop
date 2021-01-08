@@ -21,6 +21,7 @@ The cards in [assets/cards-default](https://github.com/ArnoldSmith86/virtualtabl
 The cards in [assets/cards-plastic](https://github.com/ArnoldSmith86/virtualtabletop/tree/main/assets/cards-plastic) have their own [license.txt file](https://github.com/ArnoldSmith86/virtualtabletop/blob/main/assets/cards-plastic/license.txt).
 
 The icons in [assets/icons-white](https://github.com/ArnoldSmith86/virtualtabletop/tree/main/assets/icons-white) were found at fontawesome.com with license [CC BY 4.0](https://fontawesome.com/license/free).
+
 The games in the public library have their license information and attributions inside their `attribution` metadata field. You can read by adding the game to your game library and clicking `Edit`.
 
 ## Download this repository and get all dependencies
@@ -47,20 +48,19 @@ Using [brew](https://brew.sh/):
 
 ### Windows
 
-1. Install [Git](https://git-scm.com/download/win) (or the [GitHub Desktop](https://desktop.github.com/)) and [Node.js](https://nodejs.org/en/download/current/).
+1. Install [Git](https://git-scm.com/download/win) and [Node.js](https://nodejs.org/en/download/current/).
 2. Open the command prompt and [cd](https://www.digitalcitizen.life/command-prompt-how-use-basic-commands/) to a directory where you want the project to live.
-3. Do `git clone --recurse-submodules https://github.com/ArnoldSmith86/virtualtabletop.git` which downloads the project (or use the GitHub app to do this).
+3. Do `git clone --recurse-submodules https://github.com/ArnoldSmith86/virtualtabletop.git` which downloads the project.
 4. Do `cd virtualtabletop` to get into the project directory git created.
 5. Do `npm install` so Node.js downloads all the dependencies of the project.
 
 If you use "GitHub Desktop" you should follow these steps:
 
-1. Install [GitHub Desktop](https://desktop.github.com/) and [Node.js](https://nodejs.org/en/download/current/)
-2. Follow steps to setup the program
-3. Go to Current repository -> Add -> Clone a repository and select this one or your fork. At the botton there should be a local path to where github will clone the repository. Get that. If you use the default one it should look like this: C:\Users\(your username)\Documents\GitHub
-4. Open cmd ( windows+R -> CMD -> enter) and enter 'cd (local path of your clone)'
-5. Enter `cd virtualtabletop` to get into the project directory git created.
-6. Do `npm install` so Node.js downloads all the dependencies of the project.
+1. Install [GitHub Desktop](https://desktop.github.com/) and [Node.js](https://nodejs.org/en/download/current/).
+2. Follow steps to setup the programs. Then open GitHub Desktop.
+3. Go to Current repository -> Add -> Clone a repository and select this one or your fork.
+4. Go to Repository -> Open in Command Prompt.
+5. Do `npm install` so Node.js downloads all the dependencies of the project.
 
 ## Starting the server
 
