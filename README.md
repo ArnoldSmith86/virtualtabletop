@@ -51,3 +51,13 @@ Press F12 to show the developer tools.
 
 In Chromium, select the Sources tab, then the select the file for the room.
 Press Ctrl-f to search for the code you want to set a breakpoint for an step through.
+
+## Testing
+
+To run the unit tests (and get a coverage report):
+
+    npm test
+
+To run them continuously (on each save) while you develop:
+
+    npm run test-cont
