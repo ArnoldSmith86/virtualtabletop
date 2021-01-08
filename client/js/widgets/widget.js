@@ -1,8 +1,12 @@
-class Widget extends StateManaged {
+import { $, removeFromDOM } from '../domhelpers.js';
+import { StateManaged } from '../statemanaged.js';
+
+export class Widget extends StateManaged {
   constructor(id) {
     const div = document.createElement('div');
     div.id = id;
     super();
+    this.id = id;
     this.domElement = div;
     this.childArray = [];
 

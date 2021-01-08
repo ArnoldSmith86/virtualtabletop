@@ -1,12 +1,12 @@
-function $(selector, parent) {
+export function $(selector, parent) {
   return (parent || document).querySelector(selector);
 }
 
-function $a(selector, parent) {
+export function $a(selector, parent) {
   return (parent || document).querySelectorAll(selector);
 }
 
-function removeFromDOM(node) {
+export function removeFromDOM(node) {
   if(typeof node == 'string') {
     for(const c of $a(node))
       removeFromDOM(c);
@@ -15,22 +15,22 @@ function removeFromDOM(node) {
   }
 }
 
-function domByTemplate(id, type) {
+export function domByTemplate(id, type) {
   const div = document.createElement(type || 'div');
   div.innerHTML = document.getElementById(id).innerHTML;
   return div;
 }
 
-function on(selector, eventName, callback) {
+export function on(selector, eventName, callback) {
   for(const d of $a(selector))
     d.addEventListener(eventName, callback);
 }
 
-function onLoad(callback) {
+export function onLoad(callback) {
   window.addEventListener('DOMContentLoaded', callback);
 }
 
-function selectFile(getContents, multipleCallback) {
+export function selectFile(getContents, multipleCallback) {
   return new Promise((resolve, reject) => {
     const upload = document.createElement('input');
     upload.type = 'file';

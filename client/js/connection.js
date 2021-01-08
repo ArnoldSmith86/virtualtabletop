@@ -2,7 +2,14 @@ let lastTimeout = 1000;
 let connection;
 let messageCallbacks = {};
 
-function startWebSocket() {
+//used by unit tests until jest supports mocking ESM static imports
+export function mockConnection() {
+  connection = {
+    readyState: false
+  }
+}
+
+export function startWebSocket() {
   let url = `ws://${location.host}`;
   if(location.protocol == 'https:')
     url = `wss://${location.host}`;
@@ -38,7 +45,7 @@ function onMessage(func, callback) {
   messageCallbacks[func].push(callback);
 }
 
-function toServer(func, args) {
+export function toServer(func, args) {
   if(connection.readyState === WebSocket.OPEN)
     connection.send(JSON.stringify({ func, args }));
 }

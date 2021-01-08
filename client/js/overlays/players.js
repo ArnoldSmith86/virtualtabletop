@@ -1,7 +1,14 @@
+import { onLoad } from '../domhelpers.js';
+
 let playerCursors = {};
 let playerName = localStorage.getItem('playerName') || 'Guest' + Math.floor(Math.random()*1000);
 let playerColor = 'red';
 localStorage.setItem('playerName', playerName);
+
+export {
+  playerName,
+  playerColor
+}
 
 function addPlayerCursor(playerName, playerColor) {
   playerCursors[playerName] = document.createElement('div');
