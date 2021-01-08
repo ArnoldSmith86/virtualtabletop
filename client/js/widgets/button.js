@@ -193,6 +193,12 @@ export class Button extends Widget {
 
           // Array operations
           // 'length' should work the same as for strings
+          case 'getIndex':
+            variables[v] = x[y];
+            break;
+          case 'setIndex':
+            variables[v][x] = y;
+            break;
           case 'from':
           case 'isArray':
             variables[v] = Array[a.operation](x);
