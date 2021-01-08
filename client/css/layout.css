@@ -273,6 +273,14 @@ body {
 }
 
 .update {
+  border:5px;
+  color:white;
+  background-color: var(--VTTblue);
+  padding: 5px;
+  padding-left: 25px;
+  border-radius: 5px;
+  background-repeat: no-repeat;
+  margin:1px;
   background-image:url(/i/icons-white/sync-alt-solid-svg.svg);
   background-size: 20px 70%;
   background-position:  2.5px center;
