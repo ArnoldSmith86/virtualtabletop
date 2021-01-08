@@ -263,7 +263,7 @@ export class Button extends Widget {
         if(isValidID(a.holder)) {
           this.w(a.holder, holder=>{
             let z = 1;
-            let children = holder.children().sort((w1,w2)=>{
+            let children = holder.children().reverse().sort((w1,w2)=>{
               if(typeof w1.p(a.key) == 'number')
                 return w1.p(a.key) - w2.p(a.key);
               else
