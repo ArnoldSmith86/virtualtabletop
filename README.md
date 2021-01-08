@@ -44,6 +44,15 @@ npm install                                                                     
 4. Do `cd virtualtabletop` to get into the project directory git created.
 5. Do `npm install` so Node.js downloads all the dependencies of the project.
 
+If you use "GitHub Desktop" you should follow these steps:
+
+1. Install GitHub Desktop
+2. Follow steps to setup the program
+3. Go to Current repository -> Add -> Clone a repository and select this one or your fork. At the botton there should be a local path to where github will clone the repository. Get that. If you use the default one it should look like this: C:\Users\(your username)\Documents\GitHub
+4. Open cmd ( windows+R -> CMD -> enter) and enter 'cd (local path of your clone)'
+5. Enter `cd virtualtabletop` to get into the project directory git created.
+6. Do `npm install` so Node.js downloads all the dependencies of the project.
+
 ## Starting the server
 
 Now you can start the server by typing:
@@ -59,6 +68,8 @@ node server.mjs
 ```
 
 This will serve the project at [localhost:8272](http://localhost:8272).
+
+If you close you terminal and wants to restart you server you will need to get back to you clone folder using cd
 
 ## Debug
 
