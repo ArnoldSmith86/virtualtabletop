@@ -37,6 +37,14 @@ cd virtualtabletop                                                              
 npm install                                                                             # uses the Node.js package manager to install all dependencies
 ```
 
+### MacOS
+Using [brew](https://brew.sh/):
+
+    brew install node
+    git clone --recurse-submodules https://github.com/ArnoldSmith86/virtualtabletop.git
+    cd virtualtabletop
+    npm install
+
 ### Windows
 
 1. Install [Git](https://git-scm.com/download/win) (or the [GitHub app](https://desktop.github.com/)) and [Node.js](https://nodejs.org/en/download/current/).
