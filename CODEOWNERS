@@ -1,0 +1,13 @@
+# Default
+* @ArnoldSmith86
+
+# UI
+*.css @RaphaelAlvez
+*.html @RaphaelAlvez
+*.svg @RaphaelAlvez
+
+# Library
+library @96LawDawg
+
+# Tests
+/tests/ @UltimateGeek
