@@ -10,4 +10,5 @@
 library @96LawDawg
 
 # Tests
+jest.config.mjs @UltimateGeek
 /tests/ @UltimateGeek
