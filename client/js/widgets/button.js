@@ -151,8 +151,8 @@ export class Button extends Widget {
       if(a.func == 'MOVE') {
         const debug = this.p('debug');
         const _move = function(w, target, source) {
-          if (debug) console.log(`moving ${w.p('id')} to ${target.p('id')}`);
-          if (w.p('type') == 'card')
+          if(debug) console.log(`moving ${w.p('id')} to ${target.p('id')}`);
+          if(w.p('type') == 'card')
             if(a.face !== null && w.flip)
               w.flip(a.face);
           if(source == target) {
@@ -189,14 +189,14 @@ export class Button extends Widget {
       if(a.func == 'MOVEXY') {
         const debug = this.p('debug');
         const _movexy = function(w) {
-          if (debug) console.log(`moving ${w.p('id')} to x:${a.x}, y:${a.y}`);
-          if (w.p('type') == 'card')
+          if(debug) console.log(`moving ${w.p('id')} to x:${a.x}, y:${a.y}`);
+          if(w.p('type') == 'card')
             if(a.face !== null && w.flip)
               w.flip(a.face);
           w.p('parent', null);
           w.bringToFront();
           w.setPosition(a.x, a.y, a.z || w.p('z'));
-          if (w.p('type') == 'card')
+          if(w.p('type') == 'card')
             w.updatePiles();
         };
         setDefaults(a, { collection: 'DEFAULT', count: 1, face: null, x: 0, y: 0 });
