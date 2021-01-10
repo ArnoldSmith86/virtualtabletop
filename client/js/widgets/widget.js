@@ -314,8 +314,11 @@ export class Widget extends StateManaged {
     }
   }
 
-  rotate(degrees) {
-    this.p('rotation', (this.p('rotation') + degrees) % 360);
+  rotate(degrees, mode) {
+    if(!mode || mode == 'add')
+      this.p('rotation', (this.p('rotation') + degrees) % 360);
+    else
+      this.p('rotation', degrees);
   }
 
   setPosition(x, y, z) {
