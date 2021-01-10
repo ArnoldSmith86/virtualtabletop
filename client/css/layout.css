@@ -115,6 +115,7 @@ body {
   flex-direction: column;
   padding: 5% 10%;
   box-sizing: border-box;
+
 }
 
 .overlay h1 {
@@ -209,4 +210,84 @@ body {
 
 #aboutButton {
 	background-image:url(/i/icons-white/info-circle-solid-svg.svg);
+}
+
+/*Buttons css*/
+
+.prettyButton {
+  border:5px;
+  color:white;
+  background-color: var(--VTTblue);
+  padding: 5px;
+  padding-left: 25px;
+  border-radius: 5px;
+  background-repeat: no-repeat;
+  margin:1px;
+}
+
+.gameMenu {
+  background-position:  5px center !important;
+  padding-left: 5px !important;
+}
+
+.upload, .uploadAsset {
+  background-image:url(/i/icons-white/upload-solid-svg.svg);
+  background-size: 20px 70%;
+  background-position:  2.5px center;
+}
+
+.download {
+  background-image:url(/i/icons-white/download-solid-svg.svg);
+  background-size: 20px 70%;
+  background-position:  2.5px center;
+}
+
+.link,.share {
+  background-image:url(/i/icons-white/link-solid-svg.svg);
+  background-size: 20px 60%;
+  background-position:  2.5px center;
+}
+
+.edit {
+  background-image:url(/i/icons-white/edit-regular-svg.svg);
+  background-size: 20px 60%;
+  background-position:  2.5px center;
+}
+
+.create {
+  background-image:url(/i/icons-white/plus-solid-svg.svg);
+  background-size: 20px 70%;
+  background-position:  2.5px center;
+}
+
+.library {
+  background-image:url(/i/icons-white/book-solid-svg.svg);
+  background-size: 20px 70%;
+  background-position:  2.5px center;
+}
+
+.save {
+  background-image:url(/i/icons-white/save-regular-svg.svg);
+  background-size: 20px 70%;
+  background-position:  2.5px center;
+}
+
+.update {
+  border:5px;
+  color:white;
+  background-color: var(--VTTblue);
+  padding: 5px;
+  padding-left: 25px;
+  border-radius: 5px;
+  background-repeat: no-repeat;
+  margin:1px;
+  background-image:url(/i/icons-white/sync-alt-solid-svg.svg);
+  background-size: 20px 70%;
+  background-position:  2.5px center;
+}
+
+.remove {
+  background-image:url(/i/icons-white/trash-alt-solid-svg.svg);
+  background-size: 20px 70%;
+  background-position:  2.5px center;
 }
