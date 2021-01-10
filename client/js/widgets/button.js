@@ -1,4 +1,10 @@
-class Button extends Widget {
+import { $ } from '../domhelpers.js';
+import { showOverlay } from '../main.js';
+import { playerName, playerColor } from '../overlays/players.js';
+import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
+import { Widget } from './widget.js';
+
+export class Button extends Widget {
   constructor(id) {
     super(id);
 
@@ -58,6 +64,7 @@ class Button extends Widget {
       const a = { ...original };
       var problems = [];
 
+      if (this.p('debug')) console.log(`${this.id}: ${JSON.stringify(original)}`);
       if(a.applyVariables) {
         if(Array.isArray(a.applyVariables)) {
           for(const v of a.applyVariables) {
@@ -78,10 +85,160 @@ class Button extends Widget {
 
 
       if(a.func == 'CLICK') {
-        setDefaults(a, { collection: 'DEFAULT' });
+        setDefaults(a, { collection: 'DEFAULT', count: 1 });
         if(isValidCollection(a.collection))
-          for(const w of collections[a.collection])
-            w.click();
+          for(let i=0; i<a.count; ++i)
+            for(const w of collections[a.collection])
+              w.click();
+      }
+
+      if(a.func == 'COMPUTE') {
+        setDefaults(a, { operation: '+', operand1: 1, operand2: 1, operand3: 1, variable: 'COMPUTE' });
+        const toNum = s=>typeof s == 'string' && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s;
+        const x = toNum(a.operand1);
+        const y = toNum(a.operand2);
+        const z = toNum(a.operand3);
+        const v = a.variable;
+
+        try {
+          switch(a.operation) {
+          case '+':  variables[v] = x + y;  break;
+          case '-':  variables[v] = x - y;  break;
+          case '*':  variables[v] = x * y;  break;
+          case '**': variables[v] = x ** y; break;
+          case '/':  variables[v] = x / y;  break;
+          case '%':  variables[v] = x % y;  break;
+          case '<':  variables[v] = x < y;  break;
+          case '<=': variables[v] = x <= y; break;
+          case '==': variables[v] = x == y; break;
+          case '!=': variables[v] = x != y; break;
+          case '>=': variables[v] = x >= y; break;
+          case '>':  variables[v] = x > y;  break;
+          case '&&': variables[v] = x && y; break;
+          case '||': variables[v] = x || y; break;
+          case '!':  variables[v] = !x;     break;
+
+          // Math operations
+          case 'hypot':
+          case 'max':
+          case 'min':
+          case 'pow':
+            variables[v] = Math[a.operation](x, y);
+            break;
+          case 'sin':
+          case 'cos':
+          case 'tan':
+            variables[v] = Math[a.operation](x * Math.PI/180);
+            break;
+          case 'abs':
+          case 'cbrt':
+          case 'ceil':
+          case 'exp':
+          case 'floor':
+          case 'log':
+          case 'log10':
+          case 'log2':
+          case 'round':
+          case 'sign':
+          case 'sqrt':
+          case 'trunc':
+            variables[v] = Math[a.operation](x);
+            break;
+          case 'E':
+          case 'LN2':
+          case 'LN10':
+          case 'LOG2E':
+          case 'LOG10E':
+          case 'PI':
+          case 'SQRT1_2':
+          case 'SQRT2':
+            variables[v] = Math[a.operation];
+            break;
+
+          // String operations
+          case 'length':
+            variables[v] = x.length;
+            break;
+          case 'toLowerCase':
+          case 'toUpperCase':
+          case 'trim':
+          case 'trimStart':
+          case 'trimEnd':
+            variables[v] = x[a.operation]();
+            break;
+          case 'charAt':
+          case 'charCodeAt':
+          case 'codePointAt':
+          case 'concat':
+          case 'includes':
+          case 'endsWith':
+          case 'indexOf':
+          case 'lastIndexOf':
+          case 'localeCompare':
+          case 'match':
+          case 'padEnd':
+          case 'padStart':
+          case 'repeat':
+          case 'search':
+          case 'split':
+          case 'startsWith':
+          case 'toLocaleLowerCase':
+          case 'toLocaleUpperCase':
+            variables[v] = x[a.operation](y);
+            break;
+          case 'replace':
+          case 'replaceAll':
+          case 'substr':
+            variables[v] = x[a.operation](y, z);
+            break;
+
+          // Array operations
+          // 'length' should work the same as for strings
+          case 'getIndex':
+            variables[v] = x[y];
+            break;
+          case 'setIndex':
+            variables[v][x] = y;
+            break;
+          case 'from':
+          case 'isArray':
+            variables[v] = Array[a.operation](x);
+            break;
+          case 'concatArray':
+            variables[v] = x.concat(y);
+            break;
+          case 'pop':
+          case 'reverse':
+          case 'shift':
+          case 'sort':
+            variables[v] = x[a.operation]();
+            break;
+          case 'findIndex':
+          case 'includes':
+          case 'indexOf':
+          case 'join':
+          case 'lastIndexOf':
+            variables[v] = x[a.operation](y);
+            break;
+          case 'slice':
+            variables[v] = x[a.operation](y, z);
+            break;
+          case 'push':
+          case 'unshift':
+            variables[v][a.operation](x);
+            break;
+          default:
+            problems.push(`Operation ${a.operation} is unsupported.`);
+          }
+        } catch(e) {
+          variables[v] = 0;
+          problems.push(`Exception: ${e.toString()}`);
+        }
+
+        if(variables[v] === null || typeof variables[v] === 'number' && !isFinite(variables[v])) {
+          variables[v] = 0;
+          problems.push(`The operation evaluated to null, Infinity or NaN. Setting the variable to 0.`);
+        }
       }
 
       if(a.func == 'COUNT') {
@@ -98,7 +255,9 @@ class Button extends Widget {
 
       if(a.func == 'GET') {
         setDefaults(a, { variable: a.property || 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first' });
-        if(isValidCollection(a.collection)) {
+        if(! isValidCollection(a.collection)) {
+          problems.push(`Invalid collection: ${a.collection}`);
+        } else {
           if(!collections[a.collection].length) {
             problems.push(`Collection ${a.collection} is empty.`);
           } else {
@@ -133,7 +292,10 @@ class Button extends Widget {
         setDefaults(a, { value: 0, mode: 'set' });
         if([ 'set', 'dec', 'inc' ].indexOf(a.mode) == -1)
           problems.push(`Warning: Mode ${a.mode} will be interpreted as add.`);
-        this.w(a.label, label=>label.setText(a.value, a.mode));
+        this.w(a.label, label=> {
+          if (this.p('debug')) console.log(`changing ${a.label} ${a.mode} ${a.value}`)
+          label.setText(a.value, a.mode)
+        });
       }
 
       if(a.func == 'MOVE') {
@@ -251,7 +413,7 @@ class Button extends Widget {
         if(isValidID(a.holder)) {
           this.w(a.holder, holder=>{
             let z = 1;
-            let children = holder.children().sort((w1,w2)=>{
+            let children = holder.children().reverse().sort((w1,w2)=>{
               if(typeof w1.p(a.key) == 'number')
                 return w1.p(a.key) - w2.p(a.key);
               else
@@ -275,14 +437,17 @@ class Button extends Widget {
       }
 
       if(this.p('debug')) {
-        $('#debugButtonOutput').textContent += '\n\n\nOPERATION: \n' + JSON.stringify(a, null, '  ');
+        let msg = ''
+        msg += '\n\n\nOPERATION: \n' + JSON.stringify(a, null, '  ');
         if(problems.length)
-          $('#debugButtonOutput').textContent += '\n\nPROBLEMS: \n' + problems.join('\n');
-        $('#debugButtonOutput').textContent += '\n\n\nVARIABLES: \n' + JSON.stringify(variables, null, '  ');
-        $('#debugButtonOutput').textContent += '\n\nCOLLECTIONS: \n';
+          msg += '\n\nPROBLEMS: \n' + problems.join('\n');
+        msg += '\n\n\nVARIABLES: \n' + JSON.stringify(variables, null, '  ');
+        msg += '\n\nCOLLECTIONS: \n';
         for(const name in collections) {
-          $('#debugButtonOutput').textContent += '  ' + name + ': ' + collections[name].map(w=>`${w.p('id')} (${w.p('type')})`).join(', ') + '\n';
+          msg += '  ' + name + ': ' + collections[name].map(w=>`${w.p('id')} (${w.p('type')})`).join(', ') + '\n';
         }
+        $('#debugButtonOutput').textContent += msg
+        console.log(msg);
       } else if(problems.length) {
         console.log(problems);
       }
