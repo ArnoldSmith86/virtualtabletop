@@ -247,6 +247,8 @@ export class Button extends Widget {
       }
 
       if(a.func == 'FLIP') {
+        if(a.limit !== undefined)
+          a.count = a.limit;
         setDefaults(a, { count: 0, face: null });
         if(isValidID(a.holder))
           this.w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>c.flip&&c.flip(a.face)));
@@ -298,6 +300,8 @@ export class Button extends Widget {
       }
 
       if(a.func == 'MOVE') {
+        if(a.limit !== undefined)
+          a.count = a.limit;
         setDefaults(a, { count: 1, face: null });
         const count = a.count || 999999;
 
@@ -324,6 +328,8 @@ export class Button extends Widget {
       }
 
       if(a.func == 'MOVEXY') {
+        if(a.limit !== undefined)
+          a.count = a.limit;
         setDefaults(a, { count: 1, face: null, x: 0, y: 0 });
         if(isValidID(a.from)) {
           this.w(a.from, source=>source.children().slice(0, a.count || 999999).reverse().forEach(c=> {
@@ -360,6 +366,8 @@ export class Button extends Widget {
       }
 
       if(a.func == 'ROTATE') {
+        if(a.limit !== undefined)
+          a.count = a.limit;
         setDefaults(a, { count: 1, angle: 90 });
         if(isValidID(a.holder)) {
           this.w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>{
@@ -369,11 +377,15 @@ export class Button extends Widget {
       }
 
       if(a.func == 'SELECT') {
-        setDefaults(a, { property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'add', source: 'all' });
+        if(a.limit !== undefined)
+          a.max = a.limit;
+        setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'add', source: 'all' });
         if(a.source == 'all' || isValidCollection(a.source)) {
           if([ 'add', 'set' ].indexOf(a.mode) == -1)
             problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
           collections[a.collection] = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(function(w) {
+            if(a.type != 'all' && w.p('type') != a.type)
+              return false;
             if(a.relation === '<')
               return w.p(a.property) < a.value;
             else if(a.relation === '<=')
@@ -384,6 +396,8 @@ export class Button extends Widget {
               return w.p(a.property) >= a.value;
             else if(a.relation === '>')
               return w.p(a.property) > a.value;
+            else if(a.relation === 'in' && Array.isArray(a.value))
+              return a.value.indexOf(w.p(a.property)) != -1;
             if(a.relation != '==')
               problems.push(`Warning: Relation ${a.relation} interpreted as ==.`);
             return w.p(a.property) === a.value;
