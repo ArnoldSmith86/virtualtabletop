@@ -149,51 +149,66 @@ export class Button extends Widget {
       }
 
       if(a.func == 'MOVE') {
-        setDefaults(a, { count: 1, face: null });
+        const debug = this.p('debug');
+        const _move = function(w, target, source) {
+          if (debug) console.log(`moving ${w.p('id')} to ${target.p('id')}`);
+          if (w.p('type') == 'card')
+            if(a.face !== null && w.flip)
+              w.flip(a.face);
+          if(source == target) {
+            w.bringToFront();
+          } else {
+            w.movedByButton = true;
+            w.moveToHolder(target);
+            delete w.movedByButton;
+          }
+        };
+        setDefaults(a, { collection: 'DEFAULT', count: 1, face: null });
         const count = a.count || 999999;
 
-        if(isValidID(a.from) && isValidID(a.to)) {
-          const item = widgets.get(a.from)
-          const dest = widgets.get(a.to)
-          if (item && item.p('type') == null && dest.p('type') == 'holder') {
-            item.moveToHolder(dest);
+        if(!isValidID(a.to)) {
+          problems.push(`Warning: ${a.to} is not a valid widget ID`);
+        } else if(a.from) {
+          if (!isValidID(a.from)) {
+            problems.push(`Warning: ${a.from} is not a valid widget ID`);
           } else if(a.face === null && typeof a.from == 'string' && typeof a.to == 'string' && !widgets.get(a.to).children().length && widgets.get(a.from).children().length <= count) {
             // this is a hacky shortcut to avoid removing and creating card piles when moving all children to an empty holder
             Widget.prototype.children.call(widgets.get(a.from)).filter(
               w => w.p('type') != 'label' && w.p('type') != 'button' && w.p('type') != 'deck'
             ).forEach(c=>c.p('parent', a.to));
           } else {
-            this.w(a.from, source=>this.w(a.to, target=>source.children().slice(0, count).reverse().forEach(c=> {
-              if(a.face !== null && c.flip)
-                c.flip(a.face);
-              if(source == target) {
-                c.bringToFront();
-              } else {
-                c.movedByButton = true;
-                c.moveToHolder(target);
-                delete c.movedByButton;
-              }
-            })));
+            this.w(a.from, source=>this.w(a.to, target=>source.children().slice(0, count).reverse().forEach(c=> _move(c, target, source))));
           }
+        } else if(! isValidCollection(a.collection)) {
+          problems.push(`Warning: ${a.collection} is not a valid collection`);
+        } else {
+          this.w(a.to, target=>collections[a.collection].slice(0, a.count || 999999).reverse().forEach(w=> _move(w, target)));
         }
       }
 
       if(a.func == 'MOVEXY') {
-        setDefaults(a, { count: 1, face: null, x: 0, y: 0});
-        if(isValidID(a.from)) {
-          const item = widgets.get(a.from)
-          if (item && item.p('type') == null) {
-            item.setPosition(a.x, a.y, a.z || item.p('z'))
-          } else {
-            this.w(a.from, source=>source.children().slice(0, a.count || 999999).reverse().forEach(c=> {
-              if(a.face !== null && c.flip)
-                c.flip(a.face);
-              c.p('parent', null);
-              c.bringToFront();
-              c.setPosition(a.x, a.y, a.z || c.p('z'));
-              c.updatePiles();
-            }));
-          }
+        const debug = this.p('debug');
+        const _movexy = function(w) {
+          if (debug) console.log(`moving ${w.p('id')} to x:${a.x}, y:${a.y}`);
+          if (w.p('type') == 'card')
+            if(a.face !== null && w.flip)
+              w.flip(a.face);
+          w.p('parent', null);
+          w.bringToFront();
+          w.setPosition(a.x, a.y, a.z || w.p('z'));
+          if (w.p('type') == 'card')
+            w.updatePiles();
+        };
+        setDefaults(a, { collection: 'DEFAULT', count: 1, face: null, x: 0, y: 0 });
+        if(a.from) {
+          if (!isValidID(a.from))
+            problems.push(`Warning: ${a.from} is not a valid widget ID`);
+          else
+            this.w(a.from, source=>source.children().slice(0, a.count || 999999).reverse().forEach(c=> _movexy(c)));
+        } else if(! isValidCollection(a.collection)) {
+          problems.push(`Warning: ${a.collection} is not a valid collection`);
+        } else {
+          collections[a.collection].slice(0, a.count || 999999).reverse().forEach(w=> _movexy(w));
         }
       }
 
