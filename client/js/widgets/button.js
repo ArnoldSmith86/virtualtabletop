@@ -64,7 +64,7 @@ export class Button extends Widget {
       const a = { ...original };
       var problems = [];
 
-      if (this.p('debug')) console.log(`${this.id}: ${JSON.stringify(original)}`);
+      if(this.p('debug')) console.log(`${this.id}: ${JSON.stringify(original)}`);
       if(a.applyVariables) {
         if(Array.isArray(a.applyVariables)) {
           for(const v of a.applyVariables) {
@@ -143,7 +143,7 @@ export class Button extends Widget {
         if([ 'set', 'dec', 'inc' ].indexOf(a.mode) == -1)
           problems.push(`Warning: Mode ${a.mode} will be interpreted as add.`);
         this.w(a.label, label=> {
-          if (this.p('debug')) console.log(`changing ${a.label} ${a.mode} ${a.value}`)
+          if(this.p('debug')) console.log(`changing ${a.label} ${a.mode} ${a.value}`)
           label.setText(a.value, a.mode)
         });
       }
@@ -169,7 +169,7 @@ export class Button extends Widget {
         if(!isValidID(a.to)) {
           problems.push(`Warning: ${a.to} is not a valid widget ID`);
         } else if(a.from) {
-          if (!isValidID(a.from)) {
+          if(!isValidID(a.from)) {
             problems.push(`Warning: ${a.from} is not a valid widget ID`);
           } else if(a.face === null && typeof a.from == 'string' && typeof a.to == 'string' && !widgets.get(a.to).children().length && widgets.get(a.from).children().length <= count) {
             // this is a hacky shortcut to avoid removing and creating card piles when moving all children to an empty holder
@@ -201,7 +201,7 @@ export class Button extends Widget {
         };
         setDefaults(a, { collection: 'DEFAULT', count: 1, face: null, x: 0, y: 0 });
         if(a.from) {
-          if (!isValidID(a.from))
+          if(!isValidID(a.from))
             problems.push(`Warning: ${a.from} is not a valid widget ID`);
           else
             this.w(a.from, source=>source.children().slice(0, a.count || 999999).reverse().forEach(c=> _movexy(c)));
