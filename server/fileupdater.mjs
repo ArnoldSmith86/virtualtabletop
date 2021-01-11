@@ -9,11 +9,15 @@ export default function FileUpdater(state) {
     const w = state[id];
 
     if(v == 1 && state[id].type == 'button') {
+      let isFirstSelect = true;
       for(const operation of w.clickRoutine) {
-        if(operation.func == 'SELECT' && operation.mode == 'set')
-          delete operation.mode;
-        if(operation.func == 'SELECT' && operation.mode === undefined)
-          operation.mode = 'add';
+        if(operation.func == 'SELECT') {
+          if(operation.mode === undefined && !isFirstSelect)
+            operation.mode = 'add';
+          if(operation.mode == 'set')
+            delete operation.mode;
+          isFirstSelect = false;
+        }
       }
     }
 
