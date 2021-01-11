@@ -309,7 +309,7 @@ export class Button extends Widget {
               w => w.p('type') != 'label' && w.p('type') != 'button' && w.p('type') != 'deck'
             ).forEach(c=>c.p('parent', a.to));
           } else {
-            this.w(a.from, source=>this.w(a.to, target=>source.children().slice(0, count).reverse().forEach(c=> {
+            this.w(a.from, source=>this.w(a.to, target=>source.children().slice(0, count).forEach(c=> {
               if(a.face !== null && c.flip)
                 c.flip(a.face);
               if(source == target) {
@@ -327,7 +327,7 @@ export class Button extends Widget {
       if(a.func == 'MOVEXY') {
         setDefaults(a, { count: 1, face: null, x: 0, y: 0 });
         if(isValidID(a.from)) {
-          this.w(a.from, source=>source.children().slice(0, a.count || 999999).reverse().forEach(c=> {
+          this.w(a.from, source=>source.children().slice(0, a.count || 999999).forEach(c=> {
             if(a.face !== null && c.flip)
               c.flip(a.face);
             c.p('parent', null);
