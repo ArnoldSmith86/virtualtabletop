@@ -5,6 +5,7 @@
   --toolbarSize: 44px;
   --roomColor: #f0f0f0;
   --editColor: #7ba5f5;
+  --VTTblue: #1f5ca6;
 }
 
 body {
@@ -12,11 +13,11 @@ body {
   padding: 0;
   margin: 0;
   overflow: hidden;
-  font-family: ubuntu, sans;
+  font-family: 'Roboto', sans-serif;
 }
 
 #toolbar {
-  background: #52bbae;
+  background: var(--VTTblue);
   height: var(--toolbarSize);
   width: 100%;
   position: fixed;
@@ -53,6 +54,9 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
+  background-size: 80% 80%;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 .toolbarButton:hover {
   background-color: rgba(0,0,0,0.1);
@@ -70,11 +74,10 @@ body {
   padding: 2px;
   font-size: 14px;
   color: white;
-  background: black;
+  background:var(--VTTblue);
   border-radius: 4px;
   width: 100px;
   height: 18px;
-  opacity: 0.9;
 }
 
 .toolbarButton:hover .tooltip {
@@ -112,6 +115,7 @@ body {
   flex-direction: column;
   padding: 5% 10%;
   box-sizing: border-box;
+
 }
 
 .overlay h1 {
@@ -182,4 +186,108 @@ body {
 #enlarged.hidden {
   opacity: 0;
   visibility: hidden;
+}
+
+#statesButton {
+	background-image:url(/i/icons-white/chess-solid-svg.svg);
+}
+
+#playersButton {
+	background-image:url(/i/icons-white/user-friends-solid-svg.svg);
+}
+
+#editButton {
+	background-image:url(/i/icons-white/edit-regular-svg.svg);
+}
+
+#addButton {
+	background-image:url(/i/icons-white/plus-solid-svg.svg);
+}
+
+#fullscreenButton {
+	background-image:url(/i/icons-white/expand-solid-svg.svg);
+}
+
+#aboutButton {
+	background-image:url(/i/icons-white/info-circle-solid-svg.svg);
+}
+
+/*Buttons css*/
+
+.prettyButton {
+  border:5px;
+  color:white;
+  background-color: var(--VTTblue);
+  padding: 5px;
+  padding-left: 25px;
+  border-radius: 5px;
+  background-repeat: no-repeat;
+  margin:1px;
+}
+
+.gameMenu {
+  background-position:  5px center !important;
+  padding-left: 5px !important;
+}
+
+.upload, .uploadAsset {
+  background-image:url(/i/icons-white/upload-solid-svg.svg);
+  background-size: 20px 70%;
+  background-position:  2.5px center;
+}
+
+.download {
+  background-image:url(/i/icons-white/download-solid-svg.svg);
+  background-size: 20px 70%;
+  background-position:  2.5px center;
+}
+
+.link,.share {
+  background-image:url(/i/icons-white/link-solid-svg.svg);
+  background-size: 20px 60%;
+  background-position:  2.5px center;
+}
+
+.edit {
+  background-image:url(/i/icons-white/edit-regular-svg.svg);
+  background-size: 20px 60%;
+  background-position:  2.5px center;
+}
+
+.create {
+  background-image:url(/i/icons-white/plus-solid-svg.svg);
+  background-size: 20px 70%;
+  background-position:  2.5px center;
+}
+
+.library {
+  background-image:url(/i/icons-white/book-solid-svg.svg);
+  background-size: 20px 70%;
+  background-position:  2.5px center;
+}
+
+.save {
+  background-image:url(/i/icons-white/save-regular-svg.svg);
+  background-size: 20px 70%;
+  background-position:  2.5px center;
+}
+
+.update {
+  border:5px;
+  color:white;
+  background-color: var(--VTTblue);
+  padding: 5px;
+  padding-left: 25px;
+  border-radius: 5px;
+  background-repeat: no-repeat;
+  margin:1px;
+  background-image:url(/i/icons-white/sync-alt-solid-svg.svg);
+  background-size: 20px 70%;
+  background-position:  2.5px center;
+}
+
+.remove {
+  background-image:url(/i/icons-white/trash-alt-solid-svg.svg);
+  background-size: 20px 70%;
+  background-position:  2.5px center;
 }

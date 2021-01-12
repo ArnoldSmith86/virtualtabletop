@@ -42,9 +42,13 @@ class Holder extends Widget {
   }
 
   dispenseCard(card) {
-    if(!card.p('ignoreOnLeave'))
-      for(const property in this.p('onLeave'))
-        card.p(property, this.p('onLeave')[property]);
+    let toProcess = [ card ];
+    if(card.p('type') == 'pile')
+      toProcess = card.children();
+    for(const w of toProcess)
+      if(!w.p('ignoreOnLeave'))
+        for(const property in this.p('onLeave'))
+          w.p(property, this.p('onLeave')[property]);
     if(this.p('alignChildren'))
       this.receiveCard(null);
   }
@@ -57,9 +61,13 @@ class Holder extends Widget {
     if(this.p('childrenPerOwner'))
       child.p('owner', playerName);
 
-    if(this != child.currentParent) // FIXME: this isn't exactly pretty
+    if(this != child.currentParent) { // FIXME: this isn't exactly pretty
+      let toProcess = [ child ];
+      if(child.p('type') == 'pile')
+        toProcess = child.children();
       for(const property in this.p('onEnter'))
-        child.p(property, this.p('onEnter')[property]);
+        toProcess.forEach(w=>w.p(property, this.p('onEnter')[property]));
+    }
   }
 
   onChildAddAlign(child, oldParentID) {

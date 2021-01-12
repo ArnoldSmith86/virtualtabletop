@@ -1,3 +1,5 @@
+import { Widget } from './widget';
+
 class BasicWidget extends Widget {
   constructor(id) {
     super(id);

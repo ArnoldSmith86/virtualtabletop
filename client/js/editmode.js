@@ -479,6 +479,11 @@ onLoad(function() {
     if(widget.y)
       widget.y += 20;
     addWidgetLocal(widget);
+    const w = widgets.get(widget.id);
+    if(widget.x && w.absoluteCoord('x') > 1500)
+      w.p('x', w.p('x')-40);
+    if(widget.y && w.absoluteCoord('y') > 900)
+      w.p('y', w.p('y')-40);
     showOverlay();
   });
 
