@@ -8,7 +8,8 @@ localStorage.setItem('playerName', playerName);
 
 export {
   playerName,
-  playerColor
+  playerColor,
+  activePlayers
 }
 
 function addPlayerCursor(playerName, playerColor) {
