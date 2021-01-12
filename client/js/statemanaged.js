@@ -1,4 +1,6 @@
-class StateManaged {
+import { sendPropertyUpdate } from './serverstate.js';
+
+export class StateManaged {
   constructor() {
     this.defaults = {};
     this.state = {};
