@@ -123,6 +123,9 @@ class Pile extends Widget {
 
       removeWidgetLocal(this.p('id'));
     }
+
+    if(this.parent && this.parent.p('type') == 'holder')
+      this.parent.dispenseCard(child);
   }
 
   supportsPiles() {

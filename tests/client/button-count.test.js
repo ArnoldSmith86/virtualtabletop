@@ -1,55 +1,30 @@
-import { mockConnection } from '../../client/js/connection.js';
-import { dropTargets } from '../../client/js/main.js';
-import { addWidget, widgetFilter, widgets } from '../../client/js/serverstate.js';
+import { addWidget, widgetFilter } from '../../client/js/serverstate.js';
 import { Button } from '../../client/js/widgets/button.js';
-import { Label } from '../../client/js/widgets/label.js';
 import { Widget } from '../../client/js/widgets/widget.js';
 
-//start: copied from serverstate.js due to circular imports
-function removeWidget(widgetID) {
-  widgets.get(widgetID).applyRemove();
-  widgets.delete(widgetID);
-  dropTargets.delete(widgetID);
-}
-//end: copied from serverstate.js
-
-beforeAll(async () => {
-  await new Promise(resolve =>
-    window.addEventListener("load", resolve)
-  );
-  mockConnection();
-
-  document.body.insertAdjacentHTML('beforeend', '<div id="roomArea"> <div id="room"> <div id="topSurface" class="surface"></div> </div></div> <div id="debugButtonOverlay"><pre id="debugButtonOutput"></pre></div> <div id="enlarged"></div>');
-});
-
-function addLabel(id) {
-  const labelDef = { id: id, type: 'label' }
-  const label = new Label(labelDef.id);
-  addWidget(labelDef, label);
-  return label
-}
+import { addButton, addLabel, removeWidget } from './client-util.js';
 
 describe("Scenarios: Counting widgets", () => {
+  const testName = "button-count";
   let testButton;
   let testLabel;
-  beforeEach(() => {
+  beforeAll(() => {
     const testButtonDef = {
-      id: "test-button",
+      id: `${testName}test-button`,
       debug: false,
       type: "button"
     }
-    testButton = new Button(testButtonDef.id);
-    addWidget(testButtonDef, testButton);
+    testButton = addButton(testButtonDef);
 
-    testLabel = addLabel("test-label");
+    testLabel = addLabel(`${testName}-test-label`);
   });
-  afterEach(() => {
+  afterAll(() => {
     removeWidget(testButton.p('id'));
     removeWidget(testLabel.p('id'));
   });
 
   describe("Given a button that counts widgets from an undefined collection", () => {
-    beforeEach(() => {
+    beforeAll(() => {
       testButton.p('clickRoutine', [
         {
           "func": "COUNT",
@@ -58,16 +33,14 @@ describe("Scenarios: Counting widgets", () => {
       ]);
     });
     describe("When clicked", () => {
-      test("Then it does not throw an error", () => {
-        expect(async () => {
-          await testButton.click();
-        }).not.toThrow();
+      test("Then it does not throw an error", async () => {
+        await expect(testButton.click()).resolves.toBeUndefined();
       });
     });
   });
 
   describe("Given a button that counts widgets with property 'countThis'", () => {
-    beforeEach(() => {
+    beforeAll(() => {
       testButton.p('clickRoutine', [
         {
           "func": "SELECT",
@@ -79,7 +52,7 @@ describe("Scenarios: Counting widgets", () => {
         },
         {
           "func": "LABEL",
-          "label": "test-label",
+          "label": `${testName}-test-label`,
           "applyVariables": [
             {
               "parameter": "value",
@@ -93,9 +66,9 @@ describe("Scenarios: Counting widgets", () => {
     describe("And there are 2 widgets with 'countThis' and 1 without", () => {
       const widgets = [];
       beforeEach(() => {
-        widgets[0] = addLabel('one');
-        widgets[1] = addLabel('two');
-        widgets[2] = addLabel('three');
+        widgets[0] = addLabel(`${testName}-label-one`);
+        widgets[1] = addLabel(`${testName}-label-two`);
+        widgets[2] = addLabel(`${testName}-label-three`);
         widgets[0].p("text", "countThis");
         widgets[2].p("text", "countThis");
       });
