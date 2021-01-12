@@ -3,6 +3,7 @@ import { onLoad } from '../domhelpers.js';
 let playerCursors = {};
 let playerName = localStorage.getItem('playerName') || 'Guest' + Math.floor(Math.random()*1000);
 let playerColor = 'red';
+let activePlayers = [];
 localStorage.setItem('playerName', playerName);
 
 export {
@@ -18,7 +19,8 @@ function addPlayerCursor(playerName, playerColor) {
   $('#roomArea').appendChild(playerCursors[playerName]);
 }
 
-function fillPlayerList(players, activePlayers) {
+function fillPlayerList(players, active) {
+  activePlayers = active;
   removeFromDOM('#playerList > div, #roomArea > .cursor');
 
   for(const player in players) {

@@ -56,7 +56,8 @@ export class Button extends Widget {
 
     const variables = {
       playerName,
-      playerColor
+      playerColor,
+      activePlayers
     };
     const collections = {};
 
