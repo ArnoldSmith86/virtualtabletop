@@ -95,7 +95,7 @@ class Card extends Widget {
     if(setFlip !== undefined && setFlip !== null)
       this.p('activeFace', setFlip);
     else
-      this.p('activeFace', Math.floor(this.p('activeFace') + (this.p('faceCycle') == 'random' ? Math.random()*99999 : 1)) % this.p('faceTemplates').length);
+      this.p('activeFace', Math.floor(this.p('activeFace') + (this.p('faceCycle') == 'random' ? Math.random()*99999 : 1)) % this.deck.p('faceTemplates').length);
   }
 
   getDefaultValue(property) {
