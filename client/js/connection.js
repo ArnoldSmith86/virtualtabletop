@@ -19,6 +19,8 @@ export function startWebSocket() {
   connection.onopen = () => {
     if(!urlProperties.askID) {
       toServer('room', { playerName, roomID });
+      if(urlProperties.trace)
+        toServer('enableTrace');
       $('#ghetto-link').href += `#${roomID}`;
     }
   };
@@ -51,5 +53,5 @@ export function toServer(func, args) {
 }
 
 function log(str) {
-  toServer('log', str);
+  toServer('trace', str);
 }

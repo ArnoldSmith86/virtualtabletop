@@ -25,10 +25,10 @@ export default class Player {
       this.receiveDelta(args);
     if(func == 'editState')
       this.room.editState(this, args.id, args.meta);
+    if(func == 'enableTrace')
+      this.room.traceActivated = true;
     if(func == 'loadState')
       this.room.loadState(this, args.stateID, args.variantID);
-    if(func == 'log')
-      console.log(new Date().toISOString(), this.name, args);
     if(func == 'mouse')
       this.room.mouseMove(this, args);
     if(func == 'playerColor')
@@ -37,6 +37,8 @@ export default class Player {
       this.room.removeState(this, args);
     if(func == 'rename')
       this.room.renamePlayer(this, args.oldName, args.newName);
+    if(func == 'trace')
+      this.room.trace('client', { player: this.name, args });
   }
 
   receiveDelta(delta) {

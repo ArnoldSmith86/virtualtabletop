@@ -117,6 +117,7 @@ export default class Room {
   }
 
   broadcast(func, args, exceptPlayer) {
+    this.trace('broadcast', { func, args, exceptPlayer: exceptPlayer?.name });
     for(const player of this.players)
       if(player != exceptPlayer)
         player.send(func, args);
@@ -239,6 +240,7 @@ export default class Room {
 
   receiveInvalidDelta(player, delta, widgetID) {
     console.log(new Date().toISOString(), `WARNING: received conflicting delta data for widget ${widgetID} from player ${player.name} in room ${this.id} - sending game state at ${this.deltaID}`);
+    this.trace('conflict', { player: player.name, delta, deltaID: this.deltaID, widgetID });
     this.state._meta.deltaID = ++this.deltaID;
     player.send('state', this.state);
   }
@@ -279,10 +281,18 @@ export default class Room {
   }
 
   setState(state) {
+    this.trace('state', 'setting state');
     const meta = this.state._meta;
     this.state = state;
     this.state._meta = meta;
     this.broadcast('state', state);
+  }
+
+  trace(type, payload) {
+    if(this.traceActivated) {
+      const line = `${new Date().toISOString()} - ${type} - ${JSON.stringify(payload)}\n`;
+      fs.appendFileSync(path.resolve() + '/save/' + this.id + '.trace', line);
+    }
   }
 
   unload() {

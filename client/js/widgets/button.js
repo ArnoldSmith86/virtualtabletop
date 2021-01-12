@@ -51,6 +51,8 @@ export class Button extends Widget {
 
     batchStart();
 
+    log(`button press: ${this.p('id')}`);
+
     if(this.p('debug'))
       $('#debugButtonOutput').textContent = '';
 
