@@ -373,7 +373,7 @@ export class Widget extends StateManaged {
     return true;
   }
 
-  updateOwner(oldName, newName) {
+  updateOwner() {
     this.domElement.className = this.classes();
   }
 
