@@ -49,7 +49,7 @@ class Holder extends Widget {
       if(!w.p('ignoreOnLeave'))
         for(const property in this.p('onLeave'))
           w.p(property, this.p('onLeave')[property]);
-    if(this.p('alignChildren'))
+    if(this.p('alignChildren') && (this.p('stackOffsetX') || this.p('stackOffsetY')))
       this.receiveCard(null);
   }
 
