@@ -1,0 +1,14 @@
+# Default
+* @ArnoldSmith86
+
+# UI
+*.css @RaphaelAlvez
+*.html @RaphaelAlvez
+*.svg @RaphaelAlvez
+
+# Library
+library @96LawDawg
+
+# Tests
+jest.config.mjs @UltimateGeek
+/tests/ @UltimateGeek
