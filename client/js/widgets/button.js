@@ -263,7 +263,8 @@ export class Button extends Widget {
           } else {
             switch(a.aggregation) {
             case 'first':
-              variables[a.variable] = collections[a.collection][0].p(a.property);
+              // always get a deep copy and not object references
+              variables[a.variable] = JSON.parse(JSON.stringify(collections[a.collection][0].p(a.property)));
               break;
             case 'sum':
               variables[a.variable] = 0;
