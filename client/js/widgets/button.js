@@ -259,15 +259,15 @@ export class Button extends Widget {
           switch(a.aggregation) {
           case 'first':
             if(collections[a.collection].length)
-              variables[a.variable] = collections[a.collection][0].p(a.property);
+              // always get a deep copy and not object references
+              variables[a.variable] = JSON.parse(JSON.stringify(collections[a.collection][0].p(a.property)));
             else
               problems.push(`Collection ${a.collection} is empty.`);
             break;
           case 'sum':
             variables[a.variable] = 0;
-            for(const widget of collections[a.collection]) {
+            for(const widget of collections[a.collection])
               variables[a.variable] += Number(widget.p(a.property) || 0);
-            }
             break;
           default:
             problems.push(`Aggregation ${a.aggregation} is unsupported.`);
@@ -358,10 +358,10 @@ export class Button extends Widget {
       }
 
       if(a.func == 'ROTATE') {
-        setDefaults(a, { count: 1, angle: 90 });
+        setDefaults(a, { count: 1, angle: 90, mode: 'add' });
         if(isValidID(a.holder)) {
           this.w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>{
-            c.rotate(a.angle);
+            c.rotate(a.angle, a.mode);
           }));
         }
       }
@@ -396,7 +396,9 @@ export class Button extends Widget {
 
       if(a.func == 'SET') {
         setDefaults(a, { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
-        if(isValidCollection(a.collection)) {
+        if((a.property == 'parent' || a.property == 'deck') && a.value !== null && !widgets.has(a.value)) {
+          problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
+        } else if(isValidCollection(a.collection)) {
           if([ '+', '-', '=' ].indexOf(a.relation) == -1)
             problems.push(`Warning: Relation ${a.relation} interpreted as =.`);
           for(const w of collections[a.collection]) {
