@@ -75,15 +75,15 @@ class Card extends Widget {
         let css = object.css ? object.css + '; ' : '';
         css += `left: ${x}px; top: ${y}px; width: ${object.width}px; height: ${object.height}px; font-size: ${object.fontSize}px; text-align: ${object.textAlign}`;
         css += object.rotation ? `; transform: rotate(${object.rotation}deg)` : '';
+        objectDiv.style.cssText = css;
         if(object.type == 'image') {
           if(value)
-            css += objectDiv.style.backgroundImage = `; background-image: url(${value})`;
-          css += object.color ? `; background-color: ${object.color}` : '; background-color: white';
+            objectDiv.style.backgroundImage = `url(${value})`;
+          objectDiv.style.backgroundColor = object.color || 'white';
         } else {
           objectDiv.textContent = value;
           objectDiv.style.color = object.color;
         }
-        objectDiv.style.cssText = css;
         faceDiv.appendChild(objectDiv);
       }
       this.domElement.appendChild(faceDiv);
