@@ -428,7 +428,7 @@ onLoad(function() {
   });
 
   on('#decrementAllCardTypes', 'click', function() {
-    $a('#cardTypesList .count').forEach(i=>--i.value);
+    $a('#cardTypesList .count').forEach(i=>i.value=Math.max(0, i.value-1));
   });
 
   on('#incrementAllCardTypes', 'click', function() {

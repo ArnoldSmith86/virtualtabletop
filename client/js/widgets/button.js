@@ -263,7 +263,8 @@ export class Button extends Widget {
           } else {
             switch(a.aggregation) {
             case 'first':
-              variables[a.variable] = collections[a.collection][0].p(a.property);
+              // always get a deep copy and not object references
+              variables[a.variable] = JSON.parse(JSON.stringify(collections[a.collection][0].p(a.property)));
               break;
             case 'sum':
               variables[a.variable] = 0;
@@ -374,7 +375,7 @@ export class Button extends Widget {
         if(a.source == 'all' || isValidCollection(a.source)) {
           if([ 'add', 'set' ].indexOf(a.mode) == -1)
             problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
-          collections[a.collection] = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(function(w) {
+          let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(function(w) {
             if(a.relation === '<')
               return w.p(a.property) < a.value;
             else if(a.relation === '<=')
@@ -389,6 +390,11 @@ export class Button extends Widget {
               problems.push(`Warning: Relation ${a.relation} interpreted as ==.`);
             return w.p(a.property) === a.value;
           }).slice(0, a.max).concat(a.mode == 'add' ? collections[a.collection] || [] : []);
+
+          // resolve piles
+          c.filter(w=>w.p('type')=='pile').forEach(w=>c.push(...w.children()));
+          c = c.filter(w=>w.p('type')!='pile');
+          collections[a.collection] = c;
         }
       }
 
