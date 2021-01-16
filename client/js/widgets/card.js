@@ -78,7 +78,7 @@ class Card extends Widget {
         if(object.type == 'image') {
           if(value)
             css += objectDiv.style.backgroundImage = `; background-image: url(${value})`;
-          css += object.color? `; background-color: ${object.color}` || '; background-color: white';
+          css += object.color ? `; background-color: ${object.color}` : '; background-color: white';
         } else {
           objectDiv.textContent = value;
           objectDiv.style.color = object.color;
