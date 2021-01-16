@@ -400,7 +400,9 @@ export class Button extends Widget {
 
       if(a.func == 'SET') {
         setDefaults(a, { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
-        if(isValidCollection(a.collection)) {
+        if((a.property == 'parent' || a.property == 'deck') && a.value !== null && !widgets.has(a.value)) {
+          problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
+        } else if(isValidCollection(a.collection)) {
           if([ '+', '-', '=' ].indexOf(a.relation) == -1)
             problems.push(`Warning: Relation ${a.relation} interpreted as =.`);
           for(const w of collections[a.collection]) {
