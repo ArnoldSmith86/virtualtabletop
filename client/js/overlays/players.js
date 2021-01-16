@@ -62,6 +62,6 @@ onLoad(function() {
     playerName = args;
     localStorage.setItem('playerName', playerName);
     for(const [ id, widget ] of widgets)
-      widget.updateOwner(oldName, playerName);
+      widget.updateOwner();
   });
 });
