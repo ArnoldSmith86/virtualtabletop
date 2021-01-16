@@ -362,10 +362,10 @@ export class Button extends Widget {
       }
 
       if(a.func == 'ROTATE') {
-        setDefaults(a, { count: 1, angle: 90 });
+        setDefaults(a, { count: 1, angle: 90, mode: 'add' });
         if(isValidID(a.holder)) {
           this.w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>{
-            c.rotate(a.angle);
+            c.rotate(a.angle, a.mode);
           }));
         }
       }
