@@ -255,26 +255,22 @@ export class Button extends Widget {
 
       if(a.func == 'GET') {
         setDefaults(a, { variable: a.property || 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first' });
-        if(! isValidCollection(a.collection)) {
-          problems.push(`Invalid collection: ${a.collection}`);
-        } else {
-          if(!collections[a.collection].length) {
-            problems.push(`Collection ${a.collection} is empty.`);
-          } else {
-            switch(a.aggregation) {
-            case 'first':
+        if(isValidCollection(a.collection)) {
+          switch(a.aggregation) {
+          case 'first':
+            if(collections[a.collection].length)
               // always get a deep copy and not object references
               variables[a.variable] = JSON.parse(JSON.stringify(collections[a.collection][0].p(a.property)));
-              break;
-            case 'sum':
-              variables[a.variable] = 0;
-              for(const widget of collections[a.collection]) {
-                variables[a.variable] += Number(widget.p(a.property) || 0);
-              }
-              break;
-            default:
-              problems.push(`Aggregation ${a.aggregation} is unsupported.`);
-            }
+            else
+              problems.push(`Collection ${a.collection} is empty.`);
+            break;
+          case 'sum':
+            variables[a.variable] = 0;
+            for(const widget of collections[a.collection])
+              variables[a.variable] += Number(widget.p(a.property) || 0);
+            break;
+          default:
+            problems.push(`Aggregation ${a.aggregation} is unsupported.`);
           }
         }
       }
