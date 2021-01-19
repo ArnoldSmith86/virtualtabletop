@@ -31,7 +31,7 @@
   "homepage": "https://github.com/ArnoldSmith86/virtualtabletop#readme",
   "dependencies": {
     "@node-minify/clean-css": "^6.1.0",
-    "@node-minify/core": "^6.1.0",
+    "@node-minify/core": "^6.2.0",
     "@node-minify/html-minifier": "^6.1.0",
     "@node-minify/no-compress": "^6.1.0",
     "@node-minify/uglify-es": "^6.1.0",
