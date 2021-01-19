@@ -9,6 +9,7 @@ let urlProperties = {};
 
 let maxZ = {};
 export const dropTargets = new Map();
+const piles = new Map();
 
 function getValidDropTargets(widget) {
   const targets = [];

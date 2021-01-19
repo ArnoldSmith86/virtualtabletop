@@ -5,6 +5,8 @@ function addWidgetLocal(widget) {
     widget.id = Math.random().toString(36).substring(3, 7);
   sendPropertyUpdate(widget.id, widget);
   sendDelta(true);
+  if(widget.parent)
+    widgets.get(widget.parent).onChildAdd(widgets.get(widget.id));
 }
 
 function populateEditOptionsDeck(widget) {
@@ -129,7 +131,6 @@ function editClick(widget) {
 function generateCardDeckWidgets(id, x, y) {
   const widgets = [
     { type:'holder', id, x, y, dropTarget: { type: 'card' } },
-    { type:'pile', id: id+'P', parent: id, width:103, height:160 },
     {
       id: id+'B',
       parent: id,
@@ -156,7 +157,7 @@ function generateCardDeckWidgets(id, x, y) {
   [ {label:'C', color: "♣", alternating:"1♣"}, {label:'D', color: "♦", alternating:"4♦"}, {label:'H', color: "♥", alternating:"2♥"}, {label:'S', color: "♠", alternating:"3♠"} ].forEach(function(s) {
     [ {label:'A', rank: "01", rankA:"5A"}, {label:'2', rank: "02", rankA:"02"},{label:'3', rank: "03", rankA:"03"},{label:'4', rank: "04", rankA:"04"},{label:'5', rank: "05", rankA:"05"},{label:'6', rank: "06", rankA:"06"},{label:'7', rank: "07", rankA:"07"},{label:'8', rank: "08", rankA:"08"},{label:'9', rank: "09", rankA:"09"},{label:'T', rank: "10", rankA:"10"},{label:'J', rank: "2J", rankA:"2J"},{label:'Q', rank: "3Q", rankA:"3Q"},{label:'K', rank: "4K", rankA:"4K"}].forEach(function(n) {
       types[s.label+" "+n.rank] = { image:`/i/cards-default/${n.label}${s.label}.svg`, suit:s.label, suitColor:s.color, suitAlt:s.alternating, rank:n.rank,rankA:n.rankA, rankFixed:n.rank+" "+s.label};
-      cards.push({ id:id+"_"+n.label+"_"+s.label, parent:id+'P', deck:id+'D', type:'card', cardType:s.label+" "+n.rank });
+      cards.push({ id:id+"_"+n.label+"_"+s.label, parent:id, pile:id+'P', deck:id+'D', type:'card', cardType:s.label+" "+n.rank });
     });
   });
 
@@ -217,7 +218,6 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
     if(wi.type == 'deck')   w = new Deck(wi.id);
     if(wi.type == 'holder') w = new Holder(wi.id);
     if(wi.type == 'label')  w = new Label(wi.id);
-    if(wi.type == 'pile')   w = new Pile(wi.id);
     widgets.set(wi.id, w);
     w.applyDelta(wi);
     if(!wi.parent) {
@@ -243,6 +243,7 @@ function addWidgetToAddWidgetOverlay(w, wi) {
 }
 
 function populateAddWidgetOverlay() {
+  return; // FIXME: re-enable
   const x = 20+140-111/2;
   addWidgetToAddWidgetOverlay(new Holder('add-holder'), {
     type: 'holder',

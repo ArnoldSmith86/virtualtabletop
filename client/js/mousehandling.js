@@ -21,7 +21,7 @@ function inputHandler(name, e) {
   e.preventDefault();
 
   let target = e.target;
-  while(target && (!target.id || !widgets.has(target.id)))
+  while(target && (!target.id || !widgets.has(target.id) && !piles.has(target.id)))
     target = target.parentNode;
 
   const coords = eventCoords(name, e);
@@ -46,7 +46,9 @@ function inputHandler(name, e) {
       if(ms.status != 'initial' && ms.widget.p(edit ? 'movableInEdit' : 'movable'))
         ms.widget.moveEnd();
       if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
-        if(edit)
+        if(piles.has(target.id))
+          piles.get(target.id).click();
+        else if(edit)
           editClick(widgets.get(target.id));
         else if(widgets.get(target.id).click)
           widgets.get(target.id).click();
@@ -61,7 +63,7 @@ function inputHandler(name, e) {
         Object.assign(mouseStatus[target.id], {
           status: 'moving',
           offset: [ downCoords[0] - (targetRect.left + targetRect.width/2), downCoords[1] - (targetRect.top + targetRect.height/2) ],
-          widget: widgets.get(target.id)
+          widget: piles.has(target.id) ? piles.get(target.id) : widgets.get(target.id)
         });
         if(mouseStatus[target.id].widget.p(edit ? 'movableInEdit' : 'movable'))
           mouseStatus[target.id].widget.moveStart();

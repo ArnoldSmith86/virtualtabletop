@@ -44,8 +44,6 @@ export function addWidget(widget, instance) {
       deferredCards[widget.deck].push(widget);
       return;
     }
-  } else if(widget.type == 'pile') {
-    w = new Pile(id);
   } else if(widget.type == 'deck') {
     w = new Deck(id);
   } else if(widget.type == 'holder') {
@@ -155,6 +153,8 @@ onLoad(function() {
     for(const widget of $a('#room .widget'))
       if(widget.id != 'enlarged')
         widgets.get(widget.id).applyRemove();
+    for(const pile of piles.values())
+      pile.destroy();
     widgets.clear();
     dropTargets.clear();
     maxZ = {};

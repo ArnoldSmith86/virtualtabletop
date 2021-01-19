@@ -24,33 +24,12 @@ class Holder extends Widget {
   }
 
   children() {
-    let children = this.childrenFilter(super.children(), true);
-    if(children.length == 1 && children[0].p('type') == 'pile')
-      children = this.childrenFilter(children[0].children(), false);
-    return children;
-  }
-
-  childrenFilter(children, acceptPiles) {
-    return children.filter(w=>{
-      if(acceptPiles && w.p('type') == 'pile')
-        return true;
+    return super.children().filter(w=>{
       for(const p in this.p('dropTarget'))
         if(w.p(p) != this.p('dropTarget')[p])
           return false;
       return true;
     });
-  }
-
-  dispenseCard(card) {
-    let toProcess = [ card ];
-    if(card.p('type') == 'pile')
-      toProcess = card.children();
-    for(const w of toProcess)
-      if(!w.p('ignoreOnLeave'))
-        for(const property in this.p('onLeave'))
-          w.p(property, this.p('onLeave')[property]);
-    if(this.p('alignChildren') && (this.p('stackOffsetX') || this.p('stackOffsetY')))
-      this.receiveCard(null);
   }
 
   onChildAdd(child, oldParentID) {
@@ -60,30 +39,13 @@ class Holder extends Widget {
 
     if(this.p('childrenPerOwner'))
       child.p('owner', playerName);
-
-    if(this != child.currentParent) { // FIXME: this isn't exactly pretty
-      let toProcess = [ child ];
-      if(child.p('type') == 'pile')
-        toProcess = child.children();
-      for(const property in this.p('onEnter'))
-        toProcess.forEach(w=>w.p(property, this.p('onEnter')[property]));
-    }
+    for(const property in this.p('onEnter'))
+      child.p(property, this.p('onEnter')[property]);
   }
 
   onChildAddAlign(child, oldParentID) {
     if(child.p('type') == 'deck')
       return super.onChildAddAlign(child, oldParentID);
-
-    if(this.p('alignChildren') && (this.p('stackOffsetX') || this.p('stackOffsetY')) && child.p('type') == 'pile') {
-      let i=1;
-      child.children().slice(0, -1).forEach(w=>{
-        w.p('x', w.p('x') + child.p('x') + i);
-        w.p('y', w.p('y') + child.p('y') + i);
-        w.p('parent', this.p('id'));
-        ++i;
-      });
-      return true;
-    }
 
     if(!this.p('alignChildren') || !this.p('stackOffsetX') && !this.p('stackOffsetY'))
       super.onChildAddAlign(child, oldParentID);
@@ -91,6 +53,17 @@ class Holder extends Widget {
       this.receiveCard(child, [ this.p('stackOffsetX')*999999, this.p('stackOffsetY')*999999 ]);
     else
       this.receiveCard(child, [ child.p('x') - this.absoluteCoord('x'), child.p('y') - this.absoluteCoord('y') ]);
+  }
+
+  onChildRemove(child) {
+    super.onChildRemove(child);
+    if(this.p('childrenPerOwner'))
+      child.p('owner', null);
+    if(!child.p('ignoreOnLeave'))
+      for(const property in this.p('onLeave'))
+        child.p(property, this.p('onLeave')[property]);
+    if(this.p('alignChildren') && (this.p('stackOffsetX') || this.p('stackOffsetY')))
+      this.receiveCard(null);
   }
 
   receiveCard(card, pos) {
@@ -104,7 +77,7 @@ class Holder extends Widget {
     this.rearrangeChildren(children, card);
   }
 
-  rearrangeChildren(children, card) {
+  rearrangeChildren(children) {
     let xOffset = 0;
     let yOffset = 0;
     let z = 1;
@@ -122,7 +95,7 @@ class Holder extends Widget {
   }
 
   supportsPiles() {
-    return !this.p('alignChildren') || !this.p('stackOffsetX') && !this.p('stackOffsetY');
+    return super.supportsPiles() && (!this.p('alignChildren') || !this.p('stackOffsetX') && !this.p('stackOffsetY'));
   }
 
   updateAfterShuffle() {

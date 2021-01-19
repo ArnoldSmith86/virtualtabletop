@@ -35,7 +35,15 @@ export class Widget extends StateManaged {
       owner: null,
       dropOffsetX: 0,
       dropOffsetY: 0,
-      inheritChildZ: false
+      inheritChildZ: false,
+
+      allowPiles: true,
+      pile: null,
+      pilesWith: null,
+      pileOptions: {
+        xOffset: 10,
+        yOffset: 10
+      }
     });
 
     this.domElement.addEventListener('contextmenu', e => this.showEnlarged(e), false);
@@ -106,6 +114,19 @@ export class Widget extends StateManaged {
       }
     }
 
+    if(delta.pile !== undefined) {
+      if(this.pile) {
+        this.pile.removeWidget(this);
+        delete this.pile;
+      }
+      if(delta.pile) {
+        if(!piles.has(delta.pile))
+          piles.set(delta.pile, new Pile(delta.pile, this.p('pileOptions')));
+        this.pile = piles.get(delta.pile);
+        this.pile.addWidget(this);
+      }
+    }
+
     if($('#enlarged').dataset.id == this.p('id') && !$('#enlarged').className.match(/hidden/))
       this.showEnlarged();
   }
@@ -148,8 +169,6 @@ export class Widget extends StateManaged {
     if(this.currentParent && (forceDetach || !overlap(this.domElement, this.currentParent.domElement))) {
       this.p('parent', null);
       this.p('owner',  null);
-      if(this.currentParent.dispenseCard)
-        this.currentParent.dispenseCard(this);
       delete this.currentParent;
     }
   }
@@ -210,7 +229,6 @@ export class Widget extends StateManaged {
     if(this.currentParent != holder)
       this.checkParent(true);
 
-    this.p('owner',  null);
     this.p('parent', holder.p('id'));
   }
 
@@ -222,6 +240,7 @@ export class Widget extends StateManaged {
     this.hoverTarget = null;
 
     this.p('parent', null);
+    this.p('pile', null);
 
     for(const t of this.dropTargets)
       t.domElement.classList.add('droppable');
@@ -316,7 +335,13 @@ export class Widget extends StateManaged {
         widgets.get(oldValue).onChildRemove(this);
       if(newValue)
         widgets.get(newValue).onChildAdd(this, oldValue);
+      this.p('pile', null);
       this.updatePiles();
+    }
+    if(property == 'pile' && piles.has(oldValue)) {
+      const pileChildren = piles.get(oldValue).children();
+      if(pileChildren.length == 1)
+        pileChildren[0].p('pile', null);
     }
   }
 
@@ -373,7 +398,7 @@ export class Widget extends StateManaged {
   }
 
   supportsPiles() {
-    return true;
+    return this.p('allowPiles');
   }
 
   updateOwner() {
@@ -381,52 +406,63 @@ export class Widget extends StateManaged {
   }
 
   updatePiles() {
-    if(this.p('parent') && !widgets.get(this.p('parent')).supportsPiles())
+    if(!this.p('pilesWith') || this.p('parent') && !widgets.get(this.p('parent')).supportsPiles()) // FIXME: this.parent
       return;
 
-    for(const [ widgetID, widget ] of widgets) {
-      // check if this widget is closer than 10px from another widget in the same parent
-      if(widget != this && widget.p('parent') == this.p('parent') && Math.abs(widget.p('x')-this.p('x')) < 10 && Math.abs(widget.p('y')-this.p('y')) < 10) {
-        if(widget.p('owner') !== this.p('owner'))
-          continue;
+    const parent = this.p('parent');
+    const owner = JSON.stringify(this.p('owner'));
+    const pilesWith = JSON.stringify(this.p('pilesWith'));
+    const pileOptions = JSON.stringify(this.p('pileOptions'));
 
-        // if a card gets dropped onto a card, they create a new pile and are added to it
-        if(widget.p('type') == 'card' && this.p('type') == 'card') {
-          const pile = {
-            type: 'pile',
-            parent: this.p('parent'),
-            x: widget.p('x'),
-            y: widget.p('y'),
-            width: this.p('width'),
-            height: this.p('height')
-          };
-          addWidgetLocal(pile);
-          this.p('parent', pile.id);
-          widget.p('parent', pile.id);
-          break;
-        }
+    const canPileWith = (widget) => { // FIXME: rotation? scale? movable?
+      if(widget.p('parent') !== parent)
+        return false;
+      if(JSON.stringify(widget.p('pilesWith')) !== pilesWith)
+        return false;
+      if(widget === this)
+        return false;
+      if(JSON.stringify(widget.p('pileOptions')) !== pileOptions)
+        return false;
+      if(JSON.stringify(widget.p('owner')) !== owner)
+        return false;
+      if(Math.abs(widget.p('x')-this.p('x')) > (this.p('pileOptions').xOffset || 10))
+        return false;
+      if(Math.abs(widget.p('y')-this.p('y')) > (this.p('pileOptions').yOffset || 10))
+        return false;
+      return true;
+    }
 
-        // if a pile gets dropped onto a pile, all children of one pile are moved to the other (the empty one destroys itself)
-        if(widget.p('type') == 'pile' && this.p('type') == 'pile') {
-          this.children().reverse().forEach(w=>{w.p('parent', widget.p('id')); w.bringToFront()});
-          break;
-        }
+    const siblings = parent ? widgets.get(this.p('parent')).children() : Array.from(widgets.values()); // FIXME: this.parent
+    // FIXME: merging piles doesn't change all positions
+    for(const widget of siblings.filter(canPileWith)) {
+      this.p('x', widget.p('x'));
+      this.p('y', widget.p('y'));
 
-        // if a pile gets dropped onto a card, the card is added to the pile but the pile is moved to the original position of the card
-        if(widget.p('type') == 'card' && this.p('type') == 'pile' && !this.removed) {
-          this.children().reverse().forEach(w=>w.bringToFront());
-          this.p('x', widget.p('x'));
-          this.p('y', widget.p('y'));
-          widget.p('parent', this.p('id'));
-          break;
-        }
+      // if a card gets dropped onto a card, they create a new pile and are added to it
+      if(!widget.p('pile') && !this.p('pile')) {
+        const pileID = Math.random().toString(36).substring(3, 7);
+        this.p('pile', pileID);
+        widget.p('pile', pileID);
+        break;
+      }
 
-        // if a card gets dropped onto a pile, it simply gets added to the pile
-        if(widget.p('type') == 'pile' && this.p('type') == 'card' && !widget.removed) {
-          this.bringToFront();
-          this.p('parent', widget.p('id'));
-          break;
-        }
+      // if a pile gets dropped onto a pile, all children of one pile are moved to the other (the empty one destroys itself)
+      if(widget.p('pile') && this.p('pile')) {
+        // FIXME: does this catch all of them?
+        // FIXME: Z-order
+        widget.p('pile', this.p('pile'));
+      }
+
+      // if a pile gets dropped onto a card, the card is added to the pile but the pile is moved to the original position of the card
+      if(!widget.p('pile') && this.p('pile')) {
+        // FIXME: Z-order
+        widget.p('pile', this.p('pile'));
+      }
+
+      // if a card gets dropped onto a pile, it simply gets added to the pile
+      if(widget.p('pile') && !this.p('pile')) {
+        // FIXME: Z-order
+        this.p('pile', widget.p('pile'));
       }
     }
   }

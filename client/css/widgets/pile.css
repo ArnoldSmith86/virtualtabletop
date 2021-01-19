@@ -1,4 +1,4 @@
-.pile .handle {
+.pile.handle {
   position: absolute;
   left: -15px;
   top: -15px;
@@ -15,18 +15,18 @@
   z-index: 9999999;
 }
 
-.pile .handle.small {
+.pile.handle.small {
   width: 20px;
   height: 20px;
   font-size: 10px;
 }
 
-.pile .handle.right {
+.pile.handle.right {
   left: unset;
   right: -15px;
 }
 
-.pile .handle.bottom {
+.pile.handle.bottom {
   top: unset;
   bottom: -15px;
 }

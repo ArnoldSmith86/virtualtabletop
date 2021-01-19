@@ -7,7 +7,7 @@
   "scripts": {
     "clean": "rm -rf coverage",
     "clobber": "npm clean && rm -rf save",
-    "debug": "NOCOMPRESS=1 npm start",
+    "debug": "env NOCOMPRESS=1 npm start",
     "start": "nodemon -e js,mjs,css,html --ignore save --ignore coverage --ignore tests server.mjs",
     "test": "node --experimental-vm-modules node_modules/.bin/jest --coverage",
     "test-cont": "nodemon -e js,mjs,css,html --ignore save --ignore coverage --experimental-vm-modules node_modules/.bin/jest"

@@ -1,49 +1,30 @@
-class Pile extends Widget {
-  constructor(id) {
-    super(id);
+class Pile {
+  constructor(id, options) {
+    this.id = id;
+    this.options = options;
+
+    console.log('creating pile', this.id);
+    this.widgets = new Map();
+
     this.handle = document.createElement('div');
-    this.handle.className = 'handle';
+    this.handle.className = 'pile handle';
+    this.handle.style = options.css || '';
+    this.handle.id = id;
 
-    this.addDefaults({
-      typeClasses: 'widget pile',
-      x: 4,
-      y: 4,
-      width: 1,
-      height: 1,
-      alignChildren: true,
-      inheritChildZ: true
-    });
-
-    this.domElement.appendChild(this.handle);
+    $('#topSurface').appendChild(this.handle);
     this.handle.textContent = 0;
   }
 
-  applyChildAdd(child) {
-    super.applyChildAdd(child);
+  addWidget(child) {
+    this.rectangle = child.domElement.getBoundingClientRect();
+
+    this.widgets.set(child.p('id'), child);
+    this.setPosition(child.absoluteCoord('x'), child.absoluteCoord('y'));
     ++this.handle.textContent;
   }
 
-  applyChildRemove(child) {
-    super.applyChildRemove(child);
-    --this.handle.textContent;
-  }
-
-  applyDeltaToDOM(delta) {
-    super.applyDeltaToDOM(delta);
-    if(this.handle && (delta.width !== undefined || delta.height !== undefined)) {
-      if(this.p('width') < 50 || this.p('height') < 50)
-        this.handle.classList.add('small');
-      else
-        this.handle.classList.remove('small');
-    }
-    for(const e of [ [ 'x', 'right', 1600-this.p('width')-20 ], [ 'y', 'bottom', 20 ] ]) {
-      if(this.handle && (delta[e[0]] !== undefined || delta.parent !== undefined)) {
-        if(this.absoluteCoord(e[0]) < e[2])
-          this.handle.classList.add(e[1]);
-        else
-          this.handle.classList.remove(e[1]);
-      }
-    }
+  children() {
+    return Array.from(this.widgets.values());
   }
 
   click() {
@@ -77,29 +58,66 @@ class Pile extends Widget {
     showOverlay('pileOverlay');
   }
 
-  onChildRemove(child) {
-    super.onChildRemove(child);
-    if(this.children().length == 1) {
-      const c = this.children()[0];
-      const p = this.p('parent');
-      const x = this.p('x');
-      const y = this.p('y');
-
-      this.removed = true;
-
-      c.p('x', c.p('x') + x);
-      c.p('y', c.p('y') + y);
-      c.p('parent', p);
-
-      removeWidgetLocal(this.p('id'));
+  destroy() {
+    if(this.movingWidgets) {
+      this.destroyAfterMove = true;
+    } else {
+      console.log('destroying pile', this.id);
+      piles.delete(this.id);
+      removeFromDOM(this.handle);
     }
-
-    if(this.parent && this.parent.p('type') == 'holder')
-      this.parent.dispenseCard(child);
   }
 
-  supportsPiles() {
-    return false;
+  moveStart() {
+    this.movingWidgets = Array.from(this.widgets.values());
+    for(const widget of this.movingWidgets)
+      widget.moveStart(true);
+  }
+
+  move(x, y) {
+    // FIXME: pile shows "0" while being dragged
+    // FIXME: a new pile handle shows up when dragging out of a holder
+    this.setPosition(x - 20 + 15, y - 20 + 15);
+    for(const widget of this.movingWidgets)
+      widget.move(x - 5 + widget.p('width')/2, y - 5 + widget.p('height')/2);
+  }
+
+  moveEnd() {
+    for(const widget of this.movingWidgets)
+      widget.moveEnd();
+    delete this.movingWidgets;
+    if(this.destroyAfterMove)
+      this.destroy();
+  }
+
+  p(property) {
+    return true;
+  }
+
+  removeWidget(child) {
+    this.widgets.delete(child.p('id'));
+    --this.handle.textContent;
+    if(this.handle.textContent == 1)
+      this.destroy();
+  }
+
+  setPosition(x, y) {
+    this.handle.style.transform = `translate(${x}px, ${y}px)`;
+
+    if(this.handle && (delta.width !== undefined || delta.height !== undefined)) {
+      if(this.p('width') < 50 || this.p('height') < 50)
+        this.handle.classList.add('small');
+      else
+        this.handle.classList.remove('small');
+    }
+    for(const e of [ [ 'x', 'right', 1600-this.p('width')-20 ], [ 'y', 'bottom', 20 ] ]) {
+      if(this.handle && (delta[e[0]] !== undefined || delta.parent !== undefined)) {
+        if(this.absoluteCoord(e[0]) < e[2])
+          this.handle.classList.add(e[1]);
+        else
+          this.handle.classList.remove(e[1]);
+      }
+    }
   }
 
   validDropTargets() {

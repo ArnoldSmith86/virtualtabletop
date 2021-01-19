@@ -3,6 +3,8 @@ class Card extends Widget {
     super(id);
 
     this.addDefaults({
+      x: 4,
+      y: 4,
       width: 103,
       height: 160,
       typeClasses: 'widget card',
@@ -11,7 +13,8 @@ class Card extends Widget {
       activeFace: 0,
 
       deck: null,
-      cardType: null
+      cardType: null,
+      pilesWith: { type: 'card' }
     });
 
     this.deck = null;

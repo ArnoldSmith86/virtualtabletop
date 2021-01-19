@@ -3,6 +3,7 @@ import path from 'path';
 
 import JSZip from 'jszip';
 import FileLoader from './fileloader.mjs';
+import FileUpdater from './fileupdater.mjs';
 
 export default class Room {
   players = [];
@@ -182,23 +183,23 @@ export default class Room {
     console.log(new Date().toISOString(), `loading room ${this.id}`);
     try {
       if(!fileOrLink)
-        this.state = JSON.parse(fs.readFileSync(path.resolve() + '/save/rooms/' + this.id + '.json'));
+        this.state = FileUpdater(JSON.parse(fs.readFileSync(path.resolve() + '/save/rooms/' + this.id + '.json')));
       else if(fileOrLink.match(/^http/))
         this.setState(await FileLoader.readVariantFromLink(fileOrLink));
       else
         this.setState(JSON.parse(fs.readFileSync(fileOrLink)));
 
-      if(!this.state._meta || this.state._meta.version !== 1)
+      if(!this.state._meta || typeof this.state._meta.version !== 'number')
         throw 'Room state has invalid meta information.';
     } catch(e) {
       console.log(new Date().toISOString(), `RESETTING ROOM ${this.id} because of "${e.toString()}"`);
-      this.state = {
+      this.state = FileUpdater({
         _meta: {
           version: 1,
           players: {},
           states: {}
         }
-      };
+      });
     }
   }
 
@@ -218,6 +219,7 @@ export default class Room {
   }
 
   receiveDelta(player, delta) {
+    console.log(player.name, delta);
     for(const widgetID in delta.s) {
       if(delta.s[widgetID] === null) {
         delete this.state[widgetID];
@@ -280,7 +282,7 @@ export default class Room {
 
   setState(state) {
     const meta = this.state._meta;
-    this.state = state;
+    this.state = FileUpdater(state);
     this.state._meta = meta;
     this.broadcast('state', state);
   }

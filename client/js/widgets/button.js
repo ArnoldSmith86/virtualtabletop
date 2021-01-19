@@ -300,24 +300,17 @@ export class Button extends Widget {
         const count = a.count || 999999;
 
         if(isValidID(a.from) && isValidID(a.to)) {
-          if(a.face === null && typeof a.from == 'string' && typeof a.to == 'string' && !widgets.get(a.to).children().length && widgets.get(a.from).children().length <= count) {
-            // this is a hacky shortcut to avoid removing and creating card piles when moving all children to an empty holder
-            Widget.prototype.children.call(widgets.get(a.from)).filter(
-              w => w.p('type') != 'label' && w.p('type') != 'button' && w.p('type') != 'deck'
-            ).forEach(c=>c.p('parent', a.to));
-          } else {
-            this.w(a.from, source=>this.w(a.to, target=>source.children().slice(0, count).reverse().forEach(c=> {
-              if(a.face !== null && c.flip)
-                c.flip(a.face);
-              if(source == target) {
-                c.bringToFront();
-              } else {
-                c.movedByButton = true;
-                c.moveToHolder(target);
-                delete c.movedByButton;
-              }
-            })));
-          }
+          this.w(a.from, source=>this.w(a.to, target=>source.children().slice(0, count).reverse().forEach(c=> {
+            if(a.face !== null && c.flip)
+              c.flip(a.face);
+            if(source == target) {
+              c.bringToFront();
+            } else {
+              c.movedByButton = true;
+              c.moveToHolder(target);
+              delete c.movedByButton;
+            }
+          })));
         }
       }
 
@@ -371,7 +364,7 @@ export class Button extends Widget {
         if(a.source == 'all' || isValidCollection(a.source)) {
           if([ 'add', 'set' ].indexOf(a.mode) == -1)
             problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
-          let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(function(w) {
+          collections[a.collection] = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(function(w) {
             if(a.relation === '<')
               return w.p(a.property) < a.value;
             else if(a.relation === '<=')
@@ -386,11 +379,6 @@ export class Button extends Widget {
               problems.push(`Warning: Relation ${a.relation} interpreted as ==.`);
             return w.p(a.property) === a.value;
           }).slice(0, a.max).concat(a.mode == 'add' ? collections[a.collection] || [] : []);
-
-          // resolve piles
-          c.filter(w=>w.p('type')=='pile').forEach(w=>c.push(...w.children()));
-          c = c.filter(w=>w.p('type')!='pile');
-          collections[a.collection] = c;
         }
       }
 
