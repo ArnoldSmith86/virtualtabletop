@@ -84,7 +84,7 @@ export class Button extends Widget {
         }
       }
       if(a.onlyif) {
-        if (!variables[a.if]) {
+        if (!variables[a.onlyif]) {
           $('#debugButtonOutput').textContent += '\n\n\nOPERATION SKIPPED (' + a.onlyif + ' != true): \n' + JSON.stringify(a, null, '  ');
           continue;
         }
