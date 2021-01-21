@@ -78,11 +78,17 @@ export class Button extends Widget {
         }
       }
       if(a.skip) {
-        $('#debugButtonOutput').textContent += '\n\n\nOPERATION SKIPPED: \n' + JSON.stringify(a, null, '  ');
-        continue;
+        if (variables[a.skip]) {
+          $('#debugButtonOutput').textContent += '\n\n\nOPERATION SKIPPED (' + a.skip + ' == true): \n' + JSON.stringify(a, null, '  ');
+          continue;
+        }
       }
-
-
+      if(a.onlyif) {
+        if (!variables[a.if]) {
+          $('#debugButtonOutput').textContent += '\n\n\nOPERATION SKIPPED (' + a.onlyif + ' != true): \n' + JSON.stringify(a, null, '  ');
+          continue;
+        }
+      }
 
       if(a.func == 'CLICK') {
         setDefaults(a, { collection: 'DEFAULT', count: 1 });
