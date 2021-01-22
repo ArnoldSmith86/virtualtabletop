@@ -71,7 +71,7 @@ export default class Room {
           attribution: ''
         };
 
-        if(type != 'link')
+        if(stateID.match(/^[a-z0-9]+$/) && variantID.match(/^[a-z0-9]+$/) && type != 'link')
           fs.writeFileSync(path.resolve() + '/save/states/' + this.id + '-' + stateID + '-' + variantID + '.json', JSON.stringify(variant));
 
         const variantMeta = {
@@ -147,7 +147,7 @@ export default class Room {
       let state = null;
       if(v.link)
         state = await FileLoader.readVariantFromLink(v.link);
-      else
+      else if(stateID.match(/^[a-z0-9]+$/) && vID.match(/^[a-z0-9]+$/))
         state = JSON.parse(fs.readFileSync(filename));
       state._meta = { version: this.state._meta.version, info: { ...this.state._meta.states[stateID] } };
       Object.assign(state._meta.info, state._meta.info.variants[vID]);
@@ -207,7 +207,7 @@ export default class Room {
 
     if(variantInfo.link) {
       this.load(variantInfo.link);
-    } else {
+    } else if(stateID.match(/^[a-z0-9]+$/) && variantID.match(/^[a-z0-9]+$/)) {
       const filename = path.resolve() + '/save/states/' + this.id + '-' + stateID + '-' + variantID + '.json';
       this.load(filename);
     }
@@ -288,7 +288,6 @@ export default class Room {
   unload() {
     console.log(new Date().toISOString(), `unloading room ${this.id}`);
     const json = JSON.stringify(this.state);
-    if(json != '{}')
-      fs.writeFileSync(path.resolve() + '/save/rooms/' + this.id + '.json', json);
+    fs.writeFileSync(path.resolve() + '/save/rooms/' + this.id + '.json', json);
   }
 }
