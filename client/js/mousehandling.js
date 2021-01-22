@@ -48,7 +48,7 @@ function inputHandler(name, e) {
       if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
         if(edit)
           editClick(widgets.get(target.id));
-        else if(widgets.get(target.id).click)
+        else
           widgets.get(target.id).click();
       }
       delete mouseStatus[target.id];
