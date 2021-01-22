@@ -8,7 +8,7 @@ export default function FileUpdater(state) {
   for(const id in state) {
     const w = state[id];
 
-    if(v == 1 && state[id].type == 'button') {
+    if(v == 1 && state[id].type == 'button' && Array.isArray(w.clickRoutine)) {
       let isFirstSelect = true;
       for(const operation of w.clickRoutine) {
         if(operation.func == 'SELECT') {
