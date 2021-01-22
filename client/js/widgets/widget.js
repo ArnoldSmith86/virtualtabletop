@@ -168,6 +168,9 @@ export class Widget extends StateManaged {
   classesProperties() {
     return [ 'classes', 'owner', 'typeClasses' ];
   }
+  
+  click() {
+  }
 
   css() {
     let css = this.p('css');
