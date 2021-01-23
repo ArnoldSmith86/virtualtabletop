@@ -248,8 +248,6 @@ export class Button extends Widget {
       }
 
       if(a.func == 'FLIP') {
-        if(a.limit !== undefined)
-          a.count = a.limit;
         setDefaults(a, { count: 0, face: null });
         if(isValidID(a.holder))
           this.w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>c.flip&&c.flip(a.face)));
@@ -298,8 +296,6 @@ export class Button extends Widget {
       }
 
       if(a.func == 'MOVE') {
-        if(a.limit !== undefined)
-          a.count = a.limit;
         setDefaults(a, { count: 1, face: null });
         const count = a.count || 999999;
 
@@ -326,8 +322,6 @@ export class Button extends Widget {
       }
 
       if(a.func == 'MOVEXY') {
-        if(a.limit !== undefined)
-          a.count = a.limit;
         setDefaults(a, { count: 1, face: null, x: 0, y: 0 });
         if(isValidID(a.from)) {
           this.w(a.from, source=>source.children().slice(0, a.count || 999999).reverse().forEach(c=> {
@@ -373,8 +367,6 @@ export class Button extends Widget {
       }
 
       if(a.func == 'SELECT') {
-        if(a.limit !== undefined)
-          a.max = a.limit;
         setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'add', source: 'all' });
         if(a.source == 'all' || isValidCollection(a.source)) {
           if([ 'add', 'set' ].indexOf(a.mode) == -1)
