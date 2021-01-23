@@ -340,8 +340,8 @@ export class Widget extends StateManaged {
     }
     if(property == 'pile' && piles.has(oldValue)) {
       const pileChildren = piles.get(oldValue).children();
-      if(pileChildren.length == 1)
-        pileChildren[0].p('pile', null);
+      if(pileChildren.length == 2)
+        pileChildren.forEach(w=>w!=this&&w.p('pile', null));
     }
   }
 
@@ -447,23 +447,17 @@ export class Widget extends StateManaged {
       }
 
       // if a pile gets dropped onto a pile, all children of one pile are moved to the other (the empty one destroys itself)
-      if(widget.p('pile') && this.p('pile')) {
+      if(widget.p('pile') && this.p('pile'))
         // FIXME: does this catch all of them?
-        // FIXME: Z-order
         widget.p('pile', this.p('pile'));
-      }
 
       // if a pile gets dropped onto a card, the card is added to the pile but the pile is moved to the original position of the card
-      if(!widget.p('pile') && this.p('pile')) {
-        // FIXME: Z-order
+      if(!widget.p('pile') && this.p('pile'))
         widget.p('pile', this.p('pile'));
-      }
 
       // if a card gets dropped onto a pile, it simply gets added to the pile
-      if(widget.p('pile') && !this.p('pile')) {
-        // FIXME: Z-order
+      if(widget.p('pile') && !this.p('pile'))
         this.p('pile', widget.p('pile'));
-      }
     }
   }
 

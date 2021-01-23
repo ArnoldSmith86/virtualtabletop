@@ -12,7 +12,6 @@ class Pile {
     this.handle.id = id;
 
     $('#topSurface').appendChild(this.handle);
-    this.handle.textContent = 0;
   }
 
   addWidget(child) {
@@ -20,7 +19,7 @@ class Pile {
 
     this.widgets.set(child.p('id'), child);
     this.setPosition(child.absoluteCoord('x'), child.absoluteCoord('y'));
-    ++this.handle.textContent;
+    this.updateHandleText();
   }
 
   children() {
@@ -69,13 +68,14 @@ class Pile {
   }
 
   moveStart() {
-    this.movingWidgets = Array.from(this.widgets.values());
+    this.movingWidgets = this.children().sort((v,w)=>v.p('z')-w.p('z'));
     for(const widget of this.movingWidgets)
       widget.moveStart(true);
   }
 
   move(x, y) {
     // FIXME: pile shows "0" while being dragged
+    // FIXME: pile with "0" stays if dropped into a hand (at least that happened once :( )
     // FIXME: a new pile handle shows up when dragging out of a holder
     this.setPosition(x - 20 + 15, y - 20 + 15);
     for(const widget of this.movingWidgets)
@@ -86,6 +86,7 @@ class Pile {
     for(const widget of this.movingWidgets)
       widget.moveEnd();
     delete this.movingWidgets;
+    this.updateHandleText();
     if(this.destroyAfterMove)
       this.destroy();
   }
@@ -96,8 +97,8 @@ class Pile {
 
   removeWidget(child) {
     this.widgets.delete(child.p('id'));
-    --this.handle.textContent;
-    if(this.handle.textContent == 1)
+    this.updateHandleText();
+    if(this.widgets.size == 1)
       this.destroy();
   }
 
@@ -120,7 +121,7 @@ class Pile {
     }
   }
 
-  validDropTargets() {
-    return getValidDropTargets(this.children()[0]);
+  updateHandleText() {
+    this.handle.textContent = this.movingWidgets ? this.movingWidgets.length : this.widgets.size;
   }
 }
