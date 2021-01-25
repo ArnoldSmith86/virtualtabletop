@@ -89,7 +89,8 @@ export class Button extends Widget {
         if(isValidCollection(a.collection))
           for(let i=0; i<a.count; ++i)
             for(const w of collections[a.collection])
-              w.click();
+              if(w.click)
+                w.click();
       }
 
       if(a.func == 'COMPUTE') {
