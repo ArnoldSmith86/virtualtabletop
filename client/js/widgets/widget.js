@@ -232,7 +232,10 @@ export class Widget extends StateManaged {
     this.p('parent', holder.p('id'));
   }
 
-  moveStart() {
+  moveStart(movedByPile) {
+    if(movedByPile)
+      this.movedByPile = true;
+
     this.bringToFront();
     this.dropTargets = this.validDropTargets();
     this.currentParent = widgets.get(this.p('parent'));
@@ -240,7 +243,8 @@ export class Widget extends StateManaged {
     this.hoverTarget = null;
 
     this.p('parent', null);
-    this.p('pile', null);
+    if(!this.movedByPile)
+      this.p('pile', null);
 
     for(const t of this.dropTargets)
       t.domElement.classList.add('droppable');
@@ -289,6 +293,8 @@ export class Widget extends StateManaged {
   }
 
   moveEnd() {
+    delete this.movedByPile;
+
     for(const t of this.dropTargets)
       t.domElement.classList.remove('droppable');
 
@@ -335,7 +341,8 @@ export class Widget extends StateManaged {
         widgets.get(oldValue).onChildRemove(this);
       if(newValue)
         widgets.get(newValue).onChildAdd(this, oldValue);
-      this.p('pile', null);
+      if(!this.movedByPile)
+        this.p('pile', null);
       this.updatePiles();
     }
     if(property == 'pile' && piles.has(oldValue)) {
@@ -408,6 +415,8 @@ export class Widget extends StateManaged {
   updatePiles() {
     if(!this.p('pilesWith') || this.p('parent') && !widgets.get(this.p('parent')).supportsPiles()) // FIXME: this.parent
       return;
+    if(this.movedByPile)
+      return;
 
     const parent = this.p('parent');
     const owner = JSON.stringify(this.p('owner'));
@@ -447,7 +456,7 @@ export class Widget extends StateManaged {
       }
 
       // if a pile gets dropped onto a pile, all children of one pile are moved to the other (the empty one destroys itself)
-      if(widget.p('pile') && this.p('pile'))
+      if(widget.p('pile') && this.p('pile') && widget.p('pile') != this.p('pile'))
         // FIXME: does this catch all of them?
         widget.p('pile', this.p('pile'));
 

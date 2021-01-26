@@ -58,13 +58,9 @@ class Pile {
   }
 
   destroy() {
-    if(this.movingWidgets) {
-      this.destroyAfterMove = true;
-    } else {
-      console.log('destroying pile', this.id);
-      piles.delete(this.id);
-      removeFromDOM(this.handle);
-    }
+    console.log('destroying pile', this.id);
+    piles.delete(this.id);
+    removeFromDOM(this.handle);
   }
 
   moveStart() {
@@ -74,9 +70,7 @@ class Pile {
   }
 
   move(x, y) {
-    // FIXME: pile shows "0" while being dragged
     // FIXME: pile with "0" stays if dropped into a hand (at least that happened once :( )
-    // FIXME: a new pile handle shows up when dragging out of a holder
     this.setPosition(x - 20 + 15, y - 20 + 15);
     for(const widget of this.movingWidgets)
       widget.move(x - 5 + widget.p('width')/2, y - 5 + widget.p('height')/2);
@@ -87,8 +81,6 @@ class Pile {
       widget.moveEnd();
     delete this.movingWidgets;
     this.updateHandleText();
-    if(this.destroyAfterMove)
-      this.destroy();
   }
 
   p(property) {
