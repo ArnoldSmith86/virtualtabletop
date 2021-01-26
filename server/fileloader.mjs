@@ -97,7 +97,7 @@ async function readVariantsFromBuffer(buffer) {
 
       if(filename.match(/^\/?assets/) && zip.files[filename]._data && zip.files[filename]._data.uncompressedSize < 2097152) {
         const targetFile = '/assets/' + zip.files[filename]._data.crc32 + '_' + zip.files[filename]._data.uncompressedSize;
-        if(!fs.existsSync(path.resolve() + '/save' + targetFile))
+        if(targetFile.match(/^\/assets\/[0-9_-]+$/) && !fs.existsSync(path.resolve() + '/save' + targetFile))
           fs.writeFileSync(path.resolve() + '/save' + targetFile, await zip.files[filename].async('nodebuffer'));
       }
 
