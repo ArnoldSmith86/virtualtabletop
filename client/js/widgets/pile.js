@@ -15,11 +15,15 @@ class Pile {
   }
 
   addWidget(child) {
-    this.rectangle = child.domElement.getBoundingClientRect();
-
     this.widgets.set(child.p('id'), child);
-    this.setPosition(child.absoluteCoord('x'), child.absoluteCoord('y'));
+    this.applyRenderLocationChanged;
     this.updateHandleText();
+  }
+
+  applyRenderLocationChanged() {
+    const rectangle = this.children()[0].domElement.getBoundingClientRect();
+
+    this.setPosition((rectangle.left-roomRectangle.left)/scale, (rectangle.top-roomRectangle.top)/scale, rectangle.width/scale, rectangle.height/scale);
   }
 
   children() {
@@ -71,7 +75,6 @@ class Pile {
 
   move(x, y) {
     // FIXME: pile with "0" stays if dropped into a hand (at least that happened once :( )
-    this.setPosition(x - 20 + 15, y - 20 + 15);
     for(const widget of this.movingWidgets)
       widget.move(x - 5 + widget.p('width')/2, y - 5 + widget.p('height')/2);
   }
@@ -94,23 +97,18 @@ class Pile {
       this.destroy();
   }
 
-  setPosition(x, y) {
+  setPosition(x, y, width, height) {
+    /*if(x < 1600-width-20)
+      x += width-10;
+    if(y < 20)
+      y += height-10;*/
+
     this.handle.style.transform = `translate(${x}px, ${y}px)`;
 
-    if(this.handle && (delta.width !== undefined || delta.height !== undefined)) {
-      if(this.p('width') < 50 || this.p('height') < 50)
-        this.handle.classList.add('small');
-      else
-        this.handle.classList.remove('small');
-    }
-    for(const e of [ [ 'x', 'right', 1600-this.p('width')-20 ], [ 'y', 'bottom', 20 ] ]) {
-      if(this.handle && (delta[e[0]] !== undefined || delta.parent !== undefined)) {
-        if(this.absoluteCoord(e[0]) < e[2])
-          this.handle.classList.add(e[1]);
-        else
-          this.handle.classList.remove(e[1]);
-      }
-    }
+    if(width < 50 || height < 50)
+      this.handle.classList.add('small');
+    else
+      this.handle.classList.remove('small');
   }
 
   updateHandleText() {

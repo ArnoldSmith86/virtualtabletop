@@ -22,16 +22,6 @@
   font-size: 10px;
 }
 
-.pile.handle.right {
-  left: unset;
-  right: -15px;
-}
-
-.pile.handle.bottom {
-  top: unset;
-  bottom: -15px;
-}
-
 body.edit .pile {
   display: none;
 }

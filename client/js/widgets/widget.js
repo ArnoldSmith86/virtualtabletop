@@ -127,6 +127,9 @@ export class Widget extends StateManaged {
       }
     }
 
+    if(delta.x !== undefined || delta.y !== undefined || delta.parent !== undefined || delta.scale !== undefined || delta.rotation !== undefined)
+      this.applyRenderLocationChanged();
+
     if($('#enlarged').dataset.id == this.p('id') && !$('#enlarged').className.match(/hidden/))
       this.showEnlarged();
   }
@@ -135,6 +138,13 @@ export class Widget extends StateManaged {
     if(this.p('parent'))
       widgets.get(this.p('parent')).applyChildRemove(this);
     removeFromDOM(this.domElement);
+  }
+
+  applyRenderLocationChanged() {
+    if(this.pile)
+      this.pile.applyRenderLocationChanged();
+    for(const child of this.children())
+      child.applyRenderLocationChanged();
   }
 
   applyZ(force) {
