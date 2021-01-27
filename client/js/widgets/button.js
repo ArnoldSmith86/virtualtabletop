@@ -263,9 +263,10 @@ export class Button extends Widget {
               if(collections[a.collection][0].p(a.property) !== undefined)
                 // always get a deep copy and not object references
                 variables[a.variable] = JSON.parse(JSON.stringify(collections[a.collection][0].p(a.property)));
-              else
+              else {
                 variables[a.variable] = null;
                 problems.push("Property ${a.property} missing from first item of collection, setting ${a.variable} to null");
+              }
             else
               problems.push(`Collection ${a.collection} is empty.`);
             break;
