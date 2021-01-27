@@ -265,7 +265,7 @@ export class Button extends Widget {
                 variables[a.variable] = JSON.parse(JSON.stringify(collections[a.collection][0].p(a.property)));
               else {
                 variables[a.variable] = null;
-                problems.push("Property ${a.property} missing from first item of collection, setting ${a.variable} to null");
+                problems.push(`Property ${a.property} missing from first item of collection, setting ${a.variable} to null`);
               }
             else
               problems.push(`Collection ${a.collection} is empty.`);
