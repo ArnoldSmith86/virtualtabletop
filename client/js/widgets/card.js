@@ -75,6 +75,7 @@ class Card extends Widget {
             object.dynamicProperties = { value: object.value };
           else
             object.dynamicProperties.value = object.value;
+          delete object.value;
         }
         if(typeOf object.dynamicProperties == 'object') {
           for(const dp of Object.keys(object.dynamicProperties)) {
