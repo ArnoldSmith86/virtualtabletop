@@ -19,6 +19,7 @@ export default function FileUpdater(state) {
                 object.dynamicProperties.value = object.value;
               delete object.value;
             }
+            delete object.valueType;
           }
         }
       }
