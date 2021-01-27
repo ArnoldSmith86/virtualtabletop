@@ -260,7 +260,7 @@ export class Button extends Widget {
           switch(a.aggregation) {
           case 'first':
             if(collections[a.collection].length)
-              if(collections[a.collection][0].(a.property) !== undefined)
+              if(collections[a.collection][0].p(a.property) !== undefined)
                 // always get a deep copy and not object references
                 variables[a.variable] = JSON.parse(JSON.stringify(collections[a.collection][0].p(a.property)));
               else
