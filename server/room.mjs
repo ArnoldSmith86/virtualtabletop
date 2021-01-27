@@ -122,6 +122,16 @@ export default class Room {
         player.send(func, args);
   }
 
+  deleteUnusedVariantFiles(stateID, oldState, newState) {
+    for(const oldVariantID of Object.keys(oldState.variants)) {
+      if(!newState.variants[oldVariantID] && stateID.match(/^[a-z0-9]+$/) && oldVariantID.match(/^[a-z0-9]+$/)) {
+        const savefile = path.resolve() + '/save/states/' + this.id + '-' + stateID + '-' + oldVariantID + '.json';
+        if(fs.existsSync(savefile))
+          fs.unlinkSync(savefile);
+      }
+    }
+  }
+
   async download(stateID, variantID) {
     const includeAssets = true;
     const zip = new JSZip();
@@ -170,6 +180,7 @@ export default class Room {
   }
 
   editState(player, id, meta) {
+    this.deleteUnusedVariantFiles(id, this.state._meta.states[id], meta);
     Object.assign(this.state._meta.states[id], meta);
     this.sendMetaUpdate();
   }
@@ -259,6 +270,7 @@ export default class Room {
   }
 
   removeState(player, stateID) {
+    this.deleteUnusedVariantFiles(stateID, this.state._meta.states[stateID], { variants: {} });
     delete this.state._meta.states[stateID];
     this.sendMetaUpdate();
   }
@@ -286,8 +298,16 @@ export default class Room {
   }
 
   unload() {
-    console.log(new Date().toISOString(), `unloading room ${this.id}`);
-    const json = JSON.stringify(this.state);
-    fs.writeFileSync(path.resolve() + '/save/rooms/' + this.id + '.json', json);
+    const savefile = path.resolve() + '/save/rooms/' + this.id + '.json';
+
+    if(Object.keys(this.state).length > 1 || Object.keys(this.state._meta.states).length) {
+      console.log(new Date().toISOString(), `unloading room ${this.id}`);
+      const json = JSON.stringify(this.state);
+      fs.writeFileSync(savefile, json);
+    } else {
+      console.log(new Date().toISOString(), `unloading empty room ${this.id}`);
+      if(fs.existsSync(savefile))
+        fs.unlinkSync(savefile);
+    }
   }
 }
