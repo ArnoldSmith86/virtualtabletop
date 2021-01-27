@@ -34,13 +34,17 @@ function ensureRoomIsLoaded(id) {
   return true;
 }
 
-function downloadState(res, roomID, stateID, variantID) {
-  if(ensureRoomIsLoaded(roomID)) {
-    activeRooms.get(roomID).download(stateID, variantID).then(function(d) {
+async function downloadState(res, roomID, stateID, variantID) {
+  try {
+    if(ensureRoomIsLoaded(roomID)) {
+      const d = await activeRooms.get(roomID).download(stateID, variantID);
       res.setHeader('Content-Type', d.type);
       res.setHeader('Content-Disposition', `attachment; filename="${d.name.replace(/[^A-Za-z0-9._-]/g, '_')}"`);
       res.send(d.content);
-    });
+    }
+  } catch(e) {
+    console.log(new Date().toISOString(), `EXCEPTION in downloadState for ${roomID}.${stateID}.${variantID}: ${String(e)}`);
+    res.sendStatus(500);
   }
 }
 
