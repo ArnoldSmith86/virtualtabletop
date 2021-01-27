@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import v8 from 'v8';
 
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -74,6 +75,10 @@ MinifyRoom().then(function(result) {
 
       res.send(content);
     });
+  });
+
+  app.post('/heapsnapshot', function(req, res) {
+    v8.getHeapSnapshot().pipe(fs.createWriteStream('memory.heapsnapshot'));
   });
 
   app.post('/quit', function(req, res) {
