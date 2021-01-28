@@ -451,7 +451,7 @@ export class Button extends Widget {
           });
         }
       }
-      
+
       if(this.p('debug')) {
         let msg = ''
         msg += '\n\n\nOPERATION: \n' + JSON.stringify(a, null, '  ');
@@ -468,6 +468,7 @@ export class Button extends Widget {
         console.log(problems);
       }
     }
+
     if(this.p('debug'))
       showOverlay('debugButtonOverlay');
 
