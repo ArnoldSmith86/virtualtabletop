@@ -62,6 +62,7 @@ export class Button extends Widget {
     //for(prop of this){
     //    variables[prop] = this[prop];
     //}
+    variables["id"] = this.id;
     for(const original of this.p('clickRoutine')) {
       const a = { ...original };
       var problems = [];
