@@ -170,6 +170,7 @@ export default class Room {
   }
 
   editState(player, id, meta) {
+    for(const variantID in meta.variants)
     Object.assign(this.state._meta.states[id], meta);
     this.sendMetaUpdate();
   }
