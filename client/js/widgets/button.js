@@ -53,16 +53,20 @@ export class Button extends Widget {
 
     if(this.p('debug'))
       $('#debugButtonOutput').textContent = '';
-
+   let thisID = this.p('id');
     const variables = {
       playerName,
       playerColor,
-      "widgetID" : this.p('id')
+      "thisID" : thisID
     };
-    const collections = {};
+    const thisButton = (Array.from(widgets.values())).filter(function(w) {
+     if(w.p("id")==thisID)
+        return true;
+    });
+    const collections = {
+        "thisButton" : thisButton
+    }
 
-
-    if (this.p('debug')) console.log(`variables: ${JSON.stringify(variables)}`);
     for(const original of this.p('clickRoutine')) {
       const a = { ...original };
       var problems = [];
@@ -369,7 +373,6 @@ export class Button extends Widget {
           }));
         }
       }
-
       if(a.func == 'SELECT') {
         setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'add', source: 'all' });
         if(a.source == 'all' || isValidCollection(a.source)) {
@@ -464,7 +467,6 @@ export class Button extends Widget {
         console.log(problems);
       }
     }
-
     if(this.p('debug'))
       showOverlay('debugButtonOverlay');
 
