@@ -70,12 +70,6 @@ class Card extends Widget {
       for(const original of face.objects) {
         const object = JSON.parse(JSON.stringify(original));
         const objectDiv = document.createElement('div');
-        if(object.valueType != 'static') {
-          if(typeOf object.dynamicProperties != 'object')
-            object.dynamicProperties = { value: object.value };
-          else
-            object.dynamicProperties.value = object.value;
-        }
         if(typeOf object.dynamicProperties == 'object') {
           for(const dp of Object.keys(object.dynamicProperties)) {
             if(typeOf object[dp] == 'undefined')
