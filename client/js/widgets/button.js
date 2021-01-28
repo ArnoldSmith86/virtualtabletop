@@ -59,9 +59,9 @@ export class Button extends Widget {
       playerColor
     };
     const collections = {};
-    for(prop of this){
-        variables[prop] = this[prop];
-    }
+    //for(prop of this){
+    //    variables[prop] = this[prop];
+    //}
     for(const original of this.p('clickRoutine')) {
       const a = { ...original };
       var problems = [];
