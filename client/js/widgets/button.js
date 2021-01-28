@@ -373,6 +373,7 @@ export class Button extends Widget {
           }));
         }
       }
+
       if(a.func == 'SELECT') {
         setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'add', source: 'all' });
         if(a.source == 'all' || isValidCollection(a.source)) {
