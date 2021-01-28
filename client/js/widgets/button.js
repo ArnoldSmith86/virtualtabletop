@@ -62,7 +62,7 @@ export class Button extends Widget {
     //for(prop of this){
     //    variables[prop] = this[prop];
     //}
-    variables["id"] = id;
+    variables["id"] = this.p('id');
     if (this.p('debug')) console.log(`variables: ${JSON.stringify(variables)}`);
     for(const original of this.p('clickRoutine')) {
       const a = { ...original };
