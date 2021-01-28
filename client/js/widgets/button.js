@@ -53,18 +53,15 @@ export class Button extends Widget {
 
     if(this.p('debug'))
       $('#debugButtonOutput').textContent = '';
-   let thisID = this.p('id');
+
     const variables = {
       playerName,
       playerColor,
-      "thisID" : thisID
+      thisID : this.p('id')
     };
-    const thisButton = (Array.from(widgets.values())).filter(function(w) {
-     if(w.p("id")==thisID)
-        return true;
-    });
+
     const collections = {
-        "thisButton" : thisButton
+        thisButton : [this]
     }
 
     for(const original of this.p('clickRoutine')) {
