@@ -67,9 +67,22 @@ class Card extends Widget {
       faceDiv.style.border = face.border ? face.border + 'px black solid' : 'none';
       faceDiv.style.borderRadius = face.radius ? face.radius + 'px' : '0';
 
-      for(const object of face.objects) {
+      for(const original of face.objects) {
+        const object = JSON.parse(JSON.stringify(original));
         const objectDiv = document.createElement('div');
-        const value = object.valueType == 'static' ? object.value : this.p(object.value);
+        if(object.valueType != 'static') {
+          if(typeOf object.dynamicProperties != 'object')
+            object.dynamicProperties = { value: object.value };
+          else
+            object.dynamicProperties.value = object.value;
+          delete object.value;
+        }
+        if(typeOf object.dynamicProperties == 'object') {
+          for(const dp of Object.keys(object.dynamicProperties)) {
+            if(typeOf object[dp] == 'undefined')
+              object[dp] = this.p(object.dynamicProperties[dp]);
+          }
+        }
         const x = face.border ? object.x-face.border : object.x;
         const y = face.border ? object.y-face.border : object.y;
         let css = object.css ? object.css + '; ' : '';
