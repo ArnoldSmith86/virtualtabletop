@@ -85,6 +85,18 @@ const jeCommands = [
 ];
 
 function jeAddButtonOperationCommands(command, defaults) {
+  jeCommands.push({
+    name: command,
+    context: `^button ↦ clickRoutine`,
+    call: function() {
+      if(jeContext.length == 2)
+        jeStateNow.clickRoutine.push({func: command});
+      else
+        jeStateNow.clickRoutine.splice(jeContext[2]+1, 0, {func: '###SELECT ME###'});
+      jeSetAndSelect(command);
+    }
+  });
+
   defaults.skip = false;
   for(const property in defaults) {
     jeCommands.push({
@@ -167,7 +179,7 @@ function jeGetContext() {
   const v = $('#jeText').value;
   const t = jeWidget.p('type') || 'basic';
 
-  const select = v.substr(s, e-s);
+  const select = v.substr(s, e-s).replace(/\n/g, '\\n');
   const line = v.substr(0, s).split('\n').pop();
 
   try {
@@ -205,7 +217,7 @@ function jeGetContext() {
 function jeGetValue(context, all) {
   let pointer = jeStateNow;
   for(const key of context || jeContext)
-    if(all && typeof pointer[key] !== undefined || typeof pointer[key] == 'object')
+    if(all && typeof pointer[key] !== undefined || typeof pointer[key] == 'object' && pointer[key] !== null)
       pointer = pointer[key];
   return pointer
 }
