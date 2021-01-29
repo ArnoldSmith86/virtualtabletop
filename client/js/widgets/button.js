@@ -260,12 +260,12 @@ export class Button extends Widget {
           switch(a.aggregation) {
           case 'first':
             if(collections[a.collection].length)
-              if(collections[a.collection][0].p(a.property) !== undefined)
+              if(collections[a.collection][0].p(a.property) !== undefined) {
                 // always get a deep copy and not object references
                 variables[a.variable] = JSON.parse(JSON.stringify(collections[a.collection][0].p(a.property)));
-              else {
+              } else {
                 variables[a.variable] = null;
-                problems.push(`Property ${a.property} missing from first item of collection, setting ${a.variable} to null`);
+                problems.push(`Property ${a.property} missing from first item of collection, setting ${a.variable} to null.`);
               }
             else
               problems.push(`Collection ${a.collection} is empty.`);
