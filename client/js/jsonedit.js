@@ -1,4 +1,5 @@
 let jeEnabled = false;
+let jeZoomOut = false;
 let jeWidget = null;
 let jeStateBefore = null;
 let jeStateNow = null;
@@ -18,6 +19,20 @@ const jeCommands = [
     context: '"(true|false)"',
     call: function() {
       jeInsert(jeContext.slice(1), jeContext[jeContext.length-2], jeContext[jeContext.length-1]=='"false"');
+    }
+  },
+  {
+    name: 'toggle zoom out',
+    forceKey: 'Z',
+    call: function() {
+      console.log("yes");
+      jeZoomOut = !jeZoomOut;
+      if(jeZoomOut) {
+        $('body').classList.add('jeZoomOut');
+      } else {
+        $('body').classList.remove('jeZoomOut');
+      }
+      setScale();
     }
   },
   {
