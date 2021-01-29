@@ -1,0 +1,42 @@
+#jsonEditor {
+  display: none;
+  height: 100%;
+  width: 100%;
+}
+
+#jeText {
+  height: 100%;
+  width: 25%;
+  position: fixed;
+  right: 25%;
+  border: none;
+  resize: none;
+  box-sizing: border-box;
+}
+
+#jeCommands {
+  padding: 5px;
+  font-family: monospace;
+  background: white;
+  white-space: pre-line;
+  height: 100%;
+  width: 25%;
+  position: fixed;
+  right: 0;
+  border: none;
+  resize: none;
+  box-sizing: border-box;
+}
+
+body.jsonEdit #jsonEditor {
+  display: block;
+}
+
+body.jsonEdit #toolbar {
+  display: none;
+}
+
+body.jsonEdit #roomArea {
+  top: calc((100vh - var(--roomHeight) * var(--scale)) / 2 - var(--toolbarSize) / 2);
+  left: 0;
+}
