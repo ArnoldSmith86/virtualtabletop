@@ -89,7 +89,7 @@ export class Button extends Widget {
             }
             else {
               problems.push('Entry in parameter applyVariables does not contain "parameter" and "variable".');
-          }
+            }
           }
         } else {
           problems.push('Parameter applyVariables is not an array.');
