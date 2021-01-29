@@ -158,6 +158,23 @@ function jeAddCommands() {
   jeAddButtonOperationCommands('SET', { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
   jeAddButtonOperationCommands('SORT', { key: 'value', reverse: false, holder: null });
   jeAddButtonOperationCommands('SHUFFLE', { holder: null });
+
+  jeAddCSScommands();
+}
+
+function jeAddCSScommands() {
+  for(const css of [ 'border: 1px solid black', 'background: black', 'font-size: 30px' ]) {
+    jeCommands.push({
+      name: css,
+      context: ' ↦ css',
+      call: function() {
+        jePasteText(css + '; ');
+      },
+      show: function() {
+        return !jeJSONerror && !jeGetValue().css.match(css.split(':')[0]);
+      }
+    });
+  }
 }
 
 function jeAddWidgetPropertyCommands(object) {
