@@ -59,7 +59,7 @@ const jeCommands = [
     forceKey: 'D',
     context: ' ↦ (?=[^"]+$)',
     call: function() {
-      let pointer = jeGetValue();
+      let pointer = jeGetValue(jeContext.slice(0, -1));
       delete pointer[jeContext[jeContext.length-1]];
 
       const oldStart = $('#jeText').selectionStart;
@@ -69,7 +69,7 @@ const jeCommands = [
       $('#jeText').selectionEnd   = oldEnd;
     },
     show: function() {
-      return jeStateNow && jeGetValue()[jeContext[jeContext.length-1]] !== undefined;
+      return jeStateNow && jeGetValue(jeContext.slice(0, -1))[jeContext[jeContext.length-1]] !== undefined;
     }
   },
   {
@@ -163,7 +163,7 @@ function jeAddCommands() {
 }
 
 function jeAddCSScommands() {
-  for(const css of [ 'border: 1px solid black', 'background: black', 'font-size: 30px' ]) {
+  for(const css of [ 'border: 1px solid black', 'background: black', 'font-size: 30px', 'color: black' ]) {
     jeCommands.push({
       name: css,
       context: ' ↦ css',
@@ -380,6 +380,7 @@ window.addEventListener('keydown', function(e) {
       if(jeEnabled) {
         $('body').classList.add('jsonEdit');
         jeAddCommands();
+        $('#jeText').value = 'CTRL-click a widget';
         $('#jeText').focus();
       } else {
         $('body').classList.remove('jsonEdit');
