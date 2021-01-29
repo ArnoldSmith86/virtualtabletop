@@ -243,6 +243,16 @@ function jeInsert(context, key, value) {
   }
 }
 
+function jePasteText(text) {
+  const s = $('#jeText').selectionStart;
+  const e = $('#jeText').selectionEnd;
+  const v = $('#jeText').value;
+
+  $('#jeText').value = v.substr(0, s) + text + v.substr(e);
+  $('#jeText').selectionStart = s;
+  $('#jeText').selectionEnd   = s + text.length;
+}
+
 function jeSetAndSelect(replaceBy) {
   let jsonString = JSON.stringify(jeStateNow, null, '  ');
   const startIndex = jsonString.indexOf('"###SELECT ME###"');
@@ -359,10 +369,14 @@ window.addEventListener('keydown', function(e) {
         }
       }
     }
-  } else {
-    const functionKey = e.key.match(/F([0-9]+)/);
-    if(functionKey && jeWidgetLayers[+functionKey[1]]) {
-      e.preventDefault();
+  }
+
+  const functionKey = e.key.match(/F([0-9]+)/);
+  if(functionKey && jeWidgetLayers[+functionKey[1]]) {
+    e.preventDefault();
+    if(jeState.ctrl) {
+      jePasteText(jeWidgetLayers[+functionKey[1]].p('id'));
+    } else {
       jeState.ctrl = true;
       jeClick(jeWidgetLayers[+functionKey[1]]);
       jeState.ctrl = false;
