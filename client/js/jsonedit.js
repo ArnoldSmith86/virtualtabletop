@@ -35,6 +35,13 @@ const jeCommands = [
     }
   },
   {
+    name: 'upload a different asset',
+    context: '"(/assets/[0-9_-]+)"',
+    call: function() {
+      uploadAsset().then(a=>jePasteText(a));
+    }
+  },
+  {
     name: 'toggle zoom out',
     forceKey: 'Z',
     call: function() {
