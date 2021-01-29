@@ -22,6 +22,18 @@ const jeCommands = [
     }
   },
   {
+    name: 'open widget by ID',
+    context: '"([^"]+)"',
+    call: function() {
+      const m = jeContext.join('').match(/"([^"]+)"/);
+      jeClick(widgets.get(m[1]));
+    },
+    show: function() {
+      const m = jeContext.join('').match(/"([^"]+)"/);
+      return widgets.has(m[1]);
+    }
+  },
+  {
     name: 'toggle zoom out',
     forceKey: 'Z',
     call: function() {
