@@ -386,11 +386,13 @@ export class Button extends Widget {
       }
 
       if(a.func == 'SELECT') {
-        setDefaults(a, { property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all' });
+        setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'add', source: 'all' });
         if(a.source == 'all' || isValidCollection(a.source)) {
           if([ 'add', 'set' ].indexOf(a.mode) == -1)
             problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
           let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(function(w) {
+            if(a.type != 'all' && w.p('type') != a.type)
+              return false;
             if(a.relation === '<')
               return w.p(a.property) < a.value;
             else if(a.relation === '<=')
@@ -401,6 +403,8 @@ export class Button extends Widget {
               return w.p(a.property) >= a.value;
             else if(a.relation === '>')
               return w.p(a.property) > a.value;
+            else if(a.relation === 'in' && Array.isArray(a.value))
+              return a.value.indexOf(w.p(a.property)) != -1;
             if(a.relation != '==')
               problems.push(`Warning: Relation ${a.relation} interpreted as ==.`);
             return w.p(a.property) === a.value;
