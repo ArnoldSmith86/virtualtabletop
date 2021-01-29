@@ -21,7 +21,7 @@ function addPlayerCursor(playerName, playerColor) {
 }
 
 function fillPlayerList(players, active) {
-  activePlayers = active;
+  activePlayers = [...new Set(active)];
   removeFromDOM('#playerList > div, #roomArea > .cursor');
 
   for(const player in players) {
