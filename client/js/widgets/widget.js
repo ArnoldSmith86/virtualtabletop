@@ -41,8 +41,8 @@ export class Widget extends StateManaged {
       pile: null,
       pilesWith: null,
       pileOptions: {
-        xOffset: 10,
-        yOffset: 10
+        snapX: 10,
+        snapY: 10
       }
     });
 
@@ -351,9 +351,6 @@ export class Widget extends StateManaged {
         widgets.get(oldValue).onChildRemove(this);
       if(newValue)
         widgets.get(newValue).onChildAdd(this, oldValue);
-      if(!this.movedByPile)
-        this.p('pile', null);
-      this.updatePiles();
     }
     if(property == 'pile' && piles.has(oldValue)) {
       const pileChildren = piles.get(oldValue).children();
@@ -433,7 +430,7 @@ export class Widget extends StateManaged {
     const pilesWith = JSON.stringify(this.p('pilesWith'));
     const pileOptions = JSON.stringify(this.p('pileOptions'));
 
-    const canPileWith = (widget) => { // FIXME: rotation? scale? movable?
+    const canPileWith = (widget) => { // FIXME: rotation? scale?
       if(widget.p('parent') !== parent)
         return false;
       if(JSON.stringify(widget.p('pilesWith')) !== pilesWith)
@@ -444,9 +441,9 @@ export class Widget extends StateManaged {
         return false;
       if(JSON.stringify(widget.p('owner')) !== owner)
         return false;
-      if(Math.abs(widget.p('x')-this.p('x')) > (this.p('pileOptions').xOffset || 10))
+      if(Math.abs(widget.p('x')-this.p('x')) > (this.p('pileOptions').snapX || 10))
         return false;
-      if(Math.abs(widget.p('y')-this.p('y')) > (this.p('pileOptions').yOffset || 10))
+      if(Math.abs(widget.p('y')-this.p('y')) > (this.p('pileOptions').snapY || 10))
         return false;
       return true;
     }

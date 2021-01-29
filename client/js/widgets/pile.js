@@ -2,13 +2,13 @@ class Pile {
   constructor(id, options) {
     this.id = id;
     this.options = options;
+    this.offset = [ -15, -15 ];
 
     console.log('creating pile', this.id);
     this.widgets = new Map();
 
     this.handle = document.createElement('div');
     this.handle.className = 'pile handle';
-    this.handle.style = options.css || '';
     this.handle.id = id;
 
     $('#topSurface').appendChild(this.handle);
@@ -68,22 +68,38 @@ class Pile {
   }
 
   moveStart() {
+    this.movingOffset = [ ...this.offset ];
     this.movingWidgets = this.children().sort((v,w)=>v.p('z')-w.p('z'));
     for(const widget of this.movingWidgets)
-      widget.moveStart(true);
+      if(widget.p('movable'))
+        widget.moveStart(true);
   }
 
   move(x, y) {
     // FIXME: pile with "0" stays if dropped into a hand (at least that happened once :( )
     for(const widget of this.movingWidgets)
-      widget.move(x - 5 + widget.p('width')/2, y - 5 + widget.p('height')/2);
+      if(widget.p('movable'))
+        widget.move(x - this.o('width')/2 - this.movingOffset[0] + widget.p('width')/2, y - this.o('height')/2 - this.movingOffset[1] + widget.p('height')/2);
   }
 
   moveEnd() {
     for(const widget of this.movingWidgets)
-      widget.moveEnd();
+      if(widget.p('movable'))
+        widget.moveEnd();
     delete this.movingWidgets;
     this.updateHandleText();
+  }
+
+  o(option) {
+    const defaults = {
+      css: '',
+      rightCSS: '',
+      bottomCSS: '',
+      width: 40,
+      height: 40,
+      inset: 15
+    };
+    return this.options[option] === undefined ? defaults[option] : this.options[option];
   }
 
   p(property) {
@@ -98,20 +114,35 @@ class Pile {
   }
 
   setPosition(x, y, width, height) {
-    /*if(x < 1600-width-20)
-      x += width-10;
-    if(y < 20)
-      y += height-10;*/
+    const w = this.o('width');
+    const h = this.o('height');
+    const i = this.o('inset');
 
-    this.handle.style.transform = `translate(${x}px, ${y}px)`;
+    if(x < 1600-width-w) {
+      this.handle.style = this.o('css') + ';' + this.o('rightCSS');
+      this.offset[0] = width - w + i;
+    } else {
+      this.offset[0] = -i;
+    }
+    if(y < h) {
+      this.handle.style = this.o('css') + ';' + this.o('bottomCSS');
+      this.offset[1] = height - h + i;
+    } else {
+      this.offset[1] = -i;
+    }
 
-    if(width < 50 || height < 50)
+    this.handle.style.width = `${w}px`;
+    this.handle.style.height = `${h}px`;
+
+    this.handle.style.transform = `translate(${x+this.offset[0]}px, ${y+this.offset[1]}px)`;
+
+    if(!Object.keys(this.options).length && (width < 50 || height < 50))
       this.handle.classList.add('small');
     else
       this.handle.classList.remove('small');
   }
 
   updateHandleText() {
-    this.handle.textContent = this.movingWidgets ? this.movingWidgets.length : this.widgets.size;
+    this.handle.textContent = this.widgets.size;
   }
 }

@@ -1,10 +1,6 @@
 .pile.handle {
   cursor: default;
   position: absolute;
-  left: -15px;
-  top: -15px;
-  width: 40px;
-  height: 40px;
   font-size: 20px;
   background: #e4e4e4;
   color: #6d6d6d;
