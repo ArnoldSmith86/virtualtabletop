@@ -68,10 +68,28 @@ export class Button extends Widget {
       if(a.applyVariables) {
         if(Array.isArray(a.applyVariables)) {
           for(const v of a.applyVariables) {
-            if(v.parameter && v.variable)
+            if(v.parameter && v.variable) {
               a[v.parameter] = variables[v.variable];
-            else
+            }
+            else if (v.parameter && v.template) {
+              for (let key in variables) {
+                a[v.parameter] = v.template.replace(/({([^}]+)})/g, function(i) {
+                  let key = i.replace(/{/, '').replace(/}/, '');
+                  if (!variables[key]) return "";
+                  return variables[key];
+                });
+              }
+            }
+            else if (v.parameter && v.property) {
+              var targetWidget = (v.property.split(".")[0] === "this") ? widgets.get(this.id) : widgets.get(v.property.split(".")[0]);
+              if (typeof targetWidget != undefined) {
+                var targetProperty = targetWidget.state[v.property.split(".")[1]];
+              }
+              a[v.parameter] = (typeof targetProperty != undefined) ? targetProperty : 0;
+            }
+            else {
               problems.push('Entry in parameter applyVariables does not contain "parameter" and "variable".');
+          }
           }
         } else {
           problems.push('Parameter applyVariables is not an array.');
@@ -368,13 +386,11 @@ export class Button extends Widget {
       }
 
       if(a.func == 'SELECT') {
-        setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'add', source: 'all' });
+        setDefaults(a, { property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all' });
         if(a.source == 'all' || isValidCollection(a.source)) {
           if([ 'add', 'set' ].indexOf(a.mode) == -1)
             problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
           let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(function(w) {
-            if(a.type != 'all' && w.p('type') != a.type)
-              return false;
             if(a.relation === '<')
               return w.p(a.property) < a.value;
             else if(a.relation === '<=')
@@ -385,8 +401,6 @@ export class Button extends Widget {
               return w.p(a.property) >= a.value;
             else if(a.relation === '>')
               return w.p(a.property) > a.value;
-            else if(a.relation === 'in' && Array.isArray(a.value))
-              return a.value.indexOf(w.p(a.property)) != -1;
             if(a.relation != '==')
               problems.push(`Warning: Relation ${a.relation} interpreted as ==.`);
             return w.p(a.property) === a.value;
