@@ -5,6 +5,7 @@ let jeStateBefore = null;
 let jeStateNow = null;
 let jeJSONerror = null;
 let jeContext = null;
+const jeWidgetLayers = {};
 const jeState = {
   ctrl: false,
   shift: false,
@@ -303,11 +304,31 @@ function jeShowCommands() {
 }
 
 window.addEventListener('mousemove', function(e) {
+  if(!jeEnabled)
+    return;
   jeState.mouseX = Math.floor((e.clientX - roomRectangle.left) / scale);
   jeState.mouseY = Math.floor((e.clientY - roomRectangle.top ) / scale);
+
+  const hoveredWidgets = [];
+  for(const [ widgetID, widget ] of widgets)
+    if(jeState.mouseX >= widget.absoluteCoord('x') && jeState.mouseX <= widget.absoluteCoord('x')+widget.p('width'))
+      if(jeState.mouseY >= widget.absoluteCoord('y') && jeState.mouseY <= widget.absoluteCoord('y')+widget.p('height'))
+        hoveredWidgets.push(widget);
+
+  for(let i=1; i<=12; ++i) {
+    if(hoveredWidgets[i-1]) {
+      jeWidgetLayers[i] = hoveredWidgets[i-1];
+      $(`#jeWidgetLayer${i}`).textContent = `F${i}:\nid: ${hoveredWidgets[i-1].p('id')}\ntype: ${hoveredWidgets[i-1].p('type') || 'basic'}`;
+    } else {
+      delete jeWidgetLayers[i];
+      $(`#jeWidgetLayer${i}`).textContent = '';
+    }
+  }
 });
 
 window.addEventListener('mouseup', function(e) {
+  if(!jeEnabled)
+    return;
   if(e.target == $('#jeText'))
     jeGetContext();
 });
@@ -337,6 +358,14 @@ window.addEventListener('keydown', function(e) {
           command.call();
         }
       }
+    }
+  } else {
+    const functionKey = e.key.match(/F([0-9]+)/);
+    if(functionKey && jeWidgetLayers[+functionKey[1]]) {
+      e.preventDefault();
+      jeState.ctrl = true;
+      jeClick(jeWidgetLayers[+functionKey[1]]);
+      jeState.ctrl = false;
     }
   }
 });

@@ -1,31 +1,42 @@
 #jsonEditor {
+  white-space: pre-line;
+  font-family: monospace;
   display: none;
   height: 100%;
   width: 100%;
 }
 
-#jeText {
-  height: 100%;
-  width: 25%;
+#jsonEditor > * {
+  background: white;
+  padding: 5px;
+  margin: 0;
   position: fixed;
-  right: 25%;
   border: none;
   resize: none;
   box-sizing: border-box;
 }
 
-#jeCommands {
-  padding: 5px;
-  font-family: monospace;
-  background: white;
-  white-space: pre-line;
+#jeText {
   height: 100%;
   width: 25%;
-  position: fixed;
+  right: 25%;
+}
+
+#jeCommands {
+  height: 100%;
+  width: 25%;
   right: 0;
-  border: none;
-  resize: none;
-  box-sizing: border-box;
+}
+
+#jeWidgetLayers {
+  height: 10%;
+  width: 50%;
+}
+
+#jeWidgetLayers > div {
+  display: inline-block;
+  width: 125px;
+  margin-bottom: 10px;
 }
 
 body.jsonEdit #jsonEditor {
