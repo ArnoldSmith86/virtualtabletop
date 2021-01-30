@@ -48,6 +48,13 @@ async function downloadState(res, roomID, stateID, variantID) {
   }
 }
 
+function autosaveRooms() {
+  setInterval(function() {
+    for(const [ _, room ] of activeRooms)
+      room.writeToFilesystem();
+  }, 60*1000);
+}
+
 MinifyRoom().then(function(result) {
   app.use('/', express.static(path.resolve() + '/client'));
   app.use('/i', express.static(path.resolve() + '/assets'));
@@ -178,6 +185,8 @@ const ws = new WebSocket(server, function(connection, { playerName, roomID }) {
   if(ensureRoomIsLoaded(roomID))
     activeRooms.get(roomID).addPlayer(new Player(connection, playerName, activeRooms.get(roomID)));
 });
+
+autosaveRooms();
 
 ['exit', 'SIGINT', 'SIGUSR1', 'SIGUSR2', 'SIGTERM'].forEach((eventType) => {
   process.on(eventType, function() {
