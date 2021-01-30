@@ -75,26 +75,18 @@ export class Button extends Widget {
           for(const v of a.applyVariables) {
             if(v.parameter && v.variable) {
               a[v.parameter] = variables[v.variable];
-            }
-            else if (v.parameter && v.template) {
+            } else if (v.parameter && v.template) {
               for (let key in variables) {
                 a[v.parameter] = v.template.replace(/({([^}]+)})/g, function(i) {
                   let key = i.replace(/{/, '').replace(/}/, '');
-                  if (!variables[key]) return "";
-                  return variables[key];
+                  return (variables[key] === undefined) ? "" : variables[key];
                 });
               }
-            }
-            else if (v.parameter && v.property) {
-              var targetWidget = (v.property.split(".")[0] === "this") ? widgets.get(this.id) : widgets.get(v.property.split(".")[0]);
-              if (typeof targetWidget != undefined) {
-                var targetProperty = targetWidget.state[v.property.split(".")[1]];
-              }
-              a[v.parameter] = (typeof targetProperty != undefined) ? targetProperty : 0;
-            }
-            else {
-              problems.push('Entry in parameter applyVariables does not contain "parameter" and "variable".');
-            }
+            } else if (v.parameter && v.property) {
+              let w = isValidID(v.widget) ? widgets.get(v.widget) : this;
+              a[v.parameter] = (w.p(v.property) === undefined) ? null : w.p(v.property);
+            } else
+              problems.push('Entry in parameter applyVariables does not contain "parameter" together with "variable", "property", or "template".');
           }
         } else {
           problems.push('Parameter applyVariables is not an array.');
@@ -104,8 +96,6 @@ export class Button extends Widget {
         $('#debugButtonOutput').textContent += '\n\n\nOPERATION SKIPPED: \n' + JSON.stringify(a, null, '  ');
         continue;
       }
-
-
 
       if(a.func == 'CLICK') {
         setDefaults(a, { collection: 'DEFAULT', count: 1 });
