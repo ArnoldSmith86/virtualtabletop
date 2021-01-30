@@ -1,6 +1,6 @@
 import { $ } from '../domhelpers.js';
 import { showOverlay } from '../main.js';
-import { playerName, playerColor } from '../overlays/players.js';
+import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { Widget } from './widget.js';
 
@@ -56,7 +56,8 @@ export class Button extends Widget {
 
     const variables = {
       playerName,
-      playerColor
+      playerColor,
+      activePlayers
     };
     const collections = {};
 
