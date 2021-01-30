@@ -287,6 +287,10 @@ export default class Room {
 
   unload() {
     console.log(new Date().toISOString(), `unloading room ${this.id}`);
+    this.writeToFilesystem();
+  }
+
+  writeToFilesystem() {
     const json = JSON.stringify(this.state);
     fs.writeFileSync(path.resolve() + '/save/rooms/' + this.id + '.json', json);
   }
