@@ -133,6 +133,9 @@ function jeAddButtonOperationCommands(command, defaults) {
 }
 
 function jeAddCommands() {
+  if(jeCommands.length > 100)
+    return;
+
   jeAddWidgetPropertyCommands(new BasicWidget());
   jeAddWidgetPropertyCommands(new Button());
   jeAddWidgetPropertyCommands(new Card());
@@ -205,6 +208,25 @@ function jeClick(widget, e) {
   } else if(widget.click) {
     widget.click();
   }
+}
+
+function jeDisplayTree() {
+  const allWidgets = Array.from(widgets.values());
+  let result = 'CTRL-click a widget on the left to edit it.\n\nRoom\n';
+  result += jeDisplayTreeAddWidgets(allWidgets, null, '  ');
+  console.log(allWidgets);
+  $('#jeText').value = jeStateBefore = result;
+  $('#jeText').focus();
+}
+
+function jeDisplayTreeAddWidgets(allWidgets, parent, indent) {
+  let result = '';
+  for(const widget of allWidgets.filter(w=>w.p('parent')==parent)) {
+    result += `${indent}${widget.p('id')} (${widget.p('type') || 'basic'} - ${Math.floor(widget.p('x'))},${Math.floor(widget.p('y'))})\n`;
+    result += jeDisplayTreeAddWidgets(allWidgets, widget.p('id'), indent+'  ');
+    delete allWidgets[allWidgets.indexOf(widget)];
+  }
+  return result;
 }
 
 function jeGetContext() {
@@ -380,8 +402,7 @@ window.addEventListener('keydown', function(e) {
       if(jeEnabled) {
         $('body').classList.add('jsonEdit');
         jeAddCommands();
-        $('#jeText').value = 'CTRL-click a widget';
-        $('#jeText').focus();
+        jeDisplayTree();
       } else {
         $('body').classList.remove('jsonEdit');
       }
