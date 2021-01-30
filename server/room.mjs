@@ -71,8 +71,8 @@ export default class Room {
           attribution: ''
         };
 
-        if(stateID.match(/^[a-z0-9]+$/) && variantID.match(/^[a-z0-9]+$/) && type != 'link')
-          fs.writeFileSync(path.resolve() + '/save/states/' + this.id + '-' + stateID + '-' + variantID + '.json', JSON.stringify(variant));
+        if(type != 'link')
+          fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(variant));
 
         const variantMeta = {
           players: meta.players,
@@ -143,12 +143,11 @@ export default class Room {
     for(const vID of variantID ? [ variantID ] : Object.keys(this.state._meta.states[stateID].variants)) {
       const v = this.state._meta.states[stateID].variants[vID];
 
-      const filename = path.resolve() + '/save/states/' + this.id + '-' + stateID + '-' + vID + '.json';
       let state = null;
       if(v.link)
         state = await FileLoader.readVariantFromLink(v.link);
-      else if(stateID.match(/^[a-z0-9]+$/) && vID.match(/^[a-z0-9]+$/))
-        state = JSON.parse(fs.readFileSync(filename));
+      else
+        state = JSON.parse(fs.readFileSync(this.variantFilename(stateID, variantID)));
       state._meta = { version: this.state._meta.version, info: { ...this.state._meta.states[stateID] } };
       Object.assign(state._meta.info, state._meta.info.variants[vID]);
       delete state._meta.info.variants;
@@ -169,7 +168,16 @@ export default class Room {
     };
   }
 
-  editState(player, id, meta) {
+  async editState(player, id, meta) {
+    // if update links were removed, download their current contents to files
+    const currentState = this.state._meta.states[id];
+    for(const variantID in meta.variants) {
+      if(currentState.variants[variantID].link && !meta.variants[variantID].link) {
+        const state = await FileLoader.readVariantFromLink(currentState.variants[variantID].link);
+        fs.writeFileSync(this.variantFilename(id, variantID), JSON.stringify(state));
+      }
+    }
+
     Object.assign(this.state._meta.states[id], meta);
     this.sendMetaUpdate();
   }
@@ -205,12 +213,10 @@ export default class Room {
   async loadState(player, stateID, variantID) {
     const variantInfo = this.state._meta.states[stateID].variants[variantID];
 
-    if(variantInfo.link) {
+    if(variantInfo.link)
       this.load(variantInfo.link);
-    } else if(stateID.match(/^[a-z0-9]+$/) && variantID.match(/^[a-z0-9]+$/)) {
-      const filename = path.resolve() + '/save/states/' + this.id + '-' + stateID + '-' + variantID + '.json';
-      this.load(filename);
-    }
+    else
+      this.load(this.variantFilename(stateID, variantID));
   }
 
   mouseMove(player, coords) {
@@ -293,5 +299,9 @@ export default class Room {
   writeToFilesystem() {
     const json = JSON.stringify(this.state);
     fs.writeFileSync(path.resolve() + '/save/rooms/' + this.id + '.json', json);
+  }
+
+  variantFilename(stateID, variantID) {
+    return path.resolve() + '/save/states/' + this.id + '-' + stateID.replace(/[^a-z0-9]/g, '_') + '-' + variantID.replace(/[^a-z0-9]/g, '_') + '.json';
   }
 }
