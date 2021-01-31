@@ -87,8 +87,8 @@ async function readVariantsFromBuffer(buffer) {
     for(const filename in zip.files) {
 
       if(filename.match(/^[^\/]+\.json$/) && zip.files[filename]._data) {
-        if(zip.files[filename]._data.uncompressedSize >= 2097152)
-          throw `${filename} is bigger than 2 MiB.`;
+        if(zip.files[filename]._data.uncompressedSize >= 20971520)
+          throw `${filename} is bigger than 20 MiB.`;
         const variant = JSON.parse(await zip.files[filename].async('string'));
         if(variant._meta.version !== 1)
           throw `Found a valid JSON file but version ${variant._meta.version} is not supported.`;
