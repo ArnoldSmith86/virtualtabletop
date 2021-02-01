@@ -91,14 +91,14 @@ class Pile extends Widget {
     splitButton.textContent = 'Split pile';
     splitButton.addEventListener('click', e=>{
       batchStart();
-      this.children().reverse().slice(0, childCount-splitInput.value).forEach(c=>{
+      this.children().reverse().slice(childCount-splitInput.value).forEach(c=>{
         c.p('parent', null);
         c.p('x', this.absoluteCoord('x'));
         const y = this.absoluteCoord('y');
         c.p('y', y < 100 ? y+60 : y-60);
         c.updatePiles();
+        c.bringToFront();
       });
-      this.bringToFront();
       showOverlay();
       batchEnd();
     });
