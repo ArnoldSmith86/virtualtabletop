@@ -243,7 +243,6 @@ function addWidgetToAddWidgetOverlay(w, wi) {
 }
 
 function populateAddWidgetOverlay() {
-  return; // FIXME: re-enable
   const x = 20+140-111/2;
   addWidgetToAddWidgetOverlay(new Holder('add-holder'), {
     type: 'holder',
@@ -255,6 +254,12 @@ function populateAddWidgetOverlay() {
     for(const w of generateCardDeckWidgets(Math.random().toString(36).substring(3, 7), x, 500))
       addWidgetLocal(w);
   });
+  // add a dummy pile handle to the card deck because the real one doesn't work
+  const dummyHandle = document.createElement('div');
+  dummyHandle.className = 'pile handle';
+  dummyHandle.style = `width:40px;height:40px;transform:translate(190px, 490px)`;
+  dummyHandle.textContent = 52;
+  $('#addOverlay').appendChild(dummyHandle);
 
   let y = 100;
   for(const color of [ '#000000','#4a4a4a','#4c5fea','#bc5bee','#e84242','#e0cb0b','#23ca5b','#e2a633','#ffffff' ]) {

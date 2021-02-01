@@ -76,7 +76,6 @@ class Pile {
   }
 
   move(x, y) {
-    // FIXME: pile with "0" stays if dropped into a hand (at least that happened once :( )
     for(const widget of this.movingWidgets)
       if(widget.p('movable'))
         widget.move(x - this.o('width')/2 - this.movingOffset[0] + widget.p('width')/2, y - this.o('height')/2 - this.movingOffset[1] + widget.p('height')/2);
