@@ -24,20 +24,35 @@ fs.mkdirSync(savedir + '/links',  { recursive: true });
 fs.mkdirSync(savedir + '/errors', { recursive: true });
 
 function ensureRoomIsLoaded(id) {
+  if(!id.match(/^[A-Za-z0-9_-]+$/))
+    return false;
   if(!activeRooms.has(id)) {
     activeRooms.set(id, new Room(id, function() {
       activeRooms.delete(id);
     }));
   }
+  return true;
 }
 
-function downloadState(res, roomID, stateID, variantID) {
-  ensureRoomIsLoaded(roomID);
-  activeRooms.get(roomID).download(stateID, variantID).then(function(d) {
-    res.setHeader('Content-Type', d.type);
-    res.setHeader('Content-Disposition', `attachment; filename="${d.name.replace(/[^A-Za-z0-9._-]/g, '_')}"`);
-    res.send(d.content);
-  });
+async function downloadState(res, roomID, stateID, variantID) {
+  try {
+    if(ensureRoomIsLoaded(roomID)) {
+      const d = await activeRooms.get(roomID).download(stateID, variantID);
+      res.setHeader('Content-Type', d.type);
+      res.setHeader('Content-Disposition', `attachment; filename="${d.name.replace(/[^A-Za-z0-9._-]/g, '_')}"`);
+      res.send(d.content);
+    }
+  } catch(e) {
+    console.log(new Date().toISOString(), `EXCEPTION in downloadState for ${roomID}.${stateID}.${variantID}: ${String(e)}`);
+    res.sendStatus(500);
+  }
+}
+
+function autosaveRooms() {
+  setInterval(function() {
+    for(const [ _, room ] of activeRooms)
+      room.writeToFilesystem();
+  }, 60*1000);
 }
 
 MinifyRoom().then(function(result) {
@@ -46,6 +61,8 @@ MinifyRoom().then(function(result) {
   app.use('/library', express.static(path.resolve() + '/library'));
 
   app.get('/assets/:name', function(req, res) {
+    if(!req.params.name.match(/^[0-9_-]+$/))
+      return;
     fs.readFile(savedir + '/assets/' + req.params.name, function(err, content) {
       if(!content) {
         res.sendStatus(404);
@@ -91,11 +108,12 @@ MinifyRoom().then(function(result) {
   });
 
   app.get('/state/:room', function(req, res) {
-    res.setHeader('Content-Type', 'application/json');
-    ensureRoomIsLoaded(req.params.room);
-    const state = {...activeRooms.get(req.params.room).state};
-    delete state._meta;
-    res.send(JSON.stringify(state, null, '  '));
+    if(ensureRoomIsLoaded(req.params.room)) {
+      res.setHeader('Content-Type', 'application/json');
+      const state = {...activeRooms.get(req.params.room).state};
+      delete state._meta;
+      res.send(JSON.stringify(state, null, '  '));
+    }
   });
 
   app.use(bodyParser.json({
@@ -103,9 +121,10 @@ MinifyRoom().then(function(result) {
   }));
   app.put('/state/:room', function(req, res) {
     if(typeof req.body == 'object') {
-      ensureRoomIsLoaded(req.params.room);
-      activeRooms.get(req.params.room).setState(req.body);
-      res.send('OK');
+      if(ensureRoomIsLoaded(req.params.room)) {
+        activeRooms.get(req.params.room).setState(req.body);
+        res.send('OK');
+      }
     } else {
       res.send('not a valid JSON object');
     }
@@ -132,6 +151,10 @@ MinifyRoom().then(function(result) {
   });
 
   app.get('/:id', function(req, res) {
+    if(!ensureRoomIsLoaded(req.params.id)) {
+      res.send('Invalid characters in room ID.');
+      return;
+    }
     if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
       res.setHeader('Content-Encoding', 'gzip');
       res.setHeader('Content-Type', 'text/html');
@@ -159,9 +182,11 @@ MinifyRoom().then(function(result) {
 
 const activeRooms = new Map();
 const ws = new WebSocket(server, function(connection, { playerName, roomID }) {
-  ensureRoomIsLoaded(roomID);
-  activeRooms.get(roomID).addPlayer(new Player(connection, playerName, activeRooms.get(roomID)));
+  if(ensureRoomIsLoaded(roomID))
+    activeRooms.get(roomID).addPlayer(new Player(connection, playerName, activeRooms.get(roomID)));
 });
+
+autosaveRooms();
 
 ['exit', 'SIGINT', 'SIGUSR1', 'SIGUSR2', 'SIGTERM'].forEach((eventType) => {
   process.on(eventType, function() {

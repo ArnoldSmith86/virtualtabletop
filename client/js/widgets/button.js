@@ -1,6 +1,6 @@
 import { $ } from '../domhelpers.js';
 import { showOverlay } from '../main.js';
-import { playerName, playerColor } from '../overlays/players.js';
+import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { Widget } from './widget.js';
 
@@ -56,7 +56,8 @@ export class Button extends Widget {
 
     const variables = {
       playerName,
-      playerColor
+      playerColor,
+      activePlayers
     };
     const collections = {};
 
@@ -89,7 +90,8 @@ export class Button extends Widget {
         if(isValidCollection(a.collection))
           for(let i=0; i<a.count; ++i)
             for(const w of collections[a.collection])
-              w.click();
+              if(w.click)
+                w.click();
       }
 
       if(a.func == 'COMPUTE') {
@@ -255,26 +257,27 @@ export class Button extends Widget {
 
       if(a.func == 'GET') {
         setDefaults(a, { variable: a.property || 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first' });
-        if(! isValidCollection(a.collection)) {
-          problems.push(`Invalid collection: ${a.collection}`);
-        } else {
-          if(!collections[a.collection].length) {
-            problems.push(`Collection ${a.collection} is empty.`);
-          } else {
-            switch(a.aggregation) {
-            case 'first':
-              // always get a deep copy and not object references
-              variables[a.variable] = JSON.parse(JSON.stringify(collections[a.collection][0].p(a.property)));
-              break;
-            case 'sum':
-              variables[a.variable] = 0;
-              for(const widget of collections[a.collection]) {
-                variables[a.variable] += Number(widget.p(a.property) || 0);
+        if(isValidCollection(a.collection)) {
+          switch(a.aggregation) {
+          case 'first':
+            if(collections[a.collection].length)
+              if(collections[a.collection][0].p(a.property) !== undefined) {
+                // always get a deep copy and not object references
+                variables[a.variable] = JSON.parse(JSON.stringify(collections[a.collection][0].p(a.property)));
+              } else {
+                variables[a.variable] = null;
+                problems.push(`Property ${a.property} missing from first item of collection, setting ${a.variable} to null.`);
               }
-              break;
-            default:
-              problems.push(`Aggregation ${a.aggregation} is unsupported.`);
-            }
+            else
+              problems.push(`Collection ${a.collection} is empty.`);
+            break;
+          case 'sum':
+            variables[a.variable] = 0;
+            for(const widget of collections[a.collection])
+              variables[a.variable] += Number(widget.p(a.property) || 0);
+            break;
+          default:
+            problems.push(`Aggregation ${a.aggregation} is unsupported.`);
           }
         }
       }
@@ -362,20 +365,22 @@ export class Button extends Widget {
       }
 
       if(a.func == 'ROTATE') {
-        setDefaults(a, { count: 1, angle: 90 });
+        setDefaults(a, { count: 1, angle: 90, mode: 'add' });
         if(isValidID(a.holder)) {
           this.w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>{
-            c.rotate(a.angle);
+            c.rotate(a.angle, a.mode);
           }));
         }
       }
 
       if(a.func == 'SELECT') {
-        setDefaults(a, { property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'add', source: 'all' });
+        setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'add', source: 'all' });
         if(a.source == 'all' || isValidCollection(a.source)) {
           if([ 'add', 'set' ].indexOf(a.mode) == -1)
             problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
           let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(function(w) {
+            if(a.type != 'all' && w.p('type') != a.type)
+              return false;
             if(a.relation === '<')
               return w.p(a.property) < a.value;
             else if(a.relation === '<=')
@@ -386,6 +391,8 @@ export class Button extends Widget {
               return w.p(a.property) >= a.value;
             else if(a.relation === '>')
               return w.p(a.property) > a.value;
+            else if(a.relation === 'in' && Array.isArray(a.value))
+              return a.value.indexOf(w.p(a.property)) != -1;
             if(a.relation != '==')
               problems.push(`Warning: Relation ${a.relation} interpreted as ==.`);
             return w.p(a.property) === a.value;
@@ -400,7 +407,9 @@ export class Button extends Widget {
 
       if(a.func == 'SET') {
         setDefaults(a, { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
-        if(isValidCollection(a.collection)) {
+        if((a.property == 'parent' || a.property == 'deck') && a.value !== null && !widgets.has(a.value)) {
+          problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
+        } else if(isValidCollection(a.collection)) {
           if([ '+', '-', '=' ].indexOf(a.relation) == -1)
             problems.push(`Warning: Relation ${a.relation} interpreted as =.`);
           for(const w of collections[a.collection]) {
