@@ -86,6 +86,8 @@ To debug client-side code, first start the server so that it doesn't compress th
 
     npm run debug
 
+On windows, enter `SET NOCOMPRESS=1` in a terminal prior to starting the server with `npm start`.
+
 In your browser, refresh to have it re-download the client code.
 Press F12 to show the developer tools.
 
