@@ -70,7 +70,7 @@ export class Button extends Widget {
         if(Array.isArray(a.applyVariables)) {
           for(const v of a.applyVariables) {
             if(v.parameter && v.variable) {
-              a[v.parameter] = variables[v.variable];
+              a[v.parameter] = (v.index === undefined) ? variables[v.variable] : variables[v.variable][v.index];
             } else if (v.parameter && v.template) {
               for (let key in variables) {
                 a[v.parameter] = v.template.replace(/({([^}]+)})/g, function(i) {
