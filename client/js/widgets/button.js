@@ -61,7 +61,7 @@ export class Button extends Widget {
     };
 
     const collections = {
-        thisButton : [this]
+      thisButton : [this]
     }
 
     for(const original of this.p('clickRoutine')) {
