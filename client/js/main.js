@@ -14,6 +14,12 @@ const piles = new Map();
 function getValidDropTargets(widget) {
   const targets = [];
   for(const [ _, t ] of dropTargets) {
+    // if the holder has a drop limit and it's reached, skip the holder
+    if(t.p('dropLimit') > -1 && t.p('dropLimit') <= t.children().length)
+      // don't skip it if the dragged widget is already its child
+      if(t.children().indexOf(widget) == -1)
+        continue;
+
     let isValid = true;
     for(const key in t.p('dropTarget')) {
       if(widget.p(key) != t.p('dropTarget')[key] && (key != 'type' || widget.p(key) != 'deck' || t.p('dropTarget')[key] != 'card')) {
@@ -23,7 +29,7 @@ function getValidDropTargets(widget) {
     }
 
     let tt = t;
-    while(true) {
+    while(isValid) {
       if(widget == tt) {
         isValid = false;
         break;
