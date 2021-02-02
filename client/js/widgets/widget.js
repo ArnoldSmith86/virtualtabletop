@@ -38,6 +38,9 @@ export class Widget extends StateManaged {
       inheritChildZ: false,
 
       clickRoutine: null,
+      propertyChangeRoutine: null,
+      childAddRoutine: null,
+      childRemoveRoutine: null,
       debug: false
     });
 
@@ -174,7 +177,7 @@ export class Widget extends StateManaged {
 
   click() {
     if(Array.isArray(this.p('clickRoutine'))) {
-      this.evaluateRoutine('clickRoutine');
+      this.evaluateRoutine('clickRoutine', {}, {});
       return true;
     } else {
       return false;
@@ -211,7 +214,7 @@ export class Widget extends StateManaged {
     return [ 'rotation', 'scale', 'x', 'y' ];
   }
 
-  async evaluateRoutine(property) {
+  async evaluateRoutine(property, initialVariables, initialCollections) {
     function setDefaults(routine, defaults) {
       for(const key in defaults)
         if(routine[key] === undefined)
@@ -245,14 +248,14 @@ export class Widget extends StateManaged {
     if(this.p('debug'))
       $('#debugButtonOutput').textContent = '';
 
-    const variables = {
+    const variables = Object.assign({
       playerName,
       playerColor,
       activePlayers
-    };
-    const collections = {};
+    }, initialVariables);
+    const collections = initialCollections;
 
-    for(const original of this.p('clickRoutine')) {
+    for(const original of this.p(property)) {
       const a = { ...original };
       var problems = [];
 
@@ -754,6 +757,8 @@ export class Widget extends StateManaged {
     this.childArray = this.childArray.filter(c=>c!=child);
     this.childArray.push(child);
     this.onChildAddAlign(child, oldParentID);
+    if(Array.isArray(this.p('childAddRoutine')))
+      this.evaluateRoutine('childAddRoutine', { oldParentID }, { child: [ child ] });
   }
 
   onChildAddAlign(child, oldParentID) {
@@ -774,6 +779,8 @@ export class Widget extends StateManaged {
   onChildRemove(child) {
     this.childArray = this.childArray.filter(c=>c!=child);
     this.applyZ();
+    if(Array.isArray(this.p('childRemoveRoutine')))
+      this.evaluateRoutine('childRemoveRoutine', {}, { child: [ child ] });
   }
 
   onPropertyChange(property, oldValue, newValue) {
@@ -784,6 +791,8 @@ export class Widget extends StateManaged {
         widgets.get(newValue).onChildAdd(this, oldValue);
       this.updatePiles();
     }
+    if(Array.isArray(this.p('propertyChangeRoutine')))
+      this.evaluateRoutine('propertyChangeRoutine', { property, oldValue, newValue }, {});
   }
 
   rotate(degrees, mode) {
