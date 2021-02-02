@@ -46,11 +46,11 @@ export default function minifyRoom() {
           'client/js/geometry.js',
           'client/js/mousehandling.js',
           'client/js/statemanaged.js',
-          'client/js/widgets/widget.js',
 
           'client/js/overlays/players.js',
           'client/js/overlays/states.js',
 
+          'client/js/widgets/widget.js',
           'client/js/widgets/basicwidget.js',
           'client/js/widgets/button.js',
           'client/js/widgets/card.js',
