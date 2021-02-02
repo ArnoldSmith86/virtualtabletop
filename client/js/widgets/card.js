@@ -55,14 +55,15 @@ class Card extends Widget {
   }
 
   click() {
-    this.flip();
+    if(!super.click())
+      this.flip();
   }
 
   createFaces(faceTemplates) {
     for(const face of faceTemplates) {
       const faceDiv = document.createElement('div');
 
-      if(face.css !== undefined) 
+      if(face.css !== undefined)
         faceDiv.style.cssText = face.css;
       faceDiv.style.border = face.border ? face.border + 'px black solid' : 'none';
       faceDiv.style.borderRadius = face.radius ? face.radius + 'px' : '0';
