@@ -1,4 +1,4 @@
-let jeEnabled = false;
+let jeEnabled = null;
 let jeZoomOut = false;
 let jeWidget = null;
 let jeStateBefore = null;
@@ -62,11 +62,10 @@ const jeCommands = [
       let pointer = jeGetValue(jeContext.slice(0, -1));
       delete pointer[jeContext[jeContext.length-1]];
 
-      const oldStart = $('#jeText').selectionStart;
-      const oldEnd   = $('#jeText').selectionEnd;
-      $('#jeText').value = JSON.stringify(jeStateNow, null, '  ');
-      $('#jeText').selectionStart = oldStart;
-      $('#jeText').selectionEnd   = oldEnd;
+      const oldStart = getSelection().anchorOffset;
+      const oldEnd   = getSelection().focusOffset;
+      jeSet(JSON.stringify(jeStateNow, null, '  '));
+      jeSelect(oldStart, oldEnd);
     },
     show: function() {
       return jeStateNow && jeGetValue(jeContext.slice(0, -1))[jeContext[jeContext.length-1]] !== undefined;
@@ -78,11 +77,13 @@ const jeCommands = [
     call: function() {
       if(jeJSONerror) {
         const location = String(jeJSONerror).match(/line ([0-9]+) column ([0-9]+)/);
-        if(location)
-          $('#jeText').selectionStart = $('#jeText').selectionEnd = $('#jeText').value.split('\n').slice(0, location[1]-1).join('\n').length + +location[2];
+        if(location) {
+          const pos = $('#jeText').textContent.split('\n').slice(0, location[1]-1).join('\n').length + +location[2];
+          jeSelect(pos, pos);
+        }
       } else {
         $('#editWidgetJSON').dataset.previousState = jeStateBefore;
-        $('#editWidgetJSON').value = $('#jeText').value;
+        $('#editWidgetJSON').value = $('#jeText').textContent;
         $('#updateWidgetJSON').click();
       }
     }
@@ -133,9 +134,6 @@ function jeAddButtonOperationCommands(command, defaults) {
 }
 
 function jeAddCommands() {
-  if(jeCommands.length > 100)
-    return;
-
   jeAddWidgetPropertyCommands(new BasicWidget());
   jeAddWidgetPropertyCommands(new Button());
   jeAddWidgetPropertyCommands(new Card());
@@ -203,11 +201,21 @@ function jeAddWidgetPropertyCommand(defaults, property) {
 function jeClick(widget, e) {
   if(jeState.ctrl) {
     jeWidget = widget;
-    $('#jeText').value = jeStateBefore = JSON.stringify(widget.state, null, '  ');
-    $('#jeText').focus();
+    jeSet(jeStateBefore = JSON.stringify(widget.state, null, '  '));
   } else if(widget.click) {
     widget.click();
   }
+}
+
+function jeColorize() {
+  const langObj = {
+    curl: /([{}":,\[\]])/g,
+  };
+  let html = $('#jeText').textContent;
+  for(const l in langObj) {
+    html = html.replace(langObj[l], `<i class=${l}>$1</i>`);
+  };
+  $('#jeTextHighlight').innerHTML = html;
 }
 
 function jeDisplayTree() {
@@ -215,8 +223,7 @@ function jeDisplayTree() {
   let result = 'CTRL-click a widget on the left to edit it.\n\nRoom\n';
   result += jeDisplayTreeAddWidgets(allWidgets, null, '  ');
   console.log(allWidgets);
-  $('#jeText').value = jeStateBefore = result;
-  $('#jeText').focus();
+  jeSet(jeStateBefore = result);
 }
 
 function jeDisplayTreeAddWidgets(allWidgets, parent, indent) {
@@ -233,9 +240,9 @@ function jeGetContext() {
   if(!jeWidget)
     return [];
 
-  const s = $('#jeText').selectionStart;
-  const e = $('#jeText').selectionEnd;
-  const v = $('#jeText').value;
+  const s = getSelection().anchorOffset;
+  const e = getSelection().focusOffset;
+  const v = $('#jeText').textContent;
   const t = jeWidget.p('type') || 'basic';
 
   const select = v.substr(s, e-s).replace(/\n/g, '\\n');
@@ -290,13 +297,46 @@ function jeInsert(context, key, value) {
 }
 
 function jePasteText(text) {
-  const s = $('#jeText').selectionStart;
-  const e = $('#jeText').selectionEnd;
-  const v = $('#jeText').value;
+  const s = getSelection().anchorOffset;
+  const e = getSelection().focusOffset;
+  const v = $('#jeText').textContent;
 
-  $('#jeText').value = v.substr(0, s) + text + v.substr(e);
-  $('#jeText').selectionStart = s;
-  $('#jeText').selectionEnd   = s + text.length;
+  jeSet(v.substr(0, s) + text + v.substr(e));
+  jeSelect(s, s + text.length);
+}
+
+function jeSelect(start, end) {
+  const t = $('#jeText');
+  t.focus();
+
+  const scroll = t.scrollTop;
+  const text = t.textContent;
+  t.textContent = text.substring(0, end);
+  const height = t.scrollHeight;
+  t.scrollTop = 50000;
+  t.textContent = text;
+
+  if(t.scrollTop) {
+    if(Math.abs(t.scrollTop + t.clientHeight/2 - scroll) < t.clientHeight*.25)
+      t.scrollTop = scroll;
+    else
+      t.scrollTop += t.clientHeight/2;
+  }
+
+  const node = t.firstChild;
+  const range = document.createRange();
+  range.setStart(node, start);
+  range.setEnd(node, end);
+  const selection = window.getSelection();
+  selection.removeAllRanges();
+
+  selection.addRange(range);
+}
+
+function jeSet(text) {
+  $('#jeText').textContent = text;
+  $('#jeText').focus();
+  jeColorize();
 }
 
 function jeSetAndSelect(replaceBy) {
@@ -306,10 +346,9 @@ function jeSetAndSelect(replaceBy) {
 
   jsonString = JSON.stringify(jeStateNow, null, '  ').replace(/"###SELECT ME###"/, JSON.stringify(replaceBy));
 
-  $('#jeText').value = jsonString;
-  $('#jeText').selectionStart = startIndex + (typeof replaceBy == 'string' ? 1 : 0);
-  $('#jeText').selectionEnd = startIndex+jsonString.length-length - (typeof replaceBy == 'string' ? 1 : 0);
-  $('#jeText').focus();
+  jeSet(jsonString);
+  const quote = typeof replaceBy == 'string' ? 1 : 0;
+  jeSelect(startIndex + quote, startIndex+jsonString.length-length - quote);
 }
 
 function jeShowCommands() {
@@ -398,11 +437,16 @@ window.addEventListener('keydown', function(e) {
   if(jeState.ctrl) {
     if(e.key == 'j') {
       e.preventDefault();
+      if(jeEnabled === null) {
+        jeAddCommands();
+        jeDisplayTree();
+        $('#jeText').addEventListener("input", jeColorize);
+        $('#jeText').onscroll = e=>$('#jeTextHighlight').scrollTop = e.target.scrollTop;
+        jeColorize();
+      }
       jeEnabled = !jeEnabled;
       if(jeEnabled) {
         $('body').classList.add('jsonEdit');
-        jeAddCommands();
-        jeDisplayTree();
       } else {
         $('body').classList.remove('jsonEdit');
       }

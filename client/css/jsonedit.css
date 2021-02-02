@@ -16,10 +16,31 @@
   box-sizing: border-box;
 }
 
-#jeText {
+#jeText, #jeTextHighlight {
+  white-space: pre-wrap;
+  overflow-y: auto;
   height: 100%;
   width: 25%;
   right: 25%;
+}
+
+#jeText {
+  background: none;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+  outline: none;
+}
+#jeText::selection {
+  background-color: black;
+  -webkit-text-fill-color: white;
+}
+
+#jeTextHighlight i {
+  font-style: normal;
+}
+
+i.curl {
+  color: grey;
 }
 
 #jeCommands {
