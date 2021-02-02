@@ -214,7 +214,7 @@ export class Widget extends StateManaged {
     return [ 'rotation', 'scale', 'x', 'y' ];
   }
 
-  async evaluateRoutine(property, initialVariables, initialCollections) {
+  async evaluateRoutine(property, initialVariables, initialCollections, depth) {
     function setDefaults(routine, defaults) {
       for(const key in defaults)
         if(routine[key] === undefined)
@@ -245,7 +245,7 @@ export class Widget extends StateManaged {
 
     batchStart();
 
-    if(this.p('debug'))
+    if(this.p('debug') && !depth)
       $('#debugButtonOutput').textContent = '';
 
     const variables = Object.assign({
@@ -278,6 +278,33 @@ export class Widget extends StateManaged {
       }
 
 
+
+      if(a.func == 'CALL') {
+        setDefaults(a, { widget: this.p('id'), routine: 'clickRoutine', 'return': true, variables: {}, variable: 'result', iterations: 1 });
+        if(!a.routine.match(/Routine$/)) {
+          problems.push('Routine parameters have to end with "Routine".');
+        } else if(isValidID(a.widget)) {
+          if(!Array.isArray(widgets.get(a.widget).p(a.routine))) {
+            problems.push(`Widget ${a.widget} does not contain ${a.routine} (or it is no array).`);
+          } else {
+            // make sure everything is passed in a way that the variables and collections of this routine won't be changed
+            const inheritVariables = Object.assign(JSON.parse(JSON.stringify(variables)), a.variables);
+            const inheritCollections = {};
+            for(const c in collections)
+              inheritCollections[c] = [ ...collections[c] ];
+            inheritCollections['caller'] = [ this ];
+            for(let iteration=0; iteration<a.iterations; ++iteration) {
+              inheritVariables.iteration = iteration;
+              $('#debugButtonOutput').textContent += `\n\n\nCALLing: ${a.widget}.${a.routine} (iteration ${iteration})\n`;
+              variables[a.variable] = await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections, (depth || 0) + 1);
+            }
+          }
+        }
+        if(!a.return) {
+          $('#debugButtonOutput').textContent += '\n\n\nCALL without return. Ending evaluation.\n';
+          break;
+        }
+      }
 
       if(a.func == 'CLICK') {
         setDefaults(a, { collection: 'DEFAULT', count: 1 });
@@ -655,17 +682,19 @@ export class Widget extends StateManaged {
         for(const name in collections) {
           msg += '  ' + name + ': ' + collections[name].map(w=>`${w.p('id')} (${w.p('type')})`).join(', ') + '\n';
         }
-        $('#debugButtonOutput').textContent += msg
+        $('#debugButtonOutput').textContent += msg.replace(/^/gm, '    '.repeat(depth));
         console.log(msg);
       } else if(problems.length) {
         console.log(problems);
       }
+
     }
 
-    if(this.p('debug'))
+    if(this.p('debug') && !depth)
       showOverlay('debugButtonOverlay');
 
     batchEnd();
+    return variables.result;
   }
 
   hideEnlarged() {
