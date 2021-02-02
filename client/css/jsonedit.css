@@ -6,8 +6,11 @@
   width: 100%;
 }
 
+#jsonEditor > *, .jsonEdit {
+  background: #08090a;
+}
 #jsonEditor > * {
-  background: white;
+  color: #f8f8f2;
   padding: 5px;
   margin: 0;
   position: fixed;
@@ -31,7 +34,7 @@
   outline: none;
 }
 #jeText::selection {
-  background-color: black;
+  background-color: #808080;
   -webkit-text-fill-color: white;
 }
 
@@ -39,9 +42,10 @@
   font-style: normal;
 }
 
-i.curl {
-  color: grey;
-}
+i.key    { color: yellow;  }
+i.string { color: #7ed07e; }
+i.number { color: #dda0dd; }
+i.null   { color: blue;    }
 
 #jeCommands {
   height: 100%;

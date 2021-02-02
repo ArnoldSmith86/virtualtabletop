@@ -208,14 +208,30 @@ function jeClick(widget, e) {
 }
 
 function jeColorize() {
-  const langObj = {
-    curl: /([{}":,\[\]])/g,
-  };
-  let html = $('#jeText').textContent;
-  for(const l in langObj) {
-    html = html.replace(langObj[l], `<i class=${l}>$1</i>`);
-  };
-  $('#jeTextHighlight').innerHTML = html;
+  const langObj = [
+    [ /^ +"(.*)": "(.*)",?$/, 'key', 'string' ],
+    [ /^ +"(.*)": (-?[0-9.]+),?$/, 'key', 'number' ],
+    [ /^ +"(.*)": (null|true|false),?$/, 'key', 'null' ],
+    [ /^ +"(.*)":/, 'key' ]
+  ];
+  let out = [];
+  for(const line of $('#jeText').textContent.split('\n')) {
+    let foundMatch = false;
+    for(const l of langObj) {
+      const match = line.match(l[0]);
+      if(match) {
+        let outLine = line;
+        for(let i=1; i<l.length; ++i)
+          outLine = outLine.replace(match[i], `<i class=${l[i]}>${match[i]}</i>`);
+        out.push(outLine);
+        foundMatch = true;
+        break;
+      }
+    }
+    if(!foundMatch)
+      out.push(line);
+  }
+  $('#jeTextHighlight').innerHTML = out.join('\n');
 }
 
 function jeDisplayTree() {
