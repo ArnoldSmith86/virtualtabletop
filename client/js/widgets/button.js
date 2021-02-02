@@ -1,7 +1,5 @@
 import { $ } from '../domhelpers.js';
 import { showOverlay } from '../main.js';
-import { playerName, playerColor, activePlayers } from '../overlays/players.js';
-import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { Widget } from './widget.js';
 
 export class Button extends Widget {
