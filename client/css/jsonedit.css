@@ -23,8 +23,8 @@
   white-space: pre-wrap;
   overflow-y: auto;
   height: 100%;
-  width: 25%;
-  right: 25%;
+  width: 350px;
+  right: 350px;
 }
 
 #jeText {
@@ -49,7 +49,7 @@ i.null   { color: blue;    }
 
 #jeCommands {
   height: 100%;
-  width: 25%;
+  width: 350px;
   right: 0;
   overflow: auto;
 }

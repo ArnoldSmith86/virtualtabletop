@@ -104,10 +104,12 @@ function checkURLproperties() {
 function setScale() {
   const w = window.innerWidth;
   const h = window.innerHeight;
-  if(jeEnabled)
-    scale = jeZoomOut ? w/6400 : w/3200;
-  else
+  if(jeEnabled) {
+    const targetWidth = jeZoomOut ? 3200 : 1600;
+    scale = (w-700)/targetWidth;
+  } else {
     scale = w/h < 1600/1000 ? w/1600 : h/1000;
+  }
   document.documentElement.style.setProperty('--scale', scale);
   roomRectangle = $('#roomArea').getBoundingClientRect();
 }
