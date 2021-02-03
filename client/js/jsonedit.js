@@ -323,30 +323,34 @@ function jePasteText(text) {
 
 function jeSelect(start, end) {
   const t = $('#jeText');
-  t.focus();
-
-  const scroll = t.scrollTop;
   const text = t.textContent;
-  t.textContent = text.substring(0, end);
-  const height = t.scrollHeight;
-  t.scrollTop = 50000;
-  t.textContent = text;
+  try {
+    t.focus();
 
-  if(t.scrollTop) {
-    if(Math.abs(t.scrollTop + t.clientHeight/2 - scroll) < t.clientHeight*.25)
-      t.scrollTop = scroll;
-    else
-      t.scrollTop += t.clientHeight/2;
+    const scroll = t.scrollTop;
+    t.textContent = text.substring(0, end);
+    const height = t.scrollHeight;
+    t.scrollTop = 50000;
+    t.textContent = text;
+
+    if(t.scrollTop) {
+      if(Math.abs(t.scrollTop + t.clientHeight/2 - scroll) < t.clientHeight*.25)
+        t.scrollTop = scroll;
+      else
+        t.scrollTop += t.clientHeight/2;
+    }
+
+    const node = t.firstChild;
+    const range = document.createRange();
+    range.setStart(node, start);
+    range.setEnd(node, end);
+    const selection = window.getSelection();
+    selection.removeAllRanges();
+
+    selection.addRange(range);
+  } catch(e) {
+    t.textContent = text;
   }
-
-  const node = t.firstChild;
-  const range = document.createRange();
-  range.setStart(node, start);
-  range.setEnd(node, end);
-  const selection = window.getSelection();
-  selection.removeAllRanges();
-
-  selection.addRange(range);
 }
 
 function jeSet(text) {
@@ -450,13 +454,18 @@ window.addEventListener('keydown', function(e) {
   if(e.key == 'Shift')
     jeState.shift = true;
 
+  if(e.key == 'Enter' && jeEnabled) {
+    document.execCommand('insertHTML', false, '\n');
+    e.preventDefault();
+  }
+
   if(jeState.ctrl) {
     if(e.key == 'j') {
       e.preventDefault();
       if(jeEnabled === null) {
         jeAddCommands();
         jeDisplayTree();
-        $('#jeText').addEventListener("input", jeColorize);
+        $('#jeText').addEventListener('input', jeColorize);
         $('#jeText').onscroll = e=>$('#jeTextHighlight').scrollTop = e.target.scrollTop;
         jeColorize();
       }
