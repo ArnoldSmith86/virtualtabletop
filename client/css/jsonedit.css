@@ -42,10 +42,12 @@
   font-style: normal;
 }
 
-i.key    { color: yellow;  }
-i.string { color: #7ed07e; }
-i.number { color: #dda0dd; }
-i.null   { color: blue;    }
+i.key     { color: yellow;  }
+i.custom  { color: orange;  }
+i.string  { color: #7ed07e; }
+i.number  { color: #dda0dd; }
+i.null    { color: blue;    }
+i.default { color: #606060; }
 
 #jeCommands {
   height: 100%;

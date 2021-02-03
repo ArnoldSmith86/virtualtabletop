@@ -14,6 +14,8 @@ const jeState = {
   widget: null
 };
 
+const jeOrder = [ 'type', 'id#', 'parent', 'deck', 'cardType', 'owner#', 'x*', 'y*', 'width*', 'height*', 'scale', 'rotation#', 'layer', 'z', 'inheritChildZ#', 'movable*', 'movableInEdit*#' ];
+
 const jeCommands = [
   {
     name: 'toggle boolean',
@@ -83,7 +85,7 @@ const jeCommands = [
         }
       } else {
         $('#editWidgetJSON').dataset.previousState = jeStateBefore;
-        $('#editWidgetJSON').value = $('#jeText').textContent;
+        $('#editWidgetJSON').value = JSON.stringify(jePostProcessObject(JSON.parse(jePostProcessText($('#jeText').textContent))));
         $('#updateWidgetJSON').click();
       }
     }
@@ -201,7 +203,7 @@ function jeAddWidgetPropertyCommand(defaults, property) {
 function jeClick(widget, e) {
   if(jeState.ctrl) {
     jeWidget = widget;
-    jeSet(jeStateBefore = JSON.stringify(widget.state, null, '  '));
+    jeSet(jePreProcessText(jeStateBefore = JSON.stringify(jePreProcessObject(widget.state), null, '  ')));
   } else if(widget.click) {
     widget.click();
   }
@@ -209,10 +211,10 @@ function jeClick(widget, e) {
 
 function jeColorize() {
   const langObj = [
-    [ /^ +"(.*)": "(.*)",?$/, 'key', 'string' ],
-    [ /^ +"(.*)": (-?[0-9.]+),?$/, 'key', 'number' ],
-    [ /^ +"(.*)": (null|true|false),?$/, 'key', 'null' ],
-    [ /^ +"(.*)":/, 'key' ]
+    [ /^( +")(.*)(": ")(.*)(",?)$/, null, 'key', null, 'string', null ],
+    [ /^( +")(.*)(": )(-?[0-9.]+)(,?)$/, null, 'key', null, 'number', null ],
+    [ /^( +")(.*)(": )(null|true|false)(,?)$/, null, 'key', null, 'null', null ],
+    [ /^( +")(.*)(":.*)$/, null, 'key', null ]
   ];
   let out = [];
   for(const line of $('#jeText').textContent.split('\n')) {
@@ -220,10 +222,20 @@ function jeColorize() {
     for(const l of langObj) {
       const match = line.match(l[0]);
       if(match) {
-        let outLine = line;
+        if(match[1] == '  "' && l[2] == 'key' && (l[4] == "null" && match[4] == "null" || String(jeWidget.defaults[match[2]]) == match[4])) {
+          out.push(`<i class=default>${line}</i>`);
+          foundMatch = true;
+          break;
+        }
+
+        const c = {...l};
+        if(match[1] == '  "' && l[2] == 'key' && [ 'id', 'type' ].indexOf(match[2]) == -1 && jeWidget.defaults[match[2]] === undefined)
+          c[2] = 'custom';
+
         for(let i=1; i<l.length; ++i)
-          outLine = outLine.replace(match[i], `<i class=${l[i]}>${match[i]}</i>`);
-        out.push(outLine);
+          if(l[i])
+            match[i] = `<i class=${c[i]}>${match[i]}</i>`;
+        out.push(match.slice(1).join(''))
         foundMatch = true;
         break;
       }
@@ -321,6 +333,41 @@ function jePasteText(text) {
   jeSelect(s, s + text.length);
 }
 
+function jePostProcessObject(o) {
+  for(const key in o)
+    if(o[key] === jeWidget.defaults[key])
+      o[key] = null;
+  return o;
+}
+
+function jePostProcessText(t) {
+  return t;
+}
+
+function jePreProcessObject(o) {
+  const copy = {};
+  for(const key of jeOrder) {
+    const match = key.match(/^(.*?)(\*)?(#)?$/);
+    console.log(match);
+    if(o[match[1]] !== undefined)
+      copy[match[1]] = o[match[1]];
+    else if(match[2] == '*')
+      copy[match[1]] = jeWidget.defaults[match[1]];
+    if(match[3] == '#')
+      copy[`LINEBREAK${match[1]}`] = null;
+  }
+
+  for(const key of Object.keys(o).sort())
+    if(copy[key] === undefined)
+      copy[key] = o[key];
+
+  return copy;
+}
+
+function jePreProcessText(t) {
+  return t.replace(/(\n +"LINEBREAK.*": null,)+/g, '\n').replace(/(,\n +"LINEBREAK.*": null)+/g, '');
+}
+
 function jeSelect(start, end) {
   const t = $('#jeText');
   const text = t.textContent;
@@ -354,17 +401,21 @@ function jeSelect(start, end) {
 }
 
 function jeSet(text) {
-  $('#jeText').textContent = text;
+  try {
+    $('#jeText').textContent = jePreProcessText(JSON.stringify(jePreProcessObject(JSON.parse(text)), null, '  '));
+  } catch(e) {
+    $('#jeText').textContent = text;
+  }
   $('#jeText').focus();
   jeColorize();
 }
 
 function jeSetAndSelect(replaceBy) {
-  let jsonString = JSON.stringify(jeStateNow, null, '  ');
+  let jsonString = jePreProcessText(JSON.stringify(jePreProcessObject(jeStateNow), null, '  '));
   const startIndex = jsonString.indexOf('"###SELECT ME###"');
   let length = jsonString.length-17;
 
-  jsonString = JSON.stringify(jeStateNow, null, '  ').replace(/"###SELECT ME###"/, JSON.stringify(replaceBy));
+  jsonString = jsonString.replace(/"###SELECT ME###"/, JSON.stringify(replaceBy));
 
   jeSet(jsonString);
   const quote = typeof replaceBy == 'string' ? 1 : 0;
