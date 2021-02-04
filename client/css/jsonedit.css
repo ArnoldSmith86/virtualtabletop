@@ -52,6 +52,7 @@ i.default { color: #606060; }
 i.error   { color: red; font-weight: bold; }
 
 #jeCommands {
+  white-space: pre-wrap;
   height: 100%;
   width: 350px;
   right: 0;

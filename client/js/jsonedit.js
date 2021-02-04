@@ -6,6 +6,7 @@ let jeStateBeforeRaw = null;
 let jeStateNow = null;
 let jeJSONerror = null;
 let jeContext = null;
+let jeSecondaryWidget = null;
 let jeDeltaIsOurs = false;
 const jeWidgetLayers = {};
 const jeState = {
@@ -89,6 +90,14 @@ const jeCommands = [
           jeJSONerror = e;
         }
       }
+      jeShowCommands();
+    }
+  },
+  {
+    name: 'show this widget below',
+    forceKey: 'S',
+    call: function() {
+      jeSecondaryWidget = jeWidget && JSON.stringify(jeWidget.state, null, '  ');
       jeShowCommands();
     }
   },
@@ -560,6 +569,8 @@ function jeShowCommands() {
   commandText += `\n${context}\n`;
   if(jeJSONerror)
     commandText += `\n<i class=error>${String(jeJSONerror)}</i>\n`;
+  if(jeSecondaryWidget)
+    commandText += `\n\n${jeSecondaryWidget}\n`;
   $('#jeCommands').innerHTML = commandText;
 }
 

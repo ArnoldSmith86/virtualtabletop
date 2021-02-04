@@ -13,7 +13,7 @@ function eventCoords(name, e) {
 }
 
 function inputHandler(name, e) {
-  if(overlayActive || e.target.id == 'jeText')
+  if(overlayActive || e.target.id == 'jeText' || e.target.id == 'jeCommands')
     return;
   if(!mouseTarget && [ "TEXTAREA", "INPUT", "BUTTON", "OPTION", "LABEL" ].indexOf(e.target.tagName) != -1)
     if(!edit || !e.target.parentNode || !e.target.parentNode.className.match(/label/))
