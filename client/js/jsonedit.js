@@ -5,6 +5,7 @@ let jeStateBefore = null;
 let jeStateNow = null;
 let jeJSONerror = null;
 let jeContext = null;
+let jeDeltaIsOurs = false;
 const jeWidgetLayers = {};
 const jeState = {
   ctrl: false,
@@ -29,7 +30,7 @@ const jeCommands = [
     context: '"([^"]+)"',
     call: function() {
       const m = jeContext.join('').match(/"([^"]+)"/);
-      jeClick(widgets.get(m[1]));
+      jeClick(widgets.get(m[1]), true);
     },
     show: function() {
       const m = jeContext.join('').match(/"([^"]+)"/);
@@ -203,12 +204,19 @@ function jeApplyChanges() {
   if(currentState != jeStateBefore) {
     $('#editWidgetJSON').dataset.previousState = jeStateBefore;
     $('#editWidgetJSON').value = jeStateBefore = currentState;
+    jeDeltaIsOurs = true;
     $('#updateWidgetJSON').click();
+    jeDeltaIsOurs = false;
   }
 }
 
-function jeClick(widget, e) {
-  if(jeState.ctrl) {
+function jeApplyDelta(delta) {
+  if(!jeDeltaIsOurs && jeStateNow && jeStateNow.id && delta.s[jeStateNow.id] !== undefined)
+    jeClick(widgets.get(jeStateNow.id), true);
+}
+
+function jeClick(widget, force) {
+  if(jeState.ctrl || force) {
     jeWidget = widget;
     jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(widget.state), null, '  ')));
   } else if(widget.click) {
@@ -557,13 +565,10 @@ window.addEventListener('keydown', function(e) {
   const functionKey = e.key.match(/F([0-9]+)/);
   if(functionKey && jeWidgetLayers[+functionKey[1]]) {
     e.preventDefault();
-    if(jeState.ctrl) {
+    if(jeState.ctrl)
       jePasteText(jeWidgetLayers[+functionKey[1]].p('id'));
-    } else {
-      jeState.ctrl = true;
-      jeClick(jeWidgetLayers[+functionKey[1]]);
-      jeState.ctrl = false;
-    }
+    else
+      jeClick(jeWidgetLayers[+functionKey[1]], true);
   }
 });
 
