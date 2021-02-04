@@ -84,9 +84,7 @@ const jeCommands = [
           jeSelect(pos, pos);
         }
       } else {
-        $('#editWidgetJSON').dataset.previousState = jeStateBefore;
-        $('#editWidgetJSON').value = JSON.stringify(jePostProcessObject(JSON.parse(jePostProcessText($('#jeText').textContent))));
-        $('#updateWidgetJSON').click();
+        jeApplyChanges();
       }
     }
   },
@@ -200,10 +198,19 @@ function jeAddWidgetPropertyCommand(defaults, property) {
   });
 }
 
+function jeApplyChanges() {
+  const currentState = JSON.stringify(jePostProcessObject(JSON.parse(jePostProcessText($('#jeText').textContent))));
+  if(currentState != jeStateBefore) {
+    $('#editWidgetJSON').dataset.previousState = jeStateBefore;
+    $('#editWidgetJSON').value = jeStateBefore = currentState;
+    $('#updateWidgetJSON').click();
+  }
+}
+
 function jeClick(widget, e) {
   if(jeState.ctrl) {
     jeWidget = widget;
-    jeSet(jePreProcessText(jeStateBefore = JSON.stringify(jePreProcessObject(widget.state), null, '  ')));
+    jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(widget.state), null, '  ')));
   } else if(widget.click) {
     widget.click();
   }
@@ -250,7 +257,6 @@ function jeDisplayTree() {
   const allWidgets = Array.from(widgets.values());
   let result = 'CTRL-click a widget on the left to edit it.\n\nRoom\n';
   result += jeDisplayTreeAddWidgets(allWidgets, null, '  ');
-  console.log(allWidgets);
   jeSet(jeStateBefore = result);
 }
 
@@ -278,7 +284,19 @@ function jeGetContext() {
 
   try {
     jeStateNow = JSON.parse(v);
-    jeJSONerror = null;
+
+    if(!jeStateNow.id)
+      jeJSONerror = 'No ID given.';
+    else if(JSON.parse(jeStateBefore).id != jeStateNow.id && widgets.has(jeStateNow.id))
+      jeJSONerror = `ID ${jeStateNow.id} is already in use.`;
+    else if(jeStateNow.parent !== undefined && !widgets.has(jeStateNow.parent))
+      jeJSONerror = `Parent ${jeStateNow.parent} does not exist.`;
+    else if(jeStateNow.type == 'card' && (!jeStateNow.deck || !widgets.has(jeStateNow.deck)))
+      jeJSONerror = `Deck ${jeStateNow.deck} does not exist.`;
+    else if(jeStateNow.type == 'card' && (!jeStateNow.cardType || !widgets.get(jeStateNow.deck).p('cardTypes')[jeStateNow.cardType]))
+      jeJSONerror = `Card type ${jeStateNow.cardType} does not exist in deck ${jeStateNow.deck}.`;
+    else
+      jeJSONerror = null;
   } catch(e) {
     jeStateNow = null;
     jeJSONerror = e;
@@ -348,7 +366,6 @@ function jePreProcessObject(o) {
   const copy = {};
   for(const key of jeOrder) {
     const match = key.match(/^(.*?)(\*)?(#)?$/);
-    console.log(match);
     if(o[match[1]] !== undefined)
       copy[match[1]] = o[match[1]];
     else if(match[2] == '*')
@@ -465,7 +482,7 @@ function jeShowCommands() {
   }
   commandText += `\n${context}\n`;
   if(jeJSONerror)
-    commandText += `\n${String(jeJSONerror)}\n`;
+    commandText += `\n<i class=error>${String(jeJSONerror)}</i>\n`;
   $('#jeCommands').innerHTML = commandText;
 }
 
@@ -556,6 +573,9 @@ window.addEventListener('keyup', function(e) {
   if(e.key == 'Shift')
     jeState.shift = false;
 
-  if(e.target == $('#jeText'))
+  if(e.target == $('#jeText')) {
     jeGetContext();
+    if(!jeJSONerror)
+      jeApplyChanges();
+  }
 });

@@ -38,7 +38,7 @@
   -webkit-text-fill-color: white;
 }
 
-#jeTextHighlight i {
+#jsonEditor i {
   font-style: normal;
 }
 
@@ -48,6 +48,7 @@ i.string  { color: #7ed07e; }
 i.number  { color: #dda0dd; }
 i.null    { color: blue;    }
 i.default { color: #606060; }
+i.error   { color: red; font-weight: bold; }
 
 #jeCommands {
   height: 100%;
@@ -58,7 +59,7 @@ i.default { color: #606060; }
 
 #jeWidgetLayers {
   height: 10%;
-  width: 50%;
+  width: calc(100%-700px);
   white-space: pre;
   overflow: hidden;
 }
