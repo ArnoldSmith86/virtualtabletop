@@ -44,6 +44,7 @@
 
 i.key     { color: yellow;  }
 i.custom  { color: orange;  }
+i.extern  { color: red;     }
 i.string  { color: #7ed07e; }
 i.number  { color: #dda0dd; }
 i.null    { color: blue;    }

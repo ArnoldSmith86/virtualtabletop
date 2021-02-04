@@ -105,7 +105,7 @@ function receiveDelta(delta) {
       widgets.get(widgetID).applyDelta(delta.s[widgetID]);
     }
   }
-  if(jeApplyDelta)
+  if(typeof jeApplyDelta == 'function')
     jeApplyDelta(delta);
 }
 

@@ -2,6 +2,7 @@ let jeEnabled = null;
 let jeZoomOut = false;
 let jeWidget = null;
 let jeStateBefore = null;
+let jeStateBeforeRaw = null;
 let jeStateNow = null;
 let jeJSONerror = null;
 let jeContext = null;
@@ -200,11 +201,15 @@ function jeAddWidgetPropertyCommand(defaults, property) {
 }
 
 function jeApplyChanges() {
-  const currentState = JSON.stringify(jePostProcessObject(JSON.parse(jePostProcessText($('#jeText').textContent))));
-  if(currentState != jeStateBefore) {
+  const currentStateRaw = $('#jeText').textContent;
+  const completeState = JSON.parse(jePostProcessText(currentStateRaw));
+  const currentState = JSON.stringify(jePostProcessObject(completeState));
+  if(currentStateRaw != jeStateBeforeRaw) {
+    jeDeltaIsOurs = true;
+    jeApplyExternalChanges(completeState);
+    jeStateBeforeRaw = currentStateRaw;
     $('#editWidgetJSON').dataset.previousState = jeStateBefore;
     $('#editWidgetJSON').value = jeStateBefore = currentState;
-    jeDeltaIsOurs = true;
     $('#updateWidgetJSON').click();
     jeDeltaIsOurs = false;
   }
@@ -213,6 +218,26 @@ function jeApplyChanges() {
 function jeApplyDelta(delta) {
   if(!jeDeltaIsOurs && jeStateNow && jeStateNow.id && delta.s[jeStateNow.id] !== undefined)
     jeClick(widgets.get(jeStateNow.id), true);
+  if(!jeDeltaIsOurs && jeStateNow && jeStateNow.deck && delta.s[jeStateNow.deck] !== undefined)
+    jeClick(widgets.get(jeStateNow.id), true);
+}
+
+function jeApplyExternalChanges(state) {
+  const before = JSON.parse(jeStateBefore);
+  if(state.type == 'card' && state.deck === before.deck) {
+    const cardDefaults = widgets.get(state.deck).p('cardDefaults');
+    if(JSON.stringify(state['cardDefaults (in deck)']) != JSON.stringify(cardDefaults))
+      widgets.get(state.deck).p('cardDefaults', state['cardDefaults (in deck)']);
+
+    if(state.cardType === before.cardType) {
+      const cardTypes = widgets.get(state.deck).p('cardTypes');
+      const cardType = cardTypes[state.cardType];
+      if(JSON.stringify(state['cardType (in deck)']) != JSON.stringify(cardType)) {
+        cardTypes[state.cardType] = state['cardType (in deck)'];
+        widgets.get(state.deck).p('cardTypes', { ...cardTypes });
+      }
+    }
+  }
 }
 
 function jeClick(widget, force) {
@@ -226,6 +251,7 @@ function jeClick(widget, force) {
 
 function jeColorize() {
   const langObj = [
+    [ /^( +")(.*)( \(in .*)(":.*)$/, null, 'extern', 'extern', null ],
     [ /^( +")(.*)(": ")(.*)(",?)$/, null, 'key', null, 'string', null ],
     [ /^( +")(.*)(": )(-?[0-9.]+)(,?)$/, null, 'key', null, 'number', null ],
     [ /^( +")(.*)(": )(null|true|false)(,?)$/, null, 'key', null, 'null', null ],
@@ -360,10 +386,11 @@ function jePasteText(text) {
 }
 
 function jePostProcessObject(o) {
-  for(const key in o)
-    if(o[key] === jeWidget.defaults[key])
-      o[key] = null;
-  return o;
+  const copy = { ...o };
+  for(const key in copy)
+    if(copy[key] === jeWidget.defaults[key] || key.match(/in deck/))
+      copy[key] = null;
+  return copy;
 }
 
 function jePostProcessText(t) {
@@ -385,6 +412,13 @@ function jePreProcessObject(o) {
   for(const key of Object.keys(o).sort())
     if(copy[key] === undefined)
       copy[key] = o[key];
+
+  try {
+    if(copy.type == 'card') {
+      copy['cardDefaults (in deck)'] = widgets.get(copy.deck).p('cardDefaults');
+      copy['cardType (in deck)'] = widgets.get(copy.deck).p('cardTypes')[copy.cardType];
+    }
+  } catch(e) {}
 
   return copy;
 }

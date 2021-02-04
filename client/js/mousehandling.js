@@ -46,8 +46,8 @@ function inputHandler(name, e) {
       if(ms.status != 'initial' && (jeEnabled || ms.widget.p(edit ? 'movableInEdit' : 'movable')))
         ms.widget.moveEnd();
       if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
-        if(jeEnabled)
-          jeClick(widgets.get(target.id), e);
+        if(typeof jeEnabled == 'boolean' && jeEnabled)
+          jeClick(widgets.get(target.id));
         else if(edit)
           editClick(widgets.get(target.id));
         else if(widgets.get(target.id).click)
