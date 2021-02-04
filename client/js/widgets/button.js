@@ -1,6 +1,6 @@
 import { $ } from '../domhelpers.js';
 import { showOverlay } from '../main.js';
-import { playerName, playerColor } from '../overlays/players.js';
+import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { Widget } from './widget.js';
 
@@ -56,9 +56,14 @@ export class Button extends Widget {
 
     const variables = {
       playerName,
-      playerColor
+      playerColor,
+      activePlayers,
+      thisID : this.p('id')
     };
-    const collections = {};
+
+    const collections = {
+      thisButton : [this]
+    }
 
     for(const original of this.p('clickRoutine')) {
       const a = { ...original };
@@ -260,8 +265,13 @@ export class Button extends Widget {
           switch(a.aggregation) {
           case 'first':
             if(collections[a.collection].length)
-              // always get a deep copy and not object references
-              variables[a.variable] = JSON.parse(JSON.stringify(collections[a.collection][0].p(a.property)));
+              if(collections[a.collection][0].p(a.property) !== undefined) {
+                // always get a deep copy and not object references
+                variables[a.variable] = JSON.parse(JSON.stringify(collections[a.collection][0].p(a.property)));
+              } else {
+                variables[a.variable] = null;
+                problems.push(`Property ${a.property} missing from first item of collection, setting ${a.variable} to null.`);
+              }
             else
               problems.push(`Collection ${a.collection} is empty.`);
             break;
