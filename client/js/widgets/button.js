@@ -57,9 +57,13 @@ export class Button extends Widget {
     const variables = {
       playerName,
       playerColor,
-      activePlayers
+      activePlayers,
+      thisID : this.p('id')
     };
-    const collections = {};
+
+    const collections = {
+      thisButton : [this]
+    }
 
     for(const original of this.p('clickRoutine')) {
       const a = { ...original };
