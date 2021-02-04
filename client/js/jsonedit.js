@@ -59,6 +59,40 @@ const jeCommands = [
     }
   },
   {
+    name: _=>jeWidget === null ? 'call' : 'macro',
+    forceKey: 'M',
+    call: function() {
+      if(jeWidget) {
+        jeWidget = null;
+        jeContext = [ 'macro' ];
+        $('#jeText').textContent = 'if(w.deck)\n  w.gotit = true;';
+        jeColorize();
+      } else {
+        jeJSONerror = null;
+        try {
+          const macro = new Function(`"use strict";return (function(w, v) {${$('#jeText').textContent}})`)();
+          const variableState = {};
+          for(const [ id, w ] of widgets) {
+            const s = JSON.stringify(w.state);
+            const newState = JSON.parse(s);
+            macro(newState, variableState);
+            batchStart();
+            if(s != JSON.stringify(newState)) {
+              for(const key in w.state)
+                if(newState[key] === undefined)
+                  newState[key] = null;
+              sendPropertyUpdate(id, newState);
+            }
+            batchEnd();
+          }
+        } catch(e) {
+          jeJSONerror = e;
+        }
+      }
+      jeShowCommands();
+    }
+  },
+  {
     name: _=>`remove property ${jeContext && jeContext[jeContext.length-1]}`,
     forceKey: 'D',
     context: ' ↦ (?=[^"]+$)',
@@ -78,6 +112,7 @@ const jeCommands = [
   {
     name: _=>jeJSONerror?'go to error':'apply changes',
     forceKey: ' ',
+    show: _=>jeWidget,
     call: function() {
       if(jeJSONerror) {
         const location = String(jeJSONerror).match(/line ([0-9]+) column ([0-9]+)/);
@@ -614,7 +649,7 @@ window.addEventListener('keyup', function(e) {
 
   if(e.target == $('#jeText')) {
     jeGetContext();
-    if(!jeJSONerror)
+    if(jeWidget && !jeJSONerror)
       jeApplyChanges();
   }
 });
