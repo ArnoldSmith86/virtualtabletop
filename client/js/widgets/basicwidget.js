@@ -13,7 +13,6 @@ class BasicWidget extends Widget {
 
       image: '',
       color: 'black',
-      coloredSVG: false,
       svgReplaces: {},
       layer: 1,
       text: ''
@@ -60,7 +59,7 @@ class BasicWidget extends Widget {
 
   cssProperties() {
     const p = super.cssProperties();
-    p.push('image', 'color', 'coloredSVG', 'svgReplaces');
+    p.push('image', 'color', 'svgReplaces');
     return p;
   }
 
@@ -81,12 +80,12 @@ class BasicWidget extends Widget {
   }
 
   getImage() {
-    if(!this.p('coloredSVG') && !Object.keys(this.p('svgReplaces')).length)
+    if(!Object.keys(this.p('svgReplaces')).length)
       return this.p('image');
 
-    const replaces = { ...this.p('svgReplaces') };
-    if(this.p('coloredSVG'))
-      replaces.currentColor = this.p('color');
+    const replaces = {};
+    for(const key in this.p('svgReplaces'))
+      replaces[key] = this.p(this.p('svgReplaces')[key]);
     return getSVG(this.p('image'), replaces, _=>this.domElement.style.cssText = this.css());
   }
 }
