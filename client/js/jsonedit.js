@@ -5,6 +5,7 @@ let jeStateBefore = null;
 let jeStateBeforeRaw = null;
 let jeStateNow = null;
 let jeJSONerror = null;
+let jeCommandError = null;
 let jeContext = null;
 let jeSecondaryWidget = null;
 let jeDeltaIsOurs = false;
@@ -44,6 +45,41 @@ const jeCommands = [
     context: '"(/assets/[0-9_-]+)"',
     call: function() {
       uploadAsset().then(a=>jePasteText(a));
+    }
+  },
+  {
+    name: 'image template',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects',
+    call: function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects.push({
+        type: 'image',
+        x: 0,
+        y: 0,
+        color: 'transparent',
+        valueType: 'dynamic',
+        value: '###SELECT ME###',
+        width: jeStateNow.cardDefaults && jeStateNow.cardDefaults.width  || 103,
+        height: jeStateNow.cardDefaults && jeStateNow.cardDefaults.height || 160
+      });
+      jeSetAndSelect('image');
+    }
+  },
+  {
+    name: 'text template',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects',
+    call: function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects.push({
+        type: 'text',
+        x: 0,
+        y: 0,
+        fontSize: '20',
+        valueType: 'dynamic',
+        value: '###SELECT ME###',
+        textAlign: 'center',
+        textFont: null,
+        width: jeStateNow.cardDefaults && jeStateNow.cardDefaults.width  || 103
+      });
+      jeSetAndSelect('text');
     }
   },
   {
@@ -569,6 +605,8 @@ function jeShowCommands() {
   commandText += `\n${context}\n`;
   if(jeJSONerror)
     commandText += `\n<i class=error>${String(jeJSONerror)}</i>\n`;
+  if(jeCommandError)
+    commandText += `\n<i class=error>Last command failed: ${String(jeCommandError)}</i>\n`;
   if(jeSecondaryWidget)
     commandText += `\n\n${jeSecondaryWidget}\n`;
   $('#jeCommands').innerHTML = commandText;
@@ -636,7 +674,12 @@ window.addEventListener('keydown', function(e) {
       for(const command of jeCommands) {
         if(command.currentKey == e.key) {
           e.preventDefault();
-          command.call();
+          try {
+            jeCommandError = null;
+            command.call();
+          } catch(e) {
+            jeCommandError = e;
+          }
         }
       }
     }
