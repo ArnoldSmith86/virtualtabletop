@@ -61,6 +61,25 @@ const jeCommands = [
     }
   },
   {
+    name: 'add card',
+    context: '^deck ↦ cardTypes ↦ .*? ↦',
+    call: function() {
+      const card = { deck:jeStateNow.id, type:'card', cardType:jeContext[2] };
+      addWidgetLocal(card);
+      if(jeStateNow.parent)
+        widgets.get(card.id).moveToHolder(widgets.get(jeStateNow.parent));
+    }
+  },
+  {
+    name: 'remove card',
+    context: '^deck ↦ cardTypes ↦ .*? ↦',
+    show: _=>widgetFilter(w=>w.p('deck')==jeStateNow.id&&w.p('cardType')==jeContext[2]).length,
+    call: function() {
+      const card = widgetFilter(w=>w.p('deck')==jeStateNow.id&&w.p('cardType')==jeContext[2])[0];
+      removeWidgetLocal(card.p('id'));
+    }
+  },
+  {
     name: 'face template',
     context: '^deck ↦ faceTemplates',
     call: function() {
