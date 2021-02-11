@@ -152,7 +152,10 @@ const jeCommands = [
     context: ' ↦ (?=[^"]+$)',
     call: function() {
       let pointer = jeGetValue(jeContext.slice(0, -1));
-      delete pointer[jeContext[jeContext.length-1]];
+      if(Array.isArray(pointer))
+        pointer.splice(jeContext[jeContext.length-1], 1);
+      else
+        delete pointer[jeContext[jeContext.length-1]];
 
       const oldStart = getSelection().anchorOffset;
       const oldEnd   = getSelection().focusOffset;
