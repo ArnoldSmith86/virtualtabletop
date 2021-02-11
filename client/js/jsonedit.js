@@ -48,6 +48,16 @@ const jeCommands = [
     }
   },
   {
+    name: 'face template',
+    context: '^deck ↦ faceTemplates',
+    call: function() {
+      jeStateNow.faceTemplates.push({
+        objects: '###SELECT ME###'
+      });
+      jeSetAndSelect([]);
+    }
+  },
+  {
     name: 'image template',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects',
     call: function() {
@@ -72,11 +82,10 @@ const jeCommands = [
         type: 'text',
         x: 0,
         y: 0,
-        fontSize: '20',
+        fontSize: 20,
         valueType: 'dynamic',
         value: '###SELECT ME###',
         textAlign: 'center',
-        textFont: null,
         width: jeStateNow.cardDefaults && jeStateNow.cardDefaults.width  || 103
       });
       jeSetAndSelect('text');
@@ -243,6 +252,10 @@ function jeAddCommands() {
   jeAddButtonOperationCommands('SHUFFLE', { holder: null });
 
   jeAddCSScommands();
+
+  jeAddFaceCommand('border', '', 1);
+  jeAddFaceCommand('css', '', '');
+  jeAddFaceCommand('radius', ' (rounded corners)', 1);
 }
 
 function jeAddCSScommands() {
@@ -258,6 +271,18 @@ function jeAddCSScommands() {
       }
     });
   }
+}
+
+function jeAddFaceCommand(key, description, value) {
+  jeCommands.push({
+    name: key+description,
+    context: '^deck ↦ faceTemplates ↦ [0-9]+',
+    show: _=>!jeStateNow.faceTemplates[+jeContext[2]][key],
+    call: function() {
+      jeStateNow.faceTemplates[+jeContext[2]][key] = '###SELECT ME###';
+      jeSetAndSelect(value);
+    }
+  });
 }
 
 function jeAddWidgetPropertyCommands(object) {
