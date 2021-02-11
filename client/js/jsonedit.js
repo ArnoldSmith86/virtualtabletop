@@ -80,7 +80,7 @@ const jeCommands = [
   {
     name: 'remove card',
     context: '^deck ↦ cardTypes ↦ .*? ↦',
-    show: _=>widgetFilter(w=>w.p('deck')==jeStateNow.id&&w.p('cardType')==jeContext[2]).length,
+    show: _=>jeStateNow&&widgetFilter(w=>w.p('deck')==jeStateNow.id&&w.p('cardType')==jeContext[2]).length,
     call: function() {
       const card = widgetFilter(w=>w.p('deck')==jeStateNow.id&&w.p('cardType')==jeContext[2])[0];
       removeWidgetLocal(card.p('id'));
