@@ -52,10 +52,17 @@ const jeCommands = [
     context: '^deck ↦ cardTypes',
     call: function() {
       const cardType = {};
-      for(const face of jeStateNow.faceTemplates)
-        for(const object of face.objects)
+      const cssVariables = {};
+      for(const face of jeStateNow.faceTemplates) {
+        for(const object of face.objects) {
           if(object.valueType == 'dynamic')
             cardType[object.value] = '';
+          ((object.css || '').match(/--[a-zA-Z]+/g) || []).forEach(m=>cssVariables[`${m}: black`]=true);
+        }
+      }
+      const css = Object.keys(cssVariables).join('; ');
+      if(css)
+        cardType.css = css;
       jeStateNow.cardTypes['###SELECT ME###'] = cardType;
       jeSetAndSelect(Math.random().toString(36).substring(3, 7));
     }
