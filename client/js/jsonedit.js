@@ -48,6 +48,19 @@ const jeCommands = [
     }
   },
   {
+    name: 'card type template',
+    context: '^deck ↦ cardTypes',
+    call: function() {
+      const cardType = {};
+      for(const face of jeStateNow.faceTemplates)
+        for(const object of face.objects)
+          if(object.valueType == 'dynamic')
+            cardType[object.value] = '';
+      jeStateNow.cardTypes['###SELECT ME###'] = cardType;
+      jeSetAndSelect(Math.random().toString(36).substring(3, 7));
+    }
+  },
+  {
     name: 'face template',
     context: '^deck ↦ faceTemplates',
     call: function() {
