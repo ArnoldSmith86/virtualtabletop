@@ -236,6 +236,39 @@ const jeCommands = [
     }
   },
   {
+    name: 'add new widget',
+    forceKey: 'A',
+    call: function() {
+      const toAdd = {};
+      addWidgetLocal(toAdd);
+      jeClick(widgets.get(toAdd.id), true);
+      jeStateNow.type = '###SELECT ME###';
+      jeSetAndSelect(null);
+    }
+  },
+  {
+    name: 'remove widget',
+    forceKey: 'R',
+    call: function() {
+      const id = jeStateNow.id;
+      jeStateNow = null;
+      jeWidget = null;
+      removeWidgetLocal(id, true);
+      jeDisplayTree();
+    }
+  },
+  {
+    name: 'edit mode',
+    forceKey: 'F',
+    call: function() {
+      if(edit)
+        $('body').classList.remove('edit');
+      else
+        $('body').classList.add('edit');
+      edit = !edit;
+    }
+  },
+  {
     name: _=>jeJSONerror?'go to error':'apply changes',
     forceKey: ' ',
     show: _=>jeWidget,
@@ -397,6 +430,8 @@ function jeApplyDelta(delta) {
     jeClick(widgets.get(jeStateNow.id), true);
   if(!jeDeltaIsOurs && jeStateNow && jeStateNow.deck && delta.s[jeStateNow.deck] !== undefined)
     jeClick(widgets.get(jeStateNow.id), true);
+  if(!jeWidget)
+    jeDisplayTree();
 }
 
 function jeApplyExternalChanges(state) {
@@ -420,6 +455,7 @@ function jeApplyExternalChanges(state) {
 function jeClick(widget, force) {
   if(jeState.ctrl || force) {
     jeWidget = widget;
+    jeStateNow = widget.state;
     jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(widget.state), null, '  ')));
   } else if(widget.click) {
     widget.click();
@@ -432,7 +468,9 @@ function jeColorize() {
     [ /^( +")(.*)(": ")(.*)(",?)$/, null, 'key', null, 'string', null ],
     [ /^( +")(.*)(": )(-?[0-9.]+)(,?)$/, null, 'key', null, 'number', null ],
     [ /^( +")(.*)(": )(null|true|false)(,?)$/, null, 'key', null, 'null', null ],
-    [ /^( +")(.*)(":.*)$/, null, 'key', null ]
+    [ /^( +")(.*)(":.*)$/, null, 'key', null ],
+    [ /^(Room)$/, 'extern' ],
+    [ /^( +)(.*)( \()([a-z]+)( - )([0-9-]+)(,)([0-9-]+)(.*)$/, null, 'key', null, 'string', null, 'number', null, 'number', null ]
   ];
   let out = [];
   for(const line of $('#jeText').textContent.split('\n')) {
@@ -468,7 +506,11 @@ function jeDisplayTree() {
   const allWidgets = Array.from(widgets.values());
   let result = 'CTRL-click a widget on the left to edit it.\n\nRoom\n';
   result += jeDisplayTreeAddWidgets(allWidgets, null, '  ');
+  jeWidget = null;
+  jeStateNow = null;
   jeSet(jeStateBefore = result);
+  jeGetContext();
+  jeShowCommands();
 }
 
 function jeDisplayTreeAddWidgets(allWidgets, parent, indent) {
@@ -482,16 +524,22 @@ function jeDisplayTreeAddWidgets(allWidgets, parent, indent) {
 }
 
 function jeGetContext() {
-  if(!jeWidget)
-    return [];
-
   const s = getSelection().anchorOffset;
   const e = getSelection().focusOffset;
   const v = $('#jeText').textContent;
-  const t = jeWidget.p('type') || 'basic';
+  const t = jeStateNow && jeStateNow.type || 'basic';
 
   const select = v.substr(s, e-s).replace(/\n/g, '\\n');
-  const line = v.substr(0, s).split('\n').pop();
+  const line = v.split('\n')[v.substr(0, s).split('\n').length-1];
+
+  if(!jeWidget) {
+    jeContext = [ 'Tree' ];
+    const match = line.match(/^(  )+(.*?) \([a-z]+ - /);
+    if(match)
+      jeContext.push(`"${match[2]}"`);
+    jeShowCommands();
+    return jeContext;
+  }
 
   try {
     jeStateNow = JSON.parse(v);
@@ -785,10 +833,14 @@ window.addEventListener('keydown', function(e) {
   const functionKey = e.key.match(/F([0-9]+)/);
   if(functionKey && jeWidgetLayers[+functionKey[1]]) {
     e.preventDefault();
-    if(jeState.ctrl)
-      jePasteText(jeWidgetLayers[+functionKey[1]].p('id'));
-    else
+    if(jeState.ctrl) {
+      let id = jeWidgetLayers[+functionKey[1]].p('id');
+      if(jeContext[jeContext.length-1] == '"null"')
+        id = `"${id}"`;
+      jePasteText(id);
+    } else {
       jeClick(jeWidgetLayers[+functionKey[1]], true);
+    }
   }
 });
 
