@@ -92,6 +92,18 @@ const jeCommands = [
     }
   },
   {
+    name: _=>jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].valueType == 'dynamic' ? 'static' : 'dynamic',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
+    call: function() {
+      const o = jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]];
+      const d = o.valueType == 'dynamic';
+      const v = o.value;
+      o.valueType = d ? 'static' : 'dynamic';
+      o.value = '###SELECT ME###';
+      jeSetAndSelect(v);
+    }
+  },
+  {
     name: 'toggle zoom out',
     forceKey: 'Z',
     call: function() {
