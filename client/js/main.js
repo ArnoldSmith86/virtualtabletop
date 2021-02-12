@@ -139,6 +139,29 @@ async function uploadAsset() {
   }).catch(e=>alert(`Uploading failed: ${e.toString()}`));
 }
 
+const svgCache = {};
+function getSVG(url, replaces, callback) {
+  if(typeof svgCache[url] == 'string') {
+    let svg = svgCache[url];
+    for(const replace in replaces)
+      svg = svg.replace(replace, replaces[replace]);
+    return 'data:image/svg+xml;base64,'+btoa(svg);
+  }
+
+  if(!svgCache[url]) {
+    svgCache[url] = [];
+    fetch(url).then(r=>r.text()).then(t=>{
+      const callbacks = svgCache[url];
+      svgCache[url] = t;
+      for(const c of callbacks)
+        c();
+    });
+  }
+
+  svgCache[url].push(callback);
+  return '';
+}
+
 onLoad(function() {
   on('#pileOverlay', 'click', e=>e.target.id=='pileOverlay'&&showOverlay());
 
