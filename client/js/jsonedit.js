@@ -276,6 +276,23 @@ const jeCommands = [
     }
   },
   {
+    name: 'open deck',
+    forceKey: 'D',
+    context: '^card',
+    show: _=>jeStateNow&&widgets.has(jeStateNow.deck),
+    call: function() {
+      jeClick(widgets.get(jeStateNow.deck), true);
+    }
+  },
+  {
+    name: 'open parent',
+    forceKey: 'ArrowUp',
+    show: _=>jeStateNow&&widgets.has(jeStateNow.parent),
+    call: function() {
+      jeClick(widgets.get(jeStateNow.parent), true);
+    }
+  },
+  {
     name: _=>jeJSONerror?'go to error':'apply changes',
     forceKey: ' ',
     show: _=>jeWidget,
