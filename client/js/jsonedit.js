@@ -23,14 +23,14 @@ const jeOrder = [ 'type', 'id#', 'parent', 'deck', 'cardType', 'owner#', 'x*', '
 const jeCommands = [
   {
     name: 'toggle boolean',
-    context: '"(true|false)"',
+    context: '.*"(true|false)"',
     call: function() {
       jeInsert(jeContext.slice(1), jeContext[jeContext.length-2], jeContext[jeContext.length-1]=='"false"');
     }
   },
   {
     name: 'open widget by ID',
-    context: '"([^"]+)"',
+    context: '.*"([^"]+)"',
     call: function() {
       const m = jeContext.join('').match(/"([^"]+)"/);
       jeClick(widgets.get(m[1]), true);
@@ -42,7 +42,7 @@ const jeCommands = [
   },
   {
     name: 'upload a different asset',
-    context: '"(/assets/[0-9_-]+)"',
+    context: '.*"(/assets/[0-9_-]+)"',
     call: function() {
       uploadAsset().then(a=>jePasteText(a));
     }
@@ -256,6 +256,7 @@ const jeCommands = [
   {
     name: 'remove widget',
     forceKey: 'R',
+    show: _=>jeStateNow,
     call: function() {
       const id = jeStateNow.id;
       jeStateNow = null;
@@ -277,7 +278,7 @@ const jeCommands = [
   },
   {
     name: 'open deck',
-    forceKey: 'D',
+    forceKey: 'ArrowDown',
     context: '^card',
     show: _=>jeStateNow&&widgets.has(jeStateNow.deck),
     call: function() {
@@ -395,6 +396,12 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=', 'in' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ type', [ 'all', null, 'button', 'card', 'deck', 'holder', 'label', 'spinner' ]);
   jeAddEnumCommands('^.*\\(SET\\) ↦ relation', [ '+', '-', '=' ]);
+
+  jeAddNumberCommand('increment number', '+', x=>x+1);
+  jeAddNumberCommand('decrement number', '-', x=>x-1);
+  jeAddNumberCommand('double number', '*', x=>x*2);
+  jeAddNumberCommand('half number', '/', x=>x/2);
+  jeAddNumberCommand('zero', '0', x=>0);
 }
 
 function jeAddCSScommands() {
@@ -436,6 +443,20 @@ function jeAddFaceCommand(key, description, value) {
     call: function() {
       jeStateNow.faceTemplates[+jeContext[2]][key] = '###SELECT ME###';
       jeSetAndSelect(value);
+    }
+  });
+}
+
+function jeAddNumberCommand(name, key, callback) {
+  jeCommands.push({
+    name: name,
+    forceKey: key,
+    context: '.*',
+    show: _=>jeStateNow&&jeGetValue()&&typeof jeGetValue()[jeGetLastKey()] == 'number',
+    call: function() {
+      const newValue = callback(jeGetValue()[jeGetLastKey()]);
+      jeGetValue()[jeGetLastKey()] = '###SELECT ME###';
+      jeSetAndSelect(newValue);
     }
   });
 }
