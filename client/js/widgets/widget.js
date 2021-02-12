@@ -228,8 +228,8 @@ export class Widget extends StateManaged {
   }
 
   move(x, y) {
-    const newX = Math.max(0-this.p('width' )*0.25, Math.min(1600+this.p('width' )*0.25, x)) - this.p('width' )/2;
-    const newY = Math.max(0-this.p('height')*0.25, Math.min(1000+this.p('height')*0.25, y)) - this.p('height')/2;
+    const newX = (jeEnabled ? x : Math.max(0-this.p('width' )*0.25, Math.min(1600+this.p('width' )*0.25, x))) - this.p('width' )/2;
+    const newY = (jeEnabled ? y : Math.max(0-this.p('height')*0.25, Math.min(1000+this.p('height')*0.25, y))) - this.p('height')/2;
 
     this.setPosition(newX, newY, this.p('z'));
     const myCenter = center(this.domElement);

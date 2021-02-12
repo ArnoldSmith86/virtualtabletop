@@ -1,0 +1,96 @@
+#jsonEditor {
+  white-space: pre-line;
+  font-family: monospace;
+  display: none;
+  height: 100%;
+  width: 100%;
+}
+
+#jsonEditor > *, .jsonEdit {
+  background: #08090a;
+}
+#jsonEditor > * {
+  color: #f8f8f2;
+  padding: 5px;
+  margin: 0;
+  position: fixed;
+  border: none;
+  resize: none;
+  box-sizing: border-box;
+}
+
+#jeText, #jeTextHighlight {
+  white-space: pre-wrap;
+  overflow-y: auto;
+  height: 100%;
+  width: 350px;
+  right: 350px;
+}
+
+#jeText {
+  background: none;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+  outline: none;
+}
+#jeText::selection {
+  background-color: #808080;
+  -webkit-text-fill-color: white;
+}
+
+#jsonEditor i {
+  font-style: normal;
+}
+
+i.key     { color: yellow;  }
+i.custom  { color: orange;  }
+i.extern  { color: red;     }
+i.string  { color: #7ed07e; }
+i.number  { color: #dda0dd; }
+i.null    { color: blue;    }
+i.default { color: #606060; }
+i.error   { color: red; font-weight: bold; }
+
+#jeCommands {
+  white-space: pre-wrap;
+  height: 100%;
+  width: 350px;
+  right: 0;
+  overflow: auto;
+}
+
+#jeWidgetLayers {
+  height: 10%;
+  width: calc(100%-700px);
+  white-space: pre;
+  overflow: hidden;
+}
+
+#jeWidgetLayers > div {
+  display: inline-block;
+  width: 125px;
+  margin-bottom: 10px;
+}
+
+body.jsonEdit #jsonEditor {
+  display: block;
+}
+
+body.jsonEdit #toolbar {
+  display: none;
+}
+
+body.jsonEdit #roomArea {
+  top: calc((100vh - var(--roomHeight) * var(--scale)) / 2 - var(--toolbarSize) / 2);
+  left: 0;
+}
+
+body.jsonEdit.jeZoomOut #roomArea {
+  top: calc((100vh - var(--roomHeight) * var(--scale)) / 2 - var(--toolbarSize) / 2);
+  left: 12.5%;
+  overflow: visible;
+}
+
+body.jsonEdit.jeZoomOut #topSurface {
+  overflow: visible;
+}
