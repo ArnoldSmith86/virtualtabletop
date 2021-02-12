@@ -13,6 +13,7 @@ class BasicWidget extends Widget {
 
       image: '',
       color: 'black',
+      svgReplaces: {},
       layer: 1,
       text: ''
     });
@@ -51,15 +52,14 @@ class BasicWidget extends Widget {
     if(this.p('color'))
       css += '; --color:' + this.p('color');
     if(this.p('image'))
-      css += '; background-image: url("' + this.p('image') + '")';
+      css += '; background-image: url("' + this.getImage() + '")';
 
     return css;
   }
 
   cssProperties() {
     const p = super.cssProperties();
-    p.push('color');
-    p.push('image');
+    p.push('image', 'color', 'svgReplaces');
     return p;
   }
 
@@ -77,5 +77,15 @@ class BasicWidget extends Widget {
     if(d !== undefined)
       return d;
     return super.getDefaultValue(property);
+  }
+
+  getImage() {
+    if(!Object.keys(this.p('svgReplaces')).length)
+      return this.p('image');
+
+    const replaces = {};
+    for(const key in this.p('svgReplaces'))
+      replaces[key] = this.p(this.p('svgReplaces')[key]);
+    return getSVG(this.p('image'), replaces, _=>this.domElement.style.cssText = this.css());
   }
 }
