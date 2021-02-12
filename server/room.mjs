@@ -124,8 +124,8 @@ export default class Room {
 
   deleteUnusedVariantFiles(stateID, oldState, newState) {
     for(const oldVariantID in oldState.variants) {
-      if(!newState.variants[oldVariantID] && stateID.match(/^[a-z0-9]+$/) && oldVariantID.match(/^[a-z0-9]+$/)) {
-        const savefile = path.resolve() + '/save/states/' + this.id + '-' + stateID + '-' + oldVariantID + '.json';
+      if(!newState.variants[oldVariantID]) {
+        const savefile = this.variantFilename(stateID, oldVariantID);
         if(fs.existsSync(savefile))
           fs.unlinkSync(savefile);
       }
