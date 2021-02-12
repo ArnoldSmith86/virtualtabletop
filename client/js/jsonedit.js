@@ -216,6 +216,13 @@ const jeCommands = [
     }
   },
   {
+    name: 'tree',
+    forceKey: 'T',
+    call: function() {
+      jeDisplayTree();
+    }
+  },
+  {
     name: _=>`remove property ${jeContext && jeContext[jeContext.length-1]}`,
     forceKey: 'D',
     context: ' ↦ (?=[^"]+$)',
@@ -361,18 +368,44 @@ function jeAddCommands() {
   jeAddFaceCommand('border', '', 1);
   jeAddFaceCommand('css', '', '');
   jeAddFaceCommand('radius', ' (rounded corners)', 1);
+
+  jeAddEnumCommands('^[a-z]+ ↦ type', [ null, 'button', 'card', 'deck', 'holder', 'label', 'spinner' ]);
+  jeAddEnumCommands('^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ textAlign', [ 'left', 'center', 'right' ]);
+  jeAddEnumCommands('^.*\\(GET\\) ↦ aggregation', [ 'first', 'sum' ]);
+  jeAddEnumCommands('^.*\\(LABEL\\) ↦ mode', [ 'set', 'dec', 'inc' ]);
+  jeAddEnumCommands('^.*\\(ROTATE\\) ↦ mode', [ 'set', 'add' ]);
+  jeAddEnumCommands('^.*\\(SELECT\\) ↦ mode', [ 'set', 'add' ]);
+  jeAddEnumCommands('^.*\\(SELECT\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=', 'in' ]);
+  jeAddEnumCommands('^.*\\(SELECT\\) ↦ type', [ 'all', null, 'button', 'card', 'deck', 'holder', 'label', 'spinner' ]);
+  jeAddEnumCommands('^.*\\(SET\\) ↦ relation', [ '+', '-', '=' ]);
 }
 
 function jeAddCSScommands() {
   for(const css of [ 'border: 1px solid black', 'background: black', 'font-size: 30px', 'color: black' ]) {
     jeCommands.push({
       name: css,
-      context: ' ↦ css',
+      context: '^.* ↦ (css|[a-z]+CSS)',
       call: function() {
         jePasteText(css + '; ');
       },
       show: function() {
-        return !jeJSONerror && !jeGetValue().css.match(css.split(':')[0]);
+        return !jeJSONerror && !jeGetValue()[jeGetLastKey()].match(css.split(':')[0]);
+      }
+    });
+  }
+}
+
+function jeAddEnumCommands(context, values) {
+  for(const v of values) {
+    jeCommands.push({
+      name: String(v),
+      context: context,
+      call: function() {
+        jeInsert(null, jeGetLastKey(), v);
+      },
+      show: function() {
+        let pointer = jeGetValue();
+        return pointer[jeGetValue()] !== v;
       }
     });
   }
@@ -583,6 +616,10 @@ function jeGetContext() {
   jeShowCommands();
 
   return jeContext;
+}
+
+function jeGetLastKey() {
+  return jeContext[jeContext.length-1].match(/^"/) ? jeContext[jeContext.length-2] : jeContext[jeContext.length-1];
 }
 
 function jeGetValue(context, all) {
