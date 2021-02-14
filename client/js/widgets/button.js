@@ -260,9 +260,9 @@ export class Button extends Widget {
       }
 
       if(a.func == 'FLIP') {
-        setDefaults(a, { count: 0, face: null });
+        setDefaults(a, { count: 0, face: null, faceCyle: null });
         if(isValidID(a.holder))
-          this.w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>c.flip&&c.flip(a.face)));
+          this.w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>c.flip&&c.flip(a.face,a.faceCycle)));
       }
 
       if(a.func == 'GET') {
