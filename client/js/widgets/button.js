@@ -66,7 +66,7 @@ export class Button extends Widget {
     }
 
     for(const original of this.p('clickRoutine')) {
-      const a = { ...original };
+      const a = JSON.parse(JSON.stringify(original));
       var problems = [];
 
       if(this.p('debug')) console.log(`${this.id}: ${JSON.stringify(original)}`);
