@@ -1,11 +1,9 @@
-import { addWidget, widgetFilter } from '../../client/js/serverstate.js';
-import { Button } from '../../client/js/widgets/button.js';
 import { Widget } from '../../client/js/widgets/widget.js';
 
-import { addButton, addLabel, removeWidget } from './client-util.js';
+import { createWidget, addLabel, removeWidget } from './client-util.js';
 
 function createClickThisWidgets(testName, numWidgets, numWithClickThis) {
-  const buttonDef = {
+  const widgetDef = {
     "clickRoutine": [
       {
         "func": "LABEL",
@@ -15,15 +13,15 @@ function createClickThisWidgets(testName, numWidgets, numWithClickThis) {
       }
     ],
     "debug": false,
-    "type": "button"
+    "type": "widget"
   }
 
   const widgets = [];
   let num = 0
   while (num++ < numWidgets) {
-    buttonDef.id = `${testName}-button-${num}`;
-    buttonDef.clickThis = num <= numWithClickThis ? true : false;
-    let b = addButton(buttonDef);
+    widgetDef.id = `${testName}-widget-${num}`;
+    widgetDef.clickThis = num <= numWithClickThis ? true : false;
+    let b = createWidget(widgetDef);
     widgets.push(b);
   }
   return widgets;
@@ -31,27 +29,27 @@ function createClickThisWidgets(testName, numWidgets, numWithClickThis) {
 
 
 describe("Scenarios: Clicking widgets", () => {
-  const testName = "button-click";
-  let testButton;
+  const testName = "widget-click";
+  let testWidget;
   let testLabel;
   beforeAll(() => {
-    const testButtonDef = {
-      id: `${testName}-test-button`,
+    const testWidgetDef = {
+      id: `${testName}-test-widget`,
       debug: false,
-      type: "button"
+      type: "widget"
     }
-    testButton = addButton(testButtonDef);
+    testWidget = createWidget(testWidgetDef);
 
     testLabel = addLabel(`${testName}-test-label`);
   });
   afterAll(() => {
-    removeWidget(testButton.p('id'));
+    removeWidget(testWidget.p('id'));
     removeWidget(testLabel.p('id'));
   });
 
-  describe("Given a button that clicks widgets from an undefined collection", () => {
+  describe("Given a widget that clicks widgets from an undefined collection", () => {
     beforeAll(() => {
-      testButton.p('clickRoutine', [
+      testWidget.p('clickRoutine', [
         {
           "func": "CLICK",
           "collection": "undefined"
@@ -60,14 +58,16 @@ describe("Scenarios: Clicking widgets", () => {
     });
     describe("When clicked", () => {
       test("Then it does not throw an error", async () => {
-        await expect(testButton.click()).resolves.toBeUndefined();
+        expect(() => {
+          testWidget.click();
+        }).not.toThrow()
       });
     });
   });
 
-  describe("Given a button that clicks widgets with property 'clickThis'", () => {
+  describe("Given a widget that clicks widgets with property 'clickThis'", () => {
     beforeAll(() => {
-      testButton.p('clickRoutine', [
+      testWidget.p('clickRoutine', [
         {
           "func": "SELECT",
           "property": "clickThis",
@@ -93,7 +93,7 @@ describe("Scenarios: Clicking widgets", () => {
 
       describe("When clicked", () => {
         test("Then it clicks 2 'clickThis' widgets", async () => {
-          await testButton.click();
+          await testWidget.click();
           expect(testLabel.p('text')).toBe(2);
         });
       });
@@ -113,7 +113,7 @@ describe("Scenarios: Clicking widgets", () => {
 
       describe("When clicked", () => {
         test("Then it clicks 0 'clickThis' widgets", async () => {
-          await testButton.click();
+          await testWidget.click();
           expect(testLabel.p('text')).toBe(0);
         });
       });
