@@ -103,11 +103,16 @@ class Card extends Widget {
     return p;
   }
 
-  flip(setFlip) {
+  flip(setFlip, faceCycle) {
     if(setFlip !== undefined && setFlip !== null)
       this.p('activeFace', setFlip);
-    else
-      this.p('activeFace', Math.floor(this.p('activeFace') + (this.p('faceCycle') == 'random' ? Math.random()*99999 : 1)) % this.deck.p('faceTemplates').length);
+    else {
+      var fC = (faceCycle == 'previous' || faceCycle == 'random') ? faceCycle : this.p('faceCycle');
+      if (fC == 'previous')
+        this.p('activeFace', (this.p('activeFace') == 0) ? this.deck.p('faceTemplates').length-1 : this.p('activeFace') -1);
+      else
+        this.p('activeFace', Math.floor(this.p('activeFace') + (fC == 'random' ? Math.random()*99999 : 1)) % this.deck.p('faceTemplates').length);
+    }
   }
 
   getDefaultValue(property) {
