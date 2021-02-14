@@ -294,7 +294,7 @@ export class Button extends Widget {
 
       if(a.func == 'INPUT') {
         try {
-          Object.assign(variables, await this.showInputOverlay(a));
+          Object.assign(variables, await this.showInputOverlay(a, widgets, variables));
         } catch(e) {
           problems.push(`Exception: ${e.toString()}`);
           batchEnd();
@@ -505,7 +505,7 @@ export class Button extends Widget {
       reject(result);
   }
 
-  async showInputOverlay(o) {
+  async showInputOverlay(o, widgets, variables) {
     return new Promise((resolve, reject) => {
       $('#buttonInputOverlay h1').textContent = o.header || "Button Input";
       $('#buttonInputFields').innerHTML = '';
@@ -513,6 +513,27 @@ export class Button extends Widget {
       for(const field of o.fields) {
 
         const dom = document.createElement('div');
+
+        if(field.applyVariables) {
+          if(Array.isArray(field.applyVariables)) {
+            for(const v of field.applyVariables) {
+              if(v.parameter && v.variable) {
+                field[v.parameter] = (v.index === undefined) ? variables[v.variable] : variables[v.variable][v.index];
+              } else if(v.parameter && v.template) {
+                field[v.parameter] = v.template.replace(/\{([^}]+)\}/g, function(i, key) {
+                  return (variables[key] === undefined) ? "" : variables[key];
+                });
+              } else if(v.parameter && v.property) {
+                let w = widgets.has(v.widget) ? widgets.get(v.widget) : this;
+                field[v.parameter] = (w.p(v.property) === undefined) ? null : w.p(v.property);
+              } else {
+                problems.push('Entry in parameter applyVariables does not contain "parameter" together with "variable", "property", or "template".');
+              }
+            }
+          } else {
+            problems.push('Parameter applyVariables is not an array.');
+          }
+        }
 
         if(field.type == 'checkbox') {
           const input = document.createElement('input');
