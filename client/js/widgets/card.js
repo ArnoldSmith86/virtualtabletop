@@ -55,7 +55,8 @@ class Card extends Widget {
   }
 
   click() {
-    this.flip();
+    if(this.p('clickable'))
+      this.flip();
   }
 
   createFaces(faceTemplates) {
