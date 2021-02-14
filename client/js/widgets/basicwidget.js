@@ -43,7 +43,8 @@ class BasicWidget extends Widget {
   }
 
   click() {
-    this.flip();
+    if(this.p('clickable'))
+      this.flip();
   }
 
   css() {
