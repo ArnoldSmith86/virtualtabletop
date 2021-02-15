@@ -28,6 +28,27 @@ export class Button extends Widget {
       this.domElement.textContent = delta.text;
   }
 
+  applyVariables(field, widgets, variables, problems) {
+    if(Array.isArray(field.applyVariables)) {
+      for(const v of field.applyVariables) {
+        if(v.parameter && v.variable) {
+          field[v.parameter] = (v.index === undefined) ? variables[v.variable] : variables[v.variable][v.index];
+        } else if(v.parameter && v.template) {
+          field[v.parameter] = v.template.replace(/\{([^}]+)\}/g, function(i, key) {
+            return (variables[key] === undefined) ? "" : variables[key];
+          });
+        } else if(v.parameter && v.property) {
+          let w = isValidID(v.widget) ? widgets.get(v.widget) : this;
+          field[v.parameter] = (w.p(v.property) === undefined) ? null : w.p(v.property);
+        } else {
+          problems.push('Entry in parameter applyVariables does not contain "parameter" together with "variable", "property", or "template".');
+        }
+      }
+    } else {
+      problems.push('Parameter applyVariables is not an array.');
+    }
+  }
+
   async click() {
     function setDefaults(routine, defaults) {
       for(const key in defaults)
@@ -70,26 +91,9 @@ export class Button extends Widget {
       var problems = [];
 
       if(this.p('debug')) console.log(`${this.id}: ${JSON.stringify(original)}`);
-      if(a.applyVariables) {
-        if(Array.isArray(a.applyVariables)) {
-          for(const v of a.applyVariables) {
-            if(v.parameter && v.variable) {
-              a[v.parameter] = (v.index === undefined) ? variables[v.variable] : variables[v.variable][v.index];
-            } else if(v.parameter && v.template) {
-              a[v.parameter] = v.template.replace(/\{([^}]+)\}/g, function(i, key) {
-                return (variables[key] === undefined) ? "" : variables[key];
-              });
-            } else if(v.parameter && v.property) {
-              let w = isValidID(v.widget) ? widgets.get(v.widget) : this;
-              a[v.parameter] = (w.p(v.property) === undefined) ? null : w.p(v.property);
-            } else {
-              problems.push('Entry in parameter applyVariables does not contain "parameter" together with "variable", "property", or "template".');
-            }
-          }
-        } else {
-          problems.push('Parameter applyVariables is not an array.');
-        }
-      }
+
+      if(a.applyVariables) this.applyVariables(a, widgets, variables, problems);
+
       if(a.skip) {
         $('#debugButtonOutput').textContent += '\n\n\nOPERATION SKIPPED: \n' + JSON.stringify(a, null, '  ');
         continue;
@@ -294,7 +298,7 @@ export class Button extends Widget {
 
       if(a.func == 'INPUT') {
         try {
-          Object.assign(variables, await this.showInputOverlay(a, widgets, variables));
+          Object.assign(variables, await this.showInputOverlay(a, widgets, variables, problems));
         } catch(e) {
           problems.push(`Exception: ${e.toString()}`);
           batchEnd();
@@ -505,8 +509,9 @@ export class Button extends Widget {
       reject(result);
   }
 
-  async showInputOverlay(o, widgets, variables) {
+  async showInputOverlay(o, widgets, variables, problems) {
     return new Promise((resolve, reject) => {
+
       $('#buttonInputOverlay h1').textContent = o.header || "Button Input";
       $('#buttonInputFields').innerHTML = '';
 
@@ -514,26 +519,7 @@ export class Button extends Widget {
 
         const dom = document.createElement('div');
 
-        if(field.applyVariables) {
-          if(Array.isArray(field.applyVariables)) {
-            for(const v of field.applyVariables) {
-              if(v.parameter && v.variable) {
-                field[v.parameter] = (v.index === undefined) ? variables[v.variable] : variables[v.variable][v.index];
-              } else if(v.parameter && v.template) {
-                field[v.parameter] = v.template.replace(/\{([^}]+)\}/g, function(i, key) {
-                  return (variables[key] === undefined) ? "" : variables[key];
-                });
-              } else if(v.parameter && v.property) {
-                let w = widgets.has(v.widget) ? widgets.get(v.widget) : this;
-                field[v.parameter] = (w.p(v.property) === undefined) ? null : w.p(v.property);
-              } else {
-                problems.push('Entry in parameter applyVariables does not contain "parameter" together with "variable", "property", or "template".');
-              }
-            }
-          } else {
-            problems.push('Parameter applyVariables is not an array.');
-          }
-        }
+        if(field.applyVariables) this.applyVariables(field, widgets, variables, problems);
 
         if(field.type == 'checkbox') {
           const input = document.createElement('input');
