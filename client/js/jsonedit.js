@@ -22,6 +22,7 @@ const jeOrder = [ 'type', 'id#', 'parent', 'deck', 'cardType', 'owner#', 'x*', '
 
 const jeCommands = [
   {
+    id: 'je_toggleBoolean',
     name: 'toggle boolean',
     context: '.*"(true|false)"',
     call: function() {
@@ -29,6 +30,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_openWidgetById',
     name: 'open widget by ID',
     context: '.*"([^"]+)"',
     call: function() {
@@ -41,6 +43,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_uploadAsset',
     name: 'upload a different asset',
     context: '.*"(/assets/[0-9_-]+)"',
     call: function() {
@@ -48,6 +51,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_cardTypeTemplate',
     name: 'card type template',
     context: '^deck ↦ cardTypes',
     call: function() {
@@ -68,6 +72,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_addCard',
     name: 'add card',
     context: '^deck ↦ cardTypes ↦ .*? ↦',
     call: function() {
@@ -78,6 +83,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_removeCard',
     name: 'remove card',
     context: '^deck ↦ cardTypes ↦ .*? ↦',
     show: _=>jeStateNow&&widgetFilter(w=>w.p('deck')==jeStateNow.id&&w.p('cardType')==jeContext[2]).length,
@@ -87,6 +93,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_faceTemplate',
     name: 'face template',
     context: '^deck ↦ faceTemplates',
     call: function() {
@@ -97,6 +104,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_imageTemplate',
     name: 'image template',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects',
     call: function() {
@@ -114,6 +122,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_textTemplate',
     name: 'text template',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects',
     call: function() {
@@ -131,6 +140,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_css',
     name: 'css',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
     show: _=>!jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].css,
@@ -140,6 +150,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_rotation',
     name: 'rotation',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
     show: _=>!jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].rotation,
@@ -149,6 +160,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_toggleValueType',
     name: _=>jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].valueType == 'dynamic' ? 'static' : 'dynamic',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
     call: function() {
@@ -161,6 +173,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_toggleZoom',
     name: 'toggle zoom out',
     forceKey: 'Z',
     call: function() {
@@ -174,6 +187,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_callMacro',
     name: _=>jeWidget === null ? 'call' : 'macro',
     forceKey: 'M',
     call: function() {
@@ -208,6 +222,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_showWidget',
     name: 'show this widget below',
     forceKey: 'S',
     call: function() {
@@ -216,6 +231,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_tree',
     name: 'tree',
     forceKey: 'T',
     call: function() {
@@ -223,6 +239,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_removeProperty',
     name: _=>`remove property ${jeContext && jeContext[jeContext.length-1]}`,
     forceKey: 'D',
     context: ' ↦ (?=[^"]+$)',
@@ -243,6 +260,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_addNewWidget',
     name: 'add new widget',
     forceKey: 'A',
     call: function() {
@@ -254,6 +272,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_removeWidget',
     name: 'remove widget',
     forceKey: 'R',
     show: _=>jeStateNow,
@@ -266,6 +285,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_editMode',
     name: 'edit mode',
     forceKey: 'F',
     call: function() {
@@ -277,6 +297,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_openDeck',
     name: 'open deck',
     forceKey: 'ArrowDown',
     context: '^card',
@@ -286,6 +307,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_openParent',
     name: 'open parent',
     forceKey: 'ArrowUp',
     show: _=>jeStateNow&&widgets.has(jeStateNow.parent),
@@ -294,6 +316,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_applyChanges',
     name: _=>jeJSONerror?'go to error':'apply changes',
     forceKey: ' ',
     show: _=>jeWidget,
@@ -310,6 +333,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_applyVariables',
     name: _=>`change ${jeContext && jeContext[4]} to applyVariables`,
     context: '^button.*\\) ↦ [a-zA-Z]+',
     call: function() {
@@ -328,6 +352,7 @@ const jeCommands = [
 
 function jeAddButtonOperationCommands(command, defaults) {
   jeCommands.push({
+    id: 'operation_' + command,
     name: command,
     context: `^button ↦ clickRoutine`,
     call: function() {
@@ -342,6 +367,7 @@ function jeAddButtonOperationCommands(command, defaults) {
   defaults.skip = false;
   for(const property in defaults) {
     jeCommands.push({
+      id: 'default_' + property,
       name: property,
       context: `^button.* ↦ \\(${command}\\) ↦ `,
       call: function() {
@@ -407,6 +433,7 @@ function jeAddCommands() {
 function jeAddCSScommands() {
   for(const css of [ 'border: 1px solid black', 'background: black', 'font-size: 30px', 'color: black' ]) {
     jeCommands.push({
+      id: 'css_' + css,
       name: css,
       context: '^.* ↦ (css|[a-z]+CSS)',
       call: function() {
@@ -422,6 +449,7 @@ function jeAddCSScommands() {
 function jeAddEnumCommands(context, values) {
   for(const v of values) {
     jeCommands.push({
+      id: 'enum_' + String(v),
       name: String(v),
       context: context,
       call: function() {
@@ -437,6 +465,7 @@ function jeAddEnumCommands(context, values) {
 
 function jeAddFaceCommand(key, description, value) {
   jeCommands.push({
+    id: 'face_' + key+description,
     name: key+description,
     context: '^deck ↦ faceTemplates ↦ [0-9]+',
     show: _=>!jeStateNow.faceTemplates[+jeContext[2]][key],
@@ -449,6 +478,7 @@ function jeAddFaceCommand(key, description, value) {
 
 function jeAddNumberCommand(name, key, callback) {
   jeCommands.push({
+    id: 'number_' + name,
     name: name,
     forceKey: key,
     context: '.*',
@@ -470,6 +500,7 @@ function jeAddWidgetPropertyCommands(object) {
 
 function jeAddWidgetPropertyCommand(defaults, property) {
   jeCommands.push({
+    id: 'widget_' + property,
     name: property,
     context: `^${defaults.typeClasses.replace('widget ', '')}`,
     call: function() {
@@ -818,7 +849,7 @@ function jeShowCommands() {
           if(!command.currentKey && !usedKeys[key])
             command.currentKey = key;
         usedKeys[command.currentKey] = true;
-        commandText += `Ctrl-${command.currentKey}: ${name.replace(command.currentKey, '<b>' + command.currentKey + '</b>')}\n`;
+        commandText += `Ctrl-${command.currentKey}: <button id="${command.id}">${name.replace(command.currentKey, '<b>' + command.currentKey + '</b>')}</button>\n`;
       }
     }
   }
@@ -830,6 +861,19 @@ function jeShowCommands() {
   if(jeSecondaryWidget)
     commandText += `\n\n${jeSecondaryWidget}\n`;
   $('#jeCommands').innerHTML = commandText;
+  var buttons = [... document.querySelectorAll('#jeCommands>button')];
+  if (buttons.length > 0) {
+    buttons.forEach((e) => {
+      if (e != undefined) document.getElementById(e.id).addEventListener('click', clickButton);
+    });
+  }
+}
+
+const clickButton = function (event) {
+  jeCommands.find(o => o.id == event.currentTarget.id).call();
+  jeGetContext();
+  if(jeWidget && !jeJSONerror)
+    jeApplyChanges();
 }
 
 window.addEventListener('mousemove', function(e) {
