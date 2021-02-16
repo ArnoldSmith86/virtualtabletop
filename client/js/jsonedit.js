@@ -339,7 +339,8 @@ function jeAddButtonOperationCommands(command, defaults) {
     }
   });
 
-  defaults.skip = false;
+  defaults.skipIF = false;
+  defaults.doIF = false;
   for(const property in defaults) {
     jeCommands.push({
       name: property,
