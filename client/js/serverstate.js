@@ -105,6 +105,8 @@ function receiveDelta(delta) {
       widgets.get(widgetID).applyDelta(delta.s[widgetID]);
     }
   }
+  if(typeof jeApplyDelta == 'function')
+    jeApplyDelta(delta);
 }
 
 function receiveDeltaFromServer(delta) {

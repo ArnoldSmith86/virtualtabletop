@@ -157,6 +157,7 @@ body {
   position: absolute;
   left: 0;
   top: 0;
+  white-space: pre-wrap;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;

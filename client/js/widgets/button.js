@@ -1,6 +1,6 @@
 import { $ } from '../domhelpers.js';
 import { showOverlay } from '../main.js';
-import { playerName, playerColor } from '../overlays/players.js';
+import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { Widget } from './widget.js';
 
@@ -56,22 +56,35 @@ export class Button extends Widget {
 
     const variables = {
       playerName,
-      playerColor
+      playerColor,
+      activePlayers,
+      thisID : this.p('id')
     };
-    const collections = {};
+
+    const collections = {
+      thisButton : [this]
+    }
 
     for(const original of this.p('clickRoutine')) {
       const a = { ...original };
       var problems = [];
 
-      if (this.p('debug')) console.log(`${this.id}: ${JSON.stringify(original)}`);
+      if(this.p('debug')) console.log(`${this.id}: ${JSON.stringify(original)}`);
       if(a.applyVariables) {
         if(Array.isArray(a.applyVariables)) {
           for(const v of a.applyVariables) {
-            if(v.parameter && v.variable)
-              a[v.parameter] = variables[v.variable];
-            else
-              problems.push('Entry in parameter applyVariables does not contain "parameter" and "variable".');
+            if(v.parameter && v.variable) {
+              a[v.parameter] = (v.index === undefined) ? variables[v.variable] : variables[v.variable][v.index];
+            } else if(v.parameter && v.template) {
+              a[v.parameter] = v.template.replace(/\{([^}]+)\}/g, function(i, key) {
+                return (variables[key] === undefined) ? "" : variables[key];
+              });
+            } else if(v.parameter && v.property) {
+              let w = isValidID(v.widget) ? widgets.get(v.widget) : this;
+              a[v.parameter] = (w.p(v.property) === undefined) ? null : w.p(v.property);
+            } else {
+              problems.push('Entry in parameter applyVariables does not contain "parameter" together with "variable", "property", or "template".');
+            }
           }
         } else {
           problems.push('Parameter applyVariables is not an array.');
@@ -95,7 +108,8 @@ export class Button extends Widget {
         if(isValidCollection(a.collection))
           for(let i=0; i<a.count; ++i)
             for(const w of collections[a.collection])
-              w.click();
+              if(w.click)
+                w.click();
       }
 
       if(a.func == 'COMPUTE') {
@@ -265,8 +279,13 @@ export class Button extends Widget {
           switch(a.aggregation) {
           case 'first':
             if(collections[a.collection].length)
-              // always get a deep copy and not object references
-              variables[a.variable] = JSON.parse(JSON.stringify(collections[a.collection][0].p(a.property)));
+              if(collections[a.collection][0].p(a.property) !== undefined) {
+                // always get a deep copy and not object references
+                variables[a.variable] = JSON.parse(JSON.stringify(collections[a.collection][0].p(a.property)));
+              } else {
+                variables[a.variable] = null;
+                problems.push(`Property ${a.property} missing from first item of collection, setting ${a.variable} to null.`);
+              }
             else
               problems.push(`Collection ${a.collection} is empty.`);
             break;
@@ -373,11 +392,13 @@ export class Button extends Widget {
       }
 
       if(a.func == 'SELECT') {
-        setDefaults(a, { property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'add', source: 'all' });
+        setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'add', source: 'all' });
         if(a.source == 'all' || isValidCollection(a.source)) {
           if([ 'add', 'set' ].indexOf(a.mode) == -1)
             problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
           let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(function(w) {
+            if(a.type != 'all' && w.p('type') != a.type)
+              return false;
             if(a.relation === '<')
               return w.p(a.property) < a.value;
             else if(a.relation === '<=')
@@ -388,6 +409,8 @@ export class Button extends Widget {
               return w.p(a.property) >= a.value;
             else if(a.relation === '>')
               return w.p(a.property) > a.value;
+            else if(a.relation === 'in' && Array.isArray(a.value))
+              return a.value.indexOf(w.p(a.property)) != -1;
             if(a.relation != '==')
               problems.push(`Warning: Relation ${a.relation} interpreted as ==.`);
             return w.p(a.property) === a.value;

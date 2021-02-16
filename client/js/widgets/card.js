@@ -62,18 +62,30 @@ class Card extends Widget {
     for(const face of faceTemplates) {
       const faceDiv = document.createElement('div');
 
+      if(face.css !== undefined)
+        faceDiv.style.cssText = face.css;
       faceDiv.style.border = face.border ? face.border + 'px black solid' : 'none';
       faceDiv.style.borderRadius = face.radius ? face.radius + 'px' : '0';
 
       for(const object of face.objects) {
         const objectDiv = document.createElement('div');
-        const value = object.valueType == 'static' ? object.value : this.p(object.value);
+        let value = object.valueType == 'static' ? object.value : this.p(object.value);
         const x = face.border ? object.x-face.border : object.x;
         const y = face.border ? object.y-face.border : object.y;
-        objectDiv.style.cssText = `left: ${x}px; top: ${y}px; width: ${object.width}px; height: ${object.height}px; font-size: ${object.fontSize}px; text-align: ${object.textAlign}`;
+        let css = object.css ? object.css + '; ' : '';
+        css += `left: ${x}px; top: ${y}px; width: ${object.width}px; height: ${object.height}px; font-size: ${object.fontSize}px; text-align: ${object.textAlign}`;
+        css += object.rotation ? `; transform: rotate(${object.rotation}deg)` : '';
+        objectDiv.style.cssText = css;
         if(object.type == 'image') {
-          if(value)
-            objectDiv.style.backgroundImage = `url(${value})`;
+          if(value) {
+            if(object.svgReplaces) {
+              const replaces = { ...object.svgReplaces };
+              for(const key in replaces)
+                replaces[key] = this.p(replaces[key]);
+              value = getSVG(value, replaces, _=>this.applyDeltaToDOM({ deck:this.p('deck') }));
+            }
+            objectDiv.style.backgroundImage = `url("${value}")`;
+          }
           objectDiv.style.backgroundColor = object.color || 'white';
         } else {
           objectDiv.textContent = value;
