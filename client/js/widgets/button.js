@@ -77,15 +77,15 @@ export class Button extends Widget {
           problems.push('Parameter applyVariables is not an array.');
         }
       }
-      if(a.skip) {
-        if (variables[a.skip]) {
-          $('#debugButtonOutput').textContent += '\n\n\nOPERATION SKIPPED (' + a.skip + ' == true): \n' + JSON.stringify(a, null, '  ');
+      if(a.skipIF) {
+        if (variables[a.skipIF]) {
+          $('#debugButtonOutput').textContent += '\n\n\nOPERATION SKIPPED (' + a.skipIF + ' == true): \n' + JSON.stringify(a, null, '  ');
           continue;
         }
       }
-      if(a.onlyif) {
-        if (!variables[a.onlyif]) {
-          $('#debugButtonOutput').textContent += '\n\n\nOPERATION SKIPPED (' + a.onlyif + ' != true): \n' + JSON.stringify(a, null, '  ');
+      if(a.doIF) {
+        if (!variables[a.doIF]) {
+          $('#debugButtonOutput').textContent += '\n\n\nOPERATION SKIPPED (' + a.doIF + ' != true): \n' + JSON.stringify(a, null, '  ');
           continue;
         }
       }
