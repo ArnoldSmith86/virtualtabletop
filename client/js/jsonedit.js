@@ -840,7 +840,7 @@ function jeShowCommands() {
     if(contextMatch) {
       if (contextMatch[0] =="") {
         const name = (typeof command.name == 'function' ? command.name() : command.name);
-        commandText += `<button id='${command.id}' title='${name}' ${!command.show || command.show() ? '' : 'disabled'}>${name.substr(0,2)}</button>`;
+        commandText += `<button id='${command.id}' title='${name} (Ctrl-${command.forceKey})' ${!command.show || command.show() ? '' : 'disabled'}>${name.substr(0,2)}</button>`;
       }
     }
   }
