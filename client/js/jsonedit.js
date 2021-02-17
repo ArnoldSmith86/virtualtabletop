@@ -23,7 +23,7 @@ const jeOrder = [ 'type', 'id#', 'parent', 'deck', 'cardType', 'owner#', 'x*', '
 const jeCommands = [
   {
     id: 'je_toggleBoolean',
-    name: '☑ toggle boolean',
+    name: 'toggle boolean',
     context: '.*(true|false)',
     call: function() {
       jeInsert(jeContext.slice(1), jeContext[jeContext.length-2], jeContext[jeContext.length-1]=='"false"');
@@ -31,7 +31,7 @@ const jeCommands = [
   },
   {
     id: 'je_openWidgetById',
-    name: '⤵ open widget by ID',
+    name: 'open widget by ID',
     context: '.*"([^"]+)"',
     call: function() {
       const m = jeContext.join('').match(/"([^"]+)"/);
