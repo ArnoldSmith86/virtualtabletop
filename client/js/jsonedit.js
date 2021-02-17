@@ -23,7 +23,7 @@ const jeOrder = [ 'type', 'id#', 'parent', 'deck', 'cardType', 'owner#', 'x*', '
 const jeCommands = [
   {
     id: 'je_toggleBoolean',
-    name: 'toggle boolean',
+    name: '☑ toggle boolean',
     context: '.*"(true|false)"',
     call: function() {
       jeInsert(jeContext.slice(1), jeContext[jeContext.length-2], jeContext[jeContext.length-1]=='"false"');
@@ -31,7 +31,7 @@ const jeCommands = [
   },
   {
     id: 'je_openWidgetById',
-    name: 'open widget by ID',
+    name: '⤵ open widget by ID',
     context: '.*"([^"]+)"',
     call: function() {
       const m = jeContext.join('').match(/"([^"]+)"/);
@@ -174,7 +174,7 @@ const jeCommands = [
   },
   {
     id: 'je_toggleZoom',
-    name: 'toggle zoom out',
+    name: '🔍 toggle zoom out',
     forceKey: 'Z',
     call: function() {
       jeZoomOut = !jeZoomOut;
@@ -188,7 +188,7 @@ const jeCommands = [
   },
   {
     id: 'je_callMacro',
-    name: _=>jeWidget === null ? 'call' : 'macro',
+    name: _=>jeWidget === null ? '📢 call' : '🎬 macro',
     forceKey: 'M',
     call: function() {
       if(jeWidget) {
@@ -223,7 +223,7 @@ const jeCommands = [
   },
   {
     id: 'je_showWidget',
-    name: 'show this widget below',
+    name: '👁 show this widget below',
     forceKey: 'S',
     call: function() {
       jeSecondaryWidget = jeWidget && JSON.stringify(jeWidget.state, null, '  ');
@@ -232,7 +232,7 @@ const jeCommands = [
   },
   {
     id: 'je_tree',
-    name: 'tree',
+    name: '🔝 tree',
     forceKey: 'T',
     call: function() {
       jeDisplayTree();
@@ -240,7 +240,7 @@ const jeCommands = [
   },
   {
     id: 'je_removeProperty',
-    name: _=>`remove property ${jeContext && jeContext[jeContext.length-1]}`,
+    name: _=>`🗑 remove property ${jeContext && jeContext[jeContext.length-1]}`,
     forceKey: 'D',
     context: ' ↦ (?=[^"]+$)',
     call: function() {
@@ -261,7 +261,7 @@ const jeCommands = [
   },
   {
     id: 'je_addNewWidget',
-    name: 'add new widget',
+    name: '➕ add new widget',
     forceKey: 'A',
     call: function() {
       const toAdd = {};
@@ -273,7 +273,7 @@ const jeCommands = [
   },
   {
     id: 'je_removeWidget',
-    name: 'remove widget',
+    name: '❌ remove widget',
     forceKey: 'R',
     show: _=>jeStateNow,
     call: function() {
@@ -286,7 +286,7 @@ const jeCommands = [
   },
   {
     id: 'je_editMode',
-    name: 'edit mode',
+    name: '📝 edit mode',
     forceKey: 'F',
     call: function() {
       if(edit)
@@ -298,7 +298,7 @@ const jeCommands = [
   },
   {
     id: 'je_openDeck',
-    name: 'open deck',
+    name: '🔽 open deck',
     forceKey: 'ArrowDown',
     context: '^card',
     show: _=>jeStateNow&&widgets.has(jeStateNow.deck),
@@ -308,7 +308,7 @@ const jeCommands = [
   },
   {
     id: 'je_openParent',
-    name: 'open parent',
+    name: '🔼 open parent',
     forceKey: 'ArrowUp',
     show: _=>jeStateNow&&widgets.has(jeStateNow.parent),
     call: function() {
@@ -317,7 +317,7 @@ const jeCommands = [
   },
   {
     id: 'je_applyChanges',
-    name: _=>jeJSONerror?'go to error':'apply changes',
+    name: _=>jeJSONerror?'❓ go to error':'✔ apply changes',
     forceKey: ' ',
     show: _=>jeWidget,
     call: function() {
@@ -334,7 +334,7 @@ const jeCommands = [
   },
   {
     id: 'je_applyVariables',
-    name: _=>`change ${jeContext && jeContext[4]} to applyVariables`,
+    name: _=>`↔ change ${jeContext && jeContext[4]} to applyVariables`,
     context: '^button.*\\) ↦ [a-zA-Z]+',
     call: function() {
       const operation = jeGetValue(jeContext.slice(1, 3));
@@ -688,7 +688,7 @@ function jeGetContext() {
 }
 
 function jeGetLastKey() {
-  return jeContext[jeContext.length-1].match(/^"/) ? jeContext[jeContext.length-2] : jeContext[jeContext.length-1];
+  return jeContext[jeContext.length-1].toString().match(/^"/) ? jeContext[jeContext.length-2] : jeContext[jeContext.length-1];
 }
 
 function jeGetValue(context, all) {
@@ -835,6 +835,19 @@ function jeShowCommands() {
     return nameA.localeCompare(nameB);
   }
 
+  for(const command of jeCommands) {
+    const contextMatch = context.match(new RegExp(command.context));
+    if(contextMatch) {
+      if (contextMatch[0] =="") {
+        const name = (typeof command.name == 'function' ? command.name() : command.name);
+        commandText += `<button id='${command.id}' title='${name}' ${!command.show || command.show() ? '' : 'disabled'}>${name.substr(0,2)}</button>`;
+      }
+    }
+  }
+  if (commandText.length > 0)
+    commandText += `\n`;
+  delete activeCommands[""];
+
   for(const contextMatch of (Object.keys(activeCommands).sort((a,b)=>b.length-a.length))) {
     commandText += `\n  <b>${contextMatch}</b>\n`;
     for(const command of activeCommands[contextMatch].sort(sortByName)) {
@@ -849,7 +862,12 @@ function jeShowCommands() {
           if(!command.currentKey && !usedKeys[key])
             command.currentKey = key;
         usedKeys[command.currentKey] = true;
-        commandText += `Ctrl-${command.currentKey}: <button id="${command.id}">${name.replace(command.currentKey, '<b>' + command.currentKey + '</b>')}</button>\n`;
+        var displayKey = command.currentKey;
+        if (displayKey == 'ArrowUp')
+          displayKey = '⬆';
+        if (displayKey == 'ArrowDown')
+          displayKey = '⬇';
+        commandText += `Ctrl-${displayKey}: <button id="${command.id}">${name.replace(displayKey, '<b>' + displayKey + '</b>')}</button>\n`;
       }
     }
   }
@@ -902,8 +920,12 @@ window.addEventListener('mousemove', function(e) {
 window.addEventListener('mouseup', function(e) {
   if(!jeEnabled)
     return;
-  if(e.target == $('#jeText'))
+  if(e.target == $('#jeText')) {
     jeGetContext();
+    if (jeContext[0] == 'Tree' && jeContext[1] != undefined)
+      jeCommands.find(o => o.id == 'je_openWidgetById').call();
+      jeGetContext();
+  }
 });
 
 window.addEventListener('keydown', function(e) {
