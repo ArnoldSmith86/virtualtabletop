@@ -188,7 +188,7 @@ const jeCommands = [
   },
   {
     id: 'je_callMacro',
-    name: _=>jeWidget === null ? '📢 call' : '🎬 macro',
+    name: _=>jeWidget === null ? '▶️ call' : '🎬 macro',
     forceKey: 'M',
     call: function() {
       if(jeWidget) {
@@ -889,9 +889,11 @@ function jeShowCommands() {
 
 const clickButton = function (event) {
   jeCommands.find(o => o.id == event.currentTarget.id).call();
-  jeGetContext();
-  if(jeWidget && !jeJSONerror)
-    jeApplyChanges();
+  if (jeContext != 'macro') {
+    jeGetContext();
+    if(jeWidget && !jeJSONerror)
+      jeApplyChanges();
+  }
 }
 
 window.addEventListener('mousemove', function(e) {
@@ -920,7 +922,7 @@ window.addEventListener('mousemove', function(e) {
 window.addEventListener('mouseup', function(e) {
   if(!jeEnabled)
     return;
-  if(e.target == $('#jeText')) {
+  if(e.target == $('#jeText') && jeContext != 'macro') {
     jeGetContext();
     if (jeContext[0] == 'Tree' && jeContext[1] != undefined)
       jeCommands.find(o => o.id == 'je_openWidgetById').call();
