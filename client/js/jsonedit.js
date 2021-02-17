@@ -24,7 +24,7 @@ const jeCommands = [
   {
     id: 'je_toggleBoolean',
     name: '☑ toggle boolean',
-    context: '.*"(true|false)"',
+    context: '.*(true|false)',
     call: function() {
       jeInsert(jeContext.slice(1), jeContext[jeContext.length-2], jeContext[jeContext.length-1]=='"false"');
     }
