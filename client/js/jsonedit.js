@@ -226,7 +226,9 @@ const jeCommands = [
     name: '👁 show this widget below',
     forceKey: 'S',
     call: function() {
-      jeSecondaryWidget = jeWidget && JSON.stringify(jeWidget.state, null, '  ');
+      if (jeWidget != undefined)
+        jeSecondaryWidget = (jeWidget != undefined && jeSecondaryWidget == null || jeStateNow.id != JSON.parse(jeSecondaryWidget).id) ? jeWidget && JSON.stringify(jeWidget.state, null, '  ') : null;
+      else jeSecondaryWidget = null;
       jeShowCommands();
     }
   },
