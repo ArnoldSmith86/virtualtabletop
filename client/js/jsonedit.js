@@ -895,6 +895,8 @@ const clickButton = function (event) {
     jeGetContext();
     if(jeWidget && !jeJSONerror)
       jeApplyChanges();
+    if (jeContext[0] == '###SELECT ME###')
+      jeGetContext();
   }
 }
 
