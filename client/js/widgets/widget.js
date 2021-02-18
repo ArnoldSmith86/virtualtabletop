@@ -25,7 +25,7 @@ export class Widget extends StateManaged {
       css: '',
       movable: true,
       movableInEdit: true,
-      clickable: true,
+      clickable: false,
 
       grid: [],
       enlarge: false,
