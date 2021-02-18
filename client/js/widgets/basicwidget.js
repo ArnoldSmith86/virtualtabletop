@@ -6,6 +6,7 @@ class BasicWidget extends Widget {
 
     this.addDefaults({
       typeClasses: 'widget basic',
+      clickable: true,
 
       faces: [ {} ],
       faceCycle: 'ordered',
