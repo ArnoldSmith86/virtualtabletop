@@ -6,6 +6,7 @@ class Spinner extends Widget {
       width: 110,
       height: 110,
       typeClasses: 'widget spinner',
+      clickable: true,
 
       options: [ 1, 2, 3, 4, 5, 6 ],
       value: '🎲',
