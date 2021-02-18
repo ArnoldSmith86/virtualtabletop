@@ -6,6 +6,7 @@ class Card extends Widget {
       width: 103,
       height: 160,
       typeClasses: 'widget card',
+      clickable: true,
 
       faceCycle: 'ordered',
       activeFace: 0,
