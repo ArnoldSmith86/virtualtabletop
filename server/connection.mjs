@@ -23,12 +23,20 @@ export default class Connection {
     if(func == "room")
       this.newPlayerCallback(this, args);
     for(const handler of this.messageHandlers)
-      handler(func, args);
+      try {
+        handler(func, args);
+      } catch(e) {
+        console.log(`ERROR in message handler: ${e.message}`)
+      }
   }
 
   messageReceived = message => {
-    const { func, args } = JSON.parse(message);
-    this.fromClient(func, args);
+    try {
+      const { func, args } = JSON.parse(message);
+      this.fromClient(func, args);
+    } catch(e) {
+      console.log(`ERROR in received message: ${e.message}`)
+    }
   }
 
   closeReceived = _ => {
