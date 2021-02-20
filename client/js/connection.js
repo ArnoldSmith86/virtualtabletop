@@ -1,6 +1,8 @@
+import { MessageBuffer, messageBufferHandlers } from './messageBuffer';
 let lastTimeout = 1000;
 let connection;
 let messageCallbacks = {};
+let messageBuffers = {};
 
 //used by unit tests until jest supports mocking ESM static imports
 export function mockConnection() {
@@ -15,6 +17,7 @@ export function startWebSocket() {
     url = `wss://${location.host}`;
   console.log(`connecting to ${url}`);
   connection = new WebSocket(url);
+  initMessageBuffers(connection)
 
   connection.onopen = () => {
     if(!urlProperties.askID) {
@@ -39,6 +42,19 @@ export function startWebSocket() {
   };
 }
 
+function initMessageBuffers(connection) {
+  var mouseBuffer, deltaBuffer, logBuffer;
+  mouseBuffer = new MessageBuffer('mouse', 100, messageBufferHandlers.sendLatest, connection);
+  deltaBuffer = new MessageBuffer('delta', 10, messageBufferHandlers.sendAll, connection);
+  logBuffer = new MessageBuffer('log', 10, messageBufferHandlers.sendAll, connection);
+  messageBuffers = {
+    'mouse': mouseBuffer,
+    'delta': deltaBuffer,
+    'log': logBuffer
+  }
+  console.log(messageBuffers)
+}
+
 function onMessage(func, callback) {
   if(!messageCallbacks[func])
     messageCallbacks[func] = [];
@@ -47,7 +63,12 @@ function onMessage(func, callback) {
 
 export function toServer(func, args) {
   if(connection.readyState === WebSocket.OPEN)
-    connection.send(JSON.stringify({ func, args }));
+    if (func in messageBuffers) {
+      messageBuffers[func].send(JSON.stringify({ func, args }));
+    }
+    else {
+      connection.send(JSON.stringify({ func, args }));
+    }
 }
 
 function log(str) {
