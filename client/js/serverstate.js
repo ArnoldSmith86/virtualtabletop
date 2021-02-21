@@ -106,7 +106,6 @@ function receiveDelta(delta) {
     }
   }
   if(jeEnabled == true)
-    console.log("whee")
     jeApplyDelta(delta);
 }
 
