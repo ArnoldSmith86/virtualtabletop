@@ -1,3 +1,7 @@
 tasks:
   - init: npm install
     command: npm debug
+
+vscode:
+  extensions:
+    - icrawl.discord-vscode@5.3.0:9ccoPk+IzE7rWxyjDq/2Lg==
