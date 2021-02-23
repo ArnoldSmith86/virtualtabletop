@@ -11,7 +11,7 @@ body.edit .card {
   box-sizing: border-box;
 }
 
-.card > div.active, card > div.widget {
+.card > div.active, .card > div.widget {
   display: block;
 }
 
