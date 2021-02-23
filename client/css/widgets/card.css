@@ -1,7 +1,3 @@
-.card {
-  overflow: hidden;
-}
-
 body.edit .card {
   display: none;
 }
@@ -15,7 +11,7 @@ body.edit .card {
   box-sizing: border-box;
 }
 
-.card > div.active {
+.card > div.active, card > div.widget {
   display: block;
 }
 
