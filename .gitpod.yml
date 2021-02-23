@@ -1,3 +1,10 @@
 tasks:
   - init: npm install
     command: npm run debug
+ports:
+  - port: 8272
+    visibility: public
+    onOpen: open-preview
+  - port: 9229
+    visibility: private
+    onOpen: ignore
