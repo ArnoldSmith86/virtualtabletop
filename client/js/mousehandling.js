@@ -13,7 +13,7 @@ function eventCoords(name, e) {
 }
 
 function inputHandler(name, e) {
-  if(overlayActive)
+  if(overlayActive || e.target.id == 'jeText' || e.target.id == 'jeCommands')
     return;
   if(!mouseTarget && [ "TEXTAREA", "INPUT", "BUTTON", "OPTION", "LABEL" ].indexOf(e.target.tagName) != -1)
     if(!edit || !e.target.parentNode || !e.target.parentNode.className.match(/label/))
@@ -43,10 +43,12 @@ function inputHandler(name, e) {
       const ms = mouseStatus[target.id];
       const timeSinceStart = +new Date() - ms.start;
       const pixelsMoved = ms.coords ? Math.abs(ms.coords[0] - ms.downCoords[0]) + Math.abs(ms.coords[1] - ms.downCoords[1]) : 0;
-      if(ms.status != 'initial' && ms.widget.p(edit ? 'movableInEdit' : 'movable'))
+      if(ms.status != 'initial' && (jeEnabled || ms.widget.p(edit ? 'movableInEdit' : 'movable')))
         ms.widget.moveEnd();
       if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
-        if(edit)
+        if(typeof jeEnabled == 'boolean' && jeEnabled)
+          jeClick(widgets.get(target.id));
+        else if(edit)
           editClick(widgets.get(target.id));
         else if(widgets.get(target.id).click)
           widgets.get(target.id).click();
@@ -63,13 +65,13 @@ function inputHandler(name, e) {
           offset: [ downCoords[0] - (targetRect.left + targetRect.width/2), downCoords[1] - (targetRect.top + targetRect.height/2) ],
           widget: widgets.get(target.id)
         });
-        if(mouseStatus[target.id].widget.p(edit ? 'movableInEdit' : 'movable'))
+        if(jeEnabled || mouseStatus[target.id].widget.p(edit ? 'movableInEdit' : 'movable'))
           mouseStatus[target.id].widget.moveStart();
       }
       mouseStatus[target.id].coords = coords;
       const x = Math.floor((coords[0] - roomRectangle.left - mouseStatus[target.id].offset[0]) / scale);
       const y = Math.floor((coords[1] - roomRectangle.top  - mouseStatus[target.id].offset[1]) / scale);
-      if(mouseStatus[target.id].widget.p(edit ? 'movableInEdit' : 'movable'))
+      if(jeEnabled || mouseStatus[target.id].widget.p(edit ? 'movableInEdit' : 'movable'))
         mouseStatus[target.id].widget.move(x, y);
       batchEnd();
     }
