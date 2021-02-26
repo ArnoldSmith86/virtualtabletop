@@ -105,7 +105,7 @@ function receiveDelta(delta) {
       widgets.get(widgetID).applyDelta(delta.s[widgetID]);
     }
   }
-  if(typeof jeApplyDelta == 'function')
+  if(typeof jeEnabled != 'undefined' && jeEnabled)
     jeApplyDelta(delta);
 }
 
