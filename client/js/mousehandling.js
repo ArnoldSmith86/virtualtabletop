@@ -21,7 +21,7 @@ function inputHandler(name, e) {
   e.preventDefault();
   
   if(name == 'mousedown' || name == 'touchstart') {
-    window.getSelection().collapse();
+    window.getSelection().collapseToEnd();
     document.activeElement.blur();
   }
   let target = e.target;
