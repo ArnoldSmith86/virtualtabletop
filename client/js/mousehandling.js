@@ -26,10 +26,13 @@ function inputHandler(name, e) {
     target = target.parentNode;
   
   let moveTarget = target;
-  while(moveTarget && !widgets.get(moveTarget).p(edit ? 'movableInEdit' : 'movable')) {
-    while(moveTarget && (!moveTarget.id || !widgets.has(moveTarget.id)))
-      moveTarget = moveTarget.parentNode;
-  }
+  let movable = false;
+  do {
+    movable = widgets.get(moveTarget).p(edit ? 'movableInEdit' : 'movable');
+    if (!movable)
+      while(moveTarget && (!moveTarget.id || !widgets.has(moveTarget.id)))
+        moveTarget = moveTarget.parentNode;
+  } while (moveTarget && !movable);
 
   const coords = eventCoords(name, e);
   if(name == 'mousedown') {
