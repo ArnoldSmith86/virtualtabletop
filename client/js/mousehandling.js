@@ -20,9 +20,10 @@ function inputHandler(name, e) {
       return;
   e.preventDefault();
   
-  if(name == 'mousedown' || name == 'touchstart')
+  if(name == 'mousedown' || name == 'touchstart') {
+    window.getSelection().collapse();
     document.activeElement.blur();
-
+  }
   let target = e.target;
   while(target && (!target.id || !widgets.has(target.id)))
     target = target.parentNode;
