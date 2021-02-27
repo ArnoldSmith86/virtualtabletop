@@ -27,19 +27,18 @@ function inputHandler(name, e) {
   
   let moveTarget = target;
   let movable = false;
-  do {
+  while (moveTarget && !movable) {
     movable = widgets.get(moveTarget).p(edit ? 'movableInEdit' : 'movable');
     if (!movable)
       while(moveTarget && (!moveTarget.id || !widgets.has(moveTarget.id)))
         moveTarget = moveTarget.parentNode;
-  } while (moveTarget && !movable);
+  }
 
   const coords = eventCoords(name, e);
   if(name == 'mousedown') {
     mouseTarget = target;
     mouseMoveTarget = moveTarget;
-  }
-  else if(name == 'mousemove' || name == 'mouseup') {
+  } else if(name == 'mousemove' || name == 'mouseup') {
     target = mouseTarget;
     moveTarget = mouseMoveTarget;
   }
