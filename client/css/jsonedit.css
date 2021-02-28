@@ -79,6 +79,7 @@ body.jsonEdit #jsonEditor {
 body.jsonEdit #jeCommands > .top {
   width: 32px;
   height: 24px;
+  border: 0;
 }
 
 body.jsonEdit #jeCommands > span.top {
