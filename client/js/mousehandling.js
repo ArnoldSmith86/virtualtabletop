@@ -47,6 +47,7 @@ function inputHandler(name, e) {
           do {
             moveTarget = moveTarget.parentNode;
           } while (moveTarget && (!moveTarget.id || !widgets.has(moveTarget.id)));
+        }
       }
     } else if(name == 'mouseup' || name == 'touchend') {
       batchStart();
