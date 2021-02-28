@@ -40,7 +40,7 @@ function inputHandler(name, e) {
         downCoords: coords
       };
       let movable = false;
-      moveTarget = target
+      moveTarget = target;
       while (moveTarget && !movable) {
         movable = wigets.get(moveTarget.id).p(edit ? 'movableInEdit' : 'movable');
         if (!movable)
