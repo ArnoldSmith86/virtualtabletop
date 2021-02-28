@@ -43,10 +43,10 @@ function inputHandler(name, e) {
       moveTarget = target;
       while (moveTarget && !movable) {
         movable = wigets.get(moveTarget.id).p(edit ? 'movableInEdit' : 'movable');
-        if (!movable)
+        if (!movable) {
           do {
             moveTarget = moveTarget.parentNode;
-          } while (moveTarget && (!moveTarget.id || !widgets.has(moveTarget.id));
+          } while (moveTarget && (!moveTarget.id || !widgets.has(moveTarget.id)));
       }
     } else if(name == 'mouseup' || name == 'touchend') {
       batchStart();
