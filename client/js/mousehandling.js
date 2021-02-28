@@ -42,7 +42,7 @@ function inputHandler(name, e) {
       let movable = false;
       moveTarget = target;
       while (moveTarget && !movable) {
-        movable = wigets.get(moveTarget.id).p(edit ? 'movableInEdit' : 'movable');
+        movable = widgets.get(moveTarget.id).p(edit ? 'movableInEdit' : 'movable');
         if (!movable) {
           do {
             moveTarget = moveTarget.parentNode;
