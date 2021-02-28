@@ -69,7 +69,7 @@ function inputHandler(name, e) {
     } else if(name == 'mousemove' || name == 'touchmove') {
       batchStart();
       if(mouseStatus[target.id].status == 'initial') {
-        const targetRect = moveTarget ? MoveTarget.getBoundingClientRect() : target.getBoundingClientRect();
+        const targetRect = moveTarget ? moveTarget.getBoundingClientRect() : target.getBoundingClientRect();
         const downCoords = mouseStatus[target.id].downCoords;
         Object.assign(mouseStatus[target.id], {
           status: 'moving',
