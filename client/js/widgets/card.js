@@ -6,6 +6,7 @@ class Card extends Widget {
       width: 103,
       height: 160,
       typeClasses: 'widget card',
+      clickable: true,
 
       faceCycle: 'ordered',
       activeFace: 0,
@@ -55,7 +56,8 @@ class Card extends Widget {
   }
 
   click() {
-    this.flip();
+    if(this.p('clickable'))
+      this.flip();
   }
 
   createFaces(faceTemplates) {

@@ -15,6 +15,7 @@ export class Button extends Widget {
       typeClasses: 'widget button',
       layer: -1,
       movable: false,
+      clickable: true,
 
       text: '',
       clickRoutine: [],
