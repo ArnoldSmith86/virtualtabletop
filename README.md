@@ -1,3 +1,5 @@
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/ArnoldSmith86/virtualtabletop)
+
 # virtualtabletop
 
 This project aims to create a virtual tabletop in the browser where you can (re)create all board, dice and card games and play them without registration over the internet.
