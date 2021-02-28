@@ -76,6 +76,18 @@ body.jsonEdit #jsonEditor {
   display: block;
 }
 
+body.jsonEdit #jeCommands > .top {
+  width: 32px;
+  height: 24px;
+}
+
+body.jsonEdit #jeCommands > span.top {
+  display: inline-block;
+  text-align: center;
+  color: #aaa;
+  font-size: x-small;
+}
+
 body.jsonEdit #toolbar {
   display: none;
 }
