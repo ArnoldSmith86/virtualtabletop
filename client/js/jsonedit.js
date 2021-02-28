@@ -24,7 +24,7 @@ const jeCommands = [
   {
     id: 'je_toggleBoolean',
     name: 'toggle boolean',
-    context: '.*(true|false)',
+    context: '.*"(true|false)"',
     call: function() {
       jeInsert(jeContext.slice(1), jeContext[jeContext.length-2], jeContext[jeContext.length-1]=='"false"');
     }
@@ -318,25 +318,9 @@ const jeCommands = [
     }
   },
   {
-    id: 'je_applyChanges',
-    name: _=>jeJSONerror?'❓ go to error':'✔ apply changes',
-    forceKey: ' ',
-    show: _=>jeWidget,
-    call: function() {
-      if(jeJSONerror) {
-        const location = String(jeJSONerror).match(/line ([0-9]+) column ([0-9]+)/);
-        if(location) {
-          const pos = $('#jeText').textContent.split('\n').slice(0, location[1]-1).join('\n').length + +location[2];
-          jeSelect(pos, pos);
-        }
-      } else {
-        jeApplyChanges();
-      }
-    }
-  },
-  {
     id: 'je_applyVariables',
-    name: _=>`↔ change ${jeContext && jeContext[4]} to applyVariables`,
+    name: _=>`⮀ change ${jeContext && jeContext[4]} to applyVariables`,
+    forceKey: 'ArrowLeft',
     context: '^button.*\\) ↦ [a-zA-Z]+',
     call: function() {
       const operation = jeGetValue(jeContext.slice(1, 3));
@@ -830,6 +814,7 @@ function jeShowCommands() {
 
   const usedKeys = { c: 1, x: 1, v: 1, w: 1, n: 1, t: 1, q: 1, j: 1, z: 1 };
   let commandText = '';
+  let subText = '';
 
   const sortByName = function(a, b) {
     const nameA = typeof a.name == 'function' ? a.name() : a.name;
@@ -837,17 +822,22 @@ function jeShowCommands() {
     return nameA.localeCompare(nameB);
   }
 
+  const displayKey = function (k) {
+    return { ArrowUp: '⬆', ArrowDown: '⬇', ArrowLeft: '🠄'} [k] || k;
+  }
   for(const command of jeCommands) {
     const contextMatch = context.match(new RegExp(command.context));
     if(contextMatch) {
       if (contextMatch[0] =="") {
         const name = (typeof command.name == 'function' ? command.name() : command.name);
-        commandText += `<button id='${command.id}' title='${name} (Ctrl-${command.forceKey})' ${!command.show || command.show() ? '' : 'disabled'}>${name.substr(0,2)}</button>`;
+        let keyName = displayKey(command.forceKey);
+        commandText += `<button class='top' id='${command.id}' title='${name} (Ctrl-${keyName})' ${!command.show || command.show() ? '' : 'disabled'}>${name.substr(0,2)}</button>`;
+        subText += `<span class='top'>${keyName}</span>`;
       }
     }
   }
   if (commandText.length > 0)
-    commandText += `\n`;
+    commandText += `\n` + subText + `\n`;
   delete activeCommands[""];
 
   for(const contextMatch of (Object.keys(activeCommands).sort((a,b)=>b.length-a.length))) {
@@ -864,12 +854,8 @@ function jeShowCommands() {
           if(!command.currentKey && !usedKeys[key])
             command.currentKey = key;
         usedKeys[command.currentKey] = true;
-        var displayKey = command.currentKey;
-        if (displayKey == 'ArrowUp')
-          displayKey = '⬆';
-        if (displayKey == 'ArrowDown')
-          displayKey = '⬇';
-        commandText += `Ctrl-${displayKey}: <button id="${command.id}">${name.replace(displayKey, '<b>' + displayKey + '</b>')}</button>\n`;
+        let keyName = displayKey(command.currentKey);
+        commandText += `Ctrl-${keyName}: <button id="${command.id}">${name.replace(keyName, '<b>' + keyName + '</b>')}</button>\n`;
       }
     }
   }
@@ -881,12 +867,7 @@ function jeShowCommands() {
   if(jeSecondaryWidget)
     commandText += `\n\n${jeSecondaryWidget}\n`;
   $('#jeCommands').innerHTML = commandText;
-  var buttons = [... document.querySelectorAll('#jeCommands>button')];
-  if (buttons.length > 0) {
-    buttons.forEach((e) => {
-      if (e != undefined) document.getElementById(e.id).addEventListener('click', clickButton);
-    });
-  }
+  on('#jeCommands>button', 'click', clickButton);
 }
 
 const clickButton = function (event) {
@@ -928,9 +909,10 @@ window.addEventListener('mouseup', function(e) {
     return;
   if(e.target == $('#jeText') && jeContext != 'macro') {
     jeGetContext();
-    if (jeContext[0] == 'Tree' && jeContext[1] != undefined)
+    if (jeContext[0] == 'Tree' && jeContext[1] != undefined) {
       jeCommands.find(o => o.id == 'je_openWidgetById').call();
       jeGetContext();
+    }
   }
 });
 
