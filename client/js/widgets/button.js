@@ -15,6 +15,7 @@ export class Button extends Widget {
       typeClasses: 'widget button',
       layer: -1,
       movable: false,
+      clickable: true,
 
       text: '',
       clickRoutine: [],
@@ -48,7 +49,9 @@ export class Button extends Widget {
         return true;
       problems.push(`Widget ID ${id} does not exist.`);
     }
-
+   
+   if(!this.p('clickable')) return;
+    
     batchStart();
 
     if(this.p('debug'))

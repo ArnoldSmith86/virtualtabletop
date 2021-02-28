@@ -6,6 +6,7 @@ class BasicWidget extends Widget {
 
     this.addDefaults({
       typeClasses: 'widget basic',
+      clickable: true,
 
       faces: [ {} ],
       faceCycle: 'ordered',
@@ -43,7 +44,8 @@ class BasicWidget extends Widget {
   }
 
   click() {
-    this.flip();
+    if(this.p('clickable'))
+      this.flip();
   }
 
   css() {
