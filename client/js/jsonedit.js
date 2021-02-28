@@ -812,7 +812,7 @@ function jeShowCommands() {
     }
   }
 
-  const usedKeys = { c: 1, x: 1, v: 1, w: 1, n: 1, t: 1, q: 1, j: 1, z: 1 };
+  const usedKeys = { a: 1, c: 1, x: 1, v: 1, w: 1, n: 1, t: 1, q: 1, j: 1, z: 1 };
   let commandText = '';
   let subText = '';
 
@@ -855,7 +855,8 @@ function jeShowCommands() {
             command.currentKey = key;
         usedKeys[command.currentKey] = true;
         let keyName = displayKey(command.currentKey);
-        commandText += `Ctrl-${keyName}: <button id="${command.id}">${name.replace(keyName, '<b>' + keyName + '</b>')}</button>\n`;
+        commandText += (keyName !== undefined)? `Ctrl-${keyName}: ` : `no key  `;
+        commandText += `<button id="${command.id}">${name.replace(keyName, '<b>' + keyName + '</b>')}</button>\n`;
       }
     }
   }
