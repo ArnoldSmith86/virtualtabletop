@@ -67,9 +67,9 @@ class BasicWidget extends Widget {
     if(setFlip !== undefined && setFlip !== null)
       this.p('activeFace', setFlip);
     else {
-      const fC = (faceCycle == 'previous' || faceCycle == 'random') ? faceCycle : this.p('faceCycle');
+      const fC = (faceCycle !== undefined && faceCycle !== null) ? faceCycle : this.p('faceCycle');
       if (fC == 'previous')
-        this.p('activeFace', (this.p('activeFace') == 0) ? this.p('faces').length-1 : this.p('activeFace') -1);
+        this.p('activeFace', this.p('activeFace') == 0 ? this.p('faces').length-1 : this.p('activeFace') -1);
       else
         this.p('activeFace', Math.floor(this.p('activeFace') + (fC == 'random' ? Math.random()*99999 : 1)) % this.p('faces').length);
     }
