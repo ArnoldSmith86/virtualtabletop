@@ -19,7 +19,11 @@ function inputHandler(name, e) {
     if(!edit || !e.target.parentNode || !e.target.parentNode.className.match(/label/))
       return;
   e.preventDefault();
-
+  
+  if(name == 'mousedown' || name == 'touchstart') {
+    window.getSelection().collapseToEnd();
+    document.activeElement.blur();
+  }
   let target = e.target;
   while(target && (!target.id || !widgets.has(target.id)))
     target = target.parentNode;
@@ -32,7 +36,6 @@ function inputHandler(name, e) {
 
   if(target && target.id) {
     if(name == 'mousedown' || name == 'touchstart') {
-      document.activeElement.blur();
       mouseStatus[target.id] = {
         status: 'initial',
         start: new Date(),
