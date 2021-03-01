@@ -6,6 +6,7 @@ class Card extends Widget {
       width: 103,
       height: 160,
       typeClasses: 'widget card',
+      clickable: true,
 
       faceCycle: 'ordered',
       activeFace: 0,
@@ -55,14 +56,15 @@ class Card extends Widget {
   }
 
   click() {
-    this.flip();
+    if(this.p('clickable'))
+      this.flip();
   }
 
   createFaces(faceTemplates) {
     for(const face of faceTemplates) {
       const faceDiv = document.createElement('div');
 
-      if(face.css !== undefined) 
+      if(face.css !== undefined)
         faceDiv.style.cssText = face.css;
       faceDiv.style.border = face.border ? face.border + 'px black solid' : 'none';
       faceDiv.style.borderRadius = face.radius ? face.radius + 'px' : '0';
@@ -90,8 +92,15 @@ class Card extends Widget {
         css += object.rotation ? `; transform: rotate(${object.rotation}deg)` : '';
         objectDiv.style.cssText = css;
         if(object.type == 'image') {
-          if(value)
-            objectDiv.style.backgroundImage = `url(${value})`;
+          if(value) {
+            if(object.svgReplaces) {
+              const replaces = { ...object.svgReplaces };
+              for(const key in replaces)
+                replaces[key] = this.p(replaces[key]);
+              value = getSVG(value, replaces, _=>this.applyDeltaToDOM({ deck:this.p('deck') }));
+            }
+            objectDiv.style.backgroundImage = `url("${value}")`;
+          }
           objectDiv.style.backgroundColor = object.color || 'white';
         } else {
           objectDiv.textContent = value;

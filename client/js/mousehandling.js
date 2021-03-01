@@ -13,13 +13,17 @@ function eventCoords(name, e) {
 }
 
 function inputHandler(name, e) {
-  if(overlayActive)
+  if(overlayActive || e.target.id == 'jeText' || e.target.id == 'jeCommands')
     return;
   if(!mouseTarget && [ "TEXTAREA", "INPUT", "BUTTON", "OPTION", "LABEL" ].indexOf(e.target.tagName) != -1)
     if(!edit || !e.target.parentNode || !e.target.parentNode.className.match(/label/))
       return;
   e.preventDefault();
-
+  
+  if(name == 'mousedown' || name == 'touchstart') {
+    window.getSelection().collapseToEnd();
+    document.activeElement.blur();
+  }
   let target = e.target;
   while(target && (!target.id || !widgets.has(target.id)))
     target = target.parentNode;
@@ -32,7 +36,6 @@ function inputHandler(name, e) {
 
   if(target && target.id) {
     if(name == 'mousedown' || name == 'touchstart') {
-      document.activeElement.blur();
       mouseStatus[target.id] = {
         status: 'initial',
         start: new Date(),
@@ -43,10 +46,12 @@ function inputHandler(name, e) {
       const ms = mouseStatus[target.id];
       const timeSinceStart = +new Date() - ms.start;
       const pixelsMoved = ms.coords ? Math.abs(ms.coords[0] - ms.downCoords[0]) + Math.abs(ms.coords[1] - ms.downCoords[1]) : 0;
-      if(ms.status != 'initial' && ms.widget.p(edit ? 'movableInEdit' : 'movable'))
+      if(ms.status != 'initial' && (ms.widget.p(edit ? 'movableInEdit' : 'movable')))
         ms.widget.moveEnd();
       if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
-        if(edit)
+        if(typeof jeEnabled == 'boolean' && jeEnabled)
+          jeClick(widgets.get(target.id));
+        else if(edit)
           editClick(widgets.get(target.id));
         else if(widgets.get(target.id).click)
           widgets.get(target.id).click();

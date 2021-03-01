@@ -15,6 +15,7 @@ export class Button extends Widget {
       typeClasses: 'widget button',
       layer: -1,
       movable: false,
+      clickable: true,
 
       text: '',
       clickRoutine: [],
@@ -48,7 +49,9 @@ export class Button extends Widget {
         return true;
       problems.push(`Widget ID ${id} does not exist.`);
     }
-
+   
+   if(!this.p('clickable')) return;
+    
     batchStart();
 
     if(this.p('debug'))
@@ -69,14 +72,22 @@ export class Button extends Widget {
       const a = { ...original };
       var problems = [];
 
-      if (this.p('debug')) console.log(`${this.id}: ${JSON.stringify(original)}`);
+      if(this.p('debug')) console.log(`${this.id}: ${JSON.stringify(original)}`);
       if(a.applyVariables) {
         if(Array.isArray(a.applyVariables)) {
           for(const v of a.applyVariables) {
-            if(v.parameter && v.variable)
-              a[v.parameter] = variables[v.variable];
-            else
-              problems.push('Entry in parameter applyVariables does not contain "parameter" and "variable".');
+            if(v.parameter && v.variable) {
+              a[v.parameter] = (v.index === undefined) ? variables[v.variable] : variables[v.variable][v.index];
+            } else if(v.parameter && v.template) {
+              a[v.parameter] = v.template.replace(/\{([^}]+)\}/g, function(i, key) {
+                return (variables[key] === undefined) ? "" : variables[key];
+              });
+            } else if(v.parameter && v.property) {
+              let w = isValidID(v.widget) ? widgets.get(v.widget) : this;
+              a[v.parameter] = (w.p(v.property) === undefined) ? null : w.p(v.property);
+            } else {
+              problems.push('Entry in parameter applyVariables does not contain "parameter" together with "variable", "property", or "template".');
+            }
           }
         } else {
           problems.push('Parameter applyVariables is not an array.');
@@ -86,8 +97,6 @@ export class Button extends Widget {
         $('#debugButtonOutput').textContent += '\n\n\nOPERATION SKIPPED: \n' + JSON.stringify(a, null, '  ');
         continue;
       }
-
-
 
       if(a.func == 'CLICK') {
         setDefaults(a, { collection: 'DEFAULT', count: 1 });
