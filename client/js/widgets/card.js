@@ -100,7 +100,7 @@ class Card extends Widget {
                 replaces[key] = this.p(replaces[key]);
               object.value = getSVG(object.value, replaces, _=>this.applyDeltaToDOM({ deck:this.p('deck') }));
             }
-            objectDiv.style.backgroundImage = `url("${value}")`;
+            objectDiv.style.backgroundImage = `url("${object.value}")`;
           }
           objectDiv.style.backgroundColor = object.color || 'white';
         } else {
