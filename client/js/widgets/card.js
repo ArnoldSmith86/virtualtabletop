@@ -80,8 +80,9 @@ class Card extends Widget {
           delete object.value;
         }
         if(typeof object.dynamicProperties == 'object') {
+          console.log(object.dynamicProperties);
           for(const dp of Object.keys(object.dynamicProperties)) {
-            if(object.dp == 'undefined')
+            if(typeof object[dp] == 'undefined')
               object[dp] = this.p(object.dynamicProperties[dp]);
           }
         }
