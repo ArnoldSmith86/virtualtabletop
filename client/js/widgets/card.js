@@ -93,18 +93,18 @@ class Card extends Widget {
         css += object.rotation ? `; transform: rotate(${object.rotation}deg)` : '';
         objectDiv.style.cssText = css;
         if(object.type == 'image') {
-          if(value) {
+          if(object.value) {
             if(object.svgReplaces) {
               const replaces = { ...object.svgReplaces };
               for(const key in replaces)
                 replaces[key] = this.p(replaces[key]);
-              value = getSVG(value, replaces, _=>this.applyDeltaToDOM({ deck:this.p('deck') }));
+              object.value = getSVG(object.value, replaces, _=>this.applyDeltaToDOM({ deck:this.p('deck') }));
             }
             objectDiv.style.backgroundImage = `url("${value}")`;
           }
           objectDiv.style.backgroundColor = object.color || 'white';
         } else {
-          objectDiv.textContent = value;
+          objectDiv.textContent = object.value;
           objectDiv.style.color = object.color;
         }
         faceDiv.appendChild(objectDiv);
