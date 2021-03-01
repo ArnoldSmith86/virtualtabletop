@@ -73,15 +73,15 @@ class Card extends Widget {
         const object = JSON.parse(JSON.stringify(original));
         const objectDiv = document.createElement('div');
         if(object.valueType != 'static') {
-          if(typeOf object[dynamicProperties] == 'object')
+          if(typeof object[dynamicProperties] == 'object')
             object.dynamicProperties.value = object.value;
           else
             object.dynamicProperties = { value: object.value };
           delete object.value;
         }
-        if(typeOf object[dynamicProperties] == 'object') {
+        if(typeof object[dynamicProperties] == 'object') {
           for(const dp of Object.keys(object.dynamicProperties)) {
-            if(typeOf object[dp] == 'undefined')
+            if(typeof object[dp] == 'undefined')
               object[dp] = this.p(object.dynamicProperties[dp]);
           }
         }
