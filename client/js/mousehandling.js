@@ -1,4 +1,5 @@
 let mouseTarget = null;
+let moveTarget = null;
 const mouseStatus = {};
 
 function eventCoords(name, e) {
@@ -42,12 +43,22 @@ function inputHandler(name, e) {
         start: new Date(),
         downCoords: coords
       };
+      let movable = false;
+      moveTarget = target;
+      while (moveTarget && !movable) {
+        movable = widgets.get(moveTarget.id).p(edit ? 'movableInEdit' : 'movable');
+        if (!movable) {
+          do {
+            moveTarget = moveTarget.parentNode;
+          } while (moveTarget && (!moveTarget.id || !widgets.has(moveTarget.id)));
+        }
+      }
     } else if(name == 'mouseup' || name == 'touchend') {
       batchStart();
       const ms = mouseStatus[target.id];
       const timeSinceStart = +new Date() - ms.start;
       const pixelsMoved = ms.coords ? Math.abs(ms.coords[0] - ms.downCoords[0]) + Math.abs(ms.coords[1] - ms.downCoords[1]) : 0;
-      if(ms.status != 'initial' && (ms.widget.p(edit ? 'movableInEdit' : 'movable')))
+      if(ms.status != 'initial' && moveTarget)
         ms.widget.moveEnd();
       if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
         if(typeof jeEnabled == 'boolean' && jeEnabled)
@@ -62,27 +73,29 @@ function inputHandler(name, e) {
     } else if(name == 'mousemove' || name == 'touchmove') {
       batchStart();
       if(mouseStatus[target.id].status == 'initial') {
-        const targetRect = target.getBoundingClientRect();
+        const targetRect = moveTarget ? moveTarget.getBoundingClientRect() : target.getBoundingClientRect();
         const downCoords = mouseStatus[target.id].downCoords;
         Object.assign(mouseStatus[target.id], {
           status: 'moving',
           offset: [ downCoords[0] - (targetRect.left + targetRect.width/2), downCoords[1] - (targetRect.top + targetRect.height/2) ],
-          widget: widgets.get(target.id)
+          widget: widgets.get(moveTarget ? moveTarget.id : target.id)
         });
-        if(mouseStatus[target.id].widget.p(edit ? 'movableInEdit' : 'movable'))
+        if(moveTarget)
           mouseStatus[target.id].widget.moveStart();
       }
       mouseStatus[target.id].coords = coords;
       const x = Math.floor((coords[0] - roomRectangle.left - mouseStatus[target.id].offset[0]) / scale);
       const y = Math.floor((coords[1] - roomRectangle.top  - mouseStatus[target.id].offset[1]) / scale);
-      if(mouseStatus[target.id].widget.p(edit ? 'movableInEdit' : 'movable'))
+      if(moveTarget)
         mouseStatus[target.id].widget.move(x, y);
       batchEnd();
     }
   }
 
-  if(name == 'mouseup')
+  if(name == 'mouseup') {
     mouseTarget = null;
+    moveTarget = null;
+  }
   if(name == 'mousemove' || name == 'touchmove')
     toServer('mouse', [ Math.floor((coords[0] - roomRectangle.left)/scale), Math.floor((coords[1] - roomRectangle.top)/scale) ]);
 }
