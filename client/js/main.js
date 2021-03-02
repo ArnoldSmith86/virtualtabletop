@@ -1,5 +1,6 @@
 import { $, $a, onLoad } from './domhelpers.js';
 import { startWebSocket } from './connection.js';
+import { loadComponents } from './components/loadComponents.js';
 
 let scale = 1;
 let roomRectangle;
@@ -187,6 +188,10 @@ onLoad(function() {
   checkURLproperties();
   setScale();
   startWebSocket();
+
+  const app = Vue.createApp({});
+  loadComponents(app);
+  app.mount("#editOverlay");
 
   onMessage('warning', alert);
   onMessage('error', alert);

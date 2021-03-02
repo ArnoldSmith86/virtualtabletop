@@ -119,7 +119,8 @@ function editClick(widget) {
 
   typeSpecific.style.display = 'block';
   if(type == 'deck')
-    populateEditOptionsDeck(widget.state);
+    console.log(widget)
+    // populateEditOptionsDeck(widget.state);
   if(type == 'holder')
     populateEditOptionsHolder(widget.state);
 

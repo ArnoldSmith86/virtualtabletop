@@ -8,6 +8,8 @@
   <link rel="shortcut icon" href="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="/>
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+  <script src="https://cdn.jsdelivr.net/npm/vue@next"></script>
   <base target="_blank">
   <style> {{CSS}} </style>
 </head>
@@ -40,26 +42,12 @@
 
     <div id="editOverlay" class="overlay">
       <h1>Edit widget</h1>
-      <div class="deckEdit">
-        <table id="cardTypesList">
-          <tr><th>ID</th><th>Properties</th><th>Count</th></tr>
-          <script id="template-cardtypeslist-entry" type="text/template">
-            <td><input class="id" value="example"></td><td class="properties"></td><td><input class="count" type="number" value="1" min="0" max="1000"></td>
-          </script>
-          <script id="template-cardtypeslist-property-entry" type="text/template">
-            <label>Example:</label> <input><button class="uploadAsset">⬆️ Upload</button><br>
-          </script>
-        </table>
-        <button id="decrementAllCardTypes">All -1</button><button id="incrementAllCardTypes">All +1</button>
-      </div>
+      <deck-editor></deck-editor>
       <div class="holderEdit">
         <input type="checkbox" id="transparentHolder"><label for="transparentHolder"> Transparent</label><br/>
         <input type="checkbox" id="resizeHolderToChildren"><label for="resizeHolderToChildren"> Resize to fit contents (once)</label>
       </div>
-      <button id="updateWidget">Update widget</button>
-      <button id="duplicateWidget">Duplicate widget</button>
-      <button id="removeWidget">Remove widget</button>
-      <button id="manualEdit">Advanced: manually edit JSON (changes above will be discarded)</button>
+      <base-edit-overlay></base-edit-overlay>
     </div>
 
     <div id="editJSONoverlay" class="overlay">
