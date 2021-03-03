@@ -1,3 +1,8 @@
+.card {
+  /* exact function uncertain but improves visibility of some card corners */
+  overflow: hidden;
+}
+
 body.edit .card {
   display: none;
 }
