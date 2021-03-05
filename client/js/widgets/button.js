@@ -23,10 +23,39 @@ export class Button extends Widget {
     });
   }
 
+  isValidID(id, problems) {
+    if(Array.isArray(id))
+      return !id.map(i=>isValidID(i, problems)).filter(r=>r!==true).length;
+    if(widgets.has(id))
+      return true;
+    problems.push(`Widget ID ${id} does not exist.`);
+  }
+
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
     if(delta.text !== undefined)
       this.domElement.textContent = delta.text;
+  }
+
+  applyVariables(field, variables, problems) {
+    if(Array.isArray(field.applyVariables)) {
+      for(const v of field.applyVariables) {
+        if(v.parameter && v.variable) {
+          field[v.parameter] = (v.index === undefined) ? variables[v.variable] : variables[v.variable][v.index];
+        } else if(v.parameter && v.template) {
+          field[v.parameter] = v.template.replace(/\{([^}]+)\}/g, function(i, key) {
+            return (variables[key] === undefined) ? "" : variables[key];
+          });
+        } else if(v.parameter && v.property) {
+          let w = isValidID(v.widget, problems) ? widgets.get(v.widget) : this;
+          field[v.parameter] = (w.p(v.property) === undefined) ? null : w.p(v.property);
+        } else {
+          problems.push('Entry in parameter applyVariables does not contain "parameter" together with "variable", "property", or "template".');
+        }
+      }
+    } else {
+      problems.push('Parameter applyVariables is not an array.');
+    }
   }
 
   async click() {
@@ -42,16 +71,6 @@ export class Button extends Widget {
       problems.push(`Collection ${collection} does not exist.`);
     }
 
-    function isValidID(id) {
-      if(Array.isArray(id))
-        return !id.map(i=>isValidID(i, problems)).filter(r=>r!==true).length;
-      if(widgets.has(id))
-        return true;
-      problems.push(`Widget ID ${id} does not exist.`);
-    }
-   
-   if(!this.p('clickable')) return;
-    
     batchStart();
 
     if(this.p('debug'))
@@ -69,30 +88,13 @@ export class Button extends Widget {
     }
 
     for(const original of this.p('clickRoutine')) {
-      const a = { ...original };
+      const a = JSON.parse(JSON.stringify(original));
       var problems = [];
 
       if(this.p('debug')) console.log(`${this.id}: ${JSON.stringify(original)}`);
-      if(a.applyVariables) {
-        if(Array.isArray(a.applyVariables)) {
-          for(const v of a.applyVariables) {
-            if(v.parameter && v.variable) {
-              a[v.parameter] = (v.index === undefined) ? variables[v.variable] : variables[v.variable][v.index];
-            } else if(v.parameter && v.template) {
-              a[v.parameter] = v.template.replace(/\{([^}]+)\}/g, function(i, key) {
-                return (variables[key] === undefined) ? "" : variables[key];
-              });
-            } else if(v.parameter && v.property) {
-              let w = isValidID(v.widget) ? widgets.get(v.widget) : this;
-              a[v.parameter] = (w.p(v.property) === undefined) ? null : w.p(v.property);
-            } else {
-              problems.push('Entry in parameter applyVariables does not contain "parameter" together with "variable", "property", or "template".');
-            }
-          }
-        } else {
-          problems.push('Parameter applyVariables is not an array.');
-        }
-      }
+
+      if(a.applyVariables) this.applyVariables(a, variables, problems);
+
       if(a.skip) {
         $('#debugButtonOutput').textContent += '\n\n\nOPERATION SKIPPED: \n' + JSON.stringify(a, null, '  ');
         continue;
@@ -297,7 +299,7 @@ export class Button extends Widget {
 
       if(a.func == 'INPUT') {
         try {
-          Object.assign(variables, await this.showInputOverlay(a));
+          Object.assign(variables, await this.showInputOverlay(a, widgets, variables, problems));
         } catch(e) {
           problems.push(`Exception: ${e.toString()}`);
           batchEnd();
@@ -319,7 +321,7 @@ export class Button extends Widget {
         setDefaults(a, { count: 1, face: null });
         const count = a.count || 999999;
 
-        if(isValidID(a.from) && isValidID(a.to)) {
+        if(isValidID(a.from, problems) && isValidID(a.to, problems)) {
           if(a.face === null && typeof a.from == 'string' && typeof a.to == 'string' && !widgets.get(a.to).children().length && widgets.get(a.from).children().length <= count) {
             // this is a hacky shortcut to avoid removing and creating card piles when moving all children to an empty holder
             Widget.prototype.children.call(widgets.get(a.from)).filter(
@@ -343,7 +345,7 @@ export class Button extends Widget {
 
       if(a.func == 'MOVEXY') {
         setDefaults(a, { count: 1, face: null, x: 0, y: 0 });
-        if(isValidID(a.from)) {
+        if(isValidID(a.from, problems)) {
           this.w(a.from, source=>source.children().slice(0, a.count || 999999).reverse().forEach(c=> {
             if(a.face !== null && c.flip)
               c.flip(a.face);
@@ -362,7 +364,7 @@ export class Button extends Widget {
 
       if(a.func == 'RECALL') {
         setDefaults(a, { owned: true });
-        if(isValidID(a.holder)) {
+        if(isValidID(a.holder, problems)) {
           this.toA(a.holder).forEach(holder=>{
             const deck = widgetFilter(w=>w.p('type')=='deck'&&w.p('parent')==holder);
             if(deck.length) {
@@ -379,7 +381,7 @@ export class Button extends Widget {
 
       if(a.func == 'ROTATE') {
         setDefaults(a, { count: 1, angle: 90, mode: 'add' });
-        if(isValidID(a.holder)) {
+        if(isValidID(a.holder, problems)) {
           this.w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>{
             c.rotate(a.angle, a.mode);
           }));
@@ -438,7 +440,7 @@ export class Button extends Widget {
 
       if(a.func == 'SORT') {
         setDefaults(a, { key: 'value', reverse: false });
-        if(isValidID(a.holder)) {
+        if(isValidID(a.holder, problems)) {
           this.w(a.holder, holder=>{
             let z = 1;
             let children = holder.children().reverse().sort((w1,w2)=>{
@@ -456,7 +458,7 @@ export class Button extends Widget {
       }
 
       if(a.func == 'SHUFFLE') {
-        if(isValidID(a.holder)) {
+        if(isValidID(a.holder, problems)) {
           this.w(a.holder, holder=>{
             holder.children().forEach(c=>c.p('z', Math.floor(Math.random()*10000)));
             holder.updateAfterShuffle();
@@ -508,14 +510,17 @@ export class Button extends Widget {
       reject(result);
   }
 
-  async showInputOverlay(o) {
+  async showInputOverlay(o, widgets, variables, problems) {
     return new Promise((resolve, reject) => {
+
       $('#buttonInputOverlay h1').textContent = o.header || "Button Input";
       $('#buttonInputFields').innerHTML = '';
 
       for(const field of o.fields) {
 
         const dom = document.createElement('div');
+
+        if(field.applyVariables) this.applyVariables(field, variables, problems);
 
         if(field.type == 'checkbox') {
           const input = document.createElement('input');
