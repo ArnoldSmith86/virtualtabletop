@@ -22,6 +22,7 @@ const jeOrder = [ 'type', 'id#', 'parent', 'deck', 'cardType', 'owner#', 'x*', '
 
 const jeCommands = [
   {
+    id: 'je_toggleBoolean',
     name: 'toggle boolean',
     context: '.*"(true|false)"',
     call: function() {
@@ -29,6 +30,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_openWidgetById',
     name: 'open widget by ID',
     context: '.*"([^"]+)"',
     call: function() {
@@ -41,6 +43,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_uploadAsset',
     name: 'upload a different asset',
     context: '.*"(/assets/[0-9_-]+)"',
     call: function() {
@@ -48,6 +51,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_cardTypeTemplate',
     name: 'card type template',
     context: '^deck ↦ cardTypes',
     call: function() {
@@ -68,6 +72,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_addCard',
     name: 'add card',
     context: '^deck ↦ cardTypes ↦ .*? ↦',
     call: function() {
@@ -78,6 +83,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_removeCard',
     name: 'remove card',
     context: '^deck ↦ cardTypes ↦ .*? ↦',
     show: _=>jeStateNow&&widgetFilter(w=>w.p('deck')==jeStateNow.id&&w.p('cardType')==jeContext[2]).length,
@@ -87,6 +93,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_faceTemplate',
     name: 'face template',
     context: '^deck ↦ faceTemplates',
     call: function() {
@@ -97,6 +104,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_imageTemplate',
     name: 'image template',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects',
     call: function() {
@@ -114,6 +122,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_textTemplate',
     name: 'text template',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects',
     call: function() {
@@ -131,6 +140,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_css',
     name: 'css',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
     show: _=>!jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].css,
@@ -140,6 +150,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_rotation',
     name: 'rotation',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
     show: _=>!jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].rotation,
@@ -149,6 +160,7 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_toggleValueType',
     name: _=>jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].valueType == 'dynamic' ? 'static' : 'dynamic',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
     call: function() {
@@ -161,7 +173,8 @@ const jeCommands = [
     }
   },
   {
-    name: 'toggle zoom out',
+    id: 'je_toggleZoom',
+    name: '🔍 toggle zoom out',
     forceKey: 'Z',
     call: function() {
       jeZoomOut = !jeZoomOut;
@@ -174,7 +187,8 @@ const jeCommands = [
     }
   },
   {
-    name: _=>jeWidget === null ? 'call' : 'macro',
+    id: 'je_callMacro',
+    name: _=>jeWidget === null ? '▶️ call' : '🎬 macro',
     forceKey: 'M',
     call: function() {
       if(jeWidget) {
@@ -208,22 +222,27 @@ const jeCommands = [
     }
   },
   {
-    name: 'show this widget below',
+    id: 'je_showWidget',
+    name: '👁 show this widget below',
     forceKey: 'S',
     call: function() {
-      jeSecondaryWidget = jeWidget && JSON.stringify(jeWidget.state, null, '  ');
+      if (jeWidget != undefined)
+        jeSecondaryWidget = (jeWidget != undefined && jeSecondaryWidget == null || jeStateNow.id != JSON.parse(jeSecondaryWidget).id) ? jeWidget && JSON.stringify(jeWidget.state, null, '  ') : null;
+      else jeSecondaryWidget = null;
       jeShowCommands();
     }
   },
   {
-    name: 'tree',
+    id: 'je_tree',
+    name: '🔝 tree',
     forceKey: 'T',
     call: function() {
       jeDisplayTree();
     }
   },
   {
-    name: _=>`remove property ${jeContext && jeContext[jeContext.length-1]}`,
+    id: 'je_removeProperty',
+    name: _=>`🗑 remove property ${jeContext && jeContext[jeContext.length-1]}`,
     forceKey: 'D',
     context: ' ↦ (?=[^"]+$)',
     call: function() {
@@ -243,7 +262,8 @@ const jeCommands = [
     }
   },
   {
-    name: 'add new widget',
+    id: 'je_addNewWidget',
+    name: '➕ add new widget',
     forceKey: 'A',
     call: function() {
       const toAdd = {};
@@ -254,7 +274,8 @@ const jeCommands = [
     }
   },
   {
-    name: 'remove widget',
+    id: 'je_removeWidget',
+    name: '❌ remove widget',
     forceKey: 'R',
     show: _=>jeStateNow,
     call: function() {
@@ -266,7 +287,8 @@ const jeCommands = [
     }
   },
   {
-    name: 'edit mode',
+    id: 'je_editMode',
+    name: '📝 edit mode',
     forceKey: 'F',
     call: function() {
       if(edit)
@@ -277,7 +299,8 @@ const jeCommands = [
     }
   },
   {
-    name: 'open deck',
+    id: 'je_openDeck',
+    name: '🔽 open deck',
     forceKey: 'ArrowDown',
     context: '^card',
     show: _=>jeStateNow&&widgets.has(jeStateNow.deck),
@@ -286,7 +309,8 @@ const jeCommands = [
     }
   },
   {
-    name: 'open parent',
+    id: 'je_openParent',
+    name: '🔼 open parent',
     forceKey: 'ArrowUp',
     show: _=>jeStateNow&&widgets.has(jeStateNow.parent),
     call: function() {
@@ -294,23 +318,9 @@ const jeCommands = [
     }
   },
   {
-    name: _=>jeJSONerror?'go to error':'apply changes',
-    forceKey: ' ',
-    show: _=>jeWidget,
-    call: function() {
-      if(jeJSONerror) {
-        const location = String(jeJSONerror).match(/line ([0-9]+) column ([0-9]+)/);
-        if(location) {
-          const pos = $('#jeText').textContent.split('\n').slice(0, location[1]-1).join('\n').length + +location[2];
-          jeSelect(pos, pos);
-        }
-      } else {
-        jeApplyChanges();
-      }
-    }
-  },
-  {
-    name: _=>`change ${jeContext && jeContext[4]} to applyVariables`,
+    id: 'je_applyVariables',
+    name: _=>`⮀ change ${jeContext && jeContext[4]} to applyVariables`,
+    forceKey: 'ArrowLeft',
     context: '^button.*\\) ↦ [a-zA-Z]+',
     call: function() {
       const operation = jeGetValue(jeContext.slice(1, 3));
@@ -328,6 +338,7 @@ const jeCommands = [
 
 function jeAddButtonOperationCommands(command, defaults) {
   jeCommands.push({
+    id: 'operation_' + command,
     name: command,
     context: `^button ↦ clickRoutine`,
     call: function() {
@@ -342,6 +353,7 @@ function jeAddButtonOperationCommands(command, defaults) {
   defaults.skip = false;
   for(const property in defaults) {
     jeCommands.push({
+      id: 'default_' + property,
       name: property,
       context: `^button.* ↦ \\(${command}\\) ↦ `,
       call: function() {
@@ -407,6 +419,7 @@ function jeAddCommands() {
 function jeAddCSScommands() {
   for(const css of [ 'border: 1px solid black', 'background: black', 'font-size: 30px', 'color: black' ]) {
     jeCommands.push({
+      id: 'css_' + css,
       name: css,
       context: '^.* ↦ (css|[a-z]+CSS)',
       call: function() {
@@ -422,6 +435,7 @@ function jeAddCSScommands() {
 function jeAddEnumCommands(context, values) {
   for(const v of values) {
     jeCommands.push({
+      id: 'enum_' + String(v),
       name: String(v),
       context: context,
       call: function() {
@@ -437,6 +451,7 @@ function jeAddEnumCommands(context, values) {
 
 function jeAddFaceCommand(key, description, value) {
   jeCommands.push({
+    id: 'face_' + key+description,
     name: key+description,
     context: '^deck ↦ faceTemplates ↦ [0-9]+',
     show: _=>!jeStateNow.faceTemplates[+jeContext[2]][key],
@@ -449,6 +464,7 @@ function jeAddFaceCommand(key, description, value) {
 
 function jeAddNumberCommand(name, key, callback) {
   jeCommands.push({
+    id: 'number_' + name,
     name: name,
     forceKey: key,
     context: '.*',
@@ -470,6 +486,7 @@ function jeAddWidgetPropertyCommands(object) {
 
 function jeAddWidgetPropertyCommand(defaults, property) {
   jeCommands.push({
+    id: 'widget_' + property,
     name: property,
     context: `^${defaults.typeClasses.replace('widget ', '')}`,
     call: function() {
@@ -657,7 +674,7 @@ function jeGetContext() {
 }
 
 function jeGetLastKey() {
-  return jeContext[jeContext.length-1].match(/^"/) ? jeContext[jeContext.length-2] : jeContext[jeContext.length-1];
+  return jeContext[jeContext.length-1].toString().match(/^"/) ? jeContext[jeContext.length-2] : jeContext[jeContext.length-1];
 }
 
 function jeGetValue(context, all) {
@@ -795,14 +812,33 @@ function jeShowCommands() {
     }
   }
 
-  const usedKeys = { c: 1, x: 1, v: 1, w: 1, n: 1, t: 1, q: 1, j: 1, z: 1 };
+  const usedKeys = { a: 1, c: 1, x: 1, v: 1, w: 1, n: 1, t: 1, q: 1, j: 1, z: 1 };
   let commandText = '';
+  let subText = '';
 
   const sortByName = function(a, b) {
     const nameA = typeof a.name == 'function' ? a.name() : a.name;
     const nameB = typeof b.name == 'function' ? b.name() : b.name;
     return nameA.localeCompare(nameB);
   }
+
+  const displayKey = function (k) {
+    return { ArrowUp: '⬆', ArrowDown: '⬇', ArrowLeft: '🠄'} [k] || k;
+  }
+  for(const command of jeCommands) {
+    const contextMatch = context.match(new RegExp(command.context));
+    if(contextMatch) {
+      if (contextMatch[0] =="") {
+        const name = (typeof command.name == 'function' ? command.name() : command.name);
+        let keyName = displayKey(command.forceKey);
+        commandText += `<button class='top' id='${command.id}' title='${name} (Ctrl-${keyName})' ${!command.show || command.show() ? '' : 'disabled'}>${name.substr(0,2)}</button>`;
+        subText += `<span class='top'>${keyName}</span>`;
+      }
+    }
+  }
+  if (commandText.length > 0)
+    commandText += `\n` + subText + `\n`;
+  delete activeCommands[""];
 
   for(const contextMatch of (Object.keys(activeCommands).sort((a,b)=>b.length-a.length))) {
     commandText += `\n  <b>${contextMatch}</b>\n`;
@@ -818,7 +854,9 @@ function jeShowCommands() {
           if(!command.currentKey && !usedKeys[key])
             command.currentKey = key;
         usedKeys[command.currentKey] = true;
-        commandText += `Ctrl-${command.currentKey}: ${name.replace(command.currentKey, '<b>' + command.currentKey + '</b>')}\n`;
+        let keyName = displayKey(command.currentKey);
+        commandText += (keyName !== undefined)? `Ctrl-${keyName}: ` : `no key  `;
+        commandText += `<button id="${command.id}">${name.replace(keyName, '<b>' + keyName + '</b>')}</button>\n`;
       }
     }
   }
@@ -830,6 +868,18 @@ function jeShowCommands() {
   if(jeSecondaryWidget)
     commandText += `\n\n${jeSecondaryWidget}\n`;
   $('#jeCommands').innerHTML = commandText;
+  on('#jeCommands>button', 'click', clickButton);
+}
+
+const clickButton = function (event) {
+  jeCommands.find(o => o.id == event.currentTarget.id).call();
+  if (jeContext != 'macro') {
+    jeGetContext();
+    if(jeWidget && !jeJSONerror)
+      jeApplyChanges();
+    if (jeContext[0] == '###SELECT ME###')
+      jeGetContext();
+  }
 }
 
 window.addEventListener('mousemove', function(e) {
@@ -858,8 +908,13 @@ window.addEventListener('mousemove', function(e) {
 window.addEventListener('mouseup', function(e) {
   if(!jeEnabled)
     return;
-  if(e.target == $('#jeText'))
+  if(e.target == $('#jeText') && jeContext != 'macro') {
     jeGetContext();
+    if (jeContext[0] == 'Tree' && jeContext[1] != undefined) {
+      jeCommands.find(o => o.id == 'je_openWidgetById').call();
+      jeGetContext();
+    }
+  }
 });
 
 window.addEventListener('keydown', function(e) {
