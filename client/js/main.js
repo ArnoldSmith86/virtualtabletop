@@ -2,9 +2,12 @@ import { $, $a, onLoad } from './domhelpers.js';
 import { startWebSocket } from './connection.js';
 import { loadComponents } from './components/loadComponents.js';
 
+
 let scale = 1;
 let roomRectangle;
 let overlayActive = false;
+
+var vmEditOverlay;
 
 let urlProperties = {};
 
@@ -189,9 +192,14 @@ onLoad(function() {
   setScale();
   startWebSocket();
 
-  const app = Vue.createApp({});
-  loadComponents(app);
-  app.mount("#editOverlay");
+
+  const editOverlayApp = Vue.createApp({
+    data() { return {
+      selectedWidgetState: {}
+    }}
+  });
+  loadComponents(editOverlayApp);
+  vmEditOverlay = editOverlayApp.mount("#editOverlay");
 
   onMessage('warning', alert);
   onMessage('error', alert);

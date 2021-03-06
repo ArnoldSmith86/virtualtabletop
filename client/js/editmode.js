@@ -7,45 +7,6 @@ function addWidgetLocal(widget) {
   sendDelta(true);
 }
 
-function populateEditOptionsDeck(widget) {
-  removeFromDOM('#cardTypesList tr.cardType');
-  for(const typeID in widget.cardTypes) {
-    const type = widget.cardTypes[typeID];
-    const entry = domByTemplate('template-cardtypeslist-entry', 'tr');
-    entry.className = 'cardType';
-
-    $('.id', entry).value = typeID;
-    $('.id', entry).dataset.oldID = typeID;
-
-    $('.count', entry).value = $('.count', entry).dataset.oldValue = widgetFilter(w=>w.p('deck')==widget.id&&w.p('cardType')==typeID).length;
-
-    const propertiesAdded = [];
-    for(const face of widget.faceTemplates) {
-      for(const object of face.objects) {
-        if(object.valueType == 'dynamic' && propertiesAdded.indexOf(object.value) == -1) {
-          propertiesAdded.push(object.value);
-          const oEntry = domByTemplate('template-cardtypeslist-property-entry');
-          $('label', oEntry).textContent = object.value;
-          $('input', oEntry).value = type[object.value] || '';
-
-          if(object.type == 'image') {
-            $('.uploadAsset', oEntry).addEventListener('click', _=>uploadAsset().then(function(asset) {
-              if(asset)
-                $('input', oEntry).value = asset;
-            }));
-          } else {
-            $('.uploadAsset', oEntry).style.display = 'none';
-          }
-
-          $('.properties', entry).appendChild(oEntry);
-        }
-      }
-    }
-
-    $('#cardTypesList').appendChild(entry);
-  }
-}
-
 function applyEditOptionsDeck(widget) {
   for(const type of $a('#cardTypesList tr.cardType')) {
     const id = $('.id', type).value;
@@ -118,9 +79,9 @@ function editClick(widget) {
     return showOverlay('editJSONoverlay');
 
   typeSpecific.style.display = 'block';
-  if(type == 'deck')
-    console.log(widget)
-    // populateEditOptionsDeck(widget.state);
+  
+  vmEditOverlay.selectedWidgetState = widget.state
+  
   if(type == 'holder')
     populateEditOptionsHolder(widget.state);
 
