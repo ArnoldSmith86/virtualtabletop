@@ -47,7 +47,7 @@ const jeCommands = [
     name: 'upload a different asset',
     context: '.*"(/assets/[0-9_-]+)"',
     call: function() {
-      uploadAsset().then(a=>jePasteText(a));
+      uploadAsset().then(a=>jeInsert(null, jeGetLastKey(), a));
     }
   },
   {
