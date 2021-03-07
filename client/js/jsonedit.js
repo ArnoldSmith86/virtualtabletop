@@ -48,7 +48,10 @@ const jeCommands = [
     context: '.*"(/assets/[0-9_-]+)"|^basic ↦ faces ↦ [0-9]+ ↦ image|^deck ↦ cardTypes ↦ .*? ↦ image',
     call: function() {
       uploadAsset().then(a=> {
-          if (a) jeInsert(null, jeGetLastKey(), a)
+          if (a) {
+            jeInsert(null, jeGetLastKey(), a);
+            jeApplyChanges();
+          }
       });
     }
   },
