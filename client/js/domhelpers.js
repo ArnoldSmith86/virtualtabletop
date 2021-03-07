@@ -43,7 +43,7 @@ export function selectFile(getContents, multipleCallback) {
         const name = file.name;
         const reader = new FileReader();
         reader.addEventListener('load', function(e) {
-          if(multipleCallback)
+          if(typeof multipleCallback === 'function')
             multipleCallback({ content: e.target.result, name });
           else
             resolve({ content: e.target.result, name });
