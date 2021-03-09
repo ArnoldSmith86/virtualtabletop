@@ -25,7 +25,7 @@ export class Button extends Widget {
 
   isValidID(id, problems) {
     if(Array.isArray(id))
-      return !id.map(i=>isValidID(i, problems)).filter(r=>r!==true).length;
+      return !id.map(i=>this.isValidID(i, problems)).filter(r=>r!==true).length;
     if(widgets.has(id))
       return true;
     problems.push(`Widget ID ${id} does not exist.`);
@@ -47,7 +47,7 @@ export class Button extends Widget {
             return (variables[key] === undefined) ? "" : variables[key];
           });
         } else if(v.parameter && v.property) {
-          let w = isValidID(v.widget, problems) ? widgets.get(v.widget) : this;
+          let w = this.isValidID(v.widget, problems) ? widgets.get(v.widget) : this;
           field[v.parameter] = (w.p(v.property) === undefined) ? null : w.p(v.property);
         } else {
           problems.push('Entry in parameter applyVariables does not contain "parameter" together with "variable", "property", or "template".');
@@ -266,7 +266,7 @@ export class Button extends Widget {
 
       if(a.func == 'FLIP') {
         setDefaults(a, { count: 0, face: null, faceCyle: null });
-        if(isValidID(a.holder))
+        if(this.isValidID(a.holder, problems))
           this.w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>c.flip&&c.flip(a.face,a.faceCycle)));
       }
 
@@ -321,7 +321,7 @@ export class Button extends Widget {
         setDefaults(a, { count: 1, face: null });
         const count = a.count || 999999;
 
-        if(isValidID(a.from, problems) && isValidID(a.to, problems)) {
+        if(this.isValidID(a.from, problems) && this.isValidID(a.to, problems)) {
           if(a.face === null && typeof a.from == 'string' && typeof a.to == 'string' && !widgets.get(a.to).children().length && widgets.get(a.from).children().length <= count) {
             // this is a hacky shortcut to avoid removing and creating card piles when moving all children to an empty holder
             Widget.prototype.children.call(widgets.get(a.from)).filter(
@@ -345,7 +345,7 @@ export class Button extends Widget {
 
       if(a.func == 'MOVEXY') {
         setDefaults(a, { count: 1, face: null, x: 0, y: 0 });
-        if(isValidID(a.from, problems)) {
+        if(this.isValidID(a.from, problems)) {
           this.w(a.from, source=>source.children().slice(0, a.count || 999999).reverse().forEach(c=> {
             if(a.face !== null && c.flip)
               c.flip(a.face);
@@ -364,7 +364,7 @@ export class Button extends Widget {
 
       if(a.func == 'RECALL') {
         setDefaults(a, { owned: true });
-        if(isValidID(a.holder, problems)) {
+        if(this.isValidID(a.holder, problems)) {
           this.toA(a.holder).forEach(holder=>{
             const deck = widgetFilter(w=>w.p('type')=='deck'&&w.p('parent')==holder);
             if(deck.length) {
@@ -381,7 +381,7 @@ export class Button extends Widget {
 
       if(a.func == 'ROTATE') {
         setDefaults(a, { count: 1, angle: 90, mode: 'add' });
-        if(isValidID(a.holder, problems)) {
+        if(this.isValidID(a.holder, problems)) {
           this.w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>{
             c.rotate(a.angle, a.mode);
           }));
@@ -440,7 +440,7 @@ export class Button extends Widget {
 
       if(a.func == 'SORT') {
         setDefaults(a, { key: 'value', reverse: false });
-        if(isValidID(a.holder, problems)) {
+        if(this.isValidID(a.holder, problems)) {
           this.w(a.holder, holder=>{
             let z = 1;
             let children = holder.children().reverse().sort((w1,w2)=>{
@@ -458,7 +458,7 @@ export class Button extends Widget {
       }
 
       if(a.func == 'SHUFFLE') {
-        if(isValidID(a.holder, problems)) {
+        if(this.isValidID(a.holder, problems)) {
           this.w(a.holder, holder=>{
             holder.children().forEach(c=>c.p('z', Math.floor(Math.random()*10000)));
             holder.updateAfterShuffle();
