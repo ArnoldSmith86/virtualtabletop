@@ -1,5 +1,6 @@
 body.edit .widget.basic {
-  border-width: 0;
+  border-width: 1;
+  border-color: #eeeeee;
 }
 
 body.edit .widget.basic.hasImage {
