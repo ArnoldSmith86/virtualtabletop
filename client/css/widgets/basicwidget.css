@@ -4,5 +4,5 @@ body.edit .widget.basic {
 
 body.edit .widget.basic.hasImage {
   filter: grayscale(100%);
-  opacity: 0.15;
+  opacity: 0.65;
 }
