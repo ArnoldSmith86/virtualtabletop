@@ -74,6 +74,36 @@ class Pile extends Widget {
     });
     $('#pileOverlay').appendChild(shuffleButton);
 
+    const childCount = this.children().length;
+    const countDiv = document.createElement('div');
+    countDiv.textContent = `/ ${childCount}`;
+    $('#pileOverlay').appendChild(countDiv);
+    const splitInput = document.createElement('input');
+    splitInput.type = 'number';
+    splitInput.value = Math.floor(childCount/2);
+    splitInput.min = 0;
+    splitInput.max = childCount;
+    countDiv.prepend(splitInput);
+    const splitLabel = document.createElement('label');
+    splitLabel.textContent = 'Split: ';
+    countDiv.prepend(splitLabel);
+    const splitButton = document.createElement('button');
+    splitButton.textContent = 'Split pile';
+    splitButton.addEventListener('click', e=>{
+      batchStart();
+      this.children().reverse().slice(childCount-splitInput.value).forEach(c=>{
+        c.p('parent', null);
+        c.p('x', this.absoluteCoord('x'));
+        const y = this.absoluteCoord('y');
+        c.p('y', y < 100 ? y+60 : y-60);
+        c.updatePiles();
+        c.bringToFront();
+      });
+      showOverlay();
+      batchEnd();
+    });
+    $('#pileOverlay').appendChild(splitButton);
+
     showOverlay('pileOverlay');
   }
 
@@ -93,6 +123,9 @@ class Pile extends Widget {
 
       removeWidgetLocal(this.p('id'));
     }
+
+    if(this.parent && this.parent.p('type') == 'holder')
+      this.parent.dispenseCard(child);
   }
 
   supportsPiles() {

@@ -191,8 +191,8 @@ function generateCounterWidgets(id, x, y) {
   const down = {
     id: id+'D',
     parent: id,
-    x: 4,
-    y: -2,
+    x: -38,
+    y: 1,
     width: 36,
     height: 36,
     type: 'button',
@@ -203,9 +203,9 @@ function generateCounterWidgets(id, x, y) {
   };
 
   return [
-    { type:'label', text: 0, id, x, y, width: 140, height: 44, css:'font-size: 30px;', editable: true },
+    { type:'label', text: 0, id, x, y, width: 65, height: 40, css:'font-size: 30px;', editable: true },
     down,
-    Object.assign({ ...down }, { id: id+'U', text: '+', x: 100, clickRoutine: [ Object.assign({ ...r }, { mode: 'inc' }) ] })
+    Object.assign({ ...down }, { id: id+'U', text: '+', x: 68, clickRoutine: [ Object.assign({ ...r }, { mode: 'inc' }) ] })
   ];
 }
 
@@ -335,8 +335,8 @@ function populateAddWidgetOverlay() {
     y += 120;
   }
 
-  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 780, 700), function() {
-    for(const w of generateCounterWidgets(Math.random().toString(36).substring(3, 7), 780, 700))
+  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 820, 700), function() {
+    for(const w of generateCounterWidgets(Math.random().toString(36).substring(3, 7), 820, 700))
       addWidgetLocal(w);
   });
 
@@ -428,7 +428,7 @@ onLoad(function() {
   });
 
   on('#decrementAllCardTypes', 'click', function() {
-    $a('#cardTypesList .count').forEach(i=>--i.value);
+    $a('#cardTypesList .count').forEach(i=>i.value=Math.max(0, i.value-1));
   });
 
   on('#incrementAllCardTypes', 'click', function() {

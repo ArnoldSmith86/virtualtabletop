@@ -12,6 +12,7 @@ class Holder extends Widget {
       dropTarget: { type: 'card' },
       dropOffsetX: 4,
       dropOffsetY: 4,
+      dropLimit: -1,
       alignChildren: true,
       childrenPerOwner: false,
 
@@ -42,10 +43,14 @@ class Holder extends Widget {
   }
 
   dispenseCard(card) {
-    if(!card.p('ignoreOnLeave'))
-      for(const property in this.p('onLeave'))
-        card.p(property, this.p('onLeave')[property]);
-    if(this.p('alignChildren'))
+    let toProcess = [ card ];
+    if(card.p('type') == 'pile')
+      toProcess = card.children();
+    for(const w of toProcess)
+      if(!w.p('ignoreOnLeave'))
+        for(const property in this.p('onLeave'))
+          w.p(property, this.p('onLeave')[property]);
+    if(this.p('alignChildren') && (this.p('stackOffsetX') || this.p('stackOffsetY')))
       this.receiveCard(null);
   }
 
@@ -57,9 +62,13 @@ class Holder extends Widget {
     if(this.p('childrenPerOwner'))
       child.p('owner', playerName);
 
-    if(this != child.currentParent) // FIXME: this isn't exactly pretty
+    if(this != child.currentParent) { // FIXME: this isn't exactly pretty
+      let toProcess = [ child ];
+      if(child.p('type') == 'pile')
+        toProcess = child.children();
       for(const property in this.p('onEnter'))
-        child.p(property, this.p('onEnter')[property]);
+        toProcess.forEach(w=>w.p(property, this.p('onEnter')[property]));
+    }
   }
 
   onChildAddAlign(child, oldParentID) {
@@ -88,7 +97,7 @@ class Holder extends Widget {
   receiveCard(card, pos) {
     // get children sorted by X or Y position
     // replace coordinates of the received card to its previous coordinates so it gets dropped at the correct position
-    const children = this.children().filter(c=>!c.p('owner') || c.p('owner')==playerName).sort((a, b)=>{
+    const children = this.childrenOwned().sort((a, b)=>{
       if(this.p('stackOffsetX'))
         return this.p('stackOffsetX') * ((a == card ? pos[0] : a.p('x')) - (b == card ? pos[0] : b.p('x')));
       return this.p('stackOffsetY') * ((a == card ? pos[1] : a.p('y')) - (b == card ? pos[1] : b.p('y')));
@@ -123,7 +132,7 @@ class Holder extends Widget {
 
     const children = this.children();
     for(const owner of new Set(children.map(c=>c.p('owner')))) {
-      this.rearrangeChildren(children.filter(c=>!c.p('owner') || c.p('owner')==owner).sort((a, b)=>{
+      this.rearrangeChildren(children.filter(c=>!c.p('owner') || c.p('owner')===owner).sort((a, b)=>{
         return a.p('z') - b.p('z');
       }));
     }

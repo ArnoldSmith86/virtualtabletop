@@ -25,6 +25,7 @@ export class Widget extends StateManaged {
       css: '',
       movable: true,
       movableInEdit: true,
+      clickable: false,
 
       grid: [],
       enlarge: false,
@@ -131,13 +132,17 @@ export class Widget extends StateManaged {
   calculateZ() {
     let z = ((this.p('layer') + 10) * 100000) + this.p('z');
     if(this.p('inheritChildZ'))
-      for(const child of this.children().filter(c=>!c.p('owner') || c.p('owner')==playerName))
+      for(const child of this.childrenOwned())
         z = Math.max(z, child.calculateZ());
     return z;
   }
 
   children() {
     return this.childArray.sort((a,b)=>b.p('z')-a.p('z'));
+  }
+
+  childrenOwned() {
+    return this.children().filter(c=>!c.p('owner') || c.p('owner')==playerName);
   }
 
   checkParent(forceDetach) {
@@ -153,7 +158,9 @@ export class Widget extends StateManaged {
   classes() {
     let className = this.p('typeClasses') + ' ' + this.p('classes');
 
-    if(this.p('owner') && this.p('owner') != playerName)
+    if(Array.isArray(this.p('owner')) && this.p('owner').indexOf(playerName) == -1)
+      className += ' foreign';
+    if(typeof this.p('owner') == 'string' && this.p('owner') != playerName)
       className += ' foreign';
 
     return className;
@@ -222,8 +229,8 @@ export class Widget extends StateManaged {
   }
 
   move(x, y) {
-    const newX = Math.max(0-this.p('width' )*0.25, Math.min(1600+this.p('width' )*0.25, x)) - this.p('width' )/2;
-    const newY = Math.max(0-this.p('height')*0.25, Math.min(1000+this.p('height')*0.25, y)) - this.p('height')/2;
+    const newX = (jeZoomOut ? x : Math.max(0-this.p('width' )*0.25, Math.min(1600+this.p('width' )*0.25, x))) - this.p('width' )/2;
+    const newY = (jeZoomOut ? y : Math.max(0-this.p('height')*0.25, Math.min(1000+this.p('height')*0.25, y))) - this.p('height')/2;
 
     this.setPosition(newX, newY, this.p('z'));
     const myCenter = center(this.domElement);
@@ -314,8 +321,11 @@ export class Widget extends StateManaged {
     }
   }
 
-  rotate(degrees) {
-    this.p('rotation', (this.p('rotation') + degrees) % 360);
+  rotate(degrees, mode) {
+    if(!mode || mode == 'add')
+      this.p('rotation', (this.p('rotation') + degrees) % 360);
+    else
+      this.p('rotation', degrees);
   }
 
   setPosition(x, y, z) {
@@ -367,12 +377,8 @@ export class Widget extends StateManaged {
     return true;
   }
 
-  updateOwner(oldName, newName) {
-    const o = this.p('owner');
-    if(o && o == oldName)
-      this.domElement.classList.add('foreign');
-    if(o && o == newName)
-      this.domElement.classList.remove('foreign');
+  updateOwner() {
+    this.domElement.className = this.classes();
   }
 
   updatePiles() {
