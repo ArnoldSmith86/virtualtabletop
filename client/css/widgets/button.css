@@ -8,9 +8,12 @@
   justify-content: center;
   align-items: center;
   text-align: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 
 .button:hover {
   border-color: #83c0b9;
 }
+
 
