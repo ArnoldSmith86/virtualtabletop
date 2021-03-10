@@ -6,6 +6,12 @@
   --roomColor: #f0f0f0;
   --editColor: #7ba5f5;
   --VTTblue: #1f5ca6;
+  --wcMain: #1f5ca6;
+  --wcDark: #0d2f5e;
+  --wcLight: #a9c6e8;
+  --wcFont: #ffffff;
+  --wcMainOH: #1f5ca6;
+  --wcDarkOH: #0d2f5e;
 }
 
 body {

@@ -1,16 +1,18 @@
 .button {
   box-sizing: border-box;
   border-radius: 800px;
-  background: #a9e9e2;
-  color: #6d6d6d;
-  border: 4px solid #93d0c9;
+  background: var(--wcMain);
+  color: var(--wcFont);
+  border: 4px solid var(--wcDark);
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
+  font-weight:bold;
 }
 
 .button:hover {
-  border-color: #83c0b9;
+  border-color: var(--wcMainOH);
+  background: var(--wcDarkOH)
 }
 
