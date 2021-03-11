@@ -1,8 +1,8 @@
 body.edit .widget.basic {
-  border-width: 0;
+  border-width: 3px solid var(--editColor);
 }
 
 body.edit .widget.basic.hasImage {
   filter: grayscale(100%);
-  opacity: 0.15;
+  opacity: 0.45;
 }

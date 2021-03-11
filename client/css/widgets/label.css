@@ -18,7 +18,7 @@
 }
 
 body.edit .widget.label {
-  border: none;
+  border: 3px solid var(--editColor);
 }
 
 body.edit .widget.label > * {
