@@ -111,25 +111,25 @@ export class Button extends Widget {
 
       if(a.func == 'CLONE'){
         setDefaults(a, { source: 'DEFAULT', count: 1, xOffset: 0, yOffset: 0, collection: 'DEFAULT' });
-	if(a.properties.applyVariables) {
-	  this.applyVariables(a.properties, variables, problems);
-	  delete a.properties["applyVariables"];
-	};
+        if(a.properties.applyVariables) {
+          this.applyVariables(a.properties, variables, problems);
+          delete a.properties["applyVariables"];
+        };
         if(isValidCollection(a.source)) {
-	  var c=[];
-	  for(const w of collections[a.source]) {
-	    const clone = Object.assign(JSON.parse(JSON.stringify(w.state)), a.properties);
-	    clone.x = clone.x + a.xOffset;
-	    clone.y = clone.y + a.yOffset;
-	    clone.clonedFrom = w.p('id');
-	    for(let i=0; i<a.count; ++i) {
-	      clone.id = null;
-	      addWidgetLocal(clone);
-	      c.push(widgets.get(clone.id));
-	    }
-	  }
-	  collections[a.collection]=c;
-	}
+          var c=[];
+          for(const w of collections[a.source]) {
+            const clone = Object.assign(JSON.parse(JSON.stringify(w.state)), a.properties);
+            clone.x = clone.x + a.xOffset;
+            clone.y = clone.y + a.yOffset;
+            clone.clonedFrom = w.p('id');
+            for(let i=0; i<a.count; ++i) {
+              clone.id = null;
+              addWidgetLocal(clone);
+              c.push(widgets.get(clone.id));
+            }
+          }
+          collections[a.collection]=c;
+        }
       };
 
       if(a.func == 'COMPUTE') {
@@ -288,10 +288,10 @@ export class Button extends Widget {
       }
 
       if(a.func == 'DELETE') {
-	setDefaults(a, { collection: 'DEFAULT' });
-	if(isValidCollection(a.collection))
-	  for(const w of collections[a.collection])
-	    removeWidgetLocal(w.p('id'))
+        setDefaults(a, { collection: 'DEFAULT' });
+        if(isValidCollection(a.collection))
+          for(const w of collections[a.collection])
+            removeWidgetLocal(w.p('id'))
       };
 
       if(a.func == 'FLIP') {
