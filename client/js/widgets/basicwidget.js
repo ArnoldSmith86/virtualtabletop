@@ -9,7 +9,7 @@ class BasicWidget extends Widget {
       clickable: true,
 
       faces: [ {} ],
-      faceCycle: 'ordered',
+      faceCycle: 'forward',
       activeFace: 0,
 
       image: '',
