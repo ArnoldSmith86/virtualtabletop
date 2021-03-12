@@ -8,7 +8,7 @@ class Card extends Widget {
       typeClasses: 'widget card',
       clickable: true,
 
-      faceCycle: 'ordered',
+      faceCycle: 'forward',
       activeFace: 0,
 
       deck: null,
