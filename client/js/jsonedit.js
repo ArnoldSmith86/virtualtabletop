@@ -407,7 +407,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ mode', [ 'set', 'add' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=', 'in' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ type', [ 'all', null, 'button', 'card', 'deck', 'holder', 'label', 'spinner' ]);
-  jeAddEnumCommands('^.*\\(SET\\) ↦ relation', [ '+', '-', '=' ]);
+  jeAddEnumCommands('^.*\\(SET\\) ↦ relation', [ '+', '-', '*', '/', 'random', 'floor', '=']);
 
   jeAddNumberCommand('increment number', '+', x=>x+1);
   jeAddNumberCommand('decrement number', '-', x=>x-1);
