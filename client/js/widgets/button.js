@@ -265,9 +265,16 @@ export class Button extends Widget {
       }
 
       if(a.func == 'FLIP') {
-        setDefaults(a, { count: 0, face: null });
-        if(this.isValidID(a.holder, problems))
-          this.w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>c.flip&&c.flip(a.face)));
+        setDefaults(a, { count: 0, face: null, faceCyle: null, collection: 'DEFAULT' });
+        if(a.holder !== undefined) {
+          if(this.isValidID(a.holder,problems))
+            this.w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>c.flip&&c.flip(a.face,a.faceCycle)));
+        } else if(isValidCollection(a.collection)) {
+          if(collections[a.collection].length)
+            collections[a.collection].slice(0, a.count || 999999).forEach(c=>c.flip&&c.flip(a.face,a.faceCycle));
+          else
+            problems.push(`Collection ${a.collection} is empty.`);
+        }
       }
 
       if(a.func == 'GET') {
