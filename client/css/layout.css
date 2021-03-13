@@ -9,12 +9,12 @@
   --VTTblueDark:  #0d2f5e;
   --VTTblueLight: #a9c6e8;
   --wcFont: #ffffff;
-  --wcBorderOH: var(--VTTblue);
-  --wcMainOH: var(--VTTblueDark);
-  --wcBorder: var(--VTTblueDark);
   --wcMain: var(--VTTblue);
-  --wcHighlight: var(--VTTblueLight)
-
+  --wcBorder: var(--VTTblueDark);
+  --wcHighlight: var(--VTTblueLight);
+  --wcMainOH: var(--VTTblueDark);
+  --wcBorderOH: var(--VTTblue);
+  --wcFontOH: var(--wcFont);
 }
 
 body {
