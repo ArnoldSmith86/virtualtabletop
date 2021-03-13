@@ -13,8 +13,8 @@
 }
 
 .button:hover {
-  border-color: var(--wcMainOH);
-  background-color: var(--wcBorderOH);
+  border-color: var(--wcBorderOH);
+  background-color: var(--wcMainOH);
   background-image: var(--wcImageOH);
   color: var(--wcFontOH);
 }
