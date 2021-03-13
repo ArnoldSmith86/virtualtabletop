@@ -462,13 +462,21 @@ export class Button extends Widget {
         if((a.property == 'parent' || a.property == 'deck') && a.value !== null && !widgets.has(a.value)) {
           problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
         } else if(isValidCollection(a.collection)) {
-          if([ '+', '-', '=' ].indexOf(a.relation) == -1)
+          if([ '+', '-', '=' , '*', '/', 'random', 'floor'].indexOf(a.relation) == -1)
             problems.push(`Warning: Relation ${a.relation} interpreted as =.`);
           for(const w of collections[a.collection]) {
             if(a.relation === '+')
               w.p(a.property, w.p(a.property) + a.value);
             else if(a.relation === '-')
               w.p(a.property, w.p(a.property) - a.value);
+            else if(a.relation === '*')
+              w.p(a.property, w.p(a.property) * a.value);
+            else if(a.relation === '/')
+              w.p(a.property, w.p(a.property) / a.value);
+            else if(a.relation === 'random')
+              w.p(a.property, Math.random());
+            else if(a.relation === 'floor')
+              w.p(a.property, Math.floor(w.p(a.property)));
             else
               w.p(a.property, a.value);
           }
