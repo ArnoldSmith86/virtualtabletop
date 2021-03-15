@@ -110,7 +110,7 @@ export class Button extends Widget {
       }
 
       if(a.func == 'CLONE'){
-        setDefaults(a, { source: 'DEFAULT', count: 1, xOffset: 0, yOffset: 0, collection: 'DEFAULT' });
+        setDefaults(a, { source: 'DEFAULT', count: 1, xOffset: 0, yOffset: 0, properties: {}, collection: 'DEFAULT' });
         if(a.properties.applyVariables) {
           this.applyVariables(a.properties, variables, problems);
           delete a.properties["applyVariables"];
