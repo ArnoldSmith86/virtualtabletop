@@ -184,6 +184,17 @@ onLoad(function() {
         document.webkitExitFullscreen();
     }
   });
+  
+  on('#buttonInputOverlayForm', 'submit', function(e) {
+    e.preventDefault(); 
+    try {
+      $('#buttonInputGo').click();
+    } catch (e) {
+      console.log(e.message);
+    }
+    return false;
+  });
+  
   checkURLproperties();
   setScale();
   startWebSocket();
