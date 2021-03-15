@@ -8,7 +8,7 @@ class Card extends Widget {
       typeClasses: 'widget card',
       clickable: true,
 
-      faceCycle: 'ordered',
+      faceCycle: 'forward',
       activeFace: 0,
 
       deck: null,
@@ -105,11 +105,16 @@ class Card extends Widget {
     return p;
   }
 
-  flip(setFlip) {
+  flip(setFlip, faceCycle) {
     if(setFlip !== undefined && setFlip !== null)
       this.p('activeFace', setFlip);
-    else
-      this.p('activeFace', Math.floor(this.p('activeFace') + (this.p('faceCycle') == 'random' ? Math.random()*99999 : 1)) % this.deck.p('faceTemplates').length);
+    else {
+      const fC = (faceCycle !== undefined && faceCycle !== null) ? faceCycle : this.p('faceCycle');
+      if (fC == 'backward')
+        this.p('activeFace', this.p('activeFace') == 0 ? this.deck.p('faceTemplates').length-1 : this.p('activeFace') -1);
+      else
+        this.p('activeFace', Math.floor(this.p('activeFace') + (fC == 'random' ? Math.random()*99999 : 1)) % this.deck.p('faceTemplates').length);
+    }
   }
 
   getDefaultValue(property) {
