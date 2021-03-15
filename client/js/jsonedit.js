@@ -389,7 +389,7 @@ function jeAddCommands() {
   jeAddButtonOperationCommands('FLIP', { count: 0, face: null, faceCycle: 'forward' });
   jeAddButtonOperationCommands('GET', { variable: 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first' });
   // INPUT is missing
-  jeAddButtonOperationCommands('LABEL', { value: 0, mode: 'set', label: null });
+  jeAddButtonOperationCommands('LABEL', { value: 0, mode: 'set', label: null, collection: 'DEFAULT' });
   jeAddButtonOperationCommands('MOVE', { count: 1, face: null, from: null, to: null });
   jeAddButtonOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0 });
   jeAddButtonOperationCommands('RANDOM', { min: 1, max: 10, variable: 'RANDOM' });
