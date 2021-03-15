@@ -285,7 +285,8 @@ export class Button extends Widget {
         setDefaults(a, { collection: 'DEFAULT', variable: 'COUNT' });
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder,problems))
-            variables[a.variable] = widgets.get(a.holder).children().length;
+            // count children as well as any other widgets except for piles, decks and the regular recall & shuffle button
+            variables[a.variable] = widgets.get(a.holder).children().length + widgets.get(a.holder).childArray.filter( (w) => { if (w.state.type != 'pile' && w.state.type != 'deck' && w.id != a.holder +'B') return true}).length;
         } else if(isValidCollection(a.collection)) {
           variables[a.variable] = collections[a.collection].length;
         }
