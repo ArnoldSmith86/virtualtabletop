@@ -17,6 +17,10 @@ export class Button extends Widget {
       movable: false,
       clickable: true,
 
+      image: '',
+      color: 'black',
+      svgReplaces: {},
+      
       text: '',
       clickRoutine: [],
       debug: false
@@ -56,6 +60,33 @@ export class Button extends Widget {
     } else {
       problems.push('Parameter applyVariables is not an array.');
     }
+  }
+
+  css() {
+    let css = super.css();
+
+    if(this.p('color'))
+      css += '; --color:' + this.p('color');
+    if(this.p('image'))
+      css += '; background-image: url("' + this.getImage() + '")';
+
+    return css;
+  }
+
+  cssProperties() {
+    const p = super.cssProperties();
+    p.push('image', 'color', 'svgReplaces');
+    return p;
+  }
+
+  getImage() {
+    if(!Object.keys(this.p('svgReplaces')).length)
+      return this.p('image');
+
+    const replaces = {};
+    for(const key in this.p('svgReplaces'))
+      replaces[key] = this.p(this.p('svgReplaces')[key]);
+    return getSVG(this.p('image'), replaces, _=>this.domElement.style.cssText = this.css());
   }
 
   async click() {
@@ -637,3 +668,4 @@ export class Button extends Widget {
     return widgetFilter(w=>this.toA(ids).indexOf(w.p('id')) != -1).forEach(callback);
   }
 }
+
