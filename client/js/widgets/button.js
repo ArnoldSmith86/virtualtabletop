@@ -20,7 +20,7 @@ export class Button extends Widget {
       image: '',
       color: 'black',
       svgReplaces: {},
-      
+
       text: '',
       clickRoutine: [],
       debug: false
@@ -140,7 +140,7 @@ export class Button extends Widget {
                 w.click();
       }
 
-      if(a.func == 'CLONE'){
+      if(a.func == 'CLONE') {
         setDefaults(a, { source: 'DEFAULT', count: 1, xOffset: 0, yOffset: 0, properties: {}, collection: 'DEFAULT' });
         if(a.properties.applyVariables) {
           this.applyVariables(a.properties, variables, problems);
@@ -149,14 +149,33 @@ export class Button extends Widget {
         if(isValidCollection(a.source)) {
           var c=[];
           for(const w of collections[a.source]) {
-            const clone = Object.assign(JSON.parse(JSON.stringify(w.state)), a.properties);
-            clone.x = clone.x + a.xOffset;
-            clone.y = clone.y + a.yOffset;
-            clone.clonedFrom = w.p('id');
-            for(let i=0; i<a.count; ++i) {
-              clone.id = null;
+            for(let i=1; i<=a.count; ++i) {
+              const clone = Object.assign(JSON.parse(JSON.stringify(w.state)), a.properties);
+              const parent = clone.parent;
+              const newX = clone.x + a.xOffset * i;
+              const newY = clone.y + a.yOffset * i;
+              clone.clonedFrom = w.p('id');
+
+              delete clone.id;
+              delete clone.parent;
               addWidgetLocal(clone);
-              c.push(widgets.get(clone.id));
+              const cWidget = widgets.get(clone.id);
+
+              if(parent) {
+                // use moveToHolder so that CLONE triggers onEnter and similar features
+                cWidget.movedByButton = true;
+                cWidget.moveToHolder(widgets.get(parent));
+                delete cWidget.movedByButton;
+              }
+
+              // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
+              if(!parent || !widgets.get(parent).p('alignChildren')) {
+                cWidget.p('x', newX);
+                cWidget.p('y', newY);
+                cWidget.updatePiles();
+              }
+
+              c.push(cWidget);
             }
           }
           collections[a.collection]=c;
