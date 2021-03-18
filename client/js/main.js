@@ -74,6 +74,7 @@ export function showOverlay(id) {
     }
   } else {
     $('#roomArea').className = '';
+    vmEditOverlay.selectedWidget = {};
     overlayActive = false;
   }
 }
@@ -195,7 +196,8 @@ onLoad(function() {
 
   const editOverlayApp = Vue.createApp({
     data() { return {
-      selectedWidgetState: {}
+      selectedWidget: Vue.shallowReactive({}),
+      previousState: Vue.shallowReactive({})
     }}
   });
   loadComponents(editOverlayApp);

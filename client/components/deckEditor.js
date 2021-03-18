@@ -1,7 +1,10 @@
 export const deckEditor = {
-    props: [
-      'widgetState'
-    ],
+    props: {
+      widgetState: {
+        type: Object,
+        default: {}
+      },
+    },
     computed: {
       dynamicProperties() {
         var properties = [];

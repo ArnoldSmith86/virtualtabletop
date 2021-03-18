@@ -42,12 +42,12 @@
 
     <div id="editOverlay" class="overlay">
       <h1>Edit widget</h1>
-      <deck-editor :widget-state="selectedWidgetState"></deck-editor>
+      <deck-editor :widget-state="selectedWidget.state"></deck-editor>
       <div class="holderEdit">
         <input type="checkbox" id="transparentHolder"><label for="transparentHolder"> Transparent</label><br/>
         <input type="checkbox" id="resizeHolderToChildren"><label for="resizeHolderToChildren"> Resize to fit contents (once)</label>
       </div>
-      <base-edit-overlay></base-edit-overlay>
+      <base-edit-overlay :widget="selectedWidget" :previous-state="previousState"></base-edit-overlaya>
     </div>
 
     <div id="editJSONoverlay" class="overlay">
