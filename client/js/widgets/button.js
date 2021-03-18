@@ -166,7 +166,7 @@ export class Button extends Widget {
       function compute(o, v, x, y, z) {
         try {
           switch(o) {
-          case '=':  v = x;      break;
+          case '=':  v = y;      break;
           case '+':  v = x + y;  break;
           case '-':  v = x - y;  break;
           case '*':  v = x * y;  break;
