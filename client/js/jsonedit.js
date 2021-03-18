@@ -358,7 +358,7 @@ function jeAddButtonOperationCommands(command, defaults) {
   defaults.skip = false;
   for(const property in defaults) {
     jeCommands.push({
-      id: 'default_' + property,
+      id: 'default_' + command + '_' + property,
       name: property,
       context: `^button.* ↦ \\(${command}\\) ↦ `,
       call: function() {
