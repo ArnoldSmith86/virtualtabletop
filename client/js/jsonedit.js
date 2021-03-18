@@ -447,6 +447,9 @@ function jeAddEnumCommands(context, values) {
         jeInsert(null, jeGetLastKey(), v);
       },
       show: function() {
+        if(jeJSONerror)
+          return false;
+
         let pointer = jeGetValue();
         return pointer[jeGetValue()] !== v;
       }
