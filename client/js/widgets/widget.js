@@ -367,7 +367,6 @@ export class Widget extends StateManaged {
         this.p('text', +text);
       else
         this.p('text', text);
-      if (debug) console.log(`changing ${this.id} ${mode} ${text}`)
     } else
       problems.push(`Tried setting text property which doesn't exist for ${this.id}.`);
   }
