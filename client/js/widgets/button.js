@@ -291,7 +291,7 @@ export class Button extends Widget {
             break;
           case 'push':
           case 'unshift':
-            if (Array.isArray(v)) v[o](x);
+            v[o](x);
             break;
           default:
             problems.push(`Operation ${o} is unsupported.`);
