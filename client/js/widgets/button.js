@@ -101,6 +101,8 @@ export class Button extends Widget {
         return true;
       problems.push(`Collection ${collection} does not exist.`);
     }
+    
+   if(!this.p('clickable')) return;
 
     batchStart();
 
