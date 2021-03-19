@@ -384,7 +384,7 @@ function jeAddCommands() {
   jeAddButtonOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 });
   jeAddButtonOperationCommands('COMPUTE', { operation: '+', operand1: 1, operand2: 1, operand3: 1, variable: 'COMPUTE' });
   jeAddButtonOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT' });
-  jeAddButtonOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1 });
+  jeAddButtonOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, properties: null });
   jeAddButtonOperationCommands('DELETE', { collection: 'DEFAULT'});
   jeAddButtonOperationCommands('FLIP', { count: 0, face: null, faceCycle: 'forward', holder: null, collection: 'DEFAULT' });
   jeAddButtonOperationCommands('GET', { variable: 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first' });
