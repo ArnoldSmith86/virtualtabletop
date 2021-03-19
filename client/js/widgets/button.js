@@ -383,10 +383,9 @@ export class Button extends Widget {
         setDefaults(a, { value: 0, mode: 'set', collection: 'DEFAULT' });
         if([ 'set', 'dec', 'inc' ].indexOf(a.mode) == -1)
           problems.push(`Warning: Mode ${a.mode} will be interpreted as add.`);
-        if(a.label !== undefined) a.widget = a.label; // remove this line to deprecate the 'label' property in favor of 'widget'
-        if(a.widget !== undefined) {
-          if (this.isValidID(a.widget, problems)) {
-            this.w(a.widget, widget=> {
+        if(a.label !== undefined) {
+          if (this.isValidID(a.label, problems)) {
+            this.w(a.label, widget=> {
               widget.setText(a.value, a.mode, this.p('debug'), problems)
             });
           }
