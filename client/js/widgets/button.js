@@ -314,8 +314,12 @@ export class Button extends Widget {
 
       if(a.func == 'COUNT') {
         setDefaults(a, { collection: 'DEFAULT', variable: 'COUNT' });
-        if(isValidCollection(a.collection))
+        if(a.holder !== undefined) {
+          if(this.isValidID(a.holder,problems))
+            variables[a.variable] = widgets.get(a.holder).children().length;
+        } else if(isValidCollection(a.collection)) {
           variables[a.variable] = collections[a.collection].length;
+        }
       }
 
       if(a.func == 'DELETE') {
@@ -376,13 +380,21 @@ export class Button extends Widget {
       }
 
       if(a.func == 'LABEL') {
-        setDefaults(a, { value: 0, mode: 'set' });
+        setDefaults(a, { value: 0, mode: 'set', collection: 'DEFAULT' });
         if([ 'set', 'dec', 'inc' ].indexOf(a.mode) == -1)
           problems.push(`Warning: Mode ${a.mode} will be interpreted as add.`);
-        this.w(a.label, label=> {
-          if (this.p('debug')) console.log(`changing ${a.label} ${a.mode} ${a.value}`)
-          label.setText(a.value, a.mode)
-        });
+        if(a.label !== undefined) {
+          if (this.isValidID(a.label, problems)) {
+            this.w(a.label, widget=> {
+              widget.setText(a.value, a.mode, this.p('debug'), problems)
+            });
+          }
+        } else if(isValidCollection(a.collection)) {
+          if(collections[a.collection].length)
+            collections[a.collection].forEach(c=>c.setText(a.value, a.mode, this.p('debug'), problems));
+          else
+            problems.push(`Collection ${a.collection} is empty.`);
+        }
       }
 
       if(a.func == 'MOVE') {
