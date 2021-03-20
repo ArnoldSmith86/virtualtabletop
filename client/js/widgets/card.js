@@ -42,6 +42,11 @@ class Card extends Widget {
       }
     }
 
+    if(this.dynamicProperties)
+      for(const p in delta)
+        for(const callback of (this.dynamicProperties[p] || []))
+          callback();
+
     super.applyDeltaToDOM(delta);
   }
 
@@ -61,6 +66,7 @@ class Card extends Widget {
   }
 
   createFaces(faceTemplates) {
+    this.dynamicProperties = {};
     for(const face of faceTemplates) {
       const faceDiv = document.createElement('div');
 
@@ -71,28 +77,42 @@ class Card extends Widget {
 
       for(const object of face.objects) {
         const objectDiv = document.createElement('div');
-        let value = object.valueType == 'static' ? object.value : this.p(object.value);
         const x = face.border ? object.x-face.border : object.x;
         const y = face.border ? object.y-face.border : object.y;
         let css = object.css ? object.css + '; ' : '';
         css += `left: ${x}px; top: ${y}px; width: ${object.width}px; height: ${object.height}px; font-size: ${object.fontSize}px; text-align: ${object.textAlign}`;
         css += object.rotation ? `; transform: rotate(${object.rotation}deg)` : '';
         objectDiv.style.cssText = css;
-        if(object.type == 'image') {
-          if(value) {
-            if(object.svgReplaces) {
-              const replaces = { ...object.svgReplaces };
-              for(const key in replaces)
-                replaces[key] = this.p(replaces[key]);
-              value = getSVG(value, replaces, _=>this.applyDeltaToDOM({ deck:this.p('deck') }));
+        const setValue = _=>{
+          let value = object.valueType == 'static' ? object.value : this.p(object.value);
+          if(object.type == 'image') {
+            if(value) {
+              if(object.svgReplaces) {
+                const replaces = { ...object.svgReplaces };
+                for(const key in replaces)
+                  replaces[key] = this.p(replaces[key]);
+                value = getSVG(value, replaces, _=>this.applyDeltaToDOM({ deck:this.p('deck') }));
+              }
+              objectDiv.style.backgroundImage = `url("${value}")`;
             }
-            objectDiv.style.backgroundImage = `url("${value}")`;
+            objectDiv.style.backgroundColor = object.color || 'white';
+          } else {
+            objectDiv.textContent = value;
+            objectDiv.style.color = object.color;
           }
-          objectDiv.style.backgroundColor = object.color || 'white';
-        } else {
-          objectDiv.textContent = value;
-          objectDiv.style.color = object.color;
         }
+
+        // add a callback that makes sure dynamic property changes are reflected on the DOM
+        const properties = object.svgReplaces ? Object.keys(object.svgReplaces) : [];
+        if(object.valueType != 'static')
+          properties.push(object.value);
+        for(const p of properties) {
+          if(!this.dynamicProperties[p])
+            this.dynamicProperties[p] = [];
+          this.dynamicProperties[p].push(setValue);
+        }
+
+        setValue();
         faceDiv.appendChild(objectDiv);
       }
       this.domElement.appendChild(faceDiv);
