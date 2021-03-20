@@ -101,6 +101,8 @@ export class Button extends Widget {
         return true;
       problems.push(`Collection ${collection} does not exist.`);
     }
+    
+   if(!this.p('clickable')) return;
 
     batchStart();
 
@@ -163,43 +165,37 @@ export class Button extends Widget {
         }
       };
 
-      if(a.func == 'COMPUTE') {
-        setDefaults(a, { operation: '+', operand1: 1, operand2: 1, operand3: 1, variable: 'COMPUTE' });
-        const toNum = s=>typeof s == 'string' && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s;
-        const x = toNum(a.operand1);
-        const y = toNum(a.operand2);
-        const z = toNum(a.operand3);
-        const v = a.variable;
-
+      function compute(o, v, x, y, z) {
         try {
-          switch(a.operation) {
-          case '+':  variables[v] = x + y;  break;
-          case '-':  variables[v] = x - y;  break;
-          case '*':  variables[v] = x * y;  break;
-          case '**': variables[v] = x ** y; break;
-          case '/':  variables[v] = x / y;  break;
-          case '%':  variables[v] = x % y;  break;
-          case '<':  variables[v] = x < y;  break;
-          case '<=': variables[v] = x <= y; break;
-          case '==': variables[v] = x == y; break;
-          case '!=': variables[v] = x != y; break;
-          case '>=': variables[v] = x >= y; break;
-          case '>':  variables[v] = x > y;  break;
-          case '&&': variables[v] = x && y; break;
-          case '||': variables[v] = x || y; break;
-          case '!':  variables[v] = !x;     break;
+          switch(o) {
+          case '=':  v = y;      break;
+          case '+':  v = x + y;  break;
+          case '-':  v = x - y;  break;
+          case '*':  v = x * y;  break;
+          case '**': v = x ** y; break;
+          case '/':  v = x / y;  break;
+          case '%':  v = x % y;  break;
+          case '<':  v = x < y;  break;
+          case '<=': v = x <= y; break;
+          case '==': v = x == y; break;
+          case '!=': v = x != y; break;
+          case '>=': v = x >= y; break;
+          case '>':  v = x > y;  break;
+          case '&&': v = x && y; break;
+          case '||': v = x || y; break;
+          case '!':  v = !x;     break;
 
           // Math operations
           case 'hypot':
           case 'max':
           case 'min':
           case 'pow':
-            variables[v] = Math[a.operation](x, y);
+            v = Math[o](x, y);
             break;
           case 'sin':
           case 'cos':
           case 'tan':
-            variables[v] = Math[a.operation](x * Math.PI/180);
+            v = Math[o](x * Math.PI/180);
             break;
           case 'abs':
           case 'cbrt':
@@ -209,11 +205,12 @@ export class Button extends Widget {
           case 'log':
           case 'log10':
           case 'log2':
+          case 'random':
           case 'round':
           case 'sign':
           case 'sqrt':
           case 'trunc':
-            variables[v] = Math[a.operation](x);
+            v = Math[o](x);
             break;
           case 'E':
           case 'LN2':
@@ -223,19 +220,19 @@ export class Button extends Widget {
           case 'PI':
           case 'SQRT1_2':
           case 'SQRT2':
-            variables[v] = Math[a.operation];
+            v = Math[o];
             break;
 
           // String operations
           case 'length':
-            variables[v] = x.length;
+            v = x.length;
             break;
           case 'toLowerCase':
           case 'toUpperCase':
           case 'trim':
           case 'trimStart':
           case 'trimEnd':
-            variables[v] = x[a.operation]();
+            v = x[o]();
             break;
           case 'charAt':
           case 'charCodeAt':
@@ -255,61 +252,68 @@ export class Button extends Widget {
           case 'startsWith':
           case 'toLocaleLowerCase':
           case 'toLocaleUpperCase':
-            variables[v] = x[a.operation](y);
+            v = x[o](y);
             break;
           case 'replace':
           case 'replaceAll':
           case 'substr':
-            variables[v] = x[a.operation](y, z);
+            v = x[o](y, z);
             break;
 
           // Array operations
           // 'length' should work the same as for strings
           case 'getIndex':
-            variables[v] = x[y];
+            v = x[y];
             break;
           case 'setIndex':
-            variables[v][x] = y;
+            v[x] = y;
             break;
           case 'from':
           case 'isArray':
-            variables[v] = Array[a.operation](x);
+            v = Array[o](x);
             break;
           case 'concatArray':
-            variables[v] = x.concat(y);
+            v = x.concat(y);
             break;
           case 'pop':
           case 'reverse':
           case 'shift':
           case 'sort':
-            variables[v] = x[a.operation]();
+            v = x[o]();
             break;
           case 'findIndex':
           case 'includes':
           case 'indexOf':
           case 'join':
           case 'lastIndexOf':
-            variables[v] = x[a.operation](y);
+            v = x[o](y);
             break;
           case 'slice':
-            variables[v] = x[a.operation](y, z);
+            v = x[o](y, z);
             break;
           case 'push':
           case 'unshift':
-            variables[v][a.operation](x);
+            v[o](x);
             break;
           default:
-            problems.push(`Operation ${a.operation} is unsupported.`);
+            problems.push(`Operation ${o} is unsupported.`);
           }
         } catch(e) {
-          variables[v] = 0;
+          v = 0;
           problems.push(`Exception: ${e.toString()}`);
         }
-
-        if(variables[v] === null || typeof variables[v] === 'number' && !isFinite(variables[v])) {
-          variables[v] = 0;
+        if(v === null || typeof v === 'number' && !isFinite(v)) {
+          v = 0;
           problems.push(`The operation evaluated to null, Infinity or NaN. Setting the variable to 0.`);
         }
+        return v;
+      }
+
+      if(a.func == 'COMPUTE') {
+        setDefaults(a, { operation: '+', operand1: 1, operand2: 1, operand3: 1, variable: 'COMPUTE' });
+        const toNum = s=>typeof s == 'string' && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s;
+        const v = a.variable;
+        variables[v] = compute(a.operation, variables[v], toNum(a.operand1), toNum(a.operand2), toNum(a.operand3));
       }
 
       if(a.func == 'COUNT') {
@@ -505,15 +509,8 @@ export class Button extends Widget {
         if((a.property == 'parent' || a.property == 'deck') && a.value !== null && !widgets.has(a.value)) {
           problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
         } else if(isValidCollection(a.collection)) {
-          if([ '+', '-', '=' ].indexOf(a.relation) == -1)
-            problems.push(`Warning: Relation ${a.relation} interpreted as =.`);
           for(const w of collections[a.collection]) {
-            if(a.relation === '+')
-              w.p(a.property, w.p(a.property) + a.value);
-            else if(a.relation === '-')
-              w.p(a.property, w.p(a.property) - a.value);
-            else
-              w.p(a.property, a.value);
+            w.p(a.property, compute(a.relation, null, w.p(a.property), a.value));
           }
         }
       }
