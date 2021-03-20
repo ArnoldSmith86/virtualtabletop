@@ -833,16 +833,14 @@ function jeShowCommands() {
   }
   for(const command of jeCommands) {
     const contextMatch = context.match(new RegExp(command.context));
-    if(contextMatch) {
-      if(contextMatch[0] == "") {
-        const name = (typeof command.name == 'function' ? command.name() : command.name);
-        let keyName = displayKey(command.forceKey);
-        commandText += `<button class='top' id='${command.id}' title='${name} (Ctrl-${keyName})' ${!command.show || command.show() ? '' : 'disabled'}>${name.substr(0,2)}</button>`;
-        subText += `<span class='top'>${keyName}</span>`;
-      }
+    if(contextMatch && contextMatch[0] == "") {
+      const name = (typeof command.name == 'function' ? command.name() : command.name);
+      let keyName = displayKey(command.forceKey);
+      commandText += `<button class='top' id='${command.id}' title='${name} (Ctrl-${keyName})' ${!command.show || command.show() ? '' : 'disabled'}>${name.substr(0,2)}</button>`;
+      subText += `<span class='top'>${keyName}</span>`;
     }
   }
-  if (commandText.length > 0)
+  if(commandText.length > 0)
     commandText += `\n` + subText + `\n`;
   delete activeCommands[""];
 
@@ -874,7 +872,7 @@ function jeShowCommands() {
   }
   commandText += `\n${context}\n`;
   if(jeJSONerror)
-    commandText += `\n<i class=error>${String(jeJSONerror)}</i>\n`;
+    commandText += `\nCtrl-Space: go to error\n\n<i class=error>${String(jeJSONerror)}</i>\n`;
   if(jeCommandError)
     commandText += `\n<i class=error>Last command failed: ${String(jeCommandError)}</i>\n`;
   if(jeSecondaryWidget)
@@ -941,7 +939,17 @@ window.addEventListener('keydown', function(e) {
   }
 
   if(jeState.ctrl) {
-    if(e.key == 'j') {
+    if(e.key == ' ') {
+      const locationLine = String(jeJSONerror).match(/line ([0-9]+) column ([0-9]+)/);
+      if(locationLine) {
+        const pos = $('#jeText').textContent.split('\n').slice(0, locationLine[1]-1).join('\n').length + +locationLine[2];
+        jeSelect(pos, pos);
+      }
+
+      const locationPostion = String(jeJSONerror).match(/position ([0-9]+)/);
+      if(locationPostion)
+        jeSelect(+locationPostion[1], +locationPostion[1]);
+    } else if(e.key == 'j') {
       e.preventDefault();
       if(jeEnabled === null) {
         jeAddCommands();
