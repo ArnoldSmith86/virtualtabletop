@@ -329,7 +329,7 @@ export class Button extends Widget {
 
       if(a.func == 'COMPUTE') {
         setDefaults(a, { operation: '+', operand1: 1, operand2: 1, operand3: 1, variable: 'COMPUTE' });
-        variables[v] = this.compute(a.operation, variables[a.variable], a.operand1, a.operand2, a.operand3);
+        variables[a.variable] = this.compute(a.operation, variables[a.variable], a.operand1, a.operand2, a.operand3);
       }
 
       if(a.func == 'COUNT') {
