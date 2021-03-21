@@ -20,7 +20,7 @@ export class Button extends Widget {
       image: '',
       color: 'black',
       svgReplaces: {},
-      
+
       text: '',
       clickRoutine: [],
       debug: false
@@ -101,7 +101,7 @@ export class Button extends Widget {
         return true;
       problems.push(`Collection ${collection} does not exist.`);
     }
-    
+
    if(!this.p('clickable')) return;
 
     batchStart();
@@ -478,10 +478,6 @@ export class Button extends Widget {
           if([ 'add', 'set' ].indexOf(a.mode) == -1)
             problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
           let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(function(w) {
-            if (typeof collections[a.collection] === 'object') {
-              if(typeof collections[a.collection].find(o => o.p('id') === w.p('id')) !== 'undefined')
-                return false;
-            }
             if(a.type != 'all' && w.p('type') != a.type)
               return false;
             if(a.relation === '<')
@@ -504,7 +500,7 @@ export class Button extends Widget {
           // resolve piles
           c.filter(w=>w.p('type')=='pile').forEach(w=>c.push(...w.children()));
           c = c.filter(w=>w.p('type')!='pile');
-          collections[a.collection] = c;
+          collections[a.collection] = [...new Set(c)];
         }
       }
 
