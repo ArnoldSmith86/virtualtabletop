@@ -50,6 +50,8 @@ export class Button extends Widget {
             op[key[key.length-1]] = value;
             if (['var_operand1', 'var_operand2', 'var_operand3'].indexOf(key) >= 0)
               op[key[key.length-1]] = variables[value].index !== undefined ? variables[value][value.index] : variables[value];
+            if (key=='var_operation')
+              v.operation = variables[value];
           });
           variables['TEMP'] = this.compute(v.operation, v.variable, op[1], op[2], op[3],problems);
           if (v.variable)
