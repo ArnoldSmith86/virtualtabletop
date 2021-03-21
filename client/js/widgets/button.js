@@ -44,22 +44,184 @@ export class Button extends Widget {
   applyVariables(field, variables, problems) {
     if(Array.isArray(field.applyVariables)) {
       for(const v of field.applyVariables) {
-        if(v.parameter && v.variable) {
-          field[v.parameter] = (v.index === undefined) ? variables[v.variable] : variables[v.variable][v.index];
+        if (v.operation) {
+          let op = [null, 1, 1, 1];
+          Object.entries(v).forEach(([key, value]) => {
+            op[key[key.length-1]] = value;
+            if (['var_operand1', 'var_operand2', 'var_operand3'].indexOf(key) >= 0)
+              op[key[key.length-1]] = variables[value].index !== undefined ? variables[value][value.index] : variables[value];
+          });
+          variables['TEMP'] = this.compute(v.operation, v.variable, op[1], op[2], op[3],problems);
+          if (v.variable)
+            variables[v.variable] = variables['TEMP'];
+        } else if(v.parameter && v.variable) {
+          field[v.parameter] = v.index !== undefined ? variables[v.variable][v.index] : variables[v.variable];
+          variables['TEMP'] = field[v.parameter];
         } else if(v.parameter && v.template) {
           field[v.parameter] = v.template.replace(/\{([^}]+)\}/g, function(i, key) {
-            return (variables[key] === undefined) ? "" : variables[key];
+            return variables[key] !== undefined ? variables[key] : "";
           });
+          variables['TEMP'] = field[v.parameter];
         } else if(v.parameter && v.property) {
           let w = this.isValidID(v.widget, problems) ? widgets.get(v.widget) : this;
-          field[v.parameter] = (w.p(v.property) === undefined) ? null : w.p(v.property);
+          field[v.parameter] = w.p(v.property) !== undefined ? w.p(v.property) : null;
+          variables['TEMP'] = field[v.parameter];
         } else {
-          problems.push('Entry in parameter applyVariables does not contain "parameter" together with "variable", "property", or "template".');
+          problems.push('Entry in parameter applyVariables does not contain "operation" or "parameter" together with "variable", "property", or "template".');
         }
       }
     } else {
       problems.push('Parameter applyVariables is not an array.');
     }
+    variables['TEMP'] = undefined;
+  }
+
+  compute(o, v, x, y, z, problems) {
+    const toNum = s=>typeof s == 'string' && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s;
+    x = toNum(x);
+    y = toNum(y);
+    z = toNum(z);
+    try {
+      switch(o) {
+      case '=':  v = x = y;  break;
+      case '+':  v = x + y;  break;
+      case '-':  v = x - y;  break;
+      case '*':  v = x * y;  break;
+      case '**': v = x ** y; break;
+      case '/':  v = x / y;  break;
+      case '%':  v = x % y;  break;
+      case '<':  v = x < y;  break;
+      case '<=': v = x <= y; break;
+      case '==': v = x == y; break;
+      case '!=': v = x != y; break;
+      case '>=': v = x >= y; break;
+      case '>':  v = x > y;  break;
+      case '&&': v = x && y; break;
+      case '||': v = x || y; break;
+      case '!':  v = !x;     break;
+
+      // Math operations
+      case 'hypot':
+      case 'max':
+      case 'min':
+      case 'pow':
+        v = Math[o](x, y);
+        break;
+      case 'sin':
+      case 'cos':
+      case 'tan':
+        v = Math[o](x * Math.PI/180);
+        break;
+      case 'abs':
+      case 'cbrt':
+      case 'ceil':
+      case 'exp':
+      case 'floor':
+      case 'log':
+      case 'log10':
+      case 'log2':
+      case 'random':
+      case 'round':
+      case 'sign':
+      case 'sqrt':
+      case 'trunc':
+        v = Math[o](x);
+        break;
+      case 'E':
+      case 'LN2':
+      case 'LN10':
+      case 'LOG2E':
+      case 'LOG10E':
+      case 'PI':
+      case 'SQRT1_2':
+      case 'SQRT2':
+        v = Math[o];
+        break;
+
+      // String operations
+      case 'length':
+        v = x.length;
+        break;
+      case 'toLowerCase':
+      case 'toUpperCase':
+      case 'trim':
+      case 'trimStart':
+      case 'trimEnd':
+        v = x[o]();
+        break;
+      case 'charAt':
+      case 'charCodeAt':
+      case 'codePointAt':
+      case 'concat':
+      case 'includes':
+      case 'endsWith':
+      case 'indexOf':
+      case 'lastIndexOf':
+      case 'localeCompare':
+      case 'match':
+      case 'padEnd':
+      case 'padStart':
+      case 'repeat':
+      case 'search':
+      case 'split':
+      case 'startsWith':
+      case 'toLocaleLowerCase':
+      case 'toLocaleUpperCase':
+        v = x[o](y);
+        break;
+      case 'replace':
+      case 'replaceAll':
+      case 'substr':
+        v = x[o](y, z);
+        break;
+
+      // Array operations
+      // 'length' should work the same as for strings
+      case 'getIndex':
+        v = x[y];
+        break;
+      case 'setIndex':
+        v[x] = y;
+        break;
+      case 'from':
+      case 'isArray':
+        v = Array[o](x);
+        break;
+      case 'concatArray':
+        v = x.concat(y);
+        break;
+      case 'pop':
+      case 'reverse':
+      case 'shift':
+      case 'sort':
+        v = x[o]();
+        break;
+      case 'findIndex':
+      case 'includes':
+      case 'indexOf':
+      case 'join':
+      case 'lastIndexOf':
+        v = x[o](y);
+        break;
+      case 'slice':
+        v = x[o](y, z);
+        break;
+      case 'push':
+      case 'unshift':
+        v[o](x);
+        break;
+      default:
+        problems.push(`Operation ${o} is unsupported.`);
+      }
+    } catch(e) {
+      v = 0;
+      problems.push(`Exception: ${e.toString()}`);
+    }
+    if(v === null || typeof v === 'number' && !isFinite(v)) {
+      v = 0;
+      problems.push(`The operation evaluated to null, Infinity or NaN. Setting the variable to 0.`);
+    }
+    return v;
   }
 
   css() {
@@ -101,8 +263,8 @@ export class Button extends Widget {
         return true;
       problems.push(`Collection ${collection} does not exist.`);
     }
-    
-   if(!this.p('clickable')) return;
+   
+    if(!this.p('clickable')) return;
 
     batchStart();
 
@@ -165,155 +327,9 @@ export class Button extends Widget {
         }
       };
 
-      function compute(o, v, x, y, z) {
-        try {
-          switch(o) {
-          case '=':  v = y;      break;
-          case '+':  v = x + y;  break;
-          case '-':  v = x - y;  break;
-          case '*':  v = x * y;  break;
-          case '**': v = x ** y; break;
-          case '/':  v = x / y;  break;
-          case '%':  v = x % y;  break;
-          case '<':  v = x < y;  break;
-          case '<=': v = x <= y; break;
-          case '==': v = x == y; break;
-          case '!=': v = x != y; break;
-          case '>=': v = x >= y; break;
-          case '>':  v = x > y;  break;
-          case '&&': v = x && y; break;
-          case '||': v = x || y; break;
-          case '!':  v = !x;     break;
-
-          // Math operations
-          case 'hypot':
-          case 'max':
-          case 'min':
-          case 'pow':
-            v = Math[o](x, y);
-            break;
-          case 'sin':
-          case 'cos':
-          case 'tan':
-            v = Math[o](x * Math.PI/180);
-            break;
-          case 'abs':
-          case 'cbrt':
-          case 'ceil':
-          case 'exp':
-          case 'floor':
-          case 'log':
-          case 'log10':
-          case 'log2':
-          case 'random':
-          case 'round':
-          case 'sign':
-          case 'sqrt':
-          case 'trunc':
-            v = Math[o](x);
-            break;
-          case 'E':
-          case 'LN2':
-          case 'LN10':
-          case 'LOG2E':
-          case 'LOG10E':
-          case 'PI':
-          case 'SQRT1_2':
-          case 'SQRT2':
-            v = Math[o];
-            break;
-
-          // String operations
-          case 'length':
-            v = x.length;
-            break;
-          case 'toLowerCase':
-          case 'toUpperCase':
-          case 'trim':
-          case 'trimStart':
-          case 'trimEnd':
-            v = x[o]();
-            break;
-          case 'charAt':
-          case 'charCodeAt':
-          case 'codePointAt':
-          case 'concat':
-          case 'includes':
-          case 'endsWith':
-          case 'indexOf':
-          case 'lastIndexOf':
-          case 'localeCompare':
-          case 'match':
-          case 'padEnd':
-          case 'padStart':
-          case 'repeat':
-          case 'search':
-          case 'split':
-          case 'startsWith':
-          case 'toLocaleLowerCase':
-          case 'toLocaleUpperCase':
-            v = x[o](y);
-            break;
-          case 'replace':
-          case 'replaceAll':
-          case 'substr':
-            v = x[o](y, z);
-            break;
-
-          // Array operations
-          // 'length' should work the same as for strings
-          case 'getIndex':
-            v = x[y];
-            break;
-          case 'setIndex':
-            v[x] = y;
-            break;
-          case 'from':
-          case 'isArray':
-            v = Array[o](x);
-            break;
-          case 'concatArray':
-            v = x.concat(y);
-            break;
-          case 'pop':
-          case 'reverse':
-          case 'shift':
-          case 'sort':
-            v = x[o]();
-            break;
-          case 'findIndex':
-          case 'includes':
-          case 'indexOf':
-          case 'join':
-          case 'lastIndexOf':
-            v = x[o](y);
-            break;
-          case 'slice':
-            v = x[o](y, z);
-            break;
-          case 'push':
-          case 'unshift':
-            v[o](x);
-            break;
-          default:
-            problems.push(`Operation ${o} is unsupported.`);
-          }
-        } catch(e) {
-          v = 0;
-          problems.push(`Exception: ${e.toString()}`);
-        }
-        if(v === null || typeof v === 'number' && !isFinite(v)) {
-          v = 0;
-          problems.push(`The operation evaluated to null, Infinity or NaN. Setting the variable to 0.`);
-        }
-        return v;
-      }
-
       if(a.func == 'COMPUTE') {
         setDefaults(a, { operation: '+', operand1: 1, operand2: 1, operand3: 1, variable: 'COMPUTE' });
-        const toNum = s=>typeof s == 'string' && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s;
-        const v = a.variable;
-        variables[v] = compute(a.operation, variables[v], toNum(a.operand1), toNum(a.operand2), toNum(a.operand3));
+        variables[v] = this.compute(a.operation, variables[a.variable], a.operand1, a.operand2, a.operand3);
       }
 
       if(a.func == 'COUNT') {
@@ -514,7 +530,7 @@ export class Button extends Widget {
           problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
         } else if(isValidCollection(a.collection)) {
           for(const w of collections[a.collection]) {
-            w.p(a.property, compute(a.relation, null, w.p(a.property), a.value));
+            w.p(a.property, this.compute(a.relation, null, w.p(a.property), a.value));
           }
         }
       }
