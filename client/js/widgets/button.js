@@ -478,6 +478,10 @@ export class Button extends Widget {
           if([ 'add', 'set' ].indexOf(a.mode) == -1)
             problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
           let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(function(w) {
+            if (typeof collections[a.collection] === 'object') {
+              if(typeof collections[a.collection].find(o => o.p('id') === w.p('id')) !== 'undefined')
+                return false;
+            }
             if(a.type != 'all' && w.p('type') != a.type)
               return false;
             if(a.relation === '<')
