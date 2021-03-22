@@ -115,6 +115,9 @@ class Pile extends Widget {
       const x = this.p('x');
       const y = this.p('y');
 
+      // this is added in removeWidgetLocal aswell but needed before the set parent so that the child isn't added to the same pile again during updatePiles
+      this.isBeingRemoved = true;
+
       c.p('x', c.p('x') + x);
       c.p('y', c.p('y') + y);
       c.p('parent', p);
