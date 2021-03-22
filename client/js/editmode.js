@@ -1,8 +1,10 @@
 let edit = false;
 
 function addWidgetLocal(widget) {
-  if(!widget.id)
-    widget.id = Math.random().toString(36).substring(3, 7);
+  if (!widget.id)
+    do {
+      widget.id = Math.random().toString(36).substring(3, 7);
+    } while (widgets.has(widget.id));
   sendPropertyUpdate(widget.id, widget);
   sendDelta(true);
 }
