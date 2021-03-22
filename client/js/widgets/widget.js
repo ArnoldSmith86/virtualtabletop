@@ -114,6 +114,8 @@ export class Widget extends StateManaged {
   applyRemove() {
     if(this.p('parent') && widgets.has(this.p('parent')))
       widgets.get(this.p('parent')).applyChildRemove(this);
+    if(this.p('deck') && widgets.has(this.p('deck')))
+      widgets.get(this.p('deck')).removeCard(this);
     removeFromDOM(this.domElement);
   }
 
