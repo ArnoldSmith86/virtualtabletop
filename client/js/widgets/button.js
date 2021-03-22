@@ -20,7 +20,7 @@ export class Button extends Widget {
       image: '',
       color: 'black',
       svgReplaces: {},
-      
+
       text: '',
       clickRoutine: [],
       debug: false
@@ -101,7 +101,7 @@ export class Button extends Widget {
         return true;
       problems.push(`Collection ${collection} does not exist.`);
     }
-    
+
    if(!this.p('clickable')) return;
 
     batchStart();
@@ -500,7 +500,7 @@ export class Button extends Widget {
           // resolve piles
           c.filter(w=>w.p('type')=='pile').forEach(w=>c.push(...w.children()));
           c = c.filter(w=>w.p('type')!='pile');
-          collections[a.collection] = c;
+          collections[a.collection] = [...new Set(c)];
         }
       }
 
