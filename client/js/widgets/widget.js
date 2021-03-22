@@ -112,7 +112,7 @@ export class Widget extends StateManaged {
   }
 
   applyRemove() {
-    if(this.p('parent'))
+    if(this.p('parent') && widgets.has(this.p('parent')))
       widgets.get(this.p('parent')).applyChildRemove(this);
     removeFromDOM(this.domElement);
   }
@@ -382,13 +382,13 @@ export class Widget extends StateManaged {
   }
 
   updatePiles() {
-    if(this.p('parent') && !widgets.get(this.p('parent')).supportsPiles())
+    if(this.p('parent') && !widgets.get(this.p('parent')).supportsPiles() || this.isBeingRemoved)
       return;
 
     for(const [ widgetID, widget ] of widgets) {
       // check if this widget is closer than 10px from another widget in the same parent
       if(widget != this && widget.p('parent') == this.p('parent') && Math.abs(widget.p('x')-this.p('x')) < 10 && Math.abs(widget.p('y')-this.p('y')) < 10) {
-        if(widget.p('owner') !== this.p('owner'))
+        if(widget.p('owner') !== this.p('owner') || widget.isBeingRemoved)
           continue;
 
         // if a card gets dropped onto a card, they create a new pile and are added to it
@@ -414,7 +414,7 @@ export class Widget extends StateManaged {
         }
 
         // if a pile gets dropped onto a card, the card is added to the pile but the pile is moved to the original position of the card
-        if(widget.p('type') == 'card' && this.p('type') == 'pile' && !this.removed) {
+        if(widget.p('type') == 'card' && this.p('type') == 'pile') {
           this.children().reverse().forEach(w=>w.bringToFront());
           this.p('x', widget.p('x'));
           this.p('y', widget.p('y'));
@@ -423,7 +423,7 @@ export class Widget extends StateManaged {
         }
 
         // if a card gets dropped onto a pile, it simply gets added to the pile
-        if(widget.p('type') == 'pile' && this.p('type') == 'card' && !widget.removed) {
+        if(widget.p('type') == 'pile' && this.p('type') == 'card') {
           this.bringToFront();
           this.p('parent', widget.p('id'));
           break;

@@ -115,8 +115,6 @@ class Pile extends Widget {
       const x = this.p('x');
       const y = this.p('y');
 
-      this.removed = true;
-
       c.p('x', c.p('x') + x);
       c.p('y', c.p('y') + y);
       c.p('parent', p);
