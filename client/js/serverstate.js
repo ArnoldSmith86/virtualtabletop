@@ -142,7 +142,7 @@ export function sendPropertyUpdate(widgetID, property, value) {
 }
 
 export function widgetFilter(callback) {
-  return Array.from(widgets.values()).filter(callback);
+  return Array.from(widgets.values()).filter(w=>!w.isBeingRemoved).filter(callback);
 }
 
 onLoad(function() {

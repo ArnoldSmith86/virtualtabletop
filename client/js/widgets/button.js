@@ -347,9 +347,13 @@ export class Button extends Widget {
 
       if(a.func == 'DELETE') {
         setDefaults(a, { collection: 'DEFAULT' });
-        if(isValidCollection(a.collection))
-          for(const w of collections[a.collection])
-            removeWidgetLocal(w.p('id'))
+        if(isValidCollection(a.collection)) {
+          for(const w of collections[a.collection]) {
+            removeWidgetLocal(w.p('id'));
+            for(const c in collections)
+              collections[c] = collections[c].filter(x=>x!=w);
+          }
+        }
       };
 
       if(a.func == 'FLIP') {
@@ -490,6 +494,8 @@ export class Button extends Widget {
           if([ 'add', 'set' ].indexOf(a.mode) == -1)
             problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
           let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(function(w) {
+            if(w.isBeingRemoved)
+              return false;
             if(a.type != 'all' && w.p('type') != a.type)
               return false;
             if(a.relation === '<')
