@@ -1,10 +1,16 @@
 let edit = false;
 
+function generateUniqueWidgetID() {
+  let id;
+  do {
+    id = Math.random().toString(36).substring(3, 7);
+  } while (widgets.has(id));
+  return id;
+}
+
 function addWidgetLocal(widget) {
   if (!widget.id)
-    do {
-      widget.id = Math.random().toString(36).substring(3, 7);
-    } while (widgets.has(widget.id));
+    widget.id = generateUniqueWidgetID();
   sendPropertyUpdate(widget.id, widget);
   sendDelta(true);
 }
@@ -253,7 +259,7 @@ function populateAddWidgetOverlay() {
   });
 
   addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', x, 500), function() {
-    for(const w of generateCardDeckWidgets(Math.random().toString(36).substring(3, 7), x, 500))
+    for(const w of generateCardDeckWidgets(generateUniqueWidgetID(), x, 500))
       addWidgetLocal(w);
   });
 
@@ -338,7 +344,7 @@ function populateAddWidgetOverlay() {
   }
 
   addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 820, 700), function() {
-    for(const w of generateCounterWidgets(Math.random().toString(36).substring(3, 7), 820, 700))
+    for(const w of generateCounterWidgets(generateUniqueWidgetID(), 820, 700))
       addWidgetLocal(w);
   });
 
