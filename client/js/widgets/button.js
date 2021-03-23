@@ -133,6 +133,71 @@ export class Button extends Widget {
         continue;
       }
 
+      if(typeof a == 'string') {
+        const i = '[a-zA-Z0-9_-]+';
+        const s = `'(${i}|)'`;
+        const n = '(-?(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?)';
+        const v = `(\\((${i})\\)(?:\\.(${i})|\\[(${i})\\])|(${i})(?:\\.(${i})|\\[(${i})\\])?)`;
+        const p = `(null|true|false|${n}|${v}|${s})`;
+        const r = `^${v} = ${p}(?: (${i}|[=+*/%<!>&|-]{1,2}) ${p}(?: ${p})?)?`;
+
+        const match = a.match(new RegExp(r + '\x24')); // the minifier doesn't like a "$" here
+
+        if(match) {
+          const getParam = (offset)=>{
+            if(typeof match[offset+9] == 'string') {
+              return match[offset+9];
+            } else if(typeof match[offset+1] == 'string') {
+              return +match[offset+1];
+            } else if(match[offset] == 'null') {
+              return null;
+            } else if(match[offset] == 'true') {
+              return true;
+            } else if(match[offset] == 'false') {
+              return false;
+            } else if(match[offset] == 'false') {
+              return false;
+            } else if(match[offset+6]) {
+              const variable = match[offset+6];
+              const index = match[offset+8] !== undefined ? variables[match[offset+8]] : match[offset+7];
+              if(index && typeof variables[variable] != 'object')
+                problems.push(`The variable ${variable} is not an object, so indexing it doesn't work.`)
+              else
+                return index ? variables[variable][index] : variables[variable];
+            } else if(match[offset+3]) {
+              if(this.isValidID(match[offset+3], problems)) {
+                const widget = widgets.get(match[offset+3]);
+                const property = match[offset+4] || variables[match[offset+5]];
+                return widget.p(property);
+              }
+            }
+          };
+          const getValue = function(input) {
+            if(match[18])
+              return compute(match[18], input, getParam(8), getParam(19), getParam(29));
+            else
+              return getParam(8);
+          };
+
+          if(match[2]) {
+            if(this.isValidID(match[2], problems)) {
+              const widget = widgets.get(match[2]);
+              const property = match[3] || variables[match[4]];
+              widget.p(property, getValue(widget.p(property)));
+            }
+          } else {
+            const variable = match[5];
+            const index = match[7] !== undefined ? variables[match[7]] : match[6];
+            if(index && typeof variables[variable] != 'object')
+              problems.push(`The variable ${variable} is not an object, so indexing it doesn't work.`)
+            else if(index)
+              variables[variable][index] = getValue(variables[variable][index]);
+            else
+              variables[variable] = getValue(variables[variable]);
+          }
+        }
+      }
+
       if(a.func == 'CLICK') {
         setDefaults(a, { collection: 'DEFAULT', count: 1 });
         if(isValidCollection(a.collection))
