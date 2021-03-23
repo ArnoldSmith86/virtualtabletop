@@ -20,7 +20,7 @@ export class Button extends Widget {
       image: '',
       color: 'black',
       svgReplaces: {},
-      
+
       text: '',
       clickRoutine: [],
       debug: false
@@ -101,7 +101,7 @@ export class Button extends Widget {
         return true;
       problems.push(`Collection ${collection} does not exist.`);
     }
-    
+
    if(!this.p('clickable')) return;
 
     batchStart();
@@ -302,7 +302,7 @@ export class Button extends Widget {
           v = 0;
           problems.push(`Exception: ${e.toString()}`);
         }
-        if(v === null || typeof v === 'number' && !isFinite(v)) {
+        if(o !== '=' && (v === null || typeof v === 'number' && !isFinite(v))) {
           v = 0;
           problems.push(`The operation evaluated to null, Infinity or NaN. Setting the variable to 0.`);
         }
@@ -500,7 +500,7 @@ export class Button extends Widget {
           // resolve piles
           c.filter(w=>w.p('type')=='pile').forEach(w=>c.push(...w.children()));
           c = c.filter(w=>w.p('type')!='pile');
-          collections[a.collection] = c;
+          collections[a.collection] = [...new Set(c)];
         }
       }
 
