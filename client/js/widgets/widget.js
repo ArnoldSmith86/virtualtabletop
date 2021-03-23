@@ -398,7 +398,7 @@ export class Widget extends StateManaged {
   }
 
   updatePiles() {
-    if(this.p('parent') && !widgets.get(this.p('parent')).supportsPiles() || this.isBeingRemoved)
+    if(this.isBeingRemoved || this.p('parent') && !widgets.get(this.p('parent')).supportsPiles())
       return;
 
     for(const [ widgetID, widget ] of widgets) {
