@@ -302,7 +302,7 @@ export class Button extends Widget {
           v = 0;
           problems.push(`Exception: ${e.toString()}`);
         }
-        if(v === null || typeof v === 'number' && !isFinite(v)) {
+        if(o !== '=' && (v === null || typeof v === 'number' && !isFinite(v))) {
           v = 0;
           problems.push(`The operation evaluated to null, Infinity or NaN. Setting the variable to 0.`);
         }
