@@ -248,7 +248,6 @@ const jeCommands = [
   {
     id: 'je_removeProperty',
     name: _=>`🗑 remove property ${jeContext && jeContext[jeContext.length-1]}`,
-    forceKey: 'r',
     context: ' ↦ (?=[^"]+$)',
     call: function() {
       let pointer = jeGetValue(jeContext.slice(0, -1));
