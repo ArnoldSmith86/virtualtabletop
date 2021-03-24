@@ -1,3 +1,7 @@
+.card {
+  overflow: hidden;
+}
+
 body.edit .card {
   display: none;
 }
