@@ -248,7 +248,7 @@ const jeCommands = [
   {
     id: 'je_removeProperty',
     name: _=>`🗑 remove property ${jeContext && jeContext[jeContext.length-1]}`,
-    forceKey: 'D',
+    forceKey: 'r',
     context: ' ↦ (?=[^"]+$)',
     call: function() {
       let pointer = jeGetValue(jeContext.slice(0, -1));
@@ -275,6 +275,19 @@ const jeCommands = [
       addWidgetLocal(toAdd);
       jeClick(widgets.get(toAdd.id), true);
       jeStateNow.type = '###SELECT ME###';
+      jeSetAndSelect(null);
+    }
+  },
+  {
+    id: 'je_duplicateWidget',
+    name: '✨ duplicate widget',
+    forceKey: 'D',
+    show: _=>jeStateNow,
+    call: function() {
+      var currentWidget = JSON.parse(JSON.stringify(jeWidget.state))
+      currentWidget.id = null;
+      addWidgetLocal(currentWidget);
+      jeClick(widgets.get(currentWidget.id), true);
       jeSetAndSelect(null);
     }
   },
