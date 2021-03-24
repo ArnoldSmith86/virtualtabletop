@@ -248,6 +248,7 @@ const jeCommands = [
   {
     id: 'je_removeProperty',
     name: _=>`🗑 remove property ${jeContext && jeContext[jeContext.length-1]}`,
+    forceKey: 'r',
     context: ' ↦ (?=[^"]+$)',
     call: function() {
       let pointer = jeGetValue(jeContext.slice(0, -1));
@@ -283,11 +284,12 @@ const jeCommands = [
     forceKey: 'D',
     show: _=>jeStateNow,
     call: function() {
-      var currentWidget = JSON.parse(JSON.stringify(jeWidget.state))
+      let currentWidget = JSON.parse(JSON.stringify(jeWidget.state))
       currentWidget.id = null;
       addWidgetLocal(currentWidget);
       jeClick(widgets.get(currentWidget.id), true);
-      jeSetAndSelect(null);
+      jeStateNow.id = '###SELECT ME###';
+      jeSetAndSelect(currentWidget.id);
     }
   },
   {
