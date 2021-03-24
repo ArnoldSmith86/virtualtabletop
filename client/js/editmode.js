@@ -80,9 +80,6 @@ function editClick(widget) {
 
   typeSpecific.style.display = 'block';
   
-  vmEditOverlay.selectedWidget = widget
-  vmEditOverlay.previousState = widget.state
-  
   if(type == 'holder')
     populateEditOptionsHolder(widget.state);
 
