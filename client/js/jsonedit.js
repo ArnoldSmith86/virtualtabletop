@@ -247,8 +247,7 @@ const jeCommands = [
   },
   {
     id: 'je_removeProperty',
-    name: _=>`🗑 remove property ${jeContext && jeContext[jeContext.length-1]}`,
-    forceKey: 'r',
+    name: _=>`remove property ${jeContext && jeContext[jeContext.length-1]}`,
     context: ' ↦ (?=[^"]+$)',
     call: function() {
       let pointer = jeGetValue(jeContext.slice(0, -1));
@@ -338,8 +337,7 @@ const jeCommands = [
   },
   {
     id: 'je_applyVariables',
-    name: _=>`⮀ change ${jeContext && jeContext[4]} to applyVariables`,
-    forceKey: 'ArrowLeft',
+    name: _=>`change ${jeContext && jeContext[4]} to applyVariables`,
     context: '^button.*\\) ↦ [a-zA-Z]+',
     call: function() {
       const operation = jeGetValue(jeContext.slice(1, 3));
@@ -845,7 +843,7 @@ function jeShowCommands() {
   }
 
   const displayKey = function (k) {
-    return { ArrowUp: '⬆', ArrowDown: '⬇', ArrowLeft: '🠄'} [k] || k;
+    return { ArrowUp: '⬆', ArrowDown: '⬇'} [k] || k;
   }
   for(const command of jeCommands) {
     const contextMatch = context.match(new RegExp(command.context));
