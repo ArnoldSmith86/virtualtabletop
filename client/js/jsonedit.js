@@ -192,6 +192,22 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_copyState',
+    name: '📋 copy state from another room/server',
+    forceKey: 'C',
+    call: function() {
+      const sourceURL = prompt('Please enter the room URL:').replace(/\/[^\/]+$/, a=>`/state${a}`);
+      const targetURL = location.href.replace(/\/[^\/]+$/, a=>`/state${a}`);
+      fetch(sourceURL).then(r=>r.text()).then(t=>{
+        fetch(targetURL,{
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: t
+        })
+      });
+    }
+  },
+  {
     id: 'je_callMacro',
     name: _=>jeWidget === null ? '▶️ call' : '🎬 macro',
     forceKey: 'M',
