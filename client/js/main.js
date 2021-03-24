@@ -196,8 +196,7 @@ onLoad(function() {
 
   const editOverlayApp = Vue.createApp({
     data() { return {
-      selectedWidget: Vue.shallowReactive({}),
-      previousState: Vue.shallowReactive({})
+      selectedWidget: {},
     }}
   });
   loadComponents(editOverlayApp);

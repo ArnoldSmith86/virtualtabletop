@@ -29,9 +29,9 @@ export const deckEditor = {
     template: `
       <div class="deckEdit">
         <table id="cardTypesList">
-          <tr><th>ID</th><th>Properties</th><th>Count</th></tr>
-            <tr v-for="(typeObject, typeID) in this.widgetState.cardTypes">
-              <td><input class="id" :value="typeID"></td>
+          <tbody><tr><th>ID</th><th>Properties</th><th>Count</th></tr></tbody>
+            <tr v-for="(typeObject, typeID) in this.widgetState.cardTypes" class="cardType">
+              <td><input class="id" :value="typeID" :data-old-i-d="typeID"></td>
               <td class="properties">
                 <div v-for="prop in dynamicProperties">
                   <label>{{ prop.name }}</label>
@@ -39,7 +39,7 @@ export const deckEditor = {
                   <button v-if="prop.type == 'image'" class="uploadAsset" @click="upload(typeID, prop.name)">⬆️ Upload</button>
                 </div>
               </td>
-              <td><input class="count" type="number" :value="countCardType(typeID)" min="0" max="1000"></td>
+              <td><input class="count" type="number" :value="countCardType(typeID)" :data-old-value="countCardType(typeID)" min="0" max="1000"></td>
             </tr>
         </table>
         <button id="decrementAllCardTypes">All -1</button><button id="incrementAllCardTypes">All +1</button>
