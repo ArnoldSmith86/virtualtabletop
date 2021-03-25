@@ -111,7 +111,7 @@ class Card extends Widget {
         }
 
         // add a callback that makes sure dynamic property changes are reflected on the DOM
-        const properties = object.svgReplaces ? Object.keys(object.svgReplaces) : [];
+        const properties = object.svgReplaces ? Object.values(object.svgReplaces) : [];
         if(object.valueType != 'static')
           properties.push(object.value);
         for(const p of properties) {
