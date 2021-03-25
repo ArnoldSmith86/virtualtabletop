@@ -20,7 +20,7 @@ export class Button extends Widget {
       image: '',
       color: 'black',
       svgReplaces: {},
-      
+
       text: '',
       clickRoutine: [],
       debug: false
@@ -39,6 +39,10 @@ export class Button extends Widget {
     super.applyDeltaToDOM(delta);
     if(delta.text !== undefined)
       this.domElement.textContent = delta.text;
+
+    for(const property of Object.values(this.p('svgReplaces') || {}))
+      if(delta[property] !== undefined)
+        this.domElement.style.cssText = this.css();
   }
 
   applyVariables(field, variables, problems) {
@@ -101,7 +105,7 @@ export class Button extends Widget {
         return true;
       problems.push(`Collection ${collection} does not exist.`);
     }
-    
+
    if(!this.p('clickable')) return;
 
     batchStart();
