@@ -73,7 +73,7 @@ const jeCommands = [
       if(css)
         cardType.css = css;
       jeStateNow.cardTypes['###SELECT ME###'] = cardType;
-      jeSetAndSelect(Math.random().toString(36).substring(3, 7));
+      jeSetAndSelect(getUniqueWidgetID());
     }
   },
   {
