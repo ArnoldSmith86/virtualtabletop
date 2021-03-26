@@ -299,7 +299,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'CALL') {
-        setDefaults(a, { widget: this.p('id'), routine: 'clickRoutine', 'return': true, variables: {}, variable: 'result', iterations: 1 });
+        setDefaults(a, { widget: this.p('id'), routine: 'clickRoutine', 'return': true, variables: {}, variable: 'result' });
         if(!a.routine.match(/Routine$/)) {
           problems.push('Routine parameters have to end with "Routine".');
         } else if(isValidID(a.widget)) {
@@ -312,11 +312,8 @@ export class Widget extends StateManaged {
             for(const c in collections)
               inheritCollections[c] = [ ...collections[c] ];
             inheritCollections['caller'] = [ this ];
-            for(let iteration=0; iteration<a.iterations; ++iteration) {
-              inheritVariables.iteration = iteration;
-              $('#debugButtonOutput').textContent += `\n\n\nCALLing: ${a.widget}.${a.routine} (iteration ${iteration})\n`;
-              variables[a.variable] = await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections, (depth || 0) + 1);
-            }
+            $('#debugButtonOutput').textContent += `\n\n\nCALLing: ${a.widget}.${a.routine}\n`;
+            variables[a.variable] = await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections, (depth || 0) + 1);
           }
         }
         if(!a.return) {
