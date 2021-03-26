@@ -6,6 +6,7 @@ class Spinner extends Widget {
       width: 110,
       height: 110,
       typeClasses: 'widget spinner',
+      clickable: true,
 
       options: [ 1, 2, 3, 4, 5, 6 ],
       value: '🎲',
@@ -38,7 +39,7 @@ class Spinner extends Widget {
   }
 
   click() {
-    if(!super.click()) {
+    if(this.p('clickable') && !super.click()) {
       const angle = this.p('angle') + Math.floor((2+Math.random())*360);
       const o = this.p('options');
       this.p('angle', angle);

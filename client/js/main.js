@@ -110,7 +110,12 @@ function checkURLproperties() {
 function setScale() {
   const w = window.innerWidth;
   const h = window.innerHeight;
-  scale = w/h < 1600/1000 ? w/1600 : h/1000;
+  if(jeEnabled) {
+    const targetWidth = jeZoomOut ? 3200 : 1600;
+    scale = (w-700)/targetWidth;
+  } else {
+    scale = w/h < 1600/1000 ? w/1600 : h/1000;
+  }
   document.documentElement.style.setProperty('--scale', scale);
   roomRectangle = $('#roomArea').getBoundingClientRect();
 }
@@ -132,6 +137,29 @@ async function uploadAsset() {
 
     return response.text();
   }).catch(e=>alert(`Uploading failed: ${e.toString()}`));
+}
+
+const svgCache = {};
+function getSVG(url, replaces, callback) {
+  if(typeof svgCache[url] == 'string') {
+    let svg = svgCache[url];
+    for(const replace in replaces)
+      svg = svg.replace(replace, replaces[replace]);
+    return 'data:image/svg+xml;base64,'+btoa(svg);
+  }
+
+  if(!svgCache[url]) {
+    svgCache[url] = [];
+    fetch(url).then(r=>r.text()).then(t=>{
+      const callbacks = svgCache[url];
+      svgCache[url] = t;
+      for(const c of callbacks)
+        c();
+    });
+  }
+
+  svgCache[url].push(callback);
+  return '';
 }
 
 onLoad(function() {

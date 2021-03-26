@@ -122,6 +122,16 @@ export default class Room {
         player.send(func, args);
   }
 
+  deleteUnusedVariantFiles(stateID, oldState, newState) {
+    for(const oldVariantID in oldState.variants) {
+      if(!newState.variants[oldVariantID]) {
+        const savefile = this.variantFilename(stateID, oldVariantID);
+        if(fs.existsSync(savefile))
+          fs.unlinkSync(savefile);
+      }
+    }
+  }
+
   async download(stateID, variantID) {
     const includeAssets = true;
     const zip = new JSZip();
@@ -169,6 +179,8 @@ export default class Room {
   }
 
   async editState(player, id, meta) {
+    this.deleteUnusedVariantFiles(id, this.state._meta.states[id], meta);
+
     // if update links were removed, download their current contents to files
     const currentState = this.state._meta.states[id];
     for(const variantID in meta.variants) {
@@ -265,6 +277,7 @@ export default class Room {
   }
 
   removeState(player, stateID) {
+    this.deleteUnusedVariantFiles(stateID, this.state._meta.states[stateID], { variants: {} });
     delete this.state._meta.states[stateID];
     this.sendMetaUpdate();
   }
@@ -292,8 +305,15 @@ export default class Room {
   }
 
   unload() {
-    console.log(new Date().toISOString(), `unloading room ${this.id}`);
-    this.writeToFilesystem();
+    if(Object.keys(this.state).length > 1 || Object.keys(this.state._meta.states).length) {
+      console.log(new Date().toISOString(), `unloading room ${this.id}`);
+      this.writeToFilesystem();
+    } else {
+      console.log(new Date().toISOString(), `unloading empty room ${this.id}`);
+      const savefile = path.resolve() + '/save/rooms/' + this.id + '.json';
+      if(fs.existsSync(savefile))
+        fs.unlinkSync(savefile);
+    }
   }
 
   writeToFilesystem() {

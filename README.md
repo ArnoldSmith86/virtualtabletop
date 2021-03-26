@@ -1,3 +1,5 @@
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/ArnoldSmith86/virtualtabletop)
+
 # virtualtabletop
 
 This project aims to create a virtual tabletop in the browser where you can (re)create all board, dice and card games and play them without registration over the internet.
@@ -85,6 +87,8 @@ If you close you terminal and wants to restart you server you will need to get b
 To debug client-side code, first start the server so that it doesn't compress the code:
 
     npm run debug
+
+On windows, enter `SET NOCOMPRESS=1` in a terminal prior to starting the server with `npm start`.
 
 In your browser, refresh to have it re-download the client code.
 Press F12 to show the developer tools.
