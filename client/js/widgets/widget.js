@@ -299,7 +299,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'CALL') {
-        setDefaults(a, { widget: this.p('id'), routine: 'clickRoutine', 'return': true, variables: {}, variable: 'result' });
+        setDefaults(a, { widget: this.p('id'), routine: 'clickRoutine', 'return': true, arguments: {}, variable: 'result' });
         if(!a.routine.match(/Routine$/)) {
           problems.push('Routine parameters have to end with "Routine".');
         } else if(isValidID(a.widget)) {
@@ -307,7 +307,7 @@ export class Widget extends StateManaged {
             problems.push(`Widget ${a.widget} does not contain ${a.routine} (or it is no array).`);
           } else {
             // make sure everything is passed in a way that the variables and collections of this routine won't be changed
-            const inheritVariables = Object.assign(JSON.parse(JSON.stringify(variables)), a.variables);
+            const inheritVariables = Object.assign(JSON.parse(JSON.stringify(variables)), a.arguments);
             const inheritCollections = {};
             for(const c in collections)
               inheritCollections[c] = [ ...collections[c] ];
