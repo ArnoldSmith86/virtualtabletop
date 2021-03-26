@@ -1,6 +1,5 @@
 import { $, $a, onLoad } from './domhelpers.js';
 import { startWebSocket } from './connection.js';
-import { loadComponents } from './components/loadComponents.js';
 
 
 let scale = 1;
