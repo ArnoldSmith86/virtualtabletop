@@ -125,6 +125,27 @@ export class Widget extends StateManaged {
     removeFromDOM(this.domElement);
   }
 
+  applyVariables(field, variables, problems) {
+    if(Array.isArray(field.applyVariables)) {
+      for(const v of field.applyVariables) {
+        if(v.parameter && v.variable) {
+          field[v.parameter] = (v.index === undefined) ? variables[v.variable] : variables[v.variable][v.index];
+        } else if(v.parameter && v.template) {
+          field[v.parameter] = v.template.replace(/\{([^}]+)\}/g, function(i, key) {
+            return (variables[key] === undefined) ? "" : variables[key];
+          });
+        } else if(v.parameter && v.property) {
+          let w = this.isValidID(v.widget, problems) ? widgets.get(v.widget) : this;
+          field[v.parameter] = (w.p(v.property) === undefined) ? null : w.p(v.property);
+        } else {
+          problems.push('Entry in parameter applyVariables does not contain "parameter" together with "variable", "property", or "template".');
+        }
+      }
+    } else {
+      problems.push('Parameter applyVariables is not an array.');
+    }
+  }
+
   applyZ(force) {
     if(this.p('inheritChildZ') || force) {
       this.domElement.style.zIndex = this.calculateZ();
@@ -217,40 +238,32 @@ export class Widget extends StateManaged {
     return [ 'rotation', 'scale', 'x', 'y' ];
   }
 
-  async evaluateRoutine(property, initialVariables, initialCollections, depth) {
-    function applyVariables(field, variables, problems) {
-      if(Array.isArray(field.applyVariables)) {
-        for(const v of field.applyVariables) {
-          if(v.parameter && v.variable) {
-            field[v.parameter] = (v.index === undefined) ? variables[v.variable] : variables[v.variable][v.index];
-          } else if(v.parameter && v.template) {
-            field[v.parameter] = v.template.replace(/\{([^}]+)\}/g, function(i, key) {
-              return (variables[key] === undefined) ? "" : variables[key];
-            });
-          } else if(v.parameter && v.property) {
-            let w = isValidID(v.widget, problems) ? widgets.get(v.widget) : this;
-            field[v.parameter] = (w.p(v.property) === undefined) ? null : w.p(v.property);
-          } else {
-            problems.push('Entry in parameter applyVariables does not contain "parameter" together with "variable", "property", or "template".');
-          }
-        }
-      } else {
-        problems.push('Parameter applyVariables is not an array.');
+  evaluateInputOverlay(o, resolve, reject, go) {
+    const result = {};
+    for(const field of o.fields) {
+
+      if(field.type == 'checkbox') {
+        result[field.variable] = document.getElementById(this.p('id') + ';' + field.variable).checked;
       }
+
+      if(field.type == 'color' || field.type == 'number' || field.type == 'string') {
+        result[field.variable] = document.getElementById(this.p('id') + ';' + field.variable).value;
+      }
+
     }
 
+    showOverlay(null);
+    if(go)
+      resolve(result);
+    else
+      reject(result);
+  }
+
+  async evaluateRoutine(property, initialVariables, initialCollections, depth) {
     function setDefaults(routine, defaults) {
       for(const key in defaults)
         if(routine[key] === undefined)
           routine[key] = defaults[key];
-    }
-
-    function isValidID(id, problems) {
-      if(Array.isArray(id))
-        return !id.map(i=>isValidID(i, problems)).filter(r=>r!==true).length;
-      if(widgets.has(id))
-        return true;
-      problems.push(`Widget ID ${id} does not exist.`);
     }
 
     function isValidCollection(collection) {
@@ -291,7 +304,7 @@ export class Widget extends StateManaged {
 
       if(this.p('debug')) console.log(`${this.id}: ${JSON.stringify(original)}`);
 
-      if(a.applyVariables) applyVariables(a, variables, problems);
+      if(a.applyVariables) this.applyVariables(a, variables, problems);
 
       if(a.skip) {
         $('#debugButtonOutput').textContent += '\n\n\nOPERATION SKIPPED: \n' + JSON.stringify(a, null, '  ');
@@ -302,7 +315,7 @@ export class Widget extends StateManaged {
         setDefaults(a, { widget: this.p('id'), routine: 'clickRoutine', 'return': true, arguments: {}, variable: 'result' });
         if(!a.routine.match(/Routine$/)) {
           problems.push('Routine parameters have to end with "Routine".');
-        } else if(isValidID(a.widget)) {
+        } else if(this.isValidID(a.widget)) {
           if(!Array.isArray(widgets.get(a.widget).p(a.routine))) {
             problems.push(`Widget ${a.widget} does not contain ${a.routine} (or it is no array).`);
           } else {
@@ -334,7 +347,7 @@ export class Widget extends StateManaged {
       if(a.func == 'CLONE'){
         setDefaults(a, { source: 'DEFAULT', count: 1, xOffset: 0, yOffset: 0, properties: {}, collection: 'DEFAULT' });
         if(a.properties.applyVariables) {
-          applyVariables(a.properties, variables, problems);
+          this.applyVariables(a.properties, variables, problems);
           delete a.properties["applyVariables"];
         };
         if(isValidCollection(a.source)) {
@@ -508,7 +521,7 @@ export class Widget extends StateManaged {
       if(a.func == 'COUNT') {
         setDefaults(a, { collection: 'DEFAULT', variable: 'COUNT' });
         if(a.holder !== undefined) {
-          if(isValidID(a.holder,problems))
+          if(this.isValidID(a.holder,problems))
             variables[a.variable] = widgets.get(a.holder).children().length;
         } else if(isValidCollection(a.collection)) {
           variables[a.variable] = collections[a.collection].length;
@@ -525,7 +538,7 @@ export class Widget extends StateManaged {
       if(a.func == 'FLIP') {
         setDefaults(a, { count: 0, face: null, faceCyle: null, collection: 'DEFAULT' });
         if(a.holder !== undefined) {
-          if(isValidID(a.holder,problems))
+          if(this.isValidID(a.holder,problems))
             w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>c.flip&&c.flip(a.face,a.faceCycle)));
         } else if(isValidCollection(a.collection)) {
           if(collections[a.collection].length)
@@ -562,7 +575,7 @@ export class Widget extends StateManaged {
         }
       }
 
-      if(a.func == 'INPUT' && this.showInputOverlay) {
+      if(a.func == 'INPUT') {
         try {
           Object.assign(variables, await this.showInputOverlay(a, widgets, variables, problems));
         } catch(e) {
@@ -577,7 +590,7 @@ export class Widget extends StateManaged {
         if([ 'set', 'dec', 'inc' ].indexOf(a.mode) == -1)
           problems.push(`Warning: Mode ${a.mode} will be interpreted as add.`);
         if(a.label !== undefined) {
-          if (isValidID(a.label, problems)) {
+          if (this.isValidID(a.label, problems)) {
             w(a.label, widget=> {
               widget.setText(a.value, a.mode, this.p('debug'), problems)
             });
@@ -594,7 +607,7 @@ export class Widget extends StateManaged {
         setDefaults(a, { count: 1, face: null });
         const count = a.count || 999999;
 
-        if(isValidID(a.from, problems) && isValidID(a.to, problems)) {
+        if(this.isValidID(a.from, problems) && this.isValidID(a.to, problems)) {
           w(a.from, source=>w(a.to, target=>source.children().slice(0, count).reverse().forEach(c=> {
             if(a.face !== null && c.flip)
               c.flip(a.face);
@@ -611,7 +624,7 @@ export class Widget extends StateManaged {
 
       if(a.func == 'MOVEXY') {
         setDefaults(a, { count: 1, face: null, x: 0, y: 0 });
-        if(isValidID(a.from, problems)) {
+        if(this.isValidID(a.from, problems)) {
           w(a.from, source=>source.children().slice(0, a.count || 999999).reverse().forEach(c=> {
             if(a.face !== null && c.flip)
               c.flip(a.face);
@@ -630,7 +643,7 @@ export class Widget extends StateManaged {
 
       if(a.func == 'RECALL') {
         setDefaults(a, { owned: true });
-        if(isValidID(a.holder, problems)) {
+        if(this.isValidID(a.holder, problems)) {
           toA(a.holder).forEach(holder=>{
             const deck = widgetFilter(w=>w.p('type')=='deck'&&w.p('parent')==holder);
             if(deck.length) {
@@ -647,7 +660,7 @@ export class Widget extends StateManaged {
 
       if(a.func == 'ROTATE') {
         setDefaults(a, { count: 1, angle: 90, mode: 'add' });
-        if(isValidID(a.holder, problems)) {
+        if(this.isValidID(a.holder, problems)) {
           w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>{
             c.rotate(a.angle, a.mode);
           }));
@@ -699,7 +712,7 @@ export class Widget extends StateManaged {
 
       if(a.func == 'SORT') {
         setDefaults(a, { key: 'value', reverse: false });
-        if(isValidID(a.holder, problems)) {
+        if(this.isValidID(a.holder, problems)) {
           w(a.holder, holder=>{
             let z = 1;
             let children = holder.children().reverse().sort((w1,w2)=>{
@@ -717,7 +730,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'SHUFFLE') {
-        if(isValidID(a.holder, problems)) {
+        if(this.isValidID(a.holder, problems)) {
           w(a.holder, holder=>{
             holder.children().forEach(c=>c.p('z', Math.floor(Math.random()*10000)));
             holder.updateAfterShuffle();
@@ -751,6 +764,14 @@ export class Widget extends StateManaged {
 
   hideEnlarged() {
     $('#enlarged').classList.add('hidden');
+  }
+
+  isValidID(id, problems) {
+    if(Array.isArray(id))
+      return !id.map(i=>this.isValidID(i, problems)).filter(r=>r!==true).length;
+    if(widgets.has(id))
+      return true;
+    problems.push(`Widget ID ${id} does not exist.`);
   }
 
   moveToHolder(holder) {
@@ -940,6 +961,88 @@ export class Widget extends StateManaged {
     }
     if(event)
       event.preventDefault();
+  }
+
+  async showInputOverlay(o, widgets, variables, problems) {
+    return new Promise((resolve, reject) => {
+
+      $('#buttonInputOverlay h1').textContent = o.header || "Button Input";
+      $('#buttonInputFields').innerHTML = '';
+
+      for(const field of o.fields) {
+
+        const dom = document.createElement('div');
+
+        if(field.applyVariables) this.applyVariables(field, variables, problems);
+
+        if(field.type == 'checkbox') {
+          const input = document.createElement('input');
+          const label = document.createElement('label');
+          input.type = 'checkbox';
+          input.checked = field.value || false;
+          label.textContent = field.label;
+          dom.appendChild(input);
+          dom.appendChild(label);
+          label.htmlFor = input.id = this.p('id') + ';' + field.variable;
+        }
+
+        if(field.type == 'color') {
+          const input = document.createElement('input');
+          const label = document.createElement('label');
+          input.type = 'color';
+          input.value = field.value || '#ff0000';
+          label.textContent = field.label;
+          dom.appendChild(label);
+          dom.appendChild(input);
+          label.htmlFor = input.id = this.p('id') + ';' + field.variable;
+        }
+
+        if(field.type == 'number') {
+          const input = document.createElement('input');
+          const label = document.createElement('label');
+          input.type = 'number';
+          input.value = field.value || 1;
+          input.min = field.min || 1;
+          input.max = field.max || 10;
+          label.textContent = field.label;
+          dom.appendChild(label);
+          dom.appendChild(input);
+          label.htmlFor = input.id = this.p('id') + ';' + field.variable;
+        }
+
+        if(field.type == 'string') {
+          const input = document.createElement('input');
+          const label = document.createElement('label');
+          input.value = field.value || "";
+          label.textContent = field.label;
+          dom.appendChild(label);
+          dom.appendChild(input);
+          label.htmlFor = input.id = this.p('id') + ';' + field.variable;
+        }
+
+        if(field.type == 'text') {
+          const p = document.createElement('p');
+          p.textContent = field.text;
+          dom.appendChild(p);
+        }
+
+        $('#buttonInputFields').appendChild(dom);
+      }
+
+      const goHandler = e=>{
+        this.evaluateInputOverlay(o, resolve, reject, true)
+        $('#buttonInputGo').removeEventListener('click', goHandler);
+        $('#buttonInputCancel').removeEventListener('click', cancelHandler);
+      };
+      const cancelHandler = e=>{
+        this.evaluateInputOverlay(o, resolve, reject, false)
+        $('#buttonInputGo').removeEventListener('click', goHandler);
+        $('#buttonInputCancel').removeEventListener('click', cancelHandler);
+      };
+      on('#buttonInputGo', 'click', goHandler);
+      on('#buttonInputCancel', 'click', cancelHandler);
+      showOverlay('buttonInputOverlay');
+    });
   }
 
   supportsPiles() {
