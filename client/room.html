@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
-  <script src="https://cdn.jsdelivr.net/npm/vue@next"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3.0.7/dist/vue.global.prod.js"></script>
   <base target="_blank">
   <style> {{CSS}} </style>
 </head>
@@ -40,24 +40,24 @@
       <button>▶️ Play</button>
     </div>
 
-    <div id="editOverlay" class="overlay">
-      <h1>Edit widget</h1>
-      <deck-editor :widget-state="selectedWidget.state"></deck-editor>
-      <div class="holderEdit">
-        <input type="checkbox" id="transparentHolder"><label for="transparentHolder"> Transparent</label><br/>
-        <input type="checkbox" id="resizeHolderToChildren"><label for="resizeHolderToChildren"> Resize to fit contents (once)</label>
+    <div id="editOverlayVue">
+      <div id="editOverlay" class="overlay">
+        <h1>Edit widget</h1>
+        <deck-editor :widget-state="selectedWidget.state"></deck-editor>
+        <div class="holderEdit">
+          <input type="checkbox" id="transparentHolder"><label for="transparentHolder"> Transparent</label><br/>
+          <input type="checkbox" id="resizeHolderToChildren"><label for="resizeHolderToChildren"> Resize to fit contents (once)</label>
+        </div>
+        <base-edit-overlay ></base-edit-overlay>
       </div>
-      <base-edit-overlay ></base-edit-overlay>
-    </div>
 
-    <div id="editJSONoverlay" class="overlay">
-      <h1>Edit widget JSON</h1>
-      <p>Please check <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Creating-Games">our GitHub wiki for documentation</a>. Having trouble with a button? Temporarily add this to see a log of state changes after each operation: "debug": true</p>
-      <p>You can open this room in <a href="https://virtualtabletop.io/ghetto.htm" id="ghetto-link">an advanced editor</a>. Be sure to have <b>backups</b> on your harddrive first (of every game in your room)!</p>
-      <textarea id="editWidgetJSON"></textarea>
-      <button id="updateWidgetJSON">Update widget</button>
-      <button id="duplicateWidgetJSON">Duplicate widget</button>
-      <button id="removeWidgetJSON">Remove widget</button>
+      <div id="editJSONoverlay" class="overlay">
+        <h1>Edit widget JSON</h1>
+        <p>Please check <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Creating-Games">our GitHub wiki for documentation</a>. Having trouble with a button? Temporarily add this to see a log of state changes after each operation: "debug": true</p>
+        <p>You can open this room in <a href="https://virtualtabletop.io/ghetto.htm" id="ghetto-link">an advanced editor</a>. Be sure to have <b>backups</b> on your harddrive first (of every game in your room)!</p>
+        <textarea id="editWidgetJSON"></textarea>
+        <base-edit-overlay :json-edit="true"></base-edit-overlay>
+      </div>
     </div>
 
     <div id="debugButtonOverlay" class="overlay">

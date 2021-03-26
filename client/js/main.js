@@ -200,7 +200,7 @@ onLoad(function() {
     }}
   });
   loadComponents(editOverlayApp);
-  vmEditOverlay = editOverlayApp.mount("#editOverlay");
+  vmEditOverlay = editOverlayApp.mount("#editOverlayVue");
 
   onMessage('warning', alert);
   onMessage('error', alert);

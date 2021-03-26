@@ -1,4 +1,10 @@
 export const baseEditOverlay = {
+  props: {
+    jsonEdit: {
+      type: Boolean,
+      default: false
+    }
+  },
   methods: {
       update() {
         onClickUpdateWidget();
@@ -17,6 +23,6 @@ export const baseEditOverlay = {
     <button id="updateWidget" @click="update()">Update widget</button>
     <button id="duplicateWidget" @click="duplicate()">Duplicate widget</button>
     <button id="removeWidget" @click="remove()">Remove widget</button>
-    <button id="manualEdit" @click="manualEdit()">Advanced: manually edit JSON (changes above will be discarded)</button>
+    <button v-if="!this.jsonEdit" id="manualEdit" @click="manualEdit()">Advanced: manually edit JSON (changes above will be discarded)</button>
   `
 }
