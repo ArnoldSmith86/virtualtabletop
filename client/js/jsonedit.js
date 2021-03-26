@@ -341,16 +341,16 @@ const jeCommands = [
   }
 ];
 
-function jeAddButtonOperationCommands(command, defaults) {
+function jeAddRoutineOperationCommands(command, defaults) {
   jeCommands.push({
     id: 'operation_' + command,
     name: command,
-    context: `^button ↦ clickRoutine`,
+    context: `^.*Routine`,
     call: function() {
       if(jeContext.length == 2)
-        jeStateNow.clickRoutine.push({func: command});
+        jeStateNow[jeContext[1]].push({func: command});
       else
-        jeStateNow.clickRoutine.splice(jeContext[2]+1, 0, {func: '###SELECT ME###'});
+        jeStateNow[jeContext[1]].splice(jeContext[2]+1, 0, {func: '###SELECT ME###'});
       jeSetAndSelect(command);
     }
   });
@@ -360,7 +360,7 @@ function jeAddButtonOperationCommands(command, defaults) {
     jeCommands.push({
       id: 'default_' + command + '_' + property,
       name: property,
-      context: `^button.* ↦ \\(${command}\\) ↦ `,
+      context: `^.* ↦ \\(${command}\\) ↦ `,
       call: function() {
         jeInsert(jeContext.slice(1, 3), property, defaults[property]);
       },
@@ -381,24 +381,25 @@ function jeAddCommands() {
   jeAddWidgetPropertyCommands(new Pile());
   jeAddWidgetPropertyCommands(new Spinner());
 
-  jeAddButtonOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 });
-  jeAddButtonOperationCommands('COMPUTE', { operation: '+', operand1: 1, operand2: 1, operand3: 1, variable: 'COMPUTE' });
-  jeAddButtonOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT' });
-  jeAddButtonOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, properties: null });
-  jeAddButtonOperationCommands('DELETE', { collection: 'DEFAULT'});
-  jeAddButtonOperationCommands('FLIP', { count: 0, face: null, faceCycle: 'forward', holder: null, collection: 'DEFAULT' });
-  jeAddButtonOperationCommands('GET', { variable: 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first' });
+  jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', 'return': true, arguments: {}, variable: 'result' });
+  jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 });
+  jeAddRoutineOperationCommands('COMPUTE', { operation: '+', operand1: 1, operand2: 1, operand3: 1, variable: 'COMPUTE' });
+  jeAddRoutineOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT' });
+  jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, properties: null });
+  jeAddRoutineOperationCommands('DELETE', { collection: 'DEFAULT'});
+  jeAddRoutineOperationCommands('FLIP', { count: 0, face: null, faceCycle: 'forward', holder: null, collection: 'DEFAULT' });
+  jeAddRoutineOperationCommands('GET', { variable: 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first' });
   // INPUT is missing
-  jeAddButtonOperationCommands('LABEL', { value: 0, mode: 'set', label: null, collection: 'DEFAULT' });
-  jeAddButtonOperationCommands('MOVE', { count: 1, face: null, from: null, to: null });
-  jeAddButtonOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0 });
-  jeAddButtonOperationCommands('RANDOM', { min: 1, max: 10, variable: 'RANDOM' });
-  jeAddButtonOperationCommands('RECALL', { owned: true, holder: null });
-  jeAddButtonOperationCommands('ROTATE', { count: 1, angle: 90, mode: 'add', holder: null });
-  jeAddButtonOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'add', source: 'all' });
-  jeAddButtonOperationCommands('SET', { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
-  jeAddButtonOperationCommands('SORT', { key: 'value', reverse: false, holder: null });
-  jeAddButtonOperationCommands('SHUFFLE', { holder: null });
+  jeAddRoutineOperationCommands('LABEL', { value: 0, mode: 'set', label: null, collection: 'DEFAULT' });
+  jeAddRoutineOperationCommands('MOVE', { count: 1, face: null, from: null, to: null });
+  jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0 });
+  jeAddRoutineOperationCommands('RANDOM', { min: 1, max: 10, variable: 'RANDOM' });
+  jeAddRoutineOperationCommands('RECALL', { owned: true, holder: null });
+  jeAddRoutineOperationCommands('ROTATE', { count: 1, angle: 90, mode: 'add', holder: null });
+  jeAddRoutineOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'add', source: 'all' });
+  jeAddRoutineOperationCommands('SET', { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
+  jeAddRoutineOperationCommands('SORT', { key: 'value', reverse: false, holder: null });
+  jeAddRoutineOperationCommands('SHUFFLE', { holder: null });
 
   jeAddCSScommands();
 
@@ -667,8 +668,8 @@ function jeGetContext() {
     }
   }
   try {
-    if(keys[1] == 'clickRoutine' && typeof keys[2] == 'number' && !jeJSONerror)
-      keys.splice(3, 0, '(' + jeStateNow.clickRoutine[keys[2]].func + ')');
+    if(keys[1].match(/Routine$/) && typeof keys[2] == 'number' && !jeJSONerror)
+      keys.splice(3, 0, '(' + jeStateNow[keys[1]][keys[2]].func + ')');
   } catch(e) {}
 
   if(select)
