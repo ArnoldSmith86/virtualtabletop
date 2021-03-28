@@ -385,8 +385,8 @@ export class Button extends Widget {
 
       if(a.func == 'LABEL') {
         setDefaults(a, { value: 0, mode: 'set', collection: 'DEFAULT' });
-        if([ 'set', 'dec', 'inc' ].indexOf(a.mode) == -1)
-          problems.push(`Warning: Mode ${a.mode} will be interpreted as add.`);
+        if([ 'set', 'dec', 'inc','append' ].indexOf(a.mode) == -1)
+          problems.push(`Warning: Mode ${a.mode} will be interpreted as set.`);
         if(a.label !== undefined) {
           if (this.isValidID(a.label, problems)) {
             this.w(a.label, widget=> {
