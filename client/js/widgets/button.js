@@ -466,7 +466,7 @@ export class Button extends Widget {
       }
 
       if(a.func == 'SELECT') {
-        setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'add', source: 'all' });
+        setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'add', source: 'all', key: null, reverse: false });
         if(a.source == 'all' || isValidCollection(a.source)) {
           if([ 'add', 'set' ].indexOf(a.mode) == -1)
             problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
@@ -494,6 +494,17 @@ export class Button extends Widget {
           c.filter(w=>w.p('type')=='pile').forEach(w=>c.push(...w.children()));
           c = c.filter(w=>w.p('type')!='pile');
           collections[a.collection] = [...new Set(c)];
+
+          if (a.key) {
+            collections[a.collection].sort((w1,w2)=>{
+              if(typeof w1.p(a.key) == 'number')
+                return w1.p(a.key) - w2.p(a.key);
+              else
+                return w1.p(a.key).localeCompare(w2.p(a.key));
+            });
+            if(a.reverse)
+            collections[a.collection].reverse();
+          }
         }
       }
 
