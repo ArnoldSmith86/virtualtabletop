@@ -407,7 +407,7 @@ function jeAddCommands() {
   jeAddButtonOperationCommands('RANDOM', { min: 1, max: 10, variable: 'RANDOM' });
   jeAddButtonOperationCommands('RECALL', { owned: true, holder: null });
   jeAddButtonOperationCommands('ROTATE', { count: 1, angle: 90, mode: 'add', holder: null });
-  jeAddButtonOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'add', source: 'all' });
+  jeAddButtonOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'add', source: 'all', key: null, reverse: false });
   jeAddButtonOperationCommands('SET', { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
   jeAddButtonOperationCommands('SORT', { key: 'value', reverse: false, holder: null });
   jeAddButtonOperationCommands('SHUFFLE', { holder: null });
