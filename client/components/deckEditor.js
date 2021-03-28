@@ -25,6 +25,14 @@ export const deckEditor = {
       async upload(typeID, propName) {
         this.widgetState.cardTypes[typeID][propName] = await uploadAsset();
       },
+
+      increment() {
+        onClickIncrementAllCardTypes();
+      },
+
+      decrement() {
+        onClickDecrementAllCardTypes()
+      }
     },
     template: `
       <div class="deckEdit">
@@ -42,7 +50,7 @@ export const deckEditor = {
               <td><input class="count" type="number" :value="countCardType(typeID)" :data-old-value="countCardType(typeID)" min="0" max="1000"></td>
             </tr>
         </table>
-        <button id="decrementAllCardTypes">All -1</button><button id="incrementAllCardTypes">All +1</button>
+        <button id="decrementAllCardTypes" @click="decrement()">All -1</button><button id="incrementAllCardTypes" @click="increment()">All +1</button>
       </div>
     `
 }

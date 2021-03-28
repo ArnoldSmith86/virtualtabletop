@@ -87,9 +87,9 @@ function editClick(widget) {
     return showOverlay('editJSONoverlay');
 
   typeSpecific.style.display = 'block';
-  
+
   vmEditOverlay.selectedWidget = widget
-  
+
   if(type == 'holder')
     populateEditOptionsHolder(widget.state);
 
@@ -422,6 +422,14 @@ function onClickManualEditWidget() {
   showOverlay('editJSONoverlay')
 }
 
+function onClickIncrementAllCardTypes() {
+  $a('#cardTypesList .count').forEach(i=>++i.value);
+}
+
+function onClickDecrementAllCardTypes() {
+  $a('#cardTypesList .count').forEach(i=>i.value=Math.max(0, i.value-1));
+}
+
 onLoad(function() {
   on('#editButton', 'click', function() {
     if(edit)
@@ -457,14 +465,6 @@ onLoad(function() {
   on('#addWidget', 'click', function() {
     addWidgetLocal(JSON.parse($('#widgetText').value));
     showOverlay();
-  });
-
-  on('#decrementAllCardTypes', 'click', function() {
-    $a('#cardTypesList .count').forEach(i=>i.value=Math.max(0, i.value-1));
-  });
-
-  on('#incrementAllCardTypes', 'click', function() {
-    $a('#cardTypesList .count').forEach(i=>++i.value);
   });
 
   populateAddWidgetOverlay();
