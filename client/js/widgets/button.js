@@ -154,8 +154,8 @@ export class Button extends Widget {
             for(let i=1; i<=a.count; ++i) {
               const clone = Object.assign(JSON.parse(JSON.stringify(w.state)), a.properties);
               const parent = clone.parent;
-              const newX = clone.x + a.xOffset * i;
-              const newY = clone.y + a.yOffset * i;
+              const newX = (clone.x ? clone.x : 0) + a.xOffset * i;
+              const newY = (clone.y ? clone.y : 0) + a.yOffset * i;
               clone.clonedFrom = w.p('id');
 
               delete clone.id;
