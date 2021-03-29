@@ -363,6 +363,8 @@ export class Widget extends StateManaged {
     if (this.p('text') !== undefined) {
       if(mode == 'inc' || mode == 'dec')
         this.p('text', (parseInt(this.p('text')) || 0) + (mode == 'dec' ? -1 : 1) * text);
+      else if(mode == 'append')
+        this.p('text', this.p('text') + text);
       else if(Array.isArray(text))
         this.p('text', text.join(', '));
       else if(typeof text == 'string' && text.match(/^[-+]?[0-9]+(\.[0-9]+)?$/))

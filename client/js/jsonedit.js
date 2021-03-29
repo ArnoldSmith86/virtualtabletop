@@ -73,7 +73,7 @@ const jeCommands = [
       if(css)
         cardType.css = css;
       jeStateNow.cardTypes['###SELECT ME###'] = cardType;
-      jeSetAndSelect(Math.random().toString(36).substring(3, 7));
+      jeSetAndSelect(getUniqueWidgetID());
     }
   },
   {
@@ -247,8 +247,7 @@ const jeCommands = [
   },
   {
     id: 'je_removeProperty',
-    name: _=>`🗑 remove property ${jeContext && jeContext[jeContext.length-1]}`,
-    forceKey: 'D',
+    name: _=>`remove property ${jeContext && jeContext[jeContext.length-1]}`,
     context: ' ↦ (?=[^"]+$)',
     call: function() {
       let pointer = jeGetValue(jeContext.slice(0, -1));
@@ -276,6 +275,20 @@ const jeCommands = [
       jeClick(widgets.get(toAdd.id), true);
       jeStateNow.type = '###SELECT ME###';
       jeSetAndSelect(null);
+    }
+  },
+  {
+    id: 'je_duplicateWidget',
+    name: '✨ duplicate widget',
+    forceKey: 'D',
+    show: _=>jeStateNow,
+    call: function() {
+      let currentWidget = JSON.parse(JSON.stringify(jeWidget.state))
+      currentWidget.id = null;
+      addWidgetLocal(currentWidget);
+      jeClick(widgets.get(currentWidget.id), true);
+      jeStateNow.id = '###SELECT ME###';
+      jeSetAndSelect(currentWidget.id);
     }
   },
   {
@@ -324,8 +337,7 @@ const jeCommands = [
   },
   {
     id: 'je_applyVariables',
-    name: _=>`⮀ change ${jeContext && jeContext[4]} to applyVariables`,
-    forceKey: 'ArrowLeft',
+    name: _=>`change ${jeContext && jeContext[4]} to applyVariables`,
     context: '^button.*\\) ↦ [a-zA-Z]+',
     call: function() {
       const operation = jeGetValue(jeContext.slice(1, 3));
@@ -410,7 +422,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ textAlign', [ 'left', 'center', 'right' ]);
   jeAddEnumCommands('^.*\\(FLIP\\) ↦ faceCycle', [ 'forward', 'backward', 'random' ]);
   jeAddEnumCommands('^.*\\(GET\\) ↦ aggregation', [ 'first', 'sum' ]);
-  jeAddEnumCommands('^.*\\(LABEL\\) ↦ mode', [ 'set', 'dec', 'inc' ]);
+  jeAddEnumCommands('^.*\\(LABEL\\) ↦ mode', [ 'set', 'dec', 'inc', 'append' ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ mode', [ 'set', 'add' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ mode', [ 'set', 'add' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=', 'in' ]);
@@ -831,7 +843,7 @@ function jeShowCommands() {
   }
 
   const displayKey = function (k) {
-    return { ArrowUp: '⬆', ArrowDown: '⬇', ArrowLeft: '🠄'} [k] || k;
+    return { ArrowUp: '⬆', ArrowDown: '⬇'} [k] || k;
   }
   for(const command of jeCommands) {
     const contextMatch = context.match(new RegExp(command.context));
