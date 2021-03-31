@@ -1,9 +1,12 @@
 import { $, $a, onLoad } from './domhelpers.js';
 import { startWebSocket } from './connection.js';
 
+
 let scale = 1;
 let roomRectangle;
 let overlayActive = false;
+
+var vmEditOverlay;
 
 let urlProperties = {};
 
@@ -70,6 +73,7 @@ export function showOverlay(id) {
     }
   } else {
     $('#roomArea').className = '';
+    vmEditOverlay.selectedWidget = {};
     overlayActive = false;
   }
 }
@@ -187,6 +191,15 @@ onLoad(function() {
   checkURLproperties();
   setScale();
   startWebSocket();
+
+
+  const editOverlayApp = Vue.createApp({
+    data() { return {
+      selectedWidget: {},
+    }}
+  });
+  loadComponents(editOverlayApp);
+  vmEditOverlay = editOverlayApp.mount("#editOverlayVue");
 
   onMessage('warning', alert);
   onMessage('error', alert);
