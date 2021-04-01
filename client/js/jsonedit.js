@@ -528,7 +528,7 @@ function jeApplyChanges() {
     jeStateBeforeRaw = currentStateRaw;
     $('#editWidgetJSON').dataset.previousState = jeStateBefore;
     $('#editWidgetJSON').value = jeStateBefore = currentState;
-    $('#updateWidgetJSON').click();
+    onClickUpdateWidget();
     jeDeltaIsOurs = false;
   }
 }
