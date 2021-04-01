@@ -96,6 +96,30 @@ function editClick(widget) {
   showOverlay('editOverlay');
 }
 
+function generateEmptyDeckWidget(id, x, y) {
+  const widgets = [
+    { type:'holder', id, x, y, dropTarget: { type: 'card' } },
+    { type:'pile', id: id+'P', parent: id, width:103, height:160 },
+  ];
+  const front = { type:'image', x:0, y:0, width:103, height:160, valueType:'dynamic', value:'image', color:'transparent' };
+  const back  = { ...front };
+  back.value = 'backImage';
+  widgets.push({
+    type: 'deck',
+    id: id+'D',
+    parent: id,
+    x: 12,
+    y: 41,
+    cardTypes: {},
+    faceTemplates: [ {
+      border: false, radius: false, objects: [ back  ]
+    }, {
+      border: false, radius: false, objects: [ front ]
+    } ]
+  });
+  return widgets;
+}
+
 function generateCardDeckWidgets(id, x, y) {
   const widgets = [
     { type:'holder', id, x, y, dropTarget: { type: 'card' } },
@@ -456,6 +480,11 @@ onLoad(function() {
       width: 1500,
       height: 180
     });
+    showOverlay();
+  });
+  on('#addEmptyDeck', 'click', function() {
+    for(const w of generateEmptyDeckWidget(generateUniqueWidgetID(), 100, 700))
+      addWidgetLocal(w);
     showOverlay();
   });
 
