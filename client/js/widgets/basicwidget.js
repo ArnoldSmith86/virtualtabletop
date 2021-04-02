@@ -29,6 +29,10 @@ class BasicWidget extends Widget {
     }
     if(delta.text !== undefined)
       this.domElement.textContent = delta.text;
+
+    for(const property of Object.values(this.p('svgReplaces') || {}))
+      if(delta[property] !== undefined)
+        this.domElement.style.cssText = this.css();
   }
 
   classes() {

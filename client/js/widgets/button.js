@@ -39,6 +39,10 @@ export class Button extends Widget {
     super.applyDeltaToDOM(delta);
     if(delta.text !== undefined)
       this.domElement.textContent = delta.text;
+
+    for(const property of Object.values(this.p('svgReplaces') || {}))
+      if(delta[property] !== undefined)
+        this.domElement.style.cssText = this.css();
   }
 
   applyVariables(field, variables, problems) {
