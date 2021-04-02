@@ -48,10 +48,10 @@ const jeCommands = [
     context: '.*"(/assets/[0-9_-]+)"|^basic ↦ faces ↦ [0-9]+ ↦ image|^deck ↦ cardTypes ↦ .*? ↦ image',
     call: function() {
       uploadAsset().then(a=> {
-          if (a) {
-            jeInsert(null, jeGetLastKey(), a);
-            jeApplyChanges();
-          }
+        if(a) {
+          jeInsert(null, jeGetLastKey(), a);
+          jeApplyChanges();
+        }
       });
     }
   },
@@ -91,7 +91,7 @@ const jeCommands = [
     id: 'je_removeCard',
     name: 'remove card',
     context: '^deck ↦ cardTypes ↦ .*? ↦',
-    show: _=>jeStateNow&&widgetFilter(w=>w.p('deck')==jeStateNow.id&&w.p('cardType')==jeContext[2]).length,
+    show: _=>widgetFilter(w=>w.p('deck')==jeStateNow.id&&w.p('cardType')==jeContext[2]).length,
     call: function() {
       const card = widgetFilter(w=>w.p('deck')==jeStateNow.id&&w.p('cardType')==jeContext[2])[0];
       removeWidgetLocal(card.p('id'));
@@ -231,9 +231,10 @@ const jeCommands = [
     name: '👁 show this widget below',
     forceKey: 'S',
     call: function() {
-      if (jeWidget != undefined)
+      if(jeWidget != undefined)
         jeSecondaryWidget = (jeWidget != undefined && jeSecondaryWidget == null || jeStateNow.id != JSON.parse(jeSecondaryWidget).id) ? jeWidget && JSON.stringify(jeWidget.state, null, '  ') : null;
-      else jeSecondaryWidget = null;
+      else
+        jeSecondaryWidget = null;
       jeShowCommands();
     }
   },
@@ -262,7 +263,7 @@ const jeCommands = [
       jeSelect(oldStart, oldEnd);
     },
     show: function() {
-      return jeStateNow && jeGetValue(jeContext.slice(0, -1))[jeContext[jeContext.length-1]] !== undefined;
+      return jeGetValue(jeContext.slice(0, -1))[jeContext[jeContext.length-1]] !== undefined;
     }
   },
   {
@@ -321,7 +322,7 @@ const jeCommands = [
     name: '🔽 open deck',
     forceKey: 'ArrowDown',
     context: '^card',
-    show: _=>jeStateNow&&widgets.has(jeStateNow.deck),
+    show: _=>widgets.has(jeStateNow.deck),
     call: function() {
       jeClick(widgets.get(jeStateNow.deck), true);
     }
@@ -330,14 +331,14 @@ const jeCommands = [
     id: 'je_openParent',
     name: '🔼 open parent',
     forceKey: 'ArrowUp',
-    show: _=>jeStateNow&&widgets.has(jeStateNow.parent),
+    show: _=>jeStateNow && widgets.has(jeStateNow.parent),
     call: function() {
       jeClick(widgets.get(jeStateNow.parent), true);
     }
   },
   {
     id: 'je_applyVariables',
-    name: _=>`change ${jeContext && jeContext[4]} to applyVariables`,
+    name: _=>`change ${jeContext[4]} to applyVariables`,
     context: '^button.*\\) ↦ [a-zA-Z]+',
     call: function() {
       const operation = jeGetValue(jeContext.slice(1, 3));
@@ -348,7 +349,7 @@ const jeCommands = [
       jeSetAndSelect('');
     },
     show: function() {
-      return jeContext && jeContext[4] != 'applyVariables';
+      return jeContext[4] != 'applyVariables';
     }
   }
 ];
@@ -377,7 +378,7 @@ function jeAddButtonOperationCommands(command, defaults) {
         jeInsert(jeContext.slice(1, 3), property, defaults[property]);
       },
       show: function() {
-        return jeStateNow && jeGetValue()[property] === undefined;
+        return jeGetValue()[property] === undefined;
       }
     });
   }
@@ -446,7 +447,7 @@ function jeAddCSScommands() {
         jePasteText(css + '; ');
       },
       show: function() {
-        return !jeJSONerror && !jeGetValue()[jeGetLastKey()].match(css.split(':')[0]);
+        return !jeGetValue()[jeGetLastKey()].match(css.split(':')[0]);
       }
     });
   }
@@ -488,7 +489,7 @@ function jeAddNumberCommand(name, key, callback) {
     name: name,
     forceKey: key,
     context: '.*',
-    show: _=>jeStateNow&&jeGetValue()&&typeof jeGetValue()[jeGetLastKey()] == 'number',
+    show: _=>jeGetValue()&&typeof jeGetValue()[jeGetLastKey()] == 'number',
     call: function() {
       const newValue = callback(jeGetValue()[jeGetLastKey()]);
       jeGetValue()[jeGetLastKey()] = '###SELECT ME###';
@@ -513,7 +514,7 @@ function jeAddWidgetPropertyCommand(defaults, property) {
       jeInsert([], property, defaults[property]);
     },
     show: function() {
-      return jeStateNow && jeStateNow[property] === undefined;
+      return jeStateNow[property] === undefined;
     }
   });
 }
@@ -825,7 +826,7 @@ function jeShowCommands() {
   for(const command of jeCommands) {
     delete command.currentKey;
     const contextMatch = context.match(new RegExp(command.context));
-    if(contextMatch && (!command.show || command.show())) {
+    if(contextMatch && (!command.context || jeStateNow && !jeJSONerror) && (!command.show || command.show())) {
       if(activeCommands[contextMatch[0]] === undefined)
         activeCommands[contextMatch[0]] = [];
       activeCommands[contextMatch[0]].push(command);
@@ -847,42 +848,46 @@ function jeShowCommands() {
   }
   for(const command of jeCommands) {
     const contextMatch = context.match(new RegExp(command.context));
-    if(contextMatch) {
-      if (contextMatch[0] =="") {
-        const name = (typeof command.name == 'function' ? command.name() : command.name);
-        let keyName = displayKey(command.forceKey);
-        commandText += `<button class='top' id='${command.id}' title='${name} (Ctrl-${keyName})' ${!command.show || command.show() ? '' : 'disabled'}>${name.substr(0,2)}</button>`;
-        subText += `<span class='top'>${keyName}</span>`;
-      }
+    if(contextMatch && contextMatch[0] == "") {
+      const name = (typeof command.name == 'function' ? command.name() : command.name);
+      let keyName = displayKey(command.forceKey);
+      commandText += `<button class='top' id='${command.id}' title='${name} (Ctrl-${keyName})' ${!command.show || command.show() ? '' : 'disabled'}>${name.substr(0,2)}</button>`;
+      subText += `<span class='top'>${keyName}</span>`;
     }
   }
-  if (commandText.length > 0)
+  if(commandText.length > 0)
     commandText += `\n` + subText + `\n`;
   delete activeCommands[""];
 
-  for(const contextMatch of (Object.keys(activeCommands).sort((a,b)=>b.length-a.length))) {
-    commandText += `\n  <b>${contextMatch}</b>\n`;
-    for(const command of activeCommands[contextMatch].sort(sortByName)) {
-      if(context.match(new RegExp(command.context)) && (!command.show || command.show())) {
-        const name = typeof command.name == 'function' ? command.name() : command.name;
-        if(command.forceKey && !usedKeys[command.forceKey])
-          command.currentKey = command.forceKey;
-        for(const key of name.split(''))
-          if(key != ' ' && !command.currentKey && !usedKeys[key.toLowerCase()])
-            command.currentKey = key.toLowerCase();
-        for(const key of 'abcdefghijklmnopqrstuvwxyz1234567890'.split(''))
-          if(!command.currentKey && !usedKeys[key])
-            command.currentKey = key;
-        usedKeys[command.currentKey] = true;
-        let keyName = displayKey(command.currentKey);
-        commandText += (keyName !== undefined)? `Ctrl-${keyName}: ` : `no key  `;
-        commandText += `<button id="${command.id}">${name.replace(keyName, '<b>' + keyName + '</b>')}</button>\n`;
+  if(!jeJSONerror && jeStateNow) {
+    for(const contextMatch of (Object.keys(activeCommands).sort((a,b)=>b.length-a.length))) {
+      commandText += `\n  <b>${contextMatch}</b>\n`;
+      for(const command of activeCommands[contextMatch].sort(sortByName)) {
+        try {
+          if(context.match(new RegExp(command.context)) && (!command.show || command.show())) {
+            const name = typeof command.name == 'function' ? command.name() : command.name;
+            if(command.forceKey && !usedKeys[command.forceKey])
+              command.currentKey = command.forceKey;
+            for(const key of name.split(''))
+              if(key != ' ' && !command.currentKey && !usedKeys[key.toLowerCase()])
+                command.currentKey = key.toLowerCase();
+            for(const key of 'abcdefghijklmnopqrstuvwxyz1234567890'.split(''))
+              if(!command.currentKey && !usedKeys[key])
+                command.currentKey = key;
+            usedKeys[command.currentKey] = true;
+            let keyName = displayKey(command.currentKey);
+            commandText += (keyName !== undefined)? `Ctrl-${keyName}: ` : `no key  `;
+            commandText += `<button id="${command.id}">${name.replace(keyName, '<b>' + keyName + '</b>')}</button>\n`;
+          }
+        } catch(e) {
+          console.error(`Failed to show command ${command.id}`, e);
+        }
       }
     }
   }
   commandText += `\n${context}\n`;
   if(jeJSONerror)
-    commandText += `\n<i class=error>${String(jeJSONerror)}</i>\n`;
+    commandText += `\nCtrl-Space: go to error\n\n<i class=error>${String(jeJSONerror)}</i>\n`;
   if(jeCommandError)
     commandText += `\n<i class=error>Last command failed: ${String(jeCommandError)}</i>\n`;
   if(jeSecondaryWidget)
@@ -949,7 +954,17 @@ window.addEventListener('keydown', function(e) {
   }
 
   if(jeState.ctrl) {
-    if(e.key == 'j') {
+    if(e.key == ' ') {
+      const locationLine = String(jeJSONerror).match(/line ([0-9]+) column ([0-9]+)/);
+      if(locationLine) {
+        const pos = $('#jeText').textContent.split('\n').slice(0, locationLine[1]-1).join('\n').length + +locationLine[2];
+        jeSelect(pos, pos);
+      }
+
+      const locationPostion = String(jeJSONerror).match(/position ([0-9]+)/);
+      if(locationPostion)
+        jeSelect(+locationPostion[1], +locationPostion[1]);
+    } else if(e.key == 'j') {
       e.preventDefault();
       if(jeEnabled === null) {
         jeAddCommands();
