@@ -463,7 +463,7 @@ function addCardType(cardType, value) {
       return;
     }
     widget.cardTypes[cardType] = value;
-    $('#editWidgetJSON').value = JSON.stringify(widget)
+    $('#editWidgetJSON').value = JSON.stringify(widget);
 }
 
 onLoad(function() {

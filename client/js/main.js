@@ -125,11 +125,11 @@ function setScale() {
 }
 
 async function uploadAsset(multipleCallback) {
-  if (multipleCallback) {
-    return selectFile('BINARY', async function _f (f){
-      let uploadPath = await _uploadAsset(f);
+  if (typeof(multipleCallback) === "function") {
+    return selectFile('BINARY', async function _f (f) {
+      let uploadPath = await _uploadAsset(f).catch(e=>alert(`Uploading failed: ${e.toString()}`));
       multipleCallback(uploadPath, f.name);
-    })
+    });
   }
   else {
     return selectFile('BINARY').then(_uploadAsset).catch(e=>alert(`Uploading failed: ${e.toString()}`));
