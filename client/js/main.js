@@ -126,7 +126,7 @@ function setScale() {
 
 async function uploadAsset(multipleCallback) {
   if (typeof(multipleCallback) === "function") {
-    return selectFile('BINARY', async function _f (f) {
+    return selectFile('BINARY', async function (f) {
       let uploadPath = await _uploadAsset(f).catch(e=>alert(`Uploading failed: ${e.toString()}`));
       multipleCallback(uploadPath, f.name);
     });

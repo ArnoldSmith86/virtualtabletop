@@ -99,7 +99,6 @@ function editClick(widget) {
 function generateEmptyDeckWidget(id, x, y) {
   const widgets = [
     { type:'holder', id, x, y, dropTarget: { type: 'card' } },
-    { type:'pile', id: id+'P', parent: id, width:103, height:160 },
   ];
   const front = { type:'image', x:0, y:0, width:103, height:160, valueType:'dynamic', value:'image', color:'transparent' };
   const back  = { ...front };
