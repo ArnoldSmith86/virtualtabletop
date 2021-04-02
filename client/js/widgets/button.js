@@ -51,7 +51,7 @@ export class Button extends Widget {
             return (variables[key] === undefined) ? "" : variables[key];
           });
         } else if(v.parameter && v.property) {
-          var w = this;
+          let w = this;
           if (v.widget)
             w = this.isValidID(v.widget, problems) ? widgets.get(v.widget) : this;
           field[v.parameter] = (w.p(v.property) === undefined) ? null : w.p(v.property);
