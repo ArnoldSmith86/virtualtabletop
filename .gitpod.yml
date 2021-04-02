@@ -1,10 +1,10 @@
 tasks:
-  - init: npm install
-    command: npm run debug
+  - init: nvm install 15; nvm use 15; npm install
+    command: (sleep 2; gp preview $(gp url 8272)/test) & npm run debug
 ports:
   - port: 8272
     visibility: public
-    onOpen: open-preview
+    onOpen: ignore
   - port: 9229
     visibility: private
     onOpen: ignore
