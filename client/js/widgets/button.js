@@ -306,7 +306,7 @@ export class Button extends Widget {
           v = 0;
           problems.push(`Exception: ${e.toString()}`);
         }
-        if(v === null || typeof v === 'number' && !isFinite(v)) {
+        if(o !== '=' && (v === null || typeof v === 'number' && !isFinite(v))) {
           v = 0;
           problems.push(`The operation evaluated to null, Infinity or NaN. Setting the variable to 0.`);
         }
@@ -389,8 +389,8 @@ export class Button extends Widget {
 
       if(a.func == 'LABEL') {
         setDefaults(a, { value: 0, mode: 'set', collection: 'DEFAULT' });
-        if([ 'set', 'dec', 'inc' ].indexOf(a.mode) == -1)
-          problems.push(`Warning: Mode ${a.mode} will be interpreted as add.`);
+        if([ 'set', 'dec', 'inc','append' ].indexOf(a.mode) == -1)
+          problems.push(`Warning: Mode ${a.mode} will be interpreted as set.`);
         if(a.label !== undefined) {
           if (this.isValidID(a.label, problems)) {
             this.w(a.label, widget=> {
@@ -410,24 +410,17 @@ export class Button extends Widget {
         const count = a.count || 999999;
 
         if(this.isValidID(a.from, problems) && this.isValidID(a.to, problems)) {
-          if(a.face === null && typeof a.from == 'string' && typeof a.to == 'string' && !widgets.get(a.to).children().length && widgets.get(a.from).children().length <= count) {
-            // this is a hacky shortcut to avoid removing and creating card piles when moving all children to an empty holder
-            Widget.prototype.children.call(widgets.get(a.from)).filter(
-              w => w.p('type') != 'label' && w.p('type') != 'button' && w.p('type') != 'deck'
-            ).forEach(c=>c.p('parent', a.to));
-          } else {
-            this.w(a.from, source=>this.w(a.to, target=>source.children().slice(0, count).reverse().forEach(c=> {
-              if(a.face !== null && c.flip)
-                c.flip(a.face);
-              if(source == target) {
-                c.bringToFront();
-              } else {
-                c.movedByButton = true;
-                c.moveToHolder(target);
-                delete c.movedByButton;
-              }
-            })));
-          }
+          this.w(a.from, source=>this.w(a.to, target=>source.children().slice(0, count).reverse().forEach(c=> {
+            if(a.face !== null && c.flip)
+              c.flip(a.face);
+            if(source == target) {
+              c.bringToFront();
+            } else {
+              c.movedByButton = true;
+              c.moveToHolder(target);
+              delete c.movedByButton;
+            }
+          })));
         }
       }
 
@@ -504,7 +497,7 @@ export class Button extends Widget {
           // resolve piles
           c.filter(w=>w.p('type')=='pile').forEach(w=>c.push(...w.children()));
           c = c.filter(w=>w.p('type')!='pile');
-          collections[a.collection] = c;
+          collections[a.collection] = [...new Set(c)];
         }
       }
 

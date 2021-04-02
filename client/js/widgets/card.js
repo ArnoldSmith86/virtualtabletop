@@ -60,9 +60,11 @@ class Card extends Widget {
 
   applyInitialDelta(delta) {
     if(!delta.deck)
-      throw `card ${delta.id} requires property deck`;
+      throw `card "${delta.id}" requires property deck`;
     if(!delta.cardType)
-      throw `card ${delta.id} requires property cardType`;
+      throw `card "${delta.id}" requires property cardType`;
+    if(!(widgets.get(delta.deck) instanceof Deck))
+      throw `card "${delta.id}" has "${delta.deck}" as a deck which is not a deck`;
     if(!widgets.get(delta.deck).p('cardTypes')[delta.cardType])
       throw `card type "${delta.cardType}" not found in deck "${delta.deck}"`;
     super.applyInitialDelta(delta);
