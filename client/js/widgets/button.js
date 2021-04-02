@@ -174,7 +174,7 @@ export class Button extends Widget {
       function compute(o, v, x, y, z) {
         try {
           switch(o) {
-          case '=':  v = y;      break;
+          case 'set':  v = y;    break;
           case '+':  v = x + y;  break;
           case '-':  v = x - y;  break;
           case '*':  v = x * y;  break;
@@ -505,6 +505,9 @@ export class Button extends Widget {
 
       if(a.func == 'SET') {
         setDefaults(a, { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
+        if(a.relation == '==')
+          problems.push(`Warning: Relation == interpreted as =`);
+        a.relation = (a.relation != '==' && a.relation != '=') ? a.relation : 'set';
         if((a.property == 'parent' || a.property == 'deck') && a.value !== null && !widgets.has(a.value)) {
           problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
         } else if(isValidCollection(a.collection)) {
