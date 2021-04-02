@@ -103,7 +103,8 @@ function generateEmptyDeckWidget(id, x, y) {
   ];
   const front = { type:'image', x:0, y:0, width:103, height:160, valueType:'dynamic', value:'image', color:'transparent' };
   const back  = { ...front };
-  back.value = 'backImage';
+  back.valueType = 'static'
+  back.value = '/i/cards-default/2B.svg';
   widgets.push({
     type: 'deck',
     id: id+'D',
@@ -452,6 +453,17 @@ function onClickIncrementAllCardTypes() {
 
 function onClickDecrementAllCardTypes() {
   $a('#cardTypesList .count').forEach(i=>i.value=Math.max(0, i.value-1));
+}
+
+function addCardType(cardType, value) {
+    try {
+      var widget = JSON.parse($('#editWidgetJSON').value);
+    } catch(e) {
+      alert(e.toString());
+      return;
+    }
+    widget.cardTypes[cardType] = value;
+    $('#editWidgetJSON').value = JSON.stringify(widget)
 }
 
 onLoad(function() {

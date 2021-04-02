@@ -124,23 +124,32 @@ function setScale() {
   roomRectangle = $('#roomArea').getBoundingClientRect();
 }
 
-async function uploadAsset() {
-  return selectFile('BINARY').then(async function(file) {
-    const response = await fetch('/asset', {
-      method: 'PUT',
-      headers: {
-        'Content-type': 'application/octet-stream'
-      },
-      body: file.content
-    });
+async function uploadAsset(multipleCallback) {
+  if (multipleCallback) {
+    return selectFile('BINARY', async function _f (f){
+      let uploadPath = await _uploadAsset(f);
+      multipleCallback(uploadPath, f.name);
+    })
+  }
+  else {
+    return selectFile('BINARY').then(_uploadAsset).catch(e=>alert(`Uploading failed: ${e.toString()}`));
+  }
+}
 
-    if(response.status == 413)
-      throw 'File is too big.';
-    else if(!response.ok)
-      throw `${response.status} - ${response.statusText}`;
+async function _uploadAsset(file) {
+  const response = await fetch('/asset', {
+    method: 'PUT',
+    headers: {
+      'Content-type': 'application/octet-stream'
+    },
+    body: file.content
+  });
 
-    return response.text();
-  }).catch(e=>alert(`Uploading failed: ${e.toString()}`));
+  if(response.status == 413)
+    throw 'File is too big.';
+  else if(!response.ok)
+    throw `${response.status} - ${response.statusText}`;
+  return response.text();
 }
 
 const svgCache = {};
