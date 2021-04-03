@@ -199,6 +199,9 @@ export class Widget extends StateManaged {
   }
 
   async click() {
+    if(!this.p('clickable'))
+      return true;
+
     if(Array.isArray(this.p('clickRoutine'))) {
       await this.evaluateRoutine('clickRoutine', {}, {});
       return true;
@@ -278,8 +281,6 @@ export class Widget extends StateManaged {
     function w(ids, callback) {
       return widgetFilter(w=>toA(ids).indexOf(w.p('id')) != -1).forEach(callback);
     }
-
-    if(!this.p('clickable')) return;
 
     batchStart();
 

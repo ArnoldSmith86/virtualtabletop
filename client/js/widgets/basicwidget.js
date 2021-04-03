@@ -51,7 +51,7 @@ class BasicWidget extends Widget {
   }
 
   async click() {
-    if(this.p('clickable') && !await super.click())
+    if(!await super.click())
       this.flip();
   }
 
