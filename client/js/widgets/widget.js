@@ -41,9 +41,6 @@ export class Widget extends StateManaged {
       inheritChildZ: false,
 
       clickRoutine: null,
-      changeRoutine: null,
-      enterRoutine: null,
-      leaveRoutine: null,
       debug: false
     });
 
@@ -865,8 +862,6 @@ export class Widget extends StateManaged {
     this.childArray = this.childArray.filter(c=>c!=child);
     this.childArray.push(child);
     this.onChildAddAlign(child, oldParentID);
-    if(Array.isArray(this.p('enterRoutine')))
-      this.evaluateRoutine('enterRoutine', { oldParentID }, { child: [ child ] });
   }
 
   onChildAddAlign(child, oldParentID) {
@@ -887,8 +882,6 @@ export class Widget extends StateManaged {
   onChildRemove(child) {
     this.childArray = this.childArray.filter(c=>c!=child);
     this.applyZ();
-    if(Array.isArray(this.p('leaveRoutine')))
-      this.evaluateRoutine('leaveRoutine', {}, { child: [ child ] });
   }
 
   onPropertyChange(property, oldValue, newValue) {
@@ -899,8 +892,6 @@ export class Widget extends StateManaged {
         widgets.get(newValue).onChildAdd(this, oldValue);
       this.updatePiles();
     }
-    if(Array.isArray(this.p('changeRoutine')))
-      this.evaluateRoutine('changeRoutine', { property, oldValue, newValue }, {});
   }
 
   rotate(degrees, mode) {
