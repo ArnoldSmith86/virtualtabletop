@@ -10,6 +10,7 @@
     "debug": "cross-env NOCOMPRESS=1 nodemon -e js,mjs,css,html --ignore save --ignore coverage --ignore tests --inspect server.mjs",
     "start": "node server.mjs",
     "test": "node --experimental-vm-modules node_modules/.bin/jest --coverage",
+    "test-debug": "node --experimental-vm-modules --inspect-brk=9239 node_modules/.bin/jest",
     "test-cont": "nodemon -e js,mjs,css,html --ignore save --ignore coverage --experimental-vm-modules node_modules/.bin/jest"
   },
   "repository": {
