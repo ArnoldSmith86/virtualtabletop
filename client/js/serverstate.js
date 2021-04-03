@@ -28,7 +28,6 @@ export function addWidget(widget, instance) {
   }
 
   let w;
-
   let parent = $('.surface');
   if(widget.parent)
     parent = widgets.get(widget.parent);

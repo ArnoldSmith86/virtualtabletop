@@ -135,7 +135,9 @@ export class Widget extends StateManaged {
             return (variables[key] === undefined) ? "" : variables[key];
           });
         } else if(v.parameter && v.property) {
-          let w = this.isValidID(v.widget, problems) ? widgets.get(v.widget) : this;
+          let w = this;
+          if (v.widget)
+            w = this.isValidID(v.widget, problems) ? widgets.get(v.widget) : this;
           field[v.parameter] = (w.p(v.property) === undefined) ? null : w.p(v.property);
         } else {
           problems.push('Entry in parameter applyVariables does not contain "parameter" together with "variable", "property", or "template".');
@@ -587,8 +589,8 @@ export class Widget extends StateManaged {
 
       if(a.func == 'LABEL') {
         setDefaults(a, { value: 0, mode: 'set', collection: 'DEFAULT' });
-        if([ 'set', 'dec', 'inc' ].indexOf(a.mode) == -1)
-          problems.push(`Warning: Mode ${a.mode} will be interpreted as add.`);
+        if([ 'set', 'dec', 'inc', 'append' ].indexOf(a.mode) == -1)
+          problems.push(`Warning: Mode ${a.mode} will be interpreted as set.`);
         if(a.label !== undefined) {
           if (this.isValidID(a.label, problems)) {
             w(a.label, widget=> {
@@ -701,6 +703,10 @@ export class Widget extends StateManaged {
 
       if(a.func == 'SET') {
         setDefaults(a, { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
+        if(a.relation == '==') {
+          problems.push(`Warning: Relation == interpreted as =`);
+          a.relation = '=';
+        }
         if((a.property == 'parent' || a.property == 'deck') && a.value !== null && !widgets.has(a.value)) {
           problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
         } else if(isValidCollection(a.collection)) {
@@ -933,10 +939,12 @@ export class Widget extends StateManaged {
     super.setPosition(x, y, z);
   }
 
-    setText(text, mode, debug, problems) {
+  setText(text, mode, debug, problems) {
     if (this.p('text') !== undefined) {
       if(mode == 'inc' || mode == 'dec')
         this.p('text', (parseInt(this.p('text')) || 0) + (mode == 'dec' ? -1 : 1) * text);
+      else if(mode == 'append')
+        this.p('text', this.p('text') + text);
       else if(Array.isArray(text))
         this.p('text', text.join(', '));
       else if(typeof text == 'string' && text.match(/^[-+]?[0-9]+(\.[0-9]+)?$/))
