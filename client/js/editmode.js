@@ -360,7 +360,7 @@ function uploadWidget(preset) {
   });
 }
 
-function onClickUpdateWidget() {
+function onClickUpdateWidget(applyChangesFromUI) {
     const previousState = JSON.parse($('#editWidgetJSON').dataset.previousState);
     try {
       var widget = JSON.parse($('#editWidgetJSON').value);
@@ -369,7 +369,8 @@ function onClickUpdateWidget() {
       return;
     }
 
-    applyEditOptions(widget);
+    if(applyChangesFromUI)
+      applyEditOptions(widget);
 
     const children = Widget.prototype.children.call(widgets.get(previousState.id));
     const cards = widgetFilter(w=>w.p('deck')==previousState.id);

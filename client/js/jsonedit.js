@@ -529,7 +529,7 @@ function jeApplyChanges() {
     jeStateBeforeRaw = currentStateRaw;
     $('#editWidgetJSON').dataset.previousState = jeStateBefore;
     $('#editWidgetJSON').value = jeStateBefore = currentState;
-    onClickUpdateWidget();
+    onClickUpdateWidget(false);
     jeDeltaIsOurs = false;
   }
 }

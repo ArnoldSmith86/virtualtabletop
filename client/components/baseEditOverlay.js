@@ -7,7 +7,7 @@ export const baseEditOverlay = {
   },
   methods: {
       update() {
-        onClickUpdateWidget();
+        onClickUpdateWidget(!this.jsonEdit);
       },
       duplicate() {
         onClickDuplicateWidget();
