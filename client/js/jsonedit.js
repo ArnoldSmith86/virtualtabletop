@@ -35,7 +35,7 @@ const jeCommands = [
     context: '.*"([^"]+)"',
     call: function() {
       const m = jeContext.join('').match(/"([^"]+)"/);
-      jeClick(widgets.get(m[1]), true);
+      jeSelectWidget(widgets.get(m[1]));
     },
     show: function() {
       const m = jeContext.join('').match(/"([^"]+)"/);
@@ -270,10 +270,10 @@ const jeCommands = [
     id: 'je_addNewWidget',
     name: '➕ add new widget',
     forceKey: 'A',
-    call: function() {
+    call: async function() {
       const toAdd = {};
       addWidgetLocal(toAdd);
-      jeClick(widgets.get(toAdd.id), true);
+      jeSelectWidget(widgets.get(toAdd.id));
       jeStateNow.type = '###SELECT ME###';
       jeSetAndSelect(null);
     }
@@ -310,7 +310,7 @@ const jeCommands = [
     context: '^card',
     show: _=>jeStateNow&&widgets.has(jeStateNow.deck),
     call: function() {
-      jeClick(widgets.get(jeStateNow.deck), true);
+      jeSelectWidget(widgets.get(jeStateNow.deck));
     }
   },
   {
@@ -319,7 +319,7 @@ const jeCommands = [
     forceKey: 'ArrowUp',
     show: _=>jeStateNow&&widgets.has(jeStateNow.parent),
     call: function() {
-      jeClick(widgets.get(jeStateNow.parent), true);
+      jeSelectWidget(widgets.get(jeStateNow.parent));
     }
   },
   {
@@ -522,11 +522,11 @@ function jeApplyChanges() {
   }
 }
 
-function jeApplyDelta(delta) {
+async function jeApplyDelta(delta) {
   if(!jeDeltaIsOurs && jeStateNow && jeStateNow.id && delta.s[jeStateNow.id] !== undefined)
-    jeClick(widgets.get(jeStateNow.id), true);
+    jeSelectWidget(widgets.get(jeStateNow.id));
   if(!jeDeltaIsOurs && jeStateNow && jeStateNow.deck && delta.s[jeStateNow.deck] !== undefined)
-    jeClick(widgets.get(jeStateNow.id), true);
+    jeSelectWidget(widgets.get(jeStateNow.id));
   if(!jeWidget)
     jeDisplayTree();
 }
@@ -549,14 +549,18 @@ function jeApplyExternalChanges(state) {
   }
 }
 
-function jeClick(widget, force) {
-  if(jeState.ctrl || force) {
-    jeWidget = widget;
-    jeStateNow = widget.state;
-    jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(widget.state), null, '  ')));
+async function jeClick(widget) {
+  if(jeState.ctrl) {
+    jeSelectWidget(widget);
   } else if(widget.click) {
-    widget.click();
+    await widget.click();
   }
+}
+
+function jeSelectWidget(widget) {
+  jeWidget = widget;
+  jeStateNow = widget.state;
+  jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(widget.state), null, '  ')));
 }
 
 function jeColorize() {
@@ -978,7 +982,7 @@ window.addEventListener('keydown', function(e) {
         id = `"${id}"`;
       jePasteText(id);
     } else {
-      jeClick(jeWidgetLayers[+functionKey[1]], true);
+      jeSelectWidget(jeWidgetLayers[+functionKey[1]]);
     }
   }
 });

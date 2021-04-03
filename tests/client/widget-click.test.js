@@ -59,7 +59,7 @@ describe("Scenarios: Clicking widgets", () => {
     describe("When clicked", () => {
       test("Then it does not throw an error", async () => {
         expect(() => {
-          testWidget.click();
+          await testWidget.click();
         }).not.toThrow()
       });
     });

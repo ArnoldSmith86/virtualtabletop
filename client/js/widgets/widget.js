@@ -199,9 +199,9 @@ export class Widget extends StateManaged {
     return [ 'classes', 'owner', 'typeClasses' ];
   }
 
-  click() {
+  async click() {
     if(Array.isArray(this.p('clickRoutine'))) {
-      this.evaluateRoutine('clickRoutine', {}, {});
+      await this.evaluateRoutine('clickRoutine', {}, {});
       return true;
     } else {
       return false;
@@ -341,7 +341,7 @@ export class Widget extends StateManaged {
           for(let i=0; i<a.count; ++i)
             for(const w of collections[a.collection])
               if(w.click)
-                w.click();
+                await w.click();
       }
 
       if(a.func == 'CLONE'){
