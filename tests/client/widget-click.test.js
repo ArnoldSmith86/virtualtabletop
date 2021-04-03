@@ -12,6 +12,7 @@ function createClickThisWidgets(testName, numWidgets, numWithClickThis) {
         "mode": "inc"
       }
     ],
+    "clickable": true,
     "debug": false,
     "type": "widget"
   }
@@ -35,6 +36,7 @@ describe("Scenarios: Clicking widgets", () => {
   beforeAll(() => {
     const testWidgetDef = {
       id: `${testName}-test-widget`,
+      clickable: true,
       debug: false,
       type: "widget"
     }
@@ -58,9 +60,7 @@ describe("Scenarios: Clicking widgets", () => {
     });
     describe("When clicked", () => {
       test("Then it does not throw an error", async () => {
-        expect(() => {
-          await testWidget.click();
-        }).not.toThrow()
+        await expect(testWidget.click()).resolves.toBe(true);
       });
     });
   });
