@@ -270,7 +270,7 @@ const jeCommands = [
     id: 'je_addNewWidget',
     name: '➕ add new widget',
     forceKey: 'A',
-    call: async function() {
+    call: function() {
       const toAdd = {};
       addWidgetLocal(toAdd);
       jeSelectWidget(widgets.get(toAdd.id));
@@ -535,7 +535,7 @@ function jeApplyChanges() {
   }
 }
 
-async function jeApplyDelta(delta) {
+function jeApplyDelta(delta) {
   if(!jeDeltaIsOurs && jeStateNow && jeStateNow.id && delta.s[jeStateNow.id] !== undefined)
     jeSelectWidget(widgets.get(jeStateNow.id));
   if(!jeDeltaIsOurs && jeStateNow && jeStateNow.deck && delta.s[jeStateNow.deck] !== undefined)

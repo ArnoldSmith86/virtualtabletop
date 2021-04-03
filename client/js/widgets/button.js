@@ -1,5 +1,3 @@
-import { $ } from '../domhelpers.js';
-import { showOverlay } from '../main.js';
 import { Widget } from './widget.js';
 
 export class Button extends Widget {

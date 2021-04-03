@@ -2,6 +2,7 @@ import { $, removeFromDOM } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
+import { showOverlay } from '../main.js';
 
 export class Widget extends StateManaged {
   constructor(id) {
