@@ -65,7 +65,7 @@ async function inputHandler(name, e) {
           await jeClick(widgets.get(target.id));
         else if(edit)
           editClick(widgets.get(target.id));
-        else if(widgets.get(target.id).click)
+        else
           await widgets.get(target.id).click();
       }
       delete mouseStatus[target.id];

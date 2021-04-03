@@ -340,8 +340,7 @@ export class Widget extends StateManaged {
         if(isValidCollection(a.collection))
           for(let i=0; i<a.count; ++i)
             for(const w of collections[a.collection])
-              if(w.click)
-                await w.click();
+              await w.click();
       }
 
       if(a.func == 'CLONE'){

@@ -565,7 +565,7 @@ function jeApplyExternalChanges(state) {
 async function jeClick(widget) {
   if(jeState.ctrl) {
     jeSelectWidget(widget);
-  } else if(widget.click) {
+  } else {
     await widget.click();
   }
 }
