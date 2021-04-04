@@ -28,7 +28,6 @@ export function addWidget(widget, instance) {
   }
 
   let w;
-
   let parent = $('.surface');
   if(widget.parent)
     parent = widgets.get(widget.parent);
@@ -105,7 +104,7 @@ function receiveDelta(delta) {
       widgets.get(widgetID).applyDelta(delta.s[widgetID]);
     }
   }
-  if(typeof jeApplyDelta == 'function')
+  if(typeof jeEnabled != 'undefined' && jeEnabled)
     jeApplyDelta(delta);
 }
 

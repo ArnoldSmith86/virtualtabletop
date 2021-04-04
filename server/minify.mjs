@@ -63,6 +63,10 @@ export default function minifyRoom() {
           'client/js/widgets/pile.js',
           'client/js/widgets/spinner.js',
 
+          'client/components/baseEditOverlay.js',
+          'client/components/deckEditor.js',
+          'client/components/loadComponents.js',
+
           'client/js/main.js'
         ],
         output: os.tmpdir() + '/out.js'

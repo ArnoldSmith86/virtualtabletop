@@ -15,6 +15,11 @@ export class Button extends Widget {
       typeClasses: 'widget button',
       layer: -1,
       movable: false,
+      clickable: true,
+
+      image: '',
+      color: 'black',
+      svgReplaces: {},
 
       text: '',
       clickRoutine: [],
@@ -22,10 +27,72 @@ export class Button extends Widget {
     });
   }
 
+  isValidID(id, problems) {
+    if(Array.isArray(id))
+      return !id.map(i=>this.isValidID(i, problems)).filter(r=>r!==true).length;
+    if(widgets.has(id))
+      return true;
+    problems.push(`Widget ID ${id} does not exist.`);
+  }
+
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
     if(delta.text !== undefined)
       this.domElement.textContent = delta.text;
+
+    for(const property of Object.values(this.p('svgReplaces') || {}))
+      if(delta[property] !== undefined)
+        this.domElement.style.cssText = this.css();
+  }
+
+  applyVariables(field, variables, problems) {
+    if(Array.isArray(field.applyVariables)) {
+      for(const v of field.applyVariables) {
+        if(v.parameter && v.variable) {
+          field[v.parameter] = (v.index === undefined) ? variables[v.variable] : variables[v.variable][v.index];
+        } else if(v.parameter && v.template) {
+          field[v.parameter] = v.template.replace(/\{([^}]+)\}/g, function(i, key) {
+            return (variables[key] === undefined) ? "" : variables[key];
+          });
+        } else if(v.parameter && v.property) {
+          let w = this;
+          if (v.widget)
+            w = this.isValidID(v.widget, problems) ? widgets.get(v.widget) : this;
+          field[v.parameter] = (w.p(v.property) === undefined) ? null : w.p(v.property);
+        } else {
+          problems.push('Entry in parameter applyVariables does not contain "parameter" together with "variable", "property", or "template".');
+        }
+      }
+    } else {
+      problems.push('Parameter applyVariables is not an array.');
+    }
+  }
+
+  css() {
+    let css = super.css();
+
+    if(this.p('color'))
+      css += '; --color:' + this.p('color');
+    if(this.p('image'))
+      css += '; background-image: url("' + this.getImage() + '")';
+
+    return css;
+  }
+
+  cssProperties() {
+    const p = super.cssProperties();
+    p.push('image', 'color', 'svgReplaces');
+    return p;
+  }
+
+  getImage() {
+    if(!Object.keys(this.p('svgReplaces')).length)
+      return this.p('image');
+
+    const replaces = {};
+    for(const key in this.p('svgReplaces'))
+      replaces[key] = this.p(this.p('svgReplaces')[key]);
+    return getSVG(this.p('image'), replaces, _=>this.domElement.style.cssText = this.css());
   }
 
   async click() {
@@ -41,13 +108,7 @@ export class Button extends Widget {
       problems.push(`Collection ${collection} does not exist.`);
     }
 
-    function isValidID(id) {
-      if(Array.isArray(id))
-        return !id.map(i=>isValidID(i, problems)).filter(r=>r!==true).length;
-      if(widgets.has(id))
-        return true;
-      problems.push(`Widget ID ${id} does not exist.`);
-    }
+   if(!this.p('clickable')) return;
 
     batchStart();
 
@@ -66,30 +127,13 @@ export class Button extends Widget {
     }
 
     for(const original of this.p('clickRoutine')) {
-      const a = { ...original };
+      const a = JSON.parse(JSON.stringify(original));
       var problems = [];
 
       if(this.p('debug')) console.log(`${this.id}: ${JSON.stringify(original)}`);
-      if(a.applyVariables) {
-        if(Array.isArray(a.applyVariables)) {
-          for(const v of a.applyVariables) {
-            if(v.parameter && v.variable) {
-              a[v.parameter] = (v.index === undefined) ? variables[v.variable] : variables[v.variable][v.index];
-            } else if(v.parameter && v.template) {
-              a[v.parameter] = v.template.replace(/\{([^}]+)\}/g, function(i, key) {
-                return (variables[key] === undefined) ? "" : variables[key];
-              });
-            } else if(v.parameter && v.property) {
-              let w = isValidID(v.widget) ? widgets.get(v.widget) : this;
-              a[v.parameter] = (w.p(v.property) === undefined) ? null : w.p(v.property);
-            } else {
-              problems.push('Entry in parameter applyVariables does not contain "parameter" together with "variable", "property", or "template".');
-            }
-          }
-        } else {
-          problems.push('Parameter applyVariables is not an array.');
-        }
-      }
+
+      if(a.applyVariables) this.applyVariables(a, variables, problems);
+
       if(a.skip) {
         $('#debugButtonOutput').textContent += '\n\n\nOPERATION SKIPPED: \n' + JSON.stringify(a, null, '  ');
         continue;
@@ -104,43 +148,60 @@ export class Button extends Widget {
                 w.click();
       }
 
-      if(a.func == 'COMPUTE') {
-        setDefaults(a, { operation: '+', operand1: 1, operand2: 1, operand3: 1, variable: 'COMPUTE' });
-        const toNum = s=>typeof s == 'string' && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s;
-        const x = toNum(a.operand1);
-        const y = toNum(a.operand2);
-        const z = toNum(a.operand3);
-        const v = a.variable;
+      if(a.func == 'CLONE'){
+        setDefaults(a, { source: 'DEFAULT', count: 1, xOffset: 0, yOffset: 0, properties: {}, collection: 'DEFAULT' });
+        if(a.properties.applyVariables) {
+          this.applyVariables(a.properties, variables, problems);
+          delete a.properties["applyVariables"];
+        };
+        if(isValidCollection(a.source)) {
+          var c=[];
+          for(const w of collections[a.source]) {
+            const clone = Object.assign(JSON.parse(JSON.stringify(w.state)), a.properties);
+            clone.x = clone.x + a.xOffset;
+            clone.y = clone.y + a.yOffset;
+            clone.clonedFrom = w.p('id');
+            for(let i=0; i<a.count; ++i) {
+              clone.id = null;
+              addWidgetLocal(clone);
+              c.push(widgets.get(clone.id));
+            }
+          }
+          collections[a.collection]=c;
+        }
+      };
 
+      function compute(o, v, x, y, z) {
         try {
-          switch(a.operation) {
-          case '+':  variables[v] = x + y;  break;
-          case '-':  variables[v] = x - y;  break;
-          case '*':  variables[v] = x * y;  break;
-          case '**': variables[v] = x ** y; break;
-          case '/':  variables[v] = x / y;  break;
-          case '%':  variables[v] = x % y;  break;
-          case '<':  variables[v] = x < y;  break;
-          case '<=': variables[v] = x <= y; break;
-          case '==': variables[v] = x == y; break;
-          case '!=': variables[v] = x != y; break;
-          case '>=': variables[v] = x >= y; break;
-          case '>':  variables[v] = x > y;  break;
-          case '&&': variables[v] = x && y; break;
-          case '||': variables[v] = x || y; break;
-          case '!':  variables[v] = !x;     break;
+          switch(o) {
+          case '=':  v = y;      break;
+          case '+':  v = x + y;  break;
+          case '-':  v = x - y;  break;
+          case '*':  v = x * y;  break;
+          case '**': v = x ** y; break;
+          case '/':  v = x / y;  break;
+          case '%':  v = x % y;  break;
+          case '<':  v = x < y;  break;
+          case '<=': v = x <= y; break;
+          case '==': v = x == y; break;
+          case '!=': v = x != y; break;
+          case '>=': v = x >= y; break;
+          case '>':  v = x > y;  break;
+          case '&&': v = x && y; break;
+          case '||': v = x || y; break;
+          case '!':  v = !x;     break;
 
           // Math operations
           case 'hypot':
           case 'max':
           case 'min':
           case 'pow':
-            variables[v] = Math[a.operation](x, y);
+            v = Math[o](x, y);
             break;
           case 'sin':
           case 'cos':
           case 'tan':
-            variables[v] = Math[a.operation](x * Math.PI/180);
+            v = Math[o](x * Math.PI/180);
             break;
           case 'abs':
           case 'cbrt':
@@ -150,11 +211,12 @@ export class Button extends Widget {
           case 'log':
           case 'log10':
           case 'log2':
+          case 'random':
           case 'round':
           case 'sign':
           case 'sqrt':
           case 'trunc':
-            variables[v] = Math[a.operation](x);
+            v = Math[o](x);
             break;
           case 'E':
           case 'LN2':
@@ -164,19 +226,19 @@ export class Button extends Widget {
           case 'PI':
           case 'SQRT1_2':
           case 'SQRT2':
-            variables[v] = Math[a.operation];
+            v = Math[o];
             break;
 
           // String operations
           case 'length':
-            variables[v] = x.length;
+            v = x.length;
             break;
           case 'toLowerCase':
           case 'toUpperCase':
           case 'trim':
           case 'trimStart':
           case 'trimEnd':
-            variables[v] = x[a.operation]();
+            v = x[o]();
             break;
           case 'charAt':
           case 'charCodeAt':
@@ -196,73 +258,98 @@ export class Button extends Widget {
           case 'startsWith':
           case 'toLocaleLowerCase':
           case 'toLocaleUpperCase':
-            variables[v] = x[a.operation](y);
+            v = x[o](y);
             break;
           case 'replace':
           case 'replaceAll':
           case 'substr':
-            variables[v] = x[a.operation](y, z);
+            v = x[o](y, z);
             break;
 
           // Array operations
           // 'length' should work the same as for strings
           case 'getIndex':
-            variables[v] = x[y];
+            v = x[y];
             break;
           case 'setIndex':
-            variables[v][x] = y;
+            v[x] = y;
             break;
           case 'from':
           case 'isArray':
-            variables[v] = Array[a.operation](x);
+            v = Array[o](x);
             break;
           case 'concatArray':
-            variables[v] = x.concat(y);
+            v = x.concat(y);
             break;
           case 'pop':
           case 'reverse':
           case 'shift':
           case 'sort':
-            variables[v] = x[a.operation]();
+            v = x[o]();
             break;
           case 'findIndex':
           case 'includes':
           case 'indexOf':
           case 'join':
           case 'lastIndexOf':
-            variables[v] = x[a.operation](y);
+            v = x[o](y);
             break;
           case 'slice':
-            variables[v] = x[a.operation](y, z);
+            v = x[o](y, z);
             break;
           case 'push':
           case 'unshift':
-            variables[v][a.operation](x);
+            v[o](x);
             break;
           default:
-            problems.push(`Operation ${a.operation} is unsupported.`);
+            problems.push(`Operation ${o} is unsupported.`);
           }
         } catch(e) {
-          variables[v] = 0;
+          v = 0;
           problems.push(`Exception: ${e.toString()}`);
         }
-
-        if(variables[v] === null || typeof variables[v] === 'number' && !isFinite(variables[v])) {
-          variables[v] = 0;
+        if(o !== '=' && (v === null || typeof v === 'number' && !isFinite(v))) {
+          v = 0;
           problems.push(`The operation evaluated to null, Infinity or NaN. Setting the variable to 0.`);
         }
+        return v;
+      }
+
+      if(a.func == 'COMPUTE') {
+        setDefaults(a, { operation: '+', operand1: 1, operand2: 1, operand3: 1, variable: 'COMPUTE' });
+        const toNum = s=>typeof s == 'string' && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s;
+        const v = a.variable;
+        variables[v] = compute(a.operation, variables[v], toNum(a.operand1), toNum(a.operand2), toNum(a.operand3));
       }
 
       if(a.func == 'COUNT') {
         setDefaults(a, { collection: 'DEFAULT', variable: 'COUNT' });
-        if(isValidCollection(a.collection))
+        if(a.holder !== undefined) {
+          if(this.isValidID(a.holder,problems))
+            variables[a.variable] = widgets.get(a.holder).children().length;
+        } else if(isValidCollection(a.collection)) {
           variables[a.variable] = collections[a.collection].length;
+        }
       }
 
+      if(a.func == 'DELETE') {
+        setDefaults(a, { collection: 'DEFAULT' });
+        if(isValidCollection(a.collection))
+          for(const w of collections[a.collection])
+            removeWidgetLocal(w.p('id'))
+      };
+
       if(a.func == 'FLIP') {
-        setDefaults(a, { count: 0, face: null });
-        if(isValidID(a.holder))
-          this.w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>c.flip&&c.flip(a.face)));
+        setDefaults(a, { count: 0, face: null, faceCyle: null, collection: 'DEFAULT' });
+        if(a.holder !== undefined) {
+          if(this.isValidID(a.holder,problems))
+            this.w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>c.flip&&c.flip(a.face,a.faceCycle)));
+        } else if(isValidCollection(a.collection)) {
+          if(collections[a.collection].length)
+            collections[a.collection].slice(0, a.count || 999999).forEach(c=>c.flip&&c.flip(a.face,a.faceCycle));
+          else
+            problems.push(`Collection ${a.collection} is empty.`);
+        }
       }
 
       if(a.func == 'GET') {
@@ -294,7 +381,7 @@ export class Button extends Widget {
 
       if(a.func == 'INPUT') {
         try {
-          Object.assign(variables, await this.showInputOverlay(a));
+          Object.assign(variables, await this.showInputOverlay(a, widgets, variables, problems));
         } catch(e) {
           problems.push(`Exception: ${e.toString()}`);
           batchEnd();
@@ -303,44 +390,45 @@ export class Button extends Widget {
       }
 
       if(a.func == 'LABEL') {
-        setDefaults(a, { value: 0, mode: 'set' });
-        if([ 'set', 'dec', 'inc' ].indexOf(a.mode) == -1)
-          problems.push(`Warning: Mode ${a.mode} will be interpreted as add.`);
-        this.w(a.label, label=> {
-          if (this.p('debug')) console.log(`changing ${a.label} ${a.mode} ${a.value}`)
-          label.setText(a.value, a.mode)
-        });
+        setDefaults(a, { value: 0, mode: 'set', collection: 'DEFAULT' });
+        if([ 'set', 'dec', 'inc','append' ].indexOf(a.mode) == -1)
+          problems.push(`Warning: Mode ${a.mode} will be interpreted as set.`);
+        if(a.label !== undefined) {
+          if (this.isValidID(a.label, problems)) {
+            this.w(a.label, widget=> {
+              widget.setText(a.value, a.mode, this.p('debug'), problems)
+            });
+          }
+        } else if(isValidCollection(a.collection)) {
+          if(collections[a.collection].length)
+            collections[a.collection].forEach(c=>c.setText(a.value, a.mode, this.p('debug'), problems));
+          else
+            problems.push(`Collection ${a.collection} is empty.`);
+        }
       }
 
       if(a.func == 'MOVE') {
         setDefaults(a, { count: 1, face: null });
         const count = a.count || 999999;
 
-        if(isValidID(a.from) && isValidID(a.to)) {
-          if(a.face === null && typeof a.from == 'string' && typeof a.to == 'string' && !widgets.get(a.to).children().length && widgets.get(a.from).children().length <= count) {
-            // this is a hacky shortcut to avoid removing and creating card piles when moving all children to an empty holder
-            Widget.prototype.children.call(widgets.get(a.from)).filter(
-              w => w.p('type') != 'label' && w.p('type') != 'button' && w.p('type') != 'deck'
-            ).forEach(c=>c.p('parent', a.to));
-          } else {
-            this.w(a.from, source=>this.w(a.to, target=>source.children().slice(0, count).reverse().forEach(c=> {
-              if(a.face !== null && c.flip)
-                c.flip(a.face);
-              if(source == target) {
-                c.bringToFront();
-              } else {
-                c.movedByButton = true;
-                c.moveToHolder(target);
-                delete c.movedByButton;
-              }
-            })));
-          }
+        if(this.isValidID(a.from, problems) && this.isValidID(a.to, problems)) {
+          this.w(a.from, source=>this.w(a.to, target=>source.children().slice(0, count).reverse().forEach(c=> {
+            if(a.face !== null && c.flip)
+              c.flip(a.face);
+            if(source == target) {
+              c.bringToFront();
+            } else {
+              c.movedByButton = true;
+              c.moveToHolder(target);
+              delete c.movedByButton;
+            }
+          })));
         }
       }
 
       if(a.func == 'MOVEXY') {
         setDefaults(a, { count: 1, face: null, x: 0, y: 0 });
-        if(isValidID(a.from)) {
+        if(this.isValidID(a.from, problems)) {
           this.w(a.from, source=>source.children().slice(0, a.count || 999999).reverse().forEach(c=> {
             if(a.face !== null && c.flip)
               c.flip(a.face);
@@ -359,7 +447,7 @@ export class Button extends Widget {
 
       if(a.func == 'RECALL') {
         setDefaults(a, { owned: true });
-        if(isValidID(a.holder)) {
+        if(this.isValidID(a.holder, problems)) {
           this.toA(a.holder).forEach(holder=>{
             const deck = widgetFilter(w=>w.p('type')=='deck'&&w.p('parent')==holder);
             if(deck.length) {
@@ -376,7 +464,7 @@ export class Button extends Widget {
 
       if(a.func == 'ROTATE') {
         setDefaults(a, { count: 1, angle: 90, mode: 'add' });
-        if(isValidID(a.holder)) {
+        if(this.isValidID(a.holder, problems)) {
           this.w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>{
             c.rotate(a.angle, a.mode);
           }));
@@ -411,31 +499,28 @@ export class Button extends Widget {
           // resolve piles
           c.filter(w=>w.p('type')=='pile').forEach(w=>c.push(...w.children()));
           c = c.filter(w=>w.p('type')!='pile');
-          collections[a.collection] = c;
+          collections[a.collection] = [...new Set(c)];
         }
       }
 
       if(a.func == 'SET') {
         setDefaults(a, { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
+        if(a.relation == '==') {
+          problems.push(`Warning: Relation == interpreted as =`);
+          a.relation = '=';
+        }
         if((a.property == 'parent' || a.property == 'deck') && a.value !== null && !widgets.has(a.value)) {
           problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
         } else if(isValidCollection(a.collection)) {
-          if([ '+', '-', '=' ].indexOf(a.relation) == -1)
-            problems.push(`Warning: Relation ${a.relation} interpreted as =.`);
           for(const w of collections[a.collection]) {
-            if(a.relation === '+')
-              w.p(a.property, w.p(a.property) + a.value);
-            else if(a.relation === '-')
-              w.p(a.property, w.p(a.property) - a.value);
-            else
-              w.p(a.property, a.value);
+            w.p(a.property, compute(a.relation, null, w.p(a.property), a.value));
           }
         }
       }
 
       if(a.func == 'SORT') {
         setDefaults(a, { key: 'value', reverse: false });
-        if(isValidID(a.holder)) {
+        if(this.isValidID(a.holder, problems)) {
           this.w(a.holder, holder=>{
             let z = 1;
             let children = holder.children().reverse().sort((w1,w2)=>{
@@ -453,7 +538,7 @@ export class Button extends Widget {
       }
 
       if(a.func == 'SHUFFLE') {
-        if(isValidID(a.holder)) {
+        if(this.isValidID(a.holder, problems)) {
           this.w(a.holder, holder=>{
             holder.children().forEach(c=>c.p('z', Math.floor(Math.random()*10000)));
             holder.updateAfterShuffle();
@@ -505,14 +590,17 @@ export class Button extends Widget {
       reject(result);
   }
 
-  async showInputOverlay(o) {
+  async showInputOverlay(o, widgets, variables, problems) {
     return new Promise((resolve, reject) => {
+
       $('#buttonInputOverlay h1').textContent = o.header || "Button Input";
       $('#buttonInputFields').innerHTML = '';
 
       for(const field of o.fields) {
 
         const dom = document.createElement('div');
+
+        if(field.applyVariables) this.applyVariables(field, variables, problems);
 
         if(field.type == 'checkbox') {
           const input = document.createElement('input');
@@ -592,3 +680,4 @@ export class Button extends Widget {
     return widgetFilter(w=>this.toA(ids).indexOf(w.p('id')) != -1).forEach(callback);
   }
 }
+
