@@ -1,7 +1,6 @@
 import { $, $a, onLoad } from './domhelpers.js';
 import { startWebSocket } from './connection.js';
 
-
 let scale = 1;
 let roomRectangle;
 let overlayActive = false;
@@ -200,7 +199,6 @@ onLoad(function() {
   checkURLproperties();
   setScale();
   startWebSocket();
-
 
   const editOverlayApp = Vue.createApp({
     data() { return {
