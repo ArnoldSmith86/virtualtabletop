@@ -25,7 +25,8 @@ export class MessageBuffer {
 
 export const messageBufferHandlers = {
     'sendLatest': sendLatest,
-    'sendAll': sendAll
+    'sendAll': sendAll,
+    'sendMergedObject': sendMergedObject
 }
 
 function sendLatest(buffer, connection) {
@@ -35,7 +36,17 @@ function sendLatest(buffer, connection) {
 }
 
 function sendAll(buffer, connection) {
-    buffer.forEach(function(message) {
+    buffer.forEach(message=>{
         connection.send(message);
     })
+}
+
+function sendMergedObject(buffer, connection) {
+    if (buffer.length < 1) return;
+
+    let result = {};
+    buffer.forEach(message=>{
+        result = Object.assign(result, JSON.parse(message));
+    })
+    connection.send(JSON.stringify(result));
 }

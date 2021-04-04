@@ -1,4 +1,3 @@
-import { MessageBuffer, messageBufferHandlers } from './messageBuffer';
 let lastTimeout = 1000;
 let connection;
 let messageCallbacks = {};
@@ -44,8 +43,8 @@ export function startWebSocket() {
 
 function initMessageBuffers(connection) {
   var mouseBuffer, deltaBuffer, logBuffer;
-  mouseBuffer = new MessageBuffer('mouse', 100, messageBufferHandlers.sendLatest, connection);
-  deltaBuffer = new MessageBuffer('delta', 10, messageBufferHandlers.sendAll, connection);
+  mouseBuffer = new MessageBuffer('mouse', 30, messageBufferHandlers.sendLatest, connection);
+  deltaBuffer = new MessageBuffer('delta', 10, messageBufferHandlers.sendMergedObject , connection);
   logBuffer = new MessageBuffer('log', 10, messageBufferHandlers.sendAll, connection);
   messageBuffers = {
     'mouse': mouseBuffer,
