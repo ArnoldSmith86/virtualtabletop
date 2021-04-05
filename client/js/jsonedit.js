@@ -287,7 +287,7 @@ const jeCommands = [
       let currentWidget = JSON.parse(JSON.stringify(jeWidget.state))
       currentWidget.id = null;
       addWidgetLocal(currentWidget);
-      jeClick(widgets.get(currentWidget.id), true);
+      jeSelectWidget(widgets.get(currentWidget.id));
       jeStateNow.id = '###SELECT ME###';
       jeSetAndSelect(currentWidget.id);
     }
