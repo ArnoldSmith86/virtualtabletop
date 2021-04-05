@@ -154,8 +154,6 @@ export class Button extends Widget {
             for(let i=1; i<=a.count; ++i) {
               const clone = Object.assign(JSON.parse(JSON.stringify(w.state)), a.properties);
               const parent = clone.parent;
-              const newX = (clone.x ? clone.x : 0) + a.xOffset * i;
-              const newY = (clone.y ? clone.y : 0) + a.yOffset * i;
               clone.clonedFrom = w.p('id');
 
               delete clone.id;
@@ -172,8 +170,8 @@ export class Button extends Widget {
 
               // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
               if(!parent || !widgets.get(parent).p('alignChildren')) {
-                cWidget.p('x', newX);
-                cWidget.p('y', newY);
+                cWidget.p('x', (a.properties.x || w.p('x')) + a.xOffset * i);
+                cWidget.p('y', (a.properties.y || w.p('y')) + a.yOffset * i);
                 cWidget.updatePiles();
               }
 
