@@ -338,34 +338,49 @@ const jeCommands = [
   },
   {
     id: 'je_applyVariables',
-    name: _=>`change ${jeContext[4]} to applyVariables`,
-    context: '^button.*\\) ↦ [a-zA-Z]+',
-    call: function() {
-      const operation = jeGetValue(jeContext.slice(1, 3));
-      delete operation[jeContext[4]];
+    name: jeRoutineCall(routineIndex=>`change ${jeContext[routineIndex+3]} to applyVariables`),
+    context: '^.*\\) ↦ [a-zA-Z]+',
+    call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
+      delete operation[jeContext[routineIndex+3]];
       if(!operation.applyVariables)
         operation.applyVariables = [];
-      operation.applyVariables.push({ parameter: jeContext[4], variable: '###SELECT ME###' });
+      operation.applyVariables.push({ parameter: jeContext[routineIndex+3], variable: '###SELECT ME###' });
       jeSetAndSelect('');
-    },
-    show: function() {
-      return jeContext[4] != 'applyVariables';
-    }
+    }),
+    show: jeRoutineCall(routineIndex=>jeContext[routineIndex+3] != 'applyVariables')
   }
 ];
+
+function jeRoutineCall(callback) {
+  return function() {
+    let routineIndex = -1;
+    for(let i=jeContext.length-1; i>=0; --i) {
+      if(String(jeContext[i]).match(/Routine$/)) {
+        routineIndex = i;
+        break;
+      }
+    }
+
+    const routine = jeGetValue(jeContext.slice(1, routineIndex+1));
+    if(jeContext.length >= routineIndex)
+      return callback(routineIndex, routine, jeContext[routineIndex+1], routine[jeContext[routineIndex+1]]);
+    else
+      return callback(routineIndex, routine, null, null);
+  };
+}
 
 function jeAddRoutineOperationCommands(command, defaults) {
   jeCommands.push({
     id: 'operation_' + command,
     name: command,
     context: `^.*Routine`,
-    call: function() {
-      if(jeContext.length == 2)
-        jeStateNow[jeContext[1]].push({func: command});
+    call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
+      if(operationIndex === null)
+        routine.push({func: '###SELECT ME###'});
       else
-        jeStateNow[jeContext[1]].splice(jeContext[2]+1, 0, {func: '###SELECT ME###'});
+        routine.splice(operationIndex+1, 0, {func: '###SELECT ME###'});
       jeSetAndSelect(command);
-    }
+    })
   });
 
   defaults.skip = false;
@@ -374,12 +389,12 @@ function jeAddRoutineOperationCommands(command, defaults) {
       id: 'default_' + command + '_' + property,
       name: property,
       context: `^.* ↦ \\(${command}\\) ↦ `,
-      call: function() {
-        jeInsert(jeContext.slice(1, 3), property, defaults[property]);
-      },
-      show: function() {
-        return jeGetValue()[property] === undefined;
-      }
+      call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
+        jeInsert(jeContext.slice(1, routineIndex+2), property, defaults[property]);
+      }),
+      show: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
+        return operation[property] === undefined;
+      })
     });
   }
 }
@@ -512,7 +527,7 @@ function jeAddWidgetPropertyCommand(defaults, property) {
     name: property,
     context: `^${defaults.typeClasses.replace('widget ', '')}`,
     call: function() {
-      jeInsert([], property, defaults[property]);
+      jeInsert([], property, property == 'clickRoutine' ? [] : defaults[property]);
     },
     show: function() {
       return jeStateNow[property] === undefined;
@@ -685,8 +700,9 @@ function jeGetContext() {
     }
   }
   try {
-    if(keys[1].match(/Routine$/) && typeof keys[2] == 'number' && !jeJSONerror)
-      keys.splice(3, 0, '(' + jeStateNow[keys[1]][keys[2]].func + ')');
+    for(let i=1; i<keys.length-1; ++i)
+      if(String(keys[i]).match(/Routine$/) && typeof keys[i+1] == 'number' && !jeJSONerror)
+        keys.splice(i+2, 0, '(' + jeGetValue(keys.slice(0, i+2)).func + ')');
   } catch(e) {}
 
   if(select)
