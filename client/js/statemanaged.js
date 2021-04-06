@@ -43,6 +43,16 @@ export class StateManaged {
   }
 
   propertyGet(property) {
+    if (property.indexOf('activeFace.') == 0) {
+      property = property.split('.')[1];
+      if(this.state.type == 'card') {
+        if(this.deck.cards[this.state.id].deck.state.faceTemplates[this.state.activeFace || 0][property] !== undefined)
+          return this.deck.cards[this.state.id].deck.state.faceTemplates[this.state.activeFace || 0][property];
+      } else {
+        if(this.state.faces[this.state.activeFace][property] !== undefined)
+          return this.state.faces[this.state.activeFace][property];
+      }
+    }
     if(this.state[property] !== undefined)
       return this.state[property];
     else
