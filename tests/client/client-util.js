@@ -1,12 +1,12 @@
 import { dropTargets } from '../../client/js/main.js';
 import { addWidget, widgets } from '../../client/js/serverstate.js';
-import { Button } from '../../client/js/widgets/button.js';
+import { Widget } from '../../client/js/widgets/widget.js';
 import { Label } from '../../client/js/widgets/label.js';
 
-export function addButton(definition) {
-  const button = new Button(definition.id);
-  addWidget(definition, button);
-  return button;
+export function createWidget(definition) {
+  const widget = new Widget(definition.id);
+  addWidget(definition, widget);
+  return widget;
 }
 
 export function addLabel(id) {

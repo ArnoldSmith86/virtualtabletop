@@ -13,14 +13,14 @@ function eventCoords(name, e) {
   return [ coords.clientX, coords.clientY ];
 }
 
-function inputHandler(name, e) {
+async function inputHandler(name, e) {
   if(overlayActive || e.target.id == 'jeText' || e.target.id == 'jeCommands')
     return;
   if(!mouseTarget && [ "TEXTAREA", "INPUT", "BUTTON", "OPTION", "LABEL" ].indexOf(e.target.tagName) != -1)
     if(!edit || !e.target.parentNode || !e.target.parentNode.className.match(/label/))
       return;
   e.preventDefault();
-  
+
   if(name == 'mousedown' || name == 'touchstart') {
     if (!window.getSelection().isCollapsed)
       window.getSelection().collapseToEnd();
@@ -62,11 +62,11 @@ function inputHandler(name, e) {
         ms.widget.moveEnd();
       if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
         if(typeof jeEnabled == 'boolean' && jeEnabled)
-          jeClick(widgets.get(target.id));
+          await jeClick(widgets.get(target.id));
         else if(edit)
           editClick(widgets.get(target.id));
-        else if(widgets.get(target.id).click)
-          widgets.get(target.id).click();
+        else
+          await widgets.get(target.id).click();
       }
       delete mouseStatus[target.id];
       batchEnd();

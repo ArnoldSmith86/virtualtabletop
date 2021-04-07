@@ -96,46 +96,6 @@ function editClick(widget) {
   showOverlay('editOverlay');
 }
 
-function generateEmptyDeckWidget(id, x, y) {
-  const widgets = [
-    { type:'holder', id, x, y, dropTarget: { type: 'card' } },
-    {
-      id: id+'B',
-      parent: id,
-      y: 171.36,
-      width: 111,
-      height: 40,
-      type: 'button',
-      text: 'Recall & Shuffle',
-      movableInEdit: false,
-
-      clickRoutine: [
-        { func: 'RECALL',  holder: id },
-        { func: 'FLIP',    holder: id, face: 0 },
-        { func: 'SHUFFLE', holder: id }
-      ]
-    }
-  ];
-  const front = { type:'image', x:0, y:0, width:103, height:160, valueType:'dynamic', value:'image', color:'transparent' };
-  const back  = { ...front };
-  back.valueType = 'static'
-  back.value = '/i/cards-default/2B.svg';
-  widgets.push({
-    type: 'deck',
-    id: id+'D',
-    parent: id,
-    x: 12,
-    y: 41,
-    cardTypes: {},
-    faceTemplates: [ {
-      border: false, radius: false, objects: [ back  ]
-    }, {
-      border: false, radius: false, objects: [ front ]
-    } ]
-  });
-  return widgets;
-}
-
 function generateCardDeckWidgets(id, x, y) {
   const widgets = [
     { type:'holder', id, x, y, dropTarget: { type: 'card' } },
@@ -257,16 +217,11 @@ function populateAddWidgetOverlay() {
   addWidgetToAddWidgetOverlay(new Holder('add-holder'), {
     type: 'holder',
     x,
-    y: 130
+    y: 300
   });
 
-  addCompositeWidgetToAddWidgetOverlay(generateEmptyDeckWidget('add-empty-deck', x, 320), function() {
-    for(const w of generateEmptyDeckWidget(generateUniqueWidgetID(), x, 320))
-      addWidgetLocal(w);
-  });
-
-  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', x, 550), function() {
-    for(const w of generateCardDeckWidgets(generateUniqueWidgetID(), x, 535))
+  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', x, 500), function() {
+    for(const w of generateCardDeckWidgets(generateUniqueWidgetID(), x, 500))
       addWidgetLocal(w);
   });
 
@@ -379,8 +334,11 @@ function removeWidgetLocal(widgetID, removeChildren) {
       if(childWidget.p('parent') == widgetID || childWidget.p('deck') == widgetID)
         removeWidgetLocal(childWidgetID, removeChildren);
   if(widgets.has(widgetID)) {
-    widgets.get(widgetID).p('deck', null);
-    widgets.get(widgetID).p('parent', null);
+    const w = widgets.get(widgetID);
+    w.isBeingRemoved = true;
+    // don't actually set deck and parent to null (only pretend to) because when "receiving" the delta, the applyRemove has to find the parent
+    w.onPropertyChange('deck', w.p('deck'), null);
+    w.onPropertyChange('parent', w.p('parent'), null);
     sendPropertyUpdate(widgetID, null);
   }
 }
@@ -405,7 +363,7 @@ function uploadWidget(preset) {
   });
 }
 
-function onClickUpdateWidget() {
+function onClickUpdateWidget(applyChangesFromUI) {
     const previousState = JSON.parse($('#editWidgetJSON').dataset.previousState);
     try {
       var widget = JSON.parse($('#editWidgetJSON').value);
@@ -414,7 +372,8 @@ function onClickUpdateWidget() {
       return;
     }
 
-    applyEditOptions(widget);
+    if(applyChangesFromUI)
+      applyEditOptions(widget);
 
     const children = Widget.prototype.children.call(widgets.get(previousState.id));
     const cards = widgetFilter(w=>w.p('deck')==previousState.id);

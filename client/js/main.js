@@ -1,6 +1,7 @@
 import { $, $a, onLoad } from './domhelpers.js';
 import { startWebSocket } from './connection.js';
 
+
 let scale = 1;
 let roomRectangle;
 let overlayActive = false;
@@ -156,8 +157,8 @@ function getSVG(url, replaces, callback) {
   if(typeof svgCache[url] == 'string') {
     let svg = svgCache[url];
     for(const replace in replaces)
-      svg = svg.replace(replace, replaces[replace]);
-    return 'data:image/svg+xml;base64,'+btoa(svg);
+      svg = svg.split(replace).join(replaces[replace]);
+    return 'data:image/svg+xml,'+encodeURIComponent(svg);
   }
 
   if(!svgCache[url]) {
@@ -199,6 +200,7 @@ onLoad(function() {
   checkURLproperties();
   setScale();
   startWebSocket();
+
 
   const editOverlayApp = Vue.createApp({
     data() { return {
