@@ -96,6 +96,46 @@ function editClick(widget) {
   showOverlay('editOverlay');
 }
 
+function generateEmptyDeckWidget(id, x, y) {
+  const widgets = [
+    { type:'holder', id, x, y, dropTarget: { type: 'card' } },
+    {
+      id: id+'B',
+      parent: id,
+      y: 171.36,
+      width: 111,
+      height: 40,
+      type: 'button',
+      text: 'Recall & Shuffle',
+      movableInEdit: false,
+
+      clickRoutine: [
+        { func: 'RECALL',  holder: id },
+        { func: 'FLIP',    holder: id, face: 0 },
+        { func: 'SHUFFLE', holder: id }
+      ]
+    }
+  ];
+  const front = { type:'image', x:0, y:0, width:103, height:160, valueType:'dynamic', value:'image', color:'transparent' };
+  const back  = { ...front };
+  back.valueType = 'static'
+  back.value = '/i/cards-default/2B.svg';
+  widgets.push({
+    type: 'deck',
+    id: id+'D',
+    parent: id,
+    x: 12,
+    y: 41,
+    cardTypes: {},
+    faceTemplates: [ {
+      border: false, radius: false, objects: [ back  ]
+    }, {
+      border: false, radius: false, objects: [ front ]
+    } ]
+  });
+  return widgets;
+}
+
 function generateCardDeckWidgets(id, x, y) {
   const widgets = [
     { type:'holder', id, x, y, dropTarget: { type: 'card' } },
@@ -217,11 +257,16 @@ function populateAddWidgetOverlay() {
   addWidgetToAddWidgetOverlay(new Holder('add-holder'), {
     type: 'holder',
     x,
-    y: 300
+    y: 130
   });
 
-  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', x, 500), function() {
-    for(const w of generateCardDeckWidgets(generateUniqueWidgetID(), x, 500))
+  addCompositeWidgetToAddWidgetOverlay(generateEmptyDeckWidget('add-empty-deck', x, 320), function() {
+    for(const w of generateEmptyDeckWidget(generateUniqueWidgetID(), x, 320))
+      addWidgetLocal(w);
+  });
+
+  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', x, 550), function() {
+    for(const w of generateCardDeckWidgets(generateUniqueWidgetID(), x, 535))
       addWidgetLocal(w);
   });
 
