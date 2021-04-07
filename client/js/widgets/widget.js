@@ -118,8 +118,10 @@ export class Widget extends StateManaged {
   }
 
   applyRemove() {
-    if(this.p('parent'))
+    if(this.p('parent') && widgets.has(this.p('parent')))
       widgets.get(this.p('parent')).applyChildRemove(this);
+    if(this.p('deck') && widgets.has(this.p('deck')))
+      widgets.get(this.p('deck')).removeCard(this);
     removeFromDOM(this.domElement);
   }
 
@@ -346,7 +348,7 @@ export class Widget extends StateManaged {
               await w.click();
       }
 
-      if(a.func == 'CLONE'){
+      if(a.func == 'CLONE') {
         setDefaults(a, { source: 'DEFAULT', count: 1, xOffset: 0, yOffset: 0, properties: {}, collection: 'DEFAULT' });
         if(a.properties.applyVariables) {
           this.applyVariables(a.properties, variables, problems);
@@ -355,19 +357,36 @@ export class Widget extends StateManaged {
         if(isValidCollection(a.source)) {
           var c=[];
           for(const w of collections[a.source]) {
-            const clone = Object.assign(JSON.parse(JSON.stringify(w.state)), a.properties);
-            clone.x = clone.x + a.xOffset;
-            clone.y = clone.y + a.yOffset;
-            clone.clonedFrom = w.p('id');
-            for(let i=0; i<a.count; ++i) {
-              clone.id = null;
+            for(let i=1; i<=a.count; ++i) {
+              const clone = Object.assign(JSON.parse(JSON.stringify(w.state)), a.properties);
+              const parent = clone.parent;
+              clone.clonedFrom = w.p('id');
+
+              delete clone.id;
+              delete clone.parent;
               addWidgetLocal(clone);
-              c.push(widgets.get(clone.id));
+              const cWidget = widgets.get(clone.id);
+
+              if(parent) {
+                // use moveToHolder so that CLONE triggers onEnter and similar features
+                cWidget.movedByButton = true;
+                cWidget.moveToHolder(widgets.get(parent));
+                delete cWidget.movedByButton;
+              }
+
+              // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
+              if(!parent || !widgets.get(parent).p('alignChildren')) {
+                cWidget.p('x', (a.properties.x || w.p('x')) + a.xOffset * i);
+                cWidget.p('y', (a.properties.y || w.p('y')) + a.yOffset * i);
+                cWidget.updatePiles();
+              }
+
+              c.push(cWidget);
             }
           }
           collections[a.collection]=c;
         }
-      };
+      }
 
       function compute(o, v, x, y, z) {
         try {
@@ -532,10 +551,14 @@ export class Widget extends StateManaged {
 
       if(a.func == 'DELETE') {
         setDefaults(a, { collection: 'DEFAULT' });
-        if(isValidCollection(a.collection))
-          for(const w of collections[a.collection])
-            removeWidgetLocal(w.p('id'))
-      };
+        if(isValidCollection(a.collection)) {
+          for(const w of collections[a.collection]) {
+            removeWidgetLocal(w.p('id'));
+            for(const c in collections)
+              collections[c] = collections[c].filter(x=>x!=w);
+          }
+        }
+      }
 
       if(a.func == 'FLIP') {
         setDefaults(a, { count: 0, face: null, faceCyle: null, collection: 'DEFAULT' });
@@ -679,6 +702,8 @@ export class Widget extends StateManaged {
           if([ 'add', 'set' ].indexOf(a.mode) == -1)
             problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
           let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(function(w) {
+            if(w.isBeingRemoved)
+              return false;
             if(a.type != 'all' && w.p('type') != a.type)
               return false;
             if(a.relation === '<')
@@ -1079,13 +1104,13 @@ export class Widget extends StateManaged {
   }
 
   updatePiles() {
-    if(this.p('parent') && !widgets.get(this.p('parent')).supportsPiles())
+    if(this.isBeingRemoved || this.p('parent') && !widgets.get(this.p('parent')).supportsPiles())
       return;
 
     for(const [ widgetID, widget ] of widgets) {
       // check if this widget is closer than 10px from another widget in the same parent
       if(widget != this && widget.p('parent') == this.p('parent') && Math.abs(widget.p('x')-this.p('x')) < 10 && Math.abs(widget.p('y')-this.p('y')) < 10) {
-        if(widget.p('owner') !== this.p('owner'))
+        if(widget.p('owner') !== this.p('owner') || widget.isBeingRemoved)
           continue;
 
         // if a card gets dropped onto a card, they create a new pile and are added to it
@@ -1111,7 +1136,7 @@ export class Widget extends StateManaged {
         }
 
         // if a pile gets dropped onto a card, the card is added to the pile but the pile is moved to the original position of the card
-        if(widget.p('type') == 'card' && this.p('type') == 'pile' && !this.removed) {
+        if(widget.p('type') == 'card' && this.p('type') == 'pile') {
           this.children().reverse().forEach(w=>w.bringToFront());
           this.p('x', widget.p('x'));
           this.p('y', widget.p('y'));
@@ -1120,7 +1145,7 @@ export class Widget extends StateManaged {
         }
 
         // if a card gets dropped onto a pile, it simply gets added to the pile
-        if(widget.p('type') == 'pile' && this.p('type') == 'card' && !widget.removed) {
+        if(widget.p('type') == 'pile' && this.p('type') == 'card') {
           this.bringToFront();
           this.p('parent', widget.p('id'));
           break;

@@ -28,9 +28,6 @@ export function addWidget(widget, instance) {
   }
 
   let w;
-  let parent = $('.surface');
-  if(widget.parent)
-    parent = widgets.get(widget.parent);
 
   if(instance != undefined) {
     w = instance;
@@ -145,7 +142,7 @@ export function sendPropertyUpdate(widgetID, property, value) {
 }
 
 export function widgetFilter(callback) {
-  return Array.from(widgets.values()).filter(callback);
+  return Array.from(widgets.values()).filter(w=>!w.isBeingRemoved).filter(callback);
 }
 
 onLoad(function() {

@@ -334,8 +334,11 @@ function removeWidgetLocal(widgetID, removeChildren) {
       if(childWidget.p('parent') == widgetID || childWidget.p('deck') == widgetID)
         removeWidgetLocal(childWidgetID, removeChildren);
   if(widgets.has(widgetID)) {
-    widgets.get(widgetID).p('deck', null);
-    widgets.get(widgetID).p('parent', null);
+    const w = widgets.get(widgetID);
+    w.isBeingRemoved = true;
+    // don't actually set deck and parent to null (only pretend to) because when "receiving" the delta, the applyRemove has to find the parent
+    w.onPropertyChange('deck', w.p('deck'), null);
+    w.onPropertyChange('parent', w.p('parent'), null);
     sendPropertyUpdate(widgetID, null);
   }
 }
