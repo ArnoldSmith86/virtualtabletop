@@ -70,8 +70,8 @@ class Card extends Widget {
     super.applyInitialDelta(delta);
   }
 
-  click() {
-    if(this.p('clickable'))
+  async click() {
+    if(!await super.click())
       this.flip();
   }
 

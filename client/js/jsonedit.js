@@ -35,7 +35,7 @@ const jeCommands = [
     context: '.*"([^"]+)"',
     call: function() {
       const m = jeContext.join('').match(/"([^"]+)"/);
-      jeClick(widgets.get(m[1]), true);
+      jeSelectWidget(widgets.get(m[1]));
     },
     show: function() {
       const m = jeContext.join('').match(/"([^"]+)"/);
@@ -273,7 +273,7 @@ const jeCommands = [
     call: function() {
       const toAdd = {};
       addWidgetLocal(toAdd);
-      jeClick(widgets.get(toAdd.id), true);
+      jeSelectWidget(widgets.get(toAdd.id));
       jeStateNow.type = '###SELECT ME###';
       jeSetAndSelect(null);
     }
@@ -287,7 +287,7 @@ const jeCommands = [
       let currentWidget = JSON.parse(JSON.stringify(jeWidget.state))
       currentWidget.id = null;
       addWidgetLocal(currentWidget);
-      jeClick(widgets.get(currentWidget.id), true);
+      jeSelectWidget(widgets.get(currentWidget.id));
       jeStateNow.id = '###SELECT ME###';
       jeSetAndSelect(currentWidget.id);
     }
@@ -324,7 +324,7 @@ const jeCommands = [
     context: '^card',
     show: _=>widgets.has(jeStateNow.deck),
     call: function() {
-      jeClick(widgets.get(jeStateNow.deck), true);
+      jeSelectWidget(widgets.get(jeStateNow.deck));
     }
   },
   {
@@ -333,39 +333,54 @@ const jeCommands = [
     forceKey: 'ArrowUp',
     show: _=>jeStateNow && widgets.has(jeStateNow.parent),
     call: function() {
-      jeClick(widgets.get(jeStateNow.parent), true);
+      jeSelectWidget(widgets.get(jeStateNow.parent));
     }
   },
   {
     id: 'je_applyVariables',
-    name: _=>`change ${jeContext[4]} to applyVariables`,
-    context: '^button.*\\) ↦ [a-zA-Z]+',
-    call: function() {
-      const operation = jeGetValue(jeContext.slice(1, 3));
-      delete operation[jeContext[4]];
+    name: jeRoutineCall(routineIndex=>`change ${jeContext[routineIndex+3]} to applyVariables`),
+    context: '^.*\\) ↦ [a-zA-Z]+',
+    call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
+      delete operation[jeContext[routineIndex+3]];
       if(!operation.applyVariables)
         operation.applyVariables = [];
-      operation.applyVariables.push({ parameter: jeContext[4], variable: '###SELECT ME###' });
+      operation.applyVariables.push({ parameter: jeContext[routineIndex+3], variable: '###SELECT ME###' });
       jeSetAndSelect('');
-    },
-    show: function() {
-      return jeContext[4] != 'applyVariables';
-    }
+    }),
+    show: jeRoutineCall(routineIndex=>jeContext[routineIndex+3] != 'applyVariables')
   }
 ];
 
-function jeAddButtonOperationCommands(command, defaults) {
+function jeRoutineCall(callback) {
+  return function() {
+    let routineIndex = -1;
+    for(let i=jeContext.length-1; i>=0; --i) {
+      if(String(jeContext[i]).match(/Routine$/)) {
+        routineIndex = i;
+        break;
+      }
+    }
+
+    const routine = jeGetValue(jeContext.slice(1, routineIndex+1));
+    if(jeContext.length >= routineIndex)
+      return callback(routineIndex, routine, jeContext[routineIndex+1], routine[jeContext[routineIndex+1]]);
+    else
+      return callback(routineIndex, routine, null, null);
+  };
+}
+
+function jeAddRoutineOperationCommands(command, defaults) {
   jeCommands.push({
     id: 'operation_' + command,
     name: command,
-    context: `^button ↦ clickRoutine`,
-    call: function() {
-      if(jeContext.length == 2)
-        jeStateNow.clickRoutine.push({func: command});
+    context: `^.*Routine`,
+    call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
+      if(operationIndex === null)
+        routine.push({func: '###SELECT ME###'});
       else
-        jeStateNow.clickRoutine.splice(jeContext[2]+1, 0, {func: '###SELECT ME###'});
+        routine.splice(operationIndex+1, 0, {func: '###SELECT ME###'});
       jeSetAndSelect(command);
-    }
+    })
   });
 
   defaults.skip = false;
@@ -373,13 +388,13 @@ function jeAddButtonOperationCommands(command, defaults) {
     jeCommands.push({
       id: 'default_' + command + '_' + property,
       name: property,
-      context: `^button.* ↦ \\(${command}\\) ↦ `,
-      call: function() {
-        jeInsert(jeContext.slice(1, 3), property, defaults[property]);
-      },
-      show: function() {
-        return jeGetValue()[property] === undefined;
-      }
+      context: `^.* ↦ \\(${command}\\) ↦ `,
+      call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
+        jeInsert(jeContext.slice(1, routineIndex+2), property, defaults[property]);
+      }),
+      show: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
+        return operation[property] === undefined;
+      })
     });
   }
 }
@@ -394,24 +409,25 @@ function jeAddCommands() {
   jeAddWidgetPropertyCommands(new Pile());
   jeAddWidgetPropertyCommands(new Spinner());
 
-  jeAddButtonOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 });
-  jeAddButtonOperationCommands('COMPUTE', { operation: '+', operand1: 1, operand2: 1, operand3: 1, variable: 'COMPUTE' });
-  jeAddButtonOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT' });
-  jeAddButtonOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, properties: null });
-  jeAddButtonOperationCommands('DELETE', { collection: 'DEFAULT'});
-  jeAddButtonOperationCommands('FLIP', { count: 0, face: null, faceCycle: 'forward', holder: null, collection: 'DEFAULT' });
-  jeAddButtonOperationCommands('GET', { variable: 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first' });
+  jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', 'return': true, arguments: {}, variable: 'result' });
+  jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 });
+  jeAddRoutineOperationCommands('COMPUTE', { operation: '+', operand1: 1, operand2: 1, operand3: 1, variable: 'COMPUTE' });
+  jeAddRoutineOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT' });
+  jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, properties: null });
+  jeAddRoutineOperationCommands('DELETE', { collection: 'DEFAULT'});
+  jeAddRoutineOperationCommands('FLIP', { count: 0, face: null, faceCycle: 'forward', holder: null, collection: 'DEFAULT' });
+  jeAddRoutineOperationCommands('GET', { variable: 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first' });
   // INPUT is missing
-  jeAddButtonOperationCommands('LABEL', { value: 0, mode: 'set', label: null, collection: 'DEFAULT' });
-  jeAddButtonOperationCommands('MOVE', { count: 1, face: null, from: null, to: null });
-  jeAddButtonOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0 });
-  jeAddButtonOperationCommands('RANDOM', { min: 1, max: 10, variable: 'RANDOM' });
-  jeAddButtonOperationCommands('RECALL', { owned: true, holder: null });
-  jeAddButtonOperationCommands('ROTATE', { count: 1, angle: 90, mode: 'add', holder: null });
-  jeAddButtonOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'add', source: 'all' });
-  jeAddButtonOperationCommands('SET', { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
-  jeAddButtonOperationCommands('SORT', { key: 'value', reverse: false, holder: null });
-  jeAddButtonOperationCommands('SHUFFLE', { holder: null });
+  jeAddRoutineOperationCommands('LABEL', { value: 0, mode: 'set', label: null, collection: 'DEFAULT' });
+  jeAddRoutineOperationCommands('MOVE', { count: 1, face: null, from: null, to: null });
+  jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0 });
+  jeAddRoutineOperationCommands('RANDOM', { min: 1, max: 10, variable: 'RANDOM' });
+  jeAddRoutineOperationCommands('RECALL', { owned: true, holder: null });
+  jeAddRoutineOperationCommands('ROTATE', { count: 1, angle: 90, mode: 'add', holder: null });
+  jeAddRoutineOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'add', source: 'all' });
+  jeAddRoutineOperationCommands('SET', { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
+  jeAddRoutineOperationCommands('SORT', { key: 'value', reverse: false, holder: null });
+  jeAddRoutineOperationCommands('SHUFFLE', { holder: null });
 
   jeAddCSScommands();
 
@@ -511,7 +527,7 @@ function jeAddWidgetPropertyCommand(defaults, property) {
     name: property,
     context: `^${defaults.typeClasses.replace('widget ', '')}`,
     call: function() {
-      jeInsert([], property, defaults[property]);
+      jeInsert([], property, property == 'clickRoutine' ? [] : defaults[property]);
     },
     show: function() {
       return jeStateNow[property] === undefined;
@@ -536,9 +552,9 @@ function jeApplyChanges() {
 
 function jeApplyDelta(delta) {
   if(!jeDeltaIsOurs && jeStateNow && jeStateNow.id && delta.s[jeStateNow.id] !== undefined)
-    jeClick(widgets.get(jeStateNow.id), true);
+    jeSelectWidget(widgets.get(jeStateNow.id));
   if(!jeDeltaIsOurs && jeStateNow && jeStateNow.deck && delta.s[jeStateNow.deck] !== undefined)
-    jeClick(widgets.get(jeStateNow.id), true);
+    jeSelectWidget(widgets.get(jeStateNow.id));
   if(!jeWidget)
     jeDisplayTree();
 }
@@ -561,14 +577,18 @@ function jeApplyExternalChanges(state) {
   }
 }
 
-function jeClick(widget, force) {
-  if(jeState.ctrl || force) {
-    jeWidget = widget;
-    jeStateNow = widget.state;
-    jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(widget.state), null, '  ')));
-  } else if(widget.click) {
-    widget.click();
+async function jeClick(widget) {
+  if(jeState.ctrl) {
+    jeSelectWidget(widget);
+  } else {
+    await widget.click();
   }
+}
+
+function jeSelectWidget(widget) {
+  jeWidget = widget;
+  jeStateNow = widget.state;
+  jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(widget.state), null, '  ')));
 }
 
 function jeColorize() {
@@ -680,8 +700,9 @@ function jeGetContext() {
     }
   }
   try {
-    if(keys[1] == 'clickRoutine' && typeof keys[2] == 'number' && !jeJSONerror)
-      keys.splice(3, 0, '(' + jeStateNow.clickRoutine[keys[2]].func + ')');
+    for(let i=1; i<keys.length-1; ++i)
+      if(String(keys[i]).match(/Routine$/) && typeof keys[i+1] == 'number' && !jeJSONerror)
+        keys.splice(i+2, 0, '(' + jeGetValue(keys.slice(0, i+2)).func + ')');
   } catch(e) {}
 
   if(select)
@@ -1004,7 +1025,7 @@ window.addEventListener('keydown', function(e) {
         id = `"${id}"`;
       jePasteText(id);
     } else {
-      jeClick(jeWidgetLayers[+functionKey[1]], true);
+      jeSelectWidget(jeWidgetLayers[+functionKey[1]]);
     }
   }
 });
