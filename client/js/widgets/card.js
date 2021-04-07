@@ -149,7 +149,7 @@ class Card extends Widget {
 
   getDefaultValue(property) {
     if(this.deck) {
-      const d = this.deck.cardPropertyGet(this.p('cardType'), property);
+      const d = this.deck.cardPropertyGet(this.p('cardType'), this.p('id'), this.state.activeFace, property);
       if(d !== undefined)
         return d;
     }

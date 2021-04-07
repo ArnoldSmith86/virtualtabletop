@@ -21,6 +21,8 @@ class Deck extends Widget {
   }
 
   cardPropertyGet(cardType, property) {
+    if(this.cards[cardId].deck.state.faceTemplates[activeFace || 0][property] !== undefined)
+      return this.cards[cardId].deck.state.faceTemplates[activeFace || 0][property];
     if(this.p('cardTypes')[cardType][property] !== undefined)
       return this.p('cardTypes')[cardType][property];
 
