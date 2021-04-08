@@ -653,8 +653,10 @@ function jeDisplayTreeAddWidgets(allWidgets, parent, indent) {
 }
 
 function jeGetContext() {
-  const s = getSelection().anchorOffset;
-  const e = getSelection().focusOffset;
+  const aO = getSelection().anchorOffset;
+  const fO = getSelection().focusOffset;
+  const s = Math.min(aO, fO);
+  const e = Math.max(aO, fO);
   const v = $('#jeText').textContent;
   const t = jeStateNow && jeStateNow.type || 'basic';
 
@@ -736,8 +738,10 @@ function jeInsert(context, key, value) {
 }
 
 function jePasteText(text) {
-  const s = getSelection().anchorOffset;
-  const e = getSelection().focusOffset;
+  const aO = getSelection().anchorOffset;
+  const fO = getSelection().focusOffset;
+  const s = Math.min(aO, fO);
+  const e = Math.max(aO, fO);
   const v = $('#jeText').textContent;
 
   jeSet(v.substr(0, s) + text + v.substr(e));
