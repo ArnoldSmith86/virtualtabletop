@@ -334,8 +334,11 @@ function removeWidgetLocal(widgetID, removeChildren) {
       if(childWidget.p('parent') == widgetID || childWidget.p('deck') == widgetID)
         removeWidgetLocal(childWidgetID, removeChildren);
   if(widgets.has(widgetID)) {
-    widgets.get(widgetID).p('deck', null);
-    widgets.get(widgetID).p('parent', null);
+    const w = widgets.get(widgetID);
+    w.isBeingRemoved = true;
+    // don't actually set deck and parent to null (only pretend to) because when "receiving" the delta, the applyRemove has to find the parent
+    w.onPropertyChange('deck', w.p('deck'), null);
+    w.onPropertyChange('parent', w.p('parent'), null);
     sendPropertyUpdate(widgetID, null);
   }
 }
@@ -360,7 +363,7 @@ function uploadWidget(preset) {
   });
 }
 
-function onClickUpdateWidget() {
+function onClickUpdateWidget(applyChangesFromUI) {
     const previousState = JSON.parse($('#editWidgetJSON').dataset.previousState);
     try {
       var widget = JSON.parse($('#editWidgetJSON').value);
@@ -369,7 +372,8 @@ function onClickUpdateWidget() {
       return;
     }
 
-    applyEditOptions(widget);
+    if(applyChangesFromUI)
+      applyEditOptions(widget);
 
     const children = Widget.prototype.children.call(widgets.get(previousState.id));
     const cards = widgetFilter(w=>w.p('deck')==previousState.id);
