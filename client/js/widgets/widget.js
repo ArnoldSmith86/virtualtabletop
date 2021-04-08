@@ -615,9 +615,12 @@ export class Widget extends StateManaged {
             $('#debugButtonOutput').textContent += `\n\n\nIF elseRoutine\n`;
             result = await this.evaluateRoutine(a.elseRoutine, inheritVariables, inheritCollections, (depth || 0) + 1);
           }
-          const returnedVariables = Object.entries(JSON.parse(result.variable));
+          const returnedVariables = Object.entries(result.variable);
           for (const [k,v] of returnedVariables)
             variables[k] = v;
+          const returnedCollections = Object.entries(result.collection);
+          for (const [k,v] of returnedCollections)
+            collections[k] = v;
         } else
           problems.push(`IF operation is missing the 'variable' or 'then' parameter.`);
       }
@@ -812,7 +815,7 @@ export class Widget extends StateManaged {
       showOverlay('debugButtonOverlay');
 
     batchEnd();
-    return typeof this.p(property) != 'undefined' ? { variable: variables.result, collection: collections.result } : { variable: JSON.stringify(variables), collection: JSON.stringify(collections) };
+    return typeof this.p(property) != 'undefined' ? { variable: variables.result, collection: collections.result } : { variable: variables, collection: collections };
   }
 
   hideEnlarged() {
