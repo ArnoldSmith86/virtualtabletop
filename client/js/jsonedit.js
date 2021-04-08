@@ -381,7 +381,8 @@ function jeAddRoutineOperationCommands(command, defaults) {
       else
         routine.splice(operationIndex+1, 0, {func: '###SELECT ME###'});
       jeSetAndSelect(command);
-    })
+    }),
+    show: jeRoutineCall((_, routine)=>Array.isArray(routine))
   });
 
   defaults.skip = false;
