@@ -20,6 +20,12 @@ class Deck extends Widget {
     ++this.domElement.textContent;
   }
 
+  applyDeltaToDOM(delta) {
+    if(delta.cardDefaults !== undefined || delta.cardTypes !== undefined || delta.faceTemplates !== undefined)
+      for(const cardID in this.cards)
+        this.cards[cardID].applyDeltaToDOM({ deck: this.p('id') });
+  }
+
   cardPropertyGet(cardType, property) {
     if(this.p('cardTypes')[cardType][property] !== undefined)
       return this.p('cardTypes')[cardType][property];
