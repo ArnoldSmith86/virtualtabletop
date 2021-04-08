@@ -688,7 +688,7 @@ function jeGetContext() {
       jeJSONerror = 'No ID given.';
     else if(JSON.parse(jeStateBefore).id != jeStateNow.id && widgets.has(jeStateNow.id))
       jeJSONerror = `ID ${jeStateNow.id} is already in use.`;
-    else if(jeStateNow.parent !== undefined && !widgets.has(jeStateNow.parent))
+    else if(jeStateNow.parent && !widgets.has(jeStateNow.parent))
       jeJSONerror = `Parent ${jeStateNow.parent} does not exist.`;
     else if(jeStateNow.type == 'card' && (!jeStateNow.deck || !widgets.has(jeStateNow.deck)))
       jeJSONerror = `Deck ${jeStateNow.deck} does not exist.`;
