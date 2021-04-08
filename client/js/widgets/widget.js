@@ -528,7 +528,7 @@ export class Widget extends StateManaged {
             v = Math.floor((Math.random() * (y - x + 1)) + x);
             break;
           case 'randrange':
-            v = Math.floor((Math.random() * (y - x) / (z || 1))) * (z || 1) + x;
+            v = Math.round(Math.floor((Math.random() * (y - x) / (z || 1))) * (z || 1) + x);
             break;
           default:
             problems.push(`Operation ${o} is unsupported.`);
