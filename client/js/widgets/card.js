@@ -149,9 +149,10 @@ class Card extends Widget {
 
   getDefaultValue(property) {
     if(this.deck) {
-      const d = this.deck.cardPropertyGet(this.p('cardType'), this.p('id'), this.state.activeFace, property);
-      if(d !== undefined)
-        return d;
+      if (this.deck.state.faceTemplates[this.deck.cards[this.id].state.activeFace || 0][property] !== undefined)
+        return this.deck.state.faceTemplates[this.deck.cards[this.id].state.activeFace || 0][property];
+      if (this.deck.cardPropertyGet(this.p('cardType'), property) !== undefined)
+        return this.deck.cardPropertyGet(this.p('cardType'), property);
     }
     return super.getDefaultValue(property);
   }
