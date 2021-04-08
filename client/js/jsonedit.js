@@ -706,7 +706,7 @@ function jeGetContext() {
   }
 
   let keys = [ t ];
-  for(const line of v.substr(0, s).split('\n')) {
+  for(const line of v.split('\n').slice(0, v.substr(0, s).split('\n').length)) {
     const m = line.match(/^( +)(["{])([^"]*)/);
     if(m) {
       const depth = m[1].length/2;
