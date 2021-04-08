@@ -461,7 +461,7 @@ function jeAddCSScommands() {
       name: css,
       context: '^.* ↦ (css|[a-z]+CSS)',
       call: function() {
-        jePasteText(css + '; ');
+        jePasteText(css + '; ', true);
       },
       show: function() {
         return !jeGetValue()[jeGetLastKey()].match(css.split(':')[0]);
@@ -749,15 +749,17 @@ function jeInsert(context, key, value) {
   }
 }
 
-function jePasteText(text) {
+function jePasteText(text, select) {
   const aO = getSelection().anchorOffset;
   const fO = getSelection().focusOffset;
   const s = Math.min(aO, fO);
   const e = Math.max(aO, fO);
   const v = $('#jeText').textContent;
 
-  jeSet(v.substr(0, s) + text + v.substr(e));
-  jeSelect(s, s + text.length);
+  $('#jeText').textContent = v.substr(0, s) + text + v.substr(e);
+  $('#jeText').focus();
+  jeColorize();
+  jeSelect(select ? s : s + text.length, s + text.length);
 }
 
 function jePostProcessObject(o) {
@@ -982,6 +984,14 @@ window.addEventListener('mouseup', function(e) {
   }
 });
 
+onLoad(function() {
+  on('#jeText', 'paste', function(e) {
+    const paste = (e.clipboardData || window.clipboardData).getData('text');
+    jePasteText(paste, false);
+    e.preventDefault();
+  });
+});
+
 window.addEventListener('keydown', function(e) {
   if(e.key == 'Control')
     jeState.ctrl = true;
@@ -1042,7 +1052,7 @@ window.addEventListener('keydown', function(e) {
       let id = jeWidgetLayers[+functionKey[1]].p('id');
       if(jeContext[jeContext.length-1] == '"null"')
         id = `"${id}"`;
-      jePasteText(id);
+      jePasteText(id, true);
     } else {
       jeSelectWidget(jeWidgetLayers[+functionKey[1]]);
     }
