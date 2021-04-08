@@ -301,7 +301,9 @@ export class Widget extends StateManaged {
       thisButton : [this]
     }, initialCollections);
 
-    for(const original of this.p(property)) {
+    const routine = typeof this.p(property) != 'undefined' ? this.p(property) : property;
+
+    for(const original of routine) {
       const a = JSON.parse(JSON.stringify(original));
       var problems = [];
 
@@ -599,6 +601,22 @@ export class Widget extends StateManaged {
           }
         }
       }
+      if(a.func == 'IF') {
+        if(typeof a.variable != 'undefined' && Array.isArray(a.thenRoutine)) {
+          if (a.variable) {
+            const inheritVariables = variables;
+            const inheritCollections = {};
+            for(const c in collections)
+              inheritCollections[c] = [ ...collections[c] ];
+            $('#debugButtonOutput').textContent += `\n\n\nIF thenRoutine\n`;
+            const result = await this.evaluateRoutine(a.thenRoutine, inheritVariables, inheritCollections, (depth || 0) + 1);
+            const returnedVariables = Object.entries(JSON.parse(result.variable));
+            for (const [k,v] of returnedVariables)
+              variables[k] = v;
+          }
+        } else
+          problems.push(`IF operation is missing the 'variable' or 'then' parameter.`);
+      }
 
       if(a.func == 'INPUT') {
         try {
@@ -790,7 +808,7 @@ export class Widget extends StateManaged {
       showOverlay('debugButtonOverlay');
 
     batchEnd();
-    return { variable: variables.result, collection: collections.result };
+    return typeof this.p(property) != 'undefined' ? { variable: variables.result, collection: collections.result } : { variable: JSON.stringify(variables), collection: JSON.stringify(collections) }
   }
 
   hideEnlarged() {
