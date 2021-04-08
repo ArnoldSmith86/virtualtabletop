@@ -790,7 +790,7 @@ export class Widget extends StateManaged {
       showOverlay('debugButtonOverlay');
 
     batchEnd();
-    return { variable: variables.result, collection: collections.result };
+    return { variable: variables.result, collection: collections.result || [] };
   }
 
   hideEnlarged() {
