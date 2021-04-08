@@ -21,6 +21,7 @@ class Deck extends Widget {
   }
 
   applyDeltaToDOM(delta) {
+    super.applyDeltaToDOM(delta);
     if(delta.cardDefaults !== undefined || delta.cardTypes !== undefined || delta.faceTemplates !== undefined)
       for(const cardID in this.cards)
         this.cards[cardID].applyDeltaToDOM({ deck: this.p('id') });
