@@ -464,7 +464,7 @@ function jeAddCSScommands() {
         jePasteText(css + '; ', true);
       },
       show: function() {
-        return !jeGetValue()[jeGetLastKey()].match(css.split(':')[0]);
+        return !String(jeGetValue()[jeGetLastKey()]).match(css.split(':')[0]);
       }
     });
   }
