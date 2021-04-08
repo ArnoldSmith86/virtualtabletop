@@ -19,6 +19,7 @@ export default function minifyRoom() {
         'client/css/layout.css',
 
         'client/css/editmode.css',
+        'client/css/jsonedit.css',
 
         'client/css/overlays/players.css',
         'client/css/overlays/states.css',
@@ -44,13 +45,14 @@ export default function minifyRoom() {
           'client/js/serverstate.js',
           'client/js/editmode.js',
           'client/js/geometry.js',
+          'client/js/jsonedit.js',
           'client/js/mousehandling.js',
           'client/js/statemanaged.js',
-          'client/js/widgets/widget.js',
 
           'client/js/overlays/players.js',
           'client/js/overlays/states.js',
 
+          'client/js/widgets/widget.js',
           'client/js/widgets/basicwidget.js',
           'client/js/widgets/button.js',
           'client/js/widgets/card.js',
@@ -59,6 +61,10 @@ export default function minifyRoom() {
           'client/js/widgets/label.js',
           'client/js/widgets/pile.js',
           'client/js/widgets/spinner.js',
+
+          'client/components/baseEditOverlay.js',
+          'client/components/deckEditor.js',
+          'client/components/loadComponents.js',
 
           'client/js/main.js'
         ],

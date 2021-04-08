@@ -34,7 +34,7 @@ export function selectFile(getContents, multipleCallback) {
   return new Promise((resolve, reject) => {
     const upload = document.createElement('input');
     upload.type = 'file';
-    upload.setAttribute('multiple', !!multipleCallback);
+    if (typeof multipleCallback === 'function') upload.setAttribute('multiple', true);
     upload.addEventListener('change', function(e) {
       if(!getContents)
         resolve(e.target.files[0]);
@@ -43,7 +43,7 @@ export function selectFile(getContents, multipleCallback) {
         const name = file.name;
         const reader = new FileReader();
         reader.addEventListener('load', function(e) {
-          if(multipleCallback)
+          if(typeof multipleCallback === 'function')
             multipleCallback({ content: e.target.result, name });
           else
             resolve({ content: e.target.result, name });
