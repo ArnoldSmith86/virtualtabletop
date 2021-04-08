@@ -693,6 +693,8 @@ function jeGetContext() {
       jeJSONerror = `Parent ${jeStateNow.parent} does not exist.`;
     else if(jeStateNow.type == 'card' && (!jeStateNow.deck || !widgets.has(jeStateNow.deck)))
       jeJSONerror = `Deck ${jeStateNow.deck} does not exist.`;
+    else if(jeStateNow.type == 'card' && !widgets.get(jeStateNow.deck).p('cardTypes'))
+      jeJSONerror = `Given widget ${jeStateNow.deck} is not a deck or doesn't define cardTypes.`;
     else if(jeStateNow.type == 'card' && (!jeStateNow.cardType || !widgets.get(jeStateNow.deck).p('cardTypes')[jeStateNow.cardType]))
       jeJSONerror = `Card type ${jeStateNow.cardType} does not exist in deck ${jeStateNow.deck}.`;
     else
