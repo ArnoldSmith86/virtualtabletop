@@ -603,17 +603,21 @@ export class Widget extends StateManaged {
       }
       if(a.func == 'IF') {
         if(typeof a.variable != 'undefined' && Array.isArray(a.thenRoutine)) {
-          if (a.variable) {
-            const inheritVariables = variables;
-            const inheritCollections = {};
-            for(const c in collections)
-              inheritCollections[c] = [ ...collections[c] ];
+          const inheritVariables = variables;
+          const inheritCollections = {};
+          let result = [];
+          for(const c in collections)
+            inheritCollections[c] = [ ...collections[c] ];
+          if (variables[a.variable]) {
             $('#debugButtonOutput').textContent += `\n\n\nIF thenRoutine\n`;
-            const result = await this.evaluateRoutine(a.thenRoutine, inheritVariables, inheritCollections, (depth || 0) + 1);
-            const returnedVariables = Object.entries(JSON.parse(result.variable));
-            for (const [k,v] of returnedVariables)
-              variables[k] = v;
+            result = await this.evaluateRoutine(a.thenRoutine, inheritVariables, inheritCollections, (depth || 0) + 1);
+          } else if (Array.isArray(a.elseRoutine)) {
+            $('#debugButtonOutput').textContent += `\n\n\nIF elseRoutine\n`;
+            result = await this.evaluateRoutine(a.elseRoutine, inheritVariables, inheritCollections, (depth || 0) + 1);
           }
+          const returnedVariables = Object.entries(JSON.parse(result.variable));
+          for (const [k,v] of returnedVariables)
+            variables[k] = v;
         } else
           problems.push(`IF operation is missing the 'variable' or 'then' parameter.`);
       }
@@ -808,7 +812,7 @@ export class Widget extends StateManaged {
       showOverlay('debugButtonOverlay');
 
     batchEnd();
-    return typeof this.p(property) != 'undefined' ? { variable: variables.result, collection: collections.result } : { variable: JSON.stringify(variables), collection: JSON.stringify(collections) }
+    return typeof this.p(property) != 'undefined' ? { variable: variables.result, collection: collections.result } : { variable: JSON.stringify(variables), collection: JSON.stringify(collections) };
   }
 
   hideEnlarged() {
