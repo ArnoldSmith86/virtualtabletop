@@ -1,5 +1,6 @@
 let jeEnabled = null;
 let jeZoomOut = false;
+let jeMode = null;
 let jeWidget = null;
 let jeStateBefore = null;
 let jeStateBeforeRaw = null;
@@ -193,13 +194,13 @@ const jeCommands = [
   },
   {
     id: 'je_callMacro',
-    name: _=>jeWidget === null ? '▶️ call' : '🎬 macro',
+    name: _=>jeMode == 'macro' ? '▶️ call' : '🎬 macro',
     forceKey: 'M',
     call: function() {
-      if(jeWidget) {
+      if(jeMode != 'macro') {
         jeWidget = null;
-        jeContext = [ 'macro' ];
-        $('#jeText').textContent = 'if(w.deck)\n  w.gotit = true;';
+        jeMode = 'macro';
+        $('#jeText').textContent = '// this code will be called for\n// every widget as variable w\n\n// variable v is a persistent object you\n// can use to store other information\n\nif(w.deck)\n  w.gotit = true;';
         jeColorize();
       } else {
         jeJSONerror = null;
@@ -555,7 +556,7 @@ function jeApplyDelta(delta) {
     jeSelectWidget(widgets.get(jeStateNow.id));
   if(!jeDeltaIsOurs && jeStateNow && jeStateNow.deck && delta.s[jeStateNow.deck] !== undefined)
     jeSelectWidget(widgets.get(jeStateNow.id));
-  if(!jeWidget)
+  if(jeMode == 'tree')
     jeDisplayTree();
 }
 
@@ -586,6 +587,7 @@ async function jeClick(widget) {
 }
 
 function jeSelectWidget(widget) {
+  jeMode = 'widget';
   jeWidget = widget;
   jeStateNow = widget.state;
   jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(widget.state), null, '  ')));
@@ -635,6 +637,7 @@ function jeDisplayTree() {
   const allWidgets = Array.from(widgets.values());
   let result = 'CTRL-click a widget on the left to edit it.\n\nRoom\n';
   result += jeDisplayTreeAddWidgets(allWidgets, null, '  ');
+  jeMode = 'tree';
   jeWidget = null;
   jeStateNow = null;
   jeSet(jeStateBefore = result);
@@ -663,11 +666,17 @@ function jeGetContext() {
   const select = v.substr(s, e-s).replace(/\n/g, '\\n');
   const line = v.split('\n')[v.substr(0, s).split('\n').length-1];
 
-  if(!jeWidget) {
+  if(jeMode == 'tree') {
     jeContext = [ 'Tree' ];
     const match = line.match(/^(  )+(.*?) \([a-z]+ - /);
     if(match)
       jeContext.push(`"${match[2]}"`);
+    jeShowCommands();
+    return jeContext;
+  }
+
+  if(jeMode == 'macro') {
+    jeContext = [ 'Macro' ];
     jeShowCommands();
     return jeContext;
   }
@@ -911,8 +920,11 @@ function jeShowCommands() {
     }
   }
   commandText += `\n${context}\n`;
-  if(jeJSONerror)
-    commandText += `\nCtrl-Space: go to error\n\n<i class=error>${String(jeJSONerror)}</i>\n`;
+  if(jeJSONerror) {
+    if(jeMode == 'widget')
+      commandText += `\nCtrl-Space: go to error\n`;
+    commandText += `\n<i class=error>${String(jeJSONerror)}</i>\n`;
+  }
   if(jeCommandError)
     commandText += `\n<i class=error>Last command failed: ${String(jeCommandError)}</i>\n`;
   if(jeSecondaryWidget)
@@ -979,7 +991,7 @@ window.addEventListener('keydown', function(e) {
   }
 
   if(jeState.ctrl) {
-    if(e.key == ' ') {
+    if(e.key == ' ' && jeMode == 'widget') {
       const locationLine = String(jeJSONerror).match(/line ([0-9]+) column ([0-9]+)/);
       if(locationLine) {
         const pos = $('#jeText').textContent.split('\n').slice(0, locationLine[1]-1).join('\n').length + +locationLine[2];
