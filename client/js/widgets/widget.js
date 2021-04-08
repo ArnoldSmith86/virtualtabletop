@@ -450,6 +450,9 @@ export class Widget extends StateManaged {
           case 'length':
             v = x.length;
             break;
+          case 'parseFloat':
+            v = parseFloat(x);
+            break;
           case 'toLowerCase':
           case 'toUpperCase':
           case 'trim':
@@ -473,6 +476,7 @@ export class Widget extends StateManaged {
           case 'search':
           case 'split':
           case 'startsWith':
+          case 'toFixed':
           case 'toLocaleLowerCase':
           case 'toLocaleUpperCase':
             v = x[o](y);
@@ -517,6 +521,14 @@ export class Widget extends StateManaged {
           case 'push':
           case 'unshift':
             v[o](x);
+            break;
+
+          // random values
+          case 'randint':
+            v = Math.floor((Math.random() * (y - x + 1)) + x);
+            break;
+          case 'randrange':
+            v = Math.floor((Math.random() * (y - x) / (z || 1))) * (z || 1) + x;
             break;
           default:
             problems.push(`Operation ${o} is unsupported.`);
