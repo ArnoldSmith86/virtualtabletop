@@ -604,7 +604,8 @@ function jeColorize() {
     [ /^( +)(.*)( \()([a-z]+)( - )([0-9-]+)(,)([0-9-]+)(.*)$/, null, 'key', null, 'string', null, 'number', null, 'number', null ]
   ];
   let out = [];
-  for(const line of $('#jeText').textContent.split('\n')) {
+  for(let line of $('#jeText').textContent.split('\n')) {
+    line = line.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     let foundMatch = false;
     for(const l of langObj) {
       const match = line.match(l[0]);
