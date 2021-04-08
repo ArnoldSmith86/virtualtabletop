@@ -290,16 +290,16 @@ export class Widget extends StateManaged {
     if(this.p('debug') && !depth)
       $('#debugButtonOutput').textContent = '';
 
-    const variables = Object.assign({
+    const variables = Object.assign({}, initialVariables, {
       playerName,
       playerColor,
       activePlayers,
       thisID : this.p('id')
-    }, initialVariables);
+    });
 
-    const collections = Object.assign({
+    const collections = Object.assign({}, initialCollections, {
       thisButton : [this]
-    }, initialCollections);
+    });
 
     for(const original of this.p(property)) {
       const a = JSON.parse(JSON.stringify(original));
