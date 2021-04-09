@@ -55,16 +55,14 @@ async function getState() {
   // wait for 500ms
   await new Promise(resolve => setTimeout(resolve, 500));
 
-  console.log(`Fetching ${server}/state/testcafe-testing...`)
   const response = await fetch(`${server}/state/testcafe-testing`);
   const text = await response.text();
-  console.log(text);
   return crypto.createHash('md5').update(text).digest('hex');
 }
 
 fixture('virtualtabletop.io').page(`${server}/testcafe-testing`).beforeEach(emptyRoomState).after(emptyRoomState);
 
-/*publicLibraryTest('Blue', 0, '8cf30e7dbcb33dc01fbbc0d7b5dac039', async t => {
+publicLibraryTest('Blue', 0, '8cf30e7dbcb33dc01fbbc0d7b5dac039', async t => {
   await t
     .click('#fcc3fa2c-c091-41bc-8737-54d8b9d3a929')
     .click('#d3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton')
@@ -87,7 +85,7 @@ publicLibraryTest('Rummy Tiles', 0, 'e0073d6f0d8f48d268aefc44139b4492', async t 
   await t
     .click('#startMix')
     .click('#draw14');
-});*/
+});
 
 publicLibraryTest('Undercover', 1, '019088481e33f1632ab3872991ed4f56', async t => {
   await t
@@ -95,7 +93,7 @@ publicLibraryTest('Undercover', 1, '019088481e33f1632ab3872991ed4f56', async t =
     .click('[id="Spy Master Button"]');
 });
 
-/*publicLibraryTest('Functions - RANDOM', 0, 'bfd121b54d8ab0fced83cc0bcc09032d', async t => {
+publicLibraryTest('Functions - RANDOM', 0, 'bfd121b54d8ab0fced83cc0bcc09032d', async t => {
   await t
     .click('[id="9fhb"]')
     .click('#yqji')
@@ -132,4 +130,4 @@ publicLibraryTest('Master Button', 0, '8249f5f20ad44bc0ac468e4f0bbcacd5', async 
     .click('[id="violetbutton"]')
     .click('[id="fae4"]')
     .click('[id="vbx5"]');
-});*/
+});
