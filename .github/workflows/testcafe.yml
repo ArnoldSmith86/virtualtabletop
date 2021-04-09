@@ -30,4 +30,4 @@ jobs:
     - name: Run TestCafe tests
       uses: DevExpress/testcafe-action@latest
       with:
-        args: "chrome:headless tests/testcafe/tests.js"
+        args: "firefox:headless tests/testcafe/tests.js"
