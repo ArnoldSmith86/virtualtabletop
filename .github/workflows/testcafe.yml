@@ -15,13 +15,15 @@ jobs:
     name: Run TestCafe Tests
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Checkout submodules
+      uses: textbook/git-checkout-submodule-action@master
     - name: Use Node.js 15.x
       uses: actions/setup-node@v1
       with:
         node-version: 15.x
     - run: find
-    - run: git submodule update
     - run: npm ci
     - run: |
         npm run debug &
