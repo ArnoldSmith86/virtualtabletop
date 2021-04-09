@@ -26,9 +26,6 @@ function prepareClient() {
 
   // remove base element because it causes popups on form submit
   document.querySelector('base').parentNode.removeChild(document.querySelector('base'));
-
-  // wait for 2s for the library to load
-  await new Promise(resolve => setTimeout(resolve, 2000));
 }
 
 function publicLibraryTest(game, variant, md5, tests) {
@@ -40,6 +37,9 @@ function publicLibraryTest(game, variant, md5, tests) {
       .click('p > .remove')
       .expect(Selector('#statesOverlay').visible).ok();
   })(`Public library: ${game} (variant ${variant})`, async t => {
+    // wait for 2s for the library to load
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
     await ClientFunction(prepareClient)();
     await t
       .click(Selector('td.name').withExactText(game).prevSibling().child())
