@@ -25,6 +25,7 @@ jobs:
         npm run debug &
         sleep 5
         curl -I http://localhost:8272
+    - run: curl -I http://localhost:8272
     - name: Install TestCafe from 'npm' and Run Tests
       uses: DevExpress/testcafe-action@latest
       with:
