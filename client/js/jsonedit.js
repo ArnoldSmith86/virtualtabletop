@@ -196,7 +196,7 @@ const jeCommands = [
     name: '📋 copy state from another room/server',
     forceKey: 'C',
     call: function() {
-      const sourceURL = prompt('Please enter the room URL:').replace(/\/[^\/]+$/, a=>`/state${a}`);
+      const sourceURL = (prompt('Please enter the room URL:') || '').replace(/\/[^\/]+$/, a=>`/state${a}`);
       const targetURL = location.href.replace(/\/[^\/]+$/, a=>`/state${a}`);
       fetch(sourceURL).then(r=>r.text()).then(t=>{
         fetch(targetURL,{
