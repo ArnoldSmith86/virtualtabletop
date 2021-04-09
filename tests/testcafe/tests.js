@@ -4,6 +4,8 @@ import crypto from 'crypto';
 
 const server = 'http://localhost:8272';
 
+getState();
+
 async function emptyRoomState() {
   await fetch(`${server}/state/testcafe-testing`, {
     method: 'PUT',
@@ -53,8 +55,10 @@ async function getState() {
   // wait for 500ms
   await new Promise(resolve => setTimeout(resolve, 500));
 
+  console.log(`Fetching ${server}/state/testcafe-testing...`)
   const response = await fetch(`${server}/state/testcafe-testing`);
   const text = await response.text();
+  console.log(text);
   return crypto.createHash('md5').update(text).digest('hex');
 }
 
