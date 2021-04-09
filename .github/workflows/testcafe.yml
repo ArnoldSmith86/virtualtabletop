@@ -27,7 +27,11 @@ jobs:
         npm run debug &
         sleep 5
         curl -I http://localhost:8272
-    - name: Run TestCafe tests
+    - name: Run TestCafe tests (Firefox)
       uses: DevExpress/testcafe-action@latest
       with:
         args: "firefox:headless tests/testcafe/tests.js"
+    - name: Run TestCafe tests (Chrome)
+      uses: DevExpress/testcafe-action@latest
+      with:
+        args: "chrome:headless tests/testcafe/tests.js"

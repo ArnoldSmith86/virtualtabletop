@@ -37,11 +37,13 @@ function publicLibraryTest(game, variant, md5, tests) {
       .click('p > .remove')
       .expect(Selector('#statesOverlay').visible).ok();
   })(`Public library: ${game} (variant ${variant})`, async t => {
-    // wait for 2s for the library to load
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    // wait for 1s for the library to load
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
     await ClientFunction(prepareClient)();
     await t
+      .pressKey('esc')
+      .click('#statesButton')
       .click(Selector('td.name').withExactText(game).prevSibling().child())
       .hover('.roomState')
       .click(Selector('button.play').nth(variant))
