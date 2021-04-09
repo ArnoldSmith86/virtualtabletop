@@ -20,6 +20,8 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 15.x
+    - run: find
+    - run: git submodule update
     - run: npm ci
     - run: |
         npm run debug &
