@@ -29,7 +29,8 @@ export function startWebSocket() {
 
   connection.onclose = () => {
     console.log(`WebSocket closed`);
-    setTimeout(startWebSocket, lastTimeout *= 2);
+    if(lastTimeout)
+      setTimeout(startWebSocket, lastTimeout *= 2);
   };
 
   connection.onmessage = (e) => {
@@ -48,6 +49,10 @@ function onMessage(func, callback) {
 export function toServer(func, args) {
   if(connection.readyState === WebSocket.OPEN)
     connection.send(JSON.stringify({ func, args }));
+}
+
+function preventReconnect() {
+  lastTimeout = null;
 }
 
 function log(str) {
