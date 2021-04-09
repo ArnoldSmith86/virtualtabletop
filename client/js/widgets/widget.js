@@ -524,10 +524,10 @@ export class Widget extends StateManaged {
             break;
 
           // random values
-          case 'randint':
+          case 'randInt':
             v = Math.floor((Math.random() * (y - x + 1)) + x);
             break;
-          case 'randrange':
+          case 'randRange':
             v = Math.round(Math.floor((Math.random() * (y - x) / (z || 1))) * (z || 1) + x);
             break;
           default:
