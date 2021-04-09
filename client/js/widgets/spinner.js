@@ -38,12 +38,13 @@ class Spinner extends Widget {
     }
   }
 
-  click() {
-    if(!this.p('clickable')) return;
-    const angle = this.p('angle') + Math.floor((2+Math.random())*360);
-    const o = this.p('options');
-    this.p('angle', angle);
-    this.p('value', o[Math.floor(angle/(360/o.length))%o.length]);
+  async click() {
+    if(!await super.click()) {
+      const angle = this.p('angle') + Math.floor((2+Math.random())*360);
+      const o = this.p('options');
+      this.p('angle', angle);
+      this.p('value', o[Math.floor(angle/(360/o.length))%o.length]);
+    }
   }
 
   createChildNodes() {
