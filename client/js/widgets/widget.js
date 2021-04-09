@@ -697,7 +697,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'SELECT') {
-        setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'add', source: 'all' });
+         setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'add', source: 'all', reverse: false });
         if(a.source == 'all' || isValidCollection(a.source)) {
           if([ 'add', 'set' ].indexOf(a.mode) == -1)
             problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
@@ -727,6 +727,9 @@ export class Widget extends StateManaged {
           c.filter(w=>w.p('type')=='pile').forEach(w=>c.push(...w.children()));
           c = c.filter(w=>w.p('type')!='pile');
           collections[a.collection] = [...new Set(c)];
+
+          if (a.key)
+            this.sortWidgets(collections[a.collection], a.key, a.reverse, a.locales, a.options);
         }
       }
 
@@ -750,15 +753,15 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             w(a.holder, holder=>{
-              this.sortWidgets(holder.children(), a.key, a.reverse);
+              this.sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options);
               holder.updateAfterShuffle();
             });
           }
         } else if(isValidCollection(a.collection)) {
           if(collections[a.collection].length)
-            this.sortWidgets(collections[a.collection], a.key, a.reverse);
+            this.sortWidgets(collections[a.collection], a.key, a.reverse, a.locales, a.options);
           else
-            problems.push(`Collection ${a.collection} is empty.`); 
+            problems.push(`Collection ${a.collection} is empty.`);
         }
       }
 
@@ -775,7 +778,7 @@ export class Widget extends StateManaged {
           if(collections[a.collection].length)
             collections[a.collection].forEach(c=>c.p('z', Math.floor(Math.random()*10000)));
           else
-            problems.push(`Collection ${a.collection} is empty.`);  
+            problems.push(`Collection ${a.collection} is empty.`);
         }
       }
 
@@ -1082,13 +1085,13 @@ export class Widget extends StateManaged {
     });
   }
 
-  sortWidgets(w, key, reverse) {
+  sortWidgets(w, key, reverse, locales, options) {
     let z = 1;
     let children = w.reverse().sort((w1,w2)=>{
       if(typeof w1.p(key) == 'number')
         return w1.p(key) - w2.p(key);
       else
-        return w1.p(key).localeCompare(w2.p(key));
+        return w1.p(key).localeCompare(w2.p(key), locales, options);
     });
     if(reverse)
       children = children.reverse();
