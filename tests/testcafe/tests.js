@@ -2,7 +2,7 @@ import { Selector, ClientFunction } from 'testcafe';
 import fetch from 'node-fetch';
 import crypto from 'crypto';
 
-const server = process.env.SERVER || 'http://localhost:8272';
+const server = 'http://localhost:8272';
 
 async function emptyRoomState() {
   await fetch(`${server}/state/testcafe-testing`, {
