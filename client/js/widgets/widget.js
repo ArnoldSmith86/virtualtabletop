@@ -643,33 +643,29 @@ export class Widget extends StateManaged {
       if(a.func == 'MOVE') {
         setDefaults(a, { count: 1, face: null });
         const count = a.count || 999999;
-
-        if(this.isValidID(a.from, problems) && this.isValidID(a.to, problems)) {
-          w(a.from, source=>w(a.to, target=>source.children().slice(0, count).reverse().forEach(c=> {
-            if(a.face !== null && c.flip)
-              c.flip(a.face);
-            if(source == target) {
-              c.bringToFront();
-            } else {
-              c.movedByButton = true;
-              c.moveToHolder(target);
-              delete c.movedByButton;
-            }
-          })));
+        if(a.from !== undefined) {
+          if(this.isValidID(a.from, problems) && this.isValidID(a.to, problems)) {
+            w(a.from, source=>w(a.to, target=>this.moveFlipToHolder(source.children(), target, count, a.face)));
+          }
+        } else if(isValidCollection(a.collection)) {
+          if(collections[a.collection].length)
+            w(a.to, target=>this.moveFlipToHolder(collections[a.collection], target, count, a.face));
+          else
+            problems.push(`Collection ${a.collection} is empty.`);
         }
       }
 
       if(a.func == 'MOVEXY') {
         setDefaults(a, { count: 1, face: null, x: 0, y: 0 });
-        if(this.isValidID(a.from, problems)) {
-          w(a.from, source=>source.children().slice(0, a.count || 999999).reverse().forEach(c=> {
-            if(a.face !== null && c.flip)
-              c.flip(a.face);
-            c.p('parent', null);
-            c.bringToFront();
-            c.setPosition(a.x, a.y, a.z || c.p('z'));
-            c.updatePiles();
-          }));
+        if(a.from !== undefined) {
+          if(this.isValidID(a.from, problems)) {
+            w(a.from, source=>this.moveXY(source.children(), a.count, a.face, a.x, a.y, a.z));
+          }
+        } else if(isValidCollection(a.collection)) {
+          if(collections[a.collection].length)
+            this.moveXY(collections[a.collection], a.count, a.face, a.x, a.y, a.z);
+          else
+            problems.push(`Collection ${a.collection} is empty.`);
         }
       }
 
@@ -896,6 +892,25 @@ export class Widget extends StateManaged {
 
     this.hideEnlarged();
     this.updatePiles();
+  }
+
+  moveFlipToHolder(source, target, count, face) {
+    source.slice(0, count).reverse().forEach(c=> {
+      if(face !== null && c.flip)
+        c.flip(face);
+      c.moveToHolder(target);
+    });
+  }
+
+  moveXY(source, count, face, x, y, z) {
+    source.slice(0, count || 999999).reverse().forEach(c=> {
+      if(face !== null && c.flip)
+        c.flip(face);
+      c.p('parent', null);
+      c.bringToFront();
+      c.setPosition(x, y, z || c.p('z'));
+      c.updatePiles();
+    });
   }
 
   onChildAdd(child, oldParentID) {
