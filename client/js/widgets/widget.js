@@ -641,7 +641,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'MOVE') {
-        setDefaults(a, { count: 1, face: null });
+        setDefaults(a, { count: 1, face: null, collection: 'DEFAULT' });
         const count = a.count || 999999;
         if(a.from !== undefined) {
           if(this.isValidID(a.from, problems) && this.isValidID(a.to, problems)) {
@@ -656,7 +656,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'MOVEXY') {
-        setDefaults(a, { count: 1, face: null, x: 0, y: 0 });
+        setDefaults(a, { count: 1, face: null, x: 0, y: 0, collection: 'DEFAULT' });
         if(a.from !== undefined) {
           if(this.isValidID(a.from, problems)) {
             w(a.from, source=>this.moveXY(source.children(), a.count, a.face, a.x, a.y, a.z));
