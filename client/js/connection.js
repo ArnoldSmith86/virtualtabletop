@@ -1,5 +1,6 @@
 let lastTimeout = 1000;
 let connection;
+let serverStart = null;
 let messageCallbacks = {};
 
 //used by unit tests until jest supports mocking ESM static imports
@@ -35,6 +36,17 @@ export function startWebSocket() {
 
   connection.onmessage = (e) => {
     const { func, args } = JSON.parse(e.data);
+
+    if(func == 'serverStart') {
+      if(serverStart != null && serverStart != args) {
+        console.log('Server restart detected. Reloading...')
+        setTimeout(location.reload, Math.random()*10000);
+        preventReconnect();
+        connection.close();
+      }
+      serverStart = args;
+    }
+
     for(const callback of (messageCallbacks[func] || []))
       callback(args);
   };
