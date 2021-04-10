@@ -5,8 +5,9 @@ import Connection from './connection.mjs';
 export default class WebSocket {
   connections = [];
 
-  constructor(server, newPlayerCallback) {
+  constructor(server, serverStart, newPlayerCallback) {
     this.server = new ws.Server({ noServer: true });
+    this.serverStart = serverStart;
     this.newPlayerCallback = newPlayerCallback;
 
     this.server.on('connection', this.newConnection);
