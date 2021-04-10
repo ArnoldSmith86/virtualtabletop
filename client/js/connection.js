@@ -18,6 +18,7 @@ export function startWebSocket() {
   connection = new WebSocket(url);
 
   connection.onopen = () => {
+    showOverlay(null, true);
     if(!urlProperties.askID) {
       toServer('room', { playerName, roomID });
       $('#ghetto-link').href += `#${roomID}`;
@@ -30,6 +31,7 @@ export function startWebSocket() {
 
   connection.onclose = () => {
     console.log(`WebSocket closed`);
+    showOverlay('connectionLostOverlay', true);
     if(lastTimeout)
       setTimeout(startWebSocket, lastTimeout *= 2);
   };
