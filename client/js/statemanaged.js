@@ -44,7 +44,7 @@ export class StateManaged {
 
   propertyGet(property) {
     if(this.state[property] !== undefined)
-      return this.state[property];
+      return [ 'x', 'y', 'width', 'height', 'z', 'layer' ].indexOf(property) != -1 ? +this.state[property] : this.state[property];
     else
       return this.getDefaultValue(property);
   }
