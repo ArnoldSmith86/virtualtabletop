@@ -25,6 +25,7 @@
   height: 100%;
   width: 350px;
   right: 350px;
+  overflow-wrap: break-word;
 }
 
 #jeText {
