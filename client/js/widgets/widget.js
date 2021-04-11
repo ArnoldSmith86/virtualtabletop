@@ -603,7 +603,7 @@ export class Widget extends StateManaged {
       }
       if(a.func == 'IF') {
         setDefaults(a, { relation: '==' });
-        if (!['==', '!=', '<', '<=', '>=', '>'].indexOf(a.relation) < 0) {
+        if (['==', '!=', '<', '<=', '>=', '>'].indexOf(a.relation) < 0) {
           problems.push(`Relation ${a.relation} is unsupported. Using '==' relation.`);
           a.relation = '==';
         }
