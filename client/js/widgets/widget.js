@@ -301,7 +301,7 @@ export class Widget extends StateManaged {
       thisButton : [this]
     }, initialCollections);
 
-    const routine = typeof this.p(property) != 'undefined' ? this.p(property) : property;
+    const routine = this.p(property) !== undefined ? this.p(property) : property;
 
     for(const original of routine) {
       const a = JSON.parse(JSON.stringify(original));
@@ -602,27 +602,24 @@ export class Widget extends StateManaged {
         }
       }
       if(a.func == 'IF') {
-        if(typeof a.variable != 'undefined' && Array.isArray(a.thenRoutine)) {
+        if(a.variable !== undefined) {
           const inheritVariables = variables;
           const inheritCollections = {};
-          let result = [];
           for(const c in collections)
             inheritCollections[c] = [ ...collections[c] ];
-          if (variables[a.variable]) {
-            $('#debugButtonOutput').textContent += `\n\n\nIF thenRoutine\n`;
-            result = await this.evaluateRoutine(a.thenRoutine, inheritVariables, inheritCollections, (depth || 0) + 1);
-          } else if (Array.isArray(a.elseRoutine)) {
-            $('#debugButtonOutput').textContent += `\n\n\nIF elseRoutine\n`;
-            result = await this.evaluateRoutine(a.elseRoutine, inheritVariables, inheritCollections, (depth || 0) + 1);
+          const branch = (variables[a.variable]) ? 'thenRoutine' : 'elseRoutine';
+          if (Array.isArray(a[branch])) {
+            $('#debugButtonOutput').textContent += `\n\n\nIF ${branch}\n`;
+            const result = await this.evaluateRoutine(a[branch], inheritVariables, inheritCollections, (depth || 0) + 1);
+            const returnedVariables = Object.entries(result.variable);
+            for (const [k,v] of returnedVariables)
+              variables[k] = v;
+            const returnedCollections = Object.entries(result.collection);
+            for (const [k,v] of returnedCollections)
+              collections[k] = v;
           }
-          const returnedVariables = Object.entries(result.variable);
-          for (const [k,v] of returnedVariables)
-            variables[k] = v;
-          const returnedCollections = Object.entries(result.collection);
-          for (const [k,v] of returnedCollections)
-            collections[k] = v;
         } else
-          problems.push(`IF operation is missing the 'variable' or 'then' parameter.`);
+          problems.push(`IF operation is missing the 'variable' parameter.`);
       }
 
       if(a.func == 'INPUT') {
@@ -815,7 +812,7 @@ export class Widget extends StateManaged {
       showOverlay('debugButtonOverlay');
 
     batchEnd();
-    return typeof this.p(property) != 'undefined' ? { variable: variables.result, collection: collections.result } : { variable: variables, collection: collections };
+    return this.p(property) !== undefined ? { variable: variables.result, collection: collections.result } : { variable: variables, collection: collections };
   }
 
   hideEnlarged() {
