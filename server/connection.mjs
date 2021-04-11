@@ -1,3 +1,5 @@
+import Logging from './logging.mjs';
+
 export default class Connection {
   constructor(websocket, connection, newPlayerCallback) {
     this.websocket = websocket;
@@ -19,15 +21,15 @@ export default class Connection {
     this.messageHandlers.push(callback);
   }
 
+  close() {
+    this.connection.close();
+  }
+
   fromClient(func, args) {
     if(func == "room")
       this.newPlayerCallback(this, args);
     for(const handler of this.messageHandlers)
-      try {
-        handler(func, args);
-      } catch(e) {
-        console.log(`ERROR in message handler: ${e.message}`)
-      }
+      handler(func, args);
   }
 
   messageReceived = message => {
@@ -35,7 +37,9 @@ export default class Connection {
       const { func, args } = JSON.parse(message);
       this.fromClient(func, args);
     } catch(e) {
-      console.log(`ERROR in received message: ${e.message}`)
+      Logging.handleGenericException('messageReceived', e);
+      this.toClient('internal_error', 'unknown');
+      this.close();
     }
   }
 

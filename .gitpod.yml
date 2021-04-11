@@ -8,3 +8,6 @@ ports:
   - port: 9229
     visibility: private
     onOpen: ignore
+  - port: 9239
+    visibility: private
+    onOpen: ignore

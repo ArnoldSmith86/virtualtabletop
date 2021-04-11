@@ -203,6 +203,10 @@ onLoad(function() {
 
   onMessage('warning', alert);
   onMessage('error', alert);
+  onMessage('internal_error', function() {
+    preventReconnect();
+    showOverlay('internalErrorOverlay');
+  });
 });
 
 window.onresize = function(event) {
