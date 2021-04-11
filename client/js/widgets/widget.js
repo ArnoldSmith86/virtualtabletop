@@ -602,12 +602,12 @@ export class Widget extends StateManaged {
         }
       }
       if(a.func == 'IF') {
-        if(a.variable !== undefined) {
+        if(a.condition !== undefined) {
           const inheritVariables = variables;
           const inheritCollections = {};
           for(const c in collections)
             inheritCollections[c] = [ ...collections[c] ];
-          const branch = (variables[a.variable]) ? 'thenRoutine' : 'elseRoutine';
+          const branch = (a.condition) ? 'thenRoutine' : 'elseRoutine';
           if (Array.isArray(a[branch])) {
             $('#debugButtonOutput').textContent += `\n\n\nIF ${branch}\n`;
             const result = await this.evaluateRoutine(a[branch], inheritVariables, inheritCollections, (depth || 0) + 1);
@@ -619,7 +619,7 @@ export class Widget extends StateManaged {
               collections[k] = v;
           }
         } else
-          problems.push(`IF operation is missing the 'variable' parameter.`);
+          problems.push(`IF operation is missing the 'condition' parameter.`);
       }
 
       if(a.func == 'INPUT') {
