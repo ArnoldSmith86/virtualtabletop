@@ -697,7 +697,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'SELECT') {
-         setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'add', source: 'all', reverse: false });
+        setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'add', source: 'all' });
         if(a.source == 'all' || isValidCollection(a.source)) {
           if([ 'add', 'set' ].indexOf(a.mode) == -1)
             problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
@@ -728,8 +728,8 @@ export class Widget extends StateManaged {
           c = c.filter(w=>w.p('type')!='pile');
           collections[a.collection] = [...new Set(c)];
 
-          if (a.key)
-            this.sortWidgets(collections[a.collection], a.key, a.reverse, a.locales, a.options);
+          if (a.sortBy)
+            this.sortWidgets(collections[a.collection], a.sortBy.key, a.sortBy.reverse, a.sortBy.locales, a.sortBy.options);
         }
       }
 
@@ -753,13 +753,13 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             w(a.holder, holder=>{
-              this.sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options);
+              this.sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options, true);
               holder.updateAfterShuffle();
             });
           }
         } else if(isValidCollection(a.collection)) {
           if(collections[a.collection].length)
-            this.sortWidgets(collections[a.collection], a.key, a.reverse, a.locales, a.options);
+            this.sortWidgets(collections[a.collection], a.key, a.reverse, a.locales, a.options, true);
           else
             problems.push(`Collection ${a.collection} is empty.`);
         }
@@ -1085,7 +1085,7 @@ export class Widget extends StateManaged {
     });
   }
 
-  sortWidgets(w, key, reverse, locales, options) {
+  sortWidgets(w, key, reverse, locales, options, rearrange) {
     let z = 1;
     let children = w.reverse().sort((w1,w2)=>{
       if(typeof w1.p(key) == 'number')
@@ -1095,7 +1095,8 @@ export class Widget extends StateManaged {
     });
     if(reverse)
       children = children.reverse();
-    children.forEach(c=>c.p('z', ++z));
+    if(rearrange)
+      children.forEach(c=>c.p('z', ++z));
   }
 
   supportsPiles() {
