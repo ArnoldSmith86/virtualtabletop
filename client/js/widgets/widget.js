@@ -602,12 +602,19 @@ export class Widget extends StateManaged {
         }
       }
       if(a.func == 'IF') {
-        if(a.condition !== undefined) {
+        setDefaults(a, { relation: '==' });
+        if (!['==', '!=', '<', '<=', '>=', '>'].indexOf(a.relation)) {
+          problems.push(`Relation ${a.relation} is unsupported. Using '==' relation.`);
+          a.relation = '==';
+        }
+        if(a.operand1 !== undefined) {
+          if(a.operand2 === undefined)
+            a.operand2 = a.operand1;
           const inheritVariables = variables;
           const inheritCollections = {};
           for(const c in collections)
             inheritCollections[c] = [ ...collections[c] ];
-          const branch = (a.condition) ? 'thenRoutine' : 'elseRoutine';
+          const branch = compute(a.relation, null, a.operand1, a.operand2) ? 'thenRoutine' : 'elseRoutine';
           if (Array.isArray(a[branch])) {
             $('#debugButtonOutput').textContent += `\n\n\nIF ${branch}\n`;
             const result = await this.evaluateRoutine(a[branch], inheritVariables, inheritCollections, (depth || 0) + 1);
@@ -619,7 +626,7 @@ export class Widget extends StateManaged {
               collections[k] = v;
           }
         } else
-          problems.push(`IF operation is missing the 'condition' parameter.`);
+          problems.push(`IF operation is missing the 'operand1' parameter.`);
       }
 
       if(a.func == 'INPUT') {
