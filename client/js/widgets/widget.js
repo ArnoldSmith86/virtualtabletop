@@ -603,17 +603,18 @@ export class Widget extends StateManaged {
       }
       if(a.func == 'IF') {
         setDefaults(a, { relation: '==' });
-        if (!['==', '!=', '<', '<=', '>=', '>'].indexOf(a.relation)) {
+        if (!['==', '!=', '<', '<=', '>=', '>'].indexOf(a.relation) < 0) {
           problems.push(`Relation ${a.relation} is unsupported. Using '==' relation.`);
           a.relation = '==';
         }
-        if(a.operand1 !== undefined) {
+        if(a.condition !== undefined || a.operand1 !== undefined) {
           const inheritVariables = variables;
           const inheritCollections = {};
           for(const c in collections)
             inheritCollections[c] = [ ...collections[c] ];
-          const condition = (a.operand2 !== undefined) ? compute(a.relation, null, a.operand1, a.operand2) : a.operand1;
-          const branch = condition ? 'thenRoutine' : 'elseRoutine';
+          if (a.condition === undefined)
+            a.condition = compute(a.relation, null, a.operand1, a.operand2);
+          const branch = a.condition ? 'thenRoutine' : 'elseRoutine';
           if (Array.isArray(a[branch])) {
             $('#debugButtonOutput').textContent += `\n\n\nIF ${branch}\n`;
             const result = await this.evaluateRoutine(a[branch], inheritVariables, inheritCollections, (depth || 0) + 1);
@@ -625,7 +626,7 @@ export class Widget extends StateManaged {
               collections[k] = v;
           }
         } else
-          problems.push(`IF operation is missing the 'operand1' parameter.`);
+          problems.push(`IF operation is missing the 'condition' or 'operand1' parameter.`);
       }
 
       if(a.func == 'INPUT') {
