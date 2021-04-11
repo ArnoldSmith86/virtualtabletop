@@ -608,13 +608,12 @@ export class Widget extends StateManaged {
           a.relation = '==';
         }
         if(a.operand1 !== undefined) {
-          if(a.operand2 === undefined)
-            a.operand2 = a.operand1;
           const inheritVariables = variables;
           const inheritCollections = {};
           for(const c in collections)
             inheritCollections[c] = [ ...collections[c] ];
-          const branch = compute(a.relation, null, a.operand1, a.operand2) ? 'thenRoutine' : 'elseRoutine';
+          const condition = (a.operand2 !== undefined) ? compute(a.relation, null, a.operand1, a.operand2) : a.operand1;
+          const branch = condition ? 'thenRoutine' : 'elseRoutine';
           if (Array.isArray(a[branch])) {
             $('#debugButtonOutput').textContent += `\n\n\nIF ${branch}\n`;
             const result = await this.evaluateRoutine(a[branch], inheritVariables, inheritCollections, (depth || 0) + 1);
