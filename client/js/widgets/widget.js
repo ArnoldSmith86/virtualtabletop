@@ -264,7 +264,7 @@ export class Widget extends StateManaged {
       reject(result);
   }
 
-  async evaluateRoutine(property, initialVariables, initialCollections, depth) {
+  async evaluateRoutine(property, initialVariables, initialCollections, depth, byReference) {
     function setDefaults(routine, defaults) {
       for(const key in defaults)
         if(routine[key] === undefined)
@@ -290,16 +290,19 @@ export class Widget extends StateManaged {
     if(this.p('debug') && !depth)
       $('#debugButtonOutput').textContent = '';
 
-    const variables = Object.assign({
-      playerName,
-      playerColor,
-      activePlayers,
-      thisID : this.p('id')
-    }, initialVariables);
-
-    const collections = Object.assign({
-      thisButton : [this]
-    }, initialCollections);
+    let variables = initialVariables;
+    let collections = initialCollections
+    if(!byReference) {
+      variables = Object.assign({
+        playerName,
+        playerColor,
+        activePlayers,
+        thisID : this.p('id')
+      }, initialVariables);
+      collections = Object.assign({
+        thisButton : [this]
+      }, initialCollections);
+    }
 
     const routine = this.p(property) !== undefined ? this.p(property) : property;
 
@@ -608,22 +611,12 @@ export class Widget extends StateManaged {
           a.relation = '==';
         }
         if(a.condition !== undefined || a.operand1 !== undefined) {
-          const inheritVariables = variables;
-          const inheritCollections = {};
-          for(const c in collections)
-            inheritCollections[c] = [ ...collections[c] ];
           if (a.condition === undefined)
             a.condition = compute(a.relation, null, a.operand1, a.operand2);
           const branch = a.condition ? 'thenRoutine' : 'elseRoutine';
           if (Array.isArray(a[branch])) {
             $('#debugButtonOutput').textContent += `\n\n\nIF ${branch}\n`;
-            const result = await this.evaluateRoutine(a[branch], inheritVariables, inheritCollections, (depth || 0) + 1);
-            const returnedVariables = Object.entries(result.variable);
-            for (const [k,v] of returnedVariables)
-              variables[k] = v;
-            const returnedCollections = Object.entries(result.collection);
-            for (const [k,v] of returnedCollections)
-              collections[k] = v;
+            await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true);
           }
         } else
           problems.push(`IF operation is missing the 'condition' or 'operand1' parameter.`);
@@ -819,7 +812,7 @@ export class Widget extends StateManaged {
       showOverlay('debugButtonOverlay');
 
     batchEnd();
-    return this.p(property) !== undefined ? { variable: variables.result, collection: collections.result } : { variable: variables, collection: collections };
+    return { variable: variables.result, collection: collections.result };
   }
 
   hideEnlarged() {
