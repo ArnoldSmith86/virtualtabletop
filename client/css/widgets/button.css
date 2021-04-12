@@ -10,6 +10,9 @@
   text-align: center;
   font-weight:bold;
   --wcImageOH: url();
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%;
 }
 
 .button:hover {

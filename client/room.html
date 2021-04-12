@@ -8,6 +8,7 @@
   <link rel="shortcut icon" href="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="/>
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/vue@3.0.7/dist/vue.global.prod.js"></script>
   <base target="_blank">
   <style> {{CSS}} </style>
 </head>
@@ -38,38 +39,24 @@
       <button>▶️ Play</button>
     </div>
 
-    <div id="editOverlay" class="overlay">
-      <h1>Edit widget</h1>
-      <div class="deckEdit">
-        <table id="cardTypesList">
-          <tr><th>ID</th><th>Properties</th><th>Count</th></tr>
-          <script id="template-cardtypeslist-entry" type="text/template">
-            <td><input class="id" value="example"></td><td class="properties"></td><td><input class="count" type="number" value="1" min="0" max="1000"></td>
-          </script>
-          <script id="template-cardtypeslist-property-entry" type="text/template">
-            <label>Example:</label> <input><button class="uploadAsset">⬆️ Upload</button><br>
-          </script>
-        </table>
-        <button id="decrementAllCardTypes">All -1</button><button id="incrementAllCardTypes">All +1</button>
+    <div id="editOverlayVue">
+      <div id="editOverlay" class="overlay">
+        <h1>Edit widget</h1>
+        <deck-editor :widget-state="selectedWidget.state"></deck-editor>
+        <div class="holderEdit">
+          <input type="checkbox" id="transparentHolder"><label for="transparentHolder"> Transparent</label><br/>
+          <input type="checkbox" id="resizeHolderToChildren"><label for="resizeHolderToChildren"> Resize to fit contents (once)</label>
+        </div>
+        <base-edit-overlay ></base-edit-overlay>
       </div>
-      <div class="holderEdit">
-        <input type="checkbox" id="transparentHolder"><label for="transparentHolder"> Transparent</label><br/>
-        <input type="checkbox" id="resizeHolderToChildren"><label for="resizeHolderToChildren"> Resize to fit contents (once)</label>
-      </div>
-      <button id="updateWidget">Update widget</button>
-      <button id="duplicateWidget">Duplicate widget</button>
-      <button id="removeWidget">Remove widget</button>
-      <button id="manualEdit">Advanced: manually edit JSON (changes above will be discarded)</button>
-    </div>
 
-    <div id="editJSONoverlay" class="overlay">
-      <h1>Edit widget JSON</h1>
-      <p>Please check <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Creating-Games">our GitHub wiki for documentation</a>. Having trouble with a button? Temporarily add this to see a log of state changes after each operation: "debug": true</p>
-      <p>You can open this room in <a href="https://virtualtabletop.io/ghetto.htm" id="ghetto-link">an advanced editor</a>. Be sure to have <b>backups</b> on your harddrive first (of every game in your room)!</p>
-      <textarea id="editWidgetJSON"></textarea>
-      <button id="updateWidgetJSON">Update widget</button>
-      <button id="duplicateWidgetJSON">Duplicate widget</button>
-      <button id="removeWidgetJSON">Remove widget</button>
+      <div id="editJSONoverlay" class="overlay">
+        <h1>Edit widget JSON</h1>
+        <p>Please check <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Creating-Games">our GitHub wiki for documentation</a>. Having trouble with a button? Temporarily add this to see a log of state changes after each operation: "debug": true</p>
+        <p>You can open this room in <a href="https://virtualtabletop.io/ghetto.htm" id="ghetto-link">an advanced editor</a>. Be sure to have <b>backups</b> on your harddrive first (of every game in your room)!</p>
+        <textarea id="editWidgetJSON"></textarea>
+        <base-edit-overlay :json-edit="true"></base-edit-overlay>
+      </div>
     </div>
 
     <div id="debugButtonOverlay" class="overlay">
@@ -112,10 +99,12 @@
     </div>
 
     <div id="buttonInputOverlay" class="overlay">
-      <h1>Button Input</h1>
-      <div id="buttonInputFields"></div>
-      <button id="buttonInputGo">Go</button>
-      <button id="buttonInputCancel">Cancel</button>
+      <form onsubmit="return false">
+        <h1>Button Input</h1>
+        <div id="buttonInputFields"></div>
+        <button id="buttonInputGo">Go</button>
+        <button id="buttonInputCancel">Cancel</button>
+      </form>
     </div>
 
     <div id="playerOverlay" class="overlay">
@@ -222,6 +211,13 @@
       <p>This project is licensed under GPLv3 and is <a href="https://github.com/ArnoldSmith86/virtualtabletop">available on GitHub</a>.</p>
       <p>Come join our <a href="https://discord.gg/CEZz7wny9T">discord server</a>.</p>
       <p>The default card deck was created by Adrian Kennard and released under CC0 Public Domain license: <a href="https://www.me.uk/cards/">https://www.me.uk/cards/</a></p>
+    </div>
+
+    <div id="internalErrorOverlay" class="overlay">
+      <h1>Internal Error</h1>
+      <p>Your client triggered an internal error on the server and you have been disconnected from the game.</p>
+      <p>Please <a href="https://github.com/ArnoldSmith86/virtualtabletop/issues">open an issue on GitHub</a> and try to describe in detail what led to this problem.</p>
+      <p>You can try to reload the page. It's very possible that you will run into the same problem again until it is fixed though.</p>
     </div>
   </div>
 

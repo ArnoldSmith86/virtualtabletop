@@ -9,7 +9,7 @@ class BasicWidget extends Widget {
       clickable: true,
 
       faces: [ {} ],
-      faceCycle: 'ordered',
+      faceCycle: 'forward',
       activeFace: 0,
 
       image: '',
@@ -22,10 +22,17 @@ class BasicWidget extends Widget {
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
-    if(delta.activeFace !== undefined || delta.faces !== undefined)
-      this.applyDelta(this.p('faces')[this.p('activeFace')]);
+    if(delta.activeFace !== undefined || delta.faces !== undefined) {
+      let face = this.p('faces')[this.p('activeFace')];
+      if(face !== undefined)
+        this.applyDelta(face);
+    }
     if(delta.text !== undefined)
       this.domElement.textContent = delta.text;
+
+    for(const property of Object.values(this.p('svgReplaces') || {}))
+      if(delta[property] !== undefined)
+        this.domElement.style.cssText = this.css();
   }
 
   classes() {
@@ -43,8 +50,8 @@ class BasicWidget extends Widget {
     return p;
   }
 
-  click() {
-    if(this.p('clickable'))
+  async click() {
+    if(!await super.click())
       this.flip();
   }
 
@@ -65,11 +72,16 @@ class BasicWidget extends Widget {
     return p;
   }
 
-  flip(setFlip) {
+  flip(setFlip, faceCycle) {
     if(setFlip !== undefined && setFlip !== null)
       this.p('activeFace', setFlip);
-    else
-      this.p('activeFace', Math.floor(this.p('activeFace') + (this.p('faceCycle') == 'random' ? Math.random()*99999 : 1)) % this.p('faces').length);
+    else {
+      const fC = (faceCycle !== undefined && faceCycle !== null) ? faceCycle : this.p('faceCycle');
+      if (fC == 'backward')
+        this.p('activeFace', this.p('activeFace') == 0 ? this.p('faces').length-1 : this.p('activeFace') -1);
+      else
+        this.p('activeFace', Math.floor(this.p('activeFace') + (fC == 'random' ? Math.random()*99999 : 1)) % this.p('faces').length);
+    }
   }
 
   getDefaultValue(property) {

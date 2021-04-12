@@ -1,3 +1,5 @@
+import Logging from './logging.mjs';
+
 export default class Player {
   constructor(connection, name, room) {
     this.connection = connection;
@@ -16,27 +18,33 @@ export default class Player {
     this.room.removePlayer(this);
   }
 
-  messageReceived = (func, args) => {
-    if(func == 'addState')
-      this.room.addState(this, args.id, args.type, args.src, args.addAsVariant, args.name);
-    if(func == 'confirm')
-      this.waitingForStateConfirmation = false;
-    if(func == 'delta')
-      this.receiveDelta(args);
-    if(func == 'editState')
-      this.room.editState(this, args.id, args.meta);
-    if(func == 'loadState')
-      this.room.loadState(this, args.stateID, args.variantID);
-    if(func == 'log')
-      console.log(new Date().toISOString(), this.name, args);
-    if(func == 'mouse')
-      this.room.mouseMove(this, args);
-    if(func == 'playerColor')
-      this.room.recolorPlayer(this, args.player, args.color);
-    if(func == 'removeState')
-      this.room.removeState(this, args);
-    if(func == 'rename')
-      this.room.renamePlayer(this, args.oldName, args.newName);
+  messageReceived = async (func, args) => {
+    try {
+      if(func == 'addState')
+        await this.room.addState(this, args.id, args.type, args.src, args.addAsVariant, args.name);
+      if(func == 'confirm')
+        this.waitingForStateConfirmation = false;
+      if(func == 'delta')
+        this.receiveDelta(args);
+      if(func == 'editState')
+        await this.room.editState(this, args.id, args.meta);
+      if(func == 'loadState')
+        await this.room.loadState(this, args.stateID, args.variantID);
+      if(func == 'log')
+        Logging.log([ this.name, args ]);
+      if(func == 'mouse')
+        this.room.mouseMove(this, args);
+      if(func == 'playerColor')
+        this.room.recolorPlayer(this, args.player, args.color);
+      if(func == 'removeState')
+        this.room.removeState(this, args);
+      if(func == 'rename')
+        this.room.renamePlayer(this, args.oldName, args.newName);
+    } catch(e) {
+      Logging.handleWebSocketException(func, args, e);
+      this.send('internal_error', func);
+      this.connection.close();
+    }
   }
 
   receiveDelta(delta) {
