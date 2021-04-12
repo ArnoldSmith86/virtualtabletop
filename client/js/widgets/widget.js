@@ -290,16 +290,16 @@ export class Widget extends StateManaged {
     if(this.p('debug') && !depth)
       $('#debugButtonOutput').textContent = '';
 
-    const variables = Object.assign({
+    const variables = Object.assign({}, initialVariables, {
       playerName,
       playerColor,
       activePlayers,
       thisID : this.p('id')
-    }, initialVariables);
+    });
 
-    const collections = Object.assign({
+    const collections = Object.assign({}, initialCollections, {
       thisButton : [this]
-    }, initialCollections);
+    });
 
     for(const original of this.p(property)) {
       const a = JSON.parse(JSON.stringify(original));
@@ -682,12 +682,14 @@ export class Widget extends StateManaged {
         setDefaults(a, { owned: true });
         if(this.isValidID(a.holder, problems)) {
           toA(a.holder).forEach(holder=>{
-            const deck = widgetFilter(w=>w.p('type')=='deck'&&w.p('parent')==holder);
-            if(deck.length) {
-              let cards = widgetFilter(w=>w.p('deck')==deck[0].p('id'));
-              if(!a.owned)
-                cards = cards.filter(c=>!c.p('owner'));
-              cards.forEach(c=>c.moveToHolder(widgets.get(holder)));
+            const decks = widgetFilter(w=>w.p('type')=='deck'&&w.p('parent')==holder);
+            if(decks.length) {
+              for(const deck of decks) {
+                let cards = widgetFilter(w=>w.p('deck')==deck.p('id'));
+                if(!a.owned)
+                  cards = cards.filter(c=>!c.p('owner'));
+                cards.forEach(c=>c.moveToHolder(widgets.get(holder)));
+              }
             } else {
               problems.push(`Holder ${holder} does not have a deck.`);
             }
@@ -802,7 +804,7 @@ export class Widget extends StateManaged {
       showOverlay('debugButtonOverlay');
 
     batchEnd();
-    return { variable: variables.result, collection: collections.result };
+    return { variable: variables.result, collection: collections.result || [] };
   }
 
   hideEnlarged() {
