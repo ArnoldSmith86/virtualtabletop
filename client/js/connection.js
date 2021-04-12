@@ -1,6 +1,7 @@
 let lastTimeout = 1000;
 let connection;
 let serverStart = null;
+let userNavigatedAway = false;
 let messageCallbacks = {};
 
 //used by unit tests until jest supports mocking ESM static imports
@@ -31,7 +32,8 @@ export function startWebSocket() {
 
   connection.onclose = () => {
     console.log(`WebSocket closed`);
-    showOverlay('connectionLostOverlay', true);
+    if(!userNavigatedAway)
+      showOverlay('connectionLostOverlay', true);
     if(lastTimeout)
       setTimeout(startWebSocket, lastTimeout *= 2);
   };
@@ -72,3 +74,7 @@ function preventReconnect() {
 function log(str) {
   toServer('log', str);
 }
+
+window.onbeforeunload = function() {
+  userNavigatedAway = true;
+};
