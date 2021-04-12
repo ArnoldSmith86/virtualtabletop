@@ -588,26 +588,48 @@ export class Widget extends StateManaged {
       if(a.func == 'GET') {
         setDefaults(a, { variable: a.property || 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first' });
         if(isValidCollection(a.collection)) {
-          switch(a.aggregation) {
-          case 'first':
-            if(collections[a.collection].length)
-              if(collections[a.collection][0].p(a.property) !== undefined) {
-                // always get a deep copy and not object references
-                variables[a.variable] = JSON.parse(JSON.stringify(collections[a.collection][0].p(a.property)));
-              } else {
-                variables[a.variable] = null;
-                problems.push(`Property ${a.property} missing from first item of collection, setting ${a.variable} to null.`);
-              }
-            else
-              problems.push(`Collection ${a.collection} is empty.`);
-            break;
-          case 'sum':
-            variables[a.variable] = 0;
+          if(collections[a.collection].length) {
+            c = [];
             for(const widget of collections[a.collection])
-              variables[a.variable] += Number(widget.p(a.property) || 0);
-            break;
-          default:
-            problems.push(`Aggregation ${a.aggregation} is unsupported.`);
+              c = c.concat((widget.p(a.property) || 0));
+            switch(a.aggregation) {
+            case 'first':
+            case 'last':
+              let position = (a.aggregation == 'last') ? collections[a.collection].length -1 : 0;
+              if(collections[a.collection].length)
+                if(collections[a.collection][position].p(a.property) !== undefined) {
+                  // always get a deep copy and not object references
+                  variables[a.variable] = JSON.parse(JSON.stringify(collections[a.collection][position].p(a.property)));
+                } else {
+                  variables[a.variable] = null;
+                  problems.push(`Property ${a.property} missing from ${a.aggregation} item of collection, setting ${a.variable} to null.`);
+                }
+              else
+                problems.push(`Collection ${a.collection} is empty.`);
+              break;
+            case 'array':
+              variables[a.variable] = c;
+              break;
+            case 'average':
+              variables[a.variable] = c.reduce((a, b) => a + b) / c.length;
+              break;
+            case 'median':
+              const mid = Math.floor(c.length / 2);
+              const nums = [...c].sort((a, b) => a - b);
+              variables[a.variable] = c.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
+              break;
+            case 'min':
+            case 'max':
+              variables[a.variable] = Math[a.aggregation](...c);
+              break;
+            case 'sum':
+              variables[a.variable] = 0;
+              for(const widget of collections[a.collection])
+                variables[a.variable] += Number(widget.p(a.property) || 0);
+              break;
+            default:
+              problems.push(`Aggregation ${a.aggregation} is unsupported.`);
+            }
           }
         }
       }
