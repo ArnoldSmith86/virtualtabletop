@@ -1,9 +1,12 @@
 import { $, $a, onLoad } from './domhelpers.js';
 import { startWebSocket } from './connection.js';
 
+
 let scale = 1;
 let roomRectangle;
 let overlayActive = false;
+
+var vmEditOverlay;
 
 let urlProperties = {};
 
@@ -13,6 +16,12 @@ export const dropTargets = new Map();
 function getValidDropTargets(widget) {
   const targets = [];
   for(const [ _, t ] of dropTargets) {
+    // if the holder has a drop limit and it's reached, skip the holder
+    if(t.p('dropLimit') > -1 && t.p('dropLimit') <= t.children().length)
+      // don't skip it if the dragged widget is already its child
+      if(t.children().indexOf(widget) == -1)
+        continue;
+
     let isValid = true;
     for(const key in t.p('dropTarget')) {
       if(widget.p(key) != t.p('dropTarget')[key] && (key != 'type' || widget.p(key) != 'deck' || t.p('dropTarget')[key] != 'card')) {
@@ -22,7 +31,7 @@ function getValidDropTargets(widget) {
     }
 
     let tt = t;
-    while(true) {
+    while(isValid) {
       if(widget == tt) {
         isValid = false;
         break;
@@ -48,15 +57,21 @@ function updateMaxZ(layer, z) {
   maxZ[layer] = Math.max(maxZ[layer] || 0, z);
 }
 
-export function showOverlay(id) {
+export function showOverlay(id, forced) {
+  if(overlayActive == 'forced' && !forced)
+    return;
+
   for(const d of $a('.overlay'))
     if(d.id != id)
       d.style.display = 'none';
+
   if(id) {
     const style = $(`#${id}`).style;
-    style.display = style.display === 'flex' ? 'none' : 'flex';
+    style.display = !forced && style.display === 'flex' ? 'none' : 'flex';
     $('#roomArea').className = style.display === 'flex' ? 'hasOverlay' : '';
     overlayActive = style.display === 'flex';
+    if(forced)
+      overlayActive = 'forced';
 
     //Hack to focus on the Go button for the input overlay
     if (id == 'buttonInputOverlay') {
@@ -64,6 +79,7 @@ export function showOverlay(id) {
     }
   } else {
     $('#roomArea').className = '';
+    vmEditOverlay.selectedWidget = {};
     overlayActive = false;
   }
 }
@@ -104,7 +120,12 @@ function checkURLproperties() {
 function setScale() {
   const w = window.innerWidth;
   const h = window.innerHeight;
-  scale = w/h < 1600/1000 ? w/1600 : h/1000;
+  if(jeEnabled) {
+    const targetWidth = jeZoomOut ? 3200 : 1600;
+    scale = (w-700)/targetWidth;
+  } else {
+    scale = w/h < 1600/1000 ? w/1600 : h/1000;
+  }
   document.documentElement.style.setProperty('--scale', scale);
   roomRectangle = $('#roomArea').getBoundingClientRect();
 }
@@ -126,6 +147,29 @@ async function uploadAsset() {
 
     return response.text();
   }).catch(e=>alert(`Uploading failed: ${e.toString()}`));
+}
+
+const svgCache = {};
+function getSVG(url, replaces, callback) {
+  if(typeof svgCache[url] == 'string') {
+    let svg = svgCache[url];
+    for(const replace in replaces)
+      svg = svg.split(replace).join(replaces[replace]);
+    return 'data:image/svg+xml,'+encodeURIComponent(svg);
+  }
+
+  if(!svgCache[url]) {
+    svgCache[url] = [];
+    fetch(url).then(r=>r.text()).then(t=>{
+      const callbacks = svgCache[url];
+      svgCache[url] = t;
+      for(const c of callbacks)
+        c();
+    });
+  }
+
+  svgCache[url].push(callback);
+  return '';
 }
 
 onLoad(function() {
@@ -154,8 +198,21 @@ onLoad(function() {
   setScale();
   startWebSocket();
 
+
+  const editOverlayApp = Vue.createApp({
+    data() { return {
+      selectedWidget: {},
+    }}
+  });
+  loadComponents(editOverlayApp);
+  vmEditOverlay = editOverlayApp.mount("#editOverlayVue");
+
   onMessage('warning', alert);
   onMessage('error', alert);
+  onMessage('internal_error', function() {
+    preventReconnect();
+    showOverlay('internalErrorOverlay');
+  });
 });
 
 window.onresize = function(event) {

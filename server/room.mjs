@@ -4,6 +4,7 @@ import path from 'path';
 import JSZip from 'jszip';
 import FileLoader from './fileloader.mjs';
 import FileUpdater from './fileupdater.mjs';
+import Logging from './logging.mjs';
 
 export default class Room {
   players = [];
@@ -13,8 +14,6 @@ export default class Room {
   constructor(id, unloadCallback) {
     this.id = id;
     this.unloadCallback = unloadCallback;
-
-    this.load();
   }
 
   addPlayer(player) {
@@ -73,7 +72,7 @@ export default class Room {
         };
 
         if(type != 'link')
-          fs.writeFileSync(path.resolve() + '/save/states/' + this.id + '-' + stateID + '-' + variantID + '.json', JSON.stringify(variant));
+          fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(variant));
 
         const variantMeta = {
           players: meta.players,
@@ -123,6 +122,16 @@ export default class Room {
         player.send(func, args);
   }
 
+  deleteUnusedVariantFiles(stateID, oldState, newState) {
+    for(const oldVariantID in oldState.variants) {
+      if(!newState.variants[oldVariantID]) {
+        const savefile = this.variantFilename(stateID, oldVariantID);
+        if(fs.existsSync(savefile))
+          fs.unlinkSync(savefile);
+      }
+    }
+  }
+
   async download(stateID, variantID) {
     const includeAssets = true;
     const zip = new JSZip();
@@ -140,16 +149,19 @@ export default class Room {
         content: zipBuffer
       };
     }
+    if(!this.state._meta.states[stateID])
+      throw new Logging.UserError(404, `State ${stateID} does not exist.`);
 
     for(const vID of variantID ? [ variantID ] : Object.keys(this.state._meta.states[stateID].variants)) {
       const v = this.state._meta.states[stateID].variants[vID];
+      if(!v)
+        throw new Logging.UserError(404, `Variant ${vID} does not exist.`);
 
-      const filename = path.resolve() + '/save/states/' + this.id + '-' + stateID + '-' + vID + '.json';
       let state = null;
       if(v.link)
         state = await FileLoader.readVariantFromLink(v.link);
       else
-        state = JSON.parse(fs.readFileSync(filename));
+        state = JSON.parse(fs.readFileSync(this.variantFilename(stateID, vID)));
       state._meta = { version: this.state._meta.version, info: { ...this.state._meta.states[stateID] } };
       Object.assign(state._meta.info, state._meta.info.variants[vID]);
       delete state._meta.info.variants;
@@ -170,7 +182,18 @@ export default class Room {
     };
   }
 
-  editState(player, id, meta) {
+  async editState(player, id, meta) {
+    this.deleteUnusedVariantFiles(id, this.state._meta.states[id], meta);
+
+    // if update links were removed, download their current contents to files
+    const currentState = this.state._meta.states[id];
+    for(const variantID in meta.variants) {
+      if(currentState.variants[variantID].link && !meta.variants[variantID].link) {
+        const state = await FileLoader.readVariantFromLink(currentState.variants[variantID].link);
+        fs.writeFileSync(this.variantFilename(id, variantID), JSON.stringify(state));
+      }
+    }
+
     Object.assign(this.state._meta.states[id], meta);
     this.sendMetaUpdate();
   }
@@ -180,19 +203,8 @@ export default class Room {
   }
 
   async load(fileOrLink) {
-    console.log(new Date().toISOString(), `loading room ${this.id}`);
-    try {
-      if(!fileOrLink)
-        this.state = FileUpdater(JSON.parse(fs.readFileSync(path.resolve() + '/save/rooms/' + this.id + '.json')));
-      else if(fileOrLink.match(/^http/))
-        this.setState(await FileLoader.readVariantFromLink(fileOrLink));
-      else
-        this.setState(JSON.parse(fs.readFileSync(fileOrLink)));
-
-      if(!this.state._meta || typeof this.state._meta.version !== 'number')
-        throw 'Room state has invalid meta information.';
-    } catch(e) {
-      console.log(new Date().toISOString(), `RESETTING ROOM ${this.id} because of "${e.toString()}"`);
+    if(!fileOrLink && !fs.existsSync(this.roomFilename())) {
+      Logging.log(`creating room ${this.id}`);
       this.state = FileUpdater({
         _meta: {
           version: 1,
@@ -200,18 +212,29 @@ export default class Room {
           states: {}
         }
       });
+    } else if(!fileOrLink) {
+      Logging.log(`loading room ${this.id}`);
+      this.state = FileUpdater(JSON.parse(fs.readFileSync(this.roomFilename())));
+      this.broadcast('state', this.state);
+    } else if(fileOrLink.match(/^http/)) {
+      Logging.log(`loading room ${this.id} from ${fileOrLink}`);
+      this.setState(await FileLoader.readVariantFromLink(fileOrLink));
+    } else {
+      Logging.log(`loading room ${this.id} from ${fileOrLink}`);
+      this.setState(JSON.parse(fs.readFileSync(fileOrLink)));
     }
+
+    if(!this.state._meta || this.state._meta.version !== 1)
+      throw Error('Room state has invalid meta information.');
   }
 
   async loadState(player, stateID, variantID) {
     const variantInfo = this.state._meta.states[stateID].variants[variantID];
 
-    if(variantInfo.link) {
-      this.load(variantInfo.link);
-    } else {
-      const filename = path.resolve() + '/save/states/' + this.id + '-' + stateID + '-' + variantID + '.json';
-      this.load(filename);
-    }
+    if(variantInfo.link)
+      await this.load(variantInfo.link);
+    else
+      await this.load(this.variantFilename(stateID, variantID));
   }
 
   mouseMove(player, coords) {
@@ -260,6 +283,7 @@ export default class Room {
   }
 
   removeState(player, stateID) {
+    this.deleteUnusedVariantFiles(stateID, this.state._meta.states[stateID], { variants: {} });
     delete this.state._meta.states[stateID];
     this.sendMetaUpdate();
   }
@@ -275,6 +299,10 @@ export default class Room {
     this.sendMetaUpdate();
   }
 
+  roomFilename() {
+    return path.resolve() + '/save/rooms/' + this.id + '.json';
+  }
+
   sendMetaUpdate() {
     this.broadcast('meta', { meta: this.state._meta, activePlayers: this.players.map(p=>p.name) });
   }
@@ -287,9 +315,22 @@ export default class Room {
   }
 
   unload() {
-    console.log(new Date().toISOString(), `unloading room ${this.id}`);
+    if(Object.keys(this.state).length > 1 || Object.keys(this.state._meta.states).length) {
+      Logging.log(`unloading room ${this.id}`);
+      this.writeToFilesystem();
+    } else {
+      Logging.log(`destroying room ${this.id}`);
+      if(fs.existsSync(this.roomFilename()))
+        fs.unlinkSync(this.roomFilename());
+    }
+  }
+
+  writeToFilesystem() {
     const json = JSON.stringify(this.state);
-    if(json != '{}')
-      fs.writeFileSync(path.resolve() + '/save/rooms/' + this.id + '.json', json);
+    fs.writeFileSync(this.roomFilename(), json);
+  }
+
+  variantFilename(stateID, variantID) {
+    return path.resolve() + '/save/states/' + this.id + '-' + stateID.replace(/[^a-z0-9]/g, '_') + '-' + variantID.replace(/[^a-z0-9]/g, '_') + '.json';
   }
 }

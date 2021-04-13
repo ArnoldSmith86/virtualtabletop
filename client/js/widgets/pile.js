@@ -46,7 +46,7 @@ class Pile extends Widget {
     }
   }
 
-  click() {
+  async click() {
     $('#pileOverlay').innerHTML = `<p>${this.handle.textContent} cards</p><p>Drag the handle with the number to drag the entire pile.</p>`;
 
     const flipButton = document.createElement('button');
@@ -74,6 +74,36 @@ class Pile extends Widget {
     });
     $('#pileOverlay').appendChild(shuffleButton);
 
+    const childCount = this.children().length;
+    const countDiv = document.createElement('div');
+    countDiv.textContent = `/ ${childCount}`;
+    $('#pileOverlay').appendChild(countDiv);
+    const splitInput = document.createElement('input');
+    splitInput.type = 'number';
+    splitInput.value = Math.floor(childCount/2);
+    splitInput.min = 0;
+    splitInput.max = childCount;
+    countDiv.prepend(splitInput);
+    const splitLabel = document.createElement('label');
+    splitLabel.textContent = 'Split: ';
+    countDiv.prepend(splitLabel);
+    const splitButton = document.createElement('button');
+    splitButton.textContent = 'Split pile';
+    splitButton.addEventListener('click', e=>{
+      batchStart();
+      this.children().reverse().slice(childCount-splitInput.value).forEach(c=>{
+        c.p('parent', null);
+        c.p('x', this.absoluteCoord('x'));
+        const y = this.absoluteCoord('y');
+        c.p('y', y < 100 ? y+60 : y-60);
+        c.updatePiles();
+        c.bringToFront();
+      });
+      showOverlay();
+      batchEnd();
+    });
+    $('#pileOverlay').appendChild(splitButton);
+
     showOverlay('pileOverlay');
   }
 
@@ -85,7 +115,8 @@ class Pile extends Widget {
       const x = this.p('x');
       const y = this.p('y');
 
-      this.removed = true;
+      // this is added in removeWidgetLocal aswell but needed before the set parent so that the child isn't added to the same pile again during updatePiles
+      this.isBeingRemoved = true;
 
       c.p('x', c.p('x') + x);
       c.p('y', c.p('y') + y);
