@@ -591,14 +591,14 @@ export class Widget extends StateManaged {
           let c = collections[a.collection];
           if (a.skipMissing)
             c = c.filter(w=>w.p(a.property));
-          c = c.map(w=>w.p(a.property));
+          c = JSON.parse(JSON.stringify(c.map(w=>w.p(a.property))));
           if(c.length) {
             switch(a.aggregation) {
             case 'first':
             case 'last':
               const index = (a.aggregation == 'last') ? c.length -1 : 0;
               if(c[index] !== undefined)
-                variables[a.variable] = (c[index] !== undefined) ? JSON.parse(JSON.stringify(c[index])) : null;
+                variables[a.variable] = (c[index] !== undefined) ? c[index] : null;
               break;
             case 'array':
               variables[a.variable] = c;
