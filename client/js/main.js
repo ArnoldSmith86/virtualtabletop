@@ -151,7 +151,7 @@ async function _uploadAsset(file) {
       throw `${response.status} - ${response.statusText}`;
 
     return response.text();
-  }
+}
 
 const svgCache = {};
 function getSVG(url, replaces, callback) {
