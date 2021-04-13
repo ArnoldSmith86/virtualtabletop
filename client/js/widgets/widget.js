@@ -586,36 +586,29 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'GET') {
-        setDefaults(a, { variable: a.property || 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first' });
+        setDefaults(a, { variable: a.property || 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
         if(isValidCollection(a.collection)) {
-          if(collections[a.collection].length) {
-            c = [];
-            for(const widget of collections[a.collection])
-              c = c.concat((widget.p(a.property) || 0));
+          let c = collections[a.collection];
+          if (a.skipMissing)
+            c = c.filter(w=>w.p(a.property));
+          c = c.map(w=>w.p(a.property));
+          if(c.length) {
             switch(a.aggregation) {
             case 'first':
             case 'last':
-              let position = (a.aggregation == 'last') ? collections[a.collection].length -1 : 0;
-              if(collections[a.collection].length)
-                if(collections[a.collection][position].p(a.property) !== undefined) {
-                  // always get a deep copy and not object references
-                  variables[a.variable] = JSON.parse(JSON.stringify(collections[a.collection][position].p(a.property)));
-                } else {
-                  variables[a.variable] = null;
-                  problems.push(`Property ${a.property} missing from ${a.aggregation} item of collection, setting ${a.variable} to null.`);
-                }
-              else
-                problems.push(`Collection ${a.collection} is empty.`);
+              const index = (a.aggregation == 'last') ? c.length -1 : 0;
+              if(c[index] !== undefined)
+                variables[a.variable] = (c[index] !== undefined) ? c[index] : null;
               break;
             case 'array':
               variables[a.variable] = c;
               break;
             case 'average':
-              variables[a.variable] = c.reduce((a, b) => a + b) / c.length;
+              variables[a.variable] = c.map(w=>+w).reduce((a, b) => +a + +b) / c.length;
               break;
             case 'median':
               const mid = Math.floor(c.length / 2);
-              const nums = [...c].sort((a, b) => a - b);
+              const nums = [...c].map(w=>+w).sort((a, b) => a - b);
               variables[a.variable] = c.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
               break;
             case 'min':
@@ -623,14 +616,12 @@ export class Widget extends StateManaged {
               variables[a.variable] = Math[a.aggregation](...c);
               break;
             case 'sum':
-              variables[a.variable] = 0;
-              for(const widget of collections[a.collection])
-                variables[a.variable] += Number(widget.p(a.property) || 0);
-              break;
+              variables[a.variable] = 0 + c.map(w=>+w).reduce((a, b) => a + b);
             default:
               problems.push(`Aggregation ${a.aggregation} is unsupported.`);
             }
-          }
+          } else
+            problems.push(`Collection ${a.collection} is empty.`);
         }
       }
 
