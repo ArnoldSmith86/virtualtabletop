@@ -19,6 +19,8 @@ const server = http.Server(app);
 const savedir = path.resolve() + '/save';
 const sharedLinks = fs.existsSync(savedir + '/shares.json') ? JSON.parse(fs.readFileSync(savedir + '/shares.json')) : {};
 
+const serverStart = +new Date();
+
 fs.mkdirSync(savedir + '/assets', { recursive: true });
 fs.mkdirSync(savedir + '/rooms',  { recursive: true });
 fs.mkdirSync(savedir + '/states', { recursive: true });
@@ -196,7 +198,7 @@ MinifyRoom().then(function(result) {
 });
 
 const activeRooms = new Map();
-const ws = new WebSocket(server, function(connection, { playerName, roomID }) {
+const ws = new WebSocket(server, serverStart, function(connection, { playerName, roomID }) {
   ensureRoomIsLoaded(roomID).then(function(isLoaded) {
     if(isLoaded)
       activeRooms.get(roomID).addPlayer(new Player(connection, playerName, activeRooms.get(roomID)));
