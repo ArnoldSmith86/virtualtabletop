@@ -5,24 +5,46 @@ export default function FileUpdater(state) {
   if(v == VERSION)
     return state;
 
-  for(const id in state) {
-    const w = state[id];
-
-    if(v == 1 && state[id].type == 'button' && Array.isArray(w.clickRoutine)) {
-      let isFirstSelect = true;
-      for(const operation of w.clickRoutine) {
-        if(operation.func == 'SELECT') {
-          if(operation.mode === undefined && !isFirstSelect)
-            operation.mode = 'add';
-          if(operation.mode == 'set')
-            delete operation.mode;
-          isFirstSelect = false;
-        }
-      }
-    }
-
-  }
+  for(const id in state)
+    updateProperties(state[id]);
 
   state._meta.version = VERSION;
   return state;
+}
+
+function updateProperties(properties, v) {
+  if(typeof properties != 'object')
+    return;
+
+  if(!properties.type)
+    updateProperties(properties.faces);
+  if(properties.type == 'deck')
+    updateProperties(properties.cardDefaults);
+  if(properties.type == 'deck' && typeof properties.cardTypes == 'object')
+    for(const cardType in properties.cardTypes)
+      updateProperties(properties.cardTypes[cardType]);
+
+  for(const property in properties)
+    if(property.match(/Routine$/))
+      updateRoutine(properties[property], v);
+}
+
+function updateRoutine(routine, v) {
+  if(!Array.isArray(routine))
+    return;
+
+  v<2 && v2UpdateSelectDefault(routine);
+}
+
+function v2UpdateSelectDefault(routine) {
+  let isFirstSelect = true;
+  for(const operation of routine) {
+    if(operation.func == 'SELECT') {
+      if(operation.mode === undefined && !isFirstSelect)
+        operation.mode = 'add';
+      if(operation.mode == 'set')
+        delete operation.mode;
+      isFirstSelect = false;
+    }
+  }
 }
