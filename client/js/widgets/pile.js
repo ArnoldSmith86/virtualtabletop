@@ -46,7 +46,7 @@ class Pile extends Widget {
     }
   }
 
-  click() {
+  async click() {
     $('#pileOverlay').innerHTML = `<p>${this.handle.textContent} cards</p><p>Drag the handle with the number to drag the entire pile.</p>`;
 
     const flipButton = document.createElement('button');
@@ -115,7 +115,8 @@ class Pile extends Widget {
       const x = this.p('x');
       const y = this.p('y');
 
-      this.removed = true;
+      // this is added in removeWidgetLocal aswell but needed before the set parent so that the child isn't added to the same pile again during updatePiles
+      this.isBeingRemoved = true;
 
       c.p('x', c.p('x') + x);
       c.p('y', c.p('y') + y);

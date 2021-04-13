@@ -1,9 +1,12 @@
 import { $, $a, onLoad } from './domhelpers.js';
 import { startWebSocket } from './connection.js';
 
+
 let scale = 1;
 let roomRectangle;
 let overlayActive = false;
+
+var vmEditOverlay;
 
 let urlProperties = {};
 
@@ -54,15 +57,21 @@ function updateMaxZ(layer, z) {
   maxZ[layer] = Math.max(maxZ[layer] || 0, z);
 }
 
-export function showOverlay(id) {
+export function showOverlay(id, forced) {
+  if(overlayActive == 'forced' && !forced)
+    return;
+
   for(const d of $a('.overlay'))
     if(d.id != id)
       d.style.display = 'none';
+
   if(id) {
     const style = $(`#${id}`).style;
-    style.display = style.display === 'flex' ? 'none' : 'flex';
+    style.display = !forced && style.display === 'flex' ? 'none' : 'flex';
     $('#roomArea').className = style.display === 'flex' ? 'hasOverlay' : '';
     overlayActive = style.display === 'flex';
+    if(forced)
+      overlayActive = 'forced';
 
     //Hack to focus on the Go button for the input overlay
     if (id == 'buttonInputOverlay') {
@@ -70,6 +79,7 @@ export function showOverlay(id) {
     }
   } else {
     $('#roomArea').className = '';
+    vmEditOverlay.selectedWidget = {};
     overlayActive = false;
   }
 }
@@ -144,8 +154,8 @@ function getSVG(url, replaces, callback) {
   if(typeof svgCache[url] == 'string') {
     let svg = svgCache[url];
     for(const replace in replaces)
-      svg = svg.replace(replace, replaces[replace]);
-    return 'data:image/svg+xml;base64,'+btoa(svg);
+      svg = svg.split(replace).join(replaces[replace]);
+    return 'data:image/svg+xml,'+encodeURIComponent(svg);
   }
 
   if(!svgCache[url]) {
@@ -188,8 +198,21 @@ onLoad(function() {
   setScale();
   startWebSocket();
 
+
+  const editOverlayApp = Vue.createApp({
+    data() { return {
+      selectedWidget: {},
+    }}
+  });
+  loadComponents(editOverlayApp);
+  vmEditOverlay = editOverlayApp.mount("#editOverlayVue");
+
   onMessage('warning', alert);
   onMessage('error', alert);
+  onMessage('internal_error', function() {
+    preventReconnect();
+    showOverlay('internalErrorOverlay');
+  });
 });
 
 window.onresize = function(event) {
