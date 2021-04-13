@@ -11,6 +11,8 @@ export default class Connection {
 
     connection.on('close', this.closeReceived);
     connection.on('message', this.messageReceived);
+
+    this.toClient('serverStart', websocket.serverStart);
   }
 
   addCloseHandler(callback) {
