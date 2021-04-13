@@ -224,7 +224,7 @@ export default class Room {
       this.setState(JSON.parse(fs.readFileSync(fileOrLink)));
     }
 
-    if(!this.state._meta || this.state._meta.version !== 1)
+    if(!this.state._meta || typeof this.state._meta.version !== 'number')
       throw Error('Room state has invalid meta information.');
   }
 
