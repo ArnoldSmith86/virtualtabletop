@@ -201,26 +201,37 @@ export default class Room {
     return JSON.stringify(state).match(/\/assets\/-?[0-9]+_[0-9]+/g) || [];
   }
 
-  async load(fileOrLink) {
+  async load(fileOrLink, player) {
+    const emptyState = {
+      _meta: {
+        version: 1,
+        players: {},
+        states: {}
+      }
+    };
+
     if(!fileOrLink && !fs.existsSync(this.roomFilename())) {
       Logging.log(`creating room ${this.id}`);
-      this.state = {
-        _meta: {
-          version: 1,
-          players: {},
-          states: {}
-        }
-      };
+      this.state = emptyState;
     } else if(!fileOrLink) {
       Logging.log(`loading room ${this.id}`);
       this.state = JSON.parse(fs.readFileSync(this.roomFilename()));
       this.broadcast('state', this.state);
-    } else if(fileOrLink.match(/^http/)) {
-      Logging.log(`loading room ${this.id} from ${fileOrLink}`);
-      this.setState(await FileLoader.readVariantFromLink(fileOrLink));
     } else {
-      Logging.log(`loading room ${this.id} from ${fileOrLink}`);
-      this.setState(JSON.parse(fs.readFileSync(fileOrLink)));
+      let newState = emptyState;
+      if(fileOrLink.match(/^http/))
+        newState = await FileLoader.readVariantFromLink(fileOrLink);
+      else
+        newState = JSON.parse(fs.readFileSync(fileOrLink));
+      if(newState) {
+        Logging.log(`loading room ${this.id} from ${fileOrLink}`);
+        this.setState(newState);
+      } else {
+        Logging.log(`loading room ${this.id} from ${fileOrLink} FAILED`);
+        this.setState(emptyState);
+        if(player)
+          player.send('error', 'Error loading state.');
+      }
     }
 
     if(!this.state._meta || this.state._meta.version !== 1)
@@ -231,9 +242,9 @@ export default class Room {
     const variantInfo = this.state._meta.states[stateID].variants[variantID];
 
     if(variantInfo.link)
-      await this.load(variantInfo.link);
+      await this.load(variantInfo.link, player);
     else
-      await this.load(this.variantFilename(stateID, variantID));
+      await this.load(this.variantFilename(stateID, variantID), player);
   }
 
   mouseMove(player, coords) {
