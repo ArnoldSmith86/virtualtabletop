@@ -69,6 +69,7 @@ export function toServer(func, args) {
 
 function preventReconnect() {
   lastTimeout = null;
+  userNavigatedAway = true;
 }
 
 function log(str) {
