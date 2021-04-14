@@ -51,8 +51,13 @@ async function downloadState(res, roomID, stateID, variantID) {
 
 function autosaveRooms() {
   setInterval(function() {
-    for(const [ _, room ] of activeRooms)
-      room.writeToFilesystem();
+    for(const [ _, room ] of activeRooms) {
+      try {
+        room.writeToFilesystem();
+      } catch(e) {
+        Logging.handleGenericException('autosaveRooms', e);
+      }
+    }
   }, 60*1000);
 }
 
