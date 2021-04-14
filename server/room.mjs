@@ -16,7 +16,7 @@ export default class Room {
   }
 
   addPlayer(player) {
-    console.log(new Date().toISOString(), `adding player ${player.name} to room ${this.id}`);
+    Logging.log(`adding player ${player.name} to room ${this.id}`);
     this.players.push(player);
 
     if(!this.state._meta.players[player.name])
@@ -40,7 +40,7 @@ export default class Room {
       if(type == 'link')
         states = await FileLoader.readStatesFromLink(src);
     } catch(e) {
-      console.log(new Date().toISOString(), 'ERROR LOADING FILE: ' + e);
+      Logging.log(`ERROR LOADING FILE: ${e.toString()}`);
       try {
         fs.writeFileSync(path.resolve() + '/save/errors/' + Math.random().toString(36).substring(3, 7), Buffer.from(src.replace(/^data.*?,/, ''), 'base64'));
       } catch(e) {}
@@ -261,7 +261,7 @@ export default class Room {
   }
 
   receiveInvalidDelta(player, delta, widgetID) {
-    console.log(new Date().toISOString(), `WARNING: received conflicting delta data for widget ${widgetID} from player ${player.name} in room ${this.id} - sending game state at ${this.deltaID}`);
+    Logging.log(`WARNING: received conflicting delta data for widget ${widgetID} from player ${player.name} in room ${this.id} - sending game state at ${this.deltaID}`);
     this.state._meta.deltaID = ++this.deltaID;
     player.send('state', this.state);
   }
@@ -272,7 +272,7 @@ export default class Room {
   }
 
   removePlayer(player) {
-    console.log(new Date().toISOString(), `removing player ${player.name} from room ${this.id}`);
+    Logging.log(`removing player ${player.name} from room ${this.id}`);
     this.players = this.players.filter(e => e != player);
     if(this.players.length == 0) {
       this.unload();
