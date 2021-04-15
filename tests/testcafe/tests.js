@@ -95,20 +95,20 @@ publicLibraryTest('Blue', 0, '8cf30e7dbcb33dc01fbbc0d7b5dac039', async t => {
     .click('[id="9n2q"]');
 });
 
-publicLibraryTest('FreeCell', 0, '211966a4a048e27a0e0113ead659042b', async t => {
+publicLibraryTest('FreeCell', 0, '4b0aee9fd6706a08e35928e70601b27e', async t => {
   await t
     .click('#reset')
     .click('#jemz')
     .click('#reset');
 });
 
-publicLibraryTest('Rummy Tiles', 0, 'e0073d6f0d8f48d268aefc44139b4492', async t => {
+publicLibraryTest('Rummy Tiles', 0, '5d171ad18638d051bb79bafaad169583', async t => {
   await t
     .click('#startMix')
     .click('#draw14');
 });
 
-publicLibraryTest('Undercover', 1, '019088481e33f1632ab3872991ed4f56', async t => {
+publicLibraryTest('Undercover', 1, 'd3ba0452c9f44e8963d49a484c78e66b', async t => {
   await t
     .click('#Reset')
     .click('[id="Spy Master Button"]');
