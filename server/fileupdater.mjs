@@ -6,7 +6,7 @@ export default function FileUpdater(state) {
     return state;
 
   for(const id in state)
-    updateProperties(state[id]);
+    updateProperties(state[id], v);
 
   state._meta.version = VERSION;
   return state;
@@ -37,14 +37,14 @@ function updateRoutine(routine, v) {
 }
 
 function v2UpdateSelectDefault(routine) {
-  let isFirstSelect = true;
+  let isNotFirstSelect = {};
   for(const operation of routine) {
     if(operation.func == 'SELECT') {
-      if(operation.mode === undefined && !isFirstSelect)
+      if(operation.mode === undefined && isNotFirstSelect[operation.collection || 'DEFAULT'])
         operation.mode = 'add';
       if(operation.mode == 'set')
         delete operation.mode;
-      isFirstSelect = false;
+      isNotFirstSelect[operation.collection || 'DEFAULT'] = true;
     }
   }
 }
