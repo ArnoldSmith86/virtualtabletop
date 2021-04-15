@@ -1,4 +1,4 @@
-import { $, $a, onLoad } from './domhelpers.js';
+import { $, $a, onLoad, selectFile } from './domhelpers.js';
 import { startWebSocket } from './connection.js';
 
 
@@ -57,15 +57,21 @@ function updateMaxZ(layer, z) {
   maxZ[layer] = Math.max(maxZ[layer] || 0, z);
 }
 
-export function showOverlay(id) {
+export function showOverlay(id, forced) {
+  if(overlayActive == 'forced' && !forced)
+    return;
+
   for(const d of $a('.overlay'))
     if(d.id != id)
       d.style.display = 'none';
+
   if(id) {
     const style = $(`#${id}`).style;
-    style.display = style.display === 'flex' ? 'none' : 'flex';
+    style.display = !forced && style.display === 'flex' ? 'none' : 'flex';
     $('#roomArea').className = style.display === 'flex' ? 'hasOverlay' : '';
     overlayActive = style.display === 'flex';
+    if(forced)
+      overlayActive = 'forced';
 
     //Hack to focus on the Go button for the input overlay
     if (id == 'buttonInputOverlay') {
@@ -124,8 +130,19 @@ function setScale() {
   roomRectangle = $('#roomArea').getBoundingClientRect();
 }
 
-async function uploadAsset() {
-  return selectFile('BINARY').then(async function(file) {
+async function uploadAsset(multipleCallback) {
+  if(typeof(multipleCallback) === "function") {
+    return selectFile('BINARY', async function (f) {
+      let uploadPath = await _uploadAsset(f).catch(e=>alert(`Uploading failed: ${e.toString()}`));
+      multipleCallback(uploadPath, f.name)
+    });
+  }
+  else {
+    return selectFile('BINARY').then(_uploadAsset).catch(e=>alert(`Uploading failed: ${e.toString()}`));
+  }
+}
+
+async function _uploadAsset(file) {
     const response = await fetch('/asset', {
       method: 'PUT',
       headers: {
@@ -140,7 +157,6 @@ async function uploadAsset() {
       throw `${response.status} - ${response.statusText}`;
 
     return response.text();
-  }).catch(e=>alert(`Uploading failed: ${e.toString()}`));
 }
 
 const svgCache = {};

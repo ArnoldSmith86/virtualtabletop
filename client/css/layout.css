@@ -6,6 +6,15 @@
   --roomColor: #f0f0f0;
   --editColor: #7ba5f5;
   --VTTblue: #1f5ca6;
+  --VTTblueDark:  #0d2f5e;
+  --VTTblueLight: #a9c6e8;
+  --wcFont: #ffffff;
+  --wcMain: var(--VTTblue);
+  --wcBorder: var(--VTTblueDark);
+  --wcHighlight: var(--VTTblueLight);
+  --wcMainOH: var(--VTTblueDark);
+  --wcBorderOH: var(--VTTblue);
+  --wcFontOH: var(--wcFont);
 }
 
 body {
