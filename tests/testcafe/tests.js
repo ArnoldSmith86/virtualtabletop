@@ -1,8 +1,15 @@
 import { Selector, ClientFunction } from 'testcafe';
+import fs from 'fs';
+import path from 'path';
 import fetch from 'node-fetch';
 import crypto from 'crypto';
+import { diffString, diff } from 'json-diff';
 
-const server = 'http://localhost:8272';
+const server = process.env.REFERENCE ? `http://212.47.248.129:${3000 + +process.env.REFERENCE}` : 'http://localhost:8272';
+const referenceDir = path.resolve() + '/save/testcafe-references';
+
+if(process.env.REFERENCE)
+  fs.mkdirSync(referenceDir, { recursive: true });
 
 getState();
 
@@ -48,9 +55,22 @@ function publicLibraryTest(game, variant, md5, tests) {
       .typeText('.myPlayerEntry > .playerName', 'TestCafe', { replace: true })
       .click('#playersButton');
     await tests(t);
-    await t
-      .expect(await getState()).eql(md5);
+    await compareState(t, md5);
   });
+}
+
+async function compareState(t, md5) {
+  const state = await getState();
+  const hash = crypto.createHash('md5').update(state).digest('hex');
+  const refFile = `${referenceDir}/${md5}.json`;
+
+  if(process.env.REFERENCE && hash == md5)
+    fs.writeFileSync(refFile, state);
+
+  if(!process.env.REFERENCE && hash != md5 && fs.existsSync(refFile))
+    console.log(diffString(JSON.parse(fs.readFileSync(refFile)), JSON.parse(state)));
+
+  await t.expect(hash).eql(md5);
 }
 
 async function getState() {
@@ -58,8 +78,7 @@ async function getState() {
   await new Promise(resolve => setTimeout(resolve, 500));
 
   const response = await fetch(`${server}/state/testcafe-testing`);
-  const text = await response.text();
-  return crypto.createHash('md5').update(text).digest('hex');
+  return await response.text();
 }
 
 fixture('virtualtabletop.io').page(`${server}/testcafe-testing`).beforeEach(emptyRoomState).after(emptyRoomState);
