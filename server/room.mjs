@@ -309,7 +309,9 @@ export default class Room {
 
   setState(state) {
     const meta = this.state._meta;
-    this.state = FileUpdater(state);
+    this.state = state;
+    if(this.state._meta)
+      this.state = FileUpdater(this.state);
     this.state._meta = meta;
     this.broadcast('state', state);
   }
