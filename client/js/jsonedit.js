@@ -348,7 +348,7 @@ const jeCommands = [
       operation.applyVariables.push({ parameter: jeContext[routineIndex+3], variable: '###SELECT ME###' });
       jeSetAndSelect('');
     }),
-    show: jeRoutineCall(routineIndex=>jeContext[routineIndex+3] != 'applyVariables')
+    show: jeRoutineCall(routineIndex=>jeContext[routineIndex+3] !== undefined && jeContext[routineIndex+3] != 'applyVariables')
   }
 ];
 
@@ -395,7 +395,7 @@ function jeAddRoutineOperationCommands(command, defaults) {
         jeInsert(jeContext.slice(1, routineIndex+2), property, defaults[property]);
       }),
       show: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
-        return operation[property] === undefined;
+        return operation && operation[property] === undefined;
       })
     });
   }
