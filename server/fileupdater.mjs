@@ -1,9 +1,11 @@
-const VERSION = 2;
+export const VERSION = 2;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
   if(v == VERSION)
     return state;
+  if(v > VERSION)
+    throw Error(`File version ${v} is newer than the supported version ${VERSION}.`);
 
   for(const id in state)
     updateProperties(state[id], v);
