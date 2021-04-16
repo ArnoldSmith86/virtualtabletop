@@ -28,6 +28,7 @@ export const deckEditor = {
 
       increment() {
         onClickIncrementAllCardTypes();
+        this.getOrCreateDeckManifest();
       },
 
       decrement() {
@@ -48,6 +49,33 @@ export const deckEditor = {
 
       async uploadCards() {
         await uploadAsset(this._addCardCallback);
+      },
+
+      getOrCreateDeckManifest() {
+        if (this.widgetState["manifest"] === undefined) {
+            this.createDeckManifest()
+        } else {
+            console.log('else')
+        }
+      },
+
+
+      createDeckManifest() {
+          let widgetState = Vue.toRaw(this.widgetState)
+          let countDict = () => {
+                  let res = {}
+                  for (let typeID in widgetState.cardTypes) {
+                      res[typeID] = this.countCardType(typeID)
+                  }
+                  return res
+              }
+          let manifest = {
+              "name": widgetState.id,
+              "cardDefaults": widgetState.cardDefaults,
+              "cardTypes": widgetState.cardTypes,
+              "quantity": countDict()
+          }
+          console.log(manifest)
       }
     },
     template: `
