@@ -3,7 +3,8 @@ import path from 'path';
 
 import JSZip from 'jszip';
 import FileLoader from './fileloader.mjs';
-import Logging    from './logging.mjs';
+import FileUpdater from './fileupdater.mjs';
+import Logging from './logging.mjs';
 
 export default class Room {
   players = [];
@@ -204,16 +205,16 @@ export default class Room {
   async load(fileOrLink) {
     if(!fileOrLink && !fs.existsSync(this.roomFilename())) {
       Logging.log(`creating room ${this.id}`);
-      this.state = {
+      this.state = FileUpdater({
         _meta: {
           version: 1,
           players: {},
           states: {}
         }
-      };
+      });
     } else if(!fileOrLink) {
       Logging.log(`loading room ${this.id}`);
-      this.state = JSON.parse(fs.readFileSync(this.roomFilename()));
+      this.state = FileUpdater(JSON.parse(fs.readFileSync(this.roomFilename())));
       this.broadcast('state', this.state);
     } else if(fileOrLink.match(/^http/)) {
       Logging.log(`loading room ${this.id} from ${fileOrLink}`);
@@ -223,7 +224,7 @@ export default class Room {
       this.setState(JSON.parse(fs.readFileSync(fileOrLink)));
     }
 
-    if(!this.state._meta || this.state._meta.version !== 1)
+    if(!this.state._meta || typeof this.state._meta.version !== 'number')
       throw Error('Room state has invalid meta information.');
   }
 
@@ -309,6 +310,8 @@ export default class Room {
   setState(state) {
     const meta = this.state._meta;
     this.state = state;
+    if(this.state._meta)
+      this.state = FileUpdater(this.state);
     this.state._meta = meta;
     this.broadcast('state', state);
   }
