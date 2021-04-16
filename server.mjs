@@ -115,6 +115,7 @@ MinifyRoom().then(function(result) {
   app.get('/state/:room', async function(req, res, next) {
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
       if(isLoaded) {
+        res.setHeader('Access-Control-Allow-Origin', '*');
         res.setHeader('Content-Type', 'application/json');
         const state = {...activeRooms.get(req.params.room).state};
         delete state._meta;
@@ -127,6 +128,7 @@ MinifyRoom().then(function(result) {
     limit: '10mb'
   }));
   app.put('/state/:room', function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
     if(typeof req.body == 'object') {
       ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
         if(isLoaded) {

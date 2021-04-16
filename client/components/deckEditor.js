@@ -32,10 +32,27 @@ export const deckEditor = {
 
       decrement() {
         onClickDecrementAllCardTypes()
+      },
+
+      _addCardCallback(imagePath, fileName) {
+        let value = {
+          "image": imagePath,
+        }
+        addCardType(fileName, value);
+        this.widgetState.cardTypes[fileName] = value;
+        const card = { deck:this.widgetState.id, type:'card', cardType:fileName };
+        addWidgetLocal(card);
+        if(this.widgetState.parent)
+          widgets.get(card.id).moveToHolder(widgets.get(this.widgetState.parent));
+      },
+
+      async uploadCards() {
+        await uploadAsset(this._addCardCallback);
       }
     },
     template: `
       <div class="deckEdit">
+        <button @click="uploadCards()">Upload Card Image(s)</button>
         <table id="cardTypesList">
           <tbody><tr><th>ID</th><th>Properties</th><th>Count</th></tr></tbody>
             <tr v-for="(typeObject, typeID) in this.widgetState.cardTypes" class="cardType">
