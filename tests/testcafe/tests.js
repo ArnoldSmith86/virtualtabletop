@@ -23,6 +23,22 @@ async function emptyRoomState() {
   });
 }
 
+async function removeGame(t, index) {
+  await t
+    .pressKey('esc')
+    .click('#statesButton')
+    .hover(`.roomState:nth-of-type(${index || 1})`)
+    .click(`.roomState:nth-of-type(${index || 1}) .edit`)
+    .click('p > .remove');
+}
+
+async function setName(t, name) {
+  await t
+    .click('#playersButton')
+    .typeText('.myPlayerEntry > .playerName', name || 'TestCafe', { replace: true })
+    .click('#playersButton');
+}
+
 function prepareClient() {
   // non random random
   let seed = 1;
@@ -37,12 +53,8 @@ function prepareClient() {
 
 function publicLibraryTest(game, variant, md5, tests) {
   test.after(async t => {
-    await t
-      .click('#statesButton')
-      .hover('.roomState')
-      .click('.edit')
-      .click('p > .remove')
-      .expect(Selector('#statesOverlay').visible).ok();
+    await removeGame(t);
+    await t.expect(Selector('#statesOverlay').visible).ok();
   })(`Public library: ${game} (variant ${variant})`, async t => {
     await ClientFunction(prepareClient)();
     await t
@@ -50,10 +62,8 @@ function publicLibraryTest(game, variant, md5, tests) {
       .click('#statesButton')
       .click(Selector('td.name').withExactText(game).prevSibling().child())
       .hover('.roomState')
-      .click(Selector('button.play').nth(variant))
-      .click('#playersButton')
-      .typeText('.myPlayerEntry > .playerName', 'TestCafe', { replace: true })
-      .click('#playersButton');
+      .click(Selector('button.play').nth(variant));
+    await setName(t);
     await tests(t);
     await compareState(t, md5);
   });
@@ -89,6 +99,49 @@ async function getState() {
 }
 
 fixture('virtualtabletop.io').page(`${server}/testcafe-testing`).beforeEach(emptyRoomState).after(emptyRoomState);
+
+test('Create game using edit mode', async t => {
+  await emptyRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t
+    .click('#addButton')
+    .click('#add-spinner6')
+    .click('#jyo6')
+    .click('#addButton')
+    .click('#add-holder')
+    .click('#addButton')
+    .click('#addHand')
+    .drag('[id="7ayk"]', 100, 100)
+    .click('#editButton')
+    .click('[id="7ayk"]')
+    .click('#transparentHolder')
+    .click('#updateWidget')
+    .click('#editButton')
+    .click('#addButton')
+    .click('#add-deck_K_S')
+    .click('[id="9eevB"]')
+    .click('[id="9eevP"] > .handle')
+    .click('#pileOverlay > button:nth-of-type(3)')
+    .click('[id="5iou"] > .handle')
+    .click('#pileOverlay > button:nth-of-type(1)')
+    .click('[id="5iou"] > .handle')
+    .click('#pileOverlay > button:nth-of-type(3)')
+    .click('#oklz > .handle')
+    .click('#pileOverlay > button:nth-of-type(2)')
+    .dragToElement('#oklz > .handle', '[id="3nse"]')
+    .click('#editButton')
+    .click('#jyo6')
+    .click('#editJSONoverlay > #duplicateWidget')
+    .click('[id="3fsl"]')
+    .typeText('#editWidgetJSON', '{"type":"spinner","options":[1,2],"angle": 5,"id": "3fsl"}', { replace: true })
+    .click('#editJSONoverlay > #updateWidget')
+    .click('#jyo6')
+    .setNativeDialogHandler(() => true)
+    .click('#editJSONoverlay > #removeWidget');
+
+  await compareState(t, '2e7611649b3b5339558e3f32df4e774d');
+});
 
 publicLibraryButtons('Blue',               0, '8cf30e7dbcb33dc01fbbc0d7b5dac039', [
   'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton',
