@@ -59,6 +59,13 @@ function publicLibraryTest(game, variant, md5, tests) {
   });
 }
 
+function publicLibraryButtons(game, variant, md5, buttons) {
+  publicLibraryTest(game, variant, md5, async t => {
+    for(const b of buttons)
+      await t.click(`[id="${b}"]`);
+  });
+}
+
 async function compareState(t, md5) {
   const state = await getState();
   const hash = crypto.createHash('md5').update(state).digest('hex');
@@ -83,72 +90,20 @@ async function getState() {
 
 fixture('virtualtabletop.io').page(`${server}/testcafe-testing`).beforeEach(emptyRoomState).after(emptyRoomState);
 
-publicLibraryTest('Blue', 0, '8cf30e7dbcb33dc01fbbc0d7b5dac039', async t => {
-  await t
-    .click('#fcc3fa2c-c091-41bc-8737-54d8b9d3a929')
-    .click('#d3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton')
-    .click('#d3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton')
-    .click('#d3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton')
-    .click('#fdc25f83-ed33-4845-a97c-ff35fa8a094f_shuffleButton')
-    .click('#buttonInputGo')
-    .click('#fcc3fa2c-c091-41bc-8737-54d8b9d3a929')
-    .click('[id="9n2q"]');
-});
-
-publicLibraryTest('FreeCell', 0, '4b0aee9fd6706a08e35928e70601b27e', async t => {
-  await t
-    .click('#reset')
-    .click('#jemz')
-    .click('#reset');
-});
-
-publicLibraryTest('Rummy Tiles', 0, '5d171ad18638d051bb79bafaad169583', async t => {
-  await t
-    .click('#startMix')
-    .click('#draw14');
-});
-
-publicLibraryTest('Undercover', 1, 'd3ba0452c9f44e8963d49a484c78e66b', async t => {
-  await t
-    .click('#Reset')
-    .click('[id="Spy Master Button"]');
-});
-
-publicLibraryTest('Functions - RANDOM', 0, 'bfd121b54d8ab0fced83cc0bcc09032d', async t => {
-  await t
-    .click('[id="9fhb"]')
-    .click('#yqji')
-    .click('#oeh9');
-});
-
-publicLibraryTest('Functions - SORT', 1, 'dd047343b667795ad6d3f366aa2ae2fd', async t => {
-  await t
-    .click('[id="ingw"]')
-    .click('[id="k131"]')
-    .click('[id="cnfu"]')
-    .click('[id="i6yz"]')
-    .click('[id="z394"]')
-    .click('[id="0v3h"]')
-    .click('[id="1h8o"]')
-    .click('[id="v5ra"]')
-    .click('[id="ingw-copy001"]')
-    .click('[id="k131-copy001"]')
-    .click('[id="cnfu-copy001"]')
-    .click('[id="i6yz-copy001"]')
-    .click('[id="z394-copy001"]')
-    .click('[id="0v3h-copy001"]');
-});
-
-publicLibraryTest('Master Button', 0, '8249f5f20ad44bc0ac468e4f0bbcacd5', async t => {
-  await t
-    .click('[id="masterbutton"]')
-    .click('[id="redbutton"]')
-    .click('[id="orangebutton"]')
-    .click('[id="yellowbutton"]')
-    .click('[id="greenbutton"]')
-    .click('[id="bluebutton"]')
-    .click('[id="indigobutton"]')
-    .click('[id="violetbutton"]')
-    .click('[id="fae4"]')
-    .click('[id="vbx5"]');
-});
+publicLibraryButtons('Blue',               0, '8cf30e7dbcb33dc01fbbc0d7b5dac039', [
+  'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton',
+  'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton',
+  'fdc25f83-ed33-4845-a97c-ff35fa8a094f_shuffleButton', 'buttonInputGo', 'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', '9n2q'
+]);
+publicLibraryButtons('FreeCell',           0, '4b0aee9fd6706a08e35928e70601b27e', [ 'reset', 'jemz', 'reset' ]);
+publicLibraryButtons('Rummy Tiles',        0, '5d171ad18638d051bb79bafaad169583', [ 'startMix', 'draw14' ]);
+publicLibraryButtons('Undercover',         1, 'd3ba0452c9f44e8963d49a484c78e66b', [ 'Reset', 'Spy Master Button' ]);
+publicLibraryButtons('Functions - RANDOM', 0, 'bfd121b54d8ab0fced83cc0bcc09032d', [ '9fhb', 'yqji', 'oeh9' ]);
+publicLibraryButtons('Functions - SORT',   1, 'dd047343b667795ad6d3f366aa2ae2fd', [
+  'ingw', 'k131', 'cnfu', 'i6yz', 'z394', '0v3h', '1h8o', 'v5ra', 'ingw-copy001', 'k131-copy001', 'cnfu-copy001',
+  'i6yz-copy001', 'z394-copy001', '0v3h-copy001'
+]);
+publicLibraryButtons('Master Button',      0, '8249f5f20ad44bc0ac468e4f0bbcacd5', [
+  'masterbutton', 'redbutton', 'orangebutton', 'yellowbutton', 'greenbutton', 'bluebutton', 'indigobutton',
+  'violetbutton', 'fae4', 'vbx5'
+]);
