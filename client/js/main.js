@@ -1,4 +1,4 @@
-import { $, $a, onLoad } from './domhelpers.js';
+import { $, $a, onLoad, selectFile } from './domhelpers.js';
 import { startWebSocket } from './connection.js';
 
 
@@ -130,8 +130,19 @@ function setScale() {
   roomRectangle = $('#roomArea').getBoundingClientRect();
 }
 
-async function uploadAsset() {
-  return selectFile('BINARY').then(async function(file) {
+async function uploadAsset(multipleCallback) {
+  if(typeof(multipleCallback) === "function") {
+    return selectFile('BINARY', async function (f) {
+      let uploadPath = await _uploadAsset(f).catch(e=>alert(`Uploading failed: ${e.toString()}`));
+      multipleCallback(uploadPath, f.name)
+    });
+  }
+  else {
+    return selectFile('BINARY').then(_uploadAsset).catch(e=>alert(`Uploading failed: ${e.toString()}`));
+  }
+}
+
+async function _uploadAsset(file) {
     const response = await fetch('/asset', {
       method: 'PUT',
       headers: {
@@ -146,7 +157,6 @@ async function uploadAsset() {
       throw `${response.status} - ${response.statusText}`;
 
     return response.text();
-  }).catch(e=>alert(`Uploading failed: ${e.toString()}`));
 }
 
 const svgCache = {};

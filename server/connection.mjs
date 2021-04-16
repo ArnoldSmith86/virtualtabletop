@@ -46,8 +46,14 @@ export default class Connection {
   }
 
   closeReceived = _ => {
-    for(const handler of this.closeHandlers)
-      handler();
+    try {
+      for(const handler of this.closeHandlers)
+        handler();
+    } catch(e) {
+      Logging.handleGenericException('closeReceived', e);
+      this.toClient('internal_error', 'unknown');
+      this.close();
+    }
   }
 
   toClient(func, args) {
