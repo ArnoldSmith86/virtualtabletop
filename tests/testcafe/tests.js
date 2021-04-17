@@ -143,7 +143,7 @@ test('Create game using edit mode', async t => {
   await compareState(t, '2e7611649b3b5339558e3f32df4e774d');
 });
 
-publicLibraryButtons('Blue',               0, '8cf30e7dbcb33dc01fbbc0d7b5dac039', [
+publicLibraryButtons('Blue',               0, 'f1275de07836a37060fc33377b689457', [
   'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton',
   'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton',
   'fdc25f83-ed33-4845-a97c-ff35fa8a094f_shuffleButton', 'buttonInputGo', 'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', '9n2q'
@@ -160,7 +160,7 @@ publicLibraryButtons('Functions - CALL',   0, '176feb836057ecc4b5074df90ddc4e2f'
 ]);
 publicLibraryButtons('Functions - CLICK',  0, '15b6f716708d97b769cdc930b1ae24ac', [ '7u2q' ]);
 publicLibraryButtons('Functions - RANDOM', 0, 'bfd121b54d8ab0fced83cc0bcc09032d', [ '9fhb', 'yqji', 'oeh9' ]);
-publicLibraryButtons('Functions - ROTATE', 0, 'cccdcdcd6bb944a8a3916349a4128290', [ 'c44c', '9kdj', 'w53c', 'w53c' ]);
+publicLibraryButtons('Functions - ROTATE', 0, '747586b12401e43382a7db2b2505f25e', [ 'c44c', '9kdj', 'w53c', 'w53c' ]);
 publicLibraryButtons('Functions - SELECT', 0, 'f116837e48e596c78cb1cac780b21762', [ 'oeh9', '9fhb', 'njkk', 'ffwl', 'bomo' ]);
 publicLibraryButtons('Functions - SORT',   1, 'dd047343b667795ad6d3f366aa2ae2fd', [
   'ingw', 'k131', 'cnfu', 'i6yz', 'z394', '0v3h', '1h8o', 'v5ra', 'ingw-copy001', 'k131-copy001', 'cnfu-copy001',
