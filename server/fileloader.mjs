@@ -3,6 +3,7 @@ import path from 'path';
 import fetch from 'node-fetch';
 import JSZip from 'jszip';
 
+import { VERSION } from './fileupdater.mjs';
 import PCIO from './pcioimport.mjs';
 
 const dirname = path.resolve() + '/save/links';
@@ -90,8 +91,8 @@ async function readVariantsFromBuffer(buffer) {
         if(zip.files[filename]._data.uncompressedSize >= 20971520)
           throw `${filename} is bigger than 20 MiB.`;
         const variant = JSON.parse(await zip.files[filename].async('string'));
-        if(variant._meta.version !== 1)
-          throw `Found a valid JSON file but version ${variant._meta.version} is not supported.`;
+        if(typeof variant._meta.version != 'number' || variant._meta.version > VERSION || variant._meta.version < 0)
+          throw `Found a valid JSON file but version ${variant._meta.version} is not supported. Please update your server.`;
         variants[filename] = variant;
       }
 
