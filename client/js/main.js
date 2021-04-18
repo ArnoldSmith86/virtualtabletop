@@ -126,6 +126,12 @@ function setScale() {
   } else {
     scale = w/h < 1600/1000 ? w/1600 : h/1000;
   }
+  if(w-scale*1600 + h-scale*1000 < 44) {
+    $('body').classList.add('aspectTooGood');
+    scale = (w-44)/1600;
+  } else {
+    $('body').classList.remove('aspectTooGood');
+  }
   document.documentElement.style.setProperty('--scale', scale);
   roomRectangle = $('#roomArea').getBoundingClientRect();
 }
