@@ -247,6 +247,10 @@ body.aspectTooGood #hideToolbarButton {
   background-image:url(/i/icons-white/expand-solid-svg.svg);
 }
 
+#hideToolbarButton {
+  background-image:url(/i/icons-white/hide side bar.svg);
+}
+
 #aboutButton {
   background-image:url(/i/icons-white/info-circle-solid-svg.svg);
 }
