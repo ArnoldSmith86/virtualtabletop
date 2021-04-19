@@ -128,7 +128,8 @@ function setScale() {
   }
   if(w-scale*1600 + h-scale*1000 < 44) {
     $('body').classList.add('aspectTooGood');
-    scale = (w-44)/1600;
+    if(!$('body').className.match(/hiddenToolbar/))
+      scale = (w-44)/1600;
   } else {
     $('body').classList.remove('aspectTooGood');
   }
@@ -210,6 +211,11 @@ onLoad(function() {
         document.webkitExitFullscreen();
     }
   });
+  on('#hideToolbarButton', 'click', function() {
+    $('body').classList.add('hiddenToolbar');
+    setScale();
+  });
+
   checkURLproperties();
   setScale();
   startWebSocket();

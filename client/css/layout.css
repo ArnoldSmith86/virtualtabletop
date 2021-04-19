@@ -129,6 +129,18 @@ body.aspectTooGood #roomArea {
   left: var(--toolbarSize);
 }
 
+body #hideToolbarButton, body.aspectTooGood.hiddenToolbar #toolbar {
+  display: none;
+}
+
+body.aspectTooGood.hiddenToolbar #roomArea {
+  left: calc((100vw - var(--scale) * var(--roomWidth)) / 2);
+}
+
+body.aspectTooGood #hideToolbarButton {
+  display: inline-flex;
+}
+
 .overlay {
   color: white;
   display: none;
