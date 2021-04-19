@@ -170,7 +170,6 @@ body {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
-  will-change: transform;
   touch-action: none;
   user-select: none;
   -moz-user-select: none;
@@ -199,27 +198,27 @@ body {
 }
 
 #statesButton {
-	background-image:url(/i/icons-white/chess-solid-svg.svg);
+  background-image:url(/i/icons-white/chess-solid-svg.svg);
 }
 
 #playersButton {
-	background-image:url(/i/icons-white/user-friends-solid-svg.svg);
+  background-image:url(/i/icons-white/user-friends-solid-svg.svg);
 }
 
 #editButton {
-	background-image:url(/i/icons-white/edit-regular-svg.svg);
+  background-image:url(/i/icons-white/edit-regular-svg.svg);
 }
 
 #addButton {
-	background-image:url(/i/icons-white/plus-solid-svg.svg);
+  background-image:url(/i/icons-white/plus-solid-svg.svg);
 }
 
 #fullscreenButton {
-	background-image:url(/i/icons-white/expand-solid-svg.svg);
+  background-image:url(/i/icons-white/expand-solid-svg.svg);
 }
 
 #aboutButton {
-	background-image:url(/i/icons-white/info-circle-solid-svg.svg);
+  background-image:url(/i/icons-white/info-circle-solid-svg.svg);
 }
 
 /*Buttons css*/
