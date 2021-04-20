@@ -898,13 +898,14 @@ export class Widget extends StateManaged {
 
   moveFlipToHolder(children, source, target, count, face) {
     children.slice(0, count).reverse().forEach(c=> {
+      let isInTargetHolder = false;
       if(face !== null && c.flip)
         c.flip(face);
       if (!source && c.parent !== undefined) {
-        if (c.parent.parent !== undefined)
-          source = c.parent.parent;
+        if (c.parent.p('type') == 'pile' && c.parent.parent !== undefined)
+          if (c.parent.parent == target) isInTargetHolder = true;
       }
-      if(source == target) {
+      if(source == target || isInTargetHolder) {
         c.bringToFront();
       } else {
         c.movedByButton = true;
