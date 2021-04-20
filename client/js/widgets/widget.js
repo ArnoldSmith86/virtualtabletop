@@ -591,29 +591,41 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'GET') {
-        setDefaults(a, { variable: a.property || 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first' });
+        setDefaults(a, { variable: a.property || 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
         if(isValidCollection(a.collection)) {
-          switch(a.aggregation) {
-          case 'first':
-            if(collections[a.collection].length)
-              if(collections[a.collection][0].p(a.property) !== undefined) {
-                // always get a deep copy and not object references
-                variables[a.variable] = JSON.parse(JSON.stringify(collections[a.collection][0].p(a.property)));
-              } else {
-                variables[a.variable] = null;
-                problems.push(`Property ${a.property} missing from first item of collection, setting ${a.variable} to null.`);
-              }
-            else
-              problems.push(`Collection ${a.collection} is empty.`);
-            break;
-          case 'sum':
-            variables[a.variable] = 0;
-            for(const widget of collections[a.collection])
-              variables[a.variable] += Number(widget.p(a.property) || 0);
-            break;
-          default:
-            problems.push(`Aggregation ${a.aggregation} is unsupported.`);
-          }
+          let c = collections[a.collection];
+          if (a.skipMissing)
+            c = c.filter(w=>w.p(a.property) !== null && w.p(a.property) !== undefined);
+          c = JSON.parse(JSON.stringify(c.map(w=>w.p(a.property))));
+          if(c.length) {
+            switch(a.aggregation) {
+            case 'first':
+            case 'last':
+              const index = (a.aggregation == 'last') ? c.length -1 : 0;
+              variables[a.variable] = (c[index] !== undefined) ? c[index] : null;
+              break;
+            case 'array':
+              variables[a.variable] = c;
+              break;
+            case 'average':
+              variables[a.variable] = c.map(w=>+w).reduce((a, b) => a + b) / c.length;
+              break;
+            case 'median':
+              const mid = Math.floor(c.length / 2);
+              const nums = [...c].map(w=>+w).sort((a, b) => a - b);
+              variables[a.variable] = c.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
+              break;
+            case 'min':
+            case 'max':
+              variables[a.variable] = Math[a.aggregation](...c);
+              break;
+            case 'sum':
+              variables[a.variable] = c.map(w=>+w).reduce((a, b) => a + b);
+            default:
+              problems.push(`Aggregation ${a.aggregation} is unsupported.`);
+            }
+          } else
+            problems.push(`Collection ${a.collection} is empty.`);
         }
       }
       if(a.func == 'IF') {
