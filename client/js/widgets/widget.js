@@ -748,7 +748,7 @@ export class Widget extends StateManaged {
           let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(function(w) {
             if(w.isBeingRemoved)
               return false;
-            if(a.type != 'all' && w.p('type') != a.type)
+            if(a.type != 'all' && (w.p('type') != a.type && (a.type != 'card' || w.p('type') != 'pile')))
               return false;
             if(a.relation === '<')
               return w.p(a.property) < a.value;
@@ -768,8 +768,10 @@ export class Widget extends StateManaged {
           }).slice(0, a.max).concat(a.mode == 'add' ? collections[a.collection] || [] : []);
 
           // resolve piles
-          c.filter(w=>w.p('type')=='pile').forEach(w=>c.push(...w.children()));
-          c = c.filter(w=>w.p('type')!='pile');
+          if(a.type != 'pile') {
+            c.filter(w=>w.p('type')=='pile').forEach(w=>c.push(...w.children()));
+            c = c.filter(w=>w.p('type')!='pile');
+          }
           collections[a.collection] = [...new Set(c)];
         }
       }
