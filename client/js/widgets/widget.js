@@ -597,8 +597,7 @@ export class Widget extends StateManaged {
             case 'first':
             case 'last':
               const index = (a.aggregation == 'last') ? c.length -1 : 0;
-              if(c[index] !== undefined)
-                variables[a.variable] = (c[index] !== undefined) ? c[index] : null;
+              variables[a.variable] = (c[index] !== undefined) ? c[index] : null;
               break;
             case 'array':
               variables[a.variable] = c;
