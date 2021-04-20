@@ -264,7 +264,7 @@ export class Widget extends StateManaged {
       reject(result);
   }
 
-  async evaluateRoutine(property, initialVariables, initialCollections, depth) {
+  async evaluateRoutine(property, initialVariables, initialCollections, depth, byReference) {
     function setDefaults(routine, defaults) {
       for(const key in defaults)
         if(routine[key] === undefined)
@@ -290,18 +290,23 @@ export class Widget extends StateManaged {
     if(this.p('debug') && !depth)
       $('#debugButtonOutput').textContent = '';
 
-    const variables = Object.assign({}, initialVariables, {
-      playerName,
-      playerColor,
-      activePlayers,
-      thisID : this.p('id')
-    });
+    let variables = initialVariables;
+    let collections = initialCollections
+    if(!byReference) {
+      variables = Object.assign({}, initialVariables, {
+        playerName,
+        playerColor,
+        activePlayers,
+        thisID : this.p('id')
+      });
+      collections = Object.assign({}, initialCollections, {
+        thisButton : [this]
+      });
+    }
 
-    const collections = Object.assign({}, initialCollections, {
-      thisButton : [this]
-    });
+    const routine = this.p(property) !== undefined ? this.p(property) : property;
 
-    for(const original of this.p(property)) {
+    for(const original of routine) {
       const a = JSON.parse(JSON.stringify(original));
       var problems = [];
 
@@ -623,6 +628,23 @@ export class Widget extends StateManaged {
             problems.push(`Collection ${a.collection} is empty.`);
         }
       }
+      if(a.func == 'IF') {
+        setDefaults(a, { relation: '==' });
+        if (['==', '!=', '<', '<=', '>=', '>'].indexOf(a.relation) < 0) {
+          problems.push(`Relation ${a.relation} is unsupported. Using '==' relation.`);
+          a.relation = '==';
+        }
+        if(a.condition !== undefined || a.operand1 !== undefined) {
+          if (a.condition === undefined)
+            a.condition = compute(a.relation, null, a.operand1, a.operand2);
+          const branch = a.condition ? 'thenRoutine' : 'elseRoutine';
+          if (Array.isArray(a[branch])) {
+            $('#debugButtonOutput').textContent += `\n\n\nIF ${branch}\n`;
+            await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true);
+          }
+        } else
+          problems.push(`IF operation is missing the 'condition' or 'operand1' parameter.`);
+      }
 
       if(a.func == 'INPUT') {
         try {
@@ -719,7 +741,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'SELECT') {
-        setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'add', source: 'all' });
+        setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all' });
         if(a.source == 'all' || isValidCollection(a.source)) {
           if([ 'add', 'set' ].indexOf(a.mode) == -1)
             problems.push(`Warning: Mode ${a.mode} interpreted as set.`);

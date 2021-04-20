@@ -193,6 +193,22 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_copyState',
+    name: '📋 copy state from another room/server',
+    forceKey: 'C',
+    call: function() {
+      const sourceURL = (prompt('Please enter the room URL:') || '').replace(/\/[^\/]+$/, a=>`/state${a}`);
+      const targetURL = location.href.replace(/\/[^\/]+$/, a=>`/state${a}`);
+      fetch(sourceURL).then(r=>r.text()).then(t=>{
+        fetch(targetURL,{
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: t
+        })
+      });
+    }
+  },
+  {
     id: 'je_callMacro',
     name: _=>jeMode == 'macro' ? '▶️ call' : '🎬 macro',
     forceKey: 'M',
@@ -348,7 +364,7 @@ const jeCommands = [
       operation.applyVariables.push({ parameter: jeContext[routineIndex+3], variable: '###SELECT ME###' });
       jeSetAndSelect('');
     }),
-    show: jeRoutineCall(routineIndex=>jeContext[routineIndex+3] != 'applyVariables')
+    show: jeRoutineCall(routineIndex=>jeContext[routineIndex+3] !== undefined && jeContext[routineIndex+3] != 'applyVariables')
   }
 ];
 
@@ -395,7 +411,7 @@ function jeAddRoutineOperationCommands(command, defaults) {
         jeInsert(jeContext.slice(1, routineIndex+2), property, defaults[property]);
       }),
       show: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
-        return operation[property] === undefined;
+        return operation && operation[property] === undefined;
       })
     });
   }
@@ -419,6 +435,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('DELETE', { collection: 'DEFAULT'});
   jeAddRoutineOperationCommands('FLIP', { count: 0, face: null, faceCycle: 'forward', holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('GET', { variable: 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
+  jeAddRoutineOperationCommands('IF', { condition: null, operand1: null, relation: '==', operand2: null, thenRoutine: [], elseRoutine: [] });
   // INPUT is missing
   jeAddRoutineOperationCommands('LABEL', { value: 0, mode: 'set', label: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('MOVE', { count: 1, face: null, from: null, to: null });
