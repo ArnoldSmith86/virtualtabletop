@@ -590,7 +590,7 @@ export class Widget extends StateManaged {
         if(isValidCollection(a.collection)) {
           let c = collections[a.collection];
           if (a.skipMissing)
-            c = c.filter(w=>w.p(a.property));
+            c = c.filter(w=>w.p(a.property) !== null && w.p(a.property) !== undefined);
           c = JSON.parse(JSON.stringify(c.map(w=>w.p(a.property))));
           if(c.length) {
             switch(a.aggregation) {
@@ -604,7 +604,7 @@ export class Widget extends StateManaged {
               variables[a.variable] = c;
               break;
             case 'average':
-              variables[a.variable] = c.map(w=>+w).reduce((a, b) => +a + +b) / c.length;
+              variables[a.variable] = c.map(w=>+w).reduce((a, b) => a + b) / c.length;
               break;
             case 'median':
               const mid = Math.floor(c.length / 2);
@@ -616,7 +616,7 @@ export class Widget extends StateManaged {
               variables[a.variable] = Math[a.aggregation](...c);
               break;
             case 'sum':
-              variables[a.variable] = 0 + c.map(w=>+w).reduce((a, b) => a + b);
+              variables[a.variable] = c.map(w=>+w).reduce((a, b) => a + b);
             default:
               problems.push(`Aggregation ${a.aggregation} is unsupported.`);
             }
