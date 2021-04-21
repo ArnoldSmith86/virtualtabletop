@@ -30,7 +30,7 @@ class Spinner extends Widget {
       if(this.timeout)
         clearTimeout(this.timeout);
       this.timeout = setTimeout(_=>{
-        this.value.textContent = this.p('value');
+        this.value.textContent = this.get('value');
         this.value.classList.remove('hidden')
       }, 1300);
     }
@@ -38,10 +38,10 @@ class Spinner extends Widget {
 
   async click() {
     if(!await super.click()) {
-      const angle = this.p('angle') + Math.floor((2+Math.random())*360);
-      const o = this.p('options');
-      this.p('angle', angle);
-      this.p('value', o[Math.floor(angle/(360/o.length))%o.length]);
+      const angle = this.get('angle') + Math.floor((2+Math.random())*360);
+      const o = this.get('options');
+      await this.set('angle', angle);
+      await this.set('value', o[Math.floor(angle/(360/o.length))%o.length]);
     }
   }
 
@@ -50,10 +50,10 @@ class Spinner extends Widget {
 
     const bg = document.createElementNS(ns, 'svg');
     bg.setAttribute('class', 'background');
-    bg.setAttribute('style', this.p('backgroundCSS'));
+    bg.setAttribute('style', this.get('backgroundCSS'));
     bg.setAttribute('viewBox', '0 0 100 100');
 
-    const options = this.p('options');
+    const options = this.get('options');
     for(const i in options) {
       const line = document.createElementNS(ns, 'line');
       line.setAttribute('x1', 50);
@@ -78,19 +78,19 @@ class Spinner extends Widget {
 
     this.spinner = document.createElement('div');
     this.spinner.setAttribute('class', 'spinner');
-    this.spinner.setAttribute('style', this.p('spinnerCSS'));
+    this.spinner.setAttribute('style', this.get('spinnerCSS'));
     this.domElement.appendChild(this.spinner);
 
     this.value = document.createElement('div');
     this.value.setAttribute('class', 'value');
-    this.value.setAttribute('style', this.p('valueCSS'));
-    this.value.textContent = this.p('value');
+    this.value.setAttribute('style', this.get('valueCSS'));
+    this.value.textContent = this.get('value');
     this.domElement.appendChild(this.value);
   }
 
   css() {
     let css = super.css();
-    css += `; font-size:${Math.min(this.p('width'), this.p('height')) * 0.4}px`;
+    css += `; font-size:${Math.min(this.get('width'), this.get('height')) * 0.4}px`;
     return css;
   }
 }

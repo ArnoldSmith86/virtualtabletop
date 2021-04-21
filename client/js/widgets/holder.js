@@ -26,114 +26,115 @@ class Holder extends Widget {
 
   children() {
     let children = this.childrenFilter(super.children(), true);
-    if(children.length == 1 && children[0].p('type') == 'pile')
+    if(children.length == 1 && children[0].get('type') == 'pile')
       children = this.childrenFilter(children[0].children(), false);
     return children;
   }
 
   childrenFilter(children, acceptPiles) {
     return children.filter(w=>{
-      if(acceptPiles && w.p('type') == 'pile')
+      if(acceptPiles && w.get('type') == 'pile')
         return true;
-      for(const p in this.p('dropTarget'))
-        if(w.p(p) != this.p('dropTarget')[p])
+      for(const p in this.get('dropTarget'))
+        if(w.get(p) != this.get('dropTarget')[p])
           return false;
       return true;
     });
   }
 
-  dispenseCard(card) {
+  async dispenseCard(card) {
     let toProcess = [ card ];
-    if(card.p('type') == 'pile')
+    if(card.get('type') == 'pile')
       toProcess = card.children();
     for(const w of toProcess)
-      if(!w.p('ignoreOnLeave'))
-        for(const property in this.p('onLeave'))
-          w.p(property, this.p('onLeave')[property]);
-    if(this.p('alignChildren') && (this.p('stackOffsetX') || this.p('stackOffsetY')))
-      this.receiveCard(null);
+      if(!w.get('ignoreOnLeave'))
+        for(const property in this.get('onLeave'))
+          await w.set(property, this.get('onLeave')[property]);
+    if(this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY')))
+      await this.receiveCard(null);
   }
 
-  onChildAdd(child, oldParentID) {
-    super.onChildAdd(child, oldParentID);
-    if(child.p('type') == 'deck')
+  async onChildAdd(child, oldParentID) {
+    await super.onChildAdd(child, oldParentID);
+    if(child.get('type') == 'deck')
       return;
 
-    if(this.p('childrenPerOwner'))
-      child.p('owner', playerName);
+    if(this.get('childrenPerOwner'))
+      await child.set('owner', playerName);
 
     if(this != child.currentParent) { // FIXME: this isn't exactly pretty
       let toProcess = [ child ];
-      if(child.p('type') == 'pile')
+      if(child.get('type') == 'pile')
         toProcess = child.children();
-      for(const property in this.p('onEnter'))
-        toProcess.forEach(w=>w.p(property, this.p('onEnter')[property]));
+      for(const property in this.get('onEnter'))
+        for(const w of toProcess)
+          await w.set(property, this.get('onEnter')[property]);
     }
   }
 
-  onChildAddAlign(child, oldParentID) {
-    if(child.p('type') == 'deck')
-      return super.onChildAddAlign(child, oldParentID);
+  async onChildAddAlign(child, oldParentID) {
+    if(child.get('type') == 'deck')
+      return await super.onChildAddAlign(child, oldParentID);
 
-    if(this.p('alignChildren') && (this.p('stackOffsetX') || this.p('stackOffsetY')) && child.p('type') == 'pile') {
+    if(this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY')) && child.get('type') == 'pile') {
       let i=1;
-      child.children().slice(0, -1).forEach(w=>{
-        w.p('x', w.p('x') + child.p('x') + i);
-        w.p('y', w.p('y') + child.p('y') + i);
-        w.p('parent', this.p('id'));
+      for(const w of child.children().slice(0, -1)) {
+        await w.set('x', w.get('x') + child.get('x') + i);
+        await w.set('y', w.get('y') + child.get('y') + i);
+        await w.set('parent', this.get('id'));
         ++i;
-      });
+      }
       return true;
     }
 
-    if(!this.p('alignChildren') || !this.p('stackOffsetX') && !this.p('stackOffsetY'))
-      super.onChildAddAlign(child, oldParentID);
+    if(!this.get('alignChildren') || !this.get('stackOffsetX') && !this.get('stackOffsetY'))
+      await super.onChildAddAlign(child, oldParentID);
     else if(child.movedByButton)
-      this.receiveCard(child, [ this.p('stackOffsetX')*999999, this.p('stackOffsetY')*999999 ]);
+      await this.receiveCard(child, [ this.get('stackOffsetX')*999999, this.get('stackOffsetY')*999999 ]);
     else
-      this.receiveCard(child, [ child.p('x') - this.absoluteCoord('x'), child.p('y') - this.absoluteCoord('y') ]);
+      await this.receiveCard(child, [ child.get('x') - this.absoluteCoord('x'), child.get('y') - this.absoluteCoord('y') ]);
   }
 
-  receiveCard(card, pos) {
+  async receiveCard(card, pos) {
     // get children sorted by X or Y position
     // replace coordinates of the received card to its previous coordinates so it gets dropped at the correct position
     const children = this.childrenOwned().sort((a, b)=>{
-      if(this.p('stackOffsetX'))
-        return this.p('stackOffsetX') * ((a == card ? pos[0] : a.p('x')) - (b == card ? pos[0] : b.p('x')));
-      return this.p('stackOffsetY') * ((a == card ? pos[1] : a.p('y')) - (b == card ? pos[1] : b.p('y')));
+      if(this.get('stackOffsetX'))
+        return this.get('stackOffsetX') * ((a == card ? pos[0] : a.get('x')) - (b == card ? pos[0] : b.get('x')));
+      return this.get('stackOffsetY') * ((a == card ? pos[1] : a.get('y')) - (b == card ? pos[1] : b.get('y')));
     });
-    this.rearrangeChildren(children, card);
+    await this.rearrangeChildren(children, card);
   }
 
-  rearrangeChildren(children, card) {
+  async rearrangeChildren(children, card) {
     let xOffset = 0;
     let yOffset = 0;
     let z = 1;
 
     for(const child of children) {
-      const newX = this.p('dropOffsetX') + xOffset;
-      const newY = this.p('dropOffsetY') + yOffset;
+      const newX = this.get('dropOffsetX') + xOffset;
+      const newY = this.get('dropOffsetY') + yOffset;
       const newZ = z++;
 
-      child.setPosition(newX, newY, newZ);
+      await child.setPosition(newX, newY, newZ);
 
-      xOffset += !child.p('overlap') && this.p('stackOffsetX') ? child.p('width' ) + 4 : this.p('stackOffsetX');
-      yOffset += !child.p('overlap') && this.p('stackOffsetY') ? child.p('height') + 4 : this.p('stackOffsetY');
+      xOffset += !child.get('overlap') && this.get('stackOffsetX') ? child.get('width' ) + 4 : this.get('stackOffsetX');
+      yOffset += !child.get('overlap') && this.get('stackOffsetY') ? child.get('height') + 4 : this.get('stackOffsetY');
     }
   }
 
   supportsPiles() {
-    return !this.p('alignChildren') || !this.p('stackOffsetX') && !this.p('stackOffsetY');
+    return !this.get('alignChildren') || !this.get('stackOffsetX') && !this.get('stackOffsetY');
   }
 
-  updateAfterShuffle() {
-    if(!this.p('stackOffsetX') && !this.p('stackOffsetY'))
+  async updateAfterShuffle() {
+    if(!this.get('stackOffsetX') && !this.get('stackOffsetY'))
       return;
 
     const children = this.children();
-    for(const owner of new Set(children.map(c=>c.p('owner')))) {
-      this.rearrangeChildren(children.filter(c=>!c.p('owner') || c.p('owner')===owner).sort((a, b)=>{
-        return a.p('z') - b.p('z');
+    for(const owner of new Set(children.map(c=>c.get('owner')))) {
+      await this.rearrangeChildren(children.filter(c=>!c.get('owner') || c.get('owner')===owner).sort((a, b)=>{
+        return a.get('z') - b.get('z');
       }));
     }
   }

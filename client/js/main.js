@@ -17,14 +17,14 @@ function getValidDropTargets(widget) {
   const targets = [];
   for(const [ _, t ] of dropTargets) {
     // if the holder has a drop limit and it's reached, skip the holder
-    if(t.p('dropLimit') > -1 && t.p('dropLimit') <= t.children().length)
+    if(t.get('dropLimit') > -1 && t.get('dropLimit') <= t.children().length)
       // don't skip it if the dragged widget is already its child
       if(t.children().indexOf(widget) == -1)
         continue;
 
     let isValid = true;
-    for(const key in t.p('dropTarget')) {
-      if(widget.p(key) != t.p('dropTarget')[key] && (key != 'type' || widget.p(key) != 'deck' || t.p('dropTarget')[key] != 'card')) {
+    for(const key in t.get('dropTarget')) {
+      if(widget.get(key) != t.get('dropTarget')[key] && (key != 'type' || widget.get(key) != 'deck' || t.get('dropTarget')[key] != 'card')) {
         isValid = false;
         break;
       }
@@ -37,8 +37,8 @@ function getValidDropTargets(widget) {
         break;
       }
 
-      if(tt.p('parent'))
-        tt = widgets.get(tt.p('parent'));
+      if(tt.get('parent'))
+        tt = widgets.get(tt.get('parent'));
       else
         break;
     }

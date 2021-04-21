@@ -81,21 +81,21 @@ const jeCommands = [
     id: 'je_addCard',
     name: 'add card',
     context: '^deck ↦ cardTypes ↦ .*? ↦',
-    call: function() {
+    call: async function() {
       const card = { deck:jeStateNow.id, type:'card', cardType:jeContext[2] };
       addWidgetLocal(card);
       if(jeStateNow.parent)
-        widgets.get(card.id).moveToHolder(widgets.get(jeStateNow.parent));
+        await widgets.get(card.id).moveToHolder(widgets.get(jeStateNow.parent));
     }
   },
   {
     id: 'je_removeCard',
     name: 'remove card',
     context: '^deck ↦ cardTypes ↦ .*? ↦',
-    show: _=>widgetFilter(w=>w.p('deck')==jeStateNow.id&&w.p('cardType')==jeContext[2]).length,
-    call: function() {
-      const card = widgetFilter(w=>w.p('deck')==jeStateNow.id&&w.p('cardType')==jeContext[2])[0];
-      removeWidgetLocal(card.p('id'));
+    show: _=>widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==jeContext[2]).length,
+    call: async function() {
+      const card = widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==jeContext[2])[0];
+      await removeWidgetLocal(card.get('id'));
     }
   },
   {
@@ -314,11 +314,11 @@ const jeCommands = [
     name: '❌ remove widget',
     forceKey: 'R',
     show: _=>jeStateNow,
-    call: function() {
+    call: async function() {
       const id = jeStateNow.id;
       jeStateNow = null;
       jeWidget = null;
-      removeWidgetLocal(id, true);
+      await removeWidgetLocal(id, true);
       jeDisplayTree();
     }
   },
@@ -554,17 +554,17 @@ function jeAddWidgetPropertyCommand(defaults, property) {
   });
 }
 
-function jeApplyChanges() {
+async function jeApplyChanges() {
   const currentStateRaw = $('#jeText').textContent;
   const completeState = JSON.parse(jePostProcessText(currentStateRaw));
   const currentState = JSON.stringify(jePostProcessObject(completeState));
   if(currentStateRaw != jeStateBeforeRaw) {
     jeDeltaIsOurs = true;
-    jeApplyExternalChanges(completeState);
+    await jeApplyExternalChanges(completeState);
     jeStateBeforeRaw = currentStateRaw;
     $('#editWidgetJSON').dataset.previousState = jeStateBefore;
     $('#editWidgetJSON').value = jeStateBefore = currentState;
-    onClickUpdateWidget(false);
+    await onClickUpdateWidget(false);
     jeDeltaIsOurs = false;
   }
 }
@@ -578,19 +578,19 @@ function jeApplyDelta(delta) {
     jeDisplayTree();
 }
 
-function jeApplyExternalChanges(state) {
+async function jeApplyExternalChanges(state) {
   const before = JSON.parse(jeStateBefore);
   if(state.type == 'card' && state.deck === before.deck) {
-    const cardDefaults = widgets.get(state.deck).p('cardDefaults');
+    const cardDefaults = widgets.get(state.deck).get('cardDefaults');
     if(JSON.stringify(state['cardDefaults (in deck)']) != JSON.stringify(cardDefaults))
-      widgets.get(state.deck).p('cardDefaults', state['cardDefaults (in deck)']);
+      await widgets.get(state.deck).set('cardDefaults', state['cardDefaults (in deck)']);
 
     if(state.cardType === before.cardType) {
-      const cardTypes = widgets.get(state.deck).p('cardTypes');
+      const cardTypes = widgets.get(state.deck).get('cardTypes');
       const cardType = cardTypes[state.cardType];
       if(JSON.stringify(state['cardType (in deck)']) != JSON.stringify(cardType)) {
         cardTypes[state.cardType] = state['cardType (in deck)'];
-        widgets.get(state.deck).p('cardTypes', { ...cardTypes });
+        await widgets.get(state.deck).set('cardTypes', { ...cardTypes });
       }
     }
   }
@@ -666,9 +666,9 @@ function jeDisplayTree() {
 
 function jeDisplayTreeAddWidgets(allWidgets, parent, indent) {
   let result = '';
-  for(const widget of allWidgets.filter(w=>w.p('parent')==parent)) {
-    result += `${indent}${widget.p('id')} (${widget.p('type') || 'basic'} - ${Math.floor(widget.p('x'))},${Math.floor(widget.p('y'))})\n`;
-    result += jeDisplayTreeAddWidgets(allWidgets, widget.p('id'), indent+'  ');
+  for(const widget of allWidgets.filter(w=>w.get('parent')==parent)) {
+    result += `${indent}${widget.get('id')} (${widget.get('type') || 'basic'} - ${Math.floor(widget.get('x'))},${Math.floor(widget.get('y'))})\n`;
+    result += jeDisplayTreeAddWidgets(allWidgets, widget.get('id'), indent+'  ');
     delete allWidgets[allWidgets.indexOf(widget)];
   }
   return result;
@@ -711,9 +711,9 @@ function jeGetContext() {
       jeJSONerror = `Parent ${jeStateNow.parent} does not exist.`;
     else if(jeStateNow.type == 'card' && (!jeStateNow.deck || !widgets.has(jeStateNow.deck)))
       jeJSONerror = `Deck ${jeStateNow.deck} does not exist.`;
-    else if(jeStateNow.type == 'card' && !widgets.get(jeStateNow.deck).p('cardTypes'))
+    else if(jeStateNow.type == 'card' && !widgets.get(jeStateNow.deck).get('cardTypes'))
       jeJSONerror = `Given widget ${jeStateNow.deck} is not a deck or doesn't define cardTypes.`;
-    else if(jeStateNow.type == 'card' && (!jeStateNow.cardType || !widgets.get(jeStateNow.deck).p('cardTypes')[jeStateNow.cardType]))
+    else if(jeStateNow.type == 'card' && (!jeStateNow.cardType || !widgets.get(jeStateNow.deck).get('cardTypes')[jeStateNow.cardType]))
       jeJSONerror = `Card type ${jeStateNow.cardType} does not exist in deck ${jeStateNow.deck}.`;
     else
       jeJSONerror = null;
@@ -810,8 +810,8 @@ function jePreProcessObject(o) {
 
   try {
     if(copy.type == 'card') {
-      copy['cardDefaults (in deck)'] = widgets.get(copy.deck).p('cardDefaults');
-      copy['cardType (in deck)'] = widgets.get(copy.deck).p('cardTypes')[copy.cardType];
+      copy['cardDefaults (in deck)'] = widgets.get(copy.deck).get('cardDefaults');
+      copy['cardType (in deck)'] = widgets.get(copy.deck).get('cardTypes')[copy.cardType];
     }
   } catch(e) {}
 
@@ -956,12 +956,12 @@ function jeShowCommands() {
   on('#jeCommands>button', 'click', clickButton);
 }
 
-const clickButton = function (event) {
+const clickButton = async function(event) {
   jeCommands.find(o => o.id == event.currentTarget.id).call();
   if (jeContext != 'macro') {
     jeGetContext();
     if(jeWidget && !jeJSONerror)
-      jeApplyChanges();
+      await jeApplyChanges();
     if (jeContext[0] == '###SELECT ME###')
       jeGetContext();
   }
@@ -975,14 +975,14 @@ window.addEventListener('mousemove', function(e) {
 
   const hoveredWidgets = [];
   for(const [ widgetID, widget ] of widgets)
-    if(jeState.mouseX >= widget.absoluteCoord('x') && jeState.mouseX <= widget.absoluteCoord('x')+widget.p('width'))
-      if(jeState.mouseY >= widget.absoluteCoord('y') && jeState.mouseY <= widget.absoluteCoord('y')+widget.p('height'))
+    if(jeState.mouseX >= widget.absoluteCoord('x') && jeState.mouseX <= widget.absoluteCoord('x')+widget.get('width'))
+      if(jeState.mouseY >= widget.absoluteCoord('y') && jeState.mouseY <= widget.absoluteCoord('y')+widget.get('height'))
         hoveredWidgets.push(widget);
 
   for(let i=1; i<=12; ++i) {
     if(hoveredWidgets[i-1]) {
       jeWidgetLayers[i] = hoveredWidgets[i-1];
-      $(`#jeWidgetLayer${i}`).textContent = `F${i}:\nid: ${hoveredWidgets[i-1].p('id')}\ntype: ${hoveredWidgets[i-1].p('type') || 'basic'}`;
+      $(`#jeWidgetLayer${i}`).textContent = `F${i}:\nid: ${hoveredWidgets[i-1].get('id')}\ntype: ${hoveredWidgets[i-1].get('type') || 'basic'}`;
     } else {
       delete jeWidgetLayers[i];
       $(`#jeWidgetLayer${i}`).textContent = '';
@@ -1067,7 +1067,7 @@ window.addEventListener('keydown', function(e) {
   if(functionKey && jeWidgetLayers[+functionKey[1]]) {
     e.preventDefault();
     if(jeState.ctrl) {
-      let id = jeWidgetLayers[+functionKey[1]].p('id');
+      let id = jeWidgetLayers[+functionKey[1]].get('id');
       if(jeContext[jeContext.length-1] == '"null"')
         id = `"${id}"`;
       jePasteText(id, true);
