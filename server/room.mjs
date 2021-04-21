@@ -28,30 +28,33 @@ export default class Room {
     this.sendMetaUpdate();
   }
 
-  async addState(player, id, type, src, addAsVariant) {
+  async addState(id, type, src, srcName, addAsVariant) {
     const initialAddAsVariant = addAsVariant;
     let stateID = addAsVariant || id;
     let variantID = id;
 
     let states = { room: [ this.state ] };
     let etag = null;
+
+    if(type == 'link')
+      src = src.toString('utf8');
+
     try {
       if(type == 'file')
-        states = await FileLoader.readStatesFromBuffer(Buffer.from(src.content.replace(/^data.*?,/, ''), 'base64'));
+        states = await FileLoader.readStatesFromBuffer(src);
       if(type == 'link')
         states = await FileLoader.readStatesFromLink(src);
     } catch(e) {
       Logging.log(`ERROR LOADING FILE: ${e.toString()}`);
       try {
-        fs.writeFileSync(path.resolve() + '/save/errors/' + Math.random().toString(36).substring(3, 7), Buffer.from(src.replace(/^data.*?,/, ''), 'base64'));
+        fs.writeFileSync(path.resolve() + '/save/errors/' + Math.random().toString(36).substring(3, 7), src);
       } catch(e) {}
-      player.send('error', e.toString());
-      return;
+      throw e;
     }
 
     for(const state in states) {
       for(const v in states[state]) {
-        let name = type == 'file' && src.name || 'Unnamed';
+        let name = type == 'file' && srcName || 'Unnamed';
         if(state.match(/\.pcio$/))
           name = state;
 

@@ -66,6 +66,15 @@ MinifyRoom().then(function(result) {
   app.use('/i', express.static(path.resolve() + '/assets'));
   app.use('/library', express.static(path.resolve() + '/library'));
 
+  app.post('/assetcheck', bodyParser.json({ limit: '10mb' }), function(req, res) {
+    const result = {};
+    if(Array.isArray(req.body))
+      for(const asset of req.body)
+        if(asset.match(/^[0-9_-]+$/))
+          result[asset] = fs.existsSync(savedir + '/assets/' + asset);
+    res.send(result);
+  });
+
   app.get('/assets/:name', function(req, res) {
     if(!req.params.name.match(/^[0-9_-]+$/))
       return;
@@ -117,7 +126,7 @@ MinifyRoom().then(function(result) {
     downloadState(res, req.params.room).catch(next);
   });
 
-  app.get('/state/:room', async function(req, res, next) {
+  app.get('/state/:room', function(req, res, next) {
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
       if(isLoaded) {
         res.setHeader('Access-Control-Allow-Origin', '*');
@@ -129,10 +138,7 @@ MinifyRoom().then(function(result) {
     }).catch(next);
   });
 
-  app.use(bodyParser.json({
-    limit: '10mb'
-  }));
-  app.put('/state/:room', function(req, res, next) {
+  app.put('/state/:room', bodyParser.json({ limit: '10mb' }), function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     if(typeof req.body == 'object') {
       ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
@@ -182,15 +188,21 @@ MinifyRoom().then(function(result) {
     }).catch(next);
   });
 
-  app.use(bodyParser.raw({
-    limit: '100mb'
-  }));
-
-  app.put('/asset', function(req, res) {
+  app.put('/asset', bodyParser.raw({ limit: '100mb' }), function(req, res) {
     const filename = `/assets/${CRC32.buf(req.body)}_${req.body.length}`;
-    if(!fs.existsSync(path.resolve() + '/save' + filename))
-      fs.writeFileSync(path.resolve() + '/save' + filename, req.body);
+    if(!fs.existsSync(savedir + filename))
+      fs.writeFileSync(savedir + filename, req.body);
     res.send(filename);
+  });
+
+  app.put('/addState/:room/:id/:type/:name/:addAsVariant?', bodyParser.raw({ limit: '500mb' }), async function(req, res, next) {
+    ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
+      if(isLoaded) {
+        activeRooms.get(req.params.room).addState(req.params.id, req.params.type, req.body, req.params.name, req.params.addAsVariant).then(function() {
+          res.send('OK');
+        }).catch(next);
+      }
+    }).catch(next);
   });
 
   app.use(Logging.userErrorHandler);

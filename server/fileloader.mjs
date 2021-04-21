@@ -87,7 +87,7 @@ async function readVariantsFromBuffer(buffer) {
     const variants = {};
     for(const filename in zip.files) {
 
-      if(filename.match(/^[^\/]+\.json$/) && zip.files[filename]._data) {
+      if(filename.match(/^[^\/]+\.json$/) && filename != 'asset-map.json' && zip.files[filename]._data) {
         if(zip.files[filename]._data.uncompressedSize >= 20971520)
           throw `${filename} is bigger than 20 MiB.`;
         const variant = JSON.parse(await zip.files[filename].async('string'));

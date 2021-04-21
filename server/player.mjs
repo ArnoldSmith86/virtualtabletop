@@ -20,8 +20,6 @@ export default class Player {
 
   messageReceived = async (func, args) => {
     try {
-      if(func == 'addState')
-        await this.room.addState(this, args.id, args.type, args.src, args.addAsVariant, args.name);
       if(func == 'confirm')
         this.waitingForStateConfirmation = false;
       if(func == 'delta')
