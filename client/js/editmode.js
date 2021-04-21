@@ -337,6 +337,12 @@ function populateAddWidgetOverlay() {
     y: 300
   });
 
+  addWidgetToAddWidgetOverlay(new Timer('add-timer'), {
+    type: 'timer',
+    x: 810,
+    y: 500
+  });
+
   y = 100;
   for(const sides of [ 2, 4, 6, 8, 10, 12, 20 ]) {
     addWidgetToAddWidgetOverlay(new Spinner('add-spinner'+sides), {
