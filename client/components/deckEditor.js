@@ -34,7 +34,7 @@ export const deckEditor = {
         onClickDecrementAllCardTypes()
       },
 
-      async addCardCallback(imagePath, fileName) {
+      async _addCardCallback(imagePath, fileName) {
         let value = {
           "image": imagePath,
         }
