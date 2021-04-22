@@ -960,8 +960,6 @@ export class Widget extends StateManaged {
     this.childArray = this.childArray.filter(c=>c!=child);
     this.childArray.push(child);
     await this.onChildAddAlign(child, oldParentID);
-    if(Array.isArray(this.get('enterRoutine')))
-      await this.evaluateRoutine('enterRoutine', { oldParentID }, { child: [ child ] });
   }
 
   async onChildAddAlign(child, oldParentID) {
@@ -982,20 +980,24 @@ export class Widget extends StateManaged {
   async onChildRemove(child) {
     this.childArray = this.childArray.filter(c=>c!=child);
     this.applyZ();
-    if(Array.isArray(this.get('leaveRoutine')))
-      await this.evaluateRoutine('leaveRoutine', {}, { child: [ child ] });
   }
 
   async onPropertyChange(property, oldValue, newValue) {
     if(property == 'parent') {
-      if(oldValue)
-        await widgets.get(oldValue).onChildRemove(this);
-      if(newValue)
-        await widgets.get(newValue).onChildAdd(this, oldValue);
+      if(oldValue) {
+        const oldParent = widgets.get(oldValue);
+        await oldParent.onChildRemove(this);
+        if(Array.isArray(oldParent.get('leaveRoutine')))
+          await oldParent.evaluateRoutine('leaveRoutine', {}, { child: [ this ] });
+      }
+      if(newValue) {
+        const newParent = widgets.get(newValue);
+        await newParent.onChildAdd(this, oldValue);
+        if(Array.isArray(newParent.get('enterRoutine')))
+          await newParent.evaluateRoutine('enterRoutine', { oldParentID: oldValue === undefined ? null : oldValue }, { child: [ this ] });
+      }
       await this.updatePiles();
     }
-    if(Array.isArray(this.get('changeRoutine')))
-      await this.evaluateRoutine('changeRoutine', { property, oldValue, newValue }, {});
   }
 
   async rotate(degrees, mode) {
