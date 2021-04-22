@@ -610,6 +610,10 @@ function jeSelectWidget(widget) {
   jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(widget.state), null, '  ')));
 }
 
+function html(string) {
+  return string.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
 function jeColorize() {
   const langObj = [
     [ /^( +")(.*)( \(in .*)(":.*)$/, null, 'extern', 'extern', null ],
@@ -623,13 +627,12 @@ function jeColorize() {
   ];
   let out = [];
   for(let line of $('#jeText').textContent.split('\n')) {
-    line = line.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     let foundMatch = false;
     for(const l of langObj) {
       const match = line.match(l[0]);
       if(match) {
         if(match[1] == '  "' && l[2] == 'key' && (l[4] == "null" && match[4] == "null" || String(jeWidget.defaults[match[2]]) == match[4])) {
-          out.push(`<i class=default>${line}</i>`);
+          out.push(`<i class=default>${html(line)}</i>`);
           foundMatch = true;
           break;
         }
@@ -640,14 +643,14 @@ function jeColorize() {
 
         for(let i=1; i<l.length; ++i)
           if(l[i] && match[i])
-            match[i] = `<i class=${c[i]}>${match[i]}</i>`;
+            match[i] = `<i class=${c[i]}>${html(match[i])}</i>`;
         out.push(match.slice(1).join(''))
         foundMatch = true;
         break;
       }
     }
     if(!foundMatch)
-      out.push(line);
+      out.push(html(line));
   }
   $('#jeTextHighlight').innerHTML = out.join('\n');
 }
