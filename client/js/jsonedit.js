@@ -364,7 +364,7 @@ const jeCommands = [
       operation.applyVariables.push({ parameter: jeContext[routineIndex+3], variable: '###SELECT ME###' });
       jeSetAndSelect('');
     }),
-    show: jeRoutineCall(routineIndex=>jeContext[routineIndex+3] != 'applyVariables')
+    show: jeRoutineCall(routineIndex=>jeContext[routineIndex+3] !== undefined && jeContext[routineIndex+3] != 'applyVariables')
   }
 ];
 
@@ -411,7 +411,7 @@ function jeAddRoutineOperationCommands(command, defaults) {
         jeInsert(jeContext.slice(1, routineIndex+2), property, defaults[property]);
       }),
       show: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
-        return operation[property] === undefined;
+        return operation && operation[property] === undefined;
       })
     });
   }
@@ -434,7 +434,8 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, properties: null });
   jeAddRoutineOperationCommands('DELETE', { collection: 'DEFAULT'});
   jeAddRoutineOperationCommands('FLIP', { count: 0, face: null, faceCycle: 'forward', holder: null, collection: 'DEFAULT' });
-  jeAddRoutineOperationCommands('GET', { variable: 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first' });
+  jeAddRoutineOperationCommands('GET', { variable: 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
+  jeAddRoutineOperationCommands('IF', { condition: null, operand1: null, relation: '==', operand2: null, thenRoutine: [], elseRoutine: [] });
   // INPUT is missing
   jeAddRoutineOperationCommands('LABEL', { value: 0, mode: 'set', label: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('MOVE', { count: 1, face: null, from: null, to: null });
@@ -456,7 +457,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^[a-z]+ ↦ type', [ null, 'button', 'card', 'deck', 'holder', 'label', 'spinner' ]);
   jeAddEnumCommands('^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ textAlign', [ 'left', 'center', 'right' ]);
   jeAddEnumCommands('^.*\\(FLIP\\) ↦ faceCycle', [ 'forward', 'backward', 'random' ]);
-  jeAddEnumCommands('^.*\\(GET\\) ↦ aggregation', [ 'first', 'sum' ]);
+  jeAddEnumCommands('^.*\\(GET\\) ↦ aggregation', [ 'first', 'last', 'array', 'average', 'median', 'min', 'max', 'sum' ]);
   jeAddEnumCommands('^.*\\(LABEL\\) ↦ mode', [ 'set', 'dec', 'inc', 'append' ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ mode', [ 'set', 'add' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ mode', [ 'set', 'add' ]);
