@@ -265,6 +265,45 @@ export class Widget extends StateManaged {
   }
 
   async evaluateRoutine(property, initialVariables, initialCollections, depth) {
+    function evaluateIdentifier(dollarMatch, stringMatch) {
+      return dollarMatch ? variables[stringMatch] : stringMatch;
+    }
+
+    const evaluateVariables = string=>{
+      const identifier = '[a-zA-Z0-9_-]+';
+      const variable   = `(\\$)?(${identifier})(?:\\.(\\$)?(${identifier}))?`;
+      const property   = `PROPERTY (\\$)?(${identifier})(?: OF (\\$)?(${identifier}))?`;
+      const match      = string.match(new RegExp(`^\\$\\{(?:${variable}|${property}|[^}]+)\\}` + '\x24'));
+
+      // not a match across the whole string; replace any variables inside it
+      if(!match)
+        return string.replace(/\$\{([^}]+)\}/g, evaluateVariables);
+
+      // variable
+      if(match[2]) {
+        const varContent = variables[evaluateIdentifier(match[1], match[2])];
+        if(varContent === undefined)
+          return varContent;
+
+        let indexName = evaluateIdentifier(match[3], match[4]);
+        return indexName !== undefined ? varContent[indexName] : varContent;
+      }
+
+      // property
+      if(match[6]) {
+        let widget = this;
+        if(match[8]) {
+          const id = evaluateIdentifier(match[7], match[8]);
+          if(!this.isValidID(id))
+            return null;
+          widget = widgets.get(id);
+        }
+        return widget.p(evaluateIdentifier(match[5], match[6]));
+      }
+
+      return null;
+    };
+
     function setDefaults(routine, defaults) {
       for(const key in defaults)
         if(routine[key] === undefined)
@@ -315,19 +354,23 @@ export class Widget extends StateManaged {
       }
 
       if(typeof a == 'string') {
-        const i = '[a-zA-Z0-9_-]+';
-        const s = `'(${i}|)'`;
-        const n = '(-?(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?)';
-        const v = `(\\((${i})\\)(?:\\.(${i})|\\[(${i})\\])|(${i})(?:\\.(${i})|\\[(${i})\\])?)`;
-        const p = `(null|true|false|${n}|${v}|${s})`;
-        const r = `^${v} = ${p}(?: (${i}|[=+*/%<!>&|-]{1,2}) ${p}(?: ${p})?)?`;
+        const identifier = '[a-zA-Z0-9_-]+';
+        const string     = `'(${identifier}|)'`;
+        const number     = '(-?(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?)';
+        const variable   = `(\\$\\{[^}]+\\})`;
+        const parameter  = `(null|true|false|${number}|${variable}|${string})`;
 
-        const match = a.match(new RegExp(r + '\x24')); // the minifier doesn't like a "$" here
+        const left       = `var (\\$)?(${identifier})(?:\\.(\\$)?(${identifier}))?`;
+        const operation  = `${identifier}|[=+*/%<!>&|-]{1,2}`;
+
+        const regex      = `^${left} = ${parameter}(?: (${operation}) ${parameter}(?: ${parameter})?)?( //.+)?`;
+
+        const match = a.match(new RegExp(regex + '\x24')); // the minifier doesn't like a "$" here
 
         if(match) {
           const getParam = (offset)=>{
-            if(typeof match[offset+9] == 'string') {
-              return match[offset+9];
+            if(typeof match[offset+3] == 'string') {
+              return match[offset+3];
             } else if(typeof match[offset+1] == 'string') {
               return +match[offset+1];
             } else if(match[offset] == 'null') {
@@ -338,44 +381,25 @@ export class Widget extends StateManaged {
               return false;
             } else if(match[offset] == 'false') {
               return false;
-            } else if(match[offset+6]) {
-              const variable = match[offset+6];
-              const index = match[offset+8] !== undefined ? variables[match[offset+8]] : match[offset+7];
-              if(index && typeof variables[variable] != 'object')
-                problems.push(`The variable ${variable} is not an object, so indexing it doesn't work.`)
-              else
-                return index ? variables[variable][index] : variables[variable];
-            } else if(match[offset+3]) {
-              if(this.isValidID(match[offset+3], problems)) {
-                const widget = widgets.get(match[offset+3]);
-                const property = match[offset+4] || variables[match[offset+5]];
-                return widget.p(property);
-              }
+            } else if(typeof match[offset+2] == 'string') {
+              return evaluateVariables(match[offset+2]);
             }
           };
           const getValue = function(input) {
-            if(match[18])
-              return compute(match[18], input, getParam(8), getParam(19), getParam(29));
+            if(match[9])
+              return compute(match[9], input, getParam(5), getParam(10), getParam(14));
             else
-              return getParam(8);
+              return getParam(5);
           };
 
-          if(match[2]) {
-            if(this.isValidID(match[2], problems)) {
-              const widget = widgets.get(match[2]);
-              const property = match[3] || variables[match[4]];
-              widget.p(property, getValue(widget.p(property)));
-            }
-          } else {
-            const variable = match[5];
-            const index = match[7] !== undefined ? variables[match[7]] : match[6];
-            if(index && typeof variables[variable] != 'object')
-              problems.push(`The variable ${variable} is not an object, so indexing it doesn't work.`)
-            else if(index)
-              variables[variable][index] = getValue(variables[variable][index]);
-            else
-              variables[variable] = getValue(variables[variable]);
-          }
+          const variable = match[1] !== undefined ? variables[match[2]] : match[2];
+          const index = match[3] !== undefined ? variables[match[4]] : match[4];
+          if(index && typeof variables[variable] != 'object')
+            problems.push(`The variable ${variable} is not an object, so indexing it doesn't work.`)
+          else if(index)
+            variables[variable][index] = getValue(variables[variable][index]);
+          else
+            variables[variable] = getValue(variables[variable]);
         }
       }
 
