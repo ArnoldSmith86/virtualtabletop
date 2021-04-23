@@ -264,7 +264,7 @@ export class Widget extends StateManaged {
       reject(result);
   }
 
-  async evaluateRoutine(property, initialVariables, initialCollections, depth) {
+  async evaluateRoutine(property, initialVariables, initialCollections, depth, byReference) {
     function setDefaults(routine, defaults) {
       for(const key in defaults)
         if(routine[key] === undefined)
@@ -290,18 +290,23 @@ export class Widget extends StateManaged {
     if(this.p('debug') && !depth)
       $('#debugButtonOutput').textContent = '';
 
-    const variables = Object.assign({}, initialVariables, {
-      playerName,
-      playerColor,
-      activePlayers,
-      thisID : this.p('id')
-    });
+    let variables = initialVariables;
+    let collections = initialCollections
+    if(!byReference) {
+      variables = Object.assign({}, initialVariables, {
+        playerName,
+        playerColor,
+        activePlayers,
+        thisID : this.p('id')
+      });
+      collections = Object.assign({}, initialCollections, {
+        thisButton : [this]
+      });
+    }
 
-    const collections = Object.assign({}, initialCollections, {
-      thisButton : [this]
-    });
+    const routine = this.p(property) !== undefined ? this.p(property) : property;
 
-    for(const original of this.p(property)) {
+    for(const original of routine) {
       const a = JSON.parse(JSON.stringify(original));
       var problems = [];
 
@@ -586,30 +591,65 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'GET') {
-        setDefaults(a, { variable: a.property || 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first' });
+        setDefaults(a, { variable: a.property || 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
         if(isValidCollection(a.collection)) {
-          switch(a.aggregation) {
-          case 'first':
-            if(collections[a.collection].length)
-              if(collections[a.collection][0].p(a.property) !== undefined) {
-                // always get a deep copy and not object references
-                variables[a.variable] = JSON.parse(JSON.stringify(collections[a.collection][0].p(a.property)));
-              } else {
-                variables[a.variable] = null;
-                problems.push(`Property ${a.property} missing from first item of collection, setting ${a.variable} to null.`);
-              }
-            else
-              problems.push(`Collection ${a.collection} is empty.`);
-            break;
-          case 'sum':
+          let c = collections[a.collection];
+          if (a.skipMissing)
+            c = c.filter(w=>w.p(a.property) !== null && w.p(a.property) !== undefined);
+          c = JSON.parse(JSON.stringify(c.map(w=>w.p(a.property))));
+          if(c.length) {
+            switch(a.aggregation) {
+            case 'first':
+            case 'last':
+              const index = (a.aggregation == 'last') ? c.length -1 : 0;
+              variables[a.variable] = (c[index] !== undefined) ? c[index] : null;
+              break;
+            case 'array':
+              variables[a.variable] = c;
+              break;
+            case 'average':
+              variables[a.variable] = c.map(w=>+w).reduce((a, b) => a + b) / c.length;
+              break;
+            case 'median':
+              const mid = Math.floor(c.length / 2);
+              const nums = [...c].map(w=>+w).sort((a, b) => a - b);
+              variables[a.variable] = c.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
+              break;
+            case 'min':
+            case 'max':
+              variables[a.variable] = Math[a.aggregation](...c);
+              break;
+            case 'sum':
+              variables[a.variable] = c.map(w=>+w).reduce((a, b) => a + b);
+              break;
+            default:
+              problems.push(`Aggregation ${a.aggregation} is unsupported.`);
+            }
+          } else if(a.aggregation == 'sum') {
             variables[a.variable] = 0;
-            for(const widget of collections[a.collection])
-              variables[a.variable] += Number(widget.p(a.property) || 0);
-            break;
-          default:
-            problems.push(`Aggregation ${a.aggregation} is unsupported.`);
+          } else if(a.aggregation == 'array') {
+            variables[a.variable] = [];
+          } else {
+            problems.push(`Collection ${a.collection} is empty.`);
           }
         }
+      }
+      if(a.func == 'IF') {
+        setDefaults(a, { relation: '==' });
+        if (['==', '!=', '<', '<=', '>=', '>'].indexOf(a.relation) < 0) {
+          problems.push(`Relation ${a.relation} is unsupported. Using '==' relation.`);
+          a.relation = '==';
+        }
+        if(a.condition !== undefined || a.operand1 !== undefined) {
+          if (a.condition === undefined)
+            a.condition = compute(a.relation, null, a.operand1, a.operand2);
+          const branch = a.condition ? 'thenRoutine' : 'elseRoutine';
+          if (Array.isArray(a[branch])) {
+            $('#debugButtonOutput').textContent += `\n\n\nIF ${branch}\n`;
+            await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true);
+          }
+        } else
+          problems.push(`IF operation is missing the 'condition' or 'operand1' parameter.`);
       }
 
       if(a.func == 'INPUT') {
@@ -711,14 +751,14 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'SELECT') {
-        setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'add', source: 'all' });
+        setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all' });
         if(a.source == 'all' || isValidCollection(a.source)) {
           if([ 'add', 'set' ].indexOf(a.mode) == -1)
             problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
           let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(function(w) {
             if(w.isBeingRemoved)
               return false;
-            if(a.type != 'all' && w.p('type') != a.type)
+            if(a.type != 'all' && (w.p('type') != a.type && (a.type != 'card' || w.p('type') != 'pile')))
               return false;
             if(a.relation === '<')
               return w.p(a.property) < a.value;
@@ -738,8 +778,10 @@ export class Widget extends StateManaged {
           }).slice(0, a.max).concat(a.mode == 'add' ? collections[a.collection] || [] : []);
 
           // resolve piles
-          c.filter(w=>w.p('type')=='pile').forEach(w=>c.push(...w.children()));
-          c = c.filter(w=>w.p('type')!='pile');
+          if(a.type != 'pile') {
+            c.filter(w=>w.p('type')=='pile').forEach(w=>c.push(...w.children()));
+            c = c.filter(w=>w.p('type')!='pile');
+          }
           collections[a.collection] = [...new Set(c)];
 
           if (a.sortBy)

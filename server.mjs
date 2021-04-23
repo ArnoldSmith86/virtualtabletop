@@ -51,8 +51,13 @@ async function downloadState(res, roomID, stateID, variantID) {
 
 function autosaveRooms() {
   setInterval(function() {
-    for(const [ _, room ] of activeRooms)
-      room.writeToFilesystem();
+    for(const [ _, room ] of activeRooms) {
+      try {
+        room.writeToFilesystem();
+      } catch(e) {
+        Logging.handleGenericException('autosaveRooms', e);
+      }
+    }
   }, 60*1000);
 }
 
@@ -67,7 +72,7 @@ MinifyRoom().then(function(result) {
     fs.readFile(savedir + '/assets/' + req.params.name, function(err, content) {
       if(!content) {
         res.sendStatus(404);
-        console.log(new Date().toISOString(), 'WARNING: Could not load asset ' + req.params.name);
+        Logging.log(`WARNING: Could not load asset ${req.params.name}`);
         return;
       }
 
@@ -82,7 +87,7 @@ MinifyRoom().then(function(result) {
       else if(content[0] == 0x52)
         res.setHeader('Content-Type', 'image/webp');
       else
-        console.log(new Date().toISOString(), 'WARNING: Unknown file type of asset ' + req.params.name);
+        Logging.log(`WARNING: Unknown file type of asset ${req.params.name}`);
 
       res.send(content);
     });
@@ -115,6 +120,7 @@ MinifyRoom().then(function(result) {
   app.get('/state/:room', async function(req, res, next) {
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
       if(isLoaded) {
+        res.setHeader('Access-Control-Allow-Origin', '*');
         res.setHeader('Content-Type', 'application/json');
         const state = {...activeRooms.get(req.params.room).state};
         delete state._meta;
@@ -127,6 +133,7 @@ MinifyRoom().then(function(result) {
     limit: '10mb'
   }));
   app.put('/state/:room', function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
     if(typeof req.body == 'object') {
       ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
         if(isLoaded) {
@@ -191,7 +198,7 @@ MinifyRoom().then(function(result) {
   app.use(Logging.errorHandler);
 
   server.listen(process.env.PORT || 8272, function() {
-    console.log(new Date().toISOString(), 'Listening on ' + server.address().port);
+    Logging.log(`Listening on ${server.address().port}`);
   });
 });
 

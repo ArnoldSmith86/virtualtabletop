@@ -3,7 +3,8 @@ import path from 'path';
 
 import JSZip from 'jszip';
 import FileLoader from './fileloader.mjs';
-import Logging    from './logging.mjs';
+import FileUpdater from './fileupdater.mjs';
+import Logging from './logging.mjs';
 
 export default class Room {
   players = [];
@@ -16,7 +17,7 @@ export default class Room {
   }
 
   addPlayer(player) {
-    console.log(new Date().toISOString(), `adding player ${player.name} to room ${this.id}`);
+    Logging.log(`adding player ${player.name} to room ${this.id}`);
     this.players.push(player);
 
     if(!this.state._meta.players[player.name])
@@ -40,7 +41,7 @@ export default class Room {
       if(type == 'link')
         states = await FileLoader.readStatesFromLink(src);
     } catch(e) {
-      console.log(new Date().toISOString(), 'ERROR LOADING FILE: ' + e);
+      Logging.log(`ERROR LOADING FILE: ${e.toString()}`);
       try {
         fs.writeFileSync(path.resolve() + '/save/errors/' + Math.random().toString(36).substring(3, 7), Buffer.from(src.replace(/^data.*?,/, ''), 'base64'));
       } catch(e) {}
@@ -201,29 +202,40 @@ export default class Room {
     return JSON.stringify(state).match(/\/assets\/-?[0-9]+_[0-9]+/g) || [];
   }
 
-  async load(fileOrLink) {
+  async load(fileOrLink, player) {
+    const emptyState = {
+      _meta: {
+        version: 1,
+        players: {},
+        states: {}
+      }
+    };
+
     if(!fileOrLink && !fs.existsSync(this.roomFilename())) {
       Logging.log(`creating room ${this.id}`);
-      this.state = {
-        _meta: {
-          version: 1,
-          players: {},
-          states: {}
-        }
-      };
+      this.state = FileUpdater(emptyState);
     } else if(!fileOrLink) {
       Logging.log(`loading room ${this.id}`);
-      this.state = JSON.parse(fs.readFileSync(this.roomFilename()));
+      this.state = FileUpdater(JSON.parse(fs.readFileSync(this.roomFilename())));
       this.broadcast('state', this.state);
-    } else if(fileOrLink.match(/^http/)) {
-      Logging.log(`loading room ${this.id} from ${fileOrLink}`);
-      this.setState(await FileLoader.readVariantFromLink(fileOrLink));
     } else {
-      Logging.log(`loading room ${this.id} from ${fileOrLink}`);
-      this.setState(JSON.parse(fs.readFileSync(fileOrLink)));
+      let newState = emptyState;
+      if(fileOrLink.match(/^http/))
+        newState = await FileLoader.readVariantFromLink(fileOrLink);
+      else
+        newState = JSON.parse(fs.readFileSync(fileOrLink));
+      if(newState) {
+        Logging.log(`loading room ${this.id} from ${fileOrLink}`);
+        this.setState(newState);
+      } else {
+        Logging.log(`loading room ${this.id} from ${fileOrLink} FAILED`);
+        this.setState(emptyState);
+        if(player)
+          player.send('error', 'Error loading state.');
+      }
     }
 
-    if(!this.state._meta || this.state._meta.version !== 1)
+    if(!this.state._meta || typeof this.state._meta.version !== 'number')
       throw Error('Room state has invalid meta information.');
   }
 
@@ -231,9 +243,9 @@ export default class Room {
     const variantInfo = this.state._meta.states[stateID].variants[variantID];
 
     if(variantInfo.link)
-      await this.load(variantInfo.link);
+      await this.load(variantInfo.link, player);
     else
-      await this.load(this.variantFilename(stateID, variantID));
+      await this.load(this.variantFilename(stateID, variantID), player);
   }
 
   mouseMove(player, coords) {
@@ -261,7 +273,7 @@ export default class Room {
   }
 
   receiveInvalidDelta(player, delta, widgetID) {
-    console.log(new Date().toISOString(), `WARNING: received conflicting delta data for widget ${widgetID} from player ${player.name} in room ${this.id} - sending game state at ${this.deltaID}`);
+    Logging.log(`WARNING: received conflicting delta data for widget ${widgetID} from player ${player.name} in room ${this.id} - sending game state at ${this.deltaID}`);
     this.state._meta.deltaID = ++this.deltaID;
     player.send('state', this.state);
   }
@@ -272,7 +284,7 @@ export default class Room {
   }
 
   removePlayer(player) {
-    console.log(new Date().toISOString(), `removing player ${player.name} from room ${this.id}`);
+    Logging.log(`removing player ${player.name} from room ${this.id}`);
     this.players = this.players.filter(e => e != player);
     if(this.players.length == 0) {
       this.unload();
@@ -309,6 +321,8 @@ export default class Room {
   setState(state) {
     const meta = this.state._meta;
     this.state = state;
+    if(this.state._meta)
+      this.state = FileUpdater(this.state);
     this.state._meta = meta;
     this.broadcast('state', state);
   }

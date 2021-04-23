@@ -45,6 +45,7 @@ export function startWebSocket() {
       if(serverStart != null && serverStart != args) {
         console.log('Server restart detected. Reloading...')
         setTimeout(location.reload, Math.random()*10000);
+        showOverlay('connectionLostOverlay', true);
         preventReconnect();
         connection.close();
       }
@@ -69,6 +70,7 @@ export function toServer(func, args) {
 
 function preventReconnect() {
   lastTimeout = null;
+  userNavigatedAway = true;
 }
 
 function log(str) {
