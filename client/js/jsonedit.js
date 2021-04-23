@@ -352,19 +352,6 @@ const jeCommands = [
     call: function() {
       jeSelectWidget(widgets.get(jeStateNow.parent));
     }
-  },
-  {
-    id: 'je_applyVariables',
-    name: jeRoutineCall(routineIndex=>`change ${jeContext[routineIndex+3]} to applyVariables`),
-    context: '^.*\\) ↦ [a-zA-Z]+',
-    call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
-      delete operation[jeContext[routineIndex+3]];
-      if(!operation.applyVariables)
-        operation.applyVariables = [];
-      operation.applyVariables.push({ parameter: jeContext[routineIndex+3], variable: '###SELECT ME###' });
-      jeSetAndSelect('');
-    }),
-    show: jeRoutineCall(routineIndex=>jeContext[routineIndex+3] !== undefined && jeContext[routineIndex+3] != 'applyVariables')
   }
 ];
 
@@ -429,7 +416,6 @@ function jeAddCommands() {
 
   jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', 'return': true, arguments: {}, variable: 'result' });
   jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 });
-  jeAddRoutineOperationCommands('COMPUTE', { operation: '+', operand1: 1, operand2: 1, operand3: 1, variable: 'COMPUTE' });
   jeAddRoutineOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT' });
   jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, properties: null });
   jeAddRoutineOperationCommands('DELETE', { collection: 'DEFAULT'});
@@ -623,7 +609,7 @@ function jeColorize() {
     [ /^( +")(.*)(": )(null|true|false)(,?)$/, null, 'key', null, 'null', null ],
     [ /^( +")(.*)(":.*)$/, null, 'key', null ],
     [ /^(Room)$/, 'extern' ],
-    [ /^( +"var )(.*)( = )(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?(')?([a-zA-Z_-]*)?(')?( (?:[a-zA-Z_-]+|[=+*/%<!>&|-]{1,2}) )?(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?(')?([a-zA-Z_-]+)?(')?( )?(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?(')?([a-zA-Z_-]+)?(')?(.*)(",?)$/, 'default', 'custom', null, 'number', 'null', 'extern', null, 'string', null, null, 'number', 'null', 'extern', null, 'string', null, null, 'number', 'null', 'extern', null, 'string', null, null, 'default' ],
+    [ /^( +"var )(.*)( = )(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?(')?((?<=')[a-zA-Z0-9,.() _-]*(?='))?(')?( (?:[a-zA-Z_-]+|[=+*/%<!>&|-]{1,2}) )?(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?(')?((?<=')[a-zA-Z0-9,.() _-]*(?='))?(')?( )?(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?(')?((?<=')[a-zA-Z0-9,.() _-]*(?='))?(')?(.*)(",?)$/, 'default', 'custom', null, 'number', 'null', 'variable', null, 'string', null, null, 'number', 'null', 'variable', null, 'string', null, null, 'number', 'null', 'variable', null, 'string', null, null, 'default' ],
     [ /^( +)(.*)( \()([a-z]+)( - )([0-9-]+)(,)([0-9-]+)(.*)$/, null, 'key', null, 'string', null, 'number', null, 'number', null ]
   ];
   let out = [];
@@ -645,8 +631,16 @@ function jeColorize() {
         for(let i=1; i<l.length; ++i)
           if(l[i] && match[i])
             match[i] = `<i class=${c[i]}>${html(match[i])}</i>`;
-        out.push(match.slice(1).join(''))
+
+        let newLine = match.slice(1).join('');
+
+        if(l.indexOf('variable') == -1) {
+          newLine = newLine.replace(/\$\{[^}]+\}/g, m=>`<i class=variable>${m}</i>`);
+        }
+
+        out.push(newLine);
         foundMatch = true;
+
         break;
       }
     }

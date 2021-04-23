@@ -125,29 +125,6 @@ export class Widget extends StateManaged {
     removeFromDOM(this.domElement);
   }
 
-  applyVariables(field, variables, problems) {
-    if(Array.isArray(field.applyVariables)) {
-      for(const v of field.applyVariables) {
-        if(v.parameter && v.variable) {
-          field[v.parameter] = (v.index === undefined) ? variables[v.variable] : variables[v.variable][v.index];
-        } else if(v.parameter && v.template) {
-          field[v.parameter] = v.template.replace(/\{([^}]+)\}/g, function(i, key) {
-            return (variables[key] === undefined) ? "" : variables[key];
-          });
-        } else if(v.parameter && v.property) {
-          let w = this;
-          if (v.widget)
-            w = this.isValidID(v.widget, problems) ? widgets.get(v.widget) : this;
-          field[v.parameter] = (w.p(v.property) === undefined) ? null : w.p(v.property);
-        } else {
-          problems.push('Entry in parameter applyVariables does not contain "parameter" together with "variable", "property", or "template".');
-        }
-      }
-    } else {
-      problems.push('Parameter applyVariables is not an array.');
-    }
-  }
-
   applyZ(force) {
     if(this.p('inheritChildZ') || force) {
       this.domElement.style.zIndex = this.calculateZ();
@@ -273,7 +250,7 @@ export class Widget extends StateManaged {
       const identifier = '[a-zA-Z0-9_-]+';
       const variable   = `(\\$)?(${identifier})(?:\\.(\\$)?(${identifier}))?`;
       const property   = `PROPERTY (\\$)?(${identifier})(?: OF (\\$)?(${identifier}))?`;
-      const match      = string.match(new RegExp(`^\\$\\{(?:${variable}|${property}|[^}]+)\\}` + '\x24'));
+      const match      = string.match(new RegExp(`^\\$\\{(?:${variable}|${property}|[^}]+)(?: == ([1-9][0-9]*|0))?\\}` + '\x24'));
 
       // not a match across the whole string; replace any variables inside it
       if(!match)
@@ -283,10 +260,11 @@ export class Widget extends StateManaged {
       if(match[2]) {
         const varContent = variables[evaluateIdentifier(match[1], match[2])];
         if(varContent === undefined)
-          return varContent;
+          return match[9] ? false : undefined;
 
         let indexName = evaluateIdentifier(match[3], match[4]);
-        return indexName !== undefined ? varContent[indexName] : varContent;
+        const value = indexName !== undefined ? varContent[indexName] : varContent;
+        return match[9] ? value == +match[9] : value;
       }
 
       // property
@@ -298,10 +276,25 @@ export class Widget extends StateManaged {
             return null;
           widget = widgets.get(id);
         }
-        return widget.p(evaluateIdentifier(match[5], match[6]));
+        let value = widget.p(evaluateIdentifier(match[5], match[6]));
+        value = value !== undefined ? value : null;
+        return match[9] ? value == +match[9] : value;
       }
 
       return null;
+    };
+
+    const evaluateVariablesRecursively = obj=>{
+      const newObject = Array.isArray(obj) ? [] : {};
+      for(const i in obj) {
+        let newValue = obj[i];
+        if(typeof obj[i] == 'string')
+          newValue = evaluateVariables(obj[i]);
+        else if(typeof obj[i] == 'object' && obj[i] !== null && !i.match(/Routine$/))
+          newValue = evaluateVariablesRecursively(obj[i]);
+        newObject[String(evaluateVariables(i))] = newValue;
+      }
+      return newObject;
     };
 
     function setDefaults(routine, defaults) {
@@ -346,12 +339,12 @@ export class Widget extends StateManaged {
     const routine = this.p(property) !== undefined ? this.p(property) : property;
 
     for(const original of routine) {
-      const a = JSON.parse(JSON.stringify(original));
+      let a = JSON.parse(JSON.stringify(original));
+      if(typeof a == 'object')
+        a = evaluateVariablesRecursively(a);
       var problems = [];
 
       if(this.p('debug')) console.log(`${this.id}: ${JSON.stringify(original)}`);
-
-      if(a.applyVariables) this.applyVariables(a, variables, problems);
 
       if(a.skip) {
         $('#debugButtonOutput').textContent += '\n\n\nOPERATION SKIPPED: \n' + JSON.stringify(a, null, '  ');
@@ -360,7 +353,7 @@ export class Widget extends StateManaged {
 
       if(typeof a == 'string') {
         const identifier = '[a-zA-Z0-9_-]+';
-        const string     = `'(${identifier}|)'`;
+        const string     = `'([a-zA-Z0-9,.() _-]*)'`;
         const number     = '(-?(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?)';
         const variable   = `(\\$\\{[^}]+\\})`;
         const parameter  = `(null|true|false|${number}|${variable}|${string})`;
@@ -368,7 +361,7 @@ export class Widget extends StateManaged {
         const left       = `var (\\$)?(${identifier})(?:\\.(\\$)?(${identifier}))?`;
         const operation  = `${identifier}|[=+*/%<!>&|-]{1,2}`;
 
-        const regex      = `^${left} = ${parameter}(?: (${operation}) ${parameter}(?: ${parameter})?)?( //.+)?`;
+        const regex      = `^${left} = ${parameter}(?: (${operation})(?: ${parameter})?(?: ${parameter})?)?( //.+)?`;
 
         const match = a.match(new RegExp(regex + '\x24')); // the minifier doesn't like a "$" here
 
@@ -387,12 +380,16 @@ export class Widget extends StateManaged {
             } else if(match[offset] == 'false') {
               return false;
             } else if(typeof match[offset+2] == 'string') {
-              return evaluateVariables(match[offset+2]);
+              const result = evaluateVariables(match[offset+2]);
+              return result !== undefined ? result : 1;
+            } else {
+              return 1;
             }
           };
           const getValue = function(input) {
+            const toNum = s=>typeof s == 'string' && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s;
             if(match[9])
-              return compute(match[9], input, getParam(5), getParam(10), getParam(14));
+              return compute(match[9], input, toNum(getParam(5)), toNum(getParam(10)), toNum(getParam(14)));
             else
               return getParam(5);
           };
@@ -444,10 +441,6 @@ export class Widget extends StateManaged {
 
       if(a.func == 'CLONE') {
         setDefaults(a, { source: 'DEFAULT', count: 1, xOffset: 0, yOffset: 0, properties: {}, collection: 'DEFAULT' });
-        if(a.properties.applyVariables) {
-          this.applyVariables(a.properties, variables, problems);
-          delete a.properties["applyVariables"];
-        };
         if(isValidCollection(a.source)) {
           var c=[];
           for(const w of collections[a.source]) {
@@ -636,13 +629,6 @@ export class Widget extends StateManaged {
           problems.push(`The operation evaluated to null, Infinity or NaN. Setting the variable to 0.`);
         }
         return v;
-      }
-
-      if(a.func == 'COMPUTE') {
-        setDefaults(a, { operation: '+', operand1: 1, operand2: 1, operand3: 1, variable: 'COMPUTE' });
-        const toNum = s=>typeof s == 'string' && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s;
-        const v = a.variable;
-        variables[v] = compute(a.operation, variables[v], toNum(a.operand1), toNum(a.operand2), toNum(a.operand3));
       }
 
       if(a.func == 'COUNT') {
@@ -1138,8 +1124,6 @@ export class Widget extends StateManaged {
       for(const field of o.fields) {
 
         const dom = document.createElement('div');
-
-        if(field.applyVariables) this.applyVariables(field, variables, problems);
 
         if(field.type == 'checkbox') {
           const input = document.createElement('input');

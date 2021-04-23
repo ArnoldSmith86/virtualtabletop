@@ -28,7 +28,7 @@ class Deck extends Widget {
   }
 
   cardPropertyGet(cardType, property) {
-    if(this.p('cardTypes')[cardType][property] !== undefined)
+    if(this.p('cardTypes')[cardType] && this.p('cardTypes')[cardType][property] !== undefined)
       return this.p('cardTypes')[cardType][property];
 
     return this.p('cardDefaults')[property];

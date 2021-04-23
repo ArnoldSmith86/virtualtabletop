@@ -23,8 +23,8 @@
   white-space: pre-wrap;
   overflow-y: auto;
   height: 100%;
-  width: 350px;
-  right: 350px;
+  width: 600px;
+  right: 250px;
   overflow-wrap: break-word;
 }
 
@@ -50,12 +50,13 @@ i.string  { color: #7ed07e; }
 i.number  { color: #dda0dd; }
 i.null    { color: blue;    }
 i.default { color: #606060; }
+i.variable{ color: #40e0d0; }
 i.error   { color: red; font-weight: bold; }
 
 #jeCommands {
   white-space: pre-wrap;
   height: 100%;
-  width: 350px;
+  width: 250px;
   right: 0;
   overflow: auto;
 }
