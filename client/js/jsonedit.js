@@ -570,10 +570,9 @@ async function jeApplyChanges() {
 }
 
 function jeApplyDelta(delta) {
-  if(!jeDeltaIsOurs && jeStateNow && jeStateNow.id && delta.s[jeStateNow.id] !== undefined)
-    jeSelectWidget(widgets.get(jeStateNow.id));
-  if(!jeDeltaIsOurs && jeStateNow && jeStateNow.deck && delta.s[jeStateNow.deck] !== undefined)
-    jeSelectWidget(widgets.get(jeStateNow.id));
+  for(const field of [ 'id', 'deck' ])
+    if(!jeDeltaIsOurs && jeStateNow && jeStateNow[field] && delta.s[jeStateNow[field]] !== undefined)
+      jeSelectWidget(widgets.get(jeStateNow.id), document.activeElement !== $('#jeText'));
   if(jeMode == 'tree')
     jeDisplayTree();
 }
@@ -604,11 +603,11 @@ async function jeClick(widget) {
   }
 }
 
-function jeSelectWidget(widget) {
+function jeSelectWidget(widget, dontFocus) {
   jeMode = 'widget';
   jeWidget = widget;
   jeStateNow = widget.state;
-  jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(widget.state), null, '  ')));
+  jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(widget.state), null, '  ')), dontFocus);
 }
 
 function jeColorize() {
@@ -854,13 +853,14 @@ function jeSelect(start, end) {
   }
 }
 
-function jeSet(text) {
+function jeSet(text, dontFocus) {
   try {
     $('#jeText').textContent = jePreProcessText(JSON.stringify(jePreProcessObject(JSON.parse(text)), null, '  '));
   } catch(e) {
     $('#jeText').textContent = text;
   }
-  $('#jeText').focus();
+  if(!dontFocus)
+    $('#jeText').focus();
   jeColorize();
 }
 
