@@ -32,7 +32,10 @@ export class StateManaged {
   }
 
   getDefaultValue(key) {
-    return this.defaults[key];
+    if(this.defaults.hasOwnProperty(key))
+      return this.defaults[key]
+    else
+      return null;
   }
 
   p(property, value) {
