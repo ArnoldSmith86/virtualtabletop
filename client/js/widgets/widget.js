@@ -242,15 +242,24 @@ export class Widget extends StateManaged {
   }
 
   async evaluateRoutine(property, initialVariables, initialCollections, depth, byReference) {
+    function unescape(str) {
+      if(typeof str != 'string')
+        return str;
+      return str.replace(/\\u([0-9a-fA-F]{4})/g, function(m, c) {
+        return String.fromCharCode(parseInt(c, 16));
+      });
+    }
+
     function evaluateIdentifier(dollarMatch, stringMatch) {
-      return dollarMatch ? variables[stringMatch] : stringMatch;
+      return unescape(dollarMatch ? variables[stringMatch] : stringMatch);
     }
 
     const evaluateVariables = string=>{
-      const identifier = '[a-zA-Z0-9_-]+';
-      const variable   = `(\\$)?(${identifier})(?:\\.(\\$)?(${identifier}))?`;
-      const property   = `PROPERTY (\\$)?(${identifier})(?: OF (\\$)?(${identifier}))?`;
-      const match      = string.match(new RegExp(`^\\$\\{(?:${variable}|${property}|[^}]+)(?: == ([1-9][0-9]*|0))?\\}` + '\x24'));
+      const identifierWithSpace = '(?:[a-zA-Z0-9 _-]|\\\\u[0-9a-fA-F]{4})+';
+      const identifier          = identifierWithSpace.replace(/ /, '');
+      const variable            = `(\\$)?(${identifier})(?:\\.(\\$)?(${identifier}))?`;
+      const property            = `PROPERTY (\\$)?(${identifierWithSpace}?)(?: OF (\\$)?(${identifierWithSpace}))?`;
+      const match               = string.match(new RegExp(`^\\$\\{(?:${variable}|${property}|[^}]+)(?: == ([1-9][0-9]*|0))?\\}` + '\x24'));
 
       // not a match across the whole string; replace any variables inside it
       if(!match)
@@ -352,8 +361,8 @@ export class Widget extends StateManaged {
       }
 
       if(typeof a == 'string') {
-        const identifier = '[a-zA-Z0-9_-]+';
-        const string     = `'([a-zA-Z0-9,.() _-]*)'`;
+        const identifier = '(?:[a-zA-Z0-9_-]|\\\\u[0-9a-fA-F]{4})+';
+        const string     = `'((?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*)'`;
         const number     = '(-?(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?)';
         const variable   = `(\\$\\{[^}]+\\})`;
         const parameter  = `(null|true|false|${number}|${variable}|${string})`;
@@ -368,7 +377,7 @@ export class Widget extends StateManaged {
         if(match) {
           const getParam = (offset)=>{
             if(typeof match[offset+3] == 'string') {
-              return match[offset+3];
+              return unescape(match[offset+3]);
             } else if(typeof match[offset+1] == 'string') {
               return +match[offset+1];
             } else if(match[offset] == 'null') {
@@ -394,8 +403,8 @@ export class Widget extends StateManaged {
               return getParam(5);
           };
 
-          const variable = match[1] !== undefined ? variables[match[2]] : match[2];
-          const index = match[3] !== undefined ? variables[match[4]] : match[4];
+          const variable = match[1] !== undefined ? variables[unescape(match[2])] : unescape(match[2]);
+          const index = match[3] !== undefined ? variables[unescape(match[4])] : unescape(match[4]);
           if(index && typeof variables[variable] != 'object')
             problems.push(`The variable ${variable} is not an object, so indexing it doesn't work.`)
           else if(index)

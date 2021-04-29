@@ -66,16 +66,27 @@ function v3RemoveComputeAndApplyVariables(routine) {
         if(obj.func == 'COMPUTE' && !v.variable && v.template)
           throw Error('Cannot migrate COMPUTE with template to v3.');
         if(v.parameter && v.variable)
-          obj[v.parameter] = `\${${v.variable}}`;
+          obj[v.parameter] = `\${${escapeString(v.variable)}}`;
         else if(v.parameter && v.template)
           obj[v.parameter] = v.template.replace(/\{/g, '${');
         else if(v.parameter && v.property && v.widget)
-          obj[v.parameter] = `\${PROPERTY ${v.property} OF ${v.widget}}`;
+          obj[v.parameter] = `\${PROPERTY ${escapeString(v.property, /^[A-Za-z0-9 _-]$/)} OF ${escapeString(v.widget, /^[A-Za-z0-9 _-]$/)}}`;
         else if(v.parameter && v.property)
-          obj[v.parameter] = `\${PROPERTY ${v.property}}`;
+          obj[v.parameter] = `\${PROPERTY ${escapeString(v.property, /^[A-Za-z0-9 _-]$/)}}`;
       }
     }
     delete obj.applyVariables;
+  }
+
+  function escapeString(str, valid) {
+    return str.split('').map(function(c) {
+      if(c.match(valid || /^[A-Za-z0-9_-]$/))
+        return c;
+      let code = c.charCodeAt(0).toString(16);
+      while(code.length < 4)
+        code = '0' + code;
+      return `\\u${code}`;
+    }).join('').replace(/^PROPERTY /, 'PROPERTY\\u0020').replace(/ OF /, '\\u0020OF ');
   }
 
   for(const [ i, op ] of Object.entries(routine)) {
@@ -90,16 +101,16 @@ function v3RemoveComputeAndApplyVariables(routine) {
         if(op[o] === undefined)
           return 1;
         if(typeof op[o] === 'object' && op[o] !== null)
-          throw Error("Objects are not supported");
+          throw Error("Cannot migrate objects in COMPUTE operands to v3");
         if(typeof op[o] === 'string' && op[o].match(/^\$\{[^}]+\}$/))
           return op[o];
         if(typeof op[o] === 'string')
-          return `'${op[o]}'`;
+          return `'${escapeString(op[o], /^[a-zA-Z0-9,.() _-]$/)}'`;
         return String(op[o]);
       };
 
-      routine[i] = `var ${op.variable || 'COMPUTE'} = ${getOp('operand1')} ${op.operation || '+'}`;
-      if('!,abs,cbrt,ceil,cos,exp,floor,log,log10,log2,round,sign,sin,sqrt,tan,trunc,length,toLocaleLowerCase,toLocaleUpperCase,toLowerCase,toUpperCase,trim,trimEnd,trimStart,from,isArray,join,length,pop,reverse,shift,sort,parseFloat,push,unshift'.split(',').indexOf(op.operation) == -1)
+      routine[i] = `var ${escapeString(op.variable || 'COMPUTE')} = ${getOp('operand1')} ${op.operation || '+'}`;
+      if('!,abs,cbrt,ceil,cos,exp,floor,log,log10,log2,round,sign,sin,sqrt,tan,trunc,length,toLocaleLowerCase,toLocaleUpperCase,toLowerCase,toUpperCase,trim,trimEnd,trimStart,from,isArray,length,pop,reverse,shift,sort,parseFloat,push,unshift'.split(',').indexOf(op.operation) == -1)
         routine[i] += ` ${getOp('operand2')}`;
       if([ 'slice', 'randRange', 'substr', 'replace', 'replaceAll' ].indexOf(op.operation) != -1)
         routine[i] += ` ${getOp('operand3')}`;
