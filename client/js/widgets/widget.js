@@ -987,7 +987,7 @@ export class Widget extends StateManaged {
       if(oldValue) {
         const oldParent = widgets.get(oldValue);
         await oldParent.onChildRemove(this);
-        if(Array.isArray(oldParent.get('leaveRoutine')))
+        if(this.get('type') != 'holder' && Array.isArray(oldParent.get('leaveRoutine')))
           await oldParent.evaluateRoutine('leaveRoutine', {}, { child: [ this ] });
       }
       if(newValue) {
