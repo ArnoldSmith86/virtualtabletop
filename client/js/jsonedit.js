@@ -26,7 +26,7 @@ const jeCommands = [
     id: 'je_toggleBoolean',
     name: 'toggle boolean',
     context: '.*"(true|false)"',
-    call: function() {
+    call: async function() {
       jeInsert(jeContext.slice(1), jeContext[jeContext.length-2], jeContext[jeContext.length-1]=='"false"');
     }
   },
@@ -34,7 +34,7 @@ const jeCommands = [
     id: 'je_openWidgetById',
     name: 'open widget by ID',
     context: '.*"([^"]+)"',
-    call: function() {
+    call: async function() {
       const m = jeContext.join('').match(/"([^"]+)"/);
       jeSelectWidget(widgets.get(m[1]));
     },
@@ -47,7 +47,7 @@ const jeCommands = [
     id: 'je_uploadAsset',
     name: 'upload a different asset',
     context: '.*"(/assets/[0-9_-]+)"|^basic ↦ faces ↦ [0-9]+ ↦ image|^deck ↦ cardTypes ↦ .*? ↦ image',
-    call: function() {
+    call: async function() {
       uploadAsset().then(a=> {
         if(a) {
           jeInsert(null, jeGetLastKey(), a);
@@ -60,7 +60,7 @@ const jeCommands = [
     id: 'je_cardTypeTemplate',
     name: 'card type template',
     context: '^deck ↦ cardTypes',
-    call: function() {
+    call: async function() {
       const cardType = {};
       const cssVariables = {};
       for(const face of jeStateNow.faceTemplates) {
@@ -102,7 +102,7 @@ const jeCommands = [
     id: 'je_faceTemplate',
     name: 'face template',
     context: '^deck ↦ faceTemplates',
-    call: function() {
+    call: async function() {
       jeStateNow.faceTemplates.push({
         objects: '###SELECT ME###'
       });
@@ -113,7 +113,7 @@ const jeCommands = [
     id: 'je_imageTemplate',
     name: 'image template',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects',
-    call: function() {
+    call: async function() {
       jeStateNow.faceTemplates[+jeContext[2]].objects.push({
         type: 'image',
         x: 0,
@@ -131,7 +131,7 @@ const jeCommands = [
     id: 'je_textTemplate',
     name: 'text template',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects',
-    call: function() {
+    call: async function() {
       jeStateNow.faceTemplates[+jeContext[2]].objects.push({
         type: 'text',
         x: 0,
@@ -150,7 +150,7 @@ const jeCommands = [
     name: 'css',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
     show: _=>!jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].css,
-    call: function() {
+    call: async function() {
       jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].css = '###SELECT ME###';
       jeSetAndSelect('');
     }
@@ -160,7 +160,7 @@ const jeCommands = [
     name: 'rotation',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
     show: _=>!jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].rotation,
-    call: function() {
+    call: async function() {
       jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].rotation = '###SELECT ME###';
       jeSetAndSelect(0);
     }
@@ -169,7 +169,7 @@ const jeCommands = [
     id: 'je_toggleValueType',
     name: _=>jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].valueType == 'dynamic' ? 'static' : 'dynamic',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
-    call: function() {
+    call: async function() {
       const o = jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]];
       const d = o.valueType == 'dynamic';
       const v = o.value;
@@ -182,7 +182,7 @@ const jeCommands = [
     id: 'je_toggleZoom',
     name: '🔍 toggle zoom out',
     forceKey: 'Z',
-    call: function() {
+    call: async function() {
       jeZoomOut = !jeZoomOut;
       if(jeZoomOut) {
         $('body').classList.add('jeZoomOut');
@@ -196,7 +196,7 @@ const jeCommands = [
     id: 'je_copyState',
     name: '📋 copy state from another room/server',
     forceKey: 'C',
-    call: function() {
+    call: async function() {
       const sourceURL = (prompt('Please enter the room URL:') || '').replace(/\/[^\/]+$/, a=>`/state${a}`);
       const targetURL = location.href.replace(/\/[^\/]+$/, a=>`/state${a}`);
       fetch(sourceURL).then(r=>r.text()).then(t=>{
@@ -212,7 +212,7 @@ const jeCommands = [
     id: 'je_callMacro',
     name: _=>jeMode == 'macro' ? '▶️ call' : '🎬 macro',
     forceKey: 'M',
-    call: function() {
+    call: async function() {
       if(jeMode != 'macro') {
         jeWidget = null;
         jeMode = 'macro';
@@ -247,7 +247,7 @@ const jeCommands = [
     id: 'je_showWidget',
     name: '👁 show this widget below',
     forceKey: 'S',
-    call: function() {
+    call: async function() {
       if(jeWidget != undefined)
         jeSecondaryWidget = (jeWidget != undefined && jeSecondaryWidget == null || jeStateNow.id != JSON.parse(jeSecondaryWidget).id) ? jeWidget && JSON.stringify(jeWidget.state, null, '  ') : null;
       else
@@ -259,7 +259,7 @@ const jeCommands = [
     id: 'je_tree',
     name: '🔝 tree',
     forceKey: 'T',
-    call: function() {
+    call: async function() {
       jeDisplayTree();
     }
   },
@@ -267,7 +267,7 @@ const jeCommands = [
     id: 'je_removeProperty',
     name: _=>`remove property ${jeContext && jeContext[jeContext.length-1]}`,
     context: ' ↦ (?=[^"]+$)',
-    call: function() {
+    call: async function() {
       let pointer = jeGetValue(jeContext.slice(0, -1));
       if(Array.isArray(pointer))
         pointer.splice(jeContext[jeContext.length-1], 1);
@@ -287,7 +287,7 @@ const jeCommands = [
     id: 'je_addNewWidget',
     name: '➕ add new widget',
     forceKey: 'A',
-    call: function() {
+    call: async function() {
       const toAdd = {};
       addWidgetLocal(toAdd);
       jeSelectWidget(widgets.get(toAdd.id));
@@ -300,7 +300,7 @@ const jeCommands = [
     name: '✨ duplicate widget',
     forceKey: 'D',
     show: _=>jeStateNow,
-    call: function() {
+    call: async function() {
       let currentWidget = JSON.parse(JSON.stringify(jeWidget.state))
       currentWidget.id = null;
       addWidgetLocal(currentWidget);
@@ -326,7 +326,7 @@ const jeCommands = [
     id: 'je_editMode',
     name: '📝 edit mode',
     forceKey: 'F',
-    call: function() {
+    call: async function() {
       if(edit)
         $('body').classList.remove('edit');
       else
@@ -340,7 +340,7 @@ const jeCommands = [
     forceKey: 'ArrowDown',
     context: '^card',
     show: _=>widgets.has(jeStateNow.deck),
-    call: function() {
+    call: async function() {
       jeSelectWidget(widgets.get(jeStateNow.deck));
     }
   },
@@ -349,7 +349,7 @@ const jeCommands = [
     name: '🔼 open parent',
     forceKey: 'ArrowUp',
     show: _=>jeStateNow && widgets.has(jeStateNow.parent),
-    call: function() {
+    call: async function() {
       jeSelectWidget(widgets.get(jeStateNow.parent));
     }
   },
@@ -369,7 +369,7 @@ const jeCommands = [
 ];
 
 function jeRoutineCall(callback) {
-  return function() {
+  return async function() {
     let routineIndex = -1;
     for(let i=jeContext.length-1; i>=0; --i) {
       if(String(jeContext[i]).match(/Routine$/)) {
@@ -478,7 +478,7 @@ function jeAddCSScommands() {
       id: 'css_' + css,
       name: css,
       context: '^.* ↦ (css|[a-z]+CSS)',
-      call: function() {
+      call: async function() {
         jePasteText(css + '; ', true);
       },
       show: function() {
@@ -494,7 +494,7 @@ function jeAddEnumCommands(context, values) {
       id: 'enum_' + String(v),
       name: String(v),
       context: context,
-      call: function() {
+      call: async function() {
         jeInsert(null, jeGetLastKey(), v);
       },
       show: function() {
@@ -511,7 +511,7 @@ function jeAddFaceCommand(key, description, value) {
     name: key+description,
     context: '^deck ↦ faceTemplates ↦ [0-9]+',
     show: _=>!jeStateNow.faceTemplates[+jeContext[2]][key],
-    call: function() {
+    call: async function() {
       jeStateNow.faceTemplates[+jeContext[2]][key] = '###SELECT ME###';
       jeSetAndSelect(value);
     }
@@ -525,7 +525,7 @@ function jeAddNumberCommand(name, key, callback) {
     forceKey: key,
     context: '.*',
     show: _=>jeGetValue()&&typeof jeGetValue()[jeGetLastKey()] == 'number',
-    call: function() {
+    call: async function() {
       const newValue = callback(jeGetValue()[jeGetLastKey()]);
       jeGetValue()[jeGetLastKey()] = '###SELECT ME###';
       jeSetAndSelect(newValue);
@@ -545,7 +545,7 @@ function jeAddWidgetPropertyCommand(defaults, property) {
     id: 'widget_' + property,
     name: property,
     context: `^${defaults.typeClasses.replace('widget ', '')}`,
-    call: function() {
+    call: async function() {
       jeInsert([], property, property == 'clickRoutine' ? [] : defaults[property]);
     },
     show: function() {
@@ -957,7 +957,7 @@ function jeShowCommands() {
 }
 
 const clickButton = async function(event) {
-  jeCommands.find(o => o.id == event.currentTarget.id).call();
+  await jeCommands.find(o => o.id == event.currentTarget.id).call();
   if (jeContext != 'macro') {
     jeGetContext();
     if(jeWidget && !jeJSONerror)
@@ -990,13 +990,13 @@ window.addEventListener('mousemove', function(e) {
   }
 });
 
-window.addEventListener('mouseup', function(e) {
+window.addEventListener('mouseup', async function(e) {
   if(!jeEnabled)
     return;
   if(e.target == $('#jeText') && jeContext != 'macro') {
     jeGetContext();
     if (jeContext[0] == 'Tree' && jeContext[1] != undefined) {
-      jeCommands.find(o => o.id == 'je_openWidgetById').call();
+      await jeCommands.find(o => o.id == 'je_openWidgetById').call();
       jeGetContext();
     }
   }
@@ -1010,7 +1010,7 @@ onLoad(function() {
   });
 });
 
-window.addEventListener('keydown', function(e) {
+window.addEventListener('keydown', async function(e) {
   if(e.key == 'Control')
     jeState.ctrl = true;
   if(e.key == 'Shift')
@@ -1054,7 +1054,7 @@ window.addEventListener('keydown', function(e) {
           e.preventDefault();
           try {
             jeCommandError = null;
-            command.call();
+            await command.call();
           } catch(e) {
             jeCommandError = e;
           }
