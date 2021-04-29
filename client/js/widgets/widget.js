@@ -705,11 +705,17 @@ export class Widget extends StateManaged {
               break;
             case 'sum':
               variables[a.variable] = c.map(w=>+w).reduce((a, b) => a + b);
+              break;
             default:
               problems.push(`Aggregation ${a.aggregation} is unsupported.`);
             }
-          } else
+          } else if(a.aggregation == 'sum') {
+            variables[a.variable] = 0;
+          } else if(a.aggregation == 'array') {
+            variables[a.variable] = [];
+          } else {
             problems.push(`Collection ${a.collection} is empty.`);
+          }
         }
       }
       if(a.func == 'IF') {
