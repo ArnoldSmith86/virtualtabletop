@@ -103,10 +103,6 @@ function v3RemoveComputeAndApplyVariables(routine) {
         routine[i] += ` ${getOp('operand2')}`;
       if([ 'slice', 'randRange', 'substr', 'replace', 'replaceAll' ].indexOf(op.operation) != -1)
         routine[i] += ` ${getOp('operand3')}`;
-      if(op.operation == 'getIndex' && !String(op.operand2).match(/\$/) && op.operand1.match(/^\$\{(?!PROPERTY)/))
-        routine[i] = `var ${op.variable || 'COMPUTE'} = ${getOp('operand1').replace(/\}$/, '')}.${op.operand2}}`;
-      if(op.operation == 'setIndex' && !String(op.operand1).match(/\$/))
-        routine[i] = `var ${op.variable || 'COMPUTE'}.${op.operand1} = ${getOp('operand2')}`;
       if(op.note)
         routine[i] += ` // ${op.note}`;
 
