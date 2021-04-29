@@ -58,6 +58,8 @@ export class StateManaged {
       this.state[property] = value;
     sendPropertyUpdate(this.get('id'), property, value);
     await this.onPropertyChange(property, oldValue, value);
+    if(Array.isArray(this.get(`${property}ChangeRoutine`)))
+      await this.evaluateRoutine(`${property}ChangeRoutine`, { oldValue, value }, {});
     if(Array.isArray(this.get('changeRoutine')))
       await this.evaluateRoutine('changeRoutine', { property, oldValue, value }, {});
   }
