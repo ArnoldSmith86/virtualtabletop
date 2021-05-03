@@ -114,8 +114,8 @@ function v3RemoveComputeAndApplyVariables(routine) {
         routine[i] += ` ${getOp('operand2')}`;
       if([ 'slice', 'randRange', 'substr', 'replace', 'replaceAll' ].indexOf(op.operation) != -1)
         routine[i] += ` ${getOp('operand3')}`;
-      if(op.note)
-        routine[i] += ` // ${op.note}`;
+      if(op.note || op.Note || op.comment || op.Comment)
+        routine[i] += ` // ${op.note || op.Note || op.comment || op.Comment}`;
 
       if(op.skip) {
         routine[i] = {
