@@ -6,6 +6,15 @@
   --roomColor: #f0f0f0;
   --editColor: #7ba5f5;
   --VTTblue: #1f5ca6;
+  --VTTblueDark:  #0d2f5e;
+  --VTTblueLight: #a9c6e8;
+  --wcFont: #ffffff;
+  --wcMain: var(--VTTblue);
+  --wcBorder: var(--VTTblueDark);
+  --wcHighlight: var(--VTTblueLight);
+  --wcMainOH: var(--VTTblueDark);
+  --wcBorderOH: var(--VTTblue);
+  --wcFontOH: var(--wcFont);
 }
 
 body {
@@ -103,6 +112,35 @@ body {
   }
 }
 
+body.aspectTooGood #toolbar {
+  top: calc((100vh - var(--scale) * var(--roomHeight)) / 2);
+  left: calc((100vw - var(--roomWidth) * var(--scale)) / 2 - var(--toolbarSize) / 2 + 1px);
+  width: var(--toolbarSize);
+  height: calc(var(--scale) * var(--roomHeight));
+}
+
+body.aspectTooGood .toolbarButton .tooltip {
+  top: unset;
+  left: calc(100% + 4px);
+}
+
+body.aspectTooGood #roomArea {
+  top: calc((100vh - var(--scale) * var(--roomHeight)) / 2);
+  left: var(--toolbarSize);
+}
+
+body #hideToolbarButton, body.aspectTooGood.hiddenToolbar #toolbar {
+  display: none;
+}
+
+body.aspectTooGood.hiddenToolbar #roomArea {
+  left: calc((100vw - var(--scale) * var(--roomWidth)) / 2);
+}
+
+body.aspectTooGood #hideToolbarButton {
+  display: inline-flex;
+}
+
 .overlay {
   color: white;
   display: none;
@@ -190,27 +228,31 @@ body {
 }
 
 #statesButton {
-	background-image:url(/i/icons-white/chess-solid-svg.svg);
+  background-image:url(/i/icons-white/chess-solid-svg.svg);
 }
 
 #playersButton {
-	background-image:url(/i/icons-white/user-friends-solid-svg.svg);
+  background-image:url(/i/icons-white/user-friends-solid-svg.svg);
 }
 
 #editButton {
-	background-image:url(/i/icons-white/edit-regular-svg.svg);
+  background-image:url(/i/icons-white/edit-regular-svg.svg);
 }
 
 #addButton {
-	background-image:url(/i/icons-white/plus-solid-svg.svg);
+  background-image:url(/i/icons-white/plus-solid-svg.svg);
 }
 
 #fullscreenButton {
-	background-image:url(/i/icons-white/expand-solid-svg.svg);
+  background-image:url(/i/icons-white/expand-solid-svg.svg);
+}
+
+#hideToolbarButton {
+  background-image:url(/i/icons-white/hide side bar.svg);
 }
 
 #aboutButton {
-	background-image:url(/i/icons-white/info-circle-solid-svg.svg);
+  background-image:url(/i/icons-white/info-circle-solid-svg.svg);
 }
 
 /*Buttons css*/

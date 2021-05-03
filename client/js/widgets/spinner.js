@@ -27,8 +27,6 @@ class Spinner extends Widget {
     if(delta.options !== undefined || delta.backgroundCSS !== undefined || delta.spinnerCSS !== undefined || delta.valueCSS !== undefined)
       this.createChildNodes();
 
-    if(delta.width !== undefined || delta.height !== undefined)
-      this.domElement.style.fontSize = `${Math.min(this.p('width'), this.p('height')) * 0.4}px`;
     if(delta.angle !== undefined && this.spinner || delta.value !== undefined && this.value) {
       this.spinner.style.transform = `rotate(${delta.angle}deg)`;
       this.value.classList.add('hidden');
@@ -41,12 +39,13 @@ class Spinner extends Widget {
     }
   }
 
-  click() {
-    if(!this.p('clickable')) return;
-    const angle = this.p('angle') + Math.floor((2+Math.random())*360);
-    const o = this.p('options');
-    this.p('angle', angle);
-    this.p('value', o[Math.floor(angle/(360/o.length))%o.length]);
+  async click() {
+    if(!await super.click()) {
+      const angle = this.p('angle') + Math.floor((2+Math.random())*360);
+      const o = this.p('options');
+      this.p('angle', angle);
+      this.p('value', o[Math.floor(angle/(360/o.length))%o.length]);
+    }
   }
 
   createChildNodes() {
@@ -92,5 +91,11 @@ class Spinner extends Widget {
     this.value.setAttribute('style', this.p('valueCSS'));
     this.value.textContent = this.p('value');
     this.domElement.appendChild(this.value);
+  }
+
+  css() {
+    let css = super.css();
+    css += `; font-size:${Math.min(this.p('width'), this.p('height')) * 0.4}px`;
+    return css;
   }
 }

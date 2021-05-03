@@ -1,31 +1,31 @@
 import { addWidget, widgetFilter } from '../../client/js/serverstate.js';
-import { Button } from '../../client/js/widgets/button.js';
 import { Widget } from '../../client/js/widgets/widget.js';
 
-import { addButton, addLabel, removeWidget } from './client-util.js';
+import { createWidget, addLabel, removeWidget } from './client-util.js';
 
 describe("Scenarios: Counting widgets", () => {
-  const testName = "button-count";
-  let testButton;
+  const testName = "widget-count";
+  let testWidget;
   let testLabel;
   beforeAll(() => {
-    const testButtonDef = {
-      id: `${testName}test-button`,
+    const testWidgetDef = {
+      id: `${testName}test-widget`,
+      clickable: true,
       debug: false,
-      type: "button"
+      type: "widget"
     }
-    testButton = addButton(testButtonDef);
+    testWidget = createWidget(testWidgetDef);
 
     testLabel = addLabel(`${testName}-test-label`);
   });
   afterAll(() => {
-    removeWidget(testButton.p('id'));
+    removeWidget(testWidget.p('id'));
     removeWidget(testLabel.p('id'));
   });
 
-  describe("Given a button that counts widgets from an undefined collection", () => {
+  describe("Given a widget that counts widgets from an undefined collection", () => {
     beforeAll(() => {
-      testButton.p('clickRoutine', [
+      testWidget.p('clickRoutine', [
         {
           "func": "COUNT",
           "collection": "undefined"
@@ -34,14 +34,14 @@ describe("Scenarios: Counting widgets", () => {
     });
     describe("When clicked", () => {
       test("Then it does not throw an error", async () => {
-        await expect(testButton.click()).resolves.toBeUndefined();
+        await expect(testWidget.click()).resolves.toBe(true);
       });
     });
   });
 
-  describe("Given a button that counts widgets with property 'countThis'", () => {
+  describe("Given a widget that counts widgets with property 'countThis'", () => {
     beforeAll(() => {
-      testButton.p('clickRoutine', [
+      testWidget.p('clickRoutine', [
         {
           "func": "SELECT",
           "property": "text",
@@ -78,7 +78,7 @@ describe("Scenarios: Counting widgets", () => {
 
       describe("When clicked", () => {
         test("Then it reports 2 'countThis' widgets found", async () => {
-          await testButton.click();
+          await testWidget.click();
           expect(testLabel.p('text')).toBe(2);
         });
       });
@@ -92,7 +92,7 @@ describe("Scenarios: Counting widgets", () => {
 
       describe("When clicked", () => {
         test("Then it reports 0 'countThis' widgets found", async () => {
-          await testButton.click();
+          await testWidget.click();
           expect(testLabel.p('text')).toBe(0);
         });
       });
