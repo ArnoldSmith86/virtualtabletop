@@ -1018,8 +1018,9 @@ export class Widget extends StateManaged {
       if(closest) {
         x = x + closest.x/2 - (x - (closest.offsetX || 0)) % closest.x;
         y = y + closest.y/2 - (y - (closest.offsetY || 0)) % closest.y;
-        if(closest.rotation !== undefined)
-          this.p('rotation', closest.rotation);
+        for(const p in closest)
+          if([ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY' ].indexOf(p) == -1)
+            this.p(p, closest[p]);
       }
 
       this.snappingToGrid = false;
