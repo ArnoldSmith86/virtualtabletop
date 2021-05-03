@@ -124,6 +124,7 @@ body {
   flex-direction: column;
   padding: 5% 10%;
   box-sizing: border-box;
+  overflow:auto
 
 }
 
