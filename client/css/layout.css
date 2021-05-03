@@ -234,6 +234,9 @@ body {
   background-repeat: no-repeat;
   margin:1px;
 }
+.prettyButton:hover{
+  background-color: var(--VTTblueDark);
+}
 
 .gameMenu {
   background-position:  5px center !important;
@@ -294,6 +297,9 @@ body {
   background-image:url(/i/icons-white/sync-alt-solid-svg.svg);
   background-size: 20px 70%;
   background-position:  2.5px center;
+}
+.update:hover {
+  background-color: var(--VTTblueDark);
 }
 
 .remove {
