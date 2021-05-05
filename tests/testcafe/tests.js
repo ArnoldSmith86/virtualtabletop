@@ -143,6 +143,74 @@ test('Create game using edit mode', async t => {
   await compareState(t, '2e7611649b3b5339558e3f32df4e774d');
 });
 
+test('variable test', async t => {
+  let button = `{
+    "type": "button",
+    "text": "DEAL",
+    "clickRoutine": [`;
+  const ops = [
+    ['var int = 1 // integer', 'int', '1'],
+    ['var float = 1.05 // number', 'float', '1.05'],
+    ['var nothing = null // null value', 'nothing', 'null'],
+    ['var text = \'abcd\' // string', 'text', '\"abcd\"'],
+    ['var bool = true // boolean', 'bool', true],
+    ['var list = \'\' split \'\' // empty array', 'list', '[]'], // [] - empty array (not working yet)
+    // ['var obj = {} // object', 'obj', '???'], // {} - empty object (not working yet)
+    ['var a = \'foo\'', 'a', '\"foo\"'],
+    ['var b = ${a}', 'b', '\"foo\"'],
+    ['var c = ${a.1}', 'c', '\"o\"'],
+    ['var prop_name = \'x\'', 'prop_name', '\"x\"'],
+    ['var prop_widget = \'jyo6\'', 'prop_widget', '\"jyo6\"'],
+    ['var a = ${PROPERTY x}', 'a', '810'],
+    ['var b = ${PROPERTY x OF jyo6}', 'b', '810'],
+    ['var c = ${PROPERTY $prop_name OF $prop_widget}', 'c', '810'],
+    ['var a = ${text} == \'abcd\'', 'a', 'true'],
+    ['var b = ${int} < ${float}', 'b', 'true'],
+    ['var a = 1 + 2', 'a', '3'],
+    ['var b = \'read\' + \'me\'', 'b', '\"readme\"'],
+    ['var c = 100 / 2', 'c', '50'],
+    ['var d = ${int} * ${float}', 'd', '1.05'],
+    ['var a = \'split.me.up\' split \'.\'', 'a', '[\n    \"split\",\n    \"me\",\n    \"up\"\n  ]'],
+    ['var b = ${a.0} concat \'me\'', 'b', '\"splitme\"'],
+    ['var c = \'hello world\' substr 0 5', 'c', '\"hello\"'],
+    // ['var a = nonexistant', 'a', '???'], // statement is ignored
+    ['var b = ${nonexistant_variable_name}', 'b', '1'], // should this return 1 ???
+    ['var c = ${PROPERTY nonexistant_property_name}', 'c', 'null'],
+    // ['var d = ${PROPERTY x OF nonexistant_widget_id}', 'd', '???'], // currently produces an error
+    ['var e = ${list.999999}', 'e', '1'], // should this return 1 ???
+    ['var f = ${foo.bar}', 'f', '1'] // should this return 1 ???
+  ];
+
+  ops.forEach((o)=>{
+    button += '\n"' + o[0] + '",'
+  });
+  button = button.substring(0, button.length - 1);
+  button += `
+      ],
+  "x": 810,
+  "y": 300,
+  "z": 127,
+  "id": "jyo6",
+  "debug": true
+}`;
+  await emptyRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t
+    .click('#addButton')
+    .click('#add-button')
+    .click('#editButton')
+    .click('[id="jyo6"]')
+    .typeText('#editWidgetJSON', button, { replace: true, paste: true })
+    .click('#editJSONoverlay > #updateWidget')
+    .click('#editButton')
+    .click('[id="jyo6"]')
+  const { log } = await t.getBrowserConsoleMessages();
+  for (let i=1; i<=ops.length; i++) {
+    await t.expect(log[i*2]).contains('"'+ops[i-1][1]+'": '+ops[i-1][2])
+  };
+});
+
 publicLibraryButtons('Blue',               0, 'f1275de07836a37060fc33377b689457', [
   'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton',
   'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton',
