@@ -551,7 +551,7 @@ function jeAddWidgetPropertyCommand(defaults, property) {
     name: property,
     context: `^${defaults.typeClasses.replace('widget ', '')}`,
     call: async function() {
-      jeInsert([], property, property == 'clickRoutine' ? [] : defaults[property]);
+      jeInsert([], property, property.match(/Routine$/) ? [] : defaults[property]);
     },
     show: function() {
       return jeStateNow[property] === undefined;
