@@ -575,9 +575,14 @@ async function jeApplyChanges() {
 }
 
 function jeApplyDelta(delta) {
-  for(const field of [ 'id', 'deck' ])
-    if(!jeDeltaIsOurs && jeStateNow && jeStateNow[field] && delta.s[jeStateNow[field]] !== undefined)
-      jeSelectWidget(widgets.get(jeStateNow.id), document.activeElement !== $('#jeText'));
+  for(const field of [ 'id', 'deck' ]) {
+    if(!jeDeltaIsOurs && jeStateNow && jeStateNow[field] && delta.s[jeStateNow[field]] !== undefined) {
+      if(delta.s[jeStateNow[field]] === null)
+        jeDisplayTree();
+      else
+        jeSelectWidget(widgets.get(jeStateNow.id), document.activeElement !== $('#jeText'));
+    }
+  }
   if(jeMode == 'tree')
     jeDisplayTree();
 }
