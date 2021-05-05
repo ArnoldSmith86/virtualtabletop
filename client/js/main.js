@@ -126,6 +126,13 @@ function setScale() {
   } else {
     scale = w/h < 1600/1000 ? w/1600 : h/1000;
   }
+  if(w-scale*1600 + h-scale*1000 < 44) {
+    $('body').classList.add('aspectTooGood');
+    if(!$('body').className.match(/hiddenToolbar/))
+      scale = (w-44)/1600;
+  } else {
+    $('body').classList.remove('aspectTooGood');
+  }
   document.documentElement.style.setProperty('--scale', scale);
   roomRectangle = $('#roomArea').getBoundingClientRect();
 }
@@ -204,6 +211,11 @@ onLoad(function() {
         document.webkitExitFullscreen();
     }
   });
+  on('#hideToolbarButton', 'click', function() {
+    $('body').classList.add('hiddenToolbar');
+    setScale();
+  });
+
   checkURLproperties();
   setScale();
   startWebSocket();

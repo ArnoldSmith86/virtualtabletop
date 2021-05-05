@@ -631,11 +631,17 @@ export class Widget extends StateManaged {
               break;
             case 'sum':
               variables[a.variable] = c.map(w=>+w).reduce((a, b) => a + b);
+              break;
             default:
               problems.push(`Aggregation ${a.aggregation} is unsupported.`);
             }
-          } else
+          } else if(a.aggregation == 'sum') {
+            variables[a.variable] = 0;
+          } else if(a.aggregation == 'array') {
+            variables[a.variable] = [];
+          } else {
             problems.push(`Collection ${a.collection} is empty.`);
+          }
         }
       }
       if(a.func == 'IF') {
@@ -1027,8 +1033,9 @@ export class Widget extends StateManaged {
       if(closest) {
         x = x + closest.x/2 - (x - (closest.offsetX || 0)) % closest.x;
         y = y + closest.y/2 - (y - (closest.offsetY || 0)) % closest.y;
-        if(closest.rotation !== undefined)
-          await this.set('rotation', closest.rotation);
+        for(const p in closest)
+          if([ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY' ].indexOf(p) == -1)
+            await this.set(p, closest[p]);
       }
 
       this.snappingToGrid = false;
