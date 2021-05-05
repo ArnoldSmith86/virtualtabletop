@@ -355,7 +355,7 @@ const jeCommands = [
   },
   {
     id: 'je_applyVariables',
-    name: jeRoutineCall(routineIndex=>`change ${jeContext[routineIndex+3]} to applyVariables`),
+    name: jeRoutineCall(routineIndex=>`change ${jeContext[routineIndex+3]} to applyVariables`, true),
     context: '^.*\\) ↦ [a-zA-Z]+',
     call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
       delete operation[jeContext[routineIndex+3]];
@@ -364,12 +364,12 @@ const jeCommands = [
       operation.applyVariables.push({ parameter: jeContext[routineIndex+3], variable: '###SELECT ME###' });
       jeSetAndSelect('');
     }),
-    show: jeRoutineCall(routineIndex=>jeContext[routineIndex+3] !== undefined && jeContext[routineIndex+3] != 'applyVariables')
+    show: jeRoutineCall(routineIndex=>jeContext[routineIndex+3] !== undefined && jeContext[routineIndex+3] != 'applyVariables', true)
   }
 ];
 
-function jeRoutineCall(callback) {
-  return async function() {
+function jeRoutineCall(callback, synchronous) {
+  const f = function() {
     let routineIndex = -1;
     for(let i=jeContext.length-1; i>=0; --i) {
       if(String(jeContext[i]).match(/Routine$/)) {
@@ -384,6 +384,11 @@ function jeRoutineCall(callback) {
     else
       return callback(routineIndex, routine, null, null);
   };
+
+  if(synchronous)
+    return f;
+  else
+    return async _=>f();
 }
 
 function jeAddRoutineOperationCommands(command, defaults) {
@@ -398,7 +403,7 @@ function jeAddRoutineOperationCommands(command, defaults) {
         routine.splice(operationIndex+1, 0, {func: '###SELECT ME###'});
       jeSetAndSelect(command);
     }),
-    show: jeRoutineCall((_, routine)=>Array.isArray(routine))
+    show: jeRoutineCall((_, routine)=>Array.isArray(routine), true)
   });
 
   defaults.skip = false;
@@ -412,7 +417,7 @@ function jeAddRoutineOperationCommands(command, defaults) {
       }),
       show: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
         return operation && operation[property] === undefined;
-      })
+      }, true)
     });
   }
 }
