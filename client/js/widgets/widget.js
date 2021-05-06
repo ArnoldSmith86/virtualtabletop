@@ -591,28 +591,46 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'GET') {
-        setDefaults(a, { variable: a.property || 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first' });
+        setDefaults(a, { variable: a.property || 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
         if(isValidCollection(a.collection)) {
-          switch(a.aggregation) {
-          case 'first':
-            if(collections[a.collection].length)
-              if(collections[a.collection][0].p(a.property) !== undefined) {
-                // always get a deep copy and not object references
-                variables[a.variable] = JSON.parse(JSON.stringify(collections[a.collection][0].p(a.property)));
-              } else {
-                variables[a.variable] = null;
-                problems.push(`Property ${a.property} missing from first item of collection, setting ${a.variable} to null.`);
-              }
-            else
-              problems.push(`Collection ${a.collection} is empty.`);
-            break;
-          case 'sum':
+          let c = collections[a.collection];
+          if (a.skipMissing)
+            c = c.filter(w=>w.p(a.property) !== null && w.p(a.property) !== undefined);
+          c = JSON.parse(JSON.stringify(c.map(w=>w.p(a.property))));
+          if(c.length) {
+            switch(a.aggregation) {
+            case 'first':
+            case 'last':
+              const index = (a.aggregation == 'last') ? c.length -1 : 0;
+              variables[a.variable] = (c[index] !== undefined) ? c[index] : null;
+              break;
+            case 'array':
+              variables[a.variable] = c;
+              break;
+            case 'average':
+              variables[a.variable] = c.map(w=>+w).reduce((a, b) => a + b) / c.length;
+              break;
+            case 'median':
+              const mid = Math.floor(c.length / 2);
+              const nums = [...c].map(w=>+w).sort((a, b) => a - b);
+              variables[a.variable] = c.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
+              break;
+            case 'min':
+            case 'max':
+              variables[a.variable] = Math[a.aggregation](...c);
+              break;
+            case 'sum':
+              variables[a.variable] = c.map(w=>+w).reduce((a, b) => a + b);
+              break;
+            default:
+              problems.push(`Aggregation ${a.aggregation} is unsupported.`);
+            }
+          } else if(a.aggregation == 'sum') {
             variables[a.variable] = 0;
-            for(const widget of collections[a.collection])
-              variables[a.variable] += Number(widget.p(a.property) || 0);
-            break;
-          default:
-            problems.push(`Aggregation ${a.aggregation} is unsupported.`);
+          } else if(a.aggregation == 'array') {
+            variables[a.variable] = [];
+          } else {
+            problems.push(`Collection ${a.collection} is empty.`);
           }
         }
       }
@@ -720,11 +738,15 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'ROTATE') {
-        setDefaults(a, { count: 1, angle: 90, mode: 'add' });
-        if(this.isValidID(a.holder, problems)) {
-          w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>{
-            c.rotate(a.angle, a.mode);
-          }));
+        setDefaults(a, { count: 1, angle: 90, mode: 'add', collection: 'DEFAULT' });
+        if(a.holder !== undefined) {
+          if(this.isValidID(a.holder, problems))
+            w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>c.rotate(a.angle, a.mode)));
+        } else if(isValidCollection(a.collection)) {
+          if(collections[a.collection].length)
+            collections[a.collection].slice(0, a.count || 999999).forEach(c=>c.rotate(a.angle, a.mode));
+          else
+            problems.push(`Collection ${a.collection} is empty.`);
         }
       }
 
@@ -736,7 +758,7 @@ export class Widget extends StateManaged {
           let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(function(w) {
             if(w.isBeingRemoved)
               return false;
-            if(a.type != 'all' && w.p('type') != a.type)
+            if(a.type != 'all' && (w.p('type') != a.type && (a.type != 'card' || w.p('type') != 'pile')))
               return false;
             if(a.relation === '<')
               return w.p(a.property) < a.value;
@@ -756,9 +778,14 @@ export class Widget extends StateManaged {
           }).slice(0, a.max).concat(a.mode == 'add' ? collections[a.collection] || [] : []);
 
           // resolve piles
-          c.filter(w=>w.p('type')=='pile').forEach(w=>c.push(...w.children()));
-          c = c.filter(w=>w.p('type')!='pile');
+          if(a.type != 'pile') {
+            c.filter(w=>w.p('type')=='pile').forEach(w=>c.push(...w.children()));
+            c = c.filter(w=>w.p('type')!='pile');
+          }
           collections[a.collection] = [...new Set(c)];
+
+          if (a.sortBy)
+            this.sortWidgets(collections[a.collection], a.sortBy.key, a.sortBy.reverse, a.sortBy.locales, a.sortBy.options);
         }
       }
 
@@ -778,30 +805,36 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'SORT') {
-        setDefaults(a, { key: 'value', reverse: false });
-        if(this.isValidID(a.holder, problems)) {
-          w(a.holder, holder=>{
-            let z = 1;
-            let children = holder.children().reverse().sort((w1,w2)=>{
-              if(typeof w1.p(a.key) == 'number')
-                return w1.p(a.key) - w2.p(a.key);
-              else
-                return w1.p(a.key).localeCompare(w2.p(a.key));
+        setDefaults(a, { key: 'value', reverse: false, collection: 'DEFAULT' });
+        if(a.holder !== undefined) {
+          if(this.isValidID(a.holder, problems)) {
+            w(a.holder, holder=>{
+              this.sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options, true);
+              holder.updateAfterShuffle();
             });
-            if(a.reverse)
-              children = children.reverse();
-            children.forEach(c=>c.p('z', ++z));
-            holder.updateAfterShuffle();
-          });
+          }
+        } else if(isValidCollection(a.collection)) {
+          if(collections[a.collection].length)
+            this.sortWidgets(collections[a.collection], a.key, a.reverse, a.locales, a.options, true);
+          else
+            problems.push(`Collection ${a.collection} is empty.`);
         }
       }
 
       if(a.func == 'SHUFFLE') {
-        if(this.isValidID(a.holder, problems)) {
-          w(a.holder, holder=>{
-            holder.children().forEach(c=>c.p('z', Math.floor(Math.random()*10000)));
-            holder.updateAfterShuffle();
-          });
+        setDefaults(a, { collection: 'DEFAULT' });
+        if(a.holder !== undefined) {
+          if(this.isValidID(a.holder, problems)) {
+            w(a.holder, holder=>{
+              holder.children().forEach(c=>c.p('z', Math.floor(Math.random()*10000)));
+              holder.updateAfterShuffle();
+            });
+          }
+        } else if(isValidCollection(a.collection)) {
+          if(collections[a.collection].length)
+            collections[a.collection].forEach(c=>c.p('z', Math.floor(Math.random()*10000)));
+          else
+            problems.push(`Collection ${a.collection} is empty.`);
         }
       }
 
@@ -985,8 +1018,9 @@ export class Widget extends StateManaged {
       if(closest) {
         x = x + closest.x/2 - (x - (closest.offsetX || 0)) % closest.x;
         y = y + closest.y/2 - (y - (closest.offsetY || 0)) % closest.y;
-        if(closest.rotation !== undefined)
-          this.p('rotation', closest.rotation);
+        for(const p in closest)
+          if([ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY' ].indexOf(p) == -1)
+            this.p(p, closest[p]);
       }
 
       this.snappingToGrid = false;
@@ -1106,6 +1140,20 @@ export class Widget extends StateManaged {
       on('#buttonInputCancel', 'click', cancelHandler);
       showOverlay('buttonInputOverlay');
     });
+  }
+
+  sortWidgets(w, key, reverse, locales, options, rearrange) {
+    let z = 1;
+    let children = w.reverse().sort((w1,w2)=>{
+      if(typeof w1.p(key) == 'number')
+        return w1.p(key) - w2.p(key);
+      else
+        return w1.p(key).localeCompare(w2.p(key), locales, options);
+    });
+    if(reverse)
+      children = children.reverse();
+    if(rearrange)
+      children.forEach(c=>c.p('z', ++z));
   }
 
   supportsPiles() {
