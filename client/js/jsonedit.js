@@ -890,7 +890,6 @@ function jeShowCommands() {
 
   const usedKeys = { a: 1, c: 1, x: 1, v: 1, w: 1, n: 1, t: 1, q: 1, j: 1, z: 1 };
   let commandText = '';
-  let subText = '';
 
   const sortByName = function(a, b) {
     const nameA = typeof a.name == 'function' ? a.name() : a.name;
@@ -906,12 +905,9 @@ function jeShowCommands() {
     if(contextMatch && contextMatch[0] == "") {
       const name = (typeof command.name == 'function' ? command.name() : command.name);
       let keyName = displayKey(command.forceKey);
-      commandText += `<button class='top' id='${command.id}' title='${name} (Ctrl-${keyName})' ${!command.show || command.show() ? '' : 'disabled'}>${name.substr(0,2)}</button>`;
-      subText += `<span class='top'>${keyName}</span>`;
+      commandText += `<div class='jeTopButton'><button class='top' id='${command.id}' title='${name} (Ctrl-${keyName})' ${!command.show || command.show() ? '' : 'disabled'}>${name.substr(0,2)}</button><span class='top'>${keyName}</span></div>`;
     }
   }
-  if(commandText.length > 0)
-    commandText += `\n` + subText + `\n`;
   delete activeCommands[""];
 
   if(!jeJSONerror && jeStateNow) {
@@ -940,7 +936,7 @@ function jeShowCommands() {
       }
     }
   }
-  commandText += `\n${context}\n`;
+  commandText += `\n\n${context}\n`;
   if(jeJSONerror) {
     if(jeMode == 'widget')
       commandText += `\nCtrl-Space: go to error\n`;
@@ -951,7 +947,7 @@ function jeShowCommands() {
   if(jeSecondaryWidget)
     commandText += `\n\n${jeSecondaryWidget}\n`;
   $('#jeCommands').innerHTML = commandText;
-  on('#jeCommands>button', 'click', clickButton);
+  on('#jeCommands button', 'click', clickButton);
 }
 
 const clickButton = function (event) {

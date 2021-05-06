@@ -78,17 +78,23 @@ body.jsonEdit #jsonEditor {
   display: block;
 }
 
-body.jsonEdit #jeCommands > .top {
-  width: 32px;
-  height: 24px;
-  border: 0;
-}
-
-body.jsonEdit #jeCommands > span.top {
+body.jsonEdit #jeCommands > .jeTopButton {
   display: inline-block;
   text-align: center;
+}
+
+body.jsonEdit #jeCommands > .jeTopButton > button {
+  width: 28px;
+  height: 24px;
+  border: 0;
+  display: block;
+}
+
+body.jsonEdit #jeCommands > .jeTopButton > span.top {
+  display: inline-block;
   color: #aaa;
   font-size: x-small;
+  margin-bottom: 10px;
 }
 
 body.jsonEdit #toolbar {
