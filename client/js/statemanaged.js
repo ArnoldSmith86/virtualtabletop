@@ -32,10 +32,7 @@ export class StateManaged {
   }
 
   getDefaultValue(key) {
-    if(this.defaults.hasOwnProperty(key))
-      return this.defaults[key]
-    else
-      return null;
+    return this.defaults[key];
   }
 
   p(property, value) {
@@ -49,7 +46,7 @@ export class StateManaged {
     if(this.state[property] !== undefined)
       return [ 'x', 'y', 'width', 'height', 'z', 'layer' ].indexOf(property) != -1 ? +this.state[property] : this.state[property];
     else
-      return this.getDefaultValue(property);
+      return this.getDefaultValue(property) !== undefined ? this.getDefaultValue(property) : null;
   }
 
   propertySet(property, value) {
