@@ -112,6 +112,35 @@ body {
   }
 }
 
+body.aspectTooGood #toolbar {
+  top: calc((100vh - var(--scale) * var(--roomHeight)) / 2);
+  left: calc((100vw - var(--roomWidth) * var(--scale)) / 2 - var(--toolbarSize) / 2 + 1px);
+  width: var(--toolbarSize);
+  height: calc(var(--scale) * var(--roomHeight));
+}
+
+body.aspectTooGood .toolbarButton .tooltip {
+  top: unset;
+  left: calc(100% + 4px);
+}
+
+body.aspectTooGood #roomArea {
+  top: calc((100vh - var(--scale) * var(--roomHeight)) / 2);
+  left: var(--toolbarSize);
+}
+
+body #hideToolbarButton, body.aspectTooGood.hiddenToolbar #toolbar {
+  display: none;
+}
+
+body.aspectTooGood.hiddenToolbar #roomArea {
+  left: calc((100vw - var(--scale) * var(--roomWidth)) / 2);
+}
+
+body.aspectTooGood #hideToolbarButton {
+  display: inline-flex;
+}
+
 .overlay {
   color: white;
   display: none;
@@ -124,6 +153,7 @@ body {
   flex-direction: column;
   padding: 5% 10%;
   box-sizing: border-box;
+  overflow:auto
 
 }
 
@@ -199,27 +229,31 @@ body {
 }
 
 #statesButton {
-	background-image:url(/i/icons-white/chess-solid-svg.svg);
+  background-image:url(/i/icons-white/chess-solid-svg.svg);
 }
 
 #playersButton {
-	background-image:url(/i/icons-white/user-friends-solid-svg.svg);
+  background-image:url(/i/icons-white/user-friends-solid-svg.svg);
 }
 
 #editButton {
-	background-image:url(/i/icons-white/edit-regular-svg.svg);
+  background-image:url(/i/icons-white/edit-regular-svg.svg);
 }
 
 #addButton {
-	background-image:url(/i/icons-white/plus-solid-svg.svg);
+  background-image:url(/i/icons-white/plus-solid-svg.svg);
 }
 
 #fullscreenButton {
-	background-image:url(/i/icons-white/expand-solid-svg.svg);
+  background-image:url(/i/icons-white/expand-solid-svg.svg);
+}
+
+#hideToolbarButton {
+  background-image:url(/i/icons-white/hide side bar.svg);
 }
 
 #aboutButton {
-	background-image:url(/i/icons-white/info-circle-solid-svg.svg);
+  background-image:url(/i/icons-white/info-circle-solid-svg.svg);
 }
 
 /*Buttons css*/
@@ -233,6 +267,9 @@ body {
   border-radius: 5px;
   background-repeat: no-repeat;
   margin:1px;
+}
+.prettyButton:hover{
+  background-color: var(--VTTblueDark);
 }
 
 .gameMenu {
@@ -294,6 +331,9 @@ body {
   background-image:url(/i/icons-white/sync-alt-solid-svg.svg);
   background-size: 20px 70%;
   background-position:  2.5px center;
+}
+.update:hover {
+  background-color: var(--VTTblueDark);
 }
 
 .remove {
