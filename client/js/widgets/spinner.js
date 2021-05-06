@@ -14,7 +14,10 @@ class Spinner extends Widget {
 
       backgroundCSS: '',
       spinnerCSS: '',
-      valueCSS: ''
+      valueCSS: '',
+      textColor:'#000000',
+      lineColor :'#d2d2d2'
+
     });
   }
 
@@ -60,7 +63,7 @@ class Spinner extends Widget {
       line.setAttribute('y1', 50);
       line.setAttribute('x2', 50 + Math.sin(0.5*Math.PI+2*Math.PI/options.length*i)*50);
       line.setAttribute('y2', 50 + Math.cos(0.5*Math.PI+2*Math.PI/options.length*i)*50);
-      line.setAttribute('stroke', '#d2d2d2');
+      line.setAttribute('stroke', this.p('lineColor'));
 
       const text = document.createElementNS(ns, 'text');
       text.setAttribute('x', 50 + Math.sin(0.5*Math.PI-2*Math.PI/options.length*(+i+0.5))*38);
@@ -68,6 +71,8 @@ class Spinner extends Widget {
       text.setAttribute('dominant-baseline', 'central');
       text.setAttribute('text-anchor', 'middle');
       text.setAttribute('font-size', 20-options.length/2);
+      text.setAttribute('fill', this.p('textColor'));
+
       text.textContent = options[i];
 
       bg.appendChild(line);

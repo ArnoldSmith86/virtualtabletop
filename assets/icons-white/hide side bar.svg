@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000">
+	<style>
+		tspan { white-space:pre }
+		.shp0 { fill: #ffffff } 
+		.shp1 { fill: none;stroke: #ffffff;stroke-width: 10 } 
+	</style>
+	<path id="Camada 4" class="shp0" d="M301.05 484.98L471.28 314.45C485.23 300.51 509.05 310.67 509.05 331.01L509.63 428.62L659.82 428.91C675.8 428.33 688.29 440.24 687.71 455.93L688 544.82C688 559.35 675.51 570.38 660.98 570.97L509.34 571.26L509.34 670.03C509.34 688.04 485.23 699.08 470.7 684.26L301.34 515.19C292.91 506.18 292.62 492.53 301.05 484.98Z" />
+	<path id="Forma 1" class="shp0" d="M67 130L205 130L205 870L67 870L67 130Z" />
+	<path id="Forma 2" class="shp1" d="M68 129L932 129L932 870L68 870L68 129Z" />
+</svg>
