@@ -259,7 +259,7 @@ export class Widget extends StateManaged {
       const identifier          = identifierWithSpace.replace(/ /, '');
       const variable            = `(\\$)?(${identifier})(?:\\.(\\$)?(${identifier}))?`;
       const property            = `PROPERTY (\\$)?(${identifierWithSpace}?)(?: OF (\\$)?(${identifierWithSpace}))?`;
-      const match               = string.match(new RegExp(`^\\$\\{(?:${variable}|${property}|[^}]+)(?: == ([1-9][0-9]*|0))?\\}` + '\x24'));
+      const match               = string.match(new RegExp(`^\\$\\{(?:${variable}|${property}|[^}]+)\\}` + '\x24'));
 
       // not a match across the whole string; replace any variables inside it
       if(!match)
@@ -272,8 +272,7 @@ export class Widget extends StateManaged {
           return match[9] ? false : undefined;
 
         let indexName = evaluateIdentifier(match[3], match[4]);
-        const value = indexName !== undefined ? varContent[indexName] : varContent;
-        return match[9] ? value == +match[9] : value;
+        return indexName !== undefined ? varContent[indexName] : varContent;
       }
 
       // property
@@ -286,8 +285,7 @@ export class Widget extends StateManaged {
           widget = widgets.get(id);
         }
         let value = widget.p(evaluateIdentifier(match[5], match[6]));
-        value = value !== undefined ? value : null;
-        return match[9] ? value == +match[9] : value;
+        return value !== undefined ? value : null;
       }
 
       return null;
