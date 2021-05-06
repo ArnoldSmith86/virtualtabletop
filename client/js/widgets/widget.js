@@ -415,6 +415,8 @@ export class Widget extends StateManaged {
             variables[variable][index] = getValue(variables[variable][index]);
           else
             variables[variable] = getValue(variables[variable]);
+        } else {
+          problems.push('String could not be interpreted as expression. Please check your syntax and note that many characters have to be escaped.');
         }
       }
 
