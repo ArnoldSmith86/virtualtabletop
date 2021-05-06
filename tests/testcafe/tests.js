@@ -112,7 +112,7 @@ test('Create game using edit mode', async t => {
     .click('#add-holder')
     .click('#addButton')
     .click('#addHand')
-    .drag('[id="7ayk"]', 100, 100)
+    .drag('[id="7ayk"]', 100, 100) // this shouldn't change anything because it's not movable
     .click('#editButton')
     .click('[id="7ayk"]')
     .click('#transparentHolder')
@@ -179,7 +179,7 @@ test('variable test', async t => {
     ['var g = PI', 'g', '3.141592653589793'],
     ['var a.$int = 2', 'a', '[\n    \"split\",\n    2,\n    \"up\"\n  ]'],
     ['var $text = 2', 'abcd', '2'],
-    ['var a = nonexistant', 'a', '0'],
+    ['var a = nonexistant', 'a', '[\n    \"split\",\n    2,\n    \"up\"\n  ]'],
     ['var b = ${nonexistant_variable_name}', 'b', 'null'],
     ['var c = ${PROPERTY nonexistant_property_name}', 'c', 'null'],
     ['var d = ${PROPERTY x OF nonexistant_widget_id}', 'd', 'null'],
