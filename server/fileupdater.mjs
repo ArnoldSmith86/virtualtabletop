@@ -62,16 +62,40 @@ function v2UpdateSelectDefault(routine) {
 function v3RemoveComputeAndRandomAndApplyVariables(routine) {
   const operationsToSplice = [];
 
+  let stringCounter = 0;
+  function removeExistingVariables(str, routineIndex) {
+    return str.replace(/\$\{[^}]+\}/g, function(match) {
+      operationsToSplice.push({
+        index: +routineIndex,
+        operation: `var internal_computeMigration_existingVariable${stringCounter} = '${escapeString(match)}' // This was added by the automatic file migration because the new expression syntax does not support escaping variable expressions.`
+      });
+      return `\${internal_computeMigration_existingVariable${stringCounter++}}`;
+    });
+  }
+
+  function removeExistingVariablesRecursively(obj, routineIndex) {
+    for(const i of Object.keys(obj)) {
+      if(typeof obj[i] == 'string' && i != 'template')
+        obj[i] = removeExistingVariables(obj[i], routineIndex);
+      else if(typeof obj[i] == 'object' && obj[i] !== null && !i.match(/Routine$/))
+        removeExistingVariablesRecursively(obj[i], routineIndex);
+
+      const temp = obj[i];
+      delete obj[i];
+      obj[removeExistingVariables(i, routineIndex)] = temp;
+    }
+  }
+
   function dissolveApplyVariables(obj, routineIndex) {
     if(Array.isArray(obj.applyVariables)) {
       for(const i in obj.applyVariables) {
         const v = obj.applyVariables[i];
         if(obj.func == 'COMPUTE' && !v.variable && v.template)
-          obj[v.parameter] = addTempSet(routineIndex, `applyVariables${i}`, v.template.replace(/\{/g, '${'), 'templates in operands');
+          obj[v.parameter] = addTempSet(routineIndex, `applyVariables${i}`, v.template.replace(/\{([^}]+)\}/g, (_,x)=>`\${${escapeString(x)}}`), 'templates in operands');
         else if(v.parameter && v.variable)
           obj[v.parameter] = `\${${escapeString(v.variable)}}`;
         else if(v.parameter && v.template)
-          obj[v.parameter] = v.template.replace(/\{/g, '${');
+          obj[v.parameter] = v.template.replace(/\{([^}]+)\}/g, (_,x)=>`\${${escapeString(x)}}`);
         else if(v.parameter && v.property && v.widget)
           obj[v.parameter] = `\${PROPERTY ${escapeString(v.property, /^[A-Za-z0-9 _-]$/)} OF ${escapeString(v.widget, /^[A-Za-z0-9 _-]$/)}}`;
         else if(v.parameter && v.property)
@@ -111,6 +135,7 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
   }
 
   for(const [ i, op ] of Object.entries(routine)) {
+    removeExistingVariablesRecursively(op, i);
     dissolveApplyVariables(op, i);
     delete routine[i].applyVariables;
 
