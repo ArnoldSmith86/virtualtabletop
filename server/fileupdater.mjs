@@ -37,8 +37,8 @@ function updateRoutine(routine, v) {
 
   for(const operation of routine) {
     if(operation.func == 'IF') {
-      updateRoutine(operation.thenRoutine);
-      updateRoutine(operation.elseRoutine);
+      updateRoutine(operation.thenRoutine, v);
+      updateRoutine(operation.elseRoutine, v);
     }
   }
 
