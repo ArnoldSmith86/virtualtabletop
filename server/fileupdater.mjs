@@ -124,7 +124,7 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
   }
 
   function escapeString(str, valid) {
-    return str.split('').map(function(c) {
+    return String(str).split('').map(function(c) {
       if(c.match(valid || /^[A-Za-z0-9_-]$/))
         return c;
       let code = c.charCodeAt(0).toString(16);
