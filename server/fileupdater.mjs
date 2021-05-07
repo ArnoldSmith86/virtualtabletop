@@ -159,14 +159,14 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
         return String(op[o]);
       };
 
-      const operandsAfterOperation = 'hypot,min,max,sin,cos,tan,abs,cbrt,ceil,exp,floor,log,log10,log2,round,sign,sqrt,trunc,parseFloat,from,isArray,setIndex,randInt,randRange';
-      const operandBeforeOperation = `random,${operandsAfterOperation},E,LN2,LN10,LOG2E,LOG10E,PI,SQRT1_2,SQRT2`;
+      const operandsAfterOperation = 'hypot,min,max,sin,cos,tan,abs,cbrt,ceil,exp,floor,log,log10,log2,round,sign,sqrt,trunc,parseFloat,from,isArray,push,setIndex,randInt,randRange';
+      const noOperandBeforeOperation = `random,${operandsAfterOperation},E,LN2,LN10,LOG2E,LOG10E,PI,SQRT1_2,SQRT2`;
       const lessThanTwoOperands = 'E,LN2,LN10,LOG2E,LOG10E,PI,SQRT1_2,SQRT2,!,abs,cbrt,ceil,cos,exp,floor,log,log10,log2,random,round,sign,sin,sqrt,tan,trunc,length,toLocaleLowerCase,toLocaleUpperCase,toLowerCase,toUpperCase,trim,trimEnd,trimStart,from,isArray,length,pop,reverse,shift,sort,parseFloat,push,unshift';
       const threeOperands = 'slice,randRange,substr,replace,replaceAll';
-      const validOperations = `${operandBeforeOperation},${lessThanTwoOperands},${threeOperands},=,+,-,*,**,/,%,<,<=,==,!=,>=,>,&&,||,pow,charAt,charCodeAt,codePointAt,concat,includes,endsWith,indexOf,lastIndexOf,localeCompare,match,padEnd,padStart,repeat,search,split,startsWith,toFixed,getIndex,concatArray,includes,indexOf,join,lastIndexOf`;
+      const validOperations = `${noOperandBeforeOperation},${lessThanTwoOperands},${threeOperands},=,+,-,*,**,/,%,<,<=,==,!=,>=,>,&&,||,pow,charAt,charCodeAt,codePointAt,concat,includes,endsWith,indexOf,lastIndexOf,localeCompare,match,padEnd,padStart,repeat,search,split,startsWith,toFixed,getIndex,concatArray,includes,indexOf,join,lastIndexOf`;
 
       routine[i] = `var ${escapeString(op.variable || 'COMPUTE')} = `;
-      if(operandBeforeOperation.split(',').indexOf(op.operation) == -1)
+      if(noOperandBeforeOperation.split(',').indexOf(op.operation) == -1)
         routine[i] += `${getOp('operand1')} `;
       routine[i] += `${op.operation || '+'}`;
       if(operandsAfterOperation.split(',').indexOf(op.operation) != -1)

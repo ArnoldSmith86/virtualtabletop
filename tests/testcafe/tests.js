@@ -217,7 +217,7 @@ test('variable test', async t => {
   };
 });
 
-publicLibraryButtons('Blue',               0, 'f1275de07836a37060fc33377b689457', [
+publicLibraryButtons('Blue',               0, '958779d826b6e2dbfafc67e68cc8ae67', [
   'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton',
   'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton',
   'fdc25f83-ed33-4845-a97c-ff35fa8a094f_shuffleButton', 'buttonInputGo', 'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', '9n2q'
@@ -226,14 +226,14 @@ publicLibraryButtons('FreeCell',           0, 'b3339b3c5d42f47f4def7a164be69823'
 publicLibraryButtons('Reward',             0, 'cbf8598d244e1290efe98f0d7fb3ccc8', [
   'gmex', 'kprc', 'oksq', 'j1wz', 'vfhn', '0i6i', 'Orange Recall', 'buttonInputGo', 'b09z'
 ]);
-publicLibraryButtons('Rummy Tiles',        0, '5d171ad18638d051bb79bafaad169583', [ 'startMix', 'draw14' ]);
-publicLibraryButtons('Undercover',         1, 'd3ba0452c9f44e8963d49a484c78e66b', [ 'Reset', 'Spy Master Button' ]);
-publicLibraryButtons('Dice',               0, '3cd34fc98732a94639d37e677c81b7f2', [ 'k18u', 'hy65', 'gghr', 'dsfa', 'f34a', 'fusq' ]);
-publicLibraryButtons('Functions - CALL',   0, '8d1cee31b805f7e8135d262b43bfd7df', [
+publicLibraryButtons('Rummy Tiles',        0, 'c593e557612c383acaa757b4124a4d36', [ 'startMix', 'draw14' ]);
+publicLibraryButtons('Undercover',         1, 'ed966b398d9a3bc0267a42026902607d', [ 'Reset', 'Spy Master Button' ]);
+publicLibraryButtons('Dice',               0, 'd8b6edd6f7a25767781af4294ecda8fc', [ 'k18u', 'hy65', 'gghr', 'dsfa', 'f34a', 'fusq' ]);
+publicLibraryButtons('Functions - CALL',   0, 'b9cd3ea429dd3527e839ec5ef6dc1ce6', [
   'n4cw_8_C', '5a52', '5a52', '66kr', 'qeg1', 'n4cwB', '8r6p', 'qeg1', 'qeg1', 'n5eu'
 ]);
 publicLibraryButtons('Functions - CLICK',  0, 'b2430bd4589116a05df1fcedb55337c4', [ '7u2q' ]);
-publicLibraryButtons('Functions - RANDOM', 0, '6ea072855639353e4686aac8aeb0f5f1', [ '9fhb', 'yqji', 'oeh9' ]);
+publicLibraryButtons('Functions - RANDOM', 0, '81fa0b7e8256c85fbffd32308d2cdb5c', [ '9fhb', 'yqji', 'oeh9' ]);
 publicLibraryButtons('Functions - ROTATE', 0, '747586b12401e43382a7db2b2505f25e', [ 'c44c', '9kdj', 'w53c', 'w53c' ]);
 publicLibraryButtons('Functions - SELECT', 0, '4db86f0a95509b1c4fe5ebd6a1f822a9', [ 'oeh9', '9fhb', 'njkk', 'ffwl', 'bomo' ]);
 publicLibraryButtons('Functions - SORT',   1, 'dd047343b667795ad6d3f366aa2ae2fd', [
