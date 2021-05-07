@@ -755,12 +755,21 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'ROTATE') {
-        setDefaults(a, { count: 1, angle: 90, mode: 'add' });
-        if(this.isValidID(a.holder, problems)) {
-          await w(a.holder, async holder=>{
-            for(const c of holder.children().slice(0, a.count || 999999))
+        setDefaults(a, { count: 1, angle: 90, mode: 'add', collection: 'DEFAULT' });
+        if(a.holder !== undefined) {
+          if(this.isValidID(a.holder, problems)) {
+            await w(a.holder, async holder=>{
+              for(const c of holder.children().slice(0, a.count || 999999))
+                await c.rotate(a.angle, a.mode);
+            });
+          }
+        } else if(isValidCollection(a.collection)) {
+          if(collections[a.collection].length) {
+            for(const c of collections[a.collection].slice(0, a.count || 999999))
               await c.rotate(a.angle, a.mode);
-          });
+          } else {
+            problems.push(`Collection ${a.collection} is empty.`);
+          }
         }
       }
 
@@ -797,6 +806,9 @@ export class Widget extends StateManaged {
             c = c.filter(w=>w.get('type')!='pile');
           }
           collections[a.collection] = [...new Set(c)];
+
+          if(a.sortBy)
+            await this.sortWidgets(collections[a.collection], a.sortBy.key, a.sortBy.reverse, a.sortBy.locales, a.sortBy.options);
         }
       }
 
@@ -816,32 +828,39 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'SORT') {
-        setDefaults(a, { key: 'value', reverse: false });
-        if(this.isValidID(a.holder, problems)) {
-          await w(a.holder, async holder=>{
-            let z = 1;
-            let children = holder.children().reverse().sort((w1,w2)=>{
-              if(typeof w1.get(a.key) == 'number')
-                return w1.get(a.key) - w2.get(a.key);
-              else
-                return w1.get(a.key).localeCompare(w2.get(a.key));
+        setDefaults(a, { key: 'value', reverse: false, collection: 'DEFAULT' });
+        if(a.holder !== undefined) {
+          if(this.isValidID(a.holder, problems)) {
+            await w(a.holder, async holder=>{
+              await this.sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options, true);
+              await holder.updateAfterShuffle();
             });
-            if(a.reverse)
-              children = children.reverse();
-            for(const c of children)
-              await c.set('z', ++z);
-            await holder.updateAfterShuffle();
-          });
+          }
+        } else if(isValidCollection(a.collection)) {
+          if(collections[a.collection].length)
+            await this.sortWidgets(collections[a.collection], a.key, a.reverse, a.locales, a.options, true);
+          else
+            problems.push(`Collection ${a.collection} is empty.`);
         }
       }
 
       if(a.func == 'SHUFFLE') {
-        if(this.isValidID(a.holder, problems)) {
-          await w(a.holder, async holder=>{
-            for(const c of holder.children())
+        setDefaults(a, { collection: 'DEFAULT' });
+        if(a.holder !== undefined) {
+          if(this.isValidID(a.holder, problems)) {
+            await w(a.holder, async holder=>{
+              for(const c of holder.children())
+                await c.set('z', Math.floor(Math.random()*10000));
+              await holder.updateAfterShuffle();
+            });
+          }
+        } else if(isValidCollection(a.collection)) {
+          if(collections[a.collection].length) {
+            for(const c of collections[a.collection])
               await c.set('z', Math.floor(Math.random()*10000));
-            await holder.updateAfterShuffle();
-          });
+          } else {
+            problems.push(`Collection ${a.collection} is empty.`);
+          }
         }
       }
 
@@ -1155,6 +1174,21 @@ export class Widget extends StateManaged {
       on('#buttonInputCancel', 'click', cancelHandler);
       showOverlay('buttonInputOverlay');
     });
+  }
+
+  async sortWidgets(w, key, reverse, locales, options, rearrange) {
+    let z = 1;
+    let children = w.reverse().sort((w1,w2)=>{
+      if(typeof w1.get(key) == 'number')
+        return w1.get(key) - w2.get(key);
+      else
+        return w1.get(key).localeCompare(w2.get(key), locales, options);
+    });
+    if(reverse)
+      children = children.reverse();
+    if(rearrange)
+      for(const c of children)
+        await c.set('z', ++z);
   }
 
   supportsPiles() {
