@@ -106,14 +106,14 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
   }
 
   function addTempSet(i, propertySuffix, value, missingFeature) {
-    operationsToSplice.push({ index: +i, operation: {
+    operationsToSplice.push({ index: +i, forOperation: +i, operation: {
       note: `This was added by the automatic file migration because the new expression syntax does not support ${missingFeature}.`,
       func: 'SET',
       collection: 'thisButton',
       property: `internal_computeMigration_${propertySuffix}`,
       value
     }});
-    operationsToSplice.push({ index: +i+1, operation: {
+    operationsToSplice.push({ index: +i+1, forOperation: +i, operation: {
       note: `This was added by the automatic file migration because the new expression syntax does not support ${missingFeature}.`,
       func: 'SET',
       collection: 'thisButton',
@@ -159,7 +159,7 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
         return String(op[o]);
       };
 
-      const operandsAfterOperation = 'hypot,min,max,sin,cos,tan,abs,cbrt,ceil,exp,floor,log,log10,log2,round,sign,sqrt,trunc,parseFloat,from,isArray,push,setIndex,randInt,randRange';
+      const operandsAfterOperation = '!,hypot,min,max,sin,cos,tan,abs,cbrt,ceil,exp,floor,log,log10,log2,round,sign,sqrt,trunc,parseFloat,from,isArray,push,setIndex,randInt,randRange';
       const noOperandBeforeOperation = `random,${operandsAfterOperation},E,LN2,LN10,LOG2E,LOG10E,PI,SQRT1_2,SQRT2`;
       const lessThanTwoOperands = 'E,LN2,LN10,LOG2E,LOG10E,PI,SQRT1_2,SQRT2,!,abs,cbrt,ceil,cos,exp,floor,log,log10,log2,random,round,sign,sin,sqrt,tan,trunc,length,toLocaleLowerCase,toLocaleUpperCase,toLowerCase,toUpperCase,trim,trimEnd,trimStart,from,isArray,length,pop,reverse,shift,sort,parseFloat,push,unshift';
       const threeOperands = 'slice,randRange,substr,replace,replaceAll';
@@ -196,7 +196,7 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
       if(op.skip) {
         routine[i] = {
           func: 'IF',
-          condition: op.skip,
+          condition: addTempSet(i, 'skip', op.skip, 'skip'),
           elseRoutine: [ routine[i] ]
         };
       }
@@ -211,9 +211,17 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
       routine[i] = `var ${escapeString(op.variable || 'RANDOM')} = randInt ${op.min === undefined ? 1 : op.min} ${op.max === undefined ? 10 : op.max}`;
       if(op.note || op.Note || op.comment || op.Comment)
         routine[i] += ` // ${op.note || op.Note || op.comment || op.Comment}`;
+
+      if(op.skip) {
+        routine[i] = {
+          func: 'IF',
+          condition: addTempSet(i, 'skip', op.skip, 'skip'),
+          elseRoutine: [ routine[i] ]
+        };
+      }
     }
   }
 
-  for(const o of operationsToSplice.sort((a,b)=>b.index-a.index))
+  for(const o of operationsToSplice.sort((a,b)=>a.forOperation==b.forOperation?b.index-a.index:b.forOperation-a.forOperation))
     routine.splice(o.index, 0, o.operation);
 }

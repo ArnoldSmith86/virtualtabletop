@@ -227,7 +227,7 @@ publicLibraryButtons('Reward',             0, 'cbf8598d244e1290efe98f0d7fb3ccc8'
   'gmex', 'kprc', 'oksq', 'j1wz', 'vfhn', '0i6i', 'Orange Recall', 'buttonInputGo', 'b09z'
 ]);
 publicLibraryButtons('Rummy Tiles',        0, 'c593e557612c383acaa757b4124a4d36', [ 'startMix', 'draw14' ]);
-publicLibraryButtons('Undercover',         1, 'ed966b398d9a3bc0267a42026902607d', [ 'Reset', 'Spy Master Button' ]);
+publicLibraryButtons('Undercover',         1, '1c27b314acacb62fa3543f7aee49aacd', [ 'Reset', 'Spy Master Button' ]);
 publicLibraryButtons('Dice',               0, 'd8b6edd6f7a25767781af4294ecda8fc', [ 'k18u', 'hy65', 'gghr', 'dsfa', 'f34a', 'fusq' ]);
 publicLibraryButtons('Functions - CALL',   0, 'b9cd3ea429dd3527e839ec5ef6dc1ce6', [
   'n4cw_8_C', '5a52', '5a52', '66kr', 'qeg1', 'n4cwB', '8r6p', 'qeg1', 'qeg1', 'n5eu'
