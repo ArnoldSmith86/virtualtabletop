@@ -19,13 +19,13 @@ describe("Scenarios: Counting widgets", () => {
     testLabel = addLabel(`${testName}-test-label`);
   });
   afterAll(() => {
-    removeWidget(testWidget.p('id'));
-    removeWidget(testLabel.p('id'));
+    removeWidget(testWidget.get('id'));
+    removeWidget(testLabel.get('id'));
   });
 
   describe("Given a widget that counts widgets from an undefined collection", () => {
-    beforeAll(() => {
-      testWidget.p('clickRoutine', [
+    beforeAll(async () => {
+      await testWidget.set('clickRoutine', [
         {
           "func": "COUNT",
           "collection": "undefined"
@@ -40,8 +40,8 @@ describe("Scenarios: Counting widgets", () => {
   });
 
   describe("Given a widget that counts widgets with property 'countThis'", () => {
-    beforeAll(() => {
-      testWidget.p('clickRoutine', [
+    beforeAll(async () => {
+      await testWidget.set('clickRoutine', [
         {
           "func": "SELECT",
           "property": "text",
@@ -60,21 +60,21 @@ describe("Scenarios: Counting widgets", () => {
 
     describe("And there are 2 widgets with 'countThis' and 1 without", () => {
       const widgets = [];
-      beforeEach(() => {
+      beforeEach(async () => {
         widgets[0] = addLabel(`${testName}-label-one`);
         widgets[1] = addLabel(`${testName}-label-two`);
         widgets[2] = addLabel(`${testName}-label-three`);
-        widgets[0].p("text", "countThis");
-        widgets[2].p("text", "countThis");
+        await widgets[0].set("text", "countThis");
+        await widgets[2].set("text", "countThis");
       });
       afterEach(() => {
-        widgets.forEach(w => removeWidget(w.p('id')));
+        widgets.forEach(w => removeWidget(w.get('id')));
       });
 
       describe("When clicked", () => {
         test("Then it reports 2 'countThis' widgets found", async () => {
           await testWidget.click();
-          expect(testLabel.p('text')).toBe(2);
+          expect(testLabel.get('text')).toBe(2);
         });
       });
     });
@@ -88,7 +88,7 @@ describe("Scenarios: Counting widgets", () => {
       describe("When clicked", () => {
         test("Then it reports 0 'countThis' widgets found", async () => {
           await testWidget.click();
-          expect(testLabel.p('text')).toBe(0);
+          expect(testLabel.get('text')).toBe(0);
         });
       });
     });

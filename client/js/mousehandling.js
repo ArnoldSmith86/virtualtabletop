@@ -46,7 +46,7 @@ async function inputHandler(name, e) {
       let movable = false;
       moveTarget = target;
       while (moveTarget && !movable) {
-        movable = widgets.get(moveTarget.id).p(edit ? 'movableInEdit' : 'movable');
+        movable = widgets.get(moveTarget.id).get(edit ? 'movableInEdit' : 'movable');
         if (!movable) {
           do {
             moveTarget = moveTarget.parentNode;
@@ -59,7 +59,7 @@ async function inputHandler(name, e) {
       const timeSinceStart = +new Date() - ms.start;
       const pixelsMoved = ms.coords ? Math.abs(ms.coords[0] - ms.downCoords[0]) + Math.abs(ms.coords[1] - ms.downCoords[1]) : 0;
       if(ms.status != 'initial' && moveTarget)
-        ms.widget.moveEnd();
+        await ms.widget.moveEnd();
       if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
         if(typeof jeEnabled == 'boolean' && jeEnabled)
           await jeClick(widgets.get(target.id));
@@ -81,13 +81,13 @@ async function inputHandler(name, e) {
           widget: widgets.get(moveTarget ? moveTarget.id : target.id)
         });
         if(moveTarget)
-          mouseStatus[target.id].widget.moveStart();
+          await mouseStatus[target.id].widget.moveStart();
       }
       mouseStatus[target.id].coords = coords;
       const x = Math.floor((coords[0] - roomRectangle.left - mouseStatus[target.id].offset[0]) / scale);
       const y = Math.floor((coords[1] - roomRectangle.top  - mouseStatus[target.id].offset[1]) / scale);
       if(moveTarget)
-        mouseStatus[target.id].widget.move(x, y);
+        await mouseStatus[target.id].widget.move(x, y);
       batchEnd();
     }
   }
