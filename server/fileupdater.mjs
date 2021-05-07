@@ -89,6 +89,8 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
     }).join('').replace(/^PROPERTY /, 'PROPERTY\\u0020').replace(/ OF /, '\\u0020OF ');
   }
 
+  const operationsToSplice = [];
+
   for(const [ i, op ] of Object.entries(routine)) {
     dissolveApplyVariables(op);
     delete routine[i].applyVariables;
@@ -100,10 +102,29 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
       const getOp = function(o) {
         if(op[o] === undefined)
           return 1;
-        if(typeof op[o] === 'object' && op[o] !== null)
-          throw Error("Cannot migrate objects in COMPUTE operands to v3");
+        if(JSON.stringify(op[o]) == '[]')
+          return '[]';
+        if(JSON.stringify(op[o]) == '{}')
+          return '{}';
+        if(typeof op[o] === 'object' && op[o] !== null) {
+          operationsToSplice.push({ index: +i, operation: {
+            note: 'This was added by the automatic file migration because the new expression syntax does not support non-empty object literals.',
+            func: 'SET',
+            collection: 'thisButton',
+            property: `internal_computeMigration_${o}`,
+            value: op[o]
+          }});
+          operationsToSplice.push({ index: +i+1, operation: {
+            note: 'This was added by the automatic file migration because the new expression syntax does not support non-empty object literals.',
+            func: 'SET',
+            collection: 'thisButton',
+            property: `internal_computeMigration_${o}`,
+            value: null
+          }});
+          return '${PROPERTY internal_computeMigration_' + o + '}';
+        }
         if(typeof op[o] === 'string' && op[o].match(/^\$\{[^}]+\}$/))
-          return op[o];
+          return op[o]; // doesn't this need escapeString?
         if(typeof op[o] === 'string')
           return `'${escapeString(op[o], /^[a-zA-Z0-9,.() _-]$/)}'`;
         return String(op[o]);
@@ -137,4 +158,7 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
         routine[i] += ` // ${op.note || op.Note || op.comment || op.Comment}`;
     }
   }
+
+  for(const o of operationsToSplice.sort((a,b)=>b.index-a.index))
+    routine.splice(o.index, 0, o.operation);
 }
