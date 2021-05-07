@@ -43,7 +43,7 @@ function updateRoutine(routine, v) {
   }
 
   v<2 && v2UpdateSelectDefault(routine);
-  v<3 && v3RemoveComputeAndApplyVariables(routine);
+  v<3 && v3RemoveComputeAndRandomAndApplyVariables(routine);
 }
 
 function v2UpdateSelectDefault(routine) {
@@ -59,7 +59,7 @@ function v2UpdateSelectDefault(routine) {
   }
 }
 
-function v3RemoveComputeAndApplyVariables(routine) {
+function v3RemoveComputeAndRandomAndApplyVariables(routine) {
   function dissolveApplyVariables(obj) {
     if(Array.isArray(obj.applyVariables)) {
       for(const v of obj.applyVariables) {
@@ -129,6 +129,12 @@ function v3RemoveComputeAndApplyVariables(routine) {
     if(op.func == 'INPUT' && Array.isArray(op.fields)) {
       for(const field of routine[i].fields)
         dissolveApplyVariables(field);
+    }
+
+    if(op.func == 'RANDOM') {
+      routine[i] = `var ${escapeString(op.variable || 'RANDOM')} = randInt ${op.min === undefined ? 1 : op.min} ${op.max === undefined ? 10 : op.max}`;
+      if(op.note || op.Note || op.comment || op.Comment)
+        routine[i] += ` // ${op.note || op.Note || op.comment || op.Comment}`;
     }
   }
 }

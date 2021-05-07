@@ -803,11 +803,6 @@ export class Widget extends StateManaged {
         }
       }
 
-      if(a.func == 'RANDOM') {
-        setDefaults(a, { min: 1, max: 10, variable: 'RANDOM' });
-        variables[a.variable] = Math.floor(a.min + Math.random() * (a.max - a.min + 1));
-      }
-
       if(a.func == 'RECALL') {
         setDefaults(a, { owned: true });
         if(this.isValidID(a.holder, problems)) {
