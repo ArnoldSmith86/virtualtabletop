@@ -734,14 +734,18 @@ function jeGetContext() {
     const m = line.match(/^( +)(["{])([^"]*)/);
     if(m) {
       const depth = m[1].length/2;
-      keys[depth] = m[2]=='{' ? (keys[depth] === undefined ? -1 : keys[depth]) + 1 : m[3];
+      keys[depth] = m[2]=='{' || line.match(/^ +"[^"]*",?$/) ? (keys[depth] === undefined ? -1 : keys[depth]) + 1 : m[3];
       keys = keys.slice(0, depth+1);
     }
   }
   try {
-    for(let i=1; i<keys.length-1; ++i)
-      if(String(keys[i]).match(/Routine$/) && typeof keys[i+1] == 'number' && !jeJSONerror)
-        keys.splice(i+2, 0, '(' + jeGetValue(keys.slice(0, i+2)).func + ')');
+    for(let i=1; i<keys.length-1; ++i) {
+      if(String(keys[i]).match(/Routine$/) && typeof keys[i+1] == 'number' && !jeJSONerror) {
+        const operation = jeGetValue(keys.slice(1, i+2), true);
+        const func = typeof operation == 'string' && operation.match(/^var/) ? 'var expression' : operation.func;
+        keys.splice(i+2, 0, '(' + (func || String(keys.slice(0, i+2))) + ')');
+      }
+    }
   } catch(e) {}
 
   if(select)
