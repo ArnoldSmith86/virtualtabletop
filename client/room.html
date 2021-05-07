@@ -22,6 +22,7 @@
     <button id="editButton" class="toolbarButton"><span class="tooltip">Edit mode</span></button>
     <button id="addButton" data-overlay="addOverlay" class="toolbarButton"><span class="tooltip">Add widget</span></button>
     <button id="fullscreenButton" class="toolbarButton"><span class="tooltip">Fullscreen</span></button>
+    <button id="hideToolbarButton" class="toolbarButton"><span class="tooltip">Hide toolbar</span></button>
     <button id="aboutButton" data-overlay="aboutOverlay" class="toolbarButton"><span class="tooltip">About</span></button>
   </div>
 
@@ -120,9 +121,10 @@
       <h1>Games</h1>
       <div id="emptyRoom">
         <h1>VirtualTabletop.io</h1>
-        <p>This is an empty room. You can add games to it and play them with your friends and family by sharing the link.</p>
+        <p>There is no saved game in this room. You can save your progress or add games to it and play them with your friends and family by sharing the link.</p>
         <p>Bring your own voice chat. We recommend <a href="https://meet.jit.si/">Jitsi Meet</a> because it's free software, runs in the browser and requires no accounts.</p>
         <div>
+          <div><p>Save what you are currently working on?</p><button class="prettyButton create">Save room state</button></div>
           <div><p>Do you have a *.vtt or *.pcio file?</p><button class="prettyButton upload">Upload files</button></div>
           <div><p>Do you have a link to one?</p><button class="prettyButton link">Enter link</button></div>
         </div>
@@ -207,10 +209,32 @@
     </div>
 
     <div id="aboutOverlay" class="overlay">
-      <h1>About</h1>
+      <h1>About VirtualTabletop.io</h1>
       <p>This project is licensed under GPLv3 and is <a href="https://github.com/ArnoldSmith86/virtualtabletop">available on GitHub</a>.</p>
       <p>Come join our <a href="https://discord.gg/CEZz7wny9T">discord server</a>.</p>
-      <p>The default card deck was created by Adrian Kennard and released under CC0 Public Domain license: <a href="https://www.me.uk/cards/">https://www.me.uk/cards/</a></p>
+      <p>Check out our <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki">wiki page</a> for helpful information about how to make your own games.</p>
+      <h2>Copyright Attribution</h2>
+      <p>The default card deck was created by Adrian Kennard and released under CC0 Public Domain license: <a href="https://www.me.uk/cards/">https://www.me.uk/cards/</a>.</p>
+      <p>The copyright attribution information for all games and assets in the public library is available inside the "Variant" notes section of each game. All public library tutorials are released under the CC0 license. Detailed information about the various Creative Commons licenses referred to by abbreviations in variant notes can be found on the <a href="https://creativecommons.org/about/cclicenses/">Creative Commons webpage</a> or at the following links:</p>
+      <ul>
+      <li><a href="https://creativecommons.org/licenses/by/4.0/">CC BY</a></li>
+      <li><a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a></li>
+      <li><a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC</a></li>
+      <li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA</a></li>
+      <li><a href="https://creativecommons.org/licenses/by-nd/4.0/">CC BY-ND</a></li>
+      <li><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND</a></li>
+      <li><a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 (Public Domain)</a></li>
+      </ul>
+      <h2>Online Gameplay</h2>
+      <p>This is an open-source, free to use platform.</p>
+      <p>Anyone that knows the URL of the room that you are using may come in to the room at any time and take any action, including playing or changing games in the room or deleting games. Keep a personal backup of everything that you care about.</p>
+      <p>Know who you are playing with.  The platform is unmoderated and no one controls what may happen. Anything you do or share is your own responsibility.</p>
+      <p>Cheating is trivially easy, unpreventable, and undetectable.  Just play for fun.</p>
+      <p>If you are under the age of majority in the location you are from, be sure to comply with the rules for accessing online material that apply to you.</p>
+      <h2>Privacy Policy</h2>
+      <p>VirtualTabletop.io does not ask for or collect any personal identification information.</p>
+      <p>VirtualTabletop.io does not use cookies.</p>
+      <p>VirtualTabletop.io does, however, collect the "player name" and keeps that in local storage on the user's device.  The player name defaults to a number, but is customizable to any user entered data. VirtualTabletop.io does not analyze or use that information except to display it on the screen while accessing the website.</p>
     </div>
 
     <div id="internalErrorOverlay" class="overlay">

@@ -34,7 +34,7 @@ export const deckEditor = {
         onClickDecrementAllCardTypes()
       },
 
-      _addCardCallback(imagePath, fileName) {
+      async _addCardCallback(imagePath, fileName) {
         let value = {
           "image": imagePath,
         }
@@ -43,7 +43,7 @@ export const deckEditor = {
         const card = { deck:this.widgetState.id, type:'card', cardType:fileName };
         addWidgetLocal(card);
         if(this.widgetState.parent)
-          widgets.get(card.id).moveToHolder(widgets.get(this.widgetState.parent));
+          await widgets.get(card.id).moveToHolder(widgets.get(this.widgetState.parent));
       },
 
       async uploadCards() {
