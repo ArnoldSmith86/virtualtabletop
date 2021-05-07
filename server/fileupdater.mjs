@@ -60,12 +60,15 @@ function v2UpdateSelectDefault(routine) {
 }
 
 function v3RemoveComputeAndRandomAndApplyVariables(routine) {
-  function dissolveApplyVariables(obj) {
+  const operationsToSplice = [];
+
+  function dissolveApplyVariables(obj, routineIndex) {
     if(Array.isArray(obj.applyVariables)) {
-      for(const v of obj.applyVariables) {
+      for(const i in obj.applyVariables) {
+        const v = obj.applyVariables[i];
         if(obj.func == 'COMPUTE' && !v.variable && v.template)
-          throw Error('Cannot migrate COMPUTE with template to v3.');
-        if(v.parameter && v.variable)
+          obj[v.parameter] = addTempSet(routineIndex, `applyVariables${i}`, v.template.replace(/\{/g, '${'), 'templates in operands');
+        else if(v.parameter && v.variable)
           obj[v.parameter] = `\${${escapeString(v.variable)}}`;
         else if(v.parameter && v.template)
           obj[v.parameter] = v.template.replace(/\{/g, '${');
@@ -76,6 +79,24 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
       }
     }
     delete obj.applyVariables;
+  }
+
+  function addTempSet(i, propertySuffix, value, missingFeature) {
+    operationsToSplice.push({ index: +i, operation: {
+      note: `This was added by the automatic file migration because the new expression syntax does not support ${missingFeature}.`,
+      func: 'SET',
+      collection: 'thisButton',
+      property: `internal_computeMigration_${propertySuffix}`,
+      value
+    }});
+    operationsToSplice.push({ index: +i+1, operation: {
+      note: `This was added by the automatic file migration because the new expression syntax does not support ${missingFeature}.`,
+      func: 'SET',
+      collection: 'thisButton',
+      property: `internal_computeMigration_${propertySuffix}`,
+      value: null
+    }});
+    return '${PROPERTY internal_computeMigration_' + propertySuffix + '}';
   }
 
   function escapeString(str, valid) {
@@ -89,10 +110,8 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
     }).join('').replace(/^PROPERTY /, 'PROPERTY\\u0020').replace(/ OF /, '\\u0020OF ');
   }
 
-  const operationsToSplice = [];
-
   for(const [ i, op ] of Object.entries(routine)) {
-    dissolveApplyVariables(op);
+    dissolveApplyVariables(op, i);
     delete routine[i].applyVariables;
 
     if(op.func == 'CLONE' && op.properties)
@@ -106,25 +125,10 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
           return '[]';
         if(JSON.stringify(op[o]) == '{}')
           return '{}';
-        if(typeof op[o] === 'object' && op[o] !== null) {
-          operationsToSplice.push({ index: +i, operation: {
-            note: 'This was added by the automatic file migration because the new expression syntax does not support non-empty object literals.',
-            func: 'SET',
-            collection: 'thisButton',
-            property: `internal_computeMigration_${o}`,
-            value: op[o]
-          }});
-          operationsToSplice.push({ index: +i+1, operation: {
-            note: 'This was added by the automatic file migration because the new expression syntax does not support non-empty object literals.',
-            func: 'SET',
-            collection: 'thisButton',
-            property: `internal_computeMigration_${o}`,
-            value: null
-          }});
-          return '${PROPERTY internal_computeMigration_' + o + '}';
-        }
+        if(typeof op[o] === 'object' && op[o] !== null)
+          return addTempSet(i, o, op[o], 'non-empty object literals');
         if(typeof op[o] === 'string' && op[o].match(/^\$\{[^}]+\}$/))
-          return op[o]; // doesn't this need escapeString?
+          return op[o];
         if(typeof op[o] === 'string')
           return `'${escapeString(op[o], /^[a-zA-Z0-9,.() _-]$/)}'`;
         return String(op[o]);

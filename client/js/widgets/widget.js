@@ -265,8 +265,12 @@ export class Widget extends StateManaged {
       const match               = string.match(new RegExp(`^\\$\\{(?:${variable}|${property}|[^}]+)\\}` + '\x24'));
 
       // not a match across the whole string; replace any variables inside it
-      if(!match)
-        return string.replace(/\$\{([^}]+)\}/g, evaluateVariables);
+      if(!match) {
+        return string.replace(/\$\{([^}]+)\}/g, function(v) {
+          const e = evaluateVariables(v);
+          return e === undefined ? '' : e;
+        });
+      }
 
       // variable
       if(match[2]) {
