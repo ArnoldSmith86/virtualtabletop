@@ -618,7 +618,6 @@ export class Widget extends StateManaged {
           case 'sort':
             v = x[o]();
             break;
-          case 'findIndex':
           case 'includes':
           case 'indexOf':
           case 'join':

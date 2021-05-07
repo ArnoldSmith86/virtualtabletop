@@ -134,8 +134,14 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
         return String(op[o]);
       };
 
-      routine[i] = `var ${escapeString(op.variable || 'COMPUTE')} = ${getOp('operand1')} ${op.operation || '+'}`;
-      if('!,abs,cbrt,ceil,cos,exp,floor,log,log10,log2,round,sign,sin,sqrt,tan,trunc,length,toLocaleLowerCase,toLocaleUpperCase,toLowerCase,toUpperCase,trim,trimEnd,trimStart,from,isArray,length,pop,reverse,shift,sort,parseFloat,push,unshift'.split(',').indexOf(op.operation) == -1)
+      const operandsAfterOperation = 'hypot,min,max,sin,cos,tan,abs,cbrt,ceil,exp,floor,log,log10,log2,round,sign,sqrt,trunc,parseFloat,from,isArray,setIndex,randInt,randRange';
+      routine[i] = `var ${escapeString(op.variable || 'COMPUTE')} = `;
+      if(`random,${operandsAfterOperation},E,LN2,LN10,LOG2E,LOG10E,PI,SQRT1_2,SQRT2`.split(',').indexOf(op.operation) == -1)
+        routine[i] += `${getOp('operand1')} `;
+      routine[i] += `${op.operation || '+'}`;
+      if(operandsAfterOperation.split(',').indexOf(op.operation) != -1)
+        routine[i] += ` ${getOp('operand1')}`;
+      if('E,LN2,LN10,LOG2E,LOG10E,PI,SQRT1_2,SQRT2,!,abs,cbrt,ceil,cos,exp,floor,log,log10,log2,random,round,sign,sin,sqrt,tan,trunc,length,toLocaleLowerCase,toLocaleUpperCase,toLowerCase,toUpperCase,trim,trimEnd,trimStart,from,isArray,length,pop,reverse,shift,sort,parseFloat,push,unshift'.split(',').indexOf(op.operation) == -1)
         routine[i] += ` ${getOp('operand2')}`;
       if([ 'slice', 'randRange', 'substr', 'replace', 'replaceAll' ].indexOf(op.operation) != -1)
         routine[i] += ` ${getOp('operand3')}`;
