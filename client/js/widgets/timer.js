@@ -28,34 +28,34 @@ export class Timer extends Widget {
   }
 
   async click() {
-    this.togglePaused();
+    await this.togglePaused();
   }
 
   getImage() {
-    if(!Object.keys(this.p('svgReplaces')).length)
-      return this.p('image');
+    if(!Object.keys(this.get('svgReplaces')).length)
+      return this.get('image');
 
     const replaces = {};
-    for(const key in this.p('svgReplaces'))
-      replaces[key] = this.p(this.p('svgReplaces')[key]);
-    return getSVG(this.p('image'), replaces, _=>this.domElement.style.cssText = this.css());
+    for(const key in this.get('svgReplaces'))
+      replaces[key] = this.get(this.get('svgReplaces')[key]);
+    return getSVG(this.get('image'), replaces, _=>this.domElement.style.cssText = this.css());
   }
 
   onPropertyChange(property, oldValue, newValue) {
     super.onPropertyChange(property, oldValue, newValue);
     if(property == 'paused') {
-      if(this.p('paused') && this.interval)
+      if(this.get('paused') && this.interval)
         clearInterval(this.interval);
-      if(!this.p('paused'))
+      if(!this.get('paused'))
         this.interval = setInterval(_=>this.tick(), 1000);
     }
   }
 
-  tick() {
-    this.p('seconds', this.p('seconds') + (this.p('countdown') ? -1 : 1));
+  async tick() {
+    await this.set('seconds', this.get('seconds') + (this.get('countdown') ? -1 : 1));
   }
 
-  togglePaused(paused) {
-    this.p('paused', paused === undefined ? !this.p('paused') : paused);
+  async togglePaused(paused) {
+    await this.set('paused', paused === undefined ? !this.get('paused') : paused);
   }
 }
