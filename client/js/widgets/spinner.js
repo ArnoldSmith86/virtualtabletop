@@ -17,7 +17,6 @@ class Spinner extends Widget {
       valueCSS: '',
       textColor:'#000000',
       lineColor :'#d2d2d2'
-
     });
   }
 
@@ -33,7 +32,7 @@ class Spinner extends Widget {
       if(this.timeout)
         clearTimeout(this.timeout);
       this.timeout = setTimeout(_=>{
-        this.value.textContent = this.p('value');
+        this.value.textContent = this.get('value');
         this.value.classList.remove('hidden')
       }, 1300);
     }
@@ -41,10 +40,10 @@ class Spinner extends Widget {
 
   async click() {
     if(!await super.click()) {
-      const angle = this.p('angle') + Math.floor((2+Math.random())*360);
-      const o = this.p('options');
-      this.p('angle', angle);
-      this.p('value', o[Math.floor(angle/(360/o.length))%o.length]);
+      const angle = this.get('angle') + Math.floor((2+Math.random())*360);
+      const o = this.get('options');
+      await this.set('angle', angle);
+      await this.set('value', o[Math.floor(angle/(360/o.length))%o.length]);
     }
   }
 
@@ -53,17 +52,17 @@ class Spinner extends Widget {
 
     const bg = document.createElementNS(ns, 'svg');
     bg.setAttribute('class', 'background');
-    bg.setAttribute('style', this.p('backgroundCSS'));
+    bg.setAttribute('style', this.get('backgroundCSS'));
     bg.setAttribute('viewBox', '0 0 100 100');
 
-    const options = this.p('options');
+    const options = this.get('options');
     for(const i in options) {
       const line = document.createElementNS(ns, 'line');
       line.setAttribute('x1', 50);
       line.setAttribute('y1', 50);
       line.setAttribute('x2', 50 + Math.sin(0.5*Math.PI+2*Math.PI/options.length*i)*50);
       line.setAttribute('y2', 50 + Math.cos(0.5*Math.PI+2*Math.PI/options.length*i)*50);
-      line.setAttribute('stroke', this.p('lineColor'));
+      line.setAttribute('stroke', this.get('lineColor'));
 
       const text = document.createElementNS(ns, 'text');
       text.setAttribute('x', 50 + Math.sin(0.5*Math.PI-2*Math.PI/options.length*(+i+0.5))*38);
@@ -71,7 +70,7 @@ class Spinner extends Widget {
       text.setAttribute('dominant-baseline', 'central');
       text.setAttribute('text-anchor', 'middle');
       text.setAttribute('font-size', 20-options.length/2);
-      text.setAttribute('fill', this.p('textColor'));
+      text.setAttribute('fill', this.get('textColor'));
 
       text.textContent = options[i];
 
@@ -83,19 +82,19 @@ class Spinner extends Widget {
 
     this.spinner = document.createElement('div');
     this.spinner.setAttribute('class', 'spinner');
-    this.spinner.setAttribute('style', this.p('spinnerCSS'));
+    this.spinner.setAttribute('style', this.get('spinnerCSS'));
     this.domElement.appendChild(this.spinner);
 
     this.value = document.createElement('div');
     this.value.setAttribute('class', 'value');
-    this.value.setAttribute('style', this.p('valueCSS'));
-    this.value.textContent = this.p('value');
+    this.value.setAttribute('style', this.get('valueCSS'));
+    this.value.textContent = this.get('value');
     this.domElement.appendChild(this.value);
   }
 
   css() {
     let css = super.css();
-    css += `; font-size:${Math.min(this.p('width'), this.p('height')) * 0.4}px`;
+    css += `; font-size:${Math.min(this.get('width'), this.get('height')) * 0.4}px`;
     return css;
   }
 }

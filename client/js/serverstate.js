@@ -64,7 +64,7 @@ export function addWidget(widget, instance) {
     removeWidget(widget.id);
     return;
   }
-  if(w.p('dropTarget'))
+  if(w.get('dropTarget'))
     dropTargets.set(widget.id, w);
 
   if(widget.type == 'deck')

@@ -15,7 +15,7 @@ function addWidgetLocal(widget) {
   sendDelta(true);
 }
 
-function applyEditOptionsDeck(widget) {
+async function applyEditOptionsDeck(widget) {
   for(const type of $a('#cardTypesList tr.cardType')) {
     const id = $('.id', type).value;
     const oldID = $('.id', type).dataset.oldID;
@@ -24,17 +24,18 @@ function applyEditOptionsDeck(widget) {
       const card = { deck:widget.id, type:'card', cardType:oldID };
       addWidgetLocal(card);
       if(widget.parent)
-        widgets.get(card.id).moveToHolder(widgets.get(widget.parent));
+        await widgets.get(card.id).moveToHolder(widgets.get(widget.parent));
     }
     for(let i=0; i<$('.count', type).dataset.oldValue-$('.count', type).value; ++i) {
-      const card = widgetFilter(w=>w.p('deck')==widget.id&&w.p('cardType')==oldID)[0];
-      removeWidgetLocal(card.p('id'));
+      const card = widgetFilter(w=>w.get('deck')==widget.id&&w.get('cardType')==oldID)[0];
+      await removeWidgetLocal(card.get('id'));
     }
 
     if(id != oldID) {
       widget.cardTypes[id] = widget.cardTypes[oldID];
       delete widget.cardTypes[oldID];
-      widgetFilter(w=>w.p('deck')==widget.id&&w.p('cardType')==oldID).forEach(w=>w.p('cardType', id));
+      for(const w of widgetFilter(w=>w.get('deck')==widget.id&&w.get('cardType')==oldID))
+        await w.set('cardType', id);
     }
 
     for(const object of $a('.properties > div', type))
@@ -61,15 +62,15 @@ function applyEditOptionsHolder(widget) {
     const w = widgets.get(widget.id);
     const children = w.children();
     if(children.length) {
-      widget.width  = children[0].p('width')  + 2*w.p('dropOffsetX');
-      widget.height = children[0].p('height') + 2*w.p('dropOffsetY');
+      widget.width  = children[0].get('width')  + 2*w.get('dropOffsetX');
+      widget.height = children[0].get('height') + 2*w.get('dropOffsetY');
     }
   }
 }
 
-function applyEditOptions(widget) {
+async function applyEditOptions(widget) {
   if(widget.type == 'deck')
-    applyEditOptionsDeck(widget);
+    await applyEditOptionsDeck(widget);
   if(widget.type == 'holder')
     applyEditOptionsHolder(widget);
 }
@@ -244,7 +245,7 @@ function addWidgetToAddWidgetOverlay(w, wi) {
   w.applyDelta(wi);
   w.domElement.addEventListener('click', _=>{
     const toAdd = {...wi};
-    toAdd.z = getMaxZ(w.p('layer')) + 1;
+    toAdd.z = getMaxZ(w.get('layer')) + 1;
     addWidgetLocal(toAdd);
 
     showOverlay();
@@ -372,17 +373,17 @@ function populateAddWidgetOverlay() {
   });
 }
 
-function removeWidgetLocal(widgetID, removeChildren) {
+async function removeWidgetLocal(widgetID, removeChildren) {
   if(removeChildren)
     for(const [ childWidgetID, childWidget ] of widgets)
-      if(childWidget.p('parent') == widgetID || childWidget.p('deck') == widgetID)
-        removeWidgetLocal(childWidgetID, removeChildren);
+      if(childWidget.get('parent') == widgetID || childWidget.get('deck') == widgetID)
+        await removeWidgetLocal(childWidgetID, removeChildren);
   if(widgets.has(widgetID)) {
     const w = widgets.get(widgetID);
     w.isBeingRemoved = true;
     // don't actually set deck and parent to null (only pretend to) because when "receiving" the delta, the applyRemove has to find the parent
-    w.onPropertyChange('deck', w.p('deck'), null);
-    w.onPropertyChange('parent', w.p('parent'), null);
+    await w.onPropertyChange('deck', w.get('deck'), null);
+    await w.onPropertyChange('parent', w.get('parent'), null);
     sendPropertyUpdate(widgetID, null);
   }
 }
@@ -407,7 +408,7 @@ function uploadWidget(preset) {
   });
 }
 
-function onClickUpdateWidget(applyChangesFromUI) {
+async function onClickUpdateWidget(applyChangesFromUI) {
     const previousState = JSON.parse($('#editWidgetJSON').dataset.previousState);
     try {
       var widget = JSON.parse($('#editWidgetJSON').value);
@@ -417,17 +418,17 @@ function onClickUpdateWidget(applyChangesFromUI) {
     }
 
     if(applyChangesFromUI)
-      applyEditOptions(widget);
+      await applyEditOptions(widget);
 
     const children = Widget.prototype.children.call(widgets.get(previousState.id));
-    const cards = widgetFilter(w=>w.p('deck')==previousState.id);
+    const cards = widgetFilter(w=>w.get('deck')==previousState.id);
 
     if(widget.id !== previousState.id || widget.type !== previousState.type) {
       for(const child of children)
-        sendPropertyUpdate(child.p('id'), 'parent', null);
+        sendPropertyUpdate(child.get('id'), 'parent', null);
       for(const card of cards)
-        sendPropertyUpdate(card.p('id'), 'deck', null);
-      removeWidgetLocal(previousState.id);
+        sendPropertyUpdate(card.get('id'), 'deck', null);
+      await removeWidgetLocal(previousState.id);
     } else {
       for(const key in previousState)
         if(widget[key] === undefined)
@@ -436,14 +437,14 @@ function onClickUpdateWidget(applyChangesFromUI) {
     addWidgetLocal(widget);
 
     for(const child of children)
-      sendPropertyUpdate(child.p('id'), 'parent', widget.id);
+      sendPropertyUpdate(child.get('id'), 'parent', widget.id);
     for(const card of cards)
-      sendPropertyUpdate(card.p('id'), 'deck', widget.id);
+      sendPropertyUpdate(card.get('id'), 'deck', widget.id);
 
     showOverlay();
 }
 
-function onClickDuplicateWidget() {
+async function onClickDuplicateWidget() {
     const widget = JSON.parse($('#editWidgetJSON').dataset.previousState);
     delete widget.id;
     if(widget.x)
@@ -453,15 +454,15 @@ function onClickDuplicateWidget() {
     addWidgetLocal(widget);
     const w = widgets.get(widget.id);
     if(widget.x && w.absoluteCoord('x') > 1500)
-      w.p('x', w.p('x')-40);
+      await w.set('x', w.get('x')-40);
     if(widget.y && w.absoluteCoord('y') > 900)
-      w.p('y', w.p('y')-40);
+      await w.set('y', w.get('y')-40);
     showOverlay();
 }
 
-function onClickRemoveWidget() {
+async function onClickRemoveWidget() {
     if(confirm('Really remove?')) {
-      removeWidgetLocal(JSON.parse($('#editWidgetJSON').dataset.previousState).id, true);
+      await removeWidgetLocal(JSON.parse($('#editWidgetJSON').dataset.previousState).id, true);
       showOverlay();
     }
 }
