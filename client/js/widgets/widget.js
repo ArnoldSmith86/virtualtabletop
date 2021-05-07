@@ -376,7 +376,7 @@ export class Widget extends StateManaged {
         const left       = `var (\\$)?(${identifier})(?:\\.(\\$)?(${identifier}))?`;
         const operation  = `${identifier}|[=+*/%<!>&|-]{1,2}`;
 
-        const regex      = `^${left} = (?:${parameter}|(?:${parameter} )?(${operation})(?: ${parameter})?(?: ${parameter})?(?: ${parameter})?)( //.+)?`;
+        const regex      = `^${left} += +(?:${parameter}|(?:${parameter} +)?(${operation})(?: +${parameter})?(?: +${parameter})?(?: +${parameter})?)( +//.+)?`;
 
         const match = a.match(new RegExp(regex + '\x24')); // the minifier doesn't like a "$" here
 
