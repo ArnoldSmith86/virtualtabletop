@@ -141,7 +141,7 @@ export class Widget extends StateManaged {
           let w = this;
           if (v.widget)
             w = this.isValidID(v.widget, problems) ? widgets.get(v.widget) : this;
-          field[v.parameter] = w.p(v.property);
+          field[v.parameter] = w.get(v.property);
         } else {
           problems.push('Entry in parameter applyVariables does not contain "parameter" together with "variable", "property", or "template".');
         }
@@ -308,7 +308,7 @@ export class Widget extends StateManaged {
       });
     }
 
-    const routine = this.p(property) !== null ? this.p(property) : property;
+    const routine = this.get(property) !== null ? this.get(property) : property;
 
     for(const original of routine) {
       const a = JSON.parse(JSON.stringify(original));
