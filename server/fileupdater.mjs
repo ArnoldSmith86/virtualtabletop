@@ -160,18 +160,38 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
       };
 
       const operandsAfterOperation = 'hypot,min,max,sin,cos,tan,abs,cbrt,ceil,exp,floor,log,log10,log2,round,sign,sqrt,trunc,parseFloat,from,isArray,setIndex,randInt,randRange';
+      const operandBeforeOperation = `random,${operandsAfterOperation},E,LN2,LN10,LOG2E,LOG10E,PI,SQRT1_2,SQRT2`;
+      const lessThanTwoOperands = 'E,LN2,LN10,LOG2E,LOG10E,PI,SQRT1_2,SQRT2,!,abs,cbrt,ceil,cos,exp,floor,log,log10,log2,random,round,sign,sin,sqrt,tan,trunc,length,toLocaleLowerCase,toLocaleUpperCase,toLowerCase,toUpperCase,trim,trimEnd,trimStart,from,isArray,length,pop,reverse,shift,sort,parseFloat,push,unshift';
+      const threeOperands = 'slice,randRange,substr,replace,replaceAll';
+      const validOperations = `${operandBeforeOperation},${lessThanTwoOperands},${threeOperands},=,-,/,%,<,<=,==,!=,>=,>,&&,||,pow,charAt,charCodeAt,codePointAt,concat,includes,endsWith,indexOf,lastIndexOf,localeCompare,match,padEnd,padStart,repeat,search,split,startsWith,toFixed,getIndex,concatArray,includes,indexOf,join,lastIndexOf`;
+
       routine[i] = `var ${escapeString(op.variable || 'COMPUTE')} = `;
-      if(`random,${operandsAfterOperation},E,LN2,LN10,LOG2E,LOG10E,PI,SQRT1_2,SQRT2`.split(',').indexOf(op.operation) == -1)
+      if(operandBeforeOperation.split(',').indexOf(op.operation) == -1)
         routine[i] += `${getOp('operand1')} `;
       routine[i] += `${op.operation || '+'}`;
       if(operandsAfterOperation.split(',').indexOf(op.operation) != -1)
         routine[i] += ` ${getOp('operand1')}`;
-      if('E,LN2,LN10,LOG2E,LOG10E,PI,SQRT1_2,SQRT2,!,abs,cbrt,ceil,cos,exp,floor,log,log10,log2,random,round,sign,sin,sqrt,tan,trunc,length,toLocaleLowerCase,toLocaleUpperCase,toLowerCase,toUpperCase,trim,trimEnd,trimStart,from,isArray,length,pop,reverse,shift,sort,parseFloat,push,unshift'.split(',').indexOf(op.operation) == -1)
+      if(lessThanTwoOperands.split(',').indexOf(op.operation) == -1)
         routine[i] += ` ${getOp('operand2')}`;
-      if([ 'slice', 'randRange', 'substr', 'replace', 'replaceAll' ].indexOf(op.operation) != -1)
+      if(threeOperands.split(',').indexOf(op.operation) != -1)
         routine[i] += ` ${getOp('operand3')}`;
       if(op.note || op.Note || op.comment || op.Comment)
         routine[i] += ` // ${op.note || op.Note || op.comment || op.Comment}`;
+
+      if(validOperations.split(',').indexOf(op.operation || '+') == -1) {
+        operationsToSplice.push({
+          index: +i,
+          operation: `var internal_computeMigration_isVariableNull = \${${escapeString(op.variable || 'COMPUTE')}} == null // This was added by the automatic file migration because the COMPUTE used an invalid operation which leads to different results with the new expression syntax.`
+        });
+        routine[i] = {
+          note: 'This was added by the automatic file migration because the COMPUTE used an invalid operation which leads to different results with the new expression syntax.',
+          func: 'IF',
+          condition: '${internal_computeMigration_isVariableNull}',
+          thenRoutine: [
+            `var ${escapeString(op.variable || 'COMPUTE')} = 0`
+          ]
+        };
+      }
 
       if(op.skip) {
         routine[i] = {

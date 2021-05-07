@@ -640,7 +640,9 @@ export class Widget extends StateManaged {
             v = Math.round(Math.floor((Math.random() * (y - x) / (z || 1))) * (z || 1) + x);
             break;
           default:
+            v = null;
             problems.push(`Operation ${o} is unsupported.`);
+            return v;
           }
         } catch(e) {
           v = 0;
