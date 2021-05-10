@@ -376,7 +376,7 @@ export class Widget extends StateManaged {
         const left       = `var (\\$)?(${identifier})(?:\\.(\\$)?(${identifier}))?`;
         const operation  = `${identifier}|[=+*/%<!>&|-]{1,2}`;
 
-        const regex      = `^${left} += +(?:${parameter}|(?:${parameter} +)?(${operation})(?: +${parameter})?(?: +${parameter})?(?: +${parameter})?)(?: +//.*)?`;
+        const regex      = `^${left} += +(?:${parameter}|(?:${parameter} +)?(🧮)?(${operation})(?: +${parameter})?(?: +${parameter})?(?: +${parameter})?)(?: +//.*)?`;
 
         const match = a.match(new RegExp(regex + '\x24')); // the minifier doesn't like a "$" here
 
@@ -407,10 +407,10 @@ export class Widget extends StateManaged {
           };
           const getValue = function(input) {
             const toNum = s=>typeof s == 'string' && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s;
-            if(match[13] && match[9] !== undefined)
-              return compute(match[13], input, toNum(getParam(9, 1)), toNum(getParam(14, 1)), toNum(getParam(18, 1)));
-            else if(match[13])
-              return compute(match[13], input, toNum(getParam(14, 1)), toNum(getParam(18, 1)), toNum(getParam(22, 1)));
+            if(match[14] && match[9] !== undefined)
+              return compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(9, 1)), toNum(getParam(15, 1)), toNum(getParam(19, 1)));
+            else if(match[14])
+              return compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(15, 1)), toNum(getParam(19, 1)), toNum(getParam(23, 1)));
             else
               return getParam(5, null);
           };

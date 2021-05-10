@@ -143,7 +143,7 @@ test('Create game using edit mode', async t => {
   await compareState(t, '2e7611649b3b5339558e3f32df4e774d');
 });
 
-test('variable test', async t => {
+test('Dynamic expressions', async t => {
   let button = `{
     "type": "button",
     "text": "DEAL",

@@ -168,7 +168,10 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
       routine[i] = `var ${escapeString(op.variable || 'COMPUTE')} = `;
       if(noOperandBeforeOperation.split(',').indexOf(op.operation) == -1)
         routine[i] += `${getOp('operand1')} `;
-      routine[i] += `${op.operation || '+'}`;
+      if(String(op.operation).match(/^\$\{[^}]+\}$/))
+        routine[i] += op.operation.replace(/^\$\{([^}]+)\}$/, (_,v)=>`🧮${v}`);
+      else
+        routine[i] += `${op.operation || '+'}`;
       if(operandsAfterOperation.split(',').indexOf(op.operation) != -1)
         routine[i] += ` ${getOp('operand1')}`;
       if(lessThanTwoOperands.split(',').indexOf(op.operation) == -1)
@@ -178,7 +181,7 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
       if(op.note || op.Note || op.comment || op.Comment)
         routine[i] += ` // ${op.note || op.Note || op.comment || op.Comment}`;
 
-      if(validOperations.split(',').indexOf(op.operation || '+') == -1) {
+      if(!String(op.operation).match(/^\$\{[^}]+\}$/) && validOperations.split(',').indexOf(op.operation || '+') == -1) {
         operationsToSplice.push({
           index: +i,
           operation: `var internal_computeMigration_isVariableNull = \${${escapeString(op.variable || 'COMPUTE')}} == null // This was added by the automatic file migration because the COMPUTE used an invalid operation which leads to different results with the new expression syntax.`
