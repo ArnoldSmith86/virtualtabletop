@@ -47,7 +47,7 @@ export class Timer extends Widget {
       if(this.get('paused') && this.interval)
         clearInterval(this.interval);
       if(!this.get('paused'))
-        this.interval = setInterval(_=>this.tick(), 1000);
+        this.interval = setInterval(_=>this.tick(), 100);
     }
   }
 
