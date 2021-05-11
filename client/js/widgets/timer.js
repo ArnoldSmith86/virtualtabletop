@@ -14,7 +14,9 @@ export class Timer extends Widget {
       seconds: 0,
       precision: 1,
       paused: true,
-      countdown: false
+      countdown: false,
+      start: 0,
+      end: null
     });
   }
 
@@ -44,6 +46,11 @@ export class Timer extends Widget {
 
   onPropertyChange(property, oldValue, newValue) {
     super.onPropertyChange(property, oldValue, newValue);
+    if(typeof(this.get('end')=="number")){
+      if ((this.get('countdown') && this.get('seconds')<=this.get('end')) || (!this.get('countdown') && this.get('seconds')>=this.get('end')) ) {
+        this.set('typeClasses','widget timer alert')
+      } else {this.set('typeClasses','widget timer')};
+    } else {this.set('typeClasses','widget timer')};
     if(property == 'paused') {
       if(this.get('paused') && this.interval)
         clearInterval(this.interval);

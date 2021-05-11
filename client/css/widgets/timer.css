@@ -2,5 +2,11 @@
   font-size: 23px;
   font-family: monospace;
   text-align: right;
-  color: #6d6d6d
+  color: #6d6d6d;
+  --wcFontAlert: red;
+}
+
+
+.timer.alert {
+  color: var(--wcFontAlert);
 }
