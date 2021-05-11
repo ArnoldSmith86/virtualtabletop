@@ -12,6 +12,7 @@ export class Timer extends Widget {
       clickable: true,
 
       seconds: 0,
+      precision: 1,
       paused: true,
       countdown: false
     });
@@ -47,15 +48,16 @@ export class Timer extends Widget {
       if(this.get('paused') && this.interval)
         clearInterval(this.interval);
       if(!this.get('paused'))
-        this.interval = setInterval(_=>this.tick(), 1000);
+        this.interval = setInterval(_=>this.tick(), 1000*this.get('precision'));
     }
   }
 
   async tick() {
-    await this.set('seconds', this.get('seconds') + (this.get('countdown') ? -1 : 1));
+    await this.set('seconds', this.get('precision')*Math.round((this.get('seconds') + (this.get('countdown') ? -1 : 1)*this.get('precision'))/this.get('precision')));
   }
 
   async togglePaused(paused) {
+    await this.set('precision', Math.max(this.get('precision'), 0.1))
     await this.set('paused', paused === undefined ? !this.get('paused') : paused);
   }
 }
