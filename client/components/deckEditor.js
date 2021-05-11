@@ -20,7 +20,7 @@ export const deckEditor = {
     },
     methods: {
       countCardType(typeID) {
-        return widgetFilter(w=>w.p('deck')==this.widgetState.id&&w.p('cardType')==typeID).length;
+        return widgetFilter(w=>w.get('deck')==this.widgetState.id&&w.get('cardType')==typeID).length;
       },
       async upload(typeID, propName) {
         this.widgetState.cardTypes[typeID][propName] = await uploadAsset();
