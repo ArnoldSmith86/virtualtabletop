@@ -289,7 +289,7 @@ async function shareLink() {
 onLoad(function() {
   onMessage('meta', args=>fillStatesList(args.meta.states, args.activePlayers));
 
-  on('#addState .create,  #addVariant .create',  'click', e=>addState(e, 'state'));
+  on('#addState .create,  #addVariant .create, #emptyRoom .create',  'click', e=>addState(e, 'state'));
   on('#addState .library, #addVariant .library', 'click', e=>addStateFromLibrary(e));
 
   on('#addState .upload, #emptyRoom .upload, #addVariant .upload',  'click', e=>selectFile(false, f=>addState(e, 'file', f)));

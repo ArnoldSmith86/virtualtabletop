@@ -24,7 +24,7 @@ export class Label extends Widget {
     super.applyDeltaToDOM(delta);
     if(delta.text !== undefined || delta.twoRowBottomAlign !== undefined) {
       this.input.value = delta.text;
-      if(this.p('twoRowBottomAlign')) {
+      if(this.get('twoRowBottomAlign')) {
         this.input.style.height = '20px';
         this.input.style.paddingTop = '';
         if(this.input.scrollHeight == 20)
@@ -32,7 +32,7 @@ export class Label extends Widget {
         else
           this.input.style.height = '40px';
       } else {
-        this.input.style.height = `${this.p('height')}px`;
+        this.input.style.height = `${this.get('height')}px`;
         this.input.style.paddingTop = 'unset';
       }
     }

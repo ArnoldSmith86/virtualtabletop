@@ -42,6 +42,9 @@ export class Widget extends StateManaged {
       inheritChildZ: false,
 
       clickRoutine: null,
+      changeRoutine: null,
+      enterRoutine: null,
+      leaveRoutine: null,
       debug: false
     });
 
@@ -51,7 +54,7 @@ export class Widget extends StateManaged {
   }
 
   absoluteCoord(coord) {
-    return this.p(coord) + (this.p('parent') ? widgets.get(this.p('parent')).absoluteCoord(coord) : 0);
+    return this.get(coord) + (this.get('parent') ? widgets.get(this.get('parent')).absoluteCoord(coord) : 0);
   }
 
   applyChildAdd(child) {
@@ -113,15 +116,15 @@ export class Widget extends StateManaged {
       }
     }
 
-    if($('#enlarged').dataset.id == this.p('id') && !$('#enlarged').className.match(/hidden/))
+    if($('#enlarged').dataset.id == this.get('id') && !$('#enlarged').className.match(/hidden/))
       this.showEnlarged();
   }
 
   applyRemove() {
-    if(this.p('parent') && widgets.has(this.p('parent')))
-      widgets.get(this.p('parent')).applyChildRemove(this);
-    if(this.p('deck') && widgets.has(this.p('deck')))
-      widgets.get(this.p('deck')).removeCard(this);
+    if(this.get('parent') && widgets.has(this.get('parent')))
+      widgets.get(this.get('parent')).applyChildRemove(this);
+    if(this.get('deck') && widgets.has(this.get('deck')))
+      widgets.get(this.get('deck')).removeCard(this);
     removeFromDOM(this.domElement);
   }
 
@@ -138,7 +141,7 @@ export class Widget extends StateManaged {
           let w = this;
           if (v.widget)
             w = this.isValidID(v.widget, problems) ? widgets.get(v.widget) : this;
-          field[v.parameter] = (w.p(v.property) === undefined) ? null : w.p(v.property);
+          field[v.parameter] = (w.get(v.property) === undefined) ? null : w.get(v.property);
         } else {
           problems.push('Entry in parameter applyVariables does not contain "parameter" together with "variable", "property", or "template".');
         }
@@ -149,49 +152,49 @@ export class Widget extends StateManaged {
   }
 
   applyZ(force) {
-    if(this.p('inheritChildZ') || force) {
+    if(this.get('inheritChildZ') || force) {
       this.domElement.style.zIndex = this.calculateZ();
-      if(this.p('parent') && this.p('inheritChildZ'))
-        widgets.get(this.p('parent')).applyZ();
+      if(this.get('parent') && this.get('inheritChildZ'))
+        widgets.get(this.get('parent')).applyZ();
     }
   }
 
-  bringToFront() {
-    this.p('z', getMaxZ(this.p('layer')) + 1);
+  async bringToFront() {
+    await this.set('z', getMaxZ(this.get('layer')) + 1);
   }
 
   calculateZ() {
-    let z = ((this.p('layer') + 10) * 100000) + this.p('z');
-    if(this.p('inheritChildZ'))
+    let z = ((this.get('layer') + 10) * 100000) + this.get('z');
+    if(this.get('inheritChildZ'))
       for(const child of this.childrenOwned())
         z = Math.max(z, child.calculateZ());
     return z;
   }
 
   children() {
-    return this.childArray.sort((a,b)=>b.p('z')-a.p('z'));
+    return this.childArray.sort((a,b)=>b.get('z')-a.get('z'));
   }
 
   childrenOwned() {
-    return this.children().filter(c=>!c.p('owner') || c.p('owner')==playerName);
+    return this.children().filter(c=>!c.get('owner') || c.get('owner')==playerName);
   }
 
-  checkParent(forceDetach) {
+  async checkParent(forceDetach) {
     if(this.currentParent && (forceDetach || !overlap(this.domElement, this.currentParent.domElement))) {
-      this.p('parent', null);
-      this.p('owner',  null);
+      await this.set('parent', null);
+      await this.set('owner',  null);
       if(this.currentParent.dispenseCard)
-        this.currentParent.dispenseCard(this);
+        await this.currentParent.dispenseCard(this);
       delete this.currentParent;
     }
   }
 
   classes() {
-    let className = this.p('typeClasses') + ' ' + this.p('classes');
+    let className = this.get('typeClasses') + ' ' + this.get('classes');
 
-    if(Array.isArray(this.p('owner')) && this.p('owner').indexOf(playerName) == -1)
+    if(Array.isArray(this.get('owner')) && this.get('owner').indexOf(playerName) == -1)
       className += ' foreign';
-    if(typeof this.p('owner') == 'string' && this.p('owner') != playerName)
+    if(typeof this.get('owner') == 'string' && this.get('owner') != playerName)
       className += ' foreign';
 
     return className;
@@ -202,10 +205,10 @@ export class Widget extends StateManaged {
   }
 
   async click() {
-    if(!this.p('clickable'))
+    if(!this.get('clickable'))
       return true;
 
-    if(Array.isArray(this.p('clickRoutine'))) {
+    if(Array.isArray(this.get('clickRoutine'))) {
       await this.evaluateRoutine('clickRoutine', {}, {});
       return true;
     } else {
@@ -214,10 +217,10 @@ export class Widget extends StateManaged {
   }
 
   css() {
-    let css = this.p('css');
+    let css = this.get('css');
 
-    css += '; width:'  + this.p('width')  + 'px';
-    css += '; height:' + this.p('height') + 'px';
+    css += '; width:'  + this.get('width')  + 'px';
+    css += '; height:' + this.get('height') + 'px';
     css += '; z-index:' + this.calculateZ();
     css += '; transform:' + this.cssTransform();
 
@@ -229,12 +232,12 @@ export class Widget extends StateManaged {
   }
 
   cssTransform() {
-    let transform = `translate(${this.p('x')}px, ${this.p('y')}px)`;
+    let transform = `translate(${this.get('x')}px, ${this.get('y')}px)`;
 
-    if(this.p('rotation'))
-      transform += ` rotate(${this.p('rotation')}deg)`;
-    if(this.p('scale') != 1)
-      transform += ` scale(${this.p('scale')})`;
+    if(this.get('rotation'))
+      transform += ` rotate(${this.get('rotation')}deg)`;
+    if(this.get('scale') != 1)
+      transform += ` scale(${this.get('scale')})`;
 
     return transform;
   }
@@ -248,11 +251,11 @@ export class Widget extends StateManaged {
     for(const field of o.fields) {
 
       if(field.type == 'checkbox') {
-        result[field.variable] = document.getElementById(this.p('id') + ';' + field.variable).checked;
+        result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).checked;
       }
 
       if(field.type == 'color' || field.type == 'number' || field.type == 'string') {
-        result[field.variable] = document.getElementById(this.p('id') + ';' + field.variable).value;
+        result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).value;
       }
 
     }
@@ -281,13 +284,14 @@ export class Widget extends StateManaged {
       return typeof ids == 'string' ? [ ids ] : ids;
     }
 
-    function w(ids, callback) {
-      return widgetFilter(w=>toA(ids).indexOf(w.p('id')) != -1).forEach(callback);
+    async function w(ids, callback) {
+      for(const a of widgetFilter(w=>toA(ids).indexOf(w.get('id')) != -1))
+        await callback(a);
     }
 
     batchStart();
 
-    if(this.p('debug') && !depth)
+    if(this.get('debug') && !depth)
       $('#debugButtonOutput').textContent = '';
 
     let variables = initialVariables;
@@ -297,20 +301,20 @@ export class Widget extends StateManaged {
         playerName,
         playerColor,
         activePlayers,
-        thisID : this.p('id')
+        thisID : this.get('id')
       });
       collections = Object.assign({}, initialCollections, {
         thisButton : [this]
       });
     }
 
-    const routine = this.p(property) !== undefined ? this.p(property) : property;
+    const routine = this.get(property) !== undefined ? this.get(property) : property;
 
     for(const original of routine) {
       const a = JSON.parse(JSON.stringify(original));
       var problems = [];
 
-      if(this.p('debug')) console.log(`${this.id}: ${JSON.stringify(original)}`);
+      if(this.get('debug')) console.log(`${this.id}: ${JSON.stringify(original)}`);
 
       if(a.applyVariables) this.applyVariables(a, variables, problems);
 
@@ -320,11 +324,11 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'CALL') {
-        setDefaults(a, { widget: this.p('id'), routine: 'clickRoutine', 'return': true, arguments: {}, variable: 'result', collection: 'result' });
+        setDefaults(a, { widget: this.get('id'), routine: 'clickRoutine', 'return': true, arguments: {}, variable: 'result', collection: 'result' });
         if(!a.routine.match(/Routine$/)) {
           problems.push('Routine parameters have to end with "Routine".');
         } else if(this.isValidID(a.widget)) {
-          if(!Array.isArray(widgets.get(a.widget).p(a.routine))) {
+          if(!Array.isArray(widgets.get(a.widget).get(a.routine))) {
             problems.push(`Widget ${a.widget} does not contain ${a.routine} (or it is no array).`);
           } else {
             // make sure everything is passed in a way that the variables and collections of this routine won't be changed
@@ -365,7 +369,7 @@ export class Widget extends StateManaged {
             for(let i=1; i<=a.count; ++i) {
               const clone = Object.assign(JSON.parse(JSON.stringify(w.state)), a.properties);
               const parent = clone.parent;
-              clone.clonedFrom = w.p('id');
+              clone.clonedFrom = w.get('id');
 
               delete clone.id;
               delete clone.parent;
@@ -375,15 +379,15 @@ export class Widget extends StateManaged {
               if(parent) {
                 // use moveToHolder so that CLONE triggers onEnter and similar features
                 cWidget.movedByButton = true;
-                cWidget.moveToHolder(widgets.get(parent));
+                await cWidget.moveToHolder(widgets.get(parent));
                 delete cWidget.movedByButton;
               }
 
               // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
-              if(!parent || !widgets.get(parent).p('alignChildren')) {
-                cWidget.p('x', (a.properties.x || w.p('x')) + a.xOffset * i);
-                cWidget.p('y', (a.properties.y || w.p('y')) + a.yOffset * i);
-                cWidget.updatePiles();
+              if(!parent || !widgets.get(parent).get('alignChildren')) {
+                await cWidget.set('x', (a.properties.x || w.get('x')) + a.xOffset * i);
+                await cWidget.set('y', (a.properties.y || w.get('y')) + a.yOffset * i);
+                await cWidget.updatePiles();
               }
 
               c.push(cWidget);
@@ -570,7 +574,7 @@ export class Widget extends StateManaged {
         setDefaults(a, { collection: 'DEFAULT' });
         if(isValidCollection(a.collection)) {
           for(const w of collections[a.collection]) {
-            removeWidgetLocal(w.p('id'));
+            await removeWidgetLocal(w.get('id'));
             for(const c in collections)
               collections[c] = collections[c].filter(x=>x!=w);
           }
@@ -580,39 +584,63 @@ export class Widget extends StateManaged {
       if(a.func == 'FLIP') {
         setDefaults(a, { count: 0, face: null, faceCyle: null, collection: 'DEFAULT' });
         if(a.holder !== undefined) {
-          if(this.isValidID(a.holder,problems))
-            w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>c.flip&&c.flip(a.face,a.faceCycle)));
+          if(this.isValidID(a.holder,problems)) {
+            await w(a.holder, async holder=>{
+              for(const c of holder.children().slice(0, a.count || 999999))
+                c.flip && await c.flip(a.face,a.faceCycle);
+            });
+          }
         } else if(isValidCollection(a.collection)) {
-          if(collections[a.collection].length)
-            collections[a.collection].slice(0, a.count || 999999).forEach(c=>c.flip&&c.flip(a.face,a.faceCycle));
-          else
+          if(collections[a.collection].length) {
+            for(const c of collections[a.collection].slice(0, a.count || 999999))
+              c.flip && await c.flip(a.face,a.faceCycle);
+          } else {
             problems.push(`Collection ${a.collection} is empty.`);
+          }
         }
       }
 
       if(a.func == 'GET') {
-        setDefaults(a, { variable: a.property || 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first' });
+        setDefaults(a, { variable: a.property || 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
         if(isValidCollection(a.collection)) {
-          switch(a.aggregation) {
-          case 'first':
-            if(collections[a.collection].length)
-              if(collections[a.collection][0].p(a.property) !== undefined) {
-                // always get a deep copy and not object references
-                variables[a.variable] = JSON.parse(JSON.stringify(collections[a.collection][0].p(a.property)));
-              } else {
-                variables[a.variable] = null;
-                problems.push(`Property ${a.property} missing from first item of collection, setting ${a.variable} to null.`);
-              }
-            else
-              problems.push(`Collection ${a.collection} is empty.`);
-            break;
-          case 'sum':
+          let c = collections[a.collection];
+          if (a.skipMissing)
+            c = c.filter(w=>w.get(a.property) !== null && w.get(a.property) !== undefined);
+          c = JSON.parse(JSON.stringify(c.map(w=>w.get(a.property))));
+          if(c.length) {
+            switch(a.aggregation) {
+            case 'first':
+            case 'last':
+              const index = (a.aggregation == 'last') ? c.length -1 : 0;
+              variables[a.variable] = (c[index] !== undefined) ? c[index] : null;
+              break;
+            case 'array':
+              variables[a.variable] = c;
+              break;
+            case 'average':
+              variables[a.variable] = c.map(w=>+w).reduce((a, b) => a + b) / c.length;
+              break;
+            case 'median':
+              const mid = Math.floor(c.length / 2);
+              const nums = [...c].map(w=>+w).sort((a, b) => a - b);
+              variables[a.variable] = c.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
+              break;
+            case 'min':
+            case 'max':
+              variables[a.variable] = Math[a.aggregation](...c);
+              break;
+            case 'sum':
+              variables[a.variable] = c.map(w=>+w).reduce((a, b) => a + b);
+              break;
+            default:
+              problems.push(`Aggregation ${a.aggregation} is unsupported.`);
+            }
+          } else if(a.aggregation == 'sum') {
             variables[a.variable] = 0;
-            for(const widget of collections[a.collection])
-              variables[a.variable] += Number(widget.p(a.property) || 0);
-            break;
-          default:
-            problems.push(`Aggregation ${a.aggregation} is unsupported.`);
+          } else if(a.aggregation == 'array') {
+            variables[a.variable] = [];
+          } else {
+            problems.push(`Collection ${a.collection} is empty.`);
           }
         }
       }
@@ -650,15 +678,17 @@ export class Widget extends StateManaged {
           problems.push(`Warning: Mode ${a.mode} will be interpreted as set.`);
         if(a.label !== undefined) {
           if (this.isValidID(a.label, problems)) {
-            w(a.label, widget=> {
-              widget.setText(a.value, a.mode, this.p('debug'), problems)
+            await w(a.label, async widget=>{
+              await widget.setText(a.value, a.mode, this.get('debug'), problems)
             });
           }
         } else if(isValidCollection(a.collection)) {
-          if(collections[a.collection].length)
-            collections[a.collection].forEach(c=>c.setText(a.value, a.mode, this.p('debug'), problems));
-          else
+          if(collections[a.collection].length) {
+            for(const c of collections[a.collection])
+              await c.setText(a.value, a.mode, this.get('debug'), problems);
+          } else {
             problems.push(`Collection ${a.collection} is empty.`);
+          }
         }
       }
 
@@ -667,31 +697,35 @@ export class Widget extends StateManaged {
         const count = a.count || 999999;
 
         if(this.isValidID(a.from, problems) && this.isValidID(a.to, problems)) {
-          w(a.from, source=>w(a.to, target=>source.children().slice(0, count).reverse().forEach(c=> {
-            if(a.face !== null && c.flip)
-              c.flip(a.face);
-            if(source == target) {
-              c.bringToFront();
-            } else {
-              c.movedByButton = true;
-              c.moveToHolder(target);
-              delete c.movedByButton;
+          await w(a.from, async source=>await w(a.to, async target=>{
+            for(const c of source.children().slice(0, count).reverse()) {
+              if(a.face !== null && c.flip)
+                c.flip(a.face);
+              if(source == target) {
+                await c.bringToFront();
+              } else {
+                c.movedByButton = true;
+                await c.moveToHolder(target);
+                delete c.movedByButton;
+              }
             }
-          })));
+          }));
         }
       }
 
       if(a.func == 'MOVEXY') {
         setDefaults(a, { count: 1, face: null, x: 0, y: 0 });
         if(this.isValidID(a.from, problems)) {
-          w(a.from, source=>source.children().slice(0, a.count || 999999).reverse().forEach(c=> {
-            if(a.face !== null && c.flip)
-              c.flip(a.face);
-            c.p('parent', null);
-            c.bringToFront();
-            c.setPosition(a.x, a.y, a.z || c.p('z'));
-            c.updatePiles();
-          }));
+          await w(a.from, async source=>{
+            for(const c of source.children().slice(0, a.count || 999999).reverse()) {
+              if(a.face !== null && c.flip)
+                c.flip(a.face);
+              await c.set('parent', null);
+              await c.bringToFront();
+              await c.setPosition(a.x, a.y, a.z || c.get('z'));
+              await c.updatePiles();
+            }
+          });
         }
       }
 
@@ -703,28 +737,39 @@ export class Widget extends StateManaged {
       if(a.func == 'RECALL') {
         setDefaults(a, { owned: true });
         if(this.isValidID(a.holder, problems)) {
-          toA(a.holder).forEach(holder=>{
-            const decks = widgetFilter(w=>w.p('type')=='deck'&&w.p('parent')==holder);
+          for(const holder of toA(a.holder)) {
+            const decks = widgetFilter(w=>w.get('type')=='deck'&&w.get('parent')==holder);
             if(decks.length) {
               for(const deck of decks) {
-                let cards = widgetFilter(w=>w.p('deck')==deck.p('id'));
+                let cards = widgetFilter(w=>w.get('deck')==deck.get('id'));
                 if(!a.owned)
-                  cards = cards.filter(c=>!c.p('owner'));
-                cards.forEach(c=>c.moveToHolder(widgets.get(holder)));
+                  cards = cards.filter(c=>!c.get('owner'));
+                for(const c of cards)
+                  await c.moveToHolder(widgets.get(holder));
               }
             } else {
               problems.push(`Holder ${holder} does not have a deck.`);
             }
-          });
+          };
         }
       }
 
       if(a.func == 'ROTATE') {
-        setDefaults(a, { count: 1, angle: 90, mode: 'add' });
-        if(this.isValidID(a.holder, problems)) {
-          w(a.holder, holder=>holder.children().slice(0, a.count || 999999).forEach(c=>{
-            c.rotate(a.angle, a.mode);
-          }));
+        setDefaults(a, { count: 1, angle: 90, mode: 'add', collection: 'DEFAULT' });
+        if(a.holder !== undefined) {
+          if(this.isValidID(a.holder, problems)) {
+            await w(a.holder, async holder=>{
+              for(const c of holder.children().slice(0, a.count || 999999))
+                await c.rotate(a.angle, a.mode);
+            });
+          }
+        } else if(isValidCollection(a.collection)) {
+          if(collections[a.collection].length) {
+            for(const c of collections[a.collection].slice(0, a.count || 999999))
+              await c.rotate(a.angle, a.mode);
+          } else {
+            problems.push(`Collection ${a.collection} is empty.`);
+          }
         }
       }
 
@@ -736,29 +781,34 @@ export class Widget extends StateManaged {
           let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(function(w) {
             if(w.isBeingRemoved)
               return false;
-            if(a.type != 'all' && w.p('type') != a.type)
+            if(a.type != 'all' && (w.get('type') != a.type && (a.type != 'card' || w.get('type') != 'pile')))
               return false;
             if(a.relation === '<')
-              return w.p(a.property) < a.value;
+              return w.get(a.property) < a.value;
             else if(a.relation === '<=')
-              return w.p(a.property) <= a.value;
+              return w.get(a.property) <= a.value;
             else if(a.relation === '!=')
-              return w.p(a.property) != a.value;
+              return w.get(a.property) != a.value;
             else if(a.relation === '>=')
-              return w.p(a.property) >= a.value;
+              return w.get(a.property) >= a.value;
             else if(a.relation === '>')
-              return w.p(a.property) > a.value;
+              return w.get(a.property) > a.value;
             else if(a.relation === 'in' && Array.isArray(a.value))
-              return a.value.indexOf(w.p(a.property)) != -1;
+              return a.value.indexOf(w.get(a.property)) != -1;
             if(a.relation != '==')
               problems.push(`Warning: Relation ${a.relation} interpreted as ==.`);
-            return w.p(a.property) === a.value;
+            return w.get(a.property) === a.value;
           }).slice(0, a.max).concat(a.mode == 'add' ? collections[a.collection] || [] : []);
 
           // resolve piles
-          c.filter(w=>w.p('type')=='pile').forEach(w=>c.push(...w.children()));
-          c = c.filter(w=>w.p('type')!='pile');
+          if(a.type != 'pile') {
+            c.filter(w=>w.get('type')=='pile').forEach(w=>c.push(...w.children()));
+            c = c.filter(w=>w.get('type')!='pile');
+          }
           collections[a.collection] = [...new Set(c)];
+
+          if(a.sortBy)
+            await this.sortWidgets(collections[a.collection], a.sortBy.key, a.sortBy.reverse, a.sortBy.locales, a.sortBy.options);
         }
       }
 
@@ -772,40 +822,49 @@ export class Widget extends StateManaged {
           problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
         } else if(isValidCollection(a.collection)) {
           for(const w of collections[a.collection]) {
-            w.p(a.property, compute(a.relation, null, w.p(a.property), a.value));
+            await w.set(a.property, compute(a.relation, null, w.get(a.property), a.value));
           }
         }
       }
 
       if(a.func == 'SORT') {
-        setDefaults(a, { key: 'value', reverse: false });
-        if(this.isValidID(a.holder, problems)) {
-          w(a.holder, holder=>{
-            let z = 1;
-            let children = holder.children().reverse().sort((w1,w2)=>{
-              if(typeof w1.p(a.key) == 'number')
-                return w1.p(a.key) - w2.p(a.key);
-              else
-                return w1.p(a.key).localeCompare(w2.p(a.key));
+        setDefaults(a, { key: 'value', reverse: false, collection: 'DEFAULT' });
+        if(a.holder !== undefined) {
+          if(this.isValidID(a.holder, problems)) {
+            await w(a.holder, async holder=>{
+              await this.sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options, true);
+              await holder.updateAfterShuffle();
             });
-            if(a.reverse)
-              children = children.reverse();
-            children.forEach(c=>c.p('z', ++z));
-            holder.updateAfterShuffle();
-          });
+          }
+        } else if(isValidCollection(a.collection)) {
+          if(collections[a.collection].length)
+            await this.sortWidgets(collections[a.collection], a.key, a.reverse, a.locales, a.options, true);
+          else
+            problems.push(`Collection ${a.collection} is empty.`);
         }
       }
 
       if(a.func == 'SHUFFLE') {
-        if(this.isValidID(a.holder, problems)) {
-          w(a.holder, holder=>{
-            holder.children().forEach(c=>c.p('z', Math.floor(Math.random()*10000)));
-            holder.updateAfterShuffle();
-          });
+        setDefaults(a, { collection: 'DEFAULT' });
+        if(a.holder !== undefined) {
+          if(this.isValidID(a.holder, problems)) {
+            await w(a.holder, async holder=>{
+              for(const c of holder.children())
+                await c.set('z', Math.floor(Math.random()*10000));
+              await holder.updateAfterShuffle();
+            });
+          }
+        } else if(isValidCollection(a.collection)) {
+          if(collections[a.collection].length) {
+            for(const c of collections[a.collection])
+              await c.set('z', Math.floor(Math.random()*10000));
+          } else {
+            problems.push(`Collection ${a.collection} is empty.`);
+          }
         }
       }
 
-      if(this.p('debug')) {
+      if(this.get('debug')) {
         let msg = ''
         msg += '\n\n\nOPERATION: \n' + JSON.stringify(a, null, '  ');
         if(problems.length)
@@ -813,7 +872,7 @@ export class Widget extends StateManaged {
         msg += '\n\n\nVARIABLES: \n' + JSON.stringify(variables, null, '  ');
         msg += '\n\nCOLLECTIONS: \n';
         for(const name in collections) {
-          msg += '  ' + name + ': ' + collections[name].map(w=>`${w.p('id')} (${w.p('type')})`).join(', ') + '\n';
+          msg += '  ' + name + ': ' + collections[name].map(w=>`${w.get('id')} (${w.get('type')})`).join(', ') + '\n';
         }
         $('#debugButtonOutput').textContent += msg.replace(/^/gm, '    '.repeat(depth));
         console.log(msg);
@@ -822,7 +881,7 @@ export class Widget extends StateManaged {
       }
     }
 
-    if(this.p('debug') && !depth)
+    if(this.get('debug') && !depth)
       showOverlay('debugButtonOverlay');
 
     batchEnd();
@@ -841,38 +900,38 @@ export class Widget extends StateManaged {
     problems.push(`Widget ID ${id} does not exist.`);
   }
 
-  moveToHolder(holder) {
-    this.bringToFront();
-    if(this.p('parent') && !this.currentParent)
-      this.currentParent = widgets.get(this.p('parent'));
+  async moveToHolder(holder) {
+    await this.bringToFront();
+    if(this.get('parent') && !this.currentParent)
+      this.currentParent = widgets.get(this.get('parent'));
     if(this.currentParent != holder)
-      this.checkParent(true);
+      await this.checkParent(true);
 
-    this.p('owner',  null);
-    this.p('parent', holder.p('id'));
+    await this.set('owner',  null);
+    await this.set('parent', holder.get('id'));
   }
 
-  moveStart() {
-    this.bringToFront();
+  async moveStart() {
+    await this.bringToFront();
     this.dropTargets = this.validDropTargets();
-    this.currentParent = widgets.get(this.p('parent'));
+    this.currentParent = widgets.get(this.get('parent'));
     this.hoverTargetDistance = 99999;
     this.hoverTarget = null;
 
-    this.p('parent', null);
+    await this.set('parent', null);
 
     for(const t of this.dropTargets)
       t.domElement.classList.add('droppable');
   }
 
-  move(x, y) {
-    const newX = (jeZoomOut ? x : Math.max(0-this.p('width' )*0.25, Math.min(1600+this.p('width' )*0.25, x))) - this.p('width' )/2;
-    const newY = (jeZoomOut ? y : Math.max(0-this.p('height')*0.25, Math.min(1000+this.p('height')*0.25, y))) - this.p('height')/2;
+  async move(x, y) {
+    const newX = (jeZoomOut ? x : Math.max(0-this.get('width' )*0.25, Math.min(1600+this.get('width' )*0.25, x))) - this.get('width' )/2;
+    const newY = (jeZoomOut ? y : Math.max(0-this.get('height')*0.25, Math.min(1000+this.get('height')*0.25, y))) - this.get('height')/2;
 
-    this.setPosition(newX, newY, this.p('z'));
+    await this.setPosition(newX, newY, this.get('z'));
     const myCenter = center(this.domElement);
 
-    this.checkParent();
+    await this.checkParent();
 
     this.hoverTargetChanged = false;
     if(this.hoverTarget) {
@@ -907,70 +966,78 @@ export class Widget extends StateManaged {
     }
   }
 
-  moveEnd() {
+  async moveEnd() {
     for(const t of this.dropTargets)
       t.domElement.classList.remove('droppable');
 
-    this.checkParent();
+    await this.checkParent();
 
     if(this.hoverTarget) {
-      this.moveToHolder(this.hoverTarget);
+      await this.moveToHolder(this.hoverTarget);
       this.hoverTarget.domElement.classList.remove('droptarget');
     }
 
     this.hideEnlarged();
-    this.updatePiles();
+    await this.updatePiles();
   }
 
-  onChildAdd(child, oldParentID) {
+  async onChildAdd(child, oldParentID) {
     this.childArray = this.childArray.filter(c=>c!=child);
     this.childArray.push(child);
-    this.onChildAddAlign(child, oldParentID);
+    await this.onChildAddAlign(child, oldParentID);
   }
 
-  onChildAddAlign(child, oldParentID) {
-    let childX = child.p('x');
-    let childY = child.p('y');
+  async onChildAddAlign(child, oldParentID) {
+    let childX = child.get('x');
+    let childY = child.get('y');
 
     if(!oldParentID) {
       childX -= this.absoluteCoord('x');
       childY -= this.absoluteCoord('y');
     }
 
-    if(this.p('alignChildren'))
-      child.setPosition(this.p('dropOffsetX'), this.p('dropOffsetY'), child.p('z'));
+    if(this.get('alignChildren'))
+      await child.setPosition(this.get('dropOffsetX'), this.get('dropOffsetY'), child.get('z'));
     else
-      child.setPosition(childX, childY, child.p('z'));
+      await child.setPosition(childX, childY, child.get('z'));
   }
 
-  onChildRemove(child) {
+  async onChildRemove(child) {
     this.childArray = this.childArray.filter(c=>c!=child);
     this.applyZ();
   }
 
-  onPropertyChange(property, oldValue, newValue) {
+  async onPropertyChange(property, oldValue, newValue) {
     if(property == 'parent') {
-      if(oldValue)
-        widgets.get(oldValue).onChildRemove(this);
-      if(newValue)
-        widgets.get(newValue).onChildAdd(this, oldValue);
-      this.updatePiles();
+      if(oldValue) {
+        const oldParent = widgets.get(oldValue);
+        await oldParent.onChildRemove(this);
+        if(this.get('type') != 'holder' && Array.isArray(oldParent.get('leaveRoutine')))
+          await oldParent.evaluateRoutine('leaveRoutine', {}, { child: [ this ] });
+      }
+      if(newValue) {
+        const newParent = widgets.get(newValue);
+        await newParent.onChildAdd(this, oldValue);
+        if(Array.isArray(newParent.get('enterRoutine')))
+          await newParent.evaluateRoutine('enterRoutine', { oldParentID: oldValue === undefined ? null : oldValue }, { child: [ this ] });
+      }
+      await this.updatePiles();
     }
   }
 
-  rotate(degrees, mode) {
+  async rotate(degrees, mode) {
     if(!mode || mode == 'add')
-      this.p('rotation', (this.p('rotation') + degrees) % 360);
+      await this.set('rotation', (this.get('rotation') + degrees) % 360);
     else
-      this.p('rotation', degrees);
+      await this.set('rotation', degrees);
   }
 
-  setPosition(x, y, z) {
-    if(this.p('grid').length && !this.p('parent')) {
+  async setPosition(x, y, z) {
+    if(this.get('grid').length && !this.get('parent')) {
       let closest = null;
       let closestDistance = 999999;
 
-      for(const grid of this.p('grid')) {
+      for(const grid of this.get('grid')) {
         if(x < (grid.minX || -99999) || x > (grid.maxX || 99999))
           continue;
         if(y < (grid.minY || -99999) || y > (grid.maxY || 99999))
@@ -985,40 +1052,41 @@ export class Widget extends StateManaged {
       if(closest) {
         x = x + closest.x/2 - (x - (closest.offsetX || 0)) % closest.x;
         y = y + closest.y/2 - (y - (closest.offsetY || 0)) % closest.y;
-        if(closest.rotation !== undefined)
-          this.p('rotation', closest.rotation);
+        for(const p in closest)
+          if([ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY' ].indexOf(p) == -1)
+            await this.set(p, closest[p]);
       }
 
       this.snappingToGrid = false;
     }
-    super.setPosition(x, y, z);
+    await super.setPosition(x, y, z);
   }
 
-  setText(text, mode, debug, problems) {
-    if (this.p('text') !== undefined) {
+  async setText(text, mode, debug, problems) {
+    if (this.get('text') !== undefined) {
       if(mode == 'inc' || mode == 'dec')
-        this.p('text', (parseInt(this.p('text')) || 0) + (mode == 'dec' ? -1 : 1) * text);
+        await this.set('text', (parseInt(this.get('text')) || 0) + (mode == 'dec' ? -1 : 1) * text);
       else if(mode == 'append')
-        this.p('text', this.p('text') + text);
+        await this.set('text', this.get('text') + text);
       else if(Array.isArray(text))
-        this.p('text', text.join(', '));
+        await this.set('text', text.join(', '));
       else if(typeof text == 'string' && text.match(/^[-+]?[0-9]+(\.[0-9]+)?$/))
-        this.p('text', +text);
+        await this.set('text', +text);
       else
-        this.p('text', text);
+        await this.set('text', text);
     } else
       problems.push(`Tried setting text property which doesn't exist for ${this.id}.`);
   }
 
   showEnlarged(event) {
-    if(this.p('enlarge')) {
+    if(this.get('enlarge')) {
       const e = $('#enlarged');
       e.innerHTML = this.domElement.innerHTML;
       e.className = this.domElement.className;
-      e.dataset.id = this.p('id');
+      e.dataset.id = this.get('id');
       e.style.cssText = this.domElement.style.cssText;
       e.style.display = this.domElement.style.display;
-      e.style.transform = `scale(calc(${this.p('enlarge')} * var(--scale)))`;
+      e.style.transform = `scale(calc(${this.get('enlarge')} * var(--scale)))`;
       if(this.domElement.getBoundingClientRect().left < window.innerWidth/2)
         e.classList.add('right');
     }
@@ -1046,7 +1114,7 @@ export class Widget extends StateManaged {
           label.textContent = field.label;
           dom.appendChild(input);
           dom.appendChild(label);
-          label.htmlFor = input.id = this.p('id') + ';' + field.variable;
+          label.htmlFor = input.id = this.get('id') + ';' + field.variable;
         }
 
         if(field.type == 'color') {
@@ -1057,7 +1125,7 @@ export class Widget extends StateManaged {
           label.textContent = field.label;
           dom.appendChild(label);
           dom.appendChild(input);
-          label.htmlFor = input.id = this.p('id') + ';' + field.variable;
+          label.htmlFor = input.id = this.get('id') + ';' + field.variable;
         }
 
         if(field.type == 'number') {
@@ -1070,7 +1138,7 @@ export class Widget extends StateManaged {
           label.textContent = field.label;
           dom.appendChild(label);
           dom.appendChild(input);
-          label.htmlFor = input.id = this.p('id') + ';' + field.variable;
+          label.htmlFor = input.id = this.get('id') + ';' + field.variable;
         }
 
         if(field.type == 'string') {
@@ -1080,7 +1148,7 @@ export class Widget extends StateManaged {
           label.textContent = field.label;
           dom.appendChild(label);
           dom.appendChild(input);
-          label.htmlFor = input.id = this.p('id') + ';' + field.variable;
+          label.htmlFor = input.id = this.get('id') + ';' + field.variable;
         }
 
         if(field.type == 'text') {
@@ -1108,6 +1176,21 @@ export class Widget extends StateManaged {
     });
   }
 
+  async sortWidgets(w, key, reverse, locales, options, rearrange) {
+    let z = 1;
+    let children = w.reverse().sort((w1,w2)=>{
+      if(typeof w1.get(key) == 'number')
+        return w1.get(key) - w2.get(key);
+      else
+        return w1.get(key).localeCompare(w2.get(key), locales, options);
+    });
+    if(reverse)
+      children = children.reverse();
+    if(rearrange)
+      for(const c of children)
+        await c.set('z', ++z);
+  }
+
   supportsPiles() {
     return true;
   }
@@ -1116,51 +1199,53 @@ export class Widget extends StateManaged {
     this.domElement.className = this.classes();
   }
 
-  updatePiles() {
-    if(this.isBeingRemoved || this.p('parent') && !widgets.get(this.p('parent')).supportsPiles())
+  async updatePiles() {
+    if(this.isBeingRemoved || this.get('parent') && !widgets.get(this.get('parent')).supportsPiles())
       return;
 
     for(const [ widgetID, widget ] of widgets) {
       // check if this widget is closer than 10px from another widget in the same parent
-      if(widget != this && widget.p('parent') == this.p('parent') && Math.abs(widget.p('x')-this.p('x')) < 10 && Math.abs(widget.p('y')-this.p('y')) < 10) {
-        if(widget.p('owner') !== this.p('owner') || widget.isBeingRemoved)
+      if(widget != this && widget.get('parent') == this.get('parent') && Math.abs(widget.get('x')-this.get('x')) < 10 && Math.abs(widget.get('y')-this.get('y')) < 10) {
+        if(widget.get('owner') !== this.get('owner') || widget.isBeingRemoved)
           continue;
 
         // if a card gets dropped onto a card, they create a new pile and are added to it
-        if(widget.p('type') == 'card' && this.p('type') == 'card') {
+        if(widget.get('type') == 'card' && this.get('type') == 'card') {
           const pile = {
             type: 'pile',
-            parent: this.p('parent'),
-            x: widget.p('x'),
-            y: widget.p('y'),
-            width: this.p('width'),
-            height: this.p('height')
+            parent: this.get('parent'),
+            x: widget.get('x'),
+            y: widget.get('y'),
+            width: this.get('width'),
+            height: this.get('height')
           };
           addWidgetLocal(pile);
-          this.p('parent', pile.id);
-          widget.p('parent', pile.id);
+          await this.set('parent', pile.id);
+          await widget.set('parent', pile.id);
           break;
         }
 
         // if a pile gets dropped onto a pile, all children of one pile are moved to the other (the empty one destroys itself)
-        if(widget.p('type') == 'pile' && this.p('type') == 'pile') {
-          this.children().reverse().forEach(w=>{w.p('parent', widget.p('id')); w.bringToFront()});
+        if(widget.get('type') == 'pile' && this.get('type') == 'pile') {
+          for(const w of this.children().reverse())
+            await w.set('parent', widget.get('id')); await w.bringToFront();
           break;
         }
 
         // if a pile gets dropped onto a card, the card is added to the pile but the pile is moved to the original position of the card
-        if(widget.p('type') == 'card' && this.p('type') == 'pile') {
-          this.children().reverse().forEach(w=>w.bringToFront());
-          this.p('x', widget.p('x'));
-          this.p('y', widget.p('y'));
-          widget.p('parent', this.p('id'));
+        if(widget.get('type') == 'card' && this.get('type') == 'pile') {
+          for(const w of this.children().reverse())
+            await w.bringToFront();
+          await this.set('x', widget.get('x'));
+          await this.set('y', widget.get('y'));
+          await widget.set('parent', this.get('id'));
           break;
         }
 
         // if a card gets dropped onto a pile, it simply gets added to the pile
-        if(widget.p('type') == 'pile' && this.p('type') == 'card') {
-          this.bringToFront();
-          this.p('parent', widget.p('id'));
+        if(widget.get('type') == 'pile' && this.get('type') == 'card') {
+          await this.bringToFront();
+          await this.set('parent', widget.get('id'));
           break;
         }
       }
