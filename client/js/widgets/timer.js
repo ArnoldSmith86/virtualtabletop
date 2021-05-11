@@ -46,7 +46,7 @@ export class Timer extends Widget {
 
   onPropertyChange(property, oldValue, newValue) {
     super.onPropertyChange(property, oldValue, newValue);
-    if(typeof(this.get('end')=="number")){
+    if(this.get('end')!=null){
       if ((this.get('countdown') && this.get('seconds')<=this.get('end')) || (!this.get('countdown') && this.get('seconds')>=this.get('end')) ) {
         this.set('typeClasses','widget timer alert')
       } else {this.set('typeClasses','widget timer')};
