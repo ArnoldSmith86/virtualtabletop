@@ -2,7 +2,10 @@ let waitingForStateCreation = null;
 let variantIDjustUpdated = null;
 
 async function addState(e, type, src, id) {
-  const initialStatus = e && e.target.innerText;
+  const initialStatus = e && (e.target.dataset.initialText || e.target.innerText);
+  if(e && !e.target.dataset.initialText)
+    e.target.dataset.initialText = initialStatus;
+
   const status = function(t) {
     if(e)
       e.target.innerText=t;
