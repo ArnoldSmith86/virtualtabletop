@@ -220,6 +220,53 @@ function generateCounterWidgets(id, x, y) {
   ];
 }
 
+function generateTimerWidgets(id, x, y) {
+  return [
+    { type:'timer', id: id, x: x, y: y },
+    {
+      parent: id,
+      id: id+'P',
+      x: 120,
+      y: -4,
+      width: 36,
+      height: 36,
+      type: "button",
+      movableInEdit: false,
+      clickRoutine: [
+        {
+          func: "TIMERSTATE",
+          timer: id
+        }
+      ],
+      image: "/i/button-icons/White-Play_Pause.svg",
+      css: "background-size: 75% 75%"
+    },
+    {
+      parent: id,
+      id: id+'R',
+      x: 80,
+      y: -4,
+      width: 36,
+      height: 36,
+      type: "button",
+      movableInEdit: false,
+      clickRoutine: [
+        {
+          func: "TIMERSTATE",
+          timer: id,
+          mode: "pause"
+        },
+        {
+          func: "TIMERTIME",
+          timer: id
+        }
+      ],
+      image: "/i/button-icons/White-Reset.svg",
+      css: "background-size: 80% 80%"
+    }
+  ];
+}
+
 function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
   for(const wi of widgetsToAdd) {
     let w = null;
@@ -229,6 +276,7 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
     if(wi.type == 'holder') w = new Holder(wi.id);
     if(wi.type == 'label')  w = new Label(wi.id);
     if(wi.type == 'pile')   w = new Pile(wi.id);
+    if(wi.type == 'timer')  w = new Timer(wi.id);
     widgets.set(wi.id, w);
     w.applyDelta(wi);
     if(!wi.parent) {
@@ -338,12 +386,6 @@ function populateAddWidgetOverlay() {
     y: 300
   });
 
-  addWidgetToAddWidgetOverlay(new Timer('add-timer'), {
-    type: 'timer',
-    x: 810,
-    y: 500
-  });
-
   y = 100;
   for(const sides of [ 2, 4, 6, 8, 10, 12, 20 ]) {
     addWidgetToAddWidgetOverlay(new Spinner('add-spinner'+sides), {
@@ -358,6 +400,11 @@ function populateAddWidgetOverlay() {
 
   addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 820, 700), function() {
     for(const w of generateCounterWidgets(generateUniqueWidgetID(), 820, 700))
+      addWidgetLocal(w);
+  });
+
+  addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 775, 500), function() {
+    for(const w of generateTimerWidgets(generateUniqueWidgetID(), 775, 500))
       addWidgetLocal(w);
   });
 
