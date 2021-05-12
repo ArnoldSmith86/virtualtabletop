@@ -878,7 +878,7 @@ export class Widget extends StateManaged {
         } else if(isValidCollection(a.collection)) {
           if(collections[a.collection].length) {
             for(const c of collections[a.collection])
-              if(widget.setMilliseconds)
+              if(c.setMilliseconds)
                 await c.setMilliseconds(a.value, a.mode);
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
