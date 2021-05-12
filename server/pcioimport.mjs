@@ -19,6 +19,12 @@ export default async function convertPCIO(content) {
   const widgets = JSON.parse(await zip.files['widgets.json'].async('string'));
 
   const nameMap = {};
+  try {
+    // created by the client while removing already uploaded assets
+    for(const [ k, v ] of Object.entries(JSON.parse(await zip.files['asset-map.json'].async('string'))))
+      nameMap[`package://${v}`] = `/assets/${k}`;
+  } catch(e) {}
+
   for(const filename in zip.files) {
     if(filename.match(/^\/?userassets/) && zip.files[filename]._data && zip.files[filename]._data.uncompressedSize < 2097152) {
       const targetFile = '/assets/' + zip.files[filename]._data.crc32 + '_' + zip.files[filename]._data.uncompressedSize;
