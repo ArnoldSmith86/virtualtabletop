@@ -61,12 +61,14 @@ function v2UpdateSelectDefault(routine) {
 
 function v3RemoveComputeAndRandomAndApplyVariables(routine) {
   const operationsToSplice = [];
+  let orderAdded = 0;
 
   let stringCounter = 0;
   function removeExistingVariables(str, routineIndex) {
     return str.replace(/\$\{[^}]+\}/g, function(match) {
       operationsToSplice.push({
         index: +routineIndex,
+        order: orderAdded++,
         operation: `var internal_computeMigration_existingVariable${stringCounter} = '${escapeString(match)}' // This was added by the automatic file migration because the new expression syntax does not support escaping variable expressions.`
       });
       return `\${internal_computeMigration_existingVariable${stringCounter++}}`;
@@ -106,14 +108,14 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
   }
 
   function addTempSet(i, propertySuffix, value, missingFeature) {
-    operationsToSplice.push({ index: +i, forOperation: +i, operation: {
+    operationsToSplice.push({ index: +i, order: orderAdded++, operation: {
       note: `This was added by the automatic file migration because the new expression syntax does not support ${missingFeature}.`,
       func: 'SET',
       collection: 'thisButton',
       property: `internal_computeMigration_${propertySuffix}`,
       value
     }});
-    operationsToSplice.push({ index: +i+1, forOperation: +i, operation: {
+    operationsToSplice.push({ index: +i+1, order: orderAdded++, operation: {
       note: `This was added by the automatic file migration because the new expression syntax does not support ${missingFeature}.`,
       func: 'SET',
       collection: 'thisButton',
@@ -121,6 +123,20 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
       value: null
     }});
     return '${PROPERTY internal_computeMigration_' + propertySuffix + '}';
+  }
+
+  let variableCount = 0;
+  function toVariable(i, str) {
+    if(str.match(/^\$\{PROPERTY /)) {
+      const newVariable = `internal_computeMigration_propertyToVariable${variableCount++}`;
+      operationsToSplice.push({
+        index: +i,
+        order: orderAdded++,
+        operation: `var ${newVariable} = ${str} // This was added by the automatic file migration because the new expression syntax does not support using widget properties as variable name or operation.`
+      });
+      return '${' + newVariable + '}';
+    }
+    return str;
   }
 
   function escapeString(str, valid) {
@@ -165,25 +181,33 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
       const threeOperands = 'slice,randRange,substr,replace,replaceAll';
       const validOperations = `${noOperandBeforeOperation},${lessThanTwoOperands},${threeOperands},=,+,-,*,**,/,%,<,<=,==,!=,>=,>,&&,||,pow,charAt,charCodeAt,codePointAt,concat,includes,endsWith,indexOf,lastIndexOf,localeCompare,match,padEnd,padStart,repeat,search,split,startsWith,toFixed,getIndex,concatArray,includes,indexOf,join,lastIndexOf`;
 
-      routine[i] = `var ${escapeString(op.variable || 'COMPUTE')} = `;
+      if(String(op.variable).match(/^\$\{[^}]+\}$/))
+        routine[i] = `var ${toVariable(i, op.variable).replace(/^\$\{([^}]+)\}$/, (_,v)=>`$${v}`)} = `;
+      else
+        routine[i] = `var ${escapeString(op.variable || 'COMPUTE')} = `;
+
       if(noOperandBeforeOperation.split(',').indexOf(op.operation) == -1)
         routine[i] += `${getOp('operand1')} `;
+
       if(String(op.operation).match(/^\$\{[^}]+\}$/))
-        routine[i] += op.operation.replace(/^\$\{([^}]+)\}$/, (_,v)=>`🧮${v}`);
+        routine[i] += toVariable(i, op.operation).replace(/^\$\{([^}]+)\}$/, (_,v)=>`🧮${v}`);
       else
         routine[i] += `${op.operation || '+'}`;
+
       if(operandsAfterOperation.split(',').indexOf(op.operation) != -1)
         routine[i] += ` ${getOp('operand1')}`;
       if(lessThanTwoOperands.split(',').indexOf(op.operation) == -1)
         routine[i] += ` ${getOp('operand2')}`;
       if(threeOperands.split(',').indexOf(op.operation) != -1)
         routine[i] += ` ${getOp('operand3')}`;
+
       if(op.note || op.Note || op.comment || op.Comment)
         routine[i] += ` // ${op.note || op.Note || op.comment || op.Comment}`;
 
       if(!String(op.operation).match(/^\$\{[^}]+\}$/) && validOperations.split(',').indexOf(op.operation || '+') == -1) {
         operationsToSplice.push({
           index: +i,
+          order: orderAdded++,
           operation: `var internal_computeMigration_isVariableNull = \${${escapeString(op.variable || 'COMPUTE')}} == null // This was added by the automatic file migration because the COMPUTE used an invalid operation which leads to different results with the new expression syntax.`
         });
         routine[i] = {
@@ -225,6 +249,6 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
     }
   }
 
-  for(const o of operationsToSplice.sort((a,b)=>a.forOperation==b.forOperation?b.index-a.index:b.forOperation-a.forOperation))
+  for(const o of operationsToSplice.sort((a,b)=>a.index==b.index?b.order-a.order:b.index-a.index))
     routine.splice(o.index, 0, o.operation);
 }
