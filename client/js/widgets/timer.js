@@ -79,6 +79,17 @@ export class Timer extends Widget {
     }
   }
 
+  async setMilliseconds(milliseconds, mode) {
+    let ms = this.get('start');
+
+    if(mode == 'inc' || mode == 'dec')
+      ms = this.get('milliseconds') + (mode == 'dec' ? -1 : 1) * milliseconds;
+    else if(mode == 'set')
+      ms = milliseconds;
+
+    await this.set('milliseconds', parseInt(ms));
+  }
+
   async tick() {
     await this.set('milliseconds', this.get('milliseconds') + this.getPrecision()*(this.get('countdown') ? -1 : 1));
   }
