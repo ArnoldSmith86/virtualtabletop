@@ -6,6 +6,16 @@ export function $a(selector, parent) {
   return (parent || document).querySelectorAll(selector);
 }
 
+export function setText(node, text) {
+  for(const child of node.childNodes) {
+    if(child.nodeType == Node.TEXT_NODE) {
+      child.nodeValue = text;
+      return;
+    }
+  }
+  node.appendChild(document.createTextNode(text));
+}
+
 export function removeFromDOM(node) {
   if(typeof node == 'string') {
     for(const c of $a(node))

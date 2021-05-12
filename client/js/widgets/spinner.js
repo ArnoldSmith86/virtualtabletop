@@ -81,7 +81,7 @@ class Spinner extends Widget {
     this.domElement.appendChild(bg);
 
     this.spinner = document.createElement('div');
-    this.spinner.setAttribute('class', 'spinner');
+    this.spinner.setAttribute('class', 'spinningPart');
     this.spinner.setAttribute('style', this.get('spinnerCSS'));
     this.domElement.appendChild(this.spinner);
 
