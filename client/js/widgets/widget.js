@@ -1227,8 +1227,10 @@ export class Widget extends StateManaged {
 
         // if a pile gets dropped onto a pile, all children of one pile are moved to the other (the empty one destroys itself)
         if(widget.get('type') == 'pile' && this.get('type') == 'pile') {
-          for(const w of this.children().reverse())
-            await w.set('parent', widget.get('id')); await w.bringToFront();
+          for(const w of this.children().reverse()) {
+            await w.set('parent', widget.get('id'));
+            await w.bringToFront();
+          }
           break;
         }
 
