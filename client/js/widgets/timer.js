@@ -11,9 +11,10 @@ export class Timer extends Widget {
       movable: false,
       clickable: true,
 
-      seconds: 0,
-      precision: 1,
+      milliseconds: 0,
+      precision: 1000,
       paused: true,
+      alert: false,
       countdown: false,
       start: 0,
       end: null
@@ -22,16 +23,36 @@ export class Timer extends Widget {
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
-    if(delta.seconds !== undefined) {
-      const s = Math.abs(delta.seconds);
-      this.domElement.textContent = `${delta.seconds < 0 ? '-' : ''}${Math.floor(s/60)}:${Math.floor(s%60)}`.replace(/:(\d)$/, ':0$1');
+    if(delta.milliseconds !== undefined) {
+      const s = Math.floor(Math.abs(delta.milliseconds)/1000);
+      this.domElement.textContent = `${delta.milliseconds < 0 ? '-' : ''}${Math.floor(s/60)}:${Math.floor(s%60)}`.replace(/:(\d)$/, ':0$1');
     }
+
     if(delta.paused !== undefined && delta.paused && this.interval)
       clearInterval(this.interval);
   }
 
+  classes() {
+    let className = super.classes();
+
+    if(this.get('alert'))
+      className += ' alert';
+
+    return className;
+  }
+
+  classesProperties() {
+    const p = super.classesProperties();
+    p.push('alert');
+    return p;
+  }
+
   async click() {
     await this.togglePaused();
+  }
+
+  getPrecision() {
+    return Math.max(this.get('precision'), 100);
   }
 
   getImage() {
@@ -44,27 +65,25 @@ export class Timer extends Widget {
     return getSVG(this.get('image'), replaces, _=>this.domElement.style.cssText = this.css());
   }
 
-  onPropertyChange(property, oldValue, newValue) {
-    super.onPropertyChange(property, oldValue, newValue);
-    if(this.get('end')!=null){
-      if ((this.get('countdown') && this.get('seconds')<=this.get('end')) || (!this.get('countdown') && this.get('seconds')>=this.get('end')) ) {
-        this.set('typeClasses','widget timer alert')
-      } else {this.set('typeClasses','widget timer')};
-    } else {this.set('typeClasses','widget timer')};
+  async onPropertyChange(property, oldValue, newValue) {
+    await super.onPropertyChange(property, oldValue, newValue);
+
+    if(property == 'milliseconds')
+      await this.set('alert', this.get('end') !== null && ((this.get('countdown') && newValue<=this.get('end')) || (!this.get('countdown') && newValue>=this.get('end'))));
+
     if(property == 'paused') {
       if(this.get('paused') && this.interval)
         clearInterval(this.interval);
       if(!this.get('paused'))
-        this.interval = setInterval(_=>this.tick(), 1000*this.get('precision'));
+        this.interval = setInterval(_=>this.tick(), this.getPrecision());
     }
   }
 
   async tick() {
-    await this.set('seconds', this.get('precision')*Math.round((this.get('seconds') + (this.get('countdown') ? -1 : 1)*this.get('precision'))/this.get('precision')));
+    await this.set('milliseconds', this.get('milliseconds') + this.getPrecision()*(this.get('countdown') ? -1 : 1));
   }
 
   async togglePaused(paused) {
-    await this.set('precision', Math.max(this.get('precision'), 0.1))
     await this.set('paused', paused === undefined ? !this.get('paused') : paused);
   }
 }
