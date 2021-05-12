@@ -864,6 +864,28 @@ export class Widget extends StateManaged {
         }
       }
 
+      if(a.func == 'TIMERSTATE') {
+        setDefaults(a, { mode: 'toggle', collection: 'DEFAULT' });
+        if([ 'pause', 'start', 'toggle'].indexOf(a.mode) == -1)
+          problems.push(`Warning: Mode ${a.mode} will be interpreted as toggle.`);
+        if(a.timer !== undefined) {
+          if (this.isValidID(a.timer, problems)) {
+            await w(a.timer, async widget=>{
+              if(widget.setPaused)
+                await widget.setPaused(a.mode);
+            });
+          }
+        } else if(isValidCollection(a.collection)) {
+          if(collections[a.collection].length) {
+            for(const c of collections[a.collection])
+              if(c.setPaused)
+                await c.setPaused(a.mode);
+          } else {
+            problems.push(`Collection ${a.collection} is empty.`);
+          }
+        }
+      }
+
       if(a.func == 'TIMERTIME') {
         setDefaults(a, { value: 0, mode: 'reset', collection: 'DEFAULT' });
         if([ 'set', 'dec', 'inc', 'reset' ].indexOf(a.mode) == -1)

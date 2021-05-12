@@ -453,6 +453,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('SET', { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
   jeAddRoutineOperationCommands('SORT', { key: 'value', reverse: false, locales: null, options: null, holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('SHUFFLE', { holder: null, collection: 'DEFAULT' });
+  jeAddRoutineOperationCommands('TIMERSTATE', { mode: 'toggle', timer: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('TIMERTIME', { value: 0, mode: 'reset', timer: null, collection: 'DEFAULT' });
 
   jeAddCSScommands();
@@ -471,6 +472,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=', 'in' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ type', [ 'all', null, 'button', 'card', 'deck', 'holder', 'label', 'spinner' ]);
   jeAddEnumCommands('^.*\\(SET\\) ↦ relation', [ '+', '-', '=' ]);
+  jeAddEnumCommands('^.*\\(TIMERSTATE\\) ↦ mode', [ 'pause', 'start', 'toggle' ]);
   jeAddEnumCommands('^.*\\(TIMERTIME\\) ↦ mode', [ 'set', 'dec', 'inc', 'reset' ]);
 
   jeAddNumberCommand('increment number', '+', x=>x+1);

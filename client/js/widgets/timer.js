@@ -48,7 +48,7 @@ export class Timer extends Widget {
   }
 
   async click() {
-    await this.togglePaused();
+    await this.setPaused();
   }
 
   getPrecision() {
@@ -94,7 +94,13 @@ export class Timer extends Widget {
     await this.set('milliseconds', this.get('milliseconds') + this.getPrecision()*(this.get('countdown') ? -1 : 1));
   }
 
-  async togglePaused(paused) {
-    await this.set('paused', paused === undefined ? !this.get('paused') : paused);
+  async setPaused(mode) {
+    if(mode == 'pause')
+      await this.set('paused',  true);
+    else if(mode == 'start')
+      await this.set('paused',  false);
+    else
+      await this.set('paused',  !this.get('paused'));
+
   }
 }
