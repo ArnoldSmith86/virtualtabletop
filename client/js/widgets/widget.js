@@ -864,6 +864,26 @@ export class Widget extends StateManaged {
         }
       }
 
+      if(a.func == 'TIMERTIME') {
+        setDefaults(a, { value: 0, mode: 'reset', collection: 'DEFAULT' });
+        if([ 'set', 'dec', 'inc', 'reset' ].indexOf(a.mode) == -1)
+          problems.push(`Warning: Mode ${a.mode} will be interpreted as reset.`);
+        if(a.timer !== undefined) {
+          if (this.isValidID(a.timer, problems)) {
+            await w(a.timer, async widget=>{
+              await widget.setSeconds(a.value, a.mode, this.get('debug'), problems)
+            });
+          }
+        } else if(isValidCollection(a.collection)) {
+          if(collections[a.collection].length) {
+            for(const c of collections[a.collection])
+              await c.setSeconds(a.value, a.mode, this.get('debug'), problems);
+          } else {
+            problems.push(`Collection ${a.collection} is empty.`);
+          }
+        }
+      }
+
       if(this.get('debug')) {
         let msg = ''
         msg += '\n\n\nOPERATION: \n' + JSON.stringify(a, null, '  ');
@@ -1076,6 +1096,18 @@ export class Widget extends StateManaged {
         await this.set('text', text);
     } else
       problems.push(`Tried setting text property which doesn't exist for ${this.id}.`);
+  }
+
+  async setSeconds(seconds, mode, debug, problems) {
+    if (this.get('seconds') !== undefined) {
+      if(mode == 'inc' || mode == 'dec')
+        await this.set('seconds', (parseInt(this.get('seconds')) || 0) + (mode == 'dec' ? -1 : 1) * seconds);
+      else if(mode == 'set')
+        await this.set('seconds', seconds);
+      else
+        await this.set('seconds', this.get('start') || 0);
+    } else
+      problems.push(`Tried setting seconds property which doesn't exist for ${this.id}.`);
   }
 
   showEnlarged(event) {
