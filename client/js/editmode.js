@@ -398,8 +398,8 @@ function populateAddWidgetOverlay() {
     y += 120;
   }
 
-  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 820, 700), function() {
-    for(const w of generateCounterWidgets(generateUniqueWidgetID(), 820, 700))
+  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 827, 700), function() {
+    for(const w of generateCounterWidgets(generateUniqueWidgetID(), 827, 700))
       addWidgetLocal(w);
   });
 
