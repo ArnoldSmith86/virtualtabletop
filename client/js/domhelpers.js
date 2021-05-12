@@ -36,10 +36,15 @@ export function selectFile(getContents, multipleCallback) {
     upload.type = 'file';
     if (typeof multipleCallback === 'function') upload.setAttribute('multiple', true);
     upload.addEventListener('change', function(e) {
-      if(!getContents)
-        resolve(e.target.files[0]);
+      if(!getContents && typeof multipleCallback !== 'function')
+        return resolve(e.target.files[0]);
 
       for(const file of e.target.files) {
+        if(!getContents && typeof multipleCallback === 'function') {
+          multipleCallback(file);
+          continue;
+        }
+
         const name = file.name;
         const reader = new FileReader();
         reader.addEventListener('load', function(e) {
