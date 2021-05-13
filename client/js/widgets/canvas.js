@@ -29,10 +29,11 @@ class Canvas extends Widget {
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
+
     if(this.context) {
       for(let x=0; x<10; ++x) {
         for(let y=0; y<10; ++y) {
-          if(delta[`c${x}${y}`] !== undefined) {
+          if(delta[`c${x}${y}`] !== undefined || delta.colorMap !== undefined) {
             const colors = this.get('colorMap');
             const region = this.get(`c${x}${y}`);
             for(let px=0; px<10; ++px) {
