@@ -224,6 +224,7 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
   for(const wi of widgetsToAdd) {
     let w = null;
     if(wi.type == 'button') w = new Button(wi.id);
+    if(wi.type == 'canvas') w = new Canvas(wi.id);
     if(wi.type == 'card')   w = new Card(wi.id);
     if(wi.type == 'deck')   w = new Deck(wi.id);
     if(wi.type == 'holder') w = new Holder(wi.id);

@@ -55,6 +55,7 @@ export default function minifyRoom() {
           'client/js/widgets/widget.js',
           'client/js/widgets/basicwidget.js',
           'client/js/widgets/button.js',
+          'client/js/widgets/canvas.js',
           'client/js/widgets/card.js',
           'client/js/widgets/deck.js',
           'client/js/widgets/holder.js',
