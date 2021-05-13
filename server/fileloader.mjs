@@ -5,6 +5,7 @@ import JSZip from 'jszip';
 
 import { VERSION } from './fileupdater.mjs';
 import PCIO from './pcioimport.mjs';
+import Logging from './logging.mjs';
 
 const dirname = path.resolve() + '/save/links';
 const filename = dirname + '.json';
@@ -51,6 +52,8 @@ async function readStatesFromBuffer(buffer) {
     if(filename.match(/\.(vtt|pcio)$/) && zip.files[filename]._data)
       states[filename] = await readVariantsFromBuffer(await zip.files[filename].async('nodebuffer'));
   }
+  if(states.length == 0)
+    throw new Logging.UserError(404, 'Did not find any JSON files in the ZIP file.');
   return states;
 }
 
@@ -87,12 +90,12 @@ async function readVariantsFromBuffer(buffer) {
     const variants = {};
     for(const filename in zip.files) {
 
-      if(filename.match(/^[^\/]+\.json$/) && zip.files[filename]._data) {
+      if(filename.match(/^[^\/]+\.json$/) && filename != 'asset-map.json' && zip.files[filename]._data) {
         if(zip.files[filename]._data.uncompressedSize >= 20971520)
-          throw `${filename} is bigger than 20 MiB.`;
+          throw new Logging.UserError(403, `${filename} is bigger than 20 MiB.`);
         const variant = JSON.parse(await zip.files[filename].async('string'));
         if(typeof variant._meta.version != 'number' || variant._meta.version > VERSION || variant._meta.version < 0)
-          throw `Found a valid JSON file but version ${variant._meta.version} is not supported. Please update your server.`;
+          throw new Logging.UserError(403, `Found a valid JSON file but version ${variant._meta.version} is not supported. Please update your server.`);
         variants[filename] = variant;
       }
 
@@ -104,7 +107,7 @@ async function readVariantsFromBuffer(buffer) {
 
     }
     if(!Object.keys(variants).length)
-      throw 'Did not find any JSON files in the ZIP file.';
+      throw new Logging.UserError(404, 'Did not find any JSON files in the ZIP file.');
     return variants;
   }
 }

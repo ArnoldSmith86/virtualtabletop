@@ -24,9 +24,9 @@ export class Button extends Widget {
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
     if(delta.text !== undefined)
-      this.domElement.textContent = delta.text;
+      setText(this.domElement, delta.text);
 
-    for(const property of Object.values(this.p('svgReplaces') || {}))
+    for(const property of Object.values(this.get('svgReplaces') || {}))
       if(delta[property] !== undefined)
         this.domElement.style.cssText = this.css();
   }
@@ -34,9 +34,9 @@ export class Button extends Widget {
   css() {
     let css = super.css();
 
-    if(this.p('color'))
-      css += '; --color:' + this.p('color');
-    if(this.p('image'))
+    if(this.get('color'))
+      css += '; --color:' + this.get('color');
+    if(this.get('image'))
       css += '; background-image: url("' + this.getImage() + '")';
 
     return css;
@@ -49,13 +49,13 @@ export class Button extends Widget {
   }
 
   getImage() {
-    if(!Object.keys(this.p('svgReplaces')).length)
-      return this.p('image');
+    if(!Object.keys(this.get('svgReplaces')).length)
+      return this.get('image');
 
     const replaces = {};
-    for(const key in this.p('svgReplaces'))
-      replaces[key] = this.p(this.p('svgReplaces')[key]);
-    return getSVG(this.p('image'), replaces, _=>this.domElement.style.cssText = this.css());
+    for(const key in this.get('svgReplaces'))
+      replaces[key] = this.get(this.get('svgReplaces')[key]);
+    return getSVG(this.get('image'), replaces, _=>this.domElement.style.cssText = this.css());
   }
 }
 

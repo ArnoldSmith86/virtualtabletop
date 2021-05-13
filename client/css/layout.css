@@ -153,6 +153,7 @@ body.aspectTooGood #hideToolbarButton {
   flex-direction: column;
   padding: 5% 10%;
   box-sizing: border-box;
+  overflow:auto
 
 }
 
@@ -267,6 +268,9 @@ body.aspectTooGood #hideToolbarButton {
   background-repeat: no-repeat;
   margin:1px;
 }
+.prettyButton:hover{
+  background-color: var(--VTTblueDark);
+}
 
 .gameMenu {
   background-position:  5px center !important;
@@ -327,6 +331,9 @@ body.aspectTooGood #hideToolbarButton {
   background-image:url(/i/icons-white/sync-alt-solid-svg.svg);
   background-size: 20px 70%;
   background-position:  2.5px center;
+}
+.update:hover {
+  background-color: var(--VTTblueDark);
 }
 
 .remove {
