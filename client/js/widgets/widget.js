@@ -637,18 +637,21 @@ export class Widget extends StateManaged {
 
       if(a.func == 'IF') {
         setDefaults(a, { condition: variables['condition'], relation: '==' });
-        if (a.operand1 !== undefined) {
-          if (['==', '!=', '<', '<=', '>=', '>'].indexOf(a.relation) < 0) {
-            problems.push(`Relation ${a.relation} is unsupported. Using '==' relation.`);
-            a.relation = '==';
+        if(a.condition !== undefined || a.operand1 !== undefined) {
+          if (a.operand1 !== undefined) {
+            if (['==', '!=', '<', '<=', '>=', '>'].indexOf(a.relation) < 0) {
+              problems.push(`Relation ${a.relation} is unsupported. Using '==' relation.`);
+              a.relation = '==';
+            }
+            a.condition = compute(a.relation, null, a.operand1, a.operand2);
           }
-          a.condition = compute(a.relation, null, a.operand1, a.operand2);
-        }
-        const branch = a.condition ? 'thenRoutine' : 'elseRoutine';
-        if (Array.isArray(a[branch])) {
-          $('#debugButtonOutput').textContent += `\n\n\nIF ${branch}\n`;
-          await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true);
-        }
+          const branch = a.condition ? 'thenRoutine' : 'elseRoutine';
+          if (Array.isArray(a[branch])) {
+            $('#debugButtonOutput').textContent += `\n\n\nIF ${branch}\n`;
+            await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true);
+          }
+        } else
+        problems.push(`IF operation is missing the 'condition' or 'operand1' parameter.`);
       }
 
       if(a.func == 'INPUT') {
