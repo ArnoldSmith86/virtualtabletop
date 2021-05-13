@@ -675,7 +675,7 @@ function jeDisplayTree() {
 
 function jeDisplayTreeAddWidgets(allWidgets, parent, indent) {
   let result = '';
-  for(const widget of allWidgets.filter(w=>w.get('parent')==parent)) {
+  for(const widget of (allWidgets.filter(w=>w.get('parent')==parent)).sort((w1,w2)=>w1.get('id') > w2.get('id'))) {
     result += `${indent}${widget.get('id')} (${widget.get('type') || 'basic'} - ${Math.floor(widget.get('x'))},${Math.floor(widget.get('y'))})\n`;
     result += jeDisplayTreeAddWidgets(allWidgets, widget.get('id'), indent+'  ');
     delete allWidgets[allWidgets.indexOf(widget)];
