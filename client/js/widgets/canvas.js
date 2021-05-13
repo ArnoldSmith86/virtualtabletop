@@ -55,7 +55,7 @@ class Canvas extends Widget {
     if(pixelX < 0 || pixelX >= 100 || pixelY < 0 || pixelY >= 100)
       return;
 
-    if(this.lastPixelX !== undefined) {
+    if(this.lastPixelX !== undefined && state != 'down') {
       for(let i=0; i<10; ++i) {
         const interpolatedPixelX = Math.round(this.lastPixelX + (pixelX-this.lastPixelX)/10*i);
         const interpolatedPixelY = Math.round(this.lastPixelY + (pixelY-this.lastPixelY)/10*i);
