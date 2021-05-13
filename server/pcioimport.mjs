@@ -461,7 +461,34 @@ export default async function convertPCIO(content) {
           if(flipFace)
             c.face = flipFace.value == 'faceDown' ? 0 : 1;
         }
-        if(c.func == "CHANGE_COUNTER") {
+        if(c.func == 'CHANGE_TIMER_STATE') {
+          if(!c.args.timers)
+            continue;
+          c = {
+            func: 'TIMER',
+            collection: c.args.timers.value,
+            change: c.args.playState && c.args.playState.value
+          };
+          if(c.collection.length == 1)
+            c.collection = c.collection[0];
+        }
+        if(c.func == 'CHANGE_TIMER_TIME') {
+          if(!c.args.timers)
+            continue;
+          c = {
+            func: 'TIMER',
+            collection: c.args.timers.value,
+            change: (c.args.changeType || { value: 'reset' }).value,
+            seconds: c.args.seconds && c.args.seconds.value
+          };
+          if(c.collection.length == 1)
+            c.collection = c.collection[0];
+          if(c.value === undefined)
+            c.value = 30;
+          if(c.change == 'reset' || c.value === 0)
+            delete c.value;
+        }
+        if(c.func == 'CHANGE_COUNTER') {
           if(!c.args.counters)
             continue;
           c = {
