@@ -25,7 +25,7 @@ export class Timer extends Widget {
     super.applyDeltaToDOM(delta);
     if(delta.milliseconds !== undefined) {
       const s = Math.floor(Math.abs(delta.milliseconds)/1000);
-      this.domElement.textContent = `${delta.milliseconds < 0 ? '-' : ''}${Math.floor(s/60)}:${Math.floor(s%60)}`.replace(/:(\d)$/, ':0$1');
+      setText(this.domElement, `${delta.milliseconds < 0 ? '-' : ''}${Math.floor(s/60)}:${Math.floor(s%60)}`.replace(/:(\d)$/, ':0$1'));
     }
 
     if(delta.paused !== undefined && delta.paused && this.interval)
