@@ -55,13 +55,24 @@ class Canvas extends Widget {
     if(pixelX < 0 || pixelX >= 100 || pixelY < 0 || pixelY >= 100)
       return;
 
-    const regionX = Math.floor(pixelX/10);
-    const regionY = Math.floor(pixelY/10);
-    pixelX = pixelX%10;
-    pixelY = pixelY%10;
+    if(this.lastPixelX !== undefined) {
+      for(let i=0; i<10; ++i) {
+        const interpolatedPixelX = Math.round(this.lastPixelX + (pixelX-this.lastPixelX)/10*i);
+        const interpolatedPixelY = Math.round(this.lastPixelY + (pixelY-this.lastPixelY)/10*i);
 
-    let currentState = this.get(`c${regionX}${regionY}`);
-    currentState = currentState.substring(0,pixelY*10+pixelX) + String.fromCharCode(48+this.get('activeColor')) + currentState.substring(pixelY*10+pixelX+1);
-    this.set(`c${regionX}${regionY}`, currentState);
+        const regionX = Math.floor(interpolatedPixelX/10);
+        const regionY = Math.floor(interpolatedPixelY/10);
+
+        const pX = interpolatedPixelX%10;
+        const pY = interpolatedPixelY%10;
+
+        let currentState = this.get(`c${regionX}${regionY}`);
+        currentState = currentState.substring(0,pY*10+pX) + String.fromCharCode(48+this.get('activeColor')) + currentState.substring(pY*10+pX+1);
+        this.set(`c${regionX}${regionY}`, currentState);
+      }
+    }
+
+    this.lastPixelX = pixelX;
+    this.lastPixelY = pixelY;
   }
 }
