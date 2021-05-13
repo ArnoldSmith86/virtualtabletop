@@ -962,7 +962,9 @@ export class Widget extends StateManaged {
     this.hoverTargetDistance = 99999;
     this.hoverTarget = null;
 
+    this.disablePileUpdateAfterParentChange = true;
     await this.set('parent', null);
+    delete this.disablePileUpdateAfterParentChange;
 
     for(const t of this.dropTargets)
       t.domElement.classList.add('droppable');
@@ -1065,7 +1067,8 @@ export class Widget extends StateManaged {
         if(Array.isArray(newParent.get('enterRoutine')))
           await newParent.evaluateRoutine('enterRoutine', { oldParentID: oldValue === undefined ? null : oldValue }, { child: [ this ] });
       }
-      await this.updatePiles();
+      if(!this.disablePileUpdateAfterParentChange)
+        await this.updatePiles();
     }
   }
 
@@ -1271,8 +1274,10 @@ export class Widget extends StateManaged {
 
         // if a pile gets dropped onto a pile, all children of one pile are moved to the other (the empty one destroys itself)
         if(widget.get('type') == 'pile' && this.get('type') == 'pile') {
-          for(const w of this.children().reverse())
-            await w.set('parent', widget.get('id')); await w.bringToFront();
+          for(const w of this.children().reverse()) {
+            await w.set('parent', widget.get('id'));
+            await w.bringToFront();
+          }
           break;
         }
 

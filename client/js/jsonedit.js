@@ -546,17 +546,17 @@ function jeAddNumberCommand(name, key, callback) {
 function jeAddWidgetPropertyCommands(object) {
   for(const property in object.defaults)
     if(property != 'typeClasses')
-      jeAddWidgetPropertyCommand(object.defaults, property);
+      jeAddWidgetPropertyCommand(object, property);
   object.applyRemove();
 }
 
-function jeAddWidgetPropertyCommand(defaults, property) {
+function jeAddWidgetPropertyCommand(object, property) {
   jeCommands.push({
     id: 'widget_' + property,
     name: property,
-    context: `^${defaults.typeClasses.replace('widget ', '')}`,
+    context: `^${object.getDefaultValue('typeClasses').replace('widget ', '')}`,
     call: async function() {
-      jeInsert([], property, property.match(/Routine$/) ? [] : defaults[property]);
+      jeInsert([], property, property.match(/Routine$/) ? [] : object.getDefaultValue(property));
     },
     show: function() {
       return jeStateNow[property] === undefined;
@@ -642,14 +642,14 @@ function jeColorize() {
     for(const l of langObj) {
       const match = line.match(l[0]);
       if(match) {
-        if(match[1] == '  "' && l[2] == 'key' && (l[4] == "null" && match[4] == "null" || String(jeWidget.defaults[match[2]]) == match[4])) {
+        if(match[1] == '  "' && l[2] == 'key' && (l[4] == "null" && match[4] == "null" || String(jeWidget.getDefaultValue(match[2])) == match[4])) {
           out.push(`<i class=default>${line}</i>`);
           foundMatch = true;
           break;
         }
 
         const c = {...l};
-        if(match[1] == '  "' && l[2] == 'key' && [ 'id', 'type' ].indexOf(match[2]) == -1 && jeWidget.defaults[match[2]] === undefined)
+        if(match[1] == '  "' && l[2] == 'key' && [ 'id', 'type' ].indexOf(match[2]) == -1 && jeWidget.getDefaultValue(match[2]) === undefined)
           c[2] = 'custom';
 
         for(let i=1; i<l.length; ++i)
@@ -797,7 +797,7 @@ function jePasteText(text, select) {
 function jePostProcessObject(o) {
   const copy = { ...o };
   for(const key in copy)
-    if(copy[key] === jeWidget.defaults[key] || key.match(/in deck/))
+    if(copy[key] === jeWidget.getDefaultValue(key) || key.match(/in deck/))
       copy[key] = null;
   return copy;
 }
@@ -813,7 +813,7 @@ function jePreProcessObject(o) {
     if(o[match[1]] !== undefined)
       copy[match[1]] = o[match[1]];
     else if(match[2] == '*')
-      copy[match[1]] = jeWidget.defaults[match[1]];
+      copy[match[1]] = jeWidget.getDefaultValue(match[1]);
     if(match[3] == '#')
       copy[`LINEBREAK${match[1]}`] = null;
   }

@@ -20,6 +20,7 @@ class Card extends Widget {
 
   applyDeltaToDOM(delta) {
     if(delta.deck !== undefined) {
+      const childNodes = [...this.domElement.childNodes];
       if(this.deck) {
         this.domElement.innerHTML = '';
         this.deck.removeCard(this);
@@ -31,6 +32,9 @@ class Card extends Widget {
       } else {
         this.deck = null;
       }
+      for(const child of childNodes)
+        if(!child.className.match(/cardFace/))
+          this.domElement.appendChild(child);
     }
 
     if(delta.cardType !== undefined && this.deck) {
@@ -80,6 +84,7 @@ class Card extends Widget {
     for(const face of faceTemplates) {
       const faceDiv = document.createElement('div');
 
+      faceDiv.classList.add('cardFace');
       if(face.css !== undefined)
         faceDiv.style.cssText = face.css;
       faceDiv.style.border = face.border ? face.border + 'px black solid' : 'none';
@@ -87,6 +92,7 @@ class Card extends Widget {
 
       for(const object of face.objects) {
         const objectDiv = document.createElement('div');
+        objectDiv.classList.add('cardFaceObject');
         const x = face.border ? object.x-face.border : object.x;
         const y = face.border ? object.y-face.border : object.y;
         let css = object.css ? object.css + '; ' : '';
