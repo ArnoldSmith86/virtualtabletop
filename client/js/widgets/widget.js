@@ -651,7 +651,7 @@ export class Widget extends StateManaged {
             await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true);
           }
         } else
-        problems.push(`IF operation is missing the 'condition' or 'operand1' parameter.`);
+          problems.push(`IF operation is missing the 'condition' or 'operand1' parameter.`);
       }
 
       if(a.func == 'INPUT') {
