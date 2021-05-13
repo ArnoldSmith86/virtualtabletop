@@ -234,7 +234,7 @@ function generateTimerWidgets(id, x, y) {
       movableInEdit: false,
       clickRoutine: [
         {
-          func: "TIMERSTATE",
+          func: "TIMER",
           timer: id
         }
       ],
@@ -252,13 +252,9 @@ function generateTimerWidgets(id, x, y) {
       movableInEdit: false,
       clickRoutine: [
         {
-          func: "TIMERSTATE",
+          func: "TIMER",
           timer: id,
-          mode: "pause"
-        },
-        {
-          func: "TIMERTIME",
-          timer: id
+          mode: "reset"
         }
       ],
       image: "/i/button-icons/White-Reset.svg",
