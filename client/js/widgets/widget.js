@@ -636,13 +636,14 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'IF') {
-        setDefaults(a, { condition: variables['condition'],  relation: '==' });
-        if (['==', '!=', '<', '<=', '>=', '>'].indexOf(a.relation) < 0) {
-          problems.push(`Relation ${a.relation} is unsupported. Using '==' relation.`);
-          a.relation = '==';
-        }
-        if (a.operand1 && a.operand2)
+        setDefaults(a, { condition: variables['condition'], relation: '==' });
+        if (a.operand1 !== undefined) {
+          if (['==', '!=', '<', '<=', '>=', '>'].indexOf(a.relation) < 0) {
+            problems.push(`Relation ${a.relation} is unsupported. Using '==' relation.`);
+            a.relation = '==';
+          }
           a.condition = compute(a.relation, null, a.operand1, a.operand2);
+        }
         const branch = a.condition ? 'thenRoutine' : 'elseRoutine';
         if (Array.isArray(a[branch])) {
           $('#debugButtonOutput').textContent += `\n\n\nIF ${branch}\n`;
