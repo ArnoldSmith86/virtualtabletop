@@ -638,7 +638,7 @@ export class Widget extends StateManaged {
       if(a.func == 'IF') {
         setDefaults(a, { condition: variables['condition'], relation: '==' });
         if(a.condition !== undefined || a.operand1 !== undefined) {
-          if (a.operand1 !== undefined) {
+          if (a.condition === undefined) {
             if (['==', '!=', '<', '<=', '>=', '>'].indexOf(a.relation) < 0) {
               problems.push(`Relation ${a.relation} is unsupported. Using '==' relation.`);
               a.relation = '==';
