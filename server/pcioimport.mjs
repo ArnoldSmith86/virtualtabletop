@@ -536,8 +536,25 @@ export default async function convertPCIO(content) {
             c.contained = false;
           if(includeHands && includeHands != 'hands')
             c.owned = false;
-          if(flip && flip != 'none')
-            c.face = flip == 'faceDown' ? 0 : 1;
+          if(flip && flip != 'none') {
+            w.clickRoutine.push({
+              func: 'SELECT',
+              property: 'id',
+              value: c.deck,
+              collection: 'PCIOMIGRATION'
+            });
+            w.clickRoutine.push({
+              func: 'GET',
+              property: 'parent',
+              collection: 'PCIOMIGRATION',
+              variable: 'PCIOMIGRATION'
+            });
+            append = {
+              func:   'FLIP',
+              holder: '${PCIOMIGRATION}',
+              face: flip == 'faceDown' ? 0 : 1
+            };
+          }
         }
         if(c.func == "CHANGE_COUNTER") {
           if(!c.args.counters)
