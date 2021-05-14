@@ -746,10 +746,24 @@ export class Widget extends StateManaged {
             if(decks.length) {
               for(const deck of decks) {
                 let cards = widgetFilter(w=>w.get('deck')==deck.get('id'));
-                if(!a.contained)
-                  cards = cards.filter(c=>!c.get('parent'));
                 if(!a.owned)
                   cards = cards.filter(c=>!c.get('owner'));
+                if(!a.contained) {
+                  cards = cards.filter(function(c) {
+                    if(!c.get('parent'))
+                      return true;
+
+                    const parent = widgets.get(c.get('parent'));
+                    const parentType = parent.get('type');
+                    if(parentType == 'holder')
+                      return parent.get('childrenPerOwner');
+                    if(parentType != 'pile' || !parent.get('parent'))
+                      return true;
+
+                    const pileParent = widgets.get(parent.get('parent'));
+                    return pileParent.get('type') != 'holder';
+                  });
+                }
                 for(const c of cards)
                   await c.moveToHolder(widgets.get(holder));
               }
@@ -760,7 +774,7 @@ export class Widget extends StateManaged {
         }
       }
 
-      if(a.func == 'ROTATE') {
+            if(a.func == 'ROTATE') {
         setDefaults(a, { count: 1, angle: 90, mode: 'add', collection: 'DEFAULT' });
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
