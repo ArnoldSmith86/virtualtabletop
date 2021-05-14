@@ -746,8 +746,22 @@ export class Widget extends StateManaged {
             if(decks.length) {
               for(const deck of decks) {
                 let cards = widgetFilter(w=>w.get('deck')==deck.get('id'));
-                if(!a.contained)
-                  cards = cards.filter(c=>!c.get('parent'));
+                if(!a.contained) {
+                  cards = cards.filter(function(c) {
+                    if(!c.get('parent'))
+                      return false;
+
+                    const parent = widgets.get(c.get('parent'));
+                    const parentType = parent.get('type');
+                    if(parentType == 'holder')
+                      return true;
+                    if(parentType != 'pile' || !parent.get('parent'))
+                      return false;
+
+                    const pileParent = widgets.get(parent.get('parent'));
+                    return pileParent.get('type') == 'holder';
+                  });
+                }
                 if(!a.owned)
                   cards = cards.filter(c=>!c.get('owner'));
                 for(const c of cards)
