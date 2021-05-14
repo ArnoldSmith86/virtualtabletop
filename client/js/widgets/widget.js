@@ -757,7 +757,7 @@ export class Widget extends StateManaged {
                   });
                 }
                 for(const c of cards) {
-                  if(c.get('face') !== null && a.face !== undefined)
+                  if(a.face !== undefined)
                     await c.flip(a.face);
                   await c.moveToHolder(widgets.get(holder));
                 }
