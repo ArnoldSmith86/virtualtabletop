@@ -3,8 +3,6 @@ class Canvas extends Widget {
     super(id);
     this.buildCompressionTable();
     this.canvas = document.createElement('canvas');
-    this.canvas.style.width = '100%';
-    this.canvas.style.height = '100%';
     this.context = this.canvas.getContext('2d');
 
     const defaults = {
@@ -93,23 +91,28 @@ class Canvas extends Widget {
 
     if(this.lastPixelX !== undefined && state != 'down') {
       const steps = Math.max(Math.abs(pixelX-this.lastPixelX), Math.abs(pixelY-this.lastPixelY));
-      for(let i=0; i<steps; ++i) {
-        const interpolatedPixelX = this.lastPixelX + (pixelX-this.lastPixelX)/steps*i;
-        const interpolatedPixelY = this.lastPixelY + (pixelY-this.lastPixelY)/steps*i;
-
-        const regionX = Math.floor(interpolatedPixelX/regionRes);
-        const regionY = Math.floor(interpolatedPixelY/regionRes);
-
-        const pX = Math.floor(interpolatedPixelX%regionRes);
-        const pY = Math.floor(interpolatedPixelY%regionRes);
-
-        let currentState = this.decompress(this.get(`c${regionX}${regionY}`));
-        currentState = currentState.substring(0,pY*regionRes+pX) + String.fromCharCode(48+this.get('activeColor')) + currentState.substring(pY*regionRes+pX+1);
-        this.set(`c${regionX}${regionY}`, this.compress(currentState));
-      }
+      for(let i=0; i<steps; ++i)
+        this.setPixel(this.lastPixelX + (pixelX-this.lastPixelX)/steps*i, this.lastPixelY + (pixelY-this.lastPixelY)/steps*i);
     }
 
     this.lastPixelX = pixelX;
     this.lastPixelY = pixelY;
+  }
+
+  async setPixel(x, y, colorIndex, regionRes) {
+    if(!regionRes)
+      regionRes = Math.floor(this.getResolution()/10);
+
+    const regionX = Math.floor(x/regionRes);
+    const regionY = Math.floor(y/regionRes);
+
+    const pX = Math.floor(x%regionRes);
+    const pY = Math.floor(y%regionRes);
+
+    const color = String.fromCharCode(48+(colorIndex !== undefined ? colorIndex : this.get('activeColor')));
+
+    let currentState = this.decompress(this.get(`c${regionX}${regionY}`));
+    currentState = currentState.substring(0,pY*regionRes+pX) + color + currentState.substring(pY*regionRes+pX+1);
+    this.set(`c${regionX}${regionY}`, this.compress(currentState));
   }
 }

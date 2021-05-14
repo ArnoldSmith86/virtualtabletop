@@ -26,6 +26,7 @@ export default function minifyRoom() {
 
         'client/css/widgets/basicwidget.css',
         'client/css/widgets/button.css',
+        'client/css/widgets/canvas.css',
         'client/css/widgets/card.css',
         'client/css/widgets/classes.css',
         'client/css/widgets/deck.css',
