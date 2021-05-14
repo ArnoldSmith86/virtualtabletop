@@ -37,6 +37,7 @@ async function inputHandler(name, e) {
     target = mouseTarget;
 
   if(target && target.id) {
+    batchStart();
     if(name == 'mousedown' || name == 'touchstart') {
       mouseStatus[target.id] = {
         status: 'initial',
@@ -53,13 +54,14 @@ async function inputHandler(name, e) {
           } while (moveTarget && (!moveTarget.id || !widgets.has(moveTarget.id)));
         }
       }
+      if(moveTarget && !edit && widgets.get(moveTarget ? moveTarget.id : target.id).passthroughMouse)
+        await widgets.get(moveTarget ? moveTarget.id : target.id).mouseRaw('down', (coords[0] - roomRectangle.left)/scale, (coords[1] - roomRectangle.top)/scale);
     } else if(name == 'mouseup' || name == 'touchend') {
-      batchStart();
       const ms = mouseStatus[target.id];
       const timeSinceStart = +new Date() - ms.start;
       const pixelsMoved = ms.coords ? Math.abs(ms.coords[0] - ms.downCoords[0]) + Math.abs(ms.coords[1] - ms.downCoords[1]) : 0;
-      if(ms.status != 'initial' && moveTarget && !edit && ms.widget.passthroughMouse)
-        await ms.widget.mouseRaw('up', (ms.coords[0] - roomRectangle.left)/scale, (ms.coords[1] - roomRectangle.top)/scale);
+      if(moveTarget && !edit && widgets.get(moveTarget ? moveTarget.id : target.id).passthroughMouse)
+        await widgets.get(moveTarget ? moveTarget.id : target.id).mouseRaw('up', ((ms.coords ? ms.coords[0] : ms.downCoords[0]) - roomRectangle.left)/scale, ((ms.coords ? ms.coords[1] : ms.downCoords[1]) - roomRectangle.top)/scale);
       else if(ms.status != 'initial' && moveTarget)
         await ms.widget.moveEnd();
       if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
@@ -71,9 +73,7 @@ async function inputHandler(name, e) {
           await widgets.get(target.id).click();
       }
       delete mouseStatus[target.id];
-      batchEnd();
     } else if(name == 'mousemove' || name == 'touchmove') {
-      batchStart();
       if(mouseStatus[target.id].status == 'initial') {
         const targetRect = moveTarget ? moveTarget.getBoundingClientRect() : target.getBoundingClientRect();
         const downCoords = mouseStatus[target.id].downCoords;
@@ -94,8 +94,8 @@ async function inputHandler(name, e) {
         await mouseStatus[target.id].widget.mouseRaw('move', (coords[0] - roomRectangle.left)/scale, (coords[1] - roomRectangle.top)/scale);
       else if(moveTarget)
         await mouseStatus[target.id].widget.move(x, y);
-      batchEnd();
     }
+    batchEnd();
   }
 
   if(name == 'mouseup') {

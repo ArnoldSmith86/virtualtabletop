@@ -76,7 +76,7 @@ class Canvas extends Widget {
   }
 
   getResolution() {
-    return Math.max(Math.min(Math.floor(Math.sqrt(parseInt(this.get('resolution'))))**2, 500), 10);
+    return Math.max(Math.min(Math.round(parseInt(this.get('resolution'))/10)*10, 500), 10);
   }
 
   async mouseRaw(state, x, y) {
@@ -93,6 +93,8 @@ class Canvas extends Widget {
       const steps = Math.max(Math.abs(pixelX-this.lastPixelX), Math.abs(pixelY-this.lastPixelY));
       for(let i=0; i<steps; ++i)
         this.setPixel(this.lastPixelX + (pixelX-this.lastPixelX)/steps*i, this.lastPixelY + (pixelY-this.lastPixelY)/steps*i);
+    } else {
+      this.setPixel(pixelX, pixelY);
     }
 
     this.lastPixelX = pixelX;
