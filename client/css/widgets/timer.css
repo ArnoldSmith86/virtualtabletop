@@ -3,6 +3,7 @@
   font-family: monospace;
   text-align: right;
   color: #6d6d6d;
+  padding-right:3px;
   --wcFontAlert: red;
 }
 
