@@ -4,7 +4,7 @@ export class Timer extends Widget {
 
     this.addDefaults({
       width: 74,
-      height: 28,
+      height: 30,
 
       typeClasses: 'widget timer',
       layer: -1,
