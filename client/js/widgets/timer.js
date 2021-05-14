@@ -37,6 +37,8 @@ export class Timer extends Widget {
 
     if(this.get('alert'))
       className += ' alert';
+    if(this.get('paused'))
+      className += ' paused';
 
     return className;
   }
@@ -44,6 +46,7 @@ export class Timer extends Widget {
   classesProperties() {
     const p = super.classesProperties();
     p.push('alert');
+    p.push('paused');
     return p;
   }
 
