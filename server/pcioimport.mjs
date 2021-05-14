@@ -412,11 +412,13 @@ export default async function convertPCIO(content) {
 
       w.clickRoutine = [];
       for(let c of widget.clickRoutine) {
+        let append = null;
         if(c.func == 'MOVE_CARDS_BETWEEN_HOLDERS') {
           if(!c.args.from || !c.args.to)
             continue;
           const moveFlip = c.args.moveFlip && c.args.moveFlip.value;
           const changeRotation = c.args.changeRotation && c.args.changeRotation.value;
+          const setRotation = c.args.setRotation && c.args.setRotation.value;
           const fillAdd = c.args.fillAdd && c.args.fillAdd.value;
           const moveMethod = c.args.moveMethod && c.args.moveMethod.value;
           c = {
@@ -439,8 +441,8 @@ export default async function convertPCIO(content) {
             c.face = moveFlip == 'faceDown' ? 0 : 1;
           if(changeRotation && changeRotation != 'none') {
             c.rotate = changeRotation;
-            if(c.rotate == 'set' && c.args.setRotation)
-              c.rotate = c.args.setRotation.value;
+            if(c.rotate == 'set' && setRotation)
+              c.rotate = setRotation;
           }
           if(fillAdd == 'fill')
             c.mode = fillAdd;
@@ -479,11 +481,31 @@ export default async function convertPCIO(content) {
               c.face = 0;
               break;
             case 'switchEach':
-              c.face = -1;
+              w.clickRoutine.push({
+                func: 'SELECT',
+                property: 'parent',
+                value: '93de1e02-8c7f-4aee-9f25-c2e639dc36b3',
+                max: 1,
+                collection: 'PCIOMIGRATION'
+              });
+              w.clickRoutine.push({
+                func: 'GET',
+                property: 'activeFace',
+                collection: 'PCIOMIGRATION',
+                variable: 'PCIOMIGRATION'
+              });
+              w.clickRoutine.push('var PCIOMIGRATION = ! ${PCIOMIGRATION}');
+              c.face = '${PCIOMIGRATION}';
               break;
           }
-          if(reverse == 'none')
-            c.reverse = false;
+          if(reverse == 'none') {
+            append = {
+              func:   'SORT',
+              holder: c.holder,
+              key: "z",
+              reverse: true
+            };
+          }
         }
         if(c.func == 'SORT_CARDS') {
           if(!c.args.sources)
@@ -534,6 +556,8 @@ export default async function convertPCIO(content) {
             delete c.value;
         }
         w.clickRoutine.push(c);
+        if (append !== null)
+          w.clickRoutine.push(append);
       }
 
     } else if(widget.type == 'spinner') {
