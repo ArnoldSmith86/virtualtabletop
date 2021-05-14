@@ -774,7 +774,7 @@ export class Widget extends StateManaged {
         }
       }
 
-            if(a.func == 'ROTATE') {
+      if(a.func == 'ROTATE') {
         setDefaults(a, { count: 1, angle: 90, mode: 'add', collection: 'DEFAULT' });
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
