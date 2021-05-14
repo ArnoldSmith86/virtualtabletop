@@ -48,7 +48,9 @@ export class Timer extends Widget {
   }
 
   async click() {
-    await this.setPaused();
+    if(!await super.click()) {
+      await this.setPaused();
+    }
   }
 
   getPrecision() {
