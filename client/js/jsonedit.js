@@ -432,7 +432,7 @@ function jeAddCommands() {
   jeAddWidgetPropertyCommands(new Pile());
   jeAddWidgetPropertyCommands(new Spinner());
 
-  jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', 'return': true, arguments: {}, variable: 'result' });
+  jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result' });
   jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 });
   jeAddRoutineOperationCommands('COMPUTE', { operation: '+', operand1: 1, operand2: 1, operand3: 1, variable: 'COMPUTE' });
   jeAddRoutineOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT' });
@@ -463,22 +463,36 @@ function jeAddCommands() {
   jeAddEnumCommands('^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ textAlign', [ 'left', 'center', 'right' ]);
   jeAddEnumCommands('^.*\\(FLIP\\) ↦ faceCycle', [ 'forward', 'backward', 'random' ]);
   jeAddEnumCommands('^.*\\(GET\\) ↦ aggregation', [ 'first', 'last', 'array', 'average', 'median', 'min', 'max', 'sum' ]);
+  jeAddEnumCommands('^.*\\(IF\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=' ]);
   jeAddEnumCommands('^.*\\(LABEL\\) ↦ mode', [ 'set', 'dec', 'inc', 'append' ]);
+  jeAddEnumCommands('^.*\\(ROTATE\\) ↦ angle', [ 60, 90, 120, 180, 240, 270, 330 ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ mode', [ 'set', 'add' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ mode', [ 'set', 'add' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=', 'in' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ type', [ 'all', null, 'button', 'card', 'deck', 'holder', 'label', 'spinner' ]);
-  jeAddEnumCommands('^.*\\(SET\\) ↦ relation', [ '+', '-', '=' ]);
+  jeAddEnumCommands('^.*(\\(SET\\) ↦ relation|\\(COMPUTE\\) ↦ operation)', [ '+', '-', '=', "*", "/",'!' ]);
+  jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ property', [ 'id', 'parent', 'type', 'rotation' ]);
+
+  //I'm aware this could be simpler but I don't know how and at least I did it :) . Feel free to change it. note that not all 'collection' is an input. Only the functions selected here should show those options
+
+  jeAddEnumCommands('^.*\\((CLICK|COUNT|DELETE|FLIP|GET|LABEL|ROTATE|SET|SORT|SHUFFLE)\\) ↦ collection', [ 'DEFAULT', 'thisButton', 'child' ]);
+  jeAddEnumCommands('^.*\\(CLONE\\) ↦ source', [ 'DEFAULT', 'thisButton', 'child' ]);
+  jeAddEnumCommands('^.*\\(SELECT\\) ↦ source', [ 'all', 'DEFAULT', 'thisButton', 'child' ]);
+
+  //Ok this one here I'm pretty proud of myself :). Feel free to change it anyway.
+
+  jeAddEnumCommands('^.* ↦ applyVariables ↦ [0-9]+ ↦ variable', [ 'COMPUTE', 'COUNT', 'RANDOM', 'id', 'result', 'playerName', 'playerColor', 'activePlayers' , 'thisID' ]);
 
   jeAddNumberCommand('increment number', '+', x=>x+1);
   jeAddNumberCommand('decrement number', '-', x=>x-1);
   jeAddNumberCommand('double number', '*', x=>x*2);
   jeAddNumberCommand('half number', '/', x=>x/2);
   jeAddNumberCommand('zero', '0', x=>0);
+  jeAddNumberCommand('*-1', '0', x=>-x);
 }
 
 function jeAddCSScommands() {
-  for(const css of [ 'border: 1px solid black', 'background: black', 'font-size: 30px', 'color: black' ]) {
+  for(const css of [ 'border: 1px solid white', 'background: black', 'font-size: 30px', 'color: black' , 'border-radius: 100%', '--wcMain: #1f5ca6', '--wcMainOH: #0d2f5e', '--wcBorder: #0d2f5e', '--wcBorderOH: #1f5ca6', '--wcFont: #ffffff', '--wcFontOH: #ffffff', '--wcImageOH: url();']) {
     jeCommands.push({
       id: 'css_' + css,
       name: css,
