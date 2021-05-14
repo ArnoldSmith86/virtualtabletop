@@ -59,7 +59,7 @@ async function inputHandler(name, e) {
       const timeSinceStart = +new Date() - ms.start;
       const pixelsMoved = ms.coords ? Math.abs(ms.coords[0] - ms.downCoords[0]) + Math.abs(ms.coords[1] - ms.downCoords[1]) : 0;
       if(ms.status != 'initial' && moveTarget && !edit && ms.widget.passthroughMouse)
-        await ms.widget.mouseRaw('up', Math.floor((ms.coords[0] - roomRectangle.left)/scale), Math.floor((ms.coords[1] - roomRectangle.top)/scale));
+        await ms.widget.mouseRaw('up', (ms.coords[0] - roomRectangle.left)/scale, (ms.coords[1] - roomRectangle.top)/scale);
       else if(ms.status != 'initial' && moveTarget)
         await ms.widget.moveEnd();
       if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
@@ -83,7 +83,7 @@ async function inputHandler(name, e) {
           widget: widgets.get(moveTarget ? moveTarget.id : target.id)
         });
         if(moveTarget && !edit && mouseStatus[target.id].widget.passthroughMouse)
-          await mouseStatus[target.id].widget.mouseRaw('down', Math.floor((downCoords[0] - roomRectangle.left)/scale), Math.floor((downCoords[1] - roomRectangle.top)/scale));
+          await mouseStatus[target.id].widget.mouseRaw('down', (downCoords[0] - roomRectangle.left)/scale, (downCoords[1] - roomRectangle.top)/scale);
         else if(moveTarget)
           await mouseStatus[target.id].widget.moveStart();
       }
@@ -91,7 +91,7 @@ async function inputHandler(name, e) {
       const x = Math.floor((coords[0] - roomRectangle.left - mouseStatus[target.id].offset[0]) / scale);
       const y = Math.floor((coords[1] - roomRectangle.top  - mouseStatus[target.id].offset[1]) / scale);
       if(moveTarget && !edit && mouseStatus[target.id].widget.passthroughMouse)
-        await mouseStatus[target.id].widget.mouseRaw('move', Math.floor((coords[0] - roomRectangle.left)/scale), Math.floor((coords[1] - roomRectangle.top)/scale));
+        await mouseStatus[target.id].widget.mouseRaw('move', (coords[0] - roomRectangle.left)/scale, (coords[1] - roomRectangle.top)/scale);
       else if(moveTarget)
         await mouseStatus[target.id].widget.move(x, y);
       batchEnd();

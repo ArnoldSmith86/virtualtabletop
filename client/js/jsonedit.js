@@ -692,7 +692,7 @@ function jeGetContext() {
   const v = $('#jeText').textContent;
   const t = jeStateNow && jeStateNow.type || 'basic';
 
-  const select = v.substr(s, e-s).replace(/\n/g, '\\n');
+  const select = v.substr(s, Math.min(e-s, 100)).replace(/\n/g, '\\n');
   const line = v.split('\n')[v.substr(0, s).split('\n').length-1];
 
   if(jeMode == 'tree') {

@@ -1,9 +1,8 @@
 class Canvas extends Widget {
   constructor(id) {
     super(id);
+    this.buildCompressionTable();
     this.canvas = document.createElement('canvas');
-    this.canvas.width = 100;
-    this.canvas.height = 100;
     this.canvas.style.width = '100%';
     this.canvas.style.height = '100%';
     this.context = this.canvas.getContext('2d');
@@ -13,13 +12,14 @@ class Canvas extends Widget {
       height: 400,
       typeClasses: 'widget canvas',
 
+      resolution: 100,
       activeColor: 1,
-      colorMap: [ 'white', 'black', 'red', 'blue', 'green', 'yellow' ]
+      colorMap: [ '#f0f0f0', '#1f5ca6', 'black', 'red', 'green', 'yellow', 'orange', 'pink', 'purple', 'brown' ]
     };
 
     for(let x=0; x<10; ++x)
       for(let y=0; y<10; ++y)
-        defaults[`c${x}${y}`] = '0'.repeat(100);
+        defaults[`c${x}${y}`] = '0'.repeat(50**2);
 
     this.addDefaults(defaults);
 
@@ -31,15 +31,22 @@ class Canvas extends Widget {
     super.applyDeltaToDOM(delta);
 
     if(this.context) {
+      if(delta.resolution !== undefined) {
+        this.canvas.width = this.getResolution();
+        this.canvas.height = this.getResolution();
+      }
+
+      const colors = this.get('colorMap');
+      const regionRes = Math.floor(this.getResolution()/10);
+
       for(let x=0; x<10; ++x) {
         for(let y=0; y<10; ++y) {
-          if(delta[`c${x}${y}`] !== undefined || delta.colorMap !== undefined) {
-            const colors = this.get('colorMap');
-            const region = this.get(`c${x}${y}`);
-            for(let px=0; px<10; ++px) {
-              for(let py=0; py<10; ++py) {
-                this.context.fillStyle = colors[region.charCodeAt(py*10+px)-48] || 'white';
-                this.context.fillRect(x*10+px, y*10+py, 1, 1);
+          if(delta[`c${x}${y}`] !== undefined || delta.colorMap !== undefined || delta.resolution !== undefined) {
+            let region = this.decompress(this.get(`c${x}${y}`));
+            for(let px=0; px<regionRes; ++px) {
+              for(let py=0; py<regionRes; ++py) {
+                this.context.fillStyle = colors[region.charCodeAt(py*regionRes+px)-48] || 'white';
+                this.context.fillRect(x*regionRes+px, y*regionRes+py, 1, 1);
               }
             }
           }
@@ -48,27 +55,57 @@ class Canvas extends Widget {
     }
   }
 
-  async mouseRaw(state, x, y) {
-    let pixelX = Math.round((x-this.absoluteCoord('x'))/this.get('width')*100);
-    let pixelY = Math.round((y-this.absoluteCoord('y'))/this.get('height')*100);
+  buildCompressionTable() {
+    this.compressionTable = [];
+    for(let i=11; i>=1; --i)
+      this.compressionTable.push([String.fromCharCode(34 + i), '0'.repeat(2 ** i)]);
+    for(let c=1; c<=15; ++c)
+      for(let i=3; i>=1; --i)
+        this.compressionTable.push([String.fromCharCode(78 + c*3 + i), String.fromCharCode(48+c).repeat(2 ** i)]);
+  }
 
-    if(pixelX < 0 || pixelX >= 100 || pixelY < 0 || pixelY >= 100)
+  compress(str) {
+    const startStr = str;
+    for(const pair of this.compressionTable)
+      str = str.replaceAll(pair[1], pair[0]);
+    return str;
+  }
+
+  decompress(str) {
+    for(const pair of this.compressionTable)
+      str = str.replaceAll(pair[0], pair[1]);
+    return str;
+  }
+
+  getResolution() {
+    return Math.max(Math.min(Math.floor(Math.sqrt(parseInt(this.get('resolution'))))**2, 500), 10);
+  }
+
+  async mouseRaw(state, x, y) {
+    const resolution = this.getResolution();
+    const regionRes = Math.floor(resolution/10);
+
+    let pixelX = (x-this.absoluteCoord('x'))/this.get('width')*resolution;
+    let pixelY = (y-this.absoluteCoord('y'))/this.get('height')*resolution;
+
+    if(pixelX < 0 || pixelX >= resolution || pixelY < 0 || pixelY >= resolution)
       return;
 
     if(this.lastPixelX !== undefined && state != 'down') {
-      for(let i=0; i<10; ++i) {
-        const interpolatedPixelX = Math.round(this.lastPixelX + (pixelX-this.lastPixelX)/10*i);
-        const interpolatedPixelY = Math.round(this.lastPixelY + (pixelY-this.lastPixelY)/10*i);
+      const steps = Math.max(Math.abs(pixelX-this.lastPixelX), Math.abs(pixelY-this.lastPixelY));
+      for(let i=0; i<steps; ++i) {
+        const interpolatedPixelX = this.lastPixelX + (pixelX-this.lastPixelX)/steps*i;
+        const interpolatedPixelY = this.lastPixelY + (pixelY-this.lastPixelY)/steps*i;
 
-        const regionX = Math.floor(interpolatedPixelX/10);
-        const regionY = Math.floor(interpolatedPixelY/10);
+        const regionX = Math.floor(interpolatedPixelX/regionRes);
+        const regionY = Math.floor(interpolatedPixelY/regionRes);
 
-        const pX = interpolatedPixelX%10;
-        const pY = interpolatedPixelY%10;
+        const pX = Math.floor(interpolatedPixelX%regionRes);
+        const pY = Math.floor(interpolatedPixelY%regionRes);
 
-        let currentState = this.get(`c${regionX}${regionY}`);
-        currentState = currentState.substring(0,pY*10+pX) + String.fromCharCode(48+this.get('activeColor')) + currentState.substring(pY*10+pX+1);
-        this.set(`c${regionX}${regionY}`, currentState);
+        let currentState = this.decompress(this.get(`c${regionX}${regionY}`));
+        currentState = currentState.substring(0,pY*regionRes+pX) + String.fromCharCode(48+this.get('activeColor')) + currentState.substring(pY*regionRes+pX+1);
+        this.set(`c${regionX}${regionY}`, this.compress(currentState));
       }
     }
 
