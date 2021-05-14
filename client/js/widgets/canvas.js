@@ -99,6 +99,12 @@ class Canvas extends Widget {
     this.lastPixelY = pixelY;
   }
 
+  async reset() {
+    for(let x=0; x<10; ++x)
+      for(let y=0; y<10; ++y)
+        await this.set(`c${x}${y}`, null);
+  }
+
   async setPixel(x, y, colorIndex, regionRes) {
     if(!regionRes)
       regionRes = Math.floor(this.getResolution()/10);

@@ -434,6 +434,7 @@ function jeAddCommands() {
   jeAddWidgetPropertyCommands(new Spinner());
 
   jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', 'return': true, arguments: {}, variable: 'result' });
+  jeAddRoutineOperationCommands('CANVAS', { canvas: null, mode: 'reset', x: 0, y: 0, colorIndex: 1 });
   jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 });
   jeAddRoutineOperationCommands('COMPUTE', { operation: '+', operand1: 1, operand2: 1, operand3: 1, variable: 'COMPUTE' });
   jeAddRoutineOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT' });
@@ -462,6 +463,7 @@ function jeAddCommands() {
 
   jeAddEnumCommands('^[a-z]+ ↦ type', [ null, 'button', 'canvas', 'card', 'deck', 'holder', 'label', 'spinner' ]);
   jeAddEnumCommands('^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ textAlign', [ 'left', 'center', 'right' ]);
+  jeAddEnumCommands('^.*\\(CANVAS\\) ↦ mode', [ 'color', 'reset', 'setPixel' ]);
   jeAddEnumCommands('^.*\\(FLIP\\) ↦ faceCycle', [ 'forward', 'backward', 'random' ]);
   jeAddEnumCommands('^.*\\(GET\\) ↦ aggregation', [ 'first', 'last', 'array', 'average', 'median', 'min', 'max', 'sum' ]);
   jeAddEnumCommands('^.*\\(LABEL\\) ↦ mode', [ 'set', 'dec', 'inc', 'append' ]);

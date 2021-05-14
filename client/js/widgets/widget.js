@@ -349,6 +349,37 @@ export class Widget extends StateManaged {
         }
       }
 
+      if(a.func == 'CANVAS') {
+        setDefaults(a, { mode: 'reset', x: 0, y: 0 });
+
+        if([ 'color', 'reset', 'setPixel' ].indexOf(a.mode) == -1)
+          problems.push(`Warning: Mode ${a.mode} will be interpreted as reset.`);
+
+        const execute = async function(widget) {
+          if(widget.get('type') == 'canvas') {
+            if(a.mode == 'setPixel')
+              await widget.setPixel(a.x, a.y, a.colorIndex);
+            else if(a.mode == 'color')
+              await widget.set('activeColor', a.colorIndex === undefined ? null : a.colorIndex);
+            else
+              await widget.reset();
+          }
+        };
+
+        if(a.canvas !== undefined) {
+          if(this.isValidID(a.canvas, problems)) {
+            await w(a.canvas, execute);
+          }
+        } else if(isValidCollection(a.collection)) {
+          if(collections[a.collection].length) {
+            for(const c of collections[a.collection].slice(0, a.count || 999999))
+              await execute(c);
+          } else {
+            problems.push(`Collection ${a.collection} is empty.`);
+          }
+        }
+      }
+
       if(a.func == 'CLICK') {
         setDefaults(a, { collection: 'DEFAULT', count: 1 });
         if(isValidCollection(a.collection))
