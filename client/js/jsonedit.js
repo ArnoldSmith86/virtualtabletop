@@ -483,7 +483,7 @@ function jeAddCommands() {
   jeAddNumberCommand('double number', '*', x=>x*2);
   jeAddNumberCommand('half number', '/', x=>x/2);
   jeAddNumberCommand('zero', '0', x=>0);
-  jeAddNumberCommand('*-1', '0', x=>-x);
+  jeAddNumberCommand('opposite value', '0', x=>-x);
 }
 
 function jeAddCSScommands() {
