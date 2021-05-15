@@ -531,6 +531,9 @@ export class Widget extends StateManaged {
           case 'unshift':
             v[o](x);
             break;
+          case 'in':
+            v = x in y;
+            break;
 
           // random values
           case 'randInt':
@@ -646,7 +649,7 @@ export class Widget extends StateManaged {
       }
       if(a.func == 'IF') {
         setDefaults(a, { relation: '==' });
-        if (['==', '!=', '<', '<=', '>=', '>'].indexOf(a.relation) < 0) {
+        if (['==', '!=', '<', '<=', '>=', '>', 'in' ].indexOf(a.relation) < 0) {
           problems.push(`Relation ${a.relation} is unsupported. Using '==' relation.`);
           a.relation = '==';
         }
