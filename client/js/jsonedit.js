@@ -487,7 +487,7 @@ function jeAddCommands() {
 }
 
 function jeAddCSScommands() {
-  for(const css of [ 'border: 1px solid white', 'background: black', 'font-size: 30px', 'color: black' , 'border-radius: 100%', '--wcMain: #1f5ca6', '--wcMainOH: #0d2f5e', '--wcBorder: #0d2f5e', '--wcBorderOH: #1f5ca6', '--wcFont: #ffffff', '--wcFontOH: #ffffff', '--wcImageOH: url();']) {
+  for(const css of [ 'border: 1px solid white', 'background: black', 'font-size: 30px', 'color: black' , 'border-radius: 100%', '--wcMain: #1f5ca6', '--wcMainOH: #0d2f5e', '--wcBorder: #0d2f5e', '--wcBorderOH: #1f5ca6', '--wcFont: #ffffff', '--wcFontOH: #ffffff' ]) {
     jeCommands.push({
       id: 'css_' + css,
       name: css,
