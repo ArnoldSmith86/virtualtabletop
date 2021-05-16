@@ -68,11 +68,34 @@ function applyEditOptionsHolder(widget) {
   }
 }
 
+function populateEditOptionsTimer(widget) {
+  $('#timerCountdown').checked = widget.countdown;
+  $('#timerStart').value = widget.start/1000||0;
+  $('#timerEnd').value = widget.end/1000||"no end";
+  $('#timerReset').checked = false;
+}
+
+function applyEditOptionsTimer(widget) {
+  widget.countdown = $('#timerCountdown').checked;
+  widget.start = $('#timerStart').value*1000;
+  if ($('#timerEnd').value=="no end") 
+    widget.end = null;
+  else 
+    widget.end = $('#timerEnd').value*1000;
+
+  if($('#timerReset').checked) {
+    widget.paused = true;
+    widget.milliseconds = widget.start;
+  }
+}
+
 async function applyEditOptions(widget) {
   if(widget.type == 'deck')
     await applyEditOptionsDeck(widget);
   if(widget.type == 'holder')
     applyEditOptionsHolder(widget);
+  if(widget.type == 'timer')
+    applyEditOptionsTimer(widget);
 }
 
 function editClick(widget) {
@@ -93,6 +116,8 @@ function editClick(widget) {
 
   if(type == 'holder')
     populateEditOptionsHolder(widget.state);
+  if(type == 'timer')
+    populateEditOptionsTimer(widget.state);
 
   showOverlay('editOverlay');
 }
