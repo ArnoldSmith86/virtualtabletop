@@ -74,8 +74,8 @@ class Card extends Widget {
     super.applyInitialDelta(delta);
   }
 
-  async click() {
-    if(!await super.click())
+  async click(mode='respect') {
+    if(!await super.click(mode))
       await this.flip();
   }
 
