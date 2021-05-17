@@ -398,6 +398,55 @@ export default async function convertPCIO(content) {
       w.css = `font-size: ${widget.textSize}px; font-weight: ${weight}; text-align: ${widget.textAlign};`;
       addDimensions(w, widget, 100, 20);
       w.height = widget.textSize * 3.5;
+    } else if(widget.type == 'timer') {
+      w.type = 'timer'
+      w.countdown = !widget.timerCountUp
+      if (widget.timerCountUp) {
+        w.end = widget.timerLength
+        w.start = 0
+      } else {
+        w.start = widget.timerLength
+        w.end = 0
+      }
+      w.milliseconds = widget.pauseTime||w.start
+      var id = widget.id
+      output[widget.id + 'P'] = {
+        parent: id,
+        id: id+'P',
+        x: 120,
+        y: -3,
+        width: 36,
+        height: 36,
+        type: "button",
+        movableInEdit: false,
+        clickRoutine: [
+          {
+            func: "TIMER",
+            timer: id
+          }
+        ],
+        image: "/i/button-icons/White-Play_Pause.svg",
+        css: "background-size: 75% 75%"
+      };
+      output[widget.id + 'R'] = {
+        parent: id,
+        id: id+'R',
+        x: 80,
+        y: -3,
+        width: 36,
+        height: 36,
+        type: "button",
+        movableInEdit: false,
+        clickRoutine: [
+          {
+            func: "TIMER",
+            timer: id,
+            mode: "reset"
+          }
+        ],
+        image: "/i/button-icons/White-Reset.svg",
+        css: "background-size: 80% 80%"
+      }
     } else if(widget.type == 'board') {
       w.image = widget.boardImage;
       w.movable = false;
