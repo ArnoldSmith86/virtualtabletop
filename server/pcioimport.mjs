@@ -480,21 +480,7 @@ export default async function convertPCIO(content) {
               c.face = 0;
               break;
             case 'switchEach':
-              w.clickRoutine.push({
-                func: 'SELECT',
-                property: 'parent',
-                value: c.holder,
-                max: 1,
-                collection: 'PCIOMIGRATION'
-              });
-              w.clickRoutine.push({
-                func: 'GET',
-                property: 'activeFace',
-                collection: 'PCIOMIGRATION',
-                variable: 'PCIOMIGRATION'
-              });
-              w.clickRoutine.push('var PCIOMIGRATION = ! ${PCIOMIGRATION}');
-              c.face = '${PCIOMIGRATION}';
+              c.face = -1;
               break;
           }
           if(reverse == 'none') {

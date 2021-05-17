@@ -586,14 +586,19 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder,problems)) {
             await w(a.holder, async holder=>{
+              let f = a.face;
+              if(a.face == -1)
+                f = holder.children()[0].get('activeFace') == 0 ? 1 : 0;
               for(const c of holder.children().slice(0, a.count || 999999))
-                c.flip && await c.flip(a.face,a.faceCycle);
+                c.flip && await c.flip(f, a.faceCycle);
             });
           }
         } else if(isValidCollection(a.collection)) {
           if(collections[a.collection].length) {
+            if(a.face == -1)
+              a.face = collections[a.collection][0].get('activeFace') == 0 ? 1 : 0;
             for(const c of collections[a.collection].slice(0, a.count || 999999))
-              c.flip && await c.flip(a.face,a.faceCycle);
+              c.flip && await c.flip(a.face, a.faceCycle);
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
