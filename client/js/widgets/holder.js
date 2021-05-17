@@ -1,3 +1,4 @@
+//look for similar function in widget.js
 class Holder extends Widget {
   constructor(object, surface) {
     super(object, surface);
