@@ -204,11 +204,11 @@ export class Widget extends StateManaged {
     return [ 'classes', 'owner', 'typeClasses' ];
   }
 
-  async click() {
-    if(!this.get('clickable'))
+  async click(mode='respect') {
+    if(!this.get('clickable') && !(mode == 'ignoreClickable' || mode =='ignoreAll'))
       return true;
 
-    if(Array.isArray(this.get('clickRoutine'))) {
+    if(Array.isArray(this.get('clickRoutine')) && !(mode == 'ignoreClickRoutine' || mode =='ignoreAll')) {
       await this.evaluateRoutine('clickRoutine', {}, {});
       return true;
     } else {
@@ -350,11 +350,15 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'CLICK') {
-        setDefaults(a, { collection: 'DEFAULT', count: 1 });
+        setDefaults(a, { collection: 'DEFAULT', count: 1 , mode: 'respect' });
+        if (['respect', 'ignoreClickable', 'ignoreClickRoutine', 'ignoreAll'].indexOf(a.mode) == -1) {
+          problems.push(`Mode ${a.mode} is unsupported. Using 'respect' mode.`);
+          a.mode = 'respect'
+        };
         if(isValidCollection(a.collection))
           for(let i=0; i<a.count; ++i)
             for(const w of collections[a.collection])
-              await w.click();
+              await w.click(a.mode);
       }
 
       if(a.func == 'CLONE') {
