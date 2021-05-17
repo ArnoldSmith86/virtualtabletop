@@ -25,6 +25,20 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+button {
+  border:5px;
+  color:white;
+  background-color: var(--VTTblue);
+  padding: 5px;
+  border-radius: 5px;
+  background-repeat: no-repeat;
+  margin:1px;
+}
+
+button:hover {
+  background-color: var(--VTTblueDark);
+}
+
 #toolbar {
   background: var(--VTTblue);
   height: var(--toolbarSize);
@@ -181,6 +195,31 @@ body.aspectTooGood #hideToolbarButton {
 
 #roomArea.hasOverlay #room {
   filter: blur(5px);
+}
+
+/*scroll bar*/
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: white;
+  margin: 5vh;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--VTTblue);
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--VTTblueDark);
 }
 
 .surface {

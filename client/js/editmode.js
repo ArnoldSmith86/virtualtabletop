@@ -14,7 +14,17 @@ function addWidgetLocal(widget) {
   sendPropertyUpdate(widget.id, widget);
   sendDelta(true);
 }
+//This section holds the edit overlays for each widget
+//button functions
+function populateEditOptionsButton(widget) {
+  $('#buttonDebug').checked = widget.debug;
+}
 
+function applyEditOptionsButton(widget) {
+  widget.debug = $('#buttonDebug').checked;
+}
+
+//deck functions
 async function applyEditOptionsDeck(widget) {
   for(const type of $a('#cardTypesList tr.cardType')) {
     const id = $('.id', type).value;
@@ -43,6 +53,7 @@ async function applyEditOptionsDeck(widget) {
   }
 }
 
+//holder functions
 function populateEditOptionsHolder(widget) {
   $('#resizeHolderToChildren').checked = false;
   $('#transparentHolder').checked = widget.classes && !!widget.classes.match(/transparent/);
@@ -68,6 +79,18 @@ function applyEditOptionsHolder(widget) {
   }
 }
 
+//label functions
+function populateEditOptionsLabel(widget) {
+  $('#labelText').value = widget.text;
+  $('#labelEditable').checked = widget.editable;
+}
+
+function applyEditOptionsLabel(widget) {
+  widget.text = $('#labelText').value;
+  widget.editable = $('#labelEditable').checked;
+}
+
+//timer functions
 function populateEditOptionsTimer(widget) {
   $('#timerCountdown').checked = widget.countdown;
   $('#timerStart').value = widget.start/1000||0;
@@ -78,9 +101,9 @@ function populateEditOptionsTimer(widget) {
 function applyEditOptionsTimer(widget) {
   widget.countdown = $('#timerCountdown').checked;
   widget.start = $('#timerStart').value*1000;
-  if ($('#timerEnd').value=="no end") 
+  if ($('#timerEnd').value=="no end")
     widget.end = null;
-  else 
+  else
     widget.end = $('#timerEnd').value*1000;
 
   if($('#timerReset').checked) {
@@ -89,11 +112,16 @@ function applyEditOptionsTimer(widget) {
   }
 }
 
+//This section calls the relative widgets' overlays and functions
 async function applyEditOptions(widget) {
+  if(widget.type == 'button')
+    applyEditOptionsButton(widget);
   if(widget.type == 'deck')
     await applyEditOptionsDeck(widget);
   if(widget.type == 'holder')
     applyEditOptionsHolder(widget);
+  if(widget.type == 'label')
+    applyEditOptionsLabel(widget);
   if(widget.type == 'timer')
     applyEditOptionsTimer(widget);
 }
@@ -114,14 +142,19 @@ function editClick(widget) {
 
   vmEditOverlay.selectedWidget = widget
 
+  if(type == 'button')
+    populateEditOptionsButton(widget.state);
   if(type == 'holder')
     populateEditOptionsHolder(widget.state);
+  if(type == 'label')
+    populateEditOptionsLabel(widget.state);
   if(type == 'timer')
     populateEditOptionsTimer(widget.state);
 
   showOverlay('editOverlay');
 }
 
+//This section holds the functions that generate the JSON of the widgets in the add widget overlay
 function generateEmptyDeckWidget(id, x, y) {
   const widgets = [
     { type:'holder', id, x, y, dropTarget: { type: 'card' } },
@@ -446,6 +479,7 @@ function populateAddWidgetOverlay() {
     y: 600
   });
 }
+//end of JSON generators
 
 async function removeWidgetLocal(widgetID, removeChildren) {
   if(removeChildren)

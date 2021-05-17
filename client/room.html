@@ -43,17 +43,25 @@
     <div id="editOverlayVue">
       <div id="editOverlay" class="overlay">
         <h1>Edit widget</h1>
+        <div class="buttonEdit">
+          <input type="checkbox" id="buttonDebug"><label for="buttonDebug">Run debug mode</label>
+        </div>
         <deck-editor :widget-state="selectedWidget.state"></deck-editor>
         <div class="holderEdit">
           <input type="checkbox" id="transparentHolder"><label for="transparentHolder"> Transparent</label><br/>
           <input type="checkbox" id="resizeHolderToChildren"><label for="resizeHolderToChildren"> Resize to fit contents (once)</label>
         </div>
+        <div class="labelEdit">
+          <label for="labelText"> Text: </label><input type="text" id="labelText"><br/>
+          <input type="checkbox" id="labelEditable"><label for="labelEditable">Editable in play mode</label>
+        </div>
         <div class="timerEdit">
-          <input type="checkbox" id="timerCountdown"><label for="timerCountdown"> Countdown</label><br/>
-          <label for="timerStart"> Start: </label><input type="text" id="timerStart">
-          <label for="timerEnd"> End: </label><input type="text" id="timerEnd"><label for="timerEnd">(both in seconds)</label><br/>
+          <input type="checkbox" id="timerCountdown"><label for="timerCountdown"> Countdown</label><br/><br/>
+          <label for="timerStart"> Start: </label><input type="text" id="timerStart"><br/>
+          <label for="timerEnd"> End: </label><input type="text" id="timerEnd"><br/><label for="timerEnd">(both in seconds)</label><br/><br/>
           <input type="checkbox" id="timerReset"><label for="timerReset"> Reset timer (once)</label>
         </div>
+        <div class="editorSpace"></div>
         <base-edit-overlay ></base-edit-overlay>
       </div>
 
