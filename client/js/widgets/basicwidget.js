@@ -1,5 +1,6 @@
 import { Widget } from './widget';
 
+//look for similar function in widget.js
 class BasicWidget extends Widget {
   constructor(id) {
     super(id);
@@ -35,6 +36,7 @@ class BasicWidget extends Widget {
         this.domElement.style.cssText = this.css();
   }
 
+  //look for similar function in widget.js
   classes() {
     let className = super.classes();
 
@@ -44,17 +46,20 @@ class BasicWidget extends Widget {
     return className;
   }
 
+  //look for similar function in widget.js
   classesProperties() {
     const p = super.classesProperties();
     p.push('image');
     return p;
   }
 
+  //look for similar function in widget.js
   async click(mode='respect') {
     if(!await super.click(mode))
       await this.flip();
   }
 
+  //look for similar function in widget.js
   css() {
     let css = super.css();
 
@@ -66,6 +71,7 @@ class BasicWidget extends Widget {
     return css;
   }
 
+  //look for similar function in widget.js
   cssProperties() {
     const p = super.cssProperties();
     p.push('image', 'color', 'svgReplaces');
@@ -93,6 +99,7 @@ class BasicWidget extends Widget {
     return super.getDefaultValue(property);
   }
 
+  //function gets the image on the image property and applies the svg replace to recolor it. Same as in buttons widgets.
   getImage() {
     if(!Object.keys(this.get('svgReplaces')).length)
       return this.get('image');
