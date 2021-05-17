@@ -400,6 +400,7 @@ export default async function convertPCIO(content) {
       w.height = widget.textSize * 3.5;
     } else if(widget.type == 'timer') {
       w.type = 'timer'
+      w.clickable = false
       w.countdown = !widget.timerCountUp
       if (widget.timerCountUp) {
         w.end = widget.timerLength
