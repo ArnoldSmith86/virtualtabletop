@@ -865,7 +865,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'TIMER') {
-        setDefaults(a, { value: 0, seconds: false, mode: 'toggle', collection: 'DEFAULT' });
+        setDefaults(a, { value: 0, seconds: 0, mode: 'toggle', collection: 'DEFAULT' });
         if([ 'set', 'dec', 'inc', 'reset','pause', 'start', 'toggle' ].indexOf(a.mode) == -1)
           problems.push(`Warning: Mode ${a.mode} interpreted as toggle.`);
         if([ 'set', 'dec', 'inc'].indexOf(a.mode) == -1){
