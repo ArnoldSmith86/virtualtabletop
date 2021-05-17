@@ -46,7 +46,7 @@ class Pile extends Widget {
     }
   }
 
-  async click() {
+  async click(mode='respect') {
     $('#pileOverlay').innerHTML = `<p>${this.handle.textContent} cards</p><p>Drag the handle with the number to drag the entire pile.</p>`;
 
     const flipButton = document.createElement('button');

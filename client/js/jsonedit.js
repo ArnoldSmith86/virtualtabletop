@@ -74,7 +74,7 @@ const jeCommands = [
       if(css)
         cardType.css = css;
       jeStateNow.cardTypes['###SELECT ME###'] = cardType;
-      jeSetAndSelect(getUniqueWidgetID());
+      jeSetAndSelect(generateUniqueWidgetID());
     }
   },
   {
@@ -433,7 +433,7 @@ function jeAddCommands() {
   jeAddWidgetPropertyCommands(new Spinner());
 
   jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result' });
-  jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 });
+  jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 , mode:'respect'});
   jeAddRoutineOperationCommands('COMPUTE', { operation: '+', operand1: 1, operand2: 1, operand3: 1, variable: 'COMPUTE' });
   jeAddRoutineOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT' });
   jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, properties: null });
@@ -461,6 +461,7 @@ function jeAddCommands() {
 
   jeAddEnumCommands('^[a-z]+ ↦ type', [ null, 'button', 'card', 'deck', 'holder', 'label', 'spinner' ]);
   jeAddEnumCommands('^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ textAlign', [ 'left', 'center', 'right' ]);
+  jeAddEnumCommands('^.*\\(CLICK\\) ↦ mode', [ 'respect', 'ignoreClickable', 'ignoreClickRoutine', 'ignoreAll' ]);
   jeAddEnumCommands('^.*\\(FLIP\\) ↦ faceCycle', [ 'forward', 'backward', 'random' ]);
   jeAddEnumCommands('^.*\\(GET\\) ↦ aggregation', [ 'first', 'last', 'array', 'average', 'median', 'min', 'max', 'sum' ]);
   jeAddEnumCommands('^.*\\(IF\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=' ]);
@@ -684,7 +685,7 @@ function jeDisplayTree() {
 
 function jeDisplayTreeAddWidgets(allWidgets, parent, indent) {
   let result = '';
-  for(const widget of allWidgets.filter(w=>w.get('parent')==parent)) {
+  for(const widget of (allWidgets.filter(w=>w.get('parent')==parent)).sort((w1,w2)=>w1.get('id') > w2.get('id'))) {
     result += `${indent}${widget.get('id')} (${widget.get('type') || 'basic'} - ${Math.floor(widget.get('x'))},${Math.floor(widget.get('y'))})\n`;
     result += jeDisplayTreeAddWidgets(allWidgets, widget.get('id'), indent+'  ');
     delete allWidgets[allWidgets.indexOf(widget)];
