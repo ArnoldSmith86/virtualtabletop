@@ -1,5 +1,6 @@
 import { Widget } from './widget.js';
 
+//look for similar function in widget.js
 export class Label extends Widget {
   constructor(id) {
     super(id);
