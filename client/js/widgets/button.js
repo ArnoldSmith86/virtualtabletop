@@ -53,7 +53,7 @@ export class Button extends Widget {
     return p;
   }
 
-  //functionn gets the image on the image property and applies the svg replace to recolor it. Same as in basic widgets.
+  //function gets the image on the image property and applies the svg replace to recolor it. Same as in basic widgets.
   getImage() {
     if(!Object.keys(this.get('svgReplaces')).length)
       return this.get('image');
