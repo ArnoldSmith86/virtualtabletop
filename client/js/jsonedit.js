@@ -505,6 +505,19 @@ function jeAddCSScommands() {
       }
     });
   }
+  for(const css of ['--wcBorderNormal: #00000000', '--wcBorderAlert: red', '--wcFontAlert: red', '--wcFontPaused: #6d6d6d', '--wcAnimationAlert: blinker 1s linear infinite', '--wcAnimationPaused: none' ]) {
+    jeCommands.push({
+      id: 'css_' + css,
+      name: css,
+      context: 'timer ↦ (css|[a-z]+CSS)',
+      call: async function() {
+        jePasteText(css + '; ', true);
+      },
+      show: function() {
+        return !String(jeGetValue()[jeGetLastKey()]).match(css.split(':')[0]);
+      }
+    });
+  }
 }
 
 function jeAddEnumCommands(context, values) {
