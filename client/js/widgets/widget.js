@@ -4,6 +4,7 @@ import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay } from '../main.js';
 
+//This section gives the defaults values of the properties of a widget. It is also used by the JSON editor. Any new property should go here even if you give null as its default
 export class Widget extends StateManaged {
   constructor(id) {
     const div = document.createElement('div');
@@ -204,6 +205,7 @@ export class Widget extends StateManaged {
     return [ 'classes', 'owner', 'typeClasses' ];
   }
 
+  //This function defines what happens when you click a widget. If said widget has a special click action yoou will find another click function in its .js file that calls this one to know which action to do
   async click(mode='respect') {
     if(!this.get('clickable') && !(mode == 'ignoreClickable' || mode =='ignoreAll'))
       return true;
@@ -216,6 +218,7 @@ export class Widget extends StateManaged {
     }
   }
 
+  //This functions translates widgets properties to CSS properties. other widegts' .js files may have their one properties that are translated to CSS
   css() {
     let css = this.get('css');
 
@@ -227,6 +230,7 @@ export class Widget extends StateManaged {
     return css;
   }
 
+  //This function lists which properties are read from CSS
   cssProperties() {
     return [ 'css', 'height', 'inheritChildZ', 'layer', 'width' ];
   }
@@ -310,6 +314,9 @@ export class Widget extends StateManaged {
 
     const routine = this.get(property) !== undefined ? this.get(property) : property;
 
+
+    //Start of definition of Routines functions
+    // look at LABEL as an example
     for(const original of routine) {
       const a = JSON.parse(JSON.stringify(original));
       var problems = [];
@@ -401,6 +408,7 @@ export class Widget extends StateManaged {
         }
       }
 
+      //This function list all the predefined computations thas Routines functions can call for tests or execution. By default if this is used for testing the property should be called "relation" and if this is used for execution it should be called "mode"
       function compute(o, v, x, y, z) {
         try {
           switch(o) {
@@ -677,19 +685,27 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'LABEL') {
+        //start by stating the defaults
         setDefaults(a, { value: 0, mode: 'set', collection: 'DEFAULT' });
+
+        //this tests if you used the right values for a property and creates the error message in case something is not correct
         if([ 'set', 'dec', 'inc', 'append' ].indexOf(a.mode) == -1)
           problems.push(`Warning: Mode ${a.mode} will be interpreted as set.`);
+
+          //this if / else if structure is used when the input can be either a collection or a widget. First is for widgets and then for collections
+        //it then calls a function defined somewhere else in the code that use the inputs to be executed on the widgets selected
         if(a.label !== undefined) {
           if (this.isValidID(a.label, problems)) {
             await w(a.label, async widget=>{
               await widget.setText(a.value, a.mode, this.get('debug'), problems)
+              //be aware that here you should use widget.Function
             });
           }
         } else if(isValidCollection(a.collection)) {
           if(collections[a.collection].length) {
             for(const c of collections[a.collection])
               await c.setText(a.value, a.mode, this.get('debug'), problems);
+              //and here you should use c.Function
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
@@ -1069,6 +1085,7 @@ export class Widget extends StateManaged {
     await super.setPosition(x, y, z);
   }
 
+  //this is the function called by LABEL (and by other places of the code). the function doesn't need to be defined in this .js file. it can be in a more apropriate widget .js file.
   async setText(text, mode, debug, problems) {
     if (this.get('text') !== undefined) {
       if(mode == 'inc' || mode == 'dec')
@@ -1080,7 +1097,7 @@ export class Widget extends StateManaged {
       else if(typeof text == 'string' && text.match(/^[-+]?[0-9]+(\.[0-9]+)?$/))
         await this.set('text', +text);
       else
-        await this.set('text', text);
+        await this.set('text', text); //last option is the default and collects all wrong values of mode
     } else
       problems.push(`Tried setting text property which doesn't exist for ${this.id}.`);
   }
