@@ -1,3 +1,4 @@
+//look for similar function in widget.js
 class Pile extends Widget {
   constructor(id) {
     super(id);
