@@ -28,7 +28,7 @@ class BasicWidget extends Widget {
         this.applyDelta(face);
     }
     if(delta.text !== undefined)
-      this.domElement.textContent = delta.text;
+      setText(this.domElement, delta.text);
 
     for(const property of Object.values(this.get('svgReplaces') || {}))
       if(delta[property] !== undefined)
@@ -50,8 +50,8 @@ class BasicWidget extends Widget {
     return p;
   }
 
-  async click() {
-    if(!await super.click())
+  async click(mode='respect') {
+    if(!await super.click(mode))
       await this.flip();
   }
 

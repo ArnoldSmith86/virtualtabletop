@@ -14,7 +14,9 @@ function logError(message, e) {
 }
 
 function userErrorHandler(err, req, res, next) {
-  if(err instanceof UserError)
+  if(err.message == 'request entity too large')
+    res.status(403).send('Too big.');
+  else if(err instanceof UserError)
     res.status(err.code).send(err.message);
   else
     next(err);
