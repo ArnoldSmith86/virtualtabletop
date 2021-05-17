@@ -464,21 +464,38 @@ export default async function convertPCIO(content) {
         if(c.func == 'CHANGE_TIMER_STATE') {
           if(!c.args.timers)
             continue;
+          if ((c.args.playState && c.args.playState.value)=="switch"){
+            var mode = "toggle"
+          } else if ((c.args.playState && c.args.playState.value)=="pause"){
+            var mode = "pause"
+          } else {
+            var mode = "start"
+          };
           c = {
             func: 'TIMER',
             timer: c.args.timers.value,
-            mode: c.args.playState && c.args.playState.value
+            mode: mode
           };
+
           if(c.timer.length == 1)
             c.timer = c.timer[0];
         }
         if(c.func == 'CHANGE_TIMER_TIME') {
           if(!c.args.timers)
             continue;
+          if ((c.args.changeType && c.args.changeType.value)=="add"){
+            var mode = "inc"
+          } else if ((c.args.changeType && c.args.changeType.value)=="subtract"){
+            var mode = "dec"
+          } else if ((c.args.changeType && c.args.changeType.value)=="set"){
+            var mode = "set"
+          } else {
+            var mode = "reset"
+          };
           c = {
             func: 'TIMER',
             timer: c.args.timers.value,
-            mode: (c.args.changeType || { value: 'reset' }).value,
+            mode: mode,
             seconds: c.args.seconds && c.args.seconds.value
           };
           if(c.timer.length == 1)
