@@ -1,5 +1,8 @@
 import { Widget } from './widget.js';
 
+//for automation normally associated with buttons look into widgets.js
+
+//look for similar function in widget.js
 export class Button extends Widget {
   constructor(id) {
     super(id);
@@ -31,6 +34,7 @@ export class Button extends Widget {
         this.domElement.style.cssText = this.css();
   }
 
+  //look for similar function in widget.js
   css() {
     let css = super.css();
 
@@ -42,12 +46,14 @@ export class Button extends Widget {
     return css;
   }
 
+  //look for similar function in widget.js
   cssProperties() {
     const p = super.cssProperties();
     p.push('image', 'color', 'svgReplaces');
     return p;
   }
 
+  //functionn gets the image on the image property and applies the svg replace to recolor it. Same as in basic widgets.
   getImage() {
     if(!Object.keys(this.get('svgReplaces')).length)
       return this.get('image');
