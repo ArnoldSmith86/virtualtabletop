@@ -190,6 +190,7 @@ export class Widget extends StateManaged {
     }
   }
 
+  //this changes the class of a widget based on its properties
   classes() {
     let className = this.get('typeClasses') + ' ' + this.get('classes');
 
@@ -201,6 +202,7 @@ export class Widget extends StateManaged {
     return className;
   }
 
+  //This function lists which properties are related to CSS classes
   classesProperties() {
     return [ 'classes', 'owner', 'typeClasses' ];
   }
