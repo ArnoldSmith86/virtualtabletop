@@ -19,10 +19,10 @@ export class Button extends Widget {
 
       backgroundColor: null,
       borderColor: null,
-      testColor:null,
+      textColor:null,
       backgroundColorOH: null,
       borderColorOH: null,
-      testColorOH:null,
+      textColorOH:null,
 
       text: ''
     });
