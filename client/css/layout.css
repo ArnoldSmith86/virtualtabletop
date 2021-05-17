@@ -207,7 +207,6 @@ body.aspectTooGood #hideToolbarButton {
 /* Track */
 ::-webkit-scrollbar-track {
   background: white;
-  margin: 5vh;
   border-radius: 5px;
 }
 

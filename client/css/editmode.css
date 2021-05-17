@@ -39,6 +39,10 @@
   width: 90%;
 }
 
+#editOverlay::-webkit-scrollbar-track {
+  margin: 5vh;
+}
+
 .editorButtonsTop{
   display: grid !important;
   grid-gap: 2px;
