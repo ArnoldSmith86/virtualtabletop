@@ -1,3 +1,4 @@
+//look for similar function in widget.js
 class Card extends Widget {
   constructor(id) {
     super(id);
@@ -74,6 +75,7 @@ class Card extends Widget {
     super.applyInitialDelta(delta);
   }
 
+  //look for similar function in widget.js
   async click(mode='respect') {
     if(!await super.click(mode))
       await this.flip();
@@ -135,6 +137,7 @@ class Card extends Widget {
     }
   }
 
+  //look for similar function in widget.js
   cssProperties() {
     const p = super.cssProperties();
     p.push('deck');
@@ -153,6 +156,7 @@ class Card extends Widget {
     }
   }
 
+  //this gets adds the properties defined as default in the deck to each individual cards
   getDefaultValue(property) {
     if(this.deck) {
       const d = this.deck.cardPropertyGet(this.get('cardType'), property);
