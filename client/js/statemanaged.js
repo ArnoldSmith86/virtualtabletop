@@ -43,7 +43,7 @@ export class StateManaged {
   }
 
   async set(property, value) {
-    if(value === this.defaults[property])
+    if(value === this.getDefaultValue(property))
       value = null;
     if(this.state[property] === value || this.state[property] === undefined && value === null)
       return;

@@ -181,11 +181,11 @@ export class Widget extends StateManaged {
     return [ 'classes', 'owner', 'typeClasses' ];
   }
 
-  async click() {
-    if(!this.get('clickable'))
+  async click(mode='respect') {
+    if(!this.get('clickable') && !(mode == 'ignoreClickable' || mode =='ignoreAll'))
       return true;
 
-    if(Array.isArray(this.get('clickRoutine'))) {
+    if(Array.isArray(this.get('clickRoutine')) && !(mode == 'ignoreClickRoutine' || mode =='ignoreAll')) {
       await this.evaluateRoutine('clickRoutine', {}, {});
       return true;
     } else {
@@ -455,11 +455,15 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'CLICK') {
-        setDefaults(a, { collection: 'DEFAULT', count: 1 });
+        setDefaults(a, { collection: 'DEFAULT', count: 1 , mode: 'respect' });
+        if (['respect', 'ignoreClickable', 'ignoreClickRoutine', 'ignoreAll'].indexOf(a.mode) == -1) {
+          problems.push(`Mode ${a.mode} is unsupported. Using 'respect' mode.`);
+          a.mode = 'respect'
+        };
         if(isValidCollection(a.collection))
           for(let i=0; i<a.count; ++i)
             for(const w of collections[a.collection])
-              await w.click();
+              await w.click(a.mode);
       }
 
       if(a.func == 'CLONE') {
@@ -1008,7 +1012,9 @@ export class Widget extends StateManaged {
     this.hoverTargetDistance = 99999;
     this.hoverTarget = null;
 
+    this.disablePileUpdateAfterParentChange = true;
     await this.set('parent', null);
+    delete this.disablePileUpdateAfterParentChange;
 
     for(const t of this.dropTargets)
       t.domElement.classList.add('droppable');
@@ -1111,7 +1117,8 @@ export class Widget extends StateManaged {
         if(Array.isArray(newParent.get('enterRoutine')))
           await newParent.evaluateRoutine('enterRoutine', { oldParentID: oldValue === undefined ? null : oldValue }, { child: [ this ] });
       }
-      await this.updatePiles();
+      if(!this.disablePileUpdateAfterParentChange)
+        await this.updatePiles();
     }
   }
 
@@ -1315,8 +1322,10 @@ export class Widget extends StateManaged {
 
         // if a pile gets dropped onto a pile, all children of one pile are moved to the other (the empty one destroys itself)
         if(widget.get('type') == 'pile' && this.get('type') == 'pile') {
-          for(const w of this.children().reverse())
-            await w.set('parent', widget.get('id')); await w.bringToFront();
+          for(const w of this.children().reverse()) {
+            await w.set('parent', widget.get('id'));
+            await w.bringToFront();
+          }
           break;
         }
 
