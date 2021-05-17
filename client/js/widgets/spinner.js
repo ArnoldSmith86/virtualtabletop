@@ -1,3 +1,4 @@
+//look for similar function in widget.js
 class Spinner extends Widget {
   constructor(id) {
     super(id);
@@ -38,6 +39,7 @@ class Spinner extends Widget {
     }
   }
 
+  //look for similar function in widget.js
   async click(mode='respect') {
     if(!await super.click(mode)) {
       const angle = this.get('angle') + Math.floor((2+Math.random())*360);
@@ -47,17 +49,21 @@ class Spinner extends Widget {
     }
   }
 
+  //this function creates the components of a spinner
   createChildNodes() {
     const childNodes = [...this.domElement.childNodes];
     const ns = 'http://www.w3.org/2000/svg'
 
+    //start of "options" child
     const bg = document.createElementNS(ns, 'svg');
     bg.setAttribute('class', 'background');
     bg.setAttribute('style', this.get('backgroundCSS'));
     bg.setAttribute('viewBox', '0 0 100 100');
 
+    //this creates the SVG used in the options
     const options = this.get('options');
     for(const i in options) {
+      //creates the lines
       const line = document.createElementNS(ns, 'line');
       line.setAttribute('x1', 50);
       line.setAttribute('y1', 50);
@@ -65,6 +71,7 @@ class Spinner extends Widget {
       line.setAttribute('y2', 50 + Math.cos(0.5*Math.PI+2*Math.PI/options.length*i)*50);
       line.setAttribute('stroke', this.get('lineColor'));
 
+      //adds the options values
       const text = document.createElementNS(ns, 'text');
       text.setAttribute('x', 50 + Math.sin(0.5*Math.PI-2*Math.PI/options.length*(+i+0.5))*38);
       text.setAttribute('y', 50 + Math.cos(0.5*Math.PI-2*Math.PI/options.length*(+i+0.5))*38);
@@ -81,11 +88,13 @@ class Spinner extends Widget {
     this.domElement.innerHTML = '';
     this.domElement.appendChild(bg);
 
+    //start of "arrow" child
     this.spinner = document.createElement('div');
     this.spinner.setAttribute('class', 'spinningPart');
     this.spinner.setAttribute('style', this.get('spinnerCSS'));
     this.domElement.appendChild(this.spinner);
 
+    //start of "central value" child
     this.value = document.createElement('div');
     this.value.setAttribute('class', 'value');
     this.value.setAttribute('style', this.get('valueCSS'));
@@ -97,6 +106,7 @@ class Spinner extends Widget {
         this.domElement.appendChild(child);
   }
 
+  //look for similar function in widget.js
   css() {
     let css = super.css();
     css += `; font-size:${Math.min(this.get('width'), this.get('height')) * 0.4}px`;
