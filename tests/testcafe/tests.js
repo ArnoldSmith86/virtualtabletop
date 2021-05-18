@@ -155,7 +155,7 @@ publicLibraryButtons('Reward',             0, 'cbf8598d244e1290efe98f0d7fb3ccc8'
 publicLibraryButtons('Rummy Tiles',        0, '5d171ad18638d051bb79bafaad169583', [ 'startMix', 'draw14' ]);
 publicLibraryButtons('Undercover',         1, 'd3ba0452c9f44e8963d49a484c78e66b', [ 'Reset', 'Spy Master Button' ]);
 publicLibraryButtons('Dice',               0, '3cd34fc98732a94639d37e677c81b7f2', [ 'k18u', 'hy65', 'gghr', 'dsfa', 'f34a', 'fusq' ]);
-publicLibraryButtons('Functions - CALL',   0, '8d1cee31b805f7e8135d262b43bfd7df', [
+publicLibraryButtons('Functions - CALL',   0, 'eb88d5694e25c2d9559789527bcdea83', [
   'n4cw_8_C', '5a52', '5a52', '66kr', 'qeg1', 'n4cwB', '8r6p', 'qeg1', 'qeg1', 'n5eu'
 ]);
 publicLibraryButtons('Functions - CLICK',  0, 'b2430bd4589116a05df1fcedb55337c4', [ '7u2q' ]);
