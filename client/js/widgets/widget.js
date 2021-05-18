@@ -536,7 +536,7 @@ export class Widget extends StateManaged {
             v[o](x);
             break;
           case 'in':
-            v = x in y;
+            v = (y.indexOf(x)!=-1);
             break;
 
           // random values
