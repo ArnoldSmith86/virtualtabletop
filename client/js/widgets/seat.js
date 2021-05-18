@@ -14,6 +14,8 @@ class Seat extends Widget {
       turn: 0,
       player: "",
       inactive: true,
+      display: "index",
+      displayFallback: "index",
 
       color: "#999999",
       layer: 1,
@@ -56,11 +58,15 @@ class Seat extends Widget {
   //need to add a condition here to change the turn if the turn is in a seat that is empty
   setPlayer() {
     if (this.get('player') == "") {
+      var display = this.get('display')||"index"
       this.set('player', playerName);
       this.set('color', playerColor);
+      this.set('text',this.get(display))
     } else {
+      var display = this.get('displayFallback')||"index"
       this.set('player', "");
       this.set('color', "#999999");
+      this.set('text',this.get(display))
     };
   }
 
