@@ -1,0 +1,14 @@
+.seat {
+  background-color: white;
+  font-size: 25px;
+  border-radius: 100%;
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--color);
+  text-align: center;
+  --shadow: 0px 0px 20px 5px var(--color)
+}
+
+.seat.turn {
+  box-shadow: var(--shadow);
+}
