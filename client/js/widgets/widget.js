@@ -291,8 +291,7 @@ export class Widget extends StateManaged {
             return null;
           widget = widgets.get(id);
         }
-        let value = widget.get(evaluateIdentifier(match[5], match[6]));
-        return value !== undefined ? value : null;
+        return widget.get(evaluateIdentifier(match[5], match[6]));
       }
 
       return null;
@@ -351,7 +350,7 @@ export class Widget extends StateManaged {
       });
     }
 
-    const routine = this.get(property) !== undefined ? this.get(property) : property;
+    const routine = this.get(property) !== null ? this.get(property) : property;
 
     for(const original of routine) {
       let a = JSON.parse(JSON.stringify(original));
