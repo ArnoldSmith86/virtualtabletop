@@ -3,7 +3,7 @@ const compute_ops = [
       name: '=',
       desc: 'sets the variable to the value of x',
       sample: 'var a = ${x}',
-      call: function(v, x) { return v = v = x }
+      call: function(v, x) { return v = x }
     },
     {
       name: '+',
