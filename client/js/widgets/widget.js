@@ -801,7 +801,7 @@ export class Widget extends StateManaged {
             else if(a.relation === '>')
               return w.get(a.property) > a.value;
             else if(a.relation === 'in' && ((typeof a.value == "string") || (typeof a.value == "object")))
-              return (Array.isArray(a.value) || (typeof a.value == "string")) ? a.value.indexOf(w.get(a.property)) != -1 : w.get(a.property) in a.value
+              return (Array.isArray(a.value) || (typeof a.value == "string")) ? a.value.indexOf(w.get(a.property)) != -1 : w.get(a.property) in a.value;
             if(a.relation != '==')
               problems.push(`Warning: Relation ${a.relation} interpreted as ==.`);
             return w.get(a.property) === a.value;
