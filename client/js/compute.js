@@ -465,7 +465,7 @@ const compute_ops = [
       name: 'setIndex',
       desc: 'sets the index x of the given variable a to the value y',
       sample: 'var a.${x} = ${y}\nvar a = setIndex ${x} ${y}',
-      call: function(v, x, y) { return v[x] = y }
+      call: function(v, x, y) { v[x] = y; return v }
     },
     {
       name: 'from',
@@ -523,21 +523,27 @@ const compute_ops = [
     },
     {
       name: 'slice',
-      desc: 'returns elements between start (y) an end (z) of an array (or characters of a string), excluding the end (unless z is omitted)',
+      desc: 'returns elements between start index y an end index z of an array (or characters of a string), excluding the end (unless z is omitted)',
       sample: 'var a = ${x} slice ${y} ${z}',
       call: function(v, x, y, z) { return v = (z !== undefined) ? x.slice(y, z) : x.slice(y) }
+    },
+    {
+      name: 'splice',
+      desc: 'removes elements starting from index x from the array in variable a (optionally limited to only y elements)',
+      sample: 'var a = splice ${x} ${y}',
+      call: function(v, x, y) { if(y !== undefined) {v.splice(x, y)} else {v.splice(x)}; return v }
     },
     {
       name: 'push',
       desc: 'adds the given value as the last array element of the variable',
       sample: 'var a = push ${x}',
-      call: function(v, x) { return v.push(x) }
+      call: function(v, x) { v.push(x); return v }
     },
     {
       name: 'unshift',
       desc: 'adds the given value as the first array element of the variable',
       sample: 'var a = unshift ${x}',
-      call: function(v, x) { return v.unshift(x) }
+      call: function(v, x) { v.unshift(x); return v}
     },
     {
       name: 'randInt',
