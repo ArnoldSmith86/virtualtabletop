@@ -339,7 +339,7 @@ function populateAddWidgetOverlay() {
     y: 300
   });
 
-  y = 100;
+  y = 130;
   for(const sides of [ 2, 4, 6, 8, 10, 12, 20 ]) {
     addWidgetToAddWidgetOverlay(new Spinner('add-spinner'+sides), {
       type: 'spinner',
@@ -516,6 +516,15 @@ onLoad(function() {
       y: 820,
       width: 1500,
       height: 180
+    });
+    showOverlay();
+  });
+
+  on('#addCanvas', 'click', function() {
+    addWidgetLocal({
+      type: 'canvas',
+      x: 600,
+      y: 300
     });
     showOverlay();
   });
