@@ -503,7 +503,12 @@ export class Widget extends StateManaged {
 
       function compute(o, v, x, y, z) {
         try {
-          v = compute_ops.find(op => op.name == o).call(v, x, y, z);
+          if (compute_ops.find(op => op.name == o) !== undefined) {
+            v = compute_ops.find(op => op.name == o).call(v, x, y, z);
+          }else {
+            problems.push(`Operation ${o} is unsupported.`);
+            return v = null;
+          }
         } catch(e) {
           v = 0;
           problems.push(`Exception: ${e.toString()}`);
