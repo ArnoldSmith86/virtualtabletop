@@ -418,6 +418,7 @@ function jeAddCommands() {
   jeAddWidgetPropertyCommands(new Label());
   jeAddWidgetPropertyCommands(new Pile());
   jeAddWidgetPropertyCommands(new Spinner());
+  jeAddWidgetPropertyCommands(new Timer());
 
   jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result' });
   jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 , mode:'respect'});
@@ -438,6 +439,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('SET', { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
   jeAddRoutineOperationCommands('SORT', { key: 'value', reverse: false, locales: null, options: null, holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('SHUFFLE', { holder: null, collection: 'DEFAULT' });
+  jeAddRoutineOperationCommands('TIMER', { value: 0, seconds: 0, mode: 'toggle', timer: null, collection: 'DEFAULT' });
 
   jeAddCSScommands();
 
@@ -445,7 +447,7 @@ function jeAddCommands() {
   jeAddFaceCommand('css', '', '');
   jeAddFaceCommand('radius', ' (rounded corners)', 1);
 
-  jeAddEnumCommands('^[a-z]+ ↦ type', [ null, 'button', 'card', 'deck', 'holder', 'label', 'spinner' ]);
+  jeAddEnumCommands('^[a-z]+ ↦ type', [ null, 'button', 'card', 'deck', 'holder', 'label', 'spinner', 'timer' ]);
   jeAddEnumCommands('^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ textAlign', [ 'left', 'center', 'right' ]);
   jeAddEnumCommands('^.*\\(CLICK\\) ↦ mode', [ 'respect', 'ignoreClickable', 'ignoreClickRoutine', 'ignoreAll' ]);
   jeAddEnumCommands('^.*\\(FLIP\\) ↦ faceCycle', [ 'forward', 'backward', 'random' ]);
@@ -458,6 +460,8 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=', 'in' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ type', [ 'all', null, 'button', 'card', 'deck', 'holder', 'label', 'spinner' ]);
   jeAddEnumCommands('^.*\\(SET\\) ↦ relation', [ '+', '-', '=', "*", "/",'!' ]);
+  jeAddEnumCommands('^.*\\(TIMER\\) ↦ mode', [ 'pause', 'start', 'toggle', 'set', 'dec', 'inc', 'reset']);
+  jeAddEnumCommands('^.*\\(TIMER\\) ↦ value', [ 0, 'start', 'end', 'milliseconds']);
   jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ property', [ 'id', 'parent', 'type', 'rotation' ]);
   jeAddEnumCommands('^.* ↦ applyVariables ↦ [0-9]+ ↦ variable', [ 'COUNT', 'RANDOM', 'id', 'result', 'playerName', 'playerColor', 'activePlayers' , 'thisID' ]);
 
@@ -479,6 +483,19 @@ function jeAddCSScommands() {
       id: 'css_' + css,
       name: css,
       context: '^.* ↦ (css|[a-z]+CSS)',
+      call: async function() {
+        jePasteText(css + '; ', true);
+      },
+      show: function() {
+        return !String(jeGetValue()[jeGetLastKey()]).match(css.split(':')[0]);
+      }
+    });
+  }
+  for(const css of ['--wcBorderNormal: #00000000', '--wcBorderAlert: red', '--wcFontAlert: red', '--wcFontPaused: #6d6d6d', '--wcAnimationAlert: blinker 1s linear infinite', '--wcAnimationPaused: none' ]) {
+    jeCommands.push({
+      id: 'css_' + css,
+      name: css,
+      context: 'timer ↦ (css|[a-z]+CSS)',
       call: async function() {
         jePasteText(css + '; ', true);
       },

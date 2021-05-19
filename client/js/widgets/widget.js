@@ -957,6 +957,48 @@ export class Widget extends StateManaged {
         }
       }
 
+      if(a.func == 'TIMER') {
+        setDefaults(a, { value: 0, seconds: 0, mode: 'toggle', collection: 'DEFAULT' });
+        if([ 'set', 'dec', 'inc', 'reset','pause', 'start', 'toggle' ].indexOf(a.mode) == -1)
+          problems.push(`Warning: Mode ${a.mode} interpreted as toggle.`);
+        if([ 'set', 'dec', 'inc'].indexOf(a.mode) == -1){
+          if(a.timer !== undefined) {
+            if (this.isValidID(a.timer, problems)) {
+              await w(a.timer, async widget=>{
+                if(widget.setPaused)
+                  await widget.setPaused(a.mode);
+              });
+            }
+          } else if(isValidCollection(a.collection)) {
+            if(collections[a.collection].length) {
+              for(const c of collections[a.collection])
+                if(c.setPaused)
+                  await c.setPaused(a.mode);
+            } else {
+              problems.push(`Collection ${a.collection} is empty.`);
+            }
+          }
+        };
+        if(['set', 'dec', 'inc', 'reset' ].indexOf(a.mode) != -1){
+          if(a.timer !== undefined) {
+            if (this.isValidID(a.timer, problems)) {
+              await w(a.timer, async widget=>{
+                if(widget.setMilliseconds)
+                  await widget.setMilliseconds(a.seconds*1000 || a.value, a.mode);
+              });
+            }
+          } else if(isValidCollection(a.collection)) {
+            if(collections[a.collection].length) {
+              for(const c of collections[a.collection])
+                if(c.setMilliseconds)
+                  await c.setMilliseconds(a.seconds*1000 || a.value, a.mode);
+            } else {
+              problems.push(`Collection ${a.collection} is empty.`);
+            }
+          }
+        };
+      }
+
       if(this.get('debug')) {
         let msg = ''
         msg += '\n\n\nOPERATION: \n' + JSON.stringify(a, null, '  ');
