@@ -97,7 +97,7 @@ const compute_ops = [
     },
     {
       name: 'hypot',
-      desc: 'returns the square root of the sum of squares (hypotenuse) of its (up to 2) arguments',
+      desc: 'returns the square root of the sum of squares (hypotenuse) - a second number y is optional',
       sample: 'var a = hypot ${x} ${y}',
       call: function(v, x, y) { return v = (y !== undefined) ? Math.hypot(x, y) : Math.hypot(x) }
     },
@@ -331,20 +331,20 @@ const compute_ops = [
     },
     {
       name: 'charAt',
-      desc: 'returns the nth character of a string, with 0 being the first',
-      sample: 'var a = ${x} charAt ${y}',
+      desc: 'returns the nth character of a string x, with 0 being the first',
+      sample: 'var a = ${x} charAt ${n}',
       call: function(v, x, y) { return v = (y !== undefined) ? x.charAt(y) : x.charAt() }
     },
     {
       name: 'charCodeAt',
-      desc: 'returns the Unicode of the nth character in a string, with 0 being the first',
-      sample: 'var a = ${x} charCodeAt ${y}',
+      desc: 'returns the Unicode of the nth character in a string x, with 0 being the first',
+      sample: 'var a = ${x} charCodeAt ${n}',
       call: function(v, x, y) { return v = (y !== undefined) ? x.charCodeAt(y) : x.charCodeAt() }
     },
     {
       name: 'codePointAt',
-      desc: 'returns the UTF-16 code point value of the nth character in a string, with 0 being the first',
-      sample: 'var a = ${x} codePointAt ${y}',
+      desc: 'returns the UTF-16 code point value of the nth character in a string x, with 0 being the first',
+      sample: 'var a = ${x} codePointAt ${n}',
       call: function(v, x, y) { return v = (y !== undefined) ? x.codePointAt(y) : x.codePointAt() }
     },
     {
@@ -355,25 +355,25 @@ const compute_ops = [
     },
     {
       name: 'includes',
-      desc: 'returns true if a string (x) contains a string (y) - case sensitive',
+      desc: 'returns true if a string x contains a string y - case sensitive',
       sample: 'var a = ${x} includes ${y}',
       call: function(v, x, y) { return v = x.includes(y) }
     },
     {
       name: 'endsWith',
-      desc: 'returns true if a string (x) ends with a string (y) - case sensitive',
+      desc: 'returns true if a string x ends with a string y - case sensitive',
       sample: 'var a = ${x} endsWith ${y}',
       call: function(v, x, y) { return v = x.endsWith(y) }
     },
     {
       name: 'indexOf',
-      desc: 'returns the position of the first occurrence of a string (y), or -1 if not found - case sensitive',
+      desc: 'returns the position of the first occurrence of a string y in string x, or -1 if not found - case sensitive',
       sample: 'var a = ${x} indexOf ${y}',
       call: function(v, x, y) { return v = x.indexOf(y) }
     },
     {
       name: 'lastIndexOf',
-      desc: 'returns the position of the last occurrence of a string (y), or -1 if not found - case sensitive',
+      desc: 'returns the position of the last occurrence of a string y in string x, or -1 if not found - case sensitive',
       sample: 'var a = ${x} lastIndexOf ${y}',
       call: function(v, x, y) { return v = x.lastIndexOf(y) }
     },
@@ -385,19 +385,19 @@ const compute_ops = [
     },
     {
       name: 'match',
-      desc: 'searches a string for a match against a regular expression, and returns the matches as an Array, or null if no match was found',
+      desc: 'searches a string x for a match against a regular expression, and returns the matches as an Array, or null if no match was found',
       sample: 'var a = ${x} match \'[a-z]\'',
       call: function(v, x, y) { return v = x.match(y) }
     },
     {
       name: 'padEnd',
-      desc: 'returns a string padded with spaces at the end (up to the specified total string length)',
+      desc: 'returns a string x padded with spaces at the end (up to the specified total string length y)',
       sample: 'var a = ${x} padEnd ${y}',
       call: function(v, x, y) { return v = x.padEnd(y) }
     },
     {
       name: 'padStart',
-      desc: 'returns a string padded with spaces at the start (up to the specified total string length)',
+      desc: 'returns a string x padded with spaces at the start (up to the specified total string length y)',
       sample: 'var a = ${x} padStart ${y}',
       call: function(v, x, y) { return v = x.padStart(y) }
     },
@@ -409,61 +409,61 @@ const compute_ops = [
     },
     {
       name: 'split',
-      desc: 'splits a string into substrings based on a separator (y), and returns an Array of the result',
+      desc: 'splits a string into substrings based on a separator y, and returns an array of the result',
       sample: 'var a = ${x} split ${y}',
       call: function(v, x, y) { return v = x.split(y) }
     },
     {
       name: 'startsWith',
-      desc: 'returns true if a string (x) starts with a string (y) - case sensitive',
+      desc: 'returns true if a string x starts with a string y - case sensitive',
       sample: 'var a = ${x} startsWith ${y}',
       call: function(v, x, y) { return v = x.startsWith(y) }
     },
     {
       name: 'toFixed',
-      desc: 'returns a formatted number, using the given amount (y) of digits, defaulting to 0 digits',
+      desc: 'returns a formatted number based on x, using the given amount y of digits, defaulting to 0 digits',
       sample: 'var a = ${x} toFixed ${y}',
       call: function(v, x, y) { return v = (y !== undefined) ? x.toFixed(y) : x.toFixed() }
     },
     {
       name: 'toLocaleLowerCase',
-      desc: 'returns the string in lowercase letters, according to curent locale',
+      desc: 'returns the string x in lowercase letters, optionally according to current locale y',
       sample: 'var a = ${x} toLocaleLowerCase ${y}',
       call: function(v, x, y) { return v = x.toLocaleLowerCase(y) }
     },
     {
       name: 'toLocaleUpperCase',
-      desc: 'returns the string in uppercase letters, according to curent locale',
+      desc: 'returns the string in uppercase letters, optionally according to current locale y',
       sample: 'var a = ${x} toLocaleUpperCase ${y}',
       call: function(v, x, y) { return v = x.toLocaleUpperCase(y) }
     },
     {
       name: 'replace',
-      desc: 'returns a string with the first match of a pattern (y) replaced by a replacement (z)',
+      desc: 'returns a string with the first occurence of string y replaced by string z',
       sample: 'var a = ${x} replace ${y} {z}',
       call: function(v, x, y, z) { return v = x.replace(y, z) }
     },
     {
       name: 'replaceAll',
-      desc: 'returns a string with all matches of a pattern (y) replaced by a replacement (z)',
+      desc: 'returns a string with all occurences of string y replaced by string z',
       sample: 'var a = ${x} replace ${y} {z}',
       call: function(v, x, y, z) { return v = x.replace(y, z) }
     },
     {
       name: 'substr',
-      desc: 'extracts and returns part of a string, starting at an index (y) for a number of characters (z) - or to the end (if z is zero/omitted)',
+      desc: 'extracts and returns part of a string, starting at index y for z number of characters - or to the end (if z is zero/omitted)',
       sample: 'var a = ${x} substr ${y} {z}',
       call: function(v, x, y, z) { return v = (z !== undefined) ? x.substr(y, z) : x.substr(y) }
     },
     {
       name: 'getIndex',
-      desc: 'returns the index (y) position of a string or array',
+      desc: 'returns index y of a string or array x',
       sample: 'var a = ${x}.${y}\nvar a = ${x} getIndex ${y}',
       call: function(v, x, y) { return v = x.getIndex(y) }
     },
     {
       name: 'setIndex',
-      desc: 'sets the index (x) of the given variable (a) of type string or array to the value (y)',
+      desc: 'sets the index x of the given variable a to the value y',
       sample: 'var a.${x} = ${y}\nvar a = setIndex ${x} ${y}',
       call: function(v, x, y) { return v[x] = y }
     },
@@ -511,13 +511,13 @@ const compute_ops = [
     },
     {
       name: 'findIndex',
-      desc: 'returns the index of the first element in the array that passes the given value',
+      desc: 'returns the index of the first element in the array that matches the given value y',
       sample: 'var a = ${x} findIndex ${y}',
       call: function(v, x, y) { return v = x.findIndex(y) }
     },
     {
       name: 'join',
-      desc: 'returns the array as a combined string with values separated by an optional separator (y), defaulting to comma',
+      desc: 'returns the array x as a combined string with values separated by an optional separator y, defaulting to comma',
       sample: 'var a = ${x} join ${y}',
       call: function(v, x, y) { return v = (y !== undefined) ? x.join(y) : x.join() }
     },
@@ -547,8 +547,8 @@ const compute_ops = [
     },
     {
       name: 'randRange',
-      desc: 'returns random integer in range between two numbers (x and y) (excluding the ), optionally in increments (z)',
-      sample: 'var a = randRange ${x} ${y}',
+      desc: 'returns random integer in range between two numbers, optionally in z increments (defaults to 1)',
+      sample: 'var a = randRange ${x} ${y} ${z}',
       call: function(v, x, y, z) { return v = Math.round(Math.floor((Math.random() * (y - x) / (z || 1))) * (z || 1) + x) }
     }
   ]
