@@ -12,6 +12,7 @@ export class Widget extends StateManaged {
     this.id = id;
     this.domElement = div;
     this.childArray = [];
+    this.inheritingWidgetsArray = [];
 
     this.addDefaults({
       x: 0,
@@ -36,6 +37,7 @@ export class Widget extends StateManaged {
       ignoreOnLeave: false,
 
       parent: null,
+      inheritFrom: null,
       owner: null,
       dropOffsetX: 0,
       dropOffsetY: 0,
@@ -114,6 +116,22 @@ export class Widget extends StateManaged {
       } else {
         delete this.parent;
       }
+    }
+
+    if(delta.inheritFrom !== undefined) {
+      if(delta.inheritFrom && widgets.has(delta.inheritFrom))
+        widgets.get(delta.inheritFrom).inheritingWidgetsArray.push(this);
+      else
+        widgets.forEach(w=>w.inheritingWidgetsArray=w.inheritingWidgetsArray.filter(i=>i!=this));
+      this.isDraggable = delta.movable;
+    }
+
+    for(const inheriting of this.inheritingWidgetsArray) {
+      const inheritedDelta = {};
+      for(const key in delta)
+        if(inheriting.state[key] === undefined)
+          inheritedDelta[key] = delta[key];
+      inheriting.applyDeltaToDOM(inheritedDelta);
     }
 
     if($('#enlarged').dataset.id == this.get('id') && !$('#enlarged').className.match(/hidden/))
