@@ -38,8 +38,8 @@ class Spinner extends Widget {
     }
   }
 
-  async click() {
-    if(!await super.click()) {
+  async click(mode='respect') {
+    if(!await super.click(mode)) {
       const angle = this.get('angle') + Math.floor((2+Math.random())*360);
       const o = this.get('options');
       await this.set('angle', angle);

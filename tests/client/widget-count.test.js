@@ -53,12 +53,7 @@ describe("Scenarios: Counting widgets", () => {
         {
           "func": "LABEL",
           "label": `${testName}-test-label`,
-          "applyVariables": [
-            {
-              "parameter": "value",
-              "variable": "COUNT"
-            }
-          ]
+          "value": "${COUNT}"
         }
       ]);
     });
