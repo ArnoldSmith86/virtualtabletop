@@ -122,7 +122,7 @@ function setScale() {
   const h = window.innerHeight;
   if(jeEnabled) {
     const targetWidth = jeZoomOut ? 3200 : 1600;
-    scale = (w-700)/targetWidth;
+    scale = (w-850)/targetWidth;
   } else {
     scale = w/h < 1600/1000 ? w/1600 : h/1000;
   }
