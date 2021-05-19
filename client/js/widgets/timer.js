@@ -84,18 +84,18 @@ export class Timer extends Widget {
     }
   }
 
-  async setMilliseconds(milliseconds, mode) {
+  async setMilliseconds(value, mode) {
     let ms = this.get('start');
 
-    if(typeof (this.get(milliseconds))=="number")
-      var milliseconds = this.get(milliseconds);
-    else if (typeof (milliseconds)!="number")
-      milliseconds = 0;
+    if(typeof (this.get(value))=="number")
+      var value = this.get(value);
+    else if (typeof (value)!="number")
+    value = 0;
 
     if(mode == 'inc' || mode == 'dec')
-      ms = this.get('milliseconds') + (mode == 'dec' ? -1 : 1) * milliseconds;
+      ms = this.get('milliseconds') + (mode == 'dec' ? -1 : 1) * value;
     else if(mode == 'set')
-      ms = milliseconds;
+      ms = value;
 
     await this.set('milliseconds', parseInt(ms));
   }
