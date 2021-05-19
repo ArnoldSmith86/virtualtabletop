@@ -352,19 +352,6 @@ const jeCommands = [
     call: async function() {
       jeSelectWidget(widgets.get(jeStateNow.parent));
     }
-  },
-  {
-    id: 'je_applyVariables',
-    name: jeRoutineCall(routineIndex=>`change ${jeContext[routineIndex+3]} to applyVariables`, true),
-    context: '^.*\\) ↦ [a-zA-Z]+',
-    call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
-      delete operation[jeContext[routineIndex+3]];
-      if(!operation.applyVariables)
-        operation.applyVariables = [];
-      operation.applyVariables.push({ parameter: jeContext[routineIndex+3], variable: '###SELECT ME###' });
-      jeSetAndSelect('');
-    }),
-    show: jeRoutineCall(routineIndex=>jeContext[routineIndex+3] !== undefined && jeContext[routineIndex+3] != 'applyVariables', true)
   }
 ];
 
@@ -434,7 +421,6 @@ function jeAddCommands() {
 
   jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result' });
   jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 , mode:'respect'});
-  jeAddRoutineOperationCommands('COMPUTE', { operation: '+', operand1: 1, operand2: 1, operand3: 1, variable: 'COMPUTE' });
   jeAddRoutineOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT' });
   jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, properties: null });
   jeAddRoutineOperationCommands('DELETE', { collection: 'DEFAULT'});
@@ -630,6 +616,10 @@ function jeSelectWidget(widget, dontFocus) {
   jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(widget.state), null, '  ')), dontFocus);
 }
 
+function html(string) {
+  return string.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
 function jeColorize() {
   const langObj = [
     [ /^( +")(.*)( \(in .*)(":.*)$/, null, 'extern', 'extern', null ],
@@ -638,17 +628,17 @@ function jeColorize() {
     [ /^( +")(.*)(": )(null|true|false)(,?)$/, null, 'key', null, 'null', null ],
     [ /^( +")(.*)(":.*)$/, null, 'key', null ],
     [ /^(Room)$/, 'extern' ],
+    [ /^( +"var )(.*)( = )(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?( )?([0-9a-zA-Z_-]+|[=+*/%<!>&|-]{1,2})?(🧮(?:[0-9a-zA-Z_-]+|[=+*/%<!>&|-]{1,2}))?( )?(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?( )?(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?( )?(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?(.*)(",?)$/, 'default', 'custom', null, 'number', 'null', 'variable', 'string', null, null, 'variable', null, 'number', 'null', 'variable', 'string', null, 'number', 'null', 'variable', 'string', null, 'number', 'null', 'variable', 'string', null, 'default' ],
     [ /^( +)(.*)( \()([a-z]+)( - )([0-9-]+)(,)([0-9-]+)(.*)$/, null, 'key', null, 'string', null, 'number', null, 'number', null ]
   ];
   let out = [];
   for(let line of $('#jeText').textContent.split('\n')) {
-    line = line.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     let foundMatch = false;
     for(const l of langObj) {
       const match = line.match(l[0]);
       if(match) {
-        if(match[1] == '  "' && l[2] == 'key' && (l[4] == "null" && match[4] == "null" || String(jeWidget.getDefaultValue(match[2])) == match[4])) {
-          out.push(`<i class=default>${line}</i>`);
+        if(match[1] == '  "' && l[2] == 'key' && (l[4] == "null" && match[4] == "null" || String(jeWidget.defaults[match[2]]) == match[4])) {
+          out.push(`<i class=default>${html(line)}</i>`);
           foundMatch = true;
           break;
         }
@@ -658,15 +648,23 @@ function jeColorize() {
           c[2] = 'custom';
 
         for(let i=1; i<l.length; ++i)
-          if(l[i])
-            match[i] = `<i class=${c[i]}>${match[i]}</i>`;
-        out.push(match.slice(1).join(''))
+          if(l[i] && match[i])
+            match[i] = `<i class=${c[i]}>${html(match[i])}</i>`;
+
+        let newLine = match.slice(1).join('');
+
+        if(l.indexOf('variable') == -1) {
+          newLine = newLine.replace(/\$\{[^}]+\}/g, m=>`<i class=variable>${m}</i>`);
+        }
+
+        out.push(newLine);
         foundMatch = true;
+
         break;
       }
     }
     if(!foundMatch)
-      out.push(line);
+      out.push(html(line));
   }
   $('#jeTextHighlight').innerHTML = out.join('\n');
 }
@@ -746,14 +744,18 @@ function jeGetContext() {
     const m = line.match(/^( +)(["{])([^"]*)/);
     if(m) {
       const depth = m[1].length/2;
-      keys[depth] = m[2]=='{' ? (keys[depth] === undefined ? -1 : keys[depth]) + 1 : m[3];
+      keys[depth] = m[2]=='{' || line.match(/^ +"[^"]*",?$/) ? (keys[depth] === undefined ? -1 : keys[depth]) + 1 : m[3];
       keys = keys.slice(0, depth+1);
     }
   }
   try {
-    for(let i=1; i<keys.length-1; ++i)
-      if(String(keys[i]).match(/Routine$/) && typeof keys[i+1] == 'number' && !jeJSONerror)
-        keys.splice(i+2, 0, '(' + jeGetValue(keys.slice(0, i+2)).func + ')');
+    for(let i=1; i<keys.length-1; ++i) {
+      if(String(keys[i]).match(/Routine$/) && typeof keys[i+1] == 'number' && !jeJSONerror) {
+        const operation = jeGetValue(keys.slice(1, i+2), true);
+        const func = typeof operation == 'string' && operation.match(/^var/) ? 'var expression' : operation.func;
+        keys.splice(i+2, 0, '(' + (func || String(keys.slice(0, i+2))) + ')');
+      }
+    }
   } catch(e) {}
 
   if(select)
@@ -912,7 +914,6 @@ function jeShowCommands() {
 
   const usedKeys = { a: 1, c: 1, x: 1, v: 1, w: 1, n: 1, t: 1, q: 1, j: 1, z: 1 };
   let commandText = '';
-  let subText = '';
 
   const sortByName = function(a, b) {
     const nameA = typeof a.name == 'function' ? a.name() : a.name;
@@ -928,12 +929,9 @@ function jeShowCommands() {
     if(contextMatch && contextMatch[0] == "") {
       const name = (typeof command.name == 'function' ? command.name() : command.name);
       let keyName = displayKey(command.forceKey);
-      commandText += `<button class='top' id='${command.id}' title='${name} (Ctrl-${keyName})' ${!command.show || command.show() ? '' : 'disabled'}>${name.substr(0,2)}</button>`;
-      subText += `<span class='top'>${keyName}</span>`;
+      commandText += `<div class='jeTopButton'><button class='top' id='${command.id}' title='${name} (Ctrl-${keyName})' ${!command.show || command.show() ? '' : 'disabled'}>${name.substr(0,2)}</button><span class='top'>${keyName}</span></div>`;
     }
   }
-  if(commandText.length > 0)
-    commandText += `\n` + subText + `\n`;
   delete activeCommands[""];
 
   if(!jeJSONerror && jeStateNow) {
@@ -962,7 +960,7 @@ function jeShowCommands() {
       }
     }
   }
-  commandText += `\n${context}\n`;
+  commandText += `\n\n${context}\n`;
   if(jeJSONerror) {
     if(jeMode == 'widget')
       commandText += `\nCtrl-Space: go to error\n`;
@@ -973,7 +971,7 @@ function jeShowCommands() {
   if(jeSecondaryWidget)
     commandText += `\n\n${jeSecondaryWidget}\n`;
   $('#jeCommands').innerHTML = commandText;
-  on('#jeCommands>button', 'click', clickButton);
+  on('#jeCommands button', 'click', clickButton);
 }
 
 const clickButton = async function(event) {
