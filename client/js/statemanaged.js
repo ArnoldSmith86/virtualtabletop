@@ -45,7 +45,7 @@ export class StateManaged {
   }
 
   async set(property, value) {
-    if(value === this.getDefaultValue(property))
+    if(value === this.getDefaultValue(property) && !this.state.inheritFrom)
       value = null;
     if(this.state[property] === value || this.state[property] === undefined && value === null)
       return;
