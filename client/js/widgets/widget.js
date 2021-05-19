@@ -536,7 +536,7 @@ export class Widget extends StateManaged {
             v[o](x);
             break;
           case 'in':
-            v = (Array.isArray(y)|(typeof y=="string")) ? y.indexOf(x) != -1 : x in y;
+            v = (Array.isArray(y) || (typeof y == "string")) ? y.indexOf(x) != -1 : x in y;
             break;
 
           // random values
@@ -800,8 +800,8 @@ export class Widget extends StateManaged {
               return w.get(a.property) >= a.value;
             else if(a.relation === '>')
               return w.get(a.property) > a.value;
-            else if(a.relation === 'in' && ((typeof a.value=="string")||(typeof a.value=="object")))
-              return (Array.isArray(a.value)|(typeof a.value=="string")) ? a.value.indexOf(w.get(a.property)) != -1 : w.get(a.property) in a.value
+            else if(a.relation === 'in' && ((typeof a.value == "string") || (typeof a.value == "object")))
+              return (Array.isArray(a.value) || (typeof a.value == "string")) ? a.value.indexOf(w.get(a.property)) != -1 : w.get(a.property) in a.value
             if(a.relation != '==')
               problems.push(`Warning: Relation ${a.relation} interpreted as ==.`);
             return w.get(a.property) === a.value;
