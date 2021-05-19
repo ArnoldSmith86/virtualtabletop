@@ -852,9 +852,10 @@ function jePasteText(text, select) {
 
 function jePostProcessObject(o) {
   const copy = { ...o };
-  for(const key in copy)
-    if(copy[key] === jeWidget.getDefaultValue(key) || key.match(/in deck/))
-      copy[key] = null;
+  if(!o.inheritFrom)
+    for(const key in copy)
+      if(copy[key] === jeWidget.getDefaultValue(key) || key.match(/in deck/))
+        copy[key] = null;
   return copy;
 }
 
@@ -868,7 +869,7 @@ function jePreProcessObject(o) {
     const match = key.match(/^(.*?)(\*)?(#)?$/);
     if(o[match[1]] !== undefined)
       copy[match[1]] = o[match[1]];
-    else if(match[2] == '*')
+    else if(match[2] == '*' && !o.inheritFrom)
       copy[match[1]] = jeWidget.getDefaultValue(match[1]);
     if(match[3] == '#')
       copy[`LINEBREAK${match[1]}`] = null;

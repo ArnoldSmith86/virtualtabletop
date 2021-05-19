@@ -32,6 +32,8 @@ export class StateManaged {
   }
 
   getDefaultValue(key) {
+    if(this.state.inheritFrom && widgets.has(this.state.inheritFrom))
+      return widgets.get(this.state.inheritFrom).get(key);
     return this.defaults[key];
   }
 
