@@ -378,6 +378,12 @@ const compute_ops = [
       call: function(v, x, y) { return v = x.lastIndexOf(y) }
     },
     {
+      name: 'in',
+      desc: 'returns true if the string x is included in array y (or property x in object y) - case sensitive',
+      sample: 'var a = ${x} in ${y}',
+      call: function(v, x, y) { return v = Array.isArray(y) ? y.indexOf(x) != -1 : x in y }
+    },
+    {
       name: 'localeCompare',
       desc: 'compares the sort order of two strings and returns -1 (x before y), 0 (x equals y) or 1 (x after y) - case sensitive',
       sample: 'var a = ${x} localeCompare ${y}',
