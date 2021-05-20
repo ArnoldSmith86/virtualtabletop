@@ -15,6 +15,78 @@ function addWidgetLocal(widget) {
   sendDelta(true);
 }
 //This section holds the edit overlays for each widget
+//basic widget functions
+function populateEditOptionsBasic(widget) {
+  $('#basicImage').value = widget.image || "~ no image found ~";
+  $('#basicColor').value = widget.color || "black";
+  if (widget.layer == -4){
+    $('#basicTypeBoard').checked = true
+  } else if (widget.classes == "classicPiece") {
+    $('#basicTypeClassic').checked = true
+  } else if (widget.classes == "checkersPiece" || widget.classes == "checkersPiece crowned") {
+    $('#basicTypeChecker').checked = true
+  } else if (widget.classes == "pinPiece") {
+    $('#basicTypePin').checked = true
+  } else {
+    $('#basicTypeToken').checked = true
+  }
+}
+
+function applyEditOptionsBasic(widget) {
+  if ($('#basicTypeBoard').checked == true){
+    widget.layer = -4;
+    widget.movable = false;
+    widget.height = 1000;
+    widget.width = 1600;
+    widget.x = 0;
+    widget.y = 0;
+    widget.classes = null;
+    widget.activeFace = 0;
+    widget.faces = null;
+  } else if ($('#basicTypeClassic').checked == true){
+    widget.activeFace = 0;
+    widget.faces = null;
+    widget.classes = "classicPiece";
+    widget.layer = 1;
+    widget.movable = true;
+    widget.height = 90;
+    widget.width = 90;
+  } else if ($('#basicTypeChecker').checked == true && widget.classes != "checkersPiece crowned"){
+    widget.classes = "checkersPiece"
+    widget.activeFace = 0;
+    widget.faces = [{"classes": "checkersPiece"},{"classes": "checkersPiece crowned"}];
+    widget.layer = 1;
+    widget.movable = true;
+    widget.height = 73.5;
+    widget.width = 73.5;
+    widget.activeFace = 0
+  } else if ($('#basicTypePin').checked == true){
+    widget.activeFace = 0;
+    widget.faces = null;
+    widget.classes = "pinPiece"
+    widget.layer = 1;
+    widget.movable = true;
+    widget.height = 43.83;
+    widget.width = 35.85;
+  } else {
+    if (widget.faces == [{"classes": "checkersPiece"},{"classes": "checkersPiece crowned"}]){
+      widget.faces = null;
+    }
+    widget.classes = null;
+    widget.movable = true;
+    widget.layer = 1;
+    widget.movable = true;
+    widget.activeFace = 0
+  }
+
+  if ($('#basicImage').value=="~ no image found ~")
+    widget.image = "";
+  else
+    widget.image = $('#basicImage').value;
+
+    widget.color = $('#basicColor').value;
+}
+
 //button functions
 function populateEditOptionsButton(widget) {
   $('#buttonText').value = widget.text || "~ no text found ~";
@@ -151,6 +223,8 @@ function applyEditOptionsTimer(widget) {
 
 //This section calls the relative widgets' overlays and functions
 async function applyEditOptions(widget) {
+  if(widget.type == null)
+    applyEditOptionsBasic(widget);
   if(widget.type == 'button')
     applyEditOptionsButton(widget);
   if(widget.type == 'deck')
@@ -169,7 +243,7 @@ function editClick(widget) {
 
   $a('#editOverlay > div').forEach(d=>d.style.display = 'none');
 
-  const type = widget.state.type;
+  const type = widget.state.type||'basic';
   const typeSpecific = $(`#editOverlay > .${type}Edit`);
 
   if(!typeSpecific)
@@ -179,6 +253,8 @@ function editClick(widget) {
 
   vmEditOverlay.selectedWidget = widget
 
+  if(type == 'basic')
+    populateEditOptionsBasic(widget.state);
   if(type == 'button')
     populateEditOptionsButton(widget.state);
   if(type == 'holder')

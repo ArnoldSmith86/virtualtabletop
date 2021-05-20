@@ -42,6 +42,17 @@
 
     <div id="editOverlayVue">
       <div id="editOverlay" class="overlay">
+        <div class="basicEdit">
+          <h1>Edit basic widget</h1>
+          <h3>Select type:</h3>
+          <label for="basicImage"> Checker:</label><input type='radio' class='radio-button' id="basicTypeChecker" name='basicType'>
+          <label for="basicImage">   &#160; Pawn:</label><input type='radio' class='radio-button' id="basicTypeClassic" name='basicType'>
+          <label for="basicImage">   &#160; Pin:</label><input type='radio' class='radio-button' id="basicTypePin" name='basicType'>
+          <label for="basicImage">   &#160; Token:</label><input type='radio' class='radio-button' id="basicTypeToken" name='basicType'>
+          <label for="basicImage">   &#160; Board:</label><input type='radio' class='radio-button' id="basicTypeBoard" name='basicType'><br/><br/>
+          <label for="basicImage"> Image url: </label><input type="text" id="basicImage"><label for="basicImage"> (only used in boards or token) </label><br/><br/>
+          <input type="color" id="basicColor" value="black"><label for="basicColor"> - Color </label><br/><br/>
+        </div>
         <div class="buttonEdit">
           <h1>Edit button</h1>
           <label for="buttonText"> Text: </label><input type="text" id="buttonText"><br/>
