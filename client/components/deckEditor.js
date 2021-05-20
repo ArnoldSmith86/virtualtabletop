@@ -52,6 +52,7 @@ export const deckEditor = {
     },
     template: `
       <div class="deckEdit">
+        <h1>Edit deck</h1>
         <button @click="uploadCards()">Upload Card Image(s)</button>
         <table id="cardTypesList">
           <tbody><tr><th>ID</th><th>Properties</th><th>Count</th></tr></tbody>

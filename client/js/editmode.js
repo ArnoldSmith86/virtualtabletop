@@ -17,10 +17,21 @@ function addWidgetLocal(widget) {
 //This section holds the edit overlays for each widget
 //button functions
 function populateEditOptionsButton(widget) {
+  $('#buttonText').value = widget.text||"~ no text found ~";
+  $('#buttonImage').value = widget.image||"~ no image found ~";
   $('#buttonDebug').checked = widget.debug;
 }
 
 function applyEditOptionsButton(widget) {
+  if ($('#buttonText').value=="~ no text found ~")
+    widget.text = "";
+  else
+    widget.image = $('#buttonText').value;
+  if ($('#buttonImage').value=="~ no image found ~")
+    widget.image = "";
+  else
+    widget.image = $('#buttonImage').value;
+
   widget.debug = $('#buttonDebug').checked;
 }
 
