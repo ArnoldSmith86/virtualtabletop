@@ -446,19 +446,19 @@ const compute_ops = [
     {
       name: 'replace',
       desc: 'returns a string with the first occurence of string y replaced by string z',
-      sample: 'var a = ${x} replace ${y} {z}',
+      sample: 'var a = ${x} replace ${y} ${z}',
       call: function(v, x, y, z) { return v = x.replace(y, z) }
     },
     {
       name: 'replaceAll',
       desc: 'returns a string with all occurences of string y replaced by string z',
-      sample: 'var a = ${x} replace ${y} {z}',
+      sample: 'var a = ${x} replace ${y} ${z}',
       call: function(v, x, y, z) { return v = x.replace(y, z) }
     },
     {
       name: 'substr',
       desc: 'extracts and returns part of a string, starting at index y for z number of characters - or to the end (if z is zero/omitted)',
-      sample: 'var a = ${x} substr ${y} {z}',
+      sample: 'var a = ${x} substr ${y} ${z}',
       call: function(v, x, y, z) { return v = (z !== undefined) ? x.substr(y, z) : x.substr(y) }
     },
     {
@@ -476,13 +476,13 @@ const compute_ops = [
     {
       name: 'from',
       desc: 'converts and returns an array of the given string or object',
-      sample: 'var a = from {x}',
+      sample: 'var a = from ${x}',
       call: function(v, x) { return v = Array.from(x) }
     },
     {
       name: 'isArray',
       desc: 'returns true if the object is an array, and false if not',
-      sample: 'var a = isArray {x}',
+      sample: 'var a = isArray ${x}',
       call: function(v, x) { return v = Array.isArray(x) }
     },
     {
