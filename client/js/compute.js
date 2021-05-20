@@ -3,7 +3,7 @@ const compute_ops = [
       name: '=',
       desc: 'sets the variable to the value of x',
       sample: 'var a = ${x}',
-      call: function(v, x, y) { return v = x = y } // y for compatibility with SET
+      call: function(v, x, y) { return v = y } // y for compatibility with SET
     },
     {
       name: '+',
@@ -408,10 +408,16 @@ const compute_ops = [
       call: function(v, x, y) { return v = x.padStart(y) }
     },
     {
-      name: 'search',
-      desc: 'returns the position of the first match between the regular expression and the given string, or -1 if no match was found',
+      name: 'repeat',
+      desc: 'returns a string containing y copies of the string x, joined together',
       sample: 'var a = ${x} repeat ${y}',
       call: function(v, x) { return v = x.repeat(y) }
+    },
+    {
+      name: 'search',
+      desc: 'returns the position of the first match between the regular expression and the given string, or -1 if no match was found',
+      sample: 'var a = ${x} search ${y}',
+      call: function(v, x) { return v = x.search(y) }
     },
     {
       name: 'split',
@@ -435,13 +441,13 @@ const compute_ops = [
       name: 'toLocaleLowerCase',
       desc: 'returns the string x in lowercase letters, optionally according to current locale y',
       sample: 'var a = ${x} toLocaleLowerCase ${y}',
-      call: function(v, x, y) { return v = x.toLocaleLowerCase(y) }
+      call: function(v, x, y) { return v = (y !== undefined) ? x.toLocaleLowerCase(y) : x.toLocaleLowerCase() }
     },
     {
       name: 'toLocaleUpperCase',
       desc: 'returns the string in uppercase letters, optionally according to current locale y',
       sample: 'var a = ${x} toLocaleUpperCase ${y}',
-      call: function(v, x, y) { return v = x.toLocaleUpperCase(y) }
+      call: function(v, x, y) { return v = (y !== undefined) ? x.toLocaleUpperCase(y) : x.toLocaleUpperCase() }
     },
     {
       name: 'replace',
@@ -487,7 +493,7 @@ const compute_ops = [
     },
     {
       name: 'concatArray',
-      desc: 'returns an array containing the elements of the joined arrays',
+      desc: 'returns an array containing the elements of the two joined arrays',
       sample: 'var a = ${x} concatArray ${y}',
       call: function(v, x, y) { return v = x.concat(y) }
     },
