@@ -51,6 +51,8 @@ export function addWidget(widget, instance) {
     w = new Holder(id);
   } else if(widget.type == 'spinner') {
     w = new Spinner(id);
+  } else if(widget.type == 'timer') {
+    w = new Timer(id);
   } else if(widget.type == 'label') {
     w = new Label(id);
   } else if(widget.type == 'button') {
