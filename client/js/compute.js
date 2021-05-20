@@ -465,7 +465,7 @@ const compute_ops = [
       name: 'getIndex',
       desc: 'returns index y of a string or array x',
       sample: 'var a = ${x}.${y}\nvar a = ${x} getIndex ${y}',
-      call: function(v, x, y) { return v = x.getIndex(y) }
+      call: function(v, x, y) { return v = x[y] }
     },
     {
       name: 'setIndex',
