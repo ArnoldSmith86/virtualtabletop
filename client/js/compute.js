@@ -511,9 +511,15 @@ const compute_ops = [
     },
     {
       name: 'sort',
-      desc: 'returns an array after sorting its elements alphabetically / numerically',
+      desc: 'returns an array after sorting its elements alphabetically',
       sample: 'var a = ${x} sort',
       call: function(v, x) { return v = x.sort() }
+    },
+    {
+      name: 'numericSort',
+      desc: 'returns an array after sorting its elements numerically',
+      sample: 'var a = ${x} numericSort',
+      call: function(v, x) { return v = x.sort((a, b) => a.toString().localeCompare(b, undefined, {numeric: true, ignorePunctuation: true})) }
     },
     {
       name: 'findIndex',
