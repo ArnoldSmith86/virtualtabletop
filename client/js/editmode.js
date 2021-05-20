@@ -17,9 +17,12 @@ function addWidgetLocal(widget) {
 //This section holds the edit overlays for each widget
 //button functions
 function populateEditOptionsButton(widget) {
-  $('#buttonText').value = widget.text||"~ no text found ~";
-  $('#buttonImage').value = widget.image||"~ no image found ~";
+  $('#buttonText').value = widget.text || "~ no text found ~";
+  $('#buttonImage').value = widget.image || "~ no image found ~";
   $('#buttonDebug').checked = widget.debug;
+  $('#buttonColorMain').value = widget.backgroundColor || "#1f5ca6";
+  $('#buttonColorBorder').value = widget.borderColor || "#0d2f5e";
+  $('#buttonColorText').value = widget.textColor || "#ffffff"
 }
 
 function applyEditOptionsButton(widget) {
@@ -32,6 +35,21 @@ function applyEditOptionsButton(widget) {
     widget.image = "";
   else
     widget.image = $('#buttonImage').value;
+
+  if ($('#buttonColorMain').value=="#1f5ca6")
+    widget.backgroundColor = null;
+  else
+    widget.backgroundColor = $('#buttonColorMain').value;
+
+  if ($('#buttonColorBorder').value=="#0d2f5e")
+    widget.borderColor = null;
+  else
+    widget.borderColor = $('#buttonColorBorder').value;
+
+  if ($('#buttonColorText').value=="#ffffff")
+    widget.textColor = null;
+  else
+    widget.textColor = $('#buttonColorText').value;
 
   widget.debug = $('#buttonDebug').checked;
 }
@@ -112,8 +130,8 @@ function applyEditOptionsLabel(widget) {
 //timer functions
 function populateEditOptionsTimer(widget) {
   $('#timerCountdown').checked = widget.countdown;
-  $('#timerStart').value = widget.start/1000||0;
-  $('#timerEnd').value = widget.end/1000||"no end";
+  $('#timerStart').value = widget.start/1000 || 0;
+  $('#timerEnd').value = widget.end/1000 || "no end";
   $('#timerReset').checked = false;
 }
 
