@@ -78,20 +78,20 @@ const compute_ops = [
       call: function(v, x, y) { return v = x > y }
     },
     {
-      name: '&& (logical AND)',
-      desc: 'returns true if both x and y are true or returns the value of x or y if they are not boolean values',
+      name: '&&',
+      desc: 'logical AND returns true if both x and y are true or returns the value of x or y if they are not boolean values',
       sample: 'var a = ${x} >= ${y}',
       call: function(v, x, y) { return v = x && y }
     },
     {
-      name: '|| (logical OR)',
-      desc: 'returns true if x or y or both are true or returns the value of x or y if they are not boolean values',
+      name: '||',
+      desc: 'logical OR returns true if x or y or both are true or returns the value of x or y if they are not boolean values',
       sample: 'var a = ${x} >= ${y}',
       call: function(v, x, y) { return v = x || y }
     },
     {
-      name: '! (logical NOT)',
-      desc: 'returns true if the given value is false (or can be evaluated as false), otherwise returns false',
+      name: '!',
+      desc: 'logical NOT returns true if the given value is false (or can be evaluated as false), otherwise returns false',
       sample: 'var a = ! ${x}',
       call: function(v, x) { return v = !x }
     },
