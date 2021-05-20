@@ -43,6 +43,10 @@
   margin: 5vh;
 }
 
+#editOverlay input[type=range]{
+  width:40%;
+}
+
 .editorButtonsTop{
   display: grid !important;
   grid-gap: 2px;

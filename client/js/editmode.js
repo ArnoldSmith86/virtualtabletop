@@ -26,7 +26,8 @@ function applyEditOptionsButton(widget) {
   if ($('#buttonText').value=="~ no text found ~")
     widget.text = "";
   else
-    widget.image = $('#buttonText').value;
+    widget.text = $('#buttonText').value;
+
   if ($('#buttonImage').value=="~ no image found ~")
     widget.image = "";
   else
@@ -93,12 +94,19 @@ function applyEditOptionsHolder(widget) {
 //label functions
 function populateEditOptionsLabel(widget) {
   $('#labelText').value = widget.text;
+  $('#labelWidth').value = widget.width;
+  $('#labelHeight').value = widget.height;
   $('#labelEditable').checked = widget.editable;
 }
 
 function applyEditOptionsLabel(widget) {
   widget.text = $('#labelText').value;
+
+  widget.width = $('#labelWidth').value;
+  widget.height = $('#labelHeight').value;
+
   widget.editable = $('#labelEditable').checked;
+
 }
 
 //timer functions
