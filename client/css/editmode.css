@@ -58,7 +58,7 @@
 
 .editorButtonsContainer{
   display: flex !important;
-  border-top: 2px solid var(----VTTblueLight);
+  border-top: 2px solid var(--VTTblueLight);
   flex-direction: column;
 }
 
