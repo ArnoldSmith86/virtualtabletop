@@ -186,18 +186,54 @@ function populateEditOptionsLabel(widget) {
   $('#labelText').value = widget.text;
   $('#labelWidth').value = widget.width;
   $('#labelHeight').value = widget.height;
+  $('#labelWidthNumber').value = widget.width;
+  $('#labelHeightNumber').value = widget.height;
   $('#labelEditable').checked = widget.editable;
 }
 
 function applyEditOptionsLabel(widget) {
   widget.text = $('#labelText').value;
 
-  widget.width = $('#labelWidth').value;
-  widget.height = $('#labelHeight').value;
+  if (widget.width == $('#labelWidthNumber').value){
+    widget.width = $('#labelWidth').value;
+  } else {
+    widget.width = $('#labelWidthNumber').value;
+  }
+
+  if (widget.height == $('#labelHeightNumber').value){
+    widget.height = $('#labelHeight').value;
+  } else {
+    widget.height = $('#labelHeightNumber').value;
+  }
+
 
   widget.editable = $('#labelEditable').checked;
 
 }
+
+//code for revuew. this is not working
+
+var wR = document.querySelector("#labelWidth")
+var wI = document.querySelector("#labelWidthNumber")
+var hR = document.querySelector("#labelHeight")
+var hI = document.querySelector("#labelHeightNumber")
+
+wI.addEventListener('input', async function (e) {
+  wR.value = e.target.value;
+});
+
+wR.addEventListener('input', async function (e) {
+  wI.value = e.target.value;
+});
+
+hR.addEventListener('input', async function (e) {
+  hI.value = e.target.value;
+});
+
+hI.addEventListener('input', async function (e) {
+  hR.value = e.target.value;
+});
+
 
 //timer functions
 function populateEditOptionsTimer(widget) {
