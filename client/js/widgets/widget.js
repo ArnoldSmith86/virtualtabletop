@@ -119,10 +119,11 @@ export class Widget extends StateManaged {
     }
 
     if(delta.inheritFrom !== undefined) {
-      if(delta.inheritFrom && widgets.has(delta.inheritFrom))
-        widgets.get(delta.inheritFrom).inheritingWidgetsArray.push(this);
-      else
-        widgets.forEach(w=>w.inheritingWidgetsArray=w.inheritingWidgetsArray.filter(i=>i!=this));
+      widgetFilter(w=>w.inheritingWidgetsArray=w.inheritingWidgetsArray.filter(i=>i!=this));
+
+      if(delta.inheritFrom)
+        this.applyInheritedValuesToDOM(this.inheritFrom(), true);
+
       this.isDraggable = delta.movable;
     }
 
@@ -136,6 +137,26 @@ export class Widget extends StateManaged {
 
     if($('#enlarged').dataset.id == this.get('id') && !$('#enlarged').className.match(/hidden/))
       this.showEnlarged();
+  }
+
+  applyInheritedValuesToDOM(inheritFrom, pushToArray) {
+    const delta = {};
+    for(const [ id, properties ] of Object.entries(inheritFrom).reverse()) {
+      if(widgets.has(id)) {
+        const w = widgets.get(id);
+
+        if(w.state.inheritFrom)
+          this.applyInheritedValuesToDOM(w.inheritFrom());
+
+        if(pushToArray)
+          w.inheritingWidgetsArray.push(this);
+
+        for(const property in widgets.get(id).state)
+          if(this.state[property] === undefined && (properties == '*' || properties.indexOf(property) != -1))
+            delta[property] = widgets.get(id).state[property]
+      }
+    }
+    this.applyDeltaToDOM(delta);
   }
 
   applyRemove() {
