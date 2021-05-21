@@ -352,6 +352,68 @@ const jeCommands = [
     call: async function() {
       jeSelectWidget(widgets.get(jeStateNow.parent));
     }
+  },
+  {
+    id: 'je_syncInherited',
+    name: 'sync children to inheriting widgets',
+    context: '^[^ ]+',
+    show: _=>jeStateNow && widgets.has(jeStateNow.id) && widgets.get(jeStateNow.id).children().length && widgetFilter(w=>w.state.inheritFrom == jeStateNow.id).length,
+    call: async function() {
+      const children = widgets.get(jeStateNow.id).children();
+
+      for(const inheritingWidget of widgetFilter(w=>w.state.inheritFrom == jeStateNow.id)) {
+        if(children.indexOf(inheritingWidget) != -1)
+          continue;
+
+        for(const currentChild of inheritingWidget.children())
+          removeWidgetLocal(currentChild.get('id'), true);
+        const cloneMap = {};
+        for(const newChild of children) {
+          const clone = {};
+          for(const property of [ 'type', 'deck', 'inheritFrom' ])
+            if(newChild.state[property] !== undefined)
+              clone[property] = newChild.state[property];
+
+          clone.parent = inheritingWidget.get('id');
+          console.log(clone);
+          addWidgetLocal(clone);
+          cloneMap[newChild.get('id')] = clone.id;
+        }
+
+        for(const [ sourceID, cloneID ] of Object.entries(cloneMap)) {
+          const source = widgets.get(sourceID);
+          const clone  = widgets.get(cloneID);
+
+          if(clone.state.inheritFrom === undefined)
+            await clone.set('inheritFrom', sourceID);
+          else if(typeof clone.state.inheritFrom == 'string' && cloneMap[clone.state.inheritFrom]) {
+            const newInheritFrom = {};
+            newInheritFrom[sourceID] = Object.keys(source.state).filter(x=>[ 'id', 'parent', 'type', 'deck', 'inheritFrom' ].indexOf(x) === -1);
+            newInheritFrom[cloneMap[clone.state.inheritFrom]] = '*';
+            await clone.set('inheritFrom', newInheritFrom);
+          } else if(typeof clone.state.inheritFrom == 'string' && clone.state.inheritFrom == jeStateNow.id)
+            await clone.set('inheritFrom', inheritingWidget.get('id'));
+          else if(typeof clone.state.inheritFrom == 'object') {
+            const newInheritFrom = {};
+            for(const id in clone.state.inheritFrom) {
+              if(id == jeStateNow.id)
+                newInheritFrom[inheritingWidget.get('id')] = clone.state.inheritFrom[id];
+              else if(cloneMap[id])
+                newInheritFrom[cloneMap[id]] = clone.state.inheritFrom[id];
+              else
+                newInheritFrom[id] = clone.state.inheritFrom[id];
+            }
+            newInheritFrom[sourceID] = '*';
+            await clone.set('inheritFrom', newInheritFrom);
+          } else {
+            const newInheritFrom = {};
+            newInheritFrom[clone.state.inheritFrom] = '*';
+            newInheritFrom[sourceID] = '*';
+            await clone.set('inheritFrom', newInheritFrom);
+          }
+        }
+      }
+    }
   }
 ];
 
