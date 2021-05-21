@@ -211,30 +211,6 @@ function applyEditOptionsLabel(widget) {
 
 }
 
-//code for revuew. this is not working
-
-var wR = document.querySelector("#labelWidth")
-var wI = document.querySelector("#labelWidthNumber")
-var hR = document.querySelector("#labelHeight")
-var hI = document.querySelector("#labelHeightNumber")
-
-wI.addEventListener('input', async function (e) {
-  wR.value = e.target.value;
-});
-
-wR.addEventListener('input', async function (e) {
-  wI.value = e.target.value;
-});
-
-hR.addEventListener('input', async function (e) {
-  hI.value = e.target.value;
-});
-
-hI.addEventListener('input', async function (e) {
-  hR.value = e.target.value;
-});
-
-
 //timer functions
 function populateEditOptionsTimer(widget) {
   $('#timerCountdown').checked = widget.countdown;
@@ -783,6 +759,22 @@ onLoad(function() {
     addWidgetLocal(JSON.parse($('#widgetText').value));
     showOverlay();
   });
+
+  const editOverlayApp = Vue.createApp({
+    data() { return {
+      selectedWidget: {},
+    }}
+  });
+  loadComponents(editOverlayApp);
+  vmEditOverlay = editOverlayApp.mount("#editOverlayVue");
+
+  on('#labelWidthNumber', 'input', e=>$('#labelWidth').value=e.target.value)
+
+  on('#labelWidth', 'input', e=>$('#labelWidthNumber').value=e.target.value)
+
+  on('#labelHeightNumber', 'input', e=>$('#labelHeight').value=e.target.value)
+
+  on('#labelHeight', 'input', e=>$('#labelHeightNumber').value=e.target.value)
 
   populateAddWidgetOverlay();
 });

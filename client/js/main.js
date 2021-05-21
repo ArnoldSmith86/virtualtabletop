@@ -220,15 +220,6 @@ onLoad(function() {
   setScale();
   startWebSocket();
 
-
-  const editOverlayApp = Vue.createApp({
-    data() { return {
-      selectedWidget: {},
-    }}
-  });
-  loadComponents(editOverlayApp);
-  vmEditOverlay = editOverlayApp.mount("#editOverlayVue");
-
   onMessage('warning', alert);
   onMessage('error', alert);
   onMessage('internal_error', function() {
