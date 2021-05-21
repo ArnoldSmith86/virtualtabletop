@@ -411,13 +411,13 @@ const compute_ops = [
       name: 'repeat',
       desc: 'returns a string containing y copies of the string x, joined together',
       sample: 'var a = ${x} repeat ${y}',
-      call: function(v, x) { return v = x.repeat(y) }
+      call: function(v, x, y) { return v = x.repeat(y) }
     },
     {
       name: 'search',
       desc: 'returns the position of the first match between the regular expression and the given string, or -1 if no match was found',
       sample: 'var a = ${x} search ${y}',
-      call: function(v, x) { return v = x.search(y) }
+      call: function(v, x, y) { return v = x.search(y) }
     },
     {
       name: 'split',
@@ -458,8 +458,8 @@ const compute_ops = [
     {
       name: 'replaceAll',
       desc: 'returns a string with all occurences of string y replaced by string z',
-      sample: 'var a = ${x} replace ${y} ${z}',
-      call: function(v, x, y, z) { return v = x.replace(y, z) }
+      sample: 'var a = ${x} replaceAll ${y} ${z}',
+      call: function(v, x, y, z) { return v = x.replaceAll(y, z) }
     },
     {
       name: 'substr',
