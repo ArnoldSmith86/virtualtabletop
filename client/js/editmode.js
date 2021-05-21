@@ -80,7 +80,7 @@ function applyEditOptionsBasic(widget) {
   }
 
   if ($('#basicImage').value=="~ no image found ~")
-    widget.image = "";
+    delete widget.image;
   else
     widget.image = $('#basicImage').value;
 
@@ -99,27 +99,27 @@ function populateEditOptionsButton(widget) {
 
 function applyEditOptionsButton(widget) {
   if ($('#buttonText').value=="~ no text found ~")
-    widget.text = "";
+    delete widget.text;
   else
     widget.text = $('#buttonText').value;
 
   if ($('#buttonImage').value=="~ no image found ~")
-    widget.image = "";
+    delete widget.image;
   else
     widget.image = $('#buttonImage').value;
 
   if ($('#buttonColorMain').value=="#1f5ca6")
-    widget.backgroundColor = null;
+    delete widget.backgroundColor;
   else
     widget.backgroundColor = $('#buttonColorMain').value;
 
   if ($('#buttonColorBorder').value=="#0d2f5e")
-    widget.borderColor = null;
+    delete widget.borderColor;
   else
     widget.borderColor = $('#buttonColorBorder').value;
 
   if ($('#buttonColorText').value=="#ffffff")
-    widget.textColor = null;
+    delete widget.textColor;
   else
     widget.textColor = $('#buttonColorText').value;
 
@@ -186,14 +186,26 @@ function populateEditOptionsLabel(widget) {
   $('#labelText').value = widget.text;
   $('#labelWidth').value = widget.width;
   $('#labelHeight').value = widget.height;
+  $('#labelWidthNumber').value = widget.width;
+  $('#labelHeightNumber').value = widget.height;
   $('#labelEditable').checked = widget.editable;
 }
 
 function applyEditOptionsLabel(widget) {
   widget.text = $('#labelText').value;
 
-  widget.width = $('#labelWidth').value;
-  widget.height = $('#labelHeight').value;
+  if (widget.width == $('#labelWidthNumber').value){
+    widget.width = $('#labelWidth').value;
+  } else {
+    widget.width = $('#labelWidthNumber').value;
+  }
+
+  if (widget.height == $('#labelHeightNumber').value){
+    widget.height = $('#labelHeight').value;
+  } else {
+    widget.height = $('#labelHeightNumber').value;
+  }
+
 
   widget.editable = $('#labelEditable').checked;
 
@@ -211,7 +223,7 @@ function applyEditOptionsTimer(widget) {
   widget.countdown = $('#timerCountdown').checked;
   widget.start = $('#timerStart').value*1000;
   if ($('#timerEnd').value=="no end")
-    widget.end = null;
+    delete widget.end;
   else
     widget.end = $('#timerEnd').value*1000;
 
@@ -747,6 +759,22 @@ onLoad(function() {
     addWidgetLocal(JSON.parse($('#widgetText').value));
     showOverlay();
   });
+
+  const editOverlayApp = Vue.createApp({
+    data() { return {
+      selectedWidget: {},
+    }}
+  });
+  loadComponents(editOverlayApp);
+  vmEditOverlay = editOverlayApp.mount("#editOverlayVue");
+
+  on('#labelWidthNumber', 'input', e=>$('#labelWidth').value=e.target.value)
+
+  on('#labelWidth', 'input', e=>$('#labelWidthNumber').value=e.target.value)
+
+  on('#labelHeightNumber', 'input', e=>$('#labelHeight').value=e.target.value)
+
+  on('#labelHeight', 'input', e=>$('#labelHeightNumber').value=e.target.value)
 
   populateAddWidgetOverlay();
 });
