@@ -12,7 +12,7 @@ class Canvas extends Widget {
 
       resolution: 100,
       activeColor: 1,
-      colorMap: [ '#f0f0f0', '#1f5ca6', 'black', 'red', 'green', 'yellow', 'orange', 'pink', 'purple', 'brown' ]
+      colorMap: [ "#f0f0f0", "#1f5ca6", "#000000", "#ff0000", "#008000", '#ffff00', '#ffa500', "#800080", "#ffc0cb", "#a52a2a" ]
     };
 
     for(let x=0; x<10; ++x)
