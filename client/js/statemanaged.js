@@ -32,8 +32,9 @@ export class StateManaged {
   }
 
   getDefaultValue(key) {
-    if(this.state.inheritFrom && widgets.has(this.state.inheritFrom))
-      return widgets.get(this.state.inheritFrom).get(key);
+    for(const [ id, properties ] of Object.entries(this.inheritFrom()))
+      if((properties == '*' || properties.indexOf(key) != -1) && widgets.has(id) && widgets.get(id).get(key) !== undefined)
+        return widgets.get(id).get(key);
     return this.defaults[key];
   }
 
@@ -42,6 +43,20 @@ export class StateManaged {
       return [ 'x', 'y', 'width', 'height', 'z', 'layer' ].indexOf(property) != -1 ? +this.state[property] : this.state[property];
     else
       return this.getDefaultValue(property) !== undefined ? this.getDefaultValue(property) : null;
+  }
+
+  inheritFrom() {
+    const iF = this.state.inheritFrom;
+    if(!iF)
+      return {};
+
+    if(typeof iF == 'string') {
+      const object = {};
+      object[iF] = '*';
+      return object;
+    } else {
+      return iF;
+    }
   }
 
   async set(property, value) {
