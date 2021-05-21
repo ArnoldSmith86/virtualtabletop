@@ -31,13 +31,13 @@ const compute_ops = [
     },
     {
       name: '/',
-      desc: 'returns the division of two numbers',
+      desc: 'returns the division of two numbers (divide x by y)',
       sample: 'var a = ${x} / ${y}',
       call: function(v, x, y) { return v = x / y }
     },
     {
       name: '%',
-      desc: 'returns the remainder/rest/modal of the division of two numbers',
+      desc: 'returns the integer remainder/rest/modal of the division of two numbers',
       sample: 'var a = ${x} % ${y}',
       call: function(v, x, y) { return v = x % y }
     },
@@ -85,7 +85,7 @@ const compute_ops = [
     },
     {
       name: '||',
-      desc: 'logical OR returns true if x or y or both are true or returns the value of x or y if they are not boolean values',
+      desc: 'logical OR returns true if either x or y are true or returns the value of x or y if they are not boolean values',
       sample: 'var a = ${x} >= ${y}',
       call: function(v, x, y) { return v = x || y }
     },
@@ -103,13 +103,13 @@ const compute_ops = [
     },
     {
       name: 'max',
-      desc: 'returns the largest/highest of two numbers',
+      desc: 'returns the larger/higher of two numbers',
       sample: 'var a = max ${x} ${y}',
       call: function(v, x, y) { return v = Math.max(x, y) }
     },
     {
       name: 'min',
-      desc: 'returns the smallest/lowest of two numbers',
+      desc: 'returns the smaller/lower of two numbers',
       sample: 'var a = min ${x} ${y}',
       call: function(v, x, y) { return v = Math.min(x, y) }
     },
@@ -223,67 +223,67 @@ const compute_ops = [
     },
     {
       name: 'sign',
-      desc: 'returns 1 or -1, indicating the sign of a number (0 => 0)',
+      desc: 'returns 1 or -1, indicating the sign of a number (or 0 if the number is 0)',
       sample: 'var a = sign ${x}',
       call: function(v, x) { return v = Math.sign(x) }
     },
     {
       name: 'sqrt',
-      desc: 'returns the square root of a number',
+      desc: 'returns the positive square root of a number',
       sample: 'var a = sqrt ${x}',
       call: function(v, x) { return v = Math.sqrt(x) }
     },
     {
       name: 'trunc',
-      desc: 'returns the integer part of a number by removing any digits',
+      desc: 'returns the integer part of a number by removing any fractions',
       sample: 'var a = trunc ${x}',
       call: function(v, x) { return v = Math.trunc(x) }
     },
     {
       name: 'E',
-      desc: 'represents Euler\'s number, the base of natural logarithms',
+      desc: 'represents Euler\'s number, the base of natural logarithms (approx. 2.718)',
       sample: 'var a = E',
       call: function(v) { return v = Math.E }
     },
     {
       name: 'LN2',
-      desc: 'represents the natural logarithm of 2',
+      desc: 'represents the natural logarithm of 2 (approx. .693)',
       sample: 'var a = LN2',
       call: function(v) { return v = Math.LN2 }
     },
     {
       name: 'LN10',
-      desc: 'represents the natural logarithm of 10',
+      desc: 'represents the natural logarithm of 10 (approx. 2.303)',
       sample: 'var a = LN10',
       call: function(v) { return v = Math.LN10 }
     },
     {
       name: 'LOG2E',
-      desc: 'represents the base 2 logarithm of e',
+      desc: 'represents the base 2 logarithm of e (approx. 1.443)',
       sample: 'var a = LOG2E',
       call: function(v) { return v = Math.LOG2E }
     },
     {
       name: 'LOG10E',
-      desc: 'represents the base 10 logarithm of e',
+      desc: 'represents the base 10 logarithm of e (approx. .434)',
       sample: 'var a = LOG10E',
       call: function(v) { return v = Math.LOG10E }
     },
     {
       name: 'PI',
-      desc: 'represents the ratio of the circumference of a circle to its diameter',
+      desc: 'represents the ratio of the circumference of a circle to its diameter (approx. 3.14159)',
       sample: 'var a = PI',
       call: function(v) { return v = Math.PI }
     },
     {
       name: 'SQRT1_2',
-      desc: 'represents the square root of 1/2',
+      desc: 'represents the square root of 1/2 (approx. .707)',
       sample: 'var a = SQRT1_2',
       call: function(v) { return v = Math.SQRT1_2 }
     },
     {
       name: 'SQRT2',
-      desc: 'represents the square root of 2',
+      desc: 'represents the square root of 2 (approx. 1.414)',
       sample: 'var a = SQRT2',
       call: function(v) { return v = Math.SQRT2 }
     },
@@ -571,7 +571,7 @@ const compute_ops = [
     },
     {
       name: 'randRange',
-      desc: 'returns random integer in range between two numbers, optionally in z increments (defaults to 1)',
+      desc: 'returns random integer in range between two numbers but excluding the endpoint, optionally in z increments (defaults to 1)',
       sample: 'var a = randRange ${x} ${y} ${z}',
       call: function(v, x, y, z) { return v = Math.round(Math.floor((Math.random() * (y - x) / (z || 1))) * (z || 1) + x) }
     }
