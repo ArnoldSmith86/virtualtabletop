@@ -15,6 +15,85 @@ function addWidgetLocal(widget) {
   sendDelta(true);
 }
 
+//canvas functions
+function populateEditOptionsCanvas(widget) {
+  if (widget.activeColor==1){
+    $("#canvasColorSelect1").checked = true;
+  } else if (widget.activeColor==2){
+    $("#canvasColorSelect3").checked = true;
+  } else if (widget.activeColor==3){
+    $("#canvasColorSelect4").checked = true;
+  } else if (widget.activeColor==4){
+    $("#canvasColorSelect5").checked = true;
+  } else if (widget.activeColor==5){
+    $("#canvasColorSelect6").checked = true;
+  } else if (widget.activeColor==6){
+    $("#canvasColorSelect7").checked = true;
+  } else if (widget.activeColor==7){
+    $("#canvasColorSelect8").checked = true;
+  } else if (widget.activeColor==8){
+    $("#canvasColorSelect9").checked = true;
+  } else if (widget.activeColor==9){
+    $("#canvasColorSelect10").checked = true;
+  } else {
+    $("#canvasColorSelect1").checked = true;
+  };
+
+  var cm = widget.colorMap || ([ "#f0f0f0", "#1f5ca6", "#000000", "#ff0000", "#008000", '#ffff00', '#ffa500', "#800080", "#ffc0cb", "#a52a2a" ])
+
+  $("#canvasColor1").value = cm[0] || "#f0f0f0";
+  $("#canvasColor2").value = cm[1] || "#1f5ca6";
+  $("#canvasColor3").value = cm[2] || "#000000";
+  $("#canvasColor4").value = cm[3] || "#ff0000";
+  $("#canvasColor5").value = cm[4] || "#008000";
+  $("#canvasColor6").value = cm[5] || "#ffff00";
+  $("#canvasColor7").value = cm[6] || "#ffa500";
+  $("#canvasColor8").value = cm[7] || "#ffc0cb";
+  $("#canvasColor9").value = cm[8] || "#800080";
+  $("#canvasColor10").value = cm[9] || "#a52a2a";
+
+  $('#canvasColorRest').checked = false;
+}
+
+function applyEditOptionsCanvas(widget) {
+  if ($("#canvasColorSelect2").checked == true){
+    widget.activeColor = 1;
+  } else if ($("#canvasColorSelect3").checked == true){
+    widget.activeColor = 2;
+  } else if ($("#canvasColorSelect4").checked == true){
+    widget.activeColor = 3;
+  } else if ($("#canvasColorSelect5").checked == true){
+    widget.activeColor = 4;
+  } else if ($("#canvasColorSelect6").checked == true){
+    widget.activeColor = 5;
+  } else if ($("#canvasColorSelect7").checked == true){
+    widget.activeColor = 6;
+  } else if ($("#canvasColorSelect8").checked == true){
+    widget.activeColor = 7;
+  } else if ($("#canvasColorSelect9").checked == true){
+    widget.activeColor = 8;
+  } else if ($("#canvasColorSelect10").checked == true){
+    widget.activeColor = 9;
+  } else {
+    widget.activeColor = 0;
+  };
+
+  widget.colorMap = [$("#canvasColor1").value,
+                    $("#canvasColor2").value,
+                    $("#canvasColor3").value,
+                    $("#canvasColor4").value,
+                    $("#canvasColor5").value,
+                    $("#canvasColor6").value,
+                    $("#canvasColor7").value,
+                    $("#canvasColor8").value,
+                    $("#canvasColor9").value,
+                    $("#canvasColor10").value];
+
+  if ($('#canvasColorRest').checked){
+    widget.colorMap = [ "#f0f0f0", "#1f5ca6", "#000000", "#ff0000", "#008000", '#ffff00', '#ffa500', "#800080", "#ffc0cb", "#a52a2a" ]
+  }
+}
+
 async function applyEditOptionsDeck(widget) {
   for(const type of $a('#cardTypesList tr.cardType')) {
     const id = $('.id', type).value;
@@ -78,9 +157,9 @@ function populateEditOptionsTimer(widget) {
 function applyEditOptionsTimer(widget) {
   widget.countdown = $('#timerCountdown').checked;
   widget.start = $('#timerStart').value*1000;
-  if ($('#timerEnd').value=="no end") 
+  if ($('#timerEnd').value=="no end")
     widget.end = null;
-  else 
+  else
     widget.end = $('#timerEnd').value*1000;
 
   if($('#timerReset').checked) {
@@ -90,6 +169,9 @@ function applyEditOptionsTimer(widget) {
 }
 
 async function applyEditOptions(widget) {
+
+  if(widget.type == 'canvas')
+    applyEditOptionsCanvas(widget);
   if(widget.type == 'deck')
     await applyEditOptionsDeck(widget);
   if(widget.type == 'holder')
@@ -114,6 +196,9 @@ function editClick(widget) {
 
   vmEditOverlay.selectedWidget = widget
 
+
+  if(type == 'canvas')
+    populateEditOptionsCanvas(widget.state);
   if(type == 'holder')
     populateEditOptionsHolder(widget.state);
   if(type == 'timer')
