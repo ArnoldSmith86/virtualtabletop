@@ -36,6 +36,9 @@ function updateRoutine(routine, v) {
     return;
 
   for(const operation of routine) {
+    if(operation.func == 'CLONE') {
+      updateProperties(operation.properties, v);
+    }
     if(operation.func == 'IF') {
       updateRoutine(operation.thenRoutine, v);
       updateRoutine(operation.elseRoutine, v);
