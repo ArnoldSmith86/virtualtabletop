@@ -128,29 +128,6 @@ export class Widget extends StateManaged {
     removeFromDOM(this.domElement);
   }
 
-  applyVariables(field, variables, problems) {
-    if(Array.isArray(field.applyVariables)) {
-      for(const v of field.applyVariables) {
-        if(v.parameter && v.variable) {
-          field[v.parameter] = (v.index === undefined) ? variables[v.variable] : variables[v.variable][v.index];
-        } else if(v.parameter && v.template) {
-          field[v.parameter] = v.template.replace(/\{([^}]+)\}/g, function(i, key) {
-            return (variables[key] === undefined) ? "" : variables[key];
-          });
-        } else if(v.parameter && v.property) {
-          let w = this;
-          if (v.widget)
-            w = this.isValidID(v.widget, problems) ? widgets.get(v.widget) : this;
-          field[v.parameter] = (w.get(v.property) === undefined) ? null : w.get(v.property);
-        } else {
-          problems.push('Entry in parameter applyVariables does not contain "parameter" together with "variable", "property", or "template".');
-        }
-      }
-    } else {
-      problems.push('Parameter applyVariables is not an array.');
-    }
-  }
-
   applyZ(force) {
     if(this.get('inheritChildZ') || force) {
       this.domElement.style.zIndex = this.calculateZ();
@@ -204,11 +181,11 @@ export class Widget extends StateManaged {
     return [ 'classes', 'owner', 'typeClasses' ];
   }
 
-  async click() {
-    if(!this.get('clickable'))
+  async click(mode='respect') {
+    if(!this.get('clickable') && !(mode == 'ignoreClickable' || mode =='ignoreAll'))
       return true;
 
-    if(Array.isArray(this.get('clickRoutine'))) {
+    if(Array.isArray(this.get('clickRoutine')) && !(mode == 'ignoreClickRoutine' || mode =='ignoreAll')) {
       await this.evaluateRoutine('clickRoutine', {}, {});
       return true;
     } else {
@@ -268,6 +245,71 @@ export class Widget extends StateManaged {
   }
 
   async evaluateRoutine(property, initialVariables, initialCollections, depth, byReference) {
+    function unescape(str) {
+      if(typeof str != 'string')
+        return str;
+      return str.replace(/\\u([0-9a-fA-F]{4})/g, function(m, c) {
+        return String.fromCharCode(parseInt(c, 16));
+      });
+    }
+
+    function evaluateIdentifier(dollarMatch, stringMatch) {
+      return unescape(dollarMatch ? variables[stringMatch] : stringMatch);
+    }
+
+    const evaluateVariables = string=>{
+      const identifierWithSpace = '(?:[a-zA-Z0-9 _-]|\\\\u[0-9a-fA-F]{4})+';
+      const identifier          = identifierWithSpace.replace(/ /, '');
+      const variable            = `(\\$)?(${identifier})(?:\\.(\\$)?(${identifier}))?`;
+      const property            = `PROPERTY (\\$)?(${identifierWithSpace}?)(?: OF (\\$)?(${identifierWithSpace}))?`;
+      const match               = string.match(new RegExp(`^\\$\\{(?:${variable}|${property}|[^}]+)\\}` + '\x24'));
+
+      // not a match across the whole string; replace any variables inside it
+      if(!match) {
+        return string.replace(/\$\{([^}]+)\}/g, function(v) {
+          const e = evaluateVariables(v);
+          return e === undefined ? '' : e;
+        });
+      }
+
+      // variable
+      if(match[2]) {
+        const varContent = variables[evaluateIdentifier(match[1], match[2])];
+        if(varContent === undefined)
+          return match[9] ? false : undefined;
+
+        let indexName = evaluateIdentifier(match[3], match[4]);
+        return indexName !== undefined ? varContent[indexName] : varContent;
+      }
+
+      // property
+      if(match[6]) {
+        let widget = this;
+        if(match[8]) {
+          const id = evaluateIdentifier(match[7], match[8]);
+          if(!this.isValidID(id, problems))
+            return null;
+          widget = widgets.get(id);
+        }
+        return widget.get(evaluateIdentifier(match[5], match[6]));
+      }
+
+      return null;
+    };
+
+    const evaluateVariablesRecursively = obj=>{
+      const newObject = Array.isArray(obj) ? [] : {};
+      for(const i in obj) {
+        let newValue = obj[i];
+        if(typeof obj[i] == 'string')
+          newValue = evaluateVariables(obj[i]);
+        else if(typeof obj[i] == 'object' && obj[i] !== null && !i.match(/Routine$/))
+          newValue = evaluateVariablesRecursively(obj[i]);
+        newObject[String(evaluateVariables(i))] = newValue;
+      }
+      return newObject;
+    };
+
     function setDefaults(routine, defaults) {
       for(const key in defaults)
         if(routine[key] === undefined)
@@ -308,19 +350,81 @@ export class Widget extends StateManaged {
       });
     }
 
-    const routine = this.get(property) !== undefined ? this.get(property) : property;
+    const routine = this.get(property) !== null ? this.get(property) : property;
 
     for(const original of routine) {
-      const a = JSON.parse(JSON.stringify(original));
+      let a = JSON.parse(JSON.stringify(original));
+      if(typeof a == 'object')
+        a = evaluateVariablesRecursively(a);
       var problems = [];
 
       if(this.get('debug')) console.log(`${this.id}: ${JSON.stringify(original)}`);
 
-      if(a.applyVariables) this.applyVariables(a, variables, problems);
-
       if(a.skip) {
         $('#debugButtonOutput').textContent += '\n\n\nOPERATION SKIPPED: \n' + JSON.stringify(a, null, '  ');
         continue;
+      }
+
+      if(typeof a == 'string') {
+        const identifier = '(?:[a-zA-Z0-9_-]|\\\\u[0-9a-fA-F]{4})+';
+        const string     = `'((?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*)'`;
+        const number     = '(-?(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?)';
+        const variable   = `(\\$\\{[^}]+\\})`;
+        const parameter  = `(null|true|false|\\[\\]|\\{\\}|${number}|${variable}|${string})`;
+
+        const left       = `var (\\$)?(${identifier})(?:\\.(\\$)?(${identifier}))?`;
+        const operation  = `${identifier}|[=+*/%<!>&|-]{1,2}`;
+
+        const regex      = `^${left} += +(?:${parameter}|(?:${parameter} +)?(🧮)?(${operation})(?: +${parameter})?(?: +${parameter})?(?: +${parameter})?)(?: +//.*)?`;
+
+        const match = a.match(new RegExp(regex + '\x24')); // the minifier doesn't like a "$" here
+
+        if(match) {
+          const getParam = (offset, defaultValue)=>{
+            if(typeof match[offset+3] == 'string') {
+              return unescape(match[offset+3]);
+            } else if(typeof match[offset+1] == 'string') {
+              return +match[offset+1];
+            } else if(match[offset] == '[]') {
+              return [];
+            } else if(match[offset] == '{}') {
+              return {};
+            } else if(match[offset] == 'null') {
+              return null;
+            } else if(match[offset] == 'true') {
+              return true;
+            } else if(match[offset] == 'false') {
+              return false;
+            } else if(match[offset] == 'false') {
+              return false;
+            } else if(typeof match[offset+2] == 'string') {
+              const result = evaluateVariables(match[offset+2]);
+              return result !== undefined ? result : defaultValue;
+            } else {
+              return 1;
+            }
+          };
+          const getValue = function(input) {
+            const toNum = s=>typeof s == 'string' && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s;
+            if(match[14] && match[9] !== undefined)
+              return compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(9, 1)), toNum(getParam(15, 1)), toNum(getParam(19, 1)));
+            else if(match[14])
+              return compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(15, 1)), toNum(getParam(19, 1)), toNum(getParam(23, 1)));
+            else
+              return getParam(5, null);
+          };
+
+          const variable = match[1] !== undefined ? variables[unescape(match[2])] : unescape(match[2]);
+          const index = match[3] !== undefined ? variables[unescape(match[4])] : unescape(match[4]);
+          if(index !== undefined && typeof variables[variable] != 'object')
+            problems.push(`The variable ${variable} is not an object, so indexing it doesn't work.`)
+          else if(index !== undefined)
+            variables[variable][index] = getValue(variables[variable][index]);
+          else
+            variables[variable] = getValue(variables[variable]);
+        } else {
+          problems.push('String could not be interpreted as expression. Please check your syntax and note that many characters have to be escaped.');
+        }
       }
 
       if(a.func == 'CALL') {
@@ -350,19 +454,19 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'CLICK') {
-        setDefaults(a, { collection: 'DEFAULT', count: 1 });
+        setDefaults(a, { collection: 'DEFAULT', count: 1 , mode: 'respect' });
+        if (['respect', 'ignoreClickable', 'ignoreClickRoutine', 'ignoreAll'].indexOf(a.mode) == -1) {
+          problems.push(`Mode ${a.mode} is unsupported. Using 'respect' mode.`);
+          a.mode = 'respect'
+        };
         if(isValidCollection(a.collection))
           for(let i=0; i<a.count; ++i)
             for(const w of collections[a.collection])
-              await w.click();
+              await w.click(a.mode);
       }
 
       if(a.func == 'CLONE') {
         setDefaults(a, { source: 'DEFAULT', count: 1, xOffset: 0, yOffset: 0, properties: {}, collection: 'DEFAULT' });
-        if(a.properties.applyVariables) {
-          this.applyVariables(a.properties, variables, problems);
-          delete a.properties["applyVariables"];
-        };
         if(isValidCollection(a.source)) {
           var c=[];
           for(const w of collections[a.source]) {
@@ -517,7 +621,6 @@ export class Widget extends StateManaged {
           case 'sort':
             v = x[o]();
             break;
-          case 'findIndex':
           case 'includes':
           case 'indexOf':
           case 'join':
@@ -540,7 +643,9 @@ export class Widget extends StateManaged {
             v = Math.round(Math.floor((Math.random() * (y - x) / (z || 1))) * (z || 1) + x);
             break;
           default:
+            v = null;
             problems.push(`Operation ${o} is unsupported.`);
+            return v;
           }
         } catch(e) {
           v = 0;
@@ -551,13 +656,6 @@ export class Widget extends StateManaged {
           problems.push(`The operation evaluated to null, Infinity or NaN. Setting the variable to 0.`);
         }
         return v;
-      }
-
-      if(a.func == 'COMPUTE') {
-        setDefaults(a, { operation: '+', operand1: 1, operand2: 1, operand3: 1, variable: 'COMPUTE' });
-        const toNum = s=>typeof s == 'string' && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s;
-        const v = a.variable;
-        variables[v] = compute(a.operation, variables[v], toNum(a.operand1), toNum(a.operand2), toNum(a.operand3));
       }
 
       if(a.func == 'COUNT') {
@@ -729,11 +827,6 @@ export class Widget extends StateManaged {
         }
       }
 
-      if(a.func == 'RANDOM') {
-        setDefaults(a, { min: 1, max: 10, variable: 'RANDOM' });
-        variables[a.variable] = Math.floor(a.min + Math.random() * (a.max - a.min + 1));
-      }
-
       if(a.func == 'RECALL') {
         setDefaults(a, { owned: true });
         if(this.isValidID(a.holder, problems)) {
@@ -862,6 +955,48 @@ export class Widget extends StateManaged {
             problems.push(`Collection ${a.collection} is empty.`);
           }
         }
+      }
+
+      if(a.func == 'TIMER') {
+        setDefaults(a, { value: 0, seconds: 0, mode: 'toggle', collection: 'DEFAULT' });
+        if([ 'set', 'dec', 'inc', 'reset','pause', 'start', 'toggle' ].indexOf(a.mode) == -1)
+          problems.push(`Warning: Mode ${a.mode} interpreted as toggle.`);
+        if([ 'set', 'dec', 'inc'].indexOf(a.mode) == -1){
+          if(a.timer !== undefined) {
+            if (this.isValidID(a.timer, problems)) {
+              await w(a.timer, async widget=>{
+                if(widget.setPaused)
+                  await widget.setPaused(a.mode);
+              });
+            }
+          } else if(isValidCollection(a.collection)) {
+            if(collections[a.collection].length) {
+              for(const c of collections[a.collection])
+                if(c.setPaused)
+                  await c.setPaused(a.mode);
+            } else {
+              problems.push(`Collection ${a.collection} is empty.`);
+            }
+          }
+        };
+        if(['set', 'dec', 'inc', 'reset' ].indexOf(a.mode) != -1){
+          if(a.timer !== undefined) {
+            if (this.isValidID(a.timer, problems)) {
+              await w(a.timer, async widget=>{
+                if(widget.setMilliseconds)
+                  await widget.setMilliseconds(a.seconds*1000 || a.value, a.mode);
+              });
+            }
+          } else if(isValidCollection(a.collection)) {
+            if(collections[a.collection].length) {
+              for(const c of collections[a.collection])
+                if(c.setMilliseconds)
+                  await c.setMilliseconds(a.seconds*1000 || a.value, a.mode);
+            } else {
+              problems.push(`Collection ${a.collection} is empty.`);
+            }
+          }
+        };
       }
 
       if(this.get('debug')) {
@@ -1106,8 +1241,6 @@ export class Widget extends StateManaged {
       for(const field of o.fields) {
 
         const dom = document.createElement('div');
-
-        if(field.applyVariables) this.applyVariables(field, variables, problems);
 
         if(field.type == 'checkbox') {
           const input = document.createElement('input');

@@ -165,7 +165,7 @@ export default class Room {
         state = await FileLoader.readVariantFromLink(v.link);
       else
         state = JSON.parse(fs.readFileSync(this.variantFilename(stateID, vID)));
-      state._meta = { version: this.state._meta.version, info: { ...this.state._meta.states[stateID] } };
+      state._meta = { version: state._meta.version, info: { ...this.state._meta.states[stateID] } };
       Object.assign(state._meta.info, state._meta.info.variants[vID]);
       delete state._meta.info.variants;
       delete state._meta.info.link;
