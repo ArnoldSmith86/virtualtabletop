@@ -51,7 +51,7 @@ function applyEditOptionsBasic(widget) {
     widget.movable = true;
     widget.height = 90;
     widget.width = 90;
-  } else if ($('#basicTypeChecker').checked == true && widget.classes != "checkersPiece crowned"){
+  } else if ($('#basicTypeChecker').checked == true){
     widget.classes = "checkersPiece"
     widget.activeFace = 0;
     widget.faces = [{"classes": "checkersPiece"},{"classes": "checkersPiece crowned"}];
@@ -59,7 +59,7 @@ function applyEditOptionsBasic(widget) {
     widget.movable = true;
     widget.height = 73.5;
     widget.width = 73.5;
-    widget.activeFace = 0
+    widget.activeFace = (widget.activeFace ? 1 : 0);
   } else if ($('#basicTypePin').checked == true){
     widget.activeFace = 0;
     widget.faces = null;
@@ -69,7 +69,7 @@ function applyEditOptionsBasic(widget) {
     widget.height = 43.83;
     widget.width = 35.85;
   } else {
-    if (widget.faces == [{"classes": "checkersPiece"},{"classes": "checkersPiece crowned"}]){
+    if (JSON.stringify(widget.faces) == JSON.stringify([{"classes": "checkersPiece"},{"classes": "checkersPiece crowned"}])){
       widget.faces = null;
     }
     widget.classes = null;
