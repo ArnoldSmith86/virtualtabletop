@@ -31,11 +31,12 @@ function populateEditOptionsCanvas(widget) {
 }
 
 function applyEditOptionsCanvas(widget) {
-  widget.colorMap = [];
+  if(!Array.isArray(widget.colorMap))
+    widget.colorMap = [];
   for(let i=0; i<10; ++i) {
     if($a('.canvasEdit > [type=radio]')[i].checked)
       widget.activeColor = i;
-    widget.colorMap.push($a('.canvasEdit > [type=color]')[i].value);
+    widget.colorMap[i] = $a('.canvasEdit > [type=color]')[i].value;
   }
 
   if($('#canvasColorRest').checked)
