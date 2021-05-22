@@ -12,7 +12,7 @@ class Canvas extends Widget {
 
       resolution: 100,
       activeColor: 1,
-      colorMap: [ "#f0f0f0", "#1f5ca6", "#000000", "#ff0000", "#008000", '#ffff00', '#ffa500', "#800080", "#ffc0cb", "#a52a2a" ]
+      colorMap: Canvas.defaultColors
     };
 
     for(let x=0; x<10; ++x)
@@ -124,3 +124,5 @@ class Canvas extends Widget {
     this.set(`c${regionX}${regionY}`, this.compress(currentState));
   }
 }
+
+Canvas.defaultColors = [ '#f0f0f0', '#1f5ca6', '#f7b32b', '#f42c04', '#1f2421', '#49a078', '#6a041d', '#df57bc', '#a03e99', '#53ff45' ];
