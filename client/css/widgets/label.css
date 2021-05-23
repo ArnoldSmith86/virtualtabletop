@@ -4,7 +4,7 @@
   text-align: center;
 }
 
-.label textarea {
+.label > textarea {
   border: none;
   background: none;
   padding: 0;
@@ -19,6 +19,8 @@
 
 body.edit .widget.label {
   border: none;
+  box-sizing: content-box;
+  box-shadow:0 0 0 3px var(--editColor);
 }
 
 body.edit .widget.label > * {

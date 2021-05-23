@@ -3,7 +3,9 @@ import path from 'path';
 import fetch from 'node-fetch';
 import JSZip from 'jszip';
 
+import { VERSION } from './fileupdater.mjs';
 import PCIO from './pcioimport.mjs';
+import Logging from './logging.mjs';
 
 const dirname = path.resolve() + '/save/links';
 const filename = dirname + '.json';
@@ -50,6 +52,8 @@ async function readStatesFromBuffer(buffer) {
     if(filename.match(/\.(vtt|pcio)$/) && zip.files[filename]._data)
       states[filename] = await readVariantsFromBuffer(await zip.files[filename].async('nodebuffer'));
   }
+  if(states.length == 0)
+    throw new Logging.UserError(404, 'Did not find any JSON files in the ZIP file.');
   return states;
 }
 
@@ -86,24 +90,24 @@ async function readVariantsFromBuffer(buffer) {
     const variants = {};
     for(const filename in zip.files) {
 
-      if(filename.match(/^[^\/]+\.json$/) && zip.files[filename]._data) {
-        if(zip.files[filename]._data.uncompressedSize >= 2097152)
-          throw `${filename} is bigger than 2 MiB.`;
+      if(filename.match(/^[^\/]+\.json$/) && filename != 'asset-map.json' && zip.files[filename]._data) {
+        if(zip.files[filename]._data.uncompressedSize >= 20971520)
+          throw new Logging.UserError(403, `${filename} is bigger than 20 MiB.`);
         const variant = JSON.parse(await zip.files[filename].async('string'));
-        if(variant._meta.version !== 1)
-          throw `Found a valid JSON file but version ${variant._meta.version} is not supported.`;
+        if(typeof variant._meta.version != 'number' || variant._meta.version > VERSION || variant._meta.version < 0)
+          throw new Logging.UserError(403, `Found a valid JSON file but version ${variant._meta.version} is not supported. Please update your server.`);
         variants[filename] = variant;
       }
 
       if(filename.match(/^\/?assets/) && zip.files[filename]._data && zip.files[filename]._data.uncompressedSize < 2097152) {
         const targetFile = '/assets/' + zip.files[filename]._data.crc32 + '_' + zip.files[filename]._data.uncompressedSize;
-        if(!fs.existsSync(path.resolve() + '/save' + targetFile))
+        if(targetFile.match(/^\/assets\/[0-9_-]+$/) && !fs.existsSync(path.resolve() + '/save' + targetFile))
           fs.writeFileSync(path.resolve() + '/save' + targetFile, await zip.files[filename].async('nodebuffer'));
       }
 
     }
     if(!Object.keys(variants).length)
-      throw 'Did not find any JSON files in the ZIP file.';
+      throw new Logging.UserError(404, 'Did not find any JSON files in the ZIP file.');
     return variants;
   }
 }

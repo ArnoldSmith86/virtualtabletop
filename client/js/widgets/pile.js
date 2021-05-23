@@ -31,12 +31,12 @@ class Pile extends Widget {
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
     if(this.handle && (delta.width !== undefined || delta.height !== undefined)) {
-      if(this.p('width') < 50 || this.p('height') < 50)
+      if(this.get('width') < 50 || this.get('height') < 50)
         this.handle.classList.add('small');
       else
         this.handle.classList.remove('small');
     }
-    for(const e of [ [ 'x', 'right', 1600-this.p('width')-20 ], [ 'y', 'bottom', 20 ] ]) {
+    for(const e of [ [ 'x', 'right', 1600-this.get('width')-20 ], [ 'y', 'bottom', 20 ] ]) {
       if(this.handle && (delta[e[0]] !== undefined || delta.parent !== undefined)) {
         if(this.absoluteCoord(e[0]) < e[2])
           this.handle.classList.add(e[1]);
@@ -46,19 +46,19 @@ class Pile extends Widget {
     }
   }
 
-  click() {
+  async click(mode='respect') {
     $('#pileOverlay').innerHTML = `<p>${this.handle.textContent} cards</p><p>Drag the handle with the number to drag the entire pile.</p>`;
 
     const flipButton = document.createElement('button');
     flipButton.textContent = 'Flip pile';
     let z=1;
-    flipButton.addEventListener('click', e=>{
+    flipButton.addEventListener('click', async e=>{
       batchStart();
-      this.children().forEach(c=>{
-        c.p('z', z++);
+      for(const c of this.children()) {
+        await c.set('z', z++);
         if(c.flip)
-          c.flip();
-      });
+          await c.flip();
+      };
       showOverlay();
       batchEnd();
     });
@@ -66,36 +66,68 @@ class Pile extends Widget {
 
     const shuffleButton = document.createElement('button');
     shuffleButton.textContent = 'Shuffle pile';
-    shuffleButton.addEventListener('click', e=>{
+    shuffleButton.addEventListener('click', async e=>{
       batchStart();
-      this.children().forEach(c=>c.p('z', Math.floor(Math.random()*10000)));
+      for(const c of this.children())
+        await c.set('z', Math.floor(Math.random()*10000));
       showOverlay();
       batchEnd();
     });
     $('#pileOverlay').appendChild(shuffleButton);
 
+    const childCount = this.children().length;
+    const countDiv = document.createElement('div');
+    countDiv.textContent = `/ ${childCount}`;
+    $('#pileOverlay').appendChild(countDiv);
+    const splitInput = document.createElement('input');
+    splitInput.type = 'number';
+    splitInput.value = Math.floor(childCount/2);
+    splitInput.min = 0;
+    splitInput.max = childCount;
+    countDiv.prepend(splitInput);
+    const splitLabel = document.createElement('label');
+    splitLabel.textContent = 'Split: ';
+    countDiv.prepend(splitLabel);
+    const splitButton = document.createElement('button');
+    splitButton.textContent = 'Split pile';
+    splitButton.addEventListener('click', async e=>{
+      batchStart();
+      for(const c of this.children().reverse().slice(childCount-splitInput.value)) {
+        await c.set('parent', null);
+        await c.set('x', this.absoluteCoord('x'));
+        const y = this.absoluteCoord('y');
+        await c.set('y', y < 100 ? y+60 : y-60);
+        await c.updatePiles();
+        await c.bringToFront();
+      };
+      showOverlay();
+      batchEnd();
+    });
+    $('#pileOverlay').appendChild(splitButton);
+
     showOverlay('pileOverlay');
   }
 
-  onChildRemove(child) {
-    super.onChildRemove(child);
+  async onChildRemove(child) {
+    await super.onChildRemove(child);
     if(this.children().length == 1) {
       const c = this.children()[0];
-      const p = this.p('parent');
-      const x = this.p('x');
-      const y = this.p('y');
+      const p = this.get('parent');
+      const x = this.get('x');
+      const y = this.get('y');
 
-      this.removed = true;
+      // this is added in removeWidgetLocal aswell but needed before the set parent so that the child isn't added to the same pile again during updatePiles
+      this.isBeingRemoved = true;
 
-      c.p('x', c.p('x') + x);
-      c.p('y', c.p('y') + y);
-      c.p('parent', p);
+      await c.set('x', c.get('x') + x);
+      await c.set('y', c.get('y') + y);
+      await c.set('parent', p);
 
-      removeWidgetLocal(this.p('id'));
+      await removeWidgetLocal(this.get('id'));
     }
 
-    if(this.parent && this.parent.p('type') == 'holder')
-      this.parent.dispenseCard(child);
+    if(this.parent && this.parent.get('type') == 'holder')
+      await this.parent.dispenseCard(child);
   }
 
   supportsPiles() {

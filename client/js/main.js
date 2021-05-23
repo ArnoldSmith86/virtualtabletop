@@ -1,9 +1,12 @@
-import { $, $a, onLoad } from './domhelpers.js';
+import { $, $a, onLoad, selectFile } from './domhelpers.js';
 import { startWebSocket } from './connection.js';
+
 
 let scale = 1;
 let roomRectangle;
 let overlayActive = false;
+
+var vmEditOverlay;
 
 let urlProperties = {};
 
@@ -13,23 +16,29 @@ export const dropTargets = new Map();
 function getValidDropTargets(widget) {
   const targets = [];
   for(const [ _, t ] of dropTargets) {
+    // if the holder has a drop limit and it's reached, skip the holder
+    if(t.get('dropLimit') > -1 && t.get('dropLimit') <= t.children().length)
+      // don't skip it if the dragged widget is already its child
+      if(t.children().indexOf(widget) == -1)
+        continue;
+
     let isValid = true;
-    for(const key in t.p('dropTarget')) {
-      if(widget.p(key) != t.p('dropTarget')[key] && (key != 'type' || widget.p(key) != 'deck' || t.p('dropTarget')[key] != 'card')) {
+    for(const key in t.get('dropTarget')) {
+      if(widget.get(key) != t.get('dropTarget')[key] && (key != 'type' || widget.get(key) != 'deck' || t.get('dropTarget')[key] != 'card')) {
         isValid = false;
         break;
       }
     }
 
     let tt = t;
-    while(true) {
+    while(isValid) {
       if(widget == tt) {
         isValid = false;
         break;
       }
 
-      if(tt.p('parent'))
-        tt = widgets.get(tt.p('parent'));
+      if(tt.get('parent'))
+        tt = widgets.get(tt.get('parent'));
       else
         break;
     }
@@ -48,15 +57,21 @@ function updateMaxZ(layer, z) {
   maxZ[layer] = Math.max(maxZ[layer] || 0, z);
 }
 
-export function showOverlay(id) {
+export function showOverlay(id, forced) {
+  if(overlayActive == 'forced' && !forced)
+    return;
+
   for(const d of $a('.overlay'))
     if(d.id != id)
       d.style.display = 'none';
+
   if(id) {
     const style = $(`#${id}`).style;
-    style.display = style.display === 'flex' ? 'none' : 'flex';
+    style.display = !forced && style.display === 'flex' ? 'none' : 'flex';
     $('#roomArea').className = style.display === 'flex' ? 'hasOverlay' : '';
     overlayActive = style.display === 'flex';
+    if(forced)
+      overlayActive = 'forced';
 
     //Hack to focus on the Go button for the input overlay
     if (id == 'buttonInputOverlay') {
@@ -64,6 +79,7 @@ export function showOverlay(id) {
     }
   } else {
     $('#roomArea').className = '';
+    vmEditOverlay.selectedWidget = {};
     overlayActive = false;
   }
 }
@@ -104,13 +120,36 @@ function checkURLproperties() {
 function setScale() {
   const w = window.innerWidth;
   const h = window.innerHeight;
-  scale = w/h < 1600/1000 ? w/1600 : h/1000;
+  if(jeEnabled) {
+    const targetWidth = jeZoomOut ? 3200 : 1600;
+    scale = (w-850)/targetWidth;
+  } else {
+    scale = w/h < 1600/1000 ? w/1600 : h/1000;
+  }
+  if(w-scale*1600 + h-scale*1000 < 44) {
+    $('body').classList.add('aspectTooGood');
+    if(!$('body').className.match(/hiddenToolbar/))
+      scale = (w-44)/1600;
+  } else {
+    $('body').classList.remove('aspectTooGood');
+  }
   document.documentElement.style.setProperty('--scale', scale);
   roomRectangle = $('#roomArea').getBoundingClientRect();
 }
 
-async function uploadAsset() {
-  return selectFile('BINARY').then(async function(file) {
+async function uploadAsset(multipleCallback) {
+  if(typeof(multipleCallback) === "function") {
+    return selectFile('BINARY', async function (f) {
+      let uploadPath = await _uploadAsset(f).catch(e=>alert(`Uploading failed: ${e.toString()}`));
+      multipleCallback(uploadPath, f.name)
+    });
+  }
+  else {
+    return selectFile('BINARY').then(_uploadAsset).catch(e=>alert(`Uploading failed: ${e.toString()}`));
+  }
+}
+
+async function _uploadAsset(file) {
     const response = await fetch('/asset', {
       method: 'PUT',
       headers: {
@@ -125,7 +164,29 @@ async function uploadAsset() {
       throw `${response.status} - ${response.statusText}`;
 
     return response.text();
-  }).catch(e=>alert(`Uploading failed: ${e.toString()}`));
+}
+
+const svgCache = {};
+function getSVG(url, replaces, callback) {
+  if(typeof svgCache[url] == 'string') {
+    let svg = svgCache[url];
+    for(const replace in replaces)
+      svg = svg.split(replace).join(replaces[replace]);
+    return 'data:image/svg+xml,'+encodeURIComponent(svg);
+  }
+
+  if(!svgCache[url]) {
+    svgCache[url] = [];
+    fetch(url).then(r=>r.text()).then(t=>{
+      const callbacks = svgCache[url];
+      svgCache[url] = t;
+      for(const c of callbacks)
+        c();
+    });
+  }
+
+  svgCache[url].push(callback);
+  return '';
 }
 
 onLoad(function() {
@@ -150,12 +211,30 @@ onLoad(function() {
         document.webkitExitFullscreen();
     }
   });
+  on('#hideToolbarButton', 'click', function() {
+    $('body').classList.add('hiddenToolbar');
+    setScale();
+  });
+
   checkURLproperties();
   setScale();
   startWebSocket();
 
+
+  const editOverlayApp = Vue.createApp({
+    data() { return {
+      selectedWidget: {},
+    }}
+  });
+  loadComponents(editOverlayApp);
+  vmEditOverlay = editOverlayApp.mount("#editOverlayVue");
+
   onMessage('warning', alert);
   onMessage('error', alert);
+  onMessage('internal_error', function() {
+    preventReconnect();
+    showOverlay('internalErrorOverlay');
+  });
 });
 
 window.onresize = function(event) {

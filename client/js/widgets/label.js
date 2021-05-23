@@ -22,15 +22,18 @@ export class Label extends Widget {
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
-    if(delta.text !== undefined) {
+    if(delta.text !== undefined || delta.twoRowBottomAlign !== undefined) {
       this.input.value = delta.text;
-      if(this.p('twoRowBottomAlign')) {
+      if(this.get('twoRowBottomAlign')) {
         this.input.style.height = '20px';
         this.input.style.paddingTop = '';
-        if(this.input.scrollHeight == 20) // this.p('height'))
+        if(this.input.scrollHeight == 20)
           this.input.style.paddingTop = '20px';
         else
           this.input.style.height = '40px';
+      } else {
+        this.input.style.height = `${this.get('height')}px`;
+        this.input.style.paddingTop = 'unset';
       }
     }
     if(delta.editable !== undefined) {
@@ -39,16 +42,5 @@ export class Label extends Widget {
       else
         this.input.setAttribute("readonly", !delta.editable);
     }
-  }
-
-  setText(text, mode) {
-    if(mode == 'inc' || mode == 'dec')
-      this.p('text', (parseInt(this.p('text')) || 0) + (mode == 'dec' ? -1 : 1) * text);
-    else if(Array.isArray(text))
-      this.p('text', text.join(', '));
-    else if(typeof text == 'string' && text.match(/^[-+]?[0-9]+(\.[0-9]+)?$/))
-      this.p('text', +text);
-    else
-      this.p('text', text);
   }
 }

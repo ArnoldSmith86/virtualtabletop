@@ -8,6 +8,7 @@
   <link rel="shortcut icon" href="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="/>
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/combine/npm/vue@3.0.7/dist/vue.global.prod.js,npm/jszip@3.6.0/dist/jszip.min.js"></script>
   <base target="_blank">
   <style> {{CSS}} </style>
 </head>
@@ -21,6 +22,7 @@
     <button id="editButton" class="toolbarButton"><span class="tooltip">Edit mode</span></button>
     <button id="addButton" data-overlay="addOverlay" class="toolbarButton"><span class="tooltip">Add widget</span></button>
     <button id="fullscreenButton" class="toolbarButton"><span class="tooltip">Fullscreen</span></button>
+    <button id="hideToolbarButton" class="toolbarButton"><span class="tooltip">Hide toolbar</span></button>
     <button id="aboutButton" data-overlay="aboutOverlay" class="toolbarButton"><span class="tooltip">About</span></button>
   </div>
 
@@ -38,38 +40,30 @@
       <button>▶️ Play</button>
     </div>
 
-    <div id="editOverlay" class="overlay">
-      <h1>Edit widget</h1>
-      <div class="deckEdit">
-        <table id="cardTypesList">
-          <tr><th>ID</th><th>Properties</th><th>Count</th></tr>
-          <script id="template-cardtypeslist-entry" type="text/template">
-            <td><input class="id" value="example"></td><td class="properties"></td><td><input class="count" type="number" value="1" min="0" max="1000"></td>
-          </script>
-          <script id="template-cardtypeslist-property-entry" type="text/template">
-            <label>Example:</label> <input><button class="uploadAsset">⬆️ Upload</button><br>
-          </script>
-        </table>
-        <button id="decrementAllCardTypes">All -1</button><button id="incrementAllCardTypes">All +1</button>
+    <div id="editOverlayVue">
+      <div id="editOverlay" class="overlay">
+        <h1>Edit widget</h1>
+        <deck-editor :widget-state="selectedWidget.state"></deck-editor>
+        <div class="holderEdit">
+          <input type="checkbox" id="transparentHolder"><label for="transparentHolder"> Transparent</label><br/>
+          <input type="checkbox" id="resizeHolderToChildren"><label for="resizeHolderToChildren"> Resize to fit contents (once)</label>
+        </div>
+        <div class="timerEdit">
+          <input type="checkbox" id="timerCountdown"><label for="timerCountdown"> Countdown</label><br/>
+          <label for="timerStart"> Start: </label><input type="text" id="timerStart">
+          <label for="timerEnd"> End: </label><input type="text" id="timerEnd"><label for="timerEnd">(both in seconds)</label><br/>
+          <input type="checkbox" id="timerReset"><label for="timerReset"> Reset timer (once)</label>
+        </div>
+        <base-edit-overlay ></base-edit-overlay>
       </div>
-      <div class="holderEdit">
-        <input type="checkbox" id="transparentHolder"><label for="transparentHolder"> Transparent</label><br/>
-        <input type="checkbox" id="resizeHolderToChildren"><label for="resizeHolderToChildren"> Resize to fit contents (once)</label>
-      </div>
-      <button id="updateWidget">Update widget</button>
-      <button id="duplicateWidget">Duplicate widget</button>
-      <button id="removeWidget">Remove widget</button>
-      <button id="manualEdit">Advanced: manually edit JSON (changes above will be discarded)</button>
-    </div>
 
-    <div id="editJSONoverlay" class="overlay">
-      <h1>Edit widget JSON</h1>
-      <p>Please check <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Creating-Games">our GitHub wiki for documentation</a>. Having trouble with a button? Temporarily add this to see a log of state changes after each operation: "debug": true</p>
-      <p>You can open this room in <a href="https://virtualtabletop.io/ghetto.htm" id="ghetto-link">an advanced editor</a>. Be sure to have <b>backups</b> on your harddrive first (of every game in your room)!</p>
-      <textarea id="editWidgetJSON"></textarea>
-      <button id="updateWidgetJSON">Update widget</button>
-      <button id="duplicateWidgetJSON">Duplicate widget</button>
-      <button id="removeWidgetJSON">Remove widget</button>
+      <div id="editJSONoverlay" class="overlay">
+        <h1>Edit widget JSON</h1>
+        <p>Please check <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Creating-Games">our GitHub wiki for documentation</a>. Having trouble with a button? Temporarily add this to see a log of state changes after each operation: "debug": true</p>
+        <p>You can open this room in <a href="https://virtualtabletop.io/ghetto.htm" id="ghetto-link">an advanced editor</a>. Be sure to have <b>backups</b> on your harddrive first (of every game in your room)!</p>
+        <textarea id="editWidgetJSON"></textarea>
+        <base-edit-overlay :json-edit="true"></base-edit-overlay>
+      </div>
     </div>
 
     <div id="debugButtonOverlay" class="overlay">
@@ -112,10 +106,12 @@
     </div>
 
     <div id="buttonInputOverlay" class="overlay">
-      <h1>Button Input</h1>
-      <div id="buttonInputFields"></div>
-      <button id="buttonInputGo">Go</button>
-      <button id="buttonInputCancel">Cancel</button>
+      <form onsubmit="return false">
+        <h1>Button Input</h1>
+        <div id="buttonInputFields"></div>
+        <button id="buttonInputGo">Go</button>
+        <button id="buttonInputCancel">Cancel</button>
+      </form>
     </div>
 
     <div id="playerOverlay" class="overlay">
@@ -131,9 +127,10 @@
       <h1>Games</h1>
       <div id="emptyRoom">
         <h1>VirtualTabletop.io</h1>
-        <p>This is an empty room. You can add games to it and play them with your friends and family by sharing the link.</p>
+        <p>There is no saved game in this room. You can save your progress or add games to it and play them with your friends and family by sharing the link.</p>
         <p>Bring your own voice chat. We recommend <a href="https://meet.jit.si/">Jitsi Meet</a> because it's free software, runs in the browser and requires no accounts.</p>
         <div>
+          <div><p>Save what you are currently working on?</p><button class="prettyButton create">Save room state</button></div>
           <div><p>Do you have a *.vtt or *.pcio file?</p><button class="prettyButton upload">Upload files</button></div>
           <div><p>Do you have a link to one?</p><button class="prettyButton link">Enter link</button></div>
         </div>
@@ -184,7 +181,7 @@
         <div class="input"><label for="stateRules">Rules link:</label> <input id="stateRules"/></div>
         <div class="input"><label for="stateMode">Mode:</label> <input id="stateMode"/></div>
         <div class="input"><label for="stateTime">Time:</label> <input id="stateTime"/></div>
-        <div class="input"><label for="stateBGG">BordGameGeek link:</label> <input id="stateBGG"/></div>
+        <div class="input"><label for="stateBGG">BoardGameGeek link:</label> <input id="stateBGG"/></div>
         <div class="input"><label for="stateImage">Image URL:</label> <input id="stateImage"/><button class="prettyButton uploadAsset">Upload</button></div>
         <div class="input"><label for="stateLink">Update link:</label> <input id="stateLink"/></div>
       </div>
@@ -218,11 +215,66 @@
     </div>
 
     <div id="aboutOverlay" class="overlay">
-      <h1>About</h1>
+      <h1>About VirtualTabletop.io</h1>
       <p>This project is licensed under GPLv3 and is <a href="https://github.com/ArnoldSmith86/virtualtabletop">available on GitHub</a>.</p>
       <p>Come join our <a href="https://discord.gg/CEZz7wny9T">discord server</a>.</p>
-      <p>The default card deck was created by Adrian Kennard and released under CC0 Public Domain license: <a href="https://www.me.uk/cards/">https://www.me.uk/cards/</a></p>
+      <p>Check out our <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki">wiki page</a> for helpful information about how to make your own games.</p>
+      <h2>Copyright Attribution</h2>
+      <p>The default card deck was created by Adrian Kennard and released under CC0 Public Domain license: <a href="https://www.me.uk/cards/">https://www.me.uk/cards/</a>.</p>
+      <p>The copyright attribution information for all games and assets in the public library is available inside the "Variant" notes section of each game. All public library tutorials are released under the CC0 license. Detailed information about the various Creative Commons licenses referred to by abbreviations in variant notes can be found on the <a href="https://creativecommons.org/about/cclicenses/">Creative Commons webpage</a> or at the following links:</p>
+      <ul>
+      <li><a href="https://creativecommons.org/licenses/by/4.0/">CC BY</a></li>
+      <li><a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a></li>
+      <li><a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC</a></li>
+      <li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA</a></li>
+      <li><a href="https://creativecommons.org/licenses/by-nd/4.0/">CC BY-ND</a></li>
+      <li><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND</a></li>
+      <li><a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 (Public Domain)</a></li>
+      </ul>
+      <h2>Online Gameplay</h2>
+      <p>This is an open-source, free to use platform.</p>
+      <p>Anyone that knows the URL of the room that you are using may come in to the room at any time and take any action, including playing or changing games in the room or deleting games. Keep a personal backup of everything that you care about.</p>
+      <p>Know who you are playing with.  The platform is unmoderated and no one controls what may happen. Anything you do or share is your own responsibility.</p>
+      <p>Cheating is trivially easy, unpreventable, and undetectable.  Just play for fun.</p>
+      <p>If you are under the age of majority in the location you are from, be sure to comply with the rules for accessing online material that apply to you.</p>
+      <h2>Privacy Policy</h2>
+      <p>VirtualTabletop.io does not ask for or collect any personal identification information.</p>
+      <p>VirtualTabletop.io does not use cookies.</p>
+      <p>VirtualTabletop.io does, however, collect the "player name" and keeps that in local storage on the user's device.  The player name defaults to a number, but is customizable to any user entered data. VirtualTabletop.io does not analyze or use that information except to display it on the screen while accessing the website.</p>
     </div>
+
+    <div id="internalErrorOverlay" class="overlay">
+      <h1>Internal Error</h1>
+      <p>Your client triggered an internal error on the server and you have been disconnected from the game.</p>
+      <p>Please <a href="https://github.com/ArnoldSmith86/virtualtabletop/issues">open an issue on GitHub</a> and try to describe in detail what led to this problem.</p>
+      <p>You can try to reload the page. It's very possible that you will run into the same problem again until it is fixed though.</p>
+    </div>
+
+    <div id="connectionLostOverlay" class="overlay">
+      <h1>Connection lost</h1>
+      <p>The connection to the server was lost. It should be reestablished in a few moments.</p>
+      <p>In case that doesn't work, try reloading the page or use a different room.</p>
+    </div>
+  </div>
+
+  <div id="jsonEditor">
+    <div id="jeWidgetLayers">
+      <div id="jeWidgetLayer1"></div>
+      <div id="jeWidgetLayer2"></div>
+      <div id="jeWidgetLayer3"></div>
+      <div id="jeWidgetLayer4"></div>
+      <div id="jeWidgetLayer5"></div>
+      <div id="jeWidgetLayer6"></div>
+      <div id="jeWidgetLayer7"></div>
+      <div id="jeWidgetLayer8"></div>
+      <div id="jeWidgetLayer9"></div>
+      <div id="jeWidgetLayer10"></div>
+      <div id="jeWidgetLayer11"></div>
+      <div id="jeWidgetLayer12"></div>
+    </div>
+    <div id="jeTextHighlight"></div>
+    <div id="jeText" contenteditable="true" spellcheck="false"></div>
+    <div id="jeCommands"></div>
   </div>
 
   <div id="enlarged" class="hidden"></div>

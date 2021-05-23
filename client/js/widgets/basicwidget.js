@@ -6,13 +6,15 @@ class BasicWidget extends Widget {
 
     this.addDefaults({
       typeClasses: 'widget basic',
+      clickable: true,
 
       faces: [ {} ],
-      faceCycle: 'ordered',
+      faceCycle: 'forward',
       activeFace: 0,
 
       image: '',
       color: 'black',
+      svgReplaces: {},
       layer: 1,
       text: ''
     });
@@ -20,16 +22,23 @@ class BasicWidget extends Widget {
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
-    if(delta.activeFace !== undefined || delta.faces !== undefined)
-      this.applyDelta(this.p('faces')[this.p('activeFace')]);
+    if(delta.activeFace !== undefined || delta.faces !== undefined) {
+      let face = this.get('faces')[this.get('activeFace')];
+      if(face !== undefined)
+        this.applyDelta(face);
+    }
     if(delta.text !== undefined)
-      this.domElement.textContent = delta.text;
+      setText(this.domElement, delta.text);
+
+    for(const property of Object.values(this.get('svgReplaces') || {}))
+      if(delta[property] !== undefined)
+        this.domElement.style.cssText = this.css();
   }
 
   classes() {
     let className = super.classes();
 
-    if(this.p('image'))
+    if(this.get('image'))
       className += ' hasImage';
 
     return className;
@@ -41,41 +50,56 @@ class BasicWidget extends Widget {
     return p;
   }
 
-  click() {
-    this.flip();
+  async click(mode='respect') {
+    if(!await super.click(mode))
+      await this.flip();
   }
 
   css() {
     let css = super.css();
 
-    if(this.p('color'))
-      css += '; --color:' + this.p('color');
-    if(this.p('image'))
-      css += '; background-image: url("' + this.p('image') + '")';
+    if(this.get('color'))
+      css += '; --color:' + this.get('color');
+    if(this.get('image'))
+      css += '; background-image: url("' + this.getImage() + '")';
 
     return css;
   }
 
   cssProperties() {
     const p = super.cssProperties();
-    p.push('color');
-    p.push('image');
+    p.push('image', 'color', 'svgReplaces');
     return p;
   }
 
-  flip(setFlip) {
+  async flip(setFlip, faceCycle) {
     if(setFlip !== undefined && setFlip !== null)
-      this.p('activeFace', setFlip);
-    else
-      this.p('activeFace', Math.floor(this.p('activeFace') + (this.p('faceCycle') == 'random' ? Math.random()*99999 : 1)) % this.p('faces').length);
+      await this.set('activeFace', setFlip);
+    else {
+      const fC = (faceCycle !== undefined && faceCycle !== null) ? faceCycle : this.get('faceCycle');
+      if (fC == 'backward')
+        await this.set('activeFace', this.get('activeFace') == 0 ? this.get('faces').length-1 : this.get('activeFace') -1);
+      else
+        await this.set('activeFace', Math.floor(this.get('activeFace') + (fC == 'random' ? Math.random()*99999 : 1)) % this.get('faces').length);
+    }
   }
 
   getDefaultValue(property) {
-    if(property == 'faces' || property == 'activeFace' || !this.p('faces') || !this.p('faces')[this.p('activeFace')])
+    if(property == 'faces' || property == 'activeFace' || !this.get('faces') || !this.get('faces')[this.get('activeFace')])
       return super.getDefaultValue(property);
-    const d = this.p('faces')[this.p('activeFace')][property];
+    const d = this.get('faces')[this.get('activeFace')][property];
     if(d !== undefined)
       return d;
     return super.getDefaultValue(property);
+  }
+
+  getImage() {
+    if(!Object.keys(this.get('svgReplaces')).length)
+      return this.get('image');
+
+    const replaces = {};
+    for(const key in this.get('svgReplaces'))
+      replaces[key] = this.get(this.get('svgReplaces')[key]);
+    return getSVG(this.get('image'), replaces, _=>this.domElement.style.cssText = this.css());
   }
 }

@@ -59,6 +59,8 @@ body.edit .widget.classicPiece::after {
 
 body.edit .widget.checkersPiece {
   border-width: 10px;
+  box-shadow: none;
+  box-sizing: border-box;
 }
 body.edit .widget.checkersPiece::before {
   display: none;
@@ -94,6 +96,8 @@ body.edit .widget.checkersPiece::after {
 
 body.edit .widget.pinPiece {
   border: none;
+  box-shadow: none;
+  box-sizing: border-box;
 }
 body.edit .widget.pinPiece::before, body.edit .widget.pinPiece::after {
   border: 3px solid var(--editColor);

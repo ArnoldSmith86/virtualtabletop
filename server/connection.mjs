@@ -1,3 +1,5 @@
+import Logging from './logging.mjs';
+
 export default class Connection {
   constructor(websocket, connection, newPlayerCallback) {
     this.websocket = websocket;
@@ -9,6 +11,8 @@ export default class Connection {
 
     connection.on('close', this.closeReceived);
     connection.on('message', this.messageReceived);
+
+    this.toClient('serverStart', websocket.serverStart);
   }
 
   addCloseHandler(callback) {
@@ -19,6 +23,10 @@ export default class Connection {
     this.messageHandlers.push(callback);
   }
 
+  close() {
+    this.connection.close();
+  }
+
   fromClient(func, args) {
     if(func == "room")
       this.newPlayerCallback(this, args);
@@ -27,13 +35,25 @@ export default class Connection {
   }
 
   messageReceived = message => {
-    const { func, args } = JSON.parse(message);
-    this.fromClient(func, args);
+    try {
+      const { func, args } = JSON.parse(message);
+      this.fromClient(func, args);
+    } catch(e) {
+      Logging.handleGenericException('messageReceived', e);
+      this.toClient('internal_error', 'unknown');
+      this.close();
+    }
   }
 
   closeReceived = _ => {
-    for(const handler of this.closeHandlers)
-      handler();
+    try {
+      for(const handler of this.closeHandlers)
+        handler();
+    } catch(e) {
+      Logging.handleGenericException('closeReceived', e);
+      this.toClient('internal_error', 'unknown');
+      this.close();
+    }
   }
 
   toClient(func, args) {
