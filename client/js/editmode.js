@@ -233,6 +233,20 @@ function applyEditOptionsTimer(widget) {
   }
 }
 
+//spinner functions
+function populateEditOptionsSpinner(widget) {
+  }
+
+function applyEditOptionsSpinner(widget) {
+  for(let i=0; i<9; ++i) {
+    if($a('#spinnerOptions > [name=spinnerOptions]')[i].selected){
+      widget.options = JSON.parse($a('#spinnerOptions > [name=spinnerOptions]')[i].value);
+      delete widget.angle;
+      widget.value=widget.options[widget.options.length-1];
+    }
+  }
+}
+
 //This section calls the relative widgets' overlays and functions
 async function applyEditOptions(widget) {
   if(widget.type == null)
@@ -247,6 +261,8 @@ async function applyEditOptions(widget) {
     applyEditOptionsLabel(widget);
   if(widget.type == 'timer')
     applyEditOptionsTimer(widget);
+  if(widget.type == 'spinner')
+    applyEditOptionsSpinner(widget);
 }
 
 function editClick(widget) {
@@ -275,6 +291,8 @@ function editClick(widget) {
     populateEditOptionsLabel(widget.state);
   if(type == 'timer')
     populateEditOptionsTimer(widget.state);
+  if(type == 'spinner')
+    populateEditOptionsSpinner(widget.state);
 
   showOverlay('editOverlay');
 }
