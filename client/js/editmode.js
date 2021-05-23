@@ -30,6 +30,7 @@ function populateEditOptionsBasic(widget) {
   } else {
     $('#basicTypeToken').checked = true
   }
+  $('#basicEnlarge').checked = widget.enlarge;
 }
 
 function applyEditOptionsBasic(widget) {
@@ -84,7 +85,9 @@ function applyEditOptionsBasic(widget) {
   else
     widget.image = $('#basicImage').value;
 
-    widget.color = $('#basicColor').value;
+  widget.color = $('#basicColor').value;
+
+  widget.enlarge = $('#basicEnlarge').checked;
 }
 
 //button functions
