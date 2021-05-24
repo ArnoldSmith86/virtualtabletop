@@ -17,7 +17,7 @@ class Canvas extends Widget {
 
     for(let x=0; x<10; ++x)
       for(let y=0; y<10; ++y)
-        defaults[`c${x}${y}`] = '0'.repeat(50**2);
+        defaults[`c${x}${y}`] = "-*)($";
 
     this.addDefaults(defaults);
 
