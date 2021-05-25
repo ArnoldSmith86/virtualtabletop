@@ -18,15 +18,9 @@ function addWidgetLocal(widget) {
 //basic widget functions
 function populateEditOptionsBasic(widget) {
   $('#basicImage').value = widget.image || "~ no image found ~";
-  $('#basicColor').value = widget.color || "black";
-  if (widget.layer == -4){
+
+  if (widget.layer < 1){
     $('#basicTypeBoard').checked = true
-  } else if (widget.classes == "classicPiece") {
-    $('#basicTypeClassic').checked = true
-  } else if (widget.classes == "checkersPiece" || widget.classes == "checkersPiece crowned") {
-    $('#basicTypeChecker').checked = true
-  } else if (widget.classes == "pinPiece") {
-    $('#basicTypePin').checked = true
   } else {
     $('#basicTypeToken').checked = true
   }
@@ -37,55 +31,15 @@ function applyEditOptionsBasic(widget) {
   if ($('#basicTypeBoard').checked == true){
     widget.layer = -4;
     widget.movable = false;
-    widget.height = 1000;
-    widget.width = 1600;
-    widget.x = 0;
-    widget.y = 0;
-    widget.classes = null;
-    widget.activeFace = 0;
-    widget.faces = null;
-  } else if ($('#basicTypeClassic').checked == true){
-    widget.activeFace = 0;
-    widget.faces = null;
-    widget.classes = "classicPiece";
-    widget.layer = 1;
-    widget.movable = true;
-    widget.height = 90;
-    widget.width = 90;
-  } else if ($('#basicTypeChecker').checked == true){
-    widget.classes = "checkersPiece"
-    widget.activeFace = 0;
-    widget.faces = [{"classes": "checkersPiece"},{"classes": "checkersPiece crowned"}];
-    widget.layer = 1;
-    widget.movable = true;
-    widget.height = 73.5;
-    widget.width = 73.5;
-    widget.activeFace = (widget.activeFace ? 1 : 0);
-  } else if ($('#basicTypePin').checked == true){
-    widget.activeFace = 0;
-    widget.faces = null;
-    widget.classes = "pinPiece"
-    widget.layer = 1;
-    widget.movable = true;
-    widget.height = 43.83;
-    widget.width = 35.85;
   } else {
-    if (JSON.stringify(widget.faces) == JSON.stringify([{"classes": "checkersPiece"},{"classes": "checkersPiece crowned"}])){
-      widget.faces = null;
-    }
-    widget.classes = null;
-    widget.movable = true;
     widget.layer = 1;
     widget.movable = true;
-    widget.activeFace = 0
   }
 
   if ($('#basicImage').value=="~ no image found ~")
     delete widget.image;
   else
     widget.image = $('#basicImage').value;
-
-  widget.color = $('#basicColor').value;
 
   widget.enlarge = $('#basicEnlarge').checked;
 }
@@ -214,6 +168,43 @@ function applyEditOptionsLabel(widget) {
 
 }
 
+//piece widget functions
+function populateEditOptionsPiece(widget) {
+  $('#pieceColor').value = widget.color || "black";
+  if (widget.classes == "classicPiece") {
+    $('#pieceTypeClassic').checked = true
+  } else if (widget.classes == "checkersPiece" || widget.classes == "checkersPiece crowned") {
+    $('#pieceTypeChecker').checked = true
+  } else if (widget.classes == "pinPiece") {
+    $('#pieceTypePin').checked = true
+  }
+}
+
+function applyEditOptionsPiece(widget) {
+  if ($('#pieceTypeClassic').checked == true){
+    delete widget.activeFace;
+    delete widget.faces;
+    widget.classes = "classicPiece";
+    widget.height = 90;
+    widget.width = 90;
+  } else if ($('#pieceTypeChecker').checked == true){
+    widget.classes = "checkersPiece";
+    widget.activeFace = 0;
+    widget.faces = [{"classes": "checkersPiece"},{"classes": "checkersPiece crowned"}];
+    widget.height = 73.5;
+    widget.width = 73.5;
+    widget.activeFace = (widget.activeFace ? 1 : 0);
+  } else if ($('#pieceTypePin').checked == true){
+    delete widget.activeFace;
+    delete widget.faces;
+    widget.classes = "pinPiece";
+    widget.height = 43.83;
+    widget.width = 35.85;
+  }
+
+  widget.color = $('#pieceColor').value;
+}
+
 //timer functions
 function populateEditOptionsTimer(widget) {
   $('#timerCountdown').checked = widget.countdown;
@@ -252,19 +243,25 @@ function applyEditOptionsSpinner(widget) {
 
 //This section calls the relative widgets' overlays and functions
 async function applyEditOptions(widget) {
-  if(widget.type == null)
+  var type = widget.type||'piece';
+  if (type=='piece' && widget.image)
+    type = 'basic';
+
+  if(type == 'basic')
     applyEditOptionsBasic(widget);
-  if(widget.type == 'button')
+  if(type == 'button')
     applyEditOptionsButton(widget);
-  if(widget.type == 'deck')
+  if(type == 'deck')
     await applyEditOptionsDeck(widget);
-  if(widget.type == 'holder')
+  if(type == 'holder')
     applyEditOptionsHolder(widget);
-  if(widget.type == 'label')
+  if(type == 'label')
     applyEditOptionsLabel(widget);
-  if(widget.type == 'timer')
+  if(type == 'piece')
+    applyEditOptionsPiece(widget);
+  if(type == 'timer')
     applyEditOptionsTimer(widget);
-  if(widget.type == 'spinner')
+  if(type == 'spinner')
     applyEditOptionsSpinner(widget);
 }
 
@@ -274,7 +271,10 @@ function editClick(widget) {
 
   $a('#editOverlay > div').forEach(d=>d.style.display = 'none');
 
-  const type = widget.state.type||'basic';
+  var type = widget.state.type||'piece';
+  if (type=='piece' && widget.state.image)
+    type = 'basic';
+
   const typeSpecific = $(`#editOverlay > .${type}Edit`);
 
   if(!typeSpecific)
@@ -292,6 +292,8 @@ function editClick(widget) {
     populateEditOptionsHolder(widget.state);
   if(type == 'label')
     populateEditOptionsLabel(widget.state);
+  if(type == 'piece')
+    populateEditOptionsPiece(widget.state);
   if(type == 'timer')
     populateEditOptionsTimer(widget.state);
   if(type == 'spinner')

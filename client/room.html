@@ -45,13 +45,9 @@
         <div class="basicEdit">
           <h1>Edit widget</h1>
           <h3>Select type:</h3>
-          <label for="basicImage"> Checker:</label><input type='radio' class='radio-button' id="basicTypeChecker" name='basicType'>
-          <label for="basicImage">   &#160; Pawn:</label><input type='radio' class='radio-button' id="basicTypeClassic" name='basicType'>
-          <label for="basicImage">   &#160; Pin:</label><input type='radio' class='radio-button' id="basicTypePin" name='basicType'>
-          <label for="basicImage">   &#160; Token:</label><input type='radio' class='radio-button' id="basicTypeToken" name='basicType'>
-          <label for="basicImage">   &#160; Board:</label><input type='radio' class='radio-button' id="basicTypeBoard" name='basicType'><br/><br/>
-          <label for="basicImage"> Image url: </label><input type="text" id="basicImage"><label for="basicImage"> (only used in boards or token) </label><br/><br/>
-          <input type="color" id="basicColor" value="black"><label for="basicColor"> - Color </label><br/><br/>
+          <input type='radio' class='radio-button' id="basicTypeToken" name='basicType'><label for="basicTypeToken">Token   &#160; </label>
+          <input type='radio' class='radio-button' id="basicTypeBoard" name='basicType'><label for="basicTypeBoard">Board   &#160; </label><br/><br/>
+          <label for="basicImage"> Image url: </label><input type="text" id="basicImage"><br/><br/>
           <input type="checkbox" id="basicEnlarge"><label for="basicEnlarge">Enlarge on hover</label>
         </div>
         <div class="buttonEdit">
@@ -75,6 +71,14 @@
           <label for="labelWidth"> Width: &#160;</label><input type="range" min=0 max=1600 value=100  step=10 id="labelWidth"><input type="text" id="labelWidthNumber" value=100><br/>
           <label for="labelHeight"> Height: </label><input type="range" min=0 max=1000 value=20  step=10 id="labelHeight"><input type="text" id="labelHeightNumber" value=20><br/><br/>
           <input type="checkbox" id="labelEditable"><label for="labelEditable">Editable in play mode</label>
+        </div>
+        <div class="pieceEdit">
+          <h1>Edit game piece</h1>
+          <h3>Select type:</h3>
+          <input type='radio' class='radio-button' id="pieceTypeChecker" name='pieceType'><label for="pieceTypeChecker">Checker   &#160; </label>
+          <input type='radio' class='radio-button' id="pieceTypeClassic" name='pieceType'><label for="pieceTypeClassic">Pawn   &#160; </label>
+          <input type='radio' class='radio-button' id="pieceTypePin" name='pieceType'><label for="pieceTypePin">Pin   &#160; </label><br/><br/>
+          <input type="color" id="pieceColor" value="black"><label for="basicColor"> - Color </label><br/><br/>
         </div>
         <div class="timerEdit">
           <h1>Edit timer</h1>
