@@ -182,6 +182,9 @@ export class Widget extends StateManaged {
   }
 
   async click(mode='respect') {
+    if(tracingEnabled)
+      sendTraceEvent('click', { id: this.get('id'), mode });
+
     if(!this.get('clickable') && !(mode == 'ignoreClickable' || mode =='ignoreAll'))
       return true;
 
@@ -333,8 +336,8 @@ export class Widget extends StateManaged {
 
     batchStart();
 
-    if(typeof property == 'string')
-      log(`routine evaluation: ${this.get('id')}.${property}`);
+    if(tracingEnabled && typeof property == 'string')
+      sendTraceEvent('evaluateRoutine', { id: this.get('id'), property });
 
     if(this.get('debug') && !depth)
       $('#debugButtonOutput').textContent = '';
@@ -1050,6 +1053,9 @@ export class Widget extends StateManaged {
   }
 
   async moveStart() {
+    if(tracingEnabled)
+      sendTraceEvent('moveStart', { id: this.get('id') });
+
     await this.bringToFront();
     this.dropTargets = this.validDropTargets();
     this.currentParent = widgets.get(this.get('parent'));
@@ -1067,6 +1073,9 @@ export class Widget extends StateManaged {
   async move(x, y) {
     const newX = (jeZoomOut ? x : Math.max(0-this.get('width' )*0.25, Math.min(1600+this.get('width' )*0.25, x))) - this.get('width' )/2;
     const newY = (jeZoomOut ? y : Math.max(0-this.get('height')*0.25, Math.min(1000+this.get('height')*0.25, y))) - this.get('height')/2;
+
+    if(tracingEnabled)
+      sendTraceEvent('move', { id: this.get('id'), newX, newY });
 
     await this.setPosition(newX, newY, this.get('z'));
     const myCenter = center(this.domElement);
@@ -1107,6 +1116,9 @@ export class Widget extends StateManaged {
   }
 
   async moveEnd() {
+    if(tracingEnabled)
+      sendTraceEvent('moveEnd', { id: this.get('id') });
+
     for(const t of this.dropTargets)
       t.domElement.classList.remove('droppable');
 

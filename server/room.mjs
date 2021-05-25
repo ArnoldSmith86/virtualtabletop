@@ -25,6 +25,10 @@ export default class Room {
 
     this.state._meta.deltaID = this.deltaID;
     player.send('state', this.state);
+
+    if(this.enableTracing)
+      player.send('tracing', 'enable');
+
     this.sendMetaUpdate();
   }
 
@@ -120,7 +124,8 @@ export default class Room {
   }
 
   broadcast(func, args, exceptPlayer) {
-    this.trace('broadcast', { func, args, exceptPlayer: exceptPlayer?.name });
+    if(func != 'mouse')
+      this.trace('broadcast', { func, args, exceptPlayer: exceptPlayer?.name });
     for(const player of this.players)
       if(player != exceptPlayer)
         player.send(func, args);
@@ -278,7 +283,6 @@ export default class Room {
 
   receiveInvalidDelta(player, delta, widgetID) {
     Logging.log(`WARNING: received conflicting delta data for widget ${widgetID} from player ${player.name} in room ${this.id} - sending game state at ${this.deltaID}`);
-    this.trace('conflict', { player: player.name, delta, deltaID: this.deltaID, widgetID });
     this.state._meta.deltaID = ++this.deltaID;
     player.send('state', this.state);
   }
@@ -324,7 +328,7 @@ export default class Room {
   }
 
   setState(state) {
-    this.trace('state', 'setting state');
+    this.trace('setState', { state });
     const meta = this.state._meta;
     this.state = state;
     if(this.state._meta)
@@ -333,14 +337,31 @@ export default class Room {
     this.broadcast('state', state);
   }
 
-  trace(type, payload) {
-    if(this.traceActivated) {
-      const line = `${new Date().toISOString()} - ${type} - ${JSON.stringify(payload)}\n`;
-      fs.appendFileSync(path.resolve() + '/save/' + this.id + '.trace', line);
+  trace(source, payload) {
+    if(source == 'client' && source == 'client' && payload.type == 'enable' && !this.enableTracing) {
+      this.enableTracing = true;
+      this.tracingFilename = `${path.resolve()}/save/${this.id}-${+new Date}.trace`;
+      this.broadcast('tracing', 'enable');
+      payload.initialState = this.state;
+      fs.writeFileSync(this.tracingFilename, '{\n');
+      Logging.log(`tracing enabled for room ${this.id} to file ${this.tracingFilename}`);
+    }
+    if(this.enableTracing) {
+      payload.servertime = +new Date;
+      payload.source = source;
+      payload.serverDeltaID = this.deltaID;
+      const suffix = source == 'unload' ? '\n}' : ',\n';
+      fs.appendFileSync(this.tracingFilename, `  ${JSON.stringify(payload)}${suffix}`);
+
+      if(source == 'unload') {
+        Logging.log(`tracing finished for room ${this.id} to file ${this.tracingFilename}`);
+        this.enableTracing = false;
+      }
     }
   }
 
   unload() {
+    this.trace('unload', {});
     if(Object.keys(this.state).length > 1 || Object.keys(this.state._meta.states).length) {
       Logging.log(`unloading room ${this.id}`);
       this.writeToFilesystem();

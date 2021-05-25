@@ -19,6 +19,9 @@ export default class Player {
   }
 
   messageReceived = async (func, args) => {
+    if([ 'delta', 'mouse', 'trace' ].indexOf(func) == -1)
+      this.trace('messageReceived', { func, args });
+
     try {
       if(func == 'confirm')
         this.waitingForStateConfirmation = false;
@@ -26,8 +29,6 @@ export default class Player {
         this.receiveDelta(args);
       if(func == 'editState')
         await this.room.editState(this, args.id, args.meta);
-      if(func == 'enableTrace')
-        this.room.traceActivated = true;
       if(func == 'loadState')
         await this.room.loadState(this, args.stateID, args.variantID);
       if(func == 'mouse')
@@ -39,7 +40,7 @@ export default class Player {
       if(func == 'rename')
         this.room.renamePlayer(this, args.oldName, args.newName);
       if(func == 'trace')
-        this.room.trace('client', { player: this.name, args });
+        this.trace('client', args);
     } catch(e) {
       Logging.handleWebSocketException(func, args, e);
       this.send('internal_error', func);
@@ -48,13 +49,17 @@ export default class Player {
   }
 
   receiveDelta(delta) {
-    if(this.waitingForStateConfirmation)
+    if(this.waitingForStateConfirmation) {
+      this.trace('receiveDelta', { status: 'waitingForStateConfirmation', delta });
       return;
+    }
 
     if(delta.id < this.latestDeltaIDbyDifferentPlayer) {
+      this.trace('receiveDelta', { status: 'idTooLow', delta, possiblyConflicting: this.possiblyConflictingDeltas });
       for(const conflictDelta of this.possiblyConflictingDeltas) {
         for(const widgetID in delta.s) {
           if(conflictDelta.s[widgetID] !== undefined) {
+            this.trace('receiveDelta', { status: 'conflict', delta, conflictDelta, widgetID });
             this.waitingForStateConfirmation = true;
             this.room.receiveInvalidDelta(this, delta, widgetID);
             return;
@@ -78,5 +83,12 @@ export default class Player {
       this.latestDeltaIDbyDifferentPlayer = args.id;
     }
     this.connection.toClient(func, args);
+  }
+
+  trace(source, payload) {
+    if(this.room.enableTracing || source == 'client' && payload.type == 'enable') {
+      payload.player = this.name;
+      this.room.trace(source, payload);
+    }
   }
 }

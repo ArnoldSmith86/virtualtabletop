@@ -245,8 +245,3 @@ window.onkeyup = function(event) {
   if(event.key == 'Escape')
     showOverlay();
 }
-
-window.onerror = function(msg, url, line, col, err) {
-  log(`ERROR ${msg} < ${err.stack.trim().replace(/\n/g, ' < ')}`);
-  location.reload();
-}
