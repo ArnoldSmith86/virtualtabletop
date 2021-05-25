@@ -52,6 +52,19 @@ function populateEditOptionsButton(widget) {
   $('#buttonColorMain').value = widget.backgroundColor || "#1f5ca6";
   $('#buttonColorBorder').value = widget.borderColor || "#0d2f5e";
   $('#buttonColorText').value = widget.textColor || "#ffffff"
+
+  if (widget.text){
+    $('#buttonImage').style = "display: none !important";
+    $('[for=buttonImage]').style = "display: none !important";
+    $('#buttonText').style = "display: inline";
+    $('[for=buttonText]').style = "display: inline";
+  };
+  if (widget.image){
+    $('#buttonText').style = "display: none !important";
+    $('[for=buttonText]').style = "display: none !important";
+    $('#buttonImage').style = "display: inline";
+    $('[for=buttonImage]').style = "display: inline";
+  }
 }
 
 function applyEditOptionsButton(widget) {
