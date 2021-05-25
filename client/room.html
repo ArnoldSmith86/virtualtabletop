@@ -45,17 +45,19 @@
         <div class="canvasEdit">
           <h1>Edit canvas</h1>
           <span>Canvas colors: (click on check box to select active color)</span><br/>
-          <input type="radio" name="canvasColorSelect"><input type="color"><br/>
-          <input type="radio" name="canvasColorSelect"><input type="color"><br/>
-          <input type="radio" name="canvasColorSelect"><input type="color"><br/>
-          <input type="radio" name="canvasColorSelect"><input type="color"><br/>
-          <input type="radio" name="canvasColorSelect"><input type="color"><br/>
-          <input type="radio" name="canvasColorSelect"><input type="color"><br/>
-          <input type="radio" name="canvasColorSelect"><input type="color"><br/>
-          <input type="radio" name="canvasColorSelect"><input type="color"><br/>
-          <input type="radio" name="canvasColorSelect"><input type="color"><br/>
-          <input type="radio" name="canvasColorSelect"><input type="color"><br/><br/>
-          <input type="checkbox" id="canvasColorRest"><label for="canvasColorRest">Reset colors</label>
+          <div class="flexContainer" id="colorContainer">
+          <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+          <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+          <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+          <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+          <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+          <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+          <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+          <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+          <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+          <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+          </div><br/>
+          <input type="checkbox" id="canvasColorReset"><label for="canvasColorRest">Reset colors</label>
         </div>
         <deck-editor :widget-state="selectedWidget.state"></deck-editor>
         <div class="holderEdit">

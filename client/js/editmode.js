@@ -21,25 +21,25 @@ function populateEditOptionsCanvas(widget) {
   const ctx = document.createElement('canvas').getContext('2d');
 
   for(let i=0; i<10; ++i) {
-    $a('.canvasEdit > [type=radio]')[i].checked = widget.activeColor == i;
+    $a('.colorComponent > [type=radio]')[i].checked = widget.activeColor == i;
     // using canvas fillStyle to turn color names into hex colors
     ctx.fillStyle = cm[i] || Canvas.defaultColors[i];
-    $a('.canvasEdit > [type=color]')[i].value = ctx.fillStyle;
+    $a('.colorComponent > [type=color]')[i].value = ctx.fillStyle;
   }
 
-  $('#canvasColorRest').checked = false;
+  $('#canvasColorReset').checked = false;
 }
 
 function applyEditOptionsCanvas(widget) {
   if(!Array.isArray(widget.colorMap))
     widget.colorMap = [];
   for(let i=0; i<10; ++i) {
-    if($a('.canvasEdit > [type=radio]')[i].checked)
+    if($a('.colorComponent > [type=radio]')[i].checked)
       widget.activeColor = i;
-    widget.colorMap[i] = $a('.canvasEdit > [type=color]')[i].value;
+    widget.colorMap[i] = $a('.colorComponent > [type=color]')[i].value;
   }
 
-  if($('#canvasColorRest').checked)
+  if($('#canvasColorReset').checked)
     delete widget.colorMap;
 }
 
