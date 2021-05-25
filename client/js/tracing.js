@@ -1,4 +1,5 @@
 let tracingEnabled = false;
+let loadedTrace = null;
 
 function enableTracing() {
   sendTraceEvent('enable');
@@ -16,9 +17,52 @@ function sendUserTraceEvent() {
   sendTraceEvent('user report', { starttime, description });
 }
 
+function loadStateAtIndex(index) {
+  let state = JSON.parse(JSON.stringify(loadedTrace[0].initialState));
+  for(let i=1; i<=index; ++i) {
+    if(loadedTrace[i].func == 'state') {
+      state = JSON.parse(JSON.stringify(loadedTrace[i].args));
+    }
+    if(loadedTrace[i].func == 'delta') {
+      for(const widgetID in loadedTrace[i].args.s) {
+        if(loadedTrace[i].args.s[widgetID] === null) {
+          delete state[widgetID];
+        } else {
+          if(!state[widgetID])
+            state[widgetID] = {};
+          for(const property in loadedTrace[i].args.s[widgetID]) {
+            if(loadedTrace[i].args.s[widgetID][property] === null)
+              delete state[widgetID][property];
+            else
+              state[widgetID][property] = loadedTrace[i].args.s[widgetID][property];
+          }
+        }
+      }
+    }
+  }
+  receiveStateFromServer(state);
+}
+
+function loadTraceFile(file) {
+  loadedTrace = JSON.parse(file.content);
+  preventReconnect();
+  connection.close();
+  loadStateAtIndex(15);
+  $('body').classList.add('trace');
+  $('#traceInput').min = 0;
+  $('#traceInput').max = loadedTrace.length-1;
+  $('#traceInput').value = 0;
+}
+
+function updateTraceInput(e) {
+  loadStateAtIndex(+e.target.value);
+}
+
 window.addEventListener('keydown', function(e) {
   if(e.key == 'F9') {
-    if(!tracingEnabled)
+    if(e.ctrlKey)
+      selectFile('TEXT').then(loadTraceFile);
+    else if(!tracingEnabled)
       enableTracing();
     else
       sendUserTraceEvent();
@@ -27,6 +71,7 @@ window.addEventListener('keydown', function(e) {
 
 onLoad(function() {
   onMessage('tracing', _=>tracingEnabled=true);
+  on('#traceInput', 'input', updateTraceInput);
 });
 
 window.onerror = function(msg, url, line, col, err) {

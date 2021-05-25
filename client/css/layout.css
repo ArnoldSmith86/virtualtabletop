@@ -341,3 +341,17 @@ body.aspectTooGood #hideToolbarButton {
   background-size: 20px 70%;
   background-position:  2.5px center;
 }
+
+
+body.trace #toolbar {
+  background: red;
+}
+#traceUI {
+  display: none;
+}
+#traceInput {
+  width: 100%;
+}
+body.trace #traceUI {
+  display: block;
+}

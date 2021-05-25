@@ -343,14 +343,14 @@ export default class Room {
       this.tracingFilename = `${path.resolve()}/save/${this.id}-${+new Date}.trace`;
       this.broadcast('tracing', 'enable');
       payload.initialState = this.state;
-      fs.writeFileSync(this.tracingFilename, '{\n');
+      fs.writeFileSync(this.tracingFilename, '[\n');
       Logging.log(`tracing enabled for room ${this.id} to file ${this.tracingFilename}`);
     }
     if(this.enableTracing) {
       payload.servertime = +new Date;
       payload.source = source;
       payload.serverDeltaID = this.deltaID;
-      const suffix = source == 'unload' ? '\n}' : ',\n';
+      const suffix = source == 'unload' ? '\n]' : ',\n';
       fs.appendFileSync(this.tracingFilename, `  ${JSON.stringify(payload)}${suffix}`);
 
       if(source == 'unload') {
