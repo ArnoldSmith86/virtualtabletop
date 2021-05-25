@@ -24,6 +24,12 @@ function populateEditOptionsBasic(widget) {
   } else {
     $('#basicTypeToken').checked = true
   }
+
+  $('#basicWidth').value = widget.width;
+  $('#basicHeight').value = widget.height;
+  $('#basicWidthNumber').value = widget.width;
+  $('#basicHeightNumber').value = widget.height;
+
   $('#basicEnlarge').checked = widget.enlarge;
 }
 
@@ -41,7 +47,11 @@ function applyEditOptionsBasic(widget) {
   else
     widget.image = $('#basicImage').value;
 
-  widget.enlarge = $('#basicEnlarge').checked;
+  widget.width = $('#basicWidth').value;
+  widget.height = $('#basicHeight').value;
+
+  if (!widget.enlarge || !$('#basicEnlarge').checked)
+    widget.enlarge = $('#basicEnlarge').checked;
 }
 
 //button functions
@@ -164,18 +174,8 @@ function populateEditOptionsLabel(widget) {
 function applyEditOptionsLabel(widget) {
   widget.text = $('#labelText').value;
 
-  if (widget.width == $('#labelWidthNumber').value){
-    widget.width = $('#labelWidth').value;
-  } else {
-    widget.width = $('#labelWidthNumber').value;
-  }
-
-  if (widget.height == $('#labelHeightNumber').value){
-    widget.height = $('#labelHeight').value;
-  } else {
-    widget.height = $('#labelHeightNumber').value;
-  }
-
+  widget.width = $('#labelWidth').value;
+  widget.height = $('#labelHeight').value;
 
   widget.editable = $('#labelEditable').checked;
 
@@ -805,12 +805,14 @@ onLoad(function() {
   vmEditOverlay = editOverlayApp.mount("#editOverlayVue");
 
   on('#labelWidthNumber', 'input', e=>$('#labelWidth').value=e.target.value)
-
   on('#labelWidth', 'input', e=>$('#labelWidthNumber').value=e.target.value)
-
   on('#labelHeightNumber', 'input', e=>$('#labelHeight').value=e.target.value)
-
   on('#labelHeight', 'input', e=>$('#labelHeightNumber').value=e.target.value)
+
+  on('#basicWidthNumber', 'input', e=>$('#basicWidth').value=e.target.value)
+  on('#basicWidth', 'input', e=>$('#basicWidthNumber').value=e.target.value)
+  on('#basicHeightNumber', 'input', e=>$('#basicHeight').value=e.target.value)
+  on('#basicHeight', 'input', e=>$('#basicHeightNumber').value=e.target.value)
 
   populateAddWidgetOverlay();
 });
