@@ -33,7 +33,7 @@ export default function minifyRoom() {
         'client/css/widgets/label.css',
         'client/css/widgets/pile.css',
         'client/css/widgets/seat.css',
-        'client/css/widgets/spinner.css'
+        'client/css/widgets/spinner.css',
         'client/css/widgets/timer.css'
       ],
       output: os.tmpdir() + '/out.css'
