@@ -39,8 +39,24 @@ function applyEditOptionsCanvas(widget) {
     widget.colorMap[i] = $a('.colorComponent > [type=color]')[i].value;
   }
 
-  if($('#canvasColorReset').checked)
-    delete widget.colorMap;
+  if($('#canvasColorReset').checked){
+    for(let i=0; i<5; ++i) {
+      if($a('#canvasPresets > [name=canvasPresets]')[i].selected){
+        var value = $a('#canvasPresets > [name=canvasPresets]')[i].value;
+        if (value == "original"){
+          widget.colorMap = ["#f0f0f0","#1f5ca6","#000000","#FF0000red","#008000","#FFFF00","#FFA500","#FFC0CB","#800080","#A52A2A"]
+        } else if (value == "basic"){
+          widget.colorMap = ["#ffffff","#000000","#ff0000","#ff8000","#ffff00","#00ff00","#00ffff","#0000ff","#8000ff","#ff00ff"]
+        } else if (value == "pencil"){
+          widget.colorMap = ["#ffffff","#000000","#8B3003","#E52C2C","#F08A38","#FAE844","#71C82A","#1F5CA6","#775094","#CD36BC"]
+        } else if (value == "pastel"){
+          widget.colorMap = ["#ffffff","#7A7A7A","#FFADAD","#FFD6A5","#FDFFB6","#CAFFBF","#9BF6FF","#A0C4FF","#BDB2FF","#FFC6FF"]
+        } else {
+          widget.colorMap = ["#ffffff","#E0E0E0","#C4C4C4","#A8A8A8","#8C8C8C","#707070","#545454","#383838","#1C1C1C","#000000"]
+        }
+      }
+    }
+  }
 }
 
 async function applyEditOptionsDeck(widget) {

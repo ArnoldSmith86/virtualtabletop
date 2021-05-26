@@ -57,7 +57,14 @@
           <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
           <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
           </div><br/>
-          <input type="checkbox" id="canvasColorReset"><label for="canvasColorRest">Reset colors</label>
+          <input type="checkbox" id="canvasColorReset"><label for="canvasColorRest">Reset colors to: </label>
+          <select id="canvasPresets">
+            <option name="canvasPresets" value="original" selected = "selected">original colors</option>
+            <option name="canvasPresets" value="basic">basic colors</option>
+            <option name="canvasPresets" value="pencil">pencil colors</option>
+            <option name="canvasPresets" value="pastel">pastel colors</option>
+            <option name="canvasPresets" value="grey">grey scale</option>
+          </select><br/><br/>
         </div>
         <deck-editor :widget-state="selectedWidget.state"></deck-editor>
         <div class="holderEdit">
