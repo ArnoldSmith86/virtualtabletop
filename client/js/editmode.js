@@ -645,11 +645,112 @@ onLoad(function() {
   });
 
   on('#addCanvas', 'click', function() {
+    var id = generateUniqueWidgetID()
     addWidgetLocal({
-      type: 'canvas',
-      x: 600,
-      y: 300
-    });
+      type: "canvas",
+      id: id,
+    
+      x: 400,
+      y: 100,
+      width: 800,
+      height: 800,
+
+      c11: "$#01$0R#1$1#101$1$R1#1$1$1$1$1#101$0R#1-*('&$#",
+      c13: "(&#0SR1#1-*('$#0",
+      c14: "01#1#01#1#1#01#1#1#01#1#0101#01#0101#01#0101#01$1$1$1$1%#1-*('$#0",
+      c15: "#0SR1-*)'&%#",
+      c21: "'R1#S$101#10S01#101#101#1#R101-*('&$#",
+      c23: "(&TR-*('%#",
+      c24: "&01#1$#1$101#R010R0101#101$1#101$1#101$01-*('&$0",
+      c25: "TR-*)'&%#",
+      c31: "'0R1#R101#101#101#10S01#101#1#R1#R$01$#0R1-*('$",
+      c33: "(&TR-*('%#",
+      c34: "&%$#1#10R1#1#1$101#10S01#101#1#R#0R1-*('&$0",
+      c35: "TR-*)'&%#",
+      c40: "%$0R1$#01#1#1#01#101$R1#R#01#101$1#1#1-*('&%$#",
+      c41: "%$#R$#01#1$#1$0R#1$101#1$1$1#101$0R#01-*('&$",
+      c43: "(&TR-*('%#",
+      c44: "#SR101$1$1$1$1$10S$1$1$10S$101#01#01#R-*('&$",
+      c45: "TR-*)'&%#",
+      c50: "&$1#0R1#10101$101#0R#R$#10101#R1#01-*('&%$#",
+      c51: "%$01%01$#1#1#0R#101#1#10101#1#10101#1#R#01#R-*('&$0",
+      c53: "(&TR-*('%#",
+      c54: "%$1$1$1$1$1$1#10R1#1#101#101#101#101#10R1#01-*('&$0",
+      c55: "TR-*)'&%#",
+      c60: "#01%01$#1#R$#101$#1#1$R#01$#1#01-*)#0",
+      c61: "&%$#0101$#0R01$#1%01$#R01-*('&%$",
+      c63: "(&TR-*('%#",
+      c64: "%$#01%01$0R#R#R#101#10S01#101$1#1#R#01#1-*('&$",
+      c65: "TR-*)'&%#",
+      c70: "'%TR-*)&#",
+      c71: "'&%$TR-*('&%$#",
+      c73: "(&TR-*('%#",
+      c74: "&%$#1%#10R1$0101#1$101#1#01#R1#1$1%01-*('$#",
+      c75: "R010S1-*)'&%#",
+      c80: "'%TR-*)&#",
+      c81: "'&%$TR-*('&%$#",
+      c83: "(&SR%#1-*('#0",
+      c84: "$#01%01#1$#1$0R#1#101#101#101#101#101#101#1#R#1%01%1-*('#0",
+      c85: "SR-*)'&%$#",
+      c90: "%$#01%#1%#1#SR#1%1%1%1-*('&%",
+      c91: "%$0S1%01$#0101$#1#1$01#01#R1-*)$0"
+    })
+    addWidgetLocal({
+      type: "button",
+      id: id+"-Reset",
+    
+      parent: id,
+    
+      x: 802,
+      y: 0,
+      width: 50,
+      height: 50,
+    
+      movable: false,
+      movableInEdit: false,
+    
+      clickRoutine: [
+        {
+          func: "CANVAS",
+          canvas: id
+        }
+      ],
+      css: "border-radius: 0% 50% 0% 0%;  border-width: 1px;  --wcBorder: #555; --wcBorderOH: black; --wcMainOH: #0d2f5e; ",
+      text: "Reset"
+    })
+    addWidgetLocal({
+      type: "button",
+      id: id+"-Color",
+    
+      parent: id,
+    
+      x: 802,
+      y: 50,
+      width: 50,
+      height: 50,
+
+      movable: false,
+      movableInEdit: false,
+    
+      clickRoutine: [
+        {
+          func: "CANVAS",
+          canvas: id,
+          mode: "inc",
+          value: 1
+        },
+        "var color = ${PROPERTY colorMap OF "+id+"} getIndex ${PROPERTY activeColor OF "+id+"}",
+        {
+          func: "SET",
+          collection: "thisButton",
+          property: "color",
+          value: "${color}"
+        }
+      ],
+      color: "#1f5ca6",
+      css: "border-radius: 0% 0% 50% 0%;  border-width: 1px; background-color: var(--color);  --wcBorder: #555; --wcBorderOH: black  "
+    }
+    );
     showOverlay();
   });
 
