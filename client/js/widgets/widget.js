@@ -454,7 +454,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'CANVAS') {
-        setDefaults(a, { mode: 'reset', x: 0, y: 0, value: 1, color: '#1f5ca6' });
+        setDefaults(a, { mode: 'reset', x: 0, y: 0, value: 1, color: "#1F5CA6" });
 
         if([ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ].indexOf(a.mode) == -1)
           problems.push(`Warning: Mode ${a.mode} will be interpreted as reset.`);
