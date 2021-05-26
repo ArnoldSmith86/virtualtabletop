@@ -125,4 +125,4 @@ class Canvas extends Widget {
   }
 }
 
-Canvas.defaultColors = [ '#f0f0f0', '#1f5ca6', '#f7b32b', '#f42c04', '#1f2421', '#49a078', '#6a041d', '#df57bc', '#a03e99', '#53ff45' ];
+Canvas.defaultColors = ["#f0f0f0","#1f5ca6","#000000","#FF0000","#008000","#FFFF00","#FFA500","#FFC0CB","#800080","#A52A2A"];
