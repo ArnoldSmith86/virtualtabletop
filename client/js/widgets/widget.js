@@ -454,17 +454,27 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'CANVAS') {
-        setDefaults(a, { mode: 'reset', x: 0, y: 0 });
+        setDefaults(a, { mode: 'reset', x: 0, y: 0, value: 1, color: '#1f5ca6' });
 
-        if([ 'color', 'reset', 'setPixel' ].indexOf(a.mode) == -1)
+        if([ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ].indexOf(a.mode) == -1)
           problems.push(`Warning: Mode ${a.mode} will be interpreted as reset.`);
 
         const execute = async function(widget) {
           if(widget.get('type') == 'canvas') {
             if(a.mode == 'setPixel')
-              await widget.setPixel(a.x, a.y, a.colorIndex);
-            else if(a.mode == 'color')
-              await widget.set('activeColor', a.colorIndex === undefined ? null : a.colorIndex);
+              await widget.setPixel(a.x, a.y, a.value);
+            else if(a.mode == 'set')
+              await widget.set('activeColor', (a.value || 1) % widget.get('colorMap').length)||0;
+            else if(a.mode == 'inc')
+              await widget.set('activeColor', (widget.get('activeColor')+ a.value) % widget.get('colorMap').length);
+            else if(a.mode == 'dec')
+              await widget.set('activeColor', (widget.get('activeColor')+widget.get('colorMap').length - (a.value % widget.get('colorMap').length)) % widget.get('colorMap').length);
+            else if(a.mode == 'change') {
+              var CM = widget.get('colorMap');
+              var index = ((a.value || 1) % CM.length) || 0;
+              CM[index] = a.color || '#1f5ca6' ;
+              await widget.set('colorMap', CM);
+            }
             else
               await widget.reset();
           }
