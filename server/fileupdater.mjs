@@ -19,12 +19,12 @@ function updateProperties(properties, v) {
     return;
 
   if(!properties.type)
-    updateProperties(properties.faces);
+    updateProperties(properties.faces, v);
   if(properties.type == 'deck')
-    updateProperties(properties.cardDefaults);
+    updateProperties(properties.cardDefaults, v);
   if(properties.type == 'deck' && typeof properties.cardTypes == 'object')
     for(const cardType in properties.cardTypes)
-      updateProperties(properties.cardTypes[cardType]);
+      updateProperties(properties.cardTypes[cardType], v);
 
   for(const property in properties)
     if(property.match(/Routine$/))
