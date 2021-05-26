@@ -45,6 +45,8 @@ function applyEditOptionsCanvas(widget) {
         var value = $a('#canvasPresets > [name=canvasPresets]')[i].value;
         if (value == "original"){
           widget.colorMap = ["#F0F0F0","#1F5CA6","#000000","#FF0000","#008000","#FFFF00","#FFA500","#FFC0CB","#800080","#A52A2A"]
+        } else if (value == "pieces"){
+          widget.colorMap = ["#F0F0F0","#1F5CA6","#4A4A4A","#000000","#E84242","#E2A633","#E0CB0B","#23CA5B","#4C5FEA","#BC5BEE"]
         } else if (value == "basic"){
           widget.colorMap = ["#FFFFFF","#000000","#FF0000","#FF8000","#FFFF00","#00FF00","#00FFFF","#0000FF","#8000FF","#FF00FF"]
         } else if (value == "pencil"){
