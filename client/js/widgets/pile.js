@@ -130,6 +130,14 @@ class Pile extends Widget {
       await this.parent.dispenseCard(child);
   }
 
+  async onPropertyChange(property, oldValue, newValue) {
+    if(property == 'owner') {
+      for(const c of this.children())
+        await c.set('owner', newValue);
+    }
+    super.onPropertyChage(property, oldValue, newValue)
+  }
+
   supportsPiles() {
     return false;
   }
