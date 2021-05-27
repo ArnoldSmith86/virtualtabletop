@@ -154,6 +154,9 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
   }
 
   for(const [ i, op ] of Object.entries(routine)) {
+    if(typeof op != 'object')
+      continue;
+
     removeExistingVariablesRecursively(op, i);
     dissolveApplyVariables(op, i);
     delete routine[i].applyVariables;
