@@ -135,7 +135,7 @@ class Pile extends Widget {
       for(const c of this.children())
         await c.set('owner', newValue);
     }
-    await super.onPropertyChage(property, oldValue, newValue);
+    super.onPropertyChange(property, oldValue, newValue);
   }
 
   supportsPiles() {
