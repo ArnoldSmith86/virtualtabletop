@@ -64,7 +64,7 @@ class Canvas extends Widget {
 
   compress(str) {
     const startStr = str;
-    str = str.split("").reverse().join("").replace(/^(.)\1*/,"$1").spilt("").reverse().join("");
+    str = str.replace(/(.)\1*$/,"$1");
     for(const pair of this.compressionTable)
       str = str.replaceAll(pair[1], pair[0]);
     return str;
