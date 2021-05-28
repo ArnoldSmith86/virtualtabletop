@@ -17,7 +17,7 @@ class Canvas extends Widget {
 
     for(let x=0; x<10; ++x)
       for(let y=0; y<10; ++y)
-        defaults[`c${x}${y}`] = "-*)($";
+        defaults[`c${x}${y}`] = "0";
 
     this.addDefaults(defaults);
 
@@ -64,6 +64,7 @@ class Canvas extends Widget {
 
   compress(str) {
     const startStr = str;
+    str = str.replace(/(.)\1*$/,"$1");
     for(const pair of this.compressionTable)
       str = str.replaceAll(pair[1], pair[0]);
     return str;
@@ -72,6 +73,7 @@ class Canvas extends Widget {
   decompress(str) {
     for(const pair of this.compressionTable)
       str = str.replaceAll(pair[0], pair[1]);
+    str = str.padEnd(this.getResolution()**2/100,str.slice(-1));
     return str;
   }
 
