@@ -1,7 +1,6 @@
 class Canvas extends Widget {
   constructor(id) {
     super(id);
-    this.buildCompressionTable();
     this.canvas = document.createElement('canvas');
     this.context = this.canvas.getContext('2d');
 
@@ -53,26 +52,32 @@ class Canvas extends Widget {
     }
   }
 
-  buildCompressionTable() {
-    this.compressionTable = [];
-    for(let i=11; i>=1; --i)
-      this.compressionTable.push([String.fromCharCode(34 + i), '0'.repeat(2 ** i)]);
-    for(let c=1; c<=15; ++c)
-      for(let i=3; i>=1; --i)
-        this.compressionTable.push([String.fromCharCode(78 + c*3 + i), String.fromCharCode(48+c).repeat(2 ** i)]);
-  }
-
   compress(str) {
     const startStr = str;
-    str = str.replace(/(.)\1*$/,"$1");
-    for(const pair of this.compressionTable)
-      str = str.replaceAll(pair[1], pair[0]);
+    str = str.replaceAll(/(.)\1+/, (match, char, offset, str) => {
+      if(match.length + offset == str.length) {
+        return char;
+      } else if(match.length == 2) {
+        return match;
+      } else {
+        let n = match.length - 1;
+        let code = char;
+        while (n > 0) {
+          code += String.fromCharCode(32 + n % 16);
+          n = Math.floor(n / 16);
+        }
+        return code;
+      }
+    });
     return str;
   }
 
   decompress(str) {
-    for(const pair of this.compressionTable)
-      str = str.replaceAll(pair[0], pair[1]);
+    str = str.replaceAll(/[^\u0020-\u002F][\u0020-\u002F]+/, match => {
+      return match.split("").reduce((acc, char, index) => {
+        return acc + acc.charAt(0).repeat((char.charCodeAt(0)-32)*16**(index-1));
+      });
+    });
     str = str.padEnd(this.getResolution()**2/100,str.slice(-1));
     return str;
   }
