@@ -54,7 +54,7 @@ class Canvas extends Widget {
 
   compress(str) {
     const startStr = str;
-    str = str.replaceAll(/(.)\1+/, (match, char, offset, str) => {
+    str = str.replaceAll(/(.)\1+/g, (match, char, offset, str) => {
       if(match.length + offset == str.length) {
         return char;
       } else if(match.length == 2) {
@@ -73,7 +73,7 @@ class Canvas extends Widget {
   }
 
   decompress(str) {
-    str = str.replaceAll(/[^\u0020-\u002F][\u0020-\u002F]+/, match => {
+    str = str.replaceAll(/[^\u0020-\u002F][\u0020-\u002F]+/g, match => {
       return match.split("").reduce((acc, char, index) => {
         return acc + acc.charAt(0).repeat((char.charCodeAt(0)-32)*16**(index-1));
       });
