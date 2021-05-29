@@ -66,7 +66,7 @@ class Canvas extends Widget {
           code += String.fromCharCode(48 - c);
           n = Math.floor((n - c) / 7);
         }
-        return code
+        return code;
       } else if(match.length == 2) {
         return match;
       } else {
@@ -85,7 +85,7 @@ class Canvas extends Widget {
   decompress(str) {
     str = str.replaceAll(/([\u0029-\u0030]+)|[^\u0023-\u0030][\u0023-\u0028]+/g, (match, bc) => {
       if (bc != undefined) {
-        return match.split("").reduce((acc, char, index, , "") => {
+        return match.split("").reduce((acc, char, index, arr, "") => {
           return acc + "0".repeat((49-char.charCodeAt(0))*7**(index));
         });
       } else {
