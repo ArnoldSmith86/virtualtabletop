@@ -75,7 +75,7 @@ class Canvas extends Widget {
   decompress(str) {
     str = str.replaceAll(/[^\u0021-\u002F][\u0021-\u002F]+/g, match => {
       return match.split("").reduce((acc, char, index) => {
-        return acc + acc.charAt(0).repeat((char.charCodeAt(0)-32)*15**(index-1));
+        return acc + acc.charAt(0).repeat((char.charCodeAt(0)-33)*15**(index-1));
       });
     });
     str = str.padEnd(this.getResolution()**2/100,str.slice(-1));
