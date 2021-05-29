@@ -85,9 +85,9 @@ class Canvas extends Widget {
   decompress(str) {
     str = str.replaceAll(/([\u0029-\u0030]+)|[^\u0023-\u0030][\u0023-\u0028]+/g, (match, bc) => {
       if (bc != undefined) {
-        return match.split("").reduce((acc, char, index, arr, "") => {
+        return match.split("").reduce((acc, char, index) => {
           return acc + "0".repeat((49-char.charCodeAt(0))*7**(index));
-        });
+        }, "");
       } else {
         return match.split("").reduce((acc, char, index) => {
           return acc + acc.charAt(0).repeat((char.charCodeAt(0)-35)*6**(index-1));
