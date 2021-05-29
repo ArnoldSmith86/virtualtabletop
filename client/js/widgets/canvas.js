@@ -59,7 +59,7 @@ class Canvas extends Widget {
         return char;
       } else if(char == "0") {
         return this.encodeLength(48, match.length, 7);
-      } else if(match.length == 2) {
+      } else if(match.length == 2 && char.charCodeAt(0) < 128) {
         return match;
       } else {
         return char + this.encodeLength(41, match.length - 1, 7);
