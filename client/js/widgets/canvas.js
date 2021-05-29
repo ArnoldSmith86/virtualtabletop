@@ -58,44 +58,42 @@ class Canvas extends Widget {
       if(match.length + offset == str.length) {
         return char;
       } else if(char == "0") {
-        let n = match.length;
-        let c = 0;
-        let code = "";
-        while (n > 0) {
-          c = (n - 1) % 7;
-          code += String.fromCharCode(48 - c);
-          n = Math.floor((n - c) / 7);
-        }
-        return code;
+        return this.encodeLength(48, match.length, 7);
       } else if(match.length == 2) {
         return match;
       } else {
-        let n = match.length - 1;
-        let code = char;
-        while (n > 0) {
-          code += String.fromCharCode(35 + n % 6);
-          n = Math.floor(n / 6);
-        }
-        return code;
+        return char + this.encodeLength(41, match.length-1, 7);
       }
     });
     return str;
   }
 
   decompress(str) {
-    str = str.replaceAll(/([\u0029-\u0030]+)|[^\u0023-\u0030][\u0023-\u0028]+/g, (match, bc) => {
-      if (bc != undefined) {
-        return match.split("").reduce((acc, char, index) => {
-          return acc + "0".repeat((49-char.charCodeAt(0))*7**(index));
-        }, "");
+    str = str.replaceAll(/([\u002A-\u0030]+)|([^\u0023-\u0030])([\u0023-\u0029]+)/g, (match, backLength, color, colorLength) => {
+      if (backLength != undefined) {
+        return "0".repeat(this.decodeLength(backLength, 48, 7));
       } else {
-        return match.split("").reduce((acc, char, index) => {
-          return acc + acc.charAt(0).repeat((char.charCodeAt(0)-35)*6**(index-1));
-        });
+        return color.repeat(this.decodeLength(colorLength, 41, 7));
       }
     });
     str = str.padEnd(this.getResolution()**2/100,str.slice(-1));
     return str;
+  }
+  
+  decodeLength(str, baseCode, base) {
+    return str.split("").reduce((length, char, index) => length + (baseCode - char.charCodeAt(0) + 1) * base**index , 0);
+  }
+  
+  encodeLength(baseCode, length, base) {
+    let n = length;
+    let c = 0;
+    let code = "";
+    while n > 0 {
+      c = (n - 1) % base;
+      code += String.fromCharCode(baseCode - c);
+      n = Math.floor((n - c) / base);
+    }
+    return code;
   }
 
   getResolution() {
