@@ -57,14 +57,24 @@ class Canvas extends Widget {
     str = str.replaceAll(/(.)\1+/g, (match, char, offset, str) => {
       if(match.length + offset == str.length) {
         return char;
+      } else if(char == "0") {
+        let n = match.length;
+        let c = 0;
+        let code = "";
+        while (n > 0) {
+          c = (n - 1) % 7;
+          code += String.fromCharCode(48 - c);
+          n = Math.floor((n - c) / 7);
+        }
+        return code
       } else if(match.length == 2) {
         return match;
       } else {
         let n = match.length - 1;
         let code = char;
         while (n > 0) {
-          code += String.fromCharCode(35 + n % 13);
-          n = Math.floor(n / 13);
+          code += String.fromCharCode(35 + n % 6);
+          n = Math.floor(n / 6);
         }
         return code;
       }
@@ -73,10 +83,16 @@ class Canvas extends Widget {
   }
 
   decompress(str) {
-    str = str.replaceAll(/[^\u0023-\u002F][\u0023-\u002F]+/g, match => {
-      return match.split("").reduce((acc, char, index) => {
-        return acc + acc.charAt(0).repeat((char.charCodeAt(0)-35)*13**(index-1));
-      });
+    str = str.replaceAll(/([\u0029-\u0030]+)|[^\u0023-\u0030][\u0023-\u0028]+/g, (match, bc) => {
+      if (bc != undefined) {
+        return match.split("").reduce((acc, char, index, , "") => {
+          return acc + "0".repeat((49-char.charCodeAt(0))*7**(index));
+        });
+      } else {
+        return match.split("").reduce((acc, char, index) => {
+          return acc + acc.charAt(0).repeat((char.charCodeAt(0)-35)*6**(index-1));
+        });
+      }
     });
     str = str.padEnd(this.getResolution()**2/100,str.slice(-1));
     return str;
