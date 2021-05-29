@@ -63,8 +63,8 @@ class Canvas extends Widget {
         let n = match.length - 1;
         let code = char;
         while (n > 0) {
-          code += String.fromCharCode(36 + n % 8);
-          n = Math.floor(n / 8);
+          code += String.fromCharCode(35 + n % 13);
+          n = Math.floor(n / 13);
         }
         return code;
       }
@@ -73,9 +73,9 @@ class Canvas extends Widget {
   }
 
   decompress(str) {
-    str = str.replaceAll(/[^\u0024-\u002B][\u0024-\u002B]+/g, match => {
+    str = str.replaceAll(/[^\u0023-\u002F][\u0023-\u002F]+/g, match => {
       return match.split("").reduce((acc, char, index) => {
-        return acc + acc.charAt(0).repeat((char.charCodeAt(0)-36)*8**(index-1));
+        return acc + acc.charAt(0).repeat((char.charCodeAt(0)-35)*13**(index-1));
       });
     });
     str = str.padEnd(this.getResolution()**2/100,str.slice(-1));
