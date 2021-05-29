@@ -62,7 +62,7 @@ class Canvas extends Widget {
       } else if(match.length == 2) {
         return match;
       } else {
-        return char + this.encodeLength(41, match.length-1, 7);
+        return char + this.encodeLength(41, match.length - 1, 7);
       }
     });
     return str;
@@ -73,7 +73,7 @@ class Canvas extends Widget {
       if (backLength != undefined) {
         return "0".repeat(this.decodeLength(backLength, 48, 7));
       } else {
-        return color.repeat(this.decodeLength(colorLength, 41, 7));
+        return color.repeat(this.decodeLength(colorLength, 41, 7) + 1);
       }
     });
     str = str.padEnd(this.getResolution()**2/100,str.slice(-1));
