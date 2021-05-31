@@ -1,7 +1,6 @@
 class Canvas extends Widget {
   constructor(id) {
     super(id);
-    this.buildCompressionTable();
     this.canvas = document.createElement('canvas');
     this.context = this.canvas.getContext('2d');
 
@@ -53,28 +52,48 @@ class Canvas extends Widget {
     }
   }
 
-  buildCompressionTable() {
-    this.compressionTable = [];
-    for(let i=11; i>=1; --i)
-      this.compressionTable.push([String.fromCharCode(34 + i), '0'.repeat(2 ** i)]);
-    for(let c=1; c<=15; ++c)
-      for(let i=3; i>=1; --i)
-        this.compressionTable.push([String.fromCharCode(78 + c*3 + i), String.fromCharCode(48+c).repeat(2 ** i)]);
-  }
-
   compress(str) {
     const startStr = str;
-    str = str.replace(/(.)\1*$/,"$1");
-    for(const pair of this.compressionTable)
-      str = str.replaceAll(pair[1], pair[0]);
+    str = str.replaceAll(/(.)\1+/g, (match, char, offset, str) => {
+      if(match.length + offset == str.length) {
+        return char;
+      } else if(char == "0") {
+        return this.encodeLength(48, match.length, 7);
+      } else if(match.length == 2 && char.charCodeAt(0) < 128) {
+        return match;
+      } else {
+        return char + this.encodeLength(41, match.length - 1, 7);
+      }
+    });
     return str;
   }
 
   decompress(str) {
-    for(const pair of this.compressionTable)
-      str = str.replaceAll(pair[0], pair[1]);
+    str = str.replaceAll(/([\u002A-\u0030]+)|([^\u0023-\u0030])([\u0023-\u0029]+)/g, (match, backLength, color, colorLength) => {
+      if (backLength != undefined) {
+        return "0".repeat(this.decodeLength(backLength, 48, 7));
+      } else {
+        return color.repeat(this.decodeLength(colorLength, 41, 7) + 1);
+      }
+    });
     str = str.padEnd(this.getResolution()**2/100,str.slice(-1));
     return str;
+  }
+  
+  decodeLength(str, baseCode, base) {
+    return str.split("").reduce((length, char, index) => length + (baseCode - char.charCodeAt(0) + 1) * base**index , 0);
+  }
+  
+  encodeLength(baseCode, length, base) {
+    let n = length;
+    let c = 0;
+    let code = "";
+    while(n > 0) {
+      c = (n - 1) % base;
+      code += String.fromCharCode(baseCode - c);
+      n = Math.floor((n - c) / base);
+    }
+    return code;
   }
 
   getResolution() {
