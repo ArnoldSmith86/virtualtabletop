@@ -479,7 +479,7 @@ function jeAddCommands() {
 }
 
 function displayComputeOps() {
-  const keyword = document.getElementById('var_search').value;
+  const keyword = $('#var_search').value;
   let results = compute_ops.filter(o => o.name.toLowerCase().includes(keyword.toLowerCase()) || o.desc.toLowerCase().includes(keyword.toLowerCase()));
   var resultTable = '<table>';
   if(keyword.length > 0) {
@@ -487,7 +487,7 @@ function displayComputeOps() {
       resultTable += '<tr valign=top><td><b>' + r.name + '</b></td><td><b>' + r.sample + '</b><br>' + r.desc + '</td></tr>';
   }
   resultTable += '</table>';
-  document.getElementById('var_results').innerHTML = resultTable;
+  $('#var_results').innerHTML = resultTable;
   jeKeyword = keyword;
 }
 
@@ -979,7 +979,7 @@ function jeShowCommands() {
   delete activeCommands[""];
 
   if(jeContext[jeContext.length-1] == '(var expression)') {
-    commandText += `\n  <b>var expression</b>\n<label>Search </label><input id="var_search" name="var_search" type="text" value ="${jeKeyword}"><br>`;
+    commandText += `\n  <b>var expression</b>\n<label>Search </label><input id="var_search" name="var_search" type="text"<br>`;
     commandText += `<div id="var_results"></div>\n`;
   }
 
@@ -1022,8 +1022,10 @@ function jeShowCommands() {
   $('#jeCommands').innerHTML = commandText;
   on('#jeCommands button', 'click', clickButton);
   on('#var_search', 'input', displayComputeOps);
-  if (document.getElementById('var_results') && jeKeyword !='')
+  if ($('#var_results') && jeKeyword !='') {
+    $('#var_search').value = jeKeyword;
     displayComputeOps();
+  }
 }
 
 const clickButton = async function(event) {
