@@ -55,16 +55,12 @@ function getMaxZ(layer) {
 
 async function resetMaxZ(layer) {
   maxZ[layer] = 0;
-  batchStart();
   for(const w of widgetFilter(w=>w.get('layer')==layer&&w.state.z).sort((a,b)=>a.get('z')-b.get('z')))
     await w.set('z', ++maxZ[layer]);
-  batchEnd();
 }
 
 function updateMaxZ(layer, z) {
   maxZ[layer] = Math.max(maxZ[layer] || 0, z);
-  if(maxZ[layer] > 90000)
-    resetMaxZ(layer);
 }
 
 export function showOverlay(id, forced) {
