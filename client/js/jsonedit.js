@@ -483,7 +483,7 @@ function displayComputeOps() {
   let results = compute_ops.filter(o => o.name.toLowerCase().includes(keyword.toLowerCase()) || o.desc.toLowerCase().includes(keyword.toLowerCase()));
   var resultTable = '<table>';
   if(keyword.length > 0) {
-    for(const r of Object.values(results).sort())
+    for(const r of Object.values(results).sort((a, b) => a.name.toString().localeCompare(b.name)))
       resultTable += '<tr valign=top><td><b>' + r.name + '</b></td><td><b>' + r.sample + '</b><br>' + r.desc + '</td></tr>';
   }
   resultTable += '</table>';
