@@ -379,9 +379,15 @@ const compute_ops = [
   },
   {
     name: 'in',
-    desc: 'returns true if the string x is included in array y (or property x in object y) - case sensitive',
+    desc: 'returns true if string x is included in string/array y (or property x in object y) - case sensitive',
     sample: 'var a = ${x} in ${y}',
-    call: function(v, x, y) { return v = Array.isArray(y) ? y.indexOf(x) != -1 : x in y }
+    call: function(v, x, y) { return v = Array.isArray(y) || typeof y == 'string' ? y.indexOf(x) != -1 : x in y }
+  },
+  {
+    name: 'includes',
+    desc: 'returns true if string/array x includes value y (or object x includes property y) - case sensitive',
+    sample: 'var a = ${x} includes ${y}',
+    call: function(v, x, y) { return v = Array.isArray(x) || typeof x == 'string' ? x.indexOf(y) != -1 : y in x }
   },
   {
     name: 'localeCompare',

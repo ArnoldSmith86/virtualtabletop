@@ -1001,7 +1001,7 @@ function jeShowCommands() {
   delete activeCommands[""];
 
   if(jeContext[jeContext.length-1] == '(var expression)') {
-    commandText += `\n  <b>var expression</b>\n<label>Search </label><input id="var_search" name="var_search" type="text"<br>`;
+    commandText += `\n  <b>var expression</b>\n<label>Search </label><input id="var_search" name="var_search" type="text"><br>`;
     commandText += `<div id="var_results"></div>\n`;
   }
 
