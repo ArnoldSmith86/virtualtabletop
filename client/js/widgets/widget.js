@@ -464,7 +464,7 @@ export class Widget extends StateManaged {
             if(a.mode == 'setPixel')
               await widget.setPixel(a.x, a.y, a.value);
             else if(a.mode == 'set')
-              await widget.set('activeColor', (a.value || 1) % widget.get('colorMap').length)||0;
+              await widget.set('activeColor', a.value % widget.get('colorMap').length);
             else if(a.mode == 'reset')
               await widget.reset();
             else if(a.mode == 'dec')
