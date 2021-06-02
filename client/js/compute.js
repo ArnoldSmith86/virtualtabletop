@@ -354,12 +354,6 @@ const compute_ops = [
     call: function(v, x, y) { return v = x.concat(y) }
   },
   {
-    name: 'includes',
-    desc: 'returns true if a string x contains a string y - case sensitive',
-    sample: 'var a = ${x} includes ${y}',
-    call: function(v, x, y) { return v = x.includes(y) }
-  },
-  {
     name: 'endsWith',
     desc: 'returns true if a string x ends with a string y - case sensitive',
     sample: 'var a = ${x} endsWith ${y}',
@@ -552,10 +546,16 @@ const compute_ops = [
     call: function(v, x, y, z) { return v = (z !== undefined) ? x.slice(y, z) : x.slice(y) }
   },
   {
-    name: 'splice',
-    desc: 'removes elements starting from index x from the array in variable a (optionally limited to only y elements)',
-    sample: 'var a = splice ${x} ${y}',
-    call: function(v, x, y) { if(y !== undefined) {v.splice(x, y)} else {v.splice(x)}; return v }
+    name: 'insert',
+    desc: 'inserts string/array x at index y of variable a',
+    sample: 'var a = insert ${x} ${y}',
+    call: function(v, x, y) { if(Array.isArray(v)) {if(Array.isArray(x)) {v.splice(y, 0, ...x)} else {v.splice(y, 0, x)} return v} else {return v.slice(0, y) + x + v.slice(y)} }
+  },
+  {
+    name: 'remove',
+    desc: 'removes elements at index x from the string/array in variable a (optionally limited to only y elements)',
+    sample: 'var a = remove ${x} ${y}',
+    call: function(v, x, y) { if(Array.isArray(v)) {v.splice(x, y); return v} else {return v.slice(0, x) + v.slice(x + y)} }
   },
   {
     name: 'push',
