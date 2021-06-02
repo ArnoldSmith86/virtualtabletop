@@ -714,7 +714,8 @@ onLoad(function() {
       clickRoutine: [
         {
           func: "CANVAS",
-          canvas: id
+          canvas: id,
+          mode: "reset"
         }
       ],
       css: "border-radius: 0% 50% 0% 0%;  border-width: 1px;  --wcBorder: #555; --wcBorderOH: black; --wcMainOH: #0d2f5e; ",
