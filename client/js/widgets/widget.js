@@ -291,7 +291,7 @@ export class Widget extends StateManaged {
             return null;
           widget = widgets.get(id);
         }
-        return widget.get(evaluateIdentifier(match[5], match[6]));
+        return JSON.parse(JSON.stringify(widget.get(evaluateIdentifier(match[5], match[6]))));
       }
 
       return null;
