@@ -39,10 +39,12 @@ async function inputHandler(name, e) {
   if(target && target.id) {
     batchStart();
     if(!edit && widgets.get(target.id).passthroughMouse) {
-      if(name == 'mousedown' || name == 'touchstart' || name == 'mousemove' || name == 'touchmove') {
+      if(name == 'mousedown' || name == 'touchstart') {
         await widgets.get(target.id).mouseRaw('down', (coords[0] - roomRectangle.left)/scale, (coords[1] - roomRectangle.top)/scale);
       } else if (name == 'mouseup' || name == 'touchend') {
         await widgets.get(target.id).mouseRaw('up', (coords[0] - roomRectangle.left)/scale, (coords[1] - roomRectangle.top)/scale);
+      } else if (name == 'mousemove' || name == 'touchmove') {
+        await widgets.get(target.id).mouseRaw('move', (coords[0] - roomRectangle.left)/scale, (coords[1] - roomRectangle.top)/scale);
       }
     } else if(name == 'mousedown' || name == 'touchstart') {
       mouseStatus[target.id] = {
