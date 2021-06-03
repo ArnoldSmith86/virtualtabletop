@@ -12,7 +12,9 @@ export class Widget extends StateManaged {
     this.id = id;
     this.domElement = div;
     this.childArray = [];
-    this.inheritingWidgetsArray = [];
+
+    if(Widget.inheritFromMapping[id] === undefined)
+      Widget.inheritFromMapping[id] = [];
 
     this.addDefaults({
       x: 0,
@@ -121,7 +123,8 @@ export class Widget extends StateManaged {
     }
 
     if(delta.inheritFrom !== undefined) {
-      widgetFilter(w=>w.inheritingWidgetsArray=w.inheritingWidgetsArray.filter(i=>i!=this));
+      for(const wID in Widget.inheritFromMapping)
+        Widget.inheritFromMapping[wID] = Widget.inheritFromMapping[wID].filter(i=>i!=this);
 
       if(delta.inheritFrom)
         this.applyInheritedValuesToDOM(this.inheritFrom(), true);
@@ -129,7 +132,7 @@ export class Widget extends StateManaged {
       this.isDraggable = delta.movable;
     }
 
-    for(const inheriting of this.inheritingWidgetsArray) {
+    for(const inheriting of Widget.inheritFromMapping[this.id]) {
       const inheritedDelta = {};
       for(const key in delta)
         if(inheriting.state[key] === undefined)
@@ -137,7 +140,7 @@ export class Widget extends StateManaged {
       inheriting.applyDeltaToDOM(inheritedDelta);
     }
 
-    if($('#enlarged').dataset.id == this.get('id') && !$('#enlarged').className.match(/hidden/))
+    if($('#enlarged').dataset.id == this.id && !$('#enlarged').className.match(/hidden/))
       this.showEnlarged();
   }
 
@@ -150,12 +153,15 @@ export class Widget extends StateManaged {
         if(w.state.inheritFrom)
           this.applyInheritedValuesToDOM(w.inheritFrom());
 
-        if(pushToArray)
-          w.inheritingWidgetsArray.push(this);
-
         for(const property in widgets.get(id).state)
           if(this.state[property] === undefined && (properties == '*' || properties.indexOf(property) != -1))
             delta[property] = widgets.get(id).state[property]
+      }
+
+      if(pushToArray) {
+        if(Widget.inheritFromMapping[id] === undefined)
+          Widget.inheritFromMapping[id] = [];
+        Widget.inheritFromMapping[id].push(this);
       }
     }
     this.applyDeltaToDOM(delta);
@@ -1448,3 +1454,5 @@ export class Widget extends StateManaged {
     return getValidDropTargets(this);
   }
 }
+
+Widget.inheritFromMapping = {};
