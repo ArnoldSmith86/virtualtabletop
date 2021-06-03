@@ -7,6 +7,7 @@ let jeStateBeforeRaw = null;
 let jeStateNow = null;
 let jeJSONerror = null;
 let jeCommandError = null;
+let jeCommandWithOptions = null;
 let jeContext = null;
 let jeSecondaryWidget = null;
 let jeDeltaIsOurs = false;
@@ -196,8 +197,9 @@ const jeCommands = [
     id: 'je_copyState',
     name: '📋 copy state from another room/server',
     forceKey: 'C',
-    call: async function() {
-      const sourceURL = (prompt('Please enter the room URL:') || '').replace(/\/[^\/]+$/, a=>`/state${a}`);
+    options: [ { type: 'string', label: 'URL' } ],
+    call: async function(options) {
+      const sourceURL = options.URL.replace(/\/[^\/]+$/, a=>`/state${a}`);
       const targetURL = location.href.replace(/\/[^\/]+$/, a=>`/state${a}`);
       fetch(sourceURL).then(r=>r.text()).then(t=>{
         fetch(targetURL,{
@@ -713,6 +715,41 @@ async function jeApplyExternalChanges(state) {
   }
 }
 
+async function jeCallCommand(command) {
+  if(command.options) {
+    jeCommandWithOptions = command;
+  } else {
+    await command.call();
+  }
+}
+
+function jeCommandOptions() {
+  const div = document.createElement('div');
+  div.id = 'jeCommandOptions';
+  div.innerHTML = '<b>Command options:</b><div></div><button>Go</button><button>Cancel</button>';
+  $('.jeTopButton:last-of-type').parentNode.insertBefore(div, $('.jeTopButton:last-of-type').nextSibling);
+
+  for(const option of jeCommandWithOptions.options)
+    formField(option, $('#jeCommandOptions div'), `${jeCommandWithOptions.id}_${option.label}`);
+
+  $a('#jeCommandOptions button')[0].addEventListener('click', async function() {
+    const options = {};
+    for(const option of jeCommandWithOptions.options) {
+      const input = $(`#${jeCommandWithOptions.id}_${option.label}`);
+      options[option.label] = option.type == 'checkbox' ? input.checked : input.value;
+    }
+
+    await jeCommandWithOptions.call(options);
+    jeCommandWithOptions = null;
+    jeShowCommands();
+  });
+
+  $a('#jeCommandOptions button')[1].addEventListener('click', function() {
+    jeCommandWithOptions = null;
+    jeShowCommands();
+  });
+}
+
 async function jeClick(widget) {
   if(jeState.ctrl) {
     jeSelectWidget(widget, false, jeState.shift);
@@ -1140,6 +1177,9 @@ function jeShowCommands() {
     commandText += `\n\n${jeSecondaryWidget}\n`;
   $('#jeCommands').innerHTML = commandText;
   on('#jeCommands button', 'click', clickButton);
+
+  if(jeCommandWithOptions)
+    jeCommandOptions();
 }
 
 function jeToggle() {
@@ -1160,7 +1200,7 @@ function jeToggle() {
 }
 
 const clickButton = async function(event) {
-  await jeCommands.find(o => o.id == event.currentTarget.id).call();
+  await jeCallCommand(jeCommands.find(o => o.id == event.currentTarget.id));
   if (jeContext != 'macro') {
     jeGetContext();
     if((jeWidget || jeMode == 'multi') && !jeJSONerror)
@@ -1198,8 +1238,8 @@ window.addEventListener('mouseup', async function(e) {
     return;
   if(e.target == $('#jeText') && jeContext != 'macro') {
     jeGetContext();
-    if (jeContext[0] == 'Tree' && jeContext[1] != undefined) {
-      await jeCommands.find(o => o.id == 'je_openWidgetById').call();
+    if(jeContext[0] == 'Tree' && jeContext[1] !== undefined) {
+      await jeCallCommand(jeCommands.find(o => o.id == 'je_openWidgetById'));
       jeGetContext();
     }
   }
@@ -1244,7 +1284,7 @@ window.addEventListener('keydown', async function(e) {
           e.preventDefault();
           try {
             jeCommandError = null;
-            await command.call();
+            await jeCallCommand(command);
           } catch(e) {
             jeCommandError = e;
           }
