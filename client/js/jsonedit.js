@@ -630,6 +630,7 @@ async function jeApplyChangesMulti() {
 
   const currentState = JSON.parse($('#jeText').textContent);
   const widgets = widgetFilter(w=>currentState.widgets.indexOf(w.get('id')) != -1);
+  jeDeltaIsOurs = true;
   for(const key in currentState) {
     if(key != 'widgets') {
       for(const w of widgets) {
@@ -640,17 +641,30 @@ async function jeApplyChangesMulti() {
       }
     }
   }
+  jeDeltaIsOurs = false;
 }
 
 function jeApplyDelta(delta) {
-  for(const field of [ 'id', 'deck' ]) {
-    if(!jeDeltaIsOurs && jeStateNow && jeStateNow[field] && delta.s[jeStateNow[field]] !== undefined) {
-      if(delta.s[jeStateNow[field]] === null)
-        jeDisplayTree();
-      else
-        jeSelectWidget(widgets.get(jeStateNow.id), document.activeElement !== $('#jeText'));
+  if(jeMode == 'widget') {
+    for(const field of [ 'id', 'deck' ]) {
+      if(!jeDeltaIsOurs && jeStateNow && jeStateNow[field] && delta.s[jeStateNow[field]] !== undefined) {
+        if(delta.s[jeStateNow[field]] === null)
+          jeDisplayTree();
+        else
+          jeSelectWidget(widgets.get(jeStateNow.id), document.activeElement !== $('#jeText'));
+      }
     }
   }
+
+  if(jeMode == 'multi' && !jeDeltaIsOurs) {
+    try {
+      for(const selectedWidget of JSON.parse($('#jeText').textContent).widgets)
+        if(delta.s[selectedWidget] !== undefined)
+          return jeUpdateMulti();
+    } catch(e) {
+    }
+  }
+
   if(jeMode == 'tree')
     jeDisplayTree();
 }
@@ -707,10 +721,13 @@ function jeSelectWidgetMulti(widget, dontFocus) {
 
   jeWidget = null;
   jeMode = 'multi';
+  jeUpdateMulti(dontFocus);
+}
 
+function jeUpdateMulti(dontFocus) {
   const selectedWidgets = widgetFilter(w=>jeStateNow.widgets.indexOf(w.get('id')) != -1);
 
-  for(const key of [ 'x', 'y', 'width', 'height', 'parent' ]) {
+  for(const key of [ 'x', 'y', 'width', 'height', 'parent', 'z', 'layer' ]) {
     jeStateNow[key] = {};
     for(const selectedWidget of selectedWidgets)
       jeStateNow[key][selectedWidget.get('id')] = selectedWidget.get(key);
