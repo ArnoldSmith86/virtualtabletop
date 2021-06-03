@@ -31,6 +31,59 @@ export function domByTemplate(id, type) {
   return div;
 }
 
+export function formField(field, dom, id) {
+  if(field.type == 'checkbox') {
+    const input = document.createElement('input');
+    const label = document.createElement('label');
+    input.type = 'checkbox';
+    input.checked = field.value || false;
+    label.textContent = field.label;
+    dom.appendChild(input);
+    dom.appendChild(label);
+    label.htmlFor = input.id = id;
+  }
+
+  if(field.type == 'color') {
+    const input = document.createElement('input');
+    const label = document.createElement('label');
+    input.type = 'color';
+    input.value = field.value || '#ff0000';
+    label.textContent = field.label;
+    dom.appendChild(label);
+    dom.appendChild(input);
+    label.htmlFor = input.id = id;
+  }
+
+  if(field.type == 'number') {
+    const input = document.createElement('input');
+    const label = document.createElement('label');
+    input.type = 'number';
+    input.value = field.value || 1;
+    input.min = field.min || 1;
+    input.max = field.max || 10;
+    label.textContent = field.label;
+    dom.appendChild(label);
+    dom.appendChild(input);
+    label.htmlFor = input.id = id;
+  }
+
+  if(field.type == 'string') {
+    const input = document.createElement('input');
+    const label = document.createElement('label');
+    input.value = field.value || "";
+    label.textContent = field.label;
+    dom.appendChild(label);
+    dom.appendChild(input);
+    label.htmlFor = input.id = id;
+  }
+
+  if(field.type == 'text') {
+    const p = document.createElement('p');
+    p.textContent = field.text;
+    dom.appendChild(p);
+  }
+}
+
 export function on(selector, eventName, callback) {
   for(const d of $a(selector))
     d.addEventListener(eventName, callback);
