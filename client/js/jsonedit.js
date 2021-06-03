@@ -623,15 +623,20 @@ async function jeApplyChanges() {
 }
 
 async function jeApplyChangesMulti() {
+  const setValueIfNeeded = async function(widget, key, value) {
+    if(widget.get(key) !== value)
+      await widget.set(key, value);
+  };
+
   const currentState = JSON.parse($('#jeText').textContent);
   const widgets = widgetFilter(w=>currentState.widgets.indexOf(w.get('id')) != -1);
   for(const key in currentState) {
     if(key != 'widgets') {
       for(const w of widgets) {
         if(typeof currentState[key] != 'object' || currentState[key] === null)
-          await w.set(key, currentState[key]);
+          await setValueIfNeeded(w, key, currentState[key]);
         else if(currentState[key][w.get('id')] !== undefined)
-          await w.set(key, currentState[key][w.get('id')]);
+          await setValueIfNeeded(w, key, currentState[key][w.get('id')]);
       }
     }
   }
