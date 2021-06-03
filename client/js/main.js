@@ -242,8 +242,14 @@ window.onresize = function(event) {
 }
 
 window.onkeyup = function(event) {
-  if(event.key == 'Escape')
-    showOverlay();
+  if(event.key == 'Escape') {
+    if(overlayActive)
+      showOverlay();
+    else if(edit)
+      toggleEditMode();
+    else if(jeEnabled)
+      jeToggle();
+  }
 }
 
 window.onerror = function(msg, url, line, col, err) {
