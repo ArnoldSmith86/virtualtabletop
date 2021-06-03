@@ -703,7 +703,7 @@ onLoad(function() {
 
       parent: id,
 
-      x: 802,
+      x: -52,
       y: 0,
       width: 50,
       height: 50,
@@ -718,7 +718,7 @@ onLoad(function() {
           mode: "reset"
         }
       ],
-      css: "border-radius: 0% 50% 0% 0%;  border-width: 1px;  --wcBorder: #555; --wcBorderOH: black; --wcMainOH: #0d2f5e; ",
+      css: "border-radius: 50% 0% 0% 0%;  border-width: 1px;  --wcBorder: #555; --wcBorderOH: black; --wcMainOH: #0d2f5e; ",
       text: "Reset"
     })
     addWidgetLocal({
@@ -727,7 +727,7 @@ onLoad(function() {
 
       parent: id,
 
-      x: 802,
+      x: -52,
       y: 50,
       width: 50,
       height: 50,
@@ -751,7 +751,7 @@ onLoad(function() {
         }
       ],
       color: "#1F5CA6",
-      css: "border-radius: 0% 0% 50% 0%;  border-width: 1px; background-color: var(--color);  --wcBorder: #555; --wcBorderOH: black  "
+      css: "border-radius: 0% 0% 0% 50%;  border-width: 1px; background-color: var(--color);  --wcBorder: #555; --wcBorderOH: black  "
     }
     );
     showOverlay();
