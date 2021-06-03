@@ -44,7 +44,7 @@ async function inputHandler(name, e) {
       } else if (name == 'mouseup' || name == 'touchend') {
         await widgets.get(target.id).mouseRaw('up', (coords[0] - roomRectangle.left)/scale, (coords[1] - roomRectangle.top)/scale);
       }
-    else {
+    } else {
       if(name == 'mousedown' || name == 'touchstart') {
         mouseStatus[target.id] = {
           status: 'initial',
