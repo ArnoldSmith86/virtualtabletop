@@ -302,13 +302,28 @@ const jeCommands = [
     name: '✨ duplicate widget',
     forceKey: 'D',
     show: _=>jeStateNow,
-    call: async function() {
-      let currentWidget = JSON.parse(JSON.stringify(jeWidget.state))
-      currentWidget.id = null;
-      addWidgetLocal(currentWidget);
-      jeSelectWidget(widgets.get(currentWidget.id));
-      jeStateNow.id = '###SELECT ME###';
-      jeSetAndSelect(currentWidget.id);
+    options: [
+      { label: 'Recursive', type: 'checkbox' }
+    ],
+    call: async function(options) {
+      const clone = function(widget, recursive, newParent) {
+        let currentWidget = JSON.parse(JSON.stringify(widget.state))
+        currentWidget.id = null;
+        if(newParent)
+          currentWidget.parent = newParent;
+        addWidgetLocal(currentWidget);
+
+        if(recursive)
+          for(const child of widgetFilter(w=>w.get('parent')==widget.id))
+            clone(child, true, currentWidget.id);
+
+        return currentWidget;
+      };
+
+      const clonedWidget = clone(jeWidget, options.Recursive);
+      jeSelectWidget(widgets.get(clonedWidget.id));
+      jeStateNow.id = '###SELECT ME###'; // FIXME: this is in the actual widget until a change was made
+      jeSetAndSelect(clonedWidget.id);
     }
   },
   {
