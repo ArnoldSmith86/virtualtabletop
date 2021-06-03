@@ -44,56 +44,54 @@ async function inputHandler(name, e) {
       } else if (name == 'mouseup' || name == 'touchend') {
         await widgets.get(target.id).mouseRaw('up', (coords[0] - roomRectangle.left)/scale, (coords[1] - roomRectangle.top)/scale);
       }
-    } else {
-      if(name == 'mousedown' || name == 'touchstart') {
-        mouseStatus[target.id] = {
-          status: 'initial',
-          start: new Date(),
-          downCoords: coords
-        };
-        let movable = false;
-        moveTarget = target;
-        while (moveTarget && !movable) {
-          movable = widgets.get(moveTarget.id).get(edit ? 'movableInEdit' : 'movable') || widgets.get(moveTarget.id).passthroughMouse;
-          if (!movable) {
-            do {
-              moveTarget = moveTarget.parentNode;
-            } while (moveTarget && (!moveTarget.id || !widgets.has(moveTarget.id)));
-          }
+    } else if(name == 'mousedown' || name == 'touchstart') {
+      mouseStatus[target.id] = {
+        status: 'initial',
+        start: new Date(),
+        downCoords: coords
+      };
+      let movable = false;
+      moveTarget = target;
+      while (moveTarget && !movable) {
+        movable = widgets.get(moveTarget.id).get(edit ? 'movableInEdit' : 'movable') || widgets.get(moveTarget.id).passthroughMouse;
+        if (!movable) {
+          do {
+            moveTarget = moveTarget.parentNode;
+          } while (moveTarget && (!moveTarget.id || !widgets.has(moveTarget.id)));
         }
-      } else if(name == 'mouseup' || name == 'touchend') {
-        const ms = mouseStatus[target.id];
-        const timeSinceStart = +new Date() - ms.start;
-        const pixelsMoved = ms.coords ? Math.abs(ms.coords[0] - ms.downCoords[0]) + Math.abs(ms.coords[1] - ms.downCoords[1]) : 0;
-        if(ms.status != 'initial' && moveTarget)
-          await ms.widget.moveEnd();
-        if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
-          if(typeof jeEnabled == 'boolean' && jeEnabled)
-            await jeClick(widgets.get(target.id));
-          else if(edit)
-            editClick(widgets.get(target.id));
-          else
-            await widgets.get(target.id).click();
-        }
-        delete mouseStatus[target.id];
-      } else if(name == 'mousemove' || name == 'touchmove') {
-        if(mouseStatus[target.id].status == 'initial') {
-          const targetRect = moveTarget ? moveTarget.getBoundingClientRect() : target.getBoundingClientRect();
-          const downCoords = mouseStatus[target.id].downCoords;
-          Object.assign(mouseStatus[target.id], {
-            status: 'moving',
-            offset: [ downCoords[0] - (targetRect.left + targetRect.width/2), downCoords[1] - (targetRect.top + targetRect.height/2) ],
-            widget: widgets.get(moveTarget ? moveTarget.id : target.id)
-          });
-          if(moveTarget)
-            await mouseStatus[target.id].widget.moveStart();
-        }
-        mouseStatus[target.id].coords = coords;
-        const x = Math.floor((coords[0] - roomRectangle.left - mouseStatus[target.id].offset[0]) / scale);
-        const y = Math.floor((coords[1] - roomRectangle.top  - mouseStatus[target.id].offset[1]) / scale);
-        if(moveTarget)
-          await mouseStatus[target.id].widget.move(x, y);
       }
+    } else if(name == 'mouseup' || name == 'touchend') {
+      const ms = mouseStatus[target.id];
+      const timeSinceStart = +new Date() - ms.start;
+      const pixelsMoved = ms.coords ? Math.abs(ms.coords[0] - ms.downCoords[0]) + Math.abs(ms.coords[1] - ms.downCoords[1]) : 0;
+      if(ms.status != 'initial' && moveTarget)
+        await ms.widget.moveEnd();
+      if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
+        if(typeof jeEnabled == 'boolean' && jeEnabled)
+          await jeClick(widgets.get(target.id));
+        else if(edit)
+          editClick(widgets.get(target.id));
+        else
+          await widgets.get(target.id).click();
+      }
+      delete mouseStatus[target.id];
+    } else if(name == 'mousemove' || name == 'touchmove') {
+      if(mouseStatus[target.id].status == 'initial') {
+        const targetRect = moveTarget ? moveTarget.getBoundingClientRect() : target.getBoundingClientRect();
+        const downCoords = mouseStatus[target.id].downCoords;
+        Object.assign(mouseStatus[target.id], {
+          status: 'moving',
+          offset: [ downCoords[0] - (targetRect.left + targetRect.width/2), downCoords[1] - (targetRect.top + targetRect.height/2) ],
+          widget: widgets.get(moveTarget ? moveTarget.id : target.id)
+        });
+        if(moveTarget)
+          await mouseStatus[target.id].widget.moveStart();
+      }
+      mouseStatus[target.id].coords = coords;
+      const x = Math.floor((coords[0] - roomRectangle.left - mouseStatus[target.id].offset[0]) / scale);
+      const y = Math.floor((coords[1] - roomRectangle.top  - mouseStatus[target.id].offset[1]) / scale);
+      if(moveTarget)
+        await mouseStatus[target.id].widget.move(x, y);
     }
     batchEnd();
   }
