@@ -61,7 +61,7 @@ async function inputHandler(name, e) {
       if(ms.status != 'initial' && moveTarget)
         await ms.widget.moveEnd();
       if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
-        if(typeof jeEnabled == 'boolean' && jeEnabled)
+        if(typeof jeEnabled == 'boolean' && jeEnabled && e.ctrlKey)
           await jeClick(widgets.get(target.id));
         else if(edit)
           editClick(widgets.get(target.id));
