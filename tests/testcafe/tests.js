@@ -133,14 +133,14 @@ test('Create game using edit mode', async t => {
     .click('#editButton')
     .click('#jyo6')
     .click('#editJSONoverlay > #duplicateWidget')
-    .click('[id="3fsl"]')
-    .typeText('#editWidgetJSON', '{"type":"spinner","options":[1,2],"angle": 5,"id": "3fsl"}', { replace: true })
+    .click('#jyo7')
+    .typeText('#editWidgetJSON', '{"type":"spinner","options":[1,2],"angle": 5,"id": "jyo7"}', { replace: true })
     .click('#editJSONoverlay > #updateWidget')
     .click('#jyo6')
     .setNativeDialogHandler(() => true)
     .click('#editJSONoverlay > #removeWidget');
 
-  await compareState(t, 'ebb2ccb5105aae9b224b28de1ebcd50a');
+  await compareState(t, '6c7a78d8a93a01f1210462ddd8273474');
 });
 
 test('Dynamic expressions', async t => {
