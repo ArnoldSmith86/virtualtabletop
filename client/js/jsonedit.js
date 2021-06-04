@@ -311,10 +311,13 @@ const jeCommands = [
         let currentWidget = JSON.parse(JSON.stringify(widget.state))
         if(options['Increment IDs']) {
           const match = currentWidget.id.match(/^(.*?)([0-9]+)([^0-9]*)$/);
-          let number = parseInt(match[2]);
+          let number = match ? parseInt(match[2]) : 0;
           while(widgets.has(currentWidget.id)) {
             ++number;
-            currentWidget.id = `${match[1]}${number}${match[3]}`;
+            if(match)
+              currentWidget.id = `${match[1]}${number}${match[3]}`;
+            else
+              currentWidget.id = `${widget.id}${number}`;
           }
         } else {
           delete currentWidget.id;
