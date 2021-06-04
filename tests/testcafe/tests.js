@@ -201,7 +201,15 @@ test('Dynamic expressions', async t => {
     ['var c = ${PROPERTY nonexistant_property_name}', 'c', shouldBe()],
     ['var d = ${PROPERTY x OF nonexistant_widget_id}', 'd', shouldBe()],
     ['var e = ${list.999999}', 'e', shouldBe()],
-    ['var f = ${foo.bar}', 'f', shouldBe()]
+    ['var f = ${foo.bar}', 'f', shouldBe()],
+    ['var a = []', 'a', shouldBe([])],
+    ['var a = push 1', 'a', shouldBe([1])],
+    ['var a = push 3', 'a', shouldBe([1,3])],
+    ['var a = insert 2 1', 'a', shouldBe([1,2,3])],
+    ['var a = remove 1 2', 'a', shouldBe([1])],
+    ['var b = \'ac\'', 'b', shouldBe('ac')],
+    ['var b = insert \'b\' 1', 'b', shouldBe('abc')],
+    ['var b = remove 1 2', 'b', shouldBe('a')]
   ];
 
   ops.forEach((o)=>{
