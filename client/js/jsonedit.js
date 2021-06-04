@@ -303,12 +303,22 @@ const jeCommands = [
     forceKey: 'D',
     show: _=>jeStateNow,
     options: [
-      { label: 'Recursive', type: 'checkbox' }
+      { label: 'Recursive',     type: 'checkbox', value: true },
+      { label: 'Increment IDs', type: 'checkbox', value: true }
     ],
     call: async function(options) {
       const clone = function(widget, recursive, newParent) {
         let currentWidget = JSON.parse(JSON.stringify(widget.state))
-        currentWidget.id = null;
+        if(options['Increment IDs']) {
+          const match = currentWidget.id.match(/^(.*?)([0-9]+)([^0-9]*)$/);
+          let number = parseInt(match[2]);
+          while(widgets.has(currentWidget.id)) {
+            ++number;
+            currentWidget.id = `${match[1]}${number}${match[3]}`;
+          }
+        } else {
+          delete currentWidget.id;
+        }
         if(newParent)
           currentWidget.parent = newParent;
         addWidgetLocal(currentWidget);
@@ -682,13 +692,15 @@ function jeCommandOptions() {
   div.innerHTML = '<b>Command options:</b><div></div><button>Go</button><button>Cancel</button>';
   $('.jeTopButton:last-of-type').parentNode.insertBefore(div, $('.jeTopButton:last-of-type').nextSibling);
 
-  for(const option of jeCommandWithOptions.options)
+  for(const option of jeCommandWithOptions.options) {
     formField(option, $('#jeCommandOptions div'), `${jeCommandWithOptions.id}_${option.label}`);
+    $('#jeCommandOptions div').append(document.createElement('br'));
+  }
 
   $a('#jeCommandOptions button')[0].addEventListener('click', async function() {
     const options = {};
     for(const option of jeCommandWithOptions.options) {
-      const input = $(`#${jeCommandWithOptions.id}_${option.label}`);
+      const input = $(`[id="${jeCommandWithOptions.id}_${option.label}"]`);
       options[option.label] = option.type == 'checkbox' ? input.checked : input.value;
     }
 
