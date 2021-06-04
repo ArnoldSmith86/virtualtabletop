@@ -650,8 +650,12 @@ async function jeApplyExternalChanges(state) {
   }
 }
 
-async function jeClick(widget) {
-  jeSelectWidget(widget);
+async function jeClick(widget, e) {
+  if(e.ctrlKey) {
+    jeSelectWidget(widget);
+  } else {
+    await widget.click();
+  }
 }
 
 function jeSelectWidget(widget, dontFocus) {
