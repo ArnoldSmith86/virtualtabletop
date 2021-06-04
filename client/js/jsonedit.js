@@ -304,11 +304,14 @@ const jeCommands = [
     show: _=>jeStateNow,
     options: [
       { label: 'Recursive',     type: 'checkbox', value: true },
-      { label: 'Increment IDs', type: 'checkbox', value: true }
+      { label: 'Increment IDs', type: 'checkbox', value: true },
+      { label: 'X offset',      type: 'number',   value: 0,   min: -1600, max: 1600 },
+      { label: 'Y offset',      type: 'number',   value: 0,   min: -1000, max: 1000 }
     ],
     call: async function(options) {
-      const clone = function(widget, recursive, newParent) {
+      const clone = function(widget, recursive, newParent, xOffset, yOffset) {
         let currentWidget = JSON.parse(JSON.stringify(widget.state))
+
         if(options['Increment IDs']) {
           const match = currentWidget.id.match(/^(.*?)([0-9]+)([^0-9]*)$/);
           let number = match ? parseInt(match[2]) : 0;
@@ -322,18 +325,24 @@ const jeCommands = [
         } else {
           delete currentWidget.id;
         }
+
         if(newParent)
           currentWidget.parent = newParent;
+        if(xOffset)
+          currentWidget.x = widget.get('x') + xOffset;
+        if(yOffset)
+          currentWidget.y = widget.get('y') + yOffset;
+
         addWidgetLocal(currentWidget);
 
         if(recursive)
           for(const child of widgetFilter(w=>w.get('parent')==widget.id))
-            clone(child, true, currentWidget.id);
+            clone(child, true, currentWidget.id, 0, 0);
 
         return currentWidget;
       };
 
-      const clonedWidget = clone(jeWidget, options.Recursive);
+      const clonedWidget = clone(jeWidget, options.Recursive, false, options['X offset'], options['Y offset']);
       jeSelectWidget(widgets.get(clonedWidget.id));
       jeStateNow.id = '###SELECT ME###';
       jeSetAndSelect(clonedWidget.id);
@@ -768,6 +777,8 @@ function jeCommandOptions() {
     for(const option of jeCommandWithOptions.options) {
       const input = $(`[id="${jeCommandWithOptions.id}_${option.label}"]`);
       options[option.label] = option.type == 'checkbox' ? input.checked : input.value;
+      if(option.type == 'number')
+        options[option.label] = parseFloat(options[option.label]);
     }
 
     await jeCommandWithOptions.call(options);
