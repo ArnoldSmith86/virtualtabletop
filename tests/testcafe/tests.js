@@ -140,7 +140,7 @@ test('Create game using edit mode', async t => {
     .setNativeDialogHandler(() => true)
     .click('#editJSONoverlay > #removeWidget');
 
-  await compareState(t, '2e7611649b3b5339558e3f32df4e774d');
+  await compareState(t, 'ebb2ccb5105aae9b224b28de1ebcd50a');
 });
 
 test('Dynamic expressions', async t => {
