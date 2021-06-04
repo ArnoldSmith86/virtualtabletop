@@ -322,8 +322,9 @@ const jeCommands = [
 
       const clonedWidget = clone(jeWidget, options.Recursive);
       jeSelectWidget(widgets.get(clonedWidget.id));
-      jeStateNow.id = '###SELECT ME###'; // FIXME: this is in the actual widget until a change was made
+      jeStateNow.id = '###SELECT ME###';
       jeSetAndSelect(clonedWidget.id);
+      jeStateNow.id = clonedWidget.id;
     }
   },
   {
@@ -713,7 +714,7 @@ async function jeClick(widget) {
 function jeSelectWidget(widget, dontFocus) {
   jeMode = 'widget';
   jeWidget = widget;
-  jeStateNow = widget.state;
+  jeStateNow = JSON.parse(JSON.stringify(widget.state));
   jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(widget.state), null, '  ')), dontFocus);
 }
 
