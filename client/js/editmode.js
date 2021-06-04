@@ -122,7 +122,7 @@ function editClick(widget) {
   showOverlay('editOverlay');
 }
 
-function generateEmptyDeckWidget(id, x, y) {
+function generateCardDeckWidgets(id, x, y, addCards) {
   const widgets = [
     { type:'holder', id, x, y, dropTarget: { type: 'card' } },
     {
@@ -136,50 +136,9 @@ function generateEmptyDeckWidget(id, x, y) {
       movableInEdit: false,
 
       clickRoutine: [
-        { func: 'RECALL',  holder: id },
-        { func: 'FLIP',    holder: id, face: 0 },
-        { func: 'SHUFFLE', holder: id }
-      ]
-    }
-  ];
-  const front = { type:'image', x:0, y:0, width:103, height:160, valueType:'dynamic', value:'image', color:'transparent' };
-  const back  = { ...front };
-  back.valueType = 'static'
-  back.value = '/i/cards-default/2B.svg';
-  widgets.push({
-    type: 'deck',
-    id: id+'D',
-    parent: id,
-    x: 12,
-    y: 41,
-    cardTypes: {},
-    faceTemplates: [ {
-      border: false, radius: false, objects: [ back  ]
-    }, {
-      border: false, radius: false, objects: [ front ]
-    } ]
-  });
-  return widgets;
-}
-
-function generateCardDeckWidgets(id, x, y) {
-  const widgets = [
-    { type:'holder', id, x, y, dropTarget: { type: 'card' } },
-    { type:'pile', id: id+'P', parent: id, width:103, height:160 },
-    {
-      id: id+'B',
-      parent: id,
-      y: 171.36,
-      width: 111,
-      height: 40,
-      type: 'button',
-      text: 'Recall & Shuffle',
-      movableInEdit: false,
-
-      clickRoutine: [
-        { func: 'RECALL',  holder: id },
-        { func: 'FLIP',    holder: id, face: 0 },
-        { func: 'SHUFFLE', holder: id }
+        { func: 'RECALL',  holder: '${PROPERTY parent}' },
+        { func: 'FLIP',    holder: '${PROPERTY parent}', face: 0 },
+        { func: 'SHUFFLE', holder: '${PROPERTY parent}' }
       ]
     }
   ];
@@ -187,14 +146,17 @@ function generateCardDeckWidgets(id, x, y) {
   const types = {};
   const cards = [];
 
-  [ {label:'1J', color: "🃏", suit: "T", alternating:"5J", rank: "J1"}, {label:'2J', color: "🃏", suit: "T", alternating:"5J", rank: "J2"}].forEach(c=>types[c.suit+" "+c.label] = { image:`/i/cards-default/${c.label}.svg` , suit:c.suit, suitColor:c.color, suitAlt:c.alternating, rank:c.rank, rankA:c.rank, rankFixed:c.rank+" "+c.suit});
+  if(addCards) {
+    widgets.push({ type:'pile', id: id+'P', parent: id, width:103, height:160 });
+    [ {label:'1J', color: "🃏", suit: "T", alternating:"5J", rank: "J1"}, {label:'2J', color: "🃏", suit: "T", alternating:"5J", rank: "J2"}].forEach(c=>types[c.suit+" "+c.label] = { image:`/i/cards-default/${c.label}.svg` , suit:c.suit, suitColor:c.color, suitAlt:c.alternating, rank:c.rank, rankA:c.rank, rankFixed:c.rank+" "+c.suit});
 
-  [ {label:'C', color: "♣", alternating:"1♣"}, {label:'D', color: "♦", alternating:"4♦"}, {label:'H', color: "♥", alternating:"2♥"}, {label:'S', color: "♠", alternating:"3♠"} ].forEach(function(s) {
-    [ {label:'A', rank: "01", rankA:"5A"}, {label:'2', rank: "02", rankA:"02"},{label:'3', rank: "03", rankA:"03"},{label:'4', rank: "04", rankA:"04"},{label:'5', rank: "05", rankA:"05"},{label:'6', rank: "06", rankA:"06"},{label:'7', rank: "07", rankA:"07"},{label:'8', rank: "08", rankA:"08"},{label:'9', rank: "09", rankA:"09"},{label:'T', rank: "10", rankA:"10"},{label:'J', rank: "2J", rankA:"2J"},{label:'Q', rank: "3Q", rankA:"3Q"},{label:'K', rank: "4K", rankA:"4K"}].forEach(function(n) {
-      types[s.label+" "+n.rank] = { image:`/i/cards-default/${n.label}${s.label}.svg`, suit:s.label, suitColor:s.color, suitAlt:s.alternating, rank:n.rank,rankA:n.rankA, rankFixed:n.rank+" "+s.label};
-      cards.push({ id:id+"_"+n.label+"_"+s.label, parent:id+'P', deck:id+'D', type:'card', cardType:s.label+" "+n.rank });
+    [ {label:'C', color: "♣", alternating:"1♣"}, {label:'D', color: "♦", alternating:"4♦"}, {label:'H', color: "♥", alternating:"2♥"}, {label:'S', color: "♠", alternating:"3♠"} ].forEach(function(s) {
+      [ {label:'A', rank: "01", rankA:"5A"}, {label:'2', rank: "02", rankA:"02"},{label:'3', rank: "03", rankA:"03"},{label:'4', rank: "04", rankA:"04"},{label:'5', rank: "05", rankA:"05"},{label:'6', rank: "06", rankA:"06"},{label:'7', rank: "07", rankA:"07"},{label:'8', rank: "08", rankA:"08"},{label:'9', rank: "09", rankA:"09"},{label:'T', rank: "10", rankA:"10"},{label:'J', rank: "2J", rankA:"2J"},{label:'Q', rank: "3Q", rankA:"3Q"},{label:'K', rank: "4K", rankA:"4K"}].forEach(function(n) {
+        types[s.label+" "+n.rank] = { image:`/i/cards-default/${n.label}${s.label}.svg`, suit:s.label, suitColor:s.color, suitAlt:s.alternating, rank:n.rank,rankA:n.rankA, rankFixed:n.rank+" "+s.label};
+        cards.push({ id:id+"_"+n.label+"_"+s.label, parent:id+'P', deck:id+'D', type:'card', cardType:s.label+" "+n.rank });
+      });
     });
-  });
+  }
 
   const front = { type:'image', x:0, y:0, width:103, height:160, valueType:'dynamic', value:'image', color:'transparent' };
   const back  = { ...front };
@@ -222,7 +184,7 @@ function generateCardDeckWidgets(id, x, y) {
 }
 
 function generateCounterWidgets(id, x, y) {
-  const r = { func: 'LABEL', label: id, mode: 'dec', value: 1 };
+  const r = { func: 'LABEL', label: '${PROPERTY parent}', mode: 'dec', value: 1 };
 
   const down = {
     id: id+'D',
@@ -260,7 +222,7 @@ function generateTimerWidgets(id, x, y) {
       clickRoutine: [
         {
           func: "TIMER",
-          timer: id
+          timer: '${PROPERTY parent}'
         }
       ],
       image: "/i/button-icons/White-Play_Pause.svg",
@@ -278,7 +240,7 @@ function generateTimerWidgets(id, x, y) {
       clickRoutine: [
         {
           func: "TIMER",
-          timer: id,
+          timer: '${PROPERTY parent}',
           mode: "reset"
         }
       ],
@@ -330,12 +292,12 @@ function populateAddWidgetOverlay() {
     y: 130
   });
 
-  addCompositeWidgetToAddWidgetOverlay(generateEmptyDeckWidget('add-empty-deck', x, 320), function() {
-  for(const w of generateEmptyDeckWidget(generateUniqueWidgetID(), x, 320))
-    addWidgetLocal(w);
+  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-empty-deck', x, 320, false), function() {
+    for(const w of generateCardDeckWidgets(generateUniqueWidgetID(), x, 320, false))
+      addWidgetLocal(w);
   });
-  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', x, 550), function() {
-    for(const w of generateCardDeckWidgets(generateUniqueWidgetID(), x, 535))
+  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', x, 550, true), function() {
+    for(const w of generateCardDeckWidgets(generateUniqueWidgetID(), x, 550, true))
       addWidgetLocal(w);
   });
 
