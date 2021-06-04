@@ -36,7 +36,7 @@ export function formField(field, dom, id) {
     const input = document.createElement('input');
     const label = document.createElement('label');
     input.type = 'checkbox';
-    input.checked = field.value || false;
+    input.checked = !!field.value;
     label.textContent = field.label;
     dom.appendChild(input);
     dom.appendChild(label);
@@ -58,7 +58,7 @@ export function formField(field, dom, id) {
     const input = document.createElement('input');
     const label = document.createElement('label');
     input.type = 'number';
-    input.value = field.value || 1;
+    input.value = field.value !== undefined ? field.value : 1;
     input.min = field.min || 1;
     input.max = field.max || 10;
     label.textContent = field.label;
