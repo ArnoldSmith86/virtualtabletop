@@ -55,7 +55,7 @@ async function inputHandler(name, e) {
       let movable = false;
       moveTarget = target;
       while (moveTarget && !movable) {
-        movable = widgets.get(moveTarget.id).get(edit ? 'movableInEdit' : 'movable') || widgets.get(moveTarget.id).passthroughMouse;
+        movable = widgets.get(moveTarget.id).get(edit ? 'movableInEdit' : 'movable');
         if (!movable) {
           do {
             moveTarget = moveTarget.parentNode;
