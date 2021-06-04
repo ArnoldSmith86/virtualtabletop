@@ -78,9 +78,9 @@ function populateEditOptionsTimer(widget) {
 function applyEditOptionsTimer(widget) {
   widget.countdown = $('#timerCountdown').checked;
   widget.start = $('#timerStart').value*1000;
-  if ($('#timerEnd').value=="no end") 
+  if($('#timerEnd').value == 'no end')
     widget.end = null;
-  else 
+  else
     widget.end = $('#timerEnd').value*1000;
 
   if($('#timerReset').checked) {
@@ -480,20 +480,60 @@ async function onClickUpdateWidget(applyChangesFromUI) {
     showOverlay();
 }
 
-async function onClickDuplicateWidget() {
-    const widget = JSON.parse($('#editWidgetJSON').dataset.previousState);
-    delete widget.id;
-    if(widget.x)
-      widget.x += 20;
-    if(widget.y)
-      widget.y += 20;
-    addWidgetLocal(widget);
-    const w = widgets.get(widget.id);
-    if(widget.x && w.absoluteCoord('x') > 1500)
-      await w.set('x', w.get('x')-40);
-    if(widget.y && w.absoluteCoord('y') > 900)
-      await w.set('y', w.get('y')-40);
-    showOverlay();
+function duplicateWidget(widget, recursive, increment, xOffset, yOffset, xCopies, yCopies) {
+  const clone = function(widget, recursive, newParent, xOffset, yOffset) {
+    let currentWidget = JSON.parse(JSON.stringify(widget.state))
+
+    if(increment) {
+      const match = currentWidget.id.match(/^(.*?)([0-9]+)([^0-9]*)$/);
+      let number = match ? parseInt(match[2]) : 0;
+      while(widgets.has(currentWidget.id)) {
+        ++number;
+        if(match)
+          currentWidget.id = `${match[1]}${number}${match[3]}`;
+        else
+          currentWidget.id = `${widget.id}${number}`;
+      }
+    } else {
+      delete currentWidget.id;
+    }
+
+    if(newParent)
+      currentWidget.parent = newParent;
+    if(xOffset)
+      currentWidget.x = widget.get('x') + xOffset;
+    if(yOffset)
+      currentWidget.y = widget.get('y') + yOffset;
+
+    addWidgetLocal(currentWidget);
+
+    if(recursive)
+      for(const child of widgetFilter(w=>w.get('parent')==widget.id))
+        clone(child, true, currentWidget.id, 0, 0);
+
+    return currentWidget;
+  };
+
+  const gridX = xCopies + 1;
+  const gridY = yCopies + 1;
+  for(let i=1; i<gridX*gridY; ++i) {
+    let x = xOffset*(i%gridX);
+    let y = yOffset*Math.floor(i/gridX);
+    if(xCopies + yCopies == 1) {
+      x = xOffset;
+      y = yOffset;
+    }
+    var clonedWidget = clone(widget, recursive, false, x, y);
+  }
+  return clonedWidget;
+}
+
+function onClickDuplicateWidget() {
+  const widget = widgets.get(JSON.parse($('#editWidgetJSON').dataset.previousState).id);
+  const xOffset = widget.absoluteCoord('x') > 1500 ? -20 : 20;
+  const yOffset = widget.absoluteCoord('y') >  900 ? -20 : 20;
+  duplicateWidget(widget, true, true, xOffset, yOffset, 1, 0);
+  showOverlay();
 }
 
 async function onClickRemoveWidget() {

@@ -311,46 +311,7 @@ const jeCommands = [
       { label: '# Copies Y',    type: 'number',   value: 0,   min:     0, max:  100 }
     ],
     call: async function(options) {
-      const clone = function(widget, recursive, newParent, xOffset, yOffset) {
-        let currentWidget = JSON.parse(JSON.stringify(widget.state))
-
-        if(options['Increment IDs']) {
-          const match = currentWidget.id.match(/^(.*?)([0-9]+)([^0-9]*)$/);
-          let number = match ? parseInt(match[2]) : 0;
-          while(widgets.has(currentWidget.id)) {
-            ++number;
-            if(match)
-              currentWidget.id = `${match[1]}${number}${match[3]}`;
-            else
-              currentWidget.id = `${widget.id}${number}`;
-          }
-        } else {
-          delete currentWidget.id;
-        }
-
-        if(newParent)
-          currentWidget.parent = newParent;
-        if(xOffset)
-          currentWidget.x = widget.get('x') + xOffset;
-        if(yOffset)
-          currentWidget.y = widget.get('y') + yOffset;
-
-        addWidgetLocal(currentWidget);
-
-        if(recursive)
-          for(const child of widgetFilter(w=>w.get('parent')==widget.id))
-            clone(child, true, currentWidget.id, 0, 0);
-
-        return currentWidget;
-      };
-
-      const gridX = options['# Copies X'] + 1;
-      const gridY = options['# Copies Y'] + 1;
-      for(let i=1; i<gridX*gridY; ++i) {
-        const xOffset = options['X offset']*(i%gridX);
-        const yOffset = options['Y offset']*Math.floor(i/gridX);
-        var clonedWidget = clone(jeWidget, options.Recursive, false, xOffset, yOffset);
-      }
+      const clonedWidget = duplicateWidget(jeWidget, options.Recursive, options['Increment IDs'], options['X offset'], options['Y offset'], options['# Copies X'], options['# Copies Y']);
       jeSelectWidget(widgets.get(clonedWidget.id));
       jeStateNow.id = '###SELECT ME###';
       jeSetAndSelect(clonedWidget.id);
