@@ -306,7 +306,9 @@ const jeCommands = [
       { label: 'Recursive',     type: 'checkbox', value: true },
       { label: 'Increment IDs', type: 'checkbox', value: true },
       { label: 'X offset',      type: 'number',   value: 0,   min: -1600, max: 1600 },
-      { label: 'Y offset',      type: 'number',   value: 0,   min: -1000, max: 1000 }
+      { label: 'Y offset',      type: 'number',   value: 0,   min: -1000, max: 1000 },
+      { label: '# Copies X',    type: 'number',   value: 1,   min:     1, max:  100 },
+      { label: '# Copies Y',    type: 'number',   value: 0,   min:     0, max:  100 }
     ],
     call: async function(options) {
       const clone = function(widget, recursive, newParent, xOffset, yOffset) {
@@ -342,7 +344,13 @@ const jeCommands = [
         return currentWidget;
       };
 
-      const clonedWidget = clone(jeWidget, options.Recursive, false, options['X offset'], options['Y offset']);
+      const gridX = options['# Copies X'] + 1;
+      const gridY = options['# Copies Y'] + 1;
+      for(let i=1; i<gridX*gridY; ++i) {
+        const xOffset = options['X offset']*(i%gridX);
+        const yOffset = options['Y offset']*Math.floor(i/gridX);
+        var clonedWidget = clone(jeWidget, options.Recursive, false, xOffset, yOffset);
+      }
       jeSelectWidget(widgets.get(clonedWidget.id));
       jeStateNow.id = '###SELECT ME###';
       jeSetAndSelect(clonedWidget.id);
