@@ -698,6 +698,34 @@ export class Widget extends StateManaged {
         }
       }
 
+      if(a.func == 'FOREACH') {
+        setDefaults(a, { iterationRoutine: [], collection: 'DEFAULT' });
+        const callWithAdditionalValues = async (addVariables, addCollections)=>{
+          const variableBackups = {};
+          const collectionBackups = {};
+          for(const add in addVariables) {
+            variableBackups[add] = variables[add];
+            variables[add] = addVariables[add];
+          }
+          for(const add in addCollections) {
+            collectionBackups[add] = collections[add];
+            collections[add] = addCollections[add];
+          }
+          await this.evaluateRoutine(a.iterationRoutine, variables, collections, (depth || 0) + 1, true);
+          for(const add in addVariables)
+            variables[add] = variableBackups[add];
+          for(const add in addCollections)
+            collections[add] = collectionBackups[add];
+        }
+        if(a.of) {
+          for(const key in a.of)
+            await callWithAdditionalValues({ key, value: a.of[key] }, {});
+        } else if(isValidCollection(a.collection)) {
+          for(const widget of collections[a.collection])
+            await callWithAdditionalValues({ widgetID: widget.get('id') }, { DEFAULT: [ widget ] });
+        }
+      }
+
       if(a.func == 'GET') {
         setDefaults(a, { variable: a.property || 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
         if(isValidCollection(a.collection)) {
@@ -742,6 +770,7 @@ export class Widget extends StateManaged {
           }
         }
       }
+
       if(a.func == 'IF') {
         setDefaults(a, { relation: '==' });
         if (['==', '!=', '<', '<=', '>=', '>'].indexOf(a.relation) < 0) {
