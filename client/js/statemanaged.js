@@ -59,6 +59,11 @@ export class StateManaged {
     }
   }
 
+  inheritFromUnregister() {
+    for(const wID in Widget.inheritFromMapping)
+      Widget.inheritFromMapping[wID] = Widget.inheritFromMapping[wID].filter(i=>i!=this);
+  }
+
   async set(property, value) {
     if(value === this.getDefaultValue(property) && !this.state.inheritFrom)
       value = null;
