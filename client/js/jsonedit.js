@@ -797,6 +797,9 @@ function jeGetContext() {
       keys[depth] = m[2]=='{' || line.match(/^ +"[^"]*",?$/) ? (keys[depth] === undefined ? -1 : keys[depth]) + 1 : m[3];
       keys = keys.slice(0, depth+1);
     }
+    const mClose = line.match(/^( *)[\]}]/);
+    if(mClose)
+      keys = keys.slice(0, mClose[1].length/2+1);
   }
   try {
     for(let i=1; i<keys.length-1; ++i) {
