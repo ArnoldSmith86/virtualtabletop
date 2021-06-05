@@ -218,7 +218,7 @@ test('Dynamic expressions', async t => {
     ['var m = ${b} match \'a.c\'', 'm', shouldBe(['abc'])],
     ['var b = remove 1 2', 'b', shouldBe('a')],
     ['var test = \'b\' in ${b}', 'test', shouldBe(false)],
-    ['var test = ${b} includes \'b\'', 'test', shouldBe(false)],
+    ['var test = ${b} includes \'b\'', 'test', shouldBe(false)]
   ];
 
   ops.forEach((o)=>{
