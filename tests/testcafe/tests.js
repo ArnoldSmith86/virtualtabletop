@@ -217,7 +217,7 @@ test('Dynamic expressions', async t => {
   };
 });
 
-publicLibraryButtons('Blue',               0, '1d07cb56897ca1216481c6727b737659', [
+publicLibraryButtons('Blue',               0, 'e25ceda4c84138c16410f428d1021914', [
   'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton',
   'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton',
   'fdc25f83-ed33-4845-a97c-ff35fa8a094f_shuffleButton', 'buttonInputGo', 'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', '9n2q'
