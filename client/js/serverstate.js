@@ -159,6 +159,7 @@ onLoad(function() {
     widgets.clear();
     dropTargets.clear();
     maxZ = {};
+    Widget.inheritFromMapping = {};
     let isEmpty = true;
     for(const widgetID in args) {
       if(widgetID != '_meta') {

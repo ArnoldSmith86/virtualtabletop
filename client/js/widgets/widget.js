@@ -121,8 +121,7 @@ export class Widget extends StateManaged {
     }
 
     if(delta.inheritFrom !== undefined) {
-      for(const wID in Widget.inheritFromMapping)
-        Widget.inheritFromMapping[wID] = Widget.inheritFromMapping[wID].filter(i=>i!=this);
+      this.inheritFromUnregister();
 
       if(delta.inheritFrom)
         this.applyInheritedValuesToDOM(this.inheritFrom(), true);
@@ -171,6 +170,7 @@ export class Widget extends StateManaged {
     if(this.get('deck') && widgets.has(this.get('deck')))
       widgets.get(this.get('deck')).removeCard(this);
     removeFromDOM(this.domElement);
+    this.inheritFromUnregister();
   }
 
   applyZ(force) {
