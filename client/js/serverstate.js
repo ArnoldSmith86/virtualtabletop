@@ -12,6 +12,7 @@ let delta = { s: {} };
 let deltaChanged = false;
 let deltaID = 0;
 let batchDepth = 0;
+let overlayShownForEmptyRoom = false;
 
 export function addWidget(widget, instance) {
   if(widget.parent && !widgets.has(widget.parent)) {
@@ -48,6 +49,8 @@ export function addWidget(widget, instance) {
     w = new Holder(id);
   } else if(widget.type == 'spinner') {
     w = new Spinner(id);
+  } else if(widget.type == 'timer') {
+    w = new Timer(id);
   } else if(widget.type == 'label') {
     w = new Label(id);
   } else if(widget.type == 'button') {
@@ -163,8 +166,10 @@ onLoad(function() {
         isEmpty = false;
       }
     }
-    if(isEmpty && !urlProperties.load && !urlProperties.askID)
+    if(isEmpty && !overlayShownForEmptyRoom && !urlProperties.load && !urlProperties.askID) {
       showOverlay('statesOverlay');
+      overlayShownForEmptyRoom = true;
+    }
     toServer('confirm');
   });
   setScale();

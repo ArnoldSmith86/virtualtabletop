@@ -17,6 +17,13 @@ export class Button extends Widget {
       color: 'black',
       svgReplaces: {},
 
+      backgroundColor: null,
+      borderColor: null,
+      textColor:null,
+      backgroundColorOH: null,
+      borderColorOH: null,
+      textColorOH:null,
+
       text: ''
     });
   }
@@ -24,7 +31,7 @@ export class Button extends Widget {
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
     if(delta.text !== undefined)
-      this.domElement.textContent = delta.text;
+      setText(this.domElement, delta.text);
 
     for(const property of Object.values(this.get('svgReplaces') || {}))
       if(delta[property] !== undefined)
@@ -36,6 +43,18 @@ export class Button extends Widget {
 
     if(this.get('color'))
       css += '; --color:' + this.get('color');
+    if(this.get('backgroundColor'))
+      css += '; --wcMain:' + this.get('backgroundColor');
+    if(this.get('borderColor'))
+      css += '; --wcBorder:' + this.get('borderColor');
+    if(this.get('textColor'))
+      css += '; --wcFont:' + this.get('textColor');
+    if(this.get('backgroundColorOH'))
+      css += '; --wcMainOH:' + this.get('backgroundColorOH');
+    if(this.get('borderColorOH'))
+      css += '; --wcBorderOH:' + this.get('borderColorOH');
+    if(this.get('textColorOH'))
+      css += '; --wcFontOH:' + this.get('textColorOH');
     if(this.get('image'))
       css += '; background-image: url("' + this.getImage() + '")';
 
@@ -44,7 +63,7 @@ export class Button extends Widget {
 
   cssProperties() {
     const p = super.cssProperties();
-    p.push('image', 'color', 'svgReplaces');
+    p.push('image', 'color', 'svgReplaces',  'backgroundColor', 'borderColor', 'textColor',  'backgroundColorOH', 'borderColorOH', 'textColorOH');
     return p;
   }
 

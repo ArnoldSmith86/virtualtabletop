@@ -39,11 +39,11 @@ export class StateManaged {
     if(this.state[property] !== undefined)
       return [ 'x', 'y', 'width', 'height', 'z', 'layer' ].indexOf(property) != -1 ? +this.state[property] : this.state[property];
     else
-      return this.getDefaultValue(property);
+      return this.getDefaultValue(property) !== undefined ? this.getDefaultValue(property) : null;
   }
 
   async set(property, value) {
-    if(value === this.defaults[property])
+    if(value === this.getDefaultValue(property))
       value = null;
     if(this.state[property] === value || this.state[property] === undefined && value === null)
       return;

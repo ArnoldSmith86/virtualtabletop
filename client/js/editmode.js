@@ -68,11 +68,34 @@ function applyEditOptionsHolder(widget) {
   }
 }
 
+function populateEditOptionsTimer(widget) {
+  $('#timerCountdown').checked = widget.countdown;
+  $('#timerStart').value = widget.start/1000||0;
+  $('#timerEnd').value = widget.end/1000||"no end";
+  $('#timerReset').checked = false;
+}
+
+function applyEditOptionsTimer(widget) {
+  widget.countdown = $('#timerCountdown').checked;
+  widget.start = $('#timerStart').value*1000;
+  if ($('#timerEnd').value=="no end") 
+    widget.end = null;
+  else 
+    widget.end = $('#timerEnd').value*1000;
+
+  if($('#timerReset').checked) {
+    widget.paused = true;
+    widget.milliseconds = widget.start;
+  }
+}
+
 async function applyEditOptions(widget) {
   if(widget.type == 'deck')
     await applyEditOptionsDeck(widget);
   if(widget.type == 'holder')
     applyEditOptionsHolder(widget);
+  if(widget.type == 'timer')
+    applyEditOptionsTimer(widget);
 }
 
 function editClick(widget) {
@@ -93,6 +116,8 @@ function editClick(widget) {
 
   if(type == 'holder')
     populateEditOptionsHolder(widget.state);
+  if(type == 'timer')
+    populateEditOptionsTimer(widget.state);
 
   showOverlay('editOverlay');
 }
@@ -220,6 +245,49 @@ function generateCounterWidgets(id, x, y) {
   ];
 }
 
+function generateTimerWidgets(id, x, y) {
+  return [
+    { type:'timer', id: id, x: x, y: y },
+    {
+      parent: id,
+      id: id+'P',
+      x: 120,
+      y: -3,
+      width: 36,
+      height: 36,
+      type: "button",
+      movableInEdit: false,
+      clickRoutine: [
+        {
+          func: "TIMER",
+          timer: id
+        }
+      ],
+      image: "/i/button-icons/White-Play_Pause.svg",
+      css: "background-size: 75% 75%"
+    },
+    {
+      parent: id,
+      id: id+'R',
+      x: 80,
+      y: -3,
+      width: 36,
+      height: 36,
+      type: "button",
+      movableInEdit: false,
+      clickRoutine: [
+        {
+          func: "TIMER",
+          timer: id,
+          mode: "reset"
+        }
+      ],
+      image: "/i/button-icons/White-Reset.svg",
+      css: "background-size: 80% 80%"
+    }
+  ];
+}
+
 function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
   for(const wi of widgetsToAdd) {
     let w = null;
@@ -229,6 +297,7 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
     if(wi.type == 'holder') w = new Holder(wi.id);
     if(wi.type == 'label')  w = new Label(wi.id);
     if(wi.type == 'pile')   w = new Pile(wi.id);
+    if(wi.type == 'timer')  w = new Timer(wi.id);
     widgets.set(wi.id, w);
     w.applyDelta(wi);
     if(!wi.parent) {
@@ -271,7 +340,7 @@ function populateAddWidgetOverlay() {
   });
 
   let y = 100;
-  for(const color of [ '#000000','#4a4a4a','#4c5fea','#bc5bee','#e84242','#e0cb0b','#23ca5b','#e2a633','#ffffff' ]) {
+  for(const color of [ '#bc5bee','#4c5fea','#23ca5b','#e0cb0b','#e2a633','#e84242','#000000','#4a4a4a','#ffffff' ]) {
     addWidgetToAddWidgetOverlay(new BasicWidget('add-pin-'+color), {
       classes: 'pinPiece',
       color,
@@ -350,8 +419,13 @@ function populateAddWidgetOverlay() {
     y += 120;
   }
 
-  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 820, 700), function() {
-    for(const w of generateCounterWidgets(generateUniqueWidgetID(), 820, 700))
+  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 827, 700), function() {
+    for(const w of generateCounterWidgets(generateUniqueWidgetID(), 827, 700))
+      addWidgetLocal(w);
+  });
+
+  addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 775, 500), function() {
+    for(const w of generateTimerWidgets(generateUniqueWidgetID(), 775, 500))
       addWidgetLocal(w);
   });
 
