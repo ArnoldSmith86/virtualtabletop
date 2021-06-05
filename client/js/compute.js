@@ -80,13 +80,13 @@ const compute_ops = [
   {
     name: '&&',
     desc: 'logical AND returns true if both x and y are true or returns the value of x or y if they are not boolean values',
-    sample: 'var a = ${x} >= ${y}',
+    sample: 'var a = ${x} && ${y}',
     call: function(v, x, y) { return v = x && y }
   },
   {
     name: '||',
     desc: 'logical OR returns true if either x or y are true or returns the value of x or y if they are not boolean values',
-    sample: 'var a = ${x} >= ${y}',
+    sample: 'var a = ${x} || ${y}',
     call: function(v, x, y) { return v = x || y }
   },
   {
@@ -146,7 +146,7 @@ const compute_ops = [
   {
     name: 'acos',
     desc: 'returns the arccosine (in degrees) of a number',
-    sample: 'var a = cos ${x}',
+    sample: 'var a = acos ${x}',
     call: function(v, x) { return v = Math.acos(x) / Math.PI*180 }
   },
   {
@@ -296,7 +296,7 @@ const compute_ops = [
   {
     name: 'parseFloat',
     desc: 'returns a floating point number parsed from the given string',
-    sample: 'var a = parseFloat x',
+    sample: 'var a = parseFloat ${x}',
     call: function(v, x) { return v = parseFloat(x) }
   },
   {

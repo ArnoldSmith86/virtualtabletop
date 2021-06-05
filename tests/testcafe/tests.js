@@ -206,10 +206,19 @@ test('Dynamic expressions', async t => {
     ['var a = push 1', 'a', shouldBe([1])],
     ['var a = push 3', 'a', shouldBe([1,3])],
     ['var a = insert 2 1', 'a', shouldBe([1,2,3])],
+    ['var test = 2 in ${a}', 'test', shouldBe(true)],
+    ['var test = ${a} includes 2', 'test', shouldBe(true)],
     ['var a = remove 1 2', 'a', shouldBe([1])],
+    ['var test = 2 in ${a}', 'test', shouldBe(false)],
+    ['var test = ${a} includes 2', 'test', shouldBe(false)],
     ['var b = \'ac\'', 'b', shouldBe('ac')],
     ['var b = insert \'b\' 1', 'b', shouldBe('abc')],
-    ['var b = remove 1 2', 'b', shouldBe('a')]
+    ['var test = \'b\' in ${b}', 'test', shouldBe(true)],
+    ['var test = ${b} includes \'b\'', 'test', shouldBe(true)],
+    ['var m = ${b} match \'a.c\'', 'm', shouldBe(['abc'])],
+    ['var b = remove 1 2', 'b', shouldBe('a')],
+    ['var test = \'b\' in ${b}', 'test', shouldBe(false)],
+    ['var test = ${b} includes \'b\'', 'test', shouldBe(false)],
   ];
 
   ops.forEach((o)=>{
