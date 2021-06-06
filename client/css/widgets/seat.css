@@ -9,6 +9,6 @@
   --shadow: none;
 }
 
-.seat.turn {
+.seat.seated.turn {
   box-shadow: var(--shadow);
 }

@@ -62,11 +62,13 @@ class Seat extends Widget {
       this.set('player', playerName);
       this.set('color', playerColor);
       this.set('text',this.get(display))
+      this.set('inactive', false)
     } else {
       var display = this.get('displayFallback')||"index"
       this.set('player', "");
       this.set('color', "#999999");
       this.set('text',this.get(display))
+      this.set('inactive', true)
     };
   }
 
