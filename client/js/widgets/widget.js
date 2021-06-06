@@ -13,8 +13,8 @@ export class Widget extends StateManaged {
     this.domElement = div;
     this.childArray = [];
 
-    if(Widget.inheritFromMapping[id] === undefined)
-      Widget.inheritFromMapping[id] = [];
+    if(StateManaged.inheritFromMapping[id] === undefined)
+      StateManaged.inheritFromMapping[id] = [];
 
     this.addDefaults({
       x: 0,
@@ -129,7 +129,7 @@ export class Widget extends StateManaged {
       this.isDraggable = delta.movable;
     }
 
-    for(const inheriting of Widget.inheritFromMapping[this.id]) {
+    for(const inheriting of StateManaged.inheritFromMapping[this.id]) {
       const inheritedDelta = {};
       const inheritDefinition = inheriting.inheritFrom()[this.id] || [];
       for(const key in delta)
@@ -157,9 +157,9 @@ export class Widget extends StateManaged {
       }
 
       if(pushToArray) {
-        if(Widget.inheritFromMapping[id] === undefined)
-          Widget.inheritFromMapping[id] = [];
-        Widget.inheritFromMapping[id].push(this);
+        if(StateManaged.inheritFromMapping[id] === undefined)
+          StateManaged.inheritFromMapping[id] = [];
+        StateManaged.inheritFromMapping[id].push(this);
       }
     }
     this.applyDeltaToDOM(delta);
@@ -1440,5 +1440,3 @@ export class Widget extends StateManaged {
     return getValidDropTargets(this);
   }
 }
-
-Widget.inheritFromMapping = {};
