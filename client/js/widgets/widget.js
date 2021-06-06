@@ -999,6 +999,61 @@ export class Widget extends StateManaged {
         };
       }
 
+      if(a.func == 'TURN') {
+        setDefaults(a, { value: 0, mode: 'inc', collection: 'all' });
+          if([ 'set', 'dec', 'inc' ].indexOf(a.mode) == -1)
+            problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
+          let c = (a.collection == 'all' ? Array.from(widgets.values()) : collections[a.collection]).filter(function(w) {
+            w.get('type')=='seat'
+          });
+
+          var index = []
+          for (w in c) {
+            if (index.indexOf(w.get('index'))==-1)
+              index.push(w.get('index'));
+          }
+          index.sort();
+
+          var turn = this.get('turn') || 0;
+
+          //loop so it goes for the n next valid index
+          for (var i = 0; i < a.value; i++) {
+            //this checks the next valid index
+            if (a.mode=='inc'){
+              if (turn >= index[index.length-1]){
+                turn = index[0]
+              } else {
+                  for (i in index){
+                    if (i>turn){
+                      turn = i;
+                      break
+                    }
+                  }
+                }
+            } else if (a.mode=='dec'){
+              //this checks the previous valid index
+                if (turn >= index[0]){
+                  turn = index[index.length-1]
+                } else {
+                    for (i in index){
+                      if (i<turn){
+                        turn = i;
+                      } else {break}
+                    }
+                  }
+            }
+          }
+      if (a.mode=='set'){
+        turn = a.value
+      }
+
+      for (w in c) {
+        w.set('turn', turn)
+      }
+
+      this.set('turn',turn);
+      }
+
       if(this.get('debug')) {
         let msg = ''
         msg += '\n\n\nOPERATION: \n' + JSON.stringify(a, null, '  ');
