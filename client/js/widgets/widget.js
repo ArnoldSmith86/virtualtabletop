@@ -131,8 +131,9 @@ export class Widget extends StateManaged {
 
     for(const inheriting of Widget.inheritFromMapping[this.id]) {
       const inheritedDelta = {};
+      const inheritDefinition = inheriting.inheritFrom()[this.id] || [];
       for(const key in delta)
-        if(inheriting.state[key] === undefined)
+        if(inheriting.state[key] === undefined && (inheritDefinition == '*' || inheritDefinition.indexOf(key) != -1))
           inheritedDelta[key] = delta[key];
       inheriting.applyDeltaToDOM(inheritedDelta);
     }
