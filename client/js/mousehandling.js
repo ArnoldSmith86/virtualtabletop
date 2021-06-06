@@ -67,7 +67,7 @@ async function inputHandler(name, e) {
       if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
         if(typeof jeEnabled == 'boolean' && jeEnabled)
           await jeClick(widgets.get(target.id));
-        else if(editMovable)
+        else if(edit)
           editClick(widgets.get(target.id));
         else
           await widgets.get(target.id).click();
