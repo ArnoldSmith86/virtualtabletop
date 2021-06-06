@@ -1356,7 +1356,7 @@ export class Widget extends StateManaged {
             height: this.get('height')
           };
           if(this.get('owner') !== null)
-            pile.owner = this.get('owner);
+            pile.owner = this.get('owner');
           addWidgetLocal(pile);
           await this.set('parent', pile.id);
           await widget.set('parent', pile.id);
