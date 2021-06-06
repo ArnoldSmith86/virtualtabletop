@@ -54,7 +54,7 @@ class Canvas extends Widget {
 
   compress(str) {
     const startStr = str;
-    str = str.replaceAll(/(.)\1+/g, (match, char, offset, str) => {
+    str = str.replace(/(.)\1+/g, (match, char, offset, str) => {
       if(match.length + offset == str.length) {
         return char;
       } else if(char == "0") {
@@ -69,7 +69,7 @@ class Canvas extends Widget {
   }
 
   decompress(str) {
-    str = str.replaceAll(/([\u002A-\u0030]+)|([^\u0023-\u0030])([\u0023-\u0029]+)/g, (match, backLength, color, colorLength) => {
+    str = str.replace(/([\u002A-\u0030]+)|([^\u0023-\u0030])([\u0023-\u0029]+)/g, (match, backLength, color, colorLength) => {
       if (backLength != undefined) {
         return "0".repeat(this.decodeLength(backLength, 48, 7));
       } else {
@@ -79,11 +79,11 @@ class Canvas extends Widget {
     str = str.padEnd(this.getResolution()**2/100,str.slice(-1));
     return str;
   }
-  
+
   decodeLength(str, baseCode, base) {
     return str.split("").reduce((length, char, index) => length + (baseCode - char.charCodeAt(0) + 1) * base**index , 0);
   }
-  
+
   encodeLength(baseCode, length, base) {
     let n = length;
     let c = 0;
