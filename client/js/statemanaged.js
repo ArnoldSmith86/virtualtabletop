@@ -48,8 +48,11 @@ export class StateManaged {
     if(this.state[property] === value || this.state[property] === undefined && value === null)
       return;
 
-    if(property == 'z')
+    if(property == 'z') {
       updateMaxZ(this.get('layer'), value);
+      if(value > 90000)
+        return await resetMaxZ(this.get('layer'));
+    }
 
     const oldValue = this.state[property];
     if(value === null)
