@@ -18,6 +18,7 @@ class Seat extends Widget {
       displayFallback: "index",
 
       color: "#999999",
+      colorFallback: "#999999",
       layer: 1,
       text: '1'
     });
@@ -66,7 +67,7 @@ class Seat extends Widget {
     } else {
       var display = this.get('displayFallback')||"index"
       this.set('player', "");
-      this.set('color', "#999999");
+      this.set('color', this.get('colorFallback')||"#999999");
       this.set('text',this.get(display))
       this.set('inactive', true)
     };
