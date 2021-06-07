@@ -1028,9 +1028,9 @@ export class Widget extends StateManaged {
               if (turn >= index[index.length-1]){
                 turn = index[0]
               } else {
-                  for (i of index){
-                    if (i>turn){
-                      turn = i;
+                  for (var idx of index){
+                    if (idx>turn){
+                      turn = idx;
                       break
                     }
                   }
@@ -1041,9 +1041,9 @@ export class Widget extends StateManaged {
               if (turn <= index[index.length-1]){
                 turn = index[0]
               } else {
-                  for (i of index){
-                    if (i<turn){
-                      turn = i;
+                  for (var idx of index){
+                    if (idx<turn){
+                      turn = idx;
                       break
                     }
                   }
