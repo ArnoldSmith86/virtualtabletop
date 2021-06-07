@@ -1021,7 +1021,7 @@ export class Widget extends StateManaged {
           var turn = this.get('turn') || 1;
 
           //loop so it goes for the n next valid index
-          for (var i = 0; i < Math.abs(a.count); i++) {
+          for (var i = 0; i < Math.abs(a.count)%index.length; i++) {
             //this checks the next valid index
             if ((a.mode=='inc' && a.count>0) || (a.mode=='dec' && a.count<0) ){
               index.sort((a,b)=>a-b);

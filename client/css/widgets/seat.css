@@ -6,9 +6,9 @@
   border-style: solid;
   border-color: var(--color);
   text-align: center;
-  --shadow: none;
+  --wcShadowTurn: none;
 }
 
 .seat.seated.turn {
-  box-shadow: var(--shadow);
+  box-shadow: var(--wcShadowTurn);
 }

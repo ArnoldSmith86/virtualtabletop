@@ -79,7 +79,7 @@ class Seat extends Widget {
     if(this.get('color'))
       css += '; --color:' + this.get('color');
     if(this.get('glow'))
-      css += '; --shadow:' + '0px 0px 20px 5px var(--color)';
+      css += '; --wcShadowTurn:' + '0px 0px 20px 5px var(--color)';
 
     return css;
   }
