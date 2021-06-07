@@ -699,7 +699,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'FOREACH') {
-        setDefaults(a, { iterationRoutine: [], collection: 'DEFAULT' });
+        setDefaults(a, { loopRoutine: [], collection: 'DEFAULT' });
         const callWithAdditionalValues = async (addVariables, addCollections)=>{
           const variableBackups = {};
           const collectionBackups = {};
@@ -711,15 +711,15 @@ export class Widget extends StateManaged {
             collectionBackups[add] = collections[add];
             collections[add] = addCollections[add];
           }
-          await this.evaluateRoutine(a.iterationRoutine, variables, collections, (depth || 0) + 1, true);
+          await this.evaluateRoutine(a.loopRoutine, variables, collections, (depth || 0) + 1, true);
           for(const add in addVariables)
             variables[add] = variableBackups[add];
           for(const add in addCollections)
             collections[add] = collectionBackups[add];
         }
-        if(a.of) {
-          for(const key in a.of)
-            await callWithAdditionalValues({ key, value: a.of[key] }, {});
+        if(a.in) {
+          for(const key in a.in)
+            await callWithAdditionalValues({ key, value: a.in[key] }, {});
         } else if(isValidCollection(a.collection)) {
           for(const widget of collections[a.collection])
             await callWithAdditionalValues({ widgetID: widget.get('id') }, { DEFAULT: [ widget ] });

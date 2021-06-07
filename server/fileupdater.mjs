@@ -40,7 +40,7 @@ function updateRoutine(routine, v) {
       updateProperties(operation.properties, v);
     }
     if(operation.func == 'FOREACH') {
-      updateRoutine(operation.iterationRoutine, v);
+      updateRoutine(operation.loopRoutine, v);
     }
     if(operation.func == 'IF') {
       updateRoutine(operation.thenRoutine, v);
