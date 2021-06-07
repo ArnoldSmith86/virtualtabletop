@@ -221,18 +221,34 @@ function applyEditOptionsPiece(widget) {
 //timer functions
 function populateEditOptionsTimer(widget) {
   $('#timerCountdown').checked = widget.countdown;
-  $('#timerStart').value = widget.start/1000 || 0;
-  $('#timerEnd').value = widget.end/1000 || "no end";
+  if (widget.end || widget.end==0){
+    var duration = Math.abs(widget.start-widget.end)
+    console.log(duration,Math.floor(duration / 60000),Math.floor((duration % 60000)/1000))
+    $('#timerMinutes').value = Math.floor(duration / 60000) || 0;
+    $('#timerSeconds').value = Math.floor((duration % 60000)/1000);
+  } else {
+    $('#timerMinutes').value = "--";
+    $('#timerSeconds').value = "--";
+  }
   $('#timerReset').checked = false;
 }
 
 function applyEditOptionsTimer(widget) {
   widget.countdown = $('#timerCountdown').checked;
-  widget.start = $('#timerStart').value*1000;
-  if ($('#timerEnd').value=="no end")
-    delete widget.end;
-  else
-    widget.end = $('#timerEnd').value*1000;
+  if ($('#timerMinutes').value == "--" && $('#timerSeconds').value == "--"){
+    delete widget.start
+    delete widget.end
+  } else if ($('#timerCountdown').checked) {
+    var minutes = $('#timerMinutes').value == "--" ? 0 : $('#timerMinutes').value*60000
+    var seconds = $('#timerSeconds').value == "--" ? 0 : $('#timerSeconds').value*1000
+    widget.end = 0;
+    widget.start = minutes + seconds
+  } else {
+    var minutes = $('#timerMinutes').value == "--" ? 0 : $('#timerMinutes').value*60000
+    var seconds = $('#timerSeconds').value == "--" ? 0 : $('#timerSeconds').value*1000
+    widget.end = minutes + seconds;
+    widget.start = 0
+  }
 
   if($('#timerReset').checked) {
     widget.paused = true;
