@@ -46,7 +46,7 @@ const jeCommands = [
   {
     id: 'je_uploadAsset',
     name: 'upload a different asset',
-    context: '.*"(/assets/[0-9_-]+)"|^.* ↦ image\x24|^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ value\x24',
+    context: '.*"(/assets/[0-9_-]+)"|^.* ↦ image$|^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ value' + String.fromCharCode(36), // the minifier doesn't like "$" or "\x24" here
     call: async function() {
       uploadAsset().then(a=> {
         if(a) {
