@@ -219,7 +219,8 @@ test('Dynamic expressions', async t => {
     ['var b = remove 1 2', 'b', shouldBe('a')],
     ['var test = \'b\' in ${b}', 'test', shouldBe(false)],
     ['var test = ${b} includes \'b\'', 'test', shouldBe(false)],
-    ['var c = from ${b}', 'c', shouldBe(['a'])]
+    ['var c = from ${b}', 'c', shouldBe(['a'])],
+    ['var c = parseFloat \'0.3\'', 'c', shouldBe(0.3)]
   ];
 
   ops.forEach((o)=>{
