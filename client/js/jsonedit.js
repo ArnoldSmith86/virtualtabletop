@@ -46,7 +46,7 @@ const jeCommands = [
   {
     id: 'je_uploadAsset',
     name: 'upload a different asset',
-    context: '.*"(/assets/[0-9_-]+)"|^basic ↦ faces ↦ [0-9]+ ↦ image|^deck ↦ cardTypes ↦ .*? ↦ image',
+    context: '.*"(/assets/[0-9_-]+)"|^.* ↦ image\x24|^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ value\x24',
     call: async function() {
       uploadAsset().then(a=> {
         if(a) {
