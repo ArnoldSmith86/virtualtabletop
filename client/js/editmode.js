@@ -68,12 +68,14 @@ function populateEditOptionsButton(widget) {
     $('[for=buttonImage]').style = "display: none !important";
     $('#buttonText').style = "display: inline";
     $('[for=buttonText]').style = "display: inline";
+    //add upload button here with display: none
   };
   if (widget.image){
     $('#buttonText').style = "display: none !important";
     $('[for=buttonText]').style = "display: none !important";
     $('#buttonImage').style = "display: inline";
     $('[for=buttonImage]').style = "display: inline";
+    //add upload button here with display: inline
   }
 }
 
