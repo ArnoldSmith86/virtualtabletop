@@ -17,7 +17,7 @@ async function inputHandler(name, e) {
   if(overlayActive || e.target.id == 'jeText' || e.target.id == 'jeCommands')
     return;
 
-  const editMovable = edit || typeof jeEnabled == 'boolean' && jeEnabled && jeState.ctrl;
+  const editMovable = edit || typeof jeEnabled == 'boolean' && jeEnabled && e.ctrlKey;
 
   if(!mouseTarget && [ "TEXTAREA", "INPUT", "BUTTON", "OPTION", "LABEL" ].indexOf(e.target.tagName) != -1)
     if(!editMovable || !e.target.parentNode || !e.target.parentNode.className.match(/label/))
