@@ -803,7 +803,15 @@ export class Widget extends StateManaged {
                 await c.bringToFront();
               } else {
                 c.movedByButton = true;
+                if (target.get('type')=='seat' && target.get('hand') && target.get('player')){
+                  await c.moveToHolder(widgets.get(target.get('hand')));
+                  if(widgets.get(target.get('hand')).get('childrenPerOwner'))
+                    await c.set('owner', target.get('player'));
+                  c.bringToFront()
+                  widgets.get(target.get('hand')).updateAfterShuffle()
+                } else if (target.get('type')=='holder') {
                 await c.moveToHolder(target);
+                }
                 delete c.movedByButton;
               }
             }
