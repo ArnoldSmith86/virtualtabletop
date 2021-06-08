@@ -1024,7 +1024,7 @@ function jeSet(text, dontFocus) {
   jeColorize();
 }
 
-function jeSetAndSelect(replaceBy) {
+function jeSetAndSelect(replaceBy, insideString) {
   if(jeMode == 'widget')
     var jsonString = jePreProcessText(JSON.stringify(jePreProcessObject(jeStateNow), null, '  '));
   else
