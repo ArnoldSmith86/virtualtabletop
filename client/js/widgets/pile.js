@@ -131,7 +131,7 @@ class Pile extends Widget {
   }
 
   async onPropertyChange(property, oldValue, newValue) {
-    if(property == 'owner') {
+    if(this.children().length && property == 'owner') {
       for(const c of this.children())
         await c.set('owner', newValue);
     }
