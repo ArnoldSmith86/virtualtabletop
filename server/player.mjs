@@ -53,9 +53,18 @@ export default class Player {
       for(const conflictDelta of this.possiblyConflictingDeltas) {
         for(const widgetID in delta.s) {
           if(conflictDelta.s[widgetID] !== undefined) {
-            this.waitingForStateConfirmation = true;
-            this.room.receiveInvalidDelta(this, delta, widgetID);
-            return;
+            if((delta.s[widgetID] === null) != (conflictDelta.s[widgetID] === null)) {
+              this.waitingForStateConfirmation = true;
+              this.room.receiveInvalidDelta(this, delta, widgetID, '<deletion>');
+              return;
+            }
+            for(const key in delta.s[widgetID]) {
+              if(conflictDelta.s[widgetID][key] !== undefined && delta.s[widgetID][key] !== conflictDelta.s[widgetID][key]) {
+                this.waitingForStateConfirmation = true;
+                this.room.receiveInvalidDelta(this, delta, widgetID, key);
+                return;
+              }
+            }
           }
         }
       }
