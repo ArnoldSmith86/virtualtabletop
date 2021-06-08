@@ -841,7 +841,7 @@ function jeCommandOptions() {
   });
 }
 
-async function jeClick(widget) {
+async function jeClick(widget, e) {
   if(e.ctrlKey) {
     jeSelectWidget(widget, false, e.shiftKey);
   } else {
