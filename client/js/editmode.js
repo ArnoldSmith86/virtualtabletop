@@ -63,19 +63,21 @@ function populateEditOptionsButton(widget) {
   $('#buttonColorBorder').value = widget.borderColor || "#0d2f5e";
   $('#buttonColorText').value = widget.textColor || "#ffffff"
 
+  // FIXME: if widget.text is not set AND widget.image is not set, this doesn't set the correct styles
+
   if (widget.text){
     $('#buttonImage').style = "display: none !important";
     $('[for=buttonImage]').style = "display: none !important";
     $('#buttonText').style = "display: inline";
     $('[for=buttonText]').style = "display: inline";
-    //add upload button here with display: none
-  };
+    $('#uploadButtonImage').style = "display: none !important";
+  }
   if (widget.image){
     $('#buttonText').style = "display: none !important";
     $('[for=buttonText]').style = "display: none !important";
     $('#buttonImage').style = "display: inline";
     $('[for=buttonImage]').style = "display: inline";
-    //add upload button here with display: inline
+    $('#uploadButtonImage').style = "display: inline";
   }
 }
 
@@ -831,6 +833,11 @@ onLoad(function() {
   on('#basicWidth', 'input', e=>$('#basicWidthNumber').value=e.target.value)
   on('#basicHeightNumber', 'input', e=>$('#basicHeight').value=e.target.value)
   on('#basicHeight', 'input', e=>$('#basicHeightNumber').value=e.target.value)
+
+  on('#uploadButtonImage', 'click', _=>uploadAsset().then(function(asset) {
+    if(asset)
+      $('#buttonImage').value = asset;
+  }));
 
   populateAddWidgetOverlay();
 });
