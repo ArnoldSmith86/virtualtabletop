@@ -14,7 +14,7 @@ class Seat extends Widget {
       turn: false,
       player: "",
       display: "index",
-      displayEmpty: "index",
+      displayEmpty: "",
       disableGlow: false,
 
       color: "#999999",
@@ -64,10 +64,9 @@ class Seat extends Widget {
       this.set('color', playerColor);
       this.set('text',this.get(display))
     } else {
-      var display = this.get('displayEmpty')||"index"
       this.set('player', "");
       this.set('color', this.get('colorEmpty')||"#999999");
-      this.set('text',this.get(display))
+      this.set('text',this.get('displayEmpty')||this.get('index'));
     };
   }
 
