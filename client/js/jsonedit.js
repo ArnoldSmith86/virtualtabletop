@@ -327,11 +327,7 @@ const jeCommands = [
     name: '📝 edit mode',
     forceKey: 'F',
     call: async function() {
-      if(edit)
-        $('body').classList.remove('edit');
-      else
-        $('body').classList.add('edit');
-      edit = !edit;
+      toggleEditMode();
     }
   },
   {
@@ -1028,6 +1024,23 @@ function jeShowCommands() {
   on('#jeCommands button', 'click', clickButton);
 }
 
+function jeToggle() {
+  if(jeEnabled === null) {
+    jeAddCommands();
+    jeDisplayTree();
+    $('#jeText').addEventListener('input', jeColorize);
+    $('#jeText').onscroll = e=>$('#jeTextHighlight').scrollTop = e.target.scrollTop;
+    jeColorize();
+  }
+  jeEnabled = !jeEnabled;
+  if(jeEnabled) {
+    $('body').classList.add('jsonEdit');
+  } else {
+    $('body').classList.remove('jsonEdit');
+  }
+  setScale();
+}
+
 const clickButton = async function(event) {
   await jeCommands.find(o => o.id == event.currentTarget.id).call();
   if (jeContext != 'macro') {
@@ -1106,20 +1119,7 @@ window.addEventListener('keydown', async function(e) {
         jeSelect(+locationPostion[1], +locationPostion[1]);
     } else if(e.key == 'j') {
       e.preventDefault();
-      if(jeEnabled === null) {
-        jeAddCommands();
-        jeDisplayTree();
-        $('#jeText').addEventListener('input', jeColorize);
-        $('#jeText').onscroll = e=>$('#jeTextHighlight').scrollTop = e.target.scrollTop;
-        jeColorize();
-      }
-      jeEnabled = !jeEnabled;
-      if(jeEnabled) {
-        $('body').classList.add('jsonEdit');
-      } else {
-        $('body').classList.remove('jsonEdit');
-      }
-      setScale();
+      jeToggle();
     } else {
       for(const command of jeCommands) {
         if(command.currentKey == e.key) {
