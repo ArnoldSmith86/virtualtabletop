@@ -650,8 +650,8 @@ async function jeApplyExternalChanges(state) {
   }
 }
 
-async function jeClick(widget) {
-  if(jeState.ctrl) {
+async function jeClick(widget, e) {
+  if(e.ctrlKey) {
     jeSelectWidget(widget);
   } else {
     await widget.click();
@@ -1093,7 +1093,7 @@ window.addEventListener('keydown', async function(e) {
     e.preventDefault();
   }
 
-  if(jeState.ctrl) {
+  if(e.ctrlKey) {
     if(e.key == ' ' && jeMode == 'widget') {
       const locationLine = String(jeJSONerror).match(/line ([0-9]+) column ([0-9]+)/);
       if(locationLine) {
@@ -1138,7 +1138,7 @@ window.addEventListener('keydown', async function(e) {
   const functionKey = e.key.match(/F([0-9]+)/);
   if(functionKey && jeWidgetLayers[+functionKey[1]]) {
     e.preventDefault();
-    if(jeState.ctrl) {
+    if(e.ctrlKey) {
       let id = jeWidgetLayers[+functionKey[1]].get('id');
       if(jeContext[jeContext.length-1] == '"null"')
         id = `"${id}"`;
