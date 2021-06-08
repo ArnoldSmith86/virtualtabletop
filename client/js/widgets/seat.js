@@ -11,14 +11,14 @@ class Seat extends Widget {
       height: 36,
 
       index: 1,
-      turn: 0,
+      turn: false,
       player: "",
-      inactive: true,
       display: "index",
-      displayFallback: "index",
+      displayEmpty: "index",
+      disableGlow: false,
 
       color: "#999999",
-      colorFallback: "#999999",
+      colorEmpty: "#999999",
       layer: 1,
       text: '1'
     });
@@ -37,7 +37,7 @@ class Seat extends Widget {
 
     if (this.get('player')!="")
       className += ' seated';
-    if (this.get('turn')==this.get('index'))
+    if (this.get('turn'))
       className += ' turn';
 
     return className;
@@ -63,13 +63,11 @@ class Seat extends Widget {
       this.set('player', playerName);
       this.set('color', playerColor);
       this.set('text',this.get(display))
-      this.set('inactive', false)
     } else {
-      var display = this.get('displayFallback')||"index"
+      var display = this.get('displayEmpty')||"index"
       this.set('player', "");
-      this.set('color', this.get('colorFallback')||"#999999");
+      this.set('color', this.get('colorEmpty')||"#999999");
       this.set('text',this.get(display))
-      this.set('inactive', true)
     };
   }
 
@@ -78,7 +76,7 @@ class Seat extends Widget {
 
     if(this.get('color'))
       css += '; --color:' + this.get('color');
-    if(this.get('glow'))
+    if(!this.get('disableGlow'))
       css += '; --wcShadowTurn:' + '0px 0px 20px 5px var(--color)';
 
     return css;
@@ -87,7 +85,7 @@ class Seat extends Widget {
   cssProperties() {
     const p = super.cssProperties();
     p.push('color');
-    p.push('glow')
+    p.push('disableGlow')
     return p;
   }
 

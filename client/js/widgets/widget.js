@@ -1008,10 +1008,11 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'TURN') {
-        setDefaults(a, { count: 1, mode: 'inc', source: 'all', collection: 'DEFAULT', variable: 'TURN' });
-          if([ 'set', 'dec', 'inc' ].indexOf(a.mode) == -1)
-            problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
-
+        setDefaults(a, { turn: 1, turnCycle: 'inc', source: 'all', collection: 'TURN' });
+          if([ 'forward', 'backward', 'random', 'position' ].indexOf(a.turnCycle) == -1){
+            problems.push(`Warning: turnCycle ${a.turnCycle} interpreted as forward.`);
+            a.turnCycle = 'forward'
+          }
           //copied from select
           let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(function(w) {
             if (w.get('type')=='seat')
@@ -1019,37 +1020,37 @@ export class Widget extends StateManaged {
           });
 
           //this get the list of valid index
-          var index = []
+          var indexList = []
+          var turn = 1
           for (w of c) {
-            if (index.indexOf(w.get('index'))==-1 && !w.get('inactive'))
-              index.push(w.get('index'));
+            if (indexList.indexOf(w.get('index'))==-1 && w.get('player'))
+              indexList.push(w.get('index'));
+            if (w.get('turn'))
+              turn = w.get('index')
           }
 
-          //get the current turn saved in the button
-          var turn = this.get('turn') || 1;
-
           //loop so it goes for the n next valid index
-          for (var i = 0; i < Math.abs(a.count)%index.length; i++) {
+          for (var i = 0; i < Math.abs(a.turn)%indexList.length; i++) {
             //this checks the next valid index
-            if ((a.mode=='inc' && a.count>0) || (a.mode=='dec' && a.count<0) ){
-              index.sort((a,b)=>a-b);
-              if (turn >= index[index.length-1]){
-                turn = index[0]
+            if ((a.turnCycle=='forward' && a.turn>0) || (a.turnCycle=='backward' && a.turn<0) ){
+              indexList.sort((a,b)=>a-b);
+              if (turn >= indexList[indexList.length-1]){
+                turn = indexList[0]
               } else {
-                  for (var idx of index){
+                  for (var idx of indexList){
                     if (idx>turn){
                       turn = idx;
                       break
                     }
                   }
                 }
-            } else if ((a.mode=='inc' && a.count<0) || (a.mode=='dec' && a.count>0) ){
+            } else if ((a.turnCycle=='forward' && a.turn<0) || (a.turnCycle=='backward' && a.turn>0) ){
               //this checks the previous valid index
-              index.sort((a,b)=>b-a);
-              if (turn <= index[index.length-1]){
-                turn = index[0]
+              indexList.sort((a,b)=>b-a);
+              if (turn <= indexList[indexList.length-1]){
+                turn = indexList[0]
               } else {
-                  for (var idx of index){
+                  for (var idx of indexList){
                     if (idx<turn){
                       turn = idx;
                       break
@@ -1058,38 +1059,31 @@ export class Widget extends StateManaged {
                 }
             }
           }
-      if (a.mode=='set'){
-        index.sort((a,b)=>a-b);
-        if (a.count=='first'){
-          turn = index[0]
-        } else if (a.count=='last'){
-          turn = index[index.length]
-        } else if (a.count<0){
-          turn = index[index.length-((Math.abs(a.count)%index.length)||index.length)]
-        } else {
-          turn = index[a.count % index.length]||0
+        if (a.turnCycle=='position'){
+          indexList.sort((a,b)=>a-b);
+          if (a.turn=='first'){
+            turn = indexList[0]
+          } else if (a.turn=='last'){
+            turn = indexList[indexList.length]
+          } else if ((a.turn-1)<0){
+            turn = indexList[indexList.length-((Math.abs(a.turn-1)%indexList.length)||indexList.length)]
+          } else {
+            turn = indexList[(a.turn-1) % indexList.length]||0
+          }
         }
-      }
+        if (a.turnCycle=='random'){
+          turn = indexList[Math.floor(Math.random()*indexList.length)]
+        }
 
-      var output = []
-      //saves turn into all seats and creates output collection with turn seats
-      for (w of c) {
-        w.set('turn', turn)
-        if (w.get('turn')==w.get('index') && !w.get('inactive'))
-          output.push(w);
-      }
+        var output = []
+        //saves turn into all seats and creates output collection with turn seats
+        for (w of c) {
+          w.set('turn', w.get('index') == turn)
+          if (w.get('turn')==w.get('index') && w.get('player'))
+            output.push(w);
+        }
 
-      //remove after review
-      console.log(c)
-      console.log(index)
-      console.log(turn)
-      console.log(output)
-
-      //save new turn into button
-      this.set('turn',turn);
-
-      collections[a.collection] = output;
-      variables[a.variable] = turn;
+        collections[a.collection] = output;
       }
 
       if(this.get('debug')) {
