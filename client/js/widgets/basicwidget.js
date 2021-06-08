@@ -84,13 +84,13 @@ class BasicWidget extends Widget {
     }
   }
 
-  getDefaultValue(property) {
+  get(property) {
     if(property == 'faces' || property == 'activeFace' || !this.get('faces') || !this.get('faces')[this.get('activeFace')])
-      return super.getDefaultValue(property);
+      return super.get(property);
     const d = this.get('faces')[this.get('activeFace')][property];
     if(d !== undefined)
       return d;
-    return super.getDefaultValue(property);
+    return super.get(property);
   }
 
   getImage() {
