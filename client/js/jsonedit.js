@@ -46,7 +46,7 @@ const jeCommands = [
   {
     id: 'je_uploadAsset',
     name: 'upload a different asset',
-    context: '.*"(/assets/[0-9_-]+)"|^basic ↦ faces ↦ [0-9]+ ↦ image|^deck ↦ cardTypes ↦ .*? ↦ image',
+    context: '.*"(/assets/[0-9_-]+)"|^.* ↦ image$|^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ value' + String.fromCharCode(36), // the minifier doesn't like "$" or "\x24" here
     call: async function() {
       uploadAsset().then(a=> {
         if(a) {
@@ -378,6 +378,23 @@ function jeRoutineCall(callback, synchronous) {
     return async _=>f();
 }
 
+let jeExpressionCounter = 0;
+function jeAddRoutineExpressionCommands(variable, expression) {
+  jeCommands.push({
+    id: 'expression_' + ++jeExpressionCounter,
+    name: `Expression: ${variable}`,
+    context: `^.*Routine`,
+    call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
+      if(operationIndex === null)
+        routine.push(`var ###SELECT ME### = ${expression}`);
+      else
+        routine.splice(operationIndex+1, 0, `var ###SELECT ME### = ${expression}`);
+      jeSetAndSelect(variable, true);
+    }),
+    show: jeRoutineCall((_, routine)=>Array.isArray(routine), true)
+  });
+}
+
 function jeAddRoutineOperationCommands(command, defaults) {
   jeCommands.push({
     id: 'operation_' + command,
@@ -434,7 +451,6 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('LABEL', { value: 0, mode: 'set', label: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('MOVE', { count: 1, face: null, from: null, to: null });
   jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0 });
-  jeAddRoutineOperationCommands('RANDOM', { min: 1, max: 10, variable: 'RANDOM' });
   jeAddRoutineOperationCommands('RECALL', { owned: true, holder: null });
   jeAddRoutineOperationCommands('ROTATE', { count: 1, angle: 90, mode: 'add', holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'add', source: 'all', sortBy: 'null' });
@@ -442,6 +458,9 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('SORT', { key: 'value', reverse: false, locales: null, options: null, holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('SHUFFLE', { holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('TIMER', { value: 0, seconds: 0, mode: 'toggle', timer: null, collection: 'DEFAULT' });
+
+  jeAddRoutineExpressionCommands('random', 'randInt 1 10');
+  jeAddRoutineExpressionCommands('increment', '${variableName} + 1');
 
   jeAddCSScommands();
 
@@ -466,7 +485,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(TIMER\\) ↦ mode', [ 'pause', 'start', 'toggle', 'set', 'dec', 'inc', 'reset']);
   jeAddEnumCommands('^.*\\(TIMER\\) ↦ value', [ 0, 'start', 'end', 'milliseconds']);
   jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ property', [ 'id', 'parent', 'type', 'rotation' ]);
-  jeAddEnumCommands('^.* ↦ applyVariables ↦ [0-9]+ ↦ variable', [ 'COUNT', 'RANDOM', 'id', 'result', 'playerName', 'playerColor', 'activePlayers' , 'thisID' ]);
+  jeAddEnumCommands('^.* ↦ applyVariables ↦ [0-9]+ ↦ variable', [ 'COUNT', 'id', 'result', 'playerName', 'playerColor', 'activePlayers' , 'thisID' ]);
 
   jeAddEnumCommands('^.*\\((CLICK|COUNT|DELETE|FLIP|GET|LABEL|ROTATE|SET|SORT|SHUFFLE)\\) ↦ collection', [ 'DEFAULT', 'thisButton', 'child' ]);
   jeAddEnumCommands('^.*\\(CLONE\\) ↦ source', [ 'DEFAULT', 'thisButton', 'child' ]);
@@ -634,8 +653,8 @@ async function jeApplyExternalChanges(state) {
   }
 }
 
-async function jeClick(widget) {
-  if(jeState.ctrl) {
+async function jeClick(widget, e) {
+  if(e.ctrlKey) {
     jeSelectWidget(widget);
   } else {
     await widget.click();
@@ -658,10 +677,12 @@ function jeColorize() {
     [ /^( +")(.*)( \(in .*)(":.*)$/, null, 'extern', 'extern', null ],
     [ /^( +")(.*)(": ")(.*)(",?)$/, null, 'key', null, 'string', null ],
     [ /^( +")(.*)(": )(-?[0-9.]+)(,?)$/, null, 'key', null, 'number', null ],
+    [ /^( +)(-?[0-9.]+)(,?)$/, null, 'number', null ],
     [ /^( +")(.*)(": )(null|true|false)(,?)$/, null, 'key', null, 'null', null ],
     [ /^( +")(.*)(":.*)$/, null, 'key', null ],
     [ /^(Room)$/, 'extern' ],
     [ /^( +"var )(.*)( = )(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?( )?([0-9a-zA-Z_-]+|[=+*/%<!>&|-]{1,2})?(🧮(?:[0-9a-zA-Z_-]+|[=+*/%<!>&|-]{1,2}))?( )?(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?( )?(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?( )?(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?(.*)(",?)$/, 'default', 'custom', null, 'number', 'null', 'variable', 'string', null, null, 'variable', null, 'number', 'null', 'variable', 'string', null, 'number', 'null', 'variable', 'string', null, 'number', 'null', 'variable', 'string', null, 'default' ],
+    [ /^( +")(.*)(",?)$/, null, 'string', null ],
     [ /^( +)(.*)( \()([a-z]+)( - )([0-9-]+)(,)([0-9-]+)(.*)$/, null, 'key', null, 'string', null, 'number', null, 'number', null ]
   ];
   let out = [];
@@ -919,15 +940,18 @@ function jeSet(text, dontFocus) {
   jeColorize();
 }
 
-function jeSetAndSelect(replaceBy) {
+function jeSetAndSelect(replaceBy, insideString) {
   let jsonString = jePreProcessText(JSON.stringify(jePreProcessObject(jeStateNow), null, '  '));
-  const startIndex = jsonString.indexOf('"###SELECT ME###"');
-  let length = jsonString.length-17;
+  const startIndex = jsonString.indexOf(insideString ? '###SELECT ME###' : '"###SELECT ME###"');
+  let length = jsonString.length-15-(insideString ? 0 : 2);
 
-  jsonString = jsonString.replace(/"###SELECT ME###"/, JSON.stringify(replaceBy));
+  if(insideString)
+    jsonString = jsonString.replace(/###SELECT ME###/, JSON.stringify(replaceBy).substr(1, JSON.stringify(replaceBy).length-2));
+  else
+    jsonString = jsonString.replace(/"###SELECT ME###"/, JSON.stringify(replaceBy));
 
   jeSet(jsonString);
-  const quote = typeof replaceBy == 'string' ? 1 : 0;
+  const quote = typeof replaceBy == 'string' && !insideString ? 1 : 0;
   jeSelect(startIndex + quote, startIndex+jsonString.length-length - quote);
 }
 
@@ -1072,7 +1096,7 @@ window.addEventListener('keydown', async function(e) {
     e.preventDefault();
   }
 
-  if(jeState.ctrl) {
+  if(e.ctrlKey) {
     if(e.key == ' ' && jeMode == 'widget') {
       const locationLine = String(jeJSONerror).match(/line ([0-9]+) column ([0-9]+)/);
       if(locationLine) {
@@ -1117,7 +1141,7 @@ window.addEventListener('keydown', async function(e) {
   const functionKey = e.key.match(/F([0-9]+)/);
   if(functionKey && jeWidgetLayers[+functionKey[1]]) {
     e.preventDefault();
-    if(jeState.ctrl) {
+    if(e.ctrlKey) {
       let id = jeWidgetLayers[+functionKey[1]].get('id');
       if(jeContext[jeContext.length-1] == '"null"')
         id = `"${id}"`;

@@ -393,7 +393,7 @@ function populateAddWidgetOverlay() {
   });
 
   let y = 100;
-  for(const color of [ '#000000','#4a4a4a','#4c5fea','#bc5bee','#e84242','#e0cb0b','#23ca5b','#e2a633','#ffffff' ]) {
+  for(const color of [ '#bc5bee','#4c5fea','#23ca5b','#e0cb0b','#e2a633','#e84242','#000000','#4a4a4a','#ffffff' ]) {
     addWidgetToAddWidgetOverlay(new BasicWidget('add-pin-'+color), {
       classes: 'pinPiece',
       color,
