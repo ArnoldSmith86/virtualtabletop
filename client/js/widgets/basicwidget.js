@@ -25,7 +25,7 @@ class BasicWidget extends Widget {
     if(delta.activeFace !== undefined || delta.faces !== undefined) {
       let face = this.get('faces')[this.get('activeFace')];
       if(face !== undefined)
-        this.applyDelta(face);
+        this.applyDeltaToDOM(face);
     }
     if(delta.text !== undefined)
       setText(this.domElement, delta.text);
