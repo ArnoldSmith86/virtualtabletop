@@ -27,7 +27,7 @@ class Spinner extends Widget {
       this.createChildNodes();
 
     if(delta.angle !== undefined && this.spinner || delta.value !== undefined && this.value) {
-      this.spinner.style.transform = `rotate(${delta.angle}deg)`;
+      this.spinner.style.transform = `rotate(${this.get('angle')}deg)`;
       this.value.classList.add('hidden');
       if(this.timeout)
         clearTimeout(this.timeout);

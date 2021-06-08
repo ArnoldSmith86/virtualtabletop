@@ -26,7 +26,7 @@ class Card extends Widget {
         this.deck.removeCard(this);
       }
       if(delta.deck) {
-        this.deck = widgets.get(delta.deck);
+        this.deck = widgets.get(this.get('deck'));
         this.deck.addCard(this);
         this.createFaces(this.deck.get('faceTemplates'));
       } else {
