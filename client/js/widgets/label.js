@@ -40,7 +40,7 @@ export class Label extends Widget {
       if(this.get('editable'))
         this.input.removeAttribute("readonly");
       else
-        this.input.setAttribute("readonly", !this.get('editable');
+        this.input.setAttribute("readonly", !this.get('editable'));
     }
   }
 }
