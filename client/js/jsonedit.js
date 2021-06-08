@@ -648,7 +648,7 @@ function jeApplyDelta(delta) {
         if(delta.s[jeStateNow[field]] === null)
           jeDisplayTree();
         else
-          jeSelectWidget(widgets.get(jeStateNow.id), document.activeElement !== $('#jeText'));
+          jeSelectWidget(widgets.get(jeStateNow.id), document.activeElement !== $('#jeText'), false, true);
       }
     }
   }
@@ -692,7 +692,23 @@ async function jeClick(widget, e) {
   }
 }
 
-function jeSelectWidget(widget, dontFocus, addToSelection) {
+function jeSelectWidget(widget, dontFocus, addToSelection, restoreCursorPosition) {
+  if(restoreCursorPosition) {
+    const aO = getSelection().anchorOffset;
+    const fO = getSelection().focusOffset;
+    const s = Math.min(aO, fO);
+    const e = Math.max(aO, fO);
+    const v = $('#jeText').textContent;
+    const linesUntilCursor = v.split('\n').slice(0, v.substr(0, s).split('\n').length);
+    const currentLine = linesUntilCursor.pop();
+    var cursorState = {
+      currentLine,
+      sameLinesBefore: linesUntilCursor.filter(l=>l==currentLine).length,
+      start: s-linesUntilCursor.join('\n').length,
+      end: e-linesUntilCursor.join('\n').length
+    };
+  }
+
   if(addToSelection && (jeMode == 'widget' || jeMode == 'multi')) {
     jeSelectWidgetMulti(widget, dontFocus);
   } else {
@@ -700,6 +716,21 @@ function jeSelectWidget(widget, dontFocus, addToSelection) {
     jeWidget = widget;
     jeStateNow = widget.state;
     jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(widget.state), null, '  ')), dontFocus);
+  }
+
+  if(restoreCursorPosition) {
+    const v = $('#jeText').textContent;
+    const lines = v.split('\n');
+    let offset = 0;
+    let linesFound = 0;
+    for(const line of lines) {
+      if(line == cursorState.currentLine && linesFound++ == cursorState.sameLinesBefore) {
+        jeSelect(offset + cursorState.start - 1, offset + cursorState.end - 1);
+        break;
+      } else {
+        offset += line.length + 1;
+      }
+    }
   }
 }
 
