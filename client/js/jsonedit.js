@@ -303,16 +303,25 @@ const jeCommands = [
     forceKey: 'D',
     show: _=>jeStateNow,
     options: [
-      { label: 'Recursive',     type: 'checkbox', value: true },
-      { label: 'Increment IDs', type: 'checkbox', value: true },
-      { label: 'X offset',      type: 'number',   value: 0,   min: -1600, max: 1600 },
-      { label: 'Y offset',      type: 'number',   value: 0,   min: -1000, max: 1000 },
-      { label: '# Copies X',    type: 'number',   value: 1,   min:     1, max:  100 },
-      { label: '# Copies Y',    type: 'number',   value: 0,   min:     0, max:  100 }
+      { label: 'Recursive',       type: 'checkbox', value: true  },
+      { label: 'Increment IDs',   type: 'checkbox', value: true  },
+      { label: 'Use inheritFrom', type: 'checkbox', value: false },
+      { label: 'X offset',        type: 'number',   value: 0,   min: -1600, max: 1600 },
+      { label: 'Y offset',        type: 'number',   value: 0,   min: -1000, max: 1000 },
+      { label: '# Copies X',      type: 'number',   value: 1,   min:     1, max:  100 },
+      { label: '# Copies Y',      type: 'number',   value: 0,   min:     0, max:  100 }
     ],
     call: async function(options) {
       const clone = function(widget, recursive, newParent, xOffset, yOffset) {
         let currentWidget = JSON.parse(JSON.stringify(widget.state))
+
+        if(options['Use inheritFrom']) {
+          const inheritWidget = { inheritFrom: currentWidget.id };
+          for(const key of [ 'id', 'parent', 'type', 'deck' ])
+            if(currentWidget[key] !== undefined)
+              inheritWidget[key] = currentWidget[key];
+          currentWidget = inheritWidget;
+        }
 
         if(options['Increment IDs']) {
           const match = currentWidget.id.match(/^(.*?)([0-9]+)([^0-9]*)$/);
@@ -330,9 +339,9 @@ const jeCommands = [
 
         if(newParent)
           currentWidget.parent = newParent;
-        if(xOffset)
+        if(xOffset || !newParent && options['Use inheritFrom'])
           currentWidget.x = widget.get('x') + xOffset;
-        if(yOffset)
+        if(yOffset || !newParent && options['Use inheritFrom'])
           currentWidget.y = widget.get('y') + yOffset;
 
         addWidgetLocal(currentWidget);
