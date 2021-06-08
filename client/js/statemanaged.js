@@ -14,11 +14,15 @@ export class StateManaged {
   applyDelta(delta) {
     const deltaForDOM = {};
     for(const i in delta) {
+      deltaForDOM[i] = true;
+      if((i == 'activeFace' || i == 'faces') && typeof this.get('faces')[this.get('activeFace')] == 'object') {
+        for(const p in this.get('faces')[this.get('activeFace')])
+          deltaForDOM[p] = true;
+      }
       if(delta[i] === null) {
         delete this.state[i];
-        deltaForDOM[i] = this.getDefaultValue(i);
       } else {
-        deltaForDOM[i] = this.state[i] = delta[i];
+        this.state[i] = delta[i];
       }
     }
     this.applyDeltaToDOM(deltaForDOM);
