@@ -16,9 +16,13 @@ function eventCoords(name, e) {
 async function inputHandler(name, e) {
   if(overlayActive || e.target.id == 'jeText' || e.target.id == 'jeCommands')
     return;
+
+  const editMovable = edit || typeof jeEnabled == 'boolean' && jeEnabled && e.ctrlKey;
+
   if(!mouseTarget && [ "TEXTAREA", "INPUT", "BUTTON", "OPTION", "LABEL" ].indexOf(e.target.tagName) != -1)
-    if(!edit || !e.target.parentNode || !e.target.parentNode.className.match(/label/))
+    if(!editMovable || !e.target.parentNode || !e.target.parentNode.className.match(/label/))
       return;
+
   e.preventDefault();
 
   if(name == 'mousedown' || name == 'touchstart') {
@@ -46,7 +50,7 @@ async function inputHandler(name, e) {
       let movable = false;
       moveTarget = target;
       while (moveTarget && !movable) {
-        movable = widgets.get(moveTarget.id).get(edit ? 'movableInEdit' : 'movable');
+        movable = widgets.get(moveTarget.id).get(editMovable ? 'movableInEdit' : 'movable');
         if (!movable) {
           do {
             moveTarget = moveTarget.parentNode;
