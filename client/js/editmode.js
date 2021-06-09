@@ -566,15 +566,17 @@ function addCardType(cardType, value) {
     $('#editWidgetJSON').value = JSON.stringify(widget)
 }
 
+function toggleEditMode() {
+  if(edit)
+    $('body').classList.remove('edit');
+  else
+    $('body').classList.add('edit');
+  edit = !edit;
+  showOverlay();
+}
+
 onLoad(function() {
-  on('#editButton', 'click', function() {
-    if(edit)
-      $('body').classList.remove('edit');
-    else
-      $('body').classList.add('edit');
-    edit = !edit;
-    showOverlay();
-  });
+  on('#editButton', 'click', toggleEditMode);
 
   on('#addCustomWidgetOverlay', 'click', _=>showOverlay('addCustomOverlay'));
 
