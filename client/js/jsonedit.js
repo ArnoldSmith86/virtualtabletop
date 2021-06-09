@@ -439,6 +439,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, properties: null });
   jeAddRoutineOperationCommands('DELETE', { collection: 'DEFAULT'});
   jeAddRoutineOperationCommands('FLIP', { count: 0, face: null, faceCycle: 'forward', holder: null, collection: 'DEFAULT' });
+  jeAddRoutineOperationCommands('FOREACH', { loopRoutine: [], in: [], collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('GET', { variable: 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
   jeAddRoutineOperationCommands('IF', { condition: null, operand1: null, relation: '==', operand2: null, thenRoutine: [], elseRoutine: [] });
   // INPUT is missing
@@ -794,6 +795,9 @@ function jeGetContext() {
       keys[depth] = m[2]=='{' || line.match(/^ +"[^"]*",?$/) ? (keys[depth] === undefined ? -1 : keys[depth]) + 1 : m[3];
       keys = keys.slice(0, depth+1);
     }
+    const mClose = line.match(/^( *)[\]}]/);
+    if(mClose)
+      keys = keys.slice(0, mClose[1].length/2+1);
   }
   try {
     for(let i=1; i<keys.length-1; ++i) {
@@ -822,7 +826,7 @@ function jeGetLastKey() {
 function jeGetValue(context, all) {
   let pointer = jeStateNow;
   for(const key of context || jeContext)
-    if(all && typeof pointer[key] !== undefined || typeof pointer[key] == 'object' && pointer[key] !== null)
+    if(all && pointer[key] !== undefined || typeof pointer[key] == 'object' && pointer[key] !== null)
       pointer = pointer[key];
   return pointer
 }
