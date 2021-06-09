@@ -29,19 +29,23 @@ export class Timer extends Widget {
     }
 
     if(this.interval && (delta.paused !== undefined || delta.precision !== undefined)) {
-      clearInterval(this.interval);
-      delete this.interval;
+      this.stopTimer();
       if(!this.get('paused'))
-        this.interval = setInterval(_=>this.tick(), this.getPrecision());
+        this.startTimer();
     }
+  }
+
+  applyInitialDelta(delta) {
+    super.applyInitialDelta(delta);
+    if(delta.paused === false && activePlayers.length == 1)
+      this.startTimer();
   }
 
   applyRemove() {
     super.applyRemove();
     if(this.interval) {
       console.log('remove clear');
-      clearInterval(this.interval);
-      delete this.interval;
+      this.stopTimer();
     }
   }
 
@@ -64,9 +68,8 @@ export class Timer extends Widget {
   }
 
   async click() {
-    if(!await super.click()) {
+    if(!await super.click())
       await this.setPaused();
-    }
   }
 
   getPrecision() {
@@ -90,9 +93,8 @@ export class Timer extends Widget {
       await this.set('alert', this.get('end') !== null && ((this.get('countdown') && newValue<=this.get('end')) || (!this.get('countdown') && newValue>=this.get('end'))));
 
     if(property == 'paused' && newValue !== true) {
-      clearInterval(this.interval);
-      delete this.interval;
-      this.interval = setInterval(_=>this.tick(), this.getPrecision());
+      this.stopTimer();
+      this.startTimer();
     }
   }
 
@@ -123,5 +125,14 @@ export class Timer extends Widget {
       await this.set('paused',  false);
     else
       await this.set('paused',  !this.get('paused'));
+  }
+
+  startTimer() {
+    this.interval = setInterval(_=>this.tick(), this.getPrecision());
+  }
+
+  stopTimer() {
+    clearInterval(this.interval);
+    delete this.interval;
   }
 }
