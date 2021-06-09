@@ -17,7 +17,8 @@
     "testcafe-chromium": "testcafe chromium tests/testcafe/tests.js",
     "testcafe-chromium-headless": "testcafe chromium:headless tests/testcafe/tests.js",
     "testcafe-firefox": "testcafe firefox tests/testcafe/tests.js",
-    "testcafe-firefox-headless": "testcafe firefox:headless tests/testcafe/tests.js"
+    "testcafe-firefox-headless": "testcafe firefox:headless tests/testcafe/tests.js",
+    "testcafe-gitpod": "bash tests/testcafe/gitpod.sh"
   },
   "repository": {
     "type": "git",
