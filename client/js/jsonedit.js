@@ -10,6 +10,8 @@ let jeCommandError = null;
 let jeContext = null;
 let jeSecondaryWidget = null;
 let jeDeltaIsOurs = false;
+let jeKeyIsDown = true;
+let jeKeyIsDownDeltas = [];
 const jeWidgetLayers = {};
 const jeState = {
   ctrl: false,
@@ -607,8 +609,14 @@ async function jeApplyChanges() {
 
   const currentStateRaw = $('#jeText').textContent;
   const completeState = JSON.parse(jePostProcessText(currentStateRaw));
+
+  // apply external changes that happened while the key was pressed
+  for(const delta of jeKeyIsDownDeltas)
+    for(const key in delta)
+      completeState[key] = delta[key];
+
   const currentState = JSON.stringify(jePostProcessObject(completeState));
-  if(currentStateRaw != jeStateBeforeRaw) {
+  if(currentStateRaw != jeStateBeforeRaw || jeKeyIsDownDeltas.length) {
     jeDeltaIsOurs = true;
     await jeApplyExternalChanges(completeState);
     jeStateBeforeRaw = currentStateRaw;
@@ -645,19 +653,32 @@ function jeApplyDelta(delta) {
   if(jeMode == 'widget') {
     for(const field of [ 'id', 'deck' ]) {
       if(!jeDeltaIsOurs && jeStateNow && jeStateNow[field] && delta.s[jeStateNow[field]] !== undefined) {
-        if(delta.s[jeStateNow[field]] === null)
+        if(delta.s[jeStateNow[field]] === null) {
           jeDisplayTree();
-        else
+        } else {
+          if(jeKeyIsDown) {
+            jeKeyIsDownDeltas.push(delta.s[jeStateNow[field]]);
+            return;
+          }
+
           jeSelectWidget(widgets.get(jeStateNow.id), document.activeElement !== $('#jeText'), false, true);
+        }
       }
     }
   }
 
   if(jeMode == 'multi' && !jeDeltaIsOurs) {
     try {
-      for(const selectedWidget of JSON.parse($('#jeText').textContent).widgets)
-        if(delta.s[selectedWidget] !== undefined)
+      for(const selectedWidget of JSON.parse($('#jeText').textContent).widgets) {
+        if(delta.s[selectedWidget] !== undefined) {
+          if(jeKeyIsDown) {
+            jeKeyIsDownDeltas.push(delta.s);
+            return;
+          }
+
           return jeUpdateMulti();
+        }
+      }
     } catch(e) {
     }
   }
@@ -1274,6 +1295,10 @@ window.addEventListener('keydown', async function(e) {
   }
 });
 
+window.addEventListener('keydown', function(e) {
+  jeKeyIsDown = true;
+});
+
 window.addEventListener('keyup', function(e) {
   if(e.key == 'Control')
     jeState.ctrl = false;
@@ -1285,4 +1310,6 @@ window.addEventListener('keyup', function(e) {
     if((jeWidget || jeMode == 'multi') && !jeJSONerror)
       jeApplyChanges();
   }
+  jeKeyIsDown = false;
+  jeKeyIsDownDeltas = [];
 });
