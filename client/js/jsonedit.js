@@ -491,6 +491,23 @@ function jeAddCommands() {
   jeAddNumberCommand('half number', '/', x=>x/2);
   jeAddNumberCommand('zero', '0', x=>0);
   jeAddNumberCommand('opposite value', '0', x=>-x);
+
+  jeAddAlignmentCommands();
+}
+
+function jeAddAlignmentCommands() {
+  jeCommands.push({
+    id: 'jeCenter',
+    name: 'center in parent',
+    context: '^.* ↦ (x|y)( ↦ "[0-9]+")?\x24',
+    call: async function() {
+      const key = jeGetLastKey();
+      const sizeKey = key == 'x' ? 'width' : 'height';
+      const parentSize = jeStateNow.parent ? widgets.get(jeStateNow.parent).get(sizeKey) : (sizeKey == 'width' ? 1600 : 1000);
+      jeStateNow[key] = '###SELECT ME###';
+      jeSetAndSelect((parentSize-widgets.get(jeStateNow.id).get(sizeKey))/2);
+    }
+  });
 }
 
 function jeAddCSScommands() {
