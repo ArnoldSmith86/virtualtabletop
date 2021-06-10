@@ -4,6 +4,8 @@
   display: none;
   height: 100%;
   width: 100%;
+  z-index: 2;
+  position: relative;
 }
 
 #jsonEditor > *, .jsonEdit {
@@ -114,4 +116,44 @@ body.jsonEdit.jeZoomOut #roomArea {
 
 body.jsonEdit.jeZoomOut #topSurface {
   overflow: visible;
+}
+
+.jeLog {
+  white-space: normal;
+  font-size: 8px;
+  background: #ffffff10;
+  margin-left: 10px;
+}
+
+.jeLogWidget {
+  margin-left: -10px;
+}
+
+.jeLogSkipped {
+  opacity: 0.3;
+}
+
+.jeLogResult {
+  color: orange;
+}
+
+.jeLogHasProblems {
+  color: red;
+}
+
+.jeLogDetails {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: black;
+  padding: 20px;
+}
+
+.jeLogOperation:hover > .jeLogDetails {
+  display: block;
+}
+
+.jeLogDetails > div {
+  white-space: pre;
 }

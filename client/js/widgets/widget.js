@@ -44,8 +44,7 @@ export class Widget extends StateManaged {
       clickRoutine: null,
       changeRoutine: null,
       enterRoutine: null,
-      leaveRoutine: null,
-      debug: false
+      leaveRoutine: null
     });
 
     this.domElement.addEventListener('contextmenu', e => this.showEnlarged(e), false);
@@ -244,7 +243,7 @@ export class Widget extends StateManaged {
       reject(result);
   }
 
-  async evaluateRoutine(property, initialVariables, initialCollections, depth, byReference) {
+  async evaluateRoutine(property, initialVariables, initialCollections, byReference) {
     function unescape(str) {
       if(typeof str != 'string')
         return str;
@@ -333,8 +332,7 @@ export class Widget extends StateManaged {
 
     batchStart();
 
-    if(this.get('debug') && !depth)
-      $('#debugButtonOutput').textContent = '';
+    if(jeRoutineLogging) jeLoggingRoutineStart(this, property, initialVariables, initialCollections, byReference);
 
     let variables = initialVariables;
     let collections = initialCollections
@@ -358,10 +356,8 @@ export class Widget extends StateManaged {
         a = evaluateVariablesRecursively(a);
       var problems = [];
 
-      if(this.get('debug')) console.log(`${this.id}: ${JSON.stringify(original)}`);
-
       if(a.skip) {
-        $('#debugButtonOutput').textContent += '\n\n\nOPERATION SKIPPED: \n' + JSON.stringify(a, null, '  ');
+        if(jeRoutineLogging) jeLoggingRoutineOperation(original, a, problems, variables, collections, true);
         continue;
       }
 
@@ -422,6 +418,7 @@ export class Widget extends StateManaged {
             variables[variable][index] = getValue(variables[variable][index]);
           else
             variables[variable] = getValue(variables[variable]);
+          if(jeRoutineLogging) jeLoggingRoutineOperationResult(`${variable} = ${JSON.stringify(variables[variable])}`);
         } else {
           problems.push('String could not be interpreted as expression. Please check your syntax and note that many characters have to be escaped.');
         }
@@ -441,16 +438,13 @@ export class Widget extends StateManaged {
             for(const c in collections)
               inheritCollections[c] = [ ...collections[c] ];
             inheritCollections['caller'] = [ this ];
-            $('#debugButtonOutput').textContent += `\n\n\nCALLing: ${a.widget}.${a.routine}\n`;
-            const result = await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections, (depth || 0) + 1);
+            const result = await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections);
             variables[a.variable] = result.variable;
             collections[a.collection] = result.collection;
           }
         }
-        if(!a.return) {
-          $('#debugButtonOutput').textContent += '\n\n\nCALL without return. Ending evaluation.\n';
+        if(!a.return)
           break;
-        }
       }
 
       if(a.func == 'CLICK') {
@@ -711,7 +705,7 @@ export class Widget extends StateManaged {
             collectionBackups[add] = collections[add];
             collections[add] = addCollections[add];
           }
-          await this.evaluateRoutine(a.loopRoutine, variables, collections, (depth || 0) + 1, true);
+          await this.evaluateRoutine(a.loopRoutine, variables, collections, true);
           for(const add in addVariables)
             variables[add] = variableBackups[add];
           for(const add in addCollections)
@@ -769,6 +763,7 @@ export class Widget extends StateManaged {
             problems.push(`Collection ${a.collection} is empty.`);
           }
         }
+        if(jeRoutineLogging) jeLoggingRoutineOperationResult(`${a.variable} = ${JSON.stringify(variables[a.variable])}`);
       }
 
       if(a.func == 'IF') {
@@ -781,10 +776,8 @@ export class Widget extends StateManaged {
           if (a.condition === undefined)
             a.condition = compute(a.relation, null, a.operand1, a.operand2);
           const branch = a.condition ? 'thenRoutine' : 'elseRoutine';
-          if (Array.isArray(a[branch])) {
-            $('#debugButtonOutput').textContent += `\n\n\nIF ${branch}\n`;
-            await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true);
-          }
+          if(Array.isArray(a[branch]))
+            await this.evaluateRoutine(a[branch], variables, collections, true);
         } else
           problems.push(`IF operation is missing the 'condition' or 'operand1' parameter.`);
       }
@@ -931,6 +924,13 @@ export class Widget extends StateManaged {
 
           if(a.sortBy)
             await this.sortWidgets(collections[a.collection], a.sortBy.key, a.sortBy.reverse, a.sortBy.locales, a.sortBy.options);
+
+          if(jeRoutineLogging) {
+            if(collections[a.collection].length && collections[a.collection].length < 5)
+              jeLoggingRoutineOperationResult(`${a.collection} = ${collections[a.collection].map(w=>w.get('id')).join(',')}`);
+            else
+              jeLoggingRoutineOperationResult(`${a.collection} = (${collections[a.collection].length} widgets)`);
+          }
         }
       }
 
@@ -945,6 +945,10 @@ export class Widget extends StateManaged {
         } else if(isValidCollection(a.collection)) {
           for(const w of collections[a.collection]) {
             await w.set(a.property, compute(a.relation, null, w.get(a.property), a.value));
+          }
+          if(jeRoutineLogging) {
+            const relationDisplay = (a.relation != '=') ? ` (${a.relation})` : '';
+            jeLoggingRoutineOperationResult(`${a.property} = ${JSON.stringify(a.value)}${relationDisplay}`);
           }
         }
       }
@@ -1028,25 +1032,13 @@ export class Widget extends StateManaged {
         };
       }
 
-      if(this.get('debug')) {
-        let msg = ''
-        msg += '\n\n\nOPERATION: \n' + JSON.stringify(a, null, '  ');
-        if(problems.length)
-          msg += '\n\nPROBLEMS: \n' + problems.join('\n');
-        msg += '\n\n\nVARIABLES: \n' + JSON.stringify(variables, null, '  ');
-        msg += '\n\nCOLLECTIONS: \n';
-        for(const name in collections) {
-          msg += '  ' + name + ': ' + collections[name].map(w=>`${w.get('id')} (${w.get('type')})`).join(', ') + '\n';
-        }
-        $('#debugButtonOutput').textContent += msg.replace(/^/gm, '    '.repeat(depth));
-        console.log(msg);
-      } else if(problems.length) {
+      if(jeRoutineLogging) jeLoggingRoutineOperation(original, a, problems, variables, collections);
+
+      if(!jeRoutineLogging && problems.length)
         console.log(problems);
-      }
     }
 
-    if(this.get('debug') && !depth)
-      showOverlay('debugButtonOverlay');
+    if(jeRoutineLogging) jeLoggingRoutineEnd(variables, collections);
 
     batchEnd();
     return { variable: variables.result, collection: collections.result || [] };
