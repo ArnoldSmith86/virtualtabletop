@@ -374,10 +374,13 @@ const jeCommands = [
     forceKey: 'R',
     show: _=>jeStateNow,
     call: async function() {
-      const id = jeStateNow.id;
+      let ids = [ jeStateNow.id ];
+      if(jeMode == 'multi')
+        ids = jeMultiSelectedWidgets().map(w=>w.get('id'));
       jeStateNow = null;
       jeWidget = null;
-      await removeWidgetLocal(id, true);
+      for(const id of ids)
+        await removeWidgetLocal(id, true);
       jeDisplayTree();
     }
   },
@@ -834,7 +837,9 @@ async function jeCallCommand(command) {
   if(command.options) {
     jeCommandWithOptions = command;
   } else {
+    jeDeltaIsOurs = true;
     await command.call();
+    jeDeltaIsOurs = false;
   }
 }
 
@@ -943,8 +948,8 @@ function jeSelectWidgetMulti(widget, dontFocus) {
   jeUpdateMulti(dontFocus);
 }
 
-function jeUpdateMulti(dontFocus) {
-  const selectedWidgets = widgetFilter(function(w) {
+function jeMultiSelectedWidgets() {
+  return widgetFilter(function(w) {
     for(const search of jeStateNow.widgets) {
       const isRegex = search.match(/^\/(.*)\/([a-z]+)?$/);
       try {
@@ -955,10 +960,12 @@ function jeUpdateMulti(dontFocus) {
         return true;
     }
   });
+}
 
+function jeUpdateMulti(dontFocus) {
   for(const key of [ 'x', 'y', 'width', 'height', 'parent', 'z', 'layer' ]) {
     jeStateNow[key] = {};
-    for(const selectedWidget of selectedWidgets)
+    for(const selectedWidget of jeMultiSelectedWidgets())
       jeStateNow[key][selectedWidget.get('id')] = selectedWidget.get(key);
     if(Object.values(jeStateNow[key]).every( (val, i, arr) => val === arr[0] ))
       jeStateNow[key] = Object.values(jeStateNow[key])[0];
