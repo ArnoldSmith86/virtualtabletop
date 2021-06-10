@@ -928,7 +928,7 @@ function jeInsert(context, key, value) {
 
 // START routine logging
 
-let jeRoutineLogging = falset;
+let jeRoutineLogging = false;
 let jeRoutineResult = '';
 let jeLoggingHTML = null;
 let jeLoggingDepth = 0;
