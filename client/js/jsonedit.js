@@ -756,7 +756,6 @@ async function jeApplyChangesMulti() {
   };
 
   const currentState = JSON.parse($('#jeText').textContent);
-  const widgets = widgetFilter(w=>currentState.widgets.indexOf(w.get('id')) != -1);
 
   if(jeGetContext()[1] == 'widgets') {
     var cursorState = jeCursorStateGet();
@@ -766,7 +765,7 @@ async function jeApplyChangesMulti() {
     jeDeltaIsOurs = true;
     for(const key in currentState) {
       if(key != 'widgets') {
-        for(const w of widgets) {
+        for(const w of jeMultiSelectedWidgets()) {
           if(typeof currentState[key] != 'object' || currentState[key] === null)
             await setValueIfNeeded(w, key, currentState[key]);
           else if(currentState[key][w.get('id')] !== undefined)
