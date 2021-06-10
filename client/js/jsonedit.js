@@ -753,18 +753,25 @@ async function jeApplyChangesMulti() {
 
   const currentState = JSON.parse($('#jeText').textContent);
   const widgets = widgetFilter(w=>currentState.widgets.indexOf(w.get('id')) != -1);
-  jeDeltaIsOurs = true;
-  for(const key in currentState) {
-    if(key != 'widgets') {
-      for(const w of widgets) {
-        if(typeof currentState[key] != 'object' || currentState[key] === null)
-          await setValueIfNeeded(w, key, currentState[key]);
-        else if(currentState[key][w.get('id')] !== undefined)
-          await setValueIfNeeded(w, key, currentState[key][w.get('id')]);
+
+  if(jeGetContext()[1] == 'widgets') {
+    var cursorState = jeCursorStateGet();
+    jeUpdateMulti();
+    jeCursorStateSet(cursorState);
+  } else {
+    jeDeltaIsOurs = true;
+    for(const key in currentState) {
+      if(key != 'widgets') {
+        for(const w of widgets) {
+          if(typeof currentState[key] != 'object' || currentState[key] === null)
+            await setValueIfNeeded(w, key, currentState[key]);
+          else if(currentState[key][w.get('id')] !== undefined)
+            await setValueIfNeeded(w, key, currentState[key][w.get('id')]);
+        }
       }
     }
+    jeDeltaIsOurs = false;
   }
-  jeDeltaIsOurs = false;
 }
 
 function jeApplyDelta(delta) {
@@ -870,22 +877,40 @@ async function jeClick(widget, e) {
   }
 }
 
-function jeSelectWidget(widget, dontFocus, addToSelection, restoreCursorPosition) {
-  if(restoreCursorPosition) {
-    const aO = getSelection().anchorOffset;
-    const fO = getSelection().focusOffset;
-    const s = Math.min(aO, fO);
-    const e = Math.max(aO, fO);
-    const v = $('#jeText').textContent;
-    const linesUntilCursor = v.split('\n').slice(0, v.substr(0, s).split('\n').length);
-    const currentLine = linesUntilCursor.pop();
-    var cursorState = {
-      currentLine,
-      sameLinesBefore: linesUntilCursor.filter(l=>l==currentLine).length,
-      start: s-linesUntilCursor.join('\n').length,
-      end: e-linesUntilCursor.join('\n').length
-    };
+function jeCursorStateGet() {
+  const aO = getSelection().anchorOffset;
+  const fO = getSelection().focusOffset;
+  const s = Math.min(aO, fO);
+  const e = Math.max(aO, fO);
+  const v = $('#jeText').textContent;
+  const linesUntilCursor = v.split('\n').slice(0, v.substr(0, s).split('\n').length);
+  const currentLine = linesUntilCursor.pop();
+  return {
+    currentLine,
+    sameLinesBefore: linesUntilCursor.filter(l=>l==currentLine).length,
+    start: s-linesUntilCursor.join('\n').length,
+    end: e-linesUntilCursor.join('\n').length
+  };
+}
+
+function jeCursorStateSet(state) {
+  const v = $('#jeText').textContent;
+  const lines = v.split('\n');
+  let offset = 0;
+  let linesFound = 0;
+  for(const line of lines) {
+    if(line == state.currentLine && linesFound++ == state.sameLinesBefore) {
+      jeSelect(offset + state.start - 1, offset + state.end - 1);
+      break;
+    } else {
+      offset += line.length + 1;
+    }
   }
+}
+
+function jeSelectWidget(widget, dontFocus, addToSelection, restoreCursorPosition) {
+  if(restoreCursorPosition)
+    var cursorState = jeCursorStateGet();
 
   if(addToSelection && (jeMode == 'widget' || jeMode == 'multi')) {
     jeSelectWidgetMulti(widget, dontFocus);
@@ -896,20 +921,8 @@ function jeSelectWidget(widget, dontFocus, addToSelection, restoreCursorPosition
     jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(widget.state), null, '  ')), dontFocus);
   }
 
-  if(restoreCursorPosition) {
-    const v = $('#jeText').textContent;
-    const lines = v.split('\n');
-    let offset = 0;
-    let linesFound = 0;
-    for(const line of lines) {
-      if(line == cursorState.currentLine && linesFound++ == cursorState.sameLinesBefore) {
-        jeSelect(offset + cursorState.start - 1, offset + cursorState.end - 1);
-        break;
-      } else {
-        offset += line.length + 1;
-      }
-    }
-  }
+  if(restoreCursorPosition)
+    jeCursorStateSet(cursorState);
 }
 
 function jeSelectWidgetMulti(widget, dontFocus) {
