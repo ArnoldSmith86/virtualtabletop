@@ -17,7 +17,8 @@
     "testcafe-chromium": "testcafe chromium tests/testcafe/tests.js",
     "testcafe-chromium-headless": "testcafe chromium:headless tests/testcafe/tests.js",
     "testcafe-firefox": "testcafe firefox tests/testcafe/tests.js",
-    "testcafe-firefox-headless": "testcafe firefox:headless tests/testcafe/tests.js"
+    "testcafe-firefox-headless": "testcafe firefox:headless tests/testcafe/tests.js",
+    "testcafe-gitpod": "bash tests/testcafe/gitpod.sh"
   },
   "repository": {
     "type": "git",
@@ -46,7 +47,7 @@
     "express": "^4.17.1",
     "jszip": "^3.6.0",
     "node-fetch": "^2.6.1",
-    "ws": "^7.4.5"
+    "ws": "^7.4.6"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",

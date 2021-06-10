@@ -53,6 +53,12 @@ function getMaxZ(layer) {
   return maxZ[layer] || 0;
 }
 
+async function resetMaxZ(layer) {
+  maxZ[layer] = 0;
+  for(const w of widgetFilter(w=>w.get('layer')==layer&&w.state.z).sort((a,b)=>a.get('z')-b.get('z')))
+    await w.set('z', ++maxZ[layer]);
+}
+
 function updateMaxZ(layer, z) {
   maxZ[layer] = Math.max(maxZ[layer] || 0, z);
 }
@@ -233,8 +239,14 @@ window.onresize = function(event) {
 }
 
 window.onkeyup = function(event) {
-  if(event.key == 'Escape')
-    showOverlay();
+  if(event.key == 'Escape') {
+    if(overlayActive)
+      showOverlay();
+    else if(edit)
+      toggleEditMode();
+    else if(jeEnabled)
+      jeToggle();
+  }
 }
 
 window.onerror = function(msg, url, line, col, err) {
