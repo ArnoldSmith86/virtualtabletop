@@ -377,8 +377,11 @@ const jeCommands = [
     options: [ { type: 'number', label: 'Offset', value: 0 } ],
     call: async function(options) {
       const property = jeContext[1];
-      for(const widget of jeMultiSelectedWidgets())
-        await widget.set(property, widget.get(property) + options.Offset);
+      for(const widget of jeMultiSelectedWidgets()) {
+        const target = options.Offset + (typeof jeStateNow[property] == 'number' ? jeStateNow[property] : jeStateNow[property][widget.get('id')]);
+        if(widget.get(property) !== target)
+          await widget.set(property, target);
+      }
       jeUpdateMulti();
     }
   }
