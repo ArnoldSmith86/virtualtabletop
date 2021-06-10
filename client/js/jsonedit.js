@@ -412,6 +412,16 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_addMultiProperty',
+    name: 'add property',
+    context: '^Multi-Selection',
+    options: [ { type: 'string', label: 'Property' } ],
+    call: async function(options) {
+      jeStateNow[options.Property] = null;
+      jeUpdateMulti();
+    }
+  },
+  {
     id: 'je_syncInherited',
     name: 'sync children to inheriting widgets',
     context: '^[^ ]+',
@@ -963,7 +973,11 @@ function jeMultiSelectedWidgets() {
 }
 
 function jeUpdateMulti(dontFocus) {
-  for(const key of [ 'x', 'y', 'width', 'height', 'parent', 'z', 'layer' ]) {
+  const keys = [ 'x', 'y', 'width', 'height', 'parent', 'z', 'layer' ];
+  for(const usedKey in jeStateNow || [])
+    if(usedKey != 'widgets' && keys.indexOf(usedKey) == -1)
+      keys.push(usedKey);
+  for(const key of keys) {
     jeStateNow[key] = {};
     for(const selectedWidget of jeMultiSelectedWidgets())
       jeStateNow[key][selectedWidget.get('id')] = selectedWidget.get(key);
