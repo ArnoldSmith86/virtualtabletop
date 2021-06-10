@@ -136,9 +136,9 @@ function generateEmptyDeckWidget(id, x, y) {
       movableInEdit: false,
 
       clickRoutine: [
-        { func: 'RECALL',  holder: id },
-        { func: 'FLIP',    holder: id, face: 0 },
-        { func: 'SHUFFLE', holder: id }
+        { func: 'RECALL',  holder: '${PROPERTY parent}' },
+        { func: 'FLIP',    holder: '${PROPERTY parent}', face: 0 },
+        { func: 'SHUFFLE', holder: '${PROPERTY parent}' }
       ]
     }
   ];
@@ -177,9 +177,9 @@ function generateCardDeckWidgets(id, x, y) {
       movableInEdit: false,
 
       clickRoutine: [
-        { func: 'RECALL',  holder: id },
-        { func: 'FLIP',    holder: id, face: 0 },
-        { func: 'SHUFFLE', holder: id }
+        { func: 'RECALL',  holder: '${PROPERTY parent}' },
+        { func: 'FLIP',    holder: '${PROPERTY parent}', face: 0 },
+        { func: 'SHUFFLE', holder: '${PROPERTY parent}' }
       ]
     }
   ];
@@ -222,7 +222,7 @@ function generateCardDeckWidgets(id, x, y) {
 }
 
 function generateCounterWidgets(id, x, y) {
-  const r = { func: 'LABEL', label: id, mode: 'dec', value: 1 };
+  const r = { func: 'LABEL', label: '${PROPERTY parent}', mode: 'dec', value: 1 };
 
   const down = {
     id: id+'D',
@@ -260,7 +260,7 @@ function generateTimerWidgets(id, x, y) {
       clickRoutine: [
         {
           func: "TIMER",
-          timer: id
+          timer: '${PROPERTY parent}'
         }
       ],
       image: "/i/button-icons/White-Play_Pause.svg",
@@ -278,7 +278,7 @@ function generateTimerWidgets(id, x, y) {
       clickRoutine: [
         {
           func: "TIMER",
-          timer: id,
+          timer: '${PROPERTY parent}',
           mode: "reset"
         }
       ],
