@@ -714,7 +714,7 @@ onLoad(function() {
       clickRoutine: [
         {
           func: "CANVAS",
-          canvas: id,
+          canvas: "${PROPERTY parent}",
           mode: "reset"
         }
       ],
@@ -736,13 +736,14 @@ onLoad(function() {
       movableInEdit: false,
 
       clickRoutine: [
+        "var parent = ${PROPERTY parent}",
         {
           func: "CANVAS",
-          canvas: id,
+          canvas: '${parent}',
           mode: "inc",
           value: 1
         },
-        "var color = ${PROPERTY colorMap OF "+id+"} getIndex ${PROPERTY activeColor OF "+id+"}",
+        "var color = ${PROPERTY colorMap OF $parent} getIndex ${PROPERTY activeColor OF $parent}",
         {
           func: "SET",
           collection: "thisButton",
