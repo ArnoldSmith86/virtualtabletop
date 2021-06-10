@@ -944,7 +944,17 @@ function jeSelectWidgetMulti(widget, dontFocus) {
 }
 
 function jeUpdateMulti(dontFocus) {
-  const selectedWidgets = widgetFilter(w=>jeStateNow.widgets.indexOf(w.get('id')) != -1);
+  const selectedWidgets = widgetFilter(function(w) {
+    for(const search of jeStateNow.widgets) {
+      const isRegex = search.match(/^\/(.*)\/([a-z]+)?$/);
+      try {
+        if(isRegex && w.get('id').match(new RegExp(isRegex[1], isRegex[2])))
+          return true;
+      } catch(e) {}
+      if(!isRegex && w.get('id') == search)
+        return true;
+    }
+  });
 
   for(const key of [ 'x', 'y', 'width', 'height', 'parent', 'z', 'layer' ]) {
     jeStateNow[key] = {};
