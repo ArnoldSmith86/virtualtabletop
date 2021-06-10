@@ -422,6 +422,19 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_multiShift',
+    name: 'shift',
+    context: '^Multi-Selection ↦ [^ ]+',
+    show: _=>jeGetValue()&&typeof jeGetValue()[jeGetLastKey()] == 'number',
+    options: [ { type: 'number', label: 'Offset', value: 0 } ],
+    call: async function(options) {
+      const property = jeContext[1];
+      for(const widget of jeMultiSelectedWidgets())
+        await widget.set(property, widget.get(property) + options.Offset);
+      jeUpdateMulti();
+    }
+  },
+  {
     id: 'je_syncInherited',
     name: 'sync children to inheriting widgets',
     context: '^[^ ]+',
