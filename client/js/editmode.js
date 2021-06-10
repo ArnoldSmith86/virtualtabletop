@@ -124,7 +124,7 @@ function populateEditOptionsTimer(widget) {
 function applyEditOptionsTimer(widget) {
   widget.countdown = $('#timerCountdown').checked;
   widget.start = $('#timerStart').value*1000;
-  if ($('#timerEnd').value=="no end")
+  if($('#timerEnd').value == 'no end')
     widget.end = null;
   else
     widget.end = $('#timerEnd').value*1000;
@@ -617,15 +617,17 @@ function addCardType(cardType, value) {
     $('#editWidgetJSON').value = JSON.stringify(widget)
 }
 
+function toggleEditMode() {
+  if(edit)
+    $('body').classList.remove('edit');
+  else
+    $('body').classList.add('edit');
+  edit = !edit;
+  showOverlay();
+}
+
 onLoad(function() {
-  on('#editButton', 'click', function() {
-    if(edit)
-      $('body').classList.remove('edit');
-    else
-      $('body').classList.add('edit');
-    edit = !edit;
-    showOverlay();
-  });
+  on('#editButton', 'click', toggleEditMode);
 
   on('#addCustomWidgetOverlay', 'click', _=>showOverlay('addCustomOverlay'));
 
