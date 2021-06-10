@@ -25,10 +25,10 @@ function populateEditOptionsBasic(widget) {
     $('#basicTypeToken').checked = true
   }
 
-  $('#basicWidth').value = widget.width;
-  $('#basicHeight').value = widget.height;
-  $('#basicWidthNumber').value = widget.width;
-  $('#basicHeightNumber').value = widget.height;
+  $('#basicWidth').value = widget.width||100;
+  $('#basicHeight').value = widget.height||100;
+  $('#basicWidthNumber').value = widget.width||100;
+  $('#basicHeightNumber').value = widget.height||100;
 
   $('#basicEnlarge').checked = widget.enlarge;
 }
@@ -168,10 +168,10 @@ function applyEditOptionsHolder(widget) {
 //label functions
 function populateEditOptionsLabel(widget) {
   $('#labelText').value = widget.text;
-  $('#labelWidth').value = widget.width;
-  $('#labelHeight').value = widget.height;
-  $('#labelWidthNumber').value = widget.width;
-  $('#labelHeightNumber').value = widget.height;
+  $('#labelWidth').value = widget.width||100;
+  $('#labelHeight').value = widget.height||20;
+  $('#labelWidthNumber').value = widget.width||100;
+  $('#labelHeightNumber').value = widget.height||20;
   $('#labelEditable').checked = widget.editable;
 }
 
