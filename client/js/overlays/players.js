@@ -2,7 +2,7 @@ import { onLoad } from '../domhelpers.js';
 
 let playerCursors = {};
 let playerName = localStorage.getItem('playerName') || 'Guest' + Math.floor(Math.random()*1000);
-let playerColor = 'red';
+let playerColor = toHex('hsl('+ Math.floor(Math.random()*360) +',100%,50%)');
 let activePlayers = [];
 localStorage.setItem('playerName', playerName);
 
@@ -15,7 +15,7 @@ export {
 function addPlayerCursor(playerName, playerColor) {
   playerCursors[playerName] = document.createElement('div');
   playerCursors[playerName].className = 'cursor';
-  playerCursors[playerName].style.backgroundColor = playerColor;
+  playerCursors[playerName].style.backgroundColor = toHex(playerColor);
   playerCursors[playerName].style.transform = `translate(-50px, -50px)`;
   $('#roomArea').appendChild(playerCursors[playerName]);
 }
@@ -26,17 +26,17 @@ function fillPlayerList(players, active) {
 
   for(const player in players) {
     const entry = domByTemplate('template-playerlist-entry');
-    $('.teamColor', entry).value = players[player];
+    $('.teamColor', entry).value = toHex(players[player]);
     $('.playerName', entry).value = player;
     $('.teamColor', entry).addEventListener('change', function(e) {
-      toServer('playerColor', { player, color: e.target.value });
+      toServer('playerColor', { player, color: toHex(e.target.value) });
     });
     $('.playerName', entry).addEventListener('change', function(e) {
       toServer('rename', { oldName: player, newName: e.target.value });
     });
     if(player == playerName) {
       entry.className = 'myPlayerEntry';
-      playerColor = players[player];
+      playerColor = toHex(players[player]);
     }
     if(activePlayers.indexOf(player) == -1)
       entry.className = 'inactivePlayerEntry';
@@ -44,9 +44,14 @@ function fillPlayerList(players, active) {
     $('#playerList').appendChild(entry);
 
     if(player != playerName && activePlayers.indexOf(player) != -1)
-      addPlayerCursor(player, players[player]);
+      addPlayerCursor(player, toHex(players[player]));
   }
 }
+
+function toHex (color) {
+  const ctx = document.createElement('canvas').getContext('2d');
+  ctx.fillStyle = color;
+  return ctx.fillStyle;}
 
 onLoad(function() {
   onMessage('meta', args=>fillPlayerList(args.meta.players, args.activePlayers));

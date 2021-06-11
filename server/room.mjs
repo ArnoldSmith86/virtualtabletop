@@ -21,7 +21,7 @@ export default class Room {
     this.players.push(player);
 
     if(!this.state._meta.players[player.name])
-      this.state._meta.players[player.name] = '#ff0000';
+      this.state._meta.players[player.name] = 'hsl('+ Math.floor(Math.random()*360) +',100%,50%)';
 
     this.state._meta.deltaID = this.deltaID;
     player.send('state', this.state);
