@@ -21,7 +21,7 @@ export default class Room {
     this.players.push(player);
 
     if(!this.state._meta.players[player.name])
-      this.state._meta.players[player.name] = '#ff0000';
+      this.state._meta.players[player.name] = this.newPlayerColor();
 
     this.state._meta.deltaID = this.deltaID;
     player.send('state', this.state);
@@ -253,6 +253,44 @@ export default class Room {
 
   mouseMove(player, coords) {
     this.broadcast('mouse', { player: player.name, coords });
+  }
+
+  newPlayerColor() {
+    const hues = [];
+    for(const p in this.state._meta.players) {
+      const c = this.state._meta.players[p];
+      const r = parseInt(c.slice(1,3), 16) / 255;
+      const g = parseInt(c.slice(3,5), 16) / 255;
+      const b = parseInt(c.slice(5,7), 16) / 255;
+      const min = Math.min(r,g,b);
+      const max = Math.max(r,g,b);
+      if(min == max)
+        next;
+      if(r == max)
+        hues.push(Math.floor(360 + (g - b) * 60 / (max - min)) % 360)
+      else if(g == max)
+        hues.push(Math.floor(120 + (b - r) * 60 / (max - min)))
+      else
+        hues.push(Math.floor(240 + (r - g) * 60 / (max - min)));
+    }
+    if(hues.length == 0)
+      return this.hexFromHsl(Math.floor(Math.random() * 360), 100, 50); 
+    const gaps = hues.sort((a,b)=>a-b).map((h, i, a) => (i != (a.length - 1)) ? a[i + 1 ] - h : a[0] + 360 - h);
+    const gap = Math.max(...gaps);
+    if(gap > 180)
+      return this.hexFromHsl(Math.floor(Math.random() * (gap - 120) + hues[gaps.indexOf(gap)] + 60) % 360, 100, 50);
+    return this.hexFromHsl(Math.floor(Math.random() * gap / 3 + hues[gaps.indexOf(gap)] + gap / 3) % 360, 100, 50);
+  }
+
+  hexFromHsl(h, s, l) {
+    l /= 100;
+    const a = s * Math.min(l, 1 - l) / 100;
+    const f = n => {
+      const k = (n + h / 30) % 12;
+      const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+      return Math.round(255 * color).toString(16).padStart(2, '0');   // convert to Hex and prefix "0" if needed
+    };
+    return `#${f(0)}${f(8)}${f(4)}`;
   }
 
   receiveDelta(player, delta) {
