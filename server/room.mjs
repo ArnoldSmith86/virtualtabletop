@@ -277,8 +277,6 @@ export default class Room {
       return this.hexFromHsl(Math.floor(Math.random() * 360), 100, 50); 
     const gaps = hues.sort((a,b)=>a-b).map((h, i, a) => (i != (a.length - 1)) ? a[i + 1 ] - h : a[0] + 360 - h);
     const gap = Math.max(...gaps);
-    if(gap > 180)
-      return this.hexFromHsl(Math.floor(Math.random() * (gap - 120) + hues[gaps.indexOf(gap)] + 60) % 360, 100, 50);
     return this.hexFromHsl(Math.floor(Math.random() * gap / 3 + hues[gaps.indexOf(gap)] + gap / 3) % 360, 100, 50);
   }
 
