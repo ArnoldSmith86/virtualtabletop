@@ -318,7 +318,7 @@ const jeCommands = [
       const id = jeStateNow.id;
       jeStateNow = null;
       jeWidget = null;
-      await removeWidgetLocal(id, true);
+      await removeWidgetLocal(id);
       jeDisplayTree();
     }
   },
