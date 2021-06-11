@@ -812,6 +812,8 @@ async function jeApplyChangesMulti() {
             await setValueIfNeeded(w, key, currentState[key]);
           else if(currentState[key][w.get('id')] !== undefined)
             await setValueIfNeeded(w, key, currentState[key][w.get('id')]);
+          else
+            await setValueIfNeeded(w, key, currentState[key]);
         }
       }
     }
