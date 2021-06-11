@@ -1298,7 +1298,10 @@ function jeSelect(start, end) {
 
 function jeSet(text, dontFocus) {
   try {
-    $('#jeText').textContent = jePreProcessText(JSON.stringify(jePreProcessObject(JSON.parse(text)), null, '  '));
+    if(jeMode == 'widget')
+      $('#jeText').textContent = jePreProcessText(JSON.stringify(jePreProcessObject(JSON.parse(text)), null, '  '));
+    else
+      $('#jeText').textContent = text;
   } catch(e) {
     $('#jeText').textContent = text;
   }
