@@ -1049,6 +1049,12 @@ export class Widget extends StateManaged {
       showOverlay('debugButtonOverlay');
 
     batchEnd();
+
+    if(variables.playerColor != playerColor)
+      toServer('playerColor', { player: playerName, color: variables.playerColor });
+    if(variables.playerName != playerName)
+      toServer('rename', { oldName: playerName, newName: variables.playerName });
+
     return { variable: variables.result, collection: collections.result || [] };
   }
 
