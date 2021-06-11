@@ -278,7 +278,8 @@ export default class Room {
       hue = Math.floor(Math.random() * 360);
     } else {
       const gaps = hues.sort((a,b)=>a-b).map((h, i, a) => (i != (a.length - 1)) ? a[i + 1 ] - h : a[0] + 360 - h);
-      hue = Math.floor(Math.random() * gap / 3 + hues[gaps.indexOf(Math.max(...gaps))] + gap / 3) % 360;
+      const gap = Math.max(...gaps);
+      hue = Math.floor(Math.random() * gap / 3 + hues[gaps.indexOf(gap)] + gap / 3) % 360;
     }
     const f = n => {
       const k = (n + hue / 30) % 12;
