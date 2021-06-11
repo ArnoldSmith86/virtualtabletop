@@ -65,19 +65,23 @@ export class StateManaged {
   }
 
   async set(property, value) {
-    if(value === this.getDefaultValue(property) && !this.state.inheritFrom)
+    const JSONvalue = JSON.stringify(value);
+    if(JSONvalue === JSON.stringify(this.getDefaultValue(property)) && !this.state.inheritFrom)
       value = null;
-    if(this.state[property] === value || this.state[property] === undefined && value === null)
+    if(JSON.stringify(this.state[property]) === JSONvalue || this.state[property] === undefined && value === null)
       return;
 
-    if(property == 'z')
+    if(property == 'z') {
       updateMaxZ(this.get('layer'), value);
+      if(value > 90000)
+        return await resetMaxZ(this.get('layer'));
+    }
 
     const oldValue = this.state[property];
     if(value === null)
       delete this.state[property];
     else
-      this.state[property] = value;
+      this.state[property] = JSON.parse(JSONvalue);
     sendPropertyUpdate(this.get('id'), property, value);
     await this.onPropertyChange(property, oldValue, value);
     if(Array.isArray(this.get(`${property}ChangeRoutine`)))
