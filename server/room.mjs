@@ -263,16 +263,14 @@ export default class Room {
       const r = parseInt(hex.slice(1,3), 16) / 255;
       const g = parseInt(hex.slice(3,5), 16) / 255;
       const b = parseInt(hex.slice(5,7), 16) / 255;
-      const min = Math.min(r,g,b);
       const max = Math.max(r,g,b);
-      if((max - min) < .25)
-        next;
-      if(r == max)
-        hues.push((360 + (g - b) * 60 / (max - min)) % 360)
-      else if(g == max)
-        hues.push(120 + (b - r) * 60 / (max - min))
-      else
-        hues.push(240 + (r - g) * 60 / (max - min));
+      const d = max - Math.min(r,g,b);
+      if(d < .25) next;
+      switch(max) {
+        case r: hues.push((360 + (g - b) * 60 / d) % 360); break;
+        case g: hues.push(120 + (b - r) * 60 / d); break;
+        case b: hues.push(240 + (r - g) * 60 / d); break;
+      }
     }
     if(hues.length == 0) {
       hue = Math.random() * 360;
