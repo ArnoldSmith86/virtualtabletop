@@ -264,7 +264,7 @@ export default class Room {
       const b = parseInt(c.slice(5,7), 16) / 255;
       const min = Math.min(r,g,b);
       const max = Math.max(r,g,b);
-      if(min == max)
+      if((max - min) < .25)
         next;
       if(r == max)
         hues.push(Math.floor(360 + (g - b) * 60 / (max - min)) % 360)
