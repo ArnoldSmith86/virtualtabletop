@@ -71,6 +71,8 @@ class Holder extends Widget {
       for(const property in this.get('onEnter'))
         for(const w of toProcess)
           await w.set(property, this.get('onEnter')[property]);
+      if(Array.isArray(this.get('enterRoutine')))
+        await this.evaluateRoutine('enterRoutine', {}, { child: [ child ] });
     }
   }
 

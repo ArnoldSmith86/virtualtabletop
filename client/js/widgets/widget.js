@@ -1254,13 +1254,13 @@ export class Widget extends StateManaged {
       if(oldValue) {
         const oldParent = widgets.get(oldValue);
         await oldParent.onChildRemove(this);
-        if(this.get('type') != 'holder' && Array.isArray(oldParent.get('leaveRoutine')))
+        if(oldParent.get('type') != 'holder' && Array.isArray(oldParent.get('leaveRoutine')))
           await oldParent.evaluateRoutine('leaveRoutine', {}, { child: [ this ] });
       }
       if(newValue) {
         const newParent = widgets.get(newValue);
         await newParent.onChildAdd(this, oldValue);
-        if(Array.isArray(newParent.get('enterRoutine')))
+        if(newParent.get('type') != 'holder' && Array.isArray(newParent.get('enterRoutine')))
           await newParent.evaluateRoutine('enterRoutine', { oldParentID: oldValue === undefined ? null : oldValue }, { child: [ this ] });
       }
       if(!this.disablePileUpdateAfterParentChange)
