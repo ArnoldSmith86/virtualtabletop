@@ -995,6 +995,57 @@ function jeInsert(context, key, value) {
   }
 }
 
+// START routine logging
+
+let jeRoutineLogging = false;
+let jeRoutineResult = '';
+let jeLoggingHTML = null;
+let jeLoggingDepth = 0;
+
+function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference) {
+  if(!jeLoggingDepth)
+    jeLoggingHTML = '';
+  jeLoggingHTML += `
+    <div class="jeLog"><span class="jeLogWidget">${widget.get('id')}</span>
+    <span class="jeLogProperty">${typeof property == 'string' ? property : '--custom--'}</span>
+  `;
+  ++jeLoggingDepth;
+}
+
+function jeLoggingRoutineEnd(variables, collections) {
+  jeLoggingHTML += `</div>`;
+  --jeLoggingDepth;
+  if(!jeLoggingDepth)
+    jeShowCommands();
+}
+
+function jeLoggingRoutineOperation(original, applied, problems, variables, collections, skipped) {
+  const collDisplay = {};
+  for(const name in collections)
+    collDisplay[name] = collections[name].map(w=>`${w.get('id')} (${w.get('type')})`);
+
+  jeLoggingHTML += `
+    <div class="jeLogOperation ${skipped ? 'jeLogSkipped' : ''} ${problems.length ? 'jeLogHasProblems' : ''}">
+      <span class="jeLogName">${typeof applied == 'string' ? 'var' : applied.func}</span>
+      <span class="jeLogResult">${jeRoutineResult}</span>
+      <div class="jeLogDetails">
+        <h1>Problems              </h1><div class="jeLogProblems"   >${JSON.stringify(problems,    null, '  ')}</div>
+        <h1>Original Operation    </h1><div class="jeLogOriginal"   >${JSON.stringify(original,    null, '  ')}</div>
+        <h1>Applied  Operation    </h1><div class="jeLogApplied"    >${JSON.stringify(applied,     null, '  ')}</div>
+        <h1>Variables   afterwards</h1><div class="jeLogVariables"  >${JSON.stringify(variables,   null, '  ')}</div>
+        <h1>Collections afterwards</h1><div class="jeLogCollections">${JSON.stringify(collDisplay, null, '  ')}</div>
+      </div>
+    </div>
+  `;
+  jeRoutineResult = '';
+}
+
+function jeLoggingRoutineOperationResult(result) {
+  jeRoutineResult = result;
+}
+
+// END routine logging
+
 function jePasteText(text, select) {
   const aO = getSelection().anchorOffset;
   const fO = getSelection().focusOffset;
@@ -1183,6 +1234,8 @@ function jeShowCommands() {
     commandText += `\n<i class=error>Last command failed: ${String(jeCommandError)}</i>\n`;
   if(jeSecondaryWidget)
     commandText += `\n\n${jeSecondaryWidget}\n`;
+  if(jeLoggingHTML)
+    commandText += `\n\n${jeLoggingHTML}\n`;
   $('#jeCommands').innerHTML = commandText;
   on('#jeCommands button', 'click', clickButton);
 }
@@ -1196,6 +1249,7 @@ function jeToggle() {
     jeColorize();
   }
   jeEnabled = !jeEnabled;
+  jeRoutineLogging = jeEnabled;
   if(jeEnabled) {
     $('body').classList.add('jsonEdit');
   } else {
