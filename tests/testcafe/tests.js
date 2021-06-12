@@ -148,43 +148,79 @@ test('Dynamic expressions', async t => {
     "type": "button",
     "text": "DEAL",
     "clickRoutine": [`;
+    function shouldBe(a) {
+      switch((typeof a)) {
+        case 'object':
+          if (Array.isArray(a))
+            return a.length > 0 ? '['.concat(a.map(e => typeof e === 'string' ? '\n    \u0022' + e + '\u0022' : '\n    ' + e).join()).concat('\n  ]') : '[]';
+          else
+            return '{}'; // TODO: non-empty object
+        case 'string':
+          return '\u0022' + a + '\u0022';
+        case 'number':
+          return +a;
+        case 'boolean':
+          return '' + a;
+        default:
+          return 'null';
+      }
+    }
   const ops = [
-    ['var int = 1 // integer', 'int', '1'],
-    ['var float = 1.05 // number', 'float', '1.05'],
-    ['var nothing = null // null value', 'nothing', 'null'],
-    ['var text = \'abcd\' // string', 'text', '\"abcd\"'],
-    ['var bool = true // boolean', 'bool', true],
-    ['var list = [] // empty array', 'list', '[]'],
-    ['var obj = {} // object', 'obj', '{}'],
-    ['var a = \'foo\'', 'a', '\"foo\"'],
-    ['var b = ${a}', 'b', '\"foo\"'],
-    ['var c = ${a.1}', 'c', '\"o\"'],
-    ['var prop_name = \'x\'', 'prop_name', '\"x\"'],
-    ['var prop_widget = \'jyo6\'', 'prop_widget', '\"jyo6\"'],
-    ['var a = ${PROPERTY x}', 'a', '810'],
-    ['var b = ${PROPERTY x OF jyo6}', 'b', '810'],
-    ['var c = ${PROPERTY $prop_name OF $prop_widget}', 'c', '810'],
-    ['var a = ${text} == \'abcd\'', 'a', 'true'],
-    ['var b = ${int} < ${float}', 'b', 'true'],
-    ['var a = 1 + 2', 'a', '3'],
-    ['var b = \'read\' + \'me\'', 'b', '\"readme\"'],
-    ['var c = 100 / 2', 'c', '50'],
-    ['var d = ${int} * ${float}', 'd', '1.05'],
-    ['var a = \'split.me.up\' split \'.\'', 'a', '[\n    \"split\",\n    \"me\",\n    \"up\"\n  ]'],
-    ['var b = ${a.0} concat \'me\'', 'b', '\"splitme\"'],
-    ['var c = \'hello world\' substr 0 5', 'c', '\"hello\"'],
-    ['var d = max 7 2', 'd', '7'],
-    ['var e = random', 'e', '0.9742682568175951'],
-    ['var f = randRange 100 200 5', 'f', '120'],
-    ['var g = PI', 'g', '3.141592653589793'],
-    ['var a.$int = 2', 'a', '[\n    \"split\",\n    2,\n    \"up\"\n  ]'],
-    ['var $text = 2', 'abcd', '2'],
-    ['var a = nonexistant', 'a', 'null'],
-    ['var b = ${nonexistant_variable_name}', 'b', 'null'],
-    ['var c = ${PROPERTY nonexistant_property_name}', 'c', 'null'],
-    ['var d = ${PROPERTY x OF nonexistant_widget_id}', 'd', 'null'],
-    ['var e = ${list.999999}', 'e', 'null'],
-    ['var f = ${foo.bar}', 'f', 'null']
+    ['var int = 1 // integer', 'int', shouldBe(1)],
+    ['var float = 1.05 // number', 'float', shouldBe(1.05)],
+    ['var nothing = null // null value', 'nothing', shouldBe()],
+    ['var text = \'abcd\' // string', 'text', shouldBe('abcd')],
+    ['var bool = true // boolean', 'bool', shouldBe(true)],
+    ['var list = [] // empty array', 'list', shouldBe([])],
+    ['var obj = {} // object', 'obj', shouldBe({})],
+    ['var a = \'foo\'', 'a', shouldBe('foo')],
+    ['var b = ${a}', 'b', shouldBe('foo')],
+    ['var c = ${a.1}', 'c', shouldBe('o')],
+    ['var prop_name = \'x\'', 'prop_name', shouldBe('x')],
+    ['var prop_widget = \'jyo6\'', 'prop_widget', shouldBe('jyo6')],
+    ['var a = ${PROPERTY x}', 'a', shouldBe(810)],
+    ['var b = ${PROPERTY x OF jyo6}', 'b', shouldBe(810)],
+    ['var c = ${PROPERTY $prop_name OF $prop_widget}', 'c', shouldBe(810)],
+    ['var a = ${text} == \'abcd\'', 'a', shouldBe(true)],
+    ['var b = ${int} < ${float}', 'b', shouldBe(true)],
+    ['var a = 1 + 2', 'a', shouldBe(3)],
+    ['var b = \'read\' + \'me\'', 'b', shouldBe('readme')],
+    ['var c = 100 / 2', 'c', shouldBe(50)],
+    ['var d = ${int} * ${float}', 'd', shouldBe(1.05)],
+    ['var a = \'split.me.up\' split \'.\'', 'a', shouldBe(["split","me","up"])],
+    ['var b = ${a.0} concat \'me\'', 'b', shouldBe('splitme')],
+    ['var c = \'hello world\' substr 0 5', 'c', shouldBe('hello')],
+    ['var d = max 7 2', 'd', shouldBe(7)],
+    ['var e = random', 'e', shouldBe(0.9742682568175951)],
+    ['var f = randRange 100 200 5', 'f', shouldBe(120)],
+    ['var g = PI', 'g', shouldBe(3.141592653589793)],
+    ['var a.$int = 2', 'a', shouldBe(["split",2,"up"])],
+    ['var $text = 2', 'abcd', shouldBe(2)],
+    ['var a = nonexistant', 'a', shouldBe()],
+    ['var b = ${nonexistant_variable_name}', 'b', shouldBe()],
+    ['var c = ${PROPERTY nonexistant_property_name}', 'c', shouldBe()],
+    ['var d = ${PROPERTY x OF nonexistant_widget_id}', 'd', shouldBe()],
+    ['var e = ${list.999999}', 'e', shouldBe()],
+    ['var f = ${foo.bar}', 'f', shouldBe()],
+    ['var a = []', 'a', shouldBe([])],
+    ['var a = push 1', 'a', shouldBe([1])],
+    ['var a = push 3', 'a', shouldBe([1,3])],
+    ['var a = insert 2 1', 'a', shouldBe([1,2,3])],
+    ['var test = 2 in ${a}', 'test', shouldBe(true)],
+    ['var test = ${a} includes 2', 'test', shouldBe(true)],
+    ['var a = remove 1 2', 'a', shouldBe([1])],
+    ['var test = 2 in ${a}', 'test', shouldBe(false)],
+    ['var test = ${a} includes 2', 'test', shouldBe(false)],
+    ['var b = \'ac\'', 'b', shouldBe('ac')],
+    ['var b = insert \'b\' 1', 'b', shouldBe('abc')],
+    ['var test = \'b\' in ${b}', 'test', shouldBe(true)],
+    ['var test = ${b} includes \'b\'', 'test', shouldBe(true)],
+    ['var m = ${b} match \'a.c\'', 'm', shouldBe(['abc'])],
+    ['var b = remove 1 2', 'b', shouldBe('a')],
+    ['var test = \'b\' in ${b}', 'test', shouldBe(false)],
+    ['var test = ${b} includes \'b\'', 'test', shouldBe(false)],
+    ['var c = from ${b}', 'c', shouldBe(['a'])],
+    ['var c = parseFloat \'0.3\'', 'c', shouldBe(0.3)]
   ];
 
   ops.forEach((o)=>{
