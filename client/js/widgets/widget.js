@@ -331,6 +331,9 @@ export class Widget extends StateManaged {
         await callback(a);
     }
 
+    if(this.isBeingRemoved || this.inRemovalQueue)
+      return;
+
     batchStart();
 
     if(this.get('debug') && !depth)
