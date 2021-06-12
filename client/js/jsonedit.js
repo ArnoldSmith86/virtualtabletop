@@ -928,6 +928,7 @@ function jeGetContext() {
     jeJSONerror = e;
   }
 
+  // go through all the lines up until the cursor and use the indentation to figure out the context
   let keys = [ t ];
   for(const line of v.split('\n').slice(0, v.substr(0, s).split('\n').length)) {
     const m = line.match(/^( +)(["{])([^"]*)/);
@@ -940,6 +941,20 @@ function jeGetContext() {
     if(mClose)
       keys = keys.slice(0, mClose[1].length/2+1);
   }
+
+  // make sure the context actually exists in the widget
+  if(!jeJSONerror) {
+    let pointer = jeStateNow;
+    for(let i=1; i<keys.length; ++i) {
+      if(pointer[keys[i]] === undefined) {
+        keys = keys.slice(0, i);
+        break;
+      }
+      pointer = pointer[keys[i]];
+    }
+  }
+
+  // insert the operation type as a virtual key so commands can check which operation they're in
   try {
     for(let i=1; i<keys.length-1; ++i) {
       if(String(keys[i]).match(/Routine$/) && typeof keys[i+1] == 'number' && !jeJSONerror) {
