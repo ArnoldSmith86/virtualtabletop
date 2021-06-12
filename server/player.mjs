@@ -19,6 +19,9 @@ export default class Player {
   }
 
   messageReceived = async (func, args) => {
+    if([ 'delta', 'mouse', 'trace' ].indexOf(func) == -1)
+      this.trace('messageReceived', { func, args });
+
     try {
       if(func == 'confirm')
         this.waitingForStateConfirmation = false;
@@ -28,8 +31,6 @@ export default class Player {
         await this.room.editState(this, args.id, args.meta);
       if(func == 'loadState')
         await this.room.loadState(this, args.stateID, args.variantID);
-      if(func == 'log')
-        Logging.log([ this.name, args ]);
       if(func == 'mouse')
         this.room.mouseMove(this, args);
       if(func == 'playerColor')
@@ -38,6 +39,8 @@ export default class Player {
         this.room.removeState(this, args);
       if(func == 'rename')
         this.room.renamePlayer(this, args.oldName, args.newName);
+      if(func == 'trace')
+        this.trace('client', args);
     } catch(e) {
       Logging.handleWebSocketException(func, args, e);
       this.send('internal_error', func);
@@ -90,5 +93,12 @@ export default class Player {
       this.latestDeltaIDbyDifferentPlayer = args.id;
     }
     this.connection.toClient(func, args);
+  }
+
+  trace(source, payload) {
+    if(this.room.enableTracing || source == 'client' && payload.type == 'enable') {
+      payload.player = this.name;
+      this.room.trace(source, payload);
+    }
   }
 }

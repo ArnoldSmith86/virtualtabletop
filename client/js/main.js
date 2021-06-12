@@ -248,8 +248,3 @@ window.onkeyup = function(event) {
       jeToggle();
   }
 }
-
-window.onerror = function(msg, url, line, col, err) {
-  log(`ERROR ${msg} < ${err.stack.trim().replace(/\n/g, ' < ')}`);
-  location.reload();
-}
