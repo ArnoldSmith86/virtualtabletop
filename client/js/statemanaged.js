@@ -32,6 +32,9 @@ export class StateManaged {
   }
 
   getDefaultValue(key) {
+    for(const [ id, properties ] of Object.entries(this.inheritFrom()))
+      if((properties == '*' || properties.indexOf(key) != -1) && widgets.has(id) && widgets.get(id).get(key) !== undefined)
+        return widgets.get(id).get(key);
     return this.defaults[key];
   }
 
@@ -42,9 +45,28 @@ export class StateManaged {
       return this.getDefaultValue(property) !== undefined ? this.getDefaultValue(property) : null;
   }
 
+  inheritFrom() {
+    const iF = this.state.inheritFrom;
+    if(!iF)
+      return {};
+
+    if(typeof iF == 'string') {
+      const object = {};
+      object[iF] = '*';
+      return object;
+    } else {
+      return iF;
+    }
+  }
+
+  inheritFromUnregister() {
+    for(const wID in StateManaged.inheritFromMapping)
+      StateManaged.inheritFromMapping[wID] = StateManaged.inheritFromMapping[wID].filter(i=>i!=this);
+  }
+
   async set(property, value) {
     const JSONvalue = JSON.stringify(value);
-    if(JSONvalue === JSON.stringify(this.getDefaultValue(property)))
+    if(JSONvalue === JSON.stringify(this.getDefaultValue(property)) && !this.state.inheritFrom)
       value = null;
     if(JSON.stringify(this.state[property]) === JSONvalue || this.state[property] === undefined && value === null)
       return;
@@ -74,3 +96,5 @@ export class StateManaged {
     await this.set('z', z);
   }
 }
+
+StateManaged.inheritFromMapping = {};
