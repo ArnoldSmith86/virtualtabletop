@@ -114,3 +114,10 @@ body.edit .widget > .widget {
   width: 40px;
   text-align: right;
 }
+
+.flexContainer {
+  margin-top: 1em;
+  display: flex;
+  flex-flow: row wrap;
+  column-gap: 0.7em;
+}
