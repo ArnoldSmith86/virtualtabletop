@@ -1238,7 +1238,7 @@ window.addEventListener('keydown', async function(e) {
         id = `"${id}"`;
       jePasteText(id, true);
     } else {
-      jeSelectWidget(jeWidgetLayers[+functionKey[1]], false, jeState.shift);
+      jeSelectWidget(jeWidgetLayers[+functionKey[1]], false, e.shiftKey);
     }
   }
 });
