@@ -491,6 +491,11 @@ async function onClickUpdateWidget(applyChangesFromUI) {
       return;
     }
 
+    if(widget.parent !== undefined && (widget.parent === null || !widgets.has(widget.parent))) {
+      alert(`Parent widget ${widget.parent} does not exist.`);
+      return;
+    }
+
     if(applyChangesFromUI)
       await applyEditOptions(widget);
 
@@ -599,7 +604,14 @@ onLoad(function() {
   on('#uploadToken', 'click', _=>uploadWidget('token'));
 
   on('#addWidget', 'click', function() {
-    addWidgetLocal(JSON.parse($('#widgetText').value));
+    const widget = JSON.parse($('#widgetText').value);
+
+    if(widget.parent !== undefined && (widget.parent === null || !widgets.has(widget.parent))) {
+      alert(`Parent widget ${widget.parent} does not exist.`);
+      return;
+    }
+
+    addWidgetLocal(widget);
     showOverlay();
   });
 
