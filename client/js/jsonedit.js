@@ -434,6 +434,7 @@ function jeAddRoutineOperationCommands(command, defaults) {
 function jeAddCommands() {
   jeAddWidgetPropertyCommands(new BasicWidget());
   jeAddWidgetPropertyCommands(new Button());
+  jeAddWidgetPropertyCommands(new Canvas());
   jeAddWidgetPropertyCommands(new Card());
   jeAddWidgetPropertyCommands(new Deck());
   jeAddWidgetPropertyCommands(new Holder());
@@ -443,6 +444,7 @@ function jeAddCommands() {
   jeAddWidgetPropertyCommands(new Timer());
 
   jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result' });
+  jeAddRoutineOperationCommands('CANVAS', { canvas: null, mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6' });
   jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 , mode:'respect'});
   jeAddRoutineOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT' });
   jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, properties: null });
@@ -472,8 +474,9 @@ function jeAddCommands() {
   jeAddFaceCommand('css', '', '');
   jeAddFaceCommand('radius', ' (rounded corners)', 1);
 
-  jeAddEnumCommands('^[a-z]+ ↦ type', [ null, 'button', 'card', 'deck', 'holder', 'label', 'spinner', 'timer' ]);
+  jeAddEnumCommands('^[a-z]+ ↦ type', [ null, 'button', 'canvas', 'card', 'deck', 'holder', 'label', 'spinner', 'timer' ]);
   jeAddEnumCommands('^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ textAlign', [ 'left', 'center', 'right' ]);
+  jeAddEnumCommands('^.*\\(CANVAS\\) ↦ mode', [ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ]);
   jeAddEnumCommands('^.*\\(CLICK\\) ↦ mode', [ 'respect', 'ignoreClickable', 'ignoreClickRoutine', 'ignoreAll' ]);
   jeAddEnumCommands('^.*\\(FLIP\\) ↦ faceCycle', [ 'forward', 'backward', 'random' ]);
   jeAddEnumCommands('^.*\\(GET\\) ↦ aggregation', [ 'first', 'last', 'array', 'average', 'median', 'min', 'max', 'sum' ]);
@@ -867,7 +870,7 @@ function jeGetContext() {
   const v = $('#jeText').textContent;
   const t = jeStateNow && jeStateNow.type || 'basic';
 
-  const select = v.substr(s, e-s).replace(/\n/g, '\\n');
+  const select = v.substr(s, Math.min(e-s, 100)).replace(/\n/g, '\\n');
   const line = v.split('\n')[v.substr(0, s).split('\n').length-1];
 
   if(jeMode == 'tree') {

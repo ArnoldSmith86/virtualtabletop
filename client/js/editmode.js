@@ -15,6 +15,58 @@ function addWidgetLocal(widget) {
   sendDelta(true);
 }
 
+//canvas functions
+function populateEditOptionsCanvas(widget) {
+  const cm = widget.colorMap || Canvas.defaultColors
+  const ctx = document.createElement('canvas').getContext('2d');
+
+  for(let i=0; i<10; ++i) {
+    $a('.colorComponent > [type=radio]')[i].checked = widget.activeColor == i;
+    // using canvas fillStyle to turn color names into hex colors
+    ctx.fillStyle = cm[i] || Canvas.defaultColors[i];
+    $a('.colorComponent > [type=color]')[i].value = ctx.fillStyle;
+  }
+
+  $('#canvasColorReset').checked = false;
+}
+
+function applyEditOptionsCanvas(widget) {
+  if(!Array.isArray(widget.colorMap))
+    widget.colorMap = [];
+  for(let i=0; i<10; ++i) {
+    if($a('.colorComponent > [type=radio]')[i].checked)
+      widget.activeColor = i;
+    widget.colorMap[i] = $a('.colorComponent > [type=color]')[i].value;
+  }
+
+  if($('#canvasColorReset').checked){
+    for(const choice of $a('#canvasPresets > [name=canvasPresets]')) {
+      if(choice.selected) {
+        switch(choice.value) {
+          case "original":
+          widget.colorMap = ["#F0F0F0","#1F5CA6","#000000","#FF0000","#008000","#FFFF00","#FFA500","#FFC0CB","#800080","#A52A2A"];
+          break;
+          case "pieces":
+          widget.colorMap = ["#F0F0F0","#1F5CA6","#4A4A4A","#000000","#E84242","#E2A633","#E0CB0B","#23CA5B","#4C5FEA","#BC5BEE"];
+          break;
+          case "basic":
+          widget.colorMap = ["#FFFFFF","#000000","#FF0000","#FF8000","#FFFF00","#00FF00","#00FFFF","#0000FF","#8000FF","#FF00FF"];
+          break;
+          case "pencil":
+          widget.colorMap = ["#FFFFFF","#000000","#8B3003","#E52C2C","#F08A38","#FAE844","#71C82A","#1F5CA6","#775094","#CD36BC"];
+          break;
+          case "pastel":
+          widget.colorMap = ["#FFFFFF","#7A7A7A","#FFADAD","#FFD6A5","#FDFFB6","#CAFFBF","#9BF6FF","#A0C4FF","#BDB2FF","#FFC6FF"];
+          break;
+          case "grey":
+          widget.colorMap = ["#FFFFFF","#E0E0E0","#C4C4C4","#A8A8A8","#8C8C8C","#707070","#545454","#383838","#1C1C1C","#000000"];
+          break;
+        }
+      }
+    }
+  }
+}
+
 async function applyEditOptionsDeck(widget) {
   for(const type of $a('#cardTypesList tr.cardType')) {
     const id = $('.id', type).value;
@@ -90,6 +142,9 @@ function applyEditOptionsTimer(widget) {
 }
 
 async function applyEditOptions(widget) {
+
+  if(widget.type == 'canvas')
+    applyEditOptionsCanvas(widget);
   if(widget.type == 'deck')
     await applyEditOptionsDeck(widget);
   if(widget.type == 'holder')
@@ -114,6 +169,9 @@ function editClick(widget) {
 
   vmEditOverlay.selectedWidget = widget
 
+
+  if(type == 'canvas')
+    populateEditOptionsCanvas(widget.state);
   if(type == 'holder')
     populateEditOptionsHolder(widget.state);
   if(type == 'timer')
@@ -254,6 +312,7 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
   for(const wi of widgetsToAdd) {
     let w = null;
     if(wi.type == 'button') w = new Button(wi.id);
+    if(wi.type == 'canvas') w = new Canvas(wi.id);
     if(wi.type == 'card')   w = new Card(wi.id);
     if(wi.type == 'deck')   w = new Deck(wi.id);
     if(wi.type == 'holder') w = new Holder(wi.id);
@@ -369,7 +428,7 @@ function populateAddWidgetOverlay() {
     y: 300
   });
 
-  y = 100;
+  y = 130;
   for(const sides of [ 2, 4, 6, 8, 10, 12, 20 ]) {
     addWidgetToAddWidgetOverlay(new Spinner('add-spinner'+sides), {
       type: 'spinner',
@@ -594,6 +653,118 @@ onLoad(function() {
       width: 1500,
       height: 180
     });
+    showOverlay();
+  });
+
+  on('#addCanvas', 'click', function() {
+    var id = generateUniqueWidgetID()
+    addWidgetLocal({
+      type: "canvas",
+      id: id,
+
+      x: 400,
+      y: 100,
+      width: 800,
+      height: 800,
+
+      c00: "*01001001001/1%/1.01.010",
+      c01: ",01&,1/0101*1/1+1.1'0",
+      c10: ",,1()0",
+      c11: "0*1()0",
+      c13: "+-01$/10",
+      c14: "01/1.1/1/1.1/1/1.1/1.101.1.101.1.101.1-1-1-1-1.010",
+      c15: ".1$0",
+      c20: ",,1()0",
+      c21: "0*1()0",
+      c23: ".-01()0",
+      c24: "./1/1+1-101/11010110101/101-1/101-1/101,10",
+      c25: "1()0",
+      c30: "+01(*1/1/1.1/10101101(/11.1/101-1/1/10",
+      c31: "*011/1-1/101-1-11.1-101101-1-1/101,11/10",
+      c33: ".-01()0",
+      c34: "/-1/101(/1/1-101/101'01/101/1/11.1(0",
+      c35: "1()0",
+      c40: "+/1.1(/10101-101.11/11+10101/1(.10",
+      c41: "/-1/1(/1101-101/101'01/101/101/1/1(010",
+      c43: ".-01()0",
+      c44: "/1$01-1-1-1-1-101'-1-1-101'-101.1.1/110",
+      c45: "1()0",
+      c50: ".1/01+1/11+101+1/1/01+1.10",
+      c51: "/-1.1(/10101/101/101/10110101/101/1/1(/1+1*1(0",
+      c53: ".-01()0",
+      c54: ",01-1-1-1-1-1/101(/1/101/101/101/101/101(.10",
+      c55: "1()0",
+      c61: "0/11*1/1/1.1+1/1-1(/1-1-1/1011-110",
+      c63: ".-01()0",
+      c64: "0/1/01,11/11/11/101/101'01/101-1/1/11.1/10",
+      c65: "1()0",
+      c71: "*01/01,11/1.11/101/1-101/1-101/1/11.1/110",
+      c73: ".-01()0",
+      c74: "/-1/1(,101/1-101/1-101(/101/1/01/010",
+      c75: "110101&0",
+      c81: "--101,101101-101*101/010",
+      c83: ".-01%.010",
+      c84: "*1/1+1,11/1/101/101/101/101/101/101/1/11/1/01/010010",
+      c85: "1%0"
+    })
+    addWidgetLocal({
+      type: "button",
+      id: id+"-Reset",
+
+      parent: id,
+
+      x: -50,
+      y: 0,
+      width: 50,
+      height: 50,
+
+      movable: false,
+      movableInEdit: false,
+
+      clickRoutine: [
+        {
+          func: "CANVAS",
+          canvas: "${PROPERTY parent}",
+          mode: "reset"
+        }
+      ],
+      css: "border-radius: 50% 0% 0% 0%;  border-width: 1px;  --wcBorder: #555; --wcBorderOH: black; --wcMainOH: #0d2f5e; ",
+      text: "Reset"
+    })
+    addWidgetLocal({
+      type: "button",
+      id: id+"-Color",
+
+      parent: id,
+
+      x: -50,
+      y: 50,
+      width: 50,
+      height: 50,
+
+      movable: false,
+      movableInEdit: false,
+
+      clickRoutine: [
+        "var parent = ${PROPERTY parent}",
+        {
+          func: "CANVAS",
+          canvas: '${parent}',
+          mode: "inc",
+          value: 1
+        },
+        "var color = ${PROPERTY colorMap OF $parent} getIndex ${PROPERTY activeColor OF $parent}",
+        {
+          func: "SET",
+          collection: "thisButton",
+          property: "color",
+          value: "${color}"
+        }
+      ],
+      color: "#1F5CA6",
+      css: "border-radius: 0% 0% 0% 50%;  border-width: 1px; background-color: var(--color);  --wcBorder: #555; --wcBorderOH: black  "
+    }
+    );
     showOverlay();
   });
 
