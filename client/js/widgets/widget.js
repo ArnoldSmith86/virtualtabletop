@@ -1050,10 +1050,14 @@ export class Widget extends StateManaged {
 
     batchEnd();
 
-    if(variables.playerColor != playerColor && typeof variables.playerColor == 'string')
+    if(variables.playerColor != playerColor && typeof variables.playerColor == 'string' && variables.playerColor.match(/^#[0-9a-fA-F]{6}$/)) {
       toServer('playerColor', { player: playerName, color: variables.playerColor });
-    if(variables.playerName != playerName && typeof variables.playerName == 'string')
+      playerColor = variables.playerColor;
+    }
+    if(variables.playerName != playerName && typeof variables.playerName == 'string') {
       toServer('rename', { oldName: playerName, newName: variables.playerName });
+      playerName = variables.playerName;
+    }
 
     return { variable: variables.result, collection: collections.result || [] };
   }
