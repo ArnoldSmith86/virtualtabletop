@@ -1309,60 +1309,8 @@ export class Widget extends StateManaged {
       $('#buttonInputFields').innerHTML = '';
 
       for(const field of o.fields) {
-
         const dom = document.createElement('div');
-
-        if(field.type == 'checkbox') {
-          const input = document.createElement('input');
-          const label = document.createElement('label');
-          input.type = 'checkbox';
-          input.checked = field.value || false;
-          label.textContent = field.label;
-          dom.appendChild(input);
-          dom.appendChild(label);
-          label.htmlFor = input.id = this.get('id') + ';' + field.variable;
-        }
-
-        if(field.type == 'color') {
-          const input = document.createElement('input');
-          const label = document.createElement('label');
-          input.type = 'color';
-          input.value = field.value || '#ff0000';
-          label.textContent = field.label;
-          dom.appendChild(label);
-          dom.appendChild(input);
-          label.htmlFor = input.id = this.get('id') + ';' + field.variable;
-        }
-
-        if(field.type == 'number') {
-          const input = document.createElement('input');
-          const label = document.createElement('label');
-          input.type = 'number';
-          input.value = field.value || 1;
-          input.min = field.min || 1;
-          input.max = field.max || 10;
-          label.textContent = field.label;
-          dom.appendChild(label);
-          dom.appendChild(input);
-          label.htmlFor = input.id = this.get('id') + ';' + field.variable;
-        }
-
-        if(field.type == 'string') {
-          const input = document.createElement('input');
-          const label = document.createElement('label');
-          input.value = field.value || "";
-          label.textContent = field.label;
-          dom.appendChild(label);
-          dom.appendChild(input);
-          label.htmlFor = input.id = this.get('id') + ';' + field.variable;
-        }
-
-        if(field.type == 'text') {
-          const p = document.createElement('p');
-          p.textContent = field.text;
-          dom.appendChild(p);
-        }
-
+        formField(field, dom, this.get('id') + ';' + field.variable);
         $('#buttonInputFields').appendChild(dom);
       }
 
@@ -1425,6 +1373,8 @@ export class Widget extends StateManaged {
             width: this.get('width'),
             height: this.get('height')
           };
+          if(this.get('owner') !== null)
+            pile.owner = this.get('owner');
           addWidgetLocal(pile);
           await this.set('parent', pile.id);
           await widget.set('parent', pile.id);
