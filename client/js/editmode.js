@@ -63,7 +63,7 @@ function applyEditOptionsCanvas(widget) {
           break;
         }
       }
-    }
+    });
   }
 }
 
