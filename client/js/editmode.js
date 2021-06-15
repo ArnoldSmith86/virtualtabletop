@@ -40,9 +40,9 @@ function applyEditOptionsCanvas(widget) {
   }
 
   if($('#canvasColorReset').checked){
-    $a('#canvasPresets > [name=canvasPresets]').each(function(){
-      if($a(this).selected) {
-        switch($a(this).value) {
+    for(const choice in $a('#canvasPresets > [name=canvasPresets]')) {
+      if(choice.selected) {
+        switch(choice.value) {
           case "original":
           widget.colorMap = ["#F0F0F0","#1F5CA6","#000000","#FF0000","#008000","#FFFF00","#FFA500","#FFC0CB","#800080","#A52A2A"];
           break;
@@ -63,7 +63,7 @@ function applyEditOptionsCanvas(widget) {
           break;
         }
       }
-    });
+    }
   }
 }
 
