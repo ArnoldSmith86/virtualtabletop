@@ -468,18 +468,27 @@ function populateAddWidgetOverlay() {
   });
 }
 
-async function removeWidgetLocal(widgetID, removeChildren) {
-  if(removeChildren)
-    for(const [ childWidgetID, childWidget ] of widgets)
-      if(childWidget.get('parent') == widgetID || childWidget.get('deck') == widgetID)
-        await removeWidgetLocal(childWidgetID, removeChildren);
-  if(widgets.has(widgetID)) {
-    const w = widgets.get(widgetID);
+async function removeWidgetLocal(widgetID, keepChildren) {
+  function getWidgetsToRemove(widgetID) {
+    const children = [];
+    if(!keepChildren)
+      for(const [ childWidgetID, childWidget ] of widgets)
+        if(!childWidget.inRemovalQueue && (childWidget.get('parent') == widgetID || childWidget.get('deck') == widgetID))
+          children.push(...getWidgetsToRemove(childWidgetID));
+    widgets.get(widgetID).inRemovalQueue = true;
+    children.push(widgets.get(widgetID));
+    return children;
+  }
+
+  if(widgets.get(widgetID).inRemovalQueue)
+    return;
+
+  for(const w of getWidgetsToRemove(widgetID)) {
     w.isBeingRemoved = true;
     // don't actually set deck and parent to null (only pretend to) because when "receiving" the delta, the applyRemove has to find the parent
     await w.onPropertyChange('deck', w.get('deck'), null);
     await w.onPropertyChange('parent', w.get('parent'), null);
-    sendPropertyUpdate(widgetID, null);
+    sendPropertyUpdate(w.id, null);
   }
 }
 
@@ -523,7 +532,7 @@ async function onClickUpdateWidget(applyChangesFromUI) {
         sendPropertyUpdate(child.get('id'), 'parent', null);
       for(const card of cards)
         sendPropertyUpdate(card.get('id'), 'deck', null);
-      await removeWidgetLocal(previousState.id);
+      await removeWidgetLocal(previousState.id, true);
     } else {
       for(const key in previousState)
         if(widget[key] === undefined)
@@ -596,10 +605,10 @@ function onClickDuplicateWidget() {
 }
 
 async function onClickRemoveWidget() {
-    if(confirm('Really remove?')) {
-      await removeWidgetLocal(JSON.parse($('#editWidgetJSON').dataset.previousState).id, true);
-      showOverlay();
-    }
+  if(confirm('Really remove?')) {
+    await removeWidgetLocal(JSON.parse($('#editWidgetJSON').dataset.previousState).id);
+    showOverlay();
+  }
 }
 
 function onClickManualEditWidget() {

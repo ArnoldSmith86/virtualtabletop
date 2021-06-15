@@ -121,8 +121,8 @@ export class Widget extends StateManaged {
   }
 
   applyRemove() {
-    if(this.get('parent') && widgets.has(this.get('parent')))
-      widgets.get(this.get('parent')).applyChildRemove(this);
+    if(this.parent)
+      this.parent.applyChildRemove(this);
     if(this.get('deck') && widgets.has(this.get('deck')))
       widgets.get(this.get('deck')).removeCard(this);
     removeFromDOM(this.domElement);
@@ -330,6 +330,9 @@ export class Widget extends StateManaged {
       for(const a of widgetFilter(w=>toA(ids).indexOf(w.get('id')) != -1))
         await callback(a);
     }
+
+    if(this.isBeingRemoved || this.inRemovalQueue)
+      return;
 
     batchStart();
 
