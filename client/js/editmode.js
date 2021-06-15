@@ -40,7 +40,7 @@ function applyEditOptionsCanvas(widget) {
   }
 
   if($('#canvasColorReset').checked){
-    for(let i=0; i<5; ++i) {
+    for(let i=0; i<6; ++i) {
       if($a('#canvasPresets > [name=canvasPresets]')[i].selected){
         var value = $a('#canvasPresets > [name=canvasPresets]')[i].value;
         if (value == "original"){
