@@ -40,7 +40,7 @@ function applyEditOptionsCanvas(widget) {
   }
 
   if($('#canvasColorReset').checked){
-    for(const choice in $a('#canvasPresets > [name=canvasPresets]')) {
+    for(const choice of $a('#canvasPresets > [name=canvasPresets]')) {
       if(choice.selected) {
         switch(choice.value) {
           case "original":
