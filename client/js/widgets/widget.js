@@ -456,6 +456,47 @@ export class Widget extends StateManaged {
         }
       }
 
+      if(a.func == 'CANVAS') {
+        setDefaults(a, { mode: 'reset', x: 0, y: 0, value: 1, color: "#1F5CA6" });
+
+        if([ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ].indexOf(a.mode) == -1)
+          problems.push(`Warning: Mode ${a.mode} will be interpreted as inc.`);
+
+        const execute = async function(widget) {
+          if(widget.get('type') == 'canvas') {
+            if(a.mode == 'setPixel')
+              await widget.setPixel(a.x, a.y, a.value);
+            else if(a.mode == 'set')
+              await widget.set('activeColor', a.value % widget.get('colorMap').length);
+            else if(a.mode == 'reset')
+              await widget.reset();
+            else if(a.mode == 'dec')
+              await widget.set('activeColor', (widget.get('activeColor')+widget.get('colorMap').length - (a.value % widget.get('colorMap').length)) % widget.get('colorMap').length);
+            else if(a.mode == 'change') {
+              var CM = widget.get('colorMap');
+              var index = ((a.value || 1) % CM.length) || 0;
+              CM[index] = a.color || '#1f5ca6' ;
+              await widget.set('colorMap', CM);
+            }
+            else
+              await widget.set('activeColor', (widget.get('activeColor')+ a.value) % widget.get('colorMap').length);
+          }
+        };
+
+        if(a.canvas !== undefined) {
+          if(this.isValidID(a.canvas, problems)) {
+            await w(a.canvas, execute);
+          }
+        } else if(isValidCollection(a.collection)) {
+          if(collections[a.collection].length) {
+            for(const c of collections[a.collection].slice(0, a.count || 999999))
+              await execute(c);
+          } else {
+            problems.push(`Collection ${a.collection} is empty.`);
+          }
+        }
+      }
+
       if(a.func == 'CLICK') {
         setDefaults(a, { collection: 'DEFAULT', count: 1 , mode: 'respect' });
         if (['respect', 'ignoreClickable', 'ignoreClickRoutine', 'ignoreAll'].indexOf(a.mode) == -1) {
@@ -1271,60 +1312,8 @@ export class Widget extends StateManaged {
       $('#buttonInputFields').innerHTML = '';
 
       for(const field of o.fields) {
-
         const dom = document.createElement('div');
-
-        if(field.type == 'checkbox') {
-          const input = document.createElement('input');
-          const label = document.createElement('label');
-          input.type = 'checkbox';
-          input.checked = field.value || false;
-          label.textContent = field.label;
-          dom.appendChild(input);
-          dom.appendChild(label);
-          label.htmlFor = input.id = this.get('id') + ';' + field.variable;
-        }
-
-        if(field.type == 'color') {
-          const input = document.createElement('input');
-          const label = document.createElement('label');
-          input.type = 'color';
-          input.value = field.value || '#ff0000';
-          label.textContent = field.label;
-          dom.appendChild(label);
-          dom.appendChild(input);
-          label.htmlFor = input.id = this.get('id') + ';' + field.variable;
-        }
-
-        if(field.type == 'number') {
-          const input = document.createElement('input');
-          const label = document.createElement('label');
-          input.type = 'number';
-          input.value = field.value || 1;
-          input.min = field.min || 1;
-          input.max = field.max || 10;
-          label.textContent = field.label;
-          dom.appendChild(label);
-          dom.appendChild(input);
-          label.htmlFor = input.id = this.get('id') + ';' + field.variable;
-        }
-
-        if(field.type == 'string') {
-          const input = document.createElement('input');
-          const label = document.createElement('label');
-          input.value = field.value || "";
-          label.textContent = field.label;
-          dom.appendChild(label);
-          dom.appendChild(input);
-          label.htmlFor = input.id = this.get('id') + ';' + field.variable;
-        }
-
-        if(field.type == 'text') {
-          const p = document.createElement('p');
-          p.textContent = field.text;
-          dom.appendChild(p);
-        }
-
+        formField(field, dom, this.get('id') + ';' + field.variable);
         $('#buttonInputFields').appendChild(dom);
       }
 
@@ -1387,6 +1376,8 @@ export class Widget extends StateManaged {
             width: this.get('width'),
             height: this.get('height')
           };
+          if(this.get('owner') !== null)
+            pile.owner = this.get('owner');
           addWidgetLocal(pile);
           await this.set('parent', pile.id);
           await widget.set('parent', pile.id);
