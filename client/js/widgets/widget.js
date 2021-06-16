@@ -244,7 +244,7 @@ export class Widget extends StateManaged {
       reject(result);
   }
 
-  async evaluateRoutine(property, initialVariables, initialCollections, initialLegacyMode, depth, byReference) {
+  async evaluateRoutine(property, initialVariables, initialCollections, depth, initialLegacyMode, byReference) {
     function unescape(str) {
       if(typeof str != 'string')
         return str;
@@ -458,7 +458,7 @@ export class Widget extends StateManaged {
               inheritCollections[c] = [ ...collections[c] ];
             inheritCollections['caller'] = [ this ];
             $('#debugButtonOutput').textContent += `\n\n\nCALLing: ${a.widget}.${a.routine}\n`;
-            const result = await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections, null, (depth || 0) + 1);
+            const result = await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections, (depth || 0) + 1);
             variables[a.variable] = result.variable;
             collections[a.collection] = result.collection;
           }
@@ -768,7 +768,7 @@ export class Widget extends StateManaged {
             collectionBackups[add] = collections[add];
             collections[add] = addCollections[add];
           }
-          await this.evaluateRoutine(a.loopRoutine, variables, collections, legacyMode, (depth || 0) + 1, true);
+          await this.evaluateRoutine(a.loopRoutine, variables, collections, (depth || 0) + 1, legacyMode, true);
           for(const add in addVariables)
             variables[add] = variableBackups[add];
           for(const add in addCollections)
@@ -840,7 +840,7 @@ export class Widget extends StateManaged {
           const branch = a.condition ? 'thenRoutine' : 'elseRoutine';
           if (Array.isArray(a[branch])) {
             $('#debugButtonOutput').textContent += `\n\n\nIF ${branch}\n`;
-            await this.evaluateRoutine(a[branch], variables, collections, legacyMode, (depth || 0) + 1, true);
+            await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, legacyMode, true);
           }
         } else
           problems.push(`IF operation is missing the 'condition' or 'operand1' parameter.`);
