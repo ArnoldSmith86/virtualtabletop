@@ -945,9 +945,9 @@ export class Widget extends StateManaged {
         } else if (a.property == 'id' && isValidCollection(a.collection)) {
           if (collections[a.collection].length) {
             const oldWidget = collections[a.collection][0];
-            var newState = Object.assign({},oldWidget.state);
             const oldState = JSON.stringify(oldWidget.state);
-
+            var newState = JSON.parse(oldState);
+            
             newState.id = compute(a.relation, null, oldWidget.get(a.property), a.value);
             if(!widgets.has(newState.id)) {
               $('#editWidgetJSON').dataset.previousState = oldState;
@@ -955,10 +955,8 @@ export class Widget extends StateManaged {
               await onClickUpdateWidget(false);
               sendDelta(true);
             } else {
-              problems.push(`New id already in use, ignored.`);
+              problems.push(`id ${newState.id} already in use, ignored.`);
             }
-          } else {
-            problems.push(`Collection ${a.collection} is empty, ignored.`);
           }
         } else if(isValidCollection(a.collection)) {
           for(const w of collections[a.collection]) {
