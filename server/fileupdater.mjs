@@ -31,7 +31,7 @@ function updateProperties(properties, v) {
       updateRoutine(properties[property], v);
 }
 
-function updateRoutine(routine, v) {
+function updateRoutine(routine, v, nested) {
   if(!Array.isArray(routine))
     return;
 
@@ -40,17 +40,17 @@ function updateRoutine(routine, v) {
       updateProperties(operation.properties, v);
     }
     if(operation.func == 'FOREACH') {
-      updateRoutine(operation.loopRoutine, v);
+      updateRoutine(operation.loopRoutine, v, true);
     }
     if(operation.func == 'IF') {
-      updateRoutine(operation.thenRoutine, v);
-      updateRoutine(operation.elseRoutine, v);
+      updateRoutine(operation.thenRoutine, v, true);
+      updateRoutine(operation.elseRoutine, v, true);
     }
   }
 
   v<2 && v2UpdateSelectDefault(routine);
   v<3 && v3RemoveComputeAndRandomAndApplyVariables(routine);
-  v<4 && routineModeSwitch(routine, 'autoToNum defaultOne');
+  v<4 && routineModeSwitch(routine, 'strToNum defaultOne', nested);
 }
 
 function routineModeSwitch(routine, modeSwitch) {
@@ -59,7 +59,7 @@ function routineModeSwitch(routine, modeSwitch) {
     if(typeof operation == 'string' && re.test(operation))
       operation += ' ' + modeSwitch;
   }
-  if(typeof routine[0] != 'string' || !re.test(routine[0]))
+  if(!nested && (typeof routine[0] != 'string' || !re.test(routine[0])))
     routine.unshift('mode: ' + modeSwitch);
 }
 
