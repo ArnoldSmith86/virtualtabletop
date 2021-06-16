@@ -340,7 +340,8 @@ export class Widget extends StateManaged {
       $('#debugButtonOutput').textContent = '';
 
     let variables = initialVariables;
-    let collections = initialCollections
+    let collections = initialCollections;
+    let modes = new Set([]);
     if(!byReference) {
       variables = Object.assign({}, initialVariables, {
         playerName,
@@ -382,6 +383,8 @@ export class Widget extends StateManaged {
 
         const match = a.match(new RegExp(regex + '\x24')); // the minifier doesn't like a "$" here
 
+        const modeSwitch = /^mode:/;
+
         if(match) {
           const getParam = (offset, defaultValue)=>{
             if(typeof match[offset+3] == 'string') {
@@ -408,7 +411,7 @@ export class Widget extends StateManaged {
             }
           };
           const getValue = function(input) {
-            const toNum = s=>typeof s == 'string' && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s;
+            const toNum = s=>typeof s == 'string' && modes.has('autoConvertToNumber') && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s;
             if(match[14] && match[9] !== undefined)
               return compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(9, 1)), toNum(getParam(15, 1)), toNum(getParam(19, 1)));
             else if(match[14])
@@ -425,6 +428,8 @@ export class Widget extends StateManaged {
             variables[variable][index] = getValue(variables[variable][index]);
           else
             variables[variable] = getValue(variables[variable]);
+        } else if(modeSwitch.test(a)) {
+          modes = new Set(a.replace(modeSwitch,'').trim().split(/,?/s+/));
         } else {
           problems.push('String could not be interpreted as expression. Please check your syntax and note that many characters have to be escaped.');
         }

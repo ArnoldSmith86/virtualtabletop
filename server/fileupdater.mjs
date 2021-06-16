@@ -1,4 +1,4 @@
-export const VERSION = 3;
+export const VERSION = 4;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -50,6 +50,17 @@ function updateRoutine(routine, v) {
 
   v<2 && v2UpdateSelectDefault(routine);
   v<3 && v3RemoveComputeAndRandomAndApplyVariables(routine);
+  v<4 && routineModeSwitch(routine, 'autoConvertToNumber');
+}
+
+function routineModeSwitch(routine, modeSwitch) {
+  const re = /^mode:/;
+  for(const operation of routine) {
+    if(typeof operation == 'string' && re.test(operation))
+      operation += ' ' + modeSwitch;
+  }
+  if(typeof routine[0] != 'string' || !re.test(routine[0]))
+    routine.unshift('mode: ' + modeSwitch);
 }
 
 function v2UpdateSelectDefault(routine) {
