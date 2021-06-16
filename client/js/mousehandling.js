@@ -41,7 +41,16 @@ async function inputHandler(name, e) {
     target = mouseTarget;
 
   if(target && target.id) {
-    if(name == 'mousedown' || name == 'touchstart') {
+    batchStart();
+    if(!edit && (!jeEnabled || !e.ctrlKey) && widgets.get(target.id).passthroughMouse) {
+      if(name == 'mousedown' || name == 'touchstart') {
+        await widgets.get(target.id).mouseRaw('down', (coords[0] - roomRectangle.left)/scale, (coords[1] - roomRectangle.top)/scale);
+      } else if (name == 'mouseup' || name == 'touchend') {
+        await widgets.get(target.id).mouseRaw('up', (coords[0] - roomRectangle.left)/scale, (coords[1] - roomRectangle.top)/scale);
+      } else if (name == 'mousemove' || name == 'touchmove') {
+        await widgets.get(target.id).mouseRaw('move', (coords[0] - roomRectangle.left)/scale, (coords[1] - roomRectangle.top)/scale);
+      }
+    } else if(name == 'mousedown' || name == 'touchstart') {
       mouseStatus[target.id] = {
         status: 'initial',
         start: new Date(),
@@ -58,7 +67,6 @@ async function inputHandler(name, e) {
         }
       }
     } else if(name == 'mouseup' || name == 'touchend') {
-      batchStart();
       const ms = mouseStatus[target.id];
       const timeSinceStart = +new Date() - ms.start;
       const pixelsMoved = ms.coords ? Math.abs(ms.coords[0] - ms.downCoords[0]) + Math.abs(ms.coords[1] - ms.downCoords[1]) : 0;
@@ -73,9 +81,7 @@ async function inputHandler(name, e) {
           await widgets.get(target.id).click();
       }
       delete mouseStatus[target.id];
-      batchEnd();
     } else if(name == 'mousemove' || name == 'touchmove') {
-      batchStart();
       if(mouseStatus[target.id].status == 'initial') {
         const targetRect = moveTarget ? moveTarget.getBoundingClientRect() : target.getBoundingClientRect();
         const downCoords = mouseStatus[target.id].downCoords;
@@ -92,8 +98,8 @@ async function inputHandler(name, e) {
       const y = Math.floor((coords[1] - roomRectangle.top  - mouseStatus[target.id].offset[1]) / scale);
       if(moveTarget)
         await mouseStatus[target.id].widget.move(x, y);
-      batchEnd();
     }
+    batchEnd();
   }
 
   if(name == 'mouseup') {
