@@ -943,17 +943,22 @@ export class Widget extends StateManaged {
         if((a.property == 'parent' || a.property == 'deck') && a.value !== null && !widgets.has(a.value)) {
           problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
         } else if (a.property == 'id' && isValidCollection(a.collection)) {
-          if (collections[a.collection].length != 1) {
-            problems.push(`Collection ${a.collection} does not contain exactly one widget, ignored.`);
-          } else {
+          if (collections[a.collection].length) {
             const oldWidget = collections[a.collection][0];
-            var newState = oldWidget.state;
+            var newState = Object.assign({},oldWidget.state);
             const oldState = JSON.stringify(oldWidget.state);
 
             newState.id = compute(a.relation, null, oldWidget.get(a.property), a.value);
-            $('#editWidgetJSON').dataset.previousState = oldState;
-            $('#editWidgetJSON').value = JSON.stringify(newState);
-            await onClickUpdateWidget(false);
+            if(!widgets.has(newState.id)) {
+              $('#editWidgetJSON').dataset.previousState = oldState;
+              $('#editWidgetJSON').value = JSON.stringify(newState);
+              await onClickUpdateWidget(false);
+              sendDelta(true);
+            } else {
+              problems.push(`New id already in use, ignored.`);
+            }
+          } else {
+            problems.push(`Collection ${a.collection} is empty, ignored.`);
           }
         } else if(isValidCollection(a.collection)) {
           for(const w of collections[a.collection]) {
