@@ -411,11 +411,12 @@ export class Widget extends StateManaged {
             }
           };
           const getValue = function(input) {
-            const toNum = s=>typeof s == 'string' && modes.has('autoConvertToNumber') && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s;
+            const toNum = s=>typeof s == 'string' && modes.has('autoToNum') && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s;
+            const dV = modes.has('defaultOne') ? 1 : null;
             if(match[14] && match[9] !== undefined)
-              return compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(9, 1)), toNum(getParam(15, 1)), toNum(getParam(19, 1)));
+              return compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(9, dv)), toNum(getParam(15, dv)), toNum(getParam(19, dv)));
             else if(match[14])
-              return compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(15, 1)), toNum(getParam(19, 1)), toNum(getParam(23, 1)));
+              return compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(15, dv)), toNum(getParam(19, dv)), toNum(getParam(23, dv)));
             else
               return getParam(5, null);
           };
@@ -429,7 +430,7 @@ export class Widget extends StateManaged {
           else
             variables[variable] = getValue(variables[variable]);
         } else if(modeSwitch.test(a)) {
-          modes = new Set(a.replace(modeSwitch,'').trim().split(/,?/s+/));
+          modes = new Set(a.replace(modeSwitch,'').trim().split(/,?\s+/));
         } else {
           problems.push('String could not be interpreted as expression. Please check your syntax and note that many characters have to be escaped.');
         }
