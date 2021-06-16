@@ -50,7 +50,7 @@ function updateRoutine(routine, v) {
 
   v<2 && v2UpdateSelectDefault(routine);
   v<3 && v3RemoveComputeAndRandomAndApplyVariables(routine);
-  v<4 && routineModeSwitch(routine, 'autoConvertToNumber');
+  v<4 && routineModeSwitch(routine, 'autoToNum defaultOne');
 }
 
 function routineModeSwitch(routine, modeSwitch) {
