@@ -1005,7 +1005,7 @@ export class Widget extends StateManaged {
         } else if(isValidCollection(a.collection)) {
           if(collections[a.collection].length) {
             await this.sortWidgets(collections[a.collection], a.key, a.reverse, a.locales, a.options, true);
-            await W(collections[a.collection].map(i=>i.get('parent')), async holder=>{
+            await w(collections[a.collection].map(i=>i.get('parent')), async holder=>{
               if(holder.get('type') == 'holder')
                 await holder.updateAfterShuffle();
             });
