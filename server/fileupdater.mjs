@@ -31,7 +31,7 @@ function updateProperties(properties, v) {
       updateRoutine(properties[property], v);
 }
 
-function updateRoutine(routine, v, nested) {
+function updateRoutine(routine, v, nested = false) {
   if(!Array.isArray(routine))
     return;
 
@@ -53,7 +53,7 @@ function updateRoutine(routine, v, nested) {
   v<4 && routineModeSwitch(routine, 'strToNum defaultOne', nested);
 }
 
-function routineModeSwitch(routine, modeSwitch) {
+function routineModeSwitch(routine, modeSwitch, nested) {
   const re = /^mode:/;
   for(const operation of routine) {
     if(typeof operation == 'string' && re.test(operation))
