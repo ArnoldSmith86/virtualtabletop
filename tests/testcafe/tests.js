@@ -217,29 +217,29 @@ test('Dynamic expressions', async t => {
   };
 });
 
-publicLibraryButtons('Blue',               0, 'e25ceda4c84138c16410f428d1021914', [
+publicLibraryButtons('Blue',               0, '862c894355846d17325291bb0c31c96e', [
   'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton',
   'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton',
   'fdc25f83-ed33-4845-a97c-ff35fa8a094f_shuffleButton', 'buttonInputGo', 'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', '9n2q'
 ]);
-publicLibraryButtons('FreeCell',           0, 'b3339b3c5d42f47f4def7a164be69823', [ 'reset', 'jemz', 'reset' ]);
-publicLibraryButtons('Reward',             0, '44336b9a60311a8fcdaf11af3227d76c', [
+publicLibraryButtons('FreeCell',           0, '7874b94dc875ff75439e5438ca77f317', [ 'reset', 'jemz', 'reset' ]);
+publicLibraryButtons('Reward',             0, '4c40d1a19794a85c6f6e18efef64827b', [
   'gmex', 'kprc', 'oksq', 'j1wz', 'vfhn', '0i6i', 'Orange Recall', 'buttonInputGo', 'b09z'
 ]);
-publicLibraryButtons('Rummy Tiles',        0, 'c593e557612c383acaa757b4124a4d36', [ 'startMix', 'draw14' ]);
-publicLibraryButtons('Undercover',         1, '1c27b314acacb62fa3543f7aee49aacd', [ 'Reset', 'Spy Master Button' ]);
-publicLibraryButtons('Dice',               0, 'd8b6edd6f7a25767781af4294ecda8fc', [ 'k18u', 'hy65', 'gghr', 'dsfa', 'f34a', 'fusq' ]);
-publicLibraryButtons('Functions - CALL',   0, '17a7c00d809088213a62495cfef35399', [
+publicLibraryButtons('Rummy Tiles',        0, '1fa41cc1086a466053541e2d9b6382d8', [ 'startMix', 'draw14' ]);
+publicLibraryButtons('Undercover',         1, '724101e0850b3b66f255d7de5b25c896', [ 'Reset', 'Spy Master Button' ]);
+publicLibraryButtons('Dice',               0, '3b2d42e8046b65042904f86bf7a76a01', [ 'k18u', 'hy65', 'gghr', 'dsfa', 'f34a', 'fusq' ]);
+publicLibraryButtons('Functions - CALL',   0, 'b534da848cfbb3ebb30bd28fdf6db6b0', [
   'n4cw_8_C', '5a52', '5a52', '66kr', 'qeg1', 'n4cwB', '8r6p', 'qeg1', 'qeg1', 'n5eu'
 ]);
-publicLibraryButtons('Functions - CLICK',  0, 'b2430bd4589116a05df1fcedb55337c4', [ '7u2q' ]);
-publicLibraryButtons('Functions - ROTATE', 0, '747586b12401e43382a7db2b2505f25e', [ 'c44c', '9kdj', 'w53c', 'w53c' ]);
-publicLibraryButtons('Functions - SELECT', 0, '4db86f0a95509b1c4fe5ebd6a1f822a9', [ 'oeh9', '9fhb', 'njkk', 'ffwl', 'bomo' ]);
-publicLibraryButtons('Functions - SORT',   1, 'dd047343b667795ad6d3f366aa2ae2fd', [
+publicLibraryButtons('Functions - CLICK',  0, '7ed81cfc9d0bc98703cc4228835275e0', [ '7u2q' ]);
+publicLibraryButtons('Functions - ROTATE', 0, 'c9ca3be19c19e296c367274d6d938142', [ 'c44c', '9kdj', 'w53c', 'w53c' ]);
+publicLibraryButtons('Functions - SELECT', 0, '6031265697185bedf10b5756fcca6a04', [ 'oeh9', '9fhb', 'njkk', 'ffwl', 'bomo' ]);
+publicLibraryButtons('Functions - SORT',   1, 'de9c44b554ca1e2bfe3f17401b6ed8aa', [
   'ingw', 'k131', 'cnfu', 'i6yz', 'z394', '0v3h', '1h8o', 'v5ra', 'ingw-copy001', 'k131-copy001', 'cnfu-copy001',
   'i6yz-copy001', 'z394-copy001', '0v3h-copy001'
 ]);
-publicLibraryButtons('Master Button',      0, 'eb19dffdb38641d5556e5fdb2c47c62b', [
+publicLibraryButtons('Master Button',      0, '6c3f14fcdc73e075206a886c1841f844', [
   'masterbutton', 'redbutton', 'orangebutton', 'yellowbutton', 'greenbutton', 'bluebutton', 'indigobutton',
   'violetbutton', 'fae4', 'vbx5'
 ]);
