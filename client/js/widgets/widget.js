@@ -1003,10 +1003,15 @@ export class Widget extends StateManaged {
             });
           }
         } else if(isValidCollection(a.collection)) {
-          if(collections[a.collection].length)
+          if(collections[a.collection].length) {
             await this.sortWidgets(collections[a.collection], a.key, a.reverse, a.locales, a.options, true);
-          else
+            await W(collections[a.collection].map(i=>i.get('parent')), async holder=>{
+              if(holder.get('type') == 'holder')
+                await holder.updateAfterShuffle();
+            });
+          } else {
             problems.push(`Collection ${a.collection} is empty.`);
+          }
         }
       }
 
