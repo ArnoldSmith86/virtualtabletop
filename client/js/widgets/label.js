@@ -1,26 +1,5 @@
 import { Widget } from './widget.js';
 
-async function unsetHTML(w) {
-  w.domElement.innerHTML = null;
-	w.domElement.appendChild(w.input);
-	w.input.value = w.get('text');  
-  }
- 
-async function setHTML(w) {
-  if(w.get('html') == true) {
-    var HTMLtext = w.get('text')
-	  var HTMLtext = HTMLtext.toString()
-	  .replace(/<[^>]+?cript(.*?)>/gim, '')
-	  .replace(/<[^>]+?\((.*?)\)(.*?)>/gim, '')
-	  .replace(/\*\*(.*?)\*\*/gim, '<b>$1</b>')
-	  .replace(/\*(.*?)\*/gim, '<i>$1</i>')
-    .replace(/\-\-(.*?)\-\-/gim, '<sub>$1</sub>')
-   	.replace(/\^\^(.*?)\^\^/gim, '<sup>$1</sup>')
-    .replace(/<[^A-Za-z0-9]*a +href(.*?)>/im, '<a href=https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widget-Properties#label>')
-	  .replace(/<[^A-Za-z0-9]*iframe(.*?)>/im, '<iframe src=https://virtualtabletop.io/Tutorials> height="500" width="500"')
-    document.getElementById(w.id).innerHTML = HTMLtext;}
-    }
-
 export class Label extends Widget {
   constructor(id) {
     super(id);
@@ -57,12 +36,25 @@ export class Label extends Widget {
         this.input.style.paddingTop = 'unset';
       }
     }
-    if(delta.html !== undefined) {
-      if(delta.html)
-        setHTML(this);
-      else
-        unsetHTML(this);
-    }
+	if(delta.html  !== undefined|| delta.text !== undefined) {
+	  if(this.get('html') == true) {
+        var HTMLtext = this.get('text')
+        var HTMLtext = HTMLtext.toString()
+        .replace(/<[^>]+?cript(.*?)>/gim, '')
+        .replace(/<[^>]+?\((.*?)\)(.*?)>/gim, '')
+        .replace(/\*\*(.*?)\*\*/gim, '<b>$1</b>')
+        .replace(/\*(.*?)\*/gim, '<i>$1</i>')
+        .replace(/\-\-(.*?)\-\-/gim, '<sub>$1</sub>')
+  	    .replace(/\^\^(.*?)\^\^/gim, '<sup>$1</sup>')
+        .replace(/<[^A-Za-z0-9]*a +href(.*?)>/im, '<a href=https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widget-Properties#label>')
+  	    .replace(/<[^A-Za-z0-9]*iframe(.*?)>/im, '<iframe src=https://virtualtabletop.io/Tutorials> height="500" width="500"')
+        document.getElementById(this.id).innerHTML = HTMLtext;
+        } else {
+            this.domElement.innerHTML = null; 
+            this.domElement.appendChild(this.input);
+            this.input.value = this.get('text');
+              }	
+	  }
     if(delta.editable !== undefined) {
       if(delta.editable)
         this.input.removeAttribute("readonly");
