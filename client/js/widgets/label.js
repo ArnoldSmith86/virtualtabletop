@@ -23,8 +23,8 @@ export async function unsetHTML(w) {
     if(w.get('html') == true) {
       var HTMLtext = w.get('text')
 	    var HTMLtext = HTMLtext.toString()
-	    .replace(/<(.*?)script(.*?)>/gim, '')
-	    .replace(/<(.*?)\((.*?)\)(.*?)>/gim, '')
+	    .replace(/<[^>]+?cript(.*?)>/gim, '')
+	    .replace(/<[^>]+?\((.*?)\)(.*?)>/gim, '')
 	    .replace(/\*\*(.*?)\*\*/gim, '<b>$1</b>')
 	    .replace(/\*(.*?)\*/gim, '<i>$1</i>')
       .replace(/\-\-(.*?)\-\-/gim, '<sub>$1</sub>')
