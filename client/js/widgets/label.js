@@ -40,6 +40,8 @@ export class Label extends Widget {
 	  if(this.get('html') == true) {
         var HTMLtext = this.get('text')
         var HTMLtext = HTMLtext.toString()
+        .replace(/&+#+/gim, '')
+		    .replace(/\\+\\+u+/gim, '')
         .replace(/<[^>]+?cript(.*?)>/gim, '')
         .replace(/<[^>]+?\((.*?)\)(.*?)>/gim, '')
         .replace(/\*\*(.*?)\*\*/gim, '<b>$1</b>')
