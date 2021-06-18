@@ -27,3 +27,33 @@ body.edit .widget.label > * {
   left: 0;
   top: 0;
 }
+tr:nth-child(odd) {
+  background-color: #dddddd;
+}
+red {
+  color: red;
+}
+orange {
+  color: orange;
+}
+yellow {
+  color: yellow;
+}
+green {
+  color: green;
+}
+blue {
+  color: blue;
+}
+violet {
+  color: violet;
+}
+white {
+  color: white;
+}
+black {
+  color: black;
+}
+grey {
+  color: grey;
+}
