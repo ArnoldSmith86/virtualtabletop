@@ -989,8 +989,10 @@ export class Widget extends StateManaged {
         } else if(isValidCollection(a.collection)) {
           for(const w of collections[a.collection]) {
             await w.set(a.property, compute(a.relation, null, w.get(a.property), a.value));
-          }
-        }
+			      if((a.property == 'text' || w.type == 'label') && a.value !== null && !widgets.has(a.value  && w.html == true)) {
+				      setHTML(w)}
+		          }
+            }
       }
 
       if(a.func == 'SORT') {
@@ -1273,18 +1275,28 @@ export class Widget extends StateManaged {
     await super.setPosition(x, y, z);
   }
 
-  async setText(text, mode, debug, problems) {
+ async setText(text, mode, debug, problems) {  
     if (this.get('text') !== undefined) {
-      if(mode == 'inc' || mode == 'dec')
+      if(mode == 'inc' || mode == 'dec') {
         await this.set('text', (parseInt(this.get('text')) || 0) + (mode == 'dec' ? -1 : 1) * text);
-      else if(mode == 'append')
+	      setHTML(this);		
+	  }
+      else if(mode == 'append') { 
         await this.set('text', this.get('text') + text);
-      else if(Array.isArray(text))
+	    setHTML(this);
+	  }
+      else if(Array.isArray(text)) {
         await this.set('text', text.join(', '));
-      else if(typeof text == 'string' && text.match(/^[-+]?[0-9]+(\.[0-9]+)?$/))
-        await this.set('text', +text);
-      else
-        await this.set('text', text);
+	    setHTML(this);
+	  }
+      else if(typeof text == 'string' && text.match(/^[-+]?[0-9]+(\.[0-9]+)?$/)) {
+	    await this.set('text', +text);
+	    setHTML(this);
+	  }
+      else {
+		await this.set('text', text);
+	    setHTML(this); 
+	  }
     } else
       problems.push(`Tried setting text property which doesn't exist for ${this.id}.`);
   }
