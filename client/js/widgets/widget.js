@@ -990,6 +990,7 @@ export class Widget extends StateManaged {
           if (collections[a.collection].length) {
             const oldWidget = collections[a.collection][0];
             const oldState = JSON.stringify(oldWidget.state);
+            const oldID = oldWidget.get('id');
             var newState = JSON.parse(oldState);
             
             newState.id = compute(a.relation, null, oldWidget.get(a.property), a.value);
@@ -997,6 +998,8 @@ export class Widget extends StateManaged {
               $('#editWidgetJSON').dataset.previousState = oldState;
               $('#editWidgetJSON').value = JSON.stringify(newState);
               await onClickUpdateWidget(false);
+              for(const c in collections)
+                collections[c] = collections[c].map(w=>w.id==oldID ? widgets.get(newState.id) : w)
               sendDelta(true);
             } else {
               problems.push(`id ${newState.id} already in use, ignored.`);
