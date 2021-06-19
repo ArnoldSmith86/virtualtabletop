@@ -4,6 +4,7 @@ export class Label extends Widget {
   constructor(id) {
     super(id);
   	this.divinput = document.createElement('div');
+    this.divinput.className = "labeldiv"; 
   	this.domElement.appendChild(this.divinput);
   	this.divinput.addEventListener('keyup', e=>this.setText(e.target.value)); // may delete
     this.input = document.createElement('textarea');
