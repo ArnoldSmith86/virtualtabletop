@@ -722,8 +722,13 @@ function jeSelectWidget(widget, dontFocus, addToSelection, restoreCursorPosition
     const v = $('#jeText').textContent;
     const linesUntilCursor = v.split('\n').slice(0, v.substr(0, s).split('\n').length);
     const currentLine = linesUntilCursor.pop();
+    let defaultValueToAdd = null;
+    const defaultValueMatch = currentLine.match(/^  "([^"]+)": (.*?),?$/);
+    if(defaultValueMatch && jeWidget && jeWidget.getDefaultValue(defaultValueMatch[1]) === JSON.parse(defaultValueMatch[2]))
+      defaultValueToAdd = defaultValueMatch[1];
     var cursorState = {
       currentLine,
+      defaultValueToAdd,
       sameLinesBefore: linesUntilCursor.filter(l=>l==currentLine).length,
       start: s-linesUntilCursor.join('\n').length,
       end: e-linesUntilCursor.join('\n').length
@@ -735,8 +740,10 @@ function jeSelectWidget(widget, dontFocus, addToSelection, restoreCursorPosition
   } else {
     jeMode = 'widget';
     jeWidget = widget;
-    jeStateNow = widget.state;
-    jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(widget.state), null, '  ')), dontFocus);
+    jeStateNow = JSON.parse(JSON.stringify(widget.state));
+    if(restoreCursorPosition && cursorState.defaultValueToAdd && jeStateNow[cursorState.defaultValueToAdd] === undefined)
+      jeStateNow[cursorState.defaultValueToAdd] = jeWidget.getDefaultValue(cursorState.defaultValueToAdd);
+    jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(jeStateNow), null, '  ')), dontFocus);
   }
 
   if(restoreCursorPosition) {
