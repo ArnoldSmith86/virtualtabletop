@@ -920,13 +920,21 @@ export class Widget extends StateManaged {
                 let cards = widgetFilter(w=>w.get('deck')==deck.get('id'));
                 if(!a.owned)
                   cards = cards.filter(c=>!c.get('owner'));
-                for(const c of cards)
-                  await c.moveToHolder(widgets.get(holder));
+                for(const c of cards) {
+                  const thisParent = c.get('parent');
+                  if(thisParent === null || 
+                     !(thisParent == holder || 
+                       (widgets.has(thisParent) && 
+                        widgets.get(thisParent).get('type') == 'pile' && 
+                        widget.get(thisParent).get('parent') == holder)
+                      )
+                    ) await c.moveToHolder(widgets.get(holder));
+                }
               }
             } else {
               problems.push(`Holder ${holder} does not have a deck.`);
             }
-          };
+          }
         }
       }
 
