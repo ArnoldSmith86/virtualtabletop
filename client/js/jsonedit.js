@@ -11,6 +11,7 @@ let jeCommandWithOptions = null;
 let jeContext = null;
 let jeSecondaryWidget = null;
 let jeDeltaIsOurs = false;
+let jeKeyword = '';
 let jeKeyIsDown = true;
 let jeKeyIsDownDeltas = [];
 const jeWidgetLayers = {};
@@ -522,6 +523,19 @@ function jeAddAlignmentCommands() {
       jeSetAndSelect((parentSize-widgets.get(jeStateNow.id).get(sizeKey))/2);
     }
   });
+}
+
+function displayComputeOps() {
+  const keyword = $('#var_search').value;
+  let results = compute_ops.filter(o => o.name.toLowerCase().includes(keyword.toLowerCase()) || o.desc.toLowerCase().includes(keyword.toLowerCase()));
+  var resultTable = '<table>';
+  if(keyword.length > 0) {
+    for(const r of Object.values(results).sort((a, b) => a.name.toString().localeCompare(b.name)))
+      resultTable += '<tr valign=top><td><b>' + r.name + '</b></td><td><b>' + r.sample + '</b><br>' + r.desc + '</td></tr>';
+  }
+  resultTable += '</table>';
+  $('#var_results').innerHTML = resultTable;
+  jeKeyword = keyword;
 }
 
 function jeAddCSScommands() {
@@ -1272,6 +1286,11 @@ function jeShowCommands() {
   }
   delete activeCommands[""];
 
+  if(jeContext[jeContext.length-1] == '(var expression)') {
+    commandText += `\n  <b>var expression</b>\n<label>Search </label><input id="var_search" name="var_search" type="text"><br>`;
+    commandText += `<div id="var_results"></div>\n`;
+  }
+
   if(!jeJSONerror && jeStateNow) {
     for(const contextMatch of (Object.keys(activeCommands).sort((a,b)=>b.length-a.length))) {
       commandText += `\n  <b>${contextMatch}</b>\n`;
@@ -1310,6 +1329,11 @@ function jeShowCommands() {
     commandText += `\n\n${jeSecondaryWidget}\n`;
   $('#jeCommands').innerHTML = commandText;
   on('#jeCommands button', 'click', clickButton);
+  on('#var_search', 'input', displayComputeOps);
+  if ($('#var_results') && jeKeyword !='') {
+    $('#var_search').value = jeKeyword;
+    displayComputeOps();
+  }
 
   if(jeCommandWithOptions)
     jeCommandOptions();

@@ -26,7 +26,7 @@
   overflow-y: auto;
   height: 100%;
   width: 600px;
-  right: 250px;
+  right: 320px;
   overflow-wrap: break-word;
 }
 
@@ -39,6 +39,17 @@
 #jeText::selection {
   background-color: #808080;
   -webkit-text-fill-color: white;
+}
+
+#var_results > table {
+  table-layout: fixed;
+}
+
+#var_results > table > tbody > tr > td:nth-child(1) {
+  min-width: 60px;
+  max-width: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #jsonEditor i {
@@ -58,7 +69,7 @@ i.error   { color: red; font-weight: bold; }
 #jeCommands {
   white-space: pre-wrap;
   height: 100%;
-  width: 250px;
+  width: 320px;
   right: 0;
   overflow: auto;
 }
