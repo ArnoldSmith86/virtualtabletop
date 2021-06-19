@@ -26,8 +26,10 @@ export default class Room {
     this.state._meta.deltaID = this.deltaID;
     player.send('state', this.state);
 
-    if(this.enableTracing)
+    if(this.enableTracing) {
+      this.trace('addPlayer', { player: player.name });
       player.send('tracing', 'enable');
+    }
 
     this.sendMetaUpdate();
   }
@@ -293,6 +295,7 @@ export default class Room {
   }
 
   removePlayer(player) {
+    this.trace('removePlayer', { player: player.name });
     Logging.log(`removing player ${player.name} from room ${this.id}`);
     this.players = this.players.filter(e => e != player);
     if(this.players.length == 0) {
@@ -338,7 +341,7 @@ export default class Room {
   }
 
   trace(source, payload) {
-    if(source == 'client' && source == 'client' && payload.type == 'enable' && !this.enableTracing) {
+    if(!this.enableTracing && source == 'client' && source == 'client' && payload.type == 'enable') {
       this.enableTracing = true;
       this.tracingFilename = `${path.resolve()}/save/${this.id}-${+new Date}.trace`;
       this.broadcast('tracing', 'enable');
