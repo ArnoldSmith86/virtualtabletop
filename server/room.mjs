@@ -265,7 +265,7 @@ export default class Room {
       const b = parseInt(hex.slice(5,7), 16) / 255;
       const max = Math.max(r,g,b);
       const d = max - Math.min(r,g,b);
-      if(d < .25) next;
+      if(d < .25) continue;
       switch(max) {
         case r: hues.push((360 + (g - b) * 60 / d) % 360); break;
         case g: hues.push(120 + (b - r) * 60 / d); break;
