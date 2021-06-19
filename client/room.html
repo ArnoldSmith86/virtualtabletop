@@ -43,7 +43,31 @@
 
     <div id="editOverlayVue">
       <div id="editOverlay" class="overlay">
-        <h1>Edit widget</h1>
+        <div class="canvasEdit">
+          <h1>Edit canvas</h1>
+          <span>Canvas colors: (click on check box to select active color)</span><br/>
+          <div class="flexContainer" id="colorContainer">
+          <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+          <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+          <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+          <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+          <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+          <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+          <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+          <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+          <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+          <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+          </div><br/>
+          <input type="checkbox" id="canvasColorReset"><label for="canvasColorRest">Reset colors to: </label>
+          <select id="canvasPresets">
+            <option name="canvasPresets" value="original" selected = "selected">original colors</option>
+            <option name="canvasPresets" value="pieces">game pieces colors</option>
+            <option name="canvasPresets" value="basic">basic colors</option>
+            <option name="canvasPresets" value="pencil">pencil colors</option>
+            <option name="canvasPresets" value="pastel">pastel colors</option>
+            <option name="canvasPresets" value="grey">grey scale</option>
+          </select><br/><br/>
+        </div>
         <deck-editor :widget-state="selectedWidget.state"></deck-editor>
         <div class="holderEdit">
           <input type="checkbox" id="transparentHolder"><label for="transparentHolder"> Transparent</label><br/>
@@ -83,6 +107,7 @@
       </div>
       <div class="category">
         <h2>Interactive</h2>
+        <button id="addCanvas">🎨 Add Canvas</button>
       </div>
       <div class="category">
         <h2>Decorative</h2>
