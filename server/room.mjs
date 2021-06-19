@@ -21,7 +21,7 @@ export default class Room {
     this.players.push(player);
 
     if(!this.state._meta.players[player.name])
-      this.state._meta.players[player.name] = '#ff0000';
+      this.state._meta.players[player.name] = this.newPlayerColor();
 
     this.state._meta.deltaID = this.deltaID;
     player.send('state', this.state);
@@ -253,6 +253,38 @@ export default class Room {
 
   mouseMove(player, coords) {
     this.broadcast('mouse', { player: player.name, coords });
+  }
+
+  newPlayerColor() {
+    let hue = 0;
+    const hues = [];
+    for(const player in this.state._meta.players) {
+      const hex = this.state._meta.players[player];
+      const r = parseInt(hex.slice(1,3), 16) / 255;
+      const g = parseInt(hex.slice(3,5), 16) / 255;
+      const b = parseInt(hex.slice(5,7), 16) / 255;
+      const max = Math.max(r,g,b);
+      const d = max - Math.min(r,g,b);
+      if(d < .25) continue;
+      switch(max) {
+        case r: hues.push((360 + (g - b) * 60 / d) % 360); break;
+        case g: hues.push(120 + (b - r) * 60 / d); break;
+        case b: hues.push(240 + (r - g) * 60 / d); break;
+      }
+    }
+    if(hues.length == 0) {
+      hue = Math.random() * 360;
+    } else {
+      const gaps = hues.sort((a,b)=>a-b).map((h, i, a) => (i != (a.length - 1)) ? a[i + 1 ] - h : a[0] + 360 - h);
+      const gap = Math.max(...gaps);
+      hue = (Math.random() * gap / 3 + hues[gaps.indexOf(gap)] + gap / 3) % 360;
+    }
+    const f = n => {
+      const k = (n + hue / 30) % 12;
+      const c = .5 - .5 * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+      return Math.round(255 * c).toString(16).padStart(2, '0');
+    }
+    return `#${f(0)}${f(8)}${f(4)}`;
   }
 
   receiveDelta(player, delta) {
