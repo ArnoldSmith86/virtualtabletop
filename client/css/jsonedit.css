@@ -4,9 +4,11 @@
   display: none;
   height: 100%;
   width: 100%;
+  z-index: 2;
+  position: relative;
 }
 
-#jsonEditor > *, .jsonEdit {
+#jsonEditor > *, .jsonEdit, #jeWidgetLayers > div, #jeLog {
   background: #08090a;
 }
 #jsonEditor > * {
@@ -63,15 +65,22 @@ i.error   { color: red; font-weight: bold; }
 
 #jeWidgetLayers {
   height: 10%;
-  width: calc(100%-700px);
+  width: calc(100% - 850px);
   white-space: pre;
   overflow: hidden;
+  background: transparent;
 }
 
 #jeWidgetLayers > div {
   display: inline-block;
   width: 125px;
   margin-bottom: 10px;
+  padding: 4px;
+  overflow: hidden;
+}
+
+#jeWidgetLayers > div:empty {
+  display: none;
 }
 
 body.jsonEdit #jsonEditor {
@@ -102,16 +111,89 @@ body.jsonEdit #toolbar {
 }
 
 body.jsonEdit #roomArea {
-  top: calc((100vh - var(--roomHeight) * var(--scale)) / 2 - var(--toolbarSize) / 2);
+  top: calc((100vh - var(--roomHeight) * var(--scale)) / 2);
   left: 0;
 }
 
 body.jsonEdit.jeZoomOut #roomArea {
-  top: calc((100vh - var(--roomHeight) * var(--scale)) / 2 - var(--toolbarSize) / 2);
+  top: calc((100vh - var(--roomHeight) * var(--scale)) / 2);
   left: 12.5%;
   overflow: visible;
 }
 
 body.jsonEdit.jeZoomOut #topSurface {
   overflow: visible;
+}
+
+#jeLogWrapper {
+  position: fixed;
+  bottom: 0;
+}
+
+#jeLog {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: none;
+  height: 90vh;
+  width: 50vw;
+  overflow: auto;
+  box-sizing: border-box;
+}
+
+#jeLogWrapper:hover #jeLog {
+  display: block;
+}
+
+#jeLogWrapper:hover > h1 {
+  display: none;
+}
+
+.jeLog {
+  white-space: normal;
+  font-size: 12px;
+  background: #ffffff10;
+  margin-left: 20px;
+}
+
+.jeLogWidget {
+  margin-left: -20px;
+}
+
+.jeLogSkipped {
+  opacity: 0.3;
+}
+
+.jeLogResult {
+  color: orange;
+}
+
+.jeLogHasProblems {
+  color: red;
+}
+
+.jeLogDetails {
+  display: none;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  height: 90vh;
+  width: calc(50vw + 20px);
+  background: darkred;
+  padding: 20px;
+  overflow: auto;
+  color: white;
+  box-sizing: border-box;
+}
+
+.jeLogOperation:hover {
+  background-color: darkred;
+}
+
+.jeLogOperation:hover > .jeLogDetails {
+  display: block;
+}
+
+.jeLogDetails > div {
+  white-space: pre;
 }
