@@ -987,12 +987,11 @@ export class Widget extends StateManaged {
         if((a.property == 'parent' || a.property == 'deck') && a.value !== null && !widgets.has(a.value)) {
           problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
         } else if (a.property == 'id' && isValidCollection(a.collection)) {
-          if (collections[a.collection].length) {
-            const oldWidget = collections[a.collection][0];
+          for(const oldWidget of collections[a.collection]) {
             const oldState = JSON.stringify(oldWidget.state);
             const oldID = oldWidget.get('id');
             var newState = JSON.parse(oldState);
-            
+
             newState.id = compute(a.relation, null, oldWidget.get(a.property), a.value);
             if(!widgets.has(newState.id)) {
               $('#editWidgetJSON').dataset.previousState = oldState;
