@@ -942,7 +942,7 @@ function jePasteText(text, select) {
 function jePostProcessObject(o) {
   const copy = { ...o };
   for(const key in copy)
-    if(copy[key] === jeWidget.getDefaultValue(key) || key.match(/in deck/))
+    if(copy[key] === null || copy[key] === jeWidget.getDefaultValue(key) || key.match(/in deck/))
       delete copy[key];
   return copy;
 }

@@ -491,7 +491,11 @@ async function onClickUpdateWidget(applyChangesFromUI) {
       return;
     }
 
-    if(widget.parent !== undefined && (widget.parent === null || !widgets.has(widget.parent))) {
+    for(const key in widget)
+      if(widget[key] === null)
+        delete widget[key];
+
+    if(widget.parent !== undefined && !widgets.has(widget.parent)) {
       alert(`Parent widget ${widget.parent} does not exist.`);
       return;
     }
@@ -606,7 +610,11 @@ onLoad(function() {
   on('#addWidget', 'click', function() {
     const widget = JSON.parse($('#widgetText').value);
 
-    if(widget.parent !== undefined && (widget.parent === null || !widgets.has(widget.parent))) {
+    for(const key in widget)
+      if(widget[key] === null)
+        delete widget[key];
+
+    if(widget.parent !== undefined && !widgets.has(widget.parent)) {
       alert(`Parent widget ${widget.parent} does not exist.`);
       return;
     }
