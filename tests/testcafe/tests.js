@@ -140,7 +140,7 @@ test('Create game using edit mode', async t => {
     .setNativeDialogHandler(() => true)
     .click('#editJSONoverlay > #removeWidget');
 
-  await compareState(t, '5dd658f1e79ef3013d29a8c2f5fe839d');
+  await compareState(t, '3d2b66046e30979ad187f877380a87d3');
 });
 
 test('Dynamic expressions', async t => {
@@ -217,13 +217,13 @@ test('Dynamic expressions', async t => {
   };
 });
 
-publicLibraryButtons('Blue',               0, '90dbbde475e09bd500851c5648aa35f1', [
+publicLibraryButtons('Blue',               0, '335cb7e44a85b44ee006853acb9d27ce', [
   'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton',
   'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton',
   'fdc25f83-ed33-4845-a97c-ff35fa8a094f_shuffleButton', 'buttonInputGo', 'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', '9n2q'
 ]);
 publicLibraryButtons('FreeCell',           0, 'b3339b3c5d42f47f4def7a164be69823', [ 'reset', 'jemz', 'reset' ]);
-publicLibraryButtons('Reward',             0, '9fdd5258e7e556ba75806d28c1f316fd', [
+publicLibraryButtons('Reward',             0, '0ec7e912ee7248a7deb7529ba57df105', [
   'gmex', 'kprc', 'oksq', 'j1wz', 'vfhn', '0i6i', 'Orange Recall', 'buttonInputGo', 'b09z'
 ]);
 publicLibraryButtons('Rummy Tiles',        0, 'c593e557612c383acaa757b4124a4d36', [ 'startMix', 'draw14' ]);
