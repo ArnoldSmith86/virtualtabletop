@@ -8,7 +8,7 @@
   position: relative;
 }
 
-#jsonEditor > *, .jsonEdit {
+#jsonEditor > *, .jsonEdit, #jeWidgetLayers > div {
   background: #08090a;
 }
 #jsonEditor > * {
@@ -65,15 +65,22 @@ i.error   { color: red; font-weight: bold; }
 
 #jeWidgetLayers {
   height: 10%;
-  width: calc(100%-700px);
+  width: calc(100% - 850px);
   white-space: pre;
   overflow: hidden;
+  background: transparent;
 }
 
 #jeWidgetLayers > div {
   display: inline-block;
   width: 125px;
   margin-bottom: 10px;
+  padding: 4px;
+  overflow: hidden;
+}
+
+#jeWidgetLayers > div:empty {
+  display: none;
 }
 
 body.jsonEdit #jsonEditor {
@@ -104,12 +111,12 @@ body.jsonEdit #toolbar {
 }
 
 body.jsonEdit #roomArea {
-  top: calc((100vh - var(--roomHeight) * var(--scale)) / 2 - var(--toolbarSize) / 2);
+  top: calc((100vh - var(--roomHeight) * var(--scale)) / 2);
   left: 0;
 }
 
 body.jsonEdit.jeZoomOut #roomArea {
-  top: calc((100vh - var(--roomHeight) * var(--scale)) / 2 - var(--toolbarSize) / 2);
+  top: calc((100vh - var(--roomHeight) * var(--scale)) / 2);
   left: 12.5%;
   overflow: visible;
 }
