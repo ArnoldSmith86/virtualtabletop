@@ -27,7 +27,7 @@ body.edit .widget.label > * {
   left: 0;
   top: 0;
 }
-tr:nth-child(odd) {
+.label tr:nth-child(odd) {
   background-color: #dddddd;
 }
 red {
