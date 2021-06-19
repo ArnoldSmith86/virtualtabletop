@@ -64,12 +64,13 @@ export class Label extends Widget {
               }	
 	  }
     if(delta.editable !== undefined) {
-      if(delta.editable)
+      if(delta.editable) {
         this.input.removeAttribute("readonly");
    	    this.divinput.contentEditable = true;
-      else
+      } else { 
         this.input.setAttribute("readonly", !delta.editable);
    	    this.divinput.contentEditable = false;
+      }
     }
   }
 }
