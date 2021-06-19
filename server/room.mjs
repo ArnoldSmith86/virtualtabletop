@@ -26,6 +26,11 @@ export default class Room {
     this.sendMetaUpdate();
     this.state._meta.deltaID = this.deltaID;
     player.send('state', this.state);
+
+    if(this.enableTracing) {
+      this.trace('addPlayer', { player: player.name });
+      player.send('tracing', 'enable');
+    }
   }
 
   async addState(id, type, src, srcName, addAsVariant) {
@@ -120,6 +125,8 @@ export default class Room {
   }
 
   broadcast(func, args, exceptPlayer) {
+    if(func != 'mouse')
+      this.trace('broadcast', { func, args, exceptPlayer: exceptPlayer?.name });
     for(const player of this.players)
       if(player != exceptPlayer)
         player.send(func, args);
@@ -319,6 +326,7 @@ export default class Room {
   }
 
   removePlayer(player) {
+    this.trace('removePlayer', { player: player.name });
     Logging.log(`removing player ${player.name} from room ${this.id}`);
     this.players = this.players.filter(e => e != player);
     if(this.players.length == 0) {
@@ -354,6 +362,7 @@ export default class Room {
   }
 
   setState(state) {
+    this.trace('setState', { state });
     const meta = this.state._meta;
     this.state = state;
     if(this.state._meta)
@@ -362,7 +371,31 @@ export default class Room {
     this.broadcast('state', state);
   }
 
+  trace(source, payload) {
+    if(!this.enableTracing && source == 'client' && source == 'client' && payload.type == 'enable') {
+      this.enableTracing = true;
+      this.tracingFilename = `${path.resolve()}/save/${this.id}-${+new Date}.trace`;
+      this.broadcast('tracing', 'enable');
+      payload.initialState = this.state;
+      fs.writeFileSync(this.tracingFilename, '[\n');
+      Logging.log(`tracing enabled for room ${this.id} to file ${this.tracingFilename}`);
+    }
+    if(this.enableTracing) {
+      payload.servertime = +new Date;
+      payload.source = source;
+      payload.serverDeltaID = this.deltaID;
+      const suffix = source == 'unload' ? '\n]' : ',\n';
+      fs.appendFileSync(this.tracingFilename, `  ${JSON.stringify(payload)}${suffix}`);
+
+      if(source == 'unload') {
+        Logging.log(`tracing finished for room ${this.id} to file ${this.tracingFilename}`);
+        this.enableTracing = false;
+      }
+    }
+  }
+
   unload() {
+    this.trace('unload', {});
     if(Object.keys(this.state).length > 1 || Object.keys(this.state._meta.states).length) {
       Logging.log(`unloading room ${this.id}`);
       this.writeToFilesystem();

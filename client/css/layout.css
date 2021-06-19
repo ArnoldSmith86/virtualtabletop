@@ -396,3 +396,17 @@ button.add {
 
 
 }
+
+
+body.trace #toolbar {
+  background: red;
+}
+#traceUI {
+  display: none;
+}
+#traceInput {
+  width: 100%;
+}
+body.trace #traceUI {
+  display: block;
+}
