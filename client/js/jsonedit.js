@@ -947,7 +947,7 @@ function jeLoggingRoutineEnd(variables, collections) {
   jeLoggingHTML += `</div>`;
   --jeLoggingDepth;
   if(!jeLoggingDepth)
-    jeShowCommands();
+    $('#jeLog').innerHTML = jeLoggingHTML;
 }
 
 function jeLoggingRoutineOperation(original, applied, problems, variables, collections, skipped) {
@@ -1165,8 +1165,6 @@ function jeShowCommands() {
     commandText += `\n<i class=error>Last command failed: ${String(jeCommandError)}</i>\n`;
   if(jeSecondaryWidget)
     commandText += `\n\n${jeSecondaryWidget}\n`;
-  if(jeLoggingHTML)
-    commandText += `\n\n${jeLoggingHTML}\n`;
   $('#jeCommands').innerHTML = commandText;
   on('#jeCommands button', 'click', clickButton);
 }

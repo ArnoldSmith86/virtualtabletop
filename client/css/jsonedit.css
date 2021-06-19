@@ -8,7 +8,7 @@
   position: relative;
 }
 
-#jsonEditor > *, .jsonEdit, #jeWidgetLayers > div {
+#jsonEditor > *, .jsonEdit, #jeWidgetLayers > div, #jeLog {
   background: #08090a;
 }
 #jsonEditor > * {
@@ -125,15 +125,39 @@ body.jsonEdit.jeZoomOut #topSurface {
   overflow: visible;
 }
 
+#jeLogWrapper {
+  position: fixed;
+  bottom: 0;
+}
+
+#jeLog {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: none;
+  height: 90vh;
+  width: 50vw;
+  overflow: auto;
+  box-sizing: border-box;
+}
+
+#jeLogWrapper:hover #jeLog {
+  display: block;
+}
+
+#jeLogWrapper:hover > h1 {
+  display: none;
+}
+
 .jeLog {
   white-space: normal;
-  font-size: 8px;
+  font-size: 12px;
   background: #ffffff10;
-  margin-left: 10px;
+  margin-left: 20px;
 }
 
 .jeLogWidget {
-  margin-left: -10px;
+  margin-left: -20px;
 }
 
 .jeLogSkipped {
@@ -151,10 +175,19 @@ body.jsonEdit.jeZoomOut #topSurface {
 .jeLogDetails {
   display: none;
   position: fixed;
-  left: 0;
-  top: 0;
-  background: black;
+  right: 0;
+  bottom: 0;
+  height: 90vh;
+  width: calc(50vw + 20px);
+  background: darkred;
   padding: 20px;
+  overflow: auto;
+  color: white;
+  box-sizing: border-box;
+}
+
+.jeLogOperation:hover {
+  background-color: darkred;
 }
 
 .jeLogOperation:hover > .jeLogDetails {
