@@ -839,11 +839,11 @@ export class Widget extends StateManaged {
                   cards = cards.filter(c=>!c.get('owner'));
                 for(const c of cards) {
                   const thisParent = c.get('parent');
-                  if(thisParent === null || 
-                     !(thisParent == holder || 
-                       (widgets.has(thisParent) && 
-                        widgets.get(thisParent).get('type') == 'pile' && 
-                        widget.get(thisParent).get('parent') == holder)
+                  if(thisParent === null ||
+                     !(thisParent == holder ||
+                       (widgets.has(thisParent) &&
+                        widgets.get(thisParent).get('type') == 'pile' &&
+                        widgets.get(thisParent).get('parent') == holder)
                       )
                     ) await c.moveToHolder(widgets.get(holder));
                 }
