@@ -929,7 +929,7 @@ export class Widget extends StateManaged {
                      !(thisParent == holder ||
                        (widgets.has(thisParent) &&
                         widgets.get(thisParent).get('type') == 'pile' &&
-                        widget.get(thisParent).get('parent') == holder)
+                        widgets.get(thisParent).get('parent') == holder)
                       )
                     ) await c.moveToHolder(widgets.get(holder));
                 }
