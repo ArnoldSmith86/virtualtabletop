@@ -17,6 +17,18 @@
   resize: none;
 }
 
+.label > div {
+  overflow: auto;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  text-align: inherit;
+  font: inherit;
+  width: 100%;
+}
+
 body.edit .widget.label {
   border: none;
   box-sizing: content-box;
