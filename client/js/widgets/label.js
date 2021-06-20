@@ -45,7 +45,9 @@ export class Label extends Widget {
 	if(delta.html  !== undefined|| delta.text !== undefined) {
 	  if(this.get('html') == true) {
       var HTMLtext = this.get('text').toString()
-	    .replace(/=/gim, '') 
+	    .replace(/=/gim, '')
+      .replace(/<img: +(.*?) height: +(.*?)>/gim, '<img src="$1" height="$2">')
+      .replace(/<img: +(.*?) width: +(.*?)>/gim, '<img src="$1" width="$2">')
 		  .replace(/<img: +(.*?)>/gim, '<img src="$1">')
 		  .replace(/<c: +(.*?)>/gim, '<span style="color: $1">')
 		  .replace(/<\/c>/gim, '</span>') 
