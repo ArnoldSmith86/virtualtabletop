@@ -6,7 +6,14 @@ export class Label extends Widget {
   	this.divinput = document.createElement('div');
     this.divinput.className = "labeldiv"; 
   	this.domElement.appendChild(this.divinput);
-  	this.divinput.addEventListener('keyup', e=>this.setText(e.target.value)); // may delete
+    this.divinput.addEventListener('keyup', e => {
+      if(e.shiftKey && e.keyCode == 13) {
+        e.preventDefault();
+        this.setText(e.target.innerHTML);
+        document.execCommand('selectAll', false, null);
+        document.getSelection().collapseToEnd();
+		}
+})
     this.input = document.createElement('textarea');
 
     this.addDefaults({
@@ -45,12 +52,16 @@ export class Label extends Widget {
 	if(delta.html  !== undefined|| delta.text !== undefined) {
 	  if(this.get('html') == true) {
       var HTMLtext = this.get('text').toString()
-	    .replace(/=/gim, '')
+	    .replace(/=/gimu, '')
+      .replace(/&lt;/gim,'<')
+      .replace(/&gt;/gim, '>')
       .replace(/<img: +(.*?) height: +(.*?)>/gim, '<img src="$1" height="$2">')
       .replace(/<img: +(.*?) width: +(.*?)>/gim, '<img src="$1" width="$2">')
 		  .replace(/<img: +(.*?)>/gim, '<img src="$1">')
+      .replace(/<a: +(.*?)>/gim, '<a href=https:$1 rel="noopener noreferrer nofollow">')
 		  .replace(/<c: +(.*?)>/gim, '<span style="color: $1">')
-		  .replace(/<\/c>/gim, '</span>') 
+      .replace(/<center>/gim, '<span style="margin:auto; display:table">')
+      .replace(/<\/c>|<\/center>/gim, '</span>') 
       .replace(/\*\*(.*?)\*\*/gim, '<b>$1</b>')
       .replace(/\*(.*?)\*/gim, '<i>$1</i>')
       .replace(/\-\-(.*?)\-\-/gim, '<sub>$1</sub>')
