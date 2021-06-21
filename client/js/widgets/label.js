@@ -6,10 +6,17 @@ export class Label extends Widget {
   	this.divinput = document.createElement('div');
     this.divinput.className = "labeldiv"; 
   	this.domElement.appendChild(this.divinput);
-    this.divinput.addEventListener('keyup', e => {
+    this.divinput.addEventListener('keydown', e => {
       if(e.shiftKey && e.keyCode == 13) {
         e.preventDefault();
-        this.setText(e.target.innerHTML);
+        const t = e.target.innerHTML
+        .replace(/<img src=\\"(.*?)\\"(.*?)height=\\"(.*?)\\"(.*?)>/gim, '<img: $1 height: $3>')
+        .replace(/<img src=\\"(.*?)\\"(.*?)width=\\"(.*?)\\"(.*?)>/gim, '<img: $1 width: $3>')
+        .replace(/<img src=\\"(.*?)\\"(.*?)>/gim, '<img: $1>')
+        .replace(/<a href=\\"(.*?)\\">/gim, '<a: $1>')
+        .replace(/<span style=\\"color=\\"(.*?)\\">/gim, '<c: $1>')
+        .replace(/<span style=\\"margin:auto; display:table\\">/gim, '<center>')
+        this.setText(t);
         document.execCommand('selectAll', false, null);
         document.getSelection().collapseToEnd();
 		}
@@ -58,7 +65,7 @@ export class Label extends Widget {
       .replace(/<img: +(.*?) height: +(.*?)>/gim, '<img src="$1" height="$2">')
       .replace(/<img: +(.*?) width: +(.*?)>/gim, '<img src="$1" width="$2">')
 		  .replace(/<img: +(.*?)>/gim, '<img src="$1">')
-      .replace(/<a: +(.*?)>/gim, '<a href=https:$1 rel="noopener noreferrer nofollow">')
+      .replace(/<a: +(.*?)>/gim, '<a href=https://$1 rel="noopener noreferrer nofollow">')
 		  .replace(/<c: +(.*?)>/gim, '<span style="color: $1">')
       .replace(/<center>/gim, '<span style="margin:auto; display:table">')
       .replace(/<\/c>|<\/center>/gim, '</span>') 
