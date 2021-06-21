@@ -28,8 +28,25 @@ export class Timer extends Widget {
       setText(this.domElement, `${delta.milliseconds < 0 ? '-' : ''}${Math.floor(s/60)}:${Math.floor(s%60)}`.replace(/:(\d)$/, ':0$1'));
     }
 
-    if(delta.paused !== undefined && delta.paused && this.interval)
-      clearInterval(this.interval);
+    if(this.interval && (delta.paused !== undefined || delta.precision !== undefined)) {
+      this.stopTimer();
+      if(!this.get('paused'))
+        this.startTimer();
+    }
+  }
+
+  applyInitialDelta(delta) {
+    super.applyInitialDelta(delta);
+    if(delta.paused === false && activePlayers.length == 1)
+      this.startTimer();
+  }
+
+  applyRemove() {
+    super.applyRemove();
+    if(this.interval) {
+      console.log('remove clear');
+      this.stopTimer();
+    }
   }
 
   classes() {
@@ -51,9 +68,8 @@ export class Timer extends Widget {
   }
 
   async click() {
-    if(!await super.click()) {
+    if(!await super.click())
       await this.setPaused();
-    }
   }
 
   getPrecision() {
@@ -76,21 +92,19 @@ export class Timer extends Widget {
     if(property == 'milliseconds')
       await this.set('alert', this.get('end') !== null && ((this.get('countdown') && newValue<=this.get('end')) || (!this.get('countdown') && newValue>=this.get('end'))));
 
-    if(property == 'paused') {
-      if(this.get('paused') && this.interval)
-        clearInterval(this.interval);
-      if(!this.get('paused'))
-        this.interval = setInterval(_=>this.tick(), this.getPrecision());
+    if(property == 'paused' && newValue !== true) {
+      this.stopTimer();
+      this.startTimer();
     }
   }
 
   async setMilliseconds(value, mode) {
     let ms = this.get('start');
 
-    if(typeof (this.get(value))=="number")
-      var value = this.get(value);
-    else if (typeof (value)!="number")
-    value = 0;
+    if(typeof this.get(value) == 'number')
+      value = this.get(value);
+    else if(typeof value != 'number')
+      value = 0;
 
     if(mode == 'inc' || mode == 'dec')
       ms = this.get('milliseconds') + (mode == 'dec' ? -1 : 1) * value;
@@ -105,11 +119,20 @@ export class Timer extends Widget {
   }
 
   async setPaused(mode) {
-    if(mode == 'pause'||mode == 'reset')
+    if(mode == 'pause' || mode == 'reset')
       await this.set('paused',  true);
     else if(mode == 'start')
       await this.set('paused',  false);
     else
       await this.set('paused',  !this.get('paused'));
+  }
+
+  startTimer() {
+    this.interval = setInterval(_=>this.tick(), this.getPrecision());
+  }
+
+  stopTimer() {
+    clearInterval(this.interval);
+    delete this.interval;
   }
 }
