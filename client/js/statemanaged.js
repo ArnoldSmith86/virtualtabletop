@@ -43,6 +43,9 @@ export class StateManaged {
   }
 
   async set(property, value) {
+    if(tracingEnabled && property == 'activeFace')
+      sendTraceEvent('set activeFace', { w: this.get('id'), property, value, stack: new Error().stack });
+
     const JSONvalue = JSON.stringify(value);
     if(JSONvalue === JSON.stringify(this.getDefaultValue(property)))
       value = null;
