@@ -1158,7 +1158,7 @@ export class Widget extends StateManaged {
     const newY = (jeZoomOut ? y : Math.max(0-this.get('height')*0.25, Math.min(1000+this.get('height')*0.25, y))) - this.get('height')/2;
 
     if(tracingEnabled)
-      sendTraceEvent('move', { id: this.get('id'), newX, newY });
+      sendTraceEvent('move', { id: this.get('id'), x, y, newX, newY });
 
     await this.setPosition(newX, newY, this.get('z'));
     const myCenter = center(this.domElement);

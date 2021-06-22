@@ -888,6 +888,12 @@ function jeGetContext() {
     return jeContext;
   }
 
+  if(jeMode == 'trace') {
+    jeContext = [ 'Trace' ];
+    jeShowCommands();
+    return jeContext;
+  }
+
   try {
     jeStateNow = JSON.parse(v);
 

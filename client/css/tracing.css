@@ -1,0 +1,17 @@
+body.trace #toolbar {
+  background: red;
+}
+
+#traceUI {
+  display: none;
+}
+
+#traceInput {
+  width: calc(100vw - 920px);
+  position: fixed;
+  bottom: 0;
+}
+
+body.trace #traceUI {
+  display: block;
+}
