@@ -53,7 +53,8 @@ class Holder extends Widget {
     if(this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY')))
       await this.receiveCard(null);
     if(Array.isArray(this.get('leaveRoutine')))
-      await this.evaluateRoutine('leaveRoutine', {}, { child: [ card ] });
+      for(const w of toProcess)
+        await this.evaluateRoutine('leaveRoutine', {}, { child: [ w ] });
   }
 
   async onChildAdd(child, oldParentID) {
@@ -68,11 +69,12 @@ class Holder extends Widget {
       let toProcess = [ child ];
       if(child.get('type') == 'pile')
         toProcess = child.children();
-      for(const property in this.get('onEnter'))
-        for(const w of toProcess)
+      for(const w of toProcess) {
+        for(const property in this.get('onEnter'))
           await w.set(property, this.get('onEnter')[property]);
-      if(Array.isArray(this.get('enterRoutine')))
-        await this.evaluateRoutine('enterRoutine', {}, { child: [ child ] });
+        if(Array.isArray(this.get('enterRoutine')))
+          await this.evaluateRoutine('enterRoutine', {}, { child: [ w ] });
+      }
     }
   }
 
