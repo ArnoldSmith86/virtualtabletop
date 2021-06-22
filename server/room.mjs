@@ -23,6 +23,7 @@ export default class Room {
     if(!this.state._meta.players[player.name])
       this.state._meta.players[player.name] = this.newPlayerColor();
 
+    this.sendMetaUpdate();
     this.state._meta.deltaID = this.deltaID;
     player.send('state', this.state);
 
@@ -30,8 +31,6 @@ export default class Room {
       this.trace('addPlayer', { player: player.name });
       player.send('tracing', 'enable');
     }
-
-    this.sendMetaUpdate();
   }
 
   async addState(id, type, src, srcName, addAsVariant) {
