@@ -25,14 +25,19 @@ export class Label extends Widget {
     if(delta.text !== undefined || delta.twoRowBottomAlign !== undefined) {
       this.input.value = delta.text;
       if(this.get('twoRowBottomAlign')) {
-        this.input.style.minHeight = '20px';
-        this.input.style.paddingTop = '';
-        if(this.input.scrollHeight == 20)
-          this.input.style.paddingTop = '20px';
-        else
+        this.input.style.height = '20px';
+        this.input.style.minHeight = 'unset';
+        this.input.style.paddingTop = '0';
+        const contentHeight = this.input.scrollHeight;
+        if(contentHeight < this.get('height')) {
+          this.input.style.paddingTop = `${this.get('height')-contentHeight}px`;
+          this.input.style.height = 'auto';
+          this.input.style.minHeight = `${contentHeight}px`;
+        } else {
           this.input.style.minHeight = '100%';
+        }
       } else {
-        this.input.style.minHeight = `${this.get('height')}px`;
+        this.input.style.minHeight = '100%';
         this.input.style.paddingTop = 'unset';
       }
     }
