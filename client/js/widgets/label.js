@@ -65,6 +65,8 @@ export class Label extends Widget {
 	  if(this.get('html') == true) {
       var HTMLtext = this.get('text').toString()
       .replace(/=/gimu, '')
+      .replace(/&lt;/gimu,'<')
+      .replace(/&gt;/gimu, '>')
       .replace(/<img: +(.*?) height: +(.*?)>/gim, '<img src="$1" height="$2">')
       .replace(/<img: +(.*?) width: +(.*?)>/gim, '<img src="$1" width="$2">')
       .replace(/<img: +(.*?)>/gim, '<img src="$1">')
