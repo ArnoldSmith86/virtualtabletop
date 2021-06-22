@@ -133,14 +133,14 @@ test('Create game using edit mode', async t => {
     .click('#editButton')
     .click('#jyo6')
     .click('#editJSONoverlay > #duplicateWidget')
-    .click('[id="3fsl"]')
-    .typeText('#editWidgetJSON', '{"type":"spinner","options":[1,2],"angle": 5,"id": "3fsl"}', { replace: true })
+    .click('#jyo7')
+    .typeText('#editWidgetJSON', '{"type":"spinner","options":[1,2],"angle": 5,"id": "jyo7"}', { replace: true })
     .click('#editJSONoverlay > #updateWidget')
     .click('#jyo6')
     .setNativeDialogHandler(() => true)
     .click('#editJSONoverlay > #removeWidget');
 
-  await compareState(t, '2e7611649b3b5339558e3f32df4e774d');
+  await compareState(t, '6c7a78d8a93a01f1210462ddd8273474');
 });
 
 test('Dynamic expressions', async t => {
@@ -217,19 +217,19 @@ test('Dynamic expressions', async t => {
   };
 });
 
-publicLibraryButtons('Blue',               0, '1d07cb56897ca1216481c6727b737659', [
+publicLibraryButtons('Blue',               0, 'e25ceda4c84138c16410f428d1021914', [
   'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton',
   'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton',
   'fdc25f83-ed33-4845-a97c-ff35fa8a094f_shuffleButton', 'buttonInputGo', 'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', '9n2q'
 ]);
 publicLibraryButtons('FreeCell',           0, 'b3339b3c5d42f47f4def7a164be69823', [ 'reset', 'jemz', 'reset' ]);
-publicLibraryButtons('Reward',             0, 'cbf8598d244e1290efe98f0d7fb3ccc8', [
+publicLibraryButtons('Reward',             0, '9059602e8a4429da13832cebdbb54998', [
   'gmex', 'kprc', 'oksq', 'j1wz', 'vfhn', '0i6i', 'Orange Recall', 'buttonInputGo', 'b09z'
 ]);
 publicLibraryButtons('Rummy Tiles',        0, 'c593e557612c383acaa757b4124a4d36', [ 'startMix', 'draw14' ]);
 publicLibraryButtons('Undercover',         1, '1c27b314acacb62fa3543f7aee49aacd', [ 'Reset', 'Spy Master Button' ]);
 publicLibraryButtons('Dice',               0, 'd8b6edd6f7a25767781af4294ecda8fc', [ 'k18u', 'hy65', 'gghr', 'dsfa', 'f34a', 'fusq' ]);
-publicLibraryButtons('Functions - CALL',   0, '073854a669798982ecd7a365e079d00e', [
+publicLibraryButtons('Functions - CALL',   0, '17a7c00d809088213a62495cfef35399', [
   'n4cw_8_C', '5a52', '5a52', '66kr', 'qeg1', 'n4cwB', '8r6p', 'qeg1', 'qeg1', 'n5eu'
 ]);
 publicLibraryButtons('Functions - CLICK',  0, 'b2430bd4589116a05df1fcedb55337c4', [ '7u2q' ]);
