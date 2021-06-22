@@ -30,6 +30,7 @@ function populateEditOptionsBasic(widget) {
   $('#basicWidthNumber').value = widget.width||100;
   $('#basicHeightNumber').value = widget.height||100;
 
+  $('#basicFullscreen').checked = false;
   $('#basicEnlarge').checked = widget.enlarge;
 }
 
@@ -49,6 +50,13 @@ function applyEditOptionsBasic(widget) {
 
   widget.width = $('#basicWidth').value;
   widget.height = $('#basicHeight').value;
+
+  if ($('#basicFullscreen').checked){
+    widget.width = 1600;
+    widget.height = 1000;
+    delete widget.x;
+    delete widget.y;
+  }
 
   if (!widget.enlarge || !$('#basicEnlarge').checked)
     widget.enlarge = $('#basicEnlarge').checked;
