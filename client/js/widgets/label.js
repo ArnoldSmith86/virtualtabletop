@@ -36,7 +36,7 @@ export class Label extends Widget {
     .replace(/<a href="https:\/\/(.*?)"(.*?)>/gimu, '<a: $1>')
     .replace(/<span style="color: ([^>]+)?">/gimu, '<c: $1>')
     .replace(/<span style="margin:auto; display:table">/gimu, '<center>')
-    this.setText(t);
+    this.setText(t + " ");
     if(toEnd) {
       document.execCommand('selectAll', false, null); // select all the content in the element
       document.getSelection().collapseToEnd();// collapse selection to the end
