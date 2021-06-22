@@ -222,8 +222,8 @@ publicLibraryButtons('Blue',               0, '862c894355846d17325291bb0c31c96e'
   'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton',
   'fdc25f83-ed33-4845-a97c-ff35fa8a094f_shuffleButton', 'buttonInputGo', 'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', '9n2q'
 ]);
-publicLibraryButtons('FreeCell',           0, '7874b94dc875ff75439e5438ca77f317', [ 'reset', 'jemz', 'reset' ]);
-publicLibraryButtons('Reward',             0, '4c40d1a19794a85c6f6e18efef64827b', [
+publicLibraryButtons('FreeCell',           0, 'b3339b3c5d42f47f4def7a164be69823', [ 'reset', 'jemz', 'reset' ]);
+publicLibraryButtons('Reward',             0, '9059602e8a4429da13832cebdbb54998', [
   'gmex', 'kprc', 'oksq', 'j1wz', 'vfhn', '0i6i', 'Orange Recall', 'buttonInputGo', 'b09z'
 ]);
 publicLibraryButtons('Rummy Tiles',        0, '1fa41cc1086a466053541e2d9b6382d8', [ 'startMix', 'draw14' ]);
