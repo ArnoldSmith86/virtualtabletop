@@ -263,7 +263,7 @@ const compute_ops = [
     desc: 'returns a decimal number in the range 0 to less than 1',
     sample: 'var a = random',
     call: function(v) { return v = Math.random() },
-    hash: '2a041f5f7fd0dbdb98ba2c9cdc82c634'
+    hash: 'a41526e7d6ab47d459c67c38585b4088'
   },
   {
     name: 'round',

@@ -44,7 +44,7 @@ function prepareClient() {
   let seed = 1;
   Math.random = function() {
     const x = Math.sin(seed++) * 10000;
-    return x - Math.floor(x);
+    return Math.round((x - Math.floor(x))*1000000)/1000000;
   };
 
   // remove base element because it causes popups on form submit
@@ -85,7 +85,7 @@ async function compareState(t, md5) {
     hash = crypto.createHash('md5').update(state).digest('hex');
 
     if(hash == md5) {
-      if(process.env.REFERENCE)
+      if(!fs.existsSync(refFile))
         fs.writeFileSync(refFile, state);
 
       await t.expect(hash).eql(md5);
@@ -116,40 +116,40 @@ test('Create game using edit mode', async t => {
   await t
     .click('#addButton')
     .click('#add-spinner6')
-    .click('#jyo6')
+    .click('#jyo2')
     .click('#addButton')
     .click('#add-holder')
     .click('#addButton')
     .click('#addHand')
-    .drag('[id="7ayk"]', 100, 100) // this shouldn't change anything because it's not movable
+    .drag('[id="3nsj"]', 100, 100) // this shouldn't change anything because it's not movable
     .click('#editButton')
-    .click('[id="7ayk"]')
+    .click('[id="3nsj"]')
     .click('#transparentHolder')
     .click('#updateWidget')
     .click('#editButton')
     .click('#addButton')
     .click('#add-deck_K_S')
-    .click('[id="9eevB"]')
-    .click('[id="9eevP"] > .handle')
+    .click('[id="9ee9B"]')
+    .click('[id="9ee9P"] > .handle')
     .click('#pileOverlay > button:nth-of-type(3)')
-    .click('[id="5iou"] > .handle')
+    .click('[id="5ip4"] > .handle')
     .click('#pileOverlay > button:nth-of-type(1)')
-    .click('[id="5iou"] > .handle')
+    .click('[id="5ip4"] > .handle')
     .click('#pileOverlay > button:nth-of-type(3)')
-    .click('#oklz > .handle')
+    .click('#oklb > .handle')
     .click('#pileOverlay > button:nth-of-type(2)')
-    .dragToElement('#oklz > .handle', '[id="3nse"]')
+    .dragToElement('#oklb > .handle', '[id="3nsj"]')
     .click('#editButton')
-    .click('#jyo6')
+    .click('#jyo2')
     .click('#editJSONoverlay > #duplicateWidget')
-    .click('#jyo7')
-    .typeText('#editWidgetJSON', '{"type":"spinner","options":[1,2],"angle": 5,"id": "jyo7"}', { replace: true })
+    .click('#jyo3')
+    .typeText('#editWidgetJSON', '{"type":"spinner","options":[1,2],"angle": 5,"id": "jyo3"}', { replace: true })
     .click('#editJSONoverlay > #updateWidget')
-    .click('#jyo6')
+    .click('#jyo2')
     .setNativeDialogHandler(() => true)
     .click('#editJSONoverlay > #removeWidget');
 
-  await compareState(t, '6c7a78d8a93a01f1210462ddd8273474');
+  await compareState(t, '7263dfbe9c8121c92d08302a2e11d08f');
 });
 
 test('Compute', async t => {
@@ -245,8 +245,8 @@ test('Dynamic expressions', async t => {
     ['var b = ${a.0} concat \'me\'', 'b', shouldBe('splitme')],
     ['var c = \'hello world\' substr 0 5', 'c', shouldBe('hello')],
     ['var d = max 7 2', 'd', shouldBe(7)],
-    ['var e = random', 'e', shouldBe(0.9742682568175951)],
-    ['var f = randRange 100 200 5', 'f', shouldBe(120)],
+    ['var e = random', 'e', shouldBe(0.709848)],
+    ['var f = randRange 100 200 5', 'f', shouldBe(195)],
     ['var g = PI', 'g', shouldBe(3.141592653589793)],
     ['var a.$int = 2', 'a', shouldBe(["split",2,"up"])],
     ['var $text = 2', 'abcd', shouldBe(2)],
@@ -294,12 +294,9 @@ test('Dynamic expressions', async t => {
   await setName(t);
   await t
     .click('#addButton')
-    .click('#add-button')
-    .click('#editButton')
-    .click('[id="jyo6"]')
-    .typeText('#editWidgetJSON', button, { replace: true, paste: true })
-    .click('#editJSONoverlay > #updateWidget')
-    .click('#editButton')
+    .click('#addCustomWidgetOverlay')
+    .typeText('#widgetText', button, { replace: true, paste: true })
+    .click('#addWidget')
     .click('[id="jyo6"]')
   const { log } = await t.getBrowserConsoleMessages();
   for (let i=1; i<=ops.length; i++) {
@@ -307,19 +304,19 @@ test('Dynamic expressions', async t => {
   };
 });
 
-publicLibraryButtons('Blue',               0, 'e25ceda4c84138c16410f428d1021914', [
+publicLibraryButtons('Blue',               0, '6620353f985e646bb3ca37ec8351695a', [
   'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton',
   'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton',
   'fdc25f83-ed33-4845-a97c-ff35fa8a094f_shuffleButton', 'buttonInputGo', 'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', '9n2q'
 ]);
 publicLibraryButtons('FreeCell',           0, 'b3339b3c5d42f47f4def7a164be69823', [ 'reset', 'jemz', 'reset' ]);
-publicLibraryButtons('Reward',             0, '9059602e8a4429da13832cebdbb54998', [
+publicLibraryButtons('Reward',             0, '45947298cf2e3e9700468b7384a5486b', [
   'gmex', 'kprc', 'oksq', 'j1wz', 'vfhn', '0i6i', 'Orange Recall', 'buttonInputGo', 'b09z'
 ]);
-publicLibraryButtons('Rummy Tiles',        0, 'c593e557612c383acaa757b4124a4d36', [ 'startMix', 'draw14' ]);
-publicLibraryButtons('Undercover',         1, '1c27b314acacb62fa3543f7aee49aacd', [ 'Reset', 'Spy Master Button' ]);
+publicLibraryButtons('Rummy Tiles',        0, '3e7716fb5b94c59969861a72fad9ce90', [ 'startMix', 'draw14' ]);
+publicLibraryButtons('Undercover',         1, 'a2732957c709ccf1d6fd198cd27f7668', [ 'Reset', 'Spy Master Button' ]);
 publicLibraryButtons('Dice',               0, 'd8b6edd6f7a25767781af4294ecda8fc', [ 'k18u', 'hy65', 'gghr', 'dsfa', 'f34a', 'fusq' ]);
-publicLibraryButtons('Functions - CALL',   0, '17a7c00d809088213a62495cfef35399', [
+publicLibraryButtons('Functions - CALL',   0, 'def80a1f8ae3047bd435007cc7cd4aa3', [
   'n4cw_8_C', '5a52', '5a52', '66kr', 'qeg1', 'n4cwB', '8r6p', 'qeg1', 'qeg1', 'n5eu'
 ]);
 publicLibraryButtons('Functions - CLICK',  0, 'b2430bd4589116a05df1fcedb55337c4', [ '7u2q' ]);
