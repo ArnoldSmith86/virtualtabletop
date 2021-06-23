@@ -132,13 +132,14 @@ test('Create game using edit mode', async t => {
     .dragToElement('#oklz > .handle', '[id="3nse"]')
     .click('#editButton')
     .click('#jyo6')
-    .click('#editJSONoverlay > #duplicateWidget')
+    .click('#duplicateWidget')
     .click('#jyo7')
+    .click('#manualEdit')
     .typeText('#editWidgetJSON', '{"type":"spinner","options":[1,2],"angle": 5,"id": "jyo7"}', { replace: true })
-    .click('#editJSONoverlay > #updateWidget')
+    .click('#editJSONoverlay #updateWidget')
     .click('#jyo6')
     .setNativeDialogHandler(() => true)
-    .click('#editJSONoverlay > #removeWidget');
+    .click('#removeWidget');
 
   await compareState(t, '6c7a78d8a93a01f1210462ddd8273474');
 });
@@ -207,8 +208,9 @@ test('Dynamic expressions', async t => {
     .click('#add-button')
     .click('#editButton')
     .click('[id="jyo6"]')
+    .click('#manualEdit')
     .typeText('#editWidgetJSON', button, { replace: true, paste: true })
-    .click('#editJSONoverlay > #updateWidget')
+    .click('#editJSONoverlay #updateWidget')
     .click('#editButton')
     .click('[id="jyo6"]')
   const { log } = await t.getBrowserConsoleMessages();
