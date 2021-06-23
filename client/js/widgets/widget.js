@@ -926,10 +926,11 @@ export class Widget extends StateManaged {
             await this.sortWidgets(collections[a.collection], a.sortBy.key, a.sortBy.reverse, a.sortBy.locales, a.sortBy.options);
 
           if(jeRoutineLogging) {
-            if(collections[a.collection].length && collections[a.collection].length < 5)
-              jeLoggingRoutineOperationResult(`${a.collection} = ${collections[a.collection].map(w=>w.get('id')).join(',')}`);
-            else
-              jeLoggingRoutineOperationResult(`${a.collection} = (${collections[a.collection].length} widgets)`);
+            let selectedWidgets = collections[a.collection].map(w=>w.get('id')).join(',');
+            if(!collections[a.collection].length || collections[a.collection].length >= 5)
+              selectedWidgets = `(${collections[a.collection].length} widgets)`;
+
+            jeLoggingRoutineOperationResult(`${a.property} ${a.relation} ${JSON.stringify(a.value)} OF ${a.source} => ${a.mode} ${a.collection} = ${selectedWidgets}`);
           }
         }
       }
@@ -947,8 +948,7 @@ export class Widget extends StateManaged {
             await w.set(a.property, compute(a.relation, null, w.get(a.property), a.value));
           }
           if(jeRoutineLogging) {
-            const relationDisplay = (a.relation != '=') ? ` (${a.relation})` : '';
-            jeLoggingRoutineOperationResult(`${a.property} = ${JSON.stringify(a.value)}${relationDisplay}`);
+            jeLoggingRoutineOperationResult(`${a.property} ${a.relation} ${JSON.stringify(a.value)}`);
           }
         }
       }
