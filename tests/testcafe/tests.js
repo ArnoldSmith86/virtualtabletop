@@ -10,8 +10,7 @@ import { compute_ops } from '../../client/js/compute.js';
 const server = process.env.REFERENCE ? `http://212.47.248.129:${3000 + +process.env.REFERENCE}` : 'http://localhost:8272';
 const referenceDir = path.resolve() + '/save/testcafe-references';
 
-if(process.env.REFERENCE)
-  fs.mkdirSync(referenceDir, { recursive: true });
+fs.mkdirSync(referenceDir, { recursive: true });
 
 async function setRoomState(state) {
   await fetch(`${server}/state/testcafe-testing`, {
