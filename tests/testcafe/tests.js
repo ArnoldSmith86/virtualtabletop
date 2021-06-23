@@ -5,21 +5,21 @@ import fetch from 'node-fetch';
 import crypto from 'crypto';
 import { diffString, diff } from 'json-diff';
 
+import { compute_ops } from '../../client/js/compute.js';
+
 const server = process.env.REFERENCE ? `http://212.47.248.129:${3000 + +process.env.REFERENCE}` : 'http://localhost:8272';
 const referenceDir = path.resolve() + '/save/testcafe-references';
 
 if(process.env.REFERENCE)
   fs.mkdirSync(referenceDir, { recursive: true });
 
-getState();
-
-async function emptyRoomState() {
+async function setRoomState(state) {
   await fetch(`${server}/state/testcafe-testing`, {
     method: 'PUT',
     headers: {
       'Content-Type':'application/json'
     },
-    body: '{}'
+    body: JSON.stringify(state || {})
   });
 }
 
@@ -77,31 +77,40 @@ function publicLibraryButtons(game, variant, md5, buttons) {
 }
 
 async function compareState(t, md5) {
-  const state = await getState();
-  const hash = crypto.createHash('md5').update(state).digest('hex');
   const refFile = `${referenceDir}/${md5}.json`;
+  let hash = null;
+  let state = null;
+  for(let wait=50; wait<1000; wait*=2) {
+    state = await getState();
+    hash = crypto.createHash('md5').update(state).digest('hex');
 
-  if(process.env.REFERENCE && hash == md5)
-    fs.writeFileSync(refFile, state);
+    if(hash == md5) {
+      if(process.env.REFERENCE)
+        fs.writeFileSync(refFile, state);
 
-  if(!process.env.REFERENCE && hash != md5 && fs.existsSync(refFile))
+      await t.expect(hash).eql(md5);
+      return;
+    }
+
+    // wait for a bit and try again
+    await new Promise(resolve => setTimeout(resolve, wait));
+  }
+
+  if(!process.env.REFERENCE && fs.existsSync(refFile))
     console.log(diffString(JSON.parse(fs.readFileSync(refFile)), JSON.parse(state)));
 
   await t.expect(hash).eql(md5);
 }
 
 async function getState() {
-  // wait for 500ms
-  await new Promise(resolve => setTimeout(resolve, 500));
-
   const response = await fetch(`${server}/state/testcafe-testing`);
   return await response.text();
 }
 
-fixture('virtualtabletop.io').page(`${server}/testcafe-testing`).beforeEach(emptyRoomState).after(emptyRoomState);
+fixture('virtualtabletop.io').page(`${server}/testcafe-testing`).beforeEach(_=>setRoomState()).after(_=>setRoomState());
 
 test('Create game using edit mode', async t => {
-  await emptyRoomState();
+  await setRoomState();
   await ClientFunction(prepareClient)();
   await setName(t);
   await t
@@ -141,6 +150,51 @@ test('Create game using edit mode', async t => {
     .click('#editJSONoverlay > #removeWidget');
 
   await compareState(t, '6c7a78d8a93a01f1210462ddd8273474');
+});
+
+test('Compute', async t => {
+  function opToString(op) {
+    if(op === undefined)
+      return '//';
+    if(op && op[0] == '$')
+      return op;
+    return JSON.stringify(op).replace(/"/g, "'");
+  }
+
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  for(const index in compute_ops) {
+    const op = compute_ops[index];
+    const operators = [ 0, 1, '${obj.12}', 0.1, '', '0', '${str}', true, '${obj.$str}', null, undefined, [], '${PROPERTY arr}', {}, '${PROPERTY obj}' ];
+    const clickRoutine = [ "var str = 'as0d'", "var obj = ${PROPERTY obj}", 'var results = []' ];
+    let i = 0;
+    for(const op1 of operators) {
+      for(const op2 of operators) {
+        for(const op3 of operators) {
+          clickRoutine.push(`var results.${i++} = ${op.name} ${opToString(op1)} ${opToString(op2)} ${opToString(op3)}`);
+        }
+      }
+    }
+    clickRoutine.push({
+      func: 'SET',
+      property: 'results',
+      value: '${results}',
+      collection: 'thisButton'
+    });
+
+    const state = {};
+    state[`button${op.name}`] = {
+      id: `button${op.name}`,
+      type: 'button',
+      obj: { '12': 2, 'as0d': false },
+      arr: [ 'a', '1', 1, 'as0d', false, [], {} ],
+      clickRoutine
+    };
+    await setRoomState(state);
+    await t.click(`[id="button${op.name}"]`);
+    await compareState(t, op.hash);
+  }
 });
 
 test('Dynamic expressions', async t => {
@@ -235,7 +289,7 @@ test('Dynamic expressions', async t => {
   "id": "jyo6",
   "debug": true
 }`;
-  await emptyRoomState();
+  await setRoomState();
   await ClientFunction(prepareClient)();
   await setName(t);
   await t

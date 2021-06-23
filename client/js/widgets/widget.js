@@ -376,7 +376,7 @@ export class Widget extends StateManaged {
         const parameter  = `(null|true|false|\\[\\]|\\{\\}|${number}|${variable}|${string})`;
 
         const left       = `var (\\$)?(${identifier})(?:\\.(\\$)?(${identifier}))?`;
-        const operation  = `${identifier}|[=+*/%<!>&|-]{1,2}`;
+        const operation  = `${identifier}|[=+*/%<!>&|-]{1,3}`;
 
         const regex      = `^${left} += +(?:${parameter}|(?:${parameter} +)?(🧮)?(${operation})(?: +${parameter})?(?: +${parameter})?(?: +${parameter})?)(?: +//.*)?`;
 
