@@ -20,6 +20,7 @@ export class Label extends Widget {
 
       text: '',
       editable: false,
+      html: false,
       twoRowBottomAlign: false
     });
 
@@ -41,8 +42,8 @@ export class Label extends Widget {
     .replace(/<span style="font-size: ([^>]+)?">/gimu, '<size: $1>')
     this.setText(t + " ");
     if(toEnd) {
-      document.execCommand('selectAll', false, null); // select all the content in the element
-      document.getSelection().collapseToEnd();// collapse selection to the end
+      document.execCommand('selectAll', false, null);
+      document.getSelection().collapseToEnd();
     }
   }	
   
