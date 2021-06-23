@@ -136,7 +136,7 @@ body.jsonEdit.jeZoomOut #topSurface {
   left: 0;
   display: none;
   height: 90vh;
-  width: 50vw;
+  width: 100vw;
   overflow: auto;
   box-sizing: border-box;
 }
@@ -161,7 +161,7 @@ body.jsonEdit.jeZoomOut #topSurface {
 }
 
 .jeLogSkipped {
-  opacity: 0.3;
+  color: grey;
 }
 
 .jeLogResult {
@@ -175,10 +175,10 @@ body.jsonEdit.jeZoomOut #topSurface {
 .jeLogDetails {
   display: none;
   position: fixed;
-  right: 0;
+  right: 20px;
   bottom: 0;
   height: 90vh;
-  width: calc(50vw + 20px);
+  width: calc(50vw - 20px);
   background: darkred;
   padding: 20px;
   overflow: auto;
