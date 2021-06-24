@@ -504,6 +504,23 @@ function jeAddCommands() {
   jeAddNumberCommand('half number', '/', x=>x/2);
   jeAddNumberCommand('zero', '0', x=>0);
   jeAddNumberCommand('opposite value', '0', x=>-x);
+
+  jeAddAlignmentCommands();
+}
+
+function jeAddAlignmentCommands() {
+  jeCommands.push({
+    id: 'jeCenter',
+    name: 'center in parent',
+    context: '^.* ↦ (x|y)( ↦ "[0-9]+")?\x24',
+    call: async function() {
+      const key = jeGetLastKey();
+      const sizeKey = key == 'x' ? 'width' : 'height';
+      const parentSize = jeStateNow.parent ? widgets.get(jeStateNow.parent).get(sizeKey) : (sizeKey == 'width' ? 1600 : 1000);
+      jeStateNow[key] = '###SELECT ME###';
+      jeSetAndSelect((parentSize-widgets.get(jeStateNow.id).get(sizeKey))/2);
+    }
+  });
 }
 
 function displayComputeOps() {
@@ -909,7 +926,7 @@ function jeGetContext() {
       jeJSONerror = 'No ID given.';
     else if(JSON.parse(jeStateBefore).id != jeStateNow.id && widgets.has(jeStateNow.id))
       jeJSONerror = `ID ${jeStateNow.id} is already in use.`;
-    else if(jeStateNow.parent && !widgets.has(jeStateNow.parent))
+    else if(jeStateNow.parent !== undefined && jeStateNow.parent !== null && !widgets.has(jeStateNow.parent))
       jeJSONerror = `Parent ${jeStateNow.parent} does not exist.`;
     else if(jeStateNow.type == 'card' && (!jeStateNow.deck || !widgets.has(jeStateNow.deck)))
       jeJSONerror = `Deck ${jeStateNow.deck} does not exist.`;
@@ -1022,8 +1039,8 @@ function jePasteText(text, select) {
 function jePostProcessObject(o) {
   const copy = { ...o };
   for(const key in copy)
-    if(copy[key] === jeWidget.getDefaultValue(key) || key.match(/in deck/))
-      copy[key] = null;
+    if(copy[key] === null || copy[key] === jeWidget.getDefaultValue(key) || key.match(/in deck/))
+      delete copy[key];
   return copy;
 }
 
