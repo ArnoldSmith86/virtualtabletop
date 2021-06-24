@@ -11,6 +11,7 @@ let jeCommandWithOptions = null;
 let jeContext = null;
 let jeSecondaryWidget = null;
 let jeDeltaIsOurs = false;
+let jeKeyword = '';
 const jeWidgetLayers = {};
 const jeState = {
   ctrl: false,
@@ -522,6 +523,19 @@ function jeAddAlignmentCommands() {
   });
 }
 
+function displayComputeOps() {
+  const keyword = $('#var_search').value;
+  let results = compute_ops.filter(o => o.name.toLowerCase().includes(keyword.toLowerCase()) || o.desc.toLowerCase().includes(keyword.toLowerCase()));
+  var resultTable = '<table>';
+  if(keyword.length > 0) {
+    for(const r of Object.values(results).sort((a, b) => a.name.toString().localeCompare(b.name)))
+      resultTable += '<tr valign=top><td><b>' + r.name + '</b></td><td><b>' + r.sample + '</b><br>' + r.desc + '</td></tr>';
+  }
+  resultTable += '</table>';
+  $('#var_results').innerHTML = resultTable;
+  jeKeyword = keyword;
+}
+
 function jeAddCSScommands() {
   for(const css of [ 'border: 1px solid black', 'background: white', 'font-size: 30px', 'color: black' , 'border-radius: 100%' ]) {
     jeCommands.push({
@@ -815,7 +829,7 @@ function jeColorize() {
     [ /^( +")(.*)(": )(null|true|false)(,?)$/, null, 'key', null, 'null', null ],
     [ /^( +")(.*)(":.*)$/, null, 'key', null ],
     [ /^(Room)$/, 'extern' ],
-    [ /^( +"var )(.*)( = )(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?( )?([0-9a-zA-Z_-]+|[=+*/%<!>&|-]{1,2})?(🧮(?:[0-9a-zA-Z_-]+|[=+*/%<!>&|-]{1,2}))?( )?(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?( )?(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?( )?(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?(.*)(",?)$/, 'default', 'custom', null, 'number', 'null', 'variable', 'string', null, null, 'variable', null, 'number', 'null', 'variable', 'string', null, 'number', 'null', 'variable', 'string', null, 'number', 'null', 'variable', 'string', null, 'default' ],
+    [ /^( +"var )(.*)( = )(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?( )?([0-9a-zA-Z_-]+|[=+*/%<!>&|-]{1,3})?(🧮(?:[0-9a-zA-Z_-]+|[=+*/%<!>&|-]{1,2}))?( )?(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?( )?(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?( )?(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?(.*)(",?)$/, 'default', 'custom', null, 'number', 'null', 'variable', 'string', null, null, 'variable', null, 'number', 'null', 'variable', 'string', null, 'number', 'null', 'variable', 'string', null, 'number', 'null', 'variable', 'string', null, 'default' ],
     [ /^( +")(.*)(",?)$/, null, 'string', null ],
     [ /^( +)(.*)( \()([a-z]+)( - )([0-9-]+)(,)([0-9-]+)(.*)$/, null, 'key', null, 'string', null, 'number', null, 'number', null ]
   ];
@@ -1161,6 +1175,11 @@ function jeShowCommands() {
   }
   delete activeCommands[""];
 
+  if(jeContext[jeContext.length-1] == '(var expression)') {
+    commandText += `\n  <b>var expression</b>\n<label>Search </label><input id="var_search" name="var_search" type="text"><br>`;
+    commandText += `<div id="var_results"></div>\n`;
+  }
+
   if(!jeJSONerror && jeStateNow) {
     for(const contextMatch of (Object.keys(activeCommands).sort((a,b)=>b.length-a.length))) {
       commandText += `\n  <b>${contextMatch}</b>\n`;
@@ -1199,6 +1218,12 @@ function jeShowCommands() {
     commandText += `\n\n${jeSecondaryWidget}\n`;
   $('#jeCommands').innerHTML = commandText;
   on('#jeCommands button', 'click', clickButton);
+
+  on('#var_search', 'input', displayComputeOps);
+  if ($('#var_results') && jeKeyword !='') {
+    $('#var_search').value = jeKeyword;
+    displayComputeOps();
+  }
 
   if(jeCommandWithOptions)
     jeCommandOptions();
