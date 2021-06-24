@@ -165,8 +165,8 @@ export class Widget extends StateManaged {
   }
 
   applyRemove() {
-    if(this.get('parent') && widgets.has(this.get('parent')))
-      widgets.get(this.get('parent')).applyChildRemove(this);
+    if(this.parent)
+      this.parent.applyChildRemove(this);
     if(this.get('deck') && widgets.has(this.get('deck')))
       widgets.get(this.get('deck')).removeCard(this);
     removeFromDOM(this.domElement);
@@ -376,13 +376,16 @@ export class Widget extends StateManaged {
         await callback(a);
     }
 
+    if(this.isBeingRemoved || this.inRemovalQueue)
+      return;
+
     batchStart();
 
     if(this.get('debug') && !depth)
       $('#debugButtonOutput').textContent = '';
 
     let variables = initialVariables;
-    let collections = initialCollections
+    let collections = initialCollections;
     if(!byReference) {
       variables = Object.assign({}, initialVariables, {
         playerName,
@@ -418,7 +421,7 @@ export class Widget extends StateManaged {
         const parameter  = `(null|true|false|\\[\\]|\\{\\}|${number}|${variable}|${string})`;
 
         const left       = `var (\\$)?(${identifier})(?:\\.(\\$)?(${identifier}))?`;
-        const operation  = `${identifier}|[=+*/%<!>&|-]{1,2}`;
+        const operation  = `${identifier}|[=+*/%<!>&|-]{1,3}`;
 
         const regex      = `^${left} += +(?:${parameter}|(?:${parameter} +)?(🧮)?(${operation})(?: +${parameter})?(?: +${parameter})?(?: +${parameter})?)(?: +//.*)?`;
 
@@ -498,6 +501,47 @@ export class Widget extends StateManaged {
         }
       }
 
+      if(a.func == 'CANVAS') {
+        setDefaults(a, { mode: 'reset', x: 0, y: 0, value: 1, color: "#1F5CA6" });
+
+        if([ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ].indexOf(a.mode) == -1)
+          problems.push(`Warning: Mode ${a.mode} will be interpreted as inc.`);
+
+        const execute = async function(widget) {
+          if(widget.get('type') == 'canvas') {
+            if(a.mode == 'setPixel')
+              await widget.setPixel(a.x, a.y, a.value);
+            else if(a.mode == 'set')
+              await widget.set('activeColor', a.value % widget.get('colorMap').length);
+            else if(a.mode == 'reset')
+              await widget.reset();
+            else if(a.mode == 'dec')
+              await widget.set('activeColor', (widget.get('activeColor')+widget.get('colorMap').length - (a.value % widget.get('colorMap').length)) % widget.get('colorMap').length);
+            else if(a.mode == 'change') {
+              var CM = widget.get('colorMap');
+              var index = ((a.value || 1) % CM.length) || 0;
+              CM[index] = a.color || '#1f5ca6' ;
+              await widget.set('colorMap', CM);
+            }
+            else
+              await widget.set('activeColor', (widget.get('activeColor')+ a.value) % widget.get('colorMap').length);
+          }
+        };
+
+        if(a.canvas !== undefined) {
+          if(this.isValidID(a.canvas, problems)) {
+            await w(a.canvas, execute);
+          }
+        } else if(isValidCollection(a.collection)) {
+          if(collections[a.collection].length) {
+            for(const c of collections[a.collection].slice(0, a.count || 999999))
+              await execute(c);
+          } else {
+            problems.push(`Collection ${a.collection} is empty.`);
+          }
+        }
+      }
+
       if(a.func == 'CLICK') {
         setDefaults(a, { collection: 'DEFAULT', count: 1 , mode: 'respect' });
         if (['respect', 'ignoreClickable', 'ignoreClickRoutine', 'ignoreAll'].indexOf(a.mode) == -1) {
@@ -520,7 +564,11 @@ export class Widget extends StateManaged {
               const parent = clone.parent;
               clone.clonedFrom = w.get('id');
 
-              delete clone.id;
+              if(widgets.has(clone.id)) {
+                delete clone.id;
+                if(a.properties.id !== undefined)
+                  problems.push(`There is already a widget with id:${a.properties.id}, generating new ID.`);
+              }
               delete clone.parent;
               addWidgetLocal(clone);
               const cWidget = widgets.get(clone.id);
@@ -548,149 +596,11 @@ export class Widget extends StateManaged {
 
       function compute(o, v, x, y, z) {
         try {
-          switch(o) {
-          case '=':  v = y;      break;
-          case '+':  v = x + y;  break;
-          case '-':  v = x - y;  break;
-          case '*':  v = x * y;  break;
-          case '**': v = x ** y; break;
-          case '/':  v = x / y;  break;
-          case '%':  v = x % y;  break;
-          case '<':  v = x < y;  break;
-          case '<=': v = x <= y; break;
-          case '==': v = x == y; break;
-          case '!=': v = x != y; break;
-          case '>=': v = x >= y; break;
-          case '>':  v = x > y;  break;
-          case '&&': v = x && y; break;
-          case '||': v = x || y; break;
-          case '!':  v = !x;     break;
-
-          // Math operations
-          case 'hypot':
-          case 'max':
-          case 'min':
-          case 'pow':
-            v = Math[o](x, y);
-            break;
-          case 'sin':
-          case 'cos':
-          case 'tan':
-            v = Math[o](x * Math.PI/180);
-            break;
-          case 'abs':
-          case 'cbrt':
-          case 'ceil':
-          case 'exp':
-          case 'floor':
-          case 'log':
-          case 'log10':
-          case 'log2':
-          case 'random':
-          case 'round':
-          case 'sign':
-          case 'sqrt':
-          case 'trunc':
-            v = Math[o](x);
-            break;
-          case 'E':
-          case 'LN2':
-          case 'LN10':
-          case 'LOG2E':
-          case 'LOG10E':
-          case 'PI':
-          case 'SQRT1_2':
-          case 'SQRT2':
-            v = Math[o];
-            break;
-
-          // String operations
-          case 'length':
-            v = x.length;
-            break;
-          case 'parseFloat':
-            v = parseFloat(x);
-            break;
-          case 'toLowerCase':
-          case 'toUpperCase':
-          case 'trim':
-          case 'trimStart':
-          case 'trimEnd':
-            v = x[o]();
-            break;
-          case 'charAt':
-          case 'charCodeAt':
-          case 'codePointAt':
-          case 'concat':
-          case 'includes':
-          case 'endsWith':
-          case 'indexOf':
-          case 'lastIndexOf':
-          case 'localeCompare':
-          case 'match':
-          case 'padEnd':
-          case 'padStart':
-          case 'repeat':
-          case 'search':
-          case 'split':
-          case 'startsWith':
-          case 'toFixed':
-          case 'toLocaleLowerCase':
-          case 'toLocaleUpperCase':
-            v = x[o](y);
-            break;
-          case 'replace':
-          case 'replaceAll':
-          case 'substr':
-            v = x[o](y, z);
-            break;
-
-          // Array operations
-          // 'length' should work the same as for strings
-          case 'getIndex':
-            v = x[y];
-            break;
-          case 'setIndex':
-            v[x] = y;
-            break;
-          case 'from':
-          case 'isArray':
-            v = Array[o](x);
-            break;
-          case 'concatArray':
-            v = x.concat(y);
-            break;
-          case 'pop':
-          case 'reverse':
-          case 'shift':
-          case 'sort':
-            v = x[o]();
-            break;
-          case 'includes':
-          case 'indexOf':
-          case 'join':
-          case 'lastIndexOf':
-            v = x[o](y);
-            break;
-          case 'slice':
-            v = x[o](y, z);
-            break;
-          case 'push':
-          case 'unshift':
-            v[o](x);
-            break;
-
-          // random values
-          case 'randInt':
-            v = Math.floor((Math.random() * (y - x + 1)) + x);
-            break;
-          case 'randRange':
-            v = Math.round(Math.floor((Math.random() * (y - x) / (z || 1))) * (z || 1) + x);
-            break;
-          default:
-            v = null;
+          if (compute_ops.find(op => op.name == o) !== undefined) {
+            v = compute_ops.find(op => op.name == o).call(v, x, y, z);
+          }else {
             problems.push(`Operation ${o} is unsupported.`);
-            return v;
+            return v = null;
           }
         } catch(e) {
           v = 0;
@@ -1004,10 +914,15 @@ export class Widget extends StateManaged {
             });
           }
         } else if(isValidCollection(a.collection)) {
-          if(collections[a.collection].length)
+          if(collections[a.collection].length) {
             await this.sortWidgets(collections[a.collection], a.key, a.reverse, a.locales, a.options, true);
-          else
+            await w(collections[a.collection].map(i=>i.get('parent')), async holder=>{
+              if(holder.get('type') == 'holder')
+                await holder.updateAfterShuffle();
+            });
+          } else {
             problems.push(`Collection ${a.collection} is empty.`);
+          }
         }
       }
 
@@ -1094,6 +1009,16 @@ export class Widget extends StateManaged {
       showOverlay('debugButtonOverlay');
 
     batchEnd();
+
+    if(variables.playerColor != playerColor && typeof variables.playerColor == 'string' && variables.playerColor.match(/^#[0-9a-fA-F]{6}$/)) {
+      toServer('playerColor', { player: playerName, color: variables.playerColor });
+      playerColor = variables.playerColor;
+    }
+    if(variables.playerName != playerName && typeof variables.playerName == 'string') {
+      toServer('rename', { oldName: playerName, newName: variables.playerName });
+      playerName = variables.playerName;
+    }
+
     return { variable: variables.result, collection: collections.result || [] };
   }
 
@@ -1313,60 +1238,8 @@ export class Widget extends StateManaged {
       $('#buttonInputFields').innerHTML = '';
 
       for(const field of o.fields) {
-
         const dom = document.createElement('div');
-
-        if(field.type == 'checkbox') {
-          const input = document.createElement('input');
-          const label = document.createElement('label');
-          input.type = 'checkbox';
-          input.checked = field.value || false;
-          label.textContent = field.label;
-          dom.appendChild(input);
-          dom.appendChild(label);
-          label.htmlFor = input.id = this.get('id') + ';' + field.variable;
-        }
-
-        if(field.type == 'color') {
-          const input = document.createElement('input');
-          const label = document.createElement('label');
-          input.type = 'color';
-          input.value = field.value || '#ff0000';
-          label.textContent = field.label;
-          dom.appendChild(label);
-          dom.appendChild(input);
-          label.htmlFor = input.id = this.get('id') + ';' + field.variable;
-        }
-
-        if(field.type == 'number') {
-          const input = document.createElement('input');
-          const label = document.createElement('label');
-          input.type = 'number';
-          input.value = field.value || 1;
-          input.min = field.min || 1;
-          input.max = field.max || 10;
-          label.textContent = field.label;
-          dom.appendChild(label);
-          dom.appendChild(input);
-          label.htmlFor = input.id = this.get('id') + ';' + field.variable;
-        }
-
-        if(field.type == 'string') {
-          const input = document.createElement('input');
-          const label = document.createElement('label');
-          input.value = field.value || "";
-          label.textContent = field.label;
-          dom.appendChild(label);
-          dom.appendChild(input);
-          label.htmlFor = input.id = this.get('id') + ';' + field.variable;
-        }
-
-        if(field.type == 'text') {
-          const p = document.createElement('p');
-          p.textContent = field.text;
-          dom.appendChild(p);
-        }
-
+        formField(field, dom, this.get('id') + ';' + field.variable);
         $('#buttonInputFields').appendChild(dom);
       }
 
@@ -1429,6 +1302,8 @@ export class Widget extends StateManaged {
             width: this.get('width'),
             height: this.get('height')
           };
+          if(this.get('owner') !== null)
+            pile.owner = this.get('owner');
           addWidgetLocal(pile);
           await this.set('parent', pile.id);
           await widget.set('parent', pile.id);
