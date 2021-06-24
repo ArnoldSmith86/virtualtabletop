@@ -303,19 +303,19 @@ test('Dynamic expressions', async t => {
   };
 });
 
-publicLibraryButtons('Blue',               0, '6620353f985e646bb3ca37ec8351695a', [
+publicLibraryButtons('Blue',               0, '3871c73d33e397a458e6e6f575dcc961', [
   'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton',
   'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton',
   'fdc25f83-ed33-4845-a97c-ff35fa8a094f_shuffleButton', 'buttonInputGo', 'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', '9n2q'
 ]);
-publicLibraryButtons('FreeCell',           0, 'b3339b3c5d42f47f4def7a164be69823', [ 'reset', 'jemz', 'reset' ]);
-publicLibraryButtons('Reward',             0, '45947298cf2e3e9700468b7384a5486b', [
+publicLibraryButtons('FreeCell',           0, '7874b94dc875ff75439e5438ca77f317', [ 'reset', 'jemz', 'reset' ]);
+publicLibraryButtons('Reward',             0, '01d126c5562b8bcd7d5f77d766316dfc', [
   'gmex', 'kprc', 'oksq', 'j1wz', 'vfhn', '0i6i', 'Orange Recall', 'buttonInputGo', 'b09z'
 ]);
-publicLibraryButtons('Rummy Tiles',        0, '3e7716fb5b94c59969861a72fad9ce90', [ 'startMix', 'draw14' ]);
-publicLibraryButtons('Undercover',         1, 'a2732957c709ccf1d6fd198cd27f7668', [ 'Reset', 'Spy Master Button' ]);
-publicLibraryButtons('Dice',               0, 'd8b6edd6f7a25767781af4294ecda8fc', [ 'k18u', 'hy65', 'gghr', 'dsfa', 'f34a', 'fusq' ]);
-publicLibraryButtons('Functions - CALL',   0, 'def80a1f8ae3047bd435007cc7cd4aa3', [
+publicLibraryButtons('Rummy Tiles',        0, '6589ac08ca4cd13855a3878e6c5d06a6', [ 'startMix', 'draw14' ]);
+publicLibraryButtons('Undercover',         1, 'e07ff2362e8e1eed8035ec57d77773da', [ 'Reset', 'Spy Master Button' ]);
+publicLibraryButtons('Dice',               0, '3b2d42e8046b65042904f86bf7a76a01', [ 'k18u', 'hy65', 'gghr', 'dsfa', 'f34a', 'fusq' ]);
+publicLibraryButtons('Functions - CALL',   0, '538d1a9c3495390bc7a1e05ac5283447', [
   'n4cw_8_C', '5a52', '5a52', '66kr', 'qeg1', 'n4cwB', '8r6p', 'qeg1', 'qeg1', 'n5eu'
 ]);
 publicLibraryButtons('Functions - CLICK',  0, '7ed81cfc9d0bc98703cc4228835275e0', [ '7u2q' ]);
