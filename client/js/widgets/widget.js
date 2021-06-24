@@ -331,7 +331,7 @@ export class Widget extends StateManaged {
         await callback(a);
     }
 
-    if(this.isBeingRemoved || this.inRemovalQueue)
+    if(!depth && (this.isBeingRemoved || this.inRemovalQueue))
       return;
 
     batchStart();
@@ -999,8 +999,6 @@ export class Widget extends StateManaged {
               await onClickUpdateWidget(false);
               for(const c in collections)
                 collections[c] = collections[c].map(w=>w.id==oldID ? widgets.get(newState.id) : w);
-              oldWidget.isBeingRemoved = false;
-              oldWidget.inRemovalQueue = false;
               sendDelta(true);
             } else {
               problems.push(`id ${newState.id} already in use, ignored.`);
