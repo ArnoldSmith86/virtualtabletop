@@ -532,7 +532,11 @@ export class Widget extends StateManaged {
               const parent = clone.parent;
               clone.clonedFrom = w.get('id');
 
-              delete clone.id;
+              if(widgets.has(clone.id)) {
+                delete clone.id;
+                if(a.properties.id !== undefined)
+                  problems.push(`There is already a widget with id:${a.properties.id}, generating new ID.`);
+              }
               delete clone.parent;
               addWidgetLocal(clone);
               const cWidget = widgets.get(clone.id);
