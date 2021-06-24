@@ -433,7 +433,8 @@ export class Widget extends StateManaged {
           else
             variables[variable] = getValue(variables[variable]);
         } else if(modeSet.test(a)) {
-          legacyMode = new Set(a.replace(modeSet,'').trim().split(/[, ]+/));
+          legacyMode.clear();
+          a.replace(modeSet,'').trim().split(/[, ]+/).forEach(i => legacyMode.add(i));
         } else if(modeAdd.test(a)) {
           a.replace(modeAdd,'').trim().split(/[, ]+/).forEach(i => legacyMode.add(i));
         } else if(modeRemove.test(a)) {
