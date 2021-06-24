@@ -1003,10 +1003,15 @@ export class Widget extends StateManaged {
             });
           }
         } else if(isValidCollection(a.collection)) {
-          if(collections[a.collection].length)
+          if(collections[a.collection].length) {
             await this.sortWidgets(collections[a.collection], a.key, a.reverse, a.locales, a.options, true);
-          else
+            await w(collections[a.collection].map(i=>i.get('parent')), async holder=>{
+              if(holder.get('type') == 'holder')
+                await holder.updateAfterShuffle();
+            });
+          } else {
             problems.push(`Collection ${a.collection} is empty.`);
+          }
         }
       }
 
@@ -1093,6 +1098,16 @@ export class Widget extends StateManaged {
       showOverlay('debugButtonOverlay');
 
     batchEnd();
+
+    if(variables.playerColor != playerColor && typeof variables.playerColor == 'string' && variables.playerColor.match(/^#[0-9a-fA-F]{6}$/)) {
+      toServer('playerColor', { player: playerName, color: variables.playerColor });
+      playerColor = variables.playerColor;
+    }
+    if(variables.playerName != playerName && typeof variables.playerName == 'string') {
+      toServer('rename', { oldName: playerName, newName: variables.playerName });
+      playerName = variables.playerName;
+    }
+
     return { variable: variables.result, collection: collections.result || [] };
   }
 
