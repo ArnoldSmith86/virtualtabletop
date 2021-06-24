@@ -33,7 +33,7 @@ export class StateManaged {
 
   getDefaultValue(key) {
     for(const [ id, properties ] of Object.entries(this.inheritFrom()))
-      if((properties == '*' || properties.indexOf(key) != -1) && widgets.has(id) && widgets.get(id).get(key) !== undefined)
+      if(this.inheritFromIsValid(properties, key) && widgets.has(id) && widgets.get(id).get(key) !== undefined)
         return widgets.get(id).get(key);
     return this.defaults[key];
   }
@@ -57,6 +57,10 @@ export class StateManaged {
     } else {
       return iF;
     }
+  }
+
+  inheritFromIsValid(properties, key) {
+    return (properties == '*' || properties.indexOf(key) != -1) && [ 'id', 'type', 'deck', 'cardType' ].indexOf(key) == -1;
   }
 
   inheritFromUnregister() {

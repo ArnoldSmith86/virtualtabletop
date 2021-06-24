@@ -131,10 +131,7 @@ export class Widget extends StateManaged {
 
     for(const inheriting of StateManaged.inheritFromMapping[this.id]) {
       const inheritedDelta = {};
-      const inheritDefinition = inheriting.inheritFrom()[this.id] || [];
-      for(const key in delta)
-        if(inheriting.state[key] === undefined && (inheritDefinition == '*' || inheritDefinition.indexOf(key) != -1))
-          inheritedDelta[key] = delta[key];
+      this.applyInheritedValuesToObject(inheriting.inheritFrom()[this.id] || [], delta, inheritedDelta, inheriting);
       inheriting.applyDeltaToDOM(inheritedDelta);
     }
 
@@ -142,18 +139,20 @@ export class Widget extends StateManaged {
       this.showEnlarged();
   }
 
+  applyInheritedValuesToObject(inheritDefinition, sourceDelta, targetDelta, targetWidget) {
+    for(const key in sourceDelta)
+      if(this.inheritFromIsValid(inheritDefinition, key) && targetWidget.state[key] === undefined)
+          targetDelta[key] = sourceDelta[key];
+  }
+
   applyInheritedValuesToDOM(inheritFrom, pushToArray) {
     const delta = {};
     for(const [ id, properties ] of Object.entries(inheritFrom).reverse()) {
       if(widgets.has(id)) {
         const w = widgets.get(id);
-
         if(w.state.inheritFrom)
           this.applyInheritedValuesToDOM(w.inheritFrom());
-
-        for(const property in widgets.get(id).state)
-          if(this.state[property] === undefined && (properties == '*' || properties.indexOf(property) != -1))
-            delta[property] = widgets.get(id).state[property]
+        this.applyInheritedValuesToObject(properties, w.state, delta, this);
       }
 
       if(pushToArray) {
