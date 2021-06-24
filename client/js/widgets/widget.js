@@ -850,7 +850,7 @@ export class Widget extends StateManaged {
           problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
         } else if(isValidCollection(a.collection)) {
           for(const w of collections[a.collection]) {
-            await w.set(a.property, compute(a.relation, null, w.get(a.property), a.value));
+            await w.set(String(a.property), compute(a.relation, null, w.get(String(a.property)), a.value));
           }
         }
       }
