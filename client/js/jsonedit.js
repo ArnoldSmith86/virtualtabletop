@@ -512,7 +512,7 @@ function jeAddAlignmentCommands() {
   jeCommands.push({
     id: 'jeCenter',
     name: 'center in parent',
-    context: '^.* ↦ (x|y)( ↦ "[0-9]+")?\x24',
+    context: '^.* ↦ (x|y)( ↦ "[0-9]+")?' + String.fromCharCode(36), // the minifier doesn't like "$" or "\x24" here
     call: async function() {
       const key = jeGetLastKey();
       const sizeKey = key == 'x' ? 'width' : 'height';
