@@ -5,7 +5,8 @@
   <meta charset="utf-8">
   <title>VirtualTabletop.io</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <link rel="shortcut icon" href="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="/>
+  <link rel="icon" type="image/svg+xml" href="/i/branding/favicon.svg"/>
+  <link rel="alternate icon" href="/i/branding/favicon.png"/>
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/combine/npm/vue@3.0.7/dist/vue.global.prod.js,npm/jszip@3.6.0/dist/jszip.min.js"></script>
@@ -42,11 +43,41 @@
 
     <div id="editOverlayVue">
       <div id="editOverlay" class="overlay">
-        <h1>Edit widget</h1>
+        <div class="canvasEdit">
+          <h1>Edit canvas</h1>
+          <span>Canvas colors: (click on check box to select active color)</span><br/>
+          <div class="flexContainer" id="colorContainer">
+          <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+          <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+          <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+          <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+          <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+          <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+          <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+          <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+          <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+          <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+          </div><br/>
+          <input type="checkbox" id="canvasColorReset"><label for="canvasColorRest">Reset colors to: </label>
+          <select id="canvasPresets">
+            <option name="canvasPresets" value="original" selected = "selected">original colors</option>
+            <option name="canvasPresets" value="pieces">game pieces colors</option>
+            <option name="canvasPresets" value="basic">basic colors</option>
+            <option name="canvasPresets" value="pencil">pencil colors</option>
+            <option name="canvasPresets" value="pastel">pastel colors</option>
+            <option name="canvasPresets" value="grey">grey scale</option>
+          </select><br/><br/>
+        </div>
         <deck-editor :widget-state="selectedWidget.state"></deck-editor>
         <div class="holderEdit">
           <input type="checkbox" id="transparentHolder"><label for="transparentHolder"> Transparent</label><br/>
           <input type="checkbox" id="resizeHolderToChildren"><label for="resizeHolderToChildren"> Resize to fit contents (once)</label>
+        </div>
+        <div class="timerEdit">
+          <input type="checkbox" id="timerCountdown"><label for="timerCountdown"> Countdown</label><br/>
+          <label for="timerStart"> Start: </label><input type="text" id="timerStart">
+          <label for="timerEnd"> End: </label><input type="text" id="timerEnd"><label for="timerEnd">(both in seconds)</label><br/>
+          <input type="checkbox" id="timerReset"><label for="timerReset"> Reset timer (once)</label>
         </div>
         <base-edit-overlay ></base-edit-overlay>
       </div>
@@ -76,6 +107,7 @@
       </div>
       <div class="category">
         <h2>Interactive</h2>
+        <button id="addCanvas">🎨 Add Canvas</button>
       </div>
       <div class="category">
         <h2>Decorative</h2>

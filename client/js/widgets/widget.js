@@ -121,34 +121,11 @@ export class Widget extends StateManaged {
   }
 
   applyRemove() {
-    if(this.get('parent') && widgets.has(this.get('parent')))
-      widgets.get(this.get('parent')).applyChildRemove(this);
+    if(this.parent)
+      this.parent.applyChildRemove(this);
     if(this.get('deck') && widgets.has(this.get('deck')))
       widgets.get(this.get('deck')).removeCard(this);
     removeFromDOM(this.domElement);
-  }
-
-  applyVariables(field, variables, problems) {
-    if(Array.isArray(field.applyVariables)) {
-      for(const v of field.applyVariables) {
-        if(v.parameter && v.variable) {
-          field[v.parameter] = (v.index === undefined) ? variables[v.variable] : variables[v.variable][v.index];
-        } else if(v.parameter && v.template) {
-          field[v.parameter] = v.template.replace(/\{([^}]+)\}/g, function(i, key) {
-            return (variables[key] === undefined) ? "" : variables[key];
-          });
-        } else if(v.parameter && v.property) {
-          let w = this;
-          if (v.widget)
-            w = this.isValidID(v.widget, problems) ? widgets.get(v.widget) : this;
-          field[v.parameter] = (w.get(v.property) === undefined) ? null : w.get(v.property);
-        } else {
-          problems.push('Entry in parameter applyVariables does not contain "parameter" together with "variable", "property", or "template".');
-        }
-      }
-    } else {
-      problems.push('Parameter applyVariables is not an array.');
-    }
   }
 
   applyZ(force) {
@@ -204,11 +181,11 @@ export class Widget extends StateManaged {
     return [ 'classes', 'owner', 'typeClasses' ];
   }
 
-  async click() {
-    if(!this.get('clickable'))
+  async click(mode='respect') {
+    if(!this.get('clickable') && !(mode == 'ignoreClickable' || mode =='ignoreAll'))
       return true;
 
-    if(Array.isArray(this.get('clickRoutine'))) {
+    if(Array.isArray(this.get('clickRoutine')) && !(mode == 'ignoreClickRoutine' || mode =='ignoreAll')) {
       await this.evaluateRoutine('clickRoutine', {}, {});
       return true;
     } else {
@@ -268,6 +245,71 @@ export class Widget extends StateManaged {
   }
 
   async evaluateRoutine(property, initialVariables, initialCollections, depth, byReference) {
+    function unescape(str) {
+      if(typeof str != 'string')
+        return str;
+      return str.replace(/\\u([0-9a-fA-F]{4})/g, function(m, c) {
+        return String.fromCharCode(parseInt(c, 16));
+      });
+    }
+
+    function evaluateIdentifier(dollarMatch, stringMatch) {
+      return unescape(dollarMatch ? variables[stringMatch] : stringMatch);
+    }
+
+    const evaluateVariables = string=>{
+      const identifierWithSpace = '(?:[a-zA-Z0-9 _-]|\\\\u[0-9a-fA-F]{4})+';
+      const identifier          = identifierWithSpace.replace(/ /, '');
+      const variable            = `(\\$)?(${identifier})(?:\\.(\\$)?(${identifier}))?`;
+      const property            = `PROPERTY (\\$)?(${identifierWithSpace}?)(?: OF (\\$)?(${identifierWithSpace}))?`;
+      const match               = string.match(new RegExp(`^\\$\\{(?:${variable}|${property}|[^}]+)\\}` + '\x24'));
+
+      // not a match across the whole string; replace any variables inside it
+      if(!match) {
+        return string.replace(/\$\{([^}]+)\}/g, function(v) {
+          const e = evaluateVariables(v);
+          return e === undefined ? '' : e;
+        });
+      }
+
+      // variable
+      if(match[2]) {
+        const varContent = variables[evaluateIdentifier(match[1], match[2])];
+        if(varContent === undefined)
+          return match[9] ? false : undefined;
+
+        let indexName = evaluateIdentifier(match[3], match[4]);
+        return indexName !== undefined ? varContent[indexName] : varContent;
+      }
+
+      // property
+      if(match[6]) {
+        let widget = this;
+        if(match[8]) {
+          const id = evaluateIdentifier(match[7], match[8]);
+          if(!this.isValidID(id, problems))
+            return null;
+          widget = widgets.get(id);
+        }
+        return JSON.parse(JSON.stringify(widget.get(evaluateIdentifier(match[5], match[6]))));
+      }
+
+      return null;
+    };
+
+    const evaluateVariablesRecursively = obj=>{
+      const newObject = Array.isArray(obj) ? [] : {};
+      for(const i in obj) {
+        let newValue = obj[i];
+        if(typeof obj[i] == 'string')
+          newValue = evaluateVariables(obj[i]);
+        else if(typeof obj[i] == 'object' && obj[i] !== null && !i.match(/Routine$/))
+          newValue = evaluateVariablesRecursively(obj[i]);
+        newObject[String(evaluateVariables(i))] = newValue;
+      }
+      return newObject;
+    };
+
     function setDefaults(routine, defaults) {
       for(const key in defaults)
         if(routine[key] === undefined)
@@ -289,13 +331,16 @@ export class Widget extends StateManaged {
         await callback(a);
     }
 
+    if(this.isBeingRemoved || this.inRemovalQueue)
+      return;
+
     batchStart();
 
     if(this.get('debug') && !depth)
       $('#debugButtonOutput').textContent = '';
 
     let variables = initialVariables;
-    let collections = initialCollections
+    let collections = initialCollections;
     if(!byReference) {
       variables = Object.assign({}, initialVariables, {
         playerName,
@@ -308,19 +353,81 @@ export class Widget extends StateManaged {
       });
     }
 
-    const routine = this.get(property) !== undefined ? this.get(property) : property;
+    const routine = this.get(property) !== null ? this.get(property) : property;
 
     for(const original of routine) {
-      const a = JSON.parse(JSON.stringify(original));
+      let a = JSON.parse(JSON.stringify(original));
+      if(typeof a == 'object')
+        a = evaluateVariablesRecursively(a);
       var problems = [];
 
       if(this.get('debug')) console.log(`${this.id}: ${JSON.stringify(original)}`);
 
-      if(a.applyVariables) this.applyVariables(a, variables, problems);
-
       if(a.skip) {
         $('#debugButtonOutput').textContent += '\n\n\nOPERATION SKIPPED: \n' + JSON.stringify(a, null, '  ');
         continue;
+      }
+
+      if(typeof a == 'string') {
+        const identifier = '(?:[a-zA-Z0-9_-]|\\\\u[0-9a-fA-F]{4})+';
+        const string     = `'((?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*)'`;
+        const number     = '(-?(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?)';
+        const variable   = `(\\$\\{[^}]+\\})`;
+        const parameter  = `(null|true|false|\\[\\]|\\{\\}|${number}|${variable}|${string})`;
+
+        const left       = `var (\\$)?(${identifier})(?:\\.(\\$)?(${identifier}))?`;
+        const operation  = `${identifier}|[=+*/%<!>&|-]{1,3}`;
+
+        const regex      = `^${left} += +(?:${parameter}|(?:${parameter} +)?(🧮)?(${operation})(?: +${parameter})?(?: +${parameter})?(?: +${parameter})?)(?: +//.*)?`;
+
+        const match = a.match(new RegExp(regex + '\x24')); // the minifier doesn't like a "$" here
+
+        if(match) {
+          const getParam = (offset, defaultValue)=>{
+            if(typeof match[offset+3] == 'string') {
+              return unescape(match[offset+3]);
+            } else if(typeof match[offset+1] == 'string') {
+              return +match[offset+1];
+            } else if(match[offset] == '[]') {
+              return [];
+            } else if(match[offset] == '{}') {
+              return {};
+            } else if(match[offset] == 'null') {
+              return null;
+            } else if(match[offset] == 'true') {
+              return true;
+            } else if(match[offset] == 'false') {
+              return false;
+            } else if(match[offset] == 'false') {
+              return false;
+            } else if(typeof match[offset+2] == 'string') {
+              const result = evaluateVariables(match[offset+2]);
+              return result !== undefined ? result : defaultValue;
+            } else {
+              return 1;
+            }
+          };
+          const getValue = function(input) {
+            const toNum = s=>typeof s == 'string' && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s;
+            if(match[14] && match[9] !== undefined)
+              return compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(9, 1)), toNum(getParam(15, 1)), toNum(getParam(19, 1)));
+            else if(match[14])
+              return compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(15, 1)), toNum(getParam(19, 1)), toNum(getParam(23, 1)));
+            else
+              return getParam(5, null);
+          };
+
+          const variable = match[1] !== undefined ? variables[unescape(match[2])] : unescape(match[2]);
+          const index = match[3] !== undefined ? variables[unescape(match[4])] : unescape(match[4]);
+          if(index !== undefined && typeof variables[variable] != 'object')
+            problems.push(`The variable ${variable} is not an object, so indexing it doesn't work.`)
+          else if(index !== undefined)
+            variables[variable][index] = getValue(variables[variable][index]);
+          else
+            variables[variable] = getValue(variables[variable]);
+        } else {
+          problems.push('String could not be interpreted as expression. Please check your syntax and note that many characters have to be escaped.');
+        }
       }
 
       if(a.func == 'CALL') {
@@ -349,20 +456,61 @@ export class Widget extends StateManaged {
         }
       }
 
+      if(a.func == 'CANVAS') {
+        setDefaults(a, { mode: 'reset', x: 0, y: 0, value: 1, color: "#1F5CA6" });
+
+        if([ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ].indexOf(a.mode) == -1)
+          problems.push(`Warning: Mode ${a.mode} will be interpreted as inc.`);
+
+        const execute = async function(widget) {
+          if(widget.get('type') == 'canvas') {
+            if(a.mode == 'setPixel')
+              await widget.setPixel(a.x, a.y, a.value);
+            else if(a.mode == 'set')
+              await widget.set('activeColor', a.value % widget.get('colorMap').length);
+            else if(a.mode == 'reset')
+              await widget.reset();
+            else if(a.mode == 'dec')
+              await widget.set('activeColor', (widget.get('activeColor')+widget.get('colorMap').length - (a.value % widget.get('colorMap').length)) % widget.get('colorMap').length);
+            else if(a.mode == 'change') {
+              var CM = widget.get('colorMap');
+              var index = ((a.value || 1) % CM.length) || 0;
+              CM[index] = a.color || '#1f5ca6' ;
+              await widget.set('colorMap', CM);
+            }
+            else
+              await widget.set('activeColor', (widget.get('activeColor')+ a.value) % widget.get('colorMap').length);
+          }
+        };
+
+        if(a.canvas !== undefined) {
+          if(this.isValidID(a.canvas, problems)) {
+            await w(a.canvas, execute);
+          }
+        } else if(isValidCollection(a.collection)) {
+          if(collections[a.collection].length) {
+            for(const c of collections[a.collection].slice(0, a.count || 999999))
+              await execute(c);
+          } else {
+            problems.push(`Collection ${a.collection} is empty.`);
+          }
+        }
+      }
+
       if(a.func == 'CLICK') {
-        setDefaults(a, { collection: 'DEFAULT', count: 1 });
+        setDefaults(a, { collection: 'DEFAULT', count: 1 , mode: 'respect' });
+        if (['respect', 'ignoreClickable', 'ignoreClickRoutine', 'ignoreAll'].indexOf(a.mode) == -1) {
+          problems.push(`Mode ${a.mode} is unsupported. Using 'respect' mode.`);
+          a.mode = 'respect'
+        };
         if(isValidCollection(a.collection))
           for(let i=0; i<a.count; ++i)
             for(const w of collections[a.collection])
-              await w.click();
+              await w.click(a.mode);
       }
 
       if(a.func == 'CLONE') {
         setDefaults(a, { source: 'DEFAULT', count: 1, xOffset: 0, yOffset: 0, properties: {}, collection: 'DEFAULT' });
-        if(a.properties.applyVariables) {
-          this.applyVariables(a.properties, variables, problems);
-          delete a.properties["applyVariables"];
-        };
         if(isValidCollection(a.source)) {
           var c=[];
           for(const w of collections[a.source]) {
@@ -399,148 +547,11 @@ export class Widget extends StateManaged {
 
       function compute(o, v, x, y, z) {
         try {
-          switch(o) {
-          case '=':  v = y;      break;
-          case '+':  v = x + y;  break;
-          case '-':  v = x - y;  break;
-          case '*':  v = x * y;  break;
-          case '**': v = x ** y; break;
-          case '/':  v = x / y;  break;
-          case '%':  v = x % y;  break;
-          case '<':  v = x < y;  break;
-          case '<=': v = x <= y; break;
-          case '==': v = x == y; break;
-          case '!=': v = x != y; break;
-          case '>=': v = x >= y; break;
-          case '>':  v = x > y;  break;
-          case '&&': v = x && y; break;
-          case '||': v = x || y; break;
-          case '!':  v = !x;     break;
-
-          // Math operations
-          case 'hypot':
-          case 'max':
-          case 'min':
-          case 'pow':
-            v = Math[o](x, y);
-            break;
-          case 'sin':
-          case 'cos':
-          case 'tan':
-            v = Math[o](x * Math.PI/180);
-            break;
-          case 'abs':
-          case 'cbrt':
-          case 'ceil':
-          case 'exp':
-          case 'floor':
-          case 'log':
-          case 'log10':
-          case 'log2':
-          case 'random':
-          case 'round':
-          case 'sign':
-          case 'sqrt':
-          case 'trunc':
-            v = Math[o](x);
-            break;
-          case 'E':
-          case 'LN2':
-          case 'LN10':
-          case 'LOG2E':
-          case 'LOG10E':
-          case 'PI':
-          case 'SQRT1_2':
-          case 'SQRT2':
-            v = Math[o];
-            break;
-
-          // String operations
-          case 'length':
-            v = x.length;
-            break;
-          case 'parseFloat':
-            v = parseFloat(x);
-            break;
-          case 'toLowerCase':
-          case 'toUpperCase':
-          case 'trim':
-          case 'trimStart':
-          case 'trimEnd':
-            v = x[o]();
-            break;
-          case 'charAt':
-          case 'charCodeAt':
-          case 'codePointAt':
-          case 'concat':
-          case 'includes':
-          case 'endsWith':
-          case 'indexOf':
-          case 'lastIndexOf':
-          case 'localeCompare':
-          case 'match':
-          case 'padEnd':
-          case 'padStart':
-          case 'repeat':
-          case 'search':
-          case 'split':
-          case 'startsWith':
-          case 'toFixed':
-          case 'toLocaleLowerCase':
-          case 'toLocaleUpperCase':
-            v = x[o](y);
-            break;
-          case 'replace':
-          case 'replaceAll':
-          case 'substr':
-            v = x[o](y, z);
-            break;
-
-          // Array operations
-          // 'length' should work the same as for strings
-          case 'getIndex':
-            v = x[y];
-            break;
-          case 'setIndex':
-            v[x] = y;
-            break;
-          case 'from':
-          case 'isArray':
-            v = Array[o](x);
-            break;
-          case 'concatArray':
-            v = x.concat(y);
-            break;
-          case 'pop':
-          case 'reverse':
-          case 'shift':
-          case 'sort':
-            v = x[o]();
-            break;
-          case 'findIndex':
-          case 'includes':
-          case 'indexOf':
-          case 'join':
-          case 'lastIndexOf':
-            v = x[o](y);
-            break;
-          case 'slice':
-            v = x[o](y, z);
-            break;
-          case 'push':
-          case 'unshift':
-            v[o](x);
-            break;
-
-          // random values
-          case 'randInt':
-            v = Math.floor((Math.random() * (y - x + 1)) + x);
-            break;
-          case 'randRange':
-            v = Math.round(Math.floor((Math.random() * (y - x) / (z || 1))) * (z || 1) + x);
-            break;
-          default:
+          if (compute_ops.find(op => op.name == o) !== undefined) {
+            v = compute_ops.find(op => op.name == o).call(v, x, y, z);
+          }else {
             problems.push(`Operation ${o} is unsupported.`);
+            return v = null;
           }
         } catch(e) {
           v = 0;
@@ -551,13 +562,6 @@ export class Widget extends StateManaged {
           problems.push(`The operation evaluated to null, Infinity or NaN. Setting the variable to 0.`);
         }
         return v;
-      }
-
-      if(a.func == 'COMPUTE') {
-        setDefaults(a, { operation: '+', operand1: 1, operand2: 1, operand3: 1, variable: 'COMPUTE' });
-        const toNum = s=>typeof s == 'string' && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s;
-        const v = a.variable;
-        variables[v] = compute(a.operation, variables[v], toNum(a.operand1), toNum(a.operand2), toNum(a.operand3));
       }
 
       if(a.func == 'COUNT') {
@@ -605,6 +609,34 @@ export class Widget extends StateManaged {
         }
       }
 
+      if(a.func == 'FOREACH') {
+        setDefaults(a, { loopRoutine: [], collection: 'DEFAULT' });
+        const callWithAdditionalValues = async (addVariables, addCollections)=>{
+          const variableBackups = {};
+          const collectionBackups = {};
+          for(const add in addVariables) {
+            variableBackups[add] = variables[add];
+            variables[add] = addVariables[add];
+          }
+          for(const add in addCollections) {
+            collectionBackups[add] = collections[add];
+            collections[add] = addCollections[add];
+          }
+          await this.evaluateRoutine(a.loopRoutine, variables, collections, (depth || 0) + 1, true);
+          for(const add in addVariables)
+            variables[add] = variableBackups[add];
+          for(const add in addCollections)
+            collections[add] = collectionBackups[add];
+        }
+        if(a.in) {
+          for(const key in a.in)
+            await callWithAdditionalValues({ key, value: a.in[key] }, {});
+        } else if(isValidCollection(a.collection)) {
+          for(const widget of collections[a.collection])
+            await callWithAdditionalValues({ widgetID: widget.get('id') }, { DEFAULT: [ widget ] });
+        }
+      }
+
       if(a.func == 'GET') {
         setDefaults(a, { variable: a.property || 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
         if(isValidCollection(a.collection)) {
@@ -649,6 +681,7 @@ export class Widget extends StateManaged {
           }
         }
       }
+
       if(a.func == 'IF') {
         setDefaults(a, { relation: '==' });
         if (['==', '!=', '<', '<=', '>=', '>'].indexOf(a.relation) < 0) {
@@ -724,11 +757,6 @@ export class Widget extends StateManaged {
           else
             problems.push(`Collection ${a.collection} is empty.`);
         }
-      }
-
-      if(a.func == 'RANDOM') {
-        setDefaults(a, { min: 1, max: 10, variable: 'RANDOM' });
-        variables[a.variable] = Math.floor(a.min + Math.random() * (a.max - a.min + 1));
       }
 
       if(a.func == 'RECALL') {
@@ -857,10 +885,15 @@ export class Widget extends StateManaged {
             });
           }
         } else if(isValidCollection(a.collection)) {
-          if(collections[a.collection].length)
+          if(collections[a.collection].length) {
             await this.sortWidgets(collections[a.collection], a.key, a.reverse, a.locales, a.options, true);
-          else
+            await w(collections[a.collection].map(i=>i.get('parent')), async holder=>{
+              if(holder.get('type') == 'holder')
+                await holder.updateAfterShuffle();
+            });
+          } else {
             problems.push(`Collection ${a.collection} is empty.`);
+          }
         }
       }
 
@@ -884,6 +917,48 @@ export class Widget extends StateManaged {
         }
       }
 
+      if(a.func == 'TIMER') {
+        setDefaults(a, { value: 0, seconds: 0, mode: 'toggle', collection: 'DEFAULT' });
+        if([ 'set', 'dec', 'inc', 'reset','pause', 'start', 'toggle' ].indexOf(a.mode) == -1)
+          problems.push(`Warning: Mode ${a.mode} interpreted as toggle.`);
+        if([ 'set', 'dec', 'inc'].indexOf(a.mode) == -1){
+          if(a.timer !== undefined) {
+            if (this.isValidID(a.timer, problems)) {
+              await w(a.timer, async widget=>{
+                if(widget.setPaused)
+                  await widget.setPaused(a.mode);
+              });
+            }
+          } else if(isValidCollection(a.collection)) {
+            if(collections[a.collection].length) {
+              for(const c of collections[a.collection])
+                if(c.setPaused)
+                  await c.setPaused(a.mode);
+            } else {
+              problems.push(`Collection ${a.collection} is empty.`);
+            }
+          }
+        };
+        if(['set', 'dec', 'inc', 'reset' ].indexOf(a.mode) != -1){
+          if(a.timer !== undefined) {
+            if (this.isValidID(a.timer, problems)) {
+              await w(a.timer, async widget=>{
+                if(widget.setMilliseconds)
+                  await widget.setMilliseconds(a.seconds*1000 || a.value, a.mode);
+              });
+            }
+          } else if(isValidCollection(a.collection)) {
+            if(collections[a.collection].length) {
+              for(const c of collections[a.collection])
+                if(c.setMilliseconds)
+                  await c.setMilliseconds(a.seconds*1000 || a.value, a.mode);
+            } else {
+              problems.push(`Collection ${a.collection} is empty.`);
+            }
+          }
+        };
+      }
+
       if(this.get('debug')) {
         let msg = ''
         msg += '\n\n\nOPERATION: \n' + JSON.stringify(a, null, '  ');
@@ -905,6 +980,16 @@ export class Widget extends StateManaged {
       showOverlay('debugButtonOverlay');
 
     batchEnd();
+
+    if(variables.playerColor != playerColor && typeof variables.playerColor == 'string' && variables.playerColor.match(/^#[0-9a-fA-F]{6}$/)) {
+      toServer('playerColor', { player: playerName, color: variables.playerColor });
+      playerColor = variables.playerColor;
+    }
+    if(variables.playerName != playerName && typeof variables.playerName == 'string') {
+      toServer('rename', { oldName: playerName, newName: variables.playerName });
+      playerName = variables.playerName;
+    }
+
     return { variable: variables.result, collection: collections.result || [] };
   }
 
@@ -1154,62 +1239,8 @@ export class Widget extends StateManaged {
       $('#buttonInputFields').innerHTML = '';
 
       for(const field of o.fields) {
-
         const dom = document.createElement('div');
-
-        if(field.applyVariables) this.applyVariables(field, variables, problems);
-
-        if(field.type == 'checkbox') {
-          const input = document.createElement('input');
-          const label = document.createElement('label');
-          input.type = 'checkbox';
-          input.checked = field.value || false;
-          label.textContent = field.label;
-          dom.appendChild(input);
-          dom.appendChild(label);
-          label.htmlFor = input.id = this.get('id') + ';' + field.variable;
-        }
-
-        if(field.type == 'color') {
-          const input = document.createElement('input');
-          const label = document.createElement('label');
-          input.type = 'color';
-          input.value = field.value || '#ff0000';
-          label.textContent = field.label;
-          dom.appendChild(label);
-          dom.appendChild(input);
-          label.htmlFor = input.id = this.get('id') + ';' + field.variable;
-        }
-
-        if(field.type == 'number') {
-          const input = document.createElement('input');
-          const label = document.createElement('label');
-          input.type = 'number';
-          input.value = field.value || 1;
-          input.min = field.min || 1;
-          input.max = field.max || 10;
-          label.textContent = field.label;
-          dom.appendChild(label);
-          dom.appendChild(input);
-          label.htmlFor = input.id = this.get('id') + ';' + field.variable;
-        }
-
-        if(field.type == 'string') {
-          const input = document.createElement('input');
-          const label = document.createElement('label');
-          input.value = field.value || "";
-          label.textContent = field.label;
-          dom.appendChild(label);
-          dom.appendChild(input);
-          label.htmlFor = input.id = this.get('id') + ';' + field.variable;
-        }
-
-        if(field.type == 'text') {
-          const p = document.createElement('p');
-          p.textContent = field.text;
-          dom.appendChild(p);
-        }
-
+        formField(field, dom, this.get('id') + ';' + field.variable);
         $('#buttonInputFields').appendChild(dom);
       }
 
@@ -1272,6 +1303,8 @@ export class Widget extends StateManaged {
             width: this.get('width'),
             height: this.get('height')
           };
+          if(this.get('owner') !== null)
+            pile.owner = this.get('owner');
           addWidgetLocal(pile);
           await this.set('parent', pile.id);
           await widget.set('parent', pile.id);

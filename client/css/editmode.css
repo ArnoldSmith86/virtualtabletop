@@ -25,6 +25,7 @@
 
 #addCustomOverlay textarea, #editJSONoverlay textarea {
   height: 100%;
+  min-height: 100%;
 }
 
 #editOverlay {
@@ -65,4 +66,11 @@ body.edit .widget > .widget {
 #cardTypesList .count {
   width: 40px;
   text-align: right;
+}
+
+.flexContainer {
+  margin-top: 1em;
+  display: flex;
+  flex-flow: row wrap;
+  column-gap: 0.7em;
 }

@@ -46,7 +46,7 @@ class Pile extends Widget {
     }
   }
 
-  async click() {
+  async click(mode='respect') {
     $('#pileOverlay').innerHTML = `<p>${this.handle.textContent} cards</p><p>Drag the handle with the number to drag the entire pile.</p>`;
 
     const flipButton = document.createElement('button');
@@ -128,6 +128,14 @@ class Pile extends Widget {
 
     if(this.parent && this.parent.get('type') == 'holder')
       await this.parent.dispenseCard(child);
+  }
+
+  async onPropertyChange(property, oldValue, newValue) {
+    if(this.children().length && property == 'owner') {
+      for(const c of this.children())
+        await c.set('owner', newValue);
+    }
+    await super.onPropertyChange(property, oldValue, newValue);
   }
 
   supportsPiles() {

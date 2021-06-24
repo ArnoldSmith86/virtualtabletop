@@ -74,8 +74,8 @@ class Card extends Widget {
     super.applyInitialDelta(delta);
   }
 
-  async click() {
-    if(!await super.click())
+  async click(mode='respect') {
+    if(!await super.click(mode))
       await this.flip();
   }
 
@@ -155,7 +155,7 @@ class Card extends Widget {
   }
 
   getDefaultValue(property) {
-    if(this.deck) {
+    if(this.deck && property != 'cardType') {
       const d = this.deck.cardPropertyGet(this.get('cardType'), property);
       if(d !== undefined)
         return d;

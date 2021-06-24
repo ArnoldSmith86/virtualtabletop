@@ -43,12 +43,16 @@ export function addWidget(widget, instance) {
     }
   } else if(widget.type == 'pile') {
     w = new Pile(id);
+  } else if(widget.type == 'canvas') {
+    w = new Canvas(id);
   } else if(widget.type == 'deck') {
     w = new Deck(id);
   } else if(widget.type == 'holder') {
     w = new Holder(id);
   } else if(widget.type == 'spinner') {
     w = new Spinner(id);
+  } else if(widget.type == 'timer') {
+    w = new Timer(id);
   } else if(widget.type == 'label') {
     w = new Label(id);
   } else if(widget.type == 'button') {
