@@ -912,7 +912,7 @@ function jeGetContext() {
       jeJSONerror = 'No ID given.';
     else if(JSON.parse(jeStateBefore).id != jeStateNow.id && widgets.has(jeStateNow.id))
       jeJSONerror = `ID ${jeStateNow.id} is already in use.`;
-    else if(jeStateNow.parent && !widgets.has(jeStateNow.parent))
+    else if(jeStateNow.parent !== undefined && jeStateNow.parent !== null && !widgets.has(jeStateNow.parent))
       jeJSONerror = `Parent ${jeStateNow.parent} does not exist.`;
     else if(jeStateNow.type == 'card' && (!jeStateNow.deck || !widgets.has(jeStateNow.deck)))
       jeJSONerror = `Deck ${jeStateNow.deck} does not exist.`;
@@ -1025,8 +1025,8 @@ function jePasteText(text, select) {
 function jePostProcessObject(o) {
   const copy = { ...o };
   for(const key in copy)
-    if(copy[key] === jeWidget.getDefaultValue(key) || key.match(/in deck/))
-      copy[key] = null;
+    if(copy[key] === null || copy[key] === jeWidget.getDefaultValue(key) || key.match(/in deck/))
+      delete copy[key];
   return copy;
 }
 
