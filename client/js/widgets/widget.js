@@ -618,12 +618,18 @@ export class Widget extends StateManaged {
             collections[add] = addCollections[add];
           }
           await this.evaluateRoutine(a.loopRoutine, variables, collections, (depth || 0) + 1, true);
-          for(const add in addVariables)
+          for(const add in addVariables) {
             if(variableBackups[add] !== undefined)
               variables[add] = variableBackups[add];
-          for(const add in addCollections)
+            else
+              delete variables[add];
+          }
+          for(const add in addCollections) {
             if(collectionBackups[add] !== undefined)
               collections[add] = collectionBackups[add];
+            else
+              delete collections[add];
+          }
         }
         if(a.in) {
           for(const key in a.in)
