@@ -160,6 +160,7 @@ onLoad(function() {
         widgets.get(widget.id).applyRemove();
     widgets.clear();
     dropTargets.clear();
+    StateManaged.globalUpdateListeners = {};
     maxZ = {};
     let isEmpty = true;
     for(const widgetID in args) {
