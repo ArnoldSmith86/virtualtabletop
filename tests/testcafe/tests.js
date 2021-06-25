@@ -201,7 +201,7 @@ test('Compute', async t => {
     
     delete newState[`button${op.name}`].results;
     
-    if(op.name.match(/^rand.*/) {
+    if(op.name.match(/^rand.*/)) {
       console.log(`Compute ${op.name} passed`);      
     } else {
       await setRoomState(newState);
