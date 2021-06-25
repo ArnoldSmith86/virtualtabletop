@@ -683,7 +683,7 @@ const compute_ops = [
     desc: 'returns a random integer inbetween two numbers but excluding the endpoint, optionally in z increments (defaults to 1)',
     sample: 'var a = randRange ${x} ${y} ${z}',
     call: function(v, x, y, z) { return v = Math.round(Math.floor((Math.random() * (y - x) / (z || 1))) * (z || 1) + x) },
-    hash: '4758cba8f404cfe3ef0a300cebf3938a'
+    hash: '0c3de5a5df7cae6794d1794be2d12e04'
   }
 ];
 
