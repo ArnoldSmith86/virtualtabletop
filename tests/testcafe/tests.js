@@ -192,22 +192,25 @@ test('Compute', async t => {
     };
     await setRoomState(state);
     await t.click(`[id="button${op.name}"]`);
-    
+
     const newState = JSON.parse(await getState());
     newState[`button${op.name}`].clickRoutine.shift();
     await setRoomState(newState);
-    
+
     await compareState(t, op.hash);
-    
-    delete newState[`button${op.name}`].results;
-    
+
+
     if(op.name.match(/^rand.*/)) {
-      console.log(`Compute ${op.name} passed`);      
+      console.log(`Compute ${op.name} passed, skiping new hash for random functions`);
     } else {
+      delete newState[`button${op.name}`].results;
       await setRoomState(newState);
       await t.click(`[id="button${op.name}"]`);
       const newHash = crypto.createHash('md5').update(await getState()).digest('hex')
-      console.log(`Compute ${op.name} passed, new hash: ${newHash}`);
+      if(op.hash != newHash)
+        console.log(`Compute ${op.name} passed, old hash: ${op.hash}, new hash: ${newHash}`)
+      else
+        console.log(`Compute ${op.name} passed, hash unchanged`)
     }
   }
 });
