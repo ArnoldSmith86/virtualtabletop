@@ -200,7 +200,7 @@ const compute_ops = [
     desc: 'returns the arctangent (in degrees) between the positive X axis and the point (y, x)',
     sample: 'var a = atan2 ${y} ${x} // y comes before x',
     call: function(v, y, x) { return v = Math.atan2(y, x) / Math.PI*180 },
-    hash: 'f434df01a5a2f6c925b0c8a824bee51b'
+    hash: 'bc511e7edd7e40b433f5620534775646'
   },
   {
     name: 'abs',
