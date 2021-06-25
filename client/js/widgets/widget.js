@@ -331,7 +331,7 @@ export class Widget extends StateManaged {
         await callback(a);
     }
 
-    if(this.isBeingRemoved || this.inRemovalQueue)
+    if(!depth && (this.isBeingRemoved || this.inRemovalQueue))
       return;
 
     batchStart();
@@ -852,6 +852,24 @@ export class Widget extends StateManaged {
         }
         if((a.property == 'parent' || a.property == 'deck') && a.value !== null && !widgets.has(a.value)) {
           problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
+        } else if (a.property == 'id' && isValidCollection(a.collection)) {
+          for(const oldWidget of collections[a.collection]) {
+            const oldState = JSON.stringify(oldWidget.state);
+            const oldID = oldWidget.get('id');
+            var newState = JSON.parse(oldState);
+
+            newState.id = compute(a.relation, null, oldWidget.get(a.property), a.value);
+            if(!widgets.has(newState.id)) {
+              $('#editWidgetJSON').dataset.previousState = oldState;
+              $('#editWidgetJSON').value = JSON.stringify(newState);
+              await onClickUpdateWidget(false);
+              for(const c in collections)
+                collections[c] = collections[c].map(w=>w.id==oldID ? widgets.get(newState.id) : w);
+              sendDelta(true);
+            } else {
+              problems.push(`id ${newState.id} already in use, ignored.`);
+            }
+          }
         } else if(isValidCollection(a.collection)) {
           for(const w of collections[a.collection]) {
             await w.set(a.property, compute(a.relation, null, w.get(a.property), a.value));
