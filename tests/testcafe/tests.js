@@ -192,15 +192,23 @@ test('Compute', async t => {
     };
     await setRoomState(state);
     await t.click(`[id="button${op.name}"]`);
+    
     const newState = JSON.parse(await getState());
     newState[`button${op.name}`].clickRoutine.shift();
     await setRoomState(newState);
+    
     await compareState(t, op.hash);
+    
     delete newState[`button${op.name}`].results;
-    await setRoomState(newState);
-    await t.click(`[id="button${op.name}"]`);
-    const newHash = crypto.createHash('md5').update(await getState()).digest('hex')
-    console.log(`Compute ${op.name} passed, new hash: ${newHash}`);
+    
+    if(op.name.match(/^rand.*/) {
+      console.log(`Compute ${op.name} passed`);      
+    } else {
+      await setRoomState(newState);
+      await t.click(`[id="button${op.name}"]`);
+      const newHash = crypto.createHash('md5').update(await getState()).digest('hex')
+      console.log(`Compute ${op.name} passed, new hash: ${newHash}`);
+    }
   }
 });
 
