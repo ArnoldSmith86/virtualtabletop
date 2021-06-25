@@ -81,7 +81,7 @@ export class Label extends Widget {
       .replace(/<c: +(.*?)>/gim, '<span style="color: $1">')
       .replace(/<center>/gim, '<span style="margin:auto; display:table">')
       .replace(/<size: +(.*?)>/gim, '<span style="font-size: $1">')
-      .replace(/<\/c>|<\/center|<\/size>/gim, '</span>')
+      .replace(/<\/c>|<\/center>|<\/size>/gim, '</span>')
       .replace(/\*\*(.*?)\*\*/gim, '<b>$1</b>')
       .replace(/\*(.*?)\*/gim, '<i>$1</i>')
       .replace(/\-\-(.*?)\-\-/gim, '<sub>$1</sub>')
