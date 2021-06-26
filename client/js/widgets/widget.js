@@ -444,8 +444,8 @@ export class Widget extends StateManaged {
       var allAudios = document.querySelectorAll('audio');
       allAudios.forEach(function(audio){audio.parentNode.removeChild(audio);});
       var pVolCtrl = document.getElementById('volume');
-      pVolCtrlExp = (((10 ** (pVolCtrl.value / 48)) / 10) - 0.1) // converts to log scale with zero = no volume
-      var pVol = Math.min(a.volume * pVolCtrlExp, 1); 
+      pVolCtrl = (((10 ** (pVolCtrl.value / 48)) / 10) - 0.1) // converts to log scale with zero = no volume
+      var pVol = Math.min(a.volume * pVolCtrl, 1); 
       var audioElement = document.createElement('audio');
       audioElement.setAttribute('class', 'audio');
       audioElement.setAttribute('src', a.source);
