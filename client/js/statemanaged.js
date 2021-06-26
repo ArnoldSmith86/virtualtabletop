@@ -62,10 +62,20 @@ export class StateManaged {
       this.state[property] = JSON.parse(JSONvalue);
     sendPropertyUpdate(this.get('id'), property, value);
     await this.onPropertyChange(property, oldValue, value);
+
     if(Array.isArray(this.get(`${property}ChangeRoutine`)))
       await this.evaluateRoutine(`${property}ChangeRoutine`, { oldValue, value }, {});
     if(Array.isArray(this.get('changeRoutine')))
       await this.evaluateRoutine('changeRoutine', { property, oldValue, value }, {});
+
+    if(!StateManaged.isInGlobalUpdateRoutine) {
+      StateManaged.isInGlobalUpdateRoutine = true;
+      for(const [ widget, routine ] of StateManaged.globalUpdateListeners[property] || [])
+        await widget.evaluateRoutine(routine, { widgetID: this.id, oldValue, value }, { widget: [ this ] });
+      for(const [ widget, routine ] of StateManaged.globalUpdateListeners['*'] || [])
+        await widget.evaluateRoutine(routine, { widgetID: this.id, property, oldValue, value }, { widget: [ this ] });
+      StateManaged.isInGlobalUpdateRoutine = false;
+    }
   }
 
   async setPosition(x, y, z) {
@@ -74,3 +84,5 @@ export class StateManaged {
     await this.set('z', z);
   }
 }
+
+StateManaged.globalUpdateListeners = {};
