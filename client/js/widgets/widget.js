@@ -429,7 +429,38 @@ export class Widget extends StateManaged {
           problems.push('String could not be interpreted as expression. Please check your syntax and note that many characters have to be escaped.');
         }
       }
-
+      
+      document.getElementById("volume").addEventListener("input", function(){ // not sure where this should go
+        var allAudios = document.querySelectorAll('audio');
+        var pVolCtrl = document.getElementById('volume');
+        allAudios.forEach(function(audio){
+          audio.volume = audio.getAttribute('origVol') * pVolCtrl.value / 100;
+        });
+      }); 
+		
+	if(a.func == 'AUDIO') {
+    setDefaults(a, { source: '', type: 'audio/mpeg', volume: 1.0 });
+    if(a.source !== undefined) {
+      var allAudios = document.querySelectorAll('audio');
+      allAudios.forEach(function(audio){audio.parentNode.removeChild(audio);});
+      var pVolCtrl = document.getElementById('volume');
+      var pVol = Math.min(a.volume, 1) * pVolCtrl.value / 100;
+      var audioElement = document.createElement('audio');
+      audioElement.setAttribute('class', 'audio');
+      audioElement.setAttribute('src', a.source);
+      audioElement.setAttribute('type', a.type);audioElement.setAttribute('origVol', a.volume);
+      audioElement.volume = pVol;
+      audioElement.preload = 'metadata';
+      document.body.appendChild(audioElement);
+      audioElement.play();
+      setInterval(function(){
+        if(audioElement.currentTime>=0){
+          audioElement.pause();
+          clearInterval();
+        }}, 10000); // limits to 10 sec
+    }
+  }
+      
       if(a.func == 'CALL') {
         setDefaults(a, { widget: this.get('id'), routine: 'clickRoutine', 'return': true, arguments: {}, variable: 'result', collection: 'result' });
         if(!a.routine.match(/Routine$/)) {

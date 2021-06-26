@@ -105,6 +105,16 @@ body {
     top: unset;
     left: calc(100% + 4px);
   }
+  
+  #volume {
+    position: relative;
+    width: calc(var(--toolbarSize) - 4px);
+    height: calc(var(--toolbarSize) - 4px);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-position: center;
+  }
 
   #roomArea {
     top: 0;
