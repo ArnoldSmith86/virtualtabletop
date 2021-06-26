@@ -118,6 +118,8 @@ export function selectFile(getContents, multipleCallback) {
         });
         if(getContents == 'BINARY')
           reader.readAsArrayBuffer(file);
+        else if(getContents == 'TEXT')
+          reader.readAsText(file);
         else
           reader.readAsDataURL(file);
       }

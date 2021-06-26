@@ -242,6 +242,9 @@ export class Widget extends StateManaged {
   }
 
   async click(mode='respect') {
+    if(tracingEnabled)
+      sendTraceEvent('click', { id: this.get('id'), mode });
+
     if(!this.get('clickable') && !(mode == 'ignoreClickable' || mode =='ignoreAll'))
       return true;
 
@@ -395,6 +398,9 @@ export class Widget extends StateManaged {
       return;
 
     batchStart();
+
+    if(tracingEnabled && typeof property == 'string')
+      sendTraceEvent('evaluateRoutine', { id: this.get('id'), property });
 
     if(jeRoutineLogging) jeLoggingRoutineStart(this, property, initialVariables, initialCollections, byReference);
 
@@ -1232,6 +1238,9 @@ export class Widget extends StateManaged {
   }
 
   async moveStart() {
+    if(tracingEnabled)
+      sendTraceEvent('moveStart', { id: this.get('id') });
+
     if(!this.get('fixedZ'))
       await this.bringToFront();
 
@@ -1258,6 +1267,9 @@ export class Widget extends StateManaged {
       newX -= widgets.get(this.get('parent')).absoluteCoord('x');
       newY -= widgets.get(this.get('parent')).absoluteCoord('y');
     }
+
+    if(tracingEnabled)
+      sendTraceEvent('move', { id: this.get('id'), x, y, newX, newY });
 
     await this.setPosition(newX, newY, this.get('z'));
 
@@ -1300,6 +1312,9 @@ export class Widget extends StateManaged {
   }
 
   async moveEnd() {
+    if(tracingEnabled)
+      sendTraceEvent('moveEnd', { id: this.get('id') });
+
     if(!this.get('fixedParent')) {
       for(const t of this.dropTargets)
         t.domElement.classList.remove('droppable');
