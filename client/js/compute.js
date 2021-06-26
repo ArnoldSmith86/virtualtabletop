@@ -4,14 +4,14 @@ const compute_ops = [
     desc: 'sets the variable to the value of x',
     sample: 'var a = ${x}',
     call: function(v, x, y) { return y }, // for compatibility with SET
-    hash: '8c46c8ba2529c6931e488d829ef88272'
+    hash: 'b9ab83320032c969adf0e79539f50e03'
   },
   {
     name: '+',
     desc: 'returns the sum of two numbers or add/join/concat two strings together',
     sample: 'var a = ${x} + ${y}',
     call: function(v, x, y) { return v = x + y },
-    hash: '47470403fc757fcd584dc20efd70d420'
+    hash: '84794b272ab025d58749de0f6d7ece94'
   },
   {
     name: '-',
@@ -53,77 +53,77 @@ const compute_ops = [
     desc: 'returns true if x is less than y',
     sample: 'var a = ${x} < ${y}',
     call: function(v, x, y) { return v = x < y },
-    hash: 'b8da10460ca032511e0bbbd630dcb404'
+    hash: 'd4ad8183c5188f81fc8d430defca9d0e'
   },
   {
     name: '<=',
     desc: 'returns true if x is less than or equal to y',
     sample: 'var a = ${x} <= ${y}',
     call: function(v, x, y) { return v = x <= y },
-    hash: 'f92f282e3642d403e89dd745814aa965'
+    hash: '284c0510133a812f36e542213bc5fc61'
   },
   {
     name: '==',
     desc: 'returns true if x is equal to y',
     sample: 'var a = ${x} == ${y}',
     call: function(v, x, y) { return v = x == y },
-    hash: 'dc999fd39041c811671a6b52d0a27cd5'
+    hash: '561985b1912e056028a5c35b2f7990a4'
   },
   {
     name: '===',
     desc: 'returns true if x is equal to (and the same type as) y',
     sample: 'var a = ${x} === ${y}',
     call: function(v, x, y) { return v = x === y },
-    hash: 'ab49ebfc7795f6386b9c22198c391c12'
+    hash: '97140073f55a1f0d3182fed1dd2b9970'
   },
   {
     name: '!=',
     desc: 'returns true if x is not equal to y',
     sample: 'var a = ${x} != ${y}',
     call: function(v, x, y) { return v = x != y },
-    hash: '1352950841faa8eb3538d015261c7945'
+    hash: '81070efc349ce8e6bfdbf234de6ef6cf'
   },
   {
     name: '!==',
     desc: 'returns true if x is not equal to (or not the same type as) y',
     sample: 'var a = ${x} !== ${y}',
     call: function(v, x, y) { return v = x !== y },
-    hash: '933269de9a9c2358d36f4a7ff3a914af'
+    hash: 'a8c612661009cd6cac9a2aede354c20b'
   },
   {
     name: '>=',
     desc: 'returns true if x is greater than or equal to y',
     sample: 'var a = ${x} >= ${y}',
     call: function(v, x, y) { return v = x >= y },
-    hash: '0bdad89540a00bb96ef374f381f21046'
+    hash: '69a9bd081178ecf5f421ede0a1d88aca'
   },
   {
     name: '>',
     desc: 'returns true if x is greater than y',
     sample: 'var a = ${x} > ${y}',
     call: function(v, x, y) { return v = x > y },
-    hash: '9bda4a1d8031ed3bd37739d59a781ba1'
+    hash: 'ee380ce87698b1a24e53d75a8ed92b10'
   },
   {
     name: '&&',
     desc: 'logical AND returns true if both x and y are true or returns the value of x or y if they are not boolean values',
     sample: 'var a = ${x} && ${y}',
     call: function(v, x, y) { return v = x && y },
-    hash: 'cfb4c588c372704f24a6c1b6599474b5'
+    hash: 'b9b3a2b72e1e519806e9dbee51473892'
   },
   {
     name: '||',
     desc: 'logical OR returns true if either x or y are true or returns the value of x or y if they are not boolean values',
     sample: 'var a = ${x} || ${y}',
     call: function(v, x, y) { return v = x || y },
-    hash: '6a3eae6384503ff7282f5fa120127d08'
+    hash: 'ca4952d521bec600994767d3ae57dae4'
   },
   {
     name: '!',
     desc: 'logical NOT returns true if the given value is false (or can be evaluated as false), otherwise returns false',
     sample: 'var a = ! ${x}',
     call: function(v, x) { return v = !x },
-    hash: '2e1c3dd3a27b93e6c01b08c92592f714'
+    hash: '37ef396c2dea7e87c19ffdea3f6b3289'
   },
   {
     name: 'hypot',
@@ -354,7 +354,7 @@ const compute_ops = [
     desc: 'returns the length of an array',
     sample: 'var a = ${x} length',
     call: function(v, x) { return v = x.length },
-    hash: '7c3eb6540d9d1c66f2034072d464b4e7'
+    hash: '400ec285019aff3bd7627c06ac0e3893'
   },
   {
     name: 'parseFloat',
@@ -368,203 +368,203 @@ const compute_ops = [
     desc: 'returns the string in lowercase letters',
     sample: 'var a = ${x} toLowerCase',
     call: function(v, x) { return v = x.toLowerCase() },
-    hash: '274f6f97ab5a4feae67f3dfec0e4b20c'
+    hash: '3bc30f2cb9d9c176389a66c678dc73c1'
   },
   {
     name: 'toUpperCase',
     desc: 'returns the string in uppercase letters',
     sample: 'var a = ${x} toUpperCase',
     call: function(v, x) { return v = x.toUpperCase() },
-    hash: 'acba74d9e2bb204e258916a7f6b7fa66'
+    hash: '6f25b159d1d1dba50dc3bf1718fa118d'
   },
   {
     name: 'trim',
     desc: 'returns the string after removing whitespace from both sides',
     sample: 'var a = ${x} trim',
     call: function(v, x) { return v = x.trim() },
-    hash: '2571c06ee6210fc5fe258323a87b16c6'
+    hash: 'f96e08fa742a89aab93426a21f6a929f'
   },
   {
     name: 'trimStart',
     desc: 'returns the string after removing whitespace from the beginning',
     sample: 'var a = ${x} trimStart',
     call: function(v, x) { return v = x.trimStart() },
-    hash: 'e0ef0b9d90c8240ebacfe9948733604a'
+    hash: 'bde1f13d149a4cb8fd93c39b7eb25c92'
   },
   {
     name: 'trimEnd',
     desc: 'returns the string after removing whitespace from the end',
     sample: 'var a = ${x} trimEnd',
     call: function(v, x) { return v = x.trimEnd() },
-    hash: '5217ad2d3e6d3e3a093e148df8863c0d'
+    hash: '758d2026e5d29b77a3ac3397b980ec20'
   },
   {
     name: 'charAt',
     desc: 'returns the nth character of a string x, with 0 being the first',
     sample: 'var a = ${x} charAt ${n}',
     call: function(v, x, y) { return v = (y !== undefined) ? x.charAt(y) : x.charAt() },
-    hash: 'd5285e5ba15f4361b29d0422a3b8aeef'
+    hash: 'd41cda03a6abc3b53e36508eeccb6da5'
   },
   {
     name: 'charCodeAt',
     desc: 'returns the Unicode of the nth character in a string x, with 0 being the first',
     sample: 'var a = ${x} charCodeAt ${n}',
     call: function(v, x, y) { return v = (y !== undefined) ? x.charCodeAt(y) : x.charCodeAt() },
-    hash: '7f95befe02fb64f8337f6a17c0746002'
+    hash: '03509e71a2657542724bd9b1856b1100'
   },
   {
     name: 'codePointAt',
     desc: 'returns the UTF-16 code point value of the nth character in a string x, with 0 being the first',
     sample: 'var a = ${x} codePointAt ${n}',
     call: function(v, x, y) { return v = (y !== undefined) ? x.codePointAt(y) : x.codePointAt() },
-    hash: 'cdcf71df618c61345480069df3b80d23'
+    hash: '964c15da9fb60f0acedc38f90c368fed'
   },
   {
     name: 'concat',
     desc: 'returns a string containing the text of the joined strings',
     sample: 'var a = ${x} concat ${y}',
     call: function(v, x, y) { return v = x.concat(y) },
-    hash: 'e30b0c7dd6af94e177b9c0e125181f9f'
+    hash: 'c192f8fb5ac1acf2bc71ffa26292644e'
   },
   {
     name: 'endsWith',
     desc: 'returns true if a string x ends with a string y - case sensitive',
     sample: 'var a = ${x} endsWith ${y}',
     call: function(v, x, y) { return v = x.endsWith(y) },
-    hash: 'd5e589f2b02befbc50d5e988105597d6'
+    hash: '59637f7be17be4e12e579e58a125d076'
   },
   {
     name: 'indexOf',
     desc: 'returns the position of the first occurrence of a string y in string x, or -1 if not found - case sensitive',
     sample: 'var a = ${x} indexOf ${y}',
     call: function(v, x, y) { return v = x.indexOf(y) },
-    hash: '59b2f1f6312f51f9e73138ee6eeb66e7'
+    hash: '445d992a356bc012bdabbabeab705960'
   },
   {
     name: 'lastIndexOf',
     desc: 'returns the position of the last occurrence of a string y in string x, or -1 if not found - case sensitive',
     sample: 'var a = ${x} lastIndexOf ${y}',
     call: function(v, x, y) { return v = x.lastIndexOf(y) },
-    hash: '5542a5121c77b501030dfd64d045b670'
+    hash: '8325968782afd306147e759fc7b1af21'
   },
   {
     name: 'in',
     desc: 'returns true if string x is included in string/array y (or property x in object y) - case sensitive',
     sample: 'var a = ${x} in ${y}',
     call: function(v, x, y) { return v = Array.isArray(y) || typeof y == 'string' ? y.indexOf(x) != -1 : x in y },
-    hash: '403c82322543026867587d570e62f0c0'
+    hash: 'a2fb5f062bbc0aad337b012e8293998e'
   },
   {
     name: 'includes',
     desc: 'returns true if string/array x includes value y (or object x includes property y) - case sensitive',
     sample: 'var a = ${x} includes ${y}',
     call: function(v, x, y) { return v = Array.isArray(x) || typeof x == 'string' ? x.indexOf(y) != -1 : y in x },
-    hash: 'b997d91855be8b50dc234a5738734c27'
+    hash: 'd2d453fe19128b8a1f1da45dff05bd06'
   },
   {
     name: 'localeCompare',
     desc: 'compares the sort order of two strings and returns -1 (x before y), 0 (x equals y) or 1 (x after y) - case sensitive',
     sample: 'var a = ${x} localeCompare ${y}',
     call: function(v, x, y) { return v = x.localeCompare(y) },
-    hash: '4e66fbcc06bb73298761e05b13c90201'
+    hash: 'aef7efe5cf11f3d5a659b3eab0e9375b'
   },
   {
     name: 'match',
     desc: 'searches a string x for a match against a regular expression y (with optional flags z), and returns the match(es) as an array, or null if no match was found',
     sample: 'var a = ${x} match ${y} ${z}\nvar a = ${x} match \'[a-zA-Z0-9].*\' \'g\'',
     call: function(v, x, y, z) { return v = (z !== undefined) ? x.match(new RegExp(y, z != 1 ? z : '')) : x.match(new RegExp(y))  },
-    hash: '2f508a1e64848b945635eede3c326977'
+    hash: '08dc333f33fd3f91dc4decce4c6cc59d'
   },
   {
     name: 'padEnd',
     desc: 'returns a string x padded with spaces at the end (up to the specified total string length y)',
     sample: 'var a = ${x} padEnd ${y}',
     call: function(v, x, y) { return v = x.padEnd(y) },
-    hash: '9b17e1a9184f2ca3e257faa95b15ab20'
+    hash: '0581e1eebf1a093172f3fffadac84d7c'
   },
   {
     name: 'padStart',
     desc: 'returns a string x padded with spaces at the start (up to the specified total string length y)',
     sample: 'var a = ${x} padStart ${y}',
     call: function(v, x, y) { return v = x.padStart(y) },
-    hash: '6252366d506670dc4599d76b75b7732e'
+    hash: 'da0661ad2124692638a2e7870ee91a3f'
   },
   {
     name: 'repeat',
     desc: 'returns a string containing y copies of the string x, joined together',
     sample: 'var a = ${x} repeat ${y}',
     call: function(v, x, y) { return v = x.repeat(y) },
-    hash: '628669d204da659c742f607629fb3057'
+    hash: 'f456cf164de2fd4e96203c9b87e2dc6a'
   },
   {
     name: 'search',
     desc: 'returns the position of the first match between the regular expression and the given string, or -1 if no match was found',
     sample: 'var a = ${x} search ${y}',
     call: function(v, x, y) { return v = x.search(y) },
-    hash: '0222366ee555afc940c9c863fffe6f44'
+    hash: '29714e9c955530d170e69142fbc762f4'
   },
   {
     name: 'split',
     desc: 'splits a string into substrings based on a separator y, and returns an array of the result',
     sample: 'var a = ${x} split ${y}',
     call: function(v, x, y) { return v = x.split(y) },
-    hash: '79bbdc6de81e8549c9ecb4e811c6c923'
+    hash: '1d1d57f985b14c89990b134e7ce4d998'
   },
   {
     name: 'startsWith',
     desc: 'returns true if a string x starts with a string y - case sensitive',
     sample: 'var a = ${x} startsWith ${y}',
     call: function(v, x, y) { return v = x.startsWith(y) },
-    hash: 'dd5507e1f19702b828f58cce837c58d9'
+    hash: '8148f499623e2e50f2fa7f6880010f65'
   },
   {
     name: 'toFixed',
     desc: 'returns a formatted number based on x, using the given amount y of digits, defaulting to 0 digits',
     sample: 'var a = ${x} toFixed ${y}',
     call: function(v, x, y) { return v = (y !== undefined) ? x.toFixed(y) : x.toFixed() },
-    hash: '9f34bd824094247d28768d779f1c41df'
+    hash: '232a011ae7beb89537b58b26acb1e816'
   },
   {
     name: 'toLocaleLowerCase',
     desc: 'returns the string x in lowercase letters, optionally according to current locale y',
     sample: 'var a = ${x} toLocaleLowerCase ${y}',
     call: function(v, x, y) { return v = (y !== undefined) ? x.toLocaleLowerCase(y) : x.toLocaleLowerCase() },
-    hash: '4403a094826913c3d883dedc619e4924'
+    hash: '9b35688e8515e9bdc972de129d498baf'
   },
   {
     name: 'toLocaleUpperCase',
     desc: 'returns the string in uppercase letters, optionally according to current locale y',
     sample: 'var a = ${x} toLocaleUpperCase ${y}',
     call: function(v, x, y) { return v = (y !== undefined) ? x.toLocaleUpperCase(y) : x.toLocaleUpperCase() },
-    hash: 'bd10c95fda0948ba7001898c219b8c36'
+    hash: '9cc5bd53700f6de17453ee6574238252'
   },
   {
     name: 'replace',
     desc: 'returns a string with the first occurence of string y replaced by string z',
     sample: 'var a = ${x} replace ${y} ${z}',
     call: function(v, x, y, z) { return v = x.replace(y, z) },
-    hash: 'fbf76c944c4939f9e3974627fc00f735'
+    hash: 'f6b5f999d592659b9b5357b1b64a6ad4'
   },
   {
     name: 'replaceAll',
     desc: 'returns a string with all occurences of string y replaced by string z',
     sample: 'var a = ${x} replaceAll ${y} ${z}',
     call: function(v, x, y, z) { return v = x.replaceAll(y, z) },
-    hash: '907134df3b97bb1e910897ea1eadf3e1'
+    hash: '0a81a812d5f248ffc762203ae3c385a1'
   },
   {
     name: 'substr',
     desc: 'extracts and returns part of a string, starting at index y for z number of characters - or to the end (if z is zero/omitted)',
     sample: 'var a = ${x} substr ${y} ${z}',
     call: function(v, x, y, z) { return v = (z !== undefined) ? x.substr(y, z) : x.substr(y) },
-    hash: 'fef9edc84f4e64e3ea51c35520be35d0'
+    hash: 'ef62a82b006b417c0bb6b970aa24c215'
   },
   {
     name: 'getIndex',
     desc: 'returns index y of a string or array x',
     sample: 'var a = ${x.$y}\nvar a = ${x} getIndex ${y}',
     call: function(v, x, y) { return v = x[y] },
-    hash: 'bfa0e96fe5b06ab46e4476eef3c8db40'
+    hash: '6d0bc71948f339cb361773e38f19d7a2'
   },
   {
     name: 'setIndex',
@@ -578,7 +578,7 @@ const compute_ops = [
     desc: 'converts and returns an array of the given string or object',
     sample: 'var a = from ${x}',
     call: function(v, x) { return v = Array.from(x) },
-    hash: '4823b33284aeaec8e6561fe2d01a87c9'
+    hash: '4b35f2d6fb3ea6c60605ce87f3674ec5'
   },
   {
     name: 'isArray',
@@ -592,7 +592,7 @@ const compute_ops = [
     desc: 'returns an array containing the elements of the two joined arrays',
     sample: 'var a = ${x} concatArray ${y}',
     call: function(v, x, y) { return v = x.concat(y) },
-    hash: '990c860a6339a7368b6e907143d2b4ee'
+    hash: '7acf4a9a8b169fdb706692a27c8b8603'
   },
   {
     name: 'pop',
@@ -641,7 +641,7 @@ const compute_ops = [
     desc: 'returns elements between start index y and end index z of an array (or characters of a string), excluding the end (unless z is omitted)',
     sample: 'var a = ${x} slice ${y} ${z}',
     call: function(v, x, y, z) { return v = (z !== undefined) ? x.slice(y, z) : x.slice(y) },
-    hash: '5e15b7a05d455cd51609ea631c20dc96'
+    hash: 'f9c5e98a2398113fed7da2f55e3ad6b7'
   },
   {
     name: 'insert',
@@ -683,7 +683,7 @@ const compute_ops = [
     desc: 'returns a random integer inbetween two numbers but excluding the endpoint, optionally in z increments (defaults to 1)',
     sample: 'var a = randRange ${x} ${y} ${z}',
     call: function(v, x, y, z) { return v = Math.round(Math.floor((Math.random() * (y - x) / (z || 1))) * (z || 1) + x) },
-    hash: '4758cba8f404cfe3ef0a300cebf3938a'
+    hash: '0c3de5a5df7cae6794d1794be2d12e04'
   }
 ];
 
