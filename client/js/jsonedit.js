@@ -444,7 +444,7 @@ function jeAddCommands() {
   jeAddWidgetPropertyCommands(new Spinner());
   jeAddWidgetPropertyCommands(new Timer());
   
-  jeAddRoutineOperationCommands('AUDIO', { source: '', type: 'audio/mpeg', volume: 1.0 });
+  jeAddRoutineOperationCommands('AUDIO', { source: '', type: 'audio/mpeg', volume: 0.5 });
   jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result' });
   jeAddRoutineOperationCommands('CANVAS', { canvas: null, mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6' });
   jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 , mode:'respect'});
