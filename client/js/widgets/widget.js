@@ -45,8 +45,7 @@ export class Widget extends StateManaged {
       changeRoutine: null,
       enterRoutine: null,
       leaveRoutine: null,
-      globalUpdateRoutine: null,
-      debug: false
+      globalUpdateRoutine: null
     });
 
     this.domElement.addEventListener('contextmenu', e => this.showEnlarged(e), false);
@@ -350,8 +349,7 @@ export class Widget extends StateManaged {
 
     batchStart();
 
-    if(this.get('debug') && !depth)
-      $('#debugButtonOutput').textContent = '';
+    if(jeRoutineLogging) jeLoggingRoutineStart(this, property, initialVariables, initialCollections, byReference);
 
     let variables = initialVariables;
     let collections = initialCollections;
@@ -377,10 +375,8 @@ export class Widget extends StateManaged {
         a = evaluateVariablesRecursively(a);
       var problems = [];
 
-      if(this.get('debug')) console.log(`${this.id}: ${JSON.stringify(original)}`);
-
       if(a.skip) {
-        $('#debugButtonOutput').textContent += '\n\n\nOPERATION SKIPPED: \n' + JSON.stringify(a, null, '  ');
+        if(jeRoutineLogging) jeLoggingRoutineOperation(original, a, problems, variables, collections, true);
         continue;
       }
 
@@ -446,6 +442,7 @@ export class Widget extends StateManaged {
             variables[variable][index] = getValue(variables[variable][index]);
           else
             variables[variable] = getValue(variables[variable]);
+          if(jeRoutineLogging) jeLoggingRoutineOperationResult(`${variable} = ${JSON.stringify(variables[variable])}`);
         } else if(modeSet.test(a)) {
           legacyMode.clear();
           a.replace(modeSet,'').trim().split(/[, ]+/).forEach(i => legacyMode.add(i));
@@ -503,16 +500,13 @@ export class Widget extends StateManaged {
             for(const c in collections)
               inheritCollections[c] = [ ...collections[c] ];
             inheritCollections['caller'] = [ this ];
-            $('#debugButtonOutput').textContent += `\n\n\nCALLing: ${a.widget}.${a.routine}\n`;
-            const result = await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections, (depth || 0) + 1);
+            const result = await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections);
             variables[a.variable] = result.variable;
             collections[a.collection] = result.collection;
           }
         }
-        if(!a.return) {
-          $('#debugButtonOutput').textContent += '\n\n\nCALL without return. Ending evaluation.\n';
+        if(!a.return)
           break;
-        }
       }
 
       if(a.func == 'CANVAS') {
@@ -746,6 +740,7 @@ export class Widget extends StateManaged {
             problems.push(`Collection ${a.collection} is empty.`);
           }
         }
+        if(jeRoutineLogging) jeLoggingRoutineOperationResult(`${a.variable} = ${JSON.stringify(variables[a.variable])}`);
       }
 
       if(a.func == 'IF') {
@@ -758,10 +753,8 @@ export class Widget extends StateManaged {
           if (a.condition === undefined)
             a.condition = compute(a.relation, null, a.operand1, a.operand2);
           const branch = a.condition ? 'thenRoutine' : 'elseRoutine';
-          if (Array.isArray(a[branch])) {
-            $('#debugButtonOutput').textContent += `\n\n\nIF ${branch}\n`;
+          if(Array.isArray(a[branch]))
             await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, legacyMode, true);
-          }
         } else
           problems.push(`IF operation is missing the 'condition' or 'operand1' parameter.`);
       }
@@ -908,6 +901,14 @@ export class Widget extends StateManaged {
 
           if(a.sortBy)
             await this.sortWidgets(collections[a.collection], a.sortBy.key, a.sortBy.reverse, a.sortBy.locales, a.sortBy.options);
+
+          if(jeRoutineLogging) {
+            let selectedWidgets = collections[a.collection].map(w=>w.get('id')).join(',');
+            if(!collections[a.collection].length || collections[a.collection].length >= 5)
+              selectedWidgets = `(${collections[a.collection].length} widgets)`;
+
+            jeLoggingRoutineOperationResult(`${a.property} ${a.relation} ${JSON.stringify(a.value)} OF ${a.source} => ${a.mode} ${a.collection} = ${selectedWidgets}`);
+          }
         }
       }
 
@@ -940,6 +941,9 @@ export class Widget extends StateManaged {
         } else if(isValidCollection(a.collection)) {
           for(const w of collections[a.collection]) {
             await w.set(String(a.property), compute(a.relation, null, w.get(String(a.property)), a.value));
+          }
+          if(jeRoutineLogging) {
+            jeLoggingRoutineOperationResult(`${a.property} ${a.relation} ${JSON.stringify(a.value)}`);
           }
         }
       }
@@ -1028,25 +1032,13 @@ export class Widget extends StateManaged {
         };
       }
 
-      if(this.get('debug')) {
-        let msg = ''
-        msg += '\n\n\nOPERATION: \n' + JSON.stringify(a, null, '  ');
-        if(problems.length)
-          msg += '\n\nPROBLEMS: \n' + problems.join('\n');
-        msg += '\n\n\nVARIABLES: \n' + JSON.stringify(variables, null, '  ');
-        msg += '\n\nCOLLECTIONS: \n';
-        for(const name in collections) {
-          msg += '  ' + name + ': ' + collections[name].map(w=>`${w.get('id')} (${w.get('type')})`).join(', ') + '\n';
-        }
-        $('#debugButtonOutput').textContent += msg.replace(/^/gm, '    '.repeat(depth));
-        console.log(msg);
-      } else if(problems.length) {
+      if(jeRoutineLogging) jeLoggingRoutineOperation(original, a, problems, variables, collections);
+
+      if(!jeRoutineLogging && problems.length)
         console.log(problems);
-      }
     }
 
-    if(this.get('debug') && !depth)
-      showOverlay('debugButtonOverlay');
+    if(jeRoutineLogging) jeLoggingRoutineEnd(variables, collections);
 
     batchEnd();
 
