@@ -484,7 +484,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(FOREACH\\) ↦ in', [ '${}' ]);
   jeAddEnumCommands('^.*\\(GET\\) ↦ aggregation', [ 'first', 'last', 'array', 'average', 'median', 'min', 'max', 'sum' ]);
   jeAddEnumCommands('^.*\\(IF\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=' ]);
-  jeAddEnumCommands('^.*\\(IF\\) ↦ operand1 | operand2', [ '${}' ]);
+  jeAddEnumCommands('^.*\\(IF\\) ↦ (operand1|operand2)', [ '${}' ]);
   jeAddEnumCommands('^.*\\(LABEL\\) ↦ mode', [ 'set', 'dec', 'inc', 'append' ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ angle', [ 45, 60, 90, 135, 180 ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ mode', [ 'set', 'add' ]);
