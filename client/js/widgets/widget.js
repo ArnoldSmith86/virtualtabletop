@@ -789,6 +789,85 @@ export class Widget extends StateManaged {
         }
         if(jeRoutineLogging) jeLoggingRoutineOperationResult(`${a.variable} = ${JSON.stringify(variables[a.variable])}`);
       }
+      if(a.func == 'TURN') {
+        setDefaults(a, { turn: 1, turnCycle: 'inc', source: 'all', collection: 'TURN' });
+          if([ 'forward', 'backward', 'random', 'position' ].indexOf(a.turnCycle) == -1){
+            problems.push(`Warning: turnCycle ${a.turnCycle} interpreted as forward.`);
+            a.turnCycle = 'forward'
+          }
+          //copied from select
+          let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(function(w) {
+            if (w.get('type')=='seat')
+              return true;
+          });
+
+          //this get the list of valid index
+          var indexList = []
+          var turn = 1
+          for (w of c) {
+            if (indexList.indexOf(w.get('index'))==-1 && w.get('player'))
+              indexList.push(w.get('index'));
+            if (w.get('turn'))
+              turn = w.get('index')
+          }
+
+          //loop so it goes for the n next valid index
+          for (var i = 0; i < Math.abs(a.turn)%indexList.length; i++) {
+            //this checks the next valid index
+            if ((a.turnCycle=='forward' && a.turn>0) || (a.turnCycle=='backward' && a.turn<0) ){
+              indexList.sort((a,b)=>a-b);
+              if (turn >= indexList[indexList.length-1]){
+                turn = indexList[0]
+              } else {
+                  for (var idx of indexList){
+                    if (idx>turn){
+                      turn = idx;
+                      break
+                    }
+                  }
+                }
+            } else if ((a.turnCycle=='forward' && a.turn<0) || (a.turnCycle=='backward' && a.turn>0) ){
+              //this checks the previous valid index
+              indexList.sort((a,b)=>b-a);
+              if (turn <= indexList[indexList.length-1]){
+                turn = indexList[0]
+              } else {
+                  for (var idx of indexList){
+                    if (idx<turn){
+                      turn = idx;
+                      break
+                    }
+                  }
+                }
+            }
+          }
+        if (a.turnCycle=='position'){
+          indexList.sort((a,b)=>a-b);
+          if (a.turn=='first'){
+            turn = indexList[0]
+          } else if (a.turn=='last'){
+            turn = indexList[indexList.length]
+          } else if ((a.turn-1)<0){
+            turn = indexList[indexList.length-((Math.abs(a.turn-1)%indexList.length)||indexList.length)]
+          } else {
+            turn = indexList[(a.turn-1) % indexList.length]||0
+          }
+        }
+        if (a.turnCycle=='random'){
+          turn = indexList[Math.floor(Math.random()*indexList.length)]
+        }
+
+        var output = []
+        //saves turn into all seats and creates output collection with turn seats
+        for (w of c) {
+          w.set('turn', w.get('index') == turn)
+          if (w.get('turn')==w.get('index') && w.get('player'))
+            output.push(w);
+        }
+
+        collections[a.collection] = output;
+      }
+
 
       if(a.func == 'IF') {
         setDefaults(a, { relation: '==' });
@@ -849,7 +928,15 @@ export class Widget extends StateManaged {
                 await c.bringToFront();
               } else {
                 c.movedByButton = true;
+                if (target.get('type')=='seat' && target.get('hand') && target.get('player')){
+                  await c.moveToHolder(widgets.get(target.get('hand')));
+                  if(widgets.get(target.get('hand')).get('childrenPerOwner'))
+                    await c.set('owner', target.get('player'));
+                  c.bringToFront()
+                  widgets.get(target.get('hand')).updateAfterShuffle()
+                } else if (target.get('type')=='holder') {
                 await c.moveToHolder(target);
+                }
                 delete c.movedByButton;
               }
             }

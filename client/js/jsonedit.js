@@ -443,6 +443,7 @@ function jeAddCommands() {
   jeAddWidgetPropertyCommands(new Holder());
   jeAddWidgetPropertyCommands(new Label());
   jeAddWidgetPropertyCommands(new Pile());
+  jeAddWidgetPropertyCommands(new Seat());
   jeAddWidgetPropertyCommands(new Spinner());
   jeAddWidgetPropertyCommands(new Timer());
 
@@ -558,6 +559,19 @@ function jeAddCSScommands() {
     });
   }
   for(const css of [ '--wcMain: #1f5ca6', '--wcMainOH: #0d2f5e', '--wcBorder: #0d2f5e', '--wcBorderOH: #1f5ca6', '--wcFont: #ffffff', '--wcFontOH: #ffffff' ]) {
+    jeCommands.push({
+      id: 'css_' + css,
+      name: css,
+      context: 'button ↦ (css|[a-z]+CSS)',
+      call: async function() {
+        jePasteText(css + '; ', true);
+      },
+      show: function() {
+        return !String(jeGetValue()[jeGetLastKey()]).match(css.split(':')[0]);
+      }
+    });
+  }
+  for(const css of [ '--wcShadowTurn: none' ]) {
     jeCommands.push({
       id: 'css_' + css,
       name: css,
