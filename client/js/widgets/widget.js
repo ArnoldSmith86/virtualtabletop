@@ -439,12 +439,13 @@ export class Widget extends StateManaged {
       }); 
 		
 	if(a.func == 'AUDIO') {
-    setDefaults(a, { source: '', type: 'audio/mpeg', volume: 1.0 });
+    setDefaults(a, { source: '', type: 'audio/mpeg', volume: 0.5 });
     if(a.source !== undefined) {
       var allAudios = document.querySelectorAll('audio');
       allAudios.forEach(function(audio){audio.parentNode.removeChild(audio);});
       var pVolCtrl = document.getElementById('volume');
-      var pVol = Math.min(a.volume, 1) * pVolCtrl.value / 100;
+      pVolCtrlExp = (((10 ** (pVolCtrl.value / 48)) / 10) - 0.1) // converts to log scale with zero = no volume
+      var pVol = Math.min(a.volume * pVolCtrlExp, 1); 
       var audioElement = document.createElement('audio');
       audioElement.setAttribute('class', 'audio');
       audioElement.setAttribute('src', a.source);
