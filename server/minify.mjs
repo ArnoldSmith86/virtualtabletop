@@ -48,6 +48,7 @@ export default function minifyRoom() {
           'client/js/editmode.js',
           'client/js/geometry.js',
           'client/js/jsonedit.js',
+          'client/js/compute.js',
           'client/js/mousehandling.js',
           'client/js/statemanaged.js',
 

@@ -331,7 +331,7 @@ export class Widget extends StateManaged {
         await callback(a);
     }
 
-    if(this.isBeingRemoved || this.inRemovalQueue)
+    if(!depth && (this.isBeingRemoved || this.inRemovalQueue))
       return;
 
     batchStart();
@@ -340,7 +340,7 @@ export class Widget extends StateManaged {
       $('#debugButtonOutput').textContent = '';
 
     let variables = initialVariables;
-    let collections = initialCollections
+    let collections = initialCollections;
     if(!byReference) {
       variables = Object.assign({}, initialVariables, {
         playerName,
@@ -376,7 +376,7 @@ export class Widget extends StateManaged {
         const parameter  = `(null|true|false|\\[\\]|\\{\\}|${number}|${variable}|${string})`;
 
         const left       = `var (\\$)?(${identifier})(?:\\.(\\$)?(${identifier}))?`;
-        const operation  = `${identifier}|[=+*/%<!>&|-]{1,2}`;
+        const operation  = `${identifier}|[=+*/%<!>&|-]{1,3}`;
 
         const regex      = `^${left} += +(?:${parameter}|(?:${parameter} +)?(🧮)?(${operation})(?: +${parameter})?(?: +${parameter})?(?: +${parameter})?)(?: +//.*)?`;
 
@@ -519,7 +519,11 @@ export class Widget extends StateManaged {
               const parent = clone.parent;
               clone.clonedFrom = w.get('id');
 
-              delete clone.id;
+              if(widgets.has(clone.id)) {
+                delete clone.id;
+                if(a.properties.id !== undefined)
+                  problems.push(`There is already a widget with id:${a.properties.id}, generating new ID.`);
+              }
               delete clone.parent;
               addWidgetLocal(clone);
               const cWidget = widgets.get(clone.id);
@@ -547,149 +551,11 @@ export class Widget extends StateManaged {
 
       function compute(o, v, x, y, z) {
         try {
-          switch(o) {
-          case '=':  v = y;      break;
-          case '+':  v = x + y;  break;
-          case '-':  v = x - y;  break;
-          case '*':  v = x * y;  break;
-          case '**': v = x ** y; break;
-          case '/':  v = x / y;  break;
-          case '%':  v = x % y;  break;
-          case '<':  v = x < y;  break;
-          case '<=': v = x <= y; break;
-          case '==': v = x == y; break;
-          case '!=': v = x != y; break;
-          case '>=': v = x >= y; break;
-          case '>':  v = x > y;  break;
-          case '&&': v = x && y; break;
-          case '||': v = x || y; break;
-          case '!':  v = !x;     break;
-
-          // Math operations
-          case 'hypot':
-          case 'max':
-          case 'min':
-          case 'pow':
-            v = Math[o](x, y);
-            break;
-          case 'sin':
-          case 'cos':
-          case 'tan':
-            v = Math[o](x * Math.PI/180);
-            break;
-          case 'abs':
-          case 'cbrt':
-          case 'ceil':
-          case 'exp':
-          case 'floor':
-          case 'log':
-          case 'log10':
-          case 'log2':
-          case 'random':
-          case 'round':
-          case 'sign':
-          case 'sqrt':
-          case 'trunc':
-            v = Math[o](x);
-            break;
-          case 'E':
-          case 'LN2':
-          case 'LN10':
-          case 'LOG2E':
-          case 'LOG10E':
-          case 'PI':
-          case 'SQRT1_2':
-          case 'SQRT2':
-            v = Math[o];
-            break;
-
-          // String operations
-          case 'length':
-            v = x.length;
-            break;
-          case 'parseFloat':
-            v = parseFloat(x);
-            break;
-          case 'toLowerCase':
-          case 'toUpperCase':
-          case 'trim':
-          case 'trimStart':
-          case 'trimEnd':
-            v = x[o]();
-            break;
-          case 'charAt':
-          case 'charCodeAt':
-          case 'codePointAt':
-          case 'concat':
-          case 'includes':
-          case 'endsWith':
-          case 'indexOf':
-          case 'lastIndexOf':
-          case 'localeCompare':
-          case 'match':
-          case 'padEnd':
-          case 'padStart':
-          case 'repeat':
-          case 'search':
-          case 'split':
-          case 'startsWith':
-          case 'toFixed':
-          case 'toLocaleLowerCase':
-          case 'toLocaleUpperCase':
-            v = x[o](y);
-            break;
-          case 'replace':
-          case 'replaceAll':
-          case 'substr':
-            v = x[o](y, z);
-            break;
-
-          // Array operations
-          // 'length' should work the same as for strings
-          case 'getIndex':
-            v = x[y];
-            break;
-          case 'setIndex':
-            v[x] = y;
-            break;
-          case 'from':
-          case 'isArray':
-            v = Array[o](x);
-            break;
-          case 'concatArray':
-            v = x.concat(y);
-            break;
-          case 'pop':
-          case 'reverse':
-          case 'shift':
-          case 'sort':
-            v = x[o]();
-            break;
-          case 'includes':
-          case 'indexOf':
-          case 'join':
-          case 'lastIndexOf':
-            v = x[o](y);
-            break;
-          case 'slice':
-            v = x[o](y, z);
-            break;
-          case 'push':
-          case 'unshift':
-            v[o](x);
-            break;
-
-          // random values
-          case 'randInt':
-            v = Math.floor((Math.random() * (y - x + 1)) + x);
-            break;
-          case 'randRange':
-            v = Math.round(Math.floor((Math.random() * (y - x) / (z || 1))) * (z || 1) + x);
-            break;
-          default:
-            v = null;
+          if (compute_ops.find(op => op.name == o) !== undefined) {
+            v = compute_ops.find(op => op.name == o).call(v, x, y, z);
+          }else {
             problems.push(`Operation ${o} is unsupported.`);
-            return v;
+            return v = null;
           }
         } catch(e) {
           v = 0;
@@ -756,10 +622,18 @@ export class Widget extends StateManaged {
             collections[add] = addCollections[add];
           }
           await this.evaluateRoutine(a.loopRoutine, variables, collections, (depth || 0) + 1, true);
-          for(const add in addVariables)
-            variables[add] = variableBackups[add];
-          for(const add in addCollections)
-            collections[add] = collectionBackups[add];
+          for(const add in addVariables) {
+            if(variableBackups[add] !== undefined)
+              variables[add] = variableBackups[add];
+            else
+              delete variables[add];
+          }
+          for(const add in addCollections) {
+            if(collectionBackups[add] !== undefined)
+              collections[add] = collectionBackups[add];
+            else
+              delete collections[add];
+          }
         }
         if(a.in) {
           for(const key in a.in)
@@ -986,6 +860,24 @@ export class Widget extends StateManaged {
         }
         if((a.property == 'parent' || a.property == 'deck') && a.value !== null && !widgets.has(a.value)) {
           problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
+        } else if (a.property == 'id' && isValidCollection(a.collection)) {
+          for(const oldWidget of collections[a.collection]) {
+            const oldState = JSON.stringify(oldWidget.state);
+            const oldID = oldWidget.get('id');
+            var newState = JSON.parse(oldState);
+
+            newState.id = compute(a.relation, null, oldWidget.get(a.property), a.value);
+            if(!widgets.has(newState.id)) {
+              $('#editWidgetJSON').dataset.previousState = oldState;
+              $('#editWidgetJSON').value = JSON.stringify(newState);
+              await onClickUpdateWidget(false);
+              for(const c in collections)
+                collections[c] = collections[c].map(w=>w.id==oldID ? widgets.get(newState.id) : w);
+              sendDelta(true);
+            } else {
+              problems.push(`id ${newState.id} already in use, ignored.`);
+            }
+          }
         } else if(isValidCollection(a.collection)) {
           for(const w of collections[a.collection]) {
             await w.set(a.property, compute(a.relation, null, w.get(a.property), a.value));
