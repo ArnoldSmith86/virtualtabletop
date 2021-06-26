@@ -17,6 +17,12 @@
   resize: none;
 }
 
+.label > .labeldiv {
+  overflow: auto;
+  width: 100%;
+  min-height: 100%;
+}
+
 body.edit .widget.label {
   border: none;
   box-sizing: content-box;
@@ -27,3 +33,7 @@ body.edit .widget.label > * {
   left: 0;
   top: 0;
 }
+.label tr:nth-child(odd) {
+  background-color: #dddddd;
+}
+

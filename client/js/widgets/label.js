@@ -3,8 +3,15 @@ import { Widget } from './widget.js';
 export class Label extends Widget {
   constructor(id) {
     super(id);
+    this.divinput = document.createElement('div');
+    this.divinput.className = "labeldiv";
+    this.domElement.appendChild(this.divinput);
+    this.divinput.addEventListener('focusout' , e => this.setFromDiv (e, false))
+    this.divinput.addEventListener('keydown' , e => {
+      if(e.shiftKey && e.keyCode == 13)
+        this.setFromDiv (e, true);
+    })
     this.input = document.createElement('textarea');
-
     this.addDefaults({
       height: 20,
       movable: false,
@@ -13,11 +20,31 @@ export class Label extends Widget {
 
       text: '',
       editable: false,
+      html: false,
       twoRowBottomAlign: false
     });
 
     this.domElement.appendChild(this.input);
     this.input.addEventListener('keyup', e=>this.setText(e.target.value));
+  }
+
+  setFromDiv(e, toEnd){
+    e.preventDefault();
+    const t = e.target.innerHTML.trim()
+    .replace(/&lt;/gimu,'<')
+    .replace(/&gt;/gimu, '>')
+    .replace(/<img src="([^>]+)?" height="([^>]+)">/gimu, '<img: $1 height: $2>')
+    .replace(/<img src="([^>]+)?" width="([^>]+)">/gimu, '<img: $1 width: $2>')
+    .replace(/<img src="([^>]+)?">/gimu, '<img: $1>')
+    .replace(/<a href="https:\/\/(.*?)"(.*?)>/gimu, '<a: $1>')
+    .replace(/<span style="color: ([^>]+)?">/gimu, '<c: $1>')
+    .replace(/<span style="margin:auto; display:table">/gimu, '<center>')
+    .replace(/<span style="font-size: ([^>]+)?">/gimu, '<size: $1>')
+    this.setText(t + " ");
+    if(toEnd) {
+      document.execCommand('selectAll', false, null);
+      document.getSelection().collapseToEnd();
+    }
   }
 
   applyDeltaToDOM(delta) {
@@ -33,13 +60,42 @@ export class Label extends Widget {
       } else {
         this.input.style.paddingTop = '0';
         this.input.style.minHeight = '100%';
+        this.divinput.style.height = `${this.get('height')}px`;
+        this.divinput.style.paddingTop = 'unset';
       }
     }
+  if(delta.html  !== undefined|| delta.text !== undefined) {
+    if(this.get('html') == true) {
+      var HTMLtext = this.get('text').toString()
+      .replace(/=/gimu, '')
+      .replace(/<img: +(.*?) height: +(.*?)>/gim, '<img src="$1" height="$2">')
+      .replace(/<img: +(.*?) width: +(.*?)>/gim, '<img src="$1" width="$2">')
+      .replace(/<img: +(.*?)>/gim, '<img src="$1">')
+      .replace(/<a: +(.*?)>/gim, '<a href=https://$1 rel="noopener noreferrer nofollow">')
+      .replace(/<c: +(.*?)>/gim, '<span style="color: $1">')
+      .replace(/<center>/gim, '<span style="margin:auto; display:table">')
+      .replace(/<size: +(.*?)>/gim, '<span style="font-size: $1">')
+      .replace(/<\/c>|<\/center>|<\/size>/gim, '</span>')
+      .replace(/\*\*(.*?)\*\*/gim, '<b>$1</b>')
+      .replace(/\*(.*?)\*/gim, '<i>$1</i>')
+      .replace(/\-\-(.*?)\-\-/gim, '<sub>$1</sub>')
+      .replace(/\^\^(.*?)\^\^/gim, '<sup>$1</sup>')
+      this.divinput.innerHTML = HTMLtext;
+      this.input.style.display = "none";
+      this.divinput.style.display = "inline-block";
+    } else {
+      this.input.style.display = "block";
+      this.divinput.style.display = "none";
+    }
+  }
     if(delta.editable !== undefined) {
-      if(delta.editable)
+      if(delta.editable) {
         this.input.removeAttribute("readonly");
-      else
+        this.divinput.contentEditable = true;
+      } else {
         this.input.setAttribute("readonly", !delta.editable);
+        this.divinput.contentEditable = false;
+      }
     }
   }
 }
