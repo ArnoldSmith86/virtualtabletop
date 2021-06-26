@@ -162,6 +162,7 @@ onLoad(function() {
     dropTargets.clear();
     StateManaged.globalUpdateListeners = {};
     maxZ = {};
+    StateManaged.inheritFromMapping = {};
     let isEmpty = true;
     for(const widgetID in args) {
       if(widgetID != '_meta') {
