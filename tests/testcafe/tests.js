@@ -167,7 +167,7 @@ test('Compute', async t => {
   for(const index in compute_ops) {
     const op = compute_ops[index];
     const operators = [ 0, 1, '${obj.12}', 0.1, '', '0', '${str}', true, '${obj.$str}', null, undefined, [], '${PROPERTY arr}', {}, '${PROPERTY obj}' ];
-    const clickRoutine = [ "var str = 'as0d'", "var obj = ${PROPERTY obj}", 'var results = []' ];
+    const clickRoutine = [ "mode: strToNum defaultOne", "var str = 'as0d'", "var obj = ${PROPERTY obj}", 'var results = []' ];
     let i = 0;
     for(const op1 of operators) {
       for(const op2 of operators) {
@@ -193,7 +193,26 @@ test('Compute', async t => {
     };
     await setRoomState(state);
     await t.click(`[id="button${op.name}"]`);
+
+    const newState = JSON.parse(await getState());
+    newState[`button${op.name}`].clickRoutine.shift();
+    await setRoomState(newState);
+
     await compareState(t, op.hash);
+
+
+    if(op.name.match(/^rand.*/)) {
+      console.log(`Compute ${op.name} passed, skiping new hash for random functions`);
+    } else {
+      delete newState[`button${op.name}`].results;
+      await setRoomState(newState);
+      await t.click(`[id="button${op.name}"]`);
+      const newHash = crypto.createHash('md5').update(await getState()).digest('hex')
+      if(op.hash != newHash)
+        console.log(`Compute ${op.name} passed, old hash: ${op.hash}, new hash: ${newHash}`)
+      else
+        console.log(`Compute ${op.name} passed, hash unchanged`)
+    }
   }
 });
 
