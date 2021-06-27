@@ -319,10 +319,10 @@ publicLibraryButtons('Dice',               0, '3b2d42e8046b65042904f86bf7a76a01'
 publicLibraryButtons('Functions - CALL',   0, '538d1a9c3495390bc7a1e05ac5283447', [
   'n4cw_8_C', '5a52', '5a52', '66kr', 'qeg1', 'n4cwB', '8r6p', 'qeg1', 'qeg1', 'n5eu'
 ]);
-publicLibraryButtons('Functions - CLICK',  0, 'd98299a0065b24a44b0d03a79900e0ef', [ '7u2q' ]);
-publicLibraryButtons('Functions - ROTATE', 0, '747586b12401e43382a7db2b2505f25e', [ 'c44c', '9kdj', 'w53c', 'w53c' ]);
-publicLibraryButtons('Functions - SELECT', 0, '4db86f0a95509b1c4fe5ebd6a1f822a9', [ 'oeh9', '9fhb', 'njkk', 'ffwl', 'bomo' ]);
-publicLibraryButtons('Functions - SORT',   1, 'dd047343b667795ad6d3f366aa2ae2fd', [
+publicLibraryButtons('Functions - CLICK',  0, '36467ff7512b9c5d01642eff1354414b', [ '7u2q' ]);
+publicLibraryButtons('Functions - ROTATE', 0, 'c9ca3be19c19e296c367274d6d938142', [ 'c44c', '9kdj', 'w53c', 'w53c' ]);
+publicLibraryButtons('Functions - SELECT', 0, '6031265697185bedf10b5756fcca6a04', [ 'oeh9', '9fhb', 'njkk', 'ffwl', 'bomo' ]);
+publicLibraryButtons('Functions - SORT',   1, 'de9c44b554ca1e2bfe3f17401b6ed8aa', [
   'ingw', 'k131', 'cnfu', 'i6yz', 'z394', '0v3h', '1h8o', 'v5ra', 'ingw-copy001', 'k131-copy001', 'cnfu-copy001',
   'i6yz-copy001', 'z394-copy001', '0v3h-copy001'
 ]);
