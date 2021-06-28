@@ -641,8 +641,8 @@ export class Widget extends StateManaged {
         if(isValidCollection(a.collection)) {
           let c = collections[a.collection];
           if (a.skipMissing)
-            c = c.filter(w=>w.get(a.property) !== null && w.get(a.property) !== undefined);
-          c = JSON.parse(JSON.stringify(c.map(w=>w.get(a.property))));
+            c = c.filter(w=>w.get(String(a.property)) !== null && w.get(String(a.property)) !== undefined);
+          c = JSON.parse(JSON.stringify(c.map(w=>w.get(String(a.property)))));
           if(c.length) {
             switch(a.aggregation) {
             case 'first':
