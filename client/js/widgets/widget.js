@@ -28,7 +28,6 @@ export class Widget extends StateManaged {
       css: '',
       movable: true,
       movableInEdit: true,
-      fixedZ: false,
       clickable: false,
 
       grid: [],
@@ -1029,8 +1028,7 @@ export class Widget extends StateManaged {
   }
 
   async moveStart() {
-    if(!this.get('fixedZ'))
-      await this.bringToFront();
+    await this.bringToFront();
 
     if(!this.get('fixedParent')) {
       this.dropTargets = this.validDropTargets();
