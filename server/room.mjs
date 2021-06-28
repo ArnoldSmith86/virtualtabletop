@@ -3,7 +3,8 @@ import path from 'path';
 
 import JSZip from 'jszip';
 import FileLoader from './fileloader.mjs';
-import Logging    from './logging.mjs';
+import FileUpdater from './fileupdater.mjs';
+import Logging from './logging.mjs';
 
 export default class Room {
   players = [];
@@ -16,41 +17,44 @@ export default class Room {
   }
 
   addPlayer(player) {
-    console.log(new Date().toISOString(), `adding player ${player.name} to room ${this.id}`);
+    Logging.log(`adding player ${player.name} to room ${this.id}`);
     this.players.push(player);
 
     if(!this.state._meta.players[player.name])
-      this.state._meta.players[player.name] = '#ff0000';
+      this.state._meta.players[player.name] = this.newPlayerColor();
 
+    this.sendMetaUpdate();
     this.state._meta.deltaID = this.deltaID;
     player.send('state', this.state);
-    this.sendMetaUpdate();
   }
 
-  async addState(player, id, type, src, addAsVariant) {
+  async addState(id, type, src, srcName, addAsVariant) {
     const initialAddAsVariant = addAsVariant;
     let stateID = addAsVariant || id;
     let variantID = id;
 
     let states = { room: [ this.state ] };
     let etag = null;
+
+    if(type == 'link')
+      src = src.toString('utf8');
+
     try {
       if(type == 'file')
-        states = await FileLoader.readStatesFromBuffer(Buffer.from(src.content.replace(/^data.*?,/, ''), 'base64'));
+        states = await FileLoader.readStatesFromBuffer(src);
       if(type == 'link')
         states = await FileLoader.readStatesFromLink(src);
     } catch(e) {
-      console.log(new Date().toISOString(), 'ERROR LOADING FILE: ' + e);
+      Logging.log(`ERROR LOADING FILE: ${e.toString()}`);
       try {
-        fs.writeFileSync(path.resolve() + '/save/errors/' + Math.random().toString(36).substring(3, 7), Buffer.from(src.replace(/^data.*?,/, ''), 'base64'));
+        fs.writeFileSync(path.resolve() + '/save/errors/' + Math.random().toString(36).substring(3, 7), src);
       } catch(e) {}
-      player.send('error', e.toString());
-      return;
+      throw e;
     }
 
     for(const state in states) {
       for(const v in states[state]) {
-        let name = type == 'file' && src.name || 'Unnamed';
+        let name = type == 'file' && srcName || 'Unnamed';
         if(state.match(/\.pcio$/))
           name = state;
 
@@ -161,7 +165,7 @@ export default class Room {
         state = await FileLoader.readVariantFromLink(v.link);
       else
         state = JSON.parse(fs.readFileSync(this.variantFilename(stateID, vID)));
-      state._meta = { version: this.state._meta.version, info: { ...this.state._meta.states[stateID] } };
+      state._meta = { version: state._meta.version, info: { ...this.state._meta.states[stateID] } };
       Object.assign(state._meta.info, state._meta.info.variants[vID]);
       delete state._meta.info.variants;
       delete state._meta.info.link;
@@ -201,29 +205,40 @@ export default class Room {
     return JSON.stringify(state).match(/\/assets\/-?[0-9]+_[0-9]+/g) || [];
   }
 
-  async load(fileOrLink) {
+  async load(fileOrLink, player) {
+    const emptyState = {
+      _meta: {
+        version: 1,
+        players: {},
+        states: {}
+      }
+    };
+
     if(!fileOrLink && !fs.existsSync(this.roomFilename())) {
       Logging.log(`creating room ${this.id}`);
-      this.state = {
-        _meta: {
-          version: 1,
-          players: {},
-          states: {}
-        }
-      };
+      this.state = FileUpdater(emptyState);
     } else if(!fileOrLink) {
       Logging.log(`loading room ${this.id}`);
-      this.state = JSON.parse(fs.readFileSync(this.roomFilename()));
+      this.state = FileUpdater(JSON.parse(fs.readFileSync(this.roomFilename())));
       this.broadcast('state', this.state);
-    } else if(fileOrLink.match(/^http/)) {
-      Logging.log(`loading room ${this.id} from ${fileOrLink}`);
-      this.setState(await FileLoader.readVariantFromLink(fileOrLink));
     } else {
-      Logging.log(`loading room ${this.id} from ${fileOrLink}`);
-      this.setState(JSON.parse(fs.readFileSync(fileOrLink)));
+      let newState = emptyState;
+      if(fileOrLink.match(/^http/))
+        newState = await FileLoader.readVariantFromLink(fileOrLink);
+      else
+        newState = JSON.parse(fs.readFileSync(fileOrLink));
+      if(newState) {
+        Logging.log(`loading room ${this.id} from ${fileOrLink}`);
+        this.setState(newState);
+      } else {
+        Logging.log(`loading room ${this.id} from ${fileOrLink} FAILED`);
+        this.setState(emptyState);
+        if(player)
+          player.send('error', 'Error loading state.');
+      }
     }
 
-    if(!this.state._meta || this.state._meta.version !== 1)
+    if(!this.state._meta || typeof this.state._meta.version !== 'number')
       throw Error('Room state has invalid meta information.');
   }
 
@@ -231,13 +246,45 @@ export default class Room {
     const variantInfo = this.state._meta.states[stateID].variants[variantID];
 
     if(variantInfo.link)
-      await this.load(variantInfo.link);
+      await this.load(variantInfo.link, player);
     else
-      await this.load(this.variantFilename(stateID, variantID));
+      await this.load(this.variantFilename(stateID, variantID), player);
   }
 
   mouseMove(player, coords) {
     this.broadcast('mouse', { player: player.name, coords });
+  }
+
+  newPlayerColor() {
+    let hue = 0;
+    const hues = [];
+    for(const player in this.state._meta.players) {
+      const hex = this.state._meta.players[player];
+      const r = parseInt(hex.slice(1,3), 16) / 255;
+      const g = parseInt(hex.slice(3,5), 16) / 255;
+      const b = parseInt(hex.slice(5,7), 16) / 255;
+      const max = Math.max(r,g,b);
+      const d = max - Math.min(r,g,b);
+      if(d < .25) continue;
+      switch(max) {
+        case r: hues.push((360 + (g - b) * 60 / d) % 360); break;
+        case g: hues.push(120 + (b - r) * 60 / d); break;
+        case b: hues.push(240 + (r - g) * 60 / d); break;
+      }
+    }
+    if(hues.length == 0) {
+      hue = Math.random() * 360;
+    } else {
+      const gaps = hues.sort((a,b)=>a-b).map((h, i, a) => (i != (a.length - 1)) ? a[i + 1 ] - h : a[0] + 360 - h);
+      const gap = Math.max(...gaps);
+      hue = (Math.random() * gap / 3 + hues[gaps.indexOf(gap)] + gap / 3) % 360;
+    }
+    const f = n => {
+      const k = (n + hue / 30) % 12;
+      const c = .5 - .5 * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+      return Math.round(255 * c).toString(16).padStart(2, '0');
+    }
+    return `#${f(0)}${f(8)}${f(4)}`;
   }
 
   receiveDelta(player, delta) {
@@ -261,7 +308,7 @@ export default class Room {
   }
 
   receiveInvalidDelta(player, delta, widgetID) {
-    console.log(new Date().toISOString(), `WARNING: received conflicting delta data for widget ${widgetID} from player ${player.name} in room ${this.id} - sending game state at ${this.deltaID}`);
+    Logging.log(`WARNING: received conflicting delta data for widget ${widgetID} from player ${player.name} in room ${this.id} - sending game state at ${this.deltaID}`);
     this.state._meta.deltaID = ++this.deltaID;
     player.send('state', this.state);
   }
@@ -272,7 +319,7 @@ export default class Room {
   }
 
   removePlayer(player) {
-    console.log(new Date().toISOString(), `removing player ${player.name} from room ${this.id}`);
+    Logging.log(`removing player ${player.name} from room ${this.id}`);
     this.players = this.players.filter(e => e != player);
     if(this.players.length == 0) {
       this.unload();
@@ -309,6 +356,8 @@ export default class Room {
   setState(state) {
     const meta = this.state._meta;
     this.state = state;
+    if(this.state._meta)
+      this.state = FileUpdater(this.state);
     this.state._meta = meta;
     this.broadcast('state', state);
   }

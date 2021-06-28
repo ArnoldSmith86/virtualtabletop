@@ -20,6 +20,7 @@ class Card extends Widget {
 
   applyDeltaToDOM(delta) {
     if(delta.deck !== undefined) {
+      const childNodes = [...this.domElement.childNodes];
       if(this.deck) {
         this.domElement.innerHTML = '';
         this.deck.removeCard(this);
@@ -27,15 +28,18 @@ class Card extends Widget {
       if(delta.deck) {
         this.deck = widgets.get(delta.deck);
         this.deck.addCard(this);
-        this.createFaces(this.deck.p('faceTemplates'));
+        this.createFaces(this.deck.get('faceTemplates'));
       } else {
         this.deck = null;
       }
+      for(const child of childNodes)
+        if(!child.className.match(/cardFace/))
+          this.domElement.appendChild(child);
     }
 
     if(delta.cardType !== undefined && this.deck) {
       const applyForCardType = {};
-      for(const [ k, v ] of Object.entries(this.deck.p('cardTypes')[this.p('cardType')] || {}))
+      for(const [ k, v ] of Object.entries(this.deck.get('cardTypes')[this.get('cardType')] || {}))
         if(this.state[k] === undefined)
           applyForCardType[k] = v;
       this.applyDeltaToDOM(applyForCardType);
@@ -43,7 +47,7 @@ class Card extends Widget {
 
     if(delta.deck !== undefined || delta.activeFace !== undefined) {
       for(let i=0; i<this.domElement.children.length; ++i) {
-        if(i == this.p('activeFace'))
+        if(i == this.get('activeFace'))
           this.domElement.children[i].classList.add('active');
         else
           this.domElement.children[i].classList.remove('active');
@@ -65,14 +69,14 @@ class Card extends Widget {
       throw `card "${delta.id}" requires property cardType`;
     if(!(widgets.get(delta.deck) instanceof Deck))
       throw `card "${delta.id}" has "${delta.deck}" as a deck which is not a deck`;
-    if(!widgets.get(delta.deck).p('cardTypes')[delta.cardType])
+    if(!widgets.get(delta.deck).get('cardTypes')[delta.cardType])
       throw `card type "${delta.cardType}" not found in deck "${delta.deck}"`;
     super.applyInitialDelta(delta);
   }
 
-  async click() {
-    if(!await super.click())
-      this.flip();
+  async click(mode='respect') {
+    if(!await super.click(mode))
+      await this.flip();
   }
 
   createFaces(faceTemplates) {
@@ -80,6 +84,7 @@ class Card extends Widget {
     for(const face of faceTemplates) {
       const faceDiv = document.createElement('div');
 
+      faceDiv.classList.add('cardFace');
       if(face.css !== undefined)
         faceDiv.style.cssText = face.css;
       faceDiv.style.border = face.border ? face.border + 'px black solid' : 'none';
@@ -87,6 +92,7 @@ class Card extends Widget {
 
       for(const object of face.objects) {
         const objectDiv = document.createElement('div');
+        objectDiv.classList.add('cardFaceObject');
         const x = face.border ? object.x-face.border : object.x;
         const y = face.border ? object.y-face.border : object.y;
         let css = object.css ? object.css + '; ' : '';
@@ -94,14 +100,14 @@ class Card extends Widget {
         css += object.rotation ? `; transform: rotate(${object.rotation}deg)` : '';
         objectDiv.style.cssText = css;
         const setValue = _=>{
-          let value = object.valueType == 'static' ? object.value : this.p(object.value);
+          let value = object.valueType == 'static' ? object.value : this.get(object.value);
           if(object.type == 'image') {
             if(value) {
               if(object.svgReplaces) {
                 const replaces = { ...object.svgReplaces };
                 for(const key in replaces)
-                  replaces[key] = this.p(replaces[key]);
-                value = getSVG(value, replaces, _=>this.applyDeltaToDOM({ deck:this.p('deck') }));
+                  replaces[key] = this.get(replaces[key]);
+                value = getSVG(value, replaces, _=>this.applyDeltaToDOM({ deck:this.get('deck') }));
               }
               objectDiv.style.backgroundImage = `url("${value}")`;
             }
@@ -135,20 +141,20 @@ class Card extends Widget {
     return p;
   }
 
-  flip(setFlip, faceCycle) {
+  async flip(setFlip, faceCycle) {
     if(setFlip !== undefined && setFlip !== null)
-      this.p('activeFace', setFlip);
+      await this.set('activeFace', setFlip);
     else {
-      const fC = (faceCycle !== undefined && faceCycle !== null) ? faceCycle : this.p('faceCycle');
+      const fC = (faceCycle !== undefined && faceCycle !== null) ? faceCycle : this.get('faceCycle');
       if (fC == 'backward')
-        this.p('activeFace', this.p('activeFace') == 0 ? this.deck.p('faceTemplates').length-1 : this.p('activeFace') -1);
+        await this.set('activeFace', this.get('activeFace') == 0 ? this.deck.get('faceTemplates').length-1 : this.get('activeFace') -1);
       else
-        this.p('activeFace', Math.floor(this.p('activeFace') + (fC == 'random' ? Math.random()*99999 : 1)) % this.deck.p('faceTemplates').length);
+        await this.set('activeFace', Math.floor(this.get('activeFace') + (fC == 'random' ? Math.random()*99999 : 1)) % this.deck.get('faceTemplates').length);
     }
   }
 
   getDefaultValue(property) {
-    if(this.deck) {
+    if(this.deck && property != 'cardType') {
       if (this.deck.state.faceTemplates[this.deck.cards[this.id].state.activeFace || 0][property] !== undefined)
         return this.deck.state.faceTemplates[this.deck.cards[this.id].state.activeFace || 0][property];
       if (this.deck.cardPropertyGet(this.p('cardType'), property) !== undefined)

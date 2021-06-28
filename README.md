@@ -8,7 +8,7 @@ You can host your own instance or go to [VirtualTabletop.io](https://virtualtabl
 
 This project is inspired by [playingcards.io](https://playingcards.io).
 
-It's still in an early state but most PCIO files should be compatible and playable already.
+This project aims to be able to import PCIO files and have them be immediately playable.
 
 Come join our [Discord server](https://discord.gg/xWxz9Gd) if you want to discuss the project.
 
@@ -30,7 +30,7 @@ The games in the public library have their license information and attributions 
 
 ### Linux
 
-This assumes a Debian based Linux. If you use something else, you probably know what you need to change.
+This assumes a Debian based Linux. Find Node.js repositories for other Linux distributions at https://node.dev/node-binary. Consult your distribution's documentation for how to install the git and nodejs packages if your distribution does not use apt.
 
 ```
 curl -sL https://deb.nodesource.com/setup_15.x | sudo -E bash -                         # adds a repository for Node.js v15

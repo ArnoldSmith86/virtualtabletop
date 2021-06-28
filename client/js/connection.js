@@ -1,5 +1,7 @@
 let lastTimeout = 1000;
 let connection;
+let serverStart = null;
+let userNavigatedAway = false;
 let messageCallbacks = {};
 
 //used by unit tests until jest supports mocking ESM static imports
@@ -17,6 +19,7 @@ export function startWebSocket() {
   connection = new WebSocket(url);
 
   connection.onopen = () => {
+    showOverlay(null, true);
     if(!urlProperties.askID) {
       toServer('room', { playerName, roomID });
       $('#ghetto-link').href += `#${roomID}`;
@@ -29,12 +32,26 @@ export function startWebSocket() {
 
   connection.onclose = () => {
     console.log(`WebSocket closed`);
+    if(!userNavigatedAway)
+      showOverlay('connectionLostOverlay', true);
     if(lastTimeout)
       setTimeout(startWebSocket, lastTimeout *= 2);
   };
 
   connection.onmessage = (e) => {
     const { func, args } = JSON.parse(e.data);
+
+    if(func == 'serverStart') {
+      if(serverStart != null && serverStart != args) {
+        console.log('Server restart detected. Reloading...')
+        setTimeout(location.reload, Math.random()*10000);
+        showOverlay('connectionLostOverlay', true);
+        preventReconnect();
+        connection.close();
+      }
+      serverStart = args;
+    }
+
     for(const callback of (messageCallbacks[func] || []))
       callback(args);
   };
@@ -53,8 +70,13 @@ export function toServer(func, args) {
 
 function preventReconnect() {
   lastTimeout = null;
+  userNavigatedAway = true;
 }
 
 function log(str) {
   toServer('log', str);
 }
+
+window.onbeforeunload = function() {
+  userNavigatedAway = true;
+};

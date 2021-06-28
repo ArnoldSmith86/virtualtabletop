@@ -1,19 +1,85 @@
 let waitingForStateCreation = null;
 let variantIDjustUpdated = null;
 
-function addState(e, type, src, id) {
+async function addState(e, type, src, id) {
+  const initialStatus = e && (e.target.dataset.initialText || e.target.innerText);
+  if(e && !e.target.dataset.initialText)
+    e.target.dataset.initialText = initialStatus;
+
+  const status = function(t) {
+    if(e)
+      e.target.innerText=t;
+  };
+
   if(type == 'link' && (!src || !src.match(/^http/)))
     return;
   if(!id)
     id = Math.random().toString(36).substring(3, 7);
 
+  let blob = null;
+  try {
+    if(type == 'file') {
+      status('Loading file...');
+      const zip = await JSZip.loadAsync(src);
+      const assets = {};
+      for(const filename in zip.files)
+        if(filename.match(/^\/?(user)?assets/) && zip.files[filename]._data && zip.files[filename]._data.crc32)
+          assets[zip.files[filename]._data.crc32 + '_' + zip.files[filename]._data.uncompressedSize] = filename;
+
+      status('Checking assets...');
+      const result = await fetch('/assetcheck', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.keys(assets))
+      });
+
+      const exist = await result.json();
+
+      let total = 0;
+      let removed = 0;
+      for(const asset in exist) {
+        ++total;
+        if(exist[asset]) {
+          ++removed;
+          zip.remove(assets[asset]);
+        }
+      }
+
+      if(removed > total/2) {
+        zip.file('asset-map.json', JSON.stringify(assets));
+        status(`Rebuilding file (${removed}/${total} assets already exist)...`);
+        blob = await zip.generateAsync({ type: 'blob', compression: total-removed < 5 ? 'DEFLATE' : 'STORE' });
+      } else {
+        blob = src;
+      }
+    } else {
+      blob = new Blob([ src ], { type: 'text/plain' });
+    }
+  } catch(e) {
+    alert(e);
+    status(initialStatus);
+    return;
+  }
+
+  let url = `/addState/${roomID}/${id}/${type}/${src && src.name && encodeURIComponent(src.name)}/`;
+  waitingForStateCreation = id;
   if(e && (e.target.parentNode == $('#addVariant') || e.target.className == 'update')) {
     waitingForStateCreation = $('#stateEditOverlay').dataset.id;
-    toServer('addState', { id, type, src, addAsVariant: $('#stateEditOverlay').dataset.id });
-  } else {
-    waitingForStateCreation = id;
-    toServer('addState', { id, type, src });
+    url += $('#stateEditOverlay').dataset.id;
   }
+
+  var req = new XMLHttpRequest();
+  req.onload = function(e) {
+    if(e.target.status != 200)
+      alert(`${e.target.status}: ${e.target.response}`);
+    status(initialStatus);
+  };
+  req.upload.onprogress = e=>status(`Uploading (${Math.floor(e.loaded/e.total*100)}%)...`);
+
+  req.open('PUT', url, true);
+  req.setRequestHeader('Content-type', 'application/octet-stream');
+  status('Starting upload...');
+  req.send(blob);
 }
 
 function addStateFromLibrary(e) {
@@ -226,10 +292,10 @@ async function shareLink() {
 onLoad(function() {
   onMessage('meta', args=>fillStatesList(args.meta.states, args.activePlayers));
 
-  on('#addState .create,  #addVariant .create',  'click', e=>addState(e, 'state'));
+  on('#addState .create,  #addVariant .create, #emptyRoom .create',  'click', e=>addState(e, 'state'));
   on('#addState .library, #addVariant .library', 'click', e=>addStateFromLibrary(e));
 
-  on('#addState .upload, #emptyRoom .upload, #addVariant .upload',  'click', e=>selectFile(true, f=>addState(e, 'file', f)));
+  on('#addState .upload, #emptyRoom .upload, #addVariant .upload',  'click', e=>selectFile(false, f=>addState(e, 'file', f)));
   on('#addState .link,   #emptyRoom .link,   #addVariant .link',    'click', e=>addState(e, 'link', prompt('Enter shared URL:')));
 
   on('#addState .download', 'click', _=>downloadState(null));
