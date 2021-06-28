@@ -312,11 +312,13 @@ const jeCommands = [
       { label: '# Copies Y',    type: 'number',   value: 0,   min:     0, max:  100 }
     ],
     call: async function(options) {
-      const clonedWidget = duplicateWidget(jeWidget, options.Recursive, options['Increment IDs'], options['X offset'], options['Y offset'], options['# Copies X'], options['# Copies Y']);
-      jeSelectWidget(widgets.get(clonedWidget.id));
-      jeStateNow.id = '###SELECT ME###';
-      jeSetAndSelect(clonedWidget.id);
-      jeStateNow.id = clonedWidget.id;
+      for(const id of jeSelectedIDs()) {
+        const clonedWidget = duplicateWidget(widgets.get(id), options.Recursive, options['Increment IDs'], options['X offset'], options['Y offset'], options['# Copies X'], options['# Copies Y']);
+        jeSelectWidget(widgets.get(clonedWidget.id));
+        jeStateNow.id = '###SELECT ME###';
+        jeSetAndSelect(clonedWidget.id);
+        jeStateNow.id = clonedWidget.id;
+      }
     }
   },
   {
