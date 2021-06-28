@@ -1360,7 +1360,8 @@ window.addEventListener('keydown', async function(e) {
 });
 
 window.addEventListener('keydown', function(e) {
-  jeKeyIsDown = true;
+  if(e.key != 'Control')
+    jeKeyIsDown = true;
 });
 
 window.addEventListener('keyup', function(e) {
