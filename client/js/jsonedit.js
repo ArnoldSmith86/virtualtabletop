@@ -791,6 +791,7 @@ function jeSelectWidget(widget, dontFocus, addToSelection, restoreCursorPosition
   } else {
     jeMode = 'widget';
     jeWidget = widget;
+    jeKeyIsDownDeltas = [];
     jeStateNow = JSON.parse(JSON.stringify(widget.state));
     if(restoreCursorPosition && cursorState.defaultValueToAdd && jeStateNow[cursorState.defaultValueToAdd] === undefined)
       jeStateNow[cursorState.defaultValueToAdd] = jeWidget.getDefaultValue(cursorState.defaultValueToAdd);
