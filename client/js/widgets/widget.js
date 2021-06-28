@@ -755,7 +755,7 @@ export class Widget extends StateManaged {
                   if(widgets.get(target.get('hand')).get('childrenPerOwner'))
                     await c.set('owner', target.get('player'));
                   c.bringToFront()
-                  widgets.get(target.get('hand')).updateAfterShuffle()
+                  widgets.get(target.get('hand')).updateAfterShuffle()//this is arranges the cards in the new owner's hand. no need to rename the function
                 } else if (target.get('type')=='holder') {
                 await c.moveToHolder(target);
                 }
