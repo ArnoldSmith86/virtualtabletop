@@ -6,7 +6,7 @@
   border-style: solid;
   border-color: var(--color);
   text-align: center;
-  --wcShadowTurn: none;
+  --wcShadowTurn: 0px 0px 20px 5px var(--color);
 }
 
 .seat.seated.turn {

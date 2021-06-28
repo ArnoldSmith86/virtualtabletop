@@ -15,7 +15,7 @@ class Seat extends Widget {
       player: "",
       display: "index",
       displayEmpty: "",
-      disableGlow: false,
+      displayTurn: true,
 
       color: "#999999",
       colorEmpty: "#999999",
@@ -37,7 +37,7 @@ class Seat extends Widget {
 
     if (this.get('player')!="")
       className += ' seated';
-    if (this.get('turn'))
+    if (this.get('turn')&&this.get('displayTurn'))
       className += ' turn';
 
     return className;
@@ -46,7 +46,7 @@ class Seat extends Widget {
   //inactive should go into widgets
   classesProperties() {
     const p = super.classesProperties();
-    p.push( 'player', 'turn');
+    p.push( 'player', 'turn', 'displayTurn');
     return p;
   }
 
@@ -75,8 +75,6 @@ class Seat extends Widget {
 
     if(this.get('color'))
       css += '; --color:' + this.get('color');
-    if(!this.get('disableGlow'))
-      css += '; --wcShadowTurn:' + '0px 0px 20px 5px var(--color)';
 
     return css;
   }
@@ -84,7 +82,6 @@ class Seat extends Widget {
   cssProperties() {
     const p = super.cssProperties();
     p.push('color');
-    p.push('disableGlow')
     return p;
   }
 
