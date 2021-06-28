@@ -5,7 +5,8 @@
   <meta charset="utf-8">
   <title>VirtualTabletop.io</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <link rel="shortcut icon" href="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="/>
+  <link rel="icon" type="image/svg+xml" href="/i/branding/favicon.svg"/>
+  <link rel="alternate icon" href="/i/branding/favicon.png"/>
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/combine/npm/vue@3.0.7/dist/vue.global.prod.js,npm/jszip@3.6.0/dist/jszip.min.js"></script>
@@ -42,18 +43,95 @@
 
     <div id="editOverlayVue">
       <div id="editOverlay" class="overlay">
-        <h1>Edit widget</h1>
+        <div class="basicEdit">
+          <h1>Edit widget</h1>
+          <h3>Select type:</h3>
+          <input type='radio' class='radio-button' id="basicTypeToken" name='basicType'><label for="basicTypeToken">Token   &#160; </label>
+          <input type='radio' class='radio-button' id="basicTypeBoard" name='basicType'><label for="basicTypeBoard">Board   &#160; </label><br/><br/>
+          <label for="basicImage"> Image url: </label><input type="text" id="basicImage"><label for="basicImage" style="display: none"> add upload button here </label><br/><br/>
+          <label for="basicWidth"> Width: &#160;</label><input type="range" min=0 max=1600 value=100  step=10 id="basicWidth"><input type="text" id="basicWidthNumber" value=100><br/>
+          <label for="basicHeight"> Height: </label><input type="range" min=0 max=1000 value=20  step=10 id="basicHeight"><input type="text" id="basicHeightNumber" value=20><br/><br/>
+          <input type="checkbox" id="basicFullscreen"><label for="basicFullscreen">Resize to full screen (once)</label><br/><br/>
+          <input type="checkbox" id="basicEnlarge"><label for="basicEnlarge">Enlarge on hover</label>
+        </div>
+        <div class="buttonEdit">
+          <h1>Edit button</h1>
+          <label for="buttonText"> Text: </label><input type="text" id="buttonText"><br/>
+          <label for="buttonImage"> Image url: </label><input type="text" id="buttonImage"> <button id="uploadButtonImage">⬆️ Upload</button> <br/><br/>
+          <input type="color" id="buttonColorMain" value="#1f5ca6"><label for="buttonColorMain"> - Main Color </label><br/>
+          <input type="color" id="buttonColorBorder" value="#0d2f5e"><label for="buttonColorBorder"> - Second Color </label><br/>
+          <input type="color" id="buttonColorText" value="#ffffff"><label for="buttonColorText"> - Text Color </label><br/><br/>
+          <input type="checkbox" id="buttonDebug"><label for="buttonDebug">Run debug mode</label>
+        </div>
+        <div class="canvasEdit">
+          <h1>Edit canvas</h1>
+          <span>Canvas colors: (click on check box to select active color)</span><br/>
+          <div class="flexContainer" id="colorContainer">
+            <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+            <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+            <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+            <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+            <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+            <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+            <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+            <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+            <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+            <div class="colorComponent"><input type="radio" name="canvasColorSelect"><input type="color"></div>
+          </div><br/>
+          <input type="checkbox" id="canvasColorReset"><label for="canvasColorRest">Reset colors to: </label>
+          <select id="canvasPresets">
+            <option name="canvasPresets" value="original" selected = "selected">original colors</option>
+            <option name="canvasPresets" value="pieces">game pieces colors</option>
+            <option name="canvasPresets" value="basic">basic colors</option>
+            <option name="canvasPresets" value="pencil">pencil colors</option>
+            <option name="canvasPresets" value="pastel">pastel colors</option>
+            <option name="canvasPresets" value="grey">grey scale</option>
+          </select>
+        </div>
         <deck-editor :widget-state="selectedWidget.state"></deck-editor>
         <div class="holderEdit">
-          <input type="checkbox" id="transparentHolder"><label for="transparentHolder"> Transparent</label><br/>
+          <h1>Edit holder</h1>
+          <input type="checkbox" id="transparentHolder"><label for="transparentHolder"> Transparent</label><br/><br/>
           <input type="checkbox" id="resizeHolderToChildren"><label for="resizeHolderToChildren"> Resize to fit contents (once)</label>
         </div>
+        <div class="labelEdit">
+          <h1>Edit label</h1>
+          <label for="labelText"> Text: </label><input type="text" id="labelText"><br/><br/>
+          <label for="labelWidth"> Width: &#160;</label><input type="range" min=0 max=1600 value=100  step=10 id="labelWidth"><input type="text" id="labelWidthNumber" value=100><br/>
+          <label for="labelHeight"> Height: </label><input type="range" min=0 max=1000 value=20  step=10 id="labelHeight"><input type="text" id="labelHeightNumber" value=20><br/><br/>
+          <input type="checkbox" id="labelEditable"><label for="labelEditable">Editable in play mode</label>
+        </div>
+        <div class="pieceEdit">
+          <h1>Edit game piece</h1>
+          <h3>Select type:</h3>
+          <input type='radio' class='radio-button' id="pieceTypeChecker" name='pieceType'><label for="pieceTypeChecker">Checker   &#160; </label>
+          <input type='radio' class='radio-button' id="pieceTypeClassic" name='pieceType'><label for="pieceTypeClassic">Pawn   &#160; </label>
+          <input type='radio' class='radio-button' id="pieceTypePin" name='pieceType'><label for="pieceTypePin">Pin   &#160; </label><br/><br/>
+          <input type="color" id="pieceColor" value="black"><label for="basicColor"> - Color </label><br/><br/>
+        </div>
         <div class="timerEdit">
-          <input type="checkbox" id="timerCountdown"><label for="timerCountdown"> Countdown</label><br/>
-          <label for="timerStart"> Start: </label><input type="text" id="timerStart">
-          <label for="timerEnd"> End: </label><input type="text" id="timerEnd"><label for="timerEnd">(both in seconds)</label><br/>
+          <h1>Edit timer</h1>
+          <input type="checkbox" id="timerCountdown"><label for="timerCountdown"> Countdown</label><br/><br/>
+          <label for="timerMinutes"> Duration: </label><input type="text" id="timerMinutes">
+          <label for="timerSeconds">: </label><input type="text" id="timerSeconds"><label for="timerEnd">in mm:ss  (use --:-- for no end)</label><br/><br/>
           <input type="checkbox" id="timerReset"><label for="timerReset"> Reset timer (once)</label>
         </div>
+        <div class="spinnerEdit">
+          <h1>Edit spinner</h1>
+          <label for="spinnerOptions"> Choose options preset: </label>
+          <select id="spinnerOptions">
+            <option name="spinnerOptions" value="[1,2]">1-2</option>
+            <option name="spinnerOptions" value="[1,2,3]">1-3</option>
+            <option name="spinnerOptions" value="[1,2,3,4]">1-4</option>
+            <option name="spinnerOptions" value="[1,2,3,4,5,6]" selected = "selected">1-6</option>
+            <option name="spinnerOptions" value="[1,2,3,4,5,6,7,8]">1-8</option>
+            <option name="spinnerOptions" value="[1,2,3,4,5,6,7,8,9,10]">1-10</option>
+            <option name="spinnerOptions" value="[0,1,2,3,4,5,6,7,8,9]">0-9</option>
+            <option name="spinnerOptions" value="[1,2,3,4,5,6,7,8,9,10,11,12]">1-12</option>
+            <option name="spinnerOptions" value="[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]">1-20</option>
+          </select>
+        </div>
+        <div class="editorSpace"></div>
         <base-edit-overlay ></base-edit-overlay>
       </div>
 
@@ -82,6 +160,7 @@
       </div>
       <div class="category">
         <h2>Interactive</h2>
+        <button id="addCanvas">🎨 Add Canvas</button>
       </div>
       <div class="category">
         <h2>Decorative</h2>
@@ -167,7 +246,7 @@
       <table id="libraryList">
         <tr><th></th><th>Game</th><th>Similar to</th><th>Players</th><th>Language</th><th>Notes</th></tr>
         <script id="template-librarylist-entry" type="text/template">
-          <td><button class="add">➕ Add</button></td><td class="name">Chess</td><td><a>Chess</a></td><td class="players">2</td><td class="language">🇺🇳</td><td class="notes"></td>
+          <td><button class="add">Add</button></td><td class="name">Chess</td><td><a>Chess</a></td><td class="players">2</td><td class="language">🇺🇳</td><td class="notes"></td>
         </script>
       </table>
       <p>Loading...</p>

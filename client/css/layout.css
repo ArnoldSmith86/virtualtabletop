@@ -26,6 +26,20 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+button {
+  border:5px;
+  color:white;
+  background-color: var(--VTTblue);
+  padding: 5px;
+  border-radius: 5px;
+  background-repeat: no-repeat;
+  margin:1px;
+}
+
+button:hover {
+  background-color: var(--VTTblueDark);
+}
+
 #toolbar {
   background: var(--VTTblue);
   height: var(--toolbarSize);
@@ -182,6 +196,30 @@ body.aspectTooGood #hideToolbarButton {
 
 #roomArea.hasOverlay #room {
   filter: blur(5px);
+}
+
+/*scroll bar*/
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: white;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--VTTblue);
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--VTTblueDark);
 }
 
 .surface {
@@ -341,4 +379,23 @@ body.aspectTooGood #hideToolbarButton {
   background-image:url(/i/icons-white/trash-alt-solid-svg.svg);
   background-size: 20px 70%;
   background-position:  2.5px center;
+}
+
+button.top {
+  padding: 0px;
+  margin: 0.5px;
+  text-align: center;
+}
+
+button.add {
+  padding: 1.7em 1em 5px 1em;
+  text-align: center;
+  background-image:url(/i/icons-white/plus-solid-svg.svg);
+  background-size: 1em;
+  background-position:  center 0.35em;
+}
+
+button:disabled {
+  background: #808080;
+  color: #d3d3d3;
 }
