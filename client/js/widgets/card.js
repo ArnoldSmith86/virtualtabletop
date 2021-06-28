@@ -157,8 +157,8 @@ class Card extends Widget {
     if(this.deck && property != 'cardType') {
       if (this.deck.state.faceTemplates[this.deck.cards[this.id].state.activeFace || 0][property] !== undefined)
         return this.deck.state.faceTemplates[this.deck.cards[this.id].state.activeFace || 0][property];
-      if (this.deck.cardPropertyGet(this.p('cardType'), property) !== undefined)
-        return this.deck.cardPropertyGet(this.p('cardType'), property);
+      if (this.deck.cardPropertyGet(this.get('cardType'), property) !== undefined)
+        return this.deck.cardPropertyGet(this.get('cardType'), property);
     }
     return super.getDefaultValue(property);
   }
