@@ -14,6 +14,109 @@ function addWidgetLocal(widget) {
   sendPropertyUpdate(widget.id, widget);
   sendDelta(true);
 }
+//This section holds the edit overlays for each widget
+//basic widget functions
+function populateEditOptionsBasic(widget) {
+  $('#basicImage').value = widget.image || "~ no image found ~";
+
+  if (widget.layer < 1){
+    $('#basicTypeBoard').checked = true
+  } else {
+    $('#basicTypeToken').checked = true
+  }
+
+  $('#basicWidth').value = widget.width||100;
+  $('#basicHeight').value = widget.height||100;
+  $('#basicWidthNumber').value = widget.width||100;
+  $('#basicHeightNumber').value = widget.height||100;
+
+  $('#basicFullscreen').checked = false;
+  $('#basicEnlarge').checked = widget.enlarge;
+}
+
+function applyEditOptionsBasic(widget) {
+  if ($('#basicTypeBoard').checked == true){
+    widget.layer = -4;
+    widget.movable = false;
+  } else {
+    widget.layer = 1;
+    widget.movable = true;
+  }
+
+  if ($('#basicImage').value=="~ no image found ~")
+    delete widget.image;
+  else
+    widget.image = $('#basicImage').value;
+
+  widget.width = $('#basicWidth').value;
+  widget.height = $('#basicHeight').value;
+
+  if ($('#basicFullscreen').checked){
+    widget.width = 1600;
+    widget.height = 1000;
+    delete widget.x;
+    delete widget.y;
+  }
+
+  if (!widget.enlarge || !$('#basicEnlarge').checked)
+    widget.enlarge = $('#basicEnlarge').checked;
+}
+
+//button functions
+function populateEditOptionsButton(widget) {
+  $('#buttonText').value = widget.text || "~ no text found ~";
+  $('#buttonImage').value = widget.image || "~ no image found ~";
+  $('#buttonDebug').checked = widget.debug;
+  $('#buttonColorMain').value = widget.backgroundColor || "#1f5ca6";
+  $('#buttonColorBorder').value = widget.borderColor || "#0d2f5e";
+  $('#buttonColorText').value = widget.textColor || "#ffffff"
+
+
+  $('#buttonText').style = "display: inline";
+  $('[for=buttonText]').style = "display: inline";
+  $('#buttonImage').style = "display: inline";
+  $('[for=buttonImage]').style = "display: inline";
+  $('#uploadButtonImage').style = "display: inline";
+
+  if (!widget.text && widget.image){
+    $('#buttonText').style = "display: none !important";
+    $('[for=buttonText]').style = "display: none !important";
+  }
+  if (!widget.image && widget.text){
+    $('#buttonImage').style = "display: none !important";
+    $('[for=buttonImage]').style = "display: none !important";
+    $('#uploadButtonImage').style = "display: none !important";
+  }
+}
+
+function applyEditOptionsButton(widget) {
+  if ($('#buttonText').value=="~ no text found ~")
+    delete widget.text;
+  else
+    widget.text = $('#buttonText').value;
+
+  if ($('#buttonImage').value=="~ no image found ~")
+    delete widget.image;
+  else
+    widget.image = $('#buttonImage').value;
+
+  if ($('#buttonColorMain').value=="#1f5ca6")
+    delete widget.backgroundColor;
+  else
+    widget.backgroundColor = $('#buttonColorMain').value;
+
+  if ($('#buttonColorBorder').value=="#0d2f5e")
+    delete widget.borderColor;
+  else
+    widget.borderColor = $('#buttonColorBorder').value;
+
+  if ($('#buttonColorText').value=="#ffffff")
+    delete widget.textColor;
+  else
+    widget.textColor = $('#buttonColorText').value;
+
+  widget.debug = $('#buttonDebug').checked;
+}
 
 //canvas functions
 function populateEditOptionsCanvas(widget) {
@@ -67,6 +170,7 @@ function applyEditOptionsCanvas(widget) {
   }
 }
 
+//deck functions
 async function applyEditOptionsDeck(widget) {
   for(const type of $a('#cardTypesList tr.cardType')) {
     const id = $('.id', type).value;
@@ -95,6 +199,7 @@ async function applyEditOptionsDeck(widget) {
   }
 }
 
+//holder functions
 function populateEditOptionsHolder(widget) {
   $('#resizeHolderToChildren').checked = false;
   $('#transparentHolder').checked = widget.classes && !!widget.classes.match(/transparent/);
@@ -120,20 +225,95 @@ function applyEditOptionsHolder(widget) {
   }
 }
 
+//label functions
+function populateEditOptionsLabel(widget) {
+  $('#labelText').value = widget.text;
+  $('#labelWidth').value = widget.width||100;
+  $('#labelHeight').value = widget.height||20;
+  $('#labelWidthNumber').value = widget.width||100;
+  $('#labelHeightNumber').value = widget.height||20;
+  $('#labelEditable').checked = widget.editable;
+}
+
+function applyEditOptionsLabel(widget) {
+  widget.text = $('#labelText').value;
+
+  widget.width = $('#labelWidth').value;
+  widget.height = $('#labelHeight').value;
+
+  widget.editable = $('#labelEditable').checked;
+
+}
+
+//piece widget functions
+function populateEditOptionsPiece(widget) {
+  $('#pieceColor').value = widget.color || "black";
+  if (widget.classes == "classicPiece") {
+    $('#pieceTypeClassic').checked = true
+  } else if (widget.classes == "checkersPiece" || widget.classes == "checkersPiece crowned") {
+    $('#pieceTypeChecker').checked = true
+  } else if (widget.classes == "pinPiece") {
+    $('#pieceTypePin').checked = true
+  }
+}
+
+function applyEditOptionsPiece(widget) {
+  if ($('#pieceTypeClassic').checked == true){
+    delete widget.activeFace;
+    delete widget.faces;
+    widget.classes = "classicPiece";
+    widget.height = 90;
+    widget.width = 90;
+  } else if ($('#pieceTypeChecker').checked == true){
+    widget.classes = "checkersPiece";
+    widget.activeFace = 0;
+    widget.faces = [{"classes": "checkersPiece"},{"classes": "checkersPiece crowned"}];
+    widget.height = 73.5;
+    widget.width = 73.5;
+    widget.activeFace = (widget.activeFace ? 1 : 0);
+  } else if ($('#pieceTypePin').checked == true){
+    delete widget.activeFace;
+    delete widget.faces;
+    widget.classes = "pinPiece";
+    widget.height = 43.83;
+    widget.width = 35.85;
+  }
+
+  widget.color = $('#pieceColor').value;
+}
+
+//timer functions
 function populateEditOptionsTimer(widget) {
   $('#timerCountdown').checked = widget.countdown;
-  $('#timerStart').value = widget.start/1000||0;
-  $('#timerEnd').value = widget.end/1000||"no end";
+  if (widget.end || widget.end==0){
+    var duration = Math.abs(widget.start-widget.end)
+    console.log(duration,Math.floor(duration / 60000),Math.floor((duration % 60000)/1000))
+    $('#timerMinutes').value = Math.floor(duration / 60000) || 0;
+    $('#timerSeconds').value = Math.floor((duration % 60000)/1000);
+  } else {
+    $('#timerMinutes').value = "--";
+    $('#timerSeconds').value = "--";
+  }
   $('#timerReset').checked = false;
 }
 
 function applyEditOptionsTimer(widget) {
   widget.countdown = $('#timerCountdown').checked;
-  widget.start = $('#timerStart').value*1000;
-  if($('#timerEnd').value == 'no end')
-    widget.end = null;
-  else
-    widget.end = $('#timerEnd').value*1000;
+  if ($('#timerMinutes').value == "--" && $('#timerSeconds').value == "--"){
+    delete widget.start
+    delete widget.end
+  } else if ($('#timerCountdown').checked) {
+    var minutes = $('#timerMinutes').value == "--" ? 0 : $('#timerMinutes').value*60000
+    var seconds = $('#timerSeconds').value == "--" ? 0 : $('#timerSeconds').value*1000
+    widget.end = 0;
+    widget.start = minutes + seconds
+  } else {
+    var minutes = $('#timerMinutes').value == "--" ? 0 : $('#timerMinutes').value*60000
+    var seconds = $('#timerSeconds').value == "--" ? 0 : $('#timerSeconds').value*1000
+    widget.end = minutes + seconds;
+    widget.start = 0
+  }
+
 
   if($('#timerReset').checked) {
     widget.paused = true;
@@ -141,16 +321,44 @@ function applyEditOptionsTimer(widget) {
   }
 }
 
-async function applyEditOptions(widget) {
+//spinner functions
+function populateEditOptionsSpinner(widget) {
+  }
 
-  if(widget.type == 'canvas')
+function applyEditOptionsSpinner(widget) {
+  for(let i=0; i<9; ++i) {
+    if($a('#spinnerOptions > [name=spinnerOptions]')[i].selected){
+      widget.options = JSON.parse($a('#spinnerOptions > [name=spinnerOptions]')[i].value);
+      delete widget.angle;
+      widget.value=widget.options[widget.options.length-1];
+    }
+  }
+}
+
+//This section calls the relative widgets' overlays and functions
+async function applyEditOptions(widget) {
+  var type = widget.type||'piece';
+  if (type=='piece' && widget.image)
+    type = 'basic';
+
+  if(type == 'basic')
+    applyEditOptionsBasic(widget);
+  if(type == 'button')
+    applyEditOptionsButton(widget);
+  if(type == 'canvas')
     applyEditOptionsCanvas(widget);
-  if(widget.type == 'deck')
+  if(type == 'deck')
     await applyEditOptionsDeck(widget);
-  if(widget.type == 'holder')
+  if(type == 'holder')
     applyEditOptionsHolder(widget);
-  if(widget.type == 'timer')
+  if(type == 'label')
+    applyEditOptionsLabel(widget);
+  if(type == 'piece')
+    applyEditOptionsPiece(widget);
+  if(type == 'timer')
     applyEditOptionsTimer(widget);
+  if(type == 'spinner')
+    applyEditOptionsSpinner(widget);
 }
 
 function editClick(widget) {
@@ -159,7 +367,10 @@ function editClick(widget) {
 
   $a('#editOverlay > div').forEach(d=>d.style.display = 'none');
 
-  const type = widget.state.type;
+  var type = widget.state.type||'piece';
+  if (type=='piece' && widget.state.image)
+    type = 'basic';
+
   const typeSpecific = $(`#editOverlay > .${type}Edit`);
 
   if(!typeSpecific)
@@ -169,17 +380,27 @@ function editClick(widget) {
 
   vmEditOverlay.selectedWidget = widget
 
-
+  if(type == 'basic')
+    populateEditOptionsBasic(widget.state);
+  if(type == 'button')
+    populateEditOptionsButton(widget.state);
   if(type == 'canvas')
     populateEditOptionsCanvas(widget.state);
   if(type == 'holder')
     populateEditOptionsHolder(widget.state);
+  if(type == 'label')
+    populateEditOptionsLabel(widget.state);
+  if(type == 'piece')
+    populateEditOptionsPiece(widget.state);
   if(type == 'timer')
     populateEditOptionsTimer(widget.state);
+  if(type == 'spinner')
+    populateEditOptionsSpinner(widget.state);
 
   showOverlay('editOverlay');
 }
 
+//This section holds the functions that generate the JSON of the widgets in the add widget overlay
 function generateCardDeckWidgets(id, x, y, addCards) {
   const widgets = [
     { type:'holder', id, x, y, dropTarget: { type: 'card' } },
@@ -467,6 +688,7 @@ function populateAddWidgetOverlay() {
     y: 600
   });
 }
+//end of JSON generators
 
 async function removeWidgetLocal(widgetID, keepChildren) {
   function getWidgetsToRemove(widgetID) {
@@ -804,6 +1026,29 @@ onLoad(function() {
     addWidgetLocal(widget);
     showOverlay();
   });
+
+  const editOverlayApp = Vue.createApp({
+    data() { return {
+      selectedWidget: {},
+    }}
+  });
+  loadComponents(editOverlayApp);
+  vmEditOverlay = editOverlayApp.mount("#editOverlayVue");
+
+  on('#labelWidthNumber', 'input', e=>$('#labelWidth').value=e.target.value)
+  on('#labelWidth', 'input', e=>$('#labelWidthNumber').value=e.target.value)
+  on('#labelHeightNumber', 'input', e=>$('#labelHeight').value=e.target.value)
+  on('#labelHeight', 'input', e=>$('#labelHeightNumber').value=e.target.value)
+
+  on('#basicWidthNumber', 'input', e=>$('#basicWidth').value=e.target.value)
+  on('#basicWidth', 'input', e=>$('#basicWidthNumber').value=e.target.value)
+  on('#basicHeightNumber', 'input', e=>$('#basicHeight').value=e.target.value)
+  on('#basicHeight', 'input', e=>$('#basicHeightNumber').value=e.target.value)
+
+  on('#uploadButtonImage', 'click', _=>uploadAsset().then(function(asset) {
+    if(asset)
+      $('#buttonImage').value = asset;
+  }));
 
   populateAddWidgetOverlay();
 });

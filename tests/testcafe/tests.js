@@ -140,13 +140,14 @@ test('Create game using edit mode', async t => {
     .dragToElement('#oklb > .handle', '[id="3nsj"]')
     .click('#editButton')
     .click('#jyo2')
-    .click('#editJSONoverlay > #duplicateWidget')
+    .click('#duplicateWidget')
     .click('#jyo3')
+    .click('#manualEdit')
     .typeText('#editWidgetJSON', '{"type":"spinner","options":[1,2],"angle": 5,"id": "jyo3"}', { replace: true })
-    .click('#editJSONoverlay > #updateWidget')
+    .click('#editJSONoverlay #updateWidget')
     .click('#jyo2')
     .setNativeDialogHandler(() => true)
-    .click('#editJSONoverlay > #removeWidget');
+    .click('#removeWidget');
 
   await compareState(t, '7263dfbe9c8121c92d08302a2e11d08f');
 });
