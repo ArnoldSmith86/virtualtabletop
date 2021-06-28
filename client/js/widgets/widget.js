@@ -739,14 +739,13 @@ export class Widget extends StateManaged {
 
       if(a.func == 'MOVE') {
         setDefaults(a, { count: 1, face: null, collection: 'DEFAULT' });
-        const count = a.count || 999999;
         if(a.from !== undefined) {
           if(this.isValidID(a.from, problems) && this.isValidID(a.to, problems)) {
-            await w(a.from, async source=>await w(a.to, async target=>this.moveFlipToHolder(source.children(), source, target, count, a.face)));
+            await w(a.from, async source=>await w(a.to, async target=>await this.moveFlipToHolder(source.children(), source, target, a.count, a.face)));
           }
         } else if(isValidCollection(a.collection)) {
           if(collections[a.collection].length)
-            await w(a.to, async target=>this.moveFlipToHolder(collections[a.collection], null, target, count, a.face));
+            await w(a.to, async target=>await this.moveFlipToHolder(collections[a.collection], null, target, a.count, a.face));
           else
             problems.push(`Collection ${a.collection} is empty.`);
         }
@@ -756,11 +755,11 @@ export class Widget extends StateManaged {
         setDefaults(a, { count: 1, face: null, x: 0, y: 0, collection: 'DEFAULT' });
         if(a.from !== undefined) {
           if(this.isValidID(a.from, problems)) {
-            await w(a.from, async source=>this.moveXY(source.children(), a.count, a.face, a.x, a.y, a.z));
+            await w(a.from, async source=> await this.moveXY(source.children(), a.count, a.face, a.x, a.y, a.z));
           }
         } else if(isValidCollection(a.collection)) {
           if(collections[a.collection].length)
-            this.moveXY(collections[a.collection], a.count, a.face, a.x, a.y, a.z);
+            await this.moveXY(collections[a.collection], a.count, a.face, a.x, a.y, a.z);
           else
             problems.push(`Collection ${a.collection} is empty.`);
         }
@@ -1090,13 +1089,13 @@ export class Widget extends StateManaged {
     await this.updatePiles();
   }
 
-  moveFlipToHolder(children, source, target, count, face) {
-    children.slice(0, count).reverse().forEach(c=> {
+  async moveFlipToHolder(children, source, target, count, face) {
+    for (const c of children.slice(0, count || 999999).reverse()) {
       if(face !== null && c.flip)
         await c.flip(face);
       let isInTargetHolder = (source == target);
       if (!source && c.parent !== undefined) {
-        if (c.parent.get('type') == 'pile' && c.parent.parent !== undefined)
+        if (await c.parent.get('type') == 'pile' && c.parent.parent !== undefined)
           isInTargetHolder = (c.parent.parent == target);
       }
       if(isInTargetHolder) {
@@ -1106,18 +1105,18 @@ export class Widget extends StateManaged {
         await c.moveToHolder(target);
         delete c.movedByButton;
       }
-    });
+    };
   }
 
-  moveXY(source, count, face, x, y, z) {
-    source.slice(0, count || 999999).reverse().forEach(c=> {
+  async moveXY(source, count, face, x, y, z) {
+    for (const c of source.slice(0, count || 999999).reverse()) {
       if(face !== null && c.flip)
         await c.flip(face);
       await c.set('parent', null);
       await c.bringToFront();
-      await c.setPosition(x, y, z || c.get('z'));
+      await c.setPosition(x, y, z || await c.get('z'));
       await c.updatePiles();
-    });
+    };
   }
 
   async onChildAdd(child, oldParentID) {
