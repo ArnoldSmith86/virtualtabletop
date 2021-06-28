@@ -24,7 +24,7 @@ export class StateManaged {
     this.applyDeltaToDOM(deltaForDOM);
 
     if(delta.z)
-      updateMaxZ(this.p('layer'), delta.z);
+      updateMaxZ(this.get('layer'), delta.z);
   }
 
   applyInitialDelta(delta) {
@@ -35,41 +35,42 @@ export class StateManaged {
     return this.defaults[key];
   }
 
-  p(property, value) {
-    if(value === undefined)
-      return this.propertyGet(property);
-    else
-      this.propertySet(property, value);
-  }
-
-  propertyGet(property) {
+  get(property) {
     if(this.state[property] !== undefined)
       return [ 'x', 'y', 'width', 'height', 'z', 'layer' ].indexOf(property) != -1 ? +this.state[property] : this.state[property];
     else
-      return this.getDefaultValue(property);
+      return this.getDefaultValue(property) !== undefined ? this.getDefaultValue(property) : null;
   }
 
-  propertySet(property, value) {
-    if(value === this.defaults[property])
+  async set(property, value) {
+    const JSONvalue = JSON.stringify(value);
+    if(JSONvalue === JSON.stringify(this.getDefaultValue(property)))
       value = null;
-    if(this.state[property] === value || this.state[property] === undefined && value === null)
+    if(JSON.stringify(this.state[property]) === JSONvalue || this.state[property] === undefined && value === null)
       return;
 
-    if(property == 'z')
-      updateMaxZ(this.p('layer'), value);
+    if(property == 'z') {
+      updateMaxZ(this.get('layer'), value);
+      if(value > 90000)
+        return await resetMaxZ(this.get('layer'));
+    }
 
     const oldValue = this.state[property];
     if(value === null)
       delete this.state[property];
     else
-      this.state[property] = value;
-    sendPropertyUpdate(this.p('id'), property, value);
-    this.onPropertyChange(property, oldValue, value);
+      this.state[property] = JSON.parse(JSONvalue);
+    sendPropertyUpdate(this.get('id'), property, value);
+    await this.onPropertyChange(property, oldValue, value);
+    if(Array.isArray(this.get(`${property}ChangeRoutine`)))
+      await this.evaluateRoutine(`${property}ChangeRoutine`, { oldValue, value }, {});
+    if(Array.isArray(this.get('changeRoutine')))
+      await this.evaluateRoutine('changeRoutine', { property, oldValue, value }, {});
   }
 
-  setPosition(x, y, z) {
-    this.p('x', x);
-    this.p('y', y);
-    this.p('z', z);
+  async setPosition(x, y, z) {
+    await this.set('x', x);
+    await this.set('y', y);
+    await this.set('z', z);
   }
 }
