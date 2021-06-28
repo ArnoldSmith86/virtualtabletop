@@ -481,7 +481,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(CLICK\\) ↦ mode', [ 'respect', 'ignoreClickable', 'ignoreClickRoutine', 'ignoreAll' ]);
   jeAddEnumCommands('^.*\\(FLIP\\) ↦ faceCycle', [ 'forward', 'backward', 'random' ]);
   jeAddEnumCommands('^.*\\(GET\\) ↦ aggregation', [ 'first', 'last', 'array', 'average', 'median', 'min', 'max', 'sum' ]);
-  jeAddEnumCommands('^.*\\((IF|SELECT)\\) ↦ relation', [ '<', '<=', '==', '===', '!=', '>', '>=', 'in' ]);
+  jeAddEnumCommands('^.*\\((IF|SELECT)\\) ↦ relation', [ '<', '<=', '==', '===', '!=', '>', '>=', 'in', '!in' ]);
   jeAddEnumCommands('^.*\\(LABEL\\) ↦ mode', [ 'set', 'dec', 'inc', 'append' ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ angle', [ 45, 60, 90, 135, 180 ]);
   jeAddEnumCommands('^.*\\(ROTATE|SELECT\\) ↦ mode', [ 'set', 'add' ]);

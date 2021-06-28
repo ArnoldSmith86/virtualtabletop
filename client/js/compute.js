@@ -455,6 +455,13 @@ const compute_ops = [
     hash: '403c82322543026867587d570e62f0c0'
   },
   {
+    name: '!in',
+    desc: 'returns true if string x is NOT included in string/array y (or property x NOT in object y) - case sensitive',
+    sample: 'var a = ${x} !in ${y}',
+    call: function(v, x, y) { return v = Array.isArray(y) || typeof y == 'string' ? y.indexOf(x) == -1 : !(x in y) },
+    hash: 'c44839d188a729d1482ebbb38deba694'
+  },
+  {
     name: 'includes',
     desc: 'returns true if string/array x includes value y (or object x includes property y) - case sensitive',
     sample: 'var a = ${x} includes ${y}',
