@@ -251,8 +251,10 @@ const jeCommands = [
     name: '👁 show this widget below',
     forceKey: 'S',
     call: async function() {
-      if(jeWidget != undefined)
-        jeSecondaryWidget = (jeWidget != undefined && jeSecondaryWidget == null || jeStateNow.id != JSON.parse(jeSecondaryWidget).id) ? jeWidget && JSON.stringify(jeWidget.state, null, '  ') : null;
+      if(jeMode == 'multi')
+        jeSecondaryWidget = $('#jeText').textContent;
+      else if(jeWidget !== undefined && jeWidget && (jeSecondaryWidget === null || jeStateNow.id != JSON.parse(jeSecondaryWidget).id))
+        jeSecondaryWidget = JSON.stringify(jeWidget.state, null, '  ');
       else
         jeSecondaryWidget = null;
       jeShowCommands();
