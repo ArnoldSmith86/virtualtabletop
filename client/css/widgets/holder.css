@@ -4,7 +4,11 @@
   border: calc(1px / var(--scale)) solid #333;
   border-color: #d8d8d8 #ccc #ccc #d8d8d8;
   border-radius: 8px;
-  --pileDisplay: flex
+  --pileDisplay: flex !important
+}
+
+.holder.hidePile{
+  --pileDisplay: none !important
 }
 
 .holder > .widget, .widget.droppable.droptarget.holder.transparent > .widget {
