@@ -42,17 +42,17 @@ class Holder extends Widget {
     });
   }
 
-  classes() {
-    let className = super.classes();
+  css() {
+    let css = super.css();
 
     if(this.get('hidePile'))
-      className += ' hidePile';
+      css += '; --pileDisplay: none !important';
 
-    return className;
+    return css;
   }
 
-  classesProperties() {
-    const p = super.classesProperties();
+  cssProperties() {
+    const p = super.cssProperties();
     p.push('hidePile');
     return p;
   }
