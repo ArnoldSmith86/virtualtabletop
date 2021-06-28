@@ -281,7 +281,7 @@ const jeCommands = [
       const oldStart = getSelection().anchorOffset;
       const oldEnd   = getSelection().focusOffset;
       jeSet(JSON.stringify(jeStateNow, null, '  '));
-      jeSelect(oldStart, oldEnd);
+      jeSelect(oldStart, oldEnd, true);
     },
     show: function() {
       return jeGetValue(jeContext.slice(0, -1))[jeContext[jeContext.length-1]] !== undefined;
@@ -804,7 +804,7 @@ function jeSelectWidget(widget, dontFocus, addToSelection, restoreCursorPosition
     let linesFound = 0;
     for(const line of lines) {
       if(line == cursorState.currentLine && linesFound++ == cursorState.sameLinesBefore) {
-        jeSelect(offset + cursorState.start - 1, offset + cursorState.end - 1);
+        jeSelect(offset + cursorState.start - 1, offset + cursorState.end - 1, false);
         break;
       } else {
         offset += line.length + 1;
@@ -1046,7 +1046,7 @@ function jePasteText(text, select) {
   $('#jeText').textContent = v.substr(0, s) + text + v.substr(e);
   $('#jeText').focus();
   jeColorize();
-  jeSelect(select ? s : s + text.length, s + text.length);
+  jeSelect(select ? s : s + text.length, s + text.length, false);
 }
 
 function jePostProcessObject(o) {
@@ -1091,7 +1091,7 @@ function jePreProcessText(t) {
   return t.replace(/(\n +"LINEBREAK.*": null,)+/g, '\n').replace(/(,\n +"LINEBREAK.*": null)+/g, '');
 }
 
-function jeSelect(start, end) {
+function jeSelect(start, end, scrollToCursor) {
   const t = $('#jeText');
   const text = t.textContent;
   try {
@@ -1103,7 +1103,9 @@ function jeSelect(start, end) {
     t.scrollTop = 50000;
     t.textContent = text;
 
-    if(t.scrollTop) {
+    if(!scrollToCursor) {
+      t.scrollTop = scroll;
+    } else if(t.scrollTop) {
       if(Math.abs(t.scrollTop + t.clientHeight/2 - scroll) < t.clientHeight*.25)
         t.scrollTop = scroll;
       else
@@ -1149,7 +1151,7 @@ function jeSetAndSelect(replaceBy, insideString) {
 
   jeSet(jsonString);
   const quote = typeof replaceBy == 'string' && !insideString ? 1 : 0;
-  jeSelect(startIndex + quote, startIndex+jsonString.length-length - quote);
+  jeSelect(startIndex + quote, startIndex+jsonString.length-length - quote, true);
 }
 
 function jeShowCommands() {
@@ -1318,12 +1320,12 @@ window.addEventListener('keydown', async function(e) {
       const locationLine = String(jeJSONerror).match(/line ([0-9]+) column ([0-9]+)/);
       if(locationLine) {
         const pos = $('#jeText').textContent.split('\n').slice(0, locationLine[1]-1).join('\n').length + +locationLine[2];
-        jeSelect(pos, pos);
+        jeSelect(pos, pos, true);
       }
 
       const locationPostion = String(jeJSONerror).match(/position ([0-9]+)/);
       if(locationPostion)
-        jeSelect(+locationPostion[1], +locationPostion[1]);
+        jeSelect(+locationPostion[1], +locationPostion[1], true);
     } else if(e.key == 'j') {
       e.preventDefault();
       jeToggle();
