@@ -13,7 +13,7 @@ class Seat extends Widget {
       index: 1,
       turn: false,
       player: "",
-      display: "index",
+      display: "",
       displayEmpty: "",
       displayTurn: true,
 
@@ -59,10 +59,12 @@ class Seat extends Widget {
   //need to add a condition here to change the turn if the turn is in a seat that is empty
   setPlayer() {
     if (this.get('player') == "") {
-      var display = this.get('display')||"index"
+      var display = this.get('display')||this.get("index")
+      if (this.get('display')=='playerName')
+        var display = playerName
       this.set('player', playerName);
       this.set('color', playerColor);
-      this.set('text',this.get(display))
+      this.set('text', display)
     } else {
       this.set('player', "");
       this.set('color', this.get('colorEmpty')||"#999999");
