@@ -118,7 +118,7 @@ export class Widget extends StateManaged {
     }
 
     for(const key in delta) {
-      const isGlobalUpdateRoutine = key.match(/^(.*)[gG]lobalUpdateRoutine$/);
+      const isGlobalUpdateRoutine = key.match(/^(?:(.*)G|g)lobalUpdateRoutine$/);
       if(isGlobalUpdateRoutine) {
         const property = isGlobalUpdateRoutine[1] || '*';
         if(StateManaged.globalUpdateListeners[property] === undefined)
