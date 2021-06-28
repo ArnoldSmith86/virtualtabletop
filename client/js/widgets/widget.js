@@ -1095,7 +1095,7 @@ export class Widget extends StateManaged {
         await c.flip(face);
       let isInTargetHolder = (source == target);
       if (!source && c.parent !== undefined) {
-        if (await c.parent.get('type') == 'pile' && c.parent.parent !== undefined)
+        if (c.parent.get('type') == 'pile' && c.parent.parent !== undefined)
           isInTargetHolder = (c.parent.parent == target);
       }
       if(isInTargetHolder) {
@@ -1114,7 +1114,7 @@ export class Widget extends StateManaged {
         await c.flip(face);
       await c.set('parent', null);
       await c.bringToFront();
-      await c.setPosition(x, y, z || await c.get('z'));
+      await c.setPosition(x, y, z || c.get('z'));
       await c.updatePiles();
     };
   }
