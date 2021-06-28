@@ -128,7 +128,7 @@ function setScale() {
   const h = window.innerHeight;
   if(jeEnabled) {
     const targetWidth = jeZoomOut ? 3200 : 1600;
-    scale = (w-850)/targetWidth;
+    scale = (w-920)/targetWidth;
   } else {
     scale = w/h < 1600/1000 ? w/1600 : h/1000;
   }
@@ -226,15 +226,6 @@ onLoad(function() {
   setScale();
   startWebSocket();
 
-
-  const editOverlayApp = Vue.createApp({
-    data() { return {
-      selectedWidget: {},
-    }}
-  });
-  loadComponents(editOverlayApp);
-  vmEditOverlay = editOverlayApp.mount("#editOverlayVue");
-
   onMessage('warning', alert);
   onMessage('error', alert);
   onMessage('internal_error', function() {
@@ -248,8 +239,14 @@ window.onresize = function(event) {
 }
 
 window.onkeyup = function(event) {
-  if(event.key == 'Escape')
-    showOverlay();
+  if(event.key == 'Escape') {
+    if(overlayActive)
+      showOverlay();
+    else if(edit)
+      toggleEditMode();
+    else if(jeEnabled)
+      jeToggle();
+  }
 }
 
 window.onerror = function(msg, url, line, col, err) {

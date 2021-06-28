@@ -39,6 +39,9 @@ function updateRoutine(routine, v) {
     if(operation.func == 'CLONE') {
       updateProperties(operation.properties, v);
     }
+    if(operation.func == 'FOREACH') {
+      updateRoutine(operation.loopRoutine, v);
+    }
     if(operation.func == 'IF') {
       updateRoutine(operation.thenRoutine, v);
       updateRoutine(operation.elseRoutine, v);
@@ -154,7 +157,7 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
   }
 
   for(const [ i, op ] of Object.entries(routine)) {
-    if(typeof op != 'object')
+    if(!op || !op.func)
       continue;
 
     removeExistingVariablesRecursively(op, i);
