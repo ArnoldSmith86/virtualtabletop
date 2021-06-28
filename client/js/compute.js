@@ -451,22 +451,29 @@ const compute_ops = [
     name: 'in',
     desc: 'returns true if string x is included in string/array y (or property x in object y) - case sensitive',
     sample: 'var a = ${x} in ${y}',
-    call: function(v, x, y) { return v = Array.isArray(y) || typeof y == 'string' ? y.indexOf(x) != -1 : x in y },
-    hash: '403c82322543026867587d570e62f0c0'
+    call: function(v, x, y) { if (y) return v = Array.isArray(y) || typeof y == 'string' ? y.indexOf(x) != -1 : x in y },
+    hash: '36bb35cb7fae2b5fcb7dedea6902e348'
   },
   {
     name: '!in',
     desc: 'returns true if string x is NOT included in string/array y (or property x NOT in object y) - case sensitive',
     sample: 'var a = ${x} !in ${y}',
-    call: function(v, x, y) { return v = Array.isArray(y) || typeof y == 'string' ? y.indexOf(x) == -1 : !(x in y) },
+    call: function(v, x, y) { if (y) return v = Array.isArray(y) || typeof y == 'string' ? y.indexOf(x) == -1 : !(x in y) },
     hash: 'c44839d188a729d1482ebbb38deba694'
   },
   {
     name: 'includes',
     desc: 'returns true if string/array x includes value y (or object x includes property y) - case sensitive',
     sample: 'var a = ${x} includes ${y}',
-    call: function(v, x, y) { return v = Array.isArray(x) || typeof x == 'string' ? x.indexOf(y) != -1 : y in x },
-    hash: 'b997d91855be8b50dc234a5738734c27'
+    call: function(v, x, y) { if (x) return v = Array.isArray(x) || typeof x == 'string' ? x.indexOf(y) != -1 : y in x },
+    hash: 'fbacbf7485d54e65564135f08f84076b'
+  },
+  {
+    name: '!includes',
+    desc: 'returns true if string/array x does NOT include value y (or object x does NOT include property y) - case sensitive',
+    sample: 'var a = ${x} !includes ${y}',
+    call: function(v, x, y) { if (x) return v = Array.isArray(x) || typeof x == 'string' ? x.indexOf(y) == -1 : !(y in x) },
+    hash: 'cd7e8c6a56a0c4b578b9105773ce9252'
   },
   {
     name: 'localeCompare',

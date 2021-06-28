@@ -683,7 +683,7 @@ export class Widget extends StateManaged {
 
       if(a.func == 'IF') {
         setDefaults(a, { relation: '==' });
-        if (['===', '==', '!=', '<', '<=', '>=', '>', 'in', '!in'].indexOf(a.relation) < 0) {
+        if (['===', '==', '!=', '<', '<=', '>=', '>', 'in', '!in', 'includes', '!includes'].indexOf(a.relation) < 0) {
           problems.push(`Relation ${a.relation} is unsupported. Using '==' relation.`);
           a.relation = '==';
         }
@@ -819,7 +819,7 @@ export class Widget extends StateManaged {
                 problems.push(`Warning: Relation == interpreted as ===`);
                 a.relation = '===';
             }
-            if (['===', '==', '!=', '<', '<=', '>=', '>', 'in', '!in'].indexOf(a.relation) < 0) {
+            if (['===', '==', '!=', '<', '<=', '>=', '>', 'in', '!in', 'includes', '!includes'].indexOf(a.relation) < 0) {
               problems.push(`Relation ${a.relation} is unsupported. Using '===' relation.`);
               a.relation = '===';
             }
