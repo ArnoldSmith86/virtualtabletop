@@ -15,6 +15,9 @@
   --wcMainOH: var(--VTTblueDark);
   --wcBorderOH: var(--VTTblue);
   --wcFontOH: var(--wcFont);
+  --trackW: 12.5em;
+  --trackH: 0.25em;
+  --thumbD: 1.5em;
 }
 
 body {
