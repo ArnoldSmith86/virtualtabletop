@@ -26,6 +26,7 @@ body {
 }
 
 #toolbar {
+  display: inline-flex;
   background: var(--VTTblue);
   height: var(--toolbarSize);
   width: 100%;
@@ -93,8 +94,83 @@ body {
   display: block;
 }
 
+.volumeWrap {
+	transform: translate(calc(var(--trackW)/2 - 8px), -40%) rotate(90deg);
+    position: relative;
+    margin: 0 0.5em 0.5em;
+    padding: 0.5em;
+    height: var(--trackW);
+    width: var(--thumbD);
+}
+[type='range'] {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: 0;
+    padding: 0;
+    width: var(--trackW);
+    height: var(--thumbD);
+    transform: translate(calc(-1 * var(--trackW)/2), 0px) rotate(-90deg);
+    background: transparent;
+    font: 1em/1 arial, sans-serif;
+}
+[type='range'], [type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+}
+[type='range']::-webkit-slider-runnable-track {
+    box-sizing: border-box;
+    border: none;
+    width: var(--trackW);
+    height: var(--trackH);
+    background: #609ae1;
+}
+[type='range']::-moz-range-track {
+    box-sizing: border-box;
+    border: none;
+    width: var(--trackW);
+    height: var(--trackH);
+    background: #609ae1;
+}
+[type='range']::-ms-track {
+    box-sizing: border-box;
+    border: none;
+    width: var(--trackW);
+    height: var(--trackH);
+    background: #609ae1;
+}
+[type='range']::-webkit-slider-thumb {
+    margin-top: -0.625em;
+    box-sizing: border-box;
+    border: none;
+    width: var(--thumbD);
+    height: var(--thumbD);
+    border-radius: 50%;
+    background: #2771ce;
+}
+[type='range']::-moz-range-thumb {
+    box-sizing: border-box;
+    border: none;
+    width: var(--thumbD);
+    height: var(--thumbD);
+    border-radius: 50%;
+    background: #2771ce;
+}
+[type='range']::-ms-thumb {
+    margin-top: 0;
+    box-sizing: border-box;
+    border: none;
+    width: var(--thumbD);
+    height: var(--thumbD);
+    border-radius: 50%;
+    background: #2771ce;
+}
+[type='range']::-ms-tooltip {
+    display: none;
+}
+
 @media (min-aspect-ratio: 1600/1000) {
   #toolbar {
+    display: block;
     top: 0;
     left: calc((100vw - var(--roomWidth) * var(--scale)) / 2 - var(--toolbarSize) / 2 + 1px);
     width: var(--toolbarSize);
@@ -119,6 +195,12 @@ body {
   #roomArea {
     top: 0;
     left: calc((100vw - var(--roomWidth) * var(--scale)) / 2 + var(--toolbarSize) / 2);
+  }
+  .volumeWrap {
+  transform: translate(-8px, 0px) rotate(0deg); 
+  }
+  [type='range'] {
+transform: translate(-50%, -50%) rotate(-90deg);
   }
 }
 
@@ -350,4 +432,16 @@ body.aspectTooGood #hideToolbarButton {
   background-image:url(/i/icons-white/trash-alt-solid-svg.svg);
   background-size: 20px 70%;
   background-position:  2.5px center;
+}
+
+body.aspectTooGood #toolbar {
+	display: block;
+}
+
+body.aspectTooGood .volumeWrap {
+	display: flex;
+  transform: translate(-8px, 0px) rotate(0deg); 
+  }
+body.aspectTooGood [type='range'] {
+  transform: translate(-50%, -50%) rotate(-90deg);  
 }
