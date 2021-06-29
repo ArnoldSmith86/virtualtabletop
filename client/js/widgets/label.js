@@ -50,7 +50,7 @@ export class Label extends Widget {
 	if(delta.richtext  !== undefined|| delta.text !== undefined) {
 	  if(this.get('richtext') == true) {
       var HTMLtext = this.get('text').toString()
-      .replace(/=/gimu, '')
+      .replace(/=/gimu, '&#61')
       .replace(/</gimu,'')
       .replace(/>/gimu, '')
       .replace(/\[c: ([^\]]+)?\]/gim, '<span style="color: $1">')
