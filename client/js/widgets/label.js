@@ -69,7 +69,7 @@ export class Label extends Widget {
 	if(delta.html  !== undefined|| delta.text !== undefined) {
 	  if(this.get('html') == true) {
       var HTMLtext = this.get('text').toString()
-      .replace(/=/gimu, '')
+      .replace(/=/gimu, '&#61')
       .replace(/<c: ([^>]+)?>/gim, '<span style="color: $1">')
       .replace(/<center>/gim, '<span style="margin:auto; display:table">')
       .replace(/<size: ([^>]+)?>/gim, '<span style="font-size: $1">')
