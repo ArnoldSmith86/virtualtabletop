@@ -1083,6 +1083,12 @@ function jeInsert(context, key, value) {
   }
 }
 
+function jeNewline() {
+  const s = Math.min(getSelection().anchorOffset, getSelection().focusOffset);
+  const match = $('#jeText').textContent.substr(0,s).match(/( *)[^\n]*$/);
+  jePasteText('\n' + match[1], false);
+}
+
 function jePasteText(text, select) {
   const aO = getSelection().anchorOffset;
   const fO = getSelection().focusOffset;
@@ -1363,13 +1369,20 @@ onLoad(function() {
 });
 
 window.addEventListener('keydown', async function(e) {
+  if(e.ctrlKey && e.key == 'j') {
+    e.preventDefault();
+    jeToggle();
+  }
+  if(!jeEnabled)
+    return;
+
   if(e.key == 'Control')
     jeState.ctrl = true;
   if(e.key == 'Shift')
     jeState.shift = true;
 
-  if(e.key == 'Enter' && jeEnabled) {
-    document.execCommand('insertHTML', false, '\n');
+  if(e.key == 'Enter') {
+    jeNewline();
     e.preventDefault();
   }
 
@@ -1384,9 +1397,6 @@ window.addEventListener('keydown', async function(e) {
       const locationPostion = String(jeJSONerror).match(/position ([0-9]+)/);
       if(locationPostion)
         jeSelect(+locationPostion[1], +locationPostion[1], true);
-    } else if(e.key == 'j') {
-      e.preventDefault();
-      jeToggle();
     } else {
       for(const command of jeCommands) {
         if(command.currentKey == e.key) {
@@ -1417,11 +1427,15 @@ window.addEventListener('keydown', async function(e) {
 });
 
 window.addEventListener('keydown', function(e) {
+  if(!jeEnabled)
+    return;
   if(e.key != 'Control')
     jeKeyIsDown = true;
 });
 
 window.addEventListener('keyup', function(e) {
+  if(!jeEnabled)
+    return;
   if(e.key == 'Control')
     jeState.ctrl = false;
   if(e.key == 'Shift')
