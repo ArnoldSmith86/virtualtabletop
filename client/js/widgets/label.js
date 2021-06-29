@@ -6,11 +6,7 @@ export class Label extends Widget {
   	this.divinput = document.createElement('div');
     this.divinput.className = "labeldiv"; 
   	this.domElement.appendChild(this.divinput);
-    this.divinput.addEventListener('focusout' , e => this.setFromDiv (e, false))
-    this.divinput.addEventListener('keydown' , e => {
-      if(e.shiftKey && e.keyCode == 13)
-        this.setFromDiv (e, true);
-    })
+
     this.input = document.createElement('textarea');
     this.addDefaults({
       height: 20,
@@ -20,7 +16,7 @@ export class Label extends Widget {
 
       text: '',
       editable: false,
-      html: false,
+      richtext: false,
       twoRowBottomAlign: false
     });
 
@@ -66,8 +62,8 @@ export class Label extends Widget {
         this.divinput.style.paddingTop = 'unset';
       }
     }
-	if(delta.html  !== undefined|| delta.text !== undefined) {
-	  if(this.get('html') == true) {
+	if(delta.richtext  !== undefined|| delta.text !== undefined) {
+	  if(this.get('richtext') == true) {
       var HTMLtext = this.get('text').toString()
       .replace(/=/gimu, '')
       .replace(/</gimu,'')
