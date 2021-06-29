@@ -24,21 +24,6 @@ export class Label extends Widget {
     this.input.addEventListener('keyup', e=>this.setText(e.target.value));
   }
   
-  setFromDiv(e, toEnd){
-    e.preventDefault();
-    const t = e.target.innerHTML.trim()
-    .replace(/&lt;/gimu,'<')
-    .replace(/&gt;/gimu, '>')
-    .replace(/<span style="color: ([^\]]+)?">/gimu, '[c: $1]')
-    .replace(/<span style="margin:auto; display:table">/gimu, '[center]')
-    .replace(/<span style="font-size: ([^\]]+)?">/gimu, '[size: $1]')
-    this.setText(t + " ");
-    if(toEnd) {
-      document.execCommand('selectAll', false, null);
-      document.getSelection().collapseToEnd();
-    }
-  }	
-  
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
     if(delta.text !== undefined || delta.twoRowBottomAlign !== undefined) {
@@ -76,6 +61,11 @@ export class Label extends Widget {
       .replace(/\*(.*?)\*/gim, '<i>$1</i>')
       .replace(/\-\-(.*?)\-\-/gim, '<sub>$1</sub>')
       .replace(/\^\^(.*?)\^\^/gim, '<sup>$1</sup>')
+      .replace(/\[list\]/gim, '<menu>')
+      .replace(/\[\/list\]/gim, '</menu>')
+      .replace(/\[li\]/gim, '<li>')
+      .replace(/\[\/li\]/gim, '</li>')
+      .replace(/_(.*?)_/gim, '<u>$1</u>')
       this.divinput.innerHTML = HTMLtext;
       this.input.style.display = "none";
       this.divinput.style.display = "inline-block";
