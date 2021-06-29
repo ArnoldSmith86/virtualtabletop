@@ -849,9 +849,12 @@ function jeColorize() {
         if(jeMode == 'widget' && match[1] == '  "' && l[2] == 'key' && [ 'id', 'type' ].indexOf(match[2]) == -1 && jeWidget.getDefaultValue(match[2]) === undefined)
           c[2] = 'custom';
 
-        for(let i=1; i<l.length; ++i)
+        for(let i=1; i<l.length; ++i) {
           if(l[i] && match[i])
             match[i] = `<i class=${c[i]}>${html(match[i])}</i>`;
+          else if(match[i])
+            match[i] = html(match[i]);
+        }
 
         let newLine = match.slice(1).join('');
 
