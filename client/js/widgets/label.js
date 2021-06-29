@@ -29,9 +29,9 @@ export class Label extends Widget {
     const t = e.target.innerHTML.trim()
     .replace(/&lt;/gimu,'<')
     .replace(/&gt;/gimu, '>')
-    .replace(/<span style="color: ([^>]+)?">/gimu, '[c: $1]')
+    .replace(/<span style="color: ([^\]]+)?">/gimu, '[c: $1]')
     .replace(/<span style="margin:auto; display:table">/gimu, '[center]')
-    .replace(/<span style="font-size: ([^>]+)?">/gimu, '[size: $1]')
+    .replace(/<span style="font-size: ([^\]]+)?">/gimu, '[size: $1]')
     this.setText(t + " ");
     if(toEnd) {
       document.execCommand('selectAll', false, null);
@@ -68,9 +68,9 @@ export class Label extends Widget {
       .replace(/=/gimu, '')
       .replace(/</gimu,'')
       .replace(/>/gimu, '')
-      .replace(/\[c: ([^>]+)?\]/gim, '<span style="color: $1">')
+      .replace(/\[c: ([^\]]+)?\]/gim, '<span style="color: $1">')
       .replace(/\[center\]/gim, '<span style="margin:auto; display:table">')
-      .replace(/\[size: ([^>]+)?\]/gim, '<span style="font-size: $1">')
+      .replace(/\[size: ([^\]]+)?\]/gim, '<span style="font-size: $1">')
       .replace(/\[\/c\]|\[\/center\]|\[\/size\]/gim, '</span>')
       .replace(/\*\*(.*?)\*\*/gim, '<b>$1</b>')
       .replace(/\*(.*?)\*/gim, '<i>$1</i>')
