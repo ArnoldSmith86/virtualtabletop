@@ -805,9 +805,11 @@ function jeSelectWidget(widget, dontFocus, addToSelection, restoreCursorPosition
     const linesUntilCursor = v.split('\n').slice(0, v.substr(0, s).split('\n').length);
     const currentLine = linesUntilCursor.pop();
     let defaultValueToAdd = null;
-    const defaultValueMatch = currentLine.match(/^  "([^"]+)": (.*?),?$/);
-    if(defaultValueMatch && jeWidget && jeWidget.getDefaultValue(defaultValueMatch[1]) === JSON.parse(defaultValueMatch[2]))
-      defaultValueToAdd = defaultValueMatch[1];
+    try {
+      const defaultValueMatch = currentLine.match(/^  "([^"]+)": (.*?),?$/);
+      if(defaultValueMatch && jeWidget && jeWidget.getDefaultValue(defaultValueMatch[1]) === JSON.parse(defaultValueMatch[2]))
+        defaultValueToAdd = defaultValueMatch[1];
+    } catch(e) {}
     var cursorState = {
       currentLine,
       defaultValueToAdd,
