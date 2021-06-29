@@ -33,7 +33,3 @@ body.edit .widget.label > * {
   left: 0;
   top: 0;
 }
-.label tr:nth-child(odd) {
-  background-color: #dddddd;
-}
-
