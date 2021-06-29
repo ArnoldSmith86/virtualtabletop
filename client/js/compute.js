@@ -452,7 +452,7 @@ const compute_ops = [
     desc: 'returns true if string x is included in string/array y (or property x in object y) - case sensitive',
     sample: 'var a = ${x} in ${y}',
     call: function(v, x, y) { if (y) return v = Array.isArray(y) || typeof y == 'string' ? y.indexOf(x) != -1 : x in y },
-    hash: '36bb35cb7fae2b5fcb7dedea6902e348'
+    hash: '403c82322543026867587d570e62f0c0'
   },
   {
     name: '!in',
@@ -466,7 +466,7 @@ const compute_ops = [
     desc: 'returns true if string/array x includes value y (or object x includes property y) - case sensitive',
     sample: 'var a = ${x} includes ${y}',
     call: function(v, x, y) { if (x) return v = Array.isArray(x) || typeof x == 'string' ? x.indexOf(y) != -1 : y in x },
-    hash: 'fbacbf7485d54e65564135f08f84076b'
+    hash: 'b997d91855be8b50dc234a5738734c27'
   },
   {
     name: '!includes',
