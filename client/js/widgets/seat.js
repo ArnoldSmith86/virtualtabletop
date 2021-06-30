@@ -28,8 +28,12 @@ class Seat extends Widget {
     if(delta.text !== undefined)
       setText(this.domElement, delta.text);
     if(delta.player !== undefined)
-      for(const w of widgetFilter(w=>w.get('type') == 'seat'))
-        w.linkedWidgets().forEach(wc=>wc.updateOwner());
+      this.updateLinkedWidgets();
+  }
+
+  applyInitialDelta(delta) {
+    super.applyInitialDelta(delta);
+    this.updateLinkedWidgets();
   }
 
   classes() {
@@ -55,8 +59,19 @@ class Seat extends Widget {
       await this.setPlayer();
   }
 
-  linkedWidgets() {
-    return widgetFilter(w=>toArray(w.get('linkedToSeat')).indexOf(this.get('id')) != -1 || toArray(w.get('onlyVisibleForSeat')).indexOf(this.get('id')) != -1);
+  css() {
+    let css = super.css();
+
+    if(this.get('color'))
+      css += '; --color:' + this.get('color');
+
+    return css;
+  }
+
+  cssProperties() {
+    const p = super.cssProperties();
+    p.push('color');
+    return p;
   }
 
   //need to add a condition here to change the turn if the turn is in a seat that is empty
@@ -75,19 +90,10 @@ class Seat extends Widget {
     }
   }
 
-  css() {
-    let css = super.css();
-
-    if(this.get('color'))
-      css += '; --color:' + this.get('color');
-
-    return css;
+  updateLinkedWidgets() {
+    for(const seat of widgetFilter(w=>w.get('type') == 'seat')) {
+      const inProperty = p=>toArray(p).indexOf(seat.id) != -1;
+      widgetFilter(w=>inProperty(w.get('linkedToSeat')) || inProperty(w.get('onlyVisibleForSeat'))).forEach(wc=>wc.updateOwner());
+    }
   }
-
-  cssProperties() {
-    const p = super.cssProperties();
-    p.push('color');
-    return p;
-  }
-
 }
