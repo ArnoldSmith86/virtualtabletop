@@ -403,6 +403,7 @@ export default async function convertPCIO(content) {
       w.height = widget.textSize * 3.5;
     } else if(widget.type == 'seat') {
       w.type = 'seat';
+      w.hideWhenUnused = true;
       if(typeof widget.seatIndex == 'number')
         w.index = w.text = widget.seatIndex;
       w.x += 69;

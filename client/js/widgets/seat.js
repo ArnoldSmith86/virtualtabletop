@@ -15,6 +15,7 @@ class Seat extends Widget {
       display: '',
       displayEmpty: '',
       displayTurn: true,
+      hideWhenUnused: false,
 
       color: '#999999',
       colorEmpty: '#999999',
@@ -43,6 +44,8 @@ class Seat extends Widget {
       className += ' seated';
     if(this.get('turn') && this.get('displayTurn'))
       className += ' turn';
+    if(this.get('hideWhenUnused') && !this.get('player') && widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == playerName).length)
+      className += ' foreign';
 
     return className;
   }
@@ -50,7 +53,7 @@ class Seat extends Widget {
   //inactive should go into widgets
   classesProperties() {
     const p = super.classesProperties();
-    p.push('player', 'turn', 'displayTurn');
+    p.push('hideWhenUnused', 'player', 'turn', 'displayTurn');
     return p;
   }
 
@@ -94,6 +97,7 @@ class Seat extends Widget {
     for(const seat of widgetFilter(w=>w.get('type') == 'seat')) {
       const inProperty = p=>toArray(p).indexOf(seat.id) != -1;
       widgetFilter(w=>inProperty(w.get('linkedToSeat')) || inProperty(w.get('onlyVisibleForSeat'))).forEach(wc=>wc.updateOwner());
+      seat.updateOwner();
     }
   }
 }
