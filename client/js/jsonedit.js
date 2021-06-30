@@ -433,17 +433,20 @@ function jeAddRoutineOperationCommands(command, defaults) {
 }
 
 function jeAddCommands() {
-  jeAddWidgetPropertyCommands(new BasicWidget());
-  jeAddWidgetPropertyCommands(new Button());
-  jeAddWidgetPropertyCommands(new Canvas());
-  jeAddWidgetPropertyCommands(new Card());
-  jeAddWidgetPropertyCommands(new Deck());
-  jeAddWidgetPropertyCommands(new Holder());
-  jeAddWidgetPropertyCommands(new Label());
-  jeAddWidgetPropertyCommands(new Pile());
-  jeAddWidgetPropertyCommands(new Seat());
-  jeAddWidgetPropertyCommands(new Spinner());
-  jeAddWidgetPropertyCommands(new Timer());
+  const widgetTypes = [ 'all' ];
+  const collectionNames = [ 'all', 'DEFAULT', 'thisButton', 'child', 'widget' ];
+
+  widgetTypes.push(jeAddWidgetPropertyCommands(new BasicWidget()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Button()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Canvas()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Card()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Deck()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Holder()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Label()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Pile()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Seat()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Spinner()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Timer()));
 
   jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result' });
   jeAddRoutineOperationCommands('CANVAS', { canvas: null, mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6' });
@@ -476,7 +479,7 @@ function jeAddCommands() {
   jeAddFaceCommand('css', '', '');
   jeAddFaceCommand('radius', ' (rounded corners)', 1);
 
-  jeAddEnumCommands('^[a-z]+ ↦ type', [ null, 'button', 'canvas', 'card', 'deck', 'holder', 'label', 'spinner', 'timer' ]);
+  jeAddEnumCommands('^[a-z]+ ↦ type', widgetTypes.slice(1));
   jeAddEnumCommands('^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ textAlign', [ 'left', 'center', 'right' ]);
   jeAddEnumCommands('^.*\\(CANVAS\\) ↦ mode', [ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ]);
   jeAddEnumCommands('^.*\\(CLICK\\) ↦ mode', [ 'respect', 'ignoreClickable', 'ignoreClickRoutine', 'ignoreAll' ]);
@@ -488,16 +491,16 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ mode', [ 'set', 'add' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ mode', [ 'set', 'add' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=', 'in' ]);
-  jeAddEnumCommands('^.*\\(SELECT\\) ↦ type', [ 'all', null, 'button', 'card', 'deck', 'holder', 'label', 'spinner' ]);
+  jeAddEnumCommands('^.*\\(SELECT\\) ↦ type', widgetTypes);
   jeAddEnumCommands('^.*\\(SET\\) ↦ relation', [ '+', '-', '=', "*", "/",'!' ]);
   jeAddEnumCommands('^.*\\(TIMER\\) ↦ mode', [ 'pause', 'start', 'toggle', 'set', 'dec', 'inc', 'reset']);
   jeAddEnumCommands('^.*\\(TIMER\\) ↦ value', [ 0, 'start', 'end', 'milliseconds']);
   jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ property', [ 'id', 'parent', 'type', 'rotation' ]);
   jeAddEnumCommands('^.* ↦ applyVariables ↦ [0-9]+ ↦ variable', [ 'COUNT', 'id', 'result', 'playerName', 'playerColor', 'activePlayers' , 'thisID' ]);
 
-  jeAddEnumCommands('^.*\\((CLICK|COUNT|DELETE|FLIP|GET|LABEL|ROTATE|SET|SORT|SHUFFLE)\\) ↦ collection', [ 'DEFAULT', 'thisButton', 'child' ]);
-  jeAddEnumCommands('^.*\\(CLONE\\) ↦ source', [ 'DEFAULT', 'thisButton', 'child' ]);
-  jeAddEnumCommands('^.*\\(SELECT\\) ↦ source', [ 'all', 'DEFAULT', 'thisButton', 'child' ]);
+  jeAddEnumCommands('^.*\\((CLICK|COUNT|DELETE|FLIP|GET|LABEL|ROTATE|SET|SORT|SHUFFLE)\\) ↦ collection', collectionNames.slice(1));
+  jeAddEnumCommands('^.*\\(CLONE\\) ↦ source', collectionNames.slice(1));
+  jeAddEnumCommands('^.*\\(SELECT\\) ↦ source', collectionNames);
 
   jeAddNumberCommand('increment number', '+', x=>x+1);
   jeAddNumberCommand('decrement number', '-', x=>x-1);
@@ -609,6 +612,8 @@ function jeAddWidgetPropertyCommands(object) {
     if(property != 'typeClasses')
       jeAddWidgetPropertyCommand(object, property);
   object.applyRemove();
+  const type = object.defaults.typeClasses.replace(/widget /, '');
+  return type == 'basic' ? null : type;
 }
 
 function jeAddWidgetPropertyCommand(object, property) {
