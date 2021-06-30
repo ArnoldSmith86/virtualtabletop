@@ -26,6 +26,9 @@ class Seat extends Widget {
     super.applyDeltaToDOM(delta);
     if(delta.text !== undefined)
       setText(this.domElement, delta.text);
+    if(delta.player !== undefined)
+      for(const w of widgetFilter(w=>w.get('type') == 'seat'))
+        w.linkedWidgets().forEach(wc=>wc.updateOwner());
   }
 
   classes() {
@@ -49,6 +52,10 @@ class Seat extends Widget {
   async click(mode='respect') {
     if(!await super.click(mode))
       await this.setPlayer();
+  }
+
+  linkedWidgets() {
+    return widgetFilter(w=>Array.isArray(w.get('linkedToSeat')) && w.get('linkedToSeat').indexOf(this.get('id')) != -1 || w.get('linkedToSeat') == this.get('id'));
   }
 
   //need to add a condition here to change the turn if the turn is in a seat that is empty
