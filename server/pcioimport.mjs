@@ -465,14 +465,24 @@ export default async function convertPCIO(content) {
       w.layer = -4;
       w.z = 10000 - w.z;
       addDimensions(w, widget);
-    } else if(widget.type == 'automationButton') {
+    } else if(widget.type == 'automationButton' || widget.type == 'turnButton') {
       w.type = 'button';
       if(widget.label !== '')
         w.text = widget.label;
+
+      if(widget.type == 'turnButton')
+        widget.height = widget.width = 64;
       addDimensions(w, widget, 80, 80);
 
       w.clickRoutine = [];
-      for(let c of widget.clickRoutine) {
+
+      if(widget.type == 'turnButton') {
+        w.clickRoutine.push({
+          func: 'TURN'
+        });
+      }
+
+      for(let c of widget.clickRoutine || []) {
         if(c.func == 'MOVE_CARDS_BETWEEN_HOLDERS') {
           if(!c.args.from || !c.args.to)
             continue;
