@@ -538,46 +538,13 @@ function displayComputeOps() {
 }
 
 function jeAddCSScommands() {
-  for(const css of [ 'border: 1px solid black', 'background: white', 'font-size: 30px', 'color: black' , 'border-radius: 100%' ]) {
-    jeCommands.push({
-      id: 'css_' + css,
-      name: css,
-      context: '^.* ↦ (css|[a-z]+CSS)',
-      call: async function() {
-        jePasteText(css + '; ', true);
-      },
-      show: function() {
-        return !String(jeGetValue()[jeGetLastKey()]).match(css.split(':')[0]);
-      }
-    });
-  }
-  for(const css of [ '--wcMain: #1f5ca6', '--wcMainOH: #0d2f5e', '--wcBorder: #0d2f5e', '--wcBorderOH: #1f5ca6', '--wcFont: #ffffff', '--wcFontOH: #ffffff' ]) {
-    jeCommands.push({
-      id: 'css_' + css,
-      name: css,
-      context: 'button ↦ (css|[a-z]+CSS)',
-      call: async function() {
-        jePasteText(css + '; ', true);
-      },
-      show: function() {
-        return !String(jeGetValue()[jeGetLastKey()]).match(css.split(':')[0]);
-      }
-    });
-  }
-  for(const css of [ '--wcShadowTurn: none' ]) {
-    jeCommands.push({
-      id: 'css_' + css,
-      name: css,
-      context: 'button ↦ (css|[a-z]+CSS)',
-      call: async function() {
-        jePasteText(css + '; ', true);
-      },
-      show: function() {
-        return !String(jeGetValue()[jeGetLastKey()]).match(css.split(':')[0]);
-      }
-    });
-  }
-  for(const css of ['--wcBorderNormal: #00000000', '--wcBorderAlert: red', '--wcFontAlert: red', '--wcFontPaused: #6d6d6d', '--wcAnimationAlert: blinker 1s linear infinite', '--wcAnimationPaused: none' ]) {
+  const presets = [
+    'border: 1px solid black', 'background: white', 'font-size: 30px', 'color: black' , 'border-radius: 100%',
+    '--wcMain: #1f5ca6', '--wcMainOH: #0d2f5e', '--wcBorder: #0d2f5e', '--wcBorderOH: #1f5ca6', '--wcFont: #ffffff', '--wcFontOH: #ffffff',
+    '--wcShadowTurn: none',
+    '--wcBorderNormal: #00000000', '--wcBorderAlert: red', '--wcFontAlert: red', '--wcFontPaused: #6d6d6d', '--wcAnimationAlert: blinker 1s linear infinite', '--wcAnimationPaused: none'
+  ];
+  for(const css of presets) {
     jeCommands.push({
       id: 'css_' + css,
       name: css,
