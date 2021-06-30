@@ -56,7 +56,7 @@ class Seat extends Widget {
   }
 
   linkedWidgets() {
-    return widgetFilter(w=>Array.isArray(w.get('onlyVisibleForSeat')) && w.get('onlyVisibleForSeat').indexOf(this.get('id')) != -1 || w.get('onlyVisibleForSeat') == this.get('id'));
+    return widgetFilter(w=>toArray(w.get('linkedToSeat')).indexOf(this.get('id')) != -1 || toArray(w.get('onlyVisibleForSeat')).indexOf(this.get('id')) != -1);
   }
 
   //need to add a condition here to change the turn if the turn is in a seat that is empty

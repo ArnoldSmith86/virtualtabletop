@@ -41,6 +41,7 @@ export class Widget extends StateManaged {
       dropOffsetY: 0,
       inheritChildZ: false,
 
+      linkedToSeat: null,
       onlyVisibleForSeat: null,
 
       clickRoutine: null,
@@ -175,17 +176,18 @@ export class Widget extends StateManaged {
       className += ' foreign';
     if(typeof this.get('owner') == 'string' && this.get('owner') != playerName)
       className += ' foreign';
-    if(this.get('onlyVisibleForSeat') && widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == playerName).length) {
-      const seats = Array.isArray(this.get('onlyVisibleForSeat')) ? this.get('onlyVisibleForSeat') : [ this.get('onlyVisibleForSeat') ];
-      if(!widgetFilter(w=>seats.indexOf(w.get('id')) != -1 && w.get('player') == playerName).length)
+    if(this.get('onlyVisibleForSeat'))
+      if(!widgetFilter(w=>w.get('player') == playerName && toArray(this.get('onlyVisibleForSeat')).indexOf(w.get('id')) != -1).length)
         className += ' foreign';
-    }
+    if(this.get('linkedToSeat') && widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == playerName).length)
+      if(!widgetFilter(w=>toArray(this.get('linkedToSeat')).indexOf(w.get('id')) != -1 && w.get('player')).length)
+        className += ' foreign';
 
     return className;
   }
 
   classesProperties() {
-    return [ 'classes', 'onlyVisibleForSeat', 'owner', 'typeClasses' ];
+    return [ 'classes', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses' ];
   }
 
   async click(mode='respect') {
@@ -329,12 +331,8 @@ export class Widget extends StateManaged {
       problems.push(`Collection ${collection} does not exist.`);
     }
 
-    function toA(ids) {
-      return typeof ids == 'string' ? [ ids ] : ids;
-    }
-
     async function w(ids, callback) {
-      for(const a of widgetFilter(w=>toA(ids).indexOf(w.get('id')) != -1))
+      for(const a of widgetFilter(w=>toArray(ids).indexOf(w.get('id')) != -1))
         await callback(a);
     }
 
@@ -792,7 +790,7 @@ export class Widget extends StateManaged {
       if(a.func == 'RECALL') {
         setDefaults(a, { owned: true });
         if(this.isValidID(a.holder, problems)) {
-          for(const holder of toA(a.holder)) {
+          for(const holder of toArray(a.holder)) {
             const decks = widgetFilter(w=>w.get('type')=='deck'&&w.get('parent')==holder);
             if(decks.length) {
               for(const deck of decks) {

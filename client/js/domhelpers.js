@@ -125,3 +125,7 @@ export function selectFile(getContents, multipleCallback) {
     upload.dispatchEvent(new MouseEvent('click', {bubbles: true}));
   });
 }
+
+export function toArray(a) {
+  return Array.isArray(a) ? a : [ a ];
+}
