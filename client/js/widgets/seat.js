@@ -48,22 +48,22 @@ class Seat extends Widget {
 
   async click(mode='respect') {
     if(!await super.click(mode))
-      this.setPlayer();
+      await this.setPlayer();
   }
 
   //need to add a condition here to change the turn if the turn is in a seat that is empty
-  setPlayer() {
+  async setPlayer() {
     if(this.get('player') == '') {
       var display = this.get('display') || this.get('index')
       if(this.get('display') == 'playerName')
         var display = playerName
-      this.set('player', playerName);
-      this.set('color', playerColor);
-      this.set('text', display)
+      await this.set('player', playerName);
+      await this.set('color', playerColor);
+      await this.set('text', display)
     } else {
-      this.set('player', '');
-      this.set('color', this.get('colorEmpty') || '#999999');
-      this.set('text', this.get('displayEmpty') || this.get('index'));
+      await this.set('player', '');
+      await this.set('color', this.get('colorEmpty') || '#999999');
+      await this.set('text', this.get('displayEmpty') || this.get('index'));
     }
   }
 
