@@ -41,7 +41,7 @@ export class Widget extends StateManaged {
       dropOffsetY: 0,
       inheritChildZ: false,
 
-      linkedToSeat: null,
+      onlyVisibleForSeat: null,
 
       clickRoutine: null,
       changeRoutine: null,
@@ -175,8 +175,8 @@ export class Widget extends StateManaged {
       className += ' foreign';
     if(typeof this.get('owner') == 'string' && this.get('owner') != playerName)
       className += ' foreign';
-    if(this.get('linkedToSeat') && widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == playerName).length) {
-      const seats = Array.isArray(this.get('linkedToSeat')) ? this.get('linkedToSeat') : [ this.get('linkedToSeat') ];
+    if(this.get('onlyVisibleForSeat') && widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == playerName).length) {
+      const seats = Array.isArray(this.get('onlyVisibleForSeat')) ? this.get('onlyVisibleForSeat') : [ this.get('onlyVisibleForSeat') ];
       if(!widgetFilter(w=>seats.indexOf(w.get('id')) != -1 && w.get('player') == playerName).length)
         className += ' foreign';
     }
@@ -185,7 +185,7 @@ export class Widget extends StateManaged {
   }
 
   classesProperties() {
-    return [ 'classes', 'linkedToSeat', 'owner', 'typeClasses' ];
+    return [ 'classes', 'onlyVisibleForSeat', 'owner', 'typeClasses' ];
   }
 
   async click(mode='respect') {
