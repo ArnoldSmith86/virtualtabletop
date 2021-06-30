@@ -405,7 +405,7 @@ export default async function convertPCIO(content) {
       w.type = 'seat';
       w.hideWhenUnused = true;
       if(typeof widget.seatIndex == 'number')
-        w.index = w.text = widget.seatIndex;
+        w.index = w.text = widget.seatIndex + 1;
       w.x += 69;
       w.y -= 38;
     } else if(widget.type == 'timer') {
