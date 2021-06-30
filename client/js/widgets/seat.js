@@ -7,6 +7,7 @@ class Seat extends Widget {
       clickable: true,
       width: 36,
       height: 36,
+      movable: false,
 
       index: 1,
       turn: false,
