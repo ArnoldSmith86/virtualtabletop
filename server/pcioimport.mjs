@@ -140,6 +140,9 @@ export default async function convertPCIO(content) {
     if(widget.r)
       w.rotation = widget.r;
 
+    if(widget.linkedSeat && byID[widget.linkedSeat])
+      w.linkedToSeat = widget.linkedSeat;
+
     if(widget.parent && !byID[widget.parent])
       widget.parent = null;
 
@@ -398,8 +401,14 @@ export default async function convertPCIO(content) {
       w.css = `font-size: ${widget.textSize}px; font-weight: ${weight}; text-align: ${widget.textAlign};`;
       addDimensions(w, widget, 100, 20);
       w.height = widget.textSize * 3.5;
+    } else if(widget.type == 'seat') {
+      w.type = 'seat';
+      if(typeof widget.seatIndex == 'number')
+        w.index = w.text = widget.seatIndex;
+      w.x += 69;
+      w.y -= 38;
     } else if(widget.type == 'timer') {
-      w.type = 'timer'
+      w.type = 'timer';
       w.clickable = false
       w.countdown = !widget.timerCountUp
       if (widget.timerCountUp) {
