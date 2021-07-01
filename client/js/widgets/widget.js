@@ -776,10 +776,10 @@ export class Widget extends StateManaged {
 
       if(a.func == 'RECALL') {
         setDefaults(a, { owned: true, contained: true });
-        if(a.deck !== undefined) {
-          if(this.isValidID(a.deck, problems))
-            a.holder = widgets.get(a.deck).get('parent');
-        }
+
+        if(a.deck !== undefined && this.isValidID(a.deck, problems))
+          a.holder = toA(a.deck).map(d=>widgets.get(d).get('parent')).filter(d=>d!==null);
+
         if(this.isValidID(a.holder, problems)) {
           for(const holder of toA(a.holder)) {
             const decks = widgetFilter(w=>w.get('type')=='deck'&&w.get('parent')==holder);
