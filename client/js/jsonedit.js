@@ -512,7 +512,7 @@ function jeAddCommands() {
 
 function jeAddAlignmentCommands() {
   jeCommands.push({
-    id: 'jeCenter',
+    id: 'jeCenterInParent',
     name: 'center in parent',
     context: '^.* ↦ (x|y)( ↦ "[0-9]+")?' + String.fromCharCode(36), // the minifier doesn't like "$" or "\x24" here
     call: async function() {
@@ -521,6 +521,30 @@ function jeAddAlignmentCommands() {
       const parentSize = jeStateNow.parent ? widgets.get(jeStateNow.parent).get(sizeKey) : (sizeKey == 'width' ? 1600 : 1000);
       jeStateNow[key] = '###SELECT ME###';
       jeSetAndSelect((parentSize-widgets.get(jeStateNow.id).get(sizeKey))/2);
+    }
+  });
+  jeCommands.push({
+    id: 'jeMultiAlign',
+    name: 'align',
+    context: '^Multi-Selection ↦ (x|y)',
+    options: [
+      { label: 'Coordinate', type: 'select', options: [ { value: 0.5, text: 'Center' }, { value: 0, text: 'Top/Left' }, { value: 1, text: 'Bottom/Right'  } ] },
+      { label: 'Reference',  type: 'select', options: [ { value: 'First' }, { value: 'Last' }, { value: 'Center of all' } ] }
+    ],
+    call: async function(options) {
+      const key = jeContext[1];
+      const sizeKey = key == 'x' ? 'width' : 'height';
+      const selected = jeMultiSelectedWidgets();
+      const centers = selected.map(w=>w.absoluteCoord(key) + w.get(sizeKey)*options.Coordinate);
+
+      let target = centers[0];
+      if(options.Reference == 'Last')
+        target = centers[centers.length-1];
+      if(options.Reference == 'Center of all')
+        target = (Math.max(...centers) + Math.min(...centers)) / 2;
+      for(const w of selected)
+        await w.set(key, target - w.get(sizeKey)*options.Coordinate - (w.get('parent') ? widgets.get(w.get('parent')).absoluteCoord(key) : 0));
+      jeUpdateMulti();
     }
   });
 }
@@ -865,12 +889,35 @@ function jeSelectWidgetMulti(widget, dontFocus) {
   jeUpdateMulti(dontFocus);
 }
 
-function jeUpdateMulti(dontFocus) {
-  const selectedWidgets = widgetFilter(w=>jeStateNow.widgets.indexOf(w.get('id')) != -1);
+function jeMultiSelectedWidgets() {
+  let selected = [];
+  for(const search of jeStateNow.widgets) {
+    selected = selected.concat(widgetFilter(function(w) {
+      const isRegex = search.match(/^\/(.*)\/([a-z]+)?$/);
+      try {
+        if(isRegex && w.get('id').match(new RegExp(isRegex[1], isRegex[2])))
+          return true;
+      } catch(e) {}
+      if(!isRegex && w.get('id') == search)
+        return true;
+    }));
+  }
+  return selected;
+}
 
+function jeSelectedIDs() {
+  if(!jeStateNow)
+    return [];
+  else if(jeMode == 'multi')
+    return jeMultiSelectedWidgets().map(w=>w.get('id'));
+  else
+    return [ jeStateNow.id ];
+}
+
+function jeUpdateMulti(dontFocus) {
   for(const key of [ 'x', 'y', 'width', 'height', 'parent', 'z', 'layer' ]) {
     jeStateNow[key] = {};
-    for(const selectedWidget of selectedWidgets)
+    for(const selectedWidget of jeMultiSelectedWidgets())
       jeStateNow[key][selectedWidget.get('id')] = selectedWidget.get(key);
     if(Object.values(jeStateNow[key]).every( (val, i, arr) => val === arr[0] ))
       jeStateNow[key] = Object.values(jeStateNow[key])[0];
