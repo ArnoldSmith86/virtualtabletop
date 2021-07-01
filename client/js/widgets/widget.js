@@ -775,7 +775,11 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'RECALL') {
-        setDefaults(a, { owned: true });
+        setDefaults(a, { owned: true, contained: true });
+        if(a.deck !== undefined) {
+          if(this.isValidID(a.deck, problems))
+            a.holder = widgets.get(a.deck).get('parent');
+        }
         if(this.isValidID(a.holder, problems)) {
           for(const holder of toA(a.holder)) {
             const decks = widgetFilter(w=>w.get('type')=='deck'&&w.get('parent')==holder);
@@ -784,8 +788,27 @@ export class Widget extends StateManaged {
                 let cards = widgetFilter(w=>w.get('deck')==deck.get('id'));
                 if(!a.owned)
                   cards = cards.filter(c=>!c.get('owner'));
-                for(const c of cards)
+                if(!a.contained) {
+                  cards = cards.filter(function(c) {
+                    if(!c.get('parent'))
+                      return true;
+
+                    const parent = widgets.get(c.get('parent'));
+                    const parentType = parent.get('type');
+                    if(parentType == 'holder')
+                      return parent.get('childrenPerOwner');
+                    if(parentType != 'pile' || !parent.get('parent'))
+                      return true;
+
+                    const pileParent = widgets.get(parent.get('parent'));
+                    return pileParent.get('type') != 'holder';
+                  });
+                }
+                for(const c of cards) {
+                  if(a.face !== undefined)
+                    await c.flip(a.face);
                   await c.moveToHolder(widgets.get(holder));
+                }
               }
             } else {
               problems.push(`Holder ${holder} does not have a deck.`);
