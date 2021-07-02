@@ -529,19 +529,21 @@ function jeAddAlignmentCommands() {
     context: '^Multi-Selection ↦ (x|y)',
     options: [
       { label: 'Coordinate', type: 'select', options: [ { value: 0.5, text: 'Center' }, { value: 0, text: 'Top/Left' }, { value: 1, text: 'Bottom/Right'  } ] },
-      { label: 'Reference',  type: 'select', options: [ { value: 'First' }, { value: 'Last' }, { value: 'Center of all' } ] }
+      { label: 'Reference',  type: 'select', options: [ { value: 'First selected widget' }, { value: 'Lowest value' }, { value: 'Highest value' }, { value: 'Center of all' } ] }
     ],
     call: async function(options) {
       const key = jeContext[1];
       const sizeKey = key == 'x' ? 'width' : 'height';
       const selected = jeMultiSelectedWidgets();
-      const centers = selected.map(w=>w.absoluteCoord(key) + w.get(sizeKey)*options.Coordinate);
+      const coords = selected.map(w=>w.absoluteCoord(key) + w.get(sizeKey)*options.Coordinate);
 
-      let target = centers[0];
-      if(options.Reference == 'Last')
-        target = centers[centers.length-1];
+      let target = coords[0];
+      if(options.Reference == 'Lowest value')
+        target = Math.min(...coords);
+      if(options.Reference == 'Highest value')
+        target = Math.max(...coords);
       if(options.Reference == 'Center of all')
-        target = (Math.max(...centers) + Math.min(...centers)) / 2;
+        target = (Math.max(...coords) + Math.min(...coords)) / 2;
       for(const w of selected)
         await w.set(key, target - w.get(sizeKey)*options.Coordinate - (w.get('parent') ? widgets.get(w.get('parent')).absoluteCoord(key) : 0));
       jeUpdateMulti();
