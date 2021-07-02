@@ -1215,7 +1215,7 @@ export class Widget extends StateManaged {
   async showInputOverlay(o, widgets, variables, problems) {
     return new Promise((resolve, reject) => {
 
-      $('#buttonInputOverlay h1').textContent = o.header || "Button Input";
+      $('#buttonInputOverlay h1').textContent = o.header || 'Button Input';
       $('#buttonInputFields').innerHTML = '';
 
       for(const field of o.fields) {
