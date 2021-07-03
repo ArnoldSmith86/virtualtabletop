@@ -992,9 +992,12 @@ function jeColorize() {
         if(jeMode == 'widget' && match[1] == '  "' && l[2] == 'key' && [ 'id', 'type' ].indexOf(match[2]) == -1 && jeWidget.getDefaultValue(match[2]) === undefined)
           c[2] = 'custom';
 
-        for(let i=1; i<l.length; ++i)
+        for(let i=1; i<l.length; ++i) {
           if(l[i] && match[i])
             match[i] = `<i class=${c[i]}>${html(match[i])}</i>`;
+          else if(match[i])
+            match[i] = html(match[i]);
+        }
 
         let newLine = match.slice(1).join('');
 
@@ -1333,7 +1336,7 @@ function jeShowCommands() {
 
   if(!jeJSONerror && jeStateNow) {
     for(const contextMatch of (Object.keys(activeCommands).sort((a,b)=>b.length-a.length))) {
-      commandText += `\n  <b>${contextMatch}</b>\n`;
+      commandText += `\n  <b>${html(contextMatch)}</b>\n`;
       for(const command of activeCommands[contextMatch].sort(sortByName)) {
         try {
           if(context.match(new RegExp(command.context)) && (!command.show || command.show())) {
@@ -1357,16 +1360,16 @@ function jeShowCommands() {
       }
     }
   }
-  commandText += `\n\n${context}\n`;
+  commandText += `\n\n${html(context)}\n`;
   if(jeJSONerror) {
     if(jeMode == 'widget')
       commandText += `\nCtrl-Space: go to error\n`;
-    commandText += `\n<i class=error>${String(jeJSONerror)}</i>\n`;
+    commandText += `\n<i class=error>${html(String(jeJSONerror))}</i>\n`;
   }
   if(jeCommandError)
-    commandText += `\n<i class=error>Last command failed: ${String(jeCommandError)}</i>\n`;
+    commandText += `\n<i class=error>Last command failed: ${html(String(jeCommandError))}</i>\n`;
   if(jeSecondaryWidget)
-    commandText += `\n\n${jeSecondaryWidget}\n`;
+    commandText += `\n\n${html(jeSecondaryWidget)}\n`;
   $('#jeCommands').innerHTML = commandText;
   on('#jeCommands button', 'click', clickButton);
 
