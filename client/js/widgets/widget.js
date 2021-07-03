@@ -258,7 +258,7 @@ export class Widget extends StateManaged {
       reject(result);
   }
 
-  async evaluateRoutine(property, initialVariables, initialCollections, depth, byReference) {
+  async evaluateRoutine(property, initialVariables, initialCollections, depth, initialLegacyMode, byReference) {
     function unescape(str) {
       if(typeof str != 'string')
         return str;
@@ -355,6 +355,7 @@ export class Widget extends StateManaged {
 
     let variables = initialVariables;
     let collections = initialCollections;
+    let legacyMode = initialLegacyMode;
     if(!byReference) {
       variables = Object.assign({}, initialVariables, {
         playerName,
@@ -365,6 +366,7 @@ export class Widget extends StateManaged {
       collections = Object.assign({}, initialCollections, {
         thisButton : [this]
       });
+      legacyMode = new Set();
     }
 
     const routine = this.get(property) !== null ? this.get(property) : property;
@@ -396,6 +398,10 @@ export class Widget extends StateManaged {
 
         const match = a.match(new RegExp(regex + '\x24')); // the minifier doesn't like a "$" here
 
+        const modeSet = /^mode:/;
+        const modeAdd = /^mode-add:/;
+        const modeRemove = /^mode-remove:/;
+
         if(match) {
           const getParam = (offset, defaultValue)=>{
             if(typeof match[offset+3] == 'string') {
@@ -422,11 +428,12 @@ export class Widget extends StateManaged {
             }
           };
           const getValue = function(input) {
-            const toNum = s=>typeof s == 'string' && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s;
+            const toNum = s=>typeof s == 'string' && legacyMode.has('strToNum') && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s;
+            const dv = legacyMode.has('defaultOne') ? 1 : null;
             if(match[14] && match[9] !== undefined)
-              return compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(9, 1)), toNum(getParam(15, 1)), toNum(getParam(19, 1)));
+              return compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(9, dv)), toNum(getParam(15, dv)), toNum(getParam(19, dv)));
             else if(match[14])
-              return compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(15, 1)), toNum(getParam(19, 1)), toNum(getParam(23, 1)));
+              return compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(15, dv)), toNum(getParam(19, dv)), toNum(getParam(23, dv)));
             else
               return getParam(5, null);
           };
@@ -439,6 +446,13 @@ export class Widget extends StateManaged {
             variables[variable][index] = getValue(variables[variable][index]);
           else
             variables[variable] = getValue(variables[variable]);
+        } else if(modeSet.test(a)) {
+          legacyMode.clear();
+          a.replace(modeSet,'').trim().split(/[, ]+/).forEach(i => legacyMode.add(i));
+        } else if(modeAdd.test(a)) {
+          a.replace(modeAdd,'').trim().split(/[, ]+/).forEach(i => legacyMode.add(i));
+        } else if(modeRemove.test(a)) {
+          a.replace(modeRemove,'').trim().split(/[, ]+/).forEach(i => legacyMode.delete(i));
         } else {
           problems.push('String could not be interpreted as expression. Please check your syntax and note that many characters have to be escaped.');
         }
@@ -635,7 +649,7 @@ export class Widget extends StateManaged {
             collectionBackups[add] = collections[add];
             collections[add] = addCollections[add];
           }
-          await this.evaluateRoutine(a.loopRoutine, variables, collections, (depth || 0) + 1, true);
+          await this.evaluateRoutine(a.loopRoutine, variables, collections, (depth || 0) + 1, legacyMode, true);
           for(const add in addVariables) {
             if(variableBackups[add] !== undefined)
               variables[add] = variableBackups[add];
@@ -715,7 +729,7 @@ export class Widget extends StateManaged {
           const branch = a.condition ? 'thenRoutine' : 'elseRoutine';
           if (Array.isArray(a[branch])) {
             $('#debugButtonOutput').textContent += `\n\n\nIF ${branch}\n`;
-            await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true);
+            await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, legacyMode, true);
           }
         } else
           problems.push(`IF operation is missing the 'condition' or 'operand1' parameter.`);
