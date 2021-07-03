@@ -304,10 +304,10 @@ test('Dynamic expressions', async t => {
   };
 });
 
-publicLibraryButtons('Blue',               0, '6620353f985e646bb3ca37ec8351695a', [
+publicLibraryButtons('Blue',               0, '6681bcf652fe87f58945797e2f909036', [
   'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton',
   'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton',
-  'fdc25f83-ed33-4845-a97c-ff35fa8a094f_shuffleButton', 'buttonInputGo', 'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', '9n2q'
+  'reset_button', 'buttonInputGo', 'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', '9n2q'
 ]);
 publicLibraryButtons('FreeCell',           0, 'b3339b3c5d42f47f4def7a164be69823', [ 'reset', 'jemz', 'reset' ]);
 publicLibraryButtons('Reward',             0, '45947298cf2e3e9700468b7384a5486b', [
