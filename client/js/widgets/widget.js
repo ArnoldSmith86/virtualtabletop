@@ -45,6 +45,7 @@ export class Widget extends StateManaged {
       changeRoutine: null,
       enterRoutine: null,
       leaveRoutine: null,
+      globalUpdateRoutine: null,
       debug: false
     });
 
@@ -113,6 +114,19 @@ export class Widget extends StateManaged {
         this.parent.applyChildAdd(this);
       } else {
         delete this.parent;
+      }
+    }
+
+    for(const key in delta) {
+      const isGlobalUpdateRoutine = key.match(/^(?:(.*)G|g)lobalUpdateRoutine$/);
+      if(isGlobalUpdateRoutine) {
+        const property = isGlobalUpdateRoutine[1] || '*';
+        if(StateManaged.globalUpdateListeners[property] === undefined)
+          StateManaged.globalUpdateListeners[property] = [];
+        if(Array.isArray(delta[key]))
+          StateManaged.globalUpdateListeners[property].push([ this, key ]);
+        else
+          StateManaged.globalUpdateListeners[property] = StateManaged.globalUpdateListeners[property].filter(x=>x[0]!=this);
       }
     }
 
