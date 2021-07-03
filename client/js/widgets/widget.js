@@ -866,7 +866,7 @@ export class Widget extends StateManaged {
         setDefaults(a, { owned: true, contained: true });
 
         if(a.deck !== undefined && this.isValidID(a.deck, problems))
-          a.holder = toA(a.deck).map(d=>widgets.get(d).get('parent')).filter(d=>d!==null);
+          a.holder = toArray(a.deck).map(d=>widgets.get(d).get('parent')).filter(d=>d!==null);
 
         if(this.isValidID(a.holder, problems)) {
           for(const holder of toArray(a.holder)) {
