@@ -399,3 +399,17 @@ button:disabled {
   background: #808080;
   color: #d3d3d3;
 }
+
+button.top {
+  padding: 0px;
+  margin: 0.5px;
+  text-align: center;
+}
+
+button.add {
+  padding: 1.7em 1em 5px 1em;
+  text-align: center;
+  background-image:url(/i/icons-white/plus-solid-svg.svg);
+  background-size: 1em;
+  background-position:  center 0.35em;
+}
