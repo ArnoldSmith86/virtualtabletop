@@ -15,6 +15,7 @@
   --wcMainOH: var(--VTTblueDark);
   --wcBorderOH: var(--VTTblue);
   --wcFontOH: var(--wcFont);
+  --pileDisplay: flex
 }
 
 body {
