@@ -830,13 +830,20 @@ export class Widget extends StateManaged {
                 for(const c of cards) {
                   if(a.face !== undefined)
                     await c.flip(a.face);
-                  await c.moveToHolder(widgets.get(holder));
+                  const thisParent = c.get('parent');
+                  if(thisParent === null ||
+                     !(thisParent == holder ||
+                       (widgets.has(thisParent) &&
+                        widgets.get(thisParent).get('type') == 'pile' &&
+                        widgets.get(thisParent).get('parent') == holder)
+                      )
+                    ) await c.moveToHolder(widgets.get(holder));
                 }
               }
             } else {
               problems.push(`Holder ${holder} does not have a deck.`);
             }
-          };
+          }
         }
       }
 
