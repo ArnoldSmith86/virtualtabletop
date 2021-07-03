@@ -1,11 +1,42 @@
 import { Widget } from './widget.js';
 
 export class Label extends Widget {
+  
+  	setFromDiv(e, toEnd){
+		e.preventDefault();	
+		const t = e.target.innerHTML.trim()
+		.replace(/<b>(.*?)<\/b>/gim, '($1)b')
+		.replace(/<i>(.*?)<\/i>/gim, '($1)i')
+		.replace(/<span style="color: (.*?)">(.*?)<\/span>/gim, '($2)c$1') 
+		.replace(/<span style="margin:auto; display:table">(.*?)<\/span>/gim, '($1)center')
+		.replace(/<span style="font-size: (.*?)px">(.*?)<\/span>/gim, '($2)$1px')
+		.replace(/<sub">(.*?)<\/sub>/gim, '($1)center')
+		.replace(/<sup>(.*?)<\/sup>/gim, '($1)sup')
+		.replace(/<sub>(.*?)<\/sub>/gim, '($1)sub')
+		.replace(/<ol><li>([^>]+)?<\/li>/gim, '(ol)($1)li')
+		.replace(/<ul><li>([^>]+)?<\/li>/gim, '(ul)($1)li')
+		.replace(/<li>([^>]+)?<\/li><\/ol>/gim, '($1)li(/ol)')
+		.replace(/<li>([^>]+)?<\/li><\/ul>/gim, '($1)li(/ul)')
+		.replace(/<li>([^>]+)?<\/li>/gim, '($1)li')
+		.replace(/&lt;/gim,'<') 
+		.replace(/&gt;/gim, '>') 
+		this.setText(t + " ");
+		if(toEnd) {
+			document.execCommand('selectAll', false, null); 
+			document.getSelection().collapseToEnd();
+			}
+		}
+  
   constructor(id) {
     super(id);
   	this.divinput = document.createElement('div');
     this.divinput.className = "labeldiv"; 
   	this.domElement.appendChild(this.divinput);
+    this.divinput.addEventListener('focusout' , e => this.setFromDiv (e, false))
+    this.divinput.addEventListener('keydown' , e => {
+      if(e.shiftKey && e.keyCode == 13)
+        this.setFromDiv (e, true);
+    })
 
     this.input = document.createElement('textarea');
     this.addDefaults({
@@ -50,22 +81,20 @@ export class Label extends Widget {
 	if(delta.richtext  !== undefined|| delta.text !== undefined) {
 	  if(this.get('richtext') == true) {
       var HTMLtext = this.get('text').toString()
-      .replace(/=/gimu, '&#61')
-      .replace(/</gimu,'')
-      .replace(/>/gimu, '')
-      .replace(/\[c: ([^\]]+)?\]/gim, '<span style="color: $1">')
-      .replace(/\[center\]/gim, '<span style="margin:auto; display:table">')
-      .replace(/\[size: ([^\]]+)?\]/gim, '<span style="font-size: $1">')
-      .replace(/\[\/c\]|\[\/center\]|\[\/size\]/gim, '</span>')
-      .replace(/\*\*(.*?)\*\*/gim, '<b>$1</b>')
-      .replace(/\*(.*?)\*/gim, '<i>$1</i>')
-      .replace(/\-\-(.*?)\-\-/gim, '<sub>$1</sub>')
-      .replace(/\^\^(.*?)\^\^/gim, '<sup>$1</sup>')
-      .replace(/\[list\]/gim, '<menu>')
-      .replace(/\[\/list\]/gim, '</menu>')
-      .replace(/\[li\]/gim, '<li>')
-      .replace(/\[\/li\]/gim, '</li>')
-      .replace(/_(.*?)_/gim, '<u>$1</u>')
+      .replace(/</gimu,'&lt;')
+      .replace(/>/gimu, '&gt;')
+      .replace(/\(([^)]+)\)b/gim, '<b>$1</b>')
+      .replace(/\(([^)]+)\)i/gim, '<i>$1</i>')
+      .replace(/\(([^)]+)\)sub/gim, '<sub>$1</sub>')
+      .replace(/\(([^)]+)\)sup/gim, '<sup>$1</sup>')
+      .replace(/\((.*?)\)center/gim, '<span style="margin:auto; display:table">$1</span>')
+      .replace(/\((.*?)\)c([^\s]+)/gim, '<span style="color: $2">$1</span>')
+      .replace(/\(ol\)\(([^)]+)\)li/gim, '<ol><li>$1</li>')
+      .replace(/\(ul\)\(([^)]+)\)li/gim, '<ul><li>$1</li>')
+      .replace(/\(([^)]+)\)li\(\/ol\)/gim, '<li>$1</li></ol>')
+      .replace(/\(([^)]+)\)li\(\/ul\)/gim, '<li>$1</li></ul>')
+      .replace(/\(([^)]+)\)li/gim, '<li>$1</li>')
+      .replace(/\((.*?)\)([^d]+)px/gim, '<span style="font-size: $2px">$1</span>')
       this.divinput.innerHTML = HTMLtext;
       this.input.style.display = "none";
       this.divinput.style.display = "inline-block";
