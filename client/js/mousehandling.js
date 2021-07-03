@@ -19,7 +19,7 @@ async function inputHandler(name, e) {
 
   const editMovable = edit || typeof jeEnabled == 'boolean' && jeEnabled && e.ctrlKey;
 
-  if(!mouseTarget && [ 'TEXTAREA', 'INPUT', 'BUTTON', 'OPTION', 'LABEL', 'SELECT' ].indexOf(e.target.tagName) != -1)
+  if(!mouseTarget && ([ 'TEXTAREA', 'INPUT', 'BUTTON', 'OPTION', 'LABEL', 'SELECT' ].indexOf(e.target.tagName) != -1 || (e.target.className.match("labeldiv")))
     if(!editMovable || !e.target.parentNode || !e.target.parentNode.className.match(/label/))
       return;
 
