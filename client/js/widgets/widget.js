@@ -39,6 +39,7 @@ export class Widget extends StateManaged {
       ignoreOnLeave: false,
 
       parent: null,
+      fixedParent: false,
       inheritFrom: null,
       owner: null,
       dropOffsetX: 0,
@@ -1105,7 +1106,7 @@ export class Widget extends StateManaged {
       return super.get(property);
     }
   }
-  
+
   hideEnlarged() {
     $('#enlarged').classList.add('hidden');
   }
@@ -1131,70 +1132,82 @@ export class Widget extends StateManaged {
 
   async moveStart() {
     await this.bringToFront();
-    this.dropTargets = this.validDropTargets();
-    this.currentParent = widgets.get(this.get('parent'));
-    this.hoverTargetDistance = 99999;
-    this.hoverTarget = null;
 
-    this.disablePileUpdateAfterParentChange = true;
-    await this.set('parent', null);
-    delete this.disablePileUpdateAfterParentChange;
+    if(!this.get('fixedParent')) {
+      this.dropTargets = this.validDropTargets();
+      this.currentParent = widgets.get(this.get('parent'));
+      this.hoverTargetDistance = 99999;
+      this.hoverTarget = null;
 
-    for(const t of this.dropTargets)
-      t.domElement.classList.add('droppable');
+      this.disablePileUpdateAfterParentChange = true;
+      await this.set('parent', null);
+      delete this.disablePileUpdateAfterParentChange;
+
+      for(const t of this.dropTargets)
+        t.domElement.classList.add('droppable');
+    }
   }
 
   async move(x, y) {
-    const newX = (jeZoomOut ? x : Math.max(0-this.get('width' )*0.25, Math.min(1600+this.get('width' )*0.25, x))) - this.get('width' )/2;
-    const newY = (jeZoomOut ? y : Math.max(0-this.get('height')*0.25, Math.min(1000+this.get('height')*0.25, y))) - this.get('height')/2;
+    let newX = (jeZoomOut ? x : Math.max(0-this.get('width' )*0.25, Math.min(1600+this.get('width' )*0.25, x))) - this.get('width' )/2;
+    let newY = (jeZoomOut ? y : Math.max(0-this.get('height')*0.25, Math.min(1000+this.get('height')*0.25, y))) - this.get('height')/2;
+
+    if(this.get('fixedParent') && widgets.has(this.get('parent'))) {
+      newX -= widgets.get(this.get('parent')).absoluteCoord('x');
+      newY -= widgets.get(this.get('parent')).absoluteCoord('y');
+    }
 
     await this.setPosition(newX, newY, this.get('z'));
-    const myCenter = center(this.domElement);
 
-    await this.checkParent();
+    if(!this.get('fixedParent')) {
+      const myCenter = center(this.domElement);
+      await this.checkParent();
 
-    this.hoverTargetChanged = false;
-    if(this.hoverTarget) {
-      if(overlap(this.domElement, this.hoverTarget.domElement)) {
-        this.hoverTargetDistance = distance(myCenter, this.hoverTargetCenter);
-      } else {
-        this.hoverTargetDistance = 99999;
-        this.hoverTarget = null;
-        this.hoverTargetChanged = true;
-      }
-    }
-
-    for(const t of this.dropTargets) {
-      const tCenter = center(t.domElement);
-      const d = distance(myCenter, tCenter);
-      if(d < this.hoverTargetDistance) {
-        if(overlap(this.domElement, t.domElement)) {
-          this.hoverTargetChanged = this.hoverTarget != t;
-          this.hoverTarget = t;
-          this.hoverTargetCenter = tCenter;
-          this.hoverTargetDistance = d;
+      this.hoverTargetChanged = false;
+      if(this.hoverTarget) {
+        if(overlap(this.domElement, this.hoverTarget.domElement)) {
+          this.hoverTargetDistance = distance(myCenter, this.hoverTargetCenter);
+        } else {
+          this.hoverTargetDistance = 99999;
+          this.hoverTarget = null;
+          this.hoverTargetChanged = true;
         }
       }
-    }
 
-    if(this.hoverTargetChanged) {
-      if(this.lastHoverTarget)
-        this.lastHoverTarget.domElement.classList.remove('droptarget');
-      if(this.hoverTarget)
-        this.hoverTarget.domElement.classList.add('droptarget');
-      this.lastHoverTarget = this.hoverTarget;
+      for(const t of this.dropTargets) {
+        const tCenter = center(t.domElement);
+        const d = distance(myCenter, tCenter);
+        if(d < this.hoverTargetDistance) {
+          if(overlap(this.domElement, t.domElement)) {
+            this.hoverTargetChanged = this.hoverTarget != t;
+            this.hoverTarget = t;
+            this.hoverTargetCenter = tCenter;
+            this.hoverTargetDistance = d;
+          }
+        }
+      }
+
+      if(this.hoverTargetChanged) {
+        if(this.lastHoverTarget)
+          this.lastHoverTarget.domElement.classList.remove('droptarget');
+        if(this.hoverTarget)
+          this.hoverTarget.domElement.classList.add('droptarget');
+        this.lastHoverTarget = this.hoverTarget;
+      }
     }
   }
 
   async moveEnd() {
-    for(const t of this.dropTargets)
-      t.domElement.classList.remove('droppable');
+    if(!this.get('fixedParent')) {
+      for(const t of this.dropTargets)
+        t.domElement.classList.remove('droppable');
 
-    await this.checkParent();
+      await this.checkParent();
 
-    if(this.hoverTarget) {
-      await this.moveToHolder(this.hoverTarget);
-      this.hoverTarget.domElement.classList.remove('droptarget');
+      if(this.hoverTarget) {
+        await this.moveToHolder(this.hoverTarget);
+        this.hoverTarget.domElement.classList.remove('droptarget');
+      }
     }
 
     this.hideEnlarged();
