@@ -484,7 +484,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\((IF|SELECT)\\) ↦ relation', [ '<', '<=', '==', '===', '!=', '>', '>=', 'in', '!in' ]);
   jeAddEnumCommands('^.*\\(LABEL\\) ↦ mode', [ 'set', 'dec', 'inc', 'append' ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ angle', [ 45, 60, 90, 135, 180 ]);
-  jeAddEnumCommands('^.*\\(ROTATE|SELECT\\) ↦ mode', [ 'set', 'add' ]);
+  jeAddEnumCommands('^.*\\((ROTATE|SELECT)\\) ↦ mode', [ 'set', 'add' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ type', [ 'all', null, 'button', 'card', 'deck', 'holder', 'label', 'spinner' ]);
   jeAddEnumCommands('^.*\\(SET\\) ↦ relation', [ '+', '-', '=', "*", "/",'!' ]);
   jeAddEnumCommands('^.*\\(TIMER\\) ↦ mode', [ 'pause', 'start', 'toggle', 'set', 'dec', 'inc', 'reset']);
