@@ -11,6 +11,8 @@ let jeCommandWithOptions = null;
 let jeContext = null;
 let jeSecondaryWidget = null;
 let jeDeltaIsOurs = false;
+let jeKeyIsDown = true;
+let jeKeyIsDownDeltas = [];
 let jeKeyword = '';
 const jeWidgetLayers = {};
 const jeState = {
@@ -282,7 +284,7 @@ const jeCommands = [
       const oldStart = getSelection().anchorOffset;
       const oldEnd   = getSelection().focusOffset;
       jeSet(JSON.stringify(jeStateNow, null, '  '));
-      jeSelect(oldStart, oldEnd);
+      jeSelect(oldStart, oldEnd, true);
     },
     show: function() {
       return jeGetValue(jeContext.slice(0, -1))[jeContext[jeContext.length-1]] !== undefined;
@@ -506,12 +508,14 @@ function jeAddCommands() {
   jeAddFaceCommand('radius', ' (rounded corners)', 1);
 
   jeAddEnumCommands('^[a-z]+ ↦ type', [ null, 'button', 'canvas', 'card', 'deck', 'holder', 'label', 'spinner', 'timer' ]);
+  jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ value', [ '${}' ]);
   jeAddEnumCommands('^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ textAlign', [ 'left', 'center', 'right' ]);
   jeAddEnumCommands('^.*\\(CANVAS\\) ↦ mode', [ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ]);
   jeAddEnumCommands('^.*\\(CLICK\\) ↦ mode', [ 'respect', 'ignoreClickable', 'ignoreClickRoutine', 'ignoreAll' ]);
   jeAddEnumCommands('^.*\\(FLIP\\) ↦ faceCycle', [ 'forward', 'backward', 'random' ]);
   jeAddEnumCommands('^.*\\(GET\\) ↦ aggregation', [ 'first', 'last', 'array', 'average', 'median', 'min', 'max', 'sum' ]);
   jeAddEnumCommands('^.*\\(IF\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=' ]);
+  jeAddEnumCommands('^.*\\(IF\\) ↦ (operand1|operand2|condition)', [ '${}' ]);
   jeAddEnumCommands('^.*\\(LABEL\\) ↦ mode', [ 'set', 'dec', 'inc', 'append' ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ angle', [ 45, 60, 90, 135, 180 ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ mode', [ 'set', 'add' ]);
@@ -522,7 +526,6 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(TIMER\\) ↦ mode', [ 'pause', 'start', 'toggle', 'set', 'dec', 'inc', 'reset']);
   jeAddEnumCommands('^.*\\(TIMER\\) ↦ value', [ 0, 'start', 'end', 'milliseconds']);
   jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ property', [ 'id', 'parent', 'type', 'rotation' ]);
-  jeAddEnumCommands('^.* ↦ applyVariables ↦ [0-9]+ ↦ variable', [ 'COUNT', 'id', 'result', 'playerName', 'playerColor', 'activePlayers' , 'thisID' ]);
 
   jeAddEnumCommands('^.*\\((CLICK|COUNT|DELETE|FLIP|GET|LABEL|ROTATE|SET|SORT|SHUFFLE)\\) ↦ collection', [ 'DEFAULT', 'thisButton', 'child' ]);
   jeAddEnumCommands('^.*\\(CLONE\\) ↦ source', [ 'DEFAULT', 'thisButton', 'child' ]);
@@ -534,6 +537,7 @@ function jeAddCommands() {
   jeAddNumberCommand('half number', '/', x=>x/2);
   jeAddNumberCommand('zero', '0', x=>0);
   jeAddNumberCommand('opposite value', '0', x=>-x);
+  jeAddNumberCommand('${}', '0', x=>'${}');
 
   jeAddAlignmentCommands();
 }
@@ -680,8 +684,14 @@ async function jeApplyChanges() {
 
   const currentStateRaw = $('#jeText').textContent;
   const completeState = JSON.parse(jePostProcessText(currentStateRaw));
+
+  // apply external changes that happened while the key was pressed
+  for(const delta of jeKeyIsDownDeltas)
+    for(const key in delta)
+      completeState[key] = delta[key];
+
   const currentState = JSON.stringify(jePostProcessObject(completeState));
-  if(currentStateRaw != jeStateBeforeRaw) {
+  if(currentStateRaw != jeStateBeforeRaw || jeKeyIsDownDeltas.length) {
     jeDeltaIsOurs = true;
     await jeApplyExternalChanges(completeState);
     jeStateBeforeRaw = currentStateRaw;
@@ -718,19 +728,32 @@ function jeApplyDelta(delta) {
   if(jeMode == 'widget') {
     for(const field of [ 'id', 'deck' ]) {
       if(!jeDeltaIsOurs && jeStateNow && jeStateNow[field] && delta.s[jeStateNow[field]] !== undefined) {
-        if(delta.s[jeStateNow[field]] === null)
+        if(delta.s[jeStateNow[field]] === null) {
           jeDisplayTree();
-        else
-          jeSelectWidget(widgets.get(jeStateNow.id), document.activeElement !== $('#jeText'));
+        } else {
+          if(jeKeyIsDown) {
+            jeKeyIsDownDeltas.push(delta.s[jeStateNow[field]]);
+            return;
+          }
+
+          jeSelectWidget(widgets.get(jeStateNow.id), document.activeElement !== $('#jeText'), false, true);
+        }
       }
     }
   }
 
   if(jeMode == 'multi' && !jeDeltaIsOurs) {
     try {
-      for(const selectedWidget of JSON.parse($('#jeText').textContent).widgets)
-        if(delta.s[selectedWidget] !== undefined)
+      for(const selectedWidget of JSON.parse($('#jeText').textContent).widgets) {
+        if(delta.s[selectedWidget] !== undefined) {
+          if(jeKeyIsDown) {
+            jeKeyIsDownDeltas.push(delta.s);
+            return;
+          }
+
           return jeUpdateMulti();
+        }
+      }
     } catch(e) {
     }
   }
@@ -806,14 +829,55 @@ async function jeClick(widget, e) {
   }
 }
 
-function jeSelectWidget(widget, dontFocus, addToSelection) {
+function jeSelectWidget(widget, dontFocus, addToSelection, restoreCursorPosition) {
+  if(restoreCursorPosition) {
+    const aO = getSelection().anchorOffset;
+    const fO = getSelection().focusOffset;
+    const s = Math.min(aO, fO);
+    const e = Math.max(aO, fO);
+    const v = $('#jeText').textContent;
+    const linesUntilCursor = v.split('\n').slice(0, v.substr(0, s).split('\n').length);
+    const currentLine = linesUntilCursor.pop();
+    let defaultValueToAdd = null;
+    try {
+      const defaultValueMatch = currentLine.match(/^  "([^"]+)": (.*?),?$/);
+      if(defaultValueMatch && jeWidget && jeWidget.getDefaultValue(defaultValueMatch[1]) === JSON.parse(defaultValueMatch[2]))
+        defaultValueToAdd = defaultValueMatch[1];
+    } catch(e) {}
+    var cursorState = {
+      currentLine,
+      defaultValueToAdd,
+      sameLinesBefore: linesUntilCursor.filter(l=>l==currentLine).length,
+      start: s-linesUntilCursor.join('\n').length,
+      end: e-linesUntilCursor.join('\n').length
+    };
+  }
+
   if(addToSelection && (jeMode == 'widget' || jeMode == 'multi')) {
     jeSelectWidgetMulti(widget, dontFocus);
   } else {
     jeMode = 'widget';
     jeWidget = widget;
+    jeKeyIsDownDeltas = [];
     jeStateNow = JSON.parse(JSON.stringify(widget.state));
-    jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(widget.state), null, '  ')), dontFocus);
+    if(restoreCursorPosition && cursorState.defaultValueToAdd && jeStateNow[cursorState.defaultValueToAdd] === undefined)
+      jeStateNow[cursorState.defaultValueToAdd] = jeWidget.getDefaultValue(cursorState.defaultValueToAdd);
+    jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(jeStateNow), null, '  ')), dontFocus);
+  }
+
+  if(restoreCursorPosition) {
+    const v = $('#jeText').textContent;
+    const lines = v.split('\n');
+    let offset = 0;
+    let linesFound = 0;
+    for(const line of lines) {
+      if(line == cursorState.currentLine && linesFound++ == cursorState.sameLinesBefore) {
+        jeSelect(offset + cursorState.start - 1, offset + cursorState.end - 1, false);
+        break;
+      } else {
+        offset += line.length + 1;
+      }
+    }
   }
 }
 
@@ -1080,6 +1144,12 @@ function jeInsert(context, key, value) {
   }
 }
 
+function jeNewline() {
+  const s = Math.min(getSelection().anchorOffset, getSelection().focusOffset);
+  const match = $('#jeText').textContent.substr(0,s).match(/( *)[^\n]*$/);
+  jePasteText('\n' + match[1], false);
+}
+
 function jePasteText(text, select) {
   const aO = getSelection().anchorOffset;
   const fO = getSelection().focusOffset;
@@ -1090,14 +1160,15 @@ function jePasteText(text, select) {
   $('#jeText').textContent = v.substr(0, s) + text + v.substr(e);
   $('#jeText').focus();
   jeColorize();
-  jeSelect(select ? s : s + text.length, s + text.length);
+  jeSelect(select ? s : s + text.length, s + text.length, false);
 }
 
 function jePostProcessObject(o) {
   const copy = { ...o };
-  for(const key in copy)
-    if(copy[key] === null || copy[key] === jeWidget.getDefaultValue(key) || key.match(/in deck/))
-      delete copy[key];
+  if(!o.inheritFrom)
+    for(const key in copy)
+      if(copy[key] === null || copy[key] === jeWidget.getDefaultValue(key) || key.match(/in deck/))
+        delete copy[key];
   return copy;
 }
 
@@ -1111,7 +1182,7 @@ function jePreProcessObject(o) {
     const match = key.match(/^(.*?)(\*)?(#)?$/);
     if(o[match[1]] !== undefined)
       copy[match[1]] = o[match[1]];
-    else if(match[2] == '*')
+    else if(match[2] == '*' && !o.inheritFrom)
       copy[match[1]] = jeWidget.getDefaultValue(match[1]);
     if(match[3] == '#')
       copy[`LINEBREAK${match[1]}`] = null;
@@ -1135,7 +1206,7 @@ function jePreProcessText(t) {
   return t.replace(/(\n +"LINEBREAK.*": null,)+/g, '\n').replace(/(,\n +"LINEBREAK.*": null)+/g, '');
 }
 
-function jeSelect(start, end) {
+function jeSelect(start, end, scrollToCursor) {
   const t = $('#jeText');
   const text = t.textContent;
   try {
@@ -1147,7 +1218,9 @@ function jeSelect(start, end) {
     t.scrollTop = 50000;
     t.textContent = text;
 
-    if(t.scrollTop) {
+    if(!scrollToCursor) {
+      t.scrollTop = scroll;
+    } else if(t.scrollTop) {
       if(Math.abs(t.scrollTop + t.clientHeight/2 - scroll) < t.clientHeight*.25)
         t.scrollTop = scroll;
       else
@@ -1193,7 +1266,7 @@ function jeSetAndSelect(replaceBy, insideString) {
 
   jeSet(jsonString);
   const quote = typeof replaceBy == 'string' && !insideString ? 1 : 0;
-  jeSelect(startIndex + quote, startIndex+jsonString.length-length - quote);
+  jeSelect(startIndex + quote, startIndex+jsonString.length-length - quote, true);
 }
 
 function jeShowCommands() {
@@ -1358,13 +1431,20 @@ onLoad(function() {
 });
 
 window.addEventListener('keydown', async function(e) {
+  if(e.ctrlKey && e.key == 'j') {
+    e.preventDefault();
+    jeToggle();
+  }
+  if(!jeEnabled)
+    return;
+
   if(e.key == 'Control')
     jeState.ctrl = true;
   if(e.key == 'Shift')
     jeState.shift = true;
 
-  if(e.key == 'Enter' && jeEnabled) {
-    document.execCommand('insertHTML', false, '\n');
+  if(e.key == 'Enter') {
+    jeNewline();
     e.preventDefault();
   }
 
@@ -1373,15 +1453,12 @@ window.addEventListener('keydown', async function(e) {
       const locationLine = String(jeJSONerror).match(/line ([0-9]+) column ([0-9]+)/);
       if(locationLine) {
         const pos = $('#jeText').textContent.split('\n').slice(0, locationLine[1]-1).join('\n').length + +locationLine[2];
-        jeSelect(pos, pos);
+        jeSelect(pos, pos, true);
       }
 
       const locationPostion = String(jeJSONerror).match(/position ([0-9]+)/);
       if(locationPostion)
-        jeSelect(+locationPostion[1], +locationPostion[1]);
-    } else if(e.key == 'j') {
-      e.preventDefault();
-      jeToggle();
+        jeSelect(+locationPostion[1], +locationPostion[1], true);
     } else {
       for(const command of jeCommands) {
         if(command.currentKey == e.key) {
@@ -1411,7 +1488,16 @@ window.addEventListener('keydown', async function(e) {
   }
 });
 
+window.addEventListener('keydown', function(e) {
+  if(!jeEnabled)
+    return;
+  if(e.key != 'Control')
+    jeKeyIsDown = true;
+});
+
 window.addEventListener('keyup', function(e) {
+  if(!jeEnabled)
+    return;
   if(e.key == 'Control')
     jeState.ctrl = false;
   if(e.key == 'Shift')
@@ -1422,4 +1508,6 @@ window.addEventListener('keyup', function(e) {
     if((jeWidget || jeMode == 'multi') && !jeJSONerror)
       jeApplyChanges();
   }
+  jeKeyIsDown = false;
+  jeKeyIsDownDeltas = [];
 });
