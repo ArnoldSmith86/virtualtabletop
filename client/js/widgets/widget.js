@@ -376,7 +376,7 @@ export class Widget extends StateManaged {
         await callback(a);
     }
 
-    if(this.isBeingRemoved || this.inRemovalQueue)
+    if(!depth && (this.isBeingRemoved || this.inRemovalQueue))
       return;
 
     batchStart();
@@ -667,10 +667,18 @@ export class Widget extends StateManaged {
             collections[add] = addCollections[add];
           }
           await this.evaluateRoutine(a.loopRoutine, variables, collections, (depth || 0) + 1, true);
-          for(const add in addVariables)
-            variables[add] = variableBackups[add];
-          for(const add in addCollections)
-            collections[add] = collectionBackups[add];
+          for(const add in addVariables) {
+            if(variableBackups[add] !== undefined)
+              variables[add] = variableBackups[add];
+            else
+              delete variables[add];
+          }
+          for(const add in addCollections) {
+            if(collectionBackups[add] !== undefined)
+              collections[add] = collectionBackups[add];
+            else
+              delete collections[add];
+          }
         }
         if(a.in) {
           for(const key in a.in)
@@ -686,8 +694,8 @@ export class Widget extends StateManaged {
         if(isValidCollection(a.collection)) {
           let c = collections[a.collection];
           if (a.skipMissing)
-            c = c.filter(w=>w.get(a.property) !== null && w.get(a.property) !== undefined);
-          c = JSON.parse(JSON.stringify(c.map(w=>w.get(a.property))));
+            c = c.filter(w=>w.get(String(a.property)) !== null && w.get(String(a.property)) !== undefined);
+          c = JSON.parse(JSON.stringify(c.map(w=>w.get(String(a.property)))));
           if(c.length) {
             switch(a.aggregation) {
             case 'first':
@@ -897,9 +905,27 @@ export class Widget extends StateManaged {
         }
         if((a.property == 'parent' || a.property == 'deck') && a.value !== null && !widgets.has(a.value)) {
           problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
+        } else if (a.property == 'id' && isValidCollection(a.collection)) {
+          for(const oldWidget of collections[a.collection]) {
+            const oldState = JSON.stringify(oldWidget.state);
+            const oldID = oldWidget.get('id');
+            var newState = JSON.parse(oldState);
+
+            newState.id = compute(a.relation, null, oldWidget.get(a.property), a.value);
+            if(!widgets.has(newState.id)) {
+              $('#editWidgetJSON').dataset.previousState = oldState;
+              $('#editWidgetJSON').value = JSON.stringify(newState);
+              await onClickUpdateWidget(false);
+              for(const c in collections)
+                collections[c] = collections[c].map(w=>w.id==oldID ? widgets.get(newState.id) : w);
+              sendDelta(true);
+            } else {
+              problems.push(`id ${newState.id} already in use, ignored.`);
+            }
+          }
         } else if(isValidCollection(a.collection)) {
           for(const w of collections[a.collection]) {
-            await w.set(a.property, compute(a.relation, null, w.get(a.property), a.value));
+            await w.set(String(a.property), compute(a.relation, null, w.get(String(a.property)), a.value));
           }
         }
       }
