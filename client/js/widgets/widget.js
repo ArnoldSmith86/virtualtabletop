@@ -777,43 +777,49 @@ export class Widget extends StateManaged {
       if(a.func == 'RECALL') {
         setDefaults(a, { owned: true, contained: true });
 
-        if(a.deck !== undefined && this.isValidID(a.deck, problems))
-          a.holder = toA(a.deck).map(d=>widgets.get(d).get('parent')).filter(d=>d!==null);
+        const decks = widgetFilter(w=> {
+          if(a.deck !== undefined) {
+            return w.get('type')=='deck' && toA(a.deck).includes(w.get('id'));
+          } else {
+            return w.get('type')=='deck' && toA(a.holder).includes(w.get('parent'));
+          }
+        });
 
-        if(this.isValidID(a.holder, problems)) {
-          for(const holder of toA(a.holder)) {
-            const decks = widgetFilter(w=>w.get('type')=='deck'&&w.get('parent')==holder);
-            if(decks.length) {
-              for(const deck of decks) {
-                let cards = widgetFilter(w=>w.get('deck')==deck.get('id'));
-                if(!a.owned)
-                  cards = cards.filter(c=>!c.get('owner'));
-                if(!a.contained) {
-                  cards = cards.filter(function(c) {
-                    if(!c.get('parent'))
-                      return true;
+        if(decks.length) {
+          for(const deck of decks) {
+            let cards = widgetFilter(w=>w.get('deck')==deck.get('id'));
+            if(!a.owned)
+              cards = cards.filter(c=>!c.get('owner'));
+            if(!a.contained) {
+              cards = cards.filter(function(c) {
+                if(!c.get('parent'))
+                  return true;
 
-                    const parent = widgets.get(c.get('parent'));
-                    const parentType = parent.get('type');
-                    if(parentType == 'holder')
-                      return parent.get('childrenPerOwner');
-                    if(parentType != 'pile' || !parent.get('parent'))
-                      return true;
+                const parent = widgets.get(c.get('parent'));
+                const parentType = parent.get('type');
+                if(parentType == 'holder')
+                  return parent.get('childrenPerOwner');
+                if(parentType != 'pile' || !parent.get('parent'))
+                  return true;
 
-                    const pileParent = widgets.get(parent.get('parent'));
-                    return pileParent.get('type') != 'holder';
-                  });
-                }
-                for(const c of cards) {
-                  if(a.face !== undefined)
-                    await c.flip(a.face);
-                  await c.moveToHolder(widgets.get(holder));
-                }
-              }
-            } else {
-              problems.push(`Holder ${holder} does not have a deck.`);
+                const pileParent = widgets.get(parent.get('parent'));
+                return pileParent.get('type') != 'holder';
+              });
             }
-          };
+            for(const c of cards) {
+              if(a.face !== undefined)
+                await c.flip(a.face);
+              await c.moveToHolder(widgets.get(deck.get('parent')));
+            }
+          }
+        } else {
+          if(a.deck !== undefined) {
+            problems.push(`Deck ${a.deck} not found.`);
+          } else if(a.holder !== undefined) {
+            problems.push(`Holder ${a.holder} does not have a deck.`);
+          } else {
+            problems.push('No Deck or Holder provied.')
+          }
         }
       }
 
