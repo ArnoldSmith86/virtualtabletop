@@ -26,6 +26,7 @@ export default function minifyRoom() {
 
         'client/css/widgets/basicwidget.css',
         'client/css/widgets/button.css',
+        'client/css/widgets/canvas.css',
         'client/css/widgets/card.css',
         'client/css/widgets/classes.css',
         'client/css/widgets/deck.css',
@@ -47,6 +48,7 @@ export default function minifyRoom() {
           'client/js/editmode.js',
           'client/js/geometry.js',
           'client/js/jsonedit.js',
+          'client/js/compute.js',
           'client/js/mousehandling.js',
           'client/js/statemanaged.js',
 
@@ -56,6 +58,7 @@ export default function minifyRoom() {
           'client/js/widgets/widget.js',
           'client/js/widgets/basicwidget.js',
           'client/js/widgets/button.js',
+          'client/js/widgets/canvas.js',
           'client/js/widgets/card.js',
           'client/js/widgets/deck.js',
           'client/js/widgets/holder.js',

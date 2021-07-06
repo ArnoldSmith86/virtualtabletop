@@ -7,9 +7,13 @@ let jeStateBeforeRaw = null;
 let jeStateNow = null;
 let jeJSONerror = null;
 let jeCommandError = null;
+let jeCommandWithOptions = null;
 let jeContext = null;
 let jeSecondaryWidget = null;
 let jeDeltaIsOurs = false;
+let jeKeyIsDown = true;
+let jeKeyIsDownDeltas = [];
+let jeKeyword = '';
 const jeWidgetLayers = {};
 const jeState = {
   ctrl: false,
@@ -196,8 +200,9 @@ const jeCommands = [
     id: 'je_copyState',
     name: '📋 copy state from another room/server',
     forceKey: 'C',
-    call: async function() {
-      const sourceURL = (prompt('Please enter the room URL:') || '').replace(/\/[^\/]+$/, a=>`/state${a}`);
+    options: [ { type: 'string', label: 'URL' } ],
+    call: async function(options) {
+      const sourceURL = options.URL.replace(/\/[^\/]+$/, a=>`/state${a}`);
       const targetURL = location.href.replace(/\/[^\/]+$/, a=>`/state${a}`);
       fetch(sourceURL).then(r=>r.text()).then(t=>{
         fetch(targetURL,{
@@ -277,7 +282,7 @@ const jeCommands = [
       const oldStart = getSelection().anchorOffset;
       const oldEnd   = getSelection().focusOffset;
       jeSet(JSON.stringify(jeStateNow, null, '  '));
-      jeSelect(oldStart, oldEnd);
+      jeSelect(oldStart, oldEnd, true);
     },
     show: function() {
       return jeGetValue(jeContext.slice(0, -1))[jeContext[jeContext.length-1]] !== undefined;
@@ -300,13 +305,20 @@ const jeCommands = [
     name: '✨ duplicate widget',
     forceKey: 'D',
     show: _=>jeStateNow,
-    call: async function() {
-      let currentWidget = JSON.parse(JSON.stringify(jeWidget.state))
-      currentWidget.id = null;
-      addWidgetLocal(currentWidget);
-      jeSelectWidget(widgets.get(currentWidget.id));
+    options: [
+      { label: 'Recursive',     type: 'checkbox', value: true },
+      { label: 'Increment IDs', type: 'checkbox', value: true },
+      { label: 'X offset',      type: 'number',   value: 0,   min: -1600, max: 1600 },
+      { label: 'Y offset',      type: 'number',   value: 0,   min: -1000, max: 1000 },
+      { label: '# Copies X',    type: 'number',   value: 1,   min:     1, max:  100 },
+      { label: '# Copies Y',    type: 'number',   value: 0,   min:     0, max:  100 }
+    ],
+    call: async function(options) {
+      const clonedWidget = duplicateWidget(jeWidget, options.Recursive, options['Increment IDs'], options['X offset'], options['Y offset'], options['# Copies X'], options['# Copies Y']);
+      jeSelectWidget(widgets.get(clonedWidget.id));
       jeStateNow.id = '###SELECT ME###';
-      jeSetAndSelect(currentWidget.id);
+      jeSetAndSelect(clonedWidget.id);
+      jeStateNow.id = clonedWidget.id;
     }
   },
   {
@@ -318,7 +330,7 @@ const jeCommands = [
       const id = jeStateNow.id;
       jeStateNow = null;
       jeWidget = null;
-      await removeWidgetLocal(id, true);
+      await removeWidgetLocal(id);
       jeDisplayTree();
     }
   },
@@ -425,6 +437,7 @@ function jeAddRoutineOperationCommands(command, defaults) {
 function jeAddCommands() {
   jeAddWidgetPropertyCommands(new BasicWidget());
   jeAddWidgetPropertyCommands(new Button());
+  jeAddWidgetPropertyCommands(new Canvas());
   jeAddWidgetPropertyCommands(new Card());
   jeAddWidgetPropertyCommands(new Deck());
   jeAddWidgetPropertyCommands(new Holder());
@@ -434,6 +447,7 @@ function jeAddCommands() {
   jeAddWidgetPropertyCommands(new Timer());
 
   jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result' });
+  jeAddRoutineOperationCommands('CANVAS', { canvas: null, mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6' });
   jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 , mode:'respect'});
   jeAddRoutineOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT' });
   jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, properties: null });
@@ -463,12 +477,15 @@ function jeAddCommands() {
   jeAddFaceCommand('css', '', '');
   jeAddFaceCommand('radius', ' (rounded corners)', 1);
 
-  jeAddEnumCommands('^[a-z]+ ↦ type', [ null, 'button', 'card', 'deck', 'holder', 'label', 'spinner', 'timer' ]);
+  jeAddEnumCommands('^[a-z]+ ↦ type', [ null, 'button', 'canvas', 'card', 'deck', 'holder', 'label', 'spinner', 'timer' ]);
+  jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ value', [ '${}' ]);
   jeAddEnumCommands('^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ textAlign', [ 'left', 'center', 'right' ]);
+  jeAddEnumCommands('^.*\\(CANVAS\\) ↦ mode', [ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ]);
   jeAddEnumCommands('^.*\\(CLICK\\) ↦ mode', [ 'respect', 'ignoreClickable', 'ignoreClickRoutine', 'ignoreAll' ]);
   jeAddEnumCommands('^.*\\(FLIP\\) ↦ faceCycle', [ 'forward', 'backward', 'random' ]);
   jeAddEnumCommands('^.*\\(GET\\) ↦ aggregation', [ 'first', 'last', 'array', 'average', 'median', 'min', 'max', 'sum' ]);
   jeAddEnumCommands('^.*\\(IF\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=' ]);
+  jeAddEnumCommands('^.*\\(IF\\) ↦ (operand1|operand2|condition)', [ '${}' ]);
   jeAddEnumCommands('^.*\\(LABEL\\) ↦ mode', [ 'set', 'dec', 'inc', 'append' ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ angle', [ 45, 60, 90, 135, 180 ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ mode', [ 'set', 'add' ]);
@@ -479,7 +496,6 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(TIMER\\) ↦ mode', [ 'pause', 'start', 'toggle', 'set', 'dec', 'inc', 'reset']);
   jeAddEnumCommands('^.*\\(TIMER\\) ↦ value', [ 0, 'start', 'end', 'milliseconds']);
   jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ property', [ 'id', 'parent', 'type', 'rotation' ]);
-  jeAddEnumCommands('^.* ↦ applyVariables ↦ [0-9]+ ↦ variable', [ 'COUNT', 'id', 'result', 'playerName', 'playerColor', 'activePlayers' , 'thisID' ]);
 
   jeAddEnumCommands('^.*\\((CLICK|COUNT|DELETE|FLIP|GET|LABEL|ROTATE|SET|SORT|SHUFFLE)\\) ↦ collection', [ 'DEFAULT', 'thisButton', 'child' ]);
   jeAddEnumCommands('^.*\\(CLONE\\) ↦ source', [ 'DEFAULT', 'thisButton', 'child' ]);
@@ -491,6 +507,37 @@ function jeAddCommands() {
   jeAddNumberCommand('half number', '/', x=>x/2);
   jeAddNumberCommand('zero', '0', x=>0);
   jeAddNumberCommand('opposite value', '0', x=>-x);
+  jeAddNumberCommand('${}', '0', x=>'${}');
+
+  jeAddAlignmentCommands();
+}
+
+function jeAddAlignmentCommands() {
+  jeCommands.push({
+    id: 'jeCenter',
+    name: 'center in parent',
+    context: '^.* ↦ (x|y)( ↦ "[0-9]+")?' + String.fromCharCode(36), // the minifier doesn't like "$" or "\x24" here
+    call: async function() {
+      const key = jeGetLastKey();
+      const sizeKey = key == 'x' ? 'width' : 'height';
+      const parentSize = jeStateNow.parent ? widgets.get(jeStateNow.parent).get(sizeKey) : (sizeKey == 'width' ? 1600 : 1000);
+      jeStateNow[key] = '###SELECT ME###';
+      jeSetAndSelect((parentSize-widgets.get(jeStateNow.id).get(sizeKey))/2);
+    }
+  });
+}
+
+function displayComputeOps() {
+  const keyword = $('#var_search').value;
+  let results = compute_ops.filter(o => o.name.toLowerCase().includes(keyword.toLowerCase()) || o.desc.toLowerCase().includes(keyword.toLowerCase()));
+  var resultTable = '<table>';
+  if(keyword.length > 0) {
+    for(const r of Object.values(results).sort((a, b) => a.name.toString().localeCompare(b.name)))
+      resultTable += '<tr valign=top><td><b>' + r.name + '</b></td><td><b>' + r.sample + '</b><br>' + r.desc + '</td></tr>';
+  }
+  resultTable += '</table>';
+  $('#var_results').innerHTML = resultTable;
+  jeKeyword = keyword;
 }
 
 function jeAddCSScommands() {
@@ -607,8 +654,14 @@ async function jeApplyChanges() {
 
   const currentStateRaw = $('#jeText').textContent;
   const completeState = JSON.parse(jePostProcessText(currentStateRaw));
+
+  // apply external changes that happened while the key was pressed
+  for(const delta of jeKeyIsDownDeltas)
+    for(const key in delta)
+      completeState[key] = delta[key];
+
   const currentState = JSON.stringify(jePostProcessObject(completeState));
-  if(currentStateRaw != jeStateBeforeRaw) {
+  if(currentStateRaw != jeStateBeforeRaw || jeKeyIsDownDeltas.length) {
     jeDeltaIsOurs = true;
     await jeApplyExternalChanges(completeState);
     jeStateBeforeRaw = currentStateRaw;
@@ -645,19 +698,32 @@ function jeApplyDelta(delta) {
   if(jeMode == 'widget') {
     for(const field of [ 'id', 'deck' ]) {
       if(!jeDeltaIsOurs && jeStateNow && jeStateNow[field] && delta.s[jeStateNow[field]] !== undefined) {
-        if(delta.s[jeStateNow[field]] === null)
+        if(delta.s[jeStateNow[field]] === null) {
           jeDisplayTree();
-        else
-          jeSelectWidget(widgets.get(jeStateNow.id), document.activeElement !== $('#jeText'));
+        } else {
+          if(jeKeyIsDown) {
+            jeKeyIsDownDeltas.push(delta.s[jeStateNow[field]]);
+            return;
+          }
+
+          jeSelectWidget(widgets.get(jeStateNow.id), document.activeElement !== $('#jeText'), false, true);
+        }
       }
     }
   }
 
   if(jeMode == 'multi' && !jeDeltaIsOurs) {
     try {
-      for(const selectedWidget of JSON.parse($('#jeText').textContent).widgets)
-        if(delta.s[selectedWidget] !== undefined)
+      for(const selectedWidget of JSON.parse($('#jeText').textContent).widgets) {
+        if(delta.s[selectedWidget] !== undefined) {
+          if(jeKeyIsDown) {
+            jeKeyIsDownDeltas.push(delta.s);
+            return;
+          }
+
           return jeUpdateMulti();
+        }
+      }
     } catch(e) {
     }
   }
@@ -684,6 +750,45 @@ async function jeApplyExternalChanges(state) {
   }
 }
 
+async function jeCallCommand(command) {
+  if(command.options) {
+    jeCommandWithOptions = command;
+  } else {
+    await command.call();
+  }
+}
+
+function jeCommandOptions() {
+  const div = document.createElement('div');
+  div.id = 'jeCommandOptions';
+  div.innerHTML = '<b>Command options:</b><div></div><button>Go</button><button>Cancel</button>';
+  $('.jeTopButton:last-of-type').parentNode.insertBefore(div, $('.jeTopButton:last-of-type').nextSibling);
+
+  for(const option of jeCommandWithOptions.options) {
+    formField(option, $('#jeCommandOptions div'), `${jeCommandWithOptions.id}_${option.label}`);
+    $('#jeCommandOptions div').append(document.createElement('br'));
+  }
+
+  $a('#jeCommandOptions button')[0].addEventListener('click', async function() {
+    const options = {};
+    for(const option of jeCommandWithOptions.options) {
+      const input = $(`[id="${jeCommandWithOptions.id}_${option.label}"]`);
+      options[option.label] = option.type == 'checkbox' ? input.checked : input.value;
+      if(option.type == 'number')
+        options[option.label] = parseFloat(options[option.label]);
+    }
+
+    await jeCommandWithOptions.call(options);
+    jeCommandWithOptions = null;
+    jeShowCommands();
+  });
+
+  $a('#jeCommandOptions button')[1].addEventListener('click', function() {
+    jeCommandWithOptions = null;
+    jeShowCommands();
+  });
+}
+
 async function jeClick(widget, e) {
   if(e.ctrlKey) {
     jeSelectWidget(widget, false, e.shiftKey);
@@ -692,14 +797,55 @@ async function jeClick(widget, e) {
   }
 }
 
-function jeSelectWidget(widget, dontFocus, addToSelection) {
+function jeSelectWidget(widget, dontFocus, addToSelection, restoreCursorPosition) {
+  if(restoreCursorPosition) {
+    const aO = getSelection().anchorOffset;
+    const fO = getSelection().focusOffset;
+    const s = Math.min(aO, fO);
+    const e = Math.max(aO, fO);
+    const v = $('#jeText').textContent;
+    const linesUntilCursor = v.split('\n').slice(0, v.substr(0, s).split('\n').length);
+    const currentLine = linesUntilCursor.pop();
+    let defaultValueToAdd = null;
+    try {
+      const defaultValueMatch = currentLine.match(/^  "([^"]+)": (.*?),?$/);
+      if(defaultValueMatch && jeWidget && jeWidget.getDefaultValue(defaultValueMatch[1]) === JSON.parse(defaultValueMatch[2]))
+        defaultValueToAdd = defaultValueMatch[1];
+    } catch(e) {}
+    var cursorState = {
+      currentLine,
+      defaultValueToAdd,
+      sameLinesBefore: linesUntilCursor.filter(l=>l==currentLine).length,
+      start: s-linesUntilCursor.join('\n').length,
+      end: e-linesUntilCursor.join('\n').length
+    };
+  }
+
   if(addToSelection && (jeMode == 'widget' || jeMode == 'multi')) {
     jeSelectWidgetMulti(widget, dontFocus);
   } else {
     jeMode = 'widget';
     jeWidget = widget;
-    jeStateNow = widget.state;
-    jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(widget.state), null, '  ')), dontFocus);
+    jeKeyIsDownDeltas = [];
+    jeStateNow = JSON.parse(JSON.stringify(widget.state));
+    if(restoreCursorPosition && cursorState.defaultValueToAdd && jeStateNow[cursorState.defaultValueToAdd] === undefined)
+      jeStateNow[cursorState.defaultValueToAdd] = jeWidget.getDefaultValue(cursorState.defaultValueToAdd);
+    jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(jeStateNow), null, '  ')), dontFocus);
+  }
+
+  if(restoreCursorPosition) {
+    const v = $('#jeText').textContent;
+    const lines = v.split('\n');
+    let offset = 0;
+    let linesFound = 0;
+    for(const line of lines) {
+      if(line == cursorState.currentLine && linesFound++ == cursorState.sameLinesBefore) {
+        jeSelect(offset + cursorState.start - 1, offset + cursorState.end - 1, false);
+        break;
+      } else {
+        offset += line.length + 1;
+      }
+    }
   }
 }
 
@@ -747,7 +893,7 @@ function jeColorize() {
     [ /^( +")(.*)(": )(null|true|false)(,?)$/, null, 'key', null, 'null', null ],
     [ /^( +")(.*)(":.*)$/, null, 'key', null ],
     [ /^(Room)$/, 'extern' ],
-    [ /^( +"var )(.*)( = )(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?( )?([0-9a-zA-Z_-]+|[=+*/%<!>&|-]{1,2})?(🧮(?:[0-9a-zA-Z_-]+|[=+*/%<!>&|-]{1,2}))?( )?(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?( )?(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?( )?(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?(.*)(",?)$/, 'default', 'custom', null, 'number', 'null', 'variable', 'string', null, null, 'variable', null, 'number', 'null', 'variable', 'string', null, 'number', 'null', 'variable', 'string', null, 'number', 'null', 'variable', 'string', null, 'default' ],
+    [ /^( +"var )(.*)( = )(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?( )?([0-9a-zA-Z_-]+|[=+*/%<!>&|-]{1,3})?(🧮(?:[0-9a-zA-Z_-]+|[=+*/%<!>&|-]{1,2}))?( )?(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?( )?(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?( )?(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?(.*)(",?)$/, 'default', 'custom', null, 'number', 'null', 'variable', 'string', null, null, 'variable', null, 'number', 'null', 'variable', 'string', null, 'number', 'null', 'variable', 'string', null, 'number', 'null', 'variable', 'string', null, 'default' ],
     [ /^( +")(.*)(",?)$/, null, 'string', null ],
     [ /^( +)(.*)( \()([a-z]+)( - )([0-9-]+)(,)([0-9-]+)(.*)$/, null, 'key', null, 'string', null, 'number', null, 'number', null ]
   ];
@@ -819,7 +965,7 @@ function jeGetContext() {
   const v = $('#jeText').textContent;
   const t = jeStateNow && jeStateNow.type || 'basic';
 
-  const select = v.substr(s, e-s).replace(/\n/g, '\\n');
+  const select = v.substr(s, Math.min(e-s, 100)).replace(/\n/g, '\\n');
   const line = v.split('\n')[v.substr(0, s).split('\n').length-1];
 
   if(jeMode == 'tree') {
@@ -844,7 +990,7 @@ function jeGetContext() {
       jeJSONerror = 'No ID given.';
     else if(JSON.parse(jeStateBefore).id != jeStateNow.id && widgets.has(jeStateNow.id))
       jeJSONerror = `ID ${jeStateNow.id} is already in use.`;
-    else if(jeStateNow.parent && !widgets.has(jeStateNow.parent))
+    else if(jeStateNow.parent !== undefined && jeStateNow.parent !== null && !widgets.has(jeStateNow.parent))
       jeJSONerror = `Parent ${jeStateNow.parent} does not exist.`;
     else if(jeStateNow.type == 'card' && (!jeStateNow.deck || !widgets.has(jeStateNow.deck)))
       jeJSONerror = `Deck ${jeStateNow.deck} does not exist.`;
@@ -859,6 +1005,7 @@ function jeGetContext() {
     jeJSONerror = e;
   }
 
+  // go through all the lines up until the cursor and use the indentation to figure out the context
   let keys = [ t ];
   for(const line of v.split('\n').slice(0, v.substr(0, s).split('\n').length)) {
     const m = line.match(/^( +)(["{])([^"]*)/);
@@ -871,6 +1018,20 @@ function jeGetContext() {
     if(mClose)
       keys = keys.slice(0, mClose[1].length/2+1);
   }
+
+  // make sure the context actually exists in the widget
+  if(!jeJSONerror) {
+    let pointer = jeStateNow;
+    for(let i=1; i<keys.length; ++i) {
+      if(pointer[keys[i]] === undefined) {
+        keys = keys.slice(0, i);
+        break;
+      }
+      pointer = pointer[keys[i]];
+    }
+  }
+
+  // insert the operation type as a virtual key so commands can check which operation they're in
   try {
     for(let i=1; i<keys.length-1; ++i) {
       if(String(keys[i]).match(/Routine$/) && typeof keys[i+1] == 'number' && !jeJSONerror) {
@@ -926,6 +1087,12 @@ function jeInsert(context, key, value) {
   }
 }
 
+function jeNewline() {
+  const s = Math.min(getSelection().anchorOffset, getSelection().focusOffset);
+  const match = $('#jeText').textContent.substr(0,s).match(/( *)[^\n]*$/);
+  jePasteText('\n' + match[1], false);
+}
+
 function jePasteText(text, select) {
   const aO = getSelection().anchorOffset;
   const fO = getSelection().focusOffset;
@@ -936,14 +1103,15 @@ function jePasteText(text, select) {
   $('#jeText').textContent = v.substr(0, s) + text + v.substr(e);
   $('#jeText').focus();
   jeColorize();
-  jeSelect(select ? s : s + text.length, s + text.length);
+  jeSelect(select ? s : s + text.length, s + text.length, false);
 }
 
 function jePostProcessObject(o) {
   const copy = { ...o };
-  for(const key in copy)
-    if(copy[key] === jeWidget.getDefaultValue(key) || key.match(/in deck/))
-      copy[key] = null;
+  if(!o.inheritFrom)
+    for(const key in copy)
+      if(copy[key] === null || copy[key] === jeWidget.getDefaultValue(key) || key.match(/in deck/))
+        delete copy[key];
   return copy;
 }
 
@@ -957,7 +1125,7 @@ function jePreProcessObject(o) {
     const match = key.match(/^(.*?)(\*)?(#)?$/);
     if(o[match[1]] !== undefined)
       copy[match[1]] = o[match[1]];
-    else if(match[2] == '*')
+    else if(match[2] == '*' && !o.inheritFrom)
       copy[match[1]] = jeWidget.getDefaultValue(match[1]);
     if(match[3] == '#')
       copy[`LINEBREAK${match[1]}`] = null;
@@ -981,7 +1149,7 @@ function jePreProcessText(t) {
   return t.replace(/(\n +"LINEBREAK.*": null,)+/g, '\n').replace(/(,\n +"LINEBREAK.*": null)+/g, '');
 }
 
-function jeSelect(start, end) {
+function jeSelect(start, end, scrollToCursor) {
   const t = $('#jeText');
   const text = t.textContent;
   try {
@@ -993,7 +1161,9 @@ function jeSelect(start, end) {
     t.scrollTop = 50000;
     t.textContent = text;
 
-    if(t.scrollTop) {
+    if(!scrollToCursor) {
+      t.scrollTop = scroll;
+    } else if(t.scrollTop) {
       if(Math.abs(t.scrollTop + t.clientHeight/2 - scroll) < t.clientHeight*.25)
         t.scrollTop = scroll;
       else
@@ -1039,7 +1209,7 @@ function jeSetAndSelect(replaceBy, insideString) {
 
   jeSet(jsonString);
   const quote = typeof replaceBy == 'string' && !insideString ? 1 : 0;
-  jeSelect(startIndex + quote, startIndex+jsonString.length-length - quote);
+  jeSelect(startIndex + quote, startIndex+jsonString.length-length - quote, true);
 }
 
 function jeShowCommands() {
@@ -1077,6 +1247,11 @@ function jeShowCommands() {
     }
   }
   delete activeCommands[""];
+
+  if(jeContext[jeContext.length-1] == '(var expression)') {
+    commandText += `\n  <b>var expression</b>\n<label>Search </label><input id="var_search" name="var_search" type="text"><br>`;
+    commandText += `<div id="var_results"></div>\n`;
+  }
 
   if(!jeJSONerror && jeStateNow) {
     for(const contextMatch of (Object.keys(activeCommands).sort((a,b)=>b.length-a.length))) {
@@ -1116,6 +1291,15 @@ function jeShowCommands() {
     commandText += `\n\n${jeSecondaryWidget}\n`;
   $('#jeCommands').innerHTML = commandText;
   on('#jeCommands button', 'click', clickButton);
+
+  on('#var_search', 'input', displayComputeOps);
+  if ($('#var_results') && jeKeyword !='') {
+    $('#var_search').value = jeKeyword;
+    displayComputeOps();
+  }
+
+  if(jeCommandWithOptions)
+    jeCommandOptions();
 }
 
 function jeToggle() {
@@ -1136,7 +1320,7 @@ function jeToggle() {
 }
 
 const clickButton = async function(event) {
-  await jeCommands.find(o => o.id == event.currentTarget.id).call();
+  await jeCallCommand(jeCommands.find(o => o.id == event.currentTarget.id));
   if (jeContext != 'macro') {
     jeGetContext();
     if((jeWidget || jeMode == 'multi') && !jeJSONerror)
@@ -1174,8 +1358,8 @@ window.addEventListener('mouseup', async function(e) {
     return;
   if(e.target == $('#jeText') && jeContext != 'macro') {
     jeGetContext();
-    if (jeContext[0] == 'Tree' && jeContext[1] != undefined) {
-      await jeCommands.find(o => o.id == 'je_openWidgetById').call();
+    if(jeContext[0] == 'Tree' && jeContext[1] !== undefined) {
+      await jeCallCommand(jeCommands.find(o => o.id == 'je_openWidgetById'));
       jeGetContext();
     }
   }
@@ -1190,13 +1374,20 @@ onLoad(function() {
 });
 
 window.addEventListener('keydown', async function(e) {
+  if(e.ctrlKey && e.key == 'j') {
+    e.preventDefault();
+    jeToggle();
+  }
+  if(!jeEnabled)
+    return;
+
   if(e.key == 'Control')
     jeState.ctrl = true;
   if(e.key == 'Shift')
     jeState.shift = true;
 
-  if(e.key == 'Enter' && jeEnabled) {
-    document.execCommand('insertHTML', false, '\n');
+  if(e.key == 'Enter') {
+    jeNewline();
     e.preventDefault();
   }
 
@@ -1205,22 +1396,19 @@ window.addEventListener('keydown', async function(e) {
       const locationLine = String(jeJSONerror).match(/line ([0-9]+) column ([0-9]+)/);
       if(locationLine) {
         const pos = $('#jeText').textContent.split('\n').slice(0, locationLine[1]-1).join('\n').length + +locationLine[2];
-        jeSelect(pos, pos);
+        jeSelect(pos, pos, true);
       }
 
       const locationPostion = String(jeJSONerror).match(/position ([0-9]+)/);
       if(locationPostion)
-        jeSelect(+locationPostion[1], +locationPostion[1]);
-    } else if(e.key == 'j') {
-      e.preventDefault();
-      jeToggle();
+        jeSelect(+locationPostion[1], +locationPostion[1], true);
     } else {
       for(const command of jeCommands) {
         if(command.currentKey == e.key) {
           e.preventDefault();
           try {
             jeCommandError = null;
-            await command.call();
+            await jeCallCommand(command);
           } catch(e) {
             jeCommandError = e;
           }
@@ -1238,12 +1426,21 @@ window.addEventListener('keydown', async function(e) {
         id = `"${id}"`;
       jePasteText(id, true);
     } else {
-      jeSelectWidget(jeWidgetLayers[+functionKey[1]], false, jeState.shift);
+      jeSelectWidget(jeWidgetLayers[+functionKey[1]], false, e.shiftKey);
     }
   }
 });
 
+window.addEventListener('keydown', function(e) {
+  if(!jeEnabled)
+    return;
+  if(e.key != 'Control')
+    jeKeyIsDown = true;
+});
+
 window.addEventListener('keyup', function(e) {
+  if(!jeEnabled)
+    return;
   if(e.key == 'Control')
     jeState.ctrl = false;
   if(e.key == 'Shift')
@@ -1254,4 +1451,6 @@ window.addEventListener('keyup', function(e) {
     if((jeWidget || jeMode == 'multi') && !jeJSONerror)
       jeApplyChanges();
   }
+  jeKeyIsDown = false;
+  jeKeyIsDownDeltas = [];
 });

@@ -43,6 +43,8 @@ export function addWidget(widget, instance) {
     }
   } else if(widget.type == 'pile') {
     w = new Pile(id);
+  } else if(widget.type == 'canvas') {
+    w = new Canvas(id);
   } else if(widget.type == 'deck') {
     w = new Deck(id);
   } else if(widget.type == 'holder') {
@@ -159,6 +161,7 @@ onLoad(function() {
     widgets.clear();
     dropTargets.clear();
     maxZ = {};
+    StateManaged.inheritFromMapping = {};
     let isEmpty = true;
     for(const widgetID in args) {
       if(widgetID != '_meta') {
