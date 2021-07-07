@@ -793,6 +793,8 @@ export class Widget extends StateManaged {
                 problems.push(`Holder ${holder} does not have a deck.`);
               decks.push(...holderDecks);
             }
+          } else {
+            problems.push('Valid deck argument provided, ignoring holder argument');
           }
         }
 
