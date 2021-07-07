@@ -154,11 +154,10 @@ class Card extends Widget {
   }
 
   getDefaultValue(property) {
-    if(this.deck && property != 'cardType') {
-      if (this.deck.state.faceTemplates[this.deck.cards[this.id].state.activeFace || 0][property] !== undefined)
-        return this.deck.state.faceTemplates[this.deck.cards[this.id].state.activeFace || 0][property];
-      if (this.deck.cardPropertyGet(this.get('cardType'), property) !== undefined)
-        return this.deck.cardPropertyGet(this.get('cardType'), property);
+    if(this.deck && property != 'cardType' && property != 'activeFace') {
+      const d = this.deck.cardPropertyGet(this.get('cardType'), this.get('activeFace'), property);
+      if(d !== undefined)
+        return d;
     }
     return super.getDefaultValue(property);
   }
