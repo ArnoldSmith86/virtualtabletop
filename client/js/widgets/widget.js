@@ -799,12 +799,12 @@ export class Widget extends StateManaged {
         if(decks.length) {
           for(const deck of decks) {
             if(deck.get('type') != 'deck') {
-              problems.push(`${deck} is not a deck.`);
+              problems.push(`Widget ${deck.get('id')} is not a deck.`);
               continue;
             }
             let cards = widgetFilter(w=>w.get('deck')==deck.get('id'));
             if(cards.length == 0) {
-              problems.push(`${deck} contains no cards.`);
+              problems.push(`Deck ${deck.get('id')} contains no cards.`);
               continue;
             }
             if(!a.owned)
