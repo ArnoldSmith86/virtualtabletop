@@ -7,6 +7,14 @@ let loadedTrace = null;
 function enableTracing() {
   sendTraceEvent('enable');
   tracingEnabled = true;
+
+  const originalRandom = Math.random;
+  Math.random = function() {
+    const number = originalRandom();
+    sendTraceEvent('random', { number, stack: Error().stack });
+    return number;
+  };
+
   alert('Tracing is now enabled until everyone leaves the room.\nPress F9 again whenever a bug occurs.');
 }
 
