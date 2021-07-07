@@ -124,6 +124,7 @@ function receiveStateFromServer(args) {
   widgets.clear();
   dropTargets.clear();
   maxZ = {};
+  StateManaged.inheritFromMapping = {};
   let isEmpty = true;
   for(const widgetID in args) {
     if(widgetID != '_meta') {

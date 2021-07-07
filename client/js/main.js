@@ -128,7 +128,7 @@ function setScale() {
   const h = window.innerHeight;
   if(jeEnabled) {
     const targetWidth = jeZoomOut ? 3200 : 1600;
-    scale = (w-850)/targetWidth;
+    scale = (w-920)/targetWidth;
   } else {
     scale = w/h < 1600/1000 ? w/1600 : h/1000;
   }
@@ -225,15 +225,6 @@ onLoad(function() {
   checkURLproperties();
   setScale();
   startWebSocket();
-
-
-  const editOverlayApp = Vue.createApp({
-    data() { return {
-      selectedWidget: {},
-    }}
-  });
-  loadComponents(editOverlayApp);
-  vmEditOverlay = editOverlayApp.mount("#editOverlayVue");
 
   onMessage('warning', alert);
   onMessage('error', alert);
