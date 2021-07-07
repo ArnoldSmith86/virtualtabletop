@@ -777,17 +777,36 @@ export class Widget extends StateManaged {
       if(a.func == 'RECALL') {
         setDefaults(a, { owned: true, contained: true });
 
-        const decks = widgetFilter(w=> {
-          if(a.deck !== undefined) {
-            return w.get('type')=='deck' && toA(a.deck).includes(w.get('id'));
-          } else {
-            return w.get('type')=='deck' && toA(a.holder).includes(w.get('parent'));
+        const decks = [];
+
+        if(a.deck !== undefined) {
+          for(const deck of toA(a.deck)) {
+            if(this.isValidID(deck, problems))
+              decks.push(widgets.get(deck))
           }
-        });
+        }
+        if(a.holder !== undefined) {
+          if (decks.length == 0) {
+            for(const holder of toA(a.holder)) {
+              const holderDecks = widgetFilter(w=> w.get('type')=='deck' && w.get('parent')==holder);
+              if(holderDecks.length == 0)
+                problems.push(`Holder ${holder} does not have a deck.`);
+              decks.push(...holderDecks);
+            }
+          }
+        }
 
         if(decks.length) {
           for(const deck of decks) {
+            if(deck.get('type') != 'deck') {
+              problems.push(`${deck} is not a deck.`);
+              continue;
+            }
             let cards = widgetFilter(w=>w.get('deck')==deck.get('id'));
+            if(cards.length == 0) {
+              problems.push(`${deck} contains no cards.`);
+              continue;
+            }
             if(!a.owned)
               cards = cards.filter(c=>!c.get('owner'));
             if(!a.contained) {
@@ -821,13 +840,7 @@ export class Widget extends StateManaged {
             }
           }
         } else {
-          if(a.deck !== undefined) {
-            problems.push(`Deck ${a.deck} not found.`);
-          } else if(a.holder !== undefined) {
-            problems.push(`Holder ${a.holder} does not have a deck.`);
-          } else {
-            problems.push('No Deck or Holder provied.')
-          }
+          problems.push('No valid decks to recall.')
         }
       }
 
