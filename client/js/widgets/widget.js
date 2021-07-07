@@ -809,7 +809,15 @@ export class Widget extends StateManaged {
             for(const c of cards) {
               if(a.face !== undefined)
                 await c.flip(a.face);
-              await c.moveToHolder(widgets.get(deck.get('parent')));
+              if(deck.get('parent') !== null && widgets.has(deck.get('parent'))) {
+                await c.moveToHolder(widgets.get(deck.get('parent')));
+              } else {
+                await c.set('owner', null);
+                await c.set('parent', null);
+                await c.bringToFront();
+                await c.setPosition(deck.get(`x`), deck.get(`y`));
+                await c.updatePiles();  
+              }
             }
           }
         } else {
