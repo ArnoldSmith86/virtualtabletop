@@ -52,10 +52,24 @@ export default class Player {
     if(delta.id < this.latestDeltaIDbyDifferentPlayer) {
       for(const conflictDelta of this.possiblyConflictingDeltas) {
         for(const widgetID in delta.s) {
-          if(conflictDelta.s[widgetID] !== undefined) {
-            this.waitingForStateConfirmation = true;
-            this.room.receiveInvalidDelta(this, delta, widgetID);
-            return;
+          if(conflictDelta.id > delta.id && conflictDelta.s[widgetID] !== undefined) {
+            // widget was deleted in both deltas - no problem
+            if(delta.s[widgetID] === null && conflictDelta.s[widgetID] === null)
+              continue;
+            // widget was deleted in ONE of the deltas -> conflict
+            if(delta.s[widgetID] === null || conflictDelta.s[widgetID] === null) {
+              this.waitingForStateConfirmation = true;
+              this.room.receiveInvalidDelta(this, delta, widgetID, '<deletion>');
+              return;
+            }
+            for(const key in delta.s[widgetID]) {
+              // a property of the widget was changed in both deltas and not to the same value -> conflict
+              if(conflictDelta.s[widgetID][key] !== undefined && delta.s[widgetID][key] !== conflictDelta.s[widgetID][key]) {
+                this.waitingForStateConfirmation = true;
+                this.room.receiveInvalidDelta(this, delta, widgetID, key);
+                return;
+              }
+            }
           }
         }
       }

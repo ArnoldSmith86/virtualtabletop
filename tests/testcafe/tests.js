@@ -140,13 +140,14 @@ test('Create game using edit mode', async t => {
     .dragToElement('#oklb > .handle', '[id="3nsj"]')
     .click('#editButton')
     .click('#jyo2')
-    .click('#editJSONoverlay > #duplicateWidget')
+    .click('#duplicateWidget')
     .click('#jyo3')
+    .click('#manualEdit')
     .typeText('#editWidgetJSON', '{"type":"spinner","options":[1,2],"angle": 5,"id": "jyo3"}', { replace: true })
-    .click('#editJSONoverlay > #updateWidget')
+    .click('#editJSONoverlay #updateWidget')
     .click('#jyo2')
     .setNativeDialogHandler(() => true)
-    .click('#editJSONoverlay > #removeWidget');
+    .click('#removeWidget');
 
   await compareState(t, '7263dfbe9c8121c92d08302a2e11d08f');
 });
@@ -303,22 +304,22 @@ test('Dynamic expressions', async t => {
   };
 });
 
-publicLibraryButtons('Blue',               0, '6620353f985e646bb3ca37ec8351695a', [
+publicLibraryButtons('Blue',               0, '6681bcf652fe87f58945797e2f909036', [
   'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton',
   'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton',
-  'fdc25f83-ed33-4845-a97c-ff35fa8a094f_shuffleButton', 'buttonInputGo', 'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', '9n2q'
+  'reset_button', 'buttonInputGo', 'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', '9n2q'
 ]);
 publicLibraryButtons('FreeCell',           0, 'b3339b3c5d42f47f4def7a164be69823', [ 'reset', 'jemz', 'reset' ]);
 publicLibraryButtons('Reward',             0, '45947298cf2e3e9700468b7384a5486b', [
   'gmex', 'kprc', 'oksq', 'j1wz', 'vfhn', '0i6i', 'Orange Recall', 'buttonInputGo', 'b09z'
 ]);
 publicLibraryButtons('Rummy Tiles',        0, '3e7716fb5b94c59969861a72fad9ce90', [ 'startMix', 'draw14' ]);
-publicLibraryButtons('Undercover',         1, 'a2732957c709ccf1d6fd198cd27f7668', [ 'Reset', 'Spy Master Button' ]);
+publicLibraryButtons('Undercover',         1, '2ae852ce49304b1074b483138026b1b0', [ 'Reset', 'Spy Master Button' ]);
 publicLibraryButtons('Dice',               0, 'd8b6edd6f7a25767781af4294ecda8fc', [ 'k18u', 'hy65', 'gghr', 'dsfa', 'f34a', 'fusq' ]);
 publicLibraryButtons('Functions - CALL',   0, 'def80a1f8ae3047bd435007cc7cd4aa3', [
   'n4cw_8_C', '5a52', '5a52', '66kr', 'qeg1', 'n4cwB', '8r6p', 'qeg1', 'qeg1', 'n5eu'
 ]);
-publicLibraryButtons('Functions - CLICK',  0, 'b2430bd4589116a05df1fcedb55337c4', [ '7u2q' ]);
+publicLibraryButtons('Functions - CLICK',  0, 'd98299a0065b24a44b0d03a79900e0ef', [ '7u2q' ]);
 publicLibraryButtons('Functions - ROTATE', 0, '747586b12401e43382a7db2b2505f25e', [ 'c44c', '9kdj', 'w53c', 'w53c' ]);
 publicLibraryButtons('Functions - SELECT', 0, '4db86f0a95509b1c4fe5ebd6a1f822a9', [ 'oeh9', '9fhb', 'njkk', 'ffwl', 'bomo' ]);
 publicLibraryButtons('Functions - SORT',   1, 'dd047343b667795ad6d3f366aa2ae2fd', [
