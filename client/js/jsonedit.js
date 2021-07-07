@@ -544,7 +544,7 @@ function jeAddCommands() {
 
 function jeAddAlignmentCommands() {
   jeCommands.push({
-    id: 'jeCenter',
+    id: 'jeCenterInParent',
     name: 'center in parent',
     context: '^.* ↦ (x|y)( ↦ "[0-9]+")?' + String.fromCharCode(36), // the minifier doesn't like "$" or "\x24" here
     call: async function() {
@@ -553,6 +553,53 @@ function jeAddAlignmentCommands() {
       const parentSize = jeStateNow.parent ? widgets.get(jeStateNow.parent).get(sizeKey) : (sizeKey == 'width' ? 1600 : 1000);
       jeStateNow[key] = '###SELECT ME###';
       jeSetAndSelect((parentSize-widgets.get(jeStateNow.id).get(sizeKey))/2);
+    }
+  });
+  jeCommands.push({
+    id: 'jeMultiAlign',
+    name: 'align',
+    context: '^Multi-Selection ↦ (x|y)',
+    options: [
+      { label: 'Coordinate', type: 'select', options: [ { value: 0.5, text: 'Center' }, { value: 0, text: 'Top/Left' }, { value: 1, text: 'Bottom/Right'  } ] },
+      { label: 'Reference',  type: 'select', options: [ { value: 'First selected widget' }, { value: 'Lowest value' }, { value: 'Highest value' }, { value: 'Center of all' } ] }
+    ],
+    call: async function(options) {
+      const key = jeContext[1];
+      const sizeKey = key == 'x' ? 'width' : 'height';
+      const selected = jeMultiSelectedWidgets();
+      const coords = selected.map(w=>w.absoluteCoord(key) + w.get(sizeKey)*options.Coordinate);
+
+      let target = coords[0];
+      if(options.Reference == 'Lowest value')
+        target = Math.min(...coords);
+      if(options.Reference == 'Highest value')
+        target = Math.max(...coords);
+      if(options.Reference == 'Center of all')
+        target = (Math.max(...coords) + Math.min(...coords)) / 2;
+      for(const w of selected)
+        await w.set(key, target - w.get(sizeKey)*options.Coordinate - (w.get('parent') ? widgets.get(w.get('parent')).absoluteCoord(key) : 0));
+      jeUpdateMulti();
+    }
+  });
+  jeCommands.push({
+    id: 'jeMultiDistribute',
+    name: 'distribute',
+    context: '^Multi-Selection ↦ (x|y)',
+    call: async function() {
+      const key = jeContext[1];
+      const sizeKey = key == 'x' ? 'width' : 'height';
+      const selected = jeMultiSelectedWidgets();
+
+      const min = Math.min(...selected.map(w=>w.absoluteCoord(key)));
+      const max = Math.max(...selected.map(w=>w.absoluteCoord(key)+w.get(sizeKey)));
+      const heights = selected.map(w=>w.get(sizeKey)).reduce((a,b)=>a + b);
+      const spacing = (max-min-heights)/(selected.length-1);
+      selected.sort((a,b)=>a.absoluteCoord(key) - b.absoluteCoord(key));
+      for(const widget of selected) {
+        const before = selected.slice(0, selected.findIndex(w=>w.id == widget.id));
+        await widget.set(key, min + before.map(w=>w.get(sizeKey) + spacing).reduce((a,b)=>a + b, 0) - (widget.get('parent') ? widgets.get(widget.get('parent')).absoluteCoord(key) : 0));
+      }
+      jeUpdateMulti();
     }
   });
 }
@@ -823,7 +870,7 @@ function jeCommandOptions() {
 
 async function jeClick(widget, e) {
   if(e.ctrlKey) {
-    jeSelectWidget(widget, false, e.shiftKey);
+    jeSelectWidget(widget, false, e.shiftKey || e.which == 3 || e.button == 2);
   } else {
     await widget.click();
   }
@@ -900,8 +947,9 @@ function jeSelectWidgetMulti(widget, dontFocus) {
 }
 
 function jeMultiSelectedWidgets() {
-  return widgetFilter(function(w) {
-    for(const search of jeStateNow.widgets) {
+  let selected = [];
+  for(const search of jeStateNow.widgets) {
+    selected = selected.concat(widgetFilter(function(w) {
       const isRegex = search.match(/^\/(.*)\/([a-z]+)?$/);
       try {
         if(isRegex && w.get('id').match(new RegExp(isRegex[1], isRegex[2])))
@@ -909,8 +957,9 @@ function jeMultiSelectedWidgets() {
       } catch(e) {}
       if(!isRegex && w.get('id') == search)
         return true;
-    }
-  });
+    }));
+  }
+  return selected;
 }
 
 function jeSelectedIDs() {
