@@ -3,6 +3,7 @@ import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay } from '../main.js';
+import { tracingEnabled } from '../tracing.js';
 
 export class Widget extends StateManaged {
   constructor(id) {

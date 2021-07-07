@@ -1,3 +1,5 @@
+import { onLoad } from './domhelpers.js';
+
 let tracingEnabled = false;
 let tracingActiveIndex = 0;
 let loadedTrace = null;
@@ -192,3 +194,5 @@ window.onerror = function(msg, url, line, col, err) {
   sendTraceEvent('error', { msg, url, line, col, err });
   location.reload();
 }
+
+export { tracingEnabled };
