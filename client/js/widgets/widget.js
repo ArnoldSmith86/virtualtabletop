@@ -13,6 +13,9 @@ export class Widget extends StateManaged {
     this.domElement = div;
     this.childArray = [];
 
+    if(StateManaged.inheritFromMapping[id] === undefined)
+      StateManaged.inheritFromMapping[id] = [];
+
     this.addDefaults({
       x: 0,
       y: 0,
@@ -37,6 +40,7 @@ export class Widget extends StateManaged {
 
       parent: null,
       fixedParent: false,
+      inheritFrom: null,
       owner: null,
       dropOffsetX: 0,
       dropOffsetY: 0,
@@ -117,8 +121,48 @@ export class Widget extends StateManaged {
       }
     }
 
-    if($('#enlarged').dataset.id == this.get('id') && !$('#enlarged').className.match(/hidden/))
+    if(delta.inheritFrom !== undefined) {
+      this.inheritFromUnregister();
+
+      if(delta.inheritFrom)
+        this.applyInheritedValuesToDOM(this.inheritFrom(), true);
+
+      this.isDraggable = delta.movable;
+    }
+
+    for(const inheriting of StateManaged.inheritFromMapping[this.id]) {
+      const inheritedDelta = {};
+      this.applyInheritedValuesToObject(inheriting.inheritFrom()[this.id] || [], delta, inheritedDelta, inheriting);
+      inheriting.applyDeltaToDOM(inheritedDelta);
+    }
+
+    if($('#enlarged').dataset.id == this.id && !$('#enlarged').className.match(/hidden/))
       this.showEnlarged();
+  }
+
+  applyInheritedValuesToObject(inheritDefinition, sourceDelta, targetDelta, targetWidget) {
+    for(const key in sourceDelta)
+      if(this.inheritFromIsValid(inheritDefinition, key) && targetWidget.state[key] === undefined)
+          targetDelta[key] = sourceDelta[key];
+  }
+
+  applyInheritedValuesToDOM(inheritFrom, pushToArray) {
+    const delta = {};
+    for(const [ id, properties ] of Object.entries(inheritFrom).reverse()) {
+      if(widgets.has(id)) {
+        const w = widgets.get(id);
+        if(w.state.inheritFrom)
+          this.applyInheritedValuesToDOM(w.inheritFrom());
+        this.applyInheritedValuesToObject(properties, w.state, delta, this);
+      }
+
+      if(pushToArray) {
+        if(StateManaged.inheritFromMapping[id] === undefined)
+          StateManaged.inheritFromMapping[id] = [];
+        StateManaged.inheritFromMapping[id].push(this);
+      }
+    }
+    this.applyDeltaToDOM(delta);
   }
 
   applyRemove() {
@@ -127,6 +171,7 @@ export class Widget extends StateManaged {
     if(this.get('deck') && widgets.has(this.get('deck')))
       widgets.get(this.get('deck')).removeCard(this);
     removeFromDOM(this.domElement);
+    this.inheritFromUnregister();
   }
 
   applyZ(force) {
@@ -650,8 +695,8 @@ export class Widget extends StateManaged {
         if(isValidCollection(a.collection)) {
           let c = collections[a.collection];
           if (a.skipMissing)
-            c = c.filter(w=>w.get(a.property) !== null && w.get(a.property) !== undefined);
-          c = JSON.parse(JSON.stringify(c.map(w=>w.get(a.property))));
+            c = c.filter(w=>w.get(String(a.property)) !== null && w.get(String(a.property)) !== undefined);
+          c = JSON.parse(JSON.stringify(c.map(w=>w.get(String(a.property)))));
           if(c.length) {
             switch(a.aggregation) {
             case 'first':
@@ -881,7 +926,7 @@ export class Widget extends StateManaged {
           }
         } else if(isValidCollection(a.collection)) {
           for(const w of collections[a.collection]) {
-            await w.set(a.property, compute(a.relation, null, w.get(a.property), a.value));
+            await w.set(String(a.property), compute(a.relation, null, w.get(String(a.property)), a.value));
           }
         }
       }
