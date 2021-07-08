@@ -14,6 +14,7 @@ class Holder extends Widget {
       dropOffsetY: 4,
       dropLimit: -1,
       alignChildren: true,
+      formPile: true,
       childrenPerOwner: false,
 
       onEnter: {},
@@ -126,7 +127,7 @@ class Holder extends Widget {
   }
 
   supportsPiles() {
-    return !this.get('alignChildren') || !this.get('stackOffsetX') && !this.get('stackOffsetY');
+    return this.get('formPile') && (!this.get('alignChildren') || !this.get('stackOffsetX') && !this.get('stackOffsetY'));
   }
 
   async updateAfterShuffle() {
