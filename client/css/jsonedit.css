@@ -1,4 +1,6 @@
 #jsonEditor {
+  --commandPaneWidth: 320px;
+  --editorPaneWidth: 600px; /* the sum of these two has to be changed in main.js => setScale => jeEnabled branch */
   white-space: pre-line;
   font-family: monospace;
   display: none;
@@ -25,8 +27,8 @@
   white-space: pre-wrap;
   overflow-y: auto;
   height: 100%;
-  width: 600px;
-  right: 250px;
+  width: var(--editorPaneWidth);
+  right: var(--commandPaneWidth);
   overflow-wrap: break-word;
 }
 
@@ -39,6 +41,17 @@
 #jeText::selection {
   background-color: #808080;
   -webkit-text-fill-color: white;
+}
+
+#var_results > table {
+  table-layout: fixed;
+}
+
+#var_results > table > tbody > tr > td:nth-child(1) {
+  min-width: 60px;
+  max-width: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #jsonEditor i {
@@ -58,14 +71,14 @@ i.error   { color: red; font-weight: bold; }
 #jeCommands {
   white-space: pre-wrap;
   height: 100%;
-  width: 250px;
+  width: var(--commandPaneWidth);
   right: 0;
   overflow: auto;
 }
 
 #jeWidgetLayers {
   height: 10%;
-  width: calc(100% - 850px);
+  width: calc(100% - var(--commandPaneWidth) - var(--editorPaneWidth));
   white-space: pre;
   overflow: hidden;
   background: transparent;
