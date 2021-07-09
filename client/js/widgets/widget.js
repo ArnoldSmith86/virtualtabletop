@@ -57,6 +57,8 @@ export class Widget extends StateManaged {
     this.domElement.addEventListener('contextmenu', e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseenter',  e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
+    this.domElement.addEventListener('touchstart',  e => this.showEnlarged(e), false);
+    this.domElement.addEventListener('touchend',  e => this.hideEnlarged(e), false);
   }
 
   absoluteCoord(coord) {
