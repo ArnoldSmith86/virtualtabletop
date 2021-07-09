@@ -83,23 +83,51 @@ const jeCommands = [
   },
   {
     id: 'je_addCard',
-    name: 'add card',
+    name: _=>`add card ${widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==jeContext[2]).length + 1}`,
     context: '^deck ↦ cardTypes ↦ .*? ↦',
     call: async function() {
       const card = { deck:jeStateNow.id, type:'card', cardType:jeContext[2] };
       addWidgetLocal(card);
       if(jeStateNow.parent)
         await widgets.get(card.id).moveToHolder(widgets.get(jeStateNow.parent));
+      else
+        await widgets.get(card.id).updatePiles();
+    }
+  },
+  {
+    id: 'je_addAllCards',
+    name: _=>`add one card of all ${Object.keys(jeStateNow.cardTypes).length} cardTypes`,
+    context: '^deck',
+    show: _=>jeStateNow.cardTypes,
+    call: async function() {
+      for(const cardType in jeStateNow.cardTypes) {
+        const card = { deck:jeStateNow.id, type:'card', cardType };
+        addWidgetLocal(card);
+        if(jeStateNow.parent)
+          await widgets.get(card.id).moveToHolder(widgets.get(jeStateNow.parent));
+        else
+          await widgets.get(card.id).updatePiles();
+      }
     }
   },
   {
     id: 'je_removeCard',
-    name: 'remove card',
+    name: _=>`remove card ${widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==jeContext[2]).length}`,
     context: '^deck ↦ cardTypes ↦ .*? ↦',
     show: _=>widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==jeContext[2]).length,
     call: async function() {
       const card = widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==jeContext[2])[0];
       await removeWidgetLocal(card.get('id'));
+    }
+  },
+  {
+    id: 'je_removeAllCards',
+    name: _=>`remove all ${widgetFilter(w=>w.get('deck')==jeStateNow.id).length} cards`,
+    context: '^deck',
+    show: _=>widgetFilter(w=>w.get('deck')==jeStateNow.id).length,
+    call: async function() {
+      for(const card of widgetFilter(w=>w.get('deck')==jeStateNow.id))
+        await removeWidgetLocal(card.get('id'));
     }
   },
   {
