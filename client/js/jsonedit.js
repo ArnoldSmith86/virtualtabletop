@@ -67,7 +67,7 @@ const jeCommands = [
     call: async function() {
       const cardType = {};
       const cssVariables = {};
-      for(const face of jeStateNow.faceTemplates) {
+      for(const face of jeStateNow.faceTemplates || []) {
         for(const object of face.objects) {
           if(object.valueType == 'dynamic')
             cardType[object.value] = '';
@@ -84,7 +84,7 @@ const jeCommands = [
   {
     id: 'je_addCard',
     name: _=>`add card ${widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==jeContext[2]).length + 1}`,
-    context: '^deck ↦ cardTypes ↦ .*? ↦',
+    context: '^deck ↦ cardTypes ↦ [^"↦]+',
     call: async function() {
       const card = { deck:jeStateNow.id, type:'card', cardType:jeContext[2] };
       addWidgetLocal(card);
@@ -97,8 +97,8 @@ const jeCommands = [
   {
     id: 'je_addAllCards',
     name: _=>`add one card of all ${Object.keys(jeStateNow.cardTypes).length} cardTypes`,
-    context: '^deck',
-    show: _=>jeStateNow.cardTypes,
+    context: '^deck ↦ cardTypes',
+    show: _=>Object.keys(jeStateNow.cardTypes).length,
     call: async function() {
       for(const cardType in jeStateNow.cardTypes) {
         const card = { deck:jeStateNow.id, type:'card', cardType };
@@ -113,7 +113,7 @@ const jeCommands = [
   {
     id: 'je_removeCard',
     name: _=>`remove card ${widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==jeContext[2]).length}`,
-    context: '^deck ↦ cardTypes ↦ .*? ↦',
+    context: '^deck ↦ cardTypes ↦ [^"↦]+',
     show: _=>widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==jeContext[2]).length,
     call: async function() {
       const card = widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==jeContext[2])[0];
@@ -123,7 +123,7 @@ const jeCommands = [
   {
     id: 'je_removeAllCards',
     name: _=>`remove all ${widgetFilter(w=>w.get('deck')==jeStateNow.id).length} cards`,
-    context: '^deck',
+    context: '^deck ↦ cardTypes',
     show: _=>widgetFilter(w=>w.get('deck')==jeStateNow.id).length,
     call: async function() {
       for(const card of widgetFilter(w=>w.get('deck')==jeStateNow.id))
