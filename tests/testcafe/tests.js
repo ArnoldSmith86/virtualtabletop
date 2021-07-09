@@ -149,7 +149,7 @@ test('Create game using edit mode', async t => {
     .setNativeDialogHandler(() => true)
     .click('#removeWidget');
 
-  await compareState(t, '7263dfbe9c8121c92d08302a2e11d08f');
+  await compareState(t, 'f66ead24133563f7a9d0c06b999a54c2');
 });
 
 test('Compute', async t => {
