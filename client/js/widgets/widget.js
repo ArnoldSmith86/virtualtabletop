@@ -1024,9 +1024,9 @@ export class Widget extends StateManaged {
   }
 
   get(property) {
-    if(property == 'virtual_ancestor') {
+    if(property == '_ancestor') {
       if(widgets.has(this.get('parent')) && widgets.get(this.get('parent')).get('type')=='pile') {
-        return widgets.get(this.get('parent')).get('virtual_ancestor');
+        return widgets.get(this.get('parent')).get('_ancestor');
       } else {
         return this.get('parent');
       }
