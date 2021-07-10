@@ -51,6 +51,8 @@ export function addWidget(widget, instance) {
     w = new Holder(id);
   } else if(widget.type == 'spinner') {
     w = new Spinner(id);
+  } else if(widget.type == 'seat') {
+    w = new Seat(id);
   } else if(widget.type == 'timer') {
     w = new Timer(id);
   } else if(widget.type == 'label') {
@@ -124,6 +126,7 @@ function receiveStateFromServer(args) {
   widgets.clear();
   dropTargets.clear();
   maxZ = {};
+  StateManaged.globalUpdateListeners = {};
   StateManaged.inheritFromMapping = {};
   let isEmpty = true;
   for(const widgetID in args) {

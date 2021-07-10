@@ -27,7 +27,9 @@ class Deck extends Widget {
         this.cards[cardID].applyDeltaToDOM({ deck: this.get('id') });
   }
 
-  cardPropertyGet(cardType, property) {
+  cardPropertyGet(cardType, face, property) {
+    if(this.get('faceTemplates')[face] && this.get('faceTemplates')[face][property] !== undefined)
+      return this.get('faceTemplates')[face][property];
     if(this.get('cardTypes')[cardType] && this.get('cardTypes')[cardType][property] !== undefined)
       return this.get('cardTypes')[cardType][property];
 

@@ -13,7 +13,7 @@ class BasicWidget extends Widget {
       activeFace: 0,
 
       image: '',
-      color: 'black',
+      color: '#ff0000',
       svgReplaces: {},
       layer: 1,
       text: ''

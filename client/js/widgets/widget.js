@@ -1,8 +1,9 @@
-import { $, removeFromDOM } from '../domhelpers.js';
+import { $, removeFromDOM, toArray } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay } from '../main.js';
+import { compute_ops } from '../compute.js';
 import { tracingEnabled } from '../tracing.js';
 
 export class Widget extends StateManaged {
@@ -47,16 +48,21 @@ export class Widget extends StateManaged {
       dropOffsetY: 0,
       inheritChildZ: false,
 
+      linkedToSeat: null,
+      onlyVisibleForSeat: null,
+
       clickRoutine: null,
       changeRoutine: null,
       enterRoutine: null,
       leaveRoutine: null,
-      debug: false
+      globalUpdateRoutine: null
     });
 
     this.domElement.addEventListener('contextmenu', e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseenter',  e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
+    this.domElement.addEventListener('touchstart',  e => this.showEnlarged(e), false);
+    this.domElement.addEventListener('touchend',  e => this.hideEnlarged(e), false);
   }
 
   absoluteCoord(coord) {
@@ -119,6 +125,19 @@ export class Widget extends StateManaged {
         this.parent.applyChildAdd(this);
       } else {
         delete this.parent;
+      }
+    }
+
+    for(const key in delta) {
+      const isGlobalUpdateRoutine = key.match(/^(?:(.*)G|g)lobalUpdateRoutine$/);
+      if(isGlobalUpdateRoutine) {
+        const property = isGlobalUpdateRoutine[1] || '*';
+        if(StateManaged.globalUpdateListeners[property] === undefined)
+          StateManaged.globalUpdateListeners[property] = [];
+        if(Array.isArray(delta[key]))
+          StateManaged.globalUpdateListeners[property].push([ this, key ]);
+        else
+          StateManaged.globalUpdateListeners[property] = StateManaged.globalUpdateListeners[property].filter(x=>x[0]!=this);
       }
     }
 
@@ -220,12 +239,18 @@ export class Widget extends StateManaged {
       className += ' foreign';
     if(typeof this.get('owner') == 'string' && this.get('owner') != playerName)
       className += ' foreign';
+    if(this.get('onlyVisibleForSeat'))
+      if(!widgetFilter(w=>w.get('player') == playerName && toArray(this.get('onlyVisibleForSeat')).indexOf(w.get('id')) != -1).length)
+        className += ' foreign';
+    if(this.get('linkedToSeat') && widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == playerName).length)
+      if(!widgetFilter(w=>toArray(this.get('linkedToSeat')).indexOf(w.get('id')) != -1 && w.get('player')).length)
+        className += ' foreign';
 
     return className;
   }
 
   classesProperties() {
-    return [ 'classes', 'owner', 'typeClasses' ];
+    return [ 'classes', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses' ];
   }
 
   async click(mode='respect') {
@@ -294,7 +319,7 @@ export class Widget extends StateManaged {
       reject(result);
   }
 
-  async evaluateRoutine(property, initialVariables, initialCollections, depth, byReference) {
+  async evaluateRoutine(property, initialVariables, initialCollections, depth, initialLegacyMode, byReference) {
     function unescape(str) {
       if(typeof str != 'string')
         return str;
@@ -372,12 +397,8 @@ export class Widget extends StateManaged {
       problems.push(`Collection ${collection} does not exist.`);
     }
 
-    function toA(ids) {
-      return typeof ids == 'string' ? [ ids ] : ids;
-    }
-
     async function w(ids, callback) {
-      for(const a of widgetFilter(w=>toA(ids).indexOf(w.get('id')) != -1))
+      for(const a of widgetFilter(w=>toArray(ids).indexOf(w.get('id')) != -1))
         await callback(a);
     }
 
@@ -388,12 +409,11 @@ export class Widget extends StateManaged {
 
     if(tracingEnabled && typeof property == 'string')
       sendTraceEvent('evaluateRoutine', { id: this.get('id'), property });
-
-    if(this.get('debug') && !depth)
-      $('#debugButtonOutput').textContent = '';
+    if(jeRoutineLogging) jeLoggingRoutineStart(this, property, initialVariables, initialCollections, byReference);
 
     let variables = initialVariables;
     let collections = initialCollections;
+    let legacyMode = initialLegacyMode;
     if(!byReference) {
       variables = Object.assign({}, initialVariables, {
         playerName,
@@ -404,6 +424,7 @@ export class Widget extends StateManaged {
       collections = Object.assign({}, initialCollections, {
         thisButton : [this]
       });
+      legacyMode = new Set();
     }
 
     const routine = this.get(property) !== null ? this.get(property) : property;
@@ -414,12 +435,8 @@ export class Widget extends StateManaged {
         a = evaluateVariablesRecursively(a);
       var problems = [];
 
-      if(this.get('debug')) console.log(`${this.id}: ${JSON.stringify(original)}`);
-
       if(a.skip) {
-        if(this.get('debug')) {
-          $('#debugButtonOutput').textContent += '\n\n\nOPERATION SKIPPED: \n' + JSON.stringify(a, null, '  ')
-        }
+        if(jeRoutineLogging) jeLoggingRoutineOperation(original, a, problems, variables, collections, true);
         continue;
       }
 
@@ -436,6 +453,10 @@ export class Widget extends StateManaged {
         const regex      = `^${left} += +(?:${parameter}|(?:${parameter} +)?(🧮)?(${operation})(?: +${parameter})?(?: +${parameter})?(?: +${parameter})?)(?: +//.*)?`;
 
         const match = a.match(new RegExp(regex + '\x24')); // the minifier doesn't like a "$" here
+
+        const modeSet = /^mode:/;
+        const modeAdd = /^mode-add:/;
+        const modeRemove = /^mode-remove:/;
 
         if(match) {
           const getParam = (offset, defaultValue)=>{
@@ -463,11 +484,12 @@ export class Widget extends StateManaged {
             }
           };
           const getValue = function(input) {
-            const toNum = s=>typeof s == 'string' && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s;
+            const toNum = s=>typeof s == 'string' && legacyMode.has('strToNum') && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s;
+            const dv = legacyMode.has('defaultOne') ? 1 : null;
             if(match[14] && match[9] !== undefined)
-              return compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(9, 1)), toNum(getParam(15, 1)), toNum(getParam(19, 1)));
+              return compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(9, dv)), toNum(getParam(15, dv)), toNum(getParam(19, dv)));
             else if(match[14])
-              return compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(15, 1)), toNum(getParam(19, 1)), toNum(getParam(23, 1)));
+              return compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(15, dv)), toNum(getParam(19, dv)), toNum(getParam(23, dv)));
             else
               return getParam(5, null);
           };
@@ -480,6 +502,14 @@ export class Widget extends StateManaged {
             variables[variable][index] = getValue(variables[variable][index]);
           else
             variables[variable] = getValue(variables[variable]);
+          if(jeRoutineLogging) jeLoggingRoutineOperationResult(`${variable} = ${JSON.stringify(variables[variable])}`);
+        } else if(modeSet.test(a)) {
+          legacyMode.clear();
+          a.replace(modeSet,'').trim().split(/[, ]+/).forEach(i => legacyMode.add(i));
+        } else if(modeAdd.test(a)) {
+          a.replace(modeAdd,'').trim().split(/[, ]+/).forEach(i => legacyMode.add(i));
+        } else if(modeRemove.test(a)) {
+          a.replace(modeRemove,'').trim().split(/[, ]+/).forEach(i => legacyMode.delete(i));
         } else {
           problems.push('String could not be interpreted as expression. Please check your syntax and note that many characters have to be escaped.');
         }
@@ -499,20 +529,13 @@ export class Widget extends StateManaged {
             for(const c in collections)
               inheritCollections[c] = [ ...collections[c] ];
             inheritCollections['caller'] = [ this ];
-            if(this.get('debug')) {
-              $('#debugButtonOutput').textContent += `\n\n\nCALLing: ${a.widget}.${a.routine}\n`
-            }
             const result = await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections, (depth || 0) + 1);
             variables[a.variable] = result.variable;
             collections[a.collection] = result.collection;
           }
         }
-        if(!a.return) {
-          if(this.get('debug')) {
-            $('#debugButtonOutput').textContent += '\n\n\nCALL without return. Ending evaluation.\n'
-          }
+        if(!a.return)
           break;
-        }
       }
 
       if(a.func == 'CANVAS') {
@@ -596,8 +619,8 @@ export class Widget extends StateManaged {
 
               // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
               if(!parent || !widgets.get(parent).get('alignChildren')) {
-                await cWidget.set('x', (a.properties.x || w.get('x')) + a.xOffset * i);
-                await cWidget.set('y', (a.properties.y || w.get('y')) + a.yOffset * i);
+                await cWidget.set('x', (a.properties.x !== undefined ? a.properties.x : w.get('x')) + a.xOffset * i);
+                await cWidget.set('y', (a.properties.y !== undefined ? a.properties.y : w.get('y')) + a.yOffset * i);
                 await cWidget.updatePiles();
               }
 
@@ -680,7 +703,7 @@ export class Widget extends StateManaged {
             collectionBackups[add] = collections[add];
             collections[add] = addCollections[add];
           }
-          await this.evaluateRoutine(a.loopRoutine, variables, collections, (depth || 0) + 1, true);
+          await this.evaluateRoutine(a.loopRoutine, variables, collections, (depth || 0) + 1, legacyMode, true);
           for(const add in addVariables) {
             if(variableBackups[add] !== undefined)
               variables[add] = variableBackups[add];
@@ -746,11 +769,12 @@ export class Widget extends StateManaged {
             problems.push(`Collection ${a.collection} is empty.`);
           }
         }
+        if(jeRoutineLogging) jeLoggingRoutineOperationResult(`${a.variable} = ${JSON.stringify(variables[a.variable])}`);
       }
 
       if(a.func == 'IF') {
         setDefaults(a, { relation: '==' });
-        if (['==', '!=', '<', '<=', '>=', '>'].indexOf(a.relation) < 0) {
+        if (['===', '==', '!=', '<', '<=', '>=', '>', 'in', '!in', 'includes', '!includes'].indexOf(a.relation) < 0) {
           problems.push(`Relation ${a.relation} is unsupported. Using '==' relation.`);
           a.relation = '==';
         }
@@ -758,12 +782,8 @@ export class Widget extends StateManaged {
           if (a.condition === undefined)
             a.condition = compute(a.relation, null, a.operand1, a.operand2);
           const branch = a.condition ? 'thenRoutine' : 'elseRoutine';
-          if (Array.isArray(a[branch])) {
-            if(this.get('debug')) {
-              $('#debugButtonOutput').textContent += `\n\n\nIF ${branch}\n`
-            }
-            await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true);
-          }
+          if (Array.isArray(a[branch]))
+            await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, legacyMode, true);
         } else
           problems.push(`IF operation is missing the 'condition' or 'operand1' parameter.`);
       }
@@ -811,7 +831,15 @@ export class Widget extends StateManaged {
                 await c.bringToFront();
               } else {
                 c.movedByButton = true;
-                await c.moveToHolder(target);
+                if(target.get('type') == 'seat' && target.get('hand') && target.get('player')) {
+                  await c.moveToHolder(widgets.get(target.get('hand')));
+                  if(widgets.get(target.get('hand')).get('childrenPerOwner'))
+                    await c.set('owner', target.get('player'));
+                  c.bringToFront()
+                  widgets.get(target.get('hand')).updateAfterShuffle(); //this is arranges the cards in the new owner's hand. no need to rename the function
+                } else if(target.get('type') == 'holder') {
+                  await c.moveToHolder(target);
+                }
                 delete c.movedByButton;
               }
             }
@@ -834,24 +862,157 @@ export class Widget extends StateManaged {
           });
         }
       }
+      if(a.func == 'TURN') {
+        setDefaults(a, { turn: 1, turnCycle: 'inc', source: 'all', collection: 'TURN' });
+        if([ 'forward', 'backward', 'random', 'position' ].indexOf(a.turnCycle) == -1) {
+          problems.push(`Warning: turnCycle ${a.turnCycle} interpreted as forward.`);
+          a.turnCycle = 'forward'
+        }
+        //copied from select
+        let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(w=>w.get('type')=='seat');
+
+        //this get the list of valid index
+        const indexList = []
+        let turn = 1
+        for(const w of c) {
+          if(indexList.indexOf(w.get('index')) == -1 && w.get('player'))
+            indexList.push(w.get('index'));
+          if(w.get('turn'))
+            turn = w.get('index')
+        }
+
+        //loop so it goes for the n next valid index
+        for(let i = 0; i < Math.abs(a.turn) % indexList.length; ++i) {
+          //this checks the next valid index
+          if((a.turnCycle == 'forward' && a.turn > 0) || (a.turnCycle == 'backward' && a.turn < 0)) {
+            indexList.sort((a,b)=>a-b);
+            if(turn >= indexList[indexList.length-1]) {
+              turn = indexList[0];
+            } else {
+              for(const idx of indexList){
+                if(idx > turn){
+                  turn = idx;
+                  break;
+                }
+              }
+            }
+          } else if((a.turnCycle == 'forward' && a.turn < 0) || (a.turnCycle == 'backward' && a.turn > 0)) {
+            //this checks the previous valid index
+            indexList.sort((a,b)=>b-a);
+            if(turn <= indexList[indexList.length-1]) {
+              turn = indexList[0];
+            } else {
+              for(const idx of indexList) {
+                if(idx < turn){
+                  turn = idx;
+                  break;
+                }
+              }
+            }
+          }
+        }
+
+        if(a.turnCycle == 'position') {
+          indexList.sort((a,b)=>a-b);
+          if(a.turn == 'first') {
+            turn = indexList[0];
+          } else if(a.turn == 'last') {
+            turn = indexList[indexList.length];
+          } else if(a.turn < 1) {
+            turn = indexList[indexList.length - ((Math.abs(a.turn - 1) % indexList.length) || indexList.length)];
+          } else {
+            turn = indexList[(a.turn - 1) % indexList.length] || 0;
+          }
+        }
+        if(a.turnCycle == 'random')
+          turn = indexList[Math.floor(Math.random() * indexList.length)];
+
+        collections[a.collection] = [];
+        //saves turn into all seats and creates output collection with turn seats
+        for(const w of c) {
+          await w.set('turn', w.get('index') == turn);
+          if(w.get('turn') == w.get('index') && w.get('player'))
+            collections[a.collection].push(w);
+        }
+      }
+
 
       if(a.func == 'RECALL') {
-        setDefaults(a, { owned: true });
-        if(this.isValidID(a.holder, problems)) {
-          for(const holder of toA(a.holder)) {
-            const decks = widgetFilter(w=>w.get('type')=='deck'&&w.get('parent')==holder);
-            if(decks.length) {
-              for(const deck of decks) {
-                let cards = widgetFilter(w=>w.get('deck')==deck.get('id'));
-                if(!a.owned)
-                  cards = cards.filter(c=>!c.get('owner'));
-                for(const c of cards)
-                  await c.moveToHolder(widgets.get(holder));
-              }
-            } else {
-              problems.push(`Holder ${holder} does not have a deck.`);
+        setDefaults(a, { owned: true, contained: true });
+
+        const decks = [];
+
+        if(a.deck !== undefined) {
+          for(const deck of toArray(a.deck)) {
+            if(this.isValidID(deck, problems))
+              decks.push(widgets.get(deck))
+          }
+        }
+        if(a.holder !== undefined) {
+          if (decks.length == 0) {
+            for(const holder of toArray(a.holder)) {
+              const holderDecks = widgetFilter(w=> w.get('type')=='deck' && w.get('parent')==holder);
+              if(holderDecks.length == 0)
+                problems.push(`Holder ${holder} does not have a deck.`);
+              decks.push(...holderDecks);
             }
-          };
+          } else {
+            problems.push('Valid deck argument provided, ignoring holder argument');
+          }
+        }
+
+        if(decks.length) {
+          for(const deck of decks) {
+            if(deck.get('type') != 'deck') {
+              problems.push(`Widget ${deck.get('id')} is not a deck.`);
+              continue;
+            }
+            let cards = widgetFilter(w=>w.get('deck')==deck.get('id'));
+            if(cards.length == 0) {
+              problems.push(`Deck ${deck.get('id')} contains no cards.`);
+              continue;
+            }
+            if(!a.owned)
+              cards = cards.filter(c=>!c.get('owner'));
+            if(!a.contained) {
+              cards = cards.filter(function(c) {
+                if(!c.get('parent'))
+                  return true;
+
+                const parent = widgets.get(c.get('parent'));
+                const parentType = parent.get('type');
+                if(parentType == 'holder')
+                  return parent.get('childrenPerOwner');
+                if(parentType != 'pile' || !parent.get('parent'))
+                  return true;
+
+                const pileParent = widgets.get(parent.get('parent'));
+                return pileParent.get('type') != 'holder';
+              });
+            }
+            for(const c of cards) {
+              if(a.face !== undefined)
+                await c.flip(a.face);
+              if(deck.get('parent') !== null && widgets.has(deck.get('parent'))) {
+                  const thisParent = c.get('parent');
+                  if(thisParent === null ||
+                     !(thisParent == deck.get('parent') ||
+                       (widgets.has(thisParent) &&
+                        widgets.get(thisParent).get('type') == 'pile' &&
+                        widgets.get(thisParent).get('parent') == deck.get('parent'))
+                      )
+                    ) await c.moveToHolder(widgets.get(deck.get('parent')));
+              } else {
+                await c.set('owner', null);
+                await c.set('parent', null);
+                await c.bringToFront();
+                await c.setPosition(deck.get(`x`), deck.get(`y`));
+                await c.updatePiles();
+              }
+            }
+          }
+        } else {
+          problems.push('No valid decks to recall.')
         }
       }
 
@@ -875,7 +1036,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'SELECT') {
-        setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all' });
+        setDefaults(a, { type: 'all', property: 'parent', relation: '===', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all' });
         if(a.source == 'all' || isValidCollection(a.source)) {
           if([ 'add', 'set' ].indexOf(a.mode) == -1)
             problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
@@ -884,21 +1045,15 @@ export class Widget extends StateManaged {
               return false;
             if(a.type != 'all' && (w.get('type') != a.type && (a.type != 'card' || w.get('type') != 'pile')))
               return false;
-            if(a.relation === '<')
-              return w.get(a.property) < a.value;
-            else if(a.relation === '<=')
-              return w.get(a.property) <= a.value;
-            else if(a.relation === '!=')
-              return w.get(a.property) != a.value;
-            else if(a.relation === '>=')
-              return w.get(a.property) >= a.value;
-            else if(a.relation === '>')
-              return w.get(a.property) > a.value;
-            else if(a.relation === 'in' && Array.isArray(a.value))
-              return a.value.indexOf(w.get(a.property)) != -1;
-            if(a.relation != '==')
-              problems.push(`Warning: Relation ${a.relation} interpreted as ==.`);
-            return w.get(a.property) === a.value;
+            if(a.relation == '==') {
+                problems.push(`Warning: Relation == interpreted as ===`);
+                a.relation = '===';
+            }
+            if (['===', '==', '!=', '<', '<=', '>=', '>', 'in', '!in', 'includes', '!includes'].indexOf(a.relation) < 0) {
+              problems.push(`Relation ${a.relation} is unsupported. Using '===' relation.`);
+              a.relation = '===';
+            }
+            return compute(a.relation, null, w.get(a.property), a.value);
           }).slice(0, a.max).concat(a.mode == 'add' ? collections[a.collection] || [] : []);
 
           // resolve piles
@@ -910,6 +1065,14 @@ export class Widget extends StateManaged {
 
           if(a.sortBy)
             await this.sortWidgets(collections[a.collection], a.sortBy.key, a.sortBy.reverse, a.sortBy.locales, a.sortBy.options);
+
+          if(jeRoutineLogging) {
+            let selectedWidgets = collections[a.collection].map(w=>w.get('id')).join(',');
+            if(!collections[a.collection].length || collections[a.collection].length >= 5)
+              selectedWidgets = `(${collections[a.collection].length} widgets)`;
+
+            jeLoggingRoutineOperationResult(`${a.property} ${a.relation} ${JSON.stringify(a.value)} OF ${a.source} => ${a.mode} ${a.collection} = ${selectedWidgets}`);
+          }
         }
       }
 
@@ -942,6 +1105,9 @@ export class Widget extends StateManaged {
         } else if(isValidCollection(a.collection)) {
           for(const w of collections[a.collection]) {
             await w.set(String(a.property), compute(a.relation, null, w.get(String(a.property)), a.value));
+          }
+          if(jeRoutineLogging) {
+            jeLoggingRoutineOperationResult(`${a.property} ${a.relation} ${JSON.stringify(a.value)}`);
           }
         }
       }
@@ -1030,25 +1196,13 @@ export class Widget extends StateManaged {
         };
       }
 
-      if(this.get('debug')) {
-        let msg = ''
-        msg += '\n\n\nOPERATION: \n' + JSON.stringify(a, null, '  ');
-        if(problems.length)
-          msg += '\n\nPROBLEMS: \n' + problems.join('\n');
-        msg += '\n\n\nVARIABLES: \n' + JSON.stringify(variables, null, '  ');
-        msg += '\n\nCOLLECTIONS: \n';
-        for(const name in collections) {
-          msg += '  ' + name + ': ' + collections[name].map(w=>`${w.get('id')} (${w.get('type')})`).join(', ') + '\n';
-        }
-        $('#debugButtonOutput').textContent += msg.replace(/^/gm, '    '.repeat(depth));
-        console.log(msg);
-      } else if(problems.length) {
+      if(jeRoutineLogging) jeLoggingRoutineOperation(original, a, problems, variables, collections);
+
+      if(!jeRoutineLogging && problems.length)
         console.log(problems);
-      }
     }
 
-    if(this.get('debug') && !depth)
-      showOverlay('debugButtonOverlay');
+    if(jeRoutineLogging) jeLoggingRoutineEnd(variables, collections);
 
     batchEnd();
 
@@ -1062,6 +1216,18 @@ export class Widget extends StateManaged {
     }
 
     return { variable: variables.result, collection: collections.result || [] };
+  }
+
+  get(property) {
+    if(property == '_ancestor') {
+      if(widgets.has(this.get('parent')) && widgets.get(this.get('parent')).get('type')=='pile') {
+        return widgets.get(this.get('parent')).get('_ancestor');
+      } else {
+        return this.get('parent');
+      }
+    } else {
+      return super.get(property);
+    }
   }
 
   hideEnlarged() {
@@ -1297,7 +1463,7 @@ export class Widget extends StateManaged {
   async showInputOverlay(o, widgets, variables, problems) {
     return new Promise((resolve, reject) => {
 
-      $('#buttonInputOverlay h1').textContent = o.header || "Button Input";
+      $('#buttonInputOverlay h1').textContent = o.header || 'Button Input';
       $('#buttonInputFields').innerHTML = '';
 
       for(const field of o.fields) {

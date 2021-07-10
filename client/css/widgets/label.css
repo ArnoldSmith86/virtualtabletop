@@ -17,6 +17,12 @@
   resize: none;
 }
 
+.label > .labeldiv {
+  overflow: auto;
+  width: 100%;
+  min-height: 100%;
+}
+
 body.edit .widget.label {
   border: none;
   box-sizing: content-box;

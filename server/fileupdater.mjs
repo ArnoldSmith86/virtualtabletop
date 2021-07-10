@@ -1,4 +1,4 @@
-export const VERSION = 3;
+export const VERSION = 5;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -29,9 +29,11 @@ function updateProperties(properties, v) {
   for(const property in properties)
     if(property.match(/Routine$/))
       updateRoutine(properties[property], v);
+
+  v<5 && v5DynamicFaceProperties(properties);
 }
 
-function updateRoutine(routine, v) {
+function updateRoutine(routine, v, nested = false) {
   if(!Array.isArray(routine))
     return;
 
@@ -40,16 +42,27 @@ function updateRoutine(routine, v) {
       updateProperties(operation.properties, v);
     }
     if(operation.func == 'FOREACH') {
-      updateRoutine(operation.loopRoutine, v);
+      updateRoutine(operation.loopRoutine, v, true);
     }
     if(operation.func == 'IF') {
-      updateRoutine(operation.thenRoutine, v);
-      updateRoutine(operation.elseRoutine, v);
+      updateRoutine(operation.thenRoutine, v, true);
+      updateRoutine(operation.elseRoutine, v, true);
     }
   }
 
   v<2 && v2UpdateSelectDefault(routine);
   v<3 && v3RemoveComputeAndRandomAndApplyVariables(routine);
+  v<4 && routineModeSwitch(routine, 'strToNum defaultOne', nested);
+}
+
+function routineModeSwitch(routine, modeSwitch, nested) {
+  const re = /^mode:/;
+  for(const operation of routine) {
+    if(typeof operation == 'string' && re.test(operation))
+      operation += ' ' + modeSwitch;
+  }
+  if(!nested && (typeof routine[0] != 'string' || !re.test(routine[0])))
+    routine.unshift('mode: ' + modeSwitch);
 }
 
 function v2UpdateSelectDefault(routine) {
@@ -260,4 +273,23 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
 
   for(const o of operationsToSplice.sort((a,b)=>a.index==b.index?b.order-a.order:b.index-a.index))
     routine.splice(o.index, 0, o.operation);
+}
+
+function v5DynamicFaceProperties(properties) {
+  if(Array.isArray(properties.faceTemplates)) {
+    for(const face of properties.faceTemplates) {
+      if(Array.isArray(face.objects)) {
+        for(const object of face.objects) {
+          if(object.valueType != 'static' && object.value) {
+            if(typeof object.dynamicProperties != 'object')
+              object.dynamicProperties = { value: object.value }
+            else
+              object.dynamicProperties.value = object.value;
+            delete object.value;
+          }
+          delete object.valueType;
+        }
+      }
+    }
+  }
 }

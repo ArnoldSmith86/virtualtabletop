@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000">
+	<defs>
+		<radialGradient id="grd1" gradientUnits="userSpaceOnUse"  cx="-46.5" cy="-34.5" r="1418.331">
+			<stop offset="0" stop-color="#ffffff" stop-opacity="0" />
+			<stop offset="1" stop-color="#000000"  />
+		</radialGradient>
+	</defs>
+	<style>
+		tspan { white-space:pre }
+		.shp0 { fill: #ff0000 } 
+		.shp1 { opacity: 0.302;fill: url(#grd1) } 
+		.shp2 { opacity: 0.361;fill: #ffffff } 
+	</style>
+	<path id="Forma 3" class="shp0" d="M500 1000C223.5 1000 0 776.5 0 500C0 223.5 223.5 0 500 0C776.5 0 1000 223.5 1000 500C1000 776.5 776.5 1000 500 1000Z" />
+	<path id="Forma 1 copy 2" fill-rule="evenodd" class="shp1" d="M500 1000C223.5 1000 0 776.5 0 500C0 223.5 223.5 0 500 0C776.5 0 1000 223.5 1000 500C1000 776.5 776.5 1000 500 1000Z" />
+	<path id="Forma 2" class="shp2" d="M381 223.76C132.15 223.76 50 748.85 50 500C50 251.15 251.15 50 500 50C748.85 50 629.85 223.76 381 223.76Z" />
+</svg>
