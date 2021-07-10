@@ -1131,6 +1131,18 @@ export class Widget extends StateManaged {
     return { variable: variables.result, collection: collections.result || [] };
   }
 
+  get(property) {
+    if(property == '_ancestor') {
+      if(widgets.has(this.get('parent')) && widgets.get(this.get('parent')).get('type')=='pile') {
+        return widgets.get(this.get('parent')).get('_ancestor');
+      } else {
+        return this.get('parent');
+      }
+    } else {
+      return super.get(property);
+    }
+  }
+  
   hideEnlarged() {
     $('#enlarged').classList.add('hidden');
   }
