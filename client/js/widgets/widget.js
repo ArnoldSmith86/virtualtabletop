@@ -3,6 +3,7 @@ import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay } from '../main.js';
+import { tracingEnabled } from '../tracing.js';
 
 export class Widget extends StateManaged {
   constructor(id) {
@@ -228,6 +229,9 @@ export class Widget extends StateManaged {
   }
 
   async click(mode='respect') {
+    if(tracingEnabled)
+      sendTraceEvent('click', { id: this.get('id'), mode });
+
     if(!this.get('clickable') && !(mode == 'ignoreClickable' || mode =='ignoreAll'))
       return true;
 
@@ -382,6 +386,9 @@ export class Widget extends StateManaged {
 
     batchStart();
 
+    if(tracingEnabled && typeof property == 'string')
+      sendTraceEvent('evaluateRoutine', { id: this.get('id'), property });
+
     if(this.get('debug') && !depth)
       $('#debugButtonOutput').textContent = '';
 
@@ -410,13 +417,15 @@ export class Widget extends StateManaged {
       if(this.get('debug')) console.log(`${this.id}: ${JSON.stringify(original)}`);
 
       if(a.skip) {
-        $('#debugButtonOutput').textContent += '\n\n\nOPERATION SKIPPED: \n' + JSON.stringify(a, null, '  ');
+        if(this.get('debug')) {
+          $('#debugButtonOutput').textContent += '\n\n\nOPERATION SKIPPED: \n' + JSON.stringify(a, null, '  ')
+        }
         continue;
       }
 
       if(typeof a == 'string') {
         const identifier = '(?:[a-zA-Z0-9_-]|\\\\u[0-9a-fA-F]{4})+';
-        const string     = `'((?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*)'`;
+        const string     = `'((?:[ !#-&(-[\\]-~]|\\\\u[0-9a-fA-F]{4})*)'`;
         const number     = '(-?(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?)';
         const variable   = `(\\$\\{[^}]+\\})`;
         const parameter  = `(null|true|false|\\[\\]|\\{\\}|${number}|${variable}|${string})`;
@@ -490,14 +499,18 @@ export class Widget extends StateManaged {
             for(const c in collections)
               inheritCollections[c] = [ ...collections[c] ];
             inheritCollections['caller'] = [ this ];
-            $('#debugButtonOutput').textContent += `\n\n\nCALLing: ${a.widget}.${a.routine}\n`;
+            if(this.get('debug')) {
+              $('#debugButtonOutput').textContent += `\n\n\nCALLing: ${a.widget}.${a.routine}\n`
+            }
             const result = await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections, (depth || 0) + 1);
             variables[a.variable] = result.variable;
             collections[a.collection] = result.collection;
           }
         }
         if(!a.return) {
-          $('#debugButtonOutput').textContent += '\n\n\nCALL without return. Ending evaluation.\n';
+          if(this.get('debug')) {
+            $('#debugButtonOutput').textContent += '\n\n\nCALL without return. Ending evaluation.\n'
+          }
           break;
         }
       }
@@ -746,7 +759,9 @@ export class Widget extends StateManaged {
             a.condition = compute(a.relation, null, a.operand1, a.operand2);
           const branch = a.condition ? 'thenRoutine' : 'elseRoutine';
           if (Array.isArray(a[branch])) {
-            $('#debugButtonOutput').textContent += `\n\n\nIF ${branch}\n`;
+            if(this.get('debug')) {
+              $('#debugButtonOutput').textContent += `\n\n\nIF ${branch}\n`
+            }
             await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true);
           }
         } else
@@ -1073,6 +1088,9 @@ export class Widget extends StateManaged {
   }
 
   async moveStart() {
+    if(tracingEnabled)
+      sendTraceEvent('moveStart', { id: this.get('id') });
+
     await this.bringToFront();
 
     if(!this.get('fixedParent')) {
@@ -1098,6 +1116,9 @@ export class Widget extends StateManaged {
       newX -= widgets.get(this.get('parent')).absoluteCoord('x');
       newY -= widgets.get(this.get('parent')).absoluteCoord('y');
     }
+
+    if(tracingEnabled)
+      sendTraceEvent('move', { id: this.get('id'), x, y, newX, newY });
 
     await this.setPosition(newX, newY, this.get('z'));
 
@@ -1140,6 +1161,9 @@ export class Widget extends StateManaged {
   }
 
   async moveEnd() {
+    if(tracingEnabled)
+      sendTraceEvent('moveEnd', { id: this.get('id') });
+
     if(!this.get('fixedParent')) {
       for(const t of this.dropTargets)
         t.domElement.classList.remove('droppable');

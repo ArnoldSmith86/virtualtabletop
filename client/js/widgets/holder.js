@@ -47,10 +47,15 @@ class Holder extends Widget {
     let toProcess = [ card ];
     if(card.get('type') == 'pile')
       toProcess = card.children();
-    for(const w of toProcess)
-      if(!w.get('ignoreOnLeave'))
-        for(const property in this.get('onLeave'))
+    for(const w of toProcess) {
+      if(!w.get('ignoreOnLeave')) {
+        for(const property in this.get('onLeave')) {
+          if(tracingEnabled)
+            sendTraceEvent('onLeave', { w: w.get('id'), child: card.get('id'), property, value: this.get('onLeave')[property], toProcess: toProcess.map(w=>w.get('id')) });
           await w.set(property, this.get('onLeave')[property]);
+        }
+      }
+    }
     if(this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY')))
       await this.receiveCard(null);
     if(Array.isArray(this.get('leaveRoutine')))
@@ -69,9 +74,13 @@ class Holder extends Widget {
       let toProcess = [ child ];
       if(child.get('type') == 'pile')
         toProcess = child.children();
-      for(const property in this.get('onEnter'))
-        for(const w of toProcess)
+      for(const property in this.get('onEnter')) {
+        for(const w of toProcess) {
+          if(tracingEnabled)
+            sendTraceEvent('onEnter', { w: w.get('id'), child: child.get('id'), property, value: this.get('onEnter')[property], toProcess: toProcess.map(w=>w.get('id')) });
           await w.set(property, this.get('onEnter')[property]);
+        }
+      }
     }
   }
 
