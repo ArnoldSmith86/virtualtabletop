@@ -159,9 +159,15 @@ body.jsonEdit.jeZoomOut #topSurface {
 }
 
 #jeLogWrapper:hover > h1 {
-  display: none;
+    display: none;
 }
 
+.jeLogNested{ display: none; }
+
+/* Show the nested list when the user clicks on the caret/arrow */
+.jeLogNested.active {
+  display: block;
+}
 .jeLog {
   white-space: normal;
   font-size: 12px;
@@ -170,7 +176,20 @@ body.jsonEdit.jeZoomOut #topSurface {
 }
 
 .jeLogWidget {
-  margin-left: -20px;
+    margin-left: -20px;
+}
+
+/* Create the caret/arrow with a unicode, and style it */
+.jeLogWidget::before {
+  content: "\25B6";
+  color: white;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+/* Rotate the caret/arrow icon when clicked on (using JavaScript) */
+.jeLogWidget-down::before {
+  transform: rotate(90deg);
 }
 
 .jeLogSkipped {

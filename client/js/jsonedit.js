@@ -1215,12 +1215,12 @@ function jeLoggingRoutineStart(widget, property, initialVariables, initialCollec
   jeLoggingHTML += `
     <div class="jeLog"><span class="jeLogWidget">${widget.get('id')}</span>
     <span class="jeLogProperty">${typeof property == 'string' ? property : '--custom--'}</span>
-  `;
+<div class="jeLogNested">  `;
   ++jeLoggingDepth;
 }
 
 function jeLoggingRoutineEnd(variables, collections) {
-  jeLoggingHTML += `</div>`;
+  jeLoggingHTML += `</div></div>`;
   --jeLoggingDepth;
   if(!jeLoggingDepth)
     $('#jeLog').innerHTML = jeLoggingHTML;
@@ -1530,6 +1530,11 @@ window.addEventListener('mouseup', async function(e) {
       jeGetContext();
     }
   }
+  if(e.target == $('.jeLogWidget')) {
+    e.target.parentElement.querySelector(".jeLogNested").classList.toggle("active");
+    e.target.classList.toggle("jeLogWidget-down")
+  }
+
 });
 
 onLoad(function() {
