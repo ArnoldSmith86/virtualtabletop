@@ -55,9 +55,9 @@ function updateRoutine(routine, v, nested = false) {
 
 function routineModeSwitch(routine, modeSwitch, nested) {
   const re = /^mode:/;
-  for(const operation of routine) {
-    if(typeof operation == 'string' && re.test(operation))
-      operation += ' ' + modeSwitch;
+  for(let i = 0; i < routine.length; i++) {
+    if(typeof routine[i] == 'string' && re.test(routine[i]))
+      routine[i] += ' ' + modeSwitch;
   }
   if(!nested && (typeof routine[0] != 'string' || !re.test(routine[0])))
     routine.unshift('mode: ' + modeSwitch);
