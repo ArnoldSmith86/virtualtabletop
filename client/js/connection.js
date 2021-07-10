@@ -22,6 +22,8 @@ export function startWebSocket() {
     showOverlay(null, true);
     if(!urlProperties.askID) {
       toServer('room', { playerName, roomID });
+      if(urlProperties.trace)
+        toServer('enableTrace');
       $('#ghetto-link').href += `#${roomID}`;
     }
   };
@@ -74,7 +76,7 @@ function preventReconnect() {
 }
 
 function log(str) {
-  toServer('log', str);
+  toServer('trace', str);
 }
 
 window.onbeforeunload = function() {

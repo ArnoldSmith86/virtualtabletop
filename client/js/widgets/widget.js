@@ -3,6 +3,7 @@ import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay } from '../main.js';
+import { tracingEnabled } from '../tracing.js';
 
 export class Widget extends StateManaged {
   constructor(id) {
@@ -12,6 +13,9 @@ export class Widget extends StateManaged {
     this.id = id;
     this.domElement = div;
     this.childArray = [];
+
+    if(StateManaged.inheritFromMapping[id] === undefined)
+      StateManaged.inheritFromMapping[id] = [];
 
     this.addDefaults({
       x: 0,
@@ -36,6 +40,8 @@ export class Widget extends StateManaged {
       ignoreOnLeave: false,
 
       parent: null,
+      fixedParent: false,
+      inheritFrom: null,
       owner: null,
       dropOffsetX: 0,
       dropOffsetY: 0,
@@ -116,16 +122,57 @@ export class Widget extends StateManaged {
       }
     }
 
-    if($('#enlarged').dataset.id == this.get('id') && !$('#enlarged').className.match(/hidden/))
+    if(delta.inheritFrom !== undefined) {
+      this.inheritFromUnregister();
+
+      if(delta.inheritFrom)
+        this.applyInheritedValuesToDOM(this.inheritFrom(), true);
+
+      this.isDraggable = delta.movable;
+    }
+
+    for(const inheriting of StateManaged.inheritFromMapping[this.id]) {
+      const inheritedDelta = {};
+      this.applyInheritedValuesToObject(inheriting.inheritFrom()[this.id] || [], delta, inheritedDelta, inheriting);
+      inheriting.applyDeltaToDOM(inheritedDelta);
+    }
+
+    if($('#enlarged').dataset.id == this.id && !$('#enlarged').className.match(/hidden/))
       this.showEnlarged();
   }
 
+  applyInheritedValuesToObject(inheritDefinition, sourceDelta, targetDelta, targetWidget) {
+    for(const key in sourceDelta)
+      if(this.inheritFromIsValid(inheritDefinition, key) && targetWidget.state[key] === undefined)
+          targetDelta[key] = sourceDelta[key];
+  }
+
+  applyInheritedValuesToDOM(inheritFrom, pushToArray) {
+    const delta = {};
+    for(const [ id, properties ] of Object.entries(inheritFrom).reverse()) {
+      if(widgets.has(id)) {
+        const w = widgets.get(id);
+        if(w.state.inheritFrom)
+          this.applyInheritedValuesToDOM(w.inheritFrom());
+        this.applyInheritedValuesToObject(properties, w.state, delta, this);
+      }
+
+      if(pushToArray) {
+        if(StateManaged.inheritFromMapping[id] === undefined)
+          StateManaged.inheritFromMapping[id] = [];
+        StateManaged.inheritFromMapping[id].push(this);
+      }
+    }
+    this.applyDeltaToDOM(delta);
+  }
+
   applyRemove() {
-    if(this.get('parent') && widgets.has(this.get('parent')))
-      widgets.get(this.get('parent')).applyChildRemove(this);
+    if(this.parent)
+      this.parent.applyChildRemove(this);
     if(this.get('deck') && widgets.has(this.get('deck')))
       widgets.get(this.get('deck')).removeCard(this);
     removeFromDOM(this.domElement);
+    this.inheritFromUnregister();
   }
 
   applyZ(force) {
@@ -182,6 +229,9 @@ export class Widget extends StateManaged {
   }
 
   async click(mode='respect') {
+    if(tracingEnabled)
+      sendTraceEvent('click', { id: this.get('id'), mode });
+
     if(!this.get('clickable') && !(mode == 'ignoreClickable' || mode =='ignoreAll'))
       return true;
 
@@ -331,13 +381,19 @@ export class Widget extends StateManaged {
         await callback(a);
     }
 
+    if(!depth && (this.isBeingRemoved || this.inRemovalQueue))
+      return;
+
     batchStart();
+
+    if(tracingEnabled && typeof property == 'string')
+      sendTraceEvent('evaluateRoutine', { id: this.get('id'), property });
 
     if(this.get('debug') && !depth)
       $('#debugButtonOutput').textContent = '';
 
     let variables = initialVariables;
-    let collections = initialCollections
+    let collections = initialCollections;
     if(!byReference) {
       variables = Object.assign({}, initialVariables, {
         playerName,
@@ -361,19 +417,21 @@ export class Widget extends StateManaged {
       if(this.get('debug')) console.log(`${this.id}: ${JSON.stringify(original)}`);
 
       if(a.skip) {
-        $('#debugButtonOutput').textContent += '\n\n\nOPERATION SKIPPED: \n' + JSON.stringify(a, null, '  ');
+        if(this.get('debug')) {
+          $('#debugButtonOutput').textContent += '\n\n\nOPERATION SKIPPED: \n' + JSON.stringify(a, null, '  ')
+        }
         continue;
       }
 
       if(typeof a == 'string') {
         const identifier = '(?:[a-zA-Z0-9_-]|\\\\u[0-9a-fA-F]{4})+';
-        const string     = `'((?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*)'`;
+        const string     = `'((?:[ !#-&(-[\\]-~]|\\\\u[0-9a-fA-F]{4})*)'`;
         const number     = '(-?(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?)';
         const variable   = `(\\$\\{[^}]+\\})`;
         const parameter  = `(null|true|false|\\[\\]|\\{\\}|${number}|${variable}|${string})`;
 
         const left       = `var (\\$)?(${identifier})(?:\\.(\\$)?(${identifier}))?`;
-        const operation  = `${identifier}|[=+*/%<!>&|-]{1,2}`;
+        const operation  = `${identifier}|[=+*/%<!>&|-]{1,3}`;
 
         const regex      = `^${left} += +(?:${parameter}|(?:${parameter} +)?(🧮)?(${operation})(?: +${parameter})?(?: +${parameter})?(?: +${parameter})?)(?: +//.*)?`;
 
@@ -441,15 +499,60 @@ export class Widget extends StateManaged {
             for(const c in collections)
               inheritCollections[c] = [ ...collections[c] ];
             inheritCollections['caller'] = [ this ];
-            $('#debugButtonOutput').textContent += `\n\n\nCALLing: ${a.widget}.${a.routine}\n`;
+            if(this.get('debug')) {
+              $('#debugButtonOutput').textContent += `\n\n\nCALLing: ${a.widget}.${a.routine}\n`
+            }
             const result = await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections, (depth || 0) + 1);
             variables[a.variable] = result.variable;
             collections[a.collection] = result.collection;
           }
         }
         if(!a.return) {
-          $('#debugButtonOutput').textContent += '\n\n\nCALL without return. Ending evaluation.\n';
+          if(this.get('debug')) {
+            $('#debugButtonOutput').textContent += '\n\n\nCALL without return. Ending evaluation.\n'
+          }
           break;
+        }
+      }
+
+      if(a.func == 'CANVAS') {
+        setDefaults(a, { mode: 'reset', x: 0, y: 0, value: 1, color: "#1F5CA6" });
+
+        if([ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ].indexOf(a.mode) == -1)
+          problems.push(`Warning: Mode ${a.mode} will be interpreted as inc.`);
+
+        const execute = async function(widget) {
+          if(widget.get('type') == 'canvas') {
+            if(a.mode == 'setPixel')
+              await widget.setPixel(a.x, a.y, a.value);
+            else if(a.mode == 'set')
+              await widget.set('activeColor', a.value % widget.get('colorMap').length);
+            else if(a.mode == 'reset')
+              await widget.reset();
+            else if(a.mode == 'dec')
+              await widget.set('activeColor', (widget.get('activeColor')+widget.get('colorMap').length - (a.value % widget.get('colorMap').length)) % widget.get('colorMap').length);
+            else if(a.mode == 'change') {
+              var CM = widget.get('colorMap');
+              var index = ((a.value || 1) % CM.length) || 0;
+              CM[index] = a.color || '#1f5ca6' ;
+              await widget.set('colorMap', CM);
+            }
+            else
+              await widget.set('activeColor', (widget.get('activeColor')+ a.value) % widget.get('colorMap').length);
+          }
+        };
+
+        if(a.canvas !== undefined) {
+          if(this.isValidID(a.canvas, problems)) {
+            await w(a.canvas, execute);
+          }
+        } else if(isValidCollection(a.collection)) {
+          if(collections[a.collection].length) {
+            for(const c of collections[a.collection].slice(0, a.count || 999999))
+              await execute(c);
+          } else {
+            problems.push(`Collection ${a.collection} is empty.`);
+          }
         }
       }
 
@@ -475,7 +578,11 @@ export class Widget extends StateManaged {
               const parent = clone.parent;
               clone.clonedFrom = w.get('id');
 
-              delete clone.id;
+              if(widgets.has(clone.id)) {
+                delete clone.id;
+                if(a.properties.id !== undefined)
+                  problems.push(`There is already a widget with id:${a.properties.id}, generating new ID.`);
+              }
               delete clone.parent;
               addWidgetLocal(clone);
               const cWidget = widgets.get(clone.id);
@@ -503,149 +610,11 @@ export class Widget extends StateManaged {
 
       function compute(o, v, x, y, z) {
         try {
-          switch(o) {
-          case '=':  v = y;      break;
-          case '+':  v = x + y;  break;
-          case '-':  v = x - y;  break;
-          case '*':  v = x * y;  break;
-          case '**': v = x ** y; break;
-          case '/':  v = x / y;  break;
-          case '%':  v = x % y;  break;
-          case '<':  v = x < y;  break;
-          case '<=': v = x <= y; break;
-          case '==': v = x == y; break;
-          case '!=': v = x != y; break;
-          case '>=': v = x >= y; break;
-          case '>':  v = x > y;  break;
-          case '&&': v = x && y; break;
-          case '||': v = x || y; break;
-          case '!':  v = !x;     break;
-
-          // Math operations
-          case 'hypot':
-          case 'max':
-          case 'min':
-          case 'pow':
-            v = Math[o](x, y);
-            break;
-          case 'sin':
-          case 'cos':
-          case 'tan':
-            v = Math[o](x * Math.PI/180);
-            break;
-          case 'abs':
-          case 'cbrt':
-          case 'ceil':
-          case 'exp':
-          case 'floor':
-          case 'log':
-          case 'log10':
-          case 'log2':
-          case 'random':
-          case 'round':
-          case 'sign':
-          case 'sqrt':
-          case 'trunc':
-            v = Math[o](x);
-            break;
-          case 'E':
-          case 'LN2':
-          case 'LN10':
-          case 'LOG2E':
-          case 'LOG10E':
-          case 'PI':
-          case 'SQRT1_2':
-          case 'SQRT2':
-            v = Math[o];
-            break;
-
-          // String operations
-          case 'length':
-            v = x.length;
-            break;
-          case 'parseFloat':
-            v = parseFloat(x);
-            break;
-          case 'toLowerCase':
-          case 'toUpperCase':
-          case 'trim':
-          case 'trimStart':
-          case 'trimEnd':
-            v = x[o]();
-            break;
-          case 'charAt':
-          case 'charCodeAt':
-          case 'codePointAt':
-          case 'concat':
-          case 'includes':
-          case 'endsWith':
-          case 'indexOf':
-          case 'lastIndexOf':
-          case 'localeCompare':
-          case 'match':
-          case 'padEnd':
-          case 'padStart':
-          case 'repeat':
-          case 'search':
-          case 'split':
-          case 'startsWith':
-          case 'toFixed':
-          case 'toLocaleLowerCase':
-          case 'toLocaleUpperCase':
-            v = x[o](y);
-            break;
-          case 'replace':
-          case 'replaceAll':
-          case 'substr':
-            v = x[o](y, z);
-            break;
-
-          // Array operations
-          // 'length' should work the same as for strings
-          case 'getIndex':
-            v = x[y];
-            break;
-          case 'setIndex':
-            v[x] = y;
-            break;
-          case 'from':
-          case 'isArray':
-            v = Array[o](x);
-            break;
-          case 'concatArray':
-            v = x.concat(y);
-            break;
-          case 'pop':
-          case 'reverse':
-          case 'shift':
-          case 'sort':
-            v = x[o]();
-            break;
-          case 'includes':
-          case 'indexOf':
-          case 'join':
-          case 'lastIndexOf':
-            v = x[o](y);
-            break;
-          case 'slice':
-            v = x[o](y, z);
-            break;
-          case 'push':
-          case 'unshift':
-            v[o](x);
-            break;
-
-          // random values
-          case 'randInt':
-            v = Math.floor((Math.random() * (y - x + 1)) + x);
-            break;
-          case 'randRange':
-            v = Math.round(Math.floor((Math.random() * (y - x) / (z || 1))) * (z || 1) + x);
-            break;
-          default:
-            v = null;
+          if (compute_ops.find(op => op.name == o) !== undefined) {
+            v = compute_ops.find(op => op.name == o).call(v, x, y, z);
+          }else {
             problems.push(`Operation ${o} is unsupported.`);
-            return v;
+            return v = null;
           }
         } catch(e) {
           v = 0;
@@ -698,13 +667,49 @@ export class Widget extends StateManaged {
         }
       }
 
+      if(a.func == 'FOREACH') {
+        setDefaults(a, { loopRoutine: [], collection: 'DEFAULT' });
+        const callWithAdditionalValues = async (addVariables, addCollections)=>{
+          const variableBackups = {};
+          const collectionBackups = {};
+          for(const add in addVariables) {
+            variableBackups[add] = variables[add];
+            variables[add] = addVariables[add];
+          }
+          for(const add in addCollections) {
+            collectionBackups[add] = collections[add];
+            collections[add] = addCollections[add];
+          }
+          await this.evaluateRoutine(a.loopRoutine, variables, collections, (depth || 0) + 1, true);
+          for(const add in addVariables) {
+            if(variableBackups[add] !== undefined)
+              variables[add] = variableBackups[add];
+            else
+              delete variables[add];
+          }
+          for(const add in addCollections) {
+            if(collectionBackups[add] !== undefined)
+              collections[add] = collectionBackups[add];
+            else
+              delete collections[add];
+          }
+        }
+        if(a.in) {
+          for(const key in a.in)
+            await callWithAdditionalValues({ key, value: a.in[key] }, {});
+        } else if(isValidCollection(a.collection)) {
+          for(const widget of collections[a.collection])
+            await callWithAdditionalValues({ widgetID: widget.get('id') }, { DEFAULT: [ widget ] });
+        }
+      }
+
       if(a.func == 'GET') {
         setDefaults(a, { variable: a.property || 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
         if(isValidCollection(a.collection)) {
           let c = collections[a.collection];
           if (a.skipMissing)
-            c = c.filter(w=>w.get(a.property) !== null && w.get(a.property) !== undefined);
-          c = JSON.parse(JSON.stringify(c.map(w=>w.get(a.property))));
+            c = c.filter(w=>w.get(String(a.property)) !== null && w.get(String(a.property)) !== undefined);
+          c = JSON.parse(JSON.stringify(c.map(w=>w.get(String(a.property)))));
           if(c.length) {
             switch(a.aggregation) {
             case 'first':
@@ -742,6 +747,7 @@ export class Widget extends StateManaged {
           }
         }
       }
+
       if(a.func == 'IF') {
         setDefaults(a, { relation: '==' });
         if (['==', '!=', '<', '<=', '>=', '>'].indexOf(a.relation) < 0) {
@@ -753,7 +759,9 @@ export class Widget extends StateManaged {
             a.condition = compute(a.relation, null, a.operand1, a.operand2);
           const branch = a.condition ? 'thenRoutine' : 'elseRoutine';
           if (Array.isArray(a[branch])) {
-            $('#debugButtonOutput').textContent += `\n\n\nIF ${branch}\n`;
+            if(this.get('debug')) {
+              $('#debugButtonOutput').textContent += `\n\n\nIF ${branch}\n`
+            }
             await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true);
           }
         } else
@@ -913,9 +921,27 @@ export class Widget extends StateManaged {
         }
         if((a.property == 'parent' || a.property == 'deck') && a.value !== null && !widgets.has(a.value)) {
           problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
+        } else if (a.property == 'id' && isValidCollection(a.collection)) {
+          for(const oldWidget of collections[a.collection]) {
+            const oldState = JSON.stringify(oldWidget.state);
+            const oldID = oldWidget.get('id');
+            var newState = JSON.parse(oldState);
+
+            newState.id = compute(a.relation, null, oldWidget.get(a.property), a.value);
+            if(!widgets.has(newState.id)) {
+              $('#editWidgetJSON').dataset.previousState = oldState;
+              $('#editWidgetJSON').value = JSON.stringify(newState);
+              await onClickUpdateWidget(false);
+              for(const c in collections)
+                collections[c] = collections[c].map(w=>w.id==oldID ? widgets.get(newState.id) : w);
+              sendDelta(true);
+            } else {
+              problems.push(`id ${newState.id} already in use, ignored.`);
+            }
+          }
         } else if(isValidCollection(a.collection)) {
           for(const w of collections[a.collection]) {
-            await w.set(a.property, compute(a.relation, null, w.get(a.property), a.value));
+            await w.set(String(a.property), compute(a.relation, null, w.get(String(a.property)), a.value));
           }
         }
       }
@@ -930,10 +956,15 @@ export class Widget extends StateManaged {
             });
           }
         } else if(isValidCollection(a.collection)) {
-          if(collections[a.collection].length)
+          if(collections[a.collection].length) {
             await this.sortWidgets(collections[a.collection], a.key, a.reverse, a.locales, a.options, true);
-          else
+            await w(collections[a.collection].map(i=>i.get('parent')), async holder=>{
+              if(holder.get('type') == 'holder')
+                await holder.updateAfterShuffle();
+            });
+          } else {
             problems.push(`Collection ${a.collection} is empty.`);
+          }
         }
       }
 
@@ -1020,6 +1051,16 @@ export class Widget extends StateManaged {
       showOverlay('debugButtonOverlay');
 
     batchEnd();
+
+    if(variables.playerColor != playerColor && typeof variables.playerColor == 'string' && variables.playerColor.match(/^#[0-9a-fA-F]{6}$/)) {
+      toServer('playerColor', { player: playerName, color: variables.playerColor });
+      playerColor = variables.playerColor;
+    }
+    if(variables.playerName != playerName && typeof variables.playerName == 'string') {
+      toServer('rename', { oldName: playerName, newName: variables.playerName });
+      playerName = variables.playerName;
+    }
+
     return { variable: variables.result, collection: collections.result || [] };
   }
 
@@ -1059,71 +1100,92 @@ export class Widget extends StateManaged {
   }
 
   async moveStart() {
+    if(tracingEnabled)
+      sendTraceEvent('moveStart', { id: this.get('id') });
+
     await this.bringToFront();
-    this.dropTargets = this.validDropTargets();
-    this.currentParent = widgets.get(this.get('parent'));
-    this.hoverTargetDistance = 99999;
-    this.hoverTarget = null;
 
-    this.disablePileUpdateAfterParentChange = true;
-    await this.set('parent', null);
-    delete this.disablePileUpdateAfterParentChange;
+    if(!this.get('fixedParent')) {
+      this.dropTargets = this.validDropTargets();
+      this.currentParent = widgets.get(this.get('parent'));
+      this.hoverTargetDistance = 99999;
+      this.hoverTarget = null;
 
-    for(const t of this.dropTargets)
-      t.domElement.classList.add('droppable');
+      this.disablePileUpdateAfterParentChange = true;
+      await this.set('parent', null);
+      delete this.disablePileUpdateAfterParentChange;
+
+      for(const t of this.dropTargets)
+        t.domElement.classList.add('droppable');
+    }
   }
 
   async move(x, y) {
-    const newX = (jeZoomOut ? x : Math.max(0-this.get('width' )*0.25, Math.min(1600+this.get('width' )*0.25, x))) - this.get('width' )/2;
-    const newY = (jeZoomOut ? y : Math.max(0-this.get('height')*0.25, Math.min(1000+this.get('height')*0.25, y))) - this.get('height')/2;
+    let newX = (jeZoomOut ? x : Math.max(0-this.get('width' )*0.25, Math.min(1600+this.get('width' )*0.25, x))) - this.get('width' )/2;
+    let newY = (jeZoomOut ? y : Math.max(0-this.get('height')*0.25, Math.min(1000+this.get('height')*0.25, y))) - this.get('height')/2;
+
+    if(this.get('fixedParent') && widgets.has(this.get('parent'))) {
+      newX -= widgets.get(this.get('parent')).absoluteCoord('x');
+      newY -= widgets.get(this.get('parent')).absoluteCoord('y');
+    }
+
+    if(tracingEnabled)
+      sendTraceEvent('move', { id: this.get('id'), x, y, newX, newY });
 
     await this.setPosition(newX, newY, this.get('z'));
-    const myCenter = center(this.domElement);
 
-    await this.checkParent();
+    if(!this.get('fixedParent')) {
+      const myCenter = center(this.domElement);
+      await this.checkParent();
 
-    this.hoverTargetChanged = false;
-    if(this.hoverTarget) {
-      if(overlap(this.domElement, this.hoverTarget.domElement)) {
-        this.hoverTargetDistance = distance(myCenter, this.hoverTargetCenter);
-      } else {
-        this.hoverTargetDistance = 99999;
-        this.hoverTarget = null;
-        this.hoverTargetChanged = true;
-      }
-    }
-
-    for(const t of this.dropTargets) {
-      const tCenter = center(t.domElement);
-      const d = distance(myCenter, tCenter);
-      if(d < this.hoverTargetDistance) {
-        if(overlap(this.domElement, t.domElement)) {
-          this.hoverTargetChanged = this.hoverTarget != t;
-          this.hoverTarget = t;
-          this.hoverTargetCenter = tCenter;
-          this.hoverTargetDistance = d;
+      this.hoverTargetChanged = false;
+      if(this.hoverTarget) {
+        if(overlap(this.domElement, this.hoverTarget.domElement)) {
+          this.hoverTargetDistance = distance(myCenter, this.hoverTargetCenter);
+        } else {
+          this.hoverTargetDistance = 99999;
+          this.hoverTarget = null;
+          this.hoverTargetChanged = true;
         }
       }
-    }
 
-    if(this.hoverTargetChanged) {
-      if(this.lastHoverTarget)
-        this.lastHoverTarget.domElement.classList.remove('droptarget');
-      if(this.hoverTarget)
-        this.hoverTarget.domElement.classList.add('droptarget');
-      this.lastHoverTarget = this.hoverTarget;
+      for(const t of this.dropTargets) {
+        const tCenter = center(t.domElement);
+        const d = distance(myCenter, tCenter);
+        if(d < this.hoverTargetDistance) {
+          if(overlap(this.domElement, t.domElement)) {
+            this.hoverTargetChanged = this.hoverTarget != t;
+            this.hoverTarget = t;
+            this.hoverTargetCenter = tCenter;
+            this.hoverTargetDistance = d;
+          }
+        }
+      }
+
+      if(this.hoverTargetChanged) {
+        if(this.lastHoverTarget)
+          this.lastHoverTarget.domElement.classList.remove('droptarget');
+        if(this.hoverTarget)
+          this.hoverTarget.domElement.classList.add('droptarget');
+        this.lastHoverTarget = this.hoverTarget;
+      }
     }
   }
 
   async moveEnd() {
-    for(const t of this.dropTargets)
-      t.domElement.classList.remove('droppable');
+    if(tracingEnabled)
+      sendTraceEvent('moveEnd', { id: this.get('id') });
 
-    await this.checkParent();
+    if(!this.get('fixedParent')) {
+      for(const t of this.dropTargets)
+        t.domElement.classList.remove('droppable');
 
-    if(this.hoverTarget) {
-      await this.moveToHolder(this.hoverTarget);
-      this.hoverTarget.domElement.classList.remove('droptarget');
+      await this.checkParent();
+
+      if(this.hoverTarget) {
+        await this.moveToHolder(this.hoverTarget);
+        this.hoverTarget.domElement.classList.remove('droptarget');
+      }
     }
 
     this.hideEnlarged();
@@ -1251,60 +1313,8 @@ export class Widget extends StateManaged {
       $('#buttonInputFields').innerHTML = '';
 
       for(const field of o.fields) {
-
         const dom = document.createElement('div');
-
-        if(field.type == 'checkbox') {
-          const input = document.createElement('input');
-          const label = document.createElement('label');
-          input.type = 'checkbox';
-          input.checked = field.value || false;
-          label.textContent = field.label;
-          dom.appendChild(input);
-          dom.appendChild(label);
-          label.htmlFor = input.id = this.get('id') + ';' + field.variable;
-        }
-
-        if(field.type == 'color') {
-          const input = document.createElement('input');
-          const label = document.createElement('label');
-          input.type = 'color';
-          input.value = field.value || '#ff0000';
-          label.textContent = field.label;
-          dom.appendChild(label);
-          dom.appendChild(input);
-          label.htmlFor = input.id = this.get('id') + ';' + field.variable;
-        }
-
-        if(field.type == 'number') {
-          const input = document.createElement('input');
-          const label = document.createElement('label');
-          input.type = 'number';
-          input.value = field.value || 1;
-          input.min = field.min || 1;
-          input.max = field.max || 10;
-          label.textContent = field.label;
-          dom.appendChild(label);
-          dom.appendChild(input);
-          label.htmlFor = input.id = this.get('id') + ';' + field.variable;
-        }
-
-        if(field.type == 'string') {
-          const input = document.createElement('input');
-          const label = document.createElement('label');
-          input.value = field.value || "";
-          label.textContent = field.label;
-          dom.appendChild(label);
-          dom.appendChild(input);
-          label.htmlFor = input.id = this.get('id') + ';' + field.variable;
-        }
-
-        if(field.type == 'text') {
-          const p = document.createElement('p');
-          p.textContent = field.text;
-          dom.appendChild(p);
-        }
-
+        formField(field, dom, this.get('id') + ';' + field.variable);
         $('#buttonInputFields').appendChild(dom);
       }
 
@@ -1367,6 +1377,8 @@ export class Widget extends StateManaged {
             width: this.get('width'),
             height: this.get('height')
           };
+          if(this.get('owner') !== null)
+            pile.owner = this.get('owner');
           addWidgetLocal(pile);
           await this.set('parent', pile.id);
           await widget.set('parent', pile.id);

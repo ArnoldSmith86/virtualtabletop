@@ -1,4 +1,5 @@
 import { sendPropertyUpdate } from './serverstate.js';
+import { tracingEnabled } from './tracing.js';
 
 export class StateManaged {
   constructor() {
@@ -32,6 +33,9 @@ export class StateManaged {
   }
 
   getDefaultValue(key) {
+    for(const [ id, properties ] of Object.entries(this.inheritFrom()))
+      if(this.inheritFromIsValid(properties, key) && widgets.has(id) && widgets.get(id).get(key) !== undefined)
+        return widgets.get(id).get(key);
     return this.defaults[key];
   }
 
@@ -42,10 +46,37 @@ export class StateManaged {
       return this.getDefaultValue(property) !== undefined ? this.getDefaultValue(property) : null;
   }
 
+  inheritFrom() {
+    const iF = this.state.inheritFrom;
+    if(!iF)
+      return {};
+
+    if(typeof iF == 'string') {
+      const object = {};
+      object[iF] = '*';
+      return object;
+    } else {
+      return iF;
+    }
+  }
+
+  inheritFromIsValid(properties, key) {
+    return (properties == '*' || properties.indexOf(key) != -1) && [ 'id', 'type', 'deck', 'cardType' ].indexOf(key) == -1;
+  }
+
+  inheritFromUnregister() {
+    for(const wID in StateManaged.inheritFromMapping)
+      StateManaged.inheritFromMapping[wID] = StateManaged.inheritFromMapping[wID].filter(i=>i!=this);
+  }
+
   async set(property, value) {
-    if(value === this.getDefaultValue(property))
+    if(tracingEnabled && property == 'activeFace')
+      sendTraceEvent('set activeFace', { w: this.get('id'), property, value, stack: new Error().stack });
+
+    const JSONvalue = JSON.stringify(value);
+    if(JSONvalue === JSON.stringify(this.getDefaultValue(property)) && !this.state.inheritFrom)
       value = null;
-    if(this.state[property] === value || this.state[property] === undefined && value === null)
+    if(JSON.stringify(this.state[property]) === JSONvalue || this.state[property] === undefined && value === null)
       return;
 
     if(property == 'z') {
@@ -58,7 +89,7 @@ export class StateManaged {
     if(value === null)
       delete this.state[property];
     else
-      this.state[property] = value;
+      this.state[property] = JSON.parse(JSONvalue);
     sendPropertyUpdate(this.get('id'), property, value);
     await this.onPropertyChange(property, oldValue, value);
     if(Array.isArray(this.get(`${property}ChangeRoutine`)))
@@ -73,3 +104,5 @@ export class StateManaged {
     await this.set('z', z);
   }
 }
+
+StateManaged.inheritFromMapping = {};

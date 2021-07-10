@@ -39,6 +39,9 @@ function updateRoutine(routine, v) {
     if(operation.func == 'CLONE') {
       updateProperties(operation.properties, v);
     }
+    if(operation.func == 'FOREACH') {
+      updateRoutine(operation.loopRoutine, v);
+    }
     if(operation.func == 'IF') {
       updateRoutine(operation.thenRoutine, v);
       updateRoutine(operation.elseRoutine, v);
@@ -154,6 +157,9 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
   }
 
   for(const [ i, op ] of Object.entries(routine)) {
+    if(!op || !op.func)
+      continue;
+
     removeExistingVariablesRecursively(op, i);
     dissolveApplyVariables(op, i);
     delete routine[i].applyVariables;
@@ -174,7 +180,7 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
         if(typeof op[o] === 'string' && op[o].match(/^\$\{[^}]+\}$/))
           return op[o];
         if(typeof op[o] === 'string')
-          return `'${escapeString(op[o], /^[a-zA-Z0-9,.() _-]$/)}'`;
+          return `'${escapeString(op[o], /^[ !#-&(-[\]-~]$/)}'`;
         return String(op[o]);
       };
 
