@@ -95,11 +95,6 @@ class Card extends Widget {
         const objectDiv = document.createElement('div');
         objectDiv.classList.add('cardFaceObject');
 
-        if(typeof object.dynamicProperties == 'object')
-          for(const dp of Object.keys(object.dynamicProperties))
-            if(object[dp] === undefined)
-              object[dp] = this.p(object.dynamicProperties[dp]);
-
         const x = face.border ? object.x-face.border : object.x;
         const y = face.border ? object.y-face.border : object.y;
         let css = object.css ? object.css + '; ' : '';
@@ -107,6 +102,11 @@ class Card extends Widget {
         css += object.rotation ? `; transform: rotate(${object.rotation}deg)` : '';
         objectDiv.style.cssText = css;
         const setValue = _=>{
+          if(typeof object.dynamicProperties == 'object')
+            for(const dp of Object.keys(object.dynamicProperties))
+              if(object[dp] === undefined)
+                object[dp] = this.get(object.dynamicProperties[dp]);
+
           if(object.type == 'image') {
             if(object.value) {
               if(object.svgReplaces) {
@@ -126,8 +126,10 @@ class Card extends Widget {
 
         // add a callback that makes sure dynamic property changes are reflected on the DOM
         const properties = object.svgReplaces ? Object.values(object.svgReplaces) : [];
-        if(object.valueType != 'static')
-          properties.push(object.value);
+        if(typeof object.dynamicProperties == 'object')
+          for(const dp of Object.keys(object.dynamicProperties))
+            if(object[dp] === undefined)
+              properties.push(object.dynamicProperties[dp]);
         for(const p of properties) {
           if(!this.dynamicProperties[p])
             this.dynamicProperties[p] = [];
