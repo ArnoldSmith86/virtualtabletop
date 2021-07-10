@@ -598,8 +598,8 @@ export class Widget extends StateManaged {
 
               // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
               if(!parent || !widgets.get(parent).get('alignChildren')) {
-                await cWidget.set('x', (a.properties.x || w.get('x')) + a.xOffset * i);
-                await cWidget.set('y', (a.properties.y || w.get('y')) + a.yOffset * i);
+                await cWidget.set('x', (a.properties.x !== undefined ? a.properties.x : w.get('x')) + a.xOffset * i);
+                await cWidget.set('y', (a.properties.y !== undefined ? a.properties.y : w.get('y')) + a.yOffset * i);
                 await cWidget.updatePiles();
               }
 
