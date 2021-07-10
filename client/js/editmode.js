@@ -779,9 +779,17 @@ async function onClickUpdateWidget(applyChangesFromUI) {
     showOverlay();
 }
 
-function duplicateWidget(widget, recursive, increment, xOffset, yOffset, xCopies, yCopies) {
+function duplicateWidget(widget, recursive, inheritFrom, increment, xOffset, yOffset, xCopies, yCopies) {
   const clone = function(widget, recursive, newParent, xOffset, yOffset) {
     let currentWidget = JSON.parse(JSON.stringify(widget.state))
+
+    if(inheritFrom) {
+      const inheritWidget = { inheritFrom: currentWidget.id };
+      for(const key of [ 'id', 'parent', 'type', 'deck' ])
+        if(currentWidget[key] !== undefined)
+          inheritWidget[key] = currentWidget[key];
+      currentWidget = inheritWidget;
+    }
 
     if(increment) {
       const match = currentWidget.id.match(/^(.*?)([0-9]+)([^0-9]*)$/);
@@ -799,9 +807,9 @@ function duplicateWidget(widget, recursive, increment, xOffset, yOffset, xCopies
 
     if(newParent)
       currentWidget.parent = newParent;
-    if(xOffset)
+    if(xOffset || !newParent && inheritFrom)
       currentWidget.x = widget.get('x') + xOffset;
-    if(yOffset)
+    if(yOffset || !newParent && inheritFrom)
       currentWidget.y = widget.get('y') + yOffset;
 
     addWidgetLocal(currentWidget);
@@ -831,7 +839,7 @@ function onClickDuplicateWidget() {
   const widget = widgets.get(JSON.parse($('#editWidgetJSON').dataset.previousState).id);
   const xOffset = widget.absoluteCoord('x') > 1500 ? -20 : 20;
   const yOffset = widget.absoluteCoord('y') >  900 ? -20 : 20;
-  duplicateWidget(widget, true, true, xOffset, yOffset, 1, 0);
+  duplicateWidget(widget, true, false, true, xOffset, yOffset, 1, 0);
   showOverlay();
 }
 
