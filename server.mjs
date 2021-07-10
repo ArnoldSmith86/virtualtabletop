@@ -11,6 +11,7 @@ import WebSocket  from './server/websocket.mjs';
 import Player     from './server/player.mjs';
 import Room       from './server/room.mjs';
 import MinifyRoom from './server/minify.mjs';
+import Logging    from './server/logging.mjs';
 
 const app = express();
 const server = http.Server(app);
@@ -18,41 +19,45 @@ const server = http.Server(app);
 const savedir = path.resolve() + '/save';
 const sharedLinks = fs.existsSync(savedir + '/shares.json') ? JSON.parse(fs.readFileSync(savedir + '/shares.json')) : {};
 
+const serverStart = +new Date();
+
 fs.mkdirSync(savedir + '/assets', { recursive: true });
 fs.mkdirSync(savedir + '/rooms',  { recursive: true });
 fs.mkdirSync(savedir + '/states', { recursive: true });
 fs.mkdirSync(savedir + '/links',  { recursive: true });
 fs.mkdirSync(savedir + '/errors', { recursive: true });
 
-function ensureRoomIsLoaded(id) {
+async function ensureRoomIsLoaded(id) {
   if(!id.match(/^[A-Za-z0-9_-]+$/))
     return false;
   if(!activeRooms.has(id)) {
-    activeRooms.set(id, new Room(id, function() {
+    const room = new Room(id, function() {
       activeRooms.delete(id);
-    }));
+    });
+    await room.load();
+    activeRooms.set(id, room);
   }
   return true;
 }
 
 async function downloadState(res, roomID, stateID, variantID) {
-  try {
-    if(ensureRoomIsLoaded(roomID)) {
-      const d = await activeRooms.get(roomID).download(stateID, variantID);
-      res.setHeader('Content-Type', d.type);
-      res.setHeader('Content-Disposition', `attachment; filename="${d.name.replace(/[^A-Za-z0-9._-]/g, '_')}"`);
-      res.send(d.content);
-    }
-  } catch(e) {
-    console.log(new Date().toISOString(), `EXCEPTION in downloadState for ${roomID}.${stateID}.${variantID}: ${String(e)}`);
-    res.sendStatus(500);
+  if(await ensureRoomIsLoaded(roomID)) {
+    const d = await activeRooms.get(roomID).download(stateID, variantID);
+    res.setHeader('Content-Type', d.type);
+    res.setHeader('Content-Disposition', `attachment; filename="${d.name.replace(/[^A-Za-z0-9._-]/g, '_')}"`);
+    res.send(d.content);
   }
 }
 
 function autosaveRooms() {
   setInterval(function() {
-    for(const [ _, room ] of activeRooms)
-      room.writeToFilesystem();
+    for(const [ _, room ] of activeRooms) {
+      try {
+        room.writeToFilesystem();
+      } catch(e) {
+        Logging.handleGenericException('autosaveRooms', e);
+      }
+    }
   }, 60*1000);
 }
 
@@ -61,13 +66,22 @@ MinifyRoom().then(function(result) {
   app.use('/i', express.static(path.resolve() + '/assets'));
   app.use('/library', express.static(path.resolve() + '/library'));
 
+  app.post('/assetcheck', bodyParser.json({ limit: '10mb' }), function(req, res) {
+    const result = {};
+    if(Array.isArray(req.body))
+      for(const asset of req.body)
+        if(asset.match(/^[0-9_-]+$/))
+          result[asset] = fs.existsSync(savedir + '/assets/' + asset);
+    res.send(result);
+  });
+
   app.get('/assets/:name', function(req, res) {
     if(!req.params.name.match(/^[0-9_-]+$/))
       return;
     fs.readFile(savedir + '/assets/' + req.params.name, function(err, content) {
       if(!content) {
         res.sendStatus(404);
-        console.log(new Date().toISOString(), 'WARNING: Could not load asset ' + req.params.name);
+        Logging.log(`WARNING: Could not load asset ${req.params.name}`);
         return;
       }
 
@@ -82,7 +96,7 @@ MinifyRoom().then(function(result) {
       else if(content[0] == 0x52)
         res.setHeader('Content-Type', 'image/webp');
       else
-        console.log(new Date().toISOString(), 'WARNING: Unknown file type of asset ' + req.params.name);
+        Logging.log(`WARNING: Unknown file type of asset ${req.params.name}`);
 
       res.send(content);
     });
@@ -100,47 +114,50 @@ MinifyRoom().then(function(result) {
     res.redirect(Math.random().toString(36).substring(3, 7));
   });
 
-  app.get('/dl/:room/:state/:variant', function(req, res) {
-    downloadState(res, req.params.room, req.params.state, req.params.variant);
+  app.get('/dl/:room/:state/:variant', function(req, res, next) {
+    downloadState(res, req.params.room, req.params.state, req.params.variant).catch(next);
   });
 
-  app.get('/dl/:room/:state', function(req, res) {
-    downloadState(res, req.params.room, req.params.state);
+  app.get('/dl/:room/:state', function(req, res, next) {
+    downloadState(res, req.params.room, req.params.state).catch(next);
   });
 
-  app.get('/dl/:room', function(req, res) {
-    downloadState(res, req.params.room);
+  app.get('/dl/:room', function(req, res, next) {
+    downloadState(res, req.params.room).catch(next);
   });
 
-  app.get('/state/:room', function(req, res) {
-    if(ensureRoomIsLoaded(req.params.room)) {
-      res.setHeader('Content-Type', 'application/json');
-      const state = {...activeRooms.get(req.params.room).state};
-      delete state._meta;
-      res.send(JSON.stringify(state, null, '  '));
-    }
-  });
-
-  app.use(bodyParser.json({
-    limit: '10mb'
-  }));
-  app.put('/state/:room', function(req, res) {
-    if(typeof req.body == 'object') {
-      if(ensureRoomIsLoaded(req.params.room)) {
-        activeRooms.get(req.params.room).setState(req.body);
-        res.send('OK');
+  app.get('/state/:room', function(req, res, next) {
+    ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
+      if(isLoaded) {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Content-Type', 'application/json');
+        const state = {...activeRooms.get(req.params.room).state};
+        delete state._meta;
+        res.send(JSON.stringify(state, null, '  '));
       }
+    }).catch(next);
+  });
+
+  app.put('/state/:room', bodyParser.json({ limit: '10mb' }), function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    if(typeof req.body == 'object') {
+      ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
+        if(isLoaded) {
+          activeRooms.get(req.params.room).setState(req.body);
+          res.send('OK');
+        }
+      }).catch(next);
     } else {
       res.send('not a valid JSON object');
     }
   });
 
-  app.get('/s/:link/:junk', function(req, res) {
+  app.get('/s/:link/:junk', function(req, res, next) {
     if(!sharedLinks[`/s/${req.params.link}`])
       return res.status(404);
 
     const tokens = sharedLinks[`/s/${req.params.link}`].split('/');
-    downloadState(res, tokens[2], tokens[3]);
+    downloadState(res, tokens[2], tokens[3]).catch(next);
   });
 
   app.get('/share/:room/:state', function(req, res) {
@@ -155,40 +172,54 @@ MinifyRoom().then(function(result) {
     res.send(newLink);
   });
 
-  app.get('/:id', function(req, res) {
-    if(!ensureRoomIsLoaded(req.params.id)) {
-      res.send('Invalid characters in room ID.');
-      return;
-    }
-    if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
-      res.setHeader('Content-Encoding', 'gzip');
-      res.setHeader('Content-Type', 'text/html');
-      res.send(result.gzipped);
-    } else {
-      res.send(result.min);
-    }
+  app.get('/:room', function(req, res, next) {
+    ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
+      if(!isLoaded) {
+        res.send('Invalid characters in room ID.');
+        return;
+      }
+      if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
+        res.setHeader('Content-Encoding', 'gzip');
+        res.setHeader('Content-Type', 'text/html');
+        res.send(result.gzipped);
+      } else {
+        res.send(result.min);
+      }
+    }).catch(next);
   });
 
-  app.use(bodyParser.raw({
-    limit: '100mb'
-  }));
-
-  app.put('/asset', function(req, res) {
+  app.put('/asset', bodyParser.raw({ limit: '100mb' }), function(req, res) {
     const filename = `/assets/${CRC32.buf(req.body)}_${req.body.length}`;
-    if(!fs.existsSync(path.resolve() + '/save' + filename))
-      fs.writeFileSync(path.resolve() + '/save' + filename, req.body);
+    if(!fs.existsSync(savedir + filename))
+      fs.writeFileSync(savedir + filename, req.body);
     res.send(filename);
   });
 
+  app.put('/addState/:room/:id/:type/:name/:addAsVariant?', bodyParser.raw({ limit: '500mb' }), async function(req, res, next) {
+    ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
+      if(isLoaded) {
+        activeRooms.get(req.params.room).addState(req.params.id, req.params.type, req.body, req.params.name, req.params.addAsVariant).then(function() {
+          res.send('OK');
+        }).catch(next);
+      }
+    }).catch(next);
+  });
+
+  app.use(Logging.userErrorHandler);
+
+  app.use(Logging.errorHandler);
+
   server.listen(process.env.PORT || 8272, function() {
-    console.log(new Date().toISOString(), 'Listening on ' + server.address().port);
+    Logging.log(`Listening on ${server.address().port}`);
   });
 });
 
 const activeRooms = new Map();
-const ws = new WebSocket(server, function(connection, { playerName, roomID }) {
-  if(ensureRoomIsLoaded(roomID))
-    activeRooms.get(roomID).addPlayer(new Player(connection, playerName, activeRooms.get(roomID)));
+const ws = new WebSocket(server, serverStart, function(connection, { playerName, roomID }) {
+  ensureRoomIsLoaded(roomID).then(function(isLoaded) {
+    if(isLoaded)
+      activeRooms.get(roomID).addPlayer(new Player(connection, playerName, activeRooms.get(roomID)));
+  }).catch(e=>Logging.handleGenericException(`player ${playerName} connected to room ${roomID}`, e));
 });
 
 autosaveRooms();

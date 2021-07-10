@@ -25,10 +25,58 @@
 
 #addCustomOverlay textarea, #editJSONoverlay textarea {
   height: 100%;
+  min-height: 100%;
 }
 
 #editOverlay {
   overflow: auto;
+  color: black;
+  background-color:white;
+  padding: 1% 10%;
+  left: 5%;
+  top: 5%;
+  border-radius: 5vh;
+  height: 90%;
+  width: 90%;
+}
+
+#editOverlay::-webkit-scrollbar-track {
+  margin: 5vh;
+}
+
+#editOverlay input[type=range]{
+  width:40%;
+}
+
+.editorButtonsTop{
+  display: grid !important;
+  grid-gap: 2px;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 2px 0px;
+}
+
+.editorSpace{
+  display: block !important;
+  min-height: 10px;
+  flex-grow: 1000;
+}
+
+.editorButtonsContainer{
+  display: flex !important;
+  border-top: 2px solid var(--VTTblueLight);
+  flex-direction: column;
+}
+
+.editorButton{
+  color:white;
+  background-color: var(--VTTblue);
+  border-radius: 5px;
+  border: none;
+  padding: 5px;
+}
+
+.editorButton:hover{
+  background-color: var(--VTTblueDark);
 }
 
 body.edit .surface {
@@ -65,4 +113,11 @@ body.edit .widget > .widget {
 #cardTypesList .count {
   width: 40px;
   text-align: right;
+}
+
+.flexContainer {
+  margin-top: 1em;
+  display: flex;
+  flex-flow: row wrap;
+  column-gap: 0.7em;
 }

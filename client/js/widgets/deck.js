@@ -16,19 +16,26 @@ class Deck extends Widget {
   }
 
   addCard(card) {
-    this.cards[card.p('id')] = card;
+    this.cards[card.get('id')] = card;
     ++this.domElement.textContent;
   }
 
-  cardPropertyGet(cardType, property) {
-    if(this.p('cardTypes')[cardType][property] !== undefined)
-      return this.p('cardTypes')[cardType][property];
+  applyDeltaToDOM(delta) {
+    super.applyDeltaToDOM(delta);
+    if(delta.cardDefaults !== undefined || delta.cardTypes !== undefined || delta.faceTemplates !== undefined)
+      for(const cardID in this.cards)
+        this.cards[cardID].applyDeltaToDOM({ deck: this.get('id') });
+  }
 
-    return this.p('cardDefaults')[property];
+  cardPropertyGet(cardType, property) {
+    if(this.get('cardTypes')[cardType] && this.get('cardTypes')[cardType][property] !== undefined)
+      return this.get('cardTypes')[cardType][property];
+
+    return this.get('cardDefaults')[property];
   }
 
   removeCard(card) {
-    delete this.cards[card.p('id')];
+    delete this.cards[card.get('id')];
     --this.domElement.textContent;
   }
 }

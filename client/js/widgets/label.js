@@ -17,22 +17,30 @@ export class Label extends Widget {
     });
 
     this.domElement.appendChild(this.input);
-    this.input.addEventListener('keyup', e=>this.setText(e.target.value));
+    this.input.addEventListener('keyup', e=>{
+      if(this.get('editable') && e.target.value != this.get('text'))
+        this.setText(e.target.value)
+    });
   }
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
     if(delta.text !== undefined || delta.twoRowBottomAlign !== undefined) {
       this.input.value = delta.text;
-      if(this.p('twoRowBottomAlign')) {
+      if(this.get('twoRowBottomAlign')) {
         this.input.style.height = '20px';
-        this.input.style.paddingTop = '';
-        if(this.input.scrollHeight == 20)
-          this.input.style.paddingTop = '20px';
-        else
-          this.input.style.height = '40px';
+        this.input.style.minHeight = 'unset';
+        this.input.style.paddingTop = '0';
+        const contentHeight = this.input.scrollHeight;
+        if(contentHeight < this.get('height')) {
+          this.input.style.paddingTop = `${this.get('height')-contentHeight}px`;
+          this.input.style.height = 'auto';
+          this.input.style.minHeight = `${contentHeight}px`;
+        } else {
+          this.input.style.minHeight = '100%';
+        }
       } else {
-        this.input.style.height = `${this.p('height')}px`;
+        this.input.style.minHeight = '100%';
         this.input.style.paddingTop = 'unset';
       }
     }
@@ -42,16 +50,5 @@ export class Label extends Widget {
       else
         this.input.setAttribute("readonly", !delta.editable);
     }
-  }
-
-  setText(text, mode) {
-    if(mode == 'inc' || mode == 'dec')
-      this.p('text', (parseInt(this.p('text')) || 0) + (mode == 'dec' ? -1 : 1) * text);
-    else if(Array.isArray(text))
-      this.p('text', text.join(', '));
-    else if(typeof text == 'string' && text.match(/^[-+]?[0-9]+(\.[0-9]+)?$/))
-      this.p('text', +text);
-    else
-      this.p('text', text);
   }
 }

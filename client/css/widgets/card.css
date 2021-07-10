@@ -1,19 +1,16 @@
+.card {
+  overflow: hidden;
+}
+
 body.edit .card {
   display: none;
 }
 
-.card > div {
-  /* targets inactive faces */
+.card > .cardFace {
   display: none;
 }
 
-.card > div.widget {
-  /* child widgets of the card */
-  display: block;
-}
-
-.card > div.active {
-  /* active face */
+.card > .active.cardFace {
   display: block;
   overflow: hidden;
   width: 100%;
@@ -22,8 +19,7 @@ body.edit .card {
   box-sizing: border-box;
 }
 
-.card > div.active > div {
-  /* active face objects */
+.card > .active.cardFace > .cardFaceObject {
   position: absolute;
   background-size: contain;
   background-repeat: no-repeat;

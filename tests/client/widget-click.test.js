@@ -1,11 +1,9 @@
-import { addWidget, widgetFilter } from '../../client/js/serverstate.js';
-import { Button } from '../../client/js/widgets/button.js';
 import { Widget } from '../../client/js/widgets/widget.js';
 
-import { addButton, addLabel, removeWidget } from './client-util.js';
+import { createWidget, addLabel, removeWidget } from './client-util.js';
 
 function createClickThisWidgets(testName, numWidgets, numWithClickThis) {
-  const buttonDef = {
+  const widgetDef = {
     "clickRoutine": [
       {
         "func": "LABEL",
@@ -14,16 +12,17 @@ function createClickThisWidgets(testName, numWidgets, numWithClickThis) {
         "mode": "inc"
       }
     ],
+    "clickable": true,
     "debug": false,
-    "type": "button"
+    "type": "widget"
   }
 
   const widgets = [];
   let num = 0
   while (num++ < numWidgets) {
-    buttonDef.id = `${testName}-button-${num}`;
-    buttonDef.clickThis = num <= numWithClickThis ? true : false;
-    let b = addButton(buttonDef);
+    widgetDef.id = `${testName}-widget-${num}`;
+    widgetDef.clickThis = num <= numWithClickThis ? true : false;
+    let b = createWidget(widgetDef);
     widgets.push(b);
   }
   return widgets;
@@ -31,27 +30,28 @@ function createClickThisWidgets(testName, numWidgets, numWithClickThis) {
 
 
 describe("Scenarios: Clicking widgets", () => {
-  const testName = "button-click";
-  let testButton;
+  const testName = "widget-click";
+  let testWidget;
   let testLabel;
   beforeAll(() => {
-    const testButtonDef = {
-      id: `${testName}-test-button`,
+    const testWidgetDef = {
+      id: `${testName}-test-widget`,
+      clickable: true,
       debug: false,
-      type: "button"
+      type: "widget"
     }
-    testButton = addButton(testButtonDef);
+    testWidget = createWidget(testWidgetDef);
 
     testLabel = addLabel(`${testName}-test-label`);
   });
   afterAll(() => {
-    removeWidget(testButton.p('id'));
-    removeWidget(testLabel.p('id'));
+    removeWidget(testWidget.get('id'));
+    removeWidget(testLabel.get('id'));
   });
 
-  describe("Given a button that clicks widgets from an undefined collection", () => {
-    beforeAll(() => {
-      testButton.p('clickRoutine', [
+  describe("Given a widget that clicks widgets from an undefined collection", () => {
+    beforeAll(async () => {
+      await testWidget.set('clickRoutine', [
         {
           "func": "CLICK",
           "collection": "undefined"
@@ -60,14 +60,14 @@ describe("Scenarios: Clicking widgets", () => {
     });
     describe("When clicked", () => {
       test("Then it does not throw an error", async () => {
-        await expect(testButton.click()).resolves.toBeUndefined();
+        await expect(testWidget.click()).resolves.toBe(true);
       });
     });
   });
 
-  describe("Given a button that clicks widgets with property 'clickThis'", () => {
-    beforeAll(() => {
-      testButton.p('clickRoutine', [
+  describe("Given a widget that clicks widgets with property 'clickThis'", () => {
+    beforeAll(async () => {
+      await testWidget.set('clickRoutine', [
         {
           "func": "SELECT",
           "property": "clickThis",
@@ -81,40 +81,40 @@ describe("Scenarios: Clicking widgets", () => {
 
     describe("And there are 2 widgets with 'clickThis' and 1 without", () => {
       let widgets;
-      beforeEach(() => {
+      beforeEach(async () => {
         const numWidgets = 3;
         const numWithClickThis = 2;
         widgets = createClickThisWidgets(testName, numWidgets, numWithClickThis);
-        testLabel.p('text', 0);
+        await testLabel.set('text', 0);
       });
       afterEach(() => {
-        widgets.forEach(w => removeWidget(w.p('id')));
+        widgets.forEach(w => removeWidget(w.get('id')));
       });
 
       describe("When clicked", () => {
         test("Then it clicks 2 'clickThis' widgets", async () => {
-          await testButton.click();
-          expect(testLabel.p('text')).toBe(2);
+          await testWidget.click();
+          expect(testLabel.get('text')).toBe(2);
         });
       });
     });
 
     describe("And there are 0 widgets with 'clickThis'", () => {
       let widgets;
-      beforeEach(() => {
+      beforeEach(async () => {
         const numWidgets = 1;
         const numWithClickThis = 0;
         widgets = createClickThisWidgets(testName, numWidgets, numWithClickThis);
-        testLabel.p('text', 0);
+        await testLabel.set('text', 0);
       });
       afterEach(() => {
-        widgets.forEach(w => removeWidget(w.p('id')));
+        widgets.forEach(w => removeWidget(w.get('id')));
       });
 
       describe("When clicked", () => {
         test("Then it clicks 0 'clickThis' widgets", async () => {
-          await testButton.click();
-          expect(testLabel.p('text')).toBe(0);
+          await testWidget.click();
+          expect(testLabel.get('text')).toBe(0);
         });
       });
     });

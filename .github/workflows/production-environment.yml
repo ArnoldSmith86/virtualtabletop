@@ -1,0 +1,29 @@
+name: Production Environment (checks if server starts)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+
+jobs:
+  build:
+    name: Production Environment
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Checkout submodules
+      uses: textbook/git-checkout-submodule-action@master
+    - name: Install Node.js 15.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 15.x
+    - name: Install dependencies
+      run: npm ci
+    - name: Start virtualtabletop server with production settings
+      run: |
+        npm start &
+        sleep 10
+        curl -I http://localhost:8272
