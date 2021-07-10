@@ -756,19 +756,25 @@ async function jeApplyChangesMulti() {
   };
 
   const currentState = JSON.parse($('#jeText').textContent);
-  const widgets = widgetFilter(w=>currentState.widgets.indexOf(w.get('id')) != -1);
-  jeDeltaIsOurs = true;
-  for(const key in currentState) {
-    if(key != 'widgets') {
-      for(const w of widgets) {
-        if(typeof currentState[key] != 'object' || currentState[key] === null)
-          await setValueIfNeeded(w, key, currentState[key]);
-        else if(currentState[key][w.get('id')] !== undefined)
-          await setValueIfNeeded(w, key, currentState[key][w.get('id')]);
+
+  if(jeGetContext()[1] == 'widgets') {
+    var cursorState = jeCursorStateGet();
+    jeUpdateMulti();
+    jeCursorStateSet(cursorState);
+  } else {
+    jeDeltaIsOurs = true;
+    for(const key in currentState) {
+      if(key != 'widgets') {
+        for(const w of jeMultiSelectedWidgets()) {
+          if(typeof currentState[key] != 'object' || currentState[key] === null)
+            await setValueIfNeeded(w, key, currentState[key]);
+          else if(currentState[key][w.get('id')] !== undefined)
+            await setValueIfNeeded(w, key, currentState[key][w.get('id')]);
+        }
       }
     }
+    jeDeltaIsOurs = false;
   }
-  jeDeltaIsOurs = false;
 }
 
 function jeApplyDelta(delta) {
@@ -876,29 +882,47 @@ async function jeClick(widget, e) {
   }
 }
 
-function jeSelectWidget(widget, dontFocus, addToSelection, restoreCursorPosition) {
-  if(restoreCursorPosition) {
-    const aO = getSelection().anchorOffset;
-    const fO = getSelection().focusOffset;
-    const s = Math.min(aO, fO);
-    const e = Math.max(aO, fO);
-    const v = $('#jeText').textContent;
-    const linesUntilCursor = v.split('\n').slice(0, v.substr(0, s).split('\n').length);
-    const currentLine = linesUntilCursor.pop();
-    let defaultValueToAdd = null;
-    try {
-      const defaultValueMatch = currentLine.match(/^  "([^"]+)": (.*?),?$/);
-      if(defaultValueMatch && jeWidget && jeWidget.getDefaultValue(defaultValueMatch[1]) === JSON.parse(defaultValueMatch[2]))
-        defaultValueToAdd = defaultValueMatch[1];
-    } catch(e) {}
-    var cursorState = {
-      currentLine,
-      defaultValueToAdd,
-      sameLinesBefore: linesUntilCursor.filter(l=>l==currentLine).length,
-      start: s-linesUntilCursor.join('\n').length,
-      end: e-linesUntilCursor.join('\n').length
-    };
+function jeCursorStateGet() {
+  const aO = getSelection().anchorOffset;
+  const fO = getSelection().focusOffset;
+  const s = Math.min(aO, fO);
+  const e = Math.max(aO, fO);
+  const v = $('#jeText').textContent;
+  const linesUntilCursor = v.split('\n').slice(0, v.substr(0, s).split('\n').length);
+  const currentLine = linesUntilCursor.pop();
+  let defaultValueToAdd = null;
+  try {
+    const defaultValueMatch = currentLine.match(/^  "([^"]+)": (.*?),?$/);
+    if(defaultValueMatch && jeWidget && jeWidget.getDefaultValue(defaultValueMatch[1]) === JSON.parse(defaultValueMatch[2]))
+      defaultValueToAdd = defaultValueMatch[1];
+  } catch(e) {}
+  return {
+    currentLine,
+    defaultValueToAdd,
+    sameLinesBefore: linesUntilCursor.filter(l=>l==currentLine).length,
+    start: s-linesUntilCursor.join('\n').length,
+    end: e-linesUntilCursor.join('\n').length
+  };
+}
+
+function jeCursorStateSet(state) {
+  const v = $('#jeText').textContent;
+  const lines = v.split('\n');
+  let offset = 0;
+  let linesFound = 0;
+  for(const line of lines) {
+    if(line == state.currentLine && linesFound++ == state.sameLinesBefore) {
+      jeSelect(offset + state.start - 1, offset + state.end - 1);
+      break;
+    } else {
+      offset += line.length + 1;
+    }
   }
+}
+
+function jeSelectWidget(widget, dontFocus, addToSelection, restoreCursorPosition) {
+  if(restoreCursorPosition)
+    var cursorState = jeCursorStateGet();
 
   if(addToSelection && (jeMode == 'widget' || jeMode == 'multi')) {
     jeSelectWidgetMulti(widget, dontFocus);
@@ -912,20 +936,8 @@ function jeSelectWidget(widget, dontFocus, addToSelection, restoreCursorPosition
     jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(jeStateNow), null, '  ')), dontFocus);
   }
 
-  if(restoreCursorPosition) {
-    const v = $('#jeText').textContent;
-    const lines = v.split('\n');
-    let offset = 0;
-    let linesFound = 0;
-    for(const line of lines) {
-      if(line == cursorState.currentLine && linesFound++ == cursorState.sameLinesBefore) {
-        jeSelect(offset + cursorState.start - 1, offset + cursorState.end - 1, false);
-        break;
-      } else {
-        offset += line.length + 1;
-      }
-    }
-  }
+  if(restoreCursorPosition)
+    jeCursorStateSet(cursorState);
 }
 
 function jeSelectWidgetMulti(widget, dontFocus) {
@@ -1019,9 +1031,12 @@ function jeColorize() {
         if(jeMode == 'widget' && match[1] == '  "' && l[2] == 'key' && [ 'id', 'type' ].indexOf(match[2]) == -1 && jeWidget.getDefaultValue(match[2]) === undefined)
           c[2] = 'custom';
 
-        for(let i=1; i<l.length; ++i)
+        for(let i=1; i<l.length; ++i) {
           if(l[i] && match[i])
             match[i] = `<i class=${c[i]}>${html(match[i])}</i>`;
+          else if(match[i])
+            match[i] = html(match[i]);
+        }
 
         let newLine = match.slice(1).join('');
 
@@ -1085,6 +1100,12 @@ function jeGetContext() {
 
   if(jeMode == 'macro') {
     jeContext = [ 'Macro' ];
+    jeShowCommands();
+    return jeContext;
+  }
+
+  if(jeMode == 'trace') {
+    jeContext = [ 'Trace' ];
     jeShowCommands();
     return jeContext;
   }
@@ -1361,7 +1382,7 @@ function jeShowCommands() {
 
   if(!jeJSONerror && jeStateNow) {
     for(const contextMatch of (Object.keys(activeCommands).sort((a,b)=>b.length-a.length))) {
-      commandText += `\n  <b>${contextMatch}</b>\n`;
+      commandText += `\n  <b>${html(contextMatch)}</b>\n`;
       for(const command of activeCommands[contextMatch].sort(sortByName)) {
         try {
           if(context.match(new RegExp(command.context)) && (!command.show || command.show())) {
@@ -1385,16 +1406,16 @@ function jeShowCommands() {
       }
     }
   }
-  commandText += `\n\n${context}\n`;
+  commandText += `\n\n${html(context)}\n`;
   if(jeJSONerror) {
     if(jeMode == 'widget')
       commandText += `\nCtrl-Space: go to error\n`;
-    commandText += `\n<i class=error>${String(jeJSONerror)}</i>\n`;
+    commandText += `\n<i class=error>${html(String(jeJSONerror))}</i>\n`;
   }
   if(jeCommandError)
-    commandText += `\n<i class=error>Last command failed: ${String(jeCommandError)}</i>\n`;
+    commandText += `\n<i class=error>Last command failed: ${html(String(jeCommandError))}</i>\n`;
   if(jeSecondaryWidget)
-    commandText += `\n\n${jeSecondaryWidget}\n`;
+    commandText += `\n\n${html(jeSecondaryWidget)}\n`;
   $('#jeCommands').innerHTML = commandText;
   on('#jeCommands button', 'click', clickButton);
 
