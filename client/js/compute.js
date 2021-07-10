@@ -4,14 +4,14 @@ const compute_ops = [
     desc: 'sets the variable to the value of x',
     sample: 'var a = ${x}',
     call: function(v, x, y) { return y }, // for compatibility with SET
-    hash: '8c46c8ba2529c6931e488d829ef88272'
+    hash: 'b9ab83320032c969adf0e79539f50e03'
   },
   {
     name: '+',
     desc: 'returns the sum of two numbers or add/join/concat two strings together',
     sample: 'var a = ${x} + ${y}',
     call: function(v, x, y) { return v = x + y },
-    hash: '47470403fc757fcd584dc20efd70d420'
+    hash: '84794b272ab025d58749de0f6d7ece94'
   },
   {
     name: '-',
@@ -53,77 +53,77 @@ const compute_ops = [
     desc: 'returns true if x is less than y',
     sample: 'var a = ${x} < ${y}',
     call: function(v, x, y) { return v = x < y },
-    hash: 'b8da10460ca032511e0bbbd630dcb404'
+    hash: 'd4ad8183c5188f81fc8d430defca9d0e'
   },
   {
     name: '<=',
     desc: 'returns true if x is less than or equal to y',
     sample: 'var a = ${x} <= ${y}',
     call: function(v, x, y) { return v = x <= y },
-    hash: 'f92f282e3642d403e89dd745814aa965'
+    hash: '284c0510133a812f36e542213bc5fc61'
   },
   {
     name: '==',
     desc: 'returns true if x is equal to y',
     sample: 'var a = ${x} == ${y}',
     call: function(v, x, y) { return v = x == y },
-    hash: 'dc999fd39041c811671a6b52d0a27cd5'
+    hash: '561985b1912e056028a5c35b2f7990a4'
   },
   {
     name: '===',
     desc: 'returns true if x is equal to (and the same type as) y',
     sample: 'var a = ${x} === ${y}',
     call: function(v, x, y) { return v = x === y },
-    hash: 'ab49ebfc7795f6386b9c22198c391c12'
+    hash: '97140073f55a1f0d3182fed1dd2b9970'
   },
   {
     name: '!=',
     desc: 'returns true if x is not equal to y',
     sample: 'var a = ${x} != ${y}',
     call: function(v, x, y) { return v = x != y },
-    hash: '1352950841faa8eb3538d015261c7945'
+    hash: '81070efc349ce8e6bfdbf234de6ef6cf'
   },
   {
     name: '!==',
     desc: 'returns true if x is not equal to (or not the same type as) y',
     sample: 'var a = ${x} !== ${y}',
     call: function(v, x, y) { return v = x !== y },
-    hash: '933269de9a9c2358d36f4a7ff3a914af'
+    hash: 'a8c612661009cd6cac9a2aede354c20b'
   },
   {
     name: '>=',
     desc: 'returns true if x is greater than or equal to y',
     sample: 'var a = ${x} >= ${y}',
     call: function(v, x, y) { return v = x >= y },
-    hash: '0bdad89540a00bb96ef374f381f21046'
+    hash: '69a9bd081178ecf5f421ede0a1d88aca'
   },
   {
     name: '>',
     desc: 'returns true if x is greater than y',
     sample: 'var a = ${x} > ${y}',
     call: function(v, x, y) { return v = x > y },
-    hash: '9bda4a1d8031ed3bd37739d59a781ba1'
+    hash: 'ee380ce87698b1a24e53d75a8ed92b10'
   },
   {
     name: '&&',
     desc: 'logical AND returns true if both x and y are true or returns the value of x or y if they are not boolean values',
     sample: 'var a = ${x} && ${y}',
     call: function(v, x, y) { return v = x && y },
-    hash: 'cfb4c588c372704f24a6c1b6599474b5'
+    hash: 'b9b3a2b72e1e519806e9dbee51473892'
   },
   {
     name: '||',
     desc: 'logical OR returns true if either x or y are true or returns the value of x or y if they are not boolean values',
     sample: 'var a = ${x} || ${y}',
     call: function(v, x, y) { return v = x || y },
-    hash: '6a3eae6384503ff7282f5fa120127d08'
+    hash: 'ca4952d521bec600994767d3ae57dae4'
   },
   {
     name: '!',
     desc: 'logical NOT returns true if the given value is false (or can be evaluated as false), otherwise returns false',
     sample: 'var a = ! ${x}',
     call: function(v, x) { return v = !x },
-    hash: '2e1c3dd3a27b93e6c01b08c92592f714'
+    hash: '37ef396c2dea7e87c19ffdea3f6b3289'
   },
   {
     name: 'hypot',
@@ -354,7 +354,7 @@ const compute_ops = [
     desc: 'returns the length of an array',
     sample: 'var a = ${x} length',
     call: function(v, x) { return v = x.length },
-    hash: '7c3eb6540d9d1c66f2034072d464b4e7'
+    hash: '400ec285019aff3bd7627c06ac0e3893'
   },
   {
     name: 'parseFloat',
@@ -592,7 +592,7 @@ const compute_ops = [
     desc: 'converts and returns an array of the given string or object',
     sample: 'var a = from ${x}',
     call: function(v, x) { return v = Array.from(x) },
-    hash: '4823b33284aeaec8e6561fe2d01a87c9'
+    hash: '4b35f2d6fb3ea6c60605ce87f3674ec5'
   },
   {
     name: 'isArray',
@@ -606,7 +606,7 @@ const compute_ops = [
     desc: 'returns an array containing the elements of the two joined arrays',
     sample: 'var a = ${x} concatArray ${y}',
     call: function(v, x, y) { return v = x.concat(y) },
-    hash: '990c860a6339a7368b6e907143d2b4ee'
+    hash: '7acf4a9a8b169fdb706692a27c8b8603'
   },
   {
     name: 'pop',
@@ -655,7 +655,7 @@ const compute_ops = [
     desc: 'returns elements between start index y and end index z of an array (or characters of a string), excluding the end (unless z is omitted)',
     sample: 'var a = ${x} slice ${y} ${z}',
     call: function(v, x, y, z) { return v = (z !== undefined) ? x.slice(y, z) : x.slice(y) },
-    hash: '5e15b7a05d455cd51609ea631c20dc96'
+    hash: 'f9c5e98a2398113fed7da2f55e3ad6b7'
   },
   {
     name: 'insert',
@@ -697,7 +697,7 @@ const compute_ops = [
     desc: 'returns a random integer inbetween two numbers but excluding the endpoint, optionally in z increments (defaults to 1)',
     sample: 'var a = randRange ${x} ${y} ${z}',
     call: function(v, x, y, z) { return v = Math.round(Math.floor((Math.random() * (y - x) / (z || 1))) * (z || 1) + x) },
-    hash: '4758cba8f404cfe3ef0a300cebf3938a'
+    hash: '0c3de5a5df7cae6794d1794be2d12e04'
   }
 ];
 
