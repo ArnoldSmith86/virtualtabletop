@@ -1553,11 +1553,11 @@ window.addEventListener('keydown', async function(e) {
   }
 });
 
-document.getElementById("jsonEditor").addEventListener('keydown', async function(e) {
-	if(e.key == 'Enter') {
-		jeNewline();
-		e.preventDefault();
-		}
+on('#jsonEditor', 'keydown', function(e) {
+  if(e.key == 'Enter') {
+    jeNewline();
+    e.preventDefault();
+  }
 });
 
 window.addEventListener('keydown', function(e) {
