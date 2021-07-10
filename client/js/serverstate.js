@@ -117,6 +117,30 @@ function receiveDeltaFromServer(delta) {
   receiveDelta(delta);
 }
 
+function receiveStateFromServer(args) {
+  mouseTarget = null;
+  deltaID = args._meta.deltaID;
+  for(const widget of $a('#room .widget'))
+    if(widget.id != 'enlarged')
+      widgets.get(widget.id).applyRemove();
+  widgets.clear();
+  dropTargets.clear();
+  maxZ = {};
+  StateManaged.inheritFromMapping = {};
+  let isEmpty = true;
+  for(const widgetID in args) {
+    if(widgetID != '_meta') {
+      addWidget(args[widgetID]);
+      isEmpty = false;
+    }
+  }
+  if(isEmpty && !overlayShownForEmptyRoom && !urlProperties.load && !urlProperties.askID) {
+    showOverlay('statesOverlay');
+    overlayShownForEmptyRoom = true;
+  }
+  toServer('confirm');
+}
+
 function removeWidget(widgetID) {
   widgets.get(widgetID).applyRemove();
   widgets.delete(widgetID);
@@ -154,27 +178,6 @@ export function widgetFilter(callback) {
 
 onLoad(function() {
   onMessage('delta', receiveDeltaFromServer);
-  onMessage('state', function(args) {
-    mouseTarget = null;
-    deltaID = args._meta.deltaID;
-    for(const widget of $a('#room .widget'))
-      if(widget.id != 'enlarged')
-        widgets.get(widget.id).applyRemove();
-    widgets.clear();
-    dropTargets.clear();
-    maxZ = {};
-    let isEmpty = true;
-    for(const widgetID in args) {
-      if(widgetID != '_meta') {
-        addWidget(args[widgetID]);
-        isEmpty = false;
-      }
-    }
-    if(isEmpty && !overlayShownForEmptyRoom && !urlProperties.load && !urlProperties.askID) {
-      showOverlay('statesOverlay');
-      overlayShownForEmptyRoom = true;
-    }
-    toServer('confirm');
-  });
+  onMessage('state', receiveStateFromServer);
   setScale();
 });

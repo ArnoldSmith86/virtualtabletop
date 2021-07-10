@@ -273,10 +273,11 @@ export default async function convertPCIO(content) {
       if(widget.parent)
         w.parent = widget.parent;
       w.cardTypes = widget.cardTypes;
-      w.faceTemplates = [
-        widget.backTemplate,
-        widget.faceTemplate
-      ];
+      w.faceTemplates = [];
+      if(widget.backTemplate)
+        w.faceTemplates.push(widget.backTemplate);
+      if(widget.faceTemplate)
+        w.faceTemplates.push(widget.faceTemplate);
       w.cardDefaults = {
         pilesWith: {
           type: 'card'
@@ -311,7 +312,7 @@ export default async function convertPCIO(content) {
       for(const type in w.cardTypes)
         for(const key in w.cardTypes[type])
           w.cardTypes[type][key] = mapName(w.cardTypes[type][key]);
-    } else if(widget.type == 'card') {
+    } else if(widget.type == 'card' || widget.type == 'piece') {
       if(!byID[widget.deck]) // orphan card without deck
         continue;
 
