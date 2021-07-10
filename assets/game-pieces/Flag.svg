@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 475 965" width="475" height="965">
+	<defs>
+		<linearGradient id="grd1" gradientUnits="userSpaceOnUse"  x1="-0.72" y1="482.5" x2="23.28" y2="482.5">
+			<stop offset="0" stop-color="#ffffff"  />
+			<stop offset="1" stop-color="#000000"  />
+		</linearGradient>
+		<linearGradient id="grd2" gradientUnits="userSpaceOnUse"  x1="17.68" y1="175.125" x2="461.68" y2="175.125">
+			<stop offset="0" stop-color="#ffffff"  />
+			<stop offset="0.5" stop-color="#000000"  />
+			<stop offset="0.5" stop-color="#000000"  />
+			<stop offset="1" stop-color="#ffffff"  />
+		</linearGradient>
+	</defs>
+	<style>
+		tspan { white-space:pre }
+		.shp0 { fill: #ff0000 } 
+		.shp1 { opacity: 0.302;fill: url(#grd1) } 
+		.shp2 { opacity: 0.302;fill: url(#grd2) } 
+	</style>
+	<path id="Forma 3" class="shp0" d="M12 0L12 0C18.64 0 24 5.36 24 12L24 953C24 959.64 18.64 965 12 965L12 965C5.36 965 0 959.64 0 953L0 12C0 5.36 5.36 0 12 0Z" />
+	<path id="Forma 3 copy" class="shp1" d="M12 0L12 0C18.64 0 24 5.36 24 12L24 953C24 959.64 18.64 965 12 965L12 965C5.36 965 0 959.64 0 953L0 12C0 5.36 5.36 0 12 0Z" />
+	<path id="Forma 2" class="shp0" d="M31 36C31 36 170.5 -44.26 254 35C337.5 114.26 475 36 475 36L475 317C475 317 350.5 393.74 254 314C157.5 234.26 31 317 31 317L31 36Z" />
+	<path id="Forma 2 copy 3" class="shp2" d="M31 36C31 36 170.5 -44.26 254 35C337.5 114.26 475 36 475 36L475 317C475 317 350.5 393.74 254 314C157.5 234.26 31 317 31 317L31 36Z" />
+</svg>
