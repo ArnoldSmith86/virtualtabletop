@@ -191,7 +191,7 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
         if(typeof op[o] === 'string' && op[o].match(/^\$\{[^}]+\}$/))
           return op[o];
         if(typeof op[o] === 'string')
-          return `'${escapeString(op[o], /^[a-zA-Z0-9,.() _-]$/)}'`;
+          return `'${escapeString(op[o], /^[ !#-&(-[\]-~]$/)}'`;
         return String(op[o]);
       };
 
