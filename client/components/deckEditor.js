@@ -20,7 +20,7 @@ export const deckEditor = {
     },
     methods: {
       countCardType(typeID) {
-        return widgetFilter(w=>w.p('deck')==this.widgetState.id&&w.p('cardType')==typeID).length;
+        return widgetFilter(w=>w.get('deck')==this.widgetState.id&&w.get('cardType')==typeID).length;
       },
       async upload(typeID, propName) {
         this.widgetState.cardTypes[typeID][propName] = await uploadAsset();
@@ -34,7 +34,7 @@ export const deckEditor = {
         onClickDecrementAllCardTypes()
       },
 
-      _addCardCallback(imagePath, fileName) {
+      async _addCardCallback(imagePath, fileName) {
         let value = {
           "image": imagePath,
         }
@@ -43,7 +43,7 @@ export const deckEditor = {
         const card = { deck:this.widgetState.id, type:'card', cardType:fileName };
         addWidgetLocal(card);
         if(this.widgetState.parent)
-          widgets.get(card.id).moveToHolder(widgets.get(this.widgetState.parent));
+          await widgets.get(card.id).moveToHolder(widgets.get(this.widgetState.parent));
       },
 
       async uploadCards() {
@@ -52,6 +52,7 @@ export const deckEditor = {
     },
     template: `
       <div class="deckEdit">
+        <h1>Edit deck</h1>
         <button @click="uploadCards()">Upload Card Image(s)</button>
         <table id="cardTypesList">
           <tbody><tr><th>ID</th><th>Properties</th><th>Count</th></tr></tbody>
@@ -61,7 +62,7 @@ export const deckEditor = {
                 <div v-for="prop in dynamicProperties">
                   <label>{{ prop.name }}</label>
                   <input :value="typeObject[prop.name] || '' ">
-                  <button v-if="prop.type == 'image'" class="uploadAsset" @click="upload(typeID, prop.name)">⬆️ Upload</button>
+                  <button v-if="prop.type == 'image'" class="uploadAsset prettyButton" @click="upload(typeID, prop.name)">Upload</button>
                 </div>
               </td>
               <td><input class="count" type="number" :value="countCardType(typeID)" :data-old-value="countCardType(typeID)" min="0" max="1000"></td>

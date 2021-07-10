@@ -19,6 +19,12 @@ export default async function convertPCIO(content) {
   const widgets = JSON.parse(await zip.files['widgets.json'].async('string'));
 
   const nameMap = {};
+  try {
+    // created by the client while removing already uploaded assets
+    for(const [ k, v ] of Object.entries(JSON.parse(await zip.files['asset-map.json'].async('string'))))
+      nameMap[`package://${v}`] = `/assets/${k}`;
+  } catch(e) {}
+
   for(const filename in zip.files) {
     if(filename.match(/^\/?userassets/) && zip.files[filename]._data && zip.files[filename]._data.uncompressedSize < 2097152) {
       const targetFile = '/assets/' + zip.files[filename]._data.crc32 + '_' + zip.files[filename]._data.uncompressedSize;
@@ -264,10 +270,11 @@ export default async function convertPCIO(content) {
       if(widget.parent)
         w.parent = widget.parent;
       w.cardTypes = widget.cardTypes;
-      w.faceTemplates = [
-        widget.backTemplate,
-        widget.faceTemplate
-      ];
+      w.faceTemplates = [];
+      if(widget.backTemplate)
+        w.faceTemplates.push(widget.backTemplate);
+      if(widget.faceTemplate)
+        w.faceTemplates.push(widget.faceTemplate);
       w.cardDefaults = {
         pilesWith: {
           type: 'card'
@@ -302,7 +309,7 @@ export default async function convertPCIO(content) {
       for(const type in w.cardTypes)
         for(const key in w.cardTypes[type])
           w.cardTypes[type][key] = mapName(w.cardTypes[type][key]);
-    } else if(widget.type == 'card') {
+    } else if(widget.type == 'card' || widget.type == 'piece') {
       if(!byID[widget.deck]) // orphan card without deck
         continue;
 
@@ -392,6 +399,56 @@ export default async function convertPCIO(content) {
       w.css = `font-size: ${widget.textSize}px; font-weight: ${weight}; text-align: ${widget.textAlign};`;
       addDimensions(w, widget, 100, 20);
       w.height = widget.textSize * 3.5;
+    } else if(widget.type == 'timer') {
+      w.type = 'timer'
+      w.clickable = false
+      w.countdown = !widget.timerCountUp
+      if (widget.timerCountUp) {
+        w.end = widget.timerLength
+        w.start = 0
+      } else {
+        w.start = widget.timerLength
+        w.end = 0
+      }
+      w.milliseconds = widget.pauseTime||w.start
+      var id = widget.id
+      output[widget.id + 'P'] = {
+        parent: id,
+        id: id+'P',
+        x: 120,
+        y: -3,
+        width: 36,
+        height: 36,
+        type: "button",
+        movableInEdit: false,
+        clickRoutine: [
+          {
+            func: "TIMER",
+            timer: id
+          }
+        ],
+        image: "/i/button-icons/White-Play_Pause.svg",
+        css: "background-size: 75% 75%"
+      };
+      output[widget.id + 'R'] = {
+        parent: id,
+        id: id+'R',
+        x: 80,
+        y: -3,
+        width: 36,
+        height: 36,
+        type: "button",
+        movableInEdit: false,
+        clickRoutine: [
+          {
+            func: "TIMER",
+            timer: id,
+            mode: "reset"
+          }
+        ],
+        image: "/i/button-icons/White-Reset.svg",
+        css: "background-size: 80% 80%"
+      }
     } else if(widget.type == 'board') {
       w.image = widget.boardImage;
       w.movable = false;
@@ -455,7 +512,51 @@ export default async function convertPCIO(content) {
           if(flipFace)
             c.face = flipFace.value == 'faceDown' ? 0 : 1;
         }
-        if(c.func == "CHANGE_COUNTER") {
+        if(c.func == 'CHANGE_TIMER_STATE') {
+          if(!c.args.timers)
+            continue;
+          if ((c.args.playState && c.args.playState.value)=="switch"){
+            var mode = "toggle"
+          } else if ((c.args.playState && c.args.playState.value)=="pause"){
+            var mode = "pause"
+          } else {
+            var mode = "start"
+          };
+          c = {
+            func: 'TIMER',
+            timer: c.args.timers.value,
+            mode: mode
+          };
+
+          if(c.timer.length == 1)
+            c.timer = c.timer[0];
+        }
+        if(c.func == 'CHANGE_TIMER_TIME') {
+          if(!c.args.timers)
+            continue;
+          if ((c.args.changeType && c.args.changeType.value)=="add"){
+            var mode = "inc"
+          } else if ((c.args.changeType && c.args.changeType.value)=="subtract"){
+            var mode = "dec"
+          } else if ((c.args.changeType && c.args.changeType.value)=="set"){
+            var mode = "set"
+          } else {
+            var mode = "reset"
+          };
+          c = {
+            func: 'TIMER',
+            timer: c.args.timers.value,
+            mode: mode,
+            seconds: c.args.seconds && c.args.seconds.value
+          };
+          if(c.timer.length == 1)
+            c.timer = c.timer[0];
+          if(c.seconds === undefined)
+            c.seconds = 30;
+          if(c.mode == 'reset' || c.seconds === 0)
+            delete c.seconds;
+        }
+        if(c.func == 'CHANGE_COUNTER') {
           if(!c.args.counters)
             continue;
           c = {

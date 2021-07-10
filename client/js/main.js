@@ -17,14 +17,14 @@ function getValidDropTargets(widget) {
   const targets = [];
   for(const [ _, t ] of dropTargets) {
     // if the holder has a drop limit and it's reached, skip the holder
-    if(t.p('dropLimit') > -1 && t.p('dropLimit') <= t.children().length)
+    if(t.get('dropLimit') > -1 && t.get('dropLimit') <= t.children().length)
       // don't skip it if the dragged widget is already its child
       if(t.children().indexOf(widget) == -1)
         continue;
 
     let isValid = true;
-    for(const key in t.p('dropTarget')) {
-      if(widget.p(key) != t.p('dropTarget')[key] && (key != 'type' || widget.p(key) != 'deck' || t.p('dropTarget')[key] != 'card')) {
+    for(const key in t.get('dropTarget')) {
+      if(widget.get(key) != t.get('dropTarget')[key] && (key != 'type' || widget.get(key) != 'deck' || t.get('dropTarget')[key] != 'card')) {
         isValid = false;
         break;
       }
@@ -37,8 +37,8 @@ function getValidDropTargets(widget) {
         break;
       }
 
-      if(tt.p('parent'))
-        tt = widgets.get(tt.p('parent'));
+      if(tt.get('parent'))
+        tt = widgets.get(tt.get('parent'));
       else
         break;
     }
@@ -51,6 +51,12 @@ function getValidDropTargets(widget) {
 
 function getMaxZ(layer) {
   return maxZ[layer] || 0;
+}
+
+async function resetMaxZ(layer) {
+  maxZ[layer] = 0;
+  for(const w of widgetFilter(w=>w.get('layer')==layer&&w.state.z).sort((a,b)=>a.get('z')-b.get('z')))
+    await w.set('z', ++maxZ[layer]);
 }
 
 function updateMaxZ(layer, z) {
@@ -122,9 +128,16 @@ function setScale() {
   const h = window.innerHeight;
   if(jeEnabled) {
     const targetWidth = jeZoomOut ? 3200 : 1600;
-    scale = (w-700)/targetWidth;
+    scale = (w-920)/targetWidth;
   } else {
     scale = w/h < 1600/1000 ? w/1600 : h/1000;
+  }
+  if(w-scale*1600 + h-scale*1000 < 44) {
+    $('body').classList.add('aspectTooGood');
+    if(!$('body').className.match(/hiddenToolbar/))
+      scale = (w-44)/1600;
+  } else {
+    $('body').classList.remove('aspectTooGood');
   }
   document.documentElement.style.setProperty('--scale', scale);
   roomRectangle = $('#roomArea').getBoundingClientRect();
@@ -204,18 +217,14 @@ onLoad(function() {
         document.webkitExitFullscreen();
     }
   });
+  on('#hideToolbarButton', 'click', function() {
+    $('body').classList.add('hiddenToolbar');
+    setScale();
+  });
+
   checkURLproperties();
   setScale();
   startWebSocket();
-
-
-  const editOverlayApp = Vue.createApp({
-    data() { return {
-      selectedWidget: {},
-    }}
-  });
-  loadComponents(editOverlayApp);
-  vmEditOverlay = editOverlayApp.mount("#editOverlayVue");
 
   onMessage('warning', alert);
   onMessage('error', alert);
@@ -230,11 +239,12 @@ window.onresize = function(event) {
 }
 
 window.onkeyup = function(event) {
-  if(event.key == 'Escape')
-    showOverlay();
-}
-
-window.onerror = function(msg, url, line, col, err) {
-  log(`ERROR ${msg} < ${err.stack.trim().replace(/\n/g, ' < ')}`);
-  location.reload();
+  if(event.key == 'Escape') {
+    if(overlayActive)
+      showOverlay();
+    else if(edit)
+      toggleEditMode();
+    else if(jeEnabled)
+      jeToggle();
+  }
 }
