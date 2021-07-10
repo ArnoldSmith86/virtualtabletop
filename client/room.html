@@ -137,17 +137,11 @@
 
       <div id="editJSONoverlay" class="overlay">
         <h1>Edit widget JSON</h1>
-        <p>Please check <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Creating-Games">our GitHub wiki for documentation</a>. Having trouble with a button? Temporarily add this to see a log of state changes after each operation: "debug": true</p>
+        <p>Please check <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Creating-Games">our GitHub wiki for documentation</a>.</p>
         <p>You can open this room in <a href="https://virtualtabletop.io/ghetto.htm" id="ghetto-link">an advanced editor</a>. Be sure to have <b>backups</b> on your harddrive first (of every game in your room)!</p>
         <textarea id="editWidgetJSON"></textarea>
         <base-edit-overlay :json-edit="true"></base-edit-overlay>
       </div>
-    </div>
-
-    <div id="debugButtonOverlay" class="overlay">
-      <h1>Button Debug Output</h1>
-      <p>You are seeing this because the button you just clicked has its debug property set.</p>
-      <pre id="debugButtonOutput"></pre>
     </div>
 
     <div id="addOverlay" class="overlay">
@@ -354,6 +348,10 @@
     <div id="jeTextHighlight"></div>
     <div id="jeText" contenteditable="true" spellcheck="false"></div>
     <div id="jeCommands"></div>
+    <div id="jeLogWrapper">
+      <div id="jeLog"></div>
+      <h1>Show Routine Debug Output</h1>
+    </div>
     <div id="traceUI"><input type="range" id="traceInput"></div>
   </div>
 
