@@ -417,13 +417,15 @@ export class Widget extends StateManaged {
       if(this.get('debug')) console.log(`${this.id}: ${JSON.stringify(original)}`);
 
       if(a.skip) {
-        $('#debugButtonOutput').textContent += '\n\n\nOPERATION SKIPPED: \n' + JSON.stringify(a, null, '  ');
+        if(this.get('debug')) {
+          $('#debugButtonOutput').textContent += '\n\n\nOPERATION SKIPPED: \n' + JSON.stringify(a, null, '  ')
+        }
         continue;
       }
 
       if(typeof a == 'string') {
         const identifier = '(?:[a-zA-Z0-9_-]|\\\\u[0-9a-fA-F]{4})+';
-        const string     = `'((?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*)'`;
+        const string     = `'((?:[ !#-&(-[\\]-~]|\\\\u[0-9a-fA-F]{4})*)'`;
         const number     = '(-?(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?)';
         const variable   = `(\\$\\{[^}]+\\})`;
         const parameter  = `(null|true|false|\\[\\]|\\{\\}|${number}|${variable}|${string})`;
@@ -497,14 +499,18 @@ export class Widget extends StateManaged {
             for(const c in collections)
               inheritCollections[c] = [ ...collections[c] ];
             inheritCollections['caller'] = [ this ];
-            $('#debugButtonOutput').textContent += `\n\n\nCALLing: ${a.widget}.${a.routine}\n`;
+            if(this.get('debug')) {
+              $('#debugButtonOutput').textContent += `\n\n\nCALLing: ${a.widget}.${a.routine}\n`
+            }
             const result = await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections, (depth || 0) + 1);
             variables[a.variable] = result.variable;
             collections[a.collection] = result.collection;
           }
         }
         if(!a.return) {
-          $('#debugButtonOutput').textContent += '\n\n\nCALL without return. Ending evaluation.\n';
+          if(this.get('debug')) {
+            $('#debugButtonOutput').textContent += '\n\n\nCALL without return. Ending evaluation.\n'
+          }
           break;
         }
       }
@@ -753,7 +759,9 @@ export class Widget extends StateManaged {
             a.condition = compute(a.relation, null, a.operand1, a.operand2);
           const branch = a.condition ? 'thenRoutine' : 'elseRoutine';
           if (Array.isArray(a[branch])) {
-            $('#debugButtonOutput').textContent += `\n\n\nIF ${branch}\n`;
+            if(this.get('debug')) {
+              $('#debugButtonOutput').textContent += `\n\n\nIF ${branch}\n`
+            }
             await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true);
           }
         } else
