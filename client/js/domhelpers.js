@@ -67,10 +67,26 @@ export function formField(field, dom, id) {
     label.htmlFor = input.id = id;
   }
 
+  if(field.type == 'select') {
+    const input = document.createElement('select');
+    const label = document.createElement('label');
+
+    for(const option of field.options) {
+      const optionElement = document.createElement('option');
+      optionElement.value = option.value || '';
+      optionElement.textContent = option.text || option.value || '';
+      input.appendChild(optionElement);
+    }
+    label.textContent = field.label;
+    dom.appendChild(label);
+    dom.appendChild(input);
+    label.htmlFor = input.id = id;
+  }
+
   if(field.type == 'string') {
     const input = document.createElement('input');
     const label = document.createElement('label');
-    input.value = field.value || "";
+    input.value = field.value || '';
     label.textContent = field.label;
     dom.appendChild(label);
     dom.appendChild(input);
@@ -118,6 +134,8 @@ export function selectFile(getContents, multipleCallback) {
         });
         if(getContents == 'BINARY')
           reader.readAsArrayBuffer(file);
+        else if(getContents == 'TEXT')
+          reader.readAsText(file);
         else
           reader.readAsDataURL(file);
       }
