@@ -5,6 +5,8 @@ import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 
+const readOnlyProperties = new Set(['_ancestor']);
+
 export class Widget extends StateManaged {
   constructor(id) {
     const div = document.createElement('div');
@@ -921,7 +923,7 @@ export class Widget extends StateManaged {
         }
         if((a.property == 'parent' || a.property == 'deck') && a.value !== null && !widgets.has(a.value)) {
           problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
-        } else if (a.property == "_ancestor") {
+        } else if (readOnlyProperties.has(a.property)) {
           problems.push(`Tried setting read-only property ${a.property}.`;
         } else if (a.property == 'id' && isValidCollection(a.collection)) {
           for(const oldWidget of collections[a.collection]) {
