@@ -1244,6 +1244,14 @@ function jeLoggingRoutineEnd(variables, collections) {
         this.parentElement.querySelector(".jeLogNested").classList.toggle("active")
       })
     }
+    var details = document.getElementsByClassName('jeLogResult');
+    var i;
+    for (i=0; i < details.length; i++) {
+      details[i].addEventListener("click", function() {
+        this.classList.toggle("jeLogResult-left");
+        this.parentElement.querySelector(".jeLogDetails").classList.toggle("active")
+      })
+    }
   }
 }
 

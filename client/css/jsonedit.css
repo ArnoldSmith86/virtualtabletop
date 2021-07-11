@@ -168,6 +168,7 @@ body.jsonEdit.jeZoomOut #topSurface {
 .jeLogNested.active {
   display: block;
 }
+
 .jeLog {
   white-space: normal;
   font-size: 12px;
@@ -200,6 +201,19 @@ body.jsonEdit.jeZoomOut #topSurface {
   color: orange;
 }
 
+/* Create the caret/arrow with a unicode, and style it */
+.jeLogResult::after {
+  content: "\25B6";
+  color: white;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+/* Rotate the caret/arrow icon when clicked on (using JavaScript) */
+.jeLogResult-left::after {
+  transform: rotate(180deg);
+}
+
 .jeLogHasProblems {
   color: red;
 }
@@ -218,16 +232,16 @@ body.jsonEdit.jeZoomOut #topSurface {
   box-sizing: border-box;
 }
 
+/* Show the details when the user clicks on the caret/arrow */
+.jeLogDetails.active {
+  display: block;
+}
 .jeLogOperation {
   word-break: break-all;
 }
 
 .jeLogOperation:hover {
   background-color: darkred;
-}
-
-.jeLogOperation:hover > .jeLogDetails {
-  display: block;
 }
 
 .jeLogDetails > div {
