@@ -1234,8 +1234,17 @@ function jeLoggingRoutineStart(widget, property, initialVariables, initialCollec
 function jeLoggingRoutineEnd(variables, collections) {
   jeLoggingHTML += `</div></div>`;
   --jeLoggingDepth;
-  if(!jeLoggingDepth)
+  if(!jeLoggingDepth) {
     $('#jeLog').innerHTML = jeLoggingHTML;
+    var expanders = document.getElementsByClassName('jeLogWidget');
+    var i;
+    for (i=0; i < expanders.length; i++) {
+      expanders[i].addEventListener("click", function() {
+        this.classList.toggle("jeLogWidget-down");
+        this.parentElement.querySelector(".jeLogNested").classList.toggle("active")
+      })
+    }
+  }
 }
 
 function jeLoggingRoutineOperation(original, applied, problems, variables, collections, skipped) {
@@ -1541,10 +1550,6 @@ window.addEventListener('mouseup', async function(e) {
       await jeCallCommand(jeCommands.find(o => o.id == 'je_openWidgetById'));
       jeGetContext();
     }
-  }
-  if(e.target == $('.jeLogWidget')) {
-    e.target.parentElement.querySelector(".jeLogNested").classList.toggle("active");
-    e.target.classList.toggle("jeLogWidget-down")
   }
 
 });
