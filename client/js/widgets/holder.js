@@ -90,7 +90,7 @@ class Holder extends Widget {
     if(this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY')) && child.get('type') == 'pile') {
       let i=1;
       this.preventRearrangeDuringPileDrop = true;
-      for(const w of child.children()) {
+      for(const w of child.children().reverse()) {
         await w.set('x', child.get('x') - this.absoluteCoord('x') + i/100);
         await w.set('y', child.get('y') - this.absoluteCoord('y') + i/100);
         await w.set('parent', this.get('id'));
