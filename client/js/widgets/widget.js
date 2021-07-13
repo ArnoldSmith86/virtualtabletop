@@ -293,9 +293,7 @@ export class Widget extends StateManaged {
 
       if(field.type == 'checkbox') {
         result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).checked;
-      }
-
-      if(field.type == 'color' || field.type == 'number' || field.type == 'string') {
+      } else if(field.type != 'text') {
         result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).value;
       }
 
