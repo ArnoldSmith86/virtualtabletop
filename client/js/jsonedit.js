@@ -1246,7 +1246,7 @@ function jeInsert(context, key, value) {
 
 let jeRoutineLogging = false;
 let jeRoutineResult = '';
-let jeLoggingHTML = null;
+let jeLoggingHTML = '';
 let jeLoggingDepth = 0;
 let jeHTMLStack = [];
 
@@ -1255,12 +1255,12 @@ function jeLoggingJSON(obj) {
 }
 
 function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference) {
-  jeLoggingHTML = `
+  jeLoggingHTML += `
     <div class="jeLog">
       <span class="jeLogTime">${new Date().toTimeString().substr(0, 8) + new Date().toISOString().substr(19, 4)}</span>
       <span class="jeLogWidget">${widget.get('id')}</span>
       <span class="jeLogProperty">${typeof property == 'string' ? property : '--custom--'}</span>
-      <div class="jeLogNested ${jeLoggingDepth ? 'active' : ''}">
+      <div class="jeLogNested ${jeLoggingDepth ? '' : 'active'}">
   `;
   ++jeLoggingDepth;
 }
@@ -1335,7 +1335,6 @@ function jeLoggingRoutineOperationEnd(problems, variables, collections, skipped)
 function jeLoggingRoutineOperationSummary(definition, result) {
   jeRoutineResult = `<span class="jeLogSummary">${html(definition)}</span> =&gt; <span class="jeLogResult">${html(result || '')}</span>`;
 }
-
 
 // END routine logging
 
@@ -1564,6 +1563,7 @@ function jeToggle() {
   }
   jeEnabled = !jeEnabled;
   jeRoutineLogging = jeEnabled;
+  jeLoggingHTML = '';
   if(jeEnabled) {
     $('body').classList.add('jsonEdit');
   } else {
