@@ -1266,31 +1266,31 @@ function jeLoggingRoutineStart(widget, property, initialVariables, initialCollec
 }
 
 function jeLoggingRoutineEnd(variables, collections) {
-  jeLoggingHTML += `</div></div>`;
+  jeLoggingHTML += '</div></div>';
   --jeLoggingDepth;
   if(!jeLoggingDepth) {
-    $('#jeLog').innerHTML = jeLoggingHTML + `<\div><\div>`;
+    $('#jeLog').innerHTML = jeLoggingHTML + '</div></div>';
     var expanders = document.getElementsByClassName('jeLogWidget');
     var i;
     for (i=0; i < expanders.length; i++) {
-      expanders[i].addEventListener("click", function() {
-        this.classList.toggle("jeLogWidget-down");
-        this.parentElement.querySelector(".jeLogNested").classList.toggle("active")
-      })
+      expanders[i].addEventListener('click', function() {
+        this.classList.toggle('jeLogWidget-down');
+        this.parentElement.querySelector('.jeLogNested').classList.toggle('active');
+      });
     }
     var details = document.getElementsByClassName('jeLogName');
     var i;
     for (i=0; i < details.length; i++) {
-      details[i].addEventListener("click", function() {
-        this.classList.toggle("jeLogName-down");
-        this.parentElement.querySelector(".jeLogNested").classList.toggle("active")
-      })
+      details[i].addEventListener('click', function() {
+        this.classList.toggle('jeLogName-down');
+        this.parentElement.querySelector('.jeLogNested').classList.toggle('active');
+      });
     }
   }
 }
 
 function jeLoggingRoutineOperationStart(original, applied) {
-  jeHTMLStack.push([jeLoggingHTML, jeLoggingJSON(original), jeLoggingJSON(applied), html(typeof applied == 'string' ? applied.split(' ')[0] : applied.func)]);
+  jeHTMLStack.push([jeLoggingHTML, jeLoggingJSON(original), jeLoggingJSON(applied), html(typeof applied == 'string' ? applied.split(' ')[0] : applied.func || '<COMMENT>')]);
   jeLoggingHTML = '';
 }
 
