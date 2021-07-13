@@ -785,7 +785,7 @@ function duplicateWidget(widget, recursive, inheritFrom, increment, xOffset, yOf
 
     if(inheritFrom) {
       const inheritWidget = { inheritFrom: currentWidget.id };
-      for(const key of [ 'id', 'parent', 'type', 'deck' ])
+      for(const key of [ 'id', 'type', 'deck', 'cardType' ])
         if(currentWidget[key] !== undefined)
           inheritWidget[key] = currentWidget[key];
       currentWidget = inheritWidget;
