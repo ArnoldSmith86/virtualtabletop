@@ -193,6 +193,10 @@ body.jsonEdit.jeZoomOut #topSurface {
   color: grey;
 }
 
+.jeLogSummary {
+  color: green;
+}
+
 .jeLogResult {
   color: orange;
 }

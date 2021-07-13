@@ -488,7 +488,7 @@ export class Widget extends StateManaged {
             variables[variable][index] = getValue(variables[variable][index]);
           else
             variables[variable] = getValue(variables[variable]);
-          if(jeRoutineLogging) jeLoggingRoutineOperationResult(`${variable} = ${JSON.stringify(variables[variable])}`);
+          if(jeRoutineLogging) jeLoggingRoutineOperationSummary(a.substr(4), JSON.stringify(variables[variable]));
         } else {
           problems.push('String could not be interpreted as expression. Please check your syntax and note that many characters have to be escaped.');
         }
@@ -752,7 +752,7 @@ export class Widget extends StateManaged {
             problems.push(`Collection ${a.collection} is empty.`);
           }
         }
-        if(jeRoutineLogging) jeLoggingRoutineOperationResult(`${a.variable} = ${JSON.stringify(variables[a.variable])}`);
+        if(jeRoutineLogging) jeLoggingRoutineOperationSummary(`${a.variable} = ${JSON.stringify(variables[a.variable])}`);
       }
 
       if(a.func == 'IF') {
@@ -919,7 +919,7 @@ export class Widget extends StateManaged {
             if(!collections[a.collection].length || collections[a.collection].length >= 5)
               selectedWidgets = `(${collections[a.collection].length} widgets)`;
 
-            jeLoggingRoutineOperationResult(`${a.property} ${a.relation} ${JSON.stringify(a.value)} OF ${a.source} => ${a.mode} ${a.collection} = ${selectedWidgets}`);
+            jeLoggingRoutineOperationSummary(`${a.property} ${a.relation} ${JSON.stringify(a.value)} OF ${a.source}`, `${a.mode} ${a.collection} = ${selectedWidgets}`);
           }
         }
       }
@@ -954,9 +954,7 @@ export class Widget extends StateManaged {
           for(const w of collections[a.collection]) {
             await w.set(String(a.property), compute(a.relation, null, w.get(String(a.property)), a.value));
           }
-          if(jeRoutineLogging) {
-            jeLoggingRoutineOperationResult(`${a.property} ${a.relation} ${JSON.stringify(a.value)}`);
-          }
+          if(jeRoutineLogging) jeLoggingRoutineOperationSummary(a.collection, `${a.property} ${a.relation} ${JSON.stringify(a.value)}`);
         }
       }
 
