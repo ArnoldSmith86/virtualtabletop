@@ -141,6 +141,7 @@ body.jsonEdit.jeZoomOut #topSurface {
 #jeLogWrapper {
   position: fixed;
   bottom: 0;
+  white-space: normal;
 }
 
 #jeLog {
@@ -158,11 +159,9 @@ body.jsonEdit.jeZoomOut #topSurface {
   display: block;
 }
 
-#jeLogWrapper:hover > h1 {
-    display: none;
+#jeLogWrapper:hover > h1, .jeLogNested {
+  display: none;
 }
-
-.jeLogNested{ display: none; }
 
 /* Show the nested list when the user clicks on the caret/arrow */
 .jeLogNested.active {
@@ -173,7 +172,7 @@ body.jsonEdit.jeZoomOut #topSurface {
   white-space: normal;
   font-size: 12px;
   background: #ffffff10;
-  margin-left: 20px; 
+  margin-left: 20px;
 }
 
 /* Create the caret/arrow with a unicode, and style it */
@@ -214,12 +213,20 @@ body.jsonEdit.jeZoomOut #topSurface {
   transform: rotate(90deg);
 }
 
-.jeLogHasProblems {
+.jeLogHasProblems, .jeLogProblems {
   color: red;
 }
 
+.jeLogProblems {
+  display: none;
+}
+
+.jeLogHasProblems .jeLogProblems {
+  display: block;
+}
+
 .jeLogDetails {
-  word-break: break-all; 
+  word-break: break-all;
   margin-left: 20px;
   color: lightgray;
 }

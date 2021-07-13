@@ -1250,6 +1250,10 @@ let jeLoggingHTML = null;
 let jeLoggingDepth = 0;
 let jeHTMLStack = [];
 
+function jeLoggingJSON(obj) {
+  return html(JSON.stringify(obj, null, '  ').split('\n').slice(1, -1).join('\n'));
+}
+
 function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference) {
   jeLoggingHTML = '';
   jeLoggingHTML += `
@@ -1287,7 +1291,7 @@ function jeLoggingRoutineEnd(variables, collections) {
 }
 
 function jeLoggingRoutineOperationStart(original, applied) {
-  jeHTMLStack.push([jeLoggingHTML, html(JSON.stringify(original, null, '  ')), html(JSON.stringify(applied, null, '  ')), html(typeof applied == 'string' ? applied.split(' ')[0] : applied.func)]);
+  jeHTMLStack.push([jeLoggingHTML, jeLoggingJSON(original), jeLoggingJSON(applied), html(typeof applied == 'string' ? applied.split(' ')[0] : applied.func)]);
   jeLoggingHTML = '';
 }
 
@@ -1298,33 +1302,34 @@ function jeLoggingRoutineOperationEnd(problems, variables, collections, skipped)
 
   const savedHTML = jeHTMLStack.pop();
 
-  let newLoggingHTML = savedHTML[0];
-
-  newLoggingHTML += `
+  jeLoggingHTML =  `
+    ${savedHTML[0]}
     <div class="jeLogOperation ${skipped ? 'jeLogSkipped' : ''} ${problems.length ? 'jeLogHasProblems' : ''}">
       <span class="jeLogName">${savedHTML[3]}</span> ${jeRoutineResult}
-    <div class="jeLogNested">
-    <div class="jeLogDetails"><span class="jeLogName">Original and applied operations</span>
-    <div class="jeLogNested">`;
-  if (problems.length > 0)
-    newLoggingHTML += `
-        <h3>Problems              </h3><div class="jeLogProblems"   >${JSON.stringify(problems,    null, '  ')}</div>`;
-  newLoggingHTML += `
-    <h3>Original Operation    </h3><div class="jeLogOriginal"   >${savedHTML[1]}</div>
-    <h3>Applied  Operation    </h3><div class="jeLogApplied"    >${savedHTML[2]}</div>
-    </div></div>`;
-  newLoggingHTML += jeLoggingHTML;
-  newLoggingHTML += `
-    <div class="jeLogDetails"><span class="jeLogName">Variables and collections afterwards</span>
       <div class="jeLogNested">
-        <h3>Variables   afterwards</h3><div class="jeLogVariables"  >${JSON.stringify(variables,   null, '  ')}</div>
-        <h3>Collections afterwards</h3><div class="jeLogCollections">${JSON.stringify(collDisplay, null, '  ')}</div>
+        <div class="jeLogDetails jeLogProblems">
+          <span class="jeLogName jeLogName-down">Problems</span>
+          <div class="jeLogNested active">${jeLoggingJSON(problems)}</div>
+        </div>
+        <div class="jeLogDetails">
+          <span class="jeLogName">Original and applied operations</span>
+          <div class="jeLogNested">
+            <h3>Original Operation</h3><div class="jeLogOriginal">${savedHTML[1]}</div>
+            <h3>Applied  Operation</h3><div class="jeLogApplied" >${savedHTML[2]}</div>
+          </div>
+        </div>
+        ${jeLoggingHTML}
+        <div class="jeLogDetails">
+          <span class="jeLogName">Variables and collections afterwards</span>
+          <div class="jeLogNested">
+            <h3>Variables   afterwards</h3><div class="jeLogVariables"  >${jeLoggingJSON(variables  )}</div>
+            <h3>Collections afterwards</h3><div class="jeLogCollections">${jeLoggingJSON(collDisplay)}</div>
+          </div>
+        </div>
       </div>
     </div>
-   </div>
-   </div>
   `;
-  jeLoggingHTML = newLoggingHTML;
+
   jeRoutineResult = '';
 }
 
