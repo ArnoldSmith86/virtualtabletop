@@ -1255,14 +1255,13 @@ function jeLoggingJSON(obj) {
 }
 
 function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference) {
-  jeLoggingHTML = '';
-  jeLoggingHTML += `
-    <div class="jeLog"><span class="jeLogWidget">${widget.get('id')}</span> <span class="jeLogProperty">${typeof property == 'string' ? property : '--custom--'}</span>`;
-  if(jeLoggingDepth) {
-    jeLoggingHTML += `<div class="jeLogNested">  `;
-  } else {
-    jeLoggingHTML += `<div class="jeLogNested active">`
-  }
+  jeLoggingHTML = `
+    <div class="jeLog">
+      <span class="jeLogTime">${new Date().toTimeString().substr(0, 8) + new Date().toISOString().substr(19, 4)}</span>
+      <span class="jeLogWidget">${widget.get('id')}</span>
+      <span class="jeLogProperty">${typeof property == 'string' ? property : '--custom--'}</span>
+      <div class="jeLogNested ${jeLoggingDepth ? 'active' : ''}">
+  `;
   ++jeLoggingDepth;
 }
 
