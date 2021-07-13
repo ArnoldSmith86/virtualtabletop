@@ -469,7 +469,7 @@ export class Widget extends StateManaged {
             else if(match[14])
               return compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(15, 1)), toNum(getParam(19, 1)), toNum(getParam(23, 1)));
             else
-              return getParam(5, null);
+              return JSON.parse(JSON.stringify(getParam(5, null)));
           };
 
           const variable = match[1] !== undefined ? variables[unescape(match[2])] : unescape(match[2]);
