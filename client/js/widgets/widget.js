@@ -387,7 +387,8 @@ export class Widget extends StateManaged {
 
     if(tracingEnabled && typeof property == 'string')
       sendTraceEvent('evaluateRoutine', { id: this.get('id'), property });
-    if(jeRoutineLogging) jeLoggingRoutineStart(this, property, initialVariables, initialCollections, byReference);
+    if(jeRoutineLogging)
+      jeLoggingRoutineStart(this, property, initialVariables, initialCollections, byReference);
 
     let variables = initialVariables;
     let collections = initialCollections;
@@ -409,10 +410,12 @@ export class Widget extends StateManaged {
       let a = JSON.parse(JSON.stringify(original));
       if(typeof a == 'object')
         a = evaluateVariablesRecursively(a);
+
       var problems = [];
+      if(jeRoutineLogging) jeLoggingRoutineOperationStart(original, a)
 
       if(a.skip) {
-        if(jeRoutineLogging) jeLoggingRoutineOperation(original, a, problems, variables, collections, true);
+        if(jeRoutineLogging) jeLoggingRoutineOperationEnd(problems, variables, collections, true);
         continue;
       }
 
@@ -667,7 +670,11 @@ export class Widget extends StateManaged {
             collectionBackups[add] = collections[add];
             collections[add] = addCollections[add];
           }
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationStart( "iteration", "iteration" );
           await this.evaluateRoutine(a.loopRoutine, variables, collections, (depth || 0) + 1, true);
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationEnd(problems, variables, collections, false);
           for(const add in addVariables) {
             if(variableBackups[add] !== undefined)
               variables[add] = variableBackups[add];
@@ -1025,7 +1032,7 @@ export class Widget extends StateManaged {
         };
       }
 
-      if(jeRoutineLogging) jeLoggingRoutineOperation(original, a, problems, variables, collections);
+      if(jeRoutineLogging) jeLoggingRoutineOperationEnd(problems, variables, collections, false);
 
       if(!jeRoutineLogging && problems.length)
         console.log(problems);
