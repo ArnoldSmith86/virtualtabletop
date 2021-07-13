@@ -862,6 +862,8 @@ function jeCommandOptions() {
       options[option.label] = option.type == 'checkbox' ? input.checked : input.value;
       if(option.type == 'number')
         options[option.label] = parseFloat(options[option.label]);
+      if(Number.isNaN(options[option.label]))
+        options[option.label] = 0;
     }
 
     await jeCommandWithOptions.call(options);
