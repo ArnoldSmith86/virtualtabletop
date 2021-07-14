@@ -897,7 +897,7 @@ export class Widget extends StateManaged {
                 await c.set('owner', null);
                 await c.set('parent', null);
                 await c.bringToFront();
-                await c.setPosition(deck.get(`x`), deck.get(`y`));
+                await c.setPosition(deck.get('x'), deck.get('y'), c.get('z');
                 await c.updatePiles();  
               }
             }
