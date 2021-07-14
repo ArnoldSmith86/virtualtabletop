@@ -1255,11 +1255,13 @@ function jeLoggingJSON(obj) {
 }
 
 function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference) {
-  jeLoggingHTML += `
+  jeLoggingHTML = `
     <div class="jeLog">
-      <span class="jeLogTime">${new Date().toTimeString().substr(0, 8) + new Date().toISOString().substr(19, 4)}</span>
-      <span class="jeLogWidget">${widget.get('id')}</span>
-      <span class="jeLogProperty">${typeof property == 'string' ? property : '--custom--'}</span>
+      <div class="jeExpander ${jeLoggingDepth ? '' : 'jeExpander-down'}">
+        <span class="jeLogTime">${new Date().toTimeString().substr(0, 8) + new Date().toISOString().substr(19, 4)}</span>
+        <span class="jeLogWidget">${widget.get('id')}</span>
+        <span class="jeLogProperty">${typeof property == 'string' ? property : '--custom--'}</span>
+      </div>
       <div class="jeLogNested ${jeLoggingDepth ? '' : 'active'}">
   `;
   ++jeLoggingDepth;
@@ -1270,19 +1272,11 @@ function jeLoggingRoutineEnd(variables, collections) {
   --jeLoggingDepth;
   if(!jeLoggingDepth) {
     $('#jeLog').innerHTML = jeLoggingHTML + '</div></div>';
-    var expanders = document.getElementsByClassName('jeLogWidget');
+    var expanders = document.getElementsByClassName('jeExpander');
     var i;
     for (i=0; i < expanders.length; i++) {
       expanders[i].addEventListener('click', function() {
-        this.classList.toggle('jeLogWidget-down');
-        this.parentElement.querySelector('.jeLogNested').classList.toggle('active');
-      });
-    }
-    var details = document.getElementsByClassName('jeLogName');
-    var i;
-    for (i=0; i < details.length; i++) {
-      details[i].addEventListener('click', function() {
-        this.classList.toggle('jeLogName-down');
+        this.classList.toggle('jeExpander-down');
         this.parentElement.querySelector('.jeLogNested').classList.toggle('active');
       });
     }
@@ -1304,25 +1298,33 @@ function jeLoggingRoutineOperationEnd(problems, variables, collections, skipped)
   jeLoggingHTML =  `
     ${savedHTML[0]}
     <div class="jeLogOperation ${skipped ? 'jeLogSkipped' : ''} ${problems.length ? 'jeLogHasProblems' : ''}">
-      <span class="jeLogName">${savedHTML[3]}</span> ${jeRoutineResult}
+      <div class="jeExpander">
+        <span class="jeLogName">${savedHTML[3]}</span> ${jeRoutineResult}
+      </div>
       <div class="jeLogNested">
         <div class="jeLogDetails jeLogProblems">
           <span class="jeLogName jeLogName-down">Problems</span>
           <div class="jeLogNested active">${jeLoggingJSON(problems)}</div>
         </div>
         <div class="jeLogDetails">
-          <span class="jeLogName">Original and applied operations</span>
+          <div class="jeExpander">
+            <span class="jeLogName">Original and applied operation</span>
+          </div>
           <div class="jeLogNested">
-            <h3>Original Operation</h3><div class="jeLogOriginal">${savedHTML[1]}</div>
-            <h3>Applied  Operation</h3><div class="jeLogApplied" >${savedHTML[2]}</div>
+            <div class="jeLogOriginal"><h3>Original Operation</h3>${savedHTML[1]}</div>
+            <div class="jeLogApplied" ><h3>Applied  Operation</h3>${savedHTML[2]}</div>
+            <h3></h3>
           </div>
         </div>
         ${jeLoggingHTML}
         <div class="jeLogDetails">
-          <span class="jeLogName">Variables and collections afterwards</span>
+          <div class="jeExpander">
+            <span class="jeLogName">Variables and collections afterwards</span>
+          </div>
           <div class="jeLogNested">
-            <h3>Variables   afterwards</h3><div class="jeLogVariables"  >${jeLoggingJSON(variables  )}</div>
-            <h3>Collections afterwards</h3><div class="jeLogCollections">${jeLoggingJSON(collDisplay)}</div>
+            <div class="jeLogVariables"  ><h3>Variables   afterwards</h3>${jeLoggingJSON(variables  )}</div>
+            <div class="jeLogCollections"><h3>Collections afterwards</h3>${jeLoggingJSON(collDisplay)}</div>
+            <h3></h3>
           </div>
         </div>
       </div>

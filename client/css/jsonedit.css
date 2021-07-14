@@ -175,25 +175,12 @@ body.jsonEdit.jeZoomOut #topSurface {
   margin-left: 20px;
 }
 
-/* Create the caret/arrow with a unicode, and style it */
-.jeLogWidget::before {
-  content: "\25B6";
-  color: white;
-  display: inline-block;
-  margin-right: 6px;
-}
-
-/* Rotate the caret/arrow icon when clicked on (using JavaScript) */
-.jeLogWidget-down::before {
-  transform: rotate(90deg);
-}
-
 .jeLogSkipped {
   color: grey;
 }
 
 .jeLogSummary {
-  color: green;
+  color: lightgreen;
 }
 
 .jeLogResult {
@@ -201,7 +188,7 @@ body.jsonEdit.jeZoomOut #topSurface {
 }
 
 /* Create the caret/arrow with a unicode, and style it */
-.jeLogName::before {
+.jeExpander::before {
   content: "\25B6";
   color: white;
   display: inline-block;
@@ -209,7 +196,7 @@ body.jsonEdit.jeZoomOut #topSurface {
 }
 
 /* Rotate the caret/arrow icon when clicked on (using JavaScript) */
-.jeLogName-down::before {
+.jeExpander-down::before {
   transform: rotate(90deg);
 }
 
@@ -240,6 +227,7 @@ body.jsonEdit.jeZoomOut #topSurface {
   word-break: break-all;
 }
 
-.jeLogDetails > div {
+.jeLogOriginal, .jeLogApplied, .jeLogVariables, .jeLogCollections {
+  margin-left:20px;
   white-space: pre;
 }
