@@ -126,6 +126,7 @@ function receiveStateFromServer(args) {
   widgets.clear();
   dropTargets.clear();
   maxZ = {};
+  StateManaged.globalUpdateListeners = {};
   StateManaged.inheritFromMapping = {};
   let isEmpty = true;
   for(const widgetID in args) {

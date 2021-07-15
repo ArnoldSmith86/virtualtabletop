@@ -59,8 +59,8 @@ export function formField(field, dom, id) {
     const label = document.createElement('label');
     input.type = 'number';
     input.value = field.value !== undefined ? field.value : 1;
-    input.min = field.min || 1;
-    input.max = field.max || 10;
+    input.min = field.min !== undefined ? field.min : 1;
+    input.max = field.max !== undefined ? field.max : 10;
     label.textContent = field.label;
     dom.appendChild(label);
     dom.appendChild(input);
