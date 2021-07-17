@@ -259,8 +259,7 @@ export default async function convertPCIO(content) {
           movableInEdit: false,
 
           clickRoutine: recallConfirmation([
-            { func: 'RECALL',  holder: widget.id },
-            { func: 'FLIP',    holder: widget.id, face: 0 },
+            { func: 'RECALL',  holder: widget.id, face: 0 },
             { func: 'SHUFFLE', holder: widget.id }
           ])
         };
@@ -463,10 +462,15 @@ export default async function convertPCIO(content) {
 
       w.clickRoutine = [];
       for(let c of widget.clickRoutine) {
+        let append = null;
         if(c.func == 'MOVE_CARDS_BETWEEN_HOLDERS') {
           if(!c.args.from || !c.args.to)
             continue;
           const moveFlip = c.args.moveFlip && c.args.moveFlip.value;
+          const changeRotation = c.args.changeRotation && c.args.changeRotation.value;
+          const setRotation = c.args.setRotation && c.args.setRotation.value;
+          const fillAdd = c.args.fillAdd && c.args.fillAdd.value;
+          const moveMethod = c.args.moveMethod && c.args.moveMethod.value;
           c = {
             func:  'MOVE',
             from:  c.args.from.value,
@@ -485,6 +489,15 @@ export default async function convertPCIO(content) {
           }
           if(moveFlip && moveFlip != 'none')
             c.face = moveFlip == 'faceDown' ? 0 : 1;
+          if(changeRotation && changeRotation != 'none') {
+            c.rotate = changeRotation;
+            if(c.rotate == 'set' && setRotation)
+              c.rotate = setRotation;
+          }
+          if(fillAdd == 'fill')
+            c.mode = fillAdd;
+          if(moveMethod == 'all')
+            c.moveMethod = moveMethod;
         }
         if(c.func == 'SHUFFLE_CARDS') {
           if(!c.args.holders)
@@ -499,7 +512,8 @@ export default async function convertPCIO(content) {
         if(c.func == "FLIP_CARDS") {
           if(!c.args.holders)
             continue;
-          const flipFace = c.args.flipFace;
+          const flipFace = c.args.flipFace && c.args.flipFace.value;
+          const reverse = c.args.reverse && c.args.reverse.value;
           c = {
             func:   'FLIP',
             holder: c.args.holders.value,
@@ -509,8 +523,57 @@ export default async function convertPCIO(content) {
             c.holder = c.holder[0];
           if(!c.count)
             delete c.count;
-          if(flipFace)
-            c.face = flipFace.value == 'faceDown' ? 0 : 1;
+          switch (flipFace) {
+            case 'faceUp':
+              c.face = 1;
+              break;
+            case 'faceDown':
+              c.face = 0;
+              break;
+            case 'switchEach':
+              c.face = -1;
+              break;
+          }
+          if(reverse == 'none') {
+            append = {
+              func:   'SORT',
+              holder: c.holder,
+              key: "z",
+              reverse: true
+            };
+          }
+        }
+        if(c.func == 'SORT_CARDS') {
+          if(!c.args.sources)
+            continue;
+          const direction = c.args.direction && c.args.direction.value;
+          c = {
+            func:   'SORT',
+            holder: c.args.sources.value
+          };
+          if(c.holder.length == 1)
+            c.holder = c.holder[0];
+          if(direction == 'za')
+            c.reverse = true;
+        }
+        if(c.func == 'RECALL_CARDS') {
+          if(!c.args.decks)
+            continue;
+          const includeHolders = c.args.includeHolders && c.args.includeHolders.value;
+          const includeHands = c.args.includeHands && c.args.includeHands.value;
+          const flip = c.args.flip && c.args.flip.value;
+          c = {
+            func: 'RECALL',
+            deck: c.args.decks.value
+          };
+          if(c.deck.length == 1)
+            c.deck = c.deck[0];
+          if(includeHolders == 'normal')
+            c.contained = false;
+          if(includeHands && includeHands != 'hands')
+            c.owned = false;
+          if(flip && flip != 'none')
+            c.face = flip == 'faceDown' ? 0 : 1
         }
         if(c.func == 'CHANGE_TIMER_STATE') {
           if(!c.args.timers)
@@ -573,6 +636,8 @@ export default async function convertPCIO(content) {
             delete c.value;
         }
         w.clickRoutine.push(c);
+        if (append !== null)
+          w.clickRoutine.push(append);
       }
 
     } else if(widget.type == 'spinner') {

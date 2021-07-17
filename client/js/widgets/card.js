@@ -142,9 +142,10 @@ class Card extends Widget {
   }
 
   async flip(setFlip, faceCycle) {
-    if(setFlip !== undefined && setFlip !== null)
-      await this.set('activeFace', setFlip);
-    else {
+    if(setFlip !== undefined && setFlip !== null) {
+      if(setFlip >= 0 && setFlip < this.deck.get('faceTemplates').length)
+        await this.set('activeFace', setFlip);
+    } else {
       const fC = (faceCycle !== undefined && faceCycle !== null) ? faceCycle : this.get('faceCycle');
       if (fC == 'backward')
         await this.set('activeFace', this.get('activeFace') == 0 ? this.deck.get('faceTemplates').length-1 : this.get('activeFace') -1);

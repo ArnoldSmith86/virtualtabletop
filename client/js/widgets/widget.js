@@ -665,14 +665,19 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder,problems)) {
             await w(a.holder, async holder=>{
+              let f = a.face;
+              if(a.face == -1)
+                f = holder.children()[0].get('activeFace') == 0 ? 1 : 0;
               for(const c of holder.children().slice(0, a.count || 999999))
-                c.flip && await c.flip(a.face,a.faceCycle);
+                c.flip && await c.flip(f, a.faceCycle);
             });
           }
         } else if(isValidCollection(a.collection)) {
           if(collections[a.collection].length) {
+            if(a.face == -1)
+              a.face = collections[a.collection][0].get('activeFace') == 0 ? 1 : 0;
             for(const c of collections[a.collection].slice(0, a.count || 999999))
-              c.flip && await c.flip(a.face,a.faceCycle);
+              c.flip && await c.flip(a.face, a.faceCycle);
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
@@ -811,44 +816,40 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'MOVE') {
-        setDefaults(a, { count: 1, face: null });
+        setDefaults(a, { count: 1, face: null, collection: 'DEFAULT' });
         const count = a.count || 999999;
-
-        if(this.isValidID(a.from, problems) && this.isValidID(a.to, problems)) {
-          await w(a.from, async source=>await w(a.to, async target=>{
-            for(const c of source.children().slice(0, count).reverse()) {
-              if(a.face !== null && c.flip)
-                c.flip(a.face);
-              if(source == target) {
-                await c.bringToFront();
-              } else {
-                c.movedByButton = true;
-                await c.moveToHolder(target);
-                delete c.movedByButton;
-              }
-            }
-          }));
+        if(a.from !== undefined) {
+          if(this.isValidID(a.from, problems) && this.isValidID(a.to, problems)) {
+            await w(a.from, async source=>await w(a.to, async target=>this.moveFlipToHolder(source.children(), source, target, count, a.face)));
+          }
+        } else if(isValidCollection(a.collection)) {
+          if(collections[a.collection].length)
+            await w(a.to, async target=>this.moveFlipToHolder(collections[a.collection], null, target, count, a.face));
+          else
+            problems.push(`Collection ${a.collection} is empty.`);
         }
       }
 
       if(a.func == 'MOVEXY') {
-        setDefaults(a, { count: 1, face: null, x: 0, y: 0 });
-        if(this.isValidID(a.from, problems)) {
-          await w(a.from, async source=>{
-            for(const c of source.children().slice(0, a.count || 999999).reverse()) {
-              if(a.face !== null && c.flip)
-                c.flip(a.face);
-              await c.set('parent', null);
-              await c.bringToFront();
-              await c.setPosition(a.x, a.y, a.z || c.get('z'));
-              await c.updatePiles();
-            }
-          });
+        setDefaults(a, { count: 1, face: null, x: 0, y: 0, collection: 'DEFAULT' });
+        if(a.from !== undefined) {
+          if(this.isValidID(a.from, problems)) {
+            await w(a.from, async source=>this.moveXY(source.children(), a.count, a.face, a.x, a.y, a.z));
+          }
+        } else if(isValidCollection(a.collection)) {
+          if(collections[a.collection].length)
+            await this.moveXY(collections[a.collection], a.count, a.face, a.x, a.y, a.z);
+          else
+            problems.push(`Collection ${a.collection} is empty.`);
         }
       }
 
       if(a.func == 'RECALL') {
-        setDefaults(a, { owned: true });
+        setDefaults(a, { owned: true, contained: true });
+        if(a.deck !== undefined) {
+          if(this.isValidID(a.deck, problems))
+            a.holder = widgets.get(a.deck).get('parent');
+        }
         if(this.isValidID(a.holder, problems)) {
           for(const holder of toA(a.holder)) {
             const decks = widgetFilter(w=>w.get('type')=='deck'&&w.get('parent')==holder);
@@ -857,8 +858,27 @@ export class Widget extends StateManaged {
                 let cards = widgetFilter(w=>w.get('deck')==deck.get('id'));
                 if(!a.owned)
                   cards = cards.filter(c=>!c.get('owner'));
-                for(const c of cards)
+                if(!a.contained) {
+                  cards = cards.filter(function(c) {
+                    if(!c.get('parent'))
+                      return true;
+
+                    const parent = widgets.get(c.get('parent'));
+                    const parentType = parent.get('type');
+                    if(parentType == 'holder')
+                      return parent.get('childrenPerOwner');
+                    if(parentType != 'pile' || !parent.get('parent'))
+                      return true;
+
+                    const pileParent = widgets.get(parent.get('parent'));
+                    return pileParent.get('type') != 'holder';
+                  });
+                }
+                for(const c of cards) {
+                  if(a.face !== undefined)
+                    await c.flip(a.face);
                   await c.moveToHolder(widgets.get(holder));
+                }
               }
             } else {
               problems.push(`Holder ${holder} does not have a deck.`);
@@ -1190,6 +1210,36 @@ export class Widget extends StateManaged {
 
     this.hideEnlarged();
     await this.updatePiles();
+  }
+
+  async moveFlipToHolder(children, source, target, count, face) {
+    children.slice(0, count).reverse().forEach(c=> {
+      if(face !== null && c.flip)
+        c.flip(face);
+      let isInTargetHolder = (source == target);
+      if (!source && c.parent !== undefined) {
+        if (c.parent.get('type') == 'pile' && c.parent.parent !== undefined)
+          isInTargetHolder = (c.parent.parent == target);
+      }
+      if(isInTargetHolder) {
+        c.bringToFront();
+      } else {
+        c.movedByButton = true;
+        c.moveToHolder(target);
+        delete c.movedByButton;
+      }
+    });
+  }
+
+  async moveXY(source, count, face, x, y, z) {
+    source.slice(0, count || 999999).reverse().forEach(c=> {
+      if(face !== null && c.flip)
+        c.flip(face);
+      c.set('parent', null);
+      c.bringToFront();
+      c.setPosition(x, y, z || c.p('z'));
+      c.updatePiles();
+    });
   }
 
   async onChildAdd(child, oldParentID) {
