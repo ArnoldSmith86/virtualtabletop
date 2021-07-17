@@ -286,7 +286,7 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
     routine.splice(o.index, 0, o.operation);
 }
 
-function v4DynamicFaceProperties(properties) {
+function v5DynamicFaceProperties(properties) {
   if(Array.isArray(properties.faceTemplates)) {
     for(const face of properties.faceTemplates) {
       if(Array.isArray(face.objects)) {
