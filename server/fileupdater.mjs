@@ -1,4 +1,4 @@
-export const VERSION = 3;
+export const VERSION = 4;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -31,25 +31,47 @@ function updateProperties(properties, v) {
       updateRoutine(properties[property], v);
 }
 
-function updateRoutine(routine, v) {
+function updateRoutine(routine, v, nested = false, status = {hasMode:false, needsMode:false}) {
   if(!Array.isArray(routine))
     return;
-
+  const reMode = /^mode:/;
+  const reVar = /^var /;
   for(const operation of routine) {
+    if(typeof operation == 'string' && reMode.test(operation))
+      status.hasMode = true;
+    if(!status.hasMode && typeof operation == 'string' && reVar.test(operation))
+      status.needsMode = true;
+    if(!status.hasMode && operation.func == 'COMPUTE')
+      status.needsMode = true;
+    const hasModeLocal = status.hasMode;
     if(operation.func == 'CLONE') {
       updateProperties(operation.properties, v);
     }
     if(operation.func == 'FOREACH') {
-      updateRoutine(operation.loopRoutine, v);
+      updateRoutine(operation.loopRoutine, v, true, status);
+      status.hasMode = hasModeLocal;
     }
     if(operation.func == 'IF') {
-      updateRoutine(operation.thenRoutine, v);
-      updateRoutine(operation.elseRoutine, v);
+      updateRoutine(operation.thenRoutine, v, true, status);
+      status.hasMode = hasModeLocal;
+      updateRoutine(operation.elseRoutine, v, true, status);
+      status.hasMode = hasModeLocal;
     }
   }
 
   v<2 && v2UpdateSelectDefault(routine);
   v<3 && v3RemoveComputeAndRandomAndApplyVariables(routine);
+  v<4 && routineModeSwitch(routine, 'strToNum defaultOne', nested, status);
+}
+
+function routineModeSwitch(routine, modeSwitch, nested, status) {
+  const re = /^mode:/;
+  for(let i = 0; i < routine.length; i++) {
+    if(typeof routine[i] == 'string' && re.test(routine[i]))
+      routine[i] += ' ' + modeSwitch;
+  }
+  if(!nested && status.needsMode)
+    routine.unshift('mode: ' + modeSwitch);
 }
 
 function v2UpdateSelectDefault(routine) {
