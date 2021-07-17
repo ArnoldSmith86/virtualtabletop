@@ -14,7 +14,7 @@ class BasicWidget extends Widget {
 
       image: '',
       color: '#ff0000',
-      svgReplaces: {"#ff0000": "color"},
+      svgReplaces: {},
       layer: 1,
       text: ''
     });
