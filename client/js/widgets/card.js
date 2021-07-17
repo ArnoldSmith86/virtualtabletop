@@ -90,9 +90,11 @@ class Card extends Widget {
       faceDiv.style.border = face.border ? face.border + 'px black solid' : 'none';
       faceDiv.style.borderRadius = face.radius ? face.radius + 'px' : '0';
 
-      for(const object of face.objects) {
+      for(const original of face.objects) {
+        const object = JSON.parse(JSON.stringify(original));
         const objectDiv = document.createElement('div');
         objectDiv.classList.add('cardFaceObject');
+
         const x = face.border ? object.x-face.border : object.x;
         const y = face.border ? object.y-face.border : object.y;
         let css = object.css ? object.css + '; ' : '';
@@ -100,28 +102,34 @@ class Card extends Widget {
         css += object.rotation ? `; transform: rotate(${object.rotation}deg)` : '';
         objectDiv.style.cssText = css;
         const setValue = _=>{
-          let value = object.valueType == 'static' ? object.value : this.get(object.value);
+          if(typeof object.dynamicProperties == 'object')
+            for(const dp of Object.keys(object.dynamicProperties))
+              if(object[dp] === undefined)
+                object[dp] = this.get(object.dynamicProperties[dp]);
+
           if(object.type == 'image') {
-            if(value) {
+            if(object.value) {
               if(object.svgReplaces) {
                 const replaces = { ...object.svgReplaces };
                 for(const key in replaces)
                   replaces[key] = this.get(replaces[key]);
-                value = getSVG(value, replaces, _=>this.applyDeltaToDOM({ deck:this.get('deck') }));
+                object.value = getSVG(object.value, replaces, _=>this.applyDeltaToDOM({ deck:this.get('deck') }));
               }
-              objectDiv.style.backgroundImage = `url("${value}")`;
+              objectDiv.style.backgroundImage = `url("${object.value}")`;
             }
             objectDiv.style.backgroundColor = object.color || 'white';
           } else {
-            objectDiv.textContent = value;
+            objectDiv.textContent = object.value;
             objectDiv.style.color = object.color;
           }
         }
 
         // add a callback that makes sure dynamic property changes are reflected on the DOM
         const properties = object.svgReplaces ? Object.values(object.svgReplaces) : [];
-        if(object.valueType != 'static')
-          properties.push(object.value);
+        if(typeof object.dynamicProperties == 'object')
+          for(const dp of Object.keys(object.dynamicProperties))
+            if(object[dp] === undefined)
+              properties.push(object.dynamicProperties[dp]);
         for(const p of properties) {
           if(!this.dynamicProperties[p])
             this.dynamicProperties[p] = [];

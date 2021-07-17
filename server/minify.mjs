@@ -34,6 +34,7 @@ export default function minifyRoom() {
         'client/css/widgets/holder.css',
         'client/css/widgets/label.css',
         'client/css/widgets/pile.css',
+        'client/css/widgets/seat.css',
         'client/css/widgets/spinner.css',
         'client/css/widgets/timer.css'
       ],
@@ -66,6 +67,7 @@ export default function minifyRoom() {
           'client/js/widgets/holder.js',
           'client/js/widgets/label.js',
           'client/js/widgets/pile.js',
+          'client/js/widgets/seat.js',
           'client/js/widgets/spinner.js',
           'client/js/widgets/timer.js',
 

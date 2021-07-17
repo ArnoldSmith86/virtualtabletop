@@ -282,6 +282,40 @@ function applyEditOptionsPiece(widget) {
   widget.color = $('#pieceColor').value;
 }
 
+//seat functions
+function populateEditOptionsSeat(widget) {
+  $('#seatPlayerColor').value = widget.color || "black";
+  $('#seatPlayerName').value = widget.player || "~ empty seat ~";
+  $('#seatEmpty').checked = false;
+}
+
+function applyEditOptionsSeat(widget) {
+  if ($('#seatEmpty').checked){
+    delete widget.player;
+    delete widget.color;
+  }
+  else if($('#seatPlayerName').value!="~ empty seat ~"){
+    toServer('playerColor', { player: widget.player, color: $('#seatPlayerColor').value });
+    toServer('rename', { oldName: widget.player, newName: $('#seatPlayerName').value });
+    widget.player = $('#seatPlayerName').value;
+    widget.color = $('#seatPlayerColor').value;
+  }
+}
+
+//spinner functions
+function populateEditOptionsSpinner(widget) {
+  }
+
+function applyEditOptionsSpinner(widget) {
+  for(let i=0; i<9; ++i) {
+    if($a('#spinnerOptions > [name=spinnerOptions]')[i].selected){
+      widget.options = JSON.parse($a('#spinnerOptions > [name=spinnerOptions]')[i].value);
+      delete widget.angle;
+      widget.value=widget.options[widget.options.length-1];
+    }
+  }
+}
+
 //timer functions
 function populateEditOptionsTimer(widget) {
   $('#timerCountdown').checked = widget.countdown;
@@ -321,20 +355,6 @@ function applyEditOptionsTimer(widget) {
   }
 }
 
-//spinner functions
-function populateEditOptionsSpinner(widget) {
-  }
-
-function applyEditOptionsSpinner(widget) {
-  for(let i=0; i<9; ++i) {
-    if($a('#spinnerOptions > [name=spinnerOptions]')[i].selected){
-      widget.options = JSON.parse($a('#spinnerOptions > [name=spinnerOptions]')[i].value);
-      delete widget.angle;
-      widget.value=widget.options[widget.options.length-1];
-    }
-  }
-}
-
 //This section calls the relative widgets' overlays and functions
 async function applyEditOptions(widget) {
   var type = widget.type||'piece';
@@ -355,10 +375,12 @@ async function applyEditOptions(widget) {
     applyEditOptionsLabel(widget);
   if(type == 'piece')
     applyEditOptionsPiece(widget);
-  if(type == 'timer')
-    applyEditOptionsTimer(widget);
+  if(type == 'seat')
+    applyEditOptionsSeat(widget);
   if(type == 'spinner')
     applyEditOptionsSpinner(widget);
+  if(type == 'timer')
+    applyEditOptionsTimer(widget);
 }
 
 function editClick(widget) {
@@ -392,10 +414,12 @@ function editClick(widget) {
     populateEditOptionsLabel(widget.state);
   if(type == 'piece')
     populateEditOptionsPiece(widget.state);
-  if(type == 'timer')
-    populateEditOptionsTimer(widget.state);
+  if(type == 'seat')
+    populateEditOptionsSeat(widget.state);
   if(type == 'spinner')
     populateEditOptionsSpinner(widget.state);
+  if(type == 'timer')
+    populateEditOptionsTimer(widget.state);
 
   showOverlay('editOverlay');
 }
@@ -565,7 +589,7 @@ function addWidgetToAddWidgetOverlay(w, wi) {
 }
 
 function populateAddWidgetOverlay() {
-  const x = 20+140-111/2;
+  var x = 20+140-111/2;
   addWidgetToAddWidgetOverlay(new Holder('add-holder'), {
     type: 'holder',
     x,
@@ -582,7 +606,7 @@ function populateAddWidgetOverlay() {
   });
 
   let y = 100;
-  for(const color of [ '#bc5bee','#4c5fea','#23ca5b','#e0cb0b','#e2a633','#e84242','#000000','#4a4a4a','#ffffff' ]) {
+  for(const color of [ '#ff0000']) {
     addWidgetToAddWidgetOverlay(new BasicWidget('add-pin-'+color), {
       classes: 'pinPiece',
       color,
@@ -613,8 +637,45 @@ function populateAddWidgetOverlay() {
       y: y + (43.83 - 90)/2
     });
     y += 88;
-  }
+  };
 
+  var x=350;
+  for(const image of [ 'Pawn','Person']) {
+    addWidgetToAddWidgetOverlay(new BasicWidget('add-piece-'+image), {
+      image:"/i/game-pieces/"+image+".svg",
+      x,
+      y: 180,
+      width: 100,
+      height: 100,
+    });
+    x = 490;
+  };
+
+  x=360;
+  for(const image of [ 'Cube','Meeple','Marble']) {
+    addWidgetToAddWidgetOverlay(new BasicWidget('add-piece-'+image), {
+      image:"/i/game-pieces/"+image+".svg",
+      x,
+      y: 310,
+      width: 50,
+      height: 50,
+    });
+    x += 75;
+  };
+
+  x=370;
+  for(const image of [ 'Flag','House']) {
+    addWidgetToAddWidgetOverlay(new BasicWidget('add-piece-'+image), {
+      image:"/i/game-pieces/"+image+".svg",
+      x,
+      y: 390,
+      width: 70,
+      height: 70,
+    });
+    x += 110;
+  };
+
+  y=480;
   const centerStyle = 'color:black;display:flex;justify-content:center;align-items:center;text-align:center;';
   addWidgetToAddWidgetOverlay(new BasicWidget('add-unicodeS'), {
     text: '🐻',
@@ -779,9 +840,17 @@ async function onClickUpdateWidget(applyChangesFromUI) {
     showOverlay();
 }
 
-function duplicateWidget(widget, recursive, increment, xOffset, yOffset, xCopies, yCopies) {
+function duplicateWidget(widget, recursive, inheritFrom, increment, xOffset, yOffset, xCopies, yCopies) {
   const clone = function(widget, recursive, newParent, xOffset, yOffset) {
     let currentWidget = JSON.parse(JSON.stringify(widget.state))
+
+    if(inheritFrom) {
+      const inheritWidget = { inheritFrom: currentWidget.id };
+      for(const key of [ 'id', 'type', 'deck', 'cardType' ])
+        if(currentWidget[key] !== undefined)
+          inheritWidget[key] = currentWidget[key];
+      currentWidget = inheritWidget;
+    }
 
     if(increment) {
       const match = currentWidget.id.match(/^(.*?)([0-9]+)([^0-9]*)$/);
@@ -799,9 +868,9 @@ function duplicateWidget(widget, recursive, increment, xOffset, yOffset, xCopies
 
     if(newParent)
       currentWidget.parent = newParent;
-    if(xOffset)
+    if(xOffset || !newParent && inheritFrom)
       currentWidget.x = widget.get('x') + xOffset;
-    if(yOffset)
+    if(yOffset || !newParent && inheritFrom)
       currentWidget.y = widget.get('y') + yOffset;
 
     addWidgetLocal(currentWidget);
@@ -831,7 +900,7 @@ function onClickDuplicateWidget() {
   const widget = widgets.get(JSON.parse($('#editWidgetJSON').dataset.previousState).id);
   const xOffset = widget.absoluteCoord('x') > 1500 ? -20 : 20;
   const yOffset = widget.absoluteCoord('y') >  900 ? -20 : 20;
-  duplicateWidget(widget, true, true, xOffset, yOffset, 1, 0);
+  duplicateWidget(widget, true, false, true, xOffset, yOffset, 1, 0);
   showOverlay();
 }
 

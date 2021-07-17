@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000">
+	<style>
+		tspan { white-space:pre }
+		.shp0 { fill: #ff0000 } 
+		.shp1 { opacity: 0.302;fill: #000000 } 
+		.shp2 { opacity: 0.302;fill: #ffffff } 
+	</style>
+	<path id="Forma 1" class="shp0" d="M499.57 998.98L67 749.24L67 249.75L499.57 0L932.14 249.75L932.14 749.24L499.57 998.98Z" />
+	<path id="Forma 1 copy 3" fill-rule="evenodd" class="shp1" d="M932.14 249.75L932.14 749.24L502.28 997.42L500.72 996.52L500.72 498.52L931.87 249.59L932.14 249.75Z" />
+	<path id="Forma 1 copy 2" fill-rule="evenodd" class="shp2" d="M499.57 0L932 249.66L932 250.26L499.27 499.25L67.79 249.29L499.57 0Z" />
+</svg>
