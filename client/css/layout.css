@@ -238,7 +238,6 @@ body.aspectTooGood #hideToolbarButton {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
-  will-change: transform;
   touch-action: none;
   user-select: none;
   -moz-user-select: none;
