@@ -4,9 +4,8 @@
   text-align: right;
   color: #525252;
   padding-right:3px;
-  border-top: 1px solid var(--AnimationColor);
-  border-bottom: 1px solid var(--AnimationColor);
-  --AnimationColor: var(--wcBorderNormal);
+  border-top: 1px solid var(--wcBorderNormal);
+  border-bottom: 1px solid var(--wcBorderNormal);
   --wcBorderNormal: #00000000;
   --wcBorderAlert: red;
   --wcFontAlert: red;
@@ -23,7 +22,7 @@
 
 @keyframes blinker {
   50% {
-    --AnimationColor: var(--wcBorderAlert);
+    border-color: var(--wcBorderAlert);
   }
 }
 
