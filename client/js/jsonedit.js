@@ -1541,11 +1541,6 @@ window.addEventListener('keydown', async function(e) {
   if(e.key == 'Shift')
     jeState.shift = true;
 
-  if(e.key == 'Enter') {
-    jeNewline();
-    e.preventDefault();
-  }
-
   if(e.ctrlKey) {
     if(e.key == ' ' && jeMode == 'widget') {
       const locationLine = String(jeJSONerror).match(/line ([0-9]+) column ([0-9]+)/);
@@ -1583,6 +1578,13 @@ window.addEventListener('keydown', async function(e) {
     } else {
       jeSelectWidget(jeWidgetLayers[+functionKey[1]], false, e.shiftKey);
     }
+  }
+});
+
+on('#jsonEditor', 'keydown', function(e) {
+  if(e.key == 'Enter') {
+    jeNewline();
+    e.preventDefault();
   }
 });
 
