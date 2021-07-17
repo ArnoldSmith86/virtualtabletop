@@ -15,6 +15,7 @@
   width: 100%;
   min-height: 100%;
   resize: none;
+  height: inherit;
 }
 
 .label > .labeldiv {
