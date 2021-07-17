@@ -3,6 +3,7 @@ import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay } from '../main.js';
+import { compute_ops } from '../compute.js';
 import { tracingEnabled } from '../tracing.js';
 
 export class Widget extends StateManaged {
@@ -764,7 +765,7 @@ export class Widget extends StateManaged {
 
       if(a.func == 'IF') {
         setDefaults(a, { relation: '==' });
-        if (['==', '!=', '<', '<=', '>=', '>'].indexOf(a.relation) < 0) {
+        if (['===', '==', '!=', '<', '<=', '>=', '>', 'in', '!in', 'includes', '!includes'].indexOf(a.relation) < 0) {
           problems.push(`Relation ${a.relation} is unsupported. Using '==' relation.`);
           a.relation = '==';
         }
@@ -941,7 +942,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'SELECT') {
-        setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all' });
+        setDefaults(a, { type: 'all', property: 'parent', relation: '===', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all' });
         if(a.source == 'all' || isValidCollection(a.source)) {
           if([ 'add', 'set' ].indexOf(a.mode) == -1)
             problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
@@ -950,21 +951,15 @@ export class Widget extends StateManaged {
               return false;
             if(a.type != 'all' && (w.get('type') != a.type && (a.type != 'card' || w.get('type') != 'pile')))
               return false;
-            if(a.relation === '<')
-              return w.get(a.property) < a.value;
-            else if(a.relation === '<=')
-              return w.get(a.property) <= a.value;
-            else if(a.relation === '!=')
-              return w.get(a.property) != a.value;
-            else if(a.relation === '>=')
-              return w.get(a.property) >= a.value;
-            else if(a.relation === '>')
-              return w.get(a.property) > a.value;
-            else if(a.relation === 'in' && Array.isArray(a.value))
-              return a.value.indexOf(w.get(a.property)) != -1;
-            if(a.relation != '==')
-              problems.push(`Warning: Relation ${a.relation} interpreted as ==.`);
-            return w.get(a.property) === a.value;
+            if(a.relation == '==') {
+                problems.push(`Warning: Relation == interpreted as ===`);
+                a.relation = '===';
+            }
+            if (['===', '==', '!=', '<', '<=', '>=', '>', 'in', '!in', 'includes', '!includes'].indexOf(a.relation) < 0) {
+              problems.push(`Relation ${a.relation} is unsupported. Using '===' relation.`);
+              a.relation = '===';
+            }
+            return compute(a.relation, null, w.get(a.property), a.value);
           }).slice(0, a.max).concat(a.mode == 'add' ? collections[a.collection] || [] : []);
 
           // resolve piles
