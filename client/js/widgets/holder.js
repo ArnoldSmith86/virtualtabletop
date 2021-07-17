@@ -104,12 +104,15 @@ class Holder extends Widget {
 
     if(this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY')) && child.get('type') == 'pile') {
       let i=1;
-      for(const w of child.children().slice(0, -1)) {
-        await w.set('x', w.get('x') + child.get('x') + i);
-        await w.set('y', w.get('y') + child.get('y') + i);
+      this.preventRearrangeDuringPileDrop = true;
+      for(const w of child.children().reverse()) {
+        await w.set('x', child.get('x') - this.absoluteCoord('x') + i/100);
+        await w.set('y', child.get('y') - this.absoluteCoord('y') + i/100);
         await w.set('parent', this.get('id'));
         ++i;
       }
+      delete this.preventRearrangeDuringPileDrop;
+      await this.receiveCard();
       return true;
     }
 
@@ -133,6 +136,9 @@ class Holder extends Widget {
   }
 
   async rearrangeChildren(children, card) {
+    if(this.preventRearrangeDuringPileDrop)
+      return;
+
     let xOffset = 0;
     let yOffset = 0;
     let z = 1;
