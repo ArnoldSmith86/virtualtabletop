@@ -6,6 +6,8 @@ import { showOverlay } from '../main.js';
 import { compute_ops } from '../compute.js';
 import { tracingEnabled } from '../tracing.js';
 
+const readOnlyProperties = new Set(['_ancestor']);
+
 export class Widget extends StateManaged {
   constructor(id) {
     const div = document.createElement('div');
@@ -1005,6 +1007,8 @@ export class Widget extends StateManaged {
         }
         if((a.property == 'parent' || a.property == 'deck') && a.value !== null && !widgets.has(a.value)) {
           problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
+        } else if (readOnlyProperties.has(a.property)) {
+          problems.push(`Tried setting read-only property ${a.property}.`;
         } else if (a.property == 'id' && isValidCollection(a.collection)) {
           for(const oldWidget of collections[a.collection]) {
             const oldState = JSON.stringify(oldWidget.state);
@@ -1137,6 +1141,18 @@ export class Widget extends StateManaged {
     return { variable: variables.result, collection: collections.result || [] };
   }
 
+  get(property) {
+    if(property == '_ancestor') {
+      if(widgets.has(this.get('parent')) && widgets.get(this.get('parent')).get('type')=='pile') {
+        return widgets.get(this.get('parent')).get('_ancestor');
+      } else {
+        return this.get('parent');
+      }
+    } else {
+      return super.get(property);
+    }
+  }
+  
   hideEnlarged() {
     $('#enlarged').classList.add('hidden');
   }
