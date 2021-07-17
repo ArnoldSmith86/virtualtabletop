@@ -912,7 +912,17 @@ export class Widget extends StateManaged {
               if(a.face !== undefined)
                 await c.flip(a.face);
               if(deck.get('parent') !== null && widgets.has(deck.get('parent'))) {
-                await c.moveToHolder(widgets.get(deck.get('parent')));
+                const holder = deck.get('parent');
+
+                  const thisParent = c.get('parent');
+                  if(thisParent === null ||
+                     !(thisParent == holder ||
+                       (widgets.has(thisParent) &&
+                        widgets.get(thisParent).get('type') == 'pile' &&
+                        widgets.get(thisParent).get('parent') == holder)
+                      )
+                    ) await c.moveToHolder(widgets.get(holder));
+
               } else {
                 await c.set('owner', null);
                 await c.set('parent', null);

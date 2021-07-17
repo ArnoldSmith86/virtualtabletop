@@ -322,7 +322,7 @@ publicLibraryButtons('Functions - CALL',   0, '1607e438c7fe1d63607d38e567e72cca'
 publicLibraryButtons('Functions - CLICK',  0, 'd98299a0065b24a44b0d03a79900e0ef', [ '7u2q' ]);
 publicLibraryButtons('Functions - ROTATE', 0, '747586b12401e43382a7db2b2505f25e', [ 'c44c', '9kdj', 'w53c', 'w53c' ]);
 publicLibraryButtons('Functions - SELECT', 0, '4db86f0a95509b1c4fe5ebd6a1f822a9', [ 'oeh9', '9fhb', 'njkk', 'ffwl', 'bomo' ]);
-publicLibraryButtons('Functions - SORT',   1, 'dd047343b667795ad6d3f366aa2ae2fd', [
+publicLibraryButtons('Functions - SORT',   1, '387ed0489dd09143fe7fd118f84234fd', [
   'ingw', 'k131', 'cnfu', 'i6yz', 'z394', '0v3h', '1h8o', 'v5ra', 'ingw-copy001', 'k131-copy001', 'cnfu-copy001',
   'i6yz-copy001', 'z394-copy001', '0v3h-copy001'
 ]);
