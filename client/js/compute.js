@@ -465,8 +465,8 @@ const compute_ops = [
     name: 'localeCompare',
     desc: 'compares the sort order of two strings and returns -1 (x before y), 0 (x equals y) or 1 (x after y) - case sensitive',
     sample: 'var a = ${x} localeCompare ${y}',
-    call: function(v, x, y) { return v = x.localeCompare(y) },
-    hash: 'aef7efe5cf11f3d5a659b3eab0e9375b'
+    call: function(v, x, y, z) { return v = (z !== undefined) ? x.localeCompare(y, z) : x.localeCompare(y, 'en')},
+    hash: '6feb84d8a735309628da40c1fb8e59ca'
   },
   {
     name: 'match',
