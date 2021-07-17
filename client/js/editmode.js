@@ -565,7 +565,7 @@ function addWidgetToAddWidgetOverlay(w, wi) {
 }
 
 function populateAddWidgetOverlay() {
-  const x = 20+140-111/2;
+  var x = 20+140-111/2;
   addWidgetToAddWidgetOverlay(new Holder('add-holder'), {
     type: 'holder',
     x,
@@ -582,7 +582,7 @@ function populateAddWidgetOverlay() {
   });
 
   let y = 100;
-  for(const color of [ '#bc5bee','#4c5fea','#23ca5b','#e0cb0b','#e2a633','#e84242','#000000','#4a4a4a','#ffffff' ]) {
+  for(const color of [ '#ff0000']) {
     addWidgetToAddWidgetOverlay(new BasicWidget('add-pin-'+color), {
       classes: 'pinPiece',
       color,
@@ -613,8 +613,45 @@ function populateAddWidgetOverlay() {
       y: y + (43.83 - 90)/2
     });
     y += 88;
-  }
+  };
 
+  var x=350;
+  for(const image of [ 'Pawn','Person']) {
+    addWidgetToAddWidgetOverlay(new BasicWidget('add-piece-'+image), {
+      image:"/i/game-pieces/"+image+".svg",
+      x,
+      y: 180,
+      width: 100,
+      height: 100,
+    });
+    x = 490;
+  };
+
+  x=360;
+  for(const image of [ 'Cube','Meeple','Marble']) {
+    addWidgetToAddWidgetOverlay(new BasicWidget('add-piece-'+image), {
+      image:"/i/game-pieces/"+image+".svg",
+      x,
+      y: 310,
+      width: 50,
+      height: 50,
+    });
+    x += 75;
+  };
+
+  x=370;
+  for(const image of [ 'Flag','House']) {
+    addWidgetToAddWidgetOverlay(new BasicWidget('add-piece-'+image), {
+      image:"/i/game-pieces/"+image+".svg",
+      x,
+      y: 390,
+      width: 70,
+      height: 70,
+    });
+    x += 110;
+  };
+
+  y=480;
   const centerStyle = 'color:black;display:flex;justify-content:center;align-items:center;text-align:center;';
   addWidgetToAddWidgetOverlay(new BasicWidget('add-unicodeS'), {
     text: '🐻',

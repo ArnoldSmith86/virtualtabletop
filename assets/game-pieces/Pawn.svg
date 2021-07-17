@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 1000" width="640" height="1000">
+	<defs>
+		<linearGradient id="grd1" gradientUnits="userSpaceOnUse"  x1="508.8" y1="273.941" x2="297.6" y2="359.271">
+			<stop offset="0" stop-color="#ffffff"  />
+			<stop offset="0.5" stop-color="#000000"  />
+			<stop offset="0.5" stop-color="#000000"  />
+			<stop offset="1" stop-color="#ffffff"  />
+		</linearGradient>
+		<radialGradient id="grd2" gradientUnits="userSpaceOnUse"  cx="232.5" cy="35.118" r="330.096">
+			<stop offset="0" stop-color="#ffffff"  />
+			<stop offset="1" stop-color="#000000"  />
+		</radialGradient>
+	</defs>
+	<style>
+		tspan { white-space:pre }
+		.shp0 { fill: #ff0000 } 
+		.shp1 { opacity: 0.239;fill: url(#grd1) } 
+		.shp2 { opacity: 0.31;fill: url(#grd2) } 
+	</style>
+	<path id="Forma 1" class="shp0" d="M320 1000C143.04 1000 0 947.03 0 881.5C0 815.97 320 145.76 320 145.76C320 145.76 640 815.97 640 881.5C640 947.03 496.96 1000 320 1000Z" />
+	<path id="Forma 1 copy" class="shp1" d="M320 1000C143.04 1000 0 947.03 0 881.5C0 815.97 320 145.76 320 145.76C320 145.76 640 815.97 640 881.5C640 947.03 496.96 1000 320 1000Z" />
+	<path id="Forma 2" class="shp0" d="M320 296C238.16 296 172 229.84 172 148C172 66.16 238.16 0 320 0C401.84 0 468 66.16 468 148C468 229.84 401.84 296 320 296Z" />
+	<path id="Camada 1" fill-rule="evenodd" class="shp2" d="M320 296C238.16 296 172 229.84 172 148C172 66.16 238.16 0 320 0C401.84 0 468 66.16 468 148C468 229.84 401.84 296 320 296Z" />
+</svg>
