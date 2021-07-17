@@ -51,6 +51,7 @@ export class Widget extends StateManaged {
       changeRoutine: null,
       enterRoutine: null,
       leaveRoutine: null,
+      globalUpdateRoutine: null,
       debug: false
     });
 
@@ -121,6 +122,19 @@ export class Widget extends StateManaged {
         this.parent.applyChildAdd(this);
       } else {
         delete this.parent;
+      }
+    }
+
+    for(const key in delta) {
+      const isGlobalUpdateRoutine = key.match(/^(?:(.*)G|g)lobalUpdateRoutine$/);
+      if(isGlobalUpdateRoutine) {
+        const property = isGlobalUpdateRoutine[1] || '*';
+        if(StateManaged.globalUpdateListeners[property] === undefined)
+          StateManaged.globalUpdateListeners[property] = [];
+        if(Array.isArray(delta[key]))
+          StateManaged.globalUpdateListeners[property].push([ this, key ]);
+        else
+          StateManaged.globalUpdateListeners[property] = StateManaged.globalUpdateListeners[property].filter(x=>x[0]!=this);
       }
     }
 
@@ -281,9 +295,7 @@ export class Widget extends StateManaged {
 
       if(field.type == 'checkbox') {
         result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).checked;
-      }
-
-      if(field.type == 'color' || field.type == 'number' || field.type == 'string') {
+      } else if(field.type != 'text') {
         result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).value;
       }
 
@@ -598,8 +610,8 @@ export class Widget extends StateManaged {
 
               // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
               if(!parent || !widgets.get(parent).get('alignChildren')) {
-                await cWidget.set('x', (a.properties.x || w.get('x')) + a.xOffset * i);
-                await cWidget.set('y', (a.properties.y || w.get('y')) + a.yOffset * i);
+                await cWidget.set('x', (a.properties.x !== undefined ? a.properties.x : w.get('x')) + a.xOffset * i);
+                await cWidget.set('y', (a.properties.y !== undefined ? a.properties.y : w.get('y')) + a.yOffset * i);
                 await cWidget.updatePiles();
               }
 
