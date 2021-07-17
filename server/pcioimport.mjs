@@ -140,6 +140,9 @@ export default async function convertPCIO(content) {
     if(widget.r)
       w.rotation = widget.r;
 
+    if(widget.linkedSeat && byID[widget.linkedSeat])
+      w.linkedToSeat = widget.linkedSeat;
+
     if(widget.parent && !byID[widget.parent])
       widget.parent = null;
 
@@ -398,8 +401,16 @@ export default async function convertPCIO(content) {
       w.css = `font-size: ${widget.textSize}px; font-weight: ${weight}; text-align: ${widget.textAlign};`;
       addDimensions(w, widget, 100, 20);
       w.height = widget.textSize * 3.5;
+    } else if(widget.type == 'seat') {
+      w.type = 'seat';
+      w.hand = 'hand';
+      w.hideWhenUnused = true;
+      if(typeof widget.seatIndex == 'number')
+        w.index = w.text = widget.seatIndex + 1;
+      w.x += 69;
+      w.y -= 38;
     } else if(widget.type == 'timer') {
-      w.type = 'timer'
+      w.type = 'timer';
       w.clickable = false
       w.countdown = !widget.timerCountUp
       if (widget.timerCountUp) {
@@ -454,14 +465,24 @@ export default async function convertPCIO(content) {
       w.layer = -4;
       w.z = 10000 - w.z;
       addDimensions(w, widget);
-    } else if(widget.type == 'automationButton') {
+    } else if(widget.type == 'automationButton' || widget.type == 'turnButton') {
       w.type = 'button';
       if(widget.label !== '')
         w.text = widget.label;
+
+      if(widget.type == 'turnButton')
+        widget.height = widget.width = 64;
       addDimensions(w, widget, 80, 80);
 
       w.clickRoutine = [];
-      for(let c of widget.clickRoutine) {
+
+      if(widget.type == 'turnButton') {
+        w.clickRoutine.push({
+          func: 'TURN'
+        });
+      }
+
+      for(let c of widget.clickRoutine || []) {
         if(c.func == 'MOVE_CARDS_BETWEEN_HOLDERS') {
           if(!c.args.from || !c.args.to)
             continue;
