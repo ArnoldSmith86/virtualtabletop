@@ -42,6 +42,21 @@ class Holder extends Widget {
     });
   }
 
+  css() {
+    let css = super.css();
+
+    if(this.get('hidePile'))
+      css += '; --pileDisplay: none !important';
+
+    return css;
+  }
+
+  cssProperties() {
+    const p = super.cssProperties();
+    p.push('hidePile');
+    return p;
+  }
+
   async dispenseCard(card) {
     let toProcess = [ card ];
     if(card.get('type') == 'pile')
