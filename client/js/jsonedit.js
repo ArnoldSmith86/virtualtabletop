@@ -67,7 +67,7 @@ const jeCommands = [
     call: async function() {
       const cardType = {};
       const cssVariables = {};
-      for(const face of jeStateNow.faceTemplates) {
+      for(const face of jeStateNow.faceTemplates || []) {
         for(const object of face.objects) {
           if(object.valueType == 'dynamic')
             cardType[object.value] = '';
@@ -83,23 +83,51 @@ const jeCommands = [
   },
   {
     id: 'je_addCard',
-    name: 'add card',
-    context: '^deck ↦ cardTypes ↦ .*? ↦',
+    name: _=>`add card ${widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==jeContext[2]).length + 1}`,
+    context: '^deck ↦ cardTypes ↦ [^"↦]+',
     call: async function() {
       const card = { deck:jeStateNow.id, type:'card', cardType:jeContext[2] };
       addWidgetLocal(card);
       if(jeStateNow.parent)
         await widgets.get(card.id).moveToHolder(widgets.get(jeStateNow.parent));
+      else
+        await widgets.get(card.id).updatePiles();
+    }
+  },
+  {
+    id: 'je_addAllCards',
+    name: _=>`add one card of all ${Object.keys(jeStateNow.cardTypes).length} cardTypes`,
+    context: '^deck ↦ cardTypes',
+    show: _=>Object.keys(jeStateNow.cardTypes).length,
+    call: async function() {
+      for(const cardType in jeStateNow.cardTypes) {
+        const card = { deck:jeStateNow.id, type:'card', cardType };
+        addWidgetLocal(card);
+        if(jeStateNow.parent)
+          await widgets.get(card.id).moveToHolder(widgets.get(jeStateNow.parent));
+        else
+          await widgets.get(card.id).updatePiles();
+      }
     }
   },
   {
     id: 'je_removeCard',
-    name: 'remove card',
-    context: '^deck ↦ cardTypes ↦ .*? ↦',
+    name: _=>`remove card ${widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==jeContext[2]).length}`,
+    context: '^deck ↦ cardTypes ↦ [^"↦]+',
     show: _=>widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==jeContext[2]).length,
     call: async function() {
       const card = widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==jeContext[2])[0];
       await removeWidgetLocal(card.get('id'));
+    }
+  },
+  {
+    id: 'je_removeAllCards',
+    name: _=>`remove all ${widgetFilter(w=>w.get('deck')==jeStateNow.id).length} cards`,
+    context: '^deck ↦ cardTypes',
+    show: _=>widgetFilter(w=>w.get('deck')==jeStateNow.id).length,
+    call: async function() {
+      for(const card of widgetFilter(w=>w.get('deck')==jeStateNow.id))
+        await removeWidgetLocal(card.get('id'));
     }
   },
   {
@@ -1511,11 +1539,6 @@ window.addEventListener('keydown', async function(e) {
   if(e.key == 'Shift')
     jeState.shift = true;
 
-  if(e.key == 'Enter') {
-    jeNewline();
-    e.preventDefault();
-  }
-
   if(e.ctrlKey) {
     if(e.key == ' ' && jeMode == 'widget') {
       const locationLine = String(jeJSONerror).match(/line ([0-9]+) column ([0-9]+)/);
@@ -1553,6 +1576,13 @@ window.addEventListener('keydown', async function(e) {
     } else {
       jeSelectWidget(jeWidgetLayers[+functionKey[1]], false, e.shiftKey);
     }
+  }
+});
+
+on('#jsonEditor', 'keydown', function(e) {
+  if(e.key == 'Enter') {
+    jeNewline();
+    e.preventDefault();
   }
 });
 
