@@ -1,4 +1,4 @@
-export const VERSION = 4;
+export const VERSION = 5;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -29,6 +29,8 @@ function updateProperties(properties, v) {
   for(const property in properties)
     if(property.match(/Routine$/))
       updateRoutine(properties[property], v);
+
+  v<5 && v5DynamicFaceProperties(properties);
 }
 
 function updateRoutine(routine, v, nested = false, status = {hasMode:false, needsMode:false}) {
@@ -282,4 +284,23 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
 
   for(const o of operationsToSplice.sort((a,b)=>a.index==b.index?b.order-a.order:b.index-a.index))
     routine.splice(o.index, 0, o.operation);
+}
+
+function v4DynamicFaceProperties(properties) {
+  if(Array.isArray(properties.faceTemplates)) {
+    for(const face of properties.faceTemplates) {
+      if(Array.isArray(face.objects)) {
+        for(const object of face.objects) {
+          if(object.valueType != 'static' && object.value) {
+            if(typeof object.dynamicProperties != 'object')
+              object.dynamicProperties = { value: object.value }
+            else
+              object.dynamicProperties.value = object.value;
+            delete object.value;
+          }
+          delete object.valueType;
+        }
+      }
+    }
+  }
 }
