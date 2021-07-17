@@ -1095,7 +1095,7 @@ export class Widget extends StateManaged {
         if((a.property == 'parent' || a.property == 'deck') && a.value !== null && !widgets.has(a.value)) {
           problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
         } else if (readOnlyProperties.has(a.property)) {
-          problems.push(`Tried setting read-only property ${a.property}.`;
+          problems.push(`Tried setting read-only property ${a.property}.`);
         } else if (a.property == 'id' && isValidCollection(a.collection)) {
           for(const oldWidget of collections[a.collection]) {
             const oldState = JSON.stringify(oldWidget.state);
