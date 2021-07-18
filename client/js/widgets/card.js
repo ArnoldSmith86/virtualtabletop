@@ -154,8 +154,8 @@ class Card extends Widget {
   }
 
   getDefaultValue(property) {
-    if(this.deck && property != 'cardType') {
-      const d = this.deck.cardPropertyGet(this.get('cardType'), property);
+    if(this.deck && property != 'cardType' && property != 'activeFace') {
+      const d = this.deck.cardPropertyGet(this.get('cardType'), this.get('activeFace'), property);
       if(d !== undefined)
         return d;
     }
