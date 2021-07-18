@@ -304,19 +304,19 @@ test('Dynamic expressions', async t => {
   };
 });
 
-publicLibraryButtons('Blue',               0, '6681bcf652fe87f58945797e2f909036', [
+publicLibraryButtons('Blue',               0, 'a07a87f7e485c62b9d44d6a17d83c39f', [
   'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton',
   'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton',
   'reset_button', 'buttonInputGo', 'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', '9n2q'
 ]);
 publicLibraryButtons('FreeCell',           0, 'b3339b3c5d42f47f4def7a164be69823', [ 'reset', 'jemz', 'reset' ]);
-publicLibraryButtons('Reward',             0, '45947298cf2e3e9700468b7384a5486b', [
+publicLibraryButtons('Reward',             0, '4d725b6aace58fa1788cb5a189d30d2f', [
   'gmex', 'kprc', 'oksq', 'j1wz', 'vfhn', '0i6i', 'Orange Recall', 'buttonInputGo', 'b09z'
 ]);
-publicLibraryButtons('Rummy Tiles',        0, '3e7716fb5b94c59969861a72fad9ce90', [ 'startMix', 'draw14' ]);
-publicLibraryButtons('Undercover',         1, '2ae852ce49304b1074b483138026b1b0', [ 'Reset', 'Spy Master Button' ]);
-publicLibraryButtons('Dice',               0, 'd8b6edd6f7a25767781af4294ecda8fc', [ 'k18u', 'hy65', 'gghr', 'dsfa', 'f34a', 'fusq' ]);
-publicLibraryButtons('Functions - CALL',   0, 'def80a1f8ae3047bd435007cc7cd4aa3', [
+publicLibraryButtons('Rummy Tiles',        0, '1051bd31217caa2886837454676ac36a', [ 'startMix', 'draw14' ]);
+publicLibraryButtons('Undercover',         1, '58f8be7e21928fb6d2ebdaa4eee25042', [ 'Reset', 'Spy Master Button' ]);
+publicLibraryButtons('Dice',               0, '28837cc3481e2769827844e5201e6035', [ 'k18u', 'hy65', 'gghr', 'dsfa', 'f34a', 'fusq' ]);
+publicLibraryButtons('Functions - CALL',   0, '1607e438c7fe1d63607d38e567e72cca', [
   'n4cw_8_C', '5a52', '5a52', '66kr', 'qeg1', 'n4cwB', '8r6p', 'qeg1', 'qeg1', 'n5eu'
 ]);
 publicLibraryButtons('Functions - CLICK',  0, 'd98299a0065b24a44b0d03a79900e0ef', [ '7u2q' ]);
@@ -326,7 +326,7 @@ publicLibraryButtons('Functions - SORT',   1, 'dd047343b667795ad6d3f366aa2ae2fd'
   'ingw', 'k131', 'cnfu', 'i6yz', 'z394', '0v3h', '1h8o', 'v5ra', 'ingw-copy001', 'k131-copy001', 'cnfu-copy001',
   'i6yz-copy001', 'z394-copy001', '0v3h-copy001'
 ]);
-publicLibraryButtons('Master Button',      0, 'eb19dffdb38641d5556e5fdb2c47c62b', [
+publicLibraryButtons('Master Button',      0, '6f2739b68dcf50ec84426218fbfa6774', [
   'masterbutton', 'redbutton', 'orangebutton', 'yellowbutton', 'greenbutton', 'bluebutton', 'indigobutton',
   'violetbutton', 'fae4', 'vbx5'
 ]);
