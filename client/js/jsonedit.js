@@ -1255,20 +1255,21 @@ function jeLoggingJSON(obj) {
 }
 
 function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference) {
-  jeLoggingHTML = `
-    <div class="jeLog">
-      <div class="jeExpander ${jeLoggingDepth ? '' : 'jeExpander-down'}">
-        <span class="jeLogTime">${new Date().toTimeString().substr(0, 8) + new Date().toISOString().substr(19, 4)}</span>
-        <span class="jeLogWidget">${widget.get('id')}</span>
-        <span class="jeLogProperty">${typeof property == 'string' ? property : '--custom--'}</span>
-      </div>
-      <div class="jeLogNested ${jeLoggingDepth ? '' : 'active'}">
-  `;
+  if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine'].indexOf( jeHTMLStack[0][3] ) == -1 )
+    jeLoggingHTML = `
+      <div class="jeLog">
+        <div class="jeExpander ${jeLoggingDepth ? '' : 'jeExpander-down'}">
+          <span class="jeLogTime">${new Date().toTimeString().substr(0, 8) + new Date().toISOString().substr(19, 4)}</span>
+          <span class="jeLogWidget">${widget.get('id')}</span>
+          <span class="jeLogProperty">${typeof property == 'string' ? property : '--custom--'}</span>
+        </div>
+        <div class="jeLogNested ${jeLoggingDepth ? '' : 'active'}">
+    `;
   ++jeLoggingDepth;
 }
 
 function jeLoggingRoutineEnd(variables, collections) {
-  jeLoggingHTML += '</div></div>';
+  if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine'].indexOf( jeHTMLStack[0][3] ) == -1 ) jeLoggingHTML += '</div></div>';
   --jeLoggingDepth;
   if(!jeLoggingDepth) {
     $('#jeLog').innerHTML = jeLoggingHTML + '</div></div>';
@@ -1284,7 +1285,7 @@ function jeLoggingRoutineEnd(variables, collections) {
 }
 
 function jeLoggingRoutineOperationStart(original, applied) {
-  jeHTMLStack.push([jeLoggingHTML, jeLoggingJSON(original), jeLoggingJSON(applied), html(typeof applied == 'string' ? applied.split(' ')[0] : applied.func || '<COMMENT>')]);
+  jeHTMLStack.unshift([jeLoggingHTML, original, applied, html(typeof applied == 'string' ? applied.split(' ')[0] : applied.func || '<COMMENT>')]);
   jeLoggingHTML = '';
 }
 
@@ -1293,29 +1294,47 @@ function jeLoggingRoutineOperationEnd(problems, variables, collections, skipped)
   for(const name in collections)
     collDisplay[name] = collections[name].map(w=>`${html(w.get('id'))} (${html(w.get('type')||'basic')})`);
 
-  const savedHTML = jeHTMLStack.pop();
+  const savedHTML = jeHTMLStack.shift();
+  const original = savedHTML[1];
+  const originalText = jeLoggingJSON(original);
+  const applied = savedHTML[2];
+  const appliedText  = jeLoggingJSON(applied);
+  const opFunction = savedHTML[3];
+  
+  const opProblems = problems.length ?
+       `<div class="jeLogDetails">
+          <div class="jeExpander">
+            <span class="jeLogName">Problems</span>
+          </div>
+          <div class="jeLogNested">
+            <div class="jeLogProblems">${jeLoggingJSON(problems)}</div>
+          </div>
+        </div>` : '';
+  const originalOp = originalText.length ?
+        `<div class="jeLogOriginal"><h3>Original Operation</h3>${originalText}</div>` : '';
+  const appliedOp = appliedText.length ?
+        `<div class="jeLogApplied"> <h3>Applied Operation</h3>${appliedText}</div>` : '';
+  const opOperation = originalText.length || appliedText.length ?
+        `<div class="jeLogDetails">
+           <div class="jeExpander">
+             <span class="jeLogName">Original and applied operation</span> 
+           </div>
+           <div class="jeLogNested">
+             ${originalOp}
+             ${appliedOp}
+             <h3></h3>
+           </div>
+         </div>` : '';
 
   jeLoggingHTML =  `
     ${savedHTML[0]}
     <div class="jeLogOperation ${skipped ? 'jeLogSkipped' : ''} ${problems.length ? 'jeLogHasProblems' : ''}">
       <div class="jeExpander">
-        <span class="jeLogName">${savedHTML[3]}</span> ${jeRoutineResult}
+        <span class="jeLogName">${opFunction}</span> ${jeRoutineResult}
       </div>
       <div class="jeLogNested">
-        <div class="jeLogDetails jeLogProblems">
-          <span class="jeLogName jeLogName-down">Problems</span>
-          <div class="jeLogNested active">${jeLoggingJSON(problems)}</div>
-        </div>
-        <div class="jeLogDetails">
-          <div class="jeExpander">
-            <span class="jeLogName">Original and applied operation</span>
-          </div>
-          <div class="jeLogNested">
-            <div class="jeLogOriginal"><h3>Original Operation</h3>${savedHTML[1]}</div>
-            <div class="jeLogApplied" ><h3>Applied  Operation</h3>${savedHTML[2]}</div>
-            <h3></h3>
-          </div>
-        </div>
+        ${opProblems}
+        ${opOperation}
         ${jeLoggingHTML}
         <div class="jeLogDetails">
           <div class="jeExpander">

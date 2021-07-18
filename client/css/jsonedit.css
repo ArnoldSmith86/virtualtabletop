@@ -227,7 +227,7 @@ body.jsonEdit.jeZoomOut #topSurface {
   word-break: break-all;
 }
 
-.jeLogOriginal, .jeLogApplied, .jeLogVariables, .jeLogCollections {
+.jeLogOriginal, .jeLogApplied, .jeLogVariables, .jeLogCollections, .jeLogProblems {
   margin-left:20px;
   white-space: pre;
 }

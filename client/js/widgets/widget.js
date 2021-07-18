@@ -683,7 +683,7 @@ export class Widget extends StateManaged {
             collections[add] = addCollections[add];
           }
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationStart( "iteration", "iteration" );
+            jeLoggingRoutineOperationStart( "loopRoutine", "loopRoutine" );
           await this.evaluateRoutine(a.loopRoutine, variables, collections, (depth || 0) + 1, true);
           if(jeRoutineLogging)
             jeLoggingRoutineOperationEnd(problems, variables, collections, false);
