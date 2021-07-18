@@ -6,9 +6,11 @@
   display: none;
   height: 100%;
   width: 100%;
+  z-index: 2;
+  position: relative;
 }
 
-#jsonEditor > *, .jsonEdit {
+#jsonEditor > *, .jsonEdit, #jeWidgetLayers > div, #jeLog {
   background: #08090a;
 }
 #jsonEditor > * {
@@ -79,12 +81,19 @@ i.error   { color: red; font-weight: bold; }
   width: calc(100% - var(--commandPaneWidth) - var(--editorPaneWidth));
   white-space: pre;
   overflow: hidden;
+  background: transparent;
 }
 
 #jeWidgetLayers > div {
   display: inline-block;
   width: 125px;
   margin-bottom: 10px;
+  padding: 4px;
+  overflow: hidden;
+}
+
+#jeWidgetLayers > div:empty {
+  display: none;
 }
 
 body.jsonEdit #jsonEditor {
@@ -115,16 +124,111 @@ body.jsonEdit #toolbar {
 }
 
 body.jsonEdit #roomArea {
-  top: calc((100vh - var(--roomHeight) * var(--scale)) / 2 - var(--toolbarSize) / 2);
+  top: calc((100vh - var(--roomHeight) * var(--scale)) / 2);
   left: 0;
 }
 
 body.jsonEdit.jeZoomOut #roomArea {
-  top: calc((100vh - var(--roomHeight) * var(--scale)) / 2 - var(--toolbarSize) / 2);
+  top: calc((100vh - var(--roomHeight) * var(--scale)) / 2);
   left: 12.5%;
   overflow: visible;
 }
 
 body.jsonEdit.jeZoomOut #topSurface {
   overflow: visible;
+}
+
+#jeLogWrapper {
+  position: fixed;
+  bottom: 0;
+  white-space: normal;
+}
+
+#jeLog {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: none;
+  height: 90vh;
+  width: 50vw;
+  overflow: auto;
+  box-sizing: border-box;
+  border: 3px solid white;
+}
+
+#jeLogWrapper:hover #jeLog {
+  display: block;
+}
+
+#jeLogWrapper:hover > h1, .jeLogNested {
+  display: none;
+}
+
+/* Show the nested list when the user clicks on the caret/arrow */
+.jeLogNested.active {
+  display: block;
+}
+
+.jeLog {
+  white-space: normal;
+  font-size: 12px;
+  background: #ffffff10;
+  margin-left: 20px;
+}
+
+.jeLogSkipped {
+  color: grey;
+}
+
+.jeLogSummary {
+  color: lightgreen;
+}
+
+.jeLogResult {
+  color: orange;
+}
+
+/* Create the caret/arrow with a unicode, and style it */
+.jeExpander::before {
+  content: "\25B6";
+  color: white;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+/* Rotate the caret/arrow icon when clicked on (using JavaScript) */
+.jeExpander-down::before {
+  transform: rotate(90deg);
+}
+
+.jeLogHasProblems, .jeLogProblems {
+  color: red;
+}
+
+.jeLogProblems {
+  display: none;
+}
+
+.jeLogHasProblems .jeLogProblems {
+  display: block;
+}
+
+.jeLogDetails {
+  word-break: break-all;
+  margin-left: 20px;
+  color: lightgray;
+}
+
+/* Show the details when the user clicks on the caret/arrow */
+.jeLogDetails.active {
+  display: block;
+}
+.jeLogOperation {
+  margin-left: 20px;
+  word-break: break-all;
+}
+
+.jeLogOriginal, .jeLogApplied, .jeLogVariables, .jeLogCollections, .jeLogProblems {
+  margin-left:20px;
+  white-space: pre;
 }
