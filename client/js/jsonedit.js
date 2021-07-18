@@ -815,10 +815,8 @@ function jeApplyDelta(delta) {
         } else {
           if(jeKeyIsDown) {
             jeKeyIsDownDeltas.push(delta.s[jeStateNow[field]]);
-            return;
           }
-
-          jeSelectWidget(widgets.get(jeStateNow.id), document.activeElement !== $('#jeText'), false, true);
+          jeSelectWidget(widgets.get(jeStateNow.id), document.activeElement !== $('#jeText',), false, delta.s[jeStateNow.id].text === undefined);
         }
       }
     }
