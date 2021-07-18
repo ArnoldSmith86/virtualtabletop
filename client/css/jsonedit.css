@@ -153,6 +153,7 @@ body.jsonEdit.jeZoomOut #topSurface {
   width: 50vw;
   overflow: auto;
   box-sizing: border-box;
+  border: 3px solid white;
 }
 
 #jeLogWrapper:hover #jeLog {
