@@ -815,7 +815,7 @@ function jeApplyDelta(delta) {
         } else {
           if(jeKeyIsDown) {
             jeKeyIsDownDeltas.push(delta.s[jeStateNow[field]]);
-            if(delta.s[jeStateNow.id].text !== undefined)
+            if(delta.s[jeStateNow.id].milliseconds === undefined)
               jeSelectWidget(widgets.get(jeStateNow.id), document.activeElement !== $('#jeText',), false, false);
             return;
           }
