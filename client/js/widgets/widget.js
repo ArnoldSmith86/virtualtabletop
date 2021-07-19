@@ -1056,7 +1056,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'TURN') {
-        setDefaults(a, { turn: 1, turnCycle: 'inc', source: 'all', collection: 'TURN' });
+        setDefaults(a, { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN' });
         if([ 'forward', 'backward', 'random', 'position' ].indexOf(a.turnCycle) == -1) {
           problems.push(`Warning: turnCycle ${a.turnCycle} interpreted as forward.`);
           a.turnCycle = 'forward'
