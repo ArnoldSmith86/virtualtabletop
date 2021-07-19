@@ -1124,7 +1124,7 @@ export class Widget extends StateManaged {
         //saves turn into all seats and creates output collection with turn seats
         for(const w of c) {
           await w.set('turn', w.get('index') == turn);
-          if(w.get('turn') == w.get('index') && w.get('player'))
+          if(w.get('turn') && w.get('player'))
             collections[a.collection].push(w);
         }
       }
