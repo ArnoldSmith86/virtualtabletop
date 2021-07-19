@@ -282,6 +282,40 @@ function applyEditOptionsPiece(widget) {
   widget.color = $('#pieceColor').value;
 }
 
+//seat functions
+function populateEditOptionsSeat(widget) {
+  $('#seatPlayerColor').value = widget.color || "black";
+  $('#seatPlayerName').value = widget.player || "~ empty seat ~";
+  $('#seatEmpty').checked = false;
+}
+
+function applyEditOptionsSeat(widget) {
+  if ($('#seatEmpty').checked){
+    delete widget.player;
+    delete widget.color;
+  }
+  else if($('#seatPlayerName').value!="~ empty seat ~"){
+    toServer('playerColor', { player: widget.player, color: $('#seatPlayerColor').value });
+    toServer('rename', { oldName: widget.player, newName: $('#seatPlayerName').value });
+    widget.player = $('#seatPlayerName').value;
+    widget.color = $('#seatPlayerColor').value;
+  }
+}
+
+//spinner functions
+function populateEditOptionsSpinner(widget) {
+  }
+
+function applyEditOptionsSpinner(widget) {
+  for(let i=0; i<9; ++i) {
+    if($a('#spinnerOptions > [name=spinnerOptions]')[i].selected){
+      widget.options = JSON.parse($a('#spinnerOptions > [name=spinnerOptions]')[i].value);
+      delete widget.angle;
+      widget.value=widget.options[widget.options.length-1];
+    }
+  }
+}
+
 //timer functions
 function populateEditOptionsTimer(widget) {
   $('#timerCountdown').checked = widget.countdown;
@@ -321,20 +355,6 @@ function applyEditOptionsTimer(widget) {
   }
 }
 
-//spinner functions
-function populateEditOptionsSpinner(widget) {
-  }
-
-function applyEditOptionsSpinner(widget) {
-  for(let i=0; i<9; ++i) {
-    if($a('#spinnerOptions > [name=spinnerOptions]')[i].selected){
-      widget.options = JSON.parse($a('#spinnerOptions > [name=spinnerOptions]')[i].value);
-      delete widget.angle;
-      widget.value=widget.options[widget.options.length-1];
-    }
-  }
-}
-
 //This section calls the relative widgets' overlays and functions
 async function applyEditOptions(widget) {
   var type = widget.type||'piece';
@@ -355,10 +375,12 @@ async function applyEditOptions(widget) {
     applyEditOptionsLabel(widget);
   if(type == 'piece')
     applyEditOptionsPiece(widget);
-  if(type == 'timer')
-    applyEditOptionsTimer(widget);
+  if(type == 'seat')
+    applyEditOptionsSeat(widget);
   if(type == 'spinner')
     applyEditOptionsSpinner(widget);
+  if(type == 'timer')
+    applyEditOptionsTimer(widget);
 }
 
 function editClick(widget) {
@@ -392,10 +414,12 @@ function editClick(widget) {
     populateEditOptionsLabel(widget.state);
   if(type == 'piece')
     populateEditOptionsPiece(widget.state);
-  if(type == 'timer')
-    populateEditOptionsTimer(widget.state);
+  if(type == 'seat')
+    populateEditOptionsSeat(widget.state);
   if(type == 'spinner')
     populateEditOptionsSpinner(widget.state);
+  if(type == 'timer')
+    populateEditOptionsTimer(widget.state);
 
   showOverlay('editOverlay');
 }
