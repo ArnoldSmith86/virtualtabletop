@@ -407,6 +407,7 @@ function generateCardDeckWidgets(id, x, y, addCards) {
     {
       id: id+'B',
       parent: id,
+      fixedParent: true,
       y: 171.36,
       width: 111,
       height: 40,
@@ -468,6 +469,7 @@ function generateCounterWidgets(id, x, y) {
   const down = {
     id: id+'D',
     parent: id,
+    fixedParent: true,
     x: -38,
     y: 1,
     width: 36,
@@ -491,6 +493,7 @@ function generateTimerWidgets(id, x, y) {
     { type:'timer', id: id, x: x, y: y },
     {
       parent: id,
+      fixedParent: true,
       id: id+'P',
       x: 120,
       y: -3,
@@ -509,6 +512,7 @@ function generateTimerWidgets(id, x, y) {
     },
     {
       parent: id,
+      fixedParent: true,
       id: id+'R',
       x: 80,
       y: -3,
@@ -960,6 +964,7 @@ onLoad(function() {
       id: id+"-Reset",
 
       parent: id,
+      fixedParent: true,
 
       x: -50,
       y: 0,
@@ -984,6 +989,7 @@ onLoad(function() {
       id: id+"-Color",
 
       parent: id,
+      fixedParent: true,
 
       x: -50,
       y: 50,
