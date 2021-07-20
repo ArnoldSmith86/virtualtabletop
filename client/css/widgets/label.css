@@ -15,6 +15,13 @@
   width: 100%;
   min-height: 100%;
   resize: none;
+  height: inherit;
+}
+
+.label > .labeldiv {
+  overflow: auto;
+  width: 100%;
+  min-height: 100%;
 }
 
 body.edit .widget.label {
