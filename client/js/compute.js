@@ -626,7 +626,7 @@ const compute_ops = [
     name: 'numericSort',
     desc: 'sorts the elements in array x numerically, and returns the resulting array',
     sample: 'var a = ${x} numericSort',
-    call: function(v, x) { return v = x.sort((a, b) => parseInt(a) - parseInt(b)) },
+    call: function(v, x) { return v = x.sort((a, b) => (a+0) - (b+0)) },
     hash: '6feb4307bc8a5437d8ffcc2b0b06c0d6'
   },
   {
