@@ -10,6 +10,7 @@ let jeCommandError = null;
 let jeCommandWithOptions = null;
 let jeContext = null;
 let jeSecondaryWidget = null;
+let jeCopyBuffer = [];
 let jeDeltaIsOurs = false;
 let jeKeyIsDown = true;
 let jeKeyIsDownDeltas = [];
@@ -208,6 +209,30 @@ const jeCommands = [
       o.valueType = d ? 'static' : 'dynamic';
       o.value = '###SELECT ME###';
       jeSetAndSelect(v);
+    }
+  },
+  {
+    id: 'je_copyWidgets',
+    name: '🍔 widgets out',
+    forceKey: 'O',
+    call: async function() {
+      function addRecursively(widget) {
+        jeCopyBuffer.push(widget.state);
+        for(const w of widgetFilter(w=>w.get('parent')==widget.id))
+          addRecursively(w);
+      }
+      jeCopyBuffer = [];
+      for(const id of jeSelectedIDs())
+        addRecursively(widgets.get(id));
+    }
+  },
+  {
+    id: 'je_pasteWidgets',
+    name: '🍉 widgets in',
+    forceKey: 'I',
+    call: async function() {
+      for(const state of jeCopyBuffer)
+        addWidgetLocal(state);
     }
   },
   {
