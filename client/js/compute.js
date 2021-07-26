@@ -628,16 +628,13 @@ const compute_ops = [
     sample: 'var a = ${x} numericSort',
     call: function(v, x) {
       return v = x.sort((a, b) => {
-        if (Number.isNaN(parseFloat(+a)) === false && Number.isNaN(parseFloat(+b)) === false) {
-          return (parseFloat(+a)) - (parseFloat(+b));
-        }
-        if (isNaN(a) === true && isNaN(b) === true) {
+        if (((RegExp(/[^\d+-]/).test(a) === false || a === null ) && RegExp(/^(?![\s\S])/).test(a) === false ) && ((RegExp(/[^\d+-]/).test(b) === false || b === null) && RegExp(/^(?![\s\S])/).test(b) === false   ))
+          return (+a) - (+b);
+        if (((RegExp(/[^\d+-]/).test(a) === true && a !== null ) || RegExp(/^(?![\s\S])/).test(a) === true ) && ((RegExp(/[^\d+-]/).test(b) === true && b !== null) || RegExp(/^(?![\s\S])/).test(b) === true   ))
           return 0;
-        }
-        if (isNaN(a) === true) {
+        if ((RegExp(/[^\d+-]/).test(a) === true && a !== null ) || RegExp(/^(?![\s\S])/).test(a) === true )
           return -1
-        }
-        return 1 })},
+        return 1})},
     hash: '6feb4307bc8a5437d8ffcc2b0b06c0d6'
   },
   {
