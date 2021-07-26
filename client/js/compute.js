@@ -627,18 +627,17 @@ const compute_ops = [
     desc: 'sorts the elements in array x numerically, and returns the resulting array',
     sample: 'var a = ${x} numericSort',
     call: function(v, x) {
-  return v = x.sort((a, b) => {
-  if (Number.isNaN(parseFloat(+a)) === false && Number.isNaN(parseFloat(+b)) === false) {
-    return (parseFloat(+a)) - (parseFloat(+b));
-  }
-  if (isNaN(a) === true && isNaN(b) === true) {
-    return 0;
-  }
-  if (isNaN(a) === true) {
-    return -1
-  }
-  return 1
-})},
+      return v = x.sort((a, b) => {
+        if (Number.isNaN(parseFloat(+a)) === false && Number.isNaN(parseFloat(+b)) === false) {
+          return (parseFloat(+a)) - (parseFloat(+b));
+        }
+        if (isNaN(a) === true && isNaN(b) === true) {
+          return 0;
+        }
+        if (isNaN(a) === true) {
+          return -1
+        }
+        return 1 })},
     hash: '6feb4307bc8a5437d8ffcc2b0b06c0d6'
   },
   {
