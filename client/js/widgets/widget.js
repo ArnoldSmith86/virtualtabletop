@@ -511,6 +511,10 @@ export class Widget extends StateManaged {
             const result = await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections, (depth || 0) + 1);
             variables[a.variable] = result.variable;
             collections[a.collection] = result.collection;
+            if(jeRoutineLogging) {
+              const theWidget = this.isValidID(a.widget) && a.widget != this.get('id') ? `in ${a.widget}` : '';
+              jeLoggingRoutineOperationSummary( `${a.routine} ${theWidget} and return ${a.variable}`, `${variables[a.variable]}`)
+        }
           }
         }
         if(!a.return)
@@ -564,10 +568,15 @@ export class Widget extends StateManaged {
           problems.push(`Mode ${a.mode} is unsupported. Using 'respect' mode.`);
           a.mode = 'respect'
         };
-        if(isValidCollection(a.collection))
+        if(isValidCollection(a.collection)) {
           for(let i=0; i<a.count; ++i)
             for(const w of collections[a.collection])
               await w.click(a.mode);
+          if(jeRoutineLogging) {
+            const theCount = a.count ? `${a.count} times` : '';
+            jeLoggingRoutineOperationSummary( `${a.collection} ${theCount}`)
+          }
+        }
       }
 
       if(a.func == 'CLONE') {
@@ -607,6 +616,8 @@ export class Widget extends StateManaged {
             }
           }
           collections[a.collection]=c;
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary( `${a.source}`, `${a.collection}`)
         }
       }
 
@@ -631,12 +642,19 @@ export class Widget extends StateManaged {
 
       if(a.func == 'COUNT') {
         setDefaults(a, { collection: 'DEFAULT', variable: 'COUNT' });
+        let theItem;
         if(a.holder !== undefined) {
-          if(this.isValidID(a.holder,problems))
+          if(this.isValidID(a.holder,problems)) {
             variables[a.variable] = widgets.get(a.holder).children().length;
+            theItem = `${a.holder}`;
+          }
         } else if(isValidCollection(a.collection)) {
           variables[a.variable] = collections[a.collection].length;
+          theItem = `${a.collection}`
         }
+        if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary( `${theItem}`, `${variables[a.variable]}`)
+
       }
 
       if(a.func == 'DELETE') {
@@ -647,6 +665,8 @@ export class Widget extends StateManaged {
             for(const c in collections)
               collections[c] = collections[c].filter(x=>x!=w);
           }
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary( `${a.collection}`)
         }
       }
 
@@ -762,11 +782,18 @@ export class Widget extends StateManaged {
           a.relation = '==';
         }
         if(a.condition !== undefined || a.operand1 !== undefined) {
-          if (a.condition === undefined)
-            a.condition = compute(a.relation, null, a.operand1, a.operand2);
-          const branch = a.condition ? 'thenRoutine' : 'elseRoutine';
+          let condition = a.condition;
+          if (condition === undefined)
+            condition = compute(a.relation, null, a.operand1, a.operand2);
+          const branch = condition ? 'thenRoutine' : 'elseRoutine';
           if(Array.isArray(a[branch]))
             await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true);
+          if(jeRoutineLogging) {
+            if (a.condition === undefined)
+              jeLoggingRoutineOperationSummary(`${original.operand1} ${original.relation} ${original.operand2}`, `${condition}`)
+            else
+              jeLoggingRoutineOperationSummary(`${original.condition}`, `${condition}`)
+          }
         } else
           problems.push(`IF operation is missing the 'condition' or 'operand1' parameter.`);
       }
