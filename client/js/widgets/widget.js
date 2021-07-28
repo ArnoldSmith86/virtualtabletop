@@ -1411,6 +1411,8 @@ export class Widget extends StateManaged {
           break;
         }
       }
+      widget.domElement.classList.remove('top');
+      this.domElement.classList.add('top');	
     }
   }
 
