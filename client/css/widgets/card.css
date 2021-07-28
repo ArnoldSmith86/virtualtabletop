@@ -2,6 +2,10 @@
   overflow: hidden;
 }
 
+.card.top {
+  will-change: transform;
+}
+
 body.edit .card {
   display: none;
 }
