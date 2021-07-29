@@ -524,8 +524,10 @@ export class Widget extends StateManaged {
       if(a.func == 'CANVAS') {
         setDefaults(a, { mode: 'reset', x: 0, y: 0, value: 1, color: "#1F5CA6" });
 
-        if([ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ].indexOf(a.mode) == -1)
+        if([ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ].indexOf(a.mode) == -1) {
           problems.push(`Warning: Mode ${a.mode} will be interpreted as inc.`);
+          a.mode = 'inc'
+        }
 
         const execute = async function(widget) {
           if(widget.get('type') == 'canvas') {
@@ -548,17 +550,32 @@ export class Widget extends StateManaged {
           }
         };
 
+        let phrase;
+        
         if(a.canvas !== undefined) {
           if(this.isValidID(a.canvas, problems)) {
             await w(a.canvas, execute);
+            phrase = `canvas ${a.canvas}`;
           }
         } else if(isValidCollection(a.collection)) {
           if(collections[a.collection].length) {
             for(const c of collections[a.collection].slice(0, a.count || 999999))
               await execute(c);
+            phrase = `canvas widgets in ${a.collection}`;
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
+        }
+
+        if(jeRoutineLogging) {
+          if(a.mode == 'set')
+            jeLoggingRoutineOperationSummary(`color index of ${phrase}`, `${a.value}`)
+          else if(a.mode == 'change')
+            jeLoggingRoutineOperationSummary(`index ${a.value} of ${phrase}`, `${a.color}`)
+          else if(a.mode == 'reset')
+            jeLoggingRoutineOperationSummary(`color index of ${phrase}`, `0`)
+          else if(a.mode == 'setPixel')
+            jeLoggingRoutineOperationSummary(`(${a.x}, ${a.y}) of ${phrase} to index ${a.value}`, `${a.color}`)
         }
       }
 
@@ -574,7 +591,7 @@ export class Widget extends StateManaged {
               await w.click(a.mode);
           if(jeRoutineLogging) {
             const theCount = a.count ? `${a.count} times` : '';
-            jeLoggingRoutineOperationSummary( `${a.collection} ${theCount}`)
+            jeLoggingRoutineOperationSummary( `'${a.collection}' ${theCount}`)
           }
         }
       }
@@ -617,7 +634,7 @@ export class Widget extends StateManaged {
           }
           collections[a.collection]=c;
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary( `${a.source}`, `${a.collection}`)
+            jeLoggingRoutineOperationSummary( `'${a.source}'`, `'${a.collection}'`)
         }
       }
 
@@ -653,7 +670,7 @@ export class Widget extends StateManaged {
           theItem = `${a.collection}`
         }
         if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary( `${theItem}`, `${variables[a.variable]}`)
+            jeLoggingRoutineOperationSummary( `'${theItem}'`, `${variables[a.variable]}`)
 
       }
 
@@ -666,7 +683,7 @@ export class Widget extends StateManaged {
               collections[c] = collections[c].filter(x=>x!=w);
           }
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary( `${a.collection}`)
+            jeLoggingRoutineOperationSummary( `'${a.collection}'`)
         }
       }
 
@@ -679,6 +696,8 @@ export class Widget extends StateManaged {
                 c.flip && await c.flip(a.face,a.faceCycle);
             });
           }
+          if(jeRoutineLogging)
+              jeLoggingRoutineOperationSummary(`holder '${a.holder}'`);
         } else if(isValidCollection(a.collection)) {
           if(collections[a.collection].length) {
             for(const c of collections[a.collection].slice(0, a.count || 999999))
@@ -686,6 +705,8 @@ export class Widget extends StateManaged {
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
+          if(jeRoutineLogging)
+              jeLoggingRoutineOperationSummary(`collection '${a.collection}'`);
         }
       }
 
@@ -723,9 +744,13 @@ export class Widget extends StateManaged {
         if(a.in) {
           for(const key in a.in)
             await callWithAdditionalValues({ key, value: a.in[key] }, {});
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary( `widget in '${a.in}'`);
         } else if(isValidCollection(a.collection)) {
           for(const widget of collections[a.collection])
             await callWithAdditionalValues({ widgetID: widget.get('id') }, { DEFAULT: [ widget ] });
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary( `widget in '${a.collection}'`);
         }
       }
 
@@ -771,8 +796,9 @@ export class Widget extends StateManaged {
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary(`${a.aggregation} of '${a.property}' in '${a.collection}'`, `'${a.variable}'`);
         }
-        if(jeRoutineLogging) jeLoggingRoutineOperationSummary(`${a.variable} = ${JSON.stringify(variables[a.variable])}`);
       }
 
       if(a.func == 'IF') {
@@ -790,9 +816,9 @@ export class Widget extends StateManaged {
             await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true);
           if(jeRoutineLogging) {
             if (a.condition === undefined)
-              jeLoggingRoutineOperationSummary(`${original.operand1} ${original.relation} ${original.operand2}`, `${condition}`)
+              jeLoggingRoutineOperationSummary(`'${original.operand1}' ${original.relation} '${original.operand2}'`, `${condition}`)
             else
-              jeLoggingRoutineOperationSummary(`${original.condition}`, `${condition}`)
+              jeLoggingRoutineOperationSummary(`'${original.condition}'`, `${condition}`)
           }
         } else
           problems.push(`IF operation is missing the 'condition' or 'operand1' parameter.`);
@@ -801,6 +827,9 @@ export class Widget extends StateManaged {
       if(a.func == 'INPUT') {
         try {
           Object.assign(variables, await this.showInputOverlay(a, widgets, variables, problems));
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary(`"${a.header}"`,`'${a.variable}'`);
+
         } catch(e) {
           problems.push(`Exception: ${e.toString()}`);
           batchEnd();
@@ -817,11 +846,27 @@ export class Widget extends StateManaged {
             await w(a.label, async widget=>{
               await widget.setText(a.value, a.mode, this.get('debug'), problems)
             });
+            if(jeRoutineLogging) {
+              if(a.mode == 'inc' || a.mode == 'dec')
+                jeLoggingRoutineOperationSummary(`${a.mode} '${a.label}' by ${a.value}`)
+              else if(a.mode == 'append')
+                jeLoggingRoutineOperationSummary(`append '${a.value}' to '${a.label}'`)
+              else
+                jeLoggingRoutineOperationSummary(`set '${a.label}' to '${a.value}'`)
+            }
           }
         } else if(isValidCollection(a.collection)) {
           if(collections[a.collection].length) {
             for(const c of collections[a.collection])
               await c.setText(a.value, a.mode, this.get('debug'), problems);
+            if(jeRoutineLogging) {
+              if(a.mode == 'inc' || a.mode == 'dec')
+                jeLoggingRoutineOperationSummary(`${a.mode} widgets in '${a.collection}' by ${a.value}`)
+              else if(a.mode == 'append')
+                jeLoggingRoutineOperationSummary(`append '${a.value}' to widgets in '${a.collection}'`)
+              else
+                jeLoggingRoutineOperationSummary(`set widgets in '${a.collection}' to '${a.value}'`)
+            }
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
@@ -846,6 +891,10 @@ export class Widget extends StateManaged {
               }
             }
           }));
+          if(jeRoutineLogging) {
+            const count = a.count==1 ? '1 widget' : `${a.count} widgets`;
+            jeLoggingRoutineOperationSummary(`${count} from '${a.from}' to '${a.to}'`)
+          }
         }
       }
 
@@ -862,6 +911,10 @@ export class Widget extends StateManaged {
               await c.updatePiles();
             }
           });
+          if(jeRoutineLogging) {
+            const count = a.count==1 ? '1 widget' : `${a.count} widgets`;
+            jeLoggingRoutineOperationSummary(`${count} from '${a.from}' to (${a.x}, ${a.y})`)
+          }
         }
       }
 
@@ -882,22 +935,32 @@ export class Widget extends StateManaged {
               problems.push(`Holder ${holder} does not have a deck.`);
             }
           };
+          if(jeRoutineLogging) {
+            jeLoggingRoutineOperationSummary(`'${a.holder}' ${a.owned ? ' (including hands)' : ''}`)
+          }
         }
       }
 
       if(a.func == 'ROTATE') {
         setDefaults(a, { count: 1, angle: 90, mode: 'add', collection: 'DEFAULT' });
+        const mode = a.mode == 'set' ? 'to' : 'by';
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
               for(const c of holder.children().slice(0, a.count || 999999))
                 await c.rotate(a.angle, a.mode);
             });
+            if(jeRoutineLogging) {
+              jeLoggingRoutineOperationSummary(`${a.count == 0 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${a.holder}' ${mode} ${a.angle}`);
+            }
           }
         } else if(isValidCollection(a.collection)) {
           if(collections[a.collection].length) {
             for(const c of collections[a.collection].slice(0, a.count || 999999))
               await c.rotate(a.angle, a.mode);
+            if(jeRoutineLogging) {
+              jeLoggingRoutineOperationSummary(`${a.count == 0 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${a.collection}' ${mode} ${angle}`);
+            }
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
@@ -945,8 +1008,7 @@ export class Widget extends StateManaged {
             let selectedWidgets = collections[a.collection].map(w=>w.get('id')).join(',');
             if(!collections[a.collection].length || collections[a.collection].length >= 5)
               selectedWidgets = `(${collections[a.collection].length} widgets)`;
-
-            jeLoggingRoutineOperationSummary(`${a.property} ${a.relation} ${JSON.stringify(a.value)} OF ${a.source}`, `${a.mode} ${a.collection} = ${selectedWidgets}`);
+            jeLoggingRoutineOperationSummary(`widgets ${a.type == 'all' ? '' : 'a.type'} with '${a.property}' ${a.relation} ${JSON.stringify(a.value)} from '${a.source}'`, `${a.mode} '${a.collection}' = ${selectedWidgets}`);
           }
         }
       }
@@ -981,30 +1043,9 @@ export class Widget extends StateManaged {
           for(const w of collections[a.collection]) {
             await w.set(String(a.property), compute(a.relation, null, w.get(String(a.property)), a.value));
           }
-          if(jeRoutineLogging) jeLoggingRoutineOperationSummary(a.collection, `${a.property} ${a.relation} ${JSON.stringify(a.value)}`);
         }
-      }
-
-      if(a.func == 'SORT') {
-        setDefaults(a, { key: 'value', reverse: false, collection: 'DEFAULT' });
-        if(a.holder !== undefined) {
-          if(this.isValidID(a.holder, problems)) {
-            await w(a.holder, async holder=>{
-              await this.sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options, true);
-              await holder.updateAfterShuffle();
-            });
-          }
-        } else if(isValidCollection(a.collection)) {
-          if(collections[a.collection].length) {
-            await this.sortWidgets(collections[a.collection], a.key, a.reverse, a.locales, a.options, true);
-            await w(collections[a.collection].map(i=>i.get('parent')), async holder=>{
-              if(holder.get('type') == 'holder')
-                await holder.updateAfterShuffle();
-            });
-          } else {
-            problems.push(`Collection ${a.collection} is empty.`);
-          }
-        }
+        if(jeRoutineLogging)
+          jeLoggingRoutineOperationSummary(`'${a.property}' ${a.relation} '${a.value}' for widgets in '${a.collection}'`);
       }
 
       if(a.func == 'SHUFFLE') {
@@ -1016,6 +1057,8 @@ export class Widget extends StateManaged {
                 await c.set('z', Math.floor(Math.random()*10000));
               await holder.updateAfterShuffle();
             });
+            if(jeRoutineLogging)
+              jeLoggingRoutineOperationSummary(`holder ${a.holder}`);
           }
         } else if(isValidCollection(a.collection)) {
           if(collections[a.collection].length) {
@@ -1024,13 +1067,45 @@ export class Widget extends StateManaged {
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
+          if(jeRoutineLogging)
+              jeLoggingRoutineOperationSummary(`collection '${a.collection}'`);
+        }
+      }
+
+      if(a.func == 'SORT') {
+        setDefaults(a, { key: 'value', reverse: false, collection: 'DEFAULT' });
+        let reverse = a.reverse ? 'in reverse' : '';
+        if(a.holder !== undefined) {
+          if(this.isValidID(a.holder, problems)) {
+            await w(a.holder, async holder=>{
+              await this.sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options, true);
+              await holder.updateAfterShuffle();
+            });
+          }
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary(`widgets in '${a.holder}' by '${a.key}' ${reverse}`);
+        } else if(isValidCollection(a.collection)) {
+          source = a.collection;
+          if(collections[a.collection].length) {
+            await this.sortWidgets(collections[a.collection], a.key, a.reverse, a.locales, a.options, true);
+            await w(collections[a.collection].map(i=>i.get('parent')), async holder=>{
+              if(holder.get('type') == 'holder')
+                await holder.updateAfterShuffle();
+            });
+          } else {
+            problems.push(`Collection ${a.collection} is empty.`);
+          }
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary(`widgets in '${a.collection}' by '${a.key}' ${reverse}`);
         }
       }
 
       if(a.func == 'TIMER') {
         setDefaults(a, { value: 0, seconds: 0, mode: 'toggle', collection: 'DEFAULT' });
-        if([ 'set', 'dec', 'inc', 'reset','pause', 'start', 'toggle' ].indexOf(a.mode) == -1)
+        if([ 'set', 'dec', 'inc', 'reset','pause', 'start', 'toggle' ].indexOf(a.mode) == -1) {
           problems.push(`Warning: Mode ${a.mode} interpreted as toggle.`);
+          a.mode = 'toggle'
+        }
         if([ 'set', 'dec', 'inc'].indexOf(a.mode) == -1){
           if(a.timer !== undefined) {
             if (this.isValidID(a.timer, problems)) {
@@ -1067,6 +1142,16 @@ export class Widget extends StateManaged {
             }
           }
         };
+        if(jeRoutineLogging &&
+           (a.timer != undefined || (isValidCollection(a.collection) && collections[a.collection].length))) {
+          const phrase = (a.timer == undefined) ? `timers in '${a.collection}'` : `'${a.timer}'`;
+          if(a.mode == 'set')
+            jeRoutineLoggingOperationSummary(`${phrase} to ${a.value}`)
+          else if(a.mode == 'inc' || a.mode == 'dec')
+            jeRoutineLoggingOperationSummary(`${phrase} by ${a.value}`)
+          else
+            jeRoutineLoggingOperationSummary(`${a.mode} ${phrase}`)
+        }
       }
 
       if(jeRoutineLogging) jeLoggingRoutineOperationEnd(problems, variables, collections, false);
