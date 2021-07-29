@@ -38,3 +38,7 @@
 body.edit .pile {
   display: none;
 }
+
+.pile > :last-child {
+	will-change: transform;
+}
