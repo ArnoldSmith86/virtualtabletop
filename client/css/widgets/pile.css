@@ -38,7 +38,3 @@
 body.edit .pile {
   display: none;
 }
-
-.pile > :last-child, .pile > :nth-last-child(2) {
-	will-change: transform
-}
