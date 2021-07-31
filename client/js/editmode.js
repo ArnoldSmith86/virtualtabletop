@@ -195,7 +195,7 @@ async function applyEditOptionsDeck(widget) {
     }
 
     for(const object of $a('.properties > div', type))
-      widget.cardTypes[id][$('label', object).textContent] = $('input', object).value;
+      widget.cardTypes[id][$('label', object).textContent] = $('input', object).value.replace('\\n','\n');
   }
 }
 
