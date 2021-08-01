@@ -194,13 +194,18 @@ async function applyEditOptionsDeck(widget) {
         await w.set('cardType', id);
     }
 
-    for(const object of $a('.properties > div', type))
-      if ($('input', object).value !== '')
-        widget.cardTypes[id][$('label', object).textContent] = $('input', object).value.replaceAll('\\n','\n');
-      else if (widget.cardTypes[id][$('label', object).textContent] == undefined)
+    for(const object of $a('.properties > div', type)) {
+      if (widget.cardTypes[id][$('label', object).textContent] == undefined)
         delete widget.cardTypes[id][$('label', object).textContent];
+      else if (!(/\D/).test($('input', object).value))
+        widget.cardTypes[id][$('label', object).textContent] = parseFloat($('input', object).value);
+      else if ($('input', object).value === 'true' || $('input', object).value ==='false')
+        widget.cardTypes[id][$('label', object).textContent] = ($('input', object).value === 'true');
+      else if ($('input', object).value !== '')
+        widget.cardTypes[id][$('label', object).textContent] = $('input', object).value.replaceAll('\\n','\n').replaceAll('\"', '');
       else
         widget.cardTypes[id][$('label', object).textContent] = '';
+    }
   }
 }
 
