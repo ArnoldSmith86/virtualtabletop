@@ -195,7 +195,7 @@ async function applyEditOptionsDeck(widget) {
     }
 
     for(const object of $a('.properties > div', type)) {
-      if (widget.cardTypes[id][$('label', object).textContent] == undefined)
+      if (($('input', object).value) == undefined)
         delete widget.cardTypes[id][$('label', object).textContent];
       else if (!(/\D/).test($('input', object).value))
         widget.cardTypes[id][$('label', object).textContent] = parseFloat($('input', object).value);
