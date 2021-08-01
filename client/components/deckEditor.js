@@ -61,7 +61,8 @@ export const deckEditor = {
               <td class="properties">
                 <div v-for="prop in dynamicProperties">
                   <label>{{ prop.name }}</label>
-                  <input :value="typeObject[prop.name].replaceAll('\\n', '\\u005Cn') || '' ">
+                  <input v-if="typeObject[prop.name] !== undefined" :value="typeObject[prop.name].replaceAll('\\n', '\\u005Cn')">
+                  <input v-else :value="typeObject[prop.name] || '' ">
                   <button v-if="prop.type == 'image'" class="uploadAsset prettyButton" @click="upload(typeID, prop.name)">Upload</button>
                 </div>
               </td>
