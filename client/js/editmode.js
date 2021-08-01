@@ -195,7 +195,12 @@ async function applyEditOptionsDeck(widget) {
     }
 
     for(const object of $a('.properties > div', type))
-      widget.cardTypes[id][$('label', object).textContent] = $('input', object).value.replaceAll('\\n','\n');
+      if ($('input', object).value !== '')
+        widget.cardTypes[id][$('label', object).textContent] = $('input', object).value.replaceAll('\\n','\n');
+      else if (widget.cardTypes[id][$('label', object).textContent] == undefined)
+        delete widget.cardTypes[id][$('label', object).textContent];
+      else
+        widget.cardTypes[id][$('label', object).textContent] = '';
   }
 }
 
