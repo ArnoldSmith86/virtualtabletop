@@ -59,8 +59,8 @@ export class Widget extends StateManaged {
     this.domElement.addEventListener('contextmenu', e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseenter',  e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
-    this.domElement.addEventListener("touchstart", e => this.touchstart(e));
-    this.domElement.addEventListener("touchend", e => this.touchend(e), false);
+    this.domElement.addEventListener("touchstart", e => this.touchstart());
+    this.domElement.addEventListener("touchend", e => this.touchend(), false);
     
     this.touchstart = function() {
       if (!this.timer) {
@@ -68,7 +68,7 @@ export class Widget extends StateManaged {
       }
     }
     
-    this.touchend = function(e) {
+    this.touchend = function() {
       clearTimeout(this.timer);
       this.timer = null;
       this.hideEnlarged();
@@ -78,6 +78,7 @@ export class Widget extends StateManaged {
       this.showEnlarged();
       clearTimeout(this.timer);
       this.timer = null;
+      this.domElement.classList.add('enlarged');
     }
   }
 
