@@ -54,12 +54,31 @@ export class Widget extends StateManaged {
       globalUpdateRoutine: null,
       debug: false
     });
-
+    this.domElement.timer = false
+    
     this.domElement.addEventListener('contextmenu', e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseenter',  e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
-    this.domElement.addEventListener('touchstart',  e => this.showEnlarged(e), false);
-    this.domElement.addEventListener('touchend',  e => this.hideEnlarged(e), false);
+    this.domElement.addEventListener("touchstart", e => this.touchstart(e));
+    this.domElement.addEventListener("touchend", e => this.touchend(e), false);
+    
+    this.touchstart = function() {
+      if (!this.timer) {
+        this.timer = setTimeout(this.onlongtouch.bind(this), 500, false);
+      }
+    }
+    
+    this.touchend = function(e) {
+      clearTimeout(this.timer);
+      this.timer = null;
+      this.hideEnlarged();
+    }
+    
+    this.onlongtouch = function() {
+      this.showEnlarged();
+      clearTimeout(this.timer);
+      this.timer = null;
+    }
   }
 
   absoluteCoord(coord) {
