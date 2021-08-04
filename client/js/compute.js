@@ -635,7 +635,7 @@ const compute_ops = [
         if ((RegExp(/[^\d+-]/).test(a) === true && a !== null ) || RegExp(/^(?![\s\S])/).test(a) === true )
           return -1
         return 1})},
-    hash: '6feb4307bc8a5437d8ffcc2b0b06c0d6'
+    hash: '69d9b49fc1ae80f48a7b07e68db6ab23'
   },
   {
     name: 'join',
