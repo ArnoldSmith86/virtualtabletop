@@ -513,7 +513,7 @@ export class Widget extends StateManaged {
             collections[a.collection] = result.collection;
             if(jeRoutineLogging) {
               const theWidget = this.isValidID(a.widget) && a.widget != this.get('id') ? `in ${a.widget}` : '';
-              jeLoggingRoutineOperationSummary( `${a.routine} ${theWidget} and return ${a.variable}`, `${variables[a.variable]}`)
+              jeLoggingRoutineOperationSummary( `${a.routine} ${theWidget} and return ${a.variable}`, `${JSON.stringify(variables[a.variable])}`)
         }
           }
         }
@@ -569,13 +569,13 @@ export class Widget extends StateManaged {
 
         if(jeRoutineLogging) {
           if(a.mode == 'set')
-            jeLoggingRoutineOperationSummary(`color index of ${phrase}`, `${a.value}`)
+            jeLoggingRoutineOperationSummary(`color index of ${phrase}`, `${JSON.stringify(a.value)}`)
           else if(a.mode == 'change')
-            jeLoggingRoutineOperationSummary(`index ${a.value} of ${phrase}`, `${a.color}`)
+            jeLoggingRoutineOperationSummary(`index ${JSON.stringify(a.value)} of ${phrase}`, `${JSON.stringify(a.color)}`)
           else if(a.mode == 'reset')
             jeLoggingRoutineOperationSummary(`color index of ${phrase}`, `0`)
           else if(a.mode == 'setPixel')
-            jeLoggingRoutineOperationSummary(`(${a.x}, ${a.y}) of ${phrase} to index ${a.value}`, `${a.color}`)
+            jeLoggingRoutineOperationSummary(`(${a.x}, ${a.y}) of ${phrase} to index ${JSON.stringify(a.value)}`, `${JSON.stringify(a.color)}`)
         }
       }
 
@@ -634,7 +634,7 @@ export class Widget extends StateManaged {
           }
           collections[a.collection]=c;
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary( `'${a.source}'`, `'${a.collection}'`)
+            jeLoggingRoutineOperationSummary( `'${a.source}'`, `'${JSON.stringify(a.collection)}'`)
         }
       }
 
@@ -670,7 +670,7 @@ export class Widget extends StateManaged {
           theItem = `${a.collection}`
         }
         if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary( `'${theItem}'`, `${variables[a.variable]}`)
+            jeLoggingRoutineOperationSummary( `'${theItem}'`, `${JSON.stringify(variables[a.variable])}`)
 
       }
 
@@ -745,7 +745,7 @@ export class Widget extends StateManaged {
           for(const key in a.in)
             await callWithAdditionalValues({ key, value: a.in[key] }, {});
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary( `widget in '${a.in}'`);
+            jeLoggingRoutineOperationSummary( `element in '${JSON.stringify(a.in)}'`);
         } else if(isValidCollection(a.collection)) {
           for(const widget of collections[a.collection])
             await callWithAdditionalValues({ widgetID: widget.get('id') }, { DEFAULT: [ widget ] });
@@ -797,7 +797,7 @@ export class Widget extends StateManaged {
             problems.push(`Collection ${a.collection} is empty.`);
           }
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary(`${a.aggregation} of '${a.property}' in '${a.collection}'`, `'${a.variable}'`);
+            jeLoggingRoutineOperationSummary(`${a.aggregation} of '${a.property}' in '${a.collection}'`, `'${JSON.stringify(a.variable)}'`);
         }
       }
 
@@ -816,9 +816,9 @@ export class Widget extends StateManaged {
             await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true);
           if(jeRoutineLogging) {
             if (a.condition === undefined)
-              jeLoggingRoutineOperationSummary(`'${original.operand1}' ${original.relation} '${original.operand2}'`, `${condition}`)
+              jeLoggingRoutineOperationSummary(`'${original.operand1}' ${original.relation} '${original.operand2}'`, `${JSON.stringify(condition)}`)
             else
-              jeLoggingRoutineOperationSummary(`'${original.condition}'`, `${condition}`)
+              jeLoggingRoutineOperationSummary(`'${original.condition}'`, `${JSON.stringify(condition)}`)
           }
         } else
           problems.push(`IF operation is missing the 'condition' or 'operand1' parameter.`);
@@ -828,7 +828,7 @@ export class Widget extends StateManaged {
         try {
           Object.assign(variables, await this.showInputOverlay(a, widgets, variables, problems));
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary(`"${a.header}"`,`'${a.variable}'`);
+            jeLoggingRoutineOperationSummary(`"${a.header}"`,`${JSON.stringify(a.variable)}`);
 
         } catch(e) {
           problems.push(`Exception: ${e.toString()}`);
@@ -1008,7 +1008,7 @@ export class Widget extends StateManaged {
             let selectedWidgets = collections[a.collection].map(w=>w.get('id')).join(',');
             if(!collections[a.collection].length || collections[a.collection].length >= 5)
               selectedWidgets = `(${collections[a.collection].length} widgets)`;
-            jeLoggingRoutineOperationSummary(`widgets ${a.type == 'all' ? '' : 'a.type'} with '${a.property}' ${a.relation} ${JSON.stringify(a.value)} from '${a.source}'`, `${a.mode} '${a.collection}' = ${selectedWidgets}`);
+            jeLoggingRoutineOperationSummary(`widgets ${a.type == 'all' ? '' : 'a.type'} with '${a.property}' ${a.relation} ${JSON.stringify(a.value)} from '${a.source}'`, `${a.mode} ${JSON.stringify(a.collection)} = ${selectedWidgets}`);
           }
         }
       }

@@ -59,7 +59,6 @@ function publicLibraryTest(game, variant, md5, tests) {
     await t
       .pressKey('esc')
       .click('#statesButton')
-      .debug()
       .click(Selector('td.name').withExactText(game).prevSibling().child())
       .hover('.roomState')
       .click(Selector('button.play').nth(variant));
@@ -299,7 +298,7 @@ test('Dynamic expressions', async t => {
     .click('#addWidget')
     .pressKey('ctrl+j')
     .click('[id="jyo6"]')
-  const log = await Selector('#jsonEditor').textContent
+  const log = await Selector('#jeLog').textContent
   for (let i=0; i<ops.length; i++) {
     await t.expect(log).contains('"'+ops[i][1]+'": '+ops[i][2])
   };
