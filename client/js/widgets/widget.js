@@ -78,7 +78,7 @@ export class Widget extends StateManaged {
       this.showEnlarged();
       clearTimeout(this.timer);
       this.timer = null;
-      this.domElement.classList.add('enlarged');
+      this.domElement.classList.add('longtouch');
     }
   }
 
