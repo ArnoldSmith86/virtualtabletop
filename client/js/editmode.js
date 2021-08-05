@@ -202,7 +202,7 @@ async function applyEditOptionsDeck(widget) {
       else if ($('input', object).value === 'true' || $('input', object).value ==='false')
         widget.cardTypes[id][$('label', object).textContent] = ($('input', object).value === 'true');
       else if ($('input', object).value !== '')
-        widget.cardTypes[id][$('label', object).textContent] = $('input', object).value.replaceAll('\\n','\n').replaceAll('\"', '');
+        widget.cardTypes[id][$('label', object).textContent] = $('input', object).value.replaceAll('\\n','\n').replaceAll('\"', '').replaceAll('\'', '');
       else
         widget.cardTypes[id][$('label', object).textContent] = '';
     }
