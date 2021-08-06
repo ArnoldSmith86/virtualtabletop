@@ -1262,7 +1262,6 @@ function jeLoggingRoutineStart(widget, property, initialVariables, initialCollec
     jeLoggingHTML = `
       <div class="jeLog">
         <div class="jeExpander ${jeLoggingDepth ? '' : 'jeExpander-down'}">
-          <span class="jeLogTime">${new Date().toTimeString().substr(0, 8) + new Date().toISOString().substr(19, 4)}</span>
           <span class="jeLogWidget">${widget.get('id')}</span>
           <span class="jeLogProperty">${typeof property == 'string' ? property : '--custom--'}</span>
         </div>
