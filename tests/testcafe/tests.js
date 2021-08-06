@@ -312,7 +312,7 @@ publicLibraryButtons('Blue',               0, '6681bcf652fe87f58945797e2f909036'
   'reset_button', 'buttonInputGo', 'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', '9n2q'
 ]);
 publicLibraryButtons('FreeCell',           0, 'b3339b3c5d42f47f4def7a164be69823', [ 'reset', 'jemz', 'reset' ]);
-publicLibraryButtons('Reward',             0, '45947298cf2e3e9700468b7384a5486b', [
+publicLibraryButtons('Reward',             0, 'f46d98d8c5b9ec8930524a1173364e10', [
   'gmex', 'kprc', 'oksq', 'j1wz', 'vfhn', '0i6i', 'Orange Recall', 'buttonInputGo', 'b09z'
 ]);
 publicLibraryButtons('Rummy Tiles',        0, '3e7716fb5b94c59969861a72fad9ce90', [ 'startMix', 'draw14' ]);
