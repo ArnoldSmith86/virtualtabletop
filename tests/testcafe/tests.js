@@ -286,8 +286,7 @@ test('Dynamic expressions', async t => {
   "x": 810,
   "y": 300,
   "z": 127,
-  "id": "jyo6",
-  "debug": true
+  "id": "jyo6"
 }`;
   await setRoomState();
   await ClientFunction(prepareClient)();
@@ -297,11 +296,14 @@ test('Dynamic expressions', async t => {
     .click('#addCustomWidgetOverlay')
     .typeText('#widgetText', button, { replace: true, paste: true })
     .click('#addWidget')
+    .pressKey('ctrl+j')
     .click('[id="jyo6"]')
-  const { log } = await t.getBrowserConsoleMessages();
-  for (let i=1; i<=ops.length; i++) {
-    await t.expect(log[i*2]).contains('"'+ops[i-1][1]+'": '+ops[i-1][2])
+  const log = await Selector('#jeLog').textContent
+  for (let i=0; i<ops.length; i++) {
+    await t.expect(log).contains('"'+ops[i][1]+'": '+ops[i][2])
   };
+  await t
+    .pressKey('ctrl+j')
 });
 
 publicLibraryButtons('Blue',               0, '6681bcf652fe87f58945797e2f909036', [
