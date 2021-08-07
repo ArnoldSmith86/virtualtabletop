@@ -48,8 +48,14 @@ function applyEditOptionsBasic(widget) {
   else
     widget.image = $('#basicImage').value;
   
-  isNaN($('#basicWidthNumber')) === false ? widget.width = parseFloat($('#basicWidthNumber').value) :	widget.width = widget.width;
-  isNaN($('#basicHeightNumber')) === false ? widget.height = parseFloat($('#basicHeightNumber').value) : widget.height = widget.height;
+  if(($('#basicWidthNumber').value).replaceAll(/\d/g, '').replace(/\./g, '')  === '')
+    widget.width = parseFloat($('#basicWidthNumber').value)
+  else
+    widget.width = widget.width;
+  if(($('#basicHeightNumber').value).replaceAll(/\d/g, '').replace(/\./g, '')  === '')
+    widget.height = parseFloat($('#basicHeightNumber').value)
+  else
+    widget.height = widget.height;
 
   if ($('#basicFullscreen').checked){
     widget.width = 1600;
@@ -238,8 +244,14 @@ function populateEditOptionsLabel(widget) {
 function applyEditOptionsLabel(widget) {
   widget.text = $('#labelText').value;
   
-  isNaN($('#labelWidthNumber')) === false ? widget.width = parseFloat($('#labelWidthNumber').value) : widget.width = widget.width;
-  isNaN($('#labelHeightNumber')) === false ? widget.height = parseFloat($('#labelHeightNumber').value) : widget.height = widget.height;
+  if(($('#labelWidthNumber').value).replaceAll(/\d/g, '').replace(/\./g, '')  === '')
+    widget.width = parseFloat($('#labelWidthNumber').value)
+  else
+    widget.width = widget.width;
+  if(($('#labelHeightNumber').value).replaceAll(/\d/g, '').replace(/\./g, '')  === '')
+    widget.height = parseFloat($('#labelHeightNumber').value)
+  else
+    widget.height = widget.height;
 
   widget.editable = $('#labelEditable').checked;
 
