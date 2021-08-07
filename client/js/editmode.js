@@ -48,8 +48,8 @@ function applyEditOptionsBasic(widget) {
   else
     widget.image = $('#basicImage').value;
 
-  widget.width = parseFloat($('#basicWidth').value);
-  widget.height = parseFloat($('#basicHeight').value);
+  widget.width = parseFloat($('#basicWidthNumber').value);
+  widget.height = parseFloat($('#basicHeightNumber').value);
 
   if ($('#basicFullscreen').checked){
     widget.width = 1600;
@@ -238,8 +238,8 @@ function populateEditOptionsLabel(widget) {
 function applyEditOptionsLabel(widget) {
   widget.text = $('#labelText').value;
 
-  widget.width = parseFloat($('#labelWidth').value);
-  widget.height = parseFloat($('#labelHeight').value);
+  widget.width = parseFloat($('#labelWidthNumber').value);
+  widget.height = parseFloat($('#labelHeightNumber').value);
 
   widget.editable = $('#labelEditable').checked;
 
