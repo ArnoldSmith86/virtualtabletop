@@ -34,6 +34,10 @@ function populateEditOptionsBasic(widget) {
   $('#basicEnlarge').checked = widget.enlarge;
 }
 
+function applyWidthHeight(widget, value, dimension) {
+  return value.replaceAll(/\d/g, '').replace(/\./g, '')  === '' ? widget[dimension] = parseFloat(value): widget[dimension] = widget[dimension];
+}
+
 function applyEditOptionsBasic(widget) {
   if ($('#basicTypeBoard').checked == true){
     widget.layer = -4;
@@ -48,14 +52,8 @@ function applyEditOptionsBasic(widget) {
   else
     widget.image = $('#basicImage').value;
   
-  if(($('#basicWidthNumber').value).replaceAll(/\d/g, '').replace(/\./g, '')  === '')
-    widget.width = parseFloat($('#basicWidthNumber').value)
-  else
-    widget.width = widget.width;
-  if(($('#basicHeightNumber').value).replaceAll(/\d/g, '').replace(/\./g, '')  === '')
-    widget.height = parseFloat($('#basicHeightNumber').value)
-  else
-    widget.height = widget.height;
+  applyWidthHeight(widget, $('#basicWidthNumber').value, 'width');
+  applyWidthHeight(widget, $('#basicHeightNumber').value, 'height');
 
   if ($('#basicFullscreen').checked){
     widget.width = 1600;
@@ -244,17 +242,10 @@ function populateEditOptionsLabel(widget) {
 function applyEditOptionsLabel(widget) {
   widget.text = $('#labelText').value;
   
-  if(($('#labelWidthNumber').value).replaceAll(/\d/g, '').replace(/\./g, '')  === '')
-    widget.width = parseFloat($('#labelWidthNumber').value)
-  else
-    widget.width = widget.width;
-  if(($('#labelHeightNumber').value).replaceAll(/\d/g, '').replace(/\./g, '')  === '')
-    widget.height = parseFloat($('#labelHeightNumber').value)
-  else
-    widget.height = widget.height;
-
+  applyWidthHeight(widget, $('#labelWidthNumber').value, 'width');
+  applyWidthHeight(widget, $('#labelHeightNumber').value, 'height');
+  
   widget.editable = $('#labelEditable').checked;
-
 }
 
 //piece widget functions
