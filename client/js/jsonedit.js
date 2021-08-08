@@ -1246,6 +1246,123 @@ function jeInsert(context, key, value) {
   }
 }
 
+// START routine logging
+
+let jeRoutineLogging = false;
+let jeRoutineResult = '';
+let jeLoggingHTML = '';
+let jeLoggingDepth = 0;
+let jeHTMLStack = [];
+
+function jeLoggingJSON(obj) {
+  return html(JSON.stringify(obj, null, '  ').split('\n').slice(1, -1).join('\n'));
+}
+
+function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference) {
+  if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine'].indexOf( jeHTMLStack[0][3] ) == -1 )
+    jeLoggingHTML = `
+      <div class="jeLog">
+        <div class="jeExpander ${jeLoggingDepth ? '' : 'jeExpander-down'}">
+          <span class="jeLogWidget">${widget.get('id')}</span>
+          <span class="jeLogProperty">${typeof property == 'string' ? property : '--custom--'}</span>
+        </div>
+        <div class="jeLogNested ${jeLoggingDepth ? '' : 'active'}">
+    `;
+  ++jeLoggingDepth;
+}
+
+function jeLoggingRoutineEnd(variables, collections) {
+  if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine'].indexOf( jeHTMLStack[0][3] ) == -1 ) jeLoggingHTML += '</div></div>';
+  --jeLoggingDepth;
+  if(!jeLoggingDepth) {
+    $('#jeLog').innerHTML = jeLoggingHTML + '</div></div>';
+    var expanders = document.getElementsByClassName('jeExpander');
+    var i;
+    for (i=0; i < expanders.length; i++) {
+      expanders[i].addEventListener('click', function() {
+        this.classList.toggle('jeExpander-down');
+        this.parentElement.querySelector('.jeLogNested').classList.toggle('active');
+      });
+    }
+  }
+}
+
+function jeLoggingRoutineOperationStart(original, applied) {
+  jeHTMLStack.unshift([jeLoggingHTML, original, applied, html(typeof applied == 'string' ? applied.split(' ')[0] : applied.func || '<COMMENT>')]);
+  jeLoggingHTML = '';
+}
+
+function jeLoggingRoutineOperationEnd(problems, variables, collections, skipped) {
+  const collDisplay = {};
+  for(const name in collections)
+    collDisplay[name] = collections[name].map(w=>`${html(w.get('id'))} (${html(w.get('type')||'basic')})`);
+
+  const savedHTML = jeHTMLStack.shift();
+  const original = savedHTML[1];
+  const originalText = jeLoggingJSON(original);
+  const applied = savedHTML[2];
+  const appliedText  = jeLoggingJSON(applied);
+  const opFunction = savedHTML[3];
+  
+  const opProblems = problems.length ?
+       `<div class="jeLogDetails">
+          <div class="jeExpander">
+            <span class="jeLogName">Problems</span>
+          </div>
+          <div class="jeLogNested">
+            <div class="jeLogProblems">${jeLoggingJSON(problems)}</div>
+          </div>
+        </div>` : '';
+  const originalOp = originalText.length ?
+        `<div class="jeLogOriginal"><h3>Original Operation</h3>${originalText}</div>` : '';
+  const appliedOp = appliedText.length ?
+        `<div class="jeLogApplied"> <h3>Applied Operation</h3>${appliedText}</div>` : '';
+  const opOperation = originalText.length || appliedText.length ?
+        `<div class="jeLogDetails">
+           <div class="jeExpander">
+             <span class="jeLogName">Original and applied operation</span> 
+           </div>
+           <div class="jeLogNested">
+             ${originalOp}
+             ${appliedOp}
+             <h3></h3>
+           </div>
+         </div>` : '';
+
+  jeLoggingHTML =  `
+    ${savedHTML[0]}
+    <div class="jeLogOperation ${skipped ? 'jeLogSkipped' : ''} ${problems.length ? 'jeLogHasProblems' : ''}">
+      <div class="jeExpander">
+        <span class="jeLogName">${opFunction}</span> ${jeRoutineResult}
+      </div>
+      <div class="jeLogNested">
+        ${opProblems}
+        ${opOperation}
+        ${jeLoggingHTML}
+        <div class="jeLogDetails">
+          <div class="jeExpander">
+            <span class="jeLogName">Variables and collections afterwards</span>
+          </div>
+          <div class="jeLogNested">
+            <div class="jeLogVariables"  ><h3>Variables   afterwards</h3>${jeLoggingJSON(variables  )}</div>
+            <div class="jeLogCollections"><h3>Collections afterwards</h3>${jeLoggingJSON(collDisplay)}</div>
+            <h3></h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  jeRoutineResult = '';
+}
+
+function jeLoggingRoutineOperationSummary(definition, result) {
+  jeRoutineResult = `<span class="jeLogSummary">${html(definition)}</span> 
+     ${result ? '=&gt;' : ''} <span class="jeLogResult">${html(result || '')}</span>`;
+}
+
+// END routine logging
+
 function jeNewline() {
   const s = Math.min(getSelection().anchorOffset, getSelection().focusOffset);
   const match = $('#jeText').textContent.substr(0,s).match(/( *)[^\n]*$/);
@@ -1470,6 +1587,8 @@ function jeToggle() {
     jeColorize();
   }
   jeEnabled = !jeEnabled;
+  jeRoutineLogging = jeEnabled;
+  jeLoggingHTML = '';
   if(jeEnabled) {
     $('body').classList.add('jsonEdit');
   } else {
@@ -1522,6 +1641,7 @@ window.addEventListener('mouseup', async function(e) {
       jeGetContext();
     }
   }
+
 });
 
 onLoad(function() {
