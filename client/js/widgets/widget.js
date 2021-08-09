@@ -1146,11 +1146,11 @@ export class Widget extends StateManaged {
            (a.timer != undefined || (isValidCollection(a.collection) && collections[a.collection].length))) {
           const phrase = (a.timer == undefined) ? `timers in '${a.collection}'` : `'${a.timer}'`;
           if(a.mode == 'set')
-            jeRoutineLoggingOperationSummary(`${phrase} to ${a.value}`)
+            jeLoggingRoutineOperationSummary(`${phrase} to ${a.value}`)
           else if(a.mode == 'inc' || a.mode == 'dec')
             jeRoutineLoggingOperationSummary(`${phrase} by ${a.value}`)
           else
-            jeRoutineLoggingOperationSummary(`${a.mode} ${phrase}`)
+            jeLoggingRoutineOperationSummary(`${a.mode} ${phrase}`)
         }
       }
 
