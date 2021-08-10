@@ -53,10 +53,32 @@ export class Widget extends StateManaged {
       leaveRoutine: null,
       globalUpdateRoutine: null
     });
-
+    this.domElement.timer = false
+    
     this.domElement.addEventListener('contextmenu', e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseenter',  e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
+    this.domElement.addEventListener("touchstart", e => this.touchstart());
+    this.domElement.addEventListener("touchend", e => this.touchend(), false);
+    
+    this.touchstart = function() {
+      if (!this.timer) {
+        this.timer = setTimeout(this.onlongtouch.bind(this), 500, false);
+      }
+    }
+    
+    this.touchend = function() {
+      clearTimeout(this.timer);
+      this.timer = null;
+      this.hideEnlarged();
+    }
+    
+    this.onlongtouch = function() {
+      this.showEnlarged();
+      clearTimeout(this.timer);
+      this.timer = null;
+      this.domElement.classList.add('longtouch');
+    }
   }
 
   absoluteCoord(coord) {
@@ -1146,11 +1168,11 @@ export class Widget extends StateManaged {
            (a.timer != undefined || (isValidCollection(a.collection) && collections[a.collection].length))) {
           const phrase = (a.timer == undefined) ? `timers in '${a.collection}'` : `'${a.timer}'`;
           if(a.mode == 'set')
-            jeRoutineLoggingOperationSummary(`${phrase} to ${a.value}`)
+            jeLoggingRoutineOperationSummary(`${phrase} to ${a.value}`)
           else if(a.mode == 'inc' || a.mode == 'dec')
             jeRoutineLoggingOperationSummary(`${phrase} by ${a.value}`)
           else
-            jeRoutineLoggingOperationSummary(`${a.mode} ${phrase}`)
+            jeLoggingRoutineOperationSummary(`${a.mode} ${phrase}`)
         }
       }
 
