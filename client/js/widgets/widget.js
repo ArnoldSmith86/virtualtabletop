@@ -1085,7 +1085,6 @@ export class Widget extends StateManaged {
           if(jeRoutineLogging)
             jeLoggingRoutineOperationSummary(`widgets in '${a.holder}' by '${a.key}' ${reverse}`);
         } else if(isValidCollection(a.collection)) {
-          source = a.collection;
           if(collections[a.collection].length) {
             await this.sortWidgets(collections[a.collection], a.key, a.reverse, a.locales, a.options, true);
             await w(collections[a.collection].map(i=>i.get('parent')), async holder=>{
@@ -1148,7 +1147,7 @@ export class Widget extends StateManaged {
           if(a.mode == 'set')
             jeLoggingRoutineOperationSummary(`${phrase} to ${a.value}`)
           else if(a.mode == 'inc' || a.mode == 'dec')
-            jeRoutineLoggingOperationSummary(`${phrase} by ${a.value}`)
+            jeLoggingRoutineOperationSummary(`${phrase} by ${a.value}`)
           else
             jeLoggingRoutineOperationSummary(`${a.mode} ${phrase}`)
         }
