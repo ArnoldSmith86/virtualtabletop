@@ -149,7 +149,7 @@ test('Create game using edit mode', async t => {
     .setNativeDialogHandler(() => true)
     .click('#removeWidget');
 
-  await compareState(t, '4445c62da9bdab186c1c9100b3a4535a');
+  await compareState(t, 'f6c89dac1d50d5d49f1dde03a478c425');
 });
 
 test('Compute', async t => {
@@ -286,8 +286,7 @@ test('Dynamic expressions', async t => {
   "x": 810,
   "y": 300,
   "z": 127,
-  "id": "jyo6",
-  "debug": true
+  "id": "jyo6"
 }`;
   await setRoomState();
   await ClientFunction(prepareClient)();
@@ -297,11 +296,14 @@ test('Dynamic expressions', async t => {
     .click('#addCustomWidgetOverlay')
     .typeText('#widgetText', button, { replace: true, paste: true })
     .click('#addWidget')
+    .pressKey('ctrl+j')
     .click('[id="jyo6"]')
-  const { log } = await t.getBrowserConsoleMessages();
-  for (let i=1; i<=ops.length; i++) {
-    await t.expect(log[i*2]).contains('"'+ops[i-1][1]+'": '+ops[i-1][2])
+  const log = await Selector('#jeLog').textContent
+  for (let i=0; i<ops.length; i++) {
+    await t.expect(log).contains('"'+ops[i][1]+'": '+ops[i][2])
   };
+  await t
+    .pressKey('ctrl+j')
 });
 
 publicLibraryButtons('Blue',               0, '6681bcf652fe87f58945797e2f909036', [
@@ -310,7 +312,7 @@ publicLibraryButtons('Blue',               0, '6681bcf652fe87f58945797e2f909036'
   'reset_button', 'buttonInputGo', 'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', '9n2q'
 ]);
 publicLibraryButtons('FreeCell',           0, 'b3339b3c5d42f47f4def7a164be69823', [ 'reset', 'jemz', 'reset' ]);
-publicLibraryButtons('Reward',             0, '45947298cf2e3e9700468b7384a5486b', [
+publicLibraryButtons('Reward',             0, 'f46d98d8c5b9ec8930524a1173364e10', [
   'gmex', 'kprc', 'oksq', 'j1wz', 'vfhn', '0i6i', 'Orange Recall', 'buttonInputGo', 'b09z'
 ]);
 publicLibraryButtons('Rummy Tiles',        0, '3e7716fb5b94c59969861a72fad9ce90', [ 'startMix', 'draw14' ]);
