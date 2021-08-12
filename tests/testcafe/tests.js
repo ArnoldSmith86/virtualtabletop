@@ -68,6 +68,26 @@ function publicLibraryTest(game, variant, md5, tests) {
   });
 }
 
+function hiddenTest(game, variant, md5, tests) {
+  test.after(async t => {
+    await removeGame(t);
+    await t.expect(Selector('#statesOverlay').visible).ok();
+  })(`Public library: ${game} (variant ${variant})`, async t => {
+    await ClientFunction(prepareClient)();
+    await t
+      .pressKey('esc')
+      .click('#statesButton')
+	  .click(Selector('button.prettybutton.link')
+	  .pressKey('http://212.47.248.129:3724/library/Test_Room.vtt#VTT')
+	  .pressKey('enter')
+      .hover('.roomState')
+      .click(Selector('button.play').nth(variant));
+    await setName(t);
+    await tests(t);
+    await compareState(t, md5);
+  });
+}
+
 function publicLibraryButtons(game, variant, md5, buttons) {
   publicLibraryTest(game, variant, md5, async t => {
     for(const b of buttons)
@@ -333,6 +353,7 @@ publicLibraryButtons('Master Button',      0, 'eb19dffdb38641d5556e5fdb2c47c62b'
   'violetbutton', 'fae4', 'vbx5'
 ]);
 
-publicLibraryButtons('Test_Room',      0, 'hashgoeshere', [
-  'clickThis'
+hiddenTest('Master Button',      0, 'eb19dffdb38641d5556e5fdb2c47c62b', [
+  'masterbutton', 'redbutton', 'orangebutton', 'yellowbutton', 'greenbutton', 'bluebutton', 'indigobutton',
+  'violetbutton', 'fae4', 'vbx5'
 ]);
