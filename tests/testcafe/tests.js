@@ -76,7 +76,7 @@ function hiddenTest(game, variant, md5, tests) {
     await ClientFunction(prepareClient)();
     await t
       .pressKey('esc')
-      .click(Selector('.prettyButton.link:nth-child(2)'))  
+      .click('button.prettyButton.link:nth-child(2)')  
       .pressKey('http://212.47.248.129:3724/library/Test_Room.vtt#VTT')
       .pressKey('enter')
       .hover('.roomState')
@@ -325,6 +325,10 @@ test('Dynamic expressions', async t => {
     .pressKey('ctrl+j')
 });
 
+hiddenTest('Test Room',      0, 'hashgoeshere', [
+  'clickThis'
+]);
+
 publicLibraryButtons('Blue',               0, '6681bcf652fe87f58945797e2f909036', [
   'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton',
   'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton',
@@ -352,6 +356,4 @@ publicLibraryButtons('Master Button',      0, 'eb19dffdb38641d5556e5fdb2c47c62b'
   'violetbutton', 'fae4', 'vbx5'
 ]);
 
-hiddenTest('Test Room',      0, 'hashgoeshere', [
-  'clickThis'
-]);
+
