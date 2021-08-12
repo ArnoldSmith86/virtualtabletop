@@ -333,6 +333,6 @@ publicLibraryButtons('Master Button',      0, 'eb19dffdb38641d5556e5fdb2c47c62b'
   'violetbutton', 'fae4', 'vbx5'
 ]);
 
-publicLibraryButtons('Test Room',      0, 'hashgoeshere', [
+publicLibraryButtons('Test_Room',      0, 'hashgoeshere', [
   'clickThis'
 ]);
