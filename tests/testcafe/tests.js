@@ -332,3 +332,7 @@ publicLibraryButtons('Master Button',      0, 'eb19dffdb38641d5556e5fdb2c47c62b'
   'masterbutton', 'redbutton', 'orangebutton', 'yellowbutton', 'greenbutton', 'bluebutton', 'indigobutton',
   'violetbutton', 'fae4', 'vbx5'
 ]);
+
+publicLibraryButtons('Test Room',      0, 'hashgoeshere', [
+  'clickThis'
+]);
