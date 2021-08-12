@@ -77,9 +77,9 @@ function hiddenTest(game, variant, md5, tests) {
     await t
       .pressKey('esc')
       .click('#statesButton')
-	  .click(Selector('button.prettybutton.link')
-	  .pressKey('http://212.47.248.129:3724/library/Test_Room.vtt#VTT')
-	  .pressKey('enter')
+      .click(Selector('button.prettybutton.link'))
+      .pressKey('http://212.47.248.129:3724/library/Test_Room.vtt#VTT')
+      .pressKey('enter')
       .hover('.roomState')
       .click(Selector('button.play').nth(variant));
     await setName(t);
