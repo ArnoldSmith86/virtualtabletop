@@ -76,8 +76,7 @@ function hiddenTest(game, variant, md5, tests) {
     await ClientFunction(prepareClient)();
     await t
       .pressKey('esc')
-      .hover('.addState')
-      .click(Selector('button.prettyButton.gameMenu.link'))
+      .click(Selector('button.prettyButton.link').nth(0))
       .pressKey('http://212.47.248.129:3724/library/Test_Room.vtt#VTT')
       .pressKey('enter')
       .hover('.roomState')
@@ -353,7 +352,6 @@ publicLibraryButtons('Master Button',      0, 'eb19dffdb38641d5556e5fdb2c47c62b'
   'violetbutton', 'fae4', 'vbx5'
 ]);
 
-hiddenTest('Master Button',      0, 'eb19dffdb38641d5556e5fdb2c47c62b', [
-  'masterbutton', 'redbutton', 'orangebutton', 'yellowbutton', 'greenbutton', 'bluebutton', 'indigobutton',
-  'violetbutton', 'fae4', 'vbx5'
+hiddenTest('Test Room',      0, 'hashgoeshere', [
+  'clickThis'
 ]);
