@@ -50,6 +50,25 @@ function prepareClient() {
   document.querySelector('base').parentNode.removeChild(document.querySelector('base'));
 }
 
+function hiddenTest(game, variant, md5, tests) {
+  test.after(async t => {
+    await removeGame(t);
+    await t.expect(Selector('#statesOverlay').visible).ok();
+  })(`Public library: ${game} (variant ${variant})`, async t => {
+    await ClientFunction(prepareClient)();
+    await t
+      .pressKey('esc')
+      .click(Selector('.prettyButton.link:nth-child(2)'))  
+      .pressKey('http://212.47.248.129:3724/library/Test_Room.vtt#VTT')
+      .pressKey('enter')
+      .hover('.roomState')
+      .click(Selector('button.play').nth(variant));
+    await setName(t);
+    await tests(t);
+    await compareState(t, md5);
+  });
+}
+
 function publicLibraryTest(game, variant, md5, tests) {
   test.after(async t => {
     await removeGame(t);
@@ -305,6 +324,10 @@ test('Dynamic expressions', async t => {
   await t
     .pressKey('ctrl+j')
 });
+
+hiddenTest('Test Room',      0, 'hashgoeshere', [
+  'clickThis'
+]);
 
 publicLibraryButtons('Blue',               0, '6681bcf652fe87f58945797e2f909036', [
   'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton',
