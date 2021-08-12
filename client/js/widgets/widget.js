@@ -58,8 +58,8 @@ export class Widget extends StateManaged {
     this.domElement.addEventListener('contextmenu', e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseenter',  e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
-    this.domElement.addEventListener('mousedown',  e => this.moving(), false);
-    this.domElement.addEventListener('mouseup',  e => this.notMoving(), false);
+    this.domElement.addEventListener('mousedown',  e => this.selected(), false);
+    this.domElement.addEventListener('mouseup',  e => this.notSelected(), false);
     this.domElement.addEventListener("touchstart", e => this.touchstart(), false);
     this.domElement.addEventListener("touchend", e => this.touchend(), false);
     
@@ -1200,7 +1200,7 @@ export class Widget extends StateManaged {
   }
 
   hideEnlarged() {
-    if (!this.domElement.className.match(/moving/))
+    if (!this.domElement.className.match(/selected/))
       $('#enlarged').classList.add('hidden');
   }
 
@@ -1412,12 +1412,12 @@ export class Widget extends StateManaged {
       problems.push(`Tried setting text property which doesn't exist for ${this.id}.`);
   }
   
-  moving() {
-    this.domElement.classList.add('moving');
+  selected() {
+    this.domElement.classList.add('selected');
   }
   
-  notMoving() {
-    this.domElement.classList.remove('moving');
+  notSelected() {
+    this.domElement.classList.remove('selected');
   }
   
   showEnlarged(event) {
