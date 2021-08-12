@@ -76,8 +76,8 @@ function hiddenTest(game, variant, md5, tests) {
     await ClientFunction(prepareClient)();
     await t
       .pressKey('esc')
-      .click('#statesButton')
-      .click(Selector('button.prettybutton.link'))
+      .hover('.addState')
+      .click(Selector('button.prettyButton.gameMenu.link'))
       .pressKey('http://212.47.248.129:3724/library/Test_Room.vtt#VTT')
       .pressKey('enter')
       .hover('.roomState')
