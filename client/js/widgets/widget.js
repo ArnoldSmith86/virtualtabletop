@@ -1217,12 +1217,20 @@ export class Widget extends StateManaged {
       await this.checkParent(true);
 
     await this.set('owner',  null);
-    await this.set('parent', holder.get('id'));
+    if(holder.get('dropLimit')== -1 || holder.get('dropLimit') > holder.children().length || this.get('parent') == this.get('oldParent'))
+      await this.set('parent', holder.get('id'));
   }
 
   async moveStart() {
     if(tracingEnabled)
       sendTraceEvent('moveStart', { id: this.get('id') });
+    
+    if (this.get('parent') != null) {
+      if (this.parent.get('type') == 'holder')
+        this.oldParent = this.get('parent');
+      else if (this.parent.get('type') == 'pile')
+        this.oldParent = this.parent.get('parent');
+    }
 
     await this.bringToFront();
 
@@ -1311,6 +1319,7 @@ export class Widget extends StateManaged {
 
     this.hideEnlarged();
     await this.updatePiles();
+    this.oldParent = this.get('parent');
   }
 
   async onChildAdd(child, oldParentID) {
@@ -1351,7 +1360,7 @@ export class Widget extends StateManaged {
         const newParent = widgets.get(newValue);
         await newParent.onChildAdd(this, oldValue);
         if(Array.isArray(newParent.get('enterRoutine')))
-          await newParent.evaluateRoutine('enterRoutine', { oldParentID: oldValue === undefined ? null : oldValue }, { child: [ this ] });
+          await newParent.evaluateRoutine('enterRoutine', { oldParentID: oldValue === undefined ? ((this.oldParent === undefined || this.oldParent === null) ? null : this.oldParent) : oldValue }, { child: [ this ] });
       }
       if(!this.disablePileUpdateAfterParentChange)
         await this.updatePiles();
