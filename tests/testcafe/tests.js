@@ -335,10 +335,6 @@ test('Dynamic expressions', async t => {
     .pressKey('ctrl+j')
 });
 
-hiddenLibraryButtons('Test_Room',      0, 'd4bdcaad84bd09fb792fc4a6990bc0d5', [
-  'clickThis'
-]);
-
 publicLibraryButtons('Blue',               0, '6681bcf652fe87f58945797e2f909036', [
   'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton',
   'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton',
@@ -364,4 +360,8 @@ publicLibraryButtons('Functions - SORT',   1, 'dd047343b667795ad6d3f366aa2ae2fd'
 publicLibraryButtons('Master Button',      0, 'eb19dffdb38641d5556e5fdb2c47c62b', [
   'masterbutton', 'redbutton', 'orangebutton', 'yellowbutton', 'greenbutton', 'bluebutton', 'indigobutton',
   'violetbutton', 'fae4', 'vbx5'
+]);
+
+hiddenLibraryButtons('Test_Room',      0, 'd4bdcaad84bd09fb792fc4a6990bc0d5', [
+  'clickThis'
 ]);
