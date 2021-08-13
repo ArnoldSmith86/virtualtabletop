@@ -58,6 +58,7 @@ function hiddenTest(game, variant, md5, tests) {
     await ClientFunction(prepareClient)();
     await t
       .pressKey('esc')
+      .pressKey('esc')
       .click('#statesButton')
       .setNativeDialogHandler(() => {
 		  return 'http://localhost:8272/library/Test_Room.vtt#VTT'
@@ -86,6 +87,7 @@ function publicLibraryTest(game, variant, md5, tests) {
   })(`Public library: ${game} (variant ${variant})`, async t => {
     await ClientFunction(prepareClient)();
     await t
+      .pressKey('esc')
       .pressKey('esc')
       .click('#statesButton')
       .click(Selector('td.name').withExactText(game).prevSibling().child())
