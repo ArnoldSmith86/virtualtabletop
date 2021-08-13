@@ -59,10 +59,7 @@ function hiddenTest(game, variant, md5, tests) {
     await t
       .pressKey('esc')
       .click('button.prettyButton.link:nth-child(2)')
-      .pressKey(${server})
-    .pressKey('/library/')
-    .pressKey(${game})
-    .pressKey('.vtt#VTT')
+      .pressKey('${server}/library/${game}.vtt#VTT')
       .pressKey('enter')
       .hover('.roomState')
       .click(Selector('button.play').nth(variant));
