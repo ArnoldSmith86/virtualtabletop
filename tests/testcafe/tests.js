@@ -60,7 +60,7 @@ function hiddenTest(game, variant, md5, tests) {
       .pressKey('esc')
       .click('#statesButton')
       .setNativeDialogHandler(() => {
-		  return '`{ dependencies: { server }}/library/${game}.vtt#VTT'
+		  return 'http://localhost:8272/library/Test_Room.vtt#VTT'
             })
       .click('button.prettyButton.link:nth-child(2)')
       .pressKey('enter')
