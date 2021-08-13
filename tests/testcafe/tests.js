@@ -69,6 +69,13 @@ function hiddenTest(game, variant, md5, tests) {
   });
 }
 
+function hiddenLibraryButtons(game, variant, md5, buttons) {
+  hiddenTest(game, variant, md5, async t => {
+    for(const b of buttons)
+      await t.click(`[id="${b}"]`);
+  });
+}
+
 function publicLibraryTest(game, variant, md5, tests) {
   test.after(async t => {
     await removeGame(t);
@@ -325,7 +332,7 @@ test('Dynamic expressions', async t => {
     .pressKey('ctrl+j')
 });
 
-hiddenTest('Test Room',      0, 'hashgoeshere', [
+hiddenLibraryButtons('Test Room',      0, 'hashgoeshere', [
   'clickThis'
 ]);
 
