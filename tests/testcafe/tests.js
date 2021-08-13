@@ -58,8 +58,11 @@ function hiddenTest(game, variant, md5, tests) {
     await ClientFunction(prepareClient)();
     await t
       .pressKey('esc')
-      .click('button.prettyButton.link:nth-child(2)')  
-      .pressKey('http://212.47.248.129:3724/library/Test_Room.vtt#VTT')
+      .click('button.prettyButton.link:nth-child(2)')
+      .pressKey(${server})
+    .pressKey('/library/')
+    .pressKey(${game})
+    .pressKey('.vtt#VTT')
       .pressKey('enter')
       .hover('.roomState')
       .click(Selector('button.play').nth(variant));
@@ -332,7 +335,7 @@ test('Dynamic expressions', async t => {
     .pressKey('ctrl+j')
 });
 
-hiddenLibraryButtons('Test Room',      0, 'hashgoeshere', [
+hiddenLibraryButtons('Test_Room',      0, 'hashgoeshere', [
   'clickThis'
 ]);
 
