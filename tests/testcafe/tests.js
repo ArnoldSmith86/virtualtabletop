@@ -61,7 +61,7 @@ function hiddenTest(game, variant, md5, tests) {
       .pressKey('esc')
       .pressKey('esc')
       .click('#statesButton')
-      .setNativeDialogHandler(() => testUrl, { dependencies: { testUrl }}))
+      .setNativeDialogHandler(() => testUrl, { dependencies: { testUrl }}));
       .click('button.prettyButton.link:nth-child(2)')
       .pressKey('enter')
       .hover('.roomState')
