@@ -61,7 +61,7 @@ function hiddenTest(game, variant, md5, tests) {
       .click('#statesButton')
       .setNativeDialogHandler(() => {
 		  return 'http://localhost:8272/library/Test_Room.vtt#VTT'
-            }
+            })
       .click('button.prettyButton.link:nth-child(2)')
       .pressKey('enter')
       .hover('.roomState')
