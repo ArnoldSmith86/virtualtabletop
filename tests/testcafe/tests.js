@@ -335,7 +335,7 @@ test('Dynamic expressions', async t => {
     .pressKey('ctrl+j')
 });
 
-hiddenLibraryButtons('Test_Room',      0, 'hashgoeshere', [
+hiddenLibraryButtons('Test_Room',      0, 'f03147c3858e38a64b6de8acc72662f8', [
   'clickThis'
 ]);
 
