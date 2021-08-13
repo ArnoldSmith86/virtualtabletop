@@ -58,6 +58,7 @@ function hiddenTest(game, variant, md5, tests) {
     await ClientFunction(prepareClient)();
     await t
       .pressKey('esc')
+      .click('#statesButton')
       .click('button.prettyButton.link:nth-child(2)')
       .pressKey('${server}/library/${game}.vtt#VTT')
       .pressKey('enter')
