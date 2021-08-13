@@ -51,6 +51,7 @@ function prepareClient() {
 }
 
 function hiddenTest(game, variant, md5, tests) {
+  const testUrl = `${server}/library/${game}.vtt#VTT`;
   test.after(async t => {
     await removeGame(t);
     await t.expect(Selector('#statesOverlay').visible).ok();
@@ -60,9 +61,7 @@ function hiddenTest(game, variant, md5, tests) {
       .pressKey('esc')
       .pressKey('esc')
       .click('#statesButton')
-      .setNativeDialogHandler(() => {
-		  return 'http://localhost:8272/library/Test_Room.vtt#VTT'
-            })
+      .setNativeDialogHandler(() => testUrl, { dependencies: { testUrl }}))
       .click('button.prettyButton.link:nth-child(2)')
       .pressKey('enter')
       .hover('.roomState')
