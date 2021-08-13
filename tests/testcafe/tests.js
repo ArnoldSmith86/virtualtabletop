@@ -75,7 +75,7 @@ function hiddenTest(game, variant, md5, tests) {
 function hiddenLibraryButtons(game, variant, md5, buttons) {
   hiddenTest(game, variant, md5, async t => {
     for(const b of buttons)
-      await t.click(`[id="${b}"]`);
+      await t.click(`[id="${b}"]`.wait(10000));
   });
 }
 
