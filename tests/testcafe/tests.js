@@ -60,7 +60,7 @@ function hiddenTest(game, variant, md5, tests) {
       .pressKey('esc')
       .click('#statesButton')
       .setNativeDialogHandler(() => {
-		  return 'http://localhost:8272/library/Test_Room.vtt#VTT'
+		  return '{ dependencies: { server }}/library/{ dependencies: { game }}.vtt#VTT'
             })
       .click('button.prettyButton.link:nth-child(2)')
       .pressKey('enter')
@@ -75,7 +75,7 @@ function hiddenTest(game, variant, md5, tests) {
 function hiddenLibraryButtons(game, variant, md5, buttons) {
   hiddenTest(game, variant, md5, async t => {
     for(const b of buttons)
-      await t.click(`[id="${b}"]`).wait(10000);
+      await t.click(`[id="${b}"]`).wait(20000);
   });
 }
 
@@ -335,7 +335,7 @@ test('Dynamic expressions', async t => {
     .pressKey('ctrl+j')
 });
 
-hiddenLibraryButtons('Test_Room',      0, 'f03147c3858e38a64b6de8acc72662f8', [
+hiddenLibraryButtons('Test_Room',      0, 'd4bdcaad84bd09fb792fc4a6990bc0d5', [
   'clickThis'
 ]);
 
