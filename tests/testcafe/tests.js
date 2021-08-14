@@ -59,7 +59,6 @@ function hiddenTest(game, variant, md5, tests) {
     await ClientFunction(prepareClient)();
     await t
       .pressKey('esc')
-      .pressKey('esc')
       .click('#statesButton')
       .setNativeDialogHandler(() => testUrl, { dependencies: { testUrl }})
       .click('button.prettyButton.link:nth-child(2)')
@@ -76,6 +75,8 @@ function hiddenLibraryButtons(game, variant, md5, buttons) {
   hiddenTest(game, variant, md5, async t => {
     for(const b of buttons) {
       await t
+        .hover(`[id="${b}"]`)
+        .wait(1000);
         .click(`[id="${b}"]`)
         .wait(20000);
     }
@@ -89,7 +90,6 @@ function publicLibraryTest(game, variant, md5, tests) {
   })(`Public library: ${game} (variant ${variant})`, async t => {
     await ClientFunction(prepareClient)();
     await t
-      .pressKey('esc')
       .pressKey('esc')
       .click('#statesButton')
       .click(Selector('td.name').withExactText(game).prevSibling().child())
