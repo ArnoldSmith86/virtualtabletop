@@ -76,7 +76,7 @@ function hiddenLibraryButtons(game, variant, md5, buttons) {
     for(const b of buttons) {
       await t
         .hover(`[id="${b}"]`)
-        .wait(1000);
+        .wait(1000)
         .click(`[id="${b}"]`)
         .wait(20000);
     }
