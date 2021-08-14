@@ -1063,6 +1063,8 @@ export class Widget extends StateManaged {
           }
         } else if(isValidCollection(a.collection)) {
           for(const w of collections[a.collection]) {
+            if(a.relation == '+' && w.get(String(a.property)) == null)
+              a.relation = '=';
             await w.set(String(a.property), compute(a.relation, null, w.get(String(a.property)), a.value));
           }
         }
