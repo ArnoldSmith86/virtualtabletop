@@ -75,10 +75,10 @@ function hiddenLibraryButtons(game, variant, md5, buttons) {
   hiddenTest(game, variant, md5, async t => {
     for(const b of buttons) {
       await t
-        .hover(`[id="${b}"]`)
-        .wait(1000)
-        .click(`[id="${b}"]`)
-        .wait(20000);
+      const clickSubmit = ClientFunction(() => {
+    document.querySelector('#${b}').click().wait(20000);
+});
+      await clickSubmit();
     }
   });
 }
