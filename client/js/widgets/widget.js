@@ -1220,17 +1220,20 @@ export class Widget extends StateManaged {
     if(holder.get('dropLimit')== -1 || holder.get('dropLimit') > holder.children().length || this.get('parent') == this.get('oldParent'))
       await this.set('parent', holder.get('id'));
   }
-
+  
+  async parentIDIfPile(){
+    if (this.parent.get('type') == 'pile')
+      return this.parent.get('parent');
+    else
+      return this.get('parent')
+  } 
+  
   async moveStart() {
     if(tracingEnabled)
       sendTraceEvent('moveStart', { id: this.get('id') });
     
-    if (this.get('parent') != null) {
-      if (this.parent.get('type') == 'holder')
-        this.oldParent = this.get('parent');
-      else if (this.parent.get('type') == 'pile')
-        this.oldParent = this.parent.get('parent');
-    }
+    if (this.get('parent') != null)
+      this.oldParent = await this.parentIDIfPile(this.get('parent'));
 
     await this.bringToFront();
 
