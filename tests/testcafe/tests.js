@@ -78,7 +78,7 @@ function hiddenLibraryButtons(game, variant, md5, buttons) {
     document.getElementById(b).click().wait(20000);
 });
       await t
-        .clickSubmit();
+      await clickSubmit();
     }
   });
 }
