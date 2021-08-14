@@ -76,7 +76,7 @@ function hiddenLibraryButtons(game, variant, md5, buttons) {
     for(const b of buttons) {
       await t
       const clickSubmit = ClientFunction(() => {
-    document.getElementById(${b}).click().wait(20000);
+    document.getElementById('${b}').click().wait(20000);
 });
       await clickSubmit();
     }
