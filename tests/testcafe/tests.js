@@ -88,7 +88,7 @@ function publicLibraryTest(game, variant, md5, tests) {
     await t
       .pressKey('esc')
       .click('#statesButton')
-      .click(Selector('td.name').withExactText(game).prevSibling().child())
+      .click(Selector('td.name', { timeout: 20000 }).withExactText(game).prevSibling().child())
       .hover('.roomState')
       .click(Selector('button.play').nth(variant));
     await setName(t);
