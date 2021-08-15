@@ -29,8 +29,8 @@ async function downloadLink(link) {
 
   // if the link is to our own server, use the local link instead so we can skip external auth, if any
   var actual_link = link;
-  if (link.startsWith(config.SERVER_DOMAIN)) {
-    actual_link = link.replace(config.SERVER_DOMAIN, `http://localhost:${config.PORT}`);
+  if (link.startsWith(config.EXTERNAL_ADDRESS)) {
+    actual_link = link.replace(config.EXTERNAL_ADDRESS, config.INTERNAL_ADDRESS);
   }
   const response = await fetch(actual_link, requestEtag ? { headers: { 'If-None-Match': requestEtag } } : {});
 
