@@ -70,10 +70,10 @@ Most users can skip this section.
 
 | variable name| default value | example value | notes |
 | ------- | ------------------ | ----- | --- |
-| `EXTERNAL_ADDRESS` | (not set) | `https://protectedGameServer.com` | Set it if your external server address cannot be accessed from the inside (e.g. it uses an external authentication, or other special network setup). When set, internally, links to your own server will be translated to `INTERNAL_ADDRESS` below. |
+| `EXTERNAL_ADDRESS` | (not set) | `https://example.com` | Set it if your external server address cannot be accessed from the inside (e.g. it uses an external authentication, or other special network setup). When set, internally, links to your own server will be translated to `INTERNAL_ADDRESS` below. |
 | `INTERNAL_ADDRESS` | (not set) | `http://localhost:8272` | This is the address for the server to access its own resources from the inside. See `EXTERNAL_ADDRESS`. |
-| `PORT` | `8272` | `8272` | The network port this app serves from |
-| `HTTP_URL_PREFIX` | (not set) | `/games/virtualTabletop` | This allows you to serve the HTTP contents from, say, `https://protectedGameServer.com/games/virtualTabletop`. If not set, contents are served from `https://protectedGameServer.com`. |
+| `PORT` | `8272` | `8272` | The network port this app serves from. |
+| `HTTP_URL_PREFIX` | (not set) | `/games/virtualTabletop` | This allows you to serve the HTTP contents from, say, `https://example.com/games/virtualTabletop`. If not set, contents are served from `https://example.com`. |
 | `WS_URL_PREFIX` | (not set) | `/games/virtualTabletopWebSocket` | Similar to `HTTP_URL_PREFIX` but for WebSocket. Usually it's the same as `HTTP_URL_PREFIX` but if you have a different proxy setting, set it properly. |
 | `NOCOMPRESS` | (not set) | `1` | If set, the js files will not be minified, for easier debugging. |
 
