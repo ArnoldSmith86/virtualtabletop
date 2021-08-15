@@ -73,8 +73,8 @@ Most users can skip this section.
 | `EXTERNAL_ADDRESS` | (not set) | `https://protectedGameServer.com` | Set it if your external server address cannot be accessed from the inside (e.g. it uses an external authentication, or other special network setup). When set, internally, links to your own server will be translated to `INTERNAL_ADDRESS` below. |
 | `INTERNAL_ADDRESS` | (not set) | `http://localhost:8272` | This is the address for the server to access its own resources from the inside. See `EXTERNAL_ADDRESS`. |
 | `PORT` | `8272` | `8272` | The network port this app serves from |
-| `HTTP_URL_PREFIX` | `/` | `/games/virtualTabletop` | This allows you to serve the HTTP contents from, say, `https://protectedGameServer.com/games/virtualTabletop` |
-| `WS_URL_PREFIX` | `/` | `/games/virtualTabletopWebSocket` | Similar to `HTTP_URL_PREFIX` but for WebSocket. Usually it's the same as `HTTP_URL_PREFIX` but if you have a different proxy setting, set it properly. |
+| `HTTP_URL_PREFIX` | (not set) | `/games/virtualTabletop` | This allows you to serve the HTTP contents from, say, `https://protectedGameServer.com/games/virtualTabletop`. If not set, contents are served from `https://protectedGameServer.com`. |
+| `WS_URL_PREFIX` | (not set) | `/games/virtualTabletopWebSocket` | Similar to `HTTP_URL_PREFIX` but for WebSocket. Usually it's the same as `HTTP_URL_PREFIX` but if you have a different proxy setting, set it properly. |
 | `NOCOMPRESS` | `1` | (not set) | If set, the js files will not be minified, for easier debugging. |
 
 For Linux and MacOS, use the format `export NOCOMPRESS=1` to set environment variables.
