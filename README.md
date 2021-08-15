@@ -75,7 +75,7 @@ Most users can skip this section.
 | `PORT` | `8272` | `8272` | The network port this app serves from |
 | `HTTP_URL_PREFIX` | (not set) | `/games/virtualTabletop` | This allows you to serve the HTTP contents from, say, `https://protectedGameServer.com/games/virtualTabletop`. If not set, contents are served from `https://protectedGameServer.com`. |
 | `WS_URL_PREFIX` | (not set) | `/games/virtualTabletopWebSocket` | Similar to `HTTP_URL_PREFIX` but for WebSocket. Usually it's the same as `HTTP_URL_PREFIX` but if you have a different proxy setting, set it properly. |
-| `NOCOMPRESS` | `1` | (not set) | If set, the js files will not be minified, for easier debugging. |
+| `NOCOMPRESS` | (not set) | `1` | If set, the js files will not be minified, for easier debugging. |
 
 For Linux and MacOS, use the format `export NOCOMPRESS=1` to set environment variables.
 
