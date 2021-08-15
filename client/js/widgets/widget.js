@@ -240,12 +240,11 @@ export class Widget extends StateManaged {
 
   async checkParent(forceDetach) {
     if(this.currentParent && (forceDetach || !overlap(this.domElement, this.currentParent.domElement))) {
-	  this.oldParentID = this.get('parent') //this.parentIDIfPile(this.get('parent')); //this is the new thingxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
       await this.set('parent', null);
       await this.set('owner',  null);
       if(this.currentParent.dispenseCard)
         await this.currentParent.dispenseCard(this);
-      delete this.currentParent2;
+      delete this.currentParent;
     }
   }
 
@@ -1218,25 +1217,23 @@ export class Widget extends StateManaged {
       await this.checkParent(true);
 
     await this.set('owner',  null);
-    //if(holder.get('dropLimit')== -1 || holder.get('dropLimit') > holder.children().length || this.get('parent') == this.get('oldParent'))
-    if(holder.get('dropLimit')== -1 || holder.get('dropLimit') > holder.children().length || this.get('parent') == this.get('oldParentID'))
+    if(holder.get('dropLimit')== -1 || holder.get('dropLimit') > holder.children().length || this.get('parent') == this.get('oldParent'))
       await this.set('parent', holder.get('id'));
   }
-
+  
   async parentIDIfPile(){
     if (this.parent.get('type') == 'pile')
       return this.parent.get('parent');
     else
       return this.get('parent')
   } 
-
+  
   async moveStart() {
     if(tracingEnabled)
       sendTraceEvent('moveStart', { id: this.get('id') });
-
-	if (this.get('parent') != null)
-      //this.oldParent = await this.parentIDIfPile(this.get('parent'));    
-	  this.oldParentID = await this.parentIDIfPile(this.get('parent'));
+    
+    if (this.get('parent') != null)
+      this.oldParent = await this.parentIDIfPile(this.get('parent'));
 
     await this.bringToFront();
 
@@ -1325,8 +1322,7 @@ export class Widget extends StateManaged {
 
     this.hideEnlarged();
     await this.updatePiles();
-	//this.oldParent = this.get('parent');
-    this.oldParentID = this.get('parent');
+    this.oldParent = this.get('parent');
   }
 
   async onChildAdd(child, oldParentID) {
@@ -1358,7 +1354,7 @@ export class Widget extends StateManaged {
   async onPropertyChange(property, oldValue, newValue) {
     if(property == 'parent') {
       if(oldValue) {
-        const oldParent = widgets.get(oldValue) //this.parentIDIfPile(widgets.get(oldValue));
+        const oldParent = widgets.get(oldValue);
         await oldParent.onChildRemove(this);
         if(this.get('type') != 'holder' && Array.isArray(oldParent.get('leaveRoutine')))
           await oldParent.evaluateRoutine('leaveRoutine', {}, { child: [ this ] });
@@ -1367,8 +1363,7 @@ export class Widget extends StateManaged {
         const newParent = widgets.get(newValue);
         await newParent.onChildAdd(this, oldValue);
         if(Array.isArray(newParent.get('enterRoutine')))
-		//  await newParent.evaluateRoutine('enterRoutine', { oldParentID: oldValue === undefined ? ((this.oldParent === undefined || this.oldParent === null) ? null : this.oldParent) : oldValue }, { child: [ this ] });
-        await newParent.evaluateRoutine('enterRoutine', { oldParentID: oldValue === undefined ? ((this.oldParentID === undefined || this.oldParentID === null) ? null : this.oldParentID) : oldValue }, { child: [ this ] });
+          await newParent.evaluateRoutine('enterRoutine', { oldParentID: oldValue === undefined ? ((this.oldParent === undefined || this.oldParent === null) ? null : this.oldParent) : oldValue }, { child: [ this ] });
       }
       if(!this.disablePileUpdateAfterParentChange)
         await this.updatePiles();
