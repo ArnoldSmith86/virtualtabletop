@@ -14,6 +14,42 @@ export default function FileUpdater(state) {
   return state;
 }
 
+export async function transformAssetsPathToRelative(obj) {
+  // As of Aug 14, 2021, the json files in the library's vtts contain absolute paths, limiting the server path to root path only. See:
+  // https://github.com/ArnoldSmith86/virtualtabletop-library/issues/10
+  // https://github.com/ArnoldSmith86/virtualtabletop/issues/712
+  // This function changes /assets/* to ./assets/*, effectively making it relative, so the server can be deployed to any directories, not just root.
+  // If the new library standard changes in the future (mandate a relative path), we can drop this transformation
+  if (obj === null) {
+    return obj
+  }
+  if (Array.isArray(obj)) {
+    for (let i = 0; i < obj.length; i++) {
+      if (typeof obj[i] === 'string') {
+        obj[i] = _absoluteToRelative(obj[i]);
+      } else {
+        await transformAssetsPathToRelative(obj[i])
+      }
+    }
+  } else if (typeof obj === 'object') {
+    for (const [key, value] of Object.entries(obj)) {
+      if (typeof value === 'string') {
+        obj[key] = _absoluteToRelative(value);
+      } else {
+        await transformAssetsPathToRelative(value)
+      }
+    }
+  }
+}
+
+function _absoluteToRelative(str) {
+  // replace absolute path to relative path
+  // (helper function for transformAssetsPathToRelative)
+  return str.replace(/^\/assets\//, './assets/')
+            .replace(/^\/i\//, './i/')
+            .replace(/url\s*\(\s*\//g, 'url(./');
+}
+
 function updateProperties(properties, v) {
   if(typeof properties != 'object')
     return;
