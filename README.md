@@ -69,7 +69,7 @@ If you use "GitHub Desktop" you should follow these steps:
 Most users can skip these.
 
 | variable name| default value | example value | notes |
-| ------- | ------------------ | ----- |
+| ------- | ------------------ | ----- | --- |
 | `SERVER_DOMAIN` | (null) | `https://protectedGameServer.com` | If your server uses an external authentication, or is not open to the world, set this. The internal links will be translated to `http://localhost:PORT` |
 | `PORT` | 8272 | 8272 | The network port this app serves from |
 | `HTTP_URL_PREFIX` | `/` | `/games/virtualTabletop` | This allows you to serve the HTTP contents from, say, `https://protectedGameServer.com/games/virtualTabletop` |
