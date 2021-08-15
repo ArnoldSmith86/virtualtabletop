@@ -50,7 +50,8 @@ function prepareClient() {
   document.querySelector('base').parentNode.removeChild(document.querySelector('base'));
 }
 
-function publicLibraryTest(game, variant, md5, tests) {
+function hiddenTest(game, variant, md5, tests) {
+  const testUrl = `${server}/library/${game}.vtt#VTT`;
   test.after(async t => {
     await removeGame(t);
     await t.expect(Selector('#statesOverlay').visible).ok();
@@ -59,6 +60,35 @@ function publicLibraryTest(game, variant, md5, tests) {
     await t
       .pressKey('esc')
       .click('#statesButton')
+      .setNativeDialogHandler(() => testUrl, { dependencies: { testUrl }})
+      .click('button.prettyButton.link:nth-child(2)')
+      .pressKey('enter')
+      .hover('.roomState')
+      .click(Selector('button.play').nth(variant)).wait(3000);
+    await setName(t);
+    await tests(t);
+    await compareState(t, md5);
+  });
+}
+
+function hiddenLibraryButtons(game, variant, md5, buttons) {
+  hiddenTest(game, variant, md5, async t => {
+    for(const b of buttons) {
+      await t.click(`[id="${b}"]`).wait(20000);
+    }
+  });
+}
+
+function publicLibraryTest(game, variant, md5, tests) {
+  test.after(async t => {
+    await removeGame(t);
+    await t.expect(Selector('#statesOverlay').visible).ok();
+  })(`Public library: ${game} (variant ${variant})`, async t => {
+    await ClientFunction(prepareClient)();
+    await t
+      .pressKey('esc').wait(3000)
+      .pressKey('esc').wait(3000)
+      .click('#statesButton').wait(3000)
       .click(Selector('td.name').withExactText(game).prevSibling().child())
       .hover('.roomState')
       .click(Selector('button.play').nth(variant));
@@ -331,4 +361,8 @@ publicLibraryButtons('Functions - SORT',   1, 'dd047343b667795ad6d3f366aa2ae2fd'
 publicLibraryButtons('Master Button',      0, 'eb19dffdb38641d5556e5fdb2c47c62b', [
   'masterbutton', 'redbutton', 'orangebutton', 'yellowbutton', 'greenbutton', 'bluebutton', 'indigobutton',
   'violetbutton', 'fae4', 'vbx5'
+]);
+
+hiddenLibraryButtons('Test_Room',      0, 'fe86952d067fc69feb6dff7937f6b548', [
+  'clickThis'
 ]);
