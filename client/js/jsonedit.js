@@ -230,8 +230,8 @@ const jeCommands = [
     forceKey: 'C',
     options: [ { type: 'string', label: 'URL' } ],
     call: async function(options) {
-      const sourceURL = options.URL.replace(/\/[^\/]+$/, a=>`${vtt_env.HTTP_URL_PREFIX}/state${a}`);
-      const targetURL = location.href.replace(/\/[^\/]+$/, a=>`${vtt_env.HTTP_URL_PREFIX}/state${a}`);
+      const sourceURL = options.URL.replace(/\/[^\/]+$/, a=>`/state${a}`);
+      const targetURL = location.href.replace(/\/[^\/]+$/, a=>`/state${a}`);
       fetch(sourceURL).then(r=>r.text()).then(t=>{
         fetch(targetURL,{
           method: 'PUT',
