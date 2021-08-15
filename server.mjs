@@ -159,11 +159,11 @@ MinifyRoom().then(function(result) {
   });
 
   router.get('/s/:link/:junk', function(req, res, next) {
-    if(!sharedLinks[`${config.HTTP_URL_PREFIX}/s/${req.params.link}`])
+    if(!sharedLinks[`/s/${req.params.link}`])
       return res.status(404);
 
-    const tokens = sharedLinks[`${config.HTTP_URL_PREFIX}/s/${req.params.link}`].split('/');
-    downloadState(res, tokens[tokens.length-2], tokens[tokens.length-1]).catch(next);
+    const tokens = sharedLinks[`/s/${req.params.link}`].split('/');
+    downloadState(res, tokens[2], tokens[3]).catch(next);
   });
 
   router.get('/share/:room/:state', function(req, res) {
