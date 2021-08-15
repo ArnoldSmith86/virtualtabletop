@@ -38,16 +38,16 @@ export default async function convertPCIO(content) {
     if(name.match(/^\/img\//)) {
       name = 'https://playingcards.io' + name;
 
-      name = name.replace('https://playingcards.io/img/cardback-red.svg',                        '/i/cards-default/2B.svg');
-      name = name.replace(/https:\/\/playingcards\.io\/img\/cards(?:-french)?\/joker-black.svg/, '/i/cards-default/2J.svg');
-      name = name.replace(/https:\/\/playingcards\.io\/img\/cards(?:-french)?\/joker-red.svg/,   '/i/cards-default/1J.svg');
+      name = name.replace('https://playingcards.io/img/cardback-red.svg',                        './i/cards-default/2B.svg');
+      name = name.replace(/https:\/\/playingcards\.io\/img\/cards(?:-french)?\/joker-black.svg/, './i/cards-default/2J.svg');
+      name = name.replace(/https:\/\/playingcards\.io\/img\/cards(?:-french)?\/joker-red.svg/,   './i/cards-default/1J.svg');
 
       const regex = /https:\/\/playingcards\.io\/img\/cards(?:-french)?\/(hearts|spades|diamonds|clubs)-([2-9jqka]|10).svg/;
       const match = regex.exec(name);
       if(match) {
         const face = match[2].toUpperCase().replace(/10/, "T");
         const suit = match[1][0].toUpperCase();
-        name = `/i/cards-default/${face}${suit}.svg`;
+        name = `./i/cards-default/${face}${suit}.svg`;
       }
     }
     return nameMap[name] || name;
@@ -302,7 +302,7 @@ export default async function convertPCIO(content) {
           object.height = object.h;
           delete object.w;
           delete object.h;
-          if(object.value == '/i/cards-default/2B.svg')
+          if(object.value == './i/cards-default/2B.svg')
             object.color = '#ffffff';
         }
       }
@@ -427,7 +427,7 @@ export default async function convertPCIO(content) {
             timer: id
           }
         ],
-        image: "/i/button-icons/White-Play_Pause.svg",
+        image: './i/button-icons/White-Play_Pause.svg',
         css: "background-size: 75% 75%"
       };
       output[widget.id + 'R'] = {
@@ -446,7 +446,7 @@ export default async function convertPCIO(content) {
             mode: "reset"
           }
         ],
-        image: "/i/button-icons/White-Reset.svg",
+        image: './i/button-icons/White-Reset.svg',
         css: "background-size: 80% 80%"
       }
     } else if(widget.type == 'board') {

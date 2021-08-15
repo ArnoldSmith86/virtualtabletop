@@ -266,31 +266,31 @@ body.aspectTooGood #hideToolbarButton {
 }
 
 #statesButton {
-  background-image:url(/i/icons-white/chess-solid-svg.svg);
+  background-image:url(./i/icons-white/chess-solid-svg.svg);
 }
 
 #playersButton {
-  background-image:url(/i/icons-white/user-friends-solid-svg.svg);
+  background-image:url(./i/icons-white/user-friends-solid-svg.svg);
 }
 
 #editButton {
-  background-image:url(/i/icons-white/edit-regular-svg.svg);
+  background-image:url(./i/icons-white/edit-regular-svg.svg);
 }
 
 #addButton {
-  background-image:url(/i/icons-white/plus-solid-svg.svg);
+  background-image:url(./i/icons-white/plus-solid-svg.svg);
 }
 
 #fullscreenButton {
-  background-image:url(/i/icons-white/expand-solid-svg.svg);
+  background-image:url(./i/icons-white/expand-solid-svg.svg);
 }
 
 #hideToolbarButton {
-  background-image:url(/i/icons-white/hide side bar.svg);
+  background-image:url(./i/icons-white/hide side bar.svg);
 }
 
 #aboutButton {
-  background-image:url(/i/icons-white/info-circle-solid-svg.svg);
+  background-image:url(./i/icons-white/info-circle-solid-svg.svg);
 }
 
 /*Buttons css*/
@@ -315,43 +315,43 @@ body.aspectTooGood #hideToolbarButton {
 }
 
 .upload, .uploadAsset {
-  background-image:url(/i/icons-white/upload-solid-svg.svg);
+  background-image:url(./i/icons-white/upload-solid-svg.svg);
   background-size: 20px 70%;
   background-position:  2.5px center;
 }
 
 .download {
-  background-image:url(/i/icons-white/download-solid-svg.svg);
+  background-image:url(./i/icons-white/download-solid-svg.svg);
   background-size: 20px 70%;
   background-position:  2.5px center;
 }
 
 .link,.share {
-  background-image:url(/i/icons-white/link-solid-svg.svg);
+  background-image:url(./i/icons-white/link-solid-svg.svg);
   background-size: 20px 60%;
   background-position:  2.5px center;
 }
 
 .edit {
-  background-image:url(/i/icons-white/edit-regular-svg.svg);
+  background-image:url(./i/icons-white/edit-regular-svg.svg);
   background-size: 20px 60%;
   background-position:  2.5px center;
 }
 
 .create {
-  background-image:url(/i/icons-white/plus-solid-svg.svg);
+  background-image:url(./i/icons-white/plus-solid-svg.svg);
   background-size: 20px 70%;
   background-position:  2.5px center;
 }
 
 .library {
-  background-image:url(/i/icons-white/book-solid-svg.svg);
+  background-image:url(./i/icons-white/book-solid-svg.svg);
   background-size: 20px 70%;
   background-position:  2.5px center;
 }
 
 .save {
-  background-image:url(/i/icons-white/save-regular-svg.svg);
+  background-image:url(./i/icons-white/save-regular-svg.svg);
   background-size: 20px 70%;
   background-position:  2.5px center;
 }
@@ -365,7 +365,7 @@ body.aspectTooGood #hideToolbarButton {
   border-radius: 5px;
   background-repeat: no-repeat;
   margin:1px;
-  background-image:url(/i/icons-white/sync-alt-solid-svg.svg);
+  background-image:url(./i/icons-white/sync-alt-solid-svg.svg);
   background-size: 20px 70%;
   background-position:  2.5px center;
 }
@@ -374,7 +374,7 @@ body.aspectTooGood #hideToolbarButton {
 }
 
 .remove {
-  background-image:url(/i/icons-white/trash-alt-solid-svg.svg);
+  background-image:url(./i/icons-white/trash-alt-solid-svg.svg);
   background-size: 20px 70%;
   background-position:  2.5px center;
 }
@@ -388,7 +388,7 @@ button.top {
 button.add {
   padding: 1.7em 1em 5px 1em;
   text-align: center;
-  background-image:url(/i/icons-white/plus-solid-svg.svg);
+  background-image:url(./i/icons-white/plus-solid-svg.svg);
   background-size: 1em;
   background-position:  center 0.35em;
 }

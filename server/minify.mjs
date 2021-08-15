@@ -9,6 +9,10 @@ import cleanCSS from '@node-minify/clean-css';
 import uglifyES from '@node-minify/uglify-es';
 import htmlMinifier from '@node-minify/html-minifier';
 
+import Config from './config.mjs';
+
+const config = new Config();
+
 export default function minifyRoom() {
   let roomHTML = fs.readFileSync(path.resolve() + '/client/room.html', {encoding:'utf8'});
 
@@ -40,8 +44,11 @@ export default function minifyRoom() {
       output: os.tmpdir() + '/out.css'
     }).then(function(min) {
       roomHTML = roomHTML.replace(/ \{\{CSS\}\} /, min);
+      // provide environment variables
+      roomHTML = roomHTML.replace(/\{\{HTTP_URL_PREFIX\}\}/g, config.HTTP_URL_PREFIX);
+      roomHTML = roomHTML.replace(/\{\{WS_URL_PREFIX\}\}/g, config.WS_URL_PREFIX);
       return minify({
-        compressor: process.env.NOCOMPRESS ? noCompress : uglifyES,
+        compressor: config.NOCOMPRESS ? noCompress : uglifyES,
         input: [
           'client/js/domhelpers.js',
           'client/js/connection.js',

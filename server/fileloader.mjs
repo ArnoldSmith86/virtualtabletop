@@ -6,7 +6,9 @@ import JSZip from 'jszip';
 import { VERSION } from './fileupdater.mjs';
 import PCIO from './pcioimport.mjs';
 import Logging from './logging.mjs';
+import Config from './config.mjs';
 
+const config = new Config();
 const dirname = path.resolve() + '/save/links';
 const filename = dirname + '.json';
 const linkStatus = fs.existsSync(filename) ? JSON.parse(fs.readFileSync(filename)) : {};
@@ -25,7 +27,12 @@ async function downloadLink(link) {
     };
   }
 
-  const response = await fetch(link, requestEtag ? { headers: { 'If-None-Match': requestEtag } } : {});
+  // if the link is to our own server, use the local link instead so we can skip external auth, if any
+  var actual_link = link;
+  if (link.startsWith(config.SERVER_DOMAIN)) {
+    actual_link = link.replace(config.SERVER_DOMAIN, `http://localhost:${config.PORT}`);
+  }
+  const response = await fetch(actual_link, requestEtag ? { headers: { 'If-None-Match': requestEtag } } : {});
 
   linkStatus[link].time = +new Date();
   linkStatus[link].status = response.status;
@@ -39,6 +46,38 @@ async function downloadLink(link) {
   fs.writeFileSync(filename, JSON.stringify(linkStatus));
 }
 
+async function transformAssetsPathToRelative(obj) {
+  // As of Aug 14, 2021, the json files in the library's vtts contain absolute paths, limiting the server path to root path only. See:
+  // https://github.com/ArnoldSmith86/virtualtabletop-library/issues/10
+  // https://github.com/ArnoldSmith86/virtualtabletop/issues/712
+  // This function changes /assets/* to ./assets/*, effectively making it relative, so the server can be deployed to any directories, not just root.
+  // If the new library standard changes in the future (mandate a relative path), we can drop this transformation
+  if (obj === null) {
+    return obj
+  }
+  if (Array.isArray(obj)) {
+    for (let i = 0; i < obj.length; i++) {
+      if (typeof obj[i] === 'string') {
+        obj[i] = obj[i].replace(/^\/assets\//, './assets/')
+                       .replace(/^\/i\//, './i/')
+                       .replace(/url\s*\(\s*\//g, 'url(./');
+      } else {
+        await transformAssetsPathToRelative(obj[i])
+      }
+    }
+  } else if (typeof obj === 'object') {
+    for (const [key, value] of Object.entries(obj)) {
+      if (typeof value === 'string') {
+        obj[key] = value.replace(/^\/assets\//, './assets/')
+                        .replace(/^\/i\//, './i/')
+                        .replace(/url\s*\(\s*\//g, 'url(./');
+      } else {
+        await transformAssetsPathToRelative(value)
+      }
+    }
+  }
+}
+
 async function readStatesFromBuffer(buffer) {
   const zip = await JSZip.loadAsync(buffer);
 
@@ -46,9 +85,12 @@ async function readStatesFromBuffer(buffer) {
     return { 'PCIO': await readVariantsFromBuffer(buffer) };
 
   const states = [];
-  for(const filename in zip.files) {
-    if(filename.match(/^[^\/]+\.json$/) && zip.files[filename]._data)
-      return { 'VTT': await readVariantsFromBuffer(buffer) };
+  for (const filename in zip.files) {
+    if (filename.match(/^[^\/]+\.json$/) && zip.files[filename]._data) {
+      var result = await readVariantsFromBuffer(buffer);
+      await transformAssetsPathToRelative(result)
+      return { 'VTT': result };
+    }
     if(filename.match(/\.(vtt|pcio)$/) && zip.files[filename]._data)
       states[filename] = await readVariantsFromBuffer(await zip.files[filename].async('nodebuffer'));
   }

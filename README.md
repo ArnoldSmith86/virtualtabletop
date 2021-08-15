@@ -64,6 +64,22 @@ If you use "GitHub Desktop" you should follow these steps:
 4. Go to Repository -> Open in Command Prompt.
 5. Do `npm install` so Node.js downloads all the dependencies of the project.
 
+## Set environment variables for special cases
+
+Most users can skip these.
+
+| variable name| default value | example value | notes |
+| ------- | ------------------ | ----- |
+| `SERVER_DOMAIN` | (null) | `https://protectedGameServer.com` | If your server uses an external authentication, or is not open to the world, set this. The internal links will be translated to `http://localhost:PORT` |
+| `PORT` | 8272 | 8272 | The network port this app serves from |
+| `HTTP_URL_PREFIX` | `/` | `/games/virtualTabletop` | This allows you to serve the HTTP contents from, say, `https://protectedGameServer.com/games/virtualTabletop` |
+| `WS_URL_PREFIX` | `/` | `/games/virtualTabletop` | Similar to `HTTP_URL_PREFIX` but for WebSocket, in case you have a different proxy path. |
+| `NOCOMPRESS` | `1` | (not set) | If set, the js files will not be minified, for easier debugging. |
+
+For Linux and MacOS, use the format `export NOCOMPRESS=1` to set environment variables.
+
+For Windows, use the format `SET NOCOMPRESS=1` to set environment variables.
+
 ## Starting the server
 
 Now you can start the server by typing:

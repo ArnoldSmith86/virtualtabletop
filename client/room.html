@@ -5,11 +5,17 @@
   <meta charset="utf-8">
   <title>VirtualTabletop.io</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <link rel="icon" type="image/svg+xml" href="/i/branding/favicon.svg"/>
-  <link rel="alternate icon" href="/i/branding/favicon.png"/>
+  <link rel="icon" type="image/svg+xml" href="./i/branding/favicon.svg"/>
+  <link rel="alternate icon" href="./i/branding/favicon.png"/>
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/combine/npm/vue@3.0.7/dist/vue.global.prod.js,npm/jszip@3.6.0/dist/jszip.min.js"></script>
+  <script type="text/javascript">
+    var vtt_env = {
+      HTTP_URL_PREFIX: '{{HTTP_URL_PREFIX}}',
+      WS_URL_PREFIX: '{{WS_URL_PREFIX}}'
+    };
+  </script>
   <base target="_blank">
   <style> {{CSS}} </style>
 </head>
@@ -172,7 +178,7 @@
       <p>Please check <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Creating-Games">our GitHub wiki for documentation</a>.</p>
       <textarea id="widgetText">
         {
-          "image": "/i/cards-default/AS.svg"
+          "image": "./i/cards-default/AS.svg"
         }
       </textarea>
       <button id="addWidget">Add widget</button>

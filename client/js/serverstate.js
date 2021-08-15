@@ -1,7 +1,7 @@
 import { toServer } from './connection.js';
 import { $, $a, onLoad } from './domhelpers.js';
 
-let roomID = self.location.pathname.substr(1);
+let roomID = self.location.pathname.substr(vtt_env.HTTP_URL_PREFIX.length+1);
 
 export const widgets = new Map();
 
