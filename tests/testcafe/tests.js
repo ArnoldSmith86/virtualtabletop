@@ -58,6 +58,7 @@ function hiddenTest(game, variant, md5, tests) {
   })(`Public library: ${game} (variant ${variant})`, async t => {
     await ClientFunction(prepareClient)();
     await t
+      .setTestSpeed(0.3)
       .pressKey('esc')
       .click('#statesButton')
       .setNativeDialogHandler(() => testUrl, { dependencies: { testUrl }})
