@@ -64,7 +64,7 @@ function hiddenTest(game, variant, md5, tests) {
       .click('button.prettyButton.link:nth-child(2)')
       .pressKey('enter')
       .hover('.roomState')
-      .click(Selector('button.play').nth(variant)).wait(3000);
+      .click(Selector('button.play').nth(variant));
     await setName(t);
     await tests(t);
     await compareState(t, md5);
@@ -86,9 +86,8 @@ function publicLibraryTest(game, variant, md5, tests) {
   })(`Public library: ${game} (variant ${variant})`, async t => {
     await ClientFunction(prepareClient)();
     await t
-      .pressKey('esc').wait(3000)
-      .pressKey('esc').wait(3000)
-      .click('#statesButton').wait(3000)
+      .pressKey('esc')
+      .click('#statesButton')
       .click(Selector('td.name').withExactText(game).prevSibling().child())
       .hover('.roomState')
       .click(Selector('button.play').nth(variant));
