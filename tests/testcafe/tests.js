@@ -89,14 +89,13 @@ function publicLibraryTest(game, variant, md5, tests) {
       .pressKey('esc')
       .click('#statesButton')
     if(!await Selector('td.name').visible) {
-      await t.hover(`.roomState:nth-of-type(${index || 1})`)
-        .click(`.roomState:nth-of-type(${index || 1}) .edit`)
+      await t.hover(`.roomState:nth-of-type(1)`)
+        .click(`.roomState:nth-of-type(1) .edit`)
         .click('p > .remove');
     }
-    else
-      await t.click(Selector('td.name').withExactText(game).prevSibling().child())
-        .hover('.roomState')
-        .click(Selector('button.play').nth(variant));
+    await t.click(Selector('td.name').withExactText(game).prevSibling().child())
+      .hover('.roomState')
+      .click(Selector('button.play').nth(variant));
     await setName(t);
     await tests(t);
     await compareState(t, md5);
