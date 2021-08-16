@@ -363,6 +363,6 @@ publicLibraryButtons('Master Button',      0, 'eb19dffdb38641d5556e5fdb2c47c62b'
   'violetbutton', 'fae4', 'vbx5'
 ]);
 
-hiddenLibraryButtons('Test_Room',      0, 'fe86952d067fc69feb6dff7937f6b548', [
+hiddenLibraryButtons('Test_Room',      0, '3d492ded4a5bafab7f9a6c3c23bdac1c', [
   'clickThis'
 ]);
