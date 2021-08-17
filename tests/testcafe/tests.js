@@ -74,7 +74,7 @@ function hiddenTest(game, variant, md5, tests) {
 function hiddenLibraryButtons(game, variant, md5, buttons) {
   hiddenTest(game, variant, md5, async t => {
     for(const b of buttons) {
-      await t.setTestSpeed(0.1).click(`[id="${b}"]`).wait(20000);
+      await t.click(`[id="${b}"]`).wait(4000);
     }
   });
 }
@@ -367,6 +367,6 @@ publicLibraryButtons('Master Button',      0, 'eb19dffdb38641d5556e5fdb2c47c62b'
   'violetbutton', 'fae4', 'vbx5'
 ]);
 
-hiddenLibraryButtons('Test_Room',      0, '3d492ded4a5bafab7f9a6c3c23bdac1c', [
-  'clickThis'
+hiddenLibraryButtons('Test_Room',     0, '44784f8e8957d15535b7bf04ea9a72c3', [
+  'clickThis', 'button1', 'button2', 'type', 'button3', 'button4' 
 ]);
