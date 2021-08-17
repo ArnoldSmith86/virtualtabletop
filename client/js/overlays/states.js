@@ -247,14 +247,14 @@ async function pickStateFromLibrary(changeOverlay) {
       if(this.dataset.url.match(/^http/))
         resolve(this.dataset.url);
       else
-        resolve(location.origin + `${vtt_env.HTTP_URL_PREFIX}/library/` + this.dataset.url);
+        resolve(location.origin + `${window.vtt_env.HTTP_URL_PREFIX}/library/` + this.dataset.url);
     });
   });
 }
 
 async function populateLibrary() {
   if(!$('#libraryList.populated')) {
-    const library = await fetch(`${vtt_env.HTTP_URL_PREFIX}/library/library.json`);
+    const library = await fetch(`${window.vtt_env.HTTP_URL_PREFIX}/library/library.json`);
     for(const entry of await library.json()) {
       const lEntry = domByTemplate('template-librarylist-entry', 'tr');
 

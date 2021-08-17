@@ -12,9 +12,9 @@ export function mockConnection() {
 }
 
 export function startWebSocket() {
-  let url = `ws://${location.host}${vtt_env.WS_URL_PREFIX}`;
+  let url = `ws://${location.host}${window.vtt_env.WS_URL_PREFIX}`;
   if(location.protocol == 'https:')
-    url = `wss://${location.host}${vtt_env.WS_URL_PREFIX}`;
+    url = `wss://${location.host}${window.vtt_env.WS_URL_PREFIX}`;
   console.log(`connecting to ${url}`);
   connection = new WebSocket(url);
 
