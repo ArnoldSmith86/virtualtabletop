@@ -1332,8 +1332,8 @@ export class Widget extends StateManaged {
       for(const t of this.dropTargets)
         t.domElement.classList.remove('droppable');
 
-      await this.checkParent();  
-
+      await this.checkParent();
+      
       if(this.hoverTarget) {
         await this.moveToHolder(this.hoverTarget);
         this.hoverTarget.domElement.classList.remove('droptarget');
@@ -1344,8 +1344,14 @@ export class Widget extends StateManaged {
 	  if(this.get('parent') != this.oldParent && this.oldParent != null) {
 		  const oldParent = widgets.get(this.oldParent);
 		  if(oldParent.get('type') == 'holder') {
-			  //let children = await this.childrenIfPile();
-			  await oldParent.evaluateRoutine('leaveRoutine', {}, { child: [ this ] });
+        if(this.get('type') == 'pile') {
+          let arr = this.childArray;
+          for (let i = 0; i < arr.length; i++) {
+            await oldParent.evaluateRoutine('leaveRoutine', {}, { child: [ arr[i] ] });
+          }
+				}						
+				else
+					await oldParent.evaluateRoutine('leaveRoutine', {}, { child: [ this ] });
 		  }
 	  }	
     }
