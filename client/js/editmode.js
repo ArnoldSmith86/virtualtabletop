@@ -34,6 +34,10 @@ function populateEditOptionsBasic(widget) {
   $('#basicEnlarge').checked = widget.enlarge;
 }
 
+function applyWidthHeight(widget, value, dimension) {
+  return value.replaceAll(/\d/g, '').replace(/\./g, '')  === '' ? widget[dimension] = parseFloat(value): widget[dimension] = widget[dimension];
+}
+
 function applyEditOptionsBasic(widget) {
   if ($('#basicTypeBoard').checked == true){
     widget.layer = -4;
@@ -47,9 +51,9 @@ function applyEditOptionsBasic(widget) {
     delete widget.image;
   else
     widget.image = $('#basicImage').value;
-
-  widget.width = $('#basicWidth').value;
-  widget.height = $('#basicHeight').value;
+  
+  applyWidthHeight(widget, $('#basicWidthNumber').value, 'width');
+  applyWidthHeight(widget, $('#basicHeightNumber').value, 'height');
 
   if ($('#basicFullscreen').checked){
     widget.width = 1600;
@@ -194,8 +198,18 @@ async function applyEditOptionsDeck(widget) {
         await w.set('cardType', id);
     }
 
-    for(const object of $a('.properties > div', type))
-      widget.cardTypes[id][$('label', object).textContent] = $('input', object).value;
+    for(const object of $a('.properties > div', type)) {
+      if (($('input', object).value) == '')
+        delete widget.cardTypes[id][$('label', object).textContent];
+      else if (!(/\D/).test($('input', object).value))
+        widget.cardTypes[id][$('label', object).textContent] = parseFloat($('input', object).value);
+      else if ($('input', object).value === 'true' || $('input', object).value ==='false')
+        widget.cardTypes[id][$('label', object).textContent] = ($('input', object).value === 'true');
+      else if ($('input', object).value !== '')
+        widget.cardTypes[id][$('label', object).textContent] = $('input', object).value.replaceAll('\\n','\n').replaceAll('\"', '').replaceAll('\'', '');
+      else
+        widget.cardTypes[id][$('label', object).textContent] = '';
+    }
   }
 }
 
@@ -237,12 +251,11 @@ function populateEditOptionsLabel(widget) {
 
 function applyEditOptionsLabel(widget) {
   widget.text = $('#labelText').value;
-
-  widget.width = $('#labelWidth').value;
-  widget.height = $('#labelHeight').value;
-
+  
+  applyWidthHeight(widget, $('#labelWidthNumber').value, 'width');
+  applyWidthHeight(widget, $('#labelHeightNumber').value, 'height');
+  
   widget.editable = $('#labelEditable').checked;
-
 }
 
 //piece widget functions
@@ -407,6 +420,7 @@ function generateCardDeckWidgets(id, x, y, addCards) {
     {
       id: id+'B',
       parent: id,
+      fixedParent: true,
       y: 171.36,
       width: 111,
       height: 40,
@@ -468,6 +482,7 @@ function generateCounterWidgets(id, x, y) {
   const down = {
     id: id+'D',
     parent: id,
+    fixedParent: true,
     x: -38,
     y: 1,
     width: 36,
@@ -491,6 +506,7 @@ function generateTimerWidgets(id, x, y) {
     { type:'timer', id: id, x: x, y: y },
     {
       parent: id,
+      fixedParent: true,
       id: id+'P',
       x: 120,
       y: -3,
@@ -509,6 +525,7 @@ function generateTimerWidgets(id, x, y) {
     },
     {
       parent: id,
+      fixedParent: true,
       id: id+'R',
       x: 80,
       y: -3,
@@ -960,6 +977,7 @@ onLoad(function() {
       id: id+"-Reset",
 
       parent: id,
+      fixedParent: true,
 
       x: -50,
       y: 0,
@@ -984,6 +1002,7 @@ onLoad(function() {
       id: id+"-Color",
 
       parent: id,
+      fixedParent: true,
 
       x: -50,
       y: 50,
