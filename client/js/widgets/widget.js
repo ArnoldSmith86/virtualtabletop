@@ -638,10 +638,8 @@ export class Widget extends StateManaged {
               const cWidget = widgets.get(clone.id);
 
               if(parent) {
-                // use moveToHolder so that CLONE triggers onEnter and similar features
-                cWidget.movedByButton = true;
+				cWidget.oldParent = await this.parentIDIfPile(cWidget);
                 await cWidget.moveToHolder(widgets.get(parent));
-                delete cWidget.movedByButton;
               }
 
               // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
@@ -907,9 +905,8 @@ export class Widget extends StateManaged {
               if(source == target) {
                 await c.bringToFront();
               } else {
-                c.movedByButton = true;
+				c.oldParent = await this.parentIDIfPile(c);
                 await c.moveToHolder(target);
-                delete c.movedByButton;
               }
             }
           }));
@@ -950,8 +947,10 @@ export class Widget extends StateManaged {
                 let cards = widgetFilter(w=>w.get('deck')==deck.get('id'));
                 if(!a.owned)
                   cards = cards.filter(c=>!c.get('owner'));
-                for(const c of cards)
-                  await c.moveToHolder(widgets.get(holder));
+                for(const c of cards) {
+					c.oldParent = await this.parentIDIfPile(c);
+					await c.moveToHolder(widgets.get(holder));
+				}
               }
             } else {
               problems.push(`Holder ${holder} does not have a deck.`);
@@ -1063,6 +1062,8 @@ export class Widget extends StateManaged {
           }
         } else if(isValidCollection(a.collection)) {
           for(const w of collections[a.collection]) {
+							if(a.property == 'parent') 
+								w.oldParent = await this.parentIDIfPile(w);
             await w.set(String(a.property), compute(a.relation, null, w.get(String(a.property)), a.value));
           }
         }
@@ -1217,23 +1218,42 @@ export class Widget extends StateManaged {
       await this.checkParent(true);
 
     await this.set('owner',  null);
-    if(holder.get('dropLimit')== -1 || holder.get('dropLimit') > holder.children().length || this.get('parent') == this.get('oldParent'))
-      await this.set('parent', holder.get('id'));
+	
+	var dropLimit = holder.get('dropLimit')
+	var childArray = holder.childArray.filter(w=>w.get('type')!='deck')
+	var notPiles = childArray.filter(w=>w.get('type')!='pile')
+	var piles = childArray.filter(w=>w.get('type')=='pile')
+	var pileChildren=[];
+	var thirteen = piles.forEach(w=>pileChildren.push(...w.children()))
+	var holderChildren = pileChildren.length + notPiles.length
+	if(dropLimit == -1 || dropLimit >= (holderChildren + Math.max(this.childArray.length, 1)) || (this.get('parent') == this.get('oldParent') && (this.get('parent') != null)))
+		await this.set('parent', holder.get('id'));
   }
   
-  async parentIDIfPile(){
-    if (this.parent.get('type') == 'pile')
-      return this.parent.get('parent');
-    else
-      return this.get('parent')
-  } 
-  
+  async parentIDIfPile(widget){
+	  if(widget) {
+		  if(widget.parent !== undefined) {
+			  if (widget.parent.get('type') == 'pile')
+				  return widget.parent.get('parent');
+			  else
+				  return widget.get('parent')
+			  }
+			  else return null
+			  }
+	  else if (this.parent != undefined) {
+		  if (this.parent.get('type') == 'pile')
+			  return this.parent.get('parent');
+		  else
+			  return this.get('parent')
+		  }
+		  else return null
+		  }	
+
   async moveStart() {
     if(tracingEnabled)
       sendTraceEvent('moveStart', { id: this.get('id') });
-    
-    if (this.get('parent') != null)
-      this.oldParent = await this.parentIDIfPile(this.get('parent'));
+  
+  this.oldParent = await this.parentIDIfPile();
 
     await this.bringToFront();
 
@@ -1312,17 +1332,24 @@ export class Widget extends StateManaged {
       for(const t of this.dropTargets)
         t.domElement.classList.remove('droppable');
 
-      await this.checkParent();
+      await this.checkParent();  
 
       if(this.hoverTarget) {
         await this.moveToHolder(this.hoverTarget);
         this.hoverTarget.domElement.classList.remove('droptarget');
       }
+	  var one = this.get('parent');
+	  var two = this.oldParent;
+	  
+	  if(this.get('parent') != this.oldParent && this.oldParent != null) {
+		  const oldParent = widgets.get(this.oldParent);
+		  if(oldParent.get('type') == 'holder') {
+			  //let children = await this.childrenIfPile();
+			  await oldParent.evaluateRoutine('leaveRoutine', {}, { child: [ this ] });
+		  }
+	  }	
     }
-
-    this.hideEnlarged();
     await this.updatePiles();
-    this.oldParent = this.get('parent');
   }
 
   async onChildAdd(child, oldParentID) {
@@ -1356,14 +1383,22 @@ export class Widget extends StateManaged {
       if(oldValue) {
         const oldParent = widgets.get(oldValue);
         await oldParent.onChildRemove(this);
-        if(this.get('type') != 'holder' && Array.isArray(oldParent.get('leaveRoutine')))
-          await oldParent.evaluateRoutine('leaveRoutine', {}, { child: [ this ] });
       }
       if(newValue) {
         const newParent = widgets.get(newValue);
         await newParent.onChildAdd(this, oldValue);
-        if(Array.isArray(newParent.get('enterRoutine')))
-          await newParent.evaluateRoutine('enterRoutine', { oldParentID: oldValue === undefined ? ((this.oldParent === undefined || this.oldParent === null) ? null : this.oldParent) : oldValue }, { child: [ this ] });
+        if(Array.isArray(newParent.get('enterRoutine'))) {
+			if(newValue != this.oldParent) {
+				if(this.get('type') == 'pile') { 
+				let arr = this.childArray;
+				for (let i = 0; i < arr.length; i++) {
+					await newParent.evaluateRoutine('enterRoutine', { oldParentID: [  ] }, { child: [ arr[i] ] });
+					}
+				}						
+				else
+					await newParent.evaluateRoutine('enterRoutine', { oldParentID: [this.oldParent] }, { child: [ this ] });
+			}
+		}
       }
       if(!this.disablePileUpdateAfterParentChange)
         await this.updatePiles();
