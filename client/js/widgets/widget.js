@@ -1221,16 +1221,16 @@ export class Widget extends StateManaged {
       await this.checkParent(true);
 
     await this.set('owner',  null);
-	
-	var dropLimit = holder.get('dropLimit');
-	var childArray = holder.childArray.filter(w=>w.get('type')!='deck');
-	var notPiles = childArray.filter(w=>w.get('type')!='pile');
-	var piles = childArray.filter(w=>w.get('type')=='pile');
-	var pileChildren=[];
-	var thirteen = piles.forEach(w=>pileChildren.push(...w.children()));
-	var holderChildren = pileChildren.length + notPiles.length;
-  var numbDraggedChildren = holder.draggedChildren != undefined ? holder.draggedChildren.length: 0;
-    if(this.movedByButton == true || dropLimit == -1 || dropLimit >= (holderChildren + numbDraggedChildren + Math.max(this.childArray.length, 1)) || holder == widgets.get(this.oldParent))
+
+    var dropLimit = holder.get('dropLimit');
+    var childArray = holder.childArray.filter(w=>w.get('type')!='deck');
+    var notPiles = childArray.filter(w=>w.get('type')!='pile').filter(w=>w.get('fixedParent')!=true);
+    var piles = childArray.filter(w=>w.get('type')=='pile');
+    var pileChildren=[];
+    piles.forEach(w=>pileChildren.push(...w.children()));
+    var holderChildren = pileChildren.length + notPiles.length;
+    var numbDraggedChildren = holder.draggedChildren != undefined ? holder.draggedChildren.length: 0;
+    if(this.movedByButton == true || dropLimit == -1 || dropLimit > (holderChildren + numbDraggedChildren + (holder == widgets.get(this.oldParent)) ? 0 : Math.max(this.childArray.length, 1)) || holder == widgets.get(this.oldParent))
       await this.set('parent', holder.get('id'));
     var numbDraggedChildren = 0;
     delete this.movedByButton;
@@ -1348,8 +1348,8 @@ export class Widget extends StateManaged {
         await this.moveToHolder(this.hoverTarget);
         this.hoverTarget.domElement.classList.remove('droptarget');
       }
-	  
-	  if(this.get('parent') != this.oldParent && this.oldParent != null) {
+
+      if(await this.parentIDIfPile(widgets.get(this.get('parent'))) != this.oldParent && this.oldParent != null) {
 		  const oldParent = widgets.get(this.oldParent);
 		  if(oldParent.get('type') == 'holder') {
         delete oldParent.draggedChildren
