@@ -1219,15 +1219,17 @@ export class Widget extends StateManaged {
 
     await this.set('owner',  null);
 	
-	var dropLimit = holder.get('dropLimit')
-	var childArray = holder.childArray.filter(w=>w.get('type')!='deck')
-	var notPiles = childArray.filter(w=>w.get('type')!='pile')
-	var piles = childArray.filter(w=>w.get('type')=='pile')
+	var dropLimit = holder.get('dropLimit');
+	var childArray = holder.childArray.filter(w=>w.get('type')!='deck');
+	var notPiles = childArray.filter(w=>w.get('type')!='pile');
+	var piles = childArray.filter(w=>w.get('type')=='pile');
 	var pileChildren=[];
-	var thirteen = piles.forEach(w=>pileChildren.push(...w.children()))
-	var holderChildren = pileChildren.length + notPiles.length
-	if(dropLimit == -1 || dropLimit >= (holderChildren + Math.max(this.childArray.length, 1)) || (this.get('parent') == this.get('oldParent') && (this.get('parent') != null)))
-		await this.set('parent', holder.get('id'));
+	var thirteen = piles.forEach(w=>pileChildren.push(...w.children()));
+	var holderChildren = pileChildren.length + notPiles.length;
+  var numbDraggedChildren = holder.draggedChildren != undefined ? holder.draggedChildren.length: 0;
+    if(dropLimit == -1 || dropLimit >= (holderChildren + numbDraggedChildren + Math.max(this.childArray.length, 1)) || (this.get('parent') == this.get('oldParent') && (this.get('parent') != null)))
+      await this.set('parent', holder.get('id'));
+    var numbDraggedChildren = 0;
   }
   
   async parentIDIfPile(widget){
@@ -1254,6 +1256,10 @@ export class Widget extends StateManaged {
       sendTraceEvent('moveStart', { id: this.get('id') });
   
   this.oldParent = await this.parentIDIfPile();
+    const oldParent = widgets.get(this.oldParent);
+    if(oldParent != undefined)
+      if(oldParent.get('type') == 'holder')
+        oldParent.draggedChildren = this.get('type') == 'pile' ? oldParent.draggedChildren = this.childArray : oldParent.draggedChildren = this; 
 
     await this.bringToFront();
 
@@ -1338,8 +1344,6 @@ export class Widget extends StateManaged {
         await this.moveToHolder(this.hoverTarget);
         this.hoverTarget.domElement.classList.remove('droptarget');
       }
-	  var one = this.get('parent');
-	  var two = this.oldParent;
 	  
 	  if(this.get('parent') != this.oldParent && this.oldParent != null) {
 		  const oldParent = widgets.get(this.oldParent);
@@ -1355,6 +1359,7 @@ export class Widget extends StateManaged {
 		  }
 	  }	
     }
+    this.hideEnlarged();
     await this.updatePiles();
   }
 
