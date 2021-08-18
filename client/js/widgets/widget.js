@@ -638,6 +638,7 @@ export class Widget extends StateManaged {
               const cWidget = widgets.get(clone.id);
 
               if(parent) {
+                cWidget.movedByButton = true;
                 cWidget.oldParent = await this.parentIDIfPile(cWidget);
                 await cWidget.moveToHolder(widgets.get(parent));
               }
@@ -906,6 +907,7 @@ export class Widget extends StateManaged {
                 await c.bringToFront();
               } else {
                 c.oldParent = await this.parentIDIfPile(c);
+                c.movedByButton = true;
                 await c.moveToHolder(target);
               }
             }
@@ -948,9 +950,10 @@ export class Widget extends StateManaged {
                 if(!a.owned)
                   cards = cards.filter(c=>!c.get('owner'));
                 for(const c of cards) {
-					c.oldParent = await this.parentIDIfPile(c);
-					await c.moveToHolder(widgets.get(holder));
-				}
+                  c.oldParent = await this.parentIDIfPile(c);
+                  c.movedByButton = true;
+                  await c.moveToHolder(widgets.get(holder));
+                }
               }
             } else {
               problems.push(`Holder ${holder} does not have a deck.`);
@@ -1227,9 +1230,10 @@ export class Widget extends StateManaged {
 	var thirteen = piles.forEach(w=>pileChildren.push(...w.children()));
 	var holderChildren = pileChildren.length + notPiles.length;
   var numbDraggedChildren = holder.draggedChildren != undefined ? holder.draggedChildren.length: 0;
-    if(dropLimit == -1 || dropLimit >= (holderChildren + numbDraggedChildren + Math.max(this.childArray.length, 1)) || (this.get('parent') == this.get('oldParent') && (this.get('parent') != null)))
+    if(this.movedByButton == undefined || dropLimit == -1 || dropLimit >= (holderChildren + numbDraggedChildren + Math.max(this.childArray.length, 1)) || (this.get('parent') == this.get('oldParent') && (this.get('parent') != null)))
       await this.set('parent', holder.get('id'));
     var numbDraggedChildren = 0;
+    delete this.movedByButton;
   }
   
   async parentIDIfPile(widget){
@@ -1348,6 +1352,7 @@ export class Widget extends StateManaged {
 	  if(this.get('parent') != this.oldParent && this.oldParent != null) {
 		  const oldParent = widgets.get(this.oldParent);
 		  if(oldParent.get('type') == 'holder') {
+        delete oldParent.draggedChildren
         if(this.get('type') == 'pile') {
           let arr = this.childArray;
           for (let i = 0; i < arr.length; i++) {
