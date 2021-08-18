@@ -10,12 +10,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/combine/npm/vue@3.0.7/dist/vue.global.prod.js,npm/jszip@3.6.0/dist/jszip.min.js"></script>
-  <script type="text/javascript">
-    window.vtt_env = {
-      HTTP_URL_PREFIX: '{{HTTP_URL_PREFIX}}',
-      WS_URL_PREFIX: '{{WS_URL_PREFIX}}'
-    };
-  </script>
   <base target="_blank">
   <style> {{CSS}} </style>
 </head>
@@ -363,7 +357,7 @@
 
   <div id="enlarged" class="hidden"></div>
 
-  <script type="module"> {{JS}} </script>
+  <script type="module"> window.vtt_env = { HTTP_URL_PREFIX: '{{HTTP_URL_PREFIX}}', WS_URL_PREFIX: '{{WS_URL_PREFIX}}' }; {{JS}} </script>
 
 </body>
 
