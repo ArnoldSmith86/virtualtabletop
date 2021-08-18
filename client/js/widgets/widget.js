@@ -638,7 +638,7 @@ export class Widget extends StateManaged {
               const cWidget = widgets.get(clone.id);
 
               if(parent) {
-				cWidget.oldParent = await this.parentIDIfPile(cWidget);
+                cWidget.oldParent = await this.parentIDIfPile(cWidget);
                 await cWidget.moveToHolder(widgets.get(parent));
               }
 
@@ -905,7 +905,7 @@ export class Widget extends StateManaged {
               if(source == target) {
                 await c.bringToFront();
               } else {
-				c.oldParent = await this.parentIDIfPile(c);
+                c.oldParent = await this.parentIDIfPile(c);
                 await c.moveToHolder(target);
               }
             }
