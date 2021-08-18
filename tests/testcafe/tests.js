@@ -347,5 +347,5 @@ publicLibraryButtons('Master Button',      0, 'eb19dffdb38641d5556e5fdb2c47c62b'
 ]);
 
 hiddenLibraryButtons('Test_Room',          0, 'fe6a9a86ad3a5a9886529b2941f5bc01', [
-  'clickThis', 'button1', 'button2', 'tjel', 'button3', 'button4'
+  'clickThis', 'button1', 'button2', 'type', 'button3', 'button4'
 ]);
