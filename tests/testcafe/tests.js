@@ -50,63 +50,42 @@ function prepareClient() {
   document.querySelector('base').parentNode.removeChild(document.querySelector('base'));
 }
 
-function hiddenTest(game, variant, md5, tests) {
-  const testUrl = `${server}/library/${game}.vtt#VTT`;
+function publicLibraryTest(game, variant, md5, hidden, tests) {
   test.after(async t => {
     await removeGame(t);
     await t.expect(Selector('#statesOverlay').visible).ok();
-  })(`Public library: ${game} (variant ${variant})`, async t => {
+  })(`Public library${hidden ? ' (hidden)' : ''}: ${game} (variant ${variant})`, async t => {
     await ClientFunction(prepareClient)();
     await t
       .pressKey('esc')
-      .click('#statesButton')
-      .setNativeDialogHandler(() => testUrl, { dependencies: { testUrl }})
-      .click('button.prettyButton.link:nth-child(2)')
-      .pressKey('enter')
+      .click('#statesButton');
+    if(hidden) {
+      const testUrl = `${server}/library/${game}.vtt#VTT`;
+      await t
+        .setNativeDialogHandler(() => testUrl, { dependencies: { testUrl }})
+        .click('button.prettyButton.link:nth-child(2)');
+    } else {
+      await t
+        .click(Selector('td.name').withExactText(game).prevSibling().child());
+    }
+    await t
       .hover('.roomState')
       .click(Selector('button.play').nth(variant));
     await setName(t);
     await tests(t);
     await compareState(t, md5);
+  });
+}
+
+function publicLibraryButtons(game, variant, md5, buttons, hidden) {
+  publicLibraryTest(game, variant, md5, hidden, async t => {
+    for(const b of buttons)
+      await t.click(`[id="${b}"]`);
   });
 }
 
 function hiddenLibraryButtons(game, variant, md5, buttons) {
-  hiddenTest(game, variant, md5, async t => {
-    for(const b of buttons) {
-      await t.click(`[id="${b}"]`).wait(4000);
-    }
-  });
-}
-
-function publicLibraryTest(game, variant, md5, tests) {
-  test.after(async t => {
-    await removeGame(t);
-    await t.expect(Selector('#statesOverlay').visible).ok();
-  })(`Public library: ${game} (variant ${variant})`, async t => {
-    await ClientFunction(prepareClient)();
-    await t
-      .pressKey('esc')
-      .click('#statesButton')
-    if(!await Selector('td.name').visible) {
-      await t.hover(`.roomState:nth-of-type(1)`)
-        .click(`.roomState:nth-of-type(1) .edit`)
-        .click('p > .remove');
-    }
-    await t.click(Selector('td.name').withExactText(game).prevSibling().child())
-      .hover('.roomState')
-      .click(Selector('button.play').nth(variant));
-    await setName(t);
-    await tests(t);
-    await compareState(t, md5);
-  });
-}
-
-function publicLibraryButtons(game, variant, md5, buttons) {
-  publicLibraryTest(game, variant, md5, async t => {
-    for(const b of buttons)
-      await t.click(`[id="${b}"]`);
-  });
+  publicLibraryButtons(game, variant, md5, buttons, true);
 }
 
 async function compareState(t, md5) {
@@ -367,6 +346,6 @@ publicLibraryButtons('Master Button',      0, 'eb19dffdb38641d5556e5fdb2c47c62b'
   'violetbutton', 'fae4', 'vbx5'
 ]);
 
-hiddenLibraryButtons('Test_Room',     0, '44784f8e8957d15535b7bf04ea9a72c3', [
-  'clickThis', 'button1', 'button2', 'type', 'button3', 'button4' 
+hiddenLibraryButtons('Test_Room',          0, 'fe6a9a86ad3a5a9886529b2941f5bc01', [
+  'clickThis', 'button1', 'button2', 'tjel', 'button3', 'button4'
 ]);
