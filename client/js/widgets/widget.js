@@ -1229,8 +1229,7 @@ export class Widget extends StateManaged {
     var pileChildren=[];
     piles.forEach(w=>pileChildren.push(...w.children()));
     var holderChildren = pileChildren.length + notPiles.length;
-    // var numbDraggedChildren = holder.draggedChildren != undefined ? (holder.draggedChildren.length != undefined ? holder.draggedChildren.length : 1) : 0;
-    var numbDraggedChildrent = holder.get('draggedChildren') != undefined ? holder.get(draggedChildren).length != undefined ? holder.get('draggedChildren').length : 0;
+    var numbDraggedChildren = holder.draggedChildren != undefined ? (holder.draggedChildren.length != undefined ? holder.draggedChildren.length : 1) : 0;
     if(this.movedByButton == true || dropLimit == -1 || dropLimit >= (holderChildren + numbDraggedChildren + ((holder == widgets.get(this.oldParent)) ? 0 : Math.max(this.childArray.length, 1))) || holder == widgets.get(this.oldParent))
       await this.set('parent', holder.get('id'));
     var numbDraggedChildren = 0;
@@ -1264,8 +1263,7 @@ export class Widget extends StateManaged {
     const oldParent = widgets.get(this.oldParent);
     if(oldParent != undefined)
       if(oldParent.get('type') == 'holder')
-        oldParent.set('draggedChildren', this.get('type') == 'pile' ? this.childArray : this);
-        // oldParent.draggedChildren = this.get('type') == 'pile' ? oldParent.draggedChildren = this.childArray : oldParent.draggedChildren = this; 
+        oldParent.draggedChildren = this.get('type') == 'pile' ? oldParent.draggedChildren = this.childArray : oldParent.draggedChildren = this; 
 
     await this.bringToFront();
 
@@ -1354,8 +1352,7 @@ export class Widget extends StateManaged {
       if(await this.parentIDIfPile(widgets.get(this.get('parent'))) != this.oldParent && this.oldParent != null) {
 		  const oldParent = widgets.get(this.oldParent);
 		  if(oldParent.get('type') == 'holder') {
-        oldParent.set(draggedChildren, null);
-        // delete oldParent.draggedChildren
+        delete oldParent.draggedChildren
         if(this.get('type') == 'pile') {
           let arr = this.childArray;
           for (let i = 0; i < arr.length; i++) {
