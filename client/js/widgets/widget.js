@@ -1229,10 +1229,8 @@ export class Widget extends StateManaged {
     var pileChildren=[];
     piles.forEach(w=>pileChildren.push(...w.children()));
     var holderChildren = pileChildren.length + notPiles.length;
-    var numbDraggedChildren = holder.draggedChildren != undefined ? (holder.draggedChildren.length != undefined ? holder.draggedChildren.length : 1) : 0;
-    if(this.movedByButton == true || dropLimit == -1 || dropLimit >= (holderChildren + numbDraggedChildren + ((holder == widgets.get(this.oldParent)) ? 0 : Math.max(this.childArray.length, 1))) || holder == widgets.get(this.oldParent))
+    if(this.movedByButton == true || dropLimit == -1 || dropLimit >= (holderChildren + holder.get('numbDraggedChildren') + ((holder == widgets.get(this.oldParent)) ? 0 : Math.max(this.childArray.length, 1))) || holder == widgets.get(this.oldParent))
       await this.set('parent', holder.get('id'));
-    var numbDraggedChildren = 0;
     delete this.movedByButton;
   }
   
@@ -1261,9 +1259,10 @@ export class Widget extends StateManaged {
   
   this.oldParent = await this.parentIDIfPile();
     const oldParent = widgets.get(this.oldParent);
-    if(oldParent != undefined)
+    if(oldParent != undefined) {
       if(oldParent.get('type') == 'holder')
-        oldParent.draggedChildren = this.get('type') == 'pile' ? oldParent.draggedChildren = this.childArray : oldParent.draggedChildren = this; 
+        oldParent.set('numbDraggedChildren', Math.max(this.childArray.length, 1));
+    }
 
     await this.bringToFront();
 
@@ -1350,19 +1349,19 @@ export class Widget extends StateManaged {
       }
 
       if(await this.parentIDIfPile(widgets.get(this.get('parent'))) != this.oldParent && this.oldParent != null) {
-		  const oldParent = widgets.get(this.oldParent);
-		  if(oldParent.get('type') == 'holder') {
-        delete oldParent.draggedChildren
-        if(this.get('type') == 'pile') {
-          let arr = this.childArray;
-          for (let i = 0; i < arr.length; i++) {
-            await oldParent.evaluateRoutine('leaveRoutine', {}, { child: [ arr[i] ] });
+        const oldParent = widgets.get(this.oldParent);
+        if(oldParent.get('type') == 'holder') {
+          oldParent.set('numbDraggedChildren', null);
+          if(this.get('type') == 'pile') {
+            let arr = this.childArray;
+            for (let i = 0; i < arr.length; i++) {
+              await oldParent.evaluateRoutine('leaveRoutine', {}, { child: [ arr[i] ] });
+            }
           }
-				}						
-				else
-					await oldParent.evaluateRoutine('leaveRoutine', {}, { child: [ this ] });
-		  }
-	  }	
+          else
+            await oldParent.evaluateRoutine('leaveRoutine', {}, { child: [ this ] });
+        }
+      }
     }
     this.hideEnlarged();
     await this.updatePiles();
