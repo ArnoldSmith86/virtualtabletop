@@ -93,8 +93,12 @@ export class StateManaged {
     sendPropertyUpdate(this.get('id'), property, value);
     await this.onPropertyChange(property, oldValue, value);
 
-    if(Array.isArray(this.get(`${property}ChangeRoutine`)))
+    if(Array.isArray(this.get(`${property}ChangeRoutine`))) {
+      if (property == 'text')
+        window.enteredInLabel = true;
       await this.evaluateRoutine(`${property}ChangeRoutine`, { oldValue, value }, {});
+      delete windows.enteredInLabel;
+    }
     if(Array.isArray(this.get('changeRoutine')))
       await this.evaluateRoutine('changeRoutine', { property, oldValue, value }, {});
 
