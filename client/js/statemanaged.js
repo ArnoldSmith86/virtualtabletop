@@ -95,22 +95,16 @@ export class StateManaged {
 
     if(Array.isArray(this.get(`${property}ChangeRoutine`))) {
       if (property == 'text')
-        window.enteredInLabel = window.enteredInLabel + 1;
+        window.dontFocus = true;
       await this.evaluateRoutine(`${property}ChangeRoutine`, { oldValue, value }, {});
-      if (property == 'text')
-        window.enteredInLabel = window.enteredInLabel - 1;
     }
     if(Array.isArray(this.get('changeRoutine')))
       await this.evaluateRoutine('changeRoutine', { property, oldValue, value }, {});
 
     if(!StateManaged.isInGlobalUpdateRoutine) {
       StateManaged.isInGlobalUpdateRoutine = true;
-      if(property == 'text')
-        window.enteredInLabel = window.enteredInLabel + 1;
       for(const [ widget, routine ] of StateManaged.globalUpdateListeners[property] || [])
         await widget.evaluateRoutine(routine, { widgetID: this.id, oldValue, value }, { widget: [ this ] });
-      if(property == 'text')
-        window.enteredInLabel = window.enteredInLabel - 1;
       for(const [ widget, routine ] of StateManaged.globalUpdateListeners['*'] || [])
         await widget.evaluateRoutine(routine, { widgetID: this.id, property, oldValue, value }, { widget: [ this ] });
       StateManaged.isInGlobalUpdateRoutine = false;
