@@ -1465,10 +1465,10 @@ function jeSet(text, dontFocus) {
   } catch(e) {
     $('#jeText').textContent = text;
   }
-  if(!dontFocus && window.enteredInLabel == 0)
+  if(!dontFocus && !window.dontFocus)
     $('#jeText').focus();
   jeColorize();
-  window.enteredInLabel - 1;
+  window.dontFocus = false;
 }
 
 function jeSetAndSelect(replaceBy, insideString) {
