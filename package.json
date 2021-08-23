@@ -45,7 +45,7 @@
     "@node-minify/uglify-es": "^6.2.0",
     "crc-32": "^1.2.0",
     "express": "^4.17.1",
-    "jszip": "^3.6.0",
+    "jszip": "^3.7.1",
     "node-fetch": "^2.6.1",
     "ws": "^8.2.0"
   },
