@@ -1413,7 +1413,7 @@ function jePreProcessObject(o) {
   try {
     if(copy.type == 'card') {
       copy['cardDefaults (in deck)'] = widgets.get(copy.deck).get('cardDefaults');
-      copy['cardType (in deck)'] = widgets.get(copy.deck).get('cardTypes')[copy.cardType];
+      copy['cardType ['+ o.cardType + '] (in deck)'] = widgets.get(copy.deck).get('cardTypes')[copy.cardType];
     }
   } catch(e) {}
 
@@ -1622,7 +1622,8 @@ window.addEventListener('mousemove', function(e) {
   for(let i=1; i<=12; ++i) {
     if(hoveredWidgets[i-1]) {
       jeWidgetLayers[i] = hoveredWidgets[i-1];
-      $(`#jeWidgetLayer${i}`).textContent = `F${i}:\nid: ${hoveredWidgets[i-1].get('id')}\ntype: ${hoveredWidgets[i-1].get('type') || 'basic'}`;
+      var cardType = `${hoveredWidgets[i-1].get('type')}` == 'card' ? `\ncardType: ${hoveredWidgets[i-1].get('cardType')}` : "";
+      $(`#jeWidgetLayer${i}`).textContent = `F${i}:\nid: ${hoveredWidgets[i-1].get('id')}\ntype: ${hoveredWidgets[i-1].get('type') || 'basic'} ${cardType}`;
     } else {
       delete jeWidgetLayers[i];
       $(`#jeWidgetLayer${i}`).textContent = '';
