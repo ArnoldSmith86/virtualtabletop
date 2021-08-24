@@ -257,7 +257,7 @@ async function populateLibrary() {
     const library = await fetch('/library/library.json');
     var lEntry = null;
     // add sections and entries
-    for(const entry of await library.json()) {
+    (await library.json()).forEach((entry, idx) => {
       if (!entry.link) {
         // sections have empty entry.link
         lEntry = domByTemplate('template-librarylist-section-title', 'tr');
@@ -272,6 +272,11 @@ async function populateLibrary() {
         $('#libraryList').appendChild(lEntry);
       } else {
         // entries have valid entry.link
+        if (!idx) {
+            // if the top row does not have a section title, add header first
+            lEntry = domByTemplate('template-librarylist-header', 'tr');
+            $('#libraryList').appendChild(lEntry);
+        }
         lEntry = domByTemplate('template-librarylist-entry', 'tr');
 
         $('.name', lEntry).textContent = entry.name;
@@ -284,7 +289,8 @@ async function populateLibrary() {
 
         $('#libraryList').appendChild(lEntry);
       }
-    }
+
+    });
     $('#libraryList').classList.add('populated');
     removeFromDOM('#libraryOverlay > p');
   }
