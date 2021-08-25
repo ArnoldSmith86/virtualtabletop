@@ -854,7 +854,7 @@ async function jeApplyExternalChanges(state) {
     if(state.cardType === before.cardType) {
       const cardTypes = widgets.get(state.deck).get('cardTypes');
       const cardType = cardTypes[state.cardType];
-      if(JSON.stringify(state['cardType  ['+ o.cardType + '] (in deck)']) != JSON.stringify(cardType)) { 
+      if(JSON.stringify(state['cardType  ['+ o.cardType + '] (in deck)']) != JSON.stringify(cardType)) {
         cardTypes[state.cardType] = state['cardType ['+ o.cardType + '] (in deck)'];
         await widgets.get(state.deck).set('cardTypes', { ...cardTypes });
       }
@@ -1623,7 +1623,7 @@ window.addEventListener('mousemove', function(e) {
     if(hoveredWidgets[i-1]) {
       jeWidgetLayers[i] = hoveredWidgets[i-1];
       var cardType = `${hoveredWidgets[i-1].get('type')}` == 'card' ? `\ncardType: ${hoveredWidgets[i-1].get('cardType')}` : "";
-      var deck = `${hoveredWidgets[i-1].get('type')}` == 'card' ? `\nDeck: ${hoveredWidgets[i-1].get('deck')}` : "";
+      var deck = `${hoveredWidgets[i-1].get('type')}` == 'card' ? `\ndeck: ${hoveredWidgets[i-1].get('deck')}` : "";
       $(`#jeWidgetLayer${i}`).textContent = `F${i}:\nid: ${hoveredWidgets[i-1].get('id')}\ntype: ${hoveredWidgets[i-1].get('type') || 'basic'} ${cardType} ${deck}`;
     } else {
       delete jeWidgetLayers[i];
