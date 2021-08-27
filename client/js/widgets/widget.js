@@ -642,6 +642,7 @@ export class Widget extends StateManaged {
                 cWidget.movedByButton = true;
                 cWidget.set('routineParent', await this.parentIDIfPile(cWidget));
                 await cWidget.moveToHolder(widgets.get(parent));
+                cWidget.set('routineParent', parent);
               }
 
               // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
