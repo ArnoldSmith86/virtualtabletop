@@ -1390,6 +1390,10 @@ async leaveHolder() {
     }
     else
       this.oldParent = await this.parentIDIfPile();	
+    
+    if(this.domElement.classList.contains('longtouch'))
+      this.domElement.classList.remove('longtouch');
+    
     await this.updatePiles();
   }
 
