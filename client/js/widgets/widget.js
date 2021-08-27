@@ -1339,27 +1339,24 @@ export class Widget extends StateManaged {
     }
   }
 
-async leaveHolder() {
-	if(this.get('type') == 'pile') {		
-		let arr = this.childArray;
-            for (let i = 0; i < arr.length; i++) {
-              if(arr[i].get('routineParent') != await this.parentIDIfPile(arr[i]) && arr[i].get('routineParent') != null) {
-                if((widgets.get(arr[i].get('routineParent'))).get('type') == 'holder') {
-                  (widgets.get(arr[i].get('routineParent'))).set('numbDraggedChildren', null);
-                  if(arr[i].get('routineParent') != this.parentIDIfPile(arr[i]))
-                    await (widgets.get(arr[i].get('routineParent'))).evaluateRoutine('leaveRoutine', {}, { child: [ arr[i] ] });
-                }
-              }
-            }
-  } else {
-    if (this.get('routineParent') != await this.parentIDIfPile(this) && this.get('routineParent') != null) {
-      if((widgets.get(this.get('routineParent'))).get('type') == 'holder') {
+  async leaveHolder() {
+    if(this.get('type') == 'pile') {
+      let arr = this.childArray;
+      for (let i = 0; i < arr.length; i++) {
+        if(arr[i].get('routineParent') != null) {
+          (widgets.get(arr[i].get('routineParent'))).set('numbDraggedChildren', null);
+          if(arr[i].get('routineParent') != await this.parentIDIfPile(arr[i]) && (widgets.get(arr[i].get('routineParent'))).get('type') == 'holder')
+            await (widgets.get(arr[i].get('routineParent'))).evaluateRoutine('leaveRoutine', {}, { child: [ arr[i] ] });
+        }
+      }
+    } else {
+      if(this.get('routineParent') != null) {
         (widgets.get(this.get('routineParent'))).set('numbDraggedChildren', null);
-        await (widgets.get(this.get('routineParent'))).evaluateRoutine('leaveRoutine', {}, { child: [ this ] });
+        if (this.get('routineParent') != await this.parentIDIfPile(this) && (widgets.get(this.get('routineParent'))).get('type') == 'holder')
+          await (widgets.get(this.get('routineParent'))).evaluateRoutine('leaveRoutine', {}, { child: [ this ] });
       }
     }
   }
-}
 
   async moveEnd() {
     if(tracingEnabled)
