@@ -701,6 +701,8 @@ export class Widget extends StateManaged {
         setDefaults(a, { collection: 'DEFAULT' });
         if(isValidCollection(a.collection)) {
           for(const w of collections[a.collection]) {
+            w.set('parent', null);
+            await w.leaveHolder(); 
             await removeWidgetLocal(w.get('id'));
             for(const c in collections)
               collections[c] = collections[c].filter(x=>x!=w);
