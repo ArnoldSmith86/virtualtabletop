@@ -1436,7 +1436,7 @@ export class Widget extends StateManaged {
               for (let i = 0; i < arr.length; i++) {
                 if(newValue != arr[i].get('routineParent')) {
                   await newParent.evaluateRoutine('enterRoutine', { oldParentID: [ arr[i].get('routineParent') ] }, { child: [ arr[i] ] });
-                  arr[i].dontReenter = true;
+                  arr[i].movedByButton ? arr[i].dontReenter = true : delete arr[i].dontReenter;
                 }
               }
             } else {
