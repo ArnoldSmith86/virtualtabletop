@@ -1433,7 +1433,7 @@ export class Widget extends StateManaged {
           if(newValue != this.get('routineParent')) {
             if(this.get('type') == 'pile') {
               let arr = this.childArray;
-              for (let i = 0; i < arr.length; i++) {
+              for (let i = arr.length - 1; i > -1; i--) {
                 if(newValue != arr[i].get('routineParent')) {
                   await newParent.evaluateRoutine('enterRoutine', { oldParentID: [ arr[i].get('routineParent') ] }, { child: [ arr[i] ] });
                   arr[i].movedByButton ? arr[i].dontReenter = true : delete arr[i].dontReenter;
