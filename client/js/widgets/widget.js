@@ -954,6 +954,7 @@ export class Widget extends StateManaged {
             if(decks.length) {
               for(const deck of decks) {
                 let cards = widgetFilter(w=>w.get('deck')==deck.get('id'));
+                cards = cards.sort((a,b)=>b.get('z')-a.get('z'));
                 if(!a.owned)
                   cards = cards.filter(c=>!c.get('owner'));
                 for(const c of cards) {
