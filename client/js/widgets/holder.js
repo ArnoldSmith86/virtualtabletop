@@ -56,7 +56,7 @@ class Holder extends Widget {
       }
     }
     if(this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY')))
-      await this.receiveCard(null);
+      await this.receiveCard(null); 
   }
 
   async onChildAdd(child, oldParentID) {
