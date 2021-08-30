@@ -1353,14 +1353,14 @@ export class Widget extends StateManaged {
       for (let i = 0; i < arr.length; i++) {
         if(arr[i].get('routineParent') != null) {
           (widgets.get(arr[i].get('routineParent'))).set('numbDraggedChildren', null);
-          if(arr[i].get('routineParent') != await this.parentIDIfPile(arr[i]) && Array.isArray(widgets.get(arr[i].get('routineParent')).get('leaveRoutine'))
+          if(arr[i].get('routineParent') != await this.parentIDIfPile(arr[i]) && Array.isArray(widgets.get(arr[i].get('routineParent')).get('leaveRoutine')))
             await (widgets.get(arr[i].get('routineParent'))).evaluateRoutine('leaveRoutine', {}, { child: [ arr[i] ] });
         }
       }
     } else {
       if(this.get('routineParent') != null) {
         (widgets.get(this.get('routineParent'))).set('numbDraggedChildren', null);
-        if (this.get('routineParent') != await this.parentIDIfPile(this) && (widgets.get(this.get('routineParent'))).get('type') == 'holder' && Array.isArray(widgets.get(this.get('routineParent')).get('leaveRoutine')))
+        if (this.get('routineParent') != await this.parentIDIfPile(this) && Array.isArray(widgets.get(this.get('routineParent')).get('leaveRoutine')))
           await (widgets.get(this.get('routineParent'))).evaluateRoutine('leaveRoutine', {}, { child: [ this ] });
       }
     }
