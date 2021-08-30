@@ -702,7 +702,7 @@ export class Widget extends StateManaged {
         if(isValidCollection(a.collection)) {
           for(const w of collections[a.collection]) {
             w.set('parent', null);
-            await w.leaveHolder(); 
+            await w.leaveParent(); 
             await removeWidgetLocal(w.get('id'));
             for(const c in collections)
               collections[c] = collections[c].filter(x=>x!=w);
@@ -912,7 +912,7 @@ export class Widget extends StateManaged {
               } else {
                 c.movedByButton = true;
                 await c.moveToHolder(target);
-                await c.leaveHolder();
+                await c.leaveParent();
                 c.set('routineParent', await this.parentIDIfPile(c));				
               }
             }
@@ -932,7 +932,7 @@ export class Widget extends StateManaged {
               if(a.face !== null && c.flip)
                 c.flip(a.face);
               await c.set('parent', null);
-              await c.leaveHolder();
+              await c.leaveParent();
               c.set('routineParent', await this.parentIDIfPile(c));
               await c.bringToFront();
               await c.setPosition(a.x, a.y, a.z || c.get('z'));
@@ -960,7 +960,7 @@ export class Widget extends StateManaged {
                 for(const c of cards) {
                   c.movedByButton = true;
                   await c.moveToHolder(widgets.get(holder));
-                  await c.leaveHolder();
+                  await c.leaveParent();
                   c.set('routineParent', await this.parentIDIfPile(c));
                 }
               }
@@ -1077,7 +1077,7 @@ export class Widget extends StateManaged {
             await w.set(String(a.property), compute(a.relation, null, w.get(String(a.property)), a.value));
             if(a.property == 'parent' && a.value != null) {
               if((widgets.get(a.value)).get('type') == 'holder') {
-                await w.leaveHolder();
+                await w.leaveParent();
               }
               w.set('routineParent', await this.parentIDIfPile(w));
             }
@@ -1347,13 +1347,13 @@ export class Widget extends StateManaged {
     }
   }
 
-  async leaveHolder() {
+  async leaveParent() {
     if(this.get('type') == 'pile') {
       let arr = this.childArray;
       for (let i = 0; i < arr.length; i++) {
         if(arr[i].get('routineParent') != null) {
           (widgets.get(arr[i].get('routineParent'))).set('numbDraggedChildren', null);
-          if(arr[i].get('routineParent') != await this.parentIDIfPile(arr[i]) && (widgets.get(arr[i].get('routineParent'))).get('type') == 'holder' && Array.isArray(widgets.get(arr[i].get('routineParent')).get('leaveRoutine')))
+          if(arr[i].get('routineParent') != await this.parentIDIfPile(arr[i]) && Array.isArray(widgets.get(arr[i].get('routineParent')).get('leaveRoutine'))
             await (widgets.get(arr[i].get('routineParent'))).evaluateRoutine('leaveRoutine', {}, { child: [ arr[i] ] });
         }
       }
@@ -1380,7 +1380,7 @@ export class Widget extends StateManaged {
         await this.moveToHolder(this.hoverTarget);
         this.hoverTarget.domElement.classList.remove('droptarget');
       }
-	  await this.leaveHolder();
+	  await this.leaveParent();
     }
 
     this.hideEnlarged();
