@@ -1464,7 +1464,7 @@ export class Widget extends StateManaged {
         return w1.get(key) - w2.get(key);
       else
         if(w1.get(key) === null)
-          return w2.get(key) === null ?  0 : -1
+          return w2.get(key) === null ?  0 : -1;
         else
           return w2.get(key) === null ? 1 : w1.get(key).localeCompare(w2.get(key), locales, options);
     });
