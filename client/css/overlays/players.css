@@ -1,23 +1,68 @@
+#playerOverlay h1{
+  margin-bottom: 0;
+}
+.instructionalText{
+  display: block;
+  font-size: 16px;
+  content: 'From here you can edit the name other players see as well as player colors.';
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
 #playerList {
   overflow: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
-.myPlayerEntry .playerName {
-  font-weight: bold;
+#playerList > div{
+  order: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 0 0.5rem;
+  padding: 0.25rem 0;
+  font-size: 0.5em;
+  line-height: 2rem;
+  font-size: 1rem;
+  width: 15rem;
 }
-
-.inactivePlayerEntry {
-  opacity: 0.5;
+#playerList > div input{
+  font-size: 1rem;
+  height: 2rem;
+  line-height: 2rem;
 }
-
+.inactivePlayerLine{
+  display: block;
+  height: 1px;
+  width: 100%;
+  order: 3;
+  overflow: hidden;
+  margin-top: -1px;
+}
 .teamColor {
-  border: none;
-  padding: 0;
-  margin: 0;
-  width: 20px;
-  height: 20px;
+  -webkit-appearance: none;
+  border-radius: 100%;
   display: inline-block;
-  border-radius: 20px;
+  margin: 0;
+  padding: 0;
+  width: 2rem;
+  height: 2rem;
+}
+
+.teamColor::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.teamColor::-webkit-color-swatch {
+  border-radius: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  /* background properties broken up to avoid erasing the selected colors */
+  background-image: url(/i/icons-white/user-solid-svg.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 1rem;
 }
 
 .playerName {
@@ -26,8 +71,52 @@
   margin: 0;
   color: white;
   background: none;
-  font-size: 16px;
+  height: 2rem;
+  line-height: 2rem;
+  border: 1px none transparent;
+  font-weight: bold;
+  width:12rem;
 }
+
+#playerList > div.myPlayerEntry{
+  order: 1;
+  border-top: 1px solid white;
+  padding-top: 1.5rem;
+  position: relative;
+  width: 100%;
+}
+#playerList > div.myPlayerEntry::before{
+  background: white;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  content: 'me »';
+  margin: 0;
+  color: rgb(31, 92, 166);
+  padding: 0 0.5rem;
+  border-radius: 0 0 0.5rem;
+  line-height: 1rem;
+  font-weight: bold;
+  font-size: 1rem;
+}
+#playerList > div.myPlayerEntry input{
+  font-size: 1.2rem;
+}
+#playerList > div.myPlayerEntry::after{
+border-top: 1px solid white;
+display: block;
+content: 'Other Players:';
+margin-top: 0.5rem;
+padding-top: 0.5rem;
+width: 100%;
+font-weight: bold;
+}
+
+#playerList > div.inactivePlayerEntry{
+  order: 4;
+  opacity: 0.5;
+}
+
 
 .cursor {
   position: absolute;
