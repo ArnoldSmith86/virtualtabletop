@@ -238,9 +238,17 @@
     <div id="libraryOverlay" class="overlay">
       <h1>Public library</h1>
       <table id="libraryList">
-        <tr><th></th><th>Game</th><th>Similar to</th><th>Players</th><th>Language</th><th>Notes</th></tr>
+        <script id="template-librarylist-header" type="text/template">
+          <th></th><th>Game</th><th>Similar to</th><th>Players</th><th>Language</th><th>Notes</th>
+        </script>
         <script id="template-librarylist-entry" type="text/template">
           <td><button class="add">Add</button></td><td class="name">Chess</td><td><a>Chess</a></td><td class="players">2</td><td class="language">🇺🇳</td><td class="notes"></td>
+        </script>
+        <script id="template-librarylist-section-title" type="text/template">
+          <td class="section" colspan="6">
+            <div class="section-name">Section Name</div>
+            <div class="notes">Section notes</div>
+          </td>
         </script>
       </table>
       <p>Loading...</p>
