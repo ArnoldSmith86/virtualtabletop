@@ -1066,7 +1066,7 @@ export class Widget extends StateManaged {
             if(a.relation == '+' && w.get(String(a.property)) == null)
               a.relation = '=';
             if(a.relation == '+' && a.value == null)
-              problems.push(`null value being appended, SET ignored`)
+              problems.push(`null value being appended, SET ignored`);
             else
               await w.set(String(a.property), compute(a.relation, null, w.get(String(a.property)), a.value));
           }
