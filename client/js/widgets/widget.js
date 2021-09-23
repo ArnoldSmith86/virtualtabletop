@@ -1315,6 +1315,8 @@ export class Widget extends StateManaged {
     }
 
     this.hideEnlarged();
+    if(this.domElement.classList.contains('longtouch'))
+      this.domElement.classList.remove('longtouch');
     await this.updatePiles();
   }
 
