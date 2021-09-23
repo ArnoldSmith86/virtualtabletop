@@ -1065,7 +1065,8 @@ export class Widget extends StateManaged {
           for(const w of collections[a.collection]) {
             if(a.relation == '+' && w.get(String(a.property)) == null)
               a.relation = '=';
-            await w.set(String(a.property), compute(a.relation, null, w.get(String(a.property)), a.value));
+             if(!(a.relation == '+' && a.value == null))
+               await w.set(String(a.property), compute(a.relation, null, w.get(String(a.property)), a.value));
           }
         }
         if(jeRoutineLogging)
