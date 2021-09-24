@@ -1484,7 +1484,15 @@ function jeSetAndSelect(replaceBy, insideString) {
 
   jeSet(jsonString);
   const quote = typeof replaceBy == 'string' && !insideString ? 1 : 0;
-  jeSelect(startIndex + quote, startIndex+jsonString.length-length - quote, true);
+  let bracket = 0;
+  let wavybracket = 0;
+  let dollarsign = 0;
+  if(replaceBy){
+    bracket = JSON.stringify(replaceBy).includes('[') ? 1 : 0;
+    wavybracket = JSON.stringify(replaceBy).includes('{') ? 1 : 0;
+    dollarsign = JSON.stringify(replaceBy).includes('$') ? 1 : 0;
+  }
+  jeSelect(startIndex + quote + bracket + wavybracket + dollarsign, startIndex+jsonString.length-length - quote - bracket - wavybracket, true);
 }
 
 function jeShowCommands() {
