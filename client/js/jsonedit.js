@@ -1476,11 +1476,12 @@ function jeSetAndSelect(replaceBy, insideString) {
     var jsonString = JSON.stringify(jeStateNow, null, '  ');
   const startIndex = jsonString.indexOf(insideString ? '###SELECT ME###' : '"###SELECT ME###"');
   let length = jsonString.length-15-(insideString ? 0 : 2);
-
+  
+  const replaceByString = JSON.stringify(replaceBy);
   if(insideString)
-    jsonString = jsonString.replace(/###SELECT ME###/, JSON.stringify(replaceBy).substr(1, JSON.stringify(replaceBy).length-2));
+    jsonString = jsonString.replace(/###SELECT ME###/, replaceByString.substr(1, replaceByString.length-2));
   else
-    jsonString = jsonString.replace(/"###SELECT ME###"/, JSON.stringify(replaceBy));
+    jsonString = jsonString.replace(/"###SELECT ME###"/, replaceByString);
 
   jeSet(jsonString);
   const quote = typeof replaceBy == 'string' && !insideString ? 1 : 0;
@@ -1488,9 +1489,9 @@ function jeSetAndSelect(replaceBy, insideString) {
   let wavybracket = 0;
   let dollarsign = 0;
   if(replaceBy){
-    bracket = JSON.stringify(replaceBy).includes('[') ? 1 : 0;
-    wavybracket = JSON.stringify(replaceBy).includes('{') ? 1 : 0;
-    dollarsign = JSON.stringify(replaceBy).includes(String.fromCharCode(36)) ? 1 : 0;
+    bracket = replaceByString.includes('[') ? 1 : 0;
+    wavybracket = replaceByString.includes('{') ? 1 : 0;
+    dollarsign = replaceByString.includes(String.fromCharCode(36)) ? 1 : 0;
   }
   jeSelect(startIndex + quote + bracket + wavybracket + dollarsign, startIndex+jsonString.length-length - quote - bracket - wavybracket, true);
 }
