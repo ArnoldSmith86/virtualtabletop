@@ -58,7 +58,9 @@ export class Widget extends StateManaged {
     this.domElement.addEventListener('contextmenu', e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseenter',  e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
-    this.domElement.addEventListener("touchstart", e => this.touchstart());
+    this.domElement.addEventListener('mousedown',  e => this.selected(), false);
+    this.domElement.addEventListener('mouseup',  e => this.notSelected(), false);
+    this.domElement.addEventListener("touchstart", e => this.touchstart(), false);
     this.domElement.addEventListener("touchend", e => this.touchend(), false);
     
     this.touchstart = function() {
@@ -1198,7 +1200,8 @@ export class Widget extends StateManaged {
   }
 
   hideEnlarged() {
-    $('#enlarged').classList.add('hidden');
+    if (!this.domElement.className.match(/selected/))
+      $('#enlarged').classList.add('hidden');
   }
 
   isValidID(id, problems) {
@@ -1312,6 +1315,7 @@ export class Widget extends StateManaged {
     this.hideEnlarged();
     if(this.domElement.classList.contains('longtouch'))
       this.domElement.classList.remove('longtouch');
+
     await this.updatePiles();
   }
 
@@ -1412,7 +1416,15 @@ export class Widget extends StateManaged {
     } else
       problems.push(`Tried setting text property which doesn't exist for ${this.id}.`);
   }
-
+  
+  selected() {
+    this.domElement.classList.add('selected');
+  }
+  
+  notSelected() {
+    this.domElement.classList.remove('selected');
+  }
+  
   showEnlarged(event) {
     if(this.get('enlarge')) {
       const e = $('#enlarged');
