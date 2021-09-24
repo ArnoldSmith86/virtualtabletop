@@ -1490,7 +1490,7 @@ function jeSetAndSelect(replaceBy, insideString) {
   if(replaceBy){
     bracket = JSON.stringify(replaceBy).includes('[') ? 1 : 0;
     wavybracket = JSON.stringify(replaceBy).includes('{') ? 1 : 0;
-    dollarsign = JSON.stringify(replaceBy).includes('$') ? 1 : 0;
+    dollarsign = JSON.stringify(replaceBy).includes(String.fromCharCode(36)) ? 1 : 0; // the minifier doesn't like '$' here
   }
   jeSelect(startIndex + quote + bracket + wavybracket + dollarsign, startIndex+jsonString.length-length - quote - bracket - wavybracket, true);
 }
