@@ -45,7 +45,6 @@ button:hover {
   width: 100%;
   position: fixed;
 
-  top: calc((100vh - var(--roomHeight) * var(--scale)) / 2 + var(--roomHeight) * var(--scale) - var(--toolbarSize) / 2 - 1px);
   top: calc((calc(var(--vh, 1vh) * 100) - var(--roomHeight) * var(--scale)) / 2 + var(--roomHeight) * var(--scale) - var(--toolbarSize) / 2 - 1px);
 
   left: 0;
@@ -60,7 +59,6 @@ button:hover {
   width: calc(var(--roomWidth) * var(--scale));
   height: calc(var(--roomHeight) * var(--scale));
 
-  top: calc((100vh - var(--roomHeight) * var(--scale)) / 2 - var(--toolbarSize) / 2);
   top: calc((calc(var(--vh, 1vh) * 100) - var(--roomHeight) * var(--scale)) / 2 - var(--toolbarSize) / 2);
 
   left: 0;
