@@ -50,16 +50,25 @@ function prepareClient() {
   document.querySelector('base').parentNode.removeChild(document.querySelector('base'));
 }
 
-function publicLibraryTest(game, variant, md5, tests) {
+function publicLibraryTest(game, variant, md5, hidden, tests) {
   test.after(async t => {
     await removeGame(t);
     await t.expect(Selector('#statesOverlay').visible).ok();
-  })(`Public library: ${game} (variant ${variant})`, async t => {
+  })(`Public library${hidden ? ' (hidden)' : ''}: ${game} (variant ${variant})`, async t => {
     await ClientFunction(prepareClient)();
     await t
       .pressKey('esc')
-      .click('#statesButton')
-      .click(Selector('td.name').withExactText(game).prevSibling().child())
+      .click('#statesButton');
+    if(hidden) {
+      const testUrl = `${server}/library/${game}.vtt#VTT`;
+      await t
+        .setNativeDialogHandler(() => testUrl, { dependencies: { testUrl }})
+        .click('button.prettyButton.link:nth-child(2)');
+    } else {
+      await t
+        .click(Selector('td.name').withExactText(game).prevSibling().child());
+    }
+    await t
       .hover('.roomState')
       .click(Selector('button.play').nth(variant));
     await setName(t);
@@ -68,11 +77,15 @@ function publicLibraryTest(game, variant, md5, tests) {
   });
 }
 
-function publicLibraryButtons(game, variant, md5, buttons) {
-  publicLibraryTest(game, variant, md5, async t => {
+function publicLibraryButtons(game, variant, md5, buttons, hidden) {
+  publicLibraryTest(game, variant, md5, hidden, async t => {
     for(const b of buttons)
       await t.click(`[id="${b}"]`);
   });
+}
+
+function hiddenLibraryButtons(game, variant, md5, buttons) {
+  publicLibraryButtons(game, variant, md5, buttons, true);
 }
 
 async function compareState(t, md5) {
@@ -331,4 +344,8 @@ publicLibraryButtons('Functions - SORT',   1, 'dd047343b667795ad6d3f366aa2ae2fd'
 publicLibraryButtons('Master Button',      0, 'eb19dffdb38641d5556e5fdb2c47c62b', [
   'masterbutton', 'redbutton', 'orangebutton', 'yellowbutton', 'greenbutton', 'bluebutton', 'indigobutton',
   'violetbutton', 'fae4', 'vbx5'
+]);
+
+hiddenLibraryButtons('Test_Room',          0, '78940abbe4b0789d9a902561951d16e9', [
+  'clickThis', 'button1', 'button2', 'type', 'button3', 'button4'
 ]);
