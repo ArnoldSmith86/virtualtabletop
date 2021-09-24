@@ -1475,7 +1475,10 @@ export class Widget extends StateManaged {
       if(typeof w1.get(key) == 'number')
         return w1.get(key) - w2.get(key);
       else
-        return w1.get(key).localeCompare(w2.get(key), locales, options);
+        if(w1.get(key) === null)
+          return w2.get(key) === null ?  0 : -1;
+        else
+          return w2.get(key) === null ? 1 : w1.get(key).localeCompare(w2.get(key), locales, options);
     });
     if(reverse)
       children = children.reverse();
