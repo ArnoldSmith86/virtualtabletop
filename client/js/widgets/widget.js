@@ -533,16 +533,25 @@ export class Widget extends StateManaged {
               inheritCollections[c] = [ ...collections[c] ];
             inheritCollections['caller'] = [ this ];
             const result = await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections, (depth || 0) + 1);
-            variables[a.variable] = result.variable;
-            collections[a.collection] = result.collection;
+            if (a.return) {
+              variables[a.variable] = result.variable;
+              collections[a.collection] = result.collection
+            }
             if(jeRoutineLogging) {
               const theWidget = this.isValidID(a.widget) && a.widget != this.get('id') ? `in ${a.widget}` : '';
-              jeLoggingRoutineOperationSummary( `${a.routine} ${theWidget} and return ${a.variable}`, `${JSON.stringify(variables[a.variable])}`)
-        }
+              if (a.return) {
+                let returnCollection = result.collection.map(w=>w.get('id')).join(',');
+                if(!result.collection.length || result.collection.length >= 5)
+                  returnCollection = `(${result.collection.length} widgets)`;
+                jeLoggingRoutineOperationSummary(
+                  `${a.routine} ${theWidget} and return variable ${a.variable} and collection ${a.collection}`,
+                  `${JSON.stringify(variables[a.variable])}; ${JSON.stringify(result.collection)}`)
+              } else {
+                jeLoggingRoutineOperationSummary( `${a.routine} ${theWidget} and return nothing`)
+              }
+            }
           }
         }
-        if(!a.return)
-          break;
       }
 
       if(a.func == 'CANVAS') {
@@ -1032,7 +1041,7 @@ export class Widget extends StateManaged {
             let selectedWidgets = collections[a.collection].map(w=>w.get('id')).join(',');
             if(!collections[a.collection].length || collections[a.collection].length >= 5)
               selectedWidgets = `(${collections[a.collection].length} widgets)`;
-            jeLoggingRoutineOperationSummary(`widgets ${a.type == 'all' ? '' : 'a.type'} with '${a.property}' ${a.relation} ${JSON.stringify(a.value)} from '${a.source}'`, `${a.mode} ${JSON.stringify(a.collection)} = ${selectedWidgets}`);
+            jeLoggingRoutineOperationSummary(`${a.type == 'all' ? '' : a.type} widgets with '${a.property}' ${a.relation} ${JSON.stringify(a.value)} from '${a.source}'`, `${a.mode} ${JSON.stringify(a.collection)} = ${selectedWidgets}`);
           }
         }
       }
