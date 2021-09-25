@@ -126,7 +126,7 @@ export default class Room {
 
   broadcast(func, args, exceptPlayer) {
     if(func != 'mouse')
-      this.trace('broadcast', { func, args, exceptPlayer: exceptPlayer?.name });
+      this.trace('broadcast', { func, args, exceptPlayer });
     for(const player of this.players)
       if(player != exceptPlayer)
         player.send(func, args);
