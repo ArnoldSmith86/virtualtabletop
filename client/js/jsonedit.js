@@ -1400,7 +1400,7 @@ function jePreProcessObject(o) {
     const match = key.match(/^(.*?)(\*)?(#)?$/);
     if(o[match[1]] !== undefined)
       copy[match[1]] = o[match[1]];
-    else if(match[2] == '*' && !o.inheritFrom)
+    else if(match[2] == '*' && !o.inheritFrom && (o.type != 'card' || (key != 'width*' && key != 'height*')))
       copy[match[1]] = jeWidget.getDefaultValue(match[1]);
     if(match[3] == '#')
       copy[`LINEBREAK${match[1]}`] = null;
