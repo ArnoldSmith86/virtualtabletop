@@ -237,7 +237,7 @@ export class Widget extends StateManaged {
   }
   
   children() {
-    return this.childArray.sort((a,b)=>b.get('z')-a.get('z')).filter(w=>w.get('type')!='deck' && w.get('fixedParent')!=true);
+    return this.childArray.sort((a,b)=>b.get('z')-a.get('z'));
   }
 
   childrenOwned() {
