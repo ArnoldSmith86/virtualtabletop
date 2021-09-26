@@ -231,15 +231,15 @@ export class Widget extends StateManaged {
         z = Math.max(z, child.calculateZ());
     return z;
   }
-
-  childrenFiltered() {
-    return this.children().filter(w=>w.get('type')!='deck' && w.get('fixedParent')!=true);
-  }
   
   children() {
     return this.childArray.sort((a,b)=>b.get('z')-a.get('z'));
   }
 
+  childrenFiltered() {
+    return this.children().filter(w=>w.get('type')!='deck' && w.get('fixedParent')!=true);
+  }
+  
   childrenOwned() {
     return this.children().filter(c=>!c.get('owner') || c.get('owner')==playerName);
   }
