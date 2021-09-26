@@ -1081,7 +1081,7 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
-              for(const c of holder.children())
+              for(const c of holder.childrenFiltered())
                 await c.set('z', Math.floor(Math.random()*10000));
               await holder.updateAfterShuffle();
             });
