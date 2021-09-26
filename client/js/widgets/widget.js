@@ -232,6 +232,10 @@ export class Widget extends StateManaged {
     return z;
   }
 
+  childrenFiltered() {
+    return this.children().filter(w=>w.get('type')!='deck' && w.get('fixedParent')!=true);
+  }
+  
   children() {
     return this.childArray.sort((a,b)=>b.get('z')-a.get('z')).filter(w=>w.get('type')!='deck' && w.get('fixedParent')!=true);
   }
@@ -686,7 +690,7 @@ export class Widget extends StateManaged {
         let theItem;
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder,problems)) {
-            variables[a.variable] = widgets.get(a.holder).children().length;
+            variables[a.variable] = widgets.get(a.holder).childrenFiltered().length;
             theItem = `${a.holder}`;
           }
         } else if(isValidCollection(a.collection)) {
@@ -716,7 +720,7 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder,problems)) {
             await w(a.holder, async holder=>{
-              for(const c of holder.children().slice(0, a.count || 999999))
+              for(const c of holder.childrenFiltered().slice(0, a.count || 999999))
                 c.flip && await c.flip(a.face,a.faceCycle);
             });
           }
@@ -903,7 +907,7 @@ export class Widget extends StateManaged {
 
         if(this.isValidID(a.from, problems) && this.isValidID(a.to, problems)) {
           await w(a.from, async source=>await w(a.to, async target=>{
-            for(const c of source.children().slice(0, count).reverse()) {
+            for(const c of source.childrenFiltered().slice(0, count).reverse()) {
               if(a.face !== null && c.flip)
                 c.flip(a.face);
               if(source == target) {
@@ -926,7 +930,7 @@ export class Widget extends StateManaged {
         setDefaults(a, { count: 1, face: null, x: 0, y: 0 });
         if(this.isValidID(a.from, problems)) {
           await w(a.from, async source=>{
-            for(const c of source.children().slice(0, a.count || 999999).reverse()) {
+            for(const c of source.childrenFiltered().slice(0, a.count || 999999).reverse()) {
               if(a.face !== null && c.flip)
                 c.flip(a.face);
               await c.set('parent', null);
@@ -971,7 +975,7 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
-              for(const c of holder.children().slice(0, a.count || 999999))
+              for(const c of holder.childrenFiltered().slice(0, a.count || 999999))
                 await c.rotate(a.angle, a.mode);
             });
             if(jeRoutineLogging) {
@@ -1077,7 +1081,7 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
-              for(const c of holder.children()) {
+              for(const c of holder.childrenFiltered()) {
                 if(c.get('type') == 'pile') {
                   let arr = c.childArray;
                   for (let i = 0; i < arr.length; i++) {
@@ -1110,7 +1114,7 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
-              await this.sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options, true);
+              await this.sortWidgets(holder.childrenFiltered(), a.key, a.reverse, a.locales, a.options, true);
               await holder.updateAfterShuffle();
             });
           }
