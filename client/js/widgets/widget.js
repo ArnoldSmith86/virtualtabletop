@@ -231,7 +231,7 @@ export class Widget extends StateManaged {
   }
 
   children() {
-    return this.childArray.sort((a,b)=>b.get('z')-a.get('z'));
+    return this.childArray.sort((a,b)=>b.get('z')-a.get('z')).filter(w=>w.get('type')!='deck' && w.get('fixedParent')!=true);
   }
 
   childrenOwned() {
@@ -1075,7 +1075,7 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
-              for(const c of holder.children().filter(w=>w.get('type')!='deck' && w.get('fixedParent')!=true)) {
+              for(const c of holder.children()) {
                 if(c.get('type') == 'pile') {
                   let arr = c.childArray;
                   for (let i = 0; i < arr.length; i++) {
