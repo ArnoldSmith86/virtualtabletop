@@ -25,14 +25,15 @@ function getValidDropTargets(widget) {
     let isValid = true;
     for(const key in t.get('dropTarget')) {
       if(Array.isArray(t.get('dropTarget')[key])) {
-        let count = 0;
+        let thisKeyValid = false;
         for (let i = 0; i < (t.get('dropTarget')[key]).length; i++) {
           if((t.get('dropTarget')[key]).includes(widget.get(key))) {
-            count = count + 1;
+            thisKeyValid = true;
+            break;
           }
         }
-        if(count == 0)
-          isValid = false;
+        if (!(isValid = thisKeyValid))
+          break;
       }
       else
         if(widget.get(key) != t.get('dropTarget')[key] && (key != 'type' || widget.get(key) != 'deck' || t.get('dropTarget')[key] != 'card')) {
