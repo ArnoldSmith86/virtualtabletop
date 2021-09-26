@@ -27,7 +27,7 @@ function getValidDropTargets(widget) {
       if(Array.isArray(t.get('dropTarget')[key])) {
         let count = 0;
         for (let i = 0; i < (t.get('dropTarget')[key]).length; i++) {
-          if((t.get('dropTarget')[key]).includes(widget.get(key)) && widget.get('fixedParent') != true) {
+          if((t.get('dropTarget')[key]).includes(widget.get(key))) {
             count = count + 1;
           }
         }
@@ -35,7 +35,7 @@ function getValidDropTargets(widget) {
           isValid = false;
       }
       else
-        if(widget.get(key) != t.get('dropTarget')[key] && (key != 'type' || widget.get(key) != 'deck' || t.get('dropTarget')[key] != 'card') && widget.get('fixedParent') != true) {
+        if(widget.get(key) != t.get('dropTarget')[key] && (key != 'type' || widget.get(key) != 'deck' || t.get('dropTarget')[key] != 'card')) {
           isValid = false;
           break;
         }
