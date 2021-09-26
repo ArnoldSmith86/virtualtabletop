@@ -1081,16 +1081,8 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
-              for(const c of holder.childrenFiltered()) {
-                if(c.get('type') == 'pile') {
-                  let arr = c.childArray;
-                  for (let i = 0; i < arr.length; i++) {
-                    await arr[i].set('z', Math.floor(Math.random()*10000));
-                  }
-                }
-                else
-                  await c.set('z', Math.floor(Math.random()*10000));
-              }
+              for(const c of holder.children())
+                await c.set('z', Math.floor(Math.random()*10000));
               await holder.updateAfterShuffle();
             });
             if(jeRoutineLogging)
