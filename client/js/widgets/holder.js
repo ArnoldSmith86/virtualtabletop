@@ -28,7 +28,7 @@ class Holder extends Widget {
     let children = this.childrenFilter(super.children(), true);
     if(children.length == 1 && children[0].get('type') == 'pile')
       children = this.childrenFilter(children[0].children(), false);
-    return children.filter(w=>w.get('type')!='deck' && w.get('fixedParent')!=true);
+    return children;
   }
 
   childrenFilter(children, acceptPiles) {
