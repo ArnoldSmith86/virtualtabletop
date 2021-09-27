@@ -231,15 +231,26 @@ export class Widget extends StateManaged {
         z = Math.max(z, child.calculateZ());
     return z;
   }
-  
+ 
   children() {
     return this.childArray.sort((a,b)=>b.get('z')-a.get('z'));
   }
 
   childrenFiltered() {
-    return this.children().filter(w=>w.get('type')!='deck' && w.get('fixedParent')!=true);
+    let filteredList = [];
+    for(const c of this.children().filter(w=>w.get('type')!='deck' && w.get('fixedParent')!=true)) {
+      if(c.get('type') == 'pile') {
+        let arr = c.childArray;
+        for (let i = 0; i < arr.length; i++) {
+          filteredList.push(arr[i]);
+        }
+      }
+      else
+        filteredList.push(c)
+    }
+    return filteredList;
   }
-  
+
   childrenOwned() {
     return this.children().filter(c=>!c.get('owner') || c.get('owner')==playerName);
   }
