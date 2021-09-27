@@ -1337,6 +1337,7 @@ export class Widget extends StateManaged {
   async onChildAdd(child, oldParentID) {
     this.childArray = this.childArray.filter(c=>c!=child);
     this.childArray.push(child);
+    this.childArray = this.childArray.filter(w=>w.get('type')!='deck' && w.get('fixedParent')!=true);
     await this.onChildAddAlign(child, oldParentID);
   }
 
@@ -1351,8 +1352,11 @@ export class Widget extends StateManaged {
 
     if(this.get('alignChildren'))
       await child.setPosition(this.get('dropOffsetX'), this.get('dropOffsetY'), child.get('z'));
-    else
+    else {
+      let childX = child.get('x') - (widgets.get(child.get('parent'))).absoluteCoord('x');
+      let childY = child.get('y') - (widgets.get(child.get('parent'))).absoluteCoord('y');
       await child.setPosition(childX, childY, child.get('z'));
+    }
   }
 
   async onChildRemove(child) {
