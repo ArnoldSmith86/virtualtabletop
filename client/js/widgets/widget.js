@@ -231,7 +231,7 @@ export class Widget extends StateManaged {
         z = Math.max(z, child.calculateZ());
     return z;
   }
- 
+
   children() {
     return this.childArray.sort((a,b)=>b.get('z')-a.get('z'));
   }
