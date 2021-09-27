@@ -55,7 +55,7 @@
     "jest-environment-jsdom": "^27.2.2",
     "jest-environment-jsdom-global": "^2.0.4",
     "json-diff": "^0.5.4",
-    "nodemon": "^2.0.12",
+    "nodemon": "^2.0.13",
     "testcafe": "^1.15.3"
   }
 }
