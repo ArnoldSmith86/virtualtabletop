@@ -143,6 +143,8 @@ function checkURLproperties() {
 function setScale() {
   const w = window.innerWidth;
   const h = window.innerHeight;
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
   if(jeEnabled) {
     const targetWidth = jeZoomOut ? 3200 : 1600;
     scale = (w-920)/targetWidth;
