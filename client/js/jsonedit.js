@@ -1518,7 +1518,7 @@ function jeShowCommands() {
     if(contextMatch && contextMatch[0] == "") {
       const name = (typeof command.name == 'function' ? command.name() : command.name);
       let keyName = displayKey(command.forceKey);
-      commandText += `<div class='jeTopButton'><button class='top' id='${command.id}' title='${name} (Ctrl-${keyName})' ${!command.show || command.show() ? '' : 'disabled'}>${name.substr(0,2)}</button><span class='top'>${keyName}</span></div>`;
+      commandText += `<div class='jeTopButton'><button class='top' id='${command.id}' title='${name}' ${!command.show || command.show() ? '' : 'disabled'}>${name.substr(0,2)}</button><span class='top'>&nbsp;</span></div>`;
     }
   }
   delete activeCommands[""];
@@ -1545,7 +1545,7 @@ function jeShowCommands() {
                 command.currentKey = key;
             usedKeys[command.currentKey] = true;
             let keyName = displayKey(command.currentKey);
-            commandText += (keyName !== undefined)? `Ctrl-${keyName}: ` : `no key  `;
+            // commandText += (keyName !== undefined)? `Ctrl-${keyName}: ` : `no key  `;
             commandText += `<button id="${command.id}">${name.replace(keyName, '<b>' + keyName + '</b>')}</button>\n`;
           }
         } catch(e) {
@@ -1675,18 +1675,18 @@ window.addEventListener('keydown', async function(e) {
       const locationPostion = String(jeJSONerror).match(/position ([0-9]+)/);
       if(locationPostion)
         jeSelect(+locationPostion[1], +locationPostion[1], true);
-    } else {
-      for(const command of jeCommands) {
-        if(command.currentKey == e.key) {
-          e.preventDefault();
-          try {
-            jeCommandError = null;
-            await jeCallCommand(command);
-          } catch(e) {
-            jeCommandError = e;
-          }
-        }
-      }
+    // } else {
+    //   for(const command of jeCommands) {
+    //     if(command.currentKey == e.key) {
+    //       e.preventDefault();
+    //       try {
+    //         jeCommandError = null;
+    //         await jeCallCommand(command);
+    //       } catch(e) {
+    //         jeCommandError = e;
+    //       }
+    //     }
+    //   }
     }
   }
 
