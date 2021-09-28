@@ -9,7 +9,7 @@ class Holder extends Widget {
       layer: -3,
       typeClasses: 'widget holder',
 
-      dropTarget: [{ type: 'card' }],
+      dropTarget: { type: 'card' },
       dropOffsetX: 4,
       dropOffsetY: 4,
       dropLimit: -1,
