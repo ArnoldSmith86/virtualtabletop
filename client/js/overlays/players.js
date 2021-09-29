@@ -31,8 +31,14 @@ function fillPlayerList(players, active) {
     $('.teamColor', entry).addEventListener('change', function(e) {
       toServer('playerColor', { player, color: e.target.value });
     });
-    $('.playerName', entry).addEventListener('change', function(e) {
+    $('.playerName', entry).addEventListener('change', async function(e) {
       toServer('rename', { oldName: player, newName: e.target.value });
+      if(!widgetFilter(w=>w.get('owner')==e.target.value).length) {
+        batchStart();
+        for(const w of widgetFilter(w=>w.get('owner')==player))
+          await w.set('owner', e.target.value);
+        batchEnd();
+      }
     });
     if(player == playerName) {
       entry.className = 'myPlayerEntry';
