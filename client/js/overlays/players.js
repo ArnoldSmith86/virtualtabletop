@@ -25,6 +25,9 @@ function fillPlayerList(players, active) {
   removeFromDOM('#playerList > div, #roomArea > .cursor');
 
   for(const player in players) {
+    if(activePlayers.indexOf(player) == -1 && player.match(/^Guest/))
+      continue;
+
     const entry = domByTemplate('template-playerlist-entry');
     $('.teamColor', entry).value = players[player];
     $('.playerName', entry).value = player;
