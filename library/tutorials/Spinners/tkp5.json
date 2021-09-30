@@ -1,0 +1,187 @@
+{
+  "j713": {
+    "type": "label",
+    "text": "   Spinners are a bit different from normal widgets. They are constructed widgets but their components cannot be separated like in counters for example.\nThey are built using 3 layers (background, spinner, and value) hosted in a parent layer. (See examples on the right)\n\n   Like in other widgets, the CSS property is applicable, but the spinner has 3 additional CSS properties that allow you to customize each of its layers\n\n   Each layer also has one value property associated with it. \"Options\" provides an array with which the SVG used on the background is constructed, \"angle\" is used to set the rotations of the spinner layer, and \"value\" holds the result of the last spin and is displayed on the value layer.\n\n   In automation, the \"value\" property can be read and used to get the sum of spinners and organize them. ",
+    "x": 51.5,
+    "y": 224,
+    "z": 240,
+    "id": "j713",
+    "width": 897,
+    "height": 654,
+    "editable": true,
+    "css": " font-size: 25px; text-align: left;"
+  },
+  "_meta": {
+    "version": 1,
+    "info": {
+      "name": "Spinners",
+      "image": "/assets/67913234_20364",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "0",
+      "players": "1",
+      "language": "US",
+      "variant": "The Basics",
+      "attribution": ""
+    }
+  },
+  "8fr3": {
+    "type": "label",
+    "text": "Spinners:\nThe Basics",
+    "css": "font-size: 60px",
+    "height": 150,
+    "width": 1000,
+    "x": 27,
+    "y": 26,
+    "z": 241,
+    "id": "8fr3"
+  },
+  "hyux": {
+    "type": "spinner",
+    "value": 6,
+    "options": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "x": 1298,
+    "y": 785,
+    "z": 27,
+    "id": "hyux",
+    "backgroundCSS": "display: none",
+    "spinnerCSS": "display: none"
+  },
+  "2mtm": {
+    "type": "spinner",
+    "value": 6,
+    "options": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "x": 1291,
+    "y": 581,
+    "z": 26,
+    "id": "2mtm",
+    "backgroundCSS": "display: none",
+    "valueCSS": "display: none",
+    "angle": 5754
+  },
+  "xg5s": {
+    "type": "spinner",
+    "value": 5,
+    "options": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "x": 1287,
+    "y": 351,
+    "z": 19,
+    "id": "xg5s",
+    "spinnerCSS": "display: none",
+    "valueCSS": "display: none",
+    "angle": 994
+  },
+  "ocmv": {
+    "type": "spinner",
+    "options": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "x": 1279,
+    "y": 119,
+    "z": 18,
+    "id": "ocmv",
+    "css": "background-color:red;font-size: 44px;",
+    "angle": 2749,
+    "value": 4
+  },
+  "no0y": {
+    "type": "label",
+    "text": "The 4 layers that construct a spinner are:",
+    "css": "font-size: 30px",
+    "height": 80,
+    "width": 500,
+    "x": 1088,
+    "y": 11,
+    "z": 231,
+    "id": "no0y"
+  },
+  "6q9z": {
+    "type": "spinner",
+    "value": 1,
+    "options": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "x": 663,
+    "y": 802,
+    "z": 28,
+    "id": "6q9z",
+    "angle": 720
+  },
+  "zdug": {
+    "type": "label",
+    "text": "- The parent (in red): normally just holds the other layers",
+    "css": "font-size: 30px",
+    "height": 80,
+    "width": 500,
+    "x": 1096,
+    "y": 248,
+    "z": 232,
+    "id": "zdug"
+  },
+  "pv6x": {
+    "type": "label",
+    "text": "- The backgorund: holds the svg with the options",
+    "css": "font-size: 30px",
+    "height": 80,
+    "width": 500,
+    "x": 1086,
+    "y": 474,
+    "z": 233,
+    "id": "pv6x"
+  },
+  "4nl9": {
+    "type": "label",
+    "text": "- The spinner: holds the svg that will be rotated",
+    "css": "font-size: 30px",
+    "height": 80,
+    "width": 500,
+    "x": 1083,
+    "y": 693,
+    "z": 234,
+    "id": "4nl9"
+  },
+  "s3t7": {
+    "type": "label",
+    "text": "- The value: displays the result from last spin",
+    "css": "font-size: 30px",
+    "height": 80,
+    "width": 500,
+    "x": 1088,
+    "y": 898,
+    "z": 235,
+    "id": "s3t7"
+  }
+}

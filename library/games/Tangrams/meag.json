@@ -1,0 +1,1602 @@
+{
+  "square": {
+    "id": "square",
+    "width": 200,
+    "height": 200,
+    "css": "background-color:#006600;",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "relation": "+",
+        "value": 45
+      }
+    ],
+    "z": 136,
+    "x": 112,
+    "y": 2,
+    "rotation": 45,
+    "scale": 0.75
+  },
+  "t1": {
+    "id": "t1",
+    "x": 246.29000000000002,
+    "y": -87.41999999999999,
+    "width": 141.42,
+    "height": 282.84,
+    "rotation": 3330,
+    "z": 137,
+    "css": "overflow:hidden;pointer-events:none;",
+    "scale": 0.75
+  },
+  "tc1": {
+    "id": "tc1",
+    "parent": "t1",
+    "width": 282.84,
+    "height": 282.84,
+    "scale": 0.7071,
+    "rotation": 45,
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "value": 45,
+        "relation": "+"
+      }
+    ],
+    "css": "transform-origin:0 0;background-color:#000099;pointer-events:auto;"
+  },
+  "t2": {
+    "id": "t2",
+    "x": 88.29,
+    "y": 66.58000000000001,
+    "width": 141.42,
+    "height": 282.84,
+    "rotation": 3960,
+    "z": 133,
+    "css": "overflow:hidden;pointer-events:none;",
+    "scale": 0.75
+  },
+  "tc2": {
+    "id": "tc2",
+    "parent": "t2",
+    "width": 282.84,
+    "height": 282.84,
+    "scale": 0.7071,
+    "rotation": 45,
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "value": 45,
+        "relation": "+"
+      }
+    ],
+    "css": "transform-origin:0 0;background-color:#330066;pointer-events:auto;"
+  },
+  "t3": {
+    "id": "t3",
+    "x": -47,
+    "width": 200,
+    "height": 400,
+    "rotation": 3825,
+    "z": 131,
+    "css": "overflow:hidden;pointer-events:none;",
+    "y": -147,
+    "scale": 0.75
+  },
+  "tc3": {
+    "id": "tc3",
+    "parent": "t3",
+    "width": 400,
+    "height": 400,
+    "scale": 0.7071,
+    "rotation": 45,
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "value": 45,
+        "relation": "+"
+      }
+    ],
+    "css": "transform-origin:0 0;background-color:#660066;pointer-events:auto;"
+  },
+  "t4": {
+    "id": "t4",
+    "x": 67.58000000000001,
+    "y": 32.160000000000025,
+    "width": 282.84,
+    "height": 565.68,
+    "rotation": 4230,
+    "z": 138,
+    "css": "overflow:hidden;pointer-events:none;",
+    "scale": 0.75
+  },
+  "tc4": {
+    "id": "tc4",
+    "parent": "t4",
+    "width": 565.68,
+    "height": 565.68,
+    "scale": 0.7071,
+    "rotation": 45,
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "value": 45,
+        "relation": "+"
+      }
+    ],
+    "css": "transform-origin:0 0;background-color:#660033;pointer-events:auto;"
+  },
+  "t5": {
+    "id": "t5",
+    "x": 174.58,
+    "y": -72.83999999999997,
+    "width": 282.84,
+    "height": 565.68,
+    "rotation": 4500,
+    "z": 141,
+    "css": "overflow:hidden;pointer-events:none;",
+    "scale": 0.75
+  },
+  "tc5": {
+    "id": "tc5",
+    "parent": "t5",
+    "width": 565.68,
+    "height": 565.68,
+    "scale": 0.7071,
+    "rotation": 45,
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "value": 45,
+        "relation": "+"
+      }
+    ],
+    "css": "transform-origin:0 0;background-color:#660000;pointer-events:auto;"
+  },
+  "p1": {
+    "id": "p1",
+    "x": -17.709999999999994,
+    "y": 50.870000000000005,
+    "width": 141.42,
+    "height": 424.26,
+    "z": 132,
+    "css": "overflow:hidden;pointer-events:none;",
+    "rotation": 4500,
+    "scale": 0.75
+  },
+  "pc1": {
+    "id": "pc1",
+    "parent": "p1",
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "value": 45,
+        "relation": "+"
+      },
+      "var parent = ${PROPERTY parent}",
+      "var sym = ${PROPERTY rotation OF $parent} / 180",
+      "var sym = ${sym} % 2",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "activeFace",
+        "value": "${sym}"
+      }
+    ],
+    "faces": [
+      {
+        "y": 0,
+        "rotation": 45,
+        "css": "transform-origin:0 0;background-color:#003366;pointer-events:auto;"
+      },
+      {
+        "y": 224.26,
+        "rotation": -45,
+        "css": "transform-origin:0 100%;background-color:#003366;pointer-events:auto;"
+      }
+    ],
+    "width": 400,
+    "height": 200,
+    "rotation": 45,
+    "css": "transform-origin:0 0;background-color:#003366;pointer-events:auto;",
+    "activeFace": 1
+  },
+  "ilkd": {
+    "type": "holder",
+    "id": "ilkd",
+    "x": 11,
+    "y": 800,
+    "dropTarget": {
+      "type": "card"
+    },
+    "z": 8,
+    "width": 108,
+    "height": 108
+  },
+  "ilkdB": {
+    "id": "ilkdB",
+    "parent": "ilkd",
+    "y": 120,
+    "type": "button",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "ilkd"
+      },
+      {
+        "func": "FLIP",
+        "holder": "ilkd",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "ilkd"
+      }
+    ],
+    "image": "/assets/888752271_2677",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "color": "blue",
+    "x": 10
+  },
+  "ilkdD": {
+    "type": "deck",
+    "id": "ilkdD",
+    "x": 4,
+    "y": 4,
+    "cardTypes": {
+      "Apple": {
+        "image": "/assets/-1100380207_11645",
+        "image2": "/assets/-1279645980_6776",
+        "tangram": "\nApple"
+      },
+      "Arch": {
+        "image": "/assets/1658863824_8201",
+        "image2": "/assets/2051095442_4922",
+        "tangram": "\nArch"
+      },
+      "Arrow": {
+        "image": "/assets/-521029744_8352",
+        "image2": "/assets/-1769171705_5328",
+        "tangram": "\nArrow"
+      },
+      "Barn": {
+        "image": "/assets/-919308395_7676",
+        "image2": "/assets/1429759553_3857",
+        "tangram": "\nBarn"
+      },
+      "Bear": {
+        "image": "/assets/772024163_9401",
+        "image2": "/assets/-1474609239_3400",
+        "tangram": "\nBear"
+      },
+      "Bed": {
+        "image": "/assets/-1695069610_7889",
+        "image2": "/assets/1712187724_1671",
+        "tangram": "\nBed"
+      },
+      "Boat": {
+        "image": "/assets/-487301854_12468",
+        "image2": "/assets/-193797338_2680",
+        "tangram": "\nBoat"
+      },
+      "Boot": {
+        "image": "/assets/-1387613202_10147",
+        "image2": "/assets/1296149993_6892",
+        "tangram": "\nBoot"
+      },
+      "Bowl": {
+        "image": "/assets/759551423_8045",
+        "image2": "/assets/-1977914939_2234",
+        "tangram": "\nBowl"
+      },
+      "Camel": {
+        "image": "/assets/-1759130913_11267",
+        "image2": "/assets/384741310_7967",
+        "tangram": "\nCamel"
+      },
+      "Candle": {
+        "image": "/assets/-2038308729_10790",
+        "image2": "/assets/-1062015996_4045",
+        "tangram": "\nCandle"
+      },
+      "Chair": {
+        "image": "/assets/2110104835_8099",
+        "image2": "/assets/-277736554_5025",
+        "tangram": "\nChair"
+      },
+      "Crab": {
+        "image": "/assets/35571154_10717",
+        "image2": "/assets/6861140_6899",
+        "tangram": "\nCrab"
+      },
+      "Chicken": {
+        "image": "/assets/-83511897_11682",
+        "image2": "/assets/-334795309_5748",
+        "tangram": "\nChicken"
+      },
+      "Crow": {
+        "image": "/assets/402932733_10861",
+        "image2": "/assets/-641292463_5658",
+        "tangram": "\nCrow"
+      },
+      "Cube": {
+        "image": "/assets/-243427990_6187",
+        "image2": "/assets/-1589864555_3223",
+        "tangram": "\nCube"
+      },
+      "Dagger": {
+        "image": "/assets/542078536_10968",
+        "image2": "/assets/659309108_4267",
+        "tangram": "\nDagger"
+      },
+      "Dancing": {
+        "image": "/assets/1812431182_14077",
+        "image2": "/assets/769550645_8182",
+        "tangram": "\nDancing"
+      },
+      "Dog": {
+        "image": "/assets/-588143198_11460",
+        "image2": "/assets/-1893615828_6463",
+        "tangram": "\nDog"
+      },
+      "Duck": {
+        "image": "/assets/1515545551_11506",
+        "image2": "/assets/1182429240_3969",
+        "tangram": "\nDuck"
+      },
+      "Equestrian": {
+        "image": "/assets/-351815888_14051",
+        "image2": "/assets/1875748446_7787",
+        "tangram": "\nEquestrian"
+      },
+      "Falling": {
+        "image": "/assets/360469820_16040",
+        "image2": "/assets/48741921_8658",
+        "tangram": "\nFalling"
+      },
+      "Fish": {
+        "image": "/assets/-983448866_10933",
+        "image2": "/assets/-260184176_5428",
+        "tangram": "\nFish"
+      },
+      "Fox": {
+        "image": "/assets/-1301858130_13384",
+        "image2": "/assets/-375227772_8545",
+        "tangram": "\nFox"
+      },
+      "Hammer": {
+        "image": "/assets/223893314_8041",
+        "image2": "/assets/957117351_3835",
+        "tangram": "\nHammer"
+      },
+      "Heart": {
+        "image": "/assets/-1834499783_11066",
+        "image2": "/assets/644112759_4471",
+        "tangram": "\nHeart"
+      },
+      "Helicopter": {
+        "image": "/assets/-1403135898_13378",
+        "image2": "/assets/832570070_5219",
+        "tangram": "\nHelicopter"
+      },
+      "Heron": {
+        "image": "/assets/1402399327_13751",
+        "image2": "/assets/-1894845657_7557",
+        "tangram": "\nHeron"
+      },
+      "Horse": {
+        "image": "/assets/-512352875_12762",
+        "image2": "/assets/1422809882_7274",
+        "tangram": "\nHorse"
+      },
+      "House": {
+        "image": "/assets/-1264742843_7565",
+        "image2": "/assets/-316451740_2872",
+        "tangram": "\nHouse"
+      },
+      "Iron": {
+        "image": "/assets/-2016871895_10467",
+        "image2": "/assets/656308441_4039",
+        "tangram": "\nIron"
+      },
+      "Kangaroo": {
+        "image": "/assets/-784192977_11978",
+        "image2": "/assets/1882557961_6679",
+        "tangram": "\nKangaroo"
+      },
+      "Key": {
+        "image": "/assets/-837429601_11521",
+        "image2": "/assets/551885905_6174",
+        "tangram": "\nKey"
+      },
+      "Kicking": {
+        "image": "/assets/575703478_10888",
+        "image2": "/assets/269609715_6238",
+        "tangram": "\nKicking"
+      },
+      "Mountains": {
+        "image": "/assets/879874320_12070",
+        "image2": "/assets/754207049_4114",
+        "tangram": "\nMountains"
+      },
+      "Pagoda": {
+        "image": "/assets/1738600808_9589",
+        "image2": "/assets/-1772656878_4876",
+        "tangram": "\nPagoda"
+      },
+      "Parallelogram": {
+        "image": "/assets/-1996371089_11504",
+        "image2": "/assets/1906916951_3164",
+        "tangram": "\nParallel-ogram"
+      },
+      "Pigeon": {
+        "image": "/assets/76393535_12666",
+        "image2": "/assets/-906788386_6390",
+        "tangram": "\nPigeon"
+      },
+      "Pinwheel": {
+        "image": "/assets/1155756713_10885",
+        "image2": "/assets/-1891213172_6318",
+        "tangram": "\nPinwheel"
+      },
+      "Pipe": {
+        "image": "/assets/-216112154_10012",
+        "image2": "/assets/-1475351749_5321",
+        "tangram": "\nPipe"
+      },
+      "Plane": {
+        "image": "/assets/-500743708_11809",
+        "image2": "/assets/-734710205_6133",
+        "tangram": "\nPlane"
+      },
+      "Pyramids": {
+        "image": "/assets/1436067203_13918",
+        "image2": "/assets/-2065827402_4591",
+        "tangram": "\nPyramids"
+      },
+      "Rabbit": {
+        "image": "/assets/950986887_15070",
+        "image2": "/assets/-2100314819_10791",
+        "tangram": "\nRabbit"
+      },
+      "Rocket": {
+        "image": "/assets/771340556_11985",
+        "image2": "/assets/-579524663_8717",
+        "tangram": "\nRocket"
+      },
+      "Rooster": {
+        "image": "/assets/-1673091993_10235",
+        "image2": "/assets/956139961_7147",
+        "tangram": "\nRooster"
+      },
+      "Running": {
+        "image": "/assets/-1811744859_16261",
+        "image2": "/assets/-1560011688_7458",
+        "tangram": "\nRunning"
+      },
+      "Sea Lion": {
+        "image": "/assets/-720200112_15210",
+        "image2": "/assets/1712307028_8330",
+        "tangram": "\nSea Lion"
+      },
+      "Shirt": {
+        "image": "/assets/-668930630_8030",
+        "image2": "/assets/-1596492777_5349",
+        "tangram": "\nShirt"
+      },
+      "Sitting": {
+        "image": "/assets/2115646008_12244",
+        "image2": "/assets/-1391506699_6000",
+        "tangram": "\nSitting"
+      },
+      "Skating": {
+        "image": "/assets/822518174_9536",
+        "image2": "/assets/-822021637_6884",
+        "tangram": "\nSkating"
+      },
+      "Spaceship": {
+        "image": "/assets/1837721327_10088",
+        "image2": "/assets/731916056_6107",
+        "tangram": "\nSpaceship"
+      },
+      "Shovel": {
+        "image": "/assets/1444241721_11611",
+        "image2": "/assets/1009249802_5489",
+        "tangram": "\nShovel"
+      },
+      "Stroller": {
+        "image": "/assets/-400084371_13231",
+        "image2": "/assets/284057673_6089",
+        "tangram": "\nStroller"
+      },
+      "Submarine": {
+        "image": "/assets/2015596260_13266",
+        "image2": "/assets/1570043621_4693",
+        "tangram": "\nSubmarine"
+      },
+      "Swan": {
+        "image": "/assets/-1527391838_14619",
+        "image2": "/assets/-691128909_7878",
+        "tangram": "\nSwan"
+      },
+      "Table": {
+        "image": "/assets/-201410654_10066",
+        "image2": "/assets/731677823_4411",
+        "tangram": "\nTable"
+      },
+      "Teapot": {
+        "image": "/assets/-298885914_11886",
+        "image2": "/assets/2049983678_4866",
+        "tangram": "\nTeapot"
+      },
+      "Trapezoid": {
+        "image": "/assets/1496439540_10621",
+        "image2": "/assets/-1828937583_3620",
+        "tangram": "\nTrapezoid"
+      },
+      "Tree.png": {
+        "image": "/assets/1996622690_8694",
+        "image2": "/assets/1482880102_4444",
+        "tangram": "\nTree"
+      },
+      "Triangle": {
+        "image": "/assets/1711996998_11753",
+        "image2": "/assets/-870539871_4074",
+        "tangram": "\nTriangle"
+      },
+      "Turtle": {
+        "image": "/assets/-1425412740_12728",
+        "image2": "/assets/-1865159934_5032",
+        "tangram": "\nTurtle"
+      },
+      "Vase": {
+        "image": "/assets/805208077_9843",
+        "image2": "/assets/597556840_4428",
+        "tangram": "\nVase"
+      },
+      "Vulture": {
+        "image": "/assets/-1622342162_15193",
+        "image2": "/assets/1534325832_6640",
+        "tangram": "\nVulture"
+      },
+      "Watering Can": {
+        "image": "/assets/-2025614237_11044",
+        "image2": "/assets/966169099_6583",
+        "tangram": "\nWatering Can"
+      },
+      "Whale": {
+        "image": "/assets/772624568_11927",
+        "image2": "/assets/-2049687685_4374",
+        "tangram": "\nWhale"
+      },
+      "Windmill": {
+        "image": "/assets/-193623003_10647",
+        "image2": "/assets/-1958268154_5763",
+        "tangram": "\nWindmill"
+      },
+      "Wrench": {
+        "image": "/assets/1943893509_10604",
+        "image2": "/assets/1124963446_7348",
+        "tangram": "\nWrench"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 100,
+            "valueType": "dynamic",
+            "value": "tangram",
+            "color": "black",
+            "css": "font-size:20px;text-align:center;border: 1px solid black;background:white"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 100,
+            "valueType": "dynamic",
+            "value": "image2",
+            "color": "transparent"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 100,
+            "valueType": "dynamic",
+            "value": "image",
+            "color": "transparent"
+          }
+        ]
+      }
+    ],
+    "z": 11455,
+    "parent": "ilkd"
+  },
+  "0uhg": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Apple",
+    "id": "0uhg",
+    "z": 5467,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "f653": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Arch",
+    "id": "f653",
+    "z": 7400,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "8mg7": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Arrow",
+    "id": "8mg7",
+    "z": 5170,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "2tir": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Barn",
+    "id": "2tir",
+    "z": 3555,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "crab": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Bear",
+    "id": "crab",
+    "z": 1813,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "miil": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Bed",
+    "id": "miil",
+    "z": 3585,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "s868": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Boat",
+    "id": "s868",
+    "z": 3807,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "bfuc": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Boot",
+    "id": "bfuc",
+    "z": 6394,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "buox": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Bowl",
+    "id": "buox",
+    "z": 7245,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "7pi8": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Camel",
+    "id": "7pi8",
+    "z": 8333,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "20vt": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Candle",
+    "id": "20vt",
+    "z": 3232,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "8tho": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Chair",
+    "id": "8tho",
+    "z": 5348,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "587e": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Crab",
+    "id": "587e",
+    "z": 6825,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "4vq1": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Chicken",
+    "id": "4vq1",
+    "z": 5309,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "k917": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Crow",
+    "id": "k917",
+    "z": 4271,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "hq4b": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Cube",
+    "id": "hq4b",
+    "z": 2698,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "3h2l": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Dagger",
+    "id": "3h2l",
+    "z": 5655,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "5br5": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Dancing",
+    "id": "5br5",
+    "z": 3943,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "yylt": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Dog",
+    "id": "yylt",
+    "z": 2,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "0od9": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Duck",
+    "id": "0od9",
+    "z": 1101,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "ufly": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Equestrian",
+    "id": "ufly",
+    "z": 4487,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "yhgc": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Falling",
+    "id": "yhgc",
+    "z": 2342,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "5app": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Fish",
+    "id": "5app",
+    "z": 8637,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "44t8": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Fox",
+    "id": "44t8",
+    "z": 6619,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "fxuy": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Hammer",
+    "id": "fxuy",
+    "z": 175,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "unzz": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Heart",
+    "id": "unzz",
+    "z": 2109,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "4oet": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Helicopter",
+    "id": "4oet",
+    "z": 1340,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "15fc": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Heron",
+    "id": "15fc",
+    "z": 8613,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "hps0": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Horse",
+    "id": "hps0",
+    "z": 8967,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "jo37": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "House",
+    "id": "jo37",
+    "z": 4971,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "0c5e": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Iron",
+    "id": "0c5e",
+    "z": 48,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "wl0j": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Kangaroo",
+    "id": "wl0j",
+    "z": 9925,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "tbz0": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Key",
+    "id": "tbz0",
+    "z": 642,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "w65o": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Kicking",
+    "id": "w65o",
+    "z": 1913,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "93o4": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Mountains",
+    "id": "93o4",
+    "z": 4394,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "hjvt": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Pagoda",
+    "id": "hjvt",
+    "z": 6525,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "1klu": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Parallelogram",
+    "id": "1klu",
+    "z": 6590,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "hc5w": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Pigeon",
+    "id": "hc5w",
+    "z": 6177,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "yxyy": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Pinwheel",
+    "id": "yxyy",
+    "z": 3835,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "x0a6": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Pipe",
+    "id": "x0a6",
+    "z": 9142,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "kknr": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Plane",
+    "id": "kknr",
+    "z": 4178,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "ydr7": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Pyramids",
+    "id": "ydr7",
+    "z": 2002,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "m0cs": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Rabbit",
+    "id": "m0cs",
+    "z": 7773,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "ye49": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Rocket",
+    "id": "ye49",
+    "z": 6372,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "ohv7": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Rooster",
+    "id": "ohv7",
+    "z": 2407,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "zc0e": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Running",
+    "id": "zc0e",
+    "z": 3420,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "rkp0": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Sea Lion",
+    "id": "rkp0",
+    "z": 5907,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "cqoy": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Shirt",
+    "id": "cqoy",
+    "z": 1798,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "jd1u": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Sitting",
+    "id": "jd1u",
+    "z": 2676,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "3vir": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Skating",
+    "id": "3vir",
+    "z": 1963,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "51r9": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Spaceship",
+    "id": "51r9",
+    "z": 7910,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "gb7b": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Spade",
+    "id": "gb7b",
+    "z": 3008,
+    "parent": "5yj3",
+    "width": 100,
+    "height": 100,
+    "enlarge": 4
+  },
+  "r3ay": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Stroller",
+    "id": "r3ay",
+    "z": 9341,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "ugld": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Submarine",
+    "id": "ugld",
+    "z": 8513,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "r2f2": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Swan",
+    "id": "r2f2",
+    "z": 2555,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "s7fh": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Table",
+    "id": "s7fh",
+    "z": 6563,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "yyb7": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Teapot",
+    "id": "yyb7",
+    "z": 4485,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "t16b": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Trapezoid",
+    "id": "t16b",
+    "z": 4226,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "kx86": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Tree.png",
+    "id": "kx86",
+    "z": 310,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "g3uh": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Triangle",
+    "id": "g3uh",
+    "z": 2639,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "pwkf": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Turtle",
+    "id": "pwkf",
+    "z": 5833,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "6kft": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Vase",
+    "id": "6kft",
+    "z": 1157,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "sjkh": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Vulture",
+    "id": "sjkh",
+    "z": 1124,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "oyvt": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Watering Can",
+    "id": "oyvt",
+    "z": 5051,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "fl30": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Whale",
+    "id": "fl30",
+    "z": 1341,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "0acm": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Windmill",
+    "id": "0acm",
+    "z": 5523,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "51xf": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Wrench",
+    "id": "51xf",
+    "z": 3528,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "_meta": {
+    "version": 3,
+    "info": {
+      "name": "Tangrams",
+      "image": "/assets/654370634_32256",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/23953/outside-scope-bgg",
+      "year": "900",
+      "mode": "solo",
+      "time": "10",
+      "players": "1",
+      "language": "UN",
+      "variant": "",
+      "attribution": "The room layout, library image, and all game elements are by BicycleIndividual and LawDawg96 and are released to the Public Domain under CC0."
+    }
+  },
+  "zgvu": {
+    "deck": "ilkdD",
+    "type": "card",
+    "cardType": "Shovel",
+    "id": "zgvu",
+    "z": 2411,
+    "width": 100,
+    "height": 100,
+    "enlarge": 4,
+    "parent": "sdag"
+  },
+  "sdag": {
+    "type": "pile",
+    "parent": "ilkd",
+    "x": 4,
+    "y": 4,
+    "width": 100,
+    "height": 100,
+    "id": "sdag"
+  },
+  "restart_button": {
+    "id": "restart_button",
+    "width": 46,
+    "height": 46,
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Resetting board...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to start over and reset the board. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "ilkdB"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "t1"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 246.3
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -87.4
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "t2"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 88.3
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 66.6
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "t3"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": -47
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -147
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "t4"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 67.6
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 32.2
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "t5"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 174.6
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -72.8
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "p1"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": -17.7
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 50.9
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "square"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 112
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 2
+      }
+    ],
+    "x": 1550,
+    "z": 2088,
+    "color": "white",
+    "image": "/assets/1342248376_1383",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "y": 2
+  }
+}

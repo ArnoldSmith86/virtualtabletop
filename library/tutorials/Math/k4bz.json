@@ -1,0 +1,252 @@
+{
+  "8fr3": {
+    "type": "label",
+    "text": "Math: Constants",
+    "css": "font-size: 60px",
+    "height": 160,
+    "width": 1000,
+    "x": 280,
+    "z": 26392,
+    "id": "8fr3",
+    "y": 1
+  },
+  "_meta": {
+    "version": 3,
+    "info": {
+      "name": "Math",
+      "image": "/assets/2017839809_4407",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "",
+      "players": "1",
+      "language": "US",
+      "variant": "Constants",
+      "attribution": ""
+    }
+  },
+  "i1bj": {
+    "id": "i1bj",
+    "x": 294,
+    "y": 73,
+    "z": 37,
+    "height": 50,
+    "css": "font-size: 20px; ",
+    "text": "A few important math values are provided as constants in VirtualTabletop. These constants do not take any operands. You use them in a dynamic expression to multiply, divide, etc. by the value. To see an example of how to calculate the circumference of a circle with a radius of r, look at the JSON in the button in the lower left.  The button does not do anything; it is just a model.\n\nThe available constants are demonstrated below.  Press the button to see the value of the constant.",
+    "width": 1000
+  },
+  "lr6y": {
+    "id": "lr6y",
+    "x": 704,
+    "y": 731,
+    "width": 50,
+    "z": 8,
+    "css": "font-size: 30px; ",
+    "text": "Output",
+    "height": 50
+  },
+  "outputstring": {
+    "type": "label",
+    "id": "outputstring",
+    "y": 780,
+    "width": 200,
+    "height": 100,
+    "z": 26449,
+    "css": "border: 2px dashed black; font-size:30px; color:black;text-align:right",
+    "x": 650,
+    "text": 3.141592653589793
+  },
+  "pc6t": {
+    "type": "button",
+    "clickRoutine": [
+      "var result =  LN10",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "outputstring"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${result}"
+      }
+    ],
+    "x": 120,
+    "y": 487,
+    "z": 295,
+    "id": "pc6t",
+    "css": "font-size: 30px; ",
+    "text": "LN10"
+  },
+  "0y6s": {
+    "type": "button",
+    "clickRoutine": [
+      "var result =  LN2",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "outputstring"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${result}"
+      }
+    ],
+    "x": 374,
+    "y": 487,
+    "z": 280,
+    "id": "0y6s",
+    "css": "font-size: 30px; ",
+    "text": "LN2"
+  },
+  "3e62": {
+    "type": "button",
+    "clickRoutine": [
+      "var result =  LOG10E",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "outputstring"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${result}"
+      }
+    ],
+    "x": 619,
+    "y": 487,
+    "z": 296,
+    "id": "3e62",
+    "css": "font-size: 20px; ",
+    "text": "LOG10E"
+  },
+  "kouz": {
+    "type": "button",
+    "clickRoutine": [
+      "var result =  LOG2E",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "outputstring"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${result}"
+      }
+    ],
+    "x": 872,
+    "y": 487,
+    "z": 293,
+    "id": "kouz",
+    "css": "font-size: 20px; ",
+    "text": "LOG2E"
+  },
+  "vymh": {
+    "type": "button",
+    "clickRoutine": [
+      "var result =  SQRT1_2",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "outputstring"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${result}"
+      }
+    ],
+    "x": 1115,
+    "y": 487,
+    "z": 297,
+    "id": "vymh",
+    "text": "SQRT1_2",
+    "css": "font-size: 18px; "
+  },
+  "jbys": {
+    "type": "button",
+    "clickRoutine": [
+      "var result =  SQRT2",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "outputstring"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${result}"
+      }
+    ],
+    "x": 1374,
+    "y": 487,
+    "z": 291,
+    "id": "jbys",
+    "css": "font-size: 20px; ",
+    "text": "SQRT2"
+  },
+  "pv6i": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "Note": "This button does not do anything.  It is just an example of how you break would calculate the circumference of a circle with a radius variable 'r'."
+      },
+      "var circum = 2 * PI",
+      "var circum = ${circum} * ${r}"
+    ],
+    "x": 120,
+    "y": 787,
+    "z": 295,
+    "id": "pv6i",
+    "css": "font-size: 20px; ",
+    "text": "Example"
+  },
+  "0zgn": {
+    "type": "button",
+    "clickRoutine": [
+      "var result =  E",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "outputstring"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${result}"
+      }
+    ],
+    "x": 872,
+    "y": 250,
+    "z": 288,
+    "id": "0zgn",
+    "css": "font-size: 30px; ",
+    "text": "E"
+  },
+  "2rti": {
+    "type": "button",
+    "clickRoutine": [
+      "var result =  PI",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "outputstring"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${result}"
+      }
+    ],
+    "x": 619,
+    "y": 250,
+    "z": 289,
+    "id": "2rti",
+    "css": "font-size: 30px; ",
+    "text": "PI"
+  }
+}

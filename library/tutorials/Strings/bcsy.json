@@ -1,0 +1,72 @@
+{
+  "8fr3": {
+    "type": "label",
+    "text": "Strings Example: CSS",
+    "css": "font-size: 60px",
+    "height": 160,
+    "width": 1000,
+    "x": 280,
+    "z": 26392,
+    "id": "8fr3",
+    "y": 1
+  },
+  "_meta": {
+    "version": 3,
+    "info": {
+      "name": "Strings",
+      "image": "/assets/-1494076321_5309",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "",
+      "players": "2-4",
+      "language": "US",
+      "variant": "Example: CSS",
+      "attribution": ""
+    }
+  },
+  "2pt0": {
+    "id": "2pt0",
+    "x": 203,
+    "y": 235,
+    "z": 42,
+    "width": 500,
+    "height": 50,
+    "css": "font-size: 20px; ",
+    "text": "One of the many useful features of strings is to change CSS in response to room events. Click on the button below to randomly change the font size of the widget to the right."
+  },
+  "3s14": {
+    "type": "button",
+    "clickRoutine": [
+      "var randomNumber = randInt 10 30 //Create a random number between 10 and 30",
+      "var newCSS = concat 'font-size\\u003a' ${randomNumber} //The css property to be used if font-size, so start with that, use the escape code for the colon, and then concat that with the random number",
+      "var newCSS = concat ${newCSS} 'px' //Add on the rest of the necessary css information; in this case, px for the size",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "output3"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "${newCSS}"
+      }
+    ],
+    "x": 186,
+    "y": 364,
+    "z": 244,
+    "id": "3s14",
+    "text": "Font size"
+  },
+  "output3": {
+    "id": "output3",
+    "x": 303,
+    "y": 386,
+    "width": 700,
+    "height": 50,
+    "z": 43,
+    "css": "font-size: 20px; ",
+    "text": "Keep clicking the button for font size changes."
+  }
+}

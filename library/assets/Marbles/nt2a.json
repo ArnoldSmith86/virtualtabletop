@@ -1,0 +1,683 @@
+{
+  "8967": {
+    "id": "8967",
+    "x": 1270,
+    "y": 200.66666666666663,
+    "z": 125,
+    "image": "/assets/-965538703_6169",
+    "newColor1": "#d7e8f4",
+    "newColor2": "transparent",
+    "newColor3": "transparent",
+    "newColor4": "transparent",
+    "newColor5": "transparent",
+    "newColor6": "transparent",
+    "svgReplaces": {
+      "myColor1": "newColor1",
+      "myColor2": "newColor2",
+      "myColor3": "newColor3",
+      "myColor4": "newColor4",
+      "myColor5": "newColor5",
+      "myColor6": "newColor6"
+    }
+  },
+  "template": {
+    "id": "template",
+    "x": 25,
+    "z": 94,
+    "image": "/assets/-965538703_6169",
+    "newColor1": "",
+    "newColor2": "",
+    "newColor3": "",
+    "newColor4": "",
+    "newColor5": "",
+    "newColor6": "",
+    "svgReplaces": {
+      "myColor1": "newColor1",
+      "myColor2": "newColor2",
+      "myColor3": "newColor3",
+      "myColor4": "newColor4",
+      "myColor5": "newColor5",
+      "myColor6": "newColor6"
+    }
+  },
+  "yellow2": {
+    "id": "yellow2",
+    "x": 125,
+    "y": 400,
+    "z": 96,
+    "image": "/assets/-965538703_6169",
+    "newColor1": "#fefdf1",
+    "newColor2": "#f5eeb7",
+    "newColor3": "#efde84",
+    "newColor4": "#e49e3a",
+    "newColor5": "#c78c3c",
+    "newColor6": "#a67d3f",
+    "svgReplaces": {
+      "myColor1": "newColor1",
+      "myColor2": "newColor2",
+      "myColor3": "newColor3",
+      "myColor4": "newColor4",
+      "myColor5": "newColor5",
+      "myColor6": "newColor6"
+    }
+  },
+  "orange": {
+    "id": "orange",
+    "x": 25,
+    "y": 300,
+    "z": 86,
+    "image": "/assets/-965538703_6169",
+    "newColor1": "#fffcf1",
+    "newColor2": "#f4d8b9",
+    "newColor3": "#eab982",
+    "newColor4": "#dd882f",
+    "newColor5": "#bc7232",
+    "newColor6": "#8e6036",
+    "svgReplaces": {
+      "myColor1": "newColor1",
+      "myColor2": "newColor2",
+      "myColor3": "newColor3",
+      "myColor4": "newColor4",
+      "myColor5": "newColor5",
+      "myColor6": "newColor6"
+    }
+  },
+  "green1": {
+    "id": "green1",
+    "x": 25,
+    "z": 81,
+    "image": "/assets/-965538703_6169",
+    "newColor1": "#aebba8",
+    "newColor2": "#89ac78",
+    "newColor3": "#6ea050",
+    "newColor4": "#3c844a",
+    "newColor5": "#356a3e",
+    "newColor6": "#283c23",
+    "svgReplaces": {
+      "myColor1": "newColor1",
+      "myColor2": "newColor2",
+      "myColor3": "newColor3",
+      "myColor4": "newColor4",
+      "myColor5": "newColor5",
+      "myColor6": "newColor6"
+    },
+    "y": 500
+  },
+  "yellow1": {
+    "id": "yellow1",
+    "x": 25,
+    "y": 400,
+    "z": 95,
+    "image": "/assets/-965538703_6169",
+    "newColor1": "#fdf1bb",
+    "newColor2": "#f9de57",
+    "newColor3": "#f4cf30",
+    "newColor4": "#d1ae38",
+    "newColor5": "#c9a439",
+    "newColor6": "#9f8639",
+    "svgReplaces": {
+      "myColor1": "newColor1",
+      "myColor2": "newColor2",
+      "myColor3": "newColor3",
+      "myColor4": "newColor4",
+      "myColor5": "newColor5",
+      "myColor6": "newColor6"
+    }
+  },
+  "grey1": {
+    "id": "grey1",
+    "x": 25,
+    "y": 100,
+    "z": 92,
+    "image": "/assets/-965538703_6169",
+    "newColor1": "#d0d0d3",
+    "newColor2": "#8e949c",
+    "newColor3": "#8e949c",
+    "newColor4": "#7f8588",
+    "newColor5": "#7f8588",
+    "newColor6": "#626a68",
+    "svgReplaces": {
+      "myColor1": "newColor1",
+      "myColor2": "newColor2",
+      "myColor3": "newColor3",
+      "myColor4": "newColor4",
+      "myColor5": "newColor5",
+      "myColor6": "newColor6"
+    }
+  },
+  "grey2": {
+    "id": "grey2",
+    "x": 125,
+    "y": 100,
+    "z": 93,
+    "image": "/assets/-965538703_6169",
+    "newColor1": "#f0f0f0",
+    "newColor2": "#bcbcbc",
+    "newColor3": "#a8a8a8",
+    "newColor4": "#494949",
+    "newColor5": "#3e3e3e",
+    "newColor6": "#101010",
+    "svgReplaces": {
+      "myColor1": "newColor1",
+      "myColor2": "newColor2",
+      "myColor3": "newColor3",
+      "myColor4": "newColor4",
+      "myColor5": "newColor5",
+      "myColor6": "newColor6"
+    }
+  },
+  "red1": {
+    "id": "red1",
+    "x": 225,
+    "y": 200,
+    "z": 161,
+    "image": "/assets/-965538703_6169",
+    "newColor1": "#faf0ee",
+    "newColor2": "#eabbb2",
+    "newColor3": "#db857e",
+    "newColor4": "#cc2377",
+    "newColor5": "#a3236b",
+    "newColor6": "#762d58",
+    "svgReplaces": {
+      "myColor1": "newColor1",
+      "myColor2": "newColor2",
+      "myColor3": "newColor3",
+      "myColor4": "newColor4",
+      "myColor5": "newColor5",
+      "myColor6": "newColor6"
+    }
+  },
+  "blue1": {
+    "id": "blue1",
+    "x": 25,
+    "y": 600,
+    "z": 165,
+    "image": "/assets/-965538703_6169",
+    "newColor1": "#d7e8f4",
+    "newColor2": "#6db1e4",
+    "newColor3": "#3ea1d8",
+    "newColor4": "#3558a4",
+    "newColor5": "#2d529c",
+    "newColor6": "#2c4872",
+    "svgReplaces": {
+      "myColor1": "newColor1",
+      "myColor2": "newColor2",
+      "myColor3": "newColor3",
+      "myColor4": "newColor4",
+      "myColor5": "newColor5",
+      "myColor6": "newColor6"
+    }
+  },
+  "blue3": {
+    "id": "blue3",
+    "x": 125,
+    "y": 600,
+    "z": 162,
+    "image": "/assets/-965538703_6169",
+    "newColor1": "#f0eef6",
+    "newColor2": "#b3dbeb",
+    "newColor3": "#7fc4d5",
+    "newColor4": "#20aacb",
+    "newColor5": "#26808f",
+    "newColor6": "#24595e",
+    "svgReplaces": {
+      "myColor1": "newColor1",
+      "myColor2": "newColor2",
+      "myColor3": "newColor3",
+      "myColor4": "newColor4",
+      "myColor5": "newColor5",
+      "myColor6": "newColor6"
+    }
+  },
+  "blue2": {
+    "id": "blue2",
+    "x": 225,
+    "y": 600,
+    "z": 166,
+    "image": "/assets/-965538703_6169",
+    "newColor1": "#dfe2f2",
+    "newColor2": "#a5b9df",
+    "newColor3": "#71a4d9",
+    "newColor4": "#3a64ac",
+    "newColor5": "#2d539a",
+    "newColor6": "#2d4774",
+    "svgReplaces": {
+      "myColor1": "newColor1",
+      "myColor2": "newColor2",
+      "myColor3": "newColor3",
+      "myColor4": "newColor4",
+      "myColor5": "newColor5",
+      "myColor6": "newColor6"
+    }
+  },
+  "green2": {
+    "id": "green2",
+    "x": 125,
+    "y": 500,
+    "z": 97,
+    "image": "/assets/-965538703_6169",
+    "newColor1": "#edf5f0",
+    "newColor2": "#d8e6b1",
+    "newColor3": "#c6d97e",
+    "newColor4": "#8cbe4f",
+    "newColor5": "#7ea44c",
+    "newColor6": "#62763c",
+    "svgReplaces": {
+      "myColor1": "newColor1",
+      "myColor2": "newColor2",
+      "myColor3": "newColor3",
+      "myColor4": "newColor4",
+      "myColor5": "newColor5",
+      "myColor6": "newColor6"
+    }
+  },
+  "purple": {
+    "id": "purple",
+    "x": 25,
+    "y": 700,
+    "z": 77,
+    "image": "/assets/-965538703_6169",
+    "newColor1": "#e8dfee",
+    "newColor2": "#b8a8cf",
+    "newColor3": "#8376b3",
+    "newColor4": "#5e4999",
+    "newColor5": "#523a91",
+    "newColor6": "#433073",
+    "svgReplaces": {
+      "myColor1": "newColor1",
+      "myColor2": "newColor2",
+      "myColor3": "newColor3",
+      "myColor4": "newColor4",
+      "myColor5": "newColor5",
+      "myColor6": "newColor6"
+    }
+  },
+  "red2": {
+    "id": "red2",
+    "x": 125,
+    "y": 200,
+    "z": 88,
+    "image": "/assets/-965538703_6169",
+    "newColor1": "#fcf4ee",
+    "newColor2": "#edc6b2",
+    "newColor3": "#e0987d",
+    "newColor4": "#cc2229",
+    "newColor5": "#a32431",
+    "newColor6": "#752d37",
+    "svgReplaces": {
+      "myColor1": "newColor1",
+      "myColor2": "newColor2",
+      "myColor3": "newColor3",
+      "myColor4": "newColor4",
+      "myColor5": "newColor5",
+      "myColor6": "newColor6"
+    }
+  },
+  "red3": {
+    "id": "red3",
+    "x": 25,
+    "y": 200,
+    "z": 87,
+    "image": "/assets/-965538703_6169",
+    "newColor1": "#e3242b",
+    "newColor2": "#b90e0a",
+    "newColor3": "#a91b0d",
+    "newColor4": "#7e2811",
+    "newColor5": "#7a1712",
+    "newColor6": "#610c04",
+    "svgReplaces": {
+      "myColor1": "newColor1",
+      "myColor2": "newColor2",
+      "myColor3": "newColor3",
+      "myColor4": "newColor4",
+      "myColor5": "newColor5",
+      "myColor6": "newColor6"
+    }
+  },
+  "ortd": {
+    "image": "/assets/1129187176_247",
+    "id": "ortd",
+    "z": 142,
+    "y": 200.66666666666663,
+    "x": 1097,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "color": "#d7e8f4"
+  },
+  "day1": {
+    "image": "/assets/1129187176_247",
+    "id": "day1",
+    "z": 121,
+    "y": 334.3333333333333,
+    "x": 1097,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "color": "#6db1e4"
+  },
+  "47r9": {
+    "image": "/assets/1129187176_247",
+    "id": "47r9",
+    "z": 120,
+    "y": 468,
+    "x": 1097,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "color": "#3ea1d8"
+  },
+  "rmtn": {
+    "image": "/assets/1129187176_247",
+    "id": "rmtn",
+    "z": 119,
+    "y": 601.6666666666666,
+    "x": 1097,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "color": "#3558a4"
+  },
+  "cxng": {
+    "image": "/assets/1129187176_247",
+    "id": "cxng",
+    "z": 118,
+    "y": 735.3333333333333,
+    "x": 1097,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "color": "#2d529c"
+  },
+  "2jet": {
+    "image": "/assets/1129187176_247",
+    "id": "2jet",
+    "z": 117,
+    "y": 868.9999999999999,
+    "x": 1097,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "color": "#2c4872"
+  },
+  "tmha": {
+    "id": "tmha",
+    "x": 1270,
+    "y": 67,
+    "z": 126,
+    "image": "/assets/-965538703_6169",
+    "newColor1": "transparent",
+    "newColor2": "transparent",
+    "newColor3": "transparent",
+    "newColor4": "transparent",
+    "newColor5": "transparent",
+    "newColor6": "transparent",
+    "svgReplaces": {
+      "myColor1": "newColor1",
+      "myColor2": "newColor2",
+      "myColor3": "newColor3",
+      "myColor4": "newColor4",
+      "myColor5": "newColor5",
+      "myColor6": "newColor6"
+    }
+  },
+  "z93l": {
+    "id": "z93l",
+    "x": 1270,
+    "y": 334.3333333333333,
+    "z": 135,
+    "image": "/assets/-965538703_6169",
+    "newColor1": "transparent",
+    "newColor2": "#6db1e4",
+    "newColor3": "transparent",
+    "newColor4": "transparent",
+    "newColor5": "transparent",
+    "newColor6": "transparent",
+    "svgReplaces": {
+      "myColor1": "newColor1",
+      "myColor2": "newColor2",
+      "myColor3": "newColor3",
+      "myColor4": "newColor4",
+      "myColor5": "newColor5",
+      "myColor6": "newColor6"
+    }
+  },
+  "zlt0": {
+    "id": "zlt0",
+    "x": 1270,
+    "y": 468,
+    "z": 136,
+    "image": "/assets/-965538703_6169",
+    "newColor1": "transparent",
+    "newColor2": "transparent",
+    "newColor3": "#3ea1d8",
+    "newColor4": "transparent",
+    "newColor5": "transparent",
+    "newColor6": "transparent",
+    "svgReplaces": {
+      "myColor1": "newColor1",
+      "myColor2": "newColor2",
+      "myColor3": "newColor3",
+      "myColor4": "newColor4",
+      "myColor5": "newColor5",
+      "myColor6": "newColor6"
+    }
+  },
+  "ahsw": {
+    "id": "ahsw",
+    "x": 1270,
+    "y": 601.6666666666666,
+    "z": 137,
+    "image": "/assets/-965538703_6169",
+    "newColor1": "transparent",
+    "newColor2": "transparent",
+    "newColor3": "transparent",
+    "newColor4": "#3558a4",
+    "newColor5": "transparent",
+    "newColor6": "transparent",
+    "svgReplaces": {
+      "myColor1": "newColor1",
+      "myColor2": "newColor2",
+      "myColor3": "newColor3",
+      "myColor4": "newColor4",
+      "myColor5": "newColor5",
+      "myColor6": "newColor6"
+    }
+  },
+  "7ni7": {
+    "id": "7ni7",
+    "x": 1270,
+    "y": 735.3333333333333,
+    "z": 138,
+    "image": "/assets/-965538703_6169",
+    "newColor1": "transparent",
+    "newColor2": "transparent",
+    "newColor3": "transparent",
+    "newColor4": "transparent",
+    "newColor5": "#2d529c",
+    "newColor6": "transparent",
+    "svgReplaces": {
+      "myColor1": "newColor1",
+      "myColor2": "newColor2",
+      "myColor3": "newColor3",
+      "myColor4": "newColor4",
+      "myColor5": "newColor5",
+      "myColor6": "newColor6"
+    }
+  },
+  "l11o": {
+    "id": "l11o",
+    "x": 1270,
+    "y": 868.9999999999999,
+    "z": 139,
+    "image": "/assets/-965538703_6169",
+    "newColor1": "transparent",
+    "newColor2": "transparent",
+    "newColor3": "transparent",
+    "newColor4": "transparent",
+    "newColor5": "transparent",
+    "newColor6": "#2c4872",
+    "svgReplaces": {
+      "myColor1": "newColor1",
+      "myColor2": "newColor2",
+      "myColor3": "newColor3",
+      "myColor4": "newColor4",
+      "myColor5": "newColor5",
+      "myColor6": "newColor6"
+    }
+  },
+  "abgp": {
+    "image": "/assets/1129187176_247",
+    "id": "abgp",
+    "z": 143,
+    "y": 67,
+    "x": 1097,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "color": "#ffffff"
+  },
+  "ncpt": {
+    "text": "Color explanation using marble Blue1",
+    "id": "ncpt",
+    "z": 145,
+    "x": 1107,
+    "y": 25,
+    "width": 300
+  },
+  "6b8w": {
+    "text": "All marbles use white, but you could change this if you replace #ffffff.",
+    "id": "6b8w",
+    "z": 169,
+    "x": 788,
+    "y": 91,
+    "width": 300
+  },
+  "u02b": {
+    "id": "u02b",
+    "z": 170,
+    "x": 884,
+    "y": 232,
+    "width": 300,
+    "text": "Color1:  #d7e8f4"
+  },
+  "yttl": {
+    "id": "yttl",
+    "x": 1459,
+    "y": 468,
+    "z": 151,
+    "image": "/assets/-965538703_6169",
+    "newColor1": "#d7e8f4",
+    "newColor2": "#6db1e4",
+    "newColor3": "#3ea1d8",
+    "newColor4": "#3558a4",
+    "newColor5": "#2d529c",
+    "newColor6": "#2c4872",
+    "svgReplaces": {
+      "myColor1": "newColor1",
+      "myColor2": "newColor2",
+      "myColor3": "newColor3",
+      "myColor4": "newColor4",
+      "myColor5": "newColor5",
+      "myColor6": "newColor6"
+    }
+  },
+  "8fnh": {
+    "id": "8fnh",
+    "z": 171,
+    "x": 884,
+    "y": 368.4,
+    "width": 300,
+    "text": "Color2:  #6db1e4"
+  },
+  "4l8a": {
+    "id": "4l8a",
+    "z": 172,
+    "x": 884,
+    "y": 504.8,
+    "width": 300,
+    "text": "Color3:  #3ea1d8"
+  },
+  "xl80": {
+    "id": "xl80",
+    "z": 173,
+    "x": 884,
+    "y": 641.2,
+    "width": 300,
+    "text": "Color4:  #3558a4"
+  },
+  "t2l1": {
+    "id": "t2l1",
+    "z": 174,
+    "x": 884,
+    "y": 777.6,
+    "width": 300,
+    "text": "Color5:  #2d529c"
+  },
+  "m01v": {
+    "id": "m01v",
+    "z": 175,
+    "x": 884,
+    "y": 914,
+    "width": 300,
+    "text": "Color6:  #2c4872"
+  },
+  "brown": {
+    "id": "brown",
+    "x": 25,
+    "y": 800,
+    "z": 77,
+    "image": "/assets/-965538703_6169",
+    "newColor1": "#ecdbc3",
+    "newColor2": "#d9b684",
+    "newColor3": "#c69146",
+    "newColor4": "#8f662b",
+    "newColor5": "#513918",
+    "newColor6": "#382811",
+    "svgReplaces": {
+      "myColor1": "newColor1",
+      "myColor2": "newColor2",
+      "myColor3": "newColor3",
+      "myColor4": "newColor4",
+      "myColor5": "newColor5",
+      "myColor6": "newColor6"
+    }
+  },
+  "white": {
+    "id": "white",
+    "x": 25,
+    "y": 900,
+    "z": 168,
+    "image": "/assets/-965538703_6169",
+    "newColor1": "#dedddb",
+    "newColor2": "#f7f9f5",
+    "newColor3": "#f0ebe3",
+    "newColor4": "#ffffff",
+    "newColor5": "#dedddb",
+    "newColor6": "#dedddb",
+    "svgReplaces": {
+      "myColor1": "newColor1",
+      "myColor2": "newColor2",
+      "myColor3": "newColor3",
+      "myColor4": "newColor4",
+      "myColor5": "newColor5",
+      "myColor6": "newColor6"
+    }
+  },
+  "_meta": {
+    "version": 2,
+    "info": {
+      "name": "Marbles",
+      "image": "/assets/1470806650_60057",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Assets",
+      "time": "",
+      "players": "1",
+      "language": "US",
+      "variant": "",
+      "attribution": "Original svg marble design and colors by DragonArt, http://dragonartz.wordpress.com/ and http://dragonartz.net. Downloaded from https://vector.me/download/699706/colorful_marbels_vector. Available under CC BY-NC-SA 3.0.\n\nModifications to svg code to make svgReplaces work with these marbles on VirtualTabletop by LawDawg96."
+    }
+  }
+}

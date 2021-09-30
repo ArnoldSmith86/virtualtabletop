@@ -1,0 +1,1456 @@
+{
+  "1234": {
+    "type": "spinner",
+    "id": "1234",
+    "x": 205,
+    "y": 760,
+    "width": null,
+    "height": null,
+    "z": 10113,
+    "movable": null,
+    "movableInEdit": null,
+    "angle": 112736,
+    "myCustomKey": "spin",
+    "options": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "value": 1
+  },
+  "1235": {
+    "type": "spinner",
+    "id": "1235",
+    "x": 338,
+    "y": 758,
+    "width": null,
+    "height": null,
+    "z": 10107,
+    "movable": null,
+    "movableInEdit": null,
+    "angle": 112996,
+    "myCustomKey": "spin",
+    "options": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "value": 6
+  },
+  "f0pq": {
+    "type": "label",
+    "text": "This example uses 'sum' aggregation. Move cards into the holder. Then click the button to count cards & calculate points.",
+    "x": 6,
+    "y": 13,
+    "z": 326,
+    "width": 300,
+    "height": 80,
+    "id": "f0pq"
+  },
+  "bbsb": {
+    "type": "holder",
+    "id": "bbsb",
+    "x": 526,
+    "y": 172,
+    "dropTarget": {
+      "type": "card"
+    },
+    "z": 12
+  },
+  "bbsbP": {
+    "type": "pile",
+    "id": "bbsbP",
+    "parent": "bbsb",
+    "width": 103,
+    "height": 160
+  },
+  "bbsbB": {
+    "id": "bbsbB",
+    "parent": "bbsb",
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "bbsb"
+      },
+      {
+        "func": "FLIP",
+        "holder": "bbsb",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "bbsb"
+      }
+    ]
+  },
+  "bbsbAC": {
+    "id": "bbsbAC",
+    "type": "card",
+    "cardType": "AC",
+    "deck": "deck-small",
+    "z": 3094,
+    "parent": "bbsbP"
+  },
+  "bbsb2C": {
+    "id": "bbsb2C",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "2C"
+  },
+  "bbsb3C": {
+    "id": "bbsb3C",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "3C"
+  },
+  "bbsb4C": {
+    "id": "bbsb4C",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "4C"
+  },
+  "bbsb5C": {
+    "id": "bbsb5C",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "5C"
+  },
+  "bbsb6C": {
+    "id": "bbsb6C",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "6C"
+  },
+  "bbsb7C": {
+    "id": "bbsb7C",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "7C"
+  },
+  "bbsb8C": {
+    "id": "bbsb8C",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "8C"
+  },
+  "bbsb9C": {
+    "id": "bbsb9C",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "9C"
+  },
+  "bbsbTC": {
+    "id": "bbsbTC",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "TC"
+  },
+  "bbsbJC": {
+    "id": "bbsbJC",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "JC"
+  },
+  "bbsbQC": {
+    "id": "bbsbQC",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "QC"
+  },
+  "bbsbKC": {
+    "id": "bbsbKC",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "KC"
+  },
+  "bbsbAD": {
+    "id": "bbsbAD",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "AD"
+  },
+  "bbsb2D": {
+    "id": "bbsb2D",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "2D"
+  },
+  "bbsb3D": {
+    "id": "bbsb3D",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "3D"
+  },
+  "bbsb4D": {
+    "id": "bbsb4D",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "4D"
+  },
+  "bbsb5D": {
+    "id": "bbsb5D",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "5D"
+  },
+  "bbsb6D": {
+    "id": "bbsb6D",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "6D"
+  },
+  "bbsb7D": {
+    "id": "bbsb7D",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "7D"
+  },
+  "bbsb8D": {
+    "id": "bbsb8D",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "8D"
+  },
+  "bbsb9D": {
+    "id": "bbsb9D",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "9D"
+  },
+  "bbsbTD": {
+    "id": "bbsbTD",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "TD"
+  },
+  "bbsbJD": {
+    "id": "bbsbJD",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "JD"
+  },
+  "bbsbQD": {
+    "id": "bbsbQD",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "QD"
+  },
+  "bbsbKD": {
+    "id": "bbsbKD",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "KD"
+  },
+  "bbsbAH": {
+    "id": "bbsbAH",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "AH"
+  },
+  "bbsb2H": {
+    "id": "bbsb2H",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "2H"
+  },
+  "bbsb3H": {
+    "id": "bbsb3H",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "3H"
+  },
+  "bbsb4H": {
+    "id": "bbsb4H",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "4H"
+  },
+  "bbsb5H": {
+    "id": "bbsb5H",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "5H"
+  },
+  "bbsb6H": {
+    "id": "bbsb6H",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "6H"
+  },
+  "bbsb7H": {
+    "id": "bbsb7H",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "7H"
+  },
+  "bbsb8H": {
+    "id": "bbsb8H",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "8H"
+  },
+  "bbsb9H": {
+    "id": "bbsb9H",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "9H"
+  },
+  "bbsbTH": {
+    "id": "bbsbTH",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "TH"
+  },
+  "bbsbJH": {
+    "id": "bbsbJH",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "JH"
+  },
+  "bbsbQH": {
+    "id": "bbsbQH",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "QH"
+  },
+  "bbsbKH": {
+    "id": "bbsbKH",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "KH"
+  },
+  "bbsbAS": {
+    "id": "bbsbAS",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "AS"
+  },
+  "bbsb2S": {
+    "id": "bbsb2S",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "2S"
+  },
+  "bbsb3S": {
+    "id": "bbsb3S",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "3S"
+  },
+  "bbsb4S": {
+    "id": "bbsb4S",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "4S"
+  },
+  "bbsb5S": {
+    "id": "bbsb5S",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "5S"
+  },
+  "bbsb6S": {
+    "id": "bbsb6S",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "6S"
+  },
+  "bbsb7S": {
+    "id": "bbsb7S",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "7S"
+  },
+  "bbsb8S": {
+    "id": "bbsb8S",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "8S"
+  },
+  "bbsb9S": {
+    "id": "bbsb9S",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "9S"
+  },
+  "bbsbTS": {
+    "id": "bbsbTS",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "TS"
+  },
+  "bbsbJS": {
+    "id": "bbsbJS",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "JS"
+  },
+  "bbsbQS": {
+    "id": "bbsbQS",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "QS"
+  },
+  "bbsbKS": {
+    "id": "bbsbKS",
+    "parent": "bbsbP",
+    "type": "card",
+    "cardType": "KS"
+  },
+  "deck-small": {
+    "type": "deck",
+    "id": "deck-small",
+    "x": 4,
+    "y": 4,
+    "cardTypes": {
+      "1J": {
+        "image": "/i/cards-default/1J.svg",
+        "points": "-50"
+      },
+      "2J": {
+        "image": "/i/cards-default/2J.svg",
+        "points": "-50"
+      },
+      "AC": {
+        "image": "/i/cards-default/AC.svg",
+        "points": "20"
+      },
+      "9C": {
+        "image": "/i/cards-default/9C.svg",
+        "points": "9"
+      },
+      "TC": {
+        "image": "/i/cards-default/TC.svg",
+        "points": "10"
+      },
+      "JC": {
+        "image": "/i/cards-default/JC.svg"
+      },
+      "QC": {
+        "image": "/i/cards-default/QC.svg"
+      },
+      "KC": {
+        "image": "/i/cards-default/KC.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "valueType": "static",
+            "value": "/i/cards-default/2B.svg",
+            "color": "transparent"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "valueType": "dynamic",
+            "value": "image",
+            "color": "transparent"
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "points": 15
+    },
+    "z": 10011,
+    "parent": "bbsb"
+  },
+  "204f": {
+    "deck": "deck-small",
+    "type": "card",
+    "cardType": "1J",
+    "id": "204f",
+    "z": 7223,
+    "parent": "bbsbP"
+  },
+  "lkgc": {
+    "deck": "deck-small",
+    "type": "card",
+    "cardType": "2J",
+    "id": "lkgc",
+    "z": 9439,
+    "parent": "bbsbP"
+  },
+  "9c1j": {
+    "deck": "deck-small",
+    "type": "card",
+    "cardType": "9C",
+    "id": "9c1j",
+    "z": 10103,
+    "parent": "bbsbP"
+  },
+  "u55p": {
+    "deck": "deck-small",
+    "type": "card",
+    "cardType": "TC",
+    "id": "u55p",
+    "z": 1150,
+    "parent": "bbsbP"
+  },
+  "38op": {
+    "deck": "deck-small",
+    "type": "card",
+    "cardType": "JC",
+    "id": "38op",
+    "z": 5176,
+    "parent": "bbsbP"
+  },
+  "ontz": {
+    "deck": "deck-small",
+    "type": "card",
+    "cardType": "QC",
+    "id": "ontz",
+    "z": 4991,
+    "parent": "bbsbP"
+  },
+  "36nr": {
+    "deck": "deck-small",
+    "type": "card",
+    "cardType": "KC",
+    "id": "36nr",
+    "z": 652,
+    "parent": "bbsbP"
+  },
+  "g01s": {
+    "type": "label",
+    "text": "The cards in this deck have a 'points' property that is different per card. Manually edit the deck to see how the points are configured for each card. (Face cards are defaulted with '15')",
+    "x": 658,
+    "y": 212,
+    "z": 324,
+    "id": "g01s",
+    "width": 300,
+    "height": 100
+  },
+  "label-count": {
+    "type": "label",
+    "text": 0,
+    "x": 243,
+    "y": 86,
+    "z": 310,
+    "id": "label-count"
+  },
+  "holder1": {
+    "type": "holder",
+    "x": 3,
+    "y": 170,
+    "z": 13,
+    "id": "holder1",
+    "stackOffsetX": 110,
+    "width": 500,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "ep7a": {
+    "type": "label",
+    "text": "card count:",
+    "x": 169,
+    "y": 86,
+    "z": 309,
+    "id": "ep7a"
+  },
+  "vi79": {
+    "type": "label",
+    "text": "points:",
+    "x": 181,
+    "y": 113,
+    "z": 311,
+    "id": "vi79"
+  },
+  "label-points": {
+    "type": "label",
+    "text": 0,
+    "x": 237,
+    "y": 112,
+    "z": 315,
+    "id": "label-points"
+  },
+  "8fr3": {
+    "type": "label",
+    "text": "Functions: GET",
+    "css": "font-size: 60px",
+    "height": 160,
+    "width": 1000,
+    "z": 322,
+    "id": "8fr3",
+    "y": -6,
+    "x": 287
+  },
+  "yqpn-copy001": {
+    "type": "button",
+    "id": "yqpn-copy001",
+    "x": 83,
+    "y": 648,
+    "z": 280,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "myCustomKey",
+        "value": "spin"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "text": "Click to spin"
+  },
+  "abcd": {
+    "type": "spinner",
+    "id": "abcd",
+    "x": 67,
+    "y": 753,
+    "width": null,
+    "height": null,
+    "z": 10109,
+    "movable": null,
+    "movableInEdit": null,
+    "angle": 114206,
+    "myCustomKey": "spin",
+    "options": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "value": 2
+  },
+  "abc1": {
+    "type": "spinner",
+    "id": "abc1",
+    "x": 205,
+    "y": 880,
+    "width": null,
+    "height": null,
+    "z": 10114,
+    "movable": null,
+    "movableInEdit": null,
+    "angle": 111970,
+    "myCustomKey": "spin",
+    "options": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "value": 1
+  },
+  "wxyz": {
+    "type": "spinner",
+    "id": "wxyz",
+    "x": 338,
+    "y": 880,
+    "z": 10106,
+    "angle": 111269,
+    "myCustomKey": "spin",
+    "options": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "value": 1
+  },
+  "wxy2": {
+    "type": "spinner",
+    "id": "wxy2",
+    "x": 71,
+    "y": 876,
+    "width": null,
+    "height": null,
+    "z": 10096,
+    "movable": null,
+    "movableInEdit": null,
+    "angle": 110826,
+    "myCustomKey": "spin",
+    "options": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "value": 6
+  },
+  "oeh9": {
+    "type": "button",
+    "id": "oeh9",
+    "x": 62,
+    "y": 82,
+    "z": 284,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "holder1"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "LABEL",
+        "label": "label-count",
+        "value": "${COUNT}"
+      },
+      {
+        "func": "GET",
+        "aggregation": "sum",
+        "property": "points",
+        "comment": "Default variable name is the name of the property, so we use that in LABEL below"
+      },
+      {
+        "func": "LABEL",
+        "label": "label-points",
+        "value": "${points}"
+      }
+    ],
+    "text": "Calculate"
+  },
+  "rz15": {
+    "id": "rz15",
+    "x": 44,
+    "y": 520,
+    "z": 323,
+    "css": "font-size: 30px",
+    "width": 300,
+    "text": 17
+  },
+  "12ao": {
+    "type": "button",
+    "id": "12ao",
+    "x": 564,
+    "y": 658.75,
+    "z": 306,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "myCustomKey",
+        "value": "spin"
+      },
+      {
+        "func": "GET",
+        "aggregation": "average",
+        "property": "value",
+        "comment": "the value property in a spinner stores the the result of the spin",
+        "variable": "sumResult"
+      },
+      {
+        "func": "LABEL",
+        "label": "rz15",
+        "value": "${sumResult}"
+      },
+      {
+        "func": "LABEL",
+        "label": "rtfg",
+        "value": "Result for Value Average:"
+      }
+    ],
+    "text": "Mode: Average"
+  },
+  "xy38": {
+    "type": "button",
+    "id": "xy38",
+    "x": 564,
+    "y": 744.5,
+    "z": 305,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "myCustomKey",
+        "value": "spin"
+      },
+      {
+        "func": "GET",
+        "aggregation": "median",
+        "property": "value",
+        "comment": "the value property in a spinner stores the the result of the spin",
+        "variable": "sumResult"
+      },
+      {
+        "func": "LABEL",
+        "label": "rz15",
+        "value": "${sumResult}"
+      },
+      {
+        "func": "LABEL",
+        "label": "rtfg",
+        "value": "Result for Value Median:"
+      }
+    ],
+    "text": "Mode: Median"
+  },
+  "xisr": {
+    "type": "button",
+    "id": "xisr",
+    "x": 564,
+    "y": 830.25,
+    "z": 304,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "myCustomKey",
+        "value": "spin"
+      },
+      {
+        "func": "GET",
+        "aggregation": "min",
+        "property": "value",
+        "comment": "the value property in a spinner stores the the result of the spin",
+        "variable": "sumResult"
+      },
+      {
+        "func": "LABEL",
+        "label": "rz15",
+        "value": "${sumResult}"
+      },
+      {
+        "func": "LABEL",
+        "label": "rtfg",
+        "value": "Result for Value Min:"
+      }
+    ],
+    "text": "Mode: Min"
+  },
+  "rj5t": {
+    "type": "button",
+    "id": "rj5t",
+    "x": 564,
+    "y": 916,
+    "z": 303,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "myCustomKey",
+        "value": "spin"
+      },
+      {
+        "func": "GET",
+        "aggregation": "max",
+        "property": "value",
+        "comment": "the value property in a spinner stores the the result of the spin",
+        "variable": "sumResult"
+      },
+      {
+        "func": "LABEL",
+        "label": "rz15",
+        "value": "${sumResult}"
+      },
+      {
+        "func": "LABEL",
+        "label": "rtfg",
+        "value": "Result for Value Max:"
+      }
+    ],
+    "text": "Mode: Max"
+  },
+  "2mmn": {
+    "type": "button",
+    "id": "2mmn",
+    "x": 564,
+    "y": 573,
+    "z": 307,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "myCustomKey",
+        "value": "spin"
+      },
+      {
+        "func": "GET",
+        "aggregation": "sum",
+        "property": "value",
+        "comment": "the value property in a spinner stores the the result of the spin",
+        "variable": "sumResult"
+      },
+      {
+        "func": "LABEL",
+        "label": "rz15",
+        "value": "${sumResult}"
+      },
+      {
+        "func": "LABEL",
+        "label": "rtfg",
+        "value": "Result for Value Sum:"
+      }
+    ],
+    "text": "Mode: Sum"
+  },
+  "ye71": {
+    "type": "button",
+    "id": "ye71",
+    "x": 685,
+    "y": 830.25,
+    "z": 308,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "myCustomKey",
+        "value": "spin"
+      },
+      {
+        "func": "GET",
+        "aggregation": "first",
+        "property": "value",
+        "comment": "the value property in a spinner stores the the result of the spin",
+        "variable": "sumResult"
+      },
+      {
+        "func": "LABEL",
+        "label": "rz15",
+        "value": "${sumResult}"
+      },
+      {
+        "func": "LABEL",
+        "label": "rtfg",
+        "value": "Result for Value First:"
+      }
+    ],
+    "text": "Mode: First"
+  },
+  "1wx5": {
+    "type": "button",
+    "id": "1wx5",
+    "x": 685,
+    "y": 916,
+    "z": 299,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "myCustomKey",
+        "value": "spin"
+      },
+      {
+        "func": "GET",
+        "aggregation": "array",
+        "property": "value",
+        "comment": "the value property in a spinner stores the the result of the spin",
+        "variable": "sumResult"
+      },
+      {
+        "func": "LABEL",
+        "label": "rz15",
+        "value": "${sumResult}"
+      },
+      {
+        "func": "LABEL",
+        "label": "rtfg",
+        "value": "Result for Value Array:"
+      }
+    ],
+    "text": "Mode: Array"
+  },
+  "12ao-copy001": {
+    "type": "button",
+    "id": "12ao-copy001",
+    "x": 1103,
+    "y": 658.75,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "myCustomKey",
+        "value": "spin"
+      },
+      {
+        "func": "GET",
+        "aggregation": "average",
+        "property": "id",
+        "variable": "sumResult"
+      },
+      {
+        "func": "LABEL",
+        "label": "rz15",
+        "value": "${sumResult}"
+      },
+      {
+        "func": "LABEL",
+        "label": "rtfg",
+        "value": "Result for ID Average:"
+      }
+    ],
+    "text": "Mode: Average",
+    "z": 10095
+  },
+  "xy38-copy001": {
+    "type": "button",
+    "id": "xy38-copy001",
+    "x": 1103,
+    "y": 744.5,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "myCustomKey",
+        "value": "spin"
+      },
+      {
+        "func": "GET",
+        "aggregation": "median",
+        "property": "id",
+        "variable": "sumResult"
+      },
+      {
+        "func": "LABEL",
+        "label": "rz15",
+        "value": "${sumResult}"
+      },
+      {
+        "func": "LABEL",
+        "label": "rtfg",
+        "value": "Result for ID Median:"
+      }
+    ],
+    "text": "Mode: Median",
+    "z": 10096
+  },
+  "xisr-copy001": {
+    "type": "button",
+    "id": "xisr-copy001",
+    "x": 1103,
+    "y": 830.25,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "myCustomKey",
+        "value": "spin"
+      },
+      {
+        "func": "GET",
+        "aggregation": "min",
+        "property": "id",
+        "variable": "sumResult"
+      },
+      {
+        "func": "LABEL",
+        "label": "rz15",
+        "value": "${sumResult}"
+      },
+      {
+        "func": "LABEL",
+        "label": "rtfg",
+        "value": "Result for ID Min:"
+      }
+    ],
+    "text": "Mode: Min",
+    "z": 10097
+  },
+  "rj5t-copy001": {
+    "type": "button",
+    "id": "rj5t-copy001",
+    "x": 1103,
+    "y": 916,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "myCustomKey",
+        "value": "spin"
+      },
+      {
+        "func": "GET",
+        "aggregation": "max",
+        "property": "id",
+        "comment": "the value property in a spinner stores the the result of the spin",
+        "variable": "sumResult"
+      },
+      {
+        "func": "LABEL",
+        "label": "rz15",
+        "value": "${sumResult}"
+      },
+      {
+        "func": "LABEL",
+        "label": "rtfg",
+        "value": "Result for ID Max:"
+      }
+    ],
+    "text": "Mode: Max",
+    "z": 10098
+  },
+  "2mmn-copy001": {
+    "type": "button",
+    "id": "2mmn-copy001",
+    "x": 1103,
+    "y": 573,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "myCustomKey",
+        "value": "spin"
+      },
+      {
+        "func": "GET",
+        "aggregation": "sum",
+        "property": "id",
+        "variable": "sumResult"
+      },
+      {
+        "func": "LABEL",
+        "label": "rz15",
+        "value": "${sumResult}"
+      },
+      {
+        "func": "LABEL",
+        "label": "rtfg",
+        "value": "Result for ID Sum:"
+      }
+    ],
+    "text": "Mode: Sum",
+    "z": 10099
+  },
+  "ye71-copy001": {
+    "type": "button",
+    "id": "ye71-copy001",
+    "x": 1222,
+    "y": 830.25,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "myCustomKey",
+        "value": "spin"
+      },
+      {
+        "func": "GET",
+        "aggregation": "first",
+        "property": "id",
+        "comment": "the value property in a spinner stores the the result of the spin",
+        "variable": "sumResult"
+      },
+      {
+        "func": "LABEL",
+        "label": "rz15",
+        "value": "${sumResult}"
+      },
+      {
+        "func": "LABEL",
+        "label": "rtfg",
+        "value": "Result for ID First:"
+      }
+    ],
+    "text": "Mode: First",
+    "z": 10100
+  },
+  "1wx5-copy001": {
+    "type": "button",
+    "id": "1wx5-copy001",
+    "x": 1222,
+    "y": 916,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "myCustomKey",
+        "value": "spin"
+      },
+      {
+        "func": "GET",
+        "aggregation": "array",
+        "property": "id",
+        "variable": "sumResult"
+      },
+      {
+        "func": "LABEL",
+        "label": "rz15",
+        "value": "${sumResult}"
+      },
+      {
+        "func": "LABEL",
+        "label": "rtfg",
+        "value": "Result for ID Array:"
+      }
+    ],
+    "text": "Mode: Array",
+    "z": 10101
+  },
+  "jrts": {
+    "type": "holder",
+    "y": 400,
+    "z": 14,
+    "id": "jrts",
+    "stackOffsetX": 110,
+    "width": 160000,
+    "dropTarget": {
+      "no": "no"
+    },
+    "height": 600,
+    "css": "background:grey"
+  },
+  "v5h4": {
+    "id": "v5h4",
+    "x": 469,
+    "y": 417,
+    "z": 321,
+    "css": "font-size: 20px",
+    "width": 400,
+    "text": "This group of buttons acts on the value of the spinners. The larger column GETs using the stated math aggregation.  'First' and 'Array' get the numbers in seemingly random patterns. But the array can be sorted with COMPUTE (see Compute (Array) tutorial)."
+  },
+  "a4un": {
+    "id": "a4un",
+    "x": 1008,
+    "y": 412,
+    "z": 356,
+    "css": "font-size: 20px",
+    "width": 400,
+    "text": "This group of buttons acts on the spinner ID. The larger column does not work because the results are not all numbers.  'First' and 'Array' get the IDs in a seemingly consistent order based on alphabetical order."
+  },
+  "ffpq": {
+    "type": "label",
+    "id": "ffpq",
+    "x": 1090,
+    "y": 67,
+    "width": 500,
+    "z": 335,
+    "text": "This example uses 'first' aggregation, which is the default, so it need not be explicitly stated.  It reads the currently active color. Click the piece to change its color. You could also use a dynamic expression: replace both the SELECT and GET with just \"var myOutputVariable = ${PROPERTY color OF tiqk}\",",
+    "height": 200
+  },
+  "beh9": {
+    "type": "button",
+    "id": "beh9",
+    "x": 1322,
+    "y": 216,
+    "z": 10109,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "classes",
+        "value": "checkersPiece",
+        "collection": "COLLECTION2"
+      },
+      {
+        "func": "GET",
+        "property": "color",
+        "collection": "COLLECTION2",
+        "variable": "myOutputVariable"
+      },
+      {
+        "func": "LABEL",
+        "label": "rl7x",
+        "value": "${myOutputVariable}"
+      }
+    ],
+    "text": "Color"
+  },
+  "rl7x": {
+    "type": "label",
+    "id": "rl7x",
+    "x": 1423,
+    "y": 181,
+    "z": 332,
+    "text": "black"
+  },
+  "tiqk": {
+    "id": "tiqk",
+    "x": 1438.25,
+    "y": 216.25,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 324,
+    "movable": true,
+    "movableInEdit": null,
+    "classes": "checkersPiece",
+    "color": "red",
+    "faces": [
+      {
+        "color": "red"
+      },
+      {
+        "color": "blue"
+      },
+      {
+        "color": "black"
+      },
+      {
+        "color": "green"
+      }
+    ],
+    "activeFace": 2
+  },
+  "rtfg": {
+    "id": "rtfg",
+    "x": 45,
+    "y": 466,
+    "width": 340,
+    "height": 42,
+    "z": 340,
+    "css": "font-size: 30px; color:black",
+    "text": "Result for Value Sum:"
+  },
+  "3ffg": {
+    "id": "3ffg",
+    "z": 370,
+    "x": 1386,
+    "y": 696,
+    "css": "font-size:20px; background:black; color:white",
+    "text": "1",
+    "width": 30,
+    "height": 30,
+    "anotherKey": true,
+    "points": 1
+  },
+  "87b4": {
+    "id": "87b4",
+    "z": 363,
+    "x": 1432,
+    "y": 696,
+    "css": "font-size:20px; background:black; color:white",
+    "text": "0",
+    "width": 30,
+    "height": 30,
+    "anotherKey": true,
+    "points": 0
+  },
+  "7gen": {
+    "text": "0",
+    "id": "7gen",
+    "z": 344,
+    "x": 1523,
+    "y": 696,
+    "css": "font-size:20px; background:black; color:white",
+    "width": 30,
+    "height": 30,
+    "anotherKey": true,
+    "points": 0
+  },
+  "rxpb": {
+    "id": "rxpb",
+    "z": 371,
+    "x": 1477,
+    "y": 696,
+    "css": "font-size:20px; background:black; color:white",
+    "text": "3",
+    "width": 30,
+    "height": 30,
+    "anotherKey": true,
+    "points": 3
+  },
+  "69ed": {
+    "id": "69ed",
+    "z": 368,
+    "x": 1302,
+    "y": 584,
+    "css": "font-size:20px",
+    "text": "skipMissing will not GET values of null, but will get values of 0 or  '' ''. There are 5 values below; the first one is null.",
+    "width": 300
+  },
+  "g2e6": {
+    "id": "g2e6",
+    "z": 369,
+    "x": 1341,
+    "y": 696,
+    "css": "font-size:20px; background:black; color:white",
+    "width": 30,
+    "height": 30,
+    "anotherKey": true
+  },
+  "_meta": {
+    "version": 3,
+    "info": {
+      "name": "Functions - GET",
+      "image": "/assets/-1585389795_5145",
+      "rules": "",
+      "bgg": "",
+      "year": "2020",
+      "mode": "Tutorial",
+      "time": "",
+      "players": "1",
+      "language": "US",
+      "variant": "",
+      "attribution": ""
+    }
+  },
+  "wlxk": {
+    "type": "button",
+    "id": "wlxk",
+    "x": 1409,
+    "y": 738,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "anotherKey",
+        "value": true
+      },
+      {
+        "func": "GET",
+        "aggregation": "array",
+        "property": "points",
+        "variable": "sumResult"
+      },
+      {
+        "func": "LABEL",
+        "label": "rz15",
+        "value": "${sumResult}"
+      },
+      {
+        "func": "LABEL",
+        "label": "rtfg",
+        "value": "Result Array:"
+      }
+    ],
+    "text": "Array",
+    "z": 10110
+  },
+  "750i": {
+    "type": "button",
+    "id": "750i",
+    "x": 1413,
+    "y": 823,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "anotherKey",
+        "value": true
+      },
+      {
+        "func": "GET",
+        "aggregation": "array",
+        "property": "points",
+        "variable": "sumResult",
+        "skipMissing": true
+      },
+      {
+        "func": "LABEL",
+        "label": "rz15",
+        "value": "${sumResult}"
+      },
+      {
+        "func": "LABEL",
+        "label": "rtfg",
+        "value": "Result Array:"
+      }
+    ],
+    "text": "Array skipMissing",
+    "z": 10111
+  }
+}

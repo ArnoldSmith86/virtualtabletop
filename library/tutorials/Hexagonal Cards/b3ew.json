@@ -1,0 +1,792 @@
+{
+  "8fr3": {
+    "type": "label",
+    "text": "Hexagonal Cards:\nGrid",
+    "css": "font-size: 60px",
+    "height": 150,
+    "width": 1000,
+    "x": 287,
+    "y": -4,
+    "z": 66,
+    "id": "8fr3"
+  },
+  "rn4t-copy001-copy001": {
+    "type": "button",
+    "text": "=",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Input1",
+        "mode": "set"
+      },
+      {
+        "func": "GET",
+        "property": "text",
+        "variable": "Num1"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Input2",
+        "mode": "set"
+      },
+      {
+        "func": "GET",
+        "property": "text",
+        "variable": "Num2"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Operation",
+        "mode": "set"
+      },
+      {
+        "func": "GET",
+        "property": "text",
+        "variable": "maththis"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "/",
+        "applyVariables": [
+          {
+            "variable": "maththis",
+            "parameter": "operation"
+          },
+          {
+            "variable": "Num1",
+            "parameter": "operand1"
+          },
+          {
+            "variable": "Num2",
+            "parameter": "operand2"
+          }
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": "Result-copy001-copy001",
+        "significantDigits": 3,
+        "applyVariables": [
+          {
+            "parameter": "value",
+            "variable": "COMPUTE"
+          }
+        ]
+      }
+    ],
+    "x": 2298,
+    "y": 232,
+    "id": "rn4t-copy001-copy001",
+    "css": "font-size: 25px",
+    "z": 139
+  },
+  "Input1-copy001-copy001": {
+    "type": "label",
+    "css": "font-size: 25px; border: 2px solid blue",
+    "height": 35,
+    "width": 100,
+    "x": 1958,
+    "y": 256,
+    "id": "Input1-copy001-copy001",
+    "editable": true,
+    "text": 7.2,
+    "z": 140
+  },
+  "Input2-copy001-copy001": {
+    "type": "label",
+    "css": "font-size: 25px; border: 2px solid blue",
+    "height": 35,
+    "width": 100,
+    "x": 2179,
+    "y": 256,
+    "editable": true,
+    "id": "Input2-copy001-copy001",
+    "text": 1.7,
+    "z": 141
+  },
+  "Result-copy001-copy001": {
+    "type": "label",
+    "text": 8.9,
+    "css": "font-size: 25px",
+    "height": 35,
+    "width": 100,
+    "x": 2373,
+    "y": 256,
+    "id": "Result-copy001-copy001",
+    "z": 142
+  },
+  "Operation-copy001-copy001": {
+    "type": "label",
+    "css": "font-size: 25px; border: 2px solid red",
+    "height": 35,
+    "width": 70,
+    "x": 2085,
+    "y": 256,
+    "editable": true,
+    "id": "Operation-copy001-copy001",
+    "text": "+",
+    "z": 143
+  },
+  "bhbl": {
+    "type": "label",
+    "text": "  Hexagon grids need to be divided in two grids.\n \n\n  On the grid in the right, the first grid is the one with black and white cards and the second grid is the one with grey cards. As you can see the two grids are the same but one is offset to fill the gap.\n \n  In the main grid the cards have their side touching so the X value is the card's width. For the Y value, you can see that there is a gap equivalent to one side of the hexagon. As the side is half the height size, the Y value is 1.5 times the height of the card\n\n\n  For the second grid offsetX, the cards are in the middle of the ones above it so the offsetX is half the width of the cards. For offsetY you can see that the cards are 'made' out of one top and bottom triangles a rectangle. The rectangle height is the side of the hexagon so the two triangles height must sum up to the side of the hexagon. So the recatangle and one triangle sum up to 0.75 times the hexagon size.\n                                  \n\n\"grid\": [\n    {\n        \"x\": Hexagon Width,\n        \"y\": Hexagon Height*1.5,\n        \"offsetX\": 0,\n        \"offsetY\": 0\n    },\n    {\n        \"x\": Hexagon Width,\n        \"y\": Hexagon Height*1.5,\n        \"offsetX\": Hexagon Width/2,\n        \"offsetY\": Hexagon Height*0.75\n    }\n]",
+    "x": 63,
+    "y": 140,
+    "z": 221,
+    "id": "bhbl",
+    "width": 354,
+    "height": 850,
+    "css": "text-align:left;",
+    "editable": true
+  },
+  "5e5yD": {
+    "type": "deck",
+    "id": "5e5yD",
+    "x": 545,
+    "y": 661,
+    "cardTypes": {
+      "Black": {
+        "image": "/assets/205690333_283"
+      },
+      "Grey": {
+        "image": "/assets/864332140_283"
+      },
+      "White": {
+        "image": "/assets/291346051_283"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 86.6,
+            "height": 100,
+            "valueType": "dynamic",
+            "value": "image",
+            "color": "transparent"
+          }
+        ]
+      }
+    ],
+    "z": 33,
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 86.6,
+      "height": 100,
+      "shift": "yes",
+      "grid": [
+        {
+          "x": 86.6,
+          "y": 150,
+          "offsetX": 0,
+          "offsetY": 0,
+          "maxY": 810
+        },
+        {
+          "x": 86.6,
+          "y": 150,
+          "offsetX": 43.3,
+          "offsetY": 75,
+          "maxY": 810
+        }
+      ]
+    }
+  },
+  "lhge": {
+    "deck": "5e5yD",
+    "type": "card",
+    "cardType": "Black",
+    "id": "lhge",
+    "z": 7,
+    "x": 476.29999999999995,
+    "y": 225
+  },
+  "g0w6": {
+    "deck": "5e5yD",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "g0w6",
+    "z": 26,
+    "x": 606.1999999999998,
+    "y": 450
+  },
+  "u0dw": {
+    "deck": "5e5yD",
+    "type": "card",
+    "cardType": "White",
+    "id": "u0dw",
+    "z": 10,
+    "x": 476.29999999999995,
+    "y": 375
+  },
+  "492u": {
+    "deck": "5e5yD",
+    "type": "card",
+    "cardType": "Black",
+    "id": "492u",
+    "z": 29,
+    "x": 476.29999999999995,
+    "y": 525
+  },
+  "7x5k": {
+    "deck": "5e5yD",
+    "type": "card",
+    "cardType": "Black",
+    "id": "7x5k",
+    "z": 18,
+    "x": 562.8999999999999,
+    "y": 375
+  },
+  "prw5": {
+    "deck": "5e5yD",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "prw5",
+    "z": 23,
+    "x": 519.5999999999999,
+    "y": 450
+  },
+  "0c9e": {
+    "deck": "5e5yD",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "0c9e",
+    "z": 30,
+    "x": 519.6,
+    "y": 600
+  },
+  "hbe9": {
+    "deck": "5e5yD",
+    "type": "card",
+    "cardType": "White",
+    "id": "hbe9",
+    "z": 28,
+    "x": 562.8999999999999,
+    "y": 525
+  },
+  "0f8q": {
+    "deck": "5e5yD",
+    "type": "card",
+    "cardType": "White",
+    "id": "0f8q",
+    "z": 11,
+    "x": 562.8999999999999,
+    "y": 225
+  },
+  "_meta": {
+    "version": 3,
+    "info": {
+      "name": "Hexagonal Cards",
+      "image": "/assets/-2133266205_8127",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "0",
+      "players": "1",
+      "language": "US",
+      "variant": "2) Grid",
+      "attribution": "\nGood reference guide:\nhttps://www.redblobgames.com/grids/hexagons/#size-and-spacing"
+    }
+  },
+  "34s0": {
+    "type": "deck",
+    "x": 1007,
+    "y": 303,
+    "cardTypes": {
+      "Black": {
+        "image": "/assets/205690333_283"
+      },
+      "Grey": {
+        "image": "/assets/864332140_283"
+      },
+      "White": {
+        "image": "/assets/291346051_283"
+      },
+      "Red": {
+        "image": "/assets/336766617_283"
+      },
+      "Orange": {
+        "image": "/assets/-293574763_283"
+      },
+      "Yellow": {
+        "image": "/assets/1457429247_283"
+      },
+      "Green": {
+        "image": "/assets/-1704204545_283"
+      },
+      "Blue": {
+        "image": "/assets/1091990949_283"
+      },
+      "Purple": {
+        "image": "/assets/59050680_283"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 86.6,
+            "height": 100,
+            "valueType": "dynamic",
+            "value": "image",
+            "color": "transparent"
+          }
+        ]
+      }
+    ],
+    "z": 85,
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 86.6,
+      "height": 100,
+      "shift": "yes",
+      "grid": [
+        {
+          "x": 88.6,
+          "y": 152,
+          "offsetX": 0,
+          "offsetY": 0
+        },
+        {
+          "x": 88.6,
+          "y": 152,
+          "offsetX": 44.3,
+          "offsetY": 76,
+          "maxY": 810
+        }
+      ]
+    },
+    "id": "34s0"
+  },
+  "h3hn": {
+    "deck": "34s0",
+    "type": "card",
+    "cardType": "Red",
+    "id": "h3hn",
+    "z": 72,
+    "x": 930.3,
+    "y": 228
+  },
+  "1nn0": {
+    "deck": "34s0",
+    "type": "card",
+    "cardType": "Orange",
+    "id": "1nn0",
+    "z": 80,
+    "x": 885.9999999999999,
+    "y": 456
+  },
+  "l78h": {
+    "deck": "34s0",
+    "type": "card",
+    "cardType": "Yellow",
+    "id": "l78h",
+    "z": 67,
+    "x": 974.5999999999999,
+    "y": 152
+  },
+  "7sw0": {
+    "deck": "34s0",
+    "type": "card",
+    "cardType": "Green",
+    "id": "7sw0",
+    "z": 70,
+    "x": 1107.5,
+    "y": 228
+  },
+  "30jw": {
+    "deck": "34s0",
+    "type": "card",
+    "cardType": "Blue",
+    "id": "30jw",
+    "z": 71,
+    "x": 1018.8999999999999,
+    "y": 228
+  },
+  "ckco": {
+    "deck": "34s0",
+    "type": "card",
+    "cardType": "Purple",
+    "id": "ckco",
+    "z": 68,
+    "x": 1063.1999999999998,
+    "y": 152
+  },
+  "u39r": {
+    "deck": "34s0",
+    "type": "card",
+    "cardType": "Red",
+    "id": "u39r",
+    "z": 83,
+    "x": 1063.1999999999998,
+    "y": 456
+  },
+  "a354": {
+    "deck": "34s0",
+    "type": "card",
+    "cardType": "Red",
+    "id": "a354",
+    "z": 77,
+    "x": 930.3,
+    "y": 380
+  },
+  "41hp": {
+    "deck": "34s0",
+    "type": "card",
+    "cardType": "Orange",
+    "id": "41hp",
+    "z": 84,
+    "x": 1151.7999999999997,
+    "y": 456
+  },
+  "18d6": {
+    "deck": "34s0",
+    "type": "card",
+    "cardType": "Orange",
+    "id": "18d6",
+    "z": 75,
+    "x": 1063.1999999999998,
+    "y": 304
+  },
+  "4pn5": {
+    "deck": "34s0",
+    "type": "card",
+    "cardType": "Yellow",
+    "id": "4pn5",
+    "z": 69,
+    "x": 1151.7999999999997,
+    "y": 152
+  },
+  "qa6n": {
+    "deck": "34s0",
+    "type": "card",
+    "cardType": "Yellow",
+    "id": "qa6n",
+    "z": 78,
+    "x": 1018.8999999999999,
+    "y": 380
+  },
+  "7loq": {
+    "deck": "34s0",
+    "type": "card",
+    "cardType": "Green",
+    "id": "7loq",
+    "z": 79,
+    "x": 1107.5,
+    "y": 380
+  },
+  "nbtj": {
+    "deck": "34s0",
+    "type": "card",
+    "cardType": "Green",
+    "id": "nbtj",
+    "z": 82,
+    "x": 974.5999999999999,
+    "y": 456
+  },
+  "5b66": {
+    "deck": "34s0",
+    "type": "card",
+    "cardType": "Blue",
+    "id": "5b66",
+    "z": 73,
+    "x": 885.9999999999999,
+    "y": 304
+  },
+  "ykm9": {
+    "deck": "34s0",
+    "type": "card",
+    "cardType": "Blue",
+    "id": "ykm9",
+    "z": 66,
+    "x": 885.9999999999999,
+    "y": 152
+  },
+  "rc8y": {
+    "deck": "34s0",
+    "type": "card",
+    "cardType": "Purple",
+    "id": "rc8y",
+    "z": 76,
+    "x": 1151.7999999999997,
+    "y": 304
+  },
+  "gtlk": {
+    "deck": "34s0",
+    "type": "card",
+    "cardType": "Purple",
+    "id": "gtlk",
+    "z": 74,
+    "x": 974.5999999999999,
+    "y": 304
+  },
+  "f58a": {
+    "type": "label",
+    "text": "This grid has a small gap between the cards. It was created using this grid formula\n\n\"grid\": [\n    {\n        \"x\": Hexagon Width+2,\n        \"y\": (Hexagon Heigh*1.5)+2,\n        \"offsetX\": 0,\n        \"offsetY\": 0\n    },\n    {\n        \"x\": Hexagon Width+2,\n        \"y\": (Hexagon Height*1.5)+2,\n        \"offsetX\": (Hexagon Width/2)+1,\n        \"offsetY\": (Hexagon Height*0.75)+1\n    }\n]",
+    "x": 1257,
+    "y": 193,
+    "z": 218,
+    "width": 354,
+    "height": 400,
+    "css": "text-align:left;",
+    "id": "f58a"
+  },
+  "vwam": {
+    "type": "deck",
+    "x": 989,
+    "y": 747,
+    "cardTypes": {
+      "Black": {
+        "image": "/assets/-745266061_296"
+      },
+      "Grey": {
+        "image": "/assets/1758884301_296"
+      },
+      "White": {
+        "image": "/assets/-1204226281_296"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 86.6,
+            "valueType": "dynamic",
+            "value": "image",
+            "color": "transparent"
+          }
+        ]
+      }
+    ],
+    "z": 86,
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 100,
+      "height": 86.6,
+      "shift": "yes",
+      "grid": [
+        {
+          "x": 150,
+          "y": 86.6,
+          "offsetX": 0,
+          "offsetY": 0
+        },
+        {
+          "x": 150,
+          "y": 86.6,
+          "offsetX": 75,
+          "offsetY": 43.3
+        }
+      ]
+    },
+    "id": "vwam"
+  },
+  "v2j6": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "v2j6",
+    "z": 217,
+    "x": 1050,
+    "y": 779.3999999999999
+  },
+  "7j67": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "7j67",
+    "z": 206,
+    "x": 900,
+    "y": 692.7999999999998
+  },
+  "p29z": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "p29z",
+    "z": 216,
+    "x": 1050,
+    "y": 692.7999999999998
+  },
+  "i8x2": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "i8x2",
+    "z": 218,
+    "x": 975,
+    "y": 822.6999999999999
+  },
+  "4h6u": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "4h6u",
+    "z": 215,
+    "x": 975,
+    "y": 649.4999999999999
+  },
+  "e8xh": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "White",
+    "id": "e8xh",
+    "z": 176,
+    "x": 975,
+    "y": 736.0999999999999
+  },
+  "si4m": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Grey",
+    "id": "si4m",
+    "z": 208,
+    "x": 900,
+    "y": 779.3999999999999
+  },
+  "endb": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "endb",
+    "z": 173,
+    "x": 1125,
+    "y": 649.4999999999999
+  },
+  "7qw6": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "7qw6",
+    "z": 211,
+    "x": 1125,
+    "y": 736.0999999999999
+  },
+  "2e84": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "2e84",
+    "z": 171,
+    "x": 1125,
+    "y": 822.6999999999999
+  },
+  "759s": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "759s",
+    "z": 210,
+    "x": 1050,
+    "y": 865.9999999999999
+  },
+  "indq": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "indq",
+    "z": 169,
+    "x": 975,
+    "y": 909.3
+  },
+  "ejbg": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "ejbg",
+    "z": 213,
+    "x": 1050,
+    "y": 606.1999999999998
+  },
+  "o690": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "o690",
+    "z": 167,
+    "x": 975,
+    "y": 562.8999999999999
+  },
+  "wm93": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "wm93",
+    "z": 209,
+    "x": 900,
+    "y": 865.9999999999999
+  },
+  "8ux5": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "8ux5",
+    "z": 164,
+    "x": 825,
+    "y": 822.6999999999999
+  },
+  "lml0": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "lml0",
+    "z": 214,
+    "x": 900,
+    "y": 606.1999999999998
+  },
+  "qnlx": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "qnlx",
+    "z": 199,
+    "x": 825,
+    "y": 736.0999999999999
+  },
+  "2l54": {
+    "deck": "vwam",
+    "type": "card",
+    "cardType": "Black",
+    "id": "2l54",
+    "z": 161,
+    "x": 825,
+    "y": 649.4999999999999
+  },
+  "1i54": {
+    "type": "label",
+    "text": "This grid has a small gap between the cards. It was created using this grid formula\n\n\"grid\": [\n    {\n        \"x\": Hexagon Heigh*1.5,\n        \"y\": Hexagon Width,\n        \"offsetX\": 0,\n        \"offsetY\": 0\n    },\n    {\n        \"x\": Hexagon Height*1.5,\n        \"y\": Hexagon Width,\n        \"offsetX\": Hexagon Height*0.75,\n        \"offsetY\": Hexagon Width/2\n    }\n]\n\nNote that the card's width is the hexagon's height and the card's height is the hexagon's width.",
+    "x": 1253,
+    "y": 585,
+    "z": 220,
+    "width": 354,
+    "height": 400,
+    "css": "text-align:left;",
+    "id": "1i54"
+  }
+}

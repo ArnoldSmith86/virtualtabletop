@@ -1,0 +1,1816 @@
+{
+  "grid001-1-1": {
+    "id": "grid001-1-1",
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/2C.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "y": 40,
+    "dropLimit": 1,
+    "parent": "grid001-3-9"
+  },
+  "grid001-1-2": {
+    "id": "grid001-1-2",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/2D.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-3-2"
+  },
+  "grid001-1-3": {
+    "id": "grid001-1-3",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/2H.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-2-10"
+  },
+  "grid001-1-4": {
+    "id": "grid001-1-4",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/2S.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-5-9"
+  },
+  "grid001-1-5": {
+    "id": "grid001-1-5",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/3C.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-3-6"
+  },
+  "grid001-1-6": {
+    "id": "grid001-1-6",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/3D.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-3-7"
+  },
+  "grid001-1-7": {
+    "id": "grid001-1-7",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/3H.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-2-6"
+  },
+  "grid001-1-8": {
+    "id": "grid001-1-8",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/3S.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-5-4"
+  },
+  "grid001-1-9": {
+    "id": "grid001-1-9",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/4C.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-1-3"
+  },
+  "grid001-1-10": {
+    "id": "grid001-1-10",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/4D.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-2-7"
+  },
+  "grid001-2-1": {
+    "id": "grid001-2-1",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/4H.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-4-3"
+  },
+  "grid001-2-2": {
+    "id": "grid001-2-2",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/4S.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-3-5"
+  },
+  "grid001-2-3": {
+    "id": "grid001-2-3",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/5C.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-1-5"
+  },
+  "grid001-2-4": {
+    "id": "grid001-2-4",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/5D.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-5-7"
+  },
+  "grid001-2-5": {
+    "id": "grid001-2-5",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/5H.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "parent": "grid001-4-9",
+    "dropLimit": 1
+  },
+  "grid001-2-6": {
+    "id": "grid001-2-6",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/5S.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-4-4"
+  },
+  "grid001-2-7": {
+    "id": "grid001-2-7",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/6C.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-5-2"
+  },
+  "grid001-2-8": {
+    "id": "grid001-2-8",
+    "y": 4,
+    "z": 17735,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/6D.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "Column 6",
+    "x": 4
+  },
+  "grid001-2-9": {
+    "id": "grid001-2-9",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/6H.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-4-8"
+  },
+  "grid001-2-10": {
+    "id": "grid001-2-10",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/6S.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-2-8"
+  },
+  "grid001-3-1": {
+    "id": "grid001-3-1",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/7C.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-5-6"
+  },
+  "grid001-3-2": {
+    "id": "grid001-3-2",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/7D.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-4-2"
+  },
+  "grid001-3-3": {
+    "id": "grid001-3-3",
+    "y": 4,
+    "z": 17716,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/7H.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "Column 3",
+    "x": 4
+  },
+  "grid001-3-4": {
+    "id": "grid001-3-4",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/7S.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-2-2"
+  },
+  "grid001-3-5": {
+    "id": "grid001-3-5",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/8C.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-5-1"
+  },
+  "grid001-3-6": {
+    "id": "grid001-3-6",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/8D.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-5-8"
+  },
+  "grid001-3-7": {
+    "id": "grid001-3-7",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/8H.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-5-3"
+  },
+  "grid001-3-8": {
+    "id": "grid001-3-8",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/8S.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-4-1"
+  },
+  "grid001-3-9": {
+    "id": "grid001-3-9",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/9C.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-4-6"
+  },
+  "grid001-3-10": {
+    "id": "grid001-3-10",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/9D.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-2-3"
+  },
+  "grid001-4-1": {
+    "id": "grid001-4-1",
+    "y": 4,
+    "z": 17723,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/9H.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "Column 4",
+    "x": 4
+  },
+  "grid001-4-2": {
+    "id": "grid001-4-2",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/9S.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-6-1"
+  },
+  "grid001-4-3": {
+    "id": "grid001-4-3",
+    "y": 4,
+    "z": 17709,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/AC.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "x": 4,
+    "parent": "Column 2"
+  },
+  "grid001-4-4": {
+    "id": "grid001-4-4",
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/AD.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "y": 40,
+    "dropLimit": 1,
+    "parent": "grid001-2-1"
+  },
+  "grid001-4-5": {
+    "id": "grid001-4-5",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/AH.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-3-3"
+  },
+  "grid001-4-6": {
+    "id": "grid001-4-6",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/AS.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-2-9"
+  },
+  "grid001-4-7": {
+    "id": "grid001-4-7",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/JC.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-3-10"
+  },
+  "grid001-4-8": {
+    "id": "grid001-4-8",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/JD.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-5-10"
+  },
+  "grid001-4-9": {
+    "id": "grid001-4-9",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/JH.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-4-5"
+  },
+  "grid001-4-10": {
+    "id": "grid001-4-10",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/JS.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "parent": "grid001-2-5",
+    "dropLimit": 1
+  },
+  "grid001-5-1": {
+    "id": "grid001-5-1",
+    "y": 4,
+    "z": 17702,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/KC.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "x": 4,
+    "parent": "Column 1"
+  },
+  "grid001-5-2": {
+    "id": "grid001-5-2",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/KD.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-1-8"
+  },
+  "grid001-5-3": {
+    "id": "grid001-5-3",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/KH.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-3-4"
+  },
+  "grid001-5-4": {
+    "id": "grid001-5-4",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/KS.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-3-8"
+  },
+  "grid001-5-5": {
+    "id": "grid001-5-5",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/QC.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-1-7"
+  },
+  "grid001-5-6": {
+    "id": "grid001-5-6",
+    "y": 4,
+    "z": 17729,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/QD.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "Column 5",
+    "x": 4
+  },
+  "grid001-5-7": {
+    "id": "grid001-5-7",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/QH.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-4-10"
+  },
+  "grid001-5-8": {
+    "id": "grid001-5-8",
+    "y": 4,
+    "z": 17741,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/QS.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "Column 7",
+    "x": 4
+  },
+  "grid001-5-9": {
+    "id": "grid001-5-9",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/TC.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-1-9"
+  },
+  "grid001-5-10": {
+    "id": "grid001-5-10",
+    "y": 4,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/TD.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "Column 8",
+    "x": 4
+  },
+  "grid001-6-1": {
+    "id": "grid001-6-1",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/TH.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "parent": "grid001-3-1",
+    "dropLimit": 1
+  },
+  "grid001-6-2": {
+    "id": "grid001-6-2",
+    "y": 40,
+    "z": 1,
+    "type": "holder",
+    "css": "background: url(\"/i/cards-default/TS.svg\"); background-size: contain; border-color: transparent !important",
+    "movable": true,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "dropOffsetY": 40,
+    "dropOffsetX": 0,
+    "stackOffsetX": 40,
+    "stackOffsetY": 0,
+    "width": 103,
+    "height": 160,
+    "card": true,
+    "dropLimit": 1,
+    "parent": "grid001-5-5"
+  },
+  "shuffle": {
+    "type": "holder",
+    "x": -1995.5,
+    "y": 631,
+    "z": 14778,
+    "id": "shuffle",
+    "dropTarget": {
+      "card": true
+    },
+    "dropLimit": 0,
+    "hidden": true
+  },
+  "stack2": {
+    "type": "holder",
+    "x": -802.5,
+    "y": 796,
+    "z": 14784,
+    "dropTarget": {
+      "card": true
+    },
+    "id": "stack2",
+    "dropLimit": 0,
+    "hidden": true
+  },
+  "stack1": {
+    "type": "holder",
+    "x": -672.5,
+    "y": 793,
+    "z": 14783,
+    "dropTarget": {
+      "card": true
+    },
+    "id": "stack1",
+    "dropLimit": 0,
+    "hidden": true
+  },
+  "getCard": {
+    "id": "getCard",
+    "x": -656,
+    "y": 684,
+    "z": 53,
+    "type": "button",
+    "text": "GET A CARD",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "shuffle",
+        "to": "stack1",
+        "count": 1
+      }
+    ],
+    "hidden": true
+  },
+  "stackCard": {
+    "id": "stackCard",
+    "x": -790,
+    "y": 683,
+    "z": 52,
+    "type": "button",
+    "text": "STACK IT",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "stack1",
+        "to": "stack2",
+        "count": 1
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "getCard"
+      },
+      {
+        "func": "CLICK",
+        "collection": "DEFAULT"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "stack1",
+        "mode": "set"
+      },
+      {
+        "func": "GET",
+        "property": "id"
+      },
+      {
+        "func": "MOVE",
+        "from": "stack2",
+        "applyVariables": [
+          {
+            "variable": "id",
+            "parameter": "to"
+          }
+        ],
+        "count": 1
+      }
+    ],
+    "hidden": true
+  },
+  "x6": {
+    "x": -915,
+    "y": 773,
+    "z": 50,
+    "type": "button",
+    "text": "STACK X6",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "stackCard"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "id": "x6",
+    "hidden": true
+  },
+  "x7": {
+    "x": -917,
+    "y": 908,
+    "z": 48,
+    "type": "button",
+    "text": "STACK X7",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "x6"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "stackCard"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "id": "x7",
+    "hidden": true
+  },
+  "col1": {
+    "x": -1902.5,
+    "y": 910,
+    "z": 38,
+    "type": "button",
+    "text": "COL 1",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "x7"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "MOVE",
+        "from": "stack1",
+        "to": "Column 1"
+      }
+    ],
+    "id": "col1",
+    "columnButton": true,
+    "hidden": true
+  },
+  "col2": {
+    "x": -1782.5,
+    "y": 910,
+    "z": 37,
+    "type": "button",
+    "text": "COL 2",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "x7"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "MOVE",
+        "from": "stack1",
+        "to": "Column 2"
+      }
+    ],
+    "id": "col2",
+    "columnButton": true,
+    "hidden": true
+  },
+  "col3": {
+    "x": -1662.5,
+    "y": 910,
+    "z": 36,
+    "type": "button",
+    "text": "COL 3",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "x7"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "MOVE",
+        "from": "stack1",
+        "to": "Column 3"
+      }
+    ],
+    "columnButton": true,
+    "id": "col3",
+    "hidden": true
+  },
+  "col4": {
+    "x": -1542.5,
+    "y": 910,
+    "z": 35,
+    "type": "button",
+    "text": "COL 4",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "x7"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "MOVE",
+        "from": "stack1",
+        "to": "Column 4"
+      }
+    ],
+    "columnButton": true,
+    "id": "col4",
+    "hidden": true
+  },
+  "all": {
+    "x": -1900,
+    "y": 792,
+    "z": 46,
+    "type": "button",
+    "text": "BUILD COLS",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "columnButton",
+        "value": true
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "id": "all",
+    "hidden": true
+  },
+  "col5": {
+    "x": -1422.5,
+    "y": 910,
+    "z": 34,
+    "type": "button",
+    "text": "COL 5",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "x6"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "MOVE",
+        "from": "stack1",
+        "to": "Column 5"
+      }
+    ],
+    "columnButton": true,
+    "id": "col5",
+    "hidden": true
+  },
+  "col6": {
+    "x": -1302.5,
+    "y": 910,
+    "z": 33,
+    "type": "button",
+    "text": "COL 6",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "x6"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "MOVE",
+        "from": "stack1",
+        "to": "Column 6"
+      }
+    ],
+    "columnButton": true,
+    "id": "col6",
+    "hidden": true
+  },
+  "col7": {
+    "x": -1182.5,
+    "y": 910,
+    "z": 32,
+    "type": "button",
+    "text": "COL 7",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "x6"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "MOVE",
+        "from": "stack1",
+        "to": "Column 7"
+      }
+    ],
+    "columnButton": true,
+    "id": "col7",
+    "hidden": true
+  },
+  "col8": {
+    "x": -1062.5,
+    "y": 910,
+    "z": 31,
+    "type": "button",
+    "text": "COL 8",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "x6"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "MOVE",
+        "from": "stack1",
+        "to": "Column 8"
+      }
+    ],
+    "columnButton": true,
+    "id": "col8",
+    "hidden": true
+  },
+  "reset": {
+    "x": 17,
+    "y": 937,
+    "z": 43,
+    "type": "button",
+    "text": "↺",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "shuffleButton"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "all",
+        "mode": "set"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "id": "reset",
+    "height": 40,
+    "width": 40
+  },
+  "shuffleButton": {
+    "type": "button",
+    "text": "RECALL & SHUFFLE",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "card",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "value": "shuffle"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "shuffle"
+      }
+    ],
+    "x": -1997,
+    "y": 776,
+    "z": 47,
+    "id": "shuffleButton",
+    "hidden": true
+  },
+  "Column 1": {
+    "id": "Column 1",
+    "x": 82,
+    "y": 220,
+    "z": 400,
+    "type": "holder",
+    "dropTarget": {
+      "card": true
+    },
+    "dropLimit": 1
+  },
+  "Column 2": {
+    "id": "Column 2",
+    "x": 202,
+    "y": 220,
+    "z": 401,
+    "type": "holder",
+    "dropTarget": {
+      "card": true
+    },
+    "dropLimit": 1
+  },
+  "Column 3": {
+    "id": "Column 3",
+    "x": 322,
+    "y": 220,
+    "z": 402,
+    "type": "holder",
+    "dropTarget": {
+      "card": true
+    },
+    "dropLimit": 1
+  },
+  "Column 4": {
+    "id": "Column 4",
+    "x": 442,
+    "y": 220,
+    "z": 403,
+    "type": "holder",
+    "dropTarget": {
+      "card": true
+    },
+    "dropLimit": 1
+  },
+  "Column 5": {
+    "id": "Column 5",
+    "x": 562,
+    "y": 220,
+    "z": 404,
+    "type": "holder",
+    "dropTarget": {
+      "card": true
+    },
+    "dropLimit": 1
+  },
+  "Column 6": {
+    "id": "Column 6",
+    "x": 682,
+    "y": 220,
+    "z": 405,
+    "type": "holder",
+    "dropTarget": {
+      "card": true
+    },
+    "dropLimit": 1
+  },
+  "Column 7": {
+    "id": "Column 7",
+    "x": 802,
+    "y": 220,
+    "z": 406,
+    "type": "holder",
+    "dropTarget": {
+      "card": true
+    },
+    "dropLimit": 1
+  },
+  "Column 8": {
+    "id": "Column 8",
+    "x": 922,
+    "y": 220,
+    "z": 407,
+    "type": "holder",
+    "dropTarget": {
+      "card": true
+    },
+    "dropLimit": 1
+  },
+  "Top 1": {
+    "id": "Top 1",
+    "x": 82,
+    "y": 34,
+    "z": 400,
+    "type": "holder",
+    "dropTarget": {
+      "card": true
+    },
+    "dropLimit": 1
+  },
+  "Top 2": {
+    "id": "Top 2",
+    "x": 202,
+    "y": 34,
+    "z": 401,
+    "type": "holder",
+    "dropTarget": {
+      "card": true
+    },
+    "dropLimit": 1
+  },
+  "Top 3": {
+    "id": "Top 3",
+    "x": 322,
+    "y": 34,
+    "z": 402,
+    "type": "holder",
+    "dropTarget": {
+      "card": true
+    },
+    "dropLimit": 1
+  },
+  "Top 4": {
+    "id": "Top 4",
+    "x": 442,
+    "y": 34,
+    "z": 403,
+    "type": "holder",
+    "dropTarget": {
+      "card": true
+    },
+    "dropLimit": 1
+  },
+  "Top 5": {
+    "id": "Top 5",
+    "x": 1051,
+    "y": 34,
+    "z": 404,
+    "type": "holder",
+    "dropTarget": {
+      "card": true
+    },
+    "css": "background: url(\"/i/cards-default/AS.svg\") no-repeat; background-color: white; background-size: 50%; background-position: center",
+    "dropLimit": 1
+  },
+  "Top 6": {
+    "id": "Top 6",
+    "x": 1171,
+    "y": 34,
+    "z": 405,
+    "type": "holder",
+    "dropTarget": {
+      "card": true
+    },
+    "css": "background: url(\"/i/cards-default/AC.svg\") no-repeat; background-color: white; background-size: 50%; background-position: center",
+    "dropLimit": 1
+  },
+  "Top 7": {
+    "id": "Top 7",
+    "x": 1291,
+    "y": 34,
+    "z": 406,
+    "type": "holder",
+    "dropTarget": {
+      "card": true
+    },
+    "css": "background: url(\"/i/cards-default/AD.svg\") no-repeat; background-color: white; background-size: 50%; background-position: center",
+    "dropLimit": 1
+  },
+  "Top 8": {
+    "id": "Top 8",
+    "x": 1411,
+    "y": 34,
+    "z": 407,
+    "type": "holder",
+    "dropTarget": {
+      "card": true
+    },
+    "css": "background: url(\"/i/cards-default/AH.svg\") no-repeat; background-color: white; background-size: 50%; background-position: center",
+    "dropLimit": 1
+  },
+  "2u0x": {
+    "type": "label",
+    "text": "➔",
+    "y": 869,
+    "z": 13,
+    "id": "2u0x",
+    "css": "font-size: 40px",
+    "height": 50,
+    "x": -2011,
+    "rotation": -90,
+    "hidden": true
+  },
+  "1z31": {
+    "type": "label",
+    "text": "➔",
+    "y": 876,
+    "z": 15,
+    "css": "font-size: 40px",
+    "height": 50,
+    "x": -1969,
+    "rotation": -50,
+    "id": "1z31",
+    "hidden": true
+  },
+  "e7sj": {
+    "type": "label",
+    "text": "➔",
+    "y": 868,
+    "z": 12,
+    "css": "font-size: 40px",
+    "height": 50,
+    "x": -1912,
+    "rotation": 90,
+    "id": "e7sj",
+    "hidden": true
+  },
+  "tjyq": {
+    "type": "label",
+    "text": "➔",
+    "y": 864,
+    "z": 20,
+    "css": "font-size: 40px",
+    "height": 50,
+    "x": -1848,
+    "rotation": 45,
+    "id": "tjyq",
+    "hidden": true
+  },
+  "ujy7": {
+    "type": "label",
+    "text": "...",
+    "y": 853,
+    "z": 19,
+    "css": "font-size: 40px",
+    "height": 50,
+    "x": -1790,
+    "id": "ujy7",
+    "hidden": true
+  },
+  "ly4l": {
+    "type": "label",
+    "text": "➔",
+    "y": 924,
+    "z": 22,
+    "css": "font-size: 40px",
+    "height": 50,
+    "x": -995,
+    "id": "ly4l",
+    "hidden": true
+  },
+  "99ke": {
+    "type": "label",
+    "text": "➔",
+    "y": 854,
+    "z": 27,
+    "css": "font-size: 40px",
+    "height": 50,
+    "x": -1001,
+    "id": "99ke",
+    "rotation": -45,
+    "hidden": true
+  },
+  "tz31": {
+    "type": "label",
+    "text": "➔",
+    "y": 857,
+    "z": 26,
+    "css": "font-size: 40px",
+    "height": 50,
+    "x": -926,
+    "rotation": -90,
+    "id": "tz31",
+    "hidden": true
+  },
+  "kk4m": {
+    "type": "label",
+    "text": "➔",
+    "y": 737,
+    "z": 28,
+    "css": "font-size: 40px",
+    "height": 50,
+    "x": -869,
+    "rotation": -45,
+    "id": "kk4m",
+    "hidden": true
+  },
+  "f909": {
+    "type": "label",
+    "text": "➔",
+    "y": 698,
+    "z": 29,
+    "css": "font-size: 40px",
+    "height": 50,
+    "x": -734,
+    "id": "f909",
+    "hidden": true
+  },
+  "jemz": {
+    "x": 51,
+    "y": 971,
+    "z": 55,
+    "type": "button",
+    "text": "?",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "hidden",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 2000,
+        "relation": "+"
+      }
+    ],
+    "height": 20,
+    "width": 20,
+    "id": "jemz"
+  },
+  "_meta": {
+    "version": 1,
+    "info": {
+      "name": "FreeCell",
+      "image": "/assets/-1594585426_640982",
+      "rules": "https://en.wikipedia.org/wiki/FreeCell#Rules",
+      "bgg": "https://boardgamegeek.com/boardgame/63788/freecell",
+      "year": "1991",
+      "mode": "coop",
+      "time": "20",
+      "players": "1",
+      "language": "UN",
+      "variant": "",
+      "attribution": "It does not use custom assets. The layout was created by ArnoldSmith86 and is released to the public domain using CC0.\n\nThe library image is a photo by Amanda Jones and is available at https://unsplash.com/photos/P787-xixGio under the Unsplash license."
+    }
+  }
+}

@@ -1,0 +1,328 @@
+{
+  "p5k4": {
+    "type": "label",
+    "text": "Go in JSON edit mode (ctrl+j), select the buttons (ctrl+click) and then click the widgets to see the live changes in the button's JSON",
+    "x": 30,
+    "z": 56,
+    "id": "p5k4",
+    "width": 400,
+    "height": 100,
+    "y": 30,
+    "css": "color: black;"
+  },
+  "9h6g": {
+    "type": "label",
+    "text": "    The property 'paused' is set to false whenerver the timer is running.\n\n The property 'alert' is set to true whenerver the timer is 'milisecconds' reaches the 'end' value and set back to false the 'milliseconds' are reset.",
+    "x": 20,
+    "y": 289,
+    "z": 9,
+    "id": "9h6g",
+    "editable": true,
+    "width": 280,
+    "height": 250,
+    "css": "text-align:left"
+  },
+  "07l4": {
+    "type": "label",
+    "x": 340,
+    "y": 289,
+    "z": 38,
+    "id": "07l4",
+    "editable": true,
+    "width": 280,
+    "height": 250,
+    "css": "text-align:left",
+    "text": "    A checker has 2 possible values to the 'classes' property\n\n    This is actually a special case of the next point and a crowned checker could also be detected by it's activeFace"
+  },
+  "hsmm": {
+    "type": "label",
+    "x": 980,
+    "y": 289,
+    "z": 36,
+    "id": "hsmm",
+    "editable": true,
+    "width": 280,
+    "height": 250,
+    "css": "text-align:left",
+    "text": "    All widget can be parented by another widget or owned by the player. the game will change those properties as needed so the game designer can use them as reference to the widget state or usage.\n\n    In the example the holder on the right is a hand and therefore set the property owner to your player name"
+  },
+  "bmbj": {
+    "type": "label",
+    "text": "timer: 'paused' and 'alert'",
+    "x": 20,
+    "y": 167,
+    "z": 18,
+    "id": "bmbj",
+    "editable": true,
+    "width": 280
+  },
+  "r8ty": {
+    "type": "label",
+    "x": 340,
+    "y": 167,
+    "z": 19,
+    "id": "r8ty",
+    "editable": true,
+    "width": 280,
+    "text": "checker: 'classes'"
+  },
+  "w6ol": {
+    "type": "label",
+    "text": "general states: 'owner', 'parent'",
+    "x": 980,
+    "y": 167,
+    "z": 31,
+    "id": "w6ol",
+    "editable": true,
+    "width": 280
+  },
+  "x794": {
+    "type": "label",
+    "x": 1300,
+    "y": 167,
+    "z": 29,
+    "id": "x794",
+    "editable": true,
+    "width": 280,
+    "height": 20,
+    "text": "upcoming / other widgets"
+  },
+  "vhyk": {
+    "type": "label",
+    "x": 1300,
+    "y": 210,
+    "z": 35,
+    "id": "vhyk",
+    "editable": true,
+    "width": 280,
+    "height": 329,
+    "css": "text-align:left",
+    "text": "    - Canvas: activeColor loops can be a value of the colorMap\n\n    - Seat: the seat has properties related to the player seated and the inactive is also a boolean representation of a seated seat. The turn property can also be used as a global state for the game or for the seat."
+  },
+  "biz5": {
+    "type": "label",
+    "x": 230,
+    "y": 581,
+    "z": 108,
+    "editable": true,
+    "width": 400,
+    "height": 120,
+    "css": "text-align:left",
+    "id": "biz5",
+    "text": "upcoming"
+  },
+  "li9w": {
+    "type": "label",
+    "x": 660,
+    "y": 289,
+    "z": 39,
+    "id": "li9w",
+    "editable": true,
+    "width": 280,
+    "height": 250,
+    "css": "text-align:left",
+    "text": "    All basic widget can accept faces that can set multiple properties the widget. the 'activeFace' property loop trought the faces index (0 is the first face, 1 is the second face and so on)\n\n   You can also use the face mecanic to use any other property as a state value. in this checker you could either use the 'color' property or the custom property 'favoriteColor' as automation triggers or variables"
+  },
+  "0dob": {
+    "type": "label",
+    "x": 660,
+    "y": 167,
+    "z": 33,
+    "id": "0dob",
+    "editable": true,
+    "width": 280,
+    "text": "basic widgets: 'activeFace', face values"
+  },
+  "8i2l": {
+    "type": "label",
+    "text": "State dependent routines",
+    "css": "font-size: 60px",
+    "height": 80,
+    "width": 800,
+    "x": 400,
+    "z": 55,
+    "id": "8i2l"
+  },
+  "v8xd": {
+    "type": "label",
+    "text": "State avaible:",
+    "css": "font-size: 30px; text-align:left",
+    "height": 42,
+    "width": 200,
+    "y": 116,
+    "z": 58,
+    "id": "v8xd",
+    "x": 6
+  },
+  "p8c3": {
+    "type": "label",
+    "text": "Usage example:",
+    "css": "font-size: 30px; text-align:left",
+    "height": 42,
+    "width": 300,
+    "y": 571,
+    "z": 59,
+    "x": 6,
+    "id": "p8c3"
+  },
+  "v8xd-copy001": {
+    "type": "label",
+    "text": "Inbuilt States",
+    "css": "font-size: 30px; text-align:left",
+    "height": 42,
+    "width": 200,
+    "y": 85,
+    "id": "v8xd-copy001",
+    "x": 700,
+    "z": 106
+  },
+  "d6lz": {
+    "type": "timer",
+    "id": "d6lz",
+    "x": 74,
+    "y": 224,
+    "z": 1,
+    "countdown": false,
+    "start": 0,
+    "end": 3000,
+    "milliseconds": 9000,
+    "alert": true
+  },
+  "d6lzP": {
+    "parent": "d6lz",
+    "id": "d6lzP",
+    "x": 120,
+    "y": -3,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "TIMER",
+        "timer": "d6lz"
+      }
+    ],
+    "image": "/i/button-icons/White-Play_Pause.svg",
+    "css": "background-size: 75% 75%"
+  },
+  "d6lzR": {
+    "parent": "d6lz",
+    "id": "d6lzR",
+    "x": 80,
+    "y": -3,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "TIMER",
+        "timer": "d6lz",
+        "mode": "reset"
+      }
+    ],
+    "image": "/i/button-icons/White-Reset.svg",
+    "css": "background-size: 80% 80%"
+  },
+  "60h5": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#bc5bee",
+    "width": 73.5,
+    "height": 73.5,
+    "x": 441.25,
+    "y": 195.25,
+    "z": 21,
+    "id": "60h5"
+  },
+  "akrj": {
+    "faces": [
+      {
+        "color": "#e84242",
+        "favoriteColor": true
+      },
+      {
+        "color": "#e2a633",
+        "favoriteColor": false
+      },
+      {
+        "color": "#e0cb0b",
+        "favoriteColor": false
+      },
+      {
+        "color": "#23ca5b",
+        "favoriteColor": false
+      },
+      {
+        "color": "#4c5fea",
+        "favoriteColor": false
+      },
+      {
+        "color": "#bc5bee",
+        "favoriteColor": false
+      }
+    ],
+    "width": 73.5,
+    "height": 73.5,
+    "x": 763.25,
+    "y": 197.25,
+    "z": 22,
+    "id": "akrj",
+    "classes": "checkersPiece",
+    "activeFace": 1
+  },
+  "or87": {
+    "type": "holder",
+    "x": 995.5,
+    "y": 198.5,
+    "z": 3,
+    "id": "or87",
+    "dropTarget": {},
+    "width": 58,
+    "height": 58
+  },
+  "vtfa": {
+    "text": "🔥",
+    "css": "font-size:50px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "width": 50,
+    "height": 50,
+    "x": 1091.75,
+    "y": 202.5,
+    "z": 31,
+    "id": "vtfa"
+  },
+  "or87-copy001": {
+    "type": "holder",
+    "x": 1180,
+    "y": 198.5,
+    "id": "or87-copy001",
+    "dropTarget": {},
+    "width": 58,
+    "height": 58,
+    "z": 107,
+    "childrenPerOwner": true
+  },
+  "_meta": {
+    "version": 3,
+    "info": {
+      "name": "State Dependent Routines",
+      "image": "/assets/2040440396_8355",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "",
+      "players": "1",
+      "language": "US",
+      "variant": "Inbuilt states",
+      "attribution": ""
+    }
+  }
+}

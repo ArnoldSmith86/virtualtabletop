@@ -1,0 +1,1122 @@
+{
+  "ivff": {
+    "type": "holder",
+    "id": "ivff",
+    "x": 19,
+    "y": 830,
+    "dropTarget": {
+      "type": "card"
+    },
+    "z": 6
+  },
+  "ivffB": {
+    "id": "ivffB",
+    "parent": "ivff",
+    "y": 56.999999999999886,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "ivff"
+      },
+      {
+        "func": "FLIP",
+        "holder": "ivff",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "ivff"
+      }
+    ],
+    "x": 132
+  },
+  "ivffD": {
+    "type": "deck",
+    "id": "ivffD",
+    "x": 4,
+    "y": 4,
+    "cardTypes": {
+      "T 1J": {
+        "image": "/assets/725936408_291452"
+      },
+      "T 2J": {
+        "image": "/assets/1676455269_280198"
+      },
+      "B 01": {
+        "image": "/assets/-1635667177_186750"
+      },
+      "B 02": {
+        "image": "/assets/1679949798_222742"
+      },
+      "B 03": {
+        "image": "/assets/-331704617_244997"
+      },
+      "B 04": {
+        "image": "/assets/-1352907199_253395"
+      },
+      "B 05": {
+        "image": "/assets/-1710697859_276049"
+      },
+      "B 06": {
+        "image": "/assets/1652624037_296006"
+      },
+      "B 07": {
+        "image": "/assets/-1671575819_305365"
+      },
+      "B 08": {
+        "image": "/assets/-384372042_334431"
+      },
+      "B 09": {
+        "image": "/assets/1104254098_352193"
+      },
+      "B 10": {
+        "image": "/assets/-1077282206_386724"
+      },
+      "B 11": {
+        "image": "/assets/-121244174_363948"
+      },
+      "B 12": {
+        "image": "/assets/2073844522_340176"
+      },
+      "B 13": {
+        "image": "/assets/440765083_393345"
+      },
+      "B 14": {
+        "image": "/assets/-724940653_431191"
+      },
+      "B A": {
+        "image": "/assets/374516234_204782"
+      },
+      "G 01": {
+        "image": "/assets/-335186959_93714"
+      },
+      "G 02": {
+        "image": "/assets/782096130_131518"
+      },
+      "G 03": {
+        "image": "/assets/-170285046_151287"
+      },
+      "G 04": {
+        "image": "/assets/1636488167_157878"
+      },
+      "G 05": {
+        "image": "/assets/432957497_177559"
+      },
+      "G 06": {
+        "image": "/assets/1232530703_195090"
+      },
+      "G 07": {
+        "image": "/assets/-363551097_201323"
+      },
+      "G 08": {
+        "image": "/assets/1297135387_227992"
+      },
+      "G 09": {
+        "image": "/assets/539580039_242845"
+      },
+      "G 10": {
+        "image": "/assets/-106911522_272781"
+      },
+      "G 11": {
+        "image": "/assets/268573384_337177"
+      },
+      "G 12": {
+        "image": "/assets/-2076576683_316948"
+      },
+      "G 13": {
+        "image": "/assets/-26107034_365745"
+      },
+      "G 14": {
+        "image": "/assets/333714692_392111"
+      },
+      "G  A": {
+        "image": "/assets/1725219387_194462"
+      },
+      "P 01": {
+        "image": "/assets/1709633923_71599"
+      },
+      "P 02": {
+        "image": "/assets/1462336390_97962"
+      },
+      "P 03": {
+        "image": "/assets/-1831713125_114773"
+      },
+      "P 04": {
+        "image": "/assets/-2126502894_118762"
+      },
+      "P 05": {
+        "image": "/assets/-182831120_134270"
+      },
+      "P 06": {
+        "image": "/assets/899406226_147679"
+      },
+      "P 07": {
+        "image": "/assets/-62284231_155043"
+      },
+      "P 08": {
+        "image": "/assets/1718217464_175302"
+      },
+      "P 09": {
+        "image": "/assets/-436624065_186111"
+      },
+      "P 10": {
+        "image": "/assets/624240046_210252"
+      },
+      "P 11": {
+        "image": "/assets/-1591892232_314035"
+      },
+      "P 12": {
+        "image": "/assets/392763027_294163"
+      },
+      "P 13": {
+        "image": "/assets/346079657_336047"
+      },
+      "P 14": {
+        "image": "/assets/118890170_389293"
+      },
+      "P A": {
+        "image": "/assets/-701884013_171448"
+      },
+      "R 01": {
+        "image": "/assets/2064751919_94945"
+      },
+      "R 02": {
+        "image": "/assets/1974394890_136045"
+      },
+      "R 03": {
+        "image": "/assets/1508327513_156546"
+      },
+      "R 04": {
+        "image": "/assets/-1450176237_162326"
+      },
+      "R 05": {
+        "image": "/assets/-1417131640_182615"
+      },
+      "R 06": {
+        "image": "/assets/818252064_200770"
+      },
+      "R 07": {
+        "image": "/assets/-803145752_207625"
+      },
+      "R 08": {
+        "image": "/assets/269670314_234854"
+      },
+      "R 09": {
+        "image": "/assets/-448380890_249655"
+      },
+      "R 10": {
+        "image": "/assets/1041934991_281101"
+      },
+      "R 11": {
+        "image": "/assets/-978454802_346114"
+      },
+      "R 12": {
+        "image": "/assets/-1806359113_323687"
+      },
+      "R 13": {
+        "image": "/assets/1018245075_375180"
+      },
+      "R 14": {
+        "image": "/assets/1647849426_408715"
+      },
+      "R A": {
+        "image": "/assets/868138191_196832"
+      },
+      "Y 01": {
+        "image": "/assets/-684572724_184816"
+      },
+      "Y 02": {
+        "image": "/assets/-788481961_218684"
+      },
+      "Y 03": {
+        "image": "/assets/-1765494485_241914"
+      },
+      "Y 04": {
+        "image": "/assets/-1958840607_252751"
+      },
+      "Y 05": {
+        "image": "/assets/-1281526165_276156"
+      },
+      "Y 06": {
+        "image": "/assets/1469722661_296398"
+      },
+      "Y 07": {
+        "image": "/assets/-2065341021_308860"
+      },
+      "Y 08": {
+        "image": "/assets/-1684823574_337577"
+      },
+      "Y 09": {
+        "image": "/assets/-992114055_356266"
+      },
+      "Y 10": {
+        "image": "/assets/864358261_390666"
+      },
+      "Y 11": {
+        "image": "/assets/1373355882_353193"
+      },
+      "Y 12": {
+        "image": "/assets/316621607_328399"
+      },
+      "Y 13": {
+        "image": "/assets/-1651581968_386691"
+      },
+      "Y 14": {
+        "image": "/assets/-1063483274_404151"
+      },
+      "Y A": {
+        "image": "/assets/-1837078030_200490"
+      },
+      "S 4K": {
+        "image": "/assets/637340416_520405"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "valueType": "static",
+            "value": "/i/cards-default/2B.svg",
+            "color": "transparent"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "valueType": "static",
+            "value": "/i/cards-default/2B.svg",
+            "color": "transparent"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "valueType": "dynamic",
+            "value": "image",
+            "color": "transparent"
+          }
+        ]
+      }
+    ],
+    "z": 6,
+    "parent": "ivff"
+  },
+  "cceb": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "T 1J",
+    "id": "cceb",
+    "z": 375,
+    "x": 1276,
+    "y": 830,
+    "activeFace": 1
+  },
+  "cugl": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "T 2J",
+    "id": "cugl",
+    "z": 376,
+    "activeFace": 1,
+    "x": 1381.5,
+    "y": 830
+  },
+  "k3pg": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "B 01",
+    "id": "k3pg",
+    "z": 377,
+    "activeFace": 1,
+    "x": 1487,
+    "y": 5
+  },
+  "vcti": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "B 02",
+    "id": "vcti",
+    "z": 378,
+    "activeFace": 1,
+    "x": 1381.5,
+    "y": 5
+  },
+  "lmix": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "B 03",
+    "id": "lmix",
+    "z": 379,
+    "activeFace": 1,
+    "x": 1276,
+    "y": 5
+  },
+  "jco3": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "B 04",
+    "id": "jco3",
+    "z": 380,
+    "x": 1170.5,
+    "y": 5,
+    "activeFace": 1
+  },
+  "nzkf": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "B 05",
+    "id": "nzkf",
+    "z": 382,
+    "activeFace": 1,
+    "x": 1065,
+    "y": 5
+  },
+  "nttb": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "B 06",
+    "id": "nttb",
+    "z": 383,
+    "activeFace": 1,
+    "x": 959.5,
+    "y": 5
+  },
+  "opos": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "B 07",
+    "id": "opos",
+    "z": 384,
+    "activeFace": 1,
+    "x": 854,
+    "y": 5
+  },
+  "hk3e": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "B 08",
+    "id": "hk3e",
+    "z": 385,
+    "activeFace": 1,
+    "x": 748.5,
+    "y": 5
+  },
+  "aaf9": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "B 09",
+    "id": "aaf9",
+    "z": 386,
+    "activeFace": 1,
+    "x": 643,
+    "y": 5
+  },
+  "gs4g": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "B 10",
+    "id": "gs4g",
+    "z": 387,
+    "activeFace": 1,
+    "x": 537.5,
+    "y": 5
+  },
+  "9bt4": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "B 11",
+    "id": "9bt4",
+    "z": 389,
+    "x": 432,
+    "y": 5,
+    "activeFace": 1
+  },
+  "7dsj": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "B 12",
+    "id": "7dsj",
+    "z": 390,
+    "x": 326.5,
+    "y": 5,
+    "activeFace": 1
+  },
+  "u0rg": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "B 13",
+    "id": "u0rg",
+    "z": 391,
+    "activeFace": 1,
+    "x": 221,
+    "y": 5
+  },
+  "bt5k": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "B 14",
+    "id": "bt5k",
+    "z": 392,
+    "activeFace": 1,
+    "x": 115.5,
+    "y": 5
+  },
+  "kfrr": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "B A",
+    "id": "kfrr",
+    "z": 393,
+    "activeFace": 1,
+    "x": 10,
+    "y": 5
+  },
+  "dei4": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "G 01",
+    "id": "dei4",
+    "z": 395,
+    "x": 1487,
+    "y": 170,
+    "activeFace": 1
+  },
+  "fprr": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "G 02",
+    "id": "fprr",
+    "z": 397,
+    "activeFace": 1,
+    "x": 1381.5,
+    "y": 170
+  },
+  "wec8": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "G 03",
+    "id": "wec8",
+    "z": 399,
+    "activeFace": 1,
+    "x": 1276,
+    "y": 170
+  },
+  "2zyy": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "G 04",
+    "id": "2zyy",
+    "z": 400,
+    "activeFace": 1,
+    "x": 1170.5,
+    "y": 170
+  },
+  "cdc6": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "G 05",
+    "id": "cdc6",
+    "z": 401,
+    "activeFace": 1,
+    "x": 1065,
+    "y": 170
+  },
+  "upuj": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "G 06",
+    "id": "upuj",
+    "z": 402,
+    "activeFace": 1,
+    "x": 959.5,
+    "y": 170
+  },
+  "aqfy": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "G 07",
+    "id": "aqfy",
+    "z": 403,
+    "activeFace": 1,
+    "x": 854,
+    "y": 170
+  },
+  "loos": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "G 08",
+    "id": "loos",
+    "z": 404,
+    "x": 748.5,
+    "y": 170,
+    "activeFace": 1
+  },
+  "sbay": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "G 09",
+    "id": "sbay",
+    "z": 405,
+    "activeFace": 1,
+    "x": 643,
+    "y": 170
+  },
+  "1eiu": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "G 10",
+    "id": "1eiu",
+    "z": 406,
+    "activeFace": 1,
+    "x": 537.5,
+    "y": 170
+  },
+  "koch": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "G 11",
+    "id": "koch",
+    "z": 407,
+    "activeFace": 1,
+    "x": 432,
+    "y": 170
+  },
+  "ynmn": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "G 12",
+    "id": "ynmn",
+    "z": 408,
+    "activeFace": 1,
+    "x": 326.5,
+    "y": 170
+  },
+  "g1pn": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "G 13",
+    "id": "g1pn",
+    "z": 409,
+    "activeFace": 1,
+    "x": 221,
+    "y": 170
+  },
+  "skp5": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "G 14",
+    "id": "skp5",
+    "z": 410,
+    "activeFace": 1,
+    "x": 115.5,
+    "y": 170
+  },
+  "d602": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "G  A",
+    "id": "d602",
+    "z": 411,
+    "activeFace": 1,
+    "x": 10,
+    "y": 170
+  },
+  "qnes": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "S 4K",
+    "id": "qnes",
+    "z": 412,
+    "x": 1487,
+    "y": 830,
+    "activeFace": 1
+  },
+  "zb99": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "P 01",
+    "id": "zb99",
+    "z": 413,
+    "activeFace": 1,
+    "x": 1487,
+    "y": 335
+  },
+  "am0v": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "P 02",
+    "id": "am0v",
+    "z": 414,
+    "activeFace": 1,
+    "x": 1381.5,
+    "y": 335
+  },
+  "mv2z": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "P 03",
+    "id": "mv2z",
+    "z": 415,
+    "activeFace": 1,
+    "x": 1276,
+    "y": 335
+  },
+  "m71b": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "P 04",
+    "id": "m71b",
+    "z": 416,
+    "activeFace": 1,
+    "x": 1170.5,
+    "y": 335
+  },
+  "hq4h": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "P 05",
+    "id": "hq4h",
+    "z": 417,
+    "activeFace": 1,
+    "x": 1065,
+    "y": 335
+  },
+  "kir9": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "P 06",
+    "id": "kir9",
+    "z": 418,
+    "activeFace": 1,
+    "x": 959.5,
+    "y": 335
+  },
+  "2g6y": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "P 07",
+    "id": "2g6y",
+    "z": 419,
+    "activeFace": 1,
+    "x": 854,
+    "y": 335
+  },
+  "s8tv": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "P 08",
+    "id": "s8tv",
+    "z": 422,
+    "activeFace": 1,
+    "x": 748.5,
+    "y": 335
+  },
+  "1lwt": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "P 09",
+    "id": "1lwt",
+    "z": 421,
+    "activeFace": 1,
+    "x": 643,
+    "y": 335
+  },
+  "c802": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "P 10",
+    "id": "c802",
+    "z": 423,
+    "activeFace": 1,
+    "x": 537.5,
+    "y": 335
+  },
+  "bte5": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "P 11",
+    "id": "bte5",
+    "z": 424,
+    "activeFace": 1,
+    "x": 432,
+    "y": 335
+  },
+  "oijo": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "P 12",
+    "id": "oijo",
+    "z": 425,
+    "activeFace": 1,
+    "x": 326.5,
+    "y": 335
+  },
+  "iuf2": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "P 13",
+    "id": "iuf2",
+    "z": 426,
+    "activeFace": 1,
+    "x": 221,
+    "y": 335
+  },
+  "kour": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "P 14",
+    "id": "kour",
+    "z": 427,
+    "activeFace": 1,
+    "x": 115.5,
+    "y": 335
+  },
+  "qyz1": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "P A",
+    "id": "qyz1",
+    "z": 428,
+    "activeFace": 1,
+    "x": 10,
+    "y": 335
+  },
+  "vdl3": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "R 01",
+    "id": "vdl3",
+    "z": 429,
+    "activeFace": 1,
+    "x": 1487,
+    "y": 500
+  },
+  "unkq": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "R 02",
+    "id": "unkq",
+    "z": 430,
+    "activeFace": 1,
+    "x": 1381.5,
+    "y": 500
+  },
+  "q0gk": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "R 03",
+    "id": "q0gk",
+    "z": 431,
+    "activeFace": 1,
+    "x": 1276,
+    "y": 500
+  },
+  "tyio": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "R 04",
+    "id": "tyio",
+    "z": 432,
+    "activeFace": 1,
+    "x": 1170.5,
+    "y": 500
+  },
+  "s0z0": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "R 05",
+    "id": "s0z0",
+    "z": 433,
+    "activeFace": 1,
+    "x": 1065,
+    "y": 500
+  },
+  "lqxv": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "R 06",
+    "id": "lqxv",
+    "z": 434,
+    "activeFace": 1,
+    "x": 959.5,
+    "y": 500
+  },
+  "0u9e": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "R 07",
+    "id": "0u9e",
+    "z": 435,
+    "activeFace": 1,
+    "x": 854,
+    "y": 500
+  },
+  "i4n6": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "R 08",
+    "id": "i4n6",
+    "z": 436,
+    "activeFace": 1,
+    "x": 748.5,
+    "y": 500
+  },
+  "2pz4": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "R 09",
+    "id": "2pz4",
+    "z": 437,
+    "activeFace": 1,
+    "x": 643,
+    "y": 500
+  },
+  "0vnh": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "R 10",
+    "id": "0vnh",
+    "z": 438,
+    "activeFace": 1,
+    "x": 537.5,
+    "y": 500
+  },
+  "qeq1": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "R 11",
+    "id": "qeq1",
+    "z": 439,
+    "activeFace": 1,
+    "x": 432,
+    "y": 500
+  },
+  "edtc": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "R 12",
+    "id": "edtc",
+    "z": 440,
+    "activeFace": 1,
+    "x": 326.5,
+    "y": 500
+  },
+  "wc4a": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "R 13",
+    "id": "wc4a",
+    "z": 441,
+    "activeFace": 1,
+    "x": 221,
+    "y": 500
+  },
+  "dtf3": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "R 14",
+    "id": "dtf3",
+    "z": 442,
+    "activeFace": 1,
+    "x": 115.5,
+    "y": 500
+  },
+  "lbk0": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "R A",
+    "id": "lbk0",
+    "z": 443,
+    "activeFace": 1,
+    "x": 10,
+    "y": 500
+  },
+  "ovoy": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "Y 01",
+    "id": "ovoy",
+    "z": 444,
+    "activeFace": 1,
+    "x": 1487,
+    "y": 665
+  },
+  "6aiw": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "Y 02",
+    "id": "6aiw",
+    "z": 445,
+    "activeFace": 1,
+    "x": 1381.5,
+    "y": 665
+  },
+  "1nkc": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "Y 03",
+    "id": "1nkc",
+    "z": 446,
+    "activeFace": 1,
+    "x": 1276,
+    "y": 665
+  },
+  "c28x": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "Y 04",
+    "id": "c28x",
+    "z": 447,
+    "activeFace": 1,
+    "x": 1170.5,
+    "y": 665
+  },
+  "rky3": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "Y 05",
+    "id": "rky3",
+    "z": 448,
+    "activeFace": 1,
+    "x": 1065,
+    "y": 665
+  },
+  "abrc": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "Y 06",
+    "id": "abrc",
+    "z": 449,
+    "activeFace": 1,
+    "x": 959.5,
+    "y": 665
+  },
+  "udzf": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "Y 07",
+    "id": "udzf",
+    "z": 450,
+    "activeFace": 1,
+    "x": 854,
+    "y": 665
+  },
+  "hao8": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "Y 08",
+    "id": "hao8",
+    "z": 451,
+    "activeFace": 1,
+    "x": 748.5,
+    "y": 665
+  },
+  "g92s": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "Y 09",
+    "id": "g92s",
+    "z": 452,
+    "activeFace": 1,
+    "x": 643,
+    "y": 665
+  },
+  "9xm2": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "Y 10",
+    "id": "9xm2",
+    "z": 453,
+    "activeFace": 1,
+    "x": 537.5,
+    "y": 665
+  },
+  "dr9x": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "Y 11",
+    "id": "dr9x",
+    "z": 454,
+    "activeFace": 1,
+    "x": 326.5,
+    "y": 665
+  },
+  "uol0": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "Y 12",
+    "id": "uol0",
+    "z": 455,
+    "activeFace": 1,
+    "x": 432,
+    "y": 665
+  },
+  "9nf5": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "Y 13",
+    "id": "9nf5",
+    "z": 456,
+    "activeFace": 1,
+    "x": 221,
+    "y": 665
+  },
+  "xoan": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "Y 14",
+    "id": "xoan",
+    "z": 457,
+    "activeFace": 1,
+    "x": 115.5,
+    "y": 665
+  },
+  "pu07": {
+    "deck": "ivffD",
+    "type": "card",
+    "cardType": "Y A",
+    "id": "pu07",
+    "z": 458,
+    "activeFace": 1,
+    "x": 10,
+    "y": 665
+  },
+  "_meta": {
+    "version": 1,
+    "info": {
+      "name": "Decks",
+      "image": "/assets/1978293539_65452",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Assets",
+      "time": "",
+      "players": "2-4",
+      "language": "US",
+      "variant": "Grim Pixel Art (5 colors)",
+      "attribution": "Created by @bodogedama (https://twitter.com/bodogedama?s=20)\n\nThe creator authorized the use of these cards as assets in virtualtabletop.io.\n\nPlease contact the creator to obtain permission to use them elsewhere."
+    }
+  }
+}

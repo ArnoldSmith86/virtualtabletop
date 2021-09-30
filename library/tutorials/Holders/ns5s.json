@@ -1,0 +1,881 @@
+{
+  "undefined": {
+    "z": 1,
+    "x": 742,
+    "y": 204
+  },
+  "rvao": {
+    "type": "holder",
+    "id": "rvao",
+    "x": 4.5,
+    "y": 785,
+    "dropTarget": {
+      "type": "card"
+    },
+    "z": 4,
+    "layer": 1
+  },
+  "rvaoP": {
+    "type": "pile",
+    "id": "rvaoP",
+    "parent": "rvao",
+    "width": 103,
+    "height": 160
+  },
+  "rvaoB": {
+    "id": "rvaoB",
+    "parent": "rvao",
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "rvao"
+      },
+      {
+        "func": "FLIP",
+        "holder": "rvao",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "rvao"
+      }
+    ],
+    "layer": 1
+  },
+  "rvaoD": {
+    "type": "deck",
+    "id": "rvaoD",
+    "parent": "rvao",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "1J": {
+        "image": "/i/cards-default/1J.svg"
+      },
+      "2J": {
+        "image": "/i/cards-default/2J.svg"
+      },
+      "AC": {
+        "image": "/i/cards-default/AC.svg"
+      },
+      "2C": {
+        "image": "/i/cards-default/2C.svg"
+      },
+      "3C": {
+        "image": "/i/cards-default/3C.svg"
+      },
+      "4C": {
+        "image": "/i/cards-default/4C.svg"
+      },
+      "5C": {
+        "image": "/i/cards-default/5C.svg"
+      },
+      "6C": {
+        "image": "/i/cards-default/6C.svg"
+      },
+      "7C": {
+        "image": "/i/cards-default/7C.svg"
+      },
+      "8C": {
+        "image": "/i/cards-default/8C.svg"
+      },
+      "9C": {
+        "image": "/i/cards-default/9C.svg"
+      },
+      "TC": {
+        "image": "/i/cards-default/TC.svg"
+      },
+      "JC": {
+        "image": "/i/cards-default/JC.svg"
+      },
+      "QC": {
+        "image": "/i/cards-default/QC.svg"
+      },
+      "KC": {
+        "image": "/i/cards-default/KC.svg"
+      },
+      "AD": {
+        "image": "/i/cards-default/AD.svg"
+      },
+      "2D": {
+        "image": "/i/cards-default/2D.svg"
+      },
+      "3D": {
+        "image": "/i/cards-default/3D.svg"
+      },
+      "4D": {
+        "image": "/i/cards-default/4D.svg"
+      },
+      "5D": {
+        "image": "/i/cards-default/5D.svg"
+      },
+      "6D": {
+        "image": "/i/cards-default/6D.svg"
+      },
+      "7D": {
+        "image": "/i/cards-default/7D.svg"
+      },
+      "8D": {
+        "image": "/i/cards-default/8D.svg"
+      },
+      "9D": {
+        "image": "/i/cards-default/9D.svg"
+      },
+      "TD": {
+        "image": "/i/cards-default/TD.svg"
+      },
+      "JD": {
+        "image": "/i/cards-default/JD.svg"
+      },
+      "QD": {
+        "image": "/i/cards-default/QD.svg"
+      },
+      "KD": {
+        "image": "/i/cards-default/KD.svg"
+      },
+      "AH": {
+        "image": "/i/cards-default/AH.svg"
+      },
+      "2H": {
+        "image": "/i/cards-default/2H.svg"
+      },
+      "3H": {
+        "image": "/i/cards-default/3H.svg"
+      },
+      "4H": {
+        "image": "/i/cards-default/4H.svg"
+      },
+      "5H": {
+        "image": "/i/cards-default/5H.svg"
+      },
+      "6H": {
+        "image": "/i/cards-default/6H.svg"
+      },
+      "7H": {
+        "image": "/i/cards-default/7H.svg"
+      },
+      "8H": {
+        "image": "/i/cards-default/8H.svg"
+      },
+      "9H": {
+        "image": "/i/cards-default/9H.svg"
+      },
+      "TH": {
+        "image": "/i/cards-default/TH.svg"
+      },
+      "JH": {
+        "image": "/i/cards-default/JH.svg"
+      },
+      "QH": {
+        "image": "/i/cards-default/QH.svg"
+      },
+      "KH": {
+        "image": "/i/cards-default/KH.svg"
+      },
+      "AS": {
+        "image": "/i/cards-default/AS.svg"
+      },
+      "2S": {
+        "image": "/i/cards-default/2S.svg"
+      },
+      "3S": {
+        "image": "/i/cards-default/3S.svg"
+      },
+      "4S": {
+        "image": "/i/cards-default/4S.svg"
+      },
+      "5S": {
+        "image": "/i/cards-default/5S.svg"
+      },
+      "6S": {
+        "image": "/i/cards-default/6S.svg"
+      },
+      "7S": {
+        "image": "/i/cards-default/7S.svg"
+      },
+      "8S": {
+        "image": "/i/cards-default/8S.svg"
+      },
+      "9S": {
+        "image": "/i/cards-default/9S.svg"
+      },
+      "TS": {
+        "image": "/i/cards-default/TS.svg"
+      },
+      "JS": {
+        "image": "/i/cards-default/JS.svg"
+      },
+      "QS": {
+        "image": "/i/cards-default/QS.svg"
+      },
+      "KS": {
+        "image": "/i/cards-default/KS.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "valueType": "static",
+            "value": "/i/cards-default/2B.svg",
+            "color": "transparent"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "valueType": "dynamic",
+            "value": "image",
+            "color": "transparent"
+          }
+        ]
+      }
+    ]
+  },
+  "rvaoAC": {
+    "id": "rvaoAC",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "AC",
+    "z": 8023
+  },
+  "rvao2C": {
+    "id": "rvao2C",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "2C",
+    "z": 2617
+  },
+  "rvao3C": {
+    "id": "rvao3C",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "3C",
+    "z": 2118
+  },
+  "rvao4C": {
+    "id": "rvao4C",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "4C",
+    "z": 3596
+  },
+  "rvao5C": {
+    "id": "rvao5C",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "5C",
+    "z": 7870
+  },
+  "rvao6C": {
+    "id": "rvao6C",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "6C",
+    "z": 4593
+  },
+  "rvao7C": {
+    "id": "rvao7C",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "7C",
+    "z": 497
+  },
+  "rvao8C": {
+    "id": "rvao8C",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "8C",
+    "z": 1234
+  },
+  "rvao9C": {
+    "id": "rvao9C",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "9C",
+    "z": 4326
+  },
+  "rvaoTC": {
+    "id": "rvaoTC",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "TC",
+    "z": 5790
+  },
+  "rvaoJC": {
+    "id": "rvaoJC",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "JC",
+    "z": 4371,
+    "parent": "rvaoP"
+  },
+  "rvaoQC": {
+    "id": "rvaoQC",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "QC",
+    "z": 6057
+  },
+  "rvaoKC": {
+    "id": "rvaoKC",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "KC",
+    "z": 2327
+  },
+  "rvaoAD": {
+    "id": "rvaoAD",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "AD",
+    "z": 10127,
+    "x": 262.5,
+    "y": 91,
+    "activeFace": 1,
+    "parent": "myMovableArea"
+  },
+  "rvao2D": {
+    "id": "rvao2D",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "2D",
+    "z": 7811
+  },
+  "rvao3D": {
+    "id": "rvao3D",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "3D",
+    "z": 8947
+  },
+  "rvao4D": {
+    "id": "rvao4D",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "4D",
+    "z": 1677
+  },
+  "rvao5D": {
+    "id": "rvao5D",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "5D",
+    "z": 377
+  },
+  "rvao6D": {
+    "id": "rvao6D",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "6D",
+    "z": 8448
+  },
+  "rvao7D": {
+    "id": "rvao7D",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "7D",
+    "z": 3466
+  },
+  "rvao8D": {
+    "id": "rvao8D",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "8D",
+    "z": 8520
+  },
+  "rvao9D": {
+    "id": "rvao9D",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "9D",
+    "z": 5918
+  },
+  "rvaoTD": {
+    "id": "rvaoTD",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "TD",
+    "z": 6337
+  },
+  "rvaoJD": {
+    "id": "rvaoJD",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "JD",
+    "z": 7228
+  },
+  "rvaoQD": {
+    "id": "rvaoQD",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "QD",
+    "z": 6607
+  },
+  "rvaoKD": {
+    "id": "rvaoKD",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "KD",
+    "z": 6659
+  },
+  "rvaoAH": {
+    "id": "rvaoAH",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "AH",
+    "z": 897
+  },
+  "rvao2H": {
+    "id": "rvao2H",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "2H",
+    "z": 3101
+  },
+  "rvao3H": {
+    "id": "rvao3H",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "3H",
+    "z": 613
+  },
+  "rvao5H": {
+    "id": "rvao5H",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "5H",
+    "z": 5188,
+    "parent": "rvaoP"
+  },
+  "rvao6H": {
+    "id": "rvao6H",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "6H",
+    "z": 4972
+  },
+  "rvao7H": {
+    "id": "rvao7H",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "7H",
+    "z": 4265
+  },
+  "rvao8H": {
+    "id": "rvao8H",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "8H",
+    "z": 8032
+  },
+  "rvao9H": {
+    "id": "rvao9H",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "9H",
+    "z": 10118,
+    "x": 13.5,
+    "y": 16,
+    "parent": "myMovableArea",
+    "activeFace": 1
+  },
+  "rvaoTH": {
+    "id": "rvaoTH",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "TH",
+    "z": 3851
+  },
+  "rvaoJH": {
+    "id": "rvaoJH",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "JH",
+    "z": 1490
+  },
+  "rvaoQH": {
+    "id": "rvaoQH",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "QH",
+    "z": 548
+  },
+  "rvaoKH": {
+    "id": "rvaoKH",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "KH",
+    "z": 1659
+  },
+  "rvaoAS": {
+    "id": "rvaoAS",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "AS",
+    "z": 493,
+    "parent": "rvaoP"
+  },
+  "rvao2S": {
+    "id": "rvao2S",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "2S",
+    "z": 7957,
+    "parent": "rvaoP"
+  },
+  "rvao3S": {
+    "id": "rvao3S",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "3S",
+    "z": 10125,
+    "x": 127.5,
+    "y": 54,
+    "activeFace": 1,
+    "parent": "myMovableArea"
+  },
+  "rvao4S": {
+    "id": "rvao4S",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "4S",
+    "z": 6402,
+    "parent": "rvaoP"
+  },
+  "rvao5S": {
+    "id": "rvao5S",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "5S",
+    "z": 3744
+  },
+  "rvao6S": {
+    "id": "rvao6S",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "6S",
+    "z": 133
+  },
+  "rvao7S": {
+    "id": "rvao7S",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "7S",
+    "z": 900,
+    "parent": "rvaoP"
+  },
+  "rvao8S": {
+    "id": "rvao8S",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "8S",
+    "z": 3385
+  },
+  "rvao9S": {
+    "id": "rvao9S",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "9S",
+    "z": 1798
+  },
+  "rvaoTS": {
+    "id": "rvaoTS",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "TS",
+    "z": 8653
+  },
+  "rvaoJS": {
+    "id": "rvaoJS",
+    "parent": "rvaoP",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "JS",
+    "z": 6412
+  },
+  "rvaoQS": {
+    "id": "rvaoQS",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "QS",
+    "z": 4520,
+    "parent": "rvaoP"
+  },
+  "rvaoKS": {
+    "id": "rvaoKS",
+    "deck": "rvaoD",
+    "type": "card",
+    "cardType": "KS",
+    "z": 5982,
+    "parent": "rvaoP"
+  },
+  "myMovableArea": {
+    "type": "holder",
+    "y": 190.085,
+    "z": 26,
+    "id": "myMovableArea",
+    "alignChildren": false,
+    "width": 400,
+    "height": 400,
+    "dropTarget": {},
+    "movable": true,
+    "x": 607.075
+  },
+  "2zye": {
+    "type": "button",
+    "text": "Small Board Offscreen",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "myMovableArea"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 800
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 1010
+      }
+    ],
+    "x": 761,
+    "y": 837,
+    "z": 11,
+    "id": "2zye",
+    "layer": 1
+  },
+  "zt1d": {
+    "type": "button",
+    "text": "Small Board Here",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "myMovableArea"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 25
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 150
+      }
+    ],
+    "x": 166,
+    "y": 64,
+    "z": 12,
+    "id": "zt1d",
+    "layer": 1
+  },
+  "wn6r": {
+    "type": "button",
+    "text": "Small Board Here",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "myMovableArea"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1160
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 580
+      }
+    ],
+    "x": 1321,
+    "y": 491,
+    "z": 16,
+    "id": "wn6r",
+    "layer": 1
+  },
+  "7enb": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#23ca5b",
+    "width": 73.5,
+    "height": 73.5,
+    "x": 51.25,
+    "y": 299.25,
+    "z": 71,
+    "id": "7enb",
+    "parent": "myMovableArea"
+  },
+  "ozms": {
+    "type": "spinner",
+    "value": 6,
+    "options": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "x": 225,
+    "y": 274,
+    "z": 10007,
+    "id": "ozms",
+    "parent": "myMovableArea"
+  },
+  "8fr3": {
+    "type": "label",
+    "text": "Holders: Moving Boards\nBasic",
+    "css": "font-size: 60px",
+    "height": 160,
+    "width": 1000,
+    "x": 287,
+    "y": -6,
+    "z": 75,
+    "id": "8fr3"
+  },
+  "wbz5": {
+    "type": "label",
+    "text": "The 'movable':true property is enabled in the small holder, so a player can just click and drag it to a new location.",
+    "x": 611,
+    "y": 658,
+    "z": 48,
+    "width": 360,
+    "height": 100,
+    "id": "wbz5"
+  },
+  "wx9i": {
+    "type": "button",
+    "text": "Small Board to Pin",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "myMovableArea",
+        "mode": "add"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": "${PROPERTY x OF myPin}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": "${PROPERTY y OF myPin}"
+      }
+    ],
+    "x": 1340,
+    "y": 13,
+    "z": 23,
+    "id": "wx9i"
+  },
+  "myPin": {
+    "classes": "pinPiece",
+    "color": "#000000",
+    "width": 35.85,
+    "height": 43.83,
+    "x": 960.075,
+    "y": 736.085,
+    "z": 77,
+    "id": "myPin"
+  },
+  "_meta": {
+    "version": 3,
+    "info": {
+      "name": "Holders",
+      "image": "/assets/876936517_4208",
+      "rules": "",
+      "bgg": "",
+      "year": "2020",
+      "mode": "Tutorial",
+      "time": "0",
+      "players": "1",
+      "language": "US",
+      "variant": "Moving: Basic",
+      "attribution": ""
+    }
+  },
+  "xr0n": {
+    "type": "label",
+    "text": "If the pin is on (a child of) the board when you push the button, the pin has x,y coordinates relative to the board and will then move the board to those coordinates on the floor of the room.  In other words, the conversion from relative (to the board) coordinates to absolute (to the room) coordinates alters the movement behavior of the board when the pin is on the board.",
+    "x": 1175,
+    "y": 119,
+    "z": 77,
+    "width": 400,
+    "height": 250,
+    "id": "xr0n"
+  }
+}

@@ -1,0 +1,484 @@
+{
+  "uc3i": {
+    "type": "button",
+    "clickRoutine": [
+      "var string = ${PROPERTY text OF string}",
+      "var pos = ${PROPERTY text OF atString2}",
+      "var str = ${string} repeat ${pos} //Returns the same string repeated n number of times",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "outputstring"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${str}"
+      }
+    ],
+    "x": 374,
+    "y": 250,
+    "z": 274,
+    "id": "uc3i",
+    "text": "repeat"
+  },
+  "2rti": {
+    "type": "button",
+    "clickRoutine": [
+      "var string = ${PROPERTY text OF string}",
+      "var pos = ${PROPERTY text OF atString3a}",
+      "var pos2 = ${PROPERTY text OF atString3b}",
+      "var str =  ${string} replace ${pos} ${pos2} //Returns a string with the first occurence of the reference string replaced by the other string",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "outputstring"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${str}"
+      }
+    ],
+    "x": 619,
+    "y": 250,
+    "z": 289,
+    "id": "2rti",
+    "text": "replace"
+  },
+  "0zgn": {
+    "type": "button",
+    "clickRoutine": [
+      "var string = ${PROPERTY text OF string}",
+      "var pos = ${PROPERTY text OF atString4a}",
+      "var pos2 = ${PROPERTY text OF atString4b}",
+      "var str =  ${string} replaceAll ${pos} ${pos2} //Returns a string with the all occurences of the reference string replaced by the other string",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "outputstring"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${str}"
+      }
+    ],
+    "x": 872,
+    "y": 250,
+    "z": 288,
+    "id": "0zgn",
+    "text": "replaceAll"
+  },
+  "l1ak": {
+    "type": "button",
+    "clickRoutine": [
+      "var string = ${PROPERTY text OF string}",
+      "var var = ${PROPERTY text OF atString5a}",
+      "var var2 = ${PROPERTY text OF atString5b}",
+      "var str =  ${string} slice ${var} ${var2} //Returns an extract of the string from the position of the first number to the position of the second number",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "outputstring"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${str}"
+      }
+    ],
+    "x": 1115,
+    "y": 250,
+    "z": 287,
+    "id": "l1ak",
+    "var": "string. ",
+    "text": "slice"
+  },
+  "c9ee": {
+    "type": "button",
+    "clickRoutine": [
+      "var string = ${PROPERTY text OF string}",
+      "var pos = ${PROPERTY text OF atString6}",
+      "var str = ${string} split ${pos} //Returns an array of strings split from the main string using the reference character (often commas are used between words or numbers to turn a string into an array)",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "outputstring"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${str}"
+      }
+    ],
+    "y": 250,
+    "z": 286,
+    "id": "c9ee",
+    "var": "default",
+    "x": 1374,
+    "text": "split"
+  },
+  "pc6t": {
+    "type": "button",
+    "clickRoutine": [
+      "var string = ${PROPERTY text OF string}",
+      "var var = ${PROPERTY text OF atString7a}",
+      "var var2 = ${PROPERTY text OF atString7b}",
+      "var str =  ${string} substr ${var} ${var2} //Extracts and returns parts of a string starting at the postion of the first number and continuing for the number of characters in the second number",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "outputstring"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${str}"
+      }
+    ],
+    "x": 120,
+    "y": 487,
+    "z": 279,
+    "id": "pc6t",
+    "var": "the",
+    "text": "substr"
+  },
+  "0y6s": {
+    "type": "button",
+    "clickRoutine": [
+      "var string = ${PROPERTY text OF string}",
+      "var str = ${string} toLowerCase //Returns the same string with all characters converted to lowercase",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "outputstring",
+        "collection": "myString2"
+      },
+      {
+        "func": "SET",
+        "collection": "myString2",
+        "property": "text",
+        "value": "${str}"
+      }
+    ],
+    "x": 374,
+    "y": 487,
+    "z": 280,
+    "id": "0y6s",
+    "var": "e",
+    "css": "font-size: 14px; ",
+    "text": "toLowerCase"
+  },
+  "3e62": {
+    "type": "button",
+    "clickRoutine": [
+      "var string = ${PROPERTY text OF string}",
+      "var str = ${string} toUpperCase //Returns the same string with all characters converted to uppercase",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "outputstring",
+        "collection": "myString2"
+      },
+      {
+        "func": "SET",
+        "collection": "myString2",
+        "property": "text",
+        "value": "${str}"
+      }
+    ],
+    "x": 619,
+    "y": 487,
+    "z": 294,
+    "id": "3e62",
+    "css": "font-size: 13px; ",
+    "text": "toUpperCase"
+  },
+  "kouz": {
+    "type": "button",
+    "clickRoutine": [
+      "var string = ${PROPERTY text OF string}",
+      "var str = ${string} trim //Returns the same string with all blank/white space at the beginning and end removed",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "outputstring"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${str}"
+      }
+    ],
+    "x": 872,
+    "y": 487,
+    "z": 293,
+    "id": "kouz",
+    "text": "trim"
+  },
+  "vymh": {
+    "type": "button",
+    "clickRoutine": [
+      "var string = ${PROPERTY text OF string}",
+      "var str = ${string} trimEnd //Returns the same string with all blank/white space at the end removed",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "outputstring"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${str}"
+      }
+    ],
+    "x": 1115,
+    "y": 487,
+    "z": 292,
+    "id": "vymh",
+    "text": "trimEnd"
+  },
+  "jbys": {
+    "type": "button",
+    "clickRoutine": [
+      "var string = ${PROPERTY text OF string}",
+      "var str = ${string} trimStart //Returns the same string with all blank/white space at the beginning removed",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "outputstring"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${str}"
+      }
+    ],
+    "x": 1374,
+    "y": 487,
+    "z": 291,
+    "id": "jbys",
+    "text": "trimStart"
+  },
+  "outputstring": {
+    "type": "label",
+    "id": "outputstring",
+    "x": 280,
+    "y": 780,
+    "width": 1000,
+    "height": 200,
+    "z": 26449,
+    "css": "border: 2px dashed black; font-size:20px; color:black;text-align:left ",
+    "text": "  These functions can be used to modify strings. Press each button to see how the function works with the string (this intro text) to output the result below. For functions with a white box, you have an option to modify the value(s) on the screen without entering into the JSON and then pressing the button to see the revised output. This string also begins and ends with empty spaces to illustrate the trim functions."
+  },
+  "8fr3": {
+    "type": "label",
+    "text": "Strings: Modifying",
+    "css": "font-size: 60px",
+    "height": 160,
+    "width": 1000,
+    "x": 280,
+    "z": 26392,
+    "id": "8fr3",
+    "y": 1
+  },
+  "_meta": {
+    "version": 3,
+    "info": {
+      "name": "Strings",
+      "image": "/assets/-1494076321_5309",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "",
+      "players": "1",
+      "language": "US",
+      "variant": "Modifying",
+      "attribution": ""
+    }
+  },
+  "string": {
+    "id": "string",
+    "x": 280,
+    "y": 102,
+    "width": 1000,
+    "z": 16,
+    "css": "font-size: 20px; ",
+    "text": "  These functions can be used to modify strings. Press each button to see how the function works with the string (this intro text) to output the result below. For functions with a white box, you have an option to modify the value(s) on the screen without entering into the JSON and then pressing the button to see the revised output. This string also begins and ends with empty spaces to illustrate the trim functions.  "
+  },
+  "lr6y": {
+    "id": "lr6y",
+    "x": 704,
+    "y": 731,
+    "width": 50,
+    "z": 8,
+    "css": "font-size: 30px; ",
+    "text": "Output",
+    "height": 50
+  },
+  "atString6": {
+    "type": "label",
+    "id": "atString6",
+    "x": 1364,
+    "y": 361,
+    "height": 40,
+    "z": 26431,
+    "editable": true,
+    "text": "o",
+    "css": "background-color:white; border-style: solid;"
+  },
+  "atString2": {
+    "type": "label",
+    "id": "atString2",
+    "x": 364,
+    "y": 361,
+    "height": 40,
+    "z": 26420,
+    "editable": true,
+    "text": 2,
+    "css": "background-color:white; border-style: solid;"
+  },
+  "atString3b": {
+    "type": "label",
+    "id": "atString3b",
+    "x": 609,
+    "y": 411,
+    "height": 40,
+    "z": 26434,
+    "editable": true,
+    "text": "xyz",
+    "css": "background-color:white; border-style: solid;"
+  },
+  "atString3a": {
+    "type": "label",
+    "id": "atString3a",
+    "x": 609,
+    "y": 361,
+    "height": 40,
+    "z": 26434,
+    "editable": true,
+    "text": "e",
+    "css": "background-color:white; border-style: solid;"
+  },
+  "atString4b": {
+    "type": "label",
+    "id": "atString4b",
+    "x": 862,
+    "y": 411,
+    "height": 40,
+    "z": 26433,
+    "editable": true,
+    "text": "xyz",
+    "css": "background-color:white; border-style: solid;"
+  },
+  "atString4a": {
+    "type": "label",
+    "id": "atString4a",
+    "x": 862,
+    "y": 361,
+    "height": 40,
+    "z": 26433,
+    "editable": true,
+    "text": "a",
+    "css": "background-color:white; border-style: solid;"
+  },
+  "01xr": {
+    "id": "01xr",
+    "x": 70,
+    "y": 244,
+    "z": 23,
+    "css": "font-size: 20px; ",
+    "text": "The 'concat' function is also used to modify strings. It is covered in the \"Creating\" variant of this tutorial and is not included here.",
+    "width": 200
+  },
+  "atString5a": {
+    "type": "label",
+    "id": "atString5a",
+    "x": 1105,
+    "y": 361,
+    "height": 40,
+    "z": 26432,
+    "editable": true,
+    "text": 7,
+    "css": "background-color:white; border-style: solid;"
+  },
+  "atString5b": {
+    "type": "label",
+    "id": "atString5b",
+    "x": 1105,
+    "y": 411,
+    "height": 40,
+    "z": 26432,
+    "editable": true,
+    "text": "47",
+    "css": "background-color:white; border-style: solid;"
+  },
+  "atString7a": {
+    "type": "label",
+    "id": "atString7a",
+    "x": 100,
+    "y": 596,
+    "height": 40,
+    "z": 26425,
+    "editable": true,
+    "text": 7,
+    "css": "background-color:white; border-style: solid;"
+  },
+  "atString7b": {
+    "type": "label",
+    "id": "atString7b",
+    "x": 100,
+    "y": 646,
+    "height": 40,
+    "z": 26425,
+    "editable": true,
+    "text": 47,
+    "css": "background-color:white; border-style: solid;"
+  },
+  "vcwq": {
+    "type": "button",
+    "clickRoutine": [
+      "var string = ${PROPERTY text OF string}",
+      "var str = ${string} padEnd 450 ///Returns the same string, but makes the string at least a set minimum length by padding the string with spaces at the end. If the string is already as long or longer than the minimum length, then the string is unchanged.",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "outputstring"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${str}"
+      }
+    ],
+    "x": 1115,
+    "y": 587,
+    "z": 292,
+    "id": "vcwq",
+    "text": "padEnd"
+  },
+  "z4l2": {
+    "type": "button",
+    "clickRoutine": [
+      "var string = ${PROPERTY text OF string}",
+      "var str = ${string} padStart 450 //Returns the same string, but makes the string at least a set minimum length by padding the string with spaces at the start. If the string is already as long or longer than the minimum length, then the string is unchanged. ",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "outputstring"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${str}"
+      }
+    ],
+    "x": 1374,
+    "y": 587,
+    "z": 291,
+    "id": "z4l2",
+    "text": "padStart"
+  }
+}

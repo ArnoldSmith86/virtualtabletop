@@ -1,0 +1,1468 @@
+{
+  "hand": {
+    "id": "hand",
+    "x": 50,
+    "y": 820,
+    "z": 1,
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "dropOffsetX": 10,
+    "dropOffsetY": 14,
+    "stackOffsetX": 40,
+    "inheritChildZ": true,
+    "childrenPerOwner": true,
+    "width": 1500,
+    "height": 180
+  },
+  "pile3162_label": {
+    "id": "pile3162_label",
+    "x": -21.3,
+    "y": -40,
+    "width": 255.6,
+    "height": 40,
+    "type": "label",
+    "text": "Draw",
+    "movableInEdit": false,
+    "parent": "Draw",
+    "css": "font-size: 30px; "
+  },
+  "card23253": {
+    "id": "card23253",
+    "z": 3,
+    "type": "card",
+    "cardType": "type-ek04.jpg",
+    "deck": "Main Deck",
+    "activeFace": 1,
+    "x": 84,
+    "y": 4,
+    "parent": "Peek"
+  },
+  "card15165": {
+    "id": "card15165",
+    "z": 13,
+    "type": "card",
+    "cardType": "type-ek05.jpg",
+    "deck": "Main Deck",
+    "parent": "nnem",
+    "activeFace": 1
+  },
+  "card22803": {
+    "id": "card22803",
+    "z": 2,
+    "type": "card",
+    "cardType": "type-ek06.jpg",
+    "deck": "Main Deck",
+    "parent": "nnem",
+    "activeFace": 1
+  },
+  "card26999": {
+    "id": "card26999",
+    "z": 7,
+    "type": "card",
+    "cardType": "type-ek07.jpg",
+    "deck": "Main Deck",
+    "parent": "nnem",
+    "activeFace": 1
+  },
+  "card11059": {
+    "id": "card11059",
+    "z": 30,
+    "type": "card",
+    "cardType": "type-ek08.jpg",
+    "parent": "nnem",
+    "deck": "Main Deck",
+    "activeFace": 1
+  },
+  "card27677": {
+    "id": "card27677",
+    "z": 1,
+    "type": "card",
+    "cardType": "type-ek14.jpg",
+    "deck": "Main Deck",
+    "parent": "nnem",
+    "activeFace": 1
+  },
+  "card9856": {
+    "id": "card9856",
+    "z": 18411,
+    "type": "card",
+    "cardType": "type-ek17.jpg",
+    "deck": "Main Deck",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4,
+    "parent": "P3"
+  },
+  "card24768": {
+    "id": "card24768",
+    "z": 22,
+    "type": "card",
+    "cardType": "type-ek20.jpg",
+    "parent": "nnem",
+    "deck": "Main Deck",
+    "activeFace": 1
+  },
+  "card12125": {
+    "id": "card12125",
+    "z": 18438,
+    "type": "card",
+    "cardType": "type-ek25.jpg",
+    "deck": "Main Deck",
+    "activeFace": 1,
+    "parent": "l97x"
+  },
+  "card15879": {
+    "id": "card15879",
+    "z": 18401,
+    "type": "card",
+    "cardType": "type-ek37.jpg",
+    "deck": "Main Deck",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4,
+    "parent": "P1"
+  },
+  "card20066": {
+    "id": "card20066",
+    "z": 18435,
+    "type": "card",
+    "cardType": "type-ek38.jpg",
+    "deck": "Main Deck",
+    "activeFace": 1,
+    "parent": "l97x"
+  },
+  "c5c27622-7100-4a81-be82-3cc027e51011": {
+    "id": "c5c27622-7100-4a81-be82-3cc027e51011",
+    "z": 1,
+    "type": "card",
+    "cardType": "type-ek05.jpg",
+    "deck": "Main Deck",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4,
+    "parent": "Peek"
+  },
+  "a421eec9-709e-4dd9-98ba-e00dc520c22b": {
+    "id": "a421eec9-709e-4dd9-98ba-e00dc520c22b",
+    "z": 34,
+    "type": "card",
+    "cardType": "type-ek05.jpg",
+    "deck": "Main Deck",
+    "parent": "nnem",
+    "activeFace": 1
+  },
+  "05fbbde7-2bc0-4dcc-904c-eacce6e770a4": {
+    "id": "05fbbde7-2bc0-4dcc-904c-eacce6e770a4",
+    "z": 18414,
+    "type": "card",
+    "cardType": "type-ek05.jpg",
+    "deck": "Main Deck",
+    "activeFace": 1,
+    "parent": "l97x"
+  },
+  "e4f3fbd3-506a-4734-9150-feb45c1a6ec9": {
+    "id": "e4f3fbd3-506a-4734-9150-feb45c1a6ec9",
+    "z": 20,
+    "type": "card",
+    "cardType": "type-ek06.jpg",
+    "deck": "Main Deck",
+    "parent": "nnem",
+    "activeFace": 1
+  },
+  "c988b47c-68f3-4059-ae22-d1fccf4ad7a0": {
+    "id": "c988b47c-68f3-4059-ae22-d1fccf4ad7a0",
+    "z": 15,
+    "type": "card",
+    "cardType": "type-ek06.jpg",
+    "deck": "Main Deck",
+    "parent": "nnem",
+    "activeFace": 1
+  },
+  "594d1c05-d5ce-4ce6-85fe-1da2ea07fe85": {
+    "id": "594d1c05-d5ce-4ce6-85fe-1da2ea07fe85",
+    "z": 33,
+    "type": "card",
+    "cardType": "type-ek06.jpg",
+    "deck": "Main Deck",
+    "parent": "nnem",
+    "activeFace": 1
+  },
+  "8b577789-82e6-4ae7-87cf-14322c863695": {
+    "id": "8b577789-82e6-4ae7-87cf-14322c863695",
+    "z": 18432,
+    "type": "card",
+    "cardType": "type-ek04.jpg",
+    "deck": "Main Deck",
+    "activeFace": 1,
+    "parent": "l97x"
+  },
+  "915104fb-a556-4803-b629-c93d846ef84f": {
+    "id": "915104fb-a556-4803-b629-c93d846ef84f",
+    "z": 32,
+    "type": "card",
+    "cardType": "type-ek04.jpg",
+    "deck": "Main Deck",
+    "parent": "nnem",
+    "activeFace": 1
+  },
+  "7b842d9c-ef5a-493d-bdc7-b9737a17b3e8": {
+    "id": "7b842d9c-ef5a-493d-bdc7-b9737a17b3e8",
+    "z": 25,
+    "type": "card",
+    "cardType": "type-ek04.jpg",
+    "deck": "Main Deck",
+    "parent": "nnem",
+    "activeFace": 1
+  },
+  "8e6dd333-1dae-4b6d-828e-534a4581fdc3": {
+    "id": "8e6dd333-1dae-4b6d-828e-534a4581fdc3",
+    "z": 4,
+    "type": "card",
+    "cardType": "type-ek07.jpg",
+    "deck": "Main Deck",
+    "activeFace": 1,
+    "x": 124,
+    "y": 4,
+    "parent": "Peek"
+  },
+  "28ce9ea8-035d-4323-acdc-dc1152fe6af1": {
+    "id": "28ce9ea8-035d-4323-acdc-dc1152fe6af1",
+    "z": 9,
+    "type": "card",
+    "cardType": "type-ek07.jpg",
+    "deck": "Main Deck",
+    "parent": "nnem",
+    "activeFace": 1
+  },
+  "68cb0148-27c7-454a-bad7-c194ca9ff97c": {
+    "id": "68cb0148-27c7-454a-bad7-c194ca9ff97c",
+    "z": 28,
+    "type": "card",
+    "cardType": "type-ek07.jpg",
+    "parent": "nnem",
+    "deck": "Main Deck",
+    "activeFace": 1
+  },
+  "af4ccbbf-c270-408d-a0ea-6359a62d6418": {
+    "id": "af4ccbbf-c270-408d-a0ea-6359a62d6418",
+    "z": 27,
+    "type": "card",
+    "cardType": "type-ek08.jpg",
+    "parent": "nnem",
+    "deck": "Main Deck",
+    "activeFace": 1
+  },
+  "317b2748-e67a-4139-844f-211dc0665d59": {
+    "id": "317b2748-e67a-4139-844f-211dc0665d59",
+    "z": 2,
+    "type": "card",
+    "cardType": "type-ek08.jpg",
+    "deck": "Main Deck",
+    "activeFace": 1,
+    "x": 44,
+    "y": 4,
+    "parent": "Peek"
+  },
+  "aaa5e05c-c803-4064-b245-e7ecc6a1e23f": {
+    "id": "aaa5e05c-c803-4064-b245-e7ecc6a1e23f",
+    "z": 17,
+    "type": "card",
+    "cardType": "type-ek08.jpg",
+    "deck": "Main Deck",
+    "parent": "nnem",
+    "activeFace": 1
+  },
+  "5569f967-792d-4588-a6a5-e9fcd6b09f98_label": {
+    "id": "5569f967-792d-4588-a6a5-e9fcd6b09f98_label",
+    "x": -21.3,
+    "y": -40,
+    "width": 255.6,
+    "height": 40,
+    "type": "label",
+    "text": "Discard",
+    "movableInEdit": false,
+    "parent": "Discard",
+    "css": "font-size: 30px; "
+  },
+  "97e30686-6b06-4743-808a-7dc042bfa28a_label": {
+    "id": "97e30686-6b06-4743-808a-7dc042bfa28a_label",
+    "x": -21.3,
+    "y": -40,
+    "width": 255.6,
+    "height": 40,
+    "type": "label",
+    "text": "Player 1",
+    "movableInEdit": false,
+    "editable": true,
+    "parent": "P1",
+    "css": "font-size: 30px; "
+  },
+  "fdc2d5d4-31b7-4e23-8011-fbb07ee50b4e_label": {
+    "id": "fdc2d5d4-31b7-4e23-8011-fbb07ee50b4e_label",
+    "x": -21.3,
+    "y": -40,
+    "width": 255.6,
+    "height": 40,
+    "type": "label",
+    "text": "Player 2",
+    "movableInEdit": false,
+    "editable": true,
+    "parent": "P2",
+    "css": "font-size: 30px; "
+  },
+  "a64ae290-9c98-4fb1-88dc-b232e4899d7f_label": {
+    "id": "a64ae290-9c98-4fb1-88dc-b232e4899d7f_label",
+    "x": -21.3,
+    "y": -40,
+    "width": 255.6,
+    "height": 40,
+    "type": "label",
+    "text": "Player 3",
+    "movableInEdit": false,
+    "editable": true,
+    "parent": "P3",
+    "css": "font-size: 30px; "
+  },
+  "7a9a9eb1-b2e1-445c-a783-232396f43937_label": {
+    "id": "7a9a9eb1-b2e1-445c-a783-232396f43937_label",
+    "x": -21.3,
+    "y": -40,
+    "width": 255.6,
+    "height": 40,
+    "type": "label",
+    "text": "Player 4",
+    "movableInEdit": false,
+    "editable": true,
+    "parent": "P4",
+    "css": "font-size: 30px; "
+  },
+  "c6ea6e3a-7899-4129-a458-238ad907d7d3_label": {
+    "id": "c6ea6e3a-7899-4129-a458-238ad907d7d3_label",
+    "x": -21.3,
+    "y": -40,
+    "width": 255.6,
+    "height": 40,
+    "type": "label",
+    "text": "Player 5",
+    "movableInEdit": false,
+    "editable": true,
+    "parent": "P5",
+    "css": "font-size: 30px; "
+  },
+  "bggs": {
+    "type": "card",
+    "cardType": "type-ek31.jpg",
+    "id": "bggs",
+    "z": 16,
+    "deck": "Main Deck",
+    "parent": "nnem",
+    "activeFace": 1
+  },
+  "8g32": {
+    "type": "card",
+    "cardType": "type-ek40.jpg",
+    "id": "8g32",
+    "z": 361,
+    "deck": "Main Deck",
+    "parent": "bujg"
+  },
+  "Reset Button": {
+    "type": "button",
+    "id": "Reset Button",
+    "x": 1494,
+    "width": 100,
+    "height": 32,
+    "z": 6678,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Players",
+        "fields": [
+          {
+            "type": "number",
+            "label": "How many players?",
+            "variable": "players",
+            "value": 2,
+            "min": 2,
+            "max": 5
+          }
+        ]
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "<",
+        "applyVariables": [
+          {
+            "parameter": "operand1",
+            "variable": "players"
+          }
+        ],
+        "operand2": 5,
+        "variable": "lessThan5"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "<",
+        "applyVariables": [
+          {
+            "parameter": "operand1",
+            "variable": "players"
+          }
+        ],
+        "operand2": 4,
+        "variable": "lessThan4"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "<",
+        "applyVariables": [
+          {
+            "parameter": "operand1",
+            "variable": "players"
+          }
+        ],
+        "operand2": 3,
+        "variable": "lessThan3"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "-",
+        "applyVariables": [
+          {
+            "parameter": "operand1",
+            "variable": "players"
+          }
+        ],
+        "operand2": 1,
+        "variable": "kittens"
+      },
+      {
+        "func": "RECALL",
+        "holder": "Draw"
+      },
+      {
+        "func": "FLIP",
+        "holder": "Draw",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "Draw"
+      },
+      {
+        "func": "SELECT",
+        "property": "defuse",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "value": "Temp"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "Temp"
+      },
+      {
+        "func": "MOVE",
+        "from": "Temp",
+        "to": [
+          "P1",
+          "P2"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "Temp",
+        "to": "P3",
+        "applyVariables": [
+          {
+            "parameter": "skip",
+            "variable": "lessThan3"
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "Temp",
+        "to": "P4",
+        "applyVariables": [
+          {
+            "parameter": "skip",
+            "variable": "lessThan4"
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "Temp",
+        "to": "P5",
+        "applyVariables": [
+          {
+            "parameter": "skip",
+            "variable": "lessThan5"
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "Temp",
+        "to": "Draw",
+        "count": 2
+      },
+      {
+        "func": "MOVE",
+        "from": "Temp",
+        "to": "Draw",
+        "count": 0,
+        "applyVariables": [
+          {
+            "parameter": "skip",
+            "variable": "lessThan4"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "exploding",
+        "value": true,
+        "mode": "set"
+      },
+      {
+        "func": "SET",
+        "value": "Out"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "Draw"
+      },
+      {
+        "func": "MOVE",
+        "from": "Draw",
+        "to": [
+          "P1",
+          "P2"
+        ],
+        "count": 7
+      },
+      {
+        "func": "MOVE",
+        "from": "Draw",
+        "to": "P3",
+        "applyVariables": [
+          {
+            "parameter": "skip",
+            "variable": "lessThan3"
+          }
+        ],
+        "count": 7
+      },
+      {
+        "func": "MOVE",
+        "from": "Draw",
+        "to": "P4",
+        "applyVariables": [
+          {
+            "parameter": "skip",
+            "variable": "lessThan4"
+          }
+        ],
+        "count": 7
+      },
+      {
+        "func": "MOVE",
+        "from": "Draw",
+        "to": "P5",
+        "applyVariables": [
+          {
+            "parameter": "skip",
+            "variable": "lessThan5"
+          }
+        ],
+        "count": 7
+      },
+      {
+        "func": "MOVE",
+        "from": "Out",
+        "to": "Draw",
+        "applyVariables": [
+          {
+            "parameter": "count",
+            "variable": "kittens"
+          }
+        ]
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "Draw"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Player Spinner",
+        "mode": "set"
+      },
+      {
+        "func": "SET",
+        "property": "options",
+        "value": [
+          1,
+          2
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "options",
+        "value": [
+          1,
+          2,
+          3
+        ],
+        "applyVariables": [
+          {
+            "parameter": "skip",
+            "variable": "lessThan3"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "options",
+        "value": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "applyVariables": [
+          {
+            "parameter": "skip",
+            "variable": "lessThan4"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "options",
+        "value": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "applyVariables": [
+          {
+            "parameter": "skip",
+            "variable": "lessThan5"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "playerHolder",
+        "value": true,
+        "mode": "set"
+      },
+      {
+        "func": "SET",
+        "property": "owner",
+        "value": []
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "P3",
+        "mode": "set"
+      },
+      {
+        "func": "SET",
+        "property": "owner",
+        "value": null,
+        "applyVariables": [
+          {
+            "parameter": "skip",
+            "variable": "lessThan3"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "P4",
+        "mode": "set"
+      },
+      {
+        "func": "SET",
+        "property": "owner",
+        "value": null,
+        "applyVariables": [
+          {
+            "parameter": "skip",
+            "variable": "lessThan4"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "P5",
+        "mode": "set"
+      },
+      {
+        "func": "SET",
+        "property": "owner",
+        "value": null,
+        "applyVariables": [
+          {
+            "parameter": "skip",
+            "variable": "lessThan5"
+          }
+        ]
+      }
+    ],
+    "text": "Reset",
+    "y": 8
+  },
+  "Exploding Kitten Button": {
+    "type": "button",
+    "id": "Exploding Kitten Button",
+    "x": 911.25,
+    "y": 727.5,
+    "width": 100,
+    "height": 60,
+    "z": 6687,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Exploding Kitten",
+        "fields": [
+          {
+            "type": "number",
+            "label": "At which position should the Exploding Kittens card be in the draw pile?",
+            "variable": "position",
+            "value": 1,
+            "min": 1,
+            "max": 60
+          }
+        ]
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "==",
+        "applyVariables": [
+          {
+            "parameter": "operand1",
+            "variable": "position"
+          }
+        ],
+        "operand2": 1,
+        "variable": "isFirst"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "-",
+        "applyVariables": [
+          {
+            "parameter": "operand1",
+            "variable": "position"
+          }
+        ],
+        "operand2": 1,
+        "variable": "realPosition"
+      },
+      {
+        "func": "MOVE",
+        "from": "Draw",
+        "to": "Temp",
+        "applyVariables": [
+          {
+            "parameter": "skip",
+            "variable": "isFirst"
+          },
+          {
+            "parameter": "count",
+            "variable": "realPosition"
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "Discard",
+        "to": "Draw",
+        "face": 0
+      },
+      {
+        "func": "MOVE",
+        "from": "Temp",
+        "count": 100,
+        "to": "Draw"
+      }
+    ],
+    "text": "Defuse"
+  },
+  "Shuffle Button": {
+    "type": "button",
+    "id": "Shuffle Button",
+    "x": 462.75,
+    "z": 6686,
+    "clickRoutine": [
+      {
+        "func": "SHUFFLE",
+        "holder": "Draw"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Player Spinner"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "text": "Shuffle",
+    "width": 100,
+    "height": 60,
+    "y": 727.5
+  },
+  "Draw": {
+    "type": "holder",
+    "id": "Draw",
+    "x": 512.75,
+    "y": 457.5,
+    "width": 213,
+    "height": 300,
+    "z": 6003
+  },
+  "Temp": {
+    "type": "holder",
+    "id": "Temp",
+    "x": 464.5,
+    "y": -439,
+    "z": 5997,
+    "width": 213,
+    "height": 300
+  },
+  "Discard": {
+    "type": "holder",
+    "id": "Discard",
+    "x": 748.25,
+    "y": 457.5,
+    "width": 213,
+    "height": 300,
+    "z": 6002
+  },
+  "P1": {
+    "type": "holder",
+    "id": "P1",
+    "x": 395,
+    "y": 95,
+    "width": 213,
+    "height": 300,
+    "z": 6005
+  },
+  "P2": {
+    "type": "holder",
+    "id": "P2",
+    "x": 630.5,
+    "y": 95,
+    "width": 213,
+    "height": 300,
+    "z": 6006
+  },
+  "P3": {
+    "type": "holder",
+    "id": "P3",
+    "x": 866,
+    "y": 95,
+    "width": 213,
+    "height": 300,
+    "z": 6007,
+    "playerHolder": true
+  },
+  "P4": {
+    "type": "holder",
+    "id": "P4",
+    "x": 1101.5,
+    "y": 95,
+    "width": 213,
+    "height": 300,
+    "z": 6008,
+    "playerHolder": true
+  },
+  "P5": {
+    "type": "holder",
+    "id": "P5",
+    "x": 1337,
+    "y": 95,
+    "width": 213,
+    "height": 300,
+    "z": 6009,
+    "playerHolder": true
+  },
+  "Out": {
+    "type": "holder",
+    "id": "Out",
+    "width": 213,
+    "height": 300,
+    "z": 5996,
+    "x": 240.5,
+    "y": -435
+  },
+  "Player Spinner": {
+    "type": "spinner",
+    "id": "Player Spinner",
+    "x": 17,
+    "z": 18447,
+    "options": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "value": "?",
+    "y": 15,
+    "movable": false
+  },
+  "Main Deck": {
+    "type": "deck",
+    "id": "Main Deck",
+    "parent": "Draw",
+    "x": 13,
+    "y": 44,
+    "z": 2537,
+    "cardDefaults": {
+      "pilesWith": {
+        "name": "card"
+      },
+      "width": 205,
+      "height": 292,
+      "enlarge": 3,
+      "ignoreOnLeave": true
+    },
+    "cardTypes": {
+      "type-ek04.jpg": {
+        "name": "Melon",
+        "action": "nothing",
+        "filler": true,
+        "image": "/assets/-102677534_5497"
+      },
+      "type-ek05.jpg": {
+        "name": "Taco",
+        "action": "nothing",
+        "filler": true,
+        "image": "/assets/992705680_1816"
+      },
+      "type-ek06.jpg": {
+        "name": "Hairy",
+        "action": "nothing",
+        "filler": true,
+        "image": "/assets/-2079250882_1091"
+      },
+      "type-ek07.jpg": {
+        "name": "Beard",
+        "action": "nothing",
+        "filler": true,
+        "image": "/assets/1759739171_1326"
+      },
+      "type-ek08.jpg": {
+        "name": "Rainbow",
+        "action": "nothing",
+        "filler": true,
+        "image": "/assets/658295769_1038"
+      },
+      "type-ek14.jpg": {
+        "name": "Peek",
+        "action": "use the Peek button to look at the next three cards - press it again to put them back",
+        "image": "/assets/-1694193877_1439"
+      },
+      "type-ek17.jpg": {
+        "name": "Shuffle",
+        "action": "use the Shuffle button to shuffle the draw pile",
+        "image": "/assets/1640093657_2284"
+      },
+      "type-ek20.jpg": {
+        "name": "Nope",
+        "action": "undo the last played card by another player",
+        "image": "/assets/1704241044_818"
+      },
+      "type-ek25.jpg": {
+        "name": "Favor",
+        "action": "ask another player for a card of their choice",
+        "image": "/assets/451028571_3081"
+      },
+      "type-ek31.jpg": {
+        "name": "Defuse",
+        "action": "survive an explosion\nput the explosion on the discard pile and use the Defuse button",
+        "image": "/assets/-1331901266_1380",
+        "defuse": true
+      },
+      "type-ek37.jpg": {
+        "name": "Skip",
+        "action": "end your turn without drawing a card",
+        "image": "/assets/-8031558_1359"
+      },
+      "type-ek38.jpg": {
+        "name": "Attack",
+        "action": "don't draw a card; the next player takes two turns",
+        "image": "/assets/-210113206_1459"
+      },
+      "type-ek40.jpg": {
+        "name": "Explode",
+        "action": "show this card immediately and use defuse or lose the game",
+        "image": "/assets/339700929_3444",
+        "exploding": true
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "darkred",
+            "valueType": "static",
+            "value": "/assets/-1590880098_1431",
+            "width": 205,
+            "height": 292
+          }
+        ],
+        "border": false,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "valueType": "static",
+            "value": "",
+            "width": 205,
+            "height": 292
+          },
+          {
+            "type": "image",
+            "x": 36,
+            "y": 8,
+            "color": "white",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 165,
+            "height": 252
+          },
+          {
+            "type": "image",
+            "x": 2,
+            "y": 2,
+            "color": "transparent",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 36,
+            "height": 36
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 100,
+            "fontSize": 20,
+            "valueType": "dynamic",
+            "value": "name",
+            "textAlign": "center",
+            "width": 40,
+            "rotation": -90,
+            "css": "color: grey"
+          },
+          {
+            "type": "text",
+            "x": 40,
+            "y": 220,
+            "fontSize": 12,
+            "valueType": "dynamic",
+            "value": "action",
+            "textAlign": "center",
+            "width": 155
+          }
+        ],
+        "border": false,
+        "radius": 8
+      }
+    ]
+  },
+  "Peek": {
+    "type": "holder",
+    "id": "Peek",
+    "x": 1179.25,
+    "y": 457.5,
+    "width": 293,
+    "height": 300,
+    "z": 6011,
+    "childrenPerOwner": true,
+    "stackOffsetX": 40
+  },
+  "Peek Button": {
+    "type": "button",
+    "id": "Peek Button",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "value": "Peek"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "MOVE",
+        "from": "Peek",
+        "count": 3,
+        "to": "Draw",
+        "face": 0
+      },
+      {
+        "func": "MOVE",
+        "from": "Draw",
+        "to": "Peek",
+        "count": 3,
+        "applyVariables": [
+          {
+            "parameter": "skip",
+            "variable": "COUNT"
+          }
+        ],
+        "face": 1
+      }
+    ],
+    "text": "Peek",
+    "width": 100,
+    "height": 60,
+    "z": 6690,
+    "x": 1422.25,
+    "y": 727.5
+  },
+  "jh2z": {
+    "deck": "Main Deck",
+    "type": "card",
+    "cardType": "type-ek20.jpg",
+    "id": "jh2z",
+    "z": 24,
+    "parent": "nnem",
+    "activeFace": 1
+  },
+  "nc3p": {
+    "deck": "Main Deck",
+    "type": "card",
+    "cardType": "type-ek20.jpg",
+    "id": "nc3p",
+    "z": 19,
+    "parent": "nnem",
+    "activeFace": 1
+  },
+  "x9w0": {
+    "deck": "Main Deck",
+    "type": "card",
+    "cardType": "type-ek20.jpg",
+    "id": "x9w0",
+    "z": 18445,
+    "x": 163.5,
+    "y": 99,
+    "activeFace": 1
+  },
+  "i72s": {
+    "deck": "Main Deck",
+    "type": "card",
+    "cardType": "type-ek20.jpg",
+    "id": "i72s",
+    "z": 6,
+    "parent": "nnem",
+    "activeFace": 1
+  },
+  "xr4z": {
+    "deck": "Main Deck",
+    "type": "card",
+    "cardType": "type-ek37.jpg",
+    "id": "xr4z",
+    "z": 11,
+    "parent": "nnem",
+    "activeFace": 1
+  },
+  "e97i": {
+    "deck": "Main Deck",
+    "type": "card",
+    "cardType": "type-ek37.jpg",
+    "id": "e97i",
+    "z": 26,
+    "parent": "nnem",
+    "activeFace": 1
+  },
+  "uufh": {
+    "deck": "Main Deck",
+    "type": "card",
+    "cardType": "type-ek37.jpg",
+    "id": "uufh",
+    "z": 21,
+    "parent": "nnem",
+    "activeFace": 1
+  },
+  "eaiz": {
+    "deck": "Main Deck",
+    "type": "card",
+    "cardType": "type-ek31.jpg",
+    "id": "eaiz",
+    "z": 18444,
+    "activeFace": 1,
+    "parent": "l97x"
+  },
+  "zqr4": {
+    "deck": "Main Deck",
+    "type": "card",
+    "cardType": "type-ek31.jpg",
+    "id": "zqr4",
+    "z": 5,
+    "parent": "nnem",
+    "activeFace": 1
+  },
+  "3t4l": {
+    "deck": "Main Deck",
+    "type": "card",
+    "cardType": "type-ek31.jpg",
+    "id": "3t4l",
+    "z": 4,
+    "parent": "nnem",
+    "activeFace": 1
+  },
+  "87iw": {
+    "deck": "Main Deck",
+    "type": "card",
+    "cardType": "type-ek31.jpg",
+    "id": "87iw",
+    "z": 8,
+    "parent": "nnem",
+    "activeFace": 1
+  },
+  "3jnd": {
+    "deck": "Main Deck",
+    "type": "card",
+    "cardType": "type-ek31.jpg",
+    "id": "3jnd",
+    "z": 10,
+    "parent": "nnem",
+    "activeFace": 1
+  },
+  "szzq": {
+    "deck": "Main Deck",
+    "type": "card",
+    "cardType": "type-ek38.jpg",
+    "id": "szzq",
+    "z": 35,
+    "parent": "nnem",
+    "activeFace": 1
+  },
+  "in9g": {
+    "deck": "Main Deck",
+    "type": "card",
+    "cardType": "type-ek38.jpg",
+    "id": "in9g",
+    "z": 18427,
+    "activeFace": 1,
+    "x": 4,
+    "y": 4,
+    "parent": "P5"
+  },
+  "ta1n": {
+    "deck": "Main Deck",
+    "type": "card",
+    "cardType": "type-ek25.jpg",
+    "id": "ta1n",
+    "z": 18416,
+    "activeFace": 1,
+    "x": 4,
+    "y": 4,
+    "parent": "P4"
+  },
+  "5yu3": {
+    "deck": "Main Deck",
+    "type": "card",
+    "cardType": "type-ek25.jpg",
+    "id": "5yu3",
+    "z": 31,
+    "parent": "nnem",
+    "activeFace": 1
+  },
+  "vizr": {
+    "deck": "Main Deck",
+    "type": "card",
+    "cardType": "type-ek25.jpg",
+    "id": "vizr",
+    "z": 29,
+    "parent": "nnem",
+    "activeFace": 1
+  },
+  "s4vy": {
+    "deck": "Main Deck",
+    "type": "card",
+    "cardType": "type-ek14.jpg",
+    "id": "s4vy",
+    "z": 3,
+    "parent": "nnem",
+    "activeFace": 1
+  },
+  "4ymh": {
+    "deck": "Main Deck",
+    "type": "card",
+    "cardType": "type-ek14.jpg",
+    "id": "4ymh",
+    "z": 18418,
+    "activeFace": 1,
+    "parent": "l97x"
+  },
+  "8n14": {
+    "deck": "Main Deck",
+    "type": "card",
+    "cardType": "type-ek14.jpg",
+    "id": "8n14",
+    "z": 18403,
+    "activeFace": 1,
+    "x": 4,
+    "y": 4,
+    "parent": "P2"
+  },
+  "l4c4": {
+    "deck": "Main Deck",
+    "type": "card",
+    "cardType": "type-ek14.jpg",
+    "id": "l4c4",
+    "z": 18,
+    "parent": "nnem",
+    "activeFace": 1
+  },
+  "05j3": {
+    "deck": "Main Deck",
+    "type": "card",
+    "cardType": "type-ek40.jpg",
+    "id": "05j3",
+    "z": 2965,
+    "parent": "bujg"
+  },
+  "6hpg": {
+    "deck": "Main Deck",
+    "type": "card",
+    "cardType": "type-ek40.jpg",
+    "id": "6hpg",
+    "z": 18343,
+    "parent": "bujg"
+  },
+  "x7hy": {
+    "deck": "Main Deck",
+    "type": "card",
+    "cardType": "type-ek40.jpg",
+    "id": "x7hy",
+    "z": 18441,
+    "activeFace": 1,
+    "parent": "nnem"
+  },
+  "udt5": {
+    "deck": "Main Deck",
+    "type": "card",
+    "cardType": "type-ek38.jpg",
+    "id": "udt5",
+    "z": 14,
+    "parent": "nnem",
+    "activeFace": 1
+  },
+  "l8ez": {
+    "deck": "Main Deck",
+    "type": "card",
+    "cardType": "type-ek17.jpg",
+    "id": "l8ez",
+    "z": 12,
+    "parent": "nnem",
+    "activeFace": 1
+  },
+  "ity5": {
+    "deck": "Main Deck",
+    "type": "card",
+    "cardType": "type-ek17.jpg",
+    "id": "ity5",
+    "z": 18425,
+    "activeFace": 1,
+    "parent": "l97x"
+  },
+  "6hat": {
+    "deck": "Main Deck",
+    "type": "card",
+    "cardType": "type-ek17.jpg",
+    "id": "6hat",
+    "z": 23,
+    "parent": "nnem",
+    "activeFace": 1
+  },
+  "ntr6": {
+    "id": "ntr6",
+    "text": "next\n▼",
+    "x": 1303,
+    "y": 421,
+    "css": "text-align: center;color: grey",
+    "layer": -1,
+    "movable": false
+  },
+  "nnem": {
+    "type": "pile",
+    "width": 205,
+    "height": 292,
+    "id": "nnem",
+    "z": 18396,
+    "parent": "Discard"
+  },
+  "93z1": {
+    "id": "93z1",
+    "text": "How to play\n\nPlay as many cards as you want to. End your turn by drawing a card.\n\nBe the last player standing after everyone else exploded.\n\n\nDiscard two of a kind to draw a card from an opponent.\n\nDiscard three of a kind to steal a specific card (for example a Defuse) from an opponent.\n\nDiscard five different cards to pick a card from the Discard pile.",
+    "css": "color: grey",
+    "width": 300,
+    "y": 437.5,
+    "x": 103.5,
+    "height": 340,
+    "layer": -1,
+    "movable": false
+  },
+  "bujg": {
+    "type": "pile",
+    "parent": "Out",
+    "x": 4,
+    "y": 4,
+    "width": 205,
+    "height": 292,
+    "id": "bujg"
+  },
+  "l97x": {
+    "type": "pile",
+    "parent": "Draw",
+    "x": 4,
+    "y": 4,
+    "width": 205,
+    "height": 292,
+    "id": "l97x"
+  },
+  "_meta": {
+    "version": 1,
+    "info": {
+      "name": "Don't Blow Up",
+      "image": "/assets/1599847053_3509",
+      "rules": "",
+      "bgg": "",
+      "year": "2015",
+      "mode": "vs",
+      "time": "15",
+      "players": "2-5",
+      "language": "US",
+      "variant": "",
+      "attribution": "The room layout is public domain (CC0) by ArnoldSmith86.\n\nAll other images are CC-BY from game-icons.net:\n\nhttps://game-icons.net/1x1/lorc/mushroom-cloud.html\nhttps://game-icons.net/1x1/lorc/pincers.html\nhttps://game-icons.net/1x1/lorc/crystal-ball.html\nhttps://game-icons.net/1x1/lorc/run.html\nhttps://game-icons.net/1x1/lorc/interdiction.html\nhttps://game-icons.net/1x1/delapouite/pineapple.html\nhttps://game-icons.net/1x1/lorc/rainbow-star.html\nhttps://game-icons.net/1x1/lorc/beard.html\nhttps://game-icons.net/1x1/lorc/comb.html\nhttps://game-icons.net/1x1/delapouite/tacos.html\nhttps://game-icons.net/1x1/faithtoken/card-random.html\nhttps://game-icons.net/1x1/darkzaitzev/robber-hand.html\nhttps://game-icons.net/1x1/lorc/sword-clash.html\nhttps://game-icons.net/1x1/lorc/cat.html"
+    }
+  }
+}
