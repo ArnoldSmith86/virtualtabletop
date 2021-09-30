@@ -328,7 +328,11 @@ export default class Room {
   removePlayer(player) {
     this.trace('removePlayer', { player: player.name });
     Logging.log(`removing player ${player.name} from room ${this.id}`);
+
     this.players = this.players.filter(e => e != player);
+    if(player.name.match(/^Guest/) && !Object.values(this.state).filter(w=>w.owner==player.name).length)
+      delete this.state._meta.players[player.name];
+
     if(this.players.length == 0) {
       this.unload();
       this.unloadCallback();
