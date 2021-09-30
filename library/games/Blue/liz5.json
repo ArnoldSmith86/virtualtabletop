@@ -3327,7 +3327,10 @@
       "players": "4",
       "language": "UN",
       "variant": "",
-      "attribution": "Artwork and initial game layout released as CC BY-NC by https://www.reddit.com/user/jaojins/.\n\nLayout adapted for VTT by ArnoldSmith86, with minor changes by LawDawg and more automation buttons added by jade-alarm: also CC BY-NC."
+      "attribution": "Artwork and initial game layout released as CC BY-NC by https://www.reddit.com/user/jaojins/.\n\nLayout adapted for VTT by ArnoldSmith86, with minor changes by LawDawg and more automation buttons added by jade-alarm: also CC BY-NC.",
+      "similarName": "Azul",
+      "similarLink": "https://boardgamegeek.com/boardgame/230802/azul",
+      "description": "Choose colored tiles to place on board in matching colors with extra points for specific patterns and sets.  Highest score wins."
     }
   },
   "display01-02": {

@@ -3365,7 +3365,10 @@
       "players": "2-6",
       "language": "UN",
       "variant": "",
-      "attribution": "The room design and 6 player board (modified 4 player board) are by Ingegneus and are released to the Public Domain under CC0.\n\nThe 4 player board by Vitavia is from https://commons.wikimedia.org/wiki/File:Mensch%C3%84rgereDichNicht_Germany1929_front.jpg and is available under CC BY-SA 4.0.\n\nThe wood background by Nathan Dumlao is from https://unsplash.com/photos/J2gEgTPM_OA and is available under the Unsplash license.\n\nThe room also uses the image from https://pixabay.com/photos/paper-old-texture-parchment-1074136/ which is available under the Pixabay License.\n\n-The Dice is from VTT's Public Domain assets."
+      "attribution": "The room design and 6 player board (modified 4 player board) are by Ingegneus and are released to the Public Domain under CC0.\n\nThe 4 player board by Vitavia is from https://commons.wikimedia.org/wiki/File:Mensch%C3%84rgereDichNicht_Germany1929_front.jpg and is available under CC BY-SA 4.0.\n\nThe wood background by Nathan Dumlao is from https://unsplash.com/photos/J2gEgTPM_OA and is available under the Unsplash license.\n\nThe room also uses the image from https://pixabay.com/photos/paper-old-texture-parchment-1074136/ which is available under the Pixabay License.\n\n-The Dice is from VTT's Public Domain assets.",
+      "similarName": "Mensch ärgere Dich nicht",
+      "similarLink": "https://www.boardgamegeek.com/boardgame/2136/pachisi",
+      "description": "Move tokens around board according to roll of dice.  First player to get all tokens to home wins."
     }
   }
 }

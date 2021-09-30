@@ -1028,7 +1028,10 @@
       "players": "2",
       "language": "UN",
       "variant": "",
-      "attribution": "Room layout, board, and library image by LawDawg96, with small edits by RaphaelAlvez and ArnoldSmith86, are released to the Public Domain by CC0.\n\nWood grains used on the board are recolored versions of files available at https://www.pexels.com/ and are available for use under the Pexels license."
+      "attribution": "Room layout, board, and library image by LawDawg96, with small edits by RaphaelAlvez and ArnoldSmith86, are released to the Public Domain by CC0.\n\nWood grains used on the board are recolored versions of files available at https://www.pexels.com/ and are available for use under the Pexels license.",
+      "similarName": "Backgammon",
+      "similarLink": "https://boardgamegeek.com/boardgame/2397/backgammon",
+      "description": "Classic strategy game.  Move checkers around a board to reach home while avoiding capture.  First to remove all own pieces wins."
     }
   },
   "gukc": {

@@ -2010,7 +2010,10 @@
       "players": "2",
       "language": "US",
       "variant": "Original Board",
-      "attribution": "Gameplay:\n\n Each Turn:\n  - Place a piece anywhere\n  - Rotate any square\n\n Winning:\n  - Get 5 in a row (Diagonals Count)\n\n Ties:\n  - Multiple players get 5 in a row simultaneously\n  - Run out of space on the board \n\nThe game layout, assets, and library image were created by https://www.reddit.com/user/Casbuild, https://www.reddit.com/user/RaphaelAlvez and https://www.reddit.com/user/96LawDawg and are released to the public domain by CC0."
+      "attribution": "Gameplay:\n\n Each Turn:\n  - Place a piece anywhere\n  - Rotate any square\n\n Winning:\n  - Get 5 in a row (Diagonals Count)\n\n Ties:\n  - Multiple players get 5 in a row simultaneously\n  - Run out of space on the board \n\nThe game layout, assets, and library image were created by https://www.reddit.com/user/Casbuild, https://www.reddit.com/user/RaphaelAlvez and https://www.reddit.com/user/96LawDawg and are released to the public domain by CC0.",
+      "similarName": "Pentago",
+      "similarLink": "https://boardgamegeek.com/boardgame/21012/pentago-xl",
+      "description": "Place marble into a space on four connected and rotating 3x3 grids. Connect five marbles in a row to win."
     }
   },
   "o9nz": {

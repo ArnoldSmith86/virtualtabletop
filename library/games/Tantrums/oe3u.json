@@ -7892,7 +7892,10 @@
       "players": "1-4",
       "language": "UN",
       "variant": "",
-      "attribution": "The game layout, board, piece designs, and library image were done by https://www.reddit.com/user/96LawDawg and are released to the Public Domain under CC0."
+      "attribution": "The game layout, board, piece designs, and library image were done by https://www.reddit.com/user/96LawDawg and are released to the Public Domain under CC0.",
+      "similarName": "Fits",
+      "similarLink": "https://boardgamegeek.com/boardgame/40393/fits",
+      "description": "Place shaped pieces on board to fill in as many spaces as possible, but leaving designated scoring spaces open.  Highest score wins."
     }
   },
   "gpjv": {

@@ -12251,7 +12251,10 @@
       "players": "2",
       "language": "UN",
       "variant": "",
-      "attribution": "The game layout, library image, and other game elements were done by RogerLipsett. They are released to the Public Domain."
+      "attribution": "The game layout, library image, and other game elements were done by RogerLipsett. They are released to the Public Domain.",
+      "similarName": "Dots and Dashes",
+      "similarLink": "https://boardgamegeek.com/boardgame/17106/boxes",
+      "description": "Add lines to complete squares.  Most completed squares wins."
     }
   },
   "8muz": {

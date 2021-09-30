@@ -1766,7 +1766,10 @@
       "players": "2-4",
       "language": "US",
       "variant": "",
-      "attribution": "The game layout and images (including the library image) were done by LawDawg96 and are released to the Public Domain under CC0.\n\nThe background picture is by Dawn Hudson (cropped and colors modified) and released to the public domain under the CC0 license at https://publicdomainpictures.net/en/view-image.php?image=71643&picture=colourful-flame-background.\n\n\nThe black \"dead end\" squares are optional. You can use them to indicate a line that is impossible to complete because a card has already been played elsewhere."
+      "attribution": "The game layout and images (including the library image) were done by LawDawg96 and are released to the Public Domain under CC0.\n\nThe background picture is by Dawn Hudson (cropped and colors modified) and released to the public domain under the CC0 license at https://publicdomainpictures.net/en/view-image.php?image=71643&picture=colourful-flame-background.\n\n\nThe black \"dead end\" squares are optional. You can use them to indicate a line that is impossible to complete because a card has already been played elsewhere.",
+      "similarName": "IOTA",
+      "similarLink": "https://boardgamegeek.com/boardgame/119632/iota",
+      "description": "Place cards in tile pattern on board matching 4 shapes and 4 colors.  Player with most points wins."
     }
   },
   "plus7": {

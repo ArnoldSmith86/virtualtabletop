@@ -12,7 +12,10 @@
       "players": "2",
       "language": "UN",
       "variant": "",
-      "attribution": "The library image by Drolexandre is from https://commons.wikimedia.org/wiki/File:Echecs_chinois.JPG and is available under a CC BY 3.0 license.\n\nThe game pieces images are from https://commons.wikimedia.org/wiki/File:Xiangqi_Cannon_(Trad).svg (and various other locations with similar file names) and have been released to the public domain.\n\nThe game layout, game board, and game piece designs were done by https://www.reddit.com/user/96LawDawg and also released to the public domain under CC0."
+      "attribution": "The library image by Drolexandre is from https://commons.wikimedia.org/wiki/File:Echecs_chinois.JPG and is available under a CC BY 3.0 license.\n\nThe game pieces images are from https://commons.wikimedia.org/wiki/File:Xiangqi_Cannon_(Trad).svg (and various other locations with similar file names) and have been released to the public domain.\n\nThe game layout, game board, and game piece designs were done by https://www.reddit.com/user/96LawDawg and also released to the public domain under CC0.",
+      "similarName": "Chinese Chess",
+      "similarLink": "https://boardgamegeek.com/boardgame/2393/xiangqi",
+      "description": "Classic strategy game.  Move pieces in defined patterns around intersecting lines on board. First to capture opponent general/marshal piece wins."
     }
   },
   "c95908de-d55a-415f-8a08-db6fa97ad900": {

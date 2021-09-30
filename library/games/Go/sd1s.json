@@ -7838,7 +7838,10 @@
       "players": "2",
       "language": "UN",
       "variant": "",
-      "attribution": "The library image by Kendrick has been cropped.  It is from https://www.flickr.com/photos/shrimphead/2259353414/ and is available under a CC BY-NC-SA 2.0 license.\n\nThe scroll border on smaller boards is in the Public Domain and is available at https://publicdomainvectors.org.\n\nThe game layout, game board, and game piece designs were done by https://www.reddit.com/user/96LawDawg and are released to the Public Domain."
+      "attribution": "The library image by Kendrick has been cropped.  It is from https://www.flickr.com/photos/shrimphead/2259353414/ and is available under a CC BY-NC-SA 2.0 license.\n\nThe scroll border on smaller boards is in the Public Domain and is available at https://publicdomainvectors.org.\n\nThe game layout, game board, and game piece designs were done by https://www.reddit.com/user/96LawDawg and are released to the Public Domain.",
+      "similarName": "Go",
+      "similarLink": "https://boardgamegeek.com/boardgame/188/go",
+      "description": "Classic strategy game.  Take turns placing black and white pieces on intersection of board.  Player controlling most territory wins."
     }
   },
   "btnRestart": {

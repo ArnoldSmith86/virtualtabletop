@@ -21,6 +21,31 @@ const sharedLinks = fs.existsSync(savedir + '/shares.json') ? JSON.parse(fs.read
 
 const serverStart = +new Date();
 
+if(false) { // REMOVE BEFORE MERGE - used to mass edit library JSON files
+  const libraryMeta = {};
+  for(const gameInfo of JSON.parse(fs.readFileSync('library/library.json')))
+    libraryMeta[gameInfo.link.substr(0, gameInfo.link.length-4)] = gameInfo;
+
+  fs.readdir('library/games', (err, files) => {
+    for(const dir of files) {
+      fs.readdir('library/games/' + dir, (err, files) => {
+        for(const file of files) {
+          if(file.match(/json$/)) {
+            const gameFile = JSON.parse(fs.readFileSync('library/games/' + dir + '/' + file));
+            if(libraryMeta[dir]) {
+              gameFile._meta.info.similarName = libraryMeta[dir]['similar name'];
+              gameFile._meta.info.similarLink = libraryMeta[dir]['similar link'];
+              gameFile._meta.info.description = libraryMeta[dir]['notes'];
+              console.log(dir, gameFile._meta.info);
+              fs.writeFileSync('library/games/' + dir + '/' + file, JSON.stringify(gameFile, null, '  '));
+            }
+          }
+        }
+      });
+    }
+  });
+}
+
 fs.mkdirSync(savedir + '/assets', { recursive: true });
 fs.mkdirSync(savedir + '/rooms',  { recursive: true });
 fs.mkdirSync(savedir + '/states', { recursive: true });
@@ -64,7 +89,6 @@ function autosaveRooms() {
 MinifyRoom().then(function(result) {
   app.use('/', express.static(path.resolve() + '/client'));
   app.use('/i', express.static(path.resolve() + '/assets'));
-  app.use('/library', express.static(path.resolve() + '/library'));
 
   app.post('/assetcheck', bodyParser.json({ limit: '10mb' }), function(req, res) {
     const result = {};

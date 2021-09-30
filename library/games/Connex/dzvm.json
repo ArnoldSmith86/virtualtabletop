@@ -8878,7 +8878,10 @@
       "players": "2-4",
       "language": "UN",
       "variant": "",
-      "attribution": "The game layout, board, piece designs, and library image were done by https://www.reddit.com/user/96LawDawg and are released to the Public Domain under CC0."
+      "attribution": "The game layout, board, piece designs, and library image were done by https://www.reddit.com/user/96LawDawg and are released to the Public Domain under CC0.",
+      "similarName": "Tetris Link",
+      "similarLink": "https://boardgamegeek.com/boardgame/93185/tetris-link",
+      "description": "Place colored, shaped blocks into playing area to connect as many pieces as possible to earn points and block opponents.  Highest score wins. "
     }
   }
 }

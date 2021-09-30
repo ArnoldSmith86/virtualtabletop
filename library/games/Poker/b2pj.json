@@ -13081,7 +13081,10 @@
       "players": "2-6",
       "language": "US",
       "variant": "",
-      "attribution": "The game layout and chip design were done by https://www.reddit.com/user/96LawDawg and Discord user RogerLipsett. They are released to the Public Domain.\n\nThe library image is available at https://www.publicdomainpictures.net/en/view-image.php?image=84950&picture=poker and is available under a CC0 license.\n\nNote to players. There are $525 in chips in the room: 300 chips each in $1, $0.50, and $0.25 amounts."
+      "attribution": "The game layout and chip design were done by https://www.reddit.com/user/96LawDawg and Discord user RogerLipsett. They are released to the Public Domain.\n\nThe library image is available at https://www.publicdomainpictures.net/en/view-image.php?image=84950&picture=poker and is available under a CC0 license.\n\nNote to players. There are $525 in chips in the room: 300 chips each in $1, $0.50, and $0.25 amounts.",
+      "similarName": "Poker",
+      "similarLink": "https://boardgamegeek.com/boardgame/1115/poker",
+      "description": "Use regular deck of 52 cards to form hands higher than opponents, or bluff them into believing your hand is higher.  Multiple rule variations and winning conditions."
     }
   }
 }

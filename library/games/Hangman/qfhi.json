@@ -2511,7 +2511,10 @@
       "players": "1-8",
       "language": "US",
       "variant": "English",
-      "attribution": "The room design, library image, and all game elements (except for the chat system) are by LawDawg96 and are released to the Public Domain by CC0.\n\nThe chat system and an explanation of how to include it in any room are on the GitHub wiki."
+      "attribution": "The room design, library image, and all game elements (except for the chat system) are by LawDawg96 and are released to the Public Domain by CC0.\n\nThe chat system and an explanation of how to include it in any room are on the GitHub wiki.",
+      "similarName": "Hangman",
+      "similarLink": "https://boardgamegeek.com/boardgame/5314/hangman",
+      "description": "Guess letters to complete a word before the hangman image is filled in."
     }
   },
   "buildBlanks": {

@@ -1424,7 +1424,10 @@
       "players": "2-3",
       "language": "US",
       "variant": "",
-      "attribution": "The layout was created by ArnoldSmith86 and is released to the public domain using CC0. It does not use custom assets.\n\nThe library image is CC0 by Christina Pinckard: https://www.publicdomainpictures.net/en/view-image.php?image=33560&picture=fireworks"
+      "attribution": "The layout was created by ArnoldSmith86 and is released to the public domain using CC0. It does not use custom assets.\n\nThe library image is CC0 by Christina Pinckard: https://www.publicdomainpictures.net/en/view-image.php?image=33560&picture=fireworks",
+      "similarName": "Hanabi",
+      "similarLink": "https://boardgamegeek.com/boardgame/98778/hanabi",
+      "description": "Cooperative card tile laying game.  Work together to complete the pattern before running out of cards and while never looking at your own cards."
     }
   }
 }

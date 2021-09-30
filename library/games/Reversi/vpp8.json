@@ -12,7 +12,10 @@
       "players": "2",
       "language": "UN",
       "variant": "",
-      "attribution": "The woodgrain image by David Robarts is available in the Rummy Tiles game on the VirtualTabletop public library.  It is available under CC BY-NC-SA 4.0.\n\nThe room design, library image, and other room elements are by RogerLipsett and are released to the Public Domain under CC0.\n\nOthello is a registered trademark of Kabushiki Kaisha MegaHouse."
+      "attribution": "The woodgrain image by David Robarts is available in the Rummy Tiles game on the VirtualTabletop public library.  It is available under CC BY-NC-SA 4.0.\n\nThe room design, library image, and other room elements are by RogerLipsett and are released to the Public Domain under CC0.\n\nOthello is a registered trademark of Kabushiki Kaisha MegaHouse.",
+      "similarName": "Othello",
+      "similarLink": "https://boardgamegeek.com/boardgame/2389/othello",
+      "description": "Classic strategy game using two-sided discs on an 8x8 board placed to try and capture opponent pieces. Player with most of colored discs on board wins."
     }
   },
   "arpd": {

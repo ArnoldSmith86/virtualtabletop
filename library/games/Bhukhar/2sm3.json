@@ -11594,7 +11594,10 @@
       "players": "4,6,8",
       "language": "GB",
       "variant": "version 1.2",
-      "attribution": "This game is released to the public under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Licence.(https://creativecommons.org/licenses/by-nc-sa/4.0).\n\nThe playing card images are by Adrian Kennard and released under CC0 public domain license (https://www.me.uk/cards).\n\nBig thanks to the whole team at Virtual Tabletop.\n\nGame layout for online bhukhar created by:\nRahul Haria\nPradeep Shah\nBharat Shah\nPiyush Shah (GroggyLion on Discord)\n\nv 1.2"
+      "attribution": "This game is released to the public under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Licence.(https://creativecommons.org/licenses/by-nc-sa/4.0).\n\nThe playing card images are by Adrian Kennard and released under CC0 public domain license (https://www.me.uk/cards).\n\nBig thanks to the whole team at Virtual Tabletop.\n\nGame layout for online bhukhar created by:\nRahul Haria\nPradeep Shah\nBharat Shah\nPiyush Shah (GroggyLion on Discord)\n\nv 1.2",
+      "similarName": "Bhukhar",
+      "similarLink": "https://www.boardgamegeek.com/boardgame/15878/rummy",
+      "description": "Team game in Rummy family.  Cards played in sets or sequences earn points according to card value.  Team with most points wins."
     }
   },
   "shieldDiscard": {
