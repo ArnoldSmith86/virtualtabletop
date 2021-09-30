@@ -7951,7 +7951,10 @@
       "players": "2-4",
       "language": "UN",
       "variant": "",
-      "attribution": "The game layout, board, piece designs, and library image were done by https://www.reddit.com/user/96LawDawg and are released to the Public Domain under CC0."
+      "attribution": "The game layout, board, piece designs, and library image were done by https://www.reddit.com/user/96LawDawg and are released to the Public Domain under CC0.",
+      "similarName": "Blokus",
+      "similarLink": "https://www.boardgamegeek.com/boardgame/2453/blokus",
+      "description": "Place colored shapes onto board with corners touching.  Fewest unit squares remaning wins."
     }
   },
   "recall_button": {

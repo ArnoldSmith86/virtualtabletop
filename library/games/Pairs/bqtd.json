@@ -3844,7 +3844,10 @@
       "players": "2-8",
       "language": "US",
       "variant": "Template",
-      "attribution": "INSTRUCTIONS: Outside the screen there is a holder with an empty deck. Drag it into the visible part of the table while in JSON editor mode. Now you can fill it with how many Pictures you want. Upload a card back picture. Now place the deck back into the hodler. Select a nice thumbnail picture and your own custom memory game is set up!\n\nThe room design, and other room elements are by Ingegneus and are released to the Public Domain under CC0.\n\nThe wood background by Nathan Dumlao is from-https://unsplash.com/photos/J2gEgTPM_OA and is available under the Unsplash license.\n\nThe UI elements from the player menu are from-https://www.kenney.nl/assets/ui-pack-rpg-expansion and are in the public domain under CC0."
+      "attribution": "INSTRUCTIONS: Outside the screen there is a holder with an empty deck. Drag it into the visible part of the table while in JSON editor mode. Now you can fill it with how many Pictures you want. Upload a card back picture. Now place the deck back into the hodler. Select a nice thumbnail picture and your own custom memory game is set up!\n\nThe room design, and other room elements are by Ingegneus and are released to the Public Domain under CC0.\n\nThe wood background by Nathan Dumlao is from-https://unsplash.com/photos/J2gEgTPM_OA and is available under the Unsplash license.\n\nThe UI elements from the player menu are from-https://www.kenney.nl/assets/ui-pack-rpg-expansion and are in the public domain under CC0.",
+      "similarName": "Memory",
+      "similarLink": "https://boardgamegeek.com/boardgame/7688/memory",
+      "description": "Remember where items are hidden to successfully make matches and win pairs.  Player with most matching pairs wins."
     }
   }
 }

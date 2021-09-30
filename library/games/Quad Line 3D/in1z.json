@@ -550,7 +550,10 @@
       "players": "2",
       "language": "UN",
       "variant": "",
-      "attribution": "Room layout and library image by ArnoldSmith86 and put into public domain (CC0)"
+      "attribution": "Room layout and library image by ArnoldSmith86 and put into public domain (CC0)",
+      "similarName": "Connect Four 3D",
+      "similarLink": "https://boardgamegeek.com/boardgame/3656/score-four",
+      "description": "Stack checkers in 3-dimensional columns to link 4 horizontally, vertically, or diagonally.  First to connect four in a row wins."
     }
   },
   "pin31": {

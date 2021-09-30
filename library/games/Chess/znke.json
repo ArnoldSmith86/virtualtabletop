@@ -13,7 +13,10 @@
       "players": "2",
       "language": "UN",
       "variant": "",
-      "attribution": "Library image is CC0 Public Domain:\nhttps://www.publicdomainpictures.net/en/view-image.php?image=44722&picture=chess-king\n\nThe game file itself was created by ArnoldSmith86 and is hereby released to the public domain by CC0."
+      "attribution": "Library image is CC0 Public Domain:\nhttps://www.publicdomainpictures.net/en/view-image.php?image=44722&picture=chess-king\n\nThe game file itself was created by ArnoldSmith86 and is hereby released to the public domain by CC0.",
+      "similarName": "Chess",
+      "similarLink": "https://boardgamegeek.com/boardgame/171/chess",
+      "description": "Classic strategy game.  Move pawns, queens, rooks, etc. in defined patterns around board. First to capture opponent king piece wins."
     }
   },
   "A1": {

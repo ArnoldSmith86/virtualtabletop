@@ -7464,7 +7464,10 @@
       "players": "2-8",
       "language": "US",
       "variant": "5 dice",
-      "attribution": "The game design and all game board elements are by RaphaelAlvez and are released to the Public Domain by CC0.\n\nThe library image is from https://en.wikipedia.org/wiki/Liar%27s_dice#/media/File:Perudo.jpg and is available under CC BY 2.0."
+      "attribution": "The game design and all game board elements are by RaphaelAlvez and are released to the Public Domain by CC0.\n\nThe library image is from https://en.wikipedia.org/wiki/Liar%27s_dice#/media/File:Perudo.jpg and is available under CC BY 2.0.",
+      "similarName": "Liar's Dice",
+      "similarLink": "https://boardgamegeek.com/boardgame/45/perudo",
+      "description": "Make claims about value of rolled dice to bluff opponents and get them to challenge.  Lose dice if caught in a lie.  Last player with dice wins."
     }
   }
 }

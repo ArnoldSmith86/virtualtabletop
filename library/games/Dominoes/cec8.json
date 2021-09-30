@@ -940,7 +940,10 @@
       "players": "2-4",
       "language": "UN",
       "variant": "",
-      "attribution": "Domino images are public domain under the CC0 license:\nhttps://publicdomainvectors.org/en/tag/domino.\n\nThe library image is CC0:\nhttps://www.publicdomainpictures.net/en/view-image.php?image=305475&picture=vintage-dominoes-game.\n\nThe background image by Martin Stokow is CC0: https://publicdomainpictures.net/en/view-image.php?image=370218&picture=grunge-background-texture-marble.\n\nThe game layout was done by LawDawg96 and released to the public domain as CC0."
+      "attribution": "Domino images are public domain under the CC0 license:\nhttps://publicdomainvectors.org/en/tag/domino.\n\nThe library image is CC0:\nhttps://www.publicdomainpictures.net/en/view-image.php?image=305475&picture=vintage-dominoes-game.\n\nThe background image by Martin Stokow is CC0: https://publicdomainpictures.net/en/view-image.php?image=370218&picture=grunge-background-texture-marble.\n\nThe game layout was done by LawDawg96 and released to the public domain as CC0.",
+      "similarName": "Dominoes",
+      "similarLink": "https://boardgamegeek.com/boardgame/2394/dominoes",
+      "description": "Classic tile-based strategy game using dominoes with 0 to 6 pips.  Multiple rule variations and winning conditions."
     }
   },
   "6thn": {

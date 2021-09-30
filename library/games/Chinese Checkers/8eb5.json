@@ -3066,7 +3066,10 @@
       "players": "2-6",
       "language": "US",
       "variant": "Solid Marbles",
-      "attribution": "The game layout, game board, game pieces, and library image were done by https://www.reddit.com/user/96LawDawg and released to the Public Domain under CC0."
+      "attribution": "The game layout, game board, game pieces, and library image were done by https://www.reddit.com/user/96LawDawg and released to the Public Domain under CC0.",
+      "similarName": "Chinese Checkers",
+      "similarLink": "https://boardgamegeek.com/boardgame/2386/chinese-checkers",
+      "description": "Jump over own or opponent pieces to move to opposite side of board.  First to relocate all 10 pieces wins."
     }
   },
   "nextColor": {

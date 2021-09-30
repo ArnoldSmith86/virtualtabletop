@@ -12,7 +12,10 @@
       "players": "2",
       "language": "US",
       "variant": "",
-      "attribution": "Duel 52 was created by Judd Madden and Nina Riddell. All art and text is released under license CC BY-NC 3.0:\nhttp://juddmadden.com/duel52/\n\nThis is an official implementation of the game. The game layout (JSON) and two background images were co-created by https://www.reddit.com/user/RaphaelAlvez and by Judd Madden and are released to the public domain by CC0.\n\n\nGame description from the designer:\n\nA free two-player card game which uses a standard deck of cards.\n\nDuel 52 is a game of board control and tempo. The board is divided into three opposing lanes, where both players fight for control.\n\nPlayers take turns drawing cards, playing cards into lanes, using powers and attacking the opponents board.\n\nThe game ends when a player wins two lanes. A lane is won by killing all opposing cards in that lane."
+      "attribution": "Duel 52 was created by Judd Madden and Nina Riddell. All art and text is released under license CC BY-NC 3.0:\nhttp://juddmadden.com/duel52/\n\nThis is an official implementation of the game. The game layout (JSON) and two background images were co-created by https://www.reddit.com/user/RaphaelAlvez and by Judd Madden and are released to the public domain by CC0.\n\n\nGame description from the designer:\n\nA free two-player card game which uses a standard deck of cards.\n\nDuel 52 is a game of board control and tempo. The board is divided into three opposing lanes, where both players fight for control.\n\nPlayers take turns drawing cards, playing cards into lanes, using powers and attacking the opponents board.\n\nThe game ends when a player wins two lanes. A lane is won by killing all opposing cards in that lane.",
+      "similarName": "Duel 52",
+      "similarLink": "https://boardgamegeek.com/boardgame/291674/duel-52",
+      "description": "Use card powers to remove opponent cards on three lanes on the board.  First player to control two lanes wins."
     }
   },
   "d3270c7c-2233-4925-acd9-f07932ccd4fe_label": {

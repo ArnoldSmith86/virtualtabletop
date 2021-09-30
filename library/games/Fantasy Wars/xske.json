@@ -4276,7 +4276,10 @@
       "players": "4",
       "language": "US",
       "variant": "",
-      "attribution": "Choose your troops by adding them to your holders or get random troops by clicking in the reset button.\nThen take 2 tokens from each troop and adding them to your side of the table.\nClick the reset button on the bottom to refill and shuffle your bag.\nEach turn drag three pieces from your bag the hand (middle-bottom). If you don't have enough pieces press the rest button again after you dragged all the pieces you had on your bag to the hand.\n\nImplementation design by RaphaelAlvez and released under CC0.\nAssets license may vary.\n\nWood texture: https://unsplash.com/photos/J2gEgTPM_OA\nCloth texture: https://unsplash.com/photos/xTaOPMa6wAE\n\nCeltic knot: https://www.vecteezy.com/vector-art/338646-celtic-symbols\n\nTroops assets modified from https://game-icons.net/"
+      "attribution": "Choose your troops by adding them to your holders or get random troops by clicking in the reset button.\nThen take 2 tokens from each troop and adding them to your side of the table.\nClick the reset button on the bottom to refill and shuffle your bag.\nEach turn drag three pieces from your bag the hand (middle-bottom). If you don't have enough pieces press the rest button again after you dragged all the pieces you had on your bag to the hand.\n\nImplementation design by RaphaelAlvez and released under CC0.\nAssets license may vary.\n\nWood texture: https://unsplash.com/photos/J2gEgTPM_OA\nCloth texture: https://unsplash.com/photos/xTaOPMa6wAE\n\nCeltic knot: https://www.vecteezy.com/vector-art/338646-celtic-symbols\n\nTroops assets modified from https://game-icons.net/",
+      "similarName": "War Chest",
+      "similarLink": "https://boardgamegeek.com/boardgame/249259/war-chest",
+      "description": "Choose and place tokens with special powers to fight for space on board with hexagon shaped areas.  First player who places designated tokes in specific spaces wins."
     }
   },
   "rml3": {

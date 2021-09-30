@@ -5293,7 +5293,10 @@
       "players": "2-8",
       "language": "US",
       "variant": "",
-      "attribution": "The room design, library image, and other room elements are by Ingegneus and are released to the Public Domain under CC0.\n\nThe wood background by Nathan Dumlao is from-https://unsplash.com/photos/J2gEgTPM_OA and is available under the Unsplash license.\n\nThe deck back image by Michael Schwarzenberger is from https://pixabay.com/photos/playing-card-back-pattern-568200/ and is available under the Pixabay License.\n\nThe UI elements from the player menu are from-https://www.kenney.nl/assets/ui-pack-rpg-expansion and are in the public domain under CC0."
+      "attribution": "The room design, library image, and other room elements are by Ingegneus and are released to the Public Domain under CC0.\n\nThe wood background by Nathan Dumlao is from-https://unsplash.com/photos/J2gEgTPM_OA and is available under the Unsplash license.\n\nThe deck back image by Michael Schwarzenberger is from https://pixabay.com/photos/playing-card-back-pattern-568200/ and is available under the Pixabay License.\n\nThe UI elements from the player menu are from-https://www.kenney.nl/assets/ui-pack-rpg-expansion and are in the public domain under CC0.",
+      "similarName": "Halli Galli",
+      "similarLink": "https://boardgamegeek.com/boardgame/2944/halli-galli",
+      "description": "Flip cards to reveal matching fruits and ring bell when 5 of a kind are displayed to win opponent cards.  Player with most cards wins."
     }
   }
 }

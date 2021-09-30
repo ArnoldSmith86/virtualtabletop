@@ -7717,7 +7717,10 @@
       "players": "2-4",
       "language": "US",
       "variant": "Manual",
-      "attribution": "The front of the Splendid cards consist of artwork taken from unspash.com \ne.g. https://unsplash.com/photos/LrVgf6xyaWs, and is available under the Unsplash license.\n\nThe backs of the decks are created using artwork from freeimages.com and are available under the FreeImages.com license:\nhttps://www.freeimages.com/photo/artist-hand-1420746\nhttps://www.freeimages.com/photo/bible-candles-and-quill-1191928\nhttps://www.freeimages.com/photo/hand-s-dialog-1240944\nhttps://www.freeimages.com/photo/potmaker-1586181\n\nThe automation, VTT port, and remaining artwork was created by Shaun Hillier and is released to the public domain by CC0. Inspired by the original PCIO version by https://www.reddit.com/user/robinthecat730."
+      "attribution": "The front of the Splendid cards consist of artwork taken from unspash.com \ne.g. https://unsplash.com/photos/LrVgf6xyaWs, and is available under the Unsplash license.\n\nThe backs of the decks are created using artwork from freeimages.com and are available under the FreeImages.com license:\nhttps://www.freeimages.com/photo/artist-hand-1420746\nhttps://www.freeimages.com/photo/bible-candles-and-quill-1191928\nhttps://www.freeimages.com/photo/hand-s-dialog-1240944\nhttps://www.freeimages.com/photo/potmaker-1586181\n\nThe automation, VTT port, and remaining artwork was created by Shaun Hillier and is released to the public domain by CC0. Inspired by the original PCIO version by https://www.reddit.com/user/robinthecat730.",
+      "similarName": "Splendor",
+      "similarLink": "https://boardgamegeek.com/boardgame/148228/splendor",
+      "description": "Buy cards and gems to collect points.  First player to 15 points wins."
     }
   }
 }

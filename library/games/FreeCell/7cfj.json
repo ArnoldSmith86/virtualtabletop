@@ -1810,7 +1810,10 @@
       "players": "1",
       "language": "UN",
       "variant": "",
-      "attribution": "It does not use custom assets. The layout was created by ArnoldSmith86 and is released to the public domain using CC0.\n\nThe library image is a photo by Amanda Jones and is available at https://unsplash.com/photos/P787-xixGio under the Unsplash license."
+      "attribution": "It does not use custom assets. The layout was created by ArnoldSmith86 and is released to the public domain using CC0.\n\nThe library image is a photo by Amanda Jones and is available at https://unsplash.com/photos/P787-xixGio under the Unsplash license.",
+      "similarName": "FreeCell",
+      "similarLink": "https://boardgamegeek.com/boardgame/63788/freecell",
+      "description": "Classic solitare card game. Move cards one at a time to solve the puzzle."
     }
   }
 }

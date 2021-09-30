@@ -13115,7 +13115,10 @@
       "players": "2-8",
       "language": "UN",
       "variant": "",
-      "attribution": "The game layout and images (including the library image) were done by https://www.reddit.com/user/96LawDawg and are released to the Public Domain by CC0. The dice are VirtualTabletop assets.\n\n"
+      "attribution": "The game layout and images (including the library image) were done by https://www.reddit.com/user/96LawDawg and are released to the Public Domain by CC0. The dice are VirtualTabletop assets.\n\n",
+      "similarName": "Qwixx",
+      "similarLink": "https://boardgamegeek.com/boardgame/131260/qwixx",
+      "description": "Roll colored and white dice to mark off scoresheet with boxes of 2-12 trying to get as many boxes as possible.  Highest score wins."
     }
   },
   "restart_button": {

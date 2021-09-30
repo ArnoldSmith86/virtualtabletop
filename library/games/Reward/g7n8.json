@@ -75,7 +75,10 @@
       "players": "2-6",
       "language": "US",
       "variant": "",
-      "attribution": "The board, by Gr0gmint, is from https://commons.wikimedia.org/wiki/File:Risk_board.svg available under CC BY-SA 3.0 license.\n\nCard artwork is from https://publicdomainvectors.org/ and available under CC0.\n\nThe library image, game layout, and other game elements were done by LawDawg96 and RaphaelAlvez, with edits by BicycleIndividual and Interitus, and are released to the Public Domain under CC0."
+      "attribution": "The board, by Gr0gmint, is from https://commons.wikimedia.org/wiki/File:Risk_board.svg available under CC BY-SA 3.0 license.\n\nCard artwork is from https://publicdomainvectors.org/ and available under CC0.\n\nThe library image, game layout, and other game elements were done by LawDawg96 and RaphaelAlvez, with edits by BicycleIndividual and Interitus, and are released to the Public Domain under CC0.",
+      "similarName": "Risk",
+      "similarLink": "https://boardgamegeek.com/boardgame/181/risk",
+      "description": "Move armies around board using dice rolls to conquer territory.  Player who conquers all 42 territories wins."
     }
   },
   "hand": {

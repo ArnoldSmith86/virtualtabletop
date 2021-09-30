@@ -8143,7 +8143,10 @@
       "players": "2-8",
       "language": "US",
       "variant": "With timer",
-      "attribution": "The game design and all game board elements are by RaphaelAlvez and are released to the Public Domain by CC0."
+      "attribution": "The game design and all game board elements are by RaphaelAlvez and are released to the Public Domain by CC0.",
+      "similarName": "Scattergories",
+      "similarLink": "https://www.boardgamegeek.com/boardgame/2381/scattergories",
+      "description": "Starting with a random letter, list words in designated categories.  First to complete list wins."
     }
   }
 }
