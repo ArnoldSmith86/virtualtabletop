@@ -1,4 +1,4 @@
-import { $, $a, onLoad, selectFile } from './domhelpers.js';
+import { $, $a, onLoad, selectFile, asArray } from './domhelpers.js';
 import { startWebSocket } from './connection.js';
 
 
@@ -13,10 +13,6 @@ let urlProperties = {};
 let maxZ = {};
 export const dropTargets = new Map();
 
-function toArray(argument) {
-  return Array.isArray(argument) ? argument : [ argument ] ;
-}
-
 function getValidDropTargets(widget) {
   const targets = [];
   for(const [ _, t ] of dropTargets) {
@@ -27,7 +23,7 @@ function getValidDropTargets(widget) {
         continue;
 
     let isValid = true;
-    const dropTarget = toArray(t.get('dropTarget'))
+    const dropTarget = asArray(t.get('dropTarget'))
     isValid = false;
       for(let i = 0; i < dropTarget.length; i++) {
         let isValidObject = true;
