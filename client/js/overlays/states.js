@@ -255,19 +255,42 @@ async function pickStateFromLibrary(changeOverlay) {
 async function populateLibrary() {
   if(!$('#libraryList.populated')) {
     const library = await fetch('/library/library.json');
-    for(const entry of await library.json()) {
-      const lEntry = domByTemplate('template-librarylist-entry', 'tr');
+    var lEntry = null;
+    // add sections and entries
+    (await library.json()).forEach((entry, idx) => {
+      if (!entry.link) {
+        // sections have empty entry.link
+        lEntry = domByTemplate('template-librarylist-section-title', 'tr');
 
-      $('.name', lEntry).textContent = entry.name;
-      $('.players', lEntry).textContent = entry.players;
-      $('.language', lEntry).textContent = entry.language;
-      $('.notes', lEntry).textContent = entry.notes;
-      $('a', lEntry).textContent = entry['similar name'];
-      $('a', lEntry).href = entry['similar link'];
-      $('button.add', lEntry).dataset.url = entry.link;
+        $('.section-name', lEntry).textContent = entry.name;
+        $('.notes', lEntry).textContent = entry.notes;
 
-      $('#libraryList').appendChild(lEntry);
-    }
+        $('#libraryList').appendChild(lEntry);
+
+        // add another header for readability
+        lEntry = domByTemplate('template-librarylist-header', 'tr');
+        $('#libraryList').appendChild(lEntry);
+      } else {
+        // entries have valid entry.link
+        if (!idx) {
+            // if the top row does not have a section title, add header first
+            lEntry = domByTemplate('template-librarylist-header', 'tr');
+            $('#libraryList').appendChild(lEntry);
+        }
+        lEntry = domByTemplate('template-librarylist-entry', 'tr');
+
+        $('.name', lEntry).textContent = entry.name;
+        $('.players', lEntry).textContent = entry.players;
+        $('.language', lEntry).textContent = entry.language;
+        $('.notes', lEntry).textContent = entry.notes;
+        $('a', lEntry).textContent = entry['similar name'];
+        $('a', lEntry).href = entry['similar link'];
+        $('button.add', lEntry).dataset.url = entry.link;
+
+        $('#libraryList').appendChild(lEntry);
+      }
+
+    });
     $('#libraryList').classList.add('populated');
     removeFromDOM('#libraryOverlay > p');
   }
