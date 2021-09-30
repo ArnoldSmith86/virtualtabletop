@@ -168,25 +168,6 @@ function fillStatesList(states, activePlayers) {
     }
   }
   $('#statesList').appendChild(addDiv);
-
-  fillStatesWelcome(isEmpty);
-}
-
-function fillStatesWelcome(isEmpty) {
-  if(isEmpty && urlProperties.load) {
-    addState(null, 'link', urlProperties.load);
-  } else if(!widgets.size && urlProperties.load) {
-    $('.play').click();
-  } else if(isEmpty) {
-    $('#statesOverlay').classList.add('empty');
-    $('#statesOverlay').appendChild($('#libraryList'));
-    pickStateFromLibrary(false).then(url=>{
-      addState(null, 'link', url);
-    }).catch(e=>!1);
-  } else {
-    $('#statesOverlay').classList.remove('empty');
-    $('#libraryOverlay').appendChild($('#libraryList'));
-  }
 }
 
 function fillEditState(state) {
@@ -315,11 +296,9 @@ async function shareLink() {
 onLoad(function() {
   onMessage('meta', args=>fillStatesList(args.meta.states, args.activePlayers));
 
-  on('#addState .create,  #addVariant .create, #emptyRoom .create',  'click', e=>addState(e, 'state'));
-  on('#addState .library, #addVariant .library', 'click', e=>addStateFromLibrary(e));
-
-  on('#addState .upload, #emptyRoom .upload, #addVariant .upload',  'click', e=>selectFile(false, f=>addState(e, 'file', f)));
-  on('#addState .link,   #emptyRoom .link,   #addVariant .link',    'click', e=>addState(e, 'link', prompt('Enter shared URL:')));
+  on('#addState .create, #addVariant .create', 'click', e=>addState(e, 'state'));
+  on('#addState .upload, #addVariant .upload', 'click', e=>selectFile(false, f=>addState(e, 'file', f)));
+  on('#addState .link,   #addVariant .link',   'click', e=>addState(e, 'link', prompt('Enter shared URL:')));
 
   on('#addState .download', 'click', _=>downloadState(null));
 

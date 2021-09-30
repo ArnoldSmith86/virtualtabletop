@@ -46,6 +46,15 @@ if(false) { // REMOVE BEFORE MERGE - used to mass edit library JSON files
   });
 }
 
+const publicLibraryAssets = {};
+for(const category of [ 'games', 'assets', 'tutorials' ]) {
+  const name = path.resolve() + '/library/' + category;
+  for(const dir of fs.readdirSync(name))
+    if(fs.existsSync(name + '/' + dir + '/assets'))
+      for(const file of fs.readdirSync(name + '/' + dir + '/assets'))
+        publicLibraryAssets[file] = name + '/' + dir + '/assets/' + file;
+}
+
 fs.mkdirSync(savedir + '/assets', { recursive: true });
 fs.mkdirSync(savedir + '/rooms',  { recursive: true });
 fs.mkdirSync(savedir + '/states', { recursive: true });
@@ -102,7 +111,8 @@ MinifyRoom().then(function(result) {
   app.get('/assets/:name', function(req, res) {
     if(!req.params.name.match(/^[0-9_-]+$/))
       return;
-    fs.readFile(savedir + '/assets/' + req.params.name, function(err, content) {
+
+    fs.readFile(publicLibraryAssets[req.params.name] ?? savedir + '/assets/' + req.params.name, function(err, content) {
       if(!content) {
         res.sendStatus(404);
         Logging.log(`WARNING: Could not load asset ${req.params.name}`);

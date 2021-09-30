@@ -2,30 +2,6 @@
   padding: 2%;
 }
 
-#statesOverlay.empty {
-  overflow: auto;
-}
-
-#statesOverlay.empty > h1, #statesOverlay.empty #statesList, #statesOverlay #emptyRoom {
-  display: none;
-}
-
-#statesOverlay.empty #emptyRoom {
-  display: flex;
-  flex-direction: column;
-}
-
-#statesOverlay.empty #emptyRoom > div {
-  display: flex;
-  flex-direction: row;
-}
-
-#statesOverlay.empty #emptyRoom > div > div {
-  margin: 40px;
-  text-align: center;
-  width: 100%;
-}
-
 #statesList, #stateEditOverlay {
   overflow: auto;
 }

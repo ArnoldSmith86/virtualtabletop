@@ -212,6 +212,28 @@ export default class Room {
     return JSON.stringify(state).match(/\/assets\/-?[0-9]+_[0-9]+/g) || [];
   }
 
+  getPublicLibraryGames() {
+    if(!Room.publicLibrary) {
+      Room.publicLibrary = {};
+      for(const dir of fs.readdirSync(path.resolve() + '/library/games')) {
+        for(const file of fs.readdirSync(path.resolve() + '/library/games/' + dir)) {
+          if(file.match(/json$/)) {
+            const gameFile = JSON.parse(fs.readFileSync(path.resolve() + '/library/games/' + dir + '/' + file));
+            const id = 'PL:' + gameFile._meta.info.name
+            if(!Room.publicLibrary[id]) {
+              Room.publicLibrary[id] = gameFile._meta.info;
+              Room.publicLibrary[id].publicLibrary = dir;
+              Room.publicLibrary[id].variants = {};
+            }
+            Room.publicLibrary[id].variants[file] = JSON.parse(JSON.stringify(gameFile._meta.info));
+            Room.publicLibrary[id].variants[file].publicLibrary = dir + '/' + file;
+          }
+        }
+      }
+    }
+    return Room.publicLibrary;
+  }
+
   async load(fileOrLink, player) {
     const emptyState = {
       _meta: {
@@ -224,9 +246,11 @@ export default class Room {
     if(!fileOrLink && !fs.existsSync(this.roomFilename())) {
       Logging.log(`creating room ${this.id}`);
       this.state = FileUpdater(emptyState);
+      this.state._meta.states = Object.assign(this.state._meta.states, this.getPublicLibraryGames());
     } else if(!fileOrLink) {
       Logging.log(`loading room ${this.id}`);
       this.state = FileUpdater(JSON.parse(fs.readFileSync(this.roomFilename())));
+      this.state._meta.states = Object.assign(this.state._meta.states, this.getPublicLibraryGames());
       this.broadcast('state', this.state);
     } else {
       let newState = emptyState;
@@ -412,6 +436,9 @@ export default class Room {
   }
 
   variantFilename(stateID, variantID) {
-    return path.resolve() + '/save/states/' + this.id + '-' + stateID.replace(/[^a-z0-9]/g, '_') + '-' + variantID.replace(/[^a-z0-9]/g, '_') + '.json';
+    if(stateID.match(/^PL:/))
+      return path.resolve() + '/library/games/' + Room.publicLibrary[stateID].variants[variantID].publicLibrary;
+    else
+      return path.resolve() + '/save/states/' + this.id + '-' + stateID.replace(/[^a-z0-9]/g, '_') + '-' + variantID.replace(/[^a-z0-9]/g, '_') + '.json';
   }
 }
