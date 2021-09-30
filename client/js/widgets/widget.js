@@ -533,10 +533,9 @@ export class Widget extends StateManaged {
               inheritCollections[c] = [ ...collections[c] ];
             inheritCollections['caller'] = [ this ];
             const result = await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections, (depth || 0) + 1);
-            if (a.return) {
-              variables[a.variable] = result.variable;
-              collections[a.collection] = result.collection
-            }
+            variables[a.variable] = result.variable;
+            collections[a.collection] = result.collection;
+
             if(jeRoutineLogging) {
               const theWidget = this.isValidID(a.widget) && a.widget != this.get('id') ? `in ${a.widget}` : '';
               if (a.return) {
@@ -547,7 +546,7 @@ export class Widget extends StateManaged {
                   `${a.routine} ${theWidget} and return variable ${a.variable} and collection ${a.collection}`,
                   `${JSON.stringify(variables[a.variable])}; ${JSON.stringify(result.collection)}`)
               } else {
-                jeLoggingRoutineOperationSummary( `${a.routine} ${theWidget} and return nothing`)
+                jeLoggingRoutineOperationSummary( `${a.routine} ${theWidget} and abort caller processing`)
               }
             }
           }
@@ -1190,7 +1189,11 @@ export class Widget extends StateManaged {
 
       if(!jeRoutineLogging && problems.length)
         console.log(problems);
-    }
+
+      if(a.func == 'CALL' && !a.return) {
+        break
+      }
+    } // End iterate over functions in routine
 
     if(jeRoutineLogging) jeLoggingRoutineEnd(variables, collections);
 
