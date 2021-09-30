@@ -1,0 +1,3019 @@
+{
+  "grid001-1-1": {
+    "id": "grid001-1-1",
+    "height": 50,
+    "css": "background:#A2BBFB",
+    "z": 43137,
+    "key": true,
+    "color": "blue",
+    "parent": "grid005-5-2",
+    "movable": false,
+    "width": 260,
+    "x": null
+  },
+  "grid001-1-2": {
+    "id": "grid001-1-2",
+    "width": 260,
+    "height": 50,
+    "css": "background:#A2BBFB",
+    "z": 43124,
+    "key": true,
+    "color": "blue",
+    "parent": "grid005-2-4",
+    "movable": false,
+    "x": null
+  },
+  "grid001-1-3": {
+    "id": "grid001-1-3",
+    "height": 50,
+    "css": "background:#A2BBFB",
+    "z": 43121,
+    "key": true,
+    "color": "blue",
+    "parent": "grid005-2-1",
+    "movable": false,
+    "width": 260,
+    "x": null
+  },
+  "grid001-1-4": {
+    "id": "grid001-1-4",
+    "height": 50,
+    "css": "background:#A2BBFB",
+    "key": true,
+    "color": "blue",
+    "parent": "grid005-5-4",
+    "movable": false,
+    "width": 260,
+    "x": null,
+    "z": 43139
+  },
+  "grid001-1-5": {
+    "id": "grid001-1-5",
+    "width": 260,
+    "height": 50,
+    "css": "background:#A2BBFB",
+    "z": 43123,
+    "key": true,
+    "color": "blue",
+    "movable": false,
+    "parent": "grid005-2-3"
+  },
+  "grid001-2-1": {
+    "id": "grid001-2-1",
+    "width": 260,
+    "height": 50,
+    "css": "background:#A2BBFB",
+    "z": 43132,
+    "key": true,
+    "color": "blue",
+    "parent": "grid005-4-2",
+    "movable": false,
+    "x": null
+  },
+  "grid001-2-2": {
+    "id": "grid001-2-2",
+    "width": 260,
+    "height": 50,
+    "css": "background:#A2BBFB",
+    "z": 43140,
+    "key": true,
+    "color": "blue",
+    "parent": "grid005-5-5",
+    "movable": false,
+    "x": null
+  },
+  "grid001-2-3": {
+    "id": "grid001-2-3",
+    "width": 1000,
+    "height": 10,
+    "css": "background:#A2BBFB",
+    "z": 329,
+    "key": true,
+    "color": "blue",
+    "parent": "Beginning Team",
+    "movable": false
+  },
+  "grid001-2-4": {
+    "id": "grid001-2-4",
+    "height": 50,
+    "css": "background:#A2BBFB",
+    "z": 43134,
+    "key": true,
+    "color": "blue",
+    "parent": "grid005-4-4",
+    "movable": false,
+    "x": null,
+    "width": 260
+  },
+  "grid001-2-5": {
+    "id": "grid001-2-5",
+    "height": 50,
+    "css": "background:#A2BBFB",
+    "z": 915,
+    "key": true,
+    "color": "blue",
+    "parent": "grid005-1-1",
+    "movable": false,
+    "width": 260,
+    "x": null
+  },
+  "grid002-1-1": {
+    "id": "grid002-1-1",
+    "height": 50,
+    "css": "background:#FD9696",
+    "z": 43122,
+    "key": true,
+    "color": "red",
+    "parent": "grid005-2-2",
+    "movable": false,
+    "width": 260,
+    "x": null
+  },
+  "grid002-1-2": {
+    "id": "grid002-1-2",
+    "height": 50,
+    "css": "background:#FD9696",
+    "z": 1786,
+    "key": true,
+    "color": "red",
+    "parent": "Key Tokens",
+    "movable": false,
+    "width": 1000,
+    "x": null,
+    "y": 4
+  },
+  "grid002-1-3": {
+    "id": "grid002-1-3",
+    "height": 50,
+    "css": "background:#FD9696",
+    "z": 43117,
+    "key": true,
+    "color": "red",
+    "parent": "grid005-1-2",
+    "movable": false,
+    "width": 260,
+    "x": null
+  },
+  "grid002-1-4": {
+    "id": "grid002-1-4",
+    "height": 50,
+    "css": "background:#FD9696",
+    "z": 43130,
+    "key": true,
+    "color": "red",
+    "parent": "grid005-3-5",
+    "movable": false,
+    "width": 260,
+    "x": null
+  },
+  "grid002-1-5": {
+    "id": "grid002-1-5",
+    "height": 50,
+    "css": "background:#FD9696",
+    "z": 43129,
+    "key": true,
+    "color": "red",
+    "parent": "grid005-3-4",
+    "movable": false,
+    "width": 260,
+    "x": null
+  },
+  "grid002-2-1": {
+    "id": "grid002-2-1",
+    "height": 50,
+    "css": "background:#FD9696",
+    "key": true,
+    "color": "red",
+    "parent": "grid005-1-4",
+    "movable": false,
+    "width": 260,
+    "x": null,
+    "z": 43119
+  },
+  "grid002-2-2": {
+    "id": "grid002-2-2",
+    "width": 260,
+    "height": 50,
+    "css": "background:#FD9696",
+    "z": 43136,
+    "key": true,
+    "color": "red",
+    "parent": "grid005-5-1",
+    "movable": false,
+    "x": null
+  },
+  "grid002-2-3": {
+    "id": "grid002-2-3",
+    "height": 50,
+    "css": "background:#FD9696",
+    "z": 43135,
+    "key": true,
+    "color": "red",
+    "parent": "grid005-4-5",
+    "movable": false,
+    "width": 260,
+    "x": null
+  },
+  "grid002-2-4": {
+    "id": "grid002-2-4",
+    "height": 50,
+    "css": "background:#FD9696",
+    "z": 43131,
+    "key": true,
+    "color": "red",
+    "parent": "grid005-4-1",
+    "movable": false,
+    "width": 260,
+    "x": null
+  },
+  "grid002-2-5": {
+    "id": "grid002-2-5",
+    "height": 50,
+    "css": "background:#FD9696",
+    "z": 959,
+    "key": true,
+    "color": "red",
+    "parent": "Key Tokens",
+    "movable": false,
+    "width": 1000,
+    "y": 4
+  },
+  "grid003-1-1": {
+    "id": "grid003-1-1",
+    "width": 260,
+    "height": 50,
+    "css": "background:#9E9E9E; border: 4px solid #000000; box-sizing: border-box",
+    "z": 43120,
+    "key": true,
+    "color": "black",
+    "parent": "grid005-1-5",
+    "movable": false,
+    "x": null
+  },
+  "grid004-1-1": {
+    "id": "grid004-1-1",
+    "width": 260,
+    "height": 50,
+    "css": "background:#FDD396",
+    "z": 43126,
+    "key": true,
+    "color": "white",
+    "parent": "grid005-3-1",
+    "movable": false,
+    "x": null
+  },
+  "grid004-1-2": {
+    "id": "grid004-1-2",
+    "width": 260,
+    "height": 50,
+    "css": "background:#FDD396",
+    "z": 43128,
+    "key": true,
+    "color": "white",
+    "parent": "grid005-3-3",
+    "movable": false,
+    "x": null
+  },
+  "grid004-1-3": {
+    "id": "grid004-1-3",
+    "width": 260,
+    "height": 50,
+    "css": "background:#FDD396",
+    "z": 43127,
+    "key": true,
+    "color": "white",
+    "parent": "grid005-3-2",
+    "movable": false,
+    "x": null
+  },
+  "grid004-1-4": {
+    "id": "grid004-1-4",
+    "width": 260,
+    "height": 50,
+    "css": "background:#FDD396",
+    "z": 43138,
+    "key": true,
+    "color": "white",
+    "parent": "grid005-5-3",
+    "movable": false,
+    "x": null
+  },
+  "grid004-1-5": {
+    "id": "grid004-1-5",
+    "width": 260,
+    "height": 50,
+    "css": "background:#FDD396",
+    "key": true,
+    "color": "white",
+    "parent": "grid005-4-3",
+    "movable": false,
+    "z": 43133,
+    "x": null
+  },
+  "grid004-2-1": {
+    "id": "grid004-2-1",
+    "width": 260,
+    "height": 50,
+    "css": "background:#FDD396",
+    "z": 43118,
+    "key": true,
+    "color": "white",
+    "parent": "grid005-1-3",
+    "movable": false,
+    "x": null
+  },
+  "grid004-2-2": {
+    "id": "grid004-2-2",
+    "width": 260,
+    "height": 50,
+    "css": "background:#FDD396",
+    "key": true,
+    "color": "white",
+    "parent": "grid005-2-5",
+    "movable": false,
+    "z": 43125,
+    "x": null
+  },
+  "grid005-1-1": {
+    "id": "grid005-1-1",
+    "z": 400,
+    "type": "holder",
+    "x": 140,
+    "y": 187,
+    "width": 260,
+    "height": 50,
+    "dropOffsetX": 0,
+    "classes": "transparent",
+    "dropTarget": {
+      "key": true
+    },
+    "parent": "Key Card Composite",
+    "dropOffsetY": 0
+  },
+  "grid005-1-2": {
+    "id": "grid005-1-2",
+    "x": 421,
+    "y": 187,
+    "z": 401,
+    "type": "holder",
+    "width": 260,
+    "height": 50,
+    "dropOffsetX": 0,
+    "classes": "transparent",
+    "dropTarget": {
+      "key": true
+    },
+    "parent": "Key Card Composite",
+    "dropOffsetY": 0
+  },
+  "grid005-1-3": {
+    "id": "grid005-1-3",
+    "x": 701,
+    "y": 187,
+    "z": 402,
+    "type": "holder",
+    "width": 260,
+    "height": 50,
+    "dropOffsetX": 0,
+    "classes": "transparent",
+    "dropTarget": {
+      "key": true
+    },
+    "parent": "Key Card Composite",
+    "dropOffsetY": 0
+  },
+  "grid005-1-4": {
+    "id": "grid005-1-4",
+    "x": 983,
+    "y": 187,
+    "z": 403,
+    "type": "holder",
+    "width": 260,
+    "height": 50,
+    "dropOffsetX": 0,
+    "classes": "transparent",
+    "dropTarget": {
+      "key": true
+    },
+    "parent": "Key Card Composite",
+    "dropOffsetY": 0
+  },
+  "grid005-1-5": {
+    "id": "grid005-1-5",
+    "x": 1263.5,
+    "y": 187,
+    "z": 404,
+    "type": "holder",
+    "width": 260,
+    "height": 50,
+    "dropOffsetX": 0,
+    "classes": "transparent",
+    "dropTarget": {
+      "key": true
+    },
+    "parent": "Key Card Composite",
+    "dropOffsetY": 0
+  },
+  "grid005-2-1": {
+    "id": "grid005-2-1",
+    "x": 140,
+    "y": 366,
+    "z": 405,
+    "type": "holder",
+    "width": 260,
+    "height": 50,
+    "dropOffsetX": 0,
+    "classes": "transparent",
+    "dropTarget": {
+      "key": true
+    },
+    "parent": "Key Card Composite",
+    "dropOffsetY": 0
+  },
+  "grid005-2-2": {
+    "id": "grid005-2-2",
+    "x": 421,
+    "y": 366,
+    "z": 406,
+    "type": "holder",
+    "width": 260,
+    "height": 50,
+    "dropOffsetX": 0,
+    "classes": "transparent",
+    "dropTarget": {
+      "key": true
+    },
+    "parent": "Key Card Composite",
+    "dropOffsetY": 0
+  },
+  "grid005-2-3": {
+    "id": "grid005-2-3",
+    "x": 701,
+    "y": 366,
+    "z": 407,
+    "type": "holder",
+    "width": 260,
+    "height": 50,
+    "dropOffsetX": 0,
+    "classes": "transparent",
+    "dropTarget": {
+      "key": true
+    },
+    "parent": "Key Card Composite",
+    "dropOffsetY": 0
+  },
+  "grid005-2-4": {
+    "id": "grid005-2-4",
+    "x": 983,
+    "y": 366,
+    "z": 408,
+    "type": "holder",
+    "width": 260,
+    "height": 50,
+    "dropOffsetX": 0,
+    "classes": "transparent",
+    "dropTarget": {
+      "key": true
+    },
+    "parent": "Key Card Composite",
+    "dropOffsetY": 0
+  },
+  "grid005-2-5": {
+    "id": "grid005-2-5",
+    "x": 1263.5,
+    "y": 366,
+    "z": 409,
+    "type": "holder",
+    "width": 260,
+    "height": 50,
+    "dropOffsetX": 0,
+    "classes": "transparent",
+    "dropTarget": {
+      "key": true
+    },
+    "parent": "Key Card Composite",
+    "dropOffsetY": 0
+  },
+  "grid005-3-1": {
+    "id": "grid005-3-1",
+    "x": 140,
+    "y": 545,
+    "z": 410,
+    "type": "holder",
+    "width": 260,
+    "height": 50,
+    "dropOffsetX": 0,
+    "classes": "transparent",
+    "dropTarget": {
+      "key": true
+    },
+    "parent": "Key Card Composite",
+    "dropOffsetY": 0
+  },
+  "grid005-3-2": {
+    "id": "grid005-3-2",
+    "x": 421,
+    "y": 545,
+    "z": 411,
+    "type": "holder",
+    "width": 260,
+    "height": 50,
+    "dropOffsetX": 0,
+    "classes": "transparent",
+    "dropTarget": {
+      "key": true
+    },
+    "parent": "Key Card Composite",
+    "dropOffsetY": 0
+  },
+  "grid005-3-3": {
+    "id": "grid005-3-3",
+    "x": 701,
+    "y": 545,
+    "z": 412,
+    "type": "holder",
+    "width": 260,
+    "height": 50,
+    "dropOffsetX": 0,
+    "classes": "transparent",
+    "dropTarget": {
+      "key": true
+    },
+    "parent": "Key Card Composite",
+    "dropOffsetY": 0
+  },
+  "grid005-3-4": {
+    "id": "grid005-3-4",
+    "x": 983,
+    "y": 545,
+    "z": 413,
+    "type": "holder",
+    "width": 260,
+    "height": 50,
+    "dropOffsetX": 0,
+    "classes": "transparent",
+    "dropTarget": {
+      "key": true
+    },
+    "parent": "Key Card Composite",
+    "dropOffsetY": 0
+  },
+  "grid005-3-5": {
+    "id": "grid005-3-5",
+    "x": 1263.5,
+    "y": 545,
+    "z": 414,
+    "type": "holder",
+    "width": 260,
+    "height": 50,
+    "dropOffsetX": 0,
+    "classes": "transparent",
+    "dropTarget": {
+      "key": true
+    },
+    "parent": "Key Card Composite",
+    "dropOffsetY": 0
+  },
+  "grid005-4-1": {
+    "id": "grid005-4-1",
+    "x": 140,
+    "y": 724,
+    "z": 415,
+    "type": "holder",
+    "width": 260,
+    "height": 50,
+    "dropOffsetX": 0,
+    "classes": "transparent",
+    "dropTarget": {
+      "key": true
+    },
+    "parent": "Key Card Composite",
+    "dropOffsetY": 0
+  },
+  "grid005-4-2": {
+    "id": "grid005-4-2",
+    "x": 421,
+    "y": 724,
+    "z": 416,
+    "type": "holder",
+    "width": 260,
+    "height": 50,
+    "dropOffsetX": 0,
+    "classes": "transparent",
+    "dropTarget": {
+      "key": true
+    },
+    "parent": "Key Card Composite",
+    "dropOffsetY": 0
+  },
+  "grid005-4-3": {
+    "id": "grid005-4-3",
+    "x": 701,
+    "y": 724,
+    "z": 417,
+    "type": "holder",
+    "width": 260,
+    "height": 50,
+    "dropOffsetX": 0,
+    "classes": "transparent",
+    "dropTarget": {
+      "key": true
+    },
+    "parent": "Key Card Composite",
+    "dropOffsetY": 0
+  },
+  "grid005-4-4": {
+    "id": "grid005-4-4",
+    "x": 983,
+    "y": 724,
+    "z": 418,
+    "type": "holder",
+    "width": 260,
+    "height": 50,
+    "dropOffsetX": 0,
+    "classes": "transparent",
+    "dropTarget": {
+      "key": true
+    },
+    "parent": "Key Card Composite",
+    "dropOffsetY": 0
+  },
+  "grid005-4-5": {
+    "id": "grid005-4-5",
+    "x": 1263.5,
+    "y": 724,
+    "z": 419,
+    "type": "holder",
+    "width": 260,
+    "height": 50,
+    "dropOffsetX": 0,
+    "classes": "transparent",
+    "dropTarget": {
+      "key": true
+    },
+    "parent": "Key Card Composite",
+    "dropOffsetY": 0
+  },
+  "grid005-5-1": {
+    "id": "grid005-5-1",
+    "x": 140,
+    "y": 903,
+    "z": 420,
+    "type": "holder",
+    "width": 260,
+    "height": 50,
+    "dropOffsetX": 0,
+    "classes": "transparent",
+    "dropTarget": {
+      "key": true
+    },
+    "parent": "Key Card Composite",
+    "dropOffsetY": 0
+  },
+  "grid005-5-2": {
+    "id": "grid005-5-2",
+    "x": 421,
+    "y": 903,
+    "z": 421,
+    "type": "holder",
+    "width": 260,
+    "height": 50,
+    "dropOffsetX": 0,
+    "classes": "transparent",
+    "dropTarget": {
+      "key": true
+    },
+    "parent": "Key Card Composite",
+    "dropOffsetY": 0
+  },
+  "grid005-5-3": {
+    "id": "grid005-5-3",
+    "x": 701,
+    "y": 903,
+    "z": 422,
+    "type": "holder",
+    "width": 260,
+    "height": 50,
+    "dropOffsetX": 0,
+    "classes": "transparent",
+    "dropTarget": {
+      "key": true
+    },
+    "parent": "Key Card Composite",
+    "dropOffsetY": 0
+  },
+  "grid005-5-4": {
+    "id": "grid005-5-4",
+    "x": 983,
+    "y": 903,
+    "z": 423,
+    "type": "holder",
+    "width": 260,
+    "height": 50,
+    "dropOffsetX": 0,
+    "classes": "transparent",
+    "dropTarget": {
+      "key": true
+    },
+    "parent": "Key Card Composite",
+    "dropOffsetY": 0
+  },
+  "grid005-5-5": {
+    "id": "grid005-5-5",
+    "x": 1263.5,
+    "y": 903,
+    "z": 424,
+    "type": "holder",
+    "width": 260,
+    "height": 50,
+    "dropOffsetX": 0,
+    "classes": "transparent",
+    "dropTarget": {
+      "key": true
+    },
+    "parent": "Key Card Composite",
+    "dropOffsetY": 0
+  },
+  "Key Tokens": {
+    "x": 971,
+    "y": 1173,
+    "z": 425,
+    "type": "holder",
+    "width": 260,
+    "height": 30,
+    "dropOffsetX": 0,
+    "classes": "transparent",
+    "dropTarget": {
+      "key": true
+    },
+    "id": "Key Tokens",
+    "layer": -4
+  },
+  "Key Card Composite": {
+    "type": "holder",
+    "x": -120,
+    "y": -120,
+    "z": 434,
+    "id": "Key Card Composite",
+    "width": 120,
+    "height": 120,
+    "owner": [],
+    "css": "background: grey",
+    "layer": 1
+  },
+  "Reset": {
+    "id": "Reset",
+    "x": 1469,
+    "y": 9,
+    "z": 22241,
+    "type": "button",
+    "text": "Recomeçar",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": [
+          "blueagent9",
+          "redagent9",
+          "assagent",
+          "blueagent",
+          "redagent",
+          "noagent"
+        ]
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": [
+          "blueagent9",
+          "redagent9",
+          "assagent",
+          "blueagent",
+          "redagent",
+          "noagent"
+        ]
+      },
+      "var redBegins = randInt 0 1",
+      "var blueBegins = 1 - ${redBegins}",
+      {
+        "func": "MOVE",
+        "from": "blueagent9",
+        "to": "unneeded-agent",
+        "skip": "${blueBegins}"
+      },
+      {
+        "func": "MOVE",
+        "from": "redagent9",
+        "to": "unneeded-agent",
+        "skip": "${redBegins}"
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "blueagent9",
+          "redagent9"
+        ],
+        "to": "unneeded-agent"
+      },
+      "var reds = 8 + ${redBegins}",
+      "var blues = 8 + ${blueBegins}",
+      {
+        "func": "SELECT",
+        "property": "key",
+        "value": true,
+        "collection": "key components"
+      },
+      {
+        "func": "SET",
+        "collection": "key components",
+        "value": "Key Tokens"
+      },
+      {
+        "func": "SET",
+        "collection": "key components",
+        "property": "width",
+        "value": 260
+      },
+      {
+        "func": "SET",
+        "collection": "key components",
+        "property": "height",
+        "value": 50
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "Key Tokens"
+      },
+      {
+        "func": "SELECT",
+        "source": "key components",
+        "property": "color",
+        "value": "red",
+        "max": "${reds}"
+      },
+      {
+        "func": "SELECT",
+        "source": "key components",
+        "property": "color",
+        "value": "blue",
+        "mode": "add",
+        "max": "${blues}"
+      },
+      {
+        "func": "SELECT",
+        "source": "key components",
+        "property": "color",
+        "value": "black",
+        "mode": "add"
+      },
+      {
+        "func": "SELECT",
+        "source": "key components",
+        "property": "color",
+        "value": "white",
+        "mode": "add"
+      },
+      {
+        "func": "SET",
+        "value": "grid005-1-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid005-1-1",
+        "to": [
+          "grid005-1-2",
+          "grid005-1-3",
+          "grid005-1-4",
+          "grid005-1-5",
+          "grid005-2-5",
+          "grid005-2-4",
+          "grid005-2-3",
+          "grid005-2-2",
+          "grid005-2-1",
+          "grid005-3-1",
+          "grid005-3-2",
+          "grid005-3-3",
+          "grid005-3-4",
+          "grid005-3-5",
+          "grid005-4-5",
+          "grid005-4-4",
+          "grid005-4-3",
+          "grid005-4-2",
+          "grid005-4-1",
+          "grid005-5-1",
+          "grid005-5-2",
+          "grid005-5-3",
+          "grid005-5-4",
+          "grid005-5-5"
+        ],
+        "count": 1
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "Key Tokens"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "color",
+        "value": "red",
+        "collection": "beginningToken",
+        "max": "${redBegins}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "color",
+        "value": "blue",
+        "collection": "beginningToken",
+        "mode": "add",
+        "max": "${blueBegins}"
+      },
+      {
+        "func": "SET",
+        "collection": "beginningToken",
+        "value": "Beginning Team"
+      },
+      {
+        "func": "SET",
+        "property": "width",
+        "value": 1000
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Key Card Composite"
+      },
+      {
+        "func": "SET",
+        "property": "owner",
+        "value": []
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Spy Master Button"
+      },
+      {
+        "func": "SET",
+        "property": "owner",
+        "value": null
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Words Button"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "LABEL",
+        "label": "Current Spy Masters",
+        "value": ""
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Beginning Team"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -120
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "tilz"
+      },
+      {
+        "func": "SET",
+        "property": "owner",
+        "value": null
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "cover"
+      },
+      {
+        "func": "SET",
+        "property": "owner",
+        "value": []
+      }
+    ],
+    "debug": false,
+    "height": 40,
+    "css": "background:#C89CE9;border:10%; border-color: #745A86;font-size: 120%;color:black;",
+    "width": 120
+  },
+  "Beginning Team": {
+    "type": "holder",
+    "x": 216,
+    "y": -120,
+    "id": "Beginning Team",
+    "width": 1000,
+    "height": 10,
+    "onEnter": {
+      "width": 100,
+      "height": 10
+    },
+    "onLeave": {
+      "width": 20,
+      "height": 20
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "z": 22188
+  },
+  "Spy Master Button": {
+    "type": "button",
+    "text": "Reivindicar Mestre Espião",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Key Card Composite"
+      },
+      {
+        "func": "GET",
+        "property": "owner",
+        "variable": "owners"
+      },
+      "var owners = push ${playerName}",
+      {
+        "func": "SET",
+        "property": "owner",
+        "value": "${owners}"
+      },
+      "var spyMasterCount = ${owners} length",
+      "var spyMastersNeeded = ${spyMasterCount} != 2",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Spy Master Button"
+      },
+      {
+        "func": "SET",
+        "property": "owner",
+        "value": [],
+        "skip": "${spyMastersNeeded}"
+      },
+      {
+        "func": "MOVE",
+        "from": "blueagent9",
+        "to": "blueagent"
+      },
+      {
+        "func": "MOVE",
+        "from": "redagent9",
+        "to": "redagent"
+      },
+      "var console = from ${owners}",
+      "var console = 'Mestres Espi\\u00f5es\\u003a' unshift",
+      "var console = push ''",
+      "var console = push 'Equipe Inicial\\u003a'",
+      {
+        "func": "SELECT",
+        "value": "redagent"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var skipRed = 10 != ${COUNT}",
+      "var skipBlue = 10 == ${COUNT}",
+      {
+        "note": "This was added by the automatic file migration because the new expression syntax does not support skip.",
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "internal_computeMigration_skip",
+        "value": "${skipRed}"
+      },
+      {
+        "func": "IF",
+        "condition": "${PROPERTY internal_computeMigration_skip}",
+        "elseRoutine": [
+          "var console = push 'Vermelha'"
+        ]
+      },
+      {
+        "note": "This was added by the automatic file migration because the new expression syntax does not support skip.",
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "internal_computeMigration_skip",
+        "value": null
+      },
+      {
+        "note": "This was added by the automatic file migration because the new expression syntax does not support skip.",
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "internal_computeMigration_skip",
+        "value": "${skipBlue}"
+      },
+      {
+        "func": "IF",
+        "condition": "${PROPERTY internal_computeMigration_skip}",
+        "elseRoutine": [
+          "var console = push 'Azul'"
+        ]
+      },
+      {
+        "note": "This was added by the automatic file migration because the new expression syntax does not support skip.",
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "internal_computeMigration_skip",
+        "value": null
+      },
+      "var spyMastersList = ${console} join '\\u000a'",
+      {
+        "func": "LABEL",
+        "label": "Current Spy Masters",
+        "value": "${spyMastersList}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "bstart"
+      },
+      {
+        "func": "SET",
+        "property": "owner",
+        "value": null,
+        "skip": "${spyMastersNeeded}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "rstart"
+      },
+      {
+        "func": "SET",
+        "property": "owner",
+        "value": null,
+        "skip": "${spyMastersNeeded}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "cover"
+      },
+      {
+        "func": "SET",
+        "property": "owner",
+        "value": "${playerName}"
+      }
+    ],
+    "x": 585,
+    "y": 923,
+    "z": 22240,
+    "id": "Spy Master Button",
+    "debug": false,
+    "layer": -1,
+    "width": 250,
+    "height": 40,
+    "css": "background:#F2BD23;border:10%; border-color: #8F7426;font-size: 100%;color:black;"
+  },
+  "Word 1-1": {
+    "id": "Word 1-1",
+    "x": 10,
+    "y": 76,
+    "type": "label",
+    "text": " ANDES",
+    "css": "font-size: 30px; color:black",
+    "height": 42,
+    "width": 280,
+    "z": 15242,
+    "layer": 1
+  },
+  "Word 1-2": {
+    "id": "Word 1-2",
+    "x": 291,
+    "y": 76,
+    "type": "label",
+    "text": " BARRA",
+    "css": "font-size: 30px; color:black",
+    "height": 42,
+    "width": 280,
+    "z": 15243,
+    "layer": 1
+  },
+  "Word 1-3": {
+    "id": "Word 1-3",
+    "x": 572,
+    "y": 76,
+    "type": "label",
+    "text": " EMOJI",
+    "css": "font-size: 30px; color:black",
+    "height": 42,
+    "width": 280,
+    "z": 15244,
+    "layer": 1
+  },
+  "Word 1-4": {
+    "id": "Word 1-4",
+    "x": 853,
+    "y": 76,
+    "type": "label",
+    "text": " CONTRATO",
+    "css": "font-size: 30px; color:black",
+    "height": 42,
+    "width": 280,
+    "z": 15245,
+    "layer": 1
+  },
+  "Word 1-5": {
+    "id": "Word 1-5",
+    "x": 1134,
+    "y": 76,
+    "type": "label",
+    "text": " AR",
+    "css": "font-size: 30px; color:black",
+    "height": 42,
+    "width": 280,
+    "z": 15246,
+    "layer": 1
+  },
+  "Word 2-1": {
+    "id": "Word 2-1",
+    "x": 10,
+    "y": 255,
+    "type": "label",
+    "text": " CONTA",
+    "css": "font-size: 30px; color:black",
+    "height": 42,
+    "width": 280,
+    "z": 15247,
+    "layer": 1
+  },
+  "Word 2-2": {
+    "id": "Word 2-2",
+    "x": 291,
+    "y": 255,
+    "type": "label",
+    "text": " BRAÇO",
+    "css": "font-size: 30px; color:black",
+    "height": 42,
+    "width": 280,
+    "z": 15248,
+    "layer": 1
+  },
+  "Word 2-3": {
+    "id": "Word 2-3",
+    "x": 572,
+    "y": 255,
+    "type": "label",
+    "text": " TERRA",
+    "css": "font-size: 30px; color:black",
+    "height": 42,
+    "width": 280,
+    "z": 15249,
+    "layer": 1
+  },
+  "Word 2-4": {
+    "id": "Word 2-4",
+    "x": 853,
+    "y": 255,
+    "type": "label",
+    "text": " COIOTE",
+    "css": "font-size: 30px; color:black",
+    "height": 42,
+    "width": 280,
+    "z": 15250,
+    "layer": 1
+  },
+  "Word 2-5": {
+    "id": "Word 2-5",
+    "x": 1134,
+    "y": 255,
+    "type": "label",
+    "text": " BAIXO",
+    "css": "font-size: 30px; color:black",
+    "height": 42,
+    "width": 280,
+    "z": 15251,
+    "layer": 1
+  },
+  "Word 3-1": {
+    "id": "Word 3-1",
+    "x": 10,
+    "y": 434,
+    "type": "label",
+    "text": " PISCINA",
+    "css": "font-size: 30px; color:black",
+    "height": 42,
+    "width": 280,
+    "z": 15252,
+    "layer": 1
+  },
+  "Word 3-2": {
+    "id": "Word 3-2",
+    "x": 291,
+    "y": 434,
+    "type": "label",
+    "text": " CHALEIRA",
+    "css": "font-size: 30px; color:black",
+    "height": 42,
+    "width": 280,
+    "z": 15253,
+    "layer": 1
+  },
+  "Word 3-3": {
+    "id": "Word 3-3",
+    "x": 572,
+    "y": 434,
+    "type": "label",
+    "text": " CANTO",
+    "css": "font-size: 30px; color:black",
+    "height": 42,
+    "width": 280,
+    "z": 15254,
+    "layer": 1
+  },
+  "Word 3-4": {
+    "id": "Word 3-4",
+    "x": 853,
+    "y": 434,
+    "type": "label",
+    "text": " CAFÉ",
+    "css": "font-size: 30px; color:black",
+    "height": 42,
+    "width": 280,
+    "z": 15255,
+    "layer": 1
+  },
+  "Word 3-5": {
+    "id": "Word 3-5",
+    "x": 1134,
+    "y": 434,
+    "type": "label",
+    "text": " HISTÓRIA",
+    "css": "font-size: 30px; color:black",
+    "height": 42,
+    "width": 280,
+    "z": 15256,
+    "layer": 1
+  },
+  "Word 4-1": {
+    "id": "Word 4-1",
+    "x": 10,
+    "y": 613,
+    "type": "label",
+    "text": " GRILO",
+    "css": "font-size: 30px; color:black",
+    "height": 42,
+    "width": 280,
+    "z": 15257,
+    "layer": 1
+  },
+  "Word 4-2": {
+    "id": "Word 4-2",
+    "x": 291,
+    "y": 613,
+    "type": "label",
+    "text": " COZINHA",
+    "css": "font-size: 30px; color:black",
+    "height": 42,
+    "width": 280,
+    "z": 15258,
+    "layer": 1
+  },
+  "Word 4-3": {
+    "id": "Word 4-3",
+    "x": 572,
+    "y": 613,
+    "type": "label",
+    "text": " GIGANTE",
+    "css": "font-size: 30px; color:black",
+    "height": 42,
+    "width": 280,
+    "z": 15259,
+    "layer": 1
+  },
+  "Word 4-4": {
+    "id": "Word 4-4",
+    "x": 853,
+    "y": 613,
+    "type": "label",
+    "text": " ÁSIA",
+    "css": "font-size: 30px; color:black",
+    "height": 42,
+    "width": 280,
+    "z": 15260,
+    "layer": 1
+  },
+  "Word 4-5": {
+    "id": "Word 4-5",
+    "x": 1134,
+    "y": 613,
+    "type": "label",
+    "text": " ÁFRICA",
+    "css": "font-size: 30px; color:black",
+    "height": 42,
+    "width": 280,
+    "z": 15261,
+    "layer": 1
+  },
+  "Word 5-1": {
+    "id": "Word 5-1",
+    "x": 10,
+    "y": 792,
+    "type": "label",
+    "text": " DEDO",
+    "css": "font-size: 30px; color:black",
+    "height": 42,
+    "width": 280,
+    "z": 15262,
+    "layer": 1
+  },
+  "Word 5-2": {
+    "id": "Word 5-2",
+    "x": 291,
+    "y": 792,
+    "type": "label",
+    "text": " ABISMO",
+    "css": "font-size: 30px; color:black",
+    "height": 42,
+    "width": 280,
+    "z": 15263,
+    "layer": 1
+  },
+  "Word 5-3": {
+    "id": "Word 5-3",
+    "x": 572,
+    "y": 792,
+    "type": "label",
+    "text": " ESCOVA",
+    "css": "font-size: 30px; color:black",
+    "height": 42,
+    "width": 280,
+    "z": 15264,
+    "layer": 1
+  },
+  "Word 5-4": {
+    "id": "Word 5-4",
+    "x": 853,
+    "y": 792,
+    "type": "label",
+    "text": " TÓQUIO",
+    "css": "font-size: 30px; color:black",
+    "height": 42,
+    "width": 280,
+    "z": 15265,
+    "layer": 1
+  },
+  "Word 5-5": {
+    "id": "Word 5-5",
+    "x": 1134,
+    "y": 792,
+    "type": "label",
+    "text": " PROJETO",
+    "css": "font-size: 30px; color:black",
+    "height": 42,
+    "width": 280,
+    "z": 15266,
+    "layer": 1
+  },
+  "Word Button": {
+    "type": "button",
+    "text": "Word",
+    "clickRoutine": [
+      "var words = 'Tempo, homem, m\\u00e3o, dia, caminho, olho, coisa, cabe\\u00e7a, ano, quarto, porta, mulher, rosto, gente, noite, casa, pai, vida, voz, menina, lugar, Garoto, carro, lado, bra\\u00e7o, crian\\u00e7a, palavra, momento, cabelo, p\\u00e9, \\u00e1gua, leve, terra, nome, amigo, janela, corpo, mesa, manh\\u00e3, cama, parede, rua, escola, ar, ch\\u00e3o, hora, fim, fam\\u00edlia, cara, tipo, minuto, hist\\u00f3ria, Deus, semana, trabalho, ombro, parte, mente, livro, dedo, boca, crian\\u00e7a, vidro, \\u00e1rvore, som, linha, esposa, cora\\u00e7\\u00e3o, dinheiro, telefone, vis\\u00e3o, perna, cadeira, escrit\\u00f3rio, irm\\u00e3o, quest\\u00e3o, cidade, m\\u00eas, beb\\u00ea, casa, cachorro, estrada, id\\u00e9ia, cozinha, quantidade, filho, trabalho, papel, irm\\u00e3, sorriso, ponto, pensamento, amor, Cidade, morte, terra, outras, fogo, degrau, sangue, fato, respira\\u00e7\\u00e3o, l\\u00e1bio, Sol, constru\\u00e7\\u00e3o, n\\u00famero, marido, parente, canto, problema, casal, filha, Bolsa, inferno, descansar, neg\\u00f3cio, c\\u00e9u, caixa, pessoa, raz\\u00e3o, direito, pele, Papai, caso, pe\\u00e7a, m\\u00e9dico, Beira, mam\\u00e3e, cen\\u00e1rio, sentido, orelha, segundo, senhora, pesco\\u00e7o, vento, escrivaninha, arma de fogo, pedra, caf\\u00e9, navio, terra, Comida, cavalo, campo, guerra, tarde, Senhor, espa\\u00e7o, tarde, carta, Barra, sonho, apartamento, peito, jogos, ver\\u00e3o, mat\\u00e9ria, sil\\u00eancio, topo, poder, roupas, placa, aten\\u00e7\\u00e3o, m\\u00fasica, Estado, bolso, jantar, corredor, dor, era, rio, chance, nariz, sombra, pol\\u00edcia, mem\\u00f3ria, cor, joelho, madeira, camisa, festa, pa\\u00eds, caminh\\u00e3o, dente, conta, cena, terra, Estrela, p\\u00e1ssaro, quarto, tio, ordenar, grupo, verdade, problema, multid\\u00e3o, esta\\u00e7\\u00e3o, EUA, Alemanha, Brasil, Himalaia, lua, Cavaleiro, Nova york, Paris, Xangai, T\\u00f3quio, \\u00c1frica do Sul, Egito, Moscou, Berlim, ab\\u00f3bora, Espaguete, It\\u00e1lia, Hubble, jato, Microsc\\u00f3pio, Telesc\\u00f3pio, marte, Peru, M\\u00edssil, pandemia, \\u00cdndia, tigela, Urso, Curry, escargot, Grilo, giz, guitarra, banco, arbusto, sopa, V\\u00eanus, Andes, Engenharia, qu\\u00edmica, Biologia, chal\\u00e9, roteiro, canto, lima, paciente, mangueira, baralho, sauda\\u00e7\\u00e3o, Pato, h\\u00e1bito, encontro, Ant\\u00e1rtica, \\u00c1frica, Europa, \\u00c1sia, Oceania, Am\\u00e9rica do Sul, Am\\u00e9rica do Norte, macarr\\u00e3o, pedra, pinho, lixo, partida, expresso, franco, doutor, bateria, p\\u00e9, bra\\u00e7os, dedo do p\\u00e9, taxa, apontar, ser, controle, ocultar, poupan\\u00e7a, atual, gravata, n\\u00edvel, Serra, base, breu, erro, Machado, conta, ponto, projeto, abaixo, acima, clique, rato, bengala, objeto, contrato, Primavera, choque, moderno, cl\\u00e1ssico, abismo, tique, agudo, Dobro, Beira, elefante, zebra, girafa, destrui\\u00e7\\u00e3o, sul, geladeira, cerca, outono, norte, p\\u00f3lo, piscina, equipe, compactar, bolha, milho, tofu, salm\\u00e3o, \\u00c1guia, cadeira, gr\\u00e1fico, Barra, caneca, sacrif\\u00edcio, crach\\u00e1, manga, pneu, ovelha, movimento, baixo, meia, cal\\u00e7a, t\\u00eanis, futebol, tiro com arco, voleibol, bambol\\u00ea, grave, sulco, Pomar, vida, Alto, baixo, carbono, merc\\u00fario, oxig\\u00eanio, Los Angeles, coiote, funcion\\u00e1rios, casaco, \\u00e1gua, corrente, bem, marcha, maio, chuveiro, linha, ordem, marca, pele, girar, rainha, rei, perd\\u00e3o, advogado, local, gigante, quadro, vi\\u00fava, garantia, torre, azedo, escorregar, chaleira, canguru, tear, veto, v\\u00f3rtice, cinza, raio X, ferramenta, jardim zool\\u00f3gico, fronteira, tri\\u00e2ngulo, quadrado, unidade, hobbit, cart\\u00e3o, computador, mapa, pl\\u00e1stico, martelo, por\\u00e3o, pau-brasil, pinho, escova, broca, aguentar, carrinho, Cuidado, soco, fresco, emoji, cenoura, salmoura, peixe, caranguejo' split ','",
+      "var wordCount = ${words} length",
+      "var wordCount = ${wordCount} - 1",
+      "var RANDOM = randInt 0 ${wordCount}",
+      "var word = ${words} getIndex ${RANDOM}",
+      "var word = ${word} toUpperCase",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Word Button"
+      },
+      {
+        "func": "GET",
+        "property": "target"
+      },
+      {
+        "func": "GET",
+        "property": "usedWords"
+      },
+      {
+        "func": "LABEL",
+        "label": "${target}",
+        "value": "${word}"
+      },
+      "var wordLength = ${word} length",
+      "var wordShortEnough = ${wordLength} <= 11",
+      "var targetX = ${target} substr 5 1",
+      "var targetX = ${targetX} * 10",
+      "var targetY = ${target} substr 7 1",
+      "var targetCoord = ${targetX} + ${targetY}",
+      "var wordAlreadyUsedIndex = ${usedWords} indexOf ${word}",
+      "var wordWasNotAlreadyUsed = ${wordAlreadyUsedIndex} == -1",
+      "var usedWords = setIndex ${targetCoord} ${word}",
+      "var skipClick = ${wordShortEnough} && ${wordWasNotAlreadyUsed}",
+      {
+        "func": "SET",
+        "property": "usedWords",
+        "value": "${usedWords}"
+      },
+      {
+        "func": "CLICK",
+        "skip": "${skipClick}"
+      }
+    ],
+    "x": 1615,
+    "y": 784,
+    "z": 13,
+    "id": "Word Button",
+    "target": "Word 5-5",
+    "debug": false,
+    "usedWords": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      " ANDES",
+      " BARRA",
+      " EMOJI",
+      " CONTRATO",
+      " AR",
+      null,
+      null,
+      null,
+      null,
+      null,
+      " CONTA",
+      " BRAÇO",
+      " TERRA",
+      " COIOTE",
+      " BAIXO",
+      null,
+      null,
+      null,
+      null,
+      null,
+      " PISCINA",
+      " CHALEIRA",
+      " CANTO",
+      " CAFÉ",
+      " HISTÓRIA",
+      null,
+      null,
+      null,
+      null,
+      null,
+      " GRILO",
+      " COZINHA",
+      " GIGANTE",
+      " ÁSIA",
+      " ÁFRICA",
+      null,
+      null,
+      null,
+      null,
+      null,
+      " DEDO",
+      " ABISMO",
+      " ESCOVA",
+      " TÓQUIO",
+      " PROJETO"
+    ]
+  },
+  "Words Button": {
+    "type": "button",
+    "text": "Words",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Word Button"
+      },
+      {
+        "func": "SET",
+        "property": "target",
+        "value": "Word 1-1"
+      },
+      {
+        "func": "SET",
+        "property": "usedWords",
+        "value": []
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SET",
+        "property": "target",
+        "value": "Word 1-2"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SET",
+        "property": "target",
+        "value": "Word 1-3"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SET",
+        "property": "target",
+        "value": "Word 1-4"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SET",
+        "property": "target",
+        "value": "Word 1-5"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SET",
+        "property": "target",
+        "value": "Word 2-1"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SET",
+        "property": "target",
+        "value": "Word 2-2"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SET",
+        "property": "target",
+        "value": "Word 2-3"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SET",
+        "property": "target",
+        "value": "Word 2-4"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SET",
+        "property": "target",
+        "value": "Word 2-5"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SET",
+        "property": "target",
+        "value": "Word 3-1"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SET",
+        "property": "target",
+        "value": "Word 3-2"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SET",
+        "property": "target",
+        "value": "Word 3-3"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SET",
+        "property": "target",
+        "value": "Word 3-4"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SET",
+        "property": "target",
+        "value": "Word 3-5"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SET",
+        "property": "target",
+        "value": "Word 4-1"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SET",
+        "property": "target",
+        "value": "Word 4-2"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SET",
+        "property": "target",
+        "value": "Word 4-3"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SET",
+        "property": "target",
+        "value": "Word 4-4"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SET",
+        "property": "target",
+        "value": "Word 4-5"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SET",
+        "property": "target",
+        "value": "Word 5-1"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SET",
+        "property": "target",
+        "value": "Word 5-2"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SET",
+        "property": "target",
+        "value": "Word 5-3"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SET",
+        "property": "target",
+        "value": "Word 5-4"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SET",
+        "property": "target",
+        "value": "Word 5-5"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "x": 1320,
+    "y": 1013,
+    "z": 12,
+    "id": "Words Button"
+  },
+  "Current Spy Masters": {
+    "type": "label",
+    "x": 1432,
+    "y": 860,
+    "z": 15273,
+    "id": "Current Spy Masters",
+    "height": 180,
+    "width": 180,
+    "css": "font-family: courier new; color:#19590E; font-weight: bold; text-align: left"
+  },
+  "grid006-1-1": {
+    "id": "grid006-1-1",
+    "x": 15.300000000000011,
+    "y": 15,
+    "z": 5643,
+    "type": "holder",
+    "width": 270,
+    "height": 168,
+    "layer": 2,
+    "classes": "transparent"
+  },
+  "grid006-1-2": {
+    "id": "grid006-1-2",
+    "x": 296,
+    "y": 15,
+    "z": 401,
+    "type": "holder",
+    "width": 270,
+    "height": 168,
+    "layer": 2,
+    "classes": "transparent"
+  },
+  "grid006-1-3": {
+    "id": "grid006-1-3",
+    "x": 577,
+    "y": 15,
+    "z": 5523,
+    "type": "holder",
+    "width": 270,
+    "height": 168,
+    "layer": 2,
+    "classes": "transparent"
+  },
+  "grid006-1-4": {
+    "id": "grid006-1-4",
+    "x": 858,
+    "y": 15,
+    "z": 403,
+    "type": "holder",
+    "width": 270,
+    "height": 168,
+    "layer": 2,
+    "classes": "transparent"
+  },
+  "grid006-1-5": {
+    "id": "grid006-1-5",
+    "x": 1138.5,
+    "y": 15,
+    "z": 404,
+    "type": "holder",
+    "width": 270,
+    "height": 168,
+    "layer": 2,
+    "classes": "transparent"
+  },
+  "grid006-2-1": {
+    "id": "grid006-2-1",
+    "x": 15.300000000000011,
+    "y": 194,
+    "z": 405,
+    "type": "holder",
+    "width": 270,
+    "height": 168,
+    "layer": 2,
+    "classes": "transparent"
+  },
+  "grid006-2-2": {
+    "id": "grid006-2-2",
+    "x": 296,
+    "y": 194,
+    "z": 22190,
+    "type": "holder",
+    "width": 270,
+    "height": 168,
+    "layer": 2,
+    "classes": "transparent"
+  },
+  "grid006-2-3": {
+    "id": "grid006-2-3",
+    "x": 577,
+    "y": 194,
+    "z": 407,
+    "type": "holder",
+    "width": 270,
+    "height": 168,
+    "layer": 2,
+    "classes": "transparent"
+  },
+  "grid006-2-4": {
+    "id": "grid006-2-4",
+    "x": 858,
+    "y": 194,
+    "z": 408,
+    "type": "holder",
+    "width": 270,
+    "height": 168,
+    "layer": 2,
+    "classes": "transparent"
+  },
+  "grid006-2-5": {
+    "id": "grid006-2-5",
+    "x": 1138.5,
+    "y": 194,
+    "z": 409,
+    "type": "holder",
+    "width": 270,
+    "height": 168,
+    "layer": 2,
+    "classes": "transparent"
+  },
+  "grid006-3-1": {
+    "id": "grid006-3-1",
+    "x": 15.3,
+    "y": 373,
+    "z": 410,
+    "type": "holder",
+    "width": 270,
+    "height": 168,
+    "layer": 2,
+    "classes": "transparent"
+  },
+  "grid006-3-2": {
+    "id": "grid006-3-2",
+    "x": 296,
+    "y": 373,
+    "z": 411,
+    "type": "holder",
+    "width": 270,
+    "height": 168,
+    "layer": 2,
+    "classes": "transparent"
+  },
+  "grid006-3-3": {
+    "id": "grid006-3-3",
+    "x": 577,
+    "y": 373,
+    "z": 412,
+    "type": "holder",
+    "width": 270,
+    "height": 168,
+    "layer": 2,
+    "classes": "transparent"
+  },
+  "grid006-3-4": {
+    "id": "grid006-3-4",
+    "x": 858,
+    "y": 373,
+    "z": 413,
+    "type": "holder",
+    "width": 270,
+    "height": 168,
+    "layer": 2,
+    "classes": "transparent"
+  },
+  "grid006-3-5": {
+    "id": "grid006-3-5",
+    "x": 1138.5,
+    "y": 373,
+    "z": 414,
+    "type": "holder",
+    "width": 270,
+    "height": 168,
+    "layer": 2,
+    "classes": "transparent"
+  },
+  "grid006-4-1": {
+    "id": "grid006-4-1",
+    "x": 15.3,
+    "y": 552,
+    "z": 415,
+    "type": "holder",
+    "width": 270,
+    "height": 168,
+    "layer": 2,
+    "classes": "transparent"
+  },
+  "grid006-4-2": {
+    "id": "grid006-4-2",
+    "x": 296,
+    "y": 552,
+    "z": 416,
+    "type": "holder",
+    "width": 270,
+    "height": 168,
+    "layer": 2,
+    "classes": "transparent"
+  },
+  "grid006-4-3": {
+    "id": "grid006-4-3",
+    "x": 577,
+    "y": 552,
+    "z": 417,
+    "type": "holder",
+    "width": 270,
+    "height": 168,
+    "layer": 2,
+    "classes": "transparent"
+  },
+  "grid006-4-4": {
+    "id": "grid006-4-4",
+    "x": 858,
+    "y": 552,
+    "z": 38002,
+    "type": "holder",
+    "width": 270,
+    "height": 168,
+    "layer": 2,
+    "classes": "transparent"
+  },
+  "grid006-4-5": {
+    "id": "grid006-4-5",
+    "x": 1138.5,
+    "y": 552,
+    "z": 419,
+    "type": "holder",
+    "width": 270,
+    "height": 168,
+    "layer": 2,
+    "classes": "transparent"
+  },
+  "grid006-5-1": {
+    "id": "grid006-5-1",
+    "x": 15.3,
+    "y": 731,
+    "z": 420,
+    "type": "holder",
+    "width": 270,
+    "height": 168,
+    "layer": 2,
+    "classes": "transparent"
+  },
+  "grid006-5-2": {
+    "id": "grid006-5-2",
+    "x": 296,
+    "y": 731,
+    "z": 421,
+    "type": "holder",
+    "width": 270,
+    "height": 168,
+    "layer": 2,
+    "classes": "transparent"
+  },
+  "grid006-5-3": {
+    "id": "grid006-5-3",
+    "x": 577,
+    "y": 731,
+    "z": 422,
+    "type": "holder",
+    "width": 270,
+    "height": 168,
+    "layer": 2,
+    "classes": "transparent"
+  },
+  "grid006-5-4": {
+    "id": "grid006-5-4",
+    "x": 858,
+    "y": 731,
+    "z": 423,
+    "type": "holder",
+    "width": 270,
+    "height": 168,
+    "layer": 2,
+    "classes": "transparent"
+  },
+  "grid006-5-5": {
+    "id": "grid006-5-5",
+    "x": 1138.5,
+    "y": 731,
+    "z": 424,
+    "type": "holder",
+    "width": 270,
+    "height": 168,
+    "layer": 2,
+    "classes": "transparent"
+  },
+  "cxzl": {
+    "type": "card",
+    "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e6",
+    "id": "cxzl",
+    "z": 9469,
+    "layer": 2,
+    "deck": "blueagentdeck",
+    "parent": "q62e"
+  },
+  "yi8y": {
+    "type": "card",
+    "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e6",
+    "id": "yi8y",
+    "z": 8514,
+    "layer": 2,
+    "deck": "blueagentdeck",
+    "parent": "q62e"
+  },
+  "bagc": {
+    "type": "card",
+    "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e7",
+    "id": "bagc",
+    "z": 8115,
+    "layer": 2,
+    "deck": "blueagentdeck",
+    "parent": "q62e"
+  },
+  "gsvd": {
+    "type": "card",
+    "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e7",
+    "id": "gsvd",
+    "z": 1613,
+    "layer": 2,
+    "deck": "blueagentdeck",
+    "parent": "q62e"
+  },
+  "vsq5": {
+    "type": "card",
+    "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e7",
+    "id": "vsq5",
+    "z": 2848,
+    "layer": 2,
+    "deck": "blueagentdeck",
+    "parent": "q62e"
+  },
+  "kxaq": {
+    "type": "card",
+    "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e7",
+    "id": "kxaq",
+    "z": 7572,
+    "layer": 2,
+    "deck": "blueagentdeck",
+    "parent": "q62e"
+  },
+  "r2to": {
+    "type": "card",
+    "cardType": "Double",
+    "id": "r2to",
+    "z": 5999,
+    "layer": 2,
+    "deck": "2agentdeck",
+    "x": 4,
+    "y": 4,
+    "parent": "grid006-2-5",
+    "activeFace": 2
+  },
+  "zx8d": {
+    "type": "card",
+    "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e6",
+    "id": "zx8d",
+    "z": 4778,
+    "deck": "redagentdeck",
+    "layer": 2,
+    "parent": "0ppd"
+  },
+  "05ug": {
+    "type": "card",
+    "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e7",
+    "id": "05ug",
+    "z": 495,
+    "deck": "redagentdeck",
+    "layer": 2,
+    "parent": "0ppd"
+  },
+  "lt0w": {
+    "type": "card",
+    "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e6",
+    "id": "lt0w",
+    "deck": "redagentdeck",
+    "layer": 2,
+    "z": 3149,
+    "parent": "0ppd"
+  },
+  "habk": {
+    "type": "card",
+    "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e6",
+    "id": "habk",
+    "z": 776,
+    "deck": "redagentdeck",
+    "layer": 2,
+    "parent": "0ppd"
+  },
+  "dh8t": {
+    "type": "card",
+    "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e6",
+    "id": "dh8t",
+    "z": 2008,
+    "deck": "redagentdeck",
+    "layer": 2,
+    "parent": "0ppd"
+  },
+  "0va5": {
+    "type": "card",
+    "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e7",
+    "id": "0va5",
+    "z": 7492,
+    "deck": "redagentdeck",
+    "layer": 2,
+    "parent": "0ppd"
+  },
+  "y9rl": {
+    "type": "card",
+    "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e7",
+    "id": "y9rl",
+    "z": 8921,
+    "deck": "redagentdeck",
+    "layer": 2,
+    "parent": "0ppd"
+  },
+  "tlzs": {
+    "type": "card",
+    "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e7",
+    "id": "tlzs",
+    "z": 659,
+    "deck": "redagentdeck",
+    "layer": 2,
+    "parent": "0ppd"
+  },
+  "jxbp": {
+    "type": "card",
+    "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e6",
+    "id": "jxbp",
+    "deck": "noagentdeck",
+    "layer": 2,
+    "z": 877,
+    "parent": "zicy"
+  },
+  "xju5": {
+    "type": "card",
+    "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e6",
+    "id": "xju5",
+    "z": 1196,
+    "deck": "noagentdeck",
+    "layer": 2,
+    "parent": "zicy"
+  },
+  "4cwo": {
+    "type": "card",
+    "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e6",
+    "id": "4cwo",
+    "z": 6828,
+    "deck": "noagentdeck",
+    "layer": 2,
+    "parent": "zicy"
+  },
+  "pyap": {
+    "type": "card",
+    "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e7",
+    "id": "pyap",
+    "z": 7009,
+    "deck": "noagentdeck",
+    "layer": 2,
+    "parent": "zicy"
+  },
+  "qhk5": {
+    "type": "card",
+    "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e7",
+    "id": "qhk5",
+    "z": 2647,
+    "deck": "noagentdeck",
+    "layer": 2,
+    "parent": "zicy"
+  },
+  "9dp0": {
+    "type": "card",
+    "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e7",
+    "id": "9dp0",
+    "z": 7805,
+    "deck": "noagentdeck",
+    "layer": 2,
+    "parent": "zicy"
+  },
+  "2ndn": {
+    "type": "card",
+    "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e6",
+    "id": "2ndn",
+    "z": 4124,
+    "deck": "blueagentdeck",
+    "layer": 2,
+    "parent": "q62e"
+  },
+  "5kpy": {
+    "type": "card",
+    "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e6",
+    "id": "5kpy",
+    "z": 5248,
+    "deck": "blueagentdeck",
+    "layer": 2,
+    "parent": "q62e"
+  },
+  "2agentdeck": {
+    "x": 4,
+    "y": 4,
+    "z": 5812,
+    "type": "deck",
+    "cardTypes": {
+      "Double": {
+        "label": "Blue 1",
+        "image": "/assets/-1738045802_97241",
+        "image1": "/assets/1793392473_99680"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#3260FD",
+            "valueType": "static",
+            "value": "",
+            "width": 264,
+            "height": 160
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 10,
+            "color": "#557BFD",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 244,
+            "height": 140
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#FD3232",
+            "valueType": "static",
+            "value": "",
+            "width": 264,
+            "height": 160
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 10,
+            "color": "#FD5555",
+            "valueType": "dynamic",
+            "value": "image1",
+            "width": 244,
+            "height": 140
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#3260FD",
+            "valueType": "static",
+            "value": "",
+            "width": 262,
+            "height": 80
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 80,
+            "color": "#FD5555",
+            "valueType": "static",
+            "value": "",
+            "width": 262,
+            "height": 80
+          },
+          {
+            "type": "text",
+            "x": 10,
+            "y": -10,
+            "fontSize": "50",
+            "valueType": "static",
+            "value": "⇖",
+            "textAlign": "left",
+            "textFont": "interstate",
+            "color": "#000000",
+            "width": 150
+          },
+          {
+            "type": "text",
+            "x": 10,
+            "y": 100,
+            "fontSize": "50",
+            "valueType": "static",
+            "value": "⇙",
+            "textAlign": "left",
+            "textFont": "interstate",
+            "color": "#000000",
+            "width": 150
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 44,
+            "fontSize": "30",
+            "valueType": "static",
+            "value": "DOUBLE AGENT",
+            "textAlign": "right",
+            "textFont": "interstate",
+            "color": "#000000",
+            "width": 150,
+            "height": 160
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 120,
+            "fontSize": "15",
+            "valueType": "static",
+            "value": "(Flip to Color)",
+            "textAlign": "right",
+            "textFont": "interstate",
+            "color": "#000000",
+            "width": 150,
+            "height": 160
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 262,
+      "height": 160
+    },
+    "layer": 2,
+    "id": "2agentdeck",
+    "parent": "2agent"
+  },
+  "blueagentdeck": {
+    "id": "blueagentdeck",
+    "x": 4,
+    "y": 4,
+    "z": 5481,
+    "type": "deck",
+    "cardTypes": {
+      "type-7f9a725a-8392-4604-a313-81a74508c6e6": {
+        "label": "Blue 1",
+        "image1": "/assets/-1738045802_97241",
+        "": ""
+      },
+      "type-7f9a725a-8392-4604-a313-81a74508c6e7": {
+        "label": "Blue 1",
+        "image1": "/assets/1255558537_97612",
+        "": ""
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#2D53D6",
+            "valueType": "static",
+            "value": "",
+            "width": 264,
+            "height": 160
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 10,
+            "color": "#557BFD",
+            "valueType": "dynamic",
+            "value": "image1",
+            "width": 244,
+            "height": 140
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 262,
+      "height": 160
+    },
+    "layer": 2,
+    "parent": "blueagent"
+  },
+  "redagentdeck": {
+    "x": 4,
+    "y": 4,
+    "z": 5461,
+    "type": "deck",
+    "cardTypes": {
+      "type-7f9a725a-8392-4604-a313-81a74508c6e6": {
+        "label": "Blue 1",
+        "image1": "/assets/1317575730_96986",
+        "image": ""
+      },
+      "type-7f9a725a-8392-4604-a313-81a74508c6e7": {
+        "label": "Blue 1",
+        "image1": "/assets/1793392473_99680",
+        "image": ""
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#D12A2A",
+            "valueType": "static",
+            "value": "",
+            "width": 264,
+            "height": 160
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 10,
+            "color": "#FD5555",
+            "valueType": "dynamic",
+            "value": "image1",
+            "width": 244,
+            "height": 140
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 262,
+      "height": 160
+    },
+    "layer": 2,
+    "id": "redagentdeck",
+    "parent": "redagent"
+  },
+  "noagentdeck": {
+    "x": 4,
+    "y": 4,
+    "z": 5435,
+    "type": "deck",
+    "cardTypes": {
+      "type-7f9a725a-8392-4604-a313-81a74508c6e6": {
+        "label": "Blue 1",
+        "image1": "/assets/-7105587_107437",
+        "image": ""
+      },
+      "type-7f9a725a-8392-4604-a313-81a74508c6e7": {
+        "label": "Blue 1",
+        "image1": "/assets/582751212_78642",
+        "image": ""
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#DBBB48",
+            "valueType": "static",
+            "value": "",
+            "width": 264,
+            "height": 160
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 10,
+            "color": "#FDD955",
+            "valueType": "dynamic",
+            "value": "image1",
+            "width": 244,
+            "height": 140
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 262,
+      "height": 160
+    },
+    "layer": 2,
+    "id": "noagentdeck",
+    "parent": "noagent"
+  },
+  "blueagent": {
+    "type": "holder",
+    "x": 1425,
+    "y": 242.5,
+    "z": 434,
+    "width": 270,
+    "height": 168,
+    "id": "blueagent",
+    "classes": "transparent"
+  },
+  "redagent": {
+    "type": "holder",
+    "x": 1425,
+    "y": 421.5,
+    "z": 435,
+    "id": "redagent",
+    "width": 270,
+    "height": 168,
+    "classes": "transparent"
+  },
+  "noagent": {
+    "type": "holder",
+    "x": 1425,
+    "y": 600.5,
+    "z": 441,
+    "width": 270,
+    "height": 168,
+    "id": "noagent",
+    "classes": "transparent"
+  },
+  "xjsv": {
+    "deck": "noagentdeck",
+    "type": "card",
+    "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e7",
+    "id": "xjsv",
+    "z": 7928,
+    "layer": 2,
+    "parent": "zicy"
+  },
+  "pq0f": {
+    "type": "card",
+    "cardType": "Double",
+    "id": "pq0f",
+    "z": 9570,
+    "x": 4,
+    "deck": "assagentdeck",
+    "layer": 2,
+    "y": 4,
+    "parent": "assagent"
+  },
+  "assagentdeck": {
+    "x": 4,
+    "y": 4,
+    "z": 5861,
+    "type": "deck",
+    "cardTypes": {
+      "Double": {
+        "label": "Blue 1",
+        "image": "/assets/-293168483_76283"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#333333",
+            "valueType": "static",
+            "value": "",
+            "width": 264,
+            "height": 160
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 10,
+            "color": "#626262",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 244,
+            "height": 140
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 262,
+      "height": 160
+    },
+    "layer": 2,
+    "id": "assagentdeck",
+    "parent": "assagent"
+  },
+  "assagent": {
+    "type": "holder",
+    "x": 1425,
+    "y": 63.5,
+    "z": 439,
+    "width": 270,
+    "height": 168,
+    "id": "assagent",
+    "classes": "transparent"
+  },
+  "blueagentdeck-copy001": {
+    "id": "blueagentdeck-copy001",
+    "x": -13,
+    "y": 65,
+    "type": "deck",
+    "cardTypes": {
+      "type-7f9a725a-8392-4604-a313-81a74508c6e6": {
+        "label": "Blue 1",
+        "image1": "/assets/-1738045802_97241",
+        "": ""
+      },
+      "type-7f9a725a-8392-4604-a313-81a74508c6e7": {
+        "label": "Blue 1",
+        "image1": "/assets/1255558537_97612",
+        "": ""
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#3260FD",
+            "valueType": "static",
+            "value": "",
+            "width": 264,
+            "height": 160
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 10,
+            "color": "#557BFD",
+            "valueType": "dynamic",
+            "value": "image1",
+            "width": 244,
+            "height": 140
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 262,
+      "height": 160
+    },
+    "layer": 2,
+    "z": 22184,
+    "parent": "blueagent9"
+  },
+  "redagentdeck-copy001": {
+    "x": -13,
+    "y": 65,
+    "type": "deck",
+    "cardTypes": {
+      "type-7f9a725a-8392-4604-a313-81a74508c6e6": {
+        "label": "Blue 1",
+        "image1": "/assets/1317575730_96986",
+        "image": ""
+      },
+      "type-7f9a725a-8392-4604-a313-81a74508c6e7": {
+        "label": "Blue 1",
+        "image1": "/assets/1793392473_99680",
+        "image": ""
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#FD3232",
+            "valueType": "static",
+            "value": "",
+            "width": 264,
+            "height": 160
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 10,
+            "color": "#FD5555",
+            "valueType": "dynamic",
+            "value": "image1",
+            "width": 244,
+            "height": 140
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#FD3232",
+            "valueType": "static",
+            "value": "",
+            "width": 264,
+            "height": 160
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 10,
+            "color": "#FD5555",
+            "valueType": "dynamic",
+            "value": "image1",
+            "width": 244,
+            "height": 140
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 262,
+      "height": 160
+    },
+    "layer": 2,
+    "id": "redagentdeck-copy001",
+    "z": 22185,
+    "parent": "redagent9"
+  },
+  "llf4": {
+    "deck": "blueagentdeck-copy001",
+    "type": "card",
+    "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e6",
+    "id": "llf4",
+    "z": 45740,
+    "layer": 2,
+    "parent": "2jb7"
+  },
+  "2elx": {
+    "deck": "blueagentdeck-copy001",
+    "type": "card",
+    "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e7",
+    "id": "2elx",
+    "layer": 2,
+    "z": 254,
+    "parent": "blueagent9",
+    "x": 4,
+    "y": 4
+  },
+  "blueagent9": {
+    "type": "holder",
+    "x": 1731,
+    "y": 347,
+    "width": 270,
+    "height": 168,
+    "id": "blueagent9",
+    "classes": "transparent",
+    "z": 22186
+  },
+  "redagent9": {
+    "type": "holder",
+    "x": 1730,
+    "y": 541,
+    "id": "redagent9",
+    "width": 270,
+    "height": 168,
+    "classes": "transparent",
+    "z": 22187
+  },
+  "0v0h": {
+    "deck": "redagentdeck-copy001",
+    "type": "card",
+    "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e6",
+    "id": "0v0h",
+    "z": 45742,
+    "layer": 2,
+    "parent": "2jb7"
+  },
+  "9rj5": {
+    "deck": "redagentdeck-copy001",
+    "type": "card",
+    "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e7",
+    "id": "9rj5",
+    "z": 45739,
+    "layer": 2,
+    "parent": "2jb7"
+  },
+  "unneeded-agent": {
+    "type": "holder",
+    "x": 1731,
+    "y": 161,
+    "width": 270,
+    "height": 168,
+    "id": "unneeded-agent"
+  },
+  "0ppd": {
+    "type": "pile",
+    "width": 262,
+    "height": 160,
+    "id": "0ppd",
+    "z": 11086,
+    "parent": "redagent"
+  },
+  "zicy": {
+    "type": "pile",
+    "width": 262,
+    "height": 160,
+    "id": "zicy",
+    "z": 11098,
+    "parent": "noagent"
+  },
+  "cover": {
+    "image": "/assets/-1751844537_11436",
+    "id": "cover",
+    "z": 38484,
+    "x": 575,
+    "y": 874,
+    "height": 150,
+    "width": 271,
+    "movable": false,
+    "owner": []
+  },
+  "q62e": {
+    "type": "pile",
+    "parent": "blueagent",
+    "x": 4,
+    "y": 4,
+    "width": 262,
+    "height": 160,
+    "id": "q62e"
+  },
+  "36im": {
+    "image": "/assets/1679484369_416187",
+    "movable": false,
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "id": "36im"
+  },
+  "ufgf": {
+    "type": "label",
+    "text": "Painel de Controle",
+    "css": "font-size: 21px;font-family: courier new; color:#000000; font-weight: bold;",
+    "height": 50,
+    "width": 160,
+    "x": 1426,
+    "y": 797,
+    "z": 15277,
+    "id": "ufgf"
+  },
+  "_meta": {
+    "version": 3,
+    "info": {
+      "name": "Undercover",
+      "image": "/assets/2045601153_25796",
+      "rules": "",
+      "bgg": "",
+      "year": "2015",
+      "mode": "vs",
+      "time": "20",
+      "players": "4+",
+      "language": "BR",
+      "variant": "",
+      "attribution": "Word list by http://frequencylists.blogspot.com - usage allowed for non-commercial use: http://frequencylists.blogspot.com/2015/12/the-2000-most-frequent-german-nouns.html?showComment=1484153673875#c2670569270285286827\n\nCard graphics are from https://pixabay.com and are available for use under the Pixabay license.\n\nThe game layout and assets were created by https://www.reddit.com/user/Casbuild, https://www.reddit.com/user/ArnoldSmith86, and https://www.reddit.com/user/RaphaelAlvez and are released to the public domain by CC0."
+    }
+  },
+  "2jb7": {
+    "type": "pile",
+    "parent": "unneeded-agent",
+    "x": 4,
+    "y": 4,
+    "width": 262,
+    "height": 160,
+    "id": "2jb7"
+  }
+}

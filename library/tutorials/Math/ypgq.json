@@ -1,0 +1,239 @@
+{
+  "8fr3": {
+    "type": "label",
+    "text": "Math: Randomization",
+    "css": "font-size: 60px",
+    "height": 160,
+    "width": 1000,
+    "x": 280,
+    "z": 26392,
+    "id": "8fr3",
+    "y": 1
+  },
+  "_meta": {
+    "version": 3,
+    "info": {
+      "name": "Math",
+      "image": "/assets/2017839809_4407",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "",
+      "players": "1",
+      "language": "US",
+      "variant": "Randomization",
+      "attribution": ""
+    }
+  },
+  "i1bj": {
+    "id": "i1bj",
+    "x": 280,
+    "y": 95,
+    "z": 38,
+    "height": 50,
+    "css": "font-size: 20px; text-align:center ",
+    "text": "There are three functions that can be used to create random numbers.",
+    "width": 1000
+  },
+  "lr6y": {
+    "id": "lr6y",
+    "x": 704,
+    "y": 731,
+    "width": 50,
+    "z": 8,
+    "css": "font-size: 30px; ",
+    "text": "Output",
+    "height": 50
+  },
+  "outputstring": {
+    "type": "label",
+    "id": "outputstring",
+    "y": 780,
+    "width": 200,
+    "height": 100,
+    "z": 26449,
+    "css": "border: 2px dashed black; font-size:30px; color:black;text-align:right",
+    "x": 650,
+    "text": 45
+  },
+  "pc6t": {
+    "type": "button",
+    "clickRoutine": [
+      "var num1 = ${PROPERTY text OF atString1a}",
+      "var num2 = ${PROPERTY text OF atString1b}",
+      "var result =  randInt ${num1} ${num2}",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "outputstring"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${result}"
+      }
+    ],
+    "x": 117,
+    "y": 249,
+    "z": 298,
+    "id": "pc6t",
+    "css": "font-size: 20px; ",
+    "text": "randInt"
+  },
+  "0y6s": {
+    "type": "button",
+    "clickRoutine": [
+      "var num1 = ${PROPERTY text OF atString1a}",
+      "var num2 = ${PROPERTY text OF atString1b}",
+      "var result =  randRange ${num1} ${num2} 5",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "outputstring"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${result}"
+      }
+    ],
+    "x": 117,
+    "y": 465,
+    "z": 303,
+    "id": "0y6s",
+    "css": "font-size: 15px; ",
+    "text": "randRange"
+  },
+  "3e62": {
+    "type": "button",
+    "clickRoutine": [
+      "var num1 = ${PROPERTY text OF atString1a}",
+      "var num2 = ${PROPERTY text OF atString1b}",
+      "var result =  random",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "outputstring"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${result}"
+      }
+    ],
+    "x": 115,
+    "y": 675,
+    "z": 302,
+    "id": "3e62",
+    "css": "font-size: 20px; ",
+    "text": "random"
+  },
+  "atString1a": {
+    "type": "label",
+    "id": "atString1a",
+    "y": 200,
+    "height": 40,
+    "z": 26457,
+    "css": "background-color:white; border-style: solid; font-size: 20px",
+    "editable": true,
+    "x": 600,
+    "text": 5
+  },
+  "atString1b": {
+    "type": "label",
+    "id": "atString1b",
+    "x": 800,
+    "y": 200,
+    "height": 40,
+    "z": 26456,
+    "css": "background-color:white; border-style: solid;font-size:20px",
+    "editable": true,
+    "text": 55
+  },
+  "ci5x": {
+    "id": "ci5x",
+    "x": 210,
+    "y": 252,
+    "z": 42,
+    "height": 50,
+    "css": "font-size: 20px;",
+    "text": "'randInt' returns a random number between two numbers, inclusive of both the two stated numbers.  This function is easily created directly using the JSON editor. Simply place the cursor in the routine where the random function is desired and look for the grey button stating \"Expression: random\" and click on that button. Doing so will insert the following into the JSON: \"var random = randInt 1 10\".  This function will generate a random number between 1 and 10 (inclusive) and put the result in the variable 'random'.  You can easily change any of those values directly in the JSON.  The button on the left creates a random number between the two operands entered in the white text boxes.",
+    "width": 1200
+  },
+  "2io9": {
+    "id": "2io9",
+    "x": 210,
+    "y": 473,
+    "z": 41,
+    "height": 50,
+    "css": "font-size: 20px;",
+    "text": "'randRange' returns a random number between two numbers, including the starting point, but excluding the end point.  Optionally, the function takes a third operand that limits the return to a step increment (such as 2, 5, etc.). For example, the function \"var random = randRange 1 99 10\" will create a random number between 1 and 91 in increments of 10 such as 1, 11, 21, etc.).  The button on the left will create a random number between the two operands entered in the white text boxes and apply a step increment of 5.",
+    "width": 1200
+  },
+  "v1zu": {
+    "id": "v1zu",
+    "x": 210,
+    "y": 673,
+    "z": 41,
+    "height": 50,
+    "css": "font-size: 20px;",
+    "text": "'random' returns a random decimal number between 0 and 1, but not including 1 (so something like .9999999). The button on the left demonstrates that and does not depend on the numbers in the white text boxes.",
+    "width": 1200
+  },
+  "yqji": {
+    "type": "button",
+    "id": "yqji",
+    "x": 115,
+    "y": 889,
+    "z": 7,
+    "clickRoutine": [
+      "var myRandomFace = randInt 0 3",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "tiqk"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": "${myRandomFace}"
+      }
+    ],
+    "text": "Example"
+  },
+  "zn0f": {
+    "id": "zn0f",
+    "x": 209,
+    "y": 910,
+    "z": 44,
+    "height": 50,
+    "css": "font-size: 20px;",
+    "text": "Creates a random number between 0 and 3 and applies it to the activeFace of the checker to change its color.",
+    "width": 1200
+  },
+  "tiqk": {
+    "id": "tiqk",
+    "x": 16.25,
+    "y": 890.25,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 43,
+    "classes": "checkersPiece",
+    "color": "green",
+    "faces": [
+      {
+        "color": "red"
+      },
+      {
+        "color": "blue"
+      },
+      {
+        "color": "black"
+      },
+      {
+        "color": "green"
+      }
+    ]
+  }
+}

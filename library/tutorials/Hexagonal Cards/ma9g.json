@@ -1,0 +1,502 @@
+{
+  "rn4t": {
+    "type": "button",
+    "text": "find width",
+    "clickRoutine": [
+      "var COMPUTE = sqrt 3",
+      "var COMPUTE = ${COMPUTE} / 2",
+      "var COMPUTE = ${PROPERTY text OF Input Height} * ${COMPUTE}",
+      "var COMPUTE = toFixed ${COMPUTE} 3",
+      {
+        "func": "LABEL",
+        "label": "Input Width",
+        "value": "${COMPUTE}"
+      }
+    ],
+    "x": 231,
+    "y": 293,
+    "z": 152,
+    "id": "rn4t",
+    "width": 100,
+    "height": 40
+  },
+  "8fr3": {
+    "type": "label",
+    "text": "Hexagonal Cards:\nThe Basics",
+    "css": "font-size: 60px",
+    "height": 150,
+    "width": 1000,
+    "x": 287,
+    "y": -4,
+    "z": 66,
+    "id": "8fr3"
+  },
+  "7mra": {
+    "type": "label",
+    "text": "Width",
+    "x": 231,
+    "y": 212,
+    "z": 125,
+    "id": "7mra",
+    "width": 100
+  },
+  "qdg5": {
+    "type": "label",
+    "text": "Height",
+    "x": 118,
+    "y": 212,
+    "z": 145,
+    "id": "qdg5",
+    "width": 100
+  },
+  "rn4t-copy001-copy001": {
+    "type": "button",
+    "text": "=",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Input1"
+      },
+      {
+        "func": "GET",
+        "property": "text",
+        "variable": "Num1"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Input2"
+      },
+      {
+        "func": "GET",
+        "property": "text",
+        "variable": "Num2"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Operation"
+      },
+      {
+        "func": "GET",
+        "property": "text",
+        "variable": "maththis"
+      },
+      "var COMPUTE = ${Num1} 🧮maththis ${Num2}",
+      {
+        "func": "LABEL",
+        "label": "Result-copy001-copy001",
+        "significantDigits": 3,
+        "value": "${COMPUTE}"
+      }
+    ],
+    "x": 2298,
+    "y": 232,
+    "id": "rn4t-copy001-copy001",
+    "css": "font-size: 25px",
+    "z": 139
+  },
+  "Input1-copy001-copy001": {
+    "type": "label",
+    "css": "font-size: 25px; border: 2px solid blue",
+    "height": 35,
+    "width": 100,
+    "x": 1958,
+    "y": 256,
+    "id": "Input1-copy001-copy001",
+    "editable": true,
+    "text": 7.2,
+    "z": 140
+  },
+  "Input2-copy001-copy001": {
+    "type": "label",
+    "css": "font-size: 25px; border: 2px solid blue",
+    "height": 35,
+    "width": 100,
+    "x": 2179,
+    "y": 256,
+    "editable": true,
+    "id": "Input2-copy001-copy001",
+    "text": 1.7,
+    "z": 141
+  },
+  "Result-copy001-copy001": {
+    "type": "label",
+    "text": 8.9,
+    "css": "font-size: 25px",
+    "height": 35,
+    "width": 100,
+    "x": 2373,
+    "y": 256,
+    "id": "Result-copy001-copy001",
+    "z": 142
+  },
+  "Operation-copy001-copy001": {
+    "type": "label",
+    "css": "font-size: 25px; border: 2px solid red",
+    "height": 35,
+    "width": 70,
+    "x": 2085,
+    "y": 256,
+    "editable": true,
+    "id": "Operation-copy001-copy001",
+    "text": "+",
+    "z": 143
+  },
+  "Input Height": {
+    "type": "label",
+    "css": "font-size: 25px; border: 2px solid blue",
+    "height": 35,
+    "width": 100,
+    "x": 118,
+    "y": 249.5,
+    "z": 201,
+    "id": "Input Height",
+    "editable": true,
+    "text": 100
+  },
+  "Input Width": {
+    "type": "label",
+    "css": "font-size: 25px; border: 2px solid blue",
+    "height": 35,
+    "width": 100,
+    "x": 231,
+    "y": 248.5,
+    "z": 199,
+    "editable": true,
+    "id": "Input Width",
+    "text": 86.603
+  },
+  "9qqm": {
+    "type": "button",
+    "text": "find height",
+    "clickRoutine": [
+      "var COMPUTE = sqrt 3",
+      "var COMPUTE = ${COMPUTE} / 2",
+      "var COMPUTE = ${PROPERTY text OF Input Width} / ${COMPUTE}",
+      "var COMPUTE = toFixed ${COMPUTE} 3",
+      {
+        "func": "LABEL",
+        "label": "Input Height",
+        "value": "${COMPUTE}"
+      }
+    ],
+    "x": 118,
+    "y": 291,
+    "z": 200,
+    "id": "9qqm",
+    "width": 100,
+    "height": 40
+  },
+  "egfk": {
+    "image": "/assets/-563448493_4496",
+    "movable": false,
+    "width": 800,
+    "height": 500,
+    "layer": -4,
+    "id": "egfk",
+    "z": 1,
+    "x": 400,
+    "y": 250,
+    "rotation": 5760
+  },
+  "sgpg": {
+    "type": "button",
+    "text": "Rotate 60°",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "egfk"
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "relation": "+",
+        "value": 60
+      }
+    ],
+    "x": 1044,
+    "y": 401,
+    "z": 205,
+    "width": 100,
+    "height": 40,
+    "id": "sgpg"
+  },
+  "9h28": {
+    "type": "button",
+    "text": "Rotate 30°",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "egfk"
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "relation": "+",
+        "value": 30
+      }
+    ],
+    "x": 1045,
+    "y": 454,
+    "z": 207,
+    "width": 100,
+    "height": 40,
+    "id": "9h28"
+  },
+  "bhbl": {
+    "type": "label",
+    "text": "Haxegonal cards are just rectangle with just a hexagon visible.\n \nTo make them look even you need to keep a fixed proportion between the vetrex to vertex distance (diagonal or height in this tutorial) and the side to side distance (width in this tutorial).\n \nThe factor between the height and the width is (√3)/2 or roughly 0,866. Note that the height is also 2 times one side of the hexagon. The proofs for these are linked in the notes\n\n You can use the calculator above to find the size you need both for you file and widget. I recommend creating a file of 1000x866 as it keep pretty close to the right proportion. A better calculator is linked in the notes.",
+    "x": 62,
+    "y": 371.5,
+    "z": 214,
+    "id": "bhbl",
+    "width": 360,
+    "height": 503,
+    "css": "text-align:left"
+  },
+  "4o6p": {
+    "image": "/assets/-1489045045_265",
+    "id": "4o6p",
+    "z": 4,
+    "x": 1276,
+    "y": 630,
+    "rotation": 1620
+  },
+  "kn7q": {
+    "image": "/assets/699262405_283",
+    "id": "kn7q",
+    "z": 11,
+    "x": 1276,
+    "y": 455,
+    "rotation": 3240
+  },
+  "9gmf": {
+    "image": "/assets/-839650641_265",
+    "id": "9gmf",
+    "z": 2,
+    "x": 1276,
+    "y": 630,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "ck37": {
+    "image": "/assets/784109355_283",
+    "id": "ck37",
+    "z": 1,
+    "x": 1276,
+    "y": 455,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "1iwp": {
+    "image": "/assets/291346051_283",
+    "id": "1iwp",
+    "z": 9,
+    "x": 1276,
+    "y": 276,
+    "rotation": 2280
+  },
+  "mn5k": {
+    "image": "/assets/2093467574_283",
+    "id": "mn5k",
+    "z": 5,
+    "x": 1276,
+    "y": 276,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "sgpg-copy001": {
+    "type": "button",
+    "text": "Rotate 60°",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "1iwp"
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "relation": "+",
+        "value": 60
+      }
+    ],
+    "x": 1424,
+    "y": 280,
+    "width": 100,
+    "height": 40,
+    "id": "sgpg-copy001",
+    "z": 208
+  },
+  "9h28-copy001": {
+    "type": "button",
+    "text": "Rotate 30°",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "1iwp"
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "relation": "+",
+        "value": 30
+      }
+    ],
+    "x": 1424,
+    "y": 340,
+    "width": 100,
+    "height": 40,
+    "id": "9h28-copy001",
+    "z": 209
+  },
+  "sgpg-copy002": {
+    "type": "button",
+    "text": "Rotate 60°",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "kn7q"
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "relation": "+",
+        "value": 60
+      }
+    ],
+    "x": 1424,
+    "y": 456,
+    "width": 100,
+    "height": 40,
+    "id": "sgpg-copy002",
+    "z": 210
+  },
+  "9h28-copy002": {
+    "type": "button",
+    "text": "Rotate 30°",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "kn7q"
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "relation": "+",
+        "value": 30
+      }
+    ],
+    "x": 1424,
+    "y": 516,
+    "width": 100,
+    "height": 40,
+    "id": "9h28-copy002",
+    "z": 211
+  },
+  "sgpg-copy003": {
+    "type": "button",
+    "text": "Rotate 60°",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "4o6p"
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "relation": "+",
+        "value": 60
+      }
+    ],
+    "x": 1424,
+    "y": 630,
+    "width": 100,
+    "height": 40,
+    "id": "sgpg-copy003",
+    "z": 212
+  },
+  "9h28-copy003": {
+    "type": "button",
+    "text": "Rotate 30°",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "4o6p"
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "relation": "+",
+        "value": 30
+      }
+    ],
+    "x": 1424,
+    "y": 690,
+    "width": 100,
+    "height": 40,
+    "id": "9h28-copy003",
+    "z": 213
+  },
+  "5emq": {
+    "type": "label",
+    "text": "1 : 0.866",
+    "x": 1275,
+    "y": 248,
+    "z": 205,
+    "id": "5emq"
+  },
+  "6rzx": {
+    "type": "label",
+    "text": "1.2 : 1\n         1 : 0.83",
+    "x": 1263,
+    "y": 422,
+    "z": 208,
+    "id": "6rzx",
+    "width": 110,
+    "height": 46
+  },
+  "u79h": {
+    "type": "label",
+    "text": "1 : 1",
+    "x": 1275,
+    "y": 606,
+    "z": 210,
+    "id": "u79h"
+  },
+  "v1uu": {
+    "type": "label",
+    "text": "Some common proportions and how they behave in rotation",
+    "height": 71,
+    "width": 316,
+    "x": 1234,
+    "y": 196.5,
+    "z": 0,
+    "id": "v1uu"
+  },
+  "_meta": {
+    "version": 3,
+    "info": {
+      "name": "Hexagonal Cards",
+      "image": "/assets/-2133266205_8127",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "0",
+      "players": "1",
+      "language": "US",
+      "variant": "1) The Basics",
+      "attribution": "\nCalculator for hexagons: https://hexagoncalculator.apphb.com/\n\nGood reference guide:\nhttps://www.redblobgames.com/grids/hexagons/"
+    }
+  }
+}

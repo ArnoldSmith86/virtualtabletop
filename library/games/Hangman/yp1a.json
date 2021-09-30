@@ -1,0 +1,7108 @@
+{
+  "letterA": {
+    "type": "button",
+    "id": "letterA",
+    "x": 20,
+    "y": 891,
+    "width": 50,
+    "height": 50,
+    "z": 7,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "relation": "!"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "mainCheck"
+      },
+      {
+        "func": "SET",
+        "property": "letterGuess",
+        "value": "A"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "clickableChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY clickable}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": "grey"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "grey"
+          }
+        ]
+      }
+    ],
+    "css": "border-radius:0px;font-size:30px",
+    "letters": true,
+    "text": "A"
+  },
+  "letterB": {
+    "type": "button",
+    "id": "letterB",
+    "x": 80,
+    "y": 891,
+    "width": 50,
+    "height": 50,
+    "z": 7,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "relation": "!"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "mainCheck"
+      },
+      {
+        "func": "SET",
+        "property": "letterGuess",
+        "value": "B"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "clickableChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY clickable}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": "grey"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "grey"
+          }
+        ]
+      }
+    ],
+    "css": "border-radius:0px;font-size:30px",
+    "letters": true,
+    "text": "B"
+  },
+  "letterC": {
+    "type": "button",
+    "id": "letterC",
+    "y": 891,
+    "width": 50,
+    "height": 50,
+    "z": 7,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "relation": "!"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "mainCheck"
+      },
+      {
+        "func": "SET",
+        "property": "letterGuess",
+        "value": "C"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "clickableChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY clickable}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": "grey"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "grey"
+          }
+        ]
+      }
+    ],
+    "css": "border-radius:0px;font-size:30px",
+    "letters": true,
+    "x": 140,
+    "text": "C"
+  },
+  "buildGuess": {
+    "type": "button",
+    "id": "buildGuess",
+    "x": 500,
+    "y": 1200,
+    "z": 4065,
+    "clickRoutine": [
+      "var guessLength = ${PROPERTY guessLength}",
+      "var letterPos = 'char' + ${guessLength}",
+      "var theGuess = ${PROPERTY theGuess}",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${letterPos}"
+      },
+      {
+        "func": "GET",
+        "property": "text",
+        "variable": "letterGuess"
+      },
+      "var theGuess = ${theGuess} + ${letterGuess}",
+      "var guessLength = ${guessLength} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "guessLength",
+        "value": "${guessLength}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "theGuess",
+        "value": "${theGuess}"
+      }
+    ],
+    "text": "build guess",
+    "guessLength": 6,
+    "theGuess": "PEOPLE"
+  },
+  "char0": {
+    "id": "char0",
+    "y": 650,
+    "width": 80,
+    "height": 200,
+    "z": 27,
+    "css": "font-size: 80px; text-align:center ",
+    "image": "/assets/1750214487_335",
+    "text": " ",
+    "guesses": true,
+    "movable": false,
+    "movableInEdit": false,
+    "x": -500
+  },
+  "char1": {
+    "id": "char1",
+    "x": -500,
+    "y": 650,
+    "width": 80,
+    "height": 200,
+    "z": 28,
+    "css": "font-size: 80px; text-align:center ",
+    "image": "/assets/1750214487_335",
+    "text": " ",
+    "guesses": true,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "char2": {
+    "id": "char2",
+    "y": 650,
+    "width": 80,
+    "height": 200,
+    "z": 42,
+    "css": "font-size: 80px; text-align:center ",
+    "image": "/assets/1750214487_335",
+    "text": " ",
+    "guesses": true,
+    "movable": false,
+    "movableInEdit": false,
+    "x": -500
+  },
+  "char3": {
+    "id": "char3",
+    "x": -500,
+    "y": 650,
+    "width": 80,
+    "height": 200,
+    "z": 30,
+    "css": "font-size: 80px; text-align:center ",
+    "image": "/assets/1750214487_335",
+    "text": " ",
+    "guesses": true,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "char4": {
+    "id": "char4",
+    "x": -500,
+    "y": 650,
+    "width": 80,
+    "height": 200,
+    "z": 31,
+    "css": "font-size: 80px; text-align:center ",
+    "image": "/assets/1750214487_335",
+    "text": " ",
+    "guesses": true,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "char5": {
+    "id": "char5",
+    "x": -500,
+    "y": 650,
+    "width": 80,
+    "height": 200,
+    "z": 32,
+    "css": "font-size: 80px; text-align:center ",
+    "image": "/assets/1750214487_335",
+    "text": " ",
+    "guesses": true,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "checkGuess": {
+    "type": "button",
+    "id": "checkGuess",
+    "x": 400,
+    "y": 1200,
+    "z": 4064,
+    "clickRoutine": [
+      "var theWord = ${PROPERTY theWord}",
+      "var letterGuess = ${PROPERTY letterGuess}",
+      "var checkLength = ${PROPERTY checkLength}",
+      "var letterPos = 'char' + ${checkLength}",
+      "var letterCheck = ${theWord} charAt ${checkLength}",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${letterPos}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${letterGuess}",
+        "operand2": "${letterCheck}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "text",
+            "value": "${letterGuess}"
+          }
+        ]
+      },
+      "var checkLength = ${checkLength} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "checkLength",
+        "value": "${checkLength}"
+      }
+    ],
+    "text": "check guess",
+    "letterGuess": "L",
+    "theWord": "PEOPLE",
+    "checkLength": 6
+  },
+  "mainCheck": {
+    "type": "button",
+    "id": "mainCheck",
+    "x": 100,
+    "y": 1200,
+    "z": 4056,
+    "clickRoutine": [
+      "var theWord = ${PROPERTY theWord}",
+      "var letterGuess = ${PROPERTY letterGuess}",
+      "var theLength = ${theWord} length",
+      "var inWord = ${theWord} includes ${letterGuess}",
+      {
+        "func": "IF",
+        "condition": "${inWord}",
+        "thenRoutine": [
+          {
+            "Note": "If the guess is correct, then click the button that displays the letters.",
+            "func": "SELECT",
+            "property": "id",
+            "value": "checkGuess"
+          },
+          {
+            "func": "SET",
+            "property": "checkLength",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "property": "letterGuess",
+            "value": "${letterGuess}"
+          },
+          {
+            "func": "SET",
+            "property": "theWord",
+            "value": "${theWord}"
+          },
+          {
+            "func": "CLICK",
+            "count": "${theLength}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "Note": "If the guess is not correct, then click the button that builds the image and checks for the game being over.",
+            "func": "SELECT",
+            "property": "id",
+            "value": "buildHangman"
+          },
+          {
+            "func": "SET",
+            "property": "theLength",
+            "value": "${theLength}"
+          },
+          {
+            "func": "CLICK"
+          }
+        ]
+      },
+      {
+        "Note": "This checks the entire guess to see if it is correct and then sets color to green."
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "buildGuess"
+      },
+      {
+        "func": "SET",
+        "property": "guessLength",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "property": "theGuess",
+        "value": ""
+      },
+      {
+        "func": "CLICK",
+        "count": "${theLength}"
+      },
+      {
+        "func": "GET",
+        "property": "theGuess",
+        "variable": "theGuess"
+      },
+      {
+        "func": "IF",
+        "operand1": "${theGuess}",
+        "operand2": "${theWord}",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "letters",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "property": "clickable",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "property": "backgroundColor",
+            "value": "green"
+          },
+          {
+            "func": "SET",
+            "property": "borderColor",
+            "value": "green"
+          }
+        ]
+      },
+      "var gameOver = ${PROPERTY gameOver}",
+      {
+        "Note": "If the game is over, sets the colors to red.",
+        "func": "IF",
+        "operand1": "${gameOver}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "letters",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "property": "clickable",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "property": "backgroundColor",
+            "value": "red"
+          },
+          {
+            "func": "SET",
+            "property": "borderColor",
+            "value": "red"
+          }
+        ]
+      }
+    ],
+    "letterGuess": "L",
+    "text": "main check",
+    "theWord": "FISH",
+    "gameOver": false
+  },
+  "letterD": {
+    "type": "button",
+    "id": "letterD",
+    "x": 200,
+    "y": 891,
+    "width": 50,
+    "height": 50,
+    "z": 7,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "relation": "!"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "mainCheck"
+      },
+      {
+        "func": "SET",
+        "property": "letterGuess",
+        "value": "D"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "clickableChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY clickable}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": "grey"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "grey"
+          }
+        ]
+      }
+    ],
+    "css": "border-radius:0px;font-size:30px",
+    "letters": true,
+    "text": "D"
+  },
+  "letterE": {
+    "type": "button",
+    "id": "letterE",
+    "x": 260,
+    "y": 891,
+    "width": 50,
+    "height": 50,
+    "z": 7,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "relation": "!"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "mainCheck"
+      },
+      {
+        "func": "SET",
+        "property": "letterGuess",
+        "value": "E"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "clickableChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY clickable}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": "grey"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "grey"
+          }
+        ]
+      }
+    ],
+    "css": "border-radius:0px;font-size:30px",
+    "letters": true,
+    "text": "E"
+  },
+  "letterF": {
+    "type": "button",
+    "id": "letterF",
+    "y": 891,
+    "width": 50,
+    "height": 50,
+    "z": 7,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "relation": "!"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "mainCheck"
+      },
+      {
+        "func": "SET",
+        "property": "letterGuess",
+        "value": "F"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "clickableChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY clickable}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": "grey"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "grey"
+          }
+        ]
+      }
+    ],
+    "css": "border-radius:0px;font-size:30px",
+    "letters": true,
+    "x": 320,
+    "text": "F"
+  },
+  "letterG": {
+    "type": "button",
+    "id": "letterG",
+    "x": 380,
+    "y": 891,
+    "width": 50,
+    "height": 50,
+    "z": 7,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "relation": "!"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "mainCheck"
+      },
+      {
+        "func": "SET",
+        "property": "letterGuess",
+        "value": "G"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "clickableChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY clickable}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": "grey"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "grey"
+          }
+        ]
+      }
+    ],
+    "css": "border-radius:0px;font-size:30px",
+    "letters": true,
+    "text": "G"
+  },
+  "letterH": {
+    "type": "button",
+    "id": "letterH",
+    "y": 891,
+    "width": 50,
+    "height": 50,
+    "z": 7,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "relation": "!"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "mainCheck"
+      },
+      {
+        "func": "SET",
+        "property": "letterGuess",
+        "value": "H"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "clickableChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY clickable}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": "grey"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "grey"
+          }
+        ]
+      }
+    ],
+    "css": "border-radius:0px;font-size:30px",
+    "letters": true,
+    "x": 440,
+    "text": "H"
+  },
+  "letterI": {
+    "type": "button",
+    "id": "letterI",
+    "y": 891,
+    "width": 50,
+    "height": 50,
+    "z": 7,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "relation": "!"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "mainCheck"
+      },
+      {
+        "func": "SET",
+        "property": "letterGuess",
+        "value": "I"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "clickableChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY clickable}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": "grey"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "grey"
+          }
+        ]
+      }
+    ],
+    "css": "border-radius:0px;font-size:30px",
+    "letters": true,
+    "x": 500,
+    "text": "I"
+  },
+  "letter J": {
+    "type": "button",
+    "id": "letter J",
+    "x": 560,
+    "y": 891,
+    "width": 50,
+    "height": 50,
+    "z": 7,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "relation": "!"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "mainCheck"
+      },
+      {
+        "func": "SET",
+        "property": "letterGuess",
+        "value": "J"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "clickableChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY clickable}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": "grey"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "grey"
+          }
+        ]
+      }
+    ],
+    "css": "border-radius:0px;font-size:30px",
+    "letters": true,
+    "text": "J"
+  },
+  "letterK": {
+    "type": "button",
+    "id": "letterK",
+    "y": 891,
+    "width": 50,
+    "height": 50,
+    "z": 7,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "relation": "!"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "mainCheck"
+      },
+      {
+        "func": "SET",
+        "property": "letterGuess",
+        "value": "K"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "clickableChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY clickable}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": "grey"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "grey"
+          }
+        ]
+      }
+    ],
+    "css": "border-radius:0px;font-size:30px",
+    "letters": true,
+    "x": 620,
+    "text": "K"
+  },
+  "letterL": {
+    "type": "button",
+    "id": "letterL",
+    "x": 680,
+    "y": 891,
+    "width": 50,
+    "height": 50,
+    "z": 7,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "relation": "!"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "mainCheck"
+      },
+      {
+        "func": "SET",
+        "property": "letterGuess",
+        "value": "L"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "clickableChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY clickable}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": "grey"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "grey"
+          }
+        ]
+      }
+    ],
+    "css": "border-radius:0px;font-size:30px",
+    "letters": true,
+    "text": "L"
+  },
+  "letterM": {
+    "type": "button",
+    "id": "letterM",
+    "y": 891,
+    "width": 50,
+    "height": 50,
+    "z": 7,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "relation": "!"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "mainCheck"
+      },
+      {
+        "func": "SET",
+        "property": "letterGuess",
+        "value": "M"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "clickableChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY clickable}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": "grey"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "grey"
+          }
+        ]
+      }
+    ],
+    "css": "border-radius:0px;font-size:30px",
+    "letters": true,
+    "x": 740,
+    "text": "M"
+  },
+  "letterN": {
+    "type": "button",
+    "id": "letterN",
+    "y": 891,
+    "width": 50,
+    "height": 50,
+    "z": 7,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "relation": "!"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "mainCheck"
+      },
+      {
+        "func": "SET",
+        "property": "letterGuess",
+        "value": "N"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "clickableChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY clickable}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": "grey"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "grey"
+          }
+        ]
+      }
+    ],
+    "css": "border-radius:0px;font-size:30px",
+    "letters": true,
+    "x": 800,
+    "text": "N"
+  },
+  "letterO": {
+    "type": "button",
+    "id": "letterO",
+    "x": 860,
+    "y": 891,
+    "width": 50,
+    "height": 50,
+    "z": 7,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "relation": "!"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "mainCheck"
+      },
+      {
+        "func": "SET",
+        "property": "letterGuess",
+        "value": "O"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "clickableChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY clickable}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": "grey"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "grey"
+          }
+        ]
+      }
+    ],
+    "css": "border-radius:0px;font-size:30px",
+    "letters": true,
+    "text": "O"
+  },
+  "letterP": {
+    "type": "button",
+    "id": "letterP",
+    "y": 891,
+    "width": 50,
+    "height": 50,
+    "z": 7,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "relation": "!"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "mainCheck"
+      },
+      {
+        "func": "SET",
+        "property": "letterGuess",
+        "value": "P"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "clickableChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY clickable}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": "grey"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "grey"
+          }
+        ]
+      }
+    ],
+    "css": "border-radius:0px;font-size:30px",
+    "letters": true,
+    "x": 920,
+    "text": "P"
+  },
+  "letterQ": {
+    "type": "button",
+    "id": "letterQ",
+    "x": 980,
+    "y": 891,
+    "width": 50,
+    "height": 50,
+    "z": 7,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "relation": "!"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "mainCheck"
+      },
+      {
+        "func": "SET",
+        "property": "letterGuess",
+        "value": "Q"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "clickableChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY clickable}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": "grey"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "grey"
+          }
+        ]
+      }
+    ],
+    "css": "border-radius:0px;font-size:30px",
+    "letters": true,
+    "text": "Q"
+  },
+  "letterR": {
+    "type": "button",
+    "id": "letterR",
+    "y": 891,
+    "width": 50,
+    "height": 50,
+    "z": 7,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "relation": "!"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "mainCheck"
+      },
+      {
+        "func": "SET",
+        "property": "letterGuess",
+        "value": "R"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "clickableChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY clickable}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": "grey"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "grey"
+          }
+        ]
+      }
+    ],
+    "css": "border-radius:0px;font-size:30px",
+    "letters": true,
+    "x": 1040,
+    "text": "R"
+  },
+  "letterS": {
+    "type": "button",
+    "id": "letterS",
+    "x": 1100,
+    "y": 891,
+    "width": 50,
+    "height": 50,
+    "z": 7,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "relation": "!"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "mainCheck"
+      },
+      {
+        "func": "SET",
+        "property": "letterGuess",
+        "value": "S"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "clickableChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY clickable}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": "grey"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "grey"
+          }
+        ]
+      }
+    ],
+    "css": "border-radius:0px;font-size:30px",
+    "letters": true,
+    "text": "S"
+  },
+  "letterT": {
+    "type": "button",
+    "id": "letterT",
+    "x": 1160,
+    "y": 891,
+    "width": 50,
+    "height": 50,
+    "z": 7,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "relation": "!"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "mainCheck"
+      },
+      {
+        "func": "SET",
+        "property": "letterGuess",
+        "value": "T"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "clickableChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY clickable}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": "grey"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "grey"
+          }
+        ]
+      }
+    ],
+    "css": "border-radius:0px;font-size:30px",
+    "letters": true,
+    "text": "T"
+  },
+  "letterU": {
+    "type": "button",
+    "id": "letterU",
+    "x": 1220,
+    "y": 891,
+    "width": 50,
+    "height": 50,
+    "z": 7,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "relation": "!"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "mainCheck"
+      },
+      {
+        "func": "SET",
+        "property": "letterGuess",
+        "value": "U"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "clickableChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY clickable}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": "grey"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "grey"
+          }
+        ]
+      }
+    ],
+    "css": "border-radius:0px;font-size:30px",
+    "letters": true,
+    "text": "U"
+  },
+  "letterV": {
+    "type": "button",
+    "id": "letterV",
+    "x": 1280,
+    "y": 891,
+    "width": 50,
+    "height": 50,
+    "z": 7,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "relation": "!"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "mainCheck"
+      },
+      {
+        "func": "SET",
+        "property": "letterGuess",
+        "value": "V"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "clickableChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY clickable}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": "grey"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "grey"
+          }
+        ]
+      }
+    ],
+    "css": "border-radius:0px;font-size:30px",
+    "letters": true,
+    "text": "V"
+  },
+  "letterW": {
+    "type": "button",
+    "id": "letterW",
+    "x": 1340,
+    "y": 891,
+    "width": 50,
+    "height": 50,
+    "z": 7,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "relation": "!"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "mainCheck"
+      },
+      {
+        "func": "SET",
+        "property": "letterGuess",
+        "value": "W"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "clickableChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY clickable}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": "grey"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "grey"
+          }
+        ]
+      }
+    ],
+    "css": "border-radius:0px;font-size:30px",
+    "letters": true,
+    "text": "W"
+  },
+  "letterX": {
+    "type": "button",
+    "id": "letterX",
+    "x": 1400,
+    "y": 891,
+    "width": 50,
+    "height": 50,
+    "z": 7,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "relation": "!"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "mainCheck"
+      },
+      {
+        "func": "SET",
+        "property": "letterGuess",
+        "value": "X"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "clickableChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY clickable}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": "grey"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "grey"
+          }
+        ]
+      }
+    ],
+    "css": "border-radius:0px;font-size:30px",
+    "letters": true,
+    "text": "X"
+  },
+  "letterY": {
+    "type": "button",
+    "id": "letterY",
+    "x": 1460,
+    "y": 891,
+    "width": 50,
+    "height": 50,
+    "z": 7,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "relation": "!"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "mainCheck"
+      },
+      {
+        "func": "SET",
+        "property": "letterGuess",
+        "value": "Y"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "clickableChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY clickable}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": "grey"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "grey"
+          }
+        ]
+      }
+    ],
+    "css": "border-radius:0px;font-size:30px",
+    "letters": true,
+    "text": "Y"
+  },
+  "letterZ": {
+    "type": "button",
+    "id": "letterZ",
+    "x": 1520,
+    "y": 891,
+    "width": 50,
+    "height": 50,
+    "z": 7,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "relation": "!"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "mainCheck"
+      },
+      {
+        "func": "SET",
+        "property": "letterGuess",
+        "value": "Z"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "clickableChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY clickable}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "backgroundColor",
+            "value": "grey"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "borderColor",
+            "value": "grey"
+          }
+        ]
+      }
+    ],
+    "css": "border-radius:0px;font-size:30px",
+    "letters": true,
+    "text": "Z"
+  },
+  "char6": {
+    "id": "char6",
+    "x": -500,
+    "y": 650,
+    "width": 80,
+    "height": 200,
+    "z": 33,
+    "css": "font-size: 80px; text-align:center ",
+    "image": "/assets/1750214487_335",
+    "text": " ",
+    "guesses": true,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "char7": {
+    "id": "char7",
+    "x": -500,
+    "y": 650,
+    "width": 80,
+    "height": 200,
+    "z": 43,
+    "css": "font-size: 80px; text-align:center ",
+    "image": "/assets/1750214487_335",
+    "text": " ",
+    "guesses": true,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "char8": {
+    "id": "char8",
+    "x": -500,
+    "y": 650,
+    "width": 80,
+    "height": 200,
+    "z": 35,
+    "css": "font-size: 80px; text-align:center ",
+    "image": "/assets/1750214487_335",
+    "text": " ",
+    "guesses": true,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "char9": {
+    "id": "char9",
+    "x": -500,
+    "y": 650,
+    "width": 80,
+    "height": 200,
+    "z": 36,
+    "css": "font-size: 80px; text-align:center ",
+    "image": "/assets/1750214487_335",
+    "text": " ",
+    "guesses": true,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "char10": {
+    "id": "char10",
+    "x": -500,
+    "y": 650,
+    "width": 80,
+    "height": 200,
+    "z": 37,
+    "css": "font-size: 80px; text-align:center ",
+    "image": "/assets/1750214487_335",
+    "text": " ",
+    "guesses": true,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "char11": {
+    "id": "char11",
+    "x": -500,
+    "y": 650,
+    "width": 80,
+    "height": 200,
+    "z": 38,
+    "css": "font-size: 80px; text-align:center ",
+    "image": "/assets/1750214487_335",
+    "text": " ",
+    "guesses": true,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "char12": {
+    "id": "char12",
+    "x": -500,
+    "y": 650,
+    "width": 80,
+    "height": 200,
+    "z": 39,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 80px; text-align:center ",
+    "guesses": true,
+    "image": "/assets/1750214487_335",
+    "text": " "
+  },
+  "char13": {
+    "id": "char13",
+    "x": -500,
+    "y": 650,
+    "width": 80,
+    "height": 200,
+    "z": 40,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 80px; text-align:center ",
+    "guesses": true,
+    "image": "/assets/1750214487_335",
+    "text": " "
+  },
+  "char14": {
+    "id": "char14",
+    "x": -500,
+    "y": 650,
+    "width": 80,
+    "height": 200,
+    "z": 41,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 80px; text-align:center ",
+    "guesses": true,
+    "image": "/assets/1750214487_335",
+    "text": " "
+  },
+  "wrong1a": {
+    "type": "holder",
+    "id": "wrong1a",
+    "width": 10,
+    "height": 500,
+    "z": 4,
+    "css": "background: black; border:none ",
+    "parent": "wrong1"
+  },
+  "wrong1b": {
+    "type": "holder",
+    "id": "wrong1b",
+    "width": 300,
+    "height": 10,
+    "z": 5,
+    "css": "background: black; border:none ",
+    "parent": "wrong1"
+  },
+  "wrong2": {
+    "type": "holder",
+    "id": "wrong2",
+    "x": -500,
+    "y": 150,
+    "width": 70,
+    "height": 70,
+    "z": 8,
+    "css": "background: transparent; border-radius:50%; border-width:9px; border-color:black",
+    "hangman": true
+  },
+  "wrong3": {
+    "type": "holder",
+    "id": "wrong3",
+    "x": -500,
+    "y": 220,
+    "width": 10,
+    "height": 200,
+    "z": 9,
+    "css": "background: black; border:none ",
+    "hangman": true
+  },
+  "wrong4": {
+    "type": "holder",
+    "id": "wrong4",
+    "x": -500,
+    "y": 265,
+    "width": 100,
+    "height": 10,
+    "rotation": 45,
+    "z": 10,
+    "css": "background: black; border:none ",
+    "hangman": true
+  },
+  "wrong5": {
+    "type": "holder",
+    "id": "wrong5",
+    "x": -500,
+    "y": 265,
+    "width": 100,
+    "height": 10,
+    "rotation": 135,
+    "z": 12,
+    "css": "background: black; border:none",
+    "hangman": true
+  },
+  "wrong6": {
+    "type": "holder",
+    "id": "wrong6",
+    "x": -500,
+    "y": 445,
+    "width": 100,
+    "height": 10,
+    "rotation": 135,
+    "z": 13,
+    "css": "background: black; border:none ",
+    "hangman": true
+  },
+  "wrong7": {
+    "type": "holder",
+    "id": "wrong7",
+    "x": -500,
+    "y": 445,
+    "width": 100,
+    "height": 10,
+    "rotation": 45,
+    "z": 14,
+    "css": "background: black; border:none",
+    "hangman": true
+  },
+  "wrong1": {
+    "type": "holder",
+    "id": "wrong1",
+    "x": -500,
+    "width": 10,
+    "height": 10,
+    "z": 17,
+    "y": 50,
+    "hangman": true
+  },
+  "buildHangman": {
+    "type": "button",
+    "id": "buildHangman",
+    "x": 600,
+    "y": 1200,
+    "z": 4066,
+    "clickRoutine": [
+      "var wrongNum = ${PROPERTY wrongNum}",
+      "var wrongNumPos = ${wrongNum} - 1",
+      "var drawing = 'wrong' + ${wrongNum}",
+      "var xArray = ${PROPERTY xArray}",
+      "var theLength = ${PROPERTY theLength}",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${drawing}"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": "${xArray.$wrongNumPos}"
+      },
+      "var wrongNum = ${wrongNum} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "wrongNum",
+        "value": "${wrongNum}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${wrongNum}",
+        "operand2": 9,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "showWord"
+          },
+          {
+            "func": "SET",
+            "property": "currentNum",
+            "value": 0
+          },
+          {
+            "func": "CLICK",
+            "count": "${theLength}"
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "mainCheck"
+          },
+          {
+            "func": "SET",
+            "property": "gameOver",
+            "value": true
+          }
+        ]
+      }
+    ],
+    "text": "build hangman",
+    "xArray": [
+      650,
+      915,
+      945,
+      865,
+      935,
+      865,
+      935,
+      945
+    ],
+    "wrongNum": 1,
+    "theLength": 7
+  },
+  "wrong8": {
+    "type": "holder",
+    "id": "wrong8",
+    "x": -500,
+    "y": 50,
+    "width": 10,
+    "height": 100,
+    "z": 15,
+    "css": "background: black; border:none ",
+    "hangman": true
+  },
+  "reset": {
+    "type": "button",
+    "id": "reset",
+    "x": 1545,
+    "y": 5,
+    "z": 34,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "letters",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "clickable",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "property": "guesses",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": " "
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "buildHangman"
+      },
+      {
+        "func": "SET",
+        "property": "wrongNum",
+        "value": 1
+      },
+      {
+        "func": "SELECT",
+        "property": "hangman",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": -500
+      },
+      {
+        "func": "SELECT",
+        "property": "guesses",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": -500
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "mainCheck"
+      },
+      {
+        "func": "SET",
+        "property": "gameOver",
+        "value": false
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "1Pbtn"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 700
+      },
+      "var 1Player = ${PROPERTY 1Player}",
+      {
+        "func": "IF",
+        "condition": "${1Player}",
+        "thenRoutine": [
+          {
+            "func": "CLICK"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "2Pbtn"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 700
+      },
+      "var 2Player = ${PROPERTY 2Player}",
+      {
+        "func": "IF",
+        "condition": "${2Player}",
+        "thenRoutine": [
+          {
+            "func": "CLICK"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${1Player}",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "2Pbtn"
+          },
+          {
+            "func": "SET",
+            "property": "x",
+            "value": -500
+          }
+        ]
+      }
+    ],
+    "color": "white",
+    "css": "background-size: 80%; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
+    "image": "/assets/1342248376_1383",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "width": 45,
+    "height": 45,
+    "2Player": true,
+    "1Player": false
+  },
+  "_meta": {
+    "version": 3,
+    "info": {
+      "name": "Hangman",
+      "image": "/assets/1987339207_48902",
+      "rules": "https://www.ultraboardgames.com/hangman/game-rules.php",
+      "bgg": "",
+      "year": "1976",
+      "mode": "solo; vs",
+      "time": "5-10",
+      "players": "1-8",
+      "language": "BR",
+      "variant": "Portuguese",
+      "attribution": "The room design, library image, and all game elements (except for the chat system) are by LawDawg96 and are released to the Public Domain by CC0.  Portuguese word list provided by RaphaelAlvez.\n\nThe chat system and an explanation of how to include it in any room are on the GitHub wiki."
+    }
+  },
+  "buildBlanks": {
+    "type": "button",
+    "text": "build blanks",
+    "clickRoutine": [
+      "var theLength = ${PROPERTY theLength}",
+      "var blankPos = ${PROPERTY blankPos}",
+      "var startPos = ${blankPos.$theLength}",
+      "var currentNum = ${PROPERTY currentNum}",
+      "var currentBlank = 'char' + ${currentNum}",
+      "var incPos = ${currentNum} * 105",
+      "var currentPos = ${startPos} + ${incPos}",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${currentBlank}"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": "${currentPos}"
+      },
+      "var currentNum = ${currentNum} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "currentNum",
+        "value": "${currentNum}"
+      }
+    ],
+    "x": 300,
+    "y": 1200,
+    "z": 4063,
+    "id": "buildBlanks",
+    "blankPos": [
+      0,
+      0,
+      0,
+      655,
+      550,
+      550,
+      445,
+      445,
+      340,
+      340,
+      235,
+      235,
+      130,
+      130,
+      25,
+      25
+    ],
+    "theLength": 4,
+    "currentNum": 4
+  },
+  "getWord": {
+    "type": "button",
+    "id": "getWord",
+    "x": 200,
+    "y": 1200,
+    "z": 4062,
+    "clickRoutine": [
+      "var theWord = ${PROPERTY wordList}",
+      "var arrayLength = ${theWord} length",
+      "var random = randInt 0 ${arrayLength}",
+      "var theWord = ${theWord.$random}",
+      "var theWord = ${theWord} toUpperCase",
+      "var theLength = ${theWord} length",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "buildBlanks"
+      },
+      {
+        "func": "SET",
+        "property": "theLength",
+        "value": "${theLength}"
+      },
+      {
+        "func": "SET",
+        "property": "currentNum",
+        "value": 0
+      },
+      {
+        "func": "CLICK",
+        "count": "${theLength}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "mainCheck"
+      },
+      {
+        "func": "SET",
+        "property": "theWord",
+        "value": "${theWord}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "showWord"
+      },
+      {
+        "func": "SET",
+        "property": "theWord",
+        "value": "${theWord}"
+      },
+      {
+        "func": "SET",
+        "property": "theLength",
+        "value": "${theLength}"
+      }
+    ],
+    "wordList": [
+      "abandono",
+      "abdutor",
+      "acidez",
+      "ativo",
+      "arquivo",
+      "eternidade",
+      "tarde",
+      "agricultura",
+      "assessor",
+      "beco",
+      "anistia",
+      "amor",
+      "aristocracia",
+      "asfalto",
+      "abacate",
+      "traseiro",
+      "banana",
+      "bracelete",
+      "banquete",
+      "barbeiro",
+      "base",
+      "crente",
+      "atracar",
+      "bloqueio",
+      "reserva",
+      "limite",
+      "arco",
+      "tigela",
+      "brilho",
+      "bolha",
+      "buckeye",
+      "despesas",
+      "explodido",
+      "gabinete",
+      "campanha",
+      "bengala",
+      "marquise",
+      "capeamento",
+      "capturar",
+      "quilate",
+      "transporte",
+      "escultura",
+      "cuidado",
+      "celebridade",
+      "centauro",
+      "canal",
+      "personagem",
+      "chocolate",
+      "sufocador",
+      "cronologia",
+      "mandril",
+      "tinido",
+      "moita",
+      "treinador",
+      "revestimento",
+      "companheiro",
+      "composto",
+      "interesse",
+      "prestidigitador",
+      "contorno",
+      "casal",
+      "curso",
+      "tribunal",
+      "cubo",
+      "moeda",
+      "personalizadas",
+      "ciclo",
+      "lidando",
+      "conceber",
+      "ditado",
+      "dieta",
+      "desordem",
+      "descortesia",
+      "deslocamento",
+      "desviar",
+      "vestir",
+      "sonhador",
+      "secador",
+      "dirigir",
+      "baba",
+      "ema",
+      "final",
+      "energizador",
+      "enigma",
+      "resumo",
+      "despesa",
+      "expletivo",
+      "chique",
+      "culpa",
+      "fauna",
+      "companheiro",
+      "florista",
+      "viaduto",
+      "pressentimento",
+      "congelar",
+      "plenitude",
+      "galvanizador",
+      "plissado",
+      "generosidade",
+      "cinto",
+      "menina",
+      "dando",
+      "ourives",
+      "grupo",
+      "parada",
+      "aproveitar",
+      "pressa",
+      "mescla",
+      "leme",
+      "marcador",
+      "vaia",
+      "viveiro",
+      "eixo",
+      "gelo",
+      "ideia",
+      "imparidade",
+      "imperativo",
+      "impossibilidade",
+      "informando",
+      "instabilidade",
+      "passar roupa",
+      "matando",
+      "reino",
+      "kiwi",
+      "prodigalidade",
+      "letargia",
+      "ninhada",
+      "carregando",
+      "lagosta",
+      "amor",
+      "baixa",
+      "sorte",
+      "mecânico",
+      "bolor",
+      "bocado",
+      "motilidade",
+      "movimento",
+      "mula",
+      "focinho",
+      "guardanapo",
+      "nectarina",
+      "rouxinol",
+      "orquestra",
+      "ostracismo",
+      "popa",
+      "pacifismo",
+      "papel",
+      "papel",
+      "mascate",
+      "percentagem",
+      "personalidade",
+      "fantasma",
+      "salmoura",
+      "piloto",
+      "arado",
+      "apontar",
+      "potencial",
+      "precessão",
+      "presidente",
+      "aperte",
+      "preventivo",
+      "filhote",
+      "aluno",
+      "quantidade",
+      "tasneira",
+      "corrida",
+      "raridade",
+      "realista",
+      "reciprocidade",
+      "lazer",
+      "robe",
+      "raiz",
+      "rounder",
+      "fila",
+      "sabre",
+      "pires",
+      "serraria",
+      "escaldadura",
+      "cetro",
+      "vidente",
+      "sensibilidade",
+      "serpente",
+      "sacudindo",
+      "vergonha",
+      "envio",
+      "mostrar",
+      "derrapagem",
+      "sentado",
+      "estigma",
+      "tristeza",
+      "falando",
+      "esquadra",
+      "estabilidade",
+      "adesivo",
+      "estoque",
+      "costa",
+      "estranheza",
+      "onda",
+      "rua",
+      "alongamento",
+      "rechear",
+      "toco",
+      "suspeito",
+      "adoçante",
+      "cauda",
+      "territorial",
+      "texto",
+      "espessura",
+      "gamela",
+      "penacho",
+      "superior",
+      "variedade",
+      "veterinario",
+      "rede",
+      "peso",
+      "sussurrar",
+      "vento",
+      "cancelamento",
+      "maravilha",
+      "funcionamento"
+    ],
+    "text": "get word"
+  },
+  "showWord": {
+    "type": "button",
+    "id": "showWord",
+    "x": 700,
+    "y": 1200,
+    "z": 4067,
+    "clickRoutine": [
+      "var theLength = ${PROPERTY theLength}",
+      "var currentNum = ${PROPERTY currentNum}",
+      "var fillBlank = 'char' + ${currentNum}",
+      "var theWord = ${PROPERTY theWord}",
+      "var currentLetter = ${theWord.$currentNum}",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${fillBlank}"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${currentLetter}"
+      },
+      "var currentNum = ${currentNum} + 1",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "currentNum",
+        "value": "${currentNum}"
+      }
+    ],
+    "theLength": 4,
+    "text": "show word",
+    "theWord": "FISH",
+    "currentNum": 7
+  },
+  "1Pbtn": {
+    "type": "button",
+    "id": "1Pbtn",
+    "width": 200,
+    "z": 4054,
+    "movable": true,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "getWord"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "x",
+        "value": -500
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "reset"
+      },
+      {
+        "func": "SET",
+        "property": "1Player",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "2Player",
+        "value": false
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "2Pbtn"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": -500
+      }
+    ],
+    "css": "border-radius: 5px;box-shadow: 12px 12px 5px grey;font-size:30px",
+    "text": "1 Player",
+    "x": 700,
+    "y": 150
+  },
+  "2Pbtn": {
+    "type": "button",
+    "id": "2Pbtn",
+    "x": 700,
+    "y": 348,
+    "width": 200,
+    "z": 4069,
+    "movable": true,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Enter word...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "The other players cannot see what you are typing. The word you enter will automatically be converted to all caps. Words should be 3 - 15 letters long. Spaces are not allowed."
+          },
+          {
+            "type": "string",
+            "label": "Enter word",
+            "variable": "theWord"
+          }
+        ]
+      },
+      "var theWord = ${theWord} toUpperCase",
+      "var theLength = ${theWord} length",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "buildBlanks"
+      },
+      {
+        "func": "SET",
+        "property": "theLength",
+        "value": "${theLength}"
+      },
+      {
+        "func": "SET",
+        "property": "currentNum",
+        "value": 0
+      },
+      {
+        "func": "CLICK",
+        "count": "${theLength}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "mainCheck"
+      },
+      {
+        "func": "SET",
+        "property": "theWord",
+        "value": "${theWord}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "showWord"
+      },
+      {
+        "func": "SET",
+        "property": "theWord",
+        "value": "${theWord}"
+      },
+      {
+        "func": "SET",
+        "property": "theLength",
+        "value": "${theLength}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "x",
+        "value": -500
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "reset"
+      },
+      {
+        "func": "SET",
+        "property": "2Player",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "1Player",
+        "value": false
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "1Pbtn"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": -500
+      }
+    ],
+    "css": "border-radius: 5px;box-shadow: 12px 12px 5px grey;font-size:30px",
+    "text": "Multiplayer (Enter Word)"
+  },
+  "qdzl": {
+    "text": "For multi-player version, one player types in a word for others to guess. Only this player will see the word as it is typed. To play again, the person who presses the reset button will enter the word.",
+    "id": "qdzl",
+    "z": 46,
+    "css": "color: black; font-size: 30px; text-align:left",
+    "width": 550,
+    "parent": "2Pbtn",
+    "y": 100,
+    "x": -150
+  },
+  "wrong1c": {
+    "type": "holder",
+    "id": "wrong1c",
+    "parent": "wrong1",
+    "width": 300,
+    "height": 10,
+    "z": 5,
+    "css": "background: black; border:none ",
+    "x": -150,
+    "y": 490
+  },
+  "originalsidebtn": {
+    "type": "button",
+    "id": "originalsidebtn",
+    "width": 20,
+    "height": 160,
+    "layer": 20,
+    "z": 881,
+    "movable": true,
+    "changeRoutine": [
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "leftactivecss",
+        "variable": "leftActiveCss"
+      },
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "rightactivecss",
+        "variable": "rightActiveCss"
+      },
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "x",
+        "variable": "buttonX"
+      },
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "y",
+        "variable": "buttonY"
+      },
+      "var farleft = ${buttonX} < 40",
+      "var farright = ${buttonX} > 1500",
+      "var low = ${buttonY} > 900",
+      "var high = ${buttonY} < 0",
+      "var loworhigh = ${low} || ${high}",
+      "var farleftorloworhigh = ${farleft} || ${loworhigh}",
+      "var farrightorloworhigh = ${farright} || ${loworhigh}",
+      {
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "mainChat"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "IF",
+        "relation": ">",
+        "operand2": 800,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "x",
+            "value": 15
+          },
+          {
+            "func": "IF",
+            "relation": "==",
+            "operand2": true,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "css",
+                "value": "${rightActiveCss}"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "css",
+                "value": "line-height: 10px; font-size: 22px; border-radius: 17px 0px 0px 17px;"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "rightactivecss",
+                "value": "line-height: 10px; font-size: 22px; border-radius: 17px 0px 0px 17px;"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "leftactivecss",
+                "value": "line-height: 10px; font-size: 22px; border-radius: 0px 17px 17px 0px;"
+              }
+            ],
+            "operand1": "${farrightorloworhigh}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "property": "x",
+            "value": -250
+          },
+          {
+            "func": "IF",
+            "relation": "==",
+            "operand2": true,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "css",
+                "value": "${leftActiveCss}"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "css",
+                "value": "line-height: 10px; font-size: 22px; border-radius: 0px 17px 17px 0px;"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "leftactivecss",
+                "value": "line-height: 10px; font-size: 22px; border-radius: 0px 17px 17px 0px;"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "rightactivecss",
+                "value": "line-height: 10px; font-size: 22px; border-radius: 17px 0px 0px 17px;"
+              }
+            ],
+            "operand1": "${farleftorloworhigh}"
+          }
+        ],
+        "operand1": "${buttonX}"
+      }
+    ],
+    "chatRoutine": [
+      {
+        "Note": "Clone chat box for typing",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originallabel",
+        "collection": "myOriginalLabel"
+      },
+      {
+        "func": "SELECT",
+        "source": "myOriginalLabel",
+        "property": "owner",
+        "value": null,
+        "collection": "myOriginalLabel"
+      },
+      {
+        "func": "CLONE",
+        "source": "myOriginalLabel",
+        "collection": "boxPlayerName"
+      },
+      {
+        "Note": "Clone option button",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originaloptions",
+        "collection": "myOriginalOptions"
+      },
+      {
+        "func": "SELECT",
+        "source": "myOriginalOptions",
+        "property": "owner",
+        "value": null,
+        "collection": "myOriginalOptions"
+      },
+      {
+        "func": "CLONE",
+        "source": "myOriginalOptions",
+        "collection": "optionsPlayerName"
+      },
+      {
+        "Note": "Set parent, position, and owner of chat box",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "mainChat"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "collection": "mainPlayerName",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "collection": "mainPlayerName",
+        "variable": "parentID"
+      },
+      {
+        "func": "SET",
+        "collection": "boxPlayerName",
+        "property": "parent",
+        "value": "${parentID}"
+      },
+      {
+        "func": "SET",
+        "collection": "boxPlayerName",
+        "property": "x",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": "boxPlayerName",
+        "property": "y",
+        "value": 780
+      },
+      {
+        "func": "SET",
+        "collection": "boxPlayerName",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "Note": "Set box to empty string to pre-populate it with something to make entry area full sized.",
+        "func": "SET",
+        "collection": "boxPlayerName",
+        "property": "text",
+        "value": " "
+      },
+      {
+        "Note": "Get the current chat log string and put it into player log to erase the instructions.",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "mainChat",
+        "collection": "allMainChat"
+      },
+      {
+        "func": "SELECT",
+        "source": "allMainChat",
+        "property": "owner",
+        "value": null
+      },
+      {
+        "func": "GET",
+        "property": "text",
+        "variable": "mainChat"
+      },
+      {
+        "func": "SELECT",
+        "source": "allMainChat",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${mainChat}"
+      },
+      {
+        "Note": "Delete colored unicode buttons by using menu delete system"
+      },
+      {
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originaloptions"
+      },
+      {
+        "func": "GET",
+        "property": "id"
+      },
+      {
+        "func": "CALL",
+        "routine": "menuCloneDeleteRoutine",
+        "widget": "${id}"
+      },
+      {
+        "Note": "Set parent, position, and owner of option button.",
+        "func": "SET",
+        "collection": "optionsPlayerName",
+        "property": "parent",
+        "value": "${parentID}"
+      },
+      {
+        "func": "SET",
+        "collection": "optionsPlayerName",
+        "property": "x",
+        "value": 40
+      },
+      {
+        "func": "SET",
+        "collection": "optionsPlayerName",
+        "property": "y",
+        "value": 894
+      },
+      {
+        "func": "SET",
+        "collection": "optionsPlayerName",
+        "property": "owner",
+        "value": "${playerName}"
+      }
+    ],
+    "clickRoutine": [
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "x",
+        "variable": "buttonX"
+      },
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "y",
+        "variable": "buttonY"
+      },
+      "var low = ${buttonY} > 900",
+      "var high = ${buttonY} < 0",
+      {
+        "func": "IF",
+        "relation": "==",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "y",
+            "value": 2.5
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "relation": "==",
+            "operand2": true,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "y",
+                "value": 82.5
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "rotation",
+                "value": 0
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "relation": "<",
+                "operand2": 20,
+                "thenRoutine": [
+                  {
+                    "func": "SET",
+                    "collection": "thisButton",
+                    "property": "x",
+                    "value": 250
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "IF",
+                    "relation": "<",
+                    "operand2": 800,
+                    "thenRoutine": [
+                      {
+                        "func": "SET",
+                        "collection": "thisButton",
+                        "property": "x",
+                        "value": 0
+                      }
+                    ],
+                    "elseRoutine": [
+                      {
+                        "func": "IF",
+                        "relation": "<",
+                        "operand2": 1500,
+                        "thenRoutine": [
+                          {
+                            "func": "SET",
+                            "collection": "thisButton",
+                            "property": "x",
+                            "value": 1580
+                          }
+                        ],
+                        "elseRoutine": [
+                          {
+                            "func": "SET",
+                            "collection": "thisButton",
+                            "property": "x",
+                            "value": 1334
+                          }
+                        ],
+                        "operand1": "${buttonX}"
+                      }
+                    ],
+                    "operand1": "${buttonX}"
+                  }
+                ],
+                "operand1": "${buttonX}"
+              }
+            ],
+            "operand1": "${low}"
+          }
+        ],
+        "operand1": "${high}"
+      }
+    ],
+    "css": "line-height: 10px; font-size: 22px; border-radius: 0px 17px 17px 0px; background-color: red",
+    "grid": [
+      {
+        "offsetX": -125,
+        "x": 250,
+        "y": 5,
+        "minX": -200,
+        "maxX": 250,
+        "minY": 0,
+        "maxY": 1000,
+        "rotation": 0
+      },
+      {
+        "offsetX": 210,
+        "x": 250,
+        "y": 5,
+        "minX": 1280,
+        "maxX": 1600,
+        "minY": 0,
+        "maxY": 1000,
+        "rotation": 0
+      },
+      {
+        "offsetX": 210,
+        "x": 5,
+        "y": 5,
+        "minX": 250,
+        "maxX": 1280,
+        "minY": 50,
+        "maxY": 800,
+        "rotation": 0
+      },
+      {
+        "offsetY": -195,
+        "x": 5,
+        "y": 250,
+        "minX": 250,
+        "maxX": 800,
+        "minY": 0,
+        "maxY": 5,
+        "rotation": 90
+      },
+      {
+        "offsetY": -195,
+        "x": 5,
+        "y": 250,
+        "minX": 801,
+        "maxX": 1280,
+        "minY": 0,
+        "maxY": 5,
+        "rotation": -90
+      },
+      {
+        "offsetY": 35,
+        "x": 5,
+        "y": 250,
+        "minX": 250,
+        "maxX": 800,
+        "minY": 800,
+        "maxY": 1000,
+        "rotation": -90
+      },
+      {
+        "offsetY": 35,
+        "x": 5,
+        "y": 250,
+        "minX": 801,
+        "maxX": 1280,
+        "minY": 800,
+        "maxY": 1000,
+        "rotation": 90
+      }
+    ],
+    "leftactivecss": "line-height: 10px; font-size: 22px; border-radius: 0px 17px 17px 0px; background-color: red",
+    "openRoutine": [
+      {
+        "Note": "Check to see if playerName has an existing chat room.  If so, do nothing",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalsidebtn",
+        "collection": "myChatBoxes"
+      },
+      {
+        "func": "SELECT",
+        "source": "myChatBoxes",
+        "property": "owner",
+        "collection": "myChatBox",
+        "value": "${playerName}"
+      },
+      {
+        "func": "COUNT",
+        "collection": "myChatBox",
+        "variable": "myChatBoxCount"
+      },
+      {
+        "Note": "If player doesn't have chat buttons, do thenRoutine.",
+        "func": "IF",
+        "relation": "==",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "Note": "Clone side button",
+            "func": "SELECT",
+            "property": "vttChatID",
+            "value": "originalsidebtn",
+            "collection": "myOriginalSideBtn"
+          },
+          {
+            "func": "SELECT",
+            "source": "myOriginalSideBtn",
+            "property": "owner",
+            "value": null,
+            "collection": "myOriginalSideBtn"
+          },
+          {
+            "func": "CLONE",
+            "source": "myOriginalSideBtn",
+            "collection": "sideBtnPlayerName"
+          },
+          {
+            "Note": "Clone main chat log",
+            "func": "SELECT",
+            "property": "vttChatID",
+            "value": "mainChat",
+            "collection": "myOriginalMain"
+          },
+          {
+            "func": "SELECT",
+            "source": "myOriginalMain",
+            "property": "owner",
+            "value": null,
+            "collection": "myOriginalMain"
+          },
+          {
+            "func": "CLONE",
+            "source": "myOriginalMain",
+            "collection": "mainPlayerName"
+          },
+          {
+            "Note": "Clone red unicode",
+            "func": "SELECT",
+            "property": "vttChatID",
+            "value": "originalred",
+            "collection": "myOriginalRed"
+          },
+          {
+            "func": "SELECT",
+            "source": "myOriginalRed",
+            "property": "owner",
+            "value": null,
+            "collection": "myOriginalRed"
+          },
+          {
+            "func": "CLONE",
+            "source": "myOriginalRed",
+            "collection": "redPlayerName"
+          },
+          {
+            "Note": "Clone orange unicode",
+            "func": "SELECT",
+            "property": "vttChatID",
+            "value": "originalorange",
+            "collection": "myOriginalOrange"
+          },
+          {
+            "func": "SELECT",
+            "source": "myOriginalOrange",
+            "property": "owner",
+            "value": null,
+            "collection": "myOriginalOrange"
+          },
+          {
+            "func": "CLONE",
+            "source": "myOriginalOrange",
+            "collection": "orangePlayerName"
+          },
+          {
+            "Note": "Clone yellow unicode",
+            "func": "SELECT",
+            "property": "vttChatID",
+            "value": "originalyellow",
+            "collection": "myOriginalYellow"
+          },
+          {
+            "func": "SELECT",
+            "source": "myOriginalYellow",
+            "property": "owner",
+            "value": null,
+            "collection": "myOriginalYellow"
+          },
+          {
+            "func": "CLONE",
+            "source": "myOriginalYellow",
+            "collection": "yellowPlayerName"
+          },
+          {
+            "Note": "Clone green unicode",
+            "func": "SELECT",
+            "property": "vttChatID",
+            "value": "originalgreen",
+            "collection": "myOriginalGreen"
+          },
+          {
+            "func": "SELECT",
+            "source": "myOriginalGreen",
+            "property": "owner",
+            "value": null,
+            "collection": "myOriginalGreen"
+          },
+          {
+            "func": "CLONE",
+            "source": "myOriginalGreen",
+            "collection": "greenPlayerName"
+          },
+          {
+            "Note": "Clone blue unicode",
+            "func": "SELECT",
+            "property": "vttChatID",
+            "value": "originalblue",
+            "collection": "myOriginalBlue"
+          },
+          {
+            "func": "SELECT",
+            "source": "myOriginalBlue",
+            "property": "owner",
+            "value": null,
+            "collection": "myOriginalBlue"
+          },
+          {
+            "func": "CLONE",
+            "source": "myOriginalBlue",
+            "collection": "bluePlayerName"
+          },
+          {
+            "Note": "Clone purple unicode",
+            "func": "SELECT",
+            "property": "vttChatID",
+            "value": "originalpurple",
+            "collection": "myOriginalPurple"
+          },
+          {
+            "func": "SELECT",
+            "source": "myOriginalPurple",
+            "property": "owner",
+            "value": null,
+            "collection": "myOriginalPurple"
+          },
+          {
+            "func": "CLONE",
+            "source": "myOriginalPurple",
+            "collection": "purplePlayerName"
+          },
+          {
+            "Note": "Clone brown unicode",
+            "func": "SELECT",
+            "property": "vttChatID",
+            "value": "originalbrown",
+            "collection": "myOriginalBrown"
+          },
+          {
+            "func": "SELECT",
+            "source": "myOriginalBrown",
+            "property": "owner",
+            "value": null,
+            "collection": "myOriginalBrown"
+          },
+          {
+            "func": "CLONE",
+            "source": "myOriginalBrown",
+            "collection": "brownPlayerName"
+          },
+          {
+            "Note": "Clone black unicode",
+            "func": "SELECT",
+            "property": "vttChatID",
+            "value": "originalblack",
+            "collection": "myOriginalBlack"
+          },
+          {
+            "func": "SELECT",
+            "source": "myOriginalBlack",
+            "property": "owner",
+            "value": null,
+            "collection": "myOriginalBlack"
+          },
+          {
+            "func": "CLONE",
+            "source": "myOriginalBlack",
+            "collection": "blackPlayerName"
+          },
+          {
+            "Note": "Set position and owner of side button",
+            "func": "SET",
+            "collection": "sideBtnPlayerName",
+            "property": "x",
+            "value": 250
+          },
+          {
+            "func": "SET",
+            "collection": "sideBtnPlayerName",
+            "property": "y",
+            "value": 5
+          },
+          {
+            "func": "SET",
+            "collection": "sideBtnPlayerName",
+            "property": "owner",
+            "value": "${playerName}"
+          },
+          {
+            "Note": "Set parent, position, and owner of main chat log",
+            "func": "GET",
+            "property": "id",
+            "collection": "sideBtnPlayerName",
+            "variable": "btnID"
+          },
+          {
+            "func": "SET",
+            "collection": "mainPlayerName",
+            "property": "parent",
+            "value": "${btnID}"
+          },
+          {
+            "func": "SET",
+            "collection": "mainPlayerName",
+            "property": "x",
+            "value": -250
+          },
+          {
+            "func": "SET",
+            "collection": "mainPlayerName",
+            "property": "y",
+            "value": -5
+          },
+          {
+            "func": "SET",
+            "collection": "mainPlayerName",
+            "property": "owner",
+            "value": "${playerName}"
+          },
+          {
+            "Note": "Set instructions in chat log.",
+            "func": "SET",
+            "collection": "mainPlayerName",
+            "property": "text",
+            "value": "Welcome to VirtualTabletop Chat version 1.1. \n\nOnly you can see this chat window.\n\nMove it around by dragging the blue side button. Click the button to dock to nearest side (or push button towards any boundary).\n\nWhen docked, button will turn red if you get a new message.\n\nOpen and close options menu by pressing blue option button that will appear at the bottom.\n\nYou can change colors and css settings there.\n\nChat stores last 5,000 characters.\n\nPress 'Enter' key after typing message to send.\n\nPost feedback in #general channel on Discord.\n\nChoose color to start."
+          },
+          {
+            "Note": "Set parent, position, and owner of red unicode."
+          },
+          {
+            "func": "GET",
+            "property": "id",
+            "collection": "mainPlayerName",
+            "variable": "parentID"
+          },
+          {
+            "func": "SET",
+            "collection": "redPlayerName",
+            "property": "parent",
+            "value": "${parentID}"
+          },
+          {
+            "func": "SET",
+            "collection": "redPlayerName",
+            "property": "x",
+            "value": 18
+          },
+          {
+            "func": "SET",
+            "collection": "redPlayerName",
+            "property": "y",
+            "value": 700
+          },
+          {
+            "func": "SET",
+            "collection": "redPlayerName",
+            "property": "owner",
+            "value": "${playerName}"
+          },
+          {
+            "Note": "Set parent, position, and owner of orange unicode.",
+            "func": "SET",
+            "collection": "orangePlayerName",
+            "property": "parent",
+            "value": "${parentID}"
+          },
+          {
+            "func": "SET",
+            "collection": "orangePlayerName",
+            "property": "x",
+            "value": 80
+          },
+          {
+            "func": "SET",
+            "collection": "orangePlayerName",
+            "property": "y",
+            "value": 700
+          },
+          {
+            "func": "SET",
+            "collection": "orangePlayerName",
+            "property": "owner",
+            "value": "${playerName}"
+          },
+          {
+            "Note": "Set parent, position, and owner of yellow unicode.",
+            "func": "SET",
+            "collection": "yellowPlayerName",
+            "property": "parent",
+            "value": "${parentID}"
+          },
+          {
+            "func": "SET",
+            "collection": "yellowPlayerName",
+            "property": "x",
+            "value": 142
+          },
+          {
+            "func": "SET",
+            "collection": "yellowPlayerName",
+            "property": "y",
+            "value": 700
+          },
+          {
+            "func": "SET",
+            "collection": "yellowPlayerName",
+            "property": "owner",
+            "value": "${playerName}"
+          },
+          {
+            "Note": "Set parent, position, and owner of green unicode.",
+            "func": "SET",
+            "collection": "greenPlayerName",
+            "property": "parent",
+            "value": "${parentID}"
+          },
+          {
+            "func": "SET",
+            "collection": "greenPlayerName",
+            "property": "x",
+            "value": 204
+          },
+          {
+            "func": "SET",
+            "collection": "greenPlayerName",
+            "property": "y",
+            "value": 700
+          },
+          {
+            "func": "SET",
+            "collection": "greenPlayerName",
+            "property": "owner",
+            "value": "${playerName}"
+          },
+          {
+            "Note": "Set parent, position, and owner of blue unicode.",
+            "func": "SET",
+            "collection": "bluePlayerName",
+            "property": "parent",
+            "value": "${parentID}"
+          },
+          {
+            "func": "SET",
+            "collection": "bluePlayerName",
+            "property": "x",
+            "value": 18
+          },
+          {
+            "func": "SET",
+            "collection": "bluePlayerName",
+            "property": "y",
+            "value": 750
+          },
+          {
+            "func": "SET",
+            "collection": "bluePlayerName",
+            "property": "owner",
+            "value": "${playerName}"
+          },
+          {
+            "Note": "Set parent, position, and owner of purple unicode.",
+            "func": "SET",
+            "collection": "purplePlayerName",
+            "property": "parent",
+            "value": "${parentID}"
+          },
+          {
+            "func": "SET",
+            "collection": "purplePlayerName",
+            "property": "x",
+            "value": 80
+          },
+          {
+            "func": "SET",
+            "collection": "purplePlayerName",
+            "property": "y",
+            "value": 750
+          },
+          {
+            "func": "SET",
+            "collection": "purplePlayerName",
+            "property": "owner",
+            "value": "${playerName}"
+          },
+          {
+            "Note": "Set parent, position, and owner of brown unicode.",
+            "func": "SET",
+            "collection": "brownPlayerName",
+            "property": "parent",
+            "value": "${parentID}"
+          },
+          {
+            "func": "SET",
+            "collection": "brownPlayerName",
+            "property": "x",
+            "value": 142
+          },
+          {
+            "func": "SET",
+            "collection": "brownPlayerName",
+            "property": "y",
+            "value": 750
+          },
+          {
+            "func": "SET",
+            "collection": "brownPlayerName",
+            "property": "owner",
+            "value": "${playerName}"
+          },
+          {
+            "Note": "Set parent, position, and owner of black unicode.",
+            "func": "SET",
+            "collection": "blackPlayerName",
+            "property": "parent",
+            "value": "${parentID}"
+          },
+          {
+            "func": "SET",
+            "collection": "blackPlayerName",
+            "property": "x",
+            "value": 202
+          },
+          {
+            "func": "SET",
+            "collection": "blackPlayerName",
+            "property": "y",
+            "value": 750
+          },
+          {
+            "func": "SET",
+            "collection": "blackPlayerName",
+            "property": "owner",
+            "value": "${playerName}"
+          }
+        ],
+        "elseRoutine": [],
+        "operand1": "${myChatBoxCount}"
+      }
+    ],
+    "rightactivecss": "line-height: 10px; font-size: 22px; border-radius: 17px 0px 0px 17px; background-color: red",
+    "text": "~\n~\n~\n~\n~\n~\n~\n~\n~\n~\n~\n~\n",
+    "vttChatID": "originalsidebtn",
+    "vttChatVersion": "1.1",
+    "x": -500
+  },
+  "mainChat": {
+    "type": "label",
+    "id": "mainChat",
+    "x": -250,
+    "width": 200,
+    "height": 780,
+    "z": 975,
+    "changeRoutine": [
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "parent",
+        "variable": "parentID"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "collection": "myParent",
+        "value": "${parentID}"
+      },
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "text",
+        "variable": "chatboxText"
+      },
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "chatboxtextlength",
+        "variable": "oldChatboxTextLength"
+      },
+      "var chatboxTextLength = length ${chatboxText}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "chatboxtextlength",
+        "value": "${chatboxTextLength}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${chatboxTextLength}",
+        "relation": ">",
+        "operand2": "${oldChatboxTextLength}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "myParent",
+            "property": "leftactivecss",
+            "value": "line-height: 10px; font-size: 22px; border-radius: 0px 17px 17px 0px; background-color: red"
+          },
+          {
+            "func": "SET",
+            "collection": "myParent",
+            "property": "rightactivecss",
+            "value": "line-height: 10px; font-size: 22px; border-radius: 17px 0px 0px 17px; background-color: red"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${chatboxTextLength}",
+        "relation": ">",
+        "operand2": 6000,
+        "thenRoutine": [
+          "var newChatboxText = substr ${chatboxText} 0 5000",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "${newChatboxText}"
+          }
+        ],
+        "elseRoutine": []
+      },
+      {
+        "func": "GET",
+        "collection": "myParent",
+        "property": "x",
+        "variable": "parentX"
+      },
+      {
+        "func": "IF",
+        "operand1": "${parentX}",
+        "relation": "<",
+        "operand2": 20,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "myParent",
+            "property": "css",
+            "value": "line-height: 10px; font-size: 22px; border-radius: 0px 17px 17px 0px; background-color: red"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${parentX}",
+        "relation": ">",
+        "operand2": 1500,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "myParent",
+            "property": "css",
+            "value": "line-height: 10px; font-size: 22px; border-radius: 17px 0px 0px 17px; background-color: red"
+          }
+        ]
+      }
+    ],
+    "css": "background-color: #F0F0F0; color: black; font-size: 16px; text-align:left; line-height: 20px; padding: 0px 20px 0px 20px;  border-color: grey; border-style: dotted",
+    "vttChatID": "mainChat",
+    "vttChatVersion": "1.1",
+    "parent": "originalsidebtn",
+    "chatboxtextlength": 140
+  },
+  "originallabel": {
+    "type": "label",
+    "id": "originallabel",
+    "y": 780,
+    "width": 235,
+    "height": 110,
+    "layer": 0,
+    "z": 64,
+    "changeRoutine": [
+      {
+        "Note": "Determine if user has pressed Enter key.",
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "text",
+        "variable": "myChat"
+      },
+      "var isCR = ${myChat} includes '\\u000a'",
+      {
+        "Note": "If user has pressed Enter, do the thenRoutine; otherwise do nothing.",
+        "func": "IF",
+        "operand2": true,
+        "relation": "==",
+        "thenRoutine": [
+          "var myChat = ${myChat} replace '\\u000a' '' // Erase the carriage return.",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "${myChat}"
+          },
+          {
+            "Note": "Get the current chat log string.",
+            "func": "SELECT",
+            "property": "vttChatID",
+            "value": "mainChat"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "owner",
+            "value": null
+          },
+          {
+            "func": "GET",
+            "property": "text",
+            "variable": "mainChat"
+          },
+          "var mainChat = ${myChat} concat ${mainChat} // Add the player's typed entry to the beginning of the string.",
+          {
+            "Note": "Get the user unicode color icon and attach it to the playerName",
+            "func": "GET",
+            "collection": "thisButton",
+            "property": "chatColor",
+            "variable": "chatColor"
+          },
+          {
+            "note": "Create temporary property to add colon to name.",
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "tempColon",
+            "value": "${playerName}: "
+          },
+          "var displayName = ${chatColor} + ${PROPERTY tempColon}",
+          {
+            "note": "Erase temporary property",
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "tempColon",
+            "value": null
+          },
+          "var mainChat = ${displayName} concat ${mainChat} // Create a string with the display name and the new chat log string.",
+          "var mainChat = '\\u000a\\u000a' concat ${mainChat} // Add a blank line at the top of the chat log.",
+          {
+            "Note": "Select the main chat log and put the chat string into it.",
+            "func": "SELECT",
+            "property": "vttChatID",
+            "value": "mainChat"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "owner",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "value": "${mainChat}"
+          },
+          {
+            "Note": "Select the cloned main chat logs and put the chat string into it.",
+            "func": "SELECT",
+            "property": "vttChatID",
+            "value": "mainChat"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "owner",
+            "relation": "!=",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "value": "${mainChat}"
+          },
+          {
+            "Note": "Erase the text in the chat box.",
+            "func": "SET",
+            "property": "text",
+            "collection": "thisButton",
+            "value": ""
+          }
+        ],
+        "operand1": "${isCR}"
+      }
+    ],
+    "chatColor": "",
+    "css": "text-align:left;background-color:white; border-style: solid",
+    "editable": true,
+    "vttChatID": "originallabel",
+    "vttChatVersion": "1.1",
+    "parent": "mainChat"
+  },
+  "originaloptions": {
+    "type": "button",
+    "id": "originaloptions",
+    "x": 40,
+    "y": 894,
+    "width": 150,
+    "height": 20,
+    "z": 621,
+    "clickRoutine": [
+      {
+        "Note": "Determine if menu is open.",
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "menustatus",
+        "variable": "menustatus"
+      },
+      {
+        "func": "IF",
+        "operand2": true,
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "Note": "If menu is open, then delete all menu cloned buttons.",
+            "func": "CALL",
+            "routine": "menuCloneDeleteRoutine"
+          },
+          {
+            "Note": "Change the menustatus flag to false so the next click will recreate the menu.",
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "menustatus",
+            "value": false
+          }
+        ],
+        "elseRoutine": [
+          {
+            "Note": "If menu is not open, then clone the menu items by doing the elseRoutine.",
+            "func": "GET",
+            "collection": "thisButton",
+            "property": "id",
+            "variable": "btnID"
+          },
+          {
+            "Note": "Call the functions to create the menu basics, the css input labels and the unicode color buttons.",
+            "func": "CALL",
+            "routine": "optionsBasicsRoutine"
+          },
+          {
+            "func": "CALL",
+            "routine": "colorCloneRoutine"
+          },
+          {
+            "func": "CALL",
+            "routine": "cssCloneRoutine"
+          },
+          {
+            "Note": "Change menustatus flag so next click will close menu.",
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "menustatus",
+            "value": true
+          },
+          {
+            "Note": "Get size property and call the half or full height routine to set the location of the widgets.",
+            "func": "SELECT",
+            "property": "vttChatID",
+            "value": "originalsize"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "owner",
+            "collection": "sizePlayerName",
+            "value": "${playerName}"
+          },
+          {
+            "func": "GET",
+            "collection": "sizePlayerName",
+            "property": "fullheight",
+            "variable": "fullheight"
+          },
+          {
+            "func": "IF",
+            "operand2": true,
+            "relation": "==",
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "routine": "FullHeightRoutine"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "CALL",
+                "routine": "HalfHeightRoutine"
+              }
+            ],
+            "operand1": "${fullheight}"
+          }
+        ],
+        "operand1": "${menustatus}"
+      }
+    ],
+    "colorCloneRoutine": [
+      {
+        "Note": "Each of the following segments will clone the respective color unicode button and then set the layer, parent and owner of the buttons as a group",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalred",
+        "collection": "myOriginalRed"
+      },
+      {
+        "func": "SELECT",
+        "source": "myOriginalRed",
+        "property": "owner",
+        "value": null,
+        "collection": "myOriginalRed"
+      },
+      {
+        "func": "CLONE",
+        "source": "myOriginalRed",
+        "collection": "redPlayerName",
+        "properties": {
+          "clickRoutine": [
+            {
+              "func": "SELECT",
+              "property": "owner",
+              "value": "${playerName}"
+            },
+            {
+              "func": "SET",
+              "property": "chatColor",
+              "value": "🔴"
+            }
+          ]
+        }
+      },
+      {
+        "Note": "Clone orange unicode",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalorange",
+        "collection": "myOriginalOrange"
+      },
+      {
+        "func": "SELECT",
+        "source": "myOriginalOrange",
+        "property": "owner",
+        "value": null,
+        "collection": "myOriginalOrange"
+      },
+      {
+        "func": "CLONE",
+        "source": "myOriginalOrange",
+        "collection": "orangePlayerName",
+        "properties": {
+          "clickRoutine": [
+            {
+              "func": "SELECT",
+              "property": "owner",
+              "value": "${playerName}"
+            },
+            {
+              "func": "SET",
+              "property": "chatColor",
+              "value": "🟠"
+            }
+          ]
+        }
+      },
+      {
+        "Note": "Clone yellow unicode",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalyellow",
+        "collection": "myOriginalYellow"
+      },
+      {
+        "func": "SELECT",
+        "source": "myOriginalYellow",
+        "property": "owner",
+        "value": null,
+        "collection": "myOriginalYellow"
+      },
+      {
+        "func": "CLONE",
+        "source": "myOriginalYellow",
+        "collection": "yellowPlayerName",
+        "properties": {
+          "clickRoutine": [
+            {
+              "func": "SELECT",
+              "property": "owner",
+              "value": "${playerName}"
+            },
+            {
+              "func": "SET",
+              "property": "chatColor",
+              "value": "🟡"
+            }
+          ]
+        }
+      },
+      {
+        "Note": "Clone green unicode",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalgreen",
+        "collection": "myOriginalGreen"
+      },
+      {
+        "func": "SELECT",
+        "source": "myOriginalGreen",
+        "property": "owner",
+        "value": null,
+        "collection": "myOriginalGreen"
+      },
+      {
+        "func": "CLONE",
+        "source": "myOriginalGreen",
+        "collection": "greenPlayerName",
+        "properties": {
+          "clickRoutine": [
+            {
+              "func": "SELECT",
+              "property": "owner",
+              "value": "${playerName}"
+            },
+            {
+              "func": "SET",
+              "property": "chatColor",
+              "value": "🟢"
+            }
+          ]
+        }
+      },
+      {
+        "Note": "Clone blue unicode",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalblue",
+        "collection": "myOriginalBlue"
+      },
+      {
+        "func": "SELECT",
+        "source": "myOriginalBlue",
+        "property": "owner",
+        "value": null,
+        "collection": "myOriginalBlue"
+      },
+      {
+        "func": "CLONE",
+        "source": "myOriginalBlue",
+        "collection": "bluePlayerName",
+        "properties": {
+          "clickRoutine": [
+            {
+              "func": "SELECT",
+              "property": "owner",
+              "value": "${playerName}"
+            },
+            {
+              "func": "SET",
+              "property": "chatColor",
+              "value": "🔵"
+            }
+          ]
+        }
+      },
+      {
+        "Note": "Clone purple unicode",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalpurple",
+        "collection": "myOriginalPurple"
+      },
+      {
+        "func": "SELECT",
+        "source": "myOriginalPurple",
+        "property": "owner",
+        "value": null,
+        "collection": "myOriginalPurple"
+      },
+      {
+        "func": "CLONE",
+        "source": "myOriginalPurple",
+        "collection": "purplePlayerName",
+        "properties": {
+          "clickRoutine": [
+            {
+              "func": "SELECT",
+              "property": "owner",
+              "value": "${playerName}"
+            },
+            {
+              "func": "SET",
+              "property": "chatColor",
+              "value": "🟣"
+            }
+          ]
+        }
+      },
+      {
+        "Note": "Clone brown unicode",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalbrown",
+        "collection": "myOriginalBrown"
+      },
+      {
+        "func": "SELECT",
+        "source": "myOriginalBrown",
+        "property": "owner",
+        "value": null,
+        "collection": "myOriginalBrown"
+      },
+      {
+        "func": "CLONE",
+        "source": "myOriginalBrown",
+        "collection": "brownPlayerName",
+        "properties": {
+          "clickRoutine": [
+            {
+              "func": "SELECT",
+              "property": "owner",
+              "value": "${playerName}"
+            },
+            {
+              "func": "SET",
+              "property": "chatColor",
+              "value": "🟤"
+            }
+          ]
+        }
+      },
+      {
+        "Note": "Clone black unicode",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalblack",
+        "collection": "myOriginalBlack"
+      },
+      {
+        "func": "SELECT",
+        "source": "myOriginalBlack",
+        "property": "owner",
+        "value": null,
+        "collection": "myOriginalBlack"
+      },
+      {
+        "func": "CLONE",
+        "source": "myOriginalBlack",
+        "collection": "blackPlayerName",
+        "properties": {
+          "clickRoutine": [
+            {
+              "func": "SELECT",
+              "property": "owner",
+              "value": "${playerName}"
+            },
+            {
+              "func": "SET",
+              "property": "chatColor",
+              "value": "⚫"
+            }
+          ]
+        }
+      },
+      {
+        "NOTE": "Set parent, layer, and owner of all unicode buttons",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "mainChat"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "collection": "mainPlayerName",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "collection": "mainPlayerName",
+        "variable": "parentID"
+      },
+      {
+        "func": "SET",
+        "collection": "redPlayerName",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "collection": "orangePlayerName",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "collection": "yellowPlayerName",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "collection": "greenPlayerName",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "collection": "bluePlayerName",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "collection": "purplePlayerName",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "collection": "brownPlayerName",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "collection": "blackPlayerName",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SELECT",
+        "property": "unicodebtn",
+        "value": true,
+        "collection": "unicodeGroup"
+      },
+      {
+        "func": "SELECT",
+        "source": "unicodeGroup",
+        "property": "owner",
+        "collection": "unicodeGroup",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "collection": "unicodeGroup",
+        "property": "parent",
+        "value": "${parentID}"
+      },
+      {
+        "func": "SET",
+        "collection": "unicodeGroup",
+        "property": "layer",
+        "value": 5
+      }
+    ],
+    "css": "font-size: 18px; border-radius: 0px 0px 17px 17px;",
+    "cssCloneRoutine": [
+      {
+        "Note": "Each of the following segments will clone the respective css options label and then set the parent and owner of the labels as a group",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalcss1",
+        "collection": "myOriginalcss1"
+      },
+      {
+        "func": "SELECT",
+        "source": "myOriginalcss1",
+        "property": "owner",
+        "value": null,
+        "collection": "myOriginalcss1"
+      },
+      {
+        "func": "CLONE",
+        "source": "myOriginalcss1",
+        "collection": "css1PlayerName"
+      },
+      {
+        "Note": "Clone css2",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalcss2",
+        "collection": "myOriginalcss2"
+      },
+      {
+        "func": "SELECT",
+        "source": "myOriginalcss2",
+        "property": "owner",
+        "value": null,
+        "collection": "myOriginalcss2"
+      },
+      {
+        "func": "CLONE",
+        "source": "myOriginalcss2",
+        "collection": "css2PlayerName"
+      },
+      {
+        "Note": "Clone css3",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalcss3",
+        "collection": "myOriginalcss3"
+      },
+      {
+        "func": "SELECT",
+        "source": "myOriginalcss3",
+        "property": "owner",
+        "value": null,
+        "collection": "myOriginalcss3"
+      },
+      {
+        "func": "CLONE",
+        "source": "myOriginalcss3",
+        "collection": "css3PlayerName"
+      },
+      {
+        "Note": "Clone css4",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalcss4",
+        "collection": "myOriginalcss4"
+      },
+      {
+        "func": "SELECT",
+        "source": "myOriginalcss4",
+        "property": "owner",
+        "value": null,
+        "collection": "myOriginalcss4"
+      },
+      {
+        "func": "CLONE",
+        "source": "myOriginalcss4",
+        "collection": "css4PlayerName"
+      },
+      {
+        "Note": "Clone css5",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalcss5",
+        "collection": "myOriginalcss5"
+      },
+      {
+        "func": "SELECT",
+        "source": "myOriginalcss5",
+        "property": "owner",
+        "value": null,
+        "collection": "myOriginalcss5"
+      },
+      {
+        "func": "CLONE",
+        "source": "myOriginalcss5",
+        "collection": "css5PlayerName"
+      },
+      {
+        "Note": "Clone css6",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalcss6",
+        "collection": "myOriginalcss6"
+      },
+      {
+        "func": "SELECT",
+        "source": "myOriginalcss6",
+        "property": "owner",
+        "value": null,
+        "collection": "myOriginalcss6"
+      },
+      {
+        "func": "CLONE",
+        "source": "myOriginalcss6",
+        "collection": "css6PlayerName"
+      },
+      {
+        "Note": "Clone css7",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalcss7",
+        "collection": "myOriginalcss7"
+      },
+      {
+        "func": "SELECT",
+        "source": "myOriginalcss7",
+        "property": "owner",
+        "value": null,
+        "collection": "myOriginalcss7"
+      },
+      {
+        "func": "CLONE",
+        "source": "myOriginalcss7",
+        "collection": "css7PlayerName"
+      },
+      {
+        "Note": "Clone height button",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalsize",
+        "collection": "myOriginalSize"
+      },
+      {
+        "func": "SELECT",
+        "source": "myOriginalSize",
+        "property": "owner",
+        "value": null,
+        "collection": "myOriginalSize"
+      },
+      {
+        "func": "CLONE",
+        "source": "myOriginalSize",
+        "collection": "sizePlayerName"
+      },
+      {
+        "Note": "Set layer, parent and owner of all css labels",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originaloptions"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "collection": "optionsPlayerName",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "collection": "optionsPlayerName",
+        "variable": "parentID"
+      },
+      {
+        "func": "SET",
+        "collection": "css1PlayerName",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "collection": "css2PlayerName",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "collection": "css3PlayerName",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "collection": "css4PlayerName",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "collection": "css5PlayerName",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "collection": "css6PlayerName",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "collection": "css7PlayerName",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "collection": "sizePlayerName",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SELECT",
+        "property": "cssOptions",
+        "value": true,
+        "collection": "cssGroup"
+      },
+      {
+        "func": "SELECT",
+        "source": "cssGroup",
+        "property": "owner",
+        "collection": "cssGroup",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "collection": "cssGroup",
+        "property": "parent",
+        "value": "${parentID}"
+      },
+      {
+        "func": "SET",
+        "collection": "cssGroup",
+        "property": "layer",
+        "value": 5
+      }
+    ],
+    "menuCloneDeleteRoutine": [
+      {
+        "Note": "Delete menu holder and css options.",
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "id",
+        "variable": "btnID"
+      },
+      {
+        "func": "SELECT",
+        "property": "owner",
+        "collection": "clonesThisPlayer",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SELECT",
+        "source": "clonesThisPlayer",
+        "property": "parent",
+        "value": "${btnID}"
+      },
+      {
+        "func": "DELETE"
+      },
+      {
+        "Note": "Delete colored unicode buttons.",
+        "func": "SELECT",
+        "source": "clonesThisPlayer",
+        "property": "unicodebtn",
+        "value": true
+      },
+      {
+        "func": "DELETE"
+      }
+    ],
+    "menustatus": false,
+    "text": "Options",
+    "vttChatID": "originaloptions",
+    "vttChatVersion": "1.1",
+    "parent": "mainChat",
+    "optionsBasicsRoutine": [
+      {
+        "Note": "Clone options menu holder",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originaloptionsholder",
+        "collection": "myOriginalHolder"
+      },
+      {
+        "func": "SELECT",
+        "source": "myOriginalHolder",
+        "property": "owner",
+        "value": null,
+        "collection": "myOriginalHolder"
+      },
+      {
+        "func": "CLONE",
+        "source": "myOriginalHolder",
+        "collection": "menuHolderPlayerName"
+      },
+      {
+        "Note": "Clone options menu text",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originaloptionstext",
+        "collection": "myOriginalText"
+      },
+      {
+        "func": "SELECT",
+        "source": "myOriginalText",
+        "property": "owner",
+        "value": null,
+        "collection": "myOriginalText"
+      },
+      {
+        "func": "CLONE",
+        "source": "myOriginalText",
+        "collection": "menuTextPlayerName"
+      },
+      {
+        "Note": "Set parent, position, and owner of menu holder",
+        "func": "SET",
+        "collection": "menuHolderPlayerName",
+        "property": "parent",
+        "value": "${btnID}"
+      },
+      {
+        "func": "SET",
+        "collection": "menuHolderPlayerName",
+        "property": "x",
+        "value": -40
+      },
+      {
+        "func": "SET",
+        "collection": "menuHolderPlayerName",
+        "property": "y",
+        "value": -520
+      },
+      {
+        "func": "SET",
+        "collection": "menuHolderPlayerName",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "Note": "Set parent, position, and owner of menu text",
+        "func": "SET",
+        "collection": "menuTextPlayerName",
+        "property": "parent",
+        "value": "${btnID}"
+      },
+      {
+        "func": "SET",
+        "collection": "menuTextPlayerName",
+        "property": "x",
+        "value": -40
+      },
+      {
+        "func": "SET",
+        "collection": "menuTextPlayerName",
+        "property": "y",
+        "value": -520
+      },
+      {
+        "func": "SET",
+        "collection": "menuTextPlayerName",
+        "property": "owner",
+        "value": "${playerName}"
+      }
+    ],
+    "FullHeightRoutine": [
+      {
+        "Note": "Set height of main chat log.",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "mainChat"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "height",
+        "value": 780
+      },
+      {
+        "Note": "Set height and location of typing area.",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originallabel"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "height",
+        "value": 110
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 780
+      },
+      {
+        "Note": "Set location of options button.",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originaloptions"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 894
+      },
+      {
+        "Note": "The height change only displays if the mainChat is updated.  Call routine to make that happen.",
+        "func": "CALL",
+        "routine": "forceChangeRoutine"
+      },
+      {
+        "Note": "Set location of unicode buttons.",
+        "func": "SELECT",
+        "property": "unicodebtntop",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 700
+      },
+      {
+        "func": "SELECT",
+        "property": "unicodebtnbottom",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 750
+      },
+      {
+        "Note": "Set location of menu holder",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originaloptionsholder"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -520
+      },
+      {
+        "Note": "Set location of menu text",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originaloptionstext"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -520
+      },
+      {
+        "Note": "Set location of css options.",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalcss1"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -481
+      },
+      {
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalcss2"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -451
+      },
+      {
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalcss3"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -421
+      },
+      {
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalcss4"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -391
+      },
+      {
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalcss5"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -361
+      },
+      {
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalcss6"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -331
+      },
+      {
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalcss7"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -301
+      },
+      {
+        "Note": "Set location of size button.",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalsize"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -270
+      }
+    ],
+    "HalfHeightRoutine": [
+      {
+        "Note": "Set height of main chat log.",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "mainChat"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "height",
+        "value": 400
+      },
+      {
+        "Note": "Set height and location of typing area.",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originallabel"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "height",
+        "value": 60
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 400
+      },
+      {
+        "Note": "Set location of options button.",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originaloptions"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 464
+      },
+      {
+        "Note": "The height change only displays if the mainChat is updated.  Call routine to make that happen.",
+        "func": "CALL",
+        "routine": "forceChangeRoutine"
+      },
+      {
+        "Note": "Set location of unicode buttons.",
+        "func": "SELECT",
+        "property": "unicodebtntop",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 310
+      },
+      {
+        "func": "SELECT",
+        "property": "unicodebtnbottom",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 360
+      },
+      {
+        "Note": "Set location of menu holder",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originaloptionsholder"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -470
+      },
+      {
+        "Note": "Set location of menu text",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originaloptionstext"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -470
+      },
+      {
+        "Note": "Set location of css options.",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalcss1"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -431
+      },
+      {
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalcss2"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -401
+      },
+      {
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalcss3"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -371
+      },
+      {
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalcss4"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -341
+      },
+      {
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalcss5"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -311
+      },
+      {
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalcss6"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -281
+      },
+      {
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalcss7"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -251
+      },
+      {
+        "Note": "Set location of size button.",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalsize"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -220
+      }
+    ],
+    "forceChangeRoutine": [
+      {
+        "Note": "Get the current chat log string.",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "mainChat"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "text",
+        "variable": "mainChat"
+      },
+      {
+        "Note": "The chat log must change to something, so erase it and then put the originial right back in.",
+        "func": "SET",
+        "property": "text",
+        "value": "."
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${mainChat}"
+      },
+      {
+        "Note": "Repeat the same process, but this time for the typing area.",
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originallabel"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "text",
+        "variable": "labelText"
+      },
+      {
+        "Note": "The chat log must change to something, so erase it and then put the originial right back in.",
+        "func": "SET",
+        "property": "text",
+        "value": "."
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${labelText}"
+      }
+    ]
+  },
+  "originaloptionsholder": {
+    "type": "holder",
+    "id": "originaloptionsholder",
+    "x": -40,
+    "y": -520,
+    "width": 235,
+    "height": 400,
+    "z": 37,
+    "alignChildren": false,
+    "css": "background:white",
+    "dropTarget": {
+      "customization": true
+    },
+    "vttChatID": "originaloptionsholder",
+    "vttChatVersion": "1.1",
+    "parent": "originaloptions"
+  },
+  "originaloptionstext": {
+    "id": "originaloptionstext",
+    "x": -40,
+    "y": -520,
+    "width": 235,
+    "height": 400,
+    "z": 15,
+    "movable": false,
+    "css": "color:black; text-align:left; line-height: 31px",
+    "text": "             Options Menu\n               Font-Size:\n Background-color:\n              Text color:\n                  Opacity:\n         Border width:\n         Border color:\n          Border style:\n                   Height:\n Choose another color",
+    "vttChatID": "originaloptionstext",
+    "vttChatVersion": "1.1",
+    "parent": "originaloptions"
+  },
+  "originalred": {
+    "type": "button",
+    "id": "originalred",
+    "x": 18,
+    "y": 700,
+    "width": 20,
+    "height": 20,
+    "z": 588,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalsidebtn"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "id"
+      },
+      {
+        "func": "CALL",
+        "routine": "chatRoutine",
+        "widget": "${id}"
+      },
+      {
+        "func": "SELECT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "chatColor",
+        "value": "🔴"
+      }
+    ],
+    "css": "border-style:none; background:transparent;font-size:35px",
+    "text": "🔴",
+    "unicodebtn": true,
+    "unicodebtntop": true,
+    "vttChatID": "originalred",
+    "vttChatVersion": "1.1",
+    "parent": "mainChat"
+  },
+  "originalorange": {
+    "type": "button",
+    "id": "originalorange",
+    "x": 80,
+    "y": 700,
+    "width": 20,
+    "height": 20,
+    "z": 589,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalsidebtn"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "id"
+      },
+      {
+        "func": "CALL",
+        "routine": "chatRoutine",
+        "widget": "${id}"
+      },
+      {
+        "func": "SELECT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "chatColor",
+        "value": "🟠"
+      }
+    ],
+    "css": "border-style:none; background:transparent;font-size:35px",
+    "text": "🟠",
+    "unicodebtn": true,
+    "unicodebtntop": true,
+    "vttChatID": "originalorange",
+    "vttChatVersion": "1.1",
+    "parent": "mainChat"
+  },
+  "originalyellow": {
+    "type": "button",
+    "id": "originalyellow",
+    "parent": "mainChat",
+    "x": 142,
+    "y": 700,
+    "width": 20,
+    "height": 20,
+    "z": 590,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalsidebtn"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "id"
+      },
+      {
+        "func": "CALL",
+        "routine": "chatRoutine",
+        "widget": "${id}"
+      },
+      {
+        "func": "SELECT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "chatColor",
+        "value": "🟡"
+      }
+    ],
+    "css": "border-style:none; background:transparent;font-size:35px",
+    "text": "🟡",
+    "unicodebtn": true,
+    "unicodebtntop": true,
+    "vttChatID": "originalyellow",
+    "vttChatVersion": "1.1"
+  },
+  "originalgreen": {
+    "type": "button",
+    "id": "originalgreen",
+    "x": 204,
+    "y": 700,
+    "width": 20,
+    "height": 20,
+    "z": 591,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalsidebtn"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "id"
+      },
+      {
+        "func": "CALL",
+        "routine": "chatRoutine",
+        "widget": "${id}"
+      },
+      {
+        "func": "SELECT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "chatColor",
+        "value": "🟢"
+      }
+    ],
+    "css": "border-style:none; background:transparent;font-size:35px",
+    "text": "🟢",
+    "unicodebtn": true,
+    "unicodebtntop": true,
+    "vttChatID": "originalgreen",
+    "vttChatVersion": "1.1",
+    "parent": "mainChat"
+  },
+  "originalblue": {
+    "type": "button",
+    "id": "originalblue",
+    "x": 18,
+    "y": 750,
+    "width": 20,
+    "height": 20,
+    "z": 592,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalsidebtn"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "id"
+      },
+      {
+        "func": "CALL",
+        "routine": "chatRoutine",
+        "widget": "${id}"
+      },
+      {
+        "func": "SELECT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "chatColor",
+        "value": "🔵"
+      }
+    ],
+    "css": "border-style:none; background:transparent;font-size:35px",
+    "text": "🔵",
+    "unicodebtn": true,
+    "unicodebtnbottom": true,
+    "vttChatID": "originalblue",
+    "vttChatVersion": "1.1",
+    "parent": "mainChat"
+  },
+  "originalpurple": {
+    "type": "button",
+    "id": "originalpurple",
+    "x": 80,
+    "y": 750,
+    "width": 20,
+    "height": 20,
+    "z": 593,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalsidebtn"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "id"
+      },
+      {
+        "func": "CALL",
+        "routine": "chatRoutine",
+        "widget": "${id}"
+      },
+      {
+        "func": "SELECT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "chatColor",
+        "value": "🟣"
+      }
+    ],
+    "css": "border-style:none; background:transparent;font-size:35px",
+    "text": "🟣",
+    "unicodebtn": true,
+    "unicodebtnbottom": true,
+    "vttChatID": "originalpurple",
+    "vttChatVersion": "1.1",
+    "parent": "mainChat"
+  },
+  "originalbrown": {
+    "type": "button",
+    "id": "originalbrown",
+    "x": 142,
+    "y": 750,
+    "width": 20,
+    "height": 20,
+    "z": 594,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalsidebtn"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "id"
+      },
+      {
+        "func": "CALL",
+        "routine": "chatRoutine",
+        "widget": "${id}"
+      },
+      {
+        "func": "SELECT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "chatColor",
+        "value": "🟤"
+      }
+    ],
+    "css": "border-style:none; background:transparent;font-size:35px",
+    "text": "🟤",
+    "unicodebtn": true,
+    "unicodebtnbottom": true,
+    "vttChatID": "originalbrown",
+    "vttChatVersion": "1.1",
+    "parent": "mainChat"
+  },
+  "originalblack": {
+    "type": "button",
+    "id": "originalblack",
+    "x": 204,
+    "y": 750,
+    "width": 20,
+    "height": 20,
+    "z": 595,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalsidebtn"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "id"
+      },
+      {
+        "func": "CALL",
+        "routine": "chatRoutine",
+        "widget": "${id}"
+      },
+      {
+        "func": "SELECT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "chatColor",
+        "value": "⚫"
+      }
+    ],
+    "css": "border-style:none; background:transparent;font-size:35px",
+    "text": "⚫",
+    "unicodebtn": true,
+    "unicodebtnbottom": true,
+    "vttChatID": "originalblack",
+    "vttChatVersion": "1.1",
+    "parent": "mainChat"
+  },
+  "originalcss1": {
+    "type": "label",
+    "id": "originalcss1",
+    "x": 110,
+    "y": -481,
+    "width": 90,
+    "z": 321,
+    "changeRoutine": [
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "text",
+        "variable": "setting"
+      },
+      "var isCR = ${setting} includes '\\u000a'",
+      {
+        "func": "IF",
+        "operand2": true,
+        "relation": "==",
+        "thenRoutine": [
+          "var setting = ${setting} replace '\\u000a' ''",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "${setting}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "${setting}"
+          },
+          {
+            "func": "SELECT",
+            "source": "all",
+            "property": "vttChatID",
+            "value": "mainChat",
+            "collection": "myClonedMainChat"
+          },
+          {
+            "func": "SELECT",
+            "source": "myClonedMainChat",
+            "property": "owner",
+            "collection": "myClonedMainChat",
+            "value": "${playerName}"
+          },
+          {
+            "func": "GET",
+            "collection": "myClonedMainChat",
+            "property": "css",
+            "variable": "chatCss"
+          },
+          "var cssArray = ${chatCss} split 'ont-size\\u003a '",
+          "var begToF = ${cssArray} getIndex 0",
+          "var fontsizeToEnd = ${cssArray} getIndex 1",
+          "var hasF = ${begToF} endsWith 'f'",
+          {
+            "func": "IF",
+            "relation": "!=",
+            "operand2": true,
+            "thenRoutine": [
+              "var begToF = ${begToF} concat '\\u003b font-size\\u003a '"
+            ],
+            "elseRoutine": [
+              "var begToF = ${begToF} concat 'ont-size\\u003a '"
+            ],
+            "operand1": "${hasF}"
+          },
+          {
+            "note": "Create temporary property.",
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "tempFont",
+            "value": "${fontsizeToEnd}"
+          },
+          "var fontsizeToEndString = ${PROPERTY tempFont} concat ''",
+          {
+            "note": "Erase temporary property.",
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "tempFont",
+            "value": null
+          },
+          "var fontsizeToEndArray = ${fontsizeToEndString} split '\\u003b'",
+          "var trash = ${fontsizeToEndArray} shift",
+          "var newFontsizeToEnd = ${fontsizeToEndArray} join '\\u003b'",
+          {
+            "note": "Create temporary property.",
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "tempSetting",
+            "value": "${setting}px;"
+          },
+          "var finalFontsizeToEnd = ${PROPERTY tempSetting} concat ${newFontsizeToEnd}",
+          {
+            "note": "Erase temporary property.",
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "tempSetting",
+            "value": null
+          },
+          "var newCSS = ${begToF} concat ${finalFontsizeToEnd}",
+          "var newCSS = ${newCSS} replaceAll '\\u003b\\u003b' '\\u003b'",
+          "var newCSS = ${newCSS} replaceAll '\\u003b\\u0022' '\\u0022'",
+          "var newCSS = ${newCSS} replaceAll '\\u003b 0' ''",
+          "var newCSS = ${newCSS} replaceAll '\\u000a' ''",
+          {
+            "func": "SET",
+            "collection": "myClonedMainChat",
+            "property": "css",
+            "value": "${newCSS}"
+          }
+        ],
+        "operand1": "${isCR}"
+      }
+    ],
+    "editable": true,
+    "text": 16,
+    "vttChatID": "originalcss1",
+    "vttChatVersion": "1.1",
+    "parent": "originaloptions",
+    "cssOptions": true
+  },
+  "originalcss2": {
+    "type": "label",
+    "id": "originalcss2",
+    "x": 110,
+    "y": -451,
+    "width": 90,
+    "z": 322,
+    "changeRoutine": [
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "text",
+        "variable": "setting"
+      },
+      "var isCR = ${setting} includes '\\u000a'",
+      {
+        "func": "IF",
+        "operand2": true,
+        "relation": "==",
+        "thenRoutine": [
+          "var setting = ${setting} replace '\\u000a' ''",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "${setting}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "${setting}"
+          },
+          {
+            "func": "SELECT",
+            "source": "all",
+            "property": "vttChatID",
+            "value": "mainChat",
+            "collection": "myClonedMainChat"
+          },
+          {
+            "func": "SELECT",
+            "source": "myClonedMainChat",
+            "property": "owner",
+            "collection": "myClonedMainChat",
+            "value": "${playerName}"
+          },
+          {
+            "func": "GET",
+            "collection": "myClonedMainChat",
+            "property": "css",
+            "variable": "Css"
+          },
+          {
+            "note": "=========this part must be changed for new attributes=========="
+          },
+          "var cssArray = ${Css} split 'ackground-color\\u003a '",
+          "var begToFirstLetter = ${cssArray} getIndex 0",
+          "var attributeToEnd = ${cssArray} getIndex 1",
+          {
+            "note": "=========this part must be changed for new attributes=========="
+          },
+          "var hasFirstLetter = ${begToFirstLetter} endsWith 'b'",
+          {
+            "func": "IF",
+            "relation": "!=",
+            "operand2": true,
+            "thenRoutine": [
+              {
+                "note": "=========this part must be changed for new attributes=========="
+              },
+              "var begToFirstLetter = ${begToFirstLetter} concat '\\u003b background-color\\u003a '"
+            ],
+            "elseRoutine": [
+              {
+                "note": "=========this part must be changed for new attributes=========="
+              },
+              "var begToFirstLetter = ${begToFirstLetter} concat 'ackground-color\\u003a '"
+            ],
+            "operand1": "${hasFirstLetter}"
+          },
+          "var attributeToEndArray = ${attributeToEnd} split '\\u003b'",
+          "var trash = ${attributeToEndArray} shift",
+          "var newattributeToEnd = ${attributeToEndArray} join '\\u003b'",
+          {
+            "note": "=========this part must be changed for new attributes +/- px =========="
+          },
+          {
+            "note": "Create temporary property.",
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "tempSetting",
+            "value": "${setting};"
+          },
+          "var finalattributeToEnd = ${PROPERTY tempSetting} concat ${newattributeToEnd}",
+          {
+            "note": "Erase temporary property.",
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "tempSetting",
+            "value": null
+          },
+          "var newCSS = ${begToFirstLetter} concat ${finalattributeToEnd}",
+          "var newCSS = ${newCSS} replaceAll '\\u003b\\u003b' '\\u003b'",
+          "var newCSS = ${newCSS} replaceAll '\\u003b\\u0022' '\\u0022'",
+          "var newCSS = ${newCSS} replaceAll '\\u003b0' ''",
+          "var newCSS = ${newCSS} replaceAll '\\u000a' ''",
+          {
+            "func": "SET",
+            "collection": "myClonedMainChat",
+            "property": "css",
+            "value": "${newCSS}"
+          }
+        ],
+        "operand1": "${isCR}"
+      }
+    ],
+    "editable": true,
+    "text": "#F0F0F0",
+    "vttChatID": "originalcss2",
+    "vttChatVersion": "1.1",
+    "parent": "originaloptions",
+    "cssOptions": true
+  },
+  "originalcss3": {
+    "type": "label",
+    "id": "originalcss3",
+    "x": 110,
+    "y": -421,
+    "width": 90,
+    "z": 323,
+    "changeRoutine": [
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "text",
+        "variable": "setting"
+      },
+      "var isCR = ${setting} includes '\\u000a'",
+      {
+        "func": "IF",
+        "operand2": true,
+        "relation": "==",
+        "thenRoutine": [
+          "var setting = ${setting} replace '\\u000a' ''",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "${setting}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "${setting}"
+          },
+          {
+            "func": "SELECT",
+            "source": "all",
+            "property": "vttChatID",
+            "value": "mainChat",
+            "collection": "myClonedMainChat"
+          },
+          {
+            "func": "SELECT",
+            "source": "myClonedMainChat",
+            "property": "owner",
+            "collection": "myClonedMainChat",
+            "value": "${playerName}"
+          },
+          {
+            "func": "GET",
+            "collection": "myClonedMainChat",
+            "property": "css",
+            "variable": "Css"
+          },
+          {
+            "note": "=========this part must be changed for new attributes=========="
+          },
+          "var cssArray = ${Css} split ' color\\u003a '",
+          "var begToFirstLetter = ${cssArray} getIndex 0",
+          "var attributeToEnd = ${cssArray} getIndex 1",
+          {
+            "note": "=========this part must be changed for new attributes=========="
+          },
+          "var hasFirstLetter = ${begToFirstLetter} endsWith '\\u003b'",
+          {
+            "func": "IF",
+            "relation": "!=",
+            "operand2": true,
+            "thenRoutine": [
+              {
+                "note": "=========this part must be changed for new attributes=========="
+              },
+              "var begToFirstLetter = ${begToFirstLetter} concat '\\u003b color\\u003a '"
+            ],
+            "elseRoutine": [
+              {
+                "note": "=========this part must be changed for new attributes=========="
+              },
+              "var begToFirstLetter = ${begToFirstLetter} concat ' color\\u003a '"
+            ],
+            "operand1": "${hasFirstLetter}"
+          },
+          "var attributeToEndArray = ${attributeToEnd} split '\\u003b'",
+          "var trash = ${attributeToEndArray} shift",
+          "var newattributeToEnd = ${attributeToEndArray} join '\\u003b'",
+          {
+            "note": "=========this part must be changed for new attributes +/- px =========="
+          },
+          {
+            "note": "Create temporary property.",
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "tempSetting",
+            "value": "${setting};"
+          },
+          "var finalattributeToEnd = ${PROPERTY tempSetting} concat ${newattributeToEnd}",
+          {
+            "note": "Erase temporary property.",
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "tempSetting",
+            "value": null
+          },
+          "var newCSS = ${begToFirstLetter} concat ${finalattributeToEnd}",
+          "var newCSS = ${newCSS} replaceAll '\\u003b\\u003b' '\\u003b'",
+          "var newCSS = ${newCSS} replaceAll '\\u003b\\u0022' '\\u0022'",
+          "var newCSS = ${newCSS} replaceAll '\\u003b0' ''",
+          "var newCSS = ${newCSS} replaceAll '\\u000a' ''",
+          {
+            "func": "SET",
+            "collection": "myClonedMainChat",
+            "property": "css",
+            "value": "${newCSS}"
+          }
+        ],
+        "operand1": "${isCR}"
+      }
+    ],
+    "editable": true,
+    "text": "black",
+    "vttChatID": "originalcss3",
+    "vttChatVersion": "1.1",
+    "parent": "originaloptions",
+    "cssOptions": true
+  },
+  "originalcss4": {
+    "type": "label",
+    "id": "originalcss4",
+    "x": 110,
+    "y": -391,
+    "width": 90,
+    "z": 324,
+    "changeRoutine": [
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "text",
+        "variable": "setting"
+      },
+      "var isCR = ${setting} includes '\\u000a'",
+      {
+        "func": "IF",
+        "operand2": true,
+        "relation": "==",
+        "thenRoutine": [
+          "var setting = ${setting} replace '\\u000a' ''",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "${setting}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "${setting}"
+          },
+          {
+            "func": "SELECT",
+            "source": "all",
+            "property": "vttChatID",
+            "value": "mainChat",
+            "collection": "myClonedMainChat"
+          },
+          {
+            "func": "SELECT",
+            "source": "myClonedMainChat",
+            "property": "owner",
+            "collection": "myClonedMainChat",
+            "value": "${playerName}"
+          },
+          {
+            "func": "GET",
+            "collection": "myClonedMainChat",
+            "property": "css",
+            "variable": "Css"
+          },
+          {
+            "note": "=========this part must be changed for new attributes=========="
+          },
+          "var cssArray = ${Css} split 'pacity\\u003a '",
+          "var begToFirstLetter = ${cssArray} getIndex 0",
+          "var attributeToEnd = ${cssArray} getIndex 1",
+          {
+            "note": "=========this part must be changed for new attributes=========="
+          },
+          "var hasFirstLetter = ${begToFirstLetter} endsWith 'o'",
+          {
+            "func": "IF",
+            "relation": "!=",
+            "operand2": true,
+            "thenRoutine": [
+              {
+                "note": "=========this part must be changed for new attributes=========="
+              },
+              "var begToFirstLetter = ${begToFirstLetter} concat '\\u003b opacity\\u003a '"
+            ],
+            "elseRoutine": [
+              {
+                "note": "=========this part must be changed for new attributes=========="
+              },
+              "var begToFirstLetter = ${begToFirstLetter} concat 'pacity\\u003a '"
+            ],
+            "operand1": "${hasFirstLetter}"
+          },
+          "var attributeToEndArray = ${attributeToEnd} split '\\u003b'",
+          "var trash = ${attributeToEndArray} shift",
+          "var newattributeToEnd = ${attributeToEndArray} join '\\u003b'",
+          {
+            "note": "=========this part must be changed for new attributes +/- px =========="
+          },
+          {
+            "note": "Create temporary property.",
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "tempSetting",
+            "value": "${setting};"
+          },
+          "var finalattributeToEnd = ${PROPERTY tempSetting} concat ${newattributeToEnd}",
+          {
+            "note": "Erase temporary property.",
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "tempSetting",
+            "value": null
+          },
+          "var newCSS = ${begToFirstLetter} concat ${finalattributeToEnd}",
+          "var newCSS = ${newCSS} replaceAll '\\u003b\\u003b' '\\u003b'",
+          "var newCSS = ${newCSS} replaceAll '\\u003b\\u0022' '\\u0022'",
+          "var newCSS = ${newCSS} replaceAll '\\u003b0' ''",
+          "var newCSS = ${newCSS} replaceAll '\\u000a' ''",
+          {
+            "func": "SET",
+            "collection": "myClonedMainChat",
+            "property": "css",
+            "value": "${newCSS}"
+          }
+        ],
+        "operand1": "${isCR}"
+      }
+    ],
+    "editable": true,
+    "text": 1,
+    "vttChatID": "originalcss4",
+    "vttChatVersion": "1.1",
+    "parent": "originaloptions",
+    "cssOptions": true
+  },
+  "originalcss5": {
+    "type": "label",
+    "id": "originalcss5",
+    "x": 110,
+    "y": -361,
+    "width": 90,
+    "z": 325,
+    "changeRoutine": [
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "text",
+        "variable": "setting"
+      },
+      "var isCR = ${setting} includes '\\u000a'",
+      {
+        "func": "IF",
+        "operand2": true,
+        "relation": "==",
+        "thenRoutine": [
+          "var setting = ${setting} replace '\\u000a' ''",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "${setting}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "${setting}"
+          },
+          {
+            "func": "SELECT",
+            "source": "all",
+            "property": "vttChatID",
+            "value": "mainChat",
+            "collection": "myClonedMainChat"
+          },
+          {
+            "func": "SELECT",
+            "source": "myClonedMainChat",
+            "property": "owner",
+            "collection": "myClonedMainChat",
+            "value": "${playerName}"
+          },
+          {
+            "func": "GET",
+            "collection": "myClonedMainChat",
+            "property": "css",
+            "variable": "Css"
+          },
+          {
+            "note": "=========this part must be changed for new attributes=========="
+          },
+          "var cssArray = ${Css} split 'order-width\\u003a '",
+          "var begToFirstLetter = ${cssArray} getIndex 0",
+          "var attributeToEnd = ${cssArray} getIndex 1",
+          {
+            "note": "=========this part must be changed for new attributes=========="
+          },
+          "var hasFirstLetter = ${begToFirstLetter} endsWith 'o'",
+          {
+            "func": "IF",
+            "relation": "!=",
+            "operand2": true,
+            "thenRoutine": [
+              {
+                "note": "=========this part must be changed for new attributes=========="
+              },
+              "var begToFirstLetter = ${begToFirstLetter} concat '\\u003b border-width\\u003a '"
+            ],
+            "elseRoutine": [
+              {
+                "note": "=========this part must be changed for new attributes=========="
+              },
+              "var begToFirstLetter = ${begToFirstLetter} concat 'order-width\\u003a '"
+            ],
+            "operand1": "${hasFirstLetter}"
+          },
+          "var attributeToEndArray = ${attributeToEnd} split 'b'",
+          "var trash = ${attributeToEndArray} shift",
+          "var newattributeToEnd = ${attributeToEndArray} join '\\u003b'",
+          {
+            "note": "=========this part must be changed for new attributes +/- px =========="
+          },
+          {
+            "note": "Create temporary property.",
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "tempSetting",
+            "value": "${setting};"
+          },
+          "var finalattributeToEnd = ${PROPERTY tempSetting} concat ${newattributeToEnd}",
+          {
+            "note": "Erase temporary property.",
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "tempSetting",
+            "value": null
+          },
+          "var newCSS = ${begToFirstLetter} concat ${finalattributeToEnd}",
+          "var newCSS = ${newCSS} replaceAll '\\u003b\\u003b' '\\u003b'",
+          "var newCSS = ${newCSS} replaceAll '\\u003b\\u0022' '\\u0022'",
+          "var newCSS = ${newCSS} replaceAll '\\u003b0' ''",
+          "var newCSS = ${newCSS} replaceAll '\\u000a' ''",
+          {
+            "func": "SET",
+            "collection": "myClonedMainChat",
+            "property": "css",
+            "value": "${newCSS}"
+          }
+        ],
+        "operand1": "${isCR}"
+      }
+    ],
+    "editable": true,
+    "text": "thin",
+    "vttChatID": "originalcss5",
+    "vttChatVersion": "1.1",
+    "parent": "originaloptions",
+    "cssOptions": true
+  },
+  "originalcss6": {
+    "type": "label",
+    "id": "originalcss6",
+    "x": 110,
+    "y": -331,
+    "width": 90,
+    "z": 326,
+    "changeRoutine": [
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "text",
+        "variable": "setting"
+      },
+      "var isCR = ${setting} includes '\\u000a'",
+      {
+        "func": "IF",
+        "operand2": true,
+        "relation": "==",
+        "thenRoutine": [
+          "var setting = ${setting} replace '\\u000a' ''",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "${setting}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "${setting}"
+          },
+          {
+            "func": "SELECT",
+            "source": "all",
+            "property": "vttChatID",
+            "value": "mainChat",
+            "collection": "myClonedMainChat"
+          },
+          {
+            "func": "SELECT",
+            "source": "myClonedMainChat",
+            "property": "owner",
+            "collection": "myClonedMainChat",
+            "value": "${playerName}"
+          },
+          {
+            "func": "GET",
+            "collection": "myClonedMainChat",
+            "property": "css",
+            "variable": "Css"
+          },
+          {
+            "note": "=========this part must be changed for new attributes=========="
+          },
+          "var cssArray = ${Css} split 'order-color\\u003a '",
+          "var begToFirstLetter = ${cssArray} getIndex 0",
+          "var attributeToEnd = ${cssArray} getIndex 1",
+          {
+            "note": "=========this part must be changed for new attributes=========="
+          },
+          "var hasFirstLetter = ${begToFirstLetter} endsWith 'b'",
+          {
+            "func": "IF",
+            "relation": "!=",
+            "operand2": true,
+            "thenRoutine": [
+              {
+                "note": "=========this part must be changed for new attributes=========="
+              },
+              "var begToFirstLetter = ${begToFirstLetter} concat '\\u003b bordor-color\\u003a '"
+            ],
+            "elseRoutine": [
+              {
+                "note": "=========this part must be changed for new attributes=========="
+              },
+              "var begToFirstLetter = ${begToFirstLetter} concat 'order-color\\u003a '"
+            ],
+            "operand1": "${hasFirstLetter}"
+          },
+          "var attributeToEndArray = ${attributeToEnd} split '\\u003b'",
+          "var trash = ${attributeToEndArray} shift",
+          "var newattributeToEnd = ${attributeToEndArray} join '\\u003b'",
+          {
+            "note": "=========this part must be changed for new attributes +/- px =========="
+          },
+          {
+            "note": "Create temporary property.",
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "tempSetting",
+            "value": "${setting};"
+          },
+          "var finalattributeToEnd = ${PROPERTY tempSetting} concat ${newattributeToEnd}",
+          {
+            "note": "Erase temporary property.",
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "tempSetting",
+            "value": null
+          },
+          "var newCSS = ${begToFirstLetter} concat ${finalattributeToEnd}",
+          "var newCSS = ${newCSS} replaceAll '\\u003b\\u003b' '\\u003b'",
+          "var newCSS = ${newCSS} replaceAll '\\u003b\\u0022' '\\u0022'",
+          "var newCSS = ${newCSS} replaceAll '\\u003b0' ''",
+          "var newCSS = ${newCSS} replaceAll '\\u000a' ''",
+          {
+            "func": "SET",
+            "collection": "myClonedMainChat",
+            "property": "css",
+            "value": "${newCSS}"
+          }
+        ],
+        "operand1": "${isCR}"
+      }
+    ],
+    "editable": true,
+    "text": "gray",
+    "vttChatID": "originalcss6",
+    "vttChatVersion": "1.1",
+    "parent": "originaloptions",
+    "cssOptions": true
+  },
+  "originalcss7": {
+    "type": "label",
+    "id": "originalcss7",
+    "x": 110,
+    "y": -301,
+    "width": 90,
+    "z": 327,
+    "changeRoutine": [
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "text",
+        "variable": "setting"
+      },
+      "var isCR = ${setting} includes '\\u000a'",
+      {
+        "func": "IF",
+        "operand2": true,
+        "relation": "==",
+        "thenRoutine": [
+          "var setting = ${setting} replace '\\u000a' ''",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "${setting}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "${setting}"
+          },
+          {
+            "func": "SELECT",
+            "source": "all",
+            "property": "vttChatID",
+            "value": "mainChat",
+            "collection": "myClonedMainChat"
+          },
+          {
+            "func": "SELECT",
+            "source": "myClonedMainChat",
+            "property": "owner",
+            "collection": "myClonedMainChat",
+            "value": "${playerName}"
+          },
+          {
+            "func": "GET",
+            "collection": "myClonedMainChat",
+            "property": "css",
+            "variable": "Css"
+          },
+          {
+            "note": "=========this part must be changed for new attributes=========="
+          },
+          "var cssArray = ${Css} split 'order-style\\u003a '",
+          "var begToFirstLetter = ${cssArray} getIndex 0",
+          "var attributeToEnd = ${cssArray} getIndex 1",
+          {
+            "note": "=========this part must be changed for new attributes=========="
+          },
+          "var hasFirstLetter = ${begToFirstLetter} endsWith 'b'",
+          {
+            "func": "IF",
+            "relation": "!=",
+            "operand2": true,
+            "thenRoutine": [
+              {
+                "note": "=========this part must be changed for new attributes=========="
+              },
+              "var begToFirstLetter = ${begToFirstLetter} concat '\\u003b border-style\\u003a '"
+            ],
+            "elseRoutine": [
+              {
+                "note": "=========this part must be changed for new attributes=========="
+              },
+              "var begToFirstLetter = ${begToFirstLetter} concat 'order-style\\u003a '"
+            ],
+            "operand1": "${hasFirstLetter}"
+          },
+          "var attributeToEndArray = ${attributeToEnd} split '\\u003b'",
+          "var trash = ${attributeToEndArray} shift",
+          "var newattributeToEnd = ${attributeToEndArray} join '\\u003b'",
+          {
+            "note": "=========this part must be changed for new attributes +/- px =========="
+          },
+          {
+            "note": "Create temporary property.",
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "tempSetting",
+            "value": "${setting};"
+          },
+          "var finalattributeToEnd = ${PROPERTY tempSetting} concat ${newattributeToEnd}",
+          {
+            "note": "Erase temporary property.",
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "tempSetting",
+            "value": null
+          },
+          "var newCSS = ${begToFirstLetter} concat ${finalattributeToEnd}",
+          "var newCSS = ${newCSS} replaceAll '\\u003b\\u003b' '\\u003b'",
+          "var newCSS = ${newCSS} replaceAll '\\u003b\\u0022' '\\u0022'",
+          "var newCSS = ${newCSS} replaceAll '\\u003b0' ''",
+          "var newCSS = ${newCSS} replaceAll '\\u000a' ''",
+          {
+            "func": "SET",
+            "collection": "myClonedMainChat",
+            "property": "css",
+            "value": "${newCSS}"
+          }
+        ],
+        "operand1": "${isCR}"
+      }
+    ],
+    "editable": true,
+    "text": "dotted",
+    "vttChatID": "originalcss7",
+    "vttChatVersion": "1.1",
+    "parent": "originaloptions",
+    "cssOptions": true
+  },
+  "originalsize": {
+    "type": "button",
+    "id": "originalsize",
+    "x": 130,
+    "y": -270,
+    "width": 50,
+    "height": 25,
+    "z": 711,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originaloptions"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "collection": "optionsPlayerName",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "collection": "optionsPlayerName",
+        "property": "id",
+        "variable": "optionsPlayerNameID"
+      },
+      {
+        "Note": "Determine if height is full.",
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "fullheight",
+        "variable": "fullheight"
+      },
+      {
+        "func": "IF",
+        "operand2": true,
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "Note": "If full, then call routine to make it half, set fullheight flag to false, and change button text."
+          },
+          {
+            "func": "CALL",
+            "routine": "HalfHeightRoutine",
+            "widget": "${optionsPlayerNameID}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "fullheight",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "Full"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "Note": "If half, then call routine to make it full, set fullheight flag to true, and change button text."
+          },
+          {
+            "func": "CALL",
+            "routine": "FullHeightRoutine",
+            "widget": "${optionsPlayerNameID}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "fullheight",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "Half"
+          }
+        ],
+        "operand1": "${fullheight}"
+      }
+    ],
+    "css": "border-radius:10px",
+    "fullheight": true,
+    "text": "Half",
+    "vttChatID": "originalsize",
+    "vttChatVersion": "1.1",
+    "parent": "originaloptions",
+    "cssOptions": true
+  },
+  "startChat": {
+    "type": "button",
+    "id": "startChat",
+    "z": 770,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "vttChatID",
+        "value": "originalsidebtn"
+      },
+      {
+        "func": "GET",
+        "property": "id"
+      },
+      {
+        "func": "CALL",
+        "routine": "openRoutine",
+        "widget": "${id}"
+      }
+    ],
+    "vttChatID": "startChat",
+    "vttChatVersion": "1.1",
+    "css": "line-height: 10px; font-size: 18px; border-radius: 0px 0px 17px 17px;",
+    "width": 150,
+    "height": 20,
+    "text": "Start Chat",
+    "x": 2
+  }
+}

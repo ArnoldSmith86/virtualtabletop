@@ -1,0 +1,893 @@
+{
+  "_meta": {
+    "version": 3,
+    "info": {
+      "name": "Functions - CLICK",
+      "image": "/assets/-594063130_6827",
+      "rules": "",
+      "bgg": "",
+      "year": "2020",
+      "mode": "Tutorial",
+      "time": "",
+      "players": "1",
+      "language": "US",
+      "variant": "Basic",
+      "attribution": ""
+    }
+  },
+  "yqji": {
+    "type": "button",
+    "text": "CLICK",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "zuvg"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "x": 200,
+    "y": 301,
+    "z": 12,
+    "id": "yqji"
+  },
+  "9c3z": {
+    "type": "label",
+    "text": "Click on a BasicWidget.",
+    "x": 139,
+    "y": 244,
+    "z": 16,
+    "width": 300,
+    "height": 60,
+    "id": "9c3z"
+  },
+  "zuvg": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      },
+      {
+        "classes": "checkersPiece crowned"
+      }
+    ],
+    "color": "#e0cb0b",
+    "width": 73.5,
+    "height": 73.5,
+    "x": 304.25,
+    "y": 303.25,
+    "z": 12,
+    "id": "zuvg",
+    "classes": "checkersPiece",
+    "activeFace": 1
+  },
+  "7thj": {
+    "type": "button",
+    "text": "CLICK",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "type",
+        "value": "card"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "x": 638,
+    "y": 325,
+    "z": 13,
+    "id": "7thj"
+  },
+  "amce": {
+    "type": "holder",
+    "id": "amce",
+    "x": 760.5,
+    "y": 290,
+    "dropTarget": {
+      "type": "card"
+    },
+    "z": 2
+  },
+  "amceP": {
+    "type": "pile",
+    "id": "amceP",
+    "parent": "amce",
+    "width": 103,
+    "height": 160
+  },
+  "amceB": {
+    "id": "amceB",
+    "parent": "amce",
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "amce"
+      },
+      {
+        "func": "FLIP",
+        "holder": "amce",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "amce"
+      }
+    ]
+  },
+  "amceD": {
+    "type": "deck",
+    "id": "amceD",
+    "parent": "amce",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "1J": {
+        "image": "/i/cards-default/1J.svg"
+      },
+      "2J": {
+        "image": "/i/cards-default/2J.svg"
+      },
+      "AC": {
+        "image": "/i/cards-default/AC.svg"
+      },
+      "2C": {
+        "image": "/i/cards-default/2C.svg"
+      },
+      "3C": {
+        "image": "/i/cards-default/3C.svg"
+      },
+      "4C": {
+        "image": "/i/cards-default/4C.svg"
+      },
+      "5C": {
+        "image": "/i/cards-default/5C.svg"
+      },
+      "6C": {
+        "image": "/i/cards-default/6C.svg"
+      },
+      "7C": {
+        "image": "/i/cards-default/7C.svg"
+      },
+      "8C": {
+        "image": "/i/cards-default/8C.svg"
+      },
+      "9C": {
+        "image": "/i/cards-default/9C.svg"
+      },
+      "TC": {
+        "image": "/i/cards-default/TC.svg"
+      },
+      "JC": {
+        "image": "/i/cards-default/JC.svg"
+      },
+      "QC": {
+        "image": "/i/cards-default/QC.svg"
+      },
+      "KC": {
+        "image": "/i/cards-default/KC.svg"
+      },
+      "AD": {
+        "image": "/i/cards-default/AD.svg"
+      },
+      "2D": {
+        "image": "/i/cards-default/2D.svg"
+      },
+      "3D": {
+        "image": "/i/cards-default/3D.svg"
+      },
+      "4D": {
+        "image": "/i/cards-default/4D.svg"
+      },
+      "5D": {
+        "image": "/i/cards-default/5D.svg"
+      },
+      "6D": {
+        "image": "/i/cards-default/6D.svg"
+      },
+      "7D": {
+        "image": "/i/cards-default/7D.svg"
+      },
+      "8D": {
+        "image": "/i/cards-default/8D.svg"
+      },
+      "9D": {
+        "image": "/i/cards-default/9D.svg"
+      },
+      "TD": {
+        "image": "/i/cards-default/TD.svg"
+      },
+      "JD": {
+        "image": "/i/cards-default/JD.svg"
+      },
+      "QD": {
+        "image": "/i/cards-default/QD.svg"
+      },
+      "KD": {
+        "image": "/i/cards-default/KD.svg"
+      },
+      "AH": {
+        "image": "/i/cards-default/AH.svg"
+      },
+      "2H": {
+        "image": "/i/cards-default/2H.svg"
+      },
+      "3H": {
+        "image": "/i/cards-default/3H.svg"
+      },
+      "4H": {
+        "image": "/i/cards-default/4H.svg"
+      },
+      "5H": {
+        "image": "/i/cards-default/5H.svg"
+      },
+      "6H": {
+        "image": "/i/cards-default/6H.svg"
+      },
+      "7H": {
+        "image": "/i/cards-default/7H.svg"
+      },
+      "8H": {
+        "image": "/i/cards-default/8H.svg"
+      },
+      "9H": {
+        "image": "/i/cards-default/9H.svg"
+      },
+      "TH": {
+        "image": "/i/cards-default/TH.svg"
+      },
+      "JH": {
+        "image": "/i/cards-default/JH.svg"
+      },
+      "QH": {
+        "image": "/i/cards-default/QH.svg"
+      },
+      "KH": {
+        "image": "/i/cards-default/KH.svg"
+      },
+      "AS": {
+        "image": "/i/cards-default/AS.svg"
+      },
+      "2S": {
+        "image": "/i/cards-default/2S.svg"
+      },
+      "3S": {
+        "image": "/i/cards-default/3S.svg"
+      },
+      "4S": {
+        "image": "/i/cards-default/4S.svg"
+      },
+      "5S": {
+        "image": "/i/cards-default/5S.svg"
+      },
+      "6S": {
+        "image": "/i/cards-default/6S.svg"
+      },
+      "7S": {
+        "image": "/i/cards-default/7S.svg"
+      },
+      "8S": {
+        "image": "/i/cards-default/8S.svg"
+      },
+      "9S": {
+        "image": "/i/cards-default/9S.svg"
+      },
+      "TS": {
+        "image": "/i/cards-default/TS.svg"
+      },
+      "JS": {
+        "image": "/i/cards-default/JS.svg"
+      },
+      "QS": {
+        "image": "/i/cards-default/QS.svg"
+      },
+      "KS": {
+        "image": "/i/cards-default/KS.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "valueType": "static",
+            "value": "/i/cards-default/2B.svg",
+            "color": "transparent"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "valueType": "dynamic",
+            "value": "image",
+            "color": "transparent"
+          }
+        ]
+      }
+    ]
+  },
+  "amceAC": {
+    "id": "amceAC",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "AC",
+    "z": 7771
+  },
+  "amce2C": {
+    "id": "amce2C",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "2C",
+    "z": 4629
+  },
+  "amce3C": {
+    "id": "amce3C",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "3C",
+    "z": 47
+  },
+  "amce4C": {
+    "id": "amce4C",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "4C",
+    "z": 2326
+  },
+  "amce5C": {
+    "id": "amce5C",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "5C",
+    "z": 7028
+  },
+  "amce6C": {
+    "id": "amce6C",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "6C",
+    "z": 8036
+  },
+  "amce7C": {
+    "id": "amce7C",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "7C",
+    "z": 7480
+  },
+  "amce8C": {
+    "id": "amce8C",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "8C",
+    "z": 450
+  },
+  "amce9C": {
+    "id": "amce9C",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "9C",
+    "z": 5864
+  },
+  "amceTC": {
+    "id": "amceTC",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "TC",
+    "z": 5644
+  },
+  "amceJC": {
+    "id": "amceJC",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "JC",
+    "z": 3404
+  },
+  "amceQC": {
+    "id": "amceQC",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "QC",
+    "z": 1570
+  },
+  "amceKC": {
+    "id": "amceKC",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "KC",
+    "z": 9039
+  },
+  "amceAD": {
+    "id": "amceAD",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "AD",
+    "z": 7861
+  },
+  "amce2D": {
+    "id": "amce2D",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "2D",
+    "z": 3027
+  },
+  "amce3D": {
+    "id": "amce3D",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "3D",
+    "z": 5574
+  },
+  "amce4D": {
+    "id": "amce4D",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "4D",
+    "z": 5832
+  },
+  "amce5D": {
+    "id": "amce5D",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "5D",
+    "z": 3949
+  },
+  "amce6D": {
+    "id": "amce6D",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "6D",
+    "z": 648
+  },
+  "amce7D": {
+    "id": "amce7D",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "7D",
+    "z": 417
+  },
+  "amce8D": {
+    "id": "amce8D",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "8D",
+    "z": 8410
+  },
+  "amce9D": {
+    "id": "amce9D",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "9D",
+    "z": 222
+  },
+  "amceTD": {
+    "id": "amceTD",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "TD",
+    "z": 1612
+  },
+  "amceJD": {
+    "id": "amceJD",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "JD",
+    "z": 5440
+  },
+  "amceQD": {
+    "id": "amceQD",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "QD",
+    "z": 7178
+  },
+  "amceKD": {
+    "id": "amceKD",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "KD",
+    "z": 1700
+  },
+  "amceAH": {
+    "id": "amceAH",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "AH",
+    "z": 40
+  },
+  "amce2H": {
+    "id": "amce2H",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "2H",
+    "z": 2402
+  },
+  "amce3H": {
+    "id": "amce3H",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "3H",
+    "z": 9234
+  },
+  "amce4H": {
+    "id": "amce4H",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "4H",
+    "z": 9986
+  },
+  "amce5H": {
+    "id": "amce5H",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "5H",
+    "z": 2621
+  },
+  "amce6H": {
+    "id": "amce6H",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "6H",
+    "z": 2717
+  },
+  "amce7H": {
+    "id": "amce7H",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "7H",
+    "z": 4954
+  },
+  "amce8H": {
+    "id": "amce8H",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "8H",
+    "z": 6218
+  },
+  "amce9H": {
+    "id": "amce9H",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "9H",
+    "z": 844
+  },
+  "amceTH": {
+    "id": "amceTH",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "TH",
+    "z": 4268
+  },
+  "amceJH": {
+    "id": "amceJH",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "JH",
+    "z": 5762
+  },
+  "amceQH": {
+    "id": "amceQH",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "QH",
+    "z": 6631
+  },
+  "amceKH": {
+    "id": "amceKH",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "KH",
+    "z": 3683
+  },
+  "amceAS": {
+    "id": "amceAS",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "AS",
+    "z": 6542
+  },
+  "amce2S": {
+    "id": "amce2S",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "2S",
+    "z": 7596
+  },
+  "amce3S": {
+    "id": "amce3S",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "3S",
+    "z": 9034
+  },
+  "amce4S": {
+    "id": "amce4S",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "4S",
+    "z": 7572
+  },
+  "amce5S": {
+    "id": "amce5S",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "5S",
+    "z": 9466
+  },
+  "amce6S": {
+    "id": "amce6S",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "6S",
+    "z": 1525
+  },
+  "amce7S": {
+    "id": "amce7S",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "7S",
+    "z": 1115
+  },
+  "amce8S": {
+    "id": "amce8S",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "8S",
+    "z": 7000
+  },
+  "amce9S": {
+    "id": "amce9S",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "9S",
+    "z": 9788
+  },
+  "amceTS": {
+    "id": "amceTS",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "TS",
+    "z": 4566
+  },
+  "amceJS": {
+    "id": "amceJS",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "JS",
+    "z": 5688
+  },
+  "amceQS": {
+    "id": "amceQS",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "QS",
+    "z": 9470
+  },
+  "amceKS": {
+    "id": "amceKS",
+    "parent": "amceP",
+    "deck": "amceD",
+    "type": "card",
+    "cardType": "KS",
+    "z": 4573
+  },
+  "88zy": {
+    "type": "label",
+    "text": "Click on all Cards.",
+    "x": 608,
+    "y": 206,
+    "z": 17,
+    "width": 300,
+    "height": 60,
+    "id": "88zy"
+  },
+  "igpg": {
+    "type": "label",
+    "text": "Click on spinners (selected by custom property).",
+    "x": 1108,
+    "y": 199,
+    "z": 18,
+    "width": 300,
+    "height": 60,
+    "id": "igpg"
+  },
+  "6pv6": {
+    "type": "spinner",
+    "value": 2,
+    "options": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "x": 1262,
+    "y": 341,
+    "z": 11,
+    "id": "6pv6",
+    "myCustomProperty": "myCustomValue",
+    "angle": 54810
+  },
+  "yqpn": {
+    "type": "button",
+    "text": "CLICK",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "myCustomProperty",
+        "value": "myCustomValue"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "x": 1111,
+    "y": 371,
+    "z": 14,
+    "id": "yqpn"
+  },
+  "j545": {
+    "type": "spinner",
+    "value": 4,
+    "options": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "x": 1373,
+    "y": 395,
+    "z": 12,
+    "myCustomProperty": "myCustomValue",
+    "id": "j545",
+    "angle": 54930
+  },
+  "ncsa": {
+    "type": "spinner",
+    "value": 1,
+    "options": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "x": 1365,
+    "y": 272,
+    "z": 10,
+    "myCustomProperty": "myCustomValue",
+    "id": "ncsa",
+    "angle": 53669
+  },
+  "zu2w": {
+    "type": "label",
+    "text": "And of course: CLICK ON BUTTONS (don't click on the same button, please, unless you make it conditional).",
+    "x": 582,
+    "y": 662,
+    "z": 20,
+    "width": 400,
+    "height": 60,
+    "id": "zu2w"
+  },
+  "7u2q": {
+    "type": "button",
+    "text": "CLICK",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "type",
+        "value": "button"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": "7u2q",
+        "source": "DEFAULT",
+        "mode": "set"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": "amceB",
+        "source": "DEFAULT",
+        "mode": "set"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "x": 740,
+    "y": 737,
+    "z": 15,
+    "id": "7u2q"
+  },
+  "8fr3": {
+    "type": "label",
+    "text": "Functions: CLICK\nBasic",
+    "css": "font-size: 60px",
+    "height": 200,
+    "width": 1000,
+    "x": 287,
+    "y": -4,
+    "z": 66,
+    "id": "8fr3"
+  }
+}

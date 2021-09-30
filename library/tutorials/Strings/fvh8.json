@@ -1,0 +1,150 @@
+{
+  "8fr3": {
+    "type": "label",
+    "text": "Strings: Creating",
+    "css": "font-size: 60px",
+    "height": 160,
+    "width": 1000,
+    "x": 280,
+    "z": 26392,
+    "id": "8fr3",
+    "y": 1
+  },
+  "input3": {
+    "id": "input3",
+    "x": 962,
+    "y": 424,
+    "z": 32,
+    "text": "out",
+    "width": 50,
+    "height": 50
+  },
+  "input2": {
+    "id": "input2",
+    "x": 961,
+    "y": 359,
+    "z": 31,
+    "text": "this",
+    "width": 50,
+    "height": 50
+  },
+  "input1": {
+    "id": "input1",
+    "x": 960,
+    "y": 296,
+    "z": 19,
+    "text": "Check",
+    "width": 50,
+    "height": 50
+  },
+  "zn3v": {
+    "type": "button",
+    "clickRoutine": [
+      "var part1 = ${PROPERTY text OF input1}",
+      "var part2 = ${PROPERTY text OF input2}",
+      "var part3 = ${PROPERTY text OF input3}",
+      "var newString1 = concat ${part1} ${part2} //Combine parts 1 and 2",
+      "var newString1 = concat ${newString1} ${part3} //Take the result of combining parts 1 and 2 and add on part3 at the end",
+      {
+        "func": "LABEL",
+        "label": "output1",
+        "value": "${newString1}"
+      },
+      "var newString2 = concat ${part1} ' ' //Make a space after part 1",
+      "var newString2 = concat ${newString2} ${part2} //Tack on part 2",
+      "var newString2 = concat ${newString2} ', ' //Add a comma after part 2",
+      "var newString2 = concat ${newString2} ${part3} //Tack on part 3",
+      "var newString2 = concat ${newString2} '.' //Add a period at the end",
+      {
+        "func": "LABEL",
+        "label": "output2",
+        "value": "${newString2}"
+      }
+    ],
+    "x": 1061,
+    "y": 334,
+    "z": 239,
+    "id": "zn3v",
+    "text": "concat"
+  },
+  "output1": {
+    "id": "output1",
+    "x": 1222,
+    "y": 332,
+    "z": 10,
+    "text": "New string goes here.",
+    "width": 200
+  },
+  "output2": {
+    "id": "output2",
+    "x": 1221,
+    "y": 386,
+    "width": 200,
+    "z": 14,
+    "text": "And new string with spaces and punctuation goes here."
+  },
+  "_meta": {
+    "version": 3,
+    "info": {
+      "name": "Strings",
+      "image": "/assets/-1494076321_5309",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "",
+      "players": "1",
+      "language": "US",
+      "variant": "Creating",
+      "attribution": ""
+    }
+  },
+  "tw2s": {
+    "id": "tw2s",
+    "x": 946,
+    "y": 125,
+    "z": 24,
+    "width": 500,
+    "height": 50,
+    "css": "font-size: 20px; ",
+    "text": "This concat button uses SELECT and GET to put the 3 words on the left into variables, then combines them in two different ways using the concat function and dynamic expressions. Finally, the results are displayed in two widgets on the right."
+  },
+  "gb3g": {
+    "type": "button",
+    "clickRoutine": [
+      "var newString = ${PROPERTY customString} //Get the string from a property of this button",
+      {
+        "func": "LABEL",
+        "label": "output",
+        "value": "${newString}"
+      }
+    ],
+    "x": 198,
+    "y": 311,
+    "z": 241,
+    "id": "gb3g",
+    "text": "Show string",
+    "customString": "This is the string."
+  },
+  "i1bj": {
+    "id": "i1bj",
+    "x": 160,
+    "y": 179,
+    "z": 25,
+    "width": 500,
+    "height": 50,
+    "css": "font-size: 20px; ",
+    "text": "This button assigns a custom property of the button to a variable and then displays that in another widget on the right."
+  },
+  "output": {
+    "id": "output",
+    "x": 344,
+    "y": 315,
+    "width": 200,
+    "height": null,
+    "z": 30,
+    "movable": null,
+    "movableInEdit": null,
+    "text": "The string is contained in the custom property 'stringDemo' inside the button JSON."
+  }
+}

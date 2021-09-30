@@ -1,0 +1,5432 @@
+{
+  "5511": {
+    "type": "holder",
+    "x": 475.5,
+    "y": 5,
+    "z": 21798,
+    "id": "5511",
+    "css": "background: #55555550",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "b0b2bf3c-50e3-4145-87cf-e9fb106d3981": {
+    "id": "b0b2bf3c-50e3-4145-87cf-e9fb106d3981",
+    "x": 15,
+    "y": 17,
+    "z": 21798,
+    "type": "button",
+    "text": "Deal",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": [
+          "khsx",
+          "vvo5"
+        ]
+      },
+      {
+        "func": "FLIP",
+        "holder": [
+          "khsx",
+          "vvo5"
+        ],
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": [
+          "khsx",
+          "vvo5"
+        ]
+      },
+      {
+        "func": "SORT",
+        "holder": "vvo5",
+        "key": "Rocket"
+      },
+      {
+        "func": "MOVE",
+        "from": "vvo5",
+        "to": "discard",
+        "count": 1
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "vvo5"
+      },
+      {
+        "func": "MOVE",
+        "from": "vvo5",
+        "to": [
+          "2vmv",
+          "tgc6",
+          "5511",
+          "7ycs",
+          "8urn",
+          "drwy",
+          "up9w"
+        ],
+        "count": 2
+      },
+      {
+        "func": "MOVE",
+        "from": "discard",
+        "to": "vvo5",
+        "count": 4
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "vvo5"
+      },
+      {
+        "func": "MOVE",
+        "from": "vvo5",
+        "to": [
+          "Player Plie 1",
+          "Player Plie 2"
+        ],
+        "count": 13
+      },
+      {
+        "func": "SORT",
+        "holder": [
+          "Player Plie 1",
+          "Player Plie 2",
+          "AI Pile"
+        ],
+        "key": "label"
+      },
+      {
+        "func": "FLIP",
+        "holder": [
+          "2vmv",
+          "tgc6",
+          "5511",
+          "7ycs",
+          "8urn",
+          "drwy",
+          "up9w"
+        ],
+        "count": 1
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "qe3n"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "tokens1"
+      },
+      {
+        "func": "SORT",
+        "holder": "tokens1",
+        "key": "order"
+      },
+      {
+        "func": "SELECT",
+        "property": "order",
+        "relation": ">",
+        "value": 5,
+        "type": "card"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "qe3n",
+        "source": "DEFAULT"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "tokens2"
+      },
+      {
+        "func": "SORT",
+        "holder": "tokens2",
+        "key": "order"
+      },
+      {
+        "func": "SELECT",
+        "property": "resetProperties",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY resetProperties OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "css": "background-color: #243a4e88;border-color:white;color:white;",
+    "height": 40
+  },
+  "146344a4-f702-48c7-9acf-b10cf7da85f8": {
+    "id": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "x": 4,
+    "y": -19,
+    "z": 20288,
+    "type": "deck",
+    "cardTypes": {
+      "type-a92f3b7b-7799-4823-a16d-a2c731481c1b": {
+        "image": "/assets/967136150_56370",
+        "label": "b1",
+        "Rocket": 0
+      },
+      "type-1bdb002a-e392-4f0f-9249-e119bfb782be": {
+        "image": "/assets/-1339691465_84841",
+        "label": "y9",
+        "Rocket": 0
+      },
+      "type-a1c4814c-6cdb-48ee-9414-aab6e6d5e4da": {
+        "image": "/assets/-1989127155_92185",
+        "label": "b4",
+        "Rocket": 0
+      },
+      "type-b90a5f99-2703-4afd-88b1-9474094af6a9": {
+        "image": "/assets/-1999928576_87538",
+        "label": "b7",
+        "Rocket": 0
+      },
+      "type-ffb23b26-c845-4981-8bcb-b0bb2e6cfd21": {
+        "image": "/assets/-1945199976_73130",
+        "label": "b2",
+        "Rocket": 0
+      },
+      "type-a343aac7-2872-41b6-baf1-401ec1775d2b": {
+        "image": "/assets/-757908439_53109",
+        "label": "b5",
+        "Rocket": 0
+      },
+      "type-f591dea4-d38e-4990-8b1b-2b2c948bfed3": {
+        "image": "/assets/75537970_71660",
+        "label": "b8",
+        "Rocket": 0
+      },
+      "type-e2f7cd19-f162-4635-84ef-637171569582": {
+        "image": "/assets/195254592_58992",
+        "label": "b3",
+        "Rocket": 0
+      },
+      "type-7c78e796-f393-45c5-814d-fe326d93f979": {
+        "image": "/assets/-2040363622_61460",
+        "label": "b6",
+        "Rocket": 0
+      },
+      "type-4b6cee25-c45f-4605-ba36-87fcbf4a32d1": {
+        "image": "/assets/904529299_87814",
+        "label": "b9",
+        "Rocket": 0
+      },
+      "type-0d93fb9d-e1d2-4685-b249-307d8e0beac4": {
+        "image": "/assets/-238292008_51229",
+        "label": "g1",
+        "Rocket": 0
+      },
+      "type-11d6a7ff-f306-4ab3-bd1c-102bdd50b400": {
+        "image": "/assets/-517106208_88248",
+        "label": "g4",
+        "Rocket": 0
+      },
+      "type-df8cb639-bb18-4944-b397-8579793d7393": {
+        "image": "/assets/878370271_80917",
+        "label": "g7",
+        "Rocket": 0
+      },
+      "type-8ac612c3-8939-4343-bd8d-26255e3bb910": {
+        "image": "/assets/108758378_68363",
+        "label": "g2",
+        "Rocket": 0
+      },
+      "type-274a6c7d-180a-47eb-a088-f9fab8dbf4fc": {
+        "image": "/assets/-102335173_52076",
+        "label": "g5",
+        "Rocket": 0
+      },
+      "type-ae86e522-fcbe-4f7f-85f6-521de96b69c8": {
+        "image": "/assets/-602323280_66267",
+        "label": "g8",
+        "Rocket": 0
+      },
+      "type-7d90954f-03ca-4c54-a371-726567e474d8": {
+        "image": "/assets/-1039822266_53202",
+        "label": "g3",
+        "Rocket": 0
+      },
+      "type-96d944cd-0b37-4b31-933a-dcd981d73022": {
+        "image": "/assets/-1145386056_57945",
+        "label": "g6",
+        "Rocket": 0
+      },
+      "type-2eb9dbe4-7fe9-4d31-bafc-9fc8bde40d88": {
+        "image": "/assets/1386926548_78266",
+        "label": "g9",
+        "Rocket": 0
+      },
+      "type-dd6645e4-ee4a-4ba2-b24f-208bf3907503": {
+        "image": "/assets/15457454_52462",
+        "label": "a1",
+        "Rocket": 1
+      },
+      "type-ce9fc4e1-a070-4976-9834-8210d895741d": {
+        "image": "/assets/-1754952472_23340",
+        "label": "a4",
+        "Rocket": 4
+      },
+      "type-73fc96d4-6949-4962-81a1-7989021989e1": {
+        "image": "/assets/-1774052502_35327",
+        "label": "a3",
+        "Rocket": 3
+      },
+      "type-abb77175-c188-4a48-9680-ac07070c650d": {
+        "image": "/assets/1517276939_40944",
+        "label": "a2",
+        "Rocket": 2
+      },
+      "type-b55c960a-8af2-44e6-a02d-67a24d150e86": {
+        "image": "/assets/-80247238_49869",
+        "label": "r1",
+        "Rocket": 0
+      },
+      "type-4430cdc0-86b2-4a2e-91c4-b9690b206bc6": {
+        "image": "/assets/-1462321597_64882",
+        "label": "r2",
+        "Rocket": 0
+      },
+      "type-f6cfe5b0-706b-423a-9d4e-6c43acd69e73": {
+        "image": "/assets/-1459754058_52989",
+        "label": "r3",
+        "Rocket": 0
+      },
+      "type-3530b55f-0e25-43be-9865-a9b451dac6c6": {
+        "image": "/assets/776514669_84514",
+        "label": "r4",
+        "Rocket": 0
+      },
+      "type-a0ad8d42-8fd7-43de-b0d5-a2d8ece8f367": {
+        "image": "/assets/99786193_46876",
+        "label": "r5",
+        "Rocket": 0
+      },
+      "type-3a402c37-19b4-4e1a-bab3-3e84c9e392ff": {
+        "image": "/assets/891372320_52475",
+        "label": "r6",
+        "Rocket": 0
+      },
+      "type-e2ac148d-67f0-4b7e-982e-b815ef703afd": {
+        "image": "/assets/-563548152_75785",
+        "label": "r7",
+        "Rocket": 0
+      },
+      "type-56db2ad5-32c0-4194-972b-04f41d7da212": {
+        "image": "/assets/-1057789193_58391",
+        "label": "r8",
+        "Rocket": 0
+      },
+      "type-ffa228cb-d5bc-4645-b364-f887f4a2d117": {
+        "image": "/assets/-600733842_73154",
+        "label": "r9",
+        "Rocket": 0
+      },
+      "type-46ff7d57-fb98-4d50-8999-f8f24dd58270": {
+        "image": "/assets/-1489582777_54295",
+        "label": "y1",
+        "Rocket": 0
+      },
+      "type-eb3e39eb-4cb6-4202-b4e1-1674232c585f": {
+        "image": "/assets/-1193639399_95364",
+        "label": "y4",
+        "Rocket": 0
+      },
+      "type-17128a85-1a19-4b93-8307-5ee89b4294f3": {
+        "image": "/assets/67778317_82671",
+        "label": "y7"
+      },
+      "type-34eaea20-8480-4651-8f1a-41cd4151454e": {
+        "image": "/assets/-481079824_72642",
+        "label": "y2",
+        "Rocket": 0
+      },
+      "type-57212479-5d17-4a4b-8e28-c87be2380e8b": {
+        "image": "/assets/-1801737912_50376",
+        "label": "y5",
+        "Rocket": 0
+      },
+      "type-29b78df3-0ed7-481b-9442-1e4baf72026e": {
+        "image": "/assets/-908304583_71391",
+        "label": "y8",
+        "Rocket": 0
+      },
+      "type-6782cb0c-c46d-41c7-9f9d-17e0ee7b14e4": {
+        "image": "/assets/1721844061_54094",
+        "label": "y3",
+        "Rocket": 0
+      },
+      "type-7986783c-0fc4-4dd2-8c2a-99659387a587": {
+        "image": "/assets/-2046284463_56480",
+        "label": "y6",
+        "Rocket": 0
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#ffffff",
+            "valueType": "static",
+            "value": "/assets/-1682721256_109308",
+            "width": 103,
+            "height": 160
+          }
+        ],
+        "border": false,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 103,
+            "height": 160
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "overlap": false,
+      "Rocket": 0
+    },
+    "parent": "vvo5"
+  },
+  "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16": {
+    "id": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "x": 4,
+    "y": -19,
+    "z": 20372,
+    "type": "deck",
+    "cardTypes": {
+      "type-5e850b6a-c911-412e-9a57-40e72ae6fbe2": {
+        "image": "/assets/492022559_21769",
+        "label": "taskcard blue01.png"
+      },
+      "type-c99ba6da-b10d-4600-84de-cbe79c094a94": {
+        "image": "/assets/-1906127725_30672",
+        "label": "taskcard yellow 09.png"
+      },
+      "type-7ef4609b-74b5-4396-a259-e6d0a4a740e8": {
+        "image": "/assets/-116395730_27288",
+        "label": "taskcard blue02.png"
+      },
+      "type-1e37ab62-44c7-428d-b18f-cc3f1d8ed97a": {
+        "image": "/assets/1955134942_23235",
+        "label": "taskcard blue03.png"
+      },
+      "type-142403bf-d7c6-4c06-a97a-cbfe8e5dd869": {
+        "image": "/assets/826208420_33739",
+        "label": "taskcard blue04.png"
+      },
+      "type-15721d20-5d3e-417e-9047-968fca357c78": {
+        "image": "/assets/1238387486_23295",
+        "label": "taskcard blue05.png"
+      },
+      "type-6a935e9f-30ec-4cba-ab01-f7a1fb504870": {
+        "image": "/assets/-425140991_25584",
+        "label": "taskcard blue06.png"
+      },
+      "type-739c88ec-2925-43c1-bea2-8dc7bfde4e2d": {
+        "image": "/assets/-1661779211_33648",
+        "label": "taskcard blue07.png"
+      },
+      "type-9238fbb3-0a0b-4c3b-a57a-867751f8892a": {
+        "image": "/assets/-1250106647_27668",
+        "label": "taskcard blue08.png"
+      },
+      "type-7dd8c7ec-9d39-48eb-84e6-0600368ef60f": {
+        "image": "/assets/-1123622633_32206",
+        "label": "taskcard blue09.png"
+      },
+      "type-16691fb4-bc15-45a2-9cb0-37ea62d02b07": {
+        "image": "/assets/-1699669350_21392",
+        "label": "taskcard green 01.png"
+      },
+      "type-e26a2349-f1a9-4fa1-aaf1-d5cb03320e47": {
+        "image": "/assets/1260913300_25217",
+        "label": "taskcard green 02.png"
+      },
+      "type-45f772d3-3e83-4b4c-90d3-70fd51abe49c": {
+        "image": "/assets/1342818881_22370",
+        "label": "taskcard green 03.png"
+      },
+      "type-3b70a7af-ea3e-48bd-a4ad-0982074d044a": {
+        "image": "/assets/1229457677_32273",
+        "label": "taskcard green 04.png"
+      },
+      "type-1f19c879-8c5c-4203-b1f1-c7de18a684c1": {
+        "image": "/assets/-991196784_22402",
+        "label": "taskcard green 05.png"
+      },
+      "type-b4273e55-797a-4a8d-837a-e2165e3e4e8e": {
+        "image": "/assets/-385183670_24629",
+        "label": "taskcard green 06.png"
+      },
+      "type-eb6d38de-6a61-44d8-8ed4-2d0d16e05f54": {
+        "image": "/assets/2007271844_32274",
+        "label": "taskcard green 07.png"
+      },
+      "type-7836f440-9e9e-4174-9ed8-aeb7027b9511": {
+        "image": "/assets/1351138624_26997",
+        "label": "taskcard green 08.png"
+      },
+      "type-03e71902-bf9c-445f-abc1-8b8c4611bd02": {
+        "image": "/assets/255688031_30895",
+        "label": "taskcard green 09.png"
+      },
+      "type-455f9ac2-9db5-445f-812e-bdb2bcc958d1": {
+        "image": "/assets/-274127540_21157",
+        "label": "taskcard red 01.png"
+      },
+      "type-a01a1f3b-aaeb-4bd7-8389-2c1c25c9aadc": {
+        "image": "/assets/-2098965220_25900",
+        "label": "taskcard red 02.png"
+      },
+      "type-fb838705-5898-4b5c-bfaf-053035c31f0d": {
+        "image": "/assets/-1478530869_23195",
+        "label": "taskcard red 03.png"
+      },
+      "type-f9565123-61d7-4f54-ac84-2e69cd0619bf": {
+        "image": "/assets/-902781540_33014",
+        "label": "taskcard red 04.png"
+      },
+      "type-64023c45-1b4f-46a2-bfc6-472c6ab8ce1f": {
+        "image": "/assets/1289557125_23208",
+        "label": "taskcard red 05.png"
+      },
+      "type-575ba275-cc72-4b56-a484-af7e574b2516": {
+        "image": "/assets/673719761_25535",
+        "label": "taskcard red 06.png"
+      },
+      "type-1be66265-1aad-4194-bf8e-e47984ab491b": {
+        "image": "/assets/-1278541602_33105",
+        "label": "taskcard red 07.png"
+      },
+      "type-cc94b14b-88bf-4191-9709-dd8f9bed3ee7": {
+        "image": "/assets/1596122554_26324",
+        "label": "taskcard red 08.png"
+      },
+      "type-8970932c-1c24-41f9-8cfb-6754f4f63196": {
+        "image": "/assets/295477023_31716",
+        "label": "taskcard red 09.png"
+      },
+      "type-2ec6a785-66f7-49ae-9140-f3893a2e86e7": {
+        "image": "/assets/-80750579_21804",
+        "label": "taskcard yellow 01.png"
+      },
+      "type-686b1dc4-5e3f-4841-83f0-6ef8851b814d": {
+        "image": "/assets/80746063_26438",
+        "label": "taskcard yellow 02.png"
+      },
+      "type-ff3c8655-60df-4aed-8a52-8ac68cf78255": {
+        "image": "/assets/-805019595_21931",
+        "label": "taskcard yellow 03.png"
+      },
+      "type-596de1d5-fd2a-4d5e-a32d-18703e077e88": {
+        "image": "/assets/-46053316_32586",
+        "label": "taskcard yellow 04.png"
+      },
+      "type-38e47872-6e05-405a-8be0-9cb49ae3712f": {
+        "image": "/assets/214510398_21972",
+        "label": "taskcard yellow 05.png"
+      },
+      "type-a312c607-6ee2-4411-8a62-907c23ecd36a": {
+        "image": "/assets/-617955563_24310",
+        "label": "taskcard yellow 06.png"
+      },
+      "type-f8bccf46-2229-43d9-9ba9-40c1ddba2f86": {
+        "image": "/assets/-306265180_31973",
+        "label": "taskcard yellow 07.png"
+      },
+      "type-80ca9b2b-ae9e-4e4a-8c6c-7ca89e08589f": {
+        "image": "/assets/-195000944_27882",
+        "label": "taskcard yellow 08.png"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#ffffff",
+            "valueType": "static",
+            "value": "/assets/-1682721256_109308",
+            "width": 59,
+            "height": 92
+          },
+          {
+            "type": "text",
+            "x": -1,
+            "y": 59.08267474406015,
+            "fontSize": 16,
+            "valueType": "static",
+            "value": "TASK",
+            "textAlign": "center",
+            "textFont": "interstate",
+            "color": "#ffffff",
+            "width": 60
+          }
+        ],
+        "border": false,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 59,
+            "height": 92
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 59,
+      "height": 92
+    },
+    "parent": "khsx"
+  },
+  "a446559e-6d46-4477-b6ea-2a1c349f93a9": {
+    "id": "a446559e-6d46-4477-b6ea-2a1c349f93a9",
+    "x": 420,
+    "y": 420,
+    "z": 21832,
+    "type": "holder",
+    "css": "background: #55555550",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "45f2a7e7-60f0-4b81-9481-87a19cc08f25_label": {
+    "id": "45f2a7e7-60f0-4b81-9481-87a19cc08f25_label",
+    "y": 190,
+    "width": 171,
+    "height": 30,
+    "type": "label",
+    "css": "font-size:120%;color:white",
+    "text": "Communication",
+    "x": 390,
+    "z": 21782,
+    "twoRowBottomAlign": true
+  },
+  "45f2a7e7-60f0-4b81-9481-87a19cc08f25": {
+    "id": "45f2a7e7-60f0-4b81-9481-87a19cc08f25",
+    "x": 420,
+    "y": 620,
+    "z": 21848,
+    "type": "holder",
+    "css": "background: #55555550",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "hand": {
+    "id": "hand",
+    "x": 96.5,
+    "y": 820,
+    "z": 1,
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "stackOffsetX": 40,
+    "childrenPerOwner": true,
+    "width": 1407,
+    "height": 200,
+    "css": "background: #55555550",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "16d9fd42-a13a-4d4d-b769-d16302b5ff7a_label": {
+    "id": "16d9fd42-a13a-4d4d-b769-d16302b5ff7a_label",
+    "parent": "16d9fd42-a13a-4d4d-b769-d16302b5ff7a",
+    "x": 0,
+    "y": -30,
+    "width": 111,
+    "height": 30,
+    "type": "label",
+    "text": "Player 5",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false,
+    "editable": true,
+    "css": "font-size:120%;color:white"
+  },
+  "uqow": {
+    "image": "/assets/1695948041_6197",
+    "id": "uqow",
+    "z": 21835,
+    "x": 438,
+    "y": 266.5,
+    "css": "border-radius:50%;",
+    "width": 75,
+    "height": 75,
+    "resetProperties": {
+      "x": 438,
+      "y": 266.5
+    }
+  },
+  "ksqn": {
+    "css": "border-radius:50%;",
+    "z": 21829,
+    "x": 438,
+    "y": 466.5,
+    "width": 75,
+    "height": 75,
+    "faces": [
+      {
+        "image": "/assets/-1222759790_6197"
+      },
+      {
+        "image": "/assets/-19928478_6197"
+      }
+    ],
+    "id": "ksqn",
+    "resetProperties": {
+      "x": 438,
+      "y": 466.5,
+      "activeFace": 0
+    }
+  },
+  "9crp": {
+    "css": "border-radius:50%;",
+    "z": 21831,
+    "x": 438,
+    "y": 666.5,
+    "width": 75,
+    "height": 75,
+    "faces": [
+      {
+        "image": "/assets/-1222759790_6197"
+      },
+      {
+        "image": "/assets/-19928478_6197"
+      }
+    ],
+    "id": "9crp",
+    "resetProperties": {
+      "x": 438,
+      "y": 666.5,
+      "activeFace": 0
+    }
+  },
+  "qe3n": {
+    "x": 27,
+    "y": 323,
+    "z": 21770,
+    "type": "deck",
+    "cardTypes": {
+      "1": {
+        "image": "/assets/298721280_2188",
+        "order": 1
+      },
+      "2": {
+        "image": "/assets/2125674367_6060",
+        "order": 2
+      },
+      "3": {
+        "image": "/assets/-285735528_6856",
+        "order": 3
+      },
+      "4": {
+        "image": "/assets/53471310_4992",
+        "order": 4
+      },
+      "5": {
+        "image": "/assets/-92628314_6320",
+        "order": 5
+      },
+      "1/": {
+        "image": "/assets/-541923582_3838",
+        "order": 6
+      },
+      "2/": {
+        "image": "/assets/-1421847480_4017",
+        "order": 7
+      },
+      "3/": {
+        "image": "/assets/185177719_10735",
+        "order": 8
+      },
+      "4/": {
+        "image": "/assets/-292690147_5923",
+        "order": 9
+      },
+      "Ω": {
+        "image": "/assets/592696493_6265",
+        "order": 10
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "darkblue",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 50,
+            "height": 50
+          }
+        ],
+        "border": false,
+        "radius": 10
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 50,
+      "height": 50
+    },
+    "id": "qe3n"
+  },
+  "pajr": {
+    "deck": "qe3n",
+    "type": "card",
+    "cardType": "1",
+    "id": "pajr",
+    "z": 1,
+    "parent": "tokens1"
+  },
+  "q953": {
+    "deck": "qe3n",
+    "type": "card",
+    "cardType": "2",
+    "id": "q953",
+    "z": 2,
+    "parent": "tokens1",
+    "x": 58
+  },
+  "d09j": {
+    "deck": "qe3n",
+    "type": "card",
+    "cardType": "3",
+    "id": "d09j",
+    "z": 3,
+    "x": 116,
+    "parent": "tokens1"
+  },
+  "ujzz": {
+    "deck": "qe3n",
+    "type": "card",
+    "cardType": "4",
+    "id": "ujzz",
+    "z": 4,
+    "parent": "tokens1",
+    "x": 174
+  },
+  "nwtg": {
+    "deck": "qe3n",
+    "type": "card",
+    "cardType": "5",
+    "id": "nwtg",
+    "z": 5,
+    "x": 232,
+    "parent": "tokens1"
+  },
+  "r5u4": {
+    "deck": "qe3n",
+    "type": "card",
+    "cardType": "1/",
+    "id": "r5u4",
+    "z": 1,
+    "parent": "tokens2"
+  },
+  "w9ru": {
+    "deck": "qe3n",
+    "type": "card",
+    "cardType": "2/",
+    "id": "w9ru",
+    "z": 2,
+    "x": 58,
+    "parent": "tokens2"
+  },
+  "yx1y": {
+    "deck": "qe3n",
+    "type": "card",
+    "cardType": "3/",
+    "id": "yx1y",
+    "z": 3,
+    "x": 116,
+    "parent": "tokens2"
+  },
+  "fsr8": {
+    "deck": "qe3n",
+    "type": "card",
+    "cardType": "4/",
+    "id": "fsr8",
+    "z": 4,
+    "x": 174,
+    "parent": "tokens2"
+  },
+  "wsqc": {
+    "deck": "qe3n",
+    "type": "card",
+    "cardType": "Ω",
+    "id": "wsqc",
+    "z": 5,
+    "parent": "tokens2",
+    "x": 232
+  },
+  "v6or": {
+    "image": "/assets/206954176_1013912",
+    "movable": false,
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "id": "v6or",
+    "z": 4
+  },
+  "vvo5": {
+    "type": "holder",
+    "x": -149.5,
+    "y": 1,
+    "z": 21826,
+    "id": "vvo5",
+    "css": "background: #55555550"
+  },
+  "xo6i": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-a92f3b7b-7799-4823-a16d-a2c731481c1b",
+    "id": "xo6i",
+    "z": 40025,
+    "parent": "6k91"
+  },
+  "2dt0": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-1bdb002a-e392-4f0f-9249-e119bfb782be",
+    "id": "2dt0",
+    "z": 40015,
+    "parent": "axlq"
+  },
+  "va0n": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-a1c4814c-6cdb-48ee-9414-aab6e6d5e4da",
+    "id": "va0n",
+    "z": 5,
+    "parent": "l6t2"
+  },
+  "sq13": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-b90a5f99-2703-4afd-88b1-9474094af6a9",
+    "id": "sq13",
+    "z": 40024,
+    "parent": "20n3",
+    "activeFace": 1
+  },
+  "lf2e": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-ffb23b26-c845-4981-8bcb-b0bb2e6cfd21",
+    "id": "lf2e",
+    "z": 3,
+    "parent": "l6t2"
+  },
+  "1jcb": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-a343aac7-2872-41b6-baf1-401ec1775d2b",
+    "id": "1jcb",
+    "z": 40020,
+    "parent": "7nv4",
+    "activeFace": 1
+  },
+  "sgsn": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-f591dea4-d38e-4990-8b1b-2b2c948bfed3",
+    "id": "sgsn",
+    "z": 6,
+    "parent": "l6t2"
+  },
+  "ncfp": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-e2f7cd19-f162-4635-84ef-637171569582",
+    "id": "ncfp",
+    "z": 4,
+    "parent": "l6t2"
+  },
+  "pkyf": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-7c78e796-f393-45c5-814d-fe326d93f979",
+    "id": "pkyf",
+    "z": 4,
+    "parent": "a67q"
+  },
+  "ql9s": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-4b6cee25-c45f-4605-ba36-87fcbf4a32d1",
+    "id": "ql9s",
+    "z": 7,
+    "parent": "l6t2"
+  },
+  "o3g1": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-0d93fb9d-e1d2-4685-b249-307d8e0beac4",
+    "id": "o3g1",
+    "z": 5,
+    "parent": "a67q"
+  },
+  "lpmw": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-11d6a7ff-f306-4ab3-bd1c-102bdd50b400",
+    "id": "lpmw",
+    "z": 8,
+    "parent": "l6t2"
+  },
+  "n2c7": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-df8cb639-bb18-4944-b397-8579793d7393",
+    "id": "n2c7",
+    "z": 40018,
+    "parent": "ppam",
+    "activeFace": 1
+  },
+  "wzxj": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-8ac612c3-8939-4343-bd8d-26255e3bb910",
+    "id": "wzxj",
+    "z": 40019,
+    "parent": "7nv4"
+  },
+  "l1us": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-274a6c7d-180a-47eb-a088-f9fab8dbf4fc",
+    "id": "l1us",
+    "z": 40021,
+    "parent": "w0sq"
+  },
+  "0y9k": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-ae86e522-fcbe-4f7f-85f6-521de96b69c8",
+    "id": "0y9k",
+    "z": 7,
+    "parent": "a67q"
+  },
+  "u722": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-7d90954f-03ca-4c54-a371-726567e474d8",
+    "id": "u722",
+    "z": 6,
+    "parent": "a67q"
+  },
+  "xfv7": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-96d944cd-0b37-4b31-933a-dcd981d73022",
+    "id": "xfv7",
+    "z": 40013,
+    "parent": "9qke"
+  },
+  "gwnk": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-2eb9dbe4-7fe9-4d31-bafc-9fc8bde40d88",
+    "id": "gwnk",
+    "z": 8,
+    "parent": "a67q"
+  },
+  "tuep": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-dd6645e4-ee4a-4ba2-b24f-208bf3907503",
+    "id": "tuep",
+    "z": 2,
+    "parent": "l6t2"
+  },
+  "mmud": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-ce9fc4e1-a070-4976-9834-8210d895741d",
+    "id": "mmud",
+    "z": 3,
+    "parent": "a67q"
+  },
+  "5x1h": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-73fc96d4-6949-4962-81a1-7989021989e1",
+    "id": "5x1h",
+    "z": 2,
+    "parent": "a67q"
+  },
+  "tqma": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-abb77175-c188-4a48-9680-ac07070c650d",
+    "id": "tqma",
+    "z": 40016,
+    "parent": "axlq",
+    "activeFace": 1
+  },
+  "wapb": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-b55c960a-8af2-44e6-a02d-67a24d150e86",
+    "id": "wapb",
+    "z": 9,
+    "parent": "a67q"
+  },
+  "2ycx": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-4430cdc0-86b2-4a2e-91c4-b9690b206bc6",
+    "id": "2ycx",
+    "z": 9,
+    "parent": "l6t2"
+  },
+  "v707": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-f6cfe5b0-706b-423a-9d4e-6c43acd69e73",
+    "id": "v707",
+    "z": 10,
+    "parent": "l6t2"
+  },
+  "zyj2": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-3530b55f-0e25-43be-9865-a9b451dac6c6",
+    "id": "zyj2",
+    "z": 10,
+    "parent": "a67q"
+  },
+  "2fy8": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-a0ad8d42-8fd7-43de-b0d5-a2d8ece8f367",
+    "id": "2fy8",
+    "z": 11,
+    "parent": "l6t2"
+  },
+  "g20p": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-3a402c37-19b4-4e1a-bab3-3e84c9e392ff",
+    "id": "g20p",
+    "z": 40022,
+    "parent": "w0sq",
+    "activeFace": 1
+  },
+  "6vsu": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-e2ac148d-67f0-4b7e-982e-b815ef703afd",
+    "id": "6vsu",
+    "z": 11,
+    "parent": "a67q"
+  },
+  "krjn": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-56db2ad5-32c0-4194-972b-04f41d7da212",
+    "id": "krjn",
+    "z": 12,
+    "parent": "l6t2"
+  },
+  "cwy0": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-ffa228cb-d5bc-4645-b364-f887f4a2d117",
+    "id": "cwy0",
+    "z": 13,
+    "parent": "l6t2"
+  },
+  "7uj6": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-46ff7d57-fb98-4d50-8999-f8f24dd58270",
+    "id": "7uj6",
+    "z": 40017,
+    "parent": "ppam"
+  },
+  "6bxl": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-eb3e39eb-4cb6-4202-b4e1-1674232c585f",
+    "id": "6bxl",
+    "z": 40014,
+    "parent": "9qke",
+    "activeFace": 1
+  },
+  "2c0a": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-17128a85-1a19-4b93-8307-5ee89b4294f3",
+    "id": "2c0a",
+    "z": 13,
+    "parent": "a67q"
+  },
+  "9k79": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-34eaea20-8480-4651-8f1a-41cd4151454e",
+    "id": "9k79",
+    "z": 40023,
+    "parent": "20n3"
+  },
+  "2jmy": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-57212479-5d17-4a4b-8e28-c87be2380e8b",
+    "id": "2jmy",
+    "z": 14,
+    "parent": "l6t2"
+  },
+  "xng1": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-29b78df3-0ed7-481b-9442-1e4baf72026e",
+    "id": "xng1",
+    "z": 14,
+    "parent": "a67q"
+  },
+  "ycw9": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-6782cb0c-c46d-41c7-9f9d-17e0ee7b14e4",
+    "id": "ycw9",
+    "z": 40026,
+    "parent": "6k91",
+    "activeFace": 1
+  },
+  "ufh3": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-7986783c-0fc4-4dd2-8c2a-99659387a587",
+    "id": "ufh3",
+    "z": 12,
+    "parent": "a67q"
+  },
+  "khsx": {
+    "type": "holder",
+    "x": 1430.5,
+    "y": 39,
+    "z": 21847,
+    "id": "khsx",
+    "css": "background: #55555550",
+    "width": 67,
+    "height": 100,
+    "dropTarget": {
+      "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16"
+    }
+  },
+  "16em": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-5e850b6a-c911-412e-9a57-40e72ae6fbe2",
+    "id": "16em",
+    "z": 3255,
+    "parent": "vv7z"
+  },
+  "qm4e": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-c99ba6da-b10d-4600-84de-cbe79c094a94",
+    "id": "qm4e",
+    "z": 887,
+    "parent": "vv7z"
+  },
+  "3yzi": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-7ef4609b-74b5-4396-a259-e6d0a4a740e8",
+    "id": "3yzi",
+    "z": 4178,
+    "parent": "vv7z"
+  },
+  "d2nf": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-1e37ab62-44c7-428d-b18f-cc3f1d8ed97a",
+    "id": "d2nf",
+    "z": 2617,
+    "parent": "vv7z"
+  },
+  "mqti": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-142403bf-d7c6-4c06-a97a-cbfe8e5dd869",
+    "id": "mqti",
+    "parent": "vv7z",
+    "z": 3751
+  },
+  "mwle": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-15721d20-5d3e-417e-9047-968fca357c78",
+    "id": "mwle",
+    "z": 7610,
+    "parent": "vv7z"
+  },
+  "izsj": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-6a935e9f-30ec-4cba-ab01-f7a1fb504870",
+    "id": "izsj",
+    "z": 9409,
+    "parent": "vv7z"
+  },
+  "kz54": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-739c88ec-2925-43c1-bea2-8dc7bfde4e2d",
+    "id": "kz54",
+    "z": 3577,
+    "parent": "vv7z"
+  },
+  "i0tu": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-9238fbb3-0a0b-4c3b-a57a-867751f8892a",
+    "id": "i0tu",
+    "z": 9279,
+    "parent": "vv7z"
+  },
+  "ssz7": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-7dd8c7ec-9d39-48eb-84e6-0600368ef60f",
+    "id": "ssz7",
+    "z": 4587,
+    "parent": "vv7z"
+  },
+  "8kyv": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-16691fb4-bc15-45a2-9cb0-37ea62d02b07",
+    "id": "8kyv",
+    "z": 2926,
+    "parent": "vv7z"
+  },
+  "yz74": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-e26a2349-f1a9-4fa1-aaf1-d5cb03320e47",
+    "id": "yz74",
+    "z": 3941,
+    "parent": "vv7z"
+  },
+  "f4kj": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-45f772d3-3e83-4b4c-90d3-70fd51abe49c",
+    "id": "f4kj",
+    "z": 3797,
+    "parent": "vv7z"
+  },
+  "ke2f": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-3b70a7af-ea3e-48bd-a4ad-0982074d044a",
+    "id": "ke2f",
+    "z": 6534,
+    "parent": "vv7z"
+  },
+  "24ff": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-1f19c879-8c5c-4203-b1f1-c7de18a684c1",
+    "id": "24ff",
+    "z": 9602,
+    "parent": "vv7z"
+  },
+  "kabw": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-b4273e55-797a-4a8d-837a-e2165e3e4e8e",
+    "id": "kabw",
+    "z": 8045,
+    "parent": "vv7z"
+  },
+  "1e6l": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-eb6d38de-6a61-44d8-8ed4-2d0d16e05f54",
+    "id": "1e6l",
+    "z": 4356,
+    "parent": "vv7z"
+  },
+  "x3ir": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-7836f440-9e9e-4174-9ed8-aeb7027b9511",
+    "id": "x3ir",
+    "z": 6958,
+    "parent": "vv7z"
+  },
+  "etq1": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-03e71902-bf9c-445f-abc1-8b8c4611bd02",
+    "id": "etq1",
+    "z": 4938,
+    "parent": "vv7z"
+  },
+  "h40u": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-455f9ac2-9db5-445f-812e-bdb2bcc958d1",
+    "id": "h40u",
+    "z": 2523,
+    "parent": "vv7z"
+  },
+  "88zc": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-a01a1f3b-aaeb-4bd7-8389-2c1c25c9aadc",
+    "id": "88zc",
+    "z": 7082,
+    "parent": "vv7z"
+  },
+  "q6st": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-fb838705-5898-4b5c-bfaf-053035c31f0d",
+    "id": "q6st",
+    "z": 3802,
+    "parent": "vv7z"
+  },
+  "d3e7": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-f9565123-61d7-4f54-ac84-2e69cd0619bf",
+    "id": "d3e7",
+    "z": 9535,
+    "parent": "vv7z"
+  },
+  "x361": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-64023c45-1b4f-46a2-bfc6-472c6ab8ce1f",
+    "id": "x361",
+    "z": 1833,
+    "parent": "vv7z"
+  },
+  "0cjo": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-575ba275-cc72-4b56-a484-af7e574b2516",
+    "id": "0cjo",
+    "z": 6565,
+    "parent": "vv7z"
+  },
+  "i6bb": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-1be66265-1aad-4194-bf8e-e47984ab491b",
+    "id": "i6bb",
+    "z": 1196,
+    "parent": "vv7z"
+  },
+  "n9u0": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-cc94b14b-88bf-4191-9709-dd8f9bed3ee7",
+    "id": "n9u0",
+    "z": 2295,
+    "parent": "vv7z"
+  },
+  "pjd2": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-8970932c-1c24-41f9-8cfb-6754f4f63196",
+    "id": "pjd2",
+    "z": 4843,
+    "parent": "vv7z"
+  },
+  "j1qa": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-2ec6a785-66f7-49ae-9140-f3893a2e86e7",
+    "id": "j1qa",
+    "z": 3852,
+    "parent": "vv7z"
+  },
+  "24b7": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-686b1dc4-5e3f-4841-83f0-6ef8851b814d",
+    "id": "24b7",
+    "z": 5534,
+    "parent": "vv7z"
+  },
+  "dk59": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-ff3c8655-60df-4aed-8a52-8ac68cf78255",
+    "id": "dk59",
+    "z": 2135,
+    "parent": "vv7z"
+  },
+  "wook": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-596de1d5-fd2a-4d5e-a32d-18703e077e88",
+    "id": "wook",
+    "z": 588,
+    "parent": "vv7z"
+  },
+  "szki": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-38e47872-6e05-405a-8be0-9cb49ae3712f",
+    "id": "szki",
+    "z": 1654,
+    "parent": "vv7z"
+  },
+  "zm2l": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-a312c607-6ee2-4411-8a62-907c23ecd36a",
+    "id": "zm2l",
+    "z": 1744,
+    "parent": "vv7z"
+  },
+  "s9kb": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-f8bccf46-2229-43d9-9ba9-40c1ddba2f86",
+    "id": "s9kb",
+    "z": 5142,
+    "parent": "vv7z"
+  },
+  "p1u9": {
+    "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16",
+    "type": "card",
+    "cardType": "type-80ca9b2b-ae9e-4e4a-8c6c-7ca89e08589f",
+    "id": "p1u9",
+    "z": 1797,
+    "parent": "vv7z"
+  },
+  "AI Plie Label": {
+    "id": "AI Plie Label",
+    "x": 0,
+    "y": -30,
+    "width": 111,
+    "height": 30,
+    "type": "label",
+    "text": "Player 2",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false,
+    "editable": true,
+    "css": "font-size:120%;color:white",
+    "z": 21772,
+    "parent": "Player Plie 2"
+  },
+  "Player Plie 2 Label": {
+    "id": "Player Plie 2 Label",
+    "x": 0,
+    "y": -30,
+    "width": 111,
+    "height": 30,
+    "type": "label",
+    "text": "Player 1",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false,
+    "editable": true,
+    "css": "font-size:120%;color:white",
+    "z": 21774,
+    "parent": "Player Plie 1"
+  },
+  "Player Plie 1 Label": {
+    "id": "Player Plie 1 Label",
+    "y": -30,
+    "width": 111,
+    "height": 30,
+    "type": "label",
+    "text": "AI",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false,
+    "css": "font-size:120%;color:white",
+    "z": 21778,
+    "parent": "AI Pile"
+  },
+  "tgc6": {
+    "type": "holder",
+    "x": 349.5,
+    "y": 5,
+    "z": 21815,
+    "id": "tgc6",
+    "css": "background: #55555550",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "7ycs": {
+    "type": "holder",
+    "x": 601,
+    "y": 5,
+    "z": 21800,
+    "id": "7ycs",
+    "css": "background: #55555550",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "8urn": {
+    "type": "holder",
+    "x": 727.5,
+    "y": 5,
+    "z": 21802,
+    "id": "8urn",
+    "css": "background: #55555550",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "drwy": {
+    "type": "holder",
+    "x": 853.5,
+    "y": 5,
+    "z": 21804,
+    "id": "drwy",
+    "css": "background: #55555550",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "up9w": {
+    "type": "holder",
+    "x": 979.5,
+    "z": 21814,
+    "id": "up9w",
+    "y": 5,
+    "css": "background: #55555550",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "2vmv": {
+    "type": "holder",
+    "x": 223.5,
+    "y": 5,
+    "z": 21816,
+    "id": "2vmv",
+    "css": "background: #55555550",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "discard": {
+    "id": "discard",
+    "x": 223.5,
+    "y": 420,
+    "z": 21831,
+    "type": "holder",
+    "css": "background: #55555550",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "45f2a7e7-60f0-4b81-9481-87a19cc08f26_label": {
+    "id": "45f2a7e7-60f0-4b81-9481-87a19cc08f26_label",
+    "y": 190,
+    "width": 151,
+    "height": 30,
+    "type": "label",
+    "twoRowBottomAlign": true,
+    "css": "font-size:120%;color:white",
+    "text": "Tasks",
+    "x": 968.5,
+    "z": 21781
+  },
+  "discard1": {
+    "id": "discard1",
+    "x": 223.5,
+    "y": 620,
+    "z": 21838,
+    "type": "holder",
+    "css": "background: #55555550",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "discard2": {
+    "id": "discard2",
+    "x": 223.5,
+    "y": 220,
+    "z": 21836,
+    "type": "holder",
+    "css": "background: #55555550",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "509c436b-6f18-4dfb-b97a-53dd265376e4_label": {
+    "id": "509c436b-6f18-4dfb-b97a-53dd265376e4_label",
+    "y": -30,
+    "width": 111,
+    "height": 30,
+    "type": "label",
+    "text": "Tricks",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false,
+    "css": "font-size:120%;color:white",
+    "parent": "discard2"
+  },
+  "khsx1": {
+    "type": "holder",
+    "x": 890.5,
+    "y": 288,
+    "z": 21839,
+    "id": "khsx1",
+    "css": "background: #55555550",
+    "width": 67,
+    "height": 100,
+    "dropTarget": {
+      "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16"
+    }
+  },
+  "khsx2": {
+    "type": "holder",
+    "x": 8.5,
+    "y": -55,
+    "z": 21841,
+    "id": "khsx2",
+    "css": "background: #55555530; border: 1px solid #55555560; ",
+    "width": 50,
+    "height": 50,
+    "dropTarget": {
+      "deck": "qe3n"
+    },
+    "parent": "khsx1",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "khsx3": {
+    "type": "holder",
+    "x": 970.5,
+    "y": 288,
+    "z": 21839,
+    "id": "khsx3",
+    "css": "background: #55555550",
+    "width": 67,
+    "height": 100,
+    "dropTarget": {
+      "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16"
+    }
+  },
+  "khsx4": {
+    "type": "holder",
+    "x": 8.5,
+    "y": -55,
+    "z": 21841,
+    "id": "khsx4",
+    "css": "background: #55555530; border: 1px solid #55555560; ",
+    "width": 50,
+    "height": 50,
+    "dropTarget": {
+      "deck": "qe3n"
+    },
+    "parent": "khsx3",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "khsx5": {
+    "type": "holder",
+    "x": 1050.5,
+    "y": 288,
+    "z": 21839,
+    "id": "khsx5",
+    "css": "background: #55555550",
+    "width": 67,
+    "height": 100,
+    "dropTarget": {
+      "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16"
+    }
+  },
+  "khsx6": {
+    "type": "holder",
+    "x": 8.5,
+    "y": -55,
+    "z": 21841,
+    "id": "khsx6",
+    "css": "background: #55555530; border: 1px solid #55555560; ",
+    "width": 50,
+    "height": 50,
+    "dropTarget": {
+      "deck": "qe3n"
+    },
+    "parent": "khsx5",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "khsx7": {
+    "type": "holder",
+    "x": 1130.5,
+    "y": 288,
+    "z": 21839,
+    "id": "khsx7",
+    "css": "background: #55555550",
+    "width": 67,
+    "height": 100,
+    "dropTarget": {
+      "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16"
+    }
+  },
+  "khsx8": {
+    "type": "holder",
+    "x": 8.5,
+    "y": -55,
+    "z": 21841,
+    "id": "khsx8",
+    "css": "background: #55555530; border: 1px solid #55555560; ",
+    "width": 50,
+    "height": 50,
+    "dropTarget": {
+      "deck": "qe3n"
+    },
+    "parent": "khsx7",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "khsx9": {
+    "type": "holder",
+    "x": 890.5,
+    "y": 488,
+    "z": 21839,
+    "id": "khsx9",
+    "css": "background: #55555550",
+    "width": 67,
+    "height": 100,
+    "dropTarget": {
+      "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16"
+    }
+  },
+  "99cfa35a-8c94-4fa6-8145-0ae71d3f0a25": {
+    "id": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a25",
+    "x": 4,
+    "y": -19,
+    "z": 20372,
+    "type": "deck",
+    "cardTypes": {
+      "type-5e850b6a-c911-412e-9a57-40e72ae6fbe2": {
+        "image": "/assets/492022559_21769",
+        "label": "taskcard blue01.png"
+      },
+      "type-c99ba6da-b10d-4600-84de-cbe79c094a94": {
+        "image": "/assets/-1906127725_30672",
+        "label": "taskcard yellow 09.png"
+      },
+      "type-7ef4609b-74b5-4396-a259-e6d0a4a740e8": {
+        "image": "/assets/-116395730_27288",
+        "label": "taskcard blue02.png"
+      },
+      "type-1e37ab62-44c7-428d-b18f-cc3f1d8ed97a": {
+        "image": "/assets/1955134942_23235",
+        "label": "taskcard blue03.png"
+      },
+      "type-142403bf-d7c6-4c06-a97a-cbfe8e5dd869": {
+        "image": "/assets/826208420_33739",
+        "label": "taskcard blue04.png"
+      },
+      "type-15721d20-5d3e-417e-9047-968fca357c78": {
+        "image": "/assets/1238387486_23295",
+        "label": "taskcard blue05.png"
+      },
+      "type-6a935e9f-30ec-4cba-ab01-f7a1fb504870": {
+        "image": "/assets/-425140991_25584",
+        "label": "taskcard blue06.png"
+      },
+      "type-739c88ec-2925-43c1-bea2-8dc7bfde4e2d": {
+        "image": "/assets/-1661779211_33648",
+        "label": "taskcard blue07.png"
+      },
+      "type-9238fbb3-0a0b-4c3b-a57a-867751f8892a": {
+        "image": "/assets/-1250106647_27668",
+        "label": "taskcard blue08.png"
+      },
+      "type-7dd8c7ec-9d39-48eb-84e6-0600368ef60f": {
+        "image": "/assets/-1123622633_32206",
+        "label": "taskcard blue09.png"
+      },
+      "type-16691fb4-bc15-45a2-9cb0-37ea62d02b07": {
+        "image": "/assets/-1699669350_21392",
+        "label": "taskcard green 01.png"
+      },
+      "type-e26a2349-f1a9-4fa1-aaf1-d5cb03320e47": {
+        "image": "/assets/1260913300_25217",
+        "label": "taskcard green 02.png"
+      },
+      "type-45f772d3-3e83-4b4c-90d3-70fd51abe49c": {
+        "image": "/assets/1342818881_22370",
+        "label": "taskcard green 03.png"
+      },
+      "type-3b70a7af-ea3e-48bd-a4ad-0982074d044a": {
+        "image": "/assets/1229457677_32273",
+        "label": "taskcard green 04.png"
+      },
+      "type-1f19c879-8c5c-4203-b1f1-c7de18a684c1": {
+        "image": "/assets/-991196784_22402",
+        "label": "taskcard green 05.png"
+      },
+      "type-b4273e55-797a-4a8d-837a-e2165e3e4e8e": {
+        "image": "/assets/-385183670_24629",
+        "label": "taskcard green 06.png"
+      },
+      "type-eb6d38de-6a61-44d8-8ed4-2d0d16e05f54": {
+        "image": "/assets/2007271844_32274",
+        "label": "taskcard green 07.png"
+      },
+      "type-7836f440-9e9e-4174-9ed8-aeb7027b9511": {
+        "image": "/assets/1351138624_26997",
+        "label": "taskcard green 08.png"
+      },
+      "type-03e71902-bf9c-445f-abc1-8b8c4611bd02": {
+        "image": "/assets/255688031_30895",
+        "label": "taskcard green 09.png"
+      },
+      "type-455f9ac2-9db5-445f-812e-bdb2bcc958d1": {
+        "image": "/assets/-274127540_21157",
+        "label": "taskcard red 01.png"
+      },
+      "type-a01a1f3b-aaeb-4bd7-8389-2c1c25c9aadc": {
+        "image": "/assets/-2098965220_25900",
+        "label": "taskcard red 02.png"
+      },
+      "type-fb838705-5898-4b5c-bfaf-053035c31f0d": {
+        "image": "/assets/-1478530869_23195",
+        "label": "taskcard red 03.png"
+      },
+      "type-f9565123-61d7-4f54-ac84-2e69cd0619bf": {
+        "image": "/assets/-902781540_33014",
+        "label": "taskcard red 04.png"
+      },
+      "type-64023c45-1b4f-46a2-bfc6-472c6ab8ce1f": {
+        "image": "/assets/1289557125_23208",
+        "label": "taskcard red 05.png"
+      },
+      "type-575ba275-cc72-4b56-a484-af7e574b2516": {
+        "image": "/assets/673719761_25535",
+        "label": "taskcard red 06.png"
+      },
+      "type-1be66265-1aad-4194-bf8e-e47984ab491b": {
+        "image": "/assets/-1278541602_33105",
+        "label": "taskcard red 07.png"
+      },
+      "type-cc94b14b-88bf-4191-9709-dd8f9bed3ee7": {
+        "image": "/assets/1596122554_26324",
+        "label": "taskcard red 08.png"
+      },
+      "type-8970932c-1c24-41f9-8cfb-6754f4f63196": {
+        "image": "/assets/295477023_31716",
+        "label": "taskcard red 09.png"
+      },
+      "type-2ec6a785-66f7-49ae-9140-f3893a2e86e7": {
+        "image": "/assets/-80750579_21804",
+        "label": "taskcard yellow 01.png"
+      },
+      "type-686b1dc4-5e3f-4841-83f0-6ef8851b814d": {
+        "image": "/assets/80746063_26438",
+        "label": "taskcard yellow 02.png"
+      },
+      "type-ff3c8655-60df-4aed-8a52-8ac68cf78255": {
+        "image": "/assets/-805019595_21931",
+        "label": "taskcard yellow 03.png"
+      },
+      "type-596de1d5-fd2a-4d5e-a32d-18703e077e88": {
+        "image": "/assets/-46053316_32586",
+        "label": "taskcard yellow 04.png"
+      },
+      "type-38e47872-6e05-405a-8be0-9cb49ae3712f": {
+        "image": "/assets/214510398_21972",
+        "label": "taskcard yellow 05.png"
+      },
+      "type-a312c607-6ee2-4411-8a62-907c23ecd36a": {
+        "image": "/assets/-617955563_24310",
+        "label": "taskcard yellow 06.png"
+      },
+      "type-f8bccf46-2229-43d9-9ba9-40c1ddba2f86": {
+        "image": "/assets/-306265180_31973",
+        "label": "taskcard yellow 07.png"
+      },
+      "type-80ca9b2b-ae9e-4e4a-8c6c-7ca89e08589f": {
+        "image": "/assets/-195000944_27882",
+        "label": "taskcard yellow 08.png"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#ffffff",
+            "valueType": "static",
+            "value": "/assets/-1682721256_109308",
+            "width": 59,
+            "height": 92
+          },
+          {
+            "type": "text",
+            "x": -1,
+            "y": 59.08267474406015,
+            "fontSize": 16,
+            "valueType": "static",
+            "value": "TASK",
+            "textAlign": "center",
+            "textFont": "interstate",
+            "color": "#ffffff",
+            "width": 60
+          }
+        ],
+        "border": false,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 59,
+            "height": 92
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 59,
+      "height": 92
+    },
+    "parent": "khsx9"
+  },
+  "khsx10": {
+    "type": "holder",
+    "x": 8.5,
+    "y": -55,
+    "z": 21841,
+    "id": "khsx10",
+    "css": "background: #55555530; border: 1px solid #55555560; ",
+    "width": 50,
+    "height": 50,
+    "dropTarget": {
+      "deck": "qe3n"
+    },
+    "parent": "khsx9",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "khsx11": {
+    "type": "holder",
+    "x": 970.5,
+    "y": 488,
+    "z": 21839,
+    "id": "khsx11",
+    "css": "background: #55555550",
+    "width": 67,
+    "height": 100,
+    "dropTarget": {
+      "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16"
+    }
+  },
+  "99cfa35a-8c94-4fa6-8145-0ae71d3f0a27": {
+    "id": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a27",
+    "x": 4,
+    "y": -19,
+    "z": 20372,
+    "type": "deck",
+    "cardTypes": {
+      "type-5e850b6a-c911-412e-9a57-40e72ae6fbe2": {
+        "image": "/assets/492022559_21769",
+        "label": "taskcard blue01.png"
+      },
+      "type-c99ba6da-b10d-4600-84de-cbe79c094a94": {
+        "image": "/assets/-1906127725_30672",
+        "label": "taskcard yellow 09.png"
+      },
+      "type-7ef4609b-74b5-4396-a259-e6d0a4a740e8": {
+        "image": "/assets/-116395730_27288",
+        "label": "taskcard blue02.png"
+      },
+      "type-1e37ab62-44c7-428d-b18f-cc3f1d8ed97a": {
+        "image": "/assets/1955134942_23235",
+        "label": "taskcard blue03.png"
+      },
+      "type-142403bf-d7c6-4c06-a97a-cbfe8e5dd869": {
+        "image": "/assets/826208420_33739",
+        "label": "taskcard blue04.png"
+      },
+      "type-15721d20-5d3e-417e-9047-968fca357c78": {
+        "image": "/assets/1238387486_23295",
+        "label": "taskcard blue05.png"
+      },
+      "type-6a935e9f-30ec-4cba-ab01-f7a1fb504870": {
+        "image": "/assets/-425140991_25584",
+        "label": "taskcard blue06.png"
+      },
+      "type-739c88ec-2925-43c1-bea2-8dc7bfde4e2d": {
+        "image": "/assets/-1661779211_33648",
+        "label": "taskcard blue07.png"
+      },
+      "type-9238fbb3-0a0b-4c3b-a57a-867751f8892a": {
+        "image": "/assets/-1250106647_27668",
+        "label": "taskcard blue08.png"
+      },
+      "type-7dd8c7ec-9d39-48eb-84e6-0600368ef60f": {
+        "image": "/assets/-1123622633_32206",
+        "label": "taskcard blue09.png"
+      },
+      "type-16691fb4-bc15-45a2-9cb0-37ea62d02b07": {
+        "image": "/assets/-1699669350_21392",
+        "label": "taskcard green 01.png"
+      },
+      "type-e26a2349-f1a9-4fa1-aaf1-d5cb03320e47": {
+        "image": "/assets/1260913300_25217",
+        "label": "taskcard green 02.png"
+      },
+      "type-45f772d3-3e83-4b4c-90d3-70fd51abe49c": {
+        "image": "/assets/1342818881_22370",
+        "label": "taskcard green 03.png"
+      },
+      "type-3b70a7af-ea3e-48bd-a4ad-0982074d044a": {
+        "image": "/assets/1229457677_32273",
+        "label": "taskcard green 04.png"
+      },
+      "type-1f19c879-8c5c-4203-b1f1-c7de18a684c1": {
+        "image": "/assets/-991196784_22402",
+        "label": "taskcard green 05.png"
+      },
+      "type-b4273e55-797a-4a8d-837a-e2165e3e4e8e": {
+        "image": "/assets/-385183670_24629",
+        "label": "taskcard green 06.png"
+      },
+      "type-eb6d38de-6a61-44d8-8ed4-2d0d16e05f54": {
+        "image": "/assets/2007271844_32274",
+        "label": "taskcard green 07.png"
+      },
+      "type-7836f440-9e9e-4174-9ed8-aeb7027b9511": {
+        "image": "/assets/1351138624_26997",
+        "label": "taskcard green 08.png"
+      },
+      "type-03e71902-bf9c-445f-abc1-8b8c4611bd02": {
+        "image": "/assets/255688031_30895",
+        "label": "taskcard green 09.png"
+      },
+      "type-455f9ac2-9db5-445f-812e-bdb2bcc958d1": {
+        "image": "/assets/-274127540_21157",
+        "label": "taskcard red 01.png"
+      },
+      "type-a01a1f3b-aaeb-4bd7-8389-2c1c25c9aadc": {
+        "image": "/assets/-2098965220_25900",
+        "label": "taskcard red 02.png"
+      },
+      "type-fb838705-5898-4b5c-bfaf-053035c31f0d": {
+        "image": "/assets/-1478530869_23195",
+        "label": "taskcard red 03.png"
+      },
+      "type-f9565123-61d7-4f54-ac84-2e69cd0619bf": {
+        "image": "/assets/-902781540_33014",
+        "label": "taskcard red 04.png"
+      },
+      "type-64023c45-1b4f-46a2-bfc6-472c6ab8ce1f": {
+        "image": "/assets/1289557125_23208",
+        "label": "taskcard red 05.png"
+      },
+      "type-575ba275-cc72-4b56-a484-af7e574b2516": {
+        "image": "/assets/673719761_25535",
+        "label": "taskcard red 06.png"
+      },
+      "type-1be66265-1aad-4194-bf8e-e47984ab491b": {
+        "image": "/assets/-1278541602_33105",
+        "label": "taskcard red 07.png"
+      },
+      "type-cc94b14b-88bf-4191-9709-dd8f9bed3ee7": {
+        "image": "/assets/1596122554_26324",
+        "label": "taskcard red 08.png"
+      },
+      "type-8970932c-1c24-41f9-8cfb-6754f4f63196": {
+        "image": "/assets/295477023_31716",
+        "label": "taskcard red 09.png"
+      },
+      "type-2ec6a785-66f7-49ae-9140-f3893a2e86e7": {
+        "image": "/assets/-80750579_21804",
+        "label": "taskcard yellow 01.png"
+      },
+      "type-686b1dc4-5e3f-4841-83f0-6ef8851b814d": {
+        "image": "/assets/80746063_26438",
+        "label": "taskcard yellow 02.png"
+      },
+      "type-ff3c8655-60df-4aed-8a52-8ac68cf78255": {
+        "image": "/assets/-805019595_21931",
+        "label": "taskcard yellow 03.png"
+      },
+      "type-596de1d5-fd2a-4d5e-a32d-18703e077e88": {
+        "image": "/assets/-46053316_32586",
+        "label": "taskcard yellow 04.png"
+      },
+      "type-38e47872-6e05-405a-8be0-9cb49ae3712f": {
+        "image": "/assets/214510398_21972",
+        "label": "taskcard yellow 05.png"
+      },
+      "type-a312c607-6ee2-4411-8a62-907c23ecd36a": {
+        "image": "/assets/-617955563_24310",
+        "label": "taskcard yellow 06.png"
+      },
+      "type-f8bccf46-2229-43d9-9ba9-40c1ddba2f86": {
+        "image": "/assets/-306265180_31973",
+        "label": "taskcard yellow 07.png"
+      },
+      "type-80ca9b2b-ae9e-4e4a-8c6c-7ca89e08589f": {
+        "image": "/assets/-195000944_27882",
+        "label": "taskcard yellow 08.png"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#ffffff",
+            "valueType": "static",
+            "value": "/assets/-1682721256_109308",
+            "width": 59,
+            "height": 92
+          },
+          {
+            "type": "text",
+            "x": -1,
+            "y": 59.08267474406015,
+            "fontSize": 16,
+            "valueType": "static",
+            "value": "TASK",
+            "textAlign": "center",
+            "textFont": "interstate",
+            "color": "#ffffff",
+            "width": 60
+          }
+        ],
+        "border": false,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 59,
+            "height": 92
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 59,
+      "height": 92
+    },
+    "parent": "khsx11"
+  },
+  "khsx12": {
+    "type": "holder",
+    "x": 8.5,
+    "y": -55,
+    "z": 21841,
+    "id": "khsx12",
+    "css": "background: #55555530; border: 1px solid #55555560; ",
+    "width": 50,
+    "height": 50,
+    "dropTarget": {
+      "deck": "qe3n"
+    },
+    "parent": "khsx11",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "99cfa35a-8c94-4fa6-8145-0ae71d3f0a28": {
+    "id": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a28",
+    "x": 4,
+    "y": -19,
+    "z": 20372,
+    "type": "deck",
+    "cardTypes": {
+      "type-5e850b6a-c911-412e-9a57-40e72ae6fbe2": {
+        "image": "/assets/492022559_21769",
+        "label": "taskcard blue01.png"
+      },
+      "type-c99ba6da-b10d-4600-84de-cbe79c094a94": {
+        "image": "/assets/-1906127725_30672",
+        "label": "taskcard yellow 09.png"
+      },
+      "type-7ef4609b-74b5-4396-a259-e6d0a4a740e8": {
+        "image": "/assets/-116395730_27288",
+        "label": "taskcard blue02.png"
+      },
+      "type-1e37ab62-44c7-428d-b18f-cc3f1d8ed97a": {
+        "image": "/assets/1955134942_23235",
+        "label": "taskcard blue03.png"
+      },
+      "type-142403bf-d7c6-4c06-a97a-cbfe8e5dd869": {
+        "image": "/assets/826208420_33739",
+        "label": "taskcard blue04.png"
+      },
+      "type-15721d20-5d3e-417e-9047-968fca357c78": {
+        "image": "/assets/1238387486_23295",
+        "label": "taskcard blue05.png"
+      },
+      "type-6a935e9f-30ec-4cba-ab01-f7a1fb504870": {
+        "image": "/assets/-425140991_25584",
+        "label": "taskcard blue06.png"
+      },
+      "type-739c88ec-2925-43c1-bea2-8dc7bfde4e2d": {
+        "image": "/assets/-1661779211_33648",
+        "label": "taskcard blue07.png"
+      },
+      "type-9238fbb3-0a0b-4c3b-a57a-867751f8892a": {
+        "image": "/assets/-1250106647_27668",
+        "label": "taskcard blue08.png"
+      },
+      "type-7dd8c7ec-9d39-48eb-84e6-0600368ef60f": {
+        "image": "/assets/-1123622633_32206",
+        "label": "taskcard blue09.png"
+      },
+      "type-16691fb4-bc15-45a2-9cb0-37ea62d02b07": {
+        "image": "/assets/-1699669350_21392",
+        "label": "taskcard green 01.png"
+      },
+      "type-e26a2349-f1a9-4fa1-aaf1-d5cb03320e47": {
+        "image": "/assets/1260913300_25217",
+        "label": "taskcard green 02.png"
+      },
+      "type-45f772d3-3e83-4b4c-90d3-70fd51abe49c": {
+        "image": "/assets/1342818881_22370",
+        "label": "taskcard green 03.png"
+      },
+      "type-3b70a7af-ea3e-48bd-a4ad-0982074d044a": {
+        "image": "/assets/1229457677_32273",
+        "label": "taskcard green 04.png"
+      },
+      "type-1f19c879-8c5c-4203-b1f1-c7de18a684c1": {
+        "image": "/assets/-991196784_22402",
+        "label": "taskcard green 05.png"
+      },
+      "type-b4273e55-797a-4a8d-837a-e2165e3e4e8e": {
+        "image": "/assets/-385183670_24629",
+        "label": "taskcard green 06.png"
+      },
+      "type-eb6d38de-6a61-44d8-8ed4-2d0d16e05f54": {
+        "image": "/assets/2007271844_32274",
+        "label": "taskcard green 07.png"
+      },
+      "type-7836f440-9e9e-4174-9ed8-aeb7027b9511": {
+        "image": "/assets/1351138624_26997",
+        "label": "taskcard green 08.png"
+      },
+      "type-03e71902-bf9c-445f-abc1-8b8c4611bd02": {
+        "image": "/assets/255688031_30895",
+        "label": "taskcard green 09.png"
+      },
+      "type-455f9ac2-9db5-445f-812e-bdb2bcc958d1": {
+        "image": "/assets/-274127540_21157",
+        "label": "taskcard red 01.png"
+      },
+      "type-a01a1f3b-aaeb-4bd7-8389-2c1c25c9aadc": {
+        "image": "/assets/-2098965220_25900",
+        "label": "taskcard red 02.png"
+      },
+      "type-fb838705-5898-4b5c-bfaf-053035c31f0d": {
+        "image": "/assets/-1478530869_23195",
+        "label": "taskcard red 03.png"
+      },
+      "type-f9565123-61d7-4f54-ac84-2e69cd0619bf": {
+        "image": "/assets/-902781540_33014",
+        "label": "taskcard red 04.png"
+      },
+      "type-64023c45-1b4f-46a2-bfc6-472c6ab8ce1f": {
+        "image": "/assets/1289557125_23208",
+        "label": "taskcard red 05.png"
+      },
+      "type-575ba275-cc72-4b56-a484-af7e574b2516": {
+        "image": "/assets/673719761_25535",
+        "label": "taskcard red 06.png"
+      },
+      "type-1be66265-1aad-4194-bf8e-e47984ab491b": {
+        "image": "/assets/-1278541602_33105",
+        "label": "taskcard red 07.png"
+      },
+      "type-cc94b14b-88bf-4191-9709-dd8f9bed3ee7": {
+        "image": "/assets/1596122554_26324",
+        "label": "taskcard red 08.png"
+      },
+      "type-8970932c-1c24-41f9-8cfb-6754f4f63196": {
+        "image": "/assets/295477023_31716",
+        "label": "taskcard red 09.png"
+      },
+      "type-2ec6a785-66f7-49ae-9140-f3893a2e86e7": {
+        "image": "/assets/-80750579_21804",
+        "label": "taskcard yellow 01.png"
+      },
+      "type-686b1dc4-5e3f-4841-83f0-6ef8851b814d": {
+        "image": "/assets/80746063_26438",
+        "label": "taskcard yellow 02.png"
+      },
+      "type-ff3c8655-60df-4aed-8a52-8ac68cf78255": {
+        "image": "/assets/-805019595_21931",
+        "label": "taskcard yellow 03.png"
+      },
+      "type-596de1d5-fd2a-4d5e-a32d-18703e077e88": {
+        "image": "/assets/-46053316_32586",
+        "label": "taskcard yellow 04.png"
+      },
+      "type-38e47872-6e05-405a-8be0-9cb49ae3712f": {
+        "image": "/assets/214510398_21972",
+        "label": "taskcard yellow 05.png"
+      },
+      "type-a312c607-6ee2-4411-8a62-907c23ecd36a": {
+        "image": "/assets/-617955563_24310",
+        "label": "taskcard yellow 06.png"
+      },
+      "type-f8bccf46-2229-43d9-9ba9-40c1ddba2f86": {
+        "image": "/assets/-306265180_31973",
+        "label": "taskcard yellow 07.png"
+      },
+      "type-80ca9b2b-ae9e-4e4a-8c6c-7ca89e08589f": {
+        "image": "/assets/-195000944_27882",
+        "label": "taskcard yellow 08.png"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#ffffff",
+            "valueType": "static",
+            "value": "/assets/-1682721256_109308",
+            "width": 59,
+            "height": 92
+          },
+          {
+            "type": "text",
+            "x": -1,
+            "y": 59.08267474406015,
+            "fontSize": 16,
+            "valueType": "static",
+            "value": "TASK",
+            "textAlign": "center",
+            "textFont": "interstate",
+            "color": "#ffffff",
+            "width": 60
+          }
+        ],
+        "border": false,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 59,
+            "height": 92
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 59,
+      "height": 92
+    },
+    "parent": "khsx12"
+  },
+  "khsx13": {
+    "type": "holder",
+    "x": 1050.5,
+    "y": 488,
+    "z": 21839,
+    "id": "khsx13",
+    "css": "background: #55555550",
+    "width": 67,
+    "height": 100,
+    "dropTarget": {
+      "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16"
+    }
+  },
+  "99cfa35a-8c94-4fa6-8145-0ae71d3f0a29": {
+    "id": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a29",
+    "x": 4,
+    "y": -19,
+    "z": 20372,
+    "type": "deck",
+    "cardTypes": {
+      "type-5e850b6a-c911-412e-9a57-40e72ae6fbe2": {
+        "image": "/assets/492022559_21769",
+        "label": "taskcard blue01.png"
+      },
+      "type-c99ba6da-b10d-4600-84de-cbe79c094a94": {
+        "image": "/assets/-1906127725_30672",
+        "label": "taskcard yellow 09.png"
+      },
+      "type-7ef4609b-74b5-4396-a259-e6d0a4a740e8": {
+        "image": "/assets/-116395730_27288",
+        "label": "taskcard blue02.png"
+      },
+      "type-1e37ab62-44c7-428d-b18f-cc3f1d8ed97a": {
+        "image": "/assets/1955134942_23235",
+        "label": "taskcard blue03.png"
+      },
+      "type-142403bf-d7c6-4c06-a97a-cbfe8e5dd869": {
+        "image": "/assets/826208420_33739",
+        "label": "taskcard blue04.png"
+      },
+      "type-15721d20-5d3e-417e-9047-968fca357c78": {
+        "image": "/assets/1238387486_23295",
+        "label": "taskcard blue05.png"
+      },
+      "type-6a935e9f-30ec-4cba-ab01-f7a1fb504870": {
+        "image": "/assets/-425140991_25584",
+        "label": "taskcard blue06.png"
+      },
+      "type-739c88ec-2925-43c1-bea2-8dc7bfde4e2d": {
+        "image": "/assets/-1661779211_33648",
+        "label": "taskcard blue07.png"
+      },
+      "type-9238fbb3-0a0b-4c3b-a57a-867751f8892a": {
+        "image": "/assets/-1250106647_27668",
+        "label": "taskcard blue08.png"
+      },
+      "type-7dd8c7ec-9d39-48eb-84e6-0600368ef60f": {
+        "image": "/assets/-1123622633_32206",
+        "label": "taskcard blue09.png"
+      },
+      "type-16691fb4-bc15-45a2-9cb0-37ea62d02b07": {
+        "image": "/assets/-1699669350_21392",
+        "label": "taskcard green 01.png"
+      },
+      "type-e26a2349-f1a9-4fa1-aaf1-d5cb03320e47": {
+        "image": "/assets/1260913300_25217",
+        "label": "taskcard green 02.png"
+      },
+      "type-45f772d3-3e83-4b4c-90d3-70fd51abe49c": {
+        "image": "/assets/1342818881_22370",
+        "label": "taskcard green 03.png"
+      },
+      "type-3b70a7af-ea3e-48bd-a4ad-0982074d044a": {
+        "image": "/assets/1229457677_32273",
+        "label": "taskcard green 04.png"
+      },
+      "type-1f19c879-8c5c-4203-b1f1-c7de18a684c1": {
+        "image": "/assets/-991196784_22402",
+        "label": "taskcard green 05.png"
+      },
+      "type-b4273e55-797a-4a8d-837a-e2165e3e4e8e": {
+        "image": "/assets/-385183670_24629",
+        "label": "taskcard green 06.png"
+      },
+      "type-eb6d38de-6a61-44d8-8ed4-2d0d16e05f54": {
+        "image": "/assets/2007271844_32274",
+        "label": "taskcard green 07.png"
+      },
+      "type-7836f440-9e9e-4174-9ed8-aeb7027b9511": {
+        "image": "/assets/1351138624_26997",
+        "label": "taskcard green 08.png"
+      },
+      "type-03e71902-bf9c-445f-abc1-8b8c4611bd02": {
+        "image": "/assets/255688031_30895",
+        "label": "taskcard green 09.png"
+      },
+      "type-455f9ac2-9db5-445f-812e-bdb2bcc958d1": {
+        "image": "/assets/-274127540_21157",
+        "label": "taskcard red 01.png"
+      },
+      "type-a01a1f3b-aaeb-4bd7-8389-2c1c25c9aadc": {
+        "image": "/assets/-2098965220_25900",
+        "label": "taskcard red 02.png"
+      },
+      "type-fb838705-5898-4b5c-bfaf-053035c31f0d": {
+        "image": "/assets/-1478530869_23195",
+        "label": "taskcard red 03.png"
+      },
+      "type-f9565123-61d7-4f54-ac84-2e69cd0619bf": {
+        "image": "/assets/-902781540_33014",
+        "label": "taskcard red 04.png"
+      },
+      "type-64023c45-1b4f-46a2-bfc6-472c6ab8ce1f": {
+        "image": "/assets/1289557125_23208",
+        "label": "taskcard red 05.png"
+      },
+      "type-575ba275-cc72-4b56-a484-af7e574b2516": {
+        "image": "/assets/673719761_25535",
+        "label": "taskcard red 06.png"
+      },
+      "type-1be66265-1aad-4194-bf8e-e47984ab491b": {
+        "image": "/assets/-1278541602_33105",
+        "label": "taskcard red 07.png"
+      },
+      "type-cc94b14b-88bf-4191-9709-dd8f9bed3ee7": {
+        "image": "/assets/1596122554_26324",
+        "label": "taskcard red 08.png"
+      },
+      "type-8970932c-1c24-41f9-8cfb-6754f4f63196": {
+        "image": "/assets/295477023_31716",
+        "label": "taskcard red 09.png"
+      },
+      "type-2ec6a785-66f7-49ae-9140-f3893a2e86e7": {
+        "image": "/assets/-80750579_21804",
+        "label": "taskcard yellow 01.png"
+      },
+      "type-686b1dc4-5e3f-4841-83f0-6ef8851b814d": {
+        "image": "/assets/80746063_26438",
+        "label": "taskcard yellow 02.png"
+      },
+      "type-ff3c8655-60df-4aed-8a52-8ac68cf78255": {
+        "image": "/assets/-805019595_21931",
+        "label": "taskcard yellow 03.png"
+      },
+      "type-596de1d5-fd2a-4d5e-a32d-18703e077e88": {
+        "image": "/assets/-46053316_32586",
+        "label": "taskcard yellow 04.png"
+      },
+      "type-38e47872-6e05-405a-8be0-9cb49ae3712f": {
+        "image": "/assets/214510398_21972",
+        "label": "taskcard yellow 05.png"
+      },
+      "type-a312c607-6ee2-4411-8a62-907c23ecd36a": {
+        "image": "/assets/-617955563_24310",
+        "label": "taskcard yellow 06.png"
+      },
+      "type-f8bccf46-2229-43d9-9ba9-40c1ddba2f86": {
+        "image": "/assets/-306265180_31973",
+        "label": "taskcard yellow 07.png"
+      },
+      "type-80ca9b2b-ae9e-4e4a-8c6c-7ca89e08589f": {
+        "image": "/assets/-195000944_27882",
+        "label": "taskcard yellow 08.png"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#ffffff",
+            "valueType": "static",
+            "value": "/assets/-1682721256_109308",
+            "width": 59,
+            "height": 92
+          },
+          {
+            "type": "text",
+            "x": -1,
+            "y": 59.08267474406015,
+            "fontSize": 16,
+            "valueType": "static",
+            "value": "TASK",
+            "textAlign": "center",
+            "textFont": "interstate",
+            "color": "#ffffff",
+            "width": 60
+          }
+        ],
+        "border": false,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 59,
+            "height": 92
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 59,
+      "height": 92
+    },
+    "parent": "khsx13"
+  },
+  "khsx14": {
+    "type": "holder",
+    "x": 8.5,
+    "y": -55,
+    "z": 21841,
+    "id": "khsx14",
+    "css": "background: #55555530; border: 1px solid #55555560; ",
+    "width": 50,
+    "height": 50,
+    "dropTarget": {
+      "deck": "qe3n"
+    },
+    "parent": "khsx13",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "99cfa35a-8c94-4fa6-8145-0ae71d3f0a30": {
+    "id": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a30",
+    "x": 4,
+    "y": -19,
+    "z": 20372,
+    "type": "deck",
+    "cardTypes": {
+      "type-5e850b6a-c911-412e-9a57-40e72ae6fbe2": {
+        "image": "/assets/492022559_21769",
+        "label": "taskcard blue01.png"
+      },
+      "type-c99ba6da-b10d-4600-84de-cbe79c094a94": {
+        "image": "/assets/-1906127725_30672",
+        "label": "taskcard yellow 09.png"
+      },
+      "type-7ef4609b-74b5-4396-a259-e6d0a4a740e8": {
+        "image": "/assets/-116395730_27288",
+        "label": "taskcard blue02.png"
+      },
+      "type-1e37ab62-44c7-428d-b18f-cc3f1d8ed97a": {
+        "image": "/assets/1955134942_23235",
+        "label": "taskcard blue03.png"
+      },
+      "type-142403bf-d7c6-4c06-a97a-cbfe8e5dd869": {
+        "image": "/assets/826208420_33739",
+        "label": "taskcard blue04.png"
+      },
+      "type-15721d20-5d3e-417e-9047-968fca357c78": {
+        "image": "/assets/1238387486_23295",
+        "label": "taskcard blue05.png"
+      },
+      "type-6a935e9f-30ec-4cba-ab01-f7a1fb504870": {
+        "image": "/assets/-425140991_25584",
+        "label": "taskcard blue06.png"
+      },
+      "type-739c88ec-2925-43c1-bea2-8dc7bfde4e2d": {
+        "image": "/assets/-1661779211_33648",
+        "label": "taskcard blue07.png"
+      },
+      "type-9238fbb3-0a0b-4c3b-a57a-867751f8892a": {
+        "image": "/assets/-1250106647_27668",
+        "label": "taskcard blue08.png"
+      },
+      "type-7dd8c7ec-9d39-48eb-84e6-0600368ef60f": {
+        "image": "/assets/-1123622633_32206",
+        "label": "taskcard blue09.png"
+      },
+      "type-16691fb4-bc15-45a2-9cb0-37ea62d02b07": {
+        "image": "/assets/-1699669350_21392",
+        "label": "taskcard green 01.png"
+      },
+      "type-e26a2349-f1a9-4fa1-aaf1-d5cb03320e47": {
+        "image": "/assets/1260913300_25217",
+        "label": "taskcard green 02.png"
+      },
+      "type-45f772d3-3e83-4b4c-90d3-70fd51abe49c": {
+        "image": "/assets/1342818881_22370",
+        "label": "taskcard green 03.png"
+      },
+      "type-3b70a7af-ea3e-48bd-a4ad-0982074d044a": {
+        "image": "/assets/1229457677_32273",
+        "label": "taskcard green 04.png"
+      },
+      "type-1f19c879-8c5c-4203-b1f1-c7de18a684c1": {
+        "image": "/assets/-991196784_22402",
+        "label": "taskcard green 05.png"
+      },
+      "type-b4273e55-797a-4a8d-837a-e2165e3e4e8e": {
+        "image": "/assets/-385183670_24629",
+        "label": "taskcard green 06.png"
+      },
+      "type-eb6d38de-6a61-44d8-8ed4-2d0d16e05f54": {
+        "image": "/assets/2007271844_32274",
+        "label": "taskcard green 07.png"
+      },
+      "type-7836f440-9e9e-4174-9ed8-aeb7027b9511": {
+        "image": "/assets/1351138624_26997",
+        "label": "taskcard green 08.png"
+      },
+      "type-03e71902-bf9c-445f-abc1-8b8c4611bd02": {
+        "image": "/assets/255688031_30895",
+        "label": "taskcard green 09.png"
+      },
+      "type-455f9ac2-9db5-445f-812e-bdb2bcc958d1": {
+        "image": "/assets/-274127540_21157",
+        "label": "taskcard red 01.png"
+      },
+      "type-a01a1f3b-aaeb-4bd7-8389-2c1c25c9aadc": {
+        "image": "/assets/-2098965220_25900",
+        "label": "taskcard red 02.png"
+      },
+      "type-fb838705-5898-4b5c-bfaf-053035c31f0d": {
+        "image": "/assets/-1478530869_23195",
+        "label": "taskcard red 03.png"
+      },
+      "type-f9565123-61d7-4f54-ac84-2e69cd0619bf": {
+        "image": "/assets/-902781540_33014",
+        "label": "taskcard red 04.png"
+      },
+      "type-64023c45-1b4f-46a2-bfc6-472c6ab8ce1f": {
+        "image": "/assets/1289557125_23208",
+        "label": "taskcard red 05.png"
+      },
+      "type-575ba275-cc72-4b56-a484-af7e574b2516": {
+        "image": "/assets/673719761_25535",
+        "label": "taskcard red 06.png"
+      },
+      "type-1be66265-1aad-4194-bf8e-e47984ab491b": {
+        "image": "/assets/-1278541602_33105",
+        "label": "taskcard red 07.png"
+      },
+      "type-cc94b14b-88bf-4191-9709-dd8f9bed3ee7": {
+        "image": "/assets/1596122554_26324",
+        "label": "taskcard red 08.png"
+      },
+      "type-8970932c-1c24-41f9-8cfb-6754f4f63196": {
+        "image": "/assets/295477023_31716",
+        "label": "taskcard red 09.png"
+      },
+      "type-2ec6a785-66f7-49ae-9140-f3893a2e86e7": {
+        "image": "/assets/-80750579_21804",
+        "label": "taskcard yellow 01.png"
+      },
+      "type-686b1dc4-5e3f-4841-83f0-6ef8851b814d": {
+        "image": "/assets/80746063_26438",
+        "label": "taskcard yellow 02.png"
+      },
+      "type-ff3c8655-60df-4aed-8a52-8ac68cf78255": {
+        "image": "/assets/-805019595_21931",
+        "label": "taskcard yellow 03.png"
+      },
+      "type-596de1d5-fd2a-4d5e-a32d-18703e077e88": {
+        "image": "/assets/-46053316_32586",
+        "label": "taskcard yellow 04.png"
+      },
+      "type-38e47872-6e05-405a-8be0-9cb49ae3712f": {
+        "image": "/assets/214510398_21972",
+        "label": "taskcard yellow 05.png"
+      },
+      "type-a312c607-6ee2-4411-8a62-907c23ecd36a": {
+        "image": "/assets/-617955563_24310",
+        "label": "taskcard yellow 06.png"
+      },
+      "type-f8bccf46-2229-43d9-9ba9-40c1ddba2f86": {
+        "image": "/assets/-306265180_31973",
+        "label": "taskcard yellow 07.png"
+      },
+      "type-80ca9b2b-ae9e-4e4a-8c6c-7ca89e08589f": {
+        "image": "/assets/-195000944_27882",
+        "label": "taskcard yellow 08.png"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#ffffff",
+            "valueType": "static",
+            "value": "/assets/-1682721256_109308",
+            "width": 59,
+            "height": 92
+          },
+          {
+            "type": "text",
+            "x": -1,
+            "y": 59.08267474406015,
+            "fontSize": 16,
+            "valueType": "static",
+            "value": "TASK",
+            "textAlign": "center",
+            "textFont": "interstate",
+            "color": "#ffffff",
+            "width": 60
+          }
+        ],
+        "border": false,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 59,
+            "height": 92
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 59,
+      "height": 92
+    },
+    "parent": "khsx14"
+  },
+  "khsx15": {
+    "type": "holder",
+    "x": 1130.5,
+    "y": 488,
+    "z": 21839,
+    "id": "khsx15",
+    "css": "background: #55555550",
+    "width": 67,
+    "height": 100,
+    "dropTarget": {
+      "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16"
+    }
+  },
+  "99cfa35a-8c94-4fa6-8145-0ae71d3f0a31": {
+    "id": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a31",
+    "x": 4,
+    "y": -19,
+    "z": 20372,
+    "type": "deck",
+    "cardTypes": {
+      "type-5e850b6a-c911-412e-9a57-40e72ae6fbe2": {
+        "image": "/assets/492022559_21769",
+        "label": "taskcard blue01.png"
+      },
+      "type-c99ba6da-b10d-4600-84de-cbe79c094a94": {
+        "image": "/assets/-1906127725_30672",
+        "label": "taskcard yellow 09.png"
+      },
+      "type-7ef4609b-74b5-4396-a259-e6d0a4a740e8": {
+        "image": "/assets/-116395730_27288",
+        "label": "taskcard blue02.png"
+      },
+      "type-1e37ab62-44c7-428d-b18f-cc3f1d8ed97a": {
+        "image": "/assets/1955134942_23235",
+        "label": "taskcard blue03.png"
+      },
+      "type-142403bf-d7c6-4c06-a97a-cbfe8e5dd869": {
+        "image": "/assets/826208420_33739",
+        "label": "taskcard blue04.png"
+      },
+      "type-15721d20-5d3e-417e-9047-968fca357c78": {
+        "image": "/assets/1238387486_23295",
+        "label": "taskcard blue05.png"
+      },
+      "type-6a935e9f-30ec-4cba-ab01-f7a1fb504870": {
+        "image": "/assets/-425140991_25584",
+        "label": "taskcard blue06.png"
+      },
+      "type-739c88ec-2925-43c1-bea2-8dc7bfde4e2d": {
+        "image": "/assets/-1661779211_33648",
+        "label": "taskcard blue07.png"
+      },
+      "type-9238fbb3-0a0b-4c3b-a57a-867751f8892a": {
+        "image": "/assets/-1250106647_27668",
+        "label": "taskcard blue08.png"
+      },
+      "type-7dd8c7ec-9d39-48eb-84e6-0600368ef60f": {
+        "image": "/assets/-1123622633_32206",
+        "label": "taskcard blue09.png"
+      },
+      "type-16691fb4-bc15-45a2-9cb0-37ea62d02b07": {
+        "image": "/assets/-1699669350_21392",
+        "label": "taskcard green 01.png"
+      },
+      "type-e26a2349-f1a9-4fa1-aaf1-d5cb03320e47": {
+        "image": "/assets/1260913300_25217",
+        "label": "taskcard green 02.png"
+      },
+      "type-45f772d3-3e83-4b4c-90d3-70fd51abe49c": {
+        "image": "/assets/1342818881_22370",
+        "label": "taskcard green 03.png"
+      },
+      "type-3b70a7af-ea3e-48bd-a4ad-0982074d044a": {
+        "image": "/assets/1229457677_32273",
+        "label": "taskcard green 04.png"
+      },
+      "type-1f19c879-8c5c-4203-b1f1-c7de18a684c1": {
+        "image": "/assets/-991196784_22402",
+        "label": "taskcard green 05.png"
+      },
+      "type-b4273e55-797a-4a8d-837a-e2165e3e4e8e": {
+        "image": "/assets/-385183670_24629",
+        "label": "taskcard green 06.png"
+      },
+      "type-eb6d38de-6a61-44d8-8ed4-2d0d16e05f54": {
+        "image": "/assets/2007271844_32274",
+        "label": "taskcard green 07.png"
+      },
+      "type-7836f440-9e9e-4174-9ed8-aeb7027b9511": {
+        "image": "/assets/1351138624_26997",
+        "label": "taskcard green 08.png"
+      },
+      "type-03e71902-bf9c-445f-abc1-8b8c4611bd02": {
+        "image": "/assets/255688031_30895",
+        "label": "taskcard green 09.png"
+      },
+      "type-455f9ac2-9db5-445f-812e-bdb2bcc958d1": {
+        "image": "/assets/-274127540_21157",
+        "label": "taskcard red 01.png"
+      },
+      "type-a01a1f3b-aaeb-4bd7-8389-2c1c25c9aadc": {
+        "image": "/assets/-2098965220_25900",
+        "label": "taskcard red 02.png"
+      },
+      "type-fb838705-5898-4b5c-bfaf-053035c31f0d": {
+        "image": "/assets/-1478530869_23195",
+        "label": "taskcard red 03.png"
+      },
+      "type-f9565123-61d7-4f54-ac84-2e69cd0619bf": {
+        "image": "/assets/-902781540_33014",
+        "label": "taskcard red 04.png"
+      },
+      "type-64023c45-1b4f-46a2-bfc6-472c6ab8ce1f": {
+        "image": "/assets/1289557125_23208",
+        "label": "taskcard red 05.png"
+      },
+      "type-575ba275-cc72-4b56-a484-af7e574b2516": {
+        "image": "/assets/673719761_25535",
+        "label": "taskcard red 06.png"
+      },
+      "type-1be66265-1aad-4194-bf8e-e47984ab491b": {
+        "image": "/assets/-1278541602_33105",
+        "label": "taskcard red 07.png"
+      },
+      "type-cc94b14b-88bf-4191-9709-dd8f9bed3ee7": {
+        "image": "/assets/1596122554_26324",
+        "label": "taskcard red 08.png"
+      },
+      "type-8970932c-1c24-41f9-8cfb-6754f4f63196": {
+        "image": "/assets/295477023_31716",
+        "label": "taskcard red 09.png"
+      },
+      "type-2ec6a785-66f7-49ae-9140-f3893a2e86e7": {
+        "image": "/assets/-80750579_21804",
+        "label": "taskcard yellow 01.png"
+      },
+      "type-686b1dc4-5e3f-4841-83f0-6ef8851b814d": {
+        "image": "/assets/80746063_26438",
+        "label": "taskcard yellow 02.png"
+      },
+      "type-ff3c8655-60df-4aed-8a52-8ac68cf78255": {
+        "image": "/assets/-805019595_21931",
+        "label": "taskcard yellow 03.png"
+      },
+      "type-596de1d5-fd2a-4d5e-a32d-18703e077e88": {
+        "image": "/assets/-46053316_32586",
+        "label": "taskcard yellow 04.png"
+      },
+      "type-38e47872-6e05-405a-8be0-9cb49ae3712f": {
+        "image": "/assets/214510398_21972",
+        "label": "taskcard yellow 05.png"
+      },
+      "type-a312c607-6ee2-4411-8a62-907c23ecd36a": {
+        "image": "/assets/-617955563_24310",
+        "label": "taskcard yellow 06.png"
+      },
+      "type-f8bccf46-2229-43d9-9ba9-40c1ddba2f86": {
+        "image": "/assets/-306265180_31973",
+        "label": "taskcard yellow 07.png"
+      },
+      "type-80ca9b2b-ae9e-4e4a-8c6c-7ca89e08589f": {
+        "image": "/assets/-195000944_27882",
+        "label": "taskcard yellow 08.png"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#ffffff",
+            "valueType": "static",
+            "value": "/assets/-1682721256_109308",
+            "width": 59,
+            "height": 92
+          },
+          {
+            "type": "text",
+            "x": -1,
+            "y": 59.08267474406015,
+            "fontSize": 16,
+            "valueType": "static",
+            "value": "TASK",
+            "textAlign": "center",
+            "textFont": "interstate",
+            "color": "#ffffff",
+            "width": 60
+          }
+        ],
+        "border": false,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 59,
+            "height": 92
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 59,
+      "height": 92
+    },
+    "parent": "khsx15"
+  },
+  "khsx16": {
+    "type": "holder",
+    "x": 8.5,
+    "y": -55,
+    "z": 21841,
+    "id": "khsx16",
+    "css": "background: #55555530; border: 1px solid #55555560; ",
+    "width": 50,
+    "height": 50,
+    "dropTarget": {
+      "deck": "qe3n"
+    },
+    "parent": "khsx15",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "99cfa35a-8c94-4fa6-8145-0ae71d3f0a32": {
+    "id": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a32",
+    "x": 4,
+    "y": -19,
+    "z": 20372,
+    "type": "deck",
+    "cardTypes": {
+      "type-5e850b6a-c911-412e-9a57-40e72ae6fbe2": {
+        "image": "/assets/492022559_21769",
+        "label": "taskcard blue01.png"
+      },
+      "type-c99ba6da-b10d-4600-84de-cbe79c094a94": {
+        "image": "/assets/-1906127725_30672",
+        "label": "taskcard yellow 09.png"
+      },
+      "type-7ef4609b-74b5-4396-a259-e6d0a4a740e8": {
+        "image": "/assets/-116395730_27288",
+        "label": "taskcard blue02.png"
+      },
+      "type-1e37ab62-44c7-428d-b18f-cc3f1d8ed97a": {
+        "image": "/assets/1955134942_23235",
+        "label": "taskcard blue03.png"
+      },
+      "type-142403bf-d7c6-4c06-a97a-cbfe8e5dd869": {
+        "image": "/assets/826208420_33739",
+        "label": "taskcard blue04.png"
+      },
+      "type-15721d20-5d3e-417e-9047-968fca357c78": {
+        "image": "/assets/1238387486_23295",
+        "label": "taskcard blue05.png"
+      },
+      "type-6a935e9f-30ec-4cba-ab01-f7a1fb504870": {
+        "image": "/assets/-425140991_25584",
+        "label": "taskcard blue06.png"
+      },
+      "type-739c88ec-2925-43c1-bea2-8dc7bfde4e2d": {
+        "image": "/assets/-1661779211_33648",
+        "label": "taskcard blue07.png"
+      },
+      "type-9238fbb3-0a0b-4c3b-a57a-867751f8892a": {
+        "image": "/assets/-1250106647_27668",
+        "label": "taskcard blue08.png"
+      },
+      "type-7dd8c7ec-9d39-48eb-84e6-0600368ef60f": {
+        "image": "/assets/-1123622633_32206",
+        "label": "taskcard blue09.png"
+      },
+      "type-16691fb4-bc15-45a2-9cb0-37ea62d02b07": {
+        "image": "/assets/-1699669350_21392",
+        "label": "taskcard green 01.png"
+      },
+      "type-e26a2349-f1a9-4fa1-aaf1-d5cb03320e47": {
+        "image": "/assets/1260913300_25217",
+        "label": "taskcard green 02.png"
+      },
+      "type-45f772d3-3e83-4b4c-90d3-70fd51abe49c": {
+        "image": "/assets/1342818881_22370",
+        "label": "taskcard green 03.png"
+      },
+      "type-3b70a7af-ea3e-48bd-a4ad-0982074d044a": {
+        "image": "/assets/1229457677_32273",
+        "label": "taskcard green 04.png"
+      },
+      "type-1f19c879-8c5c-4203-b1f1-c7de18a684c1": {
+        "image": "/assets/-991196784_22402",
+        "label": "taskcard green 05.png"
+      },
+      "type-b4273e55-797a-4a8d-837a-e2165e3e4e8e": {
+        "image": "/assets/-385183670_24629",
+        "label": "taskcard green 06.png"
+      },
+      "type-eb6d38de-6a61-44d8-8ed4-2d0d16e05f54": {
+        "image": "/assets/2007271844_32274",
+        "label": "taskcard green 07.png"
+      },
+      "type-7836f440-9e9e-4174-9ed8-aeb7027b9511": {
+        "image": "/assets/1351138624_26997",
+        "label": "taskcard green 08.png"
+      },
+      "type-03e71902-bf9c-445f-abc1-8b8c4611bd02": {
+        "image": "/assets/255688031_30895",
+        "label": "taskcard green 09.png"
+      },
+      "type-455f9ac2-9db5-445f-812e-bdb2bcc958d1": {
+        "image": "/assets/-274127540_21157",
+        "label": "taskcard red 01.png"
+      },
+      "type-a01a1f3b-aaeb-4bd7-8389-2c1c25c9aadc": {
+        "image": "/assets/-2098965220_25900",
+        "label": "taskcard red 02.png"
+      },
+      "type-fb838705-5898-4b5c-bfaf-053035c31f0d": {
+        "image": "/assets/-1478530869_23195",
+        "label": "taskcard red 03.png"
+      },
+      "type-f9565123-61d7-4f54-ac84-2e69cd0619bf": {
+        "image": "/assets/-902781540_33014",
+        "label": "taskcard red 04.png"
+      },
+      "type-64023c45-1b4f-46a2-bfc6-472c6ab8ce1f": {
+        "image": "/assets/1289557125_23208",
+        "label": "taskcard red 05.png"
+      },
+      "type-575ba275-cc72-4b56-a484-af7e574b2516": {
+        "image": "/assets/673719761_25535",
+        "label": "taskcard red 06.png"
+      },
+      "type-1be66265-1aad-4194-bf8e-e47984ab491b": {
+        "image": "/assets/-1278541602_33105",
+        "label": "taskcard red 07.png"
+      },
+      "type-cc94b14b-88bf-4191-9709-dd8f9bed3ee7": {
+        "image": "/assets/1596122554_26324",
+        "label": "taskcard red 08.png"
+      },
+      "type-8970932c-1c24-41f9-8cfb-6754f4f63196": {
+        "image": "/assets/295477023_31716",
+        "label": "taskcard red 09.png"
+      },
+      "type-2ec6a785-66f7-49ae-9140-f3893a2e86e7": {
+        "image": "/assets/-80750579_21804",
+        "label": "taskcard yellow 01.png"
+      },
+      "type-686b1dc4-5e3f-4841-83f0-6ef8851b814d": {
+        "image": "/assets/80746063_26438",
+        "label": "taskcard yellow 02.png"
+      },
+      "type-ff3c8655-60df-4aed-8a52-8ac68cf78255": {
+        "image": "/assets/-805019595_21931",
+        "label": "taskcard yellow 03.png"
+      },
+      "type-596de1d5-fd2a-4d5e-a32d-18703e077e88": {
+        "image": "/assets/-46053316_32586",
+        "label": "taskcard yellow 04.png"
+      },
+      "type-38e47872-6e05-405a-8be0-9cb49ae3712f": {
+        "image": "/assets/214510398_21972",
+        "label": "taskcard yellow 05.png"
+      },
+      "type-a312c607-6ee2-4411-8a62-907c23ecd36a": {
+        "image": "/assets/-617955563_24310",
+        "label": "taskcard yellow 06.png"
+      },
+      "type-f8bccf46-2229-43d9-9ba9-40c1ddba2f86": {
+        "image": "/assets/-306265180_31973",
+        "label": "taskcard yellow 07.png"
+      },
+      "type-80ca9b2b-ae9e-4e4a-8c6c-7ca89e08589f": {
+        "image": "/assets/-195000944_27882",
+        "label": "taskcard yellow 08.png"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#ffffff",
+            "valueType": "static",
+            "value": "/assets/-1682721256_109308",
+            "width": 59,
+            "height": 92
+          },
+          {
+            "type": "text",
+            "x": -1,
+            "y": 59.08267474406015,
+            "fontSize": 16,
+            "valueType": "static",
+            "value": "TASK",
+            "textAlign": "center",
+            "textFont": "interstate",
+            "color": "#ffffff",
+            "width": 60
+          }
+        ],
+        "border": false,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 59,
+            "height": 92
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 59,
+      "height": 92
+    },
+    "parent": "khsx16"
+  },
+  "khsx17": {
+    "type": "holder",
+    "x": 890.5,
+    "y": 688,
+    "z": 21839,
+    "id": "khsx17",
+    "css": "background: #55555550",
+    "width": 67,
+    "height": 100,
+    "dropTarget": {
+      "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16"
+    }
+  },
+  "99cfa35a-8c94-4fa6-8145-0ae71d3f0a33": {
+    "id": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a33",
+    "x": 4,
+    "y": -19,
+    "z": 20372,
+    "type": "deck",
+    "cardTypes": {
+      "type-5e850b6a-c911-412e-9a57-40e72ae6fbe2": {
+        "image": "/assets/492022559_21769",
+        "label": "taskcard blue01.png"
+      },
+      "type-c99ba6da-b10d-4600-84de-cbe79c094a94": {
+        "image": "/assets/-1906127725_30672",
+        "label": "taskcard yellow 09.png"
+      },
+      "type-7ef4609b-74b5-4396-a259-e6d0a4a740e8": {
+        "image": "/assets/-116395730_27288",
+        "label": "taskcard blue02.png"
+      },
+      "type-1e37ab62-44c7-428d-b18f-cc3f1d8ed97a": {
+        "image": "/assets/1955134942_23235",
+        "label": "taskcard blue03.png"
+      },
+      "type-142403bf-d7c6-4c06-a97a-cbfe8e5dd869": {
+        "image": "/assets/826208420_33739",
+        "label": "taskcard blue04.png"
+      },
+      "type-15721d20-5d3e-417e-9047-968fca357c78": {
+        "image": "/assets/1238387486_23295",
+        "label": "taskcard blue05.png"
+      },
+      "type-6a935e9f-30ec-4cba-ab01-f7a1fb504870": {
+        "image": "/assets/-425140991_25584",
+        "label": "taskcard blue06.png"
+      },
+      "type-739c88ec-2925-43c1-bea2-8dc7bfde4e2d": {
+        "image": "/assets/-1661779211_33648",
+        "label": "taskcard blue07.png"
+      },
+      "type-9238fbb3-0a0b-4c3b-a57a-867751f8892a": {
+        "image": "/assets/-1250106647_27668",
+        "label": "taskcard blue08.png"
+      },
+      "type-7dd8c7ec-9d39-48eb-84e6-0600368ef60f": {
+        "image": "/assets/-1123622633_32206",
+        "label": "taskcard blue09.png"
+      },
+      "type-16691fb4-bc15-45a2-9cb0-37ea62d02b07": {
+        "image": "/assets/-1699669350_21392",
+        "label": "taskcard green 01.png"
+      },
+      "type-e26a2349-f1a9-4fa1-aaf1-d5cb03320e47": {
+        "image": "/assets/1260913300_25217",
+        "label": "taskcard green 02.png"
+      },
+      "type-45f772d3-3e83-4b4c-90d3-70fd51abe49c": {
+        "image": "/assets/1342818881_22370",
+        "label": "taskcard green 03.png"
+      },
+      "type-3b70a7af-ea3e-48bd-a4ad-0982074d044a": {
+        "image": "/assets/1229457677_32273",
+        "label": "taskcard green 04.png"
+      },
+      "type-1f19c879-8c5c-4203-b1f1-c7de18a684c1": {
+        "image": "/assets/-991196784_22402",
+        "label": "taskcard green 05.png"
+      },
+      "type-b4273e55-797a-4a8d-837a-e2165e3e4e8e": {
+        "image": "/assets/-385183670_24629",
+        "label": "taskcard green 06.png"
+      },
+      "type-eb6d38de-6a61-44d8-8ed4-2d0d16e05f54": {
+        "image": "/assets/2007271844_32274",
+        "label": "taskcard green 07.png"
+      },
+      "type-7836f440-9e9e-4174-9ed8-aeb7027b9511": {
+        "image": "/assets/1351138624_26997",
+        "label": "taskcard green 08.png"
+      },
+      "type-03e71902-bf9c-445f-abc1-8b8c4611bd02": {
+        "image": "/assets/255688031_30895",
+        "label": "taskcard green 09.png"
+      },
+      "type-455f9ac2-9db5-445f-812e-bdb2bcc958d1": {
+        "image": "/assets/-274127540_21157",
+        "label": "taskcard red 01.png"
+      },
+      "type-a01a1f3b-aaeb-4bd7-8389-2c1c25c9aadc": {
+        "image": "/assets/-2098965220_25900",
+        "label": "taskcard red 02.png"
+      },
+      "type-fb838705-5898-4b5c-bfaf-053035c31f0d": {
+        "image": "/assets/-1478530869_23195",
+        "label": "taskcard red 03.png"
+      },
+      "type-f9565123-61d7-4f54-ac84-2e69cd0619bf": {
+        "image": "/assets/-902781540_33014",
+        "label": "taskcard red 04.png"
+      },
+      "type-64023c45-1b4f-46a2-bfc6-472c6ab8ce1f": {
+        "image": "/assets/1289557125_23208",
+        "label": "taskcard red 05.png"
+      },
+      "type-575ba275-cc72-4b56-a484-af7e574b2516": {
+        "image": "/assets/673719761_25535",
+        "label": "taskcard red 06.png"
+      },
+      "type-1be66265-1aad-4194-bf8e-e47984ab491b": {
+        "image": "/assets/-1278541602_33105",
+        "label": "taskcard red 07.png"
+      },
+      "type-cc94b14b-88bf-4191-9709-dd8f9bed3ee7": {
+        "image": "/assets/1596122554_26324",
+        "label": "taskcard red 08.png"
+      },
+      "type-8970932c-1c24-41f9-8cfb-6754f4f63196": {
+        "image": "/assets/295477023_31716",
+        "label": "taskcard red 09.png"
+      },
+      "type-2ec6a785-66f7-49ae-9140-f3893a2e86e7": {
+        "image": "/assets/-80750579_21804",
+        "label": "taskcard yellow 01.png"
+      },
+      "type-686b1dc4-5e3f-4841-83f0-6ef8851b814d": {
+        "image": "/assets/80746063_26438",
+        "label": "taskcard yellow 02.png"
+      },
+      "type-ff3c8655-60df-4aed-8a52-8ac68cf78255": {
+        "image": "/assets/-805019595_21931",
+        "label": "taskcard yellow 03.png"
+      },
+      "type-596de1d5-fd2a-4d5e-a32d-18703e077e88": {
+        "image": "/assets/-46053316_32586",
+        "label": "taskcard yellow 04.png"
+      },
+      "type-38e47872-6e05-405a-8be0-9cb49ae3712f": {
+        "image": "/assets/214510398_21972",
+        "label": "taskcard yellow 05.png"
+      },
+      "type-a312c607-6ee2-4411-8a62-907c23ecd36a": {
+        "image": "/assets/-617955563_24310",
+        "label": "taskcard yellow 06.png"
+      },
+      "type-f8bccf46-2229-43d9-9ba9-40c1ddba2f86": {
+        "image": "/assets/-306265180_31973",
+        "label": "taskcard yellow 07.png"
+      },
+      "type-80ca9b2b-ae9e-4e4a-8c6c-7ca89e08589f": {
+        "image": "/assets/-195000944_27882",
+        "label": "taskcard yellow 08.png"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#ffffff",
+            "valueType": "static",
+            "value": "/assets/-1682721256_109308",
+            "width": 59,
+            "height": 92
+          },
+          {
+            "type": "text",
+            "x": -1,
+            "y": 59.08267474406015,
+            "fontSize": 16,
+            "valueType": "static",
+            "value": "TASK",
+            "textAlign": "center",
+            "textFont": "interstate",
+            "color": "#ffffff",
+            "width": 60
+          }
+        ],
+        "border": false,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 59,
+            "height": 92
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 59,
+      "height": 92
+    },
+    "parent": "khsx17"
+  },
+  "khsx18": {
+    "type": "holder",
+    "x": 8.5,
+    "y": -55,
+    "z": 21841,
+    "id": "khsx18",
+    "css": "background: #55555530; border: 1px solid #55555560; ",
+    "width": 50,
+    "height": 50,
+    "dropTarget": {
+      "deck": "qe3n"
+    },
+    "parent": "khsx17",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "99cfa35a-8c94-4fa6-8145-0ae71d3f0a34": {
+    "id": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a34",
+    "x": 4,
+    "y": -19,
+    "z": 20372,
+    "type": "deck",
+    "cardTypes": {
+      "type-5e850b6a-c911-412e-9a57-40e72ae6fbe2": {
+        "image": "/assets/492022559_21769",
+        "label": "taskcard blue01.png"
+      },
+      "type-c99ba6da-b10d-4600-84de-cbe79c094a94": {
+        "image": "/assets/-1906127725_30672",
+        "label": "taskcard yellow 09.png"
+      },
+      "type-7ef4609b-74b5-4396-a259-e6d0a4a740e8": {
+        "image": "/assets/-116395730_27288",
+        "label": "taskcard blue02.png"
+      },
+      "type-1e37ab62-44c7-428d-b18f-cc3f1d8ed97a": {
+        "image": "/assets/1955134942_23235",
+        "label": "taskcard blue03.png"
+      },
+      "type-142403bf-d7c6-4c06-a97a-cbfe8e5dd869": {
+        "image": "/assets/826208420_33739",
+        "label": "taskcard blue04.png"
+      },
+      "type-15721d20-5d3e-417e-9047-968fca357c78": {
+        "image": "/assets/1238387486_23295",
+        "label": "taskcard blue05.png"
+      },
+      "type-6a935e9f-30ec-4cba-ab01-f7a1fb504870": {
+        "image": "/assets/-425140991_25584",
+        "label": "taskcard blue06.png"
+      },
+      "type-739c88ec-2925-43c1-bea2-8dc7bfde4e2d": {
+        "image": "/assets/-1661779211_33648",
+        "label": "taskcard blue07.png"
+      },
+      "type-9238fbb3-0a0b-4c3b-a57a-867751f8892a": {
+        "image": "/assets/-1250106647_27668",
+        "label": "taskcard blue08.png"
+      },
+      "type-7dd8c7ec-9d39-48eb-84e6-0600368ef60f": {
+        "image": "/assets/-1123622633_32206",
+        "label": "taskcard blue09.png"
+      },
+      "type-16691fb4-bc15-45a2-9cb0-37ea62d02b07": {
+        "image": "/assets/-1699669350_21392",
+        "label": "taskcard green 01.png"
+      },
+      "type-e26a2349-f1a9-4fa1-aaf1-d5cb03320e47": {
+        "image": "/assets/1260913300_25217",
+        "label": "taskcard green 02.png"
+      },
+      "type-45f772d3-3e83-4b4c-90d3-70fd51abe49c": {
+        "image": "/assets/1342818881_22370",
+        "label": "taskcard green 03.png"
+      },
+      "type-3b70a7af-ea3e-48bd-a4ad-0982074d044a": {
+        "image": "/assets/1229457677_32273",
+        "label": "taskcard green 04.png"
+      },
+      "type-1f19c879-8c5c-4203-b1f1-c7de18a684c1": {
+        "image": "/assets/-991196784_22402",
+        "label": "taskcard green 05.png"
+      },
+      "type-b4273e55-797a-4a8d-837a-e2165e3e4e8e": {
+        "image": "/assets/-385183670_24629",
+        "label": "taskcard green 06.png"
+      },
+      "type-eb6d38de-6a61-44d8-8ed4-2d0d16e05f54": {
+        "image": "/assets/2007271844_32274",
+        "label": "taskcard green 07.png"
+      },
+      "type-7836f440-9e9e-4174-9ed8-aeb7027b9511": {
+        "image": "/assets/1351138624_26997",
+        "label": "taskcard green 08.png"
+      },
+      "type-03e71902-bf9c-445f-abc1-8b8c4611bd02": {
+        "image": "/assets/255688031_30895",
+        "label": "taskcard green 09.png"
+      },
+      "type-455f9ac2-9db5-445f-812e-bdb2bcc958d1": {
+        "image": "/assets/-274127540_21157",
+        "label": "taskcard red 01.png"
+      },
+      "type-a01a1f3b-aaeb-4bd7-8389-2c1c25c9aadc": {
+        "image": "/assets/-2098965220_25900",
+        "label": "taskcard red 02.png"
+      },
+      "type-fb838705-5898-4b5c-bfaf-053035c31f0d": {
+        "image": "/assets/-1478530869_23195",
+        "label": "taskcard red 03.png"
+      },
+      "type-f9565123-61d7-4f54-ac84-2e69cd0619bf": {
+        "image": "/assets/-902781540_33014",
+        "label": "taskcard red 04.png"
+      },
+      "type-64023c45-1b4f-46a2-bfc6-472c6ab8ce1f": {
+        "image": "/assets/1289557125_23208",
+        "label": "taskcard red 05.png"
+      },
+      "type-575ba275-cc72-4b56-a484-af7e574b2516": {
+        "image": "/assets/673719761_25535",
+        "label": "taskcard red 06.png"
+      },
+      "type-1be66265-1aad-4194-bf8e-e47984ab491b": {
+        "image": "/assets/-1278541602_33105",
+        "label": "taskcard red 07.png"
+      },
+      "type-cc94b14b-88bf-4191-9709-dd8f9bed3ee7": {
+        "image": "/assets/1596122554_26324",
+        "label": "taskcard red 08.png"
+      },
+      "type-8970932c-1c24-41f9-8cfb-6754f4f63196": {
+        "image": "/assets/295477023_31716",
+        "label": "taskcard red 09.png"
+      },
+      "type-2ec6a785-66f7-49ae-9140-f3893a2e86e7": {
+        "image": "/assets/-80750579_21804",
+        "label": "taskcard yellow 01.png"
+      },
+      "type-686b1dc4-5e3f-4841-83f0-6ef8851b814d": {
+        "image": "/assets/80746063_26438",
+        "label": "taskcard yellow 02.png"
+      },
+      "type-ff3c8655-60df-4aed-8a52-8ac68cf78255": {
+        "image": "/assets/-805019595_21931",
+        "label": "taskcard yellow 03.png"
+      },
+      "type-596de1d5-fd2a-4d5e-a32d-18703e077e88": {
+        "image": "/assets/-46053316_32586",
+        "label": "taskcard yellow 04.png"
+      },
+      "type-38e47872-6e05-405a-8be0-9cb49ae3712f": {
+        "image": "/assets/214510398_21972",
+        "label": "taskcard yellow 05.png"
+      },
+      "type-a312c607-6ee2-4411-8a62-907c23ecd36a": {
+        "image": "/assets/-617955563_24310",
+        "label": "taskcard yellow 06.png"
+      },
+      "type-f8bccf46-2229-43d9-9ba9-40c1ddba2f86": {
+        "image": "/assets/-306265180_31973",
+        "label": "taskcard yellow 07.png"
+      },
+      "type-80ca9b2b-ae9e-4e4a-8c6c-7ca89e08589f": {
+        "image": "/assets/-195000944_27882",
+        "label": "taskcard yellow 08.png"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#ffffff",
+            "valueType": "static",
+            "value": "/assets/-1682721256_109308",
+            "width": 59,
+            "height": 92
+          },
+          {
+            "type": "text",
+            "x": -1,
+            "y": 59.08267474406015,
+            "fontSize": 16,
+            "valueType": "static",
+            "value": "TASK",
+            "textAlign": "center",
+            "textFont": "interstate",
+            "color": "#ffffff",
+            "width": 60
+          }
+        ],
+        "border": false,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 59,
+            "height": 92
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 59,
+      "height": 92
+    },
+    "parent": "khsx18"
+  },
+  "khsx19": {
+    "type": "holder",
+    "x": 970.5,
+    "y": 688,
+    "z": 21839,
+    "id": "khsx19",
+    "css": "background: #55555550",
+    "width": 67,
+    "height": 100,
+    "dropTarget": {
+      "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16"
+    }
+  },
+  "99cfa35a-8c94-4fa6-8145-0ae71d3f0a35": {
+    "id": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a35",
+    "x": 4,
+    "y": -19,
+    "z": 20372,
+    "type": "deck",
+    "cardTypes": {
+      "type-5e850b6a-c911-412e-9a57-40e72ae6fbe2": {
+        "image": "/assets/492022559_21769",
+        "label": "taskcard blue01.png"
+      },
+      "type-c99ba6da-b10d-4600-84de-cbe79c094a94": {
+        "image": "/assets/-1906127725_30672",
+        "label": "taskcard yellow 09.png"
+      },
+      "type-7ef4609b-74b5-4396-a259-e6d0a4a740e8": {
+        "image": "/assets/-116395730_27288",
+        "label": "taskcard blue02.png"
+      },
+      "type-1e37ab62-44c7-428d-b18f-cc3f1d8ed97a": {
+        "image": "/assets/1955134942_23235",
+        "label": "taskcard blue03.png"
+      },
+      "type-142403bf-d7c6-4c06-a97a-cbfe8e5dd869": {
+        "image": "/assets/826208420_33739",
+        "label": "taskcard blue04.png"
+      },
+      "type-15721d20-5d3e-417e-9047-968fca357c78": {
+        "image": "/assets/1238387486_23295",
+        "label": "taskcard blue05.png"
+      },
+      "type-6a935e9f-30ec-4cba-ab01-f7a1fb504870": {
+        "image": "/assets/-425140991_25584",
+        "label": "taskcard blue06.png"
+      },
+      "type-739c88ec-2925-43c1-bea2-8dc7bfde4e2d": {
+        "image": "/assets/-1661779211_33648",
+        "label": "taskcard blue07.png"
+      },
+      "type-9238fbb3-0a0b-4c3b-a57a-867751f8892a": {
+        "image": "/assets/-1250106647_27668",
+        "label": "taskcard blue08.png"
+      },
+      "type-7dd8c7ec-9d39-48eb-84e6-0600368ef60f": {
+        "image": "/assets/-1123622633_32206",
+        "label": "taskcard blue09.png"
+      },
+      "type-16691fb4-bc15-45a2-9cb0-37ea62d02b07": {
+        "image": "/assets/-1699669350_21392",
+        "label": "taskcard green 01.png"
+      },
+      "type-e26a2349-f1a9-4fa1-aaf1-d5cb03320e47": {
+        "image": "/assets/1260913300_25217",
+        "label": "taskcard green 02.png"
+      },
+      "type-45f772d3-3e83-4b4c-90d3-70fd51abe49c": {
+        "image": "/assets/1342818881_22370",
+        "label": "taskcard green 03.png"
+      },
+      "type-3b70a7af-ea3e-48bd-a4ad-0982074d044a": {
+        "image": "/assets/1229457677_32273",
+        "label": "taskcard green 04.png"
+      },
+      "type-1f19c879-8c5c-4203-b1f1-c7de18a684c1": {
+        "image": "/assets/-991196784_22402",
+        "label": "taskcard green 05.png"
+      },
+      "type-b4273e55-797a-4a8d-837a-e2165e3e4e8e": {
+        "image": "/assets/-385183670_24629",
+        "label": "taskcard green 06.png"
+      },
+      "type-eb6d38de-6a61-44d8-8ed4-2d0d16e05f54": {
+        "image": "/assets/2007271844_32274",
+        "label": "taskcard green 07.png"
+      },
+      "type-7836f440-9e9e-4174-9ed8-aeb7027b9511": {
+        "image": "/assets/1351138624_26997",
+        "label": "taskcard green 08.png"
+      },
+      "type-03e71902-bf9c-445f-abc1-8b8c4611bd02": {
+        "image": "/assets/255688031_30895",
+        "label": "taskcard green 09.png"
+      },
+      "type-455f9ac2-9db5-445f-812e-bdb2bcc958d1": {
+        "image": "/assets/-274127540_21157",
+        "label": "taskcard red 01.png"
+      },
+      "type-a01a1f3b-aaeb-4bd7-8389-2c1c25c9aadc": {
+        "image": "/assets/-2098965220_25900",
+        "label": "taskcard red 02.png"
+      },
+      "type-fb838705-5898-4b5c-bfaf-053035c31f0d": {
+        "image": "/assets/-1478530869_23195",
+        "label": "taskcard red 03.png"
+      },
+      "type-f9565123-61d7-4f54-ac84-2e69cd0619bf": {
+        "image": "/assets/-902781540_33014",
+        "label": "taskcard red 04.png"
+      },
+      "type-64023c45-1b4f-46a2-bfc6-472c6ab8ce1f": {
+        "image": "/assets/1289557125_23208",
+        "label": "taskcard red 05.png"
+      },
+      "type-575ba275-cc72-4b56-a484-af7e574b2516": {
+        "image": "/assets/673719761_25535",
+        "label": "taskcard red 06.png"
+      },
+      "type-1be66265-1aad-4194-bf8e-e47984ab491b": {
+        "image": "/assets/-1278541602_33105",
+        "label": "taskcard red 07.png"
+      },
+      "type-cc94b14b-88bf-4191-9709-dd8f9bed3ee7": {
+        "image": "/assets/1596122554_26324",
+        "label": "taskcard red 08.png"
+      },
+      "type-8970932c-1c24-41f9-8cfb-6754f4f63196": {
+        "image": "/assets/295477023_31716",
+        "label": "taskcard red 09.png"
+      },
+      "type-2ec6a785-66f7-49ae-9140-f3893a2e86e7": {
+        "image": "/assets/-80750579_21804",
+        "label": "taskcard yellow 01.png"
+      },
+      "type-686b1dc4-5e3f-4841-83f0-6ef8851b814d": {
+        "image": "/assets/80746063_26438",
+        "label": "taskcard yellow 02.png"
+      },
+      "type-ff3c8655-60df-4aed-8a52-8ac68cf78255": {
+        "image": "/assets/-805019595_21931",
+        "label": "taskcard yellow 03.png"
+      },
+      "type-596de1d5-fd2a-4d5e-a32d-18703e077e88": {
+        "image": "/assets/-46053316_32586",
+        "label": "taskcard yellow 04.png"
+      },
+      "type-38e47872-6e05-405a-8be0-9cb49ae3712f": {
+        "image": "/assets/214510398_21972",
+        "label": "taskcard yellow 05.png"
+      },
+      "type-a312c607-6ee2-4411-8a62-907c23ecd36a": {
+        "image": "/assets/-617955563_24310",
+        "label": "taskcard yellow 06.png"
+      },
+      "type-f8bccf46-2229-43d9-9ba9-40c1ddba2f86": {
+        "image": "/assets/-306265180_31973",
+        "label": "taskcard yellow 07.png"
+      },
+      "type-80ca9b2b-ae9e-4e4a-8c6c-7ca89e08589f": {
+        "image": "/assets/-195000944_27882",
+        "label": "taskcard yellow 08.png"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#ffffff",
+            "valueType": "static",
+            "value": "/assets/-1682721256_109308",
+            "width": 59,
+            "height": 92
+          },
+          {
+            "type": "text",
+            "x": -1,
+            "y": 59.08267474406015,
+            "fontSize": 16,
+            "valueType": "static",
+            "value": "TASK",
+            "textAlign": "center",
+            "textFont": "interstate",
+            "color": "#ffffff",
+            "width": 60
+          }
+        ],
+        "border": false,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 59,
+            "height": 92
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 59,
+      "height": 92
+    },
+    "parent": "khsx19"
+  },
+  "khsx20": {
+    "type": "holder",
+    "x": 8.5,
+    "y": -55,
+    "z": 21841,
+    "id": "khsx20",
+    "css": "background: #55555530; border: 1px solid #55555560; ",
+    "width": 50,
+    "height": 50,
+    "dropTarget": {
+      "deck": "qe3n"
+    },
+    "parent": "khsx19",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "99cfa35a-8c94-4fa6-8145-0ae71d3f0a36": {
+    "id": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a36",
+    "x": 4,
+    "y": -19,
+    "z": 20372,
+    "type": "deck",
+    "cardTypes": {
+      "type-5e850b6a-c911-412e-9a57-40e72ae6fbe2": {
+        "image": "/assets/492022559_21769",
+        "label": "taskcard blue01.png"
+      },
+      "type-c99ba6da-b10d-4600-84de-cbe79c094a94": {
+        "image": "/assets/-1906127725_30672",
+        "label": "taskcard yellow 09.png"
+      },
+      "type-7ef4609b-74b5-4396-a259-e6d0a4a740e8": {
+        "image": "/assets/-116395730_27288",
+        "label": "taskcard blue02.png"
+      },
+      "type-1e37ab62-44c7-428d-b18f-cc3f1d8ed97a": {
+        "image": "/assets/1955134942_23235",
+        "label": "taskcard blue03.png"
+      },
+      "type-142403bf-d7c6-4c06-a97a-cbfe8e5dd869": {
+        "image": "/assets/826208420_33739",
+        "label": "taskcard blue04.png"
+      },
+      "type-15721d20-5d3e-417e-9047-968fca357c78": {
+        "image": "/assets/1238387486_23295",
+        "label": "taskcard blue05.png"
+      },
+      "type-6a935e9f-30ec-4cba-ab01-f7a1fb504870": {
+        "image": "/assets/-425140991_25584",
+        "label": "taskcard blue06.png"
+      },
+      "type-739c88ec-2925-43c1-bea2-8dc7bfde4e2d": {
+        "image": "/assets/-1661779211_33648",
+        "label": "taskcard blue07.png"
+      },
+      "type-9238fbb3-0a0b-4c3b-a57a-867751f8892a": {
+        "image": "/assets/-1250106647_27668",
+        "label": "taskcard blue08.png"
+      },
+      "type-7dd8c7ec-9d39-48eb-84e6-0600368ef60f": {
+        "image": "/assets/-1123622633_32206",
+        "label": "taskcard blue09.png"
+      },
+      "type-16691fb4-bc15-45a2-9cb0-37ea62d02b07": {
+        "image": "/assets/-1699669350_21392",
+        "label": "taskcard green 01.png"
+      },
+      "type-e26a2349-f1a9-4fa1-aaf1-d5cb03320e47": {
+        "image": "/assets/1260913300_25217",
+        "label": "taskcard green 02.png"
+      },
+      "type-45f772d3-3e83-4b4c-90d3-70fd51abe49c": {
+        "image": "/assets/1342818881_22370",
+        "label": "taskcard green 03.png"
+      },
+      "type-3b70a7af-ea3e-48bd-a4ad-0982074d044a": {
+        "image": "/assets/1229457677_32273",
+        "label": "taskcard green 04.png"
+      },
+      "type-1f19c879-8c5c-4203-b1f1-c7de18a684c1": {
+        "image": "/assets/-991196784_22402",
+        "label": "taskcard green 05.png"
+      },
+      "type-b4273e55-797a-4a8d-837a-e2165e3e4e8e": {
+        "image": "/assets/-385183670_24629",
+        "label": "taskcard green 06.png"
+      },
+      "type-eb6d38de-6a61-44d8-8ed4-2d0d16e05f54": {
+        "image": "/assets/2007271844_32274",
+        "label": "taskcard green 07.png"
+      },
+      "type-7836f440-9e9e-4174-9ed8-aeb7027b9511": {
+        "image": "/assets/1351138624_26997",
+        "label": "taskcard green 08.png"
+      },
+      "type-03e71902-bf9c-445f-abc1-8b8c4611bd02": {
+        "image": "/assets/255688031_30895",
+        "label": "taskcard green 09.png"
+      },
+      "type-455f9ac2-9db5-445f-812e-bdb2bcc958d1": {
+        "image": "/assets/-274127540_21157",
+        "label": "taskcard red 01.png"
+      },
+      "type-a01a1f3b-aaeb-4bd7-8389-2c1c25c9aadc": {
+        "image": "/assets/-2098965220_25900",
+        "label": "taskcard red 02.png"
+      },
+      "type-fb838705-5898-4b5c-bfaf-053035c31f0d": {
+        "image": "/assets/-1478530869_23195",
+        "label": "taskcard red 03.png"
+      },
+      "type-f9565123-61d7-4f54-ac84-2e69cd0619bf": {
+        "image": "/assets/-902781540_33014",
+        "label": "taskcard red 04.png"
+      },
+      "type-64023c45-1b4f-46a2-bfc6-472c6ab8ce1f": {
+        "image": "/assets/1289557125_23208",
+        "label": "taskcard red 05.png"
+      },
+      "type-575ba275-cc72-4b56-a484-af7e574b2516": {
+        "image": "/assets/673719761_25535",
+        "label": "taskcard red 06.png"
+      },
+      "type-1be66265-1aad-4194-bf8e-e47984ab491b": {
+        "image": "/assets/-1278541602_33105",
+        "label": "taskcard red 07.png"
+      },
+      "type-cc94b14b-88bf-4191-9709-dd8f9bed3ee7": {
+        "image": "/assets/1596122554_26324",
+        "label": "taskcard red 08.png"
+      },
+      "type-8970932c-1c24-41f9-8cfb-6754f4f63196": {
+        "image": "/assets/295477023_31716",
+        "label": "taskcard red 09.png"
+      },
+      "type-2ec6a785-66f7-49ae-9140-f3893a2e86e7": {
+        "image": "/assets/-80750579_21804",
+        "label": "taskcard yellow 01.png"
+      },
+      "type-686b1dc4-5e3f-4841-83f0-6ef8851b814d": {
+        "image": "/assets/80746063_26438",
+        "label": "taskcard yellow 02.png"
+      },
+      "type-ff3c8655-60df-4aed-8a52-8ac68cf78255": {
+        "image": "/assets/-805019595_21931",
+        "label": "taskcard yellow 03.png"
+      },
+      "type-596de1d5-fd2a-4d5e-a32d-18703e077e88": {
+        "image": "/assets/-46053316_32586",
+        "label": "taskcard yellow 04.png"
+      },
+      "type-38e47872-6e05-405a-8be0-9cb49ae3712f": {
+        "image": "/assets/214510398_21972",
+        "label": "taskcard yellow 05.png"
+      },
+      "type-a312c607-6ee2-4411-8a62-907c23ecd36a": {
+        "image": "/assets/-617955563_24310",
+        "label": "taskcard yellow 06.png"
+      },
+      "type-f8bccf46-2229-43d9-9ba9-40c1ddba2f86": {
+        "image": "/assets/-306265180_31973",
+        "label": "taskcard yellow 07.png"
+      },
+      "type-80ca9b2b-ae9e-4e4a-8c6c-7ca89e08589f": {
+        "image": "/assets/-195000944_27882",
+        "label": "taskcard yellow 08.png"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#ffffff",
+            "valueType": "static",
+            "value": "/assets/-1682721256_109308",
+            "width": 59,
+            "height": 92
+          },
+          {
+            "type": "text",
+            "x": -1,
+            "y": 59.08267474406015,
+            "fontSize": 16,
+            "valueType": "static",
+            "value": "TASK",
+            "textAlign": "center",
+            "textFont": "interstate",
+            "color": "#ffffff",
+            "width": 60
+          }
+        ],
+        "border": false,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 59,
+            "height": 92
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 59,
+      "height": 92
+    },
+    "parent": "khsx20"
+  },
+  "khsx21": {
+    "type": "holder",
+    "x": 1050.5,
+    "y": 688,
+    "z": 21839,
+    "id": "khsx21",
+    "css": "background: #55555550",
+    "width": 67,
+    "height": 100,
+    "dropTarget": {
+      "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16"
+    }
+  },
+  "99cfa35a-8c94-4fa6-8145-0ae71d3f0a37": {
+    "id": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a37",
+    "x": 4,
+    "y": -19,
+    "z": 20372,
+    "type": "deck",
+    "cardTypes": {
+      "type-5e850b6a-c911-412e-9a57-40e72ae6fbe2": {
+        "image": "/assets/492022559_21769",
+        "label": "taskcard blue01.png"
+      },
+      "type-c99ba6da-b10d-4600-84de-cbe79c094a94": {
+        "image": "/assets/-1906127725_30672",
+        "label": "taskcard yellow 09.png"
+      },
+      "type-7ef4609b-74b5-4396-a259-e6d0a4a740e8": {
+        "image": "/assets/-116395730_27288",
+        "label": "taskcard blue02.png"
+      },
+      "type-1e37ab62-44c7-428d-b18f-cc3f1d8ed97a": {
+        "image": "/assets/1955134942_23235",
+        "label": "taskcard blue03.png"
+      },
+      "type-142403bf-d7c6-4c06-a97a-cbfe8e5dd869": {
+        "image": "/assets/826208420_33739",
+        "label": "taskcard blue04.png"
+      },
+      "type-15721d20-5d3e-417e-9047-968fca357c78": {
+        "image": "/assets/1238387486_23295",
+        "label": "taskcard blue05.png"
+      },
+      "type-6a935e9f-30ec-4cba-ab01-f7a1fb504870": {
+        "image": "/assets/-425140991_25584",
+        "label": "taskcard blue06.png"
+      },
+      "type-739c88ec-2925-43c1-bea2-8dc7bfde4e2d": {
+        "image": "/assets/-1661779211_33648",
+        "label": "taskcard blue07.png"
+      },
+      "type-9238fbb3-0a0b-4c3b-a57a-867751f8892a": {
+        "image": "/assets/-1250106647_27668",
+        "label": "taskcard blue08.png"
+      },
+      "type-7dd8c7ec-9d39-48eb-84e6-0600368ef60f": {
+        "image": "/assets/-1123622633_32206",
+        "label": "taskcard blue09.png"
+      },
+      "type-16691fb4-bc15-45a2-9cb0-37ea62d02b07": {
+        "image": "/assets/-1699669350_21392",
+        "label": "taskcard green 01.png"
+      },
+      "type-e26a2349-f1a9-4fa1-aaf1-d5cb03320e47": {
+        "image": "/assets/1260913300_25217",
+        "label": "taskcard green 02.png"
+      },
+      "type-45f772d3-3e83-4b4c-90d3-70fd51abe49c": {
+        "image": "/assets/1342818881_22370",
+        "label": "taskcard green 03.png"
+      },
+      "type-3b70a7af-ea3e-48bd-a4ad-0982074d044a": {
+        "image": "/assets/1229457677_32273",
+        "label": "taskcard green 04.png"
+      },
+      "type-1f19c879-8c5c-4203-b1f1-c7de18a684c1": {
+        "image": "/assets/-991196784_22402",
+        "label": "taskcard green 05.png"
+      },
+      "type-b4273e55-797a-4a8d-837a-e2165e3e4e8e": {
+        "image": "/assets/-385183670_24629",
+        "label": "taskcard green 06.png"
+      },
+      "type-eb6d38de-6a61-44d8-8ed4-2d0d16e05f54": {
+        "image": "/assets/2007271844_32274",
+        "label": "taskcard green 07.png"
+      },
+      "type-7836f440-9e9e-4174-9ed8-aeb7027b9511": {
+        "image": "/assets/1351138624_26997",
+        "label": "taskcard green 08.png"
+      },
+      "type-03e71902-bf9c-445f-abc1-8b8c4611bd02": {
+        "image": "/assets/255688031_30895",
+        "label": "taskcard green 09.png"
+      },
+      "type-455f9ac2-9db5-445f-812e-bdb2bcc958d1": {
+        "image": "/assets/-274127540_21157",
+        "label": "taskcard red 01.png"
+      },
+      "type-a01a1f3b-aaeb-4bd7-8389-2c1c25c9aadc": {
+        "image": "/assets/-2098965220_25900",
+        "label": "taskcard red 02.png"
+      },
+      "type-fb838705-5898-4b5c-bfaf-053035c31f0d": {
+        "image": "/assets/-1478530869_23195",
+        "label": "taskcard red 03.png"
+      },
+      "type-f9565123-61d7-4f54-ac84-2e69cd0619bf": {
+        "image": "/assets/-902781540_33014",
+        "label": "taskcard red 04.png"
+      },
+      "type-64023c45-1b4f-46a2-bfc6-472c6ab8ce1f": {
+        "image": "/assets/1289557125_23208",
+        "label": "taskcard red 05.png"
+      },
+      "type-575ba275-cc72-4b56-a484-af7e574b2516": {
+        "image": "/assets/673719761_25535",
+        "label": "taskcard red 06.png"
+      },
+      "type-1be66265-1aad-4194-bf8e-e47984ab491b": {
+        "image": "/assets/-1278541602_33105",
+        "label": "taskcard red 07.png"
+      },
+      "type-cc94b14b-88bf-4191-9709-dd8f9bed3ee7": {
+        "image": "/assets/1596122554_26324",
+        "label": "taskcard red 08.png"
+      },
+      "type-8970932c-1c24-41f9-8cfb-6754f4f63196": {
+        "image": "/assets/295477023_31716",
+        "label": "taskcard red 09.png"
+      },
+      "type-2ec6a785-66f7-49ae-9140-f3893a2e86e7": {
+        "image": "/assets/-80750579_21804",
+        "label": "taskcard yellow 01.png"
+      },
+      "type-686b1dc4-5e3f-4841-83f0-6ef8851b814d": {
+        "image": "/assets/80746063_26438",
+        "label": "taskcard yellow 02.png"
+      },
+      "type-ff3c8655-60df-4aed-8a52-8ac68cf78255": {
+        "image": "/assets/-805019595_21931",
+        "label": "taskcard yellow 03.png"
+      },
+      "type-596de1d5-fd2a-4d5e-a32d-18703e077e88": {
+        "image": "/assets/-46053316_32586",
+        "label": "taskcard yellow 04.png"
+      },
+      "type-38e47872-6e05-405a-8be0-9cb49ae3712f": {
+        "image": "/assets/214510398_21972",
+        "label": "taskcard yellow 05.png"
+      },
+      "type-a312c607-6ee2-4411-8a62-907c23ecd36a": {
+        "image": "/assets/-617955563_24310",
+        "label": "taskcard yellow 06.png"
+      },
+      "type-f8bccf46-2229-43d9-9ba9-40c1ddba2f86": {
+        "image": "/assets/-306265180_31973",
+        "label": "taskcard yellow 07.png"
+      },
+      "type-80ca9b2b-ae9e-4e4a-8c6c-7ca89e08589f": {
+        "image": "/assets/-195000944_27882",
+        "label": "taskcard yellow 08.png"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#ffffff",
+            "valueType": "static",
+            "value": "/assets/-1682721256_109308",
+            "width": 59,
+            "height": 92
+          },
+          {
+            "type": "text",
+            "x": -1,
+            "y": 59.08267474406015,
+            "fontSize": 16,
+            "valueType": "static",
+            "value": "TASK",
+            "textAlign": "center",
+            "textFont": "interstate",
+            "color": "#ffffff",
+            "width": 60
+          }
+        ],
+        "border": false,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 59,
+            "height": 92
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 59,
+      "height": 92
+    },
+    "parent": "khsx21"
+  },
+  "khsx22": {
+    "type": "holder",
+    "x": 8.5,
+    "y": -55,
+    "z": 21841,
+    "id": "khsx22",
+    "css": "background: #55555530; border: 1px solid #55555560; ",
+    "width": 50,
+    "height": 50,
+    "dropTarget": {
+      "deck": "qe3n"
+    },
+    "parent": "khsx21",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "99cfa35a-8c94-4fa6-8145-0ae71d3f0a38": {
+    "id": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a38",
+    "x": 4,
+    "y": -19,
+    "z": 20372,
+    "type": "deck",
+    "cardTypes": {
+      "type-5e850b6a-c911-412e-9a57-40e72ae6fbe2": {
+        "image": "/assets/492022559_21769",
+        "label": "taskcard blue01.png"
+      },
+      "type-c99ba6da-b10d-4600-84de-cbe79c094a94": {
+        "image": "/assets/-1906127725_30672",
+        "label": "taskcard yellow 09.png"
+      },
+      "type-7ef4609b-74b5-4396-a259-e6d0a4a740e8": {
+        "image": "/assets/-116395730_27288",
+        "label": "taskcard blue02.png"
+      },
+      "type-1e37ab62-44c7-428d-b18f-cc3f1d8ed97a": {
+        "image": "/assets/1955134942_23235",
+        "label": "taskcard blue03.png"
+      },
+      "type-142403bf-d7c6-4c06-a97a-cbfe8e5dd869": {
+        "image": "/assets/826208420_33739",
+        "label": "taskcard blue04.png"
+      },
+      "type-15721d20-5d3e-417e-9047-968fca357c78": {
+        "image": "/assets/1238387486_23295",
+        "label": "taskcard blue05.png"
+      },
+      "type-6a935e9f-30ec-4cba-ab01-f7a1fb504870": {
+        "image": "/assets/-425140991_25584",
+        "label": "taskcard blue06.png"
+      },
+      "type-739c88ec-2925-43c1-bea2-8dc7bfde4e2d": {
+        "image": "/assets/-1661779211_33648",
+        "label": "taskcard blue07.png"
+      },
+      "type-9238fbb3-0a0b-4c3b-a57a-867751f8892a": {
+        "image": "/assets/-1250106647_27668",
+        "label": "taskcard blue08.png"
+      },
+      "type-7dd8c7ec-9d39-48eb-84e6-0600368ef60f": {
+        "image": "/assets/-1123622633_32206",
+        "label": "taskcard blue09.png"
+      },
+      "type-16691fb4-bc15-45a2-9cb0-37ea62d02b07": {
+        "image": "/assets/-1699669350_21392",
+        "label": "taskcard green 01.png"
+      },
+      "type-e26a2349-f1a9-4fa1-aaf1-d5cb03320e47": {
+        "image": "/assets/1260913300_25217",
+        "label": "taskcard green 02.png"
+      },
+      "type-45f772d3-3e83-4b4c-90d3-70fd51abe49c": {
+        "image": "/assets/1342818881_22370",
+        "label": "taskcard green 03.png"
+      },
+      "type-3b70a7af-ea3e-48bd-a4ad-0982074d044a": {
+        "image": "/assets/1229457677_32273",
+        "label": "taskcard green 04.png"
+      },
+      "type-1f19c879-8c5c-4203-b1f1-c7de18a684c1": {
+        "image": "/assets/-991196784_22402",
+        "label": "taskcard green 05.png"
+      },
+      "type-b4273e55-797a-4a8d-837a-e2165e3e4e8e": {
+        "image": "/assets/-385183670_24629",
+        "label": "taskcard green 06.png"
+      },
+      "type-eb6d38de-6a61-44d8-8ed4-2d0d16e05f54": {
+        "image": "/assets/2007271844_32274",
+        "label": "taskcard green 07.png"
+      },
+      "type-7836f440-9e9e-4174-9ed8-aeb7027b9511": {
+        "image": "/assets/1351138624_26997",
+        "label": "taskcard green 08.png"
+      },
+      "type-03e71902-bf9c-445f-abc1-8b8c4611bd02": {
+        "image": "/assets/255688031_30895",
+        "label": "taskcard green 09.png"
+      },
+      "type-455f9ac2-9db5-445f-812e-bdb2bcc958d1": {
+        "image": "/assets/-274127540_21157",
+        "label": "taskcard red 01.png"
+      },
+      "type-a01a1f3b-aaeb-4bd7-8389-2c1c25c9aadc": {
+        "image": "/assets/-2098965220_25900",
+        "label": "taskcard red 02.png"
+      },
+      "type-fb838705-5898-4b5c-bfaf-053035c31f0d": {
+        "image": "/assets/-1478530869_23195",
+        "label": "taskcard red 03.png"
+      },
+      "type-f9565123-61d7-4f54-ac84-2e69cd0619bf": {
+        "image": "/assets/-902781540_33014",
+        "label": "taskcard red 04.png"
+      },
+      "type-64023c45-1b4f-46a2-bfc6-472c6ab8ce1f": {
+        "image": "/assets/1289557125_23208",
+        "label": "taskcard red 05.png"
+      },
+      "type-575ba275-cc72-4b56-a484-af7e574b2516": {
+        "image": "/assets/673719761_25535",
+        "label": "taskcard red 06.png"
+      },
+      "type-1be66265-1aad-4194-bf8e-e47984ab491b": {
+        "image": "/assets/-1278541602_33105",
+        "label": "taskcard red 07.png"
+      },
+      "type-cc94b14b-88bf-4191-9709-dd8f9bed3ee7": {
+        "image": "/assets/1596122554_26324",
+        "label": "taskcard red 08.png"
+      },
+      "type-8970932c-1c24-41f9-8cfb-6754f4f63196": {
+        "image": "/assets/295477023_31716",
+        "label": "taskcard red 09.png"
+      },
+      "type-2ec6a785-66f7-49ae-9140-f3893a2e86e7": {
+        "image": "/assets/-80750579_21804",
+        "label": "taskcard yellow 01.png"
+      },
+      "type-686b1dc4-5e3f-4841-83f0-6ef8851b814d": {
+        "image": "/assets/80746063_26438",
+        "label": "taskcard yellow 02.png"
+      },
+      "type-ff3c8655-60df-4aed-8a52-8ac68cf78255": {
+        "image": "/assets/-805019595_21931",
+        "label": "taskcard yellow 03.png"
+      },
+      "type-596de1d5-fd2a-4d5e-a32d-18703e077e88": {
+        "image": "/assets/-46053316_32586",
+        "label": "taskcard yellow 04.png"
+      },
+      "type-38e47872-6e05-405a-8be0-9cb49ae3712f": {
+        "image": "/assets/214510398_21972",
+        "label": "taskcard yellow 05.png"
+      },
+      "type-a312c607-6ee2-4411-8a62-907c23ecd36a": {
+        "image": "/assets/-617955563_24310",
+        "label": "taskcard yellow 06.png"
+      },
+      "type-f8bccf46-2229-43d9-9ba9-40c1ddba2f86": {
+        "image": "/assets/-306265180_31973",
+        "label": "taskcard yellow 07.png"
+      },
+      "type-80ca9b2b-ae9e-4e4a-8c6c-7ca89e08589f": {
+        "image": "/assets/-195000944_27882",
+        "label": "taskcard yellow 08.png"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#ffffff",
+            "valueType": "static",
+            "value": "/assets/-1682721256_109308",
+            "width": 59,
+            "height": 92
+          },
+          {
+            "type": "text",
+            "x": -1,
+            "y": 59.08267474406015,
+            "fontSize": 16,
+            "valueType": "static",
+            "value": "TASK",
+            "textAlign": "center",
+            "textFont": "interstate",
+            "color": "#ffffff",
+            "width": 60
+          }
+        ],
+        "border": false,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 59,
+            "height": 92
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 59,
+      "height": 92
+    },
+    "parent": "khsx22"
+  },
+  "khsx23": {
+    "type": "holder",
+    "x": 1130.5,
+    "y": 688,
+    "z": 21839,
+    "id": "khsx23",
+    "css": "background: #55555550",
+    "width": 67,
+    "height": 100,
+    "dropTarget": {
+      "deck": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a16"
+    }
+  },
+  "99cfa35a-8c94-4fa6-8145-0ae71d3f0a39": {
+    "id": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a39",
+    "x": 4,
+    "y": -19,
+    "z": 20372,
+    "type": "deck",
+    "cardTypes": {
+      "type-5e850b6a-c911-412e-9a57-40e72ae6fbe2": {
+        "image": "/assets/492022559_21769",
+        "label": "taskcard blue01.png"
+      },
+      "type-c99ba6da-b10d-4600-84de-cbe79c094a94": {
+        "image": "/assets/-1906127725_30672",
+        "label": "taskcard yellow 09.png"
+      },
+      "type-7ef4609b-74b5-4396-a259-e6d0a4a740e8": {
+        "image": "/assets/-116395730_27288",
+        "label": "taskcard blue02.png"
+      },
+      "type-1e37ab62-44c7-428d-b18f-cc3f1d8ed97a": {
+        "image": "/assets/1955134942_23235",
+        "label": "taskcard blue03.png"
+      },
+      "type-142403bf-d7c6-4c06-a97a-cbfe8e5dd869": {
+        "image": "/assets/826208420_33739",
+        "label": "taskcard blue04.png"
+      },
+      "type-15721d20-5d3e-417e-9047-968fca357c78": {
+        "image": "/assets/1238387486_23295",
+        "label": "taskcard blue05.png"
+      },
+      "type-6a935e9f-30ec-4cba-ab01-f7a1fb504870": {
+        "image": "/assets/-425140991_25584",
+        "label": "taskcard blue06.png"
+      },
+      "type-739c88ec-2925-43c1-bea2-8dc7bfde4e2d": {
+        "image": "/assets/-1661779211_33648",
+        "label": "taskcard blue07.png"
+      },
+      "type-9238fbb3-0a0b-4c3b-a57a-867751f8892a": {
+        "image": "/assets/-1250106647_27668",
+        "label": "taskcard blue08.png"
+      },
+      "type-7dd8c7ec-9d39-48eb-84e6-0600368ef60f": {
+        "image": "/assets/-1123622633_32206",
+        "label": "taskcard blue09.png"
+      },
+      "type-16691fb4-bc15-45a2-9cb0-37ea62d02b07": {
+        "image": "/assets/-1699669350_21392",
+        "label": "taskcard green 01.png"
+      },
+      "type-e26a2349-f1a9-4fa1-aaf1-d5cb03320e47": {
+        "image": "/assets/1260913300_25217",
+        "label": "taskcard green 02.png"
+      },
+      "type-45f772d3-3e83-4b4c-90d3-70fd51abe49c": {
+        "image": "/assets/1342818881_22370",
+        "label": "taskcard green 03.png"
+      },
+      "type-3b70a7af-ea3e-48bd-a4ad-0982074d044a": {
+        "image": "/assets/1229457677_32273",
+        "label": "taskcard green 04.png"
+      },
+      "type-1f19c879-8c5c-4203-b1f1-c7de18a684c1": {
+        "image": "/assets/-991196784_22402",
+        "label": "taskcard green 05.png"
+      },
+      "type-b4273e55-797a-4a8d-837a-e2165e3e4e8e": {
+        "image": "/assets/-385183670_24629",
+        "label": "taskcard green 06.png"
+      },
+      "type-eb6d38de-6a61-44d8-8ed4-2d0d16e05f54": {
+        "image": "/assets/2007271844_32274",
+        "label": "taskcard green 07.png"
+      },
+      "type-7836f440-9e9e-4174-9ed8-aeb7027b9511": {
+        "image": "/assets/1351138624_26997",
+        "label": "taskcard green 08.png"
+      },
+      "type-03e71902-bf9c-445f-abc1-8b8c4611bd02": {
+        "image": "/assets/255688031_30895",
+        "label": "taskcard green 09.png"
+      },
+      "type-455f9ac2-9db5-445f-812e-bdb2bcc958d1": {
+        "image": "/assets/-274127540_21157",
+        "label": "taskcard red 01.png"
+      },
+      "type-a01a1f3b-aaeb-4bd7-8389-2c1c25c9aadc": {
+        "image": "/assets/-2098965220_25900",
+        "label": "taskcard red 02.png"
+      },
+      "type-fb838705-5898-4b5c-bfaf-053035c31f0d": {
+        "image": "/assets/-1478530869_23195",
+        "label": "taskcard red 03.png"
+      },
+      "type-f9565123-61d7-4f54-ac84-2e69cd0619bf": {
+        "image": "/assets/-902781540_33014",
+        "label": "taskcard red 04.png"
+      },
+      "type-64023c45-1b4f-46a2-bfc6-472c6ab8ce1f": {
+        "image": "/assets/1289557125_23208",
+        "label": "taskcard red 05.png"
+      },
+      "type-575ba275-cc72-4b56-a484-af7e574b2516": {
+        "image": "/assets/673719761_25535",
+        "label": "taskcard red 06.png"
+      },
+      "type-1be66265-1aad-4194-bf8e-e47984ab491b": {
+        "image": "/assets/-1278541602_33105",
+        "label": "taskcard red 07.png"
+      },
+      "type-cc94b14b-88bf-4191-9709-dd8f9bed3ee7": {
+        "image": "/assets/1596122554_26324",
+        "label": "taskcard red 08.png"
+      },
+      "type-8970932c-1c24-41f9-8cfb-6754f4f63196": {
+        "image": "/assets/295477023_31716",
+        "label": "taskcard red 09.png"
+      },
+      "type-2ec6a785-66f7-49ae-9140-f3893a2e86e7": {
+        "image": "/assets/-80750579_21804",
+        "label": "taskcard yellow 01.png"
+      },
+      "type-686b1dc4-5e3f-4841-83f0-6ef8851b814d": {
+        "image": "/assets/80746063_26438",
+        "label": "taskcard yellow 02.png"
+      },
+      "type-ff3c8655-60df-4aed-8a52-8ac68cf78255": {
+        "image": "/assets/-805019595_21931",
+        "label": "taskcard yellow 03.png"
+      },
+      "type-596de1d5-fd2a-4d5e-a32d-18703e077e88": {
+        "image": "/assets/-46053316_32586",
+        "label": "taskcard yellow 04.png"
+      },
+      "type-38e47872-6e05-405a-8be0-9cb49ae3712f": {
+        "image": "/assets/214510398_21972",
+        "label": "taskcard yellow 05.png"
+      },
+      "type-a312c607-6ee2-4411-8a62-907c23ecd36a": {
+        "image": "/assets/-617955563_24310",
+        "label": "taskcard yellow 06.png"
+      },
+      "type-f8bccf46-2229-43d9-9ba9-40c1ddba2f86": {
+        "image": "/assets/-306265180_31973",
+        "label": "taskcard yellow 07.png"
+      },
+      "type-80ca9b2b-ae9e-4e4a-8c6c-7ca89e08589f": {
+        "image": "/assets/-195000944_27882",
+        "label": "taskcard yellow 08.png"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#ffffff",
+            "valueType": "static",
+            "value": "/assets/-1682721256_109308",
+            "width": 59,
+            "height": 92
+          },
+          {
+            "type": "text",
+            "x": -1,
+            "y": 59.08267474406015,
+            "fontSize": 16,
+            "valueType": "static",
+            "value": "TASK",
+            "textAlign": "center",
+            "textFont": "interstate",
+            "color": "#ffffff",
+            "width": 60
+          }
+        ],
+        "border": false,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 59,
+            "height": 92
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 59,
+      "height": 92
+    },
+    "parent": "khsx23"
+  },
+  "khsx24": {
+    "type": "holder",
+    "x": 8.5,
+    "y": -55,
+    "z": 21841,
+    "id": "khsx24",
+    "css": "background: #55555530; border: 1px solid #55555560; ",
+    "width": 50,
+    "height": 50,
+    "dropTarget": {
+      "deck": "qe3n"
+    },
+    "parent": "khsx23",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "99cfa35a-8c94-4fa6-8145-0ae71d3f0a40": {
+    "id": "99cfa35a-8c94-4fa6-8145-0ae71d3f0a40",
+    "x": 4,
+    "y": -19,
+    "z": 20372,
+    "type": "deck",
+    "cardTypes": {
+      "type-5e850b6a-c911-412e-9a57-40e72ae6fbe2": {
+        "image": "/assets/492022559_21769",
+        "label": "taskcard blue01.png"
+      },
+      "type-c99ba6da-b10d-4600-84de-cbe79c094a94": {
+        "image": "/assets/-1906127725_30672",
+        "label": "taskcard yellow 09.png"
+      },
+      "type-7ef4609b-74b5-4396-a259-e6d0a4a740e8": {
+        "image": "/assets/-116395730_27288",
+        "label": "taskcard blue02.png"
+      },
+      "type-1e37ab62-44c7-428d-b18f-cc3f1d8ed97a": {
+        "image": "/assets/1955134942_23235",
+        "label": "taskcard blue03.png"
+      },
+      "type-142403bf-d7c6-4c06-a97a-cbfe8e5dd869": {
+        "image": "/assets/826208420_33739",
+        "label": "taskcard blue04.png"
+      },
+      "type-15721d20-5d3e-417e-9047-968fca357c78": {
+        "image": "/assets/1238387486_23295",
+        "label": "taskcard blue05.png"
+      },
+      "type-6a935e9f-30ec-4cba-ab01-f7a1fb504870": {
+        "image": "/assets/-425140991_25584",
+        "label": "taskcard blue06.png"
+      },
+      "type-739c88ec-2925-43c1-bea2-8dc7bfde4e2d": {
+        "image": "/assets/-1661779211_33648",
+        "label": "taskcard blue07.png"
+      },
+      "type-9238fbb3-0a0b-4c3b-a57a-867751f8892a": {
+        "image": "/assets/-1250106647_27668",
+        "label": "taskcard blue08.png"
+      },
+      "type-7dd8c7ec-9d39-48eb-84e6-0600368ef60f": {
+        "image": "/assets/-1123622633_32206",
+        "label": "taskcard blue09.png"
+      },
+      "type-16691fb4-bc15-45a2-9cb0-37ea62d02b07": {
+        "image": "/assets/-1699669350_21392",
+        "label": "taskcard green 01.png"
+      },
+      "type-e26a2349-f1a9-4fa1-aaf1-d5cb03320e47": {
+        "image": "/assets/1260913300_25217",
+        "label": "taskcard green 02.png"
+      },
+      "type-45f772d3-3e83-4b4c-90d3-70fd51abe49c": {
+        "image": "/assets/1342818881_22370",
+        "label": "taskcard green 03.png"
+      },
+      "type-3b70a7af-ea3e-48bd-a4ad-0982074d044a": {
+        "image": "/assets/1229457677_32273",
+        "label": "taskcard green 04.png"
+      },
+      "type-1f19c879-8c5c-4203-b1f1-c7de18a684c1": {
+        "image": "/assets/-991196784_22402",
+        "label": "taskcard green 05.png"
+      },
+      "type-b4273e55-797a-4a8d-837a-e2165e3e4e8e": {
+        "image": "/assets/-385183670_24629",
+        "label": "taskcard green 06.png"
+      },
+      "type-eb6d38de-6a61-44d8-8ed4-2d0d16e05f54": {
+        "image": "/assets/2007271844_32274",
+        "label": "taskcard green 07.png"
+      },
+      "type-7836f440-9e9e-4174-9ed8-aeb7027b9511": {
+        "image": "/assets/1351138624_26997",
+        "label": "taskcard green 08.png"
+      },
+      "type-03e71902-bf9c-445f-abc1-8b8c4611bd02": {
+        "image": "/assets/255688031_30895",
+        "label": "taskcard green 09.png"
+      },
+      "type-455f9ac2-9db5-445f-812e-bdb2bcc958d1": {
+        "image": "/assets/-274127540_21157",
+        "label": "taskcard red 01.png"
+      },
+      "type-a01a1f3b-aaeb-4bd7-8389-2c1c25c9aadc": {
+        "image": "/assets/-2098965220_25900",
+        "label": "taskcard red 02.png"
+      },
+      "type-fb838705-5898-4b5c-bfaf-053035c31f0d": {
+        "image": "/assets/-1478530869_23195",
+        "label": "taskcard red 03.png"
+      },
+      "type-f9565123-61d7-4f54-ac84-2e69cd0619bf": {
+        "image": "/assets/-902781540_33014",
+        "label": "taskcard red 04.png"
+      },
+      "type-64023c45-1b4f-46a2-bfc6-472c6ab8ce1f": {
+        "image": "/assets/1289557125_23208",
+        "label": "taskcard red 05.png"
+      },
+      "type-575ba275-cc72-4b56-a484-af7e574b2516": {
+        "image": "/assets/673719761_25535",
+        "label": "taskcard red 06.png"
+      },
+      "type-1be66265-1aad-4194-bf8e-e47984ab491b": {
+        "image": "/assets/-1278541602_33105",
+        "label": "taskcard red 07.png"
+      },
+      "type-cc94b14b-88bf-4191-9709-dd8f9bed3ee7": {
+        "image": "/assets/1596122554_26324",
+        "label": "taskcard red 08.png"
+      },
+      "type-8970932c-1c24-41f9-8cfb-6754f4f63196": {
+        "image": "/assets/295477023_31716",
+        "label": "taskcard red 09.png"
+      },
+      "type-2ec6a785-66f7-49ae-9140-f3893a2e86e7": {
+        "image": "/assets/-80750579_21804",
+        "label": "taskcard yellow 01.png"
+      },
+      "type-686b1dc4-5e3f-4841-83f0-6ef8851b814d": {
+        "image": "/assets/80746063_26438",
+        "label": "taskcard yellow 02.png"
+      },
+      "type-ff3c8655-60df-4aed-8a52-8ac68cf78255": {
+        "image": "/assets/-805019595_21931",
+        "label": "taskcard yellow 03.png"
+      },
+      "type-596de1d5-fd2a-4d5e-a32d-18703e077e88": {
+        "image": "/assets/-46053316_32586",
+        "label": "taskcard yellow 04.png"
+      },
+      "type-38e47872-6e05-405a-8be0-9cb49ae3712f": {
+        "image": "/assets/214510398_21972",
+        "label": "taskcard yellow 05.png"
+      },
+      "type-a312c607-6ee2-4411-8a62-907c23ecd36a": {
+        "image": "/assets/-617955563_24310",
+        "label": "taskcard yellow 06.png"
+      },
+      "type-f8bccf46-2229-43d9-9ba9-40c1ddba2f86": {
+        "image": "/assets/-306265180_31973",
+        "label": "taskcard yellow 07.png"
+      },
+      "type-80ca9b2b-ae9e-4e4a-8c6c-7ca89e08589f": {
+        "image": "/assets/-195000944_27882",
+        "label": "taskcard yellow 08.png"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#ffffff",
+            "valueType": "static",
+            "value": "/assets/-1682721256_109308",
+            "width": 59,
+            "height": 92
+          },
+          {
+            "type": "text",
+            "x": -1,
+            "y": 59.08267474406015,
+            "fontSize": 16,
+            "valueType": "static",
+            "value": "TASK",
+            "textAlign": "center",
+            "textFont": "interstate",
+            "color": "#ffffff",
+            "width": 60
+          }
+        ],
+        "border": false,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 59,
+            "height": 92
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 59,
+      "height": 92
+    },
+    "parent": "khsx24"
+  },
+  "tokens1": {
+    "type": "holder",
+    "id": "tokens1",
+    "x": 1129,
+    "y": 93,
+    "width": 282,
+    "height": 50,
+    "z": 21844,
+    "classes": "transparent",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "qe3n"
+    },
+    "stackOffsetX": 58
+  },
+  "tokens2": {
+    "type": "holder",
+    "id": "tokens2",
+    "x": 1128,
+    "y": 35,
+    "width": 282,
+    "height": 50,
+    "z": 21846,
+    "classes": "transparent",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "deck": "qe3n"
+    },
+    "stackOffsetX": 58
+  },
+  "vv7z": {
+    "type": "pile",
+    "width": 59,
+    "height": 92,
+    "id": "vv7z",
+    "z": 29900,
+    "parent": "khsx"
+  },
+  "AI Pile": {
+    "type": "holder",
+    "id": "AI Pile",
+    "x": 727.5,
+    "y": 220,
+    "z": 21823,
+    "inheritChildZ": true,
+    "css": "background: #55555550",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "Player Plie 1": {
+    "type": "holder",
+    "id": "Player Plie 1",
+    "x": 727.5,
+    "y": 420,
+    "z": 21824,
+    "inheritChildZ": true,
+    "css": "background: #55555550",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "Player Plie 2": {
+    "type": "holder",
+    "id": "Player Plie 2",
+    "x": 727.5,
+    "y": 620,
+    "z": 21825,
+    "inheritChildZ": true,
+    "css": "background: #55555550",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "_meta": {
+    "version": 3,
+    "info": {
+      "name": "The Team",
+      "image": "/assets/-1032817424_900322",
+      "rules": "",
+      "bgg": "",
+      "year": "2019",
+      "mode": "Co-op",
+      "time": "20",
+      "players": "2",
+      "language": "US",
+      "variant": "",
+      "attribution": "Original cards and board layout by https://www.reddit.com/user/inseend1, https://www.reddit.com/user/RaphaelAlvez and ArnoldSmith86. Released to public domain under CC0.\n\nCards based on assets from https://unsplash.com/license\n\nAstronauts tokens based on asset https://game-icons.net/1x1/delapouite/astronaut-helmet.html by Delapouite under CC BY 3.0\n\n\n\n"
+    }
+  },
+  "take1": {
+    "type": "button",
+    "id": "take1",
+    "parent": "discard2",
+    "x": -60,
+    "y": 44,
+    "layer": 4,
+    "z": 21800,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": [
+          "Player Plie 2",
+          "Player Plie 1",
+          "AI Pile"
+        ],
+        "to": [
+          "${PROPERTY parent}"
+        ],
+        "count": 1,
+        "face": 0
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          "2vmv",
+          "tgc6",
+          "5511",
+          "7ycs",
+          "8urn",
+          "drwy",
+          "up9w"
+        ],
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "value": "${value}"
+          },
+          {
+            "func": "COUNT"
+          },
+          "var COUNT = ${COUNT} - 1",
+          {
+            "func": "IF",
+            "condition": "${COUNT}",
+            "elseRoutine": [
+              {
+                "func": "FLIP",
+                "face": 1
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "css": "background-color: #243a4e88;border-color:white;color:white;",
+    "text": "Take"
+  },
+  "take2": {
+    "type": "button",
+    "id": "take2",
+    "parent": "discard",
+    "inheritFrom": "take1"
+  },
+  "take3": {
+    "type": "button",
+    "id": "take3",
+    "parent": "discard1",
+    "inheritFrom": "take1"
+  },
+  "9qke": {
+    "type": "pile",
+    "parent": "5511",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "9qke"
+  },
+  "axlq": {
+    "type": "pile",
+    "parent": "tgc6",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "axlq"
+  },
+  "ppam": {
+    "type": "pile",
+    "parent": "7ycs",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "ppam"
+  },
+  "7nv4": {
+    "type": "pile",
+    "parent": "8urn",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "7nv4"
+  },
+  "w0sq": {
+    "type": "pile",
+    "parent": "drwy",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "w0sq"
+  },
+  "20n3": {
+    "type": "pile",
+    "parent": "up9w",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "20n3"
+  },
+  "6k91": {
+    "type": "pile",
+    "parent": "2vmv",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "6k91"
+  },
+  "l6t2": {
+    "type": "pile",
+    "parent": "Player Plie 1",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "l6t2"
+  },
+  "a67q": {
+    "type": "pile",
+    "parent": "Player Plie 2",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "a67q"
+  }
+}

@@ -1,0 +1,2121 @@
+{
+  "_meta": {
+    "version": 3,
+    "info": {
+      "name": "Alleys",
+      "image": "/assets/820000023_33584",
+      "rules": "",
+      "bgg": "",
+      "year": "1997",
+      "mode": "vs",
+      "time": "15",
+      "players": "2-4",
+      "language": "UN",
+      "variant": "",
+      "attribution": "The game layout and images (including the library image) were done by https://www.reddit.com/user/96LawDawg and are released to the public domain under the CC0 license.\n\nThe pawn pieces are based on the 3d models provided by Microsoft without a license restriction."
+    }
+  },
+  "0odv": {
+    "image": "/assets/1012790218_108586",
+    "movable": false,
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "id": "0odv",
+    "movableInEdit": false
+  },
+  "l76r": {
+    "image": "/assets/331581471_13207",
+    "id": "l76r",
+    "z": 804,
+    "x": 58,
+    "y": 17,
+    "height": 80,
+    "width": 80,
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "minX": 325,
+        "maxX": 1225,
+        "minY": 25,
+        "maxY": 875,
+        "offsetX": 10,
+        "offsetY": 2
+      }
+    ]
+  },
+  "68kz": {
+    "image": "/assets/709390590_17255",
+    "id": "68kz",
+    "z": 802,
+    "x": 1443,
+    "y": 17,
+    "height": 80,
+    "width": 80,
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "minX": 325,
+        "maxX": 1225,
+        "minY": 25,
+        "maxY": 875,
+        "offsetX": 10,
+        "offsetY": 2
+      }
+    ]
+  },
+  "juej": {
+    "image": "/assets/-1327977028_18097",
+    "id": "juej",
+    "z": 800,
+    "x": 1443,
+    "y": 905,
+    "height": 80,
+    "width": 80,
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "minX": 325,
+        "maxX": 1225,
+        "minY": 25,
+        "maxY": 875,
+        "offsetX": 10,
+        "offsetY": 2
+      }
+    ]
+  },
+  "nzqp": {
+    "image": "/assets/-1059398328_17336",
+    "id": "nzqp",
+    "z": 801,
+    "x": 1500,
+    "y": 905,
+    "height": 80,
+    "width": 80,
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "minX": 325,
+        "maxX": 1225,
+        "minY": 25,
+        "maxY": 875,
+        "offsetX": 10,
+        "offsetY": 2
+      }
+    ]
+  },
+  "us8g": {
+    "image": "/assets/1244031020_15927",
+    "id": "us8g",
+    "z": 805,
+    "x": 5,
+    "y": 17,
+    "height": 80,
+    "width": 80,
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "minX": 325,
+        "maxX": 1225,
+        "minY": 25,
+        "maxY": 875,
+        "offsetX": 10,
+        "offsetY": 2
+      }
+    ]
+  },
+  "zrl8": {
+    "image": "/assets/-1149312657_14435",
+    "id": "zrl8",
+    "z": 803,
+    "x": 1500,
+    "y": 17,
+    "height": 80,
+    "width": 80,
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "minX": 325,
+        "maxX": 1225,
+        "minY": 25,
+        "maxY": 875,
+        "offsetX": 10,
+        "offsetY": 2
+      }
+    ]
+  },
+  "hrrk": {
+    "image": "/assets/1236232130_16726",
+    "id": "hrrk",
+    "z": 806,
+    "y": 905,
+    "x": 58,
+    "height": 80,
+    "width": 80,
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "minX": 325,
+        "maxX": 1225,
+        "minY": 25,
+        "maxY": 875,
+        "offsetX": 10,
+        "offsetY": 2
+      }
+    ]
+  },
+  "vzdj": {
+    "image": "/assets/-298205693_16355",
+    "id": "vzdj",
+    "z": 807,
+    "x": 5,
+    "height": 80,
+    "width": 80,
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "minX": 325,
+        "maxX": 1225,
+        "minY": 25,
+        "maxY": 875,
+        "offsetX": 10,
+        "offsetY": 2
+      }
+    ],
+    "y": 905
+  },
+  "an75": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Resetting board...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to reset the board. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "mode": "set",
+        "property": "id",
+        "value": "us8g"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 17
+      },
+      {
+        "func": "SELECT",
+        "mode": "set",
+        "property": "id",
+        "value": "l76r"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 58
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 17
+      },
+      {
+        "func": "SELECT",
+        "mode": "set",
+        "property": "id",
+        "value": "68kz"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1443
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 17
+      },
+      {
+        "func": "SELECT",
+        "mode": "set",
+        "property": "id",
+        "value": "zrl8"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1500
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 17
+      },
+      {
+        "func": "SELECT",
+        "mode": "set",
+        "property": "id",
+        "value": "vzdj"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 905
+      },
+      {
+        "func": "SELECT",
+        "mode": "set",
+        "property": "id",
+        "value": "hrrk"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 58
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 905
+      },
+      {
+        "func": "SELECT",
+        "mode": "set",
+        "property": "id",
+        "value": "juej"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1443
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 905
+      },
+      {
+        "func": "SELECT",
+        "mode": "set",
+        "property": "id",
+        "value": "nzqp"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1500
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 905
+      },
+      {
+        "func": "SELECT",
+        "mode": "set",
+        "property": "wood",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "mode": "set",
+        "property": "id",
+        "value": "wood01"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 50
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 150
+      },
+      {
+        "func": "SELECT",
+        "mode": "set",
+        "property": "id",
+        "value": "wood02"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 100
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 150
+      },
+      {
+        "func": "SELECT",
+        "mode": "set",
+        "property": "id",
+        "value": "wood03"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 150
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 150
+      },
+      {
+        "func": "SELECT",
+        "mode": "set",
+        "property": "id",
+        "value": "wood04"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 200
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 150
+      },
+      {
+        "func": "SELECT",
+        "mode": "set",
+        "property": "id",
+        "value": "wood05"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 250
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 150
+      },
+      {
+        "func": "SELECT",
+        "mode": "set",
+        "property": "id",
+        "value": "wood11"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 50
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 650
+      },
+      {
+        "func": "SELECT",
+        "mode": "set",
+        "property": "id",
+        "value": "wood12"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 100
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 650
+      },
+      {
+        "func": "SELECT",
+        "mode": "set",
+        "property": "id",
+        "value": "wood13"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 150
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 650
+      },
+      {
+        "func": "SELECT",
+        "mode": "set",
+        "property": "id",
+        "value": "wood14"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 200
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 650
+      },
+      {
+        "func": "SELECT",
+        "mode": "set",
+        "property": "id",
+        "value": "wood15"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 250
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 650
+      },
+      {
+        "func": "SELECT",
+        "mode": "set",
+        "property": "id",
+        "value": "wood06"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1300
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 150
+      },
+      {
+        "func": "SELECT",
+        "mode": "set",
+        "property": "id",
+        "value": "wood07"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1350
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 150
+      },
+      {
+        "func": "SELECT",
+        "mode": "set",
+        "property": "id",
+        "value": "wood08"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1400
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 150
+      },
+      {
+        "func": "SELECT",
+        "mode": "set",
+        "property": "id",
+        "value": "wood09"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1450
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 150
+      },
+      {
+        "func": "SELECT",
+        "mode": "set",
+        "property": "id",
+        "value": "wood10"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1500
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 150
+      },
+      {
+        "func": "SELECT",
+        "mode": "set",
+        "property": "id",
+        "value": "wood16"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1300
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 650
+      },
+      {
+        "func": "SELECT",
+        "mode": "set",
+        "property": "id",
+        "value": "wood17"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1350
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 650
+      },
+      {
+        "func": "SELECT",
+        "mode": "set",
+        "property": "id",
+        "value": "wood18"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1400
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 650
+      },
+      {
+        "func": "SELECT",
+        "mode": "set",
+        "property": "id",
+        "value": "wood19"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1450
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 650
+      },
+      {
+        "func": "SELECT",
+        "mode": "set",
+        "property": "id",
+        "value": "wood20"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1500
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 650
+      }
+    ],
+    "x": 1530,
+    "z": 3,
+    "id": "an75",
+    "image": "/assets/1342248376_1383",
+    "css": "background-size:80%",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "color": "white",
+    "width": 50,
+    "height": 50,
+    "y": 475
+  },
+  "wood01": {
+    "id": "wood01",
+    "x": 50,
+    "y": 150,
+    "width": 50,
+    "height": 200,
+    "z": 851,
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "minX": 400,
+        "maxX": 1200,
+        "minY": 50,
+        "maxY": 800,
+        "offsetX": -23
+      }
+    ],
+    "image": "/assets/1936133178_13239",
+    "wood": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "variable": "rotation"
+      },
+      {
+        "func": "IF",
+        "operand1": "${rotation}",
+        "operand2": 90,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 90
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ]
+  },
+  "wood02": {
+    "id": "wood02",
+    "x": 100,
+    "y": 150,
+    "width": 50,
+    "height": 200,
+    "z": 852,
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "minX": 400,
+        "maxX": 1200,
+        "minY": 50,
+        "maxY": 800,
+        "offsetX": -23
+      }
+    ],
+    "image": "/assets/1936133178_13239",
+    "wood": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "variable": "rotation"
+      },
+      {
+        "func": "IF",
+        "operand1": "${rotation}",
+        "operand2": 90,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 90
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ]
+  },
+  "wood03": {
+    "id": "wood03",
+    "x": 150,
+    "y": 150,
+    "width": 50,
+    "height": 200,
+    "z": 853,
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "minX": 400,
+        "maxX": 1200,
+        "minY": 50,
+        "maxY": 800,
+        "offsetX": -23
+      }
+    ],
+    "image": "/assets/1936133178_13239",
+    "wood": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "variable": "rotation"
+      },
+      {
+        "func": "IF",
+        "operand1": "${rotation}",
+        "operand2": 90,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 90
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ]
+  },
+  "wood04": {
+    "id": "wood04",
+    "x": 200,
+    "y": 150,
+    "width": 50,
+    "height": 200,
+    "z": 810,
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "minX": 400,
+        "maxX": 1200,
+        "minY": 50,
+        "maxY": 800,
+        "offsetX": -23
+      }
+    ],
+    "image": "/assets/1936133178_13239",
+    "wood": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "variable": "rotation"
+      },
+      {
+        "func": "IF",
+        "operand1": "${rotation}",
+        "operand2": 90,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 90
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ]
+  },
+  "wood06": {
+    "id": "wood06",
+    "x": 1300,
+    "y": 150,
+    "width": 50,
+    "height": 200,
+    "z": 856,
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "minX": 400,
+        "maxX": 1200,
+        "minY": 50,
+        "maxY": 800,
+        "offsetX": -23
+      }
+    ],
+    "image": "/assets/1936133178_13239",
+    "wood": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "variable": "rotation"
+      },
+      {
+        "func": "IF",
+        "operand1": "${rotation}",
+        "operand2": 90,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 90
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ]
+  },
+  "wood07": {
+    "id": "wood07",
+    "x": 1350,
+    "y": 150,
+    "width": 50,
+    "height": 200,
+    "z": 857,
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "minX": 400,
+        "maxX": 1200,
+        "minY": 50,
+        "maxY": 800,
+        "offsetX": -23
+      }
+    ],
+    "image": "/assets/1936133178_13239",
+    "wood": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "variable": "rotation"
+      },
+      {
+        "func": "IF",
+        "operand1": "${rotation}",
+        "operand2": 90,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 90
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ]
+  },
+  "wood08": {
+    "id": "wood08",
+    "x": 1400,
+    "y": 150,
+    "width": 50,
+    "height": 200,
+    "z": 858,
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "minX": 400,
+        "maxX": 1200,
+        "minY": 50,
+        "maxY": 800,
+        "offsetX": -23
+      }
+    ],
+    "image": "/assets/1936133178_13239",
+    "wood": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "variable": "rotation"
+      },
+      {
+        "func": "IF",
+        "operand1": "${rotation}",
+        "operand2": 90,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 90
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ]
+  },
+  "wood09": {
+    "id": "wood09",
+    "x": 1450,
+    "y": 150,
+    "width": 50,
+    "height": 200,
+    "z": 859,
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "minX": 400,
+        "maxX": 1200,
+        "minY": 50,
+        "maxY": 800,
+        "offsetX": -23
+      }
+    ],
+    "image": "/assets/1936133178_13239",
+    "wood": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "variable": "rotation"
+      },
+      {
+        "func": "IF",
+        "operand1": "${rotation}",
+        "operand2": 90,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 90
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ]
+  },
+  "wood10": {
+    "id": "wood10",
+    "x": 1500,
+    "y": 150,
+    "width": 50,
+    "height": 200,
+    "z": 860,
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "minX": 400,
+        "maxX": 1200,
+        "minY": 50,
+        "maxY": 800,
+        "offsetX": -23
+      }
+    ],
+    "image": "/assets/1936133178_13239",
+    "wood": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "variable": "rotation"
+      },
+      {
+        "func": "IF",
+        "operand1": "${rotation}",
+        "operand2": 90,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 90
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ]
+  },
+  "wood11": {
+    "id": "wood11",
+    "x": 50,
+    "y": 650,
+    "width": 50,
+    "height": 200,
+    "z": 818,
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "minX": 400,
+        "maxX": 1200,
+        "minY": 50,
+        "maxY": 800,
+        "offsetX": -23
+      }
+    ],
+    "image": "/assets/1936133178_13239",
+    "wood": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "variable": "rotation"
+      },
+      {
+        "func": "IF",
+        "operand1": "${rotation}",
+        "operand2": 90,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 90
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ]
+  },
+  "wood12": {
+    "id": "wood12",
+    "x": 100,
+    "y": 650,
+    "width": 50,
+    "height": 200,
+    "z": 817,
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "minX": 400,
+        "maxX": 1200,
+        "minY": 50,
+        "maxY": 800,
+        "offsetX": -23
+      }
+    ],
+    "image": "/assets/1936133178_13239",
+    "wood": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "variable": "rotation"
+      },
+      {
+        "func": "IF",
+        "operand1": "${rotation}",
+        "operand2": 90,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 90
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ]
+  },
+  "wood13": {
+    "id": "wood13",
+    "x": 150,
+    "y": 650,
+    "width": 50,
+    "height": 200,
+    "z": 816,
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "minX": 400,
+        "maxX": 1200,
+        "minY": 50,
+        "maxY": 800,
+        "offsetX": -23
+      }
+    ],
+    "image": "/assets/1936133178_13239",
+    "wood": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "variable": "rotation"
+      },
+      {
+        "func": "IF",
+        "operand1": "${rotation}",
+        "operand2": 90,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 90
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ]
+  },
+  "wood14": {
+    "id": "wood14",
+    "x": 200,
+    "y": 650,
+    "width": 50,
+    "height": 200,
+    "z": 815,
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "minX": 400,
+        "maxX": 1200,
+        "minY": 50,
+        "maxY": 800,
+        "offsetX": -23
+      }
+    ],
+    "image": "/assets/1936133178_13239",
+    "wood": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "variable": "rotation"
+      },
+      {
+        "func": "IF",
+        "operand1": "${rotation}",
+        "operand2": 90,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 90
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ]
+  },
+  "wood15": {
+    "id": "wood15",
+    "x": 250,
+    "y": 650,
+    "width": 50,
+    "height": 200,
+    "z": 814,
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "minX": 400,
+        "maxX": 1200,
+        "minY": 50,
+        "maxY": 800,
+        "offsetX": -23
+      }
+    ],
+    "image": "/assets/1936133178_13239",
+    "wood": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "variable": "rotation"
+      },
+      {
+        "func": "IF",
+        "operand1": "${rotation}",
+        "operand2": 90,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 90
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ]
+  },
+  "wood16": {
+    "id": "wood16",
+    "x": 1300,
+    "y": 650,
+    "width": 50,
+    "height": 200,
+    "z": 826,
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "minX": 400,
+        "maxX": 1200,
+        "minY": 50,
+        "maxY": 800,
+        "offsetX": -23
+      }
+    ],
+    "image": "/assets/1936133178_13239",
+    "wood": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "variable": "rotation"
+      },
+      {
+        "func": "IF",
+        "operand1": "${rotation}",
+        "operand2": 90,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 90
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ]
+  },
+  "wood17": {
+    "id": "wood17",
+    "x": 1350,
+    "y": 650,
+    "width": 50,
+    "height": 200,
+    "z": 827,
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "minX": 400,
+        "maxX": 1200,
+        "minY": 50,
+        "maxY": 800,
+        "offsetX": -23
+      }
+    ],
+    "image": "/assets/1936133178_13239",
+    "wood": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "variable": "rotation"
+      },
+      {
+        "func": "IF",
+        "operand1": "${rotation}",
+        "operand2": 90,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 90
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ]
+  },
+  "wood18": {
+    "id": "wood18",
+    "x": 1400,
+    "y": 650,
+    "width": 50,
+    "height": 200,
+    "z": 828,
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "minX": 400,
+        "maxX": 1200,
+        "minY": 50,
+        "maxY": 800,
+        "offsetX": -23
+      }
+    ],
+    "image": "/assets/1936133178_13239",
+    "wood": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "variable": "rotation"
+      },
+      {
+        "func": "IF",
+        "operand1": "${rotation}",
+        "operand2": 90,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 90
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ]
+  },
+  "wood19": {
+    "id": "wood19",
+    "x": 1450,
+    "y": 650,
+    "width": 50,
+    "height": 200,
+    "z": 829,
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "minX": 400,
+        "maxX": 1200,
+        "minY": 50,
+        "maxY": 800,
+        "offsetX": -23
+      }
+    ],
+    "image": "/assets/1936133178_13239",
+    "wood": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "variable": "rotation"
+      },
+      {
+        "func": "IF",
+        "operand1": "${rotation}",
+        "operand2": 90,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 90
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ]
+  },
+  "wood20": {
+    "id": "wood20",
+    "x": 1500,
+    "y": 650,
+    "width": 50,
+    "height": 200,
+    "z": 830,
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "minX": 400,
+        "maxX": 1200,
+        "minY": 50,
+        "maxY": 800,
+        "offsetX": -23
+      }
+    ],
+    "image": "/assets/1936133178_13239",
+    "wood": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "variable": "rotation"
+      },
+      {
+        "func": "IF",
+        "operand1": "${rotation}",
+        "operand2": 90,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 90
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ]
+  },
+  "wood05": {
+    "id": "wood05",
+    "x": 250,
+    "y": 150,
+    "width": 50,
+    "height": 200,
+    "z": 834,
+    "grid": [
+      {
+        "x": 100,
+        "y": 100,
+        "minX": 400,
+        "maxX": 1200,
+        "minY": 50,
+        "maxY": 800,
+        "offsetX": -23
+      }
+    ],
+    "image": "/assets/1936133178_13239",
+    "wood": true,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "transition: linear 0.15s"
+      },
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "variable": "rotation"
+      },
+      {
+        "func": "IF",
+        "operand1": "${rotation}",
+        "operand2": 90,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 90
+          }
+        ]
+      }
+    ],
+    "xChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "yChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ]
+  }
+}

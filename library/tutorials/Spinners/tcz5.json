@@ -1,0 +1,734 @@
+{
+  "2095": {
+    "css": "border-left:2px solid black;",
+    "z": 213,
+    "y": 17,
+    "x": 220,
+    "id": "2095",
+    "height": 900,
+    "width": 10,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "cj98": {
+    "type": "spinner",
+    "value": "🔵",
+    "options": [
+      "🟠",
+      "🟡",
+      "🟢",
+      "🔵",
+      "🟣",
+      "⚪",
+      "⚫",
+      "🔴"
+    ],
+    "x": 845,
+    "y": 29,
+    "z": 29,
+    "id": "cj98",
+    "angle": 84761,
+    "spinnerCSS": "background-image:URL(/assets/539909737_29892);top:0;left:0;",
+    "valueCSS": "background-image:URL(/assets/696583614_927); background-color:#00000000; background-position: top top;background-size:100% 100%; opacity: 1 !important;",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "sz81": {
+    "image": "/assets/539909737_29892",
+    "id": "sz81",
+    "z": 170,
+    "x": 855,
+    "y": 490,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "nxfo": {
+    "type": "spinner",
+    "value": "🟣",
+    "options": [
+      "🟠",
+      "🟡",
+      "🟢",
+      "🔵",
+      "🟣",
+      "⚪",
+      "⚫",
+      "🔴"
+    ],
+    "x": 1145,
+    "y": 29,
+    "z": 31,
+    "angle": 81909,
+    "backgroundCSS": "position:relative",
+    "spinnerCSS": "background-image:URL(/assets/539909737_29892);top:0;right:0;",
+    "valueCSS": "background-image:URL(/assets/617595691_22467); background-color:#00000000; top:0; left:0; width:inherit ;height: inherit; background-size:100% 100%; opacity: 1 !important; font-size: 50%",
+    "id": "nxfo",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "sqgr": {
+    "image": "/assets/617595691_22467",
+    "id": "sqgr",
+    "z": 174,
+    "x": 1145.5,
+    "y": 633.5,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "56c0": {
+    "image": "/assets/696583614_927",
+    "id": "56c0",
+    "z": 173,
+    "x": 1005,
+    "y": 640,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "5cj0": {
+    "type": "spinner",
+    "value": "⚪",
+    "options": [
+      "🟠",
+      "🟡",
+      "🟢",
+      "🔵",
+      "🟣",
+      "⚪",
+      "⚫",
+      "🔴"
+    ],
+    "x": 995,
+    "y": 29,
+    "z": 68,
+    "angle": 98903,
+    "spinnerCSS": "background-image:URL(/assets/539909737_29892);top:0;left:0;",
+    "valueCSS": "background-image:URL(/assets/696583614_927); background-color:#00000000; background-position: top top;background-size:100% 100%;  opacity: 1 !important; font-size: 50%",
+    "id": "5cj0",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "i5wr": {
+    "type": "spinner",
+    "value": "🟠",
+    "options": [
+      "🔴",
+      "⚫",
+      "⚪",
+      "🟣",
+      "🔵",
+      "🟢",
+      "🟡",
+      "🟠"
+    ],
+    "x": 245,
+    "y": 29,
+    "z": 28,
+    "angle": 163035,
+    "backgroundCSS": "background-color: #2a2c37;",
+    "spinnerCSS": "background-image:URL(/assets/-1721336118_941);background-size:50% 50%;background-position: center center;",
+    "valueCSS": " background-color:#00000000;",
+    "id": "i5wr",
+    "css": "font-size:100%;",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "dfau": {
+    "image": "/assets/-1721336118_941",
+    "id": "dfau",
+    "z": 169,
+    "x": 255,
+    "y": 490,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "af59": {
+    "image": "/assets/-1721336118_941",
+    "z": 179,
+    "x": 405,
+    "y": 490,
+    "id": "af59",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "sfty": {
+    "image": "/assets/696583614_927",
+    "z": 161,
+    "x": 855,
+    "y": 640,
+    "id": "sfty",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "1ngj": {
+    "image": "/assets/539909737_29892",
+    "z": 178,
+    "x": 1005,
+    "y": 490,
+    "id": "1ngj",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "lhfm": {
+    "image": "/assets/539909737_29892",
+    "z": 187,
+    "x": 1155,
+    "y": 490,
+    "id": "lhfm",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "6wnj": {
+    "image": "/assets/539909737_29892",
+    "z": 199,
+    "x": 405,
+    "y": 339,
+    "id": "6wnj",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "ms5r": {
+    "type": "spinner",
+    "value": "",
+    "options": [],
+    "x": 699,
+    "y": 28,
+    "z": 53,
+    "angle": 243422,
+    "backgroundCSS": "display: none",
+    "spinnerCSS": "background-image:URL(/assets/-1721336118_941);background-size:70% 70%;background-position: center center",
+    "css": "background-image:URL(/assets/539909737_29892); border-radius: 100%; ",
+    "id": "ms5r",
+    "valueCSS": "display: none",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "1zv3": {
+    "type": "spinner",
+    "value": "⚫",
+    "options": [
+      "⚪",
+      "🟣",
+      "🔵",
+      "🟢",
+      "🟡",
+      "🟠",
+      "🔴",
+      "⚫"
+    ],
+    "x": 545,
+    "y": 29,
+    "z": 73,
+    "angle": 240461,
+    "backgroundCSS": "display: none",
+    "spinnerCSS": "background-image:URL(/assets/-1721336118_941);background-size:70% 70%;background-position: center center;",
+    "valueCSS": " background-color:#00000000;",
+    "css": "background-image:URL(/assets/539909737_29892); background-size:100% 100%; font-size:120%; border-radius:50% ",
+    "id": "1zv3",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "tkq2": {
+    "image": "/assets/539909737_29892",
+    "z": 184,
+    "x": 555,
+    "y": 190,
+    "id": "tkq2",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "jf90": {
+    "image": "/assets/-1721336118_941",
+    "z": 185,
+    "x": 555,
+    "y": 490,
+    "id": "jf90",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "sz27": {
+    "type": "label",
+    "text": "background",
+    "css": "font-size: 30px",
+    "height": 42,
+    "width": 200,
+    "x": 12,
+    "y": 368,
+    "z": 3,
+    "id": "sz27",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "h0mn": {
+    "type": "label",
+    "text": "spinner",
+    "css": "font-size: 30px",
+    "height": 42,
+    "width": 200,
+    "x": 12,
+    "y": 518,
+    "z": 4,
+    "id": "h0mn",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "0enm": {
+    "type": "label",
+    "text": "value",
+    "css": "font-size: 30px",
+    "height": 42,
+    "width": 200,
+    "x": 12,
+    "y": 668,
+    "z": 5,
+    "id": "0enm",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "z32t": {
+    "type": "spinner",
+    "value": "",
+    "options": [],
+    "x": -531,
+    "y": 1025,
+    "z": 79,
+    "angle": 251736,
+    "backgroundCSS": "display: none",
+    "spinnerCSS": "background-image:URL(/assets/-1721336118_941);background-size:70% 70%;background-position: center center",
+    "css": "background-image:URL(/assets/539909737_29892); border-radius: 100%",
+    "id": "z32t",
+    "valueCSS": "display: none"
+  },
+  "t7ti": {
+    "css": "border-top:2px solid black;",
+    "id": "t7ti",
+    "z": 212,
+    "x": 26,
+    "y": 609,
+    "width": 1389,
+    "height": 10,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "3qgk": {
+    "css": "border-top:2px solid black;",
+    "id": "3qgk",
+    "z": 203,
+    "y": 459,
+    "x": 26,
+    "width": 1389,
+    "height": 10,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "7ovb": {
+    "css": "border-top:2px solid black;",
+    "z": 220,
+    "x": 22,
+    "y": 309,
+    "width": 1389,
+    "id": "7ovb",
+    "height": 10,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "wnoi": {
+    "css": "border-left:2px solid black;",
+    "z": 214,
+    "y": 17,
+    "x": 370,
+    "height": 900,
+    "width": 10,
+    "id": "wnoi",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "05kp": {
+    "css": "border-left:2px solid black;",
+    "z": 215,
+    "y": 17,
+    "x": 520,
+    "height": 900,
+    "width": 10,
+    "id": "05kp",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "t2ut": {
+    "css": "border-left:2px solid black;",
+    "z": 216,
+    "y": 17,
+    "x": 670,
+    "height": 900,
+    "width": 10,
+    "id": "t2ut",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "20t7": {
+    "css": "border-left:2px solid black;",
+    "z": 217,
+    "y": 17,
+    "x": 820,
+    "height": 900,
+    "width": 10,
+    "id": "20t7",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "lwtg": {
+    "css": "border-left:2px solid black;",
+    "z": 218,
+    "y": 17,
+    "x": 970,
+    "height": 900,
+    "width": 10,
+    "id": "lwtg",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "of5y": {
+    "type": "spinner",
+    "value": "🟡",
+    "options": [
+      "🟠",
+      "🟡",
+      "🟢",
+      "🔵",
+      "🟣",
+      "⚪",
+      "⚫",
+      "🔴"
+    ],
+    "x": -399,
+    "y": 1031,
+    "z": 80,
+    "angle": 159528,
+    "backgroundCSS": "position:relative",
+    "spinnerCSS": "background-image:URL(/assets/539909737_29892);top:0;left:0;",
+    "valueCSS": "background-image:URL(/assets/696583614_927); background-color:#00000000; background-position: top top;background-size:100% 100%; opacity: 1 !important;",
+    "id": "of5y"
+  },
+  "0enm-copy001": {
+    "type": "label",
+    "text": "How the spinner look in chrome on windows",
+    "css": "font-size: 30px",
+    "height": 65,
+    "width": 691,
+    "x": -911,
+    "y": 665,
+    "id": "0enm-copy001",
+    "movable": false,
+    "movableInEdit": false,
+    "z": 222
+  },
+  "7ovb-copy001": {
+    "css": "border-top:2px solid black;",
+    "x": 22,
+    "y": 159,
+    "width": 1389,
+    "id": "7ovb-copy001",
+    "height": 10,
+    "movable": false,
+    "movableInEdit": false,
+    "z": 224
+  },
+  "sz27-copy001": {
+    "type": "label",
+    "text": "general",
+    "css": "font-size: 30px",
+    "height": 42,
+    "width": 200,
+    "x": 4,
+    "y": 218,
+    "id": "sz27-copy001",
+    "movable": false,
+    "movableInEdit": false,
+    "z": 225
+  },
+  "tkq2-copy001": {
+    "image": "/assets/539909737_29892",
+    "x": 705,
+    "y": 190,
+    "id": "tkq2-copy001",
+    "movable": false,
+    "movableInEdit": false,
+    "z": 226
+  },
+  "wnoi-copy001": {
+    "css": "border-left:2px solid black;",
+    "y": 17,
+    "x": 1120,
+    "height": 900,
+    "width": 10,
+    "id": "wnoi-copy001",
+    "movable": false,
+    "movableInEdit": false,
+    "z": 227
+  },
+  "wnoi-copy002": {
+    "css": "border-left:2px solid black;",
+    "y": 19,
+    "x": 1270,
+    "height": 900,
+    "width": 10,
+    "id": "wnoi-copy002",
+    "movable": false,
+    "movableInEdit": false,
+    "z": 228
+  },
+  "0qj3": {
+    "image": "/assets/-1836194695_33399",
+    "id": "0qj3",
+    "z": 240,
+    "x": 1300,
+    "y": 190,
+    "movable": false
+  },
+  "6rw3": {
+    "image": "/assets/1632557880_715",
+    "id": "6rw3",
+    "z": 235,
+    "x": 1305,
+    "y": 490
+  },
+  "epgi": {
+    "type": "spinner",
+    "value": "❤︎",
+    "options": [
+      1,
+      "❤︎",
+      2,
+      "⚡︎",
+      3,
+      "💥︎"
+    ],
+    "x": 1296,
+    "y": 32,
+    "z": 134,
+    "angle": 286298,
+    "backgroundCSS": "display: none",
+    "spinnerCSS": "background-image:URL(/assets/1632557880_715);background-size:60% 60%;background-position: center center;",
+    "valueCSS": " background-color:#159a0c;top:37.5%; left:37.5%; width:25% ;height: 25%;color: black;",
+    "css": "background-image:URL(/assets/-1836194695_33399); background-size:100% 100%; font-size:120%; border-radius:50% ;color: black;",
+    "id": "epgi",
+    "movable": false
+  },
+  "r5mb": {
+    "type": "spinner",
+    "value": "⚪",
+    "options": [
+      "⚪",
+      "🟣",
+      "🔵",
+      "🟢",
+      "🟡",
+      "🟠",
+      "🔴",
+      "⚫"
+    ],
+    "x": 395,
+    "y": 28,
+    "z": 133,
+    "angle": 243362,
+    "backgroundCSS": "background-image:URL(/assets/539909737_29892); background-size:100% 100%;",
+    "spinnerCSS": "background-image:URL(/assets/-1721336118_941);background-size:50% 50%;background-position: center center;",
+    "valueCSS": " background-color:#00000000;",
+    "css": " font-size:120%; ",
+    "id": "r5mb",
+    "movable": false
+  },
+  "t7ti-copy001": {
+    "css": "border-top:2px solid black;",
+    "id": "t7ti-copy001",
+    "x": 26,
+    "y": 759,
+    "width": 1389,
+    "height": 10,
+    "movable": false,
+    "movableInEdit": false,
+    "z": 236
+  },
+  "f51t-copy001": {
+    "image": "/assets/-1745554929_53916",
+    "id": "f51t-copy001",
+    "x": 270,
+    "y": 1064,
+    "width": 1031,
+    "height": 125,
+    "z": 237
+  },
+  "0enm-copy002": {
+    "type": "label",
+    "text": "notes",
+    "css": "font-size: 30px",
+    "height": 42,
+    "width": 200,
+    "x": 16,
+    "y": 818,
+    "id": "0enm-copy002",
+    "movable": false,
+    "movableInEdit": false,
+    "z": 238
+  },
+  "xhpg": {
+    "type": "deck",
+    "id": "xhpg",
+    "cardTypes": {
+      "note spinner 1": {
+        "text": "     In this spinner, there is a simple customization. The options are emojis. The background color is changed in backgroundCSS. In the spinnerCSS there is a custom arrow as background image.\n\n     Note that it is not possible at the moment to change the font color or the lines color. The line just look white compared to the dark background."
+      },
+      "note spinner 2": {
+        "text": "     For spinners 5-7, the background is spinning so it has to be added in spinnerCSS.\n     The arrow is at the background of the valueCSS.\n     Normally the value disappears during the spin so we can set the opacity to 1 and !important to keep it always displayed.\n\n     In this spinner the arrow is small compared to the color emoji this is fixed on the next one"
+      },
+      "note spinner 3": {
+        "text": "    For spinners 5-7, the background is spinning so it has to be added in spinnerCSS.\n     The arrow is at the background of the valueCSS.\n     Normally the value disappears during the spin so we can set opacity to 1 and !important to keep it always displayed.\n\n     Building on the last example, on the spinner 6 the font size is reduced"
+      },
+      "note spinner 4": {
+        "text": "    For spinners 5-7, the background is spinning so it has to be added in spinnerCSS.\n     The arrow is at the background of the valueCSS.\n     Normally the value disappears during the spin so we can set opacity to 1 and !important to keep it always displayed.\n\n     Building on the example 6, the arrow is now in the outer side of the spinner. It is an svg that covers the whole space of the spinner."
+      },
+      "note spinner 5": {
+        "text": "     For spinners 2-4, the arrow will be spinning and the background match the option color.\n\n     This spinner is based on example 1 and now we set the colored disc as the background image in backgroundCSS"
+      },
+      "note spinner 6": {
+        "text": "     For spinners 2-4, the arrow will be spinning and the background match the option color.\n\n     This spinner is based on example 2 and now we set the colored disc as the background image in CSS. The background (and therefore the options) is hidden using display: none in backgroundCSS"
+      },
+      "note spinner 7": {
+        "text": "     For spinners 2-4, the arrow will be spinning and the background match the option color.\n\n     This spinner is based on example 3 and now we set the colored disc as the background image in CSS. The background (and therefore the options) and the value are hidden using display: none in backgroundCSS and in value css"
+      },
+      "note spinner 8": {
+        "text": "   This last example uses a bit of everything we saw on the other examples.\n     We changed the arrow like in example 1 and we also customized the options using strings as numbers.\n     The background is a custom SVG so we can have custom color for the options and we are hiding the options as in example 3.\n     Like on examples 5-7 the value background color is changed on the valueCSS and now we also change the font color.\n     The value disc is also resized and recentered in valueCSS. The top and left values correspond to (100-25)/2=37.5"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "text",
+            "x": 5,
+            "y": 5,
+            "fontSize": 15,
+            "valueType": "dynamic",
+            "value": "text",
+            "textAlign": "left",
+            "width": 290
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "scale": 0.5,
+      "enlarge": 2,
+      "height": 300,
+      "width": 300,
+      "css": "background-color: #f0f0f0; border: 1px solid black; text-align: left; "
+    },
+    "z": 98,
+    "x": -2
+  },
+  "d5ct": {
+    "deck": "xhpg",
+    "type": "card",
+    "cardType": "note spinner 1",
+    "id": "d5ct",
+    "z": 120,
+    "x": 147,
+    "y": 691
+  },
+  "swf7": {
+    "deck": "xhpg",
+    "type": "card",
+    "cardType": "note spinner 2",
+    "id": "swf7",
+    "z": 128,
+    "y": 691,
+    "x": 747
+  },
+  "uilt": {
+    "deck": "xhpg",
+    "type": "card",
+    "cardType": "note spinner 3",
+    "id": "uilt",
+    "z": 123,
+    "x": 897,
+    "y": 691
+  },
+  "vpht": {
+    "deck": "xhpg",
+    "type": "card",
+    "cardType": "note spinner 4",
+    "id": "vpht",
+    "z": 124,
+    "x": 1047,
+    "y": 691
+  },
+  "2fn1": {
+    "deck": "xhpg",
+    "type": "card",
+    "cardType": "note spinner 5",
+    "id": "2fn1",
+    "z": 131,
+    "x": 297,
+    "y": 691
+  },
+  "dcce": {
+    "deck": "xhpg",
+    "type": "card",
+    "cardType": "note spinner 6",
+    "id": "dcce",
+    "z": 126,
+    "x": 447,
+    "y": 691
+  },
+  "giru": {
+    "deck": "xhpg",
+    "type": "card",
+    "cardType": "note spinner 7",
+    "id": "giru",
+    "z": 108,
+    "x": 597,
+    "y": 691
+  },
+  "m763": {
+    "deck": "xhpg",
+    "type": "card",
+    "cardType": "note spinner 8",
+    "id": "m763",
+    "z": 130,
+    "y": 691,
+    "x": 1197
+  },
+  "jf90-copy001": {
+    "image": "/assets/-1721336118_941",
+    "x": 705,
+    "y": 490,
+    "id": "jf90-copy001",
+    "movable": false,
+    "movableInEdit": false,
+    "z": 239
+  },
+  "oscm": {
+    "id": "oscm",
+    "css": "background-color:#000050",
+    "z": 173,
+    "x": 1128,
+    "y": 617,
+    "width": 135,
+    "height": 137
+  },
+  "_meta": {
+    "version": 1,
+    "info": {
+      "name": "Spinners",
+      "image": "/assets/67913234_20364",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "0",
+      "players": "1",
+      "language": "US",
+      "variant": "Styling Examples",
+      "attribution": ""
+    }
+  }
+}
