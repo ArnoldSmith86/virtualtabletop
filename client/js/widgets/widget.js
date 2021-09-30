@@ -1,4 +1,4 @@
-import { $, removeFromDOM } from '../domhelpers.js';
+import { $, removeFromDOM, asArray } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
@@ -54,7 +54,7 @@ export class Widget extends StateManaged {
       globalUpdateRoutine: null
     });
     this.domElement.timer = false
-    
+
     this.domElement.addEventListener('contextmenu', e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseenter',  e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
@@ -62,19 +62,19 @@ export class Widget extends StateManaged {
     this.domElement.addEventListener('mouseup',  e => this.notSelected(), false);
     this.domElement.addEventListener("touchstart", e => this.touchstart(), false);
     this.domElement.addEventListener("touchend", e => this.touchend(), false);
-    
+
     this.touchstart = function() {
       if (!this.timer) {
         this.timer = setTimeout(this.onlongtouch.bind(this), 500, false);
       }
     }
-    
+
     this.touchend = function() {
       clearTimeout(this.timer);
       this.timer = null;
       this.hideEnlarged();
     }
-    
+
     this.onlongtouch = function() {
       this.showEnlarged();
       clearTimeout(this.timer);
@@ -407,12 +407,8 @@ export class Widget extends StateManaged {
       problems.push(`Collection ${collection} does not exist.`);
     }
 
-    function toA(ids) {
-      return typeof ids == 'string' ? [ ids ] : ids;
-    }
-
     async function w(ids, callback) {
-      for(const a of widgetFilter(w=>toA(ids).indexOf(w.get('id')) != -1))
+      for(const a of widgetFilter(w=>asArray(ids).indexOf(w.get('id')) != -1))
         await callback(a);
     }
 
@@ -575,7 +571,7 @@ export class Widget extends StateManaged {
         };
 
         let phrase;
-        
+
         if(a.canvas !== undefined) {
           if(this.isValidID(a.canvas, problems)) {
             await w(a.canvas, execute);
@@ -945,7 +941,7 @@ export class Widget extends StateManaged {
       if(a.func == 'RECALL') {
         setDefaults(a, { owned: true });
         if(this.isValidID(a.holder, problems)) {
-          for(const holder of toA(a.holder)) {
+          for(const holder of asArray(a.holder)) {
             const decks = widgetFilter(w=>w.get('type')=='deck'&&w.get('parent')==holder);
             if(decks.length) {
               for(const deck of decks) {
@@ -1416,15 +1412,15 @@ export class Widget extends StateManaged {
     } else
       problems.push(`Tried setting text property which doesn't exist for ${this.id}.`);
   }
-  
+
   selected() {
     this.domElement.classList.add('selected');
   }
-  
+
   notSelected() {
     this.domElement.classList.remove('selected');
   }
-  
+
   showEnlarged(event) {
     if(this.get('enlarge')) {
       const e = $('#enlarged');

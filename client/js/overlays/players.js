@@ -33,10 +33,14 @@ function fillPlayerList(players, active) {
     });
     $('.playerName', entry).addEventListener('change', async function(e) {
       toServer('rename', { oldName: player, newName: e.target.value });
-      if(!widgetFilter(w=>w.get('owner')==e.target.value).length) {
+      if(!widgetFilter(w=>asArray(w.get('owner')).indexOf(e.target.value)!=-1).length) {
         batchStart();
-        for(const w of widgetFilter(w=>w.get('owner')==player))
-          await w.set('owner', e.target.value);
+        for(const w of widgetFilter(w=>asArray(w.get('owner')).indexOf(player)!=-1)) {
+          if(Array.isArray(w.get('owner')))
+            await w.set('owner', w.get('owner').map(o=>o==player?e.target.value:o));
+          else
+            await w.set('owner', e.target.value);
+        }
         batchEnd();
       }
     });
