@@ -1016,13 +1016,15 @@ export class Widget extends StateManaged {
             if(a.relation != '==')
               problems.push(`Warning: Relation ${a.relation} interpreted as ==.`);
             return w.get(a.property) === a.value;
-          }).slice(0, a.max).concat(a.mode == 'add' ? collections[a.collection] || [] : []);
+          });
 
           // resolve piles
           if(a.type != 'pile') {
             c.filter(w=>w.get('type')=='pile').forEach(w=>c.push(...w.children()));
             c = c.filter(w=>w.get('type')!='pile');
           }
+
+          c = c.slice(0, a.max).concat(a.mode == 'add' ? collections[a.collection] || [] : []);
           collections[a.collection] = [...new Set(c)];
 
           if(a.sortBy)
@@ -1065,7 +1067,12 @@ export class Widget extends StateManaged {
           }
         } else if(isValidCollection(a.collection)) {
           for(const w of collections[a.collection]) {
-            await w.set(String(a.property), compute(a.relation, null, w.get(String(a.property)), a.value));
+            if(a.relation == '+' && w.get(String(a.property)) == null)
+              a.relation = '=';
+            if(a.relation == '+' && a.value == null)
+              problems.push(`null value being appended, SET ignored`);
+            else
+              await w.set(String(a.property), compute(a.relation, null, w.get(String(a.property)), a.value));
           }
         }
         if(jeRoutineLogging)
