@@ -1067,7 +1067,12 @@ export class Widget extends StateManaged {
           }
         } else if(isValidCollection(a.collection)) {
           for(const w of collections[a.collection]) {
-            await w.set(String(a.property), compute(a.relation, null, w.get(String(a.property)), a.value));
+            if(a.relation == '+' && w.get(String(a.property)) == null)
+              a.relation = '=';
+            if(a.relation == '+' && a.value == null)
+              problems.push(`null value being appended, SET ignored`);
+            else
+              await w.set(String(a.property), compute(a.relation, null, w.get(String(a.property)), a.value));
           }
         }
         if(jeRoutineLogging)
