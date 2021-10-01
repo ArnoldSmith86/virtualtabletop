@@ -465,7 +465,7 @@ export class Widget extends StateManaged {
         const left       = `var (\\$)?(${identifier})(?:\\.(\\$)?(${identifier}))?`;
         const operation  = `${identifier}|[=+*/%<!>&|-]{1,3}`;
 
-        const regex      = `^${left} += +(?:${parameter}|(?:${parameter} +)?(🧮)?(${operation})(?: +${parameter})?(?: +${parameter})?(?: +${parameter})?)(?: +//.*)?`;
+        const regex      = `^${left} += +(?:${parameter}|(?:${parameter} +)?(🧮)?(${operation})(?: +${parameter})?(?: +${parameter})?(?: +${parameter})?)(?: *|(?: +//.*))?`;
 
         const match = a.match(new RegExp(regex + '\x24')); // the minifier doesn't like a "$" here
 
@@ -1016,13 +1016,15 @@ export class Widget extends StateManaged {
             if(a.relation != '==')
               problems.push(`Warning: Relation ${a.relation} interpreted as ==.`);
             return w.get(a.property) === a.value;
-          }).slice(0, a.max).concat(a.mode == 'add' ? collections[a.collection] || [] : []);
+          });
 
           // resolve piles
           if(a.type != 'pile') {
             c.filter(w=>w.get('type')=='pile').forEach(w=>c.push(...w.children()));
             c = c.filter(w=>w.get('type')!='pile');
           }
+
+          c = c.slice(0, a.max).concat(a.mode == 'add' ? collections[a.collection] || [] : []);
           collections[a.collection] = [...new Set(c)];
 
           if(a.sortBy)

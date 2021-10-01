@@ -188,11 +188,17 @@
     </div>
 
     <div id="playerOverlay" class="overlay">
-      <h1>Players</h1>
+      <div class="heading">
+        <h1>Players</h1>
+        <div class="instructionalText">From here you can edit the name and color of any player.</div>
+      </div>
       <div id="playerList">
         <script id="template-playerlist-entry" type="text/template">
           <input type="color" class="teamColor"></span> <input class="playerName" />
         </script>
+        <label class="me ui-line" data-label="Me »"> </label>
+        <label class="otherPlayers ui-line" data-label="Other Players »"> </label>
+        <label class="inactivePlayers ui-line"> </label>
       </div>
     </div>
 
