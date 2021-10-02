@@ -58,7 +58,9 @@ export class Widget extends StateManaged {
     this.domElement.addEventListener('contextmenu', e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseenter',  e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
-    this.domElement.addEventListener("touchstart", e => this.touchstart());
+    this.domElement.addEventListener('mousedown',  e => this.selected(), false);
+    this.domElement.addEventListener('mouseup',  e => this.notSelected(), false);
+    this.domElement.addEventListener("touchstart", e => this.touchstart(), false);
     this.domElement.addEventListener("touchend", e => this.touchend(), false);
     
     this.touchstart = function() {
@@ -463,7 +465,7 @@ export class Widget extends StateManaged {
         const left       = `var (\\$)?(${identifier})(?:\\.(\\$)?(${identifier}))?`;
         const operation  = `${identifier}|[=+*/%<!>&|-]{1,3}`;
 
-        const regex      = `^${left} += +(?:${parameter}|(?:${parameter} +)?(🧮)?(${operation})(?: +${parameter})?(?: +${parameter})?(?: +${parameter})?)(?: +//.*)?`;
+        const regex      = `^${left} += +(?:${parameter}|(?:${parameter} +)?(🧮)?(${operation})(?: +${parameter})?(?: +${parameter})?(?: +${parameter})?)(?: *|(?: +//.*))?`;
 
         const match = a.match(new RegExp(regex + '\x24')); // the minifier doesn't like a "$" here
 
@@ -1025,13 +1027,15 @@ export class Widget extends StateManaged {
             if(a.relation != '==')
               problems.push(`Warning: Relation ${a.relation} interpreted as ==.`);
             return w.get(a.property) === a.value;
-          }).slice(0, a.max).concat(a.mode == 'add' ? collections[a.collection] || [] : []);
+          });
 
           // resolve piles
           if(a.type != 'pile') {
             c.filter(w=>w.get('type')=='pile').forEach(w=>c.push(...w.children()));
             c = c.filter(w=>w.get('type')!='pile');
           }
+
+          c = c.slice(0, a.max).concat(a.mode == 'add' ? collections[a.collection] || [] : []);
           collections[a.collection] = [...new Set(c)];
 
           if(a.sortBy)
@@ -1074,7 +1078,12 @@ export class Widget extends StateManaged {
           }
         } else if(isValidCollection(a.collection)) {
           for(const w of collections[a.collection]) {
-            await w.set(String(a.property), compute(a.relation, null, w.get(String(a.property)), a.value));
+            if(a.relation == '+' && w.get(String(a.property)) == null)
+              a.relation = '=';
+            if(a.relation == '+' && a.value == null)
+              problems.push(`null value being appended, SET ignored`);
+            else
+              await w.set(String(a.property), compute(a.relation, null, w.get(String(a.property)), a.value));
             if(a.property == 'parent' && a.value != null) {
               if((widgets.get(a.value)).get('type') == 'holder') {
                 await w.leaveParent();
@@ -1215,7 +1224,8 @@ export class Widget extends StateManaged {
   }
 
   hideEnlarged() {
-    $('#enlarged').classList.add('hidden');
+    if (!this.domElement.className.match(/selected/))
+      $('#enlarged').classList.add('hidden');
   }
 
   isValidID(id, problems) {
@@ -1396,7 +1406,7 @@ export class Widget extends StateManaged {
     
     if(this.domElement.classList.contains('longtouch'))
       this.domElement.classList.remove('longtouch');
-    
+
     await this.updatePiles();
   }
 
@@ -1510,7 +1520,15 @@ export class Widget extends StateManaged {
     } else
       problems.push(`Tried setting text property which doesn't exist for ${this.id}.`);
   }
-
+  
+  selected() {
+    this.domElement.classList.add('selected');
+  }
+  
+  notSelected() {
+    this.domElement.classList.remove('selected');
+  }
+  
   showEnlarged(event) {
     if(this.get('enlarge')) {
       const e = $('#enlarged');
@@ -1561,7 +1579,10 @@ export class Widget extends StateManaged {
       if(typeof w1.get(key) == 'number')
         return w1.get(key) - w2.get(key);
       else
-        return w1.get(key).localeCompare(w2.get(key), locales, options);
+        if(w1.get(key) === null)
+          return w2.get(key) === null ?  0 : -1;
+        else
+          return w2.get(key) === null ? 1 : w1.get(key).localeCompare(w2.get(key), locales, options);
     });
     if(reverse)
       children = children.reverse();
@@ -1601,8 +1622,9 @@ export class Widget extends StateManaged {
           if(this.get('owner') !== null)
             pile.owner = this.get('owner');
           addWidgetLocal(pile);
-          await this.set('parent', pile.id);
           await widget.set('parent', pile.id);
+          await this.bringToFront();
+          await this.set('parent', pile.id);
           break;
         }
 

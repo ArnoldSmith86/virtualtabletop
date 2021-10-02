@@ -854,8 +854,8 @@ async function jeApplyExternalChanges(state) {
     if(state.cardType === before.cardType) {
       const cardTypes = widgets.get(state.deck).get('cardTypes');
       const cardType = cardTypes[state.cardType];
-      if(JSON.stringify(state['cardType (in deck)']) != JSON.stringify(cardType)) {
-        cardTypes[state.cardType] = state['cardType (in deck)'];
+      if(JSON.stringify(state['cardType  ['+ o.cardType + '] (in deck)']) != JSON.stringify(cardType)) {
+        cardTypes[state.cardType] = state['cardType ['+ o.cardType + '] (in deck)'];
         await widgets.get(state.deck).set('cardTypes', { ...cardTypes });
       }
     }
@@ -1400,7 +1400,7 @@ function jePreProcessObject(o) {
     const match = key.match(/^(.*?)(\*)?(#)?$/);
     if(o[match[1]] !== undefined)
       copy[match[1]] = o[match[1]];
-    else if(match[2] == '*' && !o.inheritFrom)
+    else if(match[2] == '*' && !o.inheritFrom && (o.type != 'card' || (key != 'width*' && key != 'height*')))
       copy[match[1]] = jeWidget.getDefaultValue(match[1]);
     if(match[3] == '#')
       copy[`LINEBREAK${match[1]}`] = null;
@@ -1413,7 +1413,7 @@ function jePreProcessObject(o) {
   try {
     if(copy.type == 'card') {
       copy['cardDefaults (in deck)'] = widgets.get(copy.deck).get('cardDefaults');
-      copy['cardType (in deck)'] = widgets.get(copy.deck).get('cardTypes')[copy.cardType];
+      copy['cardType ['+ o.cardType + '] (in deck)'] = widgets.get(copy.deck).get('cardTypes')[copy.cardType];
     }
   } catch(e) {}
 
@@ -1518,7 +1518,7 @@ function jeShowCommands() {
     if(contextMatch && contextMatch[0] == "") {
       const name = (typeof command.name == 'function' ? command.name() : command.name);
       let keyName = displayKey(command.forceKey);
-      commandText += `<div class='jeTopButton'><button class='top' id='${command.id}' title='${name} (Ctrl-${keyName})' ${!command.show || command.show() ? '' : 'disabled'}>${name.substr(0,2)}</button><span class='top'>${keyName}</span></div>`;
+      commandText += `<div class='jeTopButton'><button class='top' id='${command.id}' title='${name}' ${!command.show || command.show() ? '' : 'disabled'}>${name.substr(0,2)}</button><span class='top'>&nbsp;</span></div>`;
     }
   }
   delete activeCommands[""];
@@ -1545,7 +1545,7 @@ function jeShowCommands() {
                 command.currentKey = key;
             usedKeys[command.currentKey] = true;
             let keyName = displayKey(command.currentKey);
-            commandText += (keyName !== undefined)? `Ctrl-${keyName}: ` : `no key  `;
+            // commandText += (keyName !== undefined)? `Ctrl-${keyName}: ` : `no key  `;
             commandText += `<button id="${command.id}">${name.replace(keyName, '<b>' + keyName + '</b>')}</button>\n`;
           }
         } catch(e) {
@@ -1622,7 +1622,9 @@ window.addEventListener('mousemove', function(e) {
   for(let i=1; i<=12; ++i) {
     if(hoveredWidgets[i-1]) {
       jeWidgetLayers[i] = hoveredWidgets[i-1];
-      $(`#jeWidgetLayer${i}`).textContent = `F${i}:\nid: ${hoveredWidgets[i-1].get('id')}\ntype: ${hoveredWidgets[i-1].get('type') || 'basic'}`;
+      var deck = `${hoveredWidgets[i-1].get('type')}` == 'card' ? `\ndeck: ${hoveredWidgets[i-1].get('deck')}` : "";
+      var cardType = `${hoveredWidgets[i-1].get('type')}` == 'card' ? `\ncardType: ${hoveredWidgets[i-1].get('cardType')}` : "";
+      $(`#jeWidgetLayer${i}`).textContent = `F${i}:\nid: ${hoveredWidgets[i-1].get('id')}\ntype: ${hoveredWidgets[i-1].get('type') || 'basic'} ${deck} ${cardType}`;
     } else {
       delete jeWidgetLayers[i];
       $(`#jeWidgetLayer${i}`).textContent = '';
@@ -1675,18 +1677,18 @@ window.addEventListener('keydown', async function(e) {
       const locationPostion = String(jeJSONerror).match(/position ([0-9]+)/);
       if(locationPostion)
         jeSelect(+locationPostion[1], +locationPostion[1], true);
-    } else {
-      for(const command of jeCommands) {
-        if(command.currentKey == e.key) {
-          e.preventDefault();
-          try {
-            jeCommandError = null;
-            await jeCallCommand(command);
-          } catch(e) {
-            jeCommandError = e;
-          }
-        }
-      }
+    // } else {
+    //   for(const command of jeCommands) {
+    //     if(command.currentKey == e.key) {
+    //       e.preventDefault();
+    //       try {
+    //         jeCommandError = null;
+    //         await jeCallCommand(command);
+    //       } catch(e) {
+    //         jeCommandError = e;
+    //       }
+    //     }
+    //   }
     }
   }
 
