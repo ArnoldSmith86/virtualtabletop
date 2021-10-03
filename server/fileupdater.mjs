@@ -270,7 +270,7 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
 }
 
 function v4ModifyDropTargetEmptyArray(properties, property) {
-  if(property == 'dropTarget') 
-	  if(Array.isArray(properties[property]) && properties[property].length == 0)
-        properties[property] = {};
+  if(property == 'dropTarget')
+    if(Array.isArray(properties[property]) && properties[property].length == 0)
+      properties[property] = {};
 }
