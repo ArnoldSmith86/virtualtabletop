@@ -35,8 +35,7 @@ function updateProperties(properties, v) {
 }
 
 function updateProperty(properties, property, v){
- if(v<4)
-   v4ModifyDropTargetEmptyArray(properties, property);
+  v<4 && v4ModifyDropTargetEmptyArray(properties, property);
 }
 
 function updateRoutine(routine, v) {
