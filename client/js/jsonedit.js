@@ -1475,8 +1475,6 @@ function jeSetAndSelect(replaceBy, insideString) {
   else
     var jsonString = JSON.stringify(jeStateNow, null, '  ');
   const startIndex = jsonString.indexOf(insideString ? '###SELECT ME###' : '"###SELECT ME###"');
-  let length = jsonString.length-15-(insideString ? 0 : 2);
-  
   const replaceByString = JSON.stringify(replaceBy);
   if(insideString)
     jsonString = jsonString.replace(/###SELECT ME###/, replaceByString.substr(1, replaceByString.length-2));
@@ -1484,16 +1482,52 @@ function jeSetAndSelect(replaceBy, insideString) {
     jsonString = jsonString.replace(/"###SELECT ME###"/, replaceByString);
 
   jeSet(jsonString);
-  const quote = typeof replaceBy == 'string' && !insideString ? 1 : 0;
+
   let bracket = 0;
   let wavybracket = 0;
-  let dollarsign = 0;
-  if(replaceBy){
-    bracket = replaceByString.includes('[') ? 1 : 0;
-    wavybracket = replaceByString.includes('{') ? 1 : 0;
-    dollarsign = replaceByString.includes(String.fromCharCode(36)) ? 1 : 0;
+  let begin = 0;
+  let end = 0;
+  if(replaceBy !== undefined){ 
+    const quoteArray = getAllIndexes(replaceByString,'\"');
+    if(quoteArray.length > 2) { // adjusts selection area to inside last set of quotes
+      begin = quoteArray[2] + 1;
+      end = quoteArray[3];
+    } else if (quoteArray.length > 0) {
+      begin = quoteArray[0] + 1;
+      end = quoteArray[1];
+    } else { // adjusts selection area to inside brackets
+      bracket = replaceByString.lastIndexOf('[') + 1;
+      wavybracket = replaceByString.lastIndexOf('{')+ 1;
+      begin = Math.max(bracket, wavybracket, 0);
+      bracket = replaceByString.lastIndexOf(']') > 0 ? replaceByString.lastIndexOf(']') > - 1 : replaceByString.length;
+      wavybracket = replaceByString.lastIndexOf('}') > 0 ? replaceByString.lastIndexOf('}') > - 1 : replaceByString.length;
+      end = Math.min(bracket, wavybracket);
+    }
+
+    // adjusts selection area for formatting of arrays and objects
+    if((replaceByString.indexOf('[') > -1 && (replaceByString.indexOf('\"') > -1 || replaceByString.indexOf('{') > -1)) || replaceByString.indexOf('\"') > -1 && replaceByString.indexOf('{') > -1) {
+      begin = begin + 6;
+      end = end + 6;
+      if(replaceByString.indexOf('{') > -1 && replaceByString.indexOf('\"') > -1 && replaceByString.indexOf('[') > -1) {
+        begin = begin + 7;
+        end = end + 7;
+      }
+    }
+    // variables with dollar signs and dynamic expressions
+    if(replaceByString.includes(String.fromCharCode(36))) {
+      begin = 3
+      end = 3
+    }
+    if(replaceByString.includes('increment')) {
+      begin = 30
+      end = 31
+    }
+    if(replaceByString.includes('random')) {
+      begin = 19
+      end = 21
+    }
   }
-  jeSelect(startIndex + quote + bracket + wavybracket + dollarsign, startIndex+jsonString.length-length - quote - bracket - wavybracket, true);
+  jeSelect(startIndex + begin, startIndex + end, true);
 }
 
 function jeShowCommands() {
