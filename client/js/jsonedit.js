@@ -854,8 +854,8 @@ async function jeApplyExternalChanges(state) {
     if(state.cardType === before.cardType) {
       const cardTypes = widgets.get(state.deck).get('cardTypes');
       const cardType = cardTypes[state.cardType];
-      if(JSON.stringify(state['cardType (in deck)']) != JSON.stringify(cardType)) {
-        cardTypes[state.cardType] = state['cardType (in deck)'];
+      if(JSON.stringify(state['cardType  ['+ o.cardType + '] (in deck)']) != JSON.stringify(cardType)) {
+        cardTypes[state.cardType] = state['cardType ['+ o.cardType + '] (in deck)'];
         await widgets.get(state.deck).set('cardTypes', { ...cardTypes });
       }
     }
@@ -1413,7 +1413,7 @@ function jePreProcessObject(o) {
   try {
     if(copy.type == 'card') {
       copy['cardDefaults (in deck)'] = widgets.get(copy.deck).get('cardDefaults');
-      copy['cardType (in deck)'] = widgets.get(copy.deck).get('cardTypes')[copy.cardType];
+      copy['cardType ['+ o.cardType + '] (in deck)'] = widgets.get(copy.deck).get('cardTypes')[copy.cardType];
     }
   } catch(e) {}
 
@@ -1622,7 +1622,9 @@ window.addEventListener('mousemove', function(e) {
   for(let i=1; i<=12; ++i) {
     if(hoveredWidgets[i-1]) {
       jeWidgetLayers[i] = hoveredWidgets[i-1];
-      $(`#jeWidgetLayer${i}`).textContent = `F${i}:\nid: ${hoveredWidgets[i-1].get('id')}\ntype: ${hoveredWidgets[i-1].get('type') || 'basic'}`;
+      var deck = `${hoveredWidgets[i-1].get('type')}` == 'card' ? `\ndeck: ${hoveredWidgets[i-1].get('deck')}` : "";
+      var cardType = `${hoveredWidgets[i-1].get('type')}` == 'card' ? `\ncardType: ${hoveredWidgets[i-1].get('cardType')}` : "";
+      $(`#jeWidgetLayer${i}`).textContent = `F${i}:\nid: ${hoveredWidgets[i-1].get('id')}\ntype: ${hoveredWidgets[i-1].get('type') || 'basic'} ${deck} ${cardType}`;
     } else {
       delete jeWidgetLayers[i];
       $(`#jeWidgetLayer${i}`).textContent = '';
