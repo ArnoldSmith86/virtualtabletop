@@ -26,7 +26,7 @@ function updateProperties(properties, v) {
     for(const cardType in properties.cardTypes)
       updateProperties(properties.cardTypes[cardType], v);
 
-  for(const property in properties) {
+  for(var property in properties) {
     if(property.match(/Routine$/))
       updateRoutine(properties[property], v);
     else
