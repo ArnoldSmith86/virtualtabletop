@@ -1458,6 +1458,14 @@ function jeSelect(start, end, scrollToCursor) {
   }
 }
 
+function getAllIndexes(arr, val) {
+  var indexes = [], i;
+  for(i = 0; i < arr.length; i++)
+    if (arr[i] === val)
+      indexes.push(i);
+  return indexes;
+}
+
 function jeSet(text, dontFocus) {
   try {
     $('#jeText').textContent = jePreProcessText(JSON.stringify(jePreProcessObject(JSON.parse(text)), null, '  '));
