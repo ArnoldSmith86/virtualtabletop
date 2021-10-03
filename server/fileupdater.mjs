@@ -1,4 +1,4 @@
-export const VERSION = 3;
+export const VERSION = 4;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -26,9 +26,17 @@ function updateProperties(properties, v) {
     for(const cardType in properties.cardTypes)
       updateProperties(properties.cardTypes[cardType], v);
 
-  for(const property in properties)
+  for(const property in properties) {
     if(property.match(/Routine$/))
       updateRoutine(properties[property], v);
+    else
+      updateProperty(properties, property, v);
+  }
+}
+
+function updateProperty(properties, property, v){
+ if(v<4)
+   v4ModifyDropTargetEmptyArray(properties, property);
 }
 
 function updateRoutine(routine, v) {
@@ -50,6 +58,10 @@ function updateRoutine(routine, v) {
 
   v<2 && v2UpdateSelectDefault(routine);
   v<3 && v3RemoveComputeAndRandomAndApplyVariables(routine);
+}
+
+function updateProperty(properties, property, v){
+  v<4 && v4ModifyDropTargetEmptyArray(properties, property);
 }
 
 function v2UpdateSelectDefault(routine) {
@@ -260,4 +272,10 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
 
   for(const o of operationsToSplice.sort((a,b)=>a.index==b.index?b.order-a.order:b.index-a.index))
     routine.splice(o.index, 0, o.operation);
+}
+
+function v4ModifyDropTargetEmptyArray(properties, property) {
+  if(property == 'dropTarget') 
+	  if(Array.isArray(properties[property]) && properties[property].length == 0)
+        properties[property] = {};
 }
