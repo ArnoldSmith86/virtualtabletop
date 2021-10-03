@@ -47,15 +47,15 @@
     "express": "^4.17.1",
     "jszip": "^3.7.1",
     "node-fetch": "^2.6.1",
-    "ws": "^8.2.0"
+    "ws": "^8.2.2"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
-    "jest": "^27.2.2",
-    "jest-environment-jsdom": "^27.2.2",
-    "jest-environment-jsdom-global": "^2.0.4",
+    "jest": "^27.2.4",
+    "jest-environment-jsdom": "^27.2.4",
+    "jest-environment-jsdom-global": "^3.0.0",
     "json-diff": "^0.5.4",
-    "nodemon": "^2.0.12",
-    "testcafe": "^1.15.3"
+    "nodemon": "^2.0.13",
+    "testcafe": "^1.16.0"
   }
 }
