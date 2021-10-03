@@ -1527,8 +1527,8 @@ function jeSetAndSelect(replaceBy, insideString) {
       end = 3
     }
     if(replaceByString.includes('increment')) {
-      begin = 30
-      end = 31
+      begin = 14
+      end = 26
     }
     if(replaceByString.includes('random')) {
       begin = 19
