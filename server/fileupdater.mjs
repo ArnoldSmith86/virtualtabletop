@@ -60,10 +60,6 @@ function updateRoutine(routine, v) {
   v<3 && v3RemoveComputeAndRandomAndApplyVariables(routine);
 }
 
-function updateProperty(properties, property, v){
-  v<4 && v4ModifyDropTargetEmptyArray(properties, property);
-}
-
 function v2UpdateSelectDefault(routine) {
   let isNotFirstSelect = {};
   for(const operation of routine) {
