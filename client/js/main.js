@@ -22,9 +22,8 @@ function getValidDropTargets(widget) {
       if(t.children().indexOf(widget) == -1)
         continue;
 
-    let isValid = true;
     const dropTarget = asArray(t.get('dropTarget'))
-    isValid = false;
+    let isValid = false;
       for(let i = 0; i < dropTarget.length; i++) {
         let isValidObject = true;
         for(const key in dropTarget[i]) {
