@@ -1,3 +1,5 @@
+import { $, $a, onLoad, selectFile, asArray } from './domhelpers.js';
+
 class Holder extends Widget {
   constructor(object, surface) {
     super(object, surface);
@@ -35,10 +37,22 @@ class Holder extends Widget {
     return children.filter(w=>{
       if(acceptPiles && w.get('type') == 'pile')
         return true;
-      for(const p in this.get('dropTarget'))
-        if(w.get(p) != this.get('dropTarget')[p])
-          return false;
-      return true;
+      const dropTarget = asArray(this.get('dropTarget'))
+      let isValid = false;
+      for(let i = 0; i < dropTarget.length; i++) {
+        let isValidObject = true;
+        for(const p in dropTarget[i]) {
+          if(w.get(p) !=(dropTarget[i])[p]) {
+            isValidObject = false;
+            break;
+          }
+        }
+        if(isValidObject) {
+          isValid = true;
+          break;
+        }
+      }
+      return isValid;
     });
   }
 
