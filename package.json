@@ -47,7 +47,7 @@
     "express": "^4.17.1",
     "jszip": "^3.7.1",
     "node-fetch": "^2.6.1",
-    "ws": "^8.2.2"
+    "ws": "^8.2.3"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
