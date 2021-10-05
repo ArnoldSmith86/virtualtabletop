@@ -1507,14 +1507,14 @@ function jeSetAndSelect(replaceBy, insideString) {
       bracket = replaceByString.lastIndexOf('[') + 1;
       wavybracket = replaceByString.lastIndexOf('{')+ 1;
       begin = Math.max(bracket, wavybracket, 0);
-      bracket = replaceByString.lastIndexOf(']') > 0 ? replaceByString.lastIndexOf(']') > - 1 : replaceByString.length;
-      wavybracket = replaceByString.lastIndexOf('}') > 0 ? replaceByString.lastIndexOf('}') > - 1 : replaceByString.length;
+      bracket = replaceByString.lastIndexOf(']') > -1 ? replaceByString.lastIndexOf(']') - 1 : replaceByString.length;
+      wavybracket = replaceByString.lastIndexOf('}') > -1 ? replaceByString.lastIndexOf('}') - 1 : replaceByString.length;
       end = Math.min(bracket, wavybracket);
     }
 
     // adjusts selection area for formatting of arrays and objects
-    if((replaceByString.indexOf('[') > -1 && (replaceByString.indexOf('\"') > -1 || replaceByString.indexOf('{') > -1)) || replaceByString.indexOf('\"') > -1 && replaceByString.indexOf('{') > -1) {
-      begin = begin + 6;
+    if((replaceByString.indexOf('[') > -1 && (replaceByString.indexOf('\"') > -1 || replaceByString.indexOf('{') > -1)) || (replaceByString.indexOf('\"') > -1 && replaceByString.indexOf('{') > -1)) {
+     begin = begin + 6;
       end = end + 6;
       if(replaceByString.indexOf('{') > -1 && replaceByString.indexOf('\"') > -1 && replaceByString.indexOf('[') > -1) {
         begin = begin + 7;
@@ -1522,7 +1522,7 @@ function jeSetAndSelect(replaceBy, insideString) {
       }
     }
     // variables with dollar signs and dynamic expressions
-    if(replaceByString.includes(String.fromCharCode(36))) {
+    if(replaceByString.includes(String.fromCharCode(36){})) {
       begin = 3
       end = 3
     }
