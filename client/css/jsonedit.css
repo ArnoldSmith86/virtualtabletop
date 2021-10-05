@@ -140,6 +140,8 @@ body.jsonEdit.jeZoomOut #topSurface {
 
 #jeMouseCoords {
   display: block;
+  bottom:50px;
+  right: 100px
 }
 
 #jeLogWrapper {
