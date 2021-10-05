@@ -1494,8 +1494,8 @@ function jeSetAndSelect(replaceBy, insideString) {
   if(replaceBy !== undefined){ 
     const lbracket = replaceByString.lastIndexOf('[');
     const lwavybracket = replaceByString.lastIndexOf('{');
-    const rbracket = replaceByString.lastIndexOf(']') > -1 ? replaceByString.lastIndexOf(']') : replaceByString.length;
-    const rwavybracket = replaceByString.lastIndexOf('}') > -1 ? replaceByString.lastIndexOf('}') : replaceByString.length;
+    const rbracket = replaceByString.lastIndexOf(']') > -1 ? 1 : replaceByString.length;
+    const rwavybracket = replaceByString.lastIndexOf('}') > -1 ? 1 : replaceByString.length;
     const quoteArray = getAllIndexes(replaceByString,'\"');
     let begin = 0;
     let end = 0;
