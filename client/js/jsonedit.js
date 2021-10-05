@@ -1628,6 +1628,12 @@ window.addEventListener('mousemove', function(e) {
       $(`#jeWidgetLayer${i}`).textContent = '';
     }
   }
+
+  if((roomRectangle.left <= e.clientX && e.clientX <= roomRectangle.right && roomRectangle.top <= e.clientY && e.clientY <= roomRectangle.bottom) || jeZoomOut) {
+    $('#jeMouseCoords').innerHTML = "(" + jeState.mouseX + ", " + jeState.mouseY + ")";
+  } else {
+    $('#jeMouseCoords').innerHTML = ""
+  }
 });
 
 window.addEventListener('mouseup', async function(e) {
