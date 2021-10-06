@@ -137,17 +137,11 @@
 
       <div id="editJSONoverlay" class="overlay">
         <h1>Edit widget JSON</h1>
-        <p>Please check <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Creating-Games">our GitHub wiki for documentation</a>. Having trouble with a button? Temporarily add this to see a log of state changes after each operation: "debug": true</p>
+        <p>Please check <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Creating-Games">our GitHub wiki for documentation</a>.</p>
         <p>You can open this room in <a href="https://virtualtabletop.io/ghetto.htm" id="ghetto-link">an advanced editor</a>. Be sure to have <b>backups</b> on your harddrive first (of every game in your room)!</p>
         <textarea id="editWidgetJSON"></textarea>
         <base-edit-overlay :json-edit="true"></base-edit-overlay>
       </div>
-    </div>
-
-    <div id="debugButtonOverlay" class="overlay">
-      <h1>Button Debug Output</h1>
-      <p>You are seeing this because the button you just clicked has its debug property set.</p>
-      <pre id="debugButtonOutput"></pre>
     </div>
 
     <div id="addOverlay" class="overlay">
@@ -194,11 +188,17 @@
     </div>
 
     <div id="playerOverlay" class="overlay">
-      <h1>Players</h1>
+      <div class="heading">
+        <h1>Players</h1>
+        <div class="instructionalText">From here you can edit the name and color of any player.</div>
+      </div>
       <div id="playerList">
         <script id="template-playerlist-entry" type="text/template">
           <input type="color" class="teamColor"></span> <input class="playerName" />
         </script>
+        <label class="me ui-line" data-label="Me »"> </label>
+        <label class="otherPlayers ui-line" data-label="Other Players »"> </label>
+        <label class="inactivePlayers ui-line"> </label>
       </div>
     </div>
 
@@ -244,9 +244,17 @@
     <div id="libraryOverlay" class="overlay">
       <h1>Public library</h1>
       <table id="libraryList">
-        <tr><th></th><th>Game</th><th>Similar to</th><th>Players</th><th>Language</th><th>Notes</th></tr>
+        <script id="template-librarylist-header" type="text/template">
+          <th></th><th>Game</th><th>Similar to</th><th>Players</th><th>Language</th><th>Notes</th>
+        </script>
         <script id="template-librarylist-entry" type="text/template">
           <td><button class="add">Add</button></td><td class="name">Chess</td><td><a>Chess</a></td><td class="players">2</td><td class="language">🇺🇳</td><td class="notes"></td>
+        </script>
+        <script id="template-librarylist-section-title" type="text/template">
+          <td class="section" colspan="6">
+            <div class="section-name">Section Name</div>
+            <div class="notes">Section notes</div>
+          </td>
         </script>
       </table>
       <p>Loading...</p>
@@ -354,6 +362,10 @@
     <div id="jeTextHighlight"></div>
     <div id="jeText" contenteditable="true" spellcheck="false"></div>
     <div id="jeCommands"></div>
+    <div id="jeLogWrapper">
+      <div id="jeLog"><h1>No debug information yet.</h1></div>
+      <h1>Show Routine Debug Output</h1>
+    </div>
     <div id="traceUI"><input type="range" id="traceInput"></div>
   </div>
 
