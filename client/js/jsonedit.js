@@ -1491,42 +1491,43 @@ function jeSetAndSelect(replaceBy, insideString) {
 
   jeSet(jsonString);
 
-  if(replaceBy !== undefined){ 
-    const lbracket = replaceByString.lastIndexOf('[');
-    const lwavybracket = replaceByString.lastIndexOf('{');
-    const rbracket = replaceByString.lastIndexOf(']') > -1 ? replaceByString.lastIndexOf(']') : replaceByString.length;
-    const rwavybracket = replaceByString.lastIndexOf('}') > -1 ? replaceByString.lastIndexOf('}') : replaceByString.length;
+  if(replaceBy !== undefined){
     const quoteArray = getAllIndexes(replaceByString,'\"');
+    const bracket = replaceByString.lastIndexOf('[') + 1;
+    const wavybracket = replaceByString.lastIndexOf('{') + 1;
     let begin = 0;
     let end = 0;
-
-    if(quoteArray.length > 0) { // adjust selection area to inside last set of quotes
-      begin = quoteArray[quoteArray.length-2]+1;
-      end = quoteArray[quoteArray.length-1];
-    } else { // adjust selection area to inside last set of brackets, or whole string if none
-      begin = Math.max(lbracket+1, lwavybracket+1);
-      end = Math.min(rbracket, rwavybracket);
+    if(quoteArray.length > 2) { // adjusts selection area to inside last set of quotes
+      begin = quoteArray[2] + 1;
+      end = quoteArray[3];
+    } else if (quoteArray.length > 0) {
+      begin = quoteArray[0] + 1;
+      end = quoteArray[1];
+    } else { // adjusts selection area to inside brackets
+      begin = Math.max(bracket, wavybracket);
+      end = begin > 0 ? begin : replaceByString.length;
+    }
+    // adjusts selection area for formatting of arrays and objects
+    if((bracket > 0 && (quoteArray.length > 0 || wavybracket > 0)) || (quoteArray.length > 0 && wavybracket > 0)) {
+      begin = begin + 5;
+      end = end + 5;
+      if(wavybracket > 0 && quoteArray.length > 0 && bracket > 0) {
+        begin = begin + 8;
+        end = end + 8;
+      }
     }
 
-    if(replaceByString.includes(String.fromCharCode(36)+'{}')) { // put cursor as ${|}
+    if(replaceByString.includes(String.fromCharCode(36))) { // put cursor as ${|}
       begin = 3;
-      end = 3
-    } else if(replaceByString.includes('increment')) { // highlight entire var string
+      end = 3;
+    }
+    if(replaceByString.includes('increment')) { // highlight entire var string
       begin = 0;
-      end = 31
-    } else if(replaceByString.includes('random')) { // highlight entire var string
+      end = 31;
+    }
+    if(replaceByString.includes('random')) { // highlight entire var string
       begin = 0;
-      end = 21
-    } else { // adjusts selection area for formatting of arrays and objects
-      if ((lbracket > -1 && lwavybracket > -1) || (lbracket > -1 && quoteArray.length > 0)
-          || (lwavybracket > -1 && quoteArray.length > 0)) {
-        begin = begin + 6;
-        end = end + 6;
-        if((lbracket > -1 && lwavybracket > -1 && quoteArray.length > 0)) {
-          begin = begin + 7;
-          end = end + 7;
-        }
-      }
+      end = 21;
     }
     jeSelect(startIndex + begin, startIndex + end, true);
   }
