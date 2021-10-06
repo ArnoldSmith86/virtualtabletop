@@ -1197,11 +1197,11 @@ export class Widget extends StateManaged {
            (a.timer != undefined || (isValidCollection(a.collection) && collections[a.collection].length))) {
           const phrase = (a.timer == undefined) ? `timers in '${a.collection}'` : `'${a.timer}'`;
           if(a.mode == 'set')
-            jeLoggingRoutineOperationSummary(`${phrase} to ${a.value}`)
+            jeLoggingRoutineOperationSummary(`${phrase} to ${a.value}`);
           else if(a.mode == 'inc' || a.mode == 'dec')
-            jeLoggingRoutineOperationSummary(`${phrase} by ${a.value}`)
+            jeLoggingRoutineOperationSummary(`${phrase} by ${a.value}`);
           else
-            jeLoggingRoutineOperationSummary(`${a.mode} ${phrase}`)
+            jeLoggingRoutineOperationSummary(`${a.mode} ${phrase}`);
         }
       }
 
@@ -1233,7 +1233,7 @@ export class Widget extends StateManaged {
               turn = indexList[0];
             } else {
               for(const idx of indexList){
-                if(idx > turn){
+                if(idx > turn) {
                   turn = idx;
                   break;
                 }
@@ -1246,7 +1246,7 @@ export class Widget extends StateManaged {
               turn = indexList[0];
             } else {
               for(const idx of indexList) {
-                if(idx < turn){
+                if(idx < turn) {
                   turn = idx;
                   break;
                 }
@@ -1277,6 +1277,8 @@ export class Widget extends StateManaged {
           if(w.get('turn') && w.get('player'))
             collections[a.collection].push(w);
         }
+
+        jeLoggingRoutineOperationSummary(`picked turn ${turn} out of index list ${JSON.stringify(indexList)}`);
       }
 
       if(jeRoutineLogging) jeLoggingRoutineOperationEnd(problems, variables, collections, false);
