@@ -14,8 +14,6 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-      with:
-        submodules: recursive
     - name: Install Node.js 16.x
       uses: actions/setup-node@v1
       with:
