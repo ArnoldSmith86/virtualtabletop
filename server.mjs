@@ -98,8 +98,6 @@ MinifyRoom().then(function(result) {
       else
         Logging.log(`WARNING: Unknown file type of asset ${req.params.name}`);
 
-      res.setHeader('Cache-Control', 'public, max-age=30000000');
-      res.setHeader('Expires', new Date(Date.now() + 30000000000).toUTCString());
       res.send(content);
     });
   });

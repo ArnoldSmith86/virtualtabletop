@@ -1,4 +1,4 @@
-import { WebSocketServer } from 'ws';
+import ws from 'ws';
 
 import Connection from './connection.mjs';
 
@@ -6,7 +6,7 @@ export default class WebSocket {
   connections = [];
 
   constructor(server, serverStart, newPlayerCallback) {
-    this.server = new WebSocketServer({ noServer: true });
+    this.server = new ws.Server({ noServer: true });
     this.serverStart = serverStart;
     this.newPlayerCallback = newPlayerCallback;
 

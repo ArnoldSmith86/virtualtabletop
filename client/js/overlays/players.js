@@ -37,8 +37,6 @@ function fillPlayerList(players, active) {
     if(player == playerName) {
       entry.className = 'myPlayerEntry';
       playerColor = players[player];
-    } else {
-      entry.className = 'activePlayerEntry';
     }
     if(activePlayers.indexOf(player) == -1)
       entry.className = 'inactivePlayerEntry';
@@ -47,9 +45,6 @@ function fillPlayerList(players, active) {
 
     if(player != playerName && activePlayers.indexOf(player) != -1)
       addPlayerCursor(player, players[player]);
-  }
-  if(activePlayers.length < 2){
-    document.getElementById("template-playerlist-entry").insertAdjacentHTML("afterend", "<div class='nothingtoshow'>There are no other players at this table.</div>");
   }
 }
 
