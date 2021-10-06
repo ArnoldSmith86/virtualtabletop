@@ -653,24 +653,32 @@ function displayComputeOps() {
 }
 
 function jeAddCSScommands() {
-  const presets = [
-    'border: 1px solid black', 'background: white', 'font-size: 30px', 'color: black' , 'border-radius: 100%',
-    '--wcMain: #1f5ca6', '--wcMainOH: #0d2f5e', '--wcBorder: #0d2f5e', '--wcBorderOH: #1f5ca6', '--wcFont: #ffffff', '--wcFontOH: #ffffff',
-    '--wcShadowTurn: none',
-    '--wcBorderNormal: #00000000', '--wcBorderAlert: red', '--wcFontAlert: red', '--wcFontPaused: #6d6d6d', '--wcAnimationAlert: blinker 1s linear infinite', '--wcAnimationPaused: none'
-  ];
-  for(const css of presets) {
-    jeCommands.push({
-      id: 'css_' + css,
-      name: css,
-      context: 'timer ↦ (css|[a-z]+CSS)',
-      call: async function() {
-        jePasteText(css + '; ', true);
-      },
-      show: function() {
-        return !String(jeGetValue()[jeGetLastKey()]).match(css.split(':')[0]);
-      }
-    });
+  const presets = {
+    '[a-z]+': [
+      'border: 1px solid black', 'background: white', 'font-size: 30px', 'color: black' , 'border-radius: 100%'
+    ],
+    'button': [
+      '--wcMain: #1f5ca6', '--wcMainOH: #0d2f5e', '--wcBorder: #0d2f5e', '--wcBorderOH: #1f5ca6', '--wcFont: #ffffff', '--wcFontOH: #ffffff',
+      '--wcShadowTurn: none'
+    ],
+    'timer': [
+      '--wcBorderNormal: #00000000', '--wcBorderAlert: red', '--wcFontAlert: red', '--wcFontPaused: #6d6d6d', '--wcAnimationAlert: blinker 1s linear infinite', '--wcAnimationPaused: none'
+    ]
+  };
+  for(const type in presets) {
+    for(const css of presets[type]) {
+      jeCommands.push({
+        id: 'css_' + css,
+        name: css,
+        context: `^${type} ↦ (css|[a-z]+CSS)`,
+        call: async function() {
+          jePasteText(css + '; ', true);
+        },
+        show: function() {
+          return !String(jeGetValue()[jeGetLastKey()]).match(css.split(':')[0]);
+        }
+      });
+    }
   }
 }
 
@@ -1290,7 +1298,7 @@ function jeLoggingRoutineOperationEnd(problems, variables, collections, skipped)
   const applied = savedHTML[2];
   const appliedText  = jeLoggingJSON(applied);
   const opFunction = savedHTML[3];
-  
+
   const opProblems = problems.length ?
        `<div class="jeLogDetails">
           <div class="jeExpander">
@@ -1307,7 +1315,7 @@ function jeLoggingRoutineOperationEnd(problems, variables, collections, skipped)
   const opOperation = originalText.length || appliedText.length ?
         `<div class="jeLogDetails">
            <div class="jeExpander">
-             <span class="jeLogName">Original and applied operation</span> 
+             <span class="jeLogName">Original and applied operation</span>
            </div>
            <div class="jeLogNested">
              ${originalOp}
@@ -1344,7 +1352,7 @@ function jeLoggingRoutineOperationEnd(problems, variables, collections, skipped)
 }
 
 function jeLoggingRoutineOperationSummary(definition, result) {
-  jeRoutineResult = `<span class="jeLogSummary">${html(definition)}</span> 
+  jeRoutineResult = `<span class="jeLogSummary">${html(definition)}</span>
      ${result ? '=&gt;' : ''} <span class="jeLogResult">${html(result || '')}</span>`;
 }
 
