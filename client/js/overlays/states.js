@@ -133,41 +133,53 @@ function fillStatesList(states, activePlayers) {
   removeFromDOM('#statesList > div');
 
   let isEmpty = true;
-  for(const kvp of Object.entries(states).sort((a, b) => a[1].name.localeCompare(b[1].name))) {
-    isEmpty = false;
+  const sortedStates = Object.entries(states).sort((a, b) => a[1].name.localeCompare(b[1].name));
 
-    const state = kvp[1];
-    state.id = kvp[0];
+  for(const publicLibrary of [ false, true ]) {
+    const category = domByTemplate('template-stateslist-category');
+    $('.title', category).textContent = publicLibrary ? 'Public Library' : 'Your Game Shelf';
 
-    const entry = domByTemplate('template-stateslist-entry');
-    entry.className = state.image ? 'roomState' : 'roomState noImage';
-    $('img', entry).src = state.image;
-    $('.bgg', entry).textContent = `${state.name} (${state.year})`;
-    $('.bgg', entry).href = state.bgg;
-    $('.rules', entry).href = state.rules;
-    $('.time', entry).textContent = state.time;
+    for(const kvp of sortedStates.filter(kvp=>!!kvp[1].publicLibrary == publicLibrary)) {
+      isEmpty = false;
 
-    for(const variantID in state.variants) {
-      const variant = state.variants[variantID];
-      const vEntry = domByTemplate('template-variantslist-entry');
-      $('.language', vEntry).textContent = String.fromCodePoint(...[...variant.language].map(c => c.charCodeAt() + 0x1F1A5));
-      $('.players', vEntry).textContent = variant.players;
-      $('.variant', vEntry).textContent = variant.variant;
+      const state = kvp[1];
+      state.id = kvp[0];
 
-      $('.play', vEntry).addEventListener('click', _=>{ toServer('loadState', { stateID: state.id, variantID }); showOverlay(); });
-      $('.variantsList', entry).appendChild(vEntry);
+      const entry = domByTemplate('template-stateslist-entry');
+      entry.className = state.image ? 'roomState' : 'roomState noImage';
+      if(state.publicLibrary)
+        entry.className += ' publicLibraryGame';
+
+      $('img', entry).src = state.image;
+      $('.bgg', entry).textContent = `${state.name} (${state.year})`;
+      $('.bgg', entry).href = state.bgg;
+      $('.rules', entry).href = state.rules;
+      $('.time', entry).textContent = state.time;
+
+      for(const variantID in state.variants) {
+        const variant = state.variants[variantID];
+        const vEntry = domByTemplate('template-variantslist-entry');
+        $('.language', vEntry).textContent = String.fromCodePoint(...[...variant.language].map(c => c.charCodeAt() + 0x1F1A5));
+        $('.players', vEntry).textContent = variant.players;
+        $('.variant', vEntry).textContent = variant.variant;
+
+        $('.play', vEntry).addEventListener('click', _=>{ toServer('loadState', { stateID: state.id, variantID }); showOverlay(); });
+        $('.variantsList', entry).appendChild(vEntry);
+      }
+
+      $('.edit', entry).addEventListener('click', _=>fillEditState(state));
+      $('.list', category).appendChild(entry);
+
+      if(state.id == waitingForStateCreation) {
+        waitingForStateCreation = null;
+        if(state.name == 'Unnamed' || $('#stateEditOverlay').style.display == 'flex')
+          fillEditState(state);
+      }
     }
 
-    $('.edit', entry).addEventListener('click', _=>fillEditState(state));
-    $('#statesList').appendChild(entry);
-
-    if(state.id == waitingForStateCreation) {
-      waitingForStateCreation = null;
-      if(state.name == 'Unnamed' || $('#stateEditOverlay').style.display == 'flex')
-        fillEditState(state);
-    }
+    $('#statesList').appendChild(category);
   }
-  $('#statesList').appendChild(addDiv);
+  $('#statesList > div').appendChild(addDiv);
 }
 
 function fillEditState(state) {

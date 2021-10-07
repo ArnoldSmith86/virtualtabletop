@@ -6,6 +6,12 @@
   overflow: auto;
 }
 
+#statesList .title {
+  clear: left;
+  padding: 40px;
+  padding-bottom: 0;
+}
+
 .roomState, #addState {
   color: black;
   float: left;
@@ -39,6 +45,10 @@
 .roomState .details, #addState .buttons {
   display: none;
   overflow: auto;
+}
+
+.roomState.publicLibraryGame .edit {
+  display: none;
 }
 
 .roomState.noImage .details > *, .roomState.noImage img {
