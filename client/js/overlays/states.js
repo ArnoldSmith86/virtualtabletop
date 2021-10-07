@@ -121,6 +121,29 @@ function toggleStateStar(state) {
   toServer('toggleStateStar', state.publicLibrary);
 }
 
+function updateLibraryFilter() {
+  const text = $('#filterByText').value.toLowerCase();
+  const players = $('#filterByPlayers').value;
+  const language = $('#filterByLanguage').value;
+  for(const state of $a('#statesList .list > div')) {
+    const textMatch     = state.dataset.text.match(text);
+    const playersMatch  = players  == 'Any' || state.dataset.players.split(',').indexOf(players) != -1;
+    const languageMatch = language == 'Any' || state.dataset.languages.split(',').indexOf(language) != -1;
+    state.style.display = textMatch && playersMatch && languageMatch ? 'block' : 'none';
+  }
+}
+
+function parsePlayers(players) {
+  const validPlayers = [];
+  for(const token of players.split(',')) {
+    const match = token.match(/^([0-9]+)(-([0-9]+)|\+)?$/);
+    if(match)
+      for(let i=+match[1]; i<=(match[2] ? +match[3]||20 : +match[1]); ++i)
+        validPlayers.push(i);
+  }
+  return validPlayers;
+}
+
 function fillStatesList(states, starred, activePlayers) {
   const addDiv = $('#addState');
   removeFromDOM(addDiv);
@@ -150,12 +173,16 @@ function fillStatesList(states, starred, activePlayers) {
       $('.rules', entry).href = state.rules;
       $('.time', entry).textContent = state.time;
 
+      const validPlayers = [];
+      const validLanguages = [];
       for(const variantID in state.variants) {
         const variant = state.variants[variantID];
         const vEntry = domByTemplate('template-variantslist-entry');
         $('.language', vEntry).textContent = String.fromCodePoint(...[...variant.language].map(c => c.charCodeAt() + 0x1F1A5));
         $('.players', vEntry).textContent = variant.players;
         $('.variant', vEntry).textContent = variant.variant;
+        validPlayers.push(...parsePlayers(variant.players));
+        validLanguages.push(variant.language);
 
         $('.play', vEntry).addEventListener('click', _=>{ toServer('loadState', { stateID: state.id, variantID }); showOverlay(); });
         $('.variantsList', entry).appendChild(vEntry);
@@ -164,6 +191,10 @@ function fillStatesList(states, starred, activePlayers) {
       $('.edit', entry).addEventListener('click', _=>fillEditState(state));
       $('.star', entry).addEventListener('click', _=>toggleStateStar(state));
       $('.list', category).appendChild(entry);
+
+      entry.dataset.text = `${state.name} ${state.similarName} ${state.description}`.toLowerCase();
+      entry.dataset.players = validPlayers.join();
+      entry.dataset.languages = validLanguages.join();
 
       if(state.id == waitingForStateCreation) {
         waitingForStateCreation = null;
@@ -175,6 +206,7 @@ function fillStatesList(states, starred, activePlayers) {
     $('#statesList').appendChild(category);
   }
   $('#statesList > div').appendChild(addDiv);
+  updateLibraryFilter();
 }
 
 function fillEditState(state) {
@@ -238,6 +270,9 @@ async function shareLink() {
 
 onLoad(function() {
   onMessage('meta', args=>fillStatesList(args.meta.states, args.meta.starred, args.activePlayers));
+
+  on('#filterByText', 'keyup', updateLibraryFilter);
+  on('#filterByPlayers, #filterByLanguage', 'change', updateLibraryFilter);
 
   on('#addState .create, #addVariant .create', 'click', e=>addState(e, 'state'));
   on('#addState .upload, #addVariant .upload', 'click', e=>selectFile(false, f=>addState(e, 'file', f)));
