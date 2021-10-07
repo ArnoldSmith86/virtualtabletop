@@ -127,7 +127,11 @@ function editState() {
   showOverlay('statesOverlay');
 }
 
-function fillStatesList(states, activePlayers) {
+function toggleStateStar(state) {
+  toServer('toggleStateStar', state.publicLibrary);
+}
+
+function fillStatesList(states, starred, activePlayers) {
   const addDiv = $('#addState');
   removeFromDOM(addDiv);
   removeFromDOM('#statesList > div');
@@ -139,7 +143,7 @@ function fillStatesList(states, activePlayers) {
     const category = domByTemplate('template-stateslist-category');
     $('.title', category).textContent = publicLibrary ? 'Public Library' : 'Your Game Shelf';
 
-    for(const kvp of sortedStates.filter(kvp=>!!kvp[1].publicLibrary == publicLibrary)) {
+    for(const kvp of sortedStates.filter(kvp=>(!!kvp[1].publicLibrary && (!starred || !starred[kvp[1].publicLibrary])) == publicLibrary)) {
       isEmpty = false;
 
       const state = kvp[1];
@@ -168,6 +172,7 @@ function fillStatesList(states, activePlayers) {
       }
 
       $('.edit', entry).addEventListener('click', _=>fillEditState(state));
+      $('.star', entry).addEventListener('click', _=>toggleStateStar(state));
       $('.list', category).appendChild(entry);
 
       if(state.id == waitingForStateCreation) {
@@ -306,7 +311,7 @@ async function shareLink() {
 }
 
 onLoad(function() {
-  onMessage('meta', args=>fillStatesList(args.meta.states, args.activePlayers));
+  onMessage('meta', args=>fillStatesList(args.meta.states, args.meta.starred, args.activePlayers));
 
   on('#addState .create, #addVariant .create', 'click', e=>addState(e, 'state'));
   on('#addState .upload, #addVariant .upload', 'click', e=>selectFile(false, f=>addState(e, 'file', f)));

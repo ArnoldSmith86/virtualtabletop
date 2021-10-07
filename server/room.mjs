@@ -395,6 +395,13 @@ export default class Room {
     this.broadcast('state', state);
   }
 
+  toggleStateStar(player, publicLibraryName) {
+    if(!this.state._meta.starred)
+      this.state._meta.starred = {};
+    this.state._meta.starred[publicLibraryName] = !this.state._meta.starred[publicLibraryName];
+    this.sendMetaUpdate();
+  }
+
   trace(source, payload) {
     if(!this.enableTracing && source == 'client' && source == 'client' && payload.type == 'enable') {
       this.enableTracing = true;

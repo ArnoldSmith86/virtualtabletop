@@ -47,6 +47,14 @@
   overflow: auto;
 }
 
+.roomState .star {
+  display: none;
+}
+
+.roomState.publicLibraryGame .star {
+  display: block;
+}
+
 .roomState.publicLibraryGame .edit {
   display: none;
 }
