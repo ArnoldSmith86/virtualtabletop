@@ -82,16 +82,6 @@ async function addState(e, type, src, id) {
   req.send(blob);
 }
 
-function addStateFromLibrary(e) {
-  pickStateFromLibrary().then(url=>{
-    if(e.target.parentNode == $('#addVariant'))
-      showOverlay('stateEditOverlay');
-    else
-      showOverlay('statesOverlay');
-    addState(e, 'link', url);
-  }).catch(e=>!1);
-}
-
 function downloadState(variantID) {
   const stateID = $('#stateEditOverlay').dataset.id;
   let url = `/dl/${roomID}`
@@ -228,70 +218,6 @@ function fillEditState(state) {
 
   showOverlay(null);
   showOverlay('stateEditOverlay');
-}
-
-let previousLibraryRejection = null;
-async function pickStateFromLibrary(changeOverlay) {
-  if(changeOverlay !== false)
-    showOverlay('libraryOverlay');
-  await populateLibrary();
-
-  if(previousLibraryRejection)
-    previousLibraryRejection();
-
-  return new Promise((resolve, reject) => {
-    previousLibraryRejection = reject;
-    on('#libraryList .add', 'click', function() {
-      if(this.dataset.url.match(/^http/))
-        resolve(this.dataset.url);
-      else
-        resolve(location.origin + '/library/' + this.dataset.url);
-    });
-  });
-}
-
-async function populateLibrary() {
-  if(!$('#libraryList.populated')) {
-    const library = await fetch('/library/library.json');
-    var lEntry = null;
-    // add sections and entries
-    (await library.json()).forEach((entry, idx) => {
-      if (!entry.link) {
-        // sections have empty entry.link
-        lEntry = domByTemplate('template-librarylist-section-title', 'tr');
-
-        $('.section-name', lEntry).textContent = entry.name;
-        $('.notes', lEntry).textContent = entry.notes;
-
-        $('#libraryList').appendChild(lEntry);
-
-        // add another header for readability
-        lEntry = domByTemplate('template-librarylist-header', 'tr');
-        $('#libraryList').appendChild(lEntry);
-      } else {
-        // entries have valid entry.link
-        if (!idx) {
-            // if the top row does not have a section title, add header first
-            lEntry = domByTemplate('template-librarylist-header', 'tr');
-            $('#libraryList').appendChild(lEntry);
-        }
-        lEntry = domByTemplate('template-librarylist-entry', 'tr');
-
-        $('.name', lEntry).textContent = entry.name;
-        $('.players', lEntry).textContent = entry.players;
-        $('.language', lEntry).textContent = entry.language;
-        $('.notes', lEntry).textContent = entry.notes;
-        $('a', lEntry).textContent = entry['similar name'];
-        $('a', lEntry).href = entry['similar link'];
-        $('button.add', lEntry).dataset.url = entry.link;
-
-        $('#libraryList').appendChild(lEntry);
-      }
-
-    });
-    $('#libraryList').classList.add('populated');
-    removeFromDOM('#libraryOverlay > p');
-  }
 }
 
 function removeState() {

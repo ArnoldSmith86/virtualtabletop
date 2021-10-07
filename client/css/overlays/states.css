@@ -116,23 +116,3 @@
 #variantsEditList > div {
   margin-bottom: 30px;
 }
-
-#libraryOverlay {
-  overflow: auto;
-}
-
-#libraryList td, #libraryList th {
-  padding: 6px;
-}
-#libraryList .section {
-  background-color: #4a4a4a;
-  opacity: 0.7;
-}
-#libraryList .section .section-name {
-  font-size: 1.17em;
-  font-weight: bolder;
-  text-align: center;
-}
-#libraryList .section .notes {
-  text-align: center;
-}
