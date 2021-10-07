@@ -1002,7 +1002,7 @@ export class Widget extends StateManaged {
       if(a.func == 'SELECT') {
         setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all' });
         if(a.source == 'all' || isValidCollection(a.source)) {
-          if([ 'add', 'set' ].indexOf(a.mode) == -1)
+          if([ 'add', 'set', 'remove', 'intersect' ].indexOf(a.mode) == -1)
             problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
           let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(function(w) {
             if(w.isBeingRemoved)
@@ -1032,7 +1032,14 @@ export class Widget extends StateManaged {
             c = c.filter(w=>w.get('type')!='pile');
           }
 
-          c = c.slice(0, a.max).concat(a.mode == 'add' ? collections[a.collection] || [] : []);
+          c = c.slice(0, a.max);
+          if(a.mode == 'intersect')
+            c = collections[a.collection] ? collections[a.collection].filter(value => c.includes(value)) : [];
+          else if(a.mode == 'remove')
+            c = collections[a.collection] ? collections[a.collection].filter(value => !c.includes(value)) : [];
+          else
+            c = c.concat(a.mode == 'add' ? collections[a.collection] || [] : []);
+
           collections[a.collection] = [...new Set(c)];
 
           if(a.sortBy)
