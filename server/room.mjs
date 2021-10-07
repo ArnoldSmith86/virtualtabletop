@@ -181,7 +181,7 @@ export default class Room {
       if(includeAssets)
         for(const asset of this.getAssetList(state))
           if(fs.existsSync(path.resolve() + '/save' + asset))
-            zip.file(asset, fs.readFileSync(path.resolve() + '/save' + asset));
+            zip.file(asset.substr(1), fs.readFileSync(path.resolve() + '/save' + asset));
     }
 
     const zipBuffer = await zip.generateAsync({type:'nodebuffer', compression: 'DEFLATE'});
