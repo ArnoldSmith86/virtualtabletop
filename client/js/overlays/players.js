@@ -17,6 +17,7 @@ function addPlayerCursor(playerName, playerColor) {
   playerCursors[playerName].className = 'cursor';
   playerCursors[playerName].style.backgroundColor = playerColor;
   playerCursors[playerName].style.transform = `translate(-50px, -50px)`;
+  playerCursors[playerName].setAttribute("player",playerName);
   $('#roomArea').appendChild(playerCursors[playerName]);
 }
 
@@ -60,6 +61,13 @@ onLoad(function() {
       const x = args.coords[0]*scale;
       const y = args.coords[1]*scale;
       playerCursors[args.player].style.transform = `translate(${x}px, ${y}px)`;
+      if(args.coords[2]) {
+        playerCursors[args.player].classList.add('pressed', 'active');
+      } else {
+        playerCursors[args.player].classList.add('active');
+        playerCursors[args.player].classList.remove('pressed');
+      }
+      setTimeout(()=>{playerCursors[args.player].classList.remove('active')}, 50 )
     }
   });
   onMessage('rename', function(args) {

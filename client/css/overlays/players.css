@@ -157,6 +157,28 @@ label.ui-line::before{
   width: calc(20px * var(--scale));
   height: calc(20px * var(--scale));
   border-radius: 100%;
-  opacity: 0.2;
+  opacity: 0;
+  transition-duration: 2s;
   pointer-events: none;
+}
+
+.cursor.active {
+  opacity: 0.2;
+  transition: none;
+
+}
+.cursor.pressed {
+  opacity: 0.5;
+
+}
+.cursor.pressed::before {
+  display: block;
+  position: relative;
+  top: calc(20px * var(--scale));
+  left: calc(-40px * var(--scale));
+  height: auto;
+  width: calc(100px * var(--scale));
+  text-align: center;
+  font-size: calc(12px * var(--scale));
+  content: attr(player)
 }
