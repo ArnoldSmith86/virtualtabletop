@@ -13,6 +13,25 @@ let urlProperties = {};
 let maxZ = {};
 export const dropTargets = new Map();
 
+function compareDropTarget(widget, t){
+  const dropTarget = asArray(t.get('dropTarget'))
+  let isValid = false;
+  for(let i = 0; i < dropTarget.length; i++) {
+    let isValidObject = true;
+    for(const key in dropTarget[i]) {
+      if(dropTarget[i][key] != widget.get(key) && (key != 'type' || widget.get(key) != 'deck' || dropTarget[i][key] != 'card')) {
+        isValidObject = false;
+        break;
+      }
+    }
+    if(isValidObject) {
+      isValid = true;
+      break;
+    }
+  }
+  return isValid;
+}
+
 function getValidDropTargets(widget) {
   const targets = [];
   for(const [ _, t ] of dropTargets) {
@@ -22,21 +41,7 @@ function getValidDropTargets(widget) {
       if(t.children().indexOf(widget) == -1)
         continue;
 
-    const dropTarget = asArray(t.get('dropTarget'))
-    let isValid = false;
-      for(let i = 0; i < dropTarget.length; i++) {
-        let isValidObject = true;
-        for(const key in dropTarget[i]) {
-          if((dropTarget[i])[key] != (widget.get(key)) && (key != 'type' || widget.get(key) != 'deck' || (dropTarget[i])[key] != 'card')) {
-            isValidObject = false;
-            break;
-          }
-        }
-        if(isValidObject) {
-          isValid = true;
-          break;
-        }
-      }
+    let isValid = compareDropTarget(widget, t);
 
     let tt = t;
     while(isValid) {
