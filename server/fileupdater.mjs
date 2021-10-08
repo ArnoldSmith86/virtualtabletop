@@ -26,16 +26,11 @@ function updateProperties(properties, v) {
     for(const cardType in properties.cardTypes)
       updateProperties(properties.cardTypes[cardType], v);
 
-  for(const property in properties) {
+  for(const property in properties)
     if(property.match(/Routine$/))
       updateRoutine(properties[property], v);
-    else
-      updateProperty(properties, property, v);
-  }
-}
 
-function updateProperty(properties, property, v){
-  v<4 && v4ModifyDropTargetEmptyArray(properties, property);
+  v<4 && v4ModifyDropTargetEmptyArray(properties);
 }
 
 function updateRoutine(routine, v) {
@@ -269,8 +264,10 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
     routine.splice(o.index, 0, o.operation);
 }
 
-function v4ModifyDropTargetEmptyArray(properties, property) {
-  if(property == 'dropTarget')
-    if(Array.isArray(properties[property]) && properties[property].length == 0)
-      properties[property] = {};
+function v4ModifyDropTargetEmptyArray(properties) {
+  for(const property in properties) {
+    if(property == 'dropTarget')
+      if(Array.isArray(properties[property]) && properties[property].length == 0)
+        properties[property] = {};
+  }
 }
