@@ -138,6 +138,11 @@ body.jsonEdit.jeZoomOut #topSurface {
   overflow: visible;
 }
 
+#jeMouseCoords {
+  display: block; 
+  right: calc(var(--commandPaneWidth) + 20px);
+}
+
 #jeLogWrapper {
   position: fixed;
   bottom: 0;
