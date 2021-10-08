@@ -5,6 +5,8 @@ import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 
+const readOnlyProperties = new Set(['_ancestor']);
+
 export class Widget extends StateManaged {
   constructor(id) {
     const div = document.createElement('div');
@@ -535,14 +537,22 @@ export class Widget extends StateManaged {
             const result = await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections, (depth || 0) + 1);
             variables[a.variable] = result.variable;
             collections[a.collection] = result.collection;
+
             if(jeRoutineLogging) {
               const theWidget = this.isValidID(a.widget) && a.widget != this.get('id') ? `in ${a.widget}` : '';
-              jeLoggingRoutineOperationSummary( `${a.routine} ${theWidget} and return ${a.variable}`, `${JSON.stringify(variables[a.variable])}`)
-        }
+              if (a.return) {
+                let returnCollection = result.collection.map(w=>w.get('id')).join(',');
+                if(!result.collection.length || result.collection.length >= 5)
+                  returnCollection = `(${result.collection.length} widgets)`;
+                jeLoggingRoutineOperationSummary(
+                  `${a.routine} ${theWidget} and return variable ${a.variable} and collection ${a.collection}`,
+                  `${JSON.stringify(variables[a.variable])}; ${JSON.stringify(result.collection)}`)
+              } else {
+                jeLoggingRoutineOperationSummary( `${a.routine} ${theWidget} and abort caller processing`)
+              }
+            }
           }
         }
-        if(!a.return)
-          break;
       }
 
       if(a.func == 'CANVAS') {
@@ -1045,7 +1055,7 @@ export class Widget extends StateManaged {
             let selectedWidgets = collections[a.collection].map(w=>w.get('id')).join(',');
             if(!collections[a.collection].length || collections[a.collection].length >= 5)
               selectedWidgets = `(${collections[a.collection].length} widgets)`;
-            jeLoggingRoutineOperationSummary(`widgets ${a.type == 'all' ? '' : 'a.type'} with '${a.property}' ${a.relation} ${JSON.stringify(a.value)} from '${a.source}'`, `${a.mode} ${JSON.stringify(a.collection)} = ${selectedWidgets}`);
+            jeLoggingRoutineOperationSummary(`${a.type == 'all' ? '' : a.type} widgets with '${a.property}' ${a.relation} ${JSON.stringify(a.value)} from '${a.source}'`, `${a.mode} ${JSON.stringify(a.collection)} = ${selectedWidgets}`);
           }
         }
       }
@@ -1058,6 +1068,8 @@ export class Widget extends StateManaged {
         }
         if((a.property == 'parent' || a.property == 'deck') && a.value !== null && !widgets.has(a.value)) {
           problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
+        } else if (readOnlyProperties.has(a.property)) {
+          problems.push(`Tried setting read-only property ${a.property}.`);
         } else if (a.property == 'id' && isValidCollection(a.collection)) {
           for(const oldWidget of collections[a.collection]) {
             const oldState = JSON.stringify(oldWidget.state);
@@ -1205,7 +1217,11 @@ export class Widget extends StateManaged {
 
       if(!jeRoutineLogging && problems.length)
         console.log(problems);
-    }
+
+      if(a.func == 'CALL' && !a.return) {
+        break
+      }
+    } // End iterate over functions in routine
 
     if(jeRoutineLogging) jeLoggingRoutineEnd(variables, collections);
 
@@ -1223,6 +1239,18 @@ export class Widget extends StateManaged {
     return { variable: variables.result, collection: collections.result || [] };
   }
 
+  get(property) {
+    if(property == '_ancestor') {
+      if(widgets.has(this.get('parent')) && widgets.get(this.get('parent')).get('type')=='pile') {
+        return widgets.get(this.get('parent')).get('_ancestor');
+      } else {
+        return this.get('parent');
+      }
+    } else {
+      return super.get(property);
+    }
+  }
+  
   hideEnlarged() {
     if (!this.domElement.className.match(/selected/))
       $('#enlarged').classList.add('hidden');
