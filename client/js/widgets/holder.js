@@ -37,22 +37,8 @@ class Holder extends Widget {
     return children.filter(w=>{
       if(acceptPiles && w.get('type') == 'pile')
         return true;
-      const dropTarget = asArray(this.get('dropTarget'))
-      let isValid = false;
-      for(let i = 0; i < dropTarget.length; i++) {
-        let isValidObject = true;
-        for(const p in dropTarget[i]) {
-          if(w.get(p) !=(dropTarget[i])[p]) {
-            isValidObject = false;
-            break;
-          }
-        }
-        if(isValidObject) {
-          isValid = true;
-          break;
-        }
-      }
-      return isValid;
+
+      return compareDropTarget(w, this);
     });
   }
 
