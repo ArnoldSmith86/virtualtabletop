@@ -19,7 +19,7 @@ function compareDropTarget(widget, t, exclude){
   for(let i = 0; i < dropTarget.length; i++) {
     let isValidObject = true;
     for(const key in dropTarget[i]) {
-      if(dropTarget[i][key] != widget.get(key) && (exclude == true && key != 'type' || widget.get(key) != 'deck' || dropTarget[i][key] != 'card')) {
+      if(dropTarget[i][key] != widget.get(key) && (exclude == true || (key != 'type' || widget.get(key) != 'deck' || dropTarget[i][key] != 'card'))) {
         isValidObject = false;
         break;
       }
