@@ -1032,13 +1032,13 @@ export class Widget extends StateManaged {
             c = c.filter(w=>w.get('type')!='pile');
           }
 
-          c = c.slice(0, a.max);
+          c = c.slice(0, a.max); // a.mode == 'set'
           if(a.mode == 'intersect')
             c = collections[a.collection] ? collections[a.collection].filter(value => c.includes(value)) : [];
           else if(a.mode == 'remove')
             c = collections[a.collection] ? collections[a.collection].filter(value => !c.includes(value)) : [];
-          else
-            c = c.concat(a.mode == 'add' ? collections[a.collection] || [] : []);
+          else if(a.mode == 'add')
+            c = c.concat(collections[a.collection] || []);
 
           collections[a.collection] = [...new Set(c)];
 
