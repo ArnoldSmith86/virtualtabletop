@@ -36,7 +36,7 @@ class Holder extends Widget {
       if(acceptPiles && w.get('type') == 'pile')
         return true;
 
-      return compareDropTarget(w, this);
+      return compareDropTarget(w, this, true);
     });
   }
 
