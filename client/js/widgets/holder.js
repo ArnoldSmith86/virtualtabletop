@@ -1,5 +1,3 @@
-import { $, $a, onLoad, selectFile, asArray } from './domhelpers.js';
-
 class Holder extends Widget {
   constructor(object, surface) {
     super(object, surface);
