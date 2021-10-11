@@ -14,22 +14,19 @@ let maxZ = {};
 export const dropTargets = new Map();
 
 function compareDropTarget(widget, t, exclude){
-  const dropTarget = asArray(t.get('dropTarget'))
-  let isValid = false;
-  for(let i = 0; i < dropTarget.length; i++) {
+  for(const dropTargetObject in asArray(t.get('dropTarget'))) {
     let isValidObject = true;
     for(const key in dropTarget[i]) {
-      if(dropTarget[i][key] != widget.get(key) && (exclude == true || (key != 'type' || widget.get(key) != 'deck' || dropTarget[i][key] != 'card'))) {
+      if(dropTargetObject[key] != widget.get(key) && (exclude == true || (key != 'type' || widget.get(key) != 'deck' || dropTargetObject[key] != 'card'))) {
         isValidObject = false;
         break;
       }
     }
     if(isValidObject) {
-      isValid = true;
-      break;
+      return true;
     }
   }
-  return isValid;
+  return false;
 }
 
 function getValidDropTargets(widget) {
