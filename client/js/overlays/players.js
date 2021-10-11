@@ -1,6 +1,7 @@
 import { onLoad } from '../domhelpers.js';
 
 let playerCursors = {};
+let playerCursorsTimeout = {};
 let playerName = localStorage.getItem('playerName') || 'Guest' + Math.floor(Math.random()*1000);
 let playerColor = 'red';
 let activePlayers = [];
@@ -19,6 +20,7 @@ function addPlayerCursor(playerName, playerColor) {
   playerCursors[playerName].style.transform = `translate(-50px, -50px)`;
   playerCursors[playerName].setAttribute("player",playerName);
   $('#roomArea').appendChild(playerCursors[playerName]);
+  playerCursorsTimeout[playerName] = setTimeout(()=>{}, 0);
 }
 
 function fillPlayerList(players, active) {
@@ -58,6 +60,7 @@ onLoad(function() {
   onMessage('meta', args=>fillPlayerList(args.meta.players, args.activePlayers));
   onMessage('mouse', function(args) {
     if(args.player != playerName) {
+      clearTimeout(playerCursorsTimeout[args.player]);
       const x = args.coords[0]*scale;
       const y = args.coords[1]*scale;
       playerCursors[args.player].style.transform = `translate(${x}px, ${y}px)`;
@@ -67,7 +70,7 @@ onLoad(function() {
         playerCursors[args.player].classList.add('active');
         playerCursors[args.player].classList.remove('pressed');
       }
-      setTimeout(()=>{playerCursors[args.player].classList.remove('active')}, 50 )
+      playerCursorsTimeout[args.player] = setTimeout(()=>{playerCursors[args.player].classList.remove('active')}, 50 )
     }
   });
   onMessage('rename', function(args) {
