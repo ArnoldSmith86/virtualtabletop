@@ -5,6 +5,8 @@ import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 
+const readOnlyProperties = new Set(['_ancestor']);
+
 export class Widget extends StateManaged {
   constructor(id) {
     const div = document.createElement('div');
@@ -1002,7 +1004,7 @@ export class Widget extends StateManaged {
       if(a.func == 'SELECT') {
         setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all' });
         if(a.source == 'all' || isValidCollection(a.source)) {
-          if([ 'add', 'set' ].indexOf(a.mode) == -1)
+          if([ 'add', 'set', 'remove', 'intersect' ].indexOf(a.mode) == -1)
             problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
           let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(function(w) {
             if(w.isBeingRemoved)
@@ -1032,7 +1034,14 @@ export class Widget extends StateManaged {
             c = c.filter(w=>w.get('type')!='pile');
           }
 
-          c = c.slice(0, a.max).concat(a.mode == 'add' ? collections[a.collection] || [] : []);
+          c = c.slice(0, a.max); // a.mode == 'set'
+          if(a.mode == 'intersect')
+            c = collections[a.collection] ? collections[a.collection].filter(value => c.includes(value)) : [];
+          else if(a.mode == 'remove')
+            c = collections[a.collection] ? collections[a.collection].filter(value => !c.includes(value)) : [];
+          else if(a.mode == 'add')
+            c = c.concat(collections[a.collection] || []);
+
           collections[a.collection] = [...new Set(c)];
 
           if(a.sortBy)
@@ -1055,6 +1064,8 @@ export class Widget extends StateManaged {
         }
         if((a.property == 'parent' || a.property == 'deck') && a.value !== null && !widgets.has(a.value)) {
           problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
+        } else if (readOnlyProperties.has(a.property)) {
+          problems.push(`Tried setting read-only property ${a.property}.`);
         } else if (a.property == 'id' && isValidCollection(a.collection)) {
           for(const oldWidget of collections[a.collection]) {
             const oldState = JSON.stringify(oldWidget.state);
@@ -1218,6 +1229,18 @@ export class Widget extends StateManaged {
     return { variable: variables.result, collection: collections.result || [] };
   }
 
+  get(property) {
+    if(property == '_ancestor') {
+      if(widgets.has(this.get('parent')) && widgets.get(this.get('parent')).get('type')=='pile') {
+        return widgets.get(this.get('parent')).get('_ancestor');
+      } else {
+        return this.get('parent');
+      }
+    } else {
+      return super.get(property);
+    }
+  }
+  
   hideEnlarged() {
     if (!this.domElement.className.match(/selected/))
       $('#enlarged').classList.add('hidden');
