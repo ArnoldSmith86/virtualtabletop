@@ -14,7 +14,7 @@ let maxZ = {};
 export const dropTargets = new Map();
 
 function compareDropTarget(widget, t, exclude){
-  for(const dropTargetObject in asArray(t.get('dropTarget'))) {
+  for(const dropTargetObject of asArray(t.get('dropTarget'))) {
     let isValidObject = true;
     for(const key in dropTargetObject) {
       if(dropTargetObject[key] != widget.get(key) && (exclude == true || (key != 'type' || widget.get(key) != 'deck' || dropTargetObject[key] != 'card'))) {
