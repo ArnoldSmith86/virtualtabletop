@@ -13,6 +13,7 @@ class Holder extends Widget {
       dropOffsetX: 4,
       dropOffsetY: 4,
       dropLimit: -1,
+      numbDraggedChildren: 0,
       alignChildren: true,
       childrenPerOwner: false,
 
