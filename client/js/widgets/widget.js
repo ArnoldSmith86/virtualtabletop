@@ -1289,7 +1289,7 @@ export class Widget extends StateManaged {
     this.routineParent = this.get('_ancestor');
     const oldParent = widgets.get(this.routineParent);
     if(oldParent != undefined) {
-      if(oldParent.get('type') == 'holder') {
+      if(oldParent.get('type') == 'holder' && this.get('fixedParent') != true) {
         const numbDraggedChildren = oldParent.get('numbDraggedChildren');
         oldParent.set('numbDraggedChildren', Math.max(this.childArray.length + numbDraggedChildren, 1 + numbDraggedChildren));
       }
@@ -1368,7 +1368,7 @@ export class Widget extends StateManaged {
     if(this.get('type') == 'pile') {
       let arr = this.childArray;
       for (let i = 0; i < arr.length; i++) {
-        if(arr[i].routineParent != null) {
+        if(arr[i].routineParent != null && this.get('fixedParent') != true) {
           const numbDraggedChildren = widgets.get(arr[i].routineParent).get('numbDraggedChildren');
           widgets.get(arr[i].routineParent).set('numbDraggedChildren', numbDraggedChildren - 1);
           if(arr[i].routineParent != arr[i].get('_ancestor') && Array.isArray(widgets.get(arr[i].routineParent).get('leaveRoutine')))
@@ -1376,7 +1376,7 @@ export class Widget extends StateManaged {
         }
       }
     } else {
-      if(this.routineParent != null) {
+      if(this.routineParent != null && this.get('fixedParent') != true) {
         const numbDraggedChildren = widgets.get(this.routineParent).get('numbDraggedChildren');
         (widgets.get(this.routineParent)).set('numbDraggedChildren', numbDraggedChildren - 1);
         if (this.routineParent != this.get('_ancestor') && Array.isArray(widgets.get(this.routineParent).get('leaveRoutine')))
