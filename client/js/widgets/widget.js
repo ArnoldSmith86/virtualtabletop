@@ -1369,20 +1369,29 @@ export class Widget extends StateManaged {
       let arr = this.childArray;
       for (let i = 0; i < arr.length; i++) {
         if(arr[i].routineParent != null && this.get('fixedParent') != true) {
-          const numbDraggedChildren = widgets.get(arr[i].routineParent).get('numbDraggedChildren');
-          widgets.get(arr[i].routineParent).set('numbDraggedChildren', numbDraggedChildren - 1);
+          if(this.moveEnd == true) {
+            const numbDraggedChildren = widgets.get(arr[i].routineParent).get('numbDraggedChildren');
+            widgets.get(arr[i].routineParent).set('numbDraggedChildren', numbDraggedChildren - 1);
+            if(numbDraggedChildren <= 1)
+              widgets.get(arr[i].routineParent).set('numbDraggedChildren', null);
+          }
           if(arr[i].routineParent != arr[i].get('_ancestor') && Array.isArray(widgets.get(arr[i].routineParent).get('leaveRoutine')))
             await (widgets.get(arr[i].routineParent)).evaluateRoutine('leaveRoutine', {}, { child: [ arr[i] ] });
         }
       }
     } else {
       if(this.routineParent != null && this.get('fixedParent') != true) {
-        const numbDraggedChildren = widgets.get(this.routineParent).get('numbDraggedChildren');
-        (widgets.get(this.routineParent)).set('numbDraggedChildren', numbDraggedChildren - 1);
+        if(this.moveEnd == true) {
+          const numbDraggedChildren = widgets.get(this.routineParent).get('numbDraggedChildren');
+          (widgets.get(this.routineParent)).set('numbDraggedChildren', numbDraggedChildren - 1);
+          if(numbDraggedChildren <= 1)
+            widgets.get(this.routineParent).set('numbDraggedChildren', null);
+        }
         if (this.routineParent != this.get('_ancestor') && Array.isArray(widgets.get(this.routineParent).get('leaveRoutine')))
           await (widgets.get(this.routineParent)).evaluateRoutine('leaveRoutine', {}, { child: [ this ] });
       }
     }
+    delete this.moveEnd;
     if(!this.deleted)
       this.routineParent = this.get('_ancestor');
   }
@@ -1401,7 +1410,8 @@ export class Widget extends StateManaged {
         await this.moveToHolder(this.hoverTarget);
         this.hoverTarget.domElement.classList.remove('droptarget');
       }
-	  await this.leaveParent();
+      this.moveEnd = true;
+      await this.leaveParent();
     }
 
     this.hideEnlarged();
