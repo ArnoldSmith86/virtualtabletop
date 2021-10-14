@@ -13,6 +13,7 @@ function addWidgetLocal(widget) {
     widget.id = generateUniqueWidgetID();
   sendPropertyUpdate(widget.id, widget);
   sendDelta(true);
+  return widget.id;
 }
 //This section holds the edit overlays for each widget
 //basic widget functions
@@ -561,8 +562,7 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
     w.applyDelta(wi);
     if(!wi.parent) {
       w.domElement.addEventListener('click', _=>{
-        onClick();
-        showOverlay();
+        overlayDone(onClick());
       });
       $('#addOverlay').appendChild(w.domElement);
     }
@@ -574,11 +574,20 @@ function addWidgetToAddWidgetOverlay(w, wi) {
   w.domElement.addEventListener('click', _=>{
     const toAdd = {...wi};
     toAdd.z = getMaxZ(w.get('layer')) + 1;
-    addWidgetLocal(toAdd);
-
-    showOverlay();
+    const widgetId = addWidgetLocal(toAdd);
+    overlayDone(widgetId);
   });
   $('#addOverlay').appendChild(w.domElement);
+}
+
+function overlayDone(id) {
+  if(jeEnabled) {
+    jeSelectWidget(widgets.get(id),false);
+    jeApplyChanges();
+    jeGetContext();
+    jeShowCommands();
+  }
+  showOverlay();
 }
 
 function populateAddWidgetOverlay() {
@@ -590,12 +599,16 @@ function populateAddWidgetOverlay() {
   });
 
   addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-empty-deck', x, 320, false), function() {
-    for(const w of generateCardDeckWidgets(generateUniqueWidgetID(), x, 320, false))
+    const id = generateUniqueWidgetID();
+    for(const w of generateCardDeckWidgets(id, x, 320, false))
       addWidgetLocal(w);
+    return id
   });
   addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', x, 550, true), function() {
-    for(const w of generateCardDeckWidgets(generateUniqueWidgetID(), x, 550, true))
+    const id = generateUniqueWidgetID();
+    for(const w of generateCardDeckWidgets(id, x, 550, true))
       addWidgetLocal(w);
+    return id
   });
 
   let y = 100;
@@ -679,13 +692,17 @@ function populateAddWidgetOverlay() {
   }
 
   addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 827, 700), function() {
-    for(const w of generateCounterWidgets(generateUniqueWidgetID(), 827, 700))
+    const id = generateUniqueWidgetID();
+    for(const w of generateCounterWidgets(id, 827, 700))
       addWidgetLocal(w);
+    return id
   });
 
   addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 775, 500), function() {
-    for(const w of generateTimerWidgets(generateUniqueWidgetID(), 775, 500))
+    const id = generateUniqueWidgetID();
+    for(const w of generateTimerWidgets(id, 775, 500))
       addWidgetLocal(w);
+    return id
   });
 
   addWidgetToAddWidgetOverlay(new Label('add-label'), {
@@ -733,8 +750,9 @@ async function removeWidgetLocal(widgetID, keepChildren) {
 
 function uploadWidget(preset) {
   uploadAsset().then(function(asset) {
+    let widgetId;
     if(asset && preset == 'board') {
-      addWidgetLocal({
+      widgetId = addWidgetLocal({
         image: asset,
         movable: false,
         width: 1600,
@@ -743,11 +761,11 @@ function uploadWidget(preset) {
       });
     }
     if(asset && preset == 'token') {
-      addWidgetLocal({
+      widgetId = addWidgetLocal({
         image: asset
       });
     }
-    showOverlay();
+    overlayDone(widgetId);
   });
 }
 
@@ -905,7 +923,7 @@ onLoad(function() {
   on('#addCustomWidgetOverlay', 'click', _=>showOverlay('addCustomOverlay'));
 
   on('#addHand', 'click', function() {
-    addWidgetLocal({
+    const widgetId = addWidgetLocal({
       type: 'holder',
       onEnter: { activeFace: 1 },
       onLeave: { activeFace: 0 },
@@ -918,7 +936,7 @@ onLoad(function() {
       width: 1500,
       height: 180
     });
-    showOverlay();
+    overlayDone(widgetId);
   });
 
   on('#addCanvas', 'click', function() {
@@ -1032,7 +1050,7 @@ onLoad(function() {
       css: "border-radius: 0% 0% 0% 50%;  border-width: 1px; background-color: var(--color);  --wcBorder: #555; --wcBorderOH: black  "
     }
     );
-    showOverlay();
+    overlayDone(id);
   });
 
   on('#uploadBoard', 'click', _=>uploadWidget('board'));
@@ -1050,8 +1068,8 @@ onLoad(function() {
       return;
     }
 
-    addWidgetLocal(widget);
-    showOverlay();
+    const widgetId = addWidgetLocal(widget);
+    overlayDone(widgetId);
   });
 
   const editOverlayApp = Vue.createApp({

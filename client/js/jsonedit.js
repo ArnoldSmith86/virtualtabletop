@@ -323,11 +323,7 @@ const jeCommands = [
     name: '➕ add new widget',
     forceKey: 'A',
     call: async function() {
-      const toAdd = {};
-      addWidgetLocal(toAdd);
-      jeSelectWidget(widgets.get(toAdd.id));
-      jeStateNow.type = '###SELECT ME###';
-      jeSetAndSelect(null);
+      showOverlay("addOverlay")
     }
   },
   {
@@ -1424,6 +1420,7 @@ function jePreProcessText(t) {
   return t.replace(/(\n +"LINEBREAK.*": null,)+/g, '\n').replace(/(,\n +"LINEBREAK.*": null)+/g, '');
 }
 
+// Select the characters in a given range in the text area.
 function jeSelect(start, end, scrollToCursor) {
   const t = $('#jeText');
   const text = t.textContent;
@@ -1458,6 +1455,7 @@ function jeSelect(start, end, scrollToCursor) {
   }
 }
 
+// Set the text area to the formatted version of the given text and colorize.
 function jeSet(text, dontFocus) {
   try {
     $('#jeText').textContent = jePreProcessText(JSON.stringify(jePreProcessObject(JSON.parse(text)), null, '  '));
@@ -1469,6 +1467,8 @@ function jeSet(text, dontFocus) {
   jeColorize();
 }
 
+// Replace ###SELECT ME### in JSON string in jeStateNow by the string given in replaceBy,
+// display the results in the text area by calling jeSet, and select the replaced text by calling jeSelect.
 function jeSetAndSelect(replaceBy, insideString) {
   if(jeMode == 'widget')
     var jsonString = jePreProcessText(JSON.stringify(jePreProcessObject(jeStateNow), null, '  '));
