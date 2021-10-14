@@ -250,3 +250,10 @@ window.onkeyup = function(event) {
       jeToggle();
   }
 }
+
+window.addEventListener('pagehide', (event) => {
+  let c = Array.from(widgets.values());
+  for(const w of c) {
+    if(w.get('type') == 'holder')
+      w.set('numbDraggedChildren', null);
+  }});
