@@ -183,9 +183,9 @@ async function applyEditOptionsDeck(widget) {
 
     for(let i=0; i<$('.count', type).value-$('.count', type).dataset.oldValue; ++i) {
       const card = { deck:widget.id, type:'card', cardType:oldID };
-      addWidgetLocal(card);
+      const cardId = addWidgetLocal(card);
       if(widget.parent)
-        await widgets.get(card.id).moveToHolder(widgets.get(widget.parent));
+        await widgets.get(cardId).moveToHolder(widgets.get(widget.parent));
     }
     for(let i=0; i<$('.count', type).dataset.oldValue-$('.count', type).value; ++i) {
       const card = widgetFilter(w=>w.get('deck')==widget.id&&w.get('cardType')==oldID)[0];
@@ -804,12 +804,12 @@ async function onClickUpdateWidget(applyChangesFromUI) {
         if(widget[key] === undefined)
           widget[key] = null;
     }
-    addWidgetLocal(widget);
+    const widgetId = addWidgetLocal(widget);
 
     for(const child of children)
-      sendPropertyUpdate(child.get('id'), 'parent', widget.id);
+      sendPropertyUpdate(child.get('id'), 'parent', widgetId);
     for(const card of cards)
-      sendPropertyUpdate(card.get('id'), 'deck', widget.id);
+      sendPropertyUpdate(card.get('id'), 'deck', widgetId);
 
     showOverlay();
 }
@@ -847,11 +847,11 @@ function duplicateWidget(widget, recursive, inheritFrom, increment, xOffset, yOf
     if(yOffset || !newParent && inheritFrom)
       currentWidget.y = widget.get('y') + yOffset;
 
-    addWidgetLocal(currentWidget);
+    const currentId = addWidgetLocal(currentWidget);
 
     if(recursive)
       for(const child of widgetFilter(w=>w.get('parent')==widget.id))
-        clone(child, true, currentWidget.id, 0, 0);
+        clone(child, true, currentId, 0, 0);
 
     return currentWidget;
   };
