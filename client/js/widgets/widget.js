@@ -92,7 +92,6 @@ export class Widget extends StateManaged {
   applyChildAdd(child) {
     this.childArray = this.childArray.filter(c=>c!=child);
     this.childArray.push(child);
-    this.childArray.sort((a,b)=>b.get('z')-a.get('z'));
     this.applyZ();
   }
 
@@ -237,7 +236,7 @@ export class Widget extends StateManaged {
   }
 
   children() {
-    return this.childArray;
+    return this.childArray.sort((a,b)=>b.get('z')-a.get('z'));
   }
 
   childrenOwned() {
@@ -1366,7 +1365,6 @@ export class Widget extends StateManaged {
   async onChildAdd(child, oldParentID) {
     this.childArray = this.childArray.filter(c=>c!=child);
     this.childArray.push(child);
-    this.childArray.sort((a,b)=>b.get('z')-a.get('z'));
     await this.onChildAddAlign(child, oldParentID);
   }
 
