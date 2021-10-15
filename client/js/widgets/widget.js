@@ -5,7 +5,7 @@ import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 
-const readOnlyProperties = new Set(['_ancestor']);
+const readOnlyProperties = new Set(['_absolutex', '_absolutey', '_ancestor']);
 
 export class Widget extends StateManaged {
   constructor(id) {
@@ -1235,6 +1235,8 @@ export class Widget extends StateManaged {
       } else {
         return this.get('parent');
       }
+    } else if(property == '_absolutex' || property == '_absolutey') {
+      return this.absoluteCoord(property == '_absolutex' ? 'x' : 'y')
     } else {
       return super.get(property);
     }
