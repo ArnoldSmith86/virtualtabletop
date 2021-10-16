@@ -714,7 +714,7 @@ export class Widget extends StateManaged {
         if(isValidCollection(a.collection)) {
           for(const w of collections[a.collection]) {
             await w.getRoutineParent();
-            w.set('parent', null);
+            w.deleted = true; // to trigger leaveRoutine
             await w.leaveParent();
             await removeWidgetLocal(w.get('id'));
             for(const c in collections)
@@ -1403,7 +1403,7 @@ export class Widget extends StateManaged {
         }
       }
     } else {
-      if(this.routineParent != null && this.get('fixedParent') != true) {
+      if(this.routineParent != null && this.get('fixedParent') != true || this.deleted == true) {
         if(this.moved == true) {
           const numbDraggedChildren = widgets.get(this.routineParent).get('numbDraggedChildren');
           widgets.get(this.routineParent).set('numbDraggedChildren', numbDraggedChildren - 1);
