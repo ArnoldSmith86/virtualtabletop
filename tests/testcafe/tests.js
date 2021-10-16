@@ -306,25 +306,25 @@ test('Dynamic expressions', async t => {
     .pressKey('ctrl+j')
 });
 
-publicLibraryButtons('Blue',               0, 'ce94b53a7943ab19ff1c5a5618d12d58', [
+publicLibraryButtons('Blue',               0, '970673a9ce657d09365a4c79d6127a0c', [
   'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton',
   'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton',
   'reset_button', 'buttonInputGo', 'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', '9n2q'
 ]);
 publicLibraryButtons('FreeCell',           0, 'b3339b3c5d42f47f4def7a164be69823', [ 'reset', 'jemz', 'reset' ]);
-publicLibraryButtons('Reward',             0, '24bbc23f8b2d109c3172030f41a27253', [
+publicLibraryButtons('Reward',             0, 'e88c1b4ba91141298a67fcc58d615343', [
   'gmex', 'kprc', 'oksq', 'j1wz', 'vfhn', '0i6i', 'Orange Recall', 'buttonInputGo', 'b09z'
 ]);
 publicLibraryButtons('Rummy Tiles',        0, '875067f1af33f8df3447bf60b996e4a4', [ 'startMix', 'draw14' ]);
-publicLibraryButtons('Undercover',         1, '829c56cb5b12d363a53ab382b32a8e19', [ 'Reset', 'Spy Master Button' ]);
+publicLibraryButtons('Undercover',         1, '23d135b712992c77ddd973f920b6c157', [ 'Reset', 'Spy Master Button' ]);
 publicLibraryButtons('Dice',               0, 'd8b6edd6f7a25767781af4294ecda8fc', [ 'k18u', 'hy65', 'gghr', 'dsfa', 'f34a', 'fusq' ]);
-publicLibraryButtons('Functions - CALL',   0, '843183453983a96f3465a60f19236312', [
+publicLibraryButtons('Functions - CALL',   0, '08e2735db8cfe0238a206fcca24929b1', [
   'n4cw_8_C', '5a52', '5a52', '66kr', 'qeg1', 'n4cwB', '8r6p', 'qeg1', 'qeg1', 'n5eu'
 ]);
 publicLibraryButtons('Functions - CLICK',  0, 'd98299a0065b24a44b0d03a79900e0ef', [ '7u2q' ]);
 publicLibraryButtons('Functions - ROTATE', 0, '747586b12401e43382a7db2b2505f25e', [ 'c44c', '9kdj', 'w53c', 'w53c' ]);
 publicLibraryButtons('Functions - SELECT', 0, '4db86f0a95509b1c4fe5ebd6a1f822a9', [ 'oeh9', '9fhb', 'njkk', 'ffwl', 'bomo' ]);
-publicLibraryButtons('Functions - SORT',   1, '40b54c927835422dd8cdc6dd8419a657', [
+publicLibraryButtons('Functions - SORT',   1, '5e7a1566000ae28bdf5675a460849164', [
   'ingw', 'k131', 'cnfu', 'i6yz', 'z394', '0v3h', '1h8o', 'v5ra', 'ingw-copy001', 'k131-copy001', 'cnfu-copy001',
   'i6yz-copy001', 'z394-copy001', '0v3h-copy001'
 ]);
