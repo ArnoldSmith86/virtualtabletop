@@ -925,8 +925,8 @@ export class Widget extends StateManaged {
               } else {
                 c.movedByButton = true; // overrides dropLimit
                 await c.getRoutineParent();
+                c.triggerleaveParent = true;
                 await c.moveToHolder(target);
-                await c.leaveParent();
               }
             }
           }));
@@ -1105,8 +1105,8 @@ export class Widget extends StateManaged {
             else {
               if(a.property == 'parent') {
                 await w.getRoutineParent();
+                w.triggerleaveParent = true;
                 await w.set(String(a.property), compute(a.relation, null, w.get(String(a.property)), a.value));
-                await w.leaveParent();
               }
               else
                 await w.set(String(a.property), compute(a.relation, null, w.get(String(a.property)), a.value));
@@ -1425,6 +1425,12 @@ export class Widget extends StateManaged {
       for(const t of this.dropTargets)
         t.domElement.classList.remove('droppable');
 
+      if(this.get('type') == 'pile') { // decrements numbDraggedChildren
+        for(const widget of this.childArray)
+          widget.moved = true;
+      }
+      this.moved = true;
+
       await this.checkParent();
 
       if(this.hoverTarget) {
@@ -1438,7 +1444,6 @@ export class Widget extends StateManaged {
       }
       this.moved = true;
       this.reverse = true;
-      await this.leaveParent();
     }
 
     this.hideEnlarged();
