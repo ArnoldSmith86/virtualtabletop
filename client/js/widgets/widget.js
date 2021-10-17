@@ -1511,7 +1511,7 @@ export class Widget extends StateManaged {
                 childArray = childArray.reverse();
                 delete this.reverse
               }
-              for(const child of this.childArray) {
+              for(const child of childArray) {
                 await newParent.evaluateRoutine('enterRoutine', { oldParentID: [ child.routineParent ] }, { child: [ child ] });
               }
             } else {
