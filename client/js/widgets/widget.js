@@ -1451,8 +1451,8 @@ export class Widget extends StateManaged {
       this.domElement.classList.remove('longtouch');
 
     await this.updatePiles();
+    }
   }
-
   async onChildAdd(child, oldParentID) {
     this.childArray = this.childArray.filter(c=>c!=child);
     this.childArray.push(child);
