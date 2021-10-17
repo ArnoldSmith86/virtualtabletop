@@ -1403,14 +1403,14 @@ export class Widget extends StateManaged {
         }
       }
     } else {
-      if(this.routineParent != null && this.get('fixedParent') != true || this.deleted == true) {
+      if(this.routineParent != null && this.get('fixedParent') != true) {
         if(this.moved == true) {
           const numbDraggedChildren = widgets.get(this.routineParent).get('numbDraggedChildren');
           widgets.get(this.routineParent).set('numbDraggedChildren', numbDraggedChildren - 1);
           if(numbDraggedChildren <= 1)
             widgets.get(this.routineParent).set('numbDraggedChildren', 0);
         }
-        if (this.routineParent != this.get('_ancestor') && Array.isArray(widgets.get(this.routineParent).get('leaveRoutine')))
+        if(Array.isArray(widgets.get(this.routineParent).get('leaveRoutine')) && (this.routineParent != this.get('_ancestor') || this.deleted == true))
           await (widgets.get(this.routineParent)).evaluateRoutine('leaveRoutine', {}, { child: [ this ] });
       }
     }
@@ -1437,6 +1437,7 @@ export class Widget extends StateManaged {
           widget.moved = true;
       }
       this.moved = true;
+      this.reverse = true;
       await this.leaveParent();
     }
 
@@ -1487,7 +1488,12 @@ export class Widget extends StateManaged {
         if(Array.isArray(newParent.get('enterRoutine'))) {
           if(newValue != this.routineParent) {
             if(this.get('type') == 'pile') {
-              for(const child of this.childArray) {
+              var childArray = this.childArray;
+              if(this.reverse == true) {
+                childArray = childArray.reverse();
+                delete this.reverse
+              }
+              for(const child of childArray) {
                 await newParent.evaluateRoutine('enterRoutine', { oldParentID: [ child.routineParent ] }, { child: [ child ] });
               }
             } else {
