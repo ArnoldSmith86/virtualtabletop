@@ -1482,11 +1482,6 @@ export class Widget extends StateManaged {
   async onPropertyChange(property, oldValue, newValue) {
     if(property == 'parent') {
       if(this.get('type') == 'pile') {
-        var childArray = [...this.childArray];
-        if(this.reverse == true) {
-          childArray = childArray.reverse();
-          delete this.reverse
-        }
         for(const child of this.childArray) {
           if(child.triggerleaveParent == true) {
             await child.leaveParent();
@@ -1511,6 +1506,11 @@ export class Widget extends StateManaged {
         if(Array.isArray(newParent.get('enterRoutine'))) {
           if(newValue != this.routineParent) {
             if(this.get('type') == 'pile') {
+              var childArray = [...this.childArray];
+              if(this.reverse == true) {
+                childArray = childArray.reverse();
+                delete this.reverse
+              }
               for(const child of this.childArray) {
                 await newParent.evaluateRoutine('enterRoutine', { oldParentID: [ child.routineParent ] }, { child: [ child ] });
               }
