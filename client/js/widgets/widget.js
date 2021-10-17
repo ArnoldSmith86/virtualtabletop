@@ -244,8 +244,9 @@ export class Widget extends StateManaged {
 
   async checkParent(forceDetach) {
     if(this.currentParent && (forceDetach || !overlap(this.domElement, this.currentParent.domElement))) {
+      if(this.currentParent.get('childrenPerOwner') == true)
+        await this.set('owner',  null);
       await this.set('parent', null);
-      await this.set('owner',  null);
       if(this.currentParent.dispenseCard)
         await this.currentParent.dispenseCard(this);
       delete this.currentParent;
