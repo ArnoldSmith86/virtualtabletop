@@ -1431,20 +1431,19 @@ export class Widget extends StateManaged {
       }
       this.moved = true;
 
-      await this.checkParent();
+      this.reverse = true;
 
+      await this.checkParent();
+      
       if(this.hoverTarget) {
+        if(this.hoverTarget.id != this.routineParent)
+          await this.leaveParent();
         await this.moveToHolder(this.hoverTarget);
         this.hoverTarget.domElement.classList.remove('droptarget');
-      }
-
-      if(this.get('type') == 'pile') { // decrements numbDraggedChildren
-        for(const widget of this.childArray)
-          widget.moved = true;
-      }
-      this.moved = true;
-      this.reverse = true;
-    }
+      }  
+      else
+        if(this.routineParent)
+          await this.leaveParent(); 
 
     this.hideEnlarged();
 
@@ -1482,6 +1481,20 @@ export class Widget extends StateManaged {
 
   async onPropertyChange(property, oldValue, newValue) {
     if(property == 'parent') {
+      if(this.get('type') == 'pile') {
+        for(const child of this.childArray) {
+          if(child.triggerleaveParent == true) {
+            await child.leaveParent();
+            delete this.triggerleaveParent;
+          }
+        }
+      } else {
+        if(this.triggerleaveParent == true) {
+          await this.leaveParent();
+          delete this.triggerleaveParent;
+        }
+      }
+
       if(oldValue) {
         const oldParent = widgets.get(oldValue);
         await oldParent.onChildRemove(this);
