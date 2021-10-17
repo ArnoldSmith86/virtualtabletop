@@ -5,6 +5,8 @@ import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 
+const readOnlyProperties = new Set(['_absolutex', '_absolutey', '_ancestor']);
+
 export class Widget extends StateManaged {
   constructor(id) {
     const div = document.createElement('div');
@@ -58,7 +60,9 @@ export class Widget extends StateManaged {
     this.domElement.addEventListener('contextmenu', e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseenter',  e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
-    this.domElement.addEventListener("touchstart", e => this.touchstart());
+    this.domElement.addEventListener('mousedown',  e => this.selected(), false);
+    this.domElement.addEventListener('mouseup',  e => this.notSelected(), false);
+    this.domElement.addEventListener("touchstart", e => this.touchstart(), false);
     this.domElement.addEventListener("touchend", e => this.touchend(), false);
     
     this.touchstart = function() {
@@ -463,7 +467,7 @@ export class Widget extends StateManaged {
         const left       = `var (\\$)?(${identifier})(?:\\.(\\$)?(${identifier}))?`;
         const operation  = `${identifier}|[=+*/%<!>&|-]{1,3}`;
 
-        const regex      = `^${left} += +(?:${parameter}|(?:${parameter} +)?(🧮)?(${operation})(?: +${parameter})?(?: +${parameter})?(?: +${parameter})?)(?: +//.*)?`;
+        const regex      = `^${left} += +(?:${parameter}|(?:${parameter} +)?(🧮)?(${operation})(?: +${parameter})?(?: +${parameter})?(?: +${parameter})?)(?: *|(?: +//.*))?`;
 
         const match = a.match(new RegExp(regex + '\x24')); // the minifier doesn't like a "$" here
 
@@ -533,14 +537,22 @@ export class Widget extends StateManaged {
             const result = await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections, (depth || 0) + 1);
             variables[a.variable] = result.variable;
             collections[a.collection] = result.collection;
+
             if(jeRoutineLogging) {
               const theWidget = this.isValidID(a.widget) && a.widget != this.get('id') ? `in ${a.widget}` : '';
-              jeLoggingRoutineOperationSummary( `${a.routine} ${theWidget} and return ${a.variable}`, `${JSON.stringify(variables[a.variable])}`)
-        }
+              if (a.return) {
+                let returnCollection = result.collection.map(w=>w.get('id')).join(',');
+                if(!result.collection.length || result.collection.length >= 5)
+                  returnCollection = `(${result.collection.length} widgets)`;
+                jeLoggingRoutineOperationSummary(
+                  `${a.routine} ${theWidget} and return variable ${a.variable} and collection ${a.collection}`,
+                  `${JSON.stringify(variables[a.variable])}; ${JSON.stringify(result.collection)}`)
+              } else {
+                jeLoggingRoutineOperationSummary( `${a.routine} ${theWidget} and abort caller processing`)
+              }
+            }
           }
         }
-        if(!a.return)
-          break;
       }
 
       if(a.func == 'CANVAS') {
@@ -992,7 +1004,7 @@ export class Widget extends StateManaged {
       if(a.func == 'SELECT') {
         setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all' });
         if(a.source == 'all' || isValidCollection(a.source)) {
-          if([ 'add', 'set' ].indexOf(a.mode) == -1)
+          if([ 'add', 'set', 'remove', 'intersect' ].indexOf(a.mode) == -1)
             problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
           let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(function(w) {
             if(w.isBeingRemoved)
@@ -1014,13 +1026,22 @@ export class Widget extends StateManaged {
             if(a.relation != '==')
               problems.push(`Warning: Relation ${a.relation} interpreted as ==.`);
             return w.get(a.property) === a.value;
-          }).slice(0, a.max).concat(a.mode == 'add' ? collections[a.collection] || [] : []);
+          });
 
           // resolve piles
           if(a.type != 'pile') {
             c.filter(w=>w.get('type')=='pile').forEach(w=>c.push(...w.children()));
             c = c.filter(w=>w.get('type')!='pile');
           }
+
+          c = c.slice(0, a.max); // a.mode == 'set'
+          if(a.mode == 'intersect')
+            c = collections[a.collection] ? collections[a.collection].filter(value => c.includes(value)) : [];
+          else if(a.mode == 'remove')
+            c = collections[a.collection] ? collections[a.collection].filter(value => !c.includes(value)) : [];
+          else if(a.mode == 'add')
+            c = c.concat(collections[a.collection] || []);
+
           collections[a.collection] = [...new Set(c)];
 
           if(a.sortBy)
@@ -1030,7 +1051,7 @@ export class Widget extends StateManaged {
             let selectedWidgets = collections[a.collection].map(w=>w.get('id')).join(',');
             if(!collections[a.collection].length || collections[a.collection].length >= 5)
               selectedWidgets = `(${collections[a.collection].length} widgets)`;
-            jeLoggingRoutineOperationSummary(`widgets ${a.type == 'all' ? '' : 'a.type'} with '${a.property}' ${a.relation} ${JSON.stringify(a.value)} from '${a.source}'`, `${a.mode} ${JSON.stringify(a.collection)} = ${selectedWidgets}`);
+            jeLoggingRoutineOperationSummary(`${a.type == 'all' ? '' : a.type} widgets with '${a.property}' ${a.relation} ${JSON.stringify(a.value)} from '${a.source}'`, `${a.mode} ${JSON.stringify(a.collection)} = ${selectedWidgets}`);
           }
         }
       }
@@ -1043,6 +1064,8 @@ export class Widget extends StateManaged {
         }
         if((a.property == 'parent' || a.property == 'deck') && a.value !== null && !widgets.has(a.value)) {
           problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
+        } else if (readOnlyProperties.has(a.property)) {
+          problems.push(`Tried setting read-only property ${a.property}.`);
         } else if (a.property == 'id' && isValidCollection(a.collection)) {
           for(const oldWidget of collections[a.collection]) {
             const oldState = JSON.stringify(oldWidget.state);
@@ -1063,7 +1086,12 @@ export class Widget extends StateManaged {
           }
         } else if(isValidCollection(a.collection)) {
           for(const w of collections[a.collection]) {
-            await w.set(String(a.property), compute(a.relation, null, w.get(String(a.property)), a.value));
+            if(a.relation == '+' && w.get(String(a.property)) == null)
+              a.relation = '=';
+            if(a.relation == '+' && a.value == null)
+              problems.push(`null value being appended, SET ignored`);
+            else
+              await w.set(String(a.property), compute(a.relation, null, w.get(String(a.property)), a.value));
           }
         }
         if(jeRoutineLogging)
@@ -1179,7 +1207,11 @@ export class Widget extends StateManaged {
 
       if(!jeRoutineLogging && problems.length)
         console.log(problems);
-    }
+
+      if(a.func == 'CALL' && !a.return) {
+        break
+      }
+    } // End iterate over functions in routine
 
     if(jeRoutineLogging) jeLoggingRoutineEnd(variables, collections);
 
@@ -1197,8 +1229,23 @@ export class Widget extends StateManaged {
     return { variable: variables.result, collection: collections.result || [] };
   }
 
+  get(property) {
+    if(property == '_ancestor') {
+      if(widgets.has(this.get('parent')) && widgets.get(this.get('parent')).get('type')=='pile') {
+        return widgets.get(this.get('parent')).get('_ancestor');
+      } else {
+        return this.get('parent');
+      }
+    } else if(property == '_absolutex' || property == '_absolutey') {
+      return this.absoluteCoord(property == '_absolutex' ? 'x' : 'y')
+    } else {
+      return super.get(property);
+    }
+  }
+  
   hideEnlarged() {
-    $('#enlarged').classList.add('hidden');
+    if (!this.domElement.className.match(/selected/))
+      $('#enlarged').classList.add('hidden');
   }
 
   isValidID(id, problems) {
@@ -1310,6 +1357,9 @@ export class Widget extends StateManaged {
     }
 
     this.hideEnlarged();
+    if(this.domElement.classList.contains('longtouch'))
+      this.domElement.classList.remove('longtouch');
+
     await this.updatePiles();
   }
 
@@ -1410,7 +1460,15 @@ export class Widget extends StateManaged {
     } else
       problems.push(`Tried setting text property which doesn't exist for ${this.id}.`);
   }
-
+  
+  selected() {
+    this.domElement.classList.add('selected');
+  }
+  
+  notSelected() {
+    this.domElement.classList.remove('selected');
+  }
+  
   showEnlarged(event) {
     if(this.get('enlarge')) {
       const e = $('#enlarged');
@@ -1461,7 +1519,10 @@ export class Widget extends StateManaged {
       if(typeof w1.get(key) == 'number')
         return w1.get(key) - w2.get(key);
       else
-        return w1.get(key).localeCompare(w2.get(key), locales, options);
+        if(w1.get(key) === null)
+          return w2.get(key) === null ?  0 : -1;
+        else
+          return w2.get(key) === null ? 1 : w1.get(key).localeCompare(w2.get(key), locales, options);
     });
     if(reverse)
       children = children.reverse();
@@ -1501,8 +1562,9 @@ export class Widget extends StateManaged {
           if(this.get('owner') !== null)
             pile.owner = this.get('owner');
           addWidgetLocal(pile);
-          await this.set('parent', pile.id);
           await widget.set('parent', pile.id);
+          await this.bringToFront();
+          await this.set('parent', pile.id);
           break;
         }
 
