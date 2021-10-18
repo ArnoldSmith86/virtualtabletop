@@ -27,13 +27,12 @@ class Seat extends Widget {
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
-    if((delta.text||delta.index||delta.player) !== undefined)
-      var displayedText = delta.text || this.get('text')
-      if (displayedText == 'seatIndex')
-        displayedText = this.get('index')
-      if (displayedText == 'playerName')
-        displayedText = this.get('player')
+    if((delta.text||delta.index||delta.player) !== undefined){
+      var displayedText = delta.text || this.get('text') ||""
+      displayedText = displayedText.replaceAll('seatIndex',this.get('index'))
+      displayedText = displayedText.replaceAll('playerName',this.get('player'))
       setText(this.domElement, displayedText);
+    }
     if(delta.player !== undefined)
       this.updateLinkedWidgets();
   }
