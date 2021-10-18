@@ -654,7 +654,6 @@ export class Widget extends StateManaged {
                 cWidget.movedByButton = true; // overrides dropLimit
                 await cWidget.getRoutineParent();
                 await cWidget.moveToHolder(widgets.get(parent));
-                await cWidget.leaveParent;
               }
 
               // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
