@@ -19,6 +19,10 @@
   color: black;
 }
 
+#addOverlay > .category > #uploadBoard, #uploadToken {
+  margin-bottom: 12px;
+}
+
 #addOverlay .widget, #addOverlay textarea {
   cursor: pointer;
 }
