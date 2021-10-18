@@ -652,7 +652,6 @@ export class Widget extends StateManaged {
               if(parent) {
                 // use moveToHolder so that CLONE triggers onEnter and similar features
                 cWidget.movedByButton = true; // overrides dropLimit
-                await cWidget.getRoutineParent();
                 await cWidget.moveToHolder(widgets.get(parent));
               }
 
