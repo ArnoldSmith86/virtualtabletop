@@ -923,7 +923,7 @@ export class Widget extends StateManaged {
               } else {
                 c.movedByButton = true; // overrides dropLimit
                 await c.getRoutineParent();
-                c.triggerleaveParent = true;
+                c.triggerLeaveParent = true;
                 await c.moveToHolder(target);
               }
             }
@@ -971,8 +971,8 @@ export class Widget extends StateManaged {
                 for(const c of cards) {
                   c.movedByButton = true; // overrides dropLimit
                   await c.getRoutineParent();
+                  c.triggerLeaveParent = true;
                   await c.moveToHolder(widgets.get(holder));
-                  await c.leaveParent();
                 }
               }
             } else {
@@ -1103,7 +1103,7 @@ export class Widget extends StateManaged {
             else {
               if(a.property == 'parent') {
                 await w.getRoutineParent();
-                w.triggerleaveParent = true;
+                w.triggerLeaveParent = true;
                 await w.set(String(a.property), compute(a.relation, null, w.get(String(a.property)), a.value));
               }
               else
@@ -1488,15 +1488,15 @@ export class Widget extends StateManaged {
     if(property == 'parent') {
       if(this.get('type') == 'pile') {
         for(const child of this.childArray) {
-          if(child.triggerleaveParent == true) {
+          if(child.triggerLeaveParent == true) {
             await child.leaveParent();
-            delete this.triggerleaveParent;
+            delete this.triggerLeaveParent;
           }
         }
       } else {
-        if(this.triggerleaveParent == true) {
+        if(this.triggerLeaveParent == true) {
           await this.leaveParent();
-          delete this.triggerleaveParent;
+          delete this.triggerLeaveParent;
         }
       }
 
