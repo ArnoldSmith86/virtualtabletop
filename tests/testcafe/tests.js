@@ -294,8 +294,11 @@ test('Dynamic expressions', async t => {
   await t
     .click('#addButton')
     .click('#addCustomWidgetOverlay')
-    .typeText('#widgetText', button, { replace: true, paste: true })
-    .click('#addWidget')
+    .click('#editButton')
+    .click('#roomArea', { offsetX: 1, offsetY: 1 })
+    .click('#manualEdit')
+    .typeText('#editWidgetJSON', button, { replace: true, paste: true })
+    .click('#updateWidget')
     .pressKey('ctrl+j')
     .click('[id="jyo6"]')
   const log = await Selector('#jeLog').textContent
