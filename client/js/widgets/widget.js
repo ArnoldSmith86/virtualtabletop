@@ -1386,16 +1386,19 @@ export class Widget extends StateManaged {
     this.routineParent = this.get('_ancestor');
   }
 
+  async reduceNumbDraggedChildren() {
+    const numbDraggedChildren = widgets.get(this.routineParent).get('numbDraggedChildren');
+    widgets.get(this.routineParent).set('numbDraggedChildren', numbDraggedChildren - 1);
+    if(numbDraggedChildren <= 1)
+      widgets.get(this.routineParent).set('numbDraggedChildren', 0);
+  }
+
   async leaveParent() {
     if(this.get('type') == 'pile') {
       for(const widget of this.childArray) {
         if(widget.routineParent != null && widget.get('fixedParent') != true) {
-          if(widget.moved == true) {
-            const numbDraggedChildren = widgets.get(widget.routineParent).get('numbDraggedChildren');
-            widgets.get(widget.routineParent).set('numbDraggedChildren', numbDraggedChildren - 1);
-            if(numbDraggedChildren <= 1)
-              widgets.get(widget.routineParent).set('numbDraggedChildren', 0);
-          }
+          if(widget.moved == true)
+            widget.reduceNumbDraggedChildren();
           if(widget.routineParent != widget.get('_ancestor') && Array.isArray(widgets.get(widget.routineParent).get('leaveRoutine')))
             await (widgets.get(widget.routineParent)).evaluateRoutine('leaveRoutine', {}, { child: [ widget ] });
           delete widget.moved; // decrements numbDraggedChildren
@@ -1403,12 +1406,8 @@ export class Widget extends StateManaged {
       }
     } else {
       if(this.routineParent != null && this.get('fixedParent') != true) {
-        if(this.moved == true) {
-          const numbDraggedChildren = widgets.get(this.routineParent).get('numbDraggedChildren');
-          widgets.get(this.routineParent).set('numbDraggedChildren', numbDraggedChildren - 1);
-          if(numbDraggedChildren <= 1)
-            widgets.get(this.routineParent).set('numbDraggedChildren', 0);
-        }
+        if(this.moved == true)
+          this.reduceNumbDraggedChildren();
         if(Array.isArray(widgets.get(this.routineParent).get('leaveRoutine')) && (this.routineParent != this.get('_ancestor') || this.deleted == true))
           await (widgets.get(this.routineParent)).evaluateRoutine('leaveRoutine', {}, { child: [ this ] });
       }
@@ -1433,13 +1432,21 @@ export class Widget extends StateManaged {
       this.reverse = true;
 
       await this.checkParent();
-      
+
       if(this.hoverTarget) {
         if(this.hoverTarget.id != this.routineParent)
           await this.leaveParent();
+        else {
+          if(this.get('type') == 'pile') {
+            for(const widget of this.childArray)
+              await widget.reduceNumbDraggedChildren();
+          }
+          else
+            await this.reduceNumbDraggedChildren(); 
+        }
         await this.moveToHolder(this.hoverTarget);
         this.hoverTarget.domElement.classList.remove('droptarget');
-      }  
+      }
       else
         if(this.routineParent)
           await this.leaveParent(); 
