@@ -1289,7 +1289,7 @@ export class Widget extends StateManaged {
     var pileChildren=[];
     piles.forEach(w=>pileChildren.push(...w.children()));
     var holderChildren = pileChildren.length + notPiles.length;
-    if(this.movedByButton == true || dropLimit == -1 || dropLimit >= (holderChildren + holder.get('numbDraggedChildren') + holder == this.routineParent ? 0 : Math.max(this.childArray.length, 1)) || holder == this.routineParent) 
+    if(this.movedByButton == true || dropLimit == -1 || dropLimit >= (holderChildren + holder.get('numbDraggedChildren') + Math.max(this.childArray.length, 1)) || holder == this.routineParent) 
 	  await this.set('parent', holder.get('id'));
     delete this.movedByButton;
   }
