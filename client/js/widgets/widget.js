@@ -1289,7 +1289,7 @@ export class Widget extends StateManaged {
     var pileChildren=[];
     piles.forEach(w=>pileChildren.push(...w.children()));
     var holderChildren = pileChildren.length + notPiles.length;
-    if(this.movedByButton == true || dropLimit == -1 || dropLimit >= (holderChildren + holder.get('numbDraggedChildren') + Math.max(this.childArray.length, 1)) || holder == this.routineParent) 
+    if(this.movedByButton || dropLimit == -1 || dropLimit >= (holderChildren + holder.get('numbDraggedChildren') + Math.max(this.childArray.length, 1)) || holder == this.routineParent) 
 	  await this.set('parent', holder.get('id'));
     delete this.movedByButton;
   }
@@ -1396,7 +1396,7 @@ export class Widget extends StateManaged {
     if(this.get('type') == 'pile') {
       for(const widget of this.childArray) {
         if(widget.routineParent != null && widget.get('fixedParent') != true) {
-          if(widget.moved == true)
+          if(widget.moved)
             widget.reduceNumbDraggedChildren();
           if(widget.routineParent != widget.get('_ancestor') && Array.isArray(widgets.get(widget.routineParent).get('leaveRoutine')))
             await (widgets.get(widget.routineParent)).evaluateRoutine('leaveRoutine', {}, { child: [ widget ] });
@@ -1405,9 +1405,9 @@ export class Widget extends StateManaged {
       }
     } else {
       if(this.routineParent != null && this.get('fixedParent') != true) {
-        if(this.moved == true)
+        if(this.moved)
           this.reduceNumbDraggedChildren();
-        if(Array.isArray(widgets.get(this.routineParent).get('leaveRoutine')) && (this.routineParent != this.get('_ancestor') || this.deleted == true))
+        if(Array.isArray(widgets.get(this.routineParent).get('leaveRoutine')) && (this.routineParent != this.get('_ancestor') || this.deleted))
           await (widgets.get(this.routineParent)).evaluateRoutine('leaveRoutine', {}, { child: [ this ] });
       }
     }
@@ -1488,13 +1488,13 @@ export class Widget extends StateManaged {
     if(property == 'parent') {
       if(this.get('type') == 'pile') {
         for(const child of this.childArray) {
-          if(child.triggerLeaveParent == true) {
+          if(child.triggerLeaveParent) {
             await child.leaveParent();
             delete this.triggerLeaveParent;
           }
         }
       } else {
-        if(this.triggerLeaveParent == true) {
+        if(this.triggerLeaveParent) {
           await this.leaveParent();
           delete this.triggerLeaveParent;
         }
@@ -1512,7 +1512,7 @@ export class Widget extends StateManaged {
           if(newValue != this.routineParent) {
             if(this.get('type') == 'pile') {
               var childArray = [...this.childArray];
-              if(this.reverse == true) {
+              if(this.reverse) {
                 childArray = childArray.reverse();
                 delete this.reverse
               }
