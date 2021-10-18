@@ -11,11 +11,12 @@ class Seat extends Widget {
 
       index: 1,
       turn: false,
-      player: '',
-      display: '',
-      displayEmpty: '',
+      player: null,
+      display: null,
+      displayEmpty: null,
       displayTurn: true,
       hideWhenUnused: false,
+      hand: null,
 
       color: '#999999',
       colorEmpty: '#999999',
