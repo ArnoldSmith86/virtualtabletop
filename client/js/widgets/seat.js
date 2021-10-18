@@ -12,8 +12,8 @@ class Seat extends Widget {
       index: 1,
       turn: false,
       player: null,
-      display: null,
-      displayEmpty: null,
+      display: 'playerName',
+      displayEmpty: 'seatIndex',
       displayTurn: true,
       hideWhenUnused: false,
       hand: null,
@@ -21,14 +21,19 @@ class Seat extends Widget {
       color: '#999999',
       colorEmpty: '#999999',
       layer: 1,
-      text: '1'
+      text:  'seatIndex'
     });
   }
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
-    if(delta.text !== undefined)
-      setText(this.domElement, delta.text);
+    if((delta.text||delta.index||delta.player) !== undefined)
+      var displayedText = delta.text || this.get('text')
+      if (displayedText == 'seatIndex')
+        displayedText = this.get('index')
+      if (displayedText == 'playerName')
+        displayedText = this.get('player')
+      setText(this.domElement, displayedText);
     if(delta.player !== undefined)
       this.updateLinkedWidgets();
   }
@@ -81,16 +86,13 @@ class Seat extends Widget {
   //need to add a condition here to change the turn if the turn is in a seat that is empty
   async setPlayer() {
     if(this.get('player') == '') {
-      var display = this.get('display') || this.get('index')
-      if(this.get('display') == 'playerName')
-        var display = playerName
       await this.set('player', playerName);
       await this.set('color', playerColor);
-      await this.set('text', display)
+      await this.set('text', this.get('display'))
     } else {
       await this.set('player', '');
       await this.set('color', this.get('colorEmpty') || '#999999');
-      await this.set('text', this.get('displayEmpty') || this.get('index'));
+      await this.set('text', this.get('displayEmpty'));
     }
   }
 
