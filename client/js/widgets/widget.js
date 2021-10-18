@@ -1388,7 +1388,7 @@ export class Widget extends StateManaged {
   async reduceNumbDraggedChildren() {
     const numbDraggedChildren = widgets.get(this.routineParent).get('numbDraggedChildren');
     widgets.get(this.routineParent).set('numbDraggedChildren', numbDraggedChildren - 1);
-    if(numbDraggedChildren <= 1)
+    if(numbDraggedChildren < 1)
       widgets.get(this.routineParent).set('numbDraggedChildren', 0);
   }
 
