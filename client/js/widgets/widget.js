@@ -523,14 +523,6 @@ export class Widget extends StateManaged {
         }
       }
 
-      document.getElementById("volume").addEventListener("input", function(){ // not sure where this should go, allows volume to be adjusted in real time
-        var allAudios = document.querySelectorAll('audio');
-        var pVolCtrl = document.getElementById('volume');
-        allAudios.forEach(function(audio){
-          audio.volume = audio.getAttribute('origVol') * pVolCtrl.value / 100;
-        });
-      });
-
       if(a.func == 'AUDIO') {
         setDefaults(a, { source: '', type: 'audio/mpeg', volume: 0.5 });
         if(a.source !== undefined) {
@@ -1440,10 +1432,6 @@ export class Widget extends StateManaged {
   }
 
   async onPropertyChange(property, oldValue, newValue) {
-    if(property == 'audio')
-      if(newValue)
-        await this.addAudio();
-
     if(property == 'parent') {
       if(oldValue) {
         const oldParent = widgets.get(oldValue);
