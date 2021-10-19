@@ -429,39 +429,22 @@ export class Widget extends StateManaged {
           problems.push('String could not be interpreted as expression. Please check your syntax and note that many characters have to be escaped.');
         }
       }
-      
-      document.getElementById("volume").addEventListener("input", function(){ // not sure where this should go
+
+      document.getElementById("volume").addEventListener("input", function(){ // not sure where this should go, allows volume to be adjusted in real time
         var allAudios = document.querySelectorAll('audio');
         var pVolCtrl = document.getElementById('volume');
         allAudios.forEach(function(audio){
           audio.volume = audio.getAttribute('origVol') * pVolCtrl.value / 100;
         });
-      }); 
-		
-	if(a.func == 'AUDIO') {
-    setDefaults(a, { source: '', type: 'audio/mpeg', volume: 0.5 });
-    if(a.source !== undefined) {
-      var allAudios = document.querySelectorAll('audio');
-      allAudios.forEach(function(audio){audio.parentNode.removeChild(audio);});
-      var pVolCtrl = document.getElementById('volume');
-      pVolCtrl = (((10 ** (pVolCtrl.value / 48)) / 10) - 0.1) // converts to log scale with zero = no volume
-      var pVol = Math.min(a.volume * pVolCtrl, 1); 
-      var audioElement = document.createElement('audio');
-      audioElement.setAttribute('class', 'audio');
-      audioElement.setAttribute('src', a.source);
-      audioElement.setAttribute('type', a.type);audioElement.setAttribute('origVol', a.volume);
-      audioElement.volume = pVol;
-      audioElement.preload = 'metadata';
-      document.body.appendChild(audioElement);
-      audioElement.play();
-      setInterval(function(){
-        if(audioElement.currentTime>=0){
-          audioElement.pause();
-          clearInterval();
-        }}, 10000); // limits to 10 sec
-    }
-  }
-      
+      });
+
+      if(a.func == 'AUDIO') {
+        setDefaults(a, { source: '', type: 'audio/mpeg', volume: 0.5 });
+        if(a.source !== undefined) {
+          this.set('audio', 'source: ' + a.source + ', type: ' + a.type + ', ' + 'volume: ' + a.volume);
+        }
+      }
+
       if(a.func == 'CALL') {
         setDefaults(a, { widget: this.get('id'), routine: 'clickRoutine', 'return': true, arguments: {}, variable: 'result', collection: 'result' });
         if(!a.routine.match(/Routine$/)) {
@@ -1037,6 +1020,34 @@ export class Widget extends StateManaged {
 
   hideEnlarged() {
     $('#enlarged').classList.add('hidden');
+  }
+
+  async addAudio(){
+    const audioString = this.get('audio');
+    const audioArray = audioString.split(/:\s|,\s/);
+    const source = audioArray[1];
+    const type = audioArray[3];
+    const volume = audioArray[5];
+
+    var pVolCtrl = document.getElementById('volume');
+    pVolCtrl = (((10 ** (pVolCtrl.value / 48)) / 10) - 0.1) // converts to log scale with zero = no volume
+    var pVol = Math.min(volume * pVolCtrl, 1);
+    var audioElement = document.createElement('audio');
+    audioElement.setAttribute('class', 'audio');
+    audioElement.setAttribute('src', source);
+    audioElement.setAttribute('type', type);audioElement.setAttribute('origVol', volume);
+    audioElement.volume = pVol;
+    audioElement.preload = 'metadata';
+    document.body.appendChild(audioElement);
+    audioElement.play();
+    this.set('audio', null);
+    setInterval(function(){
+      if(audioElement.currentTime>=0){
+        audioElement.pause();
+        clearInterval();
+        if(audioElement.parentNode)
+          audioElement.parentNode.removeChild(audioElement);
+      }}, 10000); // limits to 10 sec
   }
 
   isValidID(id, problems) {
