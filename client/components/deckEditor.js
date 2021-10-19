@@ -52,6 +52,7 @@ export const deckEditor = {
     },
     template: `
       <div class="deckEdit">
+        <h1>Edit deck</h1>
         <button @click="uploadCards()">Upload Card Image(s)</button>
         <table id="cardTypesList">
           <tbody><tr><th>ID</th><th>Properties</th><th>Count</th></tr></tbody>
@@ -59,9 +60,12 @@ export const deckEditor = {
               <td><input class="id" :value="typeID" :data-old-i-d="typeID"></td>
               <td class="properties">
                 <div v-for="prop in dynamicProperties">
-                  <label>{{ prop.name }}</label>
-                  <input :value="typeObject[prop.name] || '' ">
-                  <button v-if="prop.type == 'image'" class="uploadAsset" @click="upload(typeID, prop.name)">⬆️ Upload</button>
+                  <label>{{ prop.name }}</label>&nbsp;
+                  <input v-if="((typeof typeObject[prop.name] === 'string') && (isNaN(typeObject[prop.name]) === true) && (typeObject[prop.name] !== 'true') && (typeObject[prop.name] !== 'false') )" :value="typeObject[prop.name].replaceAll('\\n', '\\u005Cn')">
+                  <input v-else-if="typeof typeObject[prop.name] === 'string'" :value="'\\u0022'+typeObject[prop.name]+'\\u0022'">
+                  <input v-else-if="typeObject[prop.name] !== undefined ||  typeObject[prop.name] !== null" :value="typeObject[prop.name]">
+                  <input v-else :value=null>
+                  <button v-if="prop.type == 'image'" class="uploadAsset prettyButton" @click="upload(typeID, prop.name)">Upload</button>
                 </div>
               </td>
               <td><input class="count" type="number" :value="countCardType(typeID)" :data-old-value="countCardType(typeID)" min="0" max="1000"></td>

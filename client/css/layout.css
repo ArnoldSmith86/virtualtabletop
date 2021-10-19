@@ -28,6 +28,20 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+button {
+  border:5px;
+  color:white;
+  background-color: var(--VTTblue);
+  padding: 5px;
+  border-radius: 5px;
+  background-repeat: no-repeat;
+  margin:1px;
+}
+
+button:hover {
+  background-color: var(--VTTblueDark);
+}
+
 #toolbar {
   display: inline-flex;
   background: var(--VTTblue);
@@ -35,7 +49,8 @@ body {
   width: 100%;
   position: fixed;
 
-  top: calc((100vh - var(--roomHeight) * var(--scale)) / 2 + var(--roomHeight) * var(--scale) - var(--toolbarSize) / 2 - 1px);
+  top: calc((calc(var(--vh, 1vh) * 100) - var(--roomHeight) * var(--scale)) / 2 + var(--roomHeight) * var(--scale) - var(--toolbarSize) / 2 - 1px);
+
   left: 0;
   width: 100%;
   height: var(--toolbarSize);
@@ -48,7 +63,8 @@ body {
   width: calc(var(--roomWidth) * var(--scale));
   height: calc(var(--roomHeight) * var(--scale));
 
-  top: calc((100vh - var(--roomHeight) * var(--scale)) / 2 - var(--toolbarSize) / 2);
+  top: calc((calc(var(--vh, 1vh) * 100) - var(--roomHeight) * var(--scale)) / 2 - var(--toolbarSize) / 2);
+
   left: 0;
   z-index: 1;
 }
@@ -202,6 +218,7 @@ body.aspectTooGood #toolbar {
   left: calc((100vw - var(--roomWidth) * var(--scale)) / 2 - var(--toolbarSize) / 2 + 1px);
   width: var(--toolbarSize);
   height: calc(var(--scale) * var(--roomHeight));
+  display: block;
 }
 
 body.aspectTooGood .toolbarButton .tooltip {
@@ -234,7 +251,7 @@ body.aspectTooGood #hideToolbarButton {
   top: 0;
   height: 100%;
   width: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.75);
   flex-direction: column;
   padding: 5% 10%;
   box-sizing: border-box;
@@ -268,6 +285,30 @@ body.aspectTooGood #hideToolbarButton {
   filter: blur(5px);
 }
 
+/*scroll bar*/
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: white;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--VTTblue);
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--VTTblueDark);
+}
+
 .surface {
   position: relative;
   width: var(--roomWidth);
@@ -285,7 +326,6 @@ body.aspectTooGood #hideToolbarButton {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
-  will-change: transform;
   touch-action: none;
   user-select: none;
   -moz-user-select: none;
@@ -334,7 +374,7 @@ body.aspectTooGood #hideToolbarButton {
 }
 
 #hideToolbarButton {
-  background-image:url(/i/icons-white/hide side bar.svg);
+  background-image:url(/i/icons-white/hide-side-bar.svg);
 }
 
 #aboutButton {
@@ -417,6 +457,7 @@ body.aspectTooGood #hideToolbarButton {
   background-size: 20px 70%;
   background-position:  2.5px center;
 }
+
 .update:hover {
   background-color: var(--VTTblueDark);
 }
@@ -427,14 +468,30 @@ body.aspectTooGood #hideToolbarButton {
   background-position:  2.5px center;
 }
 
-body.aspectTooGood #toolbar {
-	display: block;
-}
-
 body.aspectTooGood .volumeWrap {
 	display: flex;
-  transform: translate(-8px, 0px) rotate(0deg); 
-  }
+  transform: translate(-8px, 0px) rotate(0deg);
+}
+
 body.aspectTooGood [type='range'] {
-  transform: translate(-50%, -50%) rotate(-90deg);  
+  transform: translate(-50%, -50%) rotate(-90deg);
+}
+
+button.top {
+  padding: 0px;
+  margin: 0.5px;
+  text-align: center;
+}
+
+button.add {
+  padding: 1.7em 1em 5px 1em;
+  text-align: center;
+  background-image:url(/i/icons-white/plus-solid-svg.svg);
+  background-size: 1em;
+  background-position:  center 0.35em;
+}
+
+button:disabled {
+  background: #808080;
+  color: #d3d3d3;
 }

@@ -1,4 +1,4 @@
-export const VERSION = 3;
+export const VERSION = 4;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -29,6 +29,8 @@ function updateProperties(properties, v) {
   for(const property in properties)
     if(property.match(/Routine$/))
       updateRoutine(properties[property], v);
+
+  v<4 && v4ModifyDropTargetEmptyArray(properties);
 }
 
 function updateRoutine(routine, v) {
@@ -180,7 +182,7 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
         if(typeof op[o] === 'string' && op[o].match(/^\$\{[^}]+\}$/))
           return op[o];
         if(typeof op[o] === 'string')
-          return `'${escapeString(op[o], /^[a-zA-Z0-9,.() _-]$/)}'`;
+          return `'${escapeString(op[o], /^[ !#-&(-[\]-~]$/)}'`;
         return String(op[o]);
       };
 
@@ -261,3 +263,9 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
   for(const o of operationsToSplice.sort((a,b)=>a.index==b.index?b.order-a.order:b.index-a.index))
     routine.splice(o.index, 0, o.operation);
 }
+
+function v4ModifyDropTargetEmptyArray(properties) {
+  if(Array.isArray(properties.dropTarget) && properties.dropTarget.length == 0)
+    properties.dropTarget = {};
+}
+

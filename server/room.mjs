@@ -26,6 +26,11 @@ export default class Room {
     this.sendMetaUpdate();
     this.state._meta.deltaID = this.deltaID;
     player.send('state', this.state);
+
+    if(this.enableTracing) {
+      this.trace('addPlayer', { player: player.name });
+      player.send('tracing', 'enable');
+    }
   }
 
   async addState(id, type, src, srcName, addAsVariant) {
@@ -120,6 +125,8 @@ export default class Room {
   }
 
   broadcast(func, args, exceptPlayer) {
+    if(func != 'mouse')
+      this.trace('broadcast', { func, args, exceptPlayer: exceptPlayer?.name });
     for(const player of this.players)
       if(player != exceptPlayer)
         player.send(func, args);
@@ -174,7 +181,7 @@ export default class Room {
       if(includeAssets)
         for(const asset of this.getAssetList(state))
           if(fs.existsSync(path.resolve() + '/save' + asset))
-            zip.file(asset, fs.readFileSync(path.resolve() + '/save' + asset));
+            zip.file(asset.substr(1), fs.readFileSync(path.resolve() + '/save' + asset));
     }
 
     const zipBuffer = await zip.generateAsync({type:'nodebuffer', compression: 'DEFLATE'});
@@ -307,8 +314,8 @@ export default class Room {
     this.broadcast('delta', delta, player);
   }
 
-  receiveInvalidDelta(player, delta, widgetID) {
-    Logging.log(`WARNING: received conflicting delta data for widget ${widgetID} from player ${player.name} in room ${this.id} - sending game state at ${this.deltaID}`);
+  receiveInvalidDelta(player, delta, widgetID, property) {
+    Logging.log(`WARNING: received conflicting delta data for property ${property} of widget ${widgetID} from player ${player.name} in room ${this.id} - sending game state at ${this.deltaID}`);
     this.state._meta.deltaID = ++this.deltaID;
     player.send('state', this.state);
   }
@@ -319,8 +326,13 @@ export default class Room {
   }
 
   removePlayer(player) {
+    this.trace('removePlayer', { player: player.name });
     Logging.log(`removing player ${player.name} from room ${this.id}`);
+
     this.players = this.players.filter(e => e != player);
+    if(player.name.match(/^Guest/) && !Object.values(this.state).filter(w=>w.owner==player.name||Array.isArray(w.owner)&&w.owner.indexOf(player.name)!=-1).length)
+      delete this.state._meta.players[player.name];
+
     if(this.players.length == 0) {
       this.unload();
       this.unloadCallback();
@@ -354,6 +366,7 @@ export default class Room {
   }
 
   setState(state) {
+    this.trace('setState', { state });
     const meta = this.state._meta;
     this.state = state;
     if(this.state._meta)
@@ -362,7 +375,31 @@ export default class Room {
     this.broadcast('state', state);
   }
 
+  trace(source, payload) {
+    if(!this.enableTracing && source == 'client' && source == 'client' && payload.type == 'enable') {
+      this.enableTracing = true;
+      this.tracingFilename = `${path.resolve()}/save/${this.id}-${+new Date}.trace`;
+      this.broadcast('tracing', 'enable');
+      payload.initialState = this.state;
+      fs.writeFileSync(this.tracingFilename, '[\n');
+      Logging.log(`tracing enabled for room ${this.id} to file ${this.tracingFilename}`);
+    }
+    if(this.enableTracing) {
+      payload.servertime = +new Date;
+      payload.source = source;
+      payload.serverDeltaID = this.deltaID;
+      const suffix = source == 'unload' ? '\n]' : ',\n';
+      fs.appendFileSync(this.tracingFilename, `  ${JSON.stringify(payload)}${suffix}`);
+
+      if(source == 'unload') {
+        Logging.log(`tracing finished for room ${this.id} to file ${this.tracingFilename}`);
+        this.enableTracing = false;
+      }
+    }
+  }
+
   unload() {
+    this.trace('unload', {});
     if(Object.keys(this.state).length > 1 || Object.keys(this.state._meta.states).length) {
       Logging.log(`unloading room ${this.id}`);
       this.writeToFilesystem();

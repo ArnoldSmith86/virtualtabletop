@@ -19,7 +19,7 @@ async function inputHandler(name, e) {
 
   const editMovable = edit || typeof jeEnabled == 'boolean' && jeEnabled && e.ctrlKey;
 
-  if(!mouseTarget && [ "TEXTAREA", "INPUT", "BUTTON", "OPTION", "LABEL" ].indexOf(e.target.tagName) != -1)
+  if(!mouseTarget && [ 'TEXTAREA', 'INPUT', 'BUTTON', 'OPTION', 'LABEL', 'SELECT' ].indexOf(e.target.tagName) != -1)
     if(!editMovable || !e.target.parentNode || !e.target.parentNode.className.match(/label/))
       return;
 
@@ -78,7 +78,10 @@ async function inputHandler(name, e) {
         else if(edit)
           editClick(widgets.get(target.id));
         else
-          await widgets.get(target.id).click();
+          if(!target.classList.contains('longtouch'))
+            await widgets.get(target.id).click();
+        else
+          widgets.get(target.id).domElement.classList.remove('longtouch');
       }
       delete mouseStatus[target.id];
     } else if(name == 'mousemove' || name == 'touchmove') {
