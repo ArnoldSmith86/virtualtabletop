@@ -1462,9 +1462,9 @@ function jeSelect(start, end, scrollToCursor) {
 // Set the text area to the formatted version of the given text and colorize.
 function jeSet(text, dontFocus) {
   try {
-    jeGetEditorContent(jePreProcessText(JSON.stringify(jePreProcessObject(JSON.parse(text)), null, '  ')));
+    jeSetEditorContent(jePreProcessText(JSON.stringify(jePreProcessObject(JSON.parse(text)), null, '  ')));
   } catch(e) {
-    jeGetEditorContent(text);
+    jeSetEditorContent(text);
   }
   if(!dontFocus)
     $('#jeText').focus();
