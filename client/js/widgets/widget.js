@@ -1168,6 +1168,10 @@ export class Widget extends StateManaged {
   }
 
   async onPropertyChange(property, oldValue, newValue) {
+    if(property == 'audio')
+      if(newValue)
+        await this.addAudio();
+
     if(property == 'parent') {
       if(oldValue) {
         const oldParent = widgets.get(oldValue);
