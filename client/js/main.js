@@ -261,12 +261,10 @@ window.onkeyup = function(event) {
   }
 }
 
-if(document.getElementById("volume")) {
-  document.getElementById("volume").addEventListener("input", function(){ // allows volume to be adjusted in real time
-    var allAudios = document.querySelectorAll('audio');
-    var pVolCtrl = document.getElementById('volume');
-    allAudios.forEach(function(audio){
-      audio.volume = audio.getAttribute('origVol') * pVolCtrl.value / 100;
-    });
+document.getElementById("volume").addEventListener("input", function(){ // allows volume to be adjusted in real time
+  var allAudios = document.querySelectorAll('audio');
+  var pVolCtrl = document.getElementById('volume');
+  allAudios.forEach(function(audio){
+    audio.volume = audio.getAttribute('origVol') * pVolCtrl.value / 100;
   });
-}
+});
