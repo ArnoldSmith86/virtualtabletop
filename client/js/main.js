@@ -215,6 +215,18 @@ onLoad(function() {
     if(overlay)
       showOverlay(overlay);
   });
+  
+  on('#muteButton', 'click', function(){
+    if(muted) {
+      document.getElementById('volume').value = unmuteVol;
+      document.getElementById('muteButton').classList.remove('muted');
+    } else {
+      unmuteVol = document.getElementById('volume').value;
+      document.getElementById("volume").value = 0;
+      document.getElementById('muteButton').classList.add('muted');
+    }
+    muted = !muted
+  });
 
   on('#fullscreenButton', 'click', function() {
     if(document.documentElement.requestFullscreen) {
