@@ -381,6 +381,14 @@ body.aspectTooGood #hideToolbarButton {
   background-image:url(/i/icons-white/info-circle-solid-svg.svg);
 }
 
+#muteButton {
+  background-image:url(/i/icons-white/mute-svg.svg);
+}
+
+#muteButton.toolbarButton.muted {
+  background-image:url(/i/icons-white/unmute-svg.svg);
+}
+
 /*Buttons css*/
 
 .prettyButton {
