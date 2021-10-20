@@ -222,6 +222,10 @@ onLoad(function() {
     if(muted) {
       document.getElementById('volume').value = unmuteVol;
       document.getElementById('muteButton').classList.remove('muted');
+      var allAudios = document.querySelectorAll('audio');
+      allAudios.forEach(function(audio){
+        audio.volume = audio.getAttribute('origVol')* unmuteVol / 100;
+      });
     } else {
       unmuteVol = document.getElementById('volume').value;
       document.getElementById("volume").value = 0;
