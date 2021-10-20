@@ -5,6 +5,8 @@ import { startWebSocket } from './connection.js';
 let scale = 1;
 let roomRectangle;
 let overlayActive = false;
+let muted = false;
+let unmuteVol = 30;
 
 var vmEditOverlay;
 
