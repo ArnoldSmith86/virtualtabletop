@@ -1278,12 +1278,15 @@ export class Widget extends StateManaged {
       audioElement.preload = 'metadata';
       document.body.appendChild(audioElement);
       audioElement.play();
-	  
+
+      setInterval(function(){
+        if(audioElement.currentTime>=0){
+          widget.set('audio', null);}}, 100);
+
       setInterval(function(){
         if(audioElement.currentTime>=0){
           audioElement.pause();
           clearInterval();
-          widget.set('audio', null);
           if(audioElement.parentNode)
             audioElement.parentNode.removeChild(audioElement);
         }}, 10000); // limits to 10 sec
