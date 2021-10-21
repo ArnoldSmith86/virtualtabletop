@@ -1,9 +1,11 @@
-import { $, removeFromDOM, toArray } from '../domhelpers.js';
+import { $, removeFromDOM, asArray } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
+
+const readOnlyProperties = new Set(['_absoluteX', '_absoluteY', '_ancestor']);
 
 export class Widget extends StateManaged {
   constructor(id) {
@@ -187,7 +189,7 @@ export class Widget extends StateManaged {
           targetDelta[key] = sourceDelta[key];
   }
 
-  applyInheritedValuesToDOM(inheritFrom, pushToArray) {
+  applyInheritedValuesToDOM(inheritFrom, pushasArray) {
     const delta = {};
     for(const [ id, properties ] of Object.entries(inheritFrom).reverse()) {
       if(widgets.has(id)) {
@@ -197,7 +199,7 @@ export class Widget extends StateManaged {
         this.applyInheritedValuesToObject(properties, w.state, delta, this);
       }
 
-      if(pushToArray) {
+      if(pushasArray) {
         if(StateManaged.inheritFromMapping[id] === undefined)
           StateManaged.inheritFromMapping[id] = [];
         StateManaged.inheritFromMapping[id].push(this);
@@ -246,7 +248,8 @@ export class Widget extends StateManaged {
   async checkParent(forceDetach) {
     if(this.currentParent && (forceDetach || !overlap(this.domElement, this.currentParent.domElement))) {
       await this.set('parent', null);
-      await this.set('owner',  null);
+      if(this.currentParent.get('childrenPerOwner'))
+        await this.set('owner',  null);
       if(this.currentParent.dispenseCard)
         await this.currentParent.dispenseCard(this);
       delete this.currentParent;
@@ -261,10 +264,10 @@ export class Widget extends StateManaged {
     if(typeof this.get('owner') == 'string' && this.get('owner') != playerName)
       className += ' foreign';
     if(this.get('onlyVisibleForSeat'))
-      if(!widgetFilter(w=>w.get('player') == playerName && toArray(this.get('onlyVisibleForSeat')).indexOf(w.get('id')) != -1).length)
+      if(!widgetFilter(w=>w.get('player') == playerName && asArray(this.get('onlyVisibleForSeat')).indexOf(w.get('id')) != -1).length)
         className += ' foreign';
     if(this.get('linkedToSeat') && widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == playerName).length)
-      if(!widgetFilter(w=>toArray(this.get('linkedToSeat')).indexOf(w.get('id')) != -1 && w.get('player')).length)
+      if(!widgetFilter(w=>asArray(this.get('linkedToSeat')).indexOf(w.get('id')) != -1 && w.get('player')).length)
         className += ' foreign';
 
     return className;
@@ -417,7 +420,7 @@ export class Widget extends StateManaged {
     }
 
     async function w(ids, callback) {
-      for(const a of widgetFilter(w=>toArray(ids).indexOf(w.get('id')) != -1))
+      for(const a of widgetFilter(w=>asArray(ids).indexOf(w.get('id')) != -1))
         await callback(a);
     }
 
@@ -966,7 +969,7 @@ export class Widget extends StateManaged {
       if(a.func == 'RECALL') {
         setDefaults(a, { owned: true });
         if(this.isValidID(a.holder, problems)) {
-          for(const holder of toArray(a.holder)) {
+          for(const holder of asArray(a.holder)) {
             const decks = widgetFilter(w=>w.get('type')=='deck'&&w.get('parent')==holder);
             if(decks.length) {
               for(const deck of decks) {
@@ -1015,7 +1018,7 @@ export class Widget extends StateManaged {
       if(a.func == 'SELECT') {
         setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all' });
         if(a.source == 'all' || isValidCollection(a.source)) {
-          if([ 'add', 'set' ].indexOf(a.mode) == -1)
+          if([ 'add', 'set', 'remove', 'intersect' ].indexOf(a.mode) == -1)
             problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
           let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(function(w) {
             if(w.isBeingRemoved)
@@ -1045,7 +1048,14 @@ export class Widget extends StateManaged {
             c = c.filter(w=>w.get('type')!='pile');
           }
 
-          c = c.slice(0, a.max).concat(a.mode == 'add' ? collections[a.collection] || [] : []);
+          c = c.slice(0, a.max); // a.mode == 'set'
+          if(a.mode == 'intersect')
+            c = collections[a.collection] ? collections[a.collection].filter(value => c.includes(value)) : [];
+          else if(a.mode == 'remove')
+            c = collections[a.collection] ? collections[a.collection].filter(value => !c.includes(value)) : [];
+          else if(a.mode == 'add')
+            c = c.concat(collections[a.collection] || []);
+
           collections[a.collection] = [...new Set(c)];
 
           if(a.sortBy)
@@ -1068,6 +1078,8 @@ export class Widget extends StateManaged {
         }
         if((a.property == 'parent' || a.property == 'deck') && a.value !== null && !widgets.has(a.value)) {
           problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
+        } else if (readOnlyProperties.has(a.property)) {
+          problems.push(`Tried setting read-only property ${a.property}.`);
         } else if (a.property == 'id' && isValidCollection(a.collection)) {
           for(const oldWidget of collections[a.collection]) {
             const oldState = JSON.stringify(oldWidget.state);
@@ -1306,6 +1318,20 @@ export class Widget extends StateManaged {
     }
 
     return { variable: variables.result, collection: collections.result || [] };
+  }
+
+  get(property) {
+    if(property == '_ancestor') {
+      if(widgets.has(this.get('parent')) && widgets.get(this.get('parent')).get('type')=='pile') {
+        return widgets.get(this.get('parent')).get('_ancestor');
+      } else {
+        return this.get('parent');
+      }
+    } else if(property == '_absoluteX' || property == '_absoluteY') {
+      return this.absoluteCoord(property == '_absoluteX' ? 'x' : 'y')
+    } else {
+      return super.get(property);
+    }
   }
 
   hideEnlarged() {

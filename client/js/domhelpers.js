@@ -144,6 +144,6 @@ export function selectFile(getContents, multipleCallback) {
   });
 }
 
-export function toArray(a) {
-  return Array.isArray(a) ? a : [ a ];
+export function asArray(variable) {
+  return Array.isArray(variable) ? variable : [ variable ];
 }
