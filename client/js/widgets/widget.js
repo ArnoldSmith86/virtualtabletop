@@ -1272,7 +1272,7 @@ export class Widget extends StateManaged {
           if(a.turn == 'first') {
             turn = indexList[0];
           } else if(a.turn == 'last') {
-            turn = indexList[indexList.length];
+            turn = indexList[indexList.length-1];
           } else if(a.turn < 1) {
             turn = indexList[indexList.length - ((Math.abs(a.turn - 1) % indexList.length) || indexList.length)];
           } else {
