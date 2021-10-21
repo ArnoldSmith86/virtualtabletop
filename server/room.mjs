@@ -347,6 +347,9 @@ export default class Room {
   }
 
   renamePlayer(renamingPlayer, oldName, newName) {
+    if(oldName == newName)
+      return;
+
     this.state._meta.players[newName] = this.state._meta.players[newName] || this.state._meta.players[oldName];
     delete this.state._meta.players[oldName];
 

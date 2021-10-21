@@ -51,7 +51,7 @@ function applyEditOptionsBasic(widget) {
     delete widget.image;
   else
     widget.image = $('#basicImage').value;
-  
+
   applyWidthHeight(widget, $('#basicWidthNumber').value, 'width');
   applyWidthHeight(widget, $('#basicHeightNumber').value, 'height');
 
@@ -251,10 +251,10 @@ function populateEditOptionsLabel(widget) {
 
 function applyEditOptionsLabel(widget) {
   widget.text = $('#labelText').value;
-  
+
   applyWidthHeight(widget, $('#labelWidthNumber').value, 'width');
   applyWidthHeight(widget, $('#labelHeightNumber').value, 'height');
-  
+
   widget.editable = $('#labelEditable').checked;
 }
 
