@@ -5,7 +5,7 @@ import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 
-const readOnlyProperties = new Set(['_absolutex', '_absolutey', '_ancestor']);
+const readOnlyProperties = new Set(['_absoluteX', '_absoluteY', '_ancestor']);
 
 export class Widget extends StateManaged {
   constructor(id) {
@@ -245,7 +245,8 @@ export class Widget extends StateManaged {
   async checkParent(forceDetach) {
     if(this.currentParent && (forceDetach || !overlap(this.domElement, this.currentParent.domElement))) {
       await this.set('parent', null);
-      await this.set('owner',  null);
+      if(this.currentParent.get('childrenPerOwner'))
+        await this.set('owner',  null);
       if(this.currentParent.dispenseCard)
         await this.currentParent.dispenseCard(this);
       delete this.currentParent;
@@ -1236,8 +1237,8 @@ export class Widget extends StateManaged {
       } else {
         return this.get('parent');
       }
-    } else if(property == '_absolutex' || property == '_absolutey') {
-      return this.absoluteCoord(property == '_absolutex' ? 'x' : 'y')
+    } else if(property == '_absoluteX' || property == '_absoluteY') {
+      return this.absoluteCoord(property == '_absoluteX' ? 'x' : 'y')
     } else {
       return super.get(property);
     }
