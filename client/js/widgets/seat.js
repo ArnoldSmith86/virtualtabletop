@@ -28,7 +28,7 @@ class Seat extends Widget {
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
     if((delta.text||delta.index||delta.player) !== undefined){
-      var displayedText = delta.text || this.get('text') ||""
+      var displayedText = String(delta.text || this.get('text') ||"")
       displayedText = displayedText.replaceAll('seatIndex',this.get('index'))
       displayedText = displayedText.replaceAll('playerName',this.get('player'))
       setText(this.domElement, displayedText);
