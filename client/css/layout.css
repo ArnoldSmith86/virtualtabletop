@@ -117,6 +117,10 @@ button:hover {
     height: 100%;
   }
 
+  .volumeWrap {
+    transform: rotate(90deg);
+  }
+
   .toolbarButton .tooltip {
     top: unset;
     left: calc(100% + 4px);
