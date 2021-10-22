@@ -292,14 +292,13 @@ test('Dynamic expressions', async t => {
   await ClientFunction(prepareClient)();
   await setName(t);
   await t
-  await t
     .click('#addButton')
     .click('#addCustomWidgetOverlay')
     .pressKey('ctrl+j')
     .click('#room',{offsetX: 1, offsetY: 1, modifiers:{ctrl:true}})
     .typeText('#jeText', button, { replace: true, paste: true })
     .click('[id="jyo6"]')
- const log = await Selector('#jeLog').textContent
+  const log = await Selector('#jeLog').textContent
   for (let i=0; i<ops.length; i++) {
     await t.expect(log).contains('"'+ops[i][1]+'": '+ops[i][2])
   };
