@@ -11,7 +11,7 @@ class Seat extends Widget {
 
       index: 1,
       turn: false,
-      player: null,
+      player: '',
       display: 'playerName',
       displayEmpty: 'seatIndex',
       displayTurn: true,
@@ -20,15 +20,15 @@ class Seat extends Widget {
 
       color: '#999999',
       colorEmpty: '#999999',
-      layer: 1,
-      text:  'seatIndex'
+      layer: 1
     });
   }
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
-    if((delta.text||delta.index||delta.player) !== undefined){
-      var displayedText = String(this.get('text') ||"")
+    if(delta.index !== undefined || delta.player !== undefined || delta.display !== undefined || delta.displayEmpty !== undefined) {
+      const display = this.get('player') != '' ? this.get('display') : this.get('displayEmpty');
+      let displayedText = String(display || '')
       displayedText = displayedText.replaceAll('seatIndex',this.get('index'))
       displayedText = displayedText.replaceAll('playerName',this.get('player'))
       setText(this.domElement, displayedText);
@@ -55,7 +55,6 @@ class Seat extends Widget {
     return className;
   }
 
-  //inactive should go into widgets
   classesProperties() {
     const p = super.classesProperties();
     p.push('hideWhenUnused', 'player', 'turn', 'displayTurn');
@@ -87,11 +86,9 @@ class Seat extends Widget {
     if(this.get('player') == '') {
       await this.set('player', playerName);
       await this.set('color', playerColor);
-      await this.set('text', this.get('display'))
     } else {
-      await this.set('player', '');
-      await this.set('color', this.get('colorEmpty') || '#999999');
-      await this.set('text', this.get('displayEmpty'));
+      await this.set('player', null);
+      await this.set('color', null);
     }
   }
 
