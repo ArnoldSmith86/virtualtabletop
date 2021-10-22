@@ -1296,7 +1296,6 @@ export class Widget extends StateManaged {
       if(jeRoutineLogging) jeLoggingRoutineOperationEnd(problems, variables, collections, false);
 
       if(!jeRoutineLogging && problems.length)
-
         console.log(problems);
 
       if(a.func == 'CALL' && !a.return)
