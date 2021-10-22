@@ -1060,6 +1060,15 @@ onLoad(function() {
     showOverlay();
   });
 
+  on('#addSeat', 'click', function() {
+    addWidgetLocal({
+      type: 'seat',
+      x: 840,
+      y: 90
+    });
+    showOverlay();
+  });
+
   on('#uploadBoard', 'click', _=>uploadWidget('board'));
   on('#uploadToken', 'click', _=>uploadWidget('token'));
 
