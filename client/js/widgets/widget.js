@@ -56,7 +56,7 @@ export class Widget extends StateManaged {
       globalUpdateRoutine: null
     });
     this.domElement.timer = false
-    
+
     this.domElement.addEventListener('contextmenu', e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseenter',  e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
@@ -64,19 +64,19 @@ export class Widget extends StateManaged {
     this.domElement.addEventListener('mouseup',  e => this.notSelected(), false);
     this.domElement.addEventListener("touchstart", e => this.touchstart(), false);
     this.domElement.addEventListener("touchend", e => this.touchend(), false);
-    
+
     this.touchstart = function() {
       if (!this.timer) {
         this.timer = setTimeout(this.onlongtouch.bind(this), 500, false);
       }
     }
-    
+
     this.touchend = function() {
       clearTimeout(this.timer);
       this.timer = null;
       this.hideEnlarged();
     }
-    
+
     this.onlongtouch = function() {
       this.showEnlarged();
       clearTimeout(this.timer);
@@ -586,7 +586,7 @@ export class Widget extends StateManaged {
         };
 
         let phrase;
-        
+
         if(a.canvas !== undefined) {
           if(this.isValidID(a.canvas, problems)) {
             await w(a.canvas, execute);
@@ -1243,7 +1243,7 @@ export class Widget extends StateManaged {
       return super.get(property);
     }
   }
-  
+
   hideEnlarged() {
     if (!this.domElement.className.match(/selected/))
       $('#enlarged').classList.add('hidden');
@@ -1426,19 +1426,23 @@ export class Widget extends StateManaged {
           continue;
         if(y < (grid.minY || -99999) || y > (grid.maxY || 99999))
           continue;
-        const distance = ((x + grid.x/2 - (grid.offsetX || 0)) % grid.x) + ((y + grid.y/2 - (grid.offsetY || 0)) % grid.y);
+
+        const snapX = x + grid.x/2 - (x - (grid.offsetX || 0) + grid.x*10) % grid.x;
+        const snapY = y + grid.y/2 - (y - (grid.offsetY || 0) + grid.y*10) % grid.y;
+
+        const distance = (snapX - x) ** 2 + (snapY - y) ** 2;
         if(distance < closestDistance) {
-          closest = grid;
+          closest = [ snapX, snapY, grid ];
           closestDistance = distance;
         }
       }
 
       if(closest) {
-        x = x + closest.x/2 - (x - (closest.offsetX || 0)) % closest.x;
-        y = y + closest.y/2 - (y - (closest.offsetY || 0)) % closest.y;
-        for(const p in closest)
+        x = closest[0];
+        y = closest[1];
+        for(const p in closest[2])
           if([ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY' ].indexOf(p) == -1)
-            await this.set(p, closest[p]);
+            await this.set(p, closest[2][p]);
       }
 
       this.snappingToGrid = false;
@@ -1461,15 +1465,15 @@ export class Widget extends StateManaged {
     } else
       problems.push(`Tried setting text property which doesn't exist for ${this.id}.`);
   }
-  
+
   selected() {
     this.domElement.classList.add('selected');
   }
-  
+
   notSelected() {
     this.domElement.classList.remove('selected');
   }
-  
+
   showEnlarged(event) {
     if(this.get('enlarge')) {
       const e = $('#enlarged');
