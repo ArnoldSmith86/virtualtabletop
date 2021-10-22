@@ -932,7 +932,7 @@ export class Widget extends StateManaged {
                     await c.set('owner', target.get('player'));
                   c.bringToFront()
                   widgets.get(target.get('hand')).updateAfterShuffle(); //this is arranges the cards in the new owner's hand. no need to rename the function
-                } else if(target.get('type') == 'holder') {
+                } else {
                   await c.moveToHolder(target);
                 }
                 delete c.movedByButton;
