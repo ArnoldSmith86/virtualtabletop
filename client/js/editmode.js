@@ -303,13 +303,14 @@ function populateEditOptionsSeat(widget) {
 }
 
 function applyEditOptionsSeat(widget) {
-  if ($('#seatEmpty').checked){
+  if($('#seatEmpty').checked || $('#seatPlayerName').value == "~ empty seat ~") {
     delete widget.player;
     delete widget.color;
-  }
-  else if($('#seatPlayerName').value!="~ empty seat ~"){
-    toServer('playerColor', { player: widget.player, color: $('#seatPlayerColor').value });
-    toServer('rename', { oldName: widget.player, newName: $('#seatPlayerName').value });
+  } else {
+    if(widget.player) {
+      toServer('playerColor', { player: widget.player, color: $('#seatPlayerColor').value });
+      toServer('rename', { oldName: widget.player, newName: $('#seatPlayerName').value });
+    }
     widget.player = $('#seatPlayerName').value;
     widget.color = $('#seatPlayerColor').value;
   }
@@ -317,7 +318,7 @@ function applyEditOptionsSeat(widget) {
 
 //spinner functions
 function populateEditOptionsSpinner(widget) {
-  }
+}
 
 function applyEditOptionsSpinner(widget) {
   for(let i=0; i<9; ++i) {
