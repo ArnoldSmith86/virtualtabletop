@@ -35,6 +35,18 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_colorPicker',
+    name: 'change color',
+    options: [ { type: 'color', label: 'color' } ],
+    context: '.*#([0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{4}|[0-9a-fA-F]{3})|^.* ↦ color',
+    call: async function(options) {
+      if(options['color']) {
+        jeInsert(null, jeGetLastKey(), options['color']);
+        jeApplyChanges();
+      };
+    }
+  },
+  {
     id: 'je_openWidgetById',
     name: 'open widget by ID',
     context: '.*"([^"]+)"',
