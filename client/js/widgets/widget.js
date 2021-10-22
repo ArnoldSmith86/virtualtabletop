@@ -926,12 +926,20 @@ export class Widget extends StateManaged {
                 await c.bringToFront();
               } else {
                 c.movedByButton = true;
-                if(target.get('type') == 'seat' && target.get('hand') && target.get('player')) {
-                  await c.moveToHolder(widgets.get(target.get('hand')));
-                  if(widgets.get(target.get('hand')).get('childrenPerOwner'))
-                    await c.set('owner', target.get('player'));
-                  c.bringToFront()
-                  widgets.get(target.get('hand')).updateAfterShuffle(); //this is arranges the cards in the new owner's hand. no need to rename the function
+                if(target.get('type') == 'seat') {
+                  if(target.get('hand') && target.get('player')) {
+                    if(widgets.has(target.get('hand'))) {
+                      await c.moveToHolder(widgets.get(target.get('hand')));
+                      if(widgets.get(target.get('hand')).get('childrenPerOwner'))
+                        await c.set('owner', target.get('player'));
+                      c.bringToFront()
+                      widgets.get(target.get('hand')).updateAfterShuffle(); // this arranges the cards in the new owner's hand
+                    } else {
+                      problems.push(`Seat ${target.id} declares 'hand: ${target.get('hand')}' which does not exist.`);
+                    }
+                  } else {
+                    problems.push(`Seat ${target.id} is empty or does not define a hand.`);
+                  }
                 } else {
                   await c.moveToHolder(target);
                 }
