@@ -5,15 +5,15 @@ class Seat extends Widget {
     this.addDefaults({
       typeClasses: 'widget seat',
       clickable: true,
-      width: 42,
-      height: 42,
+      width: 150,
+      height: 40,
       movable: false,
 
       index: 1,
       turn: false,
       player: '',
       display: 'playerName',
-      displayEmpty: 'seatIndex',
+      displayEmpty: 'click to sit',
       hideTurn: false,
       hideWhenUnused: false,
       hand: null,
