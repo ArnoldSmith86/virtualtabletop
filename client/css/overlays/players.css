@@ -154,9 +154,6 @@ label.ui-line::before{
   --cursorOpacity: 0;
   --cursorActiveOpacity: 0.2;
   --cursorPressedOpacity: 0.5;
-  --cursorShowName: none;
-  --cursorActiveShowName: none;
-  --cursorPressedShowName: block;
 }
 .cursor {
   position: absolute;
@@ -168,17 +165,6 @@ label.ui-line::before{
   opacity: var(--cursorOpacity);
   transition-duration: 2s;
   pointer-events: none;
-}
-.cursor::before {
-  display: var(--cursorShowName);
-  position: relative;
-  top: calc(var(--cursorSize) * 2px * var(--scale));
-  left: calc((var(--cursorSize) - 50) * 1px * var(--scale));
-  height: auto;
-  width: calc(100px * var(--scale));
-  text-align: center;
-  font-size: calc(12px * var(--scale));
-  content: attr(player)
 }
 .cursor.active, .cursor.pressed.foreign {
   --cursorOpacity: var(--cursorActiveOpacity);
