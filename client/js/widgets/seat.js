@@ -14,7 +14,7 @@ class Seat extends Widget {
       player: '',
       display: 'playerName',
       displayEmpty: 'seatIndex',
-      displayTurn: true,
+      hideTurn: true,
       hideWhenUnused: false,
       hand: null,
 
@@ -47,7 +47,7 @@ class Seat extends Widget {
 
     if(this.get('player') != '')
       className += ' seated';
-    if(this.get('turn') && this.get('displayTurn'))
+    if(this.get('turn') && !this.get('hideTurn'))
       className += ' turn';
     if(this.get('hideWhenUnused') && !this.get('player') && widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == playerName).length)
       className += ' foreign';
@@ -57,7 +57,7 @@ class Seat extends Widget {
 
   classesProperties() {
     const p = super.classesProperties();
-    p.push('hideWhenUnused', 'player', 'turn', 'displayTurn');
+    p.push('hideWhenUnused', 'player', 'turn', 'hideTurn');
     return p;
   }
 
