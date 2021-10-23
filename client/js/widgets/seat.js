@@ -14,7 +14,7 @@ class Seat extends Widget {
       player: '',
       display: 'playerName',
       displayEmpty: 'seatIndex',
-      hideTurn: true,
+      hideTurn: false,
       hideWhenUnused: false,
       hand: null,
 
