@@ -114,7 +114,13 @@ async function inputHandler(name, e) {
   if(name == 'mouseup' || name =='touchend')
     mouseDown = false;
   
-  toServer('mouse', [ Math.floor((coords[0] - roomRectangle.left)/scale), Math.floor((coords[1] - roomRectangle.top)/scale), mouseDown ]);
+  toServer('mouse', 
+    {
+      x: Math.floor((coords[0] - roomRectangle.left)/scale),
+      y: Math.floor((coords[1] - roomRectangle.top)/scale),
+      pressed: mouseDown,
+      target: mouseTarget? mouseTarget.id : null
+    });
 }
 
 onLoad(function() {

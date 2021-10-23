@@ -1,4 +1,4 @@
-import { onLoad } from '../domhelpers.js';
+import { asArray, onLoad } from '../domhelpers.js';
 
 let playerCursors = {};
 let playerCursorsTimeout = {};
@@ -61,16 +61,26 @@ onLoad(function() {
   onMessage('mouse', function(args) {
     if(args.player != playerName) {
       clearTimeout(playerCursorsTimeout[args.player]);
-      const x = args.coords[0]*scale;
-      const y = args.coords[1]*scale;
+      const x = args.mouseState.x*scale;
+      const y = args.mouseState.y*scale;
       playerCursors[args.player].style.transform = `translate(${x}px, ${y}px)`;
-      if(args.coords[2]) {
+      if(args.mouseState.pressed) {
         playerCursors[args.player].classList.add('pressed', 'active');
       } else {
         playerCursors[args.player].classList.add('active');
         playerCursors[args.player].classList.remove('pressed');
       }
-      playerCursorsTimeout[args.player] = setTimeout(()=>{playerCursors[args.player].classList.remove('active')}, 50 )
+      let foreign = false;
+      if(args.mouseState.target !== null && widgets.has(args.mouseState.target)) {
+        const owner = widgets.get(args.mouseState.target).get('owner');
+        if(owner !== null)
+          foreign = !asArray(owner).includes(playerName);
+      }
+      if(foreign)
+        playerCursors[args.player].classList.add('foreign');
+      else
+        playerCursors[args.player].classList.remove('foreign');
+      playerCursorsTimeout[args.player] = setTimeout(()=>{playerCursors[args.player].classList.remove('active')}, 100 )
     }
   });
   onMessage('rename', function(args) {
