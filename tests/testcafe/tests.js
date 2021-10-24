@@ -120,24 +120,24 @@ test('Create game using edit mode', async t => {
     .click('#add-holder')
     .click('#addButton')
     .click('#addHand')
-    .drag('[id="3nsj"]', 100, 100) // this shouldn't change anything because it's not movable
+    .drag('[id="hand"]', 100, 100) // this shouldn't change anything because it's not movable
     .click('#editButton')
-    .click('[id="3nsj"]')
+    .click('[id="hand"]')
     .click('#transparentHolder')
     .click('#updateWidget')
     .click('#editButton')
     .click('#addButton')
     .click('#add-deck_K_S')
-    .click('[id="9ee9B"]')
-    .click('[id="9ee9P"] > .handle')
+    .click('[id="3nsjB"]')
+    .click('[id="3nsjP"] > .handle')
     .click('#pileOverlay > button:nth-of-type(3)')
-    .click('[id="5ip4"] > .handle')
+    .click('[id="b86p"] > .handle')
     .click('#pileOverlay > button:nth-of-type(1)')
-    .click('[id="5ip4"] > .handle')
+    .click('[id="b86p"] > .handle')
     .click('#pileOverlay > button:nth-of-type(3)')
-    .click('#oklb > .handle')
+    .click('[id="5ip4"] > .handle')
     .click('#pileOverlay > button:nth-of-type(2)')
-    .dragToElement('#oklb > .handle', '[id="3nsj"]')
+    .dragToElement('[id="5ip4"] > .handle', '[id="hand"]')
     .click('#editButton')
     .click('#jyo2')
     .click('#duplicateWidget')
@@ -149,7 +149,7 @@ test('Create game using edit mode', async t => {
     .setNativeDialogHandler(() => true)
     .click('#removeWidget');
 
-  await compareState(t, 'f6c89dac1d50d5d49f1dde03a478c425');
+  await compareState(t, '86635f53abbbbc75813e021c9e60f424');
 });
 
 test('Compute', async t => {

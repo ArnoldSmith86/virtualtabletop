@@ -23,7 +23,7 @@ const jeState = {
   widget: null
 };
 
-const jeOrder = [ 'type', 'id#', 'parent', 'fixedParent', 'deck', 'cardType', 'owner#', 'x*', 'y*', 'width*', 'height*', 'scale', 'rotation#', 'layer', 'z', 'inheritChildZ#', 'movable*', 'movableInEdit*#' ];
+const jeOrder = [ 'type', 'id#', 'parent', 'fixedParent', 'deck', 'cardType', 'index*', 'owner#', 'x*', 'y*', 'width*', 'height*', 'scale', 'rotation#', 'layer', 'z', 'inheritChildZ#', 'movable*', 'movableInEdit*#' ];
 
 const jeCommands = [
   {
@@ -502,16 +502,20 @@ function jeAddRoutineOperationCommands(command, defaults) {
 }
 
 function jeAddCommands() {
-  jeAddWidgetPropertyCommands(new BasicWidget());
-  jeAddWidgetPropertyCommands(new Button());
-  jeAddWidgetPropertyCommands(new Canvas());
-  jeAddWidgetPropertyCommands(new Card());
-  jeAddWidgetPropertyCommands(new Deck());
-  jeAddWidgetPropertyCommands(new Holder());
-  jeAddWidgetPropertyCommands(new Label());
-  jeAddWidgetPropertyCommands(new Pile());
-  jeAddWidgetPropertyCommands(new Spinner());
-  jeAddWidgetPropertyCommands(new Timer());
+  const widgetTypes = [ 'all' ];
+  const collectionNames = [ 'all', 'DEFAULT', 'thisButton', 'child', 'widget' ];
+
+  widgetTypes.push(jeAddWidgetPropertyCommands(new BasicWidget()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Button()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Canvas()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Card()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Deck()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Holder()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Label()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Pile()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Seat()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Spinner()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Timer()));
 
   jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result' });
   jeAddRoutineOperationCommands('CANVAS', { canvas: null, mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6' });
@@ -534,6 +538,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('SORT', { key: 'value', reverse: false, locales: null, options: null, holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('SHUFFLE', { holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('TIMER', { value: 0, seconds: 0, mode: 'toggle', timer: null, collection: 'DEFAULT' });
+  jeAddRoutineOperationCommands('TURN', { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN' });
 
   jeAddRoutineExpressionCommands('random', 'randInt 1 10');
   jeAddRoutineExpressionCommands('increment', '${variableName} + 1');
@@ -544,7 +549,7 @@ function jeAddCommands() {
   jeAddFaceCommand('css', '', '');
   jeAddFaceCommand('radius', ' (rounded corners)', 1);
 
-  jeAddEnumCommands('^[a-z]+ ↦ type', [ null, 'button', 'canvas', 'card', 'deck', 'holder', 'label', 'spinner', 'timer' ]);
+  jeAddEnumCommands('^[a-z]+ ↦ type', widgetTypes.slice(1));
   jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ value', [ '${}' ]);
   jeAddEnumCommands('^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ textAlign', [ 'left', 'center', 'right' ]);
   jeAddEnumCommands('^.*\\(CANVAS\\) ↦ mode', [ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ]);
@@ -558,15 +563,16 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ mode', [ 'set', 'add' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ mode', [ 'set', 'add', 'remove', 'intersect' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=', 'in' ]);
-  jeAddEnumCommands('^.*\\(SELECT\\) ↦ type', [ 'all', null, 'button', 'card', 'deck', 'holder', 'label', 'spinner' ]);
+  jeAddEnumCommands('^.*\\(SELECT\\) ↦ type', widgetTypes);
   jeAddEnumCommands('^.*\\(SET\\) ↦ relation', [ '+', '-', '=', "*", "/",'!' ]);
   jeAddEnumCommands('^.*\\(TIMER\\) ↦ mode', [ 'pause', 'start', 'toggle', 'set', 'dec', 'inc', 'reset']);
   jeAddEnumCommands('^.*\\(TIMER\\) ↦ value', [ 0, 'start', 'end', 'milliseconds']);
+  jeAddEnumCommands('^.*\\(TURN\\) ↦ turnCycle', [ 'forward', 'backward', 'random', 'position']);
   jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ property', [ 'id', 'parent', 'type', 'rotation' ]);
 
-  jeAddEnumCommands('^.*\\((CLICK|COUNT|DELETE|FLIP|GET|LABEL|ROTATE|SET|SORT|SHUFFLE)\\) ↦ collection', [ 'DEFAULT', 'thisButton', 'child' ]);
-  jeAddEnumCommands('^.*\\(CLONE\\) ↦ source', [ 'DEFAULT', 'thisButton', 'child' ]);
-  jeAddEnumCommands('^.*\\(SELECT\\) ↦ source', [ 'all', 'DEFAULT', 'thisButton', 'child' ]);
+  jeAddEnumCommands('^.*\\((CLICK|COUNT|DELETE|FLIP|GET|LABEL|ROTATE|SET|SORT|SHUFFLE)\\) ↦ collection', collectionNames.slice(1));
+  jeAddEnumCommands('^.*\\(CLONE\\) ↦ source', collectionNames.slice(1));
+  jeAddEnumCommands('^.*\\(SELECT|TURN\\) ↦ source', collectionNames);
 
   jeAddNumberCommand('increment number', '+', x=>x+1);
   jeAddNumberCommand('decrement number', '-', x=>x-1);
@@ -655,44 +661,34 @@ function displayComputeOps() {
 }
 
 function jeAddCSScommands() {
-  for(const css of [ 'border: 1px solid black', 'background: white', 'font-size: 30px', 'color: black' , 'border-radius: 100%' ]) {
-    jeCommands.push({
-      id: 'css_' + css,
-      name: css,
-      context: '^.* ↦ (css|[a-z]+CSS)',
-      call: async function() {
-        jePasteText(css + '; ', true);
-      },
-      show: function() {
-        return !String(jeGetValue()[jeGetLastKey()]).match(css.split(':')[0]);
-      }
-    });
-  }
-  for(const css of [ '--wcMain: #1f5ca6', '--wcMainOH: #0d2f5e', '--wcBorder: #0d2f5e', '--wcBorderOH: #1f5ca6', '--wcFont: #ffffff', '--wcFontOH: #ffffff' ]) {
-    jeCommands.push({
-      id: 'css_' + css,
-      name: css,
-      context: 'button ↦ (css|[a-z]+CSS)',
-      call: async function() {
-        jePasteText(css + '; ', true);
-      },
-      show: function() {
-        return !String(jeGetValue()[jeGetLastKey()]).match(css.split(':')[0]);
-      }
-    });
-  }
-  for(const css of ['--wcBorderNormal: #00000000', '--wcBorderAlert: red', '--wcFontAlert: red', '--wcFontPaused: #6d6d6d', '--wcAnimationAlert: blinker 1s linear infinite', '--wcAnimationPaused: none' ]) {
-    jeCommands.push({
-      id: 'css_' + css,
-      name: css,
-      context: 'timer ↦ (css|[a-z]+CSS)',
-      call: async function() {
-        jePasteText(css + '; ', true);
-      },
-      show: function() {
-        return !String(jeGetValue()[jeGetLastKey()]).match(css.split(':')[0]);
-      }
-    });
+  const presets = {
+    '[a-z]+': [
+      'border: 1px solid black', 'background: white', 'font-size: 30px', 'color: black' , 'border-radius: 100%'
+    ],
+    'button': [
+      '--wcMain: #1f5ca6', '--wcMainOH: #0d2f5e', '--wcBorder: #0d2f5e', '--wcBorderOH: #1f5ca6', '--wcFont: #ffffff', '--wcFontOH: #ffffff'
+    ],
+    'seat': [
+      '--wcShadowTurn: 0px 0px 20px 5px var(--color)'
+    ],
+    'timer': [
+      '--wcBorderNormal: #00000000', '--wcBorderAlert: red', '--wcFontAlert: red', '--wcFontPaused: #6d6d6d', '--wcAnimationAlert: blinker 1s linear infinite', '--wcAnimationPaused: none'
+    ]
+  };
+  for(const type in presets) {
+    for(const css of presets[type]) {
+      jeCommands.push({
+        id: 'css_' + css,
+        name: css,
+        context: `^${type} ↦ (css|[a-z]+CSS)`,
+        call: async function() {
+          jePasteText(css + '; ', true);
+        },
+        show: function() {
+          return !String(jeGetValue()[jeGetLastKey()]).match(css.split(':')[0]);
+        }
+      });
+    }
   }
 }
 
@@ -746,6 +742,8 @@ function jeAddWidgetPropertyCommands(object) {
     if(property != 'typeClasses')
       jeAddWidgetPropertyCommand(object, property);
   object.applyRemove();
+  const type = object.defaults.typeClasses.replace(/widget /, '');
+  return type == 'basic' ? null : type;
 }
 
 function jeAddWidgetPropertyCommand(object, property) {
