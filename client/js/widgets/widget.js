@@ -1235,70 +1235,56 @@ export class Widget extends StateManaged {
         let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(w=>w.get('type')=='seat');
 
         //this get the list of valid index
-        const indexList = []
-        let turn = 1
+        const indexList = [];
+        let previousTurn = 1;
         for(const w of c) {
           if(indexList.indexOf(w.get('index')) == -1 && w.get('player'))
             indexList.push(w.get('index'));
           if(w.get('turn'))
-            turn = w.get('index')
+            previousTurn = w.get('index');
         }
 
-        //loop so it goes for the n next valid index
-        for(let i = 0; i < Math.abs(a.turn) % indexList.length; ++i) {
-          //this checks the next valid index
-          if((a.turnCycle == 'forward' && a.turn > 0) || (a.turnCycle == 'backward' && a.turn < 0)) {
-            indexList.sort((a,b)=>a-b);
-            if(turn >= indexList[indexList.length-1]) {
-              turn = indexList[0];
-            } else {
-              for(const idx of indexList){
-                if(idx > turn) {
-                  turn = idx;
-                  break;
-                }
-              }
-            }
-          } else if((a.turnCycle == 'forward' && a.turn < 0) || (a.turnCycle == 'backward' && a.turn > 0)) {
-            //this checks the previous valid index
-            indexList.sort((a,b)=>b-a);
-            if(turn <= indexList[indexList.length-1]) {
-              turn = indexList[0];
-            } else {
-              for(const idx of indexList) {
-                if(idx < turn) {
-                  turn = idx;
-                  break;
-                }
-              }
-            }
-          }
-        }
-
-        if(a.turnCycle == 'position') {
+        if(indexList.length) {
           indexList.sort((a,b)=>a-b);
-          if(a.turn == 'first') {
-            turn = indexList[0];
-          } else if(a.turn == 'last') {
-            turn = indexList[indexList.length-1];
-          } else if(a.turn < 1) {
-            turn = indexList[indexList.length - ((Math.abs(a.turn - 1) % indexList.length) || indexList.length)];
+          let nextTurnIndex = 0;
+
+          if(a.turnCycle == 'position') {
+            if(a.turn == 'first') {
+              nextTurnIndex = 0;
+            } else if(a.turn == 'last') {
+              nextTurnIndex = indexList.length - 1;
+            } else {
+              nextTurnIndex = a.turn;
+            }
+          } else if(a.turnCycle == 'random') {
+            nextTurnIndex = Math.floor(Math.random() * indexList.length);
           } else {
-            turn = indexList[(a.turn - 1) % indexList.length] || 0;
+            const turnIndexOffset = a.turnCycle == 'forward' ? a.turn : -a.turn;
+            nextTurnIndex = indexList.indexOf(previousTurn) + turnIndexOffset;
           }
-        }
-        if(a.turnCycle == 'random')
-          turn = indexList[Math.floor(Math.random() * indexList.length)];
 
-        collections[a.collection] = [];
-        //saves turn into all seats and creates output collection with turn seats
-        for(const w of c) {
-          await w.set('turn', w.get('index') == turn);
-          if(w.get('turn') && w.get('player'))
-            collections[a.collection].push(w);
-        }
+          //makes sure nextTurnIndex is a valid index of indexList
+          nextTurnIndex = Math.floor(nextTurnIndex);
+          if(typeof nextTurnIndex != 'number' || !isFinite(nextTurnIndex))
+            nextTurnIndex = 0;
+          while(nextTurnIndex < 0)
+            nextTurnIndex += indexList.length;
+          while(nextTurnIndex >= indexList.length)
+            nextTurnIndex -= indexList.length;
+          const turn = indexList[nextTurnIndex];
 
-        jeLoggingRoutineOperationSummary(`picked turn ${turn} out of index list ${JSON.stringify(indexList)}`);
+          collections[a.collection] = [];
+          //saves turn into all seats and creates output collection with turn seats
+          for(const w of c) {
+            await w.set('turn', w.get('index') == turn);
+            if(w.get('turn') && w.get('player'))
+              collections[a.collection].push(w);
+          }
+
+          jeLoggingRoutineOperationSummary(`changed turn of seats from ${previousTurn} to ${turn} - active seats: ${JSON.stringify(indexList)}`);
+        } else {
+          jeLoggingRoutineOperationSummary(`no active seats found`);
+        }
       }
 
       if(jeRoutineLogging) jeLoggingRoutineOperationEnd(problems, variables, collections, false);
