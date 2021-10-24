@@ -930,7 +930,7 @@ onLoad(function() {
   on('#addCustomWidgetOverlay', 'click', _=>showOverlay('addCustomOverlay'));
 
   on('#addHand', 'click', function() {
-    addWidgetLocal({
+    const hand = {
       type: 'holder',
       onEnter: { activeFace: 1 },
       onLeave: { activeFace: 0 },
@@ -942,7 +942,10 @@ onLoad(function() {
       y: 820,
       width: 1500,
       height: 180
-    });
+    }
+    if(!widgets.has('hand'))
+      hand.id = 'hand';
+    addWidgetLocal(hand);
     showOverlay();
   });
 

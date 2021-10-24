@@ -16,7 +16,7 @@ class Seat extends Widget {
       displayEmpty: 'click to sit',
       hideTurn: false,
       hideWhenUnused: false,
-      hand: null,
+      hand: 'hand',
 
       color: '#999999',
       colorEmpty: '#999999',
