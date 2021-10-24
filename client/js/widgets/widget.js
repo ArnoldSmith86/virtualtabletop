@@ -1511,19 +1511,23 @@ export class Widget extends StateManaged {
           continue;
         if(y < (grid.minY || -99999) || y > (grid.maxY || 99999))
           continue;
-        const distance = ((x + grid.x/2 - (grid.offsetX || 0)) % grid.x) + ((y + grid.y/2 - (grid.offsetY || 0)) % grid.y);
+
+        const snapX = x + grid.x/2 - (x - (grid.offsetX || 0) + grid.x*10) % grid.x;
+        const snapY = y + grid.y/2 - (y - (grid.offsetY || 0) + grid.y*10) % grid.y;
+
+        const distance = (snapX - x) ** 2 + (snapY - y) ** 2;
         if(distance < closestDistance) {
-          closest = grid;
+          closest = [ snapX, snapY, grid ];
           closestDistance = distance;
         }
       }
 
       if(closest) {
-        x = x + closest.x/2 - (x - (closest.offsetX || 0)) % closest.x;
-        y = y + closest.y/2 - (y - (closest.offsetY || 0)) % closest.y;
-        for(const p in closest)
+        x = closest[0];
+        y = closest[1];
+        for(const p in closest[2])
           if([ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY' ].indexOf(p) == -1)
-            await this.set(p, closest[p]);
+            await this.set(p, closest[2][p]);
       }
 
       this.snappingToGrid = false;
