@@ -1269,11 +1269,7 @@ export class Widget extends StateManaged {
           nextTurnIndex = Math.floor(nextTurnIndex);
           if(typeof nextTurnIndex != 'number' || !isFinite(nextTurnIndex))
             nextTurnIndex = 0;
-          while(nextTurnIndex < 0)
-            nextTurnIndex += indexList.length;
-          while(nextTurnIndex >= indexList.length)
-            nextTurnIndex -= indexList.length;
-          const turn = indexList[nextTurnIndex];
+          const turn = indexList[mod(nextTurnIndex, indexList.length)];
 
           collections[a.collection] = [];
           //saves turn into all seats and creates output collection with turn seats
@@ -1512,8 +1508,8 @@ export class Widget extends StateManaged {
         if(y < (grid.minY || -99999) || y > (grid.maxY || 99999))
           continue;
 
-        const snapX = x + grid.x/2 - (x - (grid.offsetX || 0) + grid.x*10) % grid.x;
-        const snapY = y + grid.y/2 - (y - (grid.offsetY || 0) + grid.y*10) % grid.y;
+        const snapX = x + grid.x/2 - mod(x - (grid.offsetX || 0), grid.x);
+        const snapY = y + grid.y/2 - mod(y - (grid.offsetY || 0), grid.y);
 
         const distance = (snapX - x) ** 2 + (snapY - y) ** 2;
         if(distance < closestDistance) {
