@@ -20,7 +20,7 @@ class Seat extends Widget {
 
       color: '#999999',
       colorEmpty: '#999999',
-      layer: 1
+      layer: -1
     });
   }
 
