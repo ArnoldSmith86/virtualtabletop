@@ -1253,6 +1253,8 @@ export class Widget extends StateManaged {
               nextTurnIndex = 0;
             } else if(a.turn == 'last') {
               nextTurnIndex = indexList.length - 1;
+            } else if(a.turn > 0) {
+              nextTurnIndex = a.turn - 1;
             } else {
               nextTurnIndex = a.turn;
             }
