@@ -845,7 +845,7 @@ function duplicateWidget(widget, recursive, inheritFrom, increment, incrementIn,
           currentWidget.id = `${widget.id}${targetNumber}`;
       }
       for(const property of incrementIn) {
-        if(property == 'index' && widget.state.type == 'seat' && widget.state.index === null)
+        if(property == 'index' && widget.state.type == 'seat' && widget.state.index === undefined)
           currentWidget.index = 1;
         if(currentWidget[property] !== undefined)
           currentWidget[property] = JSON.parse(JSON.stringify(currentWidget[property]).replaceAll(sourceNumber, targetNumber));
