@@ -21,3 +21,12 @@
 .seat.seated.turn {
   box-shadow: var(--wcShadowTurn);
 }
+
+body.edit .seat {
+  border-width: 7px;
+  box-sizing: unset;
+}
+
+body.edit .seat.seated.turn {
+  box-shadow: unset;
+}
