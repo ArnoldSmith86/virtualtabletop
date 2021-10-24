@@ -821,7 +821,7 @@ async function onClickUpdateWidget(applyChangesFromUI) {
     showOverlay();
 }
 
-function duplicateWidget(widget, recursive, inheritFrom, increment, xOffset, yOffset, xCopies, yCopies) {
+function duplicateWidget(widget, recursive, inheritFrom, increment, incrementIn, xOffset, yOffset, xCopies, yCopies) {
   const clone = function(widget, recursive, newParent, xOffset, yOffset) {
     let currentWidget = JSON.parse(JSON.stringify(widget.state))
 
@@ -835,13 +835,20 @@ function duplicateWidget(widget, recursive, inheritFrom, increment, xOffset, yOf
 
     if(increment) {
       const match = currentWidget.id.match(/^(.*?)([0-9]+)([^0-9]*)$/);
-      let number = match ? parseInt(match[2]) : 0;
+      const sourceNumber = match ? parseInt(match[2]) : 0;
+      let targetNumber = sourceNumber;
       while(widgets.has(currentWidget.id)) {
-        ++number;
+        ++targetNumber;
         if(match)
-          currentWidget.id = `${match[1]}${number}${match[3]}`;
+          currentWidget.id = `${match[1]}${targetNumber}${match[3]}`;
         else
-          currentWidget.id = `${widget.id}${number}`;
+          currentWidget.id = `${widget.id}${targetNumber}`;
+      }
+      for(const property of incrementIn) {
+        if(property == 'index' && widget.state.type == 'seat' && widget.state.index === null)
+          currentWidget.index = 1;
+        if(currentWidget[property] !== undefined)
+          currentWidget[property] = JSON.parse(JSON.stringify(currentWidget[property]).replaceAll(sourceNumber, targetNumber));
       }
     } else {
       delete currentWidget.id;
@@ -881,7 +888,7 @@ function onClickDuplicateWidget() {
   const widget = widgets.get(JSON.parse($('#editWidgetJSON').dataset.previousState).id);
   const xOffset = widget.absoluteCoord('x') > 1500 ? -20 : 20;
   const yOffset = widget.absoluteCoord('y') >  900 ? -20 : 20;
-  duplicateWidget(widget, true, false, true, xOffset, yOffset, 1, 0);
+  duplicateWidget(widget, true, false, true, [], xOffset, yOffset, 1, 0);
   showOverlay();
 }
 
