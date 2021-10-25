@@ -23,7 +23,7 @@ const jeState = {
   widget: null
 };
 
-const jeOrder = [ 'type', 'id#', 'parent', 'fixedParent', 'deck', 'cardType', 'owner#', 'x*', 'y*', 'width*', 'height*', 'scale', 'rotation#', 'layer', 'z', 'inheritChildZ#', 'movable*', 'movableInEdit*#' ];
+const jeOrder = [ 'type', 'id#', 'parent', 'fixedParent', 'deck', 'cardType', 'index*', 'owner#', 'x*', 'y*', 'width*', 'height*', 'scale', 'rotation#', 'layer', 'z', 'inheritChildZ#', 'movable*', 'movableInEdit*#' ];
 
 const jeCommands = [
   {
@@ -32,6 +32,18 @@ const jeCommands = [
     context: '.*"(true|false)"',
     call: async function() {
       jeInsert(jeContext.slice(1), jeContext[jeContext.length-2], jeContext[jeContext.length-1]=='"false"');
+    }
+  },
+  {
+    id: 'je_colorPicker',
+    name: 'change color',
+    options: [ { type: 'color', label: 'color' } ],
+    context: '.*#([0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{4}|[0-9a-fA-F]{3})|^.* ↦ color',
+    call: async function(options) {
+      if(options['color']) {
+        jeInsert(null, jeGetLastKey(), options['color']);
+        jeApplyChanges();
+      };
     }
   },
   {
@@ -494,16 +506,20 @@ function jeAddRoutineOperationCommands(command, defaults) {
 }
 
 function jeAddCommands() {
-  jeAddWidgetPropertyCommands(new BasicWidget());
-  jeAddWidgetPropertyCommands(new Button());
-  jeAddWidgetPropertyCommands(new Canvas());
-  jeAddWidgetPropertyCommands(new Card());
-  jeAddWidgetPropertyCommands(new Deck());
-  jeAddWidgetPropertyCommands(new Holder());
-  jeAddWidgetPropertyCommands(new Label());
-  jeAddWidgetPropertyCommands(new Pile());
-  jeAddWidgetPropertyCommands(new Spinner());
-  jeAddWidgetPropertyCommands(new Timer());
+  const widgetTypes = [ 'all' ];
+  const collectionNames = [ 'all', 'DEFAULT', 'thisButton', 'child', 'widget' ];
+
+  widgetTypes.push(jeAddWidgetPropertyCommands(new BasicWidget()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Button()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Canvas()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Card()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Deck()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Holder()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Label()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Pile()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Seat()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Spinner()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Timer()));
 
   jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result' });
   jeAddRoutineOperationCommands('CANVAS', { canvas: null, mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6' });
@@ -521,11 +537,12 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0 });
   jeAddRoutineOperationCommands('RECALL', { owned: true, holder: null });
   jeAddRoutineOperationCommands('ROTATE', { count: 1, angle: 90, mode: 'add', holder: null, collection: 'DEFAULT' });
-  jeAddRoutineOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'add', source: 'all', sortBy: 'null' });
+  jeAddRoutineOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all', sortBy: 'null' });
   jeAddRoutineOperationCommands('SET', { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
   jeAddRoutineOperationCommands('SORT', { key: 'value', reverse: false, locales: null, options: null, holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('SHUFFLE', { holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('TIMER', { value: 0, seconds: 0, mode: 'toggle', timer: null, collection: 'DEFAULT' });
+  jeAddRoutineOperationCommands('TURN', { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN' });
 
   jeAddRoutineExpressionCommands('random', 'randInt 1 10');
   jeAddRoutineExpressionCommands('increment', '${variableName} + 1');
@@ -536,7 +553,7 @@ function jeAddCommands() {
   jeAddFaceCommand('css', '', '');
   jeAddFaceCommand('radius', ' (rounded corners)', 1);
 
-  jeAddEnumCommands('^[a-z]+ ↦ type', [ null, 'button', 'canvas', 'card', 'deck', 'holder', 'label', 'spinner', 'timer' ]);
+  jeAddEnumCommands('^[a-z]+ ↦ type', widgetTypes.slice(1));
   jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ value', [ '${}' ]);
   jeAddEnumCommands('^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ textAlign', [ 'left', 'center', 'right' ]);
   jeAddEnumCommands('^.*\\(CANVAS\\) ↦ mode', [ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ]);
@@ -548,17 +565,18 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(LABEL\\) ↦ mode', [ 'set', 'dec', 'inc', 'append' ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ angle', [ 45, 60, 90, 135, 180 ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ mode', [ 'set', 'add' ]);
-  jeAddEnumCommands('^.*\\(SELECT\\) ↦ mode', [ 'set', 'add' ]);
+  jeAddEnumCommands('^.*\\(SELECT\\) ↦ mode', [ 'set', 'add', 'remove', 'intersect' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=', 'in' ]);
-  jeAddEnumCommands('^.*\\(SELECT\\) ↦ type', [ 'all', null, 'button', 'card', 'deck', 'holder', 'label', 'spinner' ]);
+  jeAddEnumCommands('^.*\\(SELECT\\) ↦ type', widgetTypes);
   jeAddEnumCommands('^.*\\(SET\\) ↦ relation', [ '+', '-', '=', "*", "/",'!' ]);
   jeAddEnumCommands('^.*\\(TIMER\\) ↦ mode', [ 'pause', 'start', 'toggle', 'set', 'dec', 'inc', 'reset']);
   jeAddEnumCommands('^.*\\(TIMER\\) ↦ value', [ 0, 'start', 'end', 'milliseconds']);
+  jeAddEnumCommands('^.*\\(TURN\\) ↦ turnCycle', [ 'forward', 'backward', 'random', 'position']);
   jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ property', [ 'id', 'parent', 'type', 'rotation' ]);
 
-  jeAddEnumCommands('^.*\\((CLICK|COUNT|DELETE|FLIP|GET|LABEL|ROTATE|SET|SORT|SHUFFLE)\\) ↦ collection', [ 'DEFAULT', 'thisButton', 'child' ]);
-  jeAddEnumCommands('^.*\\(CLONE\\) ↦ source', [ 'DEFAULT', 'thisButton', 'child' ]);
-  jeAddEnumCommands('^.*\\(SELECT\\) ↦ source', [ 'all', 'DEFAULT', 'thisButton', 'child' ]);
+  jeAddEnumCommands('^.*\\((CLICK|COUNT|DELETE|FLIP|GET|LABEL|ROTATE|SET|SORT|SHUFFLE)\\) ↦ collection', collectionNames.slice(1));
+  jeAddEnumCommands('^.*\\(CLONE\\) ↦ source', collectionNames.slice(1));
+  jeAddEnumCommands('^.*\\(SELECT|TURN\\) ↦ source', collectionNames);
 
   jeAddNumberCommand('increment number', '+', x=>x+1);
   jeAddNumberCommand('decrement number', '-', x=>x-1);
@@ -647,44 +665,34 @@ function displayComputeOps() {
 }
 
 function jeAddCSScommands() {
-  for(const css of [ 'border: 1px solid black', 'background: white', 'font-size: 30px', 'color: black' , 'border-radius: 100%' ]) {
-    jeCommands.push({
-      id: 'css_' + css,
-      name: css,
-      context: '^.* ↦ (css|[a-z]+CSS)',
-      call: async function() {
-        jePasteText(css + '; ', true);
-      },
-      show: function() {
-        return !String(jeGetValue()[jeGetLastKey()]).match(css.split(':')[0]);
-      }
-    });
-  }
-  for(const css of [ '--wcMain: #1f5ca6', '--wcMainOH: #0d2f5e', '--wcBorder: #0d2f5e', '--wcBorderOH: #1f5ca6', '--wcFont: #ffffff', '--wcFontOH: #ffffff' ]) {
-    jeCommands.push({
-      id: 'css_' + css,
-      name: css,
-      context: 'button ↦ (css|[a-z]+CSS)',
-      call: async function() {
-        jePasteText(css + '; ', true);
-      },
-      show: function() {
-        return !String(jeGetValue()[jeGetLastKey()]).match(css.split(':')[0]);
-      }
-    });
-  }
-  for(const css of ['--wcBorderNormal: #00000000', '--wcBorderAlert: red', '--wcFontAlert: red', '--wcFontPaused: #6d6d6d', '--wcAnimationAlert: blinker 1s linear infinite', '--wcAnimationPaused: none' ]) {
-    jeCommands.push({
-      id: 'css_' + css,
-      name: css,
-      context: 'timer ↦ (css|[a-z]+CSS)',
-      call: async function() {
-        jePasteText(css + '; ', true);
-      },
-      show: function() {
-        return !String(jeGetValue()[jeGetLastKey()]).match(css.split(':')[0]);
-      }
-    });
+  const presets = {
+    '[a-z]+': [
+      'border: 1px solid black', 'background: white', 'font-size: 30px', 'color: black' , 'border-radius: 100%'
+    ],
+    'button': [
+      '--wcMain: #1f5ca6', '--wcMainOH: #0d2f5e', '--wcBorder: #0d2f5e', '--wcBorderOH: #1f5ca6', '--wcFont: #ffffff', '--wcFontOH: #ffffff'
+    ],
+    'seat': [
+      '--wcShadowTurn: 0px 0px 20px 5px var(--color)'
+    ],
+    'timer': [
+      '--wcBorderNormal: #00000000', '--wcBorderAlert: red', '--wcFontAlert: red', '--wcFontPaused: #6d6d6d', '--wcAnimationAlert: blinker 1s linear infinite', '--wcAnimationPaused: none'
+    ]
+  };
+  for(const type in presets) {
+    for(const css of presets[type]) {
+      jeCommands.push({
+        id: 'css_' + css,
+        name: css,
+        context: `^${type} ↦ (css|[a-z]+CSS)`,
+        call: async function() {
+          jePasteText(css + '; ', true);
+        },
+        show: function() {
+          return !String(jeGetValue()[jeGetLastKey()]).match(css.split(':')[0]);
+        }
+      });
+    }
   }
 }
 
@@ -738,6 +746,8 @@ function jeAddWidgetPropertyCommands(object) {
     if(property != 'typeClasses')
       jeAddWidgetPropertyCommand(object, property);
   object.applyRemove();
+  const type = object.defaults.typeClasses.replace(/widget /, '');
+  return type == 'basic' ? null : type;
 }
 
 function jeAddWidgetPropertyCommand(object, property) {
@@ -854,8 +864,8 @@ async function jeApplyExternalChanges(state) {
     if(state.cardType === before.cardType) {
       const cardTypes = widgets.get(state.deck).get('cardTypes');
       const cardType = cardTypes[state.cardType];
-      if(JSON.stringify(state['cardType (in deck)']) != JSON.stringify(cardType)) {
-        cardTypes[state.cardType] = state['cardType (in deck)'];
+      if(JSON.stringify(state['cardType  ['+ state.cardType + '] (in deck)']) != JSON.stringify(cardType)) {
+        cardTypes[state.cardType] = state['cardType ['+ state.cardType + '] (in deck)'];
         await widgets.get(state.deck).set('cardTypes', { ...cardTypes });
       }
     }
@@ -1302,7 +1312,7 @@ function jeLoggingRoutineOperationEnd(problems, variables, collections, skipped)
   const applied = savedHTML[2];
   const appliedText  = jeLoggingJSON(applied);
   const opFunction = savedHTML[3];
-  
+
   const opProblems = problems.length ?
        `<div class="jeLogDetails">
           <div class="jeExpander">
@@ -1319,7 +1329,7 @@ function jeLoggingRoutineOperationEnd(problems, variables, collections, skipped)
   const opOperation = originalText.length || appliedText.length ?
         `<div class="jeLogDetails">
            <div class="jeExpander">
-             <span class="jeLogName">Original and applied operation</span> 
+             <span class="jeLogName">Original and applied operation</span>
            </div>
            <div class="jeLogNested">
              ${originalOp}
@@ -1356,7 +1366,7 @@ function jeLoggingRoutineOperationEnd(problems, variables, collections, skipped)
 }
 
 function jeLoggingRoutineOperationSummary(definition, result) {
-  jeRoutineResult = `<span class="jeLogSummary">${html(definition)}</span> 
+  jeRoutineResult = `<span class="jeLogSummary">${html(definition)}</span>
      ${result ? '=&gt;' : ''} <span class="jeLogResult">${html(result || '')}</span>`;
 }
 
@@ -1400,7 +1410,7 @@ function jePreProcessObject(o) {
     const match = key.match(/^(.*?)(\*)?(#)?$/);
     if(o[match[1]] !== undefined)
       copy[match[1]] = o[match[1]];
-    else if(match[2] == '*' && !o.inheritFrom)
+    else if(match[2] == '*' && !o.inheritFrom && (o.type != 'card' || (key != 'width*' && key != 'height*')))
       copy[match[1]] = jeWidget.getDefaultValue(match[1]);
     if(match[3] == '#')
       copy[`LINEBREAK${match[1]}`] = null;
@@ -1413,7 +1423,7 @@ function jePreProcessObject(o) {
   try {
     if(copy.type == 'card') {
       copy['cardDefaults (in deck)'] = widgets.get(copy.deck).get('cardDefaults');
-      copy['cardType (in deck)'] = widgets.get(copy.deck).get('cardTypes')[copy.cardType];
+      copy['cardType ['+ o.cardType + '] (in deck)'] = widgets.get(copy.deck).get('cardTypes')[copy.cardType];
     }
   } catch(e) {}
 
@@ -1518,7 +1528,7 @@ function jeShowCommands() {
     if(contextMatch && contextMatch[0] == "") {
       const name = (typeof command.name == 'function' ? command.name() : command.name);
       let keyName = displayKey(command.forceKey);
-      commandText += `<div class='jeTopButton'><button class='top' id='${command.id}' title='${name} (Ctrl-${keyName})' ${!command.show || command.show() ? '' : 'disabled'}>${name.substr(0,2)}</button><span class='top'>${keyName}</span></div>`;
+      commandText += `<div class='jeTopButton'><button class='top' id='${command.id}' title='${name}' ${!command.show || command.show() ? '' : 'disabled'}>${name.substr(0,2)}</button><span class='top'>&nbsp;</span></div>`;
     }
   }
   delete activeCommands[""];
@@ -1545,7 +1555,7 @@ function jeShowCommands() {
                 command.currentKey = key;
             usedKeys[command.currentKey] = true;
             let keyName = displayKey(command.currentKey);
-            commandText += (keyName !== undefined)? `Ctrl-${keyName}: ` : `no key  `;
+            // commandText += (keyName !== undefined)? `Ctrl-${keyName}: ` : `no key  `;
             commandText += `<button id="${command.id}">${name.replace(keyName, '<b>' + keyName + '</b>')}</button>\n`;
           }
         } catch(e) {
@@ -1622,11 +1632,19 @@ window.addEventListener('mousemove', function(e) {
   for(let i=1; i<=12; ++i) {
     if(hoveredWidgets[i-1]) {
       jeWidgetLayers[i] = hoveredWidgets[i-1];
-      $(`#jeWidgetLayer${i}`).textContent = `F${i}:\nid: ${hoveredWidgets[i-1].get('id')}\ntype: ${hoveredWidgets[i-1].get('type') || 'basic'}`;
+      var deck = `${hoveredWidgets[i-1].get('type')}` == 'card' ? `\ndeck: ${hoveredWidgets[i-1].get('deck')}` : "";
+      var cardType = `${hoveredWidgets[i-1].get('type')}` == 'card' ? `\ncardType: ${hoveredWidgets[i-1].get('cardType')}` : "";
+      $(`#jeWidgetLayer${i}`).textContent = `F${i}:\nid: ${hoveredWidgets[i-1].get('id')}\ntype: ${hoveredWidgets[i-1].get('type') || 'basic'} ${deck} ${cardType}`;
     } else {
       delete jeWidgetLayers[i];
       $(`#jeWidgetLayer${i}`).textContent = '';
     }
+  }
+
+  if((roomRectangle.left <= e.clientX && e.clientX <= roomRectangle.right && roomRectangle.top <= e.clientY && e.clientY <= roomRectangle.bottom) || jeZoomOut) {
+    $('#jeMouseCoords').innerHTML = "(" + jeState.mouseX + ", " + jeState.mouseY + ")";
+  } else {
+    $('#jeMouseCoords').innerHTML = ""
   }
 });
 
@@ -1675,18 +1693,18 @@ window.addEventListener('keydown', async function(e) {
       const locationPostion = String(jeJSONerror).match(/position ([0-9]+)/);
       if(locationPostion)
         jeSelect(+locationPostion[1], +locationPostion[1], true);
-    } else {
-      for(const command of jeCommands) {
-        if(command.currentKey == e.key) {
-          e.preventDefault();
-          try {
-            jeCommandError = null;
-            await jeCallCommand(command);
-          } catch(e) {
-            jeCommandError = e;
-          }
-        }
-      }
+    // } else {
+    //   for(const command of jeCommands) {
+    //     if(command.currentKey == e.key) {
+    //       e.preventDefault();
+    //       try {
+    //         jeCommandError = null;
+    //         await jeCallCommand(command);
+    //       } catch(e) {
+    //         jeCommandError = e;
+    //       }
+    //     }
+    //   }
     }
   }
 
