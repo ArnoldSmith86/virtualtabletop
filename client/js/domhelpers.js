@@ -147,3 +147,7 @@ export function selectFile(getContents, multipleCallback) {
 export function asArray(variable) {
   return Array.isArray(variable) ? variable : [ variable ];
 }
+
+export function mod(a, b) {
+  return ((a % b) + b) % b;
+}
