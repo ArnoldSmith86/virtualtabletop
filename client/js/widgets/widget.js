@@ -1,4 +1,4 @@
-import { $, removeFromDOM } from '../domhelpers.js';
+import { $, removeFromDOM, asArray } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
@@ -49,6 +49,9 @@ export class Widget extends StateManaged {
       dropOffsetY: 0,
       inheritChildZ: false,
 
+      linkedToSeat: null,
+      onlyVisibleForSeat: null,
+
       clickRoutine: null,
       changeRoutine: null,
       enterRoutine: null,
@@ -56,7 +59,7 @@ export class Widget extends StateManaged {
       globalUpdateRoutine: null
     });
     this.domElement.timer = false
-    
+
     this.domElement.addEventListener('contextmenu', e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseenter',  e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
@@ -64,19 +67,19 @@ export class Widget extends StateManaged {
     this.domElement.addEventListener('mouseup',  e => this.notSelected(), false);
     this.domElement.addEventListener("touchstart", e => this.touchstart(), false);
     this.domElement.addEventListener("touchend", e => this.touchend(), false);
-    
+
     this.touchstart = function() {
       if (!this.timer) {
         this.timer = setTimeout(this.onlongtouch.bind(this), 500, false);
       }
     }
-    
+
     this.touchend = function() {
       clearTimeout(this.timer);
       this.timer = null;
       this.hideEnlarged();
     }
-    
+
     this.onlongtouch = function() {
       this.showEnlarged();
       clearTimeout(this.timer);
@@ -186,7 +189,7 @@ export class Widget extends StateManaged {
           targetDelta[key] = sourceDelta[key];
   }
 
-  applyInheritedValuesToDOM(inheritFrom, pushToArray) {
+  applyInheritedValuesToDOM(inheritFrom, pushasArray) {
     const delta = {};
     for(const [ id, properties ] of Object.entries(inheritFrom).reverse()) {
       if(widgets.has(id)) {
@@ -196,7 +199,7 @@ export class Widget extends StateManaged {
         this.applyInheritedValuesToObject(properties, w.state, delta, this);
       }
 
-      if(pushToArray) {
+      if(pushasArray) {
         if(StateManaged.inheritFromMapping[id] === undefined)
           StateManaged.inheritFromMapping[id] = [];
         StateManaged.inheritFromMapping[id].push(this);
@@ -260,12 +263,18 @@ export class Widget extends StateManaged {
       className += ' foreign';
     if(typeof this.get('owner') == 'string' && this.get('owner') != playerName)
       className += ' foreign';
+    if(this.get('onlyVisibleForSeat'))
+      if(!widgetFilter(w=>w.get('player') == playerName && asArray(this.get('onlyVisibleForSeat')).indexOf(w.get('id')) != -1).length)
+        className += ' foreign';
+    if(this.get('linkedToSeat') && widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == playerName).length)
+      if(!widgetFilter(w=>asArray(this.get('linkedToSeat')).indexOf(w.get('id')) != -1 && w.get('player')).length)
+        className += ' foreign';
 
     return className;
   }
 
   classesProperties() {
-    return [ 'classes', 'owner', 'typeClasses' ];
+    return [ 'classes', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses' ];
   }
 
   async click(mode='respect') {
@@ -410,12 +419,8 @@ export class Widget extends StateManaged {
       problems.push(`Collection ${collection} does not exist.`);
     }
 
-    function toA(ids) {
-      return typeof ids == 'string' ? [ ids ] : ids;
-    }
-
     async function w(ids, callback) {
-      for(const a of widgetFilter(w=>toA(ids).indexOf(w.get('id')) != -1))
+      for(const a of widgetFilter(w=>asArray(ids).indexOf(w.get('id')) != -1))
         await callback(a);
     }
 
@@ -586,7 +591,7 @@ export class Widget extends StateManaged {
         };
 
         let phrase;
-        
+
         if(a.canvas !== undefined) {
           if(this.isValidID(a.canvas, problems)) {
             await w(a.canvas, execute);
@@ -921,7 +926,23 @@ export class Widget extends StateManaged {
                 await c.bringToFront();
               } else {
                 c.movedByButton = true;
-                await c.moveToHolder(target);
+                if(target.get('type') == 'seat') {
+                  if(target.get('hand') && target.get('player')) {
+                    if(widgets.has(target.get('hand'))) {
+                      await c.moveToHolder(widgets.get(target.get('hand')));
+                      if(widgets.get(target.get('hand')).get('childrenPerOwner'))
+                        await c.set('owner', target.get('player'));
+                      c.bringToFront()
+                      widgets.get(target.get('hand')).updateAfterShuffle(); // this arranges the cards in the new owner's hand
+                    } else {
+                      problems.push(`Seat ${target.id} declares 'hand: ${target.get('hand')}' which does not exist.`);
+                    }
+                  } else {
+                    problems.push(`Seat ${target.id} is empty or does not define a hand.`);
+                  }
+                } else {
+                  await c.moveToHolder(target);
+                }
                 delete c.movedByButton;
               }
             }
@@ -956,7 +977,7 @@ export class Widget extends StateManaged {
       if(a.func == 'RECALL') {
         setDefaults(a, { owned: true });
         if(this.isValidID(a.holder, problems)) {
-          for(const holder of toA(a.holder)) {
+          for(const holder of asArray(a.holder)) {
             const decks = widgetFilter(w=>w.get('type')=='deck'&&w.get('parent')==holder);
             if(decks.length) {
               for(const deck of decks) {
@@ -1196,11 +1217,71 @@ export class Widget extends StateManaged {
            (a.timer != undefined || (isValidCollection(a.collection) && collections[a.collection].length))) {
           const phrase = (a.timer == undefined) ? `timers in '${a.collection}'` : `'${a.timer}'`;
           if(a.mode == 'set')
-            jeLoggingRoutineOperationSummary(`${phrase} to ${a.value}`)
+            jeLoggingRoutineOperationSummary(`${phrase} to ${a.value}`);
           else if(a.mode == 'inc' || a.mode == 'dec')
-            jeLoggingRoutineOperationSummary(`${phrase} by ${a.value}`)
+            jeLoggingRoutineOperationSummary(`${phrase} by ${a.value}`);
           else
-            jeLoggingRoutineOperationSummary(`${a.mode} ${phrase}`)
+            jeLoggingRoutineOperationSummary(`${a.mode} ${phrase}`);
+        }
+      }
+
+      if(a.func == 'TURN') {
+        setDefaults(a, { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN' });
+        if([ 'forward', 'backward', 'random', 'position' ].indexOf(a.turnCycle) == -1) {
+          problems.push(`Warning: turnCycle ${a.turnCycle} interpreted as forward.`);
+          a.turnCycle = 'forward'
+        }
+        //copied from select
+        let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(w=>w.get('type')=='seat');
+
+        //this get the list of valid index
+        const indexList = [];
+        let previousTurn = 1;
+        for(const w of c) {
+          if(indexList.indexOf(w.get('index')) == -1 && w.get('player'))
+            indexList.push(w.get('index'));
+          if(w.get('turn'))
+            previousTurn = w.get('index');
+        }
+
+        if(indexList.length) {
+          indexList.sort((a,b)=>a-b);
+          let nextTurnIndex = 0;
+
+          if(a.turnCycle == 'position') {
+            if(a.turn == 'first') {
+              nextTurnIndex = 0;
+            } else if(a.turn == 'last') {
+              nextTurnIndex = indexList.length - 1;
+            } else if(a.turn > 0) {
+              nextTurnIndex = a.turn - 1;
+            } else {
+              nextTurnIndex = a.turn;
+            }
+          } else if(a.turnCycle == 'random') {
+            nextTurnIndex = Math.floor(Math.random() * indexList.length);
+          } else {
+            const turnIndexOffset = a.turnCycle == 'forward' ? a.turn : -a.turn;
+            nextTurnIndex = indexList.indexOf(previousTurn) + turnIndexOffset;
+          }
+
+          //makes sure nextTurnIndex is a valid index of indexList
+          nextTurnIndex = Math.floor(nextTurnIndex);
+          if(typeof nextTurnIndex != 'number' || !isFinite(nextTurnIndex))
+            nextTurnIndex = 0;
+          const turn = indexList[mod(nextTurnIndex, indexList.length)];
+
+          collections[a.collection] = [];
+          //saves turn into all seats and creates output collection with turn seats
+          for(const w of c) {
+            await w.set('turn', w.get('index') == turn);
+            if(w.get('turn') && w.get('player'))
+              collections[a.collection].push(w);
+          }
+
+          jeLoggingRoutineOperationSummary(`changed turn of seats from ${previousTurn} to ${turn} - active seats: ${JSON.stringify(indexList)}`);
+        } else {
+          jeLoggingRoutineOperationSummary(`no active seats found`);
         }
       }
 
@@ -1209,9 +1290,9 @@ export class Widget extends StateManaged {
       if(!jeRoutineLogging && problems.length)
         console.log(problems);
 
-      if(a.func == 'CALL' && !a.return) {
+      if(a.func == 'CALL' && !a.return)
         break
-      }
+
     } // End iterate over functions in routine
 
     if(jeRoutineLogging) jeLoggingRoutineEnd(variables, collections);
@@ -1243,7 +1324,7 @@ export class Widget extends StateManaged {
       return super.get(property);
     }
   }
-  
+
   hideEnlarged() {
     if (!this.domElement.className.match(/selected/))
       $('#enlarged').classList.add('hidden');
@@ -1426,19 +1507,23 @@ export class Widget extends StateManaged {
           continue;
         if(y < (grid.minY || -99999) || y > (grid.maxY || 99999))
           continue;
-        const distance = ((x + grid.x/2 - (grid.offsetX || 0)) % grid.x) + ((y + grid.y/2 - (grid.offsetY || 0)) % grid.y);
+
+        const snapX = x + grid.x/2 - mod(x - (grid.offsetX || 0), grid.x);
+        const snapY = y + grid.y/2 - mod(y - (grid.offsetY || 0), grid.y);
+
+        const distance = (snapX - x) ** 2 + (snapY - y) ** 2;
         if(distance < closestDistance) {
-          closest = grid;
+          closest = [ snapX, snapY, grid ];
           closestDistance = distance;
         }
       }
 
       if(closest) {
-        x = x + closest.x/2 - (x - (closest.offsetX || 0)) % closest.x;
-        y = y + closest.y/2 - (y - (closest.offsetY || 0)) % closest.y;
-        for(const p in closest)
+        x = closest[0];
+        y = closest[1];
+        for(const p in closest[2])
           if([ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY' ].indexOf(p) == -1)
-            await this.set(p, closest[p]);
+            await this.set(p, closest[2][p]);
       }
 
       this.snappingToGrid = false;
@@ -1461,15 +1546,15 @@ export class Widget extends StateManaged {
     } else
       problems.push(`Tried setting text property which doesn't exist for ${this.id}.`);
   }
-  
+
   selected() {
     this.domElement.classList.add('selected');
   }
-  
+
   notSelected() {
     this.domElement.classList.remove('selected');
   }
-  
+
   showEnlarged(event) {
     if(this.get('enlarge')) {
       const e = $('#enlarged');
