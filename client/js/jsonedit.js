@@ -801,6 +801,13 @@ async function jeUpdateWidget(currentState, oldState) {
       sendPropertyUpdate(card.get('id'), 'deck', id);
 }
 
+// Called from overlayDone in editmode.js to finish up add widget processing in the JSON editor.
+function jeAddWidgetDone(id) {
+    jeSelectWidget(widgets.get(id));
+    jeStateNow.id = '###SELECT ME###';
+    jeSetAndSelect(id);
+}
+
 async function jeApplyChanges() {
   if(jeMode == 'multi')
     return await jeApplyChangesMulti();

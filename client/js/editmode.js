@@ -606,13 +606,8 @@ function addWidgetToAddWidgetOverlay(w, wi) {
 }
 
 function overlayDone(id) {
-  if(jeEnabled) {
-    jeSelectWidget(widgets.get(id));
-    jeApplyChanges();
-    jeStateNow.id = '###SELECT ME###';
-    jeSetAndSelect(id);
-    jeGetContext();
-  }
+  if(jeEnabled)
+    jeAddWidgetDone(id);
   showOverlay();
 }
 
