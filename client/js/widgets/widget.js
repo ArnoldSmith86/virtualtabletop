@@ -931,7 +931,6 @@ export class Widget extends StateManaged {
                 c.movedByButton = true; // overrides dropLimit
                 await c.getRoutineParent();
                 c.triggerLeaveParent = true;
-                await c.moveToHolder(target);
                 if(target.get('type') == 'seat') {
                   if(target.get('hand') && target.get('player')) {
                     if(widgets.has(target.get('hand'))) {
