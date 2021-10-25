@@ -760,6 +760,47 @@ function jeAddWidgetPropertyCommand(object, property) {
   });
 }
 
+// Note: this code is almost identical to onClickUpdateWidget in editmode.js, from which it was stolen.
+async function jeUpdateWidget(currentState, oldState) {
+    const previousState = JSON.parse(oldState);
+    try {
+      var widget = JSON.parse(currentState);
+    } catch(e) {
+      alert(e.toString());
+      return;
+    }
+
+    for(const key in widget)
+      if(widget[key] === null)
+        delete widget[key];
+
+    if(widget.parent !== undefined && !widgets.has(widget.parent)) {
+      alert(`Parent widget ${widget.parent} does not exist.`);
+      return;
+    }
+
+    const children = Widget.prototype.children.call(widgets.get(previousState.id));
+    const cards = widgetFilter(w=>w.get('deck')==previousState.id);
+
+    if(widget.id !== previousState.id || widget.type !== previousState.type) {
+      for(const child of children)
+        sendPropertyUpdate(child.get('id'), 'parent', null);
+      for(const card of cards)
+        sendPropertyUpdate(card.get('id'), 'deck', null);
+      await removeWidgetLocal(previousState.id, true);
+    } else {
+      for(const key in previousState)
+        if(widget[key] === undefined)
+          widget[key] = null;
+    }
+    const id = addWidgetLocal(widget);
+
+    for(const child of children)
+      sendPropertyUpdate(child.get('id'), 'parent', id);
+    for(const card of cards)
+      sendPropertyUpdate(card.get('id'), 'deck', id);
+}
+
 async function jeApplyChanges() {
   if(jeMode == 'multi')
     return await jeApplyChangesMulti();
@@ -777,9 +818,9 @@ async function jeApplyChanges() {
     jeDeltaIsOurs = true;
     await jeApplyExternalChanges(completeState);
     jeStateBeforeRaw = currentStateRaw;
-    $('#editWidgetJSON').dataset.previousState = jeStateBefore;
-    $('#editWidgetJSON').value = jeStateBefore = currentState;
-    await onClickUpdateWidget(false);
+    const oldState = jeStateBefore;
+    jeStateBefore = currentState;
+    await jeUpdateWidget(currentState, oldState);
     jeDeltaIsOurs = false;
   }
 }
