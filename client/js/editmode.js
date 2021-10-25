@@ -51,7 +51,7 @@ function applyEditOptionsBasic(widget) {
     delete widget.image;
   else
     widget.image = $('#basicImage').value;
-  
+
   applyWidthHeight(widget, $('#basicWidthNumber').value, 'width');
   applyWidthHeight(widget, $('#basicHeightNumber').value, 'height');
 
@@ -251,10 +251,10 @@ function populateEditOptionsLabel(widget) {
 
 function applyEditOptionsLabel(widget) {
   widget.text = $('#labelText').value;
-  
+
   applyWidthHeight(widget, $('#labelWidthNumber').value, 'width');
   applyWidthHeight(widget, $('#labelHeightNumber').value, 'height');
-  
+
   widget.editable = $('#labelEditable').checked;
 }
 
@@ -293,6 +293,41 @@ function applyEditOptionsPiece(widget) {
   }
 
   widget.color = $('#pieceColor').value;
+}
+
+//seat functions
+function populateEditOptionsSeat(widget) {
+  $('#seatPlayerColor').value = widget.color || "black";
+  $('#seatPlayerName').value = widget.player || "~ empty seat ~";
+  $('#seatEmpty').checked = false;
+}
+
+function applyEditOptionsSeat(widget) {
+  if($('#seatEmpty').checked || $('#seatPlayerName').value == "~ empty seat ~") {
+    delete widget.player;
+    delete widget.color;
+  } else {
+    if(widget.player) {
+      toServer('playerColor', { player: widget.player, color: $('#seatPlayerColor').value });
+      toServer('rename', { oldName: widget.player, newName: $('#seatPlayerName').value });
+    }
+    widget.player = $('#seatPlayerName').value;
+    widget.color = $('#seatPlayerColor').value;
+  }
+}
+
+//spinner functions
+function populateEditOptionsSpinner(widget) {
+}
+
+function applyEditOptionsSpinner(widget) {
+  for(let i=0; i<9; ++i) {
+    if($a('#spinnerOptions > [name=spinnerOptions]')[i].selected){
+      widget.options = JSON.parse($a('#spinnerOptions > [name=spinnerOptions]')[i].value);
+      delete widget.angle;
+      widget.value=widget.options[widget.options.length-1];
+    }
+  }
 }
 
 //timer functions
@@ -334,20 +369,6 @@ function applyEditOptionsTimer(widget) {
   }
 }
 
-//spinner functions
-function populateEditOptionsSpinner(widget) {
-  }
-
-function applyEditOptionsSpinner(widget) {
-  for(let i=0; i<9; ++i) {
-    if($a('#spinnerOptions > [name=spinnerOptions]')[i].selected){
-      widget.options = JSON.parse($a('#spinnerOptions > [name=spinnerOptions]')[i].value);
-      delete widget.angle;
-      widget.value=widget.options[widget.options.length-1];
-    }
-  }
-}
-
 //This section calls the relative widgets' overlays and functions
 async function applyEditOptions(widget) {
   var type = widget.type||'piece';
@@ -368,10 +389,12 @@ async function applyEditOptions(widget) {
     applyEditOptionsLabel(widget);
   if(type == 'piece')
     applyEditOptionsPiece(widget);
-  if(type == 'timer')
-    applyEditOptionsTimer(widget);
+  if(type == 'seat')
+    applyEditOptionsSeat(widget);
   if(type == 'spinner')
     applyEditOptionsSpinner(widget);
+  if(type == 'timer')
+    applyEditOptionsTimer(widget);
 }
 
 function editClick(widget) {
@@ -405,10 +428,12 @@ function editClick(widget) {
     populateEditOptionsLabel(widget.state);
   if(type == 'piece')
     populateEditOptionsPiece(widget.state);
-  if(type == 'timer')
-    populateEditOptionsTimer(widget.state);
+  if(type == 'seat')
+    populateEditOptionsSeat(widget.state);
   if(type == 'spinner')
     populateEditOptionsSpinner(widget.state);
+  if(type == 'timer')
+    populateEditOptionsTimer(widget.state);
 
   showOverlay('editOverlay');
 }
@@ -905,7 +930,7 @@ onLoad(function() {
   on('#addCustomWidgetOverlay', 'click', _=>showOverlay('addCustomOverlay'));
 
   on('#addHand', 'click', function() {
-    addWidgetLocal({
+    const hand = {
       type: 'holder',
       onEnter: { activeFace: 1 },
       onLeave: { activeFace: 0 },
@@ -917,7 +942,10 @@ onLoad(function() {
       y: 820,
       width: 1500,
       height: 180
-    });
+    }
+    if(!widgets.has('hand'))
+      hand.id = 'hand';
+    addWidgetLocal(hand);
     showOverlay();
   });
 
@@ -1032,6 +1060,18 @@ onLoad(function() {
       css: "border-radius: 0% 0% 0% 50%;  border-width: 1px; background-color: var(--color);  --wcBorder: #555; --wcBorderOH: black  "
     }
     );
+    showOverlay();
+  });
+
+  on('#addSeat', 'click', function() {
+    const seats = widgetFilter(w=>w.get('type')=='seat');
+    const maxIndex = Math.max(...seats.map(w=>w.get('index')));
+    addWidgetLocal({
+      type: 'seat',
+      index: seats.length && maxIndex ? maxIndex+1 : 1,
+      x: 840,
+      y: 90
+    });
     showOverlay();
   });
 
