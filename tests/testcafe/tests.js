@@ -293,7 +293,7 @@ test('Dynamic expressions', async t => {
   await setName(t);
   await t
     .click('#addButton')
-    .click('#addCustomWidgetOverlay')
+    .click('#addBasicWidget')
     .pressKey('ctrl+j')
     .click('#room',{offsetX: 1, offsetY: 1, modifiers:{ctrl:true}})
     .typeText('#jeText', button, { replace: true, paste: true })

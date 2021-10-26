@@ -815,7 +815,7 @@ function uploadWidget(preset) {
   });
 }
 
-async function updateWidget(currentState, oldState) {
+async function updateWidget(currentState, oldState, applyChangesFromUI) {
   const previousState = JSON.parse(oldState);
   try {
     var widget = JSON.parse(currentState);
@@ -859,7 +859,7 @@ async function updateWidget(currentState, oldState) {
 }
 
 async function onClickUpdateWidget(applyChangesFromUI) {
-  await updateWidget($('#editWidgetJSON').value, $('#editWidgetJSON').dataset.previousState);
+  await updateWidget($('#editWidgetJSON').value, $('#editWidgetJSON').dataset.previousState, applyChangesFromUI);
 
   showOverlay();
 }
