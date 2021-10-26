@@ -971,7 +971,7 @@ onLoad(function() {
   on('#editButton', 'click', toggleEditMode);
 
   // This now adds an empty basic widget
-  on('#addBasicWidgetOverlay', 'click', function() {
+  on('#addBasicWidget', 'click', function() {
     const id = addWidgetLocal({
       text: "Basic widget"
     });
