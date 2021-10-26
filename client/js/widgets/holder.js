@@ -86,7 +86,7 @@ class Holder extends Widget {
     if(child.get('type') == 'deck')
       return await super.onChildAddAlign(child, oldParentID);
 
-    if(this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY')) && child.get('type') == 'pile') {
+    if((this.get('preventPiles') || this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY'))) && child.get('type') == 'pile') {
       let i=1;
       this.preventRearrangeDuringPileDrop = true;
       for(const w of child.children().reverse()) {
