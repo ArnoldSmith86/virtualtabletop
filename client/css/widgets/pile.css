@@ -1,3 +1,7 @@
+.pile {
+  will-change: transform;
+}
+
 .pile .handle {
   position: absolute;
   left: -15px;
