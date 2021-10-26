@@ -605,6 +605,8 @@ function addWidgetToAddWidgetOverlay(w, wi) {
   $('#addOverlay').appendChild(w.domElement);
 }
 
+// Called by most routines that add widgets. If the widget add came from the JSON editor,
+// call a routine in the JSON editor to clean up. Then hide the add widget overlay.
 function overlayDone(id) {
   if(jeEnabled)
     jeAddWidgetDone(id);
@@ -612,6 +614,7 @@ function overlayDone(id) {
 }
 
 function populateAddWidgetOverlay() {
+  // Populate the Cards panel in the add widget overlay
   const x = 20+140-111/2;
   addWidgetToAddWidgetOverlay(new Holder('add-holder'), {
     type: 'holder',
@@ -632,7 +635,9 @@ function populateAddWidgetOverlay() {
     return id
   });
 
+  // Populate the Game Pieces panel in the add widget overlay
   let y = 100;
+  // First the pins, checkers, and pawns
   for(const color of [ '#bc5bee','#4c5fea','#23ca5b','#e0cb0b','#e2a633','#e84242','#000000','#4a4a4a','#ffffff' ]) {
     addWidgetToAddWidgetOverlay(new BasicWidget('add-pin-'+color), {
       classes: 'pinPiece',
@@ -666,6 +671,7 @@ function populateAddWidgetOverlay() {
     y += 88;
   }
 
+  // Next the unicode symbols
   const centerStyle = 'color:black;display:flex;justify-content:center;align-items:center;text-align:center;';
   addWidgetToAddWidgetOverlay(new BasicWidget('add-unicodeS'), {
     text: '🐻',
@@ -692,6 +698,10 @@ function populateAddWidgetOverlay() {
     y: y - 25
   });
 
+  // Populate the Interactive panel in the add widget overlay.
+  // Note that the Add Canvas and Add Seat buttons are in room.html.
+
+  // First the various spinners
   y = 140;
   for(const sides of [ 2, 6, 10, 20 ]) {
     addWidgetToAddWidgetOverlay(new Spinner('add-spinner'+sides), {
@@ -724,6 +734,7 @@ function populateAddWidgetOverlay() {
     y: 620
   });
 
+  // Add the composite timer widget
   addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 710, 750), function() {
     const id = generateUniqueWidgetID();
     for(const w of generateTimerWidgets(id, 710, 750))
@@ -731,6 +742,7 @@ function populateAddWidgetOverlay() {
     return id
   });
 
+  // Add the composite counter widget
   addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 767, 830), function() {
     const id = generateUniqueWidgetID();
     for(const w of generateCounterWidgets(id, 767, 830))
@@ -738,6 +750,7 @@ function populateAddWidgetOverlay() {
     return id
   });
 
+  // Populate the Decorative panel in the add widget overlay
   addWidgetToAddWidgetOverlay(new Label('add-label'), {
     type: 'label',
     text: 'Label',
@@ -755,7 +768,7 @@ function populateAddWidgetOverlay() {
     y: 600
   });
 }
-//end of JSON generators
+// end of JSON generators
 
 async function removeWidgetLocal(widgetID, keepChildren) {
   function getWidgetsToRemove(widgetID) {
