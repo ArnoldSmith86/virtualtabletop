@@ -760,53 +760,12 @@ function jeAddWidgetPropertyCommand(object, property) {
   });
 }
 
-// Note: this code is almost identical to onClickUpdateWidget in editmode.js, from which it was stolen.
-async function jeUpdateWidget(currentState, oldState) {
-    const previousState = JSON.parse(oldState);
-    try {
-      var widget = JSON.parse(currentState);
-    } catch(e) {
-      alert(e.toString());
-      return;
-    }
-
-    for(const key in widget)
-      if(widget[key] === null)
-        delete widget[key];
-
-    if(widget.parent !== undefined && !widgets.has(widget.parent)) {
-      alert(`Parent widget ${widget.parent} does not exist.`);
-      return;
-    }
-
-    const children = Widget.prototype.children.call(widgets.get(previousState.id));
-    const cards = widgetFilter(w=>w.get('deck')==previousState.id);
-
-    if(widget.id !== previousState.id || widget.type !== previousState.type) {
-      for(const child of children)
-        sendPropertyUpdate(child.get('id'), 'parent', null);
-      for(const card of cards)
-        sendPropertyUpdate(card.get('id'), 'deck', null);
-      await removeWidgetLocal(previousState.id, true);
-    } else {
-      for(const key in previousState)
-        if(widget[key] === undefined)
-          widget[key] = null;
-    }
-    const id = addWidgetLocal(widget);
-
-    for(const child of children)
-      sendPropertyUpdate(child.get('id'), 'parent', id);
-    for(const card of cards)
-      sendPropertyUpdate(card.get('id'), 'deck', id);
-}
-
 // Called from overlayDone in editmode.js to finish up add widget processing in the JSON editor.
 function jeAddWidgetDone(id) {
   jeSelectWidget(widgets.get(id));
-  jeApplyChanges();
   jeStateNow.id = '###SELECT ME###';
   jeSetAndSelect(id);
+  jeGetContext();
 }
 
 async function jeApplyChanges() {
@@ -828,7 +787,7 @@ async function jeApplyChanges() {
     jeStateBeforeRaw = currentStateRaw;
     const oldState = jeStateBefore;
     jeStateBefore = currentState;
-    await jeUpdateWidget(currentState, oldState);
+    await updateWidget(currentState, oldState); // in editmode.js
     jeDeltaIsOurs = false;
   }
 }

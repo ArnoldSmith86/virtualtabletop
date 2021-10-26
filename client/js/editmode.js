@@ -815,49 +815,53 @@ function uploadWidget(preset) {
   });
 }
 
-async function onClickUpdateWidget(applyChangesFromUI) {
-    const previousState = JSON.parse($('#editWidgetJSON').dataset.previousState);
-    try {
-      var widget = JSON.parse($('#editWidgetJSON').value);
-    } catch(e) {
-      alert(e.toString());
-      return;
-    }
+async function updateWidget(currentState, oldState) {
+  const previousState = JSON.parse(oldState);
+  try {
+    var widget = JSON.parse(currentState);
+  } catch(e) {
+    alert(e.toString());
+    return;
+  }
 
-    for(const key in widget)
-      if(widget[key] === null)
-        delete widget[key];
+  for(const key in widget)
+    if(widget[key] === null)
+      delete widget[key];
 
-    if(widget.parent !== undefined && !widgets.has(widget.parent)) {
-      alert(`Parent widget ${widget.parent} does not exist.`);
-      return;
-    }
+  if(widget.parent !== undefined && !widgets.has(widget.parent)) {
+    alert(`Parent widget ${widget.parent} does not exist.`);
+    return;
+  }
 
-    if(applyChangesFromUI)
-      await applyEditOptions(widget);
+  if(applyChangesFromUI)
+    await applyEditOptions(widget);
 
-    const children = Widget.prototype.children.call(widgets.get(previousState.id));
-    const cards = widgetFilter(w=>w.get('deck')==previousState.id);
+  const children = Widget.prototype.children.call(widgets.get(previousState.id));
+  const cards = widgetFilter(w=>w.get('deck')==previousState.id);
 
-    if(widget.id !== previousState.id || widget.type !== previousState.type) {
-      for(const child of children)
-        sendPropertyUpdate(child.get('id'), 'parent', null);
-      for(const card of cards)
-        sendPropertyUpdate(card.get('id'), 'deck', null);
-      await removeWidgetLocal(previousState.id, true);
-    } else {
-      for(const key in previousState)
-        if(widget[key] === undefined)
-          widget[key] = null;
-    }
-    const id = addWidgetLocal(widget);
-
+  if(widget.id !== previousState.id || widget.type !== previousState.type) {
     for(const child of children)
-      sendPropertyUpdate(child.get('id'), 'parent', id);
+      sendPropertyUpdate(child.get('id'), 'parent', null);
     for(const card of cards)
-      sendPropertyUpdate(card.get('id'), 'deck', id);
+      sendPropertyUpdate(card.get('id'), 'deck', null);
+    await removeWidgetLocal(previousState.id, true);
+  } else {
+    for(const key in previousState)
+      if(widget[key] === undefined)
+        widget[key] = null;
+  }
+  const id = addWidgetLocal(widget);
 
-    showOverlay();
+  for(const child of children)
+    sendPropertyUpdate(child.get('id'), 'parent', id);
+  for(const card of cards)
+    sendPropertyUpdate(card.get('id'), 'deck', id);
+}
+
+async function onClickUpdateWidget(applyChangesFromUI) {
+  await updateWidget($('#editWidgetJSON').value, $('#editWidgetJSON').dataset.previousState);
+
+  showOverlay();
 }
 
 function duplicateWidget(widget, recursive, inheritFrom, increment, xOffset, yOffset, xCopies, yCopies) {
@@ -967,7 +971,7 @@ onLoad(function() {
   on('#editButton', 'click', toggleEditMode);
 
   // This now adds an empty basic widget
-  on('#addCustomWidgetOverlay', 'click', function() {
+  on('#addBasicWidgetOverlay', 'click', function() {
     const id = addWidgetLocal({
       text: "Basic widget"
     });
