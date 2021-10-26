@@ -94,9 +94,17 @@ class Holder extends Widget {
         await w.set('y', child.get('y') - this.absoluteCoord('y') + i/100);
         await w.set('parent', this.get('id'));
         ++i;
+        if(this.get('preventPiles')) {
+          if(this.get('alignChildren') && !this.get('stackOffsetX') && !this.get('stackOffsetY')) {
+            await w.set('x', this.get('dropOffsetX'));
+            await w.set('y', this.get('dropOffsetY'));
+          }
+          await w.bringToFront();
+        }
       }
       delete this.preventRearrangeDuringPileDrop;
-      await this.receiveCard();
+      if(!this.get('preventPiles'))
+        await this.receiveCard();
       return true;
     }
 
