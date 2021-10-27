@@ -572,7 +572,7 @@ function jeAddCommands() {
 
   jeAddEnumCommands('^.*\\((CLICK|COUNT|DELETE|FLIP|GET|LABEL|ROTATE|SET|SORT|SHUFFLE)\\) ↦ collection', collectionNames.slice(1));
   jeAddEnumCommands('^.*\\(CLONE\\) ↦ source', collectionNames.slice(1));
-  jeAddEnumCommands('^.*\\(SELECT|TURN\\) ↦ source', collectionNames);
+  jeAddEnumCommands('^.*\\((SELECT|TURN)\\) ↦ source', collectionNames);
 
   jeAddNumberCommand('increment number', '+', x=>x+1);
   jeAddNumberCommand('decrement number', '-', x=>x-1);
