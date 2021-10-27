@@ -348,18 +348,19 @@ const jeCommands = [
     forceKey: 'D',
     show: _=>jeStateNow,
     options: [
-      { label: 'Recursive',       type: 'checkbox', value: true  },
-      { label: 'Increment IDs',   type: 'checkbox', value: true  },
-      { label: 'Increment In',    type: 'string',   value: 'dropTarget,index,inheritFrom,linkedToSeat,onlyVisibleForSeat,text' },
-      { label: 'Use inheritFrom', type: 'checkbox', value: false },
-      { label: 'X offset',        type: 'number',   value: 0,   min: -1600, max: 1600 },
-      { label: 'Y offset',        type: 'number',   value: 0,   min: -1000, max: 1000 },
-      { label: '# Copies X',      type: 'number',   value: 1,   min:     1, max:  100 },
-      { label: '# Copies Y',      type: 'number',   value: 0,   min:     0, max:  100 }
+      { label: 'Recursive',         type: 'checkbox', value: true  },
+      { label: 'Increment IDs',     type: 'checkbox', value: true  },
+      { label: 'Increment Letters', type: 'checkbox', value: false },
+      { label: 'Increment In',      type: 'string',   value: 'dropTarget,index,inheritFrom,linkedToSeat,onlyVisibleForSeat,text' },
+      { label: 'Use inheritFrom',   type: 'checkbox', value: false },
+      { label: 'X offset',          type: 'number',   value: 0,   min: -1600, max: 1600 },
+      { label: 'Y offset',          type: 'number',   value: 0,   min: -1000, max: 1000 },
+      { label: '# Copies X',        type: 'number',   value: 1,   min:     1, max:  100 },
+      { label: '# Copies Y',        type: 'number',   value: 0,   min:     0, max:  100 }
     ],
     call: async function(options) {
       for(const id of jeSelectedIDs()) {
-        const clonedWidget = duplicateWidget(widgets.get(id), options.Recursive, options['Use inheritFrom'], options['Increment IDs'], options['Increment In'].split(','), options['X offset'], options['Y offset'], options['# Copies X'], options['# Copies Y']);
+        const clonedWidget = duplicateWidget(widgets.get(id), options.Recursive, options['Use inheritFrom'], options['Increment IDs'], options['Increment Letters'], options['Increment In'].split(','), options['X offset'], options['Y offset'], options['# Copies X'], options['# Copies Y']);
         jeSelectWidget(widgets.get(clonedWidget.id));
         jeStateNow.id = '###SELECT ME###';
         jeSetAndSelect(clonedWidget.id);
