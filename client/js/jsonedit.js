@@ -785,9 +785,8 @@ async function jeApplyChanges() {
     jeDeltaIsOurs = true;
     await jeApplyExternalChanges(completeState);
     jeStateBeforeRaw = currentStateRaw;
-    const oldState = jeStateBefore;
     jeStateBefore = currentState;
-    await updateWidget(currentState, oldState); // in editmode.js
+    await updateWidget(currentState, jeStateBefore); // in editmode.js
     jeDeltaIsOurs = false;
   }
 }
