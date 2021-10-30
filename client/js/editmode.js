@@ -1,16 +1,23 @@
 let edit = false;
 
-function generateUniqueWidgetID() {
+function generateUniqueWidgetID(widget) {
   let id;
+  let i = 1;
   do {
-    id = Math.random().toString(36).substring(3, 7);
+    if(widget && widget.type == 'card')
+      id = widget.deck + ' - ' + widget.cardType + ' - ' + i;
+    else if(widget)
+      id = (widget.type || 'basic') + ' - ' + i;
+    else
+      id = Math.random().toString(36).substring(3, 7);
+    ++i;
   } while (widgets.has(id));
   return id;
 }
 
 function addWidgetLocal(widget) {
   if (!widget.id)
-    widget.id = generateUniqueWidgetID();
+    widget.id = generateUniqueWidgetID(widget);
   sendPropertyUpdate(widget.id, widget);
   sendDelta(true);
 }
