@@ -88,7 +88,7 @@ class Seat extends Widget {
       await this.set('color', playerColor);
     } else {
       await this.set('player', null);
-      await this.set('color', null);
+      await this.set('color', this.get('colorEmpty'));
     }
   }
 
