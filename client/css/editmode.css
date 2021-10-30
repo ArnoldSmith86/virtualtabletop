@@ -20,7 +20,10 @@
 }
 
 #addOverlay > .category > button {
-  margin-bottom: 12px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 8px;
 }
 
 #addOverlay .widget, #addOverlay textarea {

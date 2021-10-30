@@ -702,7 +702,7 @@ function populateAddWidgetOverlay() {
   // Note that the Add Canvas and Add Seat buttons are in room.html.
 
   // First the various spinners
-  y = 140;
+  y = 180;
   for(const sides of [ 2, 6, 10, 20 ]) {
     addWidgetToAddWidgetOverlay(new Spinner('add-spinner'+sides), {
       type: 'spinner',
@@ -714,7 +714,7 @@ function populateAddWidgetOverlay() {
     y += 120;
   }
 
-  y = 140;
+  y = 180;
   for(const sides of [ 4, 8, 12 ]) {
     addWidgetToAddWidgetOverlay(new Spinner('add-spinner'+sides), {
       type: 'spinner',
@@ -731,21 +731,21 @@ function populateAddWidgetOverlay() {
     text: 'DEAL',
     clickRoutine: [],
     x: 760,
-    y: 620
+    y: 660
   });
 
   // Add the composite timer widget
-  addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 710, 750), function() {
+  addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 710, 790), function() {
     const id = generateUniqueWidgetID();
-    for(const w of generateTimerWidgets(id, 710, 750))
+    for(const w of generateTimerWidgets(id, 710, 790))
       addWidgetLocal(w);
     return id
   });
 
   // Add the composite counter widget
-  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 767, 830), function() {
+  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 767, 870), function() {
     const id = generateUniqueWidgetID();
-    for(const w of generateCounterWidgets(id, 767, 830))
+    for(const w of generateCounterWidgets(id, 767, 870))
       addWidgetLocal(w);
     return id
   });
