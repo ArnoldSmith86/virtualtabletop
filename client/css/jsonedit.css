@@ -1,6 +1,6 @@
 #jsonEditor {
-  --commandPaneWidth: 320px;
-  --editorPaneWidth: 600px; /* the sum of these two has to be changed in main.js => setScale => jeEnabled branch */
+  --commandPaneWidth: 180px;
+  --editorPaneWidth: 320px; /* the sum of these two has to be changed in main.js => setScale => jeEnabled branch */
   white-space: pre-line;
   font-family: monospace;
   display: none;
@@ -8,6 +8,11 @@
   width: 100%;
   z-index: 2;
   position: relative;
+}
+
+#jsonEditor.wide {
+  --commandPaneWidth: 320px;
+  --editorPaneWidth: 600px; /* the sum of these two has to be changed in main.js => setScale => jeEnabled branch */
 }
 
 #jsonEditor > *, .jsonEdit, #jeWidgetLayers > div, #jeLog {
@@ -139,7 +144,7 @@ body.jsonEdit.jeZoomOut #topSurface {
 }
 
 #jeMouseCoords {
-  display: block; 
+  display: block;
   right: calc(var(--commandPaneWidth) + 20px);
 }
 

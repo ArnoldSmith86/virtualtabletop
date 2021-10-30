@@ -139,8 +139,9 @@ function setScale() {
   let vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
   if(jeEnabled) {
+    const sidebarWidth = $('#jsonEditor.wide') ? 920 : 500;
     const targetWidth = jeZoomOut ? 3200 : 1600;
-    scale = (w-920)/targetWidth;
+    scale = (w-sidebarWidth)/targetWidth;
   } else {
     scale = w/h < 1600/1000 ? w/1600 : h/1000;
   }

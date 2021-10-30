@@ -407,6 +407,15 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_toggleWide',
+    name: '↔️ toggle wide',
+    forceKey: 'ArrowRight',
+    call: async function() {
+      $('#jsonEditor').classList.toggle('wide');
+      setScale();
+    }
+  },
+  {
     id: 'je_addMultiProperty',
     name: 'add property',
     context: '^Multi-Selection',
