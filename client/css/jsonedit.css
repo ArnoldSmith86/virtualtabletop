@@ -166,6 +166,10 @@ body.jsonEdit.jeZoomOut #topSurface {
   border: 3px solid white;
 }
 
+#jeLogWrapper > h1 {
+  margin: 0;
+}
+
 #jeLogWrapper:hover #jeLog {
   display: block;
 }
