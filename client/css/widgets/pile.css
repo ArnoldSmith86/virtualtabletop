@@ -13,7 +13,7 @@
   color: var(--phColor);
   border: var(--phBorder);
   border-radius: var(--phBorderRadius);
-  display: flex;
+  display: var(--phDisplay);
   justify-content: center;
   align-items: center;
   text-align: center;

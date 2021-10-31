@@ -25,6 +25,7 @@
   --phColor:#6d6d6d;
   --phBorder: none;
   --phBorderRadius: 50%;
+  --phDisplay: flex;
 }
 
 body {
