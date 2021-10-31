@@ -122,10 +122,7 @@ body.jsonEdit #jeCommands > .jeTopButton > button {
 }
 
 body.jsonEdit #jeCommands > .jeTopButton > span.top {
-  display: inline-block;
-  color: #aaa;
-  font-size: x-small;
-  margin-bottom: 10px;
+  display: none;
 }
 
 body.jsonEdit #toolbar {
