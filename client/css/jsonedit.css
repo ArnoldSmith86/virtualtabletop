@@ -86,8 +86,7 @@ i.error   { color: red; font-weight: bold; }
 }
 
 #jeWidgetLayers {
-  width: calc(100% - var(--commandPaneWidth) - var(--editorPaneWidth));
-  white-space: pre;
+  width: 9001px;
   font-size: 0;
   padding: 0;
   background: transparent;
@@ -96,9 +95,9 @@ i.error   { color: red; font-weight: bold; }
 #jeWidgetLayers > div {
   display: inline-block;
   padding: 2px;
-  overflow: hidden;
   vertical-align: top;
   font-size: 12px;
+  margin-right: 4px;
 }
 
 #jeWidgetLayers > div:empty {
