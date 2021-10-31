@@ -413,6 +413,7 @@ const jeCommands = [
     call: async function() {
       $('#jsonEditor').classList.toggle('wide');
       setScale();
+      $('#jeTextHighlight').scrollTop = $('#jeText').scrollTop;
     }
   },
   {
