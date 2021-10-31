@@ -1108,7 +1108,7 @@ function jeColorize() {
 
 function jeDisplayTree() {
   const allWidgets = Array.from(widgets.values());
-  let result = 'CTRL-click a widget on the left to edit it.\n\nRoom\n';
+  let result = 'CTRL-click a widget on\nthe left to edit it.\n\nRoom\n';
   result += jeDisplayTreeAddWidgets(allWidgets, null, '  ');
   jeMode = 'tree';
   jeWidget = null;
