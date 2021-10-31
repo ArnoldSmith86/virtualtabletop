@@ -15,6 +15,10 @@
   --editorPaneWidth: 600px;
 }
 
+#jsonEditor.notHighEnough #jeWidgetLayers, #jsonEditor.notHighEnough #jeLogWrapper {
+  display: none;
+}
+
 #jsonEditor > *, .jsonEdit, #jeWidgetLayers > div, #jeLog {
   background: #08090a;
 }
