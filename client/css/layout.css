@@ -15,6 +15,16 @@
   --wcMainOH: var(--VTTblueDark);
   --wcBorderOH: var(--VTTblue);
   --wcFontOH: var(--wcFont);
+
+  --phX:-15px;
+  --phY:-15px;
+  --phWidth:40px;
+  --phHeight:40px;
+  --phFontSize:20px;
+  --phBackground:#e4e4e4;
+  --phColor:#6d6d6d;
+  --phBorder: none;
+  --phBorderRadius: 50%;
 }
 
 body {

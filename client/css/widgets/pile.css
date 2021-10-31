@@ -4,14 +4,15 @@
 
 .pile .handle {
   position: absolute;
-  left: -15px;
-  top: -15px;
-  width: 40px;
-  height: 40px;
-  font-size: 20px;
-  background: #e4e4e4;
-  color: #6d6d6d;
-  border-radius: 50%;
+  left: var(--phX);
+  top: var(--phY);
+  width: var(--phWidth);
+  height: var(--phHeight);
+  font-size: var(--phFontSize);
+  background: var(--phBackground);
+  color: var(--phColor);
+  border: var(--phBorder);
+  border-radius: var(--phBorderRadius);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,19 +21,19 @@
 }
 
 .pile .handle.small {
-  width: 20px;
-  height: 20px;
-  font-size: 10px;
+  width: calc(var(--phWidth)/2);
+  height: calc(var(--phHeight)/2);
+  font-size: calc(var(--phFontSize)/2);
 }
 
 .pile .handle.right {
   left: unset;
-  right: -15px;
+  right: var(--phX);
 }
 
 .pile .handle.bottom {
   top: unset;
-  bottom: -15px;
+  bottom: var(--phY);
 }
 
 body.edit .pile {
