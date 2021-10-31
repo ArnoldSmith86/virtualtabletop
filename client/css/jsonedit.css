@@ -1,6 +1,6 @@
 #jsonEditor {
   --commandPaneWidth: 180px;
-  --editorPaneWidth: 320px; /* the sum of these two has to be changed in main.js => setScale => jeEnabled branch */
+  --editorPaneWidth: 320px;
   white-space: pre-line;
   font-family: monospace;
   display: none;
@@ -12,7 +12,7 @@
 
 #jsonEditor.wide {
   --commandPaneWidth: 320px;
-  --editorPaneWidth: 600px; /* the sum of these two has to be changed in main.js => setScale => jeEnabled branch */
+  --editorPaneWidth: 600px;
 }
 
 #jsonEditor > *, .jsonEdit, #jeWidgetLayers > div, #jeLog {
