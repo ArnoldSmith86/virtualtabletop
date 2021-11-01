@@ -1117,7 +1117,7 @@ function jeDisplayTreeAddWidgets(allWidgets, parent, indent) {
     if(type == 'card')
       result += `${widget.get('cardType')} - `;
     if(type == 'button' && widget.get('text'))
-      result += `${widget.get('text')} - `;
+      result += `${widget.get('text').replaceAll('\n', '\\n')} - `;
     if(type == null && widget.get('classes'))
       result += `${widget.get('classes')} - `;
     result += `${Math.floor(widget.get('x'))},${Math.floor(widget.get('y'))})\n`;
