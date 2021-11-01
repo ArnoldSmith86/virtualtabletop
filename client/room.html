@@ -107,14 +107,16 @@
           <input type='radio' class='radio-button' id="pieceTypeChecker" name='pieceType'><label for="pieceTypeChecker">Checker   &#160; </label>
           <input type='radio' class='radio-button' id="pieceTypeClassic" name='pieceType'><label for="pieceTypeClassic">Pawn   &#160; </label>
           <input type='radio' class='radio-button' id="pieceTypePin" name='pieceType'><label for="pieceTypePin">Pin   &#160; </label><br/><br/>
-          <input type="color" id="pieceColor" value="black"><label for="basicColor"> - Color </label><br/><br/>
+          <input type="color" id="pieceColor" value="black"><label for="pieceColor"> - Color </label><br/><br/>
         </div>
-        <div class="timerEdit">
-          <h1>Edit timer</h1>
-          <input type="checkbox" id="timerCountdown"><label for="timerCountdown"> Countdown</label><br/><br/>
-          <label for="timerMinutes"> Duration: </label><input type="text" id="timerMinutes">
-          <label for="timerSeconds">: </label><input type="text" id="timerSeconds"><label for="timerEnd">in mm:ss  (use --:-- for no end)</label><br/><br/>
-          <input type="checkbox" id="timerReset"><label for="timerReset"> Reset timer (once)</label>
+        <div class="seatEdit">
+          <h1>Edit Seat</h1>
+          <h3>Change player seated:</h3>
+          <!-- I want to add a dropdown with the player list here -->
+          <label for="seatEmpty"> Empty seat:</label><input type="checkbox" id="seatEmpty"><br/><br/>
+          <h3>Change seated player information:</h3>
+          <label for="seatPlayerName"> Player Name: </label><input type="text" id="seatPlayerName"><br/><br/><br/>
+          <label for="seatPlayerColor"> Player Color: </label><input type="color" id="seatPlayerColor" value="black"><label for="seatPlayerColor"></label><br/><br/>
         </div>
         <div class="spinnerEdit">
           <h1>Edit spinner</h1>
@@ -130,6 +132,13 @@
             <option name="spinnerOptions" value="[1,2,3,4,5,6,7,8,9,10,11,12]">1-12</option>
             <option name="spinnerOptions" value="[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]">1-20</option>
           </select>
+        </div>
+        <div class="timerEdit">
+          <h1>Edit timer</h1>
+          <input type="checkbox" id="timerCountdown"><label for="timerCountdown"> Countdown</label><br/><br/>
+          <label for="timerMinutes"> Duration: </label><input type="text" id="timerMinutes">
+          <label for="timerSeconds">: </label><input type="text" id="timerSeconds"><label for="timerEnd">in mm:ss  (use --:-- for no end)</label><br/><br/>
+          <input type="checkbox" id="timerReset"><label for="timerReset"> Reset timer (once)</label>
         </div>
         <div class="editorSpace"></div>
         <base-edit-overlay ></base-edit-overlay>
@@ -155,6 +164,7 @@
       <div class="category">
         <h2>Interactive</h2>
         <button id="addCanvas">🎨 Add Canvas</button>
+        <button id="addSeat">🪑 Add Seat</button>
       </div>
       <div class="category">
         <h2>Decorative</h2>
@@ -163,19 +173,8 @@
         <h2>Custom</h2>
         <button id="uploadBoard">⬆️ Upload board</button>
         <button id="uploadToken">⬆️ Upload token</button>
-        <button id="addCustomWidgetOverlay">Add custom widget</button>
+        <button id="addBasicWidget">Add basic widget</button>
       </div>
-    </div>
-
-    <div id="addCustomOverlay" class="overlay">
-      <h1>Add custom widget</h1>
-      <p>Please check <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Creating-Games">our GitHub wiki for documentation</a>.</p>
-      <textarea id="widgetText">
-        {
-          "image": "/i/cards-default/AS.svg"
-        }
-      </textarea>
-      <button id="addWidget">Add widget</button>
     </div>
 
     <div id="buttonInputOverlay" class="overlay">
