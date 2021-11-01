@@ -1179,7 +1179,7 @@ function jeColorize() {
     [ /^(Room)$/, 'extern' ],
     [ /^( +"var )(.*)( = )(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?( )?([0-9a-zA-Z_-]+|[=+*/%<!>&|-]{1,3})?(🧮(?:[0-9a-zA-Z_-]+|[=+*/%<!>&|-]{1,2}))?( )?(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?( )?(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?( )?(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?(.*)(",?)$/, 'default', 'custom', null, 'number', 'null', 'variable', 'string', null, null, 'variable', null, 'number', 'null', 'variable', 'string', null, 'number', 'null', 'variable', 'string', null, 'number', 'null', 'variable', 'string', null, 'default' ],
     [ /^( +")(.*)(",?)$/, null, 'string', null ],
-    [ /^( +)(.*)( \()([a-z]+)( - )([0-9-]+)(,)([0-9-]+)(.*)$/, null, 'key', null, 'string', null, 'number', null, 'number', null ]
+    [ /^( +)(.*)( \()([a-z]+)( - )(?:(.*?)( - ))?([0-9-]+)(,)([0-9-]+)(.*)$/, null, 'key', null, 'string', null, 'extern', null, 'number', null, 'number', null ]
   ];
   let out = [];
   for(let line of jeGetEditorContent().split('\n')) {
@@ -1237,7 +1237,15 @@ function jeDisplayTree() {
 function jeDisplayTreeAddWidgets(allWidgets, parent, indent) {
   let result = '';
   for(const widget of (allWidgets.filter(w=>w.get('parent')==parent)).sort((w1,w2)=>w1.get('id').localeCompare(w2.get('id'), 'en', {numeric: true, ignorePunctuation: true}))) {
-    result += `${indent}${widget.get('id')} (${widget.get('type') || 'basic'} - ${Math.floor(widget.get('x'))},${Math.floor(widget.get('y'))})\n`;
+    const type = widget.get('type');
+    result += `${indent}${widget.get('id')} (${type || 'basic'} - `;
+    if(type == 'card')
+      result += `${widget.get('cardType')} - `;
+    if(type == 'button' && widget.get('text'))
+      result += `${widget.get('text')} - `;
+    if(type == null && widget.get('classes'))
+      result += `${widget.get('classes')} - `;
+    result += `${Math.floor(widget.get('x'))},${Math.floor(widget.get('y'))})\n`;
     result += jeDisplayTreeAddWidgets(allWidgets, widget.get('id'), indent+'  ');
     delete allWidgets[allWidgets.indexOf(widget)];
   }
