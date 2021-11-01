@@ -653,8 +653,7 @@ export class Widget extends StateManaged {
                   problems.push(`There is already a widget with id:${a.properties.id}, generating new ID.`);
               }
               delete clone.parent;
-              addWidgetLocal(clone);
-              const cWidget = widgets.get(clone.id);
+              const cWidget = widgets.get(addWidgetLocal(clone));
 
               if(parent) {
                 // use moveToHolder so that CLONE triggers onEnter and similar features
@@ -923,9 +922,12 @@ export class Widget extends StateManaged {
         if(this.isValidID(a.from, problems) && this.isValidID(a.to, problems)) {
           await w(a.from, async source=>await w(a.to, async target=>{
             for(const c of source.children().slice(0, count).reverse()) {
-              if(a.face !== null && c.flip)
-                c.flip(a.face);
+              const applyFlip = async function() {
+                if(a.face !== null && c.flip)
+                  await c.flip(a.face);
+              };
               if(source == target) {
+                await applyFlip();
                 await c.bringToFront();
               } else {
                 c.movedByButton = true; // overrides dropLimit
@@ -934,6 +936,7 @@ export class Widget extends StateManaged {
                 if(target.get('type') == 'seat') {
                   if(target.get('hand') && target.get('player')) {
                     if(widgets.has(target.get('hand'))) {
+                      await applyFlip();
                       await c.moveToHolder(widgets.get(target.get('hand')));
                       if(widgets.get(target.get('hand')).get('childrenPerOwner'))
                         await c.set('owner', target.get('player'));
@@ -946,6 +949,7 @@ export class Widget extends StateManaged {
                     problems.push(`Seat ${target.id} is empty or does not define a hand.`);
                   }
                 } else {
+                  await applyFlip();
                   await c.moveToHolder(target);
                 }
               }
@@ -1785,10 +1789,10 @@ export class Widget extends StateManaged {
           };
           if(thisOwner !== null)
             pile.owner = thisOwner;
-          addWidgetLocal(pile);
-          await widget.set('parent', pile.id);
+          const pileId = addWidgetLocal(pile);
+          await widget.set('parent', pileId);
           await this.bringToFront();
-          await this.set('parent', pile.id);
+          await this.set('parent', pileId);
           break;
         }
 

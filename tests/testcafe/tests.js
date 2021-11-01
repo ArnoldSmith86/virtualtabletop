@@ -245,8 +245,8 @@ test('Dynamic expressions', async t => {
     ['var b = ${a.0} concat \'me\'', 'b', shouldBe('splitme')],
     ['var c = \'hello world\' substr 0 5', 'c', shouldBe('hello')],
     ['var d = max 7 2', 'd', shouldBe(7)],
-    ['var e = random', 'e', shouldBe(0.709848)],
-    ['var f = randRange 100 200 5', 'f', shouldBe(195)],
+    ['var e = random', 'e', shouldBe(0.974268)],
+    ['var f = randRange 100 200 5', 'f', shouldBe(120)],
     ['var g = PI', 'g', shouldBe(3.141592653589793)],
     ['var a.$int = 2', 'a', shouldBe(["split",2,"up"])],
     ['var $text = 2', 'abcd', shouldBe(2)],
@@ -293,10 +293,10 @@ test('Dynamic expressions', async t => {
   await setName(t);
   await t
     .click('#addButton')
-    .click('#addCustomWidgetOverlay')
-    .typeText('#widgetText', button, { replace: true, paste: true })
-    .click('#addWidget')
+    .click('#addBasicWidget')
     .pressKey('ctrl+j')
+    .click('#room',{offsetX: 1, offsetY: 1, modifiers:{ctrl:true}})
+    .typeText('#jeText', button, { replace: true, paste: true })
     .click('[id="jyo6"]')
   const log = await Selector('#jeLog').textContent
   for (let i=0; i<ops.length; i++) {
