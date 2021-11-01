@@ -1,15 +1,13 @@
 let edit = false;
 
-function generateUniqueWidgetID(widget) {
+function generateUniqueWidgetID(widget, type) {
   let id;
   let i = 1;
   do {
-    if(widget && widget.type == 'card')
-      id = widget.deck + ' - ' + widget.cardType + ' - ' + i;
-    else if(widget)
-      id = (widget.type || 'basic') + ' - ' + i;
+    if(type || widget)
+      id = (type || widget.type || 'basic')[0] + i;
     else
-      id = Math.random().toString(36).substring(3, 7);
+      id = Math.random().toString(36).substring(3, 6);
     ++i;
   } while (widgets.has(id));
   return id;
