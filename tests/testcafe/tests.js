@@ -120,24 +120,24 @@ test('Create game using edit mode', async t => {
     .click('#add-holder')
     .click('#addButton')
     .click('#addHand')
-    .drag('[id="3nsj"]', 100, 100) // this shouldn't change anything because it's not movable
+    .drag('[id="hand"]', 100, 100) // this shouldn't change anything because it's not movable
     .click('#editButton')
-    .click('[id="3nsj"]')
+    .click('[id="hand"]')
     .click('#transparentHolder')
     .click('#updateWidget')
     .click('#editButton')
     .click('#addButton')
     .click('#add-deck_K_S')
-    .click('[id="9ee9B"]')
-    .click('[id="9ee9P"] > .handle')
+    .click('[id="3nsjB"]')
+    .click('[id="3nsjP"] > .handle')
     .click('#pileOverlay > button:nth-of-type(3)')
-    .click('[id="5ip4"] > .handle')
+    .click('[id="b86p"] > .handle')
     .click('#pileOverlay > button:nth-of-type(1)')
-    .click('[id="5ip4"] > .handle')
+    .click('[id="b86p"] > .handle')
     .click('#pileOverlay > button:nth-of-type(3)')
-    .click('#oklb > .handle')
+    .click('[id="5ip4"] > .handle')
     .click('#pileOverlay > button:nth-of-type(2)')
-    .dragToElement('#oklb > .handle', '[id="3nsj"]')
+    .dragToElement('[id="5ip4"] > .handle', '[id="hand"]')
     .click('#editButton')
     .click('#jyo2')
     .click('#duplicateWidget')
@@ -149,7 +149,7 @@ test('Create game using edit mode', async t => {
     .setNativeDialogHandler(() => true)
     .click('#removeWidget');
 
-  await compareState(t, 'f6c89dac1d50d5d49f1dde03a478c425');
+  await compareState(t, '86635f53abbbbc75813e021c9e60f424');
 });
 
 test('Compute', async t => {
@@ -245,8 +245,8 @@ test('Dynamic expressions', async t => {
     ['var b = ${a.0} concat \'me\'', 'b', shouldBe('splitme')],
     ['var c = \'hello world\' substr 0 5', 'c', shouldBe('hello')],
     ['var d = max 7 2', 'd', shouldBe(7)],
-    ['var e = random', 'e', shouldBe(0.709848)],
-    ['var f = randRange 100 200 5', 'f', shouldBe(195)],
+    ['var e = random', 'e', shouldBe(0.974268)],
+    ['var f = randRange 100 200 5', 'f', shouldBe(120)],
     ['var g = PI', 'g', shouldBe(3.141592653589793)],
     ['var a.$int = 2', 'a', shouldBe(["split",2,"up"])],
     ['var $text = 2', 'abcd', shouldBe(2)],
@@ -293,10 +293,10 @@ test('Dynamic expressions', async t => {
   await setName(t);
   await t
     .click('#addButton')
-    .click('#addCustomWidgetOverlay')
-    .typeText('#widgetText', button, { replace: true, paste: true })
-    .click('#addWidget')
+    .click('#addBasicWidget')
     .pressKey('ctrl+j')
+    .click('#room',{offsetX: 1, offsetY: 1, modifiers:{ctrl:true}})
+    .typeText('#jeText', button, { replace: true, paste: true })
     .click('[id="jyo6"]')
   const log = await Selector('#jeLog').textContent
   for (let i=0; i<ops.length; i++) {
