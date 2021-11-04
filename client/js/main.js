@@ -142,14 +142,10 @@ function setScale() {
     const targetWidth = jeZoomOut ? 3200 : 1600;
     const targetHeight = jeZoomOut ? 2000 : 1000;
     const availableWidth = $('#jeText').offsetLeft;
-    if(availableWidth/h < 1600/1000)
+    if(availableWidth/(h-70) < 1600/1000)
       scale = availableWidth/targetWidth;
     else
-      scale = h/targetHeight;
-    if(h - scale * targetHeight < 60)
-      $('#jsonEditor').classList.add('notHighEnough');
-    else
-      $('#jsonEditor').classList.remove('notHighEnough');
+      scale = (h-70)/targetHeight;
   } else {
     scale = w/h < 1600/1000 ? w/1600 : h/1000;
   }
