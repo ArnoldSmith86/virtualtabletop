@@ -399,3 +399,15 @@ button:disabled {
   background: #808080;
   color: #d3d3d3;
 }
+
+.standard_font{
+  font-family: 'Roboto';
+}
+
+.handwriting_font {
+  font-family: 'Handwriting';
+}
+
+.handwriting_casual_font {
+  font-family: 'Handwriting Casual';
+}
