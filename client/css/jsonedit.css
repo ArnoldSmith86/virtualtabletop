@@ -160,10 +160,22 @@ body.jsonEdit.jeZoomOut #topSurface {
   left: 0;
   display: none;
   height: 90vh;
-  width: 50vw;
+  right: calc(var(--commandPaneWidth) + var(--editorPaneWidth));
   overflow: auto;
   box-sizing: border-box;
   border: 3px solid white;
+}
+
+@media (max-width: 1000px) {
+  #jeLog {
+    right: var(--commandPaneWidth);
+  }
+}
+
+@media (max-width: 600px) {
+  #jeLog {
+    right: 0;
+  }
 }
 
 #jeLogWrapper > h1 {
