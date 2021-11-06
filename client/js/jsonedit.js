@@ -347,7 +347,7 @@ const jeCommands = [
       { label: 'Recursive',         type: 'checkbox', value: true  },
       { label: 'Increment IDs',     type: 'checkbox', value: true  },
       { label: 'Increment Letters', type: 'checkbox', value: false },
-      { label: 'Increment In',      type: 'string',   value: 'dropTarget,index,inheritFrom,linkedToSeat,onlyVisibleForSeat,text' },
+      { label: 'Increment In',      type: 'string',   value: 'dropTarget,hand,index,inheritFrom,linkedToSeat,onlyVisibleForSeat,text' },
       { label: 'Use inheritFrom',   type: 'checkbox', value: false },
       { label: 'X offset',          type: 'number',   value: 0,   min: -1600, max: 1600 },
       { label: 'Y offset',          type: 'number',   value: 0,   min: -1000, max: 1000 },
