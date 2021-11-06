@@ -117,7 +117,7 @@ function checkURLproperties() {
     on('#askIDoverlay button', 'click', function() {
       roomID = urlProperties.askID + $('#enteredID').value;
       toServer('room', { playerName, roomID });
-      $('#ghetto-link').href += `#${roomID}`;
+      $('#legacy-link').href += `#${roomID}`;
       showOverlay();
     });
     showOverlay('askIDoverlay');
