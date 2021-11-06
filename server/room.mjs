@@ -258,8 +258,8 @@ export default class Room {
       await this.load(this.variantFilename(stateID, variantID), player);
   }
 
-  mouseMove(player, coords) {
-    this.broadcast('mouse', { player: player.name, coords });
+  mouseMove(player, mouseState) {
+    this.broadcast('mouse', { player: player.name, mouseState });
   }
 
   newPlayerColor() {

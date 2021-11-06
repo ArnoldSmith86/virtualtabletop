@@ -1,6 +1,6 @@
 #jsonEditor {
-  --commandPaneWidth: 320px;
-  --editorPaneWidth: 600px; /* the sum of these two has to be changed in main.js => setScale => jeEnabled branch */
+  --commandPaneWidth: 180px;
+  --editorPaneWidth: 320px;
   white-space: pre-line;
   font-family: monospace;
   display: none;
@@ -8,6 +8,15 @@
   width: 100%;
   z-index: 2;
   position: relative;
+}
+
+#jsonEditor.wide {
+  --commandPaneWidth: 320px;
+  --editorPaneWidth: 600px;
+}
+
+#jsonEditor.notHighEnough #jeWidgetLayers, #jsonEditor.notHighEnough #jeLogWrapper {
+  display: none;
 }
 
 #jsonEditor > *, .jsonEdit, #jeWidgetLayers > div, #jeLog {
@@ -77,19 +86,18 @@ i.error   { color: red; font-weight: bold; }
 }
 
 #jeWidgetLayers {
-  height: 10%;
-  width: calc(100% - var(--commandPaneWidth) - var(--editorPaneWidth));
-  white-space: pre;
-  overflow: hidden;
+  width: 9001px;
+  font-size: 0;
+  padding: 0;
   background: transparent;
 }
 
 #jeWidgetLayers > div {
   display: inline-block;
-  width: 125px;
-  margin-bottom: 10px;
-  padding: 4px;
-  overflow: hidden;
+  padding: 2px;
+  vertical-align: top;
+  font-size: 12px;
+  margin-right: 4px;
 }
 
 #jeWidgetLayers > div:empty {
@@ -113,10 +121,7 @@ body.jsonEdit #jeCommands > .jeTopButton > button {
 }
 
 body.jsonEdit #jeCommands > .jeTopButton > span.top {
-  display: inline-block;
-  color: #aaa;
-  font-size: x-small;
-  margin-bottom: 10px;
+  display: none;
 }
 
 body.jsonEdit #toolbar {
@@ -139,7 +144,7 @@ body.jsonEdit.jeZoomOut #topSurface {
 }
 
 #jeMouseCoords {
-  display: block; 
+  display: block;
   right: calc(var(--commandPaneWidth) + 20px);
 }
 
@@ -155,10 +160,26 @@ body.jsonEdit.jeZoomOut #topSurface {
   left: 0;
   display: none;
   height: 90vh;
-  width: 50vw;
+  right: calc(var(--commandPaneWidth) + var(--editorPaneWidth));
   overflow: auto;
   box-sizing: border-box;
   border: 3px solid white;
+}
+
+@media (max-width: 1000px) {
+  #jeLog {
+    right: var(--commandPaneWidth);
+  }
+}
+
+@media (max-width: 600px) {
+  #jeLog {
+    right: 0;
+  }
+}
+
+#jeLogWrapper > h1 {
+  margin: 0;
 }
 
 #jeLogWrapper:hover #jeLog {

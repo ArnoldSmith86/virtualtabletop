@@ -218,9 +218,10 @@ export class Widget extends StateManaged {
   }
 
   applyZ(force) {
-    if(this.get('inheritChildZ') || force) {
+    const thisInheritChildZ = this.get('inheritChildZ');
+    if(force || thisInheritChildZ) {
       this.domElement.style.zIndex = this.calculateZ();
-      if(this.get('parent') && this.get('inheritChildZ'))
+      if(thisInheritChildZ && this.get('parent'))
         widgets.get(this.get('parent')).applyZ();
     }
   }
@@ -230,11 +231,11 @@ export class Widget extends StateManaged {
   }
 
   calculateZ() {
-    let z = ((this.get('layer') + 10) * 100000) + this.get('z');
+    this.z = ((this.get('layer') + 10) * 100000) + this.get('z');
     if(this.get('inheritChildZ'))
       for(const child of this.childrenOwned())
-        z = Math.max(z, child.calculateZ());
-    return z;
+        this.z = Math.max(this.z, child.z);
+    return this.z;
   }
 
   children() {
@@ -652,8 +653,7 @@ export class Widget extends StateManaged {
                   problems.push(`There is already a widget with id:${a.properties.id}, generating new ID.`);
               }
               delete clone.parent;
-              addWidgetLocal(clone);
-              const cWidget = widgets.get(clone.id);
+              const cWidget = widgets.get(addWidgetLocal(clone));
 
               if(parent) {
                 // use moveToHolder so that CLONE triggers onEnter and similar features
@@ -920,15 +920,19 @@ export class Widget extends StateManaged {
         if(this.isValidID(a.from, problems) && this.isValidID(a.to, problems)) {
           await w(a.from, async source=>await w(a.to, async target=>{
             for(const c of source.children().slice(0, count).reverse()) {
-              if(a.face !== null && c.flip)
-                c.flip(a.face);
+              const applyFlip = async function() {
+                if(a.face !== null && c.flip)
+                  await c.flip(a.face);
+              };
               if(source == target) {
+                await applyFlip();
                 await c.bringToFront();
               } else {
                 c.movedByButton = true;
                 if(target.get('type') == 'seat') {
                   if(target.get('hand') && target.get('player')) {
                     if(widgets.has(target.get('hand'))) {
+                      await applyFlip();
                       await c.moveToHolder(widgets.get(target.get('hand')));
                       if(widgets.get(target.get('hand')).get('childrenPerOwner'))
                         await c.set('owner', target.get('player'));
@@ -941,6 +945,7 @@ export class Widget extends StateManaged {
                     problems.push(`Seat ${target.id} is empty or does not define a hand.`);
                   }
                 } else {
+                  await applyFlip();
                   await c.moveToHolder(target);
                 }
                 delete c.movedByButton;
@@ -1014,9 +1019,8 @@ export class Widget extends StateManaged {
           if(collections[a.collection].length) {
             for(const c of collections[a.collection].slice(0, a.count || 999999))
               await c.rotate(a.angle, a.mode);
-            if(jeRoutineLogging) {
-              jeLoggingRoutineOperationSummary(`${a.count == 0 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${a.collection}' ${mode} ${angle}`);
-            }
+            if(jeRoutineLogging)
+              jeLoggingRoutineOperationSummary(`${a.count == 0 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${a.collection}' ${mode} ${a.angle}`);
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
@@ -1626,17 +1630,31 @@ export class Widget extends StateManaged {
   }
 
   async updatePiles() {
-    if(this.isBeingRemoved || this.get('parent') && !widgets.get(this.get('parent')).supportsPiles())
+    const thisType = this.get('type');
+    if(thisType != 'card' && thisType != 'pile')
       return;
 
+    const thisParent = this.get('parent');
+    if(this.isBeingRemoved || thisParent && !widgets.get(thisParent).supportsPiles())
+      return;
+
+    const thisX = this.get('x');
+    const thisY = this.get('y');
+    const thisOwner = this.get('owner');
     for(const [ widgetID, widget ] of widgets) {
+      if(widget == this)
+        continue;
+      const widgetType = widget.get('type');
+      if(widgetType != 'card' && widgetType != 'pile')
+        continue;
+
       // check if this widget is closer than 10px from another widget in the same parent
-      if(widget != this && widget.get('parent') == this.get('parent') && Math.abs(widget.get('x')-this.get('x')) < 10 && Math.abs(widget.get('y')-this.get('y')) < 10) {
-        if(widget.get('owner') !== this.get('owner') || widget.isBeingRemoved)
+      if(widget.get('parent') == thisParent && Math.abs(widget.get('x')-thisX) < 10 && Math.abs(widget.get('y')-thisY) < 10) {
+        if(widget.isBeingRemoved || widget.get('owner') !== thisOwner)
           continue;
 
         // if a card gets dropped onto a card, they create a new pile and are added to it
-        if(widget.get('type') == 'card' && this.get('type') == 'card') {
+        if(thisType == 'card' && widgetType == 'card') {
           const pile = {
             type: 'pile',
             parent: this.get('parent'),
@@ -1645,17 +1663,17 @@ export class Widget extends StateManaged {
             width: this.get('width'),
             height: this.get('height')
           };
-          if(this.get('owner') !== null)
-            pile.owner = this.get('owner');
-          addWidgetLocal(pile);
-          await widget.set('parent', pile.id);
+          if(thisOwner !== null)
+            pile.owner = thisOwner;
+          const pileId = addWidgetLocal(pile);
+          await widget.set('parent', pileId);
           await this.bringToFront();
-          await this.set('parent', pile.id);
+          await this.set('parent', pileId);
           break;
         }
 
         // if a pile gets dropped onto a pile, all children of one pile are moved to the other (the empty one destroys itself)
-        if(widget.get('type') == 'pile' && this.get('type') == 'pile') {
+        if(thisType == 'pile' && widgetType == 'pile') {
           for(const w of this.children().reverse()) {
             await w.set('parent', widget.get('id'));
             await w.bringToFront();
@@ -1664,7 +1682,7 @@ export class Widget extends StateManaged {
         }
 
         // if a pile gets dropped onto a card, the card is added to the pile but the pile is moved to the original position of the card
-        if(widget.get('type') == 'card' && this.get('type') == 'pile') {
+        if(thisType == 'pile' && widgetType == 'card') {
           for(const w of this.children().reverse())
             await w.bringToFront();
           await this.set('x', widget.get('x'));
@@ -1674,7 +1692,7 @@ export class Widget extends StateManaged {
         }
 
         // if a card gets dropped onto a pile, it simply gets added to the pile
-        if(widget.get('type') == 'pile' && this.get('type') == 'card') {
+        if(thisType == 'card' && widgetType == 'pile') {
           await this.bringToFront();
           await this.set('parent', widget.get('id'));
           break;
