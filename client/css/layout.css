@@ -51,6 +51,7 @@ button:hover {
   width: 100%;
   height: var(--toolbarSize);
   z-index: 2;
+  display: inline-flex;
 }
 
 #roomArea {
@@ -109,17 +110,23 @@ button:hover {
   display: block;
 }
 
+.volumeWrap {
+	  display: inline-flex;
+}
+
 @media (min-aspect-ratio: 1600/1000) {
   #toolbar {
     top: 0;
     left: calc((100vw - var(--roomWidth) * var(--scale)) / 2 - var(--toolbarSize) / 2 + 1px);
     width: var(--toolbarSize);
     height: 100%;
+    display: block;
   }
 
   .volumeWrap {
-    transform: rotate(90deg);
-  }
+	transform: rotate(-90deg) translateX(-100px);
+	display: block;
+}
 
   .toolbarButton .tooltip {
     top: unset;
@@ -137,6 +144,7 @@ body.aspectTooGood #toolbar {
   left: calc((100vw - var(--roomWidth) * var(--scale)) / 2 - var(--toolbarSize) / 2 + 1px);
   width: var(--toolbarSize);
   height: calc(var(--scale) * var(--roomHeight));
+  display: block;
 }
 
 body.aspectTooGood .toolbarButton .tooltip {
@@ -159,6 +167,11 @@ body.aspectTooGood.hiddenToolbar #roomArea {
 
 body.aspectTooGood #hideToolbarButton {
   display: inline-flex;
+}
+
+body.aspectTooGood .volumeWrap {
+	transform: rotate(-90deg) translateX(-100px);
+	display: block;
 }
 
 .overlay {
