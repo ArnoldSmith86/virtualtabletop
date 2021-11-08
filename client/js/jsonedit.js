@@ -405,6 +405,16 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_toggleWide',
+    name: '↔️ toggle wide',
+    forceKey: 'ArrowRight',
+    call: async function() {
+      $('#jsonEditor').classList.toggle('wide');
+      setScale();
+      $('#jeTextHighlight').scrollTop = $('#jeText').scrollTop;
+    }
+  },
+  {
     id: 'je_addMultiProperty',
     name: 'add property',
     context: '^Multi-Selection',
@@ -1105,7 +1115,7 @@ function jeColorize() {
 
 function jeDisplayTree() {
   const allWidgets = Array.from(widgets.values());
-  let result = 'CTRL-click a widget on the left to edit it.\n\nRoom\n';
+  let result = 'CTRL-click a widget on\nthe left to edit it.\n\nRoom\n';
   result += jeDisplayTreeAddWidgets(allWidgets, null, '  ');
   jeMode = 'tree';
   jeWidget = null;
@@ -1648,11 +1658,13 @@ window.addEventListener('mousemove', function(e) {
         hoveredWidgets.push(widget);
 
   for(let i=1; i<=12; ++i) {
+    if(i==4)
+      ++i;
     if(hoveredWidgets[i-1]) {
       jeWidgetLayers[i] = hoveredWidgets[i-1];
       var deck = `${hoveredWidgets[i-1].get('type')}` == 'card' ? `\ndeck: ${hoveredWidgets[i-1].get('deck')}` : "";
       var cardType = `${hoveredWidgets[i-1].get('type')}` == 'card' ? `\ncardType: ${hoveredWidgets[i-1].get('cardType')}` : "";
-      $(`#jeWidgetLayer${i}`).textContent = `F${i}:\nid: ${hoveredWidgets[i-1].get('id')}\ntype: ${hoveredWidgets[i-1].get('type') || 'basic'} ${deck} ${cardType}`;
+      $(`#jeWidgetLayer${i}`).textContent = `F${i}: ${hoveredWidgets[i-1].get('id')}\ntype: ${hoveredWidgets[i-1].get('type') || 'basic'} ${deck} ${cardType}`;
     } else {
       delete jeWidgetLayers[i];
       $(`#jeWidgetLayer${i}`).textContent = '';
