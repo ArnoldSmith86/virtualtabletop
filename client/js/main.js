@@ -1,4 +1,4 @@
-import { $, $a, onLoad, selectFile } from './domhelpers.js';
+import { $, $a, onLoad, selectFile, asArray } from './domhelpers.js';
 import { startWebSocket } from './connection.js';
 
 
@@ -13,6 +13,22 @@ let urlProperties = {};
 let maxZ = {};
 export const dropTargets = new Map();
 
+function compareDropTarget(widget, t, exclude){
+  for(const dropTargetObject of asArray(t.get('dropTarget'))) {
+    let isValidObject = true;
+    for(const key in dropTargetObject) {
+      if(dropTargetObject[key] != widget.get(key) && (exclude == true || (key != 'type' || widget.get(key) != 'deck' || dropTargetObject[key] != 'card'))) {
+        isValidObject = false;
+        break;
+      }
+    }
+    if(isValidObject) {
+      return true;
+    }
+  }
+  return false;
+}
+
 function getValidDropTargets(widget) {
   const targets = [];
   for(const [ _, t ] of dropTargets) {
@@ -22,13 +38,7 @@ function getValidDropTargets(widget) {
       if(t.children().indexOf(widget) == -1)
         continue;
 
-    let isValid = true;
-    for(const key in t.get('dropTarget')) {
-      if(widget.get(key) != t.get('dropTarget')[key] && (key != 'type' || widget.get(key) != 'deck' || t.get('dropTarget')[key] != 'card')) {
-        isValid = false;
-        break;
-      }
-    }
+    let isValid = compareDropTarget(widget, t);
 
     let tt = t;
     while(isValid) {
@@ -107,7 +117,7 @@ function checkURLproperties() {
     on('#askIDoverlay button', 'click', function() {
       roomID = urlProperties.askID + $('#enteredID').value;
       toServer('room', { playerName, roomID });
-      $('#ghetto-link').href += `#${roomID}`;
+      $('#legacy-link').href += `#${roomID}`;
       showOverlay();
     });
     showOverlay('askIDoverlay');
@@ -126,9 +136,16 @@ function checkURLproperties() {
 function setScale() {
   const w = window.innerWidth;
   const h = window.innerHeight;
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
   if(jeEnabled) {
     const targetWidth = jeZoomOut ? 3200 : 1600;
-    scale = (w-920)/targetWidth;
+    const targetHeight = jeZoomOut ? 2000 : 1000;
+    const availableWidth = $('#jeText').offsetLeft;
+    if(availableWidth/(h-70) < 1600/1000)
+      scale = availableWidth/targetWidth;
+    else
+      scale = (h-70)/targetHeight;
   } else {
     scale = w/h < 1600/1000 ? w/1600 : h/1000;
   }

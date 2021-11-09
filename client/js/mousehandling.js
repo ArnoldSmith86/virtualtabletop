@@ -1,5 +1,6 @@
 let mouseTarget = null;
 let moveTarget = null;
+let mouseDown = false;
 const mouseStatus = {};
 
 function eventCoords(name, e) {
@@ -29,6 +30,7 @@ async function inputHandler(name, e) {
     if (!window.getSelection().isCollapsed)
       window.getSelection().collapseToEnd();
     document.activeElement.blur();
+    mouseDown = true;
   }
   let target = e.target;
   while(target && (!target.id || !widgets.has(target.id)))
@@ -78,7 +80,10 @@ async function inputHandler(name, e) {
         else if(edit)
           editClick(widgets.get(target.id));
         else
-          await widgets.get(target.id).click();
+          if(!target.classList.contains('longtouch'))
+            await widgets.get(target.id).click();
+        else
+          widgets.get(target.id).domElement.classList.remove('longtouch');
       }
       delete mouseStatus[target.id];
     } else if(name == 'mousemove' || name == 'touchmove') {
@@ -106,8 +111,16 @@ async function inputHandler(name, e) {
     mouseTarget = null;
     moveTarget = null;
   }
-  if(name == 'mousemove' || name == 'touchmove')
-    toServer('mouse', [ Math.floor((coords[0] - roomRectangle.left)/scale), Math.floor((coords[1] - roomRectangle.top)/scale) ]);
+  if(name == 'mouseup' || name =='touchend')
+    mouseDown = false;
+  
+  toServer('mouse', 
+    {
+      x: Math.floor((coords[0] - roomRectangle.left)/scale),
+      y: Math.floor((coords[1] - roomRectangle.top)/scale),
+      pressed: mouseDown,
+      target: mouseTarget? mouseTarget.id : null
+    });
 }
 
 onLoad(function() {
