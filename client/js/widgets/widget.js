@@ -1019,9 +1019,8 @@ export class Widget extends StateManaged {
           if(collections[a.collection].length) {
             for(const c of collections[a.collection].slice(0, a.count || 999999))
               await c.rotate(a.angle, a.mode);
-            if(jeRoutineLogging) {
-              jeLoggingRoutineOperationSummary(`${a.count == 0 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${a.collection}' ${mode} ${angle}`);
-            }
+            if(jeRoutineLogging)
+              jeLoggingRoutineOperationSummary(`${a.count == 0 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${a.collection}' ${mode} ${a.angle}`);
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
