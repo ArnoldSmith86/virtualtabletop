@@ -110,8 +110,21 @@ button:hover {
   display: block;
 }
 
-.volumeWrap {
-	  display: inline-flex;
+#options {
+  left: 0px;
+  display: inline-flex;
+  padding: 2px;
+  border-radius: 4px;
+  top: -82px;
+  position: absolute;
+  transform: translateY(42px) translateX(266px);
+  background:var(--VTTblue);
+}
+
+#volume {
+  top: 50%;
+  -ms-transform: translateY(50%);
+  transform: translateY(50%);
 }
 
 @media (min-aspect-ratio: 1600/1000) {
@@ -123,10 +136,9 @@ button:hover {
     display: block;
   }
 
-  .volumeWrap {
-	transform: rotate(-90deg) translateX(-100px);
-	display: block;
-}
+  #options {
+    transform: translateY(360px) translateX(46px);
+  }
 
   .toolbarButton .tooltip {
     top: unset;
@@ -169,9 +181,12 @@ body.aspectTooGood #hideToolbarButton {
   display: inline-flex;
 }
 
-body.aspectTooGood .volumeWrap {
-	transform: rotate(-90deg) translateX(-100px);
-	display: block;
+body.aspectTooGood #options {
+  transform: translateY(406px) translateX(46px);
+}
+
+#options.hidden {
+  visibility: hidden;
 }
 
 .overlay {
@@ -312,8 +327,14 @@ body.aspectTooGood .volumeWrap {
   background-image:url(/i/icons-white/info-circle-solid-svg.svg);
 }
 
+#optionsButton {
+  background-image:url(/i/icons-white/options-solid-svg.svg);
+}
+
 #muteButton {
   background-image:url(/i/icons-white/mute-svg.svg);
+  width: calc(var(--toolbarSize) - 12px);
+  height: calc(var(--toolbarSize) - 12px);
 }
 
 #muteButton.toolbarButton.muted {
