@@ -35,10 +35,8 @@ class Holder extends Widget {
     return children.filter(w=>{
       if(acceptPiles && w.get('type') == 'pile')
         return true;
-      for(const p in this.get('dropTarget'))
-        if(w.get(p) != this.get('dropTarget')[p])
-          return false;
-      return true;
+
+      return compareDropTarget(w, this, true);
     });
   }
 
