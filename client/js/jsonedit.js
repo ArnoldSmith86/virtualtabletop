@@ -543,7 +543,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('LABEL', { value: 0, mode: 'set', label: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('MOVE', { count: 1, face: null, from: null, to: null });
   jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0 });
-  jeAddRoutineOperationCommands('RECALL', { owned: true, holder: null });
+  jeAddRoutineOperationCommands('RECALL', { owned: true, contained: true, deck: null, face: null, holder: null });
   jeAddRoutineOperationCommands('ROTATE', { count: 1, angle: 90, mode: 'add', holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all', sortBy: 'null' });
   jeAddRoutineOperationCommands('SET', { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });

@@ -262,8 +262,7 @@ export default async function convertPCIO(content) {
           movableInEdit: false,
 
           clickRoutine: recallConfirmation([
-            { func: 'RECALL',  holder: widget.id },
-            { func: 'FLIP',    holder: widget.id, face: 0 },
+            { func: 'RECALL',  holder: widget.id, face: 0 },
             { func: 'SHUFFLE', holder: widget.id }
           ])
         };
@@ -699,6 +698,25 @@ export default async function convertPCIO(content) {
           };
           if(c.holder.length == 1)
             c.holder = c.holder[0];
+        }
+        if(c.func == 'RECALL_CARDS') {
+          if(!c.args.decks)
+            continue;
+          const includeHolders = c.args.includeHolders && c.args.includeHolders.value;
+          const includeHands = c.args.includeHands && c.args.includeHands.value;
+          const flip = c.args.flip && c.args.flip.value;
+          c = {
+            func: 'RECALL',
+            deck: c.args.decks.value
+          };
+          if(c.deck.length == 1)
+            c.deck = c.deck[0];
+          if(includeHolders == 'normal')
+            c.contained = false;
+          if(includeHands && includeHands != 'hands')
+            c.owned = false;
+          if(flip && flip != 'none')
+            c.face = flip == 'faceDown' ? 0 : 1
         }
         if(c.func == "FLIP_CARDS") {
           if(!c.args.holders)

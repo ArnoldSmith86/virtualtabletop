@@ -980,25 +980,77 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'RECALL') {
-        setDefaults(a, { owned: true });
-        if(this.isValidID(a.holder, problems)) {
-          for(const holder of asArray(a.holder)) {
-            const decks = widgetFilter(w=>w.get('type')=='deck'&&w.get('parent')==holder);
-            if(decks.length) {
-              for(const deck of decks) {
-                let cards = widgetFilter(w=>w.get('deck')==deck.get('id'));
-                if(!a.owned)
-                  cards = cards.filter(c=>!c.get('owner'));
-                for(const c of cards)
-                  await c.moveToHolder(widgets.get(holder));
-              }
-            } else {
-              problems.push(`Holder ${holder} does not have a deck.`);
-            }
-          };
-          if(jeRoutineLogging) {
-            jeLoggingRoutineOperationSummary(`'${a.holder}' ${a.owned ? ' (including hands)' : ''}`)
+        setDefaults(a, { owned: true, contained: true });
+
+        const decks = [];
+
+        if(a.deck !== undefined) {
+          for(const deck of asArray(a.deck)) {
+            if(this.isValidID(deck, problems))
+              decks.push(widgets.get(deck))
           }
+        }
+        if(a.holder !== undefined) {
+          if (decks.length == 0) {
+            for(const holder of asArray(a.holder)) {
+              const holderDecks = widgetFilter(w=> w.get('type')=='deck' && w.get('parent')==holder);
+              if(holderDecks.length == 0)
+                problems.push(`Holder ${holder} does not have a deck.`);
+              decks.push(...holderDecks);
+            }
+          } else {
+            problems.push('Valid deck argument provided, ignoring holder argument');
+          }
+        }
+
+        if(decks.length) {
+          for(const deck of decks) {
+            if(deck.get('type') != 'deck') {
+              problems.push(`Widget ${deck.get('id')} is not a deck.`);
+              continue;
+            }
+            let cards = widgetFilter(w=>w.get('deck')==deck.get('id'));
+            if(cards.length == 0) {
+              problems.push(`Deck ${deck.get('id')} contains no cards.`);
+              continue;
+            }
+            if(!a.owned)
+              cards = cards.filter(c=>!c.get('owner'));
+            if(!a.contained) {
+              cards = cards.filter(function(c) {
+                if(!c.get('parent'))
+                  return true;
+
+                const parent = widgets.get(c.get('parent'));
+                const parentType = parent.get('type');
+                if(parentType == 'holder')
+                  return parent.get('childrenPerOwner');
+                if(parentType != 'pile' || !parent.get('parent'))
+                  return true;
+
+                const pileParent = widgets.get(parent.get('parent'));
+                return pileParent.get('type') != 'holder';
+              });
+            }
+            for(const c of cards) {
+              if(a.face !== undefined)
+                await c.flip(a.face);
+              if(deck.get('parent') !== null && widgets.has(deck.get('parent'))) {
+                await c.moveToHolder(widgets.get(deck.get('parent')));
+              } else {
+                await c.set('owner', null);
+                await c.set('parent', null);
+                await c.bringToFront();
+                await c.setPosition(deck.get('x'), deck.get('y'), c.get('z'));
+                await c.updatePiles();
+              }
+            }
+          }
+
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary(`'${a.deck || a.holder}' ${a.owned ? ' (including hands)' : ''}`);
+        } else {
+          problems.push('No valid decks to recall.')
         }
       }
 
