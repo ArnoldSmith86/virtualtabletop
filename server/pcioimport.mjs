@@ -108,7 +108,7 @@ export default async function convertPCIO(content) {
 
   const output = {
     _meta: {
-      version: 1,
+      version: 4,
       players: {},
       states: {}
     }
@@ -139,6 +139,9 @@ export default async function convertPCIO(content) {
       w.z = widget.z;
     if(widget.r)
       w.rotation = widget.r;
+
+    if(widget.linkedSeat && byID[widget.linkedSeat])
+      w.linkedToSeat = widget.linkedSeat;
 
     if(widget.parent && !byID[widget.parent])
       widget.parent = null;
@@ -228,7 +231,7 @@ export default async function convertPCIO(content) {
       if(widget.hasShuffleButton && pileHasDeck[widget.id]) {
         function recallConfirmation(cR) {
           if(pileHasDeck[widget.id].confirmRecall || pileHasDeck[widget.id].confirmRecallAll !== false) {
-            cR[0].applyVariables = [ { parameter: 'owned', variable: 'owned' } ];
+            cR[0].owned = '${owned}';
             cR.unshift({
               func: 'INPUT',
               header: 'Recalling cards...',
@@ -398,8 +401,199 @@ export default async function convertPCIO(content) {
       w.css = `font-size: ${widget.textSize}px; font-weight: ${weight}; text-align: ${widget.textAlign};`;
       addDimensions(w, widget, 100, 20);
       w.height = widget.textSize * 3.5;
+    } else if(widget.type == 'seat') {
+      w.type = 'seat';
+      w.display = 'seatIndex';
+      w.displayEmpty = 'seatIndex';
+      w.hideWhenUnused = true;
+      if(typeof widget.seatIndex == 'number')
+        w.index = widget.seatIndex + 1;
+      w.x += 69;
+      w.y -= 38;
+      w.height = 42;
+      w.width = 42;
+      w.css = 'border-radius:100%;box-sizing:border-box;border-width:2px;';
+      w.playerChangeRoutine = [
+        {
+          func: 'SELECT',
+          value: '${PROPERTY id}',
+          type: 'button'
+        },
+        {
+          func: 'SELECT',
+          value: '${PROPERTY id}',
+          collection: 'LABEL'
+        },
+        {
+          func: 'SELECT',
+          source: 'LABEL',
+          property: 'TYPE',
+          value: 'label',
+          collection: 'LABEL'
+        },
+        {
+          func: 'SELECT',
+          value: '${PROPERTY id}',
+          collection: 'COUNT'
+        },
+        {
+          func: 'SELECT',
+          source: 'COUNT',
+          property: 'TYPE',
+          value: 'count',
+          collection: 'COUNT'
+        },
+        {
+          func: 'IF',
+          condition: '${value}',
+          thenRoutine: [
+            {
+              func: 'SET',
+              property: 'owner',
+              value: []
+            },
+            {
+              func: 'SET',
+              collection: 'LABEL',
+              property: 'text',
+              value: '${playerName}'
+            },
+            {
+              func: 'SET',
+              collection: 'COUNT',
+              property: 'owner'
+            }
+          ],
+          elseRoutine: [
+            {
+              func: 'SET',
+              property: 'owner'
+            },
+            {
+              func: 'SET',
+              collection: 'LABEL',
+              property: 'text',
+              value: 'Player ${PROPERTY index}'
+            },
+            {
+              func: 'SET',
+              collection: 'COUNT',
+              property: 'owner',
+              value: []
+            }
+          ]
+        }
+      ];
+
+      const clickRoutine = [
+        {
+          func: 'SELECT',
+          property: 'id',
+          value: '${PROPERTY parent}'
+        },
+        {
+          func: 'CLICK'
+        }
+      ];
+
+      output[widget.id + 'label'] = {
+        id: widget.id + 'label',
+        parent: widget.id,
+        x: -71,
+        y: 36,
+        layer: 0,
+        height: 44,
+        width: 180,
+        movable: false,
+        movableInEdit: false,
+        TYPE: 'label',
+        text: `Player ${widget.seatIndex + 1}`,
+        css: 'border-radius:36%;background:white;border:1px solid lightgrey;font-size:18px;display: flex;justify-content: center;align-items: center;',
+        clickRoutine
+      };
+
+      output[widget.id + 'sit'] = {
+        id: widget.id + 'sit',
+        type: 'button',
+        parent: widget.id,
+        x: -23.5,
+        y: 74,
+        layer: 1,
+        height: 28,
+        width: 85,
+        movable: false,
+        movableInEdit: false,
+        text: 'Sit Here',
+        css: 'background: white; border-radius: 4px; color: black;font-size:16px; border:1px solid lightgrey',
+        clickRoutine
+      };
+
+      output[widget.id + 'count'] = {
+        id: widget.id + 'count',
+        parent: widget.id,
+        x: -40,
+        y: 2,
+        layer: 3,
+        height: 38,
+        width: 30,
+        movable: false,
+        movableInEdit: false,
+        owner: [],
+        TYPE: 'count',
+        text: 0,
+        css: 'background: white; border-radius: 4px; color: black;font-size:18px; border:1px solid lightgrey;display: flex;justify-content: center;align-items: center;',
+        clickRoutine,
+        ownerGlobalUpdateRoutine: [
+          "var parent = ${PROPERTY parent}",
+          "var player = ${PROPERTY player OF $parent}",
+          {
+            func: 'SELECT',
+            property: 'owner',
+            value: '${player}'
+          },
+          {
+            func: 'COUNT'
+          },
+          {
+            func: 'SET',
+            collection: 'thisButton',
+            property: 'text',
+            value: '${COUNT}'
+          }
+        ]
+      };
+      output[widget.id + 'count1'] = {
+        id: widget.id + 'count1',
+        parent: widget.id,
+        x: -40,
+        y: 2,
+        layer: 2,
+        height: 38,
+        width: 30,
+        rotation: -6,
+        movable: false,
+        movableInEdit: false,
+        owner: [],
+        TYPE: 'count',
+        css: 'background: white; border-radius: 4px; color: black;font-size:16px; border:1px solid lightgrey;transform-origin:bottom left'
+      };
+      output[widget.id + 'count2'] = {
+        id: widget.id + 'count2',
+        parent: widget.id,
+        x: -40,
+        y: 2,
+        layer: 1,
+        height: 38,
+        width: 30,
+        rotation: -12,
+        movable: false,
+        movableInEdit: false,
+        owner: [],
+        TYPE: 'count',
+        css: 'background: white; border-radius: 4px; color: black;font-size:16px; border:1px solid lightgrey;transform-origin:bottom left'
+      };
     } else if(widget.type == 'timer') {
-      w.type = 'timer'
+      w.type = 'timer';
       w.clickable = false
       w.countdown = !widget.timerCountUp
       if (widget.timerCountUp) {
@@ -454,14 +648,24 @@ export default async function convertPCIO(content) {
       w.layer = -4;
       w.z = 10000 - w.z;
       addDimensions(w, widget);
-    } else if(widget.type == 'automationButton') {
+    } else if(widget.type == 'automationButton' || widget.type == 'turnButton') {
       w.type = 'button';
       if(widget.label !== '')
         w.text = widget.label;
+
+      if(widget.type == 'turnButton')
+        widget.height = widget.width = 64;
       addDimensions(w, widget, 80, 80);
 
       w.clickRoutine = [];
-      for(let c of widget.clickRoutine) {
+
+      if(widget.type == 'turnButton') {
+        w.clickRoutine.push({
+          func: 'TURN'
+        });
+      }
+
+      for(let c of widget.clickRoutine || []) {
         if(c.func == 'MOVE_CARDS_BETWEEN_HOLDERS') {
           if(!c.args.from || !c.args.to)
             continue;
