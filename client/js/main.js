@@ -7,6 +7,7 @@ let roomRectangle;
 let overlayActive = false;
 let muted = false;
 let unmuteVol = 30;
+let optionsHidden = true;
 
 var vmEditOverlay;
 
@@ -236,6 +237,15 @@ onLoad(function() {
       document.getElementById('muteButton').classList.add('muted');
     }
     muted = !muted
+  });
+
+  on('#optionsButton', 'click', function(){
+    if(optionsHidden) {
+      document.getElementById('options').classList.remove('hidden');
+    } else {
+      document.getElementById('options').classList.add('hidden');
+    }
+    optionsHidden = !optionsHidden
   });
 
   on('#fullscreenButton', 'click', function() {
