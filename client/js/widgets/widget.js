@@ -1352,17 +1352,18 @@ export class Widget extends StateManaged {
 	    const audioArray = audioString.split(/:\s|,\s/);
 	    const source = audioArray[1];
 	    const type = audioArray[3];
-	    const volume = audioArray[5];
+	    const maxVolume = audioArray[5];
       const pName = audioArray[7];
 
       if(pName == "null" || pName == playerName) {
         var pVolCtrl = document.getElementById('volume');
-        pVolCtrl = (((10 ** (pVolCtrl.value / 48)) / 10) - 0.1) // converts to log scale with zero = no volume
-        var pVol = Math.min(volume * pVolCtrl, 1); 
+        pVolCtrl = (((10 ** (pVolCtrl.value / 96.025)) / 10) - 0.1) // converts to log scale with zero = no volume
+        var pVol = Math.min(maxVolume * pVolCtrl, 1); 
         var audioElement = document.createElement('audio');
         audioElement.setAttribute('class', 'audio');
         audioElement.setAttribute('src', source);
-        audioElement.setAttribute('type', type);audioElement.setAttribute('origVol', volume);
+        audioElement.setAttribute('type', type);
+        audioElement.setAttribute('origVol', maxVolume);
         audioElement.volume = pVol;
         audioElement.preload = 'metadata';
         document.body.appendChild(audioElement);
