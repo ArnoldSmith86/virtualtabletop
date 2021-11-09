@@ -17,6 +17,7 @@ describe("Scenarios: Counting widgets", () => {
     testWidget = createWidget(testWidgetDef);
 
     testLabel = addLabel(`${testName}-test-label`);
+    window.jeRoutineLogging = false;
   });
   afterAll(() => {
     removeWidget(testWidget.get('id'));
