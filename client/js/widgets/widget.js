@@ -653,8 +653,7 @@ export class Widget extends StateManaged {
                   problems.push(`There is already a widget with id:${a.properties.id}, generating new ID.`);
               }
               delete clone.parent;
-              addWidgetLocal(clone);
-              const cWidget = widgets.get(clone.id);
+              const cWidget = widgets.get(addWidgetLocal(clone));
 
               if(parent) {
                 // use moveToHolder so that CLONE triggers onEnter and similar features
@@ -1020,9 +1019,8 @@ export class Widget extends StateManaged {
           if(collections[a.collection].length) {
             for(const c of collections[a.collection].slice(0, a.count || 999999))
               await c.rotate(a.angle, a.mode);
-            if(jeRoutineLogging) {
-              jeLoggingRoutineOperationSummary(`${a.count == 0 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${a.collection}' ${mode} ${angle}`);
-            }
+            if(jeRoutineLogging)
+              jeLoggingRoutineOperationSummary(`${a.count == 0 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${a.collection}' ${mode} ${a.angle}`);
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
@@ -1667,10 +1665,10 @@ export class Widget extends StateManaged {
           };
           if(thisOwner !== null)
             pile.owner = thisOwner;
-          addWidgetLocal(pile);
-          await widget.set('parent', pile.id);
+          const pileId = addWidgetLocal(pile);
+          await widget.set('parent', pileId);
           await this.bringToFront();
-          await this.set('parent', pile.id);
+          await this.set('parent', pileId);
           break;
         }
 
