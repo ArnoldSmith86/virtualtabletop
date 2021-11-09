@@ -147,7 +147,7 @@
       <div id="editJSONoverlay" class="overlay">
         <h1>Edit widget JSON</h1>
         <p>Please check <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Creating-Games">our GitHub wiki for documentation</a>.</p>
-        <p>You can open this room in <a href="https://virtualtabletop.io/ghetto.htm" id="ghetto-link">an advanced editor</a>. Be sure to have <b>backups</b> on your harddrive first (of every game in your room)!</p>
+        <p>You can open this room in <a href="https://virtualtabletop.io/legacy-editor.htm" id="legacy-link">the legacy editor</a>. Be sure to have <b>backups</b> on your harddrive first (of every game in your room)!</p>
         <textarea id="editWidgetJSON"></textarea>
         <base-edit-overlay :json-edit="true"></base-edit-overlay>
       </div>
@@ -173,19 +173,8 @@
         <h2>Custom</h2>
         <button id="uploadBoard">⬆️ Upload board</button>
         <button id="uploadToken">⬆️ Upload token</button>
-        <button id="addCustomWidgetOverlay">Add custom widget</button>
+        <button id="addBasicWidget">Add basic widget</button>
       </div>
-    </div>
-
-    <div id="addCustomOverlay" class="overlay">
-      <h1>Add custom widget</h1>
-      <p>Please check <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Creating-Games">our GitHub wiki for documentation</a>.</p>
-      <textarea id="widgetText">
-        {
-          "image": "/i/cards-default/AS.svg"
-        }
-      </textarea>
-      <button id="addWidget">Add widget</button>
     </div>
 
     <div id="buttonInputOverlay" class="overlay">
@@ -359,7 +348,6 @@
       <div id="jeWidgetLayer1"></div>
       <div id="jeWidgetLayer2"></div>
       <div id="jeWidgetLayer3"></div>
-      <div id="jeWidgetLayer4"></div>
       <div id="jeWidgetLayer5"></div>
       <div id="jeWidgetLayer6"></div>
       <div id="jeWidgetLayer7"></div>

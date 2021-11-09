@@ -183,7 +183,7 @@ function updateTraceInput(e) {
 }
 
 window.addEventListener('keydown', function(e) {
-  if(e.key == 'F9') {
+  if(!jeEnabled && e.key == 'F9') {
     if(e.ctrlKey)
       selectFile('TEXT').then(loadTraceFile);
     else if(!tracingEnabled)
