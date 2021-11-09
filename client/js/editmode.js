@@ -1,16 +1,21 @@
 let edit = false;
 
-function generateUniqueWidgetID() {
+function generateUniqueWidgetID(widget, type) {
   let id;
+  let i = 1;
   do {
-    id = Math.random().toString(36).substring(3, 7);
+    if(type || widget)
+      id = (type || widget.type || 'basic')[0] + i;
+    else
+      id = Math.random().toString(36).substring(3, 6);
+    ++i;
   } while (widgets.has(id));
   return id;
 }
 
 function addWidgetLocal(widget) {
   if (!widget.id)
-    widget.id = generateUniqueWidgetID();
+    widget.id = generateUniqueWidgetID(widget);
   sendPropertyUpdate(widget.id, widget);
   sendDelta(true);
   return widget.id;
