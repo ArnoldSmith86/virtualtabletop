@@ -1,6 +1,6 @@
 {
   "name": "virtualtabletop",
-  "version": "0.1.0",
+  "version": "0.5.0",
   "description": "a virtual surface in the browser on which you can play board, dice and card games",
   "main": "server.mjs",
   "type": "module",
@@ -51,11 +51,11 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
-    "jest": "^27.2.4",
-    "jest-environment-jsdom": "^27.2.4",
+    "jest": "^27.3.1",
+    "jest-environment-jsdom": "^27.3.1",
     "jest-environment-jsdom-global": "^3.0.0",
     "json-diff": "^0.5.4",
-    "nodemon": "^2.0.13",
-    "testcafe": "^1.16.1"
+    "nodemon": "^2.0.14",
+    "testcafe": "^1.17.0"
   }
 }
