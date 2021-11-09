@@ -11,6 +11,12 @@ function generateUniqueWidgetID() {
 function addWidgetLocal(widget) {
   if (!widget.id)
     widget.id = generateUniqueWidgetID();
+
+  if(widget.parent && !widgets.has(widget.parent)) {
+    console.error(`Refusing to add widget ${widget.id} with invalid parent ${widget.parent}.`);
+    return null;
+  }
+
   sendPropertyUpdate(widget.id, widget);
   sendDelta(true);
   return widget.id;
@@ -917,7 +923,8 @@ function duplicateWidget(widget, recursive, inheritFrom, increment, incrementLet
       for(const child of widgetFilter(w=>w.get('parent')==widget.id))
         clone(child, true, currentId, 0, 0);
 
-    return currentWidget;
+    if(currentId)
+      return currentWidget;
   };
 
   const gridX = xCopies + 1;
