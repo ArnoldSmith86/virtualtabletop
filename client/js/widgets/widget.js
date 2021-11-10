@@ -1355,15 +1355,12 @@ export class Widget extends StateManaged {
       const pName = audioArray[7];
 
       if(pName == "null" || pName == playerName) {
-        var pVolCtrl = document.getElementById('volume');
-        pVolCtrl = (((10 ** (pVolCtrl.value / 96.025)) / 10) - 0.1) // converts to log scale with zero = no volume
-        var pVol = Math.min(maxVolume * pVolCtrl, 1); 
         var audioElement = document.createElement('audio');
         audioElement.setAttribute('class', 'audio');
         audioElement.setAttribute('src', source);
         audioElement.setAttribute('type', type);
-        audioElement.setAttribute('origVol', maxVolume);
-        audioElement.volume = pVol;
+        audioElement.setAttribute('maxVolume', maxVolume);
+        audioElement.volume = Math.min(maxVolume * (((10 ** (document.getElementById('volume').value / 96.025)) / 10) - 0.1), 1); // converts slider to log scale with zero = no volume
         audioElement.preload = 'metadata';
         document.body.appendChild(audioElement);
         audioElement.play();
