@@ -245,14 +245,10 @@ export class Widget extends StateManaged {
   childrenFiltered() {
     let filteredList = [];
     for(const c of this.children().filter(w=>w.get('type')!='deck' && w.get('fixedParent')!=true)) {
-      if(c.get('type') == 'pile') {
-        let arr = c.childArray;
-        for (let i = 0; i < arr.length; i++) {
-          filteredList.push(arr[i]);
-        }
-      }
+      if(c.get('type') == 'pile')
+        filteredList.concat(c.childArray);
       else
-        filteredList.push(c)
+        filteredList.push(c);
     }
     return filteredList;
   }
@@ -1482,11 +1478,8 @@ export class Widget extends StateManaged {
 
     if(this.get('alignChildren'))
       await child.setPosition(this.get('dropOffsetX'), this.get('dropOffsetY'), child.get('z'));
-    else {
-      let childX = child.get('x') - (widgets.get(child.get('parent'))).absoluteCoord('x');
-      let childY = child.get('y') - (widgets.get(child.get('parent'))).absoluteCoord('y');
+    else 
       await child.setPosition(childX, childY, child.get('z'));
-    }
   }
 
   async onChildRemove(child) {
