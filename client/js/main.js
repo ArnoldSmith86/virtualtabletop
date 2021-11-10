@@ -230,7 +230,7 @@ onLoad(function() {
       document.getElementById('muteButton').classList.remove('muted');
       var allAudios = document.querySelectorAll('audio');
       allAudios.forEach(function(audio){
-        audio.volume = audio.getAttribute('origVol')* unmuteVol / 100;
+        audio.volume = Math.min(audio.getAttribute('maxVolume') * (((10 ** (unmuteVol / 96.025)) / 10) - 0.1), 1);
       });
     } else {
       unmuteVol = document.getElementById('volume').value;
@@ -305,9 +305,8 @@ if(document.getElementById("volume")) {
         muted = !muted
       }
     var allAudios = document.querySelectorAll('audio');
-    var pVolCtrl = document.getElementById('volume');
     allAudios.forEach(function(audio){
-      audio.volume = audio.getAttribute('origVol') * pVolCtrl.value / 100;
+      audio.volume = Math.min(audio.getAttribute('maxVolume') * (((10 ** (document.getElementById('volume').value / 96.025)) / 10) - 0.1), 1);
     });
   });
 }
