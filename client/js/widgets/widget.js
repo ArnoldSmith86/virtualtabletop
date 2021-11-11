@@ -531,9 +531,9 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'AUDIO') {
-        setDefaults(a, { source: '', type: 'audio/mpeg', volume: 0.5, player: null });
+        setDefaults(a, { source: '', type: 'audio/mpeg', maxVolume: 1.0, player: null });
         if(a.source !== undefined) {
-          this.set('audio', 'source: ' + a.source + ', type: ' + a.type + ', volume: ' + a.volume + ', player: ' + a.player);
+          this.set('audio', 'source: ' + a.source + ', type: ' + a.type + ', maxVolume: ' + a.maxVolume + ', player: ' + a.player);
         }
       }
 
