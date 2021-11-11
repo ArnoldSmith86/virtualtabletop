@@ -89,7 +89,7 @@ export class Widget extends StateManaged {
   }
 
   absoluteCoord(coord) {
-    return this.get(coord) + (this.get('parent') ? widgets.get(this.get('parent')).absoluteCoord(coord) : 0);
+    return this.coordGlobalFromCoordLocal({x:0,y:0})[coord];
   }
 
   applyChildAdd(child) {
@@ -293,6 +293,60 @@ export class Widget extends StateManaged {
     }
   }
 
+  coordGlobalFromCoordLocal(coordLocal) {
+    if(this.get('parent')) {
+      return widgets.get(this.get('parent')).coordGlobalFromCoordLocal(this.coordParentFromCoordLocal(coordLocal));
+    } else {
+      return this.coordParentFromCoordLocal(coordLocal);
+    }
+  }
+  coordLocalFromCoordGlobal(coordGlobal) {
+    if(this.get('parent')) {
+      return this.coordLocalFromCoordParent(widgets.get(this.get('parent')).coordLocalFromCoordGlobal(coordGlobal));
+    } else {
+      return this.coordLocalFromCoordParent(coordGlobal);
+    }
+  }
+  coordLocalFromCoordParent(coordParent) {
+    let s = this.get('scale');
+    let rot = this.get('rotation') % 360;
+    if(s == 1 && rot == 0) {
+      return {x: coordParent.x - this.get('x'), y: coordParent.y - this.get('y')};
+    } else {
+      let centerLocalX = this.get('width') / 2;
+      let centerLocalY = this.get('height') / 2;
+      let centerParentX = this.get('x') + centerLocalX;
+      let centerParentY = this.get('y') + centerLocalY;
+      if(rot == 0) {
+        return {x: (coordParent.x - centerParentX) / s + centerLocalX, y: (coordParent.y - centerParentY) / s + centerLocalY};
+      } else {
+        rot = rot * Math.PI / 180;
+        let dist = Math.sqrt((coordParent.x - centerParentX)^2 + (coordParent.y - centerParentY)^2);
+        let angle = Math.atan2(coordParent.y - centerParentY, coordParent.x - centerParentX);
+        return {x: centerLocalX + Math.cos(angle + rot) * dist / s , y: centerLocalY + Math.sin(angle + rot) * dist / s}
+      }
+    }
+  }
+  coordParentFromCoordLocal(coordLocal) {
+    let s = this.get('scale');
+    let rot = this.get('rotation') % 360;
+    if(s == 1 && rot == 0) {
+      return {x: coordLocal.x + this.get('x'), y: coordLocal.y + this.get('y')};
+    } else {
+      let centerLocalX = this.get('width') / 2;
+      let centerLocalY = this.get('height') / 2;
+      let centerParentX = this.get('x') + centerLocalX;
+      let centerParentY = this.get('y') + centerLocalY;
+      if(rot == 0) {
+        return {x: (coordLocal.x - centerLocalX) * s + centerParentX, y: (coordLocal.y - centerLocalY) * s + centerParentY};
+      } else {
+        rot = rot * Math.PI / 180;
+        let dist = Math.sqrt((coordLocal.x - centerLocalX)^2 + (coordLocal.y - centerLocalY)^2);
+        let angle = Math.atan2(coordLocal.y - centerLocalY, coordLocal.x - centerLocalX);
+        return {x: centerParentX + Math.cos(angle - rot) * dist * s , y: centerParentY + Math.sin(angle - rot) * dist * s}
+      }
+    }
+  }
   css() {
     let css = this.get('css');
 
