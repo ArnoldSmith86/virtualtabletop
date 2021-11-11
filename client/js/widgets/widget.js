@@ -301,7 +301,11 @@ export class Widget extends StateManaged {
     }
   }
   coordLocalFromCoordGlobal(coordGlobal) {
-    return this.coordLocalFromCoordParent(this.coordParentFromCoordGlobal(coordGlobal));
+    if(this.get('parent')) {
+      return this.coordLocalFromCoordParent(widgets.get(this.get('parent')).coordLocalFromCoordGlobal(coordGlobal));
+    } else {
+      return this.coordLocalFromCoordParent(coordGlobal);
+    }
   }
   coordLocalFromCoordParent(coordParent) {
     let s = this.get('scale');
