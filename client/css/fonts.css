@@ -110,7 +110,7 @@
     font-family: 'Material Icons';
     font-style: normal;
     font-weight: 400;
-    src: url('Material-Icons.woff2') format('woff2');
+    src: url('/i/fonts/Material-Icons.woff2') format('woff2');
   }
   
   .material-icons {
