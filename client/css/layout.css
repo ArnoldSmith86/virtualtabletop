@@ -416,9 +416,16 @@ body.aspectTooGood #hideToolbarButton {
   visibility: hidden;
 }
 
-#statesButton::before {
+/* #statesButton::before {
   content:'interests';
+} */
+
+#statesButton {
+  background-size: 40px 40px;
+  background-position: 0px 0px;
+  background-image:url(/i/icons-white/game-library.svg);
 }
+
 
 #playersButton::before {
   content:'manage_accounts';
