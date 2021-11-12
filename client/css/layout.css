@@ -401,6 +401,7 @@ body.aspectTooGood #hideToolbarButton {
 }
 
 #aboutButton {
+  background-size: 28px 28px;
   background-image:url(/i/icons-white/vttlogo.svg);
 }
 
