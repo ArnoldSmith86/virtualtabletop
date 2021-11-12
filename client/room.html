@@ -5,6 +5,15 @@
   <meta charset="utf-8">
   <title>VirtualTabletop.io</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+  <link rel="icon"
+  href="https://cdn.glitch.com/12918bef-605d-465b-83e9-daddde8072e9%2Fw.png?1553040982360"
+  id="light-scheme-icon">
+<link rel="icon"
+  href="https://cdn.glitch.com/12918bef-605d-465b-83e9-daddde8072e9%2Fb.png?1553040985667"
+  id="dark-scheme-icon">
+
+
   <link rel="icon" type="image/svg+xml" href="/i/branding/favicon.svg"/>
   <link rel="alternate icon" href="/i/branding/favicon.png"/>
   <link href="/i/fonts/fonts.css" rel="stylesheet">
@@ -17,13 +26,18 @@
 <body>
 
   <div id="toolbar">
-    <button id="statesButton" data-overlay="statesOverlay" class="toolbarButton" ><span class="tooltip">Game list</span></button>
-    <button id="playersButton" data-overlay="playerOverlay" class="toolbarButton" ><span class="tooltip">Player list</span></button>
-    <button id="editButton" class="toolbarButton"><span class="tooltip">Edit mode</span></button>
-    <button id="addButton" data-overlay="addOverlay" class="toolbarButton"><span class="tooltip">Add widget</span></button>
+    <button id="statesButton" data-overlay="statesOverlay" class="toolbarButton" ><span class="tooltip">Game Library</span></button>
+    <div class="divider">&nbsp;</div>
+    <button id="playersButton" data-overlay="playerOverlay" class="toolbarButton" ><span class="tooltip">Players & Settings</span></button>
+    <div class="divider">&nbsp;</div>
+    <button id="editButton" class="toolbarButton"><span class="tooltip">Edit Mode</span></button>
+    <button id="addButton" data-overlay="addOverlay" class="toolbarButton"><span class="tooltip">Add Widget</span></button>
+    <div class="divider">&nbsp;</div>
     <button id="fullscreenButton" class="toolbarButton"><span class="tooltip">Fullscreen</span></button>
-    <button id="hideToolbarButton" class="toolbarButton"><span class="tooltip">Hide toolbar</span></button>
-    <button id="aboutButton" data-overlay="aboutOverlay" class="toolbarButton"><span class="tooltip">About</span></button>
+    <button id="hideToolbarButton" class="toolbarButton"><span class="tooltip">Hide Toolbar</span></button>
+    <div class="spacer">&nbsp;</div>
+    <div class="divider">&nbsp;</div>
+    <button id="aboutButton" data-overlay="aboutOverlay" class="toolbarButton"><span class="tooltip">About<br>VirtualTabletop.io</span></button>
   </div>
 
   <div id="roomArea">
