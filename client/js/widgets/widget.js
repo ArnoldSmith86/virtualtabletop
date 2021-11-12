@@ -320,10 +320,9 @@ export class Widget extends StateManaged {
       if(rot == 0) {
         return {x: (coordParent.x - centerParentX) / s + centerLocalX, y: (coordParent.y - centerParentY) / s + centerLocalY};
       } else {
-        rot = rot * Math.PI / 180;
-        let dist = Math.sqrt((coordParent.x - centerParentX)^2 + (coordParent.y - centerParentY)^2);
-        let angle = Math.atan2(coordParent.y - centerParentY, coordParent.x - centerParentX);
-        return {x: centerLocalX + Math.cos(angle + rot) * dist / s , y: centerLocalY + Math.sin(angle + rot) * dist / s}
+        let dist = Math.sqrt((coordParent.x - centerParentX)**2 + (coordParent.y - centerParentY)**2) / s;
+        let angle = Math.atan2(coordParent.y - centerParentY, coordParent.x - centerParentX) - (rot * Math.PI/180);
+        return {x: centerLocalX + Math.cos(angle) * dist , y: centerLocalY + Math.sin(angle) * dist};
       }
     }
   }
@@ -340,10 +339,9 @@ export class Widget extends StateManaged {
       if(rot == 0) {
         return {x: (coordLocal.x - centerLocalX) * s + centerParentX, y: (coordLocal.y - centerLocalY) * s + centerParentY};
       } else {
-        rot = rot * Math.PI / 180;
-        let dist = Math.sqrt((coordLocal.x - centerLocalX)^2 + (coordLocal.y - centerLocalY)^2);
-        let angle = Math.atan2(coordLocal.y - centerLocalY, coordLocal.x - centerLocalX);
-        return {x: centerParentX + Math.cos(angle - rot) * dist * s , y: centerParentY + Math.sin(angle - rot) * dist * s}
+        let dist = Math.sqrt((coordLocal.x - centerLocalX)**2 + (coordLocal.y - centerLocalY)**2) * s;
+        let angle = Math.atan2(coordLocal.y - centerLocalY, coordLocal.x - centerLocalX) + (rot * Math.PI / 180);
+        return {x: centerParentX + Math.cos(angle) * dist, y: centerParentY + Math.sin(angle) * dist};
       }
     }
   }
