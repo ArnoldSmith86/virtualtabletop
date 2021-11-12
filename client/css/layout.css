@@ -90,7 +90,7 @@ button:hover {
   flex-grow: 0;
   flex-shrink: 0;
   position: relative;
-  width: calc(var(--toolbarSize) - 4px);
+  width: auto;
   height: calc(var(--toolbarSize) - 4px);
   margin: 0;
   padding: 0;
@@ -145,35 +145,29 @@ button:hover {
   border-color: transparent;
 }
 .toolbarButton .tooltip {
-  display: none;
-  position: absolute;
-  left: 0;
-  bottom: calc(var(--toolbarSize) + 2px);
-  padding: 2px 12px;
+  display: inline-block;
+  position: relative;
+  padding: 2px 8px 2px 2px;
+  margin-left: calc(var(--toolbarSize) - 4px);
   font-size: 14px;
-  line-height: 14px;
+  line-height: calc(var(--toolbarSize) - 4px);
   color: white;
-  background:var(--VTTblue);
   border-radius: 4px;
   width: auto;
-  height: auto;
-  box-shadow: 0 0 5px #00000055;
+  height: calc(var(--toolbarSize) - 4px);
   white-space: nowrap;
+  pointer-events: none;
 }
 .toolbarButton:hover .tooltip {
   display: block;
 }
 
-#aboutButton > .tooltip {
-  top: unset;
-  bottom: calc(var(--toolbarSize) + 2px);
-    left: unset;
-    right: 0;
-    line-height: 14px;
-    min-height: 30px;
-}
+
 
 @media (min-aspect-ratio: 1600/1000) {
+  .toolbarButton {
+    width: calc(var(--toolbarSize) - 4px);
+  }
   #toolbar {
     top: 0;
     left: calc((100vw - var(--roomWidth) * var(--scale)) / 2 - var(--toolbarSize) / 2 + 1px);
@@ -192,20 +186,25 @@ button:hover {
     max-width: 75px;
   }
   .toolbarButton .tooltip {
+    display: none;
+    position: absolute;
+    padding: 2px 12px;
+    font-size: 14px;
+    line-height: 14px;
+    color: white;
+    background:var(--VTTblue);
+    border-radius: 4px;
+    width: auto;
+    height: auto;
+    box-shadow: 0 0 5px #00000055;
+    white-space: nowrap;
     top: 10px;
     right: unset;
-    left: calc(100% + 4px);
+    left: 4px;
     line-height: 14px;
     min-height: 16px;
   }
 
-  #aboutButton > .tooltip {
-    top: 5px;
-    right: unset;
-    left: calc(100% + 4px);
-    line-height: 14px;
-    min-height: 30px;
-  }
   
   
   #roomArea {
@@ -213,6 +212,38 @@ button:hover {
     left: calc((100vw - var(--roomWidth) * var(--scale)) / 2 + var(--toolbarSize) / 2);
   }
 }
+
+@media only screen and (max-width: 900px) {
+  .toolbarButton .tooltip {
+    display: none;
+    position: absolute;
+    padding: 2px 12px;
+    font-size: 14px;
+    line-height: 14px;
+    color: white;
+    background:var(--VTTblue);
+    border-radius: 4px;
+    width: auto;
+    height: auto;
+    box-shadow: 0 0 5px #00000055;
+    white-space: nowrap;
+    bottom: calc(var(--toolbarSize) + 4px);
+    right: unset;
+    left: 4px;
+    line-height: 14px;
+    min-height: 16px;
+    left: 0;
+    margin: 0;
+  }
+  #aboutButton > .tooltip{
+    left: unset;
+    right: 0;
+  }
+  .toolbarButton {
+    width: calc(var(--toolbarSize) - 4px);
+  }
+}
+
 
 body.aspectTooGood #toolbar {
   top: calc((100vh - var(--scale) * var(--roomHeight)) / 2);
@@ -223,19 +254,29 @@ body.aspectTooGood #toolbar {
 }
 
 body.aspectTooGood .toolbarButton .tooltip {
-  top: 10px;
+  display: none;
+    position: absolute;
+    padding: 2px 12px;
+    font-size: 14px;
+    line-height: 14px;
+    color: white;
+    background:var(--VTTblue);
+    border-radius: 4px;
+    width: auto;
+    height: auto;
+    box-shadow: 0 0 5px #00000055;
+    white-space: nowrap;
+    top: 10px;
     right: unset;
-    left: calc(100% + 4px);
+    left: 4px;
     line-height: 14px;
     min-height: 16px;
 }
-body.aspectTooGood #aboutButton > .tooltip {
-  top: 5px;
-  right: unset;
-  left: calc(100% + 4px);
-  line-height: 14px;
-  min-height: 30px;
+
+body.aspectTooGood .toolbarButton:hover .tooltip {
+  display: block;
 }
+
 
 body.aspectTooGood #toolbar .divider{
   border-top: 1px solid #ffffff44;
@@ -391,9 +432,21 @@ body.aspectTooGood #hideToolbarButton {
   content:'post_add';
 }
 
-#fullscreenButton::before {
+
+html:not(:fullscreen) #fullscreenButton::before {
   content:'fullscreen';
 }
+html:fullscreen #fullscreenButton::before {
+  content:'fullscreen_exit';
+}
+
+html:not(:fullscreen) #fullscreenButton .tooltip::before {
+  content:'';
+}
+html:fullscreen #fullscreenButton .tooltip::before {
+  content:'Exit ';
+}
+
 
 #hideToolbarButton {
   background-size: 28px 28px;
@@ -402,6 +455,7 @@ body.aspectTooGood #hideToolbarButton {
 
 #aboutButton {
   background-size: 28px 28px;
+  background-position: 4px 6px;
   background-image:url(/i/icons-white/vttlogo.svg);
 }
 
