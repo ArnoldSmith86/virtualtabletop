@@ -426,9 +426,11 @@ body.aspectTooGood #hideToolbarButton {
   background-size: 40px 40px;
   background-position: 0px 0px;
   background-image:url(/i/icons-white/game-library.svg);
-  font-weight: 900;
 }
 
+#statesButton .tooltip{
+  font-weight: 900;
+}
 
 #playersButton::before {
   content:'manage_accounts';
