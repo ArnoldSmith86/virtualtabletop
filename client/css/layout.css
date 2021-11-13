@@ -123,8 +123,8 @@ button:hover {
 
 #volume {
   top: 50%;
-  -ms-transform: translateY(50%);
   transform: translateY(50%);
+  -moz-transform: translateY(25%);
 }
 
 @media (min-aspect-ratio: 1600/1000) {
@@ -137,7 +137,8 @@ button:hover {
   }
 
   #options {
-    transform: translateY(360px) translateX(46px);
+    transform: translateY(362px) translateX(46px);
+    -moz-transform: translateY(352px) translateX(46px);
   }
 
   .toolbarButton .tooltip {
@@ -182,7 +183,8 @@ body.aspectTooGood #hideToolbarButton {
 }
 
 body.aspectTooGood #options {
-  transform: translateY(406px) translateX(46px);
+  transform: translateY(408px) translateX(46px);
+  -moz-transform: translateY(394px) translateX(46px);
 }
 
 #options.hidden {
