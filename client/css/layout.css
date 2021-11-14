@@ -15,7 +15,24 @@
   --wcMainOH: var(--VTTblueDark);
   --wcBorderOH: var(--VTTblue);
   --wcFontOH: var(--wcFont);
+  --negativeInput: #F44336;
+  --positiveInput: #43A047;
+  --modalBackgroundColor: #ffffff;
+  --modalTextColor: #000;
+  --modalBorderColor: rgba(0, 0, 0, 0.12);
+  --modalInputFocusColor: gold;
 }
+@media (prefers-color-scheme: dark) {
+  :root{
+    --modalBackgroundColor: #1c1c1d;
+    --modalTextColor: #fff;
+    --modalBorderColor: rgba(255, 255, 255, 0.15);
+    
+  }
+}
+
+
+
 
 body {
   background: #484848;
@@ -320,8 +337,80 @@ body.aspectTooGood #hideToolbarButton {
   flex-direction: column;
   padding: 5% 10%;
   box-sizing: border-box;
-  overflow:auto
+  overflow:auto;
+  -webkit-animation: fadeInFromNone 0.15s ease-out;
+    -moz-animation: fadeInFromNone 0.15s ease-out;
+    -o-animation: fadeInFromNone 0.15s ease-out;
+    animation: fadeInFromNone 0.15s ease-out;
 
+}
+
+@-webkit-keyframes fadeInFromNone {
+  0% {
+      display: none;
+      opacity: 0;
+  }
+
+  1% {
+      display: flex;
+      opacity: 0;
+  }
+
+  100% {
+      display: flex;
+      opacity: 1;
+  }
+}
+
+@-moz-keyframes fadeInFromNone {
+  0% {
+      display: none;
+      opacity: 0;
+  }
+
+  1% {
+      display: flex;
+      opacity: 0;
+  }
+
+  100% {
+      display: flex;
+      opacity: 1;
+  }
+}
+
+@-o-keyframes fadeInFromNone {
+  0% {
+      display: none;
+      opacity: 0;
+  }
+
+  1% {
+      display: flex;
+      opacity: 0;
+  }
+
+  100% {
+      display: flex;
+      opacity: 1;
+  }
+}
+
+@keyframes fadeInFromNone {
+  0% {
+      display: none;
+      opacity: 0;
+  }
+
+  1% {
+      display: flex;
+      opacity: 0;
+  }
+
+  100% {
+      display: flex;
+      opacity: 1;
+  }
 }
 
 .overlay h1 {
@@ -587,3 +676,330 @@ button:disabled {
 .handwriting_casual_font {
   font-family: 'Handwriting Casual';
 }
+
+#buttonInputOverlay{
+  justify-content: center;
+  align-items: center;
+}
+#buttonInputOverlay h1{
+  display: none;
+}
+.modal{
+  color: var(--modalTextColor);
+  background: var(--modalBackgroundColor);
+  box-shadow: 0 5px 10px #000000aa;
+  max-width: 80%;
+  min-width: 40%;
+  max-height: 90%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.modal h1{
+  margin: 0;
+  padding: 4px 8px;
+  text-align: left;
+  position: relative;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 48px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 10px 16px;
+    background: var(--VTTblueDark);
+}
+
+.modal h1:after {
+    content: '';
+    position: absolute;
+    background-color: var(--modalBorderColor);
+    display: block;
+    z-index: 15;
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    width: 100%;
+}
+
+.modal .footer{
+ margin-top: 16px;
+
+  padding: 4px;
+  position: relative;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal .footer:before {
+    content: '';
+    position: absolute;
+    background-color: var(--modalBorderColor);
+    display: block;
+    z-index: 15;
+    top: 0;
+    right: auto;
+    bottom: auto;
+    left: 0;
+    height: 1px;
+    width: 100%;
+}
+
+
+.modal .footer > div{
+  font-family: 'Roboto';
+  
+  padding: 0 8px;
+  font-size: 14px;
+  line-height: 32px;
+  color: white;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px 0px, rgba(0, 0, 0, 0.24) 0px 1px 2px 0px;
+
+}
+
+
+.modal .footer > div::before{
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+  vertical-align: middle;
+  margin-right: 8px;
+}
+.modal .footer > div.positiveInput {
+  font-weight: 900;
+  background: var(--positiveInput);
+  order: 2;
+}
+.modal .footer > div.positiveInput::before{
+  content: 'check';
+}
+.modal .footer > div.negativeInput::before{
+  content: 'close';
+}
+.modal .negativeInput {
+  font-weight: 500;
+  background: var(--negativeInput);
+  order: 1;
+}
+#buttonInputFields{
+  margin: 0;
+}
+#buttonInputFields input{
+  position: relative;
+}
+.modal *:focus {
+  outline-width: 3px;
+  outline-style:solid;
+  outline-color: var(--modalInputFocusColor);
+} 
+#buttonInputFields > div{
+  display: flex;
+  position: relative;
+  padding: 3px;
+}
+#buttonInputFields > div::after {
+    content: '';
+    position: absolute;
+    background-color: var(--modalBorderColor);
+    display: block;
+    z-index: 15;
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    width: 100%;
+}
+.inputtitle label{
+  display: block;
+  font-size: 24px;
+  line-height: 31.2px;
+  font-weight: bold;
+  padding: 32px 8px 16px 8px ;
+  margin: 0;
+}
+.inputtext label{
+  display: block;
+  font-size:14px;
+  line-height:19.6px;
+  padding:16px 8px;
+  position:relative;
+  text-size-adjust:100%;
+  font-style: italic;
+  margin: 0;
+}
+.inputnumber, 
+.inputstring,
+.inputselect{
+  flex-direction: column;
+}
+.inputcheckbox{
+  flex-direction: row;
+}
+
+.inputnumber label,
+.inputstring label,
+.inputselect label{
+  padding: 4px 5px 0 5px;
+    width: 100%;
+    vertical-align: top;
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 15.6px;
+    opacity: 0.5;
+}
+
+.inputcheckbox input{
+  display: inline-block;
+  margin: 8px 5px 0 14px;
+  height: 20px;
+  width: 20px;
+  border-radius: 4px;
+  flex-grow: 0;
+  order: 1;
+}
+.inputnumber input, 
+.inputstring input,
+.inputselect select
+{
+  appearance: none;
+  padding: 20.6px 5px 0px 5px;
+  margin: -20.6px 0 0 0;
+    font-size: 16px;
+    color: var(--modalTextColor);
+    background-color: transparent;
+    border: 0px none transparent;
+    line-height: 36px;
+    border-radius: 4px;
+}
+.inputselect select option{
+  background-color: var(--modalBackgroundColor);
+  font-size: 16px;
+}
+.inputcheckbox label,
+.inputcolor label,
+.inputswitch label{
+  cursor: pointer;
+  padding: 0px 5px 0px 5px;
+  margin: 0px 0 0 0;
+  font-size: 16px;
+  line-height: 36px;
+  flex-grow: 1;
+}
+.inputcheckbox label,
+.inputcolor label{
+  order: 2;
+}
+
+.inputcolor input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border-radius: 4px;
+  display: inline-block;
+  margin: 3px 3px 0 8px;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  order: 1;
+  flex-grow: 0;
+}
+.inputcolor input::-webkit-color-swatch-wrapper {
+  padding: 0;
+  border: 0 none transparent;
+}
+.inputcolor input::-webkit-color-swatch {
+  border-radius: 4px;
+}
+.inputcolor input::-moz-color-swatch-wrapper {
+  padding: 0;
+  border: 0 none transparent;
+}
+.inputcolor input::-moz-color-swatch  {
+  border-radius: 4px;
+}
+.inputswitch{
+  flex-direction: row;
+}
+.inputswitch input{
+  position: absolute;
+  top: -50000px;
+}
+
+.inputswitch label.switchbox {
+  font-size: 0px;
+  line-height: 0px;
+  height: 28px;
+  width: 40px;
+  flex-grow: 0;
+  margin: 4px;
+  position: relative;
+}
+label.switchbox{
+  background: gray;
+  border-radius: 100px;
+  transition-property: all;
+  transition-duration: 0.15s;
+  transition-delay: 0;
+}
+label.switchbox::before {
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  color: white;
+  content: 'w';
+  background: white;
+  border-radius: 100px;
+  font-size: 0px;
+  line-height: 0px;
+  height: 24px;
+  width: 24px;
+  margin-top: 2px;
+  margin-left: 2px;
+  transition-property: all;
+  transition-duration: 0.15s;
+  transition-delay: 0;
+  box-shadow: 0 0 3px black;
+}
+
+input.switchbox + label.switchbox::before {
+  margin-left: 2px;
+  background-color: #aaaaaa;
+}
+
+input.switchbox[type="checkbox"]:checked + .switchbox::before {
+  margin-left: 24px;
+  background-color: #ffffff;
+}
+input.switchbox[type="checkbox"]:checked + .switchbox{
+  background-color: var(--VTTblueLight);
+}
+
+

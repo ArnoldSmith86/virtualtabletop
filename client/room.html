@@ -191,11 +191,13 @@
     </div>
 
     <div id="buttonInputOverlay" class="overlay">
-      <form onsubmit="return false">
+      <form class="modal" onsubmit="return false">
         <h1>Button Input</h1>
         <div id="buttonInputFields"></div>
-        <button id="buttonInputGo">Go</button>
-        <button id="buttonInputCancel">Cancel</button>
+        <div class="footer">
+          <div id="buttonInputGo" class="positiveInput">Go</div>
+          <div id="buttonInputCancel" class="negativeInput">Cancel</div>
+        </div>
       </form>
     </div>
 

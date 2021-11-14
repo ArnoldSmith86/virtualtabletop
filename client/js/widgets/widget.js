@@ -326,10 +326,9 @@ export class Widget extends StateManaged {
   evaluateInputOverlay(o, resolve, reject, go) {
     const result = {};
     for(const field of o.fields) {
-
       if(field.type == 'checkbox') {
         result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).checked;
-      } else if(field.type != 'text') {
+      } else if(field.type != 'text' && field.type != 'title') {
         result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).value;
       }
 
@@ -1578,11 +1577,15 @@ export class Widget extends StateManaged {
   async showInputOverlay(o, widgets, variables, problems) {
     return new Promise((resolve, reject) => {
 
-      $('#buttonInputOverlay h1').textContent = o.header || "Button Input";
+      $('#buttonInputOverlay .modal').style = o.css || "";
       $('#buttonInputFields').innerHTML = '';
+      $('#buttonInputGo').textContent = o.confirmButtonText || "Go";
+      $('#buttonInputCancel').textContent = o.cancelButtonText || "Cancel";
 
       for(const field of o.fields) {
         const dom = document.createElement('div');
+        dom.style = field.css || "";
+        dom.className = "input"+field.type;
         formField(field, dom, this.get('id') + ';' + field.variable);
         $('#buttonInputFields').appendChild(dom);
       }
