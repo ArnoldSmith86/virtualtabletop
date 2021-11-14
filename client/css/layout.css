@@ -754,6 +754,11 @@ button:disabled {
 
 .modal .footer > div{
   font-family: 'Roboto';
+  display: flex;
+  height: 32px;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
   
   padding: 0 8px;
   font-size: 14px;
@@ -765,6 +770,10 @@ button:disabled {
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px 0px, rgba(0, 0, 0, 0.24) 0px 1px 2px 0px;
 
+}
+
+.modal .footer > div label:empty{
+  display: none;
 }
 
 .UIicon:empty{
@@ -791,8 +800,9 @@ button:disabled {
   /* Support for IE. */
   font-feature-settings: 'liga';
   vertical-align: middle;
-  margin-right: 8px;
 }
+
+
 .modal .footer > div.positiveInput {
   font-weight: 900;
   background: var(--positiveInput);
@@ -838,7 +848,7 @@ button:disabled {
   font-size: 24px;
   line-height: 31.2px;
   font-weight: bold;
-  padding: 32px 8px 16px 8px ;
+  padding: 8px;
   margin: 0;
 }
 .inputtext label{

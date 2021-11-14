@@ -1576,11 +1576,14 @@ export class Widget extends StateManaged {
 
   async showInputOverlay(o, widgets, variables, problems) {
     return new Promise((resolve, reject) => {
+      const maxRandomRotate = o.randomRotation || 0;
+      const rotation = Math.floor(Math.random() * maxRandomRotate) - (maxRandomRotate / 2);
 
       $('#buttonInputOverlay .modal').style = o.css || "";
+      $('#buttonInputOverlay .modal').style.transform = "rotate("+rotation+"deg)";
       $('#buttonInputFields').innerHTML = '';
-      $('#buttonInputGo label').textContent = o.confirmButtonText || "Go";
-      $('#buttonInputCancel label').textContent = o.cancelButtonText || "Cancel";
+      $('#buttonInputGo label').textContent = o.confirmButtonText || "";
+      $('#buttonInputCancel label').textContent = o.cancelButtonText || "";
       
       $('#buttonInputGo span').textContent = o.confirmButtonIcon || "";
       $('#buttonInputCancel span').textContent = o.cancelButtonIcon || "";
