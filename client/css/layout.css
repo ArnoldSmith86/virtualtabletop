@@ -693,6 +693,7 @@ button:disabled {
   max-height: 90%;
   overflow-y: auto;
   overflow-x: hidden;
+  border-radius: 10px;
 }
 
 .modal h1{
@@ -700,16 +701,16 @@ button:disabled {
   padding: 4px 8px;
   text-align: left;
   position: relative;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    min-height: 48px;
-    color: #ffffff;
-    font-size: 16px;
-    font-weight: 700;
-    padding: 10px 16px;
-    background: var(--VTTblueDark);
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 48px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 10px 16px;
+  background: var(--VTTblueDark);
 }
 
 .modal h1:after {
@@ -731,24 +732,24 @@ button:disabled {
 
   padding: 4px;
   position: relative;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .modal .footer:before {
-    content: '';
-    position: absolute;
-    background-color: var(--modalBorderColor);
-    display: block;
-    z-index: 15;
-    top: 0;
-    right: auto;
-    bottom: auto;
-    left: 0;
-    height: 1px;
-    width: 100%;
+  content: '';
+  position: absolute;
+  background-color: var(--modalBorderColor);
+  display: block;
+  z-index: 15;
+  top: 0;
+  right: auto;
+  bottom: auto;
+  left: 0;
+  height: 1px;
+  width: 100%;
 }
 
 
