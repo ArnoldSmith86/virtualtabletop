@@ -767,8 +767,10 @@ button:disabled {
 
 }
 
-
-.modal .footer > div::before{
+.UIicon:empty{
+  display: none;
+}
+.UIicon{
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
@@ -796,12 +798,7 @@ button:disabled {
   background: var(--positiveInput);
   order: 2;
 }
-.modal .footer > div.positiveInput::before{
-  content: 'check';
-}
-.modal .footer > div.negativeInput::before{
-  content: 'close';
-}
+
 .modal .negativeInput {
   font-weight: 500;
   background: var(--negativeInput);

@@ -1579,8 +1579,11 @@ export class Widget extends StateManaged {
 
       $('#buttonInputOverlay .modal').style = o.css || "";
       $('#buttonInputFields').innerHTML = '';
-      $('#buttonInputGo').textContent = o.confirmButtonText || "Go";
-      $('#buttonInputCancel').textContent = o.cancelButtonText || "Cancel";
+      $('#buttonInputGo label').textContent = o.confirmButtonText || "Go";
+      $('#buttonInputCancel label').textContent = o.cancelButtonText || "Cancel";
+      
+      $('#buttonInputGo span').textContent = o.confirmButtonIcon || "";
+      $('#buttonInputCancel span').textContent = o.cancelButtonIcon || "";
 
       for(const field of o.fields) {
         const dom = document.createElement('div');
