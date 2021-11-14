@@ -680,6 +680,7 @@ button:disabled {
 #buttonInputOverlay{
   justify-content: center;
   align-items: center;
+  padding: 10px;
 }
 #buttonInputOverlay h1{
   display: none;
@@ -688,8 +689,8 @@ button:disabled {
   color: var(--modalTextColor);
   background: var(--modalBackgroundColor);
   box-shadow: 0 5px 10px #000000aa;
-  max-width: 80%;
-  min-width: 40%;
+  max-width: 550px;
+  min-width: 300px;
   max-height: 90%;
   overflow-y: auto;
   overflow-x: hidden;
@@ -736,6 +737,7 @@ button:disabled {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
 }
 
 .modal .footer:before {
@@ -900,12 +902,12 @@ button:disabled {
   appearance: none;
   padding: 20.6px 5px 0px 5px;
   margin: -20.6px 0 0 0;
-    font-size: 16px;
-    color: var(--modalTextColor);
-    background-color: transparent;
-    border: 0px none transparent;
-    line-height: 36px;
-    border-radius: 4px;
+  font-size: 16px;
+  color: var(--modalTextColor);
+  background-color: transparent;
+  border: 0px none transparent;
+  line-height: 36px;
+  border-radius: 4px;
 }
 .inputselect select option{
   background-color: var(--modalBackgroundColor);
