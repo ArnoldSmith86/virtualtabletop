@@ -999,7 +999,7 @@ label.switchbox::before {
 
 input.switchbox + label.switchbox::before {
   margin-left: 2px;
-  background-color: #aaaaaa;
+  background-color: #ffffff;
 }
 
 input.switchbox[type="checkbox"]:checked + .switchbox::before {
@@ -1007,7 +1007,7 @@ input.switchbox[type="checkbox"]:checked + .switchbox::before {
   background-color: #ffffff;
 }
 input.switchbox[type="checkbox"]:checked + .switchbox{
-  background-color: var(--VTTblueLight);
+  background-color: var(--VTTblue);
 }
 
 
