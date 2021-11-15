@@ -10,7 +10,14 @@ function eventCoords(name, e) {
     coords = e.targetTouches[0];
   else
     coords = e;
-  return [ coords.clientX, coords.clientY ];
+  let x = (coords.clientX - roomRectangle.left) / scale;
+  let y = (coords.clientY - roomRectangle.top) / scale;
+  if(!jeZoomOut) {
+    x = Math.max(0, Math.min(1600, x));
+    y = Math.max(0, Math.min(1000, y));
+  }
+  console.log("eventCoords", x, y, coords.clientX, roomRectangle.left, scale)
+  return {x, y};
 }
 
 async function inputHandler(name, e) {
@@ -44,11 +51,11 @@ async function inputHandler(name, e) {
     batchStart();
     if(!edit && (!jeEnabled || !e.ctrlKey) && widgets.get(target.id).passthroughMouse) {
       if(name == 'mousedown' || name == 'touchstart') {
-        await widgets.get(target.id).mouseRaw('down', (coords[0] - roomRectangle.left)/scale, (coords[1] - roomRectangle.top)/scale);
+        await widgets.get(target.id).mouseRaw('down', coords.x, coords.y);
       } else if (name == 'mouseup' || name == 'touchend') {
-        await widgets.get(target.id).mouseRaw('up', (coords[0] - roomRectangle.left)/scale, (coords[1] - roomRectangle.top)/scale);
+        await widgets.get(target.id).mouseRaw('up', coords.x, coords.y);
       } else if (name == 'mousemove' || name == 'touchmove') {
-        await widgets.get(target.id).mouseRaw('move', (coords[0] - roomRectangle.left)/scale, (coords[1] - roomRectangle.top)/scale);
+        await widgets.get(target.id).mouseRaw('move', coords.x, coords.y);
       }
     } else if(name == 'mousedown' || name == 'touchstart') {
       mouseStatus[target.id] = {
@@ -69,7 +76,7 @@ async function inputHandler(name, e) {
     } else if(name == 'mouseup' || name == 'touchend') {
       const ms = mouseStatus[target.id];
       const timeSinceStart = +new Date() - ms.start;
-      const pixelsMoved = ms.coords ? Math.abs(ms.coords[0] - ms.downCoords[0]) + Math.abs(ms.coords[1] - ms.downCoords[1]) : 0;
+      const pixelsMoved = ms.coords ? Math.abs(ms.coords.x - ms.downCoords.x) + Math.abs(ms.coords.y - ms.downCoords.y) : 0;
       if(ms.status != 'initial' && moveTarget)
         await ms.widget.moveEnd();
       if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
@@ -86,21 +93,18 @@ async function inputHandler(name, e) {
       delete mouseStatus[target.id];
     } else if(name == 'mousemove' || name == 'touchmove') {
       if(mouseStatus[target.id].status == 'initial') {
-        const targetRect = moveTarget ? moveTarget.getBoundingClientRect() : target.getBoundingClientRect();
-        const downCoords = mouseStatus[target.id].downCoords;
+        const widget = widgets.get(moveTarget ? moveTarget.id : target.id);
         Object.assign(mouseStatus[target.id], {
           status: 'moving',
-          offset: [ downCoords[0] - (targetRect.left + targetRect.width/2), downCoords[1] - (targetRect.top + targetRect.height/2) ],
-          widget: widgets.get(moveTarget ? moveTarget.id : target.id)
+          widget: widget,
+          coordLocal: widget.coordLocalFromCoordGlobal(mouseStatus[target.id].downCoords)
         });
         if(moveTarget)
           await mouseStatus[target.id].widget.moveStart();
       }
       mouseStatus[target.id].coords = coords;
-      const x = Math.floor((coords[0] - roomRectangle.left - mouseStatus[target.id].offset[0]) / scale);
-      const y = Math.floor((coords[1] - roomRectangle.top  - mouseStatus[target.id].offset[1]) / scale);
       if(moveTarget)
-        await mouseStatus[target.id].widget.move(x, y);
+        await mouseStatus[target.id].widget.move(coords, mouseStatus[target.id].coordLocal);
     }
     batchEnd();
   }
@@ -112,8 +116,8 @@ async function inputHandler(name, e) {
   
   toServer('mouse', 
     {
-      x: Math.floor((coords[0] - roomRectangle.left)/scale),
-      y: Math.floor((coords[1] - roomRectangle.top)/scale),
+      x: Math.floor(coords.x),
+      y: Math.floor(coords.y),
       pressed: (e.buttons & 1 == 1) || name == 'touchstart' || name == 'touchmove',
       target: mouseTarget? mouseTarget.id : null
     });
