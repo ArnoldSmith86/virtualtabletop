@@ -1426,17 +1426,14 @@ export class Widget extends StateManaged {
     }
   }
 
-  async move(x, y) {
-    let newX = (jeZoomOut ? x : Math.max(0-this.get('width' )*0.25, Math.min(1600+this.get('width' )*0.25, x))) - this.get('width' )/2;
-    let newY = (jeZoomOut ? y : Math.max(0-this.get('height')*0.25, Math.min(1000+this.get('height')*0.25, y))) - this.get('height')/2;
-
-    if(this.get('fixedParent') && widgets.has(this.get('parent'))) {
-      newX -= widgets.get(this.get('parent')).absoluteCoord('x');
-      newY -= widgets.get(this.get('parent')).absoluteCoord('y');
-    }
+  async move(coordGlobal, coordLocal) {
+    const coordParentOld = this.coordParentFromCoordLocal(coordLocal);
+    const coordParentNew = (this.get('parent') && widgets.has(this.get('parent'))) ? widgets.get(this.get('parent')).coordLocalFromCoordGlobal(coordGlobal) : coordGlobal;
+    const newX = this.get('x') + coordParentNew.x - coordParentOld.x;
+    const newY = this.get('y') + coordParentNew.y - coordParentOld.y;
 
     if(tracingEnabled)
-      sendTraceEvent('move', { id: this.get('id'), x, y, newX, newY });
+      sendTraceEvent('move', { id: this.get('id'), coordGlobal, coordLocal, newX, newY });
 
     await this.setPosition(newX, newY, this.get('z'));
 
