@@ -867,8 +867,17 @@ export class Widget extends StateManaged {
       if(a.func == 'INPUT') {
         try {
           Object.assign(variables, await this.showInputOverlay(a, widgets, variables, problems));
-          if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary(`"${a.header}"`,`${JSON.stringify(a.variable)}`);
+          if(jeRoutineLogging) {
+            let varList = [];
+            let valueList = [];
+            a.fields.forEach(f=>{
+              if(f.variable) {
+                varList.push(f.variable);
+                valueList.push(variables[f.variable]);
+              }
+            });
+            jeLoggingRoutineOperationSummary(`${varList.join(', ')}`,`${valueList.join(', ')}`);
+          }
 
         } catch(e) {
           problems.push(`Exception: ${e.toString()}`);
