@@ -301,11 +301,7 @@ export class Widget extends StateManaged {
     }
   }
   coordLocalFromCoordGlobal(coordGlobal) {
-    if(this.get('parent')) {
-      return this.coordLocalFromCoordParent(widgets.get(this.get('parent')).coordLocalFromCoordGlobal(coordGlobal));
-    } else {
-      return this.coordLocalFromCoordParent(coordGlobal);
-    }
+    return this.coordLocalFromCoordParent(this.coordParentFromCoordGlobal(coordGlobal));
   }
   coordLocalFromCoordParent(coordParent) {
     let s = this.get('scale');
@@ -324,6 +320,14 @@ export class Widget extends StateManaged {
         let angle = Math.atan2(coordParent.y - centerParentY, coordParent.x - centerParentX) - (rot * Math.PI/180);
         return {x: centerLocalX + Math.cos(angle) * dist , y: centerLocalY + Math.sin(angle) * dist};
       }
+    }
+  }
+  coordParentFromCoordGlobal(coordGlobal) {
+    const p = this.get('parent');
+    if(p && widgets.has(p)) {
+      return widgets.get(p).coordLocalFromCoordGlobal(coordGlobal);
+    } else {
+      return coordGlobal;
     }
   }
   coordParentFromCoordLocal(coordLocal) {
@@ -1459,14 +1463,14 @@ export class Widget extends StateManaged {
     }
   }
 
-  async move(coordGlobal, coordLocal) {
-    const coordParentOld = this.coordParentFromCoordLocal(coordLocal);
-    const coordParentNew = (this.get('parent') && widgets.has(this.get('parent'))) ? widgets.get(this.get('parent')).coordLocalFromCoordGlobal(coordGlobal) : coordGlobal;
-    const newX = this.get('x') + coordParentNew.x - coordParentOld.x;
-    const newY = this.get('y') + coordParentNew.y - coordParentOld.y;
+  async move(coordGlobal, offset) {
+    const p = this.get('parent');
+    const coordParent = (p && widgets.has(p)) ? widgets.get(p).coordLocalFromCoordGlobal(coordGlobal) : coordGlobal;
+    const newX = coordParent.x - offset.x;
+    const newY = coordParent.y - offset.y;
 
     if(tracingEnabled)
-      sendTraceEvent('move', { id: this.get('id'), coordGlobal, coordLocal, newX, newY });
+      sendTraceEvent('move', { id: this.get('id'), coordGlobal, offset, newX, newY });
 
     await this.setPosition(newX, newY, this.get('z'));
 
