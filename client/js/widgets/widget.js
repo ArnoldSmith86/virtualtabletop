@@ -422,7 +422,7 @@ export class Widget extends StateManaged {
         newCollection = '$collection_' + batchDepth;
         collections[newCollection] = widgetFilter(w=>collection.indexOf(w.id)!=-1);
       } else
-        problems.push(`Collection ${collection} does not exist or is not an array.`);
+        problems.push(`Collection ${collection} does not exist and is not an array.`);
       return newCollection;
     }
 
