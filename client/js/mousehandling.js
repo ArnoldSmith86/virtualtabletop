@@ -16,7 +16,6 @@ function eventCoords(name, e) {
     x = Math.max(0, Math.min(1600, x));
     y = Math.max(0, Math.min(1000, y));
   }
-  console.log("eventCoords", x, y, coords.clientX, roomRectangle.left, scale)
   return {x, y};
 }
 
@@ -94,17 +93,20 @@ async function inputHandler(name, e) {
     } else if(name == 'mousemove' || name == 'touchmove') {
       if(mouseStatus[target.id].status == 'initial') {
         const widget = widgets.get(moveTarget ? moveTarget.id : target.id);
+        const offset = widget.coordParentFromCoordGlobal(mouseStatus[target.id].downCoords);
+        offset.x -= widget.get('x');
+        offset.y -= widget.get('y');
         Object.assign(mouseStatus[target.id], {
           status: 'moving',
           widget: widget,
-          coordLocal: widget.coordLocalFromCoordGlobal(mouseStatus[target.id].downCoords)
+          offset: offset
         });
         if(moveTarget)
           await mouseStatus[target.id].widget.moveStart();
       }
       mouseStatus[target.id].coords = coords;
       if(moveTarget)
-        await mouseStatus[target.id].widget.move(coords, mouseStatus[target.id].coordLocal);
+        await mouseStatus[target.id].widget.move(coords, mouseStatus[target.id].offset);
     }
     batchEnd();
   }
