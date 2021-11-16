@@ -837,7 +837,7 @@ export class Widget extends StateManaged {
             problems.push(`Collection ${a.collection} is empty.`);
           }
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary(`${a.aggregation} of '${a.property}' in '${a.collection}'`, `'${JSON.stringify(a.variable)}'`);
+            jeLoggingRoutineOperationSummary(`${a.aggregation} of '${a.property}' in '${a.collection}'`, `'${JSON.stringify(variables[a.variable])}'`);
         }
       }
 
