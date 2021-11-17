@@ -12,7 +12,8 @@ function addWidgetLocal(widget) {
   if (!widget.id)
     widget.id = generateUniqueWidgetID();
   sendPropertyUpdate(widget.id, widget);
-  sendDelta(true);
+  addWidget(widget);
+  sendDelta();
   return widget.id;
 }
 //This section holds the edit overlays for each widget
