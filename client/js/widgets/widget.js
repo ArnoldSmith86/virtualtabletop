@@ -941,12 +941,14 @@ export class Widget extends StateManaged {
                 if(target.get('type') == 'seat') {
                   if(target.get('hand') && target.get('player')) {
                     if(widgets.has(target.get('hand'))) {
+                      const targetHand = widgets.get(target.get('hand'));
                       await applyFlip();
-                      await c.moveToHolder(widgets.get(target.get('hand')));
-                      if(widgets.get(target.get('hand')).get('childrenPerOwner'))
+                      await c.moveToHolder(targetHand);
+                      if(targetHand.get('childrenPerOwner'))
                         await c.set('owner', target.get('player'));
                       c.bringToFront()
-                      widgets.get(target.get('hand')).updateAfterShuffle(); // this arranges the cards in the new owner's hand
+                      if(targetHand.get('type') == 'holder')
+                        targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
                     } else {
                       problems.push(`Seat ${target.id} declares 'hand: ${target.get('hand')}' which does not exist.`);
                     }
@@ -1140,7 +1142,8 @@ export class Widget extends StateManaged {
             await w(a.holder, async holder=>{
               for(const c of holder.children())
                 await c.set('z', Math.floor(Math.random()*10000));
-              await holder.updateAfterShuffle();
+              if(holder.get('type') == 'holder')
+                await holder.updateAfterShuffle();
             });
             if(jeRoutineLogging)
               jeLoggingRoutineOperationSummary(`holder ${a.holder}`);
@@ -1164,7 +1167,8 @@ export class Widget extends StateManaged {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
               await this.sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options, true);
-              await holder.updateAfterShuffle();
+              if(holder.get('type') == 'holder')
+                await holder.updateAfterShuffle();
             });
           }
           if(jeRoutineLogging)
