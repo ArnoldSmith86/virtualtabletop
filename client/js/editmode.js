@@ -11,8 +11,8 @@ function generateUniqueWidgetID() {
 function addWidgetLocal(widget) {
   if (!widget.id)
     widget.id = generateUniqueWidgetID();
-  sendPropertyUpdate(widget.id, widget);
   addWidget(widget);
+  sendPropertyUpdate(widget.id, widget);
   sendDelta();
   return widget.id;
 }
