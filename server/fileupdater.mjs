@@ -1,4 +1,4 @@
-export const VERSION = 4;
+export const VERSION = 5;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -30,7 +30,8 @@ function updateProperties(properties, v) {
     if(property.match(/Routine$/))
       updateRoutine(properties[property], v);
 
-  v<4 && v4DynamicFaceProperties(properties);
+  v<4 && v4ModifyDropTargetEmptyArray(properties);
+  v<5 && v5DynamicFaceProperties(properties);
 }
 
 function updateRoutine(routine, v) {
@@ -264,8 +265,12 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
     routine.splice(o.index, 0, o.operation);
 }
 
+function v4ModifyDropTargetEmptyArray(properties) {
+  if(Array.isArray(properties.dropTarget) && properties.dropTarget.length == 0)
+    properties.dropTarget = {};
+}
 
-function v4DynamicFaceProperties(properties) {
+function v5DynamicFaceProperties(properties) {
   if(Array.isArray(properties.faceTemplates)) {
     for(const face of properties.faceTemplates) {
       if(Array.isArray(face.objects)) {
