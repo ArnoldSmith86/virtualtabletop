@@ -969,7 +969,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'MOVEXY') {
-        setDefaults(a, { count: 1, face: null, x: 0, y: 0 });
+        setDefaults(a, { count: 1, face: null, x: 0, y: 0, snapToGrid: true });
         if(this.isValidID(a.from, problems)) {
           await w(a.from, async source=>{
             for(const c of source.children().slice(0, a.count || 999999).reverse()) {
@@ -978,6 +978,8 @@ export class Widget extends StateManaged {
               await c.set('parent', null);
               await c.bringToFront();
               await c.setPosition(a.x, a.y, a.z || c.get('z'));
+              if(a.snapToGrid)
+                await c.snapToGrid();
               await c.updatePiles();
             }
           });
