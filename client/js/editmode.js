@@ -477,9 +477,9 @@ function generateCardDeckWidgets(id, x, y, addCards) {
     });
   }
 
-  const front = { type:'image', x:0, y:0, width:103, height:160, valueType:'dynamic', value:'image', color:'transparent' };
+  const front = { type:'image', x:0, y:0, width:103, height:160, color:'transparent', dynamicProperties:{value:'image'} };
   const back  = { ...front };
-  back.valueType = 'static';
+  delete back.dynamicProperties;
   back.value = '/i/cards-default/2B.svg';
   widgets.push({
     type: 'deck',

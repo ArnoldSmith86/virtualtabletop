@@ -81,8 +81,8 @@ const jeCommands = [
       const cssVariables = {};
       for(const face of jeStateNow.faceTemplates || []) {
         for(const object of face.objects) {
-          if(object.valueType == 'dynamic')
-            cardType[object.value] = '';
+          for(const property of object.dynamicProperties || {})
+            cardType[property] = '';
           ((object.css || '').match(/--[a-zA-Z]+/g) || []).forEach(m=>cssVariables[`${m}: black`]=true);
         }
       }
@@ -163,10 +163,11 @@ const jeCommands = [
         x: 0,
         y: 0,
         color: 'transparent',
-        valueType: 'dynamic',
-        value: '###SELECT ME###',
         width: jeStateNow.cardDefaults && jeStateNow.cardDefaults.width  || 103,
-        height: jeStateNow.cardDefaults && jeStateNow.cardDefaults.height || 160
+        height: jeStateNow.cardDefaults && jeStateNow.cardDefaults.height || 160,
+        dynamicProperties: {
+          value: '###SELECT ME###'
+        }
       });
       jeSetAndSelect('image');
     }
@@ -181,10 +182,11 @@ const jeCommands = [
         x: 0,
         y: 0,
         fontSize: 20,
-        valueType: 'dynamic',
-        value: '###SELECT ME###',
         textAlign: 'center',
-        width: jeStateNow.cardDefaults && jeStateNow.cardDefaults.width  || 103
+        width: jeStateNow.cardDefaults && jeStateNow.cardDefaults.width  || 103,
+        dynamicProperties: {
+          value: '###SELECT ME###'
+        }
       });
       jeSetAndSelect('text');
     }
@@ -210,15 +212,24 @@ const jeCommands = [
     }
   },
   {
-    id: 'je_toggleValueType',
-    name: _=>jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].valueType == 'dynamic' ? 'static' : 'dynamic',
+    id: 'je_toggleDynamicValue',
+    name: _=>(jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].dynamicProperties || {}).value ? 'static value' : 'dynamic value',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
     call: async function() {
       const o = jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]];
-      const d = o.valueType == 'dynamic';
-      const v = o.value;
-      o.valueType = d ? 'static' : 'dynamic';
-      o.value = '###SELECT ME###';
+      const d = !!(o.dynamicProperties || {}).value;
+      const v = d ? o.dynamicProperties.value : o.value;
+      if(d) {
+        delete o.dynamicProperties.value;
+        if(!Object.keys(o.dynamicProperties).length)
+          delete o.dynamicProperties;
+        o.value = '###SELECT ME###';
+      } else {
+        delete o.value;
+        if(!o.dynamicProperties)
+          o.dynamicProperties = {};
+        o.dynamicProperties.value = '###SELECT ME###';
+      }
       jeSetAndSelect(v);
     }
   },
