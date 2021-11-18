@@ -452,11 +452,11 @@ export class Widget extends StateManaged {
     const routine = this.get(property) !== null ? this.get(property) : property;
 
     for(const original of routine) {
+      var problems = [];
       let a = JSON.parse(JSON.stringify(original));
       if(typeof a == 'object')
         a = evaluateVariablesRecursively(a);
 
-      var problems = [];
       if(jeRoutineLogging) jeLoggingRoutineOperationStart(original, a)
 
       if(a.skip) {
