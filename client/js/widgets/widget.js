@@ -991,10 +991,9 @@ export class Widget extends StateManaged {
             for(const c of source.children().slice(0, a.count || 999999).reverse()) {
               if(a.face !== null && c.flip)
                 c.flip(a.face);
-              await c.set('parent', null);
               await c.bringToFront();
               await c.setPosition(a.x, a.y, a.z || c.get('z'));
-              await c.updatePiles();
+              await c.set('parent', null);
             }
           });
           if(jeRoutineLogging) {
