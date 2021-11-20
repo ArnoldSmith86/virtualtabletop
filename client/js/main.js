@@ -1,5 +1,5 @@
 import { $, $a, onLoad, selectFile, asArray } from './domhelpers.js';
-import { startWebSocket } from './connection.js';
+import { startWebSocket, toServer } from './connection.js';
 
 
 let scale = 1;
@@ -96,6 +96,7 @@ export function showOverlay(id, forced) {
     if (id == 'buttonInputOverlay') {
       $('#buttonInputGo').focus();
     }
+    toServer('mouse',{inactive:true})
   } else {
     $('#roomArea').className = '';
     vmEditOverlay.selectedWidget = {};

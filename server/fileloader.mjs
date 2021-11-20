@@ -45,14 +45,14 @@ async function readStatesFromBuffer(buffer) {
   if(zip.files['widgets.json'])
     return { 'PCIO': await readVariantsFromBuffer(buffer) };
 
-  const states = [];
+  const states = {};
   for(const filename in zip.files) {
     if(filename.match(/^[^\/]+\.json$/) && zip.files[filename]._data)
       return { 'VTT': await readVariantsFromBuffer(buffer) };
     if(filename.match(/\.(vtt|pcio)$/) && zip.files[filename]._data)
       states[filename] = await readVariantsFromBuffer(await zip.files[filename].async('nodebuffer'));
   }
-  if(states.length == 0)
+  if(Object.keys(states).length == 0)
     throw new Logging.UserError(404, 'Did not find any JSON files in the ZIP file.');
   return states;
 }
