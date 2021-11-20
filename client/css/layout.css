@@ -104,10 +104,7 @@ button:hover {
   background-size: 80% 80%;
   background-position: center;
   background-repeat: no-repeat;
-  
 }
-
-
 
 .toolbarButton::before {
   position: absolute;
@@ -138,11 +135,13 @@ button:hover {
 .toolbarButton:hover {
   background-color: rgba(0,0,0,0.1);
 }
+
 .toolbarButton:focus {
   outline-style: none;
   box-shadow: none;
   border-color: transparent;
 }
+
 .toolbarButton .tooltip {
   font-family: 'Roboto';
   display: inline-block;
@@ -159,10 +158,10 @@ button:hover {
   pointer-events: none;
   font-weight: 500;
 }
+
 .toolbarButton:hover .tooltip {
   display: block;
 }
-
 
 #options {
   left: 0px;
@@ -171,7 +170,7 @@ button:hover {
   border-radius: 4px;
   top: -82px;
   position: absolute;
-  transform: translateY(42px) translateX(266px);
+  transform: translateY(42px) translateX(687px);
   background:var(--VTTblue);
 }
 
@@ -185,20 +184,19 @@ button:hover {
   .toolbarButton {
     width: calc(var(--toolbarSize) - 4px);
   }
+
   #toolbar {
     top: 0;
     left: calc((100vw - var(--roomWidth) * var(--scale)) / 2 - var(--toolbarSize) / 2 + 1px);
     width: var(--toolbarSize);
     height: 100%;
-    display: block;
     flex-direction: column;
   }
 
   #options {
-    transform: translateY(362px) translateX(46px);
-    -moz-transform: translateY(352px) translateX(46px);
+    transform: translateY(323px) translateX(46px);
   }
-  
+
   #toolbar .divider{
     border-top: 1px solid #ffffff44;
     height: 0px;
@@ -209,7 +207,7 @@ button:hover {
     margin: 3px 5px;
     max-width: 75px;
   }
-  
+
   .toolbarButton .tooltip {
     display: none;
     position: absolute;
@@ -230,8 +228,6 @@ button:hover {
     min-height: 16px;
   }
 
-  
-  
   #roomArea {
     top: 0;
     left: calc((100vw - var(--roomWidth) * var(--scale)) / 2 + var(--toolbarSize) / 2);
@@ -260,22 +256,27 @@ button:hover {
     left: 0;
     margin: 0;
   }
+
   #aboutButton > .tooltip{
     left: unset;
     right: 0;
   }
+
   .toolbarButton {
     width: calc(var(--toolbarSize) - 4px);
   }
-}
 
+  #options {
+    transform: translateY(42px) translateX(238px);
+    background:var(--VTTblue);
+  }
+}
 
 body.aspectTooGood #toolbar {
   top: calc((100vh - var(--scale) * var(--roomHeight)) / 2);
   left: calc((100vw - var(--roomWidth) * var(--scale)) / 2 - var(--toolbarSize) / 2 + 1px);
   width: var(--toolbarSize);
   height: calc(var(--scale) * var(--roomHeight));
-  display: block;
   flex-direction: column;
 }
 
@@ -302,7 +303,6 @@ body.aspectTooGood .toolbarButton .tooltip {
 body.aspectTooGood .toolbarButton:hover .tooltip {
   display: block;
 }
-
 
 body.aspectTooGood #toolbar .divider{
   border-top: 1px solid #ffffff44;
@@ -333,8 +333,7 @@ body.aspectTooGood #hideToolbarButton {
 }
 
 body.aspectTooGood #options {
-  transform: translateY(408px) translateX(46px);
-  -moz-transform: translateY(394px) translateX(46px);
+  transform: translateY(323px) translateX(46px);
 }
 
 #options.hidden {
@@ -354,7 +353,6 @@ body.aspectTooGood #options {
   padding: 5% 10%;
   box-sizing: border-box;
   overflow:auto
-
 }
 
 .overlay h1 {
@@ -428,6 +426,7 @@ body.aspectTooGood #options {
   user-select: none;
   -moz-user-select: none;
 }
+
 .widget.foreign {
   display: none !important;
 }
@@ -441,19 +440,17 @@ body.aspectTooGood #options {
   transform-origin: top left;
   pointer-events: none;
 }
+
 #enlarged.right {
   left: unset;
   right: 5vw;
   transform-origin: top right;
 }
+
 #enlarged.hidden {
   opacity: 0;
   visibility: hidden;
 }
-
-/* #statesButton::before {
-  content:'interests';
-} */
 
 #statesButton {
   background-size: 40px 40px;
@@ -477,10 +474,10 @@ body.aspectTooGood #options {
   content:'post_add';
 }
 
-
 html:not(:fullscreen) #fullscreenButton::before {
   content:'fullscreen';
 }
+
 html:fullscreen #fullscreenButton::before {
   content:'fullscreen_exit';
 }
@@ -488,10 +485,10 @@ html:fullscreen #fullscreenButton::before {
 html:not(:fullscreen) #fullscreenButton .tooltip::before {
   content:'';
 }
+
 html:fullscreen #fullscreenButton .tooltip::before {
   content:'Exit ';
 }
-
 
 #hideToolbarButton {
   background-size: 28px 28px;
