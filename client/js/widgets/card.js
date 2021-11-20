@@ -91,17 +91,18 @@ class Card extends Widget {
       faceDiv.style.borderRadius = face.radius ? face.radius + 'px' : '0';
 
       for(const original of face.objects) {
-        const object = JSON.parse(JSON.stringify(original));
         const objectDiv = document.createElement('div');
         objectDiv.classList.add('cardFaceObject');
 
-        const x = face.border ? object.x-face.border : object.x;
-        const y = face.border ? object.y-face.border : object.y;
-        let css = object.css ? object.css + '; ' : '';
-        css += `left: ${x}px; top: ${y}px; width: ${object.width}px; height: ${object.height}px; font-size: ${object.fontSize}px; text-align: ${object.textAlign}`;
-        css += object.rotation ? `; transform: rotate(${object.rotation}deg)` : '';
-        objectDiv.style.cssText = css;
         const setValue = _=>{
+          const object = JSON.parse(JSON.stringify(original));
+          const x = face.border ? object.x-face.border : object.x;
+          const y = face.border ? object.y-face.border : object.y;
+          let css = object.css ? object.css + '; ' : '';
+          css += `left: ${x}px; top: ${y}px; width: ${object.width}px; height: ${object.height}px; font-size: ${object.fontSize}px; text-align: ${object.textAlign}`;
+          css += object.rotation ? `; transform: rotate(${object.rotation}deg)` : '';
+          objectDiv.style.cssText = css;
+
           if(typeof object.dynamicProperties == 'object')
             for(const dp of Object.keys(object.dynamicProperties))
               if(object[dp] === undefined)
@@ -125,11 +126,11 @@ class Card extends Widget {
         }
 
         // add a callback that makes sure dynamic property changes are reflected on the DOM
-        const properties = object.svgReplaces ? Object.values(object.svgReplaces) : [];
-        if(typeof object.dynamicProperties == 'object')
-          for(const dp of Object.keys(object.dynamicProperties))
-            if(object[dp] === undefined)
-              properties.push(object.dynamicProperties[dp]);
+        const properties = original.svgReplaces ? Object.values(original.svgReplaces) : [];
+        if(typeof original.dynamicProperties == 'object')
+          for(const dp of Object.keys(original.dynamicProperties))
+            if(original[dp] === undefined)
+              properties.push(original.dynamicProperties[dp]);
         for(const p of properties) {
           if(!this.dynamicProperties[p])
             this.dynamicProperties[p] = [];
