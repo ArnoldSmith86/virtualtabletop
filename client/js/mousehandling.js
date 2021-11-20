@@ -109,8 +109,14 @@ async function inputHandler(name, e) {
     mouseTarget = null;
     moveTarget = null;
   }
-  if(name == 'mousemove' || name == 'touchmove')
-    toServer('mouse', [ Math.floor((coords[0] - roomRectangle.left)/scale), Math.floor((coords[1] - roomRectangle.top)/scale) ]);
+  
+  toServer('mouse', 
+    {
+      x: Math.floor((coords[0] - roomRectangle.left)/scale),
+      y: Math.floor((coords[1] - roomRectangle.top)/scale),
+      pressed: (e.buttons & 1 == 1) || name == 'touchstart' || name == 'touchmove',
+      target: mouseTarget? mouseTarget.id : null
+    });
 }
 
 onLoad(function() {
