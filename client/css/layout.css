@@ -169,9 +169,9 @@ button:hover {
   padding: 2px;
   border-radius: 4px;
   top: -82px;
-  position: absolute;
-  transform: translateY(42px) translateX(687px);
+  transform: translateY(45px) translateX(564px);
   background:var(--VTTblue);
+  box-shadow: 0 0 5px #00000055;
 }
 
 #volume {
@@ -194,7 +194,7 @@ button:hover {
   }
 
   #options {
-    transform: translateY(323px) translateX(46px);
+    transform: translateY(273px) translateX(46px);
   }
 
   #toolbar .divider{
@@ -234,7 +234,7 @@ button:hover {
   }
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 1000px) {
   .toolbarButton .tooltip {
     display: none;
     position: absolute;
@@ -267,7 +267,7 @@ button:hover {
   }
 
   #options {
-    transform: translateY(42px) translateX(238px);
+    transform: translateY(44px) translateX(188px);
     background:var(--VTTblue);
   }
 }
@@ -333,7 +333,7 @@ body.aspectTooGood #hideToolbarButton {
 }
 
 body.aspectTooGood #options {
-  transform: translateY(323px) translateX(46px);
+  transform: translateY(273px) translateX(46px);
 }
 
 #options.hidden {
@@ -504,7 +504,7 @@ html:fullscreen #fullscreenButton .tooltip::before {
 #optionsButton {
   background-size: 28px 28px;
   background-position: 6px 6px;
-  background-image:url(/i/icons-white/options-solid-svg.svg);
+  background-image:url(/i/icons-white/mute-svg.svg);
 }
 
 #muteButton {
