@@ -96,17 +96,18 @@ class Card extends Widget {
 
         const setValue = _=>{
           const object = JSON.parse(JSON.stringify(original));
+
+          if(typeof object.dynamicProperties == 'object')
+            for(const dp of Object.keys(object.dynamicProperties))
+              if(object[dp] === undefined)
+                object[dp] = this.get(object.dynamicProperties[dp]);
+
           const x = face.border ? object.x-face.border : object.x;
           const y = face.border ? object.y-face.border : object.y;
           let css = object.css ? object.css + '; ' : '';
           css += `left: ${x}px; top: ${y}px; width: ${object.width}px; height: ${object.height}px; font-size: ${object.fontSize}px; text-align: ${object.textAlign}`;
           css += object.rotation ? `; transform: rotate(${object.rotation}deg)` : '';
           objectDiv.style.cssText = css;
-
-          if(typeof object.dynamicProperties == 'object')
-            for(const dp of Object.keys(object.dynamicProperties))
-              if(object[dp] === undefined)
-                object[dp] = this.get(object.dynamicProperties[dp]);
 
           if(object.type == 'image') {
             if(object.value) {
