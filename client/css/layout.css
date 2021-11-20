@@ -170,6 +170,7 @@ button:hover {
   border-radius: 4px;
   top: -82px;
   transform: translateY(45px) translateX(564px);
+  position: absolute;
   background:var(--VTTblue);
   box-shadow: 0 0 5px #00000055;
 }
