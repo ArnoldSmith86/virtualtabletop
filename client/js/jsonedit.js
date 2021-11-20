@@ -81,8 +81,8 @@ const jeCommands = [
       const cssVariables = {};
       for(const face of jeStateNow.faceTemplates || []) {
         for(const object of face.objects) {
-          for(const property of object.dynamicProperties || {})
-            cardType[property] = '';
+          for(const property in object.dynamicProperties || {})
+            cardType[object.dynamicProperties[property]] = '';
           ((object.css || '').match(/--[a-zA-Z]+/g) || []).forEach(m=>cssVariables[`${m}: black`]=true);
         }
       }
