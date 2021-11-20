@@ -459,6 +459,22 @@ html:fullscreen #fullscreenButton .tooltip::before {
   content:'Exit ';
 }
 
+html:not(:-webkit-full-screen) #fullscreenButton::before {
+  content:'fullscreen';
+}
+html:-webkit-full-screen #fullscreenButton::before {
+  content:'fullscreen_exit';
+}
+
+html:not(:-webkit-full-screen) #fullscreenButton .tooltip::before {
+  content:'';
+}
+html:-webkit-full-screen #fullscreenButton .tooltip::before {
+  content:'Exit ';
+}
+
+
+
 
 #hideToolbarButton {
   background-size: 28px 28px;
