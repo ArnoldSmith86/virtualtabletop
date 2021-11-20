@@ -502,6 +502,8 @@ html:fullscreen #fullscreenButton .tooltip::before {
 }
 
 #optionsButton {
+  background-size: 28px 28px;
+  background-position: 6px 6px;
   background-image:url(/i/icons-white/options-solid-svg.svg);
 }
 
