@@ -7,7 +7,7 @@
   "scripts": {
     "clean": "rm -rf coverage",
     "clobber": "npm clean && rm -rf save",
-    "debug": "cross-env NOCOMPRESS=1 nodemon -e js,mjs,css,html --ignore save --ignore coverage --ignore tests --inspect server.mjs",
+    "debug": "nodemon -e js,mjs,css,html,json --ignore save --ignore coverage --ignore tests --inspect server.mjs",
     "start": "node server.mjs",
     "test": "node --experimental-vm-modules node_modules/.bin/jest --coverage",
     "test-debug": "node --experimental-vm-modules --inspect-brk=9239 node_modules/.bin/jest",
@@ -50,7 +50,6 @@
     "ws": "^8.2.3"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3",
     "jest": "^27.3.1",
     "jest-environment-jsdom": "^27.3.1",
     "jest-environment-jsdom-global": "^3.0.0",

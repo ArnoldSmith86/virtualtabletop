@@ -5,6 +5,7 @@ import JSZip from 'jszip';
 import FileLoader from './fileloader.mjs';
 import FileUpdater from './fileupdater.mjs';
 import Logging from './logging.mjs';
+import Config from './config.mjs';
 
 export default class Room {
   players = [];
@@ -379,7 +380,7 @@ export default class Room {
   }
 
   trace(source, payload) {
-    if(!this.enableTracing && source == 'client' && source == 'client' && payload.type == 'enable') {
+    if(!this.enableTracing && source == 'client' && payload.type == 'enable') {
       this.enableTracing = true;
       this.tracingFilename = `${path.resolve()}/save/${this.id}-${+new Date}.trace`;
       this.broadcast('tracing', 'enable');

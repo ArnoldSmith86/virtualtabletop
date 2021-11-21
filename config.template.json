@@ -1,0 +1,13 @@
+{
+  "port": 8272,
+  "minifyJavascript": false,
+
+  "directories": {
+    "library": "library",
+    "save": "save",
+    "assets": "save/assets"
+  },
+
+  "betaServer": null,
+  "legacyServers": {}
+}
