@@ -1,6 +1,5 @@
 let mouseTarget = null;
 let moveTarget = null;
-let mouseDown = false;
 const mouseStatus = {};
 
 function eventCoords(name, e) {
@@ -30,7 +29,6 @@ async function inputHandler(name, e) {
     if (!window.getSelection().isCollapsed)
       window.getSelection().collapseToEnd();
     document.activeElement.blur();
-    mouseDown = true;
   }
   let target = e.target;
   while(target && (!target.id || !widgets.has(target.id)))
@@ -111,14 +109,12 @@ async function inputHandler(name, e) {
     mouseTarget = null;
     moveTarget = null;
   }
-  if(name == 'mouseup' || name =='touchend')
-    mouseDown = false;
   
   toServer('mouse', 
     {
       x: Math.floor((coords[0] - roomRectangle.left)/scale),
       y: Math.floor((coords[1] - roomRectangle.top)/scale),
-      pressed: mouseDown,
+      pressed: (e.buttons & 1 == 1) || name == 'touchstart' || name == 'touchmove',
       target: mouseTarget? mouseTarget.id : null
     });
 }
