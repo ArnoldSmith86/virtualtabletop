@@ -11,7 +11,8 @@ class Pile extends Widget {
       width: 1,
       height: 1,
       alignChildren: true,
-      inheritChildZ: true
+      inheritChildZ: true,
+      clickable: true
     });
 
     this.domElement.appendChild(this.handle);
