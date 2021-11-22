@@ -1,5 +1,5 @@
 import { $, $a, onLoad, selectFile, asArray } from './domhelpers.js';
-import { startWebSocket } from './connection.js';
+import { startWebSocket, toServer } from './connection.js';
 
 
 let scale = 1;
@@ -93,6 +93,7 @@ export function showOverlay(id, forced) {
     if (id == 'buttonInputOverlay') {
       $('#buttonInputGo').focus();
     }
+    toServer('mouse',{inactive:true})
   } else {
     $('#roomArea').className = '';
     vmEditOverlay.selectedWidget = {};
@@ -117,7 +118,7 @@ function checkURLproperties() {
     on('#askIDoverlay button', 'click', function() {
       roomID = urlProperties.askID + $('#enteredID').value;
       toServer('room', { playerName, roomID });
-      $('#ghetto-link').href += `#${roomID}`;
+      $('#legacy-link').href += `#${roomID}`;
       showOverlay();
     });
     showOverlay('askIDoverlay');
@@ -140,7 +141,12 @@ function setScale() {
   document.documentElement.style.setProperty('--vh', `${vh}px`);
   if(jeEnabled) {
     const targetWidth = jeZoomOut ? 3200 : 1600;
-    scale = (w-920)/targetWidth;
+    const targetHeight = jeZoomOut ? 2000 : 1000;
+    const availableWidth = $('#jeText').offsetLeft;
+    if(availableWidth/(h-70) < 1600/1000)
+      scale = availableWidth/targetWidth;
+    else
+      scale = (h-70)/targetHeight;
   } else {
     scale = w/h < 1600/1000 ? w/1600 : h/1000;
   }
