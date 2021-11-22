@@ -6,9 +6,10 @@
   <title>VirtualTabletop.io</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <link rel="icon" type="image/svg+xml" href="/i/branding/favicon.svg"/>
-  <link rel="alternate icon" href="/i/branding/favicon.png"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link rel="apple-touch-icon" sizes="180x180" href="/i/branding/ios-icon.png">
+  <link rel="alternate icon" href="/i/branding/favicon-32.png"/>
+  <link rel="manifest" href="/i/branding/manifest.json">
+  <link rel="mask-icon" href="/i/branding/mask-icon.svg">
   <script src="https://cdn.jsdelivr.net/combine/npm/vue@3.0.7/dist/vue.global.prod.js,npm/jszip@3.6.0/dist/jszip.min.js"></script>
   <base target="_blank">
   <style> {{CSS}} </style>
@@ -18,13 +19,18 @@
 <body>
 
   <div id="toolbar">
-    <button id="statesButton" data-overlay="statesOverlay" class="toolbarButton" ><span class="tooltip">Game list</span></button>
-    <button id="playersButton" data-overlay="playerOverlay" class="toolbarButton" ><span class="tooltip">Player list</span></button>
-    <button id="editButton" class="toolbarButton"><span class="tooltip">Edit mode</span></button>
-    <button id="addButton" data-overlay="addOverlay" class="toolbarButton"><span class="tooltip">Add widget</span></button>
+    <button id="statesButton" data-overlay="statesOverlay" class="toolbarButton" ><span class="tooltip">Game Library</span></button>
+    <div class="divider">&nbsp;</div>
+    <button id="playersButton" data-overlay="playerOverlay" class="toolbarButton" ><span class="tooltip">Players & Settings</span></button>
+    <div class="divider">&nbsp;</div>
+    <button id="editButton" class="toolbarButton"><span class="tooltip">Edit Mode</span></button>
+    <button id="addButton" data-overlay="addOverlay" class="toolbarButton"><span class="tooltip">Add Widget</span></button>
+    <div class="divider">&nbsp;</div>
     <button id="fullscreenButton" class="toolbarButton"><span class="tooltip">Fullscreen</span></button>
-    <button id="hideToolbarButton" class="toolbarButton"><span class="tooltip">Hide toolbar</span></button>
-    <button id="aboutButton" data-overlay="aboutOverlay" class="toolbarButton"><span class="tooltip">About</span></button>
+    <button id="hideToolbarButton" class="toolbarButton"><span class="tooltip">Hide Toolbar</span></button>
+    <div class="spacer">&nbsp;</div>
+    <div class="divider">&nbsp;</div>
+    <button id="aboutButton" data-overlay="aboutOverlay" class="toolbarButton"><span class="tooltip">About VirtualTabletop.io</span></button>
   </div>
 
   <div id="roomArea">
@@ -107,7 +113,7 @@
           <input type='radio' class='radio-button' id="pieceTypeChecker" name='pieceType'><label for="pieceTypeChecker">Checker   &#160; </label>
           <input type='radio' class='radio-button' id="pieceTypeClassic" name='pieceType'><label for="pieceTypeClassic">Pawn   &#160; </label>
           <input type='radio' class='radio-button' id="pieceTypePin" name='pieceType'><label for="pieceTypePin">Pin   &#160; </label><br/><br/>
-          <input type="color" id="pieceColor" value="black"><label for="pieceColor"> - Color </label><br/><br/>
+          <input type="color" id="pieceColor" value="#000000"><label for="pieceColor"> - Color </label><br/><br/>
         </div>
         <div class="seatEdit">
           <h1>Edit Seat</h1>
@@ -116,7 +122,7 @@
           <label for="seatEmpty"> Empty seat:</label><input type="checkbox" id="seatEmpty"><br/><br/>
           <h3>Change seated player information:</h3>
           <label for="seatPlayerName"> Player Name: </label><input type="text" id="seatPlayerName"><br/><br/><br/>
-          <label for="seatPlayerColor"> Player Color: </label><input type="color" id="seatPlayerColor" value="black"><label for="seatPlayerColor"></label><br/><br/>
+          <label for="seatPlayerColor"> Player Color: </label><input type="color" id="seatPlayerColor" value="#000000"><label for="seatPlayerColor"></label><br/><br/>
         </div>
         <div class="spinnerEdit">
           <h1>Edit spinner</h1>
@@ -147,7 +153,7 @@
       <div id="editJSONoverlay" class="overlay">
         <h1>Edit widget JSON</h1>
         <p>Please check <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Creating-Games">our GitHub wiki for documentation</a>.</p>
-        <p>You can open this room in <a href="https://virtualtabletop.io/ghetto.htm" id="ghetto-link">an advanced editor</a>. Be sure to have <b>backups</b> on your harddrive first (of every game in your room)!</p>
+        <p>You can open this room in <a href="https://virtualtabletop.io/legacy-editor.htm" id="legacy-link">the legacy editor</a>. Be sure to have <b>backups</b> on your harddrive first (of every game in your room)!</p>
         <textarea id="editWidgetJSON"></textarea>
         <base-edit-overlay :json-edit="true"></base-edit-overlay>
       </div>
@@ -348,7 +354,6 @@
       <div id="jeWidgetLayer1"></div>
       <div id="jeWidgetLayer2"></div>
       <div id="jeWidgetLayer3"></div>
-      <div id="jeWidgetLayer4"></div>
       <div id="jeWidgetLayer5"></div>
       <div id="jeWidgetLayer6"></div>
       <div id="jeWidgetLayer7"></div>
