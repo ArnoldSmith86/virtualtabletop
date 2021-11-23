@@ -1663,6 +1663,11 @@ export class Widget extends StateManaged {
             width: this.get('width'),
             height: this.get('height')
           };
+          if(this.get('parent')){
+            pile.css = widgets.get(this.get('parent')).get('pileCSS')}
+          else if(this.get('pileCSS')){
+            pile.css = this.get('pileCSS')
+          }
           if(thisOwner !== null)
             pile.owner = thisOwner;
           const pileId = addWidgetLocal(pile);
