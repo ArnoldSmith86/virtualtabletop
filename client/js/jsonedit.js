@@ -73,6 +73,19 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_uploadAudio',
+    name: 'upload audio file',
+    context: '^.*\\(AUDIO\\) ↦ source|^.* ↦ clickSound', 
+    call: async function() {
+      uploadAsset().then(a=> {
+        if(a) {
+          jeInsert(null, jeGetLastKey(), a);
+          jeApplyChanges();
+        }
+      });
+    }
+  },
+  {
     id: 'je_cardTypeTemplate',
     name: 'card type template',
     context: '^deck ↦ cardTypes',
