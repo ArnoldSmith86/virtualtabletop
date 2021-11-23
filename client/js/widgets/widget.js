@@ -1664,9 +1664,9 @@ export class Widget extends StateManaged {
             height: this.get('height')
           };
           if(this.get('parent')){
-            pile.css = widgets.get(this.get('parent')).get('pileCSS')}
-          else if(this.get('pileCSS')){
-            pile.css = this.get('pileCSS')
+            pile.css = widgets.get(this.get('parent')).get('pileCSS')||widget.get('pileCSS')}
+          else if(widget.get('pileCSS')){
+            pile.css = widget.get('pileCSS')
           }
           if(this.get('splitPileCSS')){
             pile.css = this.get('splitPileCSS')
