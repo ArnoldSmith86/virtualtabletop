@@ -1470,8 +1470,7 @@ export class Widget extends StateManaged {
   }
 
   async move(coordGlobal, offset) {
-    const p = this.get('parent');
-    const coordParent = (p && widgets.has(p)) ? widgets.get(p).coordLocalFromCoordGlobal(coordGlobal) : coordGlobal;
+    const coordParent = this.coordParentFromCoordGlobal(coordGlobal);
     const newX = coordParent.x - offset.x;
     const newY = coordParent.y - offset.y;
 
