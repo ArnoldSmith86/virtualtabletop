@@ -1668,6 +1668,10 @@ export class Widget extends StateManaged {
           else if(this.get('pileCSS')){
             pile.css = this.get('pileCSS')
           }
+          if(this.get('splitPileCSS')){
+            pile.css = this.get('splitPileCSS')
+            this.set('splitPileCSS',null)
+          }
           if(thisOwner !== null)
             pile.owner = thisOwner;
           const pileId = addWidgetLocal(pile);
@@ -1700,6 +1704,7 @@ export class Widget extends StateManaged {
         if(thisType == 'card' && widgetType == 'pile') {
           await this.bringToFront();
           await this.set('parent', widget.get('id'));
+          await this.set('splitPileCSS',null)
           break;
         }
       }

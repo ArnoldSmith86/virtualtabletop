@@ -97,6 +97,7 @@ class Pile extends Widget {
         await c.set('x', this.absoluteCoord('x'));
         const y = this.absoluteCoord('y');
         await c.set('y', y < 100 ? y+60 : y-60);
+        await c.set('splitPileCSS',this.get('css'));
         await c.updatePiles();
         await c.bringToFront();
       };
