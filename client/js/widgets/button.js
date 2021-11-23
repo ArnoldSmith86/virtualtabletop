@@ -61,7 +61,7 @@ export class Button extends Widget {
 
   cssProperties() {
     const p = super.cssProperties();
-    p.push('image', 'color', 'svgReplaces',  'backgroundColor', 'borderColor', 'textColor',  'backgroundColorOH', 'borderColorOH', 'textColorOH');
+    p.push('image', 'svgReplaces',  'backgroundColor', 'borderColor', 'textColor',  'backgroundColorOH', 'borderColorOH', 'textColorOH');
     return p;
   }
 

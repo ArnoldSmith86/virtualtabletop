@@ -66,12 +66,6 @@ class Seat extends Widget {
       await this.setPlayer();
   }
 
-  cssProperties() {
-    const p = super.cssProperties();
-    p.push('color');
-    return p;
-  }
-
   //need to add a condition here to change the turn if the turn is in a seat that is empty
   async setPlayer() {
     if(this.get('player') == '') {

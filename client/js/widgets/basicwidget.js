@@ -66,7 +66,7 @@ class BasicWidget extends Widget {
 
   cssProperties() {
     const p = super.cssProperties();
-    p.push('image', 'color', 'svgReplaces');
+    p.push('image', 'svgReplaces');
     return p;
   }
 
