@@ -61,26 +61,30 @@ onLoad(function() {
   onMessage('mouse', function(args) {
     if(args.player != playerName) {
       clearTimeout(playerCursorsTimeout[args.player]);
-      const x = args.mouseState.x*scale;
-      const y = args.mouseState.y*scale;
-      playerCursors[args.player].style.transform = `translate(${x}px, ${y}px)`;
-      if(args.mouseState.pressed) {
-        playerCursors[args.player].classList.add('pressed', 'active');
+      if(args.mouseState.inactive) {
+        playerCursors[args.player].classList.remove('pressed','active','foreign');
       } else {
-        playerCursors[args.player].classList.add('active');
-        playerCursors[args.player].classList.remove('pressed');
+        const x = args.mouseState.x*scale;
+        const y = args.mouseState.y*scale;
+        playerCursors[args.player].style.transform = `translate(${x}px, ${y}px)`;
+        if(args.mouseState.pressed) {
+          playerCursors[args.player].classList.add('pressed', 'active');
+        } else {
+          playerCursors[args.player].classList.add('active');
+          playerCursors[args.player].classList.remove('pressed');
+        }
+        let foreign = false;
+        if(args.mouseState.target !== null && widgets.has(args.mouseState.target)) {
+          const owner = widgets.get(args.mouseState.target).get('owner');
+          if(owner !== null)
+            foreign = !asArray(owner).includes(playerName);
+        }
+        if(foreign)
+          playerCursors[args.player].classList.add('foreign');
+        else
+          playerCursors[args.player].classList.remove('foreign');
+        playerCursorsTimeout[args.player] = setTimeout(()=>{playerCursors[args.player].classList.remove('active')}, 100 )
       }
-      let foreign = false;
-      if(args.mouseState.target !== null && widgets.has(args.mouseState.target)) {
-        const owner = widgets.get(args.mouseState.target).get('owner');
-        if(owner !== null)
-          foreign = !asArray(owner).includes(playerName);
-      }
-      if(foreign)
-        playerCursors[args.player].classList.add('foreign');
-      else
-        playerCursors[args.player].classList.remove('foreign');
-      playerCursorsTimeout[args.player] = setTimeout(()=>{playerCursors[args.player].classList.remove('active')}, 100 )
     }
   });
   onMessage('rename', function(args) {
