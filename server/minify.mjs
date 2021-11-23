@@ -17,6 +17,7 @@ export default function minifyRoom() {
       compressor: cleanCSS,
       input: [
         'client/css/layout.css',
+        'client/css/fonts.css',
 
         'client/css/editmode.css',
         'client/css/jsonedit.css',
