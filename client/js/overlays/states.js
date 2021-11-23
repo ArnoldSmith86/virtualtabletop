@@ -127,7 +127,13 @@ function editState() {
   showOverlay('statesOverlay');
 }
 
-function fillStatesList(states, activePlayers) {
+function fillStatesList(states, returnServer, activePlayers) {
+  if(returnServer) {
+    $('#statesButton').dataset.overlay = 'returnOverlay';
+    return;
+  }
+  $('#statesButton').dataset.overlay = 'statesOverlay';
+
   const addDiv = $('#addState');
   removeFromDOM(addDiv);
   removeFromDOM('#statesList > div');
@@ -313,7 +319,7 @@ async function shareLink() {
 }
 
 onLoad(function() {
-  onMessage('meta', args=>fillStatesList(args.meta.states, args.activePlayers));
+  onMessage('meta', args=>fillStatesList(args.meta.states, args.meta.returnServer, args.activePlayers));
 
   on('#addState .create,  #addVariant .create, #emptyRoom .create',  'click', e=>addState(e, 'state'));
   on('#addState .library, #addVariant .library', 'click', e=>addStateFromLibrary(e));

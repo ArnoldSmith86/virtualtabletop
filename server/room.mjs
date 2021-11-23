@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 import JSZip from 'jszip';
+import fetch from 'node-fetch';
 import FileLoader from './fileloader.mjs';
 import FileUpdater from './fileupdater.mjs';
 import Logging from './logging.mjs';
@@ -210,7 +211,11 @@ export default class Room {
   }
 
   getAssetList(state) {
-    return JSON.stringify(state).match(/\/assets\/-?[0-9]+_[0-9]+/g) || [];
+    return [...new Set(JSON.stringify(state).match(/\/assets\/-?[0-9]+_[0-9]+/g) || [])];
+  }
+
+  getRedirection() {
+    return this.state._meta.redirectTo;
   }
 
   async load(fileOrLink, player) {
@@ -321,6 +326,19 @@ export default class Room {
     player.send('state', this.state);
   }
 
+  async receiveState(zipBody, returnServer, returnState) {
+    delete this.state._meta.redirectTo;
+    if(returnServer != 'RETURN') {
+      this.state._meta.returnServer = returnServer;
+      this.state._meta.returnState = returnState == 'true';
+    }
+    if(zipBody) {
+      await this.addState('serverMove', 'file', zipBody, 'source', false);
+      await this.loadState(null, 'serverMove', 'serverMove');
+      this.removeState(null, 'serverMove');
+    }
+  }
+
   recolorPlayer(renamingPlayer, playerName, color) {
     this.state._meta.players[playerName] = color;
     this.sendMetaUpdate();
@@ -367,6 +385,43 @@ export default class Room {
 
   sendMetaUpdate() {
     this.broadcast('meta', { meta: this.state._meta, activePlayers: this.players.map(p=>p.name) });
+  }
+
+  async setRedirect(player, target) {
+    let targetServer = Config.get('betaServer');
+    const isReturn = target == 'return';
+    if(isReturn)
+      targetServer = this.state._meta.returnServer;
+
+    if(targetServer) {
+      const assets = [];
+      for(const asset of this.getAssetList(this.state))
+        assets.push(asset.substr(8));
+
+      const result = await fetch(targetServer + '/assetcheck', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(assets)
+      });
+
+      const assetStatus = await result.json();
+
+      const zip = new JSZip();
+      zip.file(`${this.id}.json`, JSON.stringify(this.state, null, '  '));
+      for(const asset in assetStatus)
+        if(!assetStatus[asset] && fs.existsSync(Config.directory('assets') + '/' + asset))
+          zip.file('assets/' + asset, fs.readFileSync(Config.directory('assets') + '/' + asset));
+
+      const zipBuffer = await zip.generateAsync({type:'nodebuffer'});
+      const putResult = await fetch(targetServer + '/moveServer/' + this.id + '/' + (isReturn ? 'RETURN' : encodeURIComponent(Config.get('externalURL'))) + '/true', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/octet-stream' },
+        body: zipBuffer
+      });
+
+      this.state._meta.redirectTo = targetServer + '/' + this.id;
+      this.broadcast('redirect', this.state._meta.redirectTo);
+    }
   }
 
   setState(state) {

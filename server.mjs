@@ -182,6 +182,11 @@ MinifyRoom().then(function(result) {
         res.send('Invalid characters in room ID.');
         return;
       }
+      const redirectTo = activeRooms.get(req.params.room).getRedirection();
+      if(redirectTo) {
+        res.redirect(redirectTo);
+        return;
+      }
       if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
         res.setHeader('Content-Encoding', 'gzip');
         res.setHeader('Content-Type', 'text/html');
@@ -203,6 +208,16 @@ MinifyRoom().then(function(result) {
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
       if(isLoaded) {
         activeRooms.get(req.params.room).addState(req.params.id, req.params.type, req.body, req.params.name, req.params.addAsVariant).then(function() {
+          res.send('OK');
+        }).catch(next);
+      }
+    }).catch(next);
+  });
+
+  app.put('/moveServer/:room/:returnServer/:returnState', bodyParser.raw({ limit: '500mb' }), async function(req, res, next) {
+    ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
+      if(isLoaded) {
+        activeRooms.get(req.params.room).receiveState(req.body, req.params.returnServer, req.params.returnState).then(function() {
           res.send('OK');
         }).catch(next);
       }

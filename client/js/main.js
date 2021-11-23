@@ -239,6 +239,16 @@ onLoad(function() {
     setScale();
   });
 
+  on('#betaButton', 'click', function() {
+    toServer('setRedirect', 'beta');
+  });
+  onMessage('redirect', function(url) {
+    window.location.href = url;
+  });
+  on('#returnOverlay button', 'click', function() {
+    toServer('setRedirect', 'return');
+  });
+
   checkURLproperties();
   setScale();
   startWebSocket();
