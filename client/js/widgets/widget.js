@@ -301,6 +301,9 @@ export class Widget extends StateManaged {
     css += '; z-index:' + this.calculateZ();
     css += '; transform:' + this.cssTransform();
 
+    if(this.get('color'))
+      css += '; --color:' + this.get('color');
+
     return css;
   }
 
