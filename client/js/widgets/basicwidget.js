@@ -58,8 +58,6 @@ class BasicWidget extends Widget {
   css() {
     let css = super.css();
 
-    if(this.get('color'))
-      css += '; --color:' + this.get('color');
     if(this.get('image'))
       css += '; background-image: url("' + this.getImage() + '")';
 

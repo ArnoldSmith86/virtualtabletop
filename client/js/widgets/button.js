@@ -41,8 +41,6 @@ export class Button extends Widget {
   css() {
     let css = super.css();
 
-    if(this.get('color'))
-      css += '; --color:' + this.get('color');
     if(this.get('backgroundColor'))
       css += '; --wcMain:' + this.get('backgroundColor');
     if(this.get('borderColor'))
