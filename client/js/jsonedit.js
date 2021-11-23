@@ -709,7 +709,7 @@ function jeAddCSScommands() {
     jeCommands.push({
       id: 'css_' + css,
       name: css,
-      context: `pileCSS`,
+      context: ` ↦ pileCSS`,
       call: async function() {
         jePasteText(css + '; ', true);
       },
