@@ -685,6 +685,9 @@ function jeAddCSScommands() {
     ],
     'timer': [
       '--wcBorderNormal: #00000000', '--wcBorderAlert: red', '--wcFontAlert: red', '--wcFontPaused: #6d6d6d', '--wcAnimationAlert: blinker 1s linear infinite', '--wcAnimationPaused: none'
+    ],
+    'pile': [
+      '--phX:-15px','--phY:-15px','--phWidth:40px','--phHeight:40px','--phFontSize:20px','--phBackground:#e4e4e4','--phColor:#6d6d6d','--phBorder: none','--phBorderRadius: 50%','--phDisplay: flex'
     ]
   };
   for(const type in presets) {
@@ -701,6 +704,19 @@ function jeAddCSScommands() {
         }
       });
     }
+  };
+  for(const css of ['--phX: -15px','--phY: -15px','--phWidth: 40px','--phHeight: 40px','--phFontSize: 20px','--phBackground: #e4e4e4','--phColor: #6d6d6d','--phBorder: none','--phBorderRadius: 50%','--phDisplay: flex']) {
+    jeCommands.push({
+      id: 'css_' + css,
+      name: css,
+      context: `pileCSS`,
+      call: async function() {
+        jePasteText(css + '; ', true);
+      },
+      show: function() {
+        return !String(jeGetValue()[jeGetLastKey()]).match(css.split(':')[0]);
+      }
+    });
   }
 }
 

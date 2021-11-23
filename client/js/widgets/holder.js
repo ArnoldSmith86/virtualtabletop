@@ -20,7 +20,9 @@ class Holder extends Widget {
       onLeave: {},
 
       stackOffsetX: 0,
-      stackOffsetY: 0
+      stackOffsetY: 0,
+
+      pileCSS:''
     });
   }
 
