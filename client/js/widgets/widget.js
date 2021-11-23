@@ -1511,9 +1511,9 @@ export class Widget extends StateManaged {
     }
   }
 
-  async moveEnd() {
+  async moveEnd(coordGlobal, offset) {
     if(tracingEnabled)
-      sendTraceEvent('moveEnd', { id: this.get('id') });
+      sendTraceEvent('moveEnd', { id: this.get('id'), coordGlobal, offset });
 
     if(!this.get('fixedParent')) {
       for(const t of this.dropTargets)
@@ -1522,6 +1522,9 @@ export class Widget extends StateManaged {
       await this.checkParent();
 
       if(this.hoverTarget) {
+        let coordNew = this.hoverTarget.coordLocalFromCoordGlobal(coordGlobal);
+        coordNew = this.hoverTarget.coordGlobalFromCoordLocal({x: coordNew.x - offset.x, y: coordNew.y - offset.y});
+        this.setPosition(coordNew.x, coordNew.y, this.get('z'));
         await this.moveToHolder(this.hoverTarget);
         this.hoverTarget.domElement.classList.remove('droptarget');
       }
@@ -1541,18 +1544,16 @@ export class Widget extends StateManaged {
   }
 
   async onChildAddAlign(child, oldParentID) {
-    let childX = child.get('x');
-    let childY = child.get('y');
+    let coordChild = {x: child.get('x'), y: child.get('y')};
 
     if(!oldParentID) {
-      childX -= this.absoluteCoord('x');
-      childY -= this.absoluteCoord('y');
+      coordChild = this.coordLocalFromCoordGlobal(coordChild);
     }
 
     if(this.get('alignChildren'))
       await child.setPosition(this.get('dropOffsetX'), this.get('dropOffsetY'), child.get('z'));
     else
-      await child.setPosition(childX, childY, child.get('z'));
+      await child.setPosition(coordChild.x, coordChild.y, child.get('z'));
   }
 
   async onChildRemove(child) {

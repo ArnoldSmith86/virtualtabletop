@@ -77,7 +77,7 @@ async function inputHandler(name, e) {
       const timeSinceStart = +new Date() - ms.start;
       const pixelsMoved = ms.coords ? Math.abs(ms.coords.x - ms.downCoords.x) + Math.abs(ms.coords.y - ms.downCoords.y) : 0;
       if(ms.status != 'initial' && moveTarget)
-        await ms.widget.moveEnd();
+        await ms.widget.moveEnd(ms.coords, ms.offset);
       if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
         if(typeof jeEnabled == 'boolean' && jeEnabled)
           await jeClick(widgets.get(target.id), e);
