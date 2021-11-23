@@ -1567,7 +1567,7 @@ export class Widget extends StateManaged {
     await super.setPosition(x, y, z);
   }
 
-  async setText(text, mode, debug, problems) {
+  async setText(text, mode, problems) {
     if (this.get('text') !== undefined) {
       if(mode == 'inc' || mode == 'dec')
         await this.set('text', (parseInt(this.get('text')) || 0) + (mode == 'dec' ? -1 : 1) * text);
