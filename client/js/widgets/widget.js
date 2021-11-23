@@ -5,7 +5,7 @@ import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 
-const readOnlyProperties = new Set(['_absoluteX', '_absoluteY', '_ancestor']);
+const readOnlyProperties = new Set(['_absoluteX', '_absoluteY', '_centerAbsoluteX', '_centerAbsoluteY', '_localOriginAbsoluteX', '_localOriginAbsoluteY', '_ancestor']);
 
 export class Widget extends StateManaged {
   constructor(id) {
@@ -88,7 +88,13 @@ export class Widget extends StateManaged {
     }
   }
 
+  absoluteCenter(coord) {
+    return this.coordGlobalFromCoordParent({x:this.get('x')+this.get('width')/2,y:this.get('y')+this.get('height')/2})[coord];
+  }
   absoluteCoord(coord) {
+    return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})[coord];
+  }
+  absoluteLocalOrigin(coord) {
     return this.coordGlobalFromCoordLocal({x:0,y:0})[coord];
   }
 
@@ -294,11 +300,11 @@ export class Widget extends StateManaged {
   }
 
   coordGlobalFromCoordLocal(coordLocal) {
-    if(this.get('parent')) {
-      return widgets.get(this.get('parent')).coordGlobalFromCoordLocal(this.coordParentFromCoordLocal(coordLocal));
-    } else {
-      return this.coordParentFromCoordLocal(coordLocal);
-    }
+    return this.coordGlobalFromCoordParent(this.coordParentFromCoordLocal(coordLocal));
+  }
+  coordGlobalFromCoordParent(coordParent) {
+    const p = this.get('parent');
+    return (widgets.has(p)) ? widgets.get(p).coordGlobalFromCoordLocal(coordParent) : coordParent;
   }
   coordLocalFromCoordGlobal(coordGlobal) {
     return this.coordLocalFromCoordParent(this.coordParentFromCoordGlobal(coordGlobal));
@@ -324,11 +330,7 @@ export class Widget extends StateManaged {
   }
   coordParentFromCoordGlobal(coordGlobal) {
     const p = this.get('parent');
-    if(p && widgets.has(p)) {
-      return widgets.get(p).coordLocalFromCoordGlobal(coordGlobal);
-    } else {
-      return coordGlobal;
-    }
+    return (widgets.has(p)) ? widgets.get(p).coordLocalFromCoordGlobal(coordGlobal) : coordGlobal;
   }
   coordParentFromCoordLocal(coordLocal) {
     let s = this.get('scale');
@@ -1405,13 +1407,18 @@ export class Widget extends StateManaged {
 
   get(property) {
     if(property == '_ancestor') {
-      if(widgets.has(this.get('parent')) && widgets.get(this.get('parent')).get('type')=='pile') {
-        return widgets.get(this.get('parent')).get('_ancestor');
+      const p = this.get('parent');
+      if(widgets.has(p) && widgets.get(p).get('type')=='pile') {
+        return widgets.get(p).get('_ancestor');
       } else {
-        return this.get('parent');
+        return p;
       }
     } else if(property == '_absoluteX' || property == '_absoluteY') {
-      return this.absoluteCoord(property == '_absoluteX' ? 'x' : 'y')
+      return this.absoluteCoord(property == '_absoluteX' ? 'x' : 'y');
+    } else if(property == '_centerAbsoluteX' || property == '_centerAbsoluteY') {
+      return this.absoluteCenter(property = '_centerAbsoluteX' ? 'x' : 'y');
+    } else if(property == '_localOriginAbsoluteX' || property == '_localOriginAbsoluteY') {
+      return this.absoluteLocalOrigin(property = '_absoluteLocalOriginX' ? 'x' : 'y');
     } else {
       return super.get(property);
     }
