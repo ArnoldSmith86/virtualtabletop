@@ -11,7 +11,8 @@ class Pile extends Widget {
       width: 1,
       height: 1,
       alignChildren: true,
-      inheritChildZ: true
+      inheritChildZ: true,
+      clickable: true
     });
 
     this.domElement.appendChild(this.handle);
@@ -47,65 +48,67 @@ class Pile extends Widget {
   }
 
   async click(mode='respect') {
-    $('#pileOverlay').innerHTML = `<p>${this.handle.textContent} cards</p><p>Drag the handle with the number to drag the entire pile.</p>`;
+    if(!await super.click(mode)) {
+      $('#pileOverlay').innerHTML = `<p>${this.handle.textContent} cards</p><p>Drag the handle with the number to drag the entire pile.</p>`;
 
-    const flipButton = document.createElement('button');
-    flipButton.textContent = 'Flip pile';
-    let z=1;
-    flipButton.addEventListener('click', async e=>{
-      batchStart();
-      for(const c of this.children()) {
-        await c.set('z', z++);
-        if(c.flip)
-          await c.flip();
-      };
-      showOverlay();
-      batchEnd();
-    });
-    $('#pileOverlay').appendChild(flipButton);
+      const flipButton = document.createElement('button');
+      flipButton.textContent = 'Flip pile';
+      let z=1;
+      flipButton.addEventListener('click', async e=>{
+        batchStart();
+        for(const c of this.children()) {
+          await c.set('z', z++);
+          if(c.flip)
+            await c.flip();
+        };
+        showOverlay();
+        batchEnd();
+      });
+      $('#pileOverlay').appendChild(flipButton);
 
-    const shuffleButton = document.createElement('button');
-    shuffleButton.textContent = 'Shuffle pile';
-    shuffleButton.addEventListener('click', async e=>{
-      batchStart();
-      for(const c of this.children())
-        await c.set('z', Math.floor(Math.random()*10000));
-      showOverlay();
-      batchEnd();
-    });
-    $('#pileOverlay').appendChild(shuffleButton);
+      const shuffleButton = document.createElement('button');
+      shuffleButton.textContent = 'Shuffle pile';
+      shuffleButton.addEventListener('click', async e=>{
+        batchStart();
+        for(const c of this.children())
+          await c.set('z', Math.floor(Math.random()*10000));
+        showOverlay();
+        batchEnd();
+      });
+      $('#pileOverlay').appendChild(shuffleButton);
 
-    const childCount = this.children().length;
-    const countDiv = document.createElement('div');
-    countDiv.textContent = `/ ${childCount}`;
-    $('#pileOverlay').appendChild(countDiv);
-    const splitInput = document.createElement('input');
-    splitInput.type = 'number';
-    splitInput.value = Math.floor(childCount/2);
-    splitInput.min = 0;
-    splitInput.max = childCount;
-    countDiv.prepend(splitInput);
-    const splitLabel = document.createElement('label');
-    splitLabel.textContent = 'Split: ';
-    countDiv.prepend(splitLabel);
-    const splitButton = document.createElement('button');
-    splitButton.textContent = 'Split pile';
-    splitButton.addEventListener('click', async e=>{
-      batchStart();
-      for(const c of this.children().reverse().slice(childCount-splitInput.value)) {
-        await c.set('parent', null);
-        await c.set('x', this.absoluteCoord('x'));
-        const y = this.absoluteCoord('y');
-        await c.set('y', y < 100 ? y+60 : y-60);
-        await c.updatePiles();
-        await c.bringToFront();
-      };
-      showOverlay();
-      batchEnd();
-    });
-    $('#pileOverlay').appendChild(splitButton);
+      const childCount = this.children().length;
+      const countDiv = document.createElement('div');
+      countDiv.textContent = `/ ${childCount}`;
+      $('#pileOverlay').appendChild(countDiv);
+      const splitInput = document.createElement('input');
+      splitInput.type = 'number';
+      splitInput.value = Math.floor(childCount/2);
+      splitInput.min = 0;
+      splitInput.max = childCount;
+      countDiv.prepend(splitInput);
+      const splitLabel = document.createElement('label');
+      splitLabel.textContent = 'Split: ';
+      countDiv.prepend(splitLabel);
+      const splitButton = document.createElement('button');
+      splitButton.textContent = 'Split pile';
+      splitButton.addEventListener('click', async e=>{
+        batchStart();
+        for(const c of this.children().reverse().slice(childCount-splitInput.value)) {
+          await c.set('parent', null);
+          await c.set('x', this.absoluteCoord('x'));
+          const y = this.absoluteCoord('y');
+          await c.set('y', y < 100 ? y+60 : y-60);
+          await c.updatePiles();
+          await c.bringToFront();
+        };
+        showOverlay();
+        batchEnd();
+      });
+      $('#pileOverlay').appendChild(splitButton);
 
-    showOverlay('pileOverlay');
+      showOverlay('pileOverlay');
+    }
   }
 
   async onChildRemove(child) {
