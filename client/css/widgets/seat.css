@@ -16,6 +16,11 @@
   text-align: center;
 
   --wcShadowTurn: 0px 0px 20px 5px var(--color);
+
+  --wcBorderOH: var(--color);
+  --wcMainOH: #ffffff;
+  --wcFontOH: #222222;
+  --wcImageOH: url();
   --wcFilterOH: brightness(90%);
 }
 
@@ -31,6 +36,11 @@ body.edit .seat {
 body.edit .seat.seated.turn {
   box-shadow: unset;
 }
+
 .seat:hover {
   filter: var(--wcFilterOH);
+  border-color: var(--wcBorderOH);
+  background-color: var(--wcMainOH);
+  background-image: var(--wcImageOH);
+  color: var(--wcFontOH);
 }
