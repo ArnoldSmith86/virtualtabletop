@@ -1,14 +1,14 @@
 .seat {
-  background-color: #ffffff;
+  background-color: var(--wcBackground);
 
   font-size: 25px;
-  color:#222222;
+  color:var(--wcFont);
   font-weight:bold;
 
   border-radius: 5px;
   border-width: 7px;
   border-style: solid;
-  border-color: var(--color);
+  border-color: var(--wcBorder);
 
   display: flex;
   justify-content: center;
@@ -17,10 +17,14 @@
 
   --wcShadowTurn: 0px 0px 20px 5px var(--color);
 
-  --wcBorderOH: var(--color);
-  --wcMainOH: #ffffff;
-  --wcFontOH: #222222;
-  --wcImageOH: url();
+  --wcBackground: #ffffff;
+  --wcBackgroundOH: var(--wcBackground);
+  --wcBorder: var(--color);
+  --wcBorderOH: var(--wcBorder);
+  --wcFont: #222222;
+  --wcFontOH: var(--wcFont);
+  --wcImage: url();
+  --wcImageOH: var(--wcImage);
   --wcFilterOH: brightness(90%);
 }
 
@@ -40,7 +44,7 @@ body.edit .seat.seated.turn {
 .seat:hover {
   filter: var(--wcFilterOH);
   border-color: var(--wcBorderOH);
-  background-color: var(--wcMainOH);
+  background-color: var(--wcBackgroundOH);
   background-image: var(--wcImageOH);
   color: var(--wcFontOH);
 }
