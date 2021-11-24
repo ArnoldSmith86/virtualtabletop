@@ -678,10 +678,10 @@ function jeAddCSScommands() {
       'border: 1px solid black', 'background: white', 'font-size: 30px', 'color: black' , 'border-radius: 100%'
     ],
     'button': [
-      '--wcMain: #1f5ca6', '--wcMainOH: #0d2f5e', '--wcBorder: #0d2f5e', '--wcBorderOH: #1f5ca6', '--wcFont: #ffffff', '--wcFontOH: #ffffff'
+      '--wcMain: #1f5ca6', '--wcMainOH: #0d2f5e', '--wcBorder: #0d2f5e', '--wcBorderOH: #1f5ca6', '--wcFont: #ffffff', '--wcFontOH: #ffffff', '--wcFilterOH'
     ],
     'seat': [
-      '--wcShadowTurn: 0px 0px 20px 5px var(--color)'
+      '--wcShadowTurn: 0px 0px 20px 5px var(--color)', '--wcMainOH: #0d2f5e', '--wcBorderOH: #1f5ca6', '--wcFontOH: #ffffff', '--wcFilterOH'
     ],
     'timer': [
       '--wcBorderNormal: #00000000', '--wcBorderAlert: red', '--wcFontAlert: red', '--wcFontPaused: #6d6d6d', '--wcAnimationAlert: blinker 1s linear infinite', '--wcAnimationPaused: none'
