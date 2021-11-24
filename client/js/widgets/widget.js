@@ -99,7 +99,7 @@ export class Widget extends StateManaged {
   }
 
   absoluteCoord(coord) {
-    this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})[coord]
+    return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})[coord]
   }
 
   applyChildAdd(child) {
