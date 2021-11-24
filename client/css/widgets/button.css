@@ -17,9 +17,11 @@
   --wcMainOH: var(--wcBorder);
   --wcFontOH: var(--wcFont);
   --wcImageOH: url();
+  --wcFilterOH: none;
 }
 
 .button:hover {
+  filter: var(--wcFilterOH);
   border-color: var(--wcBorderOH);
   background-color: var(--wcMainOH);
   background-image: var(--wcImageOH);
