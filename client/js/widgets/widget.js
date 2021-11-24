@@ -1673,6 +1673,7 @@ export class Widget extends StateManaged {
     const thisX = this.get('x');
     const thisY = this.get('y');
     const thisOwner = this.get('owner');
+    const thisOnPileCreation = this.get('onPileCreation');
     for(const [ widgetID, widget ] of widgets) {
       if(widget == this)
         continue;
@@ -1682,7 +1683,7 @@ export class Widget extends StateManaged {
 
       // check if this widget is closer than 10px from another widget in the same parent
       if(widget.get('parent') == thisParent && Math.abs(widget.get('x')-thisX) < 10 && Math.abs(widget.get('y')-thisY) < 10) {
-        if(widget.isBeingRemoved || widget.get('owner') !== thisOwner)
+        if(widget.isBeingRemoved || widget.get('owner') !== thisOwner || JSON.stringify(widget.get('onPileCreation')) !== thisOnPileCreation)
           continue;
 
         // if a card gets dropped onto a card, they create a new pile and are added to it

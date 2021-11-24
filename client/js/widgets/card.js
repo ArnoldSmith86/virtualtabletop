@@ -12,7 +12,8 @@ class Card extends Widget {
       activeFace: 0,
 
       deck: null,
-      cardType: null
+      cardType: null,
+      onPileCreation: {}
     });
 
     this.deck = null;
