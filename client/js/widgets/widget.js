@@ -289,7 +289,7 @@ export class Widget extends StateManaged {
       return true;
 
     if(this.get('clickSound'))
-      this.set('audio','source: ' + this.get('clickSound') + ', type: audio/mpeg , maxVolume: 1.0, player: null' )
+      this.set('audio','source: ' + this.get('clickSound') + ', type: audio/mpeg , maxVolume: 1.0, length: null, player: null');
 
     if(Array.isArray(this.get('clickRoutine')) && !(mode == 'ignoreClickRoutine' || mode =='ignoreAll')) {
       await this.evaluateRoutine('clickRoutine', {}, {});
@@ -540,9 +540,9 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'AUDIO') {
-        setDefaults(a, { source: '', type: 'audio/mpeg', maxVolume: 1.0, player: null });
+        setDefaults(a, { source: '', type: 'audio/mpeg', maxVolume: 1.0, length: null, player: null });
         if(a.source !== undefined) {
-          this.set('audio', 'source: ' + a.source + ', type: ' + a.type + ', maxVolume: ' + a.maxVolume + ', player: ' + a.player);
+          this.set('audio', 'source: ' + a.source + ', type: ' + a.type + ', maxVolume: ' + a.maxVolume + ', length: ' + a.length + ', player: ' + a.player);
         }
       }
 
@@ -1380,14 +1380,14 @@ export class Widget extends StateManaged {
   }
 
   async addAudio(widget){
-    const test = widget
 	  if(widget.get('audio')) {
 	    const audioString = widget.get('audio');
 	    const audioArray = audioString.split(/:\s|,\s/);
 	    const source = audioArray[1];
 	    const type = audioArray[3];
 	    const maxVolume = audioArray[5];
-      const pName = audioArray[7];
+      const length = audioArray[7];
+      const pName = audioArray[9];
 
       if(pName == "null" || pName == playerName) {
         var audioElement = document.createElement('audio');
@@ -1400,13 +1400,22 @@ export class Widget extends StateManaged {
         document.body.appendChild(audioElement);
         audioElement.play();
 
-        setInterval(function(){
-          if(audioElement.currentTime>=0){
+        if(length != "null") {
+          setInterval(function(){
+            if(audioElement.currentTime>=0){
+              audioElement.pause();
+              clearInterval();
+              if(audioElement.parentNode)
+                audioElement.parentNode.removeChild(audioElement);
+            }}, length);
+        } else {
+          audioElement.onended = function() {
             audioElement.pause();
             clearInterval();
             if(audioElement.parentNode)
               audioElement.parentNode.removeChild(audioElement);
-          }}, 10000); // limits to 10 sec
+          };
+        }
       }
       setInterval(function(){
         widget.set('audio', null);}, 100);
