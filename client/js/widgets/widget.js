@@ -1396,7 +1396,6 @@ export class Widget extends StateManaged {
         audioElement.setAttribute('type', type);
         audioElement.setAttribute('maxVolume', maxVolume);
         audioElement.volume = Math.min(maxVolume * (((10 ** (document.getElementById('volume').value / 96.025)) / 10) - 0.1), 1); // converts slider to log scale with zero = no volume
-        audioElement.preload = 'metadata';
         document.body.appendChild(audioElement);
         audioElement.play();
 
