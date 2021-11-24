@@ -1688,14 +1688,14 @@ export class Widget extends StateManaged {
 
         // if a card gets dropped onto a card, they create a new pile and are added to it
         if(thisType == 'card' && widgetType == 'card') {
-          const pile = {
+          const pile = Object.assign({
             type: 'pile',
             parent: this.get('parent'),
             x: widget.get('x'),
             y: widget.get('y'),
             width: this.get('width'),
             height: this.get('height')
-          };
+          }, this.get('onPileCreation'));
           if(thisOwner !== null)
             pile.owner = thisOwner;
           const pileId = addWidgetLocal(pile);
