@@ -6,8 +6,8 @@ import { showOverlay } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 
 const readOnlyProperties = new Set([
-  '_absoluteScale',
   '_absoluteRotation',
+  '_absoluteScale',
   '_absoluteX', 
   '_absoluteY',
   '_ancestor',
@@ -96,6 +96,10 @@ export class Widget extends StateManaged {
       this.timer = null;
       this.domElement.classList.add('longtouch');
     }
+  }
+
+  absoluteCoord(coord) {
+    this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})[coord]
   }
 
   applyChildAdd(child) {
@@ -1411,37 +1415,28 @@ export class Widget extends StateManaged {
     } else {
       const p = this.get('parent');
       switch(property) {
-        case '_absoluteScale':
-          return this.get('scale') * (widgets.has(p)? widgets.get(p).get('_absoluteScale') : 1);
-          break;
         case '_absoluteRotation':
           return this.get('rotation') + (widgets.has(p)? widgets.get(p).get('_absoluteRotation') : 0);
-          break;
+        case '_absoluteScale':
+          return this.get('scale') * (widgets.has(p)? widgets.get(p).get('_absoluteScale') : 1);
         case '_absoluteX':
           return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})['x'];
-          break;
         case '_absoluteY':
           return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})['y'];
-          break;
         case '_ancestor':
           if(widgets.has(p) && widgets.get(p).get('type')=='pile') {
             return widgets.get(p).get('_ancestor');
           } else {
             return p;
           }
-          break;
         case '_centerAbsoluteX':
           return this.coordGlobalFromCoordParent({x:this.get('x')+this.get('width')/2,y:this.get('y')+this.get('height')/2})['x'];
-          break;
         case '_centerAbsoluteY':
           return this.coordGlobalFromCoordParent({x:this.get('x')+this.get('width')/2,y:this.get('y')+this.get('height')/2})['y'];
-          break;
         case '_localOriginAbsoluteX':
           return this.coordGlobalFromCoordLocal({x:0,y:0})['x'];
-          break;
         case '_localOriginAbsoluteY':
           return this.coordGlobalFromCoordLocal({x:0,y:0})['y'];
-          break;
         default:
           return super.get(property);
       }
