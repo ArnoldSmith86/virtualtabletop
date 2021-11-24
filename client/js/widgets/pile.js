@@ -114,6 +114,12 @@ class Pile extends Widget {
     }
   }
 
+  getDefaultValue(property) {
+    if(property == 'onPileCreation')
+      return this.children()[0].get('onPileCreation');
+    return super.getDefaultValue(property);
+  }
+
   async onChildRemove(child) {
     await super.onChildRemove(child);
     if(this.children().length == 1) {
