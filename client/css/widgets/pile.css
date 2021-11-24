@@ -3,12 +3,21 @@
 }
 
 .pile .handle {
+  --phPosition: -15px;
+  --phSize: 40px;
+
+  --phX: var(--phPosition);
+  --phY: var(--phPosition);
+  --phHeight: var(--phSize);
+  --phWidth: var(--phSize);
+  --FontSize: calc(var(--phSize)/2);
+
   position: absolute;
-  left: -15px;
-  top: -15px;
-  width: 40px;
-  height: 40px;
-  font-size: 20px;
+  left: var(--phX);
+  top: var(--phY);
+  width: var(--phHeight);
+  height: var(--phWidth);
+  font-size: var(--FontSize);
   background: #e4e4e4;
   color: #6d6d6d;
   border-radius: 50%;
@@ -20,19 +29,19 @@
 }
 
 .pile .handle.small {
-  width: 20px;
-  height: 20px;
-  font-size: 10px;
+  width: calc(var(--phWidth)/2);
+  height: calc(var(--phHeight)/2);
+  font-size: calc(var(--phFontSize)/2);
 }
 
 .pile .handle.right {
   left: unset;
-  right: -15px;
+  right: var(--phX);
 }
 
 .pile .handle.bottom {
   top: unset;
-  bottom: -15px;
+  bottom: var(--phY);
 }
 
 body.edit .pile {
