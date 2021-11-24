@@ -1673,7 +1673,7 @@ export class Widget extends StateManaged {
     const thisX = this.get('x');
     const thisY = this.get('y');
     const thisOwner = this.get('owner');
-    const thisOnPileCreation = this.get('onPileCreation');
+    const thisOnPileCreation = JSON.stringify(this.get('onPileCreation'));
     for(const [ widgetID, widget ] of widgets) {
       if(widget == this)
         continue;
