@@ -25,7 +25,7 @@
   --wcFontOH: var(--wcFont);
   --wcImage: url();
   --wcImageOH: var(--wcImage);
-  --wcFilterOH: brightness(90%);
+  --wcFilterOH: brightness(85%);
 }
 
 .seat.seated.turn {
