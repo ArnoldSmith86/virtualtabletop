@@ -43,7 +43,7 @@ export default function minifyRoom() {
       ],
       output: os.tmpdir() + '/out.css'
     }).then(function(min) {
-      roomHTML = roomHTML.replace(/ \{\{CSS\}\} /, min);
+      roomHTML = roomHTML.replace(/ \{\{CSS\}\} /, min).replace(/ \{\{CONFIG\}\} /, `const config = ${JSON.stringify(Config.config)};`);
       return minify({
         compressor: Config.get('minifyJavascript') ? uglifyES : noCompress,
         input: [

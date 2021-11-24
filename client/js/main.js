@@ -240,9 +240,20 @@ onLoad(function() {
     setScale();
   });
 
-  on('#betaButton', 'click', function() {
-    toServer('setRedirect', 'Beta');
-  });
+  if(Object.keys(config.betaServers).length) {
+    for(const betaServerName in config.betaServers) {
+      const entry = domByTemplate('template-betaServerList-entry', 'tr');
+      $('button', entry).textContent = betaServerName;
+      $('.return', entry).textContent = config.betaServers[betaServerName].return ? 'Yeah...' : 'Nope!';
+      $('.description', entry).textContent = config.betaServers[betaServerName].description;
+      $('#betaServerList').appendChild(entry);
+    }
+    on('#betaServerList button', 'click', function(e) {
+      toServer('setRedirect', e.target.textContent);
+    });
+  } else {
+    removeFromDOM($('#betaText'));
+  }
   onMessage('redirect', function(url) {
     window.location.href = url;
   });
