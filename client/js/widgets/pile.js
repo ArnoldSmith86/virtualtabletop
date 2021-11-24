@@ -32,7 +32,7 @@ class Pile extends Widget {
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
-    if(this.handle && delta.handleCSS)
+    if(this.handle && delta.handleCSS !== undefined)
       this.handle.style = this.get('handleCSS');
     if(this.handle && (delta.width !== undefined || delta.height !== undefined)) {
       if(this.get('width') < 50 || this.get('height') < 50)
