@@ -12,7 +12,8 @@ class Pile extends Widget {
       height: 1,
       alignChildren: true,
       inheritChildZ: true,
-      clickable: true
+      clickable: true,
+      handleCSS: ''
     });
 
     this.domElement.appendChild(this.handle);
@@ -31,6 +32,8 @@ class Pile extends Widget {
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
+    if(this.handle && delta.handleCSS)
+      this.handle.style = delta.handleCSS;
     if(this.handle && (delta.width !== undefined || delta.height !== undefined)) {
       if(this.get('width') < 50 || this.get('height') < 50)
         this.handle.classList.add('small');
