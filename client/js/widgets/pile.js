@@ -13,27 +13,33 @@ class Pile extends Widget {
       alignChildren: true,
       inheritChildZ: true,
       clickable: true,
-      handleCSS: ''
+      handleCSS: '',
+      text: null
     });
 
     this.domElement.appendChild(this.handle);
-    this.handle.textContent = 0;
+    this.childCount = 0;
+    this.updateText();
   }
 
   applyChildAdd(child) {
     super.applyChildAdd(child);
-    ++this.handle.textContent;
+    ++this.childCount;
+    this.updateText();
   }
 
   applyChildRemove(child) {
     super.applyChildRemove(child);
-    --this.handle.textContent;
+    --this.childCount;
+    this.updateText();
   }
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
     if(this.handle && delta.handleCSS !== undefined)
       this.handle.style = this.get('handleCSS');
+    if(this.handle && delta.text !== undefined)
+      this.updateText();
     if(this.handle && (delta.width !== undefined || delta.height !== undefined)) {
       if(this.get('width') < 50 || this.get('height') < 50)
         this.handle.classList.add('small');
@@ -152,6 +158,11 @@ class Pile extends Widget {
 
   supportsPiles() {
     return false;
+  }
+
+  updateText() {
+    const text = this.get('text');
+    this.handle.textContent = text === null ? this.childCount : text;
   }
 
   validDropTargets() {
