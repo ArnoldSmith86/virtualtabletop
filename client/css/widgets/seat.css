@@ -16,6 +16,7 @@
   text-align: center;
 
   --wcShadowTurn: 0px 0px 20px 5px var(--color);
+  --wcFilterOH: brightness(90%);
 }
 
 .seat.seated.turn {
@@ -29,4 +30,7 @@ body.edit .seat {
 
 body.edit .seat.seated.turn {
   box-shadow: unset;
+}
+.seat:hover {
+  filter: var(--wcFilterOH);
 }
