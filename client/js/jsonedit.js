@@ -681,7 +681,7 @@ function jeAddCSScommands() {
       '--wcMain: #1f5ca6', '--wcMainOH: #0d2f5e', '--wcBorder: #0d2f5e', '--wcBorderOH: #1f5ca6', '--wcFont: #ffffff', '--wcFontOH: #ffffff', '--wcFilterOH'
     ],
     'seat': [
-      '--wcShadowTurn: 0px 0px 20px 5px var(--color)', '--wcbackgroundOH: #ffffff', '--wcbackgroundOH: var(--wcbackground)', '--wcBorderOH: var(--color)', '--wcBorderOH: var(--wcBorder)', '--wcFontOH: #222222', '--wcFontOH: var(--wcFont)', '--wcFilterOH: brightness(90%)'
+      '--wcShadowTurn: 0px 0px 20px 5px var(--color)', '--wcbackground: #ffffff', '--wcbackgroundOH: var(--wcbackground)', '--wcBorder: var(--color)', '--wcBorderOH: var(--wcBorder)', '--wcFont: #222222', '--wcFontOH: var(--wcFont)', '--wcFilterOH: brightness(90%)'
     ],
     'timer': [
       '--wcBorderNormal: #00000000', '--wcBorderAlert: red', '--wcFontAlert: red', '--wcFontPaused: #6d6d6d', '--wcAnimationAlert: blinker 1s linear infinite', '--wcAnimationPaused: none'
