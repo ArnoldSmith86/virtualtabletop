@@ -1424,11 +1424,7 @@ export class Widget extends StateManaged {
         case '_absoluteY':
           return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})['y'];
         case '_ancestor':
-          if(widgets.has(p) && widgets.get(p).get('type')=='pile') {
-            return widgets.get(p).get('_ancestor');
-          } else {
-            return p;
-          }
+          return (widgets.has(p) && widgets.get(p).get('type')=='pile') ? widgets.get(p).get('_ancestor') : p;
         case '_centerAbsoluteX':
           return this.coordGlobalFromCoordParent({x:this.get('x')+this.get('width')/2,y:this.get('y')+this.get('height')/2})['x'];
         case '_centerAbsoluteY':
