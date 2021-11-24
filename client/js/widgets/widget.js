@@ -5,7 +5,17 @@ import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 
-const readOnlyProperties = new Set(['_absoluteX', '_absoluteY', '_centerAbsoluteX', '_centerAbsoluteY', '_localOriginAbsoluteX', '_localOriginAbsoluteY', '_ancestor']);
+const readOnlyProperties = new Set([
+  '_absoluteScale',
+  '_absoluteRotation',
+  '_absoluteX', 
+  '_absoluteY',
+  '_ancestor',
+  '_centerAbsoluteX', 
+  '_centerAbsoluteY', 
+  '_localOriginAbsoluteX', 
+  '_localOriginAbsoluteY'
+]);
 
 export class Widget extends StateManaged {
   constructor(id) {
@@ -86,16 +96,6 @@ export class Widget extends StateManaged {
       this.timer = null;
       this.domElement.classList.add('longtouch');
     }
-  }
-
-  absoluteCenter(coord) {
-    return this.coordGlobalFromCoordParent({x:this.get('x')+this.get('width')/2,y:this.get('y')+this.get('height')/2})[coord];
-  }
-  absoluteCoord(coord) {
-    return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})[coord];
-  }
-  absoluteLocalOrigin(coord) {
-    return this.coordGlobalFromCoordLocal({x:0,y:0})[coord];
   }
 
   applyChildAdd(child) {
@@ -1406,21 +1406,45 @@ export class Widget extends StateManaged {
   }
 
   get(property) {
-    if(property == '_ancestor') {
-      const p = this.get('parent');
-      if(widgets.has(p) && widgets.get(p).get('type')=='pile') {
-        return widgets.get(p).get('_ancestor');
-      } else {
-        return p;
-      }
-    } else if(property == '_absoluteX' || property == '_absoluteY') {
-      return this.absoluteCoord(property == '_absoluteX' ? 'x' : 'y');
-    } else if(property == '_centerAbsoluteX' || property == '_centerAbsoluteY') {
-      return this.absoluteCenter(property = '_centerAbsoluteX' ? 'x' : 'y');
-    } else if(property == '_localOriginAbsoluteX' || property == '_localOriginAbsoluteY') {
-      return this.absoluteLocalOrigin(property = '_absoluteLocalOriginX' ? 'x' : 'y');
+    if(!readOnlyProperties.has(property)) {
+      return super.get(property);      
     } else {
-      return super.get(property);
+      const p = this.get('parent');
+      switch(property) {
+        case '_absoluteScale':
+          return this.get('scale') * (widgets.has(p)? widgets.get(p).get('_absoluteScale') : 1);
+          break;
+        case '_absoluteRotation':
+          return this.get('rotation') + (widgets.has(p)? widgets.get(p).get('_absoluteRotation') : 0);
+          break;
+        case '_absoluteX':
+          return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})['x'];
+          break;
+        case '_absoluteY':
+          return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})['y'];
+          break;
+        case '_ancestor':
+          if(widgets.has(p) && widgets.get(p).get('type')=='pile') {
+            return widgets.get(p).get('_ancestor');
+          } else {
+            return p;
+          }
+          break;
+        case '_centerAbsoluteX':
+          return this.coordGlobalFromCoordParent({x:this.get('x')+this.get('width')/2,y:this.get('y')+this.get('height')/2})['x'];
+          break;
+        case '_centerAbsoluteY':
+          return this.coordGlobalFromCoordParent({x:this.get('x')+this.get('width')/2,y:this.get('y')+this.get('height')/2})['y'];
+          break;
+        case '_localOriginAbsoluteX':
+          return this.coordGlobalFromCoordLocal({x:0,y:0})['x'];
+          break;
+        case '_localOriginAbsoluteY':
+          return this.coordGlobalFromCoordLocal({x:0,y:0})['y'];
+          break;
+        default:
+          return super.get(property);
+      }
     }
   }
 
