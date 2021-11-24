@@ -9,6 +9,6 @@
     "assets": "save/assets"
   },
 
-  "betaServer": null,
+  "betaServers": {},
   "legacyServers": {}
 }

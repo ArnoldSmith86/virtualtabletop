@@ -241,7 +241,7 @@ onLoad(function() {
   });
 
   on('#betaButton', 'click', function() {
-    toServer('setRedirect', 'beta');
+    toServer('setRedirect', 'Beta');
   });
   onMessage('redirect', function(url) {
     window.location.href = url;
