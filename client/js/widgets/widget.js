@@ -922,7 +922,7 @@ export class Widget extends StateManaged {
         if(a.label !== undefined) {
           if (this.isValidID(a.label, problems)) {
             await w(a.label, async widget=>{
-              await widget.setText(a.value, a.mode, this.get('debug'), problems)
+              await widget.setText(a.value, a.mode, problems)
             });
             if(jeRoutineLogging) {
               if(a.mode == 'inc' || a.mode == 'dec')
@@ -936,7 +936,7 @@ export class Widget extends StateManaged {
         } else if(collection = getCollection(a.collection)) {
           if(collections[collection].length) {
             for(const c of collections[collection])
-              await c.setText(a.value, a.mode, this.get('debug'), problems);
+              await c.setText(a.value, a.mode, problems);
             if(jeRoutineLogging) {
               if(a.mode == 'inc' || a.mode == 'dec')
                 jeLoggingRoutineOperationSummary(`${a.mode} widgets in '${a.collection}' by ${a.value}`)
@@ -1622,7 +1622,7 @@ export class Widget extends StateManaged {
     await super.setPosition(x, y, z);
   }
 
-  async setText(text, mode, debug, problems) {
+  async setText(text, mode, problems) {
     if (this.get('text') !== undefined) {
       if(mode == 'inc' || mode == 'dec')
         await this.set('text', (parseInt(this.get('text')) || 0) + (mode == 'dec' ? -1 : 1) * text);
