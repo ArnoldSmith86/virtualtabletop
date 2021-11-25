@@ -30,7 +30,7 @@
 
 .widget.droppable.droptarget {
   background-color: var(--wcBackgroundDT);
-  border-color: var(--wcBorderDT);
+  border-color: var(--wcBorderDT) !important;
 }
 
 body.edit .widget.droppable.droptarget {
