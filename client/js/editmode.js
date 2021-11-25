@@ -13,6 +13,8 @@ function addWidgetLocal(widget) {
     widget.id = generateUniqueWidgetID();
   sendPropertyUpdate(widget.id, widget);
   sendDelta(true);
+  for(const [ widget, routine ] of StateManaged.globalUpdateListeners['id'] || [])
+    await widget.evaluateRoutine(routine, { widgetID: widget.id, oldValue: null, value: widget.id }, { widget: [ widgets.get(widget.id) ] });
   return widget.id;
 }
 //This section holds the edit overlays for each widget
