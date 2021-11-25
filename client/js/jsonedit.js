@@ -873,14 +873,13 @@ function jeApplyDelta(delta) {
 async function jeApplyExternalChanges(state) {
   const before = JSON.parse(jeStateBefore);
   if(state.type == 'card' && state.deck === before.deck) {
-    const cardDefaults = widgets.get(state.deck).get('cardDefaults');
-    if(JSON.stringify(state['cardDefaults (in deck)']) != JSON.stringify(cardDefaults))
+    const cardDefaults = { ...widgets.get(state.deck).get('cardDefaults') };
+    if(state['cardDefaults (in deck)'] && JSON.stringify(state['cardDefaults (in deck)']) != JSON.stringify(cardDefaults))
       await widgets.get(state.deck).set('cardDefaults', state['cardDefaults (in deck)']);
 
     if(state.cardType === before.cardType) {
       const cardTypes = { ...widgets.get(state.deck).get('cardTypes') };
-      const cardType = cardTypes[state.cardType];
-      if(JSON.stringify(state['cardType  ['+ state.cardType + '] (in deck)']) != JSON.stringify(cardType)) {
+      if(state['cardType ['+ state.cardType + '] (in deck)'] && JSON.stringify(state['cardType ['+ state.cardType + '] (in deck)']) != JSON.stringify(cardTypes[state.cardType])) {
         cardTypes[state.cardType] = state['cardType ['+ state.cardType + '] (in deck)'];
         await widgets.get(state.deck).set('cardTypes', cardTypes);
       }
@@ -1442,8 +1441,10 @@ function jePreProcessObject(o) {
 
   try {
     if(copy.type == 'card') {
-      copy['cardDefaults (in deck)'] = widgets.get(copy.deck).get('cardDefaults');
-      copy['cardType ['+ o.cardType + '] (in deck)'] = widgets.get(copy.deck).get('cardTypes')[copy.cardType];
+      if(widgets.get(copy.deck).state.cardDefaults)
+        copy['cardDefaults (in deck)'] = widgets.get(copy.deck).get('cardDefaults');
+      if(widgets.get(copy.deck).state.cardTypes)
+        copy['cardType ['+ o.cardType + '] (in deck)'] = widgets.get(copy.deck).get('cardTypes')[copy.cardType];
     }
   } catch(e) {}
 
