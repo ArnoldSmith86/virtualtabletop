@@ -24,6 +24,12 @@ class Holder extends Widget {
     });
   }
 
+  applyDeltaToDOM(delta) {
+    super.applyDeltaToDOM(delta);
+    if(delta.text !== undefined)
+      setText(this.domElement, delta.text);
+  }
+
   children() {
     let children = this.childrenFilter(super.children(), true);
     if(children.length == 1 && children[0].get('type') == 'pile')

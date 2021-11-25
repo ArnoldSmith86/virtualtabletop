@@ -4,6 +4,10 @@
   border: calc(1px / var(--scale)) solid #333;
   border-color: #d8d8d8 #ccc #ccc #d8d8d8;
   border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .holder > .widget, .widget.droppable.droptarget.holder.transparent > .widget {
