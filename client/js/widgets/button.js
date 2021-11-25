@@ -14,7 +14,6 @@ export class Button extends Widget {
       clickable: true,
 
       image: '',
-      color: 'black',
       svgReplaces: {},
 
       backgroundColor: null,
