@@ -67,7 +67,15 @@ export class StateManaged {
   }
 
   inheritFromIsValid(properties, key) {
-    return (properties == '*' || properties.indexOf(key) != -1) && [ 'id', 'type', 'deck', 'cardType' ].indexOf(key) == -1;
+    if(properties == '*')
+      return true;
+    if([ 'id', 'type', 'deck', 'cardType' ].indexOf(key) != -1)
+      return false;
+
+    if(Array.isArray(properties) && properties[0][0] == '!')
+      return properties.indexOf('!'+key) == -1;
+    else
+      return properties.indexOf(key) != -1;
   }
 
   inheritFromUnregister() {
