@@ -1,9 +1,16 @@
 .holder {
-  background: white;
+  background: var(--wcBackground);
   box-sizing: border-box;
-  border: calc(1px / var(--scale)) solid #333;
-  border-color: #d8d8d8 #ccc #ccc #d8d8d8;
+  border-width: calc(1px / var(--scale));
+  border-style: solid;
+  border-color:var(--wcBorder);
   border-radius: 8px;
+
+  --wcBackground: #ffffff;
+  --wcBackgroundDT: var(--wcBackground);
+  --wcBorderLight: #d8d8d8 #ccc #ccc #d8d8d8;
+  --wcBorder: var(--wcBorderLight);
+  --wcBorderDT: #333;
 }
 
 .holder > .widget, .widget.droppable.droptarget.holder.transparent > .widget {
@@ -22,7 +29,8 @@
 }
 
 .widget.droppable.droptarget {
-  border: calc(1px / var(--scale)) solid #333 !important;
+  background-color: var(--wcBackgroundDT);
+  border-color: var(--wcBorderDT);
 }
 
 body.edit .widget.droppable.droptarget {
