@@ -30,6 +30,11 @@
   cursor: pointer;
 }
 
+#editJSONoverlay textarea {
+    height: 100%;
+    min-height: 100%;
+}
+
 #editOverlay {
   overflow: auto;
   color: black;
