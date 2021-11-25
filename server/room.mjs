@@ -27,7 +27,12 @@ export default class Room {
 
     this.sendMetaUpdate();
     this.state._meta.deltaID = this.deltaID;
-    player.send('state', this.state);
+
+    if(this.state._meta.redirectTo) {
+      player.send('redirect', this.state._meta.redirectTo.url + '/' + this.id);
+    } else {
+      player.send('state', this.state);
+    }
 
     if(this.enableTracing) {
       this.trace('addPlayer', { player: player.name });

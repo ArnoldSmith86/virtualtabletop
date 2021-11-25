@@ -182,11 +182,6 @@ MinifyRoom().then(function(result) {
         res.send('Invalid characters in room ID.');
         return;
       }
-      const redirectTo = activeRooms.get(req.params.room).getRedirection();
-      if(redirectTo) {
-        res.redirect(redirectTo);
-        return;
-      }
       if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
         res.setHeader('Content-Encoding', 'gzip');
         res.setHeader('Content-Type', 'text/html');
