@@ -680,6 +680,9 @@ function jeAddCSScommands() {
     'button': [
       '--wcMain: #1f5ca6', '--wcMainOH: #0d2f5e', '--wcBorder: #0d2f5e', '--wcBorderOH: #1f5ca6', '--wcFont: #ffffff', '--wcFontOH: #ffffff'
     ],
+    'holder': [
+      '--wcBackground: #ffffff', '--wcBackgroundDT: var(--wcBackground)', '--wcBorder: #d8d8d8 #ccc #ccc #d8d8d8', '--wcBorderDT: #333'
+    ],
     'seat': [
       '--wcShadowTurn: 0px 0px 20px 5px var(--color)'
     ],
