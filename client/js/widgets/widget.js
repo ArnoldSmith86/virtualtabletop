@@ -1569,9 +1569,15 @@ export class Widget extends StateManaged {
 
   async setText(text, mode, problems) {
     if (this.get('text') !== undefined) {
-      if(mode == 'inc' || mode == 'dec')
-        await this.set('text', (parseInt(this.get('text')) || 0) + (mode == 'dec' ? -1 : 1) * text);
-      else if(mode == 'append')
+      if(mode == 'inc' || mode == 'dec') {
+        let newText = (parseFloat(this.get('text')) || 0) + (mode == 'dec' ? -1 : 1) * text;
+        const decimalPlaces = text.toString().match(/\..*$/);
+        if(decimalPlaces) {
+          const factor = 10**(decimalPlaces[0].length-1);
+          newText = Math.round(newText*factor)/factor;
+        }
+        await this.set('text', newText);
+      } else if(mode == 'append')
         await this.set('text', this.get('text') + text);
       else if(Array.isArray(text))
         await this.set('text', text.join(', '));
