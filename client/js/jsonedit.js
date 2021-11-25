@@ -878,11 +878,11 @@ async function jeApplyExternalChanges(state) {
       await widgets.get(state.deck).set('cardDefaults', state['cardDefaults (in deck)']);
 
     if(state.cardType === before.cardType) {
-      const cardTypes = widgets.get(state.deck).get('cardTypes');
+      const cardTypes = { ...widgets.get(state.deck).get('cardTypes') };
       const cardType = cardTypes[state.cardType];
       if(JSON.stringify(state['cardType  ['+ state.cardType + '] (in deck)']) != JSON.stringify(cardType)) {
         cardTypes[state.cardType] = state['cardType ['+ state.cardType + '] (in deck)'];
-        await widgets.get(state.deck).set('cardTypes', { ...cardTypes });
+        await widgets.get(state.deck).set('cardTypes', cardTypes);
       }
     }
   }
