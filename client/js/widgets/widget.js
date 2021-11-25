@@ -1536,40 +1536,6 @@ export class Widget extends StateManaged {
       await this.set('rotation', degrees);
   }
 
-  async setPosition(x, y, z) {
-    if(this.get('grid').length && !this.get('parent')) {
-      let closest = null;
-      let closestDistance = 999999;
-
-      for(const grid of this.get('grid')) {
-        if(x < (grid.minX || -99999) || x > (grid.maxX || 99999))
-          continue;
-        if(y < (grid.minY || -99999) || y > (grid.maxY || 99999))
-          continue;
-
-        const snapX = x + grid.x/2 - mod(x - (grid.offsetX || 0), grid.x);
-        const snapY = y + grid.y/2 - mod(y - (grid.offsetY || 0), grid.y);
-
-        const distance = (snapX - x) ** 2 + (snapY - y) ** 2;
-        if(distance < closestDistance) {
-          closest = [ snapX, snapY, grid ];
-          closestDistance = distance;
-        }
-      }
-
-      if(closest) {
-        x = closest[0];
-        y = closest[1];
-        for(const p in closest[2])
-          if([ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY' ].indexOf(p) == -1)
-            await this.set(p, closest[2][p]);
-      }
-
-      this.snappingToGrid = false;
-    }
-    await super.setPosition(x, y, z);
-  }
-
   async setText(text, mode, problems) {
     if (this.get('text') !== undefined) {
       if(mode == 'inc' || mode == 'dec')
@@ -1668,8 +1634,6 @@ export class Widget extends StateManaged {
           if([ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY' ].indexOf(p) == -1)
             await this.set(p, closest[2][p]);
       }
-
-      this.snappingToGrid = false;
     }
   }
 
