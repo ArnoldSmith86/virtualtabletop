@@ -8,6 +8,7 @@ class Canvas extends Widget {
       width: 400,
       height: 400,
       typeClasses: 'widget canvas',
+      clickable: true,
 
       resolution: 100,
       activeColor: 1,
@@ -101,6 +102,9 @@ class Canvas extends Widget {
   }
 
   async mouseRaw(state, x, y) {
+    if(!this.get('clickable'))
+      return;
+
     const resolution = this.getResolution();
     const regionRes = Math.floor(resolution/10);
 
