@@ -36,7 +36,7 @@ export class Widget extends StateManaged {
       movableInEdit: true,
       clickable: false,
 
-      color: 'black',
+      color: null,
 
       grid: [],
       enlarge: false,
@@ -310,7 +310,7 @@ export class Widget extends StateManaged {
   }
 
   cssProperties() {
-    return [ 'css', 'height', 'inheritChildZ', 'layer', 'width', 'color' ];
+    return [ 'color', 'css', 'height', 'inheritChildZ', 'layer', 'width' ];
   }
 
   cssTransform() {
