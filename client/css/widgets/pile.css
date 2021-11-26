@@ -1,8 +1,4 @@
 .pile {
-  will-change: transform;
-}
-
-.pile .handle {
   --phPosition: -15px;
   --phSize: 40px;
 
@@ -12,6 +8,10 @@
   --phWidth: var(--phSize);
   --FontSize: calc(var(--phSize)/2);
 
+  will-change: transform;
+}
+
+.pile .handle {
   position: absolute;
   left: var(--phX);
   top: var(--phY);

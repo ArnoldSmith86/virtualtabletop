@@ -15,7 +15,10 @@ class Pile extends Widget {
       clickable: true,
 
       handleCSS: '',
-      handleText: null
+      handleText: null,
+      handleSize: 'auto',
+      handleOffset: 15,
+      handlePosition: 'top right'
     });
 
     this.domElement.appendChild(this.handle);
@@ -41,15 +44,18 @@ class Pile extends Widget {
       this.handle.style = this.get('handleCSS');
     if(this.handle && delta.handleText !== undefined)
       this.updateText();
-    if(this.handle && (delta.width !== undefined || delta.height !== undefined)) {
-      if(this.get('width') < 50 || this.get('height') < 50)
+    if(this.handle && (delta.width !== undefined || delta.height !== undefined || delta.handleSize !== undefined)) {
+      if(this.get('handleSize') == 'auto' && (this.get('width') < 50 || this.get('height') < 50))
         this.handle.classList.add('small');
       else
         this.handle.classList.remove('small');
     }
-    for(const e of [ [ 'x', 'right', 1600-this.get('width')-20 ], [ 'y', 'bottom', 20 ] ]) {
-      if(this.handle && (delta[e[0]] !== undefined || delta.parent !== undefined)) {
-        if(this.absoluteCoord(e[0]) < e[2])
+
+    const threshold = this.get('handleOffset')+5;
+    for(const e of [ [ 'x', 'right', 1600-this.get('width') ], [ 'y', 'bottom', 1000-this.get('height') ] ]) {
+      if(this.handle && (delta[e[0]] !== undefined || delta.parent !== undefined || delta.handlePosition !== undefined || delta.handleOffset !== undefined)) {
+        const isRightOrBottom = this.get('handlePosition').match(e[1]);
+        if(isRightOrBottom && this.absoluteCoord(e[0]) < e[2]-threshold || !isRightOrBottom && this.absoluteCoord(e[0]) < threshold)
           this.handle.classList.add(e[1]);
         else
           this.handle.classList.remove(e[1]);
@@ -119,6 +125,22 @@ class Pile extends Widget {
 
       showOverlay('pileOverlay');
     }
+  }
+
+  css() {
+    let css = super.css();
+
+    if(this.get('handleSize') != 'auto')
+      css += '; --phSize:' + this.get('handleSize') + 'px';
+    css += '; --phPosition:-' + this.get('handleOffset') + 'px';
+
+    return css;
+  }
+
+  cssProperties() {
+    const p = super.cssProperties();
+    p.push('handleSize', 'handleOffset');
+    return p;
   }
 
   getDefaultValue(property) {
