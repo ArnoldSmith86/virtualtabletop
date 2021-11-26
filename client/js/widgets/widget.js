@@ -1571,11 +1571,11 @@ export class Widget extends StateManaged {
     if (this.get('text') !== undefined) {
       if(mode == 'inc' || mode == 'dec') {
         let newText = (parseFloat(this.get('text')) || 0) + (mode == 'dec' ? -1 : 1) * text;
-        const decimalPlaces = text.toString().match(/\..*$/);
-        if(decimalPlaces) {
-          const factor = 10**(decimalPlaces[0].length-1);
-          newText = Math.round(newText*factor)/factor;
-        }
+        const decimalPlacesOld = this.get('text').toString().match(/\..*$/);
+        const decimalPlacesChange = text.toString().match(/\..*$/);
+        const decimalPlaces = Math.max(decimalPlacesOld ? decimalPlacesOld[0].length-1 : 0, decimalPlacesChange ? decimalPlacesChange[0].length-1 : 0);
+        const factor = 10**decimalPlaces;
+        newText = Math.round(newText*factor)/factor;
         await this.set('text', newText);
       } else if(mode == 'append')
         await this.set('text', this.get('text') + text);
