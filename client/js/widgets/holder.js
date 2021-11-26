@@ -58,8 +58,6 @@ class Holder extends Widget {
         css += '; align-items: start; padding-top: 10px';
       } else if (this.get('textPosition')=="bottom"){
         css += '; align-items: end; padding-bottom: 10px';
-      } else {
-        css += '; align-items: center;';
       }
 
     return css;
