@@ -11,7 +11,7 @@ function generateUniqueWidgetID() {
 function addWidgetLocal(widget) {
   if (!widget.id)
     widget.id = generateUniqueWidgetID();
-  const isNewWidget = widgets.has(widget.id);
+  const isNewWidget = !widgets.has(widget.id);
   sendPropertyUpdate(widget.id, widget);
   sendDelta(true);
   batchStart();
