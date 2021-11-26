@@ -1326,8 +1326,10 @@ export class Widget extends StateManaged {
       if(!jeRoutineLogging && problems.length)
         console.log(problems);
 
-      if(a.func == 'CALL' && !a.return)
+      if(a.func == 'BREAK' & a.condition || a.func == 'CALL' && !a.return) {
+        setDefaults(a, { condition: true });
         break
+      }
 
     } // End iterate over functions in routine
 
