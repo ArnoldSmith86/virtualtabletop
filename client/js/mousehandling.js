@@ -50,11 +50,11 @@ async function inputHandler(name, e) {
     batchStart();
     if(!edit && (!jeEnabled || !e.ctrlKey) && widgets.get(target.id).passthroughMouse) {
       if(name == 'mousedown' || name == 'touchstart') {
-        await widgets.get(target.id).mouseRaw('down', coords.x, coords.y);
+        await widgets.get(target.id).mouseRaw('down', coords);
       } else if (name == 'mouseup' || name == 'touchend') {
-        await widgets.get(target.id).mouseRaw('up', coords.x, coords.y);
+        await widgets.get(target.id).mouseRaw('up', coords);
       } else if (name == 'mousemove' || name == 'touchmove') {
-        await widgets.get(target.id).mouseRaw('move', coords.x, coords.y);
+        await widgets.get(target.id).mouseRaw('move', coords);
       }
     } else if(name == 'mousedown' || name == 'touchstart') {
       mouseStatus[target.id] = {
