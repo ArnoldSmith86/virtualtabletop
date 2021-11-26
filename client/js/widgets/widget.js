@@ -877,7 +877,7 @@ export class Widget extends StateManaged {
           if((a.thenBreak || a.thenEnd) && condition || (a.elseBreak || a.elseEnd) && !condition) {
             this.break = true;
             if(a.thenEnd || a.elseEnd) {
-              var end = true;
+              end = true;
             }
           } else {
             const branch = condition ? 'thenRoutine' : 'elseRoutine';
