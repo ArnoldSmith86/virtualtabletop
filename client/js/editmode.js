@@ -11,11 +11,13 @@ function generateUniqueWidgetID() {
 function addWidgetLocal(widget) {
   if (!widget.id)
     widget.id = generateUniqueWidgetID();
+  const isNewWidget = widgets.has(widget.id);
   sendPropertyUpdate(widget.id, widget);
   sendDelta(true);
   batchStart();
-  for(const [ widget, routine ] of StateManaged.globalUpdateListeners['id'] || [])
-    widget.evaluateRoutine(routine, { widgetID: widget.id, oldValue: null, value: widget.id }, { widget: [ widgets.get(widget.id) ] });
+  if(isNewWidget)
+    for(const [ w, routine ] of StateManaged.globalUpdateListeners['id'] || [])
+      w.evaluateRoutine(routine, { widgetID: widget.id, oldValue: null, value: widget.id }, { widget: [ widgets.get(widget.id) ] });
   batchEnd();
   return widget.id;
 }
