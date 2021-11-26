@@ -39,9 +39,24 @@
   right: var(--phX);
 }
 
+.pile .handle.center {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .pile .handle.bottom {
   top: unset;
   bottom: var(--phY);
+}
+
+.pile .handle.middle {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.pile .handle.center.middle {
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
 }
 
 body.edit .pile {

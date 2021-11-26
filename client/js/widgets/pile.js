@@ -52,13 +52,22 @@ class Pile extends Widget {
     }
 
     const threshold = this.get('handleOffset')+5;
-    for(const e of [ [ 'x', 'right', 1600-this.get('width') ], [ 'y', 'bottom', 1000-this.get('height') ] ]) {
+    for(const e of [ [ 'x', 'right', 1600-this.get('width'), 'center' ], [ 'y', 'bottom', 1000-this.get('height'), 'middle' ] ]) {
       if(this.handle && (delta[e[0]] !== undefined || delta.parent !== undefined || delta.handlePosition !== undefined || delta.handleOffset !== undefined)) {
-        const isRightOrBottom = this.get('handlePosition').match(e[1]);
-        if(isRightOrBottom && this.absoluteCoord(e[0]) < e[2]-threshold || !isRightOrBottom && this.absoluteCoord(e[0]) < threshold)
-          this.handle.classList.add(e[1]);
-        else
+        if(this.get('handlePosition') == 'static') {
           this.handle.classList.remove(e[1]);
+          this.handle.classList.remove(e[3]);
+        } else if(this.get('handlePosition').match(e[3])) {
+          this.handle.classList.remove(e[1]);
+          this.handle.classList.add(e[3]);
+        } else {
+          this.handle.classList.remove(e[3]);
+          const isRightOrBottom = this.get('handlePosition').match(e[1]);
+          if(isRightOrBottom && this.absoluteCoord(e[0]) < e[2]-threshold || !isRightOrBottom && this.absoluteCoord(e[0]) < threshold)
+            this.handle.classList.add(e[1]);
+          else
+            this.handle.classList.remove(e[1]);
+        }
       }
     }
   }
