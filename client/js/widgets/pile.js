@@ -14,8 +14,9 @@ class Pile extends Widget {
       inheritChildZ: true,
       clickable: true,
 
+      text: null,
+
       handleCSS: '',
-      handleText: null,
       handleSize: 'auto',
       handleOffset: 15,
       handlePosition: 'top right'
@@ -42,7 +43,7 @@ class Pile extends Widget {
     super.applyDeltaToDOM(delta);
     if(this.handle && delta.handleCSS !== undefined)
       this.handle.style = this.get('handleCSS');
-    if(this.handle && delta.handleText !== undefined)
+    if(this.handle && delta.text !== undefined)
       this.updateText();
     if(this.handle && (delta.width !== undefined || delta.height !== undefined || delta.handleSize !== undefined)) {
       if(this.get('handleSize') == 'auto' && (this.get('width') < 50 || this.get('height') < 50))
@@ -193,7 +194,7 @@ class Pile extends Widget {
   }
 
   updateText() {
-    const text = this.get('handleText');
+    const text = this.get('text');
     this.handle.textContent = text === null ? this.childCount : text;
   }
 
