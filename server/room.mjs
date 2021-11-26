@@ -396,43 +396,47 @@ export default class Room {
   }
 
   async setRedirect(player, target) {
-    let targetServer = Config.get('betaServers')[target] || Config.get('legacyServers')[target];
-    const isReturn = target == 'return';
-    if(isReturn)
-      targetServer = { url:this.state._meta.returnServer, return:false };
+    try {
+      let targetServer = Config.get('betaServers')[target] || Config.get('legacyServers')[target];
+      const isReturn = target == 'return';
+      if(isReturn)
+        targetServer = { url:this.state._meta.returnServer, return:false };
 
-    if(targetServer) {
-      const assets = [];
-      for(const asset of this.getAssetList(this.state))
-        assets.push(asset.substr(8));
+      if(targetServer) {
+        const assets = [];
+        for(const asset of this.getAssetList(this.state))
+          assets.push(asset.substr(8));
 
-      const result = await fetch(targetServer.url + '/assetcheck', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(assets)
-      });
+        const result = await fetch(targetServer.url + '/assetcheck', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(assets)
+        });
 
-      const assetStatus = await result.json();
+        const assetStatus = await result.json();
 
-      let zipBuffer = '';
-      if(!isReturn || this.state._meta.returnState) {
-        const zip = new JSZip();
-        zip.file(`${this.id}.json`, JSON.stringify(this.state, null, '  '));
-        for(const asset in assetStatus)
-          if(!assetStatus[asset] && fs.existsSync(Config.directory('assets') + '/' + asset))
-            zip.file('assets/' + asset, fs.readFileSync(Config.directory('assets') + '/' + asset));
+        let zipBuffer = '';
+        if(!isReturn || this.state._meta.returnState) {
+          const zip = new JSZip();
+          zip.file(`${this.id}.json`, JSON.stringify(this.state, null, '  '));
+          for(const asset in assetStatus)
+            if(!assetStatus[asset] && fs.existsSync(Config.directory('assets') + '/' + asset))
+              zip.file('assets/' + asset, fs.readFileSync(Config.directory('assets') + '/' + asset));
 
-        zipBuffer = await zip.generateAsync({type:'nodebuffer'});
+          zipBuffer = await zip.generateAsync({type:'nodebuffer'});
+        }
+
+        const putResult = await fetch(targetServer.url + '/moveServer/' + this.id + '/' + (isReturn ? 'RETURN' : encodeURIComponent(Config.get('externalURL'))) + '/' + (targetServer.return ? 'true' : 'false'), {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/octet-stream' },
+          body: zipBuffer
+        });
+
+        this.state._meta.redirectTo = targetServer;
+        this.broadcast('redirect', targetServer.url + '/' + this.id);
       }
-
-      const putResult = await fetch(targetServer.url + '/moveServer/' + this.id + '/' + (isReturn ? 'RETURN' : encodeURIComponent(Config.get('externalURL'))) + '/' + (targetServer.return ? 'true' : 'false'), {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/octet-stream' },
-        body: zipBuffer
-      });
-
-      this.state._meta.redirectTo = targetServer;
-      this.broadcast('redirect', targetServer.url + '/' + this.id);
+    } catch(e) {
+      Logging.handleGenericException('setRedirect', e);
     }
   }
 
