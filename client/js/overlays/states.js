@@ -130,6 +130,7 @@ function editState() {
 function fillStatesList(states, returnServer, activePlayers) {
   if(returnServer) {
     $('#statesButton').dataset.overlay = 'returnOverlay';
+    overlayShownForEmptyRoom = true;
     return;
   }
   $('#statesButton').dataset.overlay = 'statesOverlay';
