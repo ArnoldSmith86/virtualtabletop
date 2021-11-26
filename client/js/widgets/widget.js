@@ -287,7 +287,10 @@ export class Widget extends StateManaged {
 
     if(Array.isArray(this.get('clickRoutine')) && !(mode == 'ignoreClickRoutine' || mode =='ignoreAll')) {
       await this.evaluateRoutine('clickRoutine', {}, {});
-      return true;
+      if(this.end)
+        delete this.end;
+      else
+        return true;
     } else {
       return false;
     }
@@ -458,6 +461,10 @@ export class Widget extends StateManaged {
     const routine = this.get(property) !== null ? this.get(property) : property;
 
     for(const original of routine) {
+      if(this.end){
+        break;
+      }
+
       let a = JSON.parse(JSON.stringify(original));
       if(typeof a == 'object')
         a = evaluateVariablesRecursively(a);
@@ -857,7 +864,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'IF') {
-        setDefaults(a, { relation: '==' });
+        setDefaults(a, { relation: '==', thenBreak: false, elseBreak: false, thenEnd: false, elseEnd: false });
         if (['==', '!=', '<', '<=', '>=', '>'].indexOf(a.relation) < 0) {
           problems.push(`Relation ${a.relation} is unsupported. Using '==' relation.`);
           a.relation = '==';
@@ -866,9 +873,16 @@ export class Widget extends StateManaged {
           let condition = a.condition;
           if (condition === undefined)
             condition = compute(a.relation, null, a.operand1, a.operand2);
-          const branch = condition ? 'thenRoutine' : 'elseRoutine';
-          if(Array.isArray(a[branch]))
-            await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true);
+          if((a.thenBreak || a.thenEnd) && condition || (a.elseBreak || a.elseEnd) && !condition || this.end) {
+            this.break = true;
+            if(a.thenEnd || a.elseEnd) {
+              this.end = true;
+            }
+          } else {
+            const branch = condition ? 'thenRoutine' : 'elseRoutine';
+            if(Array.isArray(a[branch]))
+              await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true);
+          }
           if(jeRoutineLogging) {
             if (a.condition === undefined)
               jeLoggingRoutineOperationSummary(`'${original.operand1}' ${a.relation} '${original.operand2}'`, `${JSON.stringify(condition)}`)
@@ -1326,11 +1340,10 @@ export class Widget extends StateManaged {
       if(!jeRoutineLogging && problems.length)
         console.log(problems);
 
-      if(a.func == 'BREAK' & a.condition || a.func == 'CALL' && !a.return) {
-        setDefaults(a, { condition: true });
-        break
+      if(this.break || a.func == 'CALL' && !a.return) {
+        delete this.break;
+        break;
       }
-
     } // End iterate over functions in routine
 
     if(jeRoutineLogging) jeLoggingRoutineEnd(variables, collections);
