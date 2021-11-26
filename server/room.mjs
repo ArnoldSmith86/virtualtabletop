@@ -437,6 +437,7 @@ export default class Room {
       }
     } catch(e) {
       Logging.handleGenericException('setRedirect', e);
+      player.send('error', 'There was a problem setting up the redirection. The other server might be offline.');
     }
   }
 
