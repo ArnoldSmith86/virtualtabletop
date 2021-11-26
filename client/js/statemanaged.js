@@ -72,7 +72,7 @@ export class StateManaged {
     if([ 'id', 'type', 'deck', 'cardType' ].indexOf(key) != -1)
       return false;
 
-    if(Array.isArray(properties) && properties[0][0] == '!')
+    if(Array.isArray(properties) && properties.length && properties[0].length && properties[0][0] == '!')
       return properties.indexOf('!'+key) == -1;
     else
       return properties.indexOf(key) != -1;
