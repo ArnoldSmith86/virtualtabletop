@@ -6,6 +6,7 @@ import { showOverlay } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 
 const readOnlyProperties = new Set(['_absoluteX', '_absoluteY', '_ancestor']);
+let end = null;
 
 export class Widget extends StateManaged {
   constructor(id) {
@@ -873,7 +874,7 @@ export class Widget extends StateManaged {
           let condition = a.condition;
           if (condition === undefined)
             condition = compute(a.relation, null, a.operand1, a.operand2);
-          if((a.thenBreak || a.thenEnd) && condition || (a.elseBreak || a.elseEnd) && !condition || this.end) {
+          if((a.thenBreak || a.thenEnd) && condition || (a.elseBreak || a.elseEnd) && !condition) {
             this.break = true;
             if(a.thenEnd || a.elseEnd) {
               var end = true;
