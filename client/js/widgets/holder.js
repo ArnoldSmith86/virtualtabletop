@@ -22,7 +22,9 @@ class Holder extends Widget {
       stackOffsetX: 0,
       stackOffsetY: 0,
 
-      text: ''
+      text: '',
+      textPosition: 'center'
+
     });
   }
 
@@ -46,6 +48,27 @@ class Holder extends Widget {
 
       return compareDropTarget(w, this, true);
     });
+  }
+
+  css() {
+    let css = super.css();
+
+    if(this.get('textPosition'))
+      if (this.get('textPosition')=="top"){
+        css += '; align-items: start; padding-top: 10px';
+      } else if (this.get('textPosition')=="bottom"){
+        css += '; align-items: end; padding-bottom: 10px';
+      } else {
+        css += '; align-items: center;';
+      }
+
+    return css;
+  }
+
+  cssProperties() {
+    const p = super.cssProperties();
+    p.push('textPosition');
+    return p;
   }
 
   async dispenseCard(card) {
