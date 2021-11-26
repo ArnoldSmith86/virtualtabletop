@@ -1657,17 +1657,16 @@ window.addEventListener('mousemove', function(e) {
       if(jeState.mouseY >= widget.absoluteCoord('y') && jeState.mouseY <= widget.absoluteCoord('y')+widget.get('height'))
         hoveredWidgets.push(widget);
 
-  for(let i=1; i<=12; ++i) {
-    if(i==4)
-      ++i;
+  for(let i=1; i<=11; ++i) {
+    const hotkey = i>=4 ? i+1 : i;
     if(hoveredWidgets[i-1]) {
-      jeWidgetLayers[i] = hoveredWidgets[i-1];
+      jeWidgetLayers[hotkey] = hoveredWidgets[i-1];
       var deck = `${hoveredWidgets[i-1].get('type')}` == 'card' ? `\ndeck: ${hoveredWidgets[i-1].get('deck')}` : "";
       var cardType = `${hoveredWidgets[i-1].get('type')}` == 'card' ? `\ncardType: ${hoveredWidgets[i-1].get('cardType')}` : "";
-      $(`#jeWidgetLayer${i}`).textContent = `F${i}: ${hoveredWidgets[i-1].get('id')}\ntype: ${hoveredWidgets[i-1].get('type') || 'basic'} ${deck} ${cardType}`;
+      $(`#jeWidgetLayer${hotkey}`).textContent = `F${hotkey}: ${hoveredWidgets[i-1].get('id')}\ntype: ${hoveredWidgets[i-1].get('type') || 'basic'} ${deck} ${cardType}`;
     } else {
-      delete jeWidgetLayers[i];
-      $(`#jeWidgetLayer${i}`).textContent = '';
+      delete jeWidgetLayers[hotkey];
+      $(`#jeWidgetLayer${hotkey}`).textContent = '';
     }
   }
 
