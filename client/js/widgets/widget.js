@@ -287,8 +287,8 @@ export class Widget extends StateManaged {
 
     if(Array.isArray(this.get('clickRoutine')) && !(mode == 'ignoreClickRoutine' || mode =='ignoreAll')) {
       await this.evaluateRoutine('clickRoutine', {}, {});
-      if(this.end)
-        delete this.end;
+      if(end)
+        end = null;
       else
         return true;
     } else {
@@ -461,7 +461,7 @@ export class Widget extends StateManaged {
     const routine = this.get(property) !== null ? this.get(property) : property;
 
     for(const original of routine) {
-      if(this.end){
+      if(end){
         break;
       }
 
@@ -876,7 +876,7 @@ export class Widget extends StateManaged {
           if((a.thenBreak || a.thenEnd) && condition || (a.elseBreak || a.elseEnd) && !condition || this.end) {
             this.break = true;
             if(a.thenEnd || a.elseEnd) {
-              this.end = true;
+              var end = true;
             }
           } else {
             const branch = condition ? 'thenRoutine' : 'elseRoutine';
