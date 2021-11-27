@@ -1,5 +1,5 @@
 import { $, removeFromDOM, asArray } from '../domhelpers.js';
-import { StateManaged } from '../statemanaged.js';
+import { StateManaged, endRoutine } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay } from '../main.js';
