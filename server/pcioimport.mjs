@@ -307,9 +307,15 @@ export default async function convertPCIO(content) {
           object.height = object.h;
           delete object.w;
           delete object.h;
-          if(object.value == '/i/cards-default/2B.svg')
-            object.color = '#ffffff';
         }
+        face.objects.unshift({
+          width:     w.cardDefaults.width  || 103,
+          height:    w.cardDefaults.height || 160,
+          type:      'image',
+          color:     'white',
+          valueType: 'static',
+          value:     ''
+        });
       }
       let sortingOrder = 0;
       for(const type in w.cardTypes) {
