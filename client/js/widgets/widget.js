@@ -6,7 +6,7 @@ import { showOverlay } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 
 const readOnlyProperties = new Set(['_absoluteX', '_absoluteY', '_ancestor']);
-let end = null;
+let breakRoutine = null;
 
 export class Widget extends StateManaged {
   constructor(id) {
@@ -288,8 +288,8 @@ export class Widget extends StateManaged {
 
     if(Array.isArray(this.get('clickRoutine')) && !(mode == 'ignoreClickRoutine' || mode =='ignoreAll')) {
       await this.evaluateRoutine('clickRoutine', {}, {});
-      if(end)
-        end = null;
+      if(endRoutine)
+        endRoutine = null;
       else
         return true;
     } else {
@@ -462,7 +462,7 @@ export class Widget extends StateManaged {
     const routine = this.get(property) !== null ? this.get(property) : property;
 
     for(const original of routine) {
-      if(end){
+      if(endRoutine){
         break;
       }
 
@@ -875,9 +875,9 @@ export class Widget extends StateManaged {
           if (condition === undefined)
             condition = compute(a.relation, null, a.operand1, a.operand2);
           if((a.thenBreak || a.thenEnd) && condition || (a.elseBreak || a.elseEnd) && !condition) {
-            this.break = true;
+            breakRoutine = true;
             if(a.thenEnd || a.elseEnd) {
-              end = true;
+              endRoutine = true;
             }
           } else {
             const branch = condition ? 'thenRoutine' : 'elseRoutine';
@@ -1341,8 +1341,8 @@ export class Widget extends StateManaged {
       if(!jeRoutineLogging && problems.length)
         console.log(problems);
 
-      if(this.break || a.func == 'CALL' && !a.return) {
-        delete this.break;
+      if(breakRoutine || a.func == 'CALL' && !a.return) {
+        delete breakRoutine;
         break;
       }
     } // End iterate over functions in routine
@@ -1528,14 +1528,18 @@ export class Widget extends StateManaged {
       if(oldValue) {
         const oldParent = widgets.get(oldValue);
         await oldParent.onChildRemove(this);
-        if(this.get('type') != 'holder' && Array.isArray(oldParent.get('leaveRoutine')))
+        if(this.get('type') != 'holder' && Array.isArray(oldParent.get('leaveRoutine'))) {
           await oldParent.evaluateRoutine('leaveRoutine', {}, { child: [ this ] });
+          endRoutine = null;
+        }
       }
       if(newValue) {
         const newParent = widgets.get(newValue);
         await newParent.onChildAdd(this, oldValue);
-        if(Array.isArray(newParent.get('enterRoutine')))
+        if(Array.isArray(newParent.get('enterRoutine'))) {
           await newParent.evaluateRoutine('enterRoutine', { oldParentID: oldValue === undefined ? null : oldValue }, { child: [ this ] });
+          endRoutine = null;
+        }
       }
       if(!this.disablePileUpdateAfterParentChange)
         await this.updatePiles();
