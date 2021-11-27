@@ -1,7 +1,7 @@
 import { sendPropertyUpdate } from './serverstate.js';
 import { tracingEnabled } from './tracing.js';
 
-let endRoutine = null;
+export let endRoutine = null;
 
 export class StateManaged {
   constructor() {
