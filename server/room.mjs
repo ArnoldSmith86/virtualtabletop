@@ -431,6 +431,9 @@ export default class Room {
           headers: { 'Content-Type': 'application/octet-stream' },
           body: zipBuffer
         });
+        const putText = await putResult.text();
+        if(putText != 'OK')
+          throw Error(`moveServer failed: ${putText}`);
 
         this.state._meta.redirectTo = targetServer;
         this.broadcast('redirect', targetServer.url + '/' + this.id);
