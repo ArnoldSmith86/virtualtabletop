@@ -1530,7 +1530,6 @@ export class Widget extends StateManaged {
         await oldParent.onChildRemove(this);
         if(this.get('type') != 'holder' && Array.isArray(oldParent.get('leaveRoutine'))) {
           await oldParent.evaluateRoutine('leaveRoutine', {}, { child: [ this ] });
-          endRoutine = null;
         }
       }
       if(newValue) {
