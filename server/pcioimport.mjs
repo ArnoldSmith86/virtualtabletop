@@ -667,7 +667,7 @@ export default async function convertPCIO(content) {
         });
       }
 
-      for(let c of widget.clickRoutine || []) {
+      for(let c of widget.clickRoutine ? (widget.clickRoutine.steps || widget.clickRoutine) : []) {
         if(c.func == 'MOVE_CARDS_BETWEEN_HOLDERS') {
           if(!c.args.from || !c.args.to)
             continue;
