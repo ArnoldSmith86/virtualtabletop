@@ -1342,7 +1342,7 @@ export class Widget extends StateManaged {
         console.log(problems);
 
       if(breakRoutine || a.func == 'CALL' && !a.return) {
-        delete breakRoutine;
+        breakRoutine = null;
         break;
       }
     } // End iterate over functions in routine
