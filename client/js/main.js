@@ -119,8 +119,10 @@ function checkURLproperties(connected) {
       urlProperties = {};
     }
 
-    if(urlProperties.player)
+    if(urlProperties.player) {
       playerName = urlProperties.player;
+      localStorage.setItem('playerName', playerName);
+    }
     if(urlProperties.hideToolbar) {
       $('#toolbar').style.display = 'none';
       document.documentElement.style.setProperty('--toolbarSize', 0);
