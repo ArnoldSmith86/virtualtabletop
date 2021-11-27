@@ -476,7 +476,7 @@ export default class Room {
 
   unload() {
     this.trace('unload', {});
-    if(Object.keys(this.state).length > 1 || Object.keys(this.state._meta.states).length) {
+    if(Object.keys(this.state).length > 1 || Object.keys(this.state._meta.states).length || this.state._meta.redirectTo || this.state._meta.returnServer) {
       Logging.log(`unloading room ${this.id}`);
       this.writeToFilesystem();
     } else {
