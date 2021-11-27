@@ -310,9 +310,12 @@ export default async function convertPCIO(content) {
             object.color = '#ffffff';
         }
       }
-      for(const type in w.cardTypes)
+      let sortingOrder = 0;
+      for(const type in w.cardTypes) {
         for(const key in w.cardTypes[type])
           w.cardTypes[type][key] = mapName(w.cardTypes[type][key]);
+        w.cardTypes[type].sortingOrder = ++sortingOrder;
+      }
     } else if(widget.type == 'card' || widget.type == 'piece') {
       if(!byID[widget.deck]) // orphan card without deck
         continue;
@@ -700,6 +703,20 @@ export default async function convertPCIO(content) {
           };
           if(c.holder.length == 1)
             c.holder = c.holder[0];
+        }
+        if(c.func == 'SORT_CARDS') {
+          if(!c.args.sources)
+            continue;
+          c = {
+            func:   'SORT',
+            holder: c.args.sources.value,
+            key:    'sortingOrder',
+            reverse: c.args.direction.value != 'za'
+          };
+          if(c.holder.length == 1)
+            c.holder = c.holder[0];
+          if(!c.reverse)
+            delete c.reverse;
         }
         if(c.func == "FLIP_CARDS") {
           if(!c.args.holders)
