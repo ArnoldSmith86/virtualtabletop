@@ -300,7 +300,8 @@ export default async function convertPCIO(content) {
         delete face.includeBorder;
         delete face.includeRadius;
         for(const object of face.objects) {
-          object.value = mapName(object.value);
+          if(object.value)
+            object.value = mapName(object.value);
           object.width = object.w;
           object.height = object.h;
           delete object.w;
