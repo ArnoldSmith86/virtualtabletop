@@ -310,6 +310,10 @@ export class Widget extends StateManaged {
     const p = this.get('parent');
     return (widgets.has(p)) ? widgets.get(p).coordGlobalFromCoordLocal(coordParent) : coordParent;
   }
+  coordGlobalInside(coordGlobal) {
+    const coordLocal = this.coordLocalFromCoordGlobal(coordGlobal);
+    return coordLocal.x >= 0 && coordLocal.y >= 0 && coordLocal.x <= this.get('width') && coordLocal.y <= this.get('height');
+  }
   coordLocalFromCoordGlobal(coordGlobal) {
     return this.coordLocalFromCoordParent(this.coordParentFromCoordGlobal(coordGlobal));
   }
@@ -1500,7 +1504,7 @@ export class Widget extends StateManaged {
 
       this.hoverTargetChanged = false;
       if(this.hoverTarget) {
-        if(overlap(this.domElement, this.hoverTarget.domElement)) {
+        if(overlap(this.domElement, this.hoverTarget.domElement) && this.hoverTarget.coordGlobalInside(coordGlobal)) {
           this.hoverTargetDistance = distance(myCenter, this.hoverTargetCenter);
         } else {
           this.hoverTargetDistance = 99999;
@@ -1513,7 +1517,7 @@ export class Widget extends StateManaged {
         const tCenter = center(t.domElement);
         const d = distance(myCenter, tCenter);
         if(d < this.hoverTargetDistance) {
-          if(overlap(this.domElement, t.domElement)) {
+          if(overlap(this.domElement, t.domElement) && t.coordGlobalInside(coordGlobal)) {
             this.hoverTargetChanged = this.hoverTarget != t;
             this.hoverTarget = t;
             this.hoverTargetCenter = tCenter;
