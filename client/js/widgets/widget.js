@@ -944,7 +944,22 @@ export class Widget extends StateManaged {
 
         if(this.isValidID(a.from, problems) && this.isValidID(a.to, problems)) {
           await w(a.from, async source=>await w(a.to, async target=>{
-            for(const c of source.children().slice(0, count).reverse()) {
+            let sourceWidgets = source.children();
+
+            if(source.get('type') == 'seat') {
+              sourceWidgets = [];
+              if(source.get('hand') && source.get('player')) {
+                if(widgets.has(source.get('hand'))) {
+                  sourceWidgets = widgets.get(source.get('hand')).children().filter(w=>w.get('owner')==source.get('player'));
+                } else {
+                  problems.push(`Seat ${source.id} declares 'hand: ${source.get('hand')}' which does not exist.`);
+                }
+              } else {
+                problems.push(`Seat ${source.id} is empty or does not define a hand.`);
+              }
+            }
+
+            for(const c of sourceWidgets.slice(0, count).reverse()) {
               const applyFlip = async function() {
                 if(a.face !== null && c.flip)
                   await c.flip(a.face);
