@@ -985,7 +985,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'MOVEXY') {
-        setDefaults(a, { count: 1, face: null, x: 0, y: 0 });
+        setDefaults(a, { count: 1, face: null, x: 0, y: 0, snapToGrid: true });
         if(this.isValidID(a.from, problems)) {
           await w(a.from, async source=>{
             for(const c of source.children().slice(0, a.count || 999999).reverse()) {
@@ -993,6 +993,8 @@ export class Widget extends StateManaged {
                 c.flip(a.face);
               await c.bringToFront();
               await c.setPosition(a.x, a.y, a.z || c.get('z'));
+              if(a.snapToGrid)
+                await c.snapToGrid();
               await c.set('parent', null);
             }
           });
@@ -1419,6 +1421,7 @@ export class Widget extends StateManaged {
       sendTraceEvent('move', { id: this.get('id'), x, y, newX, newY });
 
     await this.setPosition(newX, newY, this.get('z'));
+    await this.snapToGrid();
 
     if(!this.get('fixedParent')) {
       const myCenter = center(this.domElement);
@@ -1533,45 +1536,17 @@ export class Widget extends StateManaged {
       await this.set('rotation', degrees);
   }
 
-  async setPosition(x, y, z) {
-    if(this.get('grid').length && !this.get('parent')) {
-      let closest = null;
-      let closestDistance = 999999;
-
-      for(const grid of this.get('grid')) {
-        if(x < (grid.minX || -99999) || x > (grid.maxX || 99999))
-          continue;
-        if(y < (grid.minY || -99999) || y > (grid.maxY || 99999))
-          continue;
-
-        const snapX = x + grid.x/2 - mod(x - (grid.offsetX || 0), grid.x);
-        const snapY = y + grid.y/2 - mod(y - (grid.offsetY || 0), grid.y);
-
-        const distance = (snapX - x) ** 2 + (snapY - y) ** 2;
-        if(distance < closestDistance) {
-          closest = [ snapX, snapY, grid ];
-          closestDistance = distance;
-        }
-      }
-
-      if(closest) {
-        x = closest[0];
-        y = closest[1];
-        for(const p in closest[2])
-          if([ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY' ].indexOf(p) == -1)
-            await this.set(p, closest[2][p]);
-      }
-
-      this.snappingToGrid = false;
-    }
-    await super.setPosition(x, y, z);
-  }
-
   async setText(text, mode, problems) {
     if (this.get('text') !== undefined) {
-      if(mode == 'inc' || mode == 'dec')
-        await this.set('text', (parseInt(this.get('text')) || 0) + (mode == 'dec' ? -1 : 1) * text);
-      else if(mode == 'append')
+      if(mode == 'inc' || mode == 'dec') {
+        let newText = (parseFloat(this.get('text')) || 0) + (mode == 'dec' ? -1 : 1) * text;
+        const decimalPlacesOld = this.get('text').toString().match(/\..*$/);
+        const decimalPlacesChange = text.toString().match(/\..*$/);
+        const decimalPlaces = Math.max(decimalPlacesOld ? decimalPlacesOld[0].length-1 : 0, decimalPlacesChange ? decimalPlacesChange[0].length-1 : 0);
+        const factor = 10**decimalPlaces;
+        newText = Math.round(newText*factor)/factor;
+        await this.set('text', newText);
+      } else if(mode == 'append')
         await this.set('text', this.get('text') + text);
       else if(Array.isArray(text))
         await this.set('text', text.join(', '));
@@ -1633,6 +1608,39 @@ export class Widget extends StateManaged {
       on('#buttonInputCancel', 'click', cancelHandler);
       showOverlay('buttonInputOverlay');
     });
+  }
+
+  async snapToGrid() {
+    if(this.get('grid').length) {
+      const x = this.get('x');
+      const y = this.get('y');
+
+      let closest = null;
+      let closestDistance = 999999;
+
+      for(const grid of this.get('grid')) {
+        if(x < (grid.minX || -99999) || x > (grid.maxX || 99999))
+          continue;
+        if(y < (grid.minY || -99999) || y > (grid.maxY || 99999))
+          continue;
+
+        const snapX = x + grid.x/2 - mod(x - (grid.offsetX || 0), grid.x);
+        const snapY = y + grid.y/2 - mod(y - (grid.offsetY || 0), grid.y);
+
+        const distance = (snapX - x) ** 2 + (snapY - y) ** 2;
+        if(distance < closestDistance) {
+          closest = [ snapX, snapY, grid ];
+          closestDistance = distance;
+        }
+      }
+
+      if(closest) {
+        this.setPosition(closest[0], closest[1], this.get('z'));
+        for(const p in closest[2])
+          if([ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY' ].indexOf(p) == -1)
+            await this.set(p, closest[2][p]);
+      }
+    }
   }
 
   async sortWidgets(w, key, reverse, locales, options, rearrange) {
