@@ -140,7 +140,9 @@ class Pile extends Widget {
   css() {
     let css = super.css();
 
-    if(this.get('handleSize') != 'auto')
+    if(this.get('handleSize') == 'auto')
+      css += '; --phSize:40px';
+    else
       css += '; --phSize:' + this.get('handleSize') + 'px';
     css += '; --phPosition:-' + this.get('handleOffset') + 'px';
 
