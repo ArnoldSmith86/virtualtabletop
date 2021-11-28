@@ -30,9 +30,22 @@
   cursor: pointer;
 }
 
+#editJSONoverlay {
+  padding: 10px;
+}
+
+#editJSONoverlay h1 {
+  margin: 0;
+}
+
 #editJSONoverlay textarea {
-    height: 100%;
+  height: 100%;
+}
+
+@media only screen and (max-width: 500px) {
+  #editJSONoverlay textarea {
     min-height: 100%;
+  }
 }
 
 #editOverlay {
