@@ -704,15 +704,25 @@ export default async function convertPCIO(content) {
         if(c.func == 'RECALL_CARDS') {
           if(!c.args.decks)
             continue;
+          const holders = c.args.decks.value.map(d=>byID[d].parent);
+          const flip = c.args.flip;
           c = {
             func:   'RECALL',
-            holder: c.args.decks.value.map(d=>byID[d].parent),
+            holder: holders,
             owned:  c.args.includeHands.value == 'hands'
           };
           if(c.holder.length == 1)
             c.holder = c.holder[0];
           if(c.owned)
             delete c.owned;
+          if(!flip || flip.value != 'none') {
+            w.clickRoutine.push(c);
+            c = {
+              func:   'FLIP',
+              holder: holders,
+              face:   flip && flip.value == 'faceUp' ? 1 : 0
+            };
+          }
         }
         if(c.func == 'SHUFFLE_CARDS') {
           if(!c.args.holders)
