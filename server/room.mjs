@@ -340,7 +340,7 @@ export default class Room {
       this.state._meta.returnServer = returnServer;
       this.state._meta.returnState = returnState == 'true';
     }
-    if(zipBody) {
+    if(zipBody && zipBody.length) {
       await this.addState('serverMove', 'file', zipBody, 'source', false);
       await this.loadState(null, 'serverMove', 'serverMove');
       this.removeState(null, 'serverMove');
