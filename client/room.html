@@ -5,9 +5,9 @@
   <meta charset="utf-8">
   <title>VirtualTabletop.io</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="icon" sizes="any" href="/i/branding/favicon-32.png"/>
   <link rel="icon" type="image/svg+xml" href="/i/branding/favicon.svg"/>
   <link rel="apple-touch-icon" sizes="180x180" href="/i/branding/ios-icon.png">
-  <link rel="alternate icon" href="/i/branding/favicon-32.png"/>
   <link rel="manifest" href="/i/branding/manifest.json">
   <link rel="mask-icon" href="/i/branding/mask-icon.svg">
   <script src="https://cdn.jsdelivr.net/combine/npm/vue@3.0.7/dist/vue.global.prod.js,npm/jszip@3.6.0/dist/jszip.min.js"></script>
@@ -151,8 +151,7 @@
 
       <div id="editJSONoverlay" class="overlay">
         <h1>Edit widget JSON</h1>
-        <p>Please check <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Creating-Games">our GitHub wiki for documentation</a>.</p>
-        <p>You can open this room in <a href="https://virtualtabletop.io/legacy-editor.htm" id="legacy-link">the legacy editor</a>. Be sure to have <b>backups</b> on your harddrive first (of every game in your room)!</p>
+        <p>Please check <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Creating-Games">our GitHub wiki for documentation</a>. You can also open this room in <a href="https://virtualtabletop.io/legacy-editor.htm" id="legacy-link">the legacy editor</a> or press CTRL+J for the advanced JSON editor.</p>
         <textarea id="editWidgetJSON"></textarea>
         <base-edit-overlay :json-edit="true"></base-edit-overlay>
       </div>
