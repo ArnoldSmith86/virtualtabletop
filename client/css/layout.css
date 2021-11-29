@@ -420,49 +420,49 @@ body.aspectTooGood #hideToolbarButton {
 }
 
 #statesButton::before {
-  content:'library';
+  content:'_library';
 }
 #statesButton .tooltip{
   font-weight: 900;
 }
 #playersButton::before {
-  content:'users_settings';
+  content:'_users_settings';
 }
 #editButton::before {
-  content:'edit_mode';
+  content:'_edit_mode';
 }
 #addButton::before {
-  content:'widget_add';
+  content:'_widget_add';
 }
 html:not(:fullscreen) #fullscreenButton::before {
-  content:'enter_fullscreen';
+  content:'_enter_fullscreen';
 }
 html:fullscreen #fullscreenButton::before {
-  content:'exit_fullscreen';
+  content:'_exit_fullscreen';
 }
 html:not(:fullscreen) #fullscreenButton .tooltip::before {
-  content:'';
+  content:'_';
 }
 html:fullscreen #fullscreenButton .tooltip::before {
-  content:'Exit ';
+  content:'_Exit ';
 }
 html:not(:-webkit-full-screen) #fullscreenButton::before {
-  content:'enter_fullscreen';
+  content:'_enter_fullscreen';
 }
 html:-webkit-full-screen #fullscreenButton::before {
-  content:'exit_fullscreen';
+  content:'_exit_fullscreen';
 }
 html:not(:-webkit-full-screen) #fullscreenButton .tooltip::before {
-  content:'';
+  content:'_';
 }
 html:-webkit-full-screen #fullscreenButton .tooltip::before {
-  content:'Exit ';
+  content:'_Exit ';
 }
 #hideToolbarButton::before {
-  content:'hide';
+  content:'_hide';
 }
 #aboutButton::before {
-  content:'vtt_logo';
+  content:'_vtt_logo';
 }
 
 /*Buttons css*/
@@ -521,43 +521,43 @@ html:-webkit-full-screen #fullscreenButton .tooltip::before {
 }
 
 .upload::before, .uploadAsset::before {
-  content:'upload';
+  content:'_upload';
 }
 
 .download::before {
-  content:'download';
+  content:'_download';
 }
 
 .link::before,.share::before {
-  content:'link';
+  content:'_link';
 }
 
 .edit::before {
-  content:'edit';
+  content:'_edit';
 }
 
 .create::before {
-  content:'add';
+  content:'_add';
 }
 
 .library::before {
-  content:'book_open';
+  content:'_book_open';
 }
 
 .play::before {
-  content:'play_arrow';
+  content:'_play_arrow';
 }
 
 .save::before, .saveProgress::before {
-  content:'save';
+  content:'_save';
 }
 
 .update::before {
-  content:'save';
+  content:'_save';
 }
 
 .remove::before {
-  content:'close_square';
+  content:'_close_square';
 }
 
 button.top {
@@ -570,7 +570,7 @@ button.add {
   flex-direction: column;
 }
 button.add::before {
-  content:'add';
+  content:'_add';
   margin: -4px 0 0 0;
 }
 button:disabled {
