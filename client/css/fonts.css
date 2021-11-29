@@ -113,7 +113,7 @@
     src: url('/i/fonts/Material-Icons.woff2') format('woff2');
   }
   
-  .material-icons {
+.material-icons {
     font-family: 'Material Icons';
     font-weight: normal;
     font-style: normal;
@@ -128,7 +128,42 @@
     -webkit-font-feature-settings: 'liga';
     -webkit-font-smoothing: antialiased;
     font-feature-settings: 'liga';
-  }
+}
+
+@font-face {
+font-family: 'VirtualTabletop-Symbols';
+src:
+    url('/i/fonts/VirtualTabletop-Symbols.ttf?afo4yd') format('truetype'),
+    url('/i/fonts/VirtualTabletop-Symbols.woff?afo4yd') format('woff');
+font-weight: normal;
+font-style: normal;
+font-display: block;
+}
+
+.icon {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'VirtualTabletop-Symbols' !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Enable Ligatures ================ */
+    letter-spacing: 0;
+    -webkit-font-feature-settings: "liga";
+    -moz-font-feature-settings: "liga=1";
+    -moz-font-feature-settings: "liga";
+    -ms-font-feature-settings: "liga" 1;
+    font-feature-settings: "liga";
+    -webkit-font-variant-ligatures: discretionary-ligatures;
+    font-variant-ligatures: discretionary-ligatures;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 
 @font-face {
     font-family: 'Handwriting Casual';

@@ -142,3 +142,11 @@
 #libraryList .section .notes {
   text-align: center;
 }
+.emptyRoomOptions > div{
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+#stateEditOverlay .input{
+  display: flex;
+}
