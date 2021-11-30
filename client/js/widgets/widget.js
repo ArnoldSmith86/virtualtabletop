@@ -36,6 +36,8 @@ export class Widget extends StateManaged {
       movableInEdit: true,
       clickable: false,
 
+      hoverCSS: '',
+
       grid: [],
       enlarge: false,
       overlap: true,
@@ -134,6 +136,17 @@ export class Widget extends StateManaged {
     if(delta.movable !== undefined)
       this.isDraggable = delta.movable;
 
+    if(delta.hoverCSS !== undefined) {
+      if($(`[id="${this.id}STYLESHEET"]`))
+        removeFromDOM($(`[id="${this.id}STYLESHEET"]`));
+      if(this.get('hoverCSS')) {
+        const style = document.createElement('style');
+        style.id = `${this.id}STYLESHEET`;
+        style.appendChild(document.createTextNode(`[id=${this.id}]:hover { ${this.get('hoverCSS')} }`));
+        $('head').appendChild(style);
+      }
+    }
+
     if(delta.parent !== undefined) {
       if(this.parent)
         this.parent.applyChildRemove(this);
@@ -214,6 +227,8 @@ export class Widget extends StateManaged {
     if(this.get('deck') && widgets.has(this.get('deck')))
       widgets.get(this.get('deck')).removeCard(this);
     removeFromDOM(this.domElement);
+    if($(`[id="${this.id}STYLESHEET"]`))
+      removeFromDOM($(`[id="${this.id}STYLESHEET"]`));
     this.inheritFromUnregister();
   }
 
