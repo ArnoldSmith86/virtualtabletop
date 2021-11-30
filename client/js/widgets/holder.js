@@ -10,6 +10,7 @@ class Holder extends Widget {
       typeClasses: 'widget holder',
 
       dropTarget: { type: 'card' },
+      dropHighlightCSS: '',
       dropOffsetX: 4,
       dropOffsetY: 4,
       dropLimit: -1,
@@ -22,6 +23,26 @@ class Holder extends Widget {
       stackOffsetX: 0,
       stackOffsetY: 0
     });
+  }
+
+  applyDeltaToDOM(delta) {
+    super.applyDeltaToDOM(delta);
+    if(delta.dropHighlightCSS !== undefined) {
+      if($(`[id="${this.id}DROPHIGHLIGHTSTYLESHEET"]`))
+        removeFromDOM($(`[id="${this.id}DROPHIGHLIGHTSTYLESHEET"]`));
+      if(this.get('dropHighlightCSS')) {
+        const style = document.createElement('style');
+        style.id = `${this.id}DROPHIGHLIGHTSTYLESHEET`;
+        style.appendChild(document.createTextNode(`[id=${this.id}].droppable.droptarget { ${this.get('dropHighlightCSS')} }`));
+        $('head').appendChild(style);
+      }
+    }
+  }
+
+  applyRemove() {
+    super.applyRemove();
+    if($(`[id="${this.id}DROPHIGHLIGHTSTYLESHEET"]`))
+      removeFromDOM($(`[id="${this.id}DROPHIGHLIGHTSTYLESHEET"]`));
   }
 
   children() {
