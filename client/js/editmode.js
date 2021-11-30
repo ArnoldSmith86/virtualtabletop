@@ -71,7 +71,6 @@ function applyEditOptionsBasic(widget) {
 function populateEditOptionsButton(widget) {
   $('#buttonText').value = widget.text || "~ no text found ~";
   $('#buttonImage').value = widget.image || "~ no image found ~";
-  $('#buttonDebug').checked = widget.debug;
   $('#buttonColorMain').value = widget.backgroundColor || "#1f5ca6";
   $('#buttonColorBorder').value = widget.borderColor || "#0d2f5e";
   $('#buttonColorText').value = widget.textColor || "#ffffff"
@@ -119,8 +118,6 @@ function applyEditOptionsButton(widget) {
     delete widget.textColor;
   else
     widget.textColor = $('#buttonColorText').value;
-
-  widget.debug = $('#buttonDebug').checked;
 }
 
 //canvas functions
