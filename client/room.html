@@ -284,28 +284,28 @@
           <div class="input"><label>Attribution:</label> <textarea class="stateAttribution"></textarea></div>
           <div class="input"><label>Update link:</label> <input class="stateLink"/></div>
           <div class="editOverlayButtonBar">
-            <button class="ui-button green update">Update variant using current room state</button>
-            <button class="ui-button download">Download variant</button>
-            <button class="ui-button red remove">Remove variant</button>
+            <button class="ui-button green update update-current-state">Update variant using current room state</button>
+            <button class="ui-button download download-variant">Download variant</button>
+            <button class="ui-button red remove remove-variant">Remove variant</button>
           </div>
         </script>
       </div>
       <div id="addVariant" class="buttons">
         Add variant:
         <div class="editOverlayButtonBar">
-          <button class="ui-button create">Use current room state</button>
-          <button class="ui-button library">From the Public library</button>
-          <button class="ui-button link">Enter link</button>
-          <button class="ui-button upload">Upload file</button>
+          <button class="ui-button create create-current-state">Use current room state</button>
+          <button class="ui-button library create-from-library">From the Public library</button>
+          <button class="ui-button link create-from-link">Enter link</button>
+          <button class="ui-button upload create-upload-file">Upload file</button>
         </div>
       </div>
       <hr/>
-      <p class="editOverlayButtonBar">
-        <button class="ui-button green save">Save</button>
-        <button class="ui-button share">Share link</button>
-        <button class="ui-button download">Download</button>
-        <button class="ui-button red remove">Remove</button>
-      </p>
+      <div class="editOverlayButtonBar">
+        <button class="ui-button green save save-game">Save</button>
+        <button class="ui-button share share-game">Share link</button>
+        <button class="ui-button download download-game">Download</button>
+        <button class="ui-button red remove remove-game">Remove</button>
+      </div>
     </div>
 
     <div id="shareLinkOverlay" class="overlay">

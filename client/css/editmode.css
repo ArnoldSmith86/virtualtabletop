@@ -76,7 +76,6 @@
 
 .editOverlayButtonBar{
   display: flex;
-  margin: 0;
 }
 
 #editOverlay::-webkit-scrollbar-track {

@@ -417,10 +417,6 @@ body.aspectTooGood #hideToolbarButton {
   visibility: hidden;
 }
 
-.editOverlayButtonBar{
-  display: flex;
-}
-
 #statesButton::before {
   content:'[library]';
 }
