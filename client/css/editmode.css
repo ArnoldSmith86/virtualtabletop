@@ -74,6 +74,11 @@
   width: 90%;
 }
 
+.editOverlayButtonBar{
+  display: flex;
+  margin: 0;
+}
+
 #editOverlay::-webkit-scrollbar-track {
   margin: 5vh;
 }

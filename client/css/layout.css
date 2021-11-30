@@ -24,7 +24,9 @@ body {
   overflow: hidden;
   font-family: 'VTT-Roboto', sans-serif;
 }
-
+*{
+  font-family: 'VTT-Roboto', sans-serif;
+}
 button {
   border:5px;
   color:white;
