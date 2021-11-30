@@ -20,12 +20,26 @@
 }
 
 #addOverlay > .category > button {
-  display: block;
+  display: flex;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 8px;
 }
-
+#uploadBoard::before, #uploadToken::before{
+  content:'[upload]';
+}
+#addBasicWidget::before{
+  content:'[widget_add]';
+}
+#addCanvas::before{
+  content:'[color]';
+}
+#addSeat::before{
+  content:'[face]';
+}
+#addHand::before{
+  content:'[holder_hand]';
+}
 #addOverlay .widget, #addOverlay textarea {
   cursor: pointer;
 }

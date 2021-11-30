@@ -561,6 +561,10 @@ button .edit::before {
   content:'[close_square]';
 }
 
+button {
+  font-family: 'Roboto', sans-serif;
+}
+
 button.top {
   padding: 0px;
   margin: 0.5px;
@@ -600,6 +604,7 @@ button:disabled {
   display: flex;
   align-items: center;
   gap: 8px;
+  cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px 0px, rgba(0, 0, 0, 0.24) 0px 1px 2px 0px;
 }
 
@@ -607,7 +612,7 @@ button:disabled {
   display: inline-block;
   width: auto;
   height: 36px;
-  font-size: 18px;
+  font-size: 30px;
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'VirtualTabletop-Symbols' !important;
   speak: never;
