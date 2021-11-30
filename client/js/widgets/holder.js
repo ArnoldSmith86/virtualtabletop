@@ -16,6 +16,9 @@ class Holder extends Widget {
       alignChildren: true,
       childrenPerOwner: false,
 
+      highlightBackground: null,
+      highlightBorder: 'calc(1px / var(--scale)) solid #333',
+
       onEnter: {},
       onLeave: {},
 
@@ -38,6 +41,28 @@ class Holder extends Widget {
 
       return compareDropTarget(w, this, true);
     });
+  }
+
+  css() {
+    let css = super.css();
+
+    const cssBackground = this.get('css').match(/background:([^;]+)/);
+    if(this.get('highlightBackground'))
+      css += '; --highlightBackground:' + this.get('highlightBackground');
+    else if(cssBackground)
+      css += '; --highlightBackground:' + cssBackground[1];
+    else
+      css += '; --highlightBackground:white';
+
+    css += '; --highlightBorder:' + this.get('highlightBorder');
+
+    return css;
+  }
+
+  cssProperties() {
+    const p = super.cssProperties();
+    p.push('highlightBackground', 'highlightBorder');
+    return p;
   }
 
   async dispenseCard(card) {
