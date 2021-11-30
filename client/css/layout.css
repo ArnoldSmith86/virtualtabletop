@@ -114,7 +114,7 @@ button:hover {
   height: calc(var(--toolbarSize) - 4px);
   font-size: calc(var(--toolbarSize) - 12px);
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'VirtualTabletop-Symbols' !important;
+  font-family: 'VTT-Symbols' !important;
   speak: never;
   font-style: normal;
   font-weight: normal;
@@ -489,7 +489,7 @@ html:-webkit-full-screen #fullscreenButton .tooltip::before {
   height: 18px;
   font-size: 18px;
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'VirtualTabletop-Symbols' !important;
+  font-family: 'VTT-Symbols' !important;
   speak: never;
   font-style: normal;
   font-weight: normal;
@@ -614,7 +614,7 @@ button:disabled {
   height: 36px;
   font-size: 30px;
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'VirtualTabletop-Symbols' !important;
+  font-family: 'VTT-Symbols' !important;
   speak: never;
   font-style: normal;
   font-weight: normal;

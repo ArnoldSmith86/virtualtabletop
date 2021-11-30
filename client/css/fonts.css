@@ -1,7 +1,7 @@
 @font-face {
     font-family: 'Roboto';
-    src: url('/i/fonts/Roboto-Bold.woff2') format('woff2'),
-        url('/i/fonts/Roboto-Bold.woff') format('woff');
+    src: url('/i/fonts/Roboto-Bold.woff2?9290850986') format('woff2'),
+        url('/i/fonts/Roboto-Bold.woff?9290850986') format('woff');
     font-weight: bold;
     font-style: normal;
     font-display: swap;
@@ -9,8 +9,8 @@
 
 @font-face {
     font-family: 'Roboto';
-    src: url('/i/fonts/Roboto-LightItalic.woff2') format('woff2'),
-        url('/i/fonts/Roboto-LightItalic.woff') format('woff');
+    src: url('/i/fonts/Roboto-LightItalic.woff2?9290850986') format('woff2'),
+        url('/i/fonts/Roboto-LightItalic.woff?9290850986') format('woff');
     font-weight: 300;
     font-style: italic;
     font-display: swap;
@@ -18,8 +18,8 @@
 
 @font-face {
     font-family: 'Roboto';
-    src: url('/i/fonts/Roboto-Black.woff2') format('woff2'),
-        url('/i/fonts/Roboto-Black.woff') format('woff');
+    src: url('/i/fonts/Roboto-Black.woff2?9290850986') format('woff2'),
+        url('/i/fonts/Roboto-Black.woff?9290850986') format('woff');
     font-weight: 900;
     font-style: normal;
     font-display: swap;
@@ -27,8 +27,8 @@
 
 @font-face {
     font-family: 'Roboto';
-    src: url('/i/fonts/Roboto-BoldItalic.woff2') format('woff2'),
-        url('/i/fonts/Roboto-BoldItalic.woff') format('woff');
+    src: url('/i/fonts/Roboto-BoldItalic.woff2?9290850986') format('woff2'),
+        url('/i/fonts/Roboto-BoldItalic.woff?9290850986') format('woff');
     font-weight: bold;
     font-style: italic;
     font-display: swap;
@@ -36,8 +36,8 @@
 
 @font-face {
     font-family: 'Roboto';
-    src: url('/i/fonts/Roboto-Medium.woff2') format('woff2'),
-        url('/i/fonts/Roboto-Medium.woff') format('woff');
+    src: url('/i/fonts/Roboto-Medium.woff2?9290850986') format('woff2'),
+        url('/i/fonts/Roboto-Medium.woff?9290850986') format('woff');
     font-weight: 500;
     font-style: normal;
     font-display: swap;
@@ -45,8 +45,8 @@
 
 @font-face {
     font-family: 'Roboto';
-    src: url('/i/fonts/Roboto-Italic.woff2') format('woff2'),
-        url('/i/fonts/Roboto-Italic.woff') format('woff');
+    src: url('/i/fonts/Roboto-Italic.woff2?9290850986') format('woff2'),
+        url('/i/fonts/Roboto-Italic.woff?9290850986') format('woff');
     font-weight: normal;
     font-style: italic;
     font-display: swap;
@@ -54,8 +54,8 @@
 
 @font-face {
     font-family: 'Roboto';
-    src: url('/i/fonts/Roboto-Light.woff2') format('woff2'),
-        url('/i/fonts/Roboto-Light.woff') format('woff');
+    src: url('/i/fonts/Roboto-Light.woff2?9290850986') format('woff2'),
+        url('/i/fonts/Roboto-Light.woff?9290850986') format('woff');
     font-weight: 300;
     font-style: normal;
     font-display: swap;
@@ -63,8 +63,8 @@
 
 @font-face {
     font-family: 'Roboto';
-    src: url('/i/fonts/Roboto-BlackItalic.woff2') format('woff2'),
-        url('/i/fonts/Roboto-BlackItalic.woff') format('woff');
+    src: url('/i/fonts/Roboto-BlackItalic.woff2?9290850986') format('woff2'),
+        url('/i/fonts/Roboto-BlackItalic.woff?9290850986') format('woff');
     font-weight: 900;
     font-style: italic;
     font-display: swap;
@@ -72,8 +72,8 @@
 
 @font-face {
     font-family: 'Roboto';
-    src: url('/i/fonts/Roboto-Thin.woff2') format('woff2'),
-        url('/i/fonts/Roboto-Thin.woff') format('woff');
+    src: url('/i/fonts/Roboto-Thin.woff2?9290850986') format('woff2'),
+        url('/i/fonts/Roboto-Thin.woff?9290850986') format('woff');
     font-weight: 100;
     font-style: normal;
     font-display: swap;
@@ -81,8 +81,8 @@
 
 @font-face {
     font-family: 'Roboto';
-    src: url('/i/fonts/Roboto-MediumItalic.woff2') format('woff2'),
-        url('/i/fonts/Roboto-MediumItalic.woff') format('woff');
+    src: url('/i/fonts/Roboto-MediumItalic.woff2?9290850986') format('woff2'),
+        url('/i/fonts/Roboto-MediumItalic.woff?9290850986') format('woff');
     font-weight: 500;
     font-style: italic;
     font-display: swap;
@@ -90,8 +90,8 @@
 
 @font-face {
     font-family: 'Roboto';
-    src: url('/i/fonts/Roboto-Regular.woff2') format('woff2'),
-        url('/i/fonts/Roboto-Regular.woff') format('woff');
+    src: url('/i/fonts/Roboto-Regular.woff2?9290850986') format('woff2'),
+        url('/i/fonts/Roboto-Regular.woff?9290850986') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -99,8 +99,8 @@
 
 @font-face {
     font-family: 'Roboto';
-    src: url('/i/fonts/Roboto-ThinItalic.woff2') format('woff2'),
-        url('/i/fonts/Roboto-ThinItalic.woff') format('woff');
+    src: url('/i/fonts/Roboto-ThinItalic.woff2?9290850986') format('woff2'),
+        url('/i/fonts/Roboto-ThinItalic.woff?9290850986') format('woff');
     font-weight: 100;
     font-style: italic;
     font-display: swap;
@@ -110,7 +110,7 @@
     font-family: 'Material Icons';
     font-style: normal;
     font-weight: 400;
-    src: url('/i/fonts/Material-Icons.woff2') format('woff2');
+    src: url('/i/fonts/Material-Icons.woff2?9290850986') format('woff2');
   }
   
 .material-icons {
@@ -131,10 +131,10 @@
 }
 
 @font-face {
-font-family: 'VirtualTabletop-Symbols';
+font-family: 'VTT-Symbols';
 src:
-    url('/i/fonts/VirtualTabletop-Symbols.ttf?afo4yd') format('truetype'),
-    url('/i/fonts/VirtualTabletop-Symbols.woff?afo4yd') format('woff');
+    url('/i/fonts/VTT-Symbols.ttf?9290850986') format('truetype'),
+    url('/i/fonts/VTT-Symbols.woff?9290850986') format('woff');
 font-weight: normal;
 font-style: normal;
 font-display: block;
@@ -142,7 +142,7 @@ font-display: block;
 
 .icon {
     /* use !important to prevent issues with browser extensions that change fonts */
-    font-family: 'VirtualTabletop-Symbols' !important;
+    font-family: 'VTT-Symbols' !important;
     speak: never;
     font-style: normal;
     font-weight: normal;
@@ -167,8 +167,8 @@ font-display: block;
 
 @font-face {
     font-family: 'Handwriting Casual';
-    src: url('/i/fonts/BrandonCasualRegular.woff2') format('woff2'),
-        url('/i/fonts/BrandonCasualRegular.woff') format('woff');
+    src: url('/i/fonts/BrandonCasualRegular.woff2?9290850986') format('woff2'),
+        url('/i/fonts/BrandonCasualRegular.woff?9290850986') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -176,8 +176,8 @@ font-display: block;
 
 @font-face {
     font-family: 'Handwriting';
-    src: url('/i/fonts/BrandonHandRegular.woff2') format('woff2'),
-        url('/i/fonts/BrandonHandRegular.woff') format('woff');
+    src: url('/i/fonts/BrandonHandRegular.woff2?9290850986') format('woff2'),
+        url('/i/fonts/BrandonHandRegular.woff?9290850986') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -185,8 +185,8 @@ font-display: block;
 
 @font-face {
     font-family: 'Handwriting';
-    src: url('/i/fonts/BrandonHandBold.woff2') format('woff2'),
-        url('/i/fonts/BrandonHandBold.woff') format('woff');
+    src: url('/i/fonts/BrandonHandBold.woff2?9290850986') format('woff2'),
+        url('/i/fonts/BrandonHandBold.woff?9290850986') format('woff');
     font-weight: bold;
     font-style: normal;
     font-display: swap;
@@ -194,8 +194,8 @@ font-display: block;
 
 @font-face {
     font-family: 'Handwriting';
-    src: url('/i/fonts/BrandonHandItalic.woff2') format('woff2'),
-        url('/i/fonts/BrandonHandItalic.woff') format('woff');
+    src: url('/i/fonts/BrandonHandItalic.woff2?9290850986') format('woff2'),
+        url('/i/fonts/BrandonHandItalic.woff?9290850986') format('woff');
     font-weight: normal;
     font-style: italic;
     font-display: swap;
@@ -203,8 +203,8 @@ font-display: block;
 
 @font-face {
     font-family: 'Handwriting';
-    src: url('/i/fonts/BrandonHandBoldItalic.woff2') format('woff2'),
-        url('/i/fonts/BrandonHandBoldItalic.woff') format('woff');
+    src: url('/i/fonts/BrandonHandBoldItalic.woff2?9290850986') format('woff2'),
+        url('/i/fonts/BrandonHandBoldItalic.woff?9290850986') format('woff');
     font-weight: bold;
     font-style: italic;
     font-display: swap;

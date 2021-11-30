@@ -36,6 +36,12 @@
 }
 #addSeat::before{
   content:'[face]';
+  border: 2px dashed white;
+  border-radius: 100%;
+  line-height: 30px;
+  height: 30px;
+  width: 30px;
+  color: #ffffff55;
 }
 #addHand::before{
   content:'[holder_hand]';
