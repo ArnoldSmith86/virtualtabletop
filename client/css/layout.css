@@ -420,49 +420,49 @@ body.aspectTooGood #hideToolbarButton {
 }
 
 #statesButton::before {
-  content:'_library';
+  content:'[library]';
 }
 #statesButton .tooltip{
   font-weight: 900;
 }
 #playersButton::before {
-  content:'_users_settings';
+  content:'[users_settings]';
 }
 #editButton::before {
-  content:'_edit_mode';
+  content:'[edit_mode]';
 }
 #addButton::before {
-  content:'_widget_add';
+  content:'[widget_add]';
 }
 html:not(:fullscreen) #fullscreenButton::before {
-  content:'_enter_fullscreen';
+  content:'[enter_fullscreen]';
 }
 html:fullscreen #fullscreenButton::before {
-  content:'_exit_fullscreen';
+  content:'[exit_fullscreen]';
 }
 html:not(:fullscreen) #fullscreenButton .tooltip::before {
-  content:'_';
+  content:'';
 }
 html:fullscreen #fullscreenButton .tooltip::before {
-  content:'_Exit ';
+  content:'Exit ';
 }
 html:not(:-webkit-full-screen) #fullscreenButton::before {
-  content:'_enter_fullscreen';
+  content:'[enter_fullscreen]';
 }
 html:-webkit-full-screen #fullscreenButton::before {
-  content:'_exit_fullscreen';
+  content:'[exit_fullscreen]';
 }
 html:not(:-webkit-full-screen) #fullscreenButton .tooltip::before {
-  content:'_';
+  content:'';
 }
 html:-webkit-full-screen #fullscreenButton .tooltip::before {
-  content:'_Exit ';
+  content:'Exit ';
 }
 #hideToolbarButton::before {
-  content:'_hide';
+  content:'[hide_side_bar]';
 }
 #aboutButton::before {
-  content:'_vtt_logo';
+  content:'[vtt_logo]';
 }
 
 /*Buttons css*/
@@ -479,6 +479,7 @@ html:-webkit-full-screen #fullscreenButton .tooltip::before {
   align-items: center;
   align-self: center;
   gap: 8px;
+  font-family: 'Roboto', sans-serif;
 }
 .prettyButton::before, button.add::before, .prettyButton-icon {
   display: inline-block;
@@ -521,43 +522,43 @@ html:-webkit-full-screen #fullscreenButton .tooltip::before {
 }
 
 .upload::before, .uploadAsset::before {
-  content:'_upload';
+  content:'[upload]';
 }
 
 .download::before {
-  content:'_download';
+  content:'[download]';
 }
 
 .link::before,.share::before {
-  content:'_link';
+  content:'[link]';
 }
 
-.edit::before {
-  content:'_edit';
+button .edit::before {
+  content:'[edit]';
 }
 
 .create::before {
-  content:'_add';
+  content:'[add]';
 }
 
 .library::before {
-  content:'_book_open';
+  content:'[book_open]';
 }
 
 .play::before {
-  content:'_play_arrow';
+  content:'[play_arrow]';
 }
 
 .save::before, .saveProgress::before {
-  content:'_save';
+  content:'[save]';
 }
 
 .update::before {
-  content:'_save';
+  content:'[save]';
 }
 
 .remove::before {
-  content:'_close_square';
+  content:'[close_square]';
 }
 
 button.top {
@@ -570,7 +571,7 @@ button.add {
   flex-direction: column;
 }
 button.add::before {
-  content:'_add';
+  content:'[add]';
   margin: -4px 0 0 0;
 }
 button:disabled {
