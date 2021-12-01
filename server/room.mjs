@@ -181,7 +181,7 @@ export default class Room {
       if(includeAssets)
         for(const asset of this.getAssetList(state))
           if(fs.existsSync(path.resolve() + '/save' + asset))
-            zip.file(asset, fs.readFileSync(path.resolve() + '/save' + asset));
+            zip.file(asset.substr(1), fs.readFileSync(path.resolve() + '/save' + asset));
     }
 
     const zipBuffer = await zip.generateAsync({type:'nodebuffer', compression: 'DEFLATE'});
@@ -258,8 +258,8 @@ export default class Room {
       await this.load(this.variantFilename(stateID, variantID), player);
   }
 
-  mouseMove(player, coords) {
-    this.broadcast('mouse', { player: player.name, coords });
+  mouseMove(player, mouseState) {
+    this.broadcast('mouse', { player: player.name, mouseState });
   }
 
   newPlayerColor() {
@@ -328,7 +328,12 @@ export default class Room {
   removePlayer(player) {
     this.trace('removePlayer', { player: player.name });
     Logging.log(`removing player ${player.name} from room ${this.id}`);
+
     this.players = this.players.filter(e => e != player);
+    if(player.name.match(/^Guest/) && !this.players.filter(e => e.name == player.name).length)
+      if(!Object.values(this.state).filter(w=>w.player==player.name||w.owner==player.name||Array.isArray(w.owner)&&w.owner.indexOf(player.name)!=-1).length)
+        delete this.state._meta.players[player.name];
+
     if(this.players.length == 0) {
       this.unload();
       this.unloadCallback();
@@ -343,6 +348,9 @@ export default class Room {
   }
 
   renamePlayer(renamingPlayer, oldName, newName) {
+    if(oldName == newName)
+      return;
+
     this.state._meta.players[newName] = this.state._meta.players[newName] || this.state._meta.players[oldName];
     delete this.state._meta.players[oldName];
 

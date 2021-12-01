@@ -28,10 +28,12 @@ class Deck extends Widget {
   }
 
   cardPropertyGet(cardType, face, property) {
-    if(this.get('faceTemplates')[face] && this.get('faceTemplates')[face][property] !== undefined)
-      return this.get('faceTemplates')[face][property];
-    if(this.get('cardTypes')[cardType] && this.get('cardTypes')[cardType][property] !== undefined)
-      return this.get('cardTypes')[cardType][property];
+    const thisFaceTemplates = this.get('faceTemplates');
+    if(thisFaceTemplates[face] && thisFaceTemplates[face][property] !== undefined)
+      return thisFaceTemplates[face][property];
+    const thisCardTypes = this.get('cardTypes');
+    if(thisCardTypes[cardType] && thisCardTypes[cardType][property] !== undefined)
+      return thisCardTypes[cardType][property];
 
     return this.get('cardDefaults')[property];
   }

@@ -120,24 +120,24 @@ test('Create game using edit mode', async t => {
     .click('#add-holder')
     .click('#addButton')
     .click('#addHand')
-    .drag('[id="3nsj"]', 100, 100) // this shouldn't change anything because it's not movable
+    .drag('[id="hand"]', 100, 100) // this shouldn't change anything because it's not movable
     .click('#editButton')
-    .click('[id="3nsj"]')
+    .click('[id="hand"]')
     .click('#transparentHolder')
     .click('#updateWidget')
     .click('#editButton')
     .click('#addButton')
     .click('#add-deck_K_S')
-    .click('[id="9ee9B"]')
-    .click('[id="9ee9P"] > .handle')
+    .click('[id="3nsjB"]')
+    .click('[id="3nsjP"] > .handle')
     .click('#pileOverlay > button:nth-of-type(3)')
-    .click('[id="5ip4"] > .handle')
+    .click('[id="b86p"] > .handle')
     .click('#pileOverlay > button:nth-of-type(1)')
-    .click('[id="5ip4"] > .handle')
+    .click('[id="b86p"] > .handle')
     .click('#pileOverlay > button:nth-of-type(3)')
-    .click('#oklb > .handle')
+    .click('[id="5ip4"] > .handle')
     .click('#pileOverlay > button:nth-of-type(2)')
-    .dragToElement('#oklb > .handle', '[id="3nsj"]')
+    .dragToElement('[id="5ip4"] > .handle', '[id="hand"]')
     .click('#editButton')
     .click('#jyo2')
     .click('#duplicateWidget')
@@ -149,7 +149,7 @@ test('Create game using edit mode', async t => {
     .setNativeDialogHandler(() => true)
     .click('#removeWidget');
 
-  await compareState(t, 'f6c89dac1d50d5d49f1dde03a478c425');
+  await compareState(t, 'a91f2495b7e830d942c25201d483a691');
 });
 
 test('Compute', async t => {
@@ -245,8 +245,8 @@ test('Dynamic expressions', async t => {
     ['var b = ${a.0} concat \'me\'', 'b', shouldBe('splitme')],
     ['var c = \'hello world\' substr 0 5', 'c', shouldBe('hello')],
     ['var d = max 7 2', 'd', shouldBe(7)],
-    ['var e = random', 'e', shouldBe(0.709848)],
-    ['var f = randRange 100 200 5', 'f', shouldBe(195)],
+    ['var e = random', 'e', shouldBe(0.974268)],
+    ['var f = randRange 100 200 5', 'f', shouldBe(120)],
     ['var g = PI', 'g', shouldBe(3.141592653589793)],
     ['var a.$int = 2', 'a', shouldBe(["split",2,"up"])],
     ['var $text = 2', 'abcd', shouldBe(2)],
@@ -293,10 +293,10 @@ test('Dynamic expressions', async t => {
   await setName(t);
   await t
     .click('#addButton')
-    .click('#addCustomWidgetOverlay')
-    .typeText('#widgetText', button, { replace: true, paste: true })
-    .click('#addWidget')
+    .click('#addBasicWidget')
     .pressKey('ctrl+j')
+    .click('#room',{offsetX: 1, offsetY: 1, modifiers:{ctrl:true}})
+    .typeText('#jeText', button, { replace: true, paste: true })
     .click('[id="jyo6"]')
   const log = await Selector('#jeLog').textContent
   for (let i=0; i<ops.length; i++) {
@@ -306,25 +306,25 @@ test('Dynamic expressions', async t => {
     .pressKey('ctrl+j')
 });
 
-publicLibraryButtons('Blue',               0, '6681bcf652fe87f58945797e2f909036', [
+publicLibraryButtons('Blue',               0, '0f29b132f3c1d368eec70b3457b92fe4', [
   'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton',
   'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton',
   'reset_button', 'buttonInputGo', 'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', '9n2q'
 ]);
 publicLibraryButtons('FreeCell',           0, 'b3339b3c5d42f47f4def7a164be69823', [ 'reset', 'jemz', 'reset' ]);
-publicLibraryButtons('Reward',             0, 'f46d98d8c5b9ec8930524a1173364e10', [
+publicLibraryButtons('Reward',             0, '062db4c38e9d9fbde1d783a3fead24c5', [
   'gmex', 'kprc', 'oksq', 'j1wz', 'vfhn', '0i6i', 'Orange Recall', 'buttonInputGo', 'b09z'
 ]);
-publicLibraryButtons('Rummy Tiles',        0, '3e7716fb5b94c59969861a72fad9ce90', [ 'startMix', 'draw14' ]);
-publicLibraryButtons('Undercover',         1, '2ae852ce49304b1074b483138026b1b0', [ 'Reset', 'Spy Master Button' ]);
+publicLibraryButtons('Rummy Tiles',        0, 'c93ac5accd3f22264839675bd8b5321d', [ 'startMix', 'draw14' ]);
+publicLibraryButtons('Undercover',         1, '607a75e2cff8bc887b6f025d282e68c6', [ 'Reset', 'Spy Master Button' ]);
 publicLibraryButtons('Dice',               0, 'd8b6edd6f7a25767781af4294ecda8fc', [ 'k18u', 'hy65', 'gghr', 'dsfa', 'f34a', 'fusq' ]);
-publicLibraryButtons('Functions - CALL',   0, 'def80a1f8ae3047bd435007cc7cd4aa3', [
+publicLibraryButtons('Functions - CALL',   0, 'bfa7e4fb4a065fa21f820370de7ac734', [
   'n4cw_8_C', '5a52', '5a52', '66kr', 'qeg1', 'n4cwB', '8r6p', 'qeg1', 'qeg1', 'n5eu'
 ]);
-publicLibraryButtons('Functions - CLICK',  0, 'd98299a0065b24a44b0d03a79900e0ef', [ '7u2q' ]);
-publicLibraryButtons('Functions - ROTATE', 0, '747586b12401e43382a7db2b2505f25e', [ 'c44c', '9kdj', 'w53c', 'w53c' ]);
+publicLibraryButtons('Functions - CLICK',  0, 'd44e77e0782cadbc9594494e5a83dde0', [ '7u2q' ]);
+publicLibraryButtons('Functions - ROTATE', 0, '70782503b9e3fb2d4e24495f5c53ef1b', [ 'c44c', '9kdj', 'w53c', 'w53c' ]);
 publicLibraryButtons('Functions - SELECT', 0, '4db86f0a95509b1c4fe5ebd6a1f822a9', [ 'oeh9', '9fhb', 'njkk', 'ffwl', 'bomo' ]);
-publicLibraryButtons('Functions - SORT',   1, 'dd047343b667795ad6d3f366aa2ae2fd', [
+publicLibraryButtons('Functions - SORT',   1, '35dc8ddd8f7c8cc8ebc31a188a51bd47', [
   'ingw', 'k131', 'cnfu', 'i6yz', 'z394', '0v3h', '1h8o', 'v5ra', 'ingw-copy001', 'k131-copy001', 'cnfu-copy001',
   'i6yz-copy001', 'z394-copy001', '0v3h-copy001'
 ]);
