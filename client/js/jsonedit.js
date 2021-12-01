@@ -224,7 +224,8 @@ const jeCommands = [
   },
   {
     id: 'je_toggleZoom',
-    name: '🔍 toggle zoom out',
+    name: 'Zoggle zoom',
+    icon: '[zoom_in]',
     forceKey: 'Z',
     call: async function() {
       jeZoomOut = !jeZoomOut;
@@ -238,7 +239,8 @@ const jeCommands = [
   },
   {
     id: 'je_copyState',
-    name: '📋 copy state from another room/server',
+    name: 'Copy state from another room/server',
+    icon: '[import_room]',
     forceKey: 'C',
     options: [ { type: 'string', label: 'URL' } ],
     call: async function(options) {
@@ -255,7 +257,8 @@ const jeCommands = [
   },
   {
     id: 'je_callMacro',
-    name: _=>jeMode == 'macro' ? '▶️ call' : '🎬 macro',
+    name: _=>jeMode == 'macro' ? 'Call' : 'Macro',
+    icon: _=>jeMode == 'macro' ? '[play_arrow]' : '[routine]',
     forceKey: 'M',
     call: async function() {
       if(jeMode != 'macro') {
@@ -290,7 +293,8 @@ const jeCommands = [
   },
   {
     id: 'je_showWidget',
-    name: '👁 show this widget below',
+    name: 'Show this widget below',
+    icon: '[visibility]',
     forceKey: 'S',
     call: async function() {
       if(jeMode == 'multi')
@@ -304,7 +308,8 @@ const jeCommands = [
   },
   {
     id: 'je_tree',
-    name: '🔝 tree',
+    name: 'Show Tree',
+    icon: '[to_top]',
     forceKey: 'T',
     call: async function() {
       jeDisplayTree();
@@ -332,7 +337,8 @@ const jeCommands = [
   },
   {
     id: 'je_addNewWidget',
-    name: '➕ add new widget',
+    name: 'Add new widget',
+    icon: '[add_circle]',
     forceKey: 'A',
     call: async function() {
       showOverlay("addOverlay")
@@ -340,7 +346,8 @@ const jeCommands = [
   },
   {
     id: 'je_duplicateWidget',
-    name: '✨ duplicate widget',
+    name: 'Duplicate widget',
+    icon: '[auto_awesome]',
     forceKey: 'D',
     show: _=>jeStateNow,
     options: [
@@ -366,7 +373,8 @@ const jeCommands = [
   },
   {
     id: 'je_removeWidget',
-    name: '❌ remove widget',
+    name: 'Remove widget',
+    icon: '[remove_circle]',
     forceKey: 'R',
     show: _=>jeStateNow,
     call: async function() {
@@ -379,7 +387,8 @@ const jeCommands = [
   },
   {
     id: 'je_editMode',
-    name: '📝 edit mode',
+    name: 'Edit mode',
+    icon: '[edit]',
     forceKey: 'F',
     call: async function() {
       toggleEditMode();
@@ -387,7 +396,8 @@ const jeCommands = [
   },
   {
     id: 'je_openDeck',
-    name: '🔽 open deck',
+    name: 'Open deck',
+    icon: '[deck]',
     forceKey: 'ArrowDown',
     context: '^card',
     show: _=>widgets.has(jeStateNow.deck),
@@ -397,7 +407,8 @@ const jeCommands = [
   },
   {
     id: 'je_openParent',
-    name: '🔼 open parent',
+    name: 'Open parent',
+    icon: '[up_one_level]',
     forceKey: 'ArrowUp',
     show: _=>jeStateNow && widgets.has(jeStateNow.parent),
     call: async function() {
@@ -406,7 +417,8 @@ const jeCommands = [
   },
   {
     id: 'je_toggleWide',
-    name: '↔️ toggle wide',
+    name: 'Toggle wide editor',
+    icon: '[width]',
     forceKey: 'ArrowRight',
     call: async function() {
       $('#jsonEditor').classList.toggle('wide');
@@ -470,6 +482,7 @@ function jeAddRoutineExpressionCommands(variable, expression) {
   jeCommands.push({
     id: 'expression_' + ++jeExpressionCounter,
     name: `Expression: ${variable}`,
+    class: 'expression',
     context: `^.*Routine`,
     call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
       if(operationIndex === null)
@@ -486,6 +499,7 @@ function jeAddRoutineOperationCommands(command, defaults) {
   jeCommands.push({
     id: 'operation_' + command,
     name: command,
+    class: 'operation',
     context: `^.*Routine`,
     call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
       if(operationIndex === null)
@@ -762,6 +776,7 @@ function jeAddWidgetPropertyCommand(object, property) {
   jeCommands.push({
     id: 'widget_' + property,
     name: property,
+    class: 'property',
     context: `^${object.getDefaultValue('typeClasses').replace('widget ', '')}`,
     call: async function() {
       jeInsert([], property, property.match(/Routine$/) ? [] : object.getDefaultValue(property));
@@ -1555,8 +1570,9 @@ function jeShowCommands() {
     const contextMatch = context.match(new RegExp(command.context));
     if(contextMatch && contextMatch[0] == "") {
       const name = (typeof command.name == 'function' ? command.name() : command.name);
+      const icon = (typeof command.icon == 'function' ? command.icon() : command.icon);
       let keyName = displayKey(command.forceKey);
-      commandText += `<div class='jeTopButton'><button class='top' id='${command.id}' title='${name}' ${!command.show || command.show() ? '' : 'disabled'}>${name.substr(0,2)}</button><span class='top'>&nbsp;</span></div>`;
+      commandText += `<div class='jeTopButton'><button class='top' id='${command.id}' title='${name}' ${!command.show || command.show() ? '' : 'disabled'}>${icon}</button><span class='top'>&nbsp;</span></div>`;
     }
   }
   delete activeCommands[""];
@@ -1568,7 +1584,7 @@ function jeShowCommands() {
 
   if(!jeJSONerror && jeStateNow) {
     for(const contextMatch of (Object.keys(activeCommands).sort((a,b)=>b.length-a.length))) {
-      commandText += `\n  <b>${html(contextMatch)}</b>\n`;
+      commandText += `\n  <div class="context">${html(contextMatch)}</div>\n`;
       for(const command of activeCommands[contextMatch].sort(sortByName)) {
         try {
           if(context.match(new RegExp(command.context)) && (!command.show || command.show())) {
