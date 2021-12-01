@@ -40,6 +40,15 @@ class Deck extends Widget {
     return this.get('cardDefaults')[property];
   }
 
+  getFaceProperties(face) {
+    const template = this.get('faceTemplates')[face];
+    if(template) {
+      return Object.assign(template.properties || {}, template.propertiesOverridingCardType || {});
+    } else {
+      return {};
+    }
+  }
+
   removeCard(card) {
     delete this.cards[card.get('id')];
     --this.domElement.textContent;
