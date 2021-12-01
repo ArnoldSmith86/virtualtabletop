@@ -339,7 +339,7 @@ export class Widget extends StateManaged {
     const style = document.createElement('style');
     style.id = `${this.id}STYLESHEET`;
     for(const key in css) {
-      style.appendChild(document.createTextNode(`[id=${this.id}]${key == 'normal' ? '' : key} { ${this.cssReplaceProperties(this.cssAsText(css[key]))} }`));
+      style.appendChild(document.createTextNode(`[id=${this.id}]${key == 'default' ? '' : key} { ${this.cssReplaceProperties(this.cssAsText(css[key]))} }`));
       $('head').appendChild(style);
     }
 
