@@ -15,6 +15,7 @@ export class Widget extends StateManaged {
     this.id = id;
     this.domElement = div;
     this.childArray = [];
+    this.propertiesUsedInCSS = [];
 
     if(StateManaged.inheritFromMapping[id] === undefined)
       StateManaged.inheritFromMapping[id] = [];
@@ -294,14 +295,7 @@ export class Widget extends StateManaged {
   }
 
   css() {
-    let css = this.get('css');
-
-    if(typeof css == 'object') {
-      let cssText = '';
-      for(const key in css)
-        cssText += `; ${key}: ${css[key]}`;
-      css = cssText;
-    }
+    let css = this.cssReplaceProperties(this.cssAsText());
 
     css += '; width:'  + this.get('width')  + 'px';
     css += '; height:' + this.get('height') + 'px';
@@ -311,8 +305,30 @@ export class Widget extends StateManaged {
     return css;
   }
 
+  cssAsText() {
+    const css = this.get('css');
+
+    if(typeof css == 'object') {
+      let cssText = '';
+      for(const key in css)
+        cssText += `; ${key}: ${css[key]}`;
+      return cssText;
+    } else {
+      return css;
+    }
+  }
+
   cssProperties() {
-    return [ 'css', 'height', 'inheritChildZ', 'layer', 'width' ];
+    return [ 'css', 'height', 'inheritChildZ', 'layer', 'width' ].concat(this.propertiesUsedInCSS);
+  }
+
+  cssReplaceProperties(css) {
+    this.propertiesUsedInCSS = [];
+    for(const match of css.matchAll(/\$\{PROPERTY ([A-Za-z0-9_-]+)\}/g)) {
+      css = css.replace(match[0], this.get(match[1]));
+      this.propertiesUsedInCSS.push(match[1]);
+    }
+    return css;
   }
 
   cssTransform() {
