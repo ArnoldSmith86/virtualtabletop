@@ -6,7 +6,7 @@
   --roomColor: #f0f0f0;
   --editColor: #7ba5f5;
   --VTTblue: #1f5ca6;
-  --VTTblueDark:  #0d2f5e;
+  --VTTblueDark: #0d2f5e;
   --VTTblueLight: #a9c6e8;
   --wcFont: #ffffff;
   --wcMain: var(--VTTblue);
@@ -22,17 +22,17 @@ body {
   padding: 0;
   margin: 0;
   overflow: hidden;
-  font-family: 'VTT-Roboto', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 button {
-  border:5px;
-  color:white;
+  border: 5px;
+  color: white;
   background-color: var(--VTTblue);
   padding: 5px;
   border-radius: 5px;
   background-repeat: no-repeat;
-  margin:1px;
+  margin: 1px;
 }
 
 button:hover {
@@ -54,7 +54,7 @@ button:hover {
 
   display: flex;
   align-content: center;
-  gap:2px;
+  gap: 2px;
   padding: 2px;
   box-sizing: border-box;
 }
@@ -64,14 +64,12 @@ button:hover {
   overflow: hidden;
   width: calc(var(--roomWidth) * var(--scale));
   height: calc(var(--roomHeight) * var(--scale));
-
   top: calc((calc(var(--vh, 1vh) * 100) - var(--roomHeight) * var(--scale)) / 2 - var(--toolbarSize) / 2);
-
   left: 0;
   z-index: 1;
 }
 
-#toolbar .divider{
+#toolbar .divider {
   border-left: 1px solid #ffffff44;
   height: calc(var(--toolbarSize) - 14px);
   max-width: 0px;
@@ -81,11 +79,12 @@ button:hover {
   margin: 7px 3px;
 }
 
-#toolbar .spacer{
+#toolbar .spacer {
   background: none;
   font-size: 0px;
   flex-grow: 1;
 }
+
 .toolbarButton {
   flex-grow: 0;
   flex-shrink: 0;
@@ -106,47 +105,29 @@ button:hover {
   background-position: center;
   background-repeat: no-repeat;
 }
+
 .toolbarButton::before {
   position: absolute;
-  top:0;
+  top: 0;
   left: 0;
   width: calc(var(--toolbarSize) - 4px);
   height: calc(var(--toolbarSize) - 4px);
   font-size: calc(var(--toolbarSize) - 12px);
-  /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'VTT-Symbols' !important;
-  speak: never;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
   line-height: calc(var(--toolbarSize) - 4px);
-
-  /* Enable Ligatures ================ */
-  letter-spacing: 0;
-  -webkit-font-feature-settings: "liga";
-  -moz-font-feature-settings: "liga=1";
-  -moz-font-feature-settings: "liga";
-  -ms-font-feature-settings: "liga" 1;
-  font-feature-settings: "liga";
-  -webkit-font-variant-ligatures: discretionary-ligatures;
-  font-variant-ligatures: discretionary-ligatures;
-
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 .toolbarButton:hover {
-  background-color: rgba(0,0,0,0.1);
+  background-color: rgba(0, 0, 0, 0.1);
 }
+
 .toolbarButton:focus {
   outline-style: none;
   box-shadow: none;
   border-color: transparent;
 }
+
 .toolbarButton .tooltip {
-  font-family: 'VTT-Roboto';
+  font-family: 'Roboto';
   display: inline-block;
   position: relative;
   padding: 2px 8px 2px 2px;
@@ -161,16 +142,40 @@ button:hover {
   pointer-events: none;
   font-weight: 500;
 }
+
 .toolbarButton:hover .tooltip {
   display: block;
 }
 
+.toolbarButton::before,
+.ui-button::before,
+.prettyButton::before,
+.prettyButton-icon,
+.symbols {
+  font-family: 'VTT-Symbols' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
 
+  letter-spacing: 0;
+  -webkit-font-feature-settings: "liga";
+  -moz-font-feature-settings: "liga=1";
+  -moz-font-feature-settings: "liga";
+  -ms-font-feature-settings: "liga"1;
+  font-feature-settings: "liga";
+  -webkit-font-variant-ligatures: discretionary-ligatures;
+  font-variant-ligatures: discretionary-ligatures;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
 @media (min-aspect-ratio: 1600/1000) {
   .toolbarButton {
     width: calc(var(--toolbarSize) - 4px);
   }
+
   #toolbar {
     top: 0;
     left: calc((100vw - var(--roomWidth) * var(--scale)) / 2 - var(--toolbarSize) / 2 + 1px);
@@ -178,7 +183,8 @@ button:hover {
     height: 100%;
     flex-direction: column;
   }
-  #toolbar .divider{
+
+  #toolbar .divider {
     border-top: 1px solid #ffffff44;
     height: 0px;
     max-height: 0px;
@@ -188,6 +194,7 @@ button:hover {
     margin: 3px 5px;
     max-width: 75px;
   }
+
   .toolbarButton .tooltip {
     display: none;
     position: absolute;
@@ -195,7 +202,7 @@ button:hover {
     font-size: 14px;
     line-height: 14px;
     color: white;
-    background:var(--VTTblue);
+    background: var(--VTTblue);
     border-radius: 4px;
     width: auto;
     height: auto;
@@ -207,8 +214,6 @@ button:hover {
     line-height: 14px;
     min-height: 16px;
   }
-
-
 
   #roomArea {
     top: 0;
@@ -224,7 +229,7 @@ button:hover {
     font-size: 14px;
     line-height: 14px;
     color: white;
-    background:var(--VTTblue);
+    background: var(--VTTblue);
     border-radius: 4px;
     width: auto;
     height: auto;
@@ -238,10 +243,12 @@ button:hover {
     left: 0;
     margin: 0;
   }
-  #aboutButton > .tooltip{
+
+  #aboutButton>.tooltip {
     left: unset;
     right: 0;
   }
+
   .toolbarButton {
     width: calc(var(--toolbarSize) - 4px);
   }
@@ -258,22 +265,22 @@ body.aspectTooGood #toolbar {
 
 body.aspectTooGood .toolbarButton .tooltip {
   display: none;
-    position: absolute;
-    padding: 2px 12px;
-    font-size: 14px;
-    line-height: 14px;
-    color: white;
-    background:var(--VTTblue);
-    border-radius: 4px;
-    width: auto;
-    height: auto;
-    box-shadow: 0 0 5px #00000055;
-    white-space: nowrap;
-    top: 10px;
-    right: unset;
-    left: 4px;
-    line-height: 14px;
-    min-height: 16px;
+  position: absolute;
+  padding: 2px 12px;
+  font-size: 14px;
+  line-height: 14px;
+  color: white;
+  background: var(--VTTblue);
+  border-radius: 4px;
+  width: auto;
+  height: auto;
+  box-shadow: 0 0 5px #00000055;
+  white-space: nowrap;
+  top: 10px;
+  right: unset;
+  left: 4px;
+  line-height: 14px;
+  min-height: 16px;
 }
 
 body.aspectTooGood .toolbarButton:hover .tooltip {
@@ -281,7 +288,7 @@ body.aspectTooGood .toolbarButton:hover .tooltip {
 }
 
 
-body.aspectTooGood #toolbar .divider{
+body.aspectTooGood #toolbar .divider {
   border-top: 1px solid #ffffff44;
   height: 0px;
   max-height: 0px;
@@ -297,7 +304,8 @@ body.aspectTooGood #roomArea {
   left: var(--toolbarSize);
 }
 
-body #hideToolbarButton, body.aspectTooGood.hiddenToolbar #toolbar {
+body #hideToolbarButton,
+body.aspectTooGood.hiddenToolbar #toolbar {
   display: none;
 }
 
@@ -321,8 +329,7 @@ body.aspectTooGood #hideToolbarButton {
   flex-direction: column;
   padding: 5% 10%;
   box-sizing: border-box;
-  overflow:auto
-
+  overflow: auto
 }
 
 .overlay h1 {
@@ -347,26 +354,21 @@ body.aspectTooGood #hideToolbarButton {
   filter: blur(5px);
 }
 
-/*scroll bar*/
-/* width */
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
   background: white;
   border-radius: 5px;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: var(--VTTblue);
   border-radius: 5px;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: var(--VTTblueDark);
 }
@@ -392,6 +394,7 @@ body.aspectTooGood #hideToolbarButton {
   user-select: none;
   -moz-user-select: none;
 }
+
 .widget.foreign {
   display: none !important;
 }
@@ -405,205 +408,109 @@ body.aspectTooGood #hideToolbarButton {
   transform-origin: top left;
   pointer-events: none;
 }
+
 #enlarged.right {
   left: unset;
   right: 5vw;
   transform-origin: top right;
 }
+
 #enlarged.hidden {
   opacity: 0;
   visibility: hidden;
 }
 
 #statesButton::before {
-  content:'[library]';
+  content: '[library]';
 }
-#statesButton .tooltip{
+
+#statesButton .tooltip {
   font-weight: 900;
 }
+
 #playersButton::before {
-  content:'[users_settings]';
-}
-#editButton::before {
-  content:'[edit_mode]';
-}
-#addButton::before {
-  content:'[widget_add]';
-}
-html:not(:fullscreen) #fullscreenButton::before {
-  content:'[enter_fullscreen]';
-}
-html:fullscreen #fullscreenButton::before {
-  content:'[exit_fullscreen]';
-}
-html:not(:fullscreen) #fullscreenButton .tooltip::before {
-  content:'';
-}
-html:fullscreen #fullscreenButton .tooltip::before {
-  content:'Exit ';
-}
-html:not(:-webkit-full-screen) #fullscreenButton::before {
-  content:'[enter_fullscreen]';
-}
-html:-webkit-full-screen #fullscreenButton::before {
-  content:'[exit_fullscreen]';
-}
-html:not(:-webkit-full-screen) #fullscreenButton .tooltip::before {
-  content:'';
-}
-html:-webkit-full-screen #fullscreenButton .tooltip::before {
-  content:'Exit ';
-}
-#hideToolbarButton::before {
-  content:'[hide_side_bar]';
-}
-#aboutButton::before {
-  content:'[vtt_logo]';
+  content: '[users_settings]';
 }
 
-/*Buttons css*/
+#editButton::before {
+  content: '[edit_mode]';
+}
+
+#addButton::before {
+  content: '[widget_add]';
+}
+
+html:not(:fullscreen) #fullscreenButton::before {
+  content: '[enter_fullscreen]';
+}
+
+html:fullscreen #fullscreenButton::before {
+  content: '[exit_fullscreen]';
+}
+
+html:not(:fullscreen) #fullscreenButton .tooltip::before {
+  content: '';
+}
+
+html:fullscreen #fullscreenButton .tooltip::before {
+  content: 'Exit ';
+}
+
+html:not(:-webkit-full-screen) #fullscreenButton::before {
+  content: '[enter_fullscreen]';
+}
+
+html:-webkit-full-screen #fullscreenButton::before {
+  content: '[exit_fullscreen]';
+}
+
+html:not(:-webkit-full-screen) #fullscreenButton .tooltip::before {
+  content: '';
+}
+
+html:-webkit-full-screen #fullscreenButton .tooltip::before {
+  content: 'Exit ';
+}
+
+#hideToolbarButton::before {
+  content: '[hide_side_bar]';
+}
+
+#aboutButton::before {
+  content: '[vtt_logo]';
+}
 
 .prettyButton {
-  border:5px;
-  color:white;
+  border: 5px;
+  font-size: 16px;
+  color: white;
   background-color: var(--VTTblue);
   padding: 5px 10px;
   border-radius: 5px;
   background-repeat: no-repeat;
-  margin:1px;
+  margin: 1px;
   display: flex;
   align-items: center;
   align-self: center;
   gap: 8px;
-  font-family: 'VTT-Roboto', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
-.prettyButton::before, button.add::before, .prettyButton-icon {
+
+.prettyButton::before,
+.prettyButton-icon {
   display: inline-block;
-  top:0;
-  left: 0;
-  width: 18px;
+  width: 24px;
   height: 18px;
-  font-size: 18px;
-  /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'VTT-Symbols' !important;
-  speak: never;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-
-  /* Enable Ligatures ================ */
-  letter-spacing: 0;
-  -webkit-font-feature-settings: "liga";
-  -moz-font-feature-settings: "liga=1";
-  -moz-font-feature-settings: "liga";
-  -ms-font-feature-settings: "liga" 1;
-  font-feature-settings: "liga";
-  -webkit-font-variant-ligatures: discretionary-ligatures;
-  font-variant-ligatures: discretionary-ligatures;
-
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-size: 24px;
+  line-height: 18px;
 }
+
 .symbols {
-    /* use !important to prevent issues with browser extensions that change fonts */
-    font-family: 'VTT-Symbols' !important;
-    speak: never;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-
-    /* Enable Ligatures ================ */
-    letter-spacing: 0;
-    -webkit-font-feature-settings: "liga";
-    -moz-font-feature-settings: "liga=1";
-    -moz-font-feature-settings: "liga";
-    -ms-font-feature-settings: "liga" 1;
-    font-feature-settings: "liga";
-    -webkit-font-variant-ligatures: discretionary-ligatures;
-    font-variant-ligatures: discretionary-ligatures;
-
-    /* Better Font Rendering =========== */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-.prettyButton:hover{
-  background-color: var(--VTTblueDark);
+  font-family: 'VTT-Symbols';
 }
 
-.gameMenu {
-  background-position:  5px center !important;
-  padding-left: 5px !important;
-}
-
-.upload::before, .uploadAsset::before {
-  content:'[upload]';
-}
-
-.download::before {
-  content:'[download]';
-}
-
-.link::before,.share::before {
-  content:'[link]';
-}
-
-button .edit::before {
-  content:'[edit]';
-}
-
-.create::before {
-  content:'[add]';
-}
-
-.library::before {
-  content:'[book_open]';
-}
-
-.play::before {
-  content:'[play_arrow]';
-}
-
-.save::before, .saveProgress::before {
-  content:'[save]';
-}
-
-.update::before {
-  content:'[save]';
-}
-
-.remove::before {
-  content:'[close_square]';
-}
-
-button {
-  font-family: 'VTT-Roboto', sans-serif;
-}
-
-button.top {
-  padding: 0px;
-  margin: 0.5px;
-  text-align: center;
-}
-
-button.add {
-  flex-direction: column;
-}
-button.add::before {
-  content:'[add]';
-  margin: -4px 0 0 0;
-}
-button:disabled {
-  background: #808080;
-  color: #d3d3d3;
-}
-
-.standard_font{
-  font-family: 'VTT-Roboto';
+.standard_font {
+  font-family: 'Roboto';
 }
 
 .handwriting_font {
@@ -614,8 +521,86 @@ button:disabled {
   font-family: 'Handwriting Casual';
 }
 
+.prettyButton:hover {
+  background-color: var(--VTTblueDark);
+}
 
-.ui-button{
+.gameMenu {
+  background-position: 5px center !important;
+  padding-left: 5px !important;
+}
+
+.upload::before,
+.uploadAsset::before {
+  content: '[upload]';
+}
+
+.download::before {
+  content: '[download]';
+}
+
+.link::before,
+.share::before {
+  content: '[link]';
+}
+
+button .edit::before {
+  content: '[edit]';
+}
+
+.add::before,
+.create::before {
+  content: '[add]';
+}
+
+.library::before {
+  content: '[book_open]';
+}
+
+.play::before {
+  content: '[play_arrow]';
+}
+
+.save::before,
+.saveProgress::before {
+  content: '[save]';
+}
+
+.update::before {
+  content: '[save]';
+}
+
+.remove::before {
+  content: '[close_square]';
+}
+
+button {
+  font-family: 'Roboto', sans-serif;
+}
+
+button.top {
+  padding: 0px;
+  margin: 0.5px;
+  text-align: center;
+}
+
+button.add {
+  flex-direction: column;
+  gap: 0;
+}
+
+button.add::before {
+  margin: -4px 0 0 0;
+}
+
+button:disabled {
+  background: #808080;
+  color: #d3d3d3;
+}
+
+
+
+.ui-button {
   background-color: var(--VTTblue);
   padding: 0 8px;
   border-radius: 4px;
@@ -632,35 +617,12 @@ button:disabled {
   width: auto;
   height: 36px;
   font-size: 30px;
-  /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'VTT-Symbols' !important;
-  speak: never;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: inherit;
-
-  /* Enable Ligatures ================ */
-  letter-spacing: 0;
-  -webkit-font-feature-settings: "liga";
-  -moz-font-feature-settings: "liga=1";
-  -moz-font-feature-settings: "liga";
-  -ms-font-feature-settings: "liga" 1;
-  font-feature-settings: "liga";
-  -webkit-font-variant-ligatures: discretionary-ligatures;
-  font-variant-ligatures: discretionary-ligatures;
-
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-.ui-button.red{
+.ui-button.red {
   background-color: #ff3b30;
 }
 
-.ui-button.green{
+.ui-button.green {
   background-color: #4cd964;
 }
-
