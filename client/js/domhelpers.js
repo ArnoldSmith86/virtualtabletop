@@ -31,6 +31,10 @@ export function domByTemplate(id, type) {
   return div;
 }
 
+export function escapeCSS(id) {
+  return id.split('').map(s=>'\\' + s.charCodeAt(0).toString(16)).join('');
+}
+
 export function formField(field, dom, id) {
   if(field.type == 'checkbox') {
     const input = document.createElement('input');
