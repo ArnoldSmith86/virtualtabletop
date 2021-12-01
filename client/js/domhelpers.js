@@ -32,6 +32,8 @@ export function domByTemplate(id, type) {
 }
 
 export function escapeCSS(id) {
+  if(!id)
+    return '';
   return id.split('').map(s=>'\\' + s.charCodeAt(0).toString(16)).join('');
 }
 
