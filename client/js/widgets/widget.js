@@ -337,10 +337,10 @@ export class Widget extends StateManaged {
   cssToStylesheet(css) {
     const style = document.createElement('style');
     style.id = `${this.id}STYLESHEET`;
-    for(const key in css) {
-      style.appendChild(document.createTextNode(`#${escapeCSS(this.id)}${key == 'default' ? '' : key} { ${this.cssReplaceProperties(this.cssAsText(css[key]))} }`));
-      $('head').appendChild(style);
-    }
+    for(const key in css)
+      if(key != 'inline')
+        style.appendChild(document.createTextNode(`#${escapeCSS(this.id)}${key == 'default' ? '' : key} { ${this.cssReplaceProperties(this.cssAsText(css[key]))} }`));
+    $('head').appendChild(style);
 
     return this.cssAsText(css.inline || '');
   }
