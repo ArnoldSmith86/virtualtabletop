@@ -580,6 +580,8 @@ function jeAddCommands() {
 
   jeAddFaceCommand('border', '', 1);
   jeAddFaceCommand('css', '', '');
+  jeAddFaceCommand('properties', '', {});
+  jeAddFaceCommand('propertiesOverridingCardType', '', {});
   jeAddFaceCommand('radius', ' (rounded corners)', 1);
 
   jeAddEnumCommands('^[a-z]+ ↦ type', widgetTypes.slice(1));
