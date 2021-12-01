@@ -295,7 +295,8 @@ export class Widget extends StateManaged {
   }
 
   css() {
-    let css = this.cssReplaceProperties(this.cssAsText());
+    this.propertiesUsedInCSS = [];
+    let css = this.cssReplaceProperties(this.cssAsText(this.get('css')));
 
     css += '; width:'  + this.get('width')  + 'px';
     css += '; height:' + this.get('height') + 'px';
@@ -305,13 +306,14 @@ export class Widget extends StateManaged {
     return css;
   }
 
-  cssAsText() {
-    const css = this.get('css');
-
+  cssAsText(css) {
     if(typeof css == 'object') {
       let cssText = '';
-      for(const key in css)
+      for(const key in css) {
+        if(typeof css[key] == 'object')
+          return this.cssToStylesheet(css);
         cssText += `; ${key}: ${css[key]}`;
+      }
       return cssText;
     } else {
       return css;
@@ -323,12 +325,25 @@ export class Widget extends StateManaged {
   }
 
   cssReplaceProperties(css) {
-    this.propertiesUsedInCSS = [];
     for(const match of css.matchAll(/\$\{PROPERTY ([A-Za-z0-9_-]+)\}/g)) {
       css = css.replace(match[0], this.get(match[1]));
       this.propertiesUsedInCSS.push(match[1]);
     }
     return css;
+  }
+
+  cssToStylesheet(css) {
+    if($(`[id="${this.id}STYLESHEET"]`))
+      removeFromDOM($(`[id="${this.id}STYLESHEET"]`));
+
+    const style = document.createElement('style');
+    style.id = `${this.id}STYLESHEET`;
+    for(const key in css) {
+      style.appendChild(document.createTextNode(`[id=${this.id}]${key == 'normal' ? '' : key} { ${this.cssReplaceProperties(this.cssAsText(css[key]))} }`));
+      $('head').appendChild(style);
+    }
+
+    return this.cssAsText(css.inline || '');
   }
 
   cssTransform() {
