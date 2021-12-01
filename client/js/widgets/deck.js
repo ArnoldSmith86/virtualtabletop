@@ -43,7 +43,7 @@ class Deck extends Widget {
   getFaceProperties(face) {
     const template = this.get('faceTemplates')[face];
     if(template) {
-      return Object.assign(template.properties || {}, template.propertiesOverridingCardType || {});
+      return Object.assign({...template.properties || {}}, template.propertiesOverridingCardType || {});
     } else {
       return {};
     }
