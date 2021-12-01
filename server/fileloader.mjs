@@ -5,6 +5,7 @@ import JSZip from 'jszip';
 
 import { VERSION } from './fileupdater.mjs';
 import PCIO from './pcioimport.mjs';
+import TTS from './ttsimport.mjs';
 import Logging from './logging.mjs';
 
 const dirname = path.resolve() + '/save/links';
@@ -42,6 +43,8 @@ async function downloadLink(link) {
 async function readStatesFromBuffer(buffer) {
   const zip = await JSZip.loadAsync(buffer);
 
+  if(zip.files['WorkshopUpload'])
+    return { 'TTS': await readVariantsFromBuffer(buffer) };
   if(zip.files['widgets.json'])
     return { 'PCIO': await readVariantsFromBuffer(buffer) };
 
@@ -83,7 +86,10 @@ async function readStatesFromLink(linkAndPath) {
 
 async function readVariantsFromBuffer(buffer) {
   const zip = await JSZip.loadAsync(buffer);
-  if(zip.files['widgets.json']) {
+  if(zip.files['WorkshopUpload']) {
+    const tts = await TTS(buffer);
+    return { 'TTS': tts };
+  } else if(zip.files['widgets.json']) {
     const pcio = await PCIO(buffer);
     return { 'PCIO': pcio };
   } else {
