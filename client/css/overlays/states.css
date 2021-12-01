@@ -79,7 +79,7 @@
 }
 
 #addState button {
-  width: 160px;
+  width: 180px;
 }
 
 .roomState > img {
@@ -108,6 +108,11 @@
 .roomState:hover > img, #addState:hover .image {
   filter: blur(5px);
 }
+
+.details .stats{
+  margin-bottom: 8px;
+}
+
 
 #stateEditOverlay label {
   width: 200px;

@@ -497,7 +497,8 @@ html:-webkit-full-screen #fullscreenButton .tooltip::before {
 }
 
 .prettyButton::before,
-.prettyButton-icon {
+.prettyButton-icon,
+.prettyButton .symbols {
   display: inline-block;
   width: 24px;
   height: 18px;
@@ -544,7 +545,7 @@ html:-webkit-full-screen #fullscreenButton .tooltip::before {
   content: '[link]';
 }
 
-button .edit::before {
+.edit::before {
   content: '[edit]';
 }
 
@@ -593,12 +594,12 @@ button.add::before {
   margin: -4px 0 0 0;
 }
 
-button:disabled {
+button:disabled,
+button:disabled:hover {
   background: #808080;
   color: #d3d3d3;
+  cursor: not-allowed;
 }
-
-
 
 .ui-button {
   background-color: var(--VTTblue);
@@ -626,3 +627,22 @@ button:disabled {
 .ui-button.green {
   background-color: #4cd964;
 }
+
+/*
+.bgg[href=""] {
+  display: none;
+}
+
+.bgg::after{
+  content: 'BGG';
+  color: white;
+  background: var(--VTTblue);
+  font-size: 8px;
+  line-height: 8px;
+  display: inline-block;
+  height: 8px;
+  vertical-align: middle;
+  padding: 2px 2px 0 2px;
+  border-radius: 2px;
+  margin-left: 4px;
+} */
