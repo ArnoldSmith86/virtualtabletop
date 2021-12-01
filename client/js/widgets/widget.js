@@ -296,6 +296,8 @@ export class Widget extends StateManaged {
 
   css() {
     this.propertiesUsedInCSS = [];
+    if($(`[id="${this.id}STYLESHEET"]`))
+      removeFromDOM($(`[id="${this.id}STYLESHEET"]`));
     let css = this.cssReplaceProperties(this.cssAsText(this.get('css')));
 
     css += '; width:'  + this.get('width')  + 'px';
@@ -333,9 +335,6 @@ export class Widget extends StateManaged {
   }
 
   cssToStylesheet(css) {
-    if($(`[id="${this.id}STYLESHEET"]`))
-      removeFromDOM($(`[id="${this.id}STYLESHEET"]`));
-
     const style = document.createElement('style');
     style.id = `${this.id}STYLESHEET`;
     for(const key in css) {
