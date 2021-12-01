@@ -63,7 +63,22 @@ function addDeck(o) {
       offsetX: (offset%cardsPerRow) * -cardWidth,
       offsetY: Math.floor(offset/cardsPerRow) * -cardHeight
     };
+    widgets[`${o.GUID}-${id}`] = {
+      id: `${o.GUID}-${id}`,
+      type: 'card',
+      parent: `${o.GUID}-pile`,
+      deck: o.GUID,
+      cardType: id
+    };
   }
+  widgets[`${o.GUID}-pile`] = {
+    id: `${o.GUID}-pile`,
+    type: 'pile',
+    width: cardWidth,
+    height: cardHeight,
+    x: 50,
+    y: 50
+  };
   widgets[o.GUID] = deck;
   return widgets;
 }
@@ -89,5 +104,13 @@ export default async function convertTTS(content) {
     if(file.match(/\.json$/))
       json = JSON.parse(await zip.files[file].async('string'));
 
-  return addRecursive(json.ObjectStates);
+  const widgets = addRecursive(json.ObjectStates);
+  let xOffset = 0;
+  for(const id in widgets) {
+    if(widgets[id].type == 'pile') {
+      widgets[id].x += xOffset;
+      xOffset += 50;
+    }
+  }
+  return widgets;
 }
