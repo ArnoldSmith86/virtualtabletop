@@ -12,7 +12,7 @@ export const deckEditor = {
           for(const object of face.objects) {
             if(typeof object.dynamicProperties == 'object') {
               for(const parameter in object.dynamicProperties) {
-                var propObject = {name: object.dynamicProperties[parameter], type: object.type}
+                var propObject = {name: object.dynamicProperties[parameter], type: (parameter == "value")? object.type : "text"}
                 if(!properties.some(prop => prop.name == propObject.name))
                   properties.push(propObject);
               }
