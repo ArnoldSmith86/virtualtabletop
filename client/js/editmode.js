@@ -71,7 +71,6 @@ function applyEditOptionsBasic(widget) {
 function populateEditOptionsButton(widget) {
   $('#buttonText').value = widget.text || "~ no text found ~";
   $('#buttonImage').value = widget.image || "~ no image found ~";
-  $('#buttonDebug').checked = widget.debug;
   $('#buttonColorMain').value = widget.backgroundColor || "#1f5ca6";
   $('#buttonColorBorder').value = widget.borderColor || "#0d2f5e";
   $('#buttonColorText').value = widget.textColor || "#ffffff"
@@ -119,8 +118,6 @@ function applyEditOptionsButton(widget) {
     delete widget.textColor;
   else
     widget.textColor = $('#buttonColorText').value;
-
-  widget.debug = $('#buttonDebug').checked;
 }
 
 //canvas functions
@@ -477,9 +474,9 @@ function generateCardDeckWidgets(id, x, y, addCards) {
     });
   }
 
-  const front = { type:'image', x:0, y:0, width:103, height:160, valueType:'dynamic', value:'image', color:'transparent' };
+  const front = { type:'image', x:0, y:0, width:103, height:160, color:'transparent', dynamicProperties:{value:'image'} };
   const back  = { ...front };
-  back.valueType = 'static';
+  delete back.dynamicProperties;
   back.value = '/i/cards-default/2B.svg';
   widgets.push({
     type: 'deck',
