@@ -329,8 +329,11 @@ body.jsonEdit.jeZoomOut #topSurface {
   content: '[player_circle]';
 }
 #widget_classes::before{
-  content: '[style]';
+  content: '[tag]';
 }
+#widget_css::before{
+    content: '[style]';
+  }
 #widget_rotation::before{
   content: '[rotate_right]';
 }
