@@ -112,5 +112,18 @@ export default async function convertTTS(content) {
       xOffset += 50;
     }
   }
+
+  if(json.TableURL) {
+    widgets.back = {
+      id: 'back',
+      width: 1600,
+      height: 1000,
+      layer: -9,
+      movable: false,
+      image: processURL(json.TableURL),
+      css: 'background-size: cover'
+    };
+  }
+
   return widgets;
 }
