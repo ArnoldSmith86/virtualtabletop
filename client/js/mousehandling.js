@@ -1,6 +1,4 @@
 let mouseTarget = null;
-let moveTarget = null;
-let mouseDown = false;
 const mouseStatus = {};
 
 function eventCoords(name, e) {
@@ -30,7 +28,6 @@ async function inputHandler(name, e) {
     if (!window.getSelection().isCollapsed)
       window.getSelection().collapseToEnd();
     document.activeElement.blur();
-    mouseDown = true;
   }
   let target = e.target;
   while(target && (!target.id || !widgets.has(target.id)))
@@ -56,23 +53,23 @@ async function inputHandler(name, e) {
       mouseStatus[target.id] = {
         status: 'initial',
         start: new Date(),
-        downCoords: coords
+        downCoords: coords,
+        moveTarget: target
       };
       let movable = false;
-      moveTarget = target;
-      while (moveTarget && !movable) {
-        movable = widgets.get(moveTarget.id).get(editMovable ? 'movableInEdit' : 'movable');
+      while (mouseStatus[target.id].moveTarget && !movable) {
+        movable = widgets.get(mouseStatus[target.id].moveTarget.id).get(editMovable ? 'movableInEdit' : 'movable');
         if (!movable) {
           do {
-            moveTarget = moveTarget.parentNode;
-          } while (moveTarget && (!moveTarget.id || !widgets.has(moveTarget.id)));
+            mouseStatus[target.id].moveTarget = mouseStatus[target.id].moveTarget.parentNode;
+          } while (mouseStatus[target.id].moveTarget && (!mouseStatus[target.id].moveTarget.id || !widgets.has(mouseStatus[target.id].moveTarget.id)));
         }
       }
-    } else if(name == 'mouseup' || name == 'touchend') {
+    } else if(name == 'mouseup' || name == 'touchend' && mouseStatus[target.id]) {
       const ms = mouseStatus[target.id];
       const timeSinceStart = +new Date() - ms.start;
       const pixelsMoved = ms.coords ? Math.abs(ms.coords[0] - ms.downCoords[0]) + Math.abs(ms.coords[1] - ms.downCoords[1]) : 0;
-      if(ms.status != 'initial' && moveTarget)
+      if(ms.status != 'initial' && mouseStatus[target.id].moveTarget)
         await ms.widget.moveEnd();
       if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
         if(typeof jeEnabled == 'boolean' && jeEnabled)
@@ -86,39 +83,35 @@ async function inputHandler(name, e) {
           widgets.get(target.id).domElement.classList.remove('longtouch');
       }
       delete mouseStatus[target.id];
-    } else if(name == 'mousemove' || name == 'touchmove') {
+    } else if(name == 'mousemove' || name == 'touchmove' && mouseStatus[target.id]) {
       if(mouseStatus[target.id].status == 'initial') {
-        const targetRect = moveTarget ? moveTarget.getBoundingClientRect() : target.getBoundingClientRect();
+        const targetRect = mouseStatus[target.id].moveTarget ? mouseStatus[target.id].moveTarget.getBoundingClientRect() : target.getBoundingClientRect();
         const downCoords = mouseStatus[target.id].downCoords;
         Object.assign(mouseStatus[target.id], {
           status: 'moving',
           offset: [ downCoords[0] - (targetRect.left + targetRect.width/2), downCoords[1] - (targetRect.top + targetRect.height/2) ],
-          widget: widgets.get(moveTarget ? moveTarget.id : target.id)
+          widget: widgets.get(mouseStatus[target.id].moveTarget ? mouseStatus[target.id].moveTarget.id : target.id)
         });
-        if(moveTarget)
+        if(mouseStatus[target.id].moveTarget)
           await mouseStatus[target.id].widget.moveStart();
       }
       mouseStatus[target.id].coords = coords;
       const x = Math.floor((coords[0] - roomRectangle.left - mouseStatus[target.id].offset[0]) / scale);
       const y = Math.floor((coords[1] - roomRectangle.top  - mouseStatus[target.id].offset[1]) / scale);
-      if(moveTarget)
+      if(mouseStatus[target.id].moveTarget)
         await mouseStatus[target.id].widget.move(x, y);
     }
     batchEnd();
   }
 
-  if(name == 'mouseup') {
+  if(name == 'mouseup')
     mouseTarget = null;
-    moveTarget = null;
-  }
-  if(name == 'mouseup' || name =='touchend')
-    mouseDown = false;
-  
-  toServer('mouse', 
+
+  toServer('mouse',
     {
       x: Math.floor((coords[0] - roomRectangle.left)/scale),
       y: Math.floor((coords[1] - roomRectangle.top)/scale),
-      pressed: mouseDown,
+      pressed: (e.buttons & 1 == 1) || name == 'touchstart' || name == 'touchmove',
       target: mouseTarget? mouseTarget.id : null
     });
 }
