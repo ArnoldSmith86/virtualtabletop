@@ -296,6 +296,13 @@ export class Widget extends StateManaged {
   css() {
     let css = this.get('css');
 
+    if(typeof css == 'object') {
+      let cssText = '';
+      for(const key in css)
+        cssText += `; ${key}: ${css[key]}`;
+      css = cssText;
+    }
+
     css += '; width:'  + this.get('width')  + 'px';
     css += '; height:' + this.get('height') + 'px';
     css += '; z-index:' + this.calculateZ();
