@@ -157,10 +157,9 @@ export class Widget extends StateManaged {
         const property = isGlobalUpdateRoutine[1] || '*';
         if(StateManaged.globalUpdateListeners[property] === undefined)
           StateManaged.globalUpdateListeners[property] = [];
+        StateManaged.globalUpdateListeners[property] = StateManaged.globalUpdateListeners[property].filter(x=>x[0]!=this);
         if(Array.isArray(delta[key]))
           StateManaged.globalUpdateListeners[property].push([ this, key ]);
-        else
-          StateManaged.globalUpdateListeners[property] = StateManaged.globalUpdateListeners[property].filter(x=>x[0]!=this);
       }
     }
 
@@ -215,6 +214,7 @@ export class Widget extends StateManaged {
       widgets.get(this.get('deck')).removeCard(this);
     removeFromDOM(this.domElement);
     this.inheritFromUnregister();
+    this.globalUpdateListenersUnregister();
   }
 
   applyZ(force) {

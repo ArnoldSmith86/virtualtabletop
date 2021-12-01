@@ -52,6 +52,11 @@ export class StateManaged {
     }
   }
 
+  globalUpdateListenersUnregister() {
+    for(const property in StateManaged.globalUpdateListeners)
+      StateManaged.globalUpdateListeners[property] = StateManaged.globalUpdateListeners[property].filter(i=>i[0]!=this);
+  }
+
   inheritFrom() {
     const iF = this.state.inheritFrom;
     if(!iF)
