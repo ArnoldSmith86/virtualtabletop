@@ -81,8 +81,8 @@ const jeCommands = [
       const cssVariables = {};
       for(const face of jeStateNow.faceTemplates || []) {
         for(const object of face.objects) {
-          if(object.valueType == 'dynamic')
-            cardType[object.value] = '';
+          for(const property in object.dynamicProperties || {})
+            cardType[object.dynamicProperties[property]] = '';
           ((object.css || '').match(/--[a-zA-Z]+/g) || []).forEach(m=>cssVariables[`${m}: black`]=true);
         }
       }
@@ -163,10 +163,11 @@ const jeCommands = [
         x: 0,
         y: 0,
         color: 'transparent',
-        valueType: 'dynamic',
-        value: '###SELECT ME###',
         width: jeStateNow.cardDefaults && jeStateNow.cardDefaults.width  || 103,
-        height: jeStateNow.cardDefaults && jeStateNow.cardDefaults.height || 160
+        height: jeStateNow.cardDefaults && jeStateNow.cardDefaults.height || 160,
+        dynamicProperties: {
+          value: '###SELECT ME###'
+        }
       });
       jeSetAndSelect('image');
     }
@@ -181,10 +182,11 @@ const jeCommands = [
         x: 0,
         y: 0,
         fontSize: 20,
-        valueType: 'dynamic',
-        value: '###SELECT ME###',
         textAlign: 'center',
-        width: jeStateNow.cardDefaults && jeStateNow.cardDefaults.width  || 103
+        width: jeStateNow.cardDefaults && jeStateNow.cardDefaults.width  || 103,
+        dynamicProperties: {
+          value: '###SELECT ME###'
+        }
       });
       jeSetAndSelect('text');
     }
@@ -210,15 +212,34 @@ const jeCommands = [
     }
   },
   {
-    id: 'je_toggleValueType',
-    name: _=>jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].valueType == 'dynamic' ? 'static' : 'dynamic',
+    id: 'je_dynamicProperties',
+    name: 'dynamicProperties',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
+    show: _=>!jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].dynamicProperties,
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].dynamicProperties = { "###SELECT ME###": "" };
+      jeSetAndSelect('');
+    }
+  },
+  {
+    id: 'je_toggleDynamicValue',
+    name: _=>(jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].dynamicProperties || {}).value ? 'static value' : 'dynamic value',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
     call: async function() {
       const o = jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]];
-      const d = o.valueType == 'dynamic';
-      const v = o.value;
-      o.valueType = d ? 'static' : 'dynamic';
-      o.value = '###SELECT ME###';
+      const d = !!(o.dynamicProperties || {}).value;
+      const v = d ? o.dynamicProperties.value : o.value;
+      if(d) {
+        delete o.dynamicProperties.value;
+        if(!Object.keys(o.dynamicProperties).length)
+          delete o.dynamicProperties;
+        o.value = '###SELECT ME###';
+      } else {
+        delete o.value;
+        if(!o.dynamicProperties)
+          o.dynamicProperties = {};
+        o.dynamicProperties.value = '###SELECT ME###';
+      }
       jeSetAndSelect(v);
     }
   },
@@ -542,7 +563,7 @@ function jeAddCommands() {
   // INPUT is missing
   jeAddRoutineOperationCommands('LABEL', { value: 0, mode: 'set', label: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('MOVE', { count: 1, face: null, from: null, to: null });
-  jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0 });
+  jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0, snapToGrid: true });
   jeAddRoutineOperationCommands('RECALL', { owned: true, holder: null });
   jeAddRoutineOperationCommands('ROTATE', { count: 1, angle: 90, mode: 'add', holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all', sortBy: 'null' });
