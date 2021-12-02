@@ -327,7 +327,7 @@ export class Widget extends StateManaged {
   }
 
   cssReplaceProperties(css) {
-    for(const match of css.matchAll(/\$\{PROPERTY ([A-Za-z0-9_-]+)\}/g)) {
+    for(const match of String(css).matchAll(/\$\{PROPERTY ([A-Za-z0-9_-]+)\}/g)) {
       css = css.replace(match[0], this.get(match[1]));
       this.propertiesUsedInCSS.push(match[1]);
     }
