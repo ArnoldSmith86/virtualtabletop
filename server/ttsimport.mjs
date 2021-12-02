@@ -113,7 +113,7 @@ function addBag(o, parent) {
         property: 'owner'
       }
     ],
-    text: 'Open\nBag'
+    text: o.Nickname || 'Open\nBag'
   };
   Object.assign(widgets, addRecursive(o.ContainedObjects, o.GUID));
   return widgets;
@@ -160,6 +160,23 @@ export default async function convertTTS(content) {
       movable: false,
       image: processURL(json.TableURL),
       css: 'background-size: cover'
+    };
+  }
+
+  if(json.Hands.Enable) {
+    widgets.hand = {
+      id: 'hand',
+      type: 'holder',
+      onEnter: { activeFace: 1 },
+      onLeave: { activeFace: 0 },
+      dropOffsetX: 10,
+      dropOffsetY: 14,
+      stackOffsetX: 40,
+      childrenPerOwner: true,
+      x: 50,
+      y: 820,
+      width: 1500,
+      height: 180
     };
   }
 
