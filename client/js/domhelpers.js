@@ -34,7 +34,7 @@ export function domByTemplate(id, type) {
 export function escapeCSS(id) {
   if(!id)
     return '';
-  return id.split('').map(s=>'\\' + s.charCodeAt(0).toString(16)).join('');
+  return id.split('').map(s=>'\\' + s.charCodeAt(0).toString(16)).join('') + ' ';
 }
 
 export function formField(field, dom, id) {
