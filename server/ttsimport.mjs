@@ -7,7 +7,7 @@ function processURL(url) {
   return match ? `https://steamusercontent-a.akamaihd.net${match[0]}` : url;
 }
 
-function addDeck(o) {
+function addDeck(o, parent=null) {
   const firstDeckID = Math.floor((o.DeckIDs || [ o.CardID ])[0]/100);
 
   const cardsPerRow = o.CustomDeck[firstDeckID].NumWidth  || 10;
@@ -19,6 +19,7 @@ function addDeck(o) {
   const widgets = {};
   const deck = {
     id: o.GUID,
+    parent,
     type: 'deck',
     cardTypes: {},
     cardDefaults: {
@@ -73,6 +74,7 @@ function addDeck(o) {
   }
   widgets[`${o.GUID}-pile`] = {
     id: `${o.GUID}-pile`,
+    parent,
     type: 'pile',
     width: cardWidth,
     height: cardHeight,
@@ -83,14 +85,50 @@ function addDeck(o) {
   return widgets;
 }
 
-function addRecursive(os) {
+function addBag(o, parent) {
+  const widgets = {};
+  widgets[o.GUID] = {
+    id: o.GUID,
+    parent,
+    type: 'holder',
+    owner: [],
+    clickable: true,
+    clickRoutine: [
+      {
+        func: 'SET',
+        collection: [ o.GUID ],
+        property: 'owner',
+        value: []
+      }
+    ]
+  };
+  widgets[`${o.GUID}-toggle`] = {
+    id: `${o.GUID}-toggle`,
+    parent,
+    type: 'button',
+    clickRoutine: [
+      {
+        func: 'SET',
+        collection: [ o.GUID ],
+        property: 'owner'
+      }
+    ],
+    text: 'Open\nBag'
+  };
+  Object.assign(widgets, addRecursive(o.ContainedObjects, o.GUID));
+  return widgets;
+}
+
+function addRecursive(os, parent=null) {
   const widgets = {};
 
   for(const o of os) {
     if(o.CustomDeck)
-      Object.assign(widgets, addDeck(o));
-    if(o.ContainedObjects && o.Name != 'DeckCustom' && o.Name != 'Deck')
-      Object.assign(widgets, addRecursive(o.ContainedObjects));
+      Object.assign(widgets, addDeck(o, parent));
+    else if(o.Name == 'Bag')
+      Object.assign(widgets, addBag(o, parent));
+    else if(o.ContainedObjects && o.Name != 'DeckCustom' && o.Name != 'Deck')
+      Object.assign(widgets, addRecursive(o.ContainedObjects, parent));
   }
 
   return widgets;
