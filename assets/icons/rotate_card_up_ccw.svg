@@ -1,1 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g id="Layer_1" data-name="Layer 1"><path d="M12.5,4h-8a2,2,0,0,0-2,2V18a2,2,0,0,0,2,2h8a2,2,0,0,0,2-2V6A2,2,0,0,0,12.5,4Zm-8,5,3-3h5v9l-3,3h-5Z" style="fill:currentColor"/><path d="M20.83,12.18a7,7,0,0,0-1.73-4.6l2.4-2.4h-6v6l2.41-2.42a5.31,5.31,0,0,1-2.41,8.48L16,18.82A7,7,0,0,0,20.83,12.18Z" style="fill:currentColor"/></g><g id="Layer_2" data-name="Layer 2"><rect width="24" height="24" style="fill:none"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g>
+    <path d="M12.5,4h-8a2,2,0,0,0-2,2V18a2,2,0,0,0,2,2h8a2,2,0,0,0,2-2V6A2,2,0,0,0,12.5,4Zm-8,5,3-3h5v9l-3,3h-5Z" fill="currentColor"/>
+    <path d="M20.833,12.177a6.976,6.976,0,0,0-1.733-4.6l2.4-2.4h-6v6l2.413-2.414a5.313,5.313,0,0,1-2.413,8.48l.52,1.58A7.008,7.008,0,0,0,20.833,12.177Z" fill="currentColor"/>
+  </g>
+  <rect width="24" height="24" fill="none"/>
+</svg>

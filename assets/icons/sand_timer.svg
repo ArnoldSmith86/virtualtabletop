@@ -1,1 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g id="Layer_1" data-name="Layer 1"><path d="M18,22V16l-4-4,4-4V2H6V8l4,4L6,16v6ZM8,7.5V4h8V7.5l-4,4Z" style="fill:currentColor"/></g><g id="Layer_2" data-name="Layer 2"><rect width="24" height="24" style="fill:none"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <path d="M18,22l-.01-6L14,12l3.99-4.01L18,2H6V8l4,4L6,15.99V22ZM8,7.5V4h8V7.5l-4,4Z" fill="currentColor"/>
+  <rect width="24" height="24" fill="none"/>
+</svg>
