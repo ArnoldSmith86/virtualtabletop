@@ -1,4 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-  <path d="M16.5,12a4.5,4.5,0,0,0-4.38,3.5H9.005A1.507,1.507,0,0,1,7.5,14v-.7H8.93L6.633,11H17V3H3v8H6.367l-2.3,2.3H5.5V14A3.509,3.509,0,0,0,9.005,17.5H12.12A4.5,4.5,0,1,0,16.5,12Z" fill="currentColor"/>
+  <g>
+    <polygon points="21 3 3 3 3 7 8 7 21 7 21 3" fill="currentColor"/>
+    <path d="M6.5,11.555V18h5.776a4.5,4.5,0,1,0,0-3H9.5V11.555h3.056L8,7,3.444,11.555Z" fill="currentColor"/>
+  </g>
   <rect width="24" height="24" fill="none"/>
 </svg>
