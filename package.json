@@ -50,7 +50,7 @@
     "ws": "^8.2.3"
   },
   "devDependencies": {
-    "jest": "^27.4.2",
+    "jest": "^27.4.3",
     "jest-environment-jsdom": "^27.4.3",
     "jest-environment-jsdom-global": "^3.0.0",
     "json-diff": "^0.5.4",
