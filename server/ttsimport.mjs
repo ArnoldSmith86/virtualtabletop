@@ -168,7 +168,7 @@ export default async function convertTTS(content) {
     };
   }
 
-  if(json.Hands.Enable) {
+  if(json.Hands && json.Hands.Enable) {
     widgets.hand = {
       id: 'hand',
       type: 'holder',
