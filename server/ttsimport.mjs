@@ -88,8 +88,8 @@ function addDeck(o, parent=null) {
     type: 'pile',
     width: cardWidth,
     height: cardHeight,
-    x: 50,
-    y: 50
+    x: 800+o.Transform.posX*25,
+    y: 500-o.Transform.posZ*25,
   };
   widgets[o.GUID] = deck;
   return widgets;
@@ -123,6 +123,8 @@ function addBag(o, parent) {
         property: 'owner'
       }
     ],
+    x: 800+o.Transform.posX*25,
+    y: 500-o.Transform.posZ*25,
     text: o.Nickname || 'Open\nBag'
   };
   Object.assign(widgets, addRecursive(o.ContainedObjects, o.GUID));
@@ -153,13 +155,6 @@ export default async function convertTTS(content) {
       json = JSON.parse(await zip.files[file].async('string'));
 
   const widgets = addRecursive(json.ObjectStates);
-  let xOffset = 0;
-  for(const id in widgets) {
-    if(widgets[id].type == 'pile') {
-      widgets[id].x += xOffset;
-      xOffset += 50;
-    }
-  }
 
   if(json.TableURL) {
     widgets.back = {
