@@ -38,6 +38,14 @@ function addDeck(o, parent=null) {
             x: 'offsetX',
             y: 'offsetY'
           }
+        },{
+          type: 'image',
+          width:  cardWidth,
+          height: cardHeight,
+          color: 'transparent',
+          dynamicProperties: {
+            value: 'simpleBack'
+          }
         }]
       },
       {
@@ -64,6 +72,8 @@ function addDeck(o, parent=null) {
       offsetX: (offset%cardsPerRow) * -cardWidth,
       offsetY: Math.floor(offset/cardsPerRow) * -cardHeight
     };
+    if(!o.CustomDeck[deckID].UniqueBack)
+      deck.cardTypes[id].simpleBack = deck.cardTypes[id].back;
     widgets[`${o.GUID}-${id}`] = {
       id: `${o.GUID}-${id}`,
       type: 'card',
