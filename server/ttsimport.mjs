@@ -7,6 +7,11 @@ function processURL(url) {
   return match ? `https://steamusercontent-a.akamaihd.net${match[0]}` : url;
 }
 
+let nextID = 1;
+function getID(o) {
+  return o.GUID || nextID++;
+}
+
 function addDeck(o, parent=null) {
   const firstDeckID = Math.floor((o.DeckIDs || [ o.CardID ])[0]/100);
 
@@ -17,8 +22,9 @@ function addDeck(o, parent=null) {
   const cardWidth = 128;
 
   const widgets = {};
+  const id = getID(o);
   const deck = {
-    id: o.GUID,
+    id,
     parent,
     type: 'deck',
     cardTypes: {},
@@ -63,27 +69,27 @@ function addDeck(o, parent=null) {
     ]
   };
 
-  for(const id of o.DeckIDs || [ o.CardID ]) {
-    const deckID = Math.floor(id/100);
-    const offset = id%100;
-    deck.cardTypes[id] = {
+  for(const cardID of o.DeckIDs || [ o.CardID ]) {
+    const deckID = Math.floor(cardID/100);
+    const offset = cardID%100;
+    deck.cardTypes[cardID] = {
       face: processURL(o.CustomDeck[deckID].FaceURL),
       back: processURL(o.CustomDeck[deckID].BackURL),
       offsetX: (offset%cardsPerRow) * -cardWidth,
       offsetY: Math.floor(offset/cardsPerRow) * -cardHeight
     };
     if(!o.CustomDeck[deckID].UniqueBack)
-      deck.cardTypes[id].simpleBack = deck.cardTypes[id].back;
-    widgets[`${o.GUID}-${id}`] = {
-      id: `${o.GUID}-${id}`,
+      deck.cardTypes[cardID].simpleBack = deck.cardTypes[cardID].back;
+    widgets[`${id}-${cardID}`] = {
+      id: `${id}-${cardID}`,
       type: 'card',
-      parent: `${o.GUID}-pile`,
-      deck: o.GUID,
-      cardType: id
+      parent: `${id}-pile`,
+      deck: id,
+      cardType: cardID
     };
   }
-  widgets[`${o.GUID}-pile`] = {
-    id: `${o.GUID}-pile`,
+  widgets[`${id}-pile`] = {
+    id: `${id}-pile`,
     parent,
     type: 'pile',
     width: cardWidth,
@@ -91,7 +97,7 @@ function addDeck(o, parent=null) {
     x: 800+o.Transform.posX*25,
     y: 500-o.Transform.posZ*25,
   };
-  widgets[o.GUID] = deck;
+  widgets[id] = deck;
   return widgets;
 }
 
