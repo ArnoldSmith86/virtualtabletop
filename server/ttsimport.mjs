@@ -72,14 +72,17 @@ function addDeck(o, parent=null) {
   for(const cardID of o.DeckIDs || [ o.CardID ]) {
     const deckID = Math.floor(cardID/100);
     const offset = cardID%100;
+
     deck.cardTypes[cardID] = {
       face: processURL(o.CustomDeck[deckID].FaceURL),
       back: processURL(o.CustomDeck[deckID].BackURL),
       offsetX: (offset%cardsPerRow) * -cardWidth,
       offsetY: Math.floor(offset/cardsPerRow) * -cardHeight
     };
-    if(!o.CustomDeck[deckID].UniqueBack)
+    if(!o.CustomDeck[deckID].UniqueBack) {
       deck.cardTypes[cardID].simpleBack = deck.cardTypes[cardID].back;
+      delete deck.cardTypes[cardID].back;
+    }
     widgets[`${id}-${cardID}`] = {
       id: `${id}-${cardID}`,
       type: 'card',
