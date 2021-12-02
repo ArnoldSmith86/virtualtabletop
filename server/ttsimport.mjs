@@ -180,5 +180,23 @@ export default async function convertTTS(content) {
     };
   }
 
+  widgets._meta = {
+    info: {
+      name: json.SaveName,
+      image: '',
+      rules: '',
+      bgg: '',
+      year: 0,
+      mode: 'vs',
+      time: 30,
+      players: '2-4',
+      language: 'US',
+      variant: '',
+      link: '',
+      attribution: ''
+    },
+    version: 5
+  };
+
   return widgets;
 }
