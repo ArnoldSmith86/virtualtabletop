@@ -196,7 +196,7 @@ MinifyRoom().then(function(result) {
     const filename = `/${CRC32.buf(req.body)}_${req.body.length}`;
     if(!fs.existsSync(assetsdir + filename))
       fs.writeFileSync(assetsdir + filename, req.body);
-    res.send(filename);
+    res.send(`/assets${filename}`);
   });
 
   app.put('/addState/:room/:id/:type/:name/:addAsVariant?', bodyParser.raw({ limit: '500mb' }), async function(req, res, next) {

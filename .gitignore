@@ -4,3 +4,4 @@ node_modules
 save
 *.tgz
 *.heapsnapshot
+.DS_Store
