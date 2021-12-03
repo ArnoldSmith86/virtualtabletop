@@ -1,10 +1,29 @@
 import fs from 'fs';
 import path from 'path';
 import JSZip from 'jszip';
+import fetch from 'node-fetch';
+
+const imgSizeCache = {};
+async function imgSize(url) {
+  if(imgSizeCache[url])
+    return imgSizeCache[url];
+
+  const r = await fetch(url, { headers: { 'Range': 'bytes=0-40000' } });
+  const buffer = await r.buffer();
+  fs.writeFileSync('/tmp/out', buffer);
+  if(buffer.toString('ascii', 1, 4) == 'PNG')
+    return imgSizeCache[url] = [ buffer.readUInt32BE(16), buffer.readUInt32BE(20) ];
+  for(let offset=4; offset<buffer.length; offset+=2) {
+    offset += buffer.readUInt16BE(offset);
+    if([ 0xC0, 0xC1, 0xC2 ].indexOf(buffer[offset+1])>-1)
+      return imgSizeCache[url] = [ buffer.readUInt16BE(offset+7), buffer.readUInt16BE(offset+5) ];
+  }
+  return imgSizeCache[url] = [ 1, 1 ];
+}
 
 function processURL(url) {
   const match = url.match(/\/ugc\/[0-9]+\/[0-9A-F]+\//);
-  return match ? `https://steamusercontent-a.akamaihd.net${match[0]}` : url;
+  return match ? `https://steamusercontent-a.akamaihd.net${match[0]}` : url.replace(/^http:/, 'https:');
 }
 
 let nextID = 1;
@@ -12,14 +31,25 @@ function getID(o) {
   return o.GUID || nextID++;
 }
 
-function addDeck(o, parent=null) {
+async function addDeck(o, parent=null) {
   const firstDeckID = Math.floor((o.DeckIDs || [ o.CardID ])[0]/100);
+
+  let [ deckWidth, deckHeight ] = await imgSize(processURL(o.CustomDeck[firstDeckID].FaceURL));
 
   const cardsPerRow = o.CustomDeck[firstDeckID].NumWidth  || 10;
   const cardsPerCol = o.CustomDeck[firstDeckID].NumHeight ||  7;
 
-  const cardHeight = 197.4;
-  const cardWidth = 128;
+  let cardWidth = deckWidth / cardsPerRow;
+  let cardHeight = deckHeight / cardsPerCol;
+
+  let scale = 160/cardHeight;
+  if(cardWidth > cardHeight)
+    scale = 160/cardWidth;
+
+  deckWidth *= scale;
+  cardWidth *= scale;
+  deckHeight *= scale;
+  cardHeight *= scale;
 
   const widgets = {};
   const id = getID(o);
@@ -31,14 +61,14 @@ function addDeck(o, parent=null) {
     cardDefaults: {
       width: cardWidth,
       height: cardHeight,
-      enlarge: 3
+      enlarge: 4
     },
     faceTemplates: [
       {
         objects: [{
           type: 'image',
-          width:  cardsPerRow * cardWidth,
-          height: cardsPerCol * cardHeight,
+          width:  deckWidth,
+          height: deckHeight,
           dynamicProperties: {
             value: 'back',
             x: 'offsetX',
@@ -57,8 +87,8 @@ function addDeck(o, parent=null) {
       {
         objects: [{
           type: 'image',
-          width:  cardsPerRow * cardWidth,
-          height: cardsPerCol * cardHeight,
+          width:  deckWidth,
+          height: deckHeight,
           dynamicProperties: {
             value: 'face',
             x: 'offsetX',
@@ -104,7 +134,7 @@ function addDeck(o, parent=null) {
   return widgets;
 }
 
-function addBag(o, parent) {
+async function addBag(o, parent) {
   const widgets = {};
   widgets[o.GUID] = {
     id: o.GUID,
@@ -136,20 +166,20 @@ function addBag(o, parent) {
     y: 500-o.Transform.posZ*25,
     text: o.Nickname || 'Open\nBag'
   };
-  Object.assign(widgets, addRecursive(o.ContainedObjects, o.GUID));
+  Object.assign(widgets, await addRecursive(o.ContainedObjects, o.GUID));
   return widgets;
 }
 
-function addRecursive(os, parent=null) {
+async function addRecursive(os, parent=null) {
   const widgets = {};
 
   for(const o of os) {
     if(o.CustomDeck)
-      Object.assign(widgets, addDeck(o, parent));
+      Object.assign(widgets, await addDeck(o, parent));
     else if(o.Name == 'Bag')
-      Object.assign(widgets, addBag(o, parent));
+      Object.assign(widgets, await addBag(o, parent));
     else if(o.ContainedObjects && o.Name != 'DeckCustom' && o.Name != 'Deck')
-      Object.assign(widgets, addRecursive(o.ContainedObjects, parent));
+      Object.assign(widgets, await addRecursive(o.ContainedObjects, parent));
   }
 
   return widgets;
@@ -163,7 +193,7 @@ export default async function convertTTS(content) {
     if(file.match(/\.json$/))
       json = JSON.parse(await zip.files[file].async('string'));
 
-  const widgets = addRecursive(json.ObjectStates);
+  const widgets = await addRecursive(json.ObjectStates);
 
   if(json.TableURL) {
     widgets.back = {
