@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
-	<style>
-		tspan { white-space:pre }
-	</style>
-	<path id="X " fill="currentColor" d="M85.41 27.52L72.23 14.44L49.97 36.71L27.7 14.44L14.53 27.52L36.89 49.79L14.53 72.15L27.7 85.23L49.97 62.96L72.23 85.23L85.41 72.15L63.05 49.79L85.41 27.52Z" />
-</svg>

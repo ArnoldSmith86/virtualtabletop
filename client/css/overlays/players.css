@@ -128,6 +128,29 @@ label.ui-line::before{
   padding: 0 0.5rem;
   border-radius: 0 0 0.5rem;
   font-weight: bold;
+<<<<<<< HEAD
+}
+
+.overlay .heading{
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;;
+}
+.overlay .heading h1{
+  margin: 0 0.5em 0 0;
+  padding: 0.25em 0.5em 0.25em 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.5);
+  line-height: 1em;
+  text-align: left;
+  max-width: 45%;
+}
+.overlay .heading .instructionalText{
+  display: block;
+  font-size: 16px;
+  text-align: left;
+  padding: 0.9rem 0;
+=======
+>>>>>>> 5cf48c1cdd12c9762f9718a6b24e2ba3bb6b1eb8
 }
 
 .overlay .heading{
@@ -149,14 +172,29 @@ label.ui-line::before{
   text-align: left;
   padding: 0.9rem 0;
 }
-
+#roomArea {
+  --cursorSize: 10;
+  --cursorOpacity: 0;
+  --cursorActiveOpacity: 0.2;
+  --cursorPressedOpacity: 0.5;
+}
 .cursor {
   position: absolute;
-  top: calc(-10px * var(--scale));
-  left: calc(-10px * var(--scale));
-  width: calc(20px * var(--scale));
-  height: calc(20px * var(--scale));
+  top: calc(var(--cursorSize) * -1px * var(--scale));
+  left: calc(var(--cursorSize) * -1px * var(--scale));
+  width: calc(var(--cursorSize) * 2px * var(--scale));
+  height: calc(var(--cursorSize) * 2px * var(--scale));
   border-radius: 100%;
-  opacity: 0.2;
+  opacity: var(--cursorOpacity);
+  transition-duration: 2s;
   pointer-events: none;
+}
+.cursor.active, .cursor.pressed.foreign {
+  --cursorOpacity: var(--cursorActiveOpacity);
+  --cursorShowName: var(--cursorActiveShowName);
+  transition: none;
+}
+.cursor.pressed {
+  --cursorOpacity: var(--cursorPressedOpacity);
+  --cursorShowName: var(--cursorPressedShowName);
 }

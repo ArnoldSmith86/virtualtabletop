@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 866" width="1000" height="866">
-	<style>
-		tspan { white-space:pre }
-		.shp0 { fill: #4a4a4a } 
-	</style>
-	<path id="Camada 1" class="shp0" d="M999.99 433.99L749.99 866.99L250 866.99L0.01 433.99L250 0.99L750 0.99L999.99 433.99Z" />
-</svg>
