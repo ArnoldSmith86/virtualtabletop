@@ -121,15 +121,25 @@ async function addDeck(o, parent=null) {
       cardType: cardID
     };
   }
-  widgets[`${id}-pile`] = {
-    id: `${id}-pile`,
-    parent,
-    type: 'pile',
-    width: cardWidth,
-    height: cardHeight,
-    x: 800+o.Transform.posX*25,
-    y: 500-o.Transform.posZ*25,
-  };
+  if(Object.keys(widgets).length > 2) {
+    widgets[`${id}-pile`] = {
+      id: `${id}-pile`,
+      parent,
+      type: 'pile',
+      width: cardWidth,
+      height: cardHeight,
+      x: 800+o.Transform.posX*25,
+      y: 500-o.Transform.posZ*25,
+    };
+  } else {
+    for(const widget in widgets) {
+      if(widgets[widget].type != 'deck') {
+        widgets[widget].x = 800+o.Transform.posX*25;
+        widgets[widget].y = 500+o.Transform.posZ*25;
+        widgets[widget].parent = parent;
+      }
+    }
+  }
   widgets[id] = deck;
   return widgets;
 }
