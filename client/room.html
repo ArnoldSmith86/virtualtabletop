@@ -11,6 +11,7 @@
   <link rel="manifest" href="/i/branding/manifest.json">
   <link rel="mask-icon" href="/i/branding/mask-icon.svg">
   <script src="https://cdn.jsdelivr.net/combine/npm/vue@3.0.7/dist/vue.global.prod.js,npm/jszip@3.6.0/dist/jszip.min.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
   <base target="_blank">
   <style> {{CSS}} </style>
 </head>
@@ -207,27 +208,43 @@
       </div>
     </div>
 
-    <div id="statesOverlay" class="overlay empty">
-      <h1>Games</h1>
-      <div id="emptyRoom">
-        <h1>VirtualTabletop.io</h1>
-        <p>There is no saved game in this room. You can save your progress or add games to it and play them with your friends and family by sharing the link.</p>
-        <p>Bring your own voice chat. We recommend <a href="https://meet.jit.si/">Jitsi Meet</a> because it's free software, runs in the browser and requires no accounts.</p>
-        <div>
-          <div><p>Save what you are currently working on?</p><button class="prettyButton create">Save room state</button></div>
-          <div><p>Do you have a *.vtt or *.pcio file?</p><button class="prettyButton upload">Upload files</button></div>
-          <div><p>Do you have a link to one?</p><button class="prettyButton link">Enter link</button></div>
-        </div>
-        <p>If you don't, you can create your own game or add one from the public library:</p>
+    <div id="statesOverlay" class="overlay">
+      <div id="stateFilters">
+        <div class="searchbar"><input id="filterByText" placeholder="Find a game..." /></div>
+        <span class="icon">👨‍👩‍👧</span>
+        <select id="filterByPlayers"><option>Any</option>
+          <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+          <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+          <option>11</option><option>12</option><option>13</option><option>14</option><option>15</option>
+          <option>16</option><option>17</option><option>18</option><option>19</option><option>20</option>
+        </select>
+        <span class="icon">💬</span>
+        <select id="filterByLanguage"><option>Any</option>
+          <option>UN</option><option>US</option>
+          <option>BR</option><option>CN</option><option>DE</option><option>GB</option>
+        </select>
       </div>
       <div id="statesList">
+        <script id="template-stateslist-category" type="text/template">
+          <h2 class="list-title">Title</h2>
+          <div class="list"></div>
+        </script>
         <script id="template-stateslist-entry" type="text/template">
+          <div class="header">
+            <div class="title">
+            <div class="name">Name</div>
+            <div class="similar-to"></div>
+            </div>
+
+            <div class="stats">⌛ <span class="time">0</span></div>
+            <div class="star"><input type="checkbox"></div>
+          </div>
           <img>
           <div class="details">
             <em><a class="bgg">Name (Year)</a></em>
             <em>⌛ <span class="time">0</span> minutes - <a class="rules">Rules</a></em>
             <div class="variantsList"></div>
-            <p><button class="saveProgress" disabled>💾 Save in-progress game</button><button class="prettyButton  edit">Edit</button></p>
+            <p><button class="prettyButton edit">Edit</button><button class="prettyButton star">★</button></p>
           </div>
         </script>
         <script id="template-variantslist-entry" type="text/template">
@@ -237,32 +254,12 @@
           <div class="image">➕</div>
           <div class="buttons">
             <button class="prettyButton gameMenu create">Save room state</button>
-            <button class="prettyButton gameMenu library">Public library</button>
             <button class="prettyButton gameMenu link">Enter link</button>
             <button class="prettyButton gameMenu upload">Upload files</button>
             <button class="prettyButton gameMenu download">Download all</button>
           </div>
         </div>
       </div>
-    </div>
-
-    <div id="libraryOverlay" class="overlay">
-      <h1>Public library</h1>
-      <table id="libraryList">
-        <script id="template-librarylist-header" type="text/template">
-          <th></th><th>Game</th><th>Similar to</th><th>Players</th><th>Language</th><th>Notes</th>
-        </script>
-        <script id="template-librarylist-entry" type="text/template">
-          <td><button class="add">Add</button></td><td class="name">Chess</td><td><a>Chess</a></td><td class="players">2</td><td class="language">🇺🇳</td><td class="notes"></td>
-        </script>
-        <script id="template-librarylist-section-title" type="text/template">
-          <td class="section" colspan="6">
-            <div class="section-name">Section Name</div>
-            <div class="notes">Section notes</div>
-          </td>
-        </script>
-      </table>
-      <p>Loading...</p>
     </div>
 
     <div id="stateEditOverlay" class="overlay">
@@ -377,7 +374,8 @@
   <div id="enlarged" class="hidden"></div>
 
   <script type="module"> {{JS}} </script>
-
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 </body>
 
 </html>

@@ -82,16 +82,6 @@ async function addState(e, type, src, id) {
   req.send(blob);
 }
 
-function addStateFromLibrary(e) {
-  pickStateFromLibrary().then(url=>{
-    if(e.target.parentNode == $('#addVariant'))
-      showOverlay('stateEditOverlay');
-    else
-      showOverlay('statesOverlay');
-    addState(e, 'link', url);
-  }).catch(e=>!1);
-}
-
 function downloadState(variantID) {
   const stateID = $('#stateEditOverlay').dataset.id;
   let url = `/dl/${roomID}`
@@ -127,66 +117,101 @@ function editState() {
   showOverlay('statesOverlay');
 }
 
-function fillStatesList(states, activePlayers) {
+function toggleStateStar(state) {
+  toServer('toggleStateStar', state.publicLibrary);
+}
+
+function updateLibraryFilter() {
+  const text = $('#filterByText').value.toLowerCase();
+  const players = $('#filterByPlayers').value;
+  const language = $('#filterByLanguage').value;
+  for(const state of $a('#statesList .list > div')) {
+    const textMatch     = state.dataset.text.match(text);
+    const playersMatch  = players  == 'Any' || state.dataset.players.split(',').indexOf(players) != -1;
+    const languageMatch = language == 'Any' || state.dataset.languages.split(',').indexOf(language) != -1;
+    state.style.display = textMatch && playersMatch && languageMatch ? 'block' : 'none';
+  }
+}
+
+function parsePlayers(players) {
+  const validPlayers = [];
+  for(const token of players.split(',')) {
+    const match = token.match(/^([0-9]+)(-([0-9]+)|\+)?$/);
+    if(match)
+      for(let i=+match[1]; i<=(match[2] ? +match[3]||20 : +match[1]); ++i)
+        validPlayers.push(i);
+  }
+  return validPlayers;
+}
+
+function fillStatesList(states, starred, activePlayers) {
+
+
   const addDiv = $('#addState');
   removeFromDOM(addDiv);
   removeFromDOM('#statesList > div');
 
   let isEmpty = true;
-  for(const kvp of Object.entries(states).sort((a, b) => a[1].name.localeCompare(b[1].name))) {
-    isEmpty = false;
+  const sortedStates = Object.entries(states).sort((a, b) => a[1].name.localeCompare(b[1].name));
 
-    const state = kvp[1];
-    state.id = kvp[0];
+  for(const publicLibrary of [ false, true ]) {
+    const category = domByTemplate('template-stateslist-category');
+    $('.list-title', category).textContent = publicLibrary ? 'Public Library' : 'Your Game Shelf';
 
-    const entry = domByTemplate('template-stateslist-entry');
-    entry.className = state.image ? 'roomState' : 'roomState noImage';
-    $('img', entry).src = state.image;
-    $('.bgg', entry).textContent = `${state.name} (${state.year})`;
-    $('.bgg', entry).href = state.bgg;
-    $('.rules', entry).href = state.rules;
-    $('.time', entry).textContent = state.time;
+    for(const kvp of sortedStates.filter(kvp=>(!!kvp[1].publicLibrary && (!starred || !starred[kvp[1].publicLibrary])) == publicLibrary)) {
+      isEmpty = false;
 
-    for(const variantID in state.variants) {
-      const variant = state.variants[variantID];
-      const vEntry = domByTemplate('template-variantslist-entry');
-      $('.language', vEntry).textContent = String.fromCodePoint(...[...variant.language].map(c => c.charCodeAt() + 0x1F1A5));
-      $('.players', vEntry).textContent = variant.players;
-      $('.variant', vEntry).textContent = variant.variant;
+      const state = kvp[1];
+      state.id = kvp[0];
+// console.log(state);
 
-      $('.play', vEntry).addEventListener('click', _=>{ toServer('loadState', { stateID: state.id, variantID }); showOverlay(); });
-      $('.variantsList', entry).appendChild(vEntry);
+      const entry = domByTemplate('template-stateslist-entry');
+      entry.className = state.image ? 'roomState' : 'roomState noImage';
+      if(state.publicLibrary)
+        entry.className += ' publicLibraryGame';
+
+      $('img', entry).src = state.image;
+      $('.name', entry).textContent = `${state.name}`;
+      $('.similar-to', entry).textContent = `Similar to ${state.similarName}`;
+      $('.bgg', entry).textContent = `${state.name} (${state.year})`;
+      $('.bgg', entry).href = state.bgg;
+      $('.rules', entry).href = state.rules;
+      $('.time', entry).textContent = state.time;
+
+      const validPlayers = [];
+      const validLanguages = [];
+      for(const variantID in state.variants) {
+        const variant = state.variants[variantID];
+        const vEntry = domByTemplate('template-variantslist-entry');
+        $('.language', vEntry).textContent = String.fromCodePoint(...[...variant.language].map(c => c.charCodeAt() + 0x1F1A5));
+        $('.players', vEntry).textContent = variant.players;
+        $('.variant', vEntry).textContent = variant.variant;
+        validPlayers.push(...parsePlayers(variant.players));
+        validLanguages.push(variant.language);
+
+        $('.play', vEntry).addEventListener('click', _=>{ toServer('loadState', { stateID: state.id, variantID }); showOverlay(); });
+        $('.variantsList', entry).appendChild(vEntry);
+      }
+
+      $('.edit', entry).addEventListener('click', _=>fillEditState(state));
+      $('.star', entry).addEventListener('click', _=>toggleStateStar(state));
+      $('.list', category).appendChild(entry);
+
+      entry.dataset.text = `${state.name} ${state.similarName} ${state.description}`.toLowerCase();
+      entry.dataset.players = validPlayers.join();
+      entry.dataset.languages = validLanguages.join();
+
+      if(state.id == waitingForStateCreation) {
+        waitingForStateCreation = null;
+        if(state.name == 'Unnamed' || $('#stateEditOverlay').style.display == 'flex')
+          fillEditState(state);
+      }
     }
 
-    $('.edit', entry).addEventListener('click', _=>fillEditState(state));
-    $('#statesList').appendChild(entry);
-
-    if(state.id == waitingForStateCreation) {
-      waitingForStateCreation = null;
-      if(state.name == 'Unnamed' || $('#stateEditOverlay').style.display == 'flex')
-        fillEditState(state);
-    }
+    $('#statesList').appendChild(category);
   }
-  $('#statesList').appendChild(addDiv);
-
-  fillStatesWelcome(isEmpty);
-}
-
-function fillStatesWelcome(isEmpty) {
-  if(isEmpty && urlProperties.load) {
-    addState(null, 'link', urlProperties.load);
-  } else if(!widgets.size && urlProperties.load) {
-    $('.play').click();
-  } else if(isEmpty) {
-    $('#statesOverlay').classList.add('empty');
-    $('#statesOverlay').appendChild($('#libraryList'));
-    pickStateFromLibrary(false).then(url=>{
-      addState(null, 'link', url);
-    }).catch(e=>!1);
-  } else {
-    $('#statesOverlay').classList.remove('empty');
-    $('#libraryOverlay').appendChild($('#libraryList'));
-  }
+  $('#statesList > div').appendChild(addDiv);
+  updateLibraryFilter();
 }
 
 function fillEditState(state) {
@@ -232,70 +257,6 @@ function fillEditState(state) {
   showOverlay('stateEditOverlay');
 }
 
-let previousLibraryRejection = null;
-async function pickStateFromLibrary(changeOverlay) {
-  if(changeOverlay !== false)
-    showOverlay('libraryOverlay');
-  await populateLibrary();
-
-  if(previousLibraryRejection)
-    previousLibraryRejection();
-
-  return new Promise((resolve, reject) => {
-    previousLibraryRejection = reject;
-    on('#libraryList .add', 'click', function() {
-      if(this.dataset.url.match(/^http/))
-        resolve(this.dataset.url);
-      else
-        resolve(location.origin + '/library/' + this.dataset.url);
-    });
-  });
-}
-
-async function populateLibrary() {
-  if(!$('#libraryList.populated')) {
-    const library = await fetch('/library/library.json');
-    var lEntry = null;
-    // add sections and entries
-    (await library.json()).forEach((entry, idx) => {
-      if (!entry.link) {
-        // sections have empty entry.link
-        lEntry = domByTemplate('template-librarylist-section-title', 'tr');
-
-        $('.section-name', lEntry).textContent = entry.name;
-        $('.notes', lEntry).textContent = entry.notes;
-
-        $('#libraryList').appendChild(lEntry);
-
-        // add another header for readability
-        lEntry = domByTemplate('template-librarylist-header', 'tr');
-        $('#libraryList').appendChild(lEntry);
-      } else {
-        // entries have valid entry.link
-        if (!idx) {
-            // if the top row does not have a section title, add header first
-            lEntry = domByTemplate('template-librarylist-header', 'tr');
-            $('#libraryList').appendChild(lEntry);
-        }
-        lEntry = domByTemplate('template-librarylist-entry', 'tr');
-
-        $('.name', lEntry).textContent = entry.name;
-        $('.players', lEntry).textContent = entry.players;
-        $('.language', lEntry).textContent = entry.language;
-        $('.notes', lEntry).textContent = entry.notes;
-        $('a', lEntry).textContent = entry['similar name'];
-        $('a', lEntry).href = entry['similar link'];
-        $('button.add', lEntry).dataset.url = entry.link;
-
-        $('#libraryList').appendChild(lEntry);
-      }
-
-    });
-    $('#libraryList').classList.add('populated');
-    removeFromDOM('#libraryOverlay > p');
-  }
-}
-
 function removeState() {
   toServer('removeState', $('#stateEditOverlay').dataset.id);
   showOverlay('statesOverlay');
@@ -313,13 +274,14 @@ async function shareLink() {
 }
 
 onLoad(function() {
-  onMessage('meta', args=>fillStatesList(args.meta.states, args.activePlayers));
+  onMessage('meta', args=>fillStatesList(args.meta.states, args.meta.starred, args.activePlayers));
 
-  on('#addState .create,  #addVariant .create, #emptyRoom .create',  'click', e=>addState(e, 'state'));
-  on('#addState .library, #addVariant .library', 'click', e=>addStateFromLibrary(e));
+  on('#filterByText', 'keyup', updateLibraryFilter);
+  on('#filterByPlayers, #filterByLanguage', 'change', updateLibraryFilter);
 
-  on('#addState .upload, #emptyRoom .upload, #addVariant .upload',  'click', e=>selectFile(false, f=>addState(e, 'file', f)));
-  on('#addState .link,   #emptyRoom .link,   #addVariant .link',    'click', e=>addState(e, 'link', prompt('Enter shared URL:')));
+  on('#addState .create, #addVariant .create', 'click', e=>addState(e, 'state'));
+  on('#addState .upload, #addVariant .upload', 'click', e=>selectFile(false, f=>addState(e, 'file', f)));
+  on('#addState .link,   #addVariant .link',   'click', e=>addState(e, 'link', prompt('Enter shared URL:')));
 
   on('#addState .download', 'click', _=>downloadState(null));
 

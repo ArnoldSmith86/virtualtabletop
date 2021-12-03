@@ -39,6 +39,8 @@ export default class Player {
         this.room.removeState(this, args);
       if(func == 'rename')
         this.room.renamePlayer(this, args.oldName, args.newName);
+      if(func == 'toggleStateStar')
+        this.room.toggleStateStar(this, args);
       if(func == 'trace')
         this.trace('client', args);
     } catch(e) {

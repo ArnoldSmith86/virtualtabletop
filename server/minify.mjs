@@ -75,7 +75,8 @@ export default function minifyRoom() {
           'client/components/baseEditOverlay.js',
           'client/components/deckEditor.js',
           'client/components/loadComponents.js',
-
+          'client/js/jquery.js',
+          'client/js/jquery-ui.js',
           'client/js/main.js'
         ],
         output: os.tmpdir() + '/out.js'

@@ -1,42 +1,34 @@
 #statesOverlay {
-  padding: 2%;
-}
-
-#statesOverlay.empty {
-  overflow: auto;
-}
-
-#statesOverlay.empty > h1, #statesOverlay.empty #statesList, #statesOverlay #emptyRoom {
-  display: none;
-}
-
-#statesOverlay.empty #emptyRoom {
-  display: flex;
-  flex-direction: column;
-}
-
-#statesOverlay.empty #emptyRoom > div {
-  display: flex;
-  flex-direction: row;
-}
-
-#statesOverlay.empty #emptyRoom > div > div {
-  margin: 40px;
-  text-align: center;
-  width: 100%;
+  padding: 3rem 0 0 0;
+  background-color: var(--roomColor);
+  color: black;
 }
 
 #statesList, #stateEditOverlay {
   overflow: auto;
 }
 
+#statesList .list-title {
+  lear: left;
+  padding: 0.75rem 1.5rem 0.5rem 1.5rem;
+  margin: 2.25rem 0 0 0;
+  border-top: 1px solid lightgray;
+}
+#statesList .list{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem;
+}
 .roomState, #addState {
   color: black;
   float: left;
-  width: 260px;
-  height: 260px;
+  width: 200px;
+  height: 200px;
   position: relative;
   overflow: hidden;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 10px #00000077;
 }
 
 .roomState > div {
@@ -45,10 +37,12 @@
   bottom: 0;
   right: 0;
   top: 0;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.5);
+  padding: 0;
+  background: rgba(255, 255, 255, 0.15);
 }
-
+#addState{
+  display: none;
+}
 #addState div {
   position: absolute;
 }
@@ -63,6 +57,18 @@
 .roomState .details, #addState .buttons {
   display: none;
   overflow: auto;
+}
+
+.roomState .star {
+  display: none;
+}
+
+.roomState.publicLibraryGame .star {
+  display: block;
+}
+
+.roomState.publicLibraryGame .edit {
+  display: none;
 }
 
 .roomState.noImage .details > *, .roomState.noImage img {
@@ -91,6 +97,7 @@
 #addState {
   background: rgba(255, 255, 255, 0.5);
   display: inline-flex;
+  display: none;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -101,13 +108,13 @@
   margin-bottom: 20px;
 }
 
-.roomState:hover > div, .roomState:hover .details > *, #addState:hover > div, .roomState > div > a {
+/* .roomState:hover > div, .roomState:hover .details > *, #addState:hover > div, .roomState > div > a {
   display: block;
 }
 
 .roomState:hover > img, #addState:hover .image {
   filter: blur(5px);
-}
+} */
 
 #stateEditOverlay label {
   width: 200px;
@@ -123,22 +130,126 @@
   margin-bottom: 30px;
 }
 
-#libraryOverlay {
-  overflow: auto;
+
+.roomState.unclicked .details{
+  animation: hideGame 0.5s linear;
 }
 
-#libraryList td, #libraryList th {
-  padding: 6px;
+.roomState.clicked{
+  position: initial;
 }
-#libraryList .section {
-  background-color: #4a4a4a;
-  opacity: 0.7;
+.roomState.clicked .details{
+  animation: showGame 0.5s linear;
+  opacity: 1;
+  position: absolute;
+  height: 50%;
+  width: 75%;
+  display: block;
+  left: 13.5%;
+  top: 25%;
+  z-index: 10000;
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 5px black;
 }
-#libraryList .section .section-name {
-  font-size: 1.17em;
-  font-weight: bolder;
-  text-align: center;
+@keyframes showGame {
+  from {opacity: 0;}
+  to {opacity: 1;}
 }
-#libraryList .section .notes {
-  text-align: center;
+@keyframes hideGame {
+  from {opacity: 1;}
+  to {opacity: 0;}
+}
+
+.roomState .header{
+
+  text-shadow: 0 0 3px black;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0;
+}
+.roomState .header .title{
+backdrop-filter: blur(30px) saturate(210%);
+padding: 0!important;
+margin: 0!important;
+
+}
+.roomState .header .name{
+
+
+  padding: 0.5rem 0.5rem 0 0.5rem;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+.roomState .header .similar-to{
+  padding: 0 0.5rem 0.5rem 0.5rem;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.roomState .header .stats{
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  padding: 0 0.5rem;
+  line-height: 30px;
+  backdrop-filter: blur(30px) saturate(210%);
+  border-radius: 8px;
+}
+.roomState .header .star{
+  position: absolute;
+  line-height: 30px;
+  font-size: 20px;
+  padding: 0;
+  top: 0rem;
+  left: 0rem;
+  backdrop-filter: blur(30px) saturate(210%);
+  background: none;
+  height: 30px;
+  width: 30px;
+  text-shadow: 0 0 3px black;
+  border-radius: 8px;
+
+}
+#stateFilters{
+  display: flex;
+  gap: 5px;
+  padding: 5px;
+  align-items: center;
+  background: pink;
+    top: 0;
+  left: 0;
+  border-bottom: 1px solid lightgray;
+  position: absolute;
+  z-index: 1000;
+  background: var(--roomColor);
+  width: 100%;
+  box-sizing: border-box;
+}
+#filterByPlayers-button, #filterByLanguage-button{
+  width: auto;
+  border: 0px none transparent;
+  border-bottom: 1px solid blue;
+  border-top: 1px solid var(--roomColor);
+  font-size: 1rem;
+  padding: 9px;
+  border-radius: 0;
+  background: none;
+}
+.searchbar{
+  flex-grow: 1;
+}
+#filterByText{
+  border: 1px solid blue;
+  font-size: 1rem;
+  padding: 9px;
+  border-radius: 50px;
+  width: 100%;
+  box-sizing: border-box;
+}
+#stateFilters .icon{
+  font-size: 2em;
+  margin-left: 0.5rem;
 }
