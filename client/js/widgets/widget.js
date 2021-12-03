@@ -1492,8 +1492,8 @@ export class Widget extends StateManaged {
 
   async move(coordGlobal, offset) {
     const coordParent = this.coordParentFromCoordGlobal(coordGlobal);
-    const newX = coordParent.x - offset.x;
-    const newY = coordParent.y - offset.y;
+    const newX = Math.round(coordParent.x - offset.x);
+    const newY = Math.round(coordParent.y - offset.y);
 
     if(tracingEnabled)
       sendTraceEvent('move', { id: this.get('id'), coordGlobal, offset, newX, newY });
