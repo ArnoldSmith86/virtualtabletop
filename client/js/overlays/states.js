@@ -145,6 +145,8 @@ function parsePlayers(players) {
 }
 
 function fillStatesList(states, starred, activePlayers) {
+
+
   const addDiv = $('#addState');
   removeFromDOM(addDiv);
   removeFromDOM('#statesList > div');
@@ -154,13 +156,14 @@ function fillStatesList(states, starred, activePlayers) {
 
   for(const publicLibrary of [ false, true ]) {
     const category = domByTemplate('template-stateslist-category');
-    $('.title', category).textContent = publicLibrary ? 'Public Library' : 'Your Game Shelf';
+    $('.list-title', category).textContent = publicLibrary ? 'Public Library' : 'Your Game Shelf';
 
     for(const kvp of sortedStates.filter(kvp=>(!!kvp[1].publicLibrary && (!starred || !starred[kvp[1].publicLibrary])) == publicLibrary)) {
       isEmpty = false;
 
       const state = kvp[1];
       state.id = kvp[0];
+// console.log(state);
 
       const entry = domByTemplate('template-stateslist-entry');
       entry.className = state.image ? 'roomState' : 'roomState noImage';
@@ -168,6 +171,8 @@ function fillStatesList(states, starred, activePlayers) {
         entry.className += ' publicLibraryGame';
 
       $('img', entry).src = state.image;
+      $('.name', entry).textContent = `${state.name}`;
+      $('.similar-name', entry).textContent = `${state.similarName}`;
       $('.bgg', entry).textContent = `${state.name} (${state.year})`;
       $('.bgg', entry).href = state.bgg;
       $('.rules', entry).href = state.rules;

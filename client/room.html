@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/combine/npm/vue@3.0.7/dist/vue.global.prod.js,npm/jszip@3.6.0/dist/jszip.min.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
   <base target="_blank">
   <style> {{CSS}} </style>
 </head>
@@ -203,15 +204,16 @@
     </div>
 
     <div id="statesOverlay" class="overlay">
-      <h1>Games</h1>
       <div id="stateFilters">
-        <input id="filterByText" />
+        <div class="searchbar"><input id="filterByText" placeholder="Find a game..." /></div>
+        <span class="icon">👨‍👩‍👧</span>
         <select id="filterByPlayers"><option>Any</option>
           <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
           <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
           <option>11</option><option>12</option><option>13</option><option>14</option><option>15</option>
           <option>16</option><option>17</option><option>18</option><option>19</option><option>20</option>
         </select>
+        <span class="icon">💬</span>
         <select id="filterByLanguage"><option>Any</option>
           <option>UN</option><option>US</option>
           <option>BR</option><option>CN</option><option>DE</option><option>GB</option>
@@ -219,10 +221,19 @@
       </div>
       <div id="statesList">
         <script id="template-stateslist-category" type="text/template">
-          <h2 class="title">Title</h2>
+          <h2 class="list-title">Title</h2>
           <div class="list"></div>
         </script>
         <script id="template-stateslist-entry" type="text/template">
+          <div class="header">
+            <div class="title">
+            <div class="name">Name</div>
+            <div class="similar-to">Similar to <span class="similar-name"></span></div>
+            </div>
+
+            <div class="stats">⌛ <span class="time">0</span></div>
+            <div class="star"><input type="checkbox"></div>
+          </div>
           <img>
           <div class="details">
             <em><a class="bgg">Name (Year)</a></em>
@@ -358,7 +369,8 @@
   <div id="enlarged" class="hidden"></div>
 
   <script type="module"> {{JS}} </script>
-
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 </body>
 
 </html>
