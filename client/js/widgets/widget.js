@@ -1553,6 +1553,7 @@ export class Widget extends StateManaged {
         let coordNew = this.hoverTarget.coordLocalFromCoordGlobal(coordGlobal);
         coordNew = this.hoverTarget.coordGlobalFromCoordLocal({x: coordNew.x - offset.x, y: coordNew.y - offset.y});
         this.setPosition(coordNew.x, coordNew.y, this.get('z'));
+        await this.snapToGrid();
         await this.moveToHolder(this.hoverTarget);
         this.hoverTarget.domElement.classList.remove('droptarget');
       }
