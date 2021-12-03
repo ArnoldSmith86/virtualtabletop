@@ -172,7 +172,7 @@ function fillStatesList(states, starred, activePlayers) {
 
       $('img', entry).src = state.image;
       $('.name', entry).textContent = `${state.name}`;
-      $('.similar-name', entry).textContent = `${state.similarName}`;
+      $('.similar-to', entry).textContent = `Similar to ${state.similarName}`;
       $('.bgg', entry).textContent = `${state.name} (${state.year})`;
       $('.bgg', entry).href = state.bgg;
       $('.rules', entry).href = state.rules;
