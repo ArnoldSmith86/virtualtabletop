@@ -1582,7 +1582,7 @@ export class Widget extends StateManaged {
     if(this.get('alignChildren'))
       await child.setPosition(this.get('dropOffsetX'), this.get('dropOffsetY'), child.get('z'));
     else
-      await child.setPosition(coordChild.x, coordChild.y, child.get('z'));
+      await child.setPosition(Math.round(coordChild.x*1024)/1024, Math.round(coordChild.y*1024)/1024, child.get('z'));
   }
 
   async onChildRemove(child) {
