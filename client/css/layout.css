@@ -51,6 +51,12 @@ button:hover {
   width: 100%;
   height: var(--toolbarSize);
   z-index: 2;
+
+  display: flex;
+  align-content: center;
+  gap:2px;
+  padding: 2px;
+  box-sizing: border-box;
 }
 
 #roomArea {
@@ -65,12 +71,29 @@ button:hover {
   z-index: 1;
 }
 
+#toolbar .divider{
+  border-left: 1px solid #ffffff44;
+  height: calc(var(--toolbarSize) - 14px);
+  max-width: 0px;
+  font-size: 0px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin: 7px 3px;
+}
+
+#toolbar .spacer{
+  background: none;
+  font-size: 0px;
+  flex-grow: 1;
+}
 .toolbarButton {
+  flex-grow: 0;
+  flex-shrink: 0;
   position: relative;
-  width: calc(var(--toolbarSize) - 4px);
+  width: auto;
   height: calc(var(--toolbarSize) - 4px);
-  margin: 2px 2px 0 2px;
-  padding: 2px;
+  margin: 0;
+  padding: 0;
   border: 0;
   border-radius: 4px;
   background: none;
@@ -82,7 +105,37 @@ button:hover {
   background-size: 80% 80%;
   background-position: center;
   background-repeat: no-repeat;
+
 }
+
+
+
+.toolbarButton::before {
+  position: absolute;
+  top:0;
+  left: 0;
+  width: calc(var(--toolbarSize) - 4px);
+  height: calc(var(--toolbarSize) - 4px);
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 28px;
+  line-height: calc(var(--toolbarSize) - 4px);
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .toolbarButton:hover {
   background-color: rgba(0,0,0,0.1);
 }
@@ -92,35 +145,69 @@ button:hover {
   border-color: transparent;
 }
 .toolbarButton .tooltip {
-  display: none;
-  position: absolute;
-  left: 0;
-  top: -26px;
-  padding: 2px;
+  font-family: 'Roboto';
+  display: inline-block;
+  position: relative;
+  padding: 2px 8px 2px 2px;
+  margin-left: calc(var(--toolbarSize) - 4px);
   font-size: 14px;
+  line-height: calc(var(--toolbarSize) - 4px);
   color: white;
-  background:var(--VTTblue);
   border-radius: 4px;
-  width: 100px;
-  height: 18px;
+  width: auto;
+  height: calc(var(--toolbarSize) - 4px);
+  white-space: nowrap;
+  pointer-events: none;
+  font-weight: 500;
 }
-
 .toolbarButton:hover .tooltip {
   display: block;
 }
 
+
+
 @media (min-aspect-ratio: 1600/1000) {
+  .toolbarButton {
+    width: calc(var(--toolbarSize) - 4px);
+  }
   #toolbar {
     top: 0;
     left: calc((100vw - var(--roomWidth) * var(--scale)) / 2 - var(--toolbarSize) / 2 + 1px);
     width: var(--toolbarSize);
     height: 100%;
+    flex-direction: column;
+  }
+  #toolbar .divider{
+    border-top: 1px solid #ffffff44;
+    height: 0px;
+    max-height: 0px;
+    font-size: 0px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin: 3px 5px;
+    max-width: 75px;
+  }
+  .toolbarButton .tooltip {
+    display: none;
+    position: absolute;
+    padding: 2px 12px;
+    font-size: 14px;
+    line-height: 14px;
+    color: white;
+    background:var(--VTTblue);
+    border-radius: 4px;
+    width: auto;
+    height: auto;
+    box-shadow: 0 0 5px #00000055;
+    white-space: nowrap;
+    top: 10px;
+    right: unset;
+    left: 4px;
+    line-height: 14px;
+    min-height: 16px;
   }
 
-  .toolbarButton .tooltip {
-    top: unset;
-    left: calc(100% + 4px);
-  }
+
 
   #roomArea {
     top: 0;
@@ -128,16 +215,80 @@ button:hover {
   }
 }
 
+@media only screen and (max-width: 900px) {
+  .toolbarButton .tooltip {
+    display: none;
+    position: absolute;
+    padding: 2px 12px;
+    font-size: 14px;
+    line-height: 14px;
+    color: white;
+    background:var(--VTTblue);
+    border-radius: 4px;
+    width: auto;
+    height: auto;
+    box-shadow: 0 0 5px #00000055;
+    white-space: nowrap;
+    bottom: calc(var(--toolbarSize) + 4px);
+    right: unset;
+    left: 4px;
+    line-height: 14px;
+    min-height: 16px;
+    left: 0;
+    margin: 0;
+  }
+  #aboutButton > .tooltip{
+    left: unset;
+    right: 0;
+  }
+  .toolbarButton {
+    width: calc(var(--toolbarSize) - 4px);
+  }
+}
+
+
 body.aspectTooGood #toolbar {
   top: calc((100vh - var(--scale) * var(--roomHeight)) / 2);
   left: calc((100vw - var(--roomWidth) * var(--scale)) / 2 - var(--toolbarSize) / 2 + 1px);
   width: var(--toolbarSize);
   height: calc(var(--scale) * var(--roomHeight));
+  flex-direction: column;
 }
 
 body.aspectTooGood .toolbarButton .tooltip {
-  top: unset;
-  left: calc(100% + 4px);
+  display: none;
+    position: absolute;
+    padding: 2px 12px;
+    font-size: 14px;
+    line-height: 14px;
+    color: white;
+    background:var(--VTTblue);
+    border-radius: 4px;
+    width: auto;
+    height: auto;
+    box-shadow: 0 0 5px #00000055;
+    white-space: nowrap;
+    top: 10px;
+    right: unset;
+    left: 4px;
+    line-height: 14px;
+    min-height: 16px;
+}
+
+body.aspectTooGood .toolbarButton:hover .tooltip {
+  display: block;
+}
+
+
+body.aspectTooGood #toolbar .divider{
+  border-top: 1px solid #ffffff44;
+  height: 0px;
+  max-height: 0px;
+  font-size: 0px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin: 3px 5px;
+  max-width: 75px;
 }
 
 body.aspectTooGood #roomArea {
@@ -184,10 +335,6 @@ body.aspectTooGood #hideToolbarButton {
 
 .overlay tr:nth-child(even) {
   background: #00000022;
-}
-
-#debugButtonOverlay pre {
-  overflow: auto;
 }
 
 #room {
@@ -267,32 +414,73 @@ body.aspectTooGood #hideToolbarButton {
   visibility: hidden;
 }
 
+/* #statesButton::before {
+  content:'interests';
+} */
+
 #statesButton {
-  background-image:url(/i/icons-white/chess-solid-svg.svg);
+  background-size: 40px 40px;
+  background-position: 0px 0px;
+  background-image:url(/i/icons-white/game-library.svg);
 }
 
-#playersButton {
-  background-image:url(/i/icons-white/user-friends-solid-svg.svg);
+#statesButton .tooltip{
+  font-weight: 900;
 }
 
-#editButton {
-  background-image:url(/i/icons-white/edit-regular-svg.svg);
+#playersButton::before {
+  content:'manage_accounts';
 }
 
-#addButton {
-  background-image:url(/i/icons-white/plus-solid-svg.svg);
+#editButton::before {
+  content:'construction';
 }
 
-#fullscreenButton {
-  background-image:url(/i/icons-white/expand-solid-svg.svg);
+#addButton::before {
+  content:'post_add';
 }
+
+
+html:not(:fullscreen) #fullscreenButton::before {
+  content:'fullscreen';
+}
+html:fullscreen #fullscreenButton::before {
+  content:'fullscreen_exit';
+}
+
+html:not(:fullscreen) #fullscreenButton .tooltip::before {
+  content:'';
+}
+html:fullscreen #fullscreenButton .tooltip::before {
+  content:'Exit ';
+}
+
+html:not(:-webkit-full-screen) #fullscreenButton::before {
+  content:'fullscreen';
+}
+html:-webkit-full-screen #fullscreenButton::before {
+  content:'fullscreen_exit';
+}
+
+html:not(:-webkit-full-screen) #fullscreenButton .tooltip::before {
+  content:'';
+}
+html:-webkit-full-screen #fullscreenButton .tooltip::before {
+  content:'Exit ';
+}
+
+
+
 
 #hideToolbarButton {
+  background-size: 28px 28px;
   background-image:url(/i/icons-white/hide-side-bar.svg);
 }
 
 #aboutButton {
-  background-image:url(/i/icons-white/info-circle-solid-svg.svg);
+  background-size: 28px 28px;
+  background-position: 4px 6px;
+  background-image:url(/i/icons-white/vttlogo.svg);
 }
 
 /*Buttons css*/
@@ -398,4 +586,16 @@ button.add {
 button:disabled {
   background: #808080;
   color: #d3d3d3;
+}
+
+.standard_font{
+  font-family: 'Roboto';
+}
+
+.handwriting_font {
+  font-family: 'Handwriting';
+}
+
+.handwriting_casual_font {
+  font-family: 'Handwriting Casual';
 }

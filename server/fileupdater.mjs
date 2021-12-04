@@ -1,4 +1,4 @@
-export const VERSION = 5;
+export const VERSION = 6;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -31,6 +31,7 @@ function updateProperties(properties, v) {
       updateRoutine(properties[property], v);
 
   v<4 && v4ModifyDropTargetEmptyArray(properties);
+  v<5 && v5DynamicFaceProperties(properties);
 }
 
 function updateRoutine(routine, v, nested = false, status = {hasMode:false, needsMode:false}) {
@@ -63,7 +64,7 @@ function updateRoutine(routine, v, nested = false, status = {hasMode:false, need
 
   v<2 && v2UpdateSelectDefault(routine);
   v<3 && v3RemoveComputeAndRandomAndApplyVariables(routine);
-  v<5 && v5RoutineModeSwitch(routine, 'strToNum defaultOne', nested, status);
+  v<6 && v6RoutineModeSwitch(routine, 'strToNum defaultOne', nested, status);
 }
 
 function v2UpdateSelectDefault(routine) {
@@ -281,7 +282,25 @@ function v4ModifyDropTargetEmptyArray(properties) {
     properties.dropTarget = {};
 }
 
-function v5RoutineModeSwitch(routine, modeSwitch, nested, status) {
+function v5DynamicFaceProperties(properties) {
+  if(Array.isArray(properties.faceTemplates)) {
+    for(const face of properties.faceTemplates) {
+      if(Array.isArray(face.objects)) {
+        for(const object of face.objects) {
+          if(object.valueType != 'static' && object.value) {
+            if(typeof object.dynamicProperties != 'object')
+              object.dynamicProperties = { value: object.value }
+            else
+              object.dynamicProperties.value = object.value;
+            delete object.value;
+          }
+          delete object.valueType;
+        }
+      }
+    }
+  }
+
+function v6RoutineModeSwitch(routine, modeSwitch, nested, status) {
   const re = /^mode:/;
   for(let i = 0; i < routine.length; i++) {
     if(typeof routine[i] == 'string' && re.test(routine[i]))
