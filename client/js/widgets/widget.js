@@ -4,6 +4,7 @@ import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
+import { center, distance, overlap, getOffset, applyTransformedOffset } from '../geometry.js';
 
 const readOnlyProperties = new Set([
   '_absoluteRotation',
@@ -303,60 +304,53 @@ export class Widget extends StateManaged {
     }
   }
 
-  coordGlobalFromCoordLocal(coordLocal) {
-    return this.coordGlobalFromCoordParent(this.coordParentFromCoordLocal(coordLocal));
+  coordGlobalFromCoordLocal(coord) {
+    return this.coordGlobalFromCoordParent(this.coordParentFromCoordLocal(coord));
   }
-  coordGlobalFromCoordParent(coordParent) {
+  coordGlobalFromCoordParent(coord) {
     const p = this.get('parent');
-    return (widgets.has(p)) ? widgets.get(p).coordGlobalFromCoordLocal(coordParent) : coordParent;
+    return (widgets.has(p)) ? widgets.get(p).coordGlobalFromCoordLocal(coord) : coord;
   }
-  coordGlobalInside(coordGlobal) {
-    const coordLocal = this.coordLocalFromCoordGlobal(coordGlobal);
+  coordGlobalInside(coord) {
+    const coordLocal = this.coordLocalFromCoordGlobal(coord);
     return coordLocal.x >= 0 && coordLocal.y >= 0 && coordLocal.x <= this.get('width') && coordLocal.y <= this.get('height');
   }
-  coordLocalFromCoordGlobal(coordGlobal) {
-    return this.coordLocalFromCoordParent(this.coordParentFromCoordGlobal(coordGlobal));
+  coordLocalFromCoordClient(coord) {
+    const s = this.get('_absoluteScale');
+    const rot = this.get('_absoluteRotation') % 360;
+    const localCenter = {x: this.get('width') / 2, y: this.get('height') / 2};
+    const offset = getOffset(center(this.domElement), coord);
+    return applyTransformedOffset(localCenter, offset, 1 / s, -rot );    
   }
-  coordLocalFromCoordParent(coordParent) {
-    let s = this.get('scale');
-    let rot = this.get('rotation') % 360;
+  coordLocalFromCoordGlobal(coord) {
+    return this.coordLocalFromCoordParent(this.coordParentFromCoordGlobal(coord));
+  }
+  coordLocalFromCoordParent(coord) {
+    const s = this.get('scale');
+    const rot = this.get('rotation') % 360;
     if(s == 1 && rot == 0) {
-      return {x: coordParent.x - this.get('x'), y: coordParent.y - this.get('y')};
+      return {x: coord.x - this.get('x'), y: coord.y - this.get('y')};
     } else {
-      let centerLocalX = this.get('width') / 2;
-      let centerLocalY = this.get('height') / 2;
-      let centerParentX = this.get('x') + centerLocalX;
-      let centerParentY = this.get('y') + centerLocalY;
-      if(rot == 0) {
-        return {x: (coordParent.x - centerParentX) / s + centerLocalX, y: (coordParent.y - centerParentY) / s + centerLocalY};
-      } else {
-        let dist = Math.sqrt((coordParent.x - centerParentX)**2 + (coordParent.y - centerParentY)**2) / s;
-        let angle = Math.atan2(coordParent.y - centerParentY, coordParent.x - centerParentX) - (rot * Math.PI/180);
-        return {x: centerLocalX + Math.cos(angle) * dist , y: centerLocalY + Math.sin(angle) * dist};
-      }
+      const localCenter = {x: this.get('width') / 2, y: this.get('height') / 2};
+      const parentCenter = {x: localCenter.x + this.get('x') , y: localCenter.y + this.get('y') };
+      const offset = getOffset(parentCenter, coord);
+      return applyTransformedOffset(localCenter, offset, 1 / s, -rot );
     }
   }
-  coordParentFromCoordGlobal(coordGlobal) {
+  coordParentFromCoordGlobal(coord) {
     const p = this.get('parent');
-    return (widgets.has(p)) ? widgets.get(p).coordLocalFromCoordGlobal(coordGlobal) : coordGlobal;
+    return (widgets.has(p)) ? widgets.get(p).coordLocalFromCoordGlobal(coord) : coord;
   }
-  coordParentFromCoordLocal(coordLocal) {
+  coordParentFromCoordLocal(coord) {
     let s = this.get('scale');
     let rot = this.get('rotation') % 360;
     if(s == 1 && rot == 0) {
-      return {x: coordLocal.x + this.get('x'), y: coordLocal.y + this.get('y')};
+      return {x: coord.x + this.get('x'), y: coord.y + this.get('y')};
     } else {
-      let centerLocalX = this.get('width') / 2;
-      let centerLocalY = this.get('height') / 2;
-      let centerParentX = this.get('x') + centerLocalX;
-      let centerParentY = this.get('y') + centerLocalY;
-      if(rot == 0) {
-        return {x: (coordLocal.x - centerLocalX) * s + centerParentX, y: (coordLocal.y - centerLocalY) * s + centerParentY};
-      } else {
-        let dist = Math.sqrt((coordLocal.x - centerLocalX)**2 + (coordLocal.y - centerLocalY)**2) * s;
-        let angle = Math.atan2(coordLocal.y - centerLocalY, coordLocal.x - centerLocalX) + (rot * Math.PI / 180);
-        return {x: centerParentX + Math.cos(angle) * dist, y: centerParentY + Math.sin(angle) * dist};
-      }
+      const localCenter = {x: this.get('width') / 2, y: this.get('height') / 2};
+      const parentCenter = {x: localCenter.x + this.get('x') , y: localCenter.y + this.get('y') };
+      const offset = getOffset(localCenter, coord);
+      return applyTransformedOffset(parentCenter, offset, s, rot );
     }
   }
   css() {
@@ -1490,13 +1484,14 @@ export class Widget extends StateManaged {
     }
   }
 
-  async move(coordGlobal, offset) {
+  async move(coordGlobal, localAnchor) {
     const coordParent = this.coordParentFromCoordGlobal(coordGlobal);
-    const newX = Math.round(coordParent.x - offset.x);
-    const newY = Math.round(coordParent.y - offset.y);
+    const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), {x: this.get('x'), y: this.get('y')})
+    const newX = Math.round(coordParent.x + offset.x);
+    const newY = Math.round(coordParent.y + offset.y);
 
     if(tracingEnabled)
-      sendTraceEvent('move', { id: this.get('id'), coordGlobal, offset, newX, newY });
+      sendTraceEvent('move', { id: this.get('id'), coordGlobal, localAnchor, newX, newY });
 
     await this.setPosition(newX, newY, this.get('z'));
     await this.snapToGrid();
@@ -1539,9 +1534,9 @@ export class Widget extends StateManaged {
     }
   }
 
-  async moveEnd(coordGlobal, offset) {
+  async moveEnd(coord, localAnchor) {
     if(tracingEnabled)
-      sendTraceEvent('moveEnd', { id: this.get('id'), coordGlobal, offset });
+      sendTraceEvent('moveEnd', { id: this.get('id'), coord, localAnchor });
 
     if(!this.get('fixedParent')) {
       for(const t of this.dropTargets)
@@ -1550,8 +1545,9 @@ export class Widget extends StateManaged {
       await this.checkParent();
 
       if(this.hoverTarget) {
-        let coordNew = this.hoverTarget.coordLocalFromCoordGlobal(coordGlobal);
-        coordNew = this.hoverTarget.coordGlobalFromCoordLocal({x: Math.round(coordNew.x - offset.x), y: Math.round(coordNew.y - offset.y)});
+        let coordNew = this.hoverTarget.coordLocalFromCoordClient({x: coord.clientX, y: coord.clientY});
+        const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), {x: this.get('x'), y: this.get('y')})
+        coordNew = this.hoverTarget.coordGlobalFromCoordLocal({x: Math.round(coordNew.x + offset.x), y: Math.round(coordNew.y + offset.y)});
         this.setPosition(coordNew.x, coordNew.y, this.get('z'));
         await this.snapToGrid();
         await this.moveToHolder(this.hoverTarget);

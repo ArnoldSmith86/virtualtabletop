@@ -15,7 +15,7 @@ function eventCoords(name, e) {
     x = Math.max(0, Math.min(1600, x));
     y = Math.max(0, Math.min(1000, y));
   }
-  return {x, y};
+  return {x, y, clientX: coords.clientX, clientY: coords.clientY};
 }
 
 async function inputHandler(name, e) {
@@ -63,13 +63,19 @@ async function inputHandler(name, e) {
         moveTarget: target
       };
       let movable = false;
+      let widget;
       while (mouseStatus[target.id].moveTarget && !movable) {
-        movable = widgets.get(mouseStatus[target.id].moveTarget.id).get(editMovable ? 'movableInEdit' : 'movable');
+        widget = widgets.get(mouseStatus[target.id].moveTarget.id);
+        movable = widget.get(editMovable ? 'movableInEdit' : 'movable');
         if (!movable) {
           do {
             mouseStatus[target.id].moveTarget = mouseStatus[target.id].moveTarget.parentNode;
           } while (mouseStatus[target.id].moveTarget && (!mouseStatus[target.id].moveTarget.id || !widgets.has(mouseStatus[target.id].moveTarget.id)));
         }
+      }
+      if (movable) {
+        mouseStatus[target.id].widget = widget;
+        mouseStatus[target.id].localAnchor = widget.coordLocalFromCoordClient({x: coords.clientX, y: coords.clientY});
       }
     } else if(name == 'mouseup' || name == 'touchend' && mouseStatus[target.id]) {
       const ms = mouseStatus[target.id];
@@ -91,21 +97,13 @@ async function inputHandler(name, e) {
       delete mouseStatus[target.id];
     } else if(name == 'mousemove' || name == 'touchmove' && mouseStatus[target.id]) {
       if(mouseStatus[target.id].status == 'initial') {
-        const widget = widgets.get(mouseStatus[target.id].moveTarget ? mouseStatus[target.id].moveTarget.id : target.id);
-        const offset = widget.coordParentFromCoordGlobal(mouseStatus[target.id].downCoords);
-        offset.x -= widget.get('x');
-        offset.y -= widget.get('y');
-        Object.assign(mouseStatus[target.id], {
-          status: 'moving',
-          widget: widget,
-          offset: offset
-        });
+        mouseStatus[target.id].status = 'moving';
         if(mouseStatus[target.id].moveTarget)
           await mouseStatus[target.id].widget.moveStart();
       }
       mouseStatus[target.id].coords = coords;
       if(mouseStatus[target.id].moveTarget)
-        await mouseStatus[target.id].widget.move(coords, mouseStatus[target.id].offset);
+        await mouseStatus[target.id].widget.move(coords, mouseStatus[target.id].localAnchor);
     }
     batchEnd();
   }
@@ -115,8 +113,8 @@ async function inputHandler(name, e) {
 
   toServer('mouse',
     {
-      x: Math.floor(coords.x),
-      y: Math.floor(coords.y),
+      x: Math.round(coords.x),
+      y: Math.round(coords.y),
       pressed: (e.buttons & 1 == 1) || name == 'touchstart' || name == 'touchmove',
       target: mouseTarget? mouseTarget.id : null
     });
