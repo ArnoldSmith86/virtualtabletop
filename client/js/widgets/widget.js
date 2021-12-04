@@ -470,67 +470,9 @@ export class Widget extends StateManaged {
         continue;
       }
 
-      if(typeof a == 'string') {
-        const identifier = '(?:[a-zA-Z0-9_-]|\\\\u[0-9a-fA-F]{4})+';
-        const string     = `'((?:[ !#-&(-[\\]-~]|\\\\u[0-9a-fA-F]{4})*)'`;
-        const number     = '(-?(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?)';
-        const variable   = `(\\$\\{[^}]+\\})`;
-        const parameter  = `(null|true|false|\\[\\]|\\{\\}|${number}|${variable}|${string})`;
-
-        const left       = `var (\\$)?(${identifier})(?:\\.(\\$)?(${identifier}))?`;
-        const operation  = `${identifier}|[=+*/%<!>&|-]{1,3}`;
-
-        const regex      = `^${left} += +(?:${parameter}|(?:${parameter} +)?(🧮)?(${operation})(?: +${parameter})?(?: +${parameter})?(?: +${parameter})?)(?: *|(?: +//.*))?`;
-
-        const match = a.match(new RegExp(regex + '\x24')); // the minifier doesn't like a "$" here
-
-        if(match) {
-          const getParam = (offset, defaultValue)=>{
-            if(typeof match[offset+3] == 'string') {
-              return unescape(match[offset+3]);
-            } else if(typeof match[offset+1] == 'string') {
-              return +match[offset+1];
-            } else if(match[offset] == '[]') {
-              return [];
-            } else if(match[offset] == '{}') {
-              return {};
-            } else if(match[offset] == 'null') {
-              return null;
-            } else if(match[offset] == 'true') {
-              return true;
-            } else if(match[offset] == 'false') {
-              return false;
-            } else if(match[offset] == 'false') {
-              return false;
-            } else if(typeof match[offset+2] == 'string') {
-              const result = evaluateVariables(match[offset+2]);
-              return result !== undefined ? result : defaultValue;
-            } else {
-              return 1;
-            }
-          };
-          const getValue = function(input) {
-            const toNum = s=>typeof s == 'string' && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s;
-            if(match[14] && match[9] !== undefined)
-              return compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(9, 1)), toNum(getParam(15, 1)), toNum(getParam(19, 1)));
-            else if(match[14])
-              return compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(15, 1)), toNum(getParam(19, 1)), toNum(getParam(23, 1)));
-            else
-              return getParam(5, null);
-          };
-
-          const variable = match[1] !== undefined ? variables[unescape(match[2])] : unescape(match[2]);
-          const index = match[3] !== undefined ? variables[unescape(match[4])] : unescape(match[4]);
-          if(index !== undefined && typeof variables[variable] != 'object')
-            problems.push(`The variable ${variable} is not an object, so indexing it doesn't work.`)
-          else if(index !== undefined)
-            variables[variable][index] = getValue(variables[variable][index]);
-          else
-            variables[variable] = getValue(variables[variable]);
-          if(jeRoutineLogging) jeLoggingRoutineOperationSummary(a.substr(4), JSON.stringify(variables[variable]));
-        } else {
-          problems.push('String could not be interpreted as expression. Please check your syntax and note that many characters have to be escaped.');
-        }
+        if(typeof a == 'string') {
+          const result=peg$parse(a, {evaluateVariables, compute, variables});
+          if(jeRoutineLogging) jeLoggingRoutineOperationSummary(a.substr(4), JSON.stringify(result));
       }
 
       if(a.func == 'CALL') {
