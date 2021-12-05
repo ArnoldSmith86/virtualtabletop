@@ -4,7 +4,7 @@ import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
-import { center, distance, overlap, getOffset, applyTransformedOffset } from '../geometry.js';
+import { center, distance, overlap, overlapScore, getOffset, applyTransformedOffset } from '../geometry.js';
 
 const readOnlyProperties = new Set([
   '_absoluteRotation',
@@ -1472,7 +1472,6 @@ export class Widget extends StateManaged {
     if(!this.get('fixedParent')) {
       this.dropTargets = this.validDropTargets();
       this.currentParent = widgets.get(this.get('parent'));
-      this.hoverTargetDistance = 99999;
       this.hoverTarget = null;
 
       this.disablePileUpdateAfterParentChange = true;
@@ -1497,39 +1496,37 @@ export class Widget extends StateManaged {
     await this.snapToGrid();
 
     if(!this.get('fixedParent')) {
-      const myCenter = center(this.domElement);
       await this.checkParent();
 
-      this.hoverTargetChanged = false;
-      if(this.hoverTarget) {
-        if(overlap(this.domElement, this.hoverTarget.domElement) && this.hoverTarget.coordGlobalInside(coordGlobal)) {
-          this.hoverTargetDistance = distance(myCenter, this.hoverTargetCenter);
-        } else {
-          this.hoverTargetDistance = 99999;
-          this.hoverTarget = null;
-          this.hoverTargetChanged = true;
-        }
-      }
+      const lastHoverTarget = this.HoverTarget;
+      const myCenter = center(this.domElement);
+      this.HoverTarget = null;
+      let targetCursor = false;
+      let targetOverlap = 0;
+      let targetDist = 99999;
 
       for(const t of this.dropTargets) {
-        const tCenter = center(t.domElement);
-        const d = distance(myCenter, tCenter);
-        if(d < this.hoverTargetDistance) {
-          if(overlap(this.domElement, t.domElement) && t.coordGlobalInside(coordGlobal)) {
-            this.hoverTargetChanged = this.hoverTarget != t;
-            this.hoverTarget = t;
-            this.hoverTargetCenter = tCenter;
-            this.hoverTargetDistance = d;
+        const tOverlap = overlapScore(this.domElement, t.domElement);
+        if(tOverlap > 0) {
+          const tCursor = t.coordGlobalInside(coordGlobal);
+          const tRotated = Math.round(t.get('_absoluteRotation') % 90) != 0;
+          if(tCursor || !tRotated) {
+            const tDist = distance(center(t.domElement), myCenter);
+            if(!this.hoverTarget || ((tCursor || !targetCursor) && (tOverlap > targetOverlap || (tOverlap == 1 && tDist >= targetDist)))) {
+              this.HoverTarget = t;
+              targetCursor = tCursor;
+              targetOverlap= tOverlap;
+              targetDist = tDist;
+            }
           }
         }
       }
 
-      if(this.hoverTargetChanged) {
-        if(this.lastHoverTarget)
-          this.lastHoverTarget.domElement.classList.remove('droptarget');
+      if(this.hoverTarget != lastHoverTarget) {
+        if(lastHoverTarget)
+          lastHoverTarget.domElement.classList.remove('droptarget');
         if(this.hoverTarget)
           this.hoverTarget.domElement.classList.add('droptarget');
-        this.lastHoverTarget = this.hoverTarget;
       }
     }
   }
