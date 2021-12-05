@@ -45,7 +45,7 @@ async function readStatesFromBuffer(buffer) {
 
   if(zip.files['widgets.json'])
     return { 'PCIO': await readVariantsFromBuffer(buffer) };
-  if(Object.keys(zip.files).filter(f=>f.match(/Deck View\.htm/)).length)
+  if(Object.keys(zip.files).filter(f=>f.match(/\.htm/)).length)
     return { 'MTG': await readVariantsFromBuffer(buffer) };
 
   const states = {};
@@ -86,7 +86,7 @@ async function readStatesFromLink(linkAndPath) {
 
 async function readVariantsFromBuffer(buffer) {
   const zip = await JSZip.loadAsync(buffer);
-  if(Object.keys(zip.files).filter(f=>f.match(/Deck View\.htm/)).length) {
+  if(Object.keys(zip.files).filter(f=>f.match(/ring\.htm/)).length) {
     return { 'MTG': await MTG(buffer) };
   } else if(zip.files['widgets.json']) {
     return { 'PCIO': await PCIO(buffer) };

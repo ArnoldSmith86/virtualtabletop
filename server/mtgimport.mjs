@@ -5,33 +5,22 @@ import JSZip from 'jszip';
 export default async function convertMTG(content) {
   const zip = await JSZip.loadAsync(content);
 
-  const dfcMap = {};
   const decks = {};
   const widgets = {};
   let id = 1;
 
   for(const file in zip.files) {
     const content = await zip.files[file].async('string');
-    const matches = [...content.matchAll(/srcset[^>]*(http[^ ']+)( 3x|')/g)];
-    if(matches.length == 3) {
-      dfcMap[matches[0][1]] = matches[2][1];
-      continue;
-    }
-    const cardMatches = [...content.matchAll(/([^\/"]+)"><img alt="([^"]+)" class="[^"]+" src="([^"]*)" \/>|Sideboard/g)];
-    const title = content.match(/<span>([^<]+)<\/span>/) ? content.match(/<span>([^<]+)<\/span>/)[1] : file;
+
+    const data = JSON.parse(content.match(/DeckSampleHand" data-react-props="([^"]+)/)[1].replace(/&quot;/g, '"'));
+    const title = data.deck.title || content.match(/<h1.*?\n(.+)/)[1];
     decks[title] = { cards: [], sideboard: [] };
 
-    let isSideboard = false;
-    for(const card of cardMatches) {
-      if(card[0] == 'Sideboard') {
-        isSideboard = true;
-        continue;
-      }
-      decks[title][isSideboard ? 'sideboard' : 'cards'].push([
-        card[1],
-        card[2],
-        card[3]
-      ]);
+    for(const card of data.deck.entries) {
+      decks[title][card.type == 'maindeck' ? 'cards' : 'sideboard'].push({
+        face: card.card_database.images.length ? card.card_database.images[card.card_database.images.length-1].url : card.card_database.image_url,
+        quantity: card.quantity
+      });
     }
   }
 
@@ -42,7 +31,41 @@ export default async function convertMTG(content) {
       cardDefaults: {
         width: 115,
         height: 160,
-        enlarge: 5
+        enlarge: 5,
+        clickRoutine: [
+          {
+            func: 'IF',
+            condition: '${PROPERTY activeFace}',
+            elseRoutine: [
+              {
+                func: 'FLIP',
+                collection: 'thisButton'
+              }
+            ],
+            thenRoutine: [
+              {
+                func: 'IF',
+                condition: '${PROPERTY rotation}',
+                elseRoutine: [
+                  {
+                    func: 'ROTATE',
+                    collection: 'thisButton',
+                    mode: 'set',
+                    angle: 270
+                  }
+                ],
+                thenRoutine: [
+                  {
+                    func: 'ROTATE',
+                    collection: 'thisButton',
+                    mode: 'set',
+                    angle: 0
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
       cardTypes: {},
       faceTemplates: [
@@ -53,7 +76,7 @@ export default async function convertMTG(content) {
               color: 'black',
               width: 115,
               height: 160,
-              value: decks[deckTitle].cards[0][2].replace(/[^\/]+$/, 'back.jpg')
+              value: decks[deckTitle].cards[0].face.replace(/h\/[^\/]+$/, 'gf/back.jpg')
             }
           ],
           radius: 5
@@ -83,15 +106,17 @@ export default async function convertMTG(content) {
     let i=1;
     for(const card of decks[deckTitle].cards) {
       widgets[deckTitle].cardTypes[i] = {
-        face: card[2]
+        face: card.face
       };
-      widgets[deckTitle + '_' + i] = {
-        id: deckTitle + '_' + i,
-        type: 'card',
-        parent: deckTitle + '_pile',
-        deck: deckTitle,
-        cardType: i
-      };
+      for(let c=1; c<=card.quantity; ++c) {
+        widgets[deckTitle + '_' + i + '_' + c] = {
+          id: deckTitle + '_' + i + '_' + c,
+          type: 'card',
+          parent: deckTitle + '_pile',
+          deck: deckTitle,
+          cardType: i
+        };
+      }
       ++i;
     }
   }
