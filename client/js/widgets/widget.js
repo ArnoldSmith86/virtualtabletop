@@ -1498,9 +1498,9 @@ export class Widget extends StateManaged {
     if(!this.get('fixedParent')) {
       await this.checkParent();
 
-      const lastHoverTarget = this.HoverTarget;
+      const lastHoverTarget = this.hoverTarget;
       const myCenter = center(this.domElement);
-      this.HoverTarget = null;
+      this.hoverTarget = null;
       let targetCursor = false;
       let targetOverlap = 0;
       let targetDist = 99999;
@@ -1512,22 +1512,20 @@ export class Widget extends StateManaged {
           const tRotated = Math.round(t.get('_absoluteRotation') % 90) != 0;
           if(tCursor || !tRotated) {
             const tDist = distance(center(t.domElement), myCenter);
-            if(!this.hoverTarget || ((tCursor || !targetCursor) && (tOverlap > targetOverlap || (tOverlap == 1 && tDist >= targetDist)))) {
-              this.HoverTarget = t;
+            if(this.hoverTarget == null || ((tCursor || !targetCursor) && (tOverlap > targetOverlap || (tOverlap == 1 && tDist >= targetDist)))) {
+              console.log(t.id, tOverlap, tCursor, tRotated, tDist);
               targetCursor = tCursor;
               targetOverlap= tOverlap;
               targetDist = tDist;
+              this.hoverTarget = t;
             }
           }
         }
       }
-
-      if(this.hoverTarget != lastHoverTarget) {
-        if(lastHoverTarget)
-          lastHoverTarget.domElement.classList.remove('droptarget');
-        if(this.hoverTarget)
-          this.hoverTarget.domElement.classList.add('droptarget');
-      }
+      if(lastHoverTarget)
+        lastHoverTarget.domElement.classList.remove('droptarget');
+      if(this.hoverTarget)
+        this.hoverTarget.domElement.classList.add('droptarget');
     }
   }
 
