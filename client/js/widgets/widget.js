@@ -1542,7 +1542,7 @@ export class Widget extends StateManaged {
       if(this.hoverTarget) {
         let coordNew = this.hoverTarget.coordLocalFromCoordClient({x: coord.clientX, y: coord.clientY});
         const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), {x: this.get('x'), y: this.get('y')})
-        coordNew = this.hoverTarget.coordGlobalFromCoordLocal({x: coordNew.x + offset.x, y: coordNew.y + offset.y});
+        coordNew = this.hoverTarget.coordGlobalFromCoordLocal({x: Math.round(coordNew.x + offset.x), y: Math.round(coordNew.y + offset.y)});
         this.setPosition(coordNew.x, coordNew.y, this.get('z'));
         await this.snapToGrid();
         await this.moveToHolder(this.hoverTarget);
