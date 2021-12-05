@@ -638,9 +638,14 @@ export class Widget extends StateManaged {
 
         const execute = async function(widget) {
           if(widget.get('type') == 'canvas') {
-            if(a.mode == 'setPixel')
-              await widget.setPixel(a.x, a.y, a.value);
-            else if(a.mode == 'set')
+            if(a.mode == 'setPixel') {
+              const res = widget.getResolution();
+              if(a.x >= 0 && a.y >= 0 && a.x < res && a.y < res) {
+                await widget.setPixel(a.x, a.y, a.value);
+              } else {
+                problems.push(`Pixel coordinate: (${a.x}, ${a.y}) out of range for resolution: ${res}.`);
+              }
+            } else if(a.mode == 'set')
               await widget.set('activeColor', a.value % widget.get('colorMap').length);
             else if(a.mode == 'reset')
               await widget.reset();
