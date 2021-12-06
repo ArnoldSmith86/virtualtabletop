@@ -603,6 +603,11 @@ html:-webkit-full-screen #fullscreenButton .tooltip::before {
 .edit::before {
   content: '[edit]';
 }
+body.edit::before {
+  content: '';
+  display: none;
+}
+
 
 .add::before,
 .create::before {
