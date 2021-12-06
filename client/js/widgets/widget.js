@@ -592,9 +592,14 @@ export class Widget extends StateManaged {
 
         const execute = async function(widget) {
           if(widget.get('type') == 'canvas') {
-            if(a.mode == 'setPixel')
-              await widget.setPixel(a.x, a.y, a.value);
-            else if(a.mode == 'set')
+            if(a.mode == 'setPixel') {
+              const res = widget.getResolution();
+              if(a.x >= 0 && a.y >= 0 && a.x < res && a.y < res) {
+                await widget.setPixel(a.x, a.y, a.value);
+              } else {
+                problems.push(`Pixel coordinate: (${a.x}, ${a.y}) out of range for resolution: ${res}.`);
+              }
+            } else if(a.mode == 'set')
               await widget.set('activeColor', a.value % widget.get('colorMap').length);
             else if(a.mode == 'reset')
               await widget.reset();
@@ -1737,6 +1742,7 @@ export class Widget extends StateManaged {
     const thisX = this.get('x');
     const thisY = this.get('y');
     const thisOwner = this.get('owner');
+    const thisOnPileCreation = JSON.stringify(this.get('onPileCreation'));
     for(const [ widgetID, widget ] of widgets) {
       if(widget == this)
         continue;
@@ -1746,19 +1752,19 @@ export class Widget extends StateManaged {
 
       // check if this widget is closer than 10px from another widget in the same parent
       if(widget.get('parent') == thisParent && Math.abs(widget.get('x')-thisX) < 10 && Math.abs(widget.get('y')-thisY) < 10) {
-        if(widget.isBeingRemoved || widget.get('owner') !== thisOwner)
+        if(widget.isBeingRemoved || widget.get('owner') !== thisOwner || JSON.stringify(widget.get('onPileCreation')) !== thisOnPileCreation)
           continue;
 
         // if a card gets dropped onto a card, they create a new pile and are added to it
         if(thisType == 'card' && widgetType == 'card') {
-          const pile = {
+          const pile = Object.assign({
             type: 'pile',
             parent: this.get('parent'),
             x: widget.get('x'),
             y: widget.get('y'),
             width: this.get('width'),
             height: this.get('height')
-          };
+          }, this.get('onPileCreation'));
           if(thisOwner !== null)
             pile.owner = thisOwner;
           const pileId = addWidgetLocal(pile);
