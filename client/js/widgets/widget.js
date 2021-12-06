@@ -35,6 +35,7 @@ export class Widget extends StateManaged {
       movable: true,
       movableInEdit: true,
       clickable: false,
+      clickSound: null,
 
       grid: [],
       enlarge: false,
@@ -128,6 +129,9 @@ export class Widget extends StateManaged {
 
   applyDeltaToDOM(delta) {
     this.applyCSS(delta);
+    if(delta.audio !== null)
+      this.addAudio(this);
+    
     if(delta.z !== undefined)
       this.applyZ(true);
 
@@ -284,6 +288,9 @@ export class Widget extends StateManaged {
 
     if(!this.get('clickable') && !(mode == 'ignoreClickable' || mode =='ignoreAll'))
       return true;
+
+    if(this.get('clickSound'))
+      this.set('audio','source: ' + this.get('clickSound') + ', type: audio/mpeg , maxVolume: 1.0, length: null, player: null');
 
     if(Array.isArray(this.get('clickRoutine')) && !(mode == 'ignoreClickRoutine' || mode =='ignoreAll')) {
       await this.evaluateRoutine('clickRoutine', {}, {});
@@ -533,6 +540,13 @@ export class Widget extends StateManaged {
         }
       }
 
+      if(a.func == 'AUDIO') {
+        setDefaults(a, { source: '', type: 'audio/mpeg', maxVolume: 1.0, length: null, player: null });
+        if(a.source !== undefined) {
+          this.set('audio', 'source: ' + a.source + ', type: ' + a.type + ', maxVolume: ' + a.maxVolume + ', length: ' + a.length + ', player: ' + a.player);
+        }
+      }
+
       if(a.func == 'CALL') {
         setDefaults(a, { widget: this.get('id'), routine: 'clickRoutine', 'return': true, arguments: {}, variable: 'result', collection: 'result' });
         if(!a.routine.match(/Routine$/)) {
@@ -578,9 +592,14 @@ export class Widget extends StateManaged {
 
         const execute = async function(widget) {
           if(widget.get('type') == 'canvas') {
-            if(a.mode == 'setPixel')
-              await widget.setPixel(a.x, a.y, a.value);
-            else if(a.mode == 'set')
+            if(a.mode == 'setPixel') {
+              const res = widget.getResolution();
+              if(a.x >= 0 && a.y >= 0 && a.x < res && a.y < res) {
+                await widget.setPixel(a.x, a.y, a.value);
+              } else {
+                problems.push(`Pixel coordinate: (${a.x}, ${a.y}) out of range for resolution: ${res}.`);
+              }
+            } else if(a.mode == 'set')
               await widget.set('activeColor', a.value % widget.get('colorMap').length);
             else if(a.mode == 'reset')
               await widget.reset();
@@ -985,7 +1004,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'MOVEXY') {
-        setDefaults(a, { count: 1, face: null, x: 0, y: 0 });
+        setDefaults(a, { count: 1, face: null, x: 0, y: 0, snapToGrid: true });
         if(this.isValidID(a.from, problems)) {
           await w(a.from, async source=>{
             for(const c of source.children().slice(0, a.count || 999999).reverse()) {
@@ -993,6 +1012,8 @@ export class Widget extends StateManaged {
                 c.flip(a.face);
               await c.bringToFront();
               await c.setPosition(a.x, a.y, a.z || c.get('z'));
+              if(a.snapToGrid)
+                await c.snapToGrid();
               await c.set('parent', null);
             }
           });
@@ -1366,6 +1387,48 @@ export class Widget extends StateManaged {
       $('#enlarged').classList.add('hidden');
   }
 
+  async addAudio(widget){
+	  if(widget.get('audio')) {
+	    const audioString = widget.get('audio');
+	    const audioArray = audioString.split(/:\s|,\s/);
+	    const source = audioArray[1];
+	    const type = audioArray[3];
+	    const maxVolume = audioArray[5];
+      const length = audioArray[7];
+      const pName = audioArray[9];
+
+      if(pName == "null" || pName == playerName) {
+        var audioElement = document.createElement('audio');
+        audioElement.setAttribute('class', 'audio');
+        audioElement.setAttribute('src', source);
+        audioElement.setAttribute('type', type);
+        audioElement.setAttribute('maxVolume', maxVolume);
+        audioElement.volume = Math.min(maxVolume * (((10 ** (document.getElementById('volume').value / 96.025)) / 10) - 0.1), 1); // converts slider to log scale with zero = no volume
+        document.body.appendChild(audioElement);
+        audioElement.play();
+
+        if(length != "null") {
+          setInterval(function(){
+            if(audioElement.currentTime>=0){
+              audioElement.pause();
+              clearInterval();
+              if(audioElement.parentNode)
+                audioElement.parentNode.removeChild(audioElement);
+            }}, length);
+        } else {
+          audioElement.onended = function() {
+            audioElement.pause();
+            clearInterval();
+            if(audioElement.parentNode)
+              audioElement.parentNode.removeChild(audioElement);
+          };
+        }
+      }
+      setInterval(function(){
+        widget.set('audio', null);}, 100);
+    }
+  }
+
   isValidID(id, problems) {
     if(Array.isArray(id))
       return !id.map(i=>this.isValidID(i, problems)).filter(r=>r!==true).length;
@@ -1419,6 +1482,7 @@ export class Widget extends StateManaged {
       sendTraceEvent('move', { id: this.get('id'), x, y, newX, newY });
 
     await this.setPosition(newX, newY, this.get('z'));
+    await this.snapToGrid();
 
     if(!this.get('fixedParent')) {
       const myCenter = center(this.domElement);
@@ -1533,45 +1597,17 @@ export class Widget extends StateManaged {
       await this.set('rotation', degrees);
   }
 
-  async setPosition(x, y, z) {
-    if(this.get('grid').length && !this.get('parent')) {
-      let closest = null;
-      let closestDistance = 999999;
-
-      for(const grid of this.get('grid')) {
-        if(x < (grid.minX || -99999) || x > (grid.maxX || 99999))
-          continue;
-        if(y < (grid.minY || -99999) || y > (grid.maxY || 99999))
-          continue;
-
-        const snapX = x + grid.x/2 - mod(x - (grid.offsetX || 0), grid.x);
-        const snapY = y + grid.y/2 - mod(y - (grid.offsetY || 0), grid.y);
-
-        const distance = (snapX - x) ** 2 + (snapY - y) ** 2;
-        if(distance < closestDistance) {
-          closest = [ snapX, snapY, grid ];
-          closestDistance = distance;
-        }
-      }
-
-      if(closest) {
-        x = closest[0];
-        y = closest[1];
-        for(const p in closest[2])
-          if([ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY' ].indexOf(p) == -1)
-            await this.set(p, closest[2][p]);
-      }
-
-      this.snappingToGrid = false;
-    }
-    await super.setPosition(x, y, z);
-  }
-
   async setText(text, mode, problems) {
     if (this.get('text') !== undefined) {
-      if(mode == 'inc' || mode == 'dec')
-        await this.set('text', (parseInt(this.get('text')) || 0) + (mode == 'dec' ? -1 : 1) * text);
-      else if(mode == 'append')
+      if(mode == 'inc' || mode == 'dec') {
+        let newText = (parseFloat(this.get('text')) || 0) + (mode == 'dec' ? -1 : 1) * text;
+        const decimalPlacesOld = this.get('text').toString().match(/\..*$/);
+        const decimalPlacesChange = text.toString().match(/\..*$/);
+        const decimalPlaces = Math.max(decimalPlacesOld ? decimalPlacesOld[0].length-1 : 0, decimalPlacesChange ? decimalPlacesChange[0].length-1 : 0);
+        const factor = 10**decimalPlaces;
+        newText = Math.round(newText*factor)/factor;
+        await this.set('text', newText);
+      } else if(mode == 'append')
         await this.set('text', this.get('text') + text);
       else if(Array.isArray(text))
         await this.set('text', text.join(', '));
@@ -1635,6 +1671,39 @@ export class Widget extends StateManaged {
     });
   }
 
+  async snapToGrid() {
+    if(this.get('grid').length) {
+      const x = this.get('x');
+      const y = this.get('y');
+
+      let closest = null;
+      let closestDistance = 999999;
+
+      for(const grid of this.get('grid')) {
+        if(x < (grid.minX || -99999) || x > (grid.maxX || 99999))
+          continue;
+        if(y < (grid.minY || -99999) || y > (grid.maxY || 99999))
+          continue;
+
+        const snapX = x + grid.x/2 - mod(x - (grid.offsetX || 0), grid.x);
+        const snapY = y + grid.y/2 - mod(y - (grid.offsetY || 0), grid.y);
+
+        const distance = (snapX - x) ** 2 + (snapY - y) ** 2;
+        if(distance < closestDistance) {
+          closest = [ snapX, snapY, grid ];
+          closestDistance = distance;
+        }
+      }
+
+      if(closest) {
+        this.setPosition(closest[0], closest[1], this.get('z'));
+        for(const p in closest[2])
+          if([ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY' ].indexOf(p) == -1)
+            await this.set(p, closest[2][p]);
+      }
+    }
+  }
+
   async sortWidgets(w, key, reverse, locales, options, rearrange) {
     let z = 1;
     let children = w.reverse().sort((w1,w2)=>{
@@ -1673,6 +1742,7 @@ export class Widget extends StateManaged {
     const thisX = this.get('x');
     const thisY = this.get('y');
     const thisOwner = this.get('owner');
+    const thisOnPileCreation = JSON.stringify(this.get('onPileCreation'));
     for(const [ widgetID, widget ] of widgets) {
       if(widget == this)
         continue;
@@ -1682,19 +1752,19 @@ export class Widget extends StateManaged {
 
       // check if this widget is closer than 10px from another widget in the same parent
       if(widget.get('parent') == thisParent && Math.abs(widget.get('x')-thisX) < 10 && Math.abs(widget.get('y')-thisY) < 10) {
-        if(widget.isBeingRemoved || widget.get('owner') !== thisOwner)
+        if(widget.isBeingRemoved || widget.get('owner') !== thisOwner || JSON.stringify(widget.get('onPileCreation')) !== thisOnPileCreation)
           continue;
 
         // if a card gets dropped onto a card, they create a new pile and are added to it
         if(thisType == 'card' && widgetType == 'card') {
-          const pile = {
+          const pile = Object.assign({
             type: 'pile',
             parent: this.get('parent'),
             x: widget.get('x'),
             y: widget.get('y'),
             width: this.get('width'),
             height: this.get('height')
-          };
+          }, this.get('onPileCreation'));
           if(thisOwner !== null)
             pile.owner = thisOwner;
           const pileId = addWidgetLocal(pile);
