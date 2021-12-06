@@ -24,9 +24,7 @@
 }
 @media (prefers-color-scheme: dark) {
   :root{
-    --modalBackgroundColor: #1c1c1d;
-    --modalTextColor: #fff;
-    --modalBorderColor: rgba(255, 255, 255, 0.15);
+
 
   }
 }
@@ -1330,4 +1328,16 @@ label.switchbox::before {
   transition-duration: 0.15s;
   transition-delay: 0;
   box-shadow: 0 0 3px black;
+}
+input.switchbox + label.switchbox::before {
+  margin-left: 2px;
+  background-color: #ffffff;
+}
+
+input.switchbox[type="checkbox"]:checked + .switchbox::before {
+  margin-left: 24px;
+  background-color: #ffffff;
+}
+input.switchbox[type="checkbox"]:checked + .switchbox{
+  background-color: var(--VTTblue);
 }
