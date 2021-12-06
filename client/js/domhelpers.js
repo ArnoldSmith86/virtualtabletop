@@ -31,79 +31,6 @@ export function domByTemplate(id, type) {
   return div;
 }
 
-// export function formField(field, dom, id) {
-//   const label = document.createElement('label');
-//   label.textContent = field.label || field.text || '';
-//   dom.appendChild(label);
-//   label.htmlFor = id;
-
-//   if(field.type == 'checkbox') {
-//     const input = document.createElement('input');
-//     input.type = 'checkbox';
-//     input.checked = !!field.value;
-//     dom.appendChild(label);
-//     input.id = id;
-//   }
-
-//   if(field.type == 'switch') {
-//     const input = document.createElement('input');
-//     switchbox.classList.add('switchbox');
-//     input.classList.add('switchbox');
-//     input.type = 'checkbox';
-//     input.checked = !!field.value;
-//     dom.appendChild(input);
-//     dom.appendChild(switchbox);
-//     switchbox.htmlFor = input.id = id;
-//   }
-
-//   if(field.type == 'color') {
-//     const input = document.createElement('input');
-//     input.type = 'color';
-//     input.value = field.value || '#ff0000';
-//     dom.appendChild(input);
-//     input.id = id;
-//   }
-
-//   if(field.type == 'number') {
-//     const input = document.createElement('input');
-//     input.type = 'number';
-//     input.value = field.value !== undefined ? field.value : 1;
-//     input.min = field.min !== undefined ? field.min : 1;
-//     input.max = field.max !== undefined ? field.max : 10;
-//     dom.appendChild(input);
-//   }
-
-//   if(field.type == 'select') {
-//     const input = document.createElement('select');
-//     for(const option of field.options) {
-//       const optionElement = document.createElement('option');
-//       optionElement.value = option.value || '';
-//       optionElement.textContent = option.text || option.value || '';
-//       input.appendChild(optionElement);
-//     }
-//     dom.appendChild(input);
-//     select.id = id;
-//   }
-
-//   if(field.type == 'string') {
-//     const input = document.createElement('input');
-//     input.value = field.value || '';
-//     dom.appendChild(input);
-//     input.id = id;
-//   }
-
-//   if(field.type == 'text') {
-//     // const p = document.createElement('p');
-//     // p.textContent = field.text;
-//     // dom.appendChild(p);
-//   }
-//   if(field.type == 'title') {
-//     // const h2 = document.createElement('h2');
-//     // h2.textContent = field.text;
-//     // dom.appendChild(h2);
-//   }
-// }
-
 export function formField(field, dom, id) {
   const label = document.createElement('label');
   dom.appendChild(label);
@@ -172,6 +99,10 @@ export function formField(field, dom, id) {
   }
 
   if(field.type == 'title') {
+    label.textContent = field.text;
+  }
+
+  if(field.type == 'subtitle') {
     label.textContent = field.text;
   }
 }
