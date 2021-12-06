@@ -131,7 +131,7 @@ export class Widget extends StateManaged {
     this.applyCSS(delta);
     if(delta.audio !== null)
       this.addAudio(this);
-    
+
     if(delta.z !== undefined)
       this.applyZ(true);
 
@@ -333,10 +333,9 @@ export class Widget extends StateManaged {
   evaluateInputOverlay(o, resolve, reject, go) {
     const result = {};
     for(const field of o.fields) {
-
       if(field.type == 'checkbox') {
         result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).checked;
-      } else if(field.type != 'text') {
+      } else if(field.type != 'text' && field.type != 'subtitle' && field.type != 'title') {
         result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).value;
       }
 
@@ -1645,12 +1644,30 @@ export class Widget extends StateManaged {
 
   async showInputOverlay(o, widgets, variables, problems) {
     return new Promise((resolve, reject) => {
+      const maxRandomRotate = o.randomRotation || 0;
+      const rotation = Math.floor(Math.random() * maxRandomRotate) - (maxRandomRotate / 2);
+      var confirmButtonText, cancelButtonText = "";
 
-      $('#buttonInputOverlay h1').textContent = o.header || "Button Input";
+      $('#buttonInputOverlay .modal').style = o.css || "";
+      $('#buttonInputOverlay .modal').style.transform = "rotate("+rotation+"deg)";
       $('#buttonInputFields').innerHTML = '';
+      if(!o.confirmButtonText && !o.confirmButtonIcon){
+        confirmButtonText = "Go";
+      }
+      if(!o.cancelButtonText && !o.cancelButtonIcon){
+        cancelButtonText = "Cancel";
+      }
+
+      $('#buttonInputGo label').textContent = o.confirmButtonText || confirmButtonText;
+      $('#buttonInputCancel label').textContent = o.cancelButtonText || cancelButtonText;
+
+      $('#buttonInputGo span').textContent = o.confirmButtonIcon || "";
+      $('#buttonInputCancel span').textContent = o.cancelButtonIcon || "";
 
       for(const field of o.fields) {
         const dom = document.createElement('div');
+        dom.style = field.css || "";
+        dom.className = "input"+field.type;
         formField(field, dom, this.get('id') + ';' + field.variable);
         $('#buttonInputFields').appendChild(dom);
       }

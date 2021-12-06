@@ -15,6 +15,12 @@
   --wcMainOH: var(--VTTblueDark);
   --wcBorderOH: var(--VTTblue);
   --wcFontOH: var(--wcFont);
+  --modalBackgroundColor: var(--roomColor);
+  --modalBorderColor: #bcbcbc;
+  --modalInputFocusColor: #000eff;
+  --positiveInput: #009502;
+  --negativeInput: #950000;
+  --neutralInput: #1f5ca6;
 }
 
 body {
@@ -678,4 +684,382 @@ button:disabled:hover {
 
 .ui-button.green {
   background-color: #4cd964;
+}
+
+.ui-button.blue {
+  background-color: var(--neutralInput);
+}
+
+#buttonInputOverlay{
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+#buttonInputOverlay h1{
+  display: none;
+}
+.modal{
+  color: var(--modalTextColor);
+  background: var(--modalBackgroundColor);
+  box-shadow: 0 5px 10px #000000aa;
+  max-width: 550px;
+  min-width: 300px;
+  max-height: 90%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 8px;
+}
+
+.modal h1{
+  margin: 0;
+  padding: 4px 8px;
+  text-align: left;
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 48px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 10px 16px;
+  background: var(--VTTblueDark);
+}
+
+.modal h1:after {
+    content: '';
+    position: absolute;
+    background-color: var(--modalBorderColor);
+    display: block;
+    z-index: 15;
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    width: 100%;
+}
+
+.modal .footer{
+ margin-top: 16px;
+  padding: 4px;
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  background: lightgray;
+}
+
+.modal .footer:before {
+  content: '';
+  position: absolute;
+  background-color: var(--modalBorderColor);
+  display: block;
+  z-index: 15;
+  top: 0;
+  right: auto;
+  bottom: auto;
+  left: 0;
+  height: 1px;
+  width: 100%;
+}
+
+
+.modal .footer > button{
+  font-family: 'Roboto';
+  display: flex;
+  height: 32px;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+
+  padding: 0 8px;
+  font-size: 14px;
+  line-height: 32px;
+  color: white;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px 0px, rgba(0, 0, 0, 0.24) 0px 1px 2px 0px;
+
+}
+.modal .footer > button label{
+  font-size: 1rem;
+}
+
+
+
+
+.modal .footer > button label:empty, .modal .footer > button span:empty{
+  display: none;
+}
+
+.UIicon:empty{
+  display: none;
+}
+.UIicon{
+  font-family: 'VTT-Symbols';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 32px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+  vertical-align: middle;
+}
+
+
+.modal .footer > button.positiveInput {
+  font-weight: 900;
+  background: var(--positiveInput);
+  order: 2;
+  min-width: 60px;
+}
+
+.modal .footer > button.negativeInput {
+  font-weight: 500;
+  background: var(--negativeInput);
+  order: 1;
+  min-width: 60px;
+}
+
+.modal .footer > button.neutralInput {
+  font-weight: 500;
+  background: var(--neutralInput);
+  order: 1;
+  min-width: 60px;
+}
+#buttonInputFields{
+  color: black;
+  margin: 0;
+}
+#buttonInputFields input{
+  position: relative;
+}
+.modal *:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px #159ce4;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+}
+#buttonInputFields > div{
+  display: flex;
+  position: relative;
+  padding: 3px;
+}
+#buttonInputFields > div::after {
+    content: '';
+    position: absolute;
+    background-color: var(--modalBorderColor);
+    display: block;
+    z-index: 15;
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    width: 100%;
+}
+#buttonInputFields > div:last-of-type::after {
+    background-color: transparent;
+}
+.inputtitle{
+  background: var(--VTTblue);
+  color: white;
+}
+.inputsubtitle{
+  background: lightgray;
+}
+.inputtitle label{
+  display: block;
+  font-size: 24px;
+  line-height: 31.2px;
+  font-weight: bold;
+  padding: 8px 5px;
+  margin: 0;
+}
+.inputsubtitle label{
+  display: block;
+  font-size: 20px;
+  line-height: 20px;
+  font-weight: bold;
+  padding: 12px 5px 0px 5px;
+  margin: 0;
+}
+.inputtext label{
+  display: block;
+  font-size:16px;
+  line-height:19.6px;
+  padding:16px 8px;
+  position:relative;
+  text-size-adjust:100%;
+  font-style: italic;
+  margin: 0;
+}
+.inputnumber,
+.inputstring,
+.inputselect{
+  flex-direction: column;
+}
+.inputcheckbox{
+  flex-direction: row;
+}
+
+.inputnumber label,
+.inputstring label,
+.inputselect label{
+  padding: 4px 5px 0 5px;
+    width: 100%;
+    vertical-align: top;
+    flex-shrink: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 15.6px;
+    min-height: 15px;
+}
+
+.inputcheckbox input{
+  display: inline-block;
+  margin: 8px 5px 0 14px;
+  height: 20px;
+  width: 20px;
+  border-radius: 4px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  order: 1;
+}
+.inputnumber input,
+.inputstring input,
+.inputselect select
+{
+  appearance: none;
+  padding: 20.6px 5px 0px 5px;
+  margin: -20.6px 0 0 0;
+  font-size: 16px;
+  color: var(--modalTextColor);
+  background-color: transparent;
+  border: 0px none transparent;
+  line-height: 36px;
+  border-radius: 4px;
+}
+.inputselect select option{
+  background-color: var(--modalBackgroundColor);
+  font-size: 16px;
+}
+.inputcheckbox label,
+.inputcolor label,
+.inputswitch label{
+  cursor: pointer;
+  margin: 0px 0 0 0;
+  font-size: 16px;
+  line-height: 20px;
+  padding: 8px 5px;
+  flex-grow: 1;
+}
+.inputcheckbox label,
+.inputcolor label{
+  order: 2;
+}
+
+.inputcolor input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border-radius: 4px;
+  display: inline-block;
+  margin: 3px 3px 0 8px;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  order: 1;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+.inputcolor input::-webkit-color-swatch-wrapper {
+  padding: 0;
+  border: 0 none transparent;
+}
+.inputcolor input::-webkit-color-swatch {
+  border-radius: 4px;
+}
+.inputcolor input::-moz-color-swatch-wrapper {
+  padding: 0;
+  border: 0 none transparent;
+}
+.inputcolor input::-moz-color-swatch  {
+  border-radius: 4px;
+}
+.inputswitch{
+  flex-direction: row;
+}
+.inputswitch input{
+  position: absolute;
+  top: -50000px;
+}
+
+.inputswitch label.switchbox {
+  font-size: 0px;
+  line-height: 0px;
+  height: 28px;
+  width: 40px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin: 4px;
+  padding: 0 5px;
+  position: relative;
+}
+label.switchbox{
+  background: gray;
+  border-radius: 100px;
+  transition-property: all;
+  transition-duration: 0.15s;
+  transition-delay: 0;
+}
+label.switchbox::before {
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  color: white;
+  content: 'w';
+  background: white;
+  border-radius: 100px;
+  font-size: 0px;
+  line-height: 0px;
+  height: 24px;
+  width: 24px;
+  margin-top: 2px;
+  margin-left: 2px;
+  transition-property: all;
+  transition-duration: 0.15s;
+  transition-delay: 0;
+  box-shadow: 0 0 3px black;
+}
+
+input.switchbox + label.switchbox::before {
+  margin-left: 2px;
+  background-color: #ffffff;
+}
+
+input.switchbox[type="checkbox"]:checked + .switchbox::before {
+  margin-left: 24px;
+  background-color: #ffffff;
+}
+input.switchbox[type="checkbox"]:checked + .switchbox{
+  background-color: var(--VTTblue);
 }
