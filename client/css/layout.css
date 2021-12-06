@@ -105,7 +105,7 @@ button:hover {
   background-size: 80% 80%;
   background-position: center;
   background-repeat: no-repeat;
-  
+
 }
 
 
@@ -207,8 +207,8 @@ button:hover {
     min-height: 16px;
   }
 
-  
-  
+
+
   #roomArea {
     top: 0;
     left: calc((100vw - var(--roomWidth) * var(--scale)) / 2 + var(--toolbarSize) / 2);
@@ -337,10 +337,6 @@ body.aspectTooGood #hideToolbarButton {
   background: #00000022;
 }
 
-#debugButtonOverlay pre {
-  overflow: auto;
-}
-
 #room {
   transform: scale(var(--scale));
   transform-origin: left top;
@@ -458,6 +454,22 @@ html:not(:fullscreen) #fullscreenButton .tooltip::before {
 html:fullscreen #fullscreenButton .tooltip::before {
   content:'Exit ';
 }
+
+html:not(:-webkit-full-screen) #fullscreenButton::before {
+  content:'fullscreen';
+}
+html:-webkit-full-screen #fullscreenButton::before {
+  content:'fullscreen_exit';
+}
+
+html:not(:-webkit-full-screen) #fullscreenButton .tooltip::before {
+  content:'';
+}
+html:-webkit-full-screen #fullscreenButton .tooltip::before {
+  content:'Exit ';
+}
+
+
 
 
 #hideToolbarButton {

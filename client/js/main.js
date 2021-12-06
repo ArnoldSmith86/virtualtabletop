@@ -101,36 +101,56 @@ export function showOverlay(id, forced) {
   }
 }
 
-function checkURLproperties() {
-  try {
-    if(location.hash)
-      urlProperties = JSON.parse(decodeURIComponent(location.hash.substr(1)));
-  } catch(e) {
-    console.error('Could not parse URL parameters.', e);
-    urlProperties = {};
-  }
+function checkURLproperties(connected) {
+  if(!connected) {
 
-  if(urlProperties.hideToolbar) {
-    $('#toolbar').style.display = 'none';
-    document.documentElement.style.setProperty('--toolbarSize', 0);
-  }
-  if(urlProperties.askID) {
-    on('#askIDoverlay button', 'click', function() {
-      roomID = urlProperties.askID + $('#enteredID').value;
-      toServer('room', { playerName, roomID });
-      $('#legacy-link').href += `#${roomID}`;
-      showOverlay();
-    });
-    showOverlay('askIDoverlay');
-  }
-  if(urlProperties.css) {
-    const link = document.createElement('link');
+    try {
+      if(location.hash) {
+        const playerParams = location.hash.match(/^#player:([^:]+):%23([0-9a-f]{6})$/);
+        if(playerParams) {
+          urlProperties = { player: decodeURIComponent(playerParams[1]), color: '#'+playerParams[2] };
+        } else {
+          urlProperties = JSON.parse(decodeURIComponent(location.hash.substr(1)));
+        }
+        history.pushState("", document.title, window.location.pathname);
+      }
+    } catch(e) {
+      console.error('Could not parse URL parameters.', e);
+      urlProperties = {};
+    }
 
-    link.type = 'text/css';
-    link.rel = 'stylesheet';
-    link.href = urlProperties.css;
+    if(urlProperties.player) {
+      playerName = urlProperties.player;
+      localStorage.setItem('playerName', playerName);
+    }
+    if(urlProperties.hideToolbar) {
+      $('#toolbar').style.display = 'none';
+      document.documentElement.style.setProperty('--toolbarSize', 0);
+    }
+    if(urlProperties.askID) {
+      on('#askIDoverlay button', 'click', function() {
+        roomID = urlProperties.askID + $('#enteredID').value;
+        toServer('room', { playerName, roomID });
+        $('#legacy-link').href += `#${roomID}`;
+        showOverlay();
+      });
+      showOverlay('askIDoverlay');
+    }
+    if(urlProperties.css) {
+      const link = document.createElement('link');
 
-    document.head.appendChild(link);
+      link.type = 'text/css';
+      link.rel = 'stylesheet';
+      link.href = urlProperties.css;
+
+      document.head.appendChild(link);
+    }
+
+  } else {
+
+    if(urlProperties.color)
+      toServer('playerColor', { player: playerName, color: urlProperties.color });
+
   }
 }
 
@@ -240,7 +260,28 @@ onLoad(function() {
     setScale();
   });
 
-  checkURLproperties();
+  if(Object.keys(config.betaServers).length) {
+    for(const betaServerName in config.betaServers) {
+      const entry = domByTemplate('template-betaServerList-entry', 'tr');
+      $('button', entry).textContent = betaServerName;
+      $('.return', entry).textContent = config.betaServers[betaServerName].return ? 'Yeah...' : 'Nope!';
+      $('.description', entry).textContent = config.betaServers[betaServerName].description;
+      $('#betaServerList').appendChild(entry);
+    }
+    on('#betaServerList button', 'click', function(e) {
+      toServer('setRedirect', e.target.textContent);
+    });
+  } else {
+    removeFromDOM($('#betaText'));
+  }
+  onMessage('redirect', function(url) {
+    window.location.href = `${url}#player:${encodeURIComponent(playerName)}:${encodeURIComponent(playerColor)}`;
+  });
+  on('#returnOverlay button', 'click', function() {
+    toServer('setRedirect', 'return');
+  });
+
+  checkURLproperties(false);
   setScale();
   startWebSocket();
 
@@ -249,6 +290,12 @@ onLoad(function() {
   onMessage('internal_error', function() {
     preventReconnect();
     showOverlay('internalErrorOverlay');
+  });
+  let checkedOnce = false;
+  onMessage('meta', function() {
+    if(!checkedOnce)
+      checkURLproperties(true);
+    checkedOnce = true;
   });
 });
 

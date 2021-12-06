@@ -5,9 +5,9 @@
   <meta charset="utf-8">
   <title>VirtualTabletop.io</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="icon" sizes="any" href="/i/branding/favicon-32.png"/>
   <link rel="icon" type="image/svg+xml" href="/i/branding/favicon.svg"/>
   <link rel="apple-touch-icon" sizes="180x180" href="/i/branding/ios-icon.png">
-  <link rel="alternate icon" href="/i/branding/favicon-32.png"/>
   <link rel="manifest" href="/i/branding/manifest.json">
   <link rel="mask-icon" href="/i/branding/mask-icon.svg">
   <script src="https://cdn.jsdelivr.net/combine/npm/vue@3.0.7/dist/vue.global.prod.js,npm/jszip@3.6.0/dist/jszip.min.js"></script>
@@ -67,8 +67,7 @@
           <label for="buttonImage"> Image url: </label><input type="text" id="buttonImage"> <button id="uploadButtonImage">⬆️ Upload</button> <br/><br/>
           <input type="color" id="buttonColorMain" value="#1f5ca6"><label for="buttonColorMain"> - Main Color </label><br/>
           <input type="color" id="buttonColorBorder" value="#0d2f5e"><label for="buttonColorBorder"> - Second Color </label><br/>
-          <input type="color" id="buttonColorText" value="#ffffff"><label for="buttonColorText"> - Text Color </label><br/><br/>
-          <input type="checkbox" id="buttonDebug"><label for="buttonDebug">Run debug mode</label>
+          <input type="color" id="buttonColorText" value="#ffffff"><label for="buttonColorText"> - Text Color </label>
         </div>
         <div class="canvasEdit">
           <h1>Edit canvas</h1>
@@ -153,8 +152,7 @@
 
       <div id="editJSONoverlay" class="overlay">
         <h1>Edit widget JSON</h1>
-        <p>Please check <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Creating-Games">our GitHub wiki for documentation</a>.</p>
-        <p>You can open this room in <a href="https://virtualtabletop.io/legacy-editor.htm" id="legacy-link">the legacy editor</a>. Be sure to have <b>backups</b> on your harddrive first (of every game in your room)!</p>
+        <p>Please check <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Creating-Games">our GitHub wiki for documentation</a>. You can also open this room in <a href="https://virtualtabletop.io/legacy-editor.htm" id="legacy-link">the legacy editor</a> or press CTRL+J for the advanced JSON editor.</p>
         <textarea id="editWidgetJSON"></textarea>
         <base-edit-overlay :json-edit="true"></base-edit-overlay>
       </div>
@@ -206,6 +204,11 @@
         <label class="otherPlayers ui-line" data-label="Other Players »"> </label>
         <label class="inactivePlayers ui-line"> </label>
       </div>
+    </div>
+
+    <div id="returnOverlay" class="overlay">
+      <p>In order to switch games, please return to the main server:</p>
+      <button>Return</button>
     </div>
 
     <div id="statesOverlay" class="overlay">
@@ -330,6 +333,18 @@
       <p>VirtualTabletop.io does not ask for or collect any personal identification information.</p>
       <p>VirtualTabletop.io does not use cookies.</p>
       <p>VirtualTabletop.io does, however, collect the "player name" and keeps that in local storage on the user's device.  The player name defaults to a number, but is customizable to any user entered data. VirtualTabletop.io does not analyze or use that information except to display it on the screen while accessing the website.</p>
+      <div id="betaText">
+        <h2>Beta</h2>
+        <p>Play this game on an experimental preview server to help us test new features. Anyone joining this room will be redirected there until you switch back.</p>
+        <table id="betaServerList">
+          <th>Server</th><th>Returns the state to this server</th><th>Description</th>
+        </table>
+        <script id="template-betaServerList-entry" type="text/template">
+          <td><button>Name</button></td>
+          <td class="return">Return?</td>
+          <td class="description">Description</td>
+        </script>
+      </div>
     </div>
 
     <div id="internalErrorOverlay" class="overlay">
@@ -373,7 +388,7 @@
 
   <div id="enlarged" class="hidden"></div>
 
-  <script type="module"> {{JS}} </script>
+  <script type="module"> {{CONFIG}}  {{JS}} </script>
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 </body>

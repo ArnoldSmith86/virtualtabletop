@@ -144,8 +144,13 @@ function parsePlayers(players) {
   return validPlayers;
 }
 
-function fillStatesList(states, starred, activePlayers) {
-
+function fillStatesList(states, starred, returnServer, activePlayers) {
+  if(returnServer) {
+    $('#statesButton').dataset.overlay = 'returnOverlay';
+    overlayShownForEmptyRoom = true;
+    return;
+  }
+  $('#statesButton').dataset.overlay = 'statesOverlay';
 
   const addDiv = $('#addState');
   removeFromDOM(addDiv);
@@ -274,7 +279,7 @@ async function shareLink() {
 }
 
 onLoad(function() {
-  onMessage('meta', args=>fillStatesList(args.meta.states, args.meta.starred, args.activePlayers));
+  onMessage('meta', args=>fillStatesList(args.meta.states, args.meta.starred, args.meta.returnServer, args.activePlayers));
 
   on('#filterByText', 'keyup', updateLibraryFilter);
   on('#filterByPlayers, #filterByLanguage', 'change', updateLibraryFilter);
