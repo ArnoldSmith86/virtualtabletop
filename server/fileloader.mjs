@@ -86,7 +86,7 @@ async function readStatesFromLink(linkAndPath) {
 
 async function readVariantsFromBuffer(buffer) {
   const zip = await JSZip.loadAsync(buffer);
-  if(Object.keys(zip.files).filter(f=>f.match(/ring\.htm/)).length) {
+  if(Object.keys(zip.files).filter(f=>f.match(/\.htm/)).length) {
     return { 'MTG': await MTG(buffer) };
   } else if(zip.files['widgets.json']) {
     return { 'PCIO': await PCIO(buffer) };
