@@ -51,7 +51,6 @@ button:hover {
   width: 100%;
   height: var(--toolbarSize);
   z-index: 2;
-
   display: flex;
   align-content: center;
   gap: 2px;
@@ -170,6 +169,23 @@ button:hover {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+#options {
+  left: 0px;
+  display: inline-flex;
+  padding: 2px;
+  border-radius: 4px;
+  top: -82px;
+  transform: translateY(45px) translateX(564px);
+  position: absolute;
+  background:var(--VTTblue);
+  box-shadow: 0 0 5px #00000055;
+}
+
+#volume {
+  top: 50%;
+  transform: translateY(50%);
+  -moz-transform: translateY(25%);
+}
 
 @media (min-aspect-ratio: 1600/1000) {
   .toolbarButton {
@@ -184,7 +200,11 @@ button:hover {
     flex-direction: column;
   }
 
-  #toolbar .divider {
+  #options {
+    transform: translateY(273px) translateX(46px);
+  }
+
+  #toolbar .divider{
     border-top: 1px solid #ffffff44;
     height: 0px;
     max-height: 0px;
@@ -221,7 +241,7 @@ button:hover {
   }
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 1000px) {
   .toolbarButton .tooltip {
     display: none;
     position: absolute;
@@ -244,7 +264,7 @@ button:hover {
     margin: 0;
   }
 
-  #aboutButton>.tooltip {
+  #aboutButton > .tooltip{
     left: unset;
     right: 0;
   }
@@ -252,8 +272,12 @@ button:hover {
   .toolbarButton {
     width: calc(var(--toolbarSize) - 4px);
   }
-}
 
+  #options {
+    transform: translateY(44px) translateX(188px);
+    background:var(--VTTblue);
+  }
+}
 
 body.aspectTooGood #toolbar {
   top: calc((100vh - var(--scale) * var(--roomHeight)) / 2);
@@ -287,7 +311,6 @@ body.aspectTooGood .toolbarButton:hover .tooltip {
   display: block;
 }
 
-
 body.aspectTooGood #toolbar .divider {
   border-top: 1px solid #ffffff44;
   height: 0px;
@@ -315,6 +338,14 @@ body.aspectTooGood.hiddenToolbar #roomArea {
 
 body.aspectTooGood #hideToolbarButton {
   display: inline-flex;
+}
+
+body.aspectTooGood #options {
+  transform: translateY(273px) translateX(46px);
+}
+
+#options.hidden {
+  visibility: hidden;
 }
 
 .overlay {
@@ -480,6 +511,24 @@ html:-webkit-full-screen #fullscreenButton .tooltip::before {
   content: '[vtt_logo]';
 }
 
+#optionsButton {
+  background-size: 28px 28px;
+  background-position: 6px 6px;
+  background-image:url(/i/icons-white/mute-svg.svg);
+}
+
+#muteButton {
+  background-image:url(/i/icons-white/mute-svg.svg);
+  width: calc(var(--toolbarSize) - 12px);
+  height: calc(var(--toolbarSize) - 12px);
+}
+
+#muteButton.toolbarButton.muted {
+  background-image:url(/i/icons-white/unmute-svg.svg);
+}
+
+/*Buttons css*/
+
 .prettyButton {
   border: 5px;
   font-size: 16px;
@@ -574,6 +623,9 @@ html:-webkit-full-screen #fullscreenButton .tooltip::before {
 .remove::before {
   content: '[close_square]';
 }
+.update:hover {
+  background-color: var(--VTTblueDark);
+}
 
 button {
   font-family: 'Roboto', sans-serif;
@@ -627,22 +679,3 @@ button:disabled:hover {
 .ui-button.green {
   background-color: #4cd964;
 }
-
-/*
-.bgg[href=""] {
-  display: none;
-}
-
-.bgg::after{
-  content: 'BGG';
-  color: white;
-  background: var(--VTTblue);
-  font-size: 8px;
-  line-height: 8px;
-  display: inline-block;
-  height: 8px;
-  vertical-align: middle;
-  padding: 2px 2px 0 2px;
-  border-radius: 2px;
-  margin-left: 4px;
-} */

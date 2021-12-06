@@ -73,6 +73,19 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_uploadAudio',
+    name: 'upload audio file',
+    context: '^.*\\(AUDIO\\) ↦ source|^.* ↦ clickSound', 
+    call: async function() {
+      uploadAsset().then(a=> {
+        if(a) {
+          jeInsert(null, jeGetLastKey(), a);
+          jeApplyChanges();
+        }
+      });
+    }
+  },
+  {
     id: 'je_cardTypeTemplate',
     name: 'card type template',
     context: '^deck ↦ cardTypes',
@@ -564,6 +577,7 @@ function jeAddCommands() {
   widgetTypes.push(jeAddWidgetPropertyCommands(new Spinner()));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Timer()));
 
+  jeAddRoutineOperationCommands('AUDIO', { source: '', type: 'audio/mpeg', maxVolume: 1.0, length: null, player: null });
   jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result' });
   jeAddRoutineOperationCommands('CANVAS', { canvas: null, mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6' });
   jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 , mode:'respect'});
@@ -599,6 +613,8 @@ function jeAddCommands() {
   jeAddEnumCommands('^[a-z]+ ↦ type', widgetTypes.slice(1));
   jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ value', [ '${}' ]);
   jeAddEnumCommands('^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ textAlign', [ 'left', 'center', 'right' ]);
+  jeAddEnumCommands('^.*\\(AUDIO\\) ↦ type', [ 'audio/midi', 'audio/mpeg', 'audio/ogg', 'audio/wav', 'audio/x-wav' ]);
+  jeAddEnumCommands('^.*\\(AUDIO\\) ↦ player', [ '${}', '${playerName}' ]);
   jeAddEnumCommands('^.*\\(CANVAS\\) ↦ mode', [ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ]);
   jeAddEnumCommands('^.*\\(CLICK\\) ↦ mode', [ 'respect', 'ignoreClickable', 'ignoreClickRoutine', 'ignoreAll' ]);
   jeAddEnumCommands('^.*\\(FLIP\\) ↦ faceCycle', [ 'forward', 'backward', 'random' ]);
@@ -909,16 +925,15 @@ function jeApplyDelta(delta) {
 async function jeApplyExternalChanges(state) {
   const before = JSON.parse(jeStateBefore);
   if(state.type == 'card' && state.deck === before.deck) {
-    const cardDefaults = widgets.get(state.deck).get('cardDefaults');
-    if(JSON.stringify(state['cardDefaults (in deck)']) != JSON.stringify(cardDefaults))
+    const cardDefaults = { ...widgets.get(state.deck).get('cardDefaults') };
+    if(state['cardDefaults (in deck)'] && JSON.stringify(state['cardDefaults (in deck)']) != JSON.stringify(cardDefaults))
       await widgets.get(state.deck).set('cardDefaults', state['cardDefaults (in deck)']);
 
     if(state.cardType === before.cardType) {
-      const cardTypes = widgets.get(state.deck).get('cardTypes');
-      const cardType = cardTypes[state.cardType];
-      if(JSON.stringify(state['cardType  ['+ state.cardType + '] (in deck)']) != JSON.stringify(cardType)) {
+      const cardTypes = { ...widgets.get(state.deck).get('cardTypes') };
+      if(state['cardType ['+ state.cardType + '] (in deck)'] && JSON.stringify(state['cardType ['+ state.cardType + '] (in deck)']) != JSON.stringify(cardTypes[state.cardType])) {
         cardTypes[state.cardType] = state['cardType ['+ state.cardType + '] (in deck)'];
-        await widgets.get(state.deck).set('cardTypes', { ...cardTypes });
+        await widgets.get(state.deck).set('cardTypes', cardTypes);
       }
     }
   }
@@ -1478,8 +1493,10 @@ function jePreProcessObject(o) {
 
   try {
     if(copy.type == 'card') {
-      copy['cardDefaults (in deck)'] = widgets.get(copy.deck).get('cardDefaults');
-      copy['cardType ['+ o.cardType + '] (in deck)'] = widgets.get(copy.deck).get('cardTypes')[copy.cardType];
+      if(widgets.get(copy.deck).state.cardDefaults)
+        copy['cardDefaults (in deck)'] = widgets.get(copy.deck).get('cardDefaults');
+      if(widgets.get(copy.deck).state.cardTypes)
+        copy['cardType ['+ o.cardType + '] (in deck)'] = widgets.get(copy.deck).get('cardTypes')[copy.cardType];
     }
   } catch(e) {}
 

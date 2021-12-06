@@ -5,6 +5,9 @@ import { startWebSocket, toServer } from './connection.js';
 let scale = 1;
 let roomRectangle;
 let overlayActive = false;
+let muted = false;
+let unmuteVol = 30;
+let optionsHidden = true;
 
 var vmEditOverlay;
 
@@ -241,6 +244,35 @@ onLoad(function() {
     if(overlay)
       showOverlay(overlay);
   });
+  
+  on('#muteButton', 'click', function(){
+    if(muted) {
+      document.getElementById('volume').value = unmuteVol;
+      document.getElementById('muteButton').classList.remove('muted');
+      var allAudios = document.querySelectorAll('audio');
+      allAudios.forEach(function(audio){
+        audio.volume = Math.min(audio.getAttribute('maxVolume') * (((10 ** (unmuteVol / 96.025)) / 10) - 0.1), 1);
+      });
+    } else {
+      unmuteVol = document.getElementById('volume').value;
+      document.getElementById("volume").value = 0;
+      var allAudios = document.querySelectorAll('audio');
+      allAudios.forEach(function(audio){
+        audio.volume = 0;
+      });
+      document.getElementById('muteButton').classList.add('muted');
+    }
+    muted = !muted
+  });
+
+  on('#optionsButton', 'click', function(){
+    if(optionsHidden) {
+      document.getElementById('options').classList.remove('hidden');
+    } else {
+      document.getElementById('options').classList.add('hidden');
+    }
+    optionsHidden = !optionsHidden
+  });
 
   on('#fullscreenButton', 'click', function() {
     if(document.documentElement.requestFullscreen) {
@@ -312,4 +344,17 @@ window.onkeyup = function(event) {
     else if(jeEnabled)
       jeToggle();
   }
+}
+
+if(document.getElementById("volume")) {
+    document.getElementById("volume").addEventListener("input", function(){ // allows volume to be adjusted in real time
+      if(muted) {
+        document.getElementById('muteButton').classList.remove('muted');
+        muted = !muted
+      }
+    var allAudios = document.querySelectorAll('audio');
+    allAudios.forEach(function(audio){
+      audio.volume = Math.min(audio.getAttribute('maxVolume') * (((10 ** (document.getElementById('volume').value / 96.025)) / 10) - 0.1), 1);
+    });
+  });
 }
