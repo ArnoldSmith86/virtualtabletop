@@ -28,7 +28,7 @@ async function removeGame(t, index) {
     .click('#statesButton')
     .hover(`.roomState:nth-of-type(${index || 1})`)
     .click(`.roomState:nth-of-type(${index || 1}) .edit`)
-    .click('p > .remove');
+    .click('.remove-game');
 }
 
 async function setName(t, name) {
