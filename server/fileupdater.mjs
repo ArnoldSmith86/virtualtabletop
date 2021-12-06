@@ -299,6 +299,7 @@ function v5DynamicFaceProperties(properties) {
       }
     }
   }
+}
 
 function v6RoutineModeSwitch(routine, modeSwitch, nested, status) {
   const re = /^mode:/;
