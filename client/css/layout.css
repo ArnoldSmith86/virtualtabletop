@@ -713,6 +713,8 @@ button:disabled:hover {
   overflow-y: auto;
   overflow-x: hidden;
   border-radius: 8px;
+  border-top: 3px solid var(--VTTblue);
+  border-bottom: 3px solid var(--VTTblue);
 }
 
 .modal h1{
