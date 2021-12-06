@@ -1,0 +1,3847 @@
+{
+  "a475d474-673d-4946-ba5b-83da8f98374b": {
+    "id": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "x": 4,
+    "y": 4,
+    "z": 15061,
+    "type": "deck",
+    "cardTypes": {
+      "type-035908d9-2221-4eff-a23d-cb5da51a3f4b": {
+        "label": "Blue",
+        "image": "/assets/-511651608_3199",
+        "image1": "/assets/-511651608_3199"
+      },
+      "type-9cee7423-f765-4f1d-a97a-aa2c425ab143": {
+        "label": "Red",
+        "image": "/assets/-1713370741_3596",
+        "image1": "/assets/-1713370741_3596"
+      },
+      "type-63fedd84-2258-4306-84ca-ab8d3a6ccfa7": {
+        "label": "Yellow",
+        "image": "/assets/-868978399_4650",
+        "image1": "/assets/-868978399_4650"
+      },
+      "type-e40385da-815c-4d08-b965-fa4fa228db6c": {
+        "label": "Black",
+        "image": "/assets/23549581_3212",
+        "image1": "/assets/23549581_3212"
+      },
+      "type-ecff874e-8e61-43f1-ba12-214516c283f5": {
+        "label": "Aqua",
+        "image": "/assets/1812341796_4692",
+        "image1": "/assets/1812341796_4692"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "valueType": "dynamic",
+            "value": "image1",
+            "width": 65,
+            "height": 65
+          }
+        ],
+        "border": false,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 65,
+            "height": 65
+          }
+        ],
+        "border": false,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 65,
+      "height": 65
+    },
+    "parent": "tileBag"
+  },
+  "655be2e0-4414-4405-b03c-e9e44223e6ad": {
+    "id": "655be2e0-4414-4405-b03c-e9e44223e6ad",
+    "z": 9419,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-9cee7423-f765-4f1d-a97a-aa2c425ab143",
+    "parent": "6hlh"
+  },
+  "b24008b1-4ae1-446d-aca6-207be88203cd": {
+    "id": "b24008b1-4ae1-446d-aca6-207be88203cd",
+    "z": 9875,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-63fedd84-2258-4306-84ca-ab8d3a6ccfa7",
+    "parent": "6hlh"
+  },
+  "d8d09e53-5a74-4ea4-b008-2beb94053b1e": {
+    "id": "d8d09e53-5a74-4ea4-b008-2beb94053b1e",
+    "z": 6645,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-e40385da-815c-4d08-b965-fa4fa228db6c",
+    "parent": "6hlh"
+  },
+  "458b3318-1e0f-4a0a-8a85-85bf233c9e0e": {
+    "id": "458b3318-1e0f-4a0a-8a85-85bf233c9e0e",
+    "z": 6491,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-ecff874e-8e61-43f1-ba12-214516c283f5",
+    "parent": "6hlh"
+  },
+  "286bab2d-6401-4d1c-ad8c-c89c4fd97794": {
+    "id": "286bab2d-6401-4d1c-ad8c-c89c4fd97794",
+    "z": 1162,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-035908d9-2221-4eff-a23d-cb5da51a3f4b",
+    "parent": "6hlh"
+  },
+  "7b5d4d96-46f7-46bb-83a5-66a917bcee1b": {
+    "id": "7b5d4d96-46f7-46bb-83a5-66a917bcee1b",
+    "z": 223,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-9cee7423-f765-4f1d-a97a-aa2c425ab143",
+    "parent": "6hlh"
+  },
+  "2ab17ca0-33a5-4373-a044-e41d68a0d04f": {
+    "id": "2ab17ca0-33a5-4373-a044-e41d68a0d04f",
+    "z": 3180,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-63fedd84-2258-4306-84ca-ab8d3a6ccfa7",
+    "parent": "6hlh"
+  },
+  "ff9c16b7-512e-440e-80bc-772b2845425c": {
+    "id": "ff9c16b7-512e-440e-80bc-772b2845425c",
+    "z": 6914,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-e40385da-815c-4d08-b965-fa4fa228db6c",
+    "parent": "6hlh"
+  },
+  "433cf830-91a8-40c9-b99b-2430e6b27f3f": {
+    "id": "433cf830-91a8-40c9-b99b-2430e6b27f3f",
+    "z": 616,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-ecff874e-8e61-43f1-ba12-214516c283f5",
+    "parent": "6hlh"
+  },
+  "e7786c14-54ed-4540-a88c-580d969318c8": {
+    "id": "e7786c14-54ed-4540-a88c-580d969318c8",
+    "z": 9496,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-035908d9-2221-4eff-a23d-cb5da51a3f4b",
+    "parent": "6hlh"
+  },
+  "42250f84-e073-4295-b494-bf4ec700570d": {
+    "id": "42250f84-e073-4295-b494-bf4ec700570d",
+    "z": 7543,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-9cee7423-f765-4f1d-a97a-aa2c425ab143",
+    "parent": "6hlh"
+  },
+  "d171af39-d624-45f0-b529-db5cc4fb1003": {
+    "id": "d171af39-d624-45f0-b529-db5cc4fb1003",
+    "z": 6218,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-63fedd84-2258-4306-84ca-ab8d3a6ccfa7",
+    "parent": "6hlh"
+  },
+  "d4a925e1-e243-4481-973a-5a335fff1108": {
+    "id": "d4a925e1-e243-4481-973a-5a335fff1108",
+    "z": 9076,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-e40385da-815c-4d08-b965-fa4fa228db6c",
+    "parent": "6hlh"
+  },
+  "fe791bb3-9109-4546-a9af-6413d0a3617f": {
+    "id": "fe791bb3-9109-4546-a9af-6413d0a3617f",
+    "z": 3919,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-ecff874e-8e61-43f1-ba12-214516c283f5",
+    "parent": "6hlh"
+  },
+  "f17cc16c-307e-485e-92e9-bd2cf2be6e0d": {
+    "id": "f17cc16c-307e-485e-92e9-bd2cf2be6e0d",
+    "z": 154,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-035908d9-2221-4eff-a23d-cb5da51a3f4b",
+    "parent": "6hlh"
+  },
+  "d7bf7d63-aff2-4cab-8e34-a7dc185f6bea": {
+    "id": "d7bf7d63-aff2-4cab-8e34-a7dc185f6bea",
+    "z": 9728,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-9cee7423-f765-4f1d-a97a-aa2c425ab143",
+    "parent": "6hlh"
+  },
+  "91c76fa4-267b-4ebb-beb3-303cf9f136b6": {
+    "id": "91c76fa4-267b-4ebb-beb3-303cf9f136b6",
+    "z": 8505,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-63fedd84-2258-4306-84ca-ab8d3a6ccfa7",
+    "parent": "6hlh"
+  },
+  "4fdc332c-dd11-445b-8805-75eaed70565a": {
+    "id": "4fdc332c-dd11-445b-8805-75eaed70565a",
+    "z": 7209,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-e40385da-815c-4d08-b965-fa4fa228db6c",
+    "parent": "6hlh"
+  },
+  "3c843d1e-cbb3-444b-ad22-dd031be02b9f": {
+    "id": "3c843d1e-cbb3-444b-ad22-dd031be02b9f",
+    "z": 4782,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-ecff874e-8e61-43f1-ba12-214516c283f5",
+    "parent": "6hlh"
+  },
+  "5d685503-9fca-4351-a5a7-686a5268441e": {
+    "id": "5d685503-9fca-4351-a5a7-686a5268441e",
+    "z": 6682,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-035908d9-2221-4eff-a23d-cb5da51a3f4b",
+    "parent": "6hlh"
+  },
+  "9f80fe82-e6ca-401a-aa1a-7f46cdf27889": {
+    "id": "9f80fe82-e6ca-401a-aa1a-7f46cdf27889",
+    "z": 8250,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-9cee7423-f765-4f1d-a97a-aa2c425ab143",
+    "parent": "6hlh"
+  },
+  "20c0f288-0147-4817-b16f-2bbe23b709dc": {
+    "id": "20c0f288-0147-4817-b16f-2bbe23b709dc",
+    "z": 5589,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-63fedd84-2258-4306-84ca-ab8d3a6ccfa7",
+    "parent": "6hlh"
+  },
+  "ceae49ed-8668-4c79-9750-73b6ccb5cb29": {
+    "id": "ceae49ed-8668-4c79-9750-73b6ccb5cb29",
+    "z": 2990,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-e40385da-815c-4d08-b965-fa4fa228db6c",
+    "parent": "6hlh"
+  },
+  "8c261d81-871d-4956-a47b-3482137f3bab": {
+    "id": "8c261d81-871d-4956-a47b-3482137f3bab",
+    "z": 2614,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-ecff874e-8e61-43f1-ba12-214516c283f5",
+    "parent": "6hlh"
+  },
+  "3622d07f-680f-42f2-9018-2fd0e3d1c18d": {
+    "id": "3622d07f-680f-42f2-9018-2fd0e3d1c18d",
+    "z": 231,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-035908d9-2221-4eff-a23d-cb5da51a3f4b",
+    "parent": "6hlh"
+  },
+  "b1d517fb-1068-49b7-b7e3-f0e6d83caa48": {
+    "id": "b1d517fb-1068-49b7-b7e3-f0e6d83caa48",
+    "z": 3398,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-9cee7423-f765-4f1d-a97a-aa2c425ab143",
+    "parent": "6hlh"
+  },
+  "9f40ab6d-44c8-4abf-ab77-d08187abb137": {
+    "id": "9f40ab6d-44c8-4abf-ab77-d08187abb137",
+    "z": 2195,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-63fedd84-2258-4306-84ca-ab8d3a6ccfa7",
+    "parent": "6hlh"
+  },
+  "f1fcb234-73a6-481e-80c1-c0307025fd56": {
+    "id": "f1fcb234-73a6-481e-80c1-c0307025fd56",
+    "z": 7812,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-e40385da-815c-4d08-b965-fa4fa228db6c",
+    "parent": "6hlh"
+  },
+  "c8674995-db2c-4b40-9a8a-eadbc1f53ab5": {
+    "id": "c8674995-db2c-4b40-9a8a-eadbc1f53ab5",
+    "z": 7081,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-ecff874e-8e61-43f1-ba12-214516c283f5",
+    "parent": "6hlh"
+  },
+  "968e7cae-0b9a-4c43-99c5-8d7536a93b9e": {
+    "id": "968e7cae-0b9a-4c43-99c5-8d7536a93b9e",
+    "z": 3561,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-035908d9-2221-4eff-a23d-cb5da51a3f4b",
+    "parent": "6hlh"
+  },
+  "009112b7-da88-4601-8a7c-94b23f04f746": {
+    "id": "009112b7-da88-4601-8a7c-94b23f04f746",
+    "z": 7915,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-9cee7423-f765-4f1d-a97a-aa2c425ab143",
+    "parent": "6hlh"
+  },
+  "296f647c-ea35-46aa-b03f-d4458f2f41df": {
+    "id": "296f647c-ea35-46aa-b03f-d4458f2f41df",
+    "z": 5127,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-63fedd84-2258-4306-84ca-ab8d3a6ccfa7",
+    "parent": "6hlh"
+  },
+  "e2fa3c02-79db-4806-a51d-fa9535200f3d": {
+    "id": "e2fa3c02-79db-4806-a51d-fa9535200f3d",
+    "z": 6316,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-e40385da-815c-4d08-b965-fa4fa228db6c",
+    "parent": "6hlh"
+  },
+  "a331e2d1-570f-4936-8001-97efbae7784e": {
+    "id": "a331e2d1-570f-4936-8001-97efbae7784e",
+    "z": 954,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-ecff874e-8e61-43f1-ba12-214516c283f5",
+    "parent": "6hlh"
+  },
+  "c1727127-980d-464a-8f83-1fa029ad01f4": {
+    "id": "c1727127-980d-464a-8f83-1fa029ad01f4",
+    "z": 5039,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-035908d9-2221-4eff-a23d-cb5da51a3f4b",
+    "parent": "6hlh"
+  },
+  "ef0582f5-21bc-45cd-adfd-083492589cf4": {
+    "id": "ef0582f5-21bc-45cd-adfd-083492589cf4",
+    "z": 5793,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-9cee7423-f765-4f1d-a97a-aa2c425ab143",
+    "parent": "6hlh"
+  },
+  "cabc1c0b-f31e-428d-9c66-2178580ddc4a": {
+    "id": "cabc1c0b-f31e-428d-9c66-2178580ddc4a",
+    "z": 8990,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-63fedd84-2258-4306-84ca-ab8d3a6ccfa7",
+    "parent": "6hlh"
+  },
+  "fb84b48f-400b-416d-ad48-f9898cc0a794": {
+    "id": "fb84b48f-400b-416d-ad48-f9898cc0a794",
+    "z": 3586,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-e40385da-815c-4d08-b965-fa4fa228db6c",
+    "parent": "6hlh"
+  },
+  "a8efd407-7e0f-4acb-96cd-6c8677bccd01": {
+    "id": "a8efd407-7e0f-4acb-96cd-6c8677bccd01",
+    "z": 9122,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-ecff874e-8e61-43f1-ba12-214516c283f5",
+    "parent": "6hlh"
+  },
+  "c7e4836b-9d2e-4662-9bab-19a75a5493c9": {
+    "id": "c7e4836b-9d2e-4662-9bab-19a75a5493c9",
+    "z": 8325,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-035908d9-2221-4eff-a23d-cb5da51a3f4b",
+    "parent": "6hlh"
+  },
+  "65eaaba3-634f-47e0-a6a4-9d0b95e2fc0e": {
+    "id": "65eaaba3-634f-47e0-a6a4-9d0b95e2fc0e",
+    "z": 6136,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-9cee7423-f765-4f1d-a97a-aa2c425ab143",
+    "parent": "6hlh"
+  },
+  "56231089-0ab4-40ed-8788-a21e27e706e6": {
+    "id": "56231089-0ab4-40ed-8788-a21e27e706e6",
+    "z": 594,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-63fedd84-2258-4306-84ca-ab8d3a6ccfa7",
+    "parent": "6hlh"
+  },
+  "64968263-650a-44c5-be84-2cf6c2feae46": {
+    "id": "64968263-650a-44c5-be84-2cf6c2feae46",
+    "z": 8273,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-e40385da-815c-4d08-b965-fa4fa228db6c",
+    "parent": "6hlh"
+  },
+  "98c50880-0ac4-4d61-836c-7022e5cfc50e": {
+    "id": "98c50880-0ac4-4d61-836c-7022e5cfc50e",
+    "z": 5644,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-ecff874e-8e61-43f1-ba12-214516c283f5",
+    "parent": "6hlh"
+  },
+  "abe0693f-04fe-4481-9eed-9dd74ee0d6f8": {
+    "id": "abe0693f-04fe-4481-9eed-9dd74ee0d6f8",
+    "z": 6903,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-035908d9-2221-4eff-a23d-cb5da51a3f4b",
+    "parent": "6hlh"
+  },
+  "719b3dbc-3c7d-4337-a4e4-2fdf3736083e": {
+    "id": "719b3dbc-3c7d-4337-a4e4-2fdf3736083e",
+    "z": 4820,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-9cee7423-f765-4f1d-a97a-aa2c425ab143",
+    "parent": "6hlh"
+  },
+  "8dc16711-b380-4906-b8f2-b2fb2328f6ac": {
+    "id": "8dc16711-b380-4906-b8f2-b2fb2328f6ac",
+    "z": 8756,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-63fedd84-2258-4306-84ca-ab8d3a6ccfa7",
+    "parent": "6hlh"
+  },
+  "106c0c41-e036-444f-8c90-761c0c389697": {
+    "id": "106c0c41-e036-444f-8c90-761c0c389697",
+    "z": 6663,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-e40385da-815c-4d08-b965-fa4fa228db6c",
+    "parent": "6hlh"
+  },
+  "58a8828f-bc99-470d-88a9-e163f4570fd0": {
+    "id": "58a8828f-bc99-470d-88a9-e163f4570fd0",
+    "z": 1215,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-ecff874e-8e61-43f1-ba12-214516c283f5",
+    "parent": "6hlh"
+  },
+  "cebfcbe6-c4d3-4484-a6ca-92cb3d30f172": {
+    "id": "cebfcbe6-c4d3-4484-a6ca-92cb3d30f172",
+    "z": 5828,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-035908d9-2221-4eff-a23d-cb5da51a3f4b",
+    "parent": "6hlh"
+  },
+  "9a5f7833-e171-4047-b726-ebe2282e3bcb": {
+    "id": "9a5f7833-e171-4047-b726-ebe2282e3bcb",
+    "z": 4063,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-9cee7423-f765-4f1d-a97a-aa2c425ab143",
+    "parent": "6hlh"
+  },
+  "3d73f161-3a1c-42e5-a41d-dcb7cae1cc5e": {
+    "id": "3d73f161-3a1c-42e5-a41d-dcb7cae1cc5e",
+    "z": 4636,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-63fedd84-2258-4306-84ca-ab8d3a6ccfa7",
+    "parent": "6hlh"
+  },
+  "6b2fd028-31b1-4374-9a2b-709b58750a56": {
+    "id": "6b2fd028-31b1-4374-9a2b-709b58750a56",
+    "z": 8592,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-e40385da-815c-4d08-b965-fa4fa228db6c",
+    "parent": "6hlh"
+  },
+  "268a4e7e-663c-4f1f-a009-d5ac27284671": {
+    "id": "268a4e7e-663c-4f1f-a009-d5ac27284671",
+    "z": 4593,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-ecff874e-8e61-43f1-ba12-214516c283f5",
+    "parent": "6hlh"
+  },
+  "3009333f-d285-41d2-a09b-a6763bad444a": {
+    "id": "3009333f-d285-41d2-a09b-a6763bad444a",
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-035908d9-2221-4eff-a23d-cb5da51a3f4b",
+    "z": 3681,
+    "parent": "6hlh"
+  },
+  "15829220-d903-4440-93c3-c3aa76abdc27": {
+    "id": "15829220-d903-4440-93c3-c3aa76abdc27",
+    "z": 6604,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-9cee7423-f765-4f1d-a97a-aa2c425ab143",
+    "parent": "6hlh"
+  },
+  "3ea250d8-5362-41c4-b7ac-9e1f989d2910": {
+    "id": "3ea250d8-5362-41c4-b7ac-9e1f989d2910",
+    "z": 8901,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-63fedd84-2258-4306-84ca-ab8d3a6ccfa7",
+    "parent": "6hlh"
+  },
+  "4ed771fc-06c5-4e5d-b448-68cc8e03231d": {
+    "id": "4ed771fc-06c5-4e5d-b448-68cc8e03231d",
+    "z": 810,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-e40385da-815c-4d08-b965-fa4fa228db6c",
+    "parent": "6hlh"
+  },
+  "31bae507-92b7-4a70-82c6-7f6ed333676b": {
+    "id": "31bae507-92b7-4a70-82c6-7f6ed333676b",
+    "z": 2935,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-ecff874e-8e61-43f1-ba12-214516c283f5",
+    "parent": "6hlh"
+  },
+  "4ecc7137-eac9-4719-8a97-d05cb2767f25": {
+    "id": "4ecc7137-eac9-4719-8a97-d05cb2767f25",
+    "z": 7439,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-035908d9-2221-4eff-a23d-cb5da51a3f4b",
+    "parent": "6hlh"
+  },
+  "56b94e29-a983-4d28-b5c6-24111624b562": {
+    "id": "56b94e29-a983-4d28-b5c6-24111624b562",
+    "z": 3399,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-9cee7423-f765-4f1d-a97a-aa2c425ab143",
+    "parent": "6hlh"
+  },
+  "1f3f2258-79a6-467d-9538-4d6aa93f99ef": {
+    "id": "1f3f2258-79a6-467d-9538-4d6aa93f99ef",
+    "z": 4382,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-63fedd84-2258-4306-84ca-ab8d3a6ccfa7",
+    "parent": "6hlh"
+  },
+  "74dff195-8f43-42b9-9ef9-559523228e13": {
+    "id": "74dff195-8f43-42b9-9ef9-559523228e13",
+    "z": 3536,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-e40385da-815c-4d08-b965-fa4fa228db6c",
+    "parent": "6hlh"
+  },
+  "ff3fcab7-9808-47e4-ab9b-a137729acaae": {
+    "id": "ff3fcab7-9808-47e4-ab9b-a137729acaae",
+    "z": 5252,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-ecff874e-8e61-43f1-ba12-214516c283f5",
+    "parent": "6hlh"
+  },
+  "211389b0-6908-4884-9a57-bde118bf41e3": {
+    "id": "211389b0-6908-4884-9a57-bde118bf41e3",
+    "z": 3673,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-035908d9-2221-4eff-a23d-cb5da51a3f4b",
+    "parent": "6hlh"
+  },
+  "0b56e4f6-17c5-4779-94c5-7d2d6c00c41b": {
+    "id": "0b56e4f6-17c5-4779-94c5-7d2d6c00c41b",
+    "z": 6624,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-9cee7423-f765-4f1d-a97a-aa2c425ab143",
+    "parent": "6hlh"
+  },
+  "1a660df6-4356-4267-86fb-1ffbdc73d4f5": {
+    "id": "1a660df6-4356-4267-86fb-1ffbdc73d4f5",
+    "z": 1403,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-63fedd84-2258-4306-84ca-ab8d3a6ccfa7",
+    "parent": "6hlh"
+  },
+  "fea2f7ca-4ce4-43f0-9cb3-2efe1c468191": {
+    "id": "fea2f7ca-4ce4-43f0-9cb3-2efe1c468191",
+    "z": 2948,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-e40385da-815c-4d08-b965-fa4fa228db6c",
+    "parent": "6hlh"
+  },
+  "5bf50975-9e6e-4d8f-9ad3-22f8b94bfbe0": {
+    "id": "5bf50975-9e6e-4d8f-9ad3-22f8b94bfbe0",
+    "z": 1775,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-ecff874e-8e61-43f1-ba12-214516c283f5",
+    "parent": "6hlh"
+  },
+  "d1e99b4e-cebb-4bd9-a56d-0d990df9a703": {
+    "id": "d1e99b4e-cebb-4bd9-a56d-0d990df9a703",
+    "z": 5121,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-035908d9-2221-4eff-a23d-cb5da51a3f4b",
+    "parent": "6hlh"
+  },
+  "8dab91de-47e2-4bbb-9e5b-47d07f298a4b": {
+    "id": "8dab91de-47e2-4bbb-9e5b-47d07f298a4b",
+    "z": 1659,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-9cee7423-f765-4f1d-a97a-aa2c425ab143",
+    "parent": "6hlh"
+  },
+  "2ffd161e-aba5-4931-b17c-dbdcedfe6e31": {
+    "id": "2ffd161e-aba5-4931-b17c-dbdcedfe6e31",
+    "z": 3207,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-63fedd84-2258-4306-84ca-ab8d3a6ccfa7",
+    "parent": "6hlh"
+  },
+  "df571766-b0f7-45e0-8ee3-3f5bb73b2624": {
+    "id": "df571766-b0f7-45e0-8ee3-3f5bb73b2624",
+    "z": 6290,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-e40385da-815c-4d08-b965-fa4fa228db6c",
+    "parent": "6hlh"
+  },
+  "043da497-6a4c-4f86-ae6a-7036ba7aa4ca": {
+    "id": "043da497-6a4c-4f86-ae6a-7036ba7aa4ca",
+    "z": 9699,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-ecff874e-8e61-43f1-ba12-214516c283f5",
+    "parent": "6hlh"
+  },
+  "c518a2cd-6214-47b9-ae6b-fd1f9d80fdee": {
+    "id": "c518a2cd-6214-47b9-ae6b-fd1f9d80fdee",
+    "z": 1471,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-035908d9-2221-4eff-a23d-cb5da51a3f4b",
+    "parent": "6hlh"
+  },
+  "55af0c81-208f-4e75-960f-bb29191a20d7": {
+    "id": "55af0c81-208f-4e75-960f-bb29191a20d7",
+    "z": 4137,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-9cee7423-f765-4f1d-a97a-aa2c425ab143",
+    "parent": "6hlh"
+  },
+  "65848d1f-fa9b-4b6a-bd4b-477ced5159dd": {
+    "id": "65848d1f-fa9b-4b6a-bd4b-477ced5159dd",
+    "z": 6060,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-63fedd84-2258-4306-84ca-ab8d3a6ccfa7",
+    "parent": "6hlh"
+  },
+  "c71d55fc-ad2a-4dde-99d4-4a6a70aa2df2": {
+    "id": "c71d55fc-ad2a-4dde-99d4-4a6a70aa2df2",
+    "z": 1160,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-e40385da-815c-4d08-b965-fa4fa228db6c",
+    "parent": "6hlh"
+  },
+  "48d978bc-575a-43b9-baa4-acbb31671e2b": {
+    "id": "48d978bc-575a-43b9-baa4-acbb31671e2b",
+    "z": 5947,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-ecff874e-8e61-43f1-ba12-214516c283f5",
+    "parent": "6hlh"
+  },
+  "e80f0e4a-3689-4381-a087-9490b964b7dd": {
+    "id": "e80f0e4a-3689-4381-a087-9490b964b7dd",
+    "z": 620,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-035908d9-2221-4eff-a23d-cb5da51a3f4b",
+    "parent": "6hlh"
+  },
+  "8bf10d33-d8af-411c-9666-89965b2670bd": {
+    "id": "8bf10d33-d8af-411c-9666-89965b2670bd",
+    "z": 1278,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-9cee7423-f765-4f1d-a97a-aa2c425ab143",
+    "parent": "6hlh"
+  },
+  "e1610d02-f056-4a51-8bff-a2513cb30e0f": {
+    "id": "e1610d02-f056-4a51-8bff-a2513cb30e0f",
+    "z": 4460,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-63fedd84-2258-4306-84ca-ab8d3a6ccfa7",
+    "parent": "6hlh"
+  },
+  "95cf03d8-7d50-4a40-9ccf-8d5be4bb513e": {
+    "id": "95cf03d8-7d50-4a40-9ccf-8d5be4bb513e",
+    "z": 2489,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-e40385da-815c-4d08-b965-fa4fa228db6c",
+    "parent": "6hlh"
+  },
+  "57c4ad2b-7ed8-48c4-9d06-2bac2a4bb3b1": {
+    "id": "57c4ad2b-7ed8-48c4-9d06-2bac2a4bb3b1",
+    "z": 7114,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-ecff874e-8e61-43f1-ba12-214516c283f5",
+    "parent": "6hlh"
+  },
+  "92836924-35fa-4a08-9ccf-ce219bb3d6c3": {
+    "id": "92836924-35fa-4a08-9ccf-ce219bb3d6c3",
+    "z": 3957,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-035908d9-2221-4eff-a23d-cb5da51a3f4b",
+    "parent": "6hlh"
+  },
+  "015bfe22-5ed6-46eb-9861-4e35d37159df": {
+    "id": "015bfe22-5ed6-46eb-9861-4e35d37159df",
+    "z": 8739,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-9cee7423-f765-4f1d-a97a-aa2c425ab143",
+    "parent": "6hlh"
+  },
+  "962e1fab-0789-409b-a57b-115d02e36b44": {
+    "id": "962e1fab-0789-409b-a57b-115d02e36b44",
+    "z": 319,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-63fedd84-2258-4306-84ca-ab8d3a6ccfa7",
+    "parent": "6hlh"
+  },
+  "08b736ba-fb5a-4aac-8379-97d1d6ace7bd": {
+    "id": "08b736ba-fb5a-4aac-8379-97d1d6ace7bd",
+    "z": 6683,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-e40385da-815c-4d08-b965-fa4fa228db6c",
+    "parent": "6hlh"
+  },
+  "e7f54e74-171f-4bd1-a434-7e360ea7eeed": {
+    "id": "e7f54e74-171f-4bd1-a434-7e360ea7eeed",
+    "z": 5965,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-ecff874e-8e61-43f1-ba12-214516c283f5",
+    "parent": "6hlh"
+  },
+  "b855b61b-a42e-4ec3-8a4a-bd6f503c2d8e": {
+    "id": "b855b61b-a42e-4ec3-8a4a-bd6f503c2d8e",
+    "z": 1090,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-035908d9-2221-4eff-a23d-cb5da51a3f4b",
+    "parent": "6hlh"
+  },
+  "f4bf4e33-4e9e-4b66-a2fa-bb97cffdfeda": {
+    "id": "f4bf4e33-4e9e-4b66-a2fa-bb97cffdfeda",
+    "z": 1903,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-9cee7423-f765-4f1d-a97a-aa2c425ab143",
+    "parent": "6hlh"
+  },
+  "3204893d-ed00-4746-8e8b-3b54462e6db0": {
+    "id": "3204893d-ed00-4746-8e8b-3b54462e6db0",
+    "z": 2318,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-63fedd84-2258-4306-84ca-ab8d3a6ccfa7",
+    "parent": "6hlh"
+  },
+  "3de48342-7c8b-43d6-82c8-d7f880ee04e0": {
+    "id": "3de48342-7c8b-43d6-82c8-d7f880ee04e0",
+    "z": 845,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-e40385da-815c-4d08-b965-fa4fa228db6c",
+    "parent": "6hlh"
+  },
+  "7539eda7-f3ae-46aa-b6f1-545fcec96280": {
+    "id": "7539eda7-f3ae-46aa-b6f1-545fcec96280",
+    "z": 5203,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-ecff874e-8e61-43f1-ba12-214516c283f5",
+    "parent": "6hlh"
+  },
+  "bd4f18d2-8a58-4210-a6fd-a61628660a27": {
+    "id": "bd4f18d2-8a58-4210-a6fd-a61628660a27",
+    "z": 9549,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-035908d9-2221-4eff-a23d-cb5da51a3f4b",
+    "parent": "6hlh"
+  },
+  "5beb17d1-de8f-4c0f-b16a-07bab463ba12": {
+    "id": "5beb17d1-de8f-4c0f-b16a-07bab463ba12",
+    "z": 5540,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-9cee7423-f765-4f1d-a97a-aa2c425ab143",
+    "parent": "6hlh"
+  },
+  "f73929ce-d69d-4e03-91f4-3317b9579ccf": {
+    "id": "f73929ce-d69d-4e03-91f4-3317b9579ccf",
+    "z": 3678,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-63fedd84-2258-4306-84ca-ab8d3a6ccfa7",
+    "parent": "6hlh"
+  },
+  "f73ceb64-d28a-4919-8024-26c146597c98": {
+    "id": "f73ceb64-d28a-4919-8024-26c146597c98",
+    "z": 9255,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-e40385da-815c-4d08-b965-fa4fa228db6c",
+    "parent": "6hlh"
+  },
+  "bf28f996-2c2f-43c8-b9fe-254b8be037d9": {
+    "id": "bf28f996-2c2f-43c8-b9fe-254b8be037d9",
+    "z": 2610,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-ecff874e-8e61-43f1-ba12-214516c283f5",
+    "parent": "6hlh"
+  },
+  "tileBag": {
+    "id": "tileBag",
+    "x": 815.5,
+    "y": 899.5,
+    "z": 9833,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 73,
+    "height": 73
+  },
+  "fcc3fa2c-c091-41bc-8737-54d8b9d3a929": {
+    "id": "fcc3fa2c-c091-41bc-8737-54d8b9d3a929",
+    "x": 908,
+    "y": 887,
+    "z": 3868,
+    "type": "button",
+    "text": "       2",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "value": "tileBag"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var dontShuffle = ${COUNT} >= 21",
+      {
+        "func": "SHUFFLE",
+        "holder": "discardPile",
+        "skip": "${dontShuffle}"
+      },
+      {
+        "func": "MOVE",
+        "from": "tileBag",
+        "to": "discardPile",
+        "count": 0,
+        "skip": "${dontShuffle}"
+      },
+      {
+        "func": "MOVE",
+        "from": "discardPile",
+        "to": "tileBag",
+        "count": 0,
+        "skip": "${dontShuffle}"
+      },
+      {
+        "func": "MOVE",
+        "from": "tileBag",
+        "to": [
+          "display01-01",
+          "display01-02",
+          "display01-03",
+          "display01-04",
+          "display02-01",
+          "display02-02",
+          "display02-03",
+          "display02-04",
+          "display03-01",
+          "display03-02",
+          "display03-03",
+          "display03-04",
+          "display04-01",
+          "display04-02",
+          "display04-03",
+          "display04-04",
+          "display05-01",
+          "display05-02",
+          "display05-03",
+          "display05-04"
+        ]
+      }
+    ],
+    "height": 50,
+    "image": "/assets/1444052474_484",
+    "css": "padding-bottom:31px;font-size:25px;text-align:left;background-position:25px;background-size:40%",
+    "width": 60,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "color": "white"
+  },
+  "c38e3f83-6800-4a59-a010-975e72dec10e": {
+    "id": "c38e3f83-6800-4a59-a010-975e72dec10e",
+    "z": 14515,
+    "type": "deck",
+    "cardTypes": {
+      "type-a186466c-5df5-48cb-af8a-f548eec94f14": {
+        "label": "1st Player",
+        "image": "/assets/1119165848_3749",
+        "image1": "/assets/1119165848_3749"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "valueType": "dynamic",
+            "value": "image1",
+            "width": 65,
+            "height": 65
+          }
+        ],
+        "border": false,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 65,
+            "height": 65
+          }
+        ],
+        "border": false,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 65,
+      "height": 65
+    },
+    "parent": "start-holder"
+  },
+  "e5b4b85d-bdf8-4c50-a7fc-54723a1b79d5": {
+    "id": "e5b4b85d-bdf8-4c50-a7fc-54723a1b79d5",
+    "z": 15434,
+    "type": "card",
+    "deck": "c38e3f83-6800-4a59-a010-975e72dec10e",
+    "cardType": "type-a186466c-5df5-48cb-af8a-f548eec94f14",
+    "parent": "start-holder"
+  },
+  "352de2df-1ef4-4284-a1a3-38595b4a8ac4_decrementButton": {
+    "id": "352de2df-1ef4-4284-a1a3-38595b4a8ac4_decrementButton",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "player1score",
+        "mode": "inc",
+        "value": -1
+      }
+    ],
+    "parent": "player1score"
+  },
+  "352de2df-1ef4-4284-a1a3-38595b4a8ac4_incrementButton": {
+    "id": "352de2df-1ef4-4284-a1a3-38595b4a8ac4_incrementButton",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "player1score",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "player1score"
+  },
+  "d3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton": {
+    "id": "d3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "player3score",
+        "mode": "inc",
+        "value": -1
+      }
+    ],
+    "parent": "player3score"
+  },
+  "d3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton": {
+    "id": "d3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "player3score",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "player3score"
+  },
+  "dc624dea-b2b3-4833-8066-96a683bf0b48_decrementButton": {
+    "id": "dc624dea-b2b3-4833-8066-96a683bf0b48_decrementButton",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "player2score",
+        "mode": "inc",
+        "value": -1
+      }
+    ],
+    "parent": "player2score"
+  },
+  "dc624dea-b2b3-4833-8066-96a683bf0b48_incrementButton": {
+    "id": "dc624dea-b2b3-4833-8066-96a683bf0b48_incrementButton",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "player2score",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "player2score"
+  },
+  "discardPile": {
+    "id": "discardPile",
+    "x": 690.5,
+    "y": 909.5,
+    "z": 9834,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 73,
+    "height": 73
+  },
+  "0rj7": {
+    "y": 402.5,
+    "z": 3878,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 516,
+    "height": 73,
+    "classes": "transparent",
+    "id": "0rj7",
+    "stackOffsetX": 73.83,
+    "x": 13
+  },
+  "n6mv": {
+    "x": 821.835,
+    "y": 402.5,
+    "z": 3880,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 516,
+    "height": 73,
+    "classes": "transparent",
+    "stackOffsetX": 73.83,
+    "id": "n6mv"
+  },
+  "k678": {
+    "y": 900.5,
+    "z": 3879,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 516,
+    "height": 73,
+    "classes": "transparent",
+    "stackOffsetX": 73.83,
+    "x": 13,
+    "id": "k678"
+  },
+  "i5tn": {
+    "x": 821.835,
+    "y": 316.5,
+    "z": 3882,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 368.33,
+    "height": 73,
+    "classes": "transparent",
+    "stackOffsetX": -73.83,
+    "id": "i5tn",
+    "dropOffsetX": 299.33
+  },
+  "5txv": {
+    "x": 895.665,
+    "y": 242.75,
+    "z": 3883,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 294.5,
+    "height": 73,
+    "classes": "transparent",
+    "stackOffsetX": -73.83,
+    "dropOffsetX": 225.5,
+    "id": "5txv"
+  },
+  "flko": {
+    "x": 969.505,
+    "y": 169,
+    "z": 3884,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 220.66,
+    "height": 73,
+    "classes": "transparent",
+    "stackOffsetX": -73.83,
+    "dropOffsetX": 151.66,
+    "id": "flko"
+  },
+  "f91b": {
+    "x": 1043.335,
+    "y": 95.25,
+    "z": 3885,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 146.83,
+    "height": 73,
+    "classes": "transparent",
+    "stackOffsetX": -73.83,
+    "dropOffsetX": 77.83,
+    "id": "f91b"
+  },
+  "19wi": {
+    "x": 1117.165,
+    "y": 21.5,
+    "z": 3888,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 73,
+    "height": 73,
+    "classes": "transparent",
+    "id": "19wi"
+  },
+  "i5tn-copy001": {
+    "x": 13,
+    "y": 316.5,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 368.33,
+    "height": 73,
+    "classes": "transparent",
+    "stackOffsetX": -73.83,
+    "id": "i5tn-copy001",
+    "dropOffsetX": 299.33,
+    "z": 9811
+  },
+  "5txv-copy001": {
+    "x": 86.82999999999998,
+    "y": 242.75,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 294.5,
+    "height": 73,
+    "classes": "transparent",
+    "stackOffsetX": -73.83,
+    "dropOffsetX": 225.5,
+    "id": "5txv-copy001",
+    "z": 9812
+  },
+  "flko-copy001": {
+    "x": 160.67,
+    "y": 169,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 220.66,
+    "height": 73,
+    "classes": "transparent",
+    "stackOffsetX": -73.83,
+    "dropOffsetX": 151.66,
+    "id": "flko-copy001",
+    "z": 9813
+  },
+  "f91b-copy001": {
+    "x": 234.49999999999997,
+    "y": 95.25,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 146.83,
+    "height": 73,
+    "classes": "transparent",
+    "stackOffsetX": -73.83,
+    "dropOffsetX": 77.83,
+    "id": "f91b-copy001",
+    "z": 9814
+  },
+  "19wi-copy001": {
+    "x": 308.33,
+    "y": 21.5,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 73,
+    "height": 73,
+    "classes": "transparent",
+    "id": "19wi-copy001",
+    "z": 9815
+  },
+  "i5tn-copy002": {
+    "x": 14,
+    "y": 817,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 368.33,
+    "height": 73,
+    "classes": "transparent",
+    "stackOffsetX": -73.83,
+    "id": "i5tn-copy002",
+    "dropOffsetX": 299.33,
+    "z": 9816
+  },
+  "5txv-copy002": {
+    "x": 87.82999999999993,
+    "y": 743.25,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 294.5,
+    "height": 73,
+    "classes": "transparent",
+    "stackOffsetX": -73.83,
+    "dropOffsetX": 225.5,
+    "id": "5txv-copy002",
+    "z": 9817
+  },
+  "flko-copy002": {
+    "x": 161.66999999999996,
+    "y": 669.5,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 220.66,
+    "height": 73,
+    "classes": "transparent",
+    "stackOffsetX": -73.83,
+    "dropOffsetX": 151.66,
+    "id": "flko-copy002",
+    "z": 9818
+  },
+  "f91b-copy002": {
+    "x": 235.5,
+    "y": 595.75,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 146.83,
+    "height": 73,
+    "classes": "transparent",
+    "stackOffsetX": -73.83,
+    "dropOffsetX": 77.83,
+    "id": "f91b-copy002",
+    "z": 9819
+  },
+  "19wi-copy002": {
+    "x": 309.3299999999999,
+    "y": 522,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 73,
+    "height": 73,
+    "classes": "transparent",
+    "id": "19wi-copy002",
+    "z": 9820
+  },
+  "9n2q": {
+    "x": 908,
+    "y": 939,
+    "z": 3867,
+    "type": "button",
+    "text": "       3",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "value": "tileBag"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var dontShuffle = ${COUNT} >= 29",
+      {
+        "func": "SHUFFLE",
+        "holder": "discardPile",
+        "skip": "${dontShuffle}"
+      },
+      {
+        "func": "MOVE",
+        "from": "tileBag",
+        "to": "discardPile",
+        "count": 0,
+        "skip": "${dontShuffle}"
+      },
+      {
+        "func": "MOVE",
+        "from": "discardPile",
+        "to": "tileBag",
+        "count": 0,
+        "skip": "${dontShuffle}"
+      },
+      {
+        "func": "MOVE",
+        "from": "tileBag",
+        "to": [
+          "display01-01",
+          "display01-02",
+          "display01-03",
+          "display01-04",
+          "display02-01",
+          "display02-02",
+          "display02-03",
+          "display02-04",
+          "display03-01",
+          "display03-02",
+          "display03-03",
+          "display03-04",
+          "display04-01",
+          "display04-02",
+          "display04-03",
+          "display04-04",
+          "display05-01",
+          "display05-02",
+          "display05-03",
+          "display05-04",
+          "display06-01",
+          "display06-02",
+          "display06-03",
+          "display06-04",
+          "display07-01",
+          "display07-02",
+          "display07-03",
+          "display07-04"
+        ]
+      }
+    ],
+    "id": "9n2q",
+    "height": 50,
+    "color": "white",
+    "css": "padding-bottom:31px;font-size:25px;text-align:left;background-position:25px;background-size:40%",
+    "image": "/assets/1444052474_484",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "width": 60
+  },
+  "grid001-1-1": {
+    "id": "grid001-1-1",
+    "x": 412.5,
+    "y": 24.5,
+    "z": 9823,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid001-1-2": {
+    "id": "grid001-1-2",
+    "x": 487.85,
+    "y": 25,
+    "z": 401,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid001-1-3": {
+    "id": "grid001-1-3",
+    "x": 561.7,
+    "y": 25,
+    "z": 402,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid001-1-4": {
+    "id": "grid001-1-4",
+    "x": 635.55,
+    "y": 25,
+    "z": 403,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid001-1-5": {
+    "id": "grid001-1-5",
+    "x": 709.4,
+    "y": 25,
+    "z": 404,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid001-2-1": {
+    "id": "grid001-2-1",
+    "x": 414,
+    "y": 98.85,
+    "z": 405,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid001-2-2": {
+    "id": "grid001-2-2",
+    "x": 487.85,
+    "y": 98.85,
+    "z": 406,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid001-2-3": {
+    "id": "grid001-2-3",
+    "x": 561.7,
+    "y": 98.85,
+    "z": 407,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid001-2-4": {
+    "id": "grid001-2-4",
+    "x": 635.55,
+    "y": 98.85,
+    "z": 408,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid001-2-5": {
+    "id": "grid001-2-5",
+    "x": 709.4,
+    "y": 98.85,
+    "z": 409,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid001-3-1": {
+    "id": "grid001-3-1",
+    "x": 414,
+    "y": 172.7,
+    "z": 410,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid001-3-2": {
+    "id": "grid001-3-2",
+    "x": 487.85,
+    "y": 172.7,
+    "z": 411,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid001-3-3": {
+    "id": "grid001-3-3",
+    "x": 561.7,
+    "y": 172.7,
+    "z": 412,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid001-3-4": {
+    "id": "grid001-3-4",
+    "x": 635.55,
+    "y": 172.7,
+    "z": 413,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid001-3-5": {
+    "id": "grid001-3-5",
+    "x": 709.4,
+    "y": 172.7,
+    "z": 414,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid001-4-1": {
+    "id": "grid001-4-1",
+    "x": 414,
+    "y": 246.54999999999998,
+    "z": 415,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid001-4-2": {
+    "id": "grid001-4-2",
+    "x": 487.85,
+    "y": 246.54999999999998,
+    "z": 416,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid001-4-3": {
+    "id": "grid001-4-3",
+    "x": 561.7,
+    "y": 246.54999999999998,
+    "z": 417,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid001-4-4": {
+    "id": "grid001-4-4",
+    "x": 635.55,
+    "y": 246.54999999999998,
+    "z": 418,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid001-4-5": {
+    "id": "grid001-4-5",
+    "x": 709.4,
+    "y": 246.54999999999998,
+    "z": 419,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid001-5-1": {
+    "id": "grid001-5-1",
+    "x": 414,
+    "y": 320.4,
+    "z": 420,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid001-5-2": {
+    "id": "grid001-5-2",
+    "x": 487.85,
+    "y": 320.4,
+    "z": 421,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid001-5-3": {
+    "id": "grid001-5-3",
+    "x": 561.7,
+    "y": 320.4,
+    "z": 422,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid001-5-4": {
+    "id": "grid001-5-4",
+    "x": 635.55,
+    "y": 320.4,
+    "z": 423,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid001-5-5": {
+    "id": "grid001-5-5",
+    "x": 709.4,
+    "y": 320.4,
+    "z": 424,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid002-1-1": {
+    "id": "grid002-1-1",
+    "x": 414,
+    "y": 524,
+    "z": 400,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid002-1-2": {
+    "id": "grid002-1-2",
+    "x": 487.85,
+    "y": 524,
+    "z": 401,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid002-1-3": {
+    "id": "grid002-1-3",
+    "x": 561.7,
+    "y": 524,
+    "z": 402,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid002-1-4": {
+    "id": "grid002-1-4",
+    "x": 635.55,
+    "y": 524,
+    "z": 403,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid002-1-5": {
+    "id": "grid002-1-5",
+    "x": 709.4,
+    "y": 524,
+    "z": 404,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid002-2-1": {
+    "id": "grid002-2-1",
+    "x": 414,
+    "y": 597.85,
+    "z": 405,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid002-2-2": {
+    "id": "grid002-2-2",
+    "x": 487.85,
+    "y": 597.85,
+    "z": 406,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid002-2-3": {
+    "id": "grid002-2-3",
+    "x": 561.7,
+    "y": 597.85,
+    "z": 407,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid002-2-4": {
+    "id": "grid002-2-4",
+    "x": 635.55,
+    "y": 597.85,
+    "z": 408,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid002-2-5": {
+    "id": "grid002-2-5",
+    "x": 709.4,
+    "y": 597.85,
+    "z": 409,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid002-3-1": {
+    "id": "grid002-3-1",
+    "x": 414,
+    "y": 671.7,
+    "z": 410,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid002-3-2": {
+    "id": "grid002-3-2",
+    "x": 487.85,
+    "y": 671.7,
+    "z": 411,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid002-3-3": {
+    "id": "grid002-3-3",
+    "x": 561.7,
+    "y": 671.7,
+    "z": 412,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid002-3-4": {
+    "id": "grid002-3-4",
+    "x": 635.55,
+    "y": 671.7,
+    "z": 413,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid002-3-5": {
+    "id": "grid002-3-5",
+    "x": 709.4,
+    "y": 671.7,
+    "z": 414,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid002-4-1": {
+    "id": "grid002-4-1",
+    "x": 414,
+    "y": 745.55,
+    "z": 415,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid002-4-2": {
+    "id": "grid002-4-2",
+    "x": 487.85,
+    "y": 745.55,
+    "z": 416,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid002-4-3": {
+    "id": "grid002-4-3",
+    "x": 561.7,
+    "y": 745.55,
+    "z": 417,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid002-4-4": {
+    "id": "grid002-4-4",
+    "x": 635.55,
+    "y": 745.55,
+    "z": 418,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid002-4-5": {
+    "id": "grid002-4-5",
+    "x": 709.4,
+    "y": 745.55,
+    "z": 419,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid002-5-1": {
+    "id": "grid002-5-1",
+    "x": 414,
+    "y": 819.4,
+    "z": 420,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid002-5-2": {
+    "id": "grid002-5-2",
+    "x": 487.85,
+    "y": 819.4,
+    "z": 421,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid002-5-3": {
+    "id": "grid002-5-3",
+    "x": 561.7,
+    "y": 819.4,
+    "z": 422,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid002-5-4": {
+    "id": "grid002-5-4",
+    "x": 635.55,
+    "y": 819.4,
+    "z": 423,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid002-5-5": {
+    "id": "grid002-5-5",
+    "x": 709.4,
+    "y": 819.4,
+    "z": 424,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid003-1-1": {
+    "id": "grid003-1-1",
+    "x": 1223,
+    "y": 25,
+    "z": 400,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid003-1-2": {
+    "id": "grid003-1-2",
+    "x": 1296.85,
+    "y": 25,
+    "z": 401,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid003-1-3": {
+    "id": "grid003-1-3",
+    "x": 1370.7,
+    "y": 25,
+    "z": 402,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid003-1-4": {
+    "id": "grid003-1-4",
+    "x": 1444.55,
+    "y": 25,
+    "z": 403,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid003-1-5": {
+    "id": "grid003-1-5",
+    "x": 1518.4,
+    "y": 25,
+    "z": 404,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid003-2-1": {
+    "id": "grid003-2-1",
+    "x": 1223,
+    "y": 98.85,
+    "z": 405,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid003-2-2": {
+    "id": "grid003-2-2",
+    "x": 1296.85,
+    "y": 98.85,
+    "z": 406,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid003-2-3": {
+    "id": "grid003-2-3",
+    "x": 1370.7,
+    "y": 98.85,
+    "z": 407,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid003-2-4": {
+    "id": "grid003-2-4",
+    "x": 1444.55,
+    "y": 98.85,
+    "z": 408,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid003-2-5": {
+    "id": "grid003-2-5",
+    "x": 1518.4,
+    "y": 98.85,
+    "z": 409,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid003-3-1": {
+    "id": "grid003-3-1",
+    "x": 1223,
+    "y": 172.7,
+    "z": 410,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid003-3-2": {
+    "id": "grid003-3-2",
+    "x": 1296.85,
+    "y": 172.7,
+    "z": 411,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid003-3-3": {
+    "id": "grid003-3-3",
+    "x": 1370.7,
+    "y": 172.7,
+    "z": 412,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid003-3-4": {
+    "id": "grid003-3-4",
+    "x": 1444.55,
+    "y": 172.7,
+    "z": 413,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid003-3-5": {
+    "id": "grid003-3-5",
+    "x": 1518.4,
+    "y": 172.7,
+    "z": 414,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid003-4-1": {
+    "id": "grid003-4-1",
+    "x": 1223,
+    "y": 246.54999999999998,
+    "z": 415,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid003-4-2": {
+    "id": "grid003-4-2",
+    "x": 1296.85,
+    "y": 246.54999999999998,
+    "z": 416,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid003-4-3": {
+    "id": "grid003-4-3",
+    "x": 1370.7,
+    "y": 246.54999999999998,
+    "z": 417,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid003-4-4": {
+    "id": "grid003-4-4",
+    "x": 1444.55,
+    "y": 246.54999999999998,
+    "z": 418,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid003-4-5": {
+    "id": "grid003-4-5",
+    "x": 1518.4,
+    "y": 246.54999999999998,
+    "z": 419,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid003-5-1": {
+    "id": "grid003-5-1",
+    "x": 1223,
+    "y": 320.4,
+    "z": 420,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid003-5-2": {
+    "id": "grid003-5-2",
+    "x": 1296.85,
+    "y": 320.4,
+    "z": 421,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid003-5-3": {
+    "id": "grid003-5-3",
+    "x": 1370.7,
+    "y": 320.4,
+    "z": 422,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid003-5-4": {
+    "id": "grid003-5-4",
+    "x": 1444.55,
+    "y": 320.4,
+    "z": 423,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid003-5-5": {
+    "id": "grid003-5-5",
+    "x": 1518.4,
+    "y": 320.4,
+    "z": 424,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "3xjz": {
+    "id": "3xjz",
+    "x": 773,
+    "y": 911,
+    "width": 40,
+    "height": 40,
+    "z": 3887,
+    "color": "gray",
+    "image": "/assets/1518437471_657",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "movable": false,
+    "layer": -1
+  },
+  "hsvo": {
+    "id": "hsvo",
+    "x": 647,
+    "y": 912,
+    "width": 40,
+    "height": 40,
+    "z": 3888,
+    "color": "gray",
+    "image": "/assets/-1632757686_1224",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "movable": false,
+    "layer": -1
+  },
+  "applyButton": {
+    "type": "button",
+    "id": "applyButton",
+    "x": -188,
+    "y": 68,
+    "z": 3878,
+    "clickRoutine": [
+      "var blueCol = ${row}",
+      "var yellowCol = ${row}",
+      "var redCol = ${row} + 1",
+      "var blackCol = ${row} + 2",
+      "var cyanCol = ${row} + 3",
+      "var yellowCol = ${yellowCol} % 5",
+      "var redCol = ${redCol} % 5",
+      "var blackCol = ${blackCol} % 5",
+      "var cyanCol = ${cyanCol} % 5",
+      "var yellowCol = ${yellowCol} + 1",
+      "var redCol = ${redCol} + 1",
+      "var blackCol = ${blackCol} + 1",
+      "var cyanCol = ${cyanCol} + 1",
+      "var max = 1",
+      {
+        "func": "IF",
+        "operand1": "${unlimited}",
+        "relation": "==",
+        "operand2": true,
+        "thenRoutine": [
+          "var max = 20"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "value": "${from}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "cardType",
+        "value": "type-035908d9-2221-4eff-a23d-cb5da51a3f4b",
+        "collection": "blue",
+        "max": "${max}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "cardType",
+        "value": "type-63fedd84-2258-4306-84ca-ab8d3a6ccfa7",
+        "collection": "yellow",
+        "max": "${max}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "cardType",
+        "value": "type-9cee7423-f765-4f1d-a97a-aa2c425ab143",
+        "collection": "red",
+        "max": "${max}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "cardType",
+        "value": "type-e40385da-815c-4d08-b965-fa4fa228db6c",
+        "collection": "black",
+        "max": "${max}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "cardType",
+        "value": "type-ecff874e-8e61-43f1-ba12-214516c283f5",
+        "collection": "cyan",
+        "max": "${max}"
+      },
+      {
+        "func": "SET",
+        "collection": "blue",
+        "value": "grid00${grid}-${row}-${blueCol}"
+      },
+      {
+        "func": "SET",
+        "collection": "yellow",
+        "value": "grid00${grid}-${row}-${yellowCol}"
+      },
+      {
+        "func": "SET",
+        "collection": "red",
+        "value": "grid00${grid}-${row}-${redCol}"
+      },
+      {
+        "func": "SET",
+        "collection": "black",
+        "value": "grid00${grid}-${row}-${blackCol}"
+      },
+      {
+        "func": "SET",
+        "collection": "cyan",
+        "value": "grid00${grid}-${row}-${cyanCol}"
+      },
+      {
+        "func": "MOVE",
+        "from": "${from}",
+        "to": "discardPile",
+        "count": 0
+      }
+    ]
+  },
+  "w5h0": {
+    "id": "w5h0",
+    "x": 382.66499999999996,
+    "y": 20,
+    "width": 30,
+    "z": 3875,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "applyButton",
+        "arguments": {
+          "from": "19wi-copy001",
+          "grid": 1,
+          "row": 1
+        }
+      }
+    ],
+    "height": 73,
+    "movable": false
+  },
+  "gca1": {
+    "id": "gca1",
+    "x": 382.66499999999996,
+    "y": 93.375,
+    "width": 30,
+    "height": 73,
+    "z": 3877,
+    "movable": false,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "applyButton",
+        "arguments": {
+          "from": "f91b-copy001",
+          "grid": 1,
+          "row": 2
+        }
+      }
+    ]
+  },
+  "rp7f": {
+    "id": "rp7f",
+    "x": 382.66499999999996,
+    "y": 166.75,
+    "width": 30,
+    "z": 3878,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "applyButton",
+        "arguments": {
+          "from": "flko-copy001",
+          "grid": 1,
+          "row": 3
+        }
+      }
+    ],
+    "height": 73,
+    "movable": false
+  },
+  "f82y": {
+    "id": "f82y",
+    "x": 382.66499999999996,
+    "y": 240.125,
+    "width": 30,
+    "z": 3879,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "applyButton",
+        "arguments": {
+          "from": "5txv-copy001",
+          "grid": 1,
+          "row": 4
+        }
+      }
+    ],
+    "height": 73,
+    "movable": false
+  },
+  "y7j0": {
+    "id": "y7j0",
+    "x": 382.66499999999996,
+    "y": 313.5,
+    "width": 30,
+    "z": 3880,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "applyButton",
+        "arguments": {
+          "from": "i5tn-copy001",
+          "grid": 1,
+          "row": 5
+        }
+      }
+    ],
+    "height": 73,
+    "movable": false
+  },
+  "w5h0-copy001": {
+    "id": "w5h0-copy001",
+    "x": 383.16499999999996,
+    "y": 520,
+    "width": 30,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "applyButton",
+        "arguments": {
+          "from": "19wi-copy002",
+          "grid": 2,
+          "row": 1
+        }
+      }
+    ],
+    "height": 73,
+    "movable": false,
+    "z": 9821
+  },
+  "gca1-copy001": {
+    "id": "gca1-copy001",
+    "x": 383.16499999999996,
+    "y": 593.25,
+    "width": 30,
+    "height": 73,
+    "movable": false,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "applyButton",
+        "arguments": {
+          "from": "f91b-copy002",
+          "grid": 2,
+          "row": 2
+        }
+      }
+    ],
+    "z": 9822
+  },
+  "rp7f-copy001": {
+    "id": "rp7f-copy001",
+    "x": 383.16499999999996,
+    "y": 666.5,
+    "width": 30,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "applyButton",
+        "arguments": {
+          "from": "flko-copy002",
+          "grid": 2,
+          "row": 3
+        }
+      }
+    ],
+    "height": 73,
+    "movable": false,
+    "z": 9823
+  },
+  "f82y-copy001": {
+    "id": "f82y-copy001",
+    "x": 383.16499999999996,
+    "y": 739.75,
+    "width": 30,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "applyButton",
+        "arguments": {
+          "from": "5txv-copy002",
+          "grid": 2,
+          "row": 4
+        }
+      }
+    ],
+    "height": 73,
+    "movable": false,
+    "z": 9824
+  },
+  "y7j0-copy001": {
+    "id": "y7j0-copy001",
+    "x": 383.16499999999996,
+    "y": 813,
+    "width": 30,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "applyButton",
+        "arguments": {
+          "from": "i5tn-copy002",
+          "grid": 2,
+          "row": 5
+        }
+      }
+    ],
+    "height": 73,
+    "movable": false,
+    "z": 9825
+  },
+  "w5h0-copy002": {
+    "id": "w5h0-copy002",
+    "x": 1191.5825,
+    "y": 22,
+    "width": 30,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "applyButton",
+        "arguments": {
+          "from": "19wi",
+          "grid": 3,
+          "row": 1
+        }
+      }
+    ],
+    "height": 73,
+    "movable": false,
+    "z": 9826
+  },
+  "gca1-copy002": {
+    "id": "gca1-copy002",
+    "x": 1191.5825,
+    "y": 95.25,
+    "width": 30,
+    "height": 73,
+    "movable": false,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "applyButton",
+        "arguments": {
+          "from": "f91b",
+          "grid": 3,
+          "row": 2
+        }
+      }
+    ],
+    "z": 9827
+  },
+  "rp7f-copy002": {
+    "id": "rp7f-copy002",
+    "x": 1191.5825,
+    "y": 168.5,
+    "width": 30,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "applyButton",
+        "arguments": {
+          "from": "flko",
+          "grid": 3,
+          "row": 3
+        }
+      }
+    ],
+    "height": 73,
+    "movable": false,
+    "z": 9828
+  },
+  "f82y-copy002": {
+    "id": "f82y-copy002",
+    "x": 1191.5825,
+    "y": 241.75,
+    "width": 30,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "applyButton",
+        "arguments": {
+          "from": "5txv",
+          "grid": 3,
+          "row": 4
+        }
+      }
+    ],
+    "height": 73,
+    "movable": false,
+    "z": 9829
+  },
+  "y7j0-copy002": {
+    "id": "y7j0-copy002",
+    "x": 1191.5825,
+    "y": 315,
+    "width": 30,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "applyButton",
+        "arguments": {
+          "from": "i5tn",
+          "grid": 3,
+          "row": 5
+        }
+      }
+    ],
+    "height": 73,
+    "movable": false,
+    "z": 9830
+  },
+  "_meta": {
+    "version": 3,
+    "info": {
+      "name": "Blue",
+      "image": "/assets/-303184187_2756",
+      "rules": "",
+      "bgg": "",
+      "year": "2017",
+      "mode": "vs",
+      "time": "30",
+      "players": "2-3",
+      "language": "UN",
+      "variant": "",
+      "attribution": "Artwork and initial game layout released as CC BY-NC by https://www.reddit.com/user/jaojins/.\n\nLayout adapted for VTT by ArnoldSmith86, with minor changes by LawDawg and more automation buttons added by jade-alarm: also CC BY-NC.",
+      "similarName": "Azul",
+      "similarLink": "https://boardgamegeek.com/boardgame/230802/azul",
+      "description": "Choose colored tiles to place on board in matching colors with extra points for specific patterns and sets.  Highest score wins."
+    }
+  },
+  "grid005-1-5": {
+    "id": "grid005-1-5",
+    "x": 1044.5,
+    "y": 592.5,
+    "z": 9826,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid005-1-1": {
+    "id": "grid005-1-1",
+    "x": 1122.5,
+    "y": 511.5,
+    "z": 9825,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "grid005-1-2": {
+    "type": "holder",
+    "id": "grid005-1-2",
+    "x": 1256.5,
+    "y": 560.5,
+    "width": 65,
+    "height": 65,
+    "z": 9827,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent",
+    "css": "border-radius:0",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "grid005-1-3": {
+    "type": "holder",
+    "id": "grid005-1-3",
+    "x": 1231.5,
+    "y": 693.5,
+    "width": 65,
+    "height": 65,
+    "z": 9828,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent",
+    "css": "border-radius:0",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "grid005-1-4": {
+    "type": "holder",
+    "id": "grid005-1-4",
+    "x": 1101.5,
+    "y": 693.5,
+    "width": 65,
+    "height": 65,
+    "z": 9829,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent",
+    "css": "border-radius:0",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "display01-02": {
+    "type": "holder",
+    "id": "display01-02",
+    "x": 1488.52,
+    "y": 436.3,
+    "width": 73,
+    "height": 73,
+    "z": 324,
+    "inheritChildZ": true,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent"
+  },
+  "display01-03": {
+    "type": "holder",
+    "id": "display01-03",
+    "x": 1410.19,
+    "y": 515.93,
+    "width": 73,
+    "height": 73,
+    "z": 882,
+    "inheritChildZ": true,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent"
+  },
+  "display01-01": {
+    "type": "holder",
+    "id": "display01-01",
+    "x": 1410.19,
+    "y": 436.3,
+    "width": 73,
+    "height": 73,
+    "z": 883,
+    "inheritChildZ": true,
+    "classes": "transparent"
+  },
+  "display01-04": {
+    "type": "holder",
+    "id": "display01-04",
+    "x": 1488.52,
+    "y": 515.93,
+    "width": 73,
+    "height": 73,
+    "z": 881,
+    "inheritChildZ": true,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent"
+  },
+  "display02-01": {
+    "type": "holder",
+    "id": "display02-01",
+    "x": 1410.19,
+    "y": 635.89,
+    "width": 73,
+    "height": 73,
+    "z": 903,
+    "inheritChildZ": true,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent"
+  },
+  "display02-02": {
+    "type": "holder",
+    "id": "display02-02",
+    "x": 1488.52,
+    "y": 635.89,
+    "width": 73,
+    "height": 73,
+    "z": 323,
+    "inheritChildZ": true,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent"
+  },
+  "display02-03": {
+    "type": "holder",
+    "id": "display02-03",
+    "x": 1410.19,
+    "y": 712.92,
+    "width": 73,
+    "height": 73,
+    "z": 904,
+    "inheritChildZ": true,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent"
+  },
+  "display02-04": {
+    "type": "holder",
+    "id": "display02-04",
+    "x": 1488.52,
+    "y": 712.92,
+    "width": 73,
+    "height": 73,
+    "z": 916,
+    "inheritChildZ": true,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent"
+  },
+  "display03-01": {
+    "type": "holder",
+    "id": "display03-01",
+    "x": 1410.19,
+    "y": 831.86,
+    "width": 73,
+    "height": 73,
+    "z": 936,
+    "inheritChildZ": true,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent"
+  },
+  "display03-02": {
+    "type": "holder",
+    "id": "display03-02",
+    "x": 1488.52,
+    "y": 831.86,
+    "width": 73,
+    "height": 73,
+    "z": 940,
+    "inheritChildZ": true,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent"
+  },
+  "display03-03": {
+    "type": "holder",
+    "id": "display03-03",
+    "x": 1410.19,
+    "y": 910.18,
+    "width": 73,
+    "height": 73,
+    "z": 938,
+    "inheritChildZ": true,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent"
+  },
+  "display03-04": {
+    "type": "holder",
+    "id": "display03-04",
+    "x": 1488.52,
+    "y": 910.18,
+    "width": 73,
+    "height": 73,
+    "z": 941,
+    "inheritChildZ": true,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent"
+  },
+  "display04-01": {
+    "type": "holder",
+    "id": "display04-01",
+    "x": 1209.14,
+    "y": 831.86,
+    "width": 73,
+    "height": 73,
+    "z": 933,
+    "inheritChildZ": true,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent"
+  },
+  "display04-02": {
+    "type": "holder",
+    "id": "display04-02",
+    "x": 1287.47,
+    "y": 831.86,
+    "width": 73,
+    "height": 73,
+    "z": 934,
+    "inheritChildZ": true,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent"
+  },
+  "display04-03": {
+    "type": "holder",
+    "id": "display04-03",
+    "x": 1209.14,
+    "y": 910.18,
+    "width": 73,
+    "height": 73,
+    "z": 321,
+    "inheritChildZ": true,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent"
+  },
+  "display04-04": {
+    "type": "holder",
+    "id": "display04-04",
+    "x": 1287.47,
+    "y": 910.18,
+    "width": 73,
+    "height": 73,
+    "z": 935,
+    "inheritChildZ": true,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent"
+  },
+  "display05-01": {
+    "type": "holder",
+    "id": "display05-01",
+    "x": 1010.7,
+    "y": 831.86,
+    "width": 73,
+    "height": 73,
+    "z": 930,
+    "inheritChildZ": true,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent"
+  },
+  "display05-02": {
+    "type": "holder",
+    "id": "display05-02",
+    "x": 1090.33,
+    "y": 831.86,
+    "width": 73,
+    "height": 73,
+    "z": 931,
+    "inheritChildZ": true,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent"
+  },
+  "display05-03": {
+    "type": "holder",
+    "id": "display05-03",
+    "x": 1010.7,
+    "y": 910.18,
+    "width": 73,
+    "height": 73,
+    "z": 320,
+    "inheritChildZ": true,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent"
+  },
+  "display05-04": {
+    "type": "holder",
+    "id": "display05-04",
+    "x": 1090.33,
+    "y": 910.18,
+    "width": 73,
+    "height": 73,
+    "z": 932,
+    "inheritChildZ": true,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent"
+  },
+  "display06-01": {
+    "type": "holder",
+    "id": "display06-01",
+    "x": 832.24,
+    "y": 701.69,
+    "width": 73,
+    "height": 73,
+    "z": 977,
+    "inheritChildZ": true,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent"
+  },
+  "display06-02": {
+    "type": "holder",
+    "id": "display06-02",
+    "x": 911.88,
+    "y": 701.69,
+    "width": 73,
+    "height": 73,
+    "z": 976,
+    "inheritChildZ": true,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent"
+  },
+  "display06-03": {
+    "type": "holder",
+    "id": "display06-03",
+    "x": 832.24,
+    "y": 781.32,
+    "width": 73,
+    "height": 73,
+    "z": 979,
+    "inheritChildZ": true,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent"
+  },
+  "display06-04": {
+    "type": "holder",
+    "id": "display06-04",
+    "x": 911.88,
+    "y": 781.32,
+    "width": 73,
+    "height": 73,
+    "z": 980,
+    "inheritChildZ": true,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent"
+  },
+  "display07-01": {
+    "type": "holder",
+    "id": "display07-01",
+    "x": 832.24,
+    "y": 516.94,
+    "width": 73,
+    "height": 73,
+    "z": 880,
+    "inheritChildZ": true,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent"
+  },
+  "display07-02": {
+    "type": "holder",
+    "id": "display07-02",
+    "x": 911.88,
+    "y": 516.94,
+    "width": 73,
+    "height": 73,
+    "z": 878,
+    "inheritChildZ": true,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent"
+  },
+  "display07-03": {
+    "type": "holder",
+    "id": "display07-03",
+    "x": 832.24,
+    "y": 597.86,
+    "width": 73,
+    "height": 73,
+    "z": 875,
+    "inheritChildZ": true,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent"
+  },
+  "display07-04": {
+    "type": "holder",
+    "id": "display07-04",
+    "x": 911.88,
+    "y": 597.86,
+    "width": 73,
+    "height": 73,
+    "z": 879,
+    "inheritChildZ": true,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent"
+  },
+  "c1727127-980d-464a-8f83-1fa029ad01f5": {
+    "id": "c1727127-980d-464a-8f83-1fa029ad01f5",
+    "z": 998,
+    "type": "card",
+    "deck": "a475d474-673d-4946-ba5b-83da8f98374b",
+    "cardType": "type-035908d9-2221-4eff-a23d-cb5da51a3f4b",
+    "parent": "6hlh"
+  },
+  "tmp-holder": {
+    "id": "tmp-holder",
+    "x": 1114.5,
+    "y": 582.5,
+    "z": 9830,
+    "type": "holder",
+    "width": 65,
+    "height": 65,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "css": "border-radius:0"
+  },
+  "1p21": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": [
+          "display01-01",
+          "display01-02",
+          "display01-03",
+          "display01-04"
+        ],
+        "to": "tmp-holder",
+        "count": 0
+      },
+      {
+        "func": "CALL",
+        "widget": "applyButton",
+        "arguments": {
+          "from": "tmp-holder",
+          "grid": 5,
+          "row": 1,
+          "unlimited": true
+        }
+      }
+    ],
+    "x": 1447,
+    "y": 475,
+    "z": 3880,
+    "id": "1p21",
+    "backgroundColor": "#808080",
+    "backgroundColorOH": "#aaaaaa",
+    "css": "border: none; ",
+    "text": "EMPTY"
+  },
+  "1p22": {
+    "type": "button",
+    "text": "EMPTY",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": [
+          "display02-01",
+          "display02-02",
+          "display02-03",
+          "display02-04"
+        ],
+        "to": "tmp-holder",
+        "count": 0
+      },
+      {
+        "func": "CALL",
+        "widget": "applyButton",
+        "arguments": {
+          "from": "tmp-holder",
+          "grid": 5,
+          "row": 1,
+          "unlimited": true
+        }
+      }
+    ],
+    "x": 1447,
+    "y": 673,
+    "z": 3881,
+    "id": "1p22",
+    "backgroundColor": "#808080",
+    "css": "border: none; ",
+    "backgroundColorOH": "#aaaaaa"
+  },
+  "1p23": {
+    "type": "button",
+    "text": "EMPTY",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": [
+          "display03-01",
+          "display03-02",
+          "display03-03",
+          "display03-04"
+        ],
+        "to": "tmp-holder",
+        "count": 0
+      },
+      {
+        "func": "CALL",
+        "widget": "applyButton",
+        "arguments": {
+          "from": "tmp-holder",
+          "grid": 5,
+          "row": 1,
+          "unlimited": true
+        }
+      }
+    ],
+    "x": 1447,
+    "y": 869,
+    "z": 3882,
+    "id": "1p23",
+    "css": "border: none; ",
+    "backgroundColor": "#808080",
+    "backgroundColorOH": "#aaaaaa"
+  },
+  "1p24": {
+    "type": "button",
+    "text": "EMPTY",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": [
+          "display04-01",
+          "display04-02",
+          "display04-03",
+          "display04-04"
+        ],
+        "to": "tmp-holder",
+        "count": 0
+      },
+      {
+        "func": "CALL",
+        "widget": "applyButton",
+        "arguments": {
+          "from": "tmp-holder",
+          "grid": 5,
+          "row": 1,
+          "unlimited": true
+        }
+      }
+    ],
+    "x": 1247,
+    "y": 869,
+    "z": 3883,
+    "id": "1p24",
+    "css": "border: none; ",
+    "backgroundColor": "#808080",
+    "backgroundColorOH": "#aaaaaa"
+  },
+  "1p25": {
+    "type": "button",
+    "text": "EMPTY",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": [
+          "display05-01",
+          "display05-02",
+          "display05-03",
+          "display05-04"
+        ],
+        "to": "tmp-holder",
+        "count": 0
+      },
+      {
+        "func": "CALL",
+        "widget": "applyButton",
+        "arguments": {
+          "from": "tmp-holder",
+          "grid": 5,
+          "row": 1,
+          "unlimited": true
+        }
+      }
+    ],
+    "x": 1048,
+    "y": 869,
+    "z": 3884,
+    "id": "1p25",
+    "css": "border: none; ",
+    "backgroundColor": "#808080",
+    "backgroundColorOH": "#aaaaaa"
+  },
+  "1p26": {
+    "type": "button",
+    "text": "EMPTY",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": [
+          "display06-01",
+          "display06-02",
+          "display06-03",
+          "display06-04"
+        ],
+        "to": "tmp-holder",
+        "count": 0
+      },
+      {
+        "func": "CALL",
+        "widget": "applyButton",
+        "arguments": {
+          "from": "tmp-holder",
+          "grid": 5,
+          "row": 1,
+          "unlimited": true
+        }
+      }
+    ],
+    "x": 870,
+    "y": 742,
+    "z": 3885,
+    "id": "1p26",
+    "css": "border: none; ",
+    "backgroundColor": "#808080",
+    "backgroundColorOH": "#aaaaaa"
+  },
+  "1p27": {
+    "type": "button",
+    "text": "EMPTY",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": [
+          "display07-01",
+          "display07-02",
+          "display07-03",
+          "display07-04"
+        ],
+        "to": "tmp-holder",
+        "count": 0
+      },
+      {
+        "func": "CALL",
+        "widget": "applyButton",
+        "arguments": {
+          "from": "tmp-holder",
+          "grid": 5,
+          "row": 1,
+          "unlimited": true
+        }
+      }
+    ],
+    "x": 870,
+    "y": 556,
+    "z": 3886,
+    "id": "1p27",
+    "css": "border: none; ",
+    "backgroundColor": "#808080",
+    "backgroundColorOH": "#aaaaaa"
+  },
+  "start-holder": {
+    "type": "holder",
+    "id": "start-holder",
+    "x": 1160.5,
+    "y": 607.5,
+    "width": 65,
+    "height": 65,
+    "z": 9832,
+    "movable": null,
+    "movableInEdit": null,
+    "css": "border-radius:0",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "6hlh": {
+    "type": "pile",
+    "parent": "tileBag",
+    "x": 4,
+    "y": 4,
+    "width": 65,
+    "height": 65,
+    "id": "6hlh"
+  },
+  "y7j0-copy2": {
+    "id": "y7j0-copy2",
+    "x": 530,
+    "y": 901.5,
+    "width": 30,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "value": "k678"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "cardType",
+        "value": "type-a186466c-5df5-48cb-af8a-f548eec94f14",
+        "collection": "start"
+      },
+      {
+        "func": "SET",
+        "collection": "start",
+        "value": "start-holder"
+      },
+      {
+        "func": "MOVE",
+        "from": "k678",
+        "to": "discardPile",
+        "count": 20
+      }
+    ],
+    "height": 73,
+    "movable": false,
+    "z": 9831
+  },
+  "y7j0-copy3": {
+    "id": "y7j0-copy3",
+    "x": 527,
+    "y": 405.5,
+    "width": 30,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "value": "0rj7"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "cardType",
+        "value": "type-a186466c-5df5-48cb-af8a-f548eec94f14",
+        "collection": "start"
+      },
+      {
+        "func": "SET",
+        "collection": "start",
+        "value": "start-holder"
+      },
+      {
+        "func": "MOVE",
+        "from": "0rj7",
+        "to": "discardPile",
+        "count": 20
+      }
+    ],
+    "height": 73,
+    "movable": false,
+    "z": 9832
+  },
+  "y7j0-copy4": {
+    "id": "y7j0-copy4",
+    "x": 1338,
+    "y": 402.5,
+    "width": 30,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "value": "n6mv"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "cardType",
+        "value": "type-a186466c-5df5-48cb-af8a-f548eec94f14",
+        "collection": "start"
+      },
+      {
+        "func": "SET",
+        "collection": "start",
+        "value": "start-holder"
+      },
+      {
+        "func": "MOVE",
+        "from": "n6mv",
+        "to": "discardPile",
+        "count": 20
+      }
+    ],
+    "height": 73,
+    "movable": false,
+    "z": 9834
+  },
+  "player1score": {
+    "type": "label",
+    "id": "player1score",
+    "x": 44.65,
+    "y": 53.56,
+    "width": 140,
+    "height": 44,
+    "z": 3560,
+    "movable": null,
+    "movableInEdit": null,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0
+  },
+  "player1": {
+    "type": "label",
+    "id": "player1",
+    "parent": "player1score",
+    "x": null,
+    "y": -40,
+    "width": 140,
+    "height": 35,
+    "movable": null,
+    "movableInEdit": false,
+    "css": "font-size:25px",
+    "editable": true,
+    "text": "1"
+  },
+  "player2score": {
+    "type": "label",
+    "id": "player2score",
+    "x": 852.75,
+    "y": 52.27,
+    "width": 140,
+    "height": 44,
+    "z": 3561,
+    "movable": null,
+    "movableInEdit": null,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0
+  },
+  "player2": {
+    "type": "label",
+    "id": "player2",
+    "parent": "player2score",
+    "x": null,
+    "y": -40,
+    "width": 140,
+    "height": 35,
+    "movable": null,
+    "movableInEdit": false,
+    "css": "font-size:25px",
+    "editable": true,
+    "text": "2"
+  },
+  "player3score": {
+    "type": "label",
+    "id": "player3score",
+    "x": 43.34,
+    "y": 549.65,
+    "width": 140,
+    "height": 44,
+    "z": 1014,
+    "movable": null,
+    "movableInEdit": null,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0
+  },
+  "player3": {
+    "type": "label",
+    "id": "player3",
+    "parent": "player3score",
+    "x": null,
+    "y": -40,
+    "width": 140,
+    "height": 35,
+    "movable": null,
+    "movableInEdit": false,
+    "css": "font-size:25px",
+    "editable": true,
+    "text": "3"
+  },
+  "reset_button": {
+    "type": "button",
+    "id": "reset_button",
+    "x": 599,
+    "y": 939,
+    "width": 40,
+    "height": 40,
+    "z": 3889,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Resetting game...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to reset the entire game. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "y7j0-copy3"
+      },
+      {
+        "func": "CALL",
+        "widget": "y7j0-copy4"
+      },
+      {
+        "func": "CALL",
+        "widget": "y7j0-copy2"
+      },
+      {
+        "func": "RECALL",
+        "holder": "tileBag"
+      },
+      {
+        "func": "FLIP",
+        "holder": "tileBag",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "tileBag"
+      },
+      {
+        "func": "LABEL",
+        "label": "player1score",
+        "mode": "set",
+        "value": 0
+      },
+      {
+        "func": "LABEL",
+        "label": "player2score",
+        "mode": "set",
+        "value": 0
+      },
+      {
+        "func": "LABEL",
+        "label": "player3score",
+        "mode": "set",
+        "value": 0
+      }
+    ],
+    "color": "white",
+    "css": "background-size:80%",
+    "image": "/assets/1342248376_1383",
+    "svgReplaces": {
+      "currentColor": "color"
+    }
+  },
+  "a7sz": {
+    "image": "/assets/2094015904_184759",
+    "movable": false,
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "id": "a7sz",
+    "movableInEdit": false
+  }
+}

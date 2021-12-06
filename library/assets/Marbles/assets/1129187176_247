@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+	<style>
+		tspan { white-space:pre }
+		.shp0 { fill: currentColor } 
+	</style>
+	<path id="Background" class="shp0" d="M0 0L200 0L200 200L0 200L0 0Z" />
+</svg>

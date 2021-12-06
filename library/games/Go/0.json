@@ -1,0 +1,8053 @@
+{
+  "fehm": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm",
+    "z": 1076,
+    "x": 8,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 294,
+    "parent": "black"
+  },
+  "33jj": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj",
+    "z": 695,
+    "x": 1,
+    "y": 127,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "parent": "white"
+  },
+  "fehm-copy001": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy001",
+    "x": 17,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 183,
+    "z": 1384,
+    "parent": "black"
+  },
+  "33jj-copy001": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy001",
+    "x": -47,
+    "y": 207,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1316,
+    "parent": "white"
+  },
+  "fehm-copy002": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy002",
+    "x": 41,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 256,
+    "z": 1402,
+    "parent": "black"
+  },
+  "33jj-copy002": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy002",
+    "y": 298,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1055,
+    "parent": "white",
+    "x": 76
+  },
+  "fehm-copy003": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy003",
+    "x": -20,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 145,
+    "z": 675,
+    "parent": "black"
+  },
+  "33jj-copy003": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy003",
+    "x": 62,
+    "y": 122,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1105,
+    "parent": "white"
+  },
+  "fehm-copy004": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy004",
+    "x": 30,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 12,
+    "z": 1258,
+    "parent": "black"
+  },
+  "33jj-copy004": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy004",
+    "y": 45,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1368,
+    "x": 23,
+    "parent": "white"
+  },
+  "fehm-copy005": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy005",
+    "x": 98,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 166,
+    "z": 1233,
+    "parent": "black"
+  },
+  "33jj-copy005": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy005",
+    "x": -25,
+    "y": 245,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1049,
+    "parent": "white"
+  },
+  "fehm-copy006": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy006",
+    "x": 57,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 456,
+    "z": 1268,
+    "parent": "black"
+  },
+  "33jj-copy006": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy006",
+    "x": -2,
+    "y": 439,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1290,
+    "parent": "white"
+  },
+  "fehm-copy007": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy007",
+    "x": 81,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 456,
+    "z": 1266,
+    "parent": "black"
+  },
+  "33jj-copy007": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy007",
+    "x": -18,
+    "y": 51,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1326,
+    "parent": "white"
+  },
+  "fehm-copy008": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy008",
+    "x": -22,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 283,
+    "z": 645,
+    "parent": "black"
+  },
+  "33jj-copy008": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy008",
+    "x": 10,
+    "y": 19,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1280,
+    "parent": "white"
+  },
+  "fehm-copy009": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy009",
+    "x": -27,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 273,
+    "z": 1276,
+    "parent": "black"
+  },
+  "33jj-copy009": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy009",
+    "x": 102,
+    "y": 399,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1310,
+    "parent": "white"
+  },
+  "fehm-copy010": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy010",
+    "x": 14,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 137,
+    "z": 643,
+    "parent": "black"
+  },
+  "33jj-copy010": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy010",
+    "x": 17,
+    "y": 64,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1039,
+    "parent": "white"
+  },
+  "33jj-copy011": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy011",
+    "x": 75,
+    "y": 350,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1037,
+    "parent": "white"
+  },
+  "fehm-copy012": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy012",
+    "x": 120,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 174,
+    "z": 1119,
+    "parent": "black"
+  },
+  "33jj-copy012": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy012",
+    "x": 68,
+    "y": 175,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1115,
+    "parent": "white"
+  },
+  "fehm-copy013": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy013",
+    "x": -24,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 265,
+    "z": 635,
+    "parent": "black"
+  },
+  "33jj-copy013": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy013",
+    "y": 91,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1070,
+    "parent": "white",
+    "x": 8
+  },
+  "fehm-copy014": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy014",
+    "x": -24,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 171,
+    "z": 681,
+    "parent": "black"
+  },
+  "33jj-copy014": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy014",
+    "x": -25,
+    "y": 121,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1031,
+    "parent": "white"
+  },
+  "fehm-copy015": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy015",
+    "x": 76,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 293,
+    "z": 631,
+    "parent": "black"
+  },
+  "33jj-copy015": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy015",
+    "x": 61,
+    "y": 117,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1029,
+    "parent": "white"
+  },
+  "fehm-copy016": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy016",
+    "x": -3,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 395,
+    "z": 1378,
+    "parent": "black"
+  },
+  "33jj-copy016": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy016",
+    "x": -40,
+    "y": 374,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1288,
+    "parent": "white"
+  },
+  "fehm-copy017": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy017",
+    "x": -19,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 388,
+    "z": 629,
+    "parent": "black"
+  },
+  "33jj-copy017": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy017",
+    "x": -36,
+    "y": 267,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1396,
+    "parent": "white"
+  },
+  "fehm-copy018": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy018",
+    "x": 98,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 148,
+    "z": 1196,
+    "parent": "black"
+  },
+  "33jj-copy018": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy018",
+    "y": 404,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1023,
+    "parent": "white",
+    "x": 61
+  },
+  "fehm-copy019": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy019",
+    "x": 9,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 167,
+    "z": 679,
+    "parent": "black"
+  },
+  "33jj-copy019": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy019",
+    "x": 61,
+    "y": 446,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1320,
+    "parent": "white"
+  },
+  "fehm-copy020": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy020",
+    "x": 108,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 271,
+    "z": 625,
+    "parent": "black"
+  },
+  "33jj-copy020": {
+    "0": " ",
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy020",
+    "x": -4,
+    "y": 276,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1392,
+    "parent": "white"
+  },
+  "fehm-copy021": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy021",
+    "x": 54,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 47,
+    "z": 624,
+    "parent": "black"
+  },
+  "33jj-copy021": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy021",
+    "x": 28,
+    "y": 425,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1294,
+    "parent": "white"
+  },
+  "fehm-copy022": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy022",
+    "x": 62,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 65,
+    "z": 623,
+    "parent": "black"
+  },
+  "33jj-copy022": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy022",
+    "x": 69,
+    "y": 465,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1306,
+    "parent": "white"
+  },
+  "fehm-copy023": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy023",
+    "x": 93,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 253,
+    "z": 622,
+    "parent": "black"
+  },
+  "33jj-copy023": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy023",
+    "x": 59,
+    "y": 235,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1011,
+    "parent": "white"
+  },
+  "fehm-copy024": {
+    "0": " ",
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy024",
+    "x": 3,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 74,
+    "z": 1231,
+    "parent": "black"
+  },
+  "33jj-copy024": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy024",
+    "x": 74,
+    "y": 15,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1318,
+    "parent": "white"
+  },
+  "fehm-copy025": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy025",
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 345,
+    "z": 1202,
+    "x": -5,
+    "parent": "black"
+  },
+  "33jj-copy025": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy025",
+    "x": 111,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1007,
+    "parent": "white",
+    "y": 212
+  },
+  "fehm-copy026": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy026",
+    "x": 92,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 219,
+    "z": 618,
+    "parent": "black"
+  },
+  "33jj-copy026": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy026",
+    "x": 21,
+    "y": 119,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1005,
+    "parent": "white"
+  },
+  "fehm-copy027": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy027",
+    "x": 70,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 291,
+    "z": 1159,
+    "parent": "black"
+  },
+  "33jj-copy027": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy027",
+    "x": 40,
+    "y": 434,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1298,
+    "parent": "white"
+  },
+  "fehm-copy028": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy028",
+    "x": 83,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 260,
+    "z": 1274,
+    "parent": "black"
+  },
+  "33jj-copy028": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy028",
+    "x": -2,
+    "y": 284,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1330,
+    "parent": "white"
+  },
+  "fehm-copy029": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy029",
+    "x": 85,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 323,
+    "z": 615,
+    "parent": "black"
+  },
+  "33jj-copy029": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy029",
+    "x": 3,
+    "y": 160,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 999,
+    "parent": "white"
+  },
+  "fehm-copy030": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy030",
+    "x": 25,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 117,
+    "z": 614,
+    "parent": "black"
+  },
+  "33jj-copy030": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy030",
+    "x": 87,
+    "y": 183,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1021,
+    "parent": "white"
+  },
+  "fehm-copy031": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy031",
+    "x": 31,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 186,
+    "z": 613,
+    "parent": "black"
+  },
+  "33jj-copy031": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy031",
+    "x": -19,
+    "y": 178,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 995,
+    "parent": "white"
+  },
+  "fehm-copy032": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy032",
+    "x": 7,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 74,
+    "z": 612,
+    "parent": "black"
+  },
+  "33jj-copy032": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy032",
+    "x": 120,
+    "y": 204,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 993,
+    "parent": "white"
+  },
+  "fehm-copy033": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy033",
+    "x": 90,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 209,
+    "z": 611,
+    "parent": "black"
+  },
+  "33jj-copy033": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy033",
+    "x": 30,
+    "y": 240,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1171,
+    "parent": "white"
+  },
+  "fehm-copy034": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy034",
+    "x": -14,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 145,
+    "z": 610,
+    "parent": "black"
+  },
+  "33jj-copy034": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy034",
+    "x": 56,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 989,
+    "parent": "white",
+    "y": 138
+  },
+  "fehm-copy035": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy035",
+    "x": 6,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 267,
+    "z": 609,
+    "parent": "black"
+  },
+  "33jj-copy035": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy035",
+    "x": 110,
+    "y": 367,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 987,
+    "parent": "white"
+  },
+  "fehm-copy036": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy036",
+    "x": 102,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 171,
+    "z": 608,
+    "parent": "black"
+  },
+  "33jj-copy036": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy036",
+    "x": 59,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 985,
+    "parent": "white",
+    "y": 212
+  },
+  "fehm-copy037": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy037",
+    "x": 79,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 216,
+    "z": 607,
+    "parent": "black"
+  },
+  "33jj-copy037": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy037",
+    "x": 22,
+    "y": 473,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1304,
+    "parent": "white"
+  },
+  "fehm-copy038": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy038",
+    "x": 111,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 79,
+    "z": 606,
+    "parent": "black"
+  },
+  "33jj-copy038": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy038",
+    "x": 51,
+    "y": 72,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 981,
+    "parent": "white"
+  },
+  "fehm-copy039": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy039",
+    "x": -10,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 90,
+    "z": 605,
+    "parent": "black"
+  },
+  "33jj-copy039": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy039",
+    "x": -7,
+    "y": 211,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1366,
+    "parent": "white"
+  },
+  "fehm-copy040": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy040",
+    "x": 90,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 239,
+    "z": 604,
+    "parent": "black"
+  },
+  "33jj-copy040": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy040",
+    "x": 49,
+    "y": 150,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 977,
+    "parent": "white"
+  },
+  "fehm-copy041": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy041",
+    "x": 106,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 398,
+    "z": 603,
+    "parent": "black"
+  },
+  "33jj-copy041": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy041",
+    "x": 7,
+    "y": 182,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 975,
+    "parent": "white"
+  },
+  "fehm-copy042": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy042",
+    "x": -22,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 64,
+    "z": 602,
+    "parent": "black"
+  },
+  "33jj-copy042": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy042",
+    "x": 106,
+    "y": 140,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 973,
+    "parent": "white"
+  },
+  "fehm-copy043": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy043",
+    "x": 12,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 59,
+    "z": 601,
+    "parent": "black"
+  },
+  "33jj-copy043": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy043",
+    "x": 65,
+    "y": 394,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 971,
+    "parent": "white"
+  },
+  "fehm-copy044": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy044",
+    "x": 117,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 221,
+    "z": 600,
+    "parent": "black"
+  },
+  "33jj-copy044": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy044",
+    "x": 61,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 969,
+    "parent": "white",
+    "y": 76
+  },
+  "fehm-copy045": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy045",
+    "x": 28,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 71,
+    "z": 599,
+    "parent": "black"
+  },
+  "33jj-copy045": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy045",
+    "y": 154,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 967,
+    "parent": "white",
+    "x": -23
+  },
+  "fehm-copy046": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy046",
+    "x": 42,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 275,
+    "z": 689,
+    "parent": "black"
+  },
+  "33jj-copy046": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy046",
+    "x": 61,
+    "y": 361,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 965,
+    "parent": "white"
+  },
+  "fehm-copy047": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy047",
+    "x": 92,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 399,
+    "z": 1380,
+    "parent": "black"
+  },
+  "33jj-copy047": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy047",
+    "x": -1,
+    "y": 243,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1370,
+    "parent": "white"
+  },
+  "fehm-copy048": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy048",
+    "x": 55,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 408,
+    "z": 596,
+    "parent": "black"
+  },
+  "33jj-copy048": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy048",
+    "y": 155,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1241,
+    "parent": "white",
+    "x": 106
+  },
+  "fehm-copy049": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy049",
+    "x": 55,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 18,
+    "z": 1260,
+    "parent": "black"
+  },
+  "33jj-copy049": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy049",
+    "x": 59,
+    "y": 123,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1215,
+    "parent": "white"
+  },
+  "fehm-copy050": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy050",
+    "x": 45,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 138,
+    "z": 594,
+    "parent": "black"
+  },
+  "33jj-copy050": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy050",
+    "x": 16,
+    "y": 435,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1302,
+    "parent": "white"
+  },
+  "fehm-copy051": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy051",
+    "x": 79,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 295,
+    "z": 593,
+    "parent": "black"
+  },
+  "33jj-copy051": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy051",
+    "y": 417,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 955,
+    "parent": "white",
+    "x": 47
+  },
+  "fehm-copy052": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy052",
+    "x": -5,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 210,
+    "z": 592,
+    "parent": "black"
+  },
+  "33jj-copy052": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy052",
+    "x": 9,
+    "y": 93,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 953,
+    "parent": "white"
+  },
+  "fehm-copy053": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy053",
+    "x": 4,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 276,
+    "z": 591,
+    "parent": "black"
+  },
+  "33jj-copy053": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy053",
+    "x": 59,
+    "y": 386,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1308,
+    "parent": "white"
+  },
+  "fehm-copy054": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy054",
+    "x": 51,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 408,
+    "z": 1382,
+    "parent": "black"
+  },
+  "33jj-copy054": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy054",
+    "x": 54,
+    "y": 172,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 949,
+    "parent": "white"
+  },
+  "fehm-copy055": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy055",
+    "x": 112,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 101,
+    "z": 589,
+    "parent": "black"
+  },
+  "33jj-copy055": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy055",
+    "x": 78,
+    "y": 202,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 947,
+    "parent": "white"
+  },
+  "fehm-copy056": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy056",
+    "x": 116,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 311,
+    "z": 1376,
+    "parent": "black"
+  },
+  "33jj-copy056": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy056",
+    "x": 34,
+    "y": 112,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 945,
+    "parent": "white"
+  },
+  "fehm-copy057": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy057",
+    "x": 62,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 207,
+    "z": 587,
+    "parent": "black"
+  },
+  "33jj-copy057": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy057",
+    "y": 278,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 943,
+    "parent": "white",
+    "x": 36
+  },
+  "fehm-copy058": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy058",
+    "x": 44,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 372,
+    "z": 586,
+    "parent": "black"
+  },
+  "33jj-copy058": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy058",
+    "x": 17,
+    "y": 281,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 941,
+    "parent": "white"
+  },
+  "fehm-copy059": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy059",
+    "x": 43,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 369,
+    "z": 585,
+    "parent": "black"
+  },
+  "33jj-copy059": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy059",
+    "x": 113,
+    "y": 121,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 939,
+    "parent": "white"
+  },
+  "fehm-copy060": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy060",
+    "x": 116,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 200,
+    "z": 584,
+    "parent": "black"
+  },
+  "33jj-copy060": {
+    "0": " ",
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy060",
+    "x": 37,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 937,
+    "parent": "white",
+    "y": 302
+  },
+  "fehm-copy061": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy061",
+    "x": -3,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 62,
+    "z": 583,
+    "parent": "black"
+  },
+  "33jj-copy061": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy061",
+    "x": 101,
+    "y": 151,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 933,
+    "parent": "white"
+  },
+  "fehm-copy062": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy062",
+    "x": 44,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 198,
+    "z": 582,
+    "parent": "black"
+  },
+  "33jj-copy062": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy062",
+    "x": 27,
+    "y": 142,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 931,
+    "parent": "white"
+  },
+  "fehm-copy063": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy063",
+    "x": 62,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 192,
+    "z": 581,
+    "parent": "black"
+  },
+  "33jj-copy063": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy063",
+    "x": 11,
+    "y": 361,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 929,
+    "parent": "white"
+  },
+  "fehm-copy064": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy064",
+    "x": 52,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 166,
+    "z": 580,
+    "parent": "black"
+  },
+  "33jj-copy064": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy064",
+    "x": 70,
+    "y": 290,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 927,
+    "parent": "white"
+  },
+  "fehm-copy065": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy065",
+    "x": 43,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 221,
+    "z": 579,
+    "parent": "black"
+  },
+  "33jj-copy065": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy065",
+    "x": 89,
+    "y": 347,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 925,
+    "parent": "white"
+  },
+  "fehm-copy066": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy066",
+    "x": 64,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 425,
+    "z": 1270,
+    "parent": "black"
+  },
+  "33jj-copy066": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy066",
+    "y": 18,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1282,
+    "x": 28,
+    "parent": "white"
+  },
+  "fehm-copy067": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy067",
+    "x": -15,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 357,
+    "z": 577,
+    "parent": "black"
+  },
+  "fehm-copy068": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy068",
+    "x": 44,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 379,
+    "z": 576,
+    "parent": "black"
+  },
+  "33jj-copy068": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy068",
+    "x": 89,
+    "y": 334,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 919,
+    "parent": "white"
+  },
+  "fehm-copy069": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy069",
+    "x": 101,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 103,
+    "z": 575,
+    "parent": "black"
+  },
+  "33jj-copy069": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy069",
+    "x": 47,
+    "y": 264,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 917,
+    "parent": "white"
+  },
+  "fehm-copy070": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy070",
+    "x": -3,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 418,
+    "z": 574,
+    "parent": "black"
+  },
+  "33jj-copy070": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy070",
+    "x": -13,
+    "y": 168,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 915,
+    "parent": "white"
+  },
+  "fehm-copy071": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy071",
+    "x": 17,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 143,
+    "z": 573,
+    "parent": "black"
+  },
+  "33jj-copy071": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy071",
+    "x": -23,
+    "y": 313,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 913,
+    "parent": "white"
+  },
+  "fehm-copy072": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy072",
+    "x": 80,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 365,
+    "z": 572,
+    "parent": "black"
+  },
+  "33jj-copy072": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy072",
+    "x": 91,
+    "y": 216,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 911,
+    "parent": "white"
+  },
+  "fehm-copy073": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy073",
+    "x": 61,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 3,
+    "z": 1262,
+    "parent": "black"
+  },
+  "33jj-copy073": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy073",
+    "x": 100,
+    "y": 246,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 909,
+    "parent": "white"
+  },
+  "fehm-copy074": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy074",
+    "x": 100,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 298,
+    "z": 570,
+    "parent": "black"
+  },
+  "33jj-copy074": {
+    "0": " ",
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy074",
+    "x": 19,
+    "y": 402,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1292,
+    "parent": "white"
+  },
+  "fehm-copy075": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy075",
+    "x": 104,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 233,
+    "z": 569,
+    "parent": "black"
+  },
+  "33jj-copy075": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy075",
+    "x": 82,
+    "y": 233,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 905,
+    "parent": "white"
+  },
+  "fehm-copy076": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy076",
+    "x": 103,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 331,
+    "z": 568,
+    "parent": "black"
+  },
+  "33jj-copy076": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy076",
+    "x": -29,
+    "y": 267,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 903,
+    "parent": "white"
+  },
+  "fehm-copy077": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy077",
+    "x": 18,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 373,
+    "z": 567,
+    "parent": "black"
+  },
+  "33jj-copy077": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy077",
+    "x": 63,
+    "y": 195,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 901,
+    "parent": "white"
+  },
+  "fehm-copy078": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy078",
+    "x": 24,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 246,
+    "z": 683,
+    "parent": "black"
+  },
+  "33jj-copy078": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy078",
+    "x": 93,
+    "y": 215,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 899,
+    "parent": "white"
+  },
+  "33jj-copy079": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy079",
+    "x": -26,
+    "y": 123,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 897,
+    "parent": "white"
+  },
+  "fehm-copy080": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy080",
+    "x": 5,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 43,
+    "z": 564,
+    "parent": "black"
+  },
+  "33jj-copy080": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy080",
+    "x": 47,
+    "y": 165,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 895,
+    "parent": "white"
+  },
+  "fehm-copy081": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy081",
+    "x": 39,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 41,
+    "z": 563,
+    "parent": "black"
+  },
+  "33jj-copy081": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy081",
+    "x": 68,
+    "y": 275,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 893,
+    "parent": "white"
+  },
+  "fehm-copy082": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy082",
+    "x": 41,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 259,
+    "z": 562,
+    "parent": "black"
+  },
+  "33jj-copy082": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy082",
+    "x": 21,
+    "y": 167,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 891,
+    "parent": "white"
+  },
+  "fehm-copy083": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy083",
+    "x": 67,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 249,
+    "z": 561,
+    "parent": "black"
+  },
+  "33jj-copy083": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy083",
+    "x": 44,
+    "y": 75,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 889,
+    "parent": "white"
+  },
+  "fehm-copy084": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy084",
+    "x": -12,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 216,
+    "z": 560,
+    "parent": "black"
+  },
+  "33jj-copy084": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy084",
+    "x": 93,
+    "y": 380,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 887,
+    "parent": "white"
+  },
+  "fehm-copy085": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy085",
+    "x": 28,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 133,
+    "z": 558,
+    "parent": "black"
+  },
+  "33jj-copy085": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy085",
+    "x": 80,
+    "y": 172,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 885,
+    "parent": "white"
+  },
+  "fehm-copy086": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy086",
+    "x": 77,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 274,
+    "z": 559,
+    "parent": "black"
+  },
+  "33jj-copy086": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy086",
+    "x": 28,
+    "y": 292,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 883,
+    "parent": "white"
+  },
+  "fehm-copy087": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy087",
+    "x": 111,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 144,
+    "z": 555,
+    "parent": "black"
+  },
+  "33jj-copy087": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy087",
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1278,
+    "x": 34,
+    "parent": "white"
+  },
+  "fehm-copy088": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy088",
+    "x": 61,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 215,
+    "z": 556,
+    "parent": "black"
+  },
+  "33jj-copy088": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy088",
+    "x": 94,
+    "y": 266,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 879,
+    "parent": "white"
+  },
+  "fehm-copy089": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy089",
+    "x": 36,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 344,
+    "z": 553,
+    "parent": "black"
+  },
+  "33jj-copy089": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy089",
+    "x": 44,
+    "y": 330,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 877,
+    "parent": "white"
+  },
+  "fehm-copy090": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy090",
+    "x": 89,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 267,
+    "z": 552,
+    "parent": "black"
+  },
+  "33jj-copy090": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy090",
+    "x": 90,
+    "y": 104,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 875,
+    "parent": "white"
+  },
+  "fehm-copy091": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy091",
+    "x": 21,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 332,
+    "z": 551,
+    "parent": "black"
+  },
+  "33jj-copy091": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy091",
+    "x": 98,
+    "y": 370,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 873,
+    "parent": "white"
+  },
+  "fehm-copy092": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy092",
+    "x": 31,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 87,
+    "z": 550,
+    "parent": "black"
+  },
+  "33jj-copy092": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy092",
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 871,
+    "parent": "white",
+    "y": 275,
+    "x": 65
+  },
+  "fehm-copy093": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy093",
+    "x": -23,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 379,
+    "z": 628,
+    "parent": "black"
+  },
+  "33jj-copy093": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy093",
+    "x": 75,
+    "y": 398,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 869,
+    "parent": "white"
+  },
+  "fehm-copy094": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy094",
+    "x": 38,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 390,
+    "z": 548,
+    "parent": "black"
+  },
+  "33jj-copy094": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy094",
+    "x": 59,
+    "y": 78,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 867,
+    "parent": "white"
+  },
+  "fehm-copy095": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy095",
+    "x": 43,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 238,
+    "z": 547,
+    "parent": "black"
+  },
+  "33jj-copy095": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy095",
+    "y": 142,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 865,
+    "parent": "white",
+    "x": 117
+  },
+  "fehm-copy096": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy096",
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 149,
+    "z": 546,
+    "parent": "black"
+  },
+  "33jj-copy096": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy096",
+    "x": 49,
+    "y": 86,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 863,
+    "parent": "white"
+  },
+  "fehm-copy097": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy097",
+    "x": 40,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 175,
+    "z": 545,
+    "parent": "black"
+  },
+  "33jj-copy097": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy097",
+    "x": -19,
+    "y": 81,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 861,
+    "parent": "white"
+  },
+  "fehm-copy098": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy098",
+    "x": 109,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 347,
+    "z": 544,
+    "parent": "black"
+  },
+  "33jj-copy098": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy098",
+    "x": 72,
+    "y": 73,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 859,
+    "parent": "white"
+  },
+  "fehm-copy099": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy099",
+    "x": 9,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 51,
+    "z": 543,
+    "parent": "black"
+  },
+  "33jj-copy099": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy099",
+    "x": 70,
+    "y": 255,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 857,
+    "parent": "white"
+  },
+  "fehm-copy100": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy100",
+    "x": -17,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 318,
+    "z": 542,
+    "parent": "black"
+  },
+  "33jj-copy100": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy100",
+    "x": 73,
+    "y": 370,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 855,
+    "parent": "white"
+  },
+  "fehm-copy101": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy101",
+    "x": 78,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 217,
+    "z": 541,
+    "parent": "black"
+  },
+  "33jj-copy101": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy101",
+    "x": 110,
+    "y": 129,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 853,
+    "parent": "white"
+  },
+  "fehm-copy102": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy102",
+    "x": 39,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 154,
+    "z": 540,
+    "parent": "black"
+  },
+  "33jj-copy102": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy102",
+    "x": 27,
+    "y": 259,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1394,
+    "parent": "white"
+  },
+  "fehm-copy103": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy103",
+    "x": 43,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 111,
+    "z": 539,
+    "parent": "black"
+  },
+  "33jj-copy103": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy103",
+    "x": -27,
+    "y": 143,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 849,
+    "parent": "white"
+  },
+  "fehm-copy104": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy104",
+    "x": 48,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 201,
+    "z": 538,
+    "parent": "black"
+  },
+  "33jj-copy104": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy104",
+    "x": -24,
+    "y": 162,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 847,
+    "parent": "white"
+  },
+  "fehm-copy105": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy105",
+    "x": 80,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 192,
+    "z": 537,
+    "parent": "black"
+  },
+  "33jj-copy105": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy105",
+    "x": -8,
+    "y": 219,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 845,
+    "parent": "white"
+  },
+  "fehm-copy106": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy106",
+    "x": -15,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 392,
+    "z": 536,
+    "parent": "black"
+  },
+  "33jj-copy106": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy106",
+    "x": 57,
+    "y": 291,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 843,
+    "parent": "white"
+  },
+  "fehm-copy107": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy107",
+    "x": 53,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 203,
+    "z": 535,
+    "parent": "black"
+  },
+  "33jj-copy107": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy107",
+    "x": 79,
+    "y": 335,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 841,
+    "parent": "white"
+  },
+  "fehm-copy108": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy108",
+    "x": 54,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 321,
+    "z": 534,
+    "parent": "black"
+  },
+  "33jj-copy108": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy108",
+    "x": -4,
+    "y": 275,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1404,
+    "parent": "white"
+  },
+  "fehm-copy109": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy109",
+    "x": 97,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 261,
+    "z": 533,
+    "parent": "black"
+  },
+  "33jj-copy109": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy109",
+    "x": 67,
+    "y": 178,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 837,
+    "parent": "white"
+  },
+  "fehm-copy110": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy110",
+    "x": 109,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 211,
+    "z": 532,
+    "parent": "black"
+  },
+  "33jj-copy110": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy110",
+    "x": 107,
+    "y": 283,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 835,
+    "parent": "white"
+  },
+  "fehm-copy111": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy111",
+    "x": -29,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 122,
+    "z": 531,
+    "parent": "black"
+  },
+  "33jj-copy111": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy111",
+    "y": 388,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 833,
+    "parent": "white",
+    "x": 80
+  },
+  "fehm-copy112": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy112",
+    "x": 85,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 370,
+    "z": 530,
+    "parent": "black"
+  },
+  "33jj-copy112": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy112",
+    "x": 74,
+    "y": 161,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 831,
+    "parent": "white"
+  },
+  "fehm-copy113": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy113",
+    "x": 21,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 164,
+    "z": 529,
+    "parent": "black"
+  },
+  "33jj-copy113": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy113",
+    "x": 35,
+    "y": 189,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 829,
+    "parent": "white"
+  },
+  "fehm-copy114": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy114",
+    "x": 111,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 215,
+    "z": 528,
+    "parent": "black"
+  },
+  "33jj-copy114": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy114",
+    "x": 40,
+    "y": 113,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 827,
+    "parent": "white"
+  },
+  "fehm-copy115": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy115",
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 185,
+    "z": 527,
+    "parent": "black",
+    "x": -20
+  },
+  "33jj-copy115": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy115",
+    "x": -27,
+    "y": 404,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 825,
+    "parent": "white"
+  },
+  "fehm-copy116": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy116",
+    "x": -26,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 251,
+    "z": 526,
+    "parent": "black"
+  },
+  "33jj-copy116": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy116",
+    "x": -11,
+    "y": 101,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 823,
+    "parent": "white"
+  },
+  "fehm-copy117": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy117",
+    "x": -4,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 97,
+    "z": 525,
+    "parent": "black"
+  },
+  "33jj-copy117": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy117",
+    "x": 116,
+    "y": 304,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 821,
+    "parent": "white"
+  },
+  "fehm-copy118": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy118",
+    "x": 103,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 42,
+    "z": 524,
+    "parent": "black"
+  },
+  "33jj-copy118": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy118",
+    "x": 116,
+    "y": 295,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 819,
+    "parent": "white"
+  },
+  "fehm-copy119": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy119",
+    "x": 33,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 356,
+    "z": 523,
+    "parent": "black"
+  },
+  "33jj-copy119": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy119",
+    "x": 4,
+    "y": 312,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 817,
+    "parent": "white"
+  },
+  "fehm-copy120": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy120",
+    "x": 113,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 115,
+    "z": 522,
+    "parent": "black"
+  },
+  "33jj-copy120": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy120",
+    "y": 378,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 815,
+    "parent": "white",
+    "x": 68
+  },
+  "fehm-copy121": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy121",
+    "x": 40,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 357,
+    "z": 521,
+    "parent": "black"
+  },
+  "33jj-copy121": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy121",
+    "x": 10,
+    "y": 245,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 813,
+    "parent": "white"
+  },
+  "fehm-copy122": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy122",
+    "x": 41,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 298,
+    "z": 520,
+    "parent": "black"
+  },
+  "33jj-copy122": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy122",
+    "x": 50,
+    "y": 121,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 811,
+    "parent": "white"
+  },
+  "fehm-copy123": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy123",
+    "x": -4,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 376,
+    "z": 519,
+    "parent": "black"
+  },
+  "33jj-copy123": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy123",
+    "x": 17,
+    "y": 80,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 809,
+    "parent": "white"
+  },
+  "fehm-copy124": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy124",
+    "x": 28,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 330,
+    "z": 518,
+    "parent": "black"
+  },
+  "33jj-copy124": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy124",
+    "x": -17,
+    "y": 227,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 807,
+    "parent": "white"
+  },
+  "fehm-copy125": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy125",
+    "x": 76,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 151,
+    "z": 517,
+    "parent": "black"
+  },
+  "33jj-copy125": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy125",
+    "x": -20,
+    "y": 76,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1322,
+    "parent": "white"
+  },
+  "fehm-copy126": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy126",
+    "x": 30,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 65,
+    "z": 516,
+    "parent": "black"
+  },
+  "33jj-copy126": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy126",
+    "x": 58,
+    "y": 419,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 803,
+    "parent": "white"
+  },
+  "fehm-copy127": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy127",
+    "x": -24,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 333,
+    "z": 515,
+    "parent": "black"
+  },
+  "33jj-copy127": {
+    "0": " ",
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy127",
+    "x": 74,
+    "y": 249,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 801,
+    "parent": "white"
+  },
+  "fehm-copy128": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy128",
+    "x": -11,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 65,
+    "z": 514,
+    "parent": "black"
+  },
+  "33jj-copy128": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy128",
+    "x": 79,
+    "y": 195,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 799,
+    "parent": "white"
+  },
+  "fehm-copy129": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy129",
+    "x": 75,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 327,
+    "z": 513,
+    "parent": "black"
+  },
+  "33jj-copy129": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy129",
+    "x": 41,
+    "y": 58,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 797,
+    "parent": "white"
+  },
+  "fehm-copy130": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy130",
+    "x": 93,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 325,
+    "z": 512,
+    "parent": "black"
+  },
+  "33jj-copy130": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy130",
+    "x": 91,
+    "y": 304,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 795,
+    "parent": "white"
+  },
+  "fehm-copy131": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy131",
+    "x": 51,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 219,
+    "z": 511,
+    "parent": "black"
+  },
+  "33jj-copy131": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy131",
+    "y": 314,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 793,
+    "parent": "white",
+    "x": 30
+  },
+  "fehm-copy132": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy132",
+    "x": 23,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 333,
+    "z": 510,
+    "parent": "black"
+  },
+  "33jj-copy132": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy132",
+    "x": 29,
+    "y": 54,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 791,
+    "parent": "white"
+  },
+  "fehm-copy133": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy133",
+    "x": 25,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 89,
+    "z": 509,
+    "parent": "black"
+  },
+  "33jj-copy133": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy133",
+    "x": 81,
+    "y": 328,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 789,
+    "parent": "white"
+  },
+  "fehm-copy134": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy134",
+    "x": -22,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 347,
+    "z": 508,
+    "parent": "black"
+  },
+  "33jj-copy134": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy134",
+    "x": 61,
+    "y": 379,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 787,
+    "parent": "white"
+  },
+  "fehm-copy135": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy135",
+    "x": 92,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 41,
+    "z": 507,
+    "parent": "black"
+  },
+  "33jj-copy135": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy135",
+    "x": 16,
+    "y": 241,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 785,
+    "parent": "white"
+  },
+  "fehm-copy136": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy136",
+    "x": -30,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 240,
+    "z": 506,
+    "parent": "black"
+  },
+  "33jj-copy136": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy136",
+    "x": 31,
+    "y": 302,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 783,
+    "parent": "white"
+  },
+  "fehm-copy137": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy137",
+    "x": 22,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 417,
+    "z": 505,
+    "parent": "black"
+  },
+  "33jj-copy137": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy137",
+    "x": 13,
+    "y": 205,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 781,
+    "parent": "white"
+  },
+  "fehm-copy138": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy138",
+    "x": 30,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 44,
+    "z": 504,
+    "parent": "black"
+  },
+  "33jj-copy138": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy138",
+    "x": 59,
+    "y": 269,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 779,
+    "parent": "white"
+  },
+  "fehm-copy139": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy139",
+    "x": 30,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 278,
+    "z": 503,
+    "parent": "black"
+  },
+  "33jj-copy139": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy139",
+    "x": -13,
+    "y": 126,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 777,
+    "parent": "white"
+  },
+  "fehm-copy140": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy140",
+    "x": 16,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 335,
+    "z": 502,
+    "parent": "black"
+  },
+  "33jj-copy140": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy140",
+    "x": 31,
+    "y": 273,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 775,
+    "parent": "white"
+  },
+  "fehm-copy141": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy141",
+    "x": 16,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 189,
+    "z": 501,
+    "parent": "black"
+  },
+  "33jj-copy141": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy141",
+    "x": 8,
+    "y": 105,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 773,
+    "parent": "white"
+  },
+  "fehm-copy142": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy142",
+    "x": -17,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 350,
+    "z": 500,
+    "parent": "black"
+  },
+  "33jj-copy142": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy142",
+    "y": 77,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 771,
+    "parent": "white",
+    "x": 30
+  },
+  "fehm-copy143": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy143",
+    "x": 53,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 86,
+    "z": 499,
+    "parent": "black"
+  },
+  "33jj-copy143": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy143",
+    "x": 43,
+    "y": 195,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 769,
+    "parent": "white"
+  },
+  "fehm-copy144": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy144",
+    "x": 93,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 225,
+    "z": 498,
+    "parent": "black"
+  },
+  "33jj-copy144": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy144",
+    "x": 25,
+    "y": 380,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 767,
+    "parent": "white"
+  },
+  "fehm-copy145": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy145",
+    "x": 12,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 456,
+    "z": 1264,
+    "parent": "black"
+  },
+  "33jj-copy145": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy145",
+    "x": 103,
+    "y": 280,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 765,
+    "parent": "white"
+  },
+  "fehm-copy146": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy146",
+    "x": -16,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 75,
+    "z": 495,
+    "parent": "black"
+  },
+  "33jj-copy146": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy146",
+    "x": -29,
+    "y": 232,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 763,
+    "parent": "white"
+  },
+  "fehm-copy147": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy147",
+    "x": 36,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 103,
+    "z": 494,
+    "parent": "black"
+  },
+  "33jj-copy147": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy147",
+    "x": -3,
+    "y": 169,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 761,
+    "parent": "white"
+  },
+  "fehm-copy148": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy148",
+    "x": 42,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 140,
+    "z": 493,
+    "parent": "black"
+  },
+  "33jj-copy148": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy148",
+    "x": 34,
+    "y": 420,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 759,
+    "parent": "white"
+  },
+  "fehm-copy149": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy149",
+    "x": 113,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 297,
+    "z": 491,
+    "parent": "black"
+  },
+  "33jj-copy149": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy149",
+    "x": 50,
+    "y": 327,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 757,
+    "parent": "white"
+  },
+  "fehm-copy150": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy150",
+    "x": 104,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 418,
+    "z": 490,
+    "parent": "black"
+  },
+  "33jj-copy150": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy150",
+    "x": -23,
+    "y": 304,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 755,
+    "parent": "white"
+  },
+  "fehm-copy151": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy151",
+    "x": 118,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 85,
+    "z": 489,
+    "parent": "black"
+  },
+  "33jj-copy151": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy151",
+    "x": -25,
+    "y": 286,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 753,
+    "parent": "white"
+  },
+  "fehm-copy152": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy152",
+    "x": 31,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 207,
+    "z": 488,
+    "parent": "black"
+  },
+  "33jj-copy152": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy152",
+    "x": 83,
+    "y": 420,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 751,
+    "parent": "white"
+  },
+  "fehm-copy153": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy153",
+    "x": 71,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 84,
+    "z": 487,
+    "parent": "black"
+  },
+  "33jj-copy153": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy153",
+    "x": 120,
+    "y": 312,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 749,
+    "parent": "white"
+  },
+  "fehm-copy154": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy154",
+    "x": -29,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 260,
+    "z": 486,
+    "parent": "black"
+  },
+  "33jj-copy154": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy154",
+    "x": 125,
+    "y": 238,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 1324,
+    "parent": "white"
+  },
+  "fehm-copy155": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy155",
+    "x": 8,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 397,
+    "z": 485,
+    "parent": "black"
+  },
+  "33jj-copy155": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy155",
+    "x": 71,
+    "y": 315,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 745,
+    "parent": "white"
+  },
+  "fehm-copy156": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy156",
+    "x": -20,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 159,
+    "z": 484,
+    "parent": "black"
+  },
+  "33jj-copy156": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy156",
+    "x": 77,
+    "y": 348,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 743,
+    "parent": "white"
+  },
+  "fehm-copy157": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy157",
+    "x": 79,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 337,
+    "z": 483,
+    "parent": "black"
+  },
+  "33jj-copy157": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy157",
+    "x": -13,
+    "y": 83,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 741,
+    "parent": "white"
+  },
+  "fehm-copy158": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy158",
+    "x": 32,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 76,
+    "z": 482,
+    "parent": "black"
+  },
+  "33jj-copy158": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy158",
+    "x": 20,
+    "y": 252,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 739,
+    "parent": "white"
+  },
+  "fehm-copy159": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy159",
+    "x": 1,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 350,
+    "z": 481,
+    "parent": "black"
+  },
+  "33jj-copy159": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy159",
+    "x": 109,
+    "y": 322,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 737,
+    "parent": "white"
+  },
+  "fehm-copy160": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy160",
+    "x": 62,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 119,
+    "z": 480,
+    "parent": "black"
+  },
+  "33jj-copy160": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy160",
+    "y": 145,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 735,
+    "parent": "white",
+    "x": 48
+  },
+  "fehm-copy161": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy161",
+    "x": 23,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 358,
+    "z": 479,
+    "parent": "black"
+  },
+  "33jj-copy161": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy161",
+    "x": -11,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 733,
+    "parent": "white",
+    "y": 262
+  },
+  "fehm-copy162": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy162",
+    "x": 103,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 235,
+    "z": 478,
+    "parent": "black"
+  },
+  "33jj-copy162": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy162",
+    "x": 15,
+    "y": 48,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 731,
+    "parent": "white"
+  },
+  "fehm-copy163": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy163",
+    "x": 25,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 383,
+    "z": 477,
+    "parent": "black"
+  },
+  "33jj-copy163": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy163",
+    "x": 90,
+    "y": 166,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 729,
+    "parent": "white"
+  },
+  "fehm-copy164": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy164",
+    "x": 77,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 359,
+    "z": 476,
+    "parent": "black"
+  },
+  "33jj-copy164": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy164",
+    "y": 57,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 727,
+    "parent": "white",
+    "x": 24
+  },
+  "fehm-copy165": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy165",
+    "x": 2,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 193,
+    "z": 475,
+    "parent": "black"
+  },
+  "33jj-copy165": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy165",
+    "x": 2,
+    "y": 341,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 725,
+    "parent": "white"
+  },
+  "fehm-copy166": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy166",
+    "x": 119,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 296,
+    "z": 474,
+    "parent": "black"
+  },
+  "33jj-copy166": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy166",
+    "x": 13,
+    "y": 331,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 723,
+    "parent": "white"
+  },
+  "fehm-copy167": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy167",
+    "x": 20,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 108,
+    "z": 473,
+    "parent": "black"
+  },
+  "33jj-copy167": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy167",
+    "x": 17,
+    "y": 177,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 721,
+    "parent": "white"
+  },
+  "fehm-copy168": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy168",
+    "x": -28,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 346,
+    "z": 472,
+    "parent": "black"
+  },
+  "33jj-copy168": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy168",
+    "x": 32,
+    "y": 131,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 719,
+    "parent": "white"
+  },
+  "fehm-copy169": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy169",
+    "x": 14,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 286,
+    "z": 471,
+    "parent": "black"
+  },
+  "33jj-copy169": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy169",
+    "x": 60,
+    "y": 40,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 717,
+    "parent": "white"
+  },
+  "fehm-copy170": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy170",
+    "x": 116,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 365,
+    "z": 470,
+    "parent": "black"
+  },
+  "33jj-copy170": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy170",
+    "x": -1,
+    "y": 350,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 715,
+    "parent": "white"
+  },
+  "fehm-copy171": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy171",
+    "x": 65,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 179,
+    "z": 468,
+    "parent": "black"
+  },
+  "33jj-copy171": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy171",
+    "y": 364,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 713,
+    "parent": "white",
+    "x": 51
+  },
+  "fehm-copy172": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy172",
+    "x": 16,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 124,
+    "z": 467,
+    "parent": "black"
+  },
+  "33jj-copy172": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy172",
+    "x": 75,
+    "y": 364,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 711,
+    "parent": "white"
+  },
+  "fehm-copy173": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy173",
+    "x": -27,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 183,
+    "z": 466,
+    "parent": "black"
+  },
+  "33jj-copy173": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy173",
+    "x": 36,
+    "y": 213,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 709,
+    "parent": "white"
+  },
+  "fehm-copy174": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy174",
+    "x": -2,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 154,
+    "z": 465,
+    "parent": "black"
+  },
+  "33jj-copy174": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy174",
+    "x": 51,
+    "y": 385,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 707,
+    "parent": "white"
+  },
+  "fehm-copy175": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy175",
+    "x": 37,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 154,
+    "z": 464,
+    "parent": "black"
+  },
+  "33jj-copy175": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy175",
+    "y": 147,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 705,
+    "parent": "white",
+    "x": 115
+  },
+  "fehm-copy176": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy176",
+    "x": 33,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 296,
+    "z": 463,
+    "parent": "black"
+  },
+  "33jj-copy176": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy176",
+    "x": 20,
+    "y": 58,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 703,
+    "parent": "white"
+  },
+  "fehm-copy177": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy177",
+    "x": -4,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 392,
+    "z": 462,
+    "parent": "black"
+  },
+  "33jj-copy177": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy177",
+    "x": -15,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 701,
+    "parent": "white",
+    "y": 149
+  },
+  "fehm-copy178": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy178",
+    "x": -11,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 182,
+    "z": 461,
+    "parent": "black"
+  },
+  "33jj-copy178": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy178",
+    "x": -9,
+    "y": 100,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 699,
+    "parent": "white"
+  },
+  "fehm-copy179": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy179",
+    "x": 87,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 237,
+    "z": 460,
+    "parent": "black"
+  },
+  "33jj-copy179": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy179",
+    "x": 84,
+    "y": 176,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 697,
+    "parent": "white"
+  },
+  "fehm-copy180": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy180",
+    "x": -10,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 406,
+    "z": 459,
+    "parent": "black"
+  },
+  "33jj-copy180": {
+    "image": "/assets/542605236_32142",
+    "id": "33jj-copy180",
+    "x": 114,
+    "y": 127,
+    "scale": 0.55,
+    "faces": " ",
+    "piece": "white",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "z": 693,
+    "parent": "white"
+  },
+  "fehm-copy181": {
+    "image": "/assets/558528890_40912",
+    "id": "fehm-copy181",
+    "x": 46,
+    "faces": " ",
+    "scale": 0.55,
+    "piece": "black",
+    "grid": [
+      {
+        "x": 46.5,
+        "y": 45,
+        "minX": 280,
+        "maxX": 1230,
+        "offsetX": 30,
+        "offsetY": -16
+      }
+    ],
+    "y": 321,
+    "z": 687,
+    "parent": "black"
+  },
+  "black": {
+    "image": "/assets/1885401927_2961",
+    "id": "black",
+    "x": 92,
+    "y": 90,
+    "z": 1771,
+    "type": "holder",
+    "css": "background:transparent;border-radius:100px",
+    "width": 170,
+    "height": 550,
+    "dropTarget": {
+      "piece": "black"
+    },
+    "classes": "transparent",
+    "alignChildren": false
+  },
+  "white": {
+    "image": "/assets/1885401927_2961",
+    "x": 1343,
+    "y": 90,
+    "z": 1772,
+    "type": "holder",
+    "css": "background:transparent;border-radius:100px",
+    "width": 170,
+    "height": 550,
+    "dropTarget": {
+      "piece": "white"
+    },
+    "classes": "transparent",
+    "alignChildren": false,
+    "id": "white"
+  },
+  "Whitecapture": {
+    "image": "/assets/1885401927_2961",
+    "x": 91,
+    "y": 709,
+    "z": 1774,
+    "type": "holder",
+    "css": "background:transparent;border-radius:100px",
+    "width": 170,
+    "height": 170,
+    "dropTarget": {
+      "piece": "white"
+    },
+    "classes": "transparent",
+    "alignChildren": false,
+    "id": "Whitecapture",
+    "enterRoutine": [
+      {
+        "func": "LABEL",
+        "label": "Countwhite",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "sumWhite"
+      },
+      {
+        "func": "CLICK"
+      }
+    ]
+  },
+  "Blackcapture": {
+    "image": "/assets/1885401927_2961",
+    "x": 1338,
+    "y": 702,
+    "z": 1775,
+    "type": "holder",
+    "css": "background:transparent;border-radius:100px",
+    "width": 170,
+    "height": 170,
+    "dropTarget": {
+      "piece": "black"
+    },
+    "classes": "transparent",
+    "alignChildren": false,
+    "id": "Blackcapture",
+    "enterRoutine": [
+      {
+        "func": "LABEL",
+        "label": "Countblack",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "sumBlack"
+      },
+      {
+        "func": "CLICK"
+      }
+    ]
+  },
+  "dtv3": {
+    "type": "button",
+    "text": "13 x 13",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "13board"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "19board"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 1100
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "9board"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 1100
+      }
+    ],
+    "z": 14,
+    "css": "background-color:brown; color:white; border-style: none; font-size: 15px",
+    "width": 80,
+    "height": 32,
+    "id": "dtv3",
+    "x": 756.5,
+    "y": 4
+  },
+  "9zbc": {
+    "type": "button",
+    "text": "9 x 9",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "9board"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "13board"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 1100
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "19board"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 1100
+      }
+    ],
+    "z": 18,
+    "css": "background-color:brown; color:white; border-style: none; font-size: 15px",
+    "width": 80,
+    "height": 32,
+    "x": 854,
+    "y": 4,
+    "id": "9zbc"
+  },
+  "6kjl": {
+    "type": "button",
+    "text": "19 x 19",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "19board"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "13board"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 1100
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "9board"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 1100
+      }
+    ],
+    "z": 17,
+    "css": "background-color:brown; color:white; border-style: none; font-size: 15px",
+    "width": 80,
+    "height": 32,
+    "x": 659,
+    "y": 4,
+    "id": "6kjl"
+  },
+  "9board": {
+    "image": "/assets/-1607755917_546984",
+    "movable": false,
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "id": "9board",
+    "z": 20,
+    "x": 0,
+    "movableInEdit": false,
+    "y": 1100
+  },
+  "19board": {
+    "image": "/assets/-1994476706_534993",
+    "movable": false,
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "z": 16,
+    "id": "19board",
+    "movableInEdit": false
+  },
+  "13board": {
+    "image": "/assets/-1964005091_533532",
+    "movable": false,
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "id": "13board",
+    "z": 19,
+    "x": 0,
+    "movableInEdit": false,
+    "y": 1100
+  },
+  "_meta": {
+    "version": 3,
+    "info": {
+      "name": "Go",
+      "image": "/assets/1192414565_96702",
+      "rules": "https://www.britgo.org/intro/intro2.html",
+      "bgg": "https://www.boardgamegeek.com/boardgame/188/go",
+      "year": "-2200",
+      "mode": "vs",
+      "time": "60",
+      "players": "2",
+      "language": "UN",
+      "variant": "",
+      "attribution": "The library image by Kendrick has been cropped.  It is from https://www.flickr.com/photos/shrimphead/2259353414/ and is available under a CC BY-NC-SA 2.0 license.\n\nThe scroll border on smaller boards is in the Public Domain and is available at https://publicdomainvectors.org.\n\nThe game layout, game board, and game piece designs were done by https://www.reddit.com/user/96LawDawg and are released to the Public Domain.",
+      "similarName": "Go",
+      "similarLink": "https://boardgamegeek.com/boardgame/188/go",
+      "description": "Classic strategy game.  Take turns placing black and white pieces on intersection of board.  Player controlling most territory wins."
+    }
+  },
+  "btnRestart": {
+    "type": "button",
+    "id": "btnRestart",
+    "x": 1544,
+    "y": 8,
+    "width": 50,
+    "height": 50,
+    "z": 1791,
+    "btncolor": "white",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Resetting board...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to reset the board. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "btnMove"
+      },
+      {
+        "func": "SET",
+        "property": "varColor",
+        "value": "white"
+      },
+      {
+        "func": "CLICK",
+        "count": 180
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "btnMove"
+      },
+      {
+        "func": "SET",
+        "property": "varColor",
+        "value": "black"
+      },
+      {
+        "func": "CLICK",
+        "count": 180
+      }
+    ],
+    "color": "none",
+    "css": "background-size: 80%; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
+    "image": "/assets/1342248376_1383",
+    "svgReplaces": {
+      "currentColor": "btncolor"
+    }
+  },
+  "btnMove": {
+    "type": "button",
+    "id": "btnMove",
+    "x": -200,
+    "y": 50,
+    "z": 1790,
+    "clickRoutine": [
+      {
+        "func": "GET",
+        "collection": "thisButton",
+        "property": "varColor",
+        "variable": "varColor"
+      },
+      {
+        "func": "SELECT",
+        "property": "piece",
+        "value": "${varColor}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "parent",
+        "relation": "!=",
+        "value": "${varColor}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "id"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${id}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "${varColor}"
+      },
+      "var rndX = randInt -30 120",
+      "var rndY = randInt 40 420",
+      {
+        "func": "SET",
+        "property": "x",
+        "value": "${rndX}"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": "${rndY}"
+      }
+    ],
+    "text": "Move",
+    "varColor": "black"
+  },
+  "sumWhite": {
+    "type": "button",
+    "id": "sumWhite",
+    "x": 153,
+    "y": 1100,
+    "width": 50,
+    "height": 50,
+    "z": 19,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "piece",
+        "value": "white",
+        "collection": "first"
+      },
+      {
+        "func": "SELECT",
+        "source": "first",
+        "property": "parent",
+        "value": "Whitecapture",
+        "collection": "second"
+      },
+      {
+        "func": "COUNT",
+        "collection": "second",
+        "variable": "thecount"
+      },
+      {
+        "func": "LABEL",
+        "label": "Countwhite",
+        "value": "${thecount}"
+      }
+    ],
+    "css": "background-color:white; color:black; border-color: black; font-size: 30px",
+    "text": "Σ"
+  },
+  "sumBlack": {
+    "type": "button",
+    "id": "sumBlack",
+    "x": 1401,
+    "y": 1100,
+    "width": 50,
+    "height": 50,
+    "z": 20,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "piece",
+        "value": "black",
+        "collection": "first"
+      },
+      {
+        "func": "SELECT",
+        "source": "first",
+        "property": "parent",
+        "value": "Blackcapture",
+        "collection": "second"
+      },
+      {
+        "func": "COUNT",
+        "collection": "second",
+        "variable": "thecount"
+      },
+      {
+        "func": "LABEL",
+        "label": "Countblack",
+        "value": "${thecount}"
+      }
+    ],
+    "css": "background-color:black; color:white; border-color: white; font-size: 30px",
+    "text": "Σ"
+  },
+  "Countwhite": {
+    "type": "label",
+    "id": "Countwhite",
+    "x": 158,
+    "y": 890,
+    "width": 40,
+    "height": 30,
+    "z": 8,
+    "css": "font-size: 20px; font-family:roboto; background-color:white; color:black; text-align:center; border-radius:8px",
+    "text": 0
+  },
+  "Countblack": {
+    "type": "label",
+    "id": "Countblack",
+    "x": 1402,
+    "y": 884,
+    "width": 40,
+    "height": 30,
+    "z": 11,
+    "css": "font-size: 20px; font-family:roboto; background-color:black; color:white; text-align:center; border-radius:8px",
+    "text": 0
+  }
+}

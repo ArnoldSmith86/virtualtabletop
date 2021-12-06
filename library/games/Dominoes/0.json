@@ -1,0 +1,997 @@
+{
+  "e1b9f5f3-eb82-472d-b517-756af9483b04": {
+    "id": "e1b9f5f3-eb82-472d-b517-756af9483b04",
+    "z": 4105,
+    "type": "card",
+    "deck": "917d1e05-76c4-4cb5-a817-2a738dbe86ca",
+    "cardType": "type-19d47cf2-5b42-44ec-9cea-30346159b94a",
+    "parent": "6thn"
+  },
+  "8a2940c0-b250-4024-a98d-b641fab68583": {
+    "id": "8a2940c0-b250-4024-a98d-b641fab68583",
+    "z": 4235,
+    "type": "card",
+    "deck": "917d1e05-76c4-4cb5-a817-2a738dbe86ca",
+    "cardType": "type-4622bbd9-5048-462a-a535-a0ac5c0d752a",
+    "parent": "6thn"
+  },
+  "f8913d2a-d3b4-41ea-9229-16040a8d4518": {
+    "id": "f8913d2a-d3b4-41ea-9229-16040a8d4518",
+    "z": 6169,
+    "type": "card",
+    "deck": "917d1e05-76c4-4cb5-a817-2a738dbe86ca",
+    "cardType": "type-9053659c-444b-4706-8815-7ef514fb1efa",
+    "parent": "6thn"
+  },
+  "6c487b72-adb0-4d27-b066-04540ff75df4": {
+    "id": "6c487b72-adb0-4d27-b066-04540ff75df4",
+    "z": 5295,
+    "type": "card",
+    "deck": "917d1e05-76c4-4cb5-a817-2a738dbe86ca",
+    "cardType": "type-98ee52b0-22f3-4c97-b4be-f0469be3bbc8",
+    "parent": "6thn"
+  },
+  "54264f65-0788-45fc-802c-637fcd2e564c": {
+    "id": "54264f65-0788-45fc-802c-637fcd2e564c",
+    "z": 7630,
+    "type": "card",
+    "deck": "917d1e05-76c4-4cb5-a817-2a738dbe86ca",
+    "cardType": "type-1f854e78-7d37-4599-9e9e-404bcc5aba23",
+    "parent": "6thn"
+  },
+  "50ea1338-f992-4189-a648-d3f09bb4c331": {
+    "id": "50ea1338-f992-4189-a648-d3f09bb4c331",
+    "z": 9675,
+    "type": "card",
+    "deck": "917d1e05-76c4-4cb5-a817-2a738dbe86ca",
+    "cardType": "type-e296a3dd-ca07-45ff-804c-b65f1e01709d",
+    "parent": "6thn"
+  },
+  "30f1f42d-dc90-4825-9570-9ad0ad750dfc": {
+    "id": "30f1f42d-dc90-4825-9570-9ad0ad750dfc",
+    "z": 4724,
+    "type": "card",
+    "deck": "917d1e05-76c4-4cb5-a817-2a738dbe86ca",
+    "cardType": "type-bdf4c3c9-a4cf-4fe1-9953-f312eb950fb1",
+    "parent": "6thn"
+  },
+  "hand": {
+    "id": "hand",
+    "x": 76,
+    "y": 880,
+    "z": 3023,
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropOffsetX": 10,
+    "dropOffsetY": 5,
+    "stackOffsetX": 40,
+    "inheritChildZ": true,
+    "childrenPerOwner": true,
+    "width": 660,
+    "height": 110,
+    "css": "background:#ffffff80"
+  },
+  "b97ed616-35e6-4680-b5f5-eb9cc528f2f0": {
+    "id": "b97ed616-35e6-4680-b5f5-eb9cc528f2f0",
+    "z": 2966,
+    "type": "card",
+    "deck": "917d1e05-76c4-4cb5-a817-2a738dbe86ca",
+    "cardType": "type-99d8e4ec-d89a-420a-9e61-873266e3232c",
+    "parent": "6thn"
+  },
+  "ac338626-0b6d-4b66-84c0-f5c72e929bf8": {
+    "id": "ac338626-0b6d-4b66-84c0-f5c72e929bf8",
+    "z": 5456,
+    "type": "card",
+    "deck": "917d1e05-76c4-4cb5-a817-2a738dbe86ca",
+    "cardType": "type-09159ab8-f980-42a6-8af8-6a8cf852fbf8",
+    "parent": "6thn"
+  },
+  "cf41059b-e6f0-4fed-9a4b-571c38c431c7": {
+    "id": "cf41059b-e6f0-4fed-9a4b-571c38c431c7",
+    "z": 2516,
+    "type": "card",
+    "deck": "917d1e05-76c4-4cb5-a817-2a738dbe86ca",
+    "cardType": "type-39354d9a-4968-45c7-a7fc-5f333b1e6218",
+    "face": 1,
+    "parent": "6thn"
+  },
+  "f0fe796d-9e86-48df-bfd9-7924746018cc": {
+    "id": "f0fe796d-9e86-48df-bfd9-7924746018cc",
+    "z": 4043,
+    "type": "card",
+    "deck": "917d1e05-76c4-4cb5-a817-2a738dbe86ca",
+    "cardType": "type-e0958d4a-6c0b-4682-9d26-361e1bb45235",
+    "parent": "6thn"
+  },
+  "30feb67c-e210-493b-b5a3-bddf2e6fe6ed": {
+    "id": "30feb67c-e210-493b-b5a3-bddf2e6fe6ed",
+    "z": 2489,
+    "type": "card",
+    "deck": "917d1e05-76c4-4cb5-a817-2a738dbe86ca",
+    "cardType": "type-fcce1396-30ff-438a-a248-9f64e846afea",
+    "parent": "6thn"
+  },
+  "07d2b0e9-6ffe-4507-a86a-06bea47f5f4b": {
+    "id": "07d2b0e9-6ffe-4507-a86a-06bea47f5f4b",
+    "z": 6094,
+    "type": "card",
+    "deck": "917d1e05-76c4-4cb5-a817-2a738dbe86ca",
+    "cardType": "type-31a1516e-f54d-4c7b-a9c4-026e4c6cbbbf",
+    "parent": "6thn"
+  },
+  "bf778919-08f0-4758-89b5-47fe514559ad": {
+    "id": "bf778919-08f0-4758-89b5-47fe514559ad",
+    "z": 7787,
+    "type": "card",
+    "deck": "917d1e05-76c4-4cb5-a817-2a738dbe86ca",
+    "cardType": "type-e6afbc39-241f-48ba-a0f2-458316556226",
+    "parent": "6thn"
+  },
+  "cb0f3cfa-8ba2-4882-8822-0b1449e9b713": {
+    "id": "cb0f3cfa-8ba2-4882-8822-0b1449e9b713",
+    "z": 9871,
+    "type": "card",
+    "deck": "917d1e05-76c4-4cb5-a817-2a738dbe86ca",
+    "cardType": "type-a9a47d82-69da-4bf4-b96b-112d60db0333",
+    "parent": "6thn"
+  },
+  "e43ce2b7-f00a-4cbe-9030-6060463ce291": {
+    "id": "e43ce2b7-f00a-4cbe-9030-6060463ce291",
+    "z": 1966,
+    "type": "card",
+    "deck": "917d1e05-76c4-4cb5-a817-2a738dbe86ca",
+    "cardType": "type-8459dc9a-c7c5-4184-a6ed-105388895eb9",
+    "parent": "6thn"
+  },
+  "eb16540f-e50a-4286-9c86-acb4da80a8d1": {
+    "id": "eb16540f-e50a-4286-9c86-acb4da80a8d1",
+    "z": 8304,
+    "type": "card",
+    "deck": "917d1e05-76c4-4cb5-a817-2a738dbe86ca",
+    "cardType": "type-de96d0db-f62e-457e-bea3-8796c1a5ec6c",
+    "parent": "6thn"
+  },
+  "66e879c4-44e0-422f-b89f-dd57965c634e": {
+    "id": "66e879c4-44e0-422f-b89f-dd57965c634e",
+    "z": 6600,
+    "type": "card",
+    "deck": "917d1e05-76c4-4cb5-a817-2a738dbe86ca",
+    "cardType": "type-a6ceb5e9-f3dc-4b00-be46-bb24b28e6772",
+    "parent": "6thn"
+  },
+  "9302d85e-80ba-4a61-98e5-4cc79f5e3bef": {
+    "id": "9302d85e-80ba-4a61-98e5-4cc79f5e3bef",
+    "z": 5641,
+    "type": "card",
+    "deck": "917d1e05-76c4-4cb5-a817-2a738dbe86ca",
+    "cardType": "type-a64c3b17-648c-4cdb-b40c-3fe157b3bec2",
+    "parent": "6thn"
+  },
+  "9cfab17f-87c6-4151-8df7-02e7818e8260": {
+    "id": "9cfab17f-87c6-4151-8df7-02e7818e8260",
+    "z": 5152,
+    "type": "card",
+    "deck": "917d1e05-76c4-4cb5-a817-2a738dbe86ca",
+    "cardType": "type-e643b009-70c2-4181-bdb7-e7ea09d4bbe8",
+    "parent": "6thn"
+  },
+  "3bc41b7d-49d9-422b-9f79-abe801164cba": {
+    "id": "3bc41b7d-49d9-422b-9f79-abe801164cba",
+    "z": 4632,
+    "type": "card",
+    "deck": "917d1e05-76c4-4cb5-a817-2a738dbe86ca",
+    "cardType": "type-a2a09a55-eef1-4732-9921-3c20d9077c74",
+    "parent": "6thn"
+  },
+  "178872ce-c396-4575-aaad-073bc3fe318f": {
+    "id": "178872ce-c396-4575-aaad-073bc3fe318f",
+    "z": 9950,
+    "type": "card",
+    "deck": "917d1e05-76c4-4cb5-a817-2a738dbe86ca",
+    "cardType": "type-b85d102f-b315-4738-881e-88cc752ac608",
+    "parent": "6thn"
+  },
+  "dd895687-228e-4765-a21a-41a0e383391a": {
+    "id": "dd895687-228e-4765-a21a-41a0e383391a",
+    "z": 939,
+    "type": "card",
+    "deck": "917d1e05-76c4-4cb5-a817-2a738dbe86ca",
+    "cardType": "type-54c68ba8-4783-4bae-bf61-db953b495e25",
+    "parent": "6thn"
+  },
+  "275c8ce8-3cea-4402-99ad-5a2315ddce62": {
+    "id": "275c8ce8-3cea-4402-99ad-5a2315ddce62",
+    "z": 2436,
+    "type": "card",
+    "deck": "917d1e05-76c4-4cb5-a817-2a738dbe86ca",
+    "cardType": "type-f0f6e6fb-5eab-45db-baae-b6dac2f9694b",
+    "parent": "6thn"
+  },
+  "917d1e05-76c4-4cb5-a817-2a738dbe86ca": {
+    "id": "917d1e05-76c4-4cb5-a817-2a738dbe86ca",
+    "y": 0,
+    "z": 9621,
+    "type": "deck",
+    "cardTypes": {
+      "type-a9a47d82-69da-4bf4-b96b-112d60db0333": {
+        "image": "/assets/-773773846_7644"
+      },
+      "type-a64c3b17-648c-4cdb-b40c-3fe157b3bec2": {
+        "image": "/assets/-975590391_21091"
+      },
+      "type-538009c1-056f-44f9-bb0d-cf751f3b02aa": {
+        "image": "/assets/240580530_9600"
+      },
+      "type-e6afbc39-241f-48ba-a0f2-458316556226": {
+        "image": "/assets/2014110864_11389"
+      },
+      "type-b478ef69-78a5-4f04-b1cb-cb00d901ae32": {
+        "image": "/assets/-199071619_13218"
+      },
+      "type-39354d9a-4968-45c7-a7fc-5f333b1e6218": {
+        "image": "/assets/-1788728226_12362"
+      },
+      "type-b85d102f-b315-4738-881e-88cc752ac608": {
+        "image": "/assets/1221794696_14207"
+      },
+      "type-54c68ba8-4783-4bae-bf61-db953b495e25": {
+        "image": "/assets/-1502562501_14610"
+      },
+      "type-f0f6e6fb-5eab-45db-baae-b6dac2f9694b": {
+        "image": "/assets/-1173521624_11441"
+      },
+      "type-ecbfe2be-05e8-4c7f-b26c-093feca601e1": {
+        "image": "/assets/-1386653521_13218"
+      },
+      "type-fa5767a4-eaa5-4624-aeaf-08cc58e4f261": {
+        "image": "/assets/-694491979_14991"
+      },
+      "type-bdf4c3c9-a4cf-4fe1-9953-f312eb950fb1": {
+        "image": "/assets/-1472707903_14207"
+      },
+      "type-e296a3dd-ca07-45ff-804c-b65f1e01709d": {
+        "image": "/assets/1189339330_15982"
+      },
+      "type-e0958d4a-6c0b-4682-9d26-361e1bb45235": {
+        "image": "/assets/588233241_16406"
+      },
+      "type-a6ceb5e9-f3dc-4b00-be46-bb24b28e6772": {
+        "image": "/assets/1507712239_14920"
+      },
+      "type-de96d0db-f62e-457e-bea3-8796c1a5ec6c": {
+        "image": "/assets/-2146383402_16678"
+      },
+      "type-fcce1396-30ff-438a-a248-9f64e846afea": {
+        "image": "/assets/-611922765_15908"
+      },
+      "type-e643b009-70c2-4181-bdb7-e7ea09d4bbe8": {
+        "image": "/assets/-1618477085_17672"
+      },
+      "type-09159ab8-f980-42a6-8af8-6a8cf852fbf8": {
+        "image": "/assets/1022778678_18101"
+      },
+      "type-8459dc9a-c7c5-4184-a6ed-105388895eb9": {
+        "image": "/assets/643905798_18406"
+      },
+      "type-99d8e4ec-d89a-420a-9e61-873266e3232c": {
+        "image": "/assets/1121619613_17672"
+      },
+      "type-1f854e78-7d37-4599-9e9e-404bcc5aba23": {
+        "image": "/assets/1373248316_19423"
+      },
+      "type-98ee52b0-22f3-4c97-b4be-f0469be3bbc8": {
+        "image": "/assets/-1080308345_19864"
+      },
+      "type-4622bbd9-5048-462a-a535-a0ac5c0d752a": {
+        "image": "/assets/358921231_16796"
+      },
+      "type-a2a09a55-eef1-4732-9921-3c20d9077c74": {
+        "image": "/assets/1520040566_18573"
+      },
+      "type-31a1516e-f54d-4c7b-a9c4-026e4c6cbbbf": {
+        "image": "/assets/2012220028_18972"
+      },
+      "type-9053659c-444b-4706-8815-7ef514fb1efa": {
+        "image": "/assets/1376948622_20340"
+      },
+      "type-19d47cf2-5b42-44ec-9cea-30346159b94a": {
+        "image": "/assets/-1086803906_20720"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "valueType": "static",
+            "value": "",
+            "color": "beige",
+            "width": 50,
+            "height": 100
+          }
+        ],
+        "border": false,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "beige",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 50,
+            "height": 100
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "shift": true,
+      "width": 50,
+      "height": 100,
+      "overlap": false,
+      "grid": [
+        {
+          "x": 25,
+          "y": 25
+        },
+        {
+          "offsetX": 25,
+          "offsetY": 25,
+          "x": 25,
+          "y": 25
+        }
+      ]
+    },
+    "x": -10,
+    "parent": "boneyard",
+    "layer": 10
+  },
+  "80309e7d-ab7d-4aa9-9cb1-ace1c098827c": {
+    "id": "80309e7d-ab7d-4aa9-9cb1-ace1c098827c",
+    "z": 6746,
+    "type": "card",
+    "deck": "917d1e05-76c4-4cb5-a817-2a738dbe86ca",
+    "cardType": "type-538009c1-056f-44f9-bb0d-cf751f3b02aa",
+    "parent": "6thn"
+  },
+  "baf97744-06d0-4151-9d4d-8cc4356767e4": {
+    "id": "baf97744-06d0-4151-9d4d-8cc4356767e4",
+    "z": 1990,
+    "type": "card",
+    "deck": "917d1e05-76c4-4cb5-a817-2a738dbe86ca",
+    "cardType": "type-ecbfe2be-05e8-4c7f-b26c-093feca601e1",
+    "parent": "6thn"
+  },
+  "0f5d0672-14d3-40d9-9241-8a17c51dd434": {
+    "id": "0f5d0672-14d3-40d9-9241-8a17c51dd434",
+    "z": 4478,
+    "type": "card",
+    "deck": "917d1e05-76c4-4cb5-a817-2a738dbe86ca",
+    "cardType": "type-b478ef69-78a5-4f04-b1cb-cb00d901ae32",
+    "parent": "6thn"
+  },
+  "1d7b10da-237a-4d55-848c-cd8153ffe5ef": {
+    "id": "1d7b10da-237a-4d55-848c-cd8153ffe5ef",
+    "z": 3414,
+    "type": "card",
+    "deck": "917d1e05-76c4-4cb5-a817-2a738dbe86ca",
+    "cardType": "type-fa5767a4-eaa5-4624-aeaf-08cc58e4f261",
+    "parent": "6thn"
+  },
+  "Rotate": {
+    "id": "Rotate",
+    "x": 819,
+    "y": 850,
+    "z": 4072,
+    "type": "button",
+    "width": 46,
+    "height": 46,
+    "clickRoutine": [
+      {
+        "func": "ROTATE",
+        "holder": "rotationroom",
+        "count": 1
+      }
+    ],
+    "css": "background-size: 80%; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
+    "layer": 15,
+    "image": "/assets/45318419_712",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "color": "white"
+  },
+  "boneyard": {
+    "id": "boneyard",
+    "y": 880,
+    "z": 3032,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 58,
+    "height": 108,
+    "onEnter": {
+      "rotation": 0
+    },
+    "css": "background:#ffffff80",
+    "x": 8
+  },
+  "recall_button": {
+    "id": "recall_button",
+    "width": 46,
+    "height": 46,
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Recalling dominos...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to recall all dominos. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "boneyard",
+        "owned": "${owned}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "boneyard",
+        "face": 0,
+        "rotation": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "boneyard"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "shiftcenter"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "y": 4,
+    "x": 1545,
+    "css": "background-size: 80%; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
+    "z": 2079,
+    "image": "/assets/1342248376_1383",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "color": "white"
+  },
+  "hi88": {
+    "type": "label",
+    "id": "hi88",
+    "x": 850,
+    "y": 955,
+    "width": 140,
+    "height": 44,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "z": 2506,
+    "text": 0,
+    "layer": 15
+  },
+  "hi88D": {
+    "id": "hi88D",
+    "parent": "hi88",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "hi88",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "css": "background-size: 80%; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
+    "layer": 15
+  },
+  "hi88U": {
+    "id": "hi88U",
+    "parent": "hi88",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "hi88",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "css": "background-size: 80%; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
+    "layer": 15
+  },
+  "ue74": {
+    "type": "label",
+    "text": "Label",
+    "x": 843,
+    "y": 918,
+    "z": 2488,
+    "id": "ue74",
+    "parent": "hi88"
+  },
+  "e6w3": {
+    "type": "label",
+    "css": "font-size: 30px",
+    "height": 42,
+    "width": 200,
+    "x": 825,
+    "y": 910,
+    "z": 2491,
+    "id": "e6w3",
+    "editable": true,
+    "text": "1",
+    "layer": 15
+  },
+  "iae7": {
+    "type": "label",
+    "text": 0,
+    "id": "iae7",
+    "x": 1005,
+    "y": 955,
+    "width": 140,
+    "height": 44,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "z": 2505,
+    "layer": 15
+  },
+  "iae7D": {
+    "id": "iae7D",
+    "parent": "iae7",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "iae7",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "css": "background-size: 80%; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
+    "layer": 15
+  },
+  "iae7U": {
+    "id": "iae7U",
+    "parent": "iae7",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "iae7",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "css": "background-size: 80%; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
+    "layer": 15
+  },
+  "vgqb": {
+    "type": "label",
+    "text": 0,
+    "id": "vgqb",
+    "x": 1160,
+    "y": 955,
+    "width": 140,
+    "height": 44,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "z": 2516,
+    "layer": 15
+  },
+  "vgqbD": {
+    "id": "vgqbD",
+    "parent": "vgqb",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "vgqb",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "css": "background-size: 80%; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
+    "layer": 15
+  },
+  "vgqbU": {
+    "id": "vgqbU",
+    "parent": "vgqb",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "vgqb",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "css": "background-size: 80%; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
+    "layer": 15
+  },
+  "l2sh": {
+    "type": "label",
+    "text": 0,
+    "id": "l2sh",
+    "x": 1305,
+    "y": 955,
+    "width": 140,
+    "height": 44,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "z": 2517,
+    "layer": 15
+  },
+  "l2shD": {
+    "id": "l2shD",
+    "parent": "l2sh",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "l2sh",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "css": "background-size: 80%; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
+    "layer": 15
+  },
+  "l2shU": {
+    "id": "l2shU",
+    "parent": "l2sh",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "l2sh",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "css": "background-size: 80%; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
+    "layer": 15
+  },
+  "wq32": {
+    "type": "label",
+    "text": "2",
+    "css": "font-size: 30px",
+    "height": 42,
+    "width": 200,
+    "x": 975,
+    "y": 910,
+    "z": 2508,
+    "id": "wq32",
+    "editable": true,
+    "layer": 15
+  },
+  "xrwr": {
+    "type": "label",
+    "text": "3",
+    "css": "font-size: 30px",
+    "height": 42,
+    "width": 200,
+    "x": 1130,
+    "y": 910,
+    "z": 2515,
+    "id": "xrwr",
+    "editable": true,
+    "layer": 15
+  },
+  "1m8t": {
+    "type": "label",
+    "text": "4",
+    "css": "font-size: 30px",
+    "height": 42,
+    "width": 200,
+    "x": 1275,
+    "y": 910,
+    "z": 2512,
+    "id": "1m8t",
+    "editable": true,
+    "layer": 15
+  },
+  "wdgn": {
+    "image": "/assets/1882491168_194482",
+    "movable": false,
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "id": "wdgn",
+    "movableInEdit": false
+  },
+  "shiftup": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "relation": "-",
+        "value": 50
+      }
+    ],
+    "x": 1514,
+    "y": 875,
+    "z": 613,
+    "css": "border-color:transparent;background-color:transparent;border-radius:25px",
+    "id": "shiftup",
+    "width": 50,
+    "height": 50,
+    "layer": 2,
+    "image": "/assets/979051549_277"
+  },
+  "shiftright": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "+",
+        "value": 50
+      }
+    ],
+    "x": 1558,
+    "y": 915,
+    "z": 612,
+    "id": "shiftright",
+    "css": "border-color:transparent;background-color:transparent;border-radius:25px",
+    "width": 50,
+    "height": 50,
+    "layer": 2,
+    "image": "/assets/822277903_277"
+  },
+  "shiftdown": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "relation": "+",
+        "value": 50
+      }
+    ],
+    "x": 1514,
+    "y": 955,
+    "z": 611,
+    "css": "border-color:transparent;background-color:transparent;border-radius:25px",
+    "id": "shiftdown",
+    "width": 50,
+    "height": 50,
+    "layer": 2,
+    "image": "/assets/-1712546135_277"
+  },
+  "shiftleft": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "-",
+        "value": 50
+      }
+    ],
+    "x": 1470,
+    "y": 915,
+    "z": 614,
+    "css": "border-color:transparent;background-color:transparent;border-radius:25px",
+    "id": "shiftleft",
+    "width": 50,
+    "height": 50,
+    "layer": 2,
+    "image": "/assets/1502865726_277"
+  },
+  "shiftcenter": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": -500
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -500
+      }
+    ],
+    "x": 1519,
+    "y": 920,
+    "z": 615,
+    "css": "border-color:transparent;background-color:transparent;border-radius:25px",
+    "id": "shiftcenter",
+    "width": 40,
+    "height": 40,
+    "layer": 2,
+    "image": "/assets/-27377452_736"
+  },
+  "floor": {
+    "type": "holder",
+    "z": 5,
+    "id": "floor",
+    "dropTarget": {
+      "shift": true
+    },
+    "alignChildren": false,
+    "classes": "transparent",
+    "css": "border: 1px solid orange",
+    "movableInEdit": false,
+    "height": 2000,
+    "width": 2600,
+    "layer": -1,
+    "y": -500,
+    "x": -500
+  },
+  "rotationroom": {
+    "type": "holder",
+    "x": 738,
+    "y": 880,
+    "z": 3035,
+    "id": "rotationroom",
+    "width": 110,
+    "height": 110,
+    "layer": 5,
+    "css": "background:#ffffff80",
+    "dropOffsetX": 30
+  },
+  "_meta": {
+    "version": 3,
+    "info": {
+      "name": "Dominoes",
+      "image": "/assets/-270828755_21896",
+      "rules": "https://www.dominorules.com/the-basics",
+      "bgg": "https://boardgamegeek.com/boardgame/2394/dominoes",
+      "year": "1500",
+      "mode": "vs",
+      "time": "30",
+      "players": "2-4",
+      "language": "UN",
+      "variant": "",
+      "attribution": "Domino images are public domain under the CC0 license:\nhttps://publicdomainvectors.org/en/tag/domino.\n\nThe library image is CC0:\nhttps://www.publicdomainpictures.net/en/view-image.php?image=305475&picture=vintage-dominoes-game.\n\nThe background image by Martin Stokow is CC0: https://publicdomainpictures.net/en/view-image.php?image=370218&picture=grunge-background-texture-marble.\n\nThe game layout was done by LawDawg96 and released to the public domain as CC0.",
+      "similarName": "Dominoes",
+      "similarLink": "https://boardgamegeek.com/boardgame/2394/dominoes",
+      "description": "Classic tile-based strategy game using dominoes with 0 to 6 pips.  Multiple rule variations and winning conditions."
+    }
+  },
+  "6thn": {
+    "type": "pile",
+    "parent": "boneyard",
+    "x": 4,
+    "y": 4,
+    "width": 50,
+    "height": 100,
+    "id": "6thn"
+  },
+  "plus7": {
+    "type": "button",
+    "id": "plus7",
+    "x": 10,
+    "y": 771,
+    "width": 50,
+    "height": 50,
+    "layer": null,
+    "z": 2080,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "boneyard",
+        "to": "hand",
+        "count": 7
+      }
+    ],
+    "css": "background-size: 80%; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black; font-size: 25px",
+    "text": "+7"
+  },
+  "plus5": {
+    "type": "button",
+    "id": "plus5",
+    "x": 10,
+    "y": 823,
+    "width": 50,
+    "height": 50,
+    "z": 2081,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "boneyard",
+        "to": "hand",
+        "count": 5
+      }
+    ],
+    "css": "background-size: 80%; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black; font-size: 25px",
+    "text": "+5"
+  }
+}

@@ -1,0 +1,1094 @@
+{
+  "_meta": {
+    "version": 2,
+    "info": {
+      "name": "象棋 / Xiangqi / Chinese Chess",
+      "image": "/assets/1044922100_70877",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/2393/xiangqi",
+      "year": "762",
+      "mode": "vs",
+      "time": "60",
+      "players": "2",
+      "language": "UN",
+      "variant": "",
+      "attribution": "The library image by Drolexandre is from https://commons.wikimedia.org/wiki/File:Echecs_chinois.JPG and is available under a CC BY 3.0 license.\n\nThe game pieces images are from https://commons.wikimedia.org/wiki/File:Xiangqi_Cannon_(Trad).svg (and various other locations with similar file names) and have been released to the public domain.\n\nThe game layout, game board, and game piece designs were done by https://www.reddit.com/user/96LawDawg and also released to the public domain under CC0.",
+      "similarName": "Chinese Chess",
+      "similarLink": "https://boardgamegeek.com/boardgame/2393/xiangqi",
+      "description": "Classic strategy game.  Move pieces in defined patterns around intersecting lines on board. First to capture opponent general/marshal piece wins."
+    }
+  },
+  "c95908de-d55a-415f-8a08-db6fa97ad900": {
+    "id": "c95908de-d55a-415f-8a08-db6fa97ad900",
+    "x": 1084.12,
+    "y": 70.51,
+    "z": 9747,
+    "movable": false,
+    "layer": -4,
+    "width": 273.17272437777024,
+    "height": 273.17272437777024
+  },
+  "ajs6": {
+    "image": "/assets/310828677_766597",
+    "movable": false,
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "id": "ajs6",
+    "z": 9752,
+    "x": -6
+  },
+  "99g3": {
+    "image": "/assets/-905005500_25535",
+    "id": "99g3",
+    "z": 394,
+    "x": 648.5,
+    "y": 905,
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ]
+  },
+  "801u": {
+    "id": "801u",
+    "image": "/assets/-905005500_25535",
+    "z": 396,
+    "x": 846.5,
+    "y": 905,
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ]
+  },
+  "q2wu": {
+    "image": "/assets/-118975984_26461",
+    "id": "q2wu",
+    "z": 382,
+    "x": 1044.5,
+    "y": 705,
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ]
+  },
+  "9g2j": {
+    "id": "9g2j",
+    "image": "/assets/-118975984_26461",
+    "z": 390,
+    "x": 450.5,
+    "y": 705,
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ]
+  },
+  "gnci": {
+    "image": "/assets/-642068030_21470",
+    "id": "gnci",
+    "z": 385,
+    "y": 905,
+    "x": 1143.5,
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ]
+  },
+  "ppfr": {
+    "id": "ppfr",
+    "image": "/assets/147191755_19670",
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ],
+    "z": 368,
+    "y": 305,
+    "x": 351.5
+  },
+  "prdo": {
+    "id": "prdo",
+    "image": "/assets/-1057119341_22407",
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ],
+    "z": 366,
+    "x": 450.5,
+    "y": 5
+  },
+  "jsqs": {
+    "id": "jsqs",
+    "image": "/assets/-1487103577_23060",
+    "z": 374,
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ],
+    "x": 945.5,
+    "y": 5
+  },
+  "5qen": {
+    "id": "5qen",
+    "image": "/assets/-1817389268_18381",
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ],
+    "z": 376,
+    "x": 1143.5,
+    "y": 5
+  },
+  "6p80": {
+    "id": "6p80",
+    "image": "/assets/-2034797314_23060",
+    "z": 377,
+    "y": 205,
+    "x": 1044.5,
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ]
+  },
+  "v3zs": {
+    "id": "v3zs",
+    "image": "/assets/1006112024_22287",
+    "z": 371,
+    "y": 5,
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ],
+    "x": 648.5
+  },
+  "1kpl": {
+    "id": "1kpl",
+    "image": "/assets/942127896_22886",
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ],
+    "z": 388,
+    "x": 351.5,
+    "y": 605
+  },
+  "wn6q": {
+    "id": "wn6q",
+    "image": "/assets/942127896_22886",
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ],
+    "z": 389,
+    "x": 549.5,
+    "y": 605
+  },
+  "6zq4": {
+    "id": "6zq4",
+    "image": "/assets/942127896_22886",
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ],
+    "z": 384,
+    "x": 747.5,
+    "y": 605
+  },
+  "0j4v": {
+    "id": "0j4v",
+    "image": "/assets/942127896_22886",
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ],
+    "z": 381,
+    "x": 1143.5,
+    "y": 605
+  },
+  "on9q": {
+    "id": "on9q",
+    "image": "/assets/1319541243_25660",
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ],
+    "z": 386,
+    "x": 1044.5,
+    "y": 905
+  },
+  "mkpq": {
+    "id": "mkpq",
+    "image": "/assets/630055971_26386",
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ],
+    "z": 387,
+    "x": 945.5,
+    "y": 905
+  },
+  "tnpd": {
+    "id": "tnpd",
+    "image": "/assets/-642068030_21470",
+    "z": 391,
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ],
+    "x": 351.5,
+    "y": 905
+  },
+  "ghbv": {
+    "image": "/assets/630055971_26386",
+    "id": "ghbv",
+    "z": 393,
+    "x": 549.5,
+    "y": 905,
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ]
+  },
+  "uslv": {
+    "image": "/assets/812488593_26212",
+    "id": "uslv",
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ],
+    "z": 395,
+    "x": 747.5,
+    "y": 905
+  },
+  "s78q": {
+    "image": "/assets/1319541243_25660",
+    "id": "s78q",
+    "z": 392,
+    "y": 905,
+    "x": 450.5,
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ]
+  },
+  "375c": {
+    "image": "/assets/942127896_22886",
+    "id": "375c",
+    "z": 383,
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ],
+    "x": 945.5,
+    "y": 605
+  },
+  "17w9": {
+    "image": "/assets/1006112024_22287",
+    "id": "17w9",
+    "z": 373,
+    "x": 846.5,
+    "y": 5,
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ]
+  },
+  "o0bm": {
+    "image": "/assets/-2034797314_23060",
+    "id": "o0bm",
+    "z": 367,
+    "x": 450.5,
+    "y": 205,
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ]
+  },
+  "hsof": {
+    "image": "/assets/-1817389268_18381",
+    "id": "hsof",
+    "z": 365,
+    "y": 5,
+    "x": 351.5,
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ]
+  },
+  "kn6u": {
+    "image": "/assets/-1487103577_23060",
+    "id": "kn6u",
+    "z": 370,
+    "y": 5,
+    "x": 549.5,
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ]
+  },
+  "wqpa": {
+    "image": "/assets/-759672227_22986",
+    "id": "wqpa",
+    "z": 372,
+    "x": 747.5,
+    "y": 5,
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ]
+  },
+  "1j4q": {
+    "image": "/assets/-1057119341_22407",
+    "id": "1j4q",
+    "z": 375,
+    "x": 1044.5,
+    "y": 5,
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ]
+  },
+  "u3u5": {
+    "image": "/assets/147191755_19670",
+    "id": "u3u5",
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ],
+    "z": 369,
+    "x": 549.5,
+    "y": 305
+  },
+  "bld4": {
+    "id": "bld4",
+    "image": "/assets/147191755_19670",
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ],
+    "z": 380,
+    "x": 747.5,
+    "y": 305
+  },
+  "0myn": {
+    "id": "0myn",
+    "image": "/assets/147191755_19670",
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ],
+    "z": 379,
+    "y": 305,
+    "x": 945.5
+  },
+  "zunm": {
+    "id": "zunm",
+    "image": "/assets/147191755_19670",
+    "z": 378,
+    "grid": [
+      {
+        "x": 99,
+        "y": 100,
+        "minX": 300,
+        "maxX": 1200,
+        "offsetX": 5,
+        "offsetY": -45
+      }
+    ],
+    "x": 1143.5,
+    "y": 305
+  },
+  "btnRestart": {
+    "type": "button",
+    "id": "btnRestart",
+    "x": 1544,
+    "y": 8,
+    "width": 50,
+    "height": 50,
+    "z": 1791,
+    "movable": null,
+    "movableInEdit": null,
+    "btncolor": "white",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Resetting board...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to reset the board. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "hsof"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 351.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 5
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "prdo"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 450.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 5
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "kn6u"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 549.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 5
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "v3zs"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 648.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 5
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "wqpa"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 747.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 5
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "17w9"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 846.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 5
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "jsqs"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 945.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 5
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "1j4q"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1044.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 5
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "5qen"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1143.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 5
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "o0bm"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 450.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 205
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "6p80"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1044.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 205
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "ppfr"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 351.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 305
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "u3u5"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 549.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 305
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "bld4"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 747.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 305
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "0myn"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 945.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 305
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "zunm"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1143.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 305
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "1kpl"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 351.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 605
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "wn6q"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 549.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 605
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "6zq4"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 747.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 605
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "375c"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 945.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 605
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "0j4v"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1143.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 605
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "9g2j"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 450.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 705
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "q2wu"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1044.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 705
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "tnpd"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 351.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 905
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "s78q"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 450.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 905
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "ghbv"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 549.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 905
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "99g3"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 648.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 905
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "uslv"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 747.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 905
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "801u"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 846.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 905
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "mkpq"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 945.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 905
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "on9q"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1044.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 905
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "gnci"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1143.5
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 905
+      }
+    ],
+    "css": "background-size: 80%; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
+    "image": "/assets/1342248376_1383",
+    "svgReplaces": {
+      "currentColor": "btncolor"
+    }
+  }
+}

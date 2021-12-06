@@ -1,0 +1,1147 @@
+{
+  "r01": {
+    "id": "r01",
+    "x": 4,
+    "y": 406.5,
+    "width": 73.5,
+    "height": 73.5,
+    "color": "#e84242",
+    "classes": "checkersPiece",
+    "z": 1,
+    "start": "c1",
+    "parent": "column01"
+  },
+  "r02": {
+    "id": "r02",
+    "x": 4,
+    "y": 332.5,
+    "width": 73.5,
+    "height": 73.5,
+    "color": "#e84242",
+    "classes": "checkersPiece",
+    "z": 2,
+    "start": "c1",
+    "parent": "column01"
+  },
+  "r04": {
+    "id": "r04",
+    "x": 4,
+    "width": 73.5,
+    "height": 73.5,
+    "color": "#e84242",
+    "classes": "checkersPiece",
+    "z": 1,
+    "y": 406.5,
+    "start": "c12",
+    "parent": "column12"
+  },
+  "r05": {
+    "id": "r05",
+    "x": 4,
+    "width": 73.5,
+    "height": 73.5,
+    "color": "#e84242",
+    "classes": "checkersPiece",
+    "z": 2,
+    "y": 332.5,
+    "start": "c12",
+    "parent": "column12"
+  },
+  "r07": {
+    "id": "r07",
+    "x": 4,
+    "y": 258.5,
+    "width": 73.5,
+    "height": 73.5,
+    "color": "#e84242",
+    "classes": "checkersPiece",
+    "z": 3,
+    "start": "c12",
+    "parent": "column12"
+  },
+  "r09": {
+    "id": "r09",
+    "x": 4,
+    "width": 73.5,
+    "height": 73.5,
+    "color": "#e84242",
+    "classes": "checkersPiece",
+    "z": 1,
+    "y": 4,
+    "start": "c17",
+    "parent": "column17"
+  },
+  "r10": {
+    "id": "r10",
+    "x": 4,
+    "y": 78,
+    "width": 73.5,
+    "height": 73.5,
+    "color": "#e84242",
+    "classes": "checkersPiece",
+    "z": 2,
+    "start": "c17",
+    "parent": "column17"
+  },
+  "r11": {
+    "id": "r11",
+    "x": 4,
+    "width": 73.5,
+    "height": 73.5,
+    "color": "#e84242",
+    "classes": "checkersPiece",
+    "z": 5,
+    "y": 300,
+    "start": "c19",
+    "parent": "column19"
+  },
+  "r13": {
+    "id": "r13",
+    "x": 4,
+    "width": 73.5,
+    "height": 73.5,
+    "color": "#e84242",
+    "classes": "checkersPiece",
+    "z": 3,
+    "y": 152,
+    "start": "c19",
+    "parent": "column19"
+  },
+  "r14": {
+    "id": "r14",
+    "x": 4,
+    "width": 73.5,
+    "height": 73.5,
+    "color": "#e84242",
+    "classes": "checkersPiece",
+    "z": 1,
+    "y": 4,
+    "start": "c19",
+    "parent": "column19"
+  },
+  "r15": {
+    "id": "r15",
+    "x": 4,
+    "width": 73.5,
+    "height": 73.5,
+    "color": "#e84242",
+    "classes": "checkersPiece",
+    "z": 4,
+    "y": 226,
+    "start": "c19",
+    "parent": "column19"
+  },
+  "b01": {
+    "id": "b01",
+    "x": 4,
+    "y": 4,
+    "width": 73.5,
+    "height": 73.5,
+    "classes": "checkersPiece",
+    "z": 1,
+    "start": "c24",
+    "parent": "column24"
+  },
+  "b02": {
+    "id": "b02",
+    "x": 4,
+    "y": 78,
+    "width": 73.5,
+    "height": 73.5,
+    "classes": "checkersPiece",
+    "z": 2,
+    "start": "c24",
+    "parent": "column24"
+  },
+  "b04": {
+    "id": "b04",
+    "x": 4,
+    "y": 152,
+    "width": 73.5,
+    "height": 73.5,
+    "classes": "checkersPiece",
+    "z": 3,
+    "start": "c13",
+    "parent": "column13"
+  },
+  "b05": {
+    "id": "b05",
+    "x": 4,
+    "y": 78,
+    "width": 73.5,
+    "height": 73.5,
+    "classes": "checkersPiece",
+    "z": 2,
+    "start": "c13",
+    "parent": "column13"
+  },
+  "b07": {
+    "id": "b07",
+    "x": 4,
+    "y": 4,
+    "width": 73.5,
+    "height": 73.5,
+    "classes": "checkersPiece",
+    "z": 1,
+    "start": "c13",
+    "parent": "column13"
+  },
+  "b08": {
+    "id": "b08",
+    "x": 4,
+    "y": 406.5,
+    "width": 73.5,
+    "height": 73.5,
+    "classes": "checkersPiece",
+    "z": 1,
+    "start": "c8",
+    "parent": "column08"
+  },
+  "b09": {
+    "id": "b09",
+    "x": 4,
+    "width": 73.5,
+    "height": 73.5,
+    "classes": "checkersPiece",
+    "z": 2,
+    "y": 332.5,
+    "start": "c8",
+    "parent": "column08"
+  },
+  "b10": {
+    "id": "b10",
+    "x": 4,
+    "y": 258.5,
+    "width": 73.5,
+    "height": 73.5,
+    "classes": "checkersPiece",
+    "z": 3,
+    "start": "c8",
+    "parent": "column08"
+  },
+  "b11": {
+    "id": "b11",
+    "x": 4,
+    "y": 406.5,
+    "width": 73.5,
+    "height": 73.5,
+    "classes": "checkersPiece",
+    "z": 1,
+    "start": "c6",
+    "parent": "column06"
+  },
+  "b13": {
+    "id": "b13",
+    "x": 4,
+    "y": 332.5,
+    "width": 73.5,
+    "height": 73.5,
+    "classes": "checkersPiece",
+    "z": 2,
+    "start": "c6",
+    "parent": "column06"
+  },
+  "b14": {
+    "id": "b14",
+    "x": 4,
+    "y": 258.5,
+    "width": 73.5,
+    "height": 73.5,
+    "classes": "checkersPiece",
+    "z": 3,
+    "start": "c6",
+    "parent": "column06"
+  },
+  "b15": {
+    "id": "b15",
+    "x": 4,
+    "width": 73.5,
+    "height": 73.5,
+    "classes": "checkersPiece",
+    "z": 5,
+    "y": 110.5,
+    "start": "c6",
+    "parent": "column06"
+  },
+  "reset": {
+    "type": "button",
+    "id": "reset",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Resetting board...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to reset the board. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "start",
+        "value": "c1"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "column01"
+      },
+      {
+        "func": "SELECT",
+        "property": "start",
+        "value": "c6"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "column06"
+      },
+      {
+        "func": "SELECT",
+        "property": "start",
+        "value": "c8"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "column08"
+      },
+      {
+        "func": "SELECT",
+        "property": "start",
+        "value": "c12"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "column12"
+      },
+      {
+        "func": "SELECT",
+        "property": "start",
+        "value": "c13"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "column13"
+      },
+      {
+        "func": "SELECT",
+        "property": "start",
+        "value": "c17"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "column17"
+      },
+      {
+        "func": "SELECT",
+        "property": "start",
+        "value": "c19"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "column19"
+      },
+      {
+        "func": "SELECT",
+        "property": "start",
+        "value": "c24"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "column24"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "spinner3"
+      },
+      {
+        "func": "SET",
+        "property": "value",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "property": "angle",
+        "value": 25.714285714
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 740
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 455
+      }
+    ],
+    "width": 40,
+    "height": 40,
+    "x": 5,
+    "y": 6,
+    "image": "/assets/1342248376_1383",
+    "css": "background-size:80%",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "color": "white",
+    "z": 7
+  },
+  "b03": {
+    "id": "b03",
+    "x": 4,
+    "y": 226,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 4,
+    "classes": "checkersPiece",
+    "start": "c13",
+    "parent": "column13"
+  },
+  "b06": {
+    "id": "b06",
+    "x": 4,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 5,
+    "classes": "checkersPiece",
+    "y": 300,
+    "start": "c13",
+    "parent": "column13"
+  },
+  "b12": {
+    "id": "b12",
+    "x": 4,
+    "y": 184.5,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 4,
+    "classes": "checkersPiece",
+    "start": "c6",
+    "parent": "column06"
+  },
+  "r03": {
+    "id": "r03",
+    "x": 4,
+    "y": 184.5,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 4,
+    "classes": "checkersPiece",
+    "color": "#e84242",
+    "start": "c12",
+    "parent": "column12"
+  },
+  "r06": {
+    "id": "r06",
+    "x": 4,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 5,
+    "classes": "checkersPiece",
+    "color": "#e84242",
+    "y": 110.5,
+    "start": "c12",
+    "parent": "column12"
+  },
+  "r12": {
+    "id": "r12",
+    "x": 4,
+    "y": 78,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 2,
+    "classes": "checkersPiece",
+    "color": "#e84242",
+    "start": "c19",
+    "parent": "column19"
+  },
+  "r08": {
+    "id": "r08",
+    "x": 4,
+    "y": 152,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 3,
+    "classes": "checkersPiece",
+    "color": "#e84242",
+    "start": "c17",
+    "parent": "column17"
+  },
+  "edl6": {
+    "image": "/assets/2108595768_1046958",
+    "movable": false,
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "id": "edl6",
+    "z": 1,
+    "movableInEdit": false,
+    "x": -20
+  },
+  "column02": {
+    "type": "holder",
+    "id": "column02",
+    "x": 1298,
+    "y": 475,
+    "width": 80,
+    "height": 480,
+    "z": 14,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 7,
+    "dropOffsetY": 406.5,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": -74
+  },
+  "column01": {
+    "type": "holder",
+    "id": "column01",
+    "x": 1416,
+    "y": 475,
+    "width": 80,
+    "height": 480,
+    "z": 13,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 7,
+    "dropOffsetY": 406.5,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": -74
+  },
+  "column05": {
+    "type": "holder",
+    "id": "column05",
+    "x": 948,
+    "y": 475,
+    "width": 80,
+    "height": 480,
+    "z": 17,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 7,
+    "dropOffsetY": 406.5,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": -74
+  },
+  "column06": {
+    "type": "holder",
+    "id": "column06",
+    "x": 832,
+    "y": 475,
+    "width": 80,
+    "height": 480,
+    "z": 44,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 7,
+    "dropOffsetY": 406.5,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": -74
+  },
+  "column07": {
+    "type": "holder",
+    "id": "column07",
+    "x": 649,
+    "y": 475,
+    "width": 80,
+    "height": 480,
+    "z": 19,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 7,
+    "dropOffsetY": 406.5,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": -74
+  },
+  "column08": {
+    "type": "holder",
+    "id": "column08",
+    "x": 531,
+    "y": 475,
+    "width": 80,
+    "height": 480,
+    "z": 20,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 7,
+    "dropOffsetY": 406.5,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": -74
+  },
+  "column09": {
+    "type": "holder",
+    "id": "column09",
+    "x": 414,
+    "y": 475,
+    "width": 80,
+    "height": 480,
+    "z": 23,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 7,
+    "dropOffsetY": 406.5,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": -74
+  },
+  "column10": {
+    "type": "holder",
+    "id": "column10",
+    "x": 299,
+    "y": 475,
+    "width": 80,
+    "height": 480,
+    "z": 24,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 7,
+    "dropOffsetY": 406.5,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": -74
+  },
+  "column11": {
+    "type": "holder",
+    "id": "column11",
+    "x": 180,
+    "y": 475,
+    "width": 80,
+    "height": 480,
+    "z": 25,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 7,
+    "dropOffsetY": 406.5,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": -74
+  },
+  "column03": {
+    "type": "holder",
+    "id": "column03",
+    "x": 1182,
+    "y": 475,
+    "width": 80,
+    "height": 480,
+    "z": 43,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 7,
+    "dropOffsetY": 406.5,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": -74
+  },
+  "column04": {
+    "type": "holder",
+    "id": "column04",
+    "x": 1067,
+    "y": 475,
+    "width": 80,
+    "height": 480,
+    "z": 26,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 7,
+    "dropOffsetY": 406.5,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": -74
+  },
+  "column12": {
+    "type": "holder",
+    "id": "column12",
+    "x": 64,
+    "y": 475,
+    "width": 80,
+    "height": 480,
+    "z": 27,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 7,
+    "dropOffsetY": 406.5,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": -74
+  },
+  "column24": {
+    "type": "holder",
+    "id": "column24",
+    "x": 1416,
+    "y": 42,
+    "width": 80,
+    "height": 480,
+    "z": 28,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 7,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": 74
+  },
+  "column23": {
+    "type": "holder",
+    "id": "column23",
+    "x": 1298,
+    "y": 42,
+    "width": 80,
+    "height": 480,
+    "z": 29,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 7,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": 74
+  },
+  "column22": {
+    "type": "holder",
+    "id": "column22",
+    "x": 1182,
+    "y": 42,
+    "width": 80,
+    "height": 480,
+    "z": 30,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 7,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": 74
+  },
+  "column21": {
+    "type": "holder",
+    "id": "column21",
+    "x": 1067,
+    "y": 42,
+    "width": 80,
+    "height": 480,
+    "z": 31,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 7,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": 74
+  },
+  "column20": {
+    "type": "holder",
+    "id": "column20",
+    "x": 948,
+    "y": 42,
+    "width": 80,
+    "height": 480,
+    "z": 32,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 7,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": 74
+  },
+  "column19": {
+    "type": "holder",
+    "id": "column19",
+    "x": 832,
+    "y": 42,
+    "width": 80,
+    "height": 480,
+    "z": 33,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 7,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": 74
+  },
+  "column18": {
+    "type": "holder",
+    "id": "column18",
+    "x": 649,
+    "y": 42,
+    "width": 80,
+    "height": 480,
+    "z": 36,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 7,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": 74
+  },
+  "column17": {
+    "type": "holder",
+    "id": "column17",
+    "x": 531,
+    "y": 42,
+    "width": 80,
+    "height": 480,
+    "z": 37,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 7,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": 74
+  },
+  "column16": {
+    "type": "holder",
+    "id": "column16",
+    "x": 414,
+    "y": 42,
+    "width": 80,
+    "height": 480,
+    "z": 38,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 7,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": 74
+  },
+  "column15": {
+    "type": "holder",
+    "id": "column15",
+    "x": 299,
+    "y": 42,
+    "width": 80,
+    "height": 480,
+    "z": 39,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 7,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": 74
+  },
+  "column14": {
+    "type": "holder",
+    "id": "column14",
+    "x": 180,
+    "y": 42,
+    "width": 80,
+    "height": 480,
+    "z": 40,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 7,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": 74
+  },
+  "column13": {
+    "type": "holder",
+    "id": "column13",
+    "x": 64,
+    "y": 42,
+    "width": 80,
+    "height": 480,
+    "z": 41,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 7,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": 74
+  },
+  "blackhome": {
+    "type": "holder",
+    "id": "blackhome",
+    "x": 1555,
+    "y": 510,
+    "width": 80,
+    "height": 480,
+    "z": 49,
+    "css": "border-radius: 40px; border-color:black; border-width:5px;background:#00000044",
+    "dropLimit": 15,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": -23,
+    "dropOffsetY": 394
+  },
+  "redhome": {
+    "type": "holder",
+    "id": "redhome",
+    "x": 1555,
+    "y": 20,
+    "width": 80,
+    "height": 480,
+    "z": 50,
+    "css": "border-radius: 40px; border-color:red; border-width:5px;background:#ff000044",
+    "dropLimit": 15,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": 23
+  },
+  "spinner1": {
+    "type": "spinner",
+    "id": "spinner1",
+    "x": 740,
+    "y": 779,
+    "width": 80,
+    "height": 80,
+    "z": 8,
+    "angle": 86374,
+    "options": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "value": 6,
+    "movable": false,
+    "dice": true
+  },
+  "spinner2": {
+    "type": "spinner",
+    "id": "spinner2",
+    "x": 740,
+    "y": 867,
+    "width": 80,
+    "height": 80,
+    "z": 7,
+    "angle": 92017,
+    "options": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "value": 4,
+    "movable": false,
+    "dice": true
+  },
+  "spinbtn": {
+    "type": "button",
+    "id": "spinbtn",
+    "x": 740,
+    "y": 954,
+    "height": 40,
+    "z": 6,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "dice",
+        "value": true
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "text": "Spin"
+  },
+  "spinner3": {
+    "type": "spinner",
+    "id": "spinner3",
+    "x": 740,
+    "y": 455,
+    "width": 80,
+    "height": 80,
+    "z": 14,
+    "options": [
+      1,
+      2,
+      4,
+      8,
+      16,
+      32,
+      64
+    ],
+    "value": 1,
+    "clickRoutine": [
+      "var angle = ${PROPERTY angle} + 51.428571429",
+      "var value = ${angle} % 360",
+      "var value = ${value} - 25.714285714",
+      "var value = ${value} / 51.428571429",
+      "var value = round ${value}",
+      "var value = 2 ** ${value}",
+      {
+        "func": "SET",
+        "property": "angle",
+        "collection": "thisButton",
+        "value": "${angle}"
+      },
+      {
+        "func": "SET",
+        "property": "value",
+        "collection": "thisButton",
+        "value": "${value}"
+      }
+    ],
+    "angle": 25.714285714
+  },
+  "_meta": {
+    "version": 3,
+    "info": {
+      "name": "Backgammon",
+      "image": "/assets/864541564_120911",
+      "rules": "http://usbgf.org/learn-backgammon/backgammon-rules-and-terms/rules-of-backgammon/",
+      "bgg": "https://boardgamegeek.com/boardgame/2397/backgammon",
+      "year": "-3000",
+      "mode": "vs",
+      "time": "30",
+      "players": "2",
+      "language": "UN",
+      "variant": "",
+      "attribution": "Room layout, board, and library image by LawDawg96, with small edits by RaphaelAlvez and ArnoldSmith86, are released to the Public Domain by CC0.\n\nWood grains used on the board are recolored versions of files available at https://www.pexels.com/ and are available for use under the Pexels license.",
+      "similarName": "Backgammon",
+      "similarLink": "https://boardgamegeek.com/boardgame/2397/backgammon",
+      "description": "Classic strategy game.  Move checkers around a board to reach home while avoiding capture.  First to remove all own pieces wins."
+    }
+  },
+  "gukc": {
+    "type": "label",
+    "text": 0,
+    "id": "gukc",
+    "x": 1449.5,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px; color: white;",
+    "editable": true,
+    "z": 5,
+    "y": 3
+  },
+  "gukcD": {
+    "id": "gukcD",
+    "parent": "gukc",
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "gukc",
+        "mode": "set",
+        "value": 0
+      }
+    ],
+    "image": "/assets/1342248376_1383",
+    "color": "white",
+    "css": "background-size:80%",
+    "svgReplaces": {
+      "currentColor": "color"
+    }
+  },
+  "gukcU": {
+    "id": "gukcU",
+    "parent": "gukc",
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "gukc",
+        "mode": "inc",
+        "value": "${PROPERTY value OF spinner3}"
+      }
+    ]
+  },
+  "gzeo": {
+    "type": "label",
+    "text": 0,
+    "id": "gzeo",
+    "x": 1449.5,
+    "y": 959,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px; color: white;",
+    "editable": true,
+    "z": 6
+  },
+  "gzeoD": {
+    "id": "gzeoD",
+    "parent": "gzeo",
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "gzeo",
+        "mode": "set",
+        "value": 0
+      }
+    ],
+    "color": "white",
+    "css": "background-size:80%;  ",
+    "image": "/assets/1342248376_1383",
+    "svgReplaces": {
+      "currentColor": "color"
+    }
+  },
+  "gzeoU": {
+    "id": "gzeoU",
+    "parent": "gzeo",
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "gzeo",
+        "mode": "inc",
+        "value": "${PROPERTY value OF spinner3}"
+      }
+    ]
+  }
+}

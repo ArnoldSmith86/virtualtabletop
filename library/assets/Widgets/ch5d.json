@@ -1,0 +1,137 @@
+{
+  "rpih": {
+    "image": "/assets/742837538_10620",
+    "id": "rpih",
+    "z": 15,
+    "x": 235.28571428571428,
+    "y": 43
+  },
+  "xatq": {
+    "image": "/assets/-1658770137_11515",
+    "id": "xatq",
+    "z": 39,
+    "x": 1481,
+    "y": 43
+  },
+  "mgs0": {
+    "image": "/assets/1925723047_11310",
+    "id": "mgs0",
+    "z": 27,
+    "x": 442.57142857142856,
+    "y": 43
+  },
+  "31mt": {
+    "image": "/assets/-2141823651_11449",
+    "id": "31mt",
+    "z": 40,
+    "x": 1271.7142857142856,
+    "y": 43
+  },
+  "1m6p": {
+    "image": "/assets/-177203765_10882",
+    "id": "1m6p",
+    "z": 42,
+    "x": 857.1428571428571,
+    "y": 43
+  },
+  "2ep3": {
+    "image": "/assets/1354907148_10474",
+    "id": "2ep3",
+    "z": 26,
+    "x": 649.8571428571429,
+    "y": 43
+  },
+  "nhju": {
+    "image": "/assets/-223730994_11225",
+    "id": "nhju",
+    "z": 68,
+    "x": 28,
+    "y": 43
+  },
+  "tgcd": {
+    "image": "/assets/-2133333623_10915",
+    "id": "tgcd",
+    "z": 41,
+    "x": 1064.4285714285713,
+    "y": 43
+  },
+  "r49q": {
+    "image": "/assets/1949440025_28802",
+    "id": "r49q",
+    "z": 65,
+    "y": 192,
+    "x": 1117.75
+  },
+  "7gz8": {
+    "image": "/assets/672028473_28853",
+    "id": "7gz8",
+    "z": 63,
+    "x": 754.5,
+    "y": 192
+  },
+  "rkse": {
+    "image": "/assets/641459935_27499",
+    "id": "rkse",
+    "z": 51,
+    "x": 209.625,
+    "y": 192
+  },
+  "x6af": {
+    "image": "/assets/1471827094_29410",
+    "id": "x6af",
+    "z": 60,
+    "x": 391.25,
+    "y": 192
+  },
+  "94b4": {
+    "image": "/assets/-963253265_29306",
+    "id": "94b4",
+    "z": 66,
+    "x": 1299.375,
+    "y": 192
+  },
+  "8rdv": {
+    "image": "/assets/1226830075_28045",
+    "id": "8rdv",
+    "z": 67,
+    "x": 1481,
+    "y": 192
+  },
+  "13qg": {
+    "image": "/assets/613833158_29862",
+    "id": "13qg",
+    "z": 64,
+    "x": 936.125,
+    "y": 192
+  },
+  "dkby": {
+    "image": "/assets/395705010_28231",
+    "id": "dkby",
+    "z": 47,
+    "x": 28,
+    "y": 192
+  },
+  "lenw": {
+    "image": "/assets/586625741_29891",
+    "id": "lenw",
+    "z": 61,
+    "x": 572.875,
+    "y": 192
+  },
+  "_meta": {
+    "version": 2,
+    "info": {
+      "name": "Other Widgets",
+      "image": "/assets/-104596149_22670",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Assets",
+      "time": "",
+      "players": "0",
+      "language": "UN",
+      "variant": "Game Pieces",
+      "attribution": "The pawns and marbles were designed in Microsoft Paint 3d based on models with no copyright restrictions.  These pieces were created by https://www.reddit.com/user/96LawDawg and are released to the Public Domain by CC0."
+    }
+  }
+}

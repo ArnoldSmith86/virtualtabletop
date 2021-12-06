@@ -1,0 +1,4732 @@
+{
+  "_meta": {
+    "version": 3,
+    "info": {
+      "name": "Reversi",
+      "image": "/assets/1165428272_115854",
+      "rules": "https://www.mastersofgames.com/rules/reversi-othello-rules.htm",
+      "bgg": "",
+      "year": "1883",
+      "mode": "vs",
+      "time": "30",
+      "players": "2",
+      "language": "UN",
+      "variant": "",
+      "attribution": "The woodgrain image by David Robarts is available in the Rummy Tiles game on the VirtualTabletop public library.  It is available under CC BY-NC-SA 4.0.\n\nThe room design, library image, and other room elements are by RogerLipsett and are released to the Public Domain under CC0.\n\nOthello is a registered trademark of Kabushiki Kaisha MegaHouse.",
+      "similarName": "Othello",
+      "similarLink": "https://boardgamegeek.com/boardgame/2389/othello",
+      "description": "Classic strategy game using two-sided discs on an 8x8 board placed to try and capture opponent pieces. Player with most of colored discs on board wins."
+    }
+  },
+  "arpd": {
+    "z": 1,
+    "x": 738.5,
+    "y": 88
+  },
+  "table": {
+    "id": "table",
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "image": "/assets/-714340369_104855",
+    "movable": false
+  },
+  "board": {
+    "id": "board",
+    "image": "/assets/1753914117_18059",
+    "width": 1000,
+    "height": 1000,
+    "x": 350,
+    "dirs": [
+      [
+        -1,
+        -1
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        -1,
+        1
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        -1
+      ],
+      [
+        0,
+        -1
+      ]
+    ],
+    "playerID": 0,
+    "sq": [
+      "00",
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "20",
+      "21",
+      "22",
+      "23",
+      "24",
+      "25",
+      "26",
+      "27",
+      "30",
+      "31",
+      "32",
+      "33",
+      "34",
+      "35",
+      "36",
+      "37",
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47",
+      "50",
+      "51",
+      "52",
+      "53",
+      "54",
+      "55",
+      "56",
+      "57",
+      "60",
+      "61",
+      "62",
+      "63",
+      "64",
+      "65",
+      "66",
+      "67",
+      "70",
+      "71",
+      "72",
+      "73",
+      "74",
+      "75",
+      "76",
+      "77"
+    ],
+    "movableInEdit": false,
+    "layer": -4,
+    "z": 1,
+    "movable": false,
+    "illegalMoveCSS": "border-style: none !important; background-color: none",
+    "legalMoveCSS": "border-style: none !important; background-color: lightgreen",
+    "validMove": true,
+    "css": "border-style: none !important; background-color: lightgreen",
+    "initsqs": [
+      "sq33",
+      "sq34",
+      "sq43",
+      "sq44"
+    ],
+    "blankBoardRoutine": [
+      {
+        "Note": "This is the enterRoutine for the four central squares",
+        "Note1": "using reversi rules."
+      },
+      "var sqid = ${PROPERTY id}",
+      {
+        "func": "IF",
+        "condition": "${PROPERTY validMove}",
+        "thenRoutine": [
+          {
+            "Note": "This is no longer a valid move",
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "validMove",
+            "value": false
+          },
+          "var row = ${sqid.2}",
+          "var col = ${sqid.3}",
+          {
+            "func": "CALL",
+            "widget": "utilities",
+            "routine": "moveToSquareRoutine",
+            "arguments": {
+              "row": "${row}",
+              "col": "${col}"
+            }
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "relation": "in",
+            "value": "${PROPERTY initsqs OF board}",
+            "collection": "inits"
+          },
+          {
+            "func": "SELECT",
+            "source": "inits",
+            "property": "token",
+            "value": -1,
+            "collection": "empties"
+          },
+          {
+            "func": "COUNT",
+            "collection": "empties",
+            "variable": "numLeft"
+          },
+          "var findMoves = ${numLeft} == 1",
+          "var findMoves = ${findMoves} && ${PROPERTY flipsAllowed OF OptionsList}",
+          "var initsFull = ${numLeft} == 0",
+          "var findMoves = ${findMoves} || ${initsFull}",
+          {
+            "func": "IF",
+            "condition": "${findMoves}",
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "widget": "moves",
+                "routine": "moveDoneRoutine"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SELECT",
+                "property": "tokenHolder",
+                "value": true,
+                "collection": "squares"
+              },
+              {
+                "func": "SELECT",
+                "source": "squares",
+                "property": "token",
+                "value": 0
+              },
+              {
+                "func": "COUNT",
+                "variable": "score0"
+              },
+              {
+                "func": "LABEL",
+                "label": "score0",
+                "value": "${score0}"
+              },
+              {
+                "func": "SELECT",
+                "source": "squares",
+                "property": "token",
+                "value": 1
+              },
+              {
+                "func": "COUNT",
+                "variable": "score1"
+              },
+              {
+                "func": "LABEL",
+                "label": "score1",
+                "value": "${score1}"
+              },
+              "var newPlayer = 1 - ${PROPERTY playerID OF board}",
+              {
+                "func": "CALL",
+                "widget": "utilities",
+                "routine": "setCurrentPlayerRoutine",
+                "arguments": {
+                  "newPlayer": "${newPlayer}"
+                }
+              },
+              {
+                "func": "IF",
+                "condition": "${PROPERTY showMoves OF OptionsList}",
+                "thenRoutine": [
+                  {
+                    "func": "SET",
+                    "collection": "inits",
+                    "property": "css",
+                    "value": "${PROPERTY illegalMoveCSS OF board}"
+                  },
+                  {
+                    "func": "SET",
+                    "collection": "empties",
+                    "property": "css",
+                    "value": "${PROPERTY legalMoveCSS OF board}"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          "var playerID = ${PROPERTY playerID OF board}",
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "parent",
+            "value": "holder${playerID}"
+          },
+          "var xOff = randInt 10 165",
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "x",
+            "value": "${xOff}"
+          },
+          "var yOff = randInt 20 275",
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "y",
+            "value": "${yOff}"
+          }
+        ]
+      }
+    ],
+    "onePlayerStymied": false
+  },
+  "holder0": {
+    "type": "holder",
+    "id": "holder0",
+    "x": 35,
+    "y": 25,
+    "width": 280,
+    "height": 400,
+    "z": 1781,
+    "movableInEdit": false,
+    "alignChildren": false,
+    "css": "border-radius:100px !important;background-color:burlywood; border-color:peru !important; border-width:5px !important; filter: drop-shadow(1px 2px 10px #000) !important",
+    "dropTarget": {
+      "token": true
+    },
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "css",
+        "value": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white"
+      }
+    ]
+  },
+  "holder1": {
+    "type": "holder",
+    "id": "holder1",
+    "x": 35,
+    "y": 525,
+    "width": 280,
+    "height": 400,
+    "z": 1786,
+    "movableInEdit": false,
+    "alignChildren": false,
+    "dropTarget": {
+      "token": true
+    },
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "css",
+        "value": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black"
+      }
+    ],
+    "movable": false,
+    "inheritFrom": {
+      "holder0": [
+        "css"
+      ]
+    },
+    "css": "border-radius:100px !important;background-color:gray; border-color:gray !important; border-width:5px !important; filter: drop-shadow(1px 2px 10px #000) !important",
+    "validMove": false
+  },
+  "sq00": {
+    "type": "holder",
+    "id": "sq00",
+    "x": 12,
+    "y": 11,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "flip": [],
+    "enterRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY validMove}",
+        "thenRoutine": [
+          "var sqid = ${PROPERTY id}",
+          "var row = ${sqid.2}",
+          "var col = ${sqid.3}",
+          {
+            "func": "CALL",
+            "widget": "utilities",
+            "routine": "moveToSquareRoutine",
+            "arguments": {
+              "row": "${row}",
+              "col": "${col}"
+            }
+          },
+          {
+            "func": "CALL",
+            "widget": "moves",
+            "routine": "moveDoneRoutine"
+          }
+        ],
+        "elseRoutine": [
+          "var playerID = ${PROPERTY playerID OF board}",
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "parent",
+            "value": "holder${playerID}"
+          },
+          "var xOff = randInt 10 165",
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "x",
+            "value": "${xOff}"
+          },
+          "var yOff = randInt 20 275",
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "y",
+            "value": "${yOff}"
+          }
+        ]
+      }
+    ],
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false,
+    "parent": "board",
+    "fixedParent": true
+  },
+  "sq10": {
+    "type": "holder",
+    "id": "sq10",
+    "parent": "board",
+    "x": 12,
+    "y": 134.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq20": {
+    "type": "holder",
+    "id": "sq20",
+    "parent": "board",
+    "x": 12,
+    "y": 258,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq30": {
+    "type": "holder",
+    "id": "sq30",
+    "parent": "board",
+    "x": 12,
+    "y": 381.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq40": {
+    "type": "holder",
+    "id": "sq40",
+    "parent": "board",
+    "x": 12,
+    "y": 505,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq50": {
+    "type": "holder",
+    "id": "sq50",
+    "parent": "board",
+    "x": 12,
+    "y": 628.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq60": {
+    "type": "holder",
+    "id": "sq60",
+    "parent": "board",
+    "x": 12,
+    "y": 752,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq70": {
+    "type": "holder",
+    "id": "sq70",
+    "parent": "board",
+    "x": 12,
+    "y": 875.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq01": {
+    "type": "holder",
+    "id": "sq01",
+    "parent": "board",
+    "x": 135.5,
+    "y": 11,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq02": {
+    "type": "holder",
+    "id": "sq02",
+    "parent": "board",
+    "x": 259,
+    "y": 11,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq03": {
+    "type": "holder",
+    "id": "sq03",
+    "parent": "board",
+    "x": 382.5,
+    "y": 11,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq04": {
+    "type": "holder",
+    "id": "sq04",
+    "parent": "board",
+    "x": 506,
+    "y": 11,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq05": {
+    "type": "holder",
+    "id": "sq05",
+    "parent": "board",
+    "x": 629.5,
+    "y": 11,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq06": {
+    "type": "holder",
+    "id": "sq06",
+    "parent": "board",
+    "x": 753,
+    "y": 11,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq07": {
+    "type": "holder",
+    "id": "sq07",
+    "parent": "board",
+    "x": 876.5,
+    "y": 11,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq11": {
+    "type": "holder",
+    "id": "sq11",
+    "parent": "board",
+    "x": 135.5,
+    "y": 134.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq12": {
+    "type": "holder",
+    "id": "sq12",
+    "parent": "board",
+    "x": 259,
+    "y": 134.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq13": {
+    "type": "holder",
+    "id": "sq13",
+    "parent": "board",
+    "x": 382.5,
+    "y": 134.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq14": {
+    "type": "holder",
+    "id": "sq14",
+    "parent": "board",
+    "x": 506,
+    "y": 134.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq15": {
+    "type": "holder",
+    "id": "sq15",
+    "parent": "board",
+    "x": 629.5,
+    "y": 134.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq16": {
+    "type": "holder",
+    "id": "sq16",
+    "parent": "board",
+    "x": 753,
+    "y": 134.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq17": {
+    "type": "holder",
+    "id": "sq17",
+    "parent": "board",
+    "x": 876.5,
+    "y": 134.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq21": {
+    "type": "holder",
+    "id": "sq21",
+    "parent": "board",
+    "x": 135.5,
+    "y": 258,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq22": {
+    "type": "holder",
+    "id": "sq22",
+    "parent": "board",
+    "x": 259,
+    "y": 258,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false,
+    "adj": [
+      [
+        1,
+        1
+      ]
+    ]
+  },
+  "sq23": {
+    "type": "holder",
+    "id": "sq23",
+    "parent": "board",
+    "x": 382.5,
+    "y": 258,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [
+      [
+        3,
+        3
+      ]
+    ],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": true,
+    "adj": [
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  "sq24": {
+    "type": "holder",
+    "id": "sq24",
+    "parent": "board",
+    "x": 506,
+    "y": 258,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false,
+    "adj": [
+      [
+        1,
+        -1
+      ]
+    ]
+  },
+  "sq25": {
+    "type": "holder",
+    "id": "sq25",
+    "parent": "board",
+    "x": 629.5,
+    "y": 258,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq26": {
+    "type": "holder",
+    "id": "sq26",
+    "parent": "board",
+    "x": 753,
+    "y": 258,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq27": {
+    "type": "holder",
+    "id": "sq27",
+    "parent": "board",
+    "x": 876.5,
+    "y": 258,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq31": {
+    "type": "holder",
+    "id": "sq31",
+    "parent": "board",
+    "x": 135.5,
+    "y": 381.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq32": {
+    "type": "holder",
+    "id": "sq32",
+    "parent": "board",
+    "x": 259,
+    "y": 381.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [
+      [
+        3,
+        3
+      ]
+    ],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": true,
+    "adj": [
+      [
+        0,
+        1
+      ]
+    ]
+  },
+  "sq33": {
+    "type": "holder",
+    "id": "sq33",
+    "parent": "board",
+    "x": 382.5,
+    "y": 381.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "surrounded": false,
+    "tokenHolder": true,
+    "validMove": false,
+    "token": 1
+  },
+  "sq34": {
+    "type": "holder",
+    "id": "sq34",
+    "parent": "board",
+    "x": 506,
+    "y": 381.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "surrounded": false,
+    "token": 0,
+    "tokenHolder": true,
+    "validMove": false,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "sq33": [
+        "enterRoutine"
+      ]
+    }
+  },
+  "sq35": {
+    "type": "holder",
+    "id": "sq35",
+    "parent": "board",
+    "x": 629.5,
+    "y": 381.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false,
+    "adj": [
+      [
+        1,
+        -1
+      ]
+    ]
+  },
+  "sq36": {
+    "type": "holder",
+    "id": "sq36",
+    "parent": "board",
+    "x": 753,
+    "y": 381.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq37": {
+    "type": "holder",
+    "id": "sq37",
+    "parent": "board",
+    "x": 876.5,
+    "y": 381.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq41": {
+    "type": "holder",
+    "id": "sq41",
+    "parent": "board",
+    "x": 135.5,
+    "y": 505,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq42": {
+    "type": "holder",
+    "id": "sq42",
+    "parent": "board",
+    "x": 259,
+    "y": 505,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false,
+    "adj": [
+      [
+        -1,
+        1
+      ]
+    ]
+  },
+  "sq43": {
+    "type": "holder",
+    "id": "sq43",
+    "parent": "board",
+    "x": 382.5,
+    "y": 505,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "surrounded": false,
+    "token": 0,
+    "tokenHolder": true,
+    "validMove": false,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "sq33": [
+        "enterRoutine"
+      ]
+    }
+  },
+  "sq44": {
+    "type": "holder",
+    "id": "sq44",
+    "parent": "board",
+    "x": 506,
+    "y": 505,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "surrounded": false,
+    "token": 1,
+    "tokenHolder": true,
+    "validMove": false,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    }
+  },
+  "sq45": {
+    "type": "holder",
+    "id": "sq45",
+    "parent": "board",
+    "x": 629.5,
+    "y": 505,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [
+      [
+        4,
+        4
+      ]
+    ],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": true,
+    "adj": [
+      [
+        0,
+        -1
+      ]
+    ]
+  },
+  "sq46": {
+    "type": "holder",
+    "id": "sq46",
+    "parent": "board",
+    "x": 753,
+    "y": 505,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq47": {
+    "type": "holder",
+    "id": "sq47",
+    "parent": "board",
+    "x": 876.5,
+    "y": 505,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq51": {
+    "type": "holder",
+    "id": "sq51",
+    "parent": "board",
+    "x": 135.5,
+    "y": 628.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq52": {
+    "type": "holder",
+    "id": "sq52",
+    "parent": "board",
+    "x": 259,
+    "y": 628.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq53": {
+    "type": "holder",
+    "id": "sq53",
+    "parent": "board",
+    "x": 382.5,
+    "y": 628.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false,
+    "adj": [
+      [
+        -1,
+        1
+      ]
+    ]
+  },
+  "sq54": {
+    "type": "holder",
+    "id": "sq54",
+    "parent": "board",
+    "x": 506,
+    "y": 628.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [
+      [
+        4,
+        4
+      ]
+    ],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": true,
+    "adj": [
+      [
+        -1,
+        0
+      ]
+    ]
+  },
+  "sq55": {
+    "type": "holder",
+    "id": "sq55",
+    "parent": "board",
+    "x": 629.5,
+    "y": 628.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false,
+    "adj": [
+      [
+        -1,
+        -1
+      ]
+    ]
+  },
+  "sq56": {
+    "type": "holder",
+    "id": "sq56",
+    "parent": "board",
+    "x": 753,
+    "y": 628.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq57": {
+    "type": "holder",
+    "id": "sq57",
+    "parent": "board",
+    "x": 876.5,
+    "y": 628.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq61": {
+    "type": "holder",
+    "id": "sq61",
+    "parent": "board",
+    "x": 135.5,
+    "y": 752,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq62": {
+    "type": "holder",
+    "id": "sq62",
+    "parent": "board",
+    "x": 259,
+    "y": 752,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq63": {
+    "type": "holder",
+    "id": "sq63",
+    "parent": "board",
+    "x": 382.5,
+    "y": 752,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq64": {
+    "type": "holder",
+    "id": "sq64",
+    "parent": "board",
+    "x": 506,
+    "y": 752,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq65": {
+    "type": "holder",
+    "id": "sq65",
+    "parent": "board",
+    "x": 629.5,
+    "y": 752,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq66": {
+    "type": "holder",
+    "id": "sq66",
+    "parent": "board",
+    "x": 753,
+    "y": 752,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq67": {
+    "type": "holder",
+    "id": "sq67",
+    "parent": "board",
+    "x": 876.5,
+    "y": 752,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq71": {
+    "type": "holder",
+    "id": "sq71",
+    "parent": "board",
+    "x": 135.5,
+    "y": 875.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq72": {
+    "type": "holder",
+    "id": "sq72",
+    "parent": "board",
+    "x": 259,
+    "y": 875.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq73": {
+    "type": "holder",
+    "id": "sq73",
+    "parent": "board",
+    "x": 382.5,
+    "y": 875.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq74": {
+    "type": "holder",
+    "id": "sq74",
+    "parent": "board",
+    "x": 506,
+    "y": 875.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq75": {
+    "type": "holder",
+    "id": "sq75",
+    "parent": "board",
+    "x": 629.5,
+    "y": 875.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq76": {
+    "type": "holder",
+    "id": "sq76",
+    "parent": "board",
+    "x": 753,
+    "y": 875.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "sq77": {
+    "type": "holder",
+    "id": "sq77",
+    "parent": "board",
+    "x": 876.5,
+    "y": 875.5,
+    "width": 112,
+    "height": 112,
+    "classes": "transparent",
+    "css": "border-style: none !important; background-color: none",
+    "dropTarget": {
+      "token": true
+    },
+    "fixedParent": true,
+    "flip": [],
+    "inheritFrom": {
+      "sq00": [
+        "enterRoutine"
+      ]
+    },
+    "surrounded": false,
+    "token": -1,
+    "tokenHolder": true,
+    "validMove": false
+  },
+  "moves": {
+    "type": "button",
+    "id": "moves",
+    "x": 1700,
+    "y": 900,
+    "z": 31,
+    "getAdjacentEmptiesRoutine": [
+      {
+        "Note": "Arguments are row, col",
+        "Note1": "Finds adjacent empty square. For each one, ",
+        "Note2": "puts direction vector to [row, col] in its adj property."
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "board",
+        "collection": "board"
+      },
+      {
+        "func": "GET",
+        "collection": "board",
+        "property": "dirs",
+        "variable": "dirs"
+      },
+      "var surrounded = true",
+      {
+        "func": "FOREACH",
+        "in": "${dirs}",
+        "loopRoutine": [
+          "var deltaRow = ${value.0}",
+          "var deltaCol = ${value.1}",
+          "var newRow = ${row} + ${deltaRow}",
+          "var newCol = ${col} + ${deltaCol}",
+          {
+            "func": "CALL",
+            "widget": "utilities",
+            "routine": "isValidSquareRoutine",
+            "arguments": {
+              "row": "${newRow}",
+              "col": "${newCol}"
+            },
+            "variable": "sqOK"
+          },
+          {
+            "func": "IF",
+            "condition": "${sqOK}",
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "sq${newRow}${newCol}",
+                "collection": "emptySq"
+              },
+              {
+                "func": "GET",
+                "collection": "emptySq",
+                "property": "token",
+                "variable": "token"
+              },
+              {
+                "func": "IF",
+                "operand1": "${token}",
+                "relation": "==",
+                "operand2": -1,
+                "thenRoutine": [
+                  "var sq = []",
+                  "var deltaRow = 0 - ${deltaRow}",
+                  "var deltaCol = 0 - ${deltaCol}",
+                  "var sq = push ${deltaRow}",
+                  "var sq = push ${deltaCol}",
+                  {
+                    "func": "GET",
+                    "collection": "emptySq",
+                    "property": "adj",
+                    "variable": "adj"
+                  },
+                  {
+                    "func": "IF",
+                    "operand1": "${adj}",
+                    "relation": "==",
+                    "operand2": null,
+                    "thenRoutine": [
+                      "var adj = []"
+                    ]
+                  },
+                  "var adj = push ${sq}",
+                  {
+                    "func": "SET",
+                    "collection": "emptySq",
+                    "property": "adj",
+                    "value": "${adj}"
+                  },
+                  "var surrounded = false"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${surrounded}",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "sq${row}${col}"
+          },
+          {
+            "func": "SET",
+            "property": "surrounded",
+            "value": true
+          }
+        ]
+      }
+    ],
+    "getFlipIndicesRoutine": [
+      {
+        "Note": "Given playerID (from the board), ",
+        "Note1": "[row, col], and [deltaRow, deltaCol],",
+        "Note2": "returns an array consisting of the tokens that would be flipped",
+        "Note3": "Returns [] if invalid move"
+      },
+      "var playerID = ${PROPERTY playerID OF board}",
+      "var otherPlayer = 1 - ${playerID}",
+      "var result = []",
+      "var newRow = ${row}",
+      "var newCol = ${col}",
+      "var done = false",
+      {
+        "Note": "Get board squares in this direction from [row,col].",
+        "Note1": "Stop when you reach edge of board, token of playerID's",
+        "Note2": "color, or an empty square.",
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "loopRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${done}",
+            "relation": "==",
+            "operand2": false,
+            "thenRoutine": [
+              "var newRow = ${newRow} + ${deltaRow}",
+              "var newCol = ${newCol} + ${deltaCol}",
+              {
+                "func": "CALL",
+                "widget": "utilities",
+                "routine": "isValidSquareRoutine",
+                "arguments": {
+                  "row": "${newRow}",
+                  "col": "${newCol}"
+                },
+                "variable": "validSq"
+              },
+              {
+                "func": "IF",
+                "condition": "${validSq}",
+                "thenRoutine": [
+                  "var square = 'sq' + ${newRow}",
+                  "var square = ${square} + ${newCol}",
+                  "var token = ${PROPERTY token OF $square}",
+                  "var empty = ${token} == -1",
+                  "var curr = ${token} == ${playerID}",
+                  {
+                    "Note": "Invalid move if we find empty square",
+                    "func": "IF",
+                    "condition": "${empty}",
+                    "thenRoutine": [
+                      "var result = []",
+                      "var done = true"
+                    ],
+                    "elseRoutine": [
+                      {
+                        "Note": "If current player is token, done",
+                        "Note1": "else other player is token, push and continue",
+                        "func": "IF",
+                        "condition": "${curr}",
+                        "thenRoutine": [
+                          "var done = true"
+                        ],
+                        "elseRoutine": [
+                          "var newsq = []",
+                          "var newsq = push ${newRow}",
+                          "var newsq = push ${newCol}",
+                          "var result = push ${newsq}"
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "Note": "Ran off board, invalid move"
+                  },
+                  "var result = []",
+                  "var done = true"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "getValidMovesRoutine": [
+      {
+        "Note": "Generates a list of valid [row,col] moves for `playerID`",
+        "Note1": "For each valid move, `flipnn` contains the ",
+        "Note2": "list of tokens that will be flipped upon that move."
+      },
+      "var playerID = ${PROPERTY playerID OF board}",
+      "var otherPlayer = 1 - ${playerID}",
+      {
+        "func": "SELECT",
+        "property": "tokenHolder",
+        "value": true,
+        "collection": "squares"
+      },
+      {
+        "Note": "Set array of adjacent squares of other color to []",
+        "func": "SET",
+        "collection": "squares",
+        "property": "adj",
+        "value": null
+      },
+      {
+        "Note": "Set array of flips of other color to []",
+        "func": "SET",
+        "collection": "squares",
+        "property": "flip",
+        "value": []
+      },
+      {
+        "Note": "Set all squares to be invalid moves",
+        "func": "SET",
+        "collection": "squares",
+        "property": "validMove",
+        "value": false
+      },
+      {
+        "Note": "Find squares with other player's token in them",
+        "Note1": "that are not completely surrounded,",
+        "Note2": "and put in collection 'other'",
+        "func": "SELECT",
+        "source": "squares",
+        "property": "token",
+        "value": "${otherPlayer}",
+        "collection": "other"
+      },
+      {
+        "func": "SELECT",
+        "source": "other",
+        "property": "surrounded",
+        "value": false,
+        "collection": "other"
+      },
+      {
+        "Note": "Loop over each square in 'other', looking for empty",
+        "Note1": "squares. For each such square, add the direction vector",
+        "Note2": "[deltaRow,deltaCol] of the square in 'other' to its adj",
+        "Note3": "property.",
+        "func": "FOREACH",
+        "collection": "other",
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "property": "id",
+            "variable": "sqid"
+          },
+          {
+            "func": "CALL",
+            "routine": "getAdjacentEmptiesRoutine",
+            "arguments": {
+              "row": "${sqid.2}",
+              "col": "${sqid.3}"
+            }
+          }
+        ]
+      },
+      {
+        "Note": "For each square with a non-null adj property,",
+        "Note1": "get the flips from that square and store in the ",
+        "Note2": "flip property of the square."
+      },
+      {
+        "func": "SELECT",
+        "property": "adj",
+        "relation": "!=",
+        "value": null,
+        "collection": "possibles"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "possibles",
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "property": "id",
+            "variable": "thisid"
+          },
+          "var row = ${thisid.2}",
+          "var col = ${thisid.3}",
+          {
+            "func": "GET",
+            "property": "adj",
+            "variable": "adj"
+          },
+          {
+            "func": "FOREACH",
+            "in": "${adj}",
+            "loopRoutine": [
+              {
+                "func": "CALL",
+                "routine": "getFlipIndicesRoutine",
+                "arguments": {
+                  "row": "${row}",
+                  "col": "${col}",
+                  "deltaRow": "${value.0}",
+                  "deltaCol": "${value.1}"
+                }
+              },
+              {
+                "func": "GET",
+                "property": "flip",
+                "variable": "flip"
+              },
+              "var flip = concatArray ${flip} ${result}",
+              {
+                "func": "SET",
+                "property": "flip",
+                "value": "${flip}"
+              },
+              "var len = length ${flip}",
+              {
+                "func": "IF",
+                "operand1": "${len}",
+                "relation": "!=",
+                "operand2": 0,
+                "thenRoutine": [
+                  {
+                    "func": "SET",
+                    "property": "validMove",
+                    "value": true
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "source": "squares",
+        "property": "token",
+        "relation": "!=",
+        "value": -1
+      },
+      {
+        "func": "COUNT",
+        "variable": "numPlayed"
+      },
+      {
+        "func": "IF",
+        "operand1": "${numPlayed}",
+        "relation": "<",
+        "operand2": 4,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "relation": "in",
+            "value": "${PROPERTY initsqs OF board}",
+            "collection": "inits"
+          },
+          {
+            "func": "SELECT",
+            "source": "inits",
+            "property": "token",
+            "value": -1
+          },
+          {
+            "func": "SET",
+            "property": "validMove",
+            "value": true
+          }
+        ]
+      }
+    ],
+    "moveDoneRoutine": [
+      {
+        "Note": "After player makes a move, switches players,",
+        "Note1": "gets valid moves for next player,",
+        "Note2": "makes UI changes to indicate valid drop locations"
+      },
+      "var oldPlayer = ${PROPERTY playerID OF board}",
+      "var newPlayer = 1 - ${oldPlayer}",
+      {
+        "func": "CALL",
+        "widget": "utilities",
+        "routine": "setCurrentPlayerRoutine",
+        "arguments": {
+          "newPlayer": "${newPlayer}"
+        }
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "board",
+        "collection": "board"
+      },
+      {
+        "func": "SELECT",
+        "property": "tokenHolder",
+        "value": true,
+        "collection": "squares"
+      },
+      {
+        "func": "SELECT",
+        "source": "squares",
+        "property": "token",
+        "value": 0
+      },
+      {
+        "func": "COUNT",
+        "variable": "score0"
+      },
+      {
+        "func": "LABEL",
+        "label": "score0",
+        "value": "${score0}"
+      },
+      {
+        "func": "SELECT",
+        "source": "squares",
+        "property": "token",
+        "value": 1
+      },
+      {
+        "func": "COUNT",
+        "variable": "score1"
+      },
+      {
+        "func": "LABEL",
+        "label": "score1",
+        "value": "${score1}"
+      },
+      "var tilesPlayed = ${score0} + ${score1}",
+      {
+        "func": "IF",
+        "operand1": "${tilesPlayed}",
+        "relation": "<",
+        "operand2": 64,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "getValidMovesRoutine"
+          },
+          {
+            "func": "CALL",
+            "widget": "utilities",
+            "routine": "setMoveCSSRoutine"
+          },
+          {
+            "func": "SELECT",
+            "source": "squares",
+            "property": "validMove",
+            "relation": "==",
+            "value": true,
+            "collection": "moveOK"
+          },
+          {
+            "func": "COUNT",
+            "collection": "moveOK",
+            "variable": "numMoves"
+          },
+          {
+            "Note": "If no moves, call noMovesRoutine, which will either",
+            "Note1": "end the game or else issue message",
+            "Note2": "and then call MoveDone again to switch players back.",
+            "func": "IF",
+            "operand1": "${numMoves}",
+            "relation": "==",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "widget": "utilities",
+                "routine": "noMovesRoutine"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": "board",
+                "property": "onePlayerStymied",
+                "value": false
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "widget": "utilities",
+            "routine": "gameOverRoutine"
+          }
+        ]
+      }
+    ],
+    "text": "moves",
+    "movable": true
+  },
+  "utilities": {
+    "type": "button",
+    "id": "utilities",
+    "x": 1800,
+    "y": 900,
+    "z": 32,
+    "isValidSquareRoutine": [
+      {
+        "Note": "Given row and col, returns true if 0<=rol, col <=7"
+      },
+      "var rowPos = ${row} >= 0",
+      "var rowSmall = ${row} <= 7",
+      "var colPos = ${col} >= 0",
+      "var colSmall = ${col} <= 7",
+      "var result = ${rowPos} && ${rowSmall}",
+      "var result = ${result} && ${colPos}",
+      "var result = ${result} && ${colSmall}"
+    ],
+    "moveToSquareRoutine": [
+      {
+        "Note": "Arguments are row, col",
+        "Note1": "Used to flip tiles and update properties after a token move."
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "sq${row}${col}"
+      },
+      {
+        "func": "SET",
+        "property": "movable",
+        "value": false
+      },
+      {
+        "func": "GET",
+        "property": "face",
+        "variable": "face"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "sq${row}${col}"
+      },
+      {
+        "func": "SET",
+        "property": "token",
+        "value": "${face}"
+      },
+      {
+        "func": "GET",
+        "property": "flip",
+        "variable": "flip"
+      },
+      {
+        "func": "FOREACH",
+        "in": "${flip}",
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "sq${value.0}${value.1}"
+          },
+          {
+            "func": "IF",
+            "operand1": "${face}",
+            "relation": "==",
+            "operand2": 1,
+            "thenRoutine": [
+              "var css = 'transition:linear 0.5s;border-style:inset ; background:white ; border-radius:100% ; border : 3px solid black'"
+            ],
+            "elseRoutine": [
+              "var css = 'transition: linear 0.5s; border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white'"
+            ]
+          },
+          {
+            "func": "SET",
+            "property": "css",
+            "value": "${css}"
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "sq${value.0}${value.1}"
+          },
+          {
+            "func": "SET",
+            "property": "token",
+            "value": "${face}"
+          }
+        ]
+      }
+    ],
+    "text": "utilities",
+    "movable": true,
+    "showMessageRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "message"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 600
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${msg}"
+      },
+      {
+        "func": "TIMER",
+        "timer": "messageTimer",
+        "mode": "start"
+      }
+    ],
+    "gameOverRoutine": [
+      {
+        "func": "CALL",
+        "routine": "showMessageRoutine",
+        "arguments": {
+          "msg": "Game Over"
+        }
+      },
+      {
+        "func": "SELECT",
+        "property": "token",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "movable",
+        "value": false
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          0,
+          1
+        ],
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "holder${value}"
+          },
+          {
+            "func": "SET",
+            "property": "css",
+            "value": "border-radius:100px !important;background-color:gray; border-color:gray !important; border-width:5px !important; filter: drop-shadow(1px 2px 10px #000) !important"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "tokenHolder",
+        "value": true,
+        "collection": "squares"
+      },
+      {
+        "func": "SET",
+        "property": "validMove",
+        "value": false
+      },
+      {
+        "func": "CALL",
+        "routine": "setMoveCSSRoutine"
+      }
+    ],
+    "setMoveCSSRoutine": [
+      {
+        "func": "SELECT",
+        "property": "tokenHolder",
+        "value": true,
+        "collection": "squares"
+      },
+      {
+        "func": "IF",
+        "condition": "${PROPERTY showMoves OF OptionsList}",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "source": "squares",
+            "property": "validMove",
+            "relation": "==",
+            "value": true,
+            "collection": "moveOK"
+          },
+          {
+            "func": "SET",
+            "collection": "moveOK",
+            "property": "css",
+            "value": "${PROPERTY legalMoveCSS OF board}"
+          },
+          {
+            "func": "SELECT",
+            "source": "squares",
+            "property": "validMove",
+            "relation": "==",
+            "value": false,
+            "collection": "badMove"
+          },
+          {
+            "func": "SET",
+            "collection": "badMove",
+            "property": "css",
+            "value": "${PROPERTY illegalMoveCSS OF board}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "squares",
+            "property": "css",
+            "value": "${PROPERTY illegalMoveCSS OF board}"
+          }
+        ]
+      }
+    ],
+    "noMovesRoutine": [
+      "var endGame = ${PROPERTY onePlayerStymied OF board}",
+      "var endGame = ${endGame} || ${PROPERTY endGameIfNoMoves OF OptionsList}",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "board",
+        "collection": "board"
+      },
+      {
+        "func": "IF",
+        "condition": "${endGame}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "gameOverRoutine"
+          },
+          {
+            "func": "SET",
+            "collection": "board",
+            "property": "onePlayerStymied",
+            "value": false
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "routine": "showMessageRoutine",
+            "arguments": {
+              "msg": "No Moves"
+            }
+          },
+          {
+            "func": "SET",
+            "collection": "board",
+            "property": "onePlayerStymied",
+            "value": true
+          },
+          {
+            "func": "CALL",
+            "routine": "moveDoneRoutine",
+            "widget": "moves"
+          }
+        ]
+      }
+    ],
+    "setCurrentPlayerRoutine": [
+      "var oldPlayer = 1 - ${newPlayer}",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "board"
+      },
+      {
+        "func": "SET",
+        "property": "playerID",
+        "value": "${newPlayer}"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "holder${oldPlayer}"
+      },
+      {
+        "func": "SET",
+        "property": "movable",
+        "value": false
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder${oldPlayer}"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "border-radius:100px !important;background-color:gray; border-color:gray !important; border-width:5px !important; filter: drop-shadow(1px 2px 10px #000) !important"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "holder${newPlayer}"
+      },
+      {
+        "func": "SET",
+        "property": "movable",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "holder${newPlayer}"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "border-radius:100px !important;background-color:burlywood; border-color:peru !important; border-width:5px !important; filter: drop-shadow(1px 2px 10px #000) !important"
+      }
+    ]
+  },
+  "zpiece01": {
+    "token": true,
+    "id": "zpiece01",
+    "x": 130,
+    "y": 92,
+    "z": 5318,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece33": {
+    "token": true,
+    "id": "zpiece33",
+    "x": 100,
+    "y": 54,
+    "z": 5568,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece10": {
+    "token": true,
+    "id": "zpiece10",
+    "x": 152,
+    "y": 164,
+    "z": 5350,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece11": {
+    "token": true,
+    "id": "zpiece11",
+    "x": 36,
+    "y": 254,
+    "z": 2352,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece12": {
+    "token": true,
+    "id": "zpiece12",
+    "x": 19,
+    "y": 217,
+    "z": 2352,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece13": {
+    "token": true,
+    "id": "zpiece13",
+    "x": 31,
+    "y": 21,
+    "z": 2352,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece14": {
+    "token": true,
+    "id": "zpiece14",
+    "x": 142,
+    "y": 49,
+    "z": 5372,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece15": {
+    "token": true,
+    "id": "zpiece15",
+    "x": 142,
+    "y": 104,
+    "z": 5682,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece16": {
+    "token": true,
+    "id": "zpiece16",
+    "x": 4,
+    "y": 4,
+    "z": 5747,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "sq34",
+    "movable": false
+  },
+  "zpiece17": {
+    "token": true,
+    "id": "zpiece17",
+    "x": 86,
+    "y": 132,
+    "z": 5502,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece18": {
+    "token": true,
+    "id": "zpiece18",
+    "x": 126,
+    "y": 93,
+    "z": 2352,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece19": {
+    "token": true,
+    "id": "zpiece19",
+    "x": 151,
+    "y": 214,
+    "z": 5738,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece20": {
+    "token": true,
+    "id": "zpiece20",
+    "x": 162,
+    "y": 198,
+    "z": 4065,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece21": {
+    "token": true,
+    "id": "zpiece21",
+    "x": 103,
+    "y": 157,
+    "z": 4085,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece22": {
+    "token": true,
+    "id": "zpiece22",
+    "x": 121,
+    "z": 5727,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "y": 215,
+    "parent": "holder0"
+  },
+  "zpiece23": {
+    "token": true,
+    "id": "zpiece23",
+    "x": 67,
+    "y": 229,
+    "z": 5676,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece24": {
+    "token": true,
+    "id": "zpiece24",
+    "x": 150,
+    "y": 75,
+    "z": 4064,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece25": {
+    "token": true,
+    "id": "zpiece25",
+    "x": 54,
+    "y": 154,
+    "z": 5000,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece26": {
+    "token": true,
+    "id": "zpiece26",
+    "x": 45,
+    "y": 27,
+    "z": 4069,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece27": {
+    "token": true,
+    "id": "zpiece27",
+    "x": 18,
+    "y": 93,
+    "z": 5572,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece28": {
+    "token": true,
+    "id": "zpiece28",
+    "x": 163,
+    "y": 153,
+    "z": 5618,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece29": {
+    "token": true,
+    "id": "zpiece29",
+    "x": 48,
+    "y": 68,
+    "z": 5326,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece30": {
+    "token": true,
+    "id": "zpiece30",
+    "x": 144,
+    "y": 23,
+    "z": 5330,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece31": {
+    "token": true,
+    "id": "zpiece31",
+    "x": 13,
+    "y": 190,
+    "z": 2932,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece32": {
+    "token": true,
+    "id": "zpiece32",
+    "x": 38,
+    "z": 5346,
+    "face": 0,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "y": 221,
+    "parent": "holder0"
+  },
+  "zpiece34": {
+    "token": true,
+    "id": "zpiece34",
+    "x": 40,
+    "y": 158,
+    "z": 5376,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece35": {
+    "token": true,
+    "id": "zpiece35",
+    "x": 46,
+    "y": 88,
+    "z": 5322,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece36": {
+    "token": true,
+    "id": "zpiece36",
+    "x": 76,
+    "z": 5358,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "y": 41,
+    "parent": "holder0"
+  },
+  "zpiece37": {
+    "token": true,
+    "id": "zpiece37",
+    "x": 126,
+    "y": 232,
+    "z": 3484,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece38": {
+    "token": true,
+    "id": "zpiece38",
+    "x": 17,
+    "z": 4073,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "y": 94,
+    "parent": "holder0"
+  },
+  "zpiece39": {
+    "token": true,
+    "id": "zpiece39",
+    "x": 19,
+    "y": 171,
+    "z": 5136,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece40": {
+    "token": true,
+    "id": "zpiece40",
+    "x": 33,
+    "y": 78,
+    "z": 5710,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece41": {
+    "token": true,
+    "id": "zpiece41",
+    "x": 139,
+    "y": 241,
+    "z": 5388,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece42": {
+    "token": true,
+    "id": "zpiece42",
+    "x": 159,
+    "y": 274,
+    "z": 5140,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece43": {
+    "token": true,
+    "id": "zpiece43",
+    "x": 4,
+    "y": 4,
+    "z": 5748,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "sq43",
+    "movable": false
+  },
+  "zpiece44": {
+    "token": true,
+    "id": "zpiece44",
+    "x": 49,
+    "z": 5342,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "y": 124,
+    "parent": "holder0"
+  },
+  "zpiece45": {
+    "token": true,
+    "id": "zpiece45",
+    "x": 48,
+    "y": 253,
+    "z": 2937,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece46": {
+    "token": true,
+    "id": "zpiece46",
+    "x": 53,
+    "y": 124,
+    "z": 5354,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece47": {
+    "token": true,
+    "id": "zpiece47",
+    "x": 139,
+    "y": 124,
+    "z": 5334,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece48": {
+    "token": true,
+    "id": "zpiece48",
+    "x": 27,
+    "y": 217,
+    "z": 5338,
+    "css": "border-style:inset ; background:black ; border-radius:100% ; border: 3px solid white",
+    "face": 0,
+    "parent": "holder0"
+  },
+  "zpiece49": {
+    "token": true,
+    "id": "zpiece49",
+    "x": 110,
+    "y": 55,
+    "z": 5570,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece50": {
+    "token": true,
+    "id": "zpiece50",
+    "x": 118,
+    "y": 222,
+    "z": 5328,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "Note": "This holder does not inherit the enterRoutine",
+    "Note1": "from sq00, since it is one of the initial placements",
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece51": {
+    "token": true,
+    "id": "zpiece51",
+    "x": 142,
+    "z": 5124,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "y": 255,
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece52": {
+    "token": true,
+    "id": "zpiece52",
+    "x": 83,
+    "y": 135,
+    "z": 5352,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece53": {
+    "token": true,
+    "id": "zpiece53",
+    "x": 48,
+    "z": 5062,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "y": 55,
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece54": {
+    "token": true,
+    "id": "zpiece54",
+    "x": 55,
+    "y": 264,
+    "z": 5022,
+    "face": 1,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece55": {
+    "token": true,
+    "id": "zpiece55",
+    "x": 36,
+    "y": 176,
+    "z": 5018,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece56": {
+    "token": true,
+    "id": "zpiece56",
+    "x": 107,
+    "z": 5026,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "y": 179,
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece57": {
+    "token": true,
+    "id": "zpiece57",
+    "x": 22,
+    "y": 51,
+    "z": 5336,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece58": {
+    "token": true,
+    "id": "zpiece58",
+    "x": 112,
+    "y": 234,
+    "z": 5068,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece59": {
+    "token": true,
+    "id": "zpiece59",
+    "x": 74,
+    "z": 5574,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "y": 262,
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece60": {
+    "token": true,
+    "id": "zpiece60",
+    "x": 12,
+    "y": 246,
+    "z": 5146,
+    "face": 1,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece61": {
+    "token": true,
+    "id": "zpiece61",
+    "x": 11,
+    "z": 5150,
+    "face": 1,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "y": 275,
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece62": {
+    "token": true,
+    "id": "zpiece62",
+    "x": 68,
+    "y": 233,
+    "z": 4071,
+    "face": 1,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece63": {
+    "token": true,
+    "id": "zpiece63",
+    "x": 147,
+    "y": 24,
+    "z": 5378,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece64": {
+    "token": true,
+    "id": "zpiece64",
+    "x": 67,
+    "y": 195,
+    "z": 5628,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece02": {
+    "token": true,
+    "id": "zpiece02",
+    "x": 72,
+    "y": 74,
+    "z": 3751,
+    "face": 1,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece03": {
+    "token": true,
+    "id": "zpiece03",
+    "x": 149,
+    "z": 5332,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "y": 43,
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece04": {
+    "token": true,
+    "id": "zpiece04",
+    "x": 37,
+    "y": 148,
+    "z": 5430,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece05": {
+    "token": true,
+    "id": "zpiece05",
+    "x": 141,
+    "y": 80,
+    "z": 4066,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece06": {
+    "token": true,
+    "id": "zpiece06",
+    "x": 104,
+    "z": 5544,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "y": 274,
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece07": {
+    "token": true,
+    "id": "zpiece07",
+    "x": 118,
+    "z": 3765,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "y": 65,
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece08": {
+    "token": true,
+    "id": "zpiece08",
+    "x": 91,
+    "y": 270,
+    "z": 5734,
+    "face": 1,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece09": {
+    "token": true,
+    "id": "zpiece09",
+    "x": 115,
+    "z": 5320,
+    "face": 1,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "y": 25,
+    "parent": "holder1",
+    "movable": false
+  },
+  "score0": {
+    "type": "label",
+    "id": "score0",
+    "css": "background:burlywood;font-size:36px; font-weight:bold;color:black;text-align:center",
+    "x": 125,
+    "y": 440,
+    "text": 2,
+    "height": 40
+  },
+  "score1": {
+    "type": "label",
+    "id": "score1",
+    "x": 125,
+    "y": 940,
+    "text": 2,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "score0": [
+        "css",
+        "width",
+        "height"
+      ]
+    }
+  },
+  "93zp": {
+    "id": "93zp",
+    "text": "Reversi",
+    "css": "background-color:burlywood; border-color:peru; border-width:5px; filter: drop-shadow(1px 2px 10px #000) !important;text-align:center; font-size:64px",
+    "x": 1350,
+    "y": 100,
+    "width": 240,
+    "height": 75,
+    "movableInEdit": false,
+    "movable": false
+  },
+  "zpiece65": {
+    "token": true,
+    "id": "zpiece65",
+    "x": 15,
+    "y": 148,
+    "z": 5324,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece66": {
+    "token": true,
+    "id": "zpiece66",
+    "x": 96,
+    "z": 5054,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "y": 116,
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece67": {
+    "token": true,
+    "id": "zpiece67",
+    "x": 67,
+    "z": 5602,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "y": 162,
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece68": {
+    "token": true,
+    "id": "zpiece68",
+    "x": 131,
+    "y": 254,
+    "z": 5688,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece69": {
+    "token": true,
+    "id": "zpiece69",
+    "x": 129,
+    "y": 260,
+    "z": 5162,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece70": {
+    "token": true,
+    "id": "zpiece70",
+    "x": 79,
+    "y": 38,
+    "z": 5500,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece71": {
+    "token": true,
+    "id": "zpiece71",
+    "x": 4,
+    "z": 5750,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "y": 4,
+    "parent": "sq44",
+    "movable": false
+  },
+  "zpiece72": {
+    "token": true,
+    "id": "zpiece72",
+    "x": 106,
+    "z": 5712,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "y": 58,
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece73": {
+    "token": true,
+    "id": "zpiece73",
+    "x": 108,
+    "y": 135,
+    "z": 5348,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece74": {
+    "token": true,
+    "id": "zpiece74",
+    "x": 75,
+    "y": 176,
+    "z": 5662,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece75": {
+    "token": true,
+    "id": "zpiece75",
+    "x": 4,
+    "y": 4,
+    "z": 5749,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "parent": "sq33",
+    "movable": false
+  },
+  "zpiece76": {
+    "token": true,
+    "id": "zpiece76",
+    "x": 10,
+    "y": 235,
+    "z": 2943,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece77": {
+    "token": true,
+    "id": "zpiece77",
+    "x": 155,
+    "y": 61,
+    "z": 5340,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece78": {
+    "token": true,
+    "id": "zpiece78",
+    "x": 151,
+    "y": 99,
+    "z": 5368,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece79": {
+    "token": true,
+    "id": "zpiece79",
+    "x": 142,
+    "y": 29,
+    "z": 5030,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "parent": "holder1",
+    "movable": false
+  },
+  "zpiece80": {
+    "token": true,
+    "id": "zpiece80",
+    "x": 108,
+    "y": 139,
+    "z": 5356,
+    "css": "border-style:inset ; background:white ; border-radius:100% ; border: 3px solid black",
+    "face": 1,
+    "parent": "holder1",
+    "movable": false
+  },
+  "message": {
+    "type": "label",
+    "id": "message",
+    "width": 500,
+    "height": 70,
+    "css": "background-color:burlywood; border-color:peru; border-width:5px; filter: drop-shadow(1px 2px 10px #000) !important;text-align:center; font-size:60px; color:red",
+    "x": 1700,
+    "y": 465,
+    "text": "Game Over"
+  },
+  "messageTimer": {
+    "type": "timer",
+    "id": "messageTimer",
+    "x": 1668,
+    "y": 386,
+    "z": 30,
+    "precision": 2000,
+    "millisecondsChangeRoutine": [
+      {
+        "func": "TIMER",
+        "timer": "messageTimer",
+        "mode": "pause"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "message"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1700
+      }
+    ],
+    "milliseconds": 322000
+  },
+  "resetHolder": {
+    "type": "holder",
+    "id": "resetHolder",
+    "x": 1435,
+    "width": 80,
+    "height": 80,
+    "css": "background-color:burlywood; border-color: peru; border-width:5px; border-radius:45px; filter: drop-shadow(1px 2px 10px #000) !important",
+    "y": 350,
+    "movableInEdit": false
+  },
+  "resetGame": {
+    "id": "resetGame",
+    "x": 6,
+    "y": 6.5,
+    "width": 60,
+    "height": 60,
+    "z": 3223,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "tokenHolder",
+        "value": true,
+        "collection": "squares"
+      },
+      {
+        "func": "CALL",
+        "routine": "moveTokensToHoldersRoutine"
+      },
+      {
+        "func": "CALL",
+        "routine": "resetBoardRoutine"
+      },
+      {
+        "func": "CALL",
+        "routine": "doInitialMovesRoutine"
+      }
+    ],
+    "image": "/assets/1342248376_1383",
+    "svgReplaces": {
+      "currentColor": "svgButtonColor"
+    },
+    "parent": "resetHolder",
+    "movable": false,
+    "movableInEdit": false,
+    "fixedParent": true,
+    "moveTokensToHoldersRoutine": [
+      {
+        "Note": "Move all tokens back to holders"
+      },
+      {
+        "func": "SELECT",
+        "property": "token",
+        "value": true,
+        "collection": "allTokens"
+      },
+      {
+        "func": "SET",
+        "collection": "allTokens",
+        "property": "parent",
+        "value": null
+      },
+      {
+        "func": "SELECT",
+        "source": "allTokens",
+        "max": 40
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "holder0"
+      },
+      {
+        "func": "SET",
+        "property": "face",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "source": "allTokens",
+        "property": "parent",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "holder1"
+      },
+      {
+        "func": "SET",
+        "property": "face",
+        "value": 1
+      },
+      {
+        "func": "FOREACH",
+        "collection": "allTokens",
+        "loopRoutine": [
+          "var xOff = randInt 10 165",
+          "var yOff = randInt 20 275",
+          {
+            "func": "SET",
+            "property": "x",
+            "value": "${xOff}"
+          },
+          {
+            "func": "SET",
+            "property": "y",
+            "value": "${yOff}"
+          }
+        ]
+      }
+    ],
+    "resetBoardRoutine": [
+      {
+        "Note": "Record that all squares are empty and not surrounded, and",
+        "Note1": "make sure squares don't have light green background"
+      },
+      {
+        "func": "SET",
+        "collection": "squares",
+        "property": "token",
+        "value": -1
+      },
+      {
+        "func": "SET",
+        "collection": "squares",
+        "property": "surrounded",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": "squares",
+        "property": "css",
+        "value": "${PROPERTY illegalMoveCSS OF board}"
+      }
+    ],
+    "doInitialMovesRoutine": [
+      {
+        "func": "SET",
+        "collection": "squares",
+        "property": "validMove",
+        "value": false
+      },
+      {
+        "func": "IF",
+        "condition": "${PROPERTY startWithFour OF OptionsList}",
+        "thenRoutine": [
+          {
+            "Note": "This branch is for Othello(R) rules",
+            "func": "SELECT",
+            "property": "id",
+            "value": "board"
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "relation": "in",
+            "value": [
+              "sq34",
+              "sq43"
+            ],
+            "collection": "init0"
+          },
+          {
+            "func": "SET",
+            "collection": "init0",
+            "property": "enterRoutine",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "init0",
+            "property": "token",
+            "value": 0
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "sq33",
+            "collection": "init1"
+          },
+          {
+            "func": "SET",
+            "collection": "init1",
+            "property": "enterRoutine",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "init1",
+            "property": "token",
+            "value": 1
+          },
+          {
+            "func": "MOVE",
+            "from": "holder0",
+            "to": "sq34"
+          },
+          {
+            "func": "MOVE",
+            "from": "holder0",
+            "to": "sq43"
+          },
+          {
+            "func": "MOVE",
+            "from": "holder1",
+            "to": "sq33"
+          },
+          {
+            "func": "CALL",
+            "widget": "utilities",
+            "routine": "setCurrentPlayerRoutine",
+            "arguments": {
+              "newPlayer": 1
+            }
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "sq44",
+            "collection": "finalsq"
+          },
+          {
+            "func": "SET",
+            "collection": "finalsq",
+            "property": "inheritFrom",
+            "value": {
+              "sq00": [
+                "enterRoutine"
+              ]
+            }
+          },
+          {
+            "func": "SET",
+            "collection": "finalsq",
+            "property": "validMove",
+            "value": true
+          },
+          {
+            "func": "MOVE",
+            "from": "holder1",
+            "to": "sq44"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "Note": "This branch is for reversi rules",
+            "func": "CALL",
+            "widget": "utilities",
+            "routine": "setCurrentPlayerRoutine",
+            "arguments": {
+              "newPlayer": 0
+            }
+          },
+          {
+            "func": "LABEL",
+            "label": "score0",
+            "value": 0
+          },
+          {
+            "func": "LABEL",
+            "label": "score1",
+            "value": 0
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "relation": "in",
+            "value": [
+              "sq34",
+              "sq43",
+              "sq44"
+            ],
+            "collection": "inits"
+          },
+          {
+            "func": "SET",
+            "collection": "inits",
+            "property": "inheritFrom",
+            "value": {
+              "sq33": [
+                "enterRoutine"
+              ]
+            }
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "sq33",
+            "collection": "sq33"
+          },
+          {
+            "func": "SET",
+            "collection": "sq33",
+            "property": "enterRoutine",
+            "value": "${PROPERTY blankBoardRoutine OF board}"
+          },
+          {
+            "func": "IF",
+            "condition": "${PROPERTY showMoves OF OptionsList}",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "property": "css",
+                "value": "${PROPERTY legalMoveCSS OF board}"
+              },
+              {
+                "func": "SET",
+                "collection": "inits",
+                "property": "css",
+                "value": "${PROPERTY legalMoveCSS OF board}"
+              }
+            ]
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "relation": "in",
+            "value": "${PROPERTY initsqs OF board}",
+            "collection": "initsqs"
+          },
+          {
+            "func": "SET",
+            "collection": "initsqs",
+            "property": "validMove",
+            "value": true
+          }
+        ]
+      }
+    ],
+    "svgButtonColor": "black"
+  },
+  "v485": {
+    "type": "button",
+    "id": "v485",
+    "text": "Options",
+    "x": 1435,
+    "y": 600,
+    "css": "background-color:burlywood; border-color:peru; border-width:5px; filter: drop-shadow(1px 2px 10px #000) !important;text-align:center; color:black",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "OptionsList"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 250
+      }
+    ]
+  },
+  "OptionsList": {
+    "type": "holder",
+    "id": "OptionsList",
+    "width": 500,
+    "height": 620,
+    "css": "background-color:burlywood; border-color:peru; border-width:5px; filter: drop-shadow(1px 2px 10px #000) !important;text-align:center; color:black",
+    "showMoves": false,
+    "endGameIfNoMoves": false,
+    "x": -1500,
+    "startWithFour": true,
+    "leftDisabledCSS": "background-color:green;border-color:black; border-width:2px; filter: drop-shadow(1px 2px 10px #000) !important; color:black;border-radius: 50% 0% 0% 50% / 100% 0% 0% 100% ; font-size:20pt",
+    "leftEnabledCSS": "--wcMain:burlywood; --wcMainOH: #ce954b; border-color:black; border-width:2px; filter: drop-shadow(1px 2px 10px #000) !important; color:black;border-radius: 50% 0% 0% 50% / 100% 0% 0% 100% ; font-size:20pt",
+    "rightDisabledCSS": "background-color:green; border-color:black; border-width:2px; filter: drop-shadow(1px 2px 10px #000) !important; color:black;border-radius: 0% 50% 50% 0% / 0% 100% 100% 0% ; font-size:20pt",
+    "rightEnabledCSS": "--wcMain:burlywood; --wcMainOH: #ce954b; border-color:black; border-width:2px; filter: drop-shadow(1px 2px 10px #000) !important; color:black;border-radius: 0% 50% 50% 0% / 0% 100% 100% 0% ; font-size:20pt",
+    "parent": "board",
+    "fixedParent": true,
+    "y": 128,
+    "rightSmallEnabledCSS": "--wcMain:burlywood; --wcMainOH: #ce954b; border-color:black; border-width:2px; filter: drop-shadow(1px 2px 10px #000) !important; color:black;border-radius: 0% 50% 50% 0% / 0% 100% 100% 0% ; font-size:16pt",
+    "rightSmallDisabledCSS": "background-color:green; border-color:black; border-width:2px; filter: drop-shadow(1px 2px 10px #000) !important; color:black;border-radius: 0% 50% 50% 0% / 0% 100% 100% 0% ; font-size:16pt",
+    "leftSmallDisabledCSS": "background-color:green;border-color:black; border-width:2px; filter: drop-shadow(1px 2px 10px #000) !important; color:black;border-radius: 50% 0% 0% 50% / 100% 0% 0% 100% ; font-size:16pt",
+    "leftSmallEnabledCSS": "--wcMain:burlywood; --wcMainOH: #ce954b; border-color:black; border-width:2px; filter: drop-shadow(1px 2px 10px #000) !important; color:black;border-radius: 50% 0% 0% 50% / 100% 0% 0% 100% ; font-size:16pt",
+    "startWithFourTemp": true,
+    "endGameIfNoMovesTemp": false,
+    "showMovesTemp": false,
+    "flipsAllowedTemp": true,
+    "flipsAllowed": true,
+    "z": 1788
+  },
+  "OptionsClose": {
+    "type": "button",
+    "id": "OptionsClose",
+    "parent": "OptionsList",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "optionsCancel"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "css": "background: white; --wcFont: black; --wcFontOH:red; border-style: none; font-family:Arial",
+    "text": "X",
+    "width": 40,
+    "height": 40,
+    "fixedParent": true,
+    "z": 35,
+    "x": 474,
+    "y": -24
+  },
+  "nrcv": {
+    "id": "nrcv",
+    "z": 3713,
+    "x": 1089,
+    "y": 459
+  },
+  "Othello": {
+    "type": "button",
+    "id": "Othello",
+    "parent": "OptionsList",
+    "fixedParent": true,
+    "x": 50,
+    "width": 200,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "OptionsList"
+      },
+      {
+        "func": "SET",
+        "property": "height",
+        "value": 620
+      },
+      {
+        "func": "SET",
+        "property": "startWithFourTemp",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "endGameIfNoMovesTemp",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "${PROPERTY leftDisabledCSS OF OptionsList}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Reversi"
+      },
+      {
+        "func": "SET",
+        "property": "clickable",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "${PROPERTY rightEnabledCSS OF OptionsList}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "centerOnly",
+          "flipOK"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "-",
+        "value": 1500
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "optionsOK",
+          "optionsCancel"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "relation": "-",
+        "value": 100
+      }
+    ],
+    "css": "background-color:green;border-color:black; border-width:2px; filter: drop-shadow(1px 2px 10px #000) !important; color:black;border-radius: 50% 0% 0% 50% / 100% 0% 0% 100% ; font-size:20pt",
+    "text": "Othello® rules",
+    "y": 350,
+    "clickable": false
+  },
+  "Reversi": {
+    "type": "button",
+    "id": "Reversi",
+    "parent": "OptionsList",
+    "fixedParent": true,
+    "x": 250,
+    "width": 200,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "OptionsList"
+      },
+      {
+        "func": "SET",
+        "property": "height",
+        "value": 720
+      },
+      {
+        "func": "SET",
+        "property": "startWithFourTemp",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "property": "endGameIfNoMovesTemp",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "${PROPERTY rightDisabledCSS OF OptionsList}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "Othello"
+      },
+      {
+        "func": "SET",
+        "property": "clickable",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "${PROPERTY leftEnabledCSS OF OptionsList}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "centerOnly",
+          "flipOK"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "+",
+        "value": 1500
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "optionsOK",
+          "optionsCancel"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "relation": "+",
+        "value": 100
+      }
+    ],
+    "css": "--wcMain:burlywood; --wcMainOH: #ce954b; border-color:black; border-width:2px; filter: drop-shadow(1px 2px 10px #000) !important; color:black;border-radius: 0% 50% 50% 0% / 0% 100% 100% 0% ; font-size:20pt",
+    "text": "Reversi rules",
+    "y": 350
+  },
+  "centerOnly": {
+    "type": "button",
+    "id": "centerOnly",
+    "parent": "OptionsList",
+    "fixedParent": true,
+    "width": 150,
+    "clickRoutine": [
+      "var showMoves = ! ${PROPERTY showMoves OF OptionsList}",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "OptionsList"
+      },
+      {
+        "func": "SET",
+        "property": "flipsAllowedTemp",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "${PROPERTY leftSmallDisabledCSS OF OptionsList}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "flipOK"
+      },
+      {
+        "func": "SET",
+        "property": "clickable",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "${PROPERTY rightSmallEnabledCSS OF OptionsList}"
+      }
+    ],
+    "css": "--wcMain:burlywood; --wcMainOH: #ce954b; border-color:black; border-width:2px; filter: drop-shadow(1px 2px 10px #000) !important; color:black;border-radius: 50% 0% 0% 50% / 100% 0% 0% 100% ; font-size:16pt",
+    "text": "First four\nin center",
+    "y": 450,
+    "x": -1350
+  },
+  "flipOK": {
+    "type": "button",
+    "id": "flipOK",
+    "parent": "OptionsList",
+    "fixedParent": true,
+    "width": 150,
+    "clickRoutine": [
+      "var showMoves = ! ${PROPERTY showMoves OF OptionsList}",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "OptionsList"
+      },
+      {
+        "func": "SET",
+        "property": "flipsAllowedTemp",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "${PROPERTY rightSmallDisabledCSS OF OptionsList}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "centerOnly"
+      },
+      {
+        "func": "SET",
+        "property": "clickable",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "${PROPERTY leftSmallEnabledCSS OF OptionsList}"
+      }
+    ],
+    "css": "background-color:green; border-color:black; border-width:2px; filter: drop-shadow(1px 2px 10px #000) !important; color:black;border-radius: 0% 50% 50% 0% / 0% 100% 100% 0% ; font-size:16pt",
+    "text": "Fourth token\ncan flip",
+    "y": 450,
+    "x": -1200,
+    "clickable": false
+  },
+  "showLegalMoves": {
+    "type": "button",
+    "id": "showLegalMoves",
+    "parent": "OptionsList",
+    "fixedParent": true,
+    "x": 50,
+    "width": 200,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "OptionsList"
+      },
+      {
+        "func": "SET",
+        "property": "showMovesTemp",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "${PROPERTY leftDisabledCSS OF OptionsList}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "noShowLegalMoves"
+      },
+      {
+        "func": "SET",
+        "property": "clickable",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "${PROPERTY rightEnabledCSS OF OptionsList}"
+      }
+    ],
+    "css": "--wcMain:burlywood; --wcMainOH: #ce954b; border-color:black; border-width:2px; filter: drop-shadow(1px 2px 10px #000) !important; color:black;border-radius: 50% 0% 0% 50% / 100% 0% 0% 100% ; font-size:20pt",
+    "text": "Show legal\nmoves",
+    "y": 200
+  },
+  "noShowLegalMoves": {
+    "type": "button",
+    "id": "noShowLegalMoves",
+    "parent": "OptionsList",
+    "fixedParent": true,
+    "x": 250,
+    "width": 200,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "OptionsList"
+      },
+      {
+        "func": "SET",
+        "property": "showMovesTemp",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "${PROPERTY rightDisabledCSS OF OptionsList}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "showLegalMoves"
+      },
+      {
+        "func": "SET",
+        "property": "clickable",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "${PROPERTY leftEnabledCSS OF OptionsList}"
+      }
+    ],
+    "css": "background-color:green; border-color:black; border-width:2px; filter: drop-shadow(1px 2px 10px #000) !important; color:black;border-radius: 0% 50% 50% 0% / 0% 100% 100% 0% ; font-size:20pt",
+    "text": "Do not show\nlegal moves",
+    "y": 200,
+    "clickable": false
+  },
+  "mt0b": {
+    "id": "mt0b",
+    "text": "Options",
+    "css": "font-size: 36pt; text-align:center",
+    "parent": "OptionsList",
+    "width": 300,
+    "x": 100,
+    "fixedParent": true
+  },
+  "wntp": {
+    "id": "wntp",
+    "parent": "OptionsList",
+    "fixedParent": true,
+    "text": "Note: Changing options will\nreset the game",
+    "width": 500,
+    "css": "font-size: 18pt; text-align:center",
+    "y": 80
+  },
+  "optionsCancel": {
+    "type": "button",
+    "id": "optionsCancel",
+    "parent": "OptionsList",
+    "fixedParent": true,
+    "x": 350,
+    "y": 490,
+    "width": 100,
+    "z": 39,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "OptionsList"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": -1500
+      }
+    ],
+    "css": "--wcMain:burlywood; --wcMainOH: #ce954b; border-color:black; border-width:2px; filter: drop-shadow(1px 2px 10px #000) !important; color:black;font-size:20pt",
+    "text": "Cancel"
+  },
+  "optionsOK": {
+    "type": "button",
+    "id": "optionsOK",
+    "parent": "OptionsList",
+    "fixedParent": true,
+    "x": 50,
+    "y": 490,
+    "width": 100,
+    "z": 39,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "SET",
+        "property": "startWithFour",
+        "value": "${PROPERTY startWithFourTemp OF OptionsList}"
+      },
+      {
+        "func": "SET",
+        "property": "endGameIfNoMoves",
+        "value": "${PROPERTY endGameIfNoMovesTemp OF OptionsList}"
+      },
+      {
+        "func": "SET",
+        "property": "showMoves",
+        "value": "${PROPERTY showMovesTemp OF OptionsList}"
+      },
+      {
+        "func": "SET",
+        "property": "flipsAllowed",
+        "value": "${PROPERTY flipsAllowedTemp OF OptionsList}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "resetGame"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "optionsCancel"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "css": "--wcMain:burlywood; --wcMainOH: #ce954b; border-color:black; border-width:2px; filter: drop-shadow(1px 2px 10px #000) !important; color:black;font-size:20pt",
+    "text": "OK"
+  }
+}

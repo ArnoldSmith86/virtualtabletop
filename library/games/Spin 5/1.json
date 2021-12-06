@@ -1,0 +1,3588 @@
+{
+  "grid003-1-1": {
+    "id": "grid003-1-1",
+    "x": 975,
+    "y": 6,
+    "z": 2258,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid006-3-1": {
+    "id": "grid006-3-1",
+    "x": 975,
+    "y": 557,
+    "z": 2229,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "1d139968-0314-442c-9432-aca2bce932f8": {
+    "id": "1d139968-0314-442c-9432-aca2bce932f8",
+    "y": 4,
+    "z": 15934,
+    "type": "deck",
+    "cardTypes": {
+      "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8": {}
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": -20,
+            "y": -20,
+            "valueType": "static",
+            "value": "/assets/672028473_28853",
+            "color": "#000000",
+            "width": 148,
+            "height": 148
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 17,
+            "fontSize": "40",
+            "valueType": "static",
+            "value": "♧",
+            "textAlign": "center",
+            "textFont": "interstate",
+            "width": 92
+          }
+        ],
+        "border": 1,
+        "radius": 50
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": -20,
+            "y": -20,
+            "valueType": "static",
+            "value": "/assets/672028473_28853",
+            "color": "#000000",
+            "width": 148,
+            "height": 148
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 17,
+            "fontSize": "40",
+            "valueType": "static",
+            "value": "♧",
+            "textAlign": "center",
+            "textFont": "interstate",
+            "width": 92
+          }
+        ],
+        "border": 1,
+        "radius": 50
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 92,
+      "height": 92
+    },
+    "x": 4,
+    "parent": "05db8c4a-de00-40fb-aa7c-9b07d98049da"
+  },
+  "grid005-3-3": {
+    "id": "grid005-3-3",
+    "x": 860,
+    "y": 557,
+    "z": 2227,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid004-2-1": {
+    "id": "grid004-2-1",
+    "x": 306,
+    "y": 450.25,
+    "z": 2247,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0": {
+    "id": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "x": 4,
+    "y": 4,
+    "z": 14263,
+    "type": "deck",
+    "cardTypes": {
+      "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8": {}
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": -20,
+            "y": -20,
+            "valueType": "static",
+            "value": "/assets/1949440025_28802",
+            "color": "#000000",
+            "width": 148,
+            "height": 148
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 17,
+            "fontSize": "40",
+            "valueType": "static",
+            "value": "♤",
+            "textAlign": "center",
+            "textFont": "interstate",
+            "width": 92
+          }
+        ],
+        "border": 1,
+        "radius": 46
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": -20,
+            "y": -20,
+            "valueType": "static",
+            "value": "/assets/1949440025_28802",
+            "color": "#000000",
+            "width": 148,
+            "height": 148
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 17,
+            "fontSize": "40",
+            "valueType": "static",
+            "value": "♤",
+            "textAlign": "center",
+            "textFont": "interstate",
+            "width": 92
+          }
+        ],
+        "border": 1,
+        "radius": 46
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 92,
+      "height": 92
+    },
+    "parent": "6919f00e-381a-4798-bfcd-44be0d840aab"
+  },
+  "grid001-2-1": {
+    "id": "grid001-2-1",
+    "x": 306,
+    "y": 114.5,
+    "z": 2243,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid004-2-2": {
+    "id": "grid004-2-2",
+    "x": 414.5,
+    "y": 450.25,
+    "z": 2183,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid009-1-1": {
+    "id": "grid009-1-1",
+    "x": 975,
+    "y": 677,
+    "z": 2222,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid002-3-3": {
+    "id": "grid002-3-3",
+    "x": 860,
+    "y": 224,
+    "z": 2165,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid001-3-1": {
+    "id": "grid001-3-1",
+    "x": 304,
+    "y": 223,
+    "z": 2271,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid007-2-1": {
+    "id": "grid007-2-1",
+    "x": 306,
+    "y": 785.5,
+    "z": 2250,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "auto-33-right": {
+    "id": "auto-33-right",
+    "x": 1166,
+    "y": 758.75,
+    "z": 1727,
+    "type": "button",
+    "text": "⟳",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "grid009-1-1",
+        "to": "corner"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid009-3-1",
+        "to": "grid009-1-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid009-3-3",
+        "to": "grid009-3-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid009-1-3",
+        "to": "grid009-3-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "corner",
+        "to": "grid009-1-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid009-1-2",
+        "to": "middle"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid009-2-1",
+        "to": "grid009-1-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid009-3-2",
+        "to": "grid009-2-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid009-2-3",
+        "to": "grid009-3-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "middle",
+        "to": "grid009-2-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "p2",
+        "to": "swap"
+      },
+      {
+        "func": "MOVE",
+        "from": "p1",
+        "to": "p2"
+      },
+      {
+        "func": "MOVE",
+        "from": "swap",
+        "to": "p1"
+      }
+    ],
+    "css": "background:#fb020a;border:10%; border-color: #fb020a;font-size: 200%;color:black;",
+    "width": 45,
+    "height": 45
+  },
+  "grid007-1-1": {
+    "id": "grid007-1-1",
+    "x": 306,
+    "y": 677,
+    "z": 2249,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid009-1-3": {
+    "id": "grid009-1-3",
+    "x": 1193,
+    "y": 677,
+    "z": 2224,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid008-2-1": {
+    "id": "grid008-2-1",
+    "x": 642,
+    "y": 785.5,
+    "z": 2208,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid002-2-3": {
+    "id": "grid002-2-3",
+    "x": 860,
+    "y": 115,
+    "z": 2162,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "6919f00e-381a-4798-bfcd-44be0d840aab": {
+    "id": "6919f00e-381a-4798-bfcd-44be0d840aab",
+    "x": 120,
+    "y": 450.25,
+    "z": 2275,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 100,
+    "height": 100,
+    "css": "background:#2b2a80; border-radius:50%;"
+  },
+  "grid005-2-3": {
+    "id": "grid005-2-3",
+    "x": 860,
+    "y": 450.25,
+    "z": 2235,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid008-3-3": {
+    "id": "grid008-3-3",
+    "x": 860,
+    "y": 894,
+    "z": 2203,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid005-1-1": {
+    "id": "grid005-1-1",
+    "x": 642,
+    "y": 342,
+    "z": 2198,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid009-2-1": {
+    "id": "grid009-2-1",
+    "x": 975,
+    "y": 785.5,
+    "z": 2220,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "auto-11-left": {
+    "id": "auto-11-left",
+    "x": 389,
+    "z": 1727,
+    "type": "button",
+    "text": "⟲",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "grid001-1-1",
+        "to": "corner"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid001-1-3",
+        "to": "grid001-1-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid001-3-3",
+        "to": "grid001-1-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid001-3-1",
+        "to": "grid001-3-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "corner",
+        "to": "grid001-3-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid001-1-2",
+        "to": "middle"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid001-2-3",
+        "to": "grid001-1-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid001-3-2",
+        "to": "grid001-2-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid001-2-1",
+        "to": "grid001-3-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "middle",
+        "to": "grid001-2-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "p2",
+        "to": "swap"
+      },
+      {
+        "func": "MOVE",
+        "from": "p1",
+        "to": "p2"
+      },
+      {
+        "func": "MOVE",
+        "from": "swap",
+        "to": "p1"
+      }
+    ],
+    "css": "background:#fb020a;border:10%; border-color: #fb020a;font-size: 200%;color:black;",
+    "width": 45,
+    "height": 45,
+    "y": 89
+  },
+  "grid007-1-3": {
+    "id": "grid007-1-3",
+    "x": 523,
+    "y": 677,
+    "z": 2190,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "auto-32-right": {
+    "id": "auto-32-right",
+    "x": 833,
+    "y": 758.75,
+    "z": 1727,
+    "type": "button",
+    "text": "⟳",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "grid008-1-1",
+        "to": "corner"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid008-3-1",
+        "to": "grid008-1-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid008-3-3",
+        "to": "grid008-3-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid008-1-3",
+        "to": "grid008-3-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "corner",
+        "to": "grid008-1-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid008-1-2",
+        "to": "middle"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid008-2-1",
+        "to": "grid008-1-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid008-3-2",
+        "to": "grid008-2-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid008-2-3",
+        "to": "grid008-3-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "middle",
+        "to": "grid008-2-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "p2",
+        "to": "swap"
+      },
+      {
+        "func": "MOVE",
+        "from": "p1",
+        "to": "p2"
+      },
+      {
+        "func": "MOVE",
+        "from": "swap",
+        "to": "p1"
+      }
+    ],
+    "css": "background:#fb020a;border:10%; border-color: #fb020a;font-size: 200%;color:black;",
+    "width": 45,
+    "height": 45
+  },
+  "grid008-2-3": {
+    "id": "grid008-2-3",
+    "x": 860,
+    "y": 785.5,
+    "z": 2205,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid003-2-2": {
+    "id": "grid003-2-2",
+    "x": 1084,
+    "y": 115,
+    "z": 2174,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "63f812d7-b71e-4c06-950c-1c81f55d4351": {
+    "id": "63f812d7-b71e-4c06-950c-1c81f55d4351",
+    "z": 15955,
+    "type": "card",
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "ocnk"
+  },
+  "grid009-3-1": {
+    "id": "grid009-3-1",
+    "x": 975,
+    "y": 894,
+    "z": 2214,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid006-2-3": {
+    "id": "grid006-2-3",
+    "x": 1193,
+    "y": 450.25,
+    "z": 2211,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "7421ef36-8a7e-41f8-9707-c66bdf8b882c": {
+    "id": "7421ef36-8a7e-41f8-9707-c66bdf8b882c",
+    "z": 15968,
+    "type": "card",
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "ocnk"
+  },
+  "ba505f93-ba86-492f-bee2-f9083a0c0797": {
+    "id": "ba505f93-ba86-492f-bee2-f9083a0c0797",
+    "z": 15956,
+    "type": "card",
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "ocnk"
+  },
+  "06584bbf-71ef-4998-8615-156bd3536a24": {
+    "id": "06584bbf-71ef-4998-8615-156bd3536a24",
+    "z": 15949,
+    "type": "card",
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "ocnk"
+  },
+  "auto-31-right": {
+    "id": "auto-31-right",
+    "x": 495.5,
+    "y": 759.5,
+    "z": 1729,
+    "type": "button",
+    "text": "⟳",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "grid007-1-1",
+        "to": "corner"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid007-3-1",
+        "to": "grid007-1-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid007-3-3",
+        "to": "grid007-3-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid007-1-3",
+        "to": "grid007-3-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "corner",
+        "to": "grid007-1-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid007-1-2",
+        "to": "middle"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid007-2-1",
+        "to": "grid007-1-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid007-3-2",
+        "to": "grid007-2-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid007-2-3",
+        "to": "grid007-3-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "middle",
+        "to": "grid007-2-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "p2",
+        "to": "swap"
+      },
+      {
+        "func": "MOVE",
+        "from": "p1",
+        "to": "p2"
+      },
+      {
+        "func": "MOVE",
+        "from": "swap",
+        "to": "p1"
+      }
+    ],
+    "css": "background:#fb020a;border:10%; border-color: #fb020a;font-size: 200%;color:black;",
+    "width": 45,
+    "height": 45
+  },
+  "grid008-3-2": {
+    "id": "grid008-3-2",
+    "x": 751,
+    "y": 894,
+    "z": 2201,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "auto-21-right": {
+    "id": "auto-21-right",
+    "x": 496.25,
+    "y": 423.25,
+    "z": 1727,
+    "type": "button",
+    "text": "⟳",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "grid004-1-1",
+        "to": "corner"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid004-3-1",
+        "to": "grid004-1-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid004-3-3",
+        "to": "grid004-3-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid004-1-3",
+        "to": "grid004-3-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "corner",
+        "to": "grid004-1-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid004-1-2",
+        "to": "middle"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid004-2-1",
+        "to": "grid004-1-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid004-3-2",
+        "to": "grid004-2-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid004-2-3",
+        "to": "grid004-3-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "middle",
+        "to": "grid004-2-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "p2",
+        "to": "swap"
+      },
+      {
+        "func": "MOVE",
+        "from": "p1",
+        "to": "p2"
+      },
+      {
+        "func": "MOVE",
+        "from": "swap",
+        "to": "p1"
+      }
+    ],
+    "css": "background:#fb020a;border:10%; border-color: #fb020a;font-size: 200%;color:black;",
+    "width": 45,
+    "height": 45
+  },
+  "grid006-1-1": {
+    "id": "grid006-1-1",
+    "x": 975,
+    "y": 342,
+    "z": 2204,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "auto-23-left": {
+    "id": "auto-23-left",
+    "x": 1057,
+    "y": 423.25,
+    "z": 1727,
+    "type": "button",
+    "text": "⟲",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "grid006-1-1",
+        "to": "corner"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid006-1-3",
+        "to": "grid006-1-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid006-3-3",
+        "to": "grid006-1-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid006-3-1",
+        "to": "grid006-3-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "corner",
+        "to": "grid006-3-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid006-1-2",
+        "to": "middle"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid006-2-3",
+        "to": "grid006-1-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid006-3-2",
+        "to": "grid006-2-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid006-2-1",
+        "to": "grid006-3-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "middle",
+        "to": "grid006-2-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "p2",
+        "to": "swap"
+      },
+      {
+        "func": "MOVE",
+        "from": "p1",
+        "to": "p2"
+      },
+      {
+        "func": "MOVE",
+        "from": "swap",
+        "to": "p1"
+      }
+    ],
+    "css": "background:#fb020a;border:10%; border-color: #fb020a;font-size: 200%;color:black;",
+    "width": 45,
+    "height": 45
+  },
+  "grid007-2-2": {
+    "id": "grid007-2-2",
+    "x": 414.5,
+    "y": 785.5,
+    "z": 2192,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid002-3-2": {
+    "id": "grid002-3-2",
+    "x": 751,
+    "y": 224,
+    "z": 2164,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid004-1-2": {
+    "id": "grid004-1-2",
+    "x": 414.5,
+    "y": 342,
+    "z": 2180,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "auto-13-left": {
+    "id": "auto-13-left",
+    "x": 1056.5,
+    "y": 88.5,
+    "z": 1730,
+    "type": "button",
+    "text": "⟲",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "grid003-1-1",
+        "to": "corner"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid003-1-3",
+        "to": "grid003-1-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid003-3-3",
+        "to": "grid003-1-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid003-3-1",
+        "to": "grid003-3-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "corner",
+        "to": "grid003-3-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid003-1-2",
+        "to": "middle"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid003-2-3",
+        "to": "grid003-1-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid003-3-2",
+        "to": "grid003-2-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid003-2-1",
+        "to": "grid003-3-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "middle",
+        "to": "grid003-2-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "p2",
+        "to": "swap"
+      },
+      {
+        "func": "MOVE",
+        "from": "p1",
+        "to": "p2"
+      },
+      {
+        "func": "MOVE",
+        "from": "swap",
+        "to": "p1"
+      }
+    ],
+    "css": "background:#fb020a;border:10%; border-color: #fb020a;font-size: 200%;color:black;",
+    "width": 45,
+    "height": 45
+  },
+  "a522a95b-0235-4ede-a5f4-1079f698e9d9": {
+    "id": "a522a95b-0235-4ede-a5f4-1079f698e9d9",
+    "z": 15983,
+    "type": "card",
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "ocnk"
+  },
+  "auto-13-right": {
+    "id": "auto-13-right",
+    "x": 1166,
+    "y": 89,
+    "z": 1727,
+    "type": "button",
+    "text": "⟳",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "grid003-1-1",
+        "to": "corner"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid003-3-1",
+        "to": "grid003-1-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid003-3-3",
+        "to": "grid003-3-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid003-1-3",
+        "to": "grid003-3-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "corner",
+        "to": "grid003-1-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid003-1-2",
+        "to": "middle"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid003-2-1",
+        "to": "grid003-1-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid003-3-2",
+        "to": "grid003-2-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid003-2-3",
+        "to": "grid003-3-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "middle",
+        "to": "grid003-2-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "p2",
+        "to": "swap"
+      },
+      {
+        "func": "MOVE",
+        "from": "p1",
+        "to": "p2"
+      },
+      {
+        "func": "MOVE",
+        "from": "swap",
+        "to": "p1"
+      }
+    ],
+    "css": "background:#fb020a;border:10%; border-color: #fb020a;font-size: 200%;color:black;",
+    "width": 45,
+    "height": 45
+  },
+  "grid001-3-3": {
+    "id": "grid001-3-3",
+    "x": 523,
+    "y": 224,
+    "z": 2156,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "794cdb22-ceb4-4199-8317-72466f8f768b": {
+    "id": "794cdb22-ceb4-4199-8317-72466f8f768b",
+    "z": 15959,
+    "type": "card",
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "ocnk"
+  },
+  "f651d6fc-3715-462d-84a5-79540a87b1a0": {
+    "id": "f651d6fc-3715-462d-84a5-79540a87b1a0",
+    "z": 15965,
+    "type": "card",
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "ocnk"
+  },
+  "grid004-2-3": {
+    "id": "grid004-2-3",
+    "x": 523,
+    "y": 450.25,
+    "z": 2184,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid002-2-2": {
+    "id": "grid002-2-2",
+    "x": 751,
+    "y": 115,
+    "z": 2161,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid005-2-2": {
+    "id": "grid005-2-2",
+    "x": 753,
+    "y": 450.25,
+    "z": 404,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "auto-33-left": {
+    "id": "auto-33-left",
+    "x": 1057,
+    "y": 758.75,
+    "z": 1727,
+    "type": "button",
+    "text": "⟲",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "grid009-1-1",
+        "to": "corner"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid009-1-3",
+        "to": "grid009-1-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid009-3-3",
+        "to": "grid009-1-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid009-3-1",
+        "to": "grid009-3-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "corner",
+        "to": "grid009-3-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid009-1-2",
+        "to": "middle"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid009-2-3",
+        "to": "grid009-1-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid009-3-2",
+        "to": "grid009-2-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid009-2-1",
+        "to": "grid009-3-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "middle",
+        "to": "grid009-2-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "p2",
+        "to": "swap"
+      },
+      {
+        "func": "MOVE",
+        "from": "p1",
+        "to": "p2"
+      },
+      {
+        "func": "MOVE",
+        "from": "swap",
+        "to": "p1"
+      }
+    ],
+    "css": "background:#fb020a;border:10%; border-color: #fb020a;font-size: 200%;color:black;",
+    "width": 45,
+    "height": 45
+  },
+  "auto-11-right": {
+    "id": "auto-11-right",
+    "x": 496.25,
+    "z": 1727,
+    "type": "button",
+    "text": "⟳",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "grid001-1-1",
+        "to": "corner"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid001-3-1",
+        "to": "grid001-1-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid001-3-3",
+        "to": "grid001-3-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid001-1-3",
+        "to": "grid001-3-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "corner",
+        "to": "grid001-1-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid001-1-2",
+        "to": "middle"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid001-2-1",
+        "to": "grid001-1-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid001-3-2",
+        "to": "grid001-2-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid001-2-3",
+        "to": "grid001-3-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "middle",
+        "to": "grid001-2-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "p2",
+        "to": "swap"
+      },
+      {
+        "func": "MOVE",
+        "from": "p1",
+        "to": "p2"
+      },
+      {
+        "func": "MOVE",
+        "from": "swap",
+        "to": "p1"
+      }
+    ],
+    "css": "background:#fb020a;border:10%; border-color: #fb020a;font-size: 200%;color:black;",
+    "width": 45,
+    "height": 45,
+    "y": 89
+  },
+  "grid009-1-2": {
+    "id": "grid009-1-2",
+    "x": 1084,
+    "y": 677,
+    "z": 2223,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid007-3-2": {
+    "id": "grid007-3-2",
+    "x": 414.5,
+    "y": 894,
+    "z": 2195,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid001-1-3": {
+    "id": "grid001-1-3",
+    "x": 523,
+    "y": 6,
+    "z": 2252,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "auto-22-left": {
+    "id": "auto-22-left",
+    "x": 724,
+    "y": 423.25,
+    "z": 1727,
+    "type": "button",
+    "text": "⟲",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "grid005-1-1",
+        "to": "corner"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid005-1-3",
+        "to": "grid005-1-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid005-3-3",
+        "to": "grid005-1-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid005-3-1",
+        "to": "grid005-3-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "corner",
+        "to": "grid005-3-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid005-1-2",
+        "to": "middle"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid005-2-3",
+        "to": "grid005-1-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid005-3-2",
+        "to": "grid005-2-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid005-2-1",
+        "to": "grid005-3-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "middle",
+        "to": "grid005-2-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "p2",
+        "to": "swap"
+      },
+      {
+        "func": "MOVE",
+        "from": "p1",
+        "to": "p2"
+      },
+      {
+        "func": "MOVE",
+        "from": "swap",
+        "to": "p1"
+      }
+    ],
+    "css": "background:#fb020a;border:10%; border-color: #fb020a;font-size: 200%;color:black;",
+    "width": 45,
+    "height": 45
+  },
+  "auto-21-left": {
+    "id": "auto-21-left",
+    "x": 388.5,
+    "y": 426.5,
+    "z": 1728,
+    "type": "button",
+    "text": "⟲",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "grid004-1-1",
+        "to": "corner"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid004-1-3",
+        "to": "grid004-1-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid004-3-3",
+        "to": "grid004-1-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid004-3-1",
+        "to": "grid004-3-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "corner",
+        "to": "grid004-3-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid004-1-2",
+        "to": "middle"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid004-2-3",
+        "to": "grid004-1-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid004-3-2",
+        "to": "grid004-2-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid004-2-1",
+        "to": "grid004-3-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "middle",
+        "to": "grid004-2-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "p2",
+        "to": "swap"
+      },
+      {
+        "func": "MOVE",
+        "from": "p1",
+        "to": "p2"
+      },
+      {
+        "func": "MOVE",
+        "from": "swap",
+        "to": "p1"
+      }
+    ],
+    "css": "background:#fb020a;border:10%; border-color: #fb020a;font-size: 200%;color:black;",
+    "width": 45,
+    "height": 45
+  },
+  "auto-23-right": {
+    "id": "auto-23-right",
+    "x": 1166,
+    "y": 423.25,
+    "z": 1727,
+    "type": "button",
+    "text": "⟳",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "grid006-1-1",
+        "to": "corner"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid006-3-1",
+        "to": "grid006-1-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid006-3-3",
+        "to": "grid006-3-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid006-1-3",
+        "to": "grid006-3-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "corner",
+        "to": "grid006-1-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid006-1-2",
+        "to": "middle"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid006-2-1",
+        "to": "grid006-1-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid006-3-2",
+        "to": "grid006-2-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid006-2-3",
+        "to": "grid006-3-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "middle",
+        "to": "grid006-2-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "p2",
+        "to": "swap"
+      },
+      {
+        "func": "MOVE",
+        "from": "p1",
+        "to": "p2"
+      },
+      {
+        "func": "MOVE",
+        "from": "swap",
+        "to": "p1"
+      }
+    ],
+    "css": "background:#fb020a;border:10%; border-color: #fb020a;font-size: 200%;color:black;",
+    "width": 45,
+    "height": 45
+  },
+  "40b2f6f5-c4a0-467c-ac83-1d21a56a8730": {
+    "id": "40b2f6f5-c4a0-467c-ac83-1d21a56a8730",
+    "z": 1616,
+    "type": "card",
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "dwfe"
+  },
+  "grid009-3-3": {
+    "id": "grid009-3-3",
+    "x": 1193,
+    "y": 894,
+    "z": 2217,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid003-3-2": {
+    "id": "grid003-3-2",
+    "x": 1084,
+    "y": 224,
+    "z": 2177,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid003-1-2": {
+    "id": "grid003-1-2",
+    "x": 1084,
+    "y": 6,
+    "z": 2260,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "e0466479-10bb-44ad-bbda-ef3cb266bcf1": {
+    "id": "e0466479-10bb-44ad-bbda-ef3cb266bcf1",
+    "z": 6871,
+    "type": "card",
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "dwfe"
+  },
+  "d5dd0411-0b11-497c-9ece-2c5dfcebc1d8": {
+    "id": "d5dd0411-0b11-497c-9ece-2c5dfcebc1d8",
+    "z": 1820,
+    "type": "card",
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "dwfe"
+  },
+  "grid009-2-2": {
+    "id": "grid009-2-2",
+    "x": 1084,
+    "y": 785.5,
+    "z": 2219,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid003-2-3": {
+    "id": "grid003-2-3",
+    "x": 1193,
+    "y": 115,
+    "z": 2173,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid006-3-2": {
+    "id": "grid006-3-2",
+    "x": 1084,
+    "y": 557,
+    "z": 2241,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid008-1-2": {
+    "id": "grid008-1-2",
+    "x": 751,
+    "y": 677,
+    "z": 2211,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid007-1-2": {
+    "id": "grid007-1-2",
+    "x": 414.5,
+    "y": 677,
+    "z": 2189,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid008-1-1": {
+    "id": "grid008-1-1",
+    "x": 642,
+    "y": 677,
+    "z": 2210,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid001-1-1": {
+    "id": "grid001-1-1",
+    "x": 306,
+    "y": 5,
+    "z": 2262,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": true
+  },
+  "grid008-1-3": {
+    "id": "grid008-1-3",
+    "x": 860,
+    "y": 677,
+    "z": 2212,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid004-3-2": {
+    "id": "grid004-3-2",
+    "x": 414.5,
+    "y": 557,
+    "z": 2186,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "7e545ec6-9034-4a2b-9cb5-599bb975fff7": {
+    "id": "7e545ec6-9034-4a2b-9cb5-599bb975fff7",
+    "z": 4873,
+    "type": "card",
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "dwfe"
+  },
+  "10c1d0ee-5aff-46de-8ed9-cf5ff1d33f64": {
+    "id": "10c1d0ee-5aff-46de-8ed9-cf5ff1d33f64",
+    "z": 7760,
+    "type": "card",
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "dwfe"
+  },
+  "grid006-3-3": {
+    "id": "grid006-3-3",
+    "x": 1193,
+    "y": 557,
+    "z": 2240,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid006-2-2": {
+    "id": "grid006-2-2",
+    "x": 1084,
+    "y": 450.25,
+    "z": 2239,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid003-2-1": {
+    "id": "grid003-2-1",
+    "x": 977,
+    "y": 115,
+    "z": 2175,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid007-3-3": {
+    "id": "grid007-3-3",
+    "x": 523,
+    "y": 894,
+    "z": 2197,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "4961fe30-50db-4513-91a8-e7be8018db77": {
+    "id": "4961fe30-50db-4513-91a8-e7be8018db77",
+    "z": 9282,
+    "type": "card",
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "dwfe"
+  },
+  "grid008-2-2": {
+    "id": "grid008-2-2",
+    "x": 751,
+    "y": 785.5,
+    "z": 2207,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "695cb746-a0b5-4b0e-8248-c94c35fdab4d": {
+    "id": "695cb746-a0b5-4b0e-8248-c94c35fdab4d",
+    "z": 15970,
+    "type": "card",
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "ocnk"
+  },
+  "5e4176d7-5138-4ce8-9826-c6388ee005a2": {
+    "id": "5e4176d7-5138-4ce8-9826-c6388ee005a2",
+    "z": 1316,
+    "type": "card",
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "dwfe"
+  },
+  "1b3b60d9-eaec-40d9-9850-b2886a22c318": {
+    "id": "1b3b60d9-eaec-40d9-9850-b2886a22c318",
+    "z": 15985,
+    "type": "card",
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "ocnk"
+  },
+  "grid009-3-2": {
+    "id": "grid009-3-2",
+    "x": 1084,
+    "y": 894,
+    "z": 2215,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid002-1-1": {
+    "id": "grid002-1-1",
+    "x": 642,
+    "y": 6,
+    "z": 2259,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid008-3-1": {
+    "id": "grid008-3-1",
+    "x": 642,
+    "y": 894,
+    "z": 2199,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "board001": {
+    "id": "board001",
+    "x": 300,
+    "y": 0,
+    "image": "/assets/-525637800_2849",
+    "movable": false,
+    "layer": -4,
+    "z": null,
+    "width": 1000,
+    "height": 1000,
+    "css": "border-radius:1.5%;"
+  },
+  "09d15f47-d7f6-4fa7-9417-3c835fb6b9bb": {
+    "id": "09d15f47-d7f6-4fa7-9417-3c835fb6b9bb",
+    "z": 7935,
+    "type": "card",
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "dwfe"
+  },
+  "c44d493b-e715-43a2-ba2f-097354ec7968": {
+    "id": "c44d493b-e715-43a2-ba2f-097354ec7968",
+    "z": 80,
+    "type": "card",
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "dwfe"
+  },
+  "grid002-3-1": {
+    "id": "grid002-3-1",
+    "x": 642,
+    "y": 224,
+    "z": 2163,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "92ed684f-f6f3-4fdc-9c02-1e9a1fbb5469": {
+    "id": "92ed684f-f6f3-4fdc-9c02-1e9a1fbb5469",
+    "z": 15972,
+    "type": "card",
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "ocnk"
+  },
+  "598f5e99-3bea-4897-b562-c0292f3105e6": {
+    "id": "598f5e99-3bea-4897-b562-c0292f3105e6",
+    "z": 15,
+    "type": "card",
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "dwfe"
+  },
+  "b681fe01-e01d-409f-943f-d7429af4da88": {
+    "id": "b681fe01-e01d-409f-943f-d7429af4da88",
+    "z": 1575,
+    "type": "card",
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "dwfe"
+  },
+  "grid006-1-3": {
+    "id": "grid006-1-3",
+    "x": 1193,
+    "y": 342,
+    "z": 2209,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid002-1-2": {
+    "id": "grid002-1-2",
+    "x": 751,
+    "y": 6,
+    "z": 2255,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid009-2-3": {
+    "id": "grid009-2-3",
+    "x": 1193,
+    "y": 785.5,
+    "z": 2218,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "79b8e46f-39cc-4a8a-9800-c90b6ceea738": {
+    "id": "79b8e46f-39cc-4a8a-9800-c90b6ceea738",
+    "z": 5268,
+    "type": "card",
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "dwfe"
+  },
+  "f0ced6c8-131c-4ac7-8aef-c63d6a0e0123": {
+    "id": "f0ced6c8-131c-4ac7-8aef-c63d6a0e0123",
+    "z": 1052,
+    "type": "card",
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "dwfe"
+  },
+  "auto-31-left": {
+    "id": "auto-31-left",
+    "x": 389,
+    "y": 758.75,
+    "z": 1727,
+    "type": "button",
+    "text": "⟲",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "grid007-1-1",
+        "to": "corner"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid007-1-3",
+        "to": "grid007-1-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid007-3-3",
+        "to": "grid007-1-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid007-3-1",
+        "to": "grid007-3-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "corner",
+        "to": "grid007-3-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid007-1-2",
+        "to": "middle"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid007-2-3",
+        "to": "grid007-1-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid007-3-2",
+        "to": "grid007-2-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid007-2-1",
+        "to": "grid007-3-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "middle",
+        "to": "grid007-2-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "p2",
+        "to": "swap"
+      },
+      {
+        "func": "MOVE",
+        "from": "p1",
+        "to": "p2"
+      },
+      {
+        "func": "MOVE",
+        "from": "swap",
+        "to": "p1"
+      }
+    ],
+    "css": "background:#fb020a;border:10%; border-color: #fb020a;font-size: 200%;color:black;",
+    "width": 45,
+    "height": 45
+  },
+  "1801ec39-c22c-433f-831d-51d2468167c1": {
+    "id": "1801ec39-c22c-433f-831d-51d2468167c1",
+    "z": 9736,
+    "type": "card",
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "dwfe"
+  },
+  "grid002-2-1": {
+    "id": "grid002-2-1",
+    "x": 642,
+    "y": 115,
+    "z": 2160,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "auto-12-left": {
+    "id": "auto-12-left",
+    "x": 724,
+    "y": 89,
+    "z": 1727,
+    "type": "button",
+    "text": "⟲",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "grid002-1-1",
+        "to": "corner"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid002-1-3",
+        "to": "grid002-1-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid002-3-3",
+        "to": "grid002-1-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid002-3-1",
+        "to": "grid002-3-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "corner",
+        "to": "grid002-3-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid002-1-2",
+        "to": "middle"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid002-2-3",
+        "to": "grid002-1-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid002-3-2",
+        "to": "grid002-2-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid002-2-1",
+        "to": "grid002-3-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "middle",
+        "to": "grid002-2-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "p2",
+        "to": "swap"
+      },
+      {
+        "func": "MOVE",
+        "from": "p1",
+        "to": "p2"
+      },
+      {
+        "func": "MOVE",
+        "from": "swap",
+        "to": "p1"
+      }
+    ],
+    "css": "background:#fb020a;border:10%; border-color: #fb020a;font-size: 200%;color:black;",
+    "width": 45,
+    "height": 45
+  },
+  "grid001-2-3": {
+    "id": "grid001-2-3",
+    "x": 523,
+    "y": 115,
+    "z": 2153,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "d10bd32a-7f94-4529-a6fe-a2365211a519": {
+    "id": "d10bd32a-7f94-4529-a6fe-a2365211a519",
+    "z": 4837,
+    "type": "card",
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "dwfe"
+  },
+  "auto-12-right": {
+    "id": "auto-12-right",
+    "x": 833,
+    "y": 89,
+    "z": 1727,
+    "type": "button",
+    "text": "⟳",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "grid002-1-1",
+        "to": "corner"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid002-3-1",
+        "to": "grid002-1-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid002-3-3",
+        "to": "grid002-3-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid002-1-3",
+        "to": "grid002-3-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "corner",
+        "to": "grid002-1-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid002-1-2",
+        "to": "middle"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid002-2-1",
+        "to": "grid002-1-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid002-3-2",
+        "to": "grid002-2-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid002-2-3",
+        "to": "grid002-3-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "middle",
+        "to": "grid002-2-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "p2",
+        "to": "swap"
+      },
+      {
+        "func": "MOVE",
+        "from": "p1",
+        "to": "p2"
+      },
+      {
+        "func": "MOVE",
+        "from": "swap",
+        "to": "p1"
+      }
+    ],
+    "css": "background:#fb020a;border:10%; border-color: #fb020a;font-size: 200%;color:black;",
+    "width": 45,
+    "height": 45
+  },
+  "grid005-1-3": {
+    "id": "grid005-1-3",
+    "x": 860,
+    "y": 342,
+    "z": 2202,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid006-2-1": {
+    "id": "grid006-2-1",
+    "x": 977,
+    "y": 450.25,
+    "z": 2238,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid005-3-2": {
+    "id": "grid005-3-2",
+    "x": 751,
+    "y": 557,
+    "z": 2226,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid005-3-1": {
+    "id": "grid005-3-1",
+    "x": 642,
+    "y": 557,
+    "z": 2225,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid004-1-1": {
+    "id": "grid004-1-1",
+    "x": 306,
+    "y": 342,
+    "z": 2246,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "bc3988ca-b96e-4856-834a-e413a6358170": {
+    "id": "bc3988ca-b96e-4856-834a-e413a6358170",
+    "z": 8193,
+    "type": "card",
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "dwfe"
+  },
+  "grid005-2-1": {
+    "id": "grid005-2-1",
+    "x": 642,
+    "y": 450.25,
+    "z": 2221,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "auto-32-left": {
+    "id": "auto-32-left",
+    "x": 723.5,
+    "y": 758.5,
+    "z": 1731,
+    "type": "button",
+    "text": "⟲",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "grid008-1-1",
+        "to": "corner"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid008-1-3",
+        "to": "grid008-1-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid008-3-3",
+        "to": "grid008-1-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid008-3-1",
+        "to": "grid008-3-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "corner",
+        "to": "grid008-3-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid008-1-2",
+        "to": "middle"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid008-2-3",
+        "to": "grid008-1-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid008-3-2",
+        "to": "grid008-2-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid008-2-1",
+        "to": "grid008-3-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "middle",
+        "to": "grid008-2-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "p2",
+        "to": "swap"
+      },
+      {
+        "func": "MOVE",
+        "from": "p1",
+        "to": "p2"
+      },
+      {
+        "func": "MOVE",
+        "from": "swap",
+        "to": "p1"
+      }
+    ],
+    "css": "background:#fb020a;border:10%; border-color: #fb020a;font-size: 200%;color:black;",
+    "width": 45,
+    "height": 45
+  },
+  "4327da2f-5710-4296-a7dc-86b3b6bfaa7f": {
+    "id": "4327da2f-5710-4296-a7dc-86b3b6bfaa7f",
+    "z": 15981,
+    "type": "card",
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "ocnk"
+  },
+  "392f0eb2-6cd4-4392-9daa-b32ac8e7d199": {
+    "id": "392f0eb2-6cd4-4392-9daa-b32ac8e7d199",
+    "z": 15966,
+    "type": "card",
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "ocnk"
+  },
+  "grid006-1-2": {
+    "id": "grid006-1-2",
+    "x": 1084,
+    "y": 342,
+    "z": 2206,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "auto-22-right": {
+    "id": "auto-22-right",
+    "x": 833,
+    "y": 423.25,
+    "z": 1727,
+    "type": "button",
+    "text": "⟳",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "grid005-1-1",
+        "to": "corner"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid005-3-1",
+        "to": "grid005-1-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid005-3-3",
+        "to": "grid005-3-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid005-1-3",
+        "to": "grid005-3-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "corner",
+        "to": "grid005-1-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid005-1-2",
+        "to": "middle"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid005-2-1",
+        "to": "grid005-1-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid005-3-2",
+        "to": "grid005-2-1"
+      },
+      {
+        "func": "MOVE",
+        "from": "grid005-2-3",
+        "to": "grid005-3-2"
+      },
+      {
+        "func": "MOVE",
+        "from": "middle",
+        "to": "grid005-2-3"
+      },
+      {
+        "func": "MOVE",
+        "from": "p2",
+        "to": "swap"
+      },
+      {
+        "func": "MOVE",
+        "from": "p1",
+        "to": "p2"
+      },
+      {
+        "func": "MOVE",
+        "from": "swap",
+        "to": "p1"
+      }
+    ],
+    "css": "background:#fb020a;border:10%; border-color: #fb020a;font-size: 200%;color:black;",
+    "width": 45,
+    "height": 45
+  },
+  "40754bec-aa24-4081-800b-e66934a9afbd": {
+    "id": "40754bec-aa24-4081-800b-e66934a9afbd",
+    "z": 15952,
+    "type": "card",
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "ocnk"
+  },
+  "corner": {
+    "id": "corner",
+    "x": 722,
+    "y": 1060,
+    "z": 644,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 40,
+    "height": 40
+  },
+  "986a8cca-8a48-4c46-8ec4-e05d9bb51bf8": {
+    "id": "986a8cca-8a48-4c46-8ec4-e05d9bb51bf8",
+    "z": 15987,
+    "type": "card",
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "ocnk"
+  },
+  "grid003-3-1": {
+    "id": "grid003-3-1",
+    "x": 975,
+    "y": 224,
+    "z": 2178,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "0445f047-aa18-4f1b-b6c5-e53dc62d2ce8": {
+    "id": "0445f047-aa18-4f1b-b6c5-e53dc62d2ce8",
+    "z": 6686,
+    "type": "card",
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "dwfe"
+  },
+  "e1f1245b-a7de-47f1-981d-beacb6247415": {
+    "id": "e1f1245b-a7de-47f1-981d-beacb6247415",
+    "z": 3918,
+    "type": "card",
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "dwfe"
+  },
+  "grid007-2-3": {
+    "id": "grid007-2-3",
+    "x": 523,
+    "y": 785.5,
+    "z": 2193,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "27e531f6-441d-43ed-b232-439942a7fde8": {
+    "id": "27e531f6-441d-43ed-b232-439942a7fde8",
+    "z": 1145,
+    "type": "card",
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "dwfe"
+  },
+  "grid004-3-1": {
+    "id": "grid004-3-1",
+    "x": 306,
+    "y": 557,
+    "z": 2248,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid001-2-2": {
+    "id": "grid001-2-2",
+    "x": 414.5,
+    "y": 115,
+    "z": 2245,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "c44164a8-c745-43b7-b8cb-284ba1dacd8a": {
+    "id": "c44164a8-c745-43b7-b8cb-284ba1dacd8a",
+    "z": 15946,
+    "type": "card",
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "ocnk"
+  },
+  "61eb3bc4-7ea7-4fe5-93d4-4af775be6354": {
+    "id": "61eb3bc4-7ea7-4fe5-93d4-4af775be6354",
+    "z": 15971,
+    "type": "card",
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "ocnk"
+  },
+  "grid001-3-2": {
+    "id": "grid001-3-2",
+    "x": 414.5,
+    "y": 224,
+    "z": 2155,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid004-1-3": {
+    "id": "grid004-1-3",
+    "x": 523,
+    "y": 342,
+    "z": 2272,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "middle": {
+    "id": "middle",
+    "x": 844,
+    "y": 1060,
+    "z": 645,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 40,
+    "height": 40
+  },
+  "05db8c4a-de00-40fb-aa7c-9b07d98049da": {
+    "id": "05db8c4a-de00-40fb-aa7c-9b07d98049da",
+    "x": 1367,
+    "y": 450.25,
+    "z": 2269,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 100,
+    "height": 100,
+    "css": "background:#2b6729; border-radius:50%;"
+  },
+  "grid004-3-3": {
+    "id": "grid004-3-3",
+    "x": 523,
+    "y": 557,
+    "z": 2187,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "9f907c44-85fc-4a05-b861-4d3ba69d1ffa": {
+    "id": "9f907c44-85fc-4a05-b861-4d3ba69d1ffa",
+    "z": 15978,
+    "type": "card",
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "ocnk"
+  },
+  "ecfe145b-5e86-4b5e-b869-e3388827eeb2": {
+    "id": "ecfe145b-5e86-4b5e-b869-e3388827eeb2",
+    "z": 9096,
+    "type": "card",
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "dwfe"
+  },
+  "ca74b554-4198-4a6f-8005-1c6d56748707": {
+    "id": "ca74b554-4198-4a6f-8005-1c6d56748707",
+    "z": 15960,
+    "type": "card",
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "ocnk"
+  },
+  "grid003-1-3": {
+    "id": "grid003-1-3",
+    "x": 1193,
+    "y": 6,
+    "z": 2257,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "b4a45d80-5e43-47c9-a5be-c551dd55d630": {
+    "id": "b4a45d80-5e43-47c9-a5be-c551dd55d630",
+    "z": 15974,
+    "type": "card",
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "ocnk"
+  },
+  "grid005-1-2": {
+    "id": "grid005-1-2",
+    "x": 751,
+    "y": 342,
+    "z": 2200,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid002-1-3": {
+    "id": "grid002-1-3",
+    "x": 860,
+    "y": 6,
+    "z": 2257,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "9dba9a0d-f507-4567-a589-d34b46265473": {
+    "id": "9dba9a0d-f507-4567-a589-d34b46265473",
+    "z": 15989,
+    "type": "card",
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "ocnk"
+  },
+  "grid003-3-3": {
+    "id": "grid003-3-3",
+    "x": 1193,
+    "y": 224,
+    "z": 2176,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "f05071d2-841b-4618-8463-2a175eb6b755": {
+    "id": "f05071d2-841b-4618-8463-2a175eb6b755",
+    "z": 15973,
+    "type": "card",
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "parent": "ocnk"
+  },
+  "grid001-1-2": {
+    "id": "grid001-1-2",
+    "x": 414.5,
+    "y": 6,
+    "z": 2242,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "grid007-3-1": {
+    "id": "grid007-3-1",
+    "x": 306,
+    "y": 894,
+    "z": 2251,
+    "type": "holder",
+    "inheritChildZ": true,
+    "classes": "transparent",
+    "width": 100,
+    "height": 100,
+    "css": "background: rgb(0,0,0);background: radial-gradient(circle, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.8) 61%, rgba(0,0,0,00) 64%); border:hidden; border-radius:50%;",
+    "movable": false
+  },
+  "kjk7": {
+    "y": 11,
+    "width": 80,
+    "height": 40,
+    "type": "button",
+    "text": "RESET",
+    "movableInEdit": true,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Recalling cards...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to reset the game. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "60f7deee-cf84-46bd-882b-e9cc52bdcfe4",
+        "applyVariables": [
+          {
+            "parameter": "owned",
+            "variable": true
+          }
+        ]
+      },
+      {
+        "func": "FLIP",
+        "holder": "60f7deee-cf84-46bd-882b-e9cc52bdcfe4",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "60f7deee-cf84-46bd-882b-e9cc52bdcfe4"
+      },
+      {
+        "func": "RECALL",
+        "holder": "05db8c4a-de00-40fb-aa7c-9b07d98049da",
+        "applyVariables": [
+          {
+            "parameter": "owned",
+            "variable": true
+          }
+        ]
+      },
+      {
+        "func": "FLIP",
+        "holder": "05db8c4a-de00-40fb-aa7c-9b07d98049da",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "05db8c4a-de00-40fb-aa7c-9b07d98049da"
+      },
+      {
+        "func": "RECALL",
+        "holder": "b6020d6d-623f-4bbf-bf39-991652174973",
+        "applyVariables": [
+          {
+            "parameter": "owned",
+            "variable": true
+          }
+        ]
+      },
+      {
+        "func": "FLIP",
+        "holder": "b6020d6d-623f-4bbf-bf39-991652174973",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "b6020d6d-623f-4bbf-bf39-991652174973"
+      },
+      {
+        "func": "RECALL",
+        "holder": "6919f00e-381a-4798-bfcd-44be0d840aab",
+        "applyVariables": [
+          {
+            "parameter": "owned",
+            "variable": true
+          }
+        ]
+      },
+      {
+        "func": "FLIP",
+        "holder": "6919f00e-381a-4798-bfcd-44be0d840aab",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "6919f00e-381a-4798-bfcd-44be0d840aab"
+      },
+      {
+        "func": "RECALL",
+        "holder": "p1",
+        "applyVariables": [
+          {
+            "parameter": "owned",
+            "variable": true
+          }
+        ]
+      }
+    ],
+    "id": "kjk7",
+    "z": 1675,
+    "x": 1510,
+    "css": "background:#7d7d7d;border:10%; border-color: #484848;font-size: 120%;color:white;"
+  },
+  "dwfe": {
+    "type": "pile",
+    "width": 92,
+    "height": 92,
+    "id": "dwfe",
+    "z": 14515,
+    "parent": "05db8c4a-de00-40fb-aa7c-9b07d98049da"
+  },
+  "dga3": {
+    "image": "",
+    "movable": false,
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "id": "dga3",
+    "css": "background: radial-gradient(circle, rgba(42,0,2,1) 25%, rgba(0,0,0,1) 100%);",
+    "z": -1,
+    "x": 0
+  },
+  "iqyf": {
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "iqyf",
+    "z": 15976,
+    "parent": "ocnk"
+  },
+  "39r5": {
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "39r5",
+    "z": 15961,
+    "parent": "ocnk"
+  },
+  "z31z": {
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "z31z",
+    "z": 15967,
+    "parent": "ocnk"
+  },
+  "ybvp": {
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "ybvp",
+    "z": 15962,
+    "parent": "ocnk"
+  },
+  "yo9v": {
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "yo9v",
+    "z": 15957,
+    "parent": "ocnk"
+  },
+  "gs1n": {
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "gs1n",
+    "z": 15963,
+    "parent": "ocnk"
+  },
+  "if2d": {
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "if2d",
+    "z": 15944,
+    "parent": "ocnk"
+  },
+  "g2nf": {
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "g2nf",
+    "z": 15984,
+    "parent": "ocnk"
+  },
+  "x3v8": {
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "x3v8",
+    "z": 15992,
+    "parent": "ocnk"
+  },
+  "hcgo": {
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "hcgo",
+    "z": 15958,
+    "parent": "ocnk"
+  },
+  "5vr0": {
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "5vr0",
+    "z": 15980,
+    "parent": "ocnk"
+  },
+  "62jo": {
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "62jo",
+    "z": 15975,
+    "parent": "ocnk"
+  },
+  "vecg": {
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "vecg",
+    "z": 15977,
+    "parent": "ocnk"
+  },
+  "vw0m": {
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "vw0m",
+    "z": 15982,
+    "parent": "ocnk"
+  },
+  "vnfw": {
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "vnfw",
+    "z": 15964,
+    "parent": "ocnk"
+  },
+  "uv33": {
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "uv33",
+    "z": 15988,
+    "parent": "ocnk"
+  },
+  "ghh6": {
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "ghh6",
+    "z": 15979,
+    "parent": "ocnk"
+  },
+  "p455": {
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "p455",
+    "z": 15969,
+    "parent": "ocnk"
+  },
+  "y72f": {
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "y72f",
+    "z": 15991,
+    "parent": "ocnk"
+  },
+  "j8eu": {
+    "deck": "7410f9d8-74fb-4ba6-92ba-d3a25df5fdc0",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "j8eu",
+    "z": 15986,
+    "parent": "ocnk"
+  },
+  "6u1e": {
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "6u1e",
+    "z": 9811,
+    "parent": "dwfe"
+  },
+  "08mo": {
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "08mo",
+    "z": 4418,
+    "parent": "dwfe"
+  },
+  "xrir": {
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "xrir",
+    "z": 5796,
+    "parent": "dwfe"
+  },
+  "kqno": {
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "kqno",
+    "z": 2950,
+    "parent": "dwfe"
+  },
+  "p0jo": {
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "p0jo",
+    "z": 1387,
+    "parent": "dwfe"
+  },
+  "w9rg": {
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "w9rg",
+    "z": 548,
+    "parent": "dwfe"
+  },
+  "9fkf": {
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "9fkf",
+    "z": 9217,
+    "parent": "dwfe"
+  },
+  "6r4j": {
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "6r4j",
+    "z": 9133,
+    "parent": "dwfe"
+  },
+  "q5cs": {
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "q5cs",
+    "z": 1669,
+    "parent": "dwfe"
+  },
+  "g7pe": {
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "g7pe",
+    "z": 885,
+    "parent": "dwfe"
+  },
+  "i7tc": {
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "i7tc",
+    "z": 3613,
+    "parent": "dwfe"
+  },
+  "vuu5": {
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "vuu5",
+    "z": 7867,
+    "parent": "dwfe"
+  },
+  "urj0": {
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "urj0",
+    "z": 7864,
+    "parent": "dwfe"
+  },
+  "46ax": {
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "46ax",
+    "z": 8796,
+    "parent": "dwfe"
+  },
+  "m0gm": {
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "m0gm",
+    "z": 3922,
+    "parent": "dwfe"
+  },
+  "rk82": {
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "rk82",
+    "z": 7531,
+    "parent": "dwfe"
+  },
+  "sroq": {
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "sroq",
+    "z": 2361,
+    "parent": "dwfe"
+  },
+  "id89": {
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "id89",
+    "z": 3130,
+    "parent": "dwfe"
+  },
+  "5bh0": {
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "5bh0",
+    "z": 5895,
+    "parent": "dwfe"
+  },
+  "w3ya": {
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "w3ya",
+    "z": 2258,
+    "parent": "dwfe"
+  },
+  "ygfl": {
+    "x": 4,
+    "y": 4,
+    "z": 13521,
+    "type": "deck",
+    "cardTypes": {
+      "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8": {}
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "valueType": "static",
+            "value": "/assets/1471827094_29410",
+            "color": "#000000",
+            "width": 50,
+            "height": 50
+          }
+        ],
+        "border": 1,
+        "radius": 50
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "valueType": "static",
+            "value": "/assets/1471827094_29410",
+            "color": "#000000",
+            "width": 50,
+            "height": 50
+          }
+        ],
+        "border": 1,
+        "radius": 50
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 50,
+      "height": 50,
+      "turn_marker": "yes"
+    },
+    "id": "ygfl",
+    "parent": "p1"
+  },
+  "p1": {
+    "y": 471.25,
+    "z": 13569,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 58,
+    "height": 58,
+    "css": "border-radius:50%;",
+    "x": 33,
+    "classes": "transparent",
+    "id": "p1",
+    "dropTarget": {
+      "turn_marker": "yes"
+    }
+  },
+  "7zpi": {
+    "deck": "ygfl",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "7zpi",
+    "z": 15932,
+    "y": 4,
+    "parent": "p1",
+    "x": 4
+  },
+  "p2": {
+    "y": 471.25,
+    "z": 13568,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 58,
+    "height": 58,
+    "css": "border-radius:50%;",
+    "x": 1502,
+    "id": "p2",
+    "classes": "transparent",
+    "dropTarget": {
+      "turn_marker": "yes"
+    }
+  },
+  "isgj": {
+    "image": "",
+    "movable": false,
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "css": "background: radial-gradient(circle, rgba(42,0,2,1) 25%, rgba(0,0,0,1) 100%);",
+    "z": -1,
+    "x": 0,
+    "id": "isgj"
+  },
+  "swap": {
+    "y": 1120,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 58,
+    "height": 58,
+    "css": "border-radius:50%;",
+    "x": 774,
+    "classes": "transparent",
+    "id": "swap",
+    "z": 15018
+  },
+  "_meta": {
+    "version": 1,
+    "info": {
+      "name": "Spin 5",
+      "image": "/assets/-1243222545_504241",
+      "rules": "",
+      "bgg": "",
+      "year": "2005",
+      "mode": "",
+      "time": "15",
+      "players": "2",
+      "language": "US",
+      "variant": "Large Board",
+      "attribution": "Gameplay:\n\n Each Turn:\n  - Place a piece anywhere\n  - Rotate any square\n\n Winning:\n  - Get 5 in a row (Diagonals Count)\n\n Ties:\n  - Multiple players get 5 in a row simultaneously\n  - Run out of space on the board \n\nThe game layout, assets, and library image were created by https://www.reddit.com/user/Casbuild, https://www.reddit.com/user/RaphaelAlvez and https://www.reddit.com/user/96LawDawg and are released to the public domain by CC0.",
+      "similarName": "Pentago",
+      "similarLink": "https://boardgamegeek.com/boardgame/21012/pentago-xl",
+      "description": "Place marble into a space on four connected and rotating 3x3 grids. Connect five marbles in a row to win."
+    }
+  },
+  "00hp": {
+    "deck": "1d139968-0314-442c-9432-aca2bce932f8",
+    "type": "card",
+    "cardType": "type-c0a8bdfd-7bf1-4f89-9e19-4df0e40adfb8",
+    "id": "00hp",
+    "z": 15936,
+    "parent": "dwfe"
+  },
+  "ocnk": {
+    "type": "pile",
+    "width": 92,
+    "height": 92,
+    "id": "ocnk",
+    "z": 15994,
+    "parent": "6919f00e-381a-4798-bfcd-44be0d840aab"
+  }
+}

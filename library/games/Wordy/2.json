@@ -1,0 +1,2223 @@
+{
+  "ag82": {
+    "id": "ag82",
+    "type": "pile",
+    "width": 52,
+    "height": 52,
+    "parent": "1715edb9-518e-46d9-b676-278d482e7f66"
+  },
+  "npk8": {
+    "id": "npk8",
+    "type": "pile",
+    "width": 52,
+    "height": 52,
+    "parent": "b1867144-8609-4e0a-a366-2ad43431165e"
+  },
+  "luky": {
+    "id": "luky",
+    "type": "pile",
+    "width": 52,
+    "height": 52,
+    "parent": "ede0f351-6db0-4bbd-9dbb-b1f3c5913cc8"
+  },
+  "p6dj": {
+    "id": "p6dj",
+    "type": "pile",
+    "width": 52,
+    "height": 52,
+    "parent": "592857bd-eb64-4a07-9454-dc5c7737390a"
+  },
+  "f8a98a26-3feb-43b4-aae0-9c693f26adab_label": {
+    "id": "f8a98a26-3feb-43b4-aae0-9c693f26adab_label",
+    "x": 1178,
+    "y": 767,
+    "width": 72,
+    "height": 40,
+    "type": "label",
+    "text": "Troca",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false,
+    "css": "font-family:Arial",
+    "z": 7459
+  },
+  "f8a98a26-3feb-43b4-aae0-9c693f26adab": {
+    "id": "f8a98a26-3feb-43b4-aae0-9c693f26adab",
+    "x": 1184,
+    "y": 818,
+    "z": 13920,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 60,
+    "height": 60
+  },
+  "f0429b21-8cc1-4acb-8147-2c5fa189c1c7_label": {
+    "id": "f0429b21-8cc1-4acb-8147-2c5fa189c1c7_label",
+    "x": 1361,
+    "y": 767,
+    "width": 72,
+    "height": 40,
+    "type": "label",
+    "text": "Pilha",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false,
+    "css": "font-family:Arial",
+    "z": 7460
+  },
+  "f0429b21-8cc1-4acb-8147-2c5fa189c1c7_shuffleButton": {
+    "id": "f0429b21-8cc1-4acb-8147-2c5fa189c1c7_shuffleButton",
+    "y": 744,
+    "width": 130,
+    "height": 32,
+    "type": "button",
+    "text": "Embaralhar",
+    "clickRoutine": [
+      {
+        "func": "FLIP",
+        "holder": "f0429b21-8cc1-4acb-8147-2c5fa189c1c7",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "f0429b21-8cc1-4acb-8147-2c5fa189c1c7"
+      }
+    ],
+    "css": "background-color:#b97a56; color:white; border-color: black; border-style: none; font-family:Arial; font-size: 20px",
+    "z": 282,
+    "x": 1242
+  },
+  "f0429b21-8cc1-4acb-8147-2c5fa189c1c7": {
+    "id": "f0429b21-8cc1-4acb-8147-2c5fa189c1c7",
+    "x": 1367,
+    "y": 818,
+    "z": 13921,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 60,
+    "height": 60
+  },
+  "hand": {
+    "id": "hand",
+    "x": 1014,
+    "y": 903.5,
+    "z": 13916,
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "inheritChildZ": true,
+    "childrenPerOwner": true,
+    "width": 550,
+    "height": 65,
+    "alignChildren": true,
+    "stackOffsetX": 50,
+    "dropOffsetY": 5
+  },
+  "1a5ff619-f497-41aa-906b-9a409513fac3label": {
+    "id": "1a5ff619-f497-41aa-906b-9a409513fac3label",
+    "y": 346.5,
+    "width": 190,
+    "type": "label",
+    "css": "font-size: 30px",
+    "height": 45,
+    "editable": true,
+    "x": 1069,
+    "z": 7474,
+    "text": "Jogador 1"
+  },
+  "aba85908-e495-4496-9250-6501f9e802fe": {
+    "id": "aba85908-e495-4496-9250-6501f9e802fe",
+    "z": 14827,
+    "type": "card",
+    "deck": "3132749e-def0-4527-ac28-a32f86d1b446",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "ag82"
+  },
+  "d2ae25b5-3702-4942-a3ef-1a5927cb74d2": {
+    "id": "d2ae25b5-3702-4942-a3ef-1a5927cb74d2",
+    "z": 14824,
+    "type": "card",
+    "deck": "3132749e-def0-4527-ac28-a32f86d1b446",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "ag82"
+  },
+  "0ca718c5-e5b8-4e62-bacf-06a3e64c7509": {
+    "id": "0ca718c5-e5b8-4e62-bacf-06a3e64c7509",
+    "z": 14826,
+    "type": "card",
+    "deck": "3132749e-def0-4527-ac28-a32f86d1b446",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "ag82"
+  },
+  "fd489b2a-af52-4930-8606-36fa5e04de16": {
+    "id": "fd489b2a-af52-4930-8606-36fa5e04de16",
+    "z": 14830,
+    "type": "card",
+    "deck": "3132749e-def0-4527-ac28-a32f86d1b446",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "ag82"
+  },
+  "4b613d7c-f648-4cdd-bd5f-f63632af9210": {
+    "id": "4b613d7c-f648-4cdd-bd5f-f63632af9210",
+    "z": 14828,
+    "type": "card",
+    "deck": "3132749e-def0-4527-ac28-a32f86d1b446",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "ag82"
+  },
+  "8d4c3fe6-b3a5-44bc-aef2-b455f435de0b": {
+    "id": "8d4c3fe6-b3a5-44bc-aef2-b455f435de0b",
+    "z": 14825,
+    "type": "card",
+    "deck": "3132749e-def0-4527-ac28-a32f86d1b446",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "ag82"
+  },
+  "d840a052-3c02-402d-833b-22644ebc4031": {
+    "id": "d840a052-3c02-402d-833b-22644ebc4031",
+    "z": 14823,
+    "type": "card",
+    "deck": "3132749e-def0-4527-ac28-a32f86d1b446",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "ag82"
+  },
+  "86f9afb3-9341-476e-872f-b4cefffb6512": {
+    "id": "86f9afb3-9341-476e-872f-b4cefffb6512",
+    "z": 14829,
+    "type": "card",
+    "deck": "3132749e-def0-4527-ac28-a32f86d1b446",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "ag82"
+  },
+  "1bc7ec33-510d-4b1a-8077-76734ae561fc": {
+    "id": "1bc7ec33-510d-4b1a-8077-76734ae561fc",
+    "z": 14845,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "f23cfa59-6bc2-46f0-a302-5ac3741713ee": {
+    "id": "f23cfa59-6bc2-46f0-a302-5ac3741713ee",
+    "z": 14844,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "fda162da-f919-42b4-8fbc-92f4c40f49f8": {
+    "id": "fda162da-f919-42b4-8fbc-92f4c40f49f8",
+    "z": 14852,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "a08700c4-dfa6-4859-8fcd-6eca1e64096e": {
+    "id": "a08700c4-dfa6-4859-8fcd-6eca1e64096e",
+    "z": 14848,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "c233db2a-e597-42aa-b94d-3380c735772f": {
+    "id": "c233db2a-e597-42aa-b94d-3380c735772f",
+    "z": 14856,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "0baaf3e3-c7be-4dac-b267-7b08a456142f": {
+    "id": "0baaf3e3-c7be-4dac-b267-7b08a456142f",
+    "z": 14853,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "1c716f58-f6cd-4000-956b-2449cf1c55f2": {
+    "id": "1c716f58-f6cd-4000-956b-2449cf1c55f2",
+    "z": 14858,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "b88ecbda-7b49-420e-a0a0-bf47eb950e1a": {
+    "id": "b88ecbda-7b49-420e-a0a0-bf47eb950e1a",
+    "z": 14849,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "a4ddecf0-14f8-42ba-b154-befa8c40e900": {
+    "id": "a4ddecf0-14f8-42ba-b154-befa8c40e900",
+    "z": 14843,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "2ecd7369-9ad0-48f1-8a33-b3129db834a6": {
+    "id": "2ecd7369-9ad0-48f1-8a33-b3129db834a6",
+    "z": 14854,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "3c3caba7-0243-42cc-8d2d-6aeec9372a7a": {
+    "id": "3c3caba7-0243-42cc-8d2d-6aeec9372a7a",
+    "z": 14847,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "46570fea-5c9f-4e85-8b1a-f142883bc1e0": {
+    "id": "46570fea-5c9f-4e85-8b1a-f142883bc1e0",
+    "z": 14851,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "732c4d85-c17a-4936-8e4d-b81fb127b8b6": {
+    "id": "732c4d85-c17a-4936-8e4d-b81fb127b8b6",
+    "z": 14846,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "811e5095-f91c-431b-b611-16fcc643d2a2": {
+    "id": "811e5095-f91c-431b-b611-16fcc643d2a2",
+    "z": 14855,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "6bbb5c06-1cf9-41be-a7ed-4e18a4afcc08": {
+    "id": "6bbb5c06-1cf9-41be-a7ed-4e18a4afcc08",
+    "z": 14850,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "b12462ef-50f8-40f0-bde8-e76ab084e173": {
+    "id": "b12462ef-50f8-40f0-bde8-e76ab084e173",
+    "z": 14857,
+    "type": "card",
+    "deck": "3b685543-c3f0-4fb5-9ee1-bc5cc4d7710d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "npk8"
+  },
+  "9d6ff5af-4460-43ea-aa09-09f87e985d87": {
+    "id": "9d6ff5af-4460-43ea-aa09-09f87e985d87",
+    "z": 14835,
+    "type": "card",
+    "deck": "e9a51bd6-ec51-4ac8-b5c0-0e1a4515a72d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "luky"
+  },
+  "80b560dd-e5c3-44a2-bb7f-03168e97072f": {
+    "id": "80b560dd-e5c3-44a2-bb7f-03168e97072f",
+    "z": 14836,
+    "type": "card",
+    "deck": "e9a51bd6-ec51-4ac8-b5c0-0e1a4515a72d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "luky"
+  },
+  "b07cab89-1eee-48ea-81c3-12adcfd4ea23": {
+    "id": "b07cab89-1eee-48ea-81c3-12adcfd4ea23",
+    "z": 14833,
+    "type": "card",
+    "deck": "e9a51bd6-ec51-4ac8-b5c0-0e1a4515a72d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "luky"
+  },
+  "29404670-a5b4-4507-b6ff-fbf5efc0bc3a": {
+    "id": "29404670-a5b4-4507-b6ff-fbf5efc0bc3a",
+    "z": 14838,
+    "type": "card",
+    "deck": "e9a51bd6-ec51-4ac8-b5c0-0e1a4515a72d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "luky"
+  },
+  "dba82fc5-0245-4fc7-b6b8-6482154facd0": {
+    "id": "dba82fc5-0245-4fc7-b6b8-6482154facd0",
+    "z": 14842,
+    "type": "card",
+    "deck": "e9a51bd6-ec51-4ac8-b5c0-0e1a4515a72d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "luky"
+  },
+  "ced219b7-55b1-4567-9f20-749c51ff61aa": {
+    "id": "ced219b7-55b1-4567-9f20-749c51ff61aa",
+    "z": 14841,
+    "type": "card",
+    "deck": "e9a51bd6-ec51-4ac8-b5c0-0e1a4515a72d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "luky"
+  },
+  "7ec3e4fb-63ed-4348-a73d-fa24569908a8": {
+    "id": "7ec3e4fb-63ed-4348-a73d-fa24569908a8",
+    "z": 14832,
+    "type": "card",
+    "deck": "e9a51bd6-ec51-4ac8-b5c0-0e1a4515a72d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "luky"
+  },
+  "21f6ff58-95f4-4c9f-9769-346d598e4bff": {
+    "id": "21f6ff58-95f4-4c9f-9769-346d598e4bff",
+    "z": 14834,
+    "type": "card",
+    "deck": "e9a51bd6-ec51-4ac8-b5c0-0e1a4515a72d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "luky"
+  },
+  "35d7c444-4a27-4c5e-8610-0e2fa77998bc": {
+    "id": "35d7c444-4a27-4c5e-8610-0e2fa77998bc",
+    "z": 14839,
+    "type": "card",
+    "deck": "e9a51bd6-ec51-4ac8-b5c0-0e1a4515a72d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "luky"
+  },
+  "6ebb78af-0c26-4d50-a1e3-d90059dff860": {
+    "id": "6ebb78af-0c26-4d50-a1e3-d90059dff860",
+    "z": 14837,
+    "type": "card",
+    "deck": "e9a51bd6-ec51-4ac8-b5c0-0e1a4515a72d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "luky"
+  },
+  "a5fb55f1-e215-435c-8640-1ee40b4fba44": {
+    "id": "a5fb55f1-e215-435c-8640-1ee40b4fba44",
+    "z": 14840,
+    "type": "card",
+    "deck": "e9a51bd6-ec51-4ac8-b5c0-0e1a4515a72d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "luky"
+  },
+  "be9f3ad0-23f0-406b-8dd1-9d447ed3b0ab": {
+    "id": "be9f3ad0-23f0-406b-8dd1-9d447ed3b0ab",
+    "z": 14831,
+    "type": "card",
+    "deck": "e9a51bd6-ec51-4ac8-b5c0-0e1a4515a72d",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "luky"
+  },
+  "e1187aa2-b0d8-4325-9e7b-a89ecc679850": {
+    "id": "e1187aa2-b0d8-4325-9e7b-a89ecc679850",
+    "z": 14869,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "4e7ca777-f3d9-4275-a92a-519961fa755d": {
+    "id": "4e7ca777-f3d9-4275-a92a-519961fa755d",
+    "z": 14864,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "53074514-2b87-4835-bc22-fe39cf83b18f": {
+    "id": "53074514-2b87-4835-bc22-fe39cf83b18f",
+    "z": 14874,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "17901bb6-3044-4f6b-9f9b-250e46b72901": {
+    "id": "17901bb6-3044-4f6b-9f9b-250e46b72901",
+    "z": 14861,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "264dd496-f30a-49f5-9261-8a97c0084bc3": {
+    "id": "264dd496-f30a-49f5-9261-8a97c0084bc3",
+    "z": 14870,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "a5f71ec5-9718-4174-a2ba-dc4754982620": {
+    "id": "a5f71ec5-9718-4174-a2ba-dc4754982620",
+    "z": 14871,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "3f07f9c2-84b5-47ad-8685-f58def2c483c": {
+    "id": "3f07f9c2-84b5-47ad-8685-f58def2c483c",
+    "z": 14877,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "0841f805-c64f-4b03-8f8a-a833b3f44fb2": {
+    "id": "0841f805-c64f-4b03-8f8a-a833b3f44fb2",
+    "z": 14873,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "1ea850b7-baa4-4984-a8b8-701615aadfdd": {
+    "id": "1ea850b7-baa4-4984-a8b8-701615aadfdd",
+    "z": 14859,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "5c1c18f4-6cd1-48d4-9f0b-8386762e461a": {
+    "id": "5c1c18f4-6cd1-48d4-9f0b-8386762e461a",
+    "z": 14865,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "d033319c-7254-473b-b2d6-a1c80d536e75": {
+    "id": "d033319c-7254-473b-b2d6-a1c80d536e75",
+    "z": 14863,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "cd303f4d-265b-48e6-be19-82f649e8588d": {
+    "id": "cd303f4d-265b-48e6-be19-82f649e8588d",
+    "z": 14872,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "3badfd3e-f8f8-4b0a-8142-2d94d1b4e0ae": {
+    "id": "3badfd3e-f8f8-4b0a-8142-2d94d1b4e0ae",
+    "z": 14867,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "9bcd9483-ac00-48c3-8558-51f9dda48481": {
+    "id": "9bcd9483-ac00-48c3-8558-51f9dda48481",
+    "z": 14875,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "97d84833-87a4-4e94-a4bb-a6a269be8099": {
+    "id": "97d84833-87a4-4e94-a4bb-a6a269be8099",
+    "z": 14876,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "72b2aa5c-5cf6-4c9b-b531-cc5752d9f17e": {
+    "id": "72b2aa5c-5cf6-4c9b-b531-cc5752d9f17e",
+    "z": 14878,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "b164c1e9-3708-494c-87f7-008dfa6dec79": {
+    "id": "b164c1e9-3708-494c-87f7-008dfa6dec79",
+    "z": 14868,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "178fddb8-73e8-4f65-9f76-43d23b9bdb8b": {
+    "id": "178fddb8-73e8-4f65-9f76-43d23b9bdb8b",
+    "z": 14879,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "7317a178-5d44-44be-b72a-d1cc3f843dd7": {
+    "id": "7317a178-5d44-44be-b72a-d1cc3f843dd7",
+    "z": 14862,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "be3c241c-de88-4af8-974e-1f410faa5059": {
+    "id": "be3c241c-de88-4af8-974e-1f410faa5059",
+    "z": 14880,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "9b3144e8-bd02-40c4-b7ec-b03169b82f3d": {
+    "id": "9b3144e8-bd02-40c4-b7ec-b03169b82f3d",
+    "z": 14860,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "ef0889a8-ae6d-4c13-b143-5bfe7dc3c921": {
+    "id": "ef0889a8-ae6d-4c13-b143-5bfe7dc3c921",
+    "z": 14882,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "eb1fb03c-4f43-4069-8653-e318bd8c7012": {
+    "id": "eb1fb03c-4f43-4069-8653-e318bd8c7012",
+    "z": 14881,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "dbeb6004-e78e-4b2c-8b8b-f5abffa3d4a0": {
+    "id": "dbeb6004-e78e-4b2c-8b8b-f5abffa3d4a0",
+    "z": 14866,
+    "type": "card",
+    "deck": "eff1d74e-1540-4f02-99dc-6603de4577fc",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "p6dj"
+  },
+  "33e2bb42-ae40-4792-98ef-b4a0c2b688f8": {
+    "id": "33e2bb42-ae40-4792-98ef-b4a0c2b688f8",
+    "x": 4,
+    "y": 4,
+    "z": 14822,
+    "type": "card",
+    "deck": "deaf8030-7080-4412-8990-92fd08d6138a",
+    "cardType": "type-49616c25-4de7-41b1-a7c7-2c2b30e42ada",
+    "parent": "c44b9d9b-3678-42fd-a395-6f4b8b5543c6"
+  },
+  "boh0": {
+    "image": "/assets/1934379267_9650",
+    "id": "boh0",
+    "z": 18,
+    "y": 178,
+    "x": 1250.5,
+    "enlarge": 6,
+    "movable": false
+  },
+  "1lzs": {
+    "movableInEdit": true,
+    "y": 127.5,
+    "width": 170,
+    "type": "label",
+    "text": "Distribuir Peças",
+    "css": "font-family: Arial; font-size: 25px",
+    "height": 75,
+    "id": "1lzs",
+    "z": 7479,
+    "x": 1218
+  },
+  "eoge": {
+    "image": "/assets/1176765544_105952",
+    "id": "eoge",
+    "z": 16,
+    "x": 1200.5,
+    "y": 23,
+    "height": 50,
+    "width": 200,
+    "movable": false
+  },
+  "xz0l": {
+    "type": "button",
+    "text": "⇒",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "f8a98a26-3feb-43b4-aae0-9c693f26adab",
+        "to": "f0429b21-8cc1-4acb-8147-2c5fa189c1c7",
+        "count": 100,
+        "face": 0
+      },
+      {
+        "func": "FLIP",
+        "holder": "f0429b21-8cc1-4acb-8147-2c5fa189c1c7",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "f0429b21-8cc1-4acb-8147-2c5fa189c1c7"
+      }
+    ],
+    "z": 279,
+    "id": "xz0l",
+    "css": "background:transparent;border-style:none;font-size:50px;color:#b97a56",
+    "x": 1266,
+    "y": 802
+  },
+  "gl5r": {
+    "type": "label",
+    "text": 0,
+    "id": "gl5r",
+    "x": 1094,
+    "y": 385,
+    "width": 140,
+    "height": 44,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "z": 7468
+  },
+  "gl5rD": {
+    "id": "gl5rD",
+    "parent": "gl5r",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "gl5r",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "css": "background-color:#b97a56; color:white;border-color:black; border-style: none"
+  },
+  "gl5rU": {
+    "id": "gl5rU",
+    "parent": "gl5r",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "gl5r",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "css": "background-color:#b97a56; color:white;border-color:black; border-style: none"
+  },
+  "762p": {
+    "type": "label",
+    "text": 0,
+    "id": "762p",
+    "x": 1393,
+    "y": 390,
+    "width": 140,
+    "height": 44,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "z": 7471
+  },
+  "762pD": {
+    "id": "762pD",
+    "parent": "762p",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "762p",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "css": "background-color:#b97a56; color:white;border-color:black; border-style: none"
+  },
+  "762pU": {
+    "id": "762pU",
+    "parent": "762p",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "762p",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "css": "background-color:#b97a56; color:white;border-color:black; border-style: none"
+  },
+  "ltfq": {
+    "type": "label",
+    "text": 0,
+    "id": "ltfq",
+    "x": 1094,
+    "y": 632,
+    "width": 140,
+    "height": 44,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "z": 7472
+  },
+  "ltfqD": {
+    "id": "ltfqD",
+    "parent": "ltfq",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "ltfq",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "css": "background-color:#b97a56; color:white;border-color:black; border-style: none"
+  },
+  "ltfqU": {
+    "id": "ltfqU",
+    "parent": "ltfq",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "ltfq",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "css": "background-color:#b97a56; color:white;border-color:black; border-style: none"
+  },
+  "xbbj": {
+    "type": "label",
+    "text": 0,
+    "id": "xbbj",
+    "x": 1393,
+    "y": 633,
+    "width": 140,
+    "height": 44,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "z": 7473
+  },
+  "xbbjD": {
+    "id": "xbbjD",
+    "parent": "xbbj",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "xbbj",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "css": "background-color:#b97a56; color:white;border-color:black; border-style: none"
+  },
+  "xbbjU": {
+    "id": "xbbjU",
+    "parent": "xbbj",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "xbbj",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "css": "background-color:#b97a56; color:white;border-color:black; border-style: none"
+  },
+  "pnin": {
+    "y": 346.5,
+    "width": 190,
+    "type": "label",
+    "text": "Jogador 2",
+    "css": "font-size: 30px",
+    "height": 45,
+    "editable": true,
+    "x": 1368,
+    "z": 7476,
+    "id": "pnin"
+  },
+  "juzk": {
+    "y": 588.5,
+    "width": 190,
+    "type": "label",
+    "text": "Jogador 3",
+    "css": "font-size: 30px",
+    "height": 45,
+    "editable": true,
+    "x": 1069,
+    "z": 7477,
+    "id": "juzk"
+  },
+  "g5je": {
+    "y": 588.5,
+    "width": 190,
+    "type": "label",
+    "text": "Jogador 4",
+    "css": "font-size: 30px",
+    "height": 45,
+    "editable": true,
+    "x": 1368,
+    "z": 7478,
+    "id": "g5je"
+  },
+  "_meta": {
+    "version": 1,
+    "info": {
+      "name": "Wordy",
+      "image": "/assets/-1478225327_204716",
+      "rules": "",
+      "bgg": "",
+      "year": "1948",
+      "mode": "vs",
+      "time": "90",
+      "players": "2-4",
+      "language": "BR",
+      "variant": "Portuguese",
+      "attribution": "As letras, pontos e distribuição estão em português. Para o tabuleiro a tradução de Letter é Letra e a tradução de Word é Palavra.\n\nThe game layout, images, and Wordy logo were done by https://www.reddit.com/user/96LawDawg and are released to the Public Domain.\n\nThe library image contains a photograph from https://pixabay.com/photos/printing-plate-letters-font-type-1030849/ and is available without copyright restriction under the Pixabay License.\n\nPortuguese translation by https://www.reddit.com/user/RaphaelAlvez",
+      "similarName": "Scrabble",
+      "similarLink": "https://boardgamegeek.com/boardgame/320/scrabble",
+      "description": "Use letter tiles to build words with extra points for playing in certain locations.  Most points wins"
+    }
+  },
+  "ccpv": {
+    "image": "/assets/1059705147_154393",
+    "movable": false,
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "id": "ccpv",
+    "movableInEdit": false
+  },
+  "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a": {
+    "id": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "x": 4,
+    "y": 4,
+    "z": 13733,
+    "type": "deck",
+    "cardTypes": {
+      "type-bd278b2a-a22f-4001-a5b8-6e09dfdaa3d5": {
+        "1": "1",
+        "label": "A",
+        "letter": "A",
+        "image1": "/assets/1670635785_22789",
+        "a": "A",
+        "#": "1"
+      },
+      "type-13e148a9-cc60-44c9-b163-b5d690043bf0": {
+        "1": "3",
+        "label": "B",
+        "letter": "B",
+        "image1": "/assets/1670635785_22789",
+        "a": "B",
+        "#": "3"
+      },
+      "type-d98780c2-6267-49ef-b896-530bbf746c08": {
+        "1": "3",
+        "label": "C",
+        "letter": "C",
+        "image1": "/assets/1670635785_22789",
+        "a": "C",
+        "#": "2"
+      },
+      "type-b0b4ba05-3426-42ec-87f1-2683c81fe198": {
+        "1": "2",
+        "label": "D",
+        "letter": "D",
+        "image1": "/assets/1670635785_22789",
+        "a": "D",
+        "#": "2"
+      },
+      "type-5ab8ed0c-583d-4a8d-8d13-9d8b6f672311": {
+        "1": "1",
+        "label": "E",
+        "letter": "E",
+        "image1": "/assets/1670635785_22789",
+        "a": "E",
+        "#": "1"
+      },
+      "type-6aef793f-ed6b-48b2-a3d6-d2a46ef51a4a": {
+        "1": "4",
+        "label": "F",
+        "letter": "F",
+        "image1": "/assets/1670635785_22789",
+        "a": "F",
+        "#": "4"
+      },
+      "type-c12f6dac-fee0-46f7-969a-4cbbdc18593b": {
+        "1": "2",
+        "label": "G",
+        "letter": "G",
+        "image1": "/assets/1670635785_22789",
+        "a": "G",
+        "#": "4"
+      },
+      "type-c74ab039-d2c4-44b8-8649-eb2e4ebb6190": {
+        "1": "4",
+        "label": "H",
+        "letter": "H",
+        "image1": "/assets/1670635785_22789",
+        "a": "H",
+        "#": "4"
+      },
+      "type-6854532a-2945-4c42-a1e5-632d8a390860": {
+        "1": "1",
+        "label": "I",
+        "letter": "I",
+        "image1": "/assets/1670635785_22789",
+        "a": "I",
+        "#": "1"
+      },
+      "type-9d122850-caa0-43db-91a1-782204784119": {
+        "1": "8",
+        "label": "J",
+        "letter": "J",
+        "image1": "/assets/1670635785_22789",
+        "a": "J",
+        "#": "5"
+      },
+      "type-e09bee1c-25a1-40c4-a7e1-b188decb4002": {
+        "1": "5",
+        "label": "K",
+        "letter": "K",
+        "image1": "/assets/1670635785_22789",
+        "a": "K",
+        "#": "0"
+      },
+      "type-4b67cfa0-8f1f-4243-8d69-db8ce189cb57": {
+        "1": "1",
+        "label": "L",
+        "letter": "L",
+        "image1": "/assets/1670635785_22789",
+        "a": "L",
+        "#": "2"
+      },
+      "type-437a62b8-f294-430b-ba02-e2df2bfc5f65": {
+        "1": "3",
+        "label": "M",
+        "letter": "M",
+        "image1": "/assets/1670635785_22789",
+        "a": "M",
+        "#": "1"
+      },
+      "type-1362496d-a16f-4935-b30c-f7470dd755a2": {
+        "1": "1",
+        "label": "N",
+        "letter": "N",
+        "image1": "/assets/1670635785_22789",
+        "a": "N",
+        "#": "3"
+      },
+      "type-a75f01cc-d60e-4971-b677-743fa9389a01": {
+        "1": "1",
+        "label": "O",
+        "letter": "O",
+        "image1": "/assets/1670635785_22789",
+        "a": "O",
+        "#": "1"
+      },
+      "type-28ac763b-2e1f-479d-9188-3e091a16b640": {
+        "1": "3",
+        "label": "P",
+        "letter": "P",
+        "image1": "/assets/1670635785_22789",
+        "a": "P",
+        "#": "2"
+      },
+      "type-a9daef5b-8554-406e-b4fd-f05bd5adad2d": {
+        "1": "10",
+        "label": "Q",
+        "letter": "Q",
+        "image1": "/assets/1670635785_22789",
+        "a": "Q",
+        "#": "6"
+      },
+      "type-8bcfe309-4fe4-432d-88fb-26513c668994": {
+        "1": "1",
+        "label": "R",
+        "letter": "R",
+        "image1": "/assets/1670635785_22789",
+        "a": "R",
+        "#": "1"
+      },
+      "type-523e28e4-71f7-42ff-a032-3adb5c0be7a0": {
+        "1": "1",
+        "label": "S",
+        "letter": "S",
+        "image1": "/assets/1670635785_22789",
+        "a": "S",
+        "#": "1"
+      },
+      "type-2c8de71f-0481-4daa-a9f0-ba7d5602e385": {
+        "1": "1",
+        "label": "T",
+        "letter": "T",
+        "image1": "/assets/1670635785_22789",
+        "a": "T",
+        "#": "1"
+      },
+      "type-af903535-46f5-449f-a1da-ce5d4d57143f": {
+        "1": "1",
+        "label": "U",
+        "letter": "U",
+        "image1": "/assets/1670635785_22789",
+        "a": "U",
+        "#": "1"
+      },
+      "type-ef6b376e-c046-466c-ab15-57d7bd0688c9": {
+        "1": "4",
+        "label": "V",
+        "letter": "V",
+        "image1": "/assets/1670635785_22789",
+        "a": "V",
+        "#": "4"
+      },
+      "type-0c52f60b-7af1-4437-af77-4bc289336be8": {
+        "1": "4",
+        "label": "W",
+        "letter": "W",
+        "image1": "/assets/1670635785_22789",
+        "a": "W",
+        "#": "0"
+      },
+      "type-3d6668f3-9090-47a1-b3d3-752f2aa99558": {
+        "1": "8",
+        "label": "X",
+        "letter": "X",
+        "image1": "/assets/1670635785_22789",
+        "a": "X",
+        "#": "8"
+      },
+      "type-eede3850-8ba4-4332-8ec7-3f143f4ba985": {
+        "1": "4",
+        "label": "Y",
+        "letter": "Y",
+        "image1": "/assets/1670635785_22789",
+        "a": "Y",
+        "#": "0"
+      },
+      "type-416948f4-8f3c-479f-8860-368ab8312bcc": {
+        "1": "10",
+        "label": "Z",
+        "letter": "Z",
+        "image1": "/assets/1670635785_22789",
+        "a": "Z",
+        "#": "8"
+      },
+      "type-3d8e2ef7-9506-4905-b599-c861fc91045b": {
+        "label": "Blank",
+        "image1": "/assets/1670635785_22789",
+        "letter": "",
+        "#": ""
+      },
+      "type-416948f4-8f3c-479p-8860-368ab8312bcp": {
+        "1": "10",
+        "label": "Ç",
+        "letter": "Ç",
+        "image1": "/assets/1670635785_22789",
+        "a": "Ä",
+        "#": "3"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "valueType": "static",
+            "value": "/assets/1670635785_22789",
+            "width": 52,
+            "height": 52
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "valueType": "dynamic",
+            "value": "image1",
+            "width": 52,
+            "height": 52
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 2.2838709677419278,
+            "fontSize": "36",
+            "valueType": "dynamic",
+            "value": "letter",
+            "textAlign": "center",
+            "textFont": null,
+            "width": 50.32258064516127
+          },
+          {
+            "type": "text",
+            "x": 19.79354838709676,
+            "y": 32.64516129032261,
+            "fontSize": "14",
+            "valueType": "dynamic",
+            "value": "#",
+            "textAlign": "right",
+            "textFont": null,
+            "width": 27.174193548387105
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 52,
+      "height": 52,
+      "overlap": false,
+      "ignoreOnLeave": true,
+      "grid": [
+        {
+          "x": 65,
+          "y": 65,
+          "maxX": 1000,
+          "offsetX": -9,
+          "offsetY": -13
+        }
+      ]
+    },
+    "parent": "f0429b21-8cc1-4acb-8147-2c5fa189c1c7"
+  },
+  "s4eq": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-bd278b2a-a22f-4001-a5b8-6e09dfdaa3d5",
+    "id": "s4eq",
+    "z": 89,
+    "parent": "oa34"
+  },
+  "dp15": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-bd278b2a-a22f-4001-a5b8-6e09dfdaa3d5",
+    "id": "dp15",
+    "z": 7748,
+    "parent": "oa34"
+  },
+  "lta0": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-bd278b2a-a22f-4001-a5b8-6e09dfdaa3d5",
+    "id": "lta0",
+    "z": 5452,
+    "parent": "oa34"
+  },
+  "cc2a": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-bd278b2a-a22f-4001-a5b8-6e09dfdaa3d5",
+    "id": "cc2a",
+    "z": 7646,
+    "parent": "oa34"
+  },
+  "7a3i": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-bd278b2a-a22f-4001-a5b8-6e09dfdaa3d5",
+    "id": "7a3i",
+    "z": 2038,
+    "parent": "oa34"
+  },
+  "l1ui": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-bd278b2a-a22f-4001-a5b8-6e09dfdaa3d5",
+    "id": "l1ui",
+    "z": 6166,
+    "parent": "oa34"
+  },
+  "o9un": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-bd278b2a-a22f-4001-a5b8-6e09dfdaa3d5",
+    "id": "o9un",
+    "z": 2772,
+    "parent": "oa34"
+  },
+  "qk0n": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-bd278b2a-a22f-4001-a5b8-6e09dfdaa3d5",
+    "id": "qk0n",
+    "z": 2788,
+    "parent": "oa34"
+  },
+  "85f5": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-bd278b2a-a22f-4001-a5b8-6e09dfdaa3d5",
+    "id": "85f5",
+    "z": 822,
+    "parent": "oa34"
+  },
+  "7yjf": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-bd278b2a-a22f-4001-a5b8-6e09dfdaa3d5",
+    "id": "7yjf",
+    "z": 340,
+    "parent": "oa34"
+  },
+  "jn8q": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-bd278b2a-a22f-4001-a5b8-6e09dfdaa3d5",
+    "id": "jn8q",
+    "z": 3455,
+    "parent": "oa34"
+  },
+  "al6i": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-bd278b2a-a22f-4001-a5b8-6e09dfdaa3d5",
+    "id": "al6i",
+    "z": 8610,
+    "parent": "oa34"
+  },
+  "fc7i": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-bd278b2a-a22f-4001-a5b8-6e09dfdaa3d5",
+    "id": "fc7i",
+    "z": 4988,
+    "parent": "oa34"
+  },
+  "5j4r": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-bd278b2a-a22f-4001-a5b8-6e09dfdaa3d5",
+    "id": "5j4r",
+    "z": 1734,
+    "parent": "oa34"
+  },
+  "2pkc": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-13e148a9-cc60-44c9-b163-b5d690043bf0",
+    "id": "2pkc",
+    "z": 4278,
+    "parent": "oa34"
+  },
+  "ult3": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-13e148a9-cc60-44c9-b163-b5d690043bf0",
+    "id": "ult3",
+    "z": 275,
+    "parent": "oa34"
+  },
+  "gsju": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-13e148a9-cc60-44c9-b163-b5d690043bf0",
+    "id": "gsju",
+    "z": 1658,
+    "parent": "oa34"
+  },
+  "97a0": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-d98780c2-6267-49ef-b896-530bbf746c08",
+    "id": "97a0",
+    "z": 772,
+    "parent": "oa34"
+  },
+  "wf69": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-d98780c2-6267-49ef-b896-530bbf746c08",
+    "id": "wf69",
+    "z": 9145,
+    "parent": "oa34"
+  },
+  "y3xo": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-d98780c2-6267-49ef-b896-530bbf746c08",
+    "id": "y3xo",
+    "z": 7149,
+    "parent": "oa34"
+  },
+  "rdk2": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-d98780c2-6267-49ef-b896-530bbf746c08",
+    "id": "rdk2",
+    "z": 5250,
+    "parent": "oa34"
+  },
+  "c93s": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-b0b4ba05-3426-42ec-87f1-2683c81fe198",
+    "id": "c93s",
+    "z": 1922,
+    "parent": "oa34"
+  },
+  "nohm": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-b0b4ba05-3426-42ec-87f1-2683c81fe198",
+    "id": "nohm",
+    "z": 1541,
+    "parent": "oa34"
+  },
+  "9hr7": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-b0b4ba05-3426-42ec-87f1-2683c81fe198",
+    "id": "9hr7",
+    "z": 3760,
+    "parent": "oa34"
+  },
+  "m86p": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-b0b4ba05-3426-42ec-87f1-2683c81fe198",
+    "id": "m86p",
+    "z": 6550,
+    "parent": "oa34"
+  },
+  "mvwf": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-b0b4ba05-3426-42ec-87f1-2683c81fe198",
+    "id": "mvwf",
+    "z": 5385,
+    "parent": "oa34"
+  },
+  "982p": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-5ab8ed0c-583d-4a8d-8d13-9d8b6f672311",
+    "id": "982p",
+    "z": 3814,
+    "parent": "oa34"
+  },
+  "ny1y": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-5ab8ed0c-583d-4a8d-8d13-9d8b6f672311",
+    "id": "ny1y",
+    "z": 6698,
+    "parent": "oa34"
+  },
+  "0fsh": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-5ab8ed0c-583d-4a8d-8d13-9d8b6f672311",
+    "id": "0fsh",
+    "z": 6139,
+    "parent": "oa34"
+  },
+  "anoj": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-5ab8ed0c-583d-4a8d-8d13-9d8b6f672311",
+    "id": "anoj",
+    "z": 5876,
+    "parent": "oa34"
+  },
+  "ittd": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-5ab8ed0c-583d-4a8d-8d13-9d8b6f672311",
+    "id": "ittd",
+    "z": 9304,
+    "parent": "oa34"
+  },
+  "yelc": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-5ab8ed0c-583d-4a8d-8d13-9d8b6f672311",
+    "id": "yelc",
+    "z": 8337,
+    "parent": "oa34"
+  },
+  "glfh": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-5ab8ed0c-583d-4a8d-8d13-9d8b6f672311",
+    "id": "glfh",
+    "z": 1433,
+    "parent": "oa34"
+  },
+  "3owk": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-5ab8ed0c-583d-4a8d-8d13-9d8b6f672311",
+    "id": "3owk",
+    "z": 9371,
+    "parent": "oa34"
+  },
+  "6tb1": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-5ab8ed0c-583d-4a8d-8d13-9d8b6f672311",
+    "id": "6tb1",
+    "z": 7839,
+    "parent": "oa34"
+  },
+  "plf1": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-5ab8ed0c-583d-4a8d-8d13-9d8b6f672311",
+    "id": "plf1",
+    "z": 1772,
+    "parent": "oa34"
+  },
+  "r1wd": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-5ab8ed0c-583d-4a8d-8d13-9d8b6f672311",
+    "id": "r1wd",
+    "z": 3863,
+    "parent": "oa34"
+  },
+  "b0w7": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-6aef793f-ed6b-48b2-a3d6-d2a46ef51a4a",
+    "id": "b0w7",
+    "z": 7207,
+    "parent": "oa34"
+  },
+  "jxwu": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-6aef793f-ed6b-48b2-a3d6-d2a46ef51a4a",
+    "id": "jxwu",
+    "z": 6692,
+    "parent": "oa34"
+  },
+  "4w0x": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-c12f6dac-fee0-46f7-969a-4cbbdc18593b",
+    "id": "4w0x",
+    "z": 1422,
+    "parent": "oa34"
+  },
+  "877c": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-c12f6dac-fee0-46f7-969a-4cbbdc18593b",
+    "id": "877c",
+    "z": 7442,
+    "parent": "oa34"
+  },
+  "xwoj": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-c74ab039-d2c4-44b8-8649-eb2e4ebb6190",
+    "id": "xwoj",
+    "z": 8219,
+    "parent": "oa34"
+  },
+  "kv5r": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-c74ab039-d2c4-44b8-8649-eb2e4ebb6190",
+    "id": "kv5r",
+    "z": 2106,
+    "parent": "oa34"
+  },
+  "5s6f": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-6854532a-2945-4c42-a1e5-632d8a390860",
+    "id": "5s6f",
+    "z": 3798,
+    "parent": "oa34"
+  },
+  "vd8p": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-6854532a-2945-4c42-a1e5-632d8a390860",
+    "id": "vd8p",
+    "z": 3917,
+    "parent": "oa34"
+  },
+  "5gsv": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-6854532a-2945-4c42-a1e5-632d8a390860",
+    "id": "5gsv",
+    "z": 7568,
+    "parent": "oa34"
+  },
+  "vuxj": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-6854532a-2945-4c42-a1e5-632d8a390860",
+    "id": "vuxj",
+    "z": 4353,
+    "parent": "oa34"
+  },
+  "8ggr": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-6854532a-2945-4c42-a1e5-632d8a390860",
+    "id": "8ggr",
+    "z": 6961,
+    "parent": "oa34"
+  },
+  "2rl2": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-6854532a-2945-4c42-a1e5-632d8a390860",
+    "id": "2rl2",
+    "z": 9294,
+    "parent": "oa34"
+  },
+  "uph8": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-6854532a-2945-4c42-a1e5-632d8a390860",
+    "id": "uph8",
+    "z": 8226,
+    "parent": "oa34"
+  },
+  "89br": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-6854532a-2945-4c42-a1e5-632d8a390860",
+    "id": "89br",
+    "z": 5663,
+    "parent": "oa34"
+  },
+  "r863": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-6854532a-2945-4c42-a1e5-632d8a390860",
+    "id": "r863",
+    "z": 5218,
+    "parent": "oa34"
+  },
+  "f7mk": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-6854532a-2945-4c42-a1e5-632d8a390860",
+    "id": "f7mk",
+    "z": 1130,
+    "parent": "oa34"
+  },
+  "vx8q": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-9d122850-caa0-43db-91a1-782204784119",
+    "id": "vx8q",
+    "z": 6593,
+    "parent": "oa34"
+  },
+  "0zd9": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-9d122850-caa0-43db-91a1-782204784119",
+    "id": "0zd9",
+    "z": 9067,
+    "parent": "oa34"
+  },
+  "pi7b": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-4b67cfa0-8f1f-4243-8d69-db8ce189cb57",
+    "id": "pi7b",
+    "z": 7452,
+    "parent": "oa34"
+  },
+  "kjbu": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-4b67cfa0-8f1f-4243-8d69-db8ce189cb57",
+    "id": "kjbu",
+    "z": 63,
+    "parent": "oa34"
+  },
+  "8jb6": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-4b67cfa0-8f1f-4243-8d69-db8ce189cb57",
+    "id": "8jb6",
+    "z": 3531,
+    "parent": "oa34"
+  },
+  "qux7": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-4b67cfa0-8f1f-4243-8d69-db8ce189cb57",
+    "id": "qux7",
+    "z": 7285,
+    "parent": "oa34"
+  },
+  "ddzr": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-4b67cfa0-8f1f-4243-8d69-db8ce189cb57",
+    "id": "ddzr",
+    "z": 797,
+    "parent": "oa34"
+  },
+  "wu58": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-437a62b8-f294-430b-ba02-e2df2bfc5f65",
+    "id": "wu58",
+    "z": 6446,
+    "parent": "oa34"
+  },
+  "iu6a": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-437a62b8-f294-430b-ba02-e2df2bfc5f65",
+    "id": "iu6a",
+    "z": 4297,
+    "parent": "oa34"
+  },
+  "35ht": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-437a62b8-f294-430b-ba02-e2df2bfc5f65",
+    "id": "35ht",
+    "z": 438,
+    "parent": "oa34"
+  },
+  "bh4a": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-437a62b8-f294-430b-ba02-e2df2bfc5f65",
+    "id": "bh4a",
+    "z": 1056,
+    "parent": "oa34"
+  },
+  "4fgn": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-437a62b8-f294-430b-ba02-e2df2bfc5f65",
+    "id": "4fgn",
+    "z": 3701,
+    "parent": "oa34"
+  },
+  "ic3n": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-437a62b8-f294-430b-ba02-e2df2bfc5f65",
+    "id": "ic3n",
+    "z": 5047,
+    "parent": "oa34"
+  },
+  "8u63": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-1362496d-a16f-4935-b30c-f7470dd755a2",
+    "id": "8u63",
+    "z": 2432,
+    "parent": "oa34"
+  },
+  "a6zb": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-1362496d-a16f-4935-b30c-f7470dd755a2",
+    "id": "a6zb",
+    "z": 4416,
+    "parent": "oa34"
+  },
+  "zo2w": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-1362496d-a16f-4935-b30c-f7470dd755a2",
+    "id": "zo2w",
+    "z": 1478,
+    "parent": "oa34"
+  },
+  "jhjs": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-1362496d-a16f-4935-b30c-f7470dd755a2",
+    "id": "jhjs",
+    "z": 1925,
+    "parent": "oa34"
+  },
+  "csjo": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-a75f01cc-d60e-4971-b677-743fa9389a01",
+    "id": "csjo",
+    "z": 980,
+    "parent": "oa34"
+  },
+  "tyn4": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-a75f01cc-d60e-4971-b677-743fa9389a01",
+    "id": "tyn4",
+    "z": 5667,
+    "parent": "oa34"
+  },
+  "m36p": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-a75f01cc-d60e-4971-b677-743fa9389a01",
+    "id": "m36p",
+    "z": 6316,
+    "parent": "oa34"
+  },
+  "lp9k": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-a75f01cc-d60e-4971-b677-743fa9389a01",
+    "id": "lp9k",
+    "z": 1765,
+    "parent": "oa34"
+  },
+  "huuq": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-a75f01cc-d60e-4971-b677-743fa9389a01",
+    "id": "huuq",
+    "z": 9843,
+    "parent": "oa34"
+  },
+  "azyq": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-a75f01cc-d60e-4971-b677-743fa9389a01",
+    "id": "azyq",
+    "z": 8980,
+    "parent": "oa34"
+  },
+  "gtla": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-a75f01cc-d60e-4971-b677-743fa9389a01",
+    "id": "gtla",
+    "z": 1090,
+    "parent": "oa34"
+  },
+  "z2lb": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-a75f01cc-d60e-4971-b677-743fa9389a01",
+    "id": "z2lb",
+    "z": 7156,
+    "parent": "oa34"
+  },
+  "svow": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-a75f01cc-d60e-4971-b677-743fa9389a01",
+    "id": "svow",
+    "z": 2192,
+    "parent": "oa34"
+  },
+  "5pie": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-a75f01cc-d60e-4971-b677-743fa9389a01",
+    "id": "5pie",
+    "z": 6713,
+    "parent": "oa34"
+  },
+  "ibrr": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-28ac763b-2e1f-479d-9188-3e091a16b640",
+    "id": "ibrr",
+    "z": 1005,
+    "parent": "oa34"
+  },
+  "iuf9": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-28ac763b-2e1f-479d-9188-3e091a16b640",
+    "id": "iuf9",
+    "z": 4382,
+    "parent": "oa34"
+  },
+  "jvvs": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-28ac763b-2e1f-479d-9188-3e091a16b640",
+    "id": "jvvs",
+    "z": 5250,
+    "parent": "oa34"
+  },
+  "coar": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-28ac763b-2e1f-479d-9188-3e091a16b640",
+    "id": "coar",
+    "z": 3125,
+    "parent": "oa34"
+  },
+  "lrg8": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-a9daef5b-8554-406e-b4fd-f05bd5adad2d",
+    "id": "lrg8",
+    "z": 269,
+    "parent": "oa34"
+  },
+  "3p2a": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-8bcfe309-4fe4-432d-88fb-26513c668994",
+    "id": "3p2a",
+    "z": 2021,
+    "parent": "oa34"
+  },
+  "reiv": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-8bcfe309-4fe4-432d-88fb-26513c668994",
+    "id": "reiv",
+    "z": 1544,
+    "parent": "oa34"
+  },
+  "rcij": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-8bcfe309-4fe4-432d-88fb-26513c668994",
+    "id": "rcij",
+    "z": 4217,
+    "parent": "oa34"
+  },
+  "fekd": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-8bcfe309-4fe4-432d-88fb-26513c668994",
+    "id": "fekd",
+    "z": 9089,
+    "parent": "oa34"
+  },
+  "s144": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-8bcfe309-4fe4-432d-88fb-26513c668994",
+    "id": "s144",
+    "z": 8617,
+    "parent": "oa34"
+  },
+  "c0ot": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-8bcfe309-4fe4-432d-88fb-26513c668994",
+    "id": "c0ot",
+    "z": 8827,
+    "parent": "oa34"
+  },
+  "jn5h": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-523e28e4-71f7-42ff-a032-3adb5c0be7a0",
+    "id": "jn5h",
+    "z": 9167,
+    "parent": "oa34"
+  },
+  "zvvv": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-523e28e4-71f7-42ff-a032-3adb5c0be7a0",
+    "id": "zvvv",
+    "z": 7249,
+    "parent": "oa34"
+  },
+  "hj62": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-523e28e4-71f7-42ff-a032-3adb5c0be7a0",
+    "id": "hj62",
+    "z": 2294,
+    "parent": "oa34"
+  },
+  "jqzr": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-523e28e4-71f7-42ff-a032-3adb5c0be7a0",
+    "id": "jqzr",
+    "z": 7589,
+    "parent": "oa34"
+  },
+  "8fk9": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-523e28e4-71f7-42ff-a032-3adb5c0be7a0",
+    "id": "8fk9",
+    "z": 3543,
+    "parent": "oa34"
+  },
+  "5v2w": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-523e28e4-71f7-42ff-a032-3adb5c0be7a0",
+    "id": "5v2w",
+    "z": 2977,
+    "parent": "oa34"
+  },
+  "47rn": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-523e28e4-71f7-42ff-a032-3adb5c0be7a0",
+    "id": "47rn",
+    "z": 6504,
+    "parent": "oa34"
+  },
+  "1bqa": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-523e28e4-71f7-42ff-a032-3adb5c0be7a0",
+    "id": "1bqa",
+    "z": 1129,
+    "parent": "oa34"
+  },
+  "abjj": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-2c8de71f-0481-4daa-a9f0-ba7d5602e385",
+    "id": "abjj",
+    "z": 8578,
+    "parent": "oa34"
+  },
+  "8wkz": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-2c8de71f-0481-4daa-a9f0-ba7d5602e385",
+    "id": "8wkz",
+    "z": 994,
+    "parent": "oa34"
+  },
+  "2fbn": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-2c8de71f-0481-4daa-a9f0-ba7d5602e385",
+    "id": "2fbn",
+    "z": 8235,
+    "parent": "oa34"
+  },
+  "e0i3": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-2c8de71f-0481-4daa-a9f0-ba7d5602e385",
+    "id": "e0i3",
+    "z": 2440,
+    "parent": "oa34"
+  },
+  "s8l7": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-2c8de71f-0481-4daa-a9f0-ba7d5602e385",
+    "id": "s8l7",
+    "z": 5259,
+    "parent": "oa34"
+  },
+  "phel": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-af903535-46f5-449f-a1da-ce5d4d57143f",
+    "id": "phel",
+    "z": 5060,
+    "parent": "oa34"
+  },
+  "lybf": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-af903535-46f5-449f-a1da-ce5d4d57143f",
+    "id": "lybf",
+    "z": 9001,
+    "parent": "oa34"
+  },
+  "7w7z": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-af903535-46f5-449f-a1da-ce5d4d57143f",
+    "id": "7w7z",
+    "z": 4833,
+    "parent": "oa34"
+  },
+  "7qkd": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-af903535-46f5-449f-a1da-ce5d4d57143f",
+    "id": "7qkd",
+    "z": 2723,
+    "parent": "oa34"
+  },
+  "r9kz": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-af903535-46f5-449f-a1da-ce5d4d57143f",
+    "id": "r9kz",
+    "z": 2419,
+    "parent": "oa34"
+  },
+  "8tgd": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-af903535-46f5-449f-a1da-ce5d4d57143f",
+    "id": "8tgd",
+    "z": 8482,
+    "parent": "oa34"
+  },
+  "hxdr": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-af903535-46f5-449f-a1da-ce5d4d57143f",
+    "id": "hxdr",
+    "z": 8263,
+    "parent": "oa34"
+  },
+  "a8mg": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-ef6b376e-c046-466c-ab15-57d7bd0688c9",
+    "id": "a8mg",
+    "z": 7123,
+    "parent": "oa34"
+  },
+  "n08i": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-ef6b376e-c046-466c-ab15-57d7bd0688c9",
+    "id": "n08i",
+    "z": 3139,
+    "parent": "oa34"
+  },
+  "hbcn": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-3d6668f3-9090-47a1-b3d3-752f2aa99558",
+    "id": "hbcn",
+    "z": 1671,
+    "parent": "oa34"
+  },
+  "3svr": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-416948f4-8f3c-479f-8860-368ab8312bcc",
+    "id": "3svr",
+    "z": 5950,
+    "parent": "oa34"
+  },
+  "839i": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-3d8e2ef7-9506-4905-b599-c861fc91045b",
+    "id": "839i",
+    "z": 679,
+    "parent": "oa34"
+  },
+  "zabb": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-3d8e2ef7-9506-4905-b599-c861fc91045b",
+    "id": "zabb",
+    "z": 3586,
+    "parent": "oa34"
+  },
+  "alpq": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-3d8e2ef7-9506-4905-b599-c861fc91045b",
+    "id": "alpq",
+    "z": 5864,
+    "parent": "oa34"
+  },
+  "mnpp": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-416948f4-8f3c-479p-8860-368ab8312bcp",
+    "id": "mnpp",
+    "z": 9603,
+    "parent": "oa34"
+  },
+  "6kbn": {
+    "deck": "5d115a31-8fc3-4c7d-97e0-5b6ad6ec436a",
+    "type": "card",
+    "cardType": "type-416948f4-8f3c-479p-8860-368ab8312bcp",
+    "id": "6kbn",
+    "z": 1428,
+    "parent": "oa34"
+  },
+  "oa34": {
+    "type": "pile",
+    "parent": "f0429b21-8cc1-4acb-8147-2c5fa189c1c7",
+    "x": 4,
+    "y": 4,
+    "width": 52,
+    "height": 52,
+    "id": "oa34"
+  }
+}

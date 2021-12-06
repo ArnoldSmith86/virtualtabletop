@@ -1,0 +1,1062 @@
+{
+  "n7jd": {
+    "text": "Discard",
+    "id": "n7jd",
+    "y": 211.6764705882353,
+    "z": 530,
+    "x": 24,
+    "height": 25,
+    "color": "red"
+  },
+  "bfy2": {
+    "text": "Hand",
+    "x": 24,
+    "y": 317.79411764705884,
+    "z": 528,
+    "id": "bfy2",
+    "height": 25,
+    "color": "red"
+  },
+  "8q1x": {
+    "text": "Play",
+    "x": 24,
+    "y": 476.97058823529414,
+    "z": 525,
+    "id": "8q1x",
+    "height": 25,
+    "color": "red"
+  },
+  "1ly3": {
+    "text": "Player",
+    "x": 24,
+    "y": 530.0294117647059,
+    "z": 524,
+    "id": "1ly3",
+    "height": 25,
+    "color": "red"
+  },
+  "tt2d": {
+    "text": "Restart",
+    "x": 24,
+    "y": 742.2647058823529,
+    "z": 520,
+    "id": "tt2d",
+    "height": 25,
+    "color": "red"
+  },
+  "f0nr": {
+    "text": "Rotate",
+    "x": 24,
+    "y": 795.3235294117646,
+    "z": 519,
+    "id": "f0nr",
+    "height": 25,
+    "color": "red"
+  },
+  "0jkh": {
+    "text": "Shuffle",
+    "x": 24,
+    "y": 636.1470588235295,
+    "z": 522,
+    "id": "0jkh",
+    "height": 25,
+    "color": "red"
+  },
+  "o8dv": {
+    "text": "Sort",
+    "x": 24,
+    "y": 901.4411764705881,
+    "z": 517,
+    "id": "o8dv",
+    "height": 25,
+    "color": "red"
+  },
+  "mu48": {
+    "text": "Recall",
+    "x": 24,
+    "y": 583.0882352941177,
+    "z": 523,
+    "id": "mu48",
+    "height": 25,
+    "color": "red"
+  },
+  "ym3a": {
+    "text": "Move",
+    "x": 24,
+    "y": 370.8529411764706,
+    "z": 527,
+    "id": "ym3a",
+    "height": 25,
+    "color": "red"
+  },
+  "qp2k": {
+    "text": "Close",
+    "x": 24,
+    "y": 52.5,
+    "z": 628,
+    "id": "qp2k",
+    "height": 25,
+    "color": "red"
+  },
+  "1tw4": {
+    "text": "View",
+    "x": 24,
+    "y": 954.5,
+    "z": 516,
+    "id": "1tw4",
+    "height": 25,
+    "color": "red"
+  },
+  "ou2d": {
+    "text": "Pile",
+    "x": 24,
+    "y": 423.9117647058824,
+    "z": 526,
+    "id": "ou2d",
+    "height": 25,
+    "color": "red"
+  },
+  "l8nq": {
+    "text": "Deal Up",
+    "x": 24,
+    "y": 158.61764705882354,
+    "z": 531,
+    "id": "l8nq",
+    "height": 25,
+    "color": "red"
+  },
+  "1o39": {
+    "text": "Screen Change",
+    "x": 24,
+    "y": 848.3823529411764,
+    "z": 518,
+    "id": "1o39",
+    "height": 25,
+    "width": 150,
+    "color": "red"
+  },
+  "wpuc": {
+    "text": "Grid",
+    "x": 24,
+    "y": 264.7352941176471,
+    "z": 529,
+    "id": "wpuc",
+    "height": 25,
+    "color": "red"
+  },
+  "dqgp": {
+    "text": "Recall and Shuffle",
+    "x": 24,
+    "y": 689.2058823529412,
+    "z": 521,
+    "id": "dqgp",
+    "height": 25,
+    "width": 150,
+    "color": "red"
+  },
+  "k4mp": {
+    "text": "Deal Down",
+    "x": 24,
+    "y": 105.55882352941177,
+    "z": 567,
+    "height": 25,
+    "id": "k4mp",
+    "color": "red"
+  },
+  "v4zu": {
+    "type": "button",
+    "text": "Change Color",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "colorchoice"
+      },
+      {
+        "func": "GET",
+        "collection": "DEFAULT",
+        "property": "text",
+        "variable": "userchoice"
+      },
+      {
+        "func": "SELECT",
+        "property": "color",
+        "relation": "!=",
+        "value": null,
+        "collection": "colors",
+        "source": "all"
+      },
+      {
+        "func": "SET",
+        "collection": "colors",
+        "property": "color",
+        "applyVariables": [
+          {
+            "parameter": "value",
+            "variable": "userchoice"
+          }
+        ]
+      }
+    ],
+    "x": 1468,
+    "y": 81,
+    "z": 6,
+    "id": "v4zu",
+    "color": "red"
+  },
+  "colorchoice": {
+    "type": "label",
+    "id": "colorchoice",
+    "x": 1429,
+    "y": 31.5,
+    "width": 150,
+    "height": 25,
+    "z": 5,
+    "movable": null,
+    "movableInEdit": null,
+    "css": "font-size:20px",
+    "editable": true,
+    "text": "red"
+  },
+  "6vv7": {
+    "text": "Type color choice ('red', #ff0000, etc.)",
+    "x": 1279,
+    "y": 23.5,
+    "z": 603,
+    "height": 25,
+    "id": "6vv7",
+    "width": 150,
+    "color": "red"
+  },
+  "upyp": {
+    "text": "Universal Game Symbols (Buttons)",
+    "x": 532,
+    "y": -1,
+    "z": 605,
+    "id": "upyp",
+    "width": 700,
+    "css": "font-size:45px; color:black",
+    "color": "red"
+  },
+  "wvl1": {
+    "type": "button",
+    "z": 554,
+    "x": 198,
+    "y": 24,
+    "height": 50,
+    "width": 50,
+    "id": "wvl1",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "clickRoutine": [],
+    "color": "red",
+    "image": "/assets/-1517894895_340",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "c1aj": {
+    "id": "c1aj",
+    "x": 555,
+    "y": 480.5,
+    "width": 550,
+    "height": 325,
+    "z": 616,
+    "color": "red",
+    "css": "font-size: 25px",
+    "text": "This room contains suggested universal game symbols. They are in the form of buttons with clickRoutines that will need to be customized to perform a specific function in a game room. These are similar to the basic widget version except that some CSS is needed to set properties of the button and the image on it.\n\nFurther customization of the shape and size of the button area around the icon is also possible through the use of CSS properties such as border-radius and padding."
+  },
+  "vmvm": {
+    "image": "/assets/1498046994_571",
+    "z": 553,
+    "x": 267.3333333333333,
+    "y": 27.5,
+    "id": "vmvm",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "ip9f": {
+    "image": "/assets/1710959271_477",
+    "z": 554,
+    "x": 336.66666666666663,
+    "y": 27.5,
+    "id": "ip9f",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "2zkz": {
+    "image": "/assets/-326444686_1805",
+    "z": 405,
+    "x": 198,
+    "y": 80.55882352941177,
+    "id": "2zkz",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "n1pu": {
+    "image": "/assets/1628615511_2010",
+    "id": "n1pu",
+    "z": 477,
+    "x": 267.3333333333333,
+    "y": 80.55882352941177,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "goni": {
+    "image": "/assets/221288854_2313",
+    "id": "goni",
+    "z": 493,
+    "y": 80.55882352941177,
+    "x": 336.66666666666663,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "wbsy": {
+    "image": "/assets/-628207039_2611",
+    "id": "wbsy",
+    "z": 492,
+    "x": 406,
+    "y": 80.55882352941177,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "km7c": {
+    "image": "/assets/-1466784110_2136",
+    "id": "km7c",
+    "z": 491,
+    "x": 475.33333333333326,
+    "y": 80.55882352941177,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "cacv": {
+    "image": "/assets/1805749092_2422",
+    "id": "cacv",
+    "z": 490,
+    "x": 544.6666666666666,
+    "y": 80.55882352941177,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "pyak": {
+    "image": "/assets/1873248018_2532",
+    "id": "pyak",
+    "z": 489,
+    "x": 614,
+    "y": 80.55882352941177,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "sd35": {
+    "image": "/assets/-1589376331_2010",
+    "id": "sd35",
+    "z": 488,
+    "x": 683.3333333333333,
+    "y": 80.55882352941177,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "2v0m": {
+    "image": "/assets/1636315241_2809",
+    "id": "2v0m",
+    "z": 487,
+    "x": 752.6666666666666,
+    "y": 80.55882352941177,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "s89d": {
+    "image": "/assets/1139018207_2575",
+    "id": "s89d",
+    "z": 486,
+    "x": 822,
+    "y": 80.55882352941177,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "sr3c": {
+    "image": "/assets/-1499118311_13369",
+    "z": 450,
+    "x": 198,
+    "y": 133.61764705882354,
+    "id": "sr3c",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "7tjb": {
+    "image": "/assets/-445285962_14468",
+    "id": "7tjb",
+    "z": 474,
+    "x": 336.66666666666663,
+    "y": 133.61764705882354,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "jway": {
+    "image": "/assets/650020475_14767",
+    "id": "jway",
+    "z": 472,
+    "x": 406,
+    "y": 133.61764705882354,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "aho1": {
+    "image": "/assets/55077362_14292",
+    "id": "aho1",
+    "z": 471,
+    "x": 475.33333333333326,
+    "y": 133.61764705882354,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "11fj": {
+    "image": "/assets/-557632893_14578",
+    "id": "11fj",
+    "z": 466,
+    "x": 544.6666666666666,
+    "y": 133.61764705882354,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "y65b": {
+    "image": "/assets/717267723_14688",
+    "id": "y65b",
+    "z": 465,
+    "x": 614,
+    "y": 133.61764705882354,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "y7pt": {
+    "image": "/assets/-591998462_14166",
+    "id": "y7pt",
+    "z": 464,
+    "x": 683.3333333333333,
+    "y": 133.61764705882354,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "tuog": {
+    "image": "/assets/658651991_14965",
+    "id": "tuog",
+    "z": 463,
+    "x": 752.6666666666666,
+    "y": 133.61764705882354,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "8s88": {
+    "image": "/assets/-550997259_14732",
+    "id": "8s88",
+    "z": 462,
+    "x": 822,
+    "y": 133.61764705882354,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "hsvo": {
+    "image": "/assets/-1632757686_1224",
+    "z": 533,
+    "x": 198,
+    "y": 186.6764705882353,
+    "id": "hsvo",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "z8jy": {
+    "image": "/assets/549799270_562",
+    "z": 565,
+    "x": 198,
+    "y": 239.73529411764707,
+    "id": "z8jy",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "e0b7": {
+    "image": "/assets/-1232977354_1395",
+    "z": 555,
+    "x": 198,
+    "y": 292.79411764705884,
+    "id": "e0b7",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "61pp": {
+    "image": "/assets/-1049027103_1526",
+    "id": "61pp",
+    "z": 556,
+    "x": 267.3333333333333,
+    "y": 292.79411764705884,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "b4zy": {
+    "image": "/assets/-1968965746_1784",
+    "id": "b4zy",
+    "z": 557,
+    "x": 336.66666666666663,
+    "y": 292.79411764705884,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "tre7": {
+    "image": "/assets/549246526_2053",
+    "id": "tre7",
+    "z": 591,
+    "x": 406,
+    "y": 292.79411764705884,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "yn7p": {
+    "image": "/assets/-972762639_1633",
+    "id": "yn7p",
+    "z": 559,
+    "x": 475.33333333333326,
+    "y": 292.79411764705884,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "wcxp": {
+    "image": "/assets/-923490446_1866",
+    "id": "wcxp",
+    "z": 560,
+    "x": 544.6666666666666,
+    "y": 292.79411764705884,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "tucs": {
+    "image": "/assets/-62777968_1970",
+    "id": "tucs",
+    "z": 561,
+    "x": 614,
+    "y": 292.79411764705884,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "whbg": {
+    "image": "/assets/-2083277831_1525",
+    "id": "whbg",
+    "z": 562,
+    "x": 683.3333333333333,
+    "y": 292.79411764705884,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "egbx": {
+    "image": "/assets/-1809462826_2207",
+    "id": "egbx",
+    "z": 563,
+    "x": 752.6666666666666,
+    "y": 292.79411764705884,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "y057": {
+    "image": "/assets/-575704963_2031",
+    "id": "y057",
+    "z": 564,
+    "x": 822,
+    "y": 292.79411764705884,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "kxww": {
+    "image": "/assets/-1712546135_277",
+    "z": 575,
+    "x": 198,
+    "y": 345.8529411764706,
+    "id": "kxww",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "4t4r": {
+    "image": "/assets/1502865726_277",
+    "z": 576,
+    "x": 267.3333333333333,
+    "y": 345.8529411764706,
+    "id": "4t4r",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "peor": {
+    "image": "/assets/979051549_277",
+    "z": 577,
+    "x": 336.66666666666663,
+    "y": 345.8529411764706,
+    "id": "peor",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "uke3": {
+    "image": "/assets/822277903_277",
+    "z": 578,
+    "x": 406,
+    "y": 345.8529411764706,
+    "id": "uke3",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "3xjz": {
+    "image": "/assets/1518437471_657",
+    "z": 579,
+    "x": 198,
+    "y": 398.9117647058824,
+    "id": "3xjz",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "me8w": {
+    "image": "/assets/992985589_649",
+    "z": 580,
+    "x": 198,
+    "y": 451.97058823529414,
+    "id": "me8w",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "viqv": {
+    "image": "/assets/888752271_2677",
+    "id": "viqv",
+    "z": 612,
+    "x": 198,
+    "y": 663,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "width": 50,
+    "height": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "8eb2": {
+    "image": "/assets/1444052474_484",
+    "z": 581,
+    "x": 198,
+    "y": 505.02941176470586,
+    "id": "8eb2",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "4heo": {
+    "image": "/assets/2125057347_1484",
+    "z": 582,
+    "y": 558.0882352941177,
+    "x": 198,
+    "id": "4heo",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "zkn9": {
+    "image": "/assets/835741531_1302",
+    "z": 583,
+    "x": 198,
+    "y": 611.1470588235295,
+    "id": "zkn9",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "pq2t": {
+    "image": "/assets/1342248376_1383",
+    "z": 584,
+    "x": 198,
+    "y": 717.2647058823529,
+    "id": "pq2t",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "cjp0": {
+    "image": "/assets/-247679336_711",
+    "z": 586,
+    "y": 770.3235294117646,
+    "x": 198,
+    "id": "cjp0",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "h1je": {
+    "image": "/assets/45318419_712",
+    "z": 587,
+    "x": 267.3333333333333,
+    "y": 770.3235294117646,
+    "id": "h1je",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "2ym0": {
+    "image": "/assets/1740962758_922",
+    "id": "2ym0",
+    "z": 588,
+    "x": 198,
+    "y": 823.3823529411764,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "61pl": {
+    "image": "/assets/1449230054_1314",
+    "z": 589,
+    "y": 876.4411764705881,
+    "x": 198,
+    "id": "61pl",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "2i7w": {
+    "image": "/assets/-27377452_736",
+    "z": 590,
+    "x": 198,
+    "y": 929.5,
+    "id": "2i7w",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "height": 50,
+    "width": 50,
+    "color": "red",
+    "type": "button",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0"
+  },
+  "qhx2": {
+    "type": "button",
+    "text": "       2",
+    "clickRoutine": [],
+    "x": 1365,
+    "y": 482,
+    "z": 3870,
+    "id": "qhx2",
+    "height": 50,
+    "image": "/assets/1444052474_484",
+    "css": "padding-bottom:31px;font-size:25px;text-align:left;background-position:25px;background-size:40%",
+    "width": 60,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "color": "red"
+  },
+  "gcbe": {
+    "x": 1218,
+    "y": 297,
+    "width": 350,
+    "height": 150,
+    "z": 619,
+    "color": "red",
+    "css": "font-size: 25px",
+    "text": "If you want to combine text and one of these universal images on a standard button, you can use CSS along with the shape of the button to create different effects.",
+    "id": "gcbe"
+  },
+  "45dv": {
+    "image": "/assets/1256202101_14165",
+    "id": "45dv",
+    "z": 620,
+    "y": 133.61764705882354,
+    "x": 267.3333333333333,
+    "color": "red",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "width": 50,
+    "height": 50,
+    "type": "button"
+  },
+  "_meta": {
+    "version": 2,
+    "info": {
+      "name": "Universal Game Symbols",
+      "image": "/assets/-1341312734_63883",
+      "rules": "",
+      "bgg": "",
+      "year": "0",
+      "mode": "Assets",
+      "time": "30",
+      "players": "1",
+      "language": "US",
+      "variant": "Icons as Buttons",
+      "attribution": "The icons were designed by LawDawg96 and RaphaelAlvez and are released to the Public Domain under CC0."
+    }
+  }
+}

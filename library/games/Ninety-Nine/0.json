@@ -1,0 +1,1691 @@
+{
+  "_meta": {
+    "version": 3,
+    "info": {
+      "name": "Ninety-Nine",
+      "image": "/assets/-813927956_12543",
+      "rules": "https://www.parlettgames.uk/oricards/ninety9.html",
+      "bgg": "https://boardgamegeek.com/boardgame/6688/ninety-nine",
+      "year": "1967",
+      "mode": "vs",
+      "time": "30",
+      "players": "3",
+      "language": "US",
+      "variant": "",
+      "attribution": "# Room Instructions\n\n## Setup\n\n- Set your name in the \"Player list\"\n- Click the \"player icon\" button next to a holder to assign that spot to yourself (Note: You MUST do this for the room to function correctly)\n- The red peg marks the current dealer\n\n## Play\n\n- The dealer clicks the \"Deal\" button to deal the hand\n- The card turned up at the top of the screen is the hand's turn card that indicates trump\n- Draw your pile of cards from your holder into your hand, and drag three cards to your bid holder\n- Click on cards to play them to your card holder\n- Click the \"Declare Bid\" or \"Reveal Hand\" button to declare your bid or reveal your hand.\n- The player who wins a trick clicks the \"Take\" button, which clears the trick and increments their trick count\n\n## End of Hand\n\n- Record scores at the end of the hand using the counters under the \"Scores\" heading\n- Move the dealer peg to the next player\n- The new dealer clicks the \"Deal\" button to start a new hand\n\n## License\n\nThe game layout, cards, and library image were created by an anonymous person who gave the work to virtualtabletop.io.  Virtualtabletop.io releases all of this to the Public Domain under CC0.",
+      "similarName": "Ninety-Nine",
+      "similarLink": "https://www.boardgamegeek.com/boardgame/6688/ninety-nine",
+      "description": "Trick taking card game using part of your hand to declare bid.  Most points wins."
+    }
+  },
+  "164c801c-0b48-44cb-b751-c1a12cdd5194_shuffleButton": {
+    "id": "164c801c-0b48-44cb-b751-c1a12cdd5194_shuffleButton",
+    "y": 171.36,
+    "width": 88,
+    "height": 32,
+    "type": "button",
+    "text": "Deal",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "deckHolder"
+      },
+      {
+        "func": "FLIP",
+        "holder": "deckHolder",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deckHolder"
+      },
+      {
+        "func": "LABEL",
+        "label": [
+          "player1Tricks",
+          "player2Tricks",
+          "player3Tricks"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "count": 12,
+        "to": [
+          "player1Holder",
+          "player2Holder",
+          "player3Holder"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "count": 1,
+        "to": "turnCardHolder",
+        "face": 1
+      }
+    ],
+    "parent": "deckHolder"
+  },
+  "28efd404-2d7b-4950-bf0d-e90dae5235c9": {
+    "id": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "x": 1,
+    "y": 40.99999999999999,
+    "z": 1039,
+    "type": "deck",
+    "cardTypes": {
+      "type-cea8e39b-263f-447b-9c74-e2f1c0043120": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/clubs-2.png",
+        "label": "02 - Clubs",
+        "99suit": "1"
+      },
+      "type-6e35057a-e2d8-485b-a81d-84c5ac46abb0": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/clubs-3.png",
+        "label": "03 - Clubs",
+        "99suit": "1"
+      },
+      "type-d5e475a1-da7d-4da0-825c-beb0f46e2ab3": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/clubs-4.png",
+        "label": "04 - Clubs",
+        "99suit": "1"
+      },
+      "type-6f666e3b-a7ac-4775-a43f-9721982923d0": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/clubs-5.png",
+        "label": "05 - Clubs",
+        "99suit": "1"
+      },
+      "type-c5f813c1-842a-44fa-b9c2-66ee011b2ff4": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/clubs-6.png",
+        "label": "06 - Clubs",
+        "99suit": "1"
+      },
+      "type-06cb00a1-89d2-4884-9509-321f1abc584c": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/clubs-7.png",
+        "label": "07 - Clubs",
+        "99suit": "1"
+      },
+      "type-9a9d3893-e267-4296-b911-e25c8f70320f": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/clubs-8.png",
+        "label": "08 - Clubs",
+        "99suit": "1"
+      },
+      "type-5a30a51d-7d85-4711-bf7b-9a96c8fef333": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/clubs-9.png",
+        "label": "09 - Clubs",
+        "99suit": "1"
+      },
+      "type-ba86fb26-2b16-4247-9282-db7bb262a03c": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/clubs-t.png",
+        "label": "10 - Clubs",
+        "99suit": "1"
+      },
+      "type-a691ebfe-d0a7-4a87-9362-510ea72e7544": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/clubs-j.png",
+        "label": "11J - Clubs",
+        "99suit": "1"
+      },
+      "type-9ee3e6ad-e743-4806-a36e-b67aa6593b42": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/clubs-q.png",
+        "label": "12Q - Clubs",
+        "99suit": "1"
+      },
+      "type-420f256e-a72a-4f4b-8b40-f544ef02499c": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/clubs-k.png",
+        "label": "13K - Clubs",
+        "99suit": "1"
+      },
+      "type-1feab597-9d62-4fde-899b-418c45b67c1e": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/clubs-a.png",
+        "label": "14A - Clubs",
+        "99suit": "1"
+      },
+      "type-eb931699-d817-4046-beef-c7076dbdeae8": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/spades-2.png",
+        "label": "02 - Spades",
+        "99suit": "3"
+      },
+      "type-de18a8e7-c8e4-4e55-9d48-990da2dc5014": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/spades-3.png",
+        "label": "03 - Spades",
+        "99suit": "3"
+      },
+      "type-1c6e71be-e5a8-4286-9530-192098278858": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/spades-4.png",
+        "label": "04 - Spades",
+        "99suit": "3"
+      },
+      "type-a7b47418-cf39-4a12-be37-4088bde825e9": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/spades-5.png",
+        "label": "05 - Spades",
+        "99suit": "3"
+      },
+      "type-de67f2ef-c3be-44e3-8aba-738c4ef93060": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/spades-6.png",
+        "label": "06 - Spades",
+        "99suit": "3"
+      },
+      "type-1d173e80-3b1a-4b49-8526-b7837b1cfe6b": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/spades-7.png",
+        "label": "07 - Spades",
+        "99suit": "3"
+      },
+      "type-4aeffcd1-6888-419d-be32-0b6467b4b4a9": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/spades-8.png",
+        "label": "08 - Spades",
+        "99suit": "3"
+      },
+      "type-1e2e3519-4a41-44a0-a82d-69ee7fccf81e": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/spades-9.png",
+        "label": "09 - Spades",
+        "99suit": "3"
+      },
+      "type-ea539728-470a-4f2f-92a3-89208856e596": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/spades-t.png",
+        "label": "10 - Spades",
+        "99suit": "3"
+      },
+      "type-e75f22ed-9d2c-47db-900b-7d34b01d95f6": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/spades-j.png",
+        "label": "11J - Spades",
+        "99suit": "3"
+      },
+      "type-68978da5-8116-4539-b9ac-579164637b01": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/spades-q.png",
+        "label": "12Q - Spades",
+        "99suit": "3"
+      },
+      "type-ccba2331-1713-4d37-ab52-e4c7b4a6cccd": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/spades-k.png",
+        "label": "13K - Spades",
+        "99suit": "3"
+      },
+      "type-65515f8c-d876-4f02-97dc-b196600732c3": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/spades-a.png",
+        "label": "14A - Spades",
+        "99suit": "3"
+      },
+      "type-2097bcda-af3c-4f60-a83b-8d549af56ab5": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/hearts-2.png",
+        "label": "02 - Hearts",
+        "99suit": "2"
+      },
+      "type-e3c9e164-debf-4dcf-aeec-9fffd8d5f068": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/hearts-3.png",
+        "label": "03 - Hearts",
+        "99suit": "2"
+      },
+      "type-27f1535f-4864-4378-9bf2-570b91d41678": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/hearts-4.png",
+        "label": "04 - Hearts",
+        "99suit": "2"
+      },
+      "type-66240e23-f78d-4b8b-b5d2-b3d6d8938fc3": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/hearts-5.png",
+        "label": "05 - Hearts",
+        "99suit": "2"
+      },
+      "type-191fe127-3560-456c-a72d-9b4615737fac": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/hearts-6.png",
+        "label": "06 - Hearts",
+        "99suit": "2"
+      },
+      "type-d2731157-eecb-4339-a745-32981f260d3b": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/hearts-7.png",
+        "label": "07 - Hearts",
+        "99suit": "2"
+      },
+      "type-903287d2-69d5-40dd-8e78-2e242856e7f3": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/hearts-8.png",
+        "label": "08 - Hearts",
+        "99suit": "2"
+      },
+      "type-5b324af2-7080-4afe-aaef-71c08f9ea7d7": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/hearts-9.png",
+        "label": "09 - Hearts",
+        "99suit": "2"
+      },
+      "type-7ed265a4-d69c-4df3-9815-c6ae45eeea0b": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/hearts-t.png",
+        "label": "10 - Hearts",
+        "99suit": "2"
+      },
+      "type-8cc91ee2-3d1a-44ff-8af7-d5fdddb077a6": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/hearts-j.png",
+        "label": "11J - Hearts",
+        "99suit": "2"
+      },
+      "type-2bfc6e01-17eb-4a3f-9469-0c226d036058": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/hearts-q.png",
+        "label": "12Q - Hearts",
+        "99suit": "2"
+      },
+      "type-514b501c-5420-4c7e-948a-7192cdb509df": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/hearts-k.png",
+        "label": "13K - Hearts",
+        "99suit": "2"
+      },
+      "type-e37d6f7b-cd5a-4a86-b402-6831bf8e6b2c": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/hearts-a.png",
+        "label": "14A - Hearts",
+        "99suit": "2"
+      },
+      "type-b5308431-2335-4a79-8b1b-2d8f9c3c3d3d": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/diamonds-2.png",
+        "label": "02 - Diamonds",
+        "99suit": "4"
+      },
+      "type-c1a08699-2a5c-443a-8db5-66f9e6487f20": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/diamonds-3.png",
+        "label": "03 - Diamonds",
+        "99suit": "4"
+      },
+      "type-b6a63c02-ef77-452d-955f-2fe168ee7db9": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/diamonds-4.png",
+        "label": "04 - Diamonds",
+        "99suit": "4"
+      },
+      "type-a838ebbf-be69-4a90-b897-274fc06858a4": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/diamonds-5.png",
+        "label": "05 - Diamonds",
+        "99suit": "4"
+      },
+      "type-a77eddb8-50e8-4f46-ae2b-cbdf08646181": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/diamonds-6.png",
+        "label": "06 - Diamonds",
+        "99suit": "4"
+      },
+      "type-8f22c649-7f03-4f77-9c53-1bfd03707423": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/diamonds-7.png",
+        "label": "07 - Diamonds",
+        "99suit": "4"
+      },
+      "type-aa7f904d-0772-4db1-9022-7eee77255c64": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/diamonds-8.png",
+        "label": "08 - Diamonds",
+        "99suit": "4"
+      },
+      "type-72c66dca-5aab-4810-9dfb-519421a37536": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/diamonds-9.png",
+        "label": "09 - Diamonds",
+        "99suit": "4"
+      },
+      "type-5598eaf6-ead1-4da6-9b0b-f02ec1065922": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/diamonds-t.png",
+        "label": "10 - Diamonds",
+        "99suit": "4"
+      },
+      "type-90f80457-70c3-4d86-b236-e01a87be33a1": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/diamonds-j.png",
+        "label": "11J - Diamonds",
+        "99suit": "4"
+      },
+      "type-b5373af0-b518-493c-ab11-ad0a2b84a299": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/diamonds-q.png",
+        "label": "12Q - Diamonds",
+        "99suit": "4"
+      },
+      "type-3f1ff98e-fc26-4b82-b8a4-78cc4c576171": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/diamonds-k.png",
+        "label": "13K - Diamonds",
+        "99suit": "4"
+      },
+      "type-1dc2e4af-e080-46ea-9b8d-03b0b8ae9293": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/diamonds-a.png",
+        "label": "14A - Diamonds",
+        "99suit": "4"
+      },
+      "type-bfe69fcc-c478-4856-8e6a-0e4058b14cf1": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/joker-black.png",
+        "label": "1Joker - Black",
+        "99suit": "0"
+      },
+      "type-0675ed9c-d956-497a-a6c4-dd01128710a0": {
+        "image": "https://raw.githubusercontent.com/pwinckles/pcio/master/52-domino/png/joker-red.png",
+        "label": "2Joker - Red",
+        "99suit": "0"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#ffffff",
+            "valueType": "static",
+            "value": "/i/cards-default/2B.svg",
+            "width": 80,
+            "height": 160
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "valueType": "static",
+            "value": "",
+            "color": "#3461d2",
+            "width": 80,
+            "height": 160
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "valueType": "static",
+            "value": "/assets/393647028_14279",
+            "width": 80,
+            "height": 160
+          }
+        ],
+        "border": false,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 80,
+            "height": 160
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "clickRoutine": [
+        {
+          "func": "GET",
+          "collection": "thisButton",
+          "property": "parent",
+          "variable": "parentID"
+        },
+        {
+          "func": "IF",
+          "operand1": "${parentID}",
+          "relation": "==",
+          "operand2": "hand",
+          "thenRoutine": [
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "owner",
+              "value": null,
+              "relation": "="
+            },
+            {
+              "func": "SELECT",
+              "source": "all",
+              "property": "playerHolder",
+              "relation": "==",
+              "value": "${playerName}"
+            },
+            {
+              "func": "GET",
+              "property": "id",
+              "aggregation": "first",
+              "variable": "holderId"
+            },
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "parent",
+              "value": "${holderId}",
+              "relation": "="
+            }
+          ],
+          "elseRoutine": [
+            {
+              "func": "FLIP",
+              "collection": "thisButton"
+            }
+          ]
+        }
+      ],
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 80,
+      "overlap": false
+    },
+    "parent": "deckHolder",
+    "goalHolder": ""
+  },
+  "hand": {
+    "id": "hand",
+    "x": 16,
+    "y": 800,
+    "z": 4008,
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "dropOffsetX": 10,
+    "dropOffsetY": 14,
+    "stackOffsetX": 40,
+    "inheritChildZ": true,
+    "childrenPerOwner": true,
+    "width": 1500,
+    "height": 180
+  },
+  "a31cbed2-1515-45c3-873b-9d0dd5669eb2": {
+    "id": "a31cbed2-1515-45c3-873b-9d0dd5669eb2",
+    "z": 12681,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-c5f813c1-842a-44fa-b9c2-66ee011b2ff4",
+    "parent": "f611"
+  },
+  "3c99ac80-c7b5-412c-94d9-ee8016f1cf8b": {
+    "id": "3c99ac80-c7b5-412c-94d9-ee8016f1cf8b",
+    "z": 12722,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-06cb00a1-89d2-4884-9509-321f1abc584c",
+    "parent": "f611"
+  },
+  "1cd89dfb-922c-4465-8703-07cd07571ff8": {
+    "id": "1cd89dfb-922c-4465-8703-07cd07571ff8",
+    "z": 12723,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-9a9d3893-e267-4296-b911-e25c8f70320f",
+    "parent": "f611"
+  },
+  "c7f97f07-2101-4f04-b2e6-2273ba5ee97c": {
+    "id": "c7f97f07-2101-4f04-b2e6-2273ba5ee97c",
+    "z": 12744,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-5a30a51d-7d85-4711-bf7b-9a96c8fef333",
+    "parent": "f611"
+  },
+  "c36c5f6d-65ec-47b9-80e6-09c9eca6a946": {
+    "id": "c36c5f6d-65ec-47b9-80e6-09c9eca6a946",
+    "z": 12721,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-ba86fb26-2b16-4247-9282-db7bb262a03c",
+    "parent": "f611"
+  },
+  "8f5a6f0b-dad6-492e-9fdf-9fd02b5ba9e8": {
+    "id": "8f5a6f0b-dad6-492e-9fdf-9fd02b5ba9e8",
+    "z": 12727,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-a691ebfe-d0a7-4a87-9362-510ea72e7544",
+    "parent": "f611"
+  },
+  "42170037-a313-4ffc-ba2a-5d9bbdadf6cf": {
+    "id": "42170037-a313-4ffc-ba2a-5d9bbdadf6cf",
+    "z": 12683,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-9ee3e6ad-e743-4806-a36e-b67aa6593b42",
+    "parent": "f611"
+  },
+  "b460f6e1-6f4f-4acc-8c9c-395cd159d14b": {
+    "id": "b460f6e1-6f4f-4acc-8c9c-395cd159d14b",
+    "z": 12741,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-420f256e-a72a-4f4b-8b40-f544ef02499c",
+    "parent": "f611"
+  },
+  "35f3246f-0e4f-4a3b-b132-541267ac0f86": {
+    "id": "35f3246f-0e4f-4a3b-b132-541267ac0f86",
+    "z": 12725,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-1feab597-9d62-4fde-899b-418c45b67c1e",
+    "parent": "f611"
+  },
+  "29b2ed52-4217-4352-93ea-91111b26066d": {
+    "id": "29b2ed52-4217-4352-93ea-91111b26066d",
+    "z": 12728,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-de67f2ef-c3be-44e3-8aba-738c4ef93060",
+    "parent": "f611"
+  },
+  "9b442ed2-f482-42cc-a56c-9c9c868f3ebf": {
+    "id": "9b442ed2-f482-42cc-a56c-9c9c868f3ebf",
+    "z": 12671,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-1d173e80-3b1a-4b49-8526-b7837b1cfe6b",
+    "parent": "f611"
+  },
+  "8964fb71-1df0-49bb-a5fa-f2ed317165f5": {
+    "id": "8964fb71-1df0-49bb-a5fa-f2ed317165f5",
+    "z": 12687,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-4aeffcd1-6888-419d-be32-0b6467b4b4a9",
+    "parent": "f611"
+  },
+  "86fd6903-4c87-40b0-b797-52144256d9f8": {
+    "id": "86fd6903-4c87-40b0-b797-52144256d9f8",
+    "z": 12742,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-1e2e3519-4a41-44a0-a82d-69ee7fccf81e",
+    "parent": "f611"
+  },
+  "9ed628dc-2982-4728-9269-7b0fcf158029": {
+    "id": "9ed628dc-2982-4728-9269-7b0fcf158029",
+    "z": 12679,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-ea539728-470a-4f2f-92a3-89208856e596",
+    "parent": "f611"
+  },
+  "eb1154bd-5ad0-4e77-b8ec-327c7bb85bae": {
+    "id": "eb1154bd-5ad0-4e77-b8ec-327c7bb85bae",
+    "z": 12729,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-e75f22ed-9d2c-47db-900b-7d34b01d95f6",
+    "parent": "f611"
+  },
+  "e212d176-fcce-4c99-b335-5717213d8cd5": {
+    "id": "e212d176-fcce-4c99-b335-5717213d8cd5",
+    "z": 12677,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-68978da5-8116-4539-b9ac-579164637b01",
+    "parent": "f611"
+  },
+  "368f6e2a-2c37-4cc9-8bf4-77d280339506": {
+    "id": "368f6e2a-2c37-4cc9-8bf4-77d280339506",
+    "z": 12726,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-ccba2331-1713-4d37-ab52-e4c7b4a6cccd",
+    "parent": "f611"
+  },
+  "afcf8a49-fe25-4a22-a637-70b2465aa7b9": {
+    "id": "afcf8a49-fe25-4a22-a637-70b2465aa7b9",
+    "z": 12740,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-65515f8c-d876-4f02-97dc-b196600732c3",
+    "parent": "f611"
+  },
+  "46903fcc-a4c1-41b3-b257-7c3bc6687ed8": {
+    "id": "46903fcc-a4c1-41b3-b257-7c3bc6687ed8",
+    "z": 12737,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-191fe127-3560-456c-a72d-9b4615737fac",
+    "parent": "f611"
+  },
+  "b4c90e80-ea9e-4307-935f-24573573eb50": {
+    "id": "b4c90e80-ea9e-4307-935f-24573573eb50",
+    "z": 12668,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-d2731157-eecb-4339-a745-32981f260d3b",
+    "parent": "f611"
+  },
+  "487024a5-3b2d-49f8-b079-1d96f9a548b3": {
+    "id": "487024a5-3b2d-49f8-b079-1d96f9a548b3",
+    "z": 12747,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-903287d2-69d5-40dd-8e78-2e242856e7f3",
+    "parent": "f611"
+  },
+  "46d63882-b6eb-4140-a6a7-a0a9d9062396": {
+    "id": "46d63882-b6eb-4140-a6a7-a0a9d9062396",
+    "z": 12733,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-5b324af2-7080-4afe-aaef-71c08f9ea7d7",
+    "parent": "f611"
+  },
+  "299ff0ca-5252-4fa3-a838-769fab069276": {
+    "id": "299ff0ca-5252-4fa3-a838-769fab069276",
+    "z": 12724,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-7ed265a4-d69c-4df3-9815-c6ae45eeea0b",
+    "parent": "f611"
+  },
+  "34ae7284-48d3-41f0-8bd4-6eb2d1af1ee6": {
+    "id": "34ae7284-48d3-41f0-8bd4-6eb2d1af1ee6",
+    "z": 12739,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-8cc91ee2-3d1a-44ff-8af7-d5fdddb077a6",
+    "parent": "f611"
+  },
+  "a211b7f8-276f-4f1b-882a-9a9a4776f7dd": {
+    "id": "a211b7f8-276f-4f1b-882a-9a9a4776f7dd",
+    "z": 12720,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-2bfc6e01-17eb-4a3f-9469-0c226d036058",
+    "parent": "f611"
+  },
+  "672b63b5-0249-4860-bee3-5e20c062d904": {
+    "id": "672b63b5-0249-4860-bee3-5e20c062d904",
+    "z": 12669,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-514b501c-5420-4c7e-948a-7192cdb509df",
+    "parent": "f611"
+  },
+  "6e549adc-c32e-4a49-898f-2a13e6f31a16": {
+    "id": "6e549adc-c32e-4a49-898f-2a13e6f31a16",
+    "z": 12736,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-e37d6f7b-cd5a-4a86-b402-6831bf8e6b2c",
+    "parent": "f611"
+  },
+  "2f9374e0-96c0-4c98-b3d7-b04416da5f22": {
+    "id": "2f9374e0-96c0-4c98-b3d7-b04416da5f22",
+    "z": 12743,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-a77eddb8-50e8-4f46-ae2b-cbdf08646181",
+    "parent": "f611"
+  },
+  "026a7d80-b8ab-4f89-8f9a-593690ac4061": {
+    "id": "026a7d80-b8ab-4f89-8f9a-593690ac4061",
+    "z": 12685,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-8f22c649-7f03-4f77-9c53-1bfd03707423",
+    "parent": "f611"
+  },
+  "3fb6281f-1e6a-4f8e-8de4-c4f52afdca0f": {
+    "id": "3fb6281f-1e6a-4f8e-8de4-c4f52afdca0f",
+    "z": 12675,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-aa7f904d-0772-4db1-9022-7eee77255c64",
+    "parent": "f611"
+  },
+  "fa6b4a13-a239-4527-9256-bdcc63755b54": {
+    "id": "fa6b4a13-a239-4527-9256-bdcc63755b54",
+    "z": 12730,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-72c66dca-5aab-4810-9dfb-519421a37536",
+    "parent": "f611"
+  },
+  "48861758-2b2a-4e6b-b120-ef2402ad3043": {
+    "id": "48861758-2b2a-4e6b-b120-ef2402ad3043",
+    "z": 12758,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-5598eaf6-ead1-4da6-9b0b-f02ec1065922",
+    "parent": "f611"
+  },
+  "f3e8d125-8bb5-49ce-9d5a-7b545c37e728": {
+    "id": "f3e8d125-8bb5-49ce-9d5a-7b545c37e728",
+    "z": 12745,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-90f80457-70c3-4d86-b236-e01a87be33a1",
+    "parent": "f611"
+  },
+  "f7f4216e-303f-4931-8056-ce643537ecf4": {
+    "id": "f7f4216e-303f-4931-8056-ce643537ecf4",
+    "z": 12732,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-b5373af0-b518-493c-ab11-ad0a2b84a299",
+    "parent": "f611"
+  },
+  "364752ff-3063-4640-bc37-8047af252f80": {
+    "id": "364752ff-3063-4640-bc37-8047af252f80",
+    "z": 12689,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-3f1ff98e-fc26-4b82-b8a4-78cc4c576171",
+    "parent": "f611"
+  },
+  "7f4b1b97-35f6-4206-b895-6a9ea4e6992d": {
+    "id": "7f4b1b97-35f6-4206-b895-6a9ea4e6992d",
+    "z": 12673,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-1dc2e4af-e080-46ea-9b8d-03b0b8ae9293",
+    "parent": "f611"
+  },
+  "0f56173f-7758-493b-986a-b35dd426e57f": {
+    "id": "0f56173f-7758-493b-986a-b35dd426e57f",
+    "z": 12738,
+    "type": "card",
+    "deck": "28efd404-2d7b-4950-bf0d-e90dae5235c9",
+    "cardType": "type-0675ed9c-d956-497a-a6c4-dd01128710a0",
+    "parent": "f611"
+  },
+  "cb245aff-0541-4aa6-b260-f795c516566d": {
+    "id": "cb245aff-0541-4aa6-b260-f795c516566d",
+    "x": 36.075,
+    "y": 708.085,
+    "z": 195,
+    "width": 35.85,
+    "height": 43.83,
+    "classes": "pinPiece",
+    "color": "#e84242"
+  },
+  "a00de5e3-d1cc-4a9d-bfa8-02a1b381c920_decrementButton": {
+    "id": "a00de5e3-d1cc-4a9d-bfa8-02a1b381c920_decrementButton",
+    "parent": "a00de5e3-d1cc-4a9d-bfa8-02a1b381c920",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "a00de5e3-d1cc-4a9d-bfa8-02a1b381c920",
+        "mode": "inc",
+        "value": -1
+      }
+    ]
+  },
+  "a00de5e3-d1cc-4a9d-bfa8-02a1b381c920_incrementButton": {
+    "id": "a00de5e3-d1cc-4a9d-bfa8-02a1b381c920_incrementButton",
+    "parent": "a00de5e3-d1cc-4a9d-bfa8-02a1b381c920",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "a00de5e3-d1cc-4a9d-bfa8-02a1b381c920",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "a00de5e3-d1cc-4a9d-bfa8-02a1b381c920": {
+    "id": "a00de5e3-d1cc-4a9d-bfa8-02a1b381c920",
+    "x": 409,
+    "y": 101,
+    "z": 1128,
+    "type": "label",
+    "width": 140,
+    "height": 44,
+    "css": "font-size: 30px;",
+    "text": 0,
+    "editable": true
+  },
+  "937b7355-633a-4dc1-855e-14fcc52384ea_decrementButton": {
+    "id": "937b7355-633a-4dc1-855e-14fcc52384ea_decrementButton",
+    "parent": "937b7355-633a-4dc1-855e-14fcc52384ea",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "937b7355-633a-4dc1-855e-14fcc52384ea",
+        "mode": "inc",
+        "value": -1
+      }
+    ]
+  },
+  "937b7355-633a-4dc1-855e-14fcc52384ea_incrementButton": {
+    "id": "937b7355-633a-4dc1-855e-14fcc52384ea_incrementButton",
+    "parent": "937b7355-633a-4dc1-855e-14fcc52384ea",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "937b7355-633a-4dc1-855e-14fcc52384ea",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "937b7355-633a-4dc1-855e-14fcc52384ea": {
+    "id": "937b7355-633a-4dc1-855e-14fcc52384ea",
+    "x": 570,
+    "y": 102,
+    "z": 1127,
+    "type": "label",
+    "width": 140,
+    "height": 44,
+    "css": "font-size: 30px;",
+    "text": 0,
+    "editable": true
+  },
+  "861244ef-908f-43db-9381-ed870f1decb2_decrementButton": {
+    "id": "861244ef-908f-43db-9381-ed870f1decb2_decrementButton",
+    "parent": "861244ef-908f-43db-9381-ed870f1decb2",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "861244ef-908f-43db-9381-ed870f1decb2",
+        "mode": "inc",
+        "value": -1
+      }
+    ]
+  },
+  "861244ef-908f-43db-9381-ed870f1decb2_incrementButton": {
+    "id": "861244ef-908f-43db-9381-ed870f1decb2_incrementButton",
+    "parent": "861244ef-908f-43db-9381-ed870f1decb2",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "861244ef-908f-43db-9381-ed870f1decb2",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "861244ef-908f-43db-9381-ed870f1decb2": {
+    "id": "861244ef-908f-43db-9381-ed870f1decb2",
+    "x": 733,
+    "y": 101,
+    "z": 1129,
+    "type": "label",
+    "width": 140,
+    "height": 44,
+    "css": "font-size: 30px;",
+    "text": 0,
+    "editable": true
+  },
+  "deckHolder": {
+    "id": "deckHolder",
+    "x": 27.81,
+    "y": 31.21,
+    "z": 150,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 88
+  },
+  "turnCardHolder": {
+    "id": "turnCardHolder",
+    "x": 178.6,
+    "y": 32.08,
+    "z": 174,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 88
+  },
+  "player1Tricks": {
+    "id": "player1Tricks",
+    "x": 65,
+    "y": 540,
+    "z": 1151,
+    "type": "label",
+    "width": 140,
+    "height": 44,
+    "css": "font-size: 30px;",
+    "text": 0,
+    "editable": true,
+    "playerTricks": "Player 1"
+  },
+  "player2Tricks": {
+    "id": "player2Tricks",
+    "x": 211,
+    "y": 332,
+    "z": 1147,
+    "type": "label",
+    "width": 140,
+    "height": 44,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "playerTricks": "Player 2",
+    "text": 0
+  },
+  "player3Tricks": {
+    "id": "player3Tricks",
+    "x": 364,
+    "y": 542,
+    "z": 1148,
+    "type": "label",
+    "width": 140,
+    "height": 44,
+    "css": "font-size: 30px;",
+    "text": 0,
+    "editable": true,
+    "playerTricks": "Player 3"
+  },
+  "player2Label": {
+    "id": "player2Label",
+    "x": -8.8,
+    "y": -40,
+    "width": 105.6,
+    "height": 40,
+    "type": "label",
+    "text": "Player 2",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false,
+    "editable": false,
+    "parent": "player2Holder"
+  },
+  "0txg": {
+    "type": "label",
+    "text": "Scores",
+    "css": "font-size: 30px",
+    "height": 42,
+    "width": 200,
+    "x": 541,
+    "y": 29,
+    "z": 1150,
+    "id": "0txg"
+  },
+  "player1ScoreLabel": {
+    "id": "player1ScoreLabel",
+    "parent": "a00de5e3-d1cc-4a9d-bfa8-02a1b381c920",
+    "movableInEdit": false,
+    "y": -28,
+    "width": 140,
+    "type": "label",
+    "text": "Player 1",
+    "editable": false
+  },
+  "player2ScoreLabel": {
+    "id": "player2ScoreLabel",
+    "parent": "937b7355-633a-4dc1-855e-14fcc52384ea",
+    "movableInEdit": false,
+    "y": -28,
+    "width": 140,
+    "type": "label",
+    "text": "Player 2",
+    "editable": false
+  },
+  "player3ScoreLabel": {
+    "id": "player3ScoreLabel",
+    "parent": "861244ef-908f-43db-9381-ed870f1decb2",
+    "movableInEdit": false,
+    "y": -28,
+    "width": 140,
+    "type": "label",
+    "text": "Player 3",
+    "editable": false
+  },
+  "dlvx": {
+    "type": "label",
+    "text": "Bids",
+    "css": "font-size: 30px",
+    "height": 42,
+    "width": 200,
+    "x": 721,
+    "y": 539,
+    "z": 1149,
+    "id": "dlvx"
+  },
+  "player1BidLabel": {
+    "id": "player1BidLabel",
+    "x": -8.8,
+    "y": -40,
+    "width": 105.6,
+    "height": 40,
+    "type": "label",
+    "text": "Player 1",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false,
+    "editable": false,
+    "parent": "player1Bid"
+  },
+  "player2BidLabel": {
+    "id": "player2BidLabel",
+    "x": -8.8,
+    "y": -40,
+    "width": 105.6,
+    "height": 40,
+    "type": "label",
+    "text": "Player 2",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false,
+    "editable": false,
+    "parent": "player2Bid"
+  },
+  "player3BidLabel": {
+    "id": "player3BidLabel",
+    "x": -8.8,
+    "y": -40,
+    "width": 105.6,
+    "height": 40,
+    "type": "label",
+    "text": "Player 3",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false,
+    "editable": false,
+    "parent": "player3Bid"
+  },
+  "75c0": {
+    "type": "button",
+    "text": "Take",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": [
+          "player1Holder",
+          "player2Holder",
+          "player3Holder"
+        ],
+        "count": 1,
+        "to": "deckHolder",
+        "face": 0
+      },
+      {
+        "func": "SELECT",
+        "source": "all",
+        "property": "playerTricks",
+        "relation": "==",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "aggregation": "first",
+        "variable": "trickLabelId"
+      },
+      {
+        "func": "LABEL",
+        "mode": "inc",
+        "value": 1,
+        "label": "${trickLabelId}"
+      }
+    ],
+    "x": 244,
+    "y": 671,
+    "z": 1255,
+    "id": "75c0"
+  },
+  "player1Holder": {
+    "id": "player1Holder",
+    "x": 91,
+    "y": 614,
+    "z": 1125,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 88,
+    "playerHolder": "Player 1"
+  },
+  "player2Holder": {
+    "id": "player2Holder",
+    "x": 239,
+    "y": 402,
+    "z": 1129,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 88,
+    "playerHolder": "Player 2"
+  },
+  "player3Holder": {
+    "id": "player3Holder",
+    "x": 390,
+    "y": 613,
+    "z": 1126,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 88,
+    "playerHolder": "Player 3"
+  },
+  "hxum": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "player1Label",
+        "mode": "set",
+        "value": "${playerName}"
+      },
+      {
+        "func": "LABEL",
+        "label": "player1BidLabel",
+        "mode": "set",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SELECT",
+        "source": "all",
+        "property": "id",
+        "relation": "==",
+        "value": "player1Bid"
+      },
+      {
+        "func": "SET",
+        "property": "playerBid",
+        "relation": "=",
+        "value": "${playerName}"
+      },
+      {
+        "func": "LABEL",
+        "label": "player1ScoreLabel",
+        "mode": "set",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SELECT",
+        "source": "all",
+        "property": "id",
+        "relation": "==",
+        "value": "player1Tricks"
+      },
+      {
+        "func": "SET",
+        "property": "playerTricks",
+        "relation": "=",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SELECT",
+        "source": "all",
+        "property": "id",
+        "relation": "==",
+        "value": "player1Holder"
+      },
+      {
+        "func": "SET",
+        "property": "playerHolder",
+        "relation": "=",
+        "value": "${playerName}"
+      }
+    ],
+    "x": 54,
+    "y": 583,
+    "z": 1259,
+    "id": "hxum",
+    "width": 36,
+    "height": 36,
+    "css": "padding-bottom:31px;font-size:25px;text-align:left;background-position:5px;background-size:60%",
+    "color": "white",
+    "image": "/assets/1444052474_484",
+    "svgReplaces": {
+      "currentColor": "color"
+    }
+  },
+  "player1Label": {
+    "id": "player1Label",
+    "x": -8.8,
+    "y": -40,
+    "width": 105.6,
+    "height": 40,
+    "type": "label",
+    "text": "Player 1",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false,
+    "parent": "player1Holder"
+  },
+  "player3Label": {
+    "id": "player3Label",
+    "x": -8.8,
+    "y": -40,
+    "width": 105.6,
+    "height": 40,
+    "type": "label",
+    "text": "Player 3",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false,
+    "editable": false,
+    "parent": "player3Holder"
+  },
+  "0lns": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "player2Label",
+        "mode": "set",
+        "value": "${playerName}"
+      },
+      {
+        "func": "LABEL",
+        "label": "player2BidLabel",
+        "mode": "set",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SELECT",
+        "source": "all",
+        "property": "id",
+        "relation": "==",
+        "value": "player2Bid"
+      },
+      {
+        "func": "SET",
+        "property": "playerBid",
+        "relation": "=",
+        "value": "${playerName}"
+      },
+      {
+        "func": "LABEL",
+        "label": "player2ScoreLabel",
+        "mode": "set",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SELECT",
+        "source": "all",
+        "property": "id",
+        "relation": "==",
+        "value": "player2Tricks"
+      },
+      {
+        "func": "SET",
+        "property": "playerTricks",
+        "relation": "=",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SELECT",
+        "source": "all",
+        "property": "id",
+        "relation": "==",
+        "value": "player2Holder"
+      },
+      {
+        "func": "SET",
+        "property": "playerHolder",
+        "relation": "=",
+        "value": "${playerName}"
+      }
+    ],
+    "x": 203,
+    "y": 371,
+    "z": 1260,
+    "width": 36,
+    "height": 36,
+    "css": "padding-bottom:31px;font-size:25px;text-align:left;background-position:5px;background-size:60%",
+    "id": "0lns",
+    "color": "white",
+    "image": "/assets/1444052474_484",
+    "svgReplaces": {
+      "currentColor": "color"
+    }
+  },
+  "4e3z": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "player3Label",
+        "mode": "set",
+        "value": "${playerName}"
+      },
+      {
+        "func": "LABEL",
+        "label": "player3BidLabel",
+        "mode": "set",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SELECT",
+        "source": "all",
+        "property": "id",
+        "relation": "==",
+        "value": "player3Bid"
+      },
+      {
+        "func": "SET",
+        "property": "playerBid",
+        "relation": "=",
+        "value": "${playerName}"
+      },
+      {
+        "func": "LABEL",
+        "label": "player3ScoreLabel",
+        "mode": "set",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SELECT",
+        "source": "all",
+        "property": "id",
+        "relation": "==",
+        "value": "player3Tricks"
+      },
+      {
+        "func": "SET",
+        "property": "playerTricks",
+        "relation": "=",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SELECT",
+        "source": "all",
+        "property": "id",
+        "relation": "==",
+        "value": "player3Holder"
+      },
+      {
+        "func": "SET",
+        "property": "playerHolder",
+        "relation": "=",
+        "value": "${playerName}"
+      }
+    ],
+    "x": 353,
+    "y": 581,
+    "z": 1261,
+    "width": 36,
+    "height": 36,
+    "css": "padding-bottom:31px;font-size:25px;text-align:left;background-position:5px;background-size:60%",
+    "id": "4e3z",
+    "color": "white",
+    "image": "/assets/1444052474_484",
+    "svgReplaces": {
+      "currentColor": "color"
+    }
+  },
+  "xzjd": {
+    "type": "button",
+    "text": "Sort Hand",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "hand"
+      },
+      {
+        "func": "SELECT",
+        "property": "owner",
+        "value": "${playerName}",
+        "source": "DEFAULT"
+      },
+      {
+        "func": "SORT",
+        "collection": "DEFAULT",
+        "key": "label",
+        "reverse": true
+      },
+      {
+        "func": "SORT",
+        "collection": "DEFAULT",
+        "key": "99suit"
+      }
+    ],
+    "y": 850,
+    "z": 66,
+    "id": "xzjd",
+    "x": 1509
+  },
+  "menuOpen": {
+    "type": "button",
+    "id": "menuOpen",
+    "x": 1500,
+    "y": 13,
+    "z": 1270,
+    "clickRoutine": [
+      {
+        "Note": "Set the menu system to be on screen.",
+        "func": "SELECT",
+        "property": "id",
+        "value": "aBackground"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 400
+      },
+      {
+        "Note": "Set the menu button to be off screen.",
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "x",
+        "value": -500
+      }
+    ],
+    "text": "Help",
+    "debug": false
+  },
+  "aBackground": {
+    "type": "holder",
+    "id": "aBackground",
+    "x": -1000,
+    "y": 145,
+    "width": 800,
+    "height": 400,
+    "z": 4003,
+    "css": "background: linear-gradient(to bottom right, darkblue, blue)",
+    "css Note1": "This is an example of using a holder as a background for the menu system.  CSS properties were used to change the color characteristics of the holder."
+  },
+  "wvl1": {
+    "type": "button",
+    "id": "wvl1",
+    "x": 715,
+    "width": 50,
+    "height": 50,
+    "z": 12,
+    "clickRoutine": [
+      {
+        "Note": "Set the menu system to be off screen.",
+        "func": "SELECT",
+        "property": "id",
+        "value": "aBackground"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": -1000
+      },
+      {
+        "Note": "Set the menu button to be on screen.",
+        "func": "SELECT",
+        "property": "id",
+        "value": "menuOpen"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 1500
+      }
+    ],
+    "color": "white",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0",
+    "image": "/assets/-1517894895_340",
+    "image Note1": "This symbol is just one of several available at https://virtualtabletop.io/Assets or in the library under assets. You can change the color to anything you want using the 'svgReplaces' property.",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "parent": "aBackground",
+    "y": 25
+  },
+  "3f0t": {
+    "type": "label",
+    "text": "### Room Instructions ###\n\n ## Setup ##\n\n - Set your name in the \"Player list\"\n - Click the \"player icon\" button next to a holder to assign that spot to yourself (Note: You MUST do this for the room to function correctly)\n  - The red peg marks the current dealer\n\n ## Play ##\n\n - The dealer clicks the \"Deal\" button to deal the hand\n - The card turned up at the top of the screen is the hand's turn card that indicates trump\n - Draw your pile of cards from your holder into your hand, and drag three cards to your bid holder\n - Click on cards to play them to your card holder\n - Click the \"Declare Bid\" or \"Reveal Hand\" button to declare your bid or reveal your hand.\n - The player who wins a trick clicks the \"Take\" button, which clears the trick and increments their trick count\n\n ## End of Hand ##\n\n - Record scores at the end of the hand using the counters under the \"Scores\" heading\n - Move the dealer peg to the next player\n - The new dealer clicks the \"Deal\" button to start a new hand\n\n ## License ##\n\n The game layout, cards, and library image were created by an anonymous person who gave the work to virtualtabletop.io.  Virtualtabletop.io releases all of this to the Public Domain under CC0.\n\n",
+    "x": 10,
+    "y": 50,
+    "z": 1152,
+    "id": "3f0t",
+    "parent": "aBackground",
+    "width": 780,
+    "height": 340,
+    "css": "font-size: 30px; color: white; text-align: left"
+  },
+  "xzjd1": {
+    "type": "button",
+    "text": "Reveal Hand",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "75c1"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "hand"
+      },
+      {
+        "func": "SELECT",
+        "property": "owner",
+        "value": "${playerName}",
+        "source": "DEFAULT"
+      },
+      {
+        "func": "SET",
+        "collection": "DEFAULT",
+        "property": "parent",
+        "relation": "=",
+        "value": "revealedHand"
+      },
+      {
+        "func": "SET",
+        "collection": "DEFAULT",
+        "property": "owner",
+        "relation": "=",
+        "value": null
+      }
+    ],
+    "y": 245,
+    "z": 2,
+    "id": "xzjd1",
+    "x": 1320
+  },
+  "revealedHand": {
+    "type": "holder",
+    "x": 392.5,
+    "y": 175,
+    "z": 5,
+    "id": "revealedHand",
+    "width": 920,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetX": 40
+  },
+  "player3Bid": {
+    "type": "holder",
+    "id": "player3Bid",
+    "x": 927,
+    "y": 614,
+    "width": 88,
+    "z": 1127,
+    "inheritChildZ": true,
+    "playerBid": "Player 3"
+  },
+  "player2Bid": {
+    "type": "holder",
+    "id": "player2Bid",
+    "x": 780.12,
+    "y": 613.82,
+    "width": 88,
+    "z": 1121,
+    "inheritChildZ": true,
+    "playerBid": "Player 2"
+  },
+  "player1Bid": {
+    "type": "holder",
+    "id": "player1Bid",
+    "x": 629.36,
+    "y": 613.85,
+    "width": 88,
+    "z": 1120,
+    "inheritChildZ": true,
+    "playerBid": "Player 1"
+  },
+  "declaredBid": {
+    "type": "holder",
+    "x": 1077.5,
+    "y": 614,
+    "z": 4010,
+    "id": "declaredBid",
+    "width": 260,
+    "stackOffsetX": 40
+  },
+  "dlvx1": {
+    "type": "label",
+    "text": "Declared Bid",
+    "css": "font-size: 30px",
+    "height": 42,
+    "width": 200,
+    "x": 1087,
+    "y": 538,
+    "z": 53,
+    "id": "dlvx1",
+    "editable": false
+  },
+  "dlvx2": {
+    "type": "label",
+    "text": "Revealed Hand",
+    "css": "font-size: 30px",
+    "height": 30,
+    "width": 310,
+    "x": 953,
+    "y": 100,
+    "z": 54,
+    "id": "dlvx2"
+  },
+  "75c1": {
+    "type": "button",
+    "text": "Declare Bid",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "source": "all",
+        "property": "playerBid",
+        "relation": "==",
+        "value": "${playerName}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "aggregation": "first",
+        "variable": "bidHolderId"
+      },
+      {
+        "func": "MOVE",
+        "from": "${bidHolderId}",
+        "count": 3,
+        "to": "declaredBid",
+        "face": 1
+      }
+    ],
+    "x": 1377,
+    "y": 656,
+    "z": 73,
+    "id": "75c1"
+  },
+  "f611": {
+    "type": "pile",
+    "width": 80,
+    "height": 160,
+    "id": "f611",
+    "z": 12750,
+    "parent": "deckHolder"
+  }
+}

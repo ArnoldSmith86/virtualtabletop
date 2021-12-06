@@ -1,0 +1,4477 @@
+{
+  "b0b2bf3c-50e3-4145-87cf-e9fb106d3981": {
+    "id": "b0b2bf3c-50e3-4145-87cf-e9fb106d3981",
+    "x": 71.5,
+    "y": 104,
+    "z": 21807,
+    "type": "button",
+    "text": "Deal",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "b0b2bf3c-50e3-4145-87cf-e9fb106d3982",
+        "routine": "recallRoutine"
+      },
+      {
+        "func": "RECALL",
+        "holder": "vvo5"
+      },
+      {
+        "func": "FLIP",
+        "holder": [
+          "khsx",
+          "vvo5"
+        ],
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": [
+          "khsx",
+          "vvo5"
+        ]
+      },
+      {
+        "func": "SORT",
+        "holder": "vvo5",
+        "key": "Rocket"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "vvo5"
+      },
+      {
+        "func": "MOVE",
+        "from": "vvo5",
+        "count": 10,
+        "to": [
+          "Player Plie 1",
+          "Player Plie 2",
+          "Player Plie 3",
+          "Player Plie 4"
+        ]
+      },
+      {
+        "func": "SORT",
+        "holder": [
+          "Player Plie 1",
+          "Player Plie 2",
+          "Player Plie 3",
+          "Player Plie 4"
+        ],
+        "key": "label"
+      },
+      {
+        "func": "SELECT",
+        "property": "resetProperties",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${PROPERTY resetProperties OF $widgetID}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "missions",
+        "routine": "displayMissionRoutine"
+      }
+    ],
+    "css": "background-color: #243a4e88;border-color:white;color:white;",
+    "height": 40
+  },
+  "146344a4-f702-48c7-9acf-b10cf7da85f8": {
+    "id": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "x": 4,
+    "y": -19,
+    "z": 20288,
+    "type": "deck",
+    "cardTypes": {
+      "type-a92f3b7b-7799-4823-a16d-a2c731481c1b": {
+        "image": "/assets/967136150_56370",
+        "label": "b1",
+        "Rocket": 0
+      },
+      "type-1bdb002a-e392-4f0f-9249-e119bfb782be": {
+        "image": "/assets/-1339691465_84841",
+        "label": "y9",
+        "Rocket": 0
+      },
+      "type-a1c4814c-6cdb-48ee-9414-aab6e6d5e4da": {
+        "image": "/assets/-1989127155_92185",
+        "label": "b4",
+        "Rocket": 0
+      },
+      "type-b90a5f99-2703-4afd-88b1-9474094af6a9": {
+        "image": "/assets/-1999928576_87538",
+        "label": "b7",
+        "Rocket": 0
+      },
+      "type-ffb23b26-c845-4981-8bcb-b0bb2e6cfd21": {
+        "image": "/assets/-1945199976_73130",
+        "label": "b2",
+        "Rocket": 0
+      },
+      "type-a343aac7-2872-41b6-baf1-401ec1775d2b": {
+        "image": "/assets/-757908439_53109",
+        "label": "b5",
+        "Rocket": 0
+      },
+      "type-f591dea4-d38e-4990-8b1b-2b2c948bfed3": {
+        "image": "/assets/75537970_71660",
+        "label": "b8",
+        "Rocket": 0
+      },
+      "type-e2f7cd19-f162-4635-84ef-637171569582": {
+        "image": "/assets/195254592_58992",
+        "label": "b3",
+        "Rocket": 0
+      },
+      "type-7c78e796-f393-45c5-814d-fe326d93f979": {
+        "image": "/assets/-2040363622_61460",
+        "label": "b6",
+        "Rocket": 0
+      },
+      "type-4b6cee25-c45f-4605-ba36-87fcbf4a32d1": {
+        "image": "/assets/904529299_87814",
+        "label": "b9",
+        "Rocket": 0
+      },
+      "type-0d93fb9d-e1d2-4685-b249-307d8e0beac4": {
+        "image": "/assets/-238292008_51229",
+        "label": "g1",
+        "Rocket": 0
+      },
+      "type-11d6a7ff-f306-4ab3-bd1c-102bdd50b400": {
+        "image": "/assets/-517106208_88248",
+        "label": "g4",
+        "Rocket": 0
+      },
+      "type-df8cb639-bb18-4944-b397-8579793d7393": {
+        "image": "/assets/878370271_80917",
+        "label": "g7",
+        "Rocket": 0
+      },
+      "type-8ac612c3-8939-4343-bd8d-26255e3bb910": {
+        "image": "/assets/108758378_68363",
+        "label": "g2",
+        "Rocket": 0
+      },
+      "type-274a6c7d-180a-47eb-a088-f9fab8dbf4fc": {
+        "image": "/assets/-102335173_52076",
+        "label": "g5",
+        "Rocket": 0
+      },
+      "type-ae86e522-fcbe-4f7f-85f6-521de96b69c8": {
+        "image": "/assets/-602323280_66267",
+        "label": "g8",
+        "Rocket": 0
+      },
+      "type-7d90954f-03ca-4c54-a371-726567e474d8": {
+        "image": "/assets/-1039822266_53202",
+        "label": "g3",
+        "Rocket": 0
+      },
+      "type-96d944cd-0b37-4b31-933a-dcd981d73022": {
+        "image": "/assets/-1145386056_57945",
+        "label": "g6",
+        "Rocket": 0
+      },
+      "type-2eb9dbe4-7fe9-4d31-bafc-9fc8bde40d88": {
+        "image": "/assets/1386926548_78266",
+        "label": "g9",
+        "Rocket": 0
+      },
+      "type-dd6645e4-ee4a-4ba2-b24f-208bf3907503": {
+        "image": "/assets/15457454_52462",
+        "label": "a1",
+        "Rocket": 1
+      },
+      "type-ce9fc4e1-a070-4976-9834-8210d895741d": {
+        "image": "/assets/-1754952472_23340",
+        "label": "a4",
+        "Rocket": 4
+      },
+      "type-73fc96d4-6949-4962-81a1-7989021989e1": {
+        "image": "/assets/-1774052502_35327",
+        "label": "a3",
+        "Rocket": 3
+      },
+      "type-abb77175-c188-4a48-9680-ac07070c650d": {
+        "image": "/assets/1517276939_40944",
+        "label": "a2",
+        "Rocket": 2
+      },
+      "type-b55c960a-8af2-44e6-a02d-67a24d150e86": {
+        "image": "/assets/-80247238_49869",
+        "label": "r1",
+        "Rocket": 0
+      },
+      "type-4430cdc0-86b2-4a2e-91c4-b9690b206bc6": {
+        "image": "/assets/-1462321597_64882",
+        "label": "r2",
+        "Rocket": 0
+      },
+      "type-f6cfe5b0-706b-423a-9d4e-6c43acd69e73": {
+        "image": "/assets/-1459754058_52989",
+        "label": "r3",
+        "Rocket": 0
+      },
+      "type-3530b55f-0e25-43be-9865-a9b451dac6c6": {
+        "image": "/assets/776514669_84514",
+        "label": "r4",
+        "Rocket": 0
+      },
+      "type-a0ad8d42-8fd7-43de-b0d5-a2d8ece8f367": {
+        "image": "/assets/99786193_46876",
+        "label": "r5",
+        "Rocket": 0
+      },
+      "type-3a402c37-19b4-4e1a-bab3-3e84c9e392ff": {
+        "image": "/assets/891372320_52475",
+        "label": "r6",
+        "Rocket": 0
+      },
+      "type-e2ac148d-67f0-4b7e-982e-b815ef703afd": {
+        "image": "/assets/-563548152_75785",
+        "label": "r7",
+        "Rocket": 0
+      },
+      "type-56db2ad5-32c0-4194-972b-04f41d7da212": {
+        "image": "/assets/-1057789193_58391",
+        "label": "r8",
+        "Rocket": 0
+      },
+      "type-ffa228cb-d5bc-4645-b364-f887f4a2d117": {
+        "image": "/assets/-600733842_73154",
+        "label": "r9",
+        "Rocket": 0
+      },
+      "type-46ff7d57-fb98-4d50-8999-f8f24dd58270": {
+        "image": "/assets/-1489582777_54295",
+        "label": "y1",
+        "Rocket": 0
+      },
+      "type-eb3e39eb-4cb6-4202-b4e1-1674232c585f": {
+        "image": "/assets/-1193639399_95364",
+        "label": "y4",
+        "Rocket": 0
+      },
+      "type-17128a85-1a19-4b93-8307-5ee89b4294f3": {
+        "image": "/assets/67778317_82671",
+        "label": "y7"
+      },
+      "type-34eaea20-8480-4651-8f1a-41cd4151454e": {
+        "image": "/assets/-481079824_72642",
+        "label": "y2",
+        "Rocket": 0
+      },
+      "type-57212479-5d17-4a4b-8e28-c87be2380e8b": {
+        "image": "/assets/-1801737912_50376",
+        "label": "y5",
+        "Rocket": 0
+      },
+      "type-29b78df3-0ed7-481b-9442-1e4baf72026e": {
+        "image": "/assets/-908304583_71391",
+        "label": "y8",
+        "Rocket": 0
+      },
+      "type-6782cb0c-c46d-41c7-9f9d-17e0ee7b14e4": {
+        "image": "/assets/1721844061_54094",
+        "label": "y3",
+        "Rocket": 0
+      },
+      "type-7986783c-0fc4-4dd2-8c2a-99659387a587": {
+        "image": "/assets/-2046284463_56480",
+        "label": "y6",
+        "Rocket": 0
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#ffffff",
+            "valueType": "static",
+            "value": "/assets/-1682721256_109308",
+            "width": 103,
+            "height": 160
+          }
+        ],
+        "border": false,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 103,
+            "height": 160
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "overlap": false,
+      "Rocket": 0
+    },
+    "parent": "vvo5"
+  },
+  "a446559e-6d46-4477-b6ea-2a1c349f93a9": {
+    "id": "a446559e-6d46-4477-b6ea-2a1c349f93a9",
+    "x": 1383.875,
+    "y": 546,
+    "z": 21875,
+    "type": "holder",
+    "css": "background: #55555550",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "45f2a7e7-60f0-4b81-9481-87a19cc08f25_label": {
+    "id": "45f2a7e7-60f0-4b81-9481-87a19cc08f25_label",
+    "y": -30,
+    "width": 171,
+    "height": 30,
+    "type": "label",
+    "css": "font-size:120%;color:white",
+    "text": "Communication",
+    "x": -30,
+    "z": 21782,
+    "twoRowBottomAlign": true,
+    "parent": "a446559e-6d46-4477-b6ea-2a1c349f93a22"
+  },
+  "45f2a7e7-60f0-4b81-9481-87a19cc08f25": {
+    "id": "45f2a7e7-60f0-4b81-9481-87a19cc08f25",
+    "x": 105.125,
+    "y": 546,
+    "z": 21848,
+    "type": "holder",
+    "css": "background: #55555550",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "hand": {
+    "id": "hand",
+    "x": 257,
+    "y": 820,
+    "z": 1,
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "stackOffsetX": 40,
+    "childrenPerOwner": true,
+    "width": 1086,
+    "height": 200,
+    "css": "background: #55555550",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "16d9fd42-a13a-4d4d-b769-d16302b5ff7a_label": {
+    "id": "16d9fd42-a13a-4d4d-b769-d16302b5ff7a_label",
+    "parent": "16d9fd42-a13a-4d4d-b769-d16302b5ff7a",
+    "x": 0,
+    "y": -30,
+    "width": 111,
+    "height": 30,
+    "type": "label",
+    "text": "Player 5",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false,
+    "editable": true,
+    "css": "font-size:120%;color:white"
+  },
+  "uqow": {
+    "image": "/assets/1695948041_6197",
+    "id": "uqow",
+    "z": 21908,
+    "x": 762.5,
+    "y": 462.5,
+    "css": "border-radius:50%;",
+    "width": 75,
+    "height": 75,
+    "resetProperties": {
+      "x": 762.5,
+      "y": 462.5
+    }
+  },
+  "ksqn": {
+    "css": "border-radius:50%;",
+    "z": 21907,
+    "x": 1401.875,
+    "y": 592.5,
+    "width": 75,
+    "height": 75,
+    "faces": [
+      {
+        "image": "/assets/-1222759790_6197"
+      },
+      {
+        "image": "/assets/-19928478_6197"
+      }
+    ],
+    "id": "ksqn",
+    "resetProperties": {
+      "x": 1401.875,
+      "y": 592.5,
+      "activeFace": 0
+    }
+  },
+  "9crp": {
+    "css": "border-radius:50%;",
+    "z": 21909,
+    "x": 123.125,
+    "y": 592.5,
+    "width": 75,
+    "height": 75,
+    "faces": [
+      {
+        "image": "/assets/-1222759790_6197"
+      },
+      {
+        "image": "/assets/-19928478_6197"
+      }
+    ],
+    "id": "9crp",
+    "resetProperties": {
+      "x": 123.125,
+      "y": 592.5,
+      "activeFace": 0
+    }
+  },
+  "v6or": {
+    "image": "/assets/206954176_1013912",
+    "movable": false,
+    "width": 1600,
+    "height": 1000,
+    "layer": -5,
+    "id": "v6or",
+    "movableInEdit": false
+  },
+  "vvo5": {
+    "type": "holder",
+    "x": -149.5,
+    "y": 1,
+    "z": 21826,
+    "id": "vvo5",
+    "css": "background: #55555550"
+  },
+  "xo6i": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-a92f3b7b-7799-4823-a16d-a2c731481c1b",
+    "id": "xo6i",
+    "z": 5,
+    "parent": "8syk"
+  },
+  "2dt0": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-1bdb002a-e392-4f0f-9249-e119bfb782be",
+    "id": "2dt0",
+    "z": 11,
+    "parent": "0g6r"
+  },
+  "va0n": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-a1c4814c-6cdb-48ee-9414-aab6e6d5e4da",
+    "id": "va0n",
+    "z": 3,
+    "parent": "gj3y"
+  },
+  "sq13": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-b90a5f99-2703-4afd-88b1-9474094af6a9",
+    "id": "sq13",
+    "z": 5,
+    "parent": "gj3y"
+  },
+  "lf2e": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-ffb23b26-c845-4981-8bcb-b0bb2e6cfd21",
+    "id": "lf2e",
+    "z": 2,
+    "parent": "0g6r"
+  },
+  "1jcb": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-a343aac7-2872-41b6-baf1-401ec1775d2b",
+    "id": "1jcb",
+    "z": 4,
+    "parent": "gj3y"
+  },
+  "sgsn": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-f591dea4-d38e-4990-8b1b-2b2c948bfed3",
+    "id": "sgsn",
+    "z": 3,
+    "parent": "v0uj"
+  },
+  "ncfp": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-e2f7cd19-f162-4635-84ef-637171569582",
+    "id": "ncfp",
+    "z": 2,
+    "parent": "v0uj"
+  },
+  "pkyf": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-7c78e796-f393-45c5-814d-fe326d93f979",
+    "id": "pkyf",
+    "z": 6,
+    "parent": "8syk"
+  },
+  "ql9s": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-4b6cee25-c45f-4605-ba36-87fcbf4a32d1",
+    "id": "ql9s",
+    "z": 3,
+    "parent": "0g6r"
+  },
+  "o3g1": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-0d93fb9d-e1d2-4685-b249-307d8e0beac4",
+    "id": "o3g1",
+    "z": 4,
+    "parent": "v0uj"
+  },
+  "lpmw": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-11d6a7ff-f306-4ab3-bd1c-102bdd50b400",
+    "id": "lpmw",
+    "z": 6,
+    "parent": "gj3y"
+  },
+  "n2c7": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-df8cb639-bb18-4944-b397-8579793d7393",
+    "id": "n2c7",
+    "z": 6,
+    "parent": "v0uj"
+  },
+  "wzxj": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-8ac612c3-8939-4343-bd8d-26255e3bb910",
+    "id": "wzxj",
+    "z": 7,
+    "parent": "8syk"
+  },
+  "l1us": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-274a6c7d-180a-47eb-a088-f9fab8dbf4fc",
+    "id": "l1us",
+    "z": 5,
+    "parent": "v0uj"
+  },
+  "0y9k": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-ae86e522-fcbe-4f7f-85f6-521de96b69c8",
+    "id": "0y9k",
+    "z": 5,
+    "parent": "0g6r"
+  },
+  "u722": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-7d90954f-03ca-4c54-a371-726567e474d8",
+    "id": "u722",
+    "z": 4,
+    "parent": "0g6r"
+  },
+  "xfv7": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-96d944cd-0b37-4b31-933a-dcd981d73022",
+    "id": "xfv7",
+    "z": 7,
+    "parent": "gj3y"
+  },
+  "gwnk": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-2eb9dbe4-7fe9-4d31-bafc-9fc8bde40d88",
+    "id": "gwnk",
+    "z": 6,
+    "parent": "0g6r"
+  },
+  "tuep": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-dd6645e4-ee4a-4ba2-b24f-208bf3907503",
+    "id": "tuep",
+    "z": 2,
+    "parent": "8syk"
+  },
+  "mmud": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-ce9fc4e1-a070-4976-9834-8210d895741d",
+    "id": "mmud",
+    "z": 2,
+    "parent": "gj3y"
+  },
+  "5x1h": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-73fc96d4-6949-4962-81a1-7989021989e1",
+    "id": "5x1h",
+    "z": 4,
+    "parent": "8syk"
+  },
+  "tqma": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-abb77175-c188-4a48-9680-ac07070c650d",
+    "id": "tqma",
+    "z": 3,
+    "parent": "8syk"
+  },
+  "wapb": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-b55c960a-8af2-44e6-a02d-67a24d150e86",
+    "id": "wapb",
+    "z": 7,
+    "parent": "v0uj"
+  },
+  "2ycx": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-4430cdc0-86b2-4a2e-91c4-b9690b206bc6",
+    "id": "2ycx",
+    "z": 8,
+    "parent": "8syk"
+  },
+  "v707": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-f6cfe5b0-706b-423a-9d4e-6c43acd69e73",
+    "id": "v707",
+    "z": 8,
+    "parent": "gj3y"
+  },
+  "zyj2": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-3530b55f-0e25-43be-9865-a9b451dac6c6",
+    "id": "zyj2",
+    "z": 9,
+    "parent": "8syk"
+  },
+  "2fy8": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-a0ad8d42-8fd7-43de-b0d5-a2d8ece8f367",
+    "id": "2fy8",
+    "z": 10,
+    "parent": "8syk"
+  },
+  "g20p": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-3a402c37-19b4-4e1a-bab3-3e84c9e392ff",
+    "id": "g20p",
+    "z": 7,
+    "parent": "0g6r"
+  },
+  "6vsu": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-e2ac148d-67f0-4b7e-982e-b815ef703afd",
+    "id": "6vsu",
+    "z": 8,
+    "parent": "v0uj"
+  },
+  "krjn": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-56db2ad5-32c0-4194-972b-04f41d7da212",
+    "id": "krjn",
+    "z": 9,
+    "parent": "gj3y"
+  },
+  "cwy0": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-ffa228cb-d5bc-4645-b364-f887f4a2d117",
+    "id": "cwy0",
+    "z": 11,
+    "parent": "8syk"
+  },
+  "7uj6": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-46ff7d57-fb98-4d50-8999-f8f24dd58270",
+    "id": "7uj6",
+    "z": 9,
+    "parent": "v0uj"
+  },
+  "6bxl": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-eb3e39eb-4cb6-4202-b4e1-1674232c585f",
+    "id": "6bxl",
+    "z": 10,
+    "parent": "v0uj"
+  },
+  "2c0a": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-17128a85-1a19-4b93-8307-5ee89b4294f3",
+    "id": "2c0a",
+    "z": 11,
+    "parent": "v0uj"
+  },
+  "9k79": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-34eaea20-8480-4651-8f1a-41cd4151454e",
+    "id": "9k79",
+    "z": 10,
+    "parent": "gj3y"
+  },
+  "2jmy": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-57212479-5d17-4a4b-8e28-c87be2380e8b",
+    "id": "2jmy",
+    "z": 11,
+    "parent": "gj3y"
+  },
+  "xng1": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-29b78df3-0ed7-481b-9442-1e4baf72026e",
+    "id": "xng1",
+    "z": 10,
+    "parent": "0g6r"
+  },
+  "ycw9": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-6782cb0c-c46d-41c7-9f9d-17e0ee7b14e4",
+    "id": "ycw9",
+    "z": 8,
+    "parent": "0g6r"
+  },
+  "ufh3": {
+    "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8",
+    "type": "card",
+    "cardType": "type-7986783c-0fc4-4dd2-8c2a-99659387a587",
+    "id": "ufh3",
+    "z": 9,
+    "parent": "0g6r"
+  },
+  "khsx": {
+    "type": "holder",
+    "x": 250,
+    "y": 6,
+    "z": 21873,
+    "id": "khsx",
+    "css": "background: #55555550",
+    "width": 84,
+    "height": 128,
+    "dropTarget": {
+      "deck": "taskDeck"
+    },
+    "undefined": 0
+  },
+  "AI Plie Label": {
+    "id": "AI Plie Label",
+    "x": 0,
+    "y": -30,
+    "width": 111,
+    "height": 30,
+    "type": "label",
+    "text": "Player 4",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false,
+    "editable": true,
+    "css": "font-size:120%;color:white",
+    "z": 21772,
+    "parent": "Player Plie 2"
+  },
+  "Player Plie 2 Label": {
+    "id": "Player Plie 2 Label",
+    "y": -30,
+    "width": 111,
+    "height": 30,
+    "type": "label",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false,
+    "editable": true,
+    "css": "font-size:120%;color:white",
+    "z": 21774,
+    "parent": "Player Plie 1",
+    "text": "Player 2"
+  },
+  "Player Plie 1 Label": {
+    "id": "Player Plie 1 Label",
+    "y": -30,
+    "width": 111,
+    "height": 30,
+    "type": "label",
+    "text": "Player 1",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false,
+    "css": "font-size:120%;color:white",
+    "z": 21778,
+    "parent": "Player Plie 3",
+    "editable": true
+  },
+  "discard": {
+    "id": "discard",
+    "x": 1550,
+    "y": 546,
+    "z": 21878,
+    "type": "holder",
+    "css": "background: #55555550",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "45f2a7e7-60f0-4b81-9481-87a19cc08f26_label": {
+    "id": "45f2a7e7-60f0-4b81-9481-87a19cc08f26_label",
+    "y": 256,
+    "width": 151,
+    "height": 30,
+    "type": "label",
+    "twoRowBottomAlign": true,
+    "css": "font-size:120%;color:white",
+    "text": "Tasks",
+    "x": 1085.8125,
+    "z": 21781
+  },
+  "discard1": {
+    "id": "discard1",
+    "x": -61,
+    "y": 546,
+    "z": 21838,
+    "type": "holder",
+    "css": "background: #55555550",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "discard2": {
+    "id": "discard2",
+    "x": -61,
+    "y": 286,
+    "z": 21883,
+    "type": "holder",
+    "css": "background: #55555550",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "509c436b-6f18-4dfb-b97a-53dd265376e4_label": {
+    "id": "509c436b-6f18-4dfb-b97a-53dd265376e4_label",
+    "y": 256,
+    "width": 111,
+    "height": 30,
+    "type": "label",
+    "text": "Tricks",
+    "css": "font-size:120%;color:white",
+    "z": 21807,
+    "x": -22.5,
+    "twoRowBottomAlign": true,
+    "layer": -3
+  },
+  "Player Plie 1": {
+    "type": "holder",
+    "id": "Player Plie 1",
+    "x": 824.5,
+    "y": 286,
+    "z": 21880,
+    "inheritChildZ": true,
+    "css": "background: #55555550",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "Player Plie 2": {
+    "type": "holder",
+    "id": "Player Plie 2",
+    "x": 664.5,
+    "y": 546,
+    "z": 21881,
+    "inheritChildZ": true,
+    "css": "background: #55555550",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "take1": {
+    "type": "button",
+    "id": "take1",
+    "x": 71,
+    "y": 44,
+    "layer": 4,
+    "z": 21803,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": [
+          "Player Plie 2",
+          "Player Plie 1",
+          "Player Plie 3",
+          "Player Plie 4"
+        ],
+        "to": [
+          "${PROPERTY parent}"
+        ],
+        "count": 1,
+        "face": 0
+      },
+      {
+        "func": "SELECT",
+        "value": "hand"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "condition": "${COUNT}",
+        "elseRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "privateTricksPrediction"
+          },
+          {
+            "func": "SET",
+            "property": "reveal",
+            "value": true
+          }
+        ]
+      }
+    ],
+    "css": "background-color: #243a4e88;border-color:white;color:white;",
+    "text": "Take",
+    "parent": "discard2",
+    "fixedParent": true
+  },
+  "take2": {
+    "type": "button",
+    "id": "take2",
+    "parent": "discard",
+    "inheritFrom": "take4"
+  },
+  "take3": {
+    "type": "button",
+    "id": "take3",
+    "parent": "discard1",
+    "inheritFrom": "take1"
+  },
+  "taskDeck": {
+    "type": "deck",
+    "id": "taskDeck",
+    "y": 4,
+    "z": 68,
+    "cardDefaults": {
+      "width": 76,
+      "height": 120,
+      "enlarge": 5
+    },
+    "cardTypes": {
+      "green6": {
+        "difficulty3": 1,
+        "difficulty4": 1,
+        "difficulty5": 1,
+        "text1": "win",
+        "value1": 6,
+        "css": "--color1:#6fcf97; --x1:120px; --y1:40px; --scale1:1.5"
+      },
+      "yellow1": {
+        "difficulty3": 1,
+        "difficulty4": 1,
+        "difficulty5": 1,
+        "text1": "win",
+        "value1": 1,
+        "css": "--color1:#f2c94c; --x1:120px; --y1:40px; --scale1:1.5"
+      },
+      "red3": {
+        "difficulty3": 1,
+        "difficulty4": 1,
+        "difficulty5": 1,
+        "text1": "win",
+        "value1": 3,
+        "css": "--color1:#eb5757; --x1:120px; --y1:40px; --scale1:1.5"
+      },
+      "blue4": {
+        "difficulty3": 1,
+        "difficulty4": 1,
+        "difficulty5": 1,
+        "text1": "win",
+        "value1": 4,
+        "css": "--color1:#2d9cdb; --x1:120px; --y1:40px; --scale1:1.5"
+      },
+      "black1": {
+        "difficulty3": 3,
+        "difficulty4": 3,
+        "difficulty5": 3,
+        "text1": "win only",
+        "footnote": "if 1+4 or 1-3\nin same hand\n⇒ re-deal",
+        "value1": 1,
+        "css": "--color1:black; --x1:120px; --y1:30px; --scale1:1.2;  --footnoteOffset:-10px"
+      },
+      "black2": {
+        "difficulty3": 3,
+        "difficulty4": 3,
+        "difficulty5": 3,
+        "text1": "win only",
+        "footnote": "if 2+4 or 1-3\nin same hand\n⇒ re-deal",
+        "value1": 2,
+        "css": "--color1:black; --x1:120px; --y1:30px; --scale1:1.2;  --footnoteOffset:-10px"
+      },
+      "black3": {
+        "difficulty3": 1,
+        "difficulty4": 1,
+        "difficulty5": 1,
+        "text1": "win",
+        "value1": 3,
+        "css": "--color1:black; --x1:120px; --y1:40px; --scale1:1.5"
+      },
+      "green2lastTrick": {
+        "difficulty3": 3,
+        "difficulty4": 4,
+        "difficulty5": 5,
+        "text1": "win\nin last trick",
+        "value1": 2,
+        "css": "--color1:#6fcf97; --x1:120px; --y1:45px; --scale1:1.2"
+      },
+      "2x9": {
+        "difficulty3": 2,
+        "difficulty4": 3,
+        "difficulty5": 3,
+        "text1": "win\nexactly 2",
+        "value1": 9,
+        "css": "--color1:grey; --x1:120px; --y1:50px; --scale1:1.2"
+      },
+      "3x6": {
+        "difficulty3": 3,
+        "difficulty4": 4,
+        "difficulty5": 4,
+        "text1": "win\nexactly 3",
+        "value1": 6,
+        "css": "--color1:grey; --x1:120px; --y1:50px; --scale1:1.2"
+      },
+      "4x3": {
+        "difficulty3": 3,
+        "difficulty4": 4,
+        "difficulty5": 5,
+        "text1": "win all 4",
+        "value1": 3,
+        "css": "--color1:grey; --x1:120px; --y1:40px; --scale1:1.5"
+      },
+      "4x9": {
+        "difficulty3": 4,
+        "difficulty4": 5,
+        "difficulty5": 6,
+        "text1": "win all 4",
+        "value1": 9,
+        "css": "--color1:grey; --x1:120px; --y1:40px; --scale1:1.5"
+      },
+      "3orMore5": {
+        "difficulty3": 3,
+        "difficulty4": 4,
+        "difficulty5": 5,
+        "text1": "win 3\nor more",
+        "value1": 5,
+        "css": "--color1:grey; --x1:120px; --y1:50px; --scale1:1.2"
+      },
+      "2orMore7": {
+        "difficulty3": 2,
+        "difficulty4": 2,
+        "difficulty5": 2,
+        "text1": "win 2\nor more",
+        "value1": 7,
+        "css": "--color1:grey; --x1:120px; --y1:50px; --scale1:1.2"
+      },
+      "3orMore9": {
+        "difficulty3": 3,
+        "difficulty4": 4,
+        "difficulty5": 5,
+        "text1": "win 3\nor more",
+        "value1": 9,
+        "css": "--color1:grey; --x1:120px; --y1:50px; --scale1:1.2"
+      },
+      "yellow9+blue7": {
+        "difficulty3": 2,
+        "difficulty4": 3,
+        "difficulty5": 3,
+        "text1": "win",
+        "value1": 9,
+        "value2": 7,
+        "css": "--color1:#f2c94c; --x1:105px; --y1:25px; --scale1:1;  --color2:#2d9cdb; --x2:135px; --y2:55px; --scale2:1"
+      },
+      "blue6+yellow7": {
+        "difficulty3": 2,
+        "difficulty4": 2,
+        "difficulty5": 3,
+        "text1": "win",
+        "value1": 6,
+        "value2": 7,
+        "css": "--color1:#2d9cdb; --x1:105px; --y1:25px; --scale1:1;  --color2:#f2c94c; --x2:135px; --y2:55px; --scale2:1"
+      },
+      "red8+blue5": {
+        "difficulty3": 2,
+        "difficulty4": 2,
+        "difficulty5": 3,
+        "text1": "win",
+        "value1": 8,
+        "value2": 5,
+        "css": "--color1:#eb5757; --x1:105px; --y1:25px; --scale1:1;  --color2:#2d9cdb; --x2:135px; --y2:55px; --scale2:1"
+      },
+      "green5+blue8": {
+        "difficulty3": 2,
+        "difficulty4": 2,
+        "difficulty5": 3,
+        "text1": "win",
+        "value1": 5,
+        "value2": 8,
+        "css": "--color1:#6fcf97; --x1:105px; --y1:25px; --scale1:1;  --color2:#2d9cdb; --x2:135px; --y2:55px; --scale2:1"
+      },
+      "red9+yellow8": {
+        "difficulty3": 2,
+        "difficulty4": 2,
+        "difficulty5": 3,
+        "text1": "win",
+        "value1": 9,
+        "value2": 8,
+        "css": "--color1:#eb5757; --x1:105px; --y1:25px; --scale1:1;  --color2:#f2c94c; --x2:135px; --y2:55px; --scale2:1"
+      },
+      "red5+yellow6": {
+        "difficulty3": 2,
+        "difficulty4": 2,
+        "difficulty5": 3,
+        "text1": "win",
+        "value1": 5,
+        "value2": 6,
+        "css": "--color1:#eb5757; --x1:105px; --y1:25px; --scale1:1;  --color2:#f2c94c; --x2:135px; --y2:55px; --scale2:1"
+      },
+      "red1+green7": {
+        "difficulty3": 2,
+        "difficulty4": 2,
+        "difficulty5": 2,
+        "text1": "win",
+        "value1": 1,
+        "value2": 7,
+        "css": "--color1:#eb5757; --x1:105px; --y1:25px; --scale1:1;  --color2:#6fcf97; --x2:135px; --y2:55px; --scale2:1"
+      },
+      "blue2+blue1+blue3": {
+        "difficulty3": 2,
+        "difficulty4": 3,
+        "difficulty5": 3,
+        "text1": "win",
+        "value1": 2,
+        "value2": 1,
+        "value3": 3,
+        "css": "--color1:#2d9cdb; --x1:105px; --y1:55px; --scale1:0.8;  --color2:#2d9cdb; --x2:120px; --y2:20px; --scale2:0.8;  --color3:#2d9cdb; --x3:135px; --y3:50px; --scale3:0.8"
+      },
+      "yellow4+green3+yellow5": {
+        "difficulty3": 3,
+        "difficulty4": 4,
+        "difficulty5": 4,
+        "text1": "win",
+        "value1": 4,
+        "value2": 3,
+        "value3": 5,
+        "css": "--color1:#f2c94c; --x1:105px; --y1:55px; --scale1:0.8;  --color2:#6fcf97; --x2:120px; --y2:20px; --scale2:0.8;  --color3:#f2c94c; --x3:135px; --y3:50px; --scale3:0.8"
+      },
+      "1red": {
+        "difficulty3": 3,
+        "difficulty4": 3,
+        "difficulty5": 4,
+        "text1": "win\nexactly 1",
+        "css": "--color1:#eb5757; --x1:120px; --y1:50px; --scale1:1.2"
+      },
+      "1red+1green": {
+        "difficulty3": 4,
+        "difficulty4": 4,
+        "difficulty5": 4,
+        "text1": "win\nexactly\none each",
+        "css": "--color1:#eb5757; --x1:105px; --y1:55px; --scale1:1;  --color2:#6fcf97; --x2:135px; --y2:55px; --scale2:1"
+      },
+      "2blue": {
+        "difficulty3": 3,
+        "difficulty4": 4,
+        "difficulty5": 4,
+        "text1": "win\nexactly 2",
+        "css": "--color1:#2d9cdb; --x1:120px; --y1:50px; --scale1:1.2"
+      },
+      "2green": {
+        "difficulty3": 3,
+        "difficulty4": 4,
+        "difficulty5": 4,
+        "text1": "win\nexactly 2",
+        "css": "--color1:#6fcf97; --x1:120px; --y1:50px; --scale1:1.2"
+      },
+      "1black": {
+        "difficulty3": 3,
+        "difficulty4": 3,
+        "difficulty5": 3,
+        "text1": "win\nexactly 1",
+        "footnote": "if 1-4 in same\nhand ⇒ re-deal",
+        "css": "--color1:black; --x1:120px; --y1:50px; --scale1:1.2"
+      },
+      "2black": {
+        "difficulty3": 3,
+        "difficulty4": 3,
+        "difficulty5": 4,
+        "text1": "win\nexactly 2",
+        "footnote": "if 2-4 in same\nhand ⇒ re-deal",
+        "css": "--color1:black; --x1:120px; --y1:50px; --scale1:1.2"
+      },
+      "3black": {
+        "difficulty3": 3,
+        "difficulty4": 4,
+        "difficulty5": 4,
+        "text1": "win\nexactly 3",
+        "footnote": "if 1-4 in same\nhand ⇒ re-deal",
+        "css": "--color1:black; --x1:120px; --y1:50px; --scale1:1.2"
+      },
+      "5orMoreRed": {
+        "difficulty3": 2,
+        "difficulty4": 3,
+        "difficulty5": 3,
+        "text1": "win 5\nor more",
+        "css": "--color1:#eb5757; --x1:120px; --y1:50px; --scale1:1.2"
+      },
+      "7orMoreYellow": {
+        "difficulty3": 3,
+        "difficulty4": 3,
+        "difficulty5": 3,
+        "text1": "win 7\nor more",
+        "css": "--color1:#f2c94c; --x1:120px; --y1:50px; --scale1:1.2"
+      },
+      "equalRedYellow": {
+        "difficulty3": 4,
+        "difficulty4": 4,
+        "difficulty5": 4,
+        "text1": "win equal",
+        "footnote": "at least\none each",
+        "css": "--color1:#eb5757; --x1:105px; --y1:30px; --scale1:1;  --color2:#f2c94c; --x2:135px; --y2:30px; --scale2:1"
+      },
+      "moreRedThanGreen": {
+        "difficulty3": 1,
+        "difficulty4": 1,
+        "difficulty5": 1,
+        "text1": "win more",
+        "footnote": "can be 0 green",
+        "css": "--color1:#eb5757; --x1:115px; --y1:35px; --scale1:1.4;  --color2:#6fcf97; --x2:135px; --y2:55px; --scale2:1;  --footnoteOffset:10px"
+      },
+      "moreYellowThanBlue": {
+        "difficulty3": 1,
+        "difficulty4": 1,
+        "difficulty5": 1,
+        "text1": "win more",
+        "footnote": "can be 0 blue",
+        "css": "--color1:#f2c94c; --x1:115px; --y1:35px; --scale1:1.4;  --color2:#2d9cdb; --x2:135px; --y2:55px; --scale2:1;  --footnoteOffset:10px"
+      },
+      "eachColor": {
+        "difficulty3": 2,
+        "difficulty4": 3,
+        "difficulty5": 4,
+        "text1": "\nwin\nat least 1\nof\neach color"
+      },
+      "allOneColor": {
+        "difficulty3": 3,
+        "difficulty4": 4,
+        "difficulty5": 5,
+        "text1": "\nwin\nall cards\nof\none color"
+      },
+      "equalRedBlueInTrick": {
+        "difficulty3": 2,
+        "difficulty4": 3,
+        "difficulty5": 3,
+        "text1": "win equal\nin a trick",
+        "footnote": "at least\none each",
+        "css": "--color1:#eb5757; --x1:105px; --y1:45px; --scale1:1;  --color2:#2d9cdb; --x2:135px; --y2:40px; --scale2:1"
+      },
+      "equalGreenYellowInTrick": {
+        "difficulty3": 2,
+        "difficulty4": 3,
+        "difficulty5": 3,
+        "text1": "win equal\nin a trick",
+        "footnote": "at least\none each",
+        "css": "--color1:#6fcf97; --x1:105px; --y1:45px; --scale1:1;  --color2:#f2c94c; --x2:135px; --y2:40px; --scale2:1"
+      },
+      "red7WithBlack": {
+        "difficulty3": 3,
+        "difficulty4": 3,
+        "difficulty5": 3,
+        "text1": "win          \n\n          with",
+        "value1": 7,
+        "css": "--color1:#eb5757; --x1:102px; --y1:20px; --scale1:1;  --color2:black; --x2:135px; --y2:55px; --scale2:1"
+      },
+      "green9WithBlack": {
+        "difficulty3": 3,
+        "difficulty4": 3,
+        "difficulty5": 3,
+        "text1": "win          \n\n          with",
+        "value1": 9,
+        "css": "--color1:#6fcf97; --x1:102px; --y1:20px; --scale1:1;  --color2:black; --x2:135px; --y2:55px; --scale2:1"
+      },
+      "4with8": {
+        "difficulty3": 3,
+        "difficulty4": 4,
+        "difficulty5": 5,
+        "text1": "win          \n\n          with",
+        "value1": 8,
+        "value2": 4,
+        "css": "--color1:grey; --x1:102px; --y1:20px; --scale1:1;  --color2:grey; --x2:135px; --y2:55px; --scale2:1"
+      },
+      "5with7": {
+        "difficulty3": 1,
+        "difficulty4": 2,
+        "difficulty5": 2,
+        "text1": "win          \n\n          with",
+        "value1": 5,
+        "value2": 7,
+        "css": "--color1:grey; --x1:102px; --y1:20px; --scale1:1;  --color2:grey; --x2:135px; --y2:55px; --scale2:1"
+      },
+      "6with6": {
+        "difficulty3": 2,
+        "difficulty4": 3,
+        "difficulty5": 4,
+        "text1": "win          \n\n          with",
+        "value1": 6,
+        "value2": 6,
+        "footnote": "not the same",
+        "css": "--color1:grey; --x1:102px; --y1:20px; --scale1:1;  --color2:grey; --x2:135px; --y2:55px; --scale2:1;  --footnoteOffset:10px"
+      },
+      "trickWith2": {
+        "difficulty3": 3,
+        "difficulty4": 4,
+        "difficulty5": 5,
+        "text1": "win a trick\nby playing",
+        "value1": 2,
+        "css": "--color1:grey; --x1:120px; --y1:50px; --scale1:1.2"
+      },
+      "trickWith3": {
+        "difficulty3": 3,
+        "difficulty4": 4,
+        "difficulty5": 5,
+        "text1": "win a trick\nby playing",
+        "value1": 3,
+        "css": "--color1:grey; --x1:120px; --y1:50px; --scale1:1.2"
+      },
+      "trickWith5": {
+        "difficulty3": 2,
+        "difficulty4": 3,
+        "difficulty5": 4,
+        "text1": "win a trick\nby playing",
+        "value1": 5,
+        "css": "--color1:grey; --x1:120px; --y1:50px; --scale1:1.2"
+      },
+      "trickWith6": {
+        "difficulty3": 2,
+        "difficulty4": 3,
+        "difficulty5": 3,
+        "text1": "win a trick\nby playing",
+        "value1": 6,
+        "css": "--color1:grey; --x1:120px; --y1:50px; --scale1:1.2"
+      },
+      "0tricks": {
+        "difficulty3": 4,
+        "difficulty4": 3,
+        "difficulty5": 3,
+        "text1": "\n\nwin\n0 tricks"
+      },
+      "exactly1trick": {
+        "difficulty3": 3,
+        "difficulty4": 2,
+        "difficulty5": 2,
+        "text1": "\nwin\nexactly\n\n1 trick"
+      },
+      "exactly2trick": {
+        "difficulty3": 2,
+        "difficulty4": 2,
+        "difficulty5": 2,
+        "text1": "\nwin\nexactly\n\n2 tricks"
+      },
+      "exactly4trick": {
+        "difficulty3": 2,
+        "difficulty4": 3,
+        "difficulty5": 5,
+        "text1": "\nwin\nexactly\n\n4 tricks"
+      },
+      "exactlyXtrick": {
+        "difficulty3": 3,
+        "difficulty4": 2,
+        "difficulty5": 2,
+        "text1": "\nwin\nexactly\nX tricks",
+        "footnote": "predict\nopenly"
+      },
+      "exactlyXtrickSecret": {
+        "difficulty3": 4,
+        "difficulty4": 3,
+        "difficulty5": 3,
+        "text1": "\nwin\nexactly\nX tricks",
+        "footnote": "predict\nin secret"
+      },
+      "exactly2trickInARow": {
+        "difficulty3": 3,
+        "difficulty4": 3,
+        "difficulty5": 3,
+        "text1": "win\nexactly\n2 tricks\n\nall of them\nin a row"
+      },
+      "exactly3trickInARow": {
+        "difficulty3": 3,
+        "difficulty4": 3,
+        "difficulty5": 4,
+        "text1": "win\nexactly\n3 tricks\n\nall of them\nin a row"
+      },
+      "firstTrick": {
+        "difficulty3": 1,
+        "difficulty4": 1,
+        "difficulty5": 1,
+        "text1": "\n\nwin\nthe first\ntrick"
+      },
+      "firstTwoTrick": {
+        "difficulty3": 1,
+        "difficulty4": 1,
+        "difficulty5": 2,
+        "text1": "\nwin\n\nthe first\n2 tricks"
+      },
+      "firstThreeTrick": {
+        "difficulty3": 2,
+        "difficulty4": 3,
+        "difficulty5": 4,
+        "text1": "\nwin\n\nthe first\n3 tricks"
+      },
+      "lastTrick": {
+        "difficulty3": 2,
+        "difficulty4": 3,
+        "difficulty5": 3,
+        "text1": "\nwin\n\nthe last\ntrick"
+      },
+      "firstAndLastTrick": {
+        "difficulty3": 3,
+        "difficulty4": 4,
+        "difficulty5": 4,
+        "text1": "\nwin\nthe first\nand\nlast trick"
+      },
+      "onlyFirstTrick": {
+        "difficulty3": 4,
+        "difficulty4": 3,
+        "difficulty5": 3,
+        "text1": "\nwin\nonly\nthe first\ntrick"
+      },
+      "onlyLastTrick": {
+        "difficulty3": 4,
+        "difficulty4": 4,
+        "difficulty5": 4,
+        "text1": "\nwin\nonly\nthe last\ntrick"
+      },
+      "2tricksInARow": {
+        "difficulty3": 1,
+        "difficulty4": 1,
+        "difficulty5": 1,
+        "text1": "\nwin\n\n2 tricks\nin a row"
+      },
+      "3tricksInARow": {
+        "difficulty3": 2,
+        "difficulty4": 3,
+        "difficulty5": 4,
+        "text1": "\nwin\n\n3 tricks\nin a row"
+      },
+      "moreThanHalfTricks": {
+        "difficulty3": 3,
+        "difficulty4": 4,
+        "difficulty5": 5,
+        "text1": "\nwin\nmore than\nhalf of\nall tricks"
+      },
+      "moreTricksThanOthers": {
+        "difficulty3": 2,
+        "difficulty4": 3,
+        "difficulty5": 3,
+        "text1": "win\nmore\ntricks\nthan\nany other\nplayer"
+      },
+      "lessTricksThanOthers": {
+        "difficulty3": 2,
+        "difficulty4": 2,
+        "difficulty5": 3,
+        "text1": "win\nless\ntricks\nthan\nany other\nplayer"
+      },
+      "lessTricksThanCaptain": {
+        "difficulty3": 2,
+        "difficulty4": 2,
+        "difficulty5": 2,
+        "text1": "win\nless\ntricks\nthan\nthe\ncaptain"
+      },
+      "equalTricksThanCaptain": {
+        "difficulty3": 4,
+        "difficulty4": 3,
+        "difficulty5": 3,
+        "text1": "win\nas many\ntricks\nas the\ncaptain",
+        "footnote": "not as captain",
+        "css": "--footnoteOffset:10px"
+      },
+      "moreTricksThanCaptain": {
+        "difficulty3": 2,
+        "difficulty4": 2,
+        "difficulty5": 3,
+        "text1": "win\nmore\ntricks\nthan\nthe\ncaptain"
+      },
+      "onlyOddTrick": {
+        "difficulty3": 2,
+        "difficulty4": 4,
+        "difficulty5": 5,
+        "text1": "\nwin\na trick\nwith only\nodd values"
+      },
+      "onlyEvenTrick": {
+        "difficulty3": 2,
+        "difficulty4": 5,
+        "difficulty5": 6,
+        "text1": "win\na trick\nwith\nonly\neven\nvalues"
+      },
+      "no1": {
+        "difficulty3": 2,
+        "difficulty4": 2,
+        "difficulty5": 2,
+        "text1": "win no",
+        "value1": 1,
+        "css": "--color1:grey; --x1:120px; --y1:40px; --scale1:1.5"
+      },
+      "no5": {
+        "difficulty3": 1,
+        "difficulty4": 2,
+        "difficulty5": 2,
+        "text1": "win no",
+        "value1": 5,
+        "css": "--color1:grey; --x1:120px; --y1:40px; --scale1:1.5"
+      },
+      "no9": {
+        "difficulty3": 1,
+        "difficulty4": 1,
+        "difficulty5": 1,
+        "text1": "win no",
+        "value1": 9,
+        "css": "--color1:grey; --x1:120px; --y1:40px; --scale1:1.5"
+      },
+      "no89": {
+        "difficulty3": 3,
+        "difficulty4": 3,
+        "difficulty5": 2,
+        "text1": "win no",
+        "value1": 8,
+        "value2": 9,
+        "css": "--color1:grey; --x1:105px; --y1:20px; --scale1:1;  --color2:grey; --x2:135px; --y2:50px; --scale2:1"
+      },
+      "no123": {
+        "difficulty3": 3,
+        "difficulty4": 3,
+        "difficulty5": 3,
+        "text1": "win no",
+        "value1": 1,
+        "value2": 2,
+        "value3": 3,
+        "css": "--color1:grey; --x1:105px; --y1:55px; --scale1:0.8;  --color2:grey; --x2:120px; --y2:20px; --scale2:0.8;  --color3:grey; --x3:135px; --y3:50px; --scale3:0.8"
+      },
+      "noLeadRedGreen": {
+        "difficulty3": 2,
+        "difficulty4": 1,
+        "difficulty5": 1,
+        "text1": "begin no\ntrick with",
+        "css": "--color1:#eb5757; --x1:105px; --y1:40px; --scale1:1;  --color2:#6fcf97; --x2:135px; --y2:55px; --scale2:1"
+      },
+      "noLeadRedYellowBlue": {
+        "difficulty3": 4,
+        "difficulty4": 3,
+        "difficulty5": 3,
+        "text1": "begin no\ntrick with",
+        "css": "--color1:#eb5757; --x1:105px; --y1:60px; --scale1:0.8;  --color2:#f2c94c; --x2:120px; --y2:35px; --scale2:0.8;  --color3:#2d9cdb; --x3:135px; --y3:55px; --scale3:0.8"
+      },
+      "noRed": {
+        "difficulty3": 2,
+        "difficulty4": 2,
+        "difficulty5": 2,
+        "text1": "win no",
+        "css": "--color1:#eb5757; --x1:120px; --y1:40px; --scale1:1.5"
+      },
+      "noYellow": {
+        "difficulty3": 2,
+        "difficulty4": 2,
+        "difficulty5": 2,
+        "text1": "win no",
+        "css": "--color1:#f2c94c; --x1:120px; --y1:40px; --scale1:1.5"
+      },
+      "noGreen": {
+        "difficulty3": 2,
+        "difficulty4": 2,
+        "difficulty5": 2,
+        "text1": "win no",
+        "css": "--color1:#6fcf97; --x1:120px; --y1:40px; --scale1:1.5"
+      },
+      "noRedBlue": {
+        "difficulty3": 3,
+        "difficulty4": 3,
+        "difficulty5": 3,
+        "text1": "win no",
+        "css": "--color1:#eb5757; --x1:105px; --y1:20px; --scale1:1;  --color2:#2d9cdb; --x2:135px; --y2:50px; --scale2:1"
+      },
+      "noYellowGreen": {
+        "difficulty3": 3,
+        "difficulty4": 3,
+        "difficulty5": 3,
+        "text1": "win no",
+        "css": "--color1:#f2c94c; --x1:105px; --y1:20px; --scale1:1;  --color2:#6fcf97; --x2:135px; --y2:50px; --scale2:1"
+      },
+      "noBlack": {
+        "difficulty3": 1,
+        "difficulty4": 1,
+        "difficulty5": 1,
+        "text1": "win no",
+        "css": "--color1:black; --x1:120px; --y1:40px; --scale1:1.5"
+      },
+      "noneFirst3Tricks": {
+        "difficulty3": 1,
+        "difficulty4": 2,
+        "difficulty5": 2,
+        "text1": "\ndon't win\nany of\nthe first 3\ntricks"
+      },
+      "noneFirst4Tricks": {
+        "difficulty3": 1,
+        "difficulty4": 2,
+        "difficulty5": 3,
+        "text1": "\ndon't win\nany of\nthe first 4\ntricks"
+      },
+      "noneFirst5Tricks": {
+        "difficulty3": 2,
+        "difficulty4": 3,
+        "difficulty5": 3,
+        "text1": "\ndon't win\nany of\nthe first 5\ntricks"
+      },
+      "neverTwoTricksInARow": {
+        "difficulty3": 3,
+        "difficulty4": 2,
+        "difficulty5": 2,
+        "text1": "\nnever win\n\ntwo tricks\nin a row"
+      },
+      "allLess7": {
+        "difficulty3": 2,
+        "difficulty4": 3,
+        "difficulty5": 3,
+        "text1": "win a trick\ncontaining\nonly\nvalues\nbelow 7",
+        "footnote": "no trumps\nallowed"
+      },
+      "allGreater5": {
+        "difficulty3": 2,
+        "difficulty4": 3,
+        "difficulty5": 4,
+        "text1": "win\na trick\ncontaining\nonly\nvalues\nabove 5"
+      },
+      "value22or23": {
+        "difficulty3": 3,
+        "difficulty4": 3,
+        "difficulty5": 4,
+        "text1": "win a trick\nwith sum\n22\nor\n23",
+        "footnote": "no trumps\nallowed"
+      },
+      "sumBelow": {
+        "difficulty3": 3,
+        "difficulty4": 3,
+        "difficulty5": 4,
+        "text1": "win a trick\nwith sum\n\n<12",
+        "footnote": "no trumps\nallowed"
+      },
+      "sumAbove": {
+        "difficulty3": 3,
+        "difficulty4": 3,
+        "difficulty5": 4,
+        "text1": "win a trick\nwith sum\n\n>28",
+        "footnote": "no trumps\nallowed"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "valueType": "static",
+            "value": "/assets/-1682721256_109308",
+            "width": 76,
+            "height": 120
+          },
+          {
+            "type": "text",
+            "x": 10,
+            "y": 82,
+            "fontSize": 10,
+            "valueType": "static",
+            "value": "TASK",
+            "textAlign": "left",
+            "textFont": "interstate",
+            "color": "#ffffff",
+            "width": 76
+          },
+          {
+            "type": "text",
+            "x": 8,
+            "y": 65,
+            "fontSize": 36,
+            "valueType": "dynamic",
+            "value": "difficulty4",
+            "textAlign": "right",
+            "width": 60
+          }
+        ],
+        "css": "color: white; font-weight: bold",
+        "radius": 5
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "black",
+            "valueType": "static",
+            "value": "",
+            "width": 76,
+            "height": 120,
+            "css": "border: 3px solid white; border-radius: 5px; background: linear-gradient(218deg, rgba(14,18,31,1) 10%, rgba(23,75,102,1) 90%)"
+          },
+          {
+            "type": "text",
+            "x": 4,
+            "y": 4,
+            "fontSize": 14,
+            "color": "white",
+            "valueType": "dynamic",
+            "value": "text1",
+            "textAlign": "center",
+            "width": 68,
+            "height": 120
+          },
+          {
+            "type": "text",
+            "x": -100,
+            "y": 0,
+            "fontSize": 50,
+            "color": "white",
+            "valueType": "dynamic",
+            "value": "value1",
+            "textAlign": "center",
+            "width": 38,
+            "height": 60,
+            "css": "background-image: linear-gradient(90deg, var(--color1) 1%, var(--color1) 1%); transform: translate(var(--x1), var(--y1)) scale(var(--scale1)); border: 1px solid white; border-radius: 5px"
+          },
+          {
+            "type": "text",
+            "x": -100,
+            "y": 0,
+            "fontSize": 50,
+            "color": "white",
+            "valueType": "dynamic",
+            "value": "value2",
+            "textAlign": "center",
+            "width": 38,
+            "height": 60,
+            "css": "background-image: linear-gradient(90deg, var(--color2) 1%, var(--color2) 1%); transform: translate(var(--x2), var(--y2)) scale(var(--scale2)); border: 1px solid white; border-radius: 5px"
+          },
+          {
+            "type": "text",
+            "x": -100,
+            "y": 0,
+            "fontSize": 50,
+            "color": "white",
+            "valueType": "dynamic",
+            "value": "value3",
+            "textAlign": "center",
+            "width": 38,
+            "height": 60,
+            "css": "background-image: linear-gradient(90deg, var(--color3) 1%, var(--color3) 1%); transform: translate(var(--x3), var(--y3)) scale(var(--scale3)); border: 1px solid white; border-radius: 5px"
+          },
+          {
+            "type": "text",
+            "x": 10,
+            "y": 95,
+            "fontSize": 8,
+            "color": "black",
+            "valueType": "dynamic",
+            "value": "footnote",
+            "textAlign": "center",
+            "width": 56,
+            "css": "background-color: lightgrey; transform: translate(0, var(--footnoteOffset))"
+          }
+        ],
+        "radius": 5
+      }
+    ],
+    "x": 4,
+    "parent": "khsx"
+  },
+  "ai-task1": {
+    "type": "holder",
+    "id": "ai-task1",
+    "x": 960.375,
+    "y": 326,
+    "inheritFrom": "khsx",
+    "z": 21862
+  },
+  "ai-task2": {
+    "type": "holder",
+    "id": "ai-task2",
+    "x": 1066.25,
+    "y": 326,
+    "inheritFrom": "khsx"
+  },
+  "ai-task3": {
+    "type": "holder",
+    "id": "ai-task3",
+    "x": 1172.125,
+    "y": 326,
+    "inheritFrom": "khsx",
+    "z": 21853
+  },
+  "ai-task4": {
+    "type": "holder",
+    "id": "ai-task4",
+    "x": 1278,
+    "y": 326,
+    "inheritFrom": "khsx",
+    "z": 21854
+  },
+  "p1-task1": {
+    "type": "holder",
+    "id": "p1-task1",
+    "x": 960.375,
+    "y": 586,
+    "inheritFrom": "khsx"
+  },
+  "p1-task2": {
+    "type": "holder",
+    "id": "p1-task2",
+    "x": 1066.25,
+    "y": 586,
+    "inheritFrom": "khsx"
+  },
+  "p1-task3": {
+    "type": "holder",
+    "id": "p1-task3",
+    "x": 1172.125,
+    "y": 586,
+    "inheritFrom": "khsx"
+  },
+  "p1-task4": {
+    "type": "holder",
+    "id": "p1-task4",
+    "x": 1278,
+    "y": 586,
+    "inheritFrom": "khsx"
+  },
+  "p2-task1": {
+    "type": "holder",
+    "id": "p2-task1",
+    "x": 238,
+    "y": 586,
+    "inheritFrom": "khsx"
+  },
+  "p2-task2": {
+    "type": "holder",
+    "id": "p2-task2",
+    "x": 343.875,
+    "y": 586,
+    "inheritFrom": "khsx"
+  },
+  "p2-task3": {
+    "type": "holder",
+    "id": "p2-task3",
+    "x": 449.75,
+    "y": 586,
+    "inheritFrom": "khsx"
+  },
+  "p2-task4": {
+    "type": "holder",
+    "id": "p2-task4",
+    "x": 555.625,
+    "y": 586,
+    "inheritFrom": "khsx"
+  },
+  "khsx1": {
+    "type": "holder",
+    "x": 1150,
+    "y": 6,
+    "id": "khsx1",
+    "css": "background: #55555550",
+    "width": 84,
+    "height": 128,
+    "dropTarget": {
+      "deck": "taskDeck"
+    },
+    "z": 21871,
+    "undefined": 0
+  },
+  "khsx2": {
+    "type": "holder",
+    "x": 500,
+    "z": 21865,
+    "id": "khsx2",
+    "css": "background: #55555550",
+    "width": 484,
+    "height": 128,
+    "dropTarget": {
+      "deck": "taskDeck"
+    },
+    "stackOffsetX": 80,
+    "y": 6,
+    "undefined": 0
+  },
+  "48eiD": {
+    "id": "48eiD",
+    "x": -32,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "difficulty",
+    "css": "background-color: #243a4e88;border-color:white;color:white;"
+  },
+  "48eiU": {
+    "id": "48eiU",
+    "x": 50,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "difficulty",
+    "css": "background-color: #243a4e88;border-color:white;color:white;"
+  },
+  "b0b2bf3c-50e3-4145-87cf-e9fb106d3982": {
+    "id": "b0b2bf3c-50e3-4145-87cf-e9fb106d3982",
+    "x": 377,
+    "y": 18,
+    "z": 21828,
+    "type": "button",
+    "text": "Deal",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "routine": "recallRoutine"
+      },
+      "var pointsLeft = ${PROPERTY text OF difficulty}",
+      {
+        "func": "MOVE",
+        "from": "khsx2",
+        "to": "khsx1",
+        "count": 0,
+        "face": 1
+      },
+      {
+        "func": "SELECT",
+        "value": "khsx",
+        "sortBy": {
+          "key": "z",
+          "reverse": true
+        },
+        "type": "card"
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          "var isLower = ${PROPERTY difficulty4 OF $widgetID} <= ${pointsLeft}",
+          {
+            "func": "IF",
+            "condition": "${isLower}",
+            "thenRoutine": [
+              "var pointsLeft = ${pointsLeft} - ${PROPERTY difficulty4 OF $widgetID}",
+              {
+                "func": "SET",
+                "value": "khsx2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${pointsLeft}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": "b0b2bf3c-50e3-4145-87cf-e9fb106d3983"
+          },
+          {
+            "func": "CALL"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "khsx2"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var moreThanSixTasks = ${COUNT} > 6",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "khsx2"
+      },
+      {
+        "func": "IF",
+        "condition": "${moreThanSixTasks}",
+        "thenRoutine": [
+          "var target = 400",
+          "var count = ${COUNT} - 1",
+          "var stackOffsetX = ${target} / ${count}",
+          {
+            "func": "SET",
+            "property": "stackOffsetX",
+            "value": "${stackOffsetX}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "property": "stackOffsetX",
+            "value": 80
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "khsx2"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var moreThanSixTasks = ${COUNT} > 6",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "khsx2"
+      },
+      {
+        "func": "IF",
+        "condition": "${moreThanSixTasks}",
+        "thenRoutine": [
+          "var target = 400",
+          "var count = ${COUNT} - 1",
+          "var stackOffsetX = ${target} / ${count}",
+          {
+            "func": "SET",
+            "property": "stackOffsetX",
+            "value": "${stackOffsetX}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "property": "stackOffsetX",
+            "value": 80
+          }
+        ]
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "khsx2"
+      }
+    ],
+    "css": "background-color: #243a4e88;border-color:white;color:white;",
+    "height": 40,
+    "undefined": 0,
+    "recallRoutine": [
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "taskDeck"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT"
+      },
+      {
+        "func": "SET",
+        "value": "ai-task1"
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "ai-task1",
+          "ai-task2",
+          "ai-task3",
+          "ai-task4",
+          "p1-task4",
+          "p1-task3",
+          "p1-task2",
+          "p1-task1",
+          "p2-task1",
+          "p2-task2",
+          "p2-task3",
+          "p2-task4",
+          "p2-task5",
+          "p2-task6",
+          "p2-task7",
+          "p2-task8"
+        ],
+        "to": "khsx2",
+        "face": 1,
+        "count": 0
+      }
+    ]
+  },
+  "b0b2bf3c-50e3-4145-87cf-e9fb106d3983": {
+    "id": "b0b2bf3c-50e3-4145-87cf-e9fb106d3983",
+    "x": 1027,
+    "y": 19,
+    "z": 21830,
+    "type": "button",
+    "text": "Shuffle",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "khsx"
+      },
+      {
+        "func": "FLIP",
+        "holder": "khsx",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "khsx"
+      }
+    ],
+    "css": "background-color: #243a4e88;border-color:white;color:white;",
+    "height": 40,
+    "undefined": 0
+  },
+  "difficulty": {
+    "type": "label",
+    "id": "difficulty",
+    "x": 389.5,
+    "y": 77,
+    "width": 55,
+    "height": 40,
+    "z": 21803,
+    "css": "font-size: 30px;color: white",
+    "editable": true,
+    "text": 1
+  },
+  "a446559e-6d46-4477-b6ea-2a1c349f93a10": {
+    "type": "holder",
+    "id": "a446559e-6d46-4477-b6ea-2a1c349f93a10",
+    "x": 960.375,
+    "y": 265.567567588,
+    "scale": 0.756756757,
+    "layer": -4,
+    "z": 46746,
+    "css": "background: #55555530; border: 1px solid #55555560",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "a446559e-6d46-4477-b6ea-2a1c349f93a11": {
+    "type": "holder",
+    "id": "a446559e-6d46-4477-b6ea-2a1c349f93a11",
+    "x": 960.375,
+    "y": 525.567567588,
+    "scale": 0.756756757,
+    "layer": -4,
+    "z": 46747,
+    "css": "background: #55555530; border: 1px solid #55555560",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "a446559e-6d46-4477-b6ea-2a1c349f93a12": {
+    "type": "holder",
+    "id": "a446559e-6d46-4477-b6ea-2a1c349f93a12",
+    "x": 211,
+    "y": 525.567567588,
+    "scale": 0.756756757,
+    "layer": -4,
+    "z": 46748,
+    "css": "background: #55555530; border: 1px solid #55555560",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "a446559e-6d46-4477-b6ea-2a1c349f93a13": {
+    "type": "holder",
+    "id": "a446559e-6d46-4477-b6ea-2a1c349f93a13",
+    "x": 1066.25,
+    "y": 265.567567588,
+    "scale": 0.756756757,
+    "layer": -4,
+    "z": 46751,
+    "css": "background: #55555530; border: 1px solid #55555560",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "a446559e-6d46-4477-b6ea-2a1c349f93a14": {
+    "type": "holder",
+    "id": "a446559e-6d46-4477-b6ea-2a1c349f93a14",
+    "x": 1172.125,
+    "y": 265.567567588,
+    "scale": 0.756756757,
+    "layer": -4,
+    "z": 46750,
+    "css": "background: #55555530; border: 1px solid #55555560",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "a446559e-6d46-4477-b6ea-2a1c349f93a15": {
+    "type": "holder",
+    "id": "a446559e-6d46-4477-b6ea-2a1c349f93a15",
+    "x": 1278,
+    "y": 265.567567588,
+    "scale": 0.756756757,
+    "layer": -4,
+    "z": 46749,
+    "css": "background: #55555530; border: 1px solid #55555560",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "a446559e-6d46-4477-b6ea-2a1c349f93a16": {
+    "type": "holder",
+    "id": "a446559e-6d46-4477-b6ea-2a1c349f93a16",
+    "x": 1066.25,
+    "y": 525.567567588,
+    "scale": 0.756756757,
+    "layer": -4,
+    "z": 46752,
+    "css": "background: #55555530; border: 1px solid #55555560",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "a446559e-6d46-4477-b6ea-2a1c349f93a17": {
+    "type": "holder",
+    "id": "a446559e-6d46-4477-b6ea-2a1c349f93a17",
+    "x": 1172.125,
+    "y": 525.567567588,
+    "scale": 0.756756757,
+    "layer": -4,
+    "z": 46755,
+    "css": "background: #55555530; border: 1px solid #55555560",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "a446559e-6d46-4477-b6ea-2a1c349f93a18": {
+    "type": "holder",
+    "id": "a446559e-6d46-4477-b6ea-2a1c349f93a18",
+    "x": 1278,
+    "y": 525.567567588,
+    "scale": 0.756756757,
+    "layer": -4,
+    "z": 46754,
+    "css": "background: #55555530; border: 1px solid #55555560",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "a446559e-6d46-4477-b6ea-2a1c349f93a19": {
+    "type": "holder",
+    "id": "a446559e-6d46-4477-b6ea-2a1c349f93a19",
+    "x": 316.875,
+    "y": 525.567567588,
+    "scale": 0.756756757,
+    "layer": -4,
+    "z": 46748,
+    "css": "background: #55555530; border: 1px solid #55555560",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "a446559e-6d46-4477-b6ea-2a1c349f93a20": {
+    "type": "holder",
+    "id": "a446559e-6d46-4477-b6ea-2a1c349f93a20",
+    "x": 422.75,
+    "y": 525.567567588,
+    "scale": 0.756756757,
+    "layer": -4,
+    "z": 46748,
+    "css": "background: #55555530; border: 1px solid #55555560",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "a446559e-6d46-4477-b6ea-2a1c349f93a21": {
+    "type": "holder",
+    "id": "a446559e-6d46-4477-b6ea-2a1c349f93a21",
+    "x": 528.625,
+    "y": 525.567567588,
+    "scale": 0.756756757,
+    "layer": -4,
+    "z": 46748,
+    "css": "background: #55555530; border: 1px solid #55555560",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "mgy3D": {
+    "id": "mgy3D",
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "css": "background-color: #243a4e88;border-color:white;color:white;",
+    "parent": "missions"
+  },
+  "mgy3U": {
+    "id": "mgy3U",
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "css": "background-color: #243a4e88;border-color:white;color:white;",
+    "parent": "missions"
+  },
+  "c8q1": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "green6",
+    "id": "c8q1",
+    "z": 5261,
+    "parent": "do6v"
+  },
+  "ap9g": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "yellow1",
+    "id": "ap9g",
+    "z": 7184,
+    "parent": "do6v"
+  },
+  "or84": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "red3",
+    "id": "or84",
+    "z": 8175,
+    "parent": "do6v"
+  },
+  "uvo4": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "blue4",
+    "id": "uvo4",
+    "z": 6400,
+    "parent": "do6v"
+  },
+  "7d22": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "black1",
+    "id": "7d22",
+    "z": 2774,
+    "parent": "do6v"
+  },
+  "dyf6": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "black2",
+    "id": "dyf6",
+    "z": 5636,
+    "parent": "do6v"
+  },
+  "gujz": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "black3",
+    "id": "gujz",
+    "z": 3688,
+    "parent": "do6v"
+  },
+  "yg1i": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "green2lastTrick",
+    "id": "yg1i",
+    "z": 6883,
+    "parent": "do6v"
+  },
+  "kdwy": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "2x9",
+    "id": "kdwy",
+    "z": 3794,
+    "parent": "do6v"
+  },
+  "hjpq": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "3x6",
+    "id": "hjpq",
+    "z": 9795,
+    "parent": "do6v"
+  },
+  "tudb": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "4x3",
+    "id": "tudb",
+    "z": 7409,
+    "parent": "do6v"
+  },
+  "xa7m": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "4x9",
+    "id": "xa7m",
+    "z": 1094,
+    "parent": "do6v"
+  },
+  "ujg6": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "3orMore5",
+    "id": "ujg6",
+    "z": 9095,
+    "parent": "do6v"
+  },
+  "247q": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "2orMore7",
+    "id": "247q",
+    "z": 6102,
+    "parent": "do6v"
+  },
+  "oag6": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "3orMore9",
+    "id": "oag6",
+    "z": 2673,
+    "parent": "do6v"
+  },
+  "6zbv": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "yellow9+blue7",
+    "id": "6zbv",
+    "z": 9329,
+    "parent": "do6v"
+  },
+  "iebc": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "blue6+yellow7",
+    "id": "iebc",
+    "z": 8523,
+    "parent": "do6v"
+  },
+  "ro9w": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "red8+blue5",
+    "id": "ro9w",
+    "z": 2488,
+    "parent": "do6v"
+  },
+  "e3yj": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "green5+blue8",
+    "id": "e3yj",
+    "z": 4465,
+    "parent": "do6v"
+  },
+  "r6g9": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "red9+yellow8",
+    "id": "r6g9",
+    "z": 9135,
+    "parent": "do6v"
+  },
+  "ba3d": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "red5+yellow6",
+    "id": "ba3d",
+    "z": 2262,
+    "parent": "do6v"
+  },
+  "h900": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "red1+green7",
+    "id": "h900",
+    "z": 1234,
+    "parent": "do6v"
+  },
+  "hdyr": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "blue2+blue1+blue3",
+    "id": "hdyr",
+    "z": 8319,
+    "parent": "do6v"
+  },
+  "bl81": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "yellow4+green3+yellow5",
+    "id": "bl81",
+    "z": 6467,
+    "parent": "do6v"
+  },
+  "p5u7": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "1red",
+    "id": "p5u7",
+    "z": 2870,
+    "parent": "do6v"
+  },
+  "26y0": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "1red+1green",
+    "id": "26y0",
+    "z": 3530,
+    "parent": "do6v"
+  },
+  "jr9n": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "2blue",
+    "id": "jr9n",
+    "z": 733,
+    "parent": "do6v"
+  },
+  "5qzq": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "2green",
+    "id": "5qzq",
+    "z": 87,
+    "parent": "do6v"
+  },
+  "xpeo": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "1black",
+    "id": "xpeo",
+    "z": 3325,
+    "parent": "do6v"
+  },
+  "fjqn": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "2black",
+    "id": "fjqn",
+    "z": 8402,
+    "parent": "do6v"
+  },
+  "pgj9": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "3black",
+    "id": "pgj9",
+    "z": 8163,
+    "parent": "do6v"
+  },
+  "290e": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "5orMoreRed",
+    "id": "290e",
+    "z": 153,
+    "parent": "do6v"
+  },
+  "bca8": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "7orMoreYellow",
+    "id": "bca8",
+    "z": 4028,
+    "parent": "do6v"
+  },
+  "2nyr": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "equalRedYellow",
+    "id": "2nyr",
+    "z": 5463,
+    "parent": "do6v"
+  },
+  "jl90": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "moreRedThanGreen",
+    "id": "jl90",
+    "z": 8911,
+    "parent": "do6v"
+  },
+  "ldg4": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "moreYellowThanBlue",
+    "id": "ldg4",
+    "z": 3306,
+    "parent": "do6v"
+  },
+  "d36k": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "eachColor",
+    "id": "d36k",
+    "z": 6816,
+    "parent": "do6v"
+  },
+  "62s2": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "allOneColor",
+    "id": "62s2",
+    "z": 1528,
+    "parent": "do6v"
+  },
+  "l1rb": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "equalRedBlueInTrick",
+    "id": "l1rb",
+    "z": 947,
+    "parent": "do6v"
+  },
+  "j5hj": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "equalGreenYellowInTrick",
+    "id": "j5hj",
+    "z": 9793,
+    "parent": "do6v"
+  },
+  "n8hr": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "red7WithBlack",
+    "id": "n8hr",
+    "z": 5287,
+    "parent": "do6v"
+  },
+  "scq5": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "green9WithBlack",
+    "id": "scq5",
+    "z": 4738,
+    "parent": "do6v"
+  },
+  "d8fr": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "4with8",
+    "id": "d8fr",
+    "z": 6675,
+    "parent": "do6v"
+  },
+  "43rz": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "5with7",
+    "id": "43rz",
+    "z": 3107,
+    "parent": "do6v"
+  },
+  "pxxw": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "6with6",
+    "id": "pxxw",
+    "z": 7683,
+    "parent": "do6v"
+  },
+  "4a4b": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "trickWith2",
+    "id": "4a4b",
+    "z": 5367,
+    "parent": "do6v"
+  },
+  "84g2": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "trickWith3",
+    "id": "84g2",
+    "z": 6447,
+    "parent": "do6v"
+  },
+  "wt9j": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "trickWith5",
+    "id": "wt9j",
+    "z": 2736,
+    "parent": "do6v"
+  },
+  "okt9": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "trickWith6",
+    "id": "okt9",
+    "z": 5916,
+    "parent": "do6v"
+  },
+  "ums0": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "0tricks",
+    "id": "ums0",
+    "z": 7537,
+    "parent": "do6v"
+  },
+  "t48l": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "exactly1trick",
+    "id": "t48l",
+    "z": 4718,
+    "parent": "do6v"
+  },
+  "e6jj": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "exactly2trick",
+    "id": "e6jj",
+    "z": 718,
+    "parent": "do6v"
+  },
+  "dirj": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "exactly4trick",
+    "id": "dirj",
+    "z": 5828,
+    "parent": "do6v"
+  },
+  "kqso": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "exactlyXtrick",
+    "id": "kqso",
+    "z": 3079,
+    "parent": "do6v"
+  },
+  "um5y": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "exactlyXtrickSecret",
+    "id": "um5y",
+    "z": 5034,
+    "parent": "do6v"
+  },
+  "gefv": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "exactly2trickInARow",
+    "id": "gefv",
+    "z": 6758,
+    "parent": "do6v"
+  },
+  "vaaq": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "exactly3trickInARow",
+    "id": "vaaq",
+    "z": 9532,
+    "parent": "do6v"
+  },
+  "jflk": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "firstTrick",
+    "id": "jflk",
+    "z": 8469,
+    "parent": "do6v"
+  },
+  "8lf6": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "firstTwoTrick",
+    "id": "8lf6",
+    "z": 7435,
+    "parent": "do6v"
+  },
+  "x57f": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "firstThreeTrick",
+    "id": "x57f",
+    "z": 9303,
+    "parent": "do6v"
+  },
+  "38h9": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "lastTrick",
+    "id": "38h9",
+    "z": 414,
+    "parent": "do6v"
+  },
+  "uwtm": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "firstAndLastTrick",
+    "id": "uwtm",
+    "z": 9755,
+    "parent": "do6v"
+  },
+  "039e": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "onlyFirstTrick",
+    "id": "039e",
+    "parent": "do6v",
+    "z": 3384
+  },
+  "dq4p": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "onlyLastTrick",
+    "id": "dq4p",
+    "z": 2591,
+    "parent": "do6v"
+  },
+  "g10t": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "2tricksInARow",
+    "id": "g10t",
+    "z": 1183,
+    "parent": "do6v"
+  },
+  "6lzg": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "3tricksInARow",
+    "id": "6lzg",
+    "z": 3651,
+    "parent": "do6v"
+  },
+  "1g2p": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "moreThanHalfTricks",
+    "id": "1g2p",
+    "z": 5925,
+    "parent": "do6v"
+  },
+  "jsdl": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "moreTricksThanOthers",
+    "id": "jsdl",
+    "z": 1901,
+    "parent": "do6v"
+  },
+  "fbqd": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "lessTricksThanOthers",
+    "id": "fbqd",
+    "z": 4791,
+    "parent": "do6v"
+  },
+  "64e5": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "lessTricksThanCaptain",
+    "id": "64e5",
+    "z": 3111,
+    "parent": "do6v"
+  },
+  "ows3": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "equalTricksThanCaptain",
+    "id": "ows3",
+    "z": 8050,
+    "parent": "do6v"
+  },
+  "dhh3": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "moreTricksThanCaptain",
+    "id": "dhh3",
+    "z": 1504,
+    "parent": "do6v"
+  },
+  "lg14": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "onlyOddTrick",
+    "id": "lg14",
+    "z": 1412,
+    "parent": "do6v"
+  },
+  "19mp": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "onlyEvenTrick",
+    "id": "19mp",
+    "z": 4529,
+    "parent": "do6v"
+  },
+  "wgsn": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "no1",
+    "id": "wgsn",
+    "z": 7781,
+    "parent": "do6v"
+  },
+  "bwtk": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "no5",
+    "id": "bwtk",
+    "z": 7005,
+    "parent": "do6v"
+  },
+  "46d8": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "no9",
+    "id": "46d8",
+    "z": 9622,
+    "parent": "do6v"
+  },
+  "4jsj": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "no89",
+    "id": "4jsj",
+    "z": 2379,
+    "parent": "do6v"
+  },
+  "fkkj": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "no123",
+    "id": "fkkj",
+    "z": 1840,
+    "parent": "do6v"
+  },
+  "dd24": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "noLeadRedGreen",
+    "id": "dd24",
+    "z": 3575,
+    "parent": "do6v"
+  },
+  "4ib7": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "noLeadRedYellowBlue",
+    "id": "4ib7",
+    "z": 5217,
+    "parent": "do6v"
+  },
+  "mo0k": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "noRed",
+    "id": "mo0k",
+    "z": 5786,
+    "parent": "do6v"
+  },
+  "ukcr": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "noYellow",
+    "id": "ukcr",
+    "z": 5616,
+    "parent": "do6v"
+  },
+  "40x5": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "noGreen",
+    "id": "40x5",
+    "z": 6917,
+    "parent": "do6v"
+  },
+  "zr27": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "noRedBlue",
+    "id": "zr27",
+    "z": 9779,
+    "parent": "do6v"
+  },
+  "64h1": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "noYellowGreen",
+    "id": "64h1",
+    "z": 7834,
+    "parent": "do6v"
+  },
+  "t19d": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "noBlack",
+    "id": "t19d",
+    "z": 1,
+    "parent": "khsx2",
+    "x": 4,
+    "y": 4
+  },
+  "5l38": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "noneFirst3Tricks",
+    "id": "5l38",
+    "z": 7644,
+    "parent": "do6v"
+  },
+  "5g7w": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "noneFirst4Tricks",
+    "id": "5g7w",
+    "z": 6083,
+    "parent": "do6v"
+  },
+  "lzjj": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "noneFirst5Tricks",
+    "id": "lzjj",
+    "z": 2530,
+    "parent": "do6v"
+  },
+  "oha3": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "neverTwoTricksInARow",
+    "id": "oha3",
+    "z": 7595,
+    "parent": "do6v"
+  },
+  "qmfy": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "allLess7",
+    "id": "qmfy",
+    "z": 8760,
+    "parent": "do6v"
+  },
+  "vqch": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "allGreater5",
+    "id": "vqch",
+    "z": 1800,
+    "parent": "do6v"
+  },
+  "5xtr": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "value22or23",
+    "id": "5xtr",
+    "z": 3257,
+    "parent": "do6v"
+  },
+  "9b7v": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "sumBelow",
+    "id": "9b7v",
+    "z": 3005,
+    "parent": "do6v"
+  },
+  "mu3r": {
+    "deck": "taskDeck",
+    "type": "card",
+    "cardType": "sumAbove",
+    "id": "mu3r",
+    "z": 6066,
+    "parent": "do6v"
+  },
+  "45f2a7e7-60f0-4b81-9481-87a19cc08f27_label": {
+    "id": "45f2a7e7-60f0-4b81-9481-87a19cc08f27_label",
+    "y": 10,
+    "width": 223,
+    "height": 30,
+    "type": "label",
+    "css": "font-size:120%;color:white",
+    "text": "Current Mission",
+    "z": 21790,
+    "twoRowBottomAlign": true
+  },
+  "2lcfP": {
+    "id": "2lcfP",
+    "x": 1512,
+    "y": 58,
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Add Timer",
+        "fields": [
+          {
+            "type": "select",
+            "label": "Duration",
+            "variable": "duration",
+            "options": [
+              {
+                "text": "02:00",
+                "value": 120
+              },
+              {
+                "text": "02:30",
+                "value": 150
+              },
+              {
+                "text": "03:00",
+                "value": 180
+              },
+              {
+                "text": "03:30",
+                "value": 210
+              },
+              {
+                "text": "04:00",
+                "value": 240
+              },
+              {
+                "text": "04:30",
+                "value": 270
+              },
+              {
+                "text": "05:00",
+                "value": 300
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "timer"
+      },
+      {
+        "func": "SET",
+        "property": "owner"
+      },
+      {
+        "func": "TIMER",
+        "mode": "start"
+      },
+      {
+        "func": "TIMER",
+        "mode": "set",
+        "seconds": "${duration}"
+      }
+    ],
+    "css": "background-color: #243a4e88;border-color:white;color:white;",
+    "z": 21824,
+    "text": "Timer",
+    "height": 40
+  },
+  "timer": {
+    "type": "timer",
+    "id": "timer",
+    "x": 1348,
+    "y": 39,
+    "scale": 3,
+    "z": 21825,
+    "clickable": false,
+    "countdown": true,
+    "css": "color: white; ",
+    "end": 0,
+    "resetProperties": {
+      "owner": [],
+      "paused": true
+    },
+    "height": 26,
+    "alert": true,
+    "milliseconds": -278000,
+    "undefined": 0,
+    "owner": []
+  },
+  "_meta": {
+    "version": 3,
+    "info": {
+      "name": "The Team II",
+      "image": "/assets/-734661263_192187",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "coop",
+      "time": "20",
+      "players": "4",
+      "language": "US",
+      "variant": "",
+      "attribution": "Original cards and board layout by https://www.reddit.com/user/inseend1, https://www.reddit.com/user/RaphaelAlvez and ArnoldSmith86. Released to public domain under CC0.\n\nCards based on assets from https://unsplash.com/license\n\nAstronauts tokens based on asset https://game-icons.net/1x1/delapouite/astronaut-helmet.html by Delapouite under CC BY 3.0\n\nFurther mission rule icons: https://game-icons.net/1x1/lorc/alien-stare.html and https://game-icons.net/1x1/lorc/stopwatch.html by Lorc under CC BY 3.0",
+      "similarName": "The Crew: Mission Deep Sea",
+      "similarLink": "https://boardgamegeek.com/boardgame/324856/crew-mission-deep-sea",
+      "description": "Cooperative trick taking card game. Work together on mission tasks to ensure that certain tricks are taken by certain players, all while not revealing your hand."
+    }
+  },
+  "3lcfP": {
+    "id": "3lcfP",
+    "x": 1512,
+    "y": 11,
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Predict Tricks",
+        "fields": [
+          {
+            "type": "checkbox",
+            "label": "Private",
+            "variable": "private"
+          },
+          {
+            "type": "number",
+            "label": "Tricks",
+            "variable": "tricks",
+            "min": "0",
+            "max": 13
+          }
+        ]
+      },
+      "var target = 'openTricksPrediction'",
+      {
+        "func": "IF",
+        "condition": "${private}",
+        "thenRoutine": [
+          "var target = 'privateTricksPrediction'"
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${PROPERTY tricks OF $target}",
+        "elseRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "${target}"
+          },
+          {
+            "func": "SET",
+            "property": "tricks",
+            "value": "${tricks}"
+          },
+          {
+            "func": "SET",
+            "property": "owner"
+          }
+        ]
+      }
+    ],
+    "css": "background-color: #243a4e88;border-color:white;color:white;",
+    "z": 21823,
+    "text": "Predict",
+    "height": 40,
+    "undefined": 0
+  },
+  "privateTricksPrediction": {
+    "type": "label",
+    "id": "privateTricksPrediction",
+    "x": 1259,
+    "y": 106,
+    "z": 21801,
+    "changeRoutine": [
+      "var tricks = ${PROPERTY tricks}",
+      {
+        "func": "IF",
+        "condition": "${PROPERTY reveal}",
+        "elseRoutine": [
+          "var tricks = 'X'"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "Privately predicted tricks: ${tricks}"
+      }
+    ],
+    "reveal": false,
+    "text": "Privately predicted tricks: X",
+    "resetProperties": {
+      "tricks": null,
+      "owner": [],
+      "reveal": false
+    },
+    "css": "color: white; font-size: 24px; text-align: left",
+    "width": 350,
+    "owner": []
+  },
+  "openTricksPrediction": {
+    "type": "label",
+    "id": "openTricksPrediction",
+    "resetProperties": {
+      "tricks": null,
+      "owner": []
+    },
+    "changeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "Openly predicted tricks: ${PROPERTY tricks}"
+      }
+    ],
+    "x": 1259,
+    "y": 132,
+    "width": 350,
+    "z": 21802,
+    "css": "color: white; font-size: 24px; text-align: left",
+    "text": "Openly predicted tricks: null",
+    "owner": []
+  },
+  "Player Plie 3": {
+    "type": "holder",
+    "id": "Player Plie 3",
+    "x": 664.5,
+    "y": 286,
+    "z": 21879,
+    "inheritChildZ": true,
+    "css": "background: #55555550",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "a446559e-6d46-4477-b6ea-2a1c349f93a22": {
+    "id": "a446559e-6d46-4477-b6ea-2a1c349f93a22",
+    "x": 105.125,
+    "y": 286,
+    "z": 21863,
+    "type": "holder",
+    "css": "background: #55555550",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "ksqn1": {
+    "css": "border-radius:50%;",
+    "z": 21910,
+    "x": 123.125,
+    "y": 332.5,
+    "width": 75,
+    "height": 75,
+    "faces": [
+      {
+        "image": "/assets/-1222759790_6197"
+      },
+      {
+        "image": "/assets/-19928478_6197"
+      }
+    ],
+    "id": "ksqn1",
+    "resetProperties": {
+      "x": 123.125,
+      "y": 332.5,
+      "activeFace": 0
+    }
+  },
+  "Player Plie 4": {
+    "type": "holder",
+    "id": "Player Plie 4",
+    "x": 824.5,
+    "y": 546,
+    "z": 21882,
+    "inheritChildZ": true,
+    "css": "background: #55555550",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "AI Plie Label1": {
+    "id": "AI Plie Label1",
+    "x": 0,
+    "y": -30,
+    "width": 111,
+    "height": 30,
+    "type": "label",
+    "text": "Player 3",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false,
+    "editable": true,
+    "css": "font-size:120%;color:white",
+    "z": 21772,
+    "parent": "Player Plie 4"
+  },
+  "a446559e-6d46-4477-b6ea-2a1c349f93a23": {
+    "id": "a446559e-6d46-4477-b6ea-2a1c349f93a23",
+    "x": 1383.875,
+    "y": 286,
+    "z": 21863,
+    "type": "holder",
+    "css": "background: #55555550",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "45f2a7e7-60f0-4b81-9481-87a19cc08f28_label": {
+    "id": "45f2a7e7-60f0-4b81-9481-87a19cc08f28_label",
+    "y": -30,
+    "width": 171,
+    "height": 30,
+    "type": "label",
+    "css": "font-size:120%;color:white",
+    "text": "Communication",
+    "x": -30,
+    "z": 21782,
+    "twoRowBottomAlign": true,
+    "parent": "a446559e-6d46-4477-b6ea-2a1c349f93a23"
+  },
+  "ksqn2": {
+    "css": "border-radius:50%;",
+    "z": 21906,
+    "x": 1401.875,
+    "y": 332.5,
+    "width": 75,
+    "height": 75,
+    "faces": [
+      {
+        "image": "/assets/-1222759790_6197"
+      },
+      {
+        "image": "/assets/-19928478_6197"
+      }
+    ],
+    "id": "ksqn2",
+    "resetProperties": {
+      "x": 1401.875,
+      "y": 332.5,
+      "activeFace": 0
+    }
+  },
+  "discard3": {
+    "id": "discard3",
+    "x": 1550,
+    "y": 286,
+    "z": 21878,
+    "type": "holder",
+    "css": "background: #55555550",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "take4": {
+    "type": "button",
+    "id": "take4",
+    "parent": "discard3",
+    "inheritFrom": "take1",
+    "x": -40
+  },
+  "p2-task5": {
+    "type": "holder",
+    "id": "p2-task5",
+    "x": 555.625,
+    "y": 326,
+    "inheritFrom": "khsx"
+  },
+  "p2-task6": {
+    "type": "holder",
+    "id": "p2-task6",
+    "x": 449.75,
+    "y": 326,
+    "inheritFrom": "khsx"
+  },
+  "p2-task7": {
+    "type": "holder",
+    "id": "p2-task7",
+    "x": 343.875,
+    "y": 326,
+    "inheritFrom": "khsx"
+  },
+  "p2-task8": {
+    "type": "holder",
+    "id": "p2-task8",
+    "x": 238,
+    "y": 326,
+    "inheritFrom": "khsx"
+  },
+  "a446559e-6d46-4477-b6ea-2a1c349f93a24": {
+    "type": "holder",
+    "id": "a446559e-6d46-4477-b6ea-2a1c349f93a24",
+    "x": 211,
+    "y": 265.567567588,
+    "scale": 0.756756757,
+    "layer": -4,
+    "z": 46748,
+    "css": "background: #55555530; border: 1px solid #55555560",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "a446559e-6d46-4477-b6ea-2a1c349f93a25": {
+    "type": "holder",
+    "id": "a446559e-6d46-4477-b6ea-2a1c349f93a25",
+    "x": 316.875,
+    "y": 265.567567588,
+    "scale": 0.756756757,
+    "layer": -4,
+    "z": 46748,
+    "css": "background: #55555530; border: 1px solid #55555560",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "a446559e-6d46-4477-b6ea-2a1c349f93a26": {
+    "type": "holder",
+    "id": "a446559e-6d46-4477-b6ea-2a1c349f93a26",
+    "x": 422.75,
+    "y": 265.567567588,
+    "scale": 0.756756757,
+    "layer": -4,
+    "z": 46748,
+    "css": "background: #55555530; border: 1px solid #55555560",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "a446559e-6d46-4477-b6ea-2a1c349f93a27": {
+    "type": "holder",
+    "id": "a446559e-6d46-4477-b6ea-2a1c349f93a27",
+    "x": 528.625,
+    "y": 265.567567588,
+    "scale": 0.756756757,
+    "layer": -4,
+    "z": 46748,
+    "css": "background: #55555530; border: 1px solid #55555560",
+    "dropTarget": {
+      "deck": "146344a4-f702-48c7-9acf-b10cf7da85f8"
+    }
+  },
+  "509c436b-6f18-4dfb-b97a-53dd265376e5_label": {
+    "id": "509c436b-6f18-4dfb-b97a-53dd265376e5_label",
+    "y": 256,
+    "width": 111,
+    "height": 30,
+    "type": "label",
+    "text": "Tricks",
+    "css": "font-size:120%;color:white",
+    "z": 21808,
+    "x": 1512.5,
+    "twoRowBottomAlign": true,
+    "layer": -3
+  },
+  "45f2a7e7-60f0-4b81-9481-87a19cc08f29_label": {
+    "id": "45f2a7e7-60f0-4b81-9481-87a19cc08f29_label",
+    "y": 256,
+    "width": 151,
+    "height": 30,
+    "type": "label",
+    "twoRowBottomAlign": true,
+    "css": "font-size:120%;color:white",
+    "text": "Tasks",
+    "x": 363.3125,
+    "z": 21809
+  },
+  "comm1": {
+    "type": "button",
+    "id": "comm1",
+    "x": 1516.5,
+    "width": 75,
+    "height": 75,
+    "z": 21927,
+    "css": "border-radius:30%;font-size: 75px; font-weight: bold; color: black; border: none; ",
+    "image": "/assets/-1222759790_6197",
+    "resetProperties": {
+      "owner": []
+    },
+    "text": "?",
+    "y": 916.5,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "helpButton"
+      }
+    ],
+    "owner": []
+  },
+  "comm2": {
+    "type": "button",
+    "id": "comm2",
+    "inheritFrom": {
+      "v6or": "owner",
+      "comm1": "*"
+    },
+    "text": "-2",
+    "x": 1430.5,
+    "owner": []
+  },
+  "discuss1": {
+    "type": "button",
+    "id": "discuss1",
+    "y": 829.5,
+    "backgroundColor": "purple",
+    "backgroundColorOH": "purple",
+    "image": "/assets/-1569197680_1610",
+    "inheritFrom": {
+      "v6or": "owner",
+      "comm1": "*"
+    },
+    "text": "",
+    "z": 21923,
+    "x": 1430.5,
+    "owner": []
+  },
+  "timed": {
+    "type": "button",
+    "id": "timed",
+    "y": 829.5,
+    "backgroundColor": "lightgrey",
+    "backgroundColorOH": "lightgrey",
+    "css": "border-radius:30%;font-size: 35px; font-weight: bold; color: black; border: none; line-height: 28px",
+    "image": "/assets/1464330728_1656",
+    "inheritFrom": {
+      "v6or": "owner",
+      "comm1": "*"
+    },
+    "text": "2:30\n1p",
+    "owner": []
+  },
+  "special": {
+    "id": "special",
+    "x": 6,
+    "y": 820,
+    "width": 245,
+    "height": 200,
+    "z": 21914,
+    "css": "background: #55555550;color: white;padding:5px;box-sizing: border-box;border-radius: 10px; border: 1px solid white",
+    "resetProperties": {
+      "owner": []
+    },
+    "text": "Special rules:\n\nCommunication is not allowed before the first trick. Whoever wins the first trick, has to have won more tricks than any other player at any point in the mission.",
+    "owner": [],
+    "movable": false
+  },
+  "missions": {
+    "type": "label",
+    "id": "missions",
+    "x": 79,
+    "y": 50.5,
+    "width": 65,
+    "height": 40,
+    "z": 21791,
+    "comm": {
+      "9": 1,
+      "11": 2,
+      "20": 3,
+      "21": 3,
+      "22": 3,
+      "23": 3,
+      "24": 3,
+      "25": 3,
+      "26": 3,
+      "27": 3
+    },
+    "commTexts": {
+      "0": "normal",
+      "1": "restricted (?)",
+      "2": "restricted (-2)"
+    },
+    "css": "font-size: 30px;color:white",
+    "diff": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      5,
+      6,
+      0,
+      7,
+      4,
+      8,
+      0,
+      5,
+      6,
+      6,
+      6,
+      9,
+      9,
+      9,
+      10,
+      0,
+      11,
+      0,
+      12,
+      12,
+      12,
+      0,
+      14,
+      15,
+      16,
+      17,
+      0
+    ],
+    "discuss": {
+      "17": 1,
+      "28": 1,
+      "29": 1,
+      "30": 1,
+      "31": 1,
+      "33": 1
+    },
+    "displayMissionRoutine": [
+      "var custom = ${PROPERTY text} > 32",
+      "var diff = ${PROPERTY diff} getIndex ${PROPERTY text}",
+      "var comm = ${PROPERTY comm} getIndex ${PROPERTY text}",
+      "var discuss = ${PROPERTY discuss} getIndex ${PROPERTY text}",
+      "var special = ${PROPERTY special} getIndex ${PROPERTY text}",
+      "var timed = ${PROPERTY timed} getIndex ${PROPERTY text}",
+      "var randomComm = ${comm} == 3",
+      {
+        "func": "IF",
+        "condition": "${randomComm}",
+        "thenRoutine": [
+          "var comm = randInt 0 2"
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${custom}",
+        "thenRoutine": [
+          "var diff = ${PROPERTY text} - 15",
+          "var discuss = 1"
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": "difficulty",
+        "value": "${diff}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "comm${comm}"
+      },
+      {
+        "func": "SET",
+        "property": "owner"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "discuss${discuss}"
+      },
+      {
+        "func": "SET",
+        "property": "owner"
+      },
+      {
+        "func": "IF",
+        "condition": "${special}",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "special"
+          },
+          {
+            "func": "SET",
+            "property": "owner"
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "value": "Special rules:\n\n${special}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${timed}",
+        "thenRoutine": [
+          "var randomComm = ${timed.2} == 3",
+          {
+            "func": "IF",
+            "condition": "${randomComm}",
+            "thenRoutine": [
+              "var timed.2 = randInt 0 2"
+            ]
+          },
+          "var commText = ${PROPERTY commTexts} getIndex ${timed.2}",
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "special"
+          },
+          {
+            "func": "SET",
+            "property": "owner"
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "value": "If you do not want to play a timed (real-time) mission, set difficulty to ${timed.3} and communication to ${commText}."
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "timed"
+          },
+          {
+            "func": "SET",
+            "property": "owner"
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "value": "${timed.0}\n${timed.1}p"
+          }
+        ]
+      }
+    ],
+    "editable": true,
+    "special": {
+      "6": "One player has to do all the tasks.\nDiscuss who.",
+      "8": "No player can win 2 more nines than any other player.",
+      "10": "The commander takes all tasks. They may also give them all to one other player of their choice. In the latter case communication is only allowed before the first trick.",
+      "12": "No player may begin any trick with red or black.",
+      "13": "The commander takes all tasks. They may also give them all to one other player of their choice. In the latter case communication is only allowed before the first trick.",
+      "19": "The commander first takes the leftmost most difficult task.",
+      "21": "At no point in the mission may one player have won 2 more cards with value '1' than any other player.",
+      "23": "Communication is not allowed before the first trick. Whoever wins the first trick, has to have won more tricks than any other player at any point in the mission.",
+      "27": "The yellow 5 has to be the last card in the last trick.",
+      "32": "Use these 4 tasks:\n\n0 tricks\nexactly 3 in a row\n2 in a row\nfirst and last"
+    },
+    "text": 1,
+    "textChangeRoutine": [
+      {
+        "func": "CALL",
+        "widget": "b0b2bf3c-50e3-4145-87cf-e9fb106d3981"
+      },
+      {
+        "func": "CALL",
+        "widget": "b0b2bf3c-50e3-4145-87cf-e9fb106d3982"
+      },
+      "var lastMission = ${PROPERTY text} == 32",
+      {
+        "func": "IF",
+        "condition": "${lastMission}",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "cardType",
+            "relation": "in",
+            "value": [
+              "0tricks",
+              "exactly3trickInARow",
+              "2tricksInARow",
+              "firstAndLastTrick"
+            ]
+          },
+          {
+            "func": "SET",
+            "value": "khsx2"
+          },
+          {
+            "func": "FLIP",
+            "face": 1
+          }
+        ]
+      }
+    ],
+    "timed": {
+      "14": [
+        "3:30",
+        1,
+        1,
+        6
+      ],
+      "15": [
+        "3:00",
+        1,
+        2,
+        6
+      ],
+      "16": [
+        "2:30",
+        1,
+        3,
+        6
+      ],
+      "26": [
+        "5:00",
+        2,
+        3,
+        12
+      ]
+    }
+  },
+  "do6v": {
+    "type": "pile",
+    "parent": "khsx",
+    "x": 4,
+    "y": 4,
+    "width": 76,
+    "height": 120,
+    "id": "do6v"
+  },
+  "helpButton": {
+    "type": "button",
+    "id": "helpButton",
+    "x": 1027,
+    "y": 63,
+    "z": 21922,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "helpOverlay"
+      },
+      {
+        "func": "SET",
+        "property": "owner"
+      }
+    ],
+    "css": "background-color: #243a4e88;border-color:white;color:white;",
+    "text": "Help",
+    "height": 60
+  },
+  "helpOverlay": {
+    "id": "helpOverlay",
+    "x": 160,
+    "y": 100,
+    "width": 1280,
+    "height": 800,
+    "css": "border: 5px solid white; border-radius: 50px; background: #172838;",
+    "movable": false,
+    "movableInEdit": false,
+    "layer": 10,
+    "owner": []
+  },
+  "helpTaskDeck": {
+    "type": "deck",
+    "id": "helpTaskDeck",
+    "parent": "helpOverlay",
+    "fixedParent": true,
+    "inheritFrom": "taskDeck",
+    "cardDefaults": {
+      "width": 76,
+      "height": 120,
+      "enlarge": 5,
+      "clickable": false,
+      "fixedParent": true
+    }
+  },
+  "e4yj": {
+    "deck": "helpTaskDeck",
+    "type": "card",
+    "cardType": "black3",
+    "id": "e4yj",
+    "z": 59066,
+    "x": 156,
+    "y": 119,
+    "activeFace": 1,
+    "parent": "helpOverlay",
+    "movable": false
+  },
+  "e5yj": {
+    "deck": "helpTaskDeck",
+    "type": "card",
+    "cardType": "green6",
+    "id": "e5yj",
+    "z": 59068,
+    "x": 204,
+    "y": 128,
+    "activeFace": 1,
+    "parent": "helpOverlay",
+    "movable": false,
+    "rotation": 20
+  },
+  "e6yj": {
+    "deck": "helpTaskDeck",
+    "type": "card",
+    "cardType": "blue2+blue1+blue3",
+    "id": "e6yj",
+    "x": 106,
+    "y": 128,
+    "activeFace": 1,
+    "parent": "helpOverlay",
+    "movable": false,
+    "rotation": -20
+  },
+  "5j18": {
+    "id": "5j18",
+    "parent": "helpOverlay",
+    "text": "A green box with a '6' references that specific card: the green 6. Rockets are black.",
+    "css": "color: white; font-size: 20px; ",
+    "fixedParent": true,
+    "x": 20,
+    "y": 260,
+    "width": 360,
+    "movable": false
+  },
+  "e7yj": {
+    "deck": "helpTaskDeck",
+    "type": "card",
+    "cardType": "no89",
+    "id": "e7yj",
+    "x": 106,
+    "y": 339,
+    "parent": "helpOverlay",
+    "movable": false,
+    "rotation": -20,
+    "activeFace": 1
+  },
+  "helpComm1": {
+    "type": "button",
+    "id": "helpComm1",
+    "y": 119,
+    "inheritFrom": {
+      "v6or": [
+        "resetProperties",
+        "owner"
+      ],
+      "comm1": "*"
+    },
+    "parent": "helpOverlay",
+    "fixedParent": true,
+    "x": 796.5
+  },
+  "5j19": {
+    "id": "5j19",
+    "text": "Everyone may communicate but they cannot indicate whether it's the lowest, highest or only card.\nThe card still has to satisfy one of those criteria though.",
+    "x": 898,
+    "y": 116,
+    "inheritFrom": "5j18",
+    "parent": "helpOverlay"
+  },
+  "5j20": {
+    "id": "5j20",
+    "text": "There are two communication tokens less than players. As long as there's still a token left, anyone can communicate. One player can even take multiple tokens (even at the same time).",
+    "y": 254.66666666666663,
+    "inheritFrom": "5j19",
+    "parent": "helpOverlay"
+  },
+  "helpComm2": {
+    "type": "button",
+    "id": "helpComm2",
+    "y": 257.66666666666663,
+    "inheritFrom": {
+      "v6or": [
+        "resetProperties",
+        "owner"
+      ],
+      "comm2": "*"
+    },
+    "parent": "helpOverlay",
+    "fixedParent": true,
+    "x": 796.5
+  },
+  "5j21": {
+    "id": "5j21",
+    "text": "Grey cards indicate any of the four colors. Black rockets are not included.",
+    "y": 470,
+    "inheritFrom": "5j18",
+    "parent": "helpOverlay"
+  },
+  "helpDiscuss1": {
+    "type": "button",
+    "id": "helpDiscuss1",
+    "parent": "helpOverlay",
+    "x": 796.5,
+    "y": 396.3333333333333,
+    "fixedParent": true,
+    "inheritFrom": {
+      "v6or": [
+        "resetProperties",
+        "owner"
+      ],
+      "discuss1": "*"
+    }
+  },
+  "helpTimed": {
+    "type": "button",
+    "id": "helpTimed",
+    "parent": "helpOverlay",
+    "x": 796.5,
+    "y": 535,
+    "fixedParent": true,
+    "inheritFrom": {
+      "v6or": [
+        "resetProperties",
+        "owner"
+      ],
+      "timed": "*"
+    }
+  },
+  "5j22": {
+    "id": "5j22",
+    "text": "Discuss and distribute the tasks freely among all players.\nThe tasks do not have to be distributed evenly. One player could even take all of them.",
+    "y": 393.3333333333333,
+    "inheritFrom": "5j19",
+    "parent": "helpOverlay"
+  },
+  "5j23": {
+    "id": "5j23",
+    "text": "Mission symbols",
+    "x": 864,
+    "inheritFrom": "5j24",
+    "parent": "helpOverlay"
+  },
+  "5j24": {
+    "id": "5j24",
+    "text": "Task cards",
+    "x": 285,
+    "y": 40,
+    "inheritFrom": "5j18",
+    "parent": "helpOverlay",
+    "z": 21946,
+    "css": "color: white; font-size: 40px; "
+  },
+  "e8yj": {
+    "deck": "helpTaskDeck",
+    "type": "card",
+    "cardType": "2black",
+    "id": "e8yj",
+    "z": 59069,
+    "x": 109,
+    "y": 529,
+    "activeFace": 1,
+    "parent": "helpOverlay",
+    "movable": false
+  },
+  "e9yj": {
+    "deck": "helpTaskDeck",
+    "type": "card",
+    "cardType": "black2",
+    "id": "e9yj",
+    "z": 59054,
+    "x": 196,
+    "y": 534,
+    "activeFace": 1,
+    "parent": "helpOverlay",
+    "movable": false
+  },
+  "e10yj": {
+    "deck": "helpTaskDeck",
+    "type": "card",
+    "cardType": "trickWith5",
+    "id": "e10yj",
+    "x": 154,
+    "y": 330,
+    "parent": "helpOverlay",
+    "movable": false,
+    "activeFace": 1,
+    "z": 59061
+  },
+  "e11yj": {
+    "deck": "helpTaskDeck",
+    "type": "card",
+    "cardType": "no1",
+    "id": "e11yj",
+    "x": 204,
+    "y": 338,
+    "parent": "helpOverlay",
+    "movable": false,
+    "rotation": 20,
+    "activeFace": 1,
+    "z": 59065
+  },
+  "5j25": {
+    "id": "5j25",
+    "text": "Winning only certain trump cards is impossible if one player has all of them. These cards contain footnotes that tell you for which constellations you have to re-deal the cards.",
+    "y": 656,
+    "inheritFrom": "5j18",
+    "parent": "helpOverlay"
+  },
+  "e12yj": {
+    "deck": "helpTaskDeck",
+    "type": "card",
+    "cardType": "noGreen",
+    "id": "e12yj",
+    "activeFace": 1,
+    "parent": "helpOverlay",
+    "movable": false,
+    "rotation": -20,
+    "y": 128,
+    "x": 469
+  },
+  "e13yj": {
+    "deck": "helpTaskDeck",
+    "type": "card",
+    "cardType": "2blue",
+    "id": "e13yj",
+    "z": 59033,
+    "activeFace": 1,
+    "parent": "helpOverlay",
+    "movable": false,
+    "x": 518,
+    "y": 119
+  },
+  "e14yj": {
+    "deck": "helpTaskDeck",
+    "type": "card",
+    "cardType": "equalRedBlueInTrick",
+    "id": "e14yj",
+    "z": 59072,
+    "x": 567,
+    "y": 128,
+    "activeFace": 1,
+    "parent": "helpOverlay",
+    "movable": false,
+    "rotation": 20
+  },
+  "e15yj": {
+    "deck": "helpTaskDeck",
+    "type": "card",
+    "cardType": "trickWith5",
+    "id": "e15yj",
+    "x": 472,
+    "y": 338,
+    "activeFace": 1,
+    "parent": "helpOverlay",
+    "movable": false,
+    "rotation": -20
+  },
+  "e16yj": {
+    "deck": "helpTaskDeck",
+    "type": "card",
+    "cardType": "green9WithBlack",
+    "id": "e16yj",
+    "z": 59042,
+    "x": 519,
+    "y": 330,
+    "activeFace": 1,
+    "parent": "helpOverlay",
+    "movable": false
+  },
+  "e17yj": {
+    "deck": "helpTaskDeck",
+    "type": "card",
+    "cardType": "exactlyXtrickSecret",
+    "id": "e17yj",
+    "z": 59058,
+    "x": 563,
+    "y": 533,
+    "activeFace": 1,
+    "parent": "helpOverlay",
+    "movable": false
+  },
+  "e18yj": {
+    "deck": "helpTaskDeck",
+    "type": "card",
+    "cardType": "noLeadRedYellowBlue",
+    "id": "e18yj",
+    "z": 59074,
+    "x": 567,
+    "y": 339,
+    "activeFace": 1,
+    "parent": "helpOverlay",
+    "movable": false,
+    "rotation": 20
+  },
+  "e19yj": {
+    "deck": "helpTaskDeck",
+    "type": "card",
+    "cardType": "exactlyXtrick",
+    "id": "e19yj",
+    "z": 59070,
+    "x": 475,
+    "y": 527,
+    "activeFace": 1,
+    "parent": "helpOverlay",
+    "movable": false
+  },
+  "5j26": {
+    "id": "5j26",
+    "text": "Some tasks require you to win or begin a trick by playing a specific card.",
+    "inheritFrom": {
+      "5j27": "x",
+      "5j21": "*"
+    },
+    "parent": "helpOverlay"
+  },
+  "5j27": {
+    "id": "5j27",
+    "text": "Boxes that don't show a number are any or multiple cards of the shown color.",
+    "inheritFrom": "5j18",
+    "x": 401,
+    "parent": "helpOverlay",
+    "activeFace": 0
+  },
+  "5j28": {
+    "id": "5j28",
+    "text": "For predicting tricks, please use the button 'Predict'. Privately predicted tricks will be revealed after pressing a 'Take' button on the last trick.",
+    "inheritFrom": {
+      "5j27": "x",
+      "5j25": "*"
+    },
+    "parent": "helpOverlay"
+  },
+  "5j29": {
+    "id": "5j29",
+    "text": "Four missions have a time limit.\nThe commander asks each player in turn. The first player to answer 'Yes' takes all tasks (the commander is last and has no choice).\nFor '2p' it continues until a second player says 'Yes' (last 2 have no choice). They then discuss and distribute the tasks.\nUse the button 'Timer' before the first trick and any communication.",
+    "y": 532,
+    "inheritFrom": "5j19",
+    "parent": "helpOverlay",
+    "activeFace": 0
+  },
+  "helpOverlayCloseCover": {
+    "id": "helpOverlayCloseCover",
+    "x": -165,
+    "y": -105,
+    "width": 1680,
+    "layer": 10,
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "helpOverlay"
+      },
+      {
+        "func": "SET",
+        "property": "owner",
+        "value": []
+      }
+    ],
+    "parent": "helpOverlay",
+    "height": 1000
+  },
+  "v0uj": {
+    "type": "pile",
+    "parent": "Player Plie 1",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "v0uj"
+  },
+  "8syk": {
+    "type": "pile",
+    "parent": "Player Plie 2",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "8syk"
+  },
+  "0g6r": {
+    "type": "pile",
+    "parent": "Player Plie 3",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "0g6r"
+  },
+  "gj3y": {
+    "type": "pile",
+    "parent": "Player Plie 4",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "gj3y"
+  }
+}

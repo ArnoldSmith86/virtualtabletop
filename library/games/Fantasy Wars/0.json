@@ -1,0 +1,3854 @@
+{
+  "3961": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Fenix",
+    "id": "3961",
+    "z": 24318,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "4994": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "General",
+    "id": "4994",
+    "z": 24319,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "6899": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Board",
+    "id": "6899",
+    "z": 1247,
+    "x": 740,
+    "y": 338.12
+  },
+  "bdpo": {
+    "type": "deck",
+    "x": 756,
+    "y": 456,
+    "cardTypes": {
+      "Board": {
+        "image": "/assets/1812012446_470",
+        "Raven": "/assets/1812012446_470",
+        "Wolf": "/assets/1812012446_470"
+      },
+      "Base": {
+        "image": "/assets/-567136334_22811",
+        "Raven": "/assets/1155796204_2174",
+        "Wolf": "/assets/-83813443_2757"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 120,
+            "height": 103.92,
+            "valueType": "dynamic",
+            "value": "image",
+            "color": "transparent"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 120,
+            "height": 103.92,
+            "valueType": "dynamic",
+            "value": "Raven",
+            "color": "transparent"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 120,
+            "height": 103.92,
+            "valueType": "dynamic",
+            "value": "Wolf",
+            "color": "transparent"
+          }
+        ]
+      }
+    ],
+    "z": 13007,
+    "cardDefaults": {
+      "pilesWith": {
+        "deck": "bdpo"
+      },
+      "width": 120,
+      "height": 103.92,
+      "shift": "yes",
+      "grid": [
+        {
+          "x": 186,
+          "y": 109.92,
+          "offsetX": -4,
+          "offsetY": 8.36
+        },
+        {
+          "x": 186,
+          "y": 109.92,
+          "offsetX": 89,
+          "offsetY": 63.32
+        }
+      ],
+      "layer": -3,
+      "movableInEdit": false,
+      "movable": false
+    },
+    "id": "bdpo"
+  },
+  "w6yl": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Base",
+    "id": "w6yl",
+    "z": 1279,
+    "x": 833,
+    "y": 722.84,
+    "base": "Wolf",
+    "activeFace": 2
+  },
+  "ccf9": {
+    "image": "/assets/-157838634_610437",
+    "movable": false,
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "id": "ccf9",
+    "z": 2,
+    "movableInEdit": false
+  },
+  "sym9": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Board",
+    "id": "sym9",
+    "z": 1290,
+    "x": 647,
+    "y": 283.15999999999997
+  },
+  "cqup": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Board",
+    "id": "cqup",
+    "z": 1289,
+    "x": 554,
+    "y": 228.2
+  },
+  "5gyr": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Board",
+    "id": "5gyr",
+    "z": 1288,
+    "x": 740,
+    "y": 118.28
+  },
+  "cjef": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Board",
+    "id": "cjef",
+    "z": 1287,
+    "x": 833,
+    "y": 173.24
+  },
+  "kbj9": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Board",
+    "id": "kbj9",
+    "z": 1284,
+    "x": 926,
+    "y": 338.12
+  },
+  "hys0": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Board",
+    "id": "hys0",
+    "z": 1283,
+    "x": 1019,
+    "y": 283.15999999999997
+  },
+  "rv8l": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Board",
+    "id": "rv8l",
+    "z": 1275,
+    "x": 1019,
+    "y": 612.9200000000001
+  },
+  "05uf": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Board",
+    "id": "05uf",
+    "z": 1276,
+    "x": 926,
+    "y": 667.8800000000001
+  },
+  "guig": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Board",
+    "id": "guig",
+    "z": 1278,
+    "x": 926,
+    "y": 448.03999999999996
+  },
+  "4vkq": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Board",
+    "id": "4vkq",
+    "z": 1277,
+    "x": 1019,
+    "y": 503
+  },
+  "dus8": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Board",
+    "id": "dus8",
+    "z": 1231,
+    "x": 740,
+    "y": 777.8000000000001
+  },
+  "tld7": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Board",
+    "id": "tld7",
+    "z": 1230,
+    "x": 647,
+    "y": 722.84
+  },
+  "5w3u": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Board",
+    "id": "5w3u",
+    "z": 1229,
+    "x": 740,
+    "y": 667.8800000000001
+  },
+  "vnvj": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Board",
+    "id": "vnvj",
+    "z": 1299,
+    "x": 833,
+    "y": 283.15999999999997
+  },
+  "nwvc": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Board",
+    "id": "nwvc",
+    "z": 1227,
+    "x": 461,
+    "y": 612.9200000000001
+  },
+  "v8p6": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Board",
+    "id": "v8p6",
+    "z": 1296,
+    "x": 461,
+    "y": 283.15999999999997
+  },
+  "q5qw": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Board",
+    "id": "q5qw",
+    "z": 1225,
+    "x": 461,
+    "y": 393.08
+  },
+  "z949": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Board",
+    "id": "z949",
+    "z": 1224,
+    "x": 554,
+    "y": 448.03999999999996
+  },
+  "uqan": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Board",
+    "id": "uqan",
+    "z": 1294,
+    "x": 740,
+    "y": 448.03999999999996
+  },
+  "s7h5": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Board",
+    "id": "s7h5",
+    "z": 1222,
+    "x": 647,
+    "y": 612.9200000000001
+  },
+  "p24x": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Board",
+    "id": "p24x",
+    "z": 1301,
+    "x": 740,
+    "y": 228.2
+  },
+  "b6ei": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Board",
+    "id": "b6ei",
+    "z": 1220,
+    "x": 554,
+    "y": 557.96
+  },
+  "27w4": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Board",
+    "id": "27w4",
+    "z": 1219,
+    "x": 647,
+    "y": 393.08
+  },
+  "vj9g": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Base",
+    "id": "vj9g",
+    "z": 1281,
+    "x": 1019,
+    "y": 393.08
+  },
+  "h41k": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Base",
+    "id": "h41k",
+    "z": 1291,
+    "x": 647,
+    "y": 173.24,
+    "base": "Raven",
+    "activeFace": 1
+  },
+  "02v3": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Base",
+    "id": "02v3",
+    "z": 1280,
+    "x": 926,
+    "y": 557.96
+  },
+  "yaj6": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Base",
+    "id": "yaj6",
+    "z": 1285,
+    "x": 926,
+    "y": 228.2,
+    "base": "Raven",
+    "activeFace": 1
+  },
+  "v22g": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Base",
+    "id": "v22g",
+    "z": 1298,
+    "x": 833,
+    "y": 393.08
+  },
+  "ggrl": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Base",
+    "id": "ggrl",
+    "z": 1302,
+    "x": 647,
+    "y": 503
+  },
+  "3asy": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Base",
+    "id": "3asy",
+    "z": 1295,
+    "x": 461,
+    "y": 503.00000000000006
+  },
+  "nwum": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Base",
+    "id": "nwum",
+    "z": 1300,
+    "x": 554,
+    "y": 667.8800000000001,
+    "base": "Wolf",
+    "activeFace": 2
+  },
+  "x8f7": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Base",
+    "id": "x8f7",
+    "z": 1297,
+    "x": 554,
+    "y": 338.12
+  },
+  "in9i": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Board",
+    "id": "in9i",
+    "z": 1204,
+    "x": 833,
+    "y": 503.00000000000006
+  },
+  "wedf": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Board",
+    "id": "wedf",
+    "z": 1203,
+    "x": 740,
+    "y": 557.96
+  },
+  "dye5": {
+    "deck": "bdpo",
+    "type": "card",
+    "cardType": "Board",
+    "id": "dye5",
+    "z": 1202,
+    "x": 833,
+    "y": 612.9200000000001
+  },
+  "prym": {
+    "type": "deck",
+    "x": 977,
+    "y": 3,
+    "cardTypes": {
+      "Wizard": {
+        "image": "/assets/-1697211857_10577"
+      },
+      "Mounted Knight": {
+        "image": "/assets/208115964_5891"
+      },
+      "Golen": {
+        "image": "/assets/-2037382957_2560"
+      },
+      "Fenix": {
+        "image": "/assets/771751108_6461"
+      },
+      "Unicorn": {
+        "image": "/assets/-1123154362_3916"
+      },
+      "Pegasus": {
+        "image": "/assets/-1670356561_2863"
+      },
+      "Necromancer": {
+        "image": "/assets/-880940607_3815"
+      },
+      "General": {
+        "image": "/assets/-5735833_2285"
+      },
+      "Soldier": {
+        "image": "/assets/-363444763_3491"
+      },
+      "Griffin": {
+        "image": "/assets/-52886148_3910"
+      },
+      "Archer": {
+        "image": "/assets/1711009953_4303"
+      },
+      "Centaur": {
+        "image": "/assets/1285392078_3200"
+      },
+      "Gargoyle": {
+        "image": "/assets/386981149_5441"
+      },
+      "Minion": {
+        "image": "/assets/-1384472666_2692"
+      },
+      "Giant": {
+        "image": "/assets/1247166456_6960"
+      },
+      "Minotaur": {
+        "image": "/assets/-58591872_2532"
+      },
+      "Wolf": {
+        "image": "/assets/-1132078393_2467"
+      },
+      "Raven": {
+        "image": "/assets/1415421581_1884"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": 50,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 91.92,
+            "height": 91.92,
+            "valueType": "dynamic",
+            "value": "image",
+            "color": "transparent"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": 50,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 91.92,
+            "height": 91.92,
+            "valueType": "static",
+            "value": "/assets/86759948_22476",
+            "color": "transparent"
+          }
+        ]
+      }
+    ],
+    "z": 13268,
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 91.92,
+      "height": 91.92,
+      "css": "border-radius:50%;",
+      "shift": "yes",
+      "grid": [
+        {
+          "x": 186,
+          "y": 109.92,
+          "offsetX": 10.04,
+          "offsetY": 14.36,
+          "maxX": 1079,
+          "minX": 470,
+          "maxY": 665,
+          "minY": 285,
+          "player": null
+        },
+        {
+          "x": 186,
+          "y": 109.92,
+          "offsetX": 103.04,
+          "offsetY": 69.32,
+          "maxX": 986,
+          "minX": 563,
+          "maxY": 719,
+          "minY": 229,
+          "player": null
+        },
+        {
+          "x": 186,
+          "y": 109.92,
+          "offsetX": 10.04,
+          "offsetY": 14.36,
+          "maxX": 893,
+          "minX": 653,
+          "maxY": 775,
+          "minY": 174,
+          "player": null
+        },
+        {
+          "x": 186,
+          "y": 109.92,
+          "offsetX": 103.04,
+          "offsetY": 69.32,
+          "maxX": 800,
+          "minX": 745,
+          "maxY": 829,
+          "minY": 119,
+          "player": null
+        }
+      ]
+    },
+    "id": "prym"
+  },
+  "x4yi": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Wizard",
+    "id": "x4yi",
+    "z": 24320,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "1oeg": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Mounted Knight",
+    "id": "1oeg",
+    "z": 24321,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "wth1": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Golen",
+    "id": "wth1",
+    "z": 24322,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "o2l4": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Unicorn",
+    "id": "o2l4",
+    "z": 24323,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "6svl": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Pegasus",
+    "id": "6svl",
+    "z": 24324,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "5rr0": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Necromancer",
+    "id": "5rr0",
+    "z": 24325,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "fp2t": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "General",
+    "id": "fp2t",
+    "z": 24326,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "4fcc": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Minotaur",
+    "id": "4fcc",
+    "z": 24327,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "wset": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Soldier",
+    "id": "wset",
+    "z": 24328,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "506x": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Griffin",
+    "id": "506x",
+    "z": 24329,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "yr52": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Archer",
+    "id": "yr52",
+    "z": 24330,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "yvkw": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Centaur",
+    "id": "yvkw",
+    "z": 24331,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "bw1s": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Gargoyle",
+    "id": "bw1s",
+    "z": 24332,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "n3y6": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Minion",
+    "id": "n3y6",
+    "z": 24333,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "h1j9": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Giant",
+    "id": "h1j9",
+    "z": 24334,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "nj3c": {
+    "type": "deck",
+    "x": 539,
+    "cardTypes": {
+      "Wizard": {
+        "image": "/assets/-1697211857_10577",
+        "Name": "Wizard",
+        "P1 T": "Passive:",
+        "P1 L1": "Discard 1 upgrade to move 1 extra tile.",
+        "P1 L2": "",
+        "P1 L3": "",
+        "P2 T": "",
+        "P2 L1": "",
+        "P2 L2": "(using giant eagles)",
+        "Count": "5"
+      },
+      "Mounted Knight": {
+        "image": "/assets/208115964_5891",
+        "Name": "Horseman",
+        "P1 T": "Active:",
+        "P1 L1": "Move up to 2 tiles and attack in a straight line.",
+        "P1 L2": "",
+        "P1 L3": "",
+        "P2 T": "",
+        "P2 L1": "",
+        "P2 L2": "",
+        "Count": "4"
+      },
+      "Golen": {
+        "image": "/assets/-2037382957_2560",
+        "Name": "Golem",
+        "P1 T": "Passive:",
+        "P1 L1": "Can be summoned near any friendly troop.",
+        "P1 L2": "",
+        "P1 L3": "",
+        "P2 T": "",
+        "P2 L1": "",
+        "P2 L2": "",
+        "Count": "5"
+      },
+      "Fenix": {
+        "image": "/assets/771751108_6461",
+        "Name": "Phoenix",
+        "P1 T": "Passive:",
+        "P1 L1": "When killed, can be resurrected using 1 coin from the supply.",
+        "P1 L2": "",
+        "P1 L3": "",
+        "P2 T": "Active:",
+        "P2 L1": "Fly 2 tiles to defend one of your bases.",
+        "P2 L2": "",
+        "Count": "5"
+      },
+      "Unicorn": {
+        "image": "/assets/-1123154362_3916",
+        "Name": "Unicorn",
+        "P1 T": "Active:",
+        "P1 L1": "Move 1 tile and attack.",
+        "P1 L2": "",
+        "P1 L3": "",
+        "P2 T": "",
+        "P2 L1": "",
+        "P2 L2": "",
+        "Count": "4"
+      },
+      "Pegasus": {
+        "image": "/assets/-1670356561_2863",
+        "Name": "Pegasus",
+        "P1 T": "Active:",
+        "P1 L1": "Move two tiles.",
+        "P1 L2": "",
+        "P1 L3": "",
+        "P2 T": "",
+        "P2 L1": "",
+        "P2 L2": "",
+        "Count": "5"
+      },
+      "Necromancer": {
+        "image": "/assets/-880940607_3815",
+        "Name": "Necromancer",
+        "P1 T": "Passive:",
+        "P1 L1": "After attacking or conquering base tile, draw 1 coin and use it immediately.",
+        "P1 L2": "",
+        "P1 L3": "",
+        "P2 T": "",
+        "P2 L1": "",
+        "P2 L2": "",
+        "Count": "4"
+      },
+      "General": {
+        "image": "/assets/-5735833_2285",
+        "Name": "General",
+        "P1 T": "Active:",
+        "P1 L1": "Uses your coin to activate any friendly troop up to 2 tiles away from you.",
+        "P1 L2": "",
+        "P1 L3": "",
+        "P2 T": "",
+        "P2 L1": "",
+        "P2 L2": "",
+        "Count": "5"
+      },
+      "Soldier": {
+        "image": "/assets/-363444763_3491",
+        "Name": "Soldier",
+        "P1 T": "Active:",
+        "P1 L1": "Attack and move 1 tile",
+        "P1 L2": "",
+        "P1 L3": "",
+        "P2 T": "",
+        "P2 L1": "",
+        "P2 L2": "",
+        "Count": "5"
+      },
+      "Griffin": {
+        "image": "/assets/-52886148_3910",
+        "Name": "Griffin",
+        "P1 T": "Active:",
+        "P1 L1": "Grab 1 friendly troop up to 2 tiles away and move it one tile keeping it 2 spaces from",
+        "P1 L2": "",
+        "P1 L3": "",
+        "P2 T": "",
+        "P2 L1": "",
+        "P2 L2": "",
+        "Count": "5"
+      },
+      "Archer": {
+        "image": "/assets/1711009953_4303",
+        "Name": "Archer",
+        "P1 T": "Active:",
+        "P1 L1": "Attack any troop 2 tiles away.",
+        "P1 L2": "",
+        "P1 L3": "",
+        "P2 T": "Passive:",
+        "P2 L1": "Cannot attack adjacent tiles.",
+        "P2 L2": "",
+        "Count": "4"
+      },
+      "Centaur": {
+        "image": "/assets/1285392078_3200",
+        "Name": "Centaur",
+        "P1 T": "Active:",
+        "P1 L1": "Attack the first troop up to 2 tiles away in a straight line.",
+        "P1 L2": "",
+        "P1 L3": "",
+        "P2 T": "Passive:",
+        "P2 L1": "Can attack adjacent tiles using horse legs.",
+        "P2 L2": "",
+        "Count": "5"
+      },
+      "Gargoyle": {
+        "image": "/assets/386981149_5441",
+        "Name": "Gargoyle",
+        "P1 T": "Passive:",
+        "P1 L1": "When placed can move 1 tile.",
+        "P1 L2": "",
+        "P1 L3": "",
+        "P2 T": "",
+        "P2 L1": "",
+        "P2 L2": "",
+        "Count": "5"
+      },
+      "Minion": {
+        "image": "/assets/-1384472666_2692",
+        "Name": "Minion",
+        "P1 T": "Passive:",
+        "P1 L1": "Up to 2 minions can exist on the board at the same time.",
+        "P1 L2": "",
+        "P1 L3": "",
+        "P2 T": "Active:",
+        "P2 L1": "Move all minions on the board",
+        "P2 L2": "",
+        "Count": "5"
+      },
+      "Giant": {
+        "image": "/assets/1247166456_6960",
+        "Name": "Giant",
+        "P1 T": "Passive:",
+        "P1 L1": "Can only be damaged by upgraded troops.",
+        "P1 L2": "",
+        "P1 L3": "",
+        "P2 T": "",
+        "P2 L1": "",
+        "P2 L2": "",
+        "Count": "4"
+      },
+      "Minotaur": {
+        "image": "/assets/-58591872_2532",
+        "Name": "Minotaur",
+        "P1 T": "Passive:",
+        "P1 L1": "When attacked in close combat, retaliates with one damage.",
+        "P1 L2": "",
+        "P1 L3": "",
+        "P2 T": "",
+        "P2 L1": "",
+        "P2 L2": "",
+        "Count": "4"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": true,
+        "radius": 5,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 152,
+            "height": 202,
+            "valueType": "static",
+            "value": "/assets/-2056612037_1342",
+            "color": "transparent"
+          },
+          {
+            "type": "image",
+            "x": 2,
+            "y": 4,
+            "width": 52,
+            "height": 52,
+            "valueType": "dynamic",
+            "value": "image",
+            "color": "transparent"
+          },
+          {
+            "type": "text",
+            "x": 58,
+            "y": 18,
+            "fontSize": "14",
+            "valueType": "dynamic",
+            "value": "Name",
+            "textAlign": "left",
+            "textFont": null,
+            "color": "#ffffff",
+            "width": 87
+          },
+          {
+            "type": "text",
+            "x": 16.8,
+            "y": 54,
+            "fontSize": "14",
+            "valueType": "dynamic",
+            "value": "Count",
+            "textAlign": "center",
+            "textFont": null,
+            "color": "#ffffff",
+            "width": 20
+          },
+          {
+            "type": "text",
+            "x": 15,
+            "y": 87,
+            "fontSize": "14",
+            "valueType": "dynamic",
+            "value": "P1 T",
+            "textAlign": "left",
+            "textFont": null,
+            "color": "#3a3b3e",
+            "width": 118
+          },
+          {
+            "type": "text",
+            "x": 17,
+            "y": 103,
+            "fontSize": "12",
+            "valueType": "dynamic",
+            "value": "P1 L1",
+            "textAlign": "left",
+            "textFont": null,
+            "color": "#3a3b3e",
+            "width": 118
+          },
+          {
+            "type": "text",
+            "x": 15,
+            "y": 145,
+            "fontSize": "14",
+            "valueType": "dynamic",
+            "value": "P2 T",
+            "textAlign": "left",
+            "textFont": null,
+            "color": "#3a3b3e",
+            "width": 118
+          },
+          {
+            "type": "text",
+            "x": 17,
+            "y": 161,
+            "fontSize": "12",
+            "valueType": "dynamic",
+            "value": "P2 L1",
+            "textAlign": "left",
+            "textFont": null,
+            "color": "#3a3b3e",
+            "width": 118
+          }
+        ]
+      }
+    ],
+    "z": 13269,
+    "cardDefaults": {
+      "pilesWith": {
+        "deck": "nj3c"
+      },
+      "width": 150,
+      "height": 200,
+      "css": "border:1px solid #333;border-radius:5px",
+      "shift": "yes",
+      "enlarge": 4.5,
+      "layer": 9,
+      "scale": 1
+    },
+    "id": "nj3c",
+    "y": -10
+  },
+  "ngxv": {
+    "image": "/assets/-2056612037_1342",
+    "id": "ngxv",
+    "z": 18,
+    "x": 481,
+    "y": -151
+  },
+  "1ue9": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Wizard",
+    "id": "1ue9",
+    "z": 24335,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "dcqo": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Wizard",
+    "id": "dcqo",
+    "z": 24336,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "6ep3": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Wizard",
+    "id": "6ep3",
+    "z": 24337,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "bozh": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Wizard",
+    "id": "bozh",
+    "z": 24338,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "hdle": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Mounted Knight",
+    "id": "hdle",
+    "z": 24339,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "9xob": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Mounted Knight",
+    "id": "9xob",
+    "z": 24340,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "k1zm": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Mounted Knight",
+    "id": "k1zm",
+    "z": 24341,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "w08s": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Golen",
+    "id": "w08s",
+    "z": 24342,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "t011": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Golen",
+    "id": "t011",
+    "z": 24343,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "0rmq": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Golen",
+    "id": "0rmq",
+    "z": 24344,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "6d5h": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Golen",
+    "id": "6d5h",
+    "z": 24345,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "aouv": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Fenix",
+    "id": "aouv",
+    "z": 24346,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "xy0c": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Fenix",
+    "id": "xy0c",
+    "z": 24347,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "9cgy": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Fenix",
+    "id": "9cgy",
+    "z": 24348,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "9bkr": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Fenix",
+    "id": "9bkr",
+    "z": 24349,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "ao7j": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Unicorn",
+    "id": "ao7j",
+    "z": 24350,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "aguq": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Unicorn",
+    "id": "aguq",
+    "z": 24351,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "t96o": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Unicorn",
+    "id": "t96o",
+    "z": 24352,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "y79p": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Pegasus",
+    "id": "y79p",
+    "z": 24353,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "l7qg": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Pegasus",
+    "id": "l7qg",
+    "z": 24354,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "v9ia": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Pegasus",
+    "id": "v9ia",
+    "z": 24355,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "h567": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Pegasus",
+    "id": "h567",
+    "z": 24356,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "6q1z": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Necromancer",
+    "id": "6q1z",
+    "z": 24357,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "m5l5": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Necromancer",
+    "id": "m5l5",
+    "z": 24358,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "b896": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Necromancer",
+    "id": "b896",
+    "z": 24359,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "u69w": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "General",
+    "id": "u69w",
+    "z": 24360,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "4xyb": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "General",
+    "id": "4xyb",
+    "z": 24361,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "8wq6": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "General",
+    "id": "8wq6",
+    "z": 24362,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "r84l": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Soldier",
+    "id": "r84l",
+    "z": 24363,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "m6bb": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Soldier",
+    "id": "m6bb",
+    "z": 24364,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "thls": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Soldier",
+    "id": "thls",
+    "z": 24365,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "7fuk": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Soldier",
+    "id": "7fuk",
+    "z": 24366,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "wisn": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Griffin",
+    "id": "wisn",
+    "z": 24367,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "a4w5": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Griffin",
+    "id": "a4w5",
+    "z": 24368,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "qe4w": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Griffin",
+    "id": "qe4w",
+    "z": 24369,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "e8th": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Griffin",
+    "id": "e8th",
+    "z": 24370,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "9t5u": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Archer",
+    "id": "9t5u",
+    "z": 24371,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "xvk5": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Archer",
+    "id": "xvk5",
+    "z": 24372,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "awbq": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Archer",
+    "id": "awbq",
+    "z": 24373,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "k684": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Centaur",
+    "id": "k684",
+    "z": 24374,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "7xlx": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Centaur",
+    "id": "7xlx",
+    "z": 24375,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "umx7": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Centaur",
+    "id": "umx7",
+    "z": 24376,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "6ii7": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Centaur",
+    "id": "6ii7",
+    "z": 24377,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "4qz4": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Gargoyle",
+    "id": "4qz4",
+    "z": 24378,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "sz9c": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Gargoyle",
+    "id": "sz9c",
+    "z": 24379,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "q6q3": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Gargoyle",
+    "id": "q6q3",
+    "z": 24380,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "ah5e": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Gargoyle",
+    "id": "ah5e",
+    "z": 24381,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "1c0p": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Minion",
+    "id": "1c0p",
+    "z": 24382,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "lkhk": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Minion",
+    "id": "lkhk",
+    "z": 24383,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "k3xy": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Minion",
+    "id": "k3xy",
+    "z": 24384,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "2zh8": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Minion",
+    "id": "2zh8",
+    "z": 24385,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "09mt": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Giant",
+    "id": "09mt",
+    "z": 24386,
+    "parent": "nuve",
+    "activeface": 1,
+    "activeFace": 1
+  },
+  "zo7j": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Giant",
+    "id": "zo7j",
+    "z": 24387,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "ur46": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Giant",
+    "id": "ur46",
+    "z": 24388,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "5mk1": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Minotaur",
+    "id": "5mk1",
+    "z": 24389,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "scea": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Minotaur",
+    "id": "scea",
+    "z": 24390,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "be07": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Minotaur",
+    "id": "be07",
+    "z": 24391,
+    "parent": "nuve",
+    "activeFace": 1
+  },
+  "n9fs": {
+    "id": "n9fs",
+    "z": 39,
+    "x": 1015,
+    "width": 120,
+    "height": 120,
+    "faces": [
+      {
+        "image": "/assets/-1132078393_2467"
+      },
+      {
+        "image": "/assets/1415421581_1884"
+      }
+    ],
+    "y": 45
+  },
+  "p1c2T": {
+    "type": "holder",
+    "x": 150,
+    "id": "p1c2T",
+    "width": 99.92,
+    "height": 99.92,
+    "y": 257.04,
+    "css": "background:#00000000; border-color:#00000050;border-radius:50%;",
+    "dropTarget": {
+      "deck": "prym"
+    },
+    "z": 1136,
+    "onEnter": {
+      "player": "p1",
+      "activeFace": 0
+    }
+  },
+  "p1c3T": {
+    "type": "holder",
+    "x": 150,
+    "id": "p1c3T",
+    "width": 99.92,
+    "height": 99.92,
+    "y": 465.04,
+    "css": "background:#00000000; border-color:#00000050;border-radius:50%;",
+    "dropTarget": {
+      "deck": "prym"
+    },
+    "z": 1137,
+    "onEnter": {
+      "player": "p1",
+      "activeFace": 0
+    }
+  },
+  "l7x1-copy012-copy014": {
+    "type": "holder",
+    "x": 1627,
+    "id": "l7x1-copy012-copy014",
+    "width": 99.92,
+    "height": 99.92,
+    "y": 1060,
+    "css": "background:#00000000; border-color:#00000050;border-radius:50%;",
+    "dropTarget": {
+      "deck": "prym"
+    },
+    "z": 1149
+  },
+  "hj5f": {
+    "type": "button",
+    "text": "Menu",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "menuBackground"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 0
+      }
+    ],
+    "x": 760,
+    "y": 32,
+    "z": 5,
+    "id": "hj5f",
+    "css": "--wcBorder: #616374; --wcMain:#838796; --wcFont: #3d3e49; --wcFontOH: #212127; font-size:150%; border-radius: 10px; border-width: 3px 0 8px 0; border-color: #838796 #000 #616374 #000;",
+    "height": 40,
+    "movableInEdit": false
+  },
+  "mainHolder": {
+    "type": "holder",
+    "id": "mainHolder",
+    "x": 631,
+    "y": -220,
+    "width": 158,
+    "height": 208,
+    "layer": 9,
+    "z": 1344,
+    "css": "background:#00000000; border-color:#00000050;",
+    "dropTarget": {
+      "deck": "nj3c"
+    }
+  },
+  "mainHolderToken": {
+    "type": "holder",
+    "id": "mainHolderToken",
+    "x": 750,
+    "y": -74.94,
+    "width": 99.92,
+    "height": 99.92,
+    "z": 1304,
+    "css": "background:#00000000; border-color:#00000050;border-radius:50%;",
+    "dropTarget": {
+      "deck": "prym"
+    },
+    "onEnter": {
+      "player": null,
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "movableInEdit": false
+  },
+  "p1c1": {
+    "type": "holder",
+    "id": "p1c1",
+    "x": -2.5,
+    "y": -5,
+    "width": 158,
+    "height": 208,
+    "rotation": 0,
+    "layer": 9,
+    "z": 744,
+    "css": "background-color: #00000030; border-color:#00000050;",
+    "dropTarget": {
+      "deck": "nj3c"
+    },
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "cardType",
+        "variable": "cardType"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "prym"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "cardType",
+        "value": "${cardType}"
+      },
+      "var tokenHolder = ${thisID} + 'T'",
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "${tokenHolder}"
+      }
+    ],
+    "scale": 0.9
+  },
+  "p1c2": {
+    "type": "holder",
+    "id": "p1c2",
+    "x": -2.5,
+    "y": 203,
+    "width": 158,
+    "height": 208,
+    "rotation": 0,
+    "layer": 9,
+    "z": 830,
+    "css": "background-color: #00000030; border-color:#00000050;",
+    "dropTarget": {
+      "deck": "nj3c"
+    },
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "cardType",
+        "variable": "cardType"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "prym"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "cardType",
+        "value": "${cardType}"
+      },
+      "var tokenHolder = ${thisID} + 'T'",
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "${tokenHolder}"
+      }
+    ],
+    "scale": 0.9
+  },
+  "p1c3": {
+    "type": "holder",
+    "id": "p1c3",
+    "x": -2.5,
+    "y": 411,
+    "width": 158,
+    "height": 208,
+    "rotation": 0,
+    "layer": 9,
+    "z": 820,
+    "css": "background-color: #00000030; border-color:#00000050;",
+    "dropTarget": {
+      "deck": "nj3c"
+    },
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "cardType",
+        "variable": "cardType"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "prym"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "cardType",
+        "value": "${cardType}"
+      },
+      "var tokenHolder = ${thisID} + 'T'",
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "${tokenHolder}"
+      }
+    ],
+    "scale": 0.9
+  },
+  "nuve": {
+    "type": "pile",
+    "width": 91.92,
+    "height": 91.92,
+    "id": "nuve",
+    "z": 22434,
+    "parent": "mainHolderToken"
+  },
+  "p1c1T": {
+    "type": "holder",
+    "id": "p1c1T",
+    "x": 150,
+    "y": 49.04,
+    "width": 99.92,
+    "height": 99.92,
+    "z": 1306,
+    "css": "background: #0000; border-color:#00000050;border-radius:50%;",
+    "dropTarget": {
+      "deck": "prym"
+    },
+    "onEnter": {
+      "player": "p1",
+      "activeFace": 0
+    }
+  },
+  "cardsPile": {
+    "type": "holder",
+    "x": 660,
+    "y": 906,
+    "z": 1150,
+    "id": "cardsPile",
+    "width": 280,
+    "height": 94,
+    "stackOffsetX": 91.92,
+    "dropOffsetX": 2.12,
+    "dropOffsetY": 1.04,
+    "css": "border-color:#00000050; border-radius:8000px;background-color:#00000050",
+    "childrenPerOwner": true,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "onLeave": {
+      "activeFace": 1
+    }
+  },
+  "zoqb": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "player",
+        "value": "p1"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": null,
+        "source": "DEFAULT"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "bagP1"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "bagP1"
+      }
+    ],
+    "x": 125.5,
+    "z": 9,
+    "id": "zoqb",
+    "css": "--wcBorder: #616374; --wcMain:#838796; --wcFont: #3d3e49; --wcFontOH: #212127; font-size:150%; border-radius: 10px; border-width: 3px 0 8px 0; border-color: #838796 #000 #616374 #000;",
+    "height": 40,
+    "y": 915.04,
+    "text": "Refill",
+    "movableInEdit": false
+  },
+  "jbdq": {
+    "type": "button",
+    "text": "Refill",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "player",
+        "value": "p2"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": null,
+        "source": "DEFAULT"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "bagP2"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "bagP2"
+      }
+    ],
+    "x": 1394.5,
+    "z": 13,
+    "id": "jbdq",
+    "css": "--wcBorder: #616374; --wcMain:#838796; --wcFont: #3d3e49; --wcFontOH: #212127; font-size:150%; border-radius: 10px; border-width: 3px 0 8px 0; border-color: #838796 #000 #616374 #000;",
+    "height": 40,
+    "y": 915.04,
+    "movableInEdit": false
+  },
+  "bagP1": {
+    "type": "holder",
+    "id": "bagP1",
+    "x": 15,
+    "y": 885.0799999999999,
+    "width": 99.92,
+    "height": 99.92,
+    "z": 1311,
+    "css": "background-color:#00000050; border-color:#00000050;border-radius:50%;",
+    "dropTarget": {
+      "deck": "prym"
+    },
+    "onEnter": {
+      "player": "p2",
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 1
+    },
+    "movableInEdit": false
+  },
+  "zhrx": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Wolf",
+    "id": "zhrx",
+    "z": 24393,
+    "parent": "bagP2",
+    "player": "p2",
+    "x": 4,
+    "y": 4,
+    "activeFace": 1
+  },
+  "cdtt": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Wolf",
+    "id": "cdtt",
+    "z": 19399,
+    "parent": "bagP4",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4,
+    "player": "p2"
+  },
+  "0d39": {
+    "deck": "prym",
+    "type": "card",
+    "cardType": "Raven",
+    "id": "0d39",
+    "z": 24392,
+    "x": 4,
+    "y": 4,
+    "activeFace": 1,
+    "parent": "bagP1",
+    "player": "p2"
+  },
+  "p1c4T": {
+    "type": "holder",
+    "id": "p1c4T",
+    "x": 150,
+    "y": 673.04,
+    "width": 99.92,
+    "height": 99.92,
+    "rotation": null,
+    "z": 1138,
+    "css": "background:#00000000; border-color:#00000050;border-radius:50%;",
+    "dropTarget": {
+      "deck": "prym"
+    },
+    "onEnter": {
+      "player": "p1",
+      "activeFace": 0
+    }
+  },
+  "p2c1": {
+    "type": "holder",
+    "id": "p2c1",
+    "x": 1444.5,
+    "y": -5,
+    "width": 158,
+    "height": 208,
+    "scale": 0.9,
+    "rotation": null,
+    "layer": 9,
+    "z": 824,
+    "css": "background-color: #00000030; border-color:#00000050;",
+    "dropTarget": {
+      "deck": "nj3c"
+    },
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "cardType",
+        "variable": "cardType"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "prym"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "cardType",
+        "value": "${cardType}"
+      },
+      "var tokenHolder = ${thisID} + 'T'",
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "${tokenHolder}"
+      }
+    ]
+  },
+  "p2c2": {
+    "type": "holder",
+    "id": "p2c2",
+    "x": 1444.5,
+    "y": 203,
+    "width": 158,
+    "height": 208,
+    "scale": 0.9,
+    "rotation": null,
+    "layer": 9,
+    "z": 825,
+    "movable": null,
+    "movableInEdit": null,
+    "css": "background-color: #00000030; border-color:#00000050;",
+    "dropTarget": {
+      "deck": "nj3c"
+    },
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "cardType",
+        "variable": "cardType"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "prym"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "cardType",
+        "value": "${cardType}"
+      },
+      "var tokenHolder = ${thisID} + 'T'",
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "${tokenHolder}"
+      }
+    ]
+  },
+  "p2c3": {
+    "type": "holder",
+    "id": "p2c3",
+    "x": 1444.5,
+    "y": 411,
+    "width": 158,
+    "height": 208,
+    "scale": 0.9,
+    "rotation": null,
+    "layer": 9,
+    "z": 826,
+    "movable": null,
+    "movableInEdit": null,
+    "css": "background-color: #00000030; border-color:#00000050;",
+    "dropTarget": {
+      "deck": "nj3c"
+    },
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "cardType",
+        "variable": "cardType"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "prym"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "cardType",
+        "value": "${cardType}"
+      },
+      "var tokenHolder = ${thisID} + 'T'",
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "${tokenHolder}"
+      }
+    ]
+  },
+  "p2c4T": {
+    "type": "holder",
+    "id": "p2c4T",
+    "x": 1350.08,
+    "y": 673.04,
+    "width": 99.92,
+    "height": 99.92,
+    "rotation": null,
+    "z": 1143,
+    "css": "background:#00000000; border-color:#00000050;border-radius:50%;",
+    "dropTarget": {
+      "deck": "prym"
+    },
+    "onEnter": {
+      "player": "p2",
+      "activeFace": 0
+    }
+  },
+  "p2c3T": {
+    "type": "holder",
+    "id": "p2c3T",
+    "x": 1350.08,
+    "y": 465.04,
+    "width": 99.92,
+    "height": 99.92,
+    "z": 1144,
+    "css": "background:#00000000; border-color:#00000050;border-radius:50%;",
+    "dropTarget": {
+      "deck": "prym"
+    },
+    "onEnter": {
+      "player": "p2",
+      "activeFace": 0
+    }
+  },
+  "p2c2T": {
+    "type": "holder",
+    "id": "p2c2T",
+    "x": 1350.08,
+    "y": 257.04,
+    "width": 99.92,
+    "height": 99.92,
+    "rotation": null,
+    "z": 1145,
+    "css": "background:#00000000; border-color:#00000050;border-radius:50%;",
+    "dropTarget": {
+      "deck": "prym"
+    },
+    "onEnter": {
+      "player": "p2",
+      "activeFace": 0
+    }
+  },
+  "p2c1T": {
+    "type": "holder",
+    "id": "p2c1T",
+    "x": 1350.08,
+    "y": 49.04,
+    "width": 99.92,
+    "height": 99.92,
+    "rotation": null,
+    "z": 1146,
+    "css": "background:#00000000; border-color:#00000050;border-radius:50%;",
+    "dropTarget": {
+      "deck": "prym"
+    },
+    "onEnter": {
+      "player": "p2",
+      "activeFace": 0
+    }
+  },
+  "bagP2": {
+    "type": "holder",
+    "id": "bagP2",
+    "x": 1485.08,
+    "y": 885.0799999999999,
+    "width": 99.92,
+    "height": 99.92,
+    "z": 1312,
+    "css": "background-color:#00000050; border-color:#00000050;border-radius:50%;",
+    "dropTarget": {
+      "deck": "prym"
+    },
+    "onEnter": {
+      "player": "p2",
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 1
+    },
+    "movableInEdit": false
+  },
+  "p1c4": {
+    "type": "holder",
+    "id": "p1c4",
+    "x": -2.5,
+    "y": 619,
+    "width": 158,
+    "height": 208,
+    "scale": 0.9,
+    "layer": 9,
+    "z": 823,
+    "css": "background-color: #00000030;; border-color:#00000050;",
+    "dropTarget": {
+      "deck": "nj3c"
+    },
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "cardType",
+        "variable": "cardType"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "prym"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "cardType",
+        "value": "${cardType}"
+      },
+      "var tokenHolder = ${thisID} + 'T'",
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "${tokenHolder}"
+      }
+    ]
+  },
+  "p2c4": {
+    "type": "holder",
+    "id": "p2c4",
+    "x": 1444.5,
+    "y": 619,
+    "width": 158,
+    "height": 208,
+    "scale": 0.9,
+    "layer": 9,
+    "z": 829,
+    "movable": null,
+    "movableInEdit": null,
+    "css": "background-color: #00000030; border-color:#00000050;",
+    "dropTarget": {
+      "deck": "nj3c"
+    },
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "cardType",
+        "variable": "cardType"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "prym"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "cardType",
+        "value": "${cardType}"
+      },
+      "var tokenHolder = ${thisID} + 'T'",
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "${tokenHolder}"
+      }
+    ]
+  },
+  "5edx": {
+    "image": "/assets/182025402_681659",
+    "id": "5edx",
+    "z": 43,
+    "x": 176,
+    "y": -200
+  },
+  "menuBackground": {
+    "id": "menuBackground",
+    "width": 1600,
+    "height": 1000,
+    "layer": 11,
+    "z": 43,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/assets/182025402_681659"
+  },
+  "3bv2": {
+    "type": "button",
+    "text": "X",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "menuBackground"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 1000
+      }
+    ],
+    "x": 1320,
+    "y": 17,
+    "z": 17,
+    "id": "3bv2",
+    "css": "--wcBorder: #616374; --wcMain:#838796; --wcFont: #3d3e49; --wcFontOH: #212127; font-size:150%; border-radius: 10px; border-width: 3px 0 8px 0; border-color: #838796 #000 #616374 #000;",
+    "height": 40,
+    "width": 40,
+    "movableInEdit": false,
+    "layer": 12,
+    "parent": "menuBackground"
+  },
+  "4ezs": {
+    "type": "button",
+    "text": "Random",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Recalling cards...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to reset the game. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "nj3c"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "mainHolder"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "prym"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "mainHolderToken"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "Raven"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "bagP1"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "Wolf"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "bagP2"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "mainHolder"
+      },
+      {
+        "func": "MOVE",
+        "from": "mainHolder",
+        "to": [
+          "p1c1",
+          "p1c2",
+          "p1c3",
+          "p1c4",
+          "p2c1",
+          "p2c2",
+          "p2c3",
+          "p2c4"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "bdpo"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "property": "base",
+        "value": "Raven"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 1
+      },
+      {
+        "func": "SELECT",
+        "property": "base",
+        "value": "Wolf"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 2
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "p1c1T",
+          "p1c2T",
+          "p1c3T",
+          "p1c4T"
+        ],
+        "to": "bagP1",
+        "count": 2
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "p2c1T",
+          "p2c2T",
+          "p2c3T",
+          "p2c4T"
+        ],
+        "to": "bagP2",
+        "count": 2
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "menuBackground"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 1000
+      }
+    ],
+    "x": 456,
+    "y": 145,
+    "z": 1331,
+    "id": "4ezs",
+    "css": "--wcBorder: #616374; --wcMain:#838796; --wcFont: #3d3e49; --wcFontOH: #212127; font-size:150%; border-radius: 10px; border-width: 3px 0 8px 0; border-color: #838796 #000 #616374 #000;",
+    "height": 40,
+    "width": 120,
+    "movableInEdit": false,
+    "layer": 12,
+    "parent": "menuBackground"
+  },
+  "klpo": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "menuBackground"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 1000
+      }
+    ],
+    "z": 22,
+    "id": "klpo",
+    "css": "background: none; border: none; border-radius: 0px ",
+    "height": 1000,
+    "width": 219,
+    "movableInEdit": false,
+    "layer": 12,
+    "movable": true,
+    "parent": "menuBackground"
+  },
+  "sy3v": {
+    "type": "button",
+    "text": "Beginner",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Recalling cards...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to reset the game. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "nj3c"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "mainHolder"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "prym"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "mainHolderToken"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "Raven"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "bagP1"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "Wolf"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "bagP2"
+      },
+      "var player1-1 = 'soldier' + 'Card'",
+      "var player1-2 = 'minotaur' + 'Card'",
+      "var player1-3 = 'centaur' + 'Card'",
+      "var player1-4 = 'pegasus' + 'Card'",
+      "var player2-1 = 'archer' + 'Card'",
+      "var player2-2 = 'unicorn' + 'Card'",
+      "var player2-3 = 'horseman' + 'Card'",
+      "var player2-4 = 'golem' + 'Card'",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player1-1}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p1c1"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player1-2}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p1c2"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player1-3}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p1c3"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player1-4}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p1c4"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player2-1}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p2c1"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player2-2}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p2c2"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player2-3}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p2c3"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player2-4}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p2c4"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "bdpo"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "property": "base",
+        "value": "Raven"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 1
+      },
+      {
+        "func": "SELECT",
+        "property": "base",
+        "value": "Wolf"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 2
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "p1c1T",
+          "p1c2T",
+          "p1c3T",
+          "p1c4T"
+        ],
+        "to": "bagP1",
+        "count": 2
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "p2c1T",
+          "p2c2T",
+          "p2c3T",
+          "p2c4T"
+        ],
+        "to": "bagP2",
+        "count": 2
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "menuBackground"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 1000
+      }
+    ],
+    "x": 740,
+    "y": 145,
+    "z": 43,
+    "id": "sy3v",
+    "css": "--wcBorder: #616374; --wcMain:#838796; --wcFont: #3d3e49; --wcFontOH: #212127; font-size:150%; border-radius: 10px; border-width: 3px 0 8px 0; border-color: #838796 #000 #616374 #000;",
+    "height": 40,
+    "width": 120,
+    "movableInEdit": false,
+    "layer": 12,
+    "parent": "menuBackground"
+  },
+  "s5b0": {
+    "type": "button",
+    "text": "Manually",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Recalling cards...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to reset the game. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "nj3c"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "mainHolder"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "prym"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "mainHolderToken"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "Raven"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "bagP1"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "Wolf"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "bagP2"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "bdpo"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "property": "base",
+        "value": "Raven"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 1
+      },
+      {
+        "func": "SELECT",
+        "property": "base",
+        "value": "Wolf"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 2
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "secondMenu"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "menuBackground"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 1000
+      },
+      {
+        "func": "MOVE",
+        "from": "mainHolder",
+        "to": "line1",
+        "count": 4
+      },
+      {
+        "func": "MOVE",
+        "from": "mainHolder",
+        "to": "line2",
+        "count": 4
+      },
+      {
+        "func": "MOVE",
+        "from": "mainHolder",
+        "to": "line3",
+        "count": 4
+      },
+      {
+        "func": "MOVE",
+        "from": "mainHolder",
+        "to": "line4",
+        "count": 4
+      }
+    ],
+    "x": 1025,
+    "y": 145,
+    "z": 36,
+    "id": "s5b0",
+    "css": "--wcBorder: #616374; --wcMain:#838796; --wcFont: #3d3e49; --wcFontOH: #212127; font-size:150%; border-radius: 10px; border-width: 3px 0 8px 0; border-color: #838796 #000 #616374 #000;",
+    "height": 40,
+    "width": 120,
+    "movableInEdit": false,
+    "layer": 12,
+    "parent": "menuBackground"
+  },
+  "s00r": {
+    "type": "label",
+    "text": "Choose your troops",
+    "css": "font-size: 40px; font-weight: 900; color: #838796",
+    "height": 60,
+    "width": 400,
+    "x": 600,
+    "y": 60,
+    "z": 38,
+    "id": "s00r",
+    "layer": 12,
+    "parent": "menuBackground",
+    "movableInEdit": false
+  },
+  "93hx": {
+    "type": "label",
+    "text": "Instructions:\n\n   In your bag (holder next to refill) you should have 9 tokens. 2 from each troop + 1 coin.\n\n   Each turn drag 3 token from your bag to the hand (holder in the bottom middle). If you don't have enough token, drag as many as you can from your bag and then press on refill to get enough token on your bag.\nExample: if you have 2 tokens on you your bag, drag those 2 token to your hand, press refill and get another token to your hand.\n\n   If you put card in the board grid it will no longer be automatically taken by the bag, if you to it by accident you will need to put it in the bag it manually only once.\n\n    To discard a destroyed troop, put it in the circular holder at the top of the board.",
+    "css": "font-size: 30px; font-weight: 500; text-align: left; color: #838796",
+    "height": 670,
+    "x": 300,
+    "y": 320,
+    "z": 40,
+    "id": "93hx",
+    "layer": 12,
+    "width": 1000,
+    "parent": "menuBackground",
+    "movableInEdit": false
+  },
+  "soldierCard": {
+    "type": "card",
+    "id": "soldierCard",
+    "deck": "nj3c",
+    "cardType": "Soldier",
+    "z": 16292,
+    "parent": "18q4"
+  },
+  "minotaurCard": {
+    "type": "card",
+    "id": "minotaurCard",
+    "deck": "nj3c",
+    "cardType": "Minotaur",
+    "z": 16294,
+    "parent": "18q4",
+    "player": "p2"
+  },
+  "centaurCard": {
+    "type": "card",
+    "id": "centaurCard",
+    "parent": "18q4",
+    "deck": "nj3c",
+    "cardType": "Centaur",
+    "z": 16296,
+    "player": "p2"
+  },
+  "pegasusCard": {
+    "type": "card",
+    "id": "pegasusCard",
+    "parent": "18q4",
+    "deck": "nj3c",
+    "cardType": "Pegasus",
+    "z": 16284
+  },
+  "archerCard": {
+    "type": "card",
+    "id": "archerCard",
+    "deck": "nj3c",
+    "cardType": "Archer",
+    "z": 16286,
+    "parent": "18q4",
+    "player": "p2"
+  },
+  "unicornCard": {
+    "type": "card",
+    "id": "unicornCard",
+    "deck": "nj3c",
+    "cardType": "Unicorn",
+    "z": 16288,
+    "parent": "18q4"
+  },
+  "horsemanCard": {
+    "type": "card",
+    "id": "horsemanCard",
+    "deck": "nj3c",
+    "cardType": "Mounted Knight",
+    "z": 16290,
+    "parent": "18q4",
+    "player": "p2"
+  },
+  "golemCard": {
+    "type": "card",
+    "id": "golemCard",
+    "deck": "nj3c",
+    "cardType": "Golen",
+    "layer": 10,
+    "z": 15039,
+    "parent": "18q4"
+  },
+  "gargoyleCard": {
+    "type": "card",
+    "id": "gargoyleCard",
+    "deck": "nj3c",
+    "cardType": "Gargoyle",
+    "z": 16276,
+    "parent": "18q4"
+  },
+  "fenixCard": {
+    "type": "card",
+    "id": "fenixCard",
+    "deck": "nj3c",
+    "cardType": "Fenix",
+    "z": 16278,
+    "parent": "18q4",
+    "player": "p2"
+  },
+  "generalCard": {
+    "type": "card",
+    "id": "generalCard",
+    "deck": "nj3c",
+    "cardType": "General",
+    "z": 16280,
+    "parent": "18q4",
+    "player": "p2"
+  },
+  "wizardCard": {
+    "type": "card",
+    "id": "wizardCard",
+    "deck": "nj3c",
+    "cardType": "Wizard",
+    "z": 16282,
+    "parent": "18q4",
+    "player": "p2"
+  },
+  "necromancerCard": {
+    "type": "card",
+    "id": "necromancerCard",
+    "deck": "nj3c",
+    "cardType": "Necromancer",
+    "z": 16269,
+    "parent": "18q4"
+  },
+  "giantCard": {
+    "type": "card",
+    "id": "giantCard",
+    "deck": "nj3c",
+    "cardType": "Giant",
+    "z": 16270,
+    "parent": "18q4"
+  },
+  "griffinCard": {
+    "type": "card",
+    "id": "griffinCard",
+    "deck": "nj3c",
+    "cardType": "Griffin",
+    "z": 16272,
+    "parent": "18q4"
+  },
+  "minionCard": {
+    "type": "card",
+    "id": "minionCard",
+    "deck": "nj3c",
+    "cardType": "Minion",
+    "z": 16274,
+    "parent": "18q4",
+    "player": "p2"
+  },
+  "mrsh": {
+    "type": "button",
+    "text": "Challenge 1",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Recalling cards...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to reset the game. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "nj3c"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "mainHolder"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "prym"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "mainHolderToken"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "Raven"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "bagP1"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "Wolf"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "bagP2"
+      },
+      "var player1-1 = 'giant' + 'Card'",
+      "var player1-2 = 'pegasus' + 'Card'",
+      "var player1-3 = 'minotaur' + 'Card'",
+      "var player1-4 = 'general' + 'Card'",
+      "var player2-1 = 'unicorn' + 'Card'",
+      "var player2-2 = 'minion' + 'Card'",
+      "var player2-3 = 'gargoyle' + 'Card'",
+      "var player2-4 = 'fenix' + 'Card'",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player1-1}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p1c1"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player1-2}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p1c2"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player1-3}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p1c3"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player1-4}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p1c4"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player2-1}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p2c1"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player2-2}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p2c2"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player2-3}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p2c3"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player2-4}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p2c4"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "bdpo"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "property": "base",
+        "value": "Raven"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 1
+      },
+      {
+        "func": "SELECT",
+        "property": "base",
+        "value": "Wolf"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 2
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "p1c1T",
+          "p1c2T",
+          "p1c3T",
+          "p1c4T"
+        ],
+        "to": "bagP1",
+        "count": 2
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "p2c1T",
+          "p2c2T",
+          "p2c3T",
+          "p2c4T"
+        ],
+        "to": "bagP2",
+        "count": 2
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "menuBackground"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 1000
+      }
+    ],
+    "x": 440,
+    "y": 225,
+    "z": 43,
+    "id": "mrsh",
+    "css": "--wcBorder: #616374; --wcMain:#838796; --wcFont: #3d3e49; --wcFontOH: #212127; font-size:150%; border-radius: 10px; border-width: 3px 0 8px 0; border-color: #838796 #000 #616374 #000;",
+    "height": 40,
+    "width": 150,
+    "movableInEdit": false,
+    "layer": 12,
+    "parent": "menuBackground"
+  },
+  "o9ac": {
+    "type": "button",
+    "text": "Challenge 2",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Recalling cards...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to reset the game. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "nj3c"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "mainHolder"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "prym"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "mainHolderToken"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "Raven"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "bagP1"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "Wolf"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "bagP2"
+      },
+      "var player1-1 = 'archer' + 'Card'",
+      "var player1-2 = 'unicorn' + 'Card'",
+      "var player1-3 = 'horseman' + 'Card'",
+      "var player1-4 = 'minion' + 'Card'",
+      "var player2-1 = 'pegasus' + 'Card'",
+      "var player2-2 = 'minotaur' + 'Card'",
+      "var player2-3 = 'necromancer' + 'Card'",
+      "var player2-4 = 'soldier' + 'Card'",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player1-1}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p1c1"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player1-2}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p1c2"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player1-3}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p1c3"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player1-4}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p1c4"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player2-1}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p2c1"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player2-2}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p2c2"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player2-3}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p2c3"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player2-4}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p2c4"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "bdpo"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "property": "base",
+        "value": "Raven"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 1
+      },
+      {
+        "func": "SELECT",
+        "property": "base",
+        "value": "Wolf"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 2
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "p1c1T",
+          "p1c2T",
+          "p1c3T",
+          "p1c4T"
+        ],
+        "to": "bagP1",
+        "count": 2
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "p2c1T",
+          "p2c2T",
+          "p2c3T",
+          "p2c4T"
+        ],
+        "to": "bagP2",
+        "count": 2
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "menuBackground"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 1000
+      }
+    ],
+    "x": 725,
+    "y": 225,
+    "z": 43,
+    "id": "o9ac",
+    "css": "--wcBorder: #616374; --wcMain:#838796; --wcFont: #3d3e49; --wcFontOH: #212127; font-size:150%; border-radius: 10px; border-width: 3px 0 8px 0; border-color: #838796 #000 #616374 #000;",
+    "height": 40,
+    "width": 150,
+    "movableInEdit": false,
+    "layer": 12,
+    "parent": "menuBackground"
+  },
+  "xbxq": {
+    "type": "button",
+    "text": "Challenge 3",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Recalling cards...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to reset the game. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "nj3c"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "mainHolder"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "prym"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "mainHolderToken"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "Raven"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "bagP1"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "Wolf"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "bagP2"
+      },
+      "var player1-1 = 'archer' + 'Card'",
+      "var player1-2 = 'griffin' + 'Card'",
+      "var player1-3 = 'giant' + 'Card'",
+      "var player1-4 = 'fenix' + 'Card'",
+      "var player2-1 = 'unicorn' + 'Card'",
+      "var player2-2 = 'centaur' + 'Card'",
+      "var player2-3 = 'horseman' + 'Card'",
+      "var player2-4 = 'golem' + 'Card'",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player1-1}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p1c1"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player1-2}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p1c2"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player1-3}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p1c3"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player1-4}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p1c4"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player2-1}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p2c1"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player2-2}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p2c2"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player2-3}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p2c3"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${player2-4}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "p2c4"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "bdpo"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "property": "base",
+        "value": "Raven"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 1
+      },
+      {
+        "func": "SELECT",
+        "property": "base",
+        "value": "Wolf"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 2
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "p1c1T",
+          "p1c2T",
+          "p1c3T",
+          "p1c4T"
+        ],
+        "to": "bagP1",
+        "count": 2
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "p2c1T",
+          "p2c2T",
+          "p2c3T",
+          "p2c4T"
+        ],
+        "to": "bagP2",
+        "count": 2
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "menuBackground"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 1000
+      }
+    ],
+    "x": 1010,
+    "y": 225,
+    "z": 43,
+    "id": "xbxq",
+    "css": "--wcBorder: #616374; --wcMain:#838796; --wcFont: #3d3e49; --wcFontOH: #212127; font-size:150%; border-radius: 10px; border-width: 3px 0 8px 0; border-color: #838796 #000 #616374 #000;",
+    "height": 40,
+    "width": 150,
+    "movableInEdit": false,
+    "layer": 12,
+    "parent": "menuBackground"
+  },
+  "_meta": {
+    "version": 3,
+    "info": {
+      "name": "Fantasy Wars",
+      "image": "/assets/-2124487621_265811",
+      "rules": "",
+      "bgg": "",
+      "year": "2018",
+      "mode": "1v1; 2v2",
+      "time": "30",
+      "players": "2",
+      "language": "US",
+      "variant": "",
+      "attribution": "Choose your troops by adding them to your holders by clicking in one of the default troops buttons or get random troops by clicking in the random button.\nThen take 2 tokens from each troop and adding them to your side of the table.\nClick the reset button on the bottom to refill and shuffle your bag.\nEach turn drag three pieces from your bag the hand (middle-bottom). If you don't have enough pieces press the rest button again after you dragged all the pieces you had on your bag to the hand.\n\nImplementation design by RaphaelAlvez and released under CC0.\nAssets license may vary.\n\nWood texture: https://unsplash.com/photos/J2gEgTPM_OA\nCloth texture: https://unsplash.com/photos/xTaOPMa6wAE\n\nCeltic knot: https://www.vecteezy.com/vector-art/338646-celtic-symbols\n\nTroops assets modified from https://game-icons.net/",
+      "similarName": "War Chest",
+      "similarLink": "https://boardgamegeek.com/boardgame/249259/war-chest",
+      "description": "Choose and place tokens with special powers to fight for space on board with hexagon shaped areas.  First player who places designated tokes in specific spaces wins."
+    }
+  },
+  "secondMenu": {
+    "id": "secondMenu",
+    "x": 218.5,
+    "width": 1163,
+    "height": 1000,
+    "image": "/assets/-2074221267_475717",
+    "z": 44,
+    "movable": false,
+    "movableInEdit": false,
+    "y": 2000
+  },
+  "line1": {
+    "type": "holder",
+    "id": "line1",
+    "parent": "secondMenu",
+    "x": 265,
+    "y": 66,
+    "width": 632,
+    "height": 208,
+    "layer": 12,
+    "z": 1330,
+    "classes": "transparent",
+    "stackOffsetX": 158
+  },
+  "line2": {
+    "type": "holder",
+    "id": "line2",
+    "parent": "secondMenu",
+    "x": 265,
+    "y": 286,
+    "width": 632,
+    "height": 208,
+    "layer": 12,
+    "z": 1325,
+    "classes": "transparent",
+    "stackOffsetX": 158
+  },
+  "line3": {
+    "type": "holder",
+    "id": "line3",
+    "parent": "secondMenu",
+    "x": 265,
+    "y": 506,
+    "width": 632,
+    "height": 208,
+    "layer": 12,
+    "z": 1329,
+    "classes": "transparent",
+    "stackOffsetX": 158
+  },
+  "line4": {
+    "type": "holder",
+    "id": "line4",
+    "parent": "secondMenu",
+    "x": 265,
+    "y": 726,
+    "width": 632,
+    "height": 208,
+    "layer": 12,
+    "z": 1328,
+    "classes": "transparent",
+    "stackOffsetX": 158
+  },
+  "l0ts": {
+    "type": "button",
+    "text": "X",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "menuBackground"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 1000
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "secondMenu"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 2000
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "nj3c"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "parent",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "mainHolder"
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "line1",
+          "line2",
+          "line3",
+          "line4"
+        ],
+        "to": "mainHolder",
+        "count": 0
+      }
+    ],
+    "x": 1106,
+    "y": 17,
+    "z": 17,
+    "id": "l0ts",
+    "css": "--wcBorder: #616374; --wcMain:#838796; --wcFont: #3d3e49; --wcFontOH: #212127; font-size:150%; border-radius: 10px; border-width: 3px 0 8px 0; border-color: #838796 #000 #616374 #000;",
+    "height": 40,
+    "width": 40,
+    "movableInEdit": false,
+    "layer": 12,
+    "parent": "secondMenu"
+  },
+  "18q4": {
+    "type": "pile",
+    "parent": "mainHolder",
+    "x": 4,
+    "y": 4,
+    "width": 150,
+    "height": 200,
+    "id": "18q4"
+  }
+}

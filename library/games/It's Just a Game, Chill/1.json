@@ -1,0 +1,3374 @@
+{
+  "9wxrP": {
+    "type": "pile",
+    "id": "9wxrP",
+    "parent": "9wxr",
+    "width": 103,
+    "height": 160
+  },
+  "9wxrAC": {
+    "id": "9wxrAC",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "AC",
+    "z": 1,
+    "activeFace": 1
+  },
+  "9wxr2C": {
+    "id": "9wxr2C",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "2C",
+    "z": 2,
+    "activeFace": 1
+  },
+  "9wxr3C": {
+    "id": "9wxr3C",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "3C",
+    "z": 3,
+    "activeFace": 1
+  },
+  "9wxr4C": {
+    "id": "9wxr4C",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "4C",
+    "z": 4,
+    "activeFace": 1
+  },
+  "9wxr5C": {
+    "id": "9wxr5C",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "5C",
+    "z": 5,
+    "activeFace": 1
+  },
+  "9wxr6C": {
+    "id": "9wxr6C",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "6C",
+    "z": 6,
+    "activeFace": 1
+  },
+  "9wxr7C": {
+    "id": "9wxr7C",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "7C",
+    "z": 7,
+    "activeFace": 1
+  },
+  "9wxr8C": {
+    "id": "9wxr8C",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "8C",
+    "z": 8,
+    "activeFace": 1
+  },
+  "9wxr9C": {
+    "id": "9wxr9C",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "9C",
+    "z": 9,
+    "activeFace": 1
+  },
+  "9wxrTC": {
+    "id": "9wxrTC",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "TC",
+    "z": 10,
+    "activeFace": 1
+  },
+  "9wxrJC": {
+    "id": "9wxrJC",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "JC",
+    "z": 11,
+    "activeFace": 1
+  },
+  "9wxrQC": {
+    "id": "9wxrQC",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "QC",
+    "z": 12,
+    "activeFace": 1
+  },
+  "9wxrKC": {
+    "id": "9wxrKC",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "KC",
+    "z": 13,
+    "activeFace": 1
+  },
+  "9wxrAD": {
+    "id": "9wxrAD",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "AD",
+    "z": 14,
+    "activeFace": 1
+  },
+  "9wxr2D": {
+    "id": "9wxr2D",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "2D",
+    "z": 15,
+    "activeFace": 1
+  },
+  "9wxr3D": {
+    "id": "9wxr3D",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "3D",
+    "z": 16,
+    "activeFace": 1
+  },
+  "9wxr4D": {
+    "id": "9wxr4D",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "4D",
+    "z": 17,
+    "activeFace": 1
+  },
+  "9wxr5D": {
+    "id": "9wxr5D",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "5D",
+    "z": 18,
+    "activeFace": 1
+  },
+  "9wxr6D": {
+    "id": "9wxr6D",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "6D",
+    "z": 19,
+    "activeFace": 1
+  },
+  "9wxr7D": {
+    "id": "9wxr7D",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "7D",
+    "z": 20,
+    "activeFace": 1
+  },
+  "9wxr8D": {
+    "id": "9wxr8D",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "8D",
+    "z": 21,
+    "activeFace": 1
+  },
+  "9wxr9D": {
+    "id": "9wxr9D",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "9D",
+    "z": 22,
+    "activeFace": 1
+  },
+  "9wxrTD": {
+    "id": "9wxrTD",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "TD",
+    "z": 23,
+    "activeFace": 1
+  },
+  "9wxrJD": {
+    "id": "9wxrJD",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "JD",
+    "z": 24,
+    "activeFace": 1
+  },
+  "9wxrQD": {
+    "id": "9wxrQD",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "QD",
+    "z": 25,
+    "activeFace": 1
+  },
+  "9wxrKD": {
+    "id": "9wxrKD",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "KD",
+    "z": 26,
+    "activeFace": 1
+  },
+  "9wxrAH": {
+    "id": "9wxrAH",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "AH",
+    "z": 27,
+    "activeFace": 1
+  },
+  "9wxr2H": {
+    "id": "9wxr2H",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "2H",
+    "z": 28,
+    "activeFace": 1
+  },
+  "9wxr3H": {
+    "id": "9wxr3H",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "3H",
+    "z": 29,
+    "activeFace": 1
+  },
+  "9wxr4H": {
+    "id": "9wxr4H",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "4H",
+    "z": 30,
+    "activeFace": 1
+  },
+  "9wxr5H": {
+    "id": "9wxr5H",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "5H",
+    "z": 31,
+    "activeFace": 1
+  },
+  "9wxr6H": {
+    "id": "9wxr6H",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "6H",
+    "z": 32,
+    "activeFace": 1
+  },
+  "9wxr7H": {
+    "id": "9wxr7H",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "7H",
+    "z": 33,
+    "activeFace": 1
+  },
+  "9wxr8H": {
+    "id": "9wxr8H",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "8H",
+    "z": 34,
+    "activeFace": 1
+  },
+  "9wxr9H": {
+    "id": "9wxr9H",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "9H",
+    "z": 35,
+    "activeFace": 1
+  },
+  "9wxrTH": {
+    "id": "9wxrTH",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "TH",
+    "z": 36,
+    "activeFace": 1
+  },
+  "9wxrJH": {
+    "id": "9wxrJH",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "JH",
+    "z": 37,
+    "activeFace": 1
+  },
+  "9wxrQH": {
+    "id": "9wxrQH",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "QH",
+    "z": 38,
+    "activeFace": 1
+  },
+  "9wxrKH": {
+    "id": "9wxrKH",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "KH",
+    "z": 39,
+    "activeFace": 1
+  },
+  "9wxrAS": {
+    "id": "9wxrAS",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "AS",
+    "z": 40,
+    "activeFace": 1
+  },
+  "9wxr2S": {
+    "id": "9wxr2S",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "2S",
+    "z": 41,
+    "activeFace": 1
+  },
+  "9wxr3S": {
+    "id": "9wxr3S",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "3S",
+    "z": 42,
+    "activeFace": 1
+  },
+  "9wxr4S": {
+    "id": "9wxr4S",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "4S",
+    "z": 43,
+    "activeFace": 1
+  },
+  "9wxr5S": {
+    "id": "9wxr5S",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "5S",
+    "z": 44,
+    "activeFace": 1
+  },
+  "9wxr6S": {
+    "id": "9wxr6S",
+    "parent": "9wxrP",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "6S",
+    "z": 45,
+    "activeFace": 1
+  },
+  "9wxr7S": {
+    "id": "9wxr7S",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "7S",
+    "z": 10284,
+    "activeFace": 1,
+    "parent": "9wxrP"
+  },
+  "9wxr8S": {
+    "id": "9wxr8S",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "8S",
+    "z": 10201,
+    "activeFace": 1,
+    "x": 360.5,
+    "y": 400
+  },
+  "9wxr9S": {
+    "id": "9wxr9S",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "9S",
+    "z": 10200,
+    "activeFace": 1,
+    "x": 360.5,
+    "y": 240
+  },
+  "9wxrTS": {
+    "id": "9wxrTS",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "TS",
+    "z": 10199,
+    "activeFace": 1,
+    "x": 257.5,
+    "y": 400
+  },
+  "9wxrJS": {
+    "id": "9wxrJS",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "JS",
+    "z": 10198,
+    "activeFace": 1,
+    "x": 257.5,
+    "y": 240
+  },
+  "9wxrQS": {
+    "id": "9wxrQS",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "QS",
+    "z": 10203,
+    "activeFace": 1,
+    "x": 154.5,
+    "y": 240
+  },
+  "9wxrKS": {
+    "id": "9wxrKS",
+    "deck": "9wxrD",
+    "type": "card",
+    "cardType": "KS",
+    "z": 10205,
+    "x": 154.5,
+    "y": 400,
+    "activeFace": 1
+  },
+  "moe3AC": {
+    "id": "moe3AC",
+    "parent": "73yz",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "AC",
+    "z": 19,
+    "activeFace": 1
+  },
+  "moe32C": {
+    "id": "moe32C",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "2C",
+    "z": 10263,
+    "activeFace": 1,
+    "rotation": 210,
+    "x": 1175,
+    "y": 303.1
+  },
+  "moe33C": {
+    "id": "moe33C",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "3C",
+    "z": 10279,
+    "activeFace": 1,
+    "rotation": 210,
+    "x": 1025,
+    "y": 216.60000000000002
+  },
+  "moe34C": {
+    "id": "moe34C",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "4C",
+    "z": 10271,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 950,
+    "y": 606.2
+  },
+  "moe35C": {
+    "id": "moe35C",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "5C",
+    "z": 9,
+    "parent": "73yz",
+    "activeFace": 1
+  },
+  "moe36C": {
+    "id": "moe36C",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "6C",
+    "z": 10252,
+    "activeFace": 1,
+    "rotation": 330,
+    "x": 875,
+    "y": 563
+  },
+  "moe37C": {
+    "id": "moe37C",
+    "parent": "73yz",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "7C",
+    "z": 22,
+    "activeFace": 1
+  },
+  "moe38C": {
+    "id": "moe38C",
+    "parent": "73yz",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "8C",
+    "z": 2,
+    "activeFace": 1
+  },
+  "moe39C": {
+    "id": "moe39C",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "9C",
+    "z": 10256,
+    "activeFace": 1,
+    "rotation": 330,
+    "x": 1025,
+    "y": 303.1
+  },
+  "moe3TC": {
+    "id": "moe3TC",
+    "parent": "73yz",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "TC",
+    "z": 8,
+    "activeFace": 1
+  },
+  "moe3JC": {
+    "id": "moe3JC",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "JC",
+    "z": 10269,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 950,
+    "y": 259.8
+  },
+  "moe3QC": {
+    "id": "moe3QC",
+    "parent": "73yz",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "QC",
+    "z": 10,
+    "activeFace": 1
+  },
+  "moe3KC": {
+    "id": "moe3KC",
+    "parent": "73yz",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "KC",
+    "z": 20,
+    "activeFace": 1
+  },
+  "moe3AD": {
+    "id": "moe3AD",
+    "parent": "73yz",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "AD",
+    "z": 13,
+    "activeFace": 1
+  },
+  "moe32D": {
+    "id": "moe32D",
+    "parent": "73yz",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "2D",
+    "z": 17,
+    "activeFace": 1
+  },
+  "moe33D": {
+    "id": "moe33D",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "3D",
+    "z": 10280,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 1100,
+    "y": 173.20000000000002
+  },
+  "moe34D": {
+    "id": "moe34D",
+    "parent": "73yz",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "4D",
+    "z": 12,
+    "activeFace": 1
+  },
+  "moe35D": {
+    "id": "moe35D",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "5D",
+    "z": 10270,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 950,
+    "y": 433
+  },
+  "moe36D": {
+    "id": "moe36D",
+    "parent": "73yz",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "6D",
+    "z": 14,
+    "activeFace": 1
+  },
+  "moe37D": {
+    "id": "moe37D",
+    "parent": "73yz",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "7D",
+    "z": 11,
+    "activeFace": 1
+  },
+  "moe38D": {
+    "id": "moe38D",
+    "parent": "73yz",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "8D",
+    "z": 5,
+    "activeFace": 1
+  },
+  "moe39D": {
+    "id": "moe39D",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "9D",
+    "z": 10275,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 1250,
+    "y": 259.8
+  },
+  "moe3TD": {
+    "id": "moe3TD",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "TD",
+    "z": 10260,
+    "rotation": 330,
+    "x": 1175,
+    "y": 563,
+    "activeFace": 1
+  },
+  "moe3JD": {
+    "id": "moe3JD",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "JD",
+    "z": 10276,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 1250,
+    "y": 433
+  },
+  "moe3QD": {
+    "id": "moe3QD",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "QD",
+    "z": 10250,
+    "activeFace": 1,
+    "rotation": 210,
+    "x": 875,
+    "y": 303.1
+  },
+  "moe3KD": {
+    "id": "moe3KD",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "KD",
+    "z": 10277,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 1100,
+    "y": 519.6
+  },
+  "moe3AH": {
+    "id": "moe3AH",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "AH",
+    "z": 10267,
+    "activeFace": 1,
+    "rotation": 210,
+    "x": 1325,
+    "y": 563
+  },
+  "moe32H": {
+    "id": "moe32H",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "2H",
+    "z": 10278,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 1100,
+    "y": 346.40000000000003
+  },
+  "moe33H": {
+    "id": "moe33H",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "3H",
+    "z": 10264,
+    "activeFace": 1,
+    "rotation": 330,
+    "x": 1325,
+    "y": 303.1
+  },
+  "moe34H": {
+    "id": "moe34H",
+    "parent": "73yz",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "4H",
+    "z": 3,
+    "activeFace": 1
+  },
+  "moe35H": {
+    "id": "moe35H",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "5H",
+    "z": 10281,
+    "activeFace": 1,
+    "rotation": 330,
+    "x": 1175,
+    "y": 216.60000000000002
+  },
+  "moe36H": {
+    "id": "moe36H",
+    "parent": "73yz",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "6H",
+    "z": 16,
+    "activeFace": 1
+  },
+  "moe37H": {
+    "id": "moe37H",
+    "parent": "73yz",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "7H",
+    "z": 1,
+    "activeFace": 1
+  },
+  "moe38H": {
+    "id": "moe38H",
+    "parent": "73yz",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "8H",
+    "z": 24,
+    "activeFace": 1
+  },
+  "moe39H": {
+    "id": "moe39H",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "9H",
+    "z": 10265,
+    "activeFace": 1,
+    "rotation": 210,
+    "x": 1325,
+    "y": 389.8
+  },
+  "moe3TH": {
+    "id": "moe3TH",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "TH",
+    "z": 10272,
+    "activeFace": 1,
+    "rotation": 90,
+    "x": 1250,
+    "y": 606.2
+  },
+  "moe3JH": {
+    "id": "moe3JH",
+    "parent": "73yz",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "JH",
+    "z": 7,
+    "activeFace": 1
+  },
+  "moe3QH": {
+    "id": "moe3QH",
+    "parent": "73yz",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "QH",
+    "z": 6,
+    "activeFace": 1
+  },
+  "moe3KH": {
+    "id": "moe3KH",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "KH",
+    "z": 10251,
+    "activeFace": 1,
+    "rotation": 210,
+    "x": 875,
+    "y": 476.3
+  },
+  "moe3AS": {
+    "id": "moe3AS",
+    "parent": "73yz",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "AS",
+    "z": 15,
+    "activeFace": 1
+  },
+  "moe32S": {
+    "id": "moe32S",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "2S",
+    "z": 10257,
+    "activeFace": 1,
+    "rotation": 210,
+    "x": 1025,
+    "y": 389.8
+  },
+  "moe33S": {
+    "id": "moe33S",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "3S",
+    "z": 10262,
+    "activeFace": 1,
+    "rotation": 330,
+    "x": 1175,
+    "y": 389.8
+  },
+  "moe34S": {
+    "id": "moe34S",
+    "parent": "73yz",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "4S",
+    "z": 4,
+    "activeFace": 1
+  },
+  "moe35S": {
+    "id": "moe35S",
+    "parent": "73yz",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "5S",
+    "z": 23,
+    "activeFace": 1
+  },
+  "moe36S": {
+    "id": "moe36S",
+    "parent": "73yz",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "6S",
+    "z": 21,
+    "activeFace": 1
+  },
+  "moe37S": {
+    "id": "moe37S",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "7S",
+    "z": 10259,
+    "rotation": 210,
+    "x": 1025,
+    "y": 563,
+    "activeFace": 1
+  },
+  "moe38S": {
+    "id": "moe38S",
+    "parent": "73yz",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "8S",
+    "z": 18,
+    "activeFace": 1
+  },
+  "moe39S": {
+    "id": "moe39S",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "9S",
+    "z": 10261,
+    "activeFace": 1,
+    "rotation": 210,
+    "x": 1175,
+    "y": 476.3
+  },
+  "moe3TS": {
+    "id": "moe3TS",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "TS",
+    "z": 10258,
+    "activeFace": 1,
+    "rotation": 330,
+    "x": 1025,
+    "y": 476.3
+  },
+  "moe3JS": {
+    "id": "moe3JS",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "JS",
+    "z": 10249,
+    "activeFace": 1,
+    "rotation": 330,
+    "x": 875,
+    "y": 389.8
+  },
+  "moe3QS": {
+    "id": "moe3QS",
+    "parent": "73yz",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "QS",
+    "z": 25,
+    "activeFace": 1
+  },
+  "moe3KS": {
+    "id": "moe3KS",
+    "deck": "moe3D",
+    "type": "card",
+    "cardType": "KS",
+    "z": 10274,
+    "activeFace": 1,
+    "rotation": 330,
+    "x": 1325,
+    "y": 476.3
+  },
+  "73yz": {
+    "type": "pile",
+    "parent": "moe3",
+    "x": 4,
+    "y": 4,
+    "width": 51,
+    "height": 80,
+    "id": "73yz"
+  },
+  "fusq": {
+    "type": "button",
+    "text": "roll",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "3ddd"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "GET",
+        "property": "jumpX"
+      },
+      {
+        "func": "GET",
+        "property": "x"
+      },
+      {
+        "func": "GET",
+        "property": "jumpY"
+      },
+      {
+        "func": "GET",
+        "property": "y"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "==",
+        "variable": "sameX",
+        "applyVariables": [
+          {
+            "parameter": "operand1",
+            "variable": "x"
+          },
+          {
+            "parameter": "operand2",
+            "variable": "jumpX"
+          }
+        ]
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "==",
+        "variable": "sameY",
+        "applyVariables": [
+          {
+            "parameter": "operand1",
+            "variable": "y"
+          },
+          {
+            "parameter": "operand2",
+            "variable": "jumpY"
+          }
+        ]
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "&&",
+        "variable": "movedByThis",
+        "applyVariables": [
+          {
+            "parameter": "operand1",
+            "variable": "sameX"
+          },
+          {
+            "parameter": "operand2",
+            "variable": "sameY"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "centerX",
+        "applyVariables": [
+          {
+            "parameter": "skip",
+            "variable": "movedByThis"
+          },
+          {
+            "parameter": "value",
+            "variable": "x"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "centerY",
+        "applyVariables": [
+          {
+            "parameter": "skip",
+            "variable": "movedByThis"
+          },
+          {
+            "parameter": "value",
+            "variable": "y"
+          }
+        ]
+      },
+      {
+        "func": "GET",
+        "property": "centerX"
+      },
+      {
+        "func": "GET",
+        "property": "centerY"
+      },
+      {
+        "func": "GET",
+        "property": "width"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "/",
+        "variable": "max",
+        "operand2": 10,
+        "applyVariables": [
+          {
+            "parameter": "operand1",
+            "variable": "width"
+          }
+        ]
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "*",
+        "variable": "min",
+        "operand1": -1,
+        "applyVariables": [
+          {
+            "parameter": "operand2",
+            "variable": "max"
+          }
+        ]
+      },
+      {
+        "func": "RANDOM",
+        "applyVariables": [
+          {
+            "parameter": "min",
+            "variable": "min"
+          },
+          {
+            "parameter": "max",
+            "variable": "max"
+          }
+        ]
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "+",
+        "applyVariables": [
+          {
+            "parameter": "operand1",
+            "variable": "centerX"
+          },
+          {
+            "parameter": "operand2",
+            "variable": "RANDOM"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "applyVariables": [
+          {
+            "parameter": "value",
+            "variable": "COMPUTE"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "jumpX",
+        "applyVariables": [
+          {
+            "parameter": "value",
+            "variable": "COMPUTE"
+          }
+        ]
+      },
+      {
+        "func": "RANDOM",
+        "applyVariables": [
+          {
+            "parameter": "min",
+            "variable": "min"
+          },
+          {
+            "parameter": "max",
+            "variable": "max"
+          }
+        ]
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "+",
+        "applyVariables": [
+          {
+            "parameter": "operand1",
+            "variable": "centerY"
+          },
+          {
+            "parameter": "operand2",
+            "variable": "RANDOM"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "applyVariables": [
+          {
+            "parameter": "value",
+            "variable": "COMPUTE"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "jumpY",
+        "applyVariables": [
+          {
+            "parameter": "value",
+            "variable": "COMPUTE"
+          }
+        ]
+      },
+      {
+        "func": "RANDOM",
+        "min": -10,
+        "max": 10
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "applyVariables": [
+          {
+            "parameter": "value",
+            "variable": "RANDOM"
+          }
+        ]
+      }
+    ],
+    "id": "fusq",
+    "parent": "3ddd",
+    "movableInEdit": false,
+    "width": 80,
+    "height": 80,
+    "css": "opacity:0",
+    "z": 21605,
+    "debug": false,
+    "layer": 2,
+    "rotation": 45,
+    "x": 11,
+    "y": 9,
+    "movable": false
+  },
+  "3ddd": {
+    "faces": [
+      {
+        "value": 1,
+        "image": "/assets/1925169679_31051"
+      },
+      {
+        "value": 1,
+        "image": "/assets/136562985_37299"
+      },
+      {
+        "value": 1,
+        "image": "/assets/1787376998_31661"
+      },
+      {
+        "value": 1,
+        "image": "/assets/1863200732_35303"
+      },
+      {
+        "value": 2,
+        "image": "/assets/-788352442_40663"
+      },
+      {
+        "value": 2,
+        "image": "/assets/1697908701_40061"
+      },
+      {
+        "value": 2,
+        "image": "/assets/-2094267382_31585"
+      },
+      {
+        "value": 2,
+        "image": "/assets/780552644_31850"
+      },
+      {
+        "value": 3,
+        "image": "/assets/1289633700_46851"
+      },
+      {
+        "value": 3,
+        "image": "/assets/-1917428665_37723"
+      },
+      {
+        "value": 3,
+        "image": "/assets/333445090_41919"
+      },
+      {
+        "value": 3,
+        "image": "/assets/6530566_31068"
+      },
+      {
+        "value": 4,
+        "image": "/assets/1911681449_42037"
+      },
+      {
+        "value": 4,
+        "image": "/assets/405509001_39966"
+      },
+      {
+        "value": 4,
+        "image": "/assets/-281115846_49035"
+      },
+      {
+        "value": 4,
+        "image": "/assets/-1846208178_36781"
+      },
+      {
+        "value": 5,
+        "image": "/assets/-1197054393_48630"
+      },
+      {
+        "value": 5,
+        "image": "/assets/934061303_40710"
+      },
+      {
+        "value": 5,
+        "image": "/assets/-1417464351_48233"
+      },
+      {
+        "value": 5,
+        "image": "/assets/-169609716_36565"
+      },
+      {
+        "value": 6,
+        "image": "/assets/1872203222_50118"
+      },
+      {
+        "value": 6,
+        "image": "/assets/-384500910_49989"
+      },
+      {
+        "value": 6,
+        "image": "/assets/1384430480_41253"
+      },
+      {
+        "value": 6,
+        "image": "/assets/1285703129_44251"
+      }
+    ],
+    "id": "3ddd",
+    "value": 4,
+    "image": "/assets/1911681449_42037",
+    "z": 75334,
+    "scale": 1,
+    "x": 1371,
+    "y": 449,
+    "faceCycle": "random",
+    "centerX": 750,
+    "centerY": 446,
+    "jumpX": 752,
+    "jumpY": 438,
+    "activeFace": 7,
+    "rotation": 5
+  },
+  "gep2": {
+    "image": "/assets/1854106421_2148736",
+    "movable": false,
+    "width": 950,
+    "height": 950,
+    "layer": -4,
+    "id": "gep2",
+    "y": 25,
+    "x": 325,
+    "z": 1,
+    "movableInEdit": false
+  },
+  "y7i2": {
+    "image": "/assets/-2000921333_378618",
+    "movable": false,
+    "width": 1600,
+    "height": 1000,
+    "layer": -5,
+    "id": "y7i2",
+    "y": 0,
+    "x": 0
+  },
+  "gjkz": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      }
+    ],
+    "color": "#e91b2a",
+    "width": 50,
+    "height": 50,
+    "x": 5,
+    "y": 5,
+    "z": 75449,
+    "id": "gjkz",
+    "classes": "checkersPiece",
+    "type": "gamePiece",
+    "parent": "75v9-copy051"
+  },
+  "euil": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      }
+    ],
+    "color": "#c7c342",
+    "width": 50,
+    "height": 50,
+    "x": 5,
+    "y": 5,
+    "z": 75483,
+    "id": "euil",
+    "classes": "checkersPiece",
+    "type": "gamePiece",
+    "parent": "75v9-copy089"
+  },
+  "jkq7": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      }
+    ],
+    "color": "#1e1f1b",
+    "width": 50,
+    "height": 50,
+    "x": 5,
+    "y": 5,
+    "z": 75485,
+    "id": "jkq7",
+    "classes": "checkersPiece",
+    "type": "gamePiece",
+    "parent": "75v9-copy074"
+  },
+  "fzca": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      }
+    ],
+    "color": "#63a177",
+    "width": 50,
+    "height": 50,
+    "x": 5,
+    "y": 5,
+    "z": 75470,
+    "id": "fzca",
+    "classes": "checkersPiece",
+    "type": "gamePiece",
+    "parent": "75v9-copy095"
+  },
+  "euil-copy001": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      }
+    ],
+    "color": "#c7c342",
+    "width": 50,
+    "height": 50,
+    "x": 5,
+    "y": 5,
+    "id": "euil-copy001",
+    "classes": "checkersPiece",
+    "z": 75479,
+    "type": "gamePiece",
+    "parent": "75v9-copy091"
+  },
+  "euil-copy002": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      }
+    ],
+    "color": "#c7c342",
+    "width": 50,
+    "height": 50,
+    "x": 5,
+    "y": 5,
+    "id": "euil-copy002",
+    "classes": "checkersPiece",
+    "z": 75498,
+    "type": "gamePiece",
+    "parent": "75v9-copy090"
+  },
+  "euil-copy003": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      }
+    ],
+    "color": "#c7c342",
+    "width": 50,
+    "height": 50,
+    "x": 5,
+    "y": 5,
+    "id": "euil-copy003",
+    "classes": "checkersPiece",
+    "z": 75537,
+    "type": "gamePiece",
+    "parent": "75v9-copy088"
+  },
+  "jkq7-copy001": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      }
+    ],
+    "color": "#1e1f1b",
+    "width": 50,
+    "height": 50,
+    "x": 5,
+    "y": 5,
+    "id": "jkq7-copy001",
+    "classes": "checkersPiece",
+    "z": 75489,
+    "type": "gamePiece",
+    "parent": "75v9-copy077"
+  },
+  "jkq7-copy002": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      }
+    ],
+    "color": "#1e1f1b",
+    "width": 50,
+    "height": 50,
+    "x": 5,
+    "y": 5,
+    "id": "jkq7-copy002",
+    "classes": "checkersPiece",
+    "z": 75491,
+    "type": "gamePiece",
+    "parent": "75v9-copy076"
+  },
+  "jkq7-copy003": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      }
+    ],
+    "color": "#1e1f1b",
+    "width": 50,
+    "height": 50,
+    "x": 5,
+    "y": 5,
+    "id": "jkq7-copy003",
+    "classes": "checkersPiece",
+    "z": 75487,
+    "type": "gamePiece",
+    "parent": "75v9-copy075"
+  },
+  "gjkz-copy001": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      }
+    ],
+    "color": "#e91b2a",
+    "width": 50,
+    "height": 50,
+    "x": 5,
+    "y": 5,
+    "id": "gjkz-copy001",
+    "classes": "checkersPiece",
+    "z": 75447,
+    "type": "gamePiece",
+    "parent": "75v9-copy048"
+  },
+  "gjkz-copy002": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      }
+    ],
+    "color": "#e91b2a",
+    "width": 50,
+    "height": 50,
+    "x": 5,
+    "y": 5,
+    "id": "gjkz-copy002",
+    "classes": "checkersPiece",
+    "z": 75451,
+    "type": "gamePiece",
+    "parent": "75v9-copy050"
+  },
+  "gjkz-copy003": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      }
+    ],
+    "color": "#e91b2a",
+    "width": 50,
+    "height": 50,
+    "x": 5,
+    "y": 5,
+    "id": "gjkz-copy003",
+    "classes": "checkersPiece",
+    "z": 75445,
+    "type": "gamePiece",
+    "parent": "75v9-copy049"
+  },
+  "fzca-copy002": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      }
+    ],
+    "color": "#63a177",
+    "width": 50,
+    "height": 50,
+    "x": 5,
+    "y": 5,
+    "id": "fzca-copy002",
+    "classes": "checkersPiece",
+    "z": 75474,
+    "type": "gamePiece",
+    "parent": "75v9-copy093"
+  },
+  "fzca-copy003": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      }
+    ],
+    "color": "#63a177",
+    "width": 50,
+    "height": 50,
+    "x": 5,
+    "id": "fzca-copy003",
+    "classes": "checkersPiece",
+    "z": 75472,
+    "y": 5,
+    "type": "gamePiece",
+    "parent": "75v9-copy092"
+  },
+  "wrps": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      }
+    ],
+    "color": "#2c4783",
+    "width": 50,
+    "height": 50,
+    "x": 5,
+    "classes": "checkersPiece",
+    "z": 75454,
+    "y": 5,
+    "id": "wrps",
+    "type": "gamePiece",
+    "parent": "75v9-copy053"
+  },
+  "bjg8": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      }
+    ],
+    "color": "#923853",
+    "width": 50,
+    "height": 50,
+    "x": 5,
+    "classes": "checkersPiece",
+    "z": 75466,
+    "y": 5,
+    "id": "bjg8",
+    "type": "gamePiece",
+    "parent": "75v9-copy024"
+  },
+  "rg4m": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      }
+    ],
+    "color": "#2c4783",
+    "width": 50,
+    "height": 50,
+    "x": 5,
+    "classes": "checkersPiece",
+    "z": 75460,
+    "y": 5,
+    "id": "rg4m",
+    "type": "gamePiece",
+    "parent": "75v9-copy055"
+  },
+  "unxb": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      }
+    ],
+    "color": "#2c4783",
+    "width": 50,
+    "height": 50,
+    "x": 5,
+    "classes": "checkersPiece",
+    "z": 75458,
+    "y": 5,
+    "id": "unxb",
+    "type": "gamePiece",
+    "parent": "75v9-copy054"
+  },
+  "7a1q": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      }
+    ],
+    "color": "#2c4783",
+    "width": 50,
+    "height": 50,
+    "x": 5,
+    "classes": "checkersPiece",
+    "z": 75456,
+    "y": 5,
+    "id": "7a1q",
+    "type": "gamePiece",
+    "parent": "75v9-copy052"
+  },
+  "89pk": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      }
+    ],
+    "color": "#923853",
+    "width": 50,
+    "height": 50,
+    "x": 5,
+    "classes": "checkersPiece",
+    "z": 75468,
+    "y": 5,
+    "id": "89pk",
+    "type": "gamePiece",
+    "parent": "75v9-copy021"
+  },
+  "ebdw": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      }
+    ],
+    "color": "#923853",
+    "width": 50,
+    "height": 50,
+    "x": 5,
+    "classes": "checkersPiece",
+    "z": 75464,
+    "y": 5,
+    "id": "ebdw",
+    "type": "gamePiece",
+    "parent": "75v9-copy022"
+  },
+  "i7na": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      }
+    ],
+    "color": "#923853",
+    "width": 50,
+    "height": 50,
+    "x": 5,
+    "classes": "checkersPiece",
+    "z": 75462,
+    "y": 5,
+    "id": "i7na",
+    "type": "gamePiece",
+    "parent": "75v9-copy023"
+  },
+  "75v9": {
+    "type": "holder",
+    "x": 390,
+    "y": 386,
+    "z": 75564,
+    "id": "75v9",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent"
+  },
+  "75v9-copy001": {
+    "type": "holder",
+    "x": 470,
+    "y": 384,
+    "id": "75v9-copy001",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75565
+  },
+  "75v9-copy002": {
+    "type": "holder",
+    "x": 548,
+    "y": 386,
+    "id": "75v9-copy002",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75567
+  },
+  "75v9-copy003": {
+    "type": "holder",
+    "x": 628,
+    "y": 387,
+    "id": "75v9-copy003",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75568
+  },
+  "75v9-copy004": {
+    "type": "holder",
+    "x": 588,
+    "y": 316,
+    "id": "75v9-copy004",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75569
+  },
+  "75v9-copy005": {
+    "type": "holder",
+    "x": 548,
+    "y": 246,
+    "id": "75v9-copy005",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75570
+  },
+  "75v9-copy006": {
+    "type": "holder",
+    "x": 507,
+    "y": 178,
+    "id": "75v9-copy006",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75531
+  },
+  "75v9-copy007": {
+    "type": "holder",
+    "x": 580,
+    "y": 136,
+    "id": "75v9-copy007",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75530
+  },
+  "75v9-copy008": {
+    "type": "holder",
+    "x": 648,
+    "y": 95,
+    "id": "75v9-copy008",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75501
+  },
+  "75v9-copy009": {
+    "type": "holder",
+    "x": 620,
+    "y": 206,
+    "id": "75v9-copy009",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75571
+  },
+  "75v9-copy010": {
+    "type": "holder",
+    "x": 659,
+    "y": 274,
+    "id": "75v9-copy010",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75572
+  },
+  "75v9-copy011": {
+    "type": "holder",
+    "x": 699,
+    "y": 344,
+    "id": "75v9-copy011",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75573
+  },
+  "75v9-copy012": {
+    "type": "holder",
+    "x": 739,
+    "y": 413,
+    "id": "75v9-copy012",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75574
+  },
+  "75v9-copy013": {
+    "type": "holder",
+    "x": 690,
+    "y": 165,
+    "id": "75v9-copy013",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75502
+  },
+  "75v9-copy014": {
+    "type": "holder",
+    "x": 730,
+    "y": 233,
+    "id": "75v9-copy014",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75532
+  },
+  "75v9-copy015": {
+    "type": "holder",
+    "x": 769,
+    "y": 304,
+    "id": "75v9-copy015",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75533
+  },
+  "75v9-copy016": {
+    "type": "holder",
+    "x": 809,
+    "y": 234,
+    "id": "75v9-copy016",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75505
+  },
+  "75v9-copy017": {
+    "type": "holder",
+    "x": 847,
+    "y": 165,
+    "id": "75v9-copy017",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75506
+  },
+  "75v9-copy018": {
+    "type": "holder",
+    "x": 888,
+    "y": 95,
+    "id": "75v9-copy018",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75509
+  },
+  "75v9-copy019": {
+    "type": "holder",
+    "x": 960,
+    "y": 137,
+    "id": "75v9-copy019",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75508
+  },
+  "75v9-copy020": {
+    "type": "holder",
+    "x": 1031,
+    "y": 177,
+    "id": "75v9-copy020",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75534
+  },
+  "75v9-copy021": {
+    "type": "holder",
+    "x": 1098,
+    "y": 59,
+    "id": "75v9-copy021",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75606
+  },
+  "75v9-copy022": {
+    "type": "holder",
+    "x": 1178,
+    "y": 59,
+    "id": "75v9-copy022",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75607
+  },
+  "75v9-copy023": {
+    "type": "holder",
+    "x": 1178,
+    "y": 138,
+    "id": "75v9-copy023",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75608
+  },
+  "75v9-copy024": {
+    "type": "holder",
+    "x": 1098,
+    "y": 139,
+    "id": "75v9-copy024",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75610
+  },
+  "75v9-copy025": {
+    "type": "holder",
+    "x": 990,
+    "y": 243,
+    "id": "75v9-copy025",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75512
+  },
+  "75v9-copy026": {
+    "type": "holder",
+    "x": 951,
+    "y": 314,
+    "id": "75v9-copy026",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75535
+  },
+  "75v9-copy027": {
+    "type": "holder",
+    "x": 909,
+    "y": 385,
+    "id": "75v9-copy027",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75536
+  },
+  "75v9-copy028": {
+    "type": "holder",
+    "x": 919,
+    "y": 207,
+    "id": "75v9-copy028",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75579
+  },
+  "75v9-copy029": {
+    "type": "holder",
+    "x": 880,
+    "y": 275,
+    "id": "75v9-copy029",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75578
+  },
+  "75v9-copy030": {
+    "type": "holder",
+    "x": 840,
+    "y": 344,
+    "id": "75v9-copy030",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75576
+  },
+  "75v9-copy031": {
+    "type": "holder",
+    "x": 800,
+    "y": 412,
+    "id": "75v9-copy031",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75575
+  },
+  "75v9-copy032": {
+    "type": "holder",
+    "x": 831,
+    "y": 467,
+    "id": "75v9-copy032",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75581
+  },
+  "75v9-copy033": {
+    "type": "holder",
+    "x": 911,
+    "y": 466,
+    "id": "75v9-copy033",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75580
+  },
+  "75v9-copy034": {
+    "type": "holder",
+    "x": 990,
+    "y": 468,
+    "id": "75v9-copy034",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75582
+  },
+  "75v9-copy035": {
+    "type": "holder",
+    "x": 1071,
+    "y": 468,
+    "id": "75v9-copy035",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75583
+  },
+  "75v9-copy036": {
+    "type": "holder",
+    "x": 990,
+    "y": 385,
+    "id": "75v9-copy036",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75516
+  },
+  "75v9-copy037": {
+    "type": "holder",
+    "x": 1070,
+    "y": 386,
+    "id": "75v9-copy037",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75517
+  },
+  "75v9-copy038": {
+    "type": "holder",
+    "x": 1151,
+    "y": 384,
+    "id": "75v9-copy038",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75538
+  },
+  "75v9-copy039": {
+    "type": "holder",
+    "x": 1153,
+    "y": 467,
+    "id": "75v9-copy039",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75539
+  },
+  "75v9-copy040": {
+    "type": "holder",
+    "x": 1152,
+    "y": 552,
+    "id": "75v9-copy040",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75540
+  },
+  "75v9-copy041": {
+    "type": "holder",
+    "x": 1071,
+    "y": 550,
+    "id": "75v9-copy041",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75541
+  },
+  "75v9-copy042": {
+    "type": "holder",
+    "x": 991,
+    "y": 550,
+    "id": "75v9-copy042",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75542
+  },
+  "75v9-copy043": {
+    "type": "holder",
+    "x": 911,
+    "y": 550,
+    "id": "75v9-copy043",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75543
+  },
+  "75v9-copy044": {
+    "type": "holder",
+    "x": 952,
+    "y": 619,
+    "id": "75v9-copy044",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75544
+  },
+  "75v9-copy045": {
+    "type": "holder",
+    "x": 993,
+    "y": 688,
+    "id": "75v9-copy045",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75545
+  },
+  "75v9-copy046": {
+    "type": "holder",
+    "x": 1033,
+    "y": 757,
+    "id": "75v9-copy046",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75546
+  },
+  "75v9-copy047": {
+    "type": "holder",
+    "x": 962,
+    "y": 798,
+    "id": "75v9-copy047",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75547
+  },
+  "75v9-copy048": {
+    "type": "holder",
+    "x": 1101,
+    "y": 642,
+    "id": "75v9-copy048",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75613
+  },
+  "75v9-copy049": {
+    "type": "holder",
+    "x": 1182,
+    "y": 640,
+    "id": "75v9-copy049",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75612
+  },
+  "75v9-copy050": {
+    "type": "holder",
+    "x": 1182,
+    "y": 722,
+    "id": "75v9-copy050",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75616
+  },
+  "75v9-copy051": {
+    "type": "holder",
+    "x": 1099,
+    "y": 723,
+    "id": "75v9-copy051",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75614
+  },
+  "75v9-copy052": {
+    "type": "holder",
+    "x": 1099,
+    "y": 811,
+    "id": "75v9-copy052",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75618
+  },
+  "75v9-copy053": {
+    "type": "holder",
+    "x": 1182,
+    "y": 809,
+    "id": "75v9-copy053",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75617
+  },
+  "75v9-copy054": {
+    "type": "holder",
+    "x": 1100,
+    "y": 888,
+    "id": "75v9-copy054",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75619
+  },
+  "75v9-copy055": {
+    "type": "holder",
+    "x": 1181,
+    "y": 888,
+    "id": "75v9-copy055",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75620
+  },
+  "75v9-copy056": {
+    "type": "holder",
+    "x": 893,
+    "y": 840,
+    "id": "75v9-copy056",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75548
+  },
+  "75v9-copy057": {
+    "type": "holder",
+    "x": 920,
+    "y": 731,
+    "id": "75v9-copy057",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75584
+  },
+  "75v9-copy058": {
+    "type": "holder",
+    "x": 881,
+    "y": 661,
+    "id": "75v9-copy058",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75585
+  },
+  "75v9-copy059": {
+    "type": "holder",
+    "x": 841,
+    "y": 592,
+    "id": "75v9-copy059",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75586
+  },
+  "75v9-copy060": {
+    "type": "holder",
+    "x": 801,
+    "y": 523,
+    "id": "75v9-copy060",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75587
+  },
+  "75v9-copy061": {
+    "type": "holder",
+    "x": 740,
+    "y": 520,
+    "id": "75v9-copy061",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75588
+  },
+  "75v9-copy062": {
+    "type": "holder",
+    "x": 708,
+    "y": 465,
+    "id": "75v9-copy062",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75589
+  },
+  "75v9-copy063": {
+    "type": "holder",
+    "x": 628,
+    "y": 466,
+    "id": "75v9-copy063",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75594
+  },
+  "75v9-copy064": {
+    "type": "holder",
+    "x": 548,
+    "y": 466,
+    "id": "75v9-copy064",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75595
+  },
+  "75v9-copy065": {
+    "type": "holder",
+    "x": 468,
+    "y": 463,
+    "id": "75v9-copy065",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75596
+  },
+  "75v9-copy066": {
+    "type": "holder",
+    "x": 389,
+    "y": 465,
+    "id": "75v9-copy066",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75563
+  },
+  "75v9-copy067": {
+    "type": "holder",
+    "x": 390,
+    "y": 547,
+    "id": "75v9-copy067",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75562
+  },
+  "75v9-copy068": {
+    "type": "holder",
+    "x": 470,
+    "y": 549,
+    "id": "75v9-copy068",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75561
+  },
+  "75v9-copy069": {
+    "type": "holder",
+    "x": 550,
+    "y": 548,
+    "id": "75v9-copy069",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75560
+  },
+  "75v9-copy070": {
+    "type": "holder",
+    "x": 628,
+    "y": 548,
+    "id": "75v9-copy070",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75559
+  },
+  "75v9-copy071": {
+    "type": "holder",
+    "x": 587,
+    "y": 618,
+    "id": "75v9-copy071",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75558
+  },
+  "75v9-copy072": {
+    "type": "holder",
+    "x": 548,
+    "y": 690,
+    "id": "75v9-copy072",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75557
+  },
+  "75v9-copy073": {
+    "type": "holder",
+    "x": 506,
+    "y": 759,
+    "id": "75v9-copy073",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75556
+  },
+  "75v9-copy074": {
+    "type": "holder",
+    "x": 363,
+    "y": 797,
+    "id": "75v9-copy074",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75598
+  },
+  "75v9-copy075": {
+    "type": "holder",
+    "x": 441,
+    "y": 797,
+    "id": "75v9-copy075",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75597
+  },
+  "75v9-copy076": {
+    "type": "holder",
+    "x": 362,
+    "y": 877,
+    "id": "75v9-copy076",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75599
+  },
+  "75v9-copy077": {
+    "type": "holder",
+    "x": 440,
+    "y": 879,
+    "id": "75v9-copy077",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75600
+  },
+  "75v9-copy078": {
+    "type": "holder",
+    "x": 576,
+    "y": 801,
+    "id": "75v9-copy078",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75555
+  },
+  "75v9-copy079": {
+    "type": "holder",
+    "x": 618,
+    "y": 730,
+    "id": "75v9-copy079",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75592
+  },
+  "75v9-copy080": {
+    "type": "holder",
+    "x": 658,
+    "y": 659,
+    "id": "75v9-copy080",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75593
+  },
+  "75v9-copy081": {
+    "type": "holder",
+    "x": 700,
+    "y": 589,
+    "id": "75v9-copy081",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75590
+  },
+  "75v9-copy082": {
+    "type": "holder",
+    "x": 770,
+    "y": 631,
+    "id": "75v9-copy082",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75551
+  },
+  "75v9-copy083": {
+    "type": "holder",
+    "x": 811,
+    "y": 700,
+    "id": "75v9-copy083",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75550
+  },
+  "75v9-copy084": {
+    "type": "holder",
+    "x": 851,
+    "y": 770,
+    "id": "75v9-copy084",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75549
+  },
+  "75v9-copy085": {
+    "type": "holder",
+    "x": 727,
+    "y": 700,
+    "id": "75v9-copy085",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75552
+  },
+  "75v9-copy086": {
+    "type": "holder",
+    "x": 686,
+    "y": 770,
+    "id": "75v9-copy086",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75553
+  },
+  "75v9-copy087": {
+    "type": "holder",
+    "x": 646,
+    "y": 842,
+    "id": "75v9-copy087",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75554
+  },
+  "75v9-copy088": {
+    "type": "holder",
+    "x": 451,
+    "y": 298,
+    "id": "75v9-copy088",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75605
+  },
+  "75v9-copy089": {
+    "type": "holder",
+    "x": 373,
+    "y": 300,
+    "id": "75v9-copy089",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75566
+  },
+  "75v9-copy090": {
+    "type": "holder",
+    "x": 372,
+    "y": 220,
+    "id": "75v9-copy090",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75603
+  },
+  "75v9-copy091": {
+    "type": "holder",
+    "x": 449,
+    "y": 220,
+    "id": "75v9-copy091",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75604
+  },
+  "75v9-copy092": {
+    "type": "holder",
+    "x": 449,
+    "y": 141,
+    "id": "75v9-copy092",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75602
+  },
+  "75v9-copy093": {
+    "type": "holder",
+    "x": 368,
+    "y": 142,
+    "id": "75v9-copy093",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75527
+  },
+  "75v9-copy094": {
+    "type": "holder",
+    "x": 369,
+    "y": 64,
+    "id": "75v9-copy094",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75526
+  },
+  "75v9-copy095": {
+    "type": "holder",
+    "x": 450,
+    "y": 63,
+    "id": "75v9-copy095",
+    "width": 60,
+    "height": 60,
+    "css": "border-radius:50%;border-color:#00000000!important",
+    "dropTarget": {
+      "type": "gamePiece"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "classes": "transparent",
+    "z": 75601
+  },
+  "fzca-copy001": {
+    "faces": [
+      {
+        "classes": "checkersPiece"
+      }
+    ],
+    "color": "#63a177",
+    "width": 50,
+    "height": 50,
+    "x": 5,
+    "y": 5,
+    "id": "fzca-copy001",
+    "classes": "checkersPiece",
+    "z": 75496,
+    "type": "gamePiece",
+    "parent": "75v9-copy094"
+  },
+  "_meta": {
+    "version": 1,
+    "info": {
+      "name": "It's Just a Game, Chill",
+      "image": "/assets/1486999830_11967341",
+      "rules": "",
+      "bgg": "",
+      "year": "1910",
+      "mode": "vs",
+      "time": "30",
+      "players": "2-6",
+      "language": "UN",
+      "variant": "",
+      "attribution": "The room design and 6 player board (modified 4 player board) are by Ingegneus and are released to the Public Domain under CC0.\n\nThe 4 player board by Vitavia is from https://commons.wikimedia.org/wiki/File:Mensch%C3%84rgereDichNicht_Germany1929_front.jpg and is available under CC BY-SA 4.0.\n\nThe wood background by Nathan Dumlao is from https://unsplash.com/photos/J2gEgTPM_OA and is available under the Unsplash license.\n\nThe room also uses the image from https://pixabay.com/photos/paper-old-texture-parchment-1074136/ which is available under the Pixabay License.\n\n-The Dice is from VTT's Public Domain assets.",
+      "similarName": "Mensch ärgere Dich nicht",
+      "similarLink": "https://www.boardgamegeek.com/boardgame/2136/pachisi",
+      "description": "Move tokens around board according to roll of dice.  First player to get all tokens to home wins."
+    }
+  }
+}

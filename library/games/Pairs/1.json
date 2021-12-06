@@ -1,0 +1,3853 @@
+{
+  "playerSwitchboard": {
+    "type": "holder",
+    "x": 600,
+    "z": 40152,
+    "id": "playerSwitchboard",
+    "dropTarget": {},
+    "alignChildren": false,
+    "width": 400,
+    "css": "background-color:#00000000;border-color:#00000000",
+    "height": 296,
+    "layer": 4,
+    "y": 260
+  },
+  "hctwD": {
+    "id": "hctwD",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "hctw",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "counterLabel"
+  },
+  "counterLabel": {
+    "type": "label",
+    "text": 85,
+    "id": "counterLabel",
+    "x": 1623,
+    "y": 437,
+    "width": 140,
+    "height": 44,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "z": 3038
+  },
+  "plusCounter": {
+    "id": "plusCounter",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "counterLabel",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "counterLabel"
+  },
+  "3k3q": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "clonedFrom",
+        "relation": "!=",
+        "value": null,
+        "collection": "deleteOld"
+      },
+      {
+        "func": "DELETE",
+        "collection": "deleteOld"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "pw73B",
+        "relation": "==",
+        "collection": "recall"
+      },
+      {
+        "func": "CLICK",
+        "collection": "recall"
+      },
+      {
+        "func": "SELECT",
+        "property": "board",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "=",
+        "value": 1900
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "10paare"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "=",
+        "value": 280
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "relation": "=",
+        "value": 85
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "relation": "=",
+        "value": 1.1
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "changeBoard"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "MOVE",
+        "from": "deck",
+        "to": "zwischenDing",
+        "count": 10
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "zwischenDing"
+      },
+      {
+        "func": "CLONE",
+        "collection": "tempCards"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "zwischenDing"
+      },
+      {
+        "func": "MOVE",
+        "from": "zwischenDing",
+        "to": [
+          "grid002-1-1",
+          "grid002-1-2",
+          "grid002-1-3",
+          "grid002-1-4",
+          "grid002-1-5",
+          "grid002-2-1",
+          "grid002-2-2",
+          "grid002-2-3",
+          "grid002-2-4",
+          "grid002-2-5",
+          "grid002-3-1",
+          "grid002-3-2",
+          "grid002-3-3",
+          "grid002-3-4",
+          "grid002-3-5",
+          "grid002-4-1",
+          "grid002-4-2",
+          "grid002-4-3",
+          "grid002-4-4",
+          "grid002-4-5"
+        ]
+      }
+    ],
+    "z": 40073,
+    "id": "3k3q",
+    "css": "color:#303030;font-size:18px;background-color:#00000000;border-width:0px;",
+    "width": 70,
+    "height": 60,
+    "parent": "PB2",
+    "layer": 4,
+    "text": "5x4"
+  },
+  "ckgx": {
+    "type": "button",
+    "text": "6x5",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "clonedFrom",
+        "relation": "!=",
+        "value": null,
+        "collection": "deleteOld"
+      },
+      {
+        "func": "DELETE",
+        "collection": "deleteOld"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "pw73B",
+        "relation": "==",
+        "collection": "recall"
+      },
+      {
+        "func": "CLICK",
+        "collection": "recall"
+      },
+      {
+        "func": "SELECT",
+        "property": "board",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "=",
+        "value": 1900
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "15paare"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "=",
+        "value": 175
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "relation": "=",
+        "value": -20
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "relation": "=",
+        "value": 0.9
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "changeBoard"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "MOVE",
+        "from": "deck",
+        "to": "zwischenDing",
+        "count": 15
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "zwischenDing"
+      },
+      {
+        "func": "CLONE",
+        "collection": "tempCards"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "zwischenDing"
+      },
+      {
+        "func": "MOVE",
+        "from": "zwischenDing",
+        "to": [
+          "grid003-1-1",
+          "grid003-1-2",
+          "grid003-1-3",
+          "grid003-1-4",
+          "grid003-1-5",
+          "grid003-1-6",
+          "grid003-2-1",
+          "grid003-2-2",
+          "grid003-2-3",
+          "grid003-2-4",
+          "grid003-2-5",
+          "grid003-2-6",
+          "grid003-3-1",
+          "grid003-3-2",
+          "grid003-3-3",
+          "grid003-3-4",
+          "grid003-3-5",
+          "grid003-3-6",
+          "grid003-4-1",
+          "grid003-4-2",
+          "grid003-4-3",
+          "grid003-4-4",
+          "grid003-4-5",
+          "grid003-4-6",
+          "grid003-5-1",
+          "grid003-5-2",
+          "grid003-5-3",
+          "grid003-5-4",
+          "grid003-5-5",
+          "grid003-5-6"
+        ]
+      }
+    ],
+    "z": 40059,
+    "css": "color:#303030;font-size:18px;background-color:#00000000;border-width:0px;",
+    "width": 70,
+    "height": 60,
+    "id": "ckgx",
+    "parent": "PB3",
+    "layer": 4
+  },
+  "qc4m": {
+    "type": "button",
+    "text": "8x5",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "clonedFrom",
+        "relation": "!=",
+        "value": null,
+        "collection": "deleteOld"
+      },
+      {
+        "func": "DELETE",
+        "collection": "deleteOld"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "pw73B",
+        "relation": "==",
+        "collection": "recall"
+      },
+      {
+        "func": "CLICK",
+        "collection": "recall"
+      },
+      {
+        "func": "SELECT",
+        "property": "board",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "=",
+        "value": 1900
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "20paare"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "=",
+        "value": -35
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "relation": "=",
+        "value": -20
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "relation": "=",
+        "value": 0.8
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "changeBoard"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "MOVE",
+        "from": "deck",
+        "to": "zwischenDing",
+        "count": 20
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "zwischenDing"
+      },
+      {
+        "func": "CLONE",
+        "collection": "tempCards"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "zwischenDing"
+      },
+      {
+        "func": "MOVE",
+        "from": "zwischenDing",
+        "to": [
+          "grid004-1-1",
+          "grid004-1-2",
+          "grid004-1-3",
+          "grid004-1-4",
+          "grid004-1-5",
+          "grid004-1-6",
+          "grid004-1-7",
+          "grid004-1-8",
+          "grid004-2-1",
+          "grid004-2-2",
+          "grid004-2-3",
+          "grid004-2-4",
+          "grid004-2-5",
+          "grid004-2-6",
+          "grid004-2-7",
+          "grid004-2-8",
+          "grid004-3-1",
+          "grid004-3-2",
+          "grid004-3-3",
+          "grid004-3-4",
+          "grid004-3-5",
+          "grid004-3-6",
+          "grid004-3-7",
+          "grid004-3-8",
+          "grid004-4-1",
+          "grid004-4-2",
+          "grid004-4-3",
+          "grid004-4-4",
+          "grid004-4-5",
+          "grid004-4-6",
+          "grid004-4-7",
+          "grid004-4-8",
+          "grid004-5-1",
+          "grid004-5-2",
+          "grid004-5-3",
+          "grid004-5-4",
+          "grid004-5-5",
+          "grid004-5-6",
+          "grid004-5-7",
+          "grid004-5-8"
+        ]
+      }
+    ],
+    "z": 40073,
+    "layer": 4,
+    "css": "color:#303030;font-size:18px;background-color:#00000000;border-width:0px;",
+    "width": 70,
+    "height": 60,
+    "id": "qc4m",
+    "parent": "PB4"
+  },
+  "kxj7": {
+    "type": "button",
+    "text": "10x5",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "clonedFrom",
+        "relation": "!=",
+        "value": null,
+        "collection": "deleteOld"
+      },
+      {
+        "func": "DELETE",
+        "collection": "deleteOld"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "pw73B",
+        "relation": "==",
+        "collection": "recall"
+      },
+      {
+        "func": "CLICK",
+        "collection": "recall"
+      },
+      {
+        "func": "SELECT",
+        "property": "board",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "=",
+        "value": 1900
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "25paare"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "=",
+        "value": -245
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "relation": "=",
+        "value": -20
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "relation": "=",
+        "value": 0.7
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "changeBoard"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "MOVE",
+        "from": "deck",
+        "to": "zwischenDing",
+        "count": 25
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "zwischenDing"
+      },
+      {
+        "func": "CLONE",
+        "collection": "tempCards"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "zwischenDing"
+      },
+      {
+        "func": "MOVE",
+        "from": "zwischenDing",
+        "to": [
+          "grid005-1-1",
+          "grid005-1-2",
+          "grid005-1-3",
+          "grid005-1-4",
+          "grid005-1-5",
+          "grid005-1-6",
+          "grid005-1-7",
+          "grid005-1-8",
+          "grid005-1-9",
+          "grid005-1-10",
+          "grid005-2-1",
+          "grid005-2-2",
+          "grid005-2-3",
+          "grid005-2-4",
+          "grid005-2-5",
+          "grid005-2-6",
+          "grid005-2-7",
+          "grid005-2-8",
+          "grid005-2-9",
+          "grid005-2-10",
+          "grid005-3-1",
+          "grid005-3-2",
+          "grid005-3-3",
+          "grid005-3-4",
+          "grid005-3-5",
+          "grid005-3-6",
+          "grid005-3-7",
+          "grid005-3-8",
+          "grid005-3-9",
+          "grid005-3-10",
+          "grid005-4-1",
+          "grid005-4-2",
+          "grid005-4-3",
+          "grid005-4-4",
+          "grid005-4-5",
+          "grid005-4-6",
+          "grid005-4-7",
+          "grid005-4-8",
+          "grid005-4-9",
+          "grid005-4-10",
+          "grid005-5-1",
+          "grid005-5-2",
+          "grid005-5-3",
+          "grid005-5-4",
+          "grid005-5-5",
+          "grid005-5-6",
+          "grid005-5-7",
+          "grid005-5-8",
+          "grid005-5-9",
+          "grid005-5-10"
+        ]
+      }
+    ],
+    "z": 40055,
+    "css": "color:#303030;font-size:18px;background-color:#00000000;border-width:0px;",
+    "width": 70,
+    "height": 60,
+    "id": "kxj7",
+    "parent": "PB5",
+    "layer": 4
+  },
+  "varv": {
+    "type": "button",
+    "text": "10x6",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "clonedFrom",
+        "relation": "!=",
+        "value": null,
+        "collection": "deleteOld"
+      },
+      {
+        "func": "DELETE",
+        "collection": "deleteOld"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "pw73B",
+        "relation": "==",
+        "collection": "recall"
+      },
+      {
+        "func": "CLICK",
+        "collection": "recall"
+      },
+      {
+        "func": "SELECT",
+        "property": "board",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "=",
+        "value": 1900
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "30paare"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "=",
+        "value": -245
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "relation": "=",
+        "value": -125
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "relation": "=",
+        "value": 0.68
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "changeBoard"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "MOVE",
+        "from": "deck",
+        "to": "zwischenDing",
+        "count": 30
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "zwischenDing"
+      },
+      {
+        "func": "CLONE",
+        "collection": "tempCards"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "zwischenDing"
+      },
+      {
+        "func": "MOVE",
+        "from": "zwischenDing",
+        "to": [
+          "grid006-1-1",
+          "grid006-1-2",
+          "grid006-1-3",
+          "grid006-1-4",
+          "grid006-1-5",
+          "grid006-1-6",
+          "grid006-1-7",
+          "grid006-1-8",
+          "grid006-1-9",
+          "grid006-1-10",
+          "grid006-2-1",
+          "grid006-2-2",
+          "grid006-2-3",
+          "grid006-2-4",
+          "grid006-2-5",
+          "grid006-2-6",
+          "grid006-2-7",
+          "grid006-2-8",
+          "grid006-2-9",
+          "grid006-2-10",
+          "grid006-3-1",
+          "grid006-3-2",
+          "grid006-3-3",
+          "grid006-3-4",
+          "grid006-3-5",
+          "grid006-3-6",
+          "grid006-3-7",
+          "grid006-3-8",
+          "grid006-3-9",
+          "grid006-3-10",
+          "grid006-4-1",
+          "grid006-4-2",
+          "grid006-4-3",
+          "grid006-4-4",
+          "grid006-4-5",
+          "grid006-4-6",
+          "grid006-4-7",
+          "grid006-4-8",
+          "grid006-4-9",
+          "grid006-4-10",
+          "grid006-5-1",
+          "grid006-5-2",
+          "grid006-5-3",
+          "grid006-5-4",
+          "grid006-5-5",
+          "grid006-5-6",
+          "grid006-5-7",
+          "grid006-5-8",
+          "grid006-5-9",
+          "grid006-5-10",
+          "grid006-6-1",
+          "grid006-6-2",
+          "grid006-6-3",
+          "grid006-6-4",
+          "grid006-6-5",
+          "grid006-6-6",
+          "grid006-6-7",
+          "grid006-6-8",
+          "grid006-6-9",
+          "grid006-6-10"
+        ]
+      }
+    ],
+    "z": 40073,
+    "css": "color:#303030;font-size:18px;background-color:#00000000;border-width:0px;",
+    "width": 70,
+    "id": "varv",
+    "parent": "PB6",
+    "layer": 4,
+    "height": 60
+  },
+  "be7f": {
+    "image": "/assets/-1004567241_11721",
+    "id": "be7f",
+    "z": 70793,
+    "x": 1451,
+    "y": 930,
+    "width": 140,
+    "height": 60
+  },
+  "be7f-copy003-copy001": {
+    "image": "/assets/2078926599_18912",
+    "id": "be7f-copy003-copy001",
+    "x": 0,
+    "y": 0,
+    "width": 400,
+    "height": 296,
+    "layer": -3,
+    "movable": false,
+    "z": 40178,
+    "parent": "playerSwitchboard"
+  },
+  "PB2": {
+    "image": "/assets/1703743045_28840",
+    "z": 70792,
+    "x": 39,
+    "y": 50,
+    "height": 70,
+    "width": 70,
+    "id": "PB2",
+    "inheritChildZ": true,
+    "parent": "playerSwitchboard"
+  },
+  "PB5": {
+    "image": "/assets/1703743045_28840",
+    "x": 100,
+    "y": 176,
+    "height": 70,
+    "width": 70,
+    "id": "PB5",
+    "z": 70786,
+    "inheritChildZ": true,
+    "parent": "playerSwitchboard"
+  },
+  "PB4": {
+    "image": "/assets/1703743045_28840",
+    "x": 288,
+    "y": 50,
+    "height": 70,
+    "width": 70,
+    "id": "PB4",
+    "z": 70774,
+    "inheritChildZ": true,
+    "parent": "playerSwitchboard"
+  },
+  "PB3": {
+    "image": "/assets/1703743045_28840",
+    "x": 165,
+    "y": 50,
+    "height": 70,
+    "width": 70,
+    "id": "PB3",
+    "parent": "be7f-copy003-copy001",
+    "z": 6000,
+    "inheritChildZ": true
+  },
+  "PB6": {
+    "image": "/assets/1703743045_28840",
+    "x": 223,
+    "y": 176,
+    "height": 70,
+    "width": 70,
+    "id": "PB6",
+    "z": 70781,
+    "inheritChildZ": true,
+    "parent": "playerSwitchboard"
+  },
+  "gubg": {
+    "image": "/assets/-2000921333_378618",
+    "movable": false,
+    "width": 1600,
+    "height": 1000,
+    "layer": -9,
+    "id": "gubg"
+  },
+  "10paare": {
+    "type": "holder",
+    "x": 280,
+    "y": 85,
+    "z": 10,
+    "id": "10paare",
+    "width": 1040,
+    "height": 830,
+    "classes": "transparent",
+    "board": true,
+    "scale": 1.1
+  },
+  "15paare": {
+    "type": "holder",
+    "x": 1900,
+    "y": -20,
+    "z": 14,
+    "width": 1250,
+    "height": 1040,
+    "classes": "transparent",
+    "id": "15paare",
+    "board": true,
+    "scale": 0.9
+  },
+  "20paare": {
+    "type": "holder",
+    "x": 1900,
+    "y": -20,
+    "z": 13,
+    "width": 1670,
+    "height": 1040,
+    "classes": "transparent",
+    "id": "20paare",
+    "board": true,
+    "scale": 0.8
+  },
+  "25paare": {
+    "type": "holder",
+    "x": 1900,
+    "y": -20,
+    "z": 12,
+    "width": 2090,
+    "height": 1040,
+    "classes": "transparent",
+    "id": "25paare",
+    "board": true,
+    "scale": 0.7
+  },
+  "30paare": {
+    "type": "holder",
+    "x": 1900,
+    "y": -125,
+    "z": 11,
+    "width": 2090,
+    "height": 1250,
+    "classes": "transparent",
+    "id": "30paare",
+    "board": true,
+    "scale": 0.68
+  },
+  "grid002-1-1": {
+    "id": "grid002-1-1",
+    "x": 0,
+    "y": 0,
+    "z": 400,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "10paare"
+  },
+  "grid002-1-2": {
+    "id": "grid002-1-2",
+    "x": 210,
+    "y": 0,
+    "z": 401,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "10paare"
+  },
+  "grid002-1-3": {
+    "id": "grid002-1-3",
+    "x": 420,
+    "y": 0,
+    "z": 402,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "10paare"
+  },
+  "grid002-1-4": {
+    "id": "grid002-1-4",
+    "x": 630,
+    "y": 0,
+    "z": 403,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "10paare"
+  },
+  "grid002-1-5": {
+    "id": "grid002-1-5",
+    "x": 840,
+    "y": 0,
+    "z": 404,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "10paare"
+  },
+  "grid002-2-1": {
+    "id": "grid002-2-1",
+    "x": 0,
+    "y": 210,
+    "z": 405,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "10paare"
+  },
+  "grid002-2-2": {
+    "id": "grid002-2-2",
+    "x": 210,
+    "y": 210,
+    "z": 406,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "10paare"
+  },
+  "grid002-2-3": {
+    "id": "grid002-2-3",
+    "x": 420,
+    "y": 210,
+    "z": 407,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "10paare"
+  },
+  "grid002-2-4": {
+    "id": "grid002-2-4",
+    "x": 630,
+    "y": 210,
+    "z": 408,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "10paare"
+  },
+  "grid002-2-5": {
+    "id": "grid002-2-5",
+    "x": 840,
+    "y": 210,
+    "z": 409,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "10paare"
+  },
+  "grid002-3-1": {
+    "id": "grid002-3-1",
+    "x": 0,
+    "y": 420,
+    "z": 410,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "10paare"
+  },
+  "grid002-3-2": {
+    "id": "grid002-3-2",
+    "x": 210,
+    "y": 420,
+    "z": 411,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "10paare"
+  },
+  "grid002-3-3": {
+    "id": "grid002-3-3",
+    "x": 420,
+    "y": 420,
+    "z": 412,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "10paare"
+  },
+  "grid002-3-4": {
+    "id": "grid002-3-4",
+    "x": 630,
+    "y": 420,
+    "z": 413,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "10paare"
+  },
+  "grid002-3-5": {
+    "id": "grid002-3-5",
+    "x": 840,
+    "y": 420,
+    "z": 414,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "10paare"
+  },
+  "grid002-4-1": {
+    "id": "grid002-4-1",
+    "x": 0,
+    "y": 630,
+    "z": 415,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "10paare"
+  },
+  "grid002-4-2": {
+    "id": "grid002-4-2",
+    "x": 210,
+    "y": 630,
+    "z": 416,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "10paare"
+  },
+  "grid002-4-3": {
+    "id": "grid002-4-3",
+    "x": 420,
+    "y": 630,
+    "z": 417,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "10paare"
+  },
+  "grid002-4-4": {
+    "id": "grid002-4-4",
+    "x": 630,
+    "y": 630,
+    "z": 418,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "10paare"
+  },
+  "grid002-4-5": {
+    "id": "grid002-4-5",
+    "x": 840,
+    "y": 630,
+    "z": 419,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "10paare"
+  },
+  "grid003-1-1": {
+    "id": "grid003-1-1",
+    "x": 0,
+    "y": 0,
+    "z": 400,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "15paare"
+  },
+  "grid003-1-2": {
+    "id": "grid003-1-2",
+    "x": 210,
+    "y": 0,
+    "z": 401,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "15paare"
+  },
+  "grid003-1-3": {
+    "id": "grid003-1-3",
+    "x": 420,
+    "y": 0,
+    "z": 402,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "15paare"
+  },
+  "grid003-1-4": {
+    "id": "grid003-1-4",
+    "x": 630,
+    "y": 0,
+    "z": 403,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "15paare"
+  },
+  "grid003-1-5": {
+    "id": "grid003-1-5",
+    "x": 840,
+    "y": 0,
+    "z": 404,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "15paare"
+  },
+  "grid003-1-6": {
+    "id": "grid003-1-6",
+    "x": 1050,
+    "y": 0,
+    "z": 405,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "15paare"
+  },
+  "grid003-2-1": {
+    "id": "grid003-2-1",
+    "x": 0,
+    "y": 210,
+    "z": 406,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "15paare"
+  },
+  "grid003-2-2": {
+    "id": "grid003-2-2",
+    "x": 210,
+    "y": 210,
+    "z": 407,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "15paare"
+  },
+  "grid003-2-3": {
+    "id": "grid003-2-3",
+    "x": 420,
+    "y": 210,
+    "z": 408,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "15paare"
+  },
+  "grid003-2-4": {
+    "id": "grid003-2-4",
+    "x": 630,
+    "y": 210,
+    "z": 409,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "15paare"
+  },
+  "grid003-2-5": {
+    "id": "grid003-2-5",
+    "x": 840,
+    "y": 210,
+    "z": 410,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "15paare"
+  },
+  "grid003-2-6": {
+    "id": "grid003-2-6",
+    "x": 1050,
+    "y": 210,
+    "z": 411,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "15paare"
+  },
+  "grid003-3-1": {
+    "id": "grid003-3-1",
+    "x": 0,
+    "y": 420,
+    "z": 412,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "15paare"
+  },
+  "grid003-3-2": {
+    "id": "grid003-3-2",
+    "x": 210,
+    "y": 420,
+    "z": 413,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "15paare"
+  },
+  "grid003-3-3": {
+    "id": "grid003-3-3",
+    "x": 420,
+    "y": 420,
+    "z": 414,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "15paare"
+  },
+  "grid003-3-4": {
+    "id": "grid003-3-4",
+    "x": 630,
+    "y": 420,
+    "z": 415,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "15paare"
+  },
+  "grid003-3-5": {
+    "id": "grid003-3-5",
+    "x": 840,
+    "y": 420,
+    "z": 416,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "15paare"
+  },
+  "grid003-3-6": {
+    "id": "grid003-3-6",
+    "x": 1050,
+    "y": 420,
+    "z": 417,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "15paare"
+  },
+  "grid003-4-1": {
+    "id": "grid003-4-1",
+    "x": 0,
+    "y": 630,
+    "z": 418,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "15paare"
+  },
+  "grid003-4-2": {
+    "id": "grid003-4-2",
+    "x": 210,
+    "y": 630,
+    "z": 419,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "15paare"
+  },
+  "grid003-4-3": {
+    "id": "grid003-4-3",
+    "x": 420,
+    "y": 630,
+    "z": 420,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "15paare"
+  },
+  "grid003-4-4": {
+    "id": "grid003-4-4",
+    "x": 630,
+    "y": 630,
+    "z": 421,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "15paare"
+  },
+  "grid003-4-5": {
+    "id": "grid003-4-5",
+    "x": 840,
+    "y": 630,
+    "z": 422,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "15paare"
+  },
+  "grid003-4-6": {
+    "id": "grid003-4-6",
+    "x": 1050,
+    "y": 630,
+    "z": 423,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "15paare"
+  },
+  "grid003-5-1": {
+    "id": "grid003-5-1",
+    "x": 0,
+    "y": 840,
+    "z": 424,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "15paare"
+  },
+  "grid003-5-2": {
+    "id": "grid003-5-2",
+    "x": 210,
+    "y": 840,
+    "z": 425,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "15paare"
+  },
+  "grid003-5-3": {
+    "id": "grid003-5-3",
+    "x": 420,
+    "y": 840,
+    "z": 426,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "15paare"
+  },
+  "grid003-5-4": {
+    "id": "grid003-5-4",
+    "x": 630,
+    "y": 840,
+    "z": 427,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "15paare"
+  },
+  "grid003-5-5": {
+    "id": "grid003-5-5",
+    "x": 840,
+    "y": 840,
+    "z": 428,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "15paare"
+  },
+  "grid003-5-6": {
+    "id": "grid003-5-6",
+    "x": 1050,
+    "y": 840,
+    "z": 429,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "15paare"
+  },
+  "grid004-1-1": {
+    "id": "grid004-1-1",
+    "x": 0,
+    "y": 0,
+    "z": 400,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-1-2": {
+    "id": "grid004-1-2",
+    "x": 210,
+    "y": 0,
+    "z": 401,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-1-3": {
+    "id": "grid004-1-3",
+    "x": 420,
+    "y": 0,
+    "z": 402,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-1-4": {
+    "id": "grid004-1-4",
+    "x": 630,
+    "y": 0,
+    "z": 403,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-1-5": {
+    "id": "grid004-1-5",
+    "x": 840,
+    "y": 0,
+    "z": 404,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-1-6": {
+    "id": "grid004-1-6",
+    "x": 1050,
+    "y": 0,
+    "z": 405,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-1-7": {
+    "id": "grid004-1-7",
+    "x": 1260,
+    "y": 0,
+    "z": 406,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-1-8": {
+    "id": "grid004-1-8",
+    "x": 1470,
+    "y": 0,
+    "z": 407,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-2-1": {
+    "id": "grid004-2-1",
+    "x": 0,
+    "y": 210,
+    "z": 408,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-2-2": {
+    "id": "grid004-2-2",
+    "x": 210,
+    "y": 210,
+    "z": 409,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-2-3": {
+    "id": "grid004-2-3",
+    "x": 420,
+    "y": 210,
+    "z": 410,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-2-4": {
+    "id": "grid004-2-4",
+    "x": 630,
+    "y": 210,
+    "z": 411,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-2-5": {
+    "id": "grid004-2-5",
+    "x": 840,
+    "y": 210,
+    "z": 412,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-2-6": {
+    "id": "grid004-2-6",
+    "x": 1050,
+    "y": 210,
+    "z": 413,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-2-7": {
+    "id": "grid004-2-7",
+    "x": 1260,
+    "y": 210,
+    "z": 414,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-2-8": {
+    "id": "grid004-2-8",
+    "x": 1470,
+    "y": 210,
+    "z": 415,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-3-1": {
+    "id": "grid004-3-1",
+    "x": 0,
+    "y": 420,
+    "z": 416,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-3-2": {
+    "id": "grid004-3-2",
+    "x": 210,
+    "y": 420,
+    "z": 417,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-3-3": {
+    "id": "grid004-3-3",
+    "x": 420,
+    "y": 420,
+    "z": 418,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-3-4": {
+    "id": "grid004-3-4",
+    "x": 630,
+    "y": 420,
+    "z": 419,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-3-5": {
+    "id": "grid004-3-5",
+    "x": 840,
+    "y": 420,
+    "z": 420,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-3-6": {
+    "id": "grid004-3-6",
+    "x": 1050,
+    "y": 420,
+    "z": 421,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-3-7": {
+    "id": "grid004-3-7",
+    "x": 1260,
+    "y": 420,
+    "z": 422,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-3-8": {
+    "id": "grid004-3-8",
+    "x": 1470,
+    "y": 420,
+    "z": 423,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-4-1": {
+    "id": "grid004-4-1",
+    "x": 0,
+    "y": 630,
+    "z": 424,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-4-2": {
+    "id": "grid004-4-2",
+    "x": 210,
+    "y": 630,
+    "z": 425,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-4-3": {
+    "id": "grid004-4-3",
+    "x": 420,
+    "y": 630,
+    "z": 426,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-4-4": {
+    "id": "grid004-4-4",
+    "x": 630,
+    "y": 630,
+    "z": 427,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-4-5": {
+    "id": "grid004-4-5",
+    "x": 840,
+    "y": 630,
+    "z": 428,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-4-6": {
+    "id": "grid004-4-6",
+    "x": 1050,
+    "y": 630,
+    "z": 429,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-4-7": {
+    "id": "grid004-4-7",
+    "x": 1260,
+    "y": 630,
+    "z": 430,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-4-8": {
+    "id": "grid004-4-8",
+    "x": 1470,
+    "y": 630,
+    "z": 431,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-5-1": {
+    "id": "grid004-5-1",
+    "x": 0,
+    "y": 840,
+    "z": 432,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-5-2": {
+    "id": "grid004-5-2",
+    "x": 210,
+    "y": 840,
+    "z": 433,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-5-3": {
+    "id": "grid004-5-3",
+    "x": 420,
+    "y": 840,
+    "z": 434,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-5-4": {
+    "id": "grid004-5-4",
+    "x": 630,
+    "y": 840,
+    "z": 435,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-5-5": {
+    "id": "grid004-5-5",
+    "x": 840,
+    "y": 840,
+    "z": 436,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-5-6": {
+    "id": "grid004-5-6",
+    "x": 1050,
+    "y": 840,
+    "z": 437,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-5-7": {
+    "id": "grid004-5-7",
+    "x": 1260,
+    "y": 840,
+    "z": 438,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid004-5-8": {
+    "id": "grid004-5-8",
+    "x": 1470,
+    "y": 840,
+    "z": 439,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "20paare"
+  },
+  "grid005-1-1": {
+    "id": "grid005-1-1",
+    "x": 0,
+    "y": 0,
+    "z": 400,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-1-2": {
+    "id": "grid005-1-2",
+    "x": 210,
+    "y": 0,
+    "z": 401,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-1-3": {
+    "id": "grid005-1-3",
+    "x": 420,
+    "y": 0,
+    "z": 402,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-1-4": {
+    "id": "grid005-1-4",
+    "x": 630,
+    "y": 0,
+    "z": 403,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-1-5": {
+    "id": "grid005-1-5",
+    "x": 840,
+    "y": 0,
+    "z": 404,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-1-6": {
+    "id": "grid005-1-6",
+    "x": 1050,
+    "y": 0,
+    "z": 405,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-1-7": {
+    "id": "grid005-1-7",
+    "x": 1260,
+    "y": 0,
+    "z": 406,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-1-8": {
+    "id": "grid005-1-8",
+    "x": 1470,
+    "y": 0,
+    "z": 407,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-1-9": {
+    "id": "grid005-1-9",
+    "x": 1680,
+    "y": 0,
+    "z": 408,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-1-10": {
+    "id": "grid005-1-10",
+    "x": 1890,
+    "y": 0,
+    "z": 409,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-2-1": {
+    "id": "grid005-2-1",
+    "x": 0,
+    "y": 210,
+    "z": 410,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-2-2": {
+    "id": "grid005-2-2",
+    "x": 210,
+    "y": 210,
+    "z": 411,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-2-3": {
+    "id": "grid005-2-3",
+    "x": 420,
+    "y": 210,
+    "z": 412,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-2-4": {
+    "id": "grid005-2-4",
+    "x": 630,
+    "y": 210,
+    "z": 413,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-2-5": {
+    "id": "grid005-2-5",
+    "x": 840,
+    "y": 210,
+    "z": 414,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-2-6": {
+    "id": "grid005-2-6",
+    "x": 1050,
+    "y": 210,
+    "z": 415,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-2-7": {
+    "id": "grid005-2-7",
+    "x": 1260,
+    "y": 210,
+    "z": 416,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-2-8": {
+    "id": "grid005-2-8",
+    "x": 1470,
+    "y": 210,
+    "z": 417,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-2-9": {
+    "id": "grid005-2-9",
+    "x": 1680,
+    "y": 210,
+    "z": 418,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-2-10": {
+    "id": "grid005-2-10",
+    "x": 1890,
+    "y": 210,
+    "z": 419,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-3-1": {
+    "id": "grid005-3-1",
+    "x": 0,
+    "y": 420,
+    "z": 420,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-3-2": {
+    "id": "grid005-3-2",
+    "x": 210,
+    "y": 420,
+    "z": 421,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-3-3": {
+    "id": "grid005-3-3",
+    "x": 420,
+    "y": 420,
+    "z": 422,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-3-4": {
+    "id": "grid005-3-4",
+    "x": 630,
+    "y": 420,
+    "z": 423,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-3-5": {
+    "id": "grid005-3-5",
+    "x": 840,
+    "y": 420,
+    "z": 424,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-3-6": {
+    "id": "grid005-3-6",
+    "x": 1050,
+    "y": 420,
+    "z": 425,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-3-7": {
+    "id": "grid005-3-7",
+    "x": 1260,
+    "y": 420,
+    "z": 426,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-3-8": {
+    "id": "grid005-3-8",
+    "x": 1470,
+    "y": 420,
+    "z": 427,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-3-9": {
+    "id": "grid005-3-9",
+    "x": 1680,
+    "y": 420,
+    "z": 428,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-3-10": {
+    "id": "grid005-3-10",
+    "x": 1890,
+    "y": 420,
+    "z": 429,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-4-1": {
+    "id": "grid005-4-1",
+    "x": 0,
+    "y": 630,
+    "z": 430,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-4-2": {
+    "id": "grid005-4-2",
+    "x": 210,
+    "y": 630,
+    "z": 431,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-4-3": {
+    "id": "grid005-4-3",
+    "x": 420,
+    "y": 630,
+    "z": 432,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-4-4": {
+    "id": "grid005-4-4",
+    "x": 630,
+    "y": 630,
+    "z": 433,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-4-5": {
+    "id": "grid005-4-5",
+    "x": 840,
+    "y": 630,
+    "z": 434,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-4-6": {
+    "id": "grid005-4-6",
+    "x": 1050,
+    "y": 630,
+    "z": 435,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-4-7": {
+    "id": "grid005-4-7",
+    "x": 1260,
+    "y": 630,
+    "z": 436,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-4-8": {
+    "id": "grid005-4-8",
+    "x": 1470,
+    "y": 630,
+    "z": 437,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-4-9": {
+    "id": "grid005-4-9",
+    "x": 1680,
+    "y": 630,
+    "z": 438,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-4-10": {
+    "id": "grid005-4-10",
+    "x": 1890,
+    "y": 630,
+    "z": 439,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-5-1": {
+    "id": "grid005-5-1",
+    "x": 0,
+    "y": 840,
+    "z": 440,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-5-2": {
+    "id": "grid005-5-2",
+    "x": 210,
+    "y": 840,
+    "z": 441,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-5-3": {
+    "id": "grid005-5-3",
+    "x": 420,
+    "y": 840,
+    "z": 442,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-5-4": {
+    "id": "grid005-5-4",
+    "x": 630,
+    "y": 840,
+    "z": 443,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-5-5": {
+    "id": "grid005-5-5",
+    "x": 840,
+    "y": 840,
+    "z": 444,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-5-6": {
+    "id": "grid005-5-6",
+    "x": 1050,
+    "y": 840,
+    "z": 445,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-5-7": {
+    "id": "grid005-5-7",
+    "x": 1260,
+    "y": 840,
+    "z": 446,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-5-8": {
+    "id": "grid005-5-8",
+    "x": 1470,
+    "y": 840,
+    "z": 447,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-5-9": {
+    "id": "grid005-5-9",
+    "x": 1680,
+    "y": 840,
+    "z": 448,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid005-5-10": {
+    "id": "grid005-5-10",
+    "x": 1890,
+    "y": 840,
+    "z": 449,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "25paare"
+  },
+  "grid006-1-1": {
+    "id": "grid006-1-1",
+    "x": 0,
+    "y": 0,
+    "z": 400,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-1-2": {
+    "id": "grid006-1-2",
+    "x": 210,
+    "y": 0,
+    "z": 401,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-1-3": {
+    "id": "grid006-1-3",
+    "x": 420,
+    "y": 0,
+    "z": 402,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-1-4": {
+    "id": "grid006-1-4",
+    "x": 630,
+    "y": 0,
+    "z": 403,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-1-5": {
+    "id": "grid006-1-5",
+    "x": 840,
+    "y": 0,
+    "z": 404,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-1-6": {
+    "id": "grid006-1-6",
+    "x": 1050,
+    "y": 0,
+    "z": 405,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-1-7": {
+    "id": "grid006-1-7",
+    "x": 1260,
+    "y": 0,
+    "z": 406,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-1-8": {
+    "id": "grid006-1-8",
+    "x": 1470,
+    "y": 0,
+    "z": 407,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-1-9": {
+    "id": "grid006-1-9",
+    "x": 1680,
+    "y": 0,
+    "z": 408,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-1-10": {
+    "id": "grid006-1-10",
+    "x": 1890,
+    "y": 0,
+    "z": 409,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-2-1": {
+    "id": "grid006-2-1",
+    "x": 0,
+    "y": 210,
+    "z": 410,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-2-2": {
+    "id": "grid006-2-2",
+    "x": 210,
+    "y": 210,
+    "z": 411,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-2-3": {
+    "id": "grid006-2-3",
+    "x": 420,
+    "y": 210,
+    "z": 412,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-2-4": {
+    "id": "grid006-2-4",
+    "x": 630,
+    "y": 210,
+    "z": 413,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-2-5": {
+    "id": "grid006-2-5",
+    "x": 840,
+    "y": 210,
+    "z": 414,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-2-6": {
+    "id": "grid006-2-6",
+    "x": 1050,
+    "y": 210,
+    "z": 415,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-2-7": {
+    "id": "grid006-2-7",
+    "x": 1260,
+    "y": 210,
+    "z": 416,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-2-8": {
+    "id": "grid006-2-8",
+    "x": 1470,
+    "y": 210,
+    "z": 417,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-2-9": {
+    "id": "grid006-2-9",
+    "x": 1680,
+    "y": 210,
+    "z": 418,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-2-10": {
+    "id": "grid006-2-10",
+    "x": 1890,
+    "y": 210,
+    "z": 419,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-3-1": {
+    "id": "grid006-3-1",
+    "x": 0,
+    "y": 420,
+    "z": 420,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-3-2": {
+    "id": "grid006-3-2",
+    "x": 210,
+    "y": 420,
+    "z": 421,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-3-3": {
+    "id": "grid006-3-3",
+    "x": 420,
+    "y": 420,
+    "z": 422,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-3-4": {
+    "id": "grid006-3-4",
+    "x": 630,
+    "y": 420,
+    "z": 423,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-3-5": {
+    "id": "grid006-3-5",
+    "x": 840,
+    "y": 420,
+    "z": 424,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-3-6": {
+    "id": "grid006-3-6",
+    "x": 1050,
+    "y": 420,
+    "z": 425,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-3-7": {
+    "id": "grid006-3-7",
+    "x": 1260,
+    "y": 420,
+    "z": 426,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-3-8": {
+    "id": "grid006-3-8",
+    "x": 1470,
+    "y": 420,
+    "z": 427,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-3-9": {
+    "id": "grid006-3-9",
+    "x": 1680,
+    "y": 420,
+    "z": 428,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-3-10": {
+    "id": "grid006-3-10",
+    "x": 1890,
+    "y": 420,
+    "z": 429,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-4-1": {
+    "id": "grid006-4-1",
+    "x": 0,
+    "y": 630,
+    "z": 430,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-4-2": {
+    "id": "grid006-4-2",
+    "x": 210,
+    "y": 630,
+    "z": 431,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-4-3": {
+    "id": "grid006-4-3",
+    "x": 420,
+    "y": 630,
+    "z": 432,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-4-4": {
+    "id": "grid006-4-4",
+    "x": 630,
+    "y": 630,
+    "z": 433,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-4-5": {
+    "id": "grid006-4-5",
+    "x": 840,
+    "y": 630,
+    "z": 434,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-4-6": {
+    "id": "grid006-4-6",
+    "x": 1050,
+    "y": 630,
+    "z": 435,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-4-7": {
+    "id": "grid006-4-7",
+    "x": 1260,
+    "y": 630,
+    "z": 436,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-4-8": {
+    "id": "grid006-4-8",
+    "x": 1470,
+    "y": 630,
+    "z": 437,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-4-9": {
+    "id": "grid006-4-9",
+    "x": 1680,
+    "y": 630,
+    "z": 438,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-4-10": {
+    "id": "grid006-4-10",
+    "x": 1890,
+    "y": 630,
+    "z": 439,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-5-1": {
+    "id": "grid006-5-1",
+    "x": 0,
+    "y": 840,
+    "z": 440,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-5-2": {
+    "id": "grid006-5-2",
+    "x": 210,
+    "y": 840,
+    "z": 441,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-5-3": {
+    "id": "grid006-5-3",
+    "x": 420,
+    "y": 840,
+    "z": 442,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-5-4": {
+    "id": "grid006-5-4",
+    "x": 630,
+    "y": 840,
+    "z": 443,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-5-5": {
+    "id": "grid006-5-5",
+    "x": 840,
+    "y": 840,
+    "z": 444,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-5-6": {
+    "id": "grid006-5-6",
+    "x": 1050,
+    "y": 840,
+    "z": 445,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-5-7": {
+    "id": "grid006-5-7",
+    "x": 1260,
+    "y": 840,
+    "z": 446,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-5-8": {
+    "id": "grid006-5-8",
+    "x": 1470,
+    "y": 840,
+    "z": 447,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-5-9": {
+    "id": "grid006-5-9",
+    "x": 1680,
+    "y": 840,
+    "z": 448,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-5-10": {
+    "id": "grid006-5-10",
+    "x": 1890,
+    "y": 840,
+    "z": 449,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-6-1": {
+    "id": "grid006-6-1",
+    "x": 0,
+    "y": 1050,
+    "z": 450,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-6-2": {
+    "id": "grid006-6-2",
+    "x": 210,
+    "y": 1050,
+    "z": 451,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-6-3": {
+    "id": "grid006-6-3",
+    "x": 420,
+    "y": 1050,
+    "z": 452,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-6-4": {
+    "id": "grid006-6-4",
+    "x": 630,
+    "y": 1050,
+    "z": 453,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-6-5": {
+    "id": "grid006-6-5",
+    "x": 840,
+    "y": 1050,
+    "z": 454,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-6-6": {
+    "id": "grid006-6-6",
+    "x": 1050,
+    "y": 1050,
+    "z": 455,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-6-7": {
+    "id": "grid006-6-7",
+    "x": 1260,
+    "y": 1050,
+    "z": 456,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-6-8": {
+    "id": "grid006-6-8",
+    "x": 1470,
+    "y": 1050,
+    "z": 457,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-6-9": {
+    "id": "grid006-6-9",
+    "x": 1680,
+    "y": 1050,
+    "z": 458,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "grid006-6-10": {
+    "id": "grid006-6-10",
+    "x": 1890,
+    "y": 1050,
+    "z": 459,
+    "type": "holder",
+    "width": 200,
+    "height": 200,
+    "parent": "30paare"
+  },
+  "changeBoard": {
+    "type": "button",
+    "id": "changeBoard",
+    "parent": "be7f",
+    "width": 140,
+    "height": 60,
+    "z": 70743,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "playerSwitchboard",
+        "collection": "playerSwitchboard"
+      },
+      {
+        "func": "SET",
+        "collection": "playerSwitchboard",
+        "property": "x",
+        "relation": "=",
+        "value": 600
+      },
+      {
+        "func": "SET",
+        "collection": "playerSwitchboard",
+        "property": "y",
+        "relation": "=",
+        "value": 260
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "plusCounter",
+        "collection": "counter"
+      },
+      {
+        "func": "CLICK",
+        "collection": "counter"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "counterLabel",
+        "collection": "label"
+      },
+      {
+        "func": "GET",
+        "collection": "label",
+        "property": "text",
+        "variable": "anzahlClicks"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "%",
+        "applyVariables": [
+          {
+            "parameter": "operand1",
+            "variable": "anzahlClicks"
+          }
+        ],
+        "operand2": 2,
+        "variable": "result"
+      },
+      {
+        "applyVariables": [
+          {
+            "parameter": "skip",
+            "variable": "result"
+          }
+        ],
+        "func": "SELECT",
+        "property": "id",
+        "value": "playerSwitchboard",
+        "collection": "playerSwitchboard",
+        "mode": "add"
+      },
+      {
+        "applyVariables": [
+          {
+            "parameter": "skip",
+            "variable": "result"
+          }
+        ],
+        "func": "SET",
+        "collection": "playerSwitchboard",
+        "property": "x",
+        "relation": "=",
+        "value": 1700
+      },
+      {
+        "applyVariables": [
+          {
+            "parameter": "skip",
+            "variable": "result"
+          }
+        ],
+        "func": "SET",
+        "collection": "playerSwitchboard",
+        "property": "y",
+        "relation": "=",
+        "value": 0
+      }
+    ],
+    "css": "color:#303030;font-size:18px;background-color:#00000000;border-width:0px;",
+    "text": "Change Board"
+  },
+  "deck": {
+    "type": "holder",
+    "id": "deck",
+    "y": 1100,
+    "width": 200,
+    "height": 200
+  },
+  "zwischenDing": {
+    "type": "holder",
+    "id": "zwischenDing",
+    "x": 210,
+    "y": 1100,
+    "width": 200,
+    "height": 200
+  },
+  "pw73B": {
+    "id": "pw73B",
+    "parent": "deck",
+    "y": 210,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "clonedFrom",
+        "value": null,
+        "relation": "!=",
+        "collection": "tempCards"
+      },
+      {
+        "func": "DELETE",
+        "collection": "tempCards"
+      },
+      {
+        "func": "RECALL",
+        "holder": "deck"
+      },
+      {
+        "func": "FLIP",
+        "holder": "deck",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deck"
+      }
+    ]
+  },
+  "f4fa217e-324d-46e3-a517-a07ca7592e9e": {
+    "id": "f4fa217e-324d-46e3-a517-a07ca7592e9e",
+    "x": 4,
+    "y": 4,
+    "z": 35552,
+    "type": "deck",
+    "cardTypes": {},
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#000000",
+            "valueType": "static",
+            "value": "",
+            "width": 192,
+            "height": 192
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 192,
+            "height": 192
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 192,
+      "height": 192,
+      "enlarge": 3
+    },
+    "parent": "deck"
+  },
+  "undefined": {
+    "x": 4,
+    "y": 4
+  },
+  "player1": {
+    "type": "holder",
+    "id": "player1",
+    "x": -156,
+    "y": 10,
+    "width": 212,
+    "height": 212,
+    "z": 70792,
+    "css": "background-color:#ffffffc0;border-color:#ffffff;border-width:10px;",
+    "dropOffsetY": 0,
+    "dropOffsetX": 0
+  },
+  "player2": {
+    "type": "holder",
+    "id": "player2",
+    "x": -156,
+    "y": 237,
+    "width": 212,
+    "height": 212,
+    "z": 70793,
+    "css": "background-color:#ffffffc0;border-color:#ffffff;border-width:10px;",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "player3": {
+    "type": "holder",
+    "id": "player3",
+    "x": -156,
+    "y": 464,
+    "width": 212,
+    "height": 212,
+    "z": 70794,
+    "css": "background-color:#ffffffc0;border-color:#ffffff;border-width:10px;",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "player4": {
+    "type": "holder",
+    "id": "player4",
+    "x": -156,
+    "y": 691,
+    "width": 212,
+    "height": 212,
+    "z": 70795,
+    "css": "background-color:#ffffffc0;border-color:#ffffff;border-width:10px;",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "player5": {
+    "type": "holder",
+    "id": "player5",
+    "x": 1544,
+    "y": 10,
+    "width": 212,
+    "height": 212,
+    "z": 70796,
+    "css": "background-color:#ffffffc0;border-color:#ffffff;border-width:10px;",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "player6": {
+    "type": "holder",
+    "id": "player6",
+    "x": 1544,
+    "y": 237,
+    "width": 212,
+    "height": 212,
+    "z": 70797,
+    "css": "background-color:#ffffffc0;border-color:#ffffff;border-width:10px;",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "player7": {
+    "type": "holder",
+    "id": "player7",
+    "x": 1544,
+    "y": 464,
+    "width": 212,
+    "height": 212,
+    "z": 70798,
+    "css": "background-color:#ffffffc0;border-color:#ffffff;border-width:10px;",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "player8": {
+    "type": "holder",
+    "id": "player8",
+    "x": 1544,
+    "y": 691,
+    "width": 212,
+    "height": 212,
+    "z": 70799,
+    "css": "background-color:#ffffffc0;border-color:#ffffff;border-width:10px;",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "zzs3": {
+    "type": "button",
+    "id": "zzs3",
+    "width": 192,
+    "height": 46,
+    "parent": "player4",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "player4"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "concat",
+        "operand1": "color:black;background-color:#ffffff;border-width:10px!important;border-color:",
+        "applyVariables": [
+          {
+            "parameter": "operand2",
+            "variable": "playerColor"
+          }
+        ],
+        "variable": "cssString"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "concat",
+        "applyVariables": [
+          {
+            "parameter": "operand1",
+            "variable": "cssString"
+          }
+        ],
+        "operand2": "!important",
+        "variable": "cssString"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "concat",
+        "applyVariables": [
+          {
+            "parameter": "operand1",
+            "variable": "cssString"
+          }
+        ],
+        "operand2": ";",
+        "variable": "cssString"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "applyVariables": [
+          {
+            "parameter": "value",
+            "variable": "cssString"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "applyVariables": [
+          {
+            "parameter": "value",
+            "variable": "playerName"
+          }
+        ],
+        "collection": "thisButton"
+      }
+    ],
+    "css": "color:black;font-size:30px;background-color:#00000000;text-align:center;border-width:0px",
+    "x": 73,
+    "y": 73,
+    "rotation": -90,
+    "text": "Sit Here"
+  },
+  "lfmk": {
+    "type": "button",
+    "id": "lfmk",
+    "width": 192,
+    "height": 46,
+    "parent": "player5",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "player5"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "concat",
+        "operand1": "color:black;background-color:#ffffff;border-width:10px!important;border-color:",
+        "applyVariables": [
+          {
+            "parameter": "operand2",
+            "variable": "playerColor"
+          }
+        ],
+        "variable": "cssString"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "concat",
+        "applyVariables": [
+          {
+            "parameter": "operand1",
+            "variable": "cssString"
+          }
+        ],
+        "operand2": "!important",
+        "variable": "cssString"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "concat",
+        "applyVariables": [
+          {
+            "parameter": "operand1",
+            "variable": "cssString"
+          }
+        ],
+        "operand2": ";",
+        "variable": "cssString"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "applyVariables": [
+          {
+            "parameter": "value",
+            "variable": "cssString"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "applyVariables": [
+          {
+            "parameter": "value",
+            "variable": "playerName"
+          }
+        ],
+        "collection": "thisButton"
+      }
+    ],
+    "css": "color:black;font-size:30px;background-color:#00000000;text-align:center;border-width:0px",
+    "rotation": 90,
+    "x": -73,
+    "y": 73,
+    "text": "Sit Here"
+  },
+  "3aq2": {
+    "type": "button",
+    "id": "3aq2",
+    "width": 192,
+    "height": 46,
+    "parent": "player6",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "player6"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "concat",
+        "operand1": "color:black;background-color:#ffffff;border-width:10px!important;border-color:",
+        "applyVariables": [
+          {
+            "parameter": "operand2",
+            "variable": "playerColor"
+          }
+        ],
+        "variable": "cssString"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "concat",
+        "applyVariables": [
+          {
+            "parameter": "operand1",
+            "variable": "cssString"
+          }
+        ],
+        "operand2": "!important",
+        "variable": "cssString"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "concat",
+        "applyVariables": [
+          {
+            "parameter": "operand1",
+            "variable": "cssString"
+          }
+        ],
+        "operand2": ";",
+        "variable": "cssString"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "applyVariables": [
+          {
+            "parameter": "value",
+            "variable": "cssString"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "applyVariables": [
+          {
+            "parameter": "value",
+            "variable": "playerName"
+          }
+        ],
+        "collection": "thisButton"
+      }
+    ],
+    "css": "color:black;font-size:30px;background-color:#00000000;text-align:center;border-width:0px",
+    "x": -73,
+    "y": 73,
+    "rotation": 90,
+    "text": "Sit Here"
+  },
+  "t7nj": {
+    "type": "button",
+    "id": "t7nj",
+    "parent": "player7",
+    "width": 192,
+    "height": 46,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "player7"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "concat",
+        "operand1": "color:black;background-color:#ffffff;border-width:10px!important;border-color:",
+        "applyVariables": [
+          {
+            "parameter": "operand2",
+            "variable": "playerColor"
+          }
+        ],
+        "variable": "cssString"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "concat",
+        "applyVariables": [
+          {
+            "parameter": "operand1",
+            "variable": "cssString"
+          }
+        ],
+        "operand2": "!important",
+        "variable": "cssString"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "concat",
+        "applyVariables": [
+          {
+            "parameter": "operand1",
+            "variable": "cssString"
+          }
+        ],
+        "operand2": ";",
+        "variable": "cssString"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "applyVariables": [
+          {
+            "parameter": "value",
+            "variable": "cssString"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "applyVariables": [
+          {
+            "parameter": "value",
+            "variable": "playerName"
+          }
+        ],
+        "collection": "thisButton"
+      }
+    ],
+    "css": "color:black;font-size:30px;background-color:#00000000;text-align:center;border-width:0px",
+    "x": -73,
+    "y": 73,
+    "rotation": 90,
+    "text": "Sit Here"
+  },
+  "rmlb": {
+    "type": "button",
+    "id": "rmlb",
+    "width": 192,
+    "height": 46,
+    "parent": "player8",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "player8"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "concat",
+        "operand1": "color:black;background-color:#ffffff;border-width:10px!important;border-color:",
+        "applyVariables": [
+          {
+            "parameter": "operand2",
+            "variable": "playerColor"
+          }
+        ],
+        "variable": "cssString"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "concat",
+        "applyVariables": [
+          {
+            "parameter": "operand1",
+            "variable": "cssString"
+          }
+        ],
+        "operand2": "!important",
+        "variable": "cssString"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "concat",
+        "applyVariables": [
+          {
+            "parameter": "operand1",
+            "variable": "cssString"
+          }
+        ],
+        "operand2": ";",
+        "variable": "cssString"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "applyVariables": [
+          {
+            "parameter": "value",
+            "variable": "cssString"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "applyVariables": [
+          {
+            "parameter": "value",
+            "variable": "playerName"
+          }
+        ],
+        "collection": "thisButton"
+      }
+    ],
+    "css": "color:black;font-size:30px;background-color:#00000000;text-align:center;border-width:0px",
+    "x": -73,
+    "y": 73,
+    "rotation": 90,
+    "text": "Sit Here"
+  },
+  "name1": {
+    "type": "button",
+    "id": "name1",
+    "parent": "player1",
+    "x": 73,
+    "y": 73,
+    "width": 192,
+    "height": 46,
+    "rotation": -90,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "player1"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "concat",
+        "operand1": "color:black;background-color:#ffffff;border-width:10px!important;border-color:",
+        "applyVariables": [
+          {
+            "parameter": "operand2",
+            "variable": "playerColor"
+          }
+        ],
+        "variable": "cssString"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "concat",
+        "applyVariables": [
+          {
+            "parameter": "operand1",
+            "variable": "cssString"
+          }
+        ],
+        "operand2": "!important",
+        "variable": "cssString"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "concat",
+        "applyVariables": [
+          {
+            "parameter": "operand1",
+            "variable": "cssString"
+          }
+        ],
+        "operand2": ";",
+        "variable": "cssString"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "applyVariables": [
+          {
+            "parameter": "value",
+            "variable": "cssString"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "applyVariables": [
+          {
+            "parameter": "value",
+            "variable": "playerName"
+          }
+        ],
+        "collection": "thisButton"
+      }
+    ],
+    "css": "color:black;font-size:30px;background-color:#00000000;text-align:center;border-width:0px",
+    "text": "Sit Here"
+  },
+  "name2": {
+    "type": "button",
+    "id": "name2",
+    "parent": "player2",
+    "x": 73,
+    "y": 73,
+    "width": 192,
+    "height": 46,
+    "rotation": -90,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "player2"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "concat",
+        "operand1": "color:black;background-color:#ffffff;border-width:10px!important;border-color:",
+        "applyVariables": [
+          {
+            "parameter": "operand2",
+            "variable": "playerColor"
+          }
+        ],
+        "variable": "cssString"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "concat",
+        "applyVariables": [
+          {
+            "parameter": "operand1",
+            "variable": "cssString"
+          }
+        ],
+        "operand2": "!important",
+        "variable": "cssString"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "concat",
+        "applyVariables": [
+          {
+            "parameter": "operand1",
+            "variable": "cssString"
+          }
+        ],
+        "operand2": ";",
+        "variable": "cssString"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "applyVariables": [
+          {
+            "parameter": "value",
+            "variable": "cssString"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "applyVariables": [
+          {
+            "parameter": "value",
+            "variable": "playerName"
+          }
+        ],
+        "collection": "thisButton"
+      }
+    ],
+    "css": "color:black;font-size:30px;background-color:#00000000;text-align:center;border-width:0px",
+    "text": "Sit Here"
+  },
+  "name3": {
+    "type": "button",
+    "id": "name3",
+    "parent": "player3",
+    "x": 73,
+    "y": 73,
+    "width": 192,
+    "height": 46,
+    "rotation": -90,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "player3"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "concat",
+        "operand1": "color:black;background-color:#ffffff;border-width:10px!important;border-color:",
+        "applyVariables": [
+          {
+            "parameter": "operand2",
+            "variable": "playerColor"
+          }
+        ],
+        "variable": "cssString"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "concat",
+        "applyVariables": [
+          {
+            "parameter": "operand1",
+            "variable": "cssString"
+          }
+        ],
+        "operand2": "!important",
+        "variable": "cssString"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "concat",
+        "applyVariables": [
+          {
+            "parameter": "operand1",
+            "variable": "cssString"
+          }
+        ],
+        "operand2": ";",
+        "variable": "cssString"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "applyVariables": [
+          {
+            "parameter": "value",
+            "variable": "cssString"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "applyVariables": [
+          {
+            "parameter": "value",
+            "variable": "playerName"
+          }
+        ],
+        "collection": "thisButton"
+      }
+    ],
+    "css": "color:black;font-size:30px;background-color:#00000000;text-align:center;border-width:0px",
+    "text": "Sit Here"
+  },
+  "_meta": {
+    "version": 2,
+    "info": {
+      "name": "Pairs",
+      "image": "/assets/-1714225013_46527",
+      "rules": "",
+      "bgg": "",
+      "year": "1959",
+      "mode": "vs",
+      "time": "30",
+      "players": "2-8",
+      "language": "US",
+      "variant": "Template",
+      "attribution": "INSTRUCTIONS: Outside the screen there is a holder with an empty deck. Drag it into the visible part of the table while in JSON editor mode. Now you can fill it with how many Pictures you want. Upload a card back picture. Now place the deck back into the hodler. Select a nice thumbnail picture and your own custom memory game is set up!\n\nThe room design, and other room elements are by Ingegneus and are released to the Public Domain under CC0.\n\nThe wood background by Nathan Dumlao is from-https://unsplash.com/photos/J2gEgTPM_OA and is available under the Unsplash license.\n\nThe UI elements from the player menu are from-https://www.kenney.nl/assets/ui-pack-rpg-expansion and are in the public domain under CC0.",
+      "similarName": "Memory",
+      "similarLink": "https://boardgamegeek.com/boardgame/7688/memory",
+      "description": "Remember where items are hidden to successfully make matches and win pairs.  Player with most matching pairs wins."
+    }
+  }
+}

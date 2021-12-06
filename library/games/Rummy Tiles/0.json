@@ -1,0 +1,2193 @@
+{
+  "table": {
+    "image": "/assets/-2072170188_96733",
+    "movable": false,
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "id": "table",
+    "css": "background-size: 300px 150px; background-repeat: repeat",
+    "z": 1,
+    "x": 0,
+    "movableInEdit": false
+  },
+  "playArea": {
+    "type": "holder",
+    "x": 12.5,
+    "y": 10,
+    "id": "playArea",
+    "css": "border-radius: 0; border-image-source: url(/assets/-1113368112_84025) !important; border-image-slice: 50 !important; border-image-width: 25px !important; border-image-outset: 23px !important; border-image-repeat: round !important; background: transparent; filter: drop-shadow(-1px 2px 7px #000)",
+    "width": 1575,
+    "height": 750,
+    "movableInEdit": false,
+    "onEnter": {
+      "activeFace": 1,
+      "css": ""
+    },
+    "alignChildren": false,
+    "onLeave": {
+      "css": "filter: drop-shadow(-2px 4px 10px #000)"
+    }
+  },
+  "hand": {
+    "type": "holder",
+    "x": 320,
+    "y": 765,
+    "id": "hand",
+    "width": 1260,
+    "height": 245,
+    "borderRadius": 0,
+    "classes": "transparent",
+    "childrenPerOwner": true,
+    "dropOffsetX": 7.5,
+    "dropOffsetY": -37.5,
+    "stackOffsetX": 75,
+    "z": 10,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    }
+  },
+  "rack4": {
+    "type": "holder",
+    "x": 0,
+    "y": 15,
+    "z": 1,
+    "id": "rack4",
+    "parent": "hand",
+    "width": 1260,
+    "height": 55,
+    "alignChildren": false,
+    "childrenPerOwner": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "css": "border: none !important; background-image: url(/assets/-738937364_44560); background-size: 450px 55px; background-repeat: repeat-x; background-position: 0 0; border-radius: 0; background-color:transparent; border-width: 0; filter: drop-shadow(0 -.5px 7px #000);"
+  },
+  "hand3": {
+    "type": "holder",
+    "x": 0,
+    "y": 70,
+    "z": 2,
+    "parent": "hand",
+    "width": 1260,
+    "height": 55,
+    "alignChildren": false,
+    "childrenPerOwner": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "css": "border: none !important; background-image: url(/assets/-738937364_44560); background-size: 450px 55px; background-repeat: repeat-x; background-position: 97px 0; border-radius: 0; background-color:transparent; border-width: 0; filter: drop-shadow(0 -.5px 7px #000);",
+    "id": "hand3"
+  },
+  "rack2": {
+    "type": "holder",
+    "x": 0,
+    "y": 125,
+    "z": 3,
+    "parent": "hand",
+    "width": 1260,
+    "height": 55,
+    "alignChildren": false,
+    "childrenPerOwner": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "css": "border: none !important; background-image: url(/assets/-738937364_44560); background-size: 450px 55px; background-repeat: repeat-x; background-position: -43px 0; border-radius: 0; background-color:transparent; border-width: 0; filter: drop-shadow(0 -.5px 7px #000);",
+    "id": "rack2"
+  },
+  "rack1": {
+    "type": "holder",
+    "x": 0,
+    "y": 180,
+    "z": 4,
+    "parent": "hand",
+    "width": 1260,
+    "height": 55,
+    "alignChildren": false,
+    "childrenPerOwner": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "css": "border: none !important; background-image: url(/assets/-738937364_44560); background-size: 450px 55px; background-repeat: repeat-x; background-position: 53px 0; border-radius: 0; background-color:transparent; border-width: 0; filter: drop-shadow(0 -.5px 7px #000);",
+    "id": "rack1"
+  },
+  "i5wj": {
+    "image": "/assets/33439061_116773",
+    "id": "i5wj",
+    "css": "background-image: url(/assets/33439061_116773); background-size: 225px 150px; background-repeat:repeat",
+    "layer": -3,
+    "height": 225,
+    "y": 775,
+    "x": 1580,
+    "width": 20,
+    "movable": false,
+    "z": 1
+  },
+  "drawPile": {
+    "type": "holder",
+    "x": 15,
+    "y": 10,
+    "z": 1,
+    "id": "drawPile",
+    "height": 200,
+    "width": 245,
+    "css": "border-radius: 55px;",
+    "onEnter": {
+      "activeFace": 0,
+      "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))"
+    },
+    "alignChildren": false,
+    "onLeave": {
+      "rotation": 0,
+      "css": ""
+    },
+    "parent": "drawPileArea",
+    "classes": "transparent"
+  },
+  "drawOne": {
+    "type": "button",
+    "text": "+1",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "tileSource",
+        "to": "hand",
+        "count": "1"
+      }
+    ],
+    "x": 270,
+    "y": 10,
+    "id": "drawOne",
+    "height": 40,
+    "width": 40,
+    "parent": "drawPileArea",
+    "css": "border-width:0; background-color:transparent; color:transparent;"
+  },
+  "draw14": {
+    "type": "button",
+    "text": "+14",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "tileSource",
+        "to": "hand",
+        "count": "14"
+      }
+    ],
+    "x": 270,
+    "y": 65,
+    "height": 40,
+    "width": 40,
+    "id": "draw14",
+    "parent": "drawPileArea",
+    "css": "border-width:0; background-color:transparent; color:transparent;"
+  },
+  "77ed": {
+    "type": "button",
+    "text": "🔄︎",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Resetting game…",
+        "fields": [
+          {
+            "type": "text",
+            "text": "This will recall all tiles from the board and all player racks, mix them, and return them to the draw pile."
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "deckHolder",
+        "owned": true
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "startMix"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "x": 270,
+    "y": 170,
+    "height": 40,
+    "width": 40,
+    "id": "77ed",
+    "parent": "drawPileArea",
+    "css": "border-width:0; background-color:transparent; color:transparent;"
+  },
+  "tileDeck": {
+    "id": "tileDeck",
+    "type": "deck",
+    "cardTypes": {
+      "B01": {
+        "label": "B01",
+        "image": "/assets/-1195549325_982"
+      },
+      "B02": {
+        "label": "B02",
+        "image": "/assets/1331408747_1483"
+      },
+      "B03": {
+        "label": "B03",
+        "image": "/assets/173526828_1552"
+      },
+      "B04": {
+        "label": "B04",
+        "image": "/assets/1427931947_1336"
+      },
+      "B05": {
+        "label": "B05",
+        "image": "/assets/-422060959_1540"
+      },
+      "B06": {
+        "label": "B06",
+        "image": "/assets/-297955638_1553"
+      },
+      "B07": {
+        "label": "B07",
+        "image": "/assets/-326253882_1211"
+      },
+      "B08": {
+        "label": "B08",
+        "image": "/assets/-303511937_1630"
+      },
+      "B09": {
+        "label": "B09",
+        "image": "/assets/660888190_1495"
+      },
+      "B10": {
+        "label": "B10",
+        "image": "/assets/-438295493_2067"
+      },
+      "B11": {
+        "label": "B11",
+        "image": "/assets/-1314031676_1460"
+      },
+      "B12": {
+        "label": "B12",
+        "image": "/assets/836929637_2078"
+      },
+      "B13": {
+        "label": "B13",
+        "image": "/assets/1350424938_2153"
+      },
+      "K01": {
+        "label": "K01",
+        "image": "/assets/1361038237_604"
+      },
+      "K02": {
+        "label": "K02",
+        "image": "/assets/1702565765_753"
+      },
+      "K03": {
+        "label": "K03",
+        "image": "/assets/1435876917_789"
+      },
+      "K04": {
+        "label": "K04",
+        "image": "/assets/-1235354515_732"
+      },
+      "K05": {
+        "label": "K05",
+        "image": "/assets/1684419864_800"
+      },
+      "K06": {
+        "label": "K06",
+        "image": "/assets/2124342234_786"
+      },
+      "K07": {
+        "label": "K07",
+        "image": "/assets/-1607445302_650"
+      },
+      "K08": {
+        "label": "K08",
+        "image": "/assets/1048320969_797"
+      },
+      "K09": {
+        "label": "K09",
+        "image": "/assets/-1772382135_739"
+      },
+      "K10": {
+        "label": "K10",
+        "image": "/assets/-1033852650_1019"
+      },
+      "K11": {
+        "label": "K11",
+        "image": "/assets/96758454_806"
+      },
+      "K12": {
+        "label": "K12",
+        "image": "/assets/779055454_1041"
+      },
+      "K13": {
+        "label": "K13",
+        "image": "/assets/-332390273_1079"
+      },
+      "R01": {
+        "label": "R01",
+        "image": "/assets/678698296_814"
+      },
+      "R02": {
+        "label": "R02",
+        "image": "/assets/-2042820108_1168"
+      },
+      "R03": {
+        "label": "R03",
+        "image": "/assets/-1044054774_1188"
+      },
+      "R04": {
+        "label": "R04",
+        "image": "/assets/-1356518414_1039"
+      },
+      "R05": {
+        "label": "R05",
+        "image": "/assets/188056131_1198"
+      },
+      "R06": {
+        "label": "R06",
+        "image": "/assets/-289131756_1197"
+      },
+      "R07": {
+        "label": "R07",
+        "image": "/assets/-950504819_963"
+      },
+      "R08": {
+        "label": "R08",
+        "image": "/assets/2141118034_1270"
+      },
+      "R09": {
+        "label": "R09",
+        "image": "/assets/1955920671_1156"
+      },
+      "R10": {
+        "label": "R10",
+        "image": "/assets/826289988_1611"
+      },
+      "R11": {
+        "label": "R11",
+        "image": "/assets/-718679912_1177"
+      },
+      "R12": {
+        "label": "R12",
+        "image": "/assets/-1994281256_1613"
+      },
+      "R13": {
+        "label": "R13",
+        "image": "/assets/765913773_1660"
+      },
+      "Y01": {
+        "label": "Y01",
+        "image": "/assets/-1335633930_940"
+      },
+      "Y02": {
+        "label": "Y02",
+        "image": "/assets/532775867_1407"
+      },
+      "Y03": {
+        "label": "Y03",
+        "image": "/assets/1853875409_1457"
+      },
+      "Y04": {
+        "label": "Y04",
+        "image": "/assets/-195496079_1282"
+      },
+      "Y05": {
+        "label": "Y05",
+        "image": "/assets/1709850829_1449"
+      },
+      "Y06": {
+        "label": "Y06",
+        "image": "/assets/-507246779_1448"
+      },
+      "Y07": {
+        "label": "Y07",
+        "image": "/assets/1707864352_1162"
+      },
+      "Y08": {
+        "label": "Y08",
+        "image": "/assets/-1305319153_1534"
+      },
+      "Y09": {
+        "label": "Y09",
+        "image": "/assets/-773135961_1403"
+      },
+      "Y10": {
+        "label": "Y10",
+        "image": "/assets/355618745_1936"
+      },
+      "Y11": {
+        "label": "Y11",
+        "image": "/assets/-823221146_1370"
+      },
+      "Y12": {
+        "label": "Y12",
+        "image": "/assets/-1593283364_1946"
+      },
+      "Y13": {
+        "label": "Y13",
+        "image": "/assets/-1490817757_2040"
+      },
+      "JokerB": {
+        "label": "JokerB",
+        "image": "/assets/1252779312_2488"
+      },
+      "JokerK": {
+        "label": "JokerK",
+        "image": "/assets/212983368_1388"
+      },
+      "JokerR": {
+        "label": "JokerR",
+        "image": "/assets/687347461_2011"
+      },
+      "JokerY": {
+        "label": "JokerY",
+        "image": "/assets/1041822198_2283"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "valueType": "static",
+            "value": "/assets/1570279455_22720",
+            "width": 75,
+            "height": 75
+          }
+        ],
+        "border": false,
+        "radius": 2
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "valueType": "static",
+            "value": "/assets/-624263697_28202",
+            "width": 75,
+            "height": 75
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 75,
+            "height": 75
+          }
+        ],
+        "border": false,
+        "radius": 2
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 75,
+      "height": 75,
+      "overlap": true,
+      "grid": [
+        {
+          "x": 25,
+          "offsetX": 0,
+          "minX": 0.5,
+          "maxX": 1525,
+          "y": 75,
+          "offsetY": -27.5,
+          "minY": 0,
+          "maxY": 722.5
+        },
+        {
+          "x": 15,
+          "offsetX": 5,
+          "minX": 320,
+          "maxX": 1505,
+          "y": 55,
+          "offsetY": 30,
+          "minY": 760,
+          "maxY": 960
+        }
+      ]
+    },
+    "width": 75,
+    "height": 75,
+    "z": 11579,
+    "parent": "deckHolder"
+  },
+  "9vjn": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "B01",
+    "id": "9vjn",
+    "z": 4523,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 77,
+    "y": -261,
+    "rotation": 31
+  },
+  "lpge": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "B01",
+    "id": "lpge",
+    "z": 986,
+    "rotate": 33,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 71,
+    "y": -206,
+    "rotation": -4
+  },
+  "c5z6": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "B02",
+    "id": "c5z6",
+    "z": 9809,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 103,
+    "y": -238,
+    "rotation": 32
+  },
+  "noy7": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "B02",
+    "id": "noy7",
+    "z": 2713,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 16,
+    "y": -194,
+    "rotation": 47
+  },
+  "en8z": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "B03",
+    "id": "en8z",
+    "z": 9205,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 21,
+    "y": -234,
+    "rotation": 15
+  },
+  "w1wg": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "B03",
+    "id": "w1wg",
+    "z": 9316,
+    "parent": "6txh",
+    "supportsPiles": false,
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 109,
+    "y": -258,
+    "rotation": 29
+  },
+  "51xr": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "B04",
+    "id": "51xr",
+    "z": 9974,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 105,
+    "y": -268,
+    "rotation": -11
+  },
+  "m28e": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "B04",
+    "id": "m28e",
+    "z": 4533,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 31,
+    "y": -248,
+    "rotation": -22
+  },
+  "swus": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "B05",
+    "id": "swus",
+    "z": 4233,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 65,
+    "y": -234,
+    "rotation": -27
+  },
+  "hegl": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "B05",
+    "id": "hegl",
+    "z": 5736,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 61,
+    "y": -240,
+    "rotation": -16
+  },
+  "7sv7": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "B06",
+    "id": "7sv7",
+    "z": 311,
+    "parent": "6txh",
+    "supportsPiles": false,
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 151,
+    "y": -192,
+    "rotation": 45
+  },
+  "rdl5": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "B06",
+    "id": "rdl5",
+    "z": 1519,
+    "parent": "6txh",
+    "supportsPiles": false,
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 40,
+    "y": -183,
+    "rotation": 40
+  },
+  "h202": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "B07",
+    "id": "h202",
+    "z": 413,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 39,
+    "y": -234,
+    "rotation": -26
+  },
+  "s0kn": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "B07",
+    "id": "s0kn",
+    "z": 580,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 142,
+    "y": -195,
+    "rotation": -12
+  },
+  "0xbz": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "B08",
+    "id": "0xbz",
+    "z": 6093,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 103,
+    "y": -238,
+    "rotation": 47
+  },
+  "7ke1": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "B08",
+    "id": "7ke1",
+    "z": 8348,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 45,
+    "y": -194,
+    "rotation": 18
+  },
+  "vlzn": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "B09",
+    "id": "vlzn",
+    "z": 6372,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 25,
+    "y": -210,
+    "rotation": 28
+  },
+  "oand": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "B09",
+    "id": "oand",
+    "z": 5019,
+    "parent": "6txh",
+    "supportsPiles": false,
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 53,
+    "y": -201,
+    "rotation": 7
+  },
+  "i7n8": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "B10",
+    "id": "i7n8",
+    "z": 5130,
+    "parent": "6txh",
+    "supportsPiles": false,
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 153,
+    "y": -240,
+    "rotation": -21
+  },
+  "7zb8": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "B10",
+    "id": "7zb8",
+    "z": 3051,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 105,
+    "y": -269,
+    "rotation": 21
+  },
+  "hu73": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "B11",
+    "id": "hu73",
+    "z": 3027,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 17,
+    "y": -182,
+    "rotation": 36
+  },
+  "9nkn": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "B11",
+    "id": "9nkn",
+    "supportsPiles": false,
+    "z": 904,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 90,
+    "y": -230,
+    "rotation": 18
+  },
+  "gyul": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "B12",
+    "id": "gyul",
+    "z": 7825,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 44,
+    "y": -195,
+    "rotation": 44
+  },
+  "8jss": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "B12",
+    "id": "8jss",
+    "z": 6764,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 76,
+    "y": -224,
+    "rotation": 25
+  },
+  "fnzh": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "B13",
+    "id": "fnzh",
+    "z": 860,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 32,
+    "y": -268,
+    "rotation": -19
+  },
+  "37u2": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "B13",
+    "id": "37u2",
+    "z": 542,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 121,
+    "y": -185,
+    "rotation": 42
+  },
+  "v1i6": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "K01",
+    "id": "v1i6",
+    "z": 7567,
+    "parent": "6txh",
+    "supportsPiles": false,
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 47,
+    "y": -195,
+    "rotation": 28
+  },
+  "yb0m": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "K01",
+    "id": "yb0m",
+    "z": 67,
+    "parent": "6txh",
+    "supportsPiles": false,
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 19,
+    "y": -210,
+    "rotation": 6
+  },
+  "i1l0": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "K02",
+    "id": "i1l0",
+    "z": 9617,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 144,
+    "y": -232,
+    "rotation": -17
+  },
+  "lqnb": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "K02",
+    "id": "lqnb",
+    "z": 8878,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 35,
+    "y": -254,
+    "rotation": 19
+  },
+  "xghs": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "K03",
+    "id": "xghs",
+    "z": 5542,
+    "parent": "6txh",
+    "supportsPiles": false,
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 94,
+    "y": -262,
+    "rotation": -1
+  },
+  "ricx": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "K03",
+    "id": "ricx",
+    "z": 8652,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 55,
+    "y": -228,
+    "rotation": 21
+  },
+  "xgpy": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "K04",
+    "id": "xgpy",
+    "z": 8675,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 73,
+    "y": -267,
+    "rotation": 60
+  },
+  "7kjv": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "K04",
+    "id": "7kjv",
+    "z": 3157,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 139,
+    "y": -195,
+    "rotation": -9
+  },
+  "bwyd": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "K05",
+    "id": "bwyd",
+    "z": 2861,
+    "parent": "6txh",
+    "supportsPiles": false,
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 63,
+    "y": -259,
+    "rotation": -12
+  },
+  "gpjf": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "K05",
+    "id": "gpjf",
+    "z": 9055,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 63,
+    "y": -216,
+    "rotation": 55
+  },
+  "9mdh": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "K06",
+    "id": "9mdh",
+    "z": 1909,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 106,
+    "y": -257,
+    "rotation": -22
+  },
+  "g5ot": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "K06",
+    "id": "g5ot",
+    "z": 5025,
+    "parent": "6txh",
+    "supportsPiles": false,
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 21,
+    "y": -203,
+    "rotation": 5
+  },
+  "kla4": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "K07",
+    "id": "kla4",
+    "z": 3658,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 81,
+    "y": -196,
+    "rotation": 25
+  },
+  "desp": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "K07",
+    "id": "desp",
+    "z": 7355,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 107,
+    "y": -197,
+    "rotation": -20
+  },
+  "al9z": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "K08",
+    "id": "al9z",
+    "z": 4084,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 24,
+    "y": -230,
+    "rotation": -10
+  },
+  "iyze": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "K08",
+    "id": "iyze",
+    "z": 3903,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 38,
+    "y": -206,
+    "rotation": 38
+  },
+  "nl08": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "K09",
+    "id": "nl08",
+    "z": 2833,
+    "parent": "6txh",
+    "supportsPiles": false,
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 148,
+    "y": -210,
+    "rotation": -12
+  },
+  "xjdp": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "K09",
+    "id": "xjdp",
+    "z": 4462,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 62,
+    "y": -193,
+    "rotation": -19
+  },
+  "bpw7": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "K10",
+    "id": "bpw7",
+    "z": 7199,
+    "parent": "6txh",
+    "supportsPiles": false,
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 152,
+    "y": -182,
+    "rotation": -15
+  },
+  "vlzq": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "K10",
+    "id": "vlzq",
+    "z": 3166,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 104,
+    "y": -224,
+    "rotation": 10
+  },
+  "avi8": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "K11",
+    "id": "avi8",
+    "z": 6966,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 73,
+    "y": -268,
+    "rotation": 8
+  },
+  "m8qj": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "K11",
+    "id": "m8qj",
+    "z": 9929,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 29,
+    "y": -240,
+    "rotation": 39
+  },
+  "6u49": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "K12",
+    "id": "6u49",
+    "z": 4344,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 49,
+    "y": -245,
+    "rotation": -14
+  },
+  "eilp": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "K12",
+    "id": "eilp",
+    "z": 242,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 151,
+    "y": -220,
+    "rotation": 52
+  },
+  "s4tt": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "K13",
+    "id": "s4tt",
+    "z": 8859,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 138,
+    "y": -247,
+    "rotation": -3
+  },
+  "7k8w": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "K13",
+    "id": "7k8w",
+    "z": 9170,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 16,
+    "y": -270,
+    "rotation": -10
+  },
+  "zxcg": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "R01",
+    "id": "zxcg",
+    "z": 707,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 84,
+    "y": -190,
+    "rotation": 51
+  },
+  "x07k": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "R01",
+    "id": "x07k",
+    "z": 504,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 75,
+    "y": -185,
+    "rotation": 43
+  },
+  "11je": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "R02",
+    "id": "11je",
+    "z": 8113,
+    "parent": "6txh",
+    "supportsPiles": false,
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 92,
+    "y": -272,
+    "rotation": -21
+  },
+  "lu60": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "R02",
+    "id": "lu60",
+    "z": 6507,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 107,
+    "y": -206,
+    "rotation": 27
+  },
+  "6ehx": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "R03",
+    "id": "6ehx",
+    "z": 7778,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 120,
+    "y": -207,
+    "rotation": 47
+  },
+  "wufi": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "R03",
+    "id": "wufi",
+    "z": 5108,
+    "parent": "6txh",
+    "supportsPiles": false,
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 131,
+    "y": -200,
+    "rotation": -14
+  },
+  "ju0t": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "R04",
+    "id": "ju0t",
+    "z": 4043,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 88,
+    "y": -258,
+    "rotation": 8
+  },
+  "zh9h": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "R04",
+    "id": "zh9h",
+    "z": 3334,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 125,
+    "y": -205,
+    "rotation": 29
+  },
+  "ytda": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "R05",
+    "id": "ytda",
+    "z": 8575,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 64,
+    "y": -235,
+    "rotation": 57
+  },
+  "d32h": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "R05",
+    "id": "d32h",
+    "supportsPiles": false,
+    "parent": "6txh",
+    "z": 7522,
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 50,
+    "y": -214,
+    "rotation": -13
+  },
+  "4s83": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "R06",
+    "id": "4s83",
+    "z": 8295,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 109,
+    "y": -249,
+    "rotation": 30
+  },
+  "rn1c": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "R06",
+    "id": "rn1c",
+    "z": 6551,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 90,
+    "y": -181,
+    "rotation": 55
+  },
+  "o0gu": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "R07",
+    "id": "o0gu",
+    "z": 2839,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 35,
+    "y": -208,
+    "rotation": 49
+  },
+  "68z0": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "R07",
+    "id": "68z0",
+    "z": 2058,
+    "parent": "6txh",
+    "supportsPiles": false,
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 143,
+    "y": -223,
+    "rotation": -11
+  },
+  "6nk5": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "R08",
+    "id": "6nk5",
+    "supportsPiles": false,
+    "z": 4355,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 53,
+    "y": -192,
+    "rotation": 7
+  },
+  "fb6g": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "R08",
+    "id": "fb6g",
+    "z": 5805,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 92,
+    "y": -263,
+    "rotation": 59
+  },
+  "ycfu": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "R09",
+    "id": "ycfu",
+    "z": 5316,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 91,
+    "y": -202,
+    "rotation": 58
+  },
+  "mprr": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "R09",
+    "id": "mprr",
+    "z": 878,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 96,
+    "y": -254,
+    "rotation": 36
+  },
+  "jq3k": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "R10",
+    "id": "jq3k",
+    "z": 6886,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 115,
+    "y": -218,
+    "rotation": 4
+  },
+  "aioe": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "R10",
+    "id": "aioe",
+    "z": 8552,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 52,
+    "y": -239,
+    "rotation": 35
+  },
+  "sqau": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "R11",
+    "id": "sqau",
+    "z": 278,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 88,
+    "y": -264,
+    "rotation": 27
+  },
+  "xnhe": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "R11",
+    "id": "xnhe",
+    "z": 3737,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 46,
+    "y": -222,
+    "rotation": 41
+  },
+  "udc3": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "R12",
+    "id": "udc3",
+    "z": 4273,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 83,
+    "y": -234,
+    "rotation": 13
+  },
+  "s6zc": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "R12",
+    "id": "s6zc",
+    "z": 6020,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 74,
+    "y": -197,
+    "rotation": -13
+  },
+  "9mkh": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "R13",
+    "id": "9mkh",
+    "z": 6163,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 17,
+    "y": -217,
+    "rotation": -13
+  },
+  "w89k": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "R13",
+    "id": "w89k",
+    "z": 9891,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 115,
+    "y": -201,
+    "rotation": 2
+  },
+  "nenf": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "Y01",
+    "id": "nenf",
+    "z": 6243,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 115,
+    "y": -241,
+    "rotation": 44
+  },
+  "7jlf": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "Y01",
+    "id": "7jlf",
+    "z": 2886,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 99,
+    "y": -268,
+    "rotation": 39
+  },
+  "yxec": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "Y02",
+    "id": "yxec",
+    "z": 5357,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 20,
+    "y": -186,
+    "rotation": 5
+  },
+  "mvkx": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "Y02",
+    "id": "mvkx",
+    "z": 4868,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 87,
+    "y": -192,
+    "rotation": 14
+  },
+  "mum0": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "Y03",
+    "id": "mum0",
+    "z": 7365,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 27,
+    "y": -210,
+    "rotation": 54
+  },
+  "ip2g": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "Y03",
+    "id": "ip2g",
+    "z": 3390,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 24,
+    "y": -210,
+    "rotation": 22
+  },
+  "dbae": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "Y04",
+    "id": "dbae",
+    "z": 5849,
+    "parent": "6txh",
+    "supportsPiles": false,
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 23,
+    "y": -183,
+    "rotation": 36
+  },
+  "9gyn": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "Y04",
+    "id": "9gyn",
+    "supportsPiles": false,
+    "z": 8548,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 34,
+    "y": -192,
+    "rotation": -4
+  },
+  "oxyy": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "Y05",
+    "id": "oxyy",
+    "z": 4326,
+    "parent": "6txh",
+    "supportsPiles": false,
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 115,
+    "y": -268,
+    "rotation": -25
+  },
+  "p3h8": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "Y05",
+    "id": "p3h8",
+    "z": 496,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 40,
+    "y": -197,
+    "rotation": 49
+  },
+  "r7bu": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "Y06",
+    "id": "r7bu",
+    "z": 2912,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 86,
+    "y": -214,
+    "rotation": 49
+  },
+  "bc6m": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "Y06",
+    "id": "bc6m",
+    "z": 8665,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 74,
+    "y": -244,
+    "rotation": 31
+  },
+  "o667": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "Y07",
+    "id": "o667",
+    "supportsPiles": false,
+    "parent": "6txh",
+    "z": 5167,
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 98,
+    "y": -253,
+    "rotation": 10
+  },
+  "u7zw": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "Y07",
+    "id": "u7zw",
+    "z": 4834,
+    "parent": "6txh",
+    "supportsPiles": false,
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 96,
+    "y": -264,
+    "rotation": -1
+  },
+  "qg25": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "Y08",
+    "id": "qg25",
+    "z": 4840,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 113,
+    "y": -229,
+    "rotation": 13
+  },
+  "02pf": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "Y08",
+    "id": "02pf",
+    "z": 187,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 152,
+    "y": -189,
+    "rotation": 22
+  },
+  "domq": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "Y09",
+    "id": "domq",
+    "z": 9466,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 18,
+    "y": -184,
+    "rotation": 7
+  },
+  "084c": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "Y09",
+    "id": "084c",
+    "z": 5395,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 64,
+    "y": -208,
+    "rotation": 11
+  },
+  "qiog": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "Y10",
+    "id": "qiog",
+    "z": 4554,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 27,
+    "y": -198,
+    "rotation": 3
+  },
+  "cvj7": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "Y10",
+    "id": "cvj7",
+    "z": 4122,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 149,
+    "y": -209,
+    "rotation": -17
+  },
+  "obil": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "Y11",
+    "id": "obil",
+    "z": 4090,
+    "parent": "6txh",
+    "supportsPiles": false,
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 19,
+    "y": -262,
+    "rotation": -21
+  },
+  "q5yo": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "Y11",
+    "id": "q5yo",
+    "z": 415,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 67,
+    "y": -225,
+    "rotation": 27
+  },
+  "95ya": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "Y12",
+    "id": "95ya",
+    "z": 3813,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 131,
+    "y": -261,
+    "rotation": -19
+  },
+  "lh9v": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "Y12",
+    "id": "lh9v",
+    "z": 1890,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 59,
+    "y": -257,
+    "rotation": -10
+  },
+  "5wom": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "Y13",
+    "id": "5wom",
+    "z": 3416,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 149,
+    "y": -210,
+    "rotation": 58
+  },
+  "yu10": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "Y13",
+    "id": "yu10",
+    "z": 1931,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 20,
+    "y": -271,
+    "rotation": 37
+  },
+  "jton": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "JokerK",
+    "id": "jton",
+    "z": 3845,
+    "supportsPiles": false,
+    "parent": "6txh",
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 107,
+    "y": -224,
+    "rotation": 47
+  },
+  "79ns": {
+    "deck": "tileDeck",
+    "type": "card",
+    "cardType": "JokerR",
+    "id": "79ns",
+    "z": 3181,
+    "parent": "6txh",
+    "supportsPiles": false,
+    "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))",
+    "x": 128,
+    "y": -213,
+    "rotation": 2
+  },
+  "tileSource": {
+    "type": "holder",
+    "x": 15,
+    "y": 300,
+    "id": "tileSource",
+    "width": 83,
+    "height": 83,
+    "onEnter": {
+      "activeFace": 0,
+      "scale": 1,
+      "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))"
+    },
+    "onLeave": {
+      "rotation": 0,
+      "css": ""
+    },
+    "parent": "drawPileArea",
+    "z": 20,
+    "alignChildren": false
+  },
+  "randomMove": {
+    "type": "button",
+    "text": "randomMove",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "tileSource",
+        "collection": "tilesToMove",
+        "mode": "set"
+      },
+      {
+        "func": "SELECT",
+        "source": "tilesToMove",
+        "property": "type",
+        "value": "card",
+        "collection": "tilesToMove",
+        "mode": "set"
+      },
+      {
+        "func": "SELECT",
+        "source": "tilesToMove",
+        "property": "y",
+        "relation": ">=",
+        "value": 0,
+        "collection": "tilesToMove",
+        "mode": "set"
+      },
+      {
+        "func": "SELECT",
+        "source": "tilesToMove",
+        "property": "type",
+        "value": "card",
+        "max": 1,
+        "collection": "thisTile"
+      },
+      {
+        "func": "RANDOM",
+        "min": 16,
+        "max": 154,
+        "variable": "newX"
+      },
+      {
+        "func": "RANDOM",
+        "min": -275,
+        "max": -181,
+        "variable": "newY"
+      },
+      {
+        "func": "RANDOM",
+        "min": -29,
+        "max": 60,
+        "variable": "newR"
+      },
+      {
+        "func": "SET",
+        "collection": "thisTile",
+        "property": "x",
+        "applyVariables": [
+          {
+            "variable": "newX",
+            "parameter": "value"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisTile",
+        "property": "y",
+        "applyVariables": [
+          {
+            "variable": "newY",
+            "parameter": "value"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisTile",
+        "property": "rotation",
+        "applyVariables": [
+          {
+            "variable": "newR",
+            "parameter": "value"
+          }
+        ]
+      },
+      {
+        "func": "COUNT",
+        "collection": "tilesToMove"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "randomMove",
+        "mode": "set"
+      },
+      {
+        "func": "COMPUTE",
+        "operation": "<=",
+        "operand2": 1,
+        "variable": "last",
+        "applyVariables": [
+          {
+            "variable": "COUNT",
+            "parameter": "operand1"
+          }
+        ]
+      },
+      {
+        "func": "CLICK",
+        "applyVariables": [
+          {
+            "variable": "last",
+            "parameter": "skip"
+          }
+        ]
+      }
+    ],
+    "x": 62.5,
+    "y": 400,
+    "id": "randomMove",
+    "width": 150,
+    "parent": "drawPileArea"
+  },
+  "startMix": {
+    "type": "button",
+    "text": "🔀︎",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "drawPile",
+        "to": "deckHolder",
+        "count": 9999
+      },
+      {
+        "func": "MOVE",
+        "from": "tileSource",
+        "to": "deckHolder",
+        "count": 9999
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "deckHolder",
+        "mode": "set"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "mode": "set",
+        "property": "type",
+        "value": "card"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "tileSource"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 0
+      },
+      {
+        "func": "FLIP",
+        "holder": "tileSource",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "tileSource"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "randomMove",
+        "mode": "set"
+      },
+      {
+        "func": "CLICK",
+        "skip": false
+      }
+    ],
+    "x": 270,
+    "y": 118,
+    "id": "startMix",
+    "width": 40,
+    "height": 40,
+    "parent": "drawPileArea",
+    "css": "border-width:0; background-color:transparent; color:transparent;"
+  },
+  "drawPileArea": {
+    "id": "drawPileArea",
+    "type": "holder",
+    "dropTarget": {
+      "id": null
+    },
+    "width": 320,
+    "height": 225,
+    "classes": "transparent",
+    "css": "border-radius: 0; background-image: url(/assets/-363959788_139688); background-size: 320px 225px; background-position: center;",
+    "y": 775
+  },
+  "deckHolder": {
+    "type": "holder",
+    "x": 177,
+    "y": 300,
+    "width": 83,
+    "height": 83,
+    "onEnter": {
+      "activeFace": 0,
+      "scale": 1,
+      "rotation": 0,
+      "css": "filter: drop-shadow(0 0 3px rgba(0,0,0,.7))"
+    },
+    "onLeave": {
+      "rotation": 0,
+      "css": ""
+    },
+    "parent": "drawPileArea",
+    "z": 20,
+    "id": "deckHolder"
+  },
+  "_meta": {
+    "version": 1,
+    "info": {
+      "name": "Rummy Tiles",
+      "image": "/assets/1329361085_73912",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "vs",
+      "time": "60",
+      "players": "2-4",
+      "language": "UN",
+      "variant": "",
+      "attribution": "Images and layout created by David Robarts. ©2021 \n\nThis work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.\n\nhttp://creativecommons.org/licenses/by-nc/4.0/",
+      "similarName": "Rummikub",
+      "similarLink": "https://www.boardgamegeek.com/boardgame/811/rummikub",
+      "description": "Rearrange the tiles to make sets and runs. First to play all their tiles wins."
+    }
+  },
+  "6txh": {
+    "type": "pile",
+    "parent": "tileSource",
+    "x": 0,
+    "y": 0,
+    "width": 75,
+    "height": 75,
+    "id": "6txh"
+  }
+}

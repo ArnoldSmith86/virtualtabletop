@@ -1,0 +1,219 @@
+{
+  "_meta": {
+    "version": 3,
+    "info": {
+      "name": "Comparisons",
+      "image": "/assets/1840951925_7348",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "",
+      "players": "1",
+      "language": "US",
+      "variant": "Logical",
+      "attribution": ""
+    }
+  },
+  "8fr3": {
+    "type": "label",
+    "text": "Comparisons: Logical",
+    "css": "font-size: 60px",
+    "height": 160,
+    "width": 1000,
+    "x": 280,
+    "z": 26392,
+    "id": "8fr3",
+    "y": 1
+  },
+  "string": {
+    "id": "string",
+    "x": 280,
+    "y": 102,
+    "width": 1000,
+    "z": 14,
+    "css": "font-size: 20px; ",
+    "text": "These functions can also be used compare alphanumeric strings, but these functions are usually used with boolean values (true and false).  && (logical AND) returns true if both values are true, or returns the value of one of the variables if not boolean.  || (logical OR) returns true if either value is true, or returns the value of one of the variables if not boolean.  ! (logical NOT) returns true if the given value is false, and otherwise returns false.  Press each button to see how the function compares the strings to produce the output at the bottom of the screen. The buttons will convert the string \"true\" from the textbox into the boolean true and do the same for false."
+  },
+  "lr6y": {
+    "id": "lr6y",
+    "x": 714,
+    "y": 757,
+    "width": 50,
+    "z": 12,
+    "css": "font-size: 30px; ",
+    "text": "Output",
+    "height": 50
+  },
+  "compare1": {
+    "type": "label",
+    "id": "compare1",
+    "x": 605,
+    "y": 325,
+    "height": 40,
+    "z": 26451,
+    "editable": true,
+    "css": "background-color:white; border-style: solid;",
+    "compare": true,
+    "text": "false"
+  },
+  "compare2": {
+    "type": "label",
+    "id": "compare2",
+    "x": 855,
+    "y": 325,
+    "height": 40,
+    "z": 26450,
+    "css": "background-color:white; border-style: solid;",
+    "editable": true,
+    "compare": true,
+    "text": "true"
+  },
+  "uc3i": {
+    "type": "button",
+    "id": "uc3i",
+    "x": 374,
+    "y": 450,
+    "z": 274,
+    "clickRoutine": [
+      "var str1 = ${PROPERTY text OF compare1}",
+      "var str2 = ${PROPERTY text OF compare2}",
+      {
+        "func": "IF",
+        "operand1": "${str1}",
+        "operand2": "true",
+        "thenRoutine": [
+          "var str1 = true"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${str1}",
+        "operand2": "false",
+        "thenRoutine": [
+          "var str1 = false"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${str2}",
+        "operand2": "true",
+        "thenRoutine": [
+          "var str2 = true"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${str2}",
+        "operand2": "false",
+        "thenRoutine": [
+          "var str2 = false"
+        ]
+      },
+      "var output = ${str1} && ${str2} //Logical AND",
+      {
+        "func": "LABEL",
+        "label": "outputbox",
+        "value": "${output}"
+      }
+    ],
+    "css": "font-size: 30px; ",
+    "text": "&&"
+  },
+  "2rti": {
+    "type": "button",
+    "id": "2rti",
+    "x": 725,
+    "y": 450,
+    "z": 292,
+    "clickRoutine": [
+      "var str1 = ${PROPERTY text OF compare1}",
+      "var str2 = ${PROPERTY text OF compare2}",
+      {
+        "func": "IF",
+        "operand1": "${str1}",
+        "operand2": "true",
+        "thenRoutine": [
+          "var str1 = true"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${str1}",
+        "operand2": "false",
+        "thenRoutine": [
+          "var str1 = false"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${str2}",
+        "operand2": "true",
+        "thenRoutine": [
+          "var str2 = true"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${str2}",
+        "operand2": "false",
+        "thenRoutine": [
+          "var str2 = false"
+        ]
+      },
+      "var output = ${str1} || ${str2} //Logical OR",
+      {
+        "func": "LABEL",
+        "label": "outputbox",
+        "value": "${output}"
+      }
+    ],
+    "css": "font-size: 30px; ",
+    "text": "||"
+  },
+  "l1ak": {
+    "type": "button",
+    "id": "l1ak",
+    "x": 1115,
+    "y": 450,
+    "z": 287,
+    "clickRoutine": [
+      "var str1 = ${PROPERTY text OF compare1}",
+      {
+        "func": "IF",
+        "operand1": "${str1}",
+        "operand2": "true",
+        "thenRoutine": [
+          "var str1 = true"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${str1}",
+        "operand2": "false",
+        "thenRoutine": [
+          "var str1 = false"
+        ]
+      },
+      "var output = ! ${str1} //Logical NOT",
+      {
+        "func": "LABEL",
+        "label": "outputbox",
+        "value": "${output}"
+      }
+    ],
+    "css": "font-size: 30px; ",
+    "text": "!"
+  },
+  "outputbox": {
+    "type": "label",
+    "id": "outputbox",
+    "x": 606,
+    "y": 862,
+    "width": 300,
+    "height": 60,
+    "z": 26452,
+    "css": "border: 2px dashed black; font-size:30px; color:black ",
+    "text": true
+  }
+}

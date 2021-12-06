@@ -1,0 +1,3766 @@
+{
+  "dice1": {
+    "id": "dice1",
+    "y": 4,
+    "width": 75,
+    "height": 75,
+    "z": 1,
+    "faceCycle": "random",
+    "faces": [
+      {
+        "text": "1",
+        "value": 1,
+        "css": "background:blue;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "2",
+        "value": 2,
+        "css": "background:green;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "3",
+        "value": 3,
+        "css": "background:#f68113;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "4",
+        "value": 4,
+        "css": "background:green;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "W",
+        "value": 0,
+        "css": "background:red;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "W",
+        "value": 0,
+        "css": "background:#f68113;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      }
+    ],
+    "rollMe": true,
+    "layer": 4,
+    "parent": "sortArea",
+    "x": -100
+  },
+  "hoyw": {
+    "type": "timer",
+    "id": "hoyw",
+    "x": -200,
+    "y": 150,
+    "z": 13,
+    "changeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY milliseconds}",
+        "relation": "<=",
+        "operand2": 900,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "rollMe",
+            "value": true
+          },
+          {
+            "func": "SELECT",
+            "collection": "DEFAULT",
+            "property": "parent",
+            "value": "rollArea"
+          },
+          {
+            "func": "CLICK"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SELECT",
+            "property": "rollMe",
+            "value": true
+          },
+          {
+            "func": "SELECT",
+            "collection": "DEFAULT",
+            "property": "parent",
+            "value": "rollArea"
+          },
+          {
+            "func": "MOVE",
+            "from": "rollArea",
+            "to": "sortArea",
+            "count": 99
+          },
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "sortArea"
+          },
+          {
+            "func": "SORT",
+            "holder": "sortArea",
+            "key": "value"
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "hoywR"
+          },
+          {
+            "func": "CLICK"
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "qxy2"
+          },
+          {
+            "func": "CLICK"
+          }
+        ]
+      }
+    ],
+    "precision": 150
+  },
+  "hoywP": {
+    "parent": "hoyw",
+    "id": "hoywP",
+    "x": 120,
+    "y": -3,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "TIMER",
+        "timer": "hoyw"
+      }
+    ],
+    "image": "/i/button-icons/White-Play_Pause.svg",
+    "css": "background-size: 75% 75%"
+  },
+  "hoywR": {
+    "parent": "hoyw",
+    "id": "hoywR",
+    "x": 80,
+    "y": -3,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "TIMER",
+        "timer": "hoyw",
+        "mode": "reset"
+      }
+    ],
+    "image": "/i/button-icons/White-Reset.svg",
+    "css": "background-size: 80% 80%"
+  },
+  "dice2": {
+    "id": "dice2",
+    "y": 184,
+    "width": 75,
+    "height": 75,
+    "z": 3,
+    "faceCycle": "random",
+    "faces": [
+      {
+        "text": "1",
+        "value": 1,
+        "css": "background:green;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "2",
+        "value": 2,
+        "css": "background:#f68113;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "3",
+        "value": 3,
+        "css": "background:blue;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "4",
+        "value": 4,
+        "css": "background:red;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "W",
+        "value": 0,
+        "css": "background:red;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "W",
+        "value": 0,
+        "css": "background:green;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      }
+    ],
+    "rollMe": true,
+    "layer": 4,
+    "parent": "sortArea",
+    "activeFace": 2,
+    "x": -100
+  },
+  "dice3": {
+    "id": "dice3",
+    "y": 274,
+    "width": 75,
+    "height": 75,
+    "z": 4,
+    "faceCycle": "random",
+    "faces": [
+      {
+        "text": "1",
+        "value": 1,
+        "css": "background:red;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "2",
+        "value": 2,
+        "css": "background:blue;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "3",
+        "value": 3,
+        "css": "background:green;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "4",
+        "value": 4,
+        "css": "background:#f68113;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "W",
+        "value": 0,
+        "css": "background:blue;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "W",
+        "value": 0,
+        "css": "background:#f68113;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      }
+    ],
+    "rollMe": true,
+    "layer": 4,
+    "parent": "sortArea",
+    "activeFace": 3,
+    "x": -100
+  },
+  "dice4": {
+    "id": "dice4",
+    "y": 94,
+    "width": 75,
+    "height": 75,
+    "z": 2,
+    "faceCycle": "random",
+    "faces": [
+      {
+        "text": "1",
+        "value": 1,
+        "css": "background:#f68113;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "2",
+        "value": 2,
+        "css": "background:red;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "3",
+        "value": 3,
+        "css": "background:red;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "4",
+        "value": 4,
+        "css": "background:blue;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "W",
+        "value": 0,
+        "css": "background:blue;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "W",
+        "value": 0,
+        "css": "background:green;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      }
+    ],
+    "rollMe": true,
+    "layer": 4,
+    "parent": "sortArea",
+    "activeFace": 1,
+    "x": -100
+  },
+  "dice5": {
+    "id": "dice5",
+    "y": 634,
+    "width": 75,
+    "height": 75,
+    "z": 8,
+    "faceCycle": "random",
+    "faces": [
+      {
+        "text": "5",
+        "value": 5,
+        "css": "background:green;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "6",
+        "value": 6,
+        "css": "background:red;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "7",
+        "value": 7,
+        "css": "background:green;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "8",
+        "value": 8,
+        "css": "background:#f68113;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "9",
+        "value": 9,
+        "css": "background:blue;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "10",
+        "value": 10,
+        "css": "background:red;color:white;border: 5px solid white;font-size:55px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      }
+    ],
+    "rollMe": true,
+    "layer": 4,
+    "parent": "sortArea",
+    "activeFace": 3,
+    "x": -100
+  },
+  "dice6": {
+    "id": "dice6",
+    "y": 724,
+    "width": 75,
+    "height": 75,
+    "z": 9,
+    "faceCycle": "random",
+    "faces": [
+      {
+        "text": "5",
+        "value": 5,
+        "css": "background:#f68113;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "6",
+        "value": 6,
+        "css": "background:blue;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "7",
+        "value": 7,
+        "css": "background:red;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "8",
+        "value": 8,
+        "css": "background:blue;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "9",
+        "value": 9,
+        "css": "background:green;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "10",
+        "value": 10,
+        "css": "background:#f68113;color:white;border: 5px solid white;font-size:55px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      }
+    ],
+    "rollMe": true,
+    "layer": 4,
+    "parent": "sortArea",
+    "activeFace": 4,
+    "x": -100
+  },
+  "dice7": {
+    "id": "dice7",
+    "y": 814,
+    "width": 75,
+    "height": 75,
+    "z": 10,
+    "faceCycle": "random",
+    "faces": [
+      {
+        "text": "5",
+        "value": 5,
+        "css": "background:red;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "6",
+        "value": 6,
+        "css": "background:green;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "7",
+        "value": 7,
+        "css": "background:#f68113;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "8",
+        "value": 8,
+        "css": "background:blue;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "9",
+        "value": 9,
+        "css": "background:red;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "10",
+        "value": 10,
+        "css": "background:blue;color:white;border: 5px solid white;font-size:55px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      }
+    ],
+    "rollMe": true,
+    "layer": 4,
+    "parent": "sortArea",
+    "activeFace": 5,
+    "x": -100
+  },
+  "dice8": {
+    "id": "dice8",
+    "y": 364,
+    "width": 75,
+    "height": 75,
+    "z": 5,
+    "faceCycle": "random",
+    "faces": [
+      {
+        "text": "5",
+        "value": 5,
+        "css": "background:blue;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "6",
+        "value": 6,
+        "css": "background:#f68113;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "7",
+        "value": 7,
+        "css": "background:green;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "8",
+        "value": 8,
+        "css": "background:red;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "9",
+        "value": 9,
+        "css": "background:green;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "10",
+        "value": 10,
+        "css": "background:#f68113;color:white;border: 5px solid white;font-size:55px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      }
+    ],
+    "rollMe": true,
+    "layer": 4,
+    "parent": "sortArea",
+    "x": -100
+  },
+  "dice9": {
+    "id": "dice9",
+    "y": 544,
+    "width": 75,
+    "height": 75,
+    "z": 7,
+    "faceCycle": "random",
+    "faces": [
+      {
+        "text": "5",
+        "value": 5,
+        "css": "background:red;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "6",
+        "value": 6,
+        "css": "background:#f68113;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "7",
+        "value": 7,
+        "css": "background:blue;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "8",
+        "value": 8,
+        "css": "background:green;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "9",
+        "value": 9,
+        "css": "background:#f68113;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "10",
+        "value": 10,
+        "css": "background:green;color:white;border: 5px solid white;font-size:55px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      }
+    ],
+    "rollMe": true,
+    "layer": 4,
+    "parent": "sortArea",
+    "activeFace": 2,
+    "x": -100
+  },
+  "dice10": {
+    "id": "dice10",
+    "y": 454,
+    "width": 75,
+    "height": 75,
+    "z": 6,
+    "faceCycle": "random",
+    "faces": [
+      {
+        "text": "5",
+        "value": 5,
+        "css": "background:blue;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "6",
+        "value": 6,
+        "css": "background:blue;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "7",
+        "value": 7,
+        "css": "background:red;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "8",
+        "value": 8,
+        "css": "background:#f68113;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "9",
+        "value": 9,
+        "css": "background:red;color:white;border: 5px solid white;font-size:60px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      },
+      {
+        "text": "10",
+        "value": 10,
+        "css": "background:green;color:white;border: 5px solid white;font-size:55px;text-align:center;text-shadow:4px 4px 4px black;border-radius:10px; "
+      }
+    ],
+    "rollMe": true,
+    "layer": 4,
+    "parent": "sortArea",
+    "activeFace": 1,
+    "x": -100
+  },
+  "background": {
+    "id": "background",
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/-289533753_28352"
+  },
+  "runs": {
+    "type": "holder",
+    "id": "runs",
+    "x": 100,
+    "y": 890,
+    "width": 905,
+    "height": 100,
+    "z": 12,
+    "css": "background: #ffffff80; ",
+    "dropTarget": {
+      "rollMe": true
+    },
+    "stackOffsetX": 90,
+    "layer": 2,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "runLabel"
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "CALL",
+        "widget": "scoreBtn",
+        "routine": "scoreRoutine",
+        "arguments": {
+          "theParent": "runs"
+        }
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "runs"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "CALL",
+        "widget": "scoreBtn",
+        "routine": "scoreRoutine",
+        "arguments": {
+          "theParent": "runs"
+        }
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "runLabel"
+          },
+          {
+            "func": "SET",
+            "property": "scale",
+            "value": 1
+          }
+        ]
+      }
+    ],
+    "movableInEdit": false
+  },
+  "rollArea": {
+    "type": "holder",
+    "id": "rollArea",
+    "x": 1300,
+    "y": 21,
+    "width": 300,
+    "height": 905,
+    "z": 11,
+    "css": "background: #ffffff80; ",
+    "dropTarget": {
+      "rollMe": true
+    },
+    "alignChildren": false,
+    "layer": 2,
+    "movableInEdit": false
+  },
+  "sortArea": {
+    "type": "holder",
+    "id": "sortArea",
+    "x": 1600,
+    "y": 19,
+    "width": 100,
+    "height": 950,
+    "z": 99,
+    "css": "background: transparent ",
+    "stackOffsetY": 90,
+    "layer": 3,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "sortArea"
+      },
+      {
+        "func": "SORT",
+        "key": "value",
+        "holder": "sortArea"
+      }
+    ],
+    "dropTarget": {
+      "rollMe": true
+    },
+    "dropOffsetX": -100
+  },
+  "set1": {
+    "type": "holder",
+    "id": "set1",
+    "x": 97.5,
+    "y": 778,
+    "width": 455,
+    "height": 100,
+    "layer": 2,
+    "z": 15,
+    "css": "background: #ffffff80; ",
+    "dropTarget": {
+      "rollMe": true
+    },
+    "stackOffsetX": 90,
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "set1"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "CALL",
+        "widget": "scoreBtn",
+        "routine": "scoreRoutine",
+        "arguments": {
+          "theParent": "set1"
+        }
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "set1Label"
+          },
+          {
+            "func": "SET",
+            "property": "scale",
+            "value": 1
+          }
+        ]
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "set1Label"
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "CALL",
+        "widget": "scoreBtn",
+        "routine": "scoreRoutine",
+        "arguments": {
+          "theParent": "set1"
+        }
+      }
+    ],
+    "movableInEdit": false
+  },
+  "set2": {
+    "type": "holder",
+    "id": "set2",
+    "x": 640,
+    "y": 780,
+    "width": 365,
+    "height": 100,
+    "layer": 2,
+    "z": 12,
+    "css": "background: #ffffff80; ",
+    "dropTarget": {
+      "rollMe": true
+    },
+    "stackOffsetX": 90,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "set2Label"
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "CALL",
+        "widget": "scoreBtn",
+        "routine": "scoreRoutine",
+        "arguments": {
+          "theParent": "set2"
+        }
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "set2"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "CALL",
+        "widget": "scoreBtn",
+        "routine": "scoreRoutine",
+        "arguments": {
+          "theParent": "set2"
+        }
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "set2Label"
+          },
+          {
+            "func": "SET",
+            "property": "scale",
+            "value": 1
+          }
+        ]
+      }
+    ],
+    "movableInEdit": false
+  },
+  "set1Label": {
+    "id": "set1Label",
+    "x": 275,
+    "y": 810,
+    "width": 80,
+    "height": 40,
+    "z": 2,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 30px; color: grey;",
+    "text": "Set 1"
+  },
+  "set2Label": {
+    "id": "set2Label",
+    "x": 775,
+    "y": 810,
+    "width": 80,
+    "height": 40,
+    "z": 2,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 30px; color: grey;",
+    "text": "Set 2"
+  },
+  "runLabel": {
+    "id": "runLabel",
+    "x": 475,
+    "y": 920,
+    "width": 150,
+    "height": 40,
+    "z": 2,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 30px; color: grey;",
+    "text": "Run / Color"
+  },
+  "rollLabel": {
+    "id": "rollLabel",
+    "x": 1257,
+    "y": 217,
+    "width": 40,
+    "height": 520,
+    "z": 3942,
+    "movable": false,
+    "css": "writing-mode: vertical-lr; text-orientation:upright;font-size: 30px; color: grey;",
+    "text": "ROLL DICE HERE",
+    "movableInEdit": false
+  },
+  "3eie": {
+    "id": "3eie",
+    "z": 5,
+    "x": 20,
+    "y": 50,
+    "width": 220,
+    "css": "font-size: 22px; background: #00000020",
+    "text": "\n 2 sets of 3\n\n 1 set of 3 + 1 run of 4\n\n 1 set of 4 + 1 run of 4\n\n 1 run of 7\n\n 1 run of 8\n\n 40 bonus (> 220)\n\n 1 run of 9\n\n 2 sets of 4\n\n 7 same color\n\n 1 set of 5 + 1 set of 2\n\n 1 set of 5 + 1 set of 3\n\n 40 bonus (finish 1st)\n\n\n                          TOTAL",
+    "height": 700,
+    "movableInEdit": false
+  },
+  "rollBtn": {
+    "type": "button",
+    "id": "rollBtn",
+    "x": 1300,
+    "y": 927,
+    "width": 180,
+    "height": 70,
+    "z": 3949,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "sortArea"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "rollArea"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "hoyw"
+      },
+      {
+        "func": "CLICK"
+      },
+      "var a = ${PROPERTY rollCount OF rollCount} + 1",
+      "var b = ${a} % 4",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "rollCount"
+      },
+      {
+        "func": "SET",
+        "property": "rollCount",
+        "value": "${b}"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${b}"
+      }
+    ],
+    "css": "font-size: 30px; ",
+    "text": "Roll",
+    "movableInEdit": false
+  },
+  "scoreBtn": {
+    "type": "button",
+    "id": "scoreBtn",
+    "x": -150,
+    "z": 20,
+    "text": "Score",
+    "scoreRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${theParent}"
+      },
+      {
+        "func": "GET",
+        "property": "value",
+        "aggregation": "sum",
+        "variable": "theScore"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "${theParent}",
+        "value": "${theScore}"
+      }
+    ],
+    "set1": 0,
+    "set2": 0,
+    "runs": 0,
+    "theScore": 0,
+    "changeRoutine": [
+      "var theScore = ${PROPERTY set1} + ${PROPERTY set2}",
+      "var theScore = ${theScore} + ${PROPERTY runs}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "theScore",
+        "value": "${theScore}"
+      }
+    ]
+  },
+  "sortBtn": {
+    "type": "button",
+    "id": "sortBtn",
+    "x": 7,
+    "y": 910,
+    "height": 60,
+    "z": 7,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "runs"
+      },
+      {
+        "func": "SORT",
+        "key": "value",
+        "holder": "runs"
+      }
+    ],
+    "css": "font-size: 25px; ",
+    "text": "Sort",
+    "movableInEdit": false
+  },
+  "dice1Cover": {
+    "id": "dice1Cover",
+    "width": 75,
+    "height": 75,
+    "layer": 4,
+    "z": 202,
+    "css": "background:transparent;color:white;border: 5px solid transparent;border-radius:10px; ",
+    "x": -5,
+    "y": -5,
+    "parent": "dice1",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "dice2Cover": {
+    "id": "dice2Cover",
+    "parent": "dice2",
+    "x": -5,
+    "y": -5,
+    "width": 75,
+    "height": 75,
+    "layer": 4,
+    "z": 202,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "background:transparent;color:white;border: 5px solid transparent;border-radius:10px; "
+  },
+  "dice3Cover": {
+    "id": "dice3Cover",
+    "parent": "dice3",
+    "x": -5,
+    "y": -5,
+    "width": 75,
+    "height": 75,
+    "layer": 4,
+    "z": 202,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "background:transparent;color:white;border: 5px solid transparent;border-radius:10px; "
+  },
+  "dice4Cover": {
+    "id": "dice4Cover",
+    "parent": "dice4",
+    "x": -5,
+    "y": -5,
+    "width": 75,
+    "height": 75,
+    "layer": 4,
+    "z": 202,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "background:transparent;color:white;border: 5px solid transparent;border-radius:10px; "
+  },
+  "dice6Cover": {
+    "id": "dice6Cover",
+    "parent": "dice6",
+    "x": -5,
+    "y": -5,
+    "width": 75,
+    "height": 75,
+    "layer": 4,
+    "z": 202,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "background:transparent;color:white;border: 5px solid transparent;border-radius:10px; "
+  },
+  "dice7Cover": {
+    "id": "dice7Cover",
+    "parent": "dice7",
+    "x": -5,
+    "y": -5,
+    "width": 75,
+    "height": 75,
+    "layer": 4,
+    "z": 202,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "background:transparent;color:white;border: 5px solid transparent;border-radius:10px; "
+  },
+  "dice8Cover": {
+    "id": "dice8Cover",
+    "parent": "dice8",
+    "x": -5,
+    "y": -5,
+    "width": 75,
+    "height": 75,
+    "layer": 4,
+    "z": 202,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "background:transparent;color:white;border: 5px solid transparent;border-radius:10px; "
+  },
+  "dice9Cover": {
+    "id": "dice9Cover",
+    "parent": "dice9",
+    "x": -5,
+    "y": -5,
+    "width": 75,
+    "height": 75,
+    "layer": 4,
+    "z": 202,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "background:transparent;color:white;border: 5px solid transparent;border-radius:10px; "
+  },
+  "dice10Cover": {
+    "id": "dice10Cover",
+    "parent": "dice10",
+    "x": -5,
+    "y": -5,
+    "width": 75,
+    "height": 75,
+    "layer": 4,
+    "z": 202,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "background:transparent;color:white;border: 5px solid transparent;border-radius:10px; "
+  },
+  "dice5Cover": {
+    "id": "dice5Cover",
+    "parent": "dice5",
+    "x": -5,
+    "y": -5,
+    "width": 75,
+    "height": 75,
+    "layer": 4,
+    "z": 202,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "background:transparent;color:white;border: 5px solid transparent;border-radius:10px; "
+  },
+  "totalP1": {
+    "id": "totalP1",
+    "x": 260,
+    "y": 710,
+    "height": 45,
+    "z": 25,
+    "css": "border-radius: 0;font-size: 25px; background: white; color:black; text-align:center",
+    "text": 0,
+    "movableInEdit": false
+  },
+  "bonusP1": {
+    "id": "bonusP1",
+    "x": 260,
+    "y": 320.9090909090909,
+    "height": 45,
+    "z": 23,
+    "css": "border-radius: 0;font-size: 25px; background:white;color:black;text-align:center",
+    "layer": 2,
+    "movableInEdit": false
+  },
+  "1a3v": {
+    "type": "label",
+    "x": 260,
+    "z": 8,
+    "id": "1a3v",
+    "y": 16,
+    "editable": true,
+    "text": 1,
+    "movableInEdit": false
+  },
+  "odj1": {
+    "type": "label",
+    "x": 380,
+    "z": 5,
+    "id": "odj1",
+    "y": 16,
+    "editable": true,
+    "text": 2,
+    "movableInEdit": false
+  },
+  "24h8": {
+    "type": "label",
+    "x": 620,
+    "z": 7,
+    "id": "24h8",
+    "y": 16,
+    "editable": true,
+    "text": 4,
+    "movableInEdit": false
+  },
+  "9xc6": {
+    "type": "label",
+    "x": 500,
+    "z": 6,
+    "id": "9xc6",
+    "y": 16,
+    "editable": true,
+    "text": 3,
+    "movableInEdit": false
+  },
+  "ix75": {
+    "type": "label",
+    "x": 740,
+    "z": 9,
+    "id": "ix75",
+    "y": 16,
+    "editable": true,
+    "text": 5,
+    "movableInEdit": false
+  },
+  "vilp": {
+    "type": "label",
+    "x": 860,
+    "z": 10,
+    "id": "vilp",
+    "y": 16,
+    "editable": true,
+    "text": 6,
+    "movableInEdit": false
+  },
+  "totalP2": {
+    "id": "totalP2",
+    "x": 380,
+    "y": 710,
+    "width": null,
+    "height": 45,
+    "z": 3888,
+    "movable": null,
+    "movableInEdit": false,
+    "css": "border-radius: 0;font-size: 25px; background: white; color:black; text-align:center",
+    "text": 0,
+    "clickable": false
+  },
+  "totalP3": {
+    "id": "totalP3",
+    "x": 500,
+    "y": 710,
+    "width": null,
+    "height": 45,
+    "z": 3900,
+    "movable": null,
+    "movableInEdit": false,
+    "css": "border-radius: 0;font-size: 25px; background: white; color:black; text-align:center",
+    "text": 0,
+    "clickable": false
+  },
+  "totalP4": {
+    "id": "totalP4",
+    "x": 620,
+    "y": 710,
+    "width": null,
+    "height": 45,
+    "z": 3913,
+    "movable": null,
+    "movableInEdit": false,
+    "css": "border-radius: 0;font-size: 25px; background: white; color:black; text-align:center",
+    "text": 0,
+    "clickable": false
+  },
+  "totalP5": {
+    "id": "totalP5",
+    "x": 740,
+    "y": 710,
+    "width": null,
+    "height": 45,
+    "z": 3926,
+    "movable": null,
+    "movableInEdit": false,
+    "css": "border-radius: 0;font-size: 25px; background: white; color:black; text-align:center",
+    "text": 0,
+    "clickable": false
+  },
+  "totalP6": {
+    "id": "totalP6",
+    "x": 860,
+    "y": 710,
+    "height": 45,
+    "z": 3939,
+    "movableInEdit": false,
+    "css": "border-radius: 0;font-size: 25px; background: white; color:black; text-align:center",
+    "text": 0,
+    "clickable": false
+  },
+  "finishP1": {
+    "type": "button",
+    "id": "finishP1",
+    "x": 260,
+    "y": 639.5,
+    "width": 100,
+    "height": 45,
+    "z": 26,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": 40
+          },
+          {
+            "func": "LABEL",
+            "label": "totalP1",
+            "mode": "inc",
+            "value": 40
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": 0
+          },
+          {
+            "func": "LABEL",
+            "label": "totalP1",
+            "mode": "dec",
+            "value": 40
+          }
+        ]
+      }
+    ],
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": 0,
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "scoreSheet": {
+    "type": "button",
+    "id": "scoreSheet",
+    "x": -150,
+    "y": 300,
+    "z": 3946,
+    "text": "Score Sheet",
+    "updateRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "scoreBtn"
+      },
+      {
+        "func": "GET",
+        "property": "theScore",
+        "variable": "theScore"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${currentID}"
+      },
+      {
+        "func": "SET",
+        "property": "clickable",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${theScore}"
+      },
+      {
+        "func": "SET",
+        "property": "backgroundColorOH",
+        "value": "${backColor}"
+      },
+      {
+        "func": "SET",
+        "property": "textColorOH",
+        "value": null
+      },
+      "var player = ${currentID} charAt 1",
+      "var player = parseFloat ${player}",
+      "var lvl = ${currentID} charAt 5",
+      "var lvl = parseFloat ${lvl}",
+      "var lvl = ${lvl} + 1",
+      "var nextlvl = 'P' + ${player}",
+      "var nextlvl = ${nextlvl} + 'lvl'",
+      "var nextlvl = ${nextlvl} + ${lvl}",
+      "var currentTotal = 'totalP' + ${player}",
+      "var currentBonus = 'bonusP' + ${player}",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${nextlvl}"
+      },
+      {
+        "func": "SET",
+        "property": "clickable",
+        "value": true
+      },
+      {
+        "func": "LABEL",
+        "label": "${currentTotal}",
+        "mode": "inc",
+        "value": "${theScore}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${lvl}",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY text OF $currentTotal}",
+            "relation": ">",
+            "operand2": 220,
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "${currentBonus}"
+              },
+              {
+                "func": "SET",
+                "property": "text",
+                "value": 40
+              },
+              {
+                "func": "LABEL",
+                "label": "${currentTotal}",
+                "mode": "inc",
+                "value": 40
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "undoBtn"
+      },
+      {
+        "func": "SET",
+        "property": "currentID",
+        "value": "${currentID}"
+      },
+      {
+        "func": "SET",
+        "property": "theScore",
+        "value": "${theScore}"
+      },
+      {
+        "func": "SET",
+        "property": "nextlvl",
+        "value": "${nextlvl}"
+      },
+      {
+        "func": "SET",
+        "property": "currentTotal",
+        "value": "${currentTotal}"
+      },
+      {
+        "func": "SET",
+        "property": "currentBonus",
+        "value": "${currentBonus}"
+      },
+      {
+        "func": "SET",
+        "property": "lvl",
+        "value": "${lvl}"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "Undo Last Score"
+      },
+      {
+        "func": "SET",
+        "property": "clickable",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "recallDice"
+      },
+      {
+        "func": "CLICK"
+      }
+    ]
+  },
+  "P1lvl0": {
+    "type": "button",
+    "id": "P1lvl0",
+    "x": 260,
+    "y": 55,
+    "width": 100,
+    "height": 45,
+    "z": 3942,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "#00000060",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "movableInEdit": false
+  },
+  "P1lvl1": {
+    "type": "button",
+    "id": "P1lvl1",
+    "x": 260,
+    "y": 108.18181818181819,
+    "width": 100,
+    "height": 45,
+    "z": 15,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "clickable": false,
+    "movableInEdit": false
+  },
+  "P1lvl2": {
+    "type": "button",
+    "id": "P1lvl2",
+    "x": 260,
+    "y": 161.36363636363637,
+    "width": 100,
+    "height": 45,
+    "z": 15,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P1lvl3": {
+    "type": "button",
+    "id": "P1lvl3",
+    "x": 260,
+    "y": 214.5454545454545,
+    "width": 100,
+    "height": 45,
+    "z": 15,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P1lvl4": {
+    "type": "button",
+    "id": "P1lvl4",
+    "x": 260,
+    "y": 267.72727272727275,
+    "width": 100,
+    "height": 45,
+    "z": 21,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "clickable": false,
+    "movableInEdit": false
+  },
+  "P1lvl5": {
+    "type": "button",
+    "id": "P1lvl5",
+    "x": 260,
+    "y": 374.09090909090907,
+    "width": 100,
+    "height": 45,
+    "z": 23,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P1lvl6": {
+    "type": "button",
+    "id": "P1lvl6",
+    "x": 260,
+    "y": 427.27272727272725,
+    "width": 100,
+    "height": 45,
+    "z": 24,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P1lvl7": {
+    "type": "button",
+    "id": "P1lvl7",
+    "x": 260,
+    "y": 478.5,
+    "width": 100,
+    "height": 45,
+    "z": 3876,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P1lvl8": {
+    "type": "button",
+    "id": "P1lvl8",
+    "x": 260,
+    "y": 533.6363636363636,
+    "width": 100,
+    "height": 45,
+    "z": 25,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P2lvl0": {
+    "type": "button",
+    "id": "P2lvl0",
+    "x": 380,
+    "y": 55,
+    "width": 100,
+    "height": 45,
+    "z": 3877,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P1lvl9": {
+    "type": "button",
+    "id": "P1lvl9",
+    "x": 260,
+    "y": 586.8181818181818,
+    "width": 100,
+    "height": 45,
+    "z": 25,
+    "movable": null,
+    "movableInEdit": false,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black"
+  },
+  "P2lvl1": {
+    "type": "button",
+    "id": "P2lvl1",
+    "x": 380,
+    "y": 108.18181818181819,
+    "width": 100,
+    "height": 45,
+    "z": 3878,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "clickable": false,
+    "movableInEdit": false
+  },
+  "P2lvl2": {
+    "type": "button",
+    "id": "P2lvl2",
+    "x": 380,
+    "y": 161.36363636363637,
+    "width": 100,
+    "height": 45,
+    "z": 3879,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P2lvl3": {
+    "type": "button",
+    "id": "P2lvl3",
+    "x": 380,
+    "y": 214.5454545454545,
+    "width": 100,
+    "height": 45,
+    "z": 3880,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P2lvl4": {
+    "type": "button",
+    "id": "P2lvl4",
+    "x": 380,
+    "y": 267.72727272727275,
+    "width": 100,
+    "height": 45,
+    "z": 3881,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P2lvl5": {
+    "type": "button",
+    "id": "P2lvl5",
+    "x": 380,
+    "y": 374.09090909090907,
+    "width": 100,
+    "height": 45,
+    "z": 3882,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P2lvl6": {
+    "type": "button",
+    "id": "P2lvl6",
+    "x": 380,
+    "y": 427.27272727272725,
+    "width": 100,
+    "height": 45,
+    "z": 3883,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P2lvl7": {
+    "type": "button",
+    "id": "P2lvl7",
+    "x": 380,
+    "y": 478.5,
+    "width": 100,
+    "height": 45,
+    "z": 3884,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P2lvl8": {
+    "type": "button",
+    "id": "P2lvl8",
+    "x": 380,
+    "y": 533.6363636363636,
+    "width": 100,
+    "height": 45,
+    "z": 3885,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P2lvl9": {
+    "type": "button",
+    "id": "P2lvl9",
+    "x": 380,
+    "y": 586.8181818181818,
+    "width": 100,
+    "height": 45,
+    "z": 3886,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "finishP2": {
+    "type": "button",
+    "id": "finishP2",
+    "x": 380,
+    "y": 639.5,
+    "width": 100,
+    "height": 45,
+    "z": 3887,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": 40
+          },
+          {
+            "func": "LABEL",
+            "label": "totalP2",
+            "mode": "inc",
+            "value": 40
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": 0
+          },
+          {
+            "func": "LABEL",
+            "label": "totalP2",
+            "mode": "dec",
+            "value": 40
+          }
+        ]
+      }
+    ],
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": 0,
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "finishP3": {
+    "type": "button",
+    "id": "finishP3",
+    "x": 500,
+    "y": 639.5,
+    "width": 100,
+    "height": 45,
+    "z": 3899,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": 40
+          },
+          {
+            "func": "LABEL",
+            "label": "totalP3",
+            "mode": "inc",
+            "value": 40
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": 0
+          },
+          {
+            "func": "LABEL",
+            "label": "totalP3",
+            "mode": "dec",
+            "value": 40
+          }
+        ]
+      }
+    ],
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": 0,
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "finishP4": {
+    "type": "button",
+    "id": "finishP4",
+    "x": 620,
+    "y": 639.5,
+    "width": 100,
+    "height": 45,
+    "z": 3912,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": 40
+          },
+          {
+            "func": "LABEL",
+            "label": "totalP4",
+            "mode": "inc",
+            "value": 40
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": 0
+          },
+          {
+            "func": "LABEL",
+            "label": "totalP4",
+            "mode": "dec",
+            "value": 40
+          }
+        ]
+      }
+    ],
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": 0,
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "finishP5": {
+    "type": "button",
+    "id": "finishP5",
+    "x": 740,
+    "y": 639.5,
+    "width": 100,
+    "height": 45,
+    "z": 3925,
+    "movable": null,
+    "movableInEdit": false,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": 40
+          },
+          {
+            "func": "LABEL",
+            "label": "totalP5",
+            "mode": "inc",
+            "value": 40
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": 0
+          },
+          {
+            "func": "LABEL",
+            "label": "totalP5",
+            "mode": "dec",
+            "value": 40
+          }
+        ]
+      }
+    ],
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": 0,
+    "textColorOH": "black"
+  },
+  "finishP6": {
+    "type": "button",
+    "id": "finishP6",
+    "x": 860,
+    "y": 639.5,
+    "width": 100,
+    "height": 45,
+    "z": 3938,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": 40
+          },
+          {
+            "func": "LABEL",
+            "label": "totalP6",
+            "mode": "inc",
+            "value": 40
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": 0
+          },
+          {
+            "func": "LABEL",
+            "label": "totalP6",
+            "mode": "dec",
+            "value": 40
+          }
+        ]
+      }
+    ],
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": 0,
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "bonusP2": {
+    "id": "bonusP2",
+    "x": 380,
+    "y": 320.9090909090909,
+    "width": null,
+    "height": 45,
+    "layer": 2,
+    "z": 23,
+    "movable": null,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; background:white;color:black;text-align:center"
+  },
+  "bonusP3": {
+    "id": "bonusP3",
+    "x": 500,
+    "y": 320.9090909090909,
+    "width": null,
+    "height": 45,
+    "layer": 2,
+    "z": 3901,
+    "movable": null,
+    "movableInEdit": false,
+    "css": "border-radius: 0;font-size: 25px; background:white;color:black;text-align:center"
+  },
+  "bonusP4": {
+    "id": "bonusP4",
+    "x": 620,
+    "y": 320.9090909090909,
+    "width": null,
+    "height": 45,
+    "layer": 2,
+    "z": 3914,
+    "movable": null,
+    "movableInEdit": false,
+    "css": "border-radius: 0;font-size: 25px; background:white;color:black;text-align:center"
+  },
+  "bonusP5": {
+    "id": "bonusP5",
+    "x": 740,
+    "y": 320.9090909090909,
+    "width": null,
+    "height": 45,
+    "layer": 2,
+    "z": 3927,
+    "movable": null,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; background:white;color:black;text-align:center"
+  },
+  "bonusP6": {
+    "id": "bonusP6",
+    "x": 860,
+    "y": 320.9090909090909,
+    "width": null,
+    "height": 45,
+    "layer": 2,
+    "z": 3940,
+    "movable": null,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; background:white;color:black;text-align:center"
+  },
+  "undoBtn": {
+    "type": "button",
+    "id": "undoBtn",
+    "x": 15,
+    "z": 3947,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY lvl}",
+        "operand2": 5,
+        "thenRoutine": [
+          "var bonusAmt = ${PROPERTY currentBonus}",
+          "var bonusAmt = parseFloat ${PROPERTY text OF $bonusAmt}",
+          {
+            "func": "LABEL",
+            "label": "${PROPERTY currentTotal}",
+            "mode": "dec",
+            "value": "${bonusAmt}"
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "${PROPERTY currentBonus}"
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "value": null
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY currentTotal}"
+      },
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY currentTotal}",
+        "mode": "dec",
+        "value": "${PROPERTY theScore}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY currentID}"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "--"
+      },
+      {
+        "func": "SET",
+        "property": "clickable",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY nextlvl}"
+      },
+      {
+        "func": "SET",
+        "property": "clickable",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "Undo Not Available"
+      }
+    ],
+    "text": "Undo Not Available",
+    "currentBonus": "bonusP1",
+    "currentID": "P1lvl4",
+    "currentTotal": "totalP1",
+    "nextlvl": "P1lvl5",
+    "theScore": 54,
+    "lvl": 5,
+    "width": 100,
+    "height": 45,
+    "clickable": false,
+    "y": 2,
+    "changeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "Undo Not Available",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "css",
+            "value": "background: red"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "css",
+            "value": null
+          }
+        ]
+      }
+    ],
+    "css": "background: red; ",
+    "movableInEdit": false
+  },
+  "P3lvl1": {
+    "type": "button",
+    "id": "P3lvl1",
+    "x": 500,
+    "y": 108.18181818181819,
+    "width": 100,
+    "height": 45,
+    "z": 3890,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P3lvl0": {
+    "type": "button",
+    "id": "P3lvl0",
+    "x": 500,
+    "y": 55,
+    "width": 100,
+    "height": 45,
+    "z": 3889,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "movableInEdit": false
+  },
+  "P3lvl3": {
+    "type": "button",
+    "id": "P3lvl3",
+    "x": 500,
+    "y": 214.5454545454545,
+    "width": 100,
+    "height": 45,
+    "z": 3892,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P3lvl2": {
+    "type": "button",
+    "id": "P3lvl2",
+    "x": 500,
+    "y": 161.36363636363637,
+    "width": 100,
+    "height": 45,
+    "z": 3891,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P3lvl4": {
+    "type": "button",
+    "id": "P3lvl4",
+    "x": 500,
+    "y": 267.72727272727275,
+    "width": 100,
+    "height": 45,
+    "z": 3893,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P3lvl5": {
+    "type": "button",
+    "id": "P3lvl5",
+    "x": 500,
+    "y": 374.09090909090907,
+    "width": 100,
+    "height": 45,
+    "z": 3894,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P3lvl6": {
+    "type": "button",
+    "id": "P3lvl6",
+    "x": 500,
+    "y": 427.27272727272725,
+    "width": 100,
+    "height": 45,
+    "z": 3895,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P3lvl7": {
+    "type": "button",
+    "id": "P3lvl7",
+    "x": 500,
+    "y": 478.5,
+    "width": 100,
+    "height": 45,
+    "z": 3896,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P3lvl8": {
+    "type": "button",
+    "id": "P3lvl8",
+    "x": 500,
+    "y": 533.6363636363636,
+    "width": 100,
+    "height": 45,
+    "z": 3897,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P3lvl9": {
+    "type": "button",
+    "id": "P3lvl9",
+    "x": 500,
+    "y": 586.8181818181818,
+    "width": 100,
+    "height": 45,
+    "z": 3898,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P4lvl0": {
+    "type": "button",
+    "id": "P4lvl0",
+    "x": 620,
+    "y": 55,
+    "width": 100,
+    "height": 45,
+    "z": 3902,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "movableInEdit": false
+  },
+  "P4lvl1": {
+    "type": "button",
+    "id": "P4lvl1",
+    "x": 620,
+    "y": 108.18181818181819,
+    "width": 100,
+    "height": 45,
+    "z": 3903,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P4lvl2": {
+    "type": "button",
+    "id": "P4lvl2",
+    "x": 620,
+    "y": 161.36363636363637,
+    "width": 100,
+    "height": 45,
+    "z": 3904,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P4lvl3": {
+    "type": "button",
+    "id": "P4lvl3",
+    "x": 620,
+    "y": 214.5454545454545,
+    "width": 100,
+    "height": 45,
+    "z": 3905,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P4lvl4": {
+    "type": "button",
+    "id": "P4lvl4",
+    "x": 620,
+    "y": 267.72727272727275,
+    "width": 100,
+    "height": 45,
+    "z": 3906,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P4lvl5": {
+    "type": "button",
+    "id": "P4lvl5",
+    "x": 620,
+    "y": 374.09090909090907,
+    "width": 100,
+    "height": 45,
+    "z": 3907,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P4lvl6": {
+    "type": "button",
+    "id": "P4lvl6",
+    "x": 620,
+    "y": 427.27272727272725,
+    "width": 100,
+    "height": 45,
+    "z": 3908,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P4lvl7": {
+    "type": "button",
+    "id": "P4lvl7",
+    "x": 620,
+    "y": 478.5,
+    "width": 100,
+    "height": 45,
+    "z": 3909,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P4lvl8": {
+    "type": "button",
+    "id": "P4lvl8",
+    "x": 620,
+    "y": 533.6363636363636,
+    "width": 100,
+    "height": 45,
+    "z": 3910,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P4lvl9": {
+    "type": "button",
+    "id": "P4lvl9",
+    "x": 620,
+    "y": 586.8181818181818,
+    "width": 100,
+    "height": 45,
+    "z": 3911,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P5lvl0": {
+    "type": "button",
+    "id": "P5lvl0",
+    "x": 740,
+    "y": 55,
+    "width": 100,
+    "height": 45,
+    "z": 3915,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "movableInEdit": false
+  },
+  "P5lvl1": {
+    "type": "button",
+    "id": "P5lvl1",
+    "x": 740,
+    "y": 108.18181818181819,
+    "width": 100,
+    "height": 45,
+    "z": 3916,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P5lvl2": {
+    "type": "button",
+    "id": "P5lvl2",
+    "x": 740,
+    "y": 161.36363636363637,
+    "width": 100,
+    "height": 45,
+    "z": 3917,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P5lvl3": {
+    "type": "button",
+    "id": "P5lvl3",
+    "x": 740,
+    "y": 214.5454545454545,
+    "width": 100,
+    "height": 45,
+    "z": 3918,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P5lvl4": {
+    "type": "button",
+    "id": "P5lvl4",
+    "x": 740,
+    "y": 267.72727272727275,
+    "width": 100,
+    "height": 45,
+    "z": 3919,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P5lvl5": {
+    "type": "button",
+    "id": "P5lvl5",
+    "x": 740,
+    "y": 374.09090909090907,
+    "width": 100,
+    "height": 45,
+    "z": 3920,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P5lvl6": {
+    "type": "button",
+    "id": "P5lvl6",
+    "x": 740,
+    "y": 427.27272727272725,
+    "width": 100,
+    "height": 45,
+    "z": 3921,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P5lvl7": {
+    "type": "button",
+    "id": "P5lvl7",
+    "x": 740,
+    "y": 478.5,
+    "width": 100,
+    "height": 45,
+    "z": 3922,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P5lvl8": {
+    "type": "button",
+    "id": "P5lvl8",
+    "x": 740,
+    "y": 533.6363636363636,
+    "width": 100,
+    "height": 45,
+    "z": 3923,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P5lvl9": {
+    "type": "button",
+    "id": "P5lvl9",
+    "x": 740,
+    "y": 586.8181818181818,
+    "width": 100,
+    "height": 45,
+    "z": 3924,
+    "backgroundColor": "#00000060",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P6lvl0": {
+    "type": "button",
+    "id": "P6lvl0",
+    "x": 860,
+    "y": 55,
+    "width": 100,
+    "height": 45,
+    "z": 3928,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "movableInEdit": false
+  },
+  "P6lvl1": {
+    "type": "button",
+    "id": "P6lvl1",
+    "x": 860,
+    "y": 108.18181818181819,
+    "width": 100,
+    "height": 45,
+    "z": 3929,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P6lvl2": {
+    "type": "button",
+    "id": "P6lvl2",
+    "x": 860,
+    "y": 161.36363636363637,
+    "width": 100,
+    "height": 45,
+    "z": 3930,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P6lvl3": {
+    "type": "button",
+    "id": "P6lvl3",
+    "x": 860,
+    "y": 214.5454545454545,
+    "width": 100,
+    "height": 45,
+    "z": 3931,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P6lvl4": {
+    "type": "button",
+    "id": "P6lvl4",
+    "x": 860,
+    "y": 267.72727272727275,
+    "width": 100,
+    "height": 45,
+    "z": 3932,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P6lvl5": {
+    "type": "button",
+    "id": "P6lvl5",
+    "x": 860,
+    "y": 374.09090909090907,
+    "width": 100,
+    "height": 45,
+    "z": 3933,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P6lvl6": {
+    "type": "button",
+    "id": "P6lvl6",
+    "x": 860,
+    "y": 427.27272727272725,
+    "width": 100,
+    "height": 45,
+    "z": 3934,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P6lvl7": {
+    "type": "button",
+    "id": "P6lvl7",
+    "x": 860,
+    "y": 478.5,
+    "width": 100,
+    "height": 45,
+    "z": 3935,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P6lvl8": {
+    "type": "button",
+    "id": "P6lvl8",
+    "x": 860,
+    "y": 533.6363636363636,
+    "width": 100,
+    "height": 45,
+    "z": 3936,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "P6lvl9": {
+    "type": "button",
+    "id": "P6lvl9",
+    "x": 860,
+    "y": 586.8181818181818,
+    "width": 100,
+    "height": 45,
+    "z": 3937,
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
+    "borderColor": "transparent",
+    "borderColorOH": "transparent",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "scoreSheet",
+        "routine": "updateRoutine",
+        "arguments": {
+          "currentID": "${thisID}",
+          "backColor": "${PROPERTY backgroundColor}"
+        }
+      }
+    ],
+    "clickable": false,
+    "css": "border-radius: 0;font-size: 25px; ",
+    "text": "--",
+    "textColorOH": "black",
+    "movableInEdit": false
+  },
+  "rollCount": {
+    "id": "rollCount",
+    "x": 1510,
+    "y": 935,
+    "width": 50,
+    "height": 50,
+    "layer": 4,
+    "z": 202,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "background:black;color:white;border: 5px solid white;font-size: 40px;text-align:center;border-radius: 100%",
+    "text": 0,
+    "rollCount": 0,
+    "changeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "css",
+            "value": "background:red;color:white;border: 5px solid white;font-size: 40px;text-align:center; border-radius: 100%"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "css",
+            "value": "background:black;color:white;border: 5px solid white;font-size: 40px;text-align:center;border-radius: 100%"
+          }
+        ]
+      }
+    ]
+  },
+  "recallDice": {
+    "type": "button",
+    "id": "recallDice",
+    "x": 1209,
+    "y": 5,
+    "z": 3875,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "rollMe",
+        "value": true
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          "var rndX = randInt 0 200",
+          "var rndY = randInt 0 800",
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "rollArea"
+          },
+          {
+            "func": "SET",
+            "property": "x",
+            "value": "${rndX}"
+          },
+          {
+            "func": "SET",
+            "property": "y",
+            "value": "${rndY}"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "rollCount"
+      },
+      {
+        "func": "SET",
+        "property": "rollCount",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": 0
+      }
+    ],
+    "text": "Recall Dice",
+    "movableInEdit": false
+  },
+  "_meta": {
+    "version": 3,
+    "info": {
+      "name": "Dix Dice",
+      "image": "/assets/-1880411500_33630",
+      "rules": "",
+      "bgg": "",
+      "year": "1993",
+      "mode": "vs",
+      "time": "30",
+      "players": "1-6",
+      "language": "US",
+      "variant": "",
+      "attribution": "The room state, library image, and all game elements are by LawDawg96 are are released to the Public Domain under CC0.",
+      "similarName": "Phase 10 Dice",
+      "similarLink": "https://boardgamegeek.com/boardgame/2578/phase-10-dice",
+      "description": "Complete a series of levels by rolling dice in runs, sets, or colors.  First to complete 10 levels wins."
+    }
+  }
+}

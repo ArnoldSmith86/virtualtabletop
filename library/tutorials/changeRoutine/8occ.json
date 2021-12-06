@@ -1,0 +1,2127 @@
+{
+  "A1": {
+    "id": "A1",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 719.5,
+    "x": 4,
+    "z": 25,
+    "parent": "bottomholder"
+  },
+  "A2": {
+    "id": "A2",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 616.9285714285714,
+    "x": 4,
+    "z": 23,
+    "parent": "bottomholder"
+  },
+  "A3": {
+    "id": "A3",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 514.3571428571429,
+    "x": 4,
+    "z": 21,
+    "parent": "bottomholder"
+  },
+  "A4": {
+    "id": "A4",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 411.7857142857143,
+    "x": 4,
+    "z": 19,
+    "parent": "bottomholder"
+  },
+  "A5": {
+    "id": "A5",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 309.2142857142857,
+    "x": 4,
+    "z": 17,
+    "parent": "bottomholder"
+  },
+  "A6": {
+    "id": "A6",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 206.64285714285714,
+    "x": 4,
+    "z": 15,
+    "parent": "bottomholder"
+  },
+  "A7": {
+    "id": "A7",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 104.07142857142857,
+    "x": 4,
+    "z": 13,
+    "parent": "bottomholder"
+  },
+  "A8": {
+    "id": "A8",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "x": 3,
+    "z": 143,
+    "parent": "bottomholder"
+  },
+  "B1": {
+    "id": "B1",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 719.5,
+    "x": 105.85714285714288,
+    "z": 53,
+    "parent": "bottomholder"
+  },
+  "B2": {
+    "id": "B2",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 616.9285714285714,
+    "x": 105.85714285714288,
+    "z": 49,
+    "parent": "bottomholder"
+  },
+  "B3": {
+    "id": "B3",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 514.3571428571429,
+    "x": 105.85714285714288,
+    "z": 45,
+    "parent": "bottomholder"
+  },
+  "B4": {
+    "id": "B4",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 411.7857142857143,
+    "x": 105.85714285714288,
+    "z": 41,
+    "parent": "bottomholder"
+  },
+  "B5": {
+    "id": "B5",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 309.2142857142857,
+    "x": 105.85714285714288,
+    "z": 37,
+    "parent": "bottomholder"
+  },
+  "B6": {
+    "id": "B6",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 206.64285714285714,
+    "x": 105.85714285714288,
+    "z": 33,
+    "parent": "bottomholder"
+  },
+  "B7": {
+    "id": "B7",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 104.07142857142857,
+    "x": 105.85714285714288,
+    "z": 27,
+    "parent": "bottomholder"
+  },
+  "B8": {
+    "id": "B8",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 1.5,
+    "x": 105.85714285714288,
+    "z": 9,
+    "parent": "bottomholder"
+  },
+  "C1": {
+    "id": "C1",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 719.5,
+    "x": 207.71428571428575,
+    "z": 55,
+    "parent": "bottomholder"
+  },
+  "C2": {
+    "id": "C2",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 616.9285714285714,
+    "x": 207.71428571428575,
+    "z": 51,
+    "parent": "bottomholder"
+  },
+  "C3": {
+    "id": "C3",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 514.3571428571429,
+    "x": 207.71428571428575,
+    "z": 47,
+    "parent": "bottomholder"
+  },
+  "C4": {
+    "id": "C4",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 411.7857142857143,
+    "x": 207.71428571428575,
+    "z": 43,
+    "parent": "bottomholder"
+  },
+  "C5": {
+    "id": "C5",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 309.2142857142857,
+    "x": 207.71428571428575,
+    "z": 39,
+    "parent": "bottomholder"
+  },
+  "C6": {
+    "id": "C6",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 206.64285714285714,
+    "x": 207.71428571428575,
+    "z": 35,
+    "parent": "bottomholder"
+  },
+  "C7": {
+    "id": "C7",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 104.07142857142857,
+    "x": 207.71428571428575,
+    "z": 31,
+    "parent": "bottomholder"
+  },
+  "C8": {
+    "id": "C8",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 1.5,
+    "x": 207.71428571428575,
+    "z": 11,
+    "parent": "bottomholder"
+  },
+  "D1": {
+    "id": "D1",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 719.5,
+    "x": 309.5714285714286,
+    "z": 117,
+    "parent": "bottomholder"
+  },
+  "D2": {
+    "id": "D2",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 616.9285714285714,
+    "x": 309.5714285714286,
+    "z": 115,
+    "parent": "bottomholder"
+  },
+  "D3": {
+    "id": "D3",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 514.3571428571429,
+    "x": 309.5714285714286,
+    "z": 113,
+    "parent": "bottomholder"
+  },
+  "D4": {
+    "id": "D4",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 411.7857142857143,
+    "x": 309.5714285714286,
+    "z": 101,
+    "parent": "bottomholder"
+  },
+  "D5": {
+    "id": "D5",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 309.2142857142857,
+    "x": 309.5714285714286,
+    "z": 91,
+    "parent": "bottomholder"
+  },
+  "D6": {
+    "id": "D6",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 206.64285714285714,
+    "x": 309.5714285714286,
+    "z": 79,
+    "parent": "bottomholder"
+  },
+  "D7": {
+    "id": "D7",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 104.07142857142857,
+    "x": 309.5714285714286,
+    "z": 67,
+    "parent": "bottomholder"
+  },
+  "D8": {
+    "id": "D8",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 1.5,
+    "x": 309.5714285714286,
+    "z": 57,
+    "parent": "bottomholder"
+  },
+  "E1": {
+    "id": "E1",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 719.5,
+    "x": 411.4285714285715,
+    "z": 123,
+    "parent": "bottomholder"
+  },
+  "E2": {
+    "id": "E2",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 616.9285714285714,
+    "x": 411.4285714285715,
+    "z": 121,
+    "parent": "bottomholder"
+  },
+  "E3": {
+    "id": "E3",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 514.3571428571429,
+    "x": 411.4285714285715,
+    "z": 119,
+    "parent": "bottomholder"
+  },
+  "E4": {
+    "id": "E4",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 411.7857142857143,
+    "x": 411.4285714285715,
+    "z": 103,
+    "parent": "bottomholder"
+  },
+  "E5": {
+    "id": "E5",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 309.2142857142857,
+    "x": 411.4285714285715,
+    "z": 93,
+    "parent": "bottomholder"
+  },
+  "E6": {
+    "id": "E6",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 206.64285714285714,
+    "x": 411.4285714285715,
+    "z": 81,
+    "parent": "bottomholder"
+  },
+  "E7": {
+    "id": "E7",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 104.07142857142857,
+    "x": 411.4285714285715,
+    "z": 69,
+    "parent": "bottomholder"
+  },
+  "E8": {
+    "id": "E8",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 1.5,
+    "x": 411.4285714285715,
+    "z": 59,
+    "parent": "bottomholder"
+  },
+  "F1": {
+    "id": "F1",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 719.5,
+    "x": 513.2857142857144,
+    "z": 137,
+    "parent": "bottomholder"
+  },
+  "F2": {
+    "id": "F2",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 616.9285714285714,
+    "x": 513.2857142857144,
+    "z": 131,
+    "parent": "bottomholder"
+  },
+  "F3": {
+    "id": "F3",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 514.3571428571429,
+    "x": 513.2857142857144,
+    "z": 125,
+    "parent": "bottomholder"
+  },
+  "F4": {
+    "id": "F4",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 411.7857142857143,
+    "x": 513.2857142857144,
+    "z": 105,
+    "parent": "bottomholder"
+  },
+  "F5": {
+    "id": "F5",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 309.2142857142857,
+    "x": 513.2857142857144,
+    "z": 95,
+    "parent": "bottomholder"
+  },
+  "F6": {
+    "id": "F6",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 206.64285714285714,
+    "x": 513.2857142857144,
+    "z": 85,
+    "parent": "bottomholder"
+  },
+  "F7": {
+    "id": "F7",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 104.07142857142857,
+    "x": 513.2857142857144,
+    "z": 71,
+    "parent": "bottomholder"
+  },
+  "F8": {
+    "id": "F8",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "x": 513.2857142857144,
+    "z": 61,
+    "parent": "bottomholder",
+    "y": 1.5
+  },
+  "G1": {
+    "id": "G1",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 719.5,
+    "x": 615.1428571428572,
+    "z": 139,
+    "parent": "bottomholder"
+  },
+  "G2": {
+    "id": "G2",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 616.9285714285714,
+    "x": 615.1428571428572,
+    "z": 133,
+    "parent": "bottomholder"
+  },
+  "G3": {
+    "id": "G3",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 514.3571428571429,
+    "x": 615.1428571428572,
+    "z": 127,
+    "parent": "bottomholder"
+  },
+  "G4": {
+    "id": "G4",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 411.7857142857143,
+    "x": 615.1428571428572,
+    "z": 107,
+    "parent": "bottomholder"
+  },
+  "G5": {
+    "id": "G5",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 309.2142857142857,
+    "x": 615.1428571428572,
+    "z": 97,
+    "parent": "bottomholder"
+  },
+  "G6": {
+    "id": "G6",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 206.64285714285714,
+    "x": 615.1428571428572,
+    "z": 87,
+    "parent": "bottomholder"
+  },
+  "G7": {
+    "id": "G7",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 104.07142857142857,
+    "x": 615.1428571428572,
+    "z": 73,
+    "parent": "bottomholder"
+  },
+  "G8": {
+    "id": "G8",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "x": 615.1428571428572,
+    "z": 63,
+    "parent": "bottomholder",
+    "y": 1.5
+  },
+  "H1": {
+    "id": "H1",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 719.5,
+    "x": 717.0000000000001,
+    "z": 141,
+    "parent": "bottomholder"
+  },
+  "H2": {
+    "id": "H2",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 616.9285714285714,
+    "x": 717.0000000000001,
+    "z": 135,
+    "parent": "bottomholder"
+  },
+  "H3": {
+    "id": "H3",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 514.3571428571429,
+    "x": 717.0000000000001,
+    "z": 129,
+    "parent": "bottomholder"
+  },
+  "H4": {
+    "id": "H4",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 411.7857142857143,
+    "x": 717.0000000000001,
+    "z": 109,
+    "parent": "bottomholder"
+  },
+  "H5": {
+    "id": "H5",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 309.2142857142857,
+    "x": 717.0000000000001,
+    "z": 99,
+    "parent": "bottomholder"
+  },
+  "H6": {
+    "id": "H6",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 206.64285714285714,
+    "x": 717.0000000000001,
+    "z": 89,
+    "parent": "bottomholder"
+  },
+  "H7": {
+    "id": "H7",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#ccc;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 104.07142857142857,
+    "x": 717.0000000000001,
+    "z": 77,
+    "parent": "bottomholder"
+  },
+  "H8": {
+    "id": "H8",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "css": "background:#888;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "y": 1.5,
+    "x": 717.0000000000001,
+    "z": 65,
+    "parent": "bottomholder"
+  },
+  "bottomholder": {
+    "type": "holder",
+    "id": "bottomholder",
+    "x": 548,
+    "y": 199,
+    "width": 820,
+    "height": 820,
+    "layer": -2,
+    "z": 324,
+    "movable": true,
+    "alignChildren": false,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "scale": 0.88
+  },
+  "_meta": {
+    "version": 3,
+    "info": {
+      "name": "changeRoutine",
+      "image": "/assets/-73877428_5707",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "",
+      "type": "file",
+      "players": "1",
+      "language": "US",
+      "variant": "Sliders",
+      "attribution": ""
+    }
+  },
+  "fl9q": {
+    "type": "button",
+    "clickRoutine": [],
+    "x": 1500,
+    "y": 98,
+    "z": 37,
+    "id": "fl9q",
+    "height": 445,
+    "css": "background-color: grey; border-color: black",
+    "layer": -2
+  },
+  "Black Rook A": {
+    "id": "Black Rook A",
+    "text": "♜",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "z": 256,
+    "x": 4,
+    "y": 4,
+    "parent": "A8",
+    "gamepiece": true,
+    "rotation": 360
+  },
+  "White King": {
+    "id": "White King",
+    "text": "♔",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "z": 283,
+    "x": 4,
+    "y": 4,
+    "parent": "E1",
+    "gamepiece": true,
+    "rotation": 360
+  },
+  "Black Knight B": {
+    "id": "Black Knight B",
+    "text": "♞",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "parent": "B8",
+    "gamepiece": true,
+    "rotation": 360
+  },
+  "Black Bishop C": {
+    "id": "Black Bishop C",
+    "text": "♝",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "parent": "C8",
+    "gamepiece": true,
+    "rotation": 360
+  },
+  "Black Queen": {
+    "id": "Black Queen",
+    "text": "♛",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "parent": "D8",
+    "gamepiece": true,
+    "rotation": 360
+  },
+  "Black King": {
+    "id": "Black King",
+    "text": "♚",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "parent": "E8",
+    "gamepiece": true,
+    "rotation": 360
+  },
+  "Black Bishop F": {
+    "id": "Black Bishop F",
+    "text": "♝",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "z": 4,
+    "parent": "F8",
+    "gamepiece": true,
+    "rotation": 360
+  },
+  "Black Knight G": {
+    "id": "Black Knight G",
+    "text": "♞",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "parent": "G8",
+    "gamepiece": true,
+    "rotation": 360
+  },
+  "Black Rook H": {
+    "id": "Black Rook H",
+    "text": "♜",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "parent": "H8",
+    "gamepiece": true,
+    "rotation": 360
+  },
+  "Black Pawn A": {
+    "id": "Black Pawn A",
+    "text": "♟︎",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "z": 6,
+    "parent": "A7",
+    "gamepiece": true,
+    "rotation": 360
+  },
+  "Black Pawn B": {
+    "id": "Black Pawn B",
+    "text": "♟︎",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "parent": "B7",
+    "gamepiece": true,
+    "rotation": 360
+  },
+  "Black Pawn C": {
+    "id": "Black Pawn C",
+    "text": "♟︎",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "parent": "C7",
+    "gamepiece": true,
+    "rotation": 360
+  },
+  "Black Pawn E": {
+    "id": "Black Pawn E",
+    "text": "♟︎",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "parent": "E7",
+    "gamepiece": true,
+    "rotation": 360
+  },
+  "Black Pawn F": {
+    "id": "Black Pawn F",
+    "text": "♟︎",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "parent": "F7",
+    "gamepiece": true,
+    "rotation": 360
+  },
+  "Black Pawn G": {
+    "id": "Black Pawn G",
+    "text": "♟︎",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "parent": "G7",
+    "gamepiece": true,
+    "rotation": 360
+  },
+  "Black Pawn H": {
+    "id": "Black Pawn H",
+    "text": "♟︎",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "parent": "H7",
+    "gamepiece": true,
+    "rotation": 360
+  },
+  "Black Pawn D": {
+    "id": "Black Pawn D",
+    "text": "♟︎",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "parent": "D7",
+    "gamepiece": true,
+    "rotation": 360
+  },
+  "White Pawn A": {
+    "id": "White Pawn A",
+    "text": "♙︎",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "parent": "A2",
+    "gamepiece": true,
+    "rotation": 360
+  },
+  "White Pawn B": {
+    "id": "White Pawn B",
+    "text": "♙︎",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "gamepiece": true,
+    "z": 343,
+    "x": 10,
+    "y": 10,
+    "parent": "B2",
+    "rotation": 360
+  },
+  "White Pawn C": {
+    "id": "White Pawn C",
+    "text": "♙︎",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "parent": "C2",
+    "gamepiece": true,
+    "rotation": 360
+  },
+  "White Pawn D": {
+    "id": "White Pawn D",
+    "text": "♙︎",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "parent": "D2",
+    "gamepiece": true,
+    "rotation": 360
+  },
+  "White Pawn E": {
+    "id": "White Pawn E",
+    "text": "♙︎",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "parent": "E2",
+    "gamepiece": true,
+    "rotation": 360
+  },
+  "White Pawn F": {
+    "id": "White Pawn F",
+    "text": "♙︎",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "gamepiece": true,
+    "z": 301,
+    "x": 10,
+    "y": 10,
+    "parent": "F2",
+    "rotation": 360
+  },
+  "White Pawn H": {
+    "id": "White Pawn H",
+    "text": "♙︎",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "parent": "H2",
+    "gamepiece": true,
+    "rotation": 360
+  },
+  "White Pawn G": {
+    "id": "White Pawn G",
+    "text": "♙︎",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "parent": "G2",
+    "gamepiece": true,
+    "rotation": 360
+  },
+  "White Rook A": {
+    "id": "White Rook A",
+    "text": "♖",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "parent": "A1",
+    "gamepiece": true,
+    "rotation": 360
+  },
+  "White Knight B": {
+    "id": "White Knight B",
+    "text": "♘",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "parent": "B1",
+    "gamepiece": true,
+    "rotation": 360
+  },
+  "White Bishop C": {
+    "id": "White Bishop C",
+    "text": "♗",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "parent": "C1",
+    "gamepiece": true,
+    "rotation": 360
+  },
+  "White Queen": {
+    "id": "White Queen",
+    "text": "♕",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "parent": "D1",
+    "gamepiece": true,
+    "rotation": 360
+  },
+  "White Bishop F": {
+    "id": "White Bishop F",
+    "text": "♗",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "parent": "F1",
+    "gamepiece": true,
+    "rotation": 360
+  },
+  "White Knight G": {
+    "id": "White Knight G",
+    "text": "♘",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "parent": "G1",
+    "gamepiece": true,
+    "rotation": 360
+  },
+  "White Rook H": {
+    "id": "White Rook H",
+    "text": "♖",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "parent": "H1",
+    "gamepiece": true,
+    "rotation": 360
+  },
+  "hg42": {
+    "type": "button",
+    "clickRoutine": [],
+    "y": 100,
+    "z": 39,
+    "css": "background-color: grey; border-color: black",
+    "layer": -2,
+    "id": "hg42",
+    "x": 5,
+    "width": 200
+  },
+  "xhfe": {
+    "type": "button",
+    "y": 100,
+    "z": 802,
+    "changeRoutine": [
+      {
+        "Note": "Choose the things you want to change the scale on. For this example, it is the holder containing the chess board and pieces",
+        "func": "SELECT",
+        "property": "id",
+        "value": "bottomholder",
+        "collection": "turnHolder"
+      },
+      "var yLock = ${PROPERTY yLock} //Set the y value so that it will not change.",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "y",
+        "value": "${yLock}"
+      },
+      "var xMin = ${PROPERTY xMin} //Determine the x values that will limit control for this slider",
+      "var xRange = ${PROPERTY xRange}",
+      "var xMax = ${xRange} + ${xMin}",
+      "var xSlide = ${PROPERTY x}",
+      {
+        "Note": "If x goes above the maximum, set x to the maximum.",
+        "func": "IF",
+        "operand1": "${xSlide}",
+        "operand2": "${xMax}",
+        "relation": ">",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "x",
+            "value": "${xMax}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "Note": "If x goes below the minimum, then set x to the minimum.",
+            "func": "IF",
+            "operand1": "${xSlide}",
+            "operand2": "${xMin}",
+            "relation": "<",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "x",
+                "value": "${xMin}"
+              }
+            ],
+            "elseRoutine": [
+              "var scaleVar = ${xSlide} - ${xMin} // If x is between the min and the max, calculate the value considering where its starting limit is.",
+              "var scaleVar = ${scaleVar} / 100 // For scaling, need to divide the result by 100.",
+              {
+                "Note": "Set the scale based on the slider position.",
+                "func": "SET",
+                "collection": "turnHolder",
+                "property": "scale",
+                "value": "${scaleVar}"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "text": "Scale",
+    "movable": true,
+    "id": "xhfe",
+    "yLock": 100,
+    "xMin": 5,
+    "xRange": 120,
+    "xMin Note": "Use xMin to set the left limit of the travel of the slider.  This will depend on where the slider is on the board.  Use xRange to set how far the slider can travel.  In this case, it is 120 so the scale will max out at 1.2.  Use yLock at the y coordinate on which the slider will travel to prevent it from moving up or down.",
+    "x": 93
+  },
+  "slidebutton": {
+    "type": "button",
+    "id": "slidebutton",
+    "y": 100,
+    "z": 845,
+    "movable": true,
+    "changeRoutine": [
+      {
+        "Note": "Choose the things you want to change.",
+        "func": "SELECT",
+        "property": "id",
+        "value": "bottomholder",
+        "collection": "turnHolder"
+      },
+      {
+        "func": "SELECT",
+        "property": "gamepiece",
+        "value": true,
+        "collection": "staticPiece"
+      },
+      "var xLock = ${PROPERTY xLock} ////Set the x value so that it will not change.",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "x",
+        "value": "${xLock}"
+      },
+      "var yMin = ${PROPERTY yMin} //Determine the y values that will limit control for this slider.",
+      "var yRange = ${PROPERTY yRange}",
+      "var yMax = ${yRange} + ${yMin}",
+      "var ySlide = ${PROPERTY y}",
+      {
+        "Note": "If y goes above the maximum, set y to the maximum.",
+        "func": "IF",
+        "operand1": "${ySlide}",
+        "operand2": "${yMax}",
+        "relation": ">",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "y",
+            "value": "${yMax}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "Note": "If y goes below the minimum, then set y to the minimum.",
+            "func": "IF",
+            "operand1": "${ySlide}",
+            "operand2": "${yMin}",
+            "relation": "<",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "y",
+                "value": "${yMin}"
+              }
+            ],
+            "elseRoutine": [
+              "var rotationVar = ${ySlide} - ${yMin} // If y is between the min and the max, calculate the value considering where its starting limit is.",
+              {
+                "func": "SET",
+                "collection": "turnHolder",
+                "property": "rotation",
+                "value": "${rotationVar}"
+              },
+              "var rotationVar = 360 - ${rotationVar} // Counterrotate the game pieces to left by the same amount the holder is turning to the right to keep the pieces face up.",
+              {
+                "func": "SET",
+                "collection": "staticPiece",
+                "property": "rotation",
+                "value": "${rotationVar}"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "xLock": 1500,
+    "x": 1500,
+    "xLock Note": "Use xLock at the x coordinate on which the slider will travel to prevent it from moving left or right. Use yMin to set the upper limit of the travel of the slider.  This will depend on where the slider is on the board.  Use yRange to set how far the slider can travel.  In this case, it is 360 so the setting will go from 0 to 360.",
+    "yMin": 100,
+    "yRange": 360,
+    "text": "Rotation"
+  },
+  "nrlh": {
+    "type": "button",
+    "y": 628,
+    "z": 859,
+    "changeRoutine": [
+      {
+        "Note": "Choose the things you want to change.",
+        "func": "SELECT",
+        "property": "id",
+        "value": "colorsample",
+        "collection": "colorsample"
+      },
+      "var xLock = ${PROPERTY xLock} ////Set the x value so that it will not change.",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "x",
+        "value": "${xLock}"
+      },
+      "var yMin = ${PROPERTY yMin} //Determine the y values that will limit control for this slider.",
+      "var yRange = ${PROPERTY yRange}",
+      "var yMax = ${yRange} + ${yMin}",
+      "var ySlide = ${PROPERTY y}",
+      {
+        "Note": "If y goes above the maximum, set y to the maximum.",
+        "func": "IF",
+        "operand1": "${ySlide}",
+        "operand2": "${yMax}",
+        "relation": ">",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "y",
+            "value": "${yMax}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "Note": "If y goes below the minimum, then set y to the minimum.",
+            "func": "IF",
+            "operand1": "${ySlide}",
+            "operand2": "${yMin}",
+            "relation": "<",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "y",
+                "value": "${yMin}"
+              }
+            ],
+            "elseRoutine": [
+              "var hueVar = ${ySlide} - ${yMin} // If y is between the min and the max, calculate the value considering where its starting limit is.",
+              {
+                "func": "SET",
+                "collection": "colorsample",
+                "property": "hue",
+                "value": "${hueVar}"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "movable": true,
+    "id": "nrlh",
+    "x": 45,
+    "image": "/assets/1502865726_277",
+    "css": "border-color:transparent;background-color:transparent;border-radius:0",
+    "width": 100,
+    "height": 100,
+    "xLock": 45,
+    "xLock Note": "Use xLock at the x coordinate on which the slider will travel to prevent it from moving left or right. Use yMin to set the upper limit of the travel of the slider.  This will depend on where the slider is on the board.  Use yRange to set how far the slider can travel.  In this case, it is 359 so the setting will go from 0 to 359.",
+    "yMin": 400,
+    "yRange": 359,
+    "text": "Hue"
+  },
+  "colorsample": {
+    "type": "holder",
+    "id": "colorsample",
+    "x": 56,
+    "y": 833,
+    "z": 155,
+    "hue": 228,
+    "saturation": 90,
+    "lightness": 47,
+    "width": 100,
+    "height": 100,
+    "alpha": 1,
+    "changeRoutine": [
+      {
+        "Note": "This routine simply concats new css properties to display the changing colors on 3 widgets.  This first batch is for this widget."
+      },
+      "var hue = ${PROPERTY hue}",
+      "var saturation = ${PROPERTY saturation}",
+      "var lightness = ${PROPERTY lightness}",
+      "var alpha = ${PROPERTY alpha}",
+      "var showColor = 'background-color\\u003a hsla(' + ${hue}",
+      "var showColor = ${showColor} + ','",
+      "var showColor = ${showColor} + ${saturation}",
+      "var showColor = ${showColor} + '\\u0025,'",
+      "var showColor = ${showColor} + ${lightness}",
+      "var showColor = ${showColor} + '\\u0025,'",
+      "var showColor = ${showColor} + ${alpha}",
+      "var thisCSS = ${showColor} + ')'",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": "${thisCSS}"
+      },
+      "var showColor = 'border-radius\\u003a4px\\u003bbackground-image\\u003a linear-gradient(to bottom, hsl(' + ${hue} // This second batch of css is for the saturation widget.",
+      "var showColor = ${showColor} + ', 0\\u0025, 50\\u0025), hsl('",
+      "var showColor = ${showColor} + ${hue}",
+      "var showColor = ${showColor} + ', 100\\u0025, 50\\u0025))'",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "saturationHolder"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "${showColor}"
+      },
+      "var showColor = 'border-radius\\u003a4px\\u003bbackground-image\\u003a linear-gradient(to bottom, hsl(' + ${hue} // And this last batch is for the lightness widget.",
+      "var showColor = ${showColor} + ', 100\\u0025, 10\\u0025), hsl('",
+      "var showColor = ${showColor} + ${hue}",
+      "var showColor = ${showColor} + ', 100\\u0025, 90\\u0025))'",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "lightnessHolder"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "${showColor}"
+      },
+      {
+        "func": "LABEL",
+        "label": "colorlabel",
+        "value": "${thisCSS}"
+      }
+    ],
+    "movable": true,
+    "css": "background-color: hsla(228,90%,47%,1)"
+  },
+  "dwdd": {
+    "type": "button",
+    "y": 490,
+    "z": 850,
+    "changeRoutine": [
+      {
+        "Note": "Choose the things you want to change.",
+        "func": "SELECT",
+        "property": "id",
+        "value": "colorsample",
+        "collection": "colorsample"
+      },
+      "var xLock = ${PROPERTY xLock} ////Set the x value so that it will not change.",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "x",
+        "value": "${xLock}"
+      },
+      "var yMin = ${PROPERTY yMin} //Determine the y values that will limit control for this slider.",
+      "var yRange = ${PROPERTY yRange}",
+      "var yMax = ${yRange} + ${yMin}",
+      "var ySlide = ${PROPERTY y}",
+      {
+        "Note": "If y goes above the maximum, set y to the maximum.",
+        "func": "IF",
+        "operand1": "${ySlide}",
+        "operand2": "${yMax}",
+        "relation": ">",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "y",
+            "value": "${yMax}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "Note": "If y goes below the minimum, then set y to the minimum.",
+            "func": "IF",
+            "operand1": "${ySlide}",
+            "operand2": "${yMin}",
+            "relation": "<",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "y",
+                "value": "${yMin}"
+              }
+            ],
+            "elseRoutine": [
+              "var saturationVar = ${ySlide} - ${yMin} // If y is between the min and the max, calculate the value considering where its starting limit is.",
+              {
+                "func": "SET",
+                "collection": "colorsample",
+                "property": "saturation",
+                "value": "${saturationVar}"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "movable": true,
+    "id": "dwdd",
+    "x": 195,
+    "height": 100,
+    "css": "border-color:transparent;background-color:transparent;border-radius:0",
+    "image": "/assets/1502865726_277",
+    "width": 100,
+    "text": "Sat",
+    "yMin": 400,
+    "yRange": 100,
+    "xLock": 195,
+    "xLock Note": "Use xLock at the x coordinate on which the slider will travel to prevent it from moving left or right. Use yMin to set the upper limit of the travel of the slider.  This will depend on where the slider is on the board.  Use yRange to set how far the slider can travel.  In this case, it is 100 so the setting will go from 0% to 100%."
+  },
+  "pv2t": {
+    "type": "button",
+    "y": 587,
+    "z": 860,
+    "changeRoutine": [
+      {
+        "Note": "Choose the things you want to change.",
+        "func": "SELECT",
+        "property": "id",
+        "value": "colorsample",
+        "collection": "colorsample"
+      },
+      "var xLock = ${PROPERTY xLock} ////Set the x value so that it will not change.",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "x",
+        "value": "${xLock}"
+      },
+      "var yMin = ${PROPERTY yMin} //Determine the y values that will limit control for this slider.",
+      "var yRange = ${PROPERTY yRange}",
+      "var yMax = ${yRange} + ${yMin}",
+      "var ySlide = ${PROPERTY y}",
+      {
+        "Note": "If y goes above the maximum, set y to the maximum.",
+        "func": "IF",
+        "operand1": "${ySlide}",
+        "operand2": "${yMax}",
+        "relation": ">",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "y",
+            "value": "${yMax}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "Note": "If y goes below the minimum, then set y to the minimum.",
+            "func": "IF",
+            "operand1": "${ySlide}",
+            "operand2": "${yMin}",
+            "relation": "<",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "y",
+                "value": "${yMin}"
+              }
+            ],
+            "elseRoutine": [
+              "var lightnessVar = ${ySlide} - ${yMin} // If y is between the min and the max, calculate the value considering where its starting limit is.",
+              {
+                "func": "SET",
+                "collection": "colorsample",
+                "property": "lightness",
+                "value": "${lightnessVar}"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "movable": true,
+    "id": "pv2t",
+    "x": 195,
+    "height": 100,
+    "width": 100,
+    "css": "border-color:transparent;background-color:transparent;border-radius:0",
+    "image": "/assets/1502865726_277",
+    "xLock": 195,
+    "xLock Note": "Use xLock at the x coordinate on which the slider will travel to prevent it from moving left or right. Use yMin to set the upper limit of the travel of the slider.  This will depend on where the slider is on the board.  Use yRange to set how far the slider can travel.  In this case, it is 100 so the setting will go from 0% to 100%.",
+    "yMin": 540,
+    "yRange": 100,
+    "text": "Light"
+  },
+  "haqc": {
+    "type": "button",
+    "z": 858,
+    "changeRoutine": [
+      {
+        "Note": "Choose the things you want to change.",
+        "func": "SELECT",
+        "property": "id",
+        "value": "colorsample",
+        "collection": "colorsample"
+      },
+      "var xLock = ${PROPERTY xLock} ////Set the x value so that it will not change.",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "x",
+        "value": "${xLock}"
+      },
+      "var yMin = ${PROPERTY yMin} //Determine the y values that will limit control for this slider.",
+      "var yRange = ${PROPERTY yRange}",
+      "var yMax = ${yRange} + ${yMin}",
+      "var ySlide = ${PROPERTY y}",
+      {
+        "Note": "If y goes above the maximum, set y to the maximum.",
+        "func": "IF",
+        "operand1": "${ySlide}",
+        "operand2": "${yMax}",
+        "relation": ">",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "y",
+            "value": "${yMax}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "Note": "If y goes below the minimum, then set y to the minimum.",
+            "func": "IF",
+            "operand1": "${ySlide}",
+            "operand2": "${yMin}",
+            "relation": "<",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "y",
+                "value": "${yMin}"
+              }
+            ],
+            "elseRoutine": [
+              "var alphaVar = ${ySlide} - ${yMin} // If y is between the min and the max, calculate the value considering where its starting limit is.",
+              "var alphaVar = ${alphaVar} / 100 // Necessary for scaling.",
+              {
+                "func": "SET",
+                "collection": "colorsample",
+                "property": "alpha",
+                "value": "${alphaVar}"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "movable": true,
+    "id": "haqc",
+    "x": 195,
+    "height": 100,
+    "css": "border-color:transparent;background-color:transparent;border-radius:0",
+    "image": "/assets/1502865726_277",
+    "width": 100,
+    "y": 780,
+    "xLock": 195,
+    "xLock Note": "Use xLock at the x coordinate on which the slider will travel to prevent it from moving left or right. Use yMin to set the upper limit of the travel of the slider.  This will depend on where the slider is on the board.  Use yRange to set how far the slider can travel.  In this case, it is 100 so the setting will go from 0.0 to 1.0.",
+    "yMin": 680,
+    "yRange": 100,
+    "text": "Alpha"
+  },
+  "hueHolder": {
+    "type": "button",
+    "id": "hueHolder",
+    "x": 5,
+    "y": 450,
+    "height": 360,
+    "layer": -2,
+    "z": 39,
+    "clickRoutine": [],
+    "css": "border-radius:4px;background-image: linear-gradient(to bottom, hsl(0, 100%, 50%), hsl(47.5, 100%, 50%), hsl(95, 100%, 50%), hsl(142.5, 100%, 50%), hsl(190, 100%, 50%), hsl(237.5, 100%, 50%), hsl(285, 100%, 50%), hsl(332.5, 100%, 50%), hsl(360, 100%, 50%))"
+  },
+  "saturationHolder": {
+    "type": "button",
+    "id": "saturationHolder",
+    "x": 155,
+    "height": 100,
+    "layer": -2,
+    "z": 39,
+    "y": 450,
+    "css": "border-radius:4px;background-image: linear-gradient(to bottom, hsl(228, 0%, 50%), hsl(228, 100%, 50%))"
+  },
+  "lightnessHolder": {
+    "type": "button",
+    "id": "lightnessHolder",
+    "x": 155,
+    "y": 590,
+    "height": 100,
+    "layer": -2,
+    "z": 39,
+    "clickRoutine": [],
+    "css": "border-radius:4px;background-image: linear-gradient(to bottom, hsl(228, 100%, 10%), hsl(228, 100%, 90%))"
+  },
+  "alphaHolder": {
+    "type": "button",
+    "id": "alphaHolder",
+    "x": 155,
+    "height": 100,
+    "layer": -2,
+    "z": 39,
+    "clickRoutine": [],
+    "css": "border-radius:4px;background-color:white",
+    "y": 730
+  },
+  "colorlabel": {
+    "id": "colorlabel",
+    "y": 100,
+    "z": 302,
+    "text": "background-color: hsla(228,90%,47%,1)",
+    "parent": "colorsample",
+    "width": 200,
+    "x": -25
+  },
+  "vmck": {
+    "id": "vmck",
+    "text": "♕",
+    "css": "font-size:100px;color:black;display:flex;justify-content:center;align-items:center;text-align:center;",
+    "rotation": 360,
+    "z": 314,
+    "x": 4,
+    "y": 4,
+    "parent": "D5"
+  },
+  "8qyr": {
+    "id": "8qyr",
+    "z": 331,
+    "x": 1170.5,
+    "y": 16,
+    "text": "Objects in holders rotate with the holder so the center chess piece rotates.  The rotation slider counter-rotates all the other pieces so they are always 'up.' These rotation sliders are the same except the second adds a grid element so it snaps into place at 90 degree angles. The second slider also has a clickRoutine to move the button 180 degrees from its current position.",
+    "width": 325
+  },
+  "8fr3": {
+    "type": "label",
+    "text": "changeRoutine:\nSliders",
+    "css": "font-size: 60px",
+    "height": 160,
+    "width": 1000,
+    "z": 322,
+    "id": "8fr3",
+    "y": -6,
+    "x": 287
+  },
+  "kbb1": {
+    "z": 319,
+    "x": 538,
+    "y": 165,
+    "text": "You can use changeRoutine to make sliding buttons that change various properties of widgets.  The changes are immediately visible. These sliders use custom parameters to set the limits of travel for the buttons.",
+    "width": 520,
+    "id": "kbb1"
+  },
+  "147i": {
+    "z": 322,
+    "x": 14.5,
+    "y": 189,
+    "text": "Be careful using scale because it is much more than just enlarging or shrinking widgets.  It changes they way those widgets relate to each other and with other, non-scaled widgets.",
+    "width": 350,
+    "id": "147i"
+  },
+  "8ril": {
+    "z": 325,
+    "x": 305,
+    "y": 478,
+    "text": "The color picker uses changeRoutine in two places.  The slider buttons act like the other sliders in this tutorial, but they only act to change the value of a variable of the color sample holder.  The changeRoutine in the color sample holder then identifies a change in that variable and concats new css to show the changes. That works to update the colors in the color sample holder and at the same time, the colors in the saturation and lightness slider boxes.",
+    "width": 250,
+    "id": "8ril"
+  },
+  "f7ii": {
+    "type": "button",
+    "clickRoutine": [],
+    "x": 1500,
+    "y": 550,
+    "z": 323,
+    "id": "f7ii",
+    "height": 445,
+    "css": "background-color: grey; border-color: black",
+    "layer": -2
+  },
+  "pgm4": {
+    "type": "button",
+    "id": "pgm4",
+    "z": 823,
+    "movable": true,
+    "changeRoutine": [
+      {
+        "Note": "Choose the things you want to change.",
+        "func": "SELECT",
+        "property": "id",
+        "value": "bottomholder",
+        "collection": "turnHolder"
+      },
+      {
+        "func": "SELECT",
+        "property": "gamepiece",
+        "value": true,
+        "collection": "staticPiece"
+      },
+      "var xLock = ${PROPERTY xLock} ////Set the x value so that it will not change.",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "x",
+        "value": "${xLock}"
+      },
+      "var yMin = ${PROPERTY yMin} //Determine the y values that will limit control for this slider.",
+      "var yRange = ${PROPERTY yRange}",
+      "var yMax = ${yRange} + ${yMin}",
+      "var ySlide = ${PROPERTY y}",
+      {
+        "Note": "If y goes above the maximum, set y to the maximum.",
+        "func": "IF",
+        "operand1": "${ySlide}",
+        "operand2": "${yMax}",
+        "relation": ">",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "y",
+            "value": "${yMax}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "Note": "If y goes below the minimum, then set y to the minimum.",
+            "func": "IF",
+            "operand1": "${ySlide}",
+            "operand2": "${yMin}",
+            "relation": "<",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "y",
+                "value": "${yMin}"
+              }
+            ],
+            "elseRoutine": [
+              "var rotationVar = ${ySlide} - ${yMin} // If y is between the min and the max, calculate the value considering where its starting limit is.",
+              {
+                "func": "SET",
+                "collection": "turnHolder",
+                "property": "rotation",
+                "value": "${rotationVar}"
+              },
+              "var rotationVar = 360 - ${rotationVar} // Counterrotate the game pieces to left by the same amount the holder is turning to the right to keep the pieces face up.",
+              {
+                "func": "SET",
+                "collection": "staticPiece",
+                "property": "rotation",
+                "value": "${rotationVar}"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "xLock": 1500,
+    "x": 1500,
+    "xLock Note": "Use xLock at the x coordinate on which the slider will travel to prevent it from moving left or right. Use yMin to set the upper limit of the travel of the slider.  This will depend on where the slider is on the board.  Use yRange to set how far the slider can travel.  In this case, it is 360 so the setting will go from 0 to 360.",
+    "yMin": 550,
+    "yRange": 360,
+    "text": "Rot. w/ Grid & Click",
+    "y": 550,
+    "grid": [
+      {
+        "y": 15,
+        "x": 90,
+        "offsetY": -12.5
+      }
+    ],
+    "clickRoutine": [
+      {
+        "Note": "This routine activates if the slider is clicked instead of dragged.  Determine the y values that will limit control for this slider."
+      },
+      "var yMin = ${PROPERTY yMin}",
+      "var yRange = ${PROPERTY yRange}",
+      "var yMax = ${yRange} + ${yMin}",
+      "var yMid = ${yMin} + 180",
+      "var y90 = ${yMin} + 90",
+      "var y270 = ${yMin} + 270",
+      "var ySlide = ${PROPERTY y}",
+      {
+        "Note": "If the slider is at the top position, then add 180 degrees.",
+        "func": "IF",
+        "operand1": "${ySlide}",
+        "operand2": "${yMin}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "y",
+            "value": "${yMid}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "Note": "If the slider is at the bottom position, then subtract 180 degrees.",
+            "func": "IF",
+            "operand1": "${ySlide}",
+            "operand2": "${yMax}",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "y",
+                "value": "${yMid}"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "Note": "If the slider is in the middle, then move the slider to the top.",
+                "func": "IF",
+                "operand1": "${ySlide}",
+                "operand2": "${yMid}",
+                "thenRoutine": [
+                  {
+                    "func": "SET",
+                    "collection": "thisButton",
+                    "property": "y",
+                    "value": "${yMin}"
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "Note": "If the slider is at the 90 degree position, then move it to 270 degrees. If it is at 270 degrees, then move it to 90.",
+                    "func": "IF",
+                    "operand1": "${ySlide}",
+                    "operand2": "${y90}",
+                    "thenRoutine": [
+                      {
+                        "func": "SET",
+                        "collection": "thisButton",
+                        "property": "y",
+                        "value": "${y270}"
+                      }
+                    ],
+                    "elseRoutine": [
+                      {
+                        "func": "SET",
+                        "collection": "thisButton",
+                        "property": "y",
+                        "value": "${y90}"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "mwwg": {
+    "type": null,
+    "id": "mwwg",
+    "x": null,
+    "y": null,
+    "width": null,
+    "height": null,
+    "movable": null,
+    "movableInEdit": null
+  }
+}

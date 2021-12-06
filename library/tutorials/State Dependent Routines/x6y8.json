@@ -1,0 +1,650 @@
+{
+  "0beu": {
+    "type": "button",
+    "text": "true/false",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "customStateProperty",
+        "relation": "!"
+      }
+    ],
+    "x": 102,
+    "y": 205,
+    "z": 26,
+    "id": "0beu",
+    "customStateProperty": false
+  },
+  "enav": {
+    "type": "button",
+    "text": "1 / -1",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "customStateProperty",
+        "value": "-1",
+        "relation": "*"
+      }
+    ],
+    "x": 383.25,
+    "y": 205,
+    "z": 62,
+    "id": "enav",
+    "customStateProperty": 1
+  },
+  "p5k4": {
+    "type": "label",
+    "text": "Go in JSON edit mode (ctrl+j), select the buttons (ctrl+click) and then click the buttons to see the live changes in the button's JSON",
+    "z": 110,
+    "id": "p5k4",
+    "width": 400,
+    "height": 100,
+    "css": "color: black;",
+    "y": 30,
+    "x": 30
+  },
+  "9h6g": {
+    "type": "label",
+    "text": "\"clickRoutine\": [\n    {\n      \"func\": \"SET\",\n      \"collection\": \"thisButton\",\n      \"property\": \"customStateProperty\",\n      \"relation\": \"!\"\n    }\n  ],\n  \"customStateProperty\": false",
+    "x": 7,
+    "y": 289,
+    "z": 9,
+    "id": "9h6g",
+    "editable": true,
+    "width": 270,
+    "height": 250,
+    "css": "text-align:left"
+  },
+  "07l4": {
+    "type": "label",
+    "x": 288.25,
+    "y": 289,
+    "z": 38,
+    "id": "07l4",
+    "editable": true,
+    "width": 270,
+    "height": 250,
+    "css": "text-align:left",
+    "text": "\"clickRoutine\": [\n    {\n      \"func\": \"SET\",\n      \"collection\": \"thisButton\",\n      \"property\": \"customStateProperty\",\n      \"value\": \"-1\",\n      \"relation\": \"*\"\n    }\n  ],\n  \"customStateProperty\": 1"
+  },
+  "0hsc": {
+    "type": "button",
+    "text": "0, 1, 2, 3",
+    "clickRoutine": [
+      "var a = ${PROPERTY customStateproperty} + 1",
+      "var b = ${a} % 4",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "customStateproperty",
+        "value": "${b}"
+      }
+    ],
+    "x": 990.75,
+    "y": 205,
+    "z": 61,
+    "id": "0hsc",
+    "customStateproperty": 3
+  },
+  "hsmm": {
+    "type": "label",
+    "x": 850.75,
+    "y": 289,
+    "z": 36,
+    "id": "hsmm",
+    "editable": true,
+    "width": 360,
+    "height": 250,
+    "css": "text-align:left",
+    "text": "\"clickRoutine\": [\n    \"var a = ${PROPERTY customStateproperty} + 1\",\n    \"var b = ${a} % 4\",\n    {\n      \"func\": \"SET\",\n      \"collection\": \"thisButton\",\n      \"property\": \"customStateproperty\",\n      \"value\": \"${b}\"\n    }\n  ],\n  \"customStateproperty\": 1"
+  },
+  "vyaw": {
+    "type": "button",
+    "text": "text4",
+    "clickRoutine": [
+      "var a = ${PROPERTY state} + 1",
+      "var b = ${a} % 4",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "state",
+        "value": "${b}"
+      }
+    ],
+    "x": 166,
+    "y": 800,
+    "z": 56,
+    "id": "vyaw",
+    "labelOptions": [
+      "text1",
+      "text2",
+      "text3",
+      "text4"
+    ],
+    "state": 3,
+    "debug": true,
+    "stateChangeRoutine": [
+      "var a = ${PROPERTY labelOptions} getIndex ${PROPERTY state}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${a}"
+      }
+    ]
+  },
+  "bog5": {
+    "type": "button",
+    "text": "true/false",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "upsideDown",
+        "relation": "!"
+      }
+    ],
+    "x": 627,
+    "y": 813,
+    "z": 58,
+    "id": "bog5",
+    "upsideDown": true,
+    "upsideDownChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY upsideDown}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 180
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "selection": "upsideDown",
+    "rotation": 180
+  },
+  "bmbj": {
+    "type": "label",
+    "text": "boolean two state clickRoutine",
+    "x": 7,
+    "y": 167,
+    "z": 18,
+    "id": "bmbj",
+    "editable": true,
+    "width": 270
+  },
+  "r8ty": {
+    "type": "label",
+    "text": "oposite values two state clickRoutine",
+    "x": 288.25,
+    "y": 167,
+    "z": 19,
+    "id": "r8ty",
+    "editable": true,
+    "width": 270
+  },
+  "w6ol": {
+    "type": "label",
+    "text": "4 state clickRoutine",
+    "x": 895.75,
+    "y": 167,
+    "z": 31,
+    "id": "w6ol",
+    "editable": true,
+    "width": 270
+  },
+  "rz8g": {
+    "type": "button",
+    "text": "hexagonal angles",
+    "clickRoutine": [
+      "var a = ${PROPERTY customStateproperty} + 60",
+      "var b = ${a} % 360",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "customStateproperty",
+        "value": "${b}"
+      }
+    ],
+    "x": 1367,
+    "y": 205,
+    "z": 60,
+    "id": "rz8g",
+    "customStateproperty": 180
+  },
+  "x794": {
+    "type": "label",
+    "text": "0, 60, 120, 180, 240, 300\n6 state clickRoutine",
+    "x": 1272,
+    "y": 167,
+    "z": 29,
+    "id": "x794",
+    "editable": true,
+    "width": 270,
+    "height": 40
+  },
+  "bzoz": {
+    "type": "button",
+    "text": "true/false",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "upsideDown",
+        "relation": "!"
+      },
+      {
+        "func": "IF",
+        "condition": "${PROPERTY upsideDown}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 180
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "rotation",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "x": 752,
+    "y": 815,
+    "z": 59,
+    "id": "bzoz",
+    "upsideDown": true,
+    "selection": "upsideDown",
+    "rotation": 180
+  },
+  "vhyk": {
+    "type": "label",
+    "x": 1222,
+    "y": 289,
+    "z": 35,
+    "id": "vhyk",
+    "editable": true,
+    "width": 370,
+    "height": 250,
+    "css": "text-align:left",
+    "text": "\"clickRoutine\": [\n    \"var a = ${PROPERTY customStateproperty} + 60\",\n    \"var b = ${a} % 360\",\n    {\n      \"func\": \"SET\",\n      \"collection\": \"thisButton\",\n      \"property\": \"customStateproperty\",\n      \"value\": \"${b}\"\n    }\n  ],\n  \"customStateproperty\": 0"
+  },
+  "biz5": {
+    "type": "label",
+    "x": 31,
+    "y": 697,
+    "z": 27,
+    "editable": true,
+    "width": 400,
+    "height": 120,
+    "css": "text-align:left",
+    "id": "biz5",
+    "text": "You can use the changeRoutines to trigger automations and use the state values you created.\nIn this example we are using the state to get a value in a list/array.\nNote that the index 0 is actually the first item in the array"
+  },
+  "li9w": {
+    "type": "label",
+    "x": 569.5,
+    "y": 289,
+    "z": 39,
+    "id": "li9w",
+    "editable": true,
+    "width": 270,
+    "height": 250,
+    "css": "text-align:left",
+    "text": "\"clickRoutine\": [\n    \"var a = 1 / ${PROPERTY customStateProperty}\",\n    {\n      \"func\": \"SET\",\n      \"collection\": \"thisButton\",\n      \"property\": \"customStateProperty\",\n      \"value\": \"${a}\"\n    }\n  ],\n  \"customStateProperty\": 2,"
+  },
+  "05ml": {
+    "type": "button",
+    "text": "0.5 / 2",
+    "clickRoutine": [
+      "var a = 1 / ${PROPERTY customStateProperty}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "customStateProperty",
+        "value": "${a}"
+      }
+    ],
+    "x": 664.5,
+    "y": 205,
+    "z": 65,
+    "id": "05ml",
+    "customStateProperty": 2
+  },
+  "0dob": {
+    "type": "label",
+    "text": "inverse values two state clickRoutine",
+    "x": 569.5,
+    "y": 167,
+    "z": 33,
+    "id": "0dob",
+    "editable": true,
+    "width": 270
+  },
+  "e2v5": {
+    "type": "label",
+    "text": "you can change your state property initial value depending on your needs. See examples",
+    "x": 73.25,
+    "y": 542,
+    "z": 41,
+    "id": "e2v5",
+    "width": 700
+  },
+  "k9b8": {
+    "type": "label",
+    "text": "change the 4 to the number of states you want",
+    "x": 850.75,
+    "y": 542,
+    "z": 42,
+    "id": "k9b8",
+    "width": 360
+  },
+  "sdz9": {
+    "type": "label",
+    "text": "360/60 = 6 states",
+    "x": 1222,
+    "y": 542,
+    "z": 43,
+    "id": "sdz9",
+    "width": 360
+  },
+  "s5zb": {
+    "type": "label",
+    "x": 487,
+    "y": 691,
+    "z": 45,
+    "editable": true,
+    "width": 400,
+    "height": 120,
+    "css": "text-align:left",
+    "id": "s5zb",
+    "text": "if you are going to use IF, boolean states can be directly used in the condition property\nIf you use the IF inside the clickRoutine, changing the state using other buttons will not trigger the usage of the state"
+  },
+  "l98c": {
+    "type": "button",
+    "text": "upsideDown: true",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "selection",
+        "value": "upsideDown"
+      },
+      {
+        "func": "SET",
+        "property": "upsideDown",
+        "value": true
+      }
+    ],
+    "x": 607,
+    "y": 898,
+    "z": 86,
+    "id": "l98c",
+    "width": 120,
+    "height": 60
+  },
+  "ctof": {
+    "type": "button",
+    "text": "click",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "selection",
+        "value": "upsideDown"
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "x": 482,
+    "y": 898,
+    "z": 85,
+    "id": "ctof",
+    "width": 120,
+    "height": 60
+  },
+  "ce7q": {
+    "type": "button",
+    "text": "toggle",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "selection",
+        "value": "upsideDown"
+      },
+      {
+        "func": "SET",
+        "property": "upsideDown",
+        "relation": "!"
+      }
+    ],
+    "x": 857,
+    "y": 898,
+    "z": 88,
+    "id": "ce7q",
+    "width": 120,
+    "height": 60
+  },
+  "ds6w": {
+    "type": "button",
+    "text": "upsideDown: false",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "selection",
+        "value": "upsideDown"
+      },
+      {
+        "func": "SET",
+        "property": "upsideDown",
+        "value": false
+      }
+    ],
+    "x": 732,
+    "y": 898,
+    "z": 87,
+    "id": "ds6w",
+    "width": 120,
+    "height": 60
+  },
+  "kypa": {
+    "type": "label",
+    "text": "changeRoutine ->",
+    "x": 480,
+    "y": 845,
+    "z": 47,
+    "id": "kypa",
+    "width": 150
+  },
+  "or4i": {
+    "type": "label",
+    "text": "<- clickRoutine",
+    "x": 820,
+    "y": 845,
+    "z": 54,
+    "id": "or4i",
+    "width": 150
+  },
+  "8i2l": {
+    "type": "label",
+    "text": "State dependent routines",
+    "css": "font-size: 60px",
+    "height": 80,
+    "width": 800,
+    "x": 400,
+    "z": 55,
+    "id": "8i2l"
+  },
+  "v8xd": {
+    "type": "label",
+    "text": "State types:",
+    "css": "font-size: 30px; text-align:left",
+    "height": 42,
+    "width": 200,
+    "y": 116,
+    "z": 58,
+    "id": "v8xd",
+    "x": 6
+  },
+  "p8c3": {
+    "type": "label",
+    "text": "Usage example:",
+    "css": "font-size: 30px; text-align:left",
+    "height": 42,
+    "width": 300,
+    "y": 609,
+    "z": 59,
+    "x": 6,
+    "id": "p8c3"
+  },
+  "mtoo": {
+    "type": "button",
+    "text": "change angle",
+    "clickRoutine": [
+      "var a = ${PROPERTY rotation} + 60",
+      "var b = ${a} % 360",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${b}"
+      }
+    ],
+    "x": 1432,
+    "y": 760,
+    "z": 101,
+    "id": "mtoo"
+  },
+  "b3l9": {
+    "type": "button",
+    "text": "change scale",
+    "clickRoutine": [
+      "var a = 1 / ${PROPERTY factor}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "factor",
+        "value": "${a}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "scale",
+        "relation": "*",
+        "value": "${a}"
+      }
+    ],
+    "x": 1232,
+    "y": 760,
+    "z": 102,
+    "id": "b3l9",
+    "factor": 0.5
+  },
+  "l3ec": {
+    "type": "button",
+    "text": "change color",
+    "clickRoutine": [
+      "var a = ${PROPERTY state} + 1",
+      "var b = ${a} % 3",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "state",
+        "value": "${b}"
+      }
+    ],
+    "x": 1232,
+    "y": 900,
+    "z": 99,
+    "id": "l3ec",
+    "state": 0,
+    "debug": true,
+    "stateChangeRoutine": [
+      "var a = ${PROPERTY colorOptions} getIndex ${PROPERTY state}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "backgroundColor",
+        "value": "${a}"
+      }
+    ],
+    "colorOptions": [
+      "red",
+      "green",
+      "blue"
+    ],
+    "borderColor": "#555",
+    "backgroundColor": "red"
+  },
+  "mc0n": {
+    "type": "button",
+    "text": "offset",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "offset",
+        "value": "-1",
+        "relation": "*"
+      }
+    ],
+    "x": 1432,
+    "y": 900,
+    "z": 98,
+    "id": "mc0n",
+    "offset": -50,
+    "offsetChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "x",
+        "relation": "+",
+        "value": "${PROPERTY offset}"
+      }
+    ]
+  },
+  "v8xd-copy001": {
+    "type": "label",
+    "text": "Custom States",
+    "css": "font-size: 30px; text-align:left",
+    "height": 42,
+    "width": 200,
+    "y": 85,
+    "id": "v8xd-copy001",
+    "x": 700,
+    "z": 106
+  },
+  "_meta": {
+    "version": 3,
+    "info": {
+      "name": "State Dependent Routines",
+      "image": "/assets/2040440396_8355",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "",
+      "players": "1",
+      "language": "US",
+      "variant": "Custom states",
+      "attribution": ""
+    }
+  }
+}

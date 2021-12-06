@@ -1,0 +1,1126 @@
+{
+  "r01": {
+    "id": "r01",
+    "x": 4,
+    "y": 348,
+    "width": 73.5,
+    "height": 73.5,
+    "color": "#e84242",
+    "classes": "checkersPiece",
+    "z": 15,
+    "parent": "redholder"
+  },
+  "r02": {
+    "id": "r02",
+    "x": 4,
+    "y": 240,
+    "width": 73.5,
+    "height": 73.5,
+    "color": "#e84242",
+    "classes": "checkersPiece",
+    "z": 21,
+    "parent": "redholder"
+  },
+  "r04": {
+    "id": "r04",
+    "x": 4,
+    "width": 73.5,
+    "height": 73.5,
+    "color": "#e84242",
+    "classes": "checkersPiece",
+    "z": 16,
+    "parent": "redholder",
+    "y": 330
+  },
+  "r05": {
+    "id": "r05",
+    "x": 4,
+    "width": 73.5,
+    "height": 73.5,
+    "color": "#e84242",
+    "classes": "checkersPiece",
+    "z": 22,
+    "y": 222,
+    "parent": "redholder"
+  },
+  "r07": {
+    "id": "r07",
+    "x": 4,
+    "y": 600,
+    "width": 73.5,
+    "height": 73.5,
+    "color": "#e84242",
+    "classes": "checkersPiece",
+    "z": 1,
+    "parent": "redholder"
+  },
+  "r09": {
+    "id": "r09",
+    "x": 4,
+    "width": 73.5,
+    "height": 73.5,
+    "color": "#e84242",
+    "classes": "checkersPiece",
+    "z": 23,
+    "y": 204,
+    "parent": "redholder"
+  },
+  "r10": {
+    "id": "r10",
+    "x": 4,
+    "y": 582,
+    "width": 73.5,
+    "height": 73.5,
+    "color": "#e84242",
+    "classes": "checkersPiece",
+    "z": 2,
+    "parent": "redholder"
+  },
+  "r11": {
+    "id": "r11",
+    "x": 4,
+    "width": 73.5,
+    "height": 73.5,
+    "color": "#e84242",
+    "classes": "checkersPiece",
+    "z": 20,
+    "y": 258,
+    "parent": "redholder"
+  },
+  "r13": {
+    "id": "r13",
+    "x": 4,
+    "width": 73.5,
+    "height": 73.5,
+    "color": "#e84242",
+    "classes": "checkersPiece",
+    "z": 24,
+    "y": 186,
+    "parent": "redholder"
+  },
+  "r14": {
+    "id": "r14",
+    "x": 4,
+    "width": 73.5,
+    "height": 73.5,
+    "color": "#e84242",
+    "classes": "checkersPiece",
+    "z": 14,
+    "y": 366,
+    "parent": "redholder"
+  },
+  "r15": {
+    "id": "r15",
+    "x": 4,
+    "width": 73.5,
+    "height": 73.5,
+    "color": "#e84242",
+    "classes": "checkersPiece",
+    "z": 25,
+    "y": 168,
+    "parent": "redholder"
+  },
+  "r16": {
+    "id": "r16",
+    "x": 4,
+    "y": 546,
+    "width": 73.5,
+    "height": 73.5,
+    "color": "#e84242",
+    "classes": "checkersPiece",
+    "z": 4,
+    "parent": "redholder"
+  },
+  "r18": {
+    "id": "r18",
+    "x": 4,
+    "y": 276,
+    "width": 73.5,
+    "height": 73.5,
+    "color": "#e84242",
+    "classes": "checkersPiece",
+    "z": 19,
+    "parent": "redholder"
+  },
+  "r19": {
+    "id": "r19",
+    "x": 4,
+    "y": 528,
+    "width": 73.5,
+    "height": 73.5,
+    "color": "#e84242",
+    "classes": "checkersPiece",
+    "z": 5,
+    "parent": "redholder"
+  },
+  "r20": {
+    "id": "r20",
+    "x": 4,
+    "y": 564,
+    "width": 73.5,
+    "height": 73.5,
+    "color": "#e84242",
+    "classes": "checkersPiece",
+    "z": 3,
+    "parent": "redholder"
+  },
+  "r21": {
+    "id": "r21",
+    "x": 4,
+    "width": 73.5,
+    "height": 73.5,
+    "color": "#e84242",
+    "classes": "checkersPiece",
+    "z": 6,
+    "y": 510,
+    "parent": "redholder"
+  },
+  "b01": {
+    "id": "b01",
+    "x": 4,
+    "y": 600,
+    "width": 73.5,
+    "height": 73.5,
+    "classes": "checkersPiece",
+    "parent": "blackholder",
+    "z": 1
+  },
+  "b02": {
+    "id": "b02",
+    "x": 4,
+    "y": 528,
+    "width": 73.5,
+    "height": 73.5,
+    "classes": "checkersPiece",
+    "parent": "blackholder",
+    "z": 5
+  },
+  "b04": {
+    "id": "b04",
+    "x": 4,
+    "y": 402,
+    "width": 73.5,
+    "height": 73.5,
+    "classes": "checkersPiece",
+    "z": 12,
+    "parent": "blackholder"
+  },
+  "b05": {
+    "id": "b05",
+    "x": 4,
+    "y": 384,
+    "width": 73.5,
+    "height": 73.5,
+    "classes": "checkersPiece",
+    "z": 13,
+    "parent": "blackholder"
+  },
+  "b07": {
+    "id": "b07",
+    "x": 4,
+    "y": 366,
+    "width": 73.5,
+    "height": 73.5,
+    "classes": "checkersPiece",
+    "z": 14,
+    "parent": "blackholder"
+  },
+  "b08": {
+    "id": "b08",
+    "x": 4,
+    "y": 546,
+    "width": 73.5,
+    "height": 73.5,
+    "classes": "checkersPiece",
+    "parent": "blackholder",
+    "z": 4
+  },
+  "b09": {
+    "id": "b09",
+    "x": 4,
+    "width": 73.5,
+    "height": 73.5,
+    "classes": "checkersPiece",
+    "z": 22,
+    "y": 222,
+    "parent": "blackholder"
+  },
+  "b10": {
+    "id": "b10",
+    "x": 4,
+    "y": 474,
+    "width": 73.5,
+    "height": 73.5,
+    "classes": "checkersPiece",
+    "z": 8,
+    "parent": "blackholder"
+  },
+  "b11": {
+    "id": "b11",
+    "x": 4,
+    "y": 204,
+    "width": 73.5,
+    "height": 73.5,
+    "classes": "checkersPiece",
+    "z": 23,
+    "parent": "blackholder"
+  },
+  "b13": {
+    "id": "b13",
+    "x": 4,
+    "y": 186,
+    "width": 73.5,
+    "height": 73.5,
+    "classes": "checkersPiece",
+    "z": 24,
+    "parent": "blackholder"
+  },
+  "b14": {
+    "id": "b14",
+    "x": 4,
+    "y": 564,
+    "width": 73.5,
+    "height": 73.5,
+    "classes": "checkersPiece",
+    "parent": "blackholder",
+    "z": 3
+  },
+  "b15": {
+    "id": "b15",
+    "x": 4,
+    "width": 73.5,
+    "height": 73.5,
+    "classes": "checkersPiece",
+    "z": 15,
+    "y": 348,
+    "parent": "blackholder"
+  },
+  "b16": {
+    "id": "b16",
+    "x": 4,
+    "y": 438,
+    "width": 73.5,
+    "height": 73.5,
+    "classes": "checkersPiece",
+    "z": 10,
+    "parent": "blackholder"
+  },
+  "b18": {
+    "id": "b18",
+    "x": 4,
+    "y": 330,
+    "width": 73.5,
+    "height": 73.5,
+    "classes": "checkersPiece",
+    "z": 16,
+    "parent": "blackholder"
+  },
+  "b19": {
+    "id": "b19",
+    "x": 4,
+    "y": 312,
+    "width": 73.5,
+    "height": 73.5,
+    "classes": "checkersPiece",
+    "z": 17,
+    "parent": "blackholder"
+  },
+  "b20": {
+    "id": "b20",
+    "x": 4,
+    "y": 582,
+    "width": 73.5,
+    "height": 73.5,
+    "classes": "checkersPiece",
+    "parent": "blackholder",
+    "z": 2
+  },
+  "b21": {
+    "id": "b21",
+    "x": 4,
+    "y": 420,
+    "width": 73.5,
+    "height": 73.5,
+    "classes": "checkersPiece",
+    "z": 11,
+    "parent": "blackholder"
+  },
+  "board": {
+    "id": "board",
+    "x": 500,
+    "y": 200,
+    "width": 600,
+    "height": 600,
+    "layer": -4,
+    "movable": false,
+    "css": "background: radial-gradient(circle at center, white 37%, lightgrey 38%); background-size: 150px 150px;"
+  },
+  "redholder": {
+    "type": "holder",
+    "id": "redholder",
+    "y": 115,
+    "width": 80,
+    "height": 680,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropOffsetY": 600,
+    "dropTarget": {
+      "type": null
+    },
+    "x": 260,
+    "stackOffsetY": -18
+  },
+  "blackholder": {
+    "type": "holder",
+    "id": "blackholder",
+    "x": 1260,
+    "y": 115,
+    "width": 80,
+    "height": 680,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropOffsetY": 600,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": -18
+  },
+  "reset": {
+    "type": "button",
+    "id": "reset",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "classes",
+        "value": "checkersPiece"
+      },
+      {
+        "func": "SELECT",
+        "property": "color",
+        "value": "#e84242",
+        "source": "DEFAULT",
+        "relation": "!=",
+        "mode": "set"
+      },
+      {
+        "func": "SET",
+        "value": "blackholder"
+      },
+      {
+        "func": "SELECT",
+        "mode": "set",
+        "property": "color",
+        "value": "#e84242"
+      },
+      {
+        "func": "SET",
+        "value": "redholder"
+      }
+    ],
+    "width": 40,
+    "height": 40,
+    "x": 1543,
+    "y": 17,
+    "image": "/assets/1342248376_1383",
+    "css": "background-size:80%",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "color": "white"
+  },
+  "b03": {
+    "id": "b03",
+    "parent": "blackholder",
+    "x": 4,
+    "y": 510,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 6,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "checkersPiece"
+  },
+  "b06": {
+    "id": "b06",
+    "x": 4,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 7,
+    "classes": "checkersPiece",
+    "y": 492,
+    "parent": "blackholder"
+  },
+  "b12": {
+    "id": "b12",
+    "x": 4,
+    "y": 168,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 25,
+    "classes": "checkersPiece",
+    "parent": "blackholder"
+  },
+  "b17": {
+    "id": "b17",
+    "x": 4,
+    "y": 456,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 9,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "checkersPiece",
+    "parent": "blackholder"
+  },
+  "r03": {
+    "id": "r03",
+    "x": 4,
+    "y": 294,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 18,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "checkersPiece",
+    "color": "#e84242",
+    "parent": "redholder"
+  },
+  "r06": {
+    "id": "r06",
+    "x": 4,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 17,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "checkersPiece",
+    "color": "#e84242",
+    "y": 312,
+    "parent": "redholder"
+  },
+  "r12": {
+    "id": "r12",
+    "x": 4,
+    "y": 150,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 26,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "checkersPiece",
+    "color": "#e84242",
+    "parent": "redholder"
+  },
+  "r17": {
+    "id": "r17",
+    "x": 4,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 27,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "checkersPiece",
+    "color": "#e84242",
+    "y": 132,
+    "parent": "redholder"
+  },
+  "r08": {
+    "id": "r08",
+    "x": 4,
+    "y": 114,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 28,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "checkersPiece",
+    "color": "#e84242",
+    "parent": "redholder"
+  },
+  "_meta": {
+    "version": 1,
+    "info": {
+      "name": "Quad Line 3D",
+      "image": "/assets/1605565033_95736",
+      "rules": "",
+      "bgg": "",
+      "year": "1967",
+      "mode": "vs",
+      "time": "30",
+      "players": "2",
+      "language": "UN",
+      "variant": "",
+      "attribution": "Room layout and library image by ArnoldSmith86 and put into public domain (CC0)",
+      "similarName": "Connect Four 3D",
+      "similarLink": "https://boardgamegeek.com/boardgame/3656/score-four",
+      "description": "Stack checkers in 3-dimensional columns to link 4 horizontally, vertically, or diagonally.  First to connect four in a row wins."
+    }
+  },
+  "pin31": {
+    "type": "holder",
+    "id": "pin31",
+    "x": 545,
+    "y": 470.5,
+    "width": 80,
+    "height": 150,
+    "rotation": 20,
+    "z": 6,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 4,
+    "dropOffsetY": 70,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": -20
+  },
+  "pin41": {
+    "type": "holder",
+    "id": "pin41",
+    "x": 545,
+    "y": 620.5,
+    "width": 80,
+    "height": 150,
+    "rotation": 20,
+    "z": 6,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 4,
+    "dropOffsetY": 70,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": -20
+  },
+  "pin21": {
+    "type": "holder",
+    "id": "pin21",
+    "x": 545,
+    "y": 320.5,
+    "width": 80,
+    "height": 150,
+    "rotation": 20,
+    "z": 6,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 4,
+    "dropOffsetY": 70,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": -20
+  },
+  "pin11": {
+    "type": "holder",
+    "id": "pin11",
+    "x": 545,
+    "y": 170.5,
+    "width": 80,
+    "height": 150,
+    "rotation": 20,
+    "z": 6,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 4,
+    "dropOffsetY": 70,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": -20
+  },
+  "pin12": {
+    "type": "holder",
+    "id": "pin12",
+    "x": 695,
+    "y": 170.5,
+    "width": 80,
+    "height": 150,
+    "rotation": 20,
+    "z": 6,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 4,
+    "dropOffsetY": 70,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": -20
+  },
+  "pin22": {
+    "type": "holder",
+    "id": "pin22",
+    "x": 695,
+    "y": 320.5,
+    "width": 80,
+    "height": 150,
+    "rotation": 20,
+    "z": 6,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 4,
+    "dropOffsetY": 70,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": -20
+  },
+  "pin32": {
+    "type": "holder",
+    "id": "pin32",
+    "x": 695,
+    "y": 470.5,
+    "width": 80,
+    "height": 150,
+    "rotation": 20,
+    "z": 6,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 4,
+    "dropOffsetY": 70,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": -20
+  },
+  "pin42": {
+    "type": "holder",
+    "id": "pin42",
+    "x": 695,
+    "y": 620.5,
+    "width": 80,
+    "height": 150,
+    "rotation": 20,
+    "z": 6,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 4,
+    "dropOffsetY": 70,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": -20
+  },
+  "pin13": {
+    "type": "holder",
+    "id": "pin13",
+    "x": 845,
+    "y": 170.5,
+    "width": 80,
+    "height": 150,
+    "rotation": 20,
+    "z": 6,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 4,
+    "dropOffsetY": 70,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": -20
+  },
+  "pin23": {
+    "type": "holder",
+    "id": "pin23",
+    "x": 845,
+    "y": 320.5,
+    "width": 80,
+    "height": 150,
+    "rotation": 20,
+    "z": 6,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 4,
+    "dropOffsetY": 70,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": -20
+  },
+  "pin33": {
+    "type": "holder",
+    "id": "pin33",
+    "x": 845,
+    "y": 470.5,
+    "width": 80,
+    "height": 150,
+    "rotation": 20,
+    "z": 6,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 4,
+    "dropOffsetY": 70,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": -20
+  },
+  "pin14": {
+    "type": "holder",
+    "id": "pin14",
+    "x": 995,
+    "y": 170.5,
+    "width": 80,
+    "height": 150,
+    "rotation": 20,
+    "z": 6,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 4,
+    "dropOffsetY": 70,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": -20
+  },
+  "pin24": {
+    "type": "holder",
+    "id": "pin24",
+    "x": 995,
+    "y": 320.5,
+    "width": 80,
+    "height": 150,
+    "rotation": 20,
+    "z": 6,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 4,
+    "dropOffsetY": 70,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": -20
+  },
+  "pin43": {
+    "type": "holder",
+    "id": "pin43",
+    "x": 845,
+    "y": 620.5,
+    "width": 80,
+    "height": 150,
+    "rotation": 20,
+    "z": 6,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 4,
+    "dropOffsetY": 70,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": -20
+  },
+  "pin34": {
+    "type": "holder",
+    "id": "pin34",
+    "x": 995,
+    "y": 470.5,
+    "width": 80,
+    "height": 150,
+    "rotation": 20,
+    "z": 6,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 4,
+    "dropOffsetY": 70,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": -20
+  },
+  "pin44": {
+    "type": "holder",
+    "id": "pin44",
+    "x": 995,
+    "y": 620.5,
+    "width": 80,
+    "height": 150,
+    "rotation": 20,
+    "z": 6,
+    "classes": "transparent",
+    "css": "border-radius: 40px",
+    "dropLimit": 4,
+    "dropOffsetY": 70,
+    "dropTarget": {
+      "type": null
+    },
+    "stackOffsetY": -20
+  },
+  "r22": {
+    "id": "r22",
+    "parent": "redholder",
+    "x": 4,
+    "y": 492,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 7,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "checkersPiece",
+    "color": "#e84242"
+  },
+  "r23": {
+    "id": "r23",
+    "parent": "redholder",
+    "x": 4,
+    "y": 474,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 8,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "checkersPiece",
+    "color": "#e84242"
+  },
+  "r24": {
+    "id": "r24",
+    "x": 4,
+    "y": 96,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 29,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "checkersPiece",
+    "color": "#e84242",
+    "parent": "redholder"
+  },
+  "r25": {
+    "id": "r25",
+    "parent": "redholder",
+    "x": 4,
+    "y": 456,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 9,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "checkersPiece",
+    "color": "#e84242"
+  },
+  "r26": {
+    "id": "r26",
+    "x": 4,
+    "y": 78,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 30,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "checkersPiece",
+    "color": "#e84242",
+    "parent": "redholder"
+  },
+  "r27": {
+    "id": "r27",
+    "x": 4,
+    "y": 60,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 31,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "checkersPiece",
+    "color": "#e84242",
+    "parent": "redholder"
+  },
+  "r28": {
+    "id": "r28",
+    "parent": "redholder",
+    "x": 4,
+    "y": 438,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 10,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "checkersPiece",
+    "color": "#e84242"
+  },
+  "r29": {
+    "id": "r29",
+    "parent": "redholder",
+    "x": 4,
+    "y": 420,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 11,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "checkersPiece",
+    "color": "#e84242"
+  },
+  "r30": {
+    "id": "r30",
+    "x": 4,
+    "y": 42,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 32,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "checkersPiece",
+    "color": "#e84242",
+    "parent": "redholder"
+  },
+  "r31": {
+    "id": "r31",
+    "parent": "redholder",
+    "x": 4,
+    "y": 402,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 12,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "checkersPiece",
+    "color": "#e84242"
+  },
+  "r32": {
+    "id": "r32",
+    "parent": "redholder",
+    "x": 4,
+    "y": 384,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 13,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "checkersPiece",
+    "color": "#e84242"
+  },
+  "b22": {
+    "id": "b22",
+    "x": 4,
+    "y": 150,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 26,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "checkersPiece",
+    "parent": "blackholder"
+  },
+  "b23": {
+    "id": "b23",
+    "parent": "blackholder",
+    "x": 4,
+    "y": 294,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 18,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "checkersPiece"
+  },
+  "b24": {
+    "id": "b24",
+    "x": 4,
+    "y": 132,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 27,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "checkersPiece",
+    "parent": "blackholder"
+  },
+  "b25": {
+    "id": "b25",
+    "parent": "blackholder",
+    "x": 4,
+    "y": 276,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 19,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "checkersPiece"
+  },
+  "b26": {
+    "id": "b26",
+    "parent": "blackholder",
+    "x": 4,
+    "y": 258,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 20,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "checkersPiece"
+  },
+  "b27": {
+    "id": "b27",
+    "parent": "blackholder",
+    "x": 4,
+    "y": 240,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 21,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "checkersPiece"
+  },
+  "b28": {
+    "id": "b28",
+    "x": 4,
+    "y": 114,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 28,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "checkersPiece",
+    "parent": "blackholder"
+  },
+  "b29": {
+    "id": "b29",
+    "x": 4,
+    "y": 96,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 29,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "checkersPiece",
+    "parent": "blackholder"
+  },
+  "b30": {
+    "id": "b30",
+    "x": 4,
+    "y": 78,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 30,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "checkersPiece",
+    "parent": "blackholder"
+  },
+  "b31": {
+    "id": "b31",
+    "x": 4,
+    "y": 60,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 31,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "checkersPiece",
+    "parent": "blackholder"
+  },
+  "b32": {
+    "id": "b32",
+    "x": 4,
+    "y": 42,
+    "width": 73.5,
+    "height": 73.5,
+    "z": 32,
+    "movable": null,
+    "movableInEdit": null,
+    "classes": "checkersPiece",
+    "parent": "blackholder"
+  }
+}

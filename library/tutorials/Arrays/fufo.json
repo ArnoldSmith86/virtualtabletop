@@ -1,0 +1,586 @@
+{
+  "f6mlAC": {
+    "id": "f6mlAC",
+    "parent": "3mv9",
+    "type": "card",
+    "cardType": "AC",
+    "deck": "myCards",
+    "z": 416
+  },
+  "f6ml2C": {
+    "id": "f6ml2C",
+    "type": "card",
+    "cardType": "2C",
+    "deck": "myCards",
+    "z": 8264,
+    "parent": "3mv9"
+  },
+  "f6ml3C": {
+    "id": "f6ml3C",
+    "type": "card",
+    "cardType": "3C",
+    "deck": "myCards",
+    "z": 4219,
+    "parent": "3mv9"
+  },
+  "f6ml4C": {
+    "id": "f6ml4C",
+    "type": "card",
+    "cardType": "4C",
+    "deck": "myCards",
+    "z": 3821,
+    "parent": "3mv9"
+  },
+  "f6ml5C": {
+    "id": "f6ml5C",
+    "parent": "3mv9",
+    "type": "card",
+    "cardType": "5C",
+    "deck": "myCards",
+    "z": 1343
+  },
+  "f6ml6C": {
+    "id": "f6ml6C",
+    "type": "card",
+    "cardType": "6C",
+    "deck": "myCards",
+    "z": 2366,
+    "parent": "3mv9"
+  },
+  "f6ml7C": {
+    "id": "f6ml7C",
+    "type": "card",
+    "cardType": "7C",
+    "deck": "myCards",
+    "z": 3449,
+    "parent": "3mv9"
+  },
+  "f6ml8C": {
+    "id": "f6ml8C",
+    "type": "card",
+    "cardType": "8C",
+    "deck": "myCards",
+    "z": 5551,
+    "parent": "3mv9"
+  },
+  "f6ml9C": {
+    "id": "f6ml9C",
+    "type": "card",
+    "cardType": "9C",
+    "deck": "myCards",
+    "z": 40,
+    "parent": "3mv9"
+  },
+  "f6mlTC": {
+    "id": "f6mlTC",
+    "type": "card",
+    "cardType": "TC",
+    "deck": "myCards",
+    "z": 3453,
+    "parent": "3mv9"
+  },
+  "f6mlJC": {
+    "id": "f6mlJC",
+    "type": "card",
+    "cardType": "JC",
+    "deck": "myCards",
+    "z": 8014,
+    "parent": "3mv9"
+  },
+  "f6mlQC": {
+    "id": "f6mlQC",
+    "type": "card",
+    "cardType": "QC",
+    "deck": "myCards",
+    "z": 2115,
+    "parent": "3mv9"
+  },
+  "f6mlKC": {
+    "id": "f6mlKC",
+    "type": "card",
+    "cardType": "KC",
+    "deck": "myCards",
+    "z": 7898,
+    "parent": "3mv9"
+  },
+  "f6mlAD": {
+    "id": "f6mlAD",
+    "type": "card",
+    "cardType": "AD",
+    "deck": "myCards",
+    "z": 2844,
+    "parent": "3mv9"
+  },
+  "f6ml2D": {
+    "id": "f6ml2D",
+    "type": "card",
+    "cardType": "2D",
+    "deck": "myCards",
+    "z": 1011,
+    "parent": "3mv9"
+  },
+  "f6ml3D": {
+    "id": "f6ml3D",
+    "parent": "3mv9",
+    "type": "card",
+    "cardType": "3D",
+    "deck": "myCards",
+    "z": 7060
+  },
+  "f6ml4D": {
+    "id": "f6ml4D",
+    "type": "card",
+    "cardType": "4D",
+    "deck": "myCards",
+    "z": 1705,
+    "parent": "3mv9"
+  },
+  "f6ml5D": {
+    "id": "f6ml5D",
+    "type": "card",
+    "cardType": "5D",
+    "deck": "myCards",
+    "z": 1651,
+    "parent": "3mv9"
+  },
+  "f6ml6D": {
+    "id": "f6ml6D",
+    "parent": "3mv9",
+    "type": "card",
+    "cardType": "6D",
+    "deck": "myCards",
+    "z": 1202
+  },
+  "f6ml7D": {
+    "id": "f6ml7D",
+    "type": "card",
+    "cardType": "7D",
+    "deck": "myCards",
+    "z": 4733,
+    "parent": "3mv9"
+  },
+  "f6ml8D": {
+    "id": "f6ml8D",
+    "type": "card",
+    "cardType": "8D",
+    "deck": "myCards",
+    "z": 4586,
+    "parent": "3mv9"
+  },
+  "f6ml9D": {
+    "id": "f6ml9D",
+    "type": "card",
+    "cardType": "9D",
+    "deck": "myCards",
+    "z": 1701,
+    "parent": "3mv9"
+  },
+  "f6mlTD": {
+    "id": "f6mlTD",
+    "parent": "3mv9",
+    "type": "card",
+    "cardType": "TD",
+    "deck": "myCards",
+    "z": 3804
+  },
+  "f6mlJD": {
+    "id": "f6mlJD",
+    "type": "card",
+    "cardType": "JD",
+    "deck": "myCards",
+    "z": 20,
+    "parent": "3mv9"
+  },
+  "f6mlQD": {
+    "id": "f6mlQD",
+    "type": "card",
+    "cardType": "QD",
+    "deck": "myCards",
+    "z": 2418,
+    "parent": "3mv9"
+  },
+  "f6mlKD": {
+    "id": "f6mlKD",
+    "type": "card",
+    "cardType": "KD",
+    "deck": "myCards",
+    "z": 7590,
+    "parent": "3mv9"
+  },
+  "f6mlAH": {
+    "id": "f6mlAH",
+    "type": "card",
+    "cardType": "AH",
+    "deck": "myCards",
+    "z": 297,
+    "parent": "3mv9"
+  },
+  "f6ml2H": {
+    "id": "f6ml2H",
+    "type": "card",
+    "cardType": "2H",
+    "deck": "myCards",
+    "z": 5860,
+    "parent": "3mv9"
+  },
+  "f6ml3H": {
+    "id": "f6ml3H",
+    "parent": "3mv9",
+    "type": "card",
+    "cardType": "3H",
+    "deck": "myCards",
+    "z": 590
+  },
+  "f6ml4H": {
+    "id": "f6ml4H",
+    "type": "card",
+    "cardType": "4H",
+    "deck": "myCards",
+    "z": 1653,
+    "parent": "3mv9"
+  },
+  "f6ml5H": {
+    "id": "f6ml5H",
+    "type": "card",
+    "cardType": "5H",
+    "deck": "myCards",
+    "z": 8620,
+    "parent": "3mv9"
+  },
+  "f6ml6H": {
+    "id": "f6ml6H",
+    "parent": "3mv9",
+    "type": "card",
+    "cardType": "6H",
+    "deck": "myCards",
+    "z": 2252
+  },
+  "f6ml7H": {
+    "id": "f6ml7H",
+    "type": "card",
+    "cardType": "7H",
+    "deck": "myCards",
+    "z": 7338,
+    "parent": "3mv9"
+  },
+  "f6ml8H": {
+    "id": "f6ml8H",
+    "type": "card",
+    "cardType": "8H",
+    "deck": "myCards",
+    "z": 3518,
+    "parent": "3mv9"
+  },
+  "f6ml9H": {
+    "id": "f6ml9H",
+    "type": "card",
+    "cardType": "9H",
+    "deck": "myCards",
+    "z": 6803,
+    "parent": "3mv9"
+  },
+  "f6mlTH": {
+    "id": "f6mlTH",
+    "type": "card",
+    "cardType": "TH",
+    "deck": "myCards",
+    "z": 6493,
+    "parent": "3mv9"
+  },
+  "f6mlJH": {
+    "id": "f6mlJH",
+    "type": "card",
+    "cardType": "JH",
+    "deck": "myCards",
+    "z": 788,
+    "parent": "3mv9"
+  },
+  "f6mlQH": {
+    "id": "f6mlQH",
+    "type": "card",
+    "cardType": "QH",
+    "deck": "myCards",
+    "z": 8871,
+    "parent": "3mv9"
+  },
+  "f6mlKH": {
+    "id": "f6mlKH",
+    "parent": "3mv9",
+    "type": "card",
+    "cardType": "KH",
+    "deck": "myCards",
+    "z": 7209
+  },
+  "f6mlAS": {
+    "id": "f6mlAS",
+    "type": "card",
+    "cardType": "AS",
+    "deck": "myCards",
+    "z": 1560,
+    "parent": "3mv9"
+  },
+  "f6ml2S": {
+    "id": "f6ml2S",
+    "parent": "3mv9",
+    "type": "card",
+    "cardType": "2S",
+    "deck": "myCards",
+    "z": 9568
+  },
+  "f6ml3S": {
+    "id": "f6ml3S",
+    "type": "card",
+    "cardType": "3S",
+    "deck": "myCards",
+    "z": 3344,
+    "parent": "3mv9"
+  },
+  "f6ml4S": {
+    "id": "f6ml4S",
+    "type": "card",
+    "cardType": "4S",
+    "deck": "myCards",
+    "z": 2563,
+    "parent": "3mv9"
+  },
+  "f6ml5S": {
+    "id": "f6ml5S",
+    "type": "card",
+    "cardType": "5S",
+    "deck": "myCards",
+    "z": 7288,
+    "parent": "3mv9"
+  },
+  "f6ml6S": {
+    "id": "f6ml6S",
+    "type": "card",
+    "cardType": "6S",
+    "deck": "myCards",
+    "z": 8433,
+    "parent": "3mv9"
+  },
+  "f6ml7S": {
+    "id": "f6ml7S",
+    "type": "card",
+    "cardType": "7S",
+    "deck": "myCards",
+    "z": 2990,
+    "parent": "3mv9"
+  },
+  "f6ml8S": {
+    "id": "f6ml8S",
+    "parent": "3mv9",
+    "type": "card",
+    "cardType": "8S",
+    "deck": "myCards",
+    "z": 2405
+  },
+  "f6ml9S": {
+    "id": "f6ml9S",
+    "type": "card",
+    "cardType": "9S",
+    "deck": "myCards",
+    "z": 8289,
+    "parent": "3mv9"
+  },
+  "f6mlTS": {
+    "id": "f6mlTS",
+    "type": "card",
+    "cardType": "TS",
+    "deck": "myCards",
+    "z": 3096,
+    "parent": "3mv9"
+  },
+  "f6mlJS": {
+    "id": "f6mlJS",
+    "type": "card",
+    "cardType": "JS",
+    "deck": "myCards",
+    "z": 6930,
+    "parent": "3mv9"
+  },
+  "f6mlQS": {
+    "id": "f6mlQS",
+    "type": "card",
+    "cardType": "QS",
+    "deck": "myCards",
+    "z": 7051,
+    "parent": "3mv9"
+  },
+  "f6mlKS": {
+    "id": "f6mlKS",
+    "type": "card",
+    "cardType": "KS",
+    "deck": "myCards",
+    "z": 4361,
+    "parent": "3mv9"
+  },
+  "9t4gP": {
+    "type": "pile",
+    "id": "9t4gP",
+    "width": 103,
+    "height": 160,
+    "z": 16731,
+    "parent": "covers"
+  },
+  "3mv9": {
+    "type": "pile",
+    "parent": "myDeck",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "3mv9"
+  },
+  "bwyv": {
+    "deck": "covercard",
+    "type": "card",
+    "cardType": "BlueCover",
+    "id": "bwyv",
+    "z": 26324,
+    "parent": "9t4gP"
+  },
+  "86eu": {
+    "deck": "covercard",
+    "type": "card",
+    "cardType": "BlueCover",
+    "id": "86eu",
+    "z": 26326,
+    "parent": "9t4gP"
+  },
+  "b4oh": {
+    "deck": "covercard",
+    "type": "card",
+    "cardType": "BlueCover",
+    "id": "b4oh",
+    "z": 26328,
+    "parent": "9t4gP"
+  },
+  "sk2a": {
+    "deck": "covercard",
+    "type": "card",
+    "cardType": "BlueCover",
+    "id": "sk2a",
+    "z": 26330,
+    "parent": "9t4gP"
+  },
+  "4cjh": {
+    "deck": "covercard",
+    "type": "card",
+    "cardType": "BlueCover",
+    "id": "4cjh",
+    "z": 26332,
+    "parent": "9t4gP"
+  },
+  "k0he": {
+    "deck": "covercard",
+    "type": "card",
+    "cardType": "BlueCover",
+    "id": "k0he",
+    "z": 26334,
+    "parent": "9t4gP"
+  },
+  "95du": {
+    "deck": "covercard",
+    "type": "card",
+    "cardType": "BlueCover",
+    "id": "95du",
+    "z": 26336,
+    "parent": "9t4gP"
+  },
+  "6eh0": {
+    "deck": "covercard",
+    "type": "card",
+    "cardType": "BlueCover",
+    "id": "6eh0",
+    "z": 26338,
+    "parent": "9t4gP"
+  },
+  "yo1e": {
+    "deck": "covercard",
+    "type": "card",
+    "cardType": "BlueCover",
+    "id": "yo1e",
+    "z": 26340,
+    "parent": "9t4gP"
+  },
+  "ts5z": {
+    "deck": "covercard",
+    "type": "card",
+    "cardType": "BlueCover",
+    "id": "ts5z",
+    "z": 26342,
+    "parent": "9t4gP"
+  },
+  "8fr3": {
+    "type": "label",
+    "text": "Array Example: Random Word",
+    "css": "font-size: 60px",
+    "height": 160,
+    "width": 1000,
+    "x": 280,
+    "z": 26392,
+    "id": "8fr3",
+    "y": 1
+  },
+  "m247": {
+    "type": "label",
+    "text": "The button creates an array using Split. Then uses the RANDOM function to choose one random word from that list.",
+    "x": 501,
+    "y": 421,
+    "z": 26425,
+    "id": "m247",
+    "width": 500,
+    "height": 150
+  },
+  "_meta": {
+    "version": 3,
+    "info": {
+      "name": "Arrays",
+      "image": "/assets/-2001287493_6748",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "",
+      "players": "1",
+      "language": "US",
+      "variant": "Example: Random Word",
+      "attribution": ""
+    }
+  },
+  "Word Button": {
+    "type": "button",
+    "text": "Random Word",
+    "clickRoutine": [
+      "var words = 'alpha,bravo,charlie,delta,echo,foxtrot,golf,hotel,india,juliet,kilo,lima,mike,november,oscar,papa,quebec,romeo,sierra,tango,uniform,victor,whiskey,x-ray,yankee,zulu' split ',' //Split the list of words into an array using commas as a split point",
+      "var wordCount = ${words} length //Calculate the length of (number of words in) the array",
+      "var wordCount = ${wordCount} - 1 //Subtract one from the previous value since the array positions start with an index of 0",
+      "var RANDOM = randInt 0 ${wordCount} //Calculate a random integer between 0 and the number of words in the array",
+      "var word = ${words} getIndex ${RANDOM} //Get the word at the index position of the random number",
+      "var word = ${word} toUpperCase //convert the word to uppercase",
+      "var target = ${PROPERTY target}",
+      {
+        "func": "LABEL",
+        "label": "${target}",
+        "value": "${word}"
+      }
+    ],
+    "x": 717,
+    "y": 264,
+    "z": 19,
+    "id": "Word Button",
+    "target": "Word 5-5"
+  },
+  "Word 5-5": {
+    "type": "label",
+    "css": "font-size: 30px",
+    "height": 42,
+    "width": 300,
+    "x": 859,
+    "y": 284,
+    "z": 26428,
+    "id": "Word 5-5",
+    "text": "ECHO"
+  }
+}

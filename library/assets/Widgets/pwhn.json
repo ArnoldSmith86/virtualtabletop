@@ -1,0 +1,50 @@
+{
+  "_meta": {
+    "version": 2,
+    "info": {
+      "name": "Other Widgets",
+      "image": "/assets/-104596149_22670",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Assets",
+      "time": "",
+      "players": "0",
+      "language": "UN",
+      "variant": "Game Boards",
+      "attribution": "These pieces were created by https://www.reddit.com/user/96LawDawg and are released to the Public Domain by CC0."
+    }
+  },
+  "uwdj": {
+    "image": "/assets/99412666_166830",
+    "id": "uwdj",
+    "z": 12,
+    "x": 27,
+    "y": 48,
+    "width": 600,
+    "height": 600
+  },
+  "y05z": {
+    "image": "/assets/192096284_171983",
+    "id": "y05z",
+    "z": 14,
+    "x": 717,
+    "y": 64,
+    "width": 600,
+    "height": 600
+  },
+  "rxn9": {
+    "image": "/assets/1021307598_114877",
+    "id": "rxn9",
+    "z": 16,
+    "x": 1431,
+    "y": 183
+  },
+  "ismi": {
+    "image": "/assets/-1900587352_67415",
+    "id": "ismi",
+    "z": 15,
+    "x": 1437,
+    "y": 494
+  }
+}
