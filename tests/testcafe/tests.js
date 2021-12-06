@@ -300,7 +300,7 @@ test('Dynamic expressions', async t => {
     .click('[id="jyo6"]')
   const log = await Selector('#jeLog').textContent
   for (let i=0; i<ops.length; i++) {
-    await t.expect(log).contains('"'+ops[i][1]+'": '+ops[i][2])
+    await t.expect(log).contains('"'+ops[i][1]+'": '+ops[i][2], "failure of " + ops[i][1] + ": " + ops[i][2])
   };
   await t
     .pressKey('ctrl+j')
