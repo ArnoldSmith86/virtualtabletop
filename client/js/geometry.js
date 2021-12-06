@@ -1,20 +1,20 @@
-function center(e) {
+export function center(e) {
   const rect = e.getBoundingClientRect();
   return {x:rect.left + rect.width/2, y:rect.top + rect.height/2};
 }
 
-function distance(a, b) {
+export function distance(a, b) {
   return Math.sqrt((a.x-b.x)**2 + (a.y-b.y)**2);
 }
 
-function overlap(a, b) {
+export function overlap(a, b) {
   const aR = a.getBoundingClientRect();
   const bR = b.getBoundingClientRect();
 
   return !(aR.top+aR.height <= bR.top || aR.top >= bR.top+bR.height || aR.left+aR.width <= bR.left || aR.left >= bR.left+bR.width);
 }
 
-function overlapScore(a, b) {
+export function overlapScore(a, b) {
   const aR = a.getBoundingClientRect();
   const bR = b.getBoundingClientRect();
   const maxOverlap = Math.min(aR.width, bR.width) * Math.min(aR.height, bR.height);
@@ -22,11 +22,11 @@ function overlapScore(a, b) {
   return maxOverlap ? area / maxOverlap : 0;
 }
 
-function getOffset(origin, target) {
+export function getOffset(origin, target) {
   return {x: target.x - origin.x, y: target.y - origin.y}
 }
 
-function applyTransformedOffset(origin, offset, scale, rotation) {
+export function applyTransformedOffset(origin, offset, scale, rotation) {
   if(rotation % 360 == 0) {
     return {x: origin.x + offset.x * scale, y: origin.y + offset.y * scale}
   } else {
