@@ -2,7 +2,7 @@ import { $, removeFromDOM, asArray } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
-import { showOverlay } from '../main.js';
+import { showOverlay, scale } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { center, distance, overlap, overlapScore, getOffset, applyTransformedOffset } from '../geometry.js';
 
@@ -1505,6 +1505,8 @@ export class Widget extends StateManaged {
 
       const lastHoverTarget = this.hoverTarget;
       const myCenter = center(this.domElement);
+      const myMinDim = Math.min(this.get('width'), this.get('height')) * this.get('_abslouteScale');
+      const myRotated = this.get('_absoluteRotation') % 90 != 0;
       this.hoverTarget = null;
       let targetCursor = false;
       let targetOverlap = 0;
@@ -1514,16 +1516,16 @@ export class Widget extends StateManaged {
         const tOverlap = overlapScore(this.domElement, t.domElement);
         if(tOverlap > 0) {
           const tCursor = t.coordGlobalInside(coordGlobal);
-          const tRotated = Math.round(t.get('_absoluteRotation') % 90) != 0;
-          if(tCursor || !tRotated) {
-            const tDist = distance(center(t.domElement), myCenter);
-            if(this.hoverTarget == null || ((tCursor || !targetCursor) && (tOverlap > targetOverlap || (tOverlap == 1 && tDist >= targetDist)))) {
-              console.log(t.id, tOverlap, tCursor, tRotated, tDist);
-              targetCursor = tCursor;
-              targetOverlap= tOverlap;
-              targetDist = tDist;
-              this.hoverTarget = t;
-            }
+          const tRotated = t.get('_absoluteRotation') % 90 != 0;
+          const tDist = distance(center(t.domElement), myCenter) / scale;
+          const tMinDim = Math.min(t.get('width'),t.get('height')) * t.get('_absoluteScale');
+          const validTarget = tCursor || (!myRotated && !tRotated) || tDist < myMinDim + tMinDim;
+          const bestTarget = this.hoverTarget == null || ((tCursor || !targetCursor) && (tOverlap > targetOverlap || (tOverlap >= 1 && tDist >= targetDist)));
+          if(validTarget && bestTarget) {
+            targetCursor = tCursor;
+            targetOverlap= tOverlap;
+            targetDist = tDist;
+            this.hoverTarget = t;
           }
         }
       }

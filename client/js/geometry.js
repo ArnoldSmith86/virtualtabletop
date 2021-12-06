@@ -17,9 +17,9 @@ function overlap(a, b) {
 function overlapScore(a, b) {
   const aR = a.getBoundingClientRect();
   const bR = b.getBoundingClientRect();
-  const minDim = Math.min(aR.width, aR.height, bR.width, bR.height);
+  const maxOverlap = Math.min(aR.width, bR.width) * Math.min(aR.height, bR.height);
   const area = Math.max(Math.min(aR.right, bR.right) - Math.max(aR.left, bR.left), 0) * Math.max(Math.min(aR.bottom, bR.bottom) - Math.max(aR.top, bR.top), 0);
-  return minDim ? Math.min(area / minDim**2, 1) : 0;
+  return maxOverlap ? area / maxOverlap : 0;
 }
 
 function getOffset(origin, target) {
