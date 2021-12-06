@@ -5,6 +5,15 @@
   <meta charset="utf-8">
   <title>VirtualTabletop.io</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+  <link rel="icon"
+  href="https://cdn.glitch.com/12918bef-605d-465b-83e9-daddde8072e9%2Fw.png?1553040982360"
+  id="light-scheme-icon">
+<link rel="icon"
+  href="https://cdn.glitch.com/12918bef-605d-465b-83e9-daddde8072e9%2Fb.png?1553040985667"
+  id="dark-scheme-icon">
+
+
   <link rel="icon" type="image/svg+xml" href="/i/branding/favicon.svg"/>
   <link rel="apple-touch-icon" sizes="180x180" href="/i/branding/ios-icon.png">
   <link rel="alternate icon" href="/i/branding/favicon-32.png"/>
@@ -185,11 +194,13 @@
     </div>
 
     <div id="buttonInputOverlay" class="overlay">
-      <form onsubmit="return false">
+      <form class="modal" onsubmit="return false">
         <h1>Button Input</h1>
         <div id="buttonInputFields"></div>
-        <button id="buttonInputGo">Go</button>
-        <button id="buttonInputCancel">Cancel</button>
+        <div class="footer">
+          <div id="buttonInputGo" class="positiveInput"><span class="UIicon"></span><label></label></div>
+          <div id="buttonInputCancel" class="negativeInput"><span class="UIicon"></span><label></label></div>
+        </div>
       </form>
     </div>
 
