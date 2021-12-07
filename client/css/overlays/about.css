@@ -76,5 +76,6 @@
 }
 #aboutOverlay .content-body h2{
   padding-top: 1rem;
+  color: var(--VTTblue);
   border-top: 1px solid #ffffff44;
 }
