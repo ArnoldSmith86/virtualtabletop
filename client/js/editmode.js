@@ -589,8 +589,8 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
     widgets.set(wi.id, w);
     w.applyDelta(wi);
     if(!wi.parent) {
-      w.domElement.addEventListener('click', _=>{
-        overlayDone(onClick());
+      w.domElement.addEventListener('click', async _=>{
+        overlayDone(await onClick());
       });
       $('#addOverlay').appendChild(w.domElement);
     }
