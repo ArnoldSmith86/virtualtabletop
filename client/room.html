@@ -360,18 +360,19 @@
         <p>VirtualTabletop.io does not ask for or collect any personal identification information.</p>
         <p>VirtualTabletop.io does not use cookies.</p>
         <p>VirtualTabletop.io does, however, collect the "player name" and keeps that in local storage on the user's device.  The player name defaults to a number, but is customizable to any user entered data. VirtualTabletop.io does not analyze or use that information except to display it on the screen while accessing the website.</p>
-        <div id="betaText">
-          <h2>Beta</h2>
-          <p>Play this game on an experimental preview server to help us test new features. Anyone joining this room will be redirected there until you switch back.</p>
-          <table id="betaServerList">
-            <th>Server</th><th>Returns the state to this server</th><th>Description</th>
-          </table>
-          <template id="template-betaServerList-entry" type="text/template">
-            <td><button>Name</button></td>
-            <td class="return">Return?</td>
-            <td class="description">Description</td>
-          </template>
-        </div>
+      </div>
+      <div id="betaText" class="content-body">
+        <h2>Beta</h2>
+        <p>Play this game on an experimental preview server to help us test new features. Anyone joining this room will be redirected there until you switch back.</p>
+        <table id="betaServerListTable">
+          <thead><th>Server</th><th>Returns the state to this server</th><th>Description</th></thead>
+          <tbody id="betaServerList"></tbody>
+        </table>
+        <template id="template-betaServerList-entry" type="text/template">
+          <td><button class="ui-button">Name</button></td>
+          <td class="return">Return?</td>
+          <td class="description">Description</td>
+        </template>
       </div>
     </div>
 
