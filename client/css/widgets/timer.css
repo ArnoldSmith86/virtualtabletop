@@ -1,4 +1,4 @@
-.timer {
+.timer > .widget-content {
   font-size: 23px;
   font-family: monospace;
   text-align: right;
@@ -15,7 +15,7 @@
 }
 
 
-.timer.alert {
+.timer.alert > .widget-content {
   color: var(--wcFontAlert) !important;
   animation: var(--wcAnimationAlert);
 }
@@ -26,7 +26,7 @@
   }
 }
 
-.timer.paused {
+.timer.paused > .widget-content {
   color: var(--wcFontPaused);
   animation: var(--wcAnimationPaused) !important;
 }

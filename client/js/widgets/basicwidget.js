@@ -28,11 +28,11 @@ class BasicWidget extends Widget {
         this.applyDelta(face);
     }
     if(delta.text !== undefined)
-      setText(this.domElement, delta.text);
+      setText(this.domInner, delta.text);
 
     for(const property of Object.values(this.get('svgReplaces') || {}))
       if(delta[property] !== undefined)
-        this.domElement.style.cssText = this.css();
+        this.domInner.style.cssText = this.css();
   }
 
   classes() {
@@ -100,6 +100,6 @@ class BasicWidget extends Widget {
     const replaces = {};
     for(const key in this.get('svgReplaces'))
       replaces[key] = this.get(this.get('svgReplaces')[key]);
-    return getSVG(this.get('image'), replaces, _=>this.domElement.style.cssText = this.css());
+    return getSVG(this.get('image'), replaces, _=>this.domInner.style.cssText = this.css());
   }
 }

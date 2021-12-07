@@ -48,7 +48,6 @@ class Spinner extends Widget {
   }
 
   createChildNodes() {
-    const childNodes = [...this.domElement.childNodes];
     const ns = 'http://www.w3.org/2000/svg'
 
     const bg = document.createElementNS(ns, 'svg');
@@ -78,23 +77,19 @@ class Spinner extends Widget {
       bg.appendChild(line);
       bg.appendChild(text);
     }
-    this.domElement.innerHTML = '';
-    this.domElement.appendChild(bg);
+    this.domInner.innerHTML = '';
+    this.domInner.appendChild(bg);
 
     this.spinner = document.createElement('div');
     this.spinner.setAttribute('class', 'spinningPart');
     this.spinner.setAttribute('style', this.get('spinnerCSS'));
-    this.domElement.appendChild(this.spinner);
+    this.domInner.appendChild(this.spinner);
 
     this.value = document.createElement('div');
     this.value.setAttribute('class', 'value');
     this.value.setAttribute('style', this.get('valueCSS'));
     this.value.textContent = this.get('value');
-    this.domElement.appendChild(this.value);
-
-    for(const child of childNodes)
-      if(String(child.className).match(/widget/))
-        this.domElement.appendChild(child);
+    this.domInner.appendChild(this.value);
   }
 
   css() {

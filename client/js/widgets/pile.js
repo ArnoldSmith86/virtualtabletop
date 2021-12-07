@@ -22,7 +22,7 @@ class Pile extends Widget {
       handlePosition: 'top right'
     });
 
-    this.domElement.appendChild(this.handle);
+    this.domInner.appendChild(this.handle);
     this.childCount = 0;
     this.updateText();
   }

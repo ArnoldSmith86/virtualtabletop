@@ -16,7 +16,7 @@ export class Label extends Widget {
       twoRowBottomAlign: false
     });
 
-    this.domElement.appendChild(this.input);
+    this.domInner.appendChild(this.input);
     this.input.addEventListener('keyup', e=>{
       if(this.get('editable') && e.target.value !== this.get('text'))
         this.setText(e.target.value)

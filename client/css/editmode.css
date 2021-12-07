@@ -44,6 +44,10 @@
   cursor: pointer;
 }
 
+body.edit #addOverlay .widget::before {
+  content: '';
+}
+
 #editJSONoverlay {
   padding: 10px;
 }
@@ -125,18 +129,6 @@ body.edit .surface {
     repeating-linear-gradient(-90deg, #e0e0e0, #e0e0e0 1px, transparent 2px, transparent 30px);
 }
 
-body.edit .widget {
-  background-color: transparent !important;
-  border: 3px solid var(--editColor);
-  color: var(--editColor);
-  box-sizing: border-box;
-}
-
-body.edit .widget > .widget {
-  left: -3px;
-  top: -3px;
-}
-
 #cardTypesList td {
   padding: 10px;
   vertical-align: top;
@@ -159,3 +151,4 @@ body.edit .widget > .widget {
   flex-flow: row wrap;
   column-gap: 0.7em;
 }
+

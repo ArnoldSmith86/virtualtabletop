@@ -2,7 +2,7 @@
   will-change: transform;
 }
 
-.pile .handle {
+.pile > .widget-content .handle {
   position: absolute;
   left: var(--phPosition);
   top: var(--phPosition);
@@ -19,33 +19,33 @@
   z-index: 9999999;
 }
 
-.pile .handle.small {
+.pile > .widget-content .handle.small {
   width: calc(var(--phSize)/2);
   height: calc(var(--phSize)/2);
   font-size: calc(var(--phSize)/4);
 }
 
-.pile .handle.right {
+.pile > .widget-content .handle.right {
   left: unset;
   right: var(--phPosition);
 }
 
-.pile .handle.center {
+.pile > .widget-content .handle.center {
   left: 50%;
   transform: translateX(-50%);
 }
 
-.pile .handle.bottom {
+.pile > .widget-content .handle.bottom {
   top: unset;
   bottom: var(--phPosition);
 }
 
-.pile .handle.middle {
+.pile > .widget-content .handle.middle {
   top: 50%;
   transform: translateY(-50%);
 }
 
-.pile .handle.center.middle {
+.pile > .widget-content .handle.center.middle {
   top: 50%;
   transform: translateX(-50%) translateY(-50%);
 }

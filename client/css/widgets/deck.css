@@ -1,17 +1,26 @@
-.deck {
+.deck > .widget-content {
   display: none;
 }
 
-body.edit .deck {
+body.edit .deck > .widget-content {
+  filter: none !important;
+  opacity: 1 !important;
   display: block;
   padding-top: 40px;
   text-align: center;
-
+  color: var(--editColor);
+  border: 3px solid var(--editColor);
   border-radius: 100%;
   font-size: 200%;
 }
 
-body.edit .deck::before, body.edit .deck::after {
+body.edit .deck::before {
+  align-items: flex-start;
+  border-width: 0;
+}
+
+body.edit .deck > .widget-content::before, 
+body.edit .deck > .widget-content::after {
   position: absolute;
   width: 15px;
   height: 25px;
@@ -21,7 +30,7 @@ body.edit .deck::before, body.edit .deck::after {
   content: "";
 }
 
-body.edit .deck::after {
+body.edit .deck > .widget-content::after {
   top: 15px;
   left: 35px;
 }

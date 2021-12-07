@@ -1,4 +1,4 @@
-.seat {
+.seat > .widget-content {
   background-color: #ffffff;
 
   font-size: 25px;
@@ -18,15 +18,6 @@
   --wcShadowTurn: 0px 0px 20px 5px var(--color);
 }
 
-.seat.seated.turn {
+.seat.seated.turn > .widget-content {
   box-shadow: var(--wcShadowTurn);
-}
-
-body.edit .seat {
-  border-width: 7px;
-  box-sizing: unset;
-}
-
-body.edit .seat.seated.turn {
-  box-shadow: unset;
 }

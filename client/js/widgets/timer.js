@@ -25,7 +25,7 @@ export class Timer extends Widget {
     super.applyDeltaToDOM(delta);
     if(delta.milliseconds !== undefined) {
       const s = Math.floor(Math.abs(delta.milliseconds)/1000);
-      setText(this.domElement, `${delta.milliseconds < 0 ? '-' : ''}${Math.floor(s/60)}:${Math.floor(s%60)}`.replace(/:(\d)$/, ':0$1'));
+      setText(this.domInner, `${delta.milliseconds < 0 ? '-' : ''}${Math.floor(s/60)}:${Math.floor(s%60)}`.replace(/:(\d)$/, ':0$1'));
     }
 
     if(this.interval && (delta.paused !== undefined || delta.precision !== undefined)) {
@@ -83,7 +83,7 @@ export class Timer extends Widget {
     const replaces = {};
     for(const key in this.get('svgReplaces'))
       replaces[key] = this.get(this.get('svgReplaces')[key]);
-    return getSVG(this.get('image'), replaces, _=>this.domElement.style.cssText = this.css());
+    return getSVG(this.get('image'), replaces, _=>this.domInner.style.cssText = this.css());
   }
 
   async onPropertyChange(property, oldValue, newValue) {

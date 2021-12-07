@@ -583,23 +583,23 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
     widgets.set(wi.id, w);
     w.applyDelta(wi);
     if(!wi.parent) {
-      w.domElement.addEventListener('click', _=>{
+      w.domBox.addEventListener('click', _=>{
         overlayDone(onClick());
       });
-      $('#addOverlay').appendChild(w.domElement);
+      $('#addOverlay').appendChild(w.domBox);
     }
   }
 }
 
 function addWidgetToAddWidgetOverlay(w, wi) {
   w.applyDelta(wi);
-  w.domElement.addEventListener('click', _=>{
+  w.domBox.addEventListener('click', _=>{
     const toAdd = {...wi};
     toAdd.z = getMaxZ(w.get('layer')) + 1;
     const id = addWidgetLocal(toAdd);
     overlayDone(id);
   });
-  $('#addOverlay').appendChild(w.domElement);
+  $('#addOverlay').appendChild(w.domBox);
 }
 
 // Called by most routines that add widgets. If the widget add came from the JSON editor,

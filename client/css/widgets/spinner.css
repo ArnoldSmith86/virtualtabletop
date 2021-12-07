@@ -1,4 +1,4 @@
-.spinner > svg.background {
+.spinner > .widget-content > svg.background {
   position: absolute;
   background: white;
   color: black;
@@ -9,7 +9,7 @@
   box-sizing: border-box;
 }
 
-.spinner > div.spinningPart {
+.spinner > .widget-content > div.spinningPart {
   position: absolute;
   background-image: url(/i/spinner/SpinnerVTTblue.svg);
   background-size: 70% 70%;
@@ -20,7 +20,7 @@
   height: 100%;
 }
 
-.spinner > div.value {
+.spinner > .widget-content > div.value {
   position: absolute;
   display: flex;
   justify-content: center;
@@ -37,19 +37,26 @@
   opacity: 1;
 }
 
-.spinner > div.value.hidden {
+.spinner > .widget-content > div.value.hidden {
   opacity: 0;
 }
 
-body.edit .spinner {
+body.edit .widget.spinner::before {
   border-radius: 100%;
+  align-items: flex-end;
 }
 
-body.edit .spinner > svg.background, body.edit .spinner > div.spinningPart {
+body.edit .widget.spinner > .widget-content {
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+body.edit .spinner > .widget-content > svg.background, 
+body.edit .spinner > .widget-content > div.spinningPart {
   display: none;
 }
 
-body.edit .spinner > div.value {
+body.edit .spinner > .widget-content > div.value {
   color: var(--editColor);
   background: transparent;
 }

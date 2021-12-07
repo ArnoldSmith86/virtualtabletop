@@ -1,4 +1,4 @@
-.holder {
+.holder > .widget-content {
   background: white;
   box-sizing: border-box;
   border: calc(1px / var(--scale)) solid #333;
@@ -6,25 +6,18 @@
   border-radius: 8px;
 }
 
-.holder > .widget, .widget.droppable.droptarget.holder.transparent > .widget {
-  left: -1px;
-  top: -1px;
-}
-
-.holder.transparent {
+.holder.transparent > .widget-content {
   background: none;
   border: none;
 }
 
-.holder.transparent > .widget {
-  left: 0;
-  top: 0;
-}
-
-.widget.droppable.droptarget {
+.widget.droppable.droptarget > .widget-content {
   border: calc(1px / var(--scale)) solid #333 !important;
 }
 
-body.edit .widget.droppable.droptarget {
-  border-width: 3px !important;
+body.edit .holder::before {
+  border-radius: 8px;
+}
+body.edit .widget.droppable.droptarget:before {
+  border-width: 3px;
 }

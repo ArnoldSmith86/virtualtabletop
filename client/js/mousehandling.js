@@ -80,7 +80,7 @@ async function inputHandler(name, e) {
           if(!target.classList.contains('longtouch'))
             await widgets.get(target.id).click();
         else
-          widgets.get(target.id).domElement.classList.remove('longtouch');
+          widgets.get(target.id).domBox.classList.remove('longtouch');
       }
       delete mouseStatus[target.id];
     } else if(name == 'mousemove' || name == 'touchmove' && mouseStatus[target.id]) {
