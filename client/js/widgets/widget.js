@@ -1575,7 +1575,8 @@ export class Widget extends StateManaged {
           const tRotated = t.get('_absoluteRotation') % 90 != 0;
           const tDist = distance(center(t.domElement), myCenter) / scale;
           const tMinDim = Math.min(t.get('width'),t.get('height')) * t.get('_absoluteScale');
-          const validTarget = tCursor || (!myRotated && !tRotated) || tDist < myMinDim + tMinDim;
+          console.log(tCursor, myRotated, tRotated, tDist, myMinDim, tMinDim)
+          const validTarget = tCursor || (!myRotated && !tRotated) || tDist < (myMinDim + tMinDim) / 2;
           const bestTarget = this.hoverTarget == null || ((tCursor || !targetCursor) && (tOverlap > targetOverlap || (tOverlap >= 1 && tDist >= targetDist)));
           if(validTarget && bestTarget) {
             targetCursor = tCursor;
