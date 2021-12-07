@@ -3,6 +3,7 @@
   background: rgba(0,0,0,.85);
   display: flex;
   align-items: center;
+  overflow-x: hidden;
 }
 
 #aboutOverlay .header{
