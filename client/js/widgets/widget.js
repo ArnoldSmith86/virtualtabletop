@@ -35,6 +35,7 @@ export class Widget extends StateManaged {
       movable: true,
       movableInEdit: true,
       clickable: false,
+      clickSound: null,
 
       grid: [],
       enlarge: false,
@@ -128,6 +129,9 @@ export class Widget extends StateManaged {
 
   applyDeltaToDOM(delta) {
     this.applyCSS(delta);
+    if(delta.audio !== null)
+      this.addAudio(this);
+    
     if(delta.z !== undefined)
       this.applyZ(true);
 
@@ -157,10 +161,9 @@ export class Widget extends StateManaged {
         const property = isGlobalUpdateRoutine[1] || '*';
         if(StateManaged.globalUpdateListeners[property] === undefined)
           StateManaged.globalUpdateListeners[property] = [];
+        StateManaged.globalUpdateListeners[property] = StateManaged.globalUpdateListeners[property].filter(x=>x[0]!=this);
         if(Array.isArray(delta[key]))
           StateManaged.globalUpdateListeners[property].push([ this, key ]);
-        else
-          StateManaged.globalUpdateListeners[property] = StateManaged.globalUpdateListeners[property].filter(x=>x[0]!=this);
       }
     }
 
@@ -215,6 +218,7 @@ export class Widget extends StateManaged {
       widgets.get(this.get('deck')).removeCard(this);
     removeFromDOM(this.domElement);
     this.inheritFromUnregister();
+    this.globalUpdateListenersUnregister();
   }
 
   applyZ(force) {
@@ -284,6 +288,9 @@ export class Widget extends StateManaged {
 
     if(!this.get('clickable') && !(mode == 'ignoreClickable' || mode =='ignoreAll'))
       return true;
+
+    if(this.get('clickSound'))
+      this.set('audio','source: ' + this.get('clickSound') + ', type: audio/mpeg , maxVolume: 1.0, length: null, player: null');
 
     if(Array.isArray(this.get('clickRoutine')) && !(mode == 'ignoreClickRoutine' || mode =='ignoreAll')) {
       await this.evaluateRoutine('clickRoutine', {}, {});
@@ -533,6 +540,13 @@ export class Widget extends StateManaged {
         }
       }
 
+      if(a.func == 'AUDIO') {
+        setDefaults(a, { source: '', type: 'audio/mpeg', maxVolume: 1.0, length: null, player: null });
+        if(a.source !== undefined) {
+          this.set('audio', 'source: ' + a.source + ', type: ' + a.type + ', maxVolume: ' + a.maxVolume + ', length: ' + a.length + ', player: ' + a.player);
+        }
+      }
+
       if(a.func == 'CALL') {
         setDefaults(a, { widget: this.get('id'), routine: 'clickRoutine', 'return': true, arguments: {}, variable: 'result', collection: 'result' });
         if(!a.routine.match(/Routine$/)) {
@@ -578,9 +592,14 @@ export class Widget extends StateManaged {
 
         const execute = async function(widget) {
           if(widget.get('type') == 'canvas') {
-            if(a.mode == 'setPixel')
-              await widget.setPixel(a.x, a.y, a.value);
-            else if(a.mode == 'set')
+            if(a.mode == 'setPixel') {
+              const res = widget.getResolution();
+              if(a.x >= 0 && a.y >= 0 && a.x < res && a.y < res) {
+                await widget.setPixel(a.x, a.y, a.value);
+              } else {
+                problems.push(`Pixel coordinate: (${a.x}, ${a.y}) out of range for resolution: ${res}.`);
+              }
+            } else if(a.mode == 'set')
               await widget.set('activeColor', a.value % widget.get('colorMap').length);
             else if(a.mode == 'reset')
               await widget.reset();
@@ -663,7 +682,7 @@ export class Widget extends StateManaged {
                   problems.push(`There is already a widget with id:${a.properties.id}, generating new ID.`);
               }
               delete clone.parent;
-              const cWidget = widgets.get(addWidgetLocal(clone));
+              const cWidget = widgets.get(await addWidgetLocal(clone));
 
               if(parent) {
                 // use moveToHolder so that CLONE triggers onEnter and similar features
@@ -1368,6 +1387,48 @@ export class Widget extends StateManaged {
       $('#enlarged').classList.add('hidden');
   }
 
+  async addAudio(widget){
+	  if(widget.get('audio')) {
+	    const audioString = widget.get('audio');
+	    const audioArray = audioString.split(/:\s|,\s/);
+	    const source = audioArray[1];
+	    const type = audioArray[3];
+	    const maxVolume = audioArray[5];
+      const length = audioArray[7];
+      const pName = audioArray[9];
+
+      if(pName == "null" || pName == playerName) {
+        var audioElement = document.createElement('audio');
+        audioElement.setAttribute('class', 'audio');
+        audioElement.setAttribute('src', source);
+        audioElement.setAttribute('type', type);
+        audioElement.setAttribute('maxVolume', maxVolume);
+        audioElement.volume = Math.min(maxVolume * (((10 ** (document.getElementById('volume').value / 96.025)) / 10) - 0.1), 1); // converts slider to log scale with zero = no volume
+        document.body.appendChild(audioElement);
+        audioElement.play();
+
+        if(length != "null") {
+          setInterval(function(){
+            if(audioElement.currentTime>=0){
+              audioElement.pause();
+              clearInterval();
+              if(audioElement.parentNode)
+                audioElement.parentNode.removeChild(audioElement);
+            }}, length);
+        } else {
+          audioElement.onended = function() {
+            audioElement.pause();
+            clearInterval();
+            if(audioElement.parentNode)
+              audioElement.parentNode.removeChild(audioElement);
+          };
+        }
+      }
+      setInterval(function(){
+        widget.set('audio', null);}, 100);
+    }
+  }
+
   isValidID(id, problems) {
     if(Array.isArray(id))
       return !id.map(i=>this.isValidID(i, problems)).filter(r=>r!==true).length;
@@ -1706,7 +1767,7 @@ export class Widget extends StateManaged {
           }, this.get('onPileCreation'));
           if(thisOwner !== null)
             pile.owner = thisOwner;
-          const pileId = addWidgetLocal(pile);
+          const pileId = await addWidgetLocal(pile);
           await widget.set('parent', pileId);
           await this.bringToFront();
           await this.set('parent', pileId);
