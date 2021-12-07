@@ -1561,7 +1561,7 @@ export class Widget extends StateManaged {
 
       const lastHoverTarget = this.hoverTarget;
       const myCenter = center(this.domElement);
-      const myMinDim = Math.min(this.get('width'), this.get('height')) * this.get('_abslouteScale');
+      const myMinDim = Math.min(this.get('width'), this.get('height')) * this.get('_absoluteScale');
       this.hoverTarget = null;
       let targetCursor = false;
       let targetOverlap = 0;
@@ -1573,8 +1573,9 @@ export class Widget extends StateManaged {
           const tCursor = t.coordGlobalInside(coordGlobal);
           const tDist = distance(center(t.domElement), myCenter) / scale;
           const tMinDim = Math.min(t.get('width'),t.get('height')) * t.get('_absoluteScale');
-          const validTarget = tCursor  || tDist < (myMinDim + tMinDim) / 2;
+          const validTarget = tCursor || tDist <= (myMinDim + tMinDim) / 2;
           const bestTarget = this.hoverTarget == null || ((tCursor || !targetCursor) && (tOverlap > targetOverlap || (tOverlap >= 1 && tDist >= targetDist)));
+          console.log(tCursor, tDist, myMinDim, tMinDim, validTarget, bestTarget)
           if(validTarget && bestTarget) {
             targetCursor = tCursor;
             targetOverlap= tOverlap;
