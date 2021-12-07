@@ -75,7 +75,7 @@ const jeCommands = [
   {
     id: 'je_uploadAudio',
     name: 'upload audio file',
-    context: '^.*\\(AUDIO\\) ↦ source|^.* ↦ clickSound', 
+    context: '^.*\\(AUDIO\\) ↦ source|^.* ↦ clickSound',
     call: async function() {
       uploadAsset().then(a=> {
         if(a) {
@@ -1329,6 +1329,7 @@ function jeInsert(context, key, value) {
 // START routine logging
 
 let jeRoutineLogging = false;
+let jeRoutineResetOnNextLog = true;
 let jeRoutineResult = '';
 let jeLoggingHTML = '';
 let jeLoggingDepth = 0;
@@ -1339,8 +1340,12 @@ function jeLoggingJSON(obj) {
 }
 
 function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference) {
-  if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine'].indexOf( jeHTMLStack[0][3] ) == -1 )
-    jeLoggingHTML = `
+  if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine'].indexOf( jeHTMLStack[0][3] ) == -1 ) {
+    if(jeRoutineResetOnNextLog) {
+      jeLoggingHTML = '';
+      jeRoutineResetOnNextLog = false;
+    }
+    jeLoggingHTML += `
       <div class="jeLog">
         <div class="jeExpander ${jeLoggingDepth ? '' : 'jeExpander-down'}">
           <span class="jeLogWidget">${widget.get('id')}</span>
@@ -1348,6 +1353,7 @@ function jeLoggingRoutineStart(widget, property, initialVariables, initialCollec
         </div>
         <div class="jeLogNested ${jeLoggingDepth ? '' : 'active'}">
     `;
+  }
   ++jeLoggingDepth;
 }
 
@@ -1734,6 +1740,7 @@ window.addEventListener('mousemove', function(e) {
 window.addEventListener('mouseup', async function(e) {
   if(!jeEnabled)
     return;
+  jeRoutineResetOnNextLog = true;
   if(e.target == $('#jeText') && jeContext != 'macro') {
     jeGetContext();
     if(jeContext[0] == 'Tree' && jeContext[1] !== undefined) {
