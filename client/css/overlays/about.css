@@ -79,3 +79,42 @@
   color: var(--VTTblue);
   border-top: 1px solid #ffffff44;
 }
+#betaServerListTable{
+  border-collapse: collapse;
+}
+#betaServerListTable thead{
+  font-size: 12px;
+  vertical-align: bottom;
+  padding-bottom: 5px;
+  border-bottom: 1px dotted #b5b5b5;
+}
+#betaServerList td{
+  padding: 5px 2px;
+}
+#betaServerList tr{
+  border-bottom: 1px dotted #b5b5b5;
+}
+
+#betaServerList tr:nth-child(even) {
+    background:#e2e2e2;
+}
+
+#betaServerList .ui-button{
+  color: white;
+  width: 100%;
+  justify-content: center;
+}
+#betaServerList td.return{
+  text-align: center;
+  font-size: 2rem;
+}
+#betaServerList td.return.check{
+  color: #009502;
+}
+#betaServerList td.return.cancel{
+  color: #950000;
+}
+
+#betaServerList td.description{
+  font-size: 0.8rem;
+}
