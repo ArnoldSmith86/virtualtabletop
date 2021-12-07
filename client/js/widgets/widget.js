@@ -1575,7 +1575,6 @@ export class Widget extends StateManaged {
           const tMinDim = Math.min(t.get('width'),t.get('height')) * t.get('_absoluteScale');
           const validTarget = tCursor || tDist <= (myMinDim + tMinDim) / 2;
           const bestTarget = this.hoverTarget == null || ((tCursor || !targetCursor) && (tOverlap > targetOverlap || (tOverlap >= 1 && tDist >= targetDist)));
-          console.log(tCursor, tDist, myMinDim, tMinDim, validTarget, bestTarget)
           if(validTarget && bestTarget) {
             targetCursor = tCursor;
             targetOverlap= tOverlap;
