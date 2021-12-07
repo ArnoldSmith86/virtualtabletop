@@ -156,7 +156,7 @@ class Pile extends Widget {
   }
 
   getDefaultValue(property) {
-    if(property == 'onPileCreation')
+    if(property == 'onPileCreation' && this.children().length)
       return this.children()[0].get('onPileCreation');
     return super.getDefaultValue(property);
   }
@@ -201,6 +201,6 @@ class Pile extends Widget {
   }
 
   validDropTargets() {
-    return getValidDropTargets(this.children()[0]);
+    return this.children().length ? getValidDropTargets(this.children()[0]) : [];
   }
 }

@@ -114,7 +114,7 @@ export class StateManaged {
 
     if(Array.isArray(this.get(`${property}ChangeRoutine`)))
       await this.evaluateRoutine(`${property}ChangeRoutine`, { oldValue, value }, {});
-    if(Array.isArray(this.get('changeRoutine')))
+    if(Array.isArray(this.get('changeRoutine')) && property != 'audio')
       await this.evaluateRoutine('changeRoutine', { property, oldValue, value }, {});
 
     if(!StateManaged.isInGlobalUpdateRoutine) {
