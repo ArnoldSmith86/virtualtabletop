@@ -112,7 +112,7 @@ const jeCommands = [
     context: '^deck ↦ cardTypes ↦ [^"↦]+',
     call: async function() {
       const card = { deck:jeStateNow.id, type:'card', cardType:jeContext[2] };
-      addWidgetLocal(card);
+      await addWidgetLocal(card);
       if(jeStateNow.parent)
         await widgets.get(card.id).moveToHolder(widgets.get(jeStateNow.parent));
       else
@@ -127,7 +127,7 @@ const jeCommands = [
     call: async function() {
       for(const cardType in jeStateNow.cardTypes) {
         const card = { deck:jeStateNow.id, type:'card', cardType };
-        addWidgetLocal(card);
+        await addWidgetLocal(card);
         if(jeStateNow.parent)
           await widgets.get(card.id).moveToHolder(widgets.get(jeStateNow.parent));
         else
@@ -395,7 +395,7 @@ const jeCommands = [
     ],
     call: async function(options) {
       for(const id of jeSelectedIDs()) {
-        const clonedWidget = duplicateWidget(widgets.get(id), options.Recursive, options['Use inheritFrom'], options['Increment IDs'], options['X offset'], options['Y offset'], options['# Copies X'], options['# Copies Y']);
+        const clonedWidget = await duplicateWidget(widgets.get(id), options.Recursive, options['Use inheritFrom'], options['Increment IDs'], options['X offset'], options['Y offset'], options['# Copies X'], options['# Copies Y']);
         if(clonedWidget) {
           jeSelectWidget(widgets.get(clonedWidget.id));
           jeStateNow.id = '###SELECT ME###';
