@@ -155,3 +155,15 @@
 #stateEditOverlay .input{
   display: flex;
 }
+.variantsList .prettyButton.play{
+  flex-wrap: wrap;
+}
+
+.variantsList .prettyButton.play .variant{
+  padding-top: 4px;
+  border-top: 1px solid #ffffffaa;
+  width: 100%;
+}
+.variantsList .prettyButton.play .variant:empty{
+  display: none;
+}
