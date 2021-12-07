@@ -6,13 +6,13 @@
 }
 
 #aboutOverlay .header{
-    box-sizing: content-box;
+  box-sizing: content-box;
   background: white;
-  margin: 1rem;
-  padding-bottom: 1rem;
   border-radius: 8px;
-  width: 100%;
-  max-width: 40rem;
+  width: 95%;
+  max-width: 38rem;
+  margin: 1rem;
+  padding:1rem;
 }
 #aboutOverlay .header * {
   color: var(--VTTblue);
@@ -64,7 +64,7 @@
   box-sizing: content-box;
   background: white;
   border-radius: 8px;
-  width: 100%;
+  width: 95%;
   max-width: 38rem;
   margin: 1rem;
   padding:1rem;
