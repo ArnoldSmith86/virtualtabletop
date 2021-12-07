@@ -75,7 +75,7 @@ const jeCommands = [
   {
     id: 'je_uploadAudio',
     name: 'upload audio file',
-    context: '^.*\\(AUDIO\\) ↦ source|^.* ↦ clickSound', 
+    context: '^.*\\(AUDIO\\) ↦ source|^.* ↦ clickSound',
     call: async function() {
       uploadAsset().then(a=> {
         if(a) {
@@ -953,7 +953,7 @@ function jeCommandOptions() {
   const div = document.createElement('div');
   div.id = 'jeCommandOptions';
   div.innerHTML = '<b>Command options:</b><div></div><button>Go</button><button>Cancel</button>';
-  $('.jeTopButton:last-of-type').parentNode.insertBefore(div, $('.jeTopButton:last-of-type').nextSibling);
+  $('#jeCommands').insertBefore(div, $('#jeTopButtons').nextSibling);
 
   for(const option of jeCommandWithOptions.options) {
     formField(option, $('#jeCommandOptions div'), `${jeCommandWithOptions.id}_${option.label}`);
@@ -1604,15 +1604,17 @@ function jeShowCommands() {
   const displayKey = function (k) {
     return { ArrowUp: '⬆', ArrowDown: '⬇'} [k] || k;
   }
+  commandText += `<div id='jeTopButtons'>`;
   for(const command of jeCommands) {
     const contextMatch = context.match(new RegExp(command.context));
     if(contextMatch && contextMatch[0] == "") {
       const name = (typeof command.name == 'function' ? command.name() : command.name);
       const icon = (typeof command.icon == 'function' ? command.icon() : command.icon);
       let keyName = displayKey(command.forceKey);
-      commandText += `<div class='jeTopButton'><button class='top' id='${command.id}' title='${name}' ${!command.show || command.show() ? '' : 'disabled'}>${icon}</button><span class='top'>&nbsp;</span></div>`;
+      commandText += `<button class='top' id='${command.id}' title='${name}' ${!command.show || command.show() ? '' : 'disabled'}>${icon}</button>`;
     }
   }
+  commandText += `</div>`;
   delete activeCommands[""];
 
   if(jeContext[jeContext.length-1] == '(var expression)') {
