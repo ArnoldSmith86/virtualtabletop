@@ -57,8 +57,11 @@
   border-left: 1px solid black;
 }
 #aboutOverlay .header .about_joinus img{
-  height: 50px;
-  width: 50px;
+  height: 40px;
+  width: 40px;
+  background-color: var(--VTTblue);
+  border-radius: 100%;
+  border: 5px solid  var(--VTTblue);
 }
 
 #aboutOverlay .content-body{
