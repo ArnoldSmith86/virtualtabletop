@@ -296,8 +296,9 @@ onLoad(function() {
     for(const betaServerName in config.betaServers) {
       const entry = domByTemplate('template-betaServerList-entry', 'tr');
       $('button', entry).textContent = betaServerName;
-      $('.return', entry).textContent = config.betaServers[betaServerName].return ? 'check' : 'cancel';
-      $('.return', entry).classList.add($('.return', entry).textContent);
+      var thisstatus = config.betaServers[betaServerName].return ? 'check' : 'cancel';
+      $('.return', entry).textContent = thisstatus;
+      $('.return', entry).classList.add(thisstatus);
       $('.description', entry).textContent = config.betaServers[betaServerName].description;
       $('#betaServerList').appendChild(entry);
     }
