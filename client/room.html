@@ -198,9 +198,9 @@
         <div class="instructionalText">From here you can edit the name and color of any player.</div>
       </div>
       <div id="playerList">
-        <script id="template-playerlist-entry" type="text/template">
+        <template id="template-playerlist-entry" type="text/template">
           <input type="color" class="teamColor"></span> <input class="playerName" />
-        </script>
+        </template>
         <label class="me ui-line" data-label="Me »"> </label>
         <label class="otherPlayers ui-line" data-label="Other Players »"> </label>
         <label class="inactivePlayers ui-line"> </label>
@@ -226,7 +226,7 @@
         <p>If you don't, you can create your own game or add one from the public library:</p>
       </div>
       <div id="statesList">
-        <script id="template-stateslist-entry" type="text/template">
+        <template id="template-stateslist-entry" type="text/template">
           <img>
           <div class="details">
             <a class="bgg" href="">Name (Year)</a>
@@ -234,10 +234,10 @@
             <div class="variantsList"></div>
             <p><button class="prettyButton saveProgress" disabled>Save progress</button><button class="prettyButton edit">Edit</button></p>
           </div>
-        </script>
-        <script id="template-variantslist-entry" type="text/template">
+        </template>
+        <template id="template-variantslist-entry" type="text/template">
           <button class="prettyButton play">Play: <span class="language">🇺🇸</span><span class="symbols"> [group]</span><span class="players">0</span><br><span class="variant"></span></button>
-        </script>
+        </template>
         <div id="addState">
           <div class="image">➕</div>
           <div class="buttons">
@@ -254,18 +254,18 @@
     <div id="libraryOverlay" class="overlay">
       <h1>Public library</h1>
       <table id="libraryList">
-        <script id="template-librarylist-header" type="text/template">
+        <template id="template-librarylist-header" type="text/template">
           <th></th><th>Game</th><th>Similar to</th><th>Players</th><th>Language</th><th>Notes</th>
-        </script>
-        <script id="template-librarylist-entry" type="text/template">
+        </template>
+        <template id="template-librarylist-entry" type="text/template">
           <td><button class="prettyButton add">Add</button></td><td class="name">Chess</td><td><a>Chess</a></td><td class="players">2</td><td class="language">🇺🇳</td><td class="notes"></td>
-        </script>
-        <script id="template-librarylist-section-title" type="text/template">
+        </template>
+        <template id="template-librarylist-section-title" type="text/template">
           <td class="section" colspan="6">
             <div class="section-name">Section Name</div>
             <div class="notes">Section notes</div>
           </td>
-        </script>
+        </template>
       </table>
       <p>Loading...</p>
     </div>
@@ -284,7 +284,7 @@
       </div>
       <h2>Variants</h2>
       <div id="variantsEditList">
-        <script id="template-variantseditlist-entry" type="text/template">
+        <template id="template-variantseditlist-entry" type="text/template">
           <div class="input"><label>Language (country code):</label> <input class="stateLanguage"/></div>
           <div class="input"><label>Players:</label> <input class="statePlayers"/></div>
           <div class="input"><label>Variant:</label> <input class="stateVariant"/></div>
@@ -295,7 +295,7 @@
             <button class="ui-button download download-variant">Download variant</button>
             <button class="ui-button red remove remove-variant">Remove variant</button>
           </div>
-        </script>
+        </template>
       </div>
       <div id="addVariant" class="buttons">
         Add variant:
@@ -366,11 +366,11 @@
           <table id="betaServerList">
             <th>Server</th><th>Returns the state to this server</th><th>Description</th>
           </table>
-          <script id="template-betaServerList-entry" type="text/template">
+          <template id="template-betaServerList-entry" type="text/template">
             <td><button>Name</button></td>
             <td class="return">Return?</td>
             <td class="description">Description</td>
-          </script>
+          </template>
         </div>
       </div>
     </div>
