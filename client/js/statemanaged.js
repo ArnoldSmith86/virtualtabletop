@@ -116,6 +116,7 @@ export class StateManaged {
       if (property == 'text')
         window.dontFocus = true;
       await this.evaluateRoutine(`${property}ChangeRoutine`, { oldValue, value }, {});
+    }
     if(Array.isArray(this.get('changeRoutine')) && property != 'audio')
       await this.evaluateRoutine('changeRoutine', { property, oldValue, value }, {});
 
