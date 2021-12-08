@@ -26,11 +26,11 @@ export function getOffset(origin, target) {
   return {x: target.x - origin.x, y: target.y - origin.y}
 }
 
-export function applyTransformedOffset(origin, offset, s, rotation) {
+export function applyTransformedOffset(origin, offset, scale, rotation) {
   if(rotation % 360 == 0) {
-    return {x: origin.x + offset.x * s, y: origin.y + offset.y * s}
+    return {x: origin.x + offset.x * scale, y: origin.y + offset.y * scale}
   } else {
-    const dist = distance({x:0,y:0},offset) * s;
+    const dist = distance({x:0,y:0},offset) * scale;
     const angle = Math.atan2(offset.y ,offset.x) + rotation * Math.PI / 180;
     return {x: origin.x + dist * Math.cos(angle), y: origin.y + dist * Math.sin(angle)};
   }
