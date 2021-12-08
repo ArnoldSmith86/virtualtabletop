@@ -244,9 +244,9 @@ test('Dynamic expressions', async t => {
     ['var a = \'split.me.up\' split \'.\'', 'a', shouldBe(["split","me","up"])],
     ['var b = ${a.0} concat \'me\'', 'b', shouldBe('splitme')],
     ['var c = \'hello world\' substr 0 5', 'c', shouldBe('hello')],
-    ['var d = max 7 2', 'd', shouldBe(7)],
+    ['var d = max 7 2', 'd', shouldBe(6)],
     ['var e = random', 'e', shouldBe(0.974268)],
-    ['var f = randRange 100 200 5', 'f', shouldBe(120)],
+    ['var f = randRange 100 200 5', 'f', shouldBe(110)],
     ['var g = PI', 'g', shouldBe(3.141592653589793)],
     ['var a.$int = 2', 'a', shouldBe(["split",2,"up"])],
     ['var $text = 2', 'abcd', shouldBe(2)],
@@ -300,7 +300,9 @@ test('Dynamic expressions', async t => {
     .click('[id="jyo6"]')
   const log = await Selector('#jeLog').textContent
   for (let i=0; i<ops.length; i++) {
-    await t.expect(log).contains('"'+ops[i][1]+'": '+ops[i][2], 'failure of "' + ops[i] + '"\n')
+    const logContains = log.includes('"'+ops[i][1]+'": '+ops[i][2]);
+    await t.expect(logContains)
+           .ok('Test "' + ops[i] + '" failed.');
   };
   await t
     .pressKey('ctrl+j')
