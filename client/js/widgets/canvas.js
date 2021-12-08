@@ -102,7 +102,7 @@ class Canvas extends Widget {
     return Math.max(Math.min(Math.round(parseInt(this.get('resolution'))/10)*10, 500), 10);
   }
 
-  async mouseRaw(state, x, y) {
+  async mouseRaw(state, coord) {
     if(!this.get('clickable'))
       return;
 
@@ -111,9 +111,10 @@ class Canvas extends Widget {
 
     const resolution = this.getResolution();
     const regionRes = Math.floor(resolution/10);
+    const coordLocal = this.coordLocalFromCoordClient({x: coord.clientX, y: coord.clientY});
 
-    let pixelX = (x-this.absoluteCoord('x'))/this.get('width')*resolution;
-    let pixelY = (y-this.absoluteCoord('y'))/this.get('height')*resolution;
+    let pixelX = coordLocal.x/this.get('width')*resolution;
+    let pixelY = coordLocal.y/this.get('height')*resolution;
 
     if(pixelX < 0 || pixelX >= resolution || pixelY < 0 || pixelY >= resolution)
       return;
