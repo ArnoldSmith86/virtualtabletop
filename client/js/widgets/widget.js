@@ -1394,12 +1394,12 @@ export class Widget extends StateManaged {
   }
 
   async addAudio(widget){
-	  if(widget.get('audio')) {
-	    const audioString = widget.get('audio');
-	    const audioArray = audioString.split(/:\s|,\s/);
-	    const source = audioArray[1];
-	    const type = audioArray[3];
-	    const maxVolume = audioArray[5];
+    if(widget.get('audio')) {
+      const audioString = widget.get('audio');
+      const audioArray = audioString.split(/:\s|,\s/);
+      const source = audioArray[1];
+      const type = audioArray[3];
+      const maxVolume = audioArray[5];
       const length = audioArray[7];
       const pName = audioArray[9];
 
