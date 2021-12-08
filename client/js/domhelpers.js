@@ -51,7 +51,12 @@ export function formField(field, dom, id) {
     switchbox.classList.add('switchbox');
     input.classList.add('switchbox');
     input.type = 'checkbox';
-    input.checked = !!field.value;
+    if(field.value == 'on'){
+      var thisValue = true;
+    } else {
+      var thisValue = false;
+    }
+    input.checked = thisValue;
     dom.appendChild(input);
     dom.appendChild(switchbox);
     switchbox.htmlFor = input.id = id;

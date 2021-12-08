@@ -335,6 +335,13 @@ export class Widget extends StateManaged {
     for(const field of o.fields) {
       if(field.type == 'checkbox') {
         result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).checked;
+      } else if(field.type == 'switch'){
+        var thisresult = document.getElementById(this.get('id') + ';' + field.variable).checked;
+        if(thisresult){
+          result[field.variable] = 'on';
+        } else {
+          result[field.variable] = 'off';
+        }
       } else if(field.type != 'text' && field.type != 'subtitle' && field.type != 'title') {
         result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).value;
       }
