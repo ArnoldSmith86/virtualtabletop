@@ -293,6 +293,7 @@ function v5DynamicFaceProperties(properties) {
 function v6ModifyVarSyntax(routine) {
 
   const specialOperation = 'push, unshift, remove, insert';
+  const infixOperation = 'concat, in, includes';
 
   const identifier = '(?:[a-zA-Z0-9_-]|\\\\u[0-9a-fA-F]{4})+';
   const string     = `'(?:(?:[ !#-&(-[\\]-~]|\\\\u[0-9a-fA-F]{4})*)'`;
@@ -310,7 +311,7 @@ function v6ModifyVarSyntax(routine) {
 
   for(const [i,a] of Object.entries(routine)) {
     if (typeof a != 'string')
-      return;
+      continue;
 
     const match = a.match(new RegExp(regex + '\x24'));
 
@@ -320,14 +321,14 @@ function v6ModifyVarSyntax(routine) {
         continue;
 
       const normal = specialOperation.indexOf(match[5]) == -1;
+      const infix = infixOperation.indexOf(match[5]) != -1;
+      
       let first, second, third;
+      [first,second,third] = match[3] !== undefined ? [match[3],match[6],match[7]] : [match[6],match[7],match[8]];
 
-      if (match[3] !== undefined)
-        [first,second,third] = [match[3],match[6],match[7]]
-      else
-        [first,second,third] = [match[6],match[7],match[8]]
-
-      if(normal) {
+      if (infix) 
+        continue;
+      else if(normal) {
         if (third !== undefined)
           routine[i] = `var ${match[1]} = ${match[5]}(${first}, ${second}, ${third})`
         else if(second !== undefined)
