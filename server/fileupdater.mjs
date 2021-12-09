@@ -302,9 +302,9 @@ function v6ModifyVarSyntax(routine) {
   const parameter  = `(null|true|false|\\[\\]|\\{\\}|${number}|${variable}|${string})`;
 
   const left       = `var (\\$?${identifier}(?:\\.\\$?${identifier})?)`;
-  const operation  = `${identifier}`;
+  const operation  = '(?:[a-zA-Z0-9]+)';
 
-  const regex      = `^${left} += +(?:${parameter}|(?:${parameter} +)?(🧮)?(${identifier})(?: +${parameter})?(?: +${parameter})?(?: +${parameter})?)( *|(?: +//.*))?`;
+  const regex      = `^${left} += +(?:${parameter}|(?:${parameter} +)?(🧮)?(${operation})(?: +${parameter})?(?: +${parameter})?(?: +${parameter})?)( *|(?: +//.*))?`;
 
   if(!Array.isArray(routine))
     return;
