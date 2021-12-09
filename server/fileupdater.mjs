@@ -305,18 +305,15 @@ function v6ModifyVarSyntax(routine) {
 
   const regex      = `^${left} += +(?:${parameter}|(?:${parameter} +)?(🧮)?(${identifier})(?: +${parameter})?(?: +${parameter})?(?: +${parameter})?)( *|(?: +//.*))?`;
 
-  routine[0] = `In updater.`;
-  
   if(!Array.isArray(routine))
     return;
 
-  console.log('In procedure\n');
   for(const [i,a] of Object.entries(routine)) {
     if (typeof a != 'string')
       return;
-    console.log(a);
+
     const match = a.match(new RegExp(regex + '\x24'));
-    console.log(match);
+
     if(match) {
 
       if(!match[5])
