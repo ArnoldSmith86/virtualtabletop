@@ -4,8 +4,19 @@ import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
+import { center, distance, overlap, overlapScore, getOffset, applyTransformedOffset } from '../geometry.js';
 
-const readOnlyProperties = new Set(['_absoluteX', '_absoluteY', '_ancestor']);
+const readOnlyProperties = new Set([
+  '_absoluteRotation',
+  '_absoluteScale',
+  '_absoluteX', 
+  '_absoluteY',
+  '_ancestor',
+  '_centerAbsoluteX', 
+  '_centerAbsoluteY', 
+  '_localOriginAbsoluteX', 
+  '_localOriginAbsoluteY'
+]);
 
 export class Widget extends StateManaged {
   constructor(id) {
@@ -90,7 +101,7 @@ export class Widget extends StateManaged {
   }
 
   absoluteCoord(coord) {
-    return this.get(coord) + (this.get('parent') ? widgets.get(this.get('parent')).absoluteCoord(coord) : 0);
+    return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})[coord]
   }
 
   applyChildAdd(child) {
@@ -300,6 +311,55 @@ export class Widget extends StateManaged {
     }
   }
 
+  coordGlobalFromCoordLocal(coord) {
+    return this.coordGlobalFromCoordParent(this.coordParentFromCoordLocal(coord));
+  }
+  coordGlobalFromCoordParent(coord) {
+    const p = this.get('parent');
+    return (widgets.has(p)) ? widgets.get(p).coordGlobalFromCoordLocal(coord) : coord;
+  }
+  coordGlobalInside(coord) {
+    const coordLocal = this.coordLocalFromCoordGlobal(coord);
+    return coordLocal.x >= 0 && coordLocal.y >= 0 && coordLocal.x <= this.get('width') && coordLocal.y <= this.get('height');
+  }
+  coordLocalFromCoordClient(coord) {
+    const s = this.get('_absoluteScale') * scale;
+    const rot = this.get('_absoluteRotation') % 360;
+    const localCenter = {x: this.get('width') / 2, y: this.get('height') / 2};
+    const offset = getOffset(center(this.domElement), coord);
+    return applyTransformedOffset(localCenter, offset, 1 / s, -rot );    
+  }
+  coordLocalFromCoordGlobal(coord) {
+    return this.coordLocalFromCoordParent(this.coordParentFromCoordGlobal(coord));
+  }
+  coordLocalFromCoordParent(coord) {
+    const s = this.get('scale');
+    const rot = this.get('rotation') % 360;
+    if(s == 1 && rot == 0) {
+      return {x: coord.x - this.get('x'), y: coord.y - this.get('y')};
+    } else {
+      const localCenter = {x: this.get('width') / 2, y: this.get('height') / 2};
+      const parentCenter = {x: localCenter.x + this.get('x') , y: localCenter.y + this.get('y') };
+      const offset = getOffset(parentCenter, coord);
+      return applyTransformedOffset(localCenter, offset, 1 / s, -rot );
+    }
+  }
+  coordParentFromCoordGlobal(coord) {
+    const p = this.get('parent');
+    return (widgets.has(p)) ? widgets.get(p).coordLocalFromCoordGlobal(coord) : coord;
+  }
+  coordParentFromCoordLocal(coord) {
+    let s = this.get('scale');
+    let rot = this.get('rotation') % 360;
+    if(s == 1 && rot == 0) {
+      return {x: coord.x + this.get('x'), y: coord.y + this.get('y')};
+    } else {
+      const localCenter = {x: this.get('width') / 2, y: this.get('height') / 2};
+      const parentCenter = {x: localCenter.x + this.get('x') , y: localCenter.y + this.get('y') };
+      const offset = getOffset(localCenter, coord);
+      return applyTransformedOffset(parentCenter, offset, s, rot );
+    }
+  }
   css() {
     let css = this.get('css');
 
@@ -1369,16 +1429,32 @@ export class Widget extends StateManaged {
   }
 
   get(property) {
-    if(property == '_ancestor') {
-      if(widgets.has(this.get('parent')) && widgets.get(this.get('parent')).get('type')=='pile') {
-        return widgets.get(this.get('parent')).get('_ancestor');
-      } else {
-        return this.get('parent');
-      }
-    } else if(property == '_absoluteX' || property == '_absoluteY') {
-      return this.absoluteCoord(property == '_absoluteX' ? 'x' : 'y')
+    if(!readOnlyProperties.has(property)) {
+      return super.get(property);      
     } else {
-      return super.get(property);
+      const p = this.get('parent');
+      switch(property) {
+        case '_absoluteRotation':
+          return this.get('rotation') + (widgets.has(p)? widgets.get(p).get('_absoluteRotation') : 0);
+        case '_absoluteScale':
+          return this.get('scale') * (widgets.has(p)? widgets.get(p).get('_absoluteScale') : 1);
+        case '_absoluteX':
+          return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})['x'];
+        case '_absoluteY':
+          return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})['y'];
+        case '_ancestor':
+          return (widgets.has(p) && widgets.get(p).get('type')=='pile') ? widgets.get(p).get('_ancestor') : p;
+        case '_centerAbsoluteX':
+          return this.coordGlobalFromCoordParent({x:this.get('x')+this.get('width')/2,y:this.get('y')+this.get('height')/2})['x'];
+        case '_centerAbsoluteY':
+          return this.coordGlobalFromCoordParent({x:this.get('x')+this.get('width')/2,y:this.get('y')+this.get('height')/2})['y'];
+        case '_localOriginAbsoluteX':
+          return this.coordGlobalFromCoordLocal({x:0,y:0})['x'];
+        case '_localOriginAbsoluteY':
+          return this.coordGlobalFromCoordLocal({x:0,y:0})['y'];
+        default:
+          return super.get(property);
+      }
     }
   }
 
@@ -1457,7 +1533,6 @@ export class Widget extends StateManaged {
     if(!this.get('fixedParent')) {
       this.dropTargets = this.validDropTargets();
       this.currentParent = widgets.get(this.get('parent'));
-      this.hoverTargetDistance = 99999;
       this.hoverTarget = null;
 
       this.disablePileUpdateAfterParentChange = true;
@@ -1469,62 +1544,55 @@ export class Widget extends StateManaged {
     }
   }
 
-  async move(x, y) {
-    let newX = (jeZoomOut ? x : Math.max(0-this.get('width' )*0.25, Math.min(1600+this.get('width' )*0.25, x))) - this.get('width' )/2;
-    let newY = (jeZoomOut ? y : Math.max(0-this.get('height')*0.25, Math.min(1000+this.get('height')*0.25, y))) - this.get('height')/2;
-
-    if(this.get('fixedParent') && widgets.has(this.get('parent'))) {
-      newX -= widgets.get(this.get('parent')).absoluteCoord('x');
-      newY -= widgets.get(this.get('parent')).absoluteCoord('y');
-    }
+  async move(coordGlobal, localAnchor) {
+    const coordParent = this.coordParentFromCoordGlobal(coordGlobal);
+    const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), {x: this.get('x'), y: this.get('y')})
+    const newX = Math.round(coordParent.x + offset.x);
+    const newY = Math.round(coordParent.y + offset.y);
 
     if(tracingEnabled)
-      sendTraceEvent('move', { id: this.get('id'), x, y, newX, newY });
+      sendTraceEvent('move', { id: this.get('id'), coordGlobal, localAnchor, newX, newY });
 
     await this.setPosition(newX, newY, this.get('z'));
     await this.snapToGrid();
 
     if(!this.get('fixedParent')) {
-      const myCenter = center(this.domElement);
       await this.checkParent();
 
-      this.hoverTargetChanged = false;
-      if(this.hoverTarget) {
-        if(overlap(this.domElement, this.hoverTarget.domElement)) {
-          this.hoverTargetDistance = distance(myCenter, this.hoverTargetCenter);
-        } else {
-          this.hoverTargetDistance = 99999;
-          this.hoverTarget = null;
-          this.hoverTargetChanged = true;
-        }
-      }
+      const lastHoverTarget = this.hoverTarget;
+      const myCenter = center(this.domElement);
+      const myMinDim = Math.min(this.get('width'), this.get('height')) * this.get('_absoluteScale');
+      this.hoverTarget = null;
+      let targetCursor = false;
+      let targetOverlap = 0;
+      let targetDist = 99999;
 
       for(const t of this.dropTargets) {
-        const tCenter = center(t.domElement);
-        const d = distance(myCenter, tCenter);
-        if(d < this.hoverTargetDistance) {
-          if(overlap(this.domElement, t.domElement)) {
-            this.hoverTargetChanged = this.hoverTarget != t;
+        const tOverlap = overlapScore(this.domElement, t.domElement);
+        if(tOverlap > 0) {
+          const tCursor = t.coordGlobalInside(coordGlobal);
+          const tDist = distance(center(t.domElement), myCenter) / scale;
+          const tMinDim = Math.min(t.get('width'),t.get('height')) * t.get('_absoluteScale');
+          const validTarget = tCursor || tDist <= (myMinDim + tMinDim) / 2;
+          const bestTarget = this.hoverTarget == null || ((tCursor || !targetCursor) && (tOverlap > targetOverlap || (tOverlap >= 1 && tDist >= targetDist)));
+          if(validTarget && bestTarget) {
+            targetCursor = tCursor;
+            targetOverlap= tOverlap;
+            targetDist = tDist;
             this.hoverTarget = t;
-            this.hoverTargetCenter = tCenter;
-            this.hoverTargetDistance = d;
           }
         }
       }
-
-      if(this.hoverTargetChanged) {
-        if(this.lastHoverTarget)
-          this.lastHoverTarget.domElement.classList.remove('droptarget');
-        if(this.hoverTarget)
-          this.hoverTarget.domElement.classList.add('droptarget');
-        this.lastHoverTarget = this.hoverTarget;
-      }
+      if(lastHoverTarget)
+        lastHoverTarget.domElement.classList.remove('droptarget');
+      if(this.hoverTarget)
+        this.hoverTarget.domElement.classList.add('droptarget');
     }
   }
 
-  async moveEnd() {
+  async moveEnd(coord, localAnchor) {
     if(tracingEnabled)
-      sendTraceEvent('moveEnd', { id: this.get('id') });
+      sendTraceEvent('moveEnd', { id: this.get('id'), coord, localAnchor });
 
     if(!this.get('fixedParent')) {
       for(const t of this.dropTargets)
@@ -1533,6 +1601,11 @@ export class Widget extends StateManaged {
       await this.checkParent();
 
       if(this.hoverTarget) {
+        let coordNew = this.hoverTarget.coordLocalFromCoordClient({x: coord.clientX, y: coord.clientY});
+        const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), {x: this.get('x'), y: this.get('y')})
+        coordNew = this.hoverTarget.coordGlobalFromCoordLocal({x: Math.round(coordNew.x + offset.x), y: Math.round(coordNew.y + offset.y)});
+        this.setPosition(coordNew.x, coordNew.y, this.get('z'));
+        await this.snapToGrid();
         await this.moveToHolder(this.hoverTarget);
         this.hoverTarget.domElement.classList.remove('droptarget');
       }
@@ -1552,18 +1625,16 @@ export class Widget extends StateManaged {
   }
 
   async onChildAddAlign(child, oldParentID) {
-    let childX = child.get('x');
-    let childY = child.get('y');
+    let coordChild = {x: child.get('x'), y: child.get('y')};
 
     if(!oldParentID) {
-      childX -= this.absoluteCoord('x');
-      childY -= this.absoluteCoord('y');
+      coordChild = this.coordLocalFromCoordGlobal(coordChild);
     }
 
     if(this.get('alignChildren'))
       await child.setPosition(this.get('dropOffsetX'), this.get('dropOffsetY'), child.get('z'));
     else
-      await child.setPosition(childX, childY, child.get('z'));
+      await child.setPosition(Math.round(coordChild.x*1024)/1024, Math.round(coordChild.y*1024)/1024, child.get('z'));
   }
 
   async onChildRemove(child) {

@@ -2,7 +2,7 @@ import { $, $a, onLoad, selectFile, asArray } from './domhelpers.js';
 import { startWebSocket, toServer } from './connection.js';
 
 
-let scale = 1;
+export let scale = 1;
 let roomRectangle;
 let overlayActive = false;
 let muted = false;
