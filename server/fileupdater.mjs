@@ -1,4 +1,4 @@
-export const VERSION = 5;
+export const VERSION = 6;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -53,6 +53,7 @@ function updateRoutine(routine, v) {
 
   v<2 && v2UpdateSelectDefault(routine);
   v<3 && v3RemoveComputeAndRandomAndApplyVariables(routine);
+  v<6 && v6ModifyVarSyntax(routine);
 }
 
 function v2UpdateSelectDefault(routine) {
@@ -284,6 +285,63 @@ function v5DynamicFaceProperties(properties) {
           }
           delete object.valueType;
         }
+      }
+    }
+  }
+}
+
+function v6ModifyVarSyntax(routine) {
+
+  const specialOperation = 'push, unshift, remove, insert';
+
+  const identifier = '(?:[a-zA-Z0-9_-]|\\\\u[0-9a-fA-F]{4})+';
+  const string     = `'(?:(?:[ !#-&(-[\\]-~]|\\\\u[0-9a-fA-F]{4})*)'`;
+  const number     = '(?:-?(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?)';
+  const variable   = `(?:\\$\\{[^}]+\\})`;
+  const parameter  = `(null|true|false|\\[\\]|\\{\\}|${number}|${variable}|${string})`;
+
+  const left       = `var (\\$?${identifier}(?:\\.\\$?${identifier})?)`;
+  const operation  = `${identifier}`;
+
+  const regex      = `^${left} += +(?:${parameter}|(?:${parameter} +)?(🧮)?(${identifier})(?: +${parameter})?(?: +${parameter})?(?: +${parameter})?)( *|(?: +//.*))?`;
+
+  routine[0] = `In updater.`;
+  
+  if(!Array.isArray(routine))
+    return;
+
+  console.log('In procedure\n');
+  for(const [i,a] of Object.entries(routine)) {
+    if (typeof a != 'string')
+      return;
+    console.log(a);
+    const match = a.match(new RegExp(regex + '\x24'));
+    console.log(match);
+    if(match) {
+
+      if(!match[5])
+        continue;
+
+      const normal = specialOperation.indexOf(match[5]) == -1;
+      let first, second, third;
+
+      if (match[3] !== undefined)
+        [first,second,third] = [match[3],match[6],match[7]]
+      else
+        [first,second,third] = [match[6],match[7],match[8]]
+
+      if(normal) {
+        if (third !== undefined)
+          routine[i] = `var ${match[1]} = ${match[5]}(${first}, ${second}, ${third})`
+        else if(second !== undefined)
+          routine[i] = `var ${match[1]} = ${match[5]}(${first}, ${second})`
+        else
+          routine[i] = `var ${match[1]} = ${match[5]}(${first})`
+      } else {
+        if (second !== undefined)
+          routine[i] = `${match[5]}(${match[1]}, ${first}, ${second})`
+        else
+          routine[i] = `${match[5]}(${match[1]}, ${first})`
       }
     }
   }
