@@ -1,21 +1,38 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75 75">
-
-    <polygon id="baseOutline" style="fill:none;stroke:#borderColor;stroke-linecap:round;stroke-linejoin:round;stroke-width:#borderWidth" points="50.81 28.41 50.84 18.88 38.98 1.34 27.05 5.15 5.91 17.44 5.88 26.97 5.84 43.99 5.82 49.32 47.97 73.66 69.12 61.37 69.18 39.02 50.81 28.41" />
-    <polygon id="baseFill" style="fill:#primaryColor" points="50.81 28.41 50.84 18.88 38.98 1.34 27.05 5.15 5.91 17.44 5.88 26.97 5.84 43.99 5.82 49.32 47.97 73.66 69.12 61.37 69.18 39.02 50.81 28.41"/>
-    <g id="shading">
-        <g style="mix-blend-mode:multiply;opacity:0.1"><polygon points="5.59 17.23 26.95 4.82 38.99 0.98 17.64 13.39 5.59 17.23"/></g>
-        <g style="mix-blend-mode:multiply;opacity:0.1"><polygon points="29.61 31.1 50.97 18.69 50.95 28.32 29.59 40.73 29.61 31.1"/></g>
-        <g style="mix-blend-mode:multiply;opacity:0"><polygon points="17.64 13.39 38.99 0.98 50.97 18.69 29.61 31.1 17.64 13.39"/></g>
-        <g style="mix-blend-mode:multiply;opacity:0.1"><polygon points="48.14 51.44 69.5 39.03 69.44 61.61 48.08 74.02 48.14 51.44"/></g>
-        <g style="mix-blend-mode:multiply;opacity:0"><polygon points="29.59 40.73 50.95 28.32 69.5 39.03 48.14 51.44 29.59 40.73"/></g>
-        <g style="mix-blend-mode:multiply;opacity:0.3"><polygon points="17.64 13.39 29.61 31.1 29.59 40.73 48.14 51.44 48.08 74.02 5.5 49.44 5.51 44.05 5.56 26.86 5.59 17.23 17.64 13.39"/></g>
-    </g>
-    <g id="edgeLines">
-        <line style="fill:none;stroke:#fff;stroke-linejoin:round;stroke-width:0.25px" x1="29.69" y1="31.17" x2="50.84" y2="18.88"/>
-        <line style="fill:none;stroke:#fff;stroke-linejoin:round;stroke-width:0.25px" x1="50.81" y1="28.41" x2="29.67" y2="40.7"/>
-        <line style="fill:none;stroke:#fff;stroke-linejoin:round;stroke-width:0.25px" x1="17.84" y1="13.63" x2="38.98" y2="1.34"/>
-        <line style="fill:none;stroke:#fff;stroke-linejoin:round;stroke-width:0.25px" x1="69.18" y1="39.02" x2="48.04" y2="51.3"/>
-        <line style="fill:none;stroke:#fff;stroke-linejoin:round;stroke-width:0.25px" x1="29.67" y1="40.7" x2="50.81" y2="28.41"/>
-        <polyline style="fill:none;stroke:#fff;stroke-linejoin:round;stroke-width:0.25px" points="5.91 17.44 17.84 13.63 29.69 31.17 29.67 40.7 48.03 51.3 47.97 73.66"/>
-    </g>
+<svg version="1.2" baseProfile="tiny-ps" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 69 77" width="69" height="77">
+	<title>Building-3D-svg</title>
+	<style>
+		tspan { white-space:pre }
+		.shp0 { fill: #primaryColor; stroke: #borderColor; stroke-width:#borderWidth; }
+		.shp1 { mix-blend-mode: multiply;fill: #000000 }
+		.shp2 { fill: none;stroke: #ffffff;stroke-linejoin:round;stroke-width: 0.25 }
+	</style>
+	<path id="baseFill" class="shp0" d="M47.81 29.41L66.18 40.02L66.12 62.37L44.97 74.66L2.82 50.32L2.84 44.99L2.88 27.97L2.91 18.44L24.05 6.15L35.98 2.34L47.84 19.88L47.81 29.41L47.81 29.41Z" />
+	<g id="shading">
+		<g id="Layer" style="opacity: 0.102">
+			<path id="Layer" class="shp1" d="M2.59 18.23L23.95 5.82L35.99 1.98L14.64 14.39L2.59 18.23L2.59 18.23Z" />
+		</g>
+		<g id="Layer" style="opacity: 0.102">
+			<path id="Layer" class="shp1" d="M26.61 32.1L47.97 19.69L47.95 29.32L26.59 41.73L26.61 32.1L26.61 32.1Z" />
+		</g>
+		<g id="Layer" style="opacity: 0">
+			<path id="Layer" class="shp1" d="M14.64 14.39L35.99 1.98L47.97 19.69L26.61 32.1L14.64 14.39L14.64 14.39Z" />
+		</g>
+		<g id="Layer" style="opacity: 0.102">
+			<path id="Layer" class="shp1" d="M45.14 52.44L66.5 40.03L66.44 62.61L45.08 75.02L45.14 52.44L45.14 52.44Z" />
+		</g>
+		<g id="Layer" style="opacity: 0">
+			<path id="Layer" class="shp1" d="M26.59 41.73L47.95 29.32L66.5 40.03L45.14 52.44L26.59 41.73L26.59 41.73Z" />
+		</g>
+		<g id="Layer" style="opacity: 0.302">
+			<path id="Layer" class="shp1" d="M14.64 14.39L26.61 32.1L26.59 41.73L45.14 52.44L45.08 75.02L2.5 50.44L2.51 45.05L2.56 27.86L2.59 18.23L14.64 14.39L14.64 14.39Z" />
+		</g>
+	</g>
+	<g id="edgeLines">
+		<path id="Layer" class="shp2" d="M26.69 32.17L47.84 19.88" />
+		<path id="Layer" class="shp2" d="M47.81 29.41L26.67 41.7" />
+		<path id="Layer" class="shp2" d="M14.84 14.63L35.98 2.34" />
+		<path id="Layer" class="shp2" d="M66.18 40.02L45.04 52.3" />
+		<path id="Layer" class="shp2" d="M26.67 41.7L47.81 29.41" />
+		<path id="Layer" class="shp2" d="M2.91 18.44L14.84 14.63L26.69 32.17L26.67 41.7L45.03 52.3L44.97 74.66" />
+	</g>
 </svg>
