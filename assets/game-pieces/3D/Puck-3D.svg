@@ -1,0 +1,15 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 91 65">
+    <defs>
+        <linearGradient id="linear-gradient" x1="3" y1="44.99" x2="88" y2="44.99" gradientUnits="userSpaceOnUse"><stop offset="0.05" stop-opacity="0.5"/>
+            <stop offset="0.06" stop-opacity="0.46"/><stop offset="0.16" stop-opacity="0.2"/><stop offset="0.92" stop-opacity="0.5"/><stop offset="0.92" stop-opacity="0.5"/>
+        </linearGradient>
+    </defs>
+    <path style="fill:#primaryColor;stroke:#borderColor;stroke-linecap:round;stroke-width:#borderWidth;" d="M45.5,3.47C22,3.47,3,14.66,3,28.45v8.09c0,13.8,19,25,42.5,25S88,50.34,88,36.54V28.45C88,14.66,69,3.47,45.5,3.47Z" />
+
+    <ellipse style="fill:#labelColor" cx="45.5" cy="28.46" rx="29.73" ry="17.47" />
+
+    <path d="M88,28.45v8.09c0,13.8-19,25-42.5,25S3,50.34,3,36.54V28.45c0,13.8,19,25,42.5,25S88,42.25,88,28.45Z" style="mix-blend-mode:multiply;fill:url(#linear-gradient)"/>
+    <path d="M3,28.45c0,13.8,19,25,42.5,25S88,42.25,88,28.45" style="fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.25px"/>
+
+
+</svg>
