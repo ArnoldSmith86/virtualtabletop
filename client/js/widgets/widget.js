@@ -470,9 +470,18 @@ export class Widget extends StateManaged {
         continue;
       }
 
-        if(typeof a == 'string') {
+      if(typeof a == 'string') {
+        try {
           const result=peg$parse(a, {evaluateVariables, compute, variables});
           if(jeRoutineLogging) jeLoggingRoutineOperationSummary(a.substr(4), JSON.stringify(result));
+        } catch (e) {
+          if (typeof e.format === "function") {
+            problems.push(e.format([ { text: a } ]).split("\n")[0].replaceAll('"',"'"));
+            console.log(e.format([ { text: a } ]));
+          } else {
+            throw e;
+          }
+        }
       }
 
       if(a.func == 'CALL') {
