@@ -1331,7 +1331,7 @@ export class Widget extends StateManaged {
           }
         };
         if(jeRoutineLogging &&
-           (a.timer != undefined || (isValidCollection(a.collection) && collections[a.collection].length))) {
+           (a.timer != undefined || (collections[a.collection].length))) {
           const phrase = (a.timer == undefined) ? `timers in '${a.collection}'` : `'${a.timer}'`;
           if(a.mode == 'set')
             jeLoggingRoutineOperationSummary(`${phrase} to ${a.value}`);
