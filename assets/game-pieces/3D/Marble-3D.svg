@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100" height="100" viewBox="0 0 100 100">
+  <defs>
+    <radialGradient id="a" cx="43.103" cy="43.868" r="81.255" gradientTransform="matrix(-0.817, -0.577, -0.577, 0.817, 119.683, 37.988)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#231f20" stop-opacity="0"/>
+      <stop offset="0.342" stop-color="black" stop-opacity="0.123"/>
+      <stop offset="0.705" stop-color="black" stop-opacity="0.486"/>
+      <stop offset="0.715" stop-color="black" stop-opacity="0.5"/>
+      <stop offset="0.994" stop-color="black"/>
+    </radialGradient>
+  </defs>
+  <g style="isolation: isolate">
+    <g>
+      <circle cx="49.994" cy="49.996" r="47.941" fill="none" stroke="#borderColor"; stroke-width="#borderWidth"; stroke-miterlimit="10"/>
+      <circle cx="49.994" cy="49.996" r="47.941" fill="#primaryColor"/>
+      <g>
+        <circle cx="50" cy="50" r="47.947" transform="translate(-19.683 37.988) rotate(-35.219)" fill="url(#a)" style="mix-blend-mode: multiply"/>
+        <path d="M50,74.805A47.977,47.977,0,0,0,96.548,38.421a47.964,47.964,0,1,1-93.095,0A47.976,47.976,0,0,0,50,74.805Z" opacity="0.2" style="mix-blend-mode: multiply"/>
+        <path d="M50,96.4a47.956,47.956,0,0,0,47.947-47.33c.008.311.016.622.016.935A47.963,47.963,0,0,1,2.037,50c0-.313.008-.624.015-.935A47.957,47.957,0,0,0,50,96.4Z" fill="#fff" opacity="0.95"/>
+        <ellipse cx="76.013" cy="26.842" rx="7.057" ry="12.075" transform="translate(3.284 61.611) rotate(-45)" fill="#fff" style="mix-blend-mode: luminosity"/>
+        <circle cx="56.83" cy="15.039" r="5.219" fill="#fff" style="mix-blend-mode: luminosity"/>
+        <path d="M21.714,79.641c1.861,1.687,2.8,3.678,2.106,4.449s-2.772.027-4.633-1.659-2.8-3.678-2.107-4.449S19.852,77.955,21.714,79.641Z" fill="#fff" style="mix-blend-mode: luminosity"/>
+        <ellipse cx="14.271" cy="75.764" rx="1.331" ry="1.882" transform="translate(-51.457 35.469) rotate(-47.822)" fill="#fff" style="mix-blend-mode: luminosity"/>
+      </g>
+    </g>
+  </g>
+</svg>

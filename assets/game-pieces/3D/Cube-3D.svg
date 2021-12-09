@@ -1,0 +1,23 @@
+<svg version="1.2" baseProfile="tiny-ps" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79 88" width="79" height="88">
+	<title>1517055033_977-svg</title>
+	<style>
+		tspan { white-space:pre }
+		.shp0 { fill:#primaryColor; stroke:#borderColor; stroke-width:#borderWidth; stroke-linecap:round; stroke-linejoin:round } 
+		.shp1 { opacity: 0.502;mix-blend-mode: multiply;fill: #000000 } 
+		.shp2 { opacity: 0.2;mix-blend-mode: multiply;fill: #000000 } 
+		.shp3 { opacity: 0;mix-blend-mode: multiply;fill: #000000 } 
+		.shp4 { fill: none;stroke: #ffffff;stroke-linecap:round;stroke-linejoin:round;stroke-width: 0.25 } 
+	</style>
+	<g id="Layer">
+		<g id="Layer_2">
+			<g id="Layer_1-2">
+				<path id="Layer" class="shp0" d="M76.05 22.8L76.17 65.2L39.28 86.5L2.62 65.2L2.5 22.8L39.4 1.5L76.05 22.8L76.05 22.8Z" />
+				<path id="Layer" class="shp1" d="M2.5 22.8L39.16 44.1L39.28 86.5L2.62 65.2L2.5 22.8L2.5 22.8Z" />
+				<path id="Layer" class="shp2" d="M39.16 44.1L76.05 22.8L76.17 65.2L39.28 86.5L39.16 44.1L39.16 44.1Z" />
+				<path id="Layer" class="shp3" d="M2.5 22.8L39.4 1.5L76.05 22.8L39.16 44.1L2.5 22.8L2.5 22.8Z" />
+				<path id="Layer" class="shp4" d="M75.55 23.1L39.16 44.1L3.31 23.27" />
+				<path id="Layer" class="shp4" d="M39.16 85.85L39.16 44.1" />
+			</g>
+		</g>
+	</g>
+</svg>

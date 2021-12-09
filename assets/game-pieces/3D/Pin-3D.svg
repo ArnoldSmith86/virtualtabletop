@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="64" height="78" viewBox="0 0 64 78">
+  <defs>
+    <linearGradient id="a" x1="42.253" y1="96.632" x2="98.239" y2="152.619" gradientTransform="translate(29.709 -48.372) rotate(15)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-opacity="0.5"/>
+      <stop offset="0.114" stop-color="#464646" stop-opacity="0.363"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="b" x1="52.247" y1="71.073" x2="36.641" y2="80.398" gradientTransform="translate(6.297 -17.216)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="0.081" stop-color="#fff" stop-opacity="0.169"/>
+      <stop offset="0.164" stop-color="#fff" stop-opacity="0.312"/>
+      <stop offset="0.241" stop-color="#fff" stop-opacity="0.415"/>
+      <stop offset="0.311" stop-color="#fff" stop-opacity="0.478"/>
+      <stop offset="0.364" stop-color="#fff" stop-opacity="0.5"/>
+      <stop offset="0.468" stop-color="#fff" stop-opacity="0.382"/>
+      <stop offset="0.633" stop-color="#fff" stop-opacity="0.218"/>
+      <stop offset="0.783" stop-color="#fff" stop-opacity="0.099"/>
+      <stop offset="0.91" stop-color="#fff" stop-opacity="0.026"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="c" cx="35.988" cy="25.73" fy="11.820913883551391" r="37.13" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset="0.033" stop-color="#fff" stop-opacity="0.939"/>
+      <stop offset="0.204" stop-color="#fff" stop-opacity="0.646"/>
+      <stop offset="0.357" stop-color="#fff" stop-opacity="0.413"/>
+      <stop offset="0.486" stop-color="#fff" stop-opacity="0.245"/>
+      <stop offset="0.586" stop-color="#fff" stop-opacity="0.142"/>
+      <stop offset="0.646" stop-color="#fff" stop-opacity="0.103"/>
+      <stop offset="0.663" stop-color="#fff" stop-opacity="0.085"/>
+      <stop offset="0.742" stop-color="#fff" stop-opacity="0.022"/>
+      <stop offset="0.802" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="1" stop-opacity="0.5"/>
+    </radialGradient>
+  </defs>
+  <g>
+    <path d="M27.341,53.609,42.667,72.155c1.234,2.136,6.44,6.091,13.418,2.062S62.242,63.7,61.008,61.566L52.61,39.02Z" fill="primaryColor"/>
+    <path d="M27.341,53.609,42.667,72.155c1.234,2.136,6.44,6.091,13.418,2.062S62.242,63.7,61.008,61.566L52.61,39.02Z" fill="url(#a)"/>
+    <path d="M27.341,53.609,42.667,72.155c1.234,2.136,6.44,6.091,13.418,2.062S62.242,63.7,61.008,61.566L52.61,39.02Z" fill="url(#b)"/>
+  </g>
+  <circle cx="32" cy="32.5" r="29.876" fill="#primaryColor"/>
+  <circle cx="32" cy="32.5" r="29.876" fill="url(#c)"/>
+  <g>
+    <path d="M34.494,62.265l8.173,9.89c1.234,2.136,6.44,6.091,13.418,2.062S62.242,63.7,61.008,61.566l-4.477-12.02" fill="none" stroke="#borderColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="#borderWidth"/>
+    <circle cx="32" cy="32.5" r="29.876" fill="none" stroke="#borderColor" stroke-miterlimit="10" stroke-width="#borderWidth"/>
+  </g>
+</svg>
