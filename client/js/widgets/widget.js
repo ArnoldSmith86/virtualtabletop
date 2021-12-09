@@ -331,7 +331,7 @@ export class Widget extends StateManaged {
     const s = this.get('_absoluteScale') * scale;
     const rot = this.get('_absoluteRotation') % 360;
     const localCenter = {x: this.get('width') / 2, y: this.get('height') / 2};
-    const offset = getOffset(center(this.domElement), coord);
+    const offset = getOffset(center(this.domBox), coord);
     return applyTransformedOffset(localCenter, offset, 1 / s, -rot );    
   }
   coordLocalFromCoordGlobal(coord) {
