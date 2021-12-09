@@ -292,7 +292,7 @@ function v5DynamicFaceProperties(properties) {
 
 function v6ModifyVarSyntax(routine) {
 
-  const specialOperation = 'push, unshift, remove, insert';
+  const specialOperation = 'push, unshift, remove, insert, setIndex';
   const infixOperation = 'concat, in, includes';
 
   const identifier = '(?:[a-zA-Z0-9_-]|\\\\u[0-9a-fA-F]{4})+';
