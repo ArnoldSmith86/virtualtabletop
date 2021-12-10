@@ -472,14 +472,16 @@ export class Widget extends StateManaged {
 
       if(typeof a == 'string') {
         try {
-          const result=peg$parse(a, {evaluateVariables, compute, variables});
+          const result=parse_expression(a, {evaluateVariables, compute, variables});
           if(jeRoutineLogging) jeLoggingRoutineOperationSummary(a.substr(4), JSON.stringify(result));
         } catch (e) {
           if (typeof e.format === "function") {
             problems.push(e.format([ { text: a } ]).split("\n")[0].replaceAll('"',"'"));
-            console.log(e.format([ { text: a } ]));
           } else {
-            throw e;
+            if (e.message)
+              problems.push(`Internal error: ${e.message}`)
+            else
+              problems.push('Internal error.')
           }
         }
       }

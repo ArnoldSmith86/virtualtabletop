@@ -5,11 +5,15 @@
 "use strict";
 
 
+    const debug = false;
+    
     const toNum = (s, defaultValue)=>
              s!=null ? (typeof s == 'string' && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s)
                : defaultValue;
 
-    function computeValue(computeFunction, head, tail) { console.log("computeValue: ", head, ", ",tail);
+    function computeValue(computeFunction, head, tail) {
+      if (debug)
+        console.log("computeValue: ", head, ", ",tail);
       const defaultValue = tail.length==0 ? null: 1
       return tail.reduce(
         function(result, element) {
@@ -22,7 +26,8 @@
     const noNull = s=>(s != null) ? toNum(s) : 1;
     
     function computeSpecial( computeFunction, op, p1, p2, p3 ) {
-      console.log("computeSpecial: op: ", op, ", p1: ", p1, ", p2: ", p2, ", p3: ",p3 );
+      if (debug)
+        console.log("computeSpecial: op: ", op, ", p1: ", p1, ", p2: ", p2, ", p3: ",p3 );
       let x;
       return computeFunction( op, x, toNum(p1,1), toNum(p2,1),toNum(p3,1) )
     }
@@ -458,33 +463,46 @@ function peg$parse(input, options) {
   var peg$e138 = peg$literalExpectation("=", false);
   var peg$e139 = peg$literalExpectation(",", false);
 
-  var peg$f0 = function(lhs, val) { console.log("General Expression: ", "lhs: ", lhs, "val: ", val);
+  var peg$f0 = function(lhs, val) {
+          if (debug)
+            console.log("General Expression: ", "lhs: ", lhs, "val: ", val);
           const tgt = lhs[0];
           const idx = lhs[1];
-          if (idx != null)  {
-            if (!options.variables[tgt]) {console.log('!tgt');
-               error(`Variable ${tgt} not defined.`);}
+          if (idx)  {
+            if (!options.variables[tgt]) 
+               error(`Variable ${tgt} not defined.`);
             options.variables[tgt][idx]=val; 
           } else
             options.variables[tgt]=val;
           
           return val!==undefined ? val : null
         };
-  var peg$f1 = function() { console.log("comment"); return null };
-  var peg$f2 = function(op, id, p1, p2) { console.log("Special Function: ");
+  var peg$f1 = function() {
+          if (debug)
+            console.log("comment");
+          return "Comment"
+        };
+  var peg$f2 = function(op, id, p1, p2) {
+          if (debug)
+            console.log("Special Function: ");
           const tgt = id[0];
           const idx = id[1];
           const second = p2 ? p2[1]: null;
-          if (idx)
+          if (idx) {
+            if (!options.variables[tgt]) 
+               error(`Variable ${tgt} not defined.`);
+
             options.variables[tgt][idx] =
               options.compute(op, options.variables[tgt][idx], toNum(p1), toNum(second) );
-          else
+          } else
             options.variables[tgt] =
               options.compute(op, options.variables[tgt], toNum(p1), toNum(second) );
 
           return idx? options.variables[tgt][idx] : options.variables[tgt]
         };
-  var peg$f3 = function(tgt, idx) { console.log(`tgt: ${tgt}, idx: ${idx}`);
+  var peg$f3 = function(tgt, idx) {
+          if (debug)
+            console.log(`tgt: ${tgt}, idx: ${idx}`);
           if (idx)
             return [tgt, idx[1]]
           else
@@ -499,25 +517,36 @@ function peg$parse(input, options) {
             return result !== undefined ? result : 1;
           };
   var peg$f6 = function(head, tail) {
-        console.log("Expression");
+        if (debug)
+          console.log("Expression");
         return compute( head, tail );
       };
   var peg$f7 = function(head, tail) {
         return compute( head, tail );
       };
-  var peg$f8 = function(head, tail) { console.log("Prio 10 ",tail);
+  var peg$f8 = function(head, tail) {
+        if (debug)
+          console.log("Prio 10 ",tail);
         return compute( head, tail );
       };
-  var peg$f9 = function(head, tail) { console.log("Prio 12 ", head, tail);
+  var peg$f9 = function(head, tail) {
+        if (debug)
+          console.log("Prio 12 ", head, tail);
         return compute( head, tail );
       };
-  var peg$f10 = function(op, tail) { console.log("Prio 15: ", tail);
+  var peg$f10 = function(op, tail) {
+        if (debug)
+          console.log("Prio 15: ", tail);
         if(op)
           return toNum(tail, null) * (op=="-" ? -1: 1)
         else
           return toNum(tail, null)
       };
-  var peg$f11 = function(noparams) { console.log(noparams); let x; return options.compute(noparams, x) };
+  var peg$f11 = function(noparams) {
+            if (debug)
+              console.log(noparams);
+            let x; return options.compute(noparams, x)
+          };
   var peg$f12 = function() {return null};
   var peg$f13 = function() {return true};
   var peg$f14 = function() {return false };
@@ -527,22 +556,30 @@ function peg$parse(input, options) {
           let x;
           return options.compute( op, x, toNum(p1), toNum(p2 ? p2[1]:null), toNum(p3 ? p3[1]:null) )
         };
-  var peg$f18 = function() { console.log("Identifier: ",text());
+  var peg$f18 = function() {
+        if (debug)
+          console.log("Identifier: ",text());
         return text()
       };
   var peg$f19 = function(u) { return u.join("").replace(/\\u([0-9a-fA-F]{4})/g, function(m, c) {
           return String.fromCharCode(parseInt(c, 16));
         });
       };
-  var peg$f20 = function(val) { console.log("String ", val.join(""));
+  var peg$f20 = function(val) {
+          if (debug)
+            console.log("String ", val.join(""));
           return val.join("")
         };
   var peg$f21 = function() { return toNum(text()) };
-  var peg$f22 = function() { console.log("Float: ", text());return toNum( text() ) };
+  var peg$f22 = function() {
+        if (debug)
+          console.log("Float: ", text());
+        return toNum( text() )
+      };
   var peg$f23 = function(xlate) {
-                const result = options.evaluateVariables(xlate);
-                return result !== undefined ? result : null;
-                };
+        const result = options.evaluateVariables(xlate);
+        return result !== undefined ? result : null;
+      };
 
   var peg$currPos = 0;
   var peg$savedPos = 0;
@@ -3326,7 +3363,8 @@ function peg$parse(input, options) {
       const comment = input.indexOf('//');
       if (comment != -1) 
         input = input.slice(0, comment)
-      console.log("**",input,"**");
+      if (debug)
+        console.log("**",input,"**");
 
 
   peg$result = peg$startRuleFunction();
@@ -3347,3 +3385,5 @@ function peg$parse(input, options) {
     );
   }
 }
+
+const parse_expression = peg$parse;

@@ -1,0 +1,7 @@
+#! /bin/zsh
+peggy $1 exprparse.peggy
+sed '/module.exports =/,/};/d' <exprparse.js >temp.js
+echo "const parse_expression = peg\$parse;" >>temp.js
+mv temp.js exprparse.js
+
+
