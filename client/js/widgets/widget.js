@@ -402,6 +402,17 @@ export class Widget extends StateManaged {
         } else {
           result[field.variable] = 'off';
         }
+      } else if(field.type == 'number'){
+        const inputmin = field.min !== undefined ? field.min : 1;
+        const inputmax = field.max !== undefined ? field.max : 10;
+        var thisvalue = document.getElementById(this.get('id') + ';' + field.variable).value;
+        if(thisvalue < inputmin){
+          thisvalue = inputmin;
+        }
+        if(thisvalue > inputmax){
+          thisvalue = inputmax;
+        }
+        result[field.variable] = thisvalue
       } else if(field.type != 'text' && field.type != 'subtitle' && field.type != 'title') {
         result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).value;
       }
@@ -1728,7 +1739,11 @@ export class Widget extends StateManaged {
 
       $('#buttonInputOverlay .modal').style = o.css || "";
       $('#buttonInputOverlay .modal').style.transform = "rotate("+rotation+"deg)";
-      $('#buttonInputFields').innerHTML = '';
+      if(o.header){
+        $('#buttonInputFields').innerHTML = '<div class="inputtitle" style="background-color: var(--VTTblue); color: white;"><label>A header text for the overlay.</label></div>';
+      } else {
+        $('#buttonInputFields').innerHTML = '';
+      }
       if(!o.confirmButtonText && !o.confirmButtonIcon){
         confirmButtonText = "Go";
       }

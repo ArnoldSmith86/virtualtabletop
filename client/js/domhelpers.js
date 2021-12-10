@@ -76,6 +76,13 @@ export function formField(field, dom, id) {
     input.value = field.value !== undefined ? field.value : 1;
     input.min = field.min !== undefined ? field.min : 1;
     input.max = field.max !== undefined ? field.max : 10;
+    if(input.min && input.max){
+      label.textContent += " ("+ input.min +" - "+ input.max +")";
+    }
+
+    
+
+
     dom.appendChild(input);
     input.id = id;
   }
