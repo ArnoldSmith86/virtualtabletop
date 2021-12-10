@@ -5,6 +5,8 @@
 "use strict";
 
 
+
+    /* Set to true to get parse information on console */
     const debug = false;
     
     const toNum = (s, defaultValue)=>
