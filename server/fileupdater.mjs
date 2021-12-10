@@ -341,6 +341,8 @@ function v6ModifyVarSyntax(routine) {
         else
           routine[i] = `${match[5]}(${match[1]}, ${first})`
       }
+      if (match[9] !== undefined) // Add comment back in
+        routine[i] += match[9];
     }
   }
 }
