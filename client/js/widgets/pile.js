@@ -12,37 +12,63 @@ class Pile extends Widget {
       height: 1,
       alignChildren: true,
       inheritChildZ: true,
-      clickable: true
+      clickable: true,
+
+      text: null,
+
+      handleCSS: '',
+      handleSize: 'auto',
+      handleOffset: 15,
+      handlePosition: 'top right'
     });
 
     this.domElement.appendChild(this.handle);
-    this.handle.textContent = 0;
+    this.childCount = 0;
+    this.updateText();
   }
 
   applyChildAdd(child) {
     super.applyChildAdd(child);
-    ++this.handle.textContent;
+    ++this.childCount;
+    this.updateText();
   }
 
   applyChildRemove(child) {
     super.applyChildRemove(child);
-    --this.handle.textContent;
+    --this.childCount;
+    this.updateText();
   }
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
-    if(this.handle && (delta.width !== undefined || delta.height !== undefined)) {
-      if(this.get('width') < 50 || this.get('height') < 50)
+    if(this.handle && delta.handleCSS !== undefined)
+      this.handle.style = this.get('handleCSS');
+    if(this.handle && delta.text !== undefined)
+      this.updateText();
+    if(this.handle && (delta.width !== undefined || delta.height !== undefined || delta.handleSize !== undefined)) {
+      if(this.get('handleSize') == 'auto' && (this.get('width') < 50 || this.get('height') < 50))
         this.handle.classList.add('small');
       else
         this.handle.classList.remove('small');
     }
-    for(const e of [ [ 'x', 'right', 1600-this.get('width')-20 ], [ 'y', 'bottom', 20 ] ]) {
-      if(this.handle && (delta[e[0]] !== undefined || delta.parent !== undefined)) {
-        if(this.absoluteCoord(e[0]) < e[2])
-          this.handle.classList.add(e[1]);
-        else
+
+    const threshold = this.get('handleOffset')+5;
+    for(const e of [ [ 'x', 'right', 1600-this.get('width'), 'center' ], [ 'y', 'bottom', 1000-this.get('height'), 'middle' ] ]) {
+      if(this.handle && (delta[e[0]] !== undefined || delta.parent !== undefined || delta.handlePosition !== undefined || delta.handleOffset !== undefined)) {
+        if(this.get('handlePosition') == 'static') {
           this.handle.classList.remove(e[1]);
+          this.handle.classList.remove(e[3]);
+        } else if(this.get('handlePosition').match(e[3])) {
+          this.handle.classList.remove(e[1]);
+          this.handle.classList.add(e[3]);
+        } else {
+          this.handle.classList.remove(e[3]);
+          const isRightOrBottom = this.get('handlePosition').match(e[1]);
+          if(isRightOrBottom && this.absoluteCoord(e[0]) < e[2]-threshold || !isRightOrBottom && this.absoluteCoord(e[0]) < threshold)
+            this.handle.classList.add(e[1]);
+          else
+            this.handle.classList.remove(e[1]);
+        }
       }
     }
   }
@@ -111,6 +137,30 @@ class Pile extends Widget {
     }
   }
 
+  css() {
+    let css = super.css();
+
+    if(this.get('handleSize') == 'auto')
+      css += '; --phSize:40px';
+    else
+      css += '; --phSize:' + this.get('handleSize') + 'px';
+    css += '; --phPosition:-' + this.get('handleOffset') + 'px';
+
+    return css;
+  }
+
+  cssProperties() {
+    const p = super.cssProperties();
+    p.push('handleSize', 'handleOffset');
+    return p;
+  }
+
+  getDefaultValue(property) {
+    if(property == 'onPileCreation' && this.children().length)
+      return this.children()[0].get('onPileCreation');
+    return super.getDefaultValue(property);
+  }
+
   async onChildRemove(child) {
     await super.onChildRemove(child);
     if(this.children().length == 1) {
@@ -145,7 +195,12 @@ class Pile extends Widget {
     return false;
   }
 
+  updateText() {
+    const text = this.get('text');
+    this.handle.textContent = text === null ? this.childCount : text;
+  }
+
   validDropTargets() {
-    return getValidDropTargets(this.children()[0]);
+    return this.children().length ? getValidDropTargets(this.children()[0]) : [];
   }
 }
