@@ -381,7 +381,7 @@ export class Widget extends StateManaged {
           return '';
       case 'string':
         br = br.trim().replace(/\s+/g, ' ');
-        const value = '\\+?(?:\\d+(?:\\.\\d+)?|\\.\\d+)(?:px|%)';
+        const value = '(?:0|\\+?(?:\\d+(?:\\.\\d+)?|\\.\\d+)(?:px|%))';
         const valueList = `(?:${value}(?: ${value}){0,3})`;
         const re = new RegExp(`^${valueList}(?: ?\\/ ?${valueList})?` + '\x24');
         if(br.match(re))
