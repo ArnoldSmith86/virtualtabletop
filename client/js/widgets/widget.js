@@ -1740,7 +1740,7 @@ export class Widget extends StateManaged {
       $('#buttonInputOverlay .modal').style = o.css || "";
       $('#buttonInputOverlay .modal').style.transform = "rotate("+rotation+"deg)";
       if(o.header){
-        $('#buttonInputFields').innerHTML = '<div class="inputtitle" style="background-color: var(--VTTblue); color: white;"><label>A header text for the overlay.</label></div>';
+        $('#buttonInputFields').innerHTML = '<div class="inputtitle" style="background-color: var(--VTTblue); color: white;"><label>'+o.header+'</label></div>';
       } else {
         $('#buttonInputFields').innerHTML = '';
       }

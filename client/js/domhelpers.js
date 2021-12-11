@@ -73,16 +73,24 @@ export function formField(field, dom, id) {
   if(field.type == 'number') {
     const input = document.createElement('input');
     input.type = 'number';
-    input.value = field.value !== undefined ? field.value : 1;
-    input.min = field.min !== undefined ? field.min : 1;
-    input.max = field.max !== undefined ? field.max : 10;
-    if(input.min && input.max){
-      label.textContent += " ("+ input.min +" - "+ input.max +")";
+    if(field.value > field.max){
+      field.value = field.max;
     }
-
-    
-
-
+    if(field.value < field.min){
+      field.value = field.min;
+    }
+    input.value = field.value !== undefined ? field.value : 0;
+    if(field.min && field.max){
+      label.textContent += " ("+ input.min +" - "+ input.max +")";
+      input.min = field.min !== undefined ? field.min : false;
+      input.max = field.max !== undefined ? field.max : false;
+    }else if(field.min && !field.max){
+      label.textContent += " (at least "+ field.min+")";
+      input.min = field.min !== undefined ? field.min : false;
+    }else if(!field.min && field.max){
+      label.textContent += " (up to "+ field.max+")";
+      input.max = field.max !== undefined ? field.max : false;
+    }
     dom.appendChild(input);
     input.id = id;
   }
