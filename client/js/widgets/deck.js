@@ -8,7 +8,8 @@ class Deck extends Widget {
       typeClasses: 'widget deck',
       cardDefaults: {},
       cardTypes: {},
-      faceTemplates: []
+      faceTemplates: [],
+      borderRadius: '100%'
     });
 
     this.cards = {};
