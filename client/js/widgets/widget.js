@@ -403,20 +403,17 @@ export class Widget extends StateManaged {
           result[field.variable] = 'off';
         }
       } else if(field.type == 'number'){
-        const inputmin = field.min !== undefined ? field.min : 1;
-        const inputmax = field.max !== undefined ? field.max : 10;
         var thisvalue = document.getElementById(this.get('id') + ';' + field.variable).value;
-        if(thisvalue < inputmin){
-          thisvalue = inputmin;
+        if( thisvalue > field.max){
+          thisvalue = field.max;
         }
-        if(thisvalue > inputmax){
-          thisvalue = inputmax;
+        if( thisvalue < field.min){
+          thisvalue = field.min;
         }
         result[field.variable] = thisvalue
       } else if(field.type != 'text' && field.type != 'subtitle' && field.type != 'title') {
         result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).value;
       }
-
     }
 
     showOverlay(null);
