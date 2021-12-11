@@ -81,7 +81,7 @@ export function formField(field, dom, id) {
     }
     input.value = field.value !== undefined ? field.value : 0;
     if(field.min && field.max){
-      label.textContent += " ("+ input.min +" - "+ input.max +")";
+      label.textContent += " ("+ field.min +" - "+ field.max +")";
       input.min = field.min !== undefined ? field.min : false;
       input.max = field.max !== undefined ? field.max : false;
     }else if(field.min && !field.max){
