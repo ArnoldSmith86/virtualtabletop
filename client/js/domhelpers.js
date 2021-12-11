@@ -35,7 +35,7 @@ export function formField(field, dom, id) {
   const label = document.createElement('label');
   dom.appendChild(label);
   label.htmlFor = id;
-  label.textContent = field.label || '';
+  label.innerHTML = field.label || '';
 
   if(field.type == 'checkbox') {
     const input = document.createElement('input');
@@ -81,14 +81,14 @@ export function formField(field, dom, id) {
     }
     input.value = field.value !== undefined ? field.value : 0;
     if(field.min && field.max){
-      label.textContent += " ("+ field.min +" - "+ field.max +")";
+      label.innerHTML += " <span class='numberInputRange'>("+ field.min +" - "+ field.max +")</span>";
       input.min = field.min !== undefined ? field.min : false;
       input.max = field.max !== undefined ? field.max : false;
     }else if(field.min && !field.max){
-      label.textContent += " (at least "+ field.min+")";
+      label.innerHTML += " <span class='numberInputRange'>(at least "+ field.min+")</span>";
       input.min = field.min !== undefined ? field.min : false;
     }else if(!field.min && field.max){
-      label.textContent += " (up to "+ field.max+")";
+      label.innerHTML += " <span class='numberInputRange'>(up to "+ field.max+")</span>";
       input.max = field.max !== undefined ? field.max : false;
     }
     dom.appendChild(input);
