@@ -147,7 +147,7 @@ export class Widget extends StateManaged {
     this.applyCSS(delta);
     if(delta.audio !== null)
       this.addAudio(this);
-    
+
     if(delta.z !== undefined)
       this.applyZ(true);
 
@@ -401,10 +401,16 @@ export class Widget extends StateManaged {
   evaluateInputOverlay(o, resolve, reject, go) {
     const result = {};
     for(const field of o.fields) {
-
       if(field.type == 'checkbox') {
         result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).checked;
-      } else if(field.type != 'text') {
+      } else if(field.type == 'switch'){
+        var thisresult = document.getElementById(this.get('id') + ';' + field.variable).checked;
+        if(thisresult){
+          result[field.variable] = 'on';
+        } else {
+          result[field.variable] = 'off';
+        }
+      } else if(field.type != 'text' && field.type != 'subtitle' && field.type != 'title') {
         result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).value;
       }
 
@@ -1472,12 +1478,12 @@ export class Widget extends StateManaged {
   }
 
   async addAudio(widget){
-	  if(widget.get('audio')) {
-	    const audioString = widget.get('audio');
-	    const audioArray = audioString.split(/:\s|,\s/);
-	    const source = audioArray[1];
-	    const type = audioArray[3];
-	    const maxVolume = audioArray[5];
+    if(widget.get('audio')) {
+      const audioString = widget.get('audio');
+      const audioArray = audioString.split(/:\s|,\s/);
+      const source = audioArray[1];
+      const type = audioArray[3];
+      const maxVolume = audioArray[5];
       const length = audioArray[7];
       const pName = audioArray[9];
 
@@ -1582,7 +1588,7 @@ export class Widget extends StateManaged {
           const tDist = distance(center(t.domBox), myCenter) / scale;
           const tMinDim = Math.min(t.get('width'),t.get('height')) * t.get('_absoluteScale');
           const validTarget = tCursor || tDist <= (myMinDim + tMinDim) / 2;
-          const bestTarget = this.hoverTarget == null || ((tCursor || !targetCursor) && (tOverlap > targetOverlap || (tOverlap >= 1 && tDist >= targetDist)));
+          const bestTarget = tDist <= targetDist;
           if(validTarget && bestTarget) {
             targetCursor = tCursor;
             targetOverlap= tOverlap;
@@ -1724,12 +1730,30 @@ export class Widget extends StateManaged {
 
   async showInputOverlay(o, widgets, variables, problems) {
     return new Promise((resolve, reject) => {
+      const maxRandomRotate = o.randomRotation || 0;
+      const rotation = Math.floor(Math.random() * maxRandomRotate) - (maxRandomRotate / 2);
+      var confirmButtonText, cancelButtonText = "";
 
-      $('#buttonInputOverlay h1').textContent = o.header || "Button Input";
+      $('#buttonInputOverlay .modal').style = o.css || "";
+      $('#buttonInputOverlay .modal').style.transform = "rotate("+rotation+"deg)";
       $('#buttonInputFields').innerHTML = '';
+      if(!o.confirmButtonText && !o.confirmButtonIcon){
+        confirmButtonText = "Go";
+      }
+      if(!o.cancelButtonText && !o.cancelButtonIcon){
+        cancelButtonText = "Cancel";
+      }
+
+      $('#buttonInputGo label').textContent = o.confirmButtonText || confirmButtonText;
+      $('#buttonInputCancel label').textContent = o.cancelButtonText || cancelButtonText;
+
+      $('#buttonInputGo span').textContent = o.confirmButtonIcon || "";
+      $('#buttonInputCancel span').textContent = o.cancelButtonIcon || "";
 
       for(const field of o.fields) {
         const dom = document.createElement('div');
+        dom.style = field.css || "";
+        dom.className = "input"+field.type;
         formField(field, dom, this.get('id') + ';' + field.variable);
         $('#buttonInputFields').appendChild(dom);
       }
