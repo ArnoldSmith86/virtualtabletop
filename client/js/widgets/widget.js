@@ -983,7 +983,6 @@ export class Widget extends StateManaged {
             jeLoggingRoutineOperationSummary(`${varList.join(', ')}`,`${valueList.join(', ')}`);
           }
         } catch(e) {
-          problems.push(`Exception: ${e.toString()}`);
           abortRoutine = true;
           if(jeRoutineLogging)
             jeLoggingRoutineOperationSummary("INPUT cancelled");
