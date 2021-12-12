@@ -306,13 +306,13 @@ test('Dynamic expressions', async t => {
     .pressKey('ctrl+j')
 });
 
-publicLibraryButtons('Blue',               0, '0f29b132f3c1d368eec70b3457b92fe4', [
+publicLibraryButtons('Blue',               0, '096bdf3bd07bb277c2c1f4cc132f0695', [
   'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton',
   'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton',
   'reset_button', 'buttonInputGo', 'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', '9n2q'
 ]);
 publicLibraryButtons('FreeCell',           0, 'b3339b3c5d42f47f4def7a164be69823', [ 'reset', 'jemz', 'reset' ]);
-publicLibraryButtons('Reward',             0, '062db4c38e9d9fbde1d783a3fead24c5', [
+publicLibraryButtons('Reward',             0, '7a0e6d7fda1143f21d64552c18f92a75', [
   'gmex', 'kprc', 'oksq', 'j1wz', 'vfhn', '0i6i', 'Orange Recall', 'buttonInputGo', 'b09z'
 ]);
 publicLibraryButtons('Rummy Tiles',        0, 'c93ac5accd3f22264839675bd8b5321d', [ 'startMix', 'draw14' ]);
