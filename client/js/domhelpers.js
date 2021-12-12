@@ -72,6 +72,7 @@ export function formField(field, dom, id) {
 
   if(field.type == 'number') {
     const input = document.createElement('input');
+    const spanafter = document.createElement('span');
     input.type = 'number';
     if(field.value > field.max){
       field.value = field.max;
@@ -90,8 +91,11 @@ export function formField(field, dom, id) {
     }else if(!field.min && field.max){
       label.innerHTML += " <span class='numberInputRange'>(up to "+ field.max+")</span>";
       input.max = field.max !== undefined ? field.max : false;
+    } else {
+
     }
     dom.appendChild(input);
+    dom.appendChild(spanafter);
     input.id = id;
   }
 

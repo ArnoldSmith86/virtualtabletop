@@ -392,27 +392,29 @@ export class Widget extends StateManaged {
 
   evaluateInputOverlay(o, resolve, reject, go) {
     const result = {};
-    for(const field of o.fields) {
-      if(field.type == 'checkbox') {
-        result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).checked;
-      } else if(field.type == 'switch'){
-        var thisresult = document.getElementById(this.get('id') + ';' + field.variable).checked;
-        if(thisresult){
-          result[field.variable] = 'on';
-        } else {
-          result[field.variable] = 'off';
+    if(go){
+      for(const field of o.fields) {
+        if(field.type == 'checkbox') {
+          result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).checked;
+        } else if(field.type == 'switch'){
+          var thisresult = document.getElementById(this.get('id') + ';' + field.variable).checked;
+          if(thisresult){
+            result[field.variable] = 'on';
+          } else {
+            result[field.variable] = 'off';
+          }
+        } else if(field.type == 'number'){
+          var thisvalue = document.getElementById(this.get('id') + ';' + field.variable).value;
+          if( thisvalue > field.max){
+            thisvalue = field.max;
+          }
+          if( thisvalue < field.min){
+            thisvalue = field.min;
+          }
+          result[field.variable] = thisvalue
+        } else if(field.type != 'text' && field.type != 'subtitle' && field.type != 'title') {
+          result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).value;
         }
-      } else if(field.type == 'number'){
-        var thisvalue = document.getElementById(this.get('id') + ';' + field.variable).value;
-        if( thisvalue > field.max){
-          thisvalue = field.max;
-        }
-        if( thisvalue < field.min){
-          thisvalue = field.min;
-        }
-        result[field.variable] = thisvalue
-      } else if(field.type != 'text' && field.type != 'subtitle' && field.type != 'title') {
-        result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).value;
       }
     }
 
@@ -1733,7 +1735,6 @@ export class Widget extends StateManaged {
       const maxRandomRotate = o.randomRotation || 0;
       const rotation = Math.floor(Math.random() * maxRandomRotate) - (maxRandomRotate / 2);
       var confirmButtonText, cancelButtonText = "";
-
       $('#buttonInputOverlay .modal').style = o.css || "";
       $('#buttonInputOverlay .modal').style.transform = "rotate("+rotation+"deg)";
       if(o.header){

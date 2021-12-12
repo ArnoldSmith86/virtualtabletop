@@ -1070,3 +1070,16 @@ input.switchbox[type="checkbox"]:checked + .switchbox::before {
 input.switchbox[type="checkbox"]:checked + .switchbox{
   background-color: var(--VTTblue);
 }
+input:invalid{
+  color: red;
+}
+input:invalid+span:after {
+  font-family: 'Material Icons';
+  content: 'error';
+  position: absolute;
+  right: 5px;
+  top: 0px;
+  font-size: 1.5rem;
+  color: red;
+  letter-spacing: -1px;
+}
