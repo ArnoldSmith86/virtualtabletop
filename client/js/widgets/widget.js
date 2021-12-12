@@ -128,9 +128,16 @@ export class Widget extends StateManaged {
       }
     }
 
-    for(const property of this.cssProperties()) {
+    for(const property of this.cssInnerProperties()) {
       if(delta[property] !== undefined) {
-        this.domInner.style.cssText = this.css();
+        this.domInner.style.cssText = this.cssInner();
+        break;
+      }
+    }
+
+    for(const property of this.cssBoxProperties()) {
+      if(delta[property] !== undefined) {
+        this.domBox.style.cssText = this.cssBox();
         return;
       }
     }
@@ -365,22 +372,24 @@ export class Widget extends StateManaged {
       return applyTransformedOffset(parentCenter, offset, s, rot );
     }
   }
-  css() {
-    let cssInner = this.get('css');
-    let cssBox = ""
-    
-    cssBox += '; width:'  + this.get('width')  + 'px';
-    cssBox += '; height:' + this.get('height') + 'px';
-    cssBox += '; z-index:' + this.calculateZ();
-    cssBox += '; transform:' + this.cssTransform();
-
-    this.domBox.style = cssBox;
-
-    return cssInner;
+  
+  cssBox() {
+    let css = ""
+    css += '; width:' + this.get('width') + 'px';
+    css += '; height:' + this.get('width') + 'px';
+    css += '; z-index:' + this.calculateZ();
+    css += '; transform:' + this.cssTransform();
+    return css;
   }
-
-  cssProperties() {
-    return [ 'css', 'height', 'inheritChildZ', 'layer', 'width' ];
+  cssBoxProperties() {
+    return [ 'height', 'inheritChildZ', 'layer', 'width' ];
+  }
+  cssInner() {
+    let css = this.get('css');
+    return css;
+  }
+  cssInnerProperties() {
+    return [ 'css' ];
   }
 
   cssTransform() {

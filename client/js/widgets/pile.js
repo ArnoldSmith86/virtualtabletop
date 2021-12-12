@@ -137,8 +137,8 @@ class Pile extends Widget {
     }
   }
 
-  css() {
-    let css = super.css();
+  cssInner() {
+    let css = super.cssInner();
 
     if(this.get('handleSize') == 'auto')
       css += '; --phSize:40px';
@@ -149,8 +149,8 @@ class Pile extends Widget {
     return css;
   }
 
-  cssProperties() {
-    const p = super.cssProperties();
+  cssInnerProperties() {
+    const p = super.cssInnerProperties();
     p.push('handleSize', 'handleOffset');
     return p;
   }

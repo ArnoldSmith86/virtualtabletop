@@ -92,8 +92,8 @@ class Spinner extends Widget {
     this.domInner.appendChild(this.value);
   }
 
-  css() {
-    let css = super.css();
+  cssInner() {
+    let css = super.cssInner();
     css += `; font-size:${Math.min(this.get('width'), this.get('height')) * 0.4}px`;
     return css;
   }

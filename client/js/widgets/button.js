@@ -34,15 +34,28 @@ export class Button extends Widget {
       setText(this.domInner, delta.text);
 
     for(const property of Object.values(this.get('svgReplaces') || {}))
-      if(delta[property] !== undefined)
-        this.domInner.style.cssText = this.css();
+      if(delta[property] !== undefined) {
+        this.domInner.style.cssText = this.cssInner();
+        break;
+      }
   }
 
-  css() {
-    let css = super.css();
+  cssBox() {
+    let css = super.cssBox();
 
     if(this.get('color'))
       css += '; --color:' + this.get('color');
+
+    return css;
+  }
+  cssBoxProperties() {
+    const p = super.cssBoxProperties();
+    p.push('color');
+    return p;
+  }
+  cssInner() {
+    let css = super.cssInner();
+
     if(this.get('backgroundColor'))
       css += '; --wcMain:' + this.get('backgroundColor');
     if(this.get('borderColor'))
@@ -60,10 +73,9 @@ export class Button extends Widget {
 
     return css;
   }
-
-  cssProperties() {
-    const p = super.cssProperties();
-    p.push('image', 'color', 'svgReplaces',  'backgroundColor', 'borderColor', 'textColor',  'backgroundColorOH', 'borderColorOH', 'textColorOH');
+  cssInnerProperties() {
+    const p = super.cssInnerProperties();
+    p.push('image', 'svgReplaces',  'backgroundColor', 'borderColor', 'textColor',  'backgroundColorOH', 'borderColorOH', 'textColorOH');
     return p;
   }
 
@@ -74,7 +86,7 @@ export class Button extends Widget {
     const replaces = {};
     for(const key in this.get('svgReplaces'))
       replaces[key] = this.get(this.get('svgReplaces')[key]);
-    return getSVG(this.get('image'), replaces, _=>this.domInner.style.cssText = this.css());
+    return getSVG(this.get('image'), replaces, _=>this.domInner.style.cssText = this.cssInner());
   }
 }
 

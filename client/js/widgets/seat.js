@@ -66,8 +66,8 @@ class Seat extends Widget {
       await this.setPlayer();
   }
 
-  css() {
-    let css = super.css();
+  cssBox() {
+    let css = super.cssBox();
 
     if(this.get('color'))
       css += '; --color:' + this.get('color');
@@ -75,8 +75,8 @@ class Seat extends Widget {
     return css;
   }
 
-  cssProperties() {
-    const p = super.cssProperties();
+  cssBoxProperties() {
+    const p = super.cssBoxProperties();
     p.push('color');
     return p;
   }

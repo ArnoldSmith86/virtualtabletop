@@ -142,8 +142,13 @@ class Card extends Widget {
     }
   }
 
-  cssProperties() {
-    const p = super.cssProperties();
+  cssBoxProperties() {
+    const p = super.cssBoxProperties();
+    p.push('deck');
+    return p;
+  }
+  cssInnerProperties() {
+    const p = super.cssInnerProperties();
     p.push('deck');
     return p;
   }
