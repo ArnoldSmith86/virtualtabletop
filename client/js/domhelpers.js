@@ -81,6 +81,7 @@ export function formField(field, dom, id) {
       field.value = field.min;
     }
     input.value = field.value !== undefined ? field.value : 0;
+    input.step = "any";
     if(field.min && field.max){
       label.innerHTML += " <span class='numberInputRange'>("+ field.min +" - "+ field.max +")</span>";
       input.min = field.min !== undefined ? field.min : false;
