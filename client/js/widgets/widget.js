@@ -509,6 +509,8 @@ export class Widget extends StateManaged {
 
     batchStart();
 
+    let abortRoutine = false; // Set for CALL with 'return=false' or when INPUT is cancelled.
+
     if(tracingEnabled && typeof property == 'string')
       sendTraceEvent('evaluateRoutine', { id: this.get('id'), property });
     if(jeRoutineLogging)
@@ -638,7 +640,7 @@ export class Widget extends StateManaged {
                 if(!result.collection.length || result.collection.length >= 5)
                   returnCollection = `(${result.collection.length} widgets)`;
                 jeLoggingRoutineOperationSummary(
-                  `${a.routine} ${theWidget} and return variable ${a.variable} and collection ${a.collection}`,
+                  `${a.routine} ${theWidget} and return variable '${a.variable}' and collection '${a.collection}'`,
                   `${JSON.stringify(variables[a.variable])}; ${JSON.stringify(result.collection)}`)
               } else {
                 jeLoggingRoutineOperationSummary( `${a.routine} ${theWidget} and abort caller processing`)
@@ -646,6 +648,8 @@ export class Widget extends StateManaged {
             }
           }
         }
+        if (!a.return)
+          abortRoutine = true;
       }
 
       if(a.func == 'CANVAS') {
@@ -978,11 +982,11 @@ export class Widget extends StateManaged {
             });
             jeLoggingRoutineOperationSummary(`${varList.join(', ')}`,`${valueList.join(', ')}`);
           }
-
         } catch(e) {
           problems.push(`Exception: ${e.toString()}`);
-          batchEnd();
-          return;
+          abortRoutine = true;
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary("INPUT cancelled");
         }
       }
 
@@ -1413,7 +1417,7 @@ export class Widget extends StateManaged {
       if(!jeRoutineLogging && problems.length)
         console.log(problems);
 
-      if(a.func == 'CALL' && !a.return)
+      if(abortRoutine)
         break
 
     } // End iterate over functions in routine
@@ -1431,7 +1435,7 @@ export class Widget extends StateManaged {
       playerName = variables.playerName;
     }
 
-    return { variable: variables.result, collection: collections.result || [] };
+    return { variable: variables.result || null, collection: collections.result || [] };
   }
 
   get(property) {
