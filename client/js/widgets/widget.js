@@ -1738,7 +1738,11 @@ export class Widget extends StateManaged {
       $('#buttonInputOverlay .modal').style = o.css || "";
       $('#buttonInputOverlay .modal').style.transform = "rotate("+rotation+"deg)";
       if(o.header){
-        $('#buttonInputFields').innerHTML = '<div class="inputtitle"><label>'+o.header+'</label></div>';
+        const dom = document.createElement('div');
+        dom.className = "inputtitle";
+        const thisheader = {label: o.header}
+        formField(thisheader, dom, null);
+        $('#buttonInputFields').appendChild(dom);
       } else {
         $('#buttonInputFields').innerHTML = '';
       }
