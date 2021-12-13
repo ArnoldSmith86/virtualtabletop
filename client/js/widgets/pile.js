@@ -89,7 +89,7 @@ class Pile extends Widget {
 
 
 
-      $('#pileOverlay > .modal').innerHTML = `<div class="inputtitle"><label>${this.handle.textContent} cards</label></div><div class="inputtext"><label>TIP: Drag the handle with the number to drag the entire pile.</label></div><div class="inputtext"><label>Choose an option below:</label></div>`;
+      $('#pileOverlay > .modal').innerHTML = `<div class="inputtitle"><label>${this.handle.textContent} cards</label></div><div class="inputtext"><label>TIP: Drag the handle with the number to drag the entire pile.</label></div>`;
 
       const buttonBar1 = document.createElement('div');
       buttonBar1.className = 'button-bar';

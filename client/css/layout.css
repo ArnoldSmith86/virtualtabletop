@@ -1174,6 +1174,6 @@ input.switchbox[type="checkbox"]:checked + .switchbox{
   height: 38px;
   width: auto!important;
   top: 0;
-  right: 5px;
+  right: 3px;
   background-color: black;
 }
