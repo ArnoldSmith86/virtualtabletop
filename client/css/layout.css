@@ -1072,11 +1072,10 @@ input.switchbox[type="checkbox"]:checked + .switchbox::before {
 input.switchbox[type="checkbox"]:checked + .switchbox{
   background-color: var(--VTTblue);
 }
-input[type=range]{
+.modal input[type=range]{
   width: 100%;
   margin: 16px 0;
 }
-
 .countInput{
   display: flex;
   align-items: center;
@@ -1091,7 +1090,6 @@ input[type=range]{
   border: 0px none transparent;
   background: transparent;
 }
-
 #pileOverlay > .modal button.ui-button{
   width: 100%;
   box-sizing: border-box;
