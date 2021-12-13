@@ -75,10 +75,25 @@ class Pile extends Widget {
 
   async click(mode='respect') {
     if(!await super.click(mode)) {
-      $('#pileOverlay').innerHTML = `<p>${this.handle.textContent} cards</p><p>Drag the handle with the number to drag the entire pile.</p>`;
+
+
+//       const modalDiv = document.createElement('div');
+//       modalDiv.classList.add = 'modal';
+//       $('#pileOverlay')
+//
+//       const modalTitle = document.createElement('div');
+//       modalTitle.classList.add = 'inputtitle';
+//       var thisField = { type: 'title',text: ${this.handle.textContent} cards+' cards' };
+//       formField(thisField, modalTitle, 'pileTitle')
+//       modalDiv.appendChild(modalTitle);
+
+
+
+      $('#pileOverlay > .modal').innerHTML = `<div class="inputtitle"><label>${this.handle.textContent} cards</label></div><div class="inputtext"><label>TIP: Drag the handle with the number to drag the entire pile.</label></div><div class="inputtext"><label>Choose an option below:</label></div>`;
 
       const flipButton = document.createElement('button');
-      flipButton.textContent = 'Flip pile';
+      flipButton.textContent = 'Flip everything over';
+      flipButton.className = 'ui-button';
       let z=1;
       flipButton.addEventListener('click', async e=>{
         batchStart();
@@ -90,10 +105,17 @@ class Pile extends Widget {
         showOverlay();
         batchEnd();
       });
-      $('#pileOverlay').appendChild(flipButton);
+      $('#pileOverlay > .modal').appendChild(flipButton);
+
+      const or1label = document.createElement('div');
+      or1label.className = 'inputtext optiontext';
+      const thisOr1Field = { type: 'text',text:'-OR-' };
+      formField(thisOr1Field, or1label, 'pileTitle')
+      $('#pileOverlay > .modal').appendChild(or1label);
 
       const shuffleButton = document.createElement('button');
-      shuffleButton.textContent = 'Shuffle pile';
+      shuffleButton.textContent = 'Shuffle the pile';
+      shuffleButton.className = 'ui-button';
       shuffleButton.addEventListener('click', async e=>{
         batchStart();
         for(const c of this.children())
@@ -101,23 +123,66 @@ class Pile extends Widget {
         showOverlay();
         batchEnd();
       });
-      $('#pileOverlay').appendChild(shuffleButton);
+      $('#pileOverlay > .modal').appendChild(shuffleButton);
+
+
+
+
+      const splitLabel = document.createElement('div');
+      splitLabel.className = 'inputtext optiontext';
+      const thisField = { type: 'text',text:'-OR-' };
+      formField(thisField, splitLabel, 'pileTitle')
+      $('#pileOverlay > .modal').appendChild(splitLabel);
 
       const childCount = this.children().length;
       const countDiv = document.createElement('div');
-      countDiv.textContent = `/ ${childCount}`;
-      $('#pileOverlay').appendChild(countDiv);
+      countDiv.className = 'countInput';
+
+      $('#pileOverlay > .modal').appendChild(countDiv);
+
       const splitInput = document.createElement('input');
       splitInput.type = 'number';
       splitInput.value = Math.floor(childCount/2);
       splitInput.min = 0;
       splitInput.max = childCount;
-      countDiv.prepend(splitInput);
-      const splitLabel = document.createElement('label');
-      splitLabel.textContent = 'Split: ';
-      countDiv.prepend(splitLabel);
+      splitInput.addEventListener('change', async e=>{
+        denominatorInput.value = childCount - splitInput.value;
+        splitInputSlider.value = splitInput.value;
+      });
+      countDiv.appendChild(splitInput);
+
+      const splitDivider = document.createElement('div');
+      splitDivider.textContent = '/';
+      countDiv.appendChild(splitDivider);
+
+      const denominatorInput = document.createElement('input');
+      denominatorInput.value = childCount - splitInput.value;
+      denominatorInput.type = 'number';
+      denominatorInput.min = 0;
+      denominatorInput.max = childCount;
+      denominatorInput.addEventListener('change', async e=>{
+        splitInput.value = childCount - denominatorInput.value;
+        splitInputSlider.value = splitInput.value;
+      });
+      countDiv.appendChild(denominatorInput);
+
+      const splitInputSlider = document.createElement('input');
+      splitInputSlider.type = 'range';
+      splitInputSlider.value = Math.floor(childCount/2);
+      splitInputSlider.min = 0;
+      splitInputSlider.max = childCount;
+      splitInputSlider.addEventListener('change', async e=>{
+        splitInput.value = splitInputSlider.value;
+        denominatorInput.value = childCount - splitInput.value;
+      });
+
+
+      $('#pileOverlay > .modal').appendChild(splitInputSlider);
+
+
+
       const splitButton = document.createElement('button');
-      splitButton.textContent = 'Split pile';
+      splitButton.textContent = 'Split the pile';
       splitButton.addEventListener('click', async e=>{
         batchStart();
         for(const c of this.children().reverse().slice(childCount-splitInput.value)) {
@@ -131,7 +196,8 @@ class Pile extends Widget {
         showOverlay();
         batchEnd();
       });
-      $('#pileOverlay').appendChild(splitButton);
+      splitButton.className = 'ui-button';
+      $('#pileOverlay > .modal').appendChild(splitButton);
 
       showOverlay('pileOverlay');
     }

@@ -694,7 +694,9 @@ button:disabled:hover {
 .ui-button.blue {
   background-color: var(--neutralInput);
 }
-
+#pileOverlay{
+  color: black;
+}
 #buttonInputOverlay{
   justify-content: center;
   align-items: center;
@@ -1069,4 +1071,32 @@ input.switchbox[type="checkbox"]:checked + .switchbox::before {
 }
 input.switchbox[type="checkbox"]:checked + .switchbox{
   background-color: var(--VTTblue);
+}
+input[type=range]{
+  width: 100%;
+  margin: 16px 0;
+}
+
+.countInput{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+.countInput input[type=number]{
+  font-size: 2rem;
+  text-align: center;
+  width: 3ch;
+  padding-left: 16px;
+  border: 0px none transparent;
+  background: transparent;
+}
+
+#pileOverlay > .modal button.ui-button{
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: center;
+}
+.inputtext.optiontext label{
+  text-align: center;
 }
