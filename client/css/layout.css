@@ -1077,16 +1077,17 @@ input.switchbox[type="checkbox"]:checked + .switchbox{
   margin: 0;
   width: 100%;
   background: none;
+  height: 42px;
 }
 .modal input[type=range]:focus {
   border-radius: 100px;
 }
 .modal input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
-  height: 36px;
+  height: 42px;
   cursor: pointer;
   background: #3071a9;
-  border-radius: 36px;
+  border-radius: 42px;
   margin: 0;
   overflow: hidden;
   padding: 2px;
@@ -1094,9 +1095,9 @@ input.switchbox[type="checkbox"]:checked + .switchbox{
 .modal input[type=range]::-webkit-slider-thumb {
   box-shadow: 0 0px 3px #000000, 0px 0px 1px #0d0d0d;
   border: 1px solid #000000;
-  height: 32px;
-  width: 32px;
-  border-radius: 36px;
+  height: 38px;
+  width: 38px;
+  border-radius: 42px;
   background: #ffffff;
   cursor: pointer;
   -webkit-appearance: none;
@@ -1106,10 +1107,10 @@ input.switchbox[type="checkbox"]:checked + .switchbox{
 }
 .modal input[type=range]::-moz-range-track {
   width: 100%;
-  height: 36px;
+  height: 38px;
   cursor: pointer;
   background: #3071a9;
-  border-radius: 36px;
+  border-radius: 42px;
   margin: 0;
   overflow: hidden;
   padding: 2px;
@@ -1117,8 +1118,8 @@ input.switchbox[type="checkbox"]:checked + .switchbox{
 .modal input[type=range]::-moz-range-thumb {
   box-shadow: 0 0px 3px #000000, 0px 0px 1px #0d0d0d;
   border: 1px solid #000000;
-  height: 32px;
-  width: 32px;
+  height: 36px;
+  width: 36px;
   border-radius: 36px;
   background: #ffffff;
   cursor: pointer;
@@ -1129,14 +1130,27 @@ input.switchbox[type="checkbox"]:checked + .switchbox{
   align-items: center;
   justify-content: center;
   font-size: 2rem;
+  line-height: 42px;
+
 }
 .countInput input[type=number]{
-  font-size: 2rem;
+  font-size: 1.5rem;
   text-align: center;
   width: 3ch;
-  padding-left: 16px;
+  padding: 0 5px;
   border: 0px none transparent;
   background: transparent;
+  -moz-appearance: textfield;
+  appearance: textfield;
+  margin: 0;
+}
+.countInput input[type=number]::-webkit-inner-spin-button,
+.countInput input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+}
+#pileOverlay .modal{
+  width: 200px;
 }
 #pileOverlay > .modal button.ui-button{
   width: 100%;
