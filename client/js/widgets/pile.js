@@ -171,7 +171,10 @@ class Pile extends Widget {
       splitInputSlider.value = Math.floor(childCount/2);
       splitInputSlider.min = 0;
       splitInputSlider.max = childCount;
-      splitInputSlider.addEventListener('change', async e=>{
+      splitInputSlider.setAttribute("aria-valuemin", 0);
+      splitInputSlider.setAttribute("aria-valuemax", childCount);
+      splitInputSlider.setAttribute("aria-valuenow", splitInputSlider.value);
+      splitInputSlider.addEventListener('input', async e=>{
         splitInput.value = splitInputSlider.value;
         denominatorInput.value = childCount - splitInput.value;
       });
