@@ -423,7 +423,8 @@ export default async function convertPCIO(content) {
       w.y -= 38;
       w.height = 42;
       w.width = 42;
-      w.css = 'border-radius:100%;box-sizing:border-box;border-width:2px;';
+      w.css = 'box-sizing:border-box;border-width:2px;';
+      w.borderRadius = '50%';
       w.playerChangeRoutine = [
         {
           func: 'SELECT',
@@ -519,7 +520,8 @@ export default async function convertPCIO(content) {
         movableInEdit: false,
         TYPE: 'label',
         text: `Player ${widget.seatIndex + 1}`,
-        css: 'border-radius:36%;background:white;border:1px solid lightgrey;font-size:18px;display: flex;justify-content: center;align-items: center;',
+        css: 'background:white;border:1px solid lightgrey;font-size:18px;display: flex;justify-content: center;align-items: center;',
+        borderRadius: '36%',
         clickRoutine
       };
 
@@ -535,7 +537,8 @@ export default async function convertPCIO(content) {
         movable: false,
         movableInEdit: false,
         text: 'Sit Here',
-        css: 'background: white; border-radius: 4px; color: black;font-size:16px; border:1px solid lightgrey',
+        css: 'background: white; color: black;font-size:16px; border:1px solid lightgrey',
+        borderRadius: 4,
         clickRoutine
       };
 
@@ -552,7 +555,8 @@ export default async function convertPCIO(content) {
         owner: [],
         TYPE: 'count',
         text: 0,
-        css: 'background: white; border-radius: 4px; color: black;font-size:18px; border:1px solid lightgrey;display: flex;justify-content: center;align-items: center;',
+        css: 'background: white; color: black;font-size:18px; border:1px solid lightgrey;display: flex;justify-content: center;align-items: center;',
+        borderRadius: 4,
         clickRoutine,
         ownerGlobalUpdateRoutine: [
           "var parent = ${PROPERTY parent}",
@@ -586,7 +590,8 @@ export default async function convertPCIO(content) {
         movableInEdit: false,
         owner: [],
         TYPE: 'count',
-        css: 'background: white; border-radius: 4px; color: black;font-size:16px; border:1px solid lightgrey;transform-origin:bottom left'
+        css: 'background: white; color: black;font-size:16px; border:1px solid lightgrey;transform-origin:bottom left',
+        borderRadius: 4
       };
       output[widget.id + 'count2'] = {
         id: widget.id + 'count2',
@@ -601,7 +606,8 @@ export default async function convertPCIO(content) {
         movableInEdit: false,
         owner: [],
         TYPE: 'count',
-        css: 'background: white; border-radius: 4px; color: black;font-size:16px; border:1px solid lightgrey;transform-origin:bottom left'
+        css: 'background: white; border-radius: 4px; color: black;font-size:16px; border:1px solid lightgrey;transform-origin:bottom left',
+        borderRadius: 4
       };
     } else if(widget.type == 'timer') {
       w.type = 'timer';
