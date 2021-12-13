@@ -73,27 +73,38 @@ export function formField(field, dom, id) {
   if(field.type == 'number') {
     const input = document.createElement('input');
     const spanafter = document.createElement('span');
+    const labelExplainer = document.createElement('span');
+    labelExplainer.classList.add('numberInputRange');
     input.type = 'number';
     input.step = "any";
     input.value = field.value !== undefined ? field.value : 0;
+    var maxset = false;
+    var minset = false;
+    if (field.max !== undefined) {
+      maxset = true;
+    }
+    if (field.min !== undefined) {
+      minset = true;
+    }
     if(input.value > field.max){
       input.value = field.max;
     }
     if(input.value < field.min){
       input.value = field.min;
     }
-    if(field.min && field.max){
-      label.innerHTML += " <span class='numberInputRange'>("+ field.min +" - "+ field.max +")</span>";
+    if(minset && maxset){
+      labelExplainer.textContent = " ("+ field.min +" - "+ field.max +")";
+      label.appendChild(labelExplainer);
       input.min = field.min !== undefined ? field.min : false;
       input.max = field.max !== undefined ? field.max : false;
-    }else if(field.min && !field.max){
-      label.innerHTML += " <span class='numberInputRange'>(at least "+ field.min+")</span>";
+    }else if(minset && !maxset){
+      labelExplainer.textContent = " (at least "+ field.min+")";
+      label.appendChild(labelExplainer);
       input.min = field.min !== undefined ? field.min : false;
-    }else if(!field.min && field.max){
-      label.innerHTML += " <span class='numberInputRange'>(up to "+ field.max+")</span>";
+    }else if(!minset && maxset){
+      labelExplainer.textContent = " (up to "+ field.max+")";
+      label.appendChild(labelExplainer);
       input.max = field.max !== undefined ? field.max : false;
-    } else {
-
     }
     dom.appendChild(input);
     dom.appendChild(spanafter);
