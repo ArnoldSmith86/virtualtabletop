@@ -146,6 +146,12 @@ class Pile extends Widget {
       splitInput.min = 0;
       splitInput.max = childCount;
       splitInput.addEventListener('change', async e=>{
+        if(splitInput.value > childCount){
+          splitInput.value = childCount;
+        }
+        if(splitInput.value < 0){
+          splitInput.value = 0;
+        }
         denominatorInput.value = childCount - splitInput.value;
         splitInputSlider.value = splitInput.value;
       });
@@ -161,6 +167,12 @@ class Pile extends Widget {
       denominatorInput.min = 0;
       denominatorInput.max = childCount;
       denominatorInput.addEventListener('change', async e=>{
+        if(denominatorInput.value > childCount){
+          denominatorInput.value = childCount;
+        }
+        if(denominatorInput.value < 0){
+          denominatorInput.value = 0;
+        }
         splitInput.value = childCount - denominatorInput.value;
         splitInputSlider.value = splitInput.value;
       });
