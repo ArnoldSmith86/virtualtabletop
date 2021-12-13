@@ -1737,14 +1737,13 @@ export class Widget extends StateManaged {
       var confirmButtonText, cancelButtonText = "";
       $('#buttonInputOverlay .modal').style = o.css || "";
       $('#buttonInputOverlay .modal').style.transform = "rotate("+rotation+"deg)";
+      $('#buttonInputFields').innerHTML = '';
       if(o.header){
         const dom = document.createElement('div');
         dom.className = "inputtitle";
         const thisheader = {label: o.header}
         formField(thisheader, dom, null);
         $('#buttonInputFields').appendChild(dom);
-      } else {
-        $('#buttonInputFields').innerHTML = '';
       }
       if(!o.confirmButtonText && !o.confirmButtonIcon){
         confirmButtonText = "Go";
