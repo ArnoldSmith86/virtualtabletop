@@ -143,8 +143,8 @@ class Pile extends Widget {
       const splitInput = document.createElement('input');
       splitInput.type = 'number';
       splitInput.value = Math.floor(childCount/2);
-      splitInput.min = 0;
-      splitInput.max = childCount;
+      splitInput.min = 1;
+      splitInput.max = childCount - 1;
       splitInput.setAttribute("aria-valuemin", 0);
       splitInput.setAttribute("aria-valuemax", childCount);
       splitInput.setAttribute("aria-valuenow", splitInput.value);
@@ -152,43 +152,19 @@ class Pile extends Widget {
         if(splitInput.value > childCount){
           splitInput.value = childCount;
         }
-        if(splitInput.value < 0){
-          splitInput.value = 0;
+        if(splitInput.value < 1){
+          splitInput.value = 1;
         }
         denominatorInput.value = childCount - splitInput.value;
         splitInputSlider.value = childCount - denominatorInput.value;
       });
       countDiv.appendChild(splitInput);
 
-      const splitDivider = document.createElement('div');
-      splitDivider.textContent = '/';
-      countDiv.appendChild(splitDivider);
-
-      const denominatorInput = document.createElement('input');
-      denominatorInput.value = childCount - splitInput.value;
-      denominatorInput.type = 'number';
-      denominatorInput.min = 0;
-      denominatorInput.max = childCount;
-      denominatorInput.setAttribute("aria-valuemin", 0);
-      denominatorInput.setAttribute("aria-valuemax", childCount);
-      denominatorInput.setAttribute("aria-valuenow", denominatorInput.value);
-      denominatorInput.addEventListener('input', async e=>{
-        if(denominatorInput.value > childCount){
-          denominatorInput.value = childCount;
-        }
-        if(denominatorInput.value < 0){
-          denominatorInput.value = 0;
-        }
-        splitInput.value = childCount - denominatorInput.value;
-        splitInputSlider.value = childCount - denominatorInput.value;
-      });
-      countDiv.appendChild(denominatorInput);
-
       const splitInputSlider = document.createElement('input');
       splitInputSlider.type = 'range';
       splitInputSlider.value = Math.floor(childCount/2);
-      splitInputSlider.min = 0;
-      splitInputSlider.max = childCount;
+      splitInputSlider.min = 1;
+      splitInputSlider.max = childCount - 1;
       splitInputSlider.setAttribute("aria-valuemin", 0);
       splitInputSlider.setAttribute("aria-valuemax", childCount);
       splitInputSlider.setAttribute("aria-valuenow", splitInputSlider.value);
@@ -196,10 +172,27 @@ class Pile extends Widget {
         splitInput.value = splitInputSlider.value;
         denominatorInput.value = childCount - splitInput.value;
       });
+      countDiv.appendChild(splitInputSlider);
 
-
-      $('#pileOverlay > .modal').appendChild(splitInputSlider);
-
+      const denominatorInput = document.createElement('input');
+      denominatorInput.value = childCount - splitInput.value;
+      denominatorInput.type = 'number';
+      denominatorInput.min = 1;
+      denominatorInput.max = childCount - 1;
+      denominatorInput.setAttribute("aria-valuemin", 0);
+      denominatorInput.setAttribute("aria-valuemax", childCount);
+      denominatorInput.setAttribute("aria-valuenow", denominatorInput.value);
+      denominatorInput.addEventListener('input', async e=>{
+        if(denominatorInput.value > childCount){
+          denominatorInput.value = childCount;
+        }
+        if(denominatorInput.value < 1){
+          denominatorInput.value = 1;
+        }
+        splitInput.value = childCount - denominatorInput.value;
+        splitInputSlider.value = childCount - denominatorInput.value;
+      });
+      countDiv.appendChild(denominatorInput);
 
 
       const splitButton = document.createElement('button');
