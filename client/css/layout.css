@@ -717,6 +717,7 @@ button:disabled:hover {
   border-radius: 8px;
   border-top: 3px solid var(--VTTblue);
   border-bottom: 3px solid var(--VTTblue);
+  position: relative;
 }
 
 .modal h1{
@@ -1131,6 +1132,7 @@ input.switchbox[type="checkbox"]:checked + .switchbox{
   justify-content: center;
   font-size: 2rem;
   line-height: 42px;
+  padding: 8px 8px 0;
 
 }
 .countInput input[type=number]{
@@ -1157,6 +1159,21 @@ input.switchbox[type="checkbox"]:checked + .switchbox{
   box-sizing: border-box;
   justify-content: center;
 }
-.inputtext.optiontext label{
+/* .inputtext.optiontext label{
   text-align: center;
+} */
+#pileOverlay > .modal .inputtext.optiontext{
+  display: none;
+}
+.modal .button-bar{
+  box-sizing: border-box;
+  padding: 8px 32px;
+}
+.pilecancelbutton{
+  position: absolute;
+  height: 38px;
+  width: auto!important;
+  top: 0;
+  right: 5px;
+  background-color: black;
 }

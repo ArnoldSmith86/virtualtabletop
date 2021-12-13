@@ -91,6 +91,10 @@ class Pile extends Widget {
 
       $('#pileOverlay > .modal').innerHTML = `<div class="inputtitle"><label>${this.handle.textContent} cards</label></div><div class="inputtext"><label>TIP: Drag the handle with the number to drag the entire pile.</label></div><div class="inputtext"><label>Choose an option below:</label></div>`;
 
+      const buttonBar1 = document.createElement('div');
+      buttonBar1.className = 'button-bar';
+      $('#pileOverlay > .modal').appendChild(buttonBar1);
+
       const flipButton = document.createElement('button');
       flipButton.textContent = 'Flip everything over';
       flipButton.className = 'ui-button';
@@ -105,13 +109,17 @@ class Pile extends Widget {
         showOverlay();
         batchEnd();
       });
-      $('#pileOverlay > .modal').appendChild(flipButton);
+      buttonBar1.appendChild(flipButton);
 
       const or1label = document.createElement('div');
       or1label.className = 'inputtext optiontext';
       const thisOr1Field = { type: 'text',text:'-OR-' };
       formField(thisOr1Field, or1label, 'pileTitle')
       $('#pileOverlay > .modal').appendChild(or1label);
+
+      const buttonBar2 = document.createElement('div');
+      buttonBar2.className = 'button-bar';
+      $('#pileOverlay > .modal').appendChild(buttonBar2);
 
       const shuffleButton = document.createElement('button');
       shuffleButton.textContent = 'Shuffle the pile';
@@ -123,7 +131,7 @@ class Pile extends Widget {
         showOverlay();
         batchEnd();
       });
-      $('#pileOverlay > .modal').appendChild(shuffleButton);
+      buttonBar2.appendChild(shuffleButton);
 
 
 
@@ -194,6 +202,9 @@ class Pile extends Widget {
       });
       countDiv.appendChild(denominatorInput);
 
+      const buttonBar3 = document.createElement('div');
+      buttonBar3.className = 'button-bar';
+      $('#pileOverlay > .modal').appendChild(buttonBar3);
 
       const splitButton = document.createElement('button');
       splitButton.textContent = 'Split the pile';
@@ -211,7 +222,19 @@ class Pile extends Widget {
         batchEnd();
       });
       splitButton.className = 'ui-button';
-      $('#pileOverlay > .modal').appendChild(splitButton);
+      buttonBar3.appendChild(splitButton);
+
+      const buttonBar4 = document.createElement('div');
+      buttonBar4.className = 'button-bar';
+      $('#pileOverlay > .modal').appendChild(buttonBar4);
+
+      const cancelButton = document.createElement('button');
+      cancelButton.textContent = 'close';
+      cancelButton.addEventListener('click', async e=>{
+        showOverlay('pileOverlay');
+      });
+      cancelButton.className = 'ui-button pilecancelbutton material-icons';
+      buttonBar4.appendChild(cancelButton);
 
       showOverlay('pileOverlay');
     }
