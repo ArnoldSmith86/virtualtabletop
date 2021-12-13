@@ -149,8 +149,8 @@ class Pile extends Widget {
       splitInput.setAttribute("aria-valuemax", childCount);
       splitInput.setAttribute("aria-valuenow", splitInput.value);
       splitInput.addEventListener('input', async e=>{
-        if(splitInput.value > childCount){
-          splitInput.value = childCount;
+        if(splitInput.value > (childCount - 1)){
+          splitInput.value = childCount - 1;
         }
         if(splitInput.value < 1){
           splitInput.value = 1;
@@ -183,8 +183,8 @@ class Pile extends Widget {
       denominatorInput.setAttribute("aria-valuemax", childCount);
       denominatorInput.setAttribute("aria-valuenow", denominatorInput.value);
       denominatorInput.addEventListener('input', async e=>{
-        if(denominatorInput.value > childCount){
-          denominatorInput.value = childCount;
+        if(denominatorInput.value > (childCount - 1)){
+          denominatorInput.value = childCount - 1;
         }
         if(denominatorInput.value < 1){
           denominatorInput.value = 1;
