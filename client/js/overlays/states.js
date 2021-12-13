@@ -341,4 +341,10 @@ onLoad(function() {
   on('#stateEditOverlay .share', 'click', _=>shareLink());
 
   on('#shareOK', 'click', _=>showOverlay('stateEditOverlay'));
+
+  $UI('#showAppButton').on('click', function() {
+       $('#app').style.display = 'block';
+  });
+
+
 });

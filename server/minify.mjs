@@ -18,6 +18,8 @@ export default function minifyRoom() {
     minify({
       compressor: cleanCSS,
       input: [
+        'client/ui-core/framework7-bundle.css',
+        'client/css/ui.css',
         'client/css/layout.css',
         'client/css/fonts.css',
 

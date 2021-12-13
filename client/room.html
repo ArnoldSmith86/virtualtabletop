@@ -13,13 +13,48 @@
   <script src="https://cdn.jsdelivr.net/combine/npm/vue@3.0.7/dist/vue.global.prod.js,npm/jszip@3.6.0/dist/jszip.min.js"></script>
   <base target="_blank">
   <style> {{CSS}} </style>
+
 </head>
 
 
 <body>
+<!-- App root element -->
+  <div id="app">
 
+    <!-- Your main view, should have "view-main" class -->
+    <div class="view view-main">
+      <!-- Initial Page, "data-name" contains page name -->
+      <div data-name="home" class="page">
+
+        <!-- Top Navbar -->
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner">
+            <div class="title">VirtualTabletop.io</div>
+          </div>
+        </div>
+
+        <!-- Bottom Toolbar -->
+        <div class="toolbar toolbar-bottom">
+          <div class="toolbar-inner">
+            <!-- Toolbar links -->
+            <a href="#" class="link">Link 1</a>
+            <a href="#" class="link">Link 2</a>
+          </div>
+        </div>
+
+        <!-- Scrollable page content -->
+        <div class="page-content">
+          <p>Page content goes here</p>
+          <!-- Link to another page -->
+          <a href="#" class="hideApp">Hide App</a>
+        </div>
+      </div>
+    </div>
+  </div>
   <div id="toolbar">
     <button id="statesButton" data-overlay="statesOverlay" class="toolbarButton" ><span class="tooltip">Game Library</span></button>
+    <button id="showAppButton" class="toolbarButton" ><span class="tooltip">Show App</span></button>
     <div class="divider">&nbsp;</div>
     <button id="playersButton" data-overlay="playerOverlay" class="toolbarButton" ><span class="tooltip">Players & Settings</span></button>
     <div class="divider">&nbsp;</div>
@@ -200,9 +235,9 @@
         <div class="instructionalText">From here you can edit the name and color of any player.</div>
       </div>
       <div id="playerList">
-        <script id="template-playerlist-entry" type="text/template">
+        <template id="template-playerlist-entry" type="text/template">
           <input type="color" class="teamColor"></span> <input class="playerName" />
-        </script>
+        </template>
         <label class="me ui-line" data-label="Me »"> </label>
         <label class="otherPlayers ui-line" data-label="Other Players »"> </label>
         <label class="inactivePlayers ui-line"> </label>
@@ -228,7 +263,7 @@
         <p>If you don't, you can create your own game or add one from the public library:</p>
       </div>
       <div id="statesList">
-        <script id="template-stateslist-entry" type="text/template">
+        <template id="template-stateslist-entry" type="text/template">
           <img>
           <div class="details">
             <a class="bgg" href="">Name (Year)</a>
@@ -236,10 +271,10 @@
             <div class="variantsList"></div>
             <p><button class="prettyButton saveProgress" disabled>Save progress</button><button class="prettyButton edit">Edit</button></p>
           </div>
-        </script>
-        <script id="template-variantslist-entry" type="text/template">
+        </template>
+        <template id="template-variantslist-entry" type="text/template">
           <button class="prettyButton play">Play: <span class="language">🇺🇸</span><span class="symbols"> [group]</span><span class="players">0</span><br><span class="variant"></span></button>
-        </script>
+        </template>
         <div id="addState">
           <div class="image">➕</div>
           <div class="buttons">
@@ -256,18 +291,18 @@
     <div id="libraryOverlay" class="overlay">
       <h1>Public library</h1>
       <table id="libraryList">
-        <script id="template-librarylist-header" type="text/template">
+        <template id="template-librarylist-header" type="text/template">
           <th></th><th>Game</th><th>Similar to</th><th>Players</th><th>Language</th><th>Notes</th>
-        </script>
-        <script id="template-librarylist-entry" type="text/template">
+        </template>
+        <template id="template-librarylist-entry" type="text/template">
           <td><button class="prettyButton add">Add</button></td><td class="name">Chess</td><td><a>Chess</a></td><td class="players">2</td><td class="language">🇺🇳</td><td class="notes"></td>
-        </script>
-        <script id="template-librarylist-section-title" type="text/template">
+        </template>
+        <template id="template-librarylist-section-title" type="text/template">
           <td class="section" colspan="6">
             <div class="section-name">Section Name</div>
             <div class="notes">Section notes</div>
           </td>
-        </script>
+        </template>
       </table>
       <p>Loading...</p>
     </div>
@@ -286,7 +321,7 @@
       </div>
       <h2>Variants</h2>
       <div id="variantsEditList">
-        <script id="template-variantseditlist-entry" type="text/template">
+        <template id="template-variantseditlist-entry" type="text/template">
           <div class="input"><label>Language (country code):</label> <input class="stateLanguage"/></div>
           <div class="input"><label>Players:</label> <input class="statePlayers"/></div>
           <div class="input"><label>Variant:</label> <input class="stateVariant"/></div>
@@ -297,7 +332,7 @@
             <button class="ui-button download download-variant">Download variant</button>
             <button class="ui-button red remove remove-variant">Remove variant</button>
           </div>
-        </script>
+        </template>
       </div>
       <div id="addVariant" class="buttons">
         Add variant:
@@ -359,13 +394,13 @@
         <h2>Beta</h2>
         <p>Play this game on an experimental preview server to help us test new features. Anyone joining this room will be redirected there until you switch back.</p>
         <table id="betaServerList">
-          <th>Server</th><th>Returns the state to this server</th><th>Description</th>
+          <th>Server</th><th>Returns the state to this server</th><th>Detemplateion</th>
         </table>
-        <script id="template-betaServerList-entry" type="text/template">
+        <template id="template-betaServerList-entry" type="text/template">
           <td><button>Name</button></td>
           <td class="return">Return?</td>
           <td class="description">Description</td>
-        </script>
+        </template>
       </div>
     </div>
 
@@ -413,6 +448,10 @@
   <div id="enlarged" class="hidden"></div>
 
   <script type="module"> {{CONFIG}}  {{JS}} </script>
+  <!-- Path to Framework7 Library Bundle JS-->
+  <script type="text/javascript" src="ui-core/framework7-bundle.js"></script>
+  <!-- Path to your app js-->
+  <script type="text/javascript" src="js/ui.js"></script>
 
 </body>
 
