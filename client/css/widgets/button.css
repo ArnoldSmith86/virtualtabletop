@@ -18,6 +18,7 @@
   --wcFontOH: var(--wcFont);
   --wcImageOH: url();
   text-transform: unset;
+  line-height: 1;
 }
 
 .widget.button:hover {
