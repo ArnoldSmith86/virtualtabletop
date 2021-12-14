@@ -711,7 +711,9 @@ body {
 .button .icon{
   margin-right: 8px;
 }
-
+.toolbar .icon{
+  margin: 0 8px;
+}
 .menu-dropdown-right .menu-dropdown-content > * {
   justify-content: flex-end;
 }
