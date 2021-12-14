@@ -76,35 +76,28 @@ export function formField(field, dom, id) {
     const labelExplainer = document.createElement('span');
     labelExplainer.classList.add('numberInputRange');
     input.type = 'number';
-    input.step = "any";
+    input.step = 'any';
     input.value = field.value !== undefined ? field.value : 0;
-    var maxset = false;
-    var minset = false;
-    if (field.max !== undefined) {
-      maxset = true;
-    }
-    if (field.min !== undefined) {
-      minset = true;
-    }
-    if(input.value > field.max){
+    const maxset = field.max !== undefined;
+    const minset = field.min !== undefined;
+    if(input.value > field.max)
       input.value = field.max;
-    }
-    if(input.value < field.min){
+    if(input.value < field.min)
       input.value = field.min;
-    }
-    if(minset && maxset){
-      labelExplainer.textContent = " ("+ field.min +" - "+ field.max +")";
+
+    if(minset && maxset) {
+      labelExplainer.textContent = ' ('+ field.min +' - '+ field.max +')';
       label.appendChild(labelExplainer);
-      input.min = field.min !== undefined ? field.min : false;
-      input.max = field.max !== undefined ? field.max : false;
-    }else if(minset && !maxset){
-      labelExplainer.textContent = " (at least "+ field.min+")";
+      input.min = minset ? field.min : false;
+      input.max = maxset ? field.max : false;
+    } else if(minset && !maxset) {
+      labelExplainer.textContent = ' (at least '+ field.min+')';
       label.appendChild(labelExplainer);
-      input.min = field.min !== undefined ? field.min : false;
-    }else if(!minset && maxset){
-      labelExplainer.textContent = " (up to "+ field.max+")";
+      input.min = minset ? field.min : false;
+    } else if(!minset && maxset) {
+      labelExplainer.textContent = ' (up to '+ field.max+')';
       label.appendChild(labelExplainer);
-      input.max = field.max !== undefined ? field.max : false;
+      input.max = maxset ? field.max : false;
     }
     dom.appendChild(input);
     dom.appendChild(spanafter);
