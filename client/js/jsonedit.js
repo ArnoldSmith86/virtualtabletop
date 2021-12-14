@@ -1640,7 +1640,8 @@ function jeShowCommands() {
             usedKeys[command.currentKey] = true;
             let keyName = displayKey(command.currentKey);
             // commandText += (keyName !== undefined)? `Ctrl-${keyName}: ` : `no key  `;
-            commandText += `<button id="${command.id}">${name.replace(keyName, '<b>' + keyName + '</b>')}</button>\n`;
+            // ${name.replace(keyName, '<b>' + keyName + '</b>')}
+            commandText += `<button id="${command.id}">${name}</button>\n`;
           }
         } catch(e) {
           console.error(`Failed to show command ${command.id}`, e);
