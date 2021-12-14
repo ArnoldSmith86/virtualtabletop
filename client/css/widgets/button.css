@@ -1,4 +1,4 @@
-.button {
+.widget.button {
   box-sizing: border-box;
   border-radius: 800px;
   background-color: var(--wcMain);
@@ -19,7 +19,7 @@
   --wcImageOH: url();
 }
 
-.button:hover {
+.widget.button:hover {
   border-color: var(--wcBorderOH);
   background-color: var(--wcMainOH);
   background-image: var(--wcImageOH);

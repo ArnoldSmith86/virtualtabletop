@@ -461,6 +461,10 @@ body.aspectTooGood #options {
   content: '[library]';
 }
 
+#showAppButton::before {
+  content: '[track]';
+}
+
 #statesButton .tooltip {
   font-weight: 900;
 }
