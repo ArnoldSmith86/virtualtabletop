@@ -122,6 +122,6 @@ async function inputHandler(name, e) {
 
 onLoad(function() {
   [ 'touchstart', 'touchend', 'touchmove', 'mousedown', 'mousemove', 'mouseup', 'contextmenu' ].forEach(function(event) {
-    window.addEventListener(event, e => inputHandler(event, e));
+    document.getElementById('roomArea').addEventListener(event, e => inputHandler(event, e));
   });
 });
