@@ -6294,15 +6294,15 @@
       }
 
       function appTouchStartPassive(e) {
-        emitAppTouchEvent('touchstart:passive', e);
+        // emitAppTouchEvent('touchstart:passive', e);
       }
 
       function appTouchMovePassive(e) {
-        emitAppTouchEvent('touchmove:passive', e);
+        // emitAppTouchEvent('touchmove:passive', e);
       }
 
       function appTouchEndPassive(e) {
-        emitAppTouchEvent('touchend:passive', e);
+        // emitAppTouchEvent('touchend:passive', e);
       }
 
       var passiveListener = support.passiveListener ? {
@@ -6319,25 +6319,25 @@
         passive: false,
         capture: true
       } : true;
-      document.addEventListener('click', appClick, true);
+      window.addEventListener('click', appClick, true);
 
       if (support.passiveListener) {
-        document.addEventListener(app.touchEvents.start, appTouchStartActive, activeListenerCapture);
-        document.addEventListener(app.touchEvents.move, appTouchMoveActive, activeListener);
-        document.addEventListener(app.touchEvents.end, appTouchEndActive, activeListener);
-        document.addEventListener(app.touchEvents.start, appTouchStartPassive, passiveListenerCapture);
-        document.addEventListener(app.touchEvents.move, appTouchMovePassive, passiveListener);
-        document.addEventListener(app.touchEvents.end, appTouchEndPassive, passiveListener);
+        window.addEventListener(app.touchEvents.start, appTouchStartActive, activeListenerCapture);
+        window.addEventListener(app.touchEvents.move, appTouchMoveActive, activeListener);
+        window.addEventListener(app.touchEvents.end, appTouchEndActive, activeListener);
+        window.addEventListener(app.touchEvents.start, appTouchStartPassive, passiveListenerCapture);
+        window.addEventListener(app.touchEvents.move, appTouchMovePassive, passiveListener);
+        window.addEventListener(app.touchEvents.end, appTouchEndPassive, passiveListener);
       } else {
-        document.addEventListener(app.touchEvents.start, function (e) {
+        window.addEventListener(app.touchEvents.start, function (e) {
           appTouchStartActive(e);
           appTouchStartPassive(e);
         }, true);
-        document.addEventListener(app.touchEvents.move, function (e) {
+        window.addEventListener(app.touchEvents.move, function (e) {
           appTouchMoveActive(e);
           appTouchMovePassive(e);
         }, false);
-        document.addEventListener(app.touchEvents.end, function (e) {
+        window.addEventListener(app.touchEvents.end, function (e) {
           appTouchEndActive(e);
           appTouchEndPassive(e);
         }, false);
@@ -6348,19 +6348,19 @@
         app.on('touchstart', handleTouchStart);
         app.on('touchmove', handleTouchMove);
         app.on('touchend', handleTouchEnd);
-        document.addEventListener('touchcancel', handleTouchCancel, {
+        window.addEventListener('touchcancel', handleTouchCancel, {
           passive: true
         });
       } else if (params.activeState) {
         app.on('touchstart', handleMouseDown);
         app.on('touchmove', handleMouseMove);
         app.on('touchend', handleMouseUp);
-        document.addEventListener('pointercancel', handleMouseUp, {
+        window.addEventListener('pointercancel', handleMouseUp, {
           passive: true
         });
       }
 
-      document.addEventListener('contextmenu', function (e) {
+      window.addEventListener('contextmenu', function (e) {
         if (params.disableContextMenu && (device.ios || device.android || device.cordova || window.Capacitor && window.Capacitor.isNative)) {
           e.preventDefault();
         }
@@ -37593,8 +37593,8 @@
 
       if (!support.touch && support.pointerEvents) {
         el.addEventListener(touchEvents.start, swiper.onTouchStart, false);
-        document.addEventListener(touchEvents.move, swiper.onTouchMove, capture);
-        document.addEventListener(touchEvents.end, swiper.onTouchEnd, false);
+        window.addEventListener(touchEvents.move, swiper.onTouchMove, capture);
+        window.addEventListener(touchEvents.end, swiper.onTouchEnd, false);
       } else {
         if (support.touch) {
           var passiveListener = touchEvents.start === 'touchstart' && support.passiveListener && params.passiveListeners ? {
@@ -37613,15 +37613,15 @@
           }
 
           if (!dummyEventAttached) {
-            document.addEventListener('touchstart', dummyEventListener);
+            window.addEventListener('touchstart', dummyEventListener);
             dummyEventAttached = true;
           }
         }
 
         if (params.simulateTouch && !device.ios && !device.android || params.simulateTouch && !support.touch && device.ios) {
           el.addEventListener('mousedown', swiper.onTouchStart, false);
-          document.addEventListener('mousemove', swiper.onTouchMove, capture);
-          document.addEventListener('mouseup', swiper.onTouchEnd, false);
+          window.addEventListener('mousemove', swiper.onTouchMove, capture);
+          window.addEventListener('mouseup', swiper.onTouchEnd, false);
         }
       } // Prevent Links Clicks
 
@@ -40492,8 +40492,8 @@
 
         if (!support.touch) {
           target.addEventListener(touchEventsDesktop.start, swiper.scrollbar.onDragStart, activeListener);
-          document.addEventListener(touchEventsDesktop.move, swiper.scrollbar.onDragMove, activeListener);
-          document.addEventListener(touchEventsDesktop.end, swiper.scrollbar.onDragEnd, passiveListener);
+          window.addEventListener(touchEventsDesktop.move, swiper.scrollbar.onDragMove, activeListener);
+          window.addEventListener(touchEventsDesktop.end, swiper.scrollbar.onDragEnd, passiveListener);
         } else {
           target.addEventListener(touchEventsTouch.start, swiper.scrollbar.onDragStart, activeListener);
           target.addEventListener(touchEventsTouch.move, swiper.scrollbar.onDragMove, activeListener);
@@ -42675,7 +42675,7 @@
           if (swiper.params.autoplay.enabled) {
             swiper.autoplay.start();
             var document = getDocument();
-            document.addEventListener('visibilitychange', swiper.autoplay.onVisibilityChange);
+            window.addEventListener('visibilitychange', swiper.autoplay.onVisibilityChange);
             swiper.autoplay.attachMouseEvents();
           }
         },

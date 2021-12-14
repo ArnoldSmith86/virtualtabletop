@@ -347,6 +347,13 @@ body.jsonEdit.jeZoomOut #topSurface {
 #jsonEditor input[type=checkbox]{
   float: left;
 }
+#jsonEditor {
+  pointer-events: none
+} 
+#jsonEditor > * {
+  pointer-events: initial
+}
+
 /* #jeCommandOptions > div{
   width: var(--commandPaneWidth);
 } */

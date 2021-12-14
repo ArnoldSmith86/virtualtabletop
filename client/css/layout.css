@@ -602,7 +602,6 @@ html:-webkit-full-screen #fullscreenButton .tooltip::before {
 
 .link::before,
 .share::before {
-  content: '[link]';
 }
 
 .edit::before {
