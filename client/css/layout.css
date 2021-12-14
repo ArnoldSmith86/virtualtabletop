@@ -857,7 +857,7 @@ button:disabled:hover {
 }
 #buttonInputFields{
   color: black;
-  margin: 0;
+  margin: -2px 0 0 0;
 }
 #buttonInputFields input{
   position: relative;
@@ -1176,4 +1176,17 @@ input.switchbox[type="checkbox"]:checked + .switchbox{
   top: 0;
   right: 3px;
   background-color: black;
+}
+input:invalid{
+  color: red;
+}
+input:invalid+span:after {
+  font-family: 'Material Icons';
+  content: 'error';
+  position: absolute;
+  right: 5px;
+  top: 0px;
+  font-size: 1.5rem;
+  color: red;
+  letter-spacing: -1px;
 }
