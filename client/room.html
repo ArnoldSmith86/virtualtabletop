@@ -45,88 +45,78 @@
         </div>
 
 
-          <div class="toolbar tabbar-labels toolbar-bottom">
-            <div class="toolbar-inner">
-              <a href="#yourShelf" class="tab-link tab-link-active"><span class="icon symbols">library</span><span class="tabbar-label">Your Shelf</span></a>
-              <a href="#publicLibrary" class="tab-link"><span class="icon symbols">vtt_logo</span><span class="tabbar-label">Public Library</span></a>
-              <a href="#gameDevResources" class="tab-link"><span class="icon symbols">tutorial</span><span class="tabbar-label">Dev Resources</span></a>
-            </div>
+        <div class="toolbar tabbar-labels toolbar-bottom">
+          <div class="toolbar-inner">
+            <a href="#yourShelf" class="tab-link tab-link-active"><span class="icon symbols">library</span><span class="tabbar-label">Your Shelf</span></a>
+            <a href="#publicLibrary" class="tab-link"><span class="icon symbols">vtt_logo</span><span class="tabbar-label">Public Library</span></a>
+            <a href="#gameDevResources" class="tab-link"><span class="icon symbols">tutorial</span><span class="tabbar-label">Dev Resources</span></a>
           </div>
-          <div class="tabs-swipeable-wrap">
-            <div class="tabs">
-              <!-- each tabs is a "page-content" -->
-              <div class="page-content tab tab-active" id="yourShelf">
-                <h2>
-                  <span>Your Game Shelf</span>
-
-                  <div class="menu">
-                    <div class="menu-inner">
-                      <div class="menu-item menu-item-dropdown">
-                        <div class="menu-item-content"><span class="material-icons">add</span></div>
-                        <div class="menu-dropdown menu-dropdown-right">
-                          <div class="menu-dropdown-content">
-                            <a href="#" class="menu-dropdown-link menu-close">Save what you're working on <span class="icon material-icons">save</span></a>
-                            <a href="#" class="menu-dropdown-link menu-close">Upload a VTT or PCIO file <span class="icon material-icons">upload</span></a>
-                            <a href="#" class="menu-dropdown-link menu-close">Enter a link to another game <span class="icon material-icons">link</span></a>
-                            <div class="menu-dropdown-divider"></div>
-                            <a href="#" class="menu-dropdown-link menu-close">Download everything <span class="icon material-icons">download</span></a>
-                          </div>
+        </div>
+        <div class="tabs-swipeable-wrap">
+          <div class="tabs">
+            <div class="page-content tab tab-active" id="yourShelf">
+              <h2>
+                <span>Your Game Shelf</span>
+                <div class="menu">
+                  <div class="menu-inner">
+                    <div class="menu-item menu-item-dropdown">
+                      <div class="menu-item-content"><span class="material-icons">add</span></div>
+                      <div class="menu-dropdown menu-dropdown-right">
+                        <div class="menu-dropdown-content">
+                          <a href="#" class="menu-dropdown-link menu-close">Save what you're working on <span class="icon material-icons">save</span></a>
+                          <a href="#" class="menu-dropdown-link menu-close">Upload a VTT or PCIO file <span class="icon material-icons">upload</span></a>
+                          <a href="#" class="menu-dropdown-link menu-close">Enter a link to another game <span class="icon material-icons">link</span></a>
+                          <div class="menu-dropdown-divider"></div>
+                          <a href="#" class="menu-dropdown-link menu-close">Download everything <span class="icon material-icons">download</span></a>
                         </div>
                       </div>
                     </div>
                   </div>
-                </h2>
-                <div class="block">
-                  <p>There is no saved game in this room. You can save your progress or add games to it and play them with your friends and family by sharing the link.</p>
-                  <p>Bring your own voice chat. We recommend <a class="external" href="https://meet.jit.si/">Jitsi Meet</a> because it's free software, runs in the browser and requires no accounts.</p>
                 </div>
-                <div class="block block-strong inset">
-                  <div class="row">
-                    <div class="col">
-                      <p class="text-align-center">Save what you are currently working&nbsp;on?</p>
-                    </div>
-                    <div class="col">
-                      <p class="text-align-center">Do you have a *.vtt or *.pcio&nbsp;file?</p>
-                    </div>
-                    <div class="col">
-                      <p class="text-align-center">Do you have a link to&nbsp;one?</p>
-                    </div>
+              </h2>
+              <div class="block">
+                <p>There is no saved game in this room. You can save your progress or add games to it and play them with your friends and family by sharing the link.</p>
+                <p>Bring your own voice chat. We recommend <a class="external" href="https://meet.jit.si/">Jitsi Meet</a> because it's free software, runs in the browser and requires no accounts.</p>
+              </div>
+              <div class="block block-strong inset">
+                <div class="row">
+                  <div class="col">
+                    <p class="text-align-center">Save what you are currently working&nbsp;on?</p>
                   </div>
-                  <div class="row">
-                    <div class="col">
-                      <button class="button button-raised button-fill color-blue create"><span class="icon material-icons">save</span>Room</button>
-                    </div>
-                    <div class="col">
-                      <button class="button button-raised button-fill color-blue upload"><span class="icon material-icons">upload</span>Files</button>
-                    </div>
-                    <div class="col">
-                      <button class="button button-raised button-fill color-blue link"><span class="icon material-icons">link</span>Link</button>
-                    </div>
+                  <div class="col">
+                    <p class="text-align-center">Do you have a *.vtt or *.pcio&nbsp;file?</p>
+                  </div>
+                  <div class="col">
+                    <p class="text-align-center">Do you have a link to&nbsp;one?</p>
                   </div>
                 </div>
-
-                <div class="block">
-                  <p>If you don't, you can create your own game or add one from the <a href="#publicLibrary" class="tab-link">Public Library</a>.</p>
+                <div class="row">
+                  <div class="col">
+                    <button class="button button-raised button-fill color-blue create"><span class="icon material-icons">save</span>Room</button>
+                  </div>
+                  <div class="col">
+                    <button class="button button-raised button-fill color-blue upload"><span class="icon material-icons">upload</span>Files</button>
+                  </div>
+                  <div class="col">
+                    <button class="button button-raised button-fill color-blue link"><span class="icon material-icons">link</span>Link</button>
+                  </div>
                 </div>
               </div>
-              <div class="page-content tab" id="publicLibrary">
-                <h2><span>Public Library Games</span></h2>
-                <div class="block"><p>... Public Library content goes here ...</p></div>
-              </div>
-              <!-- Third tab, should have "tab" class and unique id attribute -->
-              <div class="page-content tab" id="gameDevResources">
-                <h2><span>Dev resources and tutorials</span></h2>
-                <div class="block"><p>... Tutorials and dev resources content goes here ...</p></div>
+              <div class="block">
+                <p>If you don't, you can create your own game or add one from the <a href="#publicLibrary" class="tab-link">Public Library</a>.</p>
               </div>
             </div>
+            <div class="page-content tab" id="publicLibrary">
+              <h2><span>Public Library Games</span></h2>
+              <div class="block"><p>... Public Library content goes here ...</p></div>
+            </div>
+            <!-- Third tab, should have "tab" class and unique id attribute -->
+            <div class="page-content tab" id="gameDevResources">
+              <h2><span>Dev resources and tutorials</span></h2>
+              <div class="block"><p>... Tutorials and dev resources content goes here ...</p></div>
+            </div>
           </div>
-
-
-
-
-
-
-
+        </div>
       </div>
     </div>
   </div>
