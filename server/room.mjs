@@ -16,6 +16,10 @@ export default class Room {
   constructor(id, unloadCallback) {
     this.id = id;
     this.unloadCallback = unloadCallback;
+    setTimeout(_=>{
+      if(this.players.length == 0)
+        this.unload();
+    }, 5000);
   }
 
   addPlayer(player) {
@@ -361,10 +365,8 @@ export default class Room {
       if(!Object.values(this.state).filter(w=>w.player==player.name||w.owner==player.name||Array.isArray(w.owner)&&w.owner.indexOf(player.name)!=-1).length)
         delete this.state._meta.players[player.name];
 
-    if(this.players.length == 0) {
+    if(this.players.length == 0)
       this.unload();
-      this.unloadCallback();
-    }
     this.sendMetaUpdate();
   }
 
@@ -488,6 +490,7 @@ export default class Room {
       if(fs.existsSync(this.roomFilename()))
         fs.unlinkSync(this.roomFilename());
     }
+    this.unloadCallback();
   }
 
   writeToFilesystem() {
