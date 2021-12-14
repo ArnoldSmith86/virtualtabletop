@@ -593,11 +593,9 @@ html:-webkit-full-screen #fullscreenButton .tooltip::before {
 
 .upload::before,
 .uploadAsset::before {
-  content: '[upload]';
 }
 
 .download::before {
-  content: '[download]';
 }
 
 .link::before,
@@ -615,7 +613,6 @@ body.edit::before {
 
 .add::before,
 .create::before {
-  content: '[add]';
 }
 
 .library::before {

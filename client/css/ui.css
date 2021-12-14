@@ -707,3 +707,20 @@ body {
   background-image: url(/i/branding/header-bg.png), linear-gradient(315deg, #0abcf9 0%, #2c69d1 74%);
 }
 
+
+.button .icon{
+  margin-right: 8px;
+}
+
+.menu-dropdown-right .menu-dropdown-content > * {
+  justify-content: flex-end;
+}
+.menu-dropdown-right .menu-dropdown-content .icon{
+  margin-left: 8px;
+}
+.menu-dropdown-left .menu-dropdown-content > * {
+  justify-content: flex-start;
+}
+.menu-dropdown-left .menu-dropdown-content .icon{
+  margin-right: 8px;
+}
