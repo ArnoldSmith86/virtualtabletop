@@ -18,40 +18,106 @@
 
 
 <body>
-<!-- App root element -->
+
   <div id="app" class="ui">
-
-    <!-- Your main view, should have "view-main" class -->
     <div class="view view-main">
-      <!-- Initial Page, "data-name" contains page name -->
       <div data-name="home" class="page">
-
-        <!-- Top Navbar -->
-        <div class="navbar">
+        <div class="navbar navbar-large main-header">
           <div class="navbar-bg"></div>
-          <div class="navbar-inner">
+          <div class="navbar-inner sliding">
+            <div class="left">
+              
+            </div>
             <div class="title">VirtualTabletop.io</div>
+            <div class="title-large">
+              <div class="title-large-text">VirtualTabletop.io</div>
+            </div>
+            <div class="right">
+              <a href="#" class="link icon icon-only text-color-white hideApp"><span class="material-icons">close</span></a>
+            </div>
           </div>
         </div>
-
-        <!-- Bottom Toolbar -->
         <div class="toolbar toolbar-bottom">
           <div class="toolbar-inner">
-            <!-- Toolbar links -->
-            <a href="#" class="link">Link 1</a>
-            <a href="#" class="link">Link 2</a>
+            
           </div>
         </div>
-
-        <!-- Scrollable page content -->
         <div class="page-content">
-          <p>Page content goes here</p>
-          <!-- Link to another page -->
-          <a href="#" class="hideApp">Hide App</a>
+          <div class="block">
+            <p>There is no saved game in this room. You can save your progress or add games to it and play them with your friends and family by sharing the link.</p>
+            <p>Bring your own voice chat. We recommend <a class="external" href="https://meet.jit.si/">Jitsi Meet</a> because it's free software, runs in the browser and requires no accounts.</p>
+          </div>
+          <div class="block block-strong">
+            <div class="row">
+              <div class="col">
+                <p class="text-align-center">Save what you are currently working&nbsp;on?</p>
+              </div>
+              <div class="col">
+                <p class="text-align-center">Do you have a *.vtt or *.pcio&nbsp;file?</p>
+              </div>
+              <div class="col">
+                <p class="text-align-center">Do you have a link to&nbsp;one?</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <button class="button button-raised button-fill color-blue">Save Room State</button>
+              </div>
+              <div class="col">
+                <button class="button button-raised button-fill color-blue">Upload Files</button>
+              </div>
+              <div class="col">
+                <button class="button button-raised button-fill color-blue">Ener Link</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="block">
+            <p>If you don't, you can create your own game or add one from the public library:</p>
+          </div>
+
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          
         </div>
       </div>
     </div>
   </div>
+
   <div id="toolbar">
     <button id="statesButton" data-overlay="statesOverlay" class="toolbarButton" ><span class="tooltip">Game Library</span></button>
     <button id="showAppButton" class="toolbarButton"><span class="tooltip">Show App</span></button>
@@ -447,12 +513,9 @@
 
   <div id="enlarged" class="hidden"></div>
 
-  <script type="module"> {{CONFIG}}  {{JS}} </script>
-  <!-- Path to Framework7 Library Bundle JS-->
   <script type="text/javascript" src="ui-core/framework7-bundle.js"></script>
-  <!-- Path to your app js-->
-  <script type="text/javascript" src="js/ui.js"></script>
-
+  <script type="module"> {{CONFIG}}  {{JS}} </script>
+ 
 </body>
 
 </html>

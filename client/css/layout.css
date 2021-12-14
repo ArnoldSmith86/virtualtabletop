@@ -146,6 +146,7 @@ button:hover {
   white-space: nowrap;
   pointer-events: none;
   font-weight: 500;
+  background: none;
 }
 
 .toolbarButton:hover .tooltip {

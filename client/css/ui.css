@@ -689,3 +689,19 @@ code {
 .tooltip{
   opacity: 1!important;
 }
+html {
+  height  : 100%;
+  overflow: hidden;
+  position: relative;
+}
+body {
+  height  : 100%;
+  overflow: auto;
+  position: relative;
+}
+
+.main-header .navbar-bg{
+  background-color: #0abcf9;
+background-image: linear-gradient(315deg, #0abcf9 0%, #2c69d1 74%);
+  }
+

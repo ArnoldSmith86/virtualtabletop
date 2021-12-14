@@ -8,10 +8,13 @@ if (document.location.search.indexOf('theme=') >= 0) {
 }
 
 // Init App
+
+
 var app = new Framework7({
-  id: 'io.framework7.testapp',
+  id: 'io.virtualtabletop.ui',
   el: '#app',
   theme,
+  autoDarkTheme: true,
   popup: {
     closeOnEscape: true,
   },
@@ -29,13 +32,12 @@ var app = new Framework7({
   },
 });
 
+var mainView = app.views.create('.view-main');
+
 $UI('#app').hide();
 
 $UI('#app .hideApp').on('click', function() {
      $UI('#app').hide();
-});
-$UI('#app .showAppButton').on('click', function() {
-     $UI('#app').show();
 });
 
 
