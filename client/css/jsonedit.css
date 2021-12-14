@@ -353,7 +353,11 @@ body.jsonEdit.jeZoomOut #topSurface {
 #jsonEditor > * {
   pointer-events: initial
 }
+#jeCommands .numberInputRange{
+  display: none;
+}
 
-/* #jeCommandOptions > div{
-  width: var(--commandPaneWidth);
-} */
+#jeCommands #jeCommandOptions input[type="number"]{
+  width: 6ch;
+}
+
