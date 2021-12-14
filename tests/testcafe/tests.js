@@ -305,7 +305,7 @@ function publicLibraryButtons(game, variant, md5, tests) {
         if(typeof b == "string") {
           await t.click(`[id="${b}"]`)
         } else {
-          await t.dragToElement(b[0](), b[1]());
+          await t.dragToElement(b[0](), b[1](), { speed:0.5 });
         }
   });
 }
