@@ -4080,7 +4080,7 @@
                 supportsPassive = true;
               }
             });
-            window.addEventListener('testPassiveListener', null, opts);
+            document.getElementById('app').addEventListener('testPassiveListener', null, opts);
           } catch (e) {// No support
           }
 
@@ -5067,12 +5067,12 @@
 
 
           var window = getWindow();
-          window.addEventListener('offline', function () {
+          document.getElementById('app').addEventListener('offline', function () {
             app.online = false;
             app.emit('offline');
             app.emit('connection', false);
           });
-          window.addEventListener('online', function () {
+          document.getElementById('app').addEventListener('online', function () {
             app.online = true;
             app.emit('online');
             app.emit('connection', true);
@@ -5280,11 +5280,11 @@
 
           app.getSize(); // Emit resize
 
-          window.addEventListener('resize', function () {
+          document.getElementById('app').addEventListener('resize', function () {
             app.emit('resize');
           }, false); // Emit orientationchange
 
-          window.addEventListener('orientationchange', function () {
+          document.getElementById('app').addEventListener('orientationchange', function () {
             app.emit('orientationchange');
           });
         },
@@ -5855,7 +5855,7 @@
 
       if (device.ios && device.webView) {
         // Strange hack required for iOS 8 webview to work on inputs
-        window.addEventListener('touchstart', function () {});
+        document.getElementById('app').addEventListener('touchstart', function () {});
       }
 
       var touchStartX;
@@ -6319,25 +6319,25 @@
         passive: false,
         capture: true
       } : true;
-      window.addEventListener('click', appClick, true);
+      document.getElementById('app').addEventListener('click', appClick, true);
 
       if (support.passiveListener) {
-        window.addEventListener(app.touchEvents.start, appTouchStartActive, activeListenerCapture);
-        window.addEventListener(app.touchEvents.move, appTouchMoveActive, activeListener);
-        window.addEventListener(app.touchEvents.end, appTouchEndActive, activeListener);
-        window.addEventListener(app.touchEvents.start, appTouchStartPassive, passiveListenerCapture);
-        window.addEventListener(app.touchEvents.move, appTouchMovePassive, passiveListener);
-        window.addEventListener(app.touchEvents.end, appTouchEndPassive, passiveListener);
+        document.getElementById('app').addEventListener(app.touchEvents.start, appTouchStartActive, activeListenerCapture);
+        document.getElementById('app').addEventListener(app.touchEvents.move, appTouchMoveActive, activeListener);
+        document.getElementById('app').addEventListener(app.touchEvents.end, appTouchEndActive, activeListener);
+        document.getElementById('app').addEventListener(app.touchEvents.start, appTouchStartPassive, passiveListenerCapture);
+        document.getElementById('app').addEventListener(app.touchEvents.move, appTouchMovePassive, passiveListener);
+        document.getElementById('app').addEventListener(app.touchEvents.end, appTouchEndPassive, passiveListener);
       } else {
-        window.addEventListener(app.touchEvents.start, function (e) {
+        document.getElementById('app').addEventListener(app.touchEvents.start, function (e) {
           appTouchStartActive(e);
           appTouchStartPassive(e);
         }, true);
-        window.addEventListener(app.touchEvents.move, function (e) {
+        document.getElementById('app').addEventListener(app.touchEvents.move, function (e) {
           appTouchMoveActive(e);
           appTouchMovePassive(e);
         }, false);
-        window.addEventListener(app.touchEvents.end, function (e) {
+        document.getElementById('app').addEventListener(app.touchEvents.end, function (e) {
           appTouchEndActive(e);
           appTouchEndPassive(e);
         }, false);
@@ -6348,19 +6348,19 @@
         app.on('touchstart', handleTouchStart);
         app.on('touchmove', handleTouchMove);
         app.on('touchend', handleTouchEnd);
-        window.addEventListener('touchcancel', handleTouchCancel, {
+        document.getElementById('app').addEventListener('touchcancel', handleTouchCancel, {
           passive: true
         });
       } else if (params.activeState) {
         app.on('touchstart', handleMouseDown);
         app.on('touchmove', handleMouseMove);
         app.on('touchend', handleMouseUp);
-        window.addEventListener('pointercancel', handleMouseUp, {
+        document.getElementById('app').addEventListener('pointercancel', handleMouseUp, {
           passive: true
         });
       }
 
-      window.addEventListener('contextmenu', function (e) {
+      document.getElementById('app').addEventListener('contextmenu', function (e) {
         if (params.disableContextMenu && (device.ios || device.android || device.cordova || window.Capacitor && window.Capacitor.isNative)) {
           e.preventDefault();
         }
@@ -34679,7 +34679,7 @@
                 supportsPassive = true;
               }
             });
-            window.addEventListener('testPassiveListener', null, opts);
+            document.getElementById('app').addEventListener('testPassiveListener', null, opts);
           } catch (e) {// No support
           }
 
@@ -34845,9 +34845,9 @@
           } // Emit resize
 
 
-          window.addEventListener('resize', swiper.resize.resizeHandler); // Emit orientationchange
+          document.getElementById('app').addEventListener('resize', swiper.resize.resizeHandler); // Emit orientationchange
 
-          window.addEventListener('orientationchange', swiper.resize.orientationChangeHandler);
+          document.getElementById('app').addEventListener('orientationchange', swiper.resize.orientationChangeHandler);
         },
         destroy: function destroy(swiper) {
           var window = getWindow();
@@ -37593,8 +37593,8 @@
 
       if (!support.touch && support.pointerEvents) {
         el.addEventListener(touchEvents.start, swiper.onTouchStart, false);
-        window.addEventListener(touchEvents.move, swiper.onTouchMove, capture);
-        window.addEventListener(touchEvents.end, swiper.onTouchEnd, false);
+        document.getElementById('app').addEventListener(touchEvents.move, swiper.onTouchMove, capture);
+        document.getElementById('app').addEventListener(touchEvents.end, swiper.onTouchEnd, false);
       } else {
         if (support.touch) {
           var passiveListener = touchEvents.start === 'touchstart' && support.passiveListener && params.passiveListeners ? {
@@ -37613,15 +37613,15 @@
           }
 
           if (!dummyEventAttached) {
-            window.addEventListener('touchstart', dummyEventListener);
+            document.getElementById('app').addEventListener('touchstart', dummyEventListener);
             dummyEventAttached = true;
           }
         }
 
         if (params.simulateTouch && !device.ios && !device.android || params.simulateTouch && !support.touch && device.ios) {
           el.addEventListener('mousedown', swiper.onTouchStart, false);
-          window.addEventListener('mousemove', swiper.onTouchMove, capture);
-          window.addEventListener('mouseup', swiper.onTouchEnd, false);
+          document.getElementById('app').addEventListener('mousemove', swiper.onTouchMove, capture);
+          document.getElementById('app').addEventListener('mouseup', swiper.onTouchEnd, false);
         }
       } // Prevent Links Clicks
 
@@ -40492,8 +40492,8 @@
 
         if (!support.touch) {
           target.addEventListener(touchEventsDesktop.start, swiper.scrollbar.onDragStart, activeListener);
-          window.addEventListener(touchEventsDesktop.move, swiper.scrollbar.onDragMove, activeListener);
-          window.addEventListener(touchEventsDesktop.end, swiper.scrollbar.onDragEnd, passiveListener);
+          document.getElementById('app').addEventListener(touchEventsDesktop.move, swiper.scrollbar.onDragMove, activeListener);
+          document.getElementById('app').addEventListener(touchEventsDesktop.end, swiper.scrollbar.onDragEnd, passiveListener);
         } else {
           target.addEventListener(touchEventsTouch.start, swiper.scrollbar.onDragStart, activeListener);
           target.addEventListener(touchEventsTouch.move, swiper.scrollbar.onDragMove, activeListener);
@@ -42220,7 +42220,7 @@
         history.scrollToSlide(0, history.paths.value, swiper.params.runCallbacksOnInit);
 
         if (!swiper.params.history.replaceState) {
-          window.addEventListener('popstate', swiper.history.setHistoryPopState);
+          document.getElementById('app').addEventListener('popstate', swiper.history.setHistoryPopState);
         }
       },
       destroy: function destroy() {
@@ -42675,7 +42675,7 @@
           if (swiper.params.autoplay.enabled) {
             swiper.autoplay.start();
             var document = getDocument();
-            window.addEventListener('visibilitychange', swiper.autoplay.onVisibilityChange);
+            document.getElementById('app').addEventListener('visibilitychange', swiper.autoplay.onVisibilityChange);
             swiper.autoplay.attachMouseEvents();
           }
         },
