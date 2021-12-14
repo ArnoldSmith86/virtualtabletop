@@ -726,3 +726,15 @@ body {
 .menu-dropdown-left .menu-dropdown-content .icon{
   margin-right: 8px;
 }
+h2{
+  height: var(--f7-menu-item-height);
+  line-height: var(--f7-menu-item-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: var(--f7-block-margin-vertical) 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: calc(var(--f7-block-padding-horizontal) + var(--f7-safe-area-left));
+  padding-right: calc(var(--f7-block-padding-horizontal) + var(--f7-safe-area-right));
+}
