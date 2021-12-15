@@ -486,13 +486,17 @@ export default class Room {
 
   unload() {
     this.trace('unload', {});
-    if(Object.keys(this.state).length > 1 || Object.keys(this.state._meta.states).length || this.state._meta.redirectTo || this.state._meta.returnServer) {
-      Logging.log(`unloading room ${this.id}`);
-      this.writeToFilesystem();
+    if(this.state && this.state._meta) {
+      if(Object.keys(this.state).length > 1 || Object.keys(this.state._meta.states).length || this.state._meta.redirectTo || this.state._meta.returnServer) {
+        Logging.log(`unloading room ${this.id}`);
+        this.writeToFilesystem();
+      } else {
+        Logging.log(`destroying room ${this.id}`);
+        if(fs.existsSync(this.roomFilename()))
+          fs.unlinkSync(this.roomFilename());
+      }
     } else {
-      Logging.log(`destroying room ${this.id}`);
-      if(fs.existsSync(this.roomFilename()))
-        fs.unlinkSync(this.roomFilename());
+      Logging.log(`unloading broken room ${this.id}`);
     }
     this.unloadCallback();
   }
