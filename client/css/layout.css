@@ -146,6 +146,7 @@ button:hover {
   white-space: nowrap;
   pointer-events: none;
   font-weight: 500;
+  background: none;
 }
 
 .toolbarButton:hover .tooltip {
@@ -461,6 +462,10 @@ body.aspectTooGood #options {
   content: '[library]';
 }
 
+#showAppButton::before {
+  content: '[track]';
+}
+
 #statesButton .tooltip {
   font-weight: 900;
 }
@@ -588,16 +593,13 @@ html:-webkit-full-screen #fullscreenButton .tooltip::before {
 
 .upload::before,
 .uploadAsset::before {
-  content: '[upload]';
 }
 
 .download::before {
-  content: '[download]';
 }
 
 .link::before,
 .share::before {
-  content: '[link]';
 }
 
 .edit::before {
@@ -611,7 +613,6 @@ body.edit::before {
 
 .add::before,
 .create::before {
-  content: '[add]';
 }
 
 .library::before {

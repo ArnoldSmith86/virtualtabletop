@@ -10,6 +10,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/i/branding/ios-icon.png">
   <link rel="manifest" href="/i/branding/manifest.json">
   <link rel="mask-icon" href="/i/branding/mask-icon.svg">
+  <meta name="theme-color" content="#1f5ca6">
   <script src="https://cdn.jsdelivr.net/combine/npm/vue@3.0.7/dist/vue.global.prod.js,npm/jszip@3.6.0/dist/jszip.min.js"></script>
   <base target="_blank">
   <style> /*** CSS ***/ </style>
@@ -18,8 +19,132 @@
 
 <body>
 
+  <div id="app" class="ui color-theme-blue">
+    <div class="view view-main">
+      <div data-name="home" class="page">
+        <div class="navbar navbar-large main-header text-color-white">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner sliding">
+            <div class="left">
+
+            </div>
+            <div class="title">VirtualTabletop.io</div>
+            <div class="title-large">
+              <div class="title-large-text">VirtualTabletop.io</div>
+            </div>
+            <div class="right">
+
+              <a href="#" class="menu-item icon-only hideApp">
+                <div class="menu-item-content">
+                  <span class="material-icons text-color-white">close</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="page-content" id="yourShelf">
+          <h2>
+            <span>Your Game Shelf</span>
+            <div class="menu">
+              <div class="menu-inner">
+                <div class="menu-item menu-item-dropdown">
+                  <div class="menu-item-content"><span class="material-icons">add</span></div>
+                  <div class="menu-dropdown menu-dropdown-right">
+                    <div class="menu-dropdown-content">
+                      <a href="#" class="menu-dropdown-link menu-close">Save what you're working on <span class="icon material-icons">save</span></a>
+                      <a href="#" class="menu-dropdown-link menu-close">Upload a VTT or PCIO file <span class="icon material-icons">upload</span></a>
+                      <a href="#" class="menu-dropdown-link menu-close">Enter a link to another game <span class="icon material-icons">link</span></a>
+                      <div class="menu-dropdown-divider"></div>
+                      <a href="#" class="menu-dropdown-link menu-close">Download everything <span class="icon material-icons">download</span></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </h2>
+          <div class="block">
+            <p>There is no saved game in this room. You can save your progress or add games to it and play them with your friends and family by sharing the link.</p>
+            <p>Bring your own voice chat. We recommend <a class="external" href="https://meet.jit.si/">Jitsi Meet</a> because it's free software, runs in the browser and requires no accounts.</p>
+          </div>
+          <div class="block block-strong inset">
+            <div class="row">
+              <div class="col">
+                <p class="text-align-center">Save what you are currently working&nbsp;on?</p>
+              </div>
+              <div class="col">
+                <p class="text-align-center">Do you have a *.vtt or *.pcio&nbsp;file?</p>
+              </div>
+              <div class="col">
+                <p class="text-align-center">Do you have a link to&nbsp;one?</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <button class="button button-raised button-fill color-blue create"><span class="icon material-icons">save</span>Room</button>
+              </div>
+              <div class="col">
+                <button class="button button-raised button-fill color-blue upload"><span class="icon material-icons">upload</span>Files</button>
+              </div>
+              <div class="col">
+                <button class="button button-raised button-fill color-blue link"><span class="icon material-icons">link</span>Link</button>
+              </div>
+            </div>
+          </div>
+          <div class="block">
+            <p>If you don't, you can create your own game or add one from the Public Library below.</p>
+          </div>
+          <h2><span>Public Library</span></h2>
+          <template id="template-stateslist-entry" type="text/template">
+            <div class="card-content">
+              <a class="close-box card-close material-icons">close</a>
+              <div class="header">
+                <div class="title">
+                  <img>
+                  <div>
+                    <div class="name">Name</div>
+                    <div class="similar-to"></div>
+                    <div class="stats"><span class="material-icons icon time-icon">schedule</span> <span class="time">0</span></div>
+                  </div>
+                  <div class="edit-button"><a href="/stateEditOverlay/" class="edit"><i class="icon material-icons">drive_file_rename_outline</i>EDIT</a></div>
+                </div>
+
+              </div>
+              <input class="star" type="checkbox"><label class="star-label card-prevent-open"></label>
+
+              <div class="details">
+                <div class="extra-info">
+                  <a class="bgg external"><i class="icon material-icons">link</i>BGG Link</a>
+                  <a class="rules external"><i class="icon material-icons">menu_book</i>Rules</a>
+                </div>
+                <div class="block description-info"></div>
+                <div class="variantsList"></div>
+                <div class="block-title"><i class="icon material-icons">attribution</i> Attribution</div>
+                <div class="block attribution-info">There is no further attribution information for this title.</div>
+              </div>
+            </div>
+          </template>
+          <template id="template-variantslist-entry" type="text/template">
+            <img class="variant-image" />
+            <div class="variant-name">
+              <div class="label"></div>
+              <div class="accordion-item-content">
+                <div class="variant-description"></div>
+                <div class="variant-attribution"></div>
+              </div>
+            </div>
+            <div class="has-attribution"><i class="icon material-icons accordion-item-toggle">attribution</i></div>
+            <div class="language-info"><i class="material-icons">language</i><span class="language"></span></div>
+            <div class="player-number-info"><i class="material-icons">groups</i><span class="players">0</span></div>
+            <button class="play play-button card-close"><i class="material-icons">play_arrow</i>PLAY</button>
+          </template>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div id="toolbar">
     <button id="statesButton" data-overlay="statesOverlay" class="toolbarButton" ><span class="tooltip">Game Library</span></button>
+    <button id="showAppButton" class="toolbarButton"><span class="tooltip">Show App</span></button>
     <div class="divider">&nbsp;</div>
     <button id="playersButton" data-overlay="playerOverlay" class="toolbarButton" ><span class="tooltip">Players & Settings</span></button>
     <div class="divider">&nbsp;</div>
@@ -415,6 +540,7 @@
   <div id="enlarged" class="hidden"></div>
 
   <script type="module"> //*** CONFIG ***//  //*** JS ***// </script>
+  <script type="text/javascript" src="ui-core/framework7-bundle.js"></script>
 
 </body>
 

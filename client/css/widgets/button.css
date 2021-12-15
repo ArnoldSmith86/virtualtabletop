@@ -1,4 +1,4 @@
-.button {
+.widget.button {
   box-sizing: border-box;
   border-radius: 800px;
   background-color: var(--wcMain);
@@ -17,9 +17,15 @@
   --wcMainOH: var(--wcBorder);
   --wcFontOH: var(--wcFont);
   --wcImageOH: url();
+  text-transform: unset;
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+  letter-spacing: unset;
+  font-size: unset;
 }
 
-.button:hover {
+.widget.button:hover {
   border-color: var(--wcBorderOH);
   background-color: var(--wcMainOH);
   background-image: var(--wcImageOH);

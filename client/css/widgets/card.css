@@ -1,16 +1,17 @@
-.card {
+.widget.card {
   overflow: hidden;
+  margin: 0;
 }
 
-body.edit .card {
+body.edit .widget.card {
   display: none;
 }
 
-.card > .cardFace {
+.widget.card > .cardFace {
   display: none;
 }
 
-.card > .active.cardFace {
+.widget.card > .active.cardFace {
   display: block;
   overflow: hidden;
   width: 100%;
@@ -19,7 +20,7 @@ body.edit .card {
   box-sizing: border-box;
 }
 
-.card > .active.cardFace > .cardFaceObject {
+.widget.card > .active.cardFace > .cardFaceObject {
   position: absolute;
   background-size: contain;
   background-repeat: no-repeat;

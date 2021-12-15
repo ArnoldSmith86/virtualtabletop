@@ -336,6 +336,23 @@ body.jsonEdit.jeZoomOut #topSurface {
 #widget_dropOffsetY::before{
   content: '[width]';
 }
+
+#jsonEditor input[type=number],
+#jsonEditor input[type=text]{
+  background: white;
+  display: inline;
+  margin-left: 1ch;
+  color: black;
+}
+#jsonEditor input[type=checkbox]{
+  float: left;
+}
+#jsonEditor {
+  pointer-events: none
+} 
+#jsonEditor > * {
+  pointer-events: initial
+}
 #jeCommands .numberInputRange{
   display: none;
 }
