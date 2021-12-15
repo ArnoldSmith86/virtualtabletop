@@ -38,9 +38,10 @@ export default async function convertPCIO(content) {
     if(name.match(/^\/img\//)) {
       name = 'https://playingcards.io' + name;
 
-      name = name.replace('https://playingcards.io/img/cardback-red.svg',                        '/i/cards-default/2B.svg');
-      name = name.replace(/https:\/\/playingcards\.io\/img\/cards(?:-french)?\/joker-black.svg/, '/i/cards-default/2J.svg');
-      name = name.replace(/https:\/\/playingcards\.io\/img\/cards(?:-french)?\/joker-red.svg/,   '/i/cards-default/1J.svg');
+      name = name.replace(/https:\/\/playingcards\.io\/img\/cardback.*blue.svg/,                      '/i/cards-default/1B.svg');
+      name = name.replace(/https:\/\/playingcards\.io\/img\/cardback.*red.svg/,                       '/i/cards-default/2B.svg');
+      name = name.replace(/https:\/\/playingcards\.io\/img\/cards(?:-french)?\/joker-black.svg/,      '/i/cards-default/2J.svg');
+      name = name.replace(/https:\/\/playingcards\.io\/img\/cards(?:-french)?\/joker-(red|blue).svg/, '/i/cards-default/1J.svg');
 
       const regex = /https:\/\/playingcards\.io\/img\/cards(?:-french)?\/(hearts|spades|diamonds|clubs)-([2-9jqka]|10).svg/;
       const match = regex.exec(name);
@@ -202,6 +203,9 @@ export default async function convertPCIO(content) {
         w.classes = 'transparent';
       addDimensions(w, widget, 111, 168);
 
+      if(widget.allowedDecks)
+        w.dropTarget = widget.allowedDecks.map(d=>({deck:d}));
+
       if(pileOverlaps[w.id]) {
         w.x += 4;
         w.y += 4;
@@ -278,11 +282,7 @@ export default async function convertPCIO(content) {
         w.faceTemplates.push(widget.backTemplate);
       if(widget.faceTemplate)
         w.faceTemplates.push(widget.faceTemplate);
-      w.cardDefaults = {
-        pilesWith: {
-          type: 'card'
-        }
-      };
+      w.cardDefaults = {};
       if(widget.cardWidth && widget.cardWidth != 103)
         w.cardDefaults.width = widget.cardWidth;
       if(widget.cardHeight && widget.cardHeight != 160)
@@ -300,18 +300,28 @@ export default async function convertPCIO(content) {
         delete face.includeBorder;
         delete face.includeRadius;
         for(const object of face.objects) {
-          object.value = mapName(object.value);
+          if(object.value)
+            object.value = mapName(object.value);
           object.width = object.w;
           object.height = object.h;
           delete object.w;
           delete object.h;
-          if(object.value == '/i/cards-default/2B.svg')
-            object.color = '#ffffff';
         }
+        face.objects.unshift({
+          width:     w.cardDefaults.width  || 103,
+          height:    w.cardDefaults.height || 160,
+          type:      'image',
+          color:     'white',
+          valueType: 'static',
+          value:     ''
+        });
       }
-      for(const type in w.cardTypes)
+      let sortingOrder = 0;
+      for(const type in w.cardTypes) {
         for(const key in w.cardTypes[type])
           w.cardTypes[type][key] = mapName(w.cardTypes[type][key]);
+        w.cardTypes[type].sortingOrder = ++sortingOrder;
+      }
     } else if(widget.type == 'card' || widget.type == 'piece') {
       if(!byID[widget.deck]) // orphan card without deck
         continue;
@@ -666,7 +676,7 @@ export default async function convertPCIO(content) {
         });
       }
 
-      for(let c of widget.clickRoutine || []) {
+      for(let c of widget.clickRoutine ? (widget.clickRoutine.steps || widget.clickRoutine) : []) {
         if(c.func == 'MOVE_CARDS_BETWEEN_HOLDERS') {
           if(!c.args.from || !c.args.to)
             continue;
@@ -690,6 +700,29 @@ export default async function convertPCIO(content) {
           if(moveFlip && moveFlip != 'none')
             c.face = moveFlip == 'faceDown' ? 0 : 1;
         }
+        if(c.func == 'RECALL_CARDS') {
+          if(!c.args.decks)
+            continue;
+          const holders = c.args.decks.value.map(d=>byID[d].parent);
+          const flip = c.args.flip;
+          c = {
+            func:   'RECALL',
+            holder: holders,
+            owned:  c.args.includeHands.value == 'hands'
+          };
+          if(c.holder.length == 1)
+            c.holder = c.holder[0];
+          if(c.owned)
+            delete c.owned;
+          if(!flip || flip.value != 'none') {
+            w.clickRoutine.push(c);
+            c = {
+              func:   'FLIP',
+              holder: holders,
+              face:   flip && flip.value == 'faceUp' ? 1 : 0
+            };
+          }
+        }
         if(c.func == 'SHUFFLE_CARDS') {
           if(!c.args.holders)
             continue;
@@ -699,6 +732,20 @@ export default async function convertPCIO(content) {
           };
           if(c.holder.length == 1)
             c.holder = c.holder[0];
+        }
+        if(c.func == 'SORT_CARDS') {
+          if(!c.args.sources)
+            continue;
+          c = {
+            func:   'SORT',
+            holder: c.args.sources.value,
+            key:    'sortingOrder',
+            reverse: c.args.direction.value != 'za'
+          };
+          if(c.holder.length == 1)
+            c.holder = c.holder[0];
+          if(!c.reverse)
+            delete c.reverse;
         }
         if(c.func == "FLIP_CARDS") {
           if(!c.args.holders)
