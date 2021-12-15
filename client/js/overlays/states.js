@@ -63,7 +63,7 @@ async function addState(e, type, src, id) {
 
   let url = `/addState/${roomID}/${id}/${type}/${src && src.name && encodeURIComponent(src.name)}/`;
   waitingForStateCreation = id;
-  if(e && (e.target.parentNode == $('#addVariant') || e.target.className == 'update')) {
+  if(e && (e.target.parentNode.parentNode == $('#addVariant') || e.target.classList.contains('update'))) {
     waitingForStateCreation = $('#stateEditOverlay').dataset.id;
     url += $('#stateEditOverlay').dataset.id;
   }
@@ -144,7 +144,14 @@ function parsePlayers(players) {
   return validPlayers;
 }
 
-function fillStatesList(states, starred, activePlayers) {
+function fillStatesList(states, returnServer, starred, activePlayers) {
+  if(returnServer) {
+    $('#statesButton').dataset.overlay = 'returnOverlay';
+    overlayShownForEmptyRoom = true;
+    return;
+  }
+  $('#statesButton').dataset.overlay = 'statesOverlay';
+
   const addDiv = $('#addState');
   removeFromDOM(addDiv);
   removeFromDOM('#statesList > div');
@@ -269,7 +276,7 @@ async function shareLink() {
 }
 
 onLoad(function() {
-  onMessage('meta', args=>fillStatesList(args.meta.states, args.meta.starred, args.activePlayers));
+  onMessage('meta', args=>fillStatesList(args.meta.states, args.meta.returnServer, args.meta.starred, args.activePlayers));
 
   on('#filterByText', 'keyup', updateLibraryFilter);
   on('#filterByPlayers, #filterByLanguage', 'change', updateLibraryFilter);

@@ -12,11 +12,14 @@ import Player     from './server/player.mjs';
 import Room       from './server/room.mjs';
 import MinifyRoom from './server/minify.mjs';
 import Logging    from './server/logging.mjs';
+import Config     from './server/config.mjs';
 
 const app = express();
 const server = http.Server(app);
 
-const savedir = path.resolve() + '/save';
+const savedir = Config.directory('save');
+const assetsdir = Config.directory('assets');
+const librarydir = Config.directory('library');
 const sharedLinks = fs.existsSync(savedir + '/shares.json') ? JSON.parse(fs.readFileSync(savedir + '/shares.json')) : {};
 
 const serverStart = +new Date();
@@ -26,18 +29,18 @@ if(false) { // REMOVE BEFORE MERGE - used to mass edit library JSON files
   for(const gameInfo of JSON.parse(fs.readFileSync('library/library.json')))
     libraryMeta[gameInfo.link.substr(0, gameInfo.link.length-4)] = gameInfo;
 
-  fs.readdir('library/games', (err, files) => {
+  fs.readdir(librarydir + '/games', (err, files) => {
     for(const dir of files) {
-      fs.readdir('library/games/' + dir, (err, files) => {
+      fs.readdir(librarydir + '/games/' + dir, (err, files) => {
         for(const file of files) {
           if(file.match(/json$/)) {
-            const gameFile = JSON.parse(fs.readFileSync('library/games/' + dir + '/' + file));
+            const gameFile = JSON.parse(fs.readFileSync(librarydir + '/games/' + dir + '/' + file));
             if(libraryMeta[dir]) {
               gameFile._meta.info.similarName = libraryMeta[dir]['similar name'];
               gameFile._meta.info.similarLink = libraryMeta[dir]['similar link'];
               gameFile._meta.info.description = libraryMeta[dir]['notes'];
               console.log(dir, gameFile._meta.info);
-              fs.writeFileSync('library/games/' + dir + '/' + file, JSON.stringify(gameFile, null, '  '));
+              fs.writeFileSync(librarydir + '/games/' + dir + '/' + file, JSON.stringify(gameFile, null, '  '));
             }
           }
         }
@@ -55,7 +58,7 @@ for(const category of [ 'games', 'assets', 'tutorials' ]) {
         publicLibraryAssets[file] = name + '/' + dir + '/assets/' + file;
 }
 
-fs.mkdirSync(savedir + '/assets', { recursive: true });
+fs.mkdirSync(assetsdir, { recursive: true });
 fs.mkdirSync(savedir + '/rooms',  { recursive: true });
 fs.mkdirSync(savedir + '/states', { recursive: true });
 fs.mkdirSync(savedir + '/links',  { recursive: true });
@@ -104,7 +107,7 @@ MinifyRoom().then(function(result) {
     if(Array.isArray(req.body))
       for(const asset of req.body)
         if(asset.match(/^[0-9_-]+$/))
-          result[asset] = fs.existsSync(savedir + '/assets/' + asset);
+          result[asset] = fs.existsSync(assetsdir + '/' + asset);
     res.send(result);
   });
 
@@ -112,7 +115,7 @@ MinifyRoom().then(function(result) {
     if(!req.params.name.match(/^[0-9_-]+$/))
       return;
 
-    fs.readFile(publicLibraryAssets[req.params.name] ?? savedir + '/assets/' + req.params.name, function(err, content) {
+    fs.readFile(publicLibraryAssets[req.params.name] ?? assetsdir + '/' + req.params.name, function(err, content) {
       if(!content) {
         res.sendStatus(404);
         Logging.log(`WARNING: Could not load asset ${req.params.name}`);
@@ -225,10 +228,10 @@ MinifyRoom().then(function(result) {
   });
 
   app.put('/asset', bodyParser.raw({ limit: '100mb' }), function(req, res) {
-    const filename = `/assets/${CRC32.buf(req.body)}_${req.body.length}`;
-    if(!fs.existsSync(savedir + filename))
-      fs.writeFileSync(savedir + filename, req.body);
-    res.send(filename);
+    const filename = `/${CRC32.buf(req.body)}_${req.body.length}`;
+    if(!fs.existsSync(assetsdir + filename))
+      fs.writeFileSync(assetsdir + filename, req.body);
+    res.send(`/assets${filename}`);
   });
 
   app.put('/addState/:room/:id/:type/:name/:addAsVariant?', bodyParser.raw({ limit: '500mb' }), async function(req, res, next) {
@@ -241,11 +244,21 @@ MinifyRoom().then(function(result) {
     }).catch(next);
   });
 
+  app.put('/moveServer/:room/:returnServer/:returnState', bodyParser.raw({ limit: '500mb' }), async function(req, res, next) {
+    ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
+      if(isLoaded) {
+        activeRooms.get(req.params.room).receiveState(req.body, req.params.returnServer, req.params.returnState).then(function() {
+          res.send('OK');
+        }).catch(next);
+      }
+    }).catch(next);
+  });
+
   app.use(Logging.userErrorHandler);
 
   app.use(Logging.errorHandler);
 
-  server.listen(process.env.PORT || 8272, function() {
+  server.listen(Config.get('port'), function() {
     Logging.log(`Listening on ${server.address().port}`);
   });
 });

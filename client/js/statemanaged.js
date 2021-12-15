@@ -40,10 +40,21 @@ export class StateManaged {
   }
 
   get(property) {
-    if(this.state[property] !== undefined)
-      return [ 'x', 'y', 'width', 'height', 'z', 'layer' ].indexOf(property) != -1 ? +this.state[property] : this.state[property];
-    else
-      return this.getDefaultValue(property) !== undefined ? this.getDefaultValue(property) : null;
+    const value = this.state[property];
+    if(value !== undefined) {
+      if(property == 'x' || property == 'y' || property == 'z' || property == 'layer' || property == 'width' || property == 'height')
+        return +value;
+      else
+        return value;
+    } else {
+      const defaultValue = this.getDefaultValue(property);
+      return defaultValue !== undefined ? defaultValue : null;
+    }
+  }
+
+  globalUpdateListenersUnregister() {
+    for(const property in StateManaged.globalUpdateListeners)
+      StateManaged.globalUpdateListeners[property] = StateManaged.globalUpdateListeners[property].filter(i=>i[0]!=this);
   }
 
   inheritFrom() {
@@ -61,7 +72,15 @@ export class StateManaged {
   }
 
   inheritFromIsValid(properties, key) {
-    return (properties == '*' || properties.indexOf(key) != -1) && [ 'id', 'type', 'deck', 'cardType' ].indexOf(key) == -1;
+    if(properties == '*')
+      return true;
+    if([ 'id', 'type', 'deck', 'cardType' ].indexOf(key) != -1)
+      return false;
+
+    if(Array.isArray(properties) && properties.length && properties[0].length && properties[0][0] == '!')
+      return properties.indexOf('!'+key) == -1;
+    else
+      return properties.indexOf(key) != -1;
   }
 
   inheritFromUnregister() {
@@ -74,9 +93,9 @@ export class StateManaged {
       sendTraceEvent('set activeFace', { w: this.get('id'), property, value, stack: new Error().stack });
 
     const JSONvalue = JSON.stringify(value);
-    if(JSONvalue === JSON.stringify(this.getDefaultValue(property)) && !this.state.inheritFrom)
+    if(!this.state.inheritFrom && JSONvalue === JSON.stringify(this.getDefaultValue(property)))
       value = null;
-    if(JSON.stringify(this.state[property]) === JSONvalue || this.state[property] === undefined && value === null)
+    if(this.state[property] === undefined && value === null || JSON.stringify(this.state[property]) === JSONvalue)
       return;
 
     if(property == 'z') {
@@ -95,7 +114,7 @@ export class StateManaged {
 
     if(Array.isArray(this.get(`${property}ChangeRoutine`)))
       await this.evaluateRoutine(`${property}ChangeRoutine`, { oldValue, value }, {});
-    if(Array.isArray(this.get('changeRoutine')))
+    if(Array.isArray(this.get('changeRoutine')) && property != 'audio')
       await this.evaluateRoutine('changeRoutine', { property, oldValue, value }, {});
 
     if(!StateManaged.isInGlobalUpdateRoutine) {

@@ -2,9 +2,11 @@ import fs from 'fs';
 import path from 'path';
 
 import JSZip from 'jszip';
+import fetch from 'node-fetch';
 import FileLoader from './fileloader.mjs';
 import FileUpdater from './fileupdater.mjs';
 import Logging from './logging.mjs';
+import Config from './config.mjs';
 
 export default class Room {
   players = [];
@@ -14,10 +16,17 @@ export default class Room {
   constructor(id, unloadCallback) {
     this.id = id;
     this.unloadCallback = unloadCallback;
+    this.unloadTimeout = setTimeout(_=>{
+      if(this.players.length == 0) {
+        Logging.log(`unloading room ${this.id} after 5s without player connection`);
+        this.unload();
+      }
+    }, 5000);
   }
 
   addPlayer(player) {
     Logging.log(`adding player ${player.name} to room ${this.id}`);
+    clearTimeout(this.unloadTimeout);
     this.players.push(player);
 
     if(!this.state._meta.players[player.name])
@@ -25,7 +34,12 @@ export default class Room {
 
     this.sendMetaUpdate();
     this.state._meta.deltaID = this.deltaID;
-    player.send('state', this.state);
+
+    if(this.state._meta.redirectTo) {
+      player.send('redirect', this.state._meta.redirectTo.url + '/' + this.id);
+    } else {
+      player.send('state', this.state);
+    }
 
     if(this.enableTracing) {
       this.trace('addPlayer', { player: player.name });
@@ -181,7 +195,7 @@ export default class Room {
       if(includeAssets)
         for(const asset of this.getAssetList(state))
           if(fs.existsSync(path.resolve() + '/save' + asset))
-            zip.file(asset, fs.readFileSync(path.resolve() + '/save' + asset));
+            zip.file(asset.substr(1), fs.readFileSync(path.resolve() + '/save' + asset));
     }
 
     const zipBuffer = await zip.generateAsync({type:'nodebuffer', compression: 'DEFLATE'});
@@ -209,7 +223,14 @@ export default class Room {
   }
 
   getAssetList(state) {
-    return JSON.stringify(state).match(/\/assets\/-?[0-9]+_[0-9]+/g) || [];
+    return [...new Set(JSON.stringify(state).match(/\/assets\/-?[0-9]+_[0-9]+/g) || [])];
+  }
+
+  getRedirection() {
+    if(this.state._meta.redirectTo)
+      return this.state._meta.redirectTo.url + '/' + this.id;
+    else
+      return null;
   }
 
   getPublicLibraryGames() {
@@ -282,8 +303,8 @@ export default class Room {
       await this.load(this.variantFilename(stateID, variantID), player);
   }
 
-  mouseMove(player, coords) {
-    this.broadcast('mouse', { player: player.name, coords });
+  mouseMove(player, mouseState) {
+    this.broadcast('mouse', { player: player.name, mouseState });
   }
 
   newPlayerColor() {
@@ -344,6 +365,19 @@ export default class Room {
     player.send('state', this.state);
   }
 
+  async receiveState(zipBody, returnServer, returnState) {
+    delete this.state._meta.redirectTo;
+    if(returnServer != 'RETURN') {
+      this.state._meta.returnServer = returnServer;
+      this.state._meta.returnState = returnState == 'true';
+    }
+    if(zipBody && zipBody.length) {
+      await this.addState('serverMove', 'file', zipBody, 'source', false);
+      await this.loadState(null, 'serverMove', 'serverMove');
+      this.removeState(null, 'serverMove');
+    }
+  }
+
   recolorPlayer(renamingPlayer, playerName, color) {
     this.state._meta.players[playerName] = color;
     this.sendMetaUpdate();
@@ -354,13 +388,12 @@ export default class Room {
     Logging.log(`removing player ${player.name} from room ${this.id}`);
 
     this.players = this.players.filter(e => e != player);
-    if(player.name.match(/^Guest/) && !Object.values(this.state).filter(w=>w.owner==player.name||Array.isArray(w.owner)&&w.owner.indexOf(player.name)!=-1).length)
-      delete this.state._meta.players[player.name];
+    if(player.name.match(/^Guest/) && !this.players.filter(e => e.name == player.name).length)
+      if(!Object.values(this.state).filter(w=>w.player==player.name||w.owner==player.name||Array.isArray(w.owner)&&w.owner.indexOf(player.name)!=-1).length)
+        delete this.state._meta.players[player.name];
 
-    if(this.players.length == 0) {
+    if(this.players.length == 0)
       this.unload();
-      this.unloadCallback();
-    }
     this.sendMetaUpdate();
   }
 
@@ -371,6 +404,10 @@ export default class Room {
   }
 
   renamePlayer(renamingPlayer, oldName, newName) {
+    if(oldName == newName)
+      return;
+
+    Logging.log(`renaming player ${oldName} to ${newName} in room ${this.id}`);
     this.state._meta.players[newName] = this.state._meta.players[newName] || this.state._meta.players[oldName];
     delete this.state._meta.players[oldName];
 
@@ -387,6 +424,55 @@ export default class Room {
 
   sendMetaUpdate() {
     this.broadcast('meta', { meta: this.state._meta, activePlayers: this.players.map(p=>p.name) });
+  }
+
+  async setRedirect(player, target) {
+    try {
+      let targetServer = Config.get('betaServers')[target] || Config.get('legacyServers')[target];
+      const isReturn = target == 'return';
+      if(isReturn)
+        targetServer = { url:this.state._meta.returnServer, return:false };
+
+      if(targetServer) {
+        const assets = [];
+        for(const asset of this.getAssetList(this.state))
+          assets.push(asset.substr(8));
+
+        const result = await fetch(targetServer.url + '/assetcheck', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(assets)
+        });
+
+        const assetStatus = await result.json();
+
+        let zipBuffer = '';
+        if(!isReturn || this.state._meta.returnState) {
+          const zip = new JSZip();
+          zip.file(`${this.id}.json`, JSON.stringify(this.state, null, '  '));
+          for(const asset in assetStatus)
+            if(!assetStatus[asset] && fs.existsSync(Config.directory('assets') + '/' + asset))
+              zip.file('assets/' + asset, fs.readFileSync(Config.directory('assets') + '/' + asset));
+
+          zipBuffer = await zip.generateAsync({type:'nodebuffer'});
+        }
+
+        const putResult = await fetch(targetServer.url + '/moveServer/' + this.id + '/' + (isReturn ? 'RETURN' : encodeURIComponent(Config.get('externalURL'))) + '/' + (targetServer.return ? 'true' : 'false'), {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/octet-stream' },
+          body: zipBuffer
+        });
+        const putText = await putResult.text();
+        if(putText != 'OK')
+          throw Error(`moveServer failed: ${putText}`);
+
+        this.state._meta.redirectTo = targetServer;
+        this.broadcast('redirect', targetServer.url + '/' + this.id);
+      }
+    } catch(e) {
+      Logging.handleGenericException('setRedirect', e);
+      player.send('error', 'There was a problem setting up the redirection. The other server might be offline.');
+    }
   }
 
   setState(state) {
@@ -407,7 +493,7 @@ export default class Room {
   }
 
   trace(source, payload) {
-    if(!this.enableTracing && source == 'client' && source == 'client' && payload.type == 'enable') {
+    if(!this.enableTracing && source == 'client' && payload.type == 'enable') {
       this.enableTracing = true;
       this.tracingFilename = `${path.resolve()}/save/${this.id}-${+new Date}.trace`;
       this.broadcast('tracing', 'enable');
@@ -431,14 +517,19 @@ export default class Room {
 
   unload() {
     this.trace('unload', {});
-    if(Object.keys(this.state).length > 1 || Object.keys(this.state._meta.states).length) {
-      Logging.log(`unloading room ${this.id}`);
-      this.writeToFilesystem();
+    if(this.state && this.state._meta) {
+      if(Object.keys(this.state).length > 1 || Object.keys(this.state._meta.states).length || this.state._meta.redirectTo || this.state._meta.returnServer) {
+        Logging.log(`unloading room ${this.id}`);
+        this.writeToFilesystem();
+      } else {
+        Logging.log(`destroying room ${this.id}`);
+        if(fs.existsSync(this.roomFilename()))
+          fs.unlinkSync(this.roomFilename());
+      }
     } else {
-      Logging.log(`destroying room ${this.id}`);
-      if(fs.existsSync(this.roomFilename()))
-        fs.unlinkSync(this.roomFilename());
+      Logging.log(`unloading broken room ${this.id}`);
     }
+    this.unloadCallback();
   }
 
   writeToFilesystem() {

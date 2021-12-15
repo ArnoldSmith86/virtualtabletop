@@ -149,14 +149,36 @@ label.ui-line::before{
   text-align: left;
   padding: 0.9rem 0;
 }
-
+#playerCursors {
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  width:100%;
+  height:100%;
+  --cursorSize: 10;
+  --cursorOpacity: 0;
+  --cursorActiveOpacity: 0.2;
+  --cursorPressedOpacity: 0.5;
+}
 .cursor {
   position: absolute;
-  top: calc(-10px * var(--scale));
-  left: calc(-10px * var(--scale));
-  width: calc(20px * var(--scale));
-  height: calc(20px * var(--scale));
+  top: calc(var(--cursorSize) * -1px * var(--scale));
+  left: calc(var(--cursorSize) * -1px * var(--scale));
+  width: calc(var(--cursorSize) * 2px * var(--scale));
+  height: calc(var(--cursorSize) * 2px * var(--scale));
+  background-color: var(--playerColor);
   border-radius: 100%;
-  opacity: 0.2;
+  opacity: var(--cursorOpacity);
+  transition-duration: 2s;
   pointer-events: none;
+}
+.cursor.active, .cursor.pressed.foreign {
+  --cursorOpacity: var(--cursorActiveOpacity);
+  --cursorShowName: var(--cursorActiveShowName);
+  transition: none;
+}
+.cursor.pressed {
+  --cursorOpacity: var(--cursorPressedOpacity);
+  --cursorShowName: var(--cursorPressedShowName);
 }

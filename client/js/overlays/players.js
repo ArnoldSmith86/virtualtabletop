@@ -1,6 +1,7 @@
-import { onLoad } from '../domhelpers.js';
+import { asArray, onLoad } from '../domhelpers.js';
 
 let playerCursors = {};
+let playerCursorsTimeout = {};
 let playerName = localStorage.getItem('playerName') || 'Guest' + Math.floor(Math.random()*1000);
 let playerColor = 'red';
 let activePlayers = [];
@@ -15,14 +16,16 @@ export {
 function addPlayerCursor(playerName, playerColor) {
   playerCursors[playerName] = document.createElement('div');
   playerCursors[playerName].className = 'cursor';
-  playerCursors[playerName].style.backgroundColor = playerColor;
+  playerCursors[playerName].style = `--playerName:''${playerName}'';--playerColor:${playerColor};`;
   playerCursors[playerName].style.transform = `translate(-50px, -50px)`;
-  $('#roomArea').appendChild(playerCursors[playerName]);
+  playerCursors[playerName].setAttribute("data-player",playerName);
+  $('#playerCursors').appendChild(playerCursors[playerName]);
+  playerCursorsTimeout[playerName] = setTimeout(()=>{}, 0);
 }
 
 function fillPlayerList(players, active) {
   activePlayers = [...new Set(active)];
-  removeFromDOM('#playerList > div, #roomArea > .cursor');
+  removeFromDOM('#playerList > div, #playerCursors > .cursor');
 
   for(const player in players) {
     const entry = domByTemplate('template-playerlist-entry');
@@ -57,9 +60,31 @@ onLoad(function() {
   onMessage('meta', args=>fillPlayerList(args.meta.players, args.activePlayers));
   onMessage('mouse', function(args) {
     if(args.player != playerName) {
-      const x = args.coords[0]*scale;
-      const y = args.coords[1]*scale;
-      playerCursors[args.player].style.transform = `translate(${x}px, ${y}px)`;
+      clearTimeout(playerCursorsTimeout[args.player]);
+      if(args.mouseState.inactive) {
+        playerCursors[args.player].classList.remove('pressed','active','foreign');
+      } else {
+        const x = args.mouseState.x*scale;
+        const y = args.mouseState.y*scale;
+        playerCursors[args.player].style.transform = `translate(${x}px, ${y}px)`;
+        if(args.mouseState.pressed) {
+          playerCursors[args.player].classList.add('pressed', 'active');
+        } else {
+          playerCursors[args.player].classList.add('active');
+          playerCursors[args.player].classList.remove('pressed');
+        }
+        let foreign = false;
+        if(args.mouseState.target !== null && widgets.has(args.mouseState.target)) {
+          const owner = widgets.get(args.mouseState.target).get('owner');
+          if(owner !== null)
+            foreign = !asArray(owner).includes(playerName);
+        }
+        if(foreign)
+          playerCursors[args.player].classList.add('foreign');
+        else
+          playerCursors[args.player].classList.remove('foreign');
+        playerCursorsTimeout[args.player] = setTimeout(()=>{playerCursors[args.player].classList.remove('active')}, 100 )
+      }
     }
   });
   onMessage('rename', function(args) {

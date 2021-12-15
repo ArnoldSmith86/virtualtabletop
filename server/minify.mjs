@@ -9,6 +9,8 @@ import cleanCSS from '@node-minify/clean-css';
 import uglifyES from '@node-minify/uglify-es';
 import htmlMinifier from '@node-minify/html-minifier';
 
+import Config from './config.mjs';
+
 export default function minifyRoom() {
   let roomHTML = fs.readFileSync(path.resolve() + '/client/room.html', {encoding:'utf8'});
 
@@ -17,6 +19,7 @@ export default function minifyRoom() {
       compressor: cleanCSS,
       input: [
         'client/css/layout.css',
+        'client/css/fonts.css',
 
         'client/css/editmode.css',
         'client/css/jsonedit.css',
@@ -24,6 +27,8 @@ export default function minifyRoom() {
 
         'client/css/overlays/players.css',
         'client/css/overlays/states.css',
+        'client/css/overlays/connectionlost.css',
+        'client/css/overlays/about.css',
 
         'client/css/widgets/basicwidget.css',
         'client/css/widgets/button.css',
@@ -34,14 +39,15 @@ export default function minifyRoom() {
         'client/css/widgets/holder.css',
         'client/css/widgets/label.css',
         'client/css/widgets/pile.css',
+        'client/css/widgets/seat.css',
         'client/css/widgets/spinner.css',
         'client/css/widgets/timer.css'
       ],
       output: os.tmpdir() + '/out.css'
     }).then(function(min) {
-      roomHTML = roomHTML.replace(/ \{\{CSS\}\} /, min);
+      roomHTML = roomHTML.replace(/\ \/\*\*\*\ CSS\ \*\*\*\/\ /, min).replace(/\ \/\/\*\*\*\ CONFIG\ \*\*\*\/\/\ /, `const config = ${JSON.stringify(Config.config)};`);
       return minify({
-        compressor: process.env.NOCOMPRESS ? noCompress : uglifyES,
+        compressor: Config.get('minifyJavascript') ? uglifyES : noCompress,
         input: [
           'client/js/domhelpers.js',
           'client/js/connection.js',
@@ -66,6 +72,7 @@ export default function minifyRoom() {
           'client/js/widgets/holder.js',
           'client/js/widgets/label.js',
           'client/js/widgets/pile.js',
+          'client/js/widgets/seat.js',
           'client/js/widgets/spinner.js',
           'client/js/widgets/timer.js',
 
@@ -81,7 +88,7 @@ export default function minifyRoom() {
       const minNoImports = min.replace(/\bimport[^;]*\.\/[^;]*;/g, "")
       return minify({
         compressor: htmlMinifier,
-        content: roomHTML.replace(/ \{\{JS\}\} /, minNoImports),
+        content: roomHTML.replace(/\ \/\/\*\*\*\ JS\ \*\*\*\/\/\ /, minNoImports),
         options: {
           conservativeCollapse: true
         }
