@@ -320,13 +320,13 @@ publicLibraryButtons('Blue',               0, '096bdf3bd07bb277c2c1f4cc132f0695'
 publicLibraryButtons('Dots',               0, '23894df38f786cb014fa1cd79f2345db', [ 'reset', 'buttonInputGo', 'col11', 'col21', 'col12', 'col22', 'row11', 'row31', 'row21', 'row32', 'row12', 'row42', 'row22', 'row23', 'col23' ]);
 publicLibraryButtons('Reversi',            0, '35e0017570f9ecd206a2317c1528be36',
        [
-         [ ()=>{return Selector("#zpiece15")}, ()=>{return Selector("#sq23")} ],
-         [ ()=>{return Selector("#zpiece78")}, ()=>{return Selector("#sq22")} ],
-         [ ()=>{return Selector("#zpiece40")}, ()=>{return Selector("#sq32")} ],
-         [ ()=>{return Selector("#zpiece72")}, ()=>{return Selector("#sq12")} ],
-         [ ()=>{return Selector("#zpiece72")}, ()=>{return Selector("#sq24")} ],
-         [ ()=>{return Selector("#zpiece19")}, ()=>{return Selector("#sq35")} ],
-         [ ()=>{return Selector("#zpiece08")}, ()=>{return Selector("#sq53")} ]
+         [ ()=>Selector("#zpiece15"), ()=>Selector("#sq23") ],
+         [ ()=>Selector("#zpiece78"), ()=>Selector("#sq22") ],
+         [ ()=>Selector("#zpiece40"), ()=>Selector("#sq32") ],
+         [ ()=>Selector("#zpiece72"), ()=>Selector("#sq12") ],
+         [ ()=>Selector("#zpiece72"), ()=>Selector("#sq24") ],
+         [ ()=>Selector("#zpiece19"), ()=>Selector("#sq35") ],
+         [ ()=>Selector("#zpiece08"), ()=>Selector("#sq53") ]
        ]);
 publicLibraryButtons('Bhukhar',            0, 'e00f92a157178e7f570302ccc6b8c41b', [ 'btnMenuSettings', 'btn8Players', 'btn4Packs', 'btnCloseSettings', 'btnSelectPlayer', 'btnDeal', 'btnPile4', 'btnStartGame', 'btnTakeOne', 'btnNextPlayer', 'btnPickUp' ]);
 publicLibraryButtons('FreeCell',           0, 'b3339b3c5d42f47f4def7a164be69823', [ 'reset', 'jemz', 'reset' ]);
