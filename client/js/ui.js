@@ -14,7 +14,7 @@ var app = new Framework7({
   id: 'io.virtualtabletop.ui',
   el: '#app',
   theme,
-  autoDarkTheme: true,
+  autoDarkTheme: false,
   popup: {
     closeOnEscape: true,
   },
