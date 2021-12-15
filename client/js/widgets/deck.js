@@ -9,7 +9,7 @@ class Deck extends Widget {
       cardDefaults: {},
       cardTypes: {},
       faceTemplates: [],
-      borderRadius: '100%'
+      borderRadius: '50%'
     });
 
     this.cards = {};
