@@ -27,6 +27,8 @@ export default function minifyRoom() {
 
         'client/css/overlays/players.css',
         'client/css/overlays/states.css',
+        'client/css/overlays/connectionlost.css',
+        'client/css/overlays/about.css',
 
         'client/css/widgets/basicwidget.css',
         'client/css/widgets/button.css',
