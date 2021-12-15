@@ -336,3 +336,11 @@ body.jsonEdit.jeZoomOut #topSurface {
 #widget_dropOffsetY::before{
   content: '[width]';
 }
+#jeCommands .numberInputRange{
+  display: none;
+}
+
+#jeCommands #jeCommandOptions input[type="number"]{
+  width: 6ch;
+}
+
