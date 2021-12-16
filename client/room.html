@@ -20,8 +20,8 @@
 <body>
 
   <div id="app" class="ui color-theme-blue">
-    <div class="view view-main">
-      <div data-name="home" class="page">
+    <div class="view view-main safe-areas" data-stack-pages="true">
+      <div id="home" class="page stacked" data-name="home">
         <div class="navbar navbar-large main-header text-color-white">
           <div class="navbar-bg"></div>
           <div class="navbar-inner sliding">
@@ -42,20 +42,20 @@
             </div>
           </div>
         </div>
-        <div class="page-content" id="yourShelf">
-          <h2>
+        <div id="gameShelf" class="page-content">
+          <h2 class="list-title yourshelf">
             <span>Your Game Shelf</span>
             <div class="menu">
               <div class="menu-inner">
                 <div class="menu-item menu-item-dropdown">
                   <div class="menu-item-content"><span class="material-icons">add</span></div>
-                  <div class="menu-dropdown menu-dropdown-right">
+                  <div class="menu-dropdown menu-dropdown-center">
                     <div class="menu-dropdown-content">
-                      <a href="#" class="menu-dropdown-link menu-close">Save what you're working on <span class="icon material-icons">save</span></a>
-                      <a href="#" class="menu-dropdown-link menu-close">Upload a VTT or PCIO file <span class="icon material-icons">upload</span></a>
-                      <a href="#" class="menu-dropdown-link menu-close">Enter a link to another game <span class="icon material-icons">link</span></a>
+                      <a href="#" class="menu-dropdown-link menu-close gameMenu create">Save what you're working on <span class="icon material-icons">save</span></a>
+                      <a href="#" class="menu-dropdown-link menu-close gameMenu upload">Upload a VTT or PCIO file <span class="icon material-icons">upload</span></a>
+                      <a href="#" class="menu-dropdown-link menu-close gameMenu link">Enter a link to another game <span class="icon material-icons">link</span></a>
                       <div class="menu-dropdown-divider"></div>
-                      <a href="#" class="menu-dropdown-link menu-close">Download everything <span class="icon material-icons">download</span></a>
+                      <a href="#" class="menu-dropdown-link menu-close gameMenu download">Download everything <span class="icon material-icons">download</span></a>
                     </div>
                   </div>
                 </div>
@@ -93,7 +93,7 @@
           <div class="block">
             <p>If you don't, you can create your own game or add one from the Public Library below.</p>
           </div>
-          <h2><span>Public Library</span></h2>
+          <h2 class="list-title publiclibrary"><span>Public Library</span></h2>
           <template id="template-stateslist-entry" type="text/template">
             <div class="card-content">
               <a class="close-box card-close material-icons">close</a>
@@ -138,7 +138,160 @@
             <button class="play play-button card-close"><i class="material-icons">play_arrow</i>PLAY</button>
           </template>
         </div>
+
       </div>
+      <div id="stateEditOverlay" class="page stacked" data-name="stateEditOverlay">
+                <div class="navbar">
+                    <div class="navbar-bg"></div>
+                    <div class="navbar-inner">
+                        <div class="left">
+                            <a href="#" class="link icon-only back">
+                                <i class="material-icons">arrow_back</i>
+                            </a>
+                        </div>
+                        <div class="title">Edit Game</div>
+                        <div class="right">
+                          <a href="#" class="share link icon-only"><i class="material-icons">share</i></a>
+                          <a href="#" class="download link icon-only"><i class="material-icons">download</i></a>
+                          <a href="#" class="save link icon-only"><i class="material-icons text-color-teal">save</i></a>
+                        </div>
+                    </div>
+                </div>
+                <div id="" class="page-content">
+
+
+                  <div class="row">
+                    <div class="col-100 medium-50">
+                      <h2 class="list-title">Basic Information</h2>
+                      <div class="list">
+                    <ul>
+                      <li class="item-content item-input">
+                        <div class="item-inner">
+                          <div class="item-title item-label">Game Name</div>
+                          <div class="item-input-wrap">
+                            <input type="text" name="stateName" id="stateName" />
+                            <span class="input-clear-button"></span>
+                          </div>
+                        </div>
+                      </li>
+                      <div class="row">
+                        <div class="col-33">
+                          <li class="item-content item-input">
+                            <div class="item-inner">
+                              <div class="item-title item-label">Year Published</div>
+                              <div class="item-input-wrap">
+                                <input type="number" name="stateYear" id="stateYear" />
+                                <span class="input-clear-button"></span>
+                              </div>
+                            </div>
+                          </li>
+                        </div>
+                        <div class="col-33">
+                          <li class="item-content item-input">
+                            <div class="item-inner">
+                              <div class="item-title item-label">Game mode (vs/cooperative)</div>
+                              <div class="item-input-wrap">
+                                <input type="text" name="stateMode" id="stateMode" />
+                                <span class="input-clear-button"></span>
+                              </div>
+                            </div>
+                          </li>
+                        </div>
+                        <div class="col-33">
+                          <li class="item-content item-input">
+                            <div class="item-inner">
+                              <div class="item-title item-label">Time (in minutes)</div>
+                              <div class="item-input-wrap">
+                                <input type="number" name="stateTime" id="stateTime" />
+                                <span class="input-clear-button"></span>
+                              </div>
+                            </div>
+                          </li>
+                        </div>
+                      </div>
+
+                      <li class="item-content item-input">
+                        <div class="item-inner">
+                          <div class="item-title item-label">Link to Rules</div>
+                          <div class="item-input-wrap">
+                            <input type="url" name="stateRules" id="stateRules" />
+                            <span class="input-clear-button"></span>
+                          </div>
+                        </div>
+                      </li>
+
+
+                      <li class="item-content item-input">
+                        <div class="item-inner">
+                          <div class="item-title item-label">Link to BGG page</div>
+                          <div class="item-input-wrap">
+                            <input type="url" name="stateBGG" id="stateBGG" />
+                            <span class="input-clear-button"></span>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="item-content item-input">
+                        <div class="item-inner">
+                          <div class="item-title item-label">Link to image</div>
+                          <div class="item-input-wrap button-after">
+                            <input type="text" name="stateImage" id="stateImage" />
+                            <span class="input-clear-button"></span>
+                            <button class="ui-button button-raised button-fill button-small uploadAsset"><i class="material-icons">upload</i>Upload</button>
+
+                          </div>
+                        </div>
+                      </li>
+                      <li class="item-content item-input">
+                        <div class="item-inner">
+                          <div class="item-title item-label">stateLink</div>
+                          <div class="item-input-wrap">
+                            <input type="text" name="stateLink" id="stateLink" />                      <span class="input-clear-button"></span>
+                          </div>
+                        </div>
+                      </li>
+
+                    </ul>
+                  </div>
+                    </div>
+                    <div class="col-100 medium-50">
+                      <h2 class="list-title">Variants</h2>
+                      <div id="variantsEditList">
+                        <template id="template-variantseditlist-entry" type="text/template">
+
+                            <div class="list">
+                              <div class="input"><label>Name:</label> <input class="stateVariant"/></div>
+                              <div class="row">
+                                <div class="col-50">
+                                  <div class="input"><label>Language (country code):</label> <input class="stateLanguage"/></div>
+                                </div>
+                                <div class="col-50">
+                                  <div class="input"><label>Players:</label> <input class="statePlayers"/></div>
+                                </div>
+                              <div class="input"><label>Attribution:</label>
+                              <div class="text-editor" data-placeholder="Enter text...">
+                                <div class="text-editor-content stateAttribution" contenteditable></div>
+                              </div></div>
+
+                              <div class="input"><label>Update link:</label> <input class="stateLink"/></div>
+                            </div>
+                            <div class="buttonbar">
+                              <button class="update">Update variant using current room state</button>
+                              <button class="prettyButton download">Download variant</button>
+                              <button class="prettyButton remove">Remove variant</button>
+                            </div>
+
+                        </template>
+                      </div>
+                      <div id="addVariant" class="buttons">
+                        Add variant:
+                        <button class="prettyButton create">Use current room state</button><button class="prettyButton library">Public library</button><button class="prettyButton link">Enter link</button><button class="prettyButton upload">Upload file</button>
+                      </div>
+                    </div>
+                  </div>
+                  <p><button class="prettyButton remove">Remove</button></p>
+                </div>
+      >>>>>>> Stashed changes
+              </div>
     </div>
   </div>
 
@@ -359,7 +512,7 @@
           <h2 class="title">Title</h2>
           <div class="list"></div>
         </template>
-        <template id="template-stateslist-entry" type="text/template">
+        <template id="template-stateslist-entry-old" type="text/template">
           <img>
           <div class="details">
             <a class="bgg" href="">Name (Year)</a>
@@ -368,7 +521,7 @@
             <p><button class="prettyButton edit">Edit</button><button class="prettyButton star">★</button></p>
           </div>
         </template>
-        <template id="template-variantslist-entry" type="text/template">
+        <template id="template-variantslist-entry-old" type="text/template">
           <button class="prettyButton play">Play: <span class="language">🇺🇸</span><span class="symbols"> [group]</span><span class="players">0</span><br><span class="variant"></span></button>
         </template>
         <div id="addState">
@@ -383,7 +536,7 @@
       </div>
     </div>
 
-    <div id="stateEditOverlay" class="overlay">
+    <div id="stateEditOverlay-old" class="overlay">
       <h1>Edit game</h1>
       <div class="details">
         <div class="input"><label for="stateName">Name:</label> <input id="stateName"/></div>
@@ -397,7 +550,7 @@
       </div>
       <h2>Variants</h2>
       <div id="variantsEditList">
-        <template id="template-variantseditlist-entry" type="text/template">
+        <template id="template-variantseditlist-entry-old" type="text/template">
           <div class="input"><label>Language (country code):</label> <input class="stateLanguage"/></div>
           <div class="input"><label>Players:</label> <input class="statePlayers"/></div>
           <div class="input"><label>Variant:</label> <input class="stateVariant"/></div>

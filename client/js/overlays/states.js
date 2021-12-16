@@ -144,50 +144,109 @@ function parsePlayers(players) {
   return validPlayers;
 }
 
-function fillStatesList(states, returnServer, starred, activePlayers) {
+function fillStatesList(states, starred, returnServer, activePlayers) {
   if(returnServer) {
     $('#statesButton').dataset.overlay = 'returnOverlay';
     overlayShownForEmptyRoom = true;
     return;
   }
+  app.card.close('.card-opened');
   $('#statesButton').dataset.overlay = 'statesOverlay';
-
-  const addDiv = $('#addState');
-  removeFromDOM(addDiv);
-  removeFromDOM('#statesList > div');
+  if(starred){ console.log(starred); }
+  // const addDiv = $('#addState');
+  // removeFromDOM(addDiv);
+  removeFromDOM('#gameShelf > .roomState');
+  removeFromDOM('#gameShelf > .block');
 
   let isEmpty = true;
   const sortedStates = Object.entries(states).sort((a, b) => a[1].name.localeCompare(b[1].name));
+  // console.log(sortedStates);
 
   for(const publicLibrary of [ false, true ]) {
-    const category = domByTemplate('template-stateslist-category');
-    $('.title', category).textContent = publicLibrary ? 'Public Library' : 'Your Game Shelf';
+    // const category = domByTemplate('template-stateslist-category');
+    // $('.list-title', category).textContent = publicLibrary ? 'Public Library' : 'Your Game Shelf';
+    // $('.list-title', category).className += publicLibrary ? ' pl-header' : ' yourshelf-header';
 
     for(const kvp of sortedStates.filter(kvp=>(!!kvp[1].publicLibrary && (!starred || !starred[kvp[1].publicLibrary])) == publicLibrary)) {
       isEmpty = false;
-
+      // console.log(starred);
       const state = kvp[1];
       state.id = kvp[0];
 
       const entry = domByTemplate('template-stateslist-entry');
-      entry.className = state.image ? 'roomState' : 'roomState noImage';
+      entry.className = state.image ? 'card-expandable roomState' : 'card-expandable roomState noImage';
+
       if(state.publicLibrary)
         entry.className += ' publicLibraryGame';
 
-      $('img', entry).src = state.image;
-      $('.bgg', entry).textContent = `${state.name} (${state.year})`;
-      $('.bgg', entry).href = state.bgg;
-      $('.rules', entry).href = state.rules;
-      $('.time', entry).textContent = state.time;
-
+      if(state.image){
+        $('.header', entry).style.backgroundImage = "url("+state.image+")";
+        $('img', entry).src = state.image;
+      } else {
+        $('img', entry).src = '/i/branding/android-512.png';
+        $('.header', entry).style.backgroundImage = "url(/i/branding/android-512.png)";
+      }
+      $('.name', entry).textContent = `${state.name}`;
+      $('.similar-to', entry).textContent = `Similar to ${state.similarName}`;
+      if((state.similarName == state.name) || !state.similarName ){
+        $('.similar-to', entry).className += ' ui-hidden';
+      }
+      // $('.bgg', entry).textContent = `${state.name} (${state.year})`;
+      if(state.bgg){
+        $('.bgg', entry).href = state.bgg;
+      } else {
+        $('.bgg', entry).className += ' ui-hidden';
+      }
+      if(state.rules){
+        $('.rules', entry).href = state.rules;
+      } else {
+        $('.rules', entry).className += ' ui-hidden';
+      }
+      if(state.time){
+        $('.time', entry).textContent = state.time+" minutes";
+      } else {
+        $('.time', entry).className += ' ui-hidden';
+        $('.time-icon', entry).className += ' ui-hidden';
+      }
+      $('.description-info', entry).textContent = state.description;
+      if(state.attribution){
+        $('.attribution-info', entry).textContent = state.attribution;
+      }
+      $('.star', entry).setAttribute('id',"fave_"+state.name);
+      $('.star', entry).setAttribute('name',"fave_"+state.name);
+      $('.star-label', entry).setAttribute('for',"fave_"+state.name);
+      if(starred){
+        if(starred[state.name]) {
+           entry.className += ' favorite';
+           $('.star', entry).setAttribute("checked","checked");
+        }
+      }
       const validPlayers = [];
       const validLanguages = [];
       for(const variantID in state.variants) {
         const variant = state.variants[variantID];
         const vEntry = domByTemplate('template-variantslist-entry');
+        vEntry.className += ' variant accordion-item';
         $('.language', vEntry).textContent = String.fromCodePoint(...[...variant.language].map(c => c.charCodeAt() + 0x1F1A5));
         $('.players', vEntry).textContent = variant.players;
-        $('.variant', vEntry).textContent = variant.variant;
+
+        if(variant.variant){
+          $('.variant-name > .label', vEntry).textContent = variant.variant;
+        } else {
+          $('.variant-name > .label', vEntry).textContent = 'Unnamed Variant';
+          $('.variant-name > .label', vEntry).className += ' unnamed';
+        }
+        if(variant.description && (variant.description != state.description)){
+          $('.variant-description', vEntry).textContent = variant.description;
+        }
+        if(variant.attribution && (variant.attribution != state.attribution)){
+          $('.variant-attribution', vEntry).textContent = variant.attribution;
+        } else {
+          $('.has-attribution', vEntry).className += ' ui-hidden';
+        }
+        if(variant.image){
+          $('.variant-image', vEntry).src += ' unnamed';
+        }
         validPlayers.push(...parsePlayers(variant.players));
         validLanguages.push(variant.language);
 
@@ -196,8 +255,8 @@ function fillStatesList(states, returnServer, starred, activePlayers) {
       }
 
       $('.edit', entry).addEventListener('click', _=>fillEditState(state));
-      $('.star', entry).addEventListener('click', _=>toggleStateStar(state));
-      $('.list', category).appendChild(entry);
+      $('.star', entry).addEventListener('change', _=>toggleStateStar(state));
+      $('#gameShelf').appendChild(entry);
 
       entry.dataset.text = `${state.name} ${state.similarName} ${state.description}`.toLowerCase();
       entry.dataset.players = validPlayers.join();
@@ -210,10 +269,11 @@ function fillStatesList(states, returnServer, starred, activePlayers) {
       }
     }
 
-    $('#statesList').appendChild(category);
+    // $('#statesList').appendChild(category);
   }
-  $('#statesList > div').appendChild(addDiv);
+  // $('#statesList').appendChild(addDiv);
   updateLibraryFilter();
+
 }
 
 function fillEditState(state) {

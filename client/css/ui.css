@@ -700,7 +700,7 @@ body {
   position: relative;
 }
 
-.navbar-bg {
+#home .navbar-bg {
   background-repeat: no-repeat;
   background-position: right  ;
   background-color: #0abcf9;
@@ -718,6 +718,12 @@ body {
   justify-content: flex-end;
 }
 .menu-dropdown-right .menu-dropdown-content .icon{
+  margin-left: 8px;
+}
+.menu-dropdown-center .menu-dropdown-content > * {
+  justify-content: flex-end;
+}
+.menu-dropdown-center .menu-dropdown-content .icon{
   margin-left: 8px;
 }
 .menu-dropdown-left .menu-dropdown-content > * {

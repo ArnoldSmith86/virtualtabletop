@@ -603,7 +603,6 @@ html:-webkit-full-screen #fullscreenButton .tooltip::before {
 }
 
 .edit::before {
-  content: '[edit]';
 }
 body.edit::before {
   content: '';
@@ -620,7 +619,6 @@ body.edit::before {
 }
 
 .play::before {
-  content: '[play_arrow]';
 }
 
 .save::before,
