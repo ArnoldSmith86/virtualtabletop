@@ -28,7 +28,10 @@ export class Label extends Widget {
     if(this.input && (delta.text !== undefined || delta.twoRowBottomAlign !== undefined || delta.height !== undefined || delta.width !== undefined || delta.css !== undefined)) {
       const fontSizeMatch = this.get('css').match(/font-size: *([0-9]+) *px/);
       const fontSize = fontSizeMatch ? +fontSizeMatch[1] : 16;
-      this.input.style.lineHeight = `${Math.round(fontSize*1.2)}px`;
+      if(this.get('css').match(/line-height/))
+        this.input.style.removeProperty('line-height');
+      else
+        this.input.style.lineHeight = `${Math.round(fontSize*1.2)}px`;
 
       this.input.value = this.get('text');
       this.input.style.height = '5px';
