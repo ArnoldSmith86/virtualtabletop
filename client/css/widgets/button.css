@@ -1,6 +1,5 @@
 .button {
   box-sizing: border-box;
-  border-radius: 800px;
   background-color: var(--wcMain);
   color: var(--wcFont);
   border-width: 4px;
