@@ -25,30 +25,22 @@ export class Label extends Widget {
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
-    if(delta.text !== undefined || delta.twoRowBottomAlign !== undefined) {
-      this.input.value = delta.text;
-      if(this.get('twoRowBottomAlign')) {
-        this.input.style.height = '20px';
-        this.input.style.minHeight = 'unset';
-        this.input.style.paddingTop = '0';
-        const contentHeight = this.input.scrollHeight;
-        if(contentHeight < this.get('height')) {
-          this.input.style.paddingTop = `${this.get('height')-contentHeight}px`;
-          this.input.style.height = 'auto';
-          this.input.style.minHeight = `${contentHeight}px`;
-        } else {
-          this.input.style.minHeight = '100%';
-        }
-      } else {
-        this.input.style.minHeight = '100%';
-        this.input.style.paddingTop = 'unset';
-      }
+    if(this.input && (delta.text !== undefined || delta.twoRowBottomAlign !== undefined || delta.height !== undefined || delta.width !== undefined || delta.css !== undefined)) {
+      this.input.value = this.get('text');
+      this.input.style.height = '5px';
+      this.input.style.paddingTop = '0';
+      const contentHeight = this.input.scrollHeight;
+      const offset = this.get('twoRowBottomAlign') && contentHeight < this.get('height') ? this.get('height')-contentHeight : 0;
+      this.input.style.height = (this.get('height')-offset) + 'px';
+      this.input.style.paddingTop = `${offset}px`;
+      this.input.style.overflowY = contentHeight-this.get('height') < 5 ? 'hidden' : 'auto';
     }
+
     if(delta.editable !== undefined) {
       if(delta.editable)
         this.input.removeAttribute("readonly");
       else
-        this.input.setAttribute("readonly", !delta.editable);
+        this.input.setAttribute("readonly", true);
     }
   }
 }

@@ -5,6 +5,7 @@
 }
 
 .widget.label > textarea {
+  display: block;
   border: none;
   background: none;
   padding: 0;
@@ -13,7 +14,6 @@
   text-align: inherit;
   font: inherit;
   width: 100%;
-  min-height: 100%;
   resize: none;
 }
 
