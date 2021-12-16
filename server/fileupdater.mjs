@@ -1,4 +1,4 @@
-export const VERSION = 5;
+export const VERSION = 6;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -32,6 +32,7 @@ function updateProperties(properties, v) {
 
   v<4 && v4ModifyDropTargetEmptyArray(properties);
   v<5 && v5DynamicFaceProperties(properties);
+  v<6 && v6EnlargeTinyLabels(properties);
 }
 
 function updateRoutine(routine, v) {
@@ -286,5 +287,14 @@ function v5DynamicFaceProperties(properties) {
         }
       }
     }
+  }
+}
+
+function v6EnlargeTinyLabels(properties) {
+  if(properties.type == 'label') {
+    const match = (properties.css || '').match(/font-size: *([0-9]+) *px/);
+    const fontSize = match ? +match[1] : 16;
+    if((properties.height || 20) < fontSize)
+      properties.height = fontSize + 2;
   }
 }
