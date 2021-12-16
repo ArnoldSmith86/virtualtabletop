@@ -28,7 +28,7 @@ async function removeGame(t, index) {
     .click('#statesButton')
     .hover(`.roomState:nth-of-type(${index || 1})`)
     .click(`.roomState:nth-of-type(${index || 1}) .edit`)
-    .click('p > .remove');
+    .click('.remove-game');
 }
 
 async function setName(t, name) {
@@ -48,31 +48,6 @@ function prepareClient() {
 
   // remove base element because it causes popups on form submit
   document.querySelector('base').parentNode.removeChild(document.querySelector('base'));
-}
-
-function publicLibraryTest(game, variant, md5, tests) {
-  test.after(async t => {
-    await removeGame(t);
-    await t.expect(Selector('#statesOverlay').visible).ok();
-  })(`Public library: ${game} (variant ${variant})`, async t => {
-    await ClientFunction(prepareClient)();
-    await t
-      .pressKey('esc')
-      .click('#statesButton')
-      .click(Selector('td.name').withExactText(game).prevSibling().child())
-      .hover('.roomState')
-      .click(Selector('button.play').nth(variant));
-    await setName(t);
-    await tests(t);
-    await compareState(t, md5);
-  });
-}
-
-function publicLibraryButtons(game, variant, md5, buttons) {
-  publicLibraryTest(game, variant, md5, async t => {
-    for(const b of buttons)
-      await t.click(`[id="${b}"]`);
-  });
 }
 
 async function compareState(t, md5) {
@@ -300,24 +275,68 @@ test('Dynamic expressions', async t => {
     .click('[id="jyo6"]')
   const log = await Selector('#jeLog').textContent
   for (let i=0; i<ops.length; i++) {
-    await t.expect(log).contains('"'+ops[i][1]+'": '+ops[i][2])
+    const logContains = log.includes('"'+ops[i][1]+'": '+ops[i][2]);
+    await t.expect(logContains)
+           .ok('Test "' + ops[i] + '" failed.');
   };
   await t
     .pressKey('ctrl+j')
 });
 
-publicLibraryButtons('Blue',               0, '0f29b132f3c1d368eec70b3457b92fe4', [
+function publicLibraryTest(game, variant, md5, tests) {
+  test.after(async t => {
+    await removeGame(t);
+    await t.expect(Selector('#statesOverlay').visible).ok();
+  })(`Public library: ${game} (variant ${variant})`, async t => {
+    await ClientFunction(prepareClient)();
+    await t
+      .pressKey('esc')
+      .click('#statesButton')
+      .click(Selector('td.name').withExactText(game).prevSibling().child())
+      .hover('.roomState')
+      .click(Selector('button.play').nth(variant));
+    await setName(t); 
+    await tests(t); 
+    await compareState(t, md5);
+  });
+}
+
+function publicLibraryButtons(game, variant, md5, tests) {
+  publicLibraryTest(game, variant, md5, async t => {
+      for(const b of tests)
+        if(typeof b == "string") {
+          await t.click(`[id="${b}"]`)
+        } else {
+          await t.dragToElement(b[0](), b[1](), { speed:0.5 });
+        }
+  });
+}
+
+publicLibraryButtons('Blue',               0, '096bdf3bd07bb277c2c1f4cc132f0695', [
   'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton',
   'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton',
   'reset_button', 'buttonInputGo', 'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', '9n2q'
 ]);
+publicLibraryButtons('Bhukhar',            0, 'e00f92a157178e7f570302ccc6b8c41b', [ 'btnMenuSettings', 'btn8Players', 'btn4Packs', 'btnCloseSettings', 'btnSelectPlayer', 'btnDeal', 'btnPile4', 'btnStartGame', 'btnTakeOne', 'btnNextPlayer', 'btnPickUp' ]);
+publicLibraryButtons('Dice',               0, 'a68d28c20b624d6ddf87149bae230598', [ 'k18u', 'hy65', 'gghr', 'dsfa', 'f34a', 'fusq' ]);
+publicLibraryButtons('Dots',               0, '23894df38f786cb014fa1cd79f2345db', [ 'reset', 'buttonInputGo', 'col11', 'col21', 'col12', 'col22', 'row11', 'row31', 'row21', 'row32', 'row12', 'row42', 'row22', 'row23', 'col23' ]);
 publicLibraryButtons('FreeCell',           0, 'b3339b3c5d42f47f4def7a164be69823', [ 'reset', 'jemz', 'reset' ]);
-publicLibraryButtons('Reward',             0, '062db4c38e9d9fbde1d783a3fead24c5', [
+publicLibraryButtons('Mancala',            0, '92108a0e76fd295fee9881b6c7f8928b', ['btnRule1', 'btnRule2', 'getb5', 'getb5', 'getb5', 'getb5', 'getb1', 'getb1', 'getb1', 'getb1' ]);
+publicLibraryButtons('Reversi',            0, '35e0017570f9ecd206a2317c1528be36',
+       [
+         [ ()=>Selector("#zpiece15"), ()=>Selector("#sq23") ],
+         [ ()=>Selector("#zpiece78"), ()=>Selector("#sq22") ],
+         [ ()=>Selector("#zpiece40"), ()=>Selector("#sq32") ],
+         [ ()=>Selector("#zpiece72"), ()=>Selector("#sq12") ],
+         [ ()=>Selector("#zpiece72"), ()=>Selector("#sq24") ],
+         [ ()=>Selector("#zpiece19"), ()=>Selector("#sq35") ],
+         [ ()=>Selector("#zpiece08"), ()=>Selector("#sq53") ]
+       ]);
+publicLibraryButtons('Reward',             0, '7a0e6d7fda1143f21d64552c18f92a75', [
   'gmex', 'kprc', 'oksq', 'j1wz', 'vfhn', '0i6i', 'Orange Recall', 'buttonInputGo', 'b09z'
 ]);
 publicLibraryButtons('Rummy Tiles',        0, 'c93ac5accd3f22264839675bd8b5321d', [ 'startMix', 'draw14' ]);
-publicLibraryButtons('Undercover',         1, '607a75e2cff8bc887b6f025d282e68c6', [ 'Reset', 'Spy Master Button' ]);
-publicLibraryButtons('Dice',               0, 'd8b6edd6f7a25767781af4294ecda8fc', [ 'k18u', 'hy65', 'gghr', 'dsfa', 'f34a', 'fusq' ]);
+publicLibraryButtons('Undercover',         1, '967a258cffec728391e4b039f4899aae', [ 'Reset', 'Spy Master Button' ]);
 publicLibraryButtons('Functions - CALL',   0, 'bfa7e4fb4a065fa21f820370de7ac734', [
   'n4cw_8_C', '5a52', '5a52', '66kr', 'qeg1', 'n4cwB', '8r6p', 'qeg1', 'qeg1', 'n5eu'
 ]);
