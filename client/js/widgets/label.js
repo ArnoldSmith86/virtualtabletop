@@ -37,7 +37,7 @@ export class Label extends Widget {
       const offset = this.get('twoRowBottomAlign') && contentHeight < this.get('height') ? this.get('height')-contentHeight : 0;
       this.input.style.height = (this.get('height')-offset) + 'px';
       this.input.style.paddingTop = `${offset}px`;
-      this.input.style.overflowY = contentHeight-this.get('height') < 5 ? 'hidden' : 'auto';
+      this.input.style.overflowY = contentHeight-this.get('height') < 5 ? 'hidden' : 'scroll';
     }
 
     if(delta.editable !== undefined) {
