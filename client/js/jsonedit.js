@@ -1549,9 +1549,10 @@ function jeSet(text, dontFocus) {
   } catch(e) {
     jeSetEditorContent(text);
   }
-  if(!dontFocus)
+  if(!dontFocus && !window.dontFocus)
     $('#jeText').focus();
   jeColorize();
+  window.dontFocus = false;
 }
 
 // Replace ###SELECT ME### in JSON string in jeStateNow by the string given in replaceBy,
