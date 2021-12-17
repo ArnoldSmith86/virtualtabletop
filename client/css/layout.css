@@ -25,6 +25,9 @@
 #room{
   font-size: 16px;
 }
+#room textarea{
+  line-height: unset;
+}
 body {
   background: #484848;
   padding: 0;
