@@ -124,7 +124,7 @@ test('Create game using edit mode', async t => {
     .setNativeDialogHandler(() => true)
     .click('#removeWidget');
 
-  await compareState(t, 'a91f2495b7e830d942c25201d483a691');
+  await compareState(t, 'a9f9663d693d5993f63ca8e621d4a88f');
 });
 
 test('Compute', async t => {
@@ -295,8 +295,8 @@ function publicLibraryTest(game, variant, md5, tests) {
       .click(Selector('td.name').withExactText(game).prevSibling().child())
       .hover('.roomState')
       .click(Selector('button.play').nth(variant));
-    await setName(t); 
-    await tests(t); 
+    await setName(t);
+    await tests(t);
     await compareState(t, md5);
   });
 }
@@ -332,7 +332,7 @@ publicLibraryButtons('Reversi',            0, '35e0017570f9ecd206a2317c1528be36'
          [ ()=>Selector("#zpiece19"), ()=>Selector("#sq35") ],
          [ ()=>Selector("#zpiece08"), ()=>Selector("#sq53") ]
        ]);
-publicLibraryButtons('Reward',             0, '7a0e6d7fda1143f21d64552c18f92a75', [
+publicLibraryButtons('Reward',             0, '52aa7d9da11ec950e27a68e18d7cba26', [
   'gmex', 'kprc', 'oksq', 'j1wz', 'vfhn', '0i6i', 'Orange Recall', 'buttonInputGo', 'b09z'
 ]);
 publicLibraryButtons('Rummy Tiles',        0, 'c93ac5accd3f22264839675bd8b5321d', [ 'startMix', 'draw14' ]);
