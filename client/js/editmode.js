@@ -12,7 +12,8 @@ async function addWidgetLocal(widget) {
   if (!widget.id)
     widget.id = generateUniqueWidgetID();
   const isNewWidget = !widgets.has(widget.id);
-  addWidget(widget);
+  if(isNewWidget)
+    addWidget(widget);
   sendPropertyUpdate(widget.id, widget);
   sendDelta();
   batchStart();
