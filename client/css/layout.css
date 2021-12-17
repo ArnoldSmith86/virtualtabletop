@@ -22,7 +22,9 @@
   --negativeInput: #950000;
   --neutralInput: #1f5ca6;
 }
-
+#room{
+  font-size: 16px;
+}
 body {
   background: #484848;
   padding: 0;

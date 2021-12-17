@@ -10758,7 +10758,7 @@ html.with-modal-sheet-push-closing .framework7-root > .panel-in.panel-push.panel
 .card .list ul {
   background: none;
 }
-.card {
+#app .card {
   background: var(--f7-card-bg-color);
   position: relative;
   border-radius: var(--f7-card-border-radius);
@@ -20345,6 +20345,7 @@ button.swiper-pagination-bullet {
   */
 }
 .menu {
+  z-index: 1000;
   position: relative;
   transform: translate3d(0, 0, 0);
   --f7-touch-ripple-color: var(--f7-touch-ripple-white);
