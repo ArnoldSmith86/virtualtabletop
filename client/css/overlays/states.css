@@ -4,7 +4,9 @@
 
 #statesList, #stateEditOverlay {
   overflow: auto;
+  background-color: #cecece;
 }
+
 
 #statesList .title {
   clear: left;
@@ -12,7 +14,7 @@
   padding-bottom: 0;
 }
 
-.roomState, #addState {
+ #addState {
   color: black;
   float: left;
   width: 260px;
@@ -21,16 +23,12 @@
   overflow: hidden;
 }
 
-.roomState > div {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  top: 0;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.5);
+.addOptions.block.block-inset .menu{
+  margin-right: -12px;
 }
-
+.addOptions.block.block-inset{
+  z-index: 2;
+}
 #addState div {
   position: absolute;
 }
@@ -292,6 +290,7 @@ width: 100%;
   position: absolute;
   top: 5px;
   right: 5px;
+  z-index: 100;
 }
 .star-label{
   position: absolute;

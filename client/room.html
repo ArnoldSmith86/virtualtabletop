@@ -22,22 +22,18 @@
   <div id="app" class="ui color-theme-blue">
     <div class="view view-main safe-areas" data-stack-pages="true">
       <div id="home" class="page stacked" data-name="home">
-        <div class="navbar navbar-large main-header text-color-white">
+        <div class="navbar main-header text-color-white">
           <div class="navbar-bg"></div>
           <div class="navbar-inner sliding">
             <div class="left">
 
             </div>
             <div class="title">VirtualTabletop.io</div>
-            <div class="title-large">
-              <div class="title-large-text">VirtualTabletop.io</div>
-            </div>
+
             <div class="right">
 
-              <a href="#" class="menu-item icon-only hideApp">
-                <div class="menu-item-content">
-                  <span class="material-icons text-color-white">close</span>
-                </div>
+              <a href="#" class="button hideApp">
+                <span class="material-icons text-color-white">close</span>
               </a>
             </div>
           </div>
@@ -138,160 +134,177 @@
             <button class="play play-button card-close"><i class="material-icons">play_arrow</i>PLAY</button>
           </template>
         </div>
-
       </div>
       <div id="stateEditOverlay" class="page stacked" data-name="stateEditOverlay">
-                <div class="navbar">
-                    <div class="navbar-bg"></div>
-                    <div class="navbar-inner">
-                        <div class="left">
-                            <a href="#" class="link icon-only back">
-                                <i class="material-icons">arrow_back</i>
-                            </a>
-                        </div>
-                        <div class="title">Edit Game</div>
-                        <div class="right">
-                          <a href="#" class="share link icon-only"><i class="material-icons">share</i></a>
-                          <a href="#" class="download link icon-only"><i class="material-icons">download</i></a>
-                          <a href="#" class="save link icon-only"><i class="material-icons text-color-teal">save</i></a>
-                        </div>
-                    </div>
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner">
+                <div class="left">
+                    <a href="#" class="link icon-only back">
+                        <i class="material-icons">arrow_back</i>
+                    </a>
                 </div>
-                <div id="" class="page-content">
-
-
+                <div class="title">Edit Game</div>
+                <div class="right">
+                  <a href="#" class="share link icon-only"><i class="material-icons">share</i></a>
+                  <a href="#" class="download link icon-only"><i class="material-icons">download</i></a>
+                  <a href="#" class="save link icon-only"><i class="material-icons text-color-teal">save</i></a>
+                </div>
+            </div>
+        </div>
+        <div id="" class="page-content">
+          <div class="block row">
+            <div class="editBasicInfo col-100 medium-50">
+              <div class="block-title">Basic Information</div>
+              <div class="list medium-inset">
+                <ul>
+                  <li class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">Game Name</div>
+                      <div class="item-input-wrap">
+                        <input name="stateName" id="stateName" type="url" />
+                        <span class="input-clear-button"></span>
+                      </div>
+                    </div>
+                  </li>
                   <div class="row">
-                    <div class="col-100 medium-50">
-                      <h2 class="list-title">Basic Information</h2>
-                      <div class="list">
-                    <ul>
+                    <div class="col-33">
                       <li class="item-content item-input">
                         <div class="item-inner">
-                          <div class="item-title item-label">Game Name</div>
+                          <div class="item-title item-label">Year Published</div>
                           <div class="item-input-wrap">
-                            <input type="text" name="stateName" id="stateName" />
+                            <input type="number" name="stateYear" id="stateYear" />
                             <span class="input-clear-button"></span>
                           </div>
                         </div>
                       </li>
-                      <div class="row">
-                        <div class="col-33">
-                          <li class="item-content item-input">
-                            <div class="item-inner">
-                              <div class="item-title item-label">Year Published</div>
-                              <div class="item-input-wrap">
-                                <input type="number" name="stateYear" id="stateYear" />
-                                <span class="input-clear-button"></span>
-                              </div>
-                            </div>
-                          </li>
-                        </div>
-                        <div class="col-33">
-                          <li class="item-content item-input">
-                            <div class="item-inner">
-                              <div class="item-title item-label">Game mode (vs/cooperative)</div>
-                              <div class="item-input-wrap">
-                                <input type="text" name="stateMode" id="stateMode" />
-                                <span class="input-clear-button"></span>
-                              </div>
-                            </div>
-                          </li>
-                        </div>
-                        <div class="col-33">
-                          <li class="item-content item-input">
-                            <div class="item-inner">
-                              <div class="item-title item-label">Time (in minutes)</div>
-                              <div class="item-input-wrap">
-                                <input type="number" name="stateTime" id="stateTime" />
-                                <span class="input-clear-button"></span>
-                              </div>
-                            </div>
-                          </li>
-                        </div>
-                      </div>
-
-                      <li class="item-content item-input">
-                        <div class="item-inner">
-                          <div class="item-title item-label">Link to Rules</div>
-                          <div class="item-input-wrap">
-                            <input type="url" name="stateRules" id="stateRules" />
-                            <span class="input-clear-button"></span>
-                          </div>
-                        </div>
-                      </li>
-
-
-                      <li class="item-content item-input">
-                        <div class="item-inner">
-                          <div class="item-title item-label">Link to BGG page</div>
-                          <div class="item-input-wrap">
-                            <input type="url" name="stateBGG" id="stateBGG" />
-                            <span class="input-clear-button"></span>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="item-content item-input">
-                        <div class="item-inner">
-                          <div class="item-title item-label">Link to image</div>
-                          <div class="item-input-wrap button-after">
-                            <input type="text" name="stateImage" id="stateImage" />
-                            <span class="input-clear-button"></span>
-                            <button class="ui-button button-raised button-fill button-small uploadAsset"><i class="material-icons">upload</i>Upload</button>
-
-                          </div>
-                        </div>
-                      </li>
-                      <li class="item-content item-input">
-                        <div class="item-inner">
-                          <div class="item-title item-label">stateLink</div>
-                          <div class="item-input-wrap">
-                            <input type="text" name="stateLink" id="stateLink" />                      <span class="input-clear-button"></span>
-                          </div>
-                        </div>
-                      </li>
-
-                    </ul>
-                  </div>
                     </div>
-                    <div class="col-100 medium-50">
-                      <h2 class="list-title">Variants</h2>
-                      <div id="variantsEditList">
-                        <template id="template-variantseditlist-entry" type="text/template">
-
-                            <div class="list">
-                              <div class="input"><label>Name:</label> <input class="stateVariant"/></div>
-                              <div class="row">
-                                <div class="col-50">
-                                  <div class="input"><label>Language (country code):</label> <input class="stateLanguage"/></div>
-                                </div>
-                                <div class="col-50">
-                                  <div class="input"><label>Players:</label> <input class="statePlayers"/></div>
-                                </div>
-                              <div class="input"><label>Attribution:</label>
-                              <div class="text-editor" data-placeholder="Enter text...">
-                                <div class="text-editor-content stateAttribution" contenteditable></div>
-                              </div></div>
-
-                              <div class="input"><label>Update link:</label> <input class="stateLink"/></div>
-                            </div>
-                            <div class="buttonbar">
-                              <button class="update">Update variant using current room state</button>
-                              <button class="prettyButton download">Download variant</button>
-                              <button class="prettyButton remove">Remove variant</button>
-                            </div>
-
-                        </template>
-                      </div>
-                      <div id="addVariant" class="buttons">
-                        Add variant:
-                        <button class="prettyButton create">Use current room state</button><button class="prettyButton library">Public library</button><button class="prettyButton link">Enter link</button><button class="prettyButton upload">Upload file</button>
-                      </div>
+                    <div class="col-33">
+                      <li class="item-content item-input">
+                        <div class="item-inner">
+                          <div class="item-title item-label">Game mode (vs/cooperative)</div>
+                          <div class="item-input-wrap">
+                            <input type="url" name="stateMode" id="stateMode" />
+                            <span class="input-clear-button"></span>
+                          </div>
+                        </div>
+                      </li>
+                    </div>
+                    <div class="col-33">
+                      <li class="item-content item-input">
+                        <div class="item-inner">
+                          <div class="item-title item-label">Time (in minutes)</div>
+                          <div class="item-input-wrap">
+                            <input type="number" name="stateTime" id="stateTime" />
+                            <span class="input-clear-button"></span>
+                          </div>
+                        </div>
+                      </li>
                     </div>
                   </div>
-                  <p><button class="prettyButton remove">Remove</button></p>
-                </div>
-      >>>>>>> Stashed changes
+                  <li class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">Link to Rules</div>
+                      <div class="item-input-wrap">
+                        <input type="url" name="stateRules" id="stateRules" />
+                        <span class="input-clear-button"></span>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">Link to BGG page</div>
+                      <div class="item-input-wrap">
+                        <input type="url" name="stateBGG" id="stateBGG" />
+                        <span class="input-clear-button"></span>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">Link to image</div>
+                      <div class="item-input-wrap upload-button">
+                        <input type="url" name="stateImage" id="stateImage" />
+                        <div class="item-after"><button class="button button-fill uploadAsset"><i class="material-icons">upload</i></button></div>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">stateLink</div>
+                      <div class="item-input-wrap">
+                        <input type="url" name="stateLink" id="stateLink" />                      <span class="input-clear-button"></span>
+                      </div>
+                    </div>
+                  </li>
+                  <li><div class="block block-strong">
+                      <p class="row"><button class="button button-fill button-raised color-red col remove"><span class="icon material-icons">delete</span>Delete Permanently</button></p>
+                    </div></li>
+                </ul>
               </div>
+
+            </div>
+            <div class="col-100 medium-50">
+              <div class="block-title">Variants</div>
+              <div class="addOptions block block-inset">
+                <div class="menu">
+                  <div class="menu-inner">
+                    <div class="menu-item menu-item-dropdown">
+                      <div class="menu-item-content"><span class="material-icons">add</span> Add Variant</div>
+                      <div class="menu-dropdown menu-dropdown-right">
+                        <div class="menu-dropdown-content">
+                          <a href="#" class="menu-dropdown-link menu-close gameMenu create">Save what you're working on <span class="icon material-icons">save</span></a>
+                          <a href="#" class="menu-dropdown-link menu-close gameMenu upload">Upload a VTT or PCIO file <span class="icon material-icons">upload</span></a>
+                          <a href="#" class="menu-dropdown-link menu-close gameMenu link">Enter a link to another game <span class="icon material-icons">link</span></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="list inset">
+                <ul id="variantsEditList">
+                  <template id="template-variantseditlist-entry" type="text/template">
+                    <a href="#" data-popup=".editVariant" class="popup-open item-link">
+                      <div class="item-content">
+                        <div class="item-media"><img class="variant-image" /></div>
+                        <div class="item-inner">
+                          <div class="item-title">
+                            <div class="label variant-name">name</div>
+                            <div class="item-footer"><i class="material-icons">language</i><span class="language">UN</span><i class="material-icons">groups</i><span class="players">0</span></div>
+                          </div>
+                          <div class="item-after"><span class="badge">LINKED</span></div>
+                        </div>
+                      </div>
+                    </a>
+                  </template>
+                </ul>
+              </div>
+              <div id="addVariant" class="addOptions block block-inset">
+                <a href="#" class="button button-fill button-raised download"><span class="icon material-icons">download</span>Download everything</a>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    <div id="editVariant" class="popup editVariant" data-swipe-to-close="to-bottom">
+      <h2>This is a linked variant</h2>
+      <div class="block">
+        <p><strong>Linked versions of games cannot be edited or changed.</strong></p>
+        <p>In order to make changes to this version of the game, you can make a an unlinked copy of it.</p>
+      </div>
+      <div class="block block-strong">
+        <p class="row">
+          <button class="col button button-fill button-raised color-blue">Make an unlinked copy</button>
+        </p>
+        <p class="row">
+          <button class="col button button-fill button-raised color-red">Remove this version</button>
+        <p>
+      </div>
     </div>
   </div>
 

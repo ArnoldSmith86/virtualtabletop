@@ -174,7 +174,7 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
       state.id = kvp[0];
 
       const entry = domByTemplate('template-stateslist-entry');
-      entry.className = state.image ? 'card-expandable roomState' : 'card-expandable roomState noImage';
+      entry.className = state.image ? 'card card-expandable roomState' : 'card card-expandable roomState noImage';
 
       if(state.publicLibrary)
         entry.className += ' publicLibraryGame';
@@ -225,32 +225,23 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
       const validLanguages = [];
       for(const variantID in state.variants) {
         const variant = state.variants[variantID];
-        const vEntry = domByTemplate('template-variantslist-entry');
-        vEntry.className += ' variant accordion-item';
+        console.log(variant);
+        const vEntry = domByTemplate('template-variantslist-entry', 'li');
+        vEntry.className += ' variant';
         $('.language', vEntry).textContent = String.fromCodePoint(...[...variant.language].map(c => c.charCodeAt() + 0x1F1A5));
         $('.players', vEntry).textContent = variant.players;
 
         if(variant.variant){
-          $('.variant-name > .label', vEntry).textContent = variant.variant;
+          $('.variant-name', vEntry).textContent = variant.variant;
         } else {
-          $('.variant-name > .label', vEntry).textContent = 'Unnamed Variant';
-          $('.variant-name > .label', vEntry).className += ' unnamed';
-        }
-        if(variant.description && (variant.description != state.description)){
-          $('.variant-description', vEntry).textContent = variant.description;
-        }
-        if(variant.attribution && (variant.attribution != state.attribution)){
-          $('.variant-attribution', vEntry).textContent = variant.attribution;
-        } else {
-          $('.has-attribution', vEntry).className += ' ui-hidden';
+          $('.variant-name', vEntry).textContent = 'Unnamed Variant';
+          $('.variant-name', vEntry).className += ' unnamed';
         }
         if(variant.image){
           $('.variant-image', vEntry).src += ' unnamed';
         }
         validPlayers.push(...parsePlayers(variant.players));
         validLanguages.push(variant.language);
-
-        $('.play', vEntry).addEventListener('click', _=>{ toServer('loadState', { stateID: state.id, variantID }); showOverlay(); });
         $('.variantsList', entry).appendChild(vEntry);
       }
 
@@ -294,24 +285,24 @@ function fillEditState(state) {
     const variant = state.variants[variantID];
     const vEntry = domByTemplate('template-variantseditlist-entry');
     vEntry.dataset.id = variantID;
-    $('.stateLanguage', vEntry).value = variant.language;
-    $('.statePlayers', vEntry).value = variant.players;
-    $('.stateVariant', vEntry).value = variant.variant;
-    $('.stateLink', vEntry).value = variant.link || '';
-    $('.stateAttribution', vEntry).value = variant.attribution || '';
-    $('.stateLink', vEntry).parentNode.style.display = variant.link ? 'block' : 'none';
+    // $('.stateLanguage', vEntry).value = variant.language;
+    // $('.statePlayers', vEntry).value = variant.players;
+    // $('.stateVariant', vEntry).value = variant.variant;
+    // $('.stateLink', vEntry).value = variant.link || '';
+    // $('.stateAttribution', vEntry).value = variant.attribution || '';
+    // $('.stateLink', vEntry).parentNode.style.display = variant.link ? 'block' : 'none';
 
-    if(variantID == variantIDjustUpdated) {
-      variantIDjustUpdated = null;
-      $('.update', vEntry).textContent = '✔️ Done';
-      $('.update', vEntry).disabled = true;
-    }
-    $('.update', vEntry).addEventListener('click', e=>{
-      addState(e, 'state', undefined, variantID);
-      variantIDjustUpdated = variantID;
-    });
-    $('.download', vEntry).addEventListener('click', _=>downloadState(variantID));
-    $('.remove', vEntry).addEventListener('click', _=>removeFromDOM(vEntry));
+    // if(variantID == variantIDjustUpdated) {
+    //   variantIDjustUpdated = null;
+    //   $('.update', vEntry).textContent = '✔️ Done';
+    //   $('.update', vEntry).disabled = true;
+    // }
+    // $('.update', vEntry).addEventListener('click', e=>{
+    //   addState(e, 'state', undefined, variantID);
+    //   variantIDjustUpdated = variantID;
+    // });
+    // $('.download', vEntry).addEventListener('click', _=>downloadState(variantID));
+    // $('.remove', vEntry).addEventListener('click', _=>removeFromDOM(vEntry));
     $('#variantsEditList').appendChild(vEntry);
   }
 

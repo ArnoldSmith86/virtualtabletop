@@ -2,7 +2,8 @@
 var $UI = Dom7;
 
 // Theme
-var theme = 'auto';
+// var theme = 'auto';
+var theme = 'md';
 if (document.location.search.indexOf('theme=') >= 0) {
   theme = document.location.search.split('theme=')[1].split('&')[0];
 }
@@ -54,6 +55,10 @@ var mainView = app.views.create('.view-main', {
   stackPages: true,
   ignoreCache: true,
 });
+
+var editpopup = app.popup.create({
+  el: '.editVariant',
+})
 
 $UI('#app').hide();
 

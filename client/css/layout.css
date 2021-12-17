@@ -615,7 +615,6 @@ body.edit::before {
 }
 
 .library::before {
-  content: '[book_open]';
 }
 
 .play::before {
@@ -623,15 +622,12 @@ body.edit::before {
 
 .save::before,
 .saveProgress::before {
-  content: '[save]';
 }
 
 .update::before {
-  content: '[save]';
 }
 
 .remove::before {
-  content: '[close_square]';
 }
 .update:hover {
   background-color: var(--VTTblueDark);
@@ -1082,4 +1078,6 @@ input:invalid+span:after {
   color: red;
   letter-spacing: -1px;
 }
-
+.page{
+  background-color: var(--f7-page-bg-color);
+}
