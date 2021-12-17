@@ -16,16 +16,16 @@ export {
 function addPlayerCursor(playerName, playerColor) {
   playerCursors[playerName] = document.createElement('div');
   playerCursors[playerName].className = 'cursor';
-  playerCursors[playerName].style.backgroundColor = playerColor;
+  playerCursors[playerName].style = `--playerName:''${playerName}'';--playerColor:${playerColor};`;
   playerCursors[playerName].style.transform = `translate(-50px, -50px)`;
-  playerCursors[playerName].setAttribute("player",playerName);
-  $('#roomArea').appendChild(playerCursors[playerName]);
+  playerCursors[playerName].setAttribute("data-player",playerName);
+  $('#playerCursors').appendChild(playerCursors[playerName]);
   playerCursorsTimeout[playerName] = setTimeout(()=>{}, 0);
 }
 
 function fillPlayerList(players, active) {
   activePlayers = [...new Set(active)];
-  removeFromDOM('#playerList > div, #roomArea > .cursor');
+  removeFromDOM('#playerList > div, #playerCursors > .cursor');
 
   for(const player in players) {
     const entry = domByTemplate('template-playerlist-entry');

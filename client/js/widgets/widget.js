@@ -4,8 +4,19 @@ import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
+import { center, distance, overlap, overlapScore, getOffset, applyTransformedOffset } from '../geometry.js';
 
-const readOnlyProperties = new Set(['_absoluteX', '_absoluteY', '_ancestor']);
+const readOnlyProperties = new Set([
+  '_absoluteRotation',
+  '_absoluteScale',
+  '_absoluteX',
+  '_absoluteY',
+  '_ancestor',
+  '_centerAbsoluteX',
+  '_centerAbsoluteY',
+  '_localOriginAbsoluteX',
+  '_localOriginAbsoluteY'
+]);
 
 export class Widget extends StateManaged {
   constructor(id) {
@@ -26,6 +37,7 @@ export class Widget extends StateManaged {
       width: 100,
       height: 100,
       layer: 0,
+      borderRadius: null,
       rotation: 0,
       scale: 1,
 
@@ -35,6 +47,7 @@ export class Widget extends StateManaged {
       movable: true,
       movableInEdit: true,
       clickable: false,
+      clickSound: null,
 
       grid: [],
       enlarge: false,
@@ -89,7 +102,7 @@ export class Widget extends StateManaged {
   }
 
   absoluteCoord(coord) {
-    return this.get(coord) + (this.get('parent') ? widgets.get(this.get('parent')).absoluteCoord(coord) : 0);
+    return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})[coord]
   }
 
   applyChildAdd(child) {
@@ -128,6 +141,9 @@ export class Widget extends StateManaged {
 
   applyDeltaToDOM(delta) {
     this.applyCSS(delta);
+    if(delta.audio !== null)
+      this.addAudio(this);
+
     if(delta.z !== undefined)
       this.applyZ(true);
 
@@ -157,10 +173,9 @@ export class Widget extends StateManaged {
         const property = isGlobalUpdateRoutine[1] || '*';
         if(StateManaged.globalUpdateListeners[property] === undefined)
           StateManaged.globalUpdateListeners[property] = [];
+        StateManaged.globalUpdateListeners[property] = StateManaged.globalUpdateListeners[property].filter(x=>x[0]!=this);
         if(Array.isArray(delta[key]))
           StateManaged.globalUpdateListeners[property].push([ this, key ]);
-        else
-          StateManaged.globalUpdateListeners[property] = StateManaged.globalUpdateListeners[property].filter(x=>x[0]!=this);
       }
     }
 
@@ -215,6 +230,7 @@ export class Widget extends StateManaged {
       widgets.get(this.get('deck')).removeCard(this);
     removeFromDOM(this.domElement);
     this.inheritFromUnregister();
+    this.globalUpdateListenersUnregister();
   }
 
   applyZ(force) {
@@ -285,6 +301,9 @@ export class Widget extends StateManaged {
     if(!this.get('clickable') && !(mode == 'ignoreClickable' || mode =='ignoreAll'))
       return true;
 
+    if(this.get('clickSound'))
+      this.set('audio','source: ' + this.get('clickSound') + ', type: audio/mpeg , maxVolume: 1.0, length: null, player: null');
+
     if(Array.isArray(this.get('clickRoutine')) && !(mode == 'ignoreClickRoutine' || mode =='ignoreAll')) {
       await this.evaluateRoutine('clickRoutine', {}, {});
       return true;
@@ -293,15 +312,86 @@ export class Widget extends StateManaged {
     }
   }
 
+  coordGlobalFromCoordLocal(coord) {
+    return this.coordGlobalFromCoordParent(this.coordParentFromCoordLocal(coord));
+  }
+  coordGlobalFromCoordParent(coord) {
+    const p = this.get('parent');
+    return (widgets.has(p)) ? widgets.get(p).coordGlobalFromCoordLocal(coord) : coord;
+  }
+  coordGlobalInside(coord) {
+    const coordLocal = this.coordLocalFromCoordGlobal(coord);
+    return coordLocal.x >= 0 && coordLocal.y >= 0 && coordLocal.x <= this.get('width') && coordLocal.y <= this.get('height');
+  }
+  coordLocalFromCoordClient(coord) {
+    const s = this.get('_absoluteScale') * scale;
+    const rot = this.get('_absoluteRotation') % 360;
+    const localCenter = {x: this.get('width') / 2, y: this.get('height') / 2};
+    const offset = getOffset(center(this.domElement), coord);
+    return applyTransformedOffset(localCenter, offset, 1 / s, -rot );
+  }
+  coordLocalFromCoordGlobal(coord) {
+    return this.coordLocalFromCoordParent(this.coordParentFromCoordGlobal(coord));
+  }
+  coordLocalFromCoordParent(coord) {
+    const s = this.get('scale');
+    const rot = this.get('rotation') % 360;
+    if(s == 1 && rot == 0) {
+      return {x: coord.x - this.get('x'), y: coord.y - this.get('y')};
+    } else {
+      const localCenter = {x: this.get('width') / 2, y: this.get('height') / 2};
+      const parentCenter = {x: localCenter.x + this.get('x') , y: localCenter.y + this.get('y') };
+      const offset = getOffset(parentCenter, coord);
+      return applyTransformedOffset(localCenter, offset, 1 / s, -rot );
+    }
+  }
+  coordParentFromCoordGlobal(coord) {
+    const p = this.get('parent');
+    return (widgets.has(p)) ? widgets.get(p).coordLocalFromCoordGlobal(coord) : coord;
+  }
+  coordParentFromCoordLocal(coord) {
+    let s = this.get('scale');
+    let rot = this.get('rotation') % 360;
+    if(s == 1 && rot == 0) {
+      return {x: coord.x + this.get('x'), y: coord.y + this.get('y')};
+    } else {
+      const localCenter = {x: this.get('width') / 2, y: this.get('height') / 2};
+      const parentCenter = {x: localCenter.x + this.get('x') , y: localCenter.y + this.get('y') };
+      const offset = getOffset(localCenter, coord);
+      return applyTransformedOffset(parentCenter, offset, s, rot );
+    }
+  }
   css() {
     let css = this.get('css');
-
+    css = this.cssBorderRadius() + css;
     css += '; width:'  + this.get('width')  + 'px';
     css += '; height:' + this.get('height') + 'px';
     css += '; z-index:' + this.calculateZ();
     css += '; transform:' + this.cssTransform();
 
     return css;
+  }
+
+  cssBorderRadius() {
+    let br = this.get('borderRadius');
+    switch(typeof(br)) {
+      case 'number':
+        if(br >= 0)
+          return `border-radius:${br}px;`;
+        else
+          return '';
+      case 'string':
+        br = br.trim().replace(/\s+/g, ' ');
+        const value = '(?:0|\\+?(?:\\d+(?:\\.\\d+)?|\\.\\d+)(?:[eE][+-]?\\d+)?(?:px|%))';
+        const valueList = `(?:${value}(?: ${value}){0,3})`;
+        const re = new RegExp(`^${valueList}(?: ?\\/ ?${valueList})?` + '\x24');
+        if(br.match(re))
+          return `border-radius:${br};`;
+        else
+          return '';
+      default:
+        return ''
+    }
   }
 
   cssProperties() {
@@ -325,14 +415,28 @@ export class Widget extends StateManaged {
 
   evaluateInputOverlay(o, resolve, reject, go) {
     const result = {};
-    for(const field of o.fields) {
-
-      if(field.type == 'checkbox') {
-        result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).checked;
-      } else if(field.type != 'text') {
-        result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).value;
+    if(go) {
+      for(const field of o.fields) {
+        if(field.type == 'checkbox') {
+          result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).checked;
+        } else if(field.type == 'switch') {
+          let thisresult = document.getElementById(this.get('id') + ';' + field.variable).checked;
+          if(thisresult){
+            result[field.variable] = 'on';
+          } else {
+            result[field.variable] = 'off';
+          }
+        } else if(field.type == 'number') {
+          let thisvalue = document.getElementById(this.get('id') + ';' + field.variable).value;
+          if(thisvalue > field.max)
+            thisvalue = field.max;
+          if(thisvalue < field.min)
+            thisvalue = field.min;
+          result[field.variable] = thisvalue
+        } else if(field.type != 'text' && field.type != 'subtitle' && field.type != 'title') {
+          result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).value;
+        }
       }
-
     }
 
     showOverlay(null);
@@ -435,6 +539,8 @@ export class Widget extends StateManaged {
       return;
 
     batchStart();
+
+    let abortRoutine = false; // Set for CALL with 'return=false' or when INPUT is cancelled.
 
     if(tracingEnabled && typeof property == 'string')
       sendTraceEvent('evaluateRoutine', { id: this.get('id'), property });
@@ -547,6 +653,13 @@ export class Widget extends StateManaged {
         }
       }
 
+      if(a.func == 'AUDIO') {
+        setDefaults(a, { source: '', type: 'audio/mpeg', maxVolume: 1.0, length: null, player: null });
+        if(a.source !== undefined) {
+          this.set('audio', 'source: ' + a.source + ', type: ' + a.type + ', maxVolume: ' + a.maxVolume + ', length: ' + a.length + ', player: ' + a.player);
+        }
+      }
+
       if(a.func == 'CALL') {
         setDefaults(a, { widget: this.get('id'), routine: 'clickRoutine', 'return': true, arguments: {}, variable: 'result', collection: 'result' });
         if(!a.routine.match(/Routine$/)) {
@@ -572,7 +685,7 @@ export class Widget extends StateManaged {
                 if(!result.collection.length || result.collection.length >= 5)
                   returnCollection = `(${result.collection.length} widgets)`;
                 jeLoggingRoutineOperationSummary(
-                  `${a.routine} ${theWidget} and return variable ${a.variable} and collection ${a.collection}`,
+                  `${a.routine} ${theWidget} and return variable '${a.variable}' and collection '${a.collection}'`,
                   `${JSON.stringify(variables[a.variable])}; ${JSON.stringify(result.collection)}`)
               } else {
                 jeLoggingRoutineOperationSummary( `${a.routine} ${theWidget} and abort caller processing`)
@@ -580,6 +693,8 @@ export class Widget extends StateManaged {
             }
           }
         }
+        if (!a.return)
+          abortRoutine = true;
       }
 
       if(a.func == 'CANVAS') {
@@ -592,9 +707,14 @@ export class Widget extends StateManaged {
 
         const execute = async function(widget) {
           if(widget.get('type') == 'canvas') {
-            if(a.mode == 'setPixel')
-              await widget.setPixel(a.x, a.y, a.value);
-            else if(a.mode == 'set')
+            if(a.mode == 'setPixel') {
+              const res = widget.getResolution();
+              if(a.x >= 0 && a.y >= 0 && a.x < res && a.y < res) {
+                await widget.setPixel(a.x, a.y, a.value);
+              } else {
+                problems.push(`Pixel coordinate: (${a.x}, ${a.y}) out of range for resolution: ${res}.`);
+              }
+            } else if(a.mode == 'set')
               await widget.set('activeColor', a.value % widget.get('colorMap').length);
             else if(a.mode == 'reset')
               await widget.reset();
@@ -677,7 +797,7 @@ export class Widget extends StateManaged {
                   problems.push(`There is already a widget with id:${a.properties.id}, generating new ID.`);
               }
               delete clone.parent;
-              const cWidget = widgets.get(addWidgetLocal(clone));
+              const cWidget = widgets.get(await addWidgetLocal(clone));
 
               if(parent) {
                 // use moveToHolder so that CLONE triggers onEnter and similar features
@@ -907,11 +1027,10 @@ export class Widget extends StateManaged {
             });
             jeLoggingRoutineOperationSummary(`${varList.join(', ')}`,`${valueList.join(', ')}`);
           }
-
         } catch(e) {
-          problems.push(`Exception: ${e.toString()}`);
-          batchEnd();
-          return;
+          abortRoutine = true;
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary("INPUT cancelled");
         }
       }
 
@@ -1266,7 +1385,7 @@ export class Widget extends StateManaged {
           }
         };
         if(jeRoutineLogging &&
-           (a.timer != undefined || (isValidCollection(a.collection) && collections[a.collection].length))) {
+           (a.timer != undefined || (collection && collections[collection].length))) {
           const phrase = (a.timer == undefined) ? `timers in '${a.collection}'` : `'${a.timer}'`;
           if(a.mode == 'set')
             jeLoggingRoutineOperationSummary(`${phrase} to ${a.value}`);
@@ -1342,7 +1461,7 @@ export class Widget extends StateManaged {
       if(!jeRoutineLogging && problems.length)
         console.log(problems);
 
-      if(a.func == 'CALL' && !a.return)
+      if(abortRoutine)
         break
 
     } // End iterate over functions in routine
@@ -1360,26 +1479,84 @@ export class Widget extends StateManaged {
       playerName = variables.playerName;
     }
 
-    return { variable: variables.result, collection: collections.result || [] };
+    return { variable: variables.result || null, collection: collections.result || [] };
   }
 
   get(property) {
-    if(property == '_ancestor') {
-      if(widgets.has(this.get('parent')) && widgets.get(this.get('parent')).get('type')=='pile') {
-        return widgets.get(this.get('parent')).get('_ancestor');
-      } else {
-        return this.get('parent');
-      }
-    } else if(property == '_absoluteX' || property == '_absoluteY') {
-      return this.absoluteCoord(property == '_absoluteX' ? 'x' : 'y')
-    } else {
+    if(!readOnlyProperties.has(property)) {
       return super.get(property);
+    } else {
+      const p = this.get('parent');
+      switch(property) {
+        case '_absoluteRotation':
+          return this.get('rotation') + (widgets.has(p)? widgets.get(p).get('_absoluteRotation') : 0);
+        case '_absoluteScale':
+          return this.get('scale') * (widgets.has(p)? widgets.get(p).get('_absoluteScale') : 1);
+        case '_absoluteX':
+          return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})['x'];
+        case '_absoluteY':
+          return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})['y'];
+        case '_ancestor':
+          return (widgets.has(p) && widgets.get(p).get('type')=='pile') ? widgets.get(p).get('_ancestor') : p;
+        case '_centerAbsoluteX':
+          return this.coordGlobalFromCoordParent({x:this.get('x')+this.get('width')/2,y:this.get('y')+this.get('height')/2})['x'];
+        case '_centerAbsoluteY':
+          return this.coordGlobalFromCoordParent({x:this.get('x')+this.get('width')/2,y:this.get('y')+this.get('height')/2})['y'];
+        case '_localOriginAbsoluteX':
+          return this.coordGlobalFromCoordLocal({x:0,y:0})['x'];
+        case '_localOriginAbsoluteY':
+          return this.coordGlobalFromCoordLocal({x:0,y:0})['y'];
+        default:
+          return super.get(property);
+      }
     }
   }
 
   hideEnlarged() {
     if (!this.domElement.className.match(/selected/))
       $('#enlarged').classList.add('hidden');
+  }
+
+  async addAudio(widget){
+    if(widget.get('audio')) {
+      const audioString = widget.get('audio');
+      const audioArray = audioString.split(/:\s|,\s/);
+      const source = audioArray[1];
+      const type = audioArray[3];
+      const maxVolume = audioArray[5];
+      const length = audioArray[7];
+      const pName = audioArray[9];
+
+      if(pName == "null" || pName == playerName) {
+        var audioElement = document.createElement('audio');
+        audioElement.setAttribute('class', 'audio');
+        audioElement.setAttribute('src', source);
+        audioElement.setAttribute('type', type);
+        audioElement.setAttribute('maxVolume', maxVolume);
+        audioElement.volume = Math.min(maxVolume * (((10 ** (document.getElementById('volume').value / 96.025)) / 10) - 0.1), 1); // converts slider to log scale with zero = no volume
+        document.body.appendChild(audioElement);
+        audioElement.play();
+
+        if(length != "null") {
+          setInterval(function(){
+            if(audioElement.currentTime>=0){
+              audioElement.pause();
+              clearInterval();
+              if(audioElement.parentNode)
+                audioElement.parentNode.removeChild(audioElement);
+            }}, length);
+        } else {
+          audioElement.onended = function() {
+            audioElement.pause();
+            clearInterval();
+            if(audioElement.parentNode)
+              audioElement.parentNode.removeChild(audioElement);
+          };
+        }
+      }
+      setInterval(function(){
+        widget.set('audio', null);}, 100);
+    }
   }
 
   isValidID(id, problems) {
@@ -1410,7 +1587,6 @@ export class Widget extends StateManaged {
     if(!this.get('fixedParent')) {
       this.dropTargets = this.validDropTargets();
       this.currentParent = widgets.get(this.get('parent'));
-      this.hoverTargetDistance = 99999;
       this.hoverTarget = null;
 
       this.disablePileUpdateAfterParentChange = true;
@@ -1422,62 +1598,55 @@ export class Widget extends StateManaged {
     }
   }
 
-  async move(x, y) {
-    let newX = (jeZoomOut ? x : Math.max(0-this.get('width' )*0.25, Math.min(1600+this.get('width' )*0.25, x))) - this.get('width' )/2;
-    let newY = (jeZoomOut ? y : Math.max(0-this.get('height')*0.25, Math.min(1000+this.get('height')*0.25, y))) - this.get('height')/2;
-
-    if(this.get('fixedParent') && widgets.has(this.get('parent'))) {
-      newX -= widgets.get(this.get('parent')).absoluteCoord('x');
-      newY -= widgets.get(this.get('parent')).absoluteCoord('y');
-    }
+  async move(coordGlobal, localAnchor) {
+    const coordParent = this.coordParentFromCoordGlobal(coordGlobal);
+    const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), {x: this.get('x'), y: this.get('y')})
+    const newX = Math.round(coordParent.x + offset.x);
+    const newY = Math.round(coordParent.y + offset.y);
 
     if(tracingEnabled)
-      sendTraceEvent('move', { id: this.get('id'), x, y, newX, newY });
+      sendTraceEvent('move', { id: this.get('id'), coordGlobal, localAnchor, newX, newY });
 
     await this.setPosition(newX, newY, this.get('z'));
     await this.snapToGrid();
 
     if(!this.get('fixedParent')) {
-      const myCenter = center(this.domElement);
       await this.checkParent();
 
-      this.hoverTargetChanged = false;
-      if(this.hoverTarget) {
-        if(overlap(this.domElement, this.hoverTarget.domElement)) {
-          this.hoverTargetDistance = distance(myCenter, this.hoverTargetCenter);
-        } else {
-          this.hoverTargetDistance = 99999;
-          this.hoverTarget = null;
-          this.hoverTargetChanged = true;
-        }
-      }
+      const lastHoverTarget = this.hoverTarget;
+      const myCenter = center(this.domElement);
+      const myMinDim = Math.min(this.get('width'), this.get('height')) * this.get('_absoluteScale');
+      this.hoverTarget = null;
+      let targetCursor = false;
+      let targetOverlap = 0;
+      let targetDist = 99999;
 
       for(const t of this.dropTargets) {
-        const tCenter = center(t.domElement);
-        const d = distance(myCenter, tCenter);
-        if(d < this.hoverTargetDistance) {
-          if(overlap(this.domElement, t.domElement)) {
-            this.hoverTargetChanged = this.hoverTarget != t;
+        const tOverlap = overlapScore(this.domElement, t.domElement);
+        if(tOverlap > 0) {
+          const tCursor = t.coordGlobalInside(coordGlobal);
+          const tDist = distance(center(t.domElement), myCenter) / scale;
+          const tMinDim = Math.min(t.get('width'),t.get('height')) * t.get('_absoluteScale');
+          const validTarget = tCursor || tDist <= (myMinDim + tMinDim) / 2;
+          const bestTarget = tDist <= targetDist;
+          if(validTarget && bestTarget) {
+            targetCursor = tCursor;
+            targetOverlap= tOverlap;
+            targetDist = tDist;
             this.hoverTarget = t;
-            this.hoverTargetCenter = tCenter;
-            this.hoverTargetDistance = d;
           }
         }
       }
-
-      if(this.hoverTargetChanged) {
-        if(this.lastHoverTarget)
-          this.lastHoverTarget.domElement.classList.remove('droptarget');
-        if(this.hoverTarget)
-          this.hoverTarget.domElement.classList.add('droptarget');
-        this.lastHoverTarget = this.hoverTarget;
-      }
+      if(lastHoverTarget)
+        lastHoverTarget.domElement.classList.remove('droptarget');
+      if(this.hoverTarget)
+        this.hoverTarget.domElement.classList.add('droptarget');
     }
   }
 
-  async moveEnd() {
+  async moveEnd(coord, localAnchor) {
     if(tracingEnabled)
-      sendTraceEvent('moveEnd', { id: this.get('id') });
+      sendTraceEvent('moveEnd', { id: this.get('id'), coord, localAnchor });
 
     if(!this.get('fixedParent')) {
       for(const t of this.dropTargets)
@@ -1486,6 +1655,11 @@ export class Widget extends StateManaged {
       await this.checkParent();
 
       if(this.hoverTarget) {
+        let coordNew = this.hoverTarget.coordLocalFromCoordClient({x: coord.clientX, y: coord.clientY});
+        const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), {x: this.get('x'), y: this.get('y')})
+        coordNew = this.hoverTarget.coordGlobalFromCoordLocal({x: Math.round(coordNew.x + offset.x), y: Math.round(coordNew.y + offset.y)});
+        this.setPosition(coordNew.x, coordNew.y, this.get('z'));
+        await this.snapToGrid();
         await this.moveToHolder(this.hoverTarget);
         this.hoverTarget.domElement.classList.remove('droptarget');
       }
@@ -1505,18 +1679,16 @@ export class Widget extends StateManaged {
   }
 
   async onChildAddAlign(child, oldParentID) {
-    let childX = child.get('x');
-    let childY = child.get('y');
+    let coordChild = {x: child.get('x'), y: child.get('y')};
 
     if(!oldParentID) {
-      childX -= this.absoluteCoord('x');
-      childY -= this.absoluteCoord('y');
+      coordChild = this.coordLocalFromCoordGlobal(coordChild);
     }
 
     if(this.get('alignChildren'))
       await child.setPosition(this.get('dropOffsetX'), this.get('dropOffsetY'), child.get('z'));
     else
-      await child.setPosition(childX, childY, child.get('z'));
+      await child.setPosition(Math.round(coordChild.x*1024)/1024, Math.round(coordChild.y*1024)/1024, child.get('z'));
   }
 
   async onChildRemove(child) {
@@ -1598,12 +1770,36 @@ export class Widget extends StateManaged {
 
   async showInputOverlay(o, widgets, variables, problems) {
     return new Promise((resolve, reject) => {
-
-      $('#buttonInputOverlay h1').textContent = o.header || "Button Input";
+      const maxRandomRotate = o.randomRotation || 0;
+      const rotation = Math.floor(Math.random() * maxRandomRotate) - (maxRandomRotate / 2);
+      var confirmButtonText, cancelButtonText = "";
+      $('#buttonInputOverlay .modal').style = o.css || "";
+      $('#buttonInputOverlay .modal').style.transform = "rotate("+rotation+"deg)";
       $('#buttonInputFields').innerHTML = '';
+      if(o.header){
+        const dom = document.createElement('div');
+        dom.className = "inputtitle";
+        const thisheader = {label: o.header}
+        formField(thisheader, dom, null);
+        $('#buttonInputFields').appendChild(dom);
+      }
+      if(!o.confirmButtonText && !o.confirmButtonIcon){
+        confirmButtonText = "Go";
+      }
+      if(!o.cancelButtonText && !o.cancelButtonIcon){
+        cancelButtonText = "Cancel";
+      }
+
+      $('#buttonInputGo label').textContent = o.confirmButtonText || confirmButtonText;
+      $('#buttonInputCancel label').textContent = o.cancelButtonText || cancelButtonText;
+
+      $('#buttonInputGo span').textContent = o.confirmButtonIcon || "";
+      $('#buttonInputCancel span').textContent = o.cancelButtonIcon || "";
 
       for(const field of o.fields) {
         const dom = document.createElement('div');
+        dom.style = field.css || "";
+        dom.className = "input"+field.type;
         formField(field, dom, this.get('id') + ';' + field.variable);
         $('#buttonInputFields').appendChild(dom);
       }
@@ -1720,7 +1916,7 @@ export class Widget extends StateManaged {
           }, this.get('onPileCreation'));
           if(thisOwner !== null)
             pile.owner = thisOwner;
-          const pileId = addWidgetLocal(pile);
+          const pileId = await addWidgetLocal(pile);
           await widget.set('parent', pileId);
           await this.bringToFront();
           await this.set('parent', pileId);
