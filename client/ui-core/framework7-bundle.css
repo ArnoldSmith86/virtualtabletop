@@ -11388,7 +11388,7 @@ input[type='datetime-local'],
 input[type='time'],
 input[type='number'],
 select,
-textarea {
+#app textarea {
   box-sizing: border-box;
   -webkit-appearance: none;
      -moz-appearance: none;
