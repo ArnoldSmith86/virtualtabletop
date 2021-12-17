@@ -3,8 +3,6 @@ import { WebSocketServer } from 'ws';
 import Connection from './connection.mjs';
 
 export default class WebSocket {
-  connections = [];
-
   constructor(server, serverStart, newPlayerCallback) {
     this.server = new WebSocketServer({ noServer: true });
     this.serverStart = serverStart;
@@ -20,6 +18,6 @@ export default class WebSocket {
   }
 
   newConnection = ws => {
-    this.connections.push(new Connection(this, ws, this.newPlayerCallback));
+    new Connection(this, ws, this.newPlayerCallback);
   }
 }
