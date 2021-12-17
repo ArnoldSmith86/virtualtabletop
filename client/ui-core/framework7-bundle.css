@@ -11311,7 +11311,7 @@ html.with-modal-sheet-push-closing .framework7-root > .panel-in.panel-push.panel
   --f7-input-info-text-color: rgba(255, 255, 255, 0.55);
   --f7-input-clear-button-color: rgba(255, 255, 255, 0.5);
 }
-.md {
+.md #app {
   --f7-input-height: 36px;
   --f7-input-font-size: 16px;
   --f7-textarea-padding-vertical: 7px;
