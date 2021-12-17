@@ -21,8 +21,8 @@ var routes = [
     pageName: 'home',
   },
   {
-    path: '/stateEditOverlay/',
-    pageName: 'stateEditOverlay',
+    path: '/stateEditScreen/',
+    pageName: 'stateEditScreen',
   },
 ];
 

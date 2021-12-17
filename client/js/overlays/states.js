@@ -64,8 +64,8 @@ async function addState(e, type, src, id) {
   let url = `/addState/${roomID}/${id}/${type}/${src && src.name && encodeURIComponent(src.name)}/`;
   waitingForStateCreation = id;
   if(e && (e.target.parentNode.parentNode == $('#addVariant') || e.target.classList.contains('update'))) {
-    waitingForStateCreation = $('#stateEditOverlay').dataset.id;
-    url += $('#stateEditOverlay').dataset.id;
+    waitingForStateCreation = $('#stateEditScreen').dataset.id;
+    url += $('#stateEditScreen').dataset.id;
   }
 
   var req = new XMLHttpRequest();
@@ -83,7 +83,7 @@ async function addState(e, type, src, id) {
 }
 
 function downloadState(variantID) {
-  const stateID = $('#stateEditOverlay').dataset.id;
+  const stateID = $('#stateEditScreen').dataset.id;
   let url = `/dl/${roomID}`
   if(variantID !== null)
     url += `/${stateID}`;
@@ -103,7 +103,7 @@ function editState() {
       attribution: $('.stateAttribution', variant).value
     };
   }
-  toServer('editState', { id: $('#stateEditOverlay').dataset.id, meta: {
+  toServer('editState', { id: $('#stateEditScreen').dataset.id, meta: {
     name:    $('#stateName').value,
     image:   $('#stateImage').value,
     rules:   $('#stateRules').value,
@@ -125,7 +125,7 @@ function updateLibraryFilter() {
   const text = $('#filterByText').value.toLowerCase();
   const players = $('#filterByPlayers').value;
   const language = $('#filterByLanguage').value;
-  for(const state of $a('#statesList .list > div')) {
+  for(const state of $a('#gameShelf .card')) {
     const textMatch     = state.dataset.text.match(text);
     const playersMatch  = players  == 'Any' || state.dataset.players.split(',').indexOf(players) != -1;
     const languageMatch = language == 'Any' || state.dataset.languages.split(',').indexOf(language) != -1;
@@ -255,7 +255,7 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
 
       if(state.id == waitingForStateCreation) {
         waitingForStateCreation = null;
-        if(state.name == 'Unnamed' || $('#stateEditOverlay').style.display == 'flex')
+        if(state.name == 'Unnamed')
           fillEditState(state);
       }
     }
@@ -268,7 +268,7 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
 }
 
 function fillEditState(state) {
-  $('#stateEditOverlay').dataset.id = state.id;
+  $('#stateEditScreen').dataset.id = state.id;
 
   $('#stateName').value = state.name;
   $('#stateImage').value = state.image;
@@ -311,7 +311,7 @@ function fillEditState(state) {
 }
 
 function removeState() {
-  toServer('removeState', $('#stateEditOverlay').dataset.id);
+  toServer('removeState', $('#stateEditScreen').dataset.id);
   showOverlay('statesOverlay');
 }
 
@@ -320,7 +320,7 @@ async function shareLink() {
   let url = $('#stateLink').value;
   if(!url) {
     const name = $('#stateName').value.replace(/[^A-Za-z0-9.-]/g, '_');
-    url = await fetch(`/share/${roomID}/${$('#stateEditOverlay').dataset.id}`);
+    url = await fetch(`/share/${roomID}/${$('#stateEditScreen').dataset.id}`);
     url = `${location.origin}${await url.text()}/${name}.vtt`;
   }
   $('#sharedLink').value = url;
@@ -332,21 +332,21 @@ onLoad(function() {
   on('#filterByText', 'keyup', updateLibraryFilter);
   on('#filterByPlayers, #filterByLanguage', 'change', updateLibraryFilter);
 
-  on('#addState .create, #addVariant .create', 'click', e=>addState(e, 'state'));
-  on('#addState .upload, #addVariant .upload', 'click', e=>selectFile(false, f=>addState(e, 'file', f)));
-  on('#addState .link,   #addVariant .link',   'click', e=>addState(e, 'link', prompt('Enter shared URL:')));
+  on('.statesCreator .create, #addVariant .create', 'click', e=>addState(e, 'state'));
+  on('.statesCreator .upload, #addVariant .upload', 'click', e=>selectFile(false, f=>addState(e, 'file', f)));
+  on('.statesCreator .link,   #addVariant .link',   'click', e=>addState(e, 'link', prompt('Enter shared URL:')));
 
-  on('#addState .download', 'click', _=>downloadState(null));
+  on('.statesCreator .download', 'click', _=>downloadState(null));
 
-  on('#stateEditOverlay .save',     'click', editState);
-  on('#stateEditOverlay .download', 'click', _=>downloadState());
-  on('#stateEditOverlay .remove',   'click', removeState);
+  on('#stateEditScreen .save',     'click', editState);
+  on('#stateEditScreen .download', 'click', _=>downloadState());
+  on('#stateEditScreen .remove',   'click', removeState);
 
-  on('#stateEditOverlay .uploadAsset', 'click', _=>uploadAsset().then(function(asset) {
+  on('#stateEditScreen .uploadAsset', 'click', _=>uploadAsset().then(function(asset) {
     if(asset)
       $('#stateImage').value = asset;
   }));
-  on('#stateEditOverlay .share', 'click', _=>shareLink());
+  on('#stateEditScreen .share', 'click', _=>shareLink());
 
   on('#shareOK', 'click', _=>showOverlay('stateEditOverlay'));
 

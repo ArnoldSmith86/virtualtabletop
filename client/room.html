@@ -31,32 +31,82 @@
             <div class="title">VirtualTabletop.io</div>
 
             <div class="right">
-
-              <a href="#" class="button hideApp">
-                <span class="material-icons text-color-white">close</span>
-              </a>
+              <a class="button download" href="#"><span class="material-icons text-color-white">download</span></a>
+              <a href="#" class="button hideApp"><span class="material-icons text-color-white">close</span></a>
             </div>
+
+
+          </div>
+        </div>
+        <div class="toolbar toolbar-top">
+          <div class="toolbar-inner">
+            <div class="searchbar">
+              <div class="searchbar-input-wrap">
+                <input type="search" placeholder="Find a game..." id="filterByText" />
+                <i class="searchbar-icon"></i>
+                <span class="input-clear-button"></span>
+              </div>
+            </div>
+            <div class="searchParams list">
+            <ul>
+            <li>
+              <a class="smart-select smart-select-init" data-open-in="popover" data-close-on-select="true">
+                <select id="filterByPlayers"><option>Any</option>
+                  <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+                  <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+                  <option>11</option><option>12</option><option>13</option><option>14</option><option>15</option>
+                  <option>16</option><option>17</option><option>18</option><option>19</option><option>20</option>
+                </select>
+                <div class="item-content">
+                  <div class="item-media"><i class="material-icons">group</i></div>
+                  <div class="item-inner">
+                    <div class="item-title"></div>
+                  </div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a class="smart-select smart-select-init" data-open-in="popover" data-close-on-select="true">
+                <select id="filterByLanguage"><option>Any</option>
+                  <option>UN</option><option>US</option>
+                  <option>BR</option><option>CN</option><option>DE</option><option>GB</option>
+                </select>
+                <div class="item-content">
+                  <div class="item-media"><i class="material-icons">language</i></div>
+                  <div class="item-inner">
+                    <div class="item-title"></div>
+                  </div>
+                </div>
+              </a>
+            </li>
+            </ul>
+            </div>
+
+
+
+          </div>
+        </div>
+
+        <div class="fab fab-right-bottom color-orange statesCreator">
+          <a href="#">
+            <i class="icon material-icons">add</i>
+            <i class="icon material-icons">close</i>
+          </a>
+          <div class="fab-buttons fab-buttons-top">
+            <a class="fab-label-button fab-close create" href="#"><span class="icon material-icons">save</span><span class="fab-label">Save what you're working on</span></a>
+            <a class="fab-label-button fab-close upload" href="#"><span class="icon material-icons">upload</span><span class="fab-label">Upload a VTT or PCIO file</span></a>
+            <a class="fab-label-button fab-close link" href="#"><span class="icon material-icons">link</span><span class="fab-label">Enter a link to another game</span></a>
+
           </div>
         </div>
         <div id="gameShelf" class="page-content">
+
+
+
+
+
           <h2 class="list-title yourshelf">
             <span>Your Game Shelf</span>
-            <div class="menu">
-              <div class="menu-inner">
-                <div class="menu-item menu-item-dropdown">
-                  <div class="menu-item-content"><span class="material-icons">add</span></div>
-                  <div class="menu-dropdown menu-dropdown-center">
-                    <div class="menu-dropdown-content">
-                      <a href="#" class="menu-dropdown-link menu-close gameMenu create">Save what you're working on <span class="icon material-icons">save</span></a>
-                      <a href="#" class="menu-dropdown-link menu-close gameMenu upload">Upload a VTT or PCIO file <span class="icon material-icons">upload</span></a>
-                      <a href="#" class="menu-dropdown-link menu-close gameMenu link">Enter a link to another game <span class="icon material-icons">link</span></a>
-                      <div class="menu-dropdown-divider"></div>
-                      <a href="#" class="menu-dropdown-link menu-close gameMenu download">Download everything <span class="icon material-icons">download</span></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </h2>
           <div class="block">
             <p>There is no saved game in this room. You can save your progress or add games to it and play them with your friends and family by sharing the link.</p>
@@ -95,13 +145,13 @@
               <a class="close-box card-close material-icons">close</a>
               <div class="header">
                 <div class="title">
-                  <img>
+                  <img class="card-opened-fade-in">
                   <div>
                     <div class="name">Name</div>
                     <div class="similar-to"></div>
-                    <div class="stats"><span class="material-icons icon time-icon">schedule</span> <span class="time">0</span></div>
+                    <div class="stats"><span class="material-icons time-icon">schedule</span> <span class="time">0</span></div>
                   </div>
-                  <div class="edit-button"><a href="/stateEditOverlay/" class="edit"><i class="icon material-icons">drive_file_rename_outline</i>EDIT</a></div>
+                  <a href="/stateEditScreen/" class="card-opened-fade-in edit-button button button-raise button-fill color-white text-color-black edit"><i class="material-icons">drive_file_rename_outline</i>EDIT</a>
                 </div>
 
               </div>
@@ -114,7 +164,7 @@
                 </div>
                 <div class="block description-info"></div>
                 <div class="variantsList"></div>
-                <div class="block-title"><i class="icon material-icons">attribution</i> Attribution</div>
+                <div class="block-title display-flex align-items-center"><i class="material-icons">attribution</i> <span>Attribution</span></div>
                 <div class="block attribution-info">There is no further attribution information for this title.</div>
               </div>
             </div>
@@ -135,7 +185,7 @@
           </template>
         </div>
       </div>
-      <div id="stateEditOverlay" class="page stacked" data-name="stateEditOverlay">
+      <div id="stateEditScreen" class="page stacked" data-name="stateEditScreen">
         <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
@@ -148,12 +198,34 @@
                 <div class="right">
                   <a href="#" class="share link icon-only"><i class="material-icons">share</i></a>
                   <a href="#" class="download link icon-only"><i class="material-icons">download</i></a>
-                  <a href="#" class="save link icon-only"><i class="material-icons text-color-teal">save</i></a>
                 </div>
             </div>
         </div>
+        <div class="fab fab-left-bottom color-red">
+          <a href="#">
+            <i class="material-icons">delete</i>
+            <i class="material-icons">delete</i>
+          </a>
+          <div class="fab-buttons fab-buttons-top">
+            <a class="fab-label-button fab-close back remove" href="#"><span class="icon material-icons">trash</span><span class="fab-label">Delete permanently</span></a>
+          </div>
+        </div>
+
+
+        <div class="fab fab-extended fab-right-bottom color-orange statesCreator">
+          <a href="#">
+            <i class="icon material-icons">add</i>
+            <i class="icon material-icons">close</i>
+            <div class="fab-text">Add Variant</div>
+          </a>
+          <div class="fab-buttons fab-buttons-top">
+            <a class="fab-label-button fab-close create" href="#"><span class="material-icons">save</span><span class="fab-label">Save what you're working on</span></a>
+            <a class="fab-label-button fab-close upload" href="#"><span class="material-icons">upload</span><span class="fab-label">Upload a VTT or PCIO file</span></a>
+            <a class="fab-label-button fab-close link" href="#"><span class="material-icons">link</span><span class="fab-label">Enter a link to another game</span></a>
+          </div>
+        </div>
         <div id="" class="page-content">
-          <div class="block row">
+          <div class="block row no-gap">
             <div class="editBasicInfo col-100 medium-50">
               <div class="block-title">Basic Information</div>
               <div class="list medium-inset">
@@ -171,7 +243,7 @@
                     <div class="col-33">
                       <li class="item-content item-input">
                         <div class="item-inner">
-                          <div class="item-title item-label">Year Published</div>
+                          <div class="item-title item-label">Year Made</div>
                           <div class="item-input-wrap">
                             <input type="number" name="stateYear" id="stateYear" />
                             <span class="input-clear-button"></span>
@@ -182,7 +254,7 @@
                     <div class="col-33">
                       <li class="item-content item-input">
                         <div class="item-inner">
-                          <div class="item-title item-label">Game mode (vs/cooperative)</div>
+                          <div class="item-title item-label">Game mode</div>
                           <div class="item-input-wrap">
                             <input type="url" name="stateMode" id="stateMode" />
                             <span class="input-clear-button"></span>
@@ -193,7 +265,7 @@
                     <div class="col-33">
                       <li class="item-content item-input">
                         <div class="item-inner">
-                          <div class="item-title item-label">Time (in minutes)</div>
+                          <div class="item-title item-label">Time (minutes)</div>
                           <div class="item-input-wrap">
                             <input type="number" name="stateTime" id="stateTime" />
                             <span class="input-clear-button"></span>
@@ -238,31 +310,15 @@
                     </div>
                   </li>
                   <li><div class="block block-strong">
-                      <p class="row"><button class="button button-fill button-raised color-red col remove"><span class="icon material-icons">delete</span>Delete Permanently</button></p>
+                      <p class="row"><button class="button button-fill button-raised color-green col save"><span class="icon material-icons">save</span>Save changes</button></p>
                     </div></li>
                 </ul>
               </div>
 
             </div>
-            <div class="col-100 medium-50">
+            <div class="col-100 medium-50 margin-bottom">
               <div class="block-title">Variants</div>
-              <div class="addOptions block block-inset">
-                <div class="menu">
-                  <div class="menu-inner">
-                    <div class="menu-item menu-item-dropdown">
-                      <div class="menu-item-content"><span class="material-icons">add</span> Add Variant</div>
-                      <div class="menu-dropdown menu-dropdown-right">
-                        <div class="menu-dropdown-content">
-                          <a href="#" class="menu-dropdown-link menu-close gameMenu create">Save what you're working on <span class="icon material-icons">save</span></a>
-                          <a href="#" class="menu-dropdown-link menu-close gameMenu upload">Upload a VTT or PCIO file <span class="icon material-icons">upload</span></a>
-                          <a href="#" class="menu-dropdown-link menu-close gameMenu link">Enter a link to another game <span class="icon material-icons">link</span></a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="list inset">
+              <div class="list medium-inset">
                 <ul id="variantsEditList">
                   <template id="template-variantseditlist-entry" type="text/template">
                     <a href="#" data-popup=".editVariant" class="popup-open item-link">
@@ -280,10 +336,7 @@
                   </template>
                 </ul>
               </div>
-              <div id="addVariant" class="addOptions block block-inset">
-                <a href="#" class="button button-fill button-raised download"><span class="icon material-icons">download</span>Download everything</a>
 
-              </div>
             </div>
           </div>
 
@@ -291,7 +344,8 @@
       </div>
 
     </div>
-    <div id="editVariant" class="popup editVariant" data-swipe-to-close="to-bottom">
+    <div id="editVariant" class="popup editVariant">
+      <a class="close-box popup-close material-icons">close</a>
       <h2>This is a linked variant</h2>
       <div class="block">
         <p><strong>Linked versions of games cannot be edited or changed.</strong></p>
@@ -304,6 +358,9 @@
         <p class="row">
           <button class="col button button-fill button-raised color-red">Remove this version</button>
         <p>
+          <p class="row">
+            <button class="col button button-fill button-raised color-gray popup-close">Cancel</button>
+          <p>
       </div>
     </div>
   </div>
@@ -507,19 +564,7 @@
 
     <div id="statesOverlay" class="overlay">
       <h1>Games</h1>
-      <div id="stateFilters">
-        <input id="filterByText" />
-        <select id="filterByPlayers"><option>Any</option>
-          <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
-          <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
-          <option>11</option><option>12</option><option>13</option><option>14</option><option>15</option>
-          <option>16</option><option>17</option><option>18</option><option>19</option><option>20</option>
-        </select>
-        <select id="filterByLanguage"><option>Any</option>
-          <option>UN</option><option>US</option>
-          <option>BR</option><option>CN</option><option>DE</option><option>GB</option>
-        </select>
-      </div>
+
       <div id="statesList">
         <template id="template-stateslist-category" type="text/template">
           <h2 class="title">Title</h2>
@@ -549,7 +594,7 @@
       </div>
     </div>
 
-    <div id="stateEditOverlay-old" class="overlay">
+    <div id="stateEditOverlay" class="overlay">
       <h1>Edit game</h1>
       <div class="details">
         <div class="input"><label for="stateName">Name:</label> <input id="stateName"/></div>

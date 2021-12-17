@@ -2,7 +2,7 @@
   padding: 2%;
 }
 
-#statesList, #stateEditOverlay {
+#statesList, #stateEditOverlay, #stateEditScreen {
   overflow: auto;
   background-color: #cecece;
 }
@@ -70,12 +70,6 @@
   width: 180px;
 }
 
-.roomState > img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
 #addState {
   background: rgba(255, 255, 255, 0.5);
   display: inline-flex;
@@ -87,14 +81,6 @@
 .roomState em {
   display: block;
   margin-bottom: 20px;
-}
-
-.roomState:hover > div, .roomState:hover .details > *, #addState:hover > div, .roomState > div > a {
-/*   display: block; */
-}
-
-.roomState:hover > img, #addState:hover .image {
-  filter: blur(5px);
 }
 
 .details .stats{
@@ -154,6 +140,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-content: flex-start;
 }
 #gameShelf .list-title{
   width: 100%;
@@ -178,9 +165,6 @@
   display: none;
 }
 
-.roomState.noImage .details > *, .roomState.noImage img {
-
-}
 .roomState .header{
   height: 200px;
   text-shadow: 0 0 3px black;

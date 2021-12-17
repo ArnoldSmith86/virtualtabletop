@@ -619,7 +619,9 @@ code {
   display: none;
 }
 
-
+.menu-dropdown{
+  z-index: 1000;
+}
 .swipe-handler {
   height: 16px;
   position: absolute;
@@ -761,4 +763,32 @@ h2{
 .upload-button button{
   flex-grow: 0;
   flex-shrink: 1;
+}
+.searchParams > ul{
+  display: flex;
+}
+.searchParams > ul li{
+  width: 7rem;
+  border-left: 1px solid lightgray;
+}
+.searchParams > ul li .item-inner {
+  margin: 0!important;
+  padding: 0;
+}
+.searchParams > ul li .item-title {
+  display: none;
+}
+.searchParams > ul li .item-after {
+  padding: 0 16px 0 0;
+  margin: 0;
+}
+.searchParams > ul li .item-after::after {
+  content: 'expand_more';
+  font-family: 'Material Icons';
+}
+
+.searchParams > ul li .item-media {
+  max-width: 24px;
+  min-width: 24px;
+  width: 24px;
 }
