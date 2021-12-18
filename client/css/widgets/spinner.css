@@ -3,7 +3,7 @@
   background: white;
   color: black;
   border: 1px solid #d2d2d2;
-  border-radius: 100%;
+  border-radius: 50%;
   width: 100%;
   height: 100%;
   box-sizing: border-box;
@@ -32,7 +32,7 @@
   left: 27.6%;
   background: var(--wcMain);
   color: var(--wcFont);
-  border-radius: 100%;
+  border-radius: 50%;
   transition: opacity 0.25s;
   opacity: 1;
 }
