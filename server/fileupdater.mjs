@@ -303,7 +303,7 @@ function v6cssPieces(properties) {
       const length = 50 + 30 * Math.round((properties.height - 28.5)/15.33);
       if(length !=80)
         properties.css = `--pinLength: ${length}`;
-      properties.width = 33.85;
+      properties.width = 35.85;
       return;
     }
   } else if(properties.classes.match(classicRE)) {
