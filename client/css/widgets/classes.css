@@ -148,7 +148,6 @@ body.edit .widget.checkersPiece::after {
   --pinWidth: 40;
   --pinLength: 80;
   --pinAngle: -30;
-  --borderWidth: 3;
 }
 .pinPiece::before,
 .pinPiece::after,
