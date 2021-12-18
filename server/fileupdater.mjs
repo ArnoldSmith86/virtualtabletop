@@ -300,7 +300,7 @@ function v6cssPieces(properties) {
       properties.classes.replace(pinRE, 'legacyPinPiece');
       return;
     } else {
-      const length = 50 + 30 * math.Round((properties.height - 28.5)/15.33);
+      const length = 50 + 30 * Math.round((properties.height - 28.5)/15.33);
       if(length !=80)
         properties.css = `--pinLength: ${length}`;
       properties.width = 33.85;
