@@ -16,3 +16,18 @@
   min-height: 100%;
   resize: none;
 }
+
+body.edit .widget.label {
+  border: none;
+  box-sizing: content-box;
+  box-shadow:0 0 0 3px var(--editColor);
+}
+
+body.edit .widget.label > * {
+  left: 0;
+  top: 0;
+}
+
+.widget.label > textarea:read-only {
+  pointer-events: none;
+}

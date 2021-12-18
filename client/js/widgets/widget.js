@@ -9,12 +9,12 @@ import { center, distance, overlap, overlapScore, getOffset, applyTransformedOff
 const readOnlyProperties = new Set([
   '_absoluteRotation',
   '_absoluteScale',
-  '_absoluteX', 
+  '_absoluteX',
   '_absoluteY',
   '_ancestor',
-  '_centerAbsoluteX', 
-  '_centerAbsoluteY', 
-  '_localOriginAbsoluteX', 
+  '_centerAbsoluteX',
+  '_centerAbsoluteY',
+  '_localOriginAbsoluteX',
   '_localOriginAbsoluteY'
 ]);
 
@@ -42,6 +42,7 @@ export class Widget extends StateManaged {
       width: 100,
       height: 100,
       layer: 0,
+      borderRadius: null,
       rotation: 0,
       scale: 1,
 
@@ -372,17 +373,38 @@ export class Widget extends StateManaged {
       return applyTransformedOffset(parentCenter, offset, s, rot );
     }
   }
-  
+
+  cssBorderRadius() {
+    let br = this.get('borderRadius');
+    switch(typeof(br)) {
+      case 'number':
+        if(br >= 0)
+          return `border-radius:${br}px;`;
+        else
+          return '';
+      case 'string':
+        br = br.trim().replace(/\s+/g, ' ');
+        const value = '(?:0|\\+?(?:\\d+(?:\\.\\d+)?|\\.\\d+)(?:[eE][+-]?\\d+)?(?:px|%))';
+        const valueList = `(?:${value}(?: ${value}){0,3})`;
+        const re = new RegExp(`^${valueList}(?: ?\\/ ?${valueList})?` + '\x24');
+        if(br.match(re))
+          return `border-radius:${br};`;
+        else
+          return '';
+      default:
+        return ''
+    }
+  }
   cssBox() {
-    let css = ""
-    css += '; width:' + this.get('width') + 'px';
+    let css = this.cssBorderRadius();
+    css += '; width:'  + this.get('width')  + 'px';
     css += '; height:' + this.get('height') + 'px';
     css += '; z-index:' + this.calculateZ();
     css += '; transform:' + this.cssTransform();
     return css;
   }
   cssBoxProperties() {
-    return [ 'height', 'inheritChildZ', 'layer', 'width' ];
+    return [ 'borderRadius', 'height', 'inheritChildZ', 'layer', 'width' ];
   }
   cssInner() {
     let css = this.get('css');
@@ -409,20 +431,28 @@ export class Widget extends StateManaged {
 
   evaluateInputOverlay(o, resolve, reject, go) {
     const result = {};
-    for(const field of o.fields) {
-      if(field.type == 'checkbox') {
-        result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).checked;
-      } else if(field.type == 'switch'){
-        var thisresult = document.getElementById(this.get('id') + ';' + field.variable).checked;
-        if(thisresult){
-          result[field.variable] = 'on';
-        } else {
-          result[field.variable] = 'off';
+    if(go) {
+      for(const field of o.fields) {
+        if(field.type == 'checkbox') {
+          result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).checked;
+        } else if(field.type == 'switch') {
+          let thisresult = document.getElementById(this.get('id') + ';' + field.variable).checked;
+          if(thisresult){
+            result[field.variable] = 'on';
+          } else {
+            result[field.variable] = 'off';
+          }
+        } else if(field.type == 'number') {
+          let thisvalue = document.getElementById(this.get('id') + ';' + field.variable).value;
+          if(thisvalue > field.max)
+            thisvalue = field.max;
+          if(thisvalue < field.min)
+            thisvalue = field.min;
+          result[field.variable] = thisvalue
+        } else if(field.type != 'text' && field.type != 'subtitle' && field.type != 'title') {
+          result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).value;
         }
-      } else if(field.type != 'text' && field.type != 'subtitle' && field.type != 'title') {
-        result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).value;
       }
-
     }
 
     showOverlay(null);
@@ -525,6 +555,8 @@ export class Widget extends StateManaged {
       return;
 
     batchStart();
+
+    let abortRoutine = false; // Set for CALL with 'return=false' or when INPUT is cancelled.
 
     if(tracingEnabled && typeof property == 'string')
       sendTraceEvent('evaluateRoutine', { id: this.get('id'), property });
@@ -655,7 +687,7 @@ export class Widget extends StateManaged {
                 if(!result.collection.length || result.collection.length >= 5)
                   returnCollection = `(${result.collection.length} widgets)`;
                 jeLoggingRoutineOperationSummary(
-                  `${a.routine} ${theWidget} and return variable ${a.variable} and collection ${a.collection}`,
+                  `${a.routine} ${theWidget} and return variable '${a.variable}' and collection '${a.collection}'`,
                   `${JSON.stringify(variables[a.variable])}; ${JSON.stringify(result.collection)}`)
               } else {
                 jeLoggingRoutineOperationSummary( `${a.routine} ${theWidget} and abort caller processing`)
@@ -663,6 +695,8 @@ export class Widget extends StateManaged {
             }
           }
         }
+        if (!a.return)
+          abortRoutine = true;
       }
 
       if(a.func == 'CANVAS') {
@@ -995,11 +1029,10 @@ export class Widget extends StateManaged {
             });
             jeLoggingRoutineOperationSummary(`${varList.join(', ')}`,`${valueList.join(', ')}`);
           }
-
         } catch(e) {
-          problems.push(`Exception: ${e.toString()}`);
-          batchEnd();
-          return;
+          abortRoutine = true;
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary("INPUT cancelled");
         }
       }
 
@@ -1430,7 +1463,7 @@ export class Widget extends StateManaged {
       if(!jeRoutineLogging && problems.length)
         console.log(problems);
 
-      if(a.func == 'CALL' && !a.return)
+      if(abortRoutine)
         break
 
     } // End iterate over functions in routine
@@ -1448,12 +1481,12 @@ export class Widget extends StateManaged {
       playerName = variables.playerName;
     }
 
-    return { variable: variables.result, collection: collections.result || [] };
+    return { variable: variables.result || null, collection: collections.result || [] };
   }
 
   get(property) {
     if(!readOnlyProperties.has(property)) {
-      return super.get(property);      
+      return super.get(property);
     } else {
       const p = this.get('parent');
       switch(property) {
@@ -1743,10 +1776,16 @@ export class Widget extends StateManaged {
       const maxRandomRotate = o.randomRotation || 0;
       const rotation = Math.floor(Math.random() * maxRandomRotate) - (maxRandomRotate / 2);
       var confirmButtonText, cancelButtonText = "";
-
       $('#buttonInputOverlay .modal').style = o.css || "";
       $('#buttonInputOverlay .modal').style.transform = "rotate("+rotation+"deg)";
       $('#buttonInputFields').innerHTML = '';
+      if(o.header){
+        const dom = document.createElement('div');
+        dom.className = "inputtitle";
+        const thisheader = {label: o.header}
+        formField(thisheader, dom, null);
+        $('#buttonInputFields').appendChild(dom);
+      }
       if(!o.confirmButtonText && !o.confirmButtonIcon){
         confirmButtonText = "Go";
       }

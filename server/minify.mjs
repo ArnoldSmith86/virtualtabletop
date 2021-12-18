@@ -27,6 +27,8 @@ export default function minifyRoom() {
 
         'client/css/overlays/players.css',
         'client/css/overlays/states.css',
+        'client/css/overlays/connectionlost.css',
+        'client/css/overlays/about.css',
 
         'client/css/widgets/widget.css',
         'client/css/widgets/basicwidget.css',
@@ -44,7 +46,7 @@ export default function minifyRoom() {
       ],
       output: os.tmpdir() + '/out.css'
     }).then(function(min) {
-      roomHTML = roomHTML.replace(/ \{\{CSS\}\} /, min).replace(/ \{\{CONFIG\}\} /, `const config = ${JSON.stringify(Config.config)};`);
+      roomHTML = roomHTML.replace(/\ \/\*\*\*\ CSS\ \*\*\*\/\ /, min).replace(/\ \/\/\*\*\*\ CONFIG\ \*\*\*\/\/\ /, `const config = ${JSON.stringify(Config.config)};`);
       return minify({
         compressor: Config.get('minifyJavascript') ? uglifyES : noCompress,
         input: [
@@ -87,7 +89,7 @@ export default function minifyRoom() {
       const minNoImports = min.replace(/\bimport[^;]*\.\/[^;]*;/g, "")
       return minify({
         compressor: htmlMinifier,
-        content: roomHTML.replace(/ \{\{JS\}\} /, minNoImports),
+        content: roomHTML.replace(/\ \/\/\*\*\*\ JS\ \*\*\*\/\/\ /, minNoImports),
         options: {
           conservativeCollapse: true
         }
