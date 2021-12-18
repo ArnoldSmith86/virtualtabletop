@@ -32,6 +32,7 @@ class Seat extends Widget {
       displayedText = displayedText.replaceAll('seatIndex',this.get('index'))
       displayedText = displayedText.replaceAll('playerName',this.get('player'))
       setText(this.domInner, displayedText);
+      this.domBox.setAttribute('data-text', displayedText);
     }
     if(delta.player !== undefined)
       this.updateLinkedWidgets();

@@ -376,7 +376,7 @@ export class Widget extends StateManaged {
   cssBox() {
     let css = ""
     css += '; width:' + this.get('width') + 'px';
-    css += '; height:' + this.get('width') + 'px';
+    css += '; height:' + this.get('height') + 'px';
     css += '; z-index:' + this.calculateZ();
     css += '; transform:' + this.cssTransform();
     return css;
@@ -1711,6 +1711,7 @@ export class Widget extends StateManaged {
         await this.set('text', text);
     } else
       problems.push(`Tried setting text property which doesn't exist for ${this.id}.`);
+    this.domBox.setAttribute('data-text', this.get('text'));
   }
 
   selected() {

@@ -1,9 +1,12 @@
+.widget.holder {
+  border-radius: 8px;
+}
+
 .holder > .widget-content {
   background: white;
   box-sizing: border-box;
   border: calc(1px / var(--scale)) solid #333;
   border-color: #d8d8d8 #ccc #ccc #d8d8d8;
-  border-radius: 8px;
 }
 
 .holder.transparent > .widget-content {
@@ -15,9 +18,6 @@
   border: calc(1px / var(--scale)) solid #333 !important;
 }
 
-body.edit .holder::before {
-  border-radius: 8px;
-}
 body.edit .widget.droppable.droptarget:before {
   border-width: 3px;
 }

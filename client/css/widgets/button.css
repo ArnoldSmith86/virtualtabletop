@@ -1,6 +1,9 @@
+.widget.button {
+  border-radius: 800px;
+}
+
 .widget.button > .widget-content {
   box-sizing: border-box;
-  border-radius: 800px;
   background-color: var(--wcMain);
   color: var(--wcFont);
   border-width: 4px;
@@ -24,8 +27,4 @@
   background-color: var(--wcMainOH);
   background-image: var(--wcImageOH);
   color: var(--wcFontOH);
-}
-
-body.edit .widget.button::before {
-  border-radius:800px;
 }

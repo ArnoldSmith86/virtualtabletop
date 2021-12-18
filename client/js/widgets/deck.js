@@ -18,6 +18,7 @@ class Deck extends Widget {
   addCard(card) {
     this.cards[card.get('id')] = card;
     ++this.domInner.textContent;
+    this.domBox.setAttribute('data-text', this.domInner.textContent);
   }
 
   applyDeltaToDOM(delta) {
@@ -38,5 +39,6 @@ class Deck extends Widget {
   removeCard(card) {
     delete this.cards[card.get('id')];
     --this.domInner.textContent;
+    this.domBox.setAttribute('data-text', this.domInner.textContent);
   }
 }

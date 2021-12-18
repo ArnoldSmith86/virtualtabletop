@@ -27,6 +27,7 @@ export class Label extends Widget {
     super.applyDeltaToDOM(delta);
     if(delta.text !== undefined || delta.twoRowBottomAlign !== undefined) {
       this.input.value = delta.text;
+      this.domBox.setAttribute('data-text', delta.text);
       if(this.get('twoRowBottomAlign')) {
         this.input.style.height = '20px';
         this.input.style.minHeight = 'unset';

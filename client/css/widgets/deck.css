@@ -1,36 +1,20 @@
-.deck > .widget-content {
+.widget.deck {
+  border-radius: 50%;
+}
+
+.widget.deck > .widget-content {
   display: none;
 }
 
-body.edit .deck > .widget-content {
-  filter: none !important;
-  opacity: 1 !important;
-  display: block;
-  padding-top: 40px;
-  text-align: center;
-  color: var(--editColor);
-  border: 3px solid var(--editColor);
-  border-radius: 100%;
-  font-size: 200%;
-}
-
 body.edit .deck::before {
-  align-items: flex-start;
-  border-width: 0;
+  padding-top: 34px;
+  font-size: 24px;
 }
 
-body.edit .deck > .widget-content::before, 
-body.edit .deck > .widget-content::after {
-  position: absolute;
-  width: 15px;
-  height: 25px;
-  border: 2px solid var(--editColor);
-  top: 10px;
-  left: 30px;
-  content: "";
-}
+body.edit .deck::after {
+  font-family: 'VTT-Symbols';
+  font-size: 32px;
+  padding-bottom: 26px;
 
-body.edit .deck > .widget-content::after {
-  top: 15px;
-  left: 35px;
+  content: 'deck';
 }

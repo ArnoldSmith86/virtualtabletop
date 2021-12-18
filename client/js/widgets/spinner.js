@@ -33,6 +33,7 @@ class Spinner extends Widget {
         clearTimeout(this.timeout);
       this.timeout = setTimeout(_=>{
         this.value.textContent = this.get('value');
+        this.domBox.setAttribute('data-text', this.value.textContent);
         this.value.classList.remove('hidden')
       }, 1300);
     }
@@ -44,6 +45,7 @@ class Spinner extends Widget {
       const o = this.get('options');
       await this.set('angle', angle);
       await this.set('value', o[Math.floor(angle/(360/o.length))%o.length]);
+      this.domBox.setAttribute('data-text', this.get('value'));
     }
   }
 

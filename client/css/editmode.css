@@ -44,10 +44,6 @@
   cursor: pointer;
 }
 
-body.edit #addOverlay .widget::before {
-  content: '';
-}
-
 #editJSONoverlay {
   padding: 10px;
 }

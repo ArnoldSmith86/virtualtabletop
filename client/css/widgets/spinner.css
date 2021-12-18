@@ -1,3 +1,7 @@
+.widget.spinner {
+  border-radius: 50%;
+}
+
 .spinner > .widget-content > svg.background {
   position: absolute;
   background: white;
@@ -39,24 +43,4 @@
 
 .spinner > .widget-content > div.value.hidden {
   opacity: 0;
-}
-
-body.edit .widget.spinner::before {
-  border-radius: 100%;
-  align-items: flex-end;
-}
-
-body.edit .widget.spinner > .widget-content {
-  filter: none !important;
-  opacity: 1 !important;
-}
-
-body.edit .spinner > .widget-content > svg.background, 
-body.edit .spinner > .widget-content > div.spinningPart {
-  display: none;
-}
-
-body.edit .spinner > .widget-content > div.value {
-  color: var(--editColor);
-  background: transparent;
 }

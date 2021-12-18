@@ -27,8 +27,10 @@ class BasicWidget extends Widget {
       if(face !== undefined)
         this.applyDelta(face);
     }
-    if(delta.text !== undefined)
+    if(delta.text !== undefined) {
       setText(this.domInner, delta.text);
+      this.domBox.setAttribute('data-text', delta.text);
+    }
 
     for(const property of Object.values(this.get('svgReplaces') || {}))
       if(delta[property] !== undefined) {
