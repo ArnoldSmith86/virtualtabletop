@@ -612,7 +612,6 @@ function jeAddCommands() {
 
   jeAddEnumCommands('^[a-z]+ ↦ type', widgetTypes.slice(1));
   jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ value', [ '${}' ]);
-  jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ count', [ '${}' ]);
   jeAddEnumCommands('^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ textAlign', [ 'left', 'center', 'right' ]);
   jeAddEnumCommands('^.*\\(AUDIO\\) ↦ type', [ 'audio/midi', 'audio/mpeg', 'audio/ogg', 'audio/wav', 'audio/x-wav' ]);
   jeAddEnumCommands('^.*\\(AUDIO\\) ↦ player', [ '${}', '${playerName}' ]);
@@ -623,7 +622,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(IF\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=' ]);
   jeAddEnumCommands('^.*\\(IF\\) ↦ (operand1|operand2|condition)', [ '${}' ]);
   jeAddEnumCommands('^.*\\(LABEL\\) ↦ mode', [ 'set', 'dec', 'inc', 'append' ]);
-  jeAddEnumCommands('^.*\\(ROTATE\\) ↦ angle', [ 45, 60, 90, 135, 180, '${}' ]);
+  jeAddEnumCommands('^.*\\(ROTATE\\) ↦ angle', [ 45, 60, 90, 135, 180 ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ mode', [ 'set', 'add' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ mode', [ 'set', 'add', 'remove', 'intersect' ]);
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=', 'in' ]);
@@ -644,6 +643,7 @@ function jeAddCommands() {
   jeAddNumberCommand('half number', '/', x=>x/2);
   jeAddNumberCommand('zero', '0', x=>0);
   jeAddNumberCommand('opposite value', '0', x=>-x);
+  jeAddNumberCommand('${}', '0', x=>'${}');
 
   jeAddAlignmentCommands();
 }
@@ -1550,10 +1550,9 @@ function jeSet(text, dontFocus) {
   } catch(e) {
     jeSetEditorContent(text);
   }
-  if(!dontFocus && !window.dontFocus)
+  if(!dontFocus)
     $('#jeText').focus();
   jeColorize();
-  window.dontFocus = false;
 }
 
 // Replace ###SELECT ME### in JSON string in jeStateNow by the string given in replaceBy,
