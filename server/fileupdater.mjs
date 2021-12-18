@@ -297,7 +297,7 @@ function v6cssPieces(properties) {
     return;
   if(properties.classes.match(pinRE)) {
     if(properties.text || properties.css || !properties.height || properties.height > 60) {
-      properties.classes.replace(pinRE, 'legacyPinPiece');
+      properties.classes = properties.classes.replace(pinRE, 'legacyPinPiece');
       return;
     } else {
       const length = 50 + 30 * Math.round((properties.height - 28.5)/15.33);
@@ -308,7 +308,7 @@ function v6cssPieces(properties) {
     }
   } else if(properties.classes.match(classicRE)) {
     if(properties.text || properties.css || properties.width < 74 || properties.height < 87) {
-      properties.classes.replace(classicRE, 'legacyClassicPiece');
+      properties.classes = properties.classes.replace(classicRE, 'legacyClassicPiece');
       return;
     } else {
       properties.x += 17;
