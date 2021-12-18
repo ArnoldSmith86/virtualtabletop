@@ -29,6 +29,7 @@ body.edit .legacyClassicPiece::after {
   position: absolute;
   display: block;
   content: "";
+  top: 0;
 }
 .classicPiece::before {
   width: calc(32 / 60 * 100%);
@@ -157,6 +158,8 @@ body.edit .widget.checkersPiece::after {
   display: block;
   box-sizing: border-box;
   content: "";
+  top: 0;
+  height: 0;
   border: calc(var(--borderWidth) * 1px) solid var(--borderColor);
   background-color: var(--color);
 }
