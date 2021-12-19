@@ -72,9 +72,9 @@ export class StateManaged {
   }
 
   inheritFromIsValid(properties, key) {
-    if(properties == '*')
+    if(properties == '*' && key != 'audio')
       return true;
-    if([ 'id', 'type', 'deck', 'cardType' ].indexOf(key) != -1)
+    if([ 'id', 'type', 'deck', 'cardType', 'audio' ].indexOf(key) != -1)
       return false;
 
     if(Array.isArray(properties) && properties.length && properties[0].length && properties[0][0] == '!')
