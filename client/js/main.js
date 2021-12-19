@@ -1,10 +1,13 @@
 import { $, $a, onLoad, selectFile, asArray } from './domhelpers.js';
-import { startWebSocket } from './connection.js';
+import { startWebSocket, toServer } from './connection.js';
 
 
-let scale = 1;
+export let scale = 1;
 let roomRectangle;
 let overlayActive = false;
+let muted = false;
+let unmuteVol = 30;
+let optionsHidden = true;
 
 var vmEditOverlay;
 
@@ -93,6 +96,7 @@ export function showOverlay(id, forced) {
     if (id == 'buttonInputOverlay') {
       $('#buttonInputGo').focus();
     }
+    toServer('mouse',{inactive:true})
   } else {
     $('#roomArea').className = '';
     vmEditOverlay.selectedWidget = {};
@@ -100,36 +104,56 @@ export function showOverlay(id, forced) {
   }
 }
 
-function checkURLproperties() {
-  try {
-    if(location.hash)
-      urlProperties = JSON.parse(decodeURIComponent(location.hash.substr(1)));
-  } catch(e) {
-    console.error('Could not parse URL parameters.', e);
-    urlProperties = {};
-  }
+function checkURLproperties(connected) {
+  if(!connected) {
 
-  if(urlProperties.hideToolbar) {
-    $('#toolbar').style.display = 'none';
-    document.documentElement.style.setProperty('--toolbarSize', 0);
-  }
-  if(urlProperties.askID) {
-    on('#askIDoverlay button', 'click', function() {
-      roomID = urlProperties.askID + $('#enteredID').value;
-      toServer('room', { playerName, roomID });
-      $('#legacy-link').href += `#${roomID}`;
-      showOverlay();
-    });
-    showOverlay('askIDoverlay');
-  }
-  if(urlProperties.css) {
-    const link = document.createElement('link');
+    try {
+      if(location.hash) {
+        const playerParams = location.hash.match(/^#player:([^:]+):%23([0-9a-f]{6})$/);
+        if(playerParams) {
+          urlProperties = { player: decodeURIComponent(playerParams[1]), color: '#'+playerParams[2] };
+        } else {
+          urlProperties = JSON.parse(decodeURIComponent(location.hash.substr(1)));
+        }
+        history.pushState("", document.title, window.location.pathname);
+      }
+    } catch(e) {
+      console.error('Could not parse URL parameters.', e);
+      urlProperties = {};
+    }
 
-    link.type = 'text/css';
-    link.rel = 'stylesheet';
-    link.href = urlProperties.css;
+    if(urlProperties.player) {
+      playerName = urlProperties.player;
+      localStorage.setItem('playerName', playerName);
+    }
+    if(urlProperties.hideToolbar) {
+      $('#toolbar').style.display = 'none';
+      document.documentElement.style.setProperty('--toolbarSize', 0);
+    }
+    if(urlProperties.askID) {
+      on('#askIDoverlay button', 'click', function() {
+        roomID = urlProperties.askID + $('#enteredID').value;
+        toServer('room', { playerName, roomID });
+        $('#legacy-link').href += `#${roomID}`;
+        showOverlay();
+      });
+      showOverlay('askIDoverlay');
+    }
+    if(urlProperties.css) {
+      const link = document.createElement('link');
 
-    document.head.appendChild(link);
+      link.type = 'text/css';
+      link.rel = 'stylesheet';
+      link.href = urlProperties.css;
+
+      document.head.appendChild(link);
+    }
+
+  } else {
+
+    if(urlProperties.color)
+      toServer('playerColor', { player: playerName, color: urlProperties.color });
+
   }
 }
 
@@ -221,6 +245,35 @@ onLoad(function() {
       showOverlay(overlay);
   });
 
+  on('#muteButton', 'click', function(){
+    if(muted) {
+      document.getElementById('volume').value = unmuteVol;
+      document.getElementById('muteButton').classList.remove('muted');
+      var allAudios = document.querySelectorAll('audio');
+      allAudios.forEach(function(audio){
+        audio.volume = Math.min(audio.getAttribute('maxVolume') * (((10 ** (unmuteVol / 96.025)) / 10) - 0.1), 1);
+      });
+    } else {
+      unmuteVol = document.getElementById('volume').value;
+      document.getElementById("volume").value = 0;
+      var allAudios = document.querySelectorAll('audio');
+      allAudios.forEach(function(audio){
+        audio.volume = 0;
+      });
+      document.getElementById('muteButton').classList.add('muted');
+    }
+    muted = !muted
+  });
+
+  on('#optionsButton', 'click', function(){
+    if(optionsHidden) {
+      document.getElementById('options').classList.remove('hidden');
+    } else {
+      document.getElementById('options').classList.add('hidden');
+    }
+    optionsHidden = !optionsHidden
+  });
+
   on('#fullscreenButton', 'click', function() {
     if(document.documentElement.requestFullscreen) {
       if(!document.fullscreenElement)
@@ -239,7 +292,30 @@ onLoad(function() {
     setScale();
   });
 
-  checkURLproperties();
+  if(Object.keys(config.betaServers).length) {
+    for(const betaServerName in config.betaServers) {
+      const entry = domByTemplate('template-betaServerList-entry', 'tr');
+      $('button', entry).textContent = betaServerName;
+      var thisstatus = config.betaServers[betaServerName].return ? 'check' : 'cancel';
+      $('.return', entry).textContent = thisstatus;
+      $('.return', entry).classList.add(thisstatus);
+      $('.description', entry).textContent = config.betaServers[betaServerName].description;
+      $('#betaServerList').appendChild(entry);
+    }
+    on('#betaServerList button', 'click', function(e) {
+      toServer('setRedirect', e.target.textContent);
+    });
+  } else {
+    removeFromDOM($('#betaText'));
+  }
+  onMessage('redirect', function(url) {
+    window.location.href = `${url}#player:${encodeURIComponent(playerName)}:${encodeURIComponent(playerColor)}`;
+  });
+  on('#returnOverlay button', 'click', function() {
+    toServer('setRedirect', 'return');
+  });
+
+  checkURLproperties(false);
   setScale();
   startWebSocket();
 
@@ -248,6 +324,12 @@ onLoad(function() {
   onMessage('internal_error', function() {
     preventReconnect();
     showOverlay('internalErrorOverlay');
+  });
+  let checkedOnce = false;
+  onMessage('meta', function() {
+    if(!checkedOnce)
+      checkURLproperties(true);
+    checkedOnce = true;
   });
 });
 
@@ -264,4 +346,17 @@ window.onkeyup = function(event) {
     else if(jeEnabled)
       jeToggle();
   }
+}
+
+if(document.getElementById("volume")) {
+    document.getElementById("volume").addEventListener("input", function(){ // allows volume to be adjusted in real time
+      if(muted) {
+        document.getElementById('muteButton').classList.remove('muted');
+        muted = !muted
+      }
+    var allAudios = document.querySelectorAll('audio');
+    allAudios.forEach(function(audio){
+      audio.volume = Math.min(audio.getAttribute('maxVolume') * (((10 ** (document.getElementById('volume').value / 96.025)) / 10) - 0.1), 1);
+    });
+  });
 }

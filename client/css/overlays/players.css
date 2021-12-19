@@ -149,7 +149,13 @@ label.ui-line::before{
   text-align: left;
   padding: 0.9rem 0;
 }
-#roomArea {
+#playerCursors {
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  width:100%;
+  height:100%;
   --cursorSize: 10;
   --cursorOpacity: 0;
   --cursorActiveOpacity: 0.2;
@@ -161,6 +167,7 @@ label.ui-line::before{
   left: calc(var(--cursorSize) * -1px * var(--scale));
   width: calc(var(--cursorSize) * 2px * var(--scale));
   height: calc(var(--cursorSize) * 2px * var(--scale));
+  background-color: var(--playerColor);
   border-radius: 100%;
   opacity: var(--cursorOpacity);
   transition-duration: 2s;
