@@ -1538,6 +1538,12 @@ export class Widget extends StateManaged {
             if(audioElement.parentNode)
               audioElement.parentNode.removeChild(audioElement);
           };
+          audioElement.onerror = function() {
+            audioElement.pause();
+            clearInterval();
+            if(audioElement.parentNode)
+              audioElement.parentNode.removeChild(audioElement);
+          }
         }
       }
       setInterval(function(){
