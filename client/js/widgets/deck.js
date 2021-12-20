@@ -29,8 +29,6 @@ class Deck extends Widget {
 
   cardPropertyGet(cardType, face, property) {
     const thisFaceTemplates = this.get('faceTemplates');
-    if(thisFaceTemplates[face] && thisFaceTemplates[face].propertiesOverridingCardType && thisFaceTemplates[face].propertiesOverridingCardType[property] !== undefined)
-      return thisFaceTemplates[face].propertiesOverridingCardType[property];
     const thisCardTypes = this.get('cardTypes');
     if(thisCardTypes[cardType] && thisCardTypes[cardType][property] !== undefined)
       return thisCardTypes[cardType][property];
@@ -42,11 +40,7 @@ class Deck extends Widget {
 
   getFaceProperties(face) {
     const template = this.get('faceTemplates')[face];
-    if(template) {
-      return Object.assign({...template.properties || {}}, template.propertiesOverridingCardType || {});
-    } else {
-      return {};
-    }
+    return template ? {...template.properties || {}} : {};
   }
 
   removeCard(card) {
