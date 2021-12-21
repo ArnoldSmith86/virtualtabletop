@@ -37,6 +37,7 @@ export class Widget extends StateManaged {
       width: 100,
       height: 100,
       layer: 0,
+      borderRadius: null,
       rotation: 0,
       scale: 1,
 
@@ -362,13 +363,35 @@ export class Widget extends StateManaged {
   }
   css() {
     let css = this.get('css');
-
+    css = this.cssBorderRadius() + css;
     css += '; width:'  + this.get('width')  + 'px';
     css += '; height:' + this.get('height') + 'px';
     css += '; z-index:' + this.calculateZ();
     css += '; transform:' + this.cssTransform();
 
     return css;
+  }
+
+  cssBorderRadius() {
+    let br = this.get('borderRadius');
+    switch(typeof(br)) {
+      case 'number':
+        if(br >= 0)
+          return `border-radius:${br}px;`;
+        else
+          return '';
+      case 'string':
+        br = br.trim().replace(/\s+/g, ' ');
+        const value = '(?:0|\\+?(?:\\d+(?:\\.\\d+)?|\\.\\d+)(?:[eE][+-]?\\d+)?(?:px|%))';
+        const valueList = `(?:${value}(?: ${value}){0,3})`;
+        const re = new RegExp(`^${valueList}(?: ?\\/ ?${valueList})?` + '\x24');
+        if(br.match(re))
+          return `border-radius:${br};`;
+        else
+          return '';
+      default:
+        return ''
+    }
   }
 
   cssProperties() {
@@ -517,6 +540,8 @@ export class Widget extends StateManaged {
 
     batchStart();
 
+    let abortRoutine = false; // Set for CALL with 'return=false' or when INPUT is cancelled.
+
     if(tracingEnabled && typeof property == 'string')
       sendTraceEvent('evaluateRoutine', { id: this.get('id'), property });
     if(jeRoutineLogging)
@@ -646,7 +671,7 @@ export class Widget extends StateManaged {
                 if(!result.collection.length || result.collection.length >= 5)
                   returnCollection = `(${result.collection.length} widgets)`;
                 jeLoggingRoutineOperationSummary(
-                  `${a.routine} ${theWidget} and return variable ${a.variable} and collection ${a.collection}`,
+                  `${a.routine} ${theWidget} and return variable '${a.variable}' and collection '${a.collection}'`,
                   `${JSON.stringify(variables[a.variable])}; ${JSON.stringify(result.collection)}`)
               } else {
                 jeLoggingRoutineOperationSummary( `${a.routine} ${theWidget} and abort caller processing`)
@@ -654,6 +679,8 @@ export class Widget extends StateManaged {
             }
           }
         }
+        if (!a.return)
+          abortRoutine = true;
       }
 
       if(a.func == 'CANVAS') {
@@ -986,11 +1013,10 @@ export class Widget extends StateManaged {
             });
             jeLoggingRoutineOperationSummary(`${varList.join(', ')}`,`${valueList.join(', ')}`);
           }
-
         } catch(e) {
-          problems.push(`Exception: ${e.toString()}`);
-          batchEnd();
-          return;
+          abortRoutine = true;
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary("INPUT cancelled");
         }
       }
 
@@ -1421,7 +1447,7 @@ export class Widget extends StateManaged {
       if(!jeRoutineLogging && problems.length)
         console.log(problems);
 
-      if(a.func == 'CALL' && !a.return)
+      if(abortRoutine)
         break
 
     } // End iterate over functions in routine
@@ -1439,7 +1465,7 @@ export class Widget extends StateManaged {
       playerName = variables.playerName;
     }
 
-    return { variable: variables.result, collection: collections.result || [] };
+    return { variable: variables.result || null, collection: collections.result || [] };
   }
 
   get(property) {

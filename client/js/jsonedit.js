@@ -23,7 +23,7 @@ const jeState = {
   widget: null
 };
 
-const jeOrder = [ 'type', 'id#', 'parent', 'fixedParent', 'deck', 'cardType', 'index*', 'owner#', 'x*', 'y*', 'width*', 'height*', 'scale', 'rotation#', 'layer', 'z', 'inheritChildZ#', 'movable*', 'movableInEdit*#' ];
+const jeOrder = [ 'type', 'id#', 'parent', 'fixedParent', 'deck', 'cardType', 'index*', 'owner#', 'x*', 'y*', 'width*', 'height*', 'borderRadius', 'scale', 'rotation#', 'layer', 'z', 'inheritChildZ#', 'movable*', 'movableInEdit*#' ];
 
 const jeCommands = [
   {
@@ -1171,7 +1171,7 @@ function jeDisplayTree() {
   jeMode = 'tree';
   jeWidget = null;
   jeStateNow = null;
-  jeSet(jeStateBefore = result);
+  jeSet(jeStateBefore = result, true);
   jeGetContext();
   jeShowCommands();
 }
@@ -1329,6 +1329,7 @@ function jeInsert(context, key, value) {
 // START routine logging
 
 let jeRoutineLogging = false;
+let jeRoutineResetOnNextLog = true;
 let jeRoutineResult = '';
 let jeLoggingHTML = '';
 let jeLoggingDepth = 0;
@@ -1339,8 +1340,12 @@ function jeLoggingJSON(obj) {
 }
 
 function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference) {
-  if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine'].indexOf( jeHTMLStack[0][3] ) == -1 )
-    jeLoggingHTML = `
+  if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine'].indexOf( jeHTMLStack[0][3] ) == -1 ) {
+    if(jeRoutineResetOnNextLog) {
+      jeLoggingHTML = '';
+      jeRoutineResetOnNextLog = false;
+    }
+    jeLoggingHTML += `
       <div class="jeLog">
         <div class="jeExpander ${jeLoggingDepth ? '' : 'jeExpander-down'}">
           <span class="jeLogWidget">${widget.get('id')}</span>
@@ -1348,6 +1353,7 @@ function jeLoggingRoutineStart(widget, property, initialVariables, initialCollec
         </div>
         <div class="jeLogNested ${jeLoggingDepth ? '' : 'active'}">
     `;
+  }
   ++jeLoggingDepth;
 }
 
@@ -1356,14 +1362,27 @@ function jeLoggingRoutineEnd(variables, collections) {
   --jeLoggingDepth;
   if(!jeLoggingDepth) {
     $('#jeLog').innerHTML = jeLoggingHTML + '</div></div>';
-    var expanders = document.getElementsByClassName('jeExpander');
-    var i;
+    // Make it so clicking on the arrows expands the subtree
+    const expanders = document.getElementsByClassName('jeExpander');
+    let i;
     for (i=0; i < expanders.length; i++) {
       expanders[i].addEventListener('click', function() {
         this.classList.toggle('jeExpander-down');
-        this.parentElement.querySelector('.jeLogNested').classList.toggle('active');
+        this.parentNode.querySelector('.jeLogNested').classList.toggle('active');
       });
     }
+    // Make expander arrows that are parents of nodes with problems show up red.
+    const problems = document.getElementsByClassName('jeLogHasProblems');
+    for (i=0; i<problems.length; i++) {
+      let node = problems[i].parentNode;
+      while (node && !node.classList.contains('jeLog')) {
+        if(node.classList.contains('jeLogOperation')) {
+          node.firstElementChild.classList.remove('jeExpander');
+          node.firstElementChild.classList.add('jeRedExpander')
+        }
+        node = node.parentNode;
+      }
+    }    
   }
 }
 
@@ -1737,6 +1756,7 @@ window.addEventListener('mousemove', function(e) {
 window.addEventListener('mouseup', async function(e) {
   if(!jeEnabled)
     return;
+  jeRoutineResetOnNextLog = true;
   if(e.target == $('#jeText') && jeContext != 'macro') {
     jeGetContext();
     if(jeContext[0] == 'Tree' && jeContext[1] !== undefined) {
