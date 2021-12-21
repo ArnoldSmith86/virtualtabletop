@@ -413,7 +413,7 @@ export class Widget extends StateManaged {
   }
 
   cssProperties() {
-    return [ 'css', 'height', 'inheritChildZ', 'layer', 'width' ].concat(this.propertiesUsedInCSS);
+    return [ 'borderRadius', 'css', 'height', 'inheritChildZ', 'layer', 'width' ].concat(this.propertiesUsedInCSS);
   }
 
   cssReplaceProperties(css) {
