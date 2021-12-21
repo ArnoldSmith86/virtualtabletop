@@ -12,16 +12,18 @@ import Player     from './server/player.mjs';
 import Room       from './server/room.mjs';
 import MinifyRoom from './server/minify.mjs';
 import Logging    from './server/logging.mjs';
+import Config     from './server/config.mjs';
 
 const app = express();
 const server = http.Server(app);
 
-const savedir = path.resolve() + '/save';
+const savedir = Config.directory('save');
+const assetsdir = Config.directory('assets');
 const sharedLinks = fs.existsSync(savedir + '/shares.json') ? JSON.parse(fs.readFileSync(savedir + '/shares.json')) : {};
 
 const serverStart = +new Date();
 
-fs.mkdirSync(savedir + '/assets', { recursive: true });
+fs.mkdirSync(assetsdir, { recursive: true });
 fs.mkdirSync(savedir + '/rooms',  { recursive: true });
 fs.mkdirSync(savedir + '/states', { recursive: true });
 fs.mkdirSync(savedir + '/links',  { recursive: true });
@@ -64,21 +66,21 @@ function autosaveRooms() {
 MinifyRoom().then(function(result) {
   app.use('/', express.static(path.resolve() + '/client'));
   app.use('/i', express.static(path.resolve() + '/assets'));
-  app.use('/library', express.static(path.resolve() + '/library'));
+  app.use('/library', express.static(Config.directory('library')));
 
   app.post('/assetcheck', bodyParser.json({ limit: '10mb' }), function(req, res) {
     const result = {};
     if(Array.isArray(req.body))
       for(const asset of req.body)
         if(asset.match(/^[0-9_-]+$/))
-          result[asset] = fs.existsSync(savedir + '/assets/' + asset);
+          result[asset] = fs.existsSync(assetsdir + '/' + asset);
     res.send(result);
   });
 
   app.get('/assets/:name', function(req, res) {
     if(!req.params.name.match(/^[0-9_-]+$/))
       return;
-    fs.readFile(savedir + '/assets/' + req.params.name, function(err, content) {
+    fs.readFile(assetsdir + '/' + req.params.name, function(err, content) {
       if(!content) {
         res.sendStatus(404);
         Logging.log(`WARNING: Could not load asset ${req.params.name}`);
@@ -98,6 +100,8 @@ MinifyRoom().then(function(result) {
       else
         Logging.log(`WARNING: Unknown file type of asset ${req.params.name}`);
 
+      res.setHeader('Cache-Control', 'public, max-age=30000000');
+      res.setHeader('Expires', new Date(Date.now() + 30000000000).toUTCString());
       res.send(content);
     });
   });
@@ -189,10 +193,10 @@ MinifyRoom().then(function(result) {
   });
 
   app.put('/asset', bodyParser.raw({ limit: '100mb' }), function(req, res) {
-    const filename = `/assets/${CRC32.buf(req.body)}_${req.body.length}`;
-    if(!fs.existsSync(savedir + filename))
-      fs.writeFileSync(savedir + filename, req.body);
-    res.send(filename);
+    const filename = `/${CRC32.buf(req.body)}_${req.body.length}`;
+    if(!fs.existsSync(assetsdir + filename))
+      fs.writeFileSync(assetsdir + filename, req.body);
+    res.send(`/assets${filename}`);
   });
 
   app.put('/addState/:room/:id/:type/:name/:addAsVariant?', bodyParser.raw({ limit: '500mb' }), async function(req, res, next) {
@@ -205,11 +209,21 @@ MinifyRoom().then(function(result) {
     }).catch(next);
   });
 
+  app.put('/moveServer/:room/:returnServer/:returnState', bodyParser.raw({ limit: '500mb' }), async function(req, res, next) {
+    ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
+      if(isLoaded) {
+        activeRooms.get(req.params.room).receiveState(req.body, req.params.returnServer, req.params.returnState).then(function() {
+          res.send('OK');
+        }).catch(next);
+      }
+    }).catch(next);
+  });
+
   app.use(Logging.userErrorHandler);
 
   app.use(Logging.errorHandler);
 
-  server.listen(process.env.PORT || 8272, function() {
+  server.listen(Config.get('port'), function() {
     Logging.log(`Listening on ${server.address().port}`);
   });
 });

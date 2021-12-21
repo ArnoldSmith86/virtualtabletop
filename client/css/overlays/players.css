@@ -1,23 +1,21 @@
+#playerOverlay{
+}
 #playerList {
   overflow: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
-.myPlayerEntry .playerName {
-  font-weight: bold;
-}
-
-.inactivePlayerEntry {
-  opacity: 0.5;
-}
-
-.teamColor {
-  border: none;
+#playerList > div{
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.4em;
   padding: 0;
-  margin: 0;
-  width: 20px;
-  height: 20px;
-  display: inline-block;
-  border-radius: 20px;
+  line-height: 2em;
+  font-size: 1em;
+  margin: 0.25rem;
 }
 
 .playerName {
@@ -26,16 +24,161 @@
   margin: 0;
   color: white;
   background: none;
-  font-size: 16px;
+  height: 2em;
+  width: auto;
+  line-height: 2em;
+  font-weight: bold;
+  flex-grow: 7;
+  font-size: 0.75rem;
+  font-family: Roboto, sans-serif;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
 
+.teamColor {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border-radius: 100%;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  width: 2em;
+  height: 2em;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  flex-basis: 2em;
+  flex-grow: 0;
+  width: 2em;
+  height: 2em;
+}
+.teamColor::-webkit-color-swatch-wrapper {
+  padding: 0;
+  border: 0 none transparent;
+}
+.teamColor::-webkit-color-swatch {
+  border-radius: 100%;
+  /* background properties broken up to avoid erasing the selected colors */
+  background-image: url(/i/icons-white/user-solid-svg.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 1em;
+}
+.teamColor::-moz-color-swatch-wrapper {
+  padding: 0;
+  border: 0 none transparent;
+}
+.teamColor::-moz-color-swatch  {
+  border-radius: 100%;
+  /* background properties broken up to avoid erasing the selected colors */
+  background-image: url(/i/icons-white/user-solid-svg.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 1em;
+}
+
+#playerList .myPlayerEntry input{
+  font-size: 1.2rem;
+}
+#playerList label.me{
+  order: 1;
+}
+#playerList .myPlayerEntry{
+  order: 2;
+  width: 100%;
+}
+#playerList label.otherPlayers{
+  order: 3;
+}
+#playerList .nothingtoshow{
+  order: 4;
+  width: 100%;
+  text-align: center;
+  color: white;
+  display: block;
+  line-height: 2em;
+  font-size: .8rem;
+  border: 2px solid transparent;
+}
+#playerList .activePlayerEntry{
+  order: 4;
+}
+#playerList label.inactivePlayers{
+  order: 5;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0.25;
+}
+#playerList .inactivePlayerEntry{
+  order: 6;
+  opacity: 0.5;
+}
+
+label.ui-line{
+  border-top: 1px solid rgb(31, 92, 166);
+  width: 100%;
+  font-size: 0.8rem;
+  line-height: 1rem;
+  margin: 1rem 0 0.75rem 0;
+  padding: 0;
+}
+label.ui-line::before{
+  background-color: rgb(31, 92, 166);
+  color: white;
+  display: inline-block;
+  content: attr(data-label);
+  padding: 0 0.5rem;
+  border-radius: 0 0 0.5rem;
+  font-weight: bold;
+}
+
+.overlay .heading{
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;;
+}
+.overlay .heading h1{
+  margin: 0 0.5em 0 0;
+  padding: 0.25em 0.5em 0.25em 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.5);
+  line-height: 1em;
+  text-align: left;
+  max-width: 45%;
+}
+.overlay .heading .instructionalText{
+  display: block;
+  font-size: 16px;
+  text-align: left;
+  padding: 0.9rem 0;
+}
+#playerCursors {
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  width:100%;
+  height:100%;
+  --cursorSize: 10;
+  --cursorOpacity: 0;
+  --cursorActiveOpacity: 0.2;
+  --cursorPressedOpacity: 0.5;
+}
 .cursor {
   position: absolute;
-  top: calc(-10px * var(--scale));
-  left: calc(-10px * var(--scale));
-  width: calc(20px * var(--scale));
-  height: calc(20px * var(--scale));
+  top: calc(var(--cursorSize) * -1px * var(--scale));
+  left: calc(var(--cursorSize) * -1px * var(--scale));
+  width: calc(var(--cursorSize) * 2px * var(--scale));
+  height: calc(var(--cursorSize) * 2px * var(--scale));
+  background-color: var(--playerColor);
   border-radius: 100%;
-  opacity: 0.2;
+  opacity: var(--cursorOpacity);
+  transition-duration: 2s;
   pointer-events: none;
+}
+.cursor.active, .cursor.pressed.foreign {
+  --cursorOpacity: var(--cursorActiveOpacity);
+  --cursorShowName: var(--cursorActiveShowName);
+  transition: none;
+}
+.cursor.pressed {
+  --cursorOpacity: var(--cursorPressedOpacity);
+  --cursorShowName: var(--cursorPressedShowName);
 }

@@ -24,7 +24,8 @@ export class Button extends Widget {
       borderColorOH: null,
       textColorOH:null,
 
-      text: ''
+      text: '',
+      borderRadius: 800
     });
   }
 

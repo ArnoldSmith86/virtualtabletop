@@ -8,7 +8,8 @@ class Deck extends Widget {
       typeClasses: 'widget deck',
       cardDefaults: {},
       cardTypes: {},
-      faceTemplates: []
+      faceTemplates: [],
+      borderRadius: '50%'
     });
 
     this.cards = {};
@@ -28,8 +29,9 @@ class Deck extends Widget {
   }
 
   cardPropertyGet(cardType, property) {
-    if(this.get('cardTypes')[cardType] && this.get('cardTypes')[cardType][property] !== undefined)
-      return this.get('cardTypes')[cardType][property];
+    const thisCardTypes = this.get('cardTypes');
+    if(thisCardTypes[cardType] && thisCardTypes[cardType][property] !== undefined)
+      return thisCardTypes[cardType][property];
 
     return this.get('cardDefaults')[property];
   }

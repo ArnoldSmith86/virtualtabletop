@@ -1,0 +1,31 @@
+.seat {
+  background-color: #ffffff;
+
+  font-size: 25px;
+  color:#222222;
+  font-weight:bold;
+
+  border-width: 7px;
+  border-style: solid;
+  border-color: var(--color);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  --wcShadowTurn: 0px 0px 20px 5px var(--color);
+}
+
+.seat.seated.turn {
+  box-shadow: var(--wcShadowTurn);
+}
+
+body.edit .seat {
+  border-width: 7px;
+  box-sizing: unset;
+}
+
+body.edit .seat.seated.turn {
+  box-shadow: unset;
+}

@@ -1,12 +1,25 @@
 #jsonEditor {
+  --commandPaneWidth: 180px;
+  --editorPaneWidth: 320px;
   white-space: pre-line;
   font-family: monospace;
   display: none;
   height: 100%;
   width: 100%;
+  z-index: 2;
+  position: relative;
 }
 
-#jsonEditor > *, .jsonEdit {
+#jsonEditor.wide {
+  --commandPaneWidth: 320px;
+  --editorPaneWidth: 600px;
+}
+
+#jsonEditor.notHighEnough #jeWidgetLayers, #jsonEditor.notHighEnough #jeLogWrapper {
+  display: none;
+}
+
+#jsonEditor > *, .jsonEdit, #jeWidgetLayers > div, #jeLog {
   background: #08090a;
 }
 #jsonEditor > * {
@@ -23,8 +36,8 @@
   white-space: pre-wrap;
   overflow-y: auto;
   height: 100%;
-  width: 600px;
-  right: 250px;
+  width: var(--editorPaneWidth);
+  right: var(--commandPaneWidth);
   overflow-wrap: break-word;
 }
 
@@ -37,6 +50,17 @@
 #jeText::selection {
   background-color: #808080;
   -webkit-text-fill-color: white;
+}
+
+#var_results > table {
+  table-layout: fixed;
+}
+
+#var_results > table > tbody > tr > td:nth-child(1) {
+  min-width: 60px;
+  max-width: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #jsonEditor i {
@@ -56,45 +80,42 @@ i.error   { color: red; font-weight: bold; }
 #jeCommands {
   white-space: pre-wrap;
   height: 100%;
-  width: 250px;
+  width: var(--commandPaneWidth);
   right: 0;
   overflow: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
 }
 
 #jeWidgetLayers {
-  height: 10%;
-  width: calc(100%-700px);
-  white-space: pre;
-  overflow: hidden;
+  width: 9001px;
+  font-size: 0;
+  padding: 0;
+  background: transparent;
 }
 
 #jeWidgetLayers > div {
   display: inline-block;
-  width: 125px;
-  margin-bottom: 10px;
+  padding: 2px;
+  vertical-align: top;
+  font-size: 12px;
+  margin-right: 4px;
+}
+
+#jeWidgetLayers > div:empty {
+  display: none;
 }
 
 body.jsonEdit #jsonEditor {
   display: block;
 }
 
-body.jsonEdit #jeCommands > .jeTopButton {
-  display: inline-block;
-  text-align: center;
-}
-
-body.jsonEdit #jeCommands > .jeTopButton > button {
-  width: 28px;
-  height: 24px;
-  border: 0;
-  display: block;
-}
-
-body.jsonEdit #jeCommands > .jeTopButton > span.top {
-  display: inline-block;
-  color: #aaa;
-  font-size: x-small;
-  margin-bottom: 10px;
+body.jsonEdit #jeCommands > button {
+  width: 100%;
+  text-align: left;
 }
 
 body.jsonEdit #toolbar {
@@ -102,12 +123,12 @@ body.jsonEdit #toolbar {
 }
 
 body.jsonEdit #roomArea {
-  top: calc((100vh - var(--roomHeight) * var(--scale)) / 2 - var(--toolbarSize) / 2);
+  top: calc((100vh - var(--roomHeight) * var(--scale)) / 2);
   left: 0;
 }
 
 body.jsonEdit.jeZoomOut #roomArea {
-  top: calc((100vh - var(--roomHeight) * var(--scale)) / 2 - var(--toolbarSize) / 2);
+  top: calc((100vh - var(--roomHeight) * var(--scale)) / 2);
   left: 12.5%;
   overflow: visible;
 }
@@ -115,3 +136,224 @@ body.jsonEdit.jeZoomOut #roomArea {
 body.jsonEdit.jeZoomOut #topSurface {
   overflow: visible;
 }
+
+#jeMouseCoords {
+  display: block;
+  right: calc(var(--commandPaneWidth) + 20px);
+}
+
+#jeLogWrapper {
+  position: fixed;
+  bottom: 0;
+  white-space: normal;
+}
+
+#jeLog {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: none;
+  height: 90vh;
+  right: calc(var(--commandPaneWidth) + var(--editorPaneWidth));
+  overflow: auto;
+  box-sizing: border-box;
+  border: 3px solid white;
+}
+
+@media (max-width: 1000px) {
+  #jeLog {
+    right: var(--commandPaneWidth);
+  }
+}
+
+@media (max-width: 600px) {
+  #jeLog {
+    right: 0;
+  }
+}
+
+#jeLogWrapper > h1 {
+  margin: 0;
+}
+
+#jeLogWrapper:hover #jeLog {
+  display: block;
+}
+
+#jeLogWrapper:hover > h1, .jeLogNested {
+  display: none;
+}
+
+/* Show the nested list when the user clicks on the caret/arrow */
+.jeLogNested.active {
+  display: block;
+}
+
+.jeLog {
+  white-space: normal;
+  font-size: 12px;
+  background: #ffffff10;
+  margin-left: 20px;
+}
+
+.jeLogSkipped {
+  color: grey;
+}
+
+.jeLogSummary {
+  color: lightgreen;
+}
+
+.jeLogResult {
+  color: orange;
+}
+
+/* Create the caret/arrow with a unicode, and style it */
+.jeExpander::before {
+  content: "\25B6";
+  color: white;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+/* Rotate the caret/arrow icon when clicked on (using JavaScript) */
+.jeExpander-down::before {
+  transform: rotate(90deg);
+}
+
+/* Create the red caret/arrow with a unicode, and style it */
+.jeRedExpander::before {
+  content: "\25B6";
+  color: red;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+/* Rotate the red caret/arrow icon when clicked on (using JavaScript) */
+.jeRedExpander-down::before {
+  transform: rotate(90deg);
+}
+
+.jeLogHasProblems, .jeLogProblems {
+  color: red;
+}
+
+.jeLogProblems {
+  display: none;
+}
+
+.jeLogHasProblems .jeLogProblems {
+  display: block;
+}
+
+.jeLogDetails {
+  word-break: break-all;
+  margin-left: 20px;
+  color: lightgray;
+}
+
+/* Show the details when the user clicks on the caret/arrow */
+.jeLogDetails.active {
+  display: block;
+}
+.jeLogOperation {
+  margin-left: 20px;
+  word-break: break-all;
+}
+
+.jeLogOriginal, .jeLogApplied, .jeLogVariables, .jeLogCollections, .jeLogProblems {
+  margin-left:20px;
+  white-space: pre;
+}
+
+[id=jeTopButtons] button {
+  display: inline-block;
+  text-align: center;
+  width: 28px;
+  height: 28px;
+  font-size: 1.25em;
+  border: 0;
+  text-shadow: 0px 1px 2px rgb(9, 12, 51);
+  color: white;
+  font-family: 'VTT-Symbols';
+}
+
+#jeTopButtons button:disabled {
+  background: gray;
+  opacity: 0.5;
+}
+
+#jeCommands .context{
+  font-weight: bold;
+  margin-top: 8px;
+  width: 100%;
+}
+
+#jeCommands > button > b{
+  text-decoration: underline;
+  color: yellow;
+}
+
+#je_toggleZoom{
+}
+#je_copyState{
+}
+#je_callMacro{
+}
+#je_showWidget{
+}
+#je_tree{
+}
+#je_addNewWidget{
+  color: rgb(95, 167, 95);
+}
+#je_duplicateWidget{
+  color: yellow;
+}
+#je_removeWidget{
+  color: rgb(255, 73, 73);
+}
+#je_editMode{
+}
+#je_openParent{
+}
+#je_toggleWide{
+}
+
+#jeCommands > button::before{
+  margin-right: 4px;
+  font-family: 'VTT-Symbols';
+}
+
+#widget_backgroundColor::before, #widget_backgroundColorOH::before, #widget_borderColor::before, #widget_color::before, #widget_borderColorOH::before, #widget_textColor::before, #widget_textColorOH::before{
+  content: '[color]';
+}
+#widget_owner::before{
+  content: '[player_circle]';
+}
+#widget_classes::before{
+  content: '[tag]';
+}
+#widget_css::before{
+    content: '[style]';
+  }
+#widget_rotation::before{
+  content: '[rotate_right]';
+}
+#widget_grid::before{
+  content: '[grid]';
+}
+#widget_dropOffsetX::before{
+  content: '[height]';
+}
+#widget_dropOffsetY::before{
+  content: '[width]';
+}
+#jeCommands .numberInputRange{
+  display: none;
+}
+
+#jeCommands #jeCommandOptions input[type="number"]{
+  width: 6ch;
+}
+

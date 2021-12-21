@@ -16,7 +16,8 @@ class Spinner extends Widget {
       spinnerCSS: '',
       valueCSS: '',
       textColor:'#000000',
-      lineColor :'#d2d2d2'
+      lineColor :'#d2d2d2',
+      borderRadius: '50%'
     });
   }
 

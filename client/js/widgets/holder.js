@@ -14,13 +14,15 @@ class Holder extends Widget {
       dropOffsetY: 4,
       dropLimit: -1,
       alignChildren: true,
+      preventPiles: false,
       childrenPerOwner: false,
 
       onEnter: {},
       onLeave: {},
 
       stackOffsetX: 0,
-      stackOffsetY: 0
+      stackOffsetY: 0,
+      borderRadius: 8
     });
   }
 
@@ -35,10 +37,8 @@ class Holder extends Widget {
     return children.filter(w=>{
       if(acceptPiles && w.get('type') == 'pile')
         return true;
-      for(const p in this.get('dropTarget'))
-        if(w.get(p) != this.get('dropTarget')[p])
-          return false;
-      return true;
+
+      return compareDropTarget(w, this, true);
     });
   }
 
@@ -46,10 +46,15 @@ class Holder extends Widget {
     let toProcess = [ card ];
     if(card.get('type') == 'pile')
       toProcess = card.children();
-    for(const w of toProcess)
-      if(!w.get('ignoreOnLeave'))
-        for(const property in this.get('onLeave'))
+    for(const w of toProcess) {
+      if(!w.get('ignoreOnLeave')) {
+        for(const property in this.get('onLeave')) {
+          if(tracingEnabled)
+            sendTraceEvent('onLeave', { w: w.get('id'), child: card.get('id'), property, value: this.get('onLeave')[property], toProcess: toProcess.map(w=>w.get('id')) });
           await w.set(property, this.get('onLeave')[property]);
+        }
+      }
+    }
     if(this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY')))
       await this.receiveCard(null);
     if(Array.isArray(this.get('leaveRoutine')))
@@ -68,9 +73,13 @@ class Holder extends Widget {
       let toProcess = [ child ];
       if(child.get('type') == 'pile')
         toProcess = child.children();
-      for(const property in this.get('onEnter'))
-        for(const w of toProcess)
+      for(const property in this.get('onEnter')) {
+        for(const w of toProcess) {
+          if(tracingEnabled)
+            sendTraceEvent('onEnter', { w: w.get('id'), child: child.get('id'), property, value: this.get('onEnter')[property], toProcess: toProcess.map(w=>w.get('id')) });
           await w.set(property, this.get('onEnter')[property]);
+        }
+      }
     }
   }
 
@@ -78,14 +87,25 @@ class Holder extends Widget {
     if(child.get('type') == 'deck')
       return await super.onChildAddAlign(child, oldParentID);
 
-    if(this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY')) && child.get('type') == 'pile') {
+    if((this.get('preventPiles') || this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY'))) && child.get('type') == 'pile') {
       let i=1;
-      for(const w of child.children().slice(0, -1)) {
-        await w.set('x', w.get('x') + child.get('x') + i);
-        await w.set('y', w.get('y') + child.get('y') + i);
+      this.preventRearrangeDuringPileDrop = true;
+      for(const w of child.children().reverse()) {
+        await w.set('x', child.get('x') - this.absoluteCoord('x') + i/100);
+        await w.set('y', child.get('y') - this.absoluteCoord('y') + i/100);
         await w.set('parent', this.get('id'));
         ++i;
+        if(this.get('preventPiles')) {
+          if(this.get('alignChildren') && !this.get('stackOffsetX') && !this.get('stackOffsetY')) {
+            await w.set('x', this.get('dropOffsetX'));
+            await w.set('y', this.get('dropOffsetY'));
+          }
+          await w.bringToFront();
+        }
       }
+      delete this.preventRearrangeDuringPileDrop;
+      if(!this.get('preventPiles'))
+        await this.receiveCard();
       return true;
     }
 
@@ -109,6 +129,9 @@ class Holder extends Widget {
   }
 
   async rearrangeChildren(children, card) {
+    if(this.preventRearrangeDuringPileDrop)
+      return;
+
     let xOffset = 0;
     let yOffset = 0;
     let z = 1;
@@ -126,7 +149,7 @@ class Holder extends Widget {
   }
 
   supportsPiles() {
-    return !this.get('alignChildren') || !this.get('stackOffsetX') && !this.get('stackOffsetY');
+    return !this.get('preventPiles') && (!this.get('alignChildren') || !this.get('stackOffsetX') && !this.get('stackOffsetY'));
   }
 
   async updateAfterShuffle() {

@@ -1,4 +1,4 @@
-export const VERSION = 3;
+export const VERSION = 5;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -29,6 +29,9 @@ function updateProperties(properties, v) {
   for(const property in properties)
     if(property.match(/Routine$/))
       updateRoutine(properties[property], v);
+
+  v<4 && v4ModifyDropTargetEmptyArray(properties);
+  v<5 && v5DynamicFaceProperties(properties);
 }
 
 function updateRoutine(routine, v) {
@@ -38,6 +41,9 @@ function updateRoutine(routine, v) {
   for(const operation of routine) {
     if(operation.func == 'CLONE') {
       updateProperties(operation.properties, v);
+    }
+    if(operation.func == 'FOREACH') {
+      updateRoutine(operation.loopRoutine, v);
     }
     if(operation.func == 'IF') {
       updateRoutine(operation.thenRoutine, v);
@@ -154,6 +160,9 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
   }
 
   for(const [ i, op ] of Object.entries(routine)) {
+    if(!op || !op.func)
+      continue;
+
     removeExistingVariablesRecursively(op, i);
     dissolveApplyVariables(op, i);
     delete routine[i].applyVariables;
@@ -174,7 +183,7 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
         if(typeof op[o] === 'string' && op[o].match(/^\$\{[^}]+\}$/))
           return op[o];
         if(typeof op[o] === 'string')
-          return `'${escapeString(op[o], /^[a-zA-Z0-9,.() _-]$/)}'`;
+          return `'${escapeString(op[o], /^[ !#-&(-[\]-~]$/)}'`;
         return String(op[o]);
       };
 
@@ -254,4 +263,28 @@ function v3RemoveComputeAndRandomAndApplyVariables(routine) {
 
   for(const o of operationsToSplice.sort((a,b)=>a.index==b.index?b.order-a.order:b.index-a.index))
     routine.splice(o.index, 0, o.operation);
+}
+
+function v4ModifyDropTargetEmptyArray(properties) {
+  if(Array.isArray(properties.dropTarget) && properties.dropTarget.length == 0)
+    properties.dropTarget = {};
+}
+
+function v5DynamicFaceProperties(properties) {
+  if(Array.isArray(properties.faceTemplates)) {
+    for(const face of properties.faceTemplates) {
+      if(Array.isArray(face.objects)) {
+        for(const object of face.objects) {
+          if(object.valueType != 'static' && object.value) {
+            if(typeof object.dynamicProperties != 'object')
+              object.dynamicProperties = { value: object.value }
+            else
+              object.dynamicProperties.value = object.value;
+            delete object.value;
+          }
+          delete object.valueType;
+        }
+      }
+    }
+  }
 }

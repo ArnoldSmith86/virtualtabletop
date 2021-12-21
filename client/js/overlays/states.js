@@ -63,7 +63,7 @@ async function addState(e, type, src, id) {
 
   let url = `/addState/${roomID}/${id}/${type}/${src && src.name && encodeURIComponent(src.name)}/`;
   waitingForStateCreation = id;
-  if(e && (e.target.parentNode == $('#addVariant') || e.target.className == 'update')) {
+  if(e && (e.target.parentNode.parentNode == $('#addVariant') || e.target.classList.contains('update'))) {
     waitingForStateCreation = $('#stateEditOverlay').dataset.id;
     url += $('#stateEditOverlay').dataset.id;
   }
@@ -127,7 +127,14 @@ function editState() {
   showOverlay('statesOverlay');
 }
 
-function fillStatesList(states, activePlayers) {
+function fillStatesList(states, returnServer, activePlayers) {
+  if(returnServer) {
+    $('#statesButton').dataset.overlay = 'returnOverlay';
+    overlayShownForEmptyRoom = true;
+    return;
+  }
+  $('#statesButton').dataset.overlay = 'statesOverlay';
+
   const addDiv = $('#addState');
   removeFromDOM(addDiv);
   removeFromDOM('#statesList > div');
@@ -255,19 +262,42 @@ async function pickStateFromLibrary(changeOverlay) {
 async function populateLibrary() {
   if(!$('#libraryList.populated')) {
     const library = await fetch('/library/library.json');
-    for(const entry of await library.json()) {
-      const lEntry = domByTemplate('template-librarylist-entry', 'tr');
+    var lEntry = null;
+    // add sections and entries
+    (await library.json()).forEach((entry, idx) => {
+      if (!entry.link) {
+        // sections have empty entry.link
+        lEntry = domByTemplate('template-librarylist-section-title', 'tr');
 
-      $('.name', lEntry).textContent = entry.name;
-      $('.players', lEntry).textContent = entry.players;
-      $('.language', lEntry).textContent = entry.language;
-      $('.notes', lEntry).textContent = entry.notes;
-      $('a', lEntry).textContent = entry['similar name'];
-      $('a', lEntry).href = entry['similar link'];
-      $('button.add', lEntry).dataset.url = entry.link;
+        $('.section-name', lEntry).textContent = entry.name;
+        $('.notes', lEntry).textContent = entry.notes;
 
-      $('#libraryList').appendChild(lEntry);
-    }
+        $('#libraryList').appendChild(lEntry);
+
+        // add another header for readability
+        lEntry = domByTemplate('template-librarylist-header', 'tr');
+        $('#libraryList').appendChild(lEntry);
+      } else {
+        // entries have valid entry.link
+        if (!idx) {
+            // if the top row does not have a section title, add header first
+            lEntry = domByTemplate('template-librarylist-header', 'tr');
+            $('#libraryList').appendChild(lEntry);
+        }
+        lEntry = domByTemplate('template-librarylist-entry', 'tr');
+
+        $('.name', lEntry).textContent = entry.name;
+        $('.players', lEntry).textContent = entry.players;
+        $('.language', lEntry).textContent = entry.language;
+        $('.notes', lEntry).textContent = entry.notes;
+        $('a', lEntry).textContent = entry['similar name'];
+        $('a', lEntry).href = entry['similar link'];
+        $('button.add', lEntry).dataset.url = entry.link;
+
+        $('#libraryList').appendChild(lEntry);
+      }
+
+    });
     $('#libraryList').classList.add('populated');
     removeFromDOM('#libraryOverlay > p');
   }
@@ -290,7 +320,7 @@ async function shareLink() {
 }
 
 onLoad(function() {
-  onMessage('meta', args=>fillStatesList(args.meta.states, args.activePlayers));
+  onMessage('meta', args=>fillStatesList(args.meta.states, args.meta.returnServer, args.activePlayers));
 
   on('#addState .create,  #addVariant .create, #emptyRoom .create',  'click', e=>addState(e, 'state'));
   on('#addState .library, #addVariant .library', 'click', e=>addStateFromLibrary(e));

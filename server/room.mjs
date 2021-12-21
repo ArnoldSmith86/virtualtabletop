@@ -2,9 +2,11 @@ import fs from 'fs';
 import path from 'path';
 
 import JSZip from 'jszip';
+import fetch from 'node-fetch';
 import FileLoader from './fileloader.mjs';
 import FileUpdater from './fileupdater.mjs';
 import Logging from './logging.mjs';
+import Config from './config.mjs';
 
 export default class Room {
   players = [];
@@ -14,18 +16,35 @@ export default class Room {
   constructor(id, unloadCallback) {
     this.id = id;
     this.unloadCallback = unloadCallback;
+    this.unloadTimeout = setTimeout(_=>{
+      if(this.players.length == 0) {
+        Logging.log(`unloading room ${this.id} after 5s without player connection`);
+        this.unload();
+      }
+    }, 5000);
   }
 
   addPlayer(player) {
     Logging.log(`adding player ${player.name} to room ${this.id}`);
+    clearTimeout(this.unloadTimeout);
     this.players.push(player);
 
     if(!this.state._meta.players[player.name])
-      this.state._meta.players[player.name] = '#ff0000';
+      this.state._meta.players[player.name] = this.newPlayerColor();
 
-    this.state._meta.deltaID = this.deltaID;
-    player.send('state', this.state);
     this.sendMetaUpdate();
+    this.state._meta.deltaID = this.deltaID;
+
+    if(this.state._meta.redirectTo) {
+      player.send('redirect', this.state._meta.redirectTo.url + '/' + this.id);
+    } else {
+      player.send('state', this.state);
+    }
+
+    if(this.enableTracing) {
+      this.trace('addPlayer', { player: player.name });
+      player.send('tracing', 'enable');
+    }
   }
 
   async addState(id, type, src, srcName, addAsVariant) {
@@ -120,6 +139,8 @@ export default class Room {
   }
 
   broadcast(func, args, exceptPlayer) {
+    if(func != 'mouse')
+      this.trace('broadcast', { func, args, exceptPlayer: exceptPlayer?.name });
     for(const player of this.players)
       if(player != exceptPlayer)
         player.send(func, args);
@@ -174,7 +195,7 @@ export default class Room {
       if(includeAssets)
         for(const asset of this.getAssetList(state))
           if(fs.existsSync(path.resolve() + '/save' + asset))
-            zip.file(asset, fs.readFileSync(path.resolve() + '/save' + asset));
+            zip.file(asset.substr(1), fs.readFileSync(path.resolve() + '/save' + asset));
     }
 
     const zipBuffer = await zip.generateAsync({type:'nodebuffer', compression: 'DEFLATE'});
@@ -202,7 +223,14 @@ export default class Room {
   }
 
   getAssetList(state) {
-    return JSON.stringify(state).match(/\/assets\/-?[0-9]+_[0-9]+/g) || [];
+    return [...new Set(JSON.stringify(state).match(/\/assets\/-?[0-9]+_[0-9]+/g) || [])];
+  }
+
+  getRedirection() {
+    if(this.state._meta.redirectTo)
+      return this.state._meta.redirectTo.url + '/' + this.id;
+    else
+      return null;
   }
 
   async load(fileOrLink, player) {
@@ -251,8 +279,40 @@ export default class Room {
       await this.load(this.variantFilename(stateID, variantID), player);
   }
 
-  mouseMove(player, coords) {
-    this.broadcast('mouse', { player: player.name, coords });
+  mouseMove(player, mouseState) {
+    this.broadcast('mouse', { player: player.name, mouseState });
+  }
+
+  newPlayerColor() {
+    let hue = 0;
+    const hues = [];
+    for(const player in this.state._meta.players) {
+      const hex = this.state._meta.players[player];
+      const r = parseInt(hex.slice(1,3), 16) / 255;
+      const g = parseInt(hex.slice(3,5), 16) / 255;
+      const b = parseInt(hex.slice(5,7), 16) / 255;
+      const max = Math.max(r,g,b);
+      const d = max - Math.min(r,g,b);
+      if(d < .25) continue;
+      switch(max) {
+        case r: hues.push((360 + (g - b) * 60 / d) % 360); break;
+        case g: hues.push(120 + (b - r) * 60 / d); break;
+        case b: hues.push(240 + (r - g) * 60 / d); break;
+      }
+    }
+    if(hues.length == 0) {
+      hue = Math.random() * 360;
+    } else {
+      const gaps = hues.sort((a,b)=>a-b).map((h, i, a) => (i != (a.length - 1)) ? a[i + 1 ] - h : a[0] + 360 - h);
+      const gap = Math.max(...gaps);
+      hue = (Math.random() * gap / 3 + hues[gaps.indexOf(gap)] + gap / 3) % 360;
+    }
+    const f = n => {
+      const k = (n + hue / 30) % 12;
+      const c = .5 - .5 * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+      return Math.round(255 * c).toString(16).padStart(2, '0');
+    }
+    return `#${f(0)}${f(8)}${f(4)}`;
   }
 
   receiveDelta(player, delta) {
@@ -275,10 +335,23 @@ export default class Room {
     this.broadcast('delta', delta, player);
   }
 
-  receiveInvalidDelta(player, delta, widgetID) {
-    Logging.log(`WARNING: received conflicting delta data for widget ${widgetID} from player ${player.name} in room ${this.id} - sending game state at ${this.deltaID}`);
+  receiveInvalidDelta(player, delta, widgetID, property) {
+    Logging.log(`WARNING: received conflicting delta data for property ${property} of widget ${widgetID} from player ${player.name} in room ${this.id} - sending game state at ${this.deltaID}`);
     this.state._meta.deltaID = ++this.deltaID;
     player.send('state', this.state);
+  }
+
+  async receiveState(zipBody, returnServer, returnState) {
+    delete this.state._meta.redirectTo;
+    if(returnServer != 'RETURN') {
+      this.state._meta.returnServer = returnServer;
+      this.state._meta.returnState = returnState == 'true';
+    }
+    if(zipBody && zipBody.length) {
+      await this.addState('serverMove', 'file', zipBody, 'source', false);
+      await this.loadState(null, 'serverMove', 'serverMove');
+      this.removeState(null, 'serverMove');
+    }
   }
 
   recolorPlayer(renamingPlayer, playerName, color) {
@@ -287,12 +360,16 @@ export default class Room {
   }
 
   removePlayer(player) {
+    this.trace('removePlayer', { player: player.name });
     Logging.log(`removing player ${player.name} from room ${this.id}`);
+
     this.players = this.players.filter(e => e != player);
-    if(this.players.length == 0) {
+    if(player.name.match(/^Guest/) && !this.players.filter(e => e.name == player.name).length)
+      if(!Object.values(this.state).filter(w=>w.player==player.name||w.owner==player.name||Array.isArray(w.owner)&&w.owner.indexOf(player.name)!=-1).length)
+        delete this.state._meta.players[player.name];
+
+    if(this.players.length == 0)
       this.unload();
-      this.unloadCallback();
-    }
     this.sendMetaUpdate();
   }
 
@@ -303,6 +380,10 @@ export default class Room {
   }
 
   renamePlayer(renamingPlayer, oldName, newName) {
+    if(oldName == newName)
+      return;
+
+    Logging.log(`renaming player ${oldName} to ${newName} in room ${this.id}`);
     this.state._meta.players[newName] = this.state._meta.players[newName] || this.state._meta.players[oldName];
     delete this.state._meta.players[oldName];
 
@@ -321,7 +402,57 @@ export default class Room {
     this.broadcast('meta', { meta: this.state._meta, activePlayers: this.players.map(p=>p.name) });
   }
 
+  async setRedirect(player, target) {
+    try {
+      let targetServer = Config.get('betaServers')[target] || Config.get('legacyServers')[target];
+      const isReturn = target == 'return';
+      if(isReturn)
+        targetServer = { url:this.state._meta.returnServer, return:false };
+
+      if(targetServer) {
+        const assets = [];
+        for(const asset of this.getAssetList(this.state))
+          assets.push(asset.substr(8));
+
+        const result = await fetch(targetServer.url + '/assetcheck', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(assets)
+        });
+
+        const assetStatus = await result.json();
+
+        let zipBuffer = '';
+        if(!isReturn || this.state._meta.returnState) {
+          const zip = new JSZip();
+          zip.file(`${this.id}.json`, JSON.stringify(this.state, null, '  '));
+          for(const asset in assetStatus)
+            if(!assetStatus[asset] && fs.existsSync(Config.directory('assets') + '/' + asset))
+              zip.file('assets/' + asset, fs.readFileSync(Config.directory('assets') + '/' + asset));
+
+          zipBuffer = await zip.generateAsync({type:'nodebuffer'});
+        }
+
+        const putResult = await fetch(targetServer.url + '/moveServer/' + this.id + '/' + (isReturn ? 'RETURN' : encodeURIComponent(Config.get('externalURL'))) + '/' + (targetServer.return ? 'true' : 'false'), {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/octet-stream' },
+          body: zipBuffer
+        });
+        const putText = await putResult.text();
+        if(putText != 'OK')
+          throw Error(`moveServer failed: ${putText}`);
+
+        this.state._meta.redirectTo = targetServer;
+        this.broadcast('redirect', targetServer.url + '/' + this.id);
+      }
+    } catch(e) {
+      Logging.handleGenericException('setRedirect', e);
+      player.send('error', 'There was a problem setting up the redirection. The other server might be offline.');
+    }
+  }
+
   setState(state) {
+    this.trace('setState', { state });
     const meta = this.state._meta;
     this.state = state;
     if(this.state._meta)
@@ -330,15 +461,44 @@ export default class Room {
     this.broadcast('state', state);
   }
 
-  unload() {
-    if(Object.keys(this.state).length > 1 || Object.keys(this.state._meta.states).length) {
-      Logging.log(`unloading room ${this.id}`);
-      this.writeToFilesystem();
-    } else {
-      Logging.log(`destroying room ${this.id}`);
-      if(fs.existsSync(this.roomFilename()))
-        fs.unlinkSync(this.roomFilename());
+  trace(source, payload) {
+    if(!this.enableTracing && source == 'client' && payload.type == 'enable') {
+      this.enableTracing = true;
+      this.tracingFilename = `${path.resolve()}/save/${this.id}-${+new Date}.trace`;
+      this.broadcast('tracing', 'enable');
+      payload.initialState = this.state;
+      fs.writeFileSync(this.tracingFilename, '[\n');
+      Logging.log(`tracing enabled for room ${this.id} to file ${this.tracingFilename}`);
     }
+    if(this.enableTracing) {
+      payload.servertime = +new Date;
+      payload.source = source;
+      payload.serverDeltaID = this.deltaID;
+      const suffix = source == 'unload' ? '\n]' : ',\n';
+      fs.appendFileSync(this.tracingFilename, `  ${JSON.stringify(payload)}${suffix}`);
+
+      if(source == 'unload') {
+        Logging.log(`tracing finished for room ${this.id} to file ${this.tracingFilename}`);
+        this.enableTracing = false;
+      }
+    }
+  }
+
+  unload() {
+    this.trace('unload', {});
+    if(this.state && this.state._meta) {
+      if(Object.keys(this.state).length > 1 || Object.keys(this.state._meta.states).length || this.state._meta.redirectTo || this.state._meta.returnServer) {
+        Logging.log(`unloading room ${this.id}`);
+        this.writeToFilesystem();
+      } else {
+        Logging.log(`destroying room ${this.id}`);
+        if(fs.existsSync(this.roomFilename()))
+          fs.unlinkSync(this.roomFilename());
+      }
+    } else {
+      Logging.log(`unloading broken room ${this.id}`);
+    }
+    this.unloadCallback();
   }
 
   writeToFilesystem() {

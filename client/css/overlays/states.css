@@ -79,7 +79,7 @@
 }
 
 #addState button {
-  width: 160px;
+  width: 180px;
 }
 
 .roomState > img {
@@ -109,6 +109,11 @@
   filter: blur(5px);
 }
 
+.details .stats{
+  margin-bottom: 8px;
+}
+
+
 #stateEditOverlay label {
   width: 200px;
   display: inline-block;
@@ -129,4 +134,36 @@
 
 #libraryList td, #libraryList th {
   padding: 6px;
+}
+#libraryList .section {
+  background-color: #4a4a4a;
+  opacity: 0.7;
+}
+#libraryList .section .section-name {
+  font-size: 1.17em;
+  font-weight: bolder;
+  text-align: center;
+}
+#libraryList .section .notes {
+  text-align: center;
+}
+.emptyRoomOptions > div{
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+#stateEditOverlay .input{
+  display: flex;
+}
+.variantsList .prettyButton.play{
+  flex-wrap: wrap;
+}
+
+.variantsList .prettyButton.play .variant{
+  padding-top: 4px;
+  border-top: 1px solid #ffffffaa;
+  width: 100%;
+}
+.variantsList .prettyButton.play .variant:empty{
+  display: none;
 }
