@@ -1,4 +1,4 @@
-export const VERSION = 6;
+export const VERSION = 7;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -32,6 +32,7 @@ function updateProperties(properties, v) {
 
   v<4 && v4ModifyDropTargetEmptyArray(properties);
   v<5 && v5DynamicFaceProperties(properties);
+  v<6 && v6cssPieces(properties);
 }
 
 function updateRoutine(routine, v, nested = false, status = {hasMode:false, needsMode:false}) {
@@ -64,7 +65,7 @@ function updateRoutine(routine, v, nested = false, status = {hasMode:false, need
 
   v<2 && v2UpdateSelectDefault(routine);
   v<3 && v3RemoveComputeAndRandomAndApplyVariables(routine);
-  v<6 && v6RoutineModeSwitch(routine, 'strToNum defaultOne', nested, status);
+  v<7 && v7RoutineModeSwitch(routine, 'strToNum defaultOne', nested, status);
 }
 
 function v2UpdateSelectDefault(routine) {
@@ -301,7 +302,37 @@ function v5DynamicFaceProperties(properties) {
   }
 }
 
-function v6RoutineModeSwitch(routine, modeSwitch, nested, status) {
+function v6cssPieces(properties) {
+  const pinRE = /\bpinPiece\b/;
+  const classicRE = /\bclassicPiece\b/;
+  if(!properties.classes || typeof properties.classes != 'string')
+    return;
+  if(properties.classes.match(pinRE)) {
+    if(properties.text || properties.css || !properties.height || properties.height > 60) {
+      properties.classes = properties.classes.replace(pinRE, 'legacyPinPiece');
+      return;
+    } else {
+      const length = Math.round(50 + 30 * (properties.height - 28.5)/15.33);
+      if(length !=80)
+        properties.css = `--pinLength: ${length}`;
+      properties.width = 35.85;
+      return;
+    }
+  } else if(properties.classes.match(classicRE)) {
+    if(properties.text || properties.css || properties.width < 74 || properties.height < 87) {
+      properties.classes = properties.classes.replace(classicRE, 'legacyClassicPiece');
+      return;
+    } else {
+      properties.x += 17;
+      properties.y += 3;
+      properties.width = 56;
+      properties.height = 84;
+      return;
+    }
+  }
+}
+
+function v7RoutineModeSwitch(routine, modeSwitch, nested, status) {
   const re = /^mode:/;
   for(let i = 0; i < routine.length; i++) {
     if(typeof routine[i] == 'string' && re.test(routine[i]))
