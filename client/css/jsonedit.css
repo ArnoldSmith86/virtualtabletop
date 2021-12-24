@@ -221,6 +221,19 @@ body.jsonEdit.jeZoomOut #topSurface {
   transform: rotate(90deg);
 }
 
+/* Create the red caret/arrow with a unicode, and style it */
+.jeRedExpander::before {
+  content: "\25B6";
+  color: red;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+/* Rotate the red caret/arrow icon when clicked on (using JavaScript) */
+.jeRedExpander-down::before {
+  transform: rotate(90deg);
+}
+
 .jeLogHasProblems, .jeLogProblems {
   color: red;
 }
