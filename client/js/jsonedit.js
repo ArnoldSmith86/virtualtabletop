@@ -1171,7 +1171,7 @@ function jeDisplayTree() {
   jeMode = 'tree';
   jeWidget = null;
   jeStateNow = null;
-  jeSet(jeStateBefore = result);
+  jeSet(jeStateBefore = result, true);
   jeGetContext();
   jeShowCommands();
 }
@@ -1362,14 +1362,27 @@ function jeLoggingRoutineEnd(variables, collections) {
   --jeLoggingDepth;
   if(!jeLoggingDepth) {
     $('#jeLog').innerHTML = jeLoggingHTML + '</div></div>';
-    var expanders = document.getElementsByClassName('jeExpander');
-    var i;
+    // Make it so clicking on the arrows expands the subtree
+    const expanders = document.getElementsByClassName('jeExpander');
+    let i;
     for (i=0; i < expanders.length; i++) {
       expanders[i].addEventListener('click', function() {
         this.classList.toggle('jeExpander-down');
-        this.parentElement.querySelector('.jeLogNested').classList.toggle('active');
+        this.parentNode.querySelector('.jeLogNested').classList.toggle('active');
       });
     }
+    // Make expander arrows that are parents of nodes with problems show up red.
+    const problems = document.getElementsByClassName('jeLogHasProblems');
+    for (i=0; i<problems.length; i++) {
+      let node = problems[i].parentNode;
+      while (node && !node.classList.contains('jeLog')) {
+        if(node.classList.contains('jeLogOperation')) {
+          node.firstElementChild.classList.remove('jeExpander');
+          node.firstElementChild.classList.add('jeRedExpander')
+        }
+        node = node.parentNode;
+      }
+    }    
   }
 }
 
