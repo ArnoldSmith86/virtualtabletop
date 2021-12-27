@@ -395,7 +395,7 @@ export class Widget extends StateManaged {
   }
 
   cssProperties() {
-    return [ 'css', 'height', 'inheritChildZ', 'layer', 'width' ];
+    return [ 'borderRadius', 'css', 'height', 'inheritChildZ', 'layer', 'width' ];
   }
 
   cssTransform() {
@@ -1538,6 +1538,10 @@ export class Widget extends StateManaged {
             if(audioElement.parentNode)
               audioElement.parentNode.removeChild(audioElement);
           };
+          audioElement.onerror = function() {
+            if(audioElement.parentNode)
+              audioElement.parentNode.removeChild(audioElement);
+          }
         }
       }
       setInterval(function(){
