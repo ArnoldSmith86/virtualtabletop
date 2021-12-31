@@ -666,10 +666,10 @@ function populateAddWidgetOverlay() {
     addWidgetToAddWidgetOverlay(new BasicWidget('add-classic-'+color), {
       classes: 'classicPiece',
       color,
-      width: 90,
-      height: 90,
-      x: 510,
-      y: y + (43.83 - 90)/2
+      width: 56,
+      height: 84,
+      x: 528,
+      y: y + (43.83 - 84)/2
     });
     y += 88;
   }
@@ -1071,7 +1071,8 @@ onLoad(function() {
           mode: "reset"
         }
       ],
-      css: "border-radius: 50% 0% 0% 0%;  border-width: 1px;  --wcBorder: #555; --wcBorderOH: black; --wcMainOH: #0d2f5e; ",
+      css: "border-width: 1px;  --wcBorder: #555; --wcBorderOH: black; --wcMainOH: #0d2f5e; ",
+      borderRadius: '50% 0% 0% 0%',
       text: "Reset"
     })
     await addWidgetLocal({
@@ -1106,7 +1107,8 @@ onLoad(function() {
         }
       ],
       color: "#1F5CA6",
-      css: "border-radius: 0% 0% 0% 50%;  border-width: 1px; background-color: var(--color);  --wcBorder: #555; --wcBorderOH: black  "
+      css: "border-width: 1px; background-color: var(--color);  --wcBorder: #555; --wcBorderOH: black  ",
+      borderRadius: '0% 0% 0% 50%'
     });
     overlayDone(id);
   });
