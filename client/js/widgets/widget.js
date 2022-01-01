@@ -5,6 +5,7 @@ import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { center, distance, overlap, overlapScore, getOffset, applyTransformedOffset } from '../geometry.js';
+import { type } from 'express/lib/response';
 
 const readOnlyProperties = new Set([
   '_absoluteRotation',
@@ -409,6 +410,8 @@ export class Widget extends StateManaged {
       reject(result);
   }
 
+
+
   async evaluateRoutine(property, initialVariables, initialCollections, depth, byReference) {
     function unescape(str) {
       if(typeof str != 'string')
@@ -418,8 +421,17 @@ export class Widget extends StateManaged {
       });
     }
 
+   /* const stringToFormula = string=>{
+      if(typeof string === 'string') {
+      const match = string.match('🧮');
+      if(match)
+        return string.replaceAll('🧮', '').replaceAll('\'', '').replaceAll('\"', '')
+      } else { return string }
+    }*/
+
     function evaluateIdentifier(dollarMatch, stringMatch) {
-      return unescape(dollarMatch ? variables[stringMatch] : stringMatch);
+      //let x = stringToFormula(variables[stringMatch]);
+      return unescape(dollarMatch ? stringToFormula(variables[stringMatch]) : stringMatch);
     }
 
     const evaluateVariables = string=>{
@@ -444,6 +456,7 @@ export class Widget extends StateManaged {
           return match[9] ? false : undefined;
 
         let indexName = evaluateIdentifier(match[3], match[4]);
+        //let replacedVar = indexName !== undefined ? varContent[indexName] : varContent;
         return indexName !== undefined ? varContent[indexName] : varContent;
       }
 
@@ -456,6 +469,7 @@ export class Widget extends StateManaged {
             return null;
           widget = widgets.get(id);
         }
+        //let replacedProp = JSON.parse(JSON.stringify(widget.get(evaluateIdentifier(match[5], match[6]))));
         return JSON.parse(JSON.stringify(widget.get(evaluateIdentifier(match[5], match[6]))));
       }
 
