@@ -1,6 +1,8 @@
 import { sendPropertyUpdate } from './serverstate.js';
 import { tracingEnabled } from './tracing.js';
 
+export let endRoutine = null;
+
 export class StateManaged {
   constructor() {
     this.defaults = {};
@@ -112,10 +114,14 @@ export class StateManaged {
     sendPropertyUpdate(this.get('id'), property, value);
     await this.onPropertyChange(property, oldValue, value);
 
-    if(Array.isArray(this.get(`${property}ChangeRoutine`)))
+    if(Array.isArray(this.get(`${property}ChangeRoutine`))) {
       await this.evaluateRoutine(`${property}ChangeRoutine`, { oldValue, value }, {});
-    if(Array.isArray(this.get('changeRoutine')) && property != 'audio')
+      endRoutine = null;
+    }
+    if(Array.isArray(this.get('changeRoutine')) && property != 'audio') {
       await this.evaluateRoutine('changeRoutine', { property, oldValue, value }, {});
+      endRoutine = null;
+    }
 
     if(!StateManaged.isInGlobalUpdateRoutine) {
       StateManaged.isInGlobalUpdateRoutine = true;
