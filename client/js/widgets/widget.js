@@ -308,10 +308,7 @@ export class Widget extends StateManaged {
 
     if(Array.isArray(this.get('clickRoutine')) && !(mode == 'ignoreClickRoutine' || mode =='ignoreAll')) {
       await this.evaluateRoutine('clickRoutine', {}, {});
-      if(endRoutine)
-        endRoutine = null;
-      else
-        return true;
+      return true;
     } else {
       return false;
     }
@@ -669,7 +666,7 @@ export class Widget extends StateManaged {
             for(const c in collections)
               inheritCollections[c] = [ ...collections[c] ];
             inheritCollections['caller'] = [ this ];
-            const result = if(!await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections, (depth || 0) + 1)) break;
+            const result = await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections, (depth || 0) + 1);
             variables[a.variable] = result.variable;
             collections[a.collection] = result.collection;
 
@@ -908,7 +905,7 @@ export class Widget extends StateManaged {
           }
           if(jeRoutineLogging)
             jeLoggingRoutineOperationStart( "loopRoutine", "loopRoutine" );
-          if(!await this.evaluateRoutine(a.loopRoutine, variables, collections, (depth || 0) + 1, true)) break;
+          await this.evaluateRoutine(a.loopRoutine, variables, collections, ((depth || 0) + 1), true)
           if(jeRoutineLogging)
             jeLoggingRoutineOperationEnd(problems, variables, collections, false);
           for(const add in addVariables) {
