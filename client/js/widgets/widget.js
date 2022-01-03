@@ -1,5 +1,5 @@
 import { $, removeFromDOM, asArray } from '../domhelpers.js';
-import { StateManaged, endRoutine } from '../statemanaged.js';
+import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay } from '../main.js';
@@ -18,6 +18,7 @@ const readOnlyProperties = new Set([
   '_localOriginAbsoluteY'
 ]);
 let breakRoutine = null;
+let endRoutine = null;
 
 export class Widget extends StateManaged {
   constructor(id) {
@@ -569,7 +570,7 @@ export class Widget extends StateManaged {
 
     for(const original of routine) {
       if(endRoutine){
-        break;
+        return false;
       }
 
       let a = JSON.parse(JSON.stringify(original));
@@ -668,7 +669,7 @@ export class Widget extends StateManaged {
             for(const c in collections)
               inheritCollections[c] = [ ...collections[c] ];
             inheritCollections['caller'] = [ this ];
-            const result = await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections, (depth || 0) + 1);
+            const result = if(!await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections, (depth || 0) + 1)) break;
             variables[a.variable] = result.variable;
             collections[a.collection] = result.collection;
 
@@ -907,7 +908,7 @@ export class Widget extends StateManaged {
           }
           if(jeRoutineLogging)
             jeLoggingRoutineOperationStart( "loopRoutine", "loopRoutine" );
-          await this.evaluateRoutine(a.loopRoutine, variables, collections, (depth || 0) + 1, true);
+          if(!await this.evaluateRoutine(a.loopRoutine, variables, collections, (depth || 0) + 1, true)) break;
           if(jeRoutineLogging)
             jeLoggingRoutineOperationEnd(problems, variables, collections, false);
           for(const add in addVariables) {
@@ -1002,7 +1003,7 @@ export class Widget extends StateManaged {
           } else {
             const branch = condition ? 'thenRoutine' : 'elseRoutine';
             if(Array.isArray(a[branch]))
-              await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true);
+              if(!await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true)) break;
           }
           if(jeRoutineLogging) {
             if (a.condition === undefined)
