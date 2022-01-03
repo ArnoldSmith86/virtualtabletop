@@ -308,7 +308,7 @@ export class Widget extends StateManaged {
 
     if(Array.isArray(this.get('clickRoutine')) && !(mode == 'ignoreClickRoutine' || mode =='ignoreAll')) {
       await this.evaluateRoutine('clickRoutine', {}, {});
-      return true;
+        return true;
     } else {
       return false;
     }
