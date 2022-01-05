@@ -676,6 +676,19 @@ export default async function convertPCIO(content) {
 
       w.clickRoutine = [];
 
+      if(widget.clickRoutine && widget.clickRoutine.popupMessage) {
+        w.clickRoutine.push({
+          func: 'INPUT',
+          fields: [
+            {
+              type: 'text',
+              text: widget.clickRoutine.popupMessage
+            }
+          ],
+          confirmButtonText: widget.label
+        });
+      }
+
       if(widget.type == 'turnButton') {
         w.clickRoutine.push({
           func: 'TURN'
