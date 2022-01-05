@@ -412,6 +412,17 @@ export default async function convertPCIO(content) {
       w.css = `font-size: ${widget.textSize}px; font-weight: ${weight}; text-align: ${widget.textAlign};`;
       addDimensions(w, widget, 100, 20);
       w.height = widget.textSize * 3.5;
+    } else if(widget.type == 'separator') {
+      w.movable = false;
+      w.layer = -1;
+      w.css = `background:#ddd`;
+      if(widget.separatorType == 'horizontal') {
+        w.width  = widget.width || 150;
+        w.height = 1;
+      } else {
+        w.height = widget.height || 150;
+        w.width  = 1;
+      }
     } else if(widget.type == 'seat') {
       w.type = 'seat';
       w.display = 'seatIndex';
