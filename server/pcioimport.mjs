@@ -746,7 +746,7 @@ export default async function convertPCIO(content) {
             func:   'SORT',
             holder: c.args.sources.value,
             key:    'sortingOrder',
-            reverse: c.args.direction.value != 'za'
+            reverse: !c.args.direction || c.args.direction.value != 'za'
           };
           if(c.holder.length == 1)
             c.holder = c.holder[0];
