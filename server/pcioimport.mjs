@@ -430,8 +430,8 @@ export default async function convertPCIO(content) {
       w.hideWhenUnused = true;
       if(typeof widget.seatIndex == 'number')
         w.index = widget.seatIndex + 1;
-      w.x += 69;
-      w.y -= 38;
+      w.x = (widget.x || 0) + 69;
+      w.y = (widget.y || 0) - 38;
       w.height = 42;
       w.width = 42;
       w.css = 'box-sizing:border-box;border-width:2px;';
