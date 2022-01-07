@@ -672,7 +672,7 @@ export class Widget extends StateManaged {
                   returnCollection = `(${result.collection.length} widgets)`;
                 jeLoggingRoutineOperationSummary(
                   `${a.routine} ${theWidget} and return variable '${a.variable}' and collection '${a.collection}'`,
-                  `${JSON.stringify(variables[a.variable])}; ${JSON.stringify(result.collection)}`)
+                  `${JSON.stringify(variables[a.variable])}; ${returnCollection}`)
               } else {
                 jeLoggingRoutineOperationSummary( `${a.routine} ${theWidget} and abort caller processing`)
               }
