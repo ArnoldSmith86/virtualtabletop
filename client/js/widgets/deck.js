@@ -29,12 +29,20 @@ class Deck extends Widget {
         this.cards[cardID].applyDeltaToDOM({ deck: this.get('id') });
   }
 
-  cardPropertyGet(cardType, property) {
+  cardPropertyGet(cardType, face, property) {
+    const thisFaceTemplates = this.get('faceTemplates');
     const thisCardTypes = this.get('cardTypes');
     if(thisCardTypes[cardType] && thisCardTypes[cardType][property] !== undefined)
       return thisCardTypes[cardType][property];
+    if(thisFaceTemplates[face] && thisFaceTemplates[face].properties && thisFaceTemplates[face].properties[property] !== undefined)
+      return thisFaceTemplates[face].properties[property];
 
     return this.get('cardDefaults')[property];
+  }
+
+  getFaceProperties(face) {
+    const template = this.get('faceTemplates')[face];
+    return template ? {...template.properties || {}} : {};
   }
 
   removeCard(card) {

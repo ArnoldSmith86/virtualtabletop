@@ -295,8 +295,8 @@ function publicLibraryTest(game, variant, md5, tests) {
       .click(Selector('td.name').withExactText(game).prevSibling().child())
       .hover('.roomState')
       .click(Selector('button.play').nth(variant));
-    await setName(t); 
-    await tests(t); 
+    await setName(t);
+    await tests(t);
     await compareState(t, md5);
   });
 }
@@ -342,7 +342,7 @@ publicLibraryButtons('Functions - CALL',   0, '493d1f63f35366f82f7573ce04f2126e'
 ]);
 publicLibraryButtons('Functions - CLICK',  0, 'd44e77e0782cadbc9594494e5a83dde0', [ '7u2q' ]);
 publicLibraryButtons('Functions - ROTATE', 0, '70782503b9e3fb2d4e24495f5c53ef1b', [ 'c44c', '9kdj', 'w53c', 'w53c' ]);
-publicLibraryButtons('Functions - SELECT', 0, '4db86f0a95509b1c4fe5ebd6a1f822a9', [ 'oeh9', '9fhb', 'njkk', 'ffwl', 'bomo' ]);
+publicLibraryButtons('Functions - SELECT', 2, '48f7b9da88137c1262cb5690c6f1d6b2', [ 'jkmt1']);
 publicLibraryButtons('Functions - SORT',   1, '35dc8ddd8f7c8cc8ebc31a188a51bd47', [
   'ingw', 'k131', 'cnfu', 'i6yz', 'z394', '0v3h', '1h8o', 'v5ra', 'ingw-copy001', 'k131-copy001', 'cnfu-copy001',
   'i6yz-copy001', 'z394-copy001', '0v3h-copy001'
