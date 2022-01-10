@@ -194,6 +194,7 @@ body.jsonEdit.jeZoomOut #topSurface {
   font-size: 12px;
   background: #ffffff10;
   margin-left: 20px;
+  color:lightgray;
 }
 
 .jeLogSkipped {
