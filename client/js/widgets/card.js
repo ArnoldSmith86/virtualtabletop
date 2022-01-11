@@ -53,6 +53,17 @@ class Card extends Widget {
         else
           this.domElement.children[i].classList.remove('active');
       }
+
+      const deltaForFaceChange = {};
+      if(this.previousFaceProperties)
+        for(const key in this.previousFaceProperties)
+          deltaForFaceChange[key] = this.get(key);
+      if(this.deck) {
+        this.previousFaceProperties = this.deck.getFaceProperties(this.get('activeFace'));
+        for(const key in this.previousFaceProperties)
+          deltaForFaceChange[key] = this.get(key);
+      }
+      this.applyDeltaToDOM(deltaForFaceChange);
     }
 
     if(this.dynamicProperties)
@@ -165,8 +176,8 @@ class Card extends Widget {
   }
 
   getDefaultValue(property) {
-    if(this.deck && property != 'cardType') {
-      const d = this.deck.cardPropertyGet(this.get('cardType'), property);
+    if(this.deck && property != 'cardType' && property != 'activeFace') {
+      const d = this.deck.cardPropertyGet(this.get('cardType'), this.get('activeFace'), property);
       if(d !== undefined)
         return d;
     }
