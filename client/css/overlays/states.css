@@ -4,23 +4,19 @@
   color: black;
 }
 
-#statesList, #stateEditOverlay {
+#statesList, #stateEditOverlay, #stateEditScreen {
   overflow: auto;
+  background-color: #cecece;
 }
 
-#statesList .list-title {
-  lear: left;
-  padding: 0.75rem 1.5rem 0.5rem 1.5rem;
-  margin: 2.25rem 0 0 0;
-  border-top: 1px solid lightgray;
+
+#statesList .title {
+  clear: left;
+  padding: 40px;
+  padding-bottom: 0;
 }
-#statesList .list{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  padding: 1rem;
-}
-.roomState, #addState {
+
+ #addState {
   color: black;
   float: left;
   width: 200px;
@@ -43,6 +39,12 @@
 #addState{
   display: none;
 }
+.addOptions.block.block-inset .menu{
+  margin-right: -12px;
+}
+.addOptions.block.block-inset{
+  z-index: 2;
+}
 #addState div {
   position: absolute;
 }
@@ -54,10 +56,6 @@
   font-style: normal;
 }
 
-.roomState .details, #addState .buttons {
-  display: none;
-  overflow: auto;
-}
 
 .roomState .star {
   display: none;
@@ -72,7 +70,7 @@
 }
 
 .roomState.noImage .details > *, .roomState.noImage img {
-  display: none;
+/*   display: none; */
 }
 
 .roomState.noImage .details, .roomState.noImage .details > em:first-child {
@@ -85,13 +83,7 @@
 }
 
 #addState button {
-  width: 160px;
-}
-
-.roomState > img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 180px;
 }
 
 #addState {
@@ -108,13 +100,10 @@
   margin-bottom: 20px;
 }
 
-/* .roomState:hover > div, .roomState:hover .details > *, #addState:hover > div, .roomState > div > a {
-  display: block;
+.details .stats{
+  margin-bottom: 8px;
 }
 
-.roomState:hover > img, #addState:hover .image {
-  filter: blur(5px);
-} */
 
 #stateEditOverlay label {
   width: 200px;
@@ -161,8 +150,72 @@
   to {opacity: 0;}
 }
 
-.roomState .header{
 
+#stateEditOverlay .input{
+  display: flex;
+}
+.variantsList .prettyButton.play{
+  flex-wrap: wrap;
+}
+
+.variantsList .prettyButton.play .variant{
+  padding-top: 4px;
+  border-top: 1px solid #ffffffaa;
+  width: 100%;
+}
+.variantsList .prettyButton.play .variant:empty{
+  display: none;
+}
+
+
+
+
+
+#gameShelf .list-title.yourshelf{
+  order: 0;
+  justify-content: flex-start;
+  gap: 16px;
+}
+#gameShelf .list-title.publiclibrary{
+  order: 10;
+}
+#gameShelf .publicLibraryGame.favorite{
+  order: 5;
+}
+#gameShelf .publicLibraryGame{
+  order: 15;
+}
+#gameShelf{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: flex-start;
+}
+#gameShelf .list-title{
+  width: 100%;
+}
+.roomState a {
+  color: black;
+  font-weight: bolder;
+  text-decoration: none;
+  font-style: normal;
+}
+
+.roomState .star {
+  display: none;
+}
+
+.roomState.publicLibraryGame .star {
+  display: block;
+}
+
+.roomState.publicLibraryGame .edit,
+.roomState.publicLibraryGame .edit-button{
+  display: none;
+}
+
+.roomState .header{
+  height: 200px;
   text-shadow: 0 0 3px black;
   color: white;
   display: flex;
@@ -197,6 +250,78 @@ margin: 0!important;
   line-height: 30px;
   backdrop-filter: blur(30px) saturate(210%);
   border-radius: 8px;
+  -webkit-transition: height 0.1s linear;
+  -moz-transition: height 0.1s linear;
+  -o-transition: height 0.1s linear;
+  transition: height 0.1s linear;
+  -webkit-transition: background-position 0.1s linear;
+  -moz-transition: background-position 0.1s linear;
+  -o-transition: background-position 0.1s linear;
+  transition: background-position 0.1s linear;
+  background-size: 200px 200px;
+  background-position: top left;
+}
+.roomState.noImage .header{
+  background-size: cover;
+}
+.roomState.card-opened{
+}
+.roomState.card-opened .header{
+background-position: center;
+background-size: cover;
+}
+.roomState .header .title{
+backdrop-filter: blur(30px) saturate(210%);
+-webkit-backdrop-filter: blur(30px) saturate(210%);
+background: #00000061;
+padding: 0!important;
+margin: 0!important;
+width: 100%;
+}
+.roomState .header .title img{
+  border-radius: 4px;
+  display: inline-block;
+  height: 75px;
+  width: 0;
+  float: left;
+  margin: 5px 10px 5px 0;
+  -webkit-transition: width 0.1s linear;
+  -moz-transition: width 0.1s linear;
+  -o-transition: width 0.1s linear;
+  transition: width 0.1s linear;
+}
+.roomState.card-opened .header .title img{
+  width: 75px;
+  margin: 5px 10px 5px 5px;
+}
+.roomState.card-opened .header .title > div{
+  width: 100%;
+}
+.roomState .header .title > div{
+  width: 200px;
+}
+.roomState .header .name{
+  padding: 0.5rem 0;
+  font-weight: bold;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+.roomState .header .similar-to{
+  padding: 0;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 0.8rem;
+  line-height: 1;
+}
+.roomState .header .stats{
+  padding: 0 0 0.5rem;
+  font-size: 0.8rem;
+  display: flex;
+  align-content: center;
+  align-items: center;
+}
+.roomState .header .stats .icon{
+  margin-right: 0.25rem;
 }
 .roomState .header .star{
   position: absolute;
@@ -252,4 +377,239 @@ margin: 0!important;
 #stateFilters .icon{
   font-size: 2em;
   margin-left: 0.5rem;
+}
+.close-box{
+  text-shadow: none;
+  background: black;
+  color: white!important;
+  font-size: 32px;
+  line-height: 32px;
+  height: 32px;
+  width: 32px;
+  border-radius: 100%;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 100;
+}
+.star-label{
+  position: absolute;
+  padding-top: 1rem;
+  left: -1.75rem;
+  top: -0.75rem;
+  transform: rotate(-45deg);
+  backdrop-filter: blur(30px) saturate(210%);
+  -webkit-backdrop-filter: blur(30px) saturate(210%);
+  width: 5rem;
+  text-align: center;
+}
+.star{
+  position: absolute;
+  left: -200000px;
+}
+.star-label::before {
+  pointer-events: none;
+  font-size: 24px;
+  line-height: 24px;
+  font-family: 'Material Icons';
+  content: 'star';
+  color: white;
+  text-align: center;
+  width: 100%;
+  text-shadow: 0 0 3px #0000008c;
+  transform: rotate(45deg);
+}
+.star:checked + .star-label::before {
+  color: gold;
+}
+.card-content{
+  position: relative;
+}
+.header{
+  position: relative;
+}
+.edit-button{
+  width: auto!important;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+background-color: white;
+text-shadow: none;
+padding: 0.25rem 1rem;
+border-radius: 0.5rem;
+line-height: 1;
+font-size: 0.75rem;
+
+}
+.edit-button button{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  color: var(--VTTblue)!important;
+  font-weight: bold;
+}
+.edit-button button .icon{
+  font-size: 1.25rem;
+}
+
+
+.extra-info{
+  width: auto!important;
+  display: flex;
+background-color: white;
+text-shadow: none;
+padding: 0.25rem 0;
+border-radius: 0.5rem;
+line-height: 1;
+
+}
+.extra-info a{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0.25rem 1rem;
+  background: none;
+  color: var(--VTTblue)!important;
+  border-right: 1px dotted var(--VTTblue);
+}
+.extra-info a:last-of-type{
+  border-right: none;
+}
+.extra-info a .icon{
+}
+.description-info, .attribution-info{
+  margin: 8px 0;
+}
+.attribution-info{
+  font-style: italic;
+}
+.description-info:empty, .attribution-info:empty{
+  display: none;
+}
+.variantsList{
+  padding: 1rem 0.5rem;
+}
+.variant{
+  display: flex;
+  justify-content: space-between;
+  border-style: dotted;
+  border-color: lightgray;
+  border-width: 1px 0 1px 0;
+  padding: 0.25rem 0.5rem;
+}
+.play-button{
+  width: auto;
+  padding-right: 0.75rem;
+  flex-grow: 0;
+  font-weight: bold;
+  height: 34px;
+
+}
+.variant > div, .variant > button{
+  display: flex;
+  align-items: center;
+}
+.variant .variant-name{
+  flex-grow: 1;
+}
+.variant .variant-description, .variant .variant-attribution{
+  width: 100%;
+  font-size: 0.8rem;
+  line-height: 0.8rem!important;
+  padding: 0 0 5px;
+  font-weight: normal;
+}
+.variant .variant-attribution{
+  font-style: italic;
+}
+.variant .variant-description:empty, .variant .variant-attribution:empty{
+  display: none;
+}
+
+.variant .variant-name{
+  flex-direction: column;
+  align-content: flex-start;
+  align-items: flex-start;
+}
+.variant .variant-name > div{
+  line-height: 34px;
+
+}
+.variant .variant-image{
+  flex-grow: 0;
+  flex-shrink: 0;
+  height: 34px;
+  width: 34px;
+  margin: 1px 5px 1px 0;
+  border-radius: 3px;
+}
+.variant i{
+  margin-right: 0.25rem;
+}
+.variant .unnamed{
+  color: gray;
+  font-style: italic;
+}
+.language-info, .player-number-info, .has-attribution{
+  justify-content: center;
+  width: auto;
+  flex-grow: 0;
+  flex-shrink: 1;
+  padding: 0 0.75rem;
+  border-left: 1px dotted lightgray;
+  white-space: nowrap;
+  height: 34px;
+}
+.has-attribution{
+  padding: 0;
+  border-left: none;
+}
+.roomState.unclicked .details{
+  animation: hideGame 0.5s linear;
+}
+
+.roomState.clicked{
+  position: initial;
+}
+.roomState.clicked .details{
+  animation: showGame 0.5s linear;
+  opacity: 1;
+  position: absolute;
+  height: 50%;
+  width: 75%;
+  display: block;
+  left: 13.5%;
+  top: 25%;
+  z-index: 10000;
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 5px black;
+}
+@keyframes showGame {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+@keyframes hideGame {
+  from {opacity: 1;}
+  to {opacity: 0;}
+}
+
+.roomState {
+  color: black;
+  float: left;
+  width: 200px;
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 10px #00000077;
+  margin: 0.75rem;
+
+}
+
+.roomState .card-content{
+  padding: 0;
 }

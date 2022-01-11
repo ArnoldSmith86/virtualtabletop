@@ -10,22 +10,372 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/i/branding/ios-icon.png">
   <link rel="manifest" href="/i/branding/manifest.json">
   <link rel="mask-icon" href="/i/branding/mask-icon.svg">
+  <meta name="theme-color" content="#1f5ca6">
   <script src="https://cdn.jsdelivr.net/combine/npm/vue@3.0.7/dist/vue.global.prod.js,npm/jszip@3.6.0/dist/jszip.min.js"></script>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
   <base target="_blank">
-  <style> {{CSS}} </style>
+  <style> /*** CSS ***/ </style>
 </head>
 
 
 <body>
 
+  <div id="app" class="ui color-theme-blue">
+    <div class="view view-main safe-areas" data-stack-pages="true">
+      <div id="home" class="page stacked" data-name="home">
+        <div class="navbar main-header text-color-white">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner sliding">
+            <div class="left">
+
+            </div>
+            <div class="title">VirtualTabletop.io</div>
+
+            <div class="right">
+              <a class="button download" href="#"><span class="material-icons text-color-white">download</span></a>
+              <a href="#" class="button hideApp"><span class="material-icons text-color-white">close</span></a>
+            </div>
+
+
+          </div>
+        </div>
+        <div class="toolbar toolbar-top">
+          <div class="toolbar-inner">
+            <div class="searchbar">
+              <div class="searchbar-input-wrap">
+                <input type="search" placeholder="Find a game..." id="filterByText" />
+                <i class="searchbar-icon"></i>
+                <span class="input-clear-button"></span>
+              </div>
+            </div>
+            <div class="searchParams list">
+            <ul>
+            <li>
+              <a class="smart-select smart-select-init" data-open-in="popover" data-close-on-select="true">
+                <select id="filterByPlayers"><option>Any</option>
+                  <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+                  <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+                  <option>11</option><option>12</option><option>13</option><option>14</option><option>15</option>
+                  <option>16</option><option>17</option><option>18</option><option>19</option><option>20</option>
+                </select>
+                <div class="item-content">
+                  <div class="item-media"><i class="material-icons">group</i></div>
+                  <div class="item-inner">
+                    <div class="item-title"></div>
+                  </div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a class="smart-select smart-select-init" data-open-in="popover" data-close-on-select="true">
+                <select id="filterByLanguage"><option>Any</option>
+                  <option>UN</option><option>US</option>
+                  <option>BR</option><option>CN</option><option>DE</option><option>GB</option>
+                </select>
+                <div class="item-content">
+                  <div class="item-media"><i class="material-icons">language</i></div>
+                  <div class="item-inner">
+                    <div class="item-title"></div>
+                  </div>
+                </div>
+              </a>
+            </li>
+            </ul>
+            </div>
+
+
+
+          </div>
+        </div>
+
+        <div class="fab fab-right-bottom color-orange statesCreator">
+          <a href="#">
+            <i class="icon material-icons">add</i>
+            <i class="icon material-icons">close</i>
+          </a>
+          <div class="fab-buttons fab-buttons-top">
+            <a class="fab-label-button fab-close create" href="#"><span class="icon material-icons">save</span><span class="fab-label">Save what you're working on</span></a>
+            <a class="fab-label-button fab-close upload" href="#"><span class="icon material-icons">upload</span><span class="fab-label">Upload a VTT or PCIO file</span></a>
+            <a class="fab-label-button fab-close link" href="#"><span class="icon material-icons">link</span><span class="fab-label">Enter a link to another game</span></a>
+
+          </div>
+        </div>
+        <div id="gameShelf" class="page-content">
+
+
+
+
+
+          <h2 class="list-title yourshelf">
+            <span>Your Game Shelf</span>
+          </h2>
+          <div class="block">
+            <p>There is no saved game in this room. You can save your progress or add games to it and play them with your friends and family by sharing the link.</p>
+            <p>Bring your own voice chat. We recommend <a class="external" href="https://meet.jit.si/">Jitsi Meet</a> because it's free software, runs in the browser and requires no accounts.</p>
+          </div>
+          <div class="block block-strong inset">
+            <div class="row">
+              <div class="col">
+                <p class="text-align-center">Save what you are currently working&nbsp;on?</p>
+              </div>
+              <div class="col">
+                <p class="text-align-center">Do you have a *.vtt or *.pcio&nbsp;file?</p>
+              </div>
+              <div class="col">
+                <p class="text-align-center">Do you have a link to&nbsp;one?</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <button class="button button-raised button-fill color-blue create"><span class="icon material-icons">save</span>Room</button>
+              </div>
+              <div class="col">
+                <button class="button button-raised button-fill color-blue upload"><span class="icon material-icons">upload</span>Files</button>
+              </div>
+              <div class="col">
+                <button class="button button-raised button-fill color-blue link"><span class="icon material-icons">link</span>Link</button>
+              </div>
+            </div>
+          </div>
+          <div class="block">
+            <p>If you don't, you can create your own game or add one from the Public Library below.</p>
+          </div>
+          <h2 class="list-title publiclibrary"><span>Public Library</span></h2>
+          <template id="template-stateslist-entry" type="text/template">
+            <div class="card-content">
+              <a class="close-box card-close material-icons">close</a>
+              <div class="header">
+                <div class="title">
+                  <img class="card-opened-fade-in">
+                  <div>
+                    <div class="name">Name</div>
+                    <div class="similar-to"></div>
+                    <div class="stats"><span class="material-icons time-icon">schedule</span> <span class="time">0</span></div>
+                  </div>
+                  <a href="/stateEditScreen/" class="card-opened-fade-in edit-button button button-raise button-fill color-white text-color-black edit"><i class="material-icons">drive_file_rename_outline</i>EDIT</a>
+                </div>
+
+              </div>
+              <input class="star" type="checkbox"><label class="star-label card-prevent-open"></label>
+
+              <div class="details">
+                <div class="extra-info">
+                  <a class="bgg external"><i class="icon material-icons">link</i>BGG Link</a>
+                  <a class="rules external"><i class="icon material-icons">menu_book</i>Rules</a>
+                </div>
+                <div class="block description-info"></div>
+                <div class="variantsList"></div>
+                <div class="block-title display-flex align-items-center"><i class="material-icons">attribution</i> <span>Attribution</span></div>
+                <div class="block attribution-info">There is no further attribution information for this title.</div>
+              </div>
+            </div>
+          </template>
+          <template id="template-variantslist-entry" type="text/template">
+            <img class="variant-image" />
+            <div class="variant-name">
+              <div class="label"></div>
+              <div class="accordion-item-content">
+                <div class="variant-description"></div>
+                <div class="variant-attribution"></div>
+              </div>
+            </div>
+            <div class="has-attribution"><i class="icon material-icons accordion-item-toggle">attribution</i></div>
+            <div class="language-info"><i class="material-icons">language</i><span class="language"></span></div>
+            <div class="player-number-info"><i class="material-icons">groups</i><span class="players">0</span></div>
+            <button class="play play-button card-close"><i class="material-icons">play_arrow</i>PLAY</button>
+          </template>
+        </div>
+      </div>
+      <div id="stateEditScreen" class="page stacked" data-name="stateEditScreen">
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner">
+                <div class="left">
+                    <a href="#" class="link icon-only back">
+                        <i class="material-icons">arrow_back</i>
+                    </a>
+                </div>
+                <div class="title">Edit Game</div>
+                <div class="right">
+                  <a href="#" class="share link icon-only"><i class="material-icons">share</i></a>
+                  <a href="#" class="download link icon-only"><i class="material-icons">download</i></a>
+                </div>
+            </div>
+        </div>
+        <div class="fab fab-left-bottom color-red">
+          <a href="#">
+            <i class="material-icons">delete</i>
+            <i class="material-icons">delete</i>
+          </a>
+          <div class="fab-buttons fab-buttons-top">
+            <a class="fab-label-button fab-close back remove" href="#"><span class="icon material-icons">trash</span><span class="fab-label">Delete permanently</span></a>
+          </div>
+        </div>
+
+
+        <div class="fab fab-extended fab-right-bottom color-orange statesCreator">
+          <a href="#">
+            <i class="icon material-icons">add</i>
+            <i class="icon material-icons">close</i>
+            <div class="fab-text">Add Variant</div>
+          </a>
+          <div class="fab-buttons fab-buttons-top">
+            <a class="fab-label-button fab-close create" href="#"><span class="material-icons">save</span><span class="fab-label">Save what you're working on</span></a>
+            <a class="fab-label-button fab-close upload" href="#"><span class="material-icons">upload</span><span class="fab-label">Upload a VTT or PCIO file</span></a>
+            <a class="fab-label-button fab-close link" href="#"><span class="material-icons">link</span><span class="fab-label">Enter a link to another game</span></a>
+          </div>
+        </div>
+        <div id="" class="page-content">
+          <div class="block row no-gap">
+            <div class="editBasicInfo col-100 medium-50">
+              <div class="block-title">Basic Information</div>
+              <div class="list medium-inset">
+                <ul>
+                  <li class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">Game Name</div>
+                      <div class="item-input-wrap">
+                        <input name="stateName" id="stateName" type="url" />
+                        <span class="input-clear-button"></span>
+                      </div>
+                    </div>
+                  </li>
+                  <div class="row">
+                    <div class="col-33">
+                      <li class="item-content item-input">
+                        <div class="item-inner">
+                          <div class="item-title item-label">Year Made</div>
+                          <div class="item-input-wrap">
+                            <input type="number" name="stateYear" id="stateYear" />
+                            <span class="input-clear-button"></span>
+                          </div>
+                        </div>
+                      </li>
+                    </div>
+                    <div class="col-33">
+                      <li class="item-content item-input">
+                        <div class="item-inner">
+                          <div class="item-title item-label">Game mode</div>
+                          <div class="item-input-wrap">
+                            <input type="url" name="stateMode" id="stateMode" />
+                            <span class="input-clear-button"></span>
+                          </div>
+                        </div>
+                      </li>
+                    </div>
+                    <div class="col-33">
+                      <li class="item-content item-input">
+                        <div class="item-inner">
+                          <div class="item-title item-label">Time (minutes)</div>
+                          <div class="item-input-wrap">
+                            <input type="number" name="stateTime" id="stateTime" />
+                            <span class="input-clear-button"></span>
+                          </div>
+                        </div>
+                      </li>
+                    </div>
+                  </div>
+                  <li class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">Link to Rules</div>
+                      <div class="item-input-wrap">
+                        <input type="url" name="stateRules" id="stateRules" />
+                        <span class="input-clear-button"></span>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">Link to BGG page</div>
+                      <div class="item-input-wrap">
+                        <input type="url" name="stateBGG" id="stateBGG" />
+                        <span class="input-clear-button"></span>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">Link to image</div>
+                      <div class="item-input-wrap upload-button">
+                        <input type="url" name="stateImage" id="stateImage" />
+                        <div class="item-after"><button class="button button-fill uploadAsset"><i class="material-icons">upload</i></button></div>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">stateLink</div>
+                      <div class="item-input-wrap">
+                        <input type="url" name="stateLink" id="stateLink" />                      <span class="input-clear-button"></span>
+                      </div>
+                    </div>
+                  </li>
+                  <li><div class="block block-strong">
+                      <p class="row"><button class="button button-fill button-raised color-green col save"><span class="icon material-icons">save</span>Save changes</button></p>
+                    </div></li>
+                </ul>
+              </div>
+
+            </div>
+            <div class="col-100 medium-50 margin-bottom">
+              <div class="block-title">Variants</div>
+              <div class="list medium-inset">
+                <ul id="variantsEditList">
+                  <template id="template-variantseditlist-entry" type="text/template">
+                    <a href="#" data-popup=".editVariant" class="popup-open item-link">
+                      <div class="item-content">
+                        <div class="item-media"><img class="variant-image" /></div>
+                        <div class="item-inner">
+                          <div class="item-title">
+                            <div class="label variant-name">name</div>
+                            <div class="item-footer"><i class="material-icons">language</i><span class="language">UN</span><i class="material-icons">groups</i><span class="players">0</span></div>
+                          </div>
+                          <div class="item-after"><span class="badge">LINKED</span></div>
+                        </div>
+                      </div>
+                    </a>
+                  </template>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    <div id="editVariant" class="popup editVariant">
+      <a class="close-box popup-close material-icons">close</a>
+      <h2>This is a linked variant</h2>
+      <div class="block">
+        <p><strong>Linked versions of games cannot be edited or changed.</strong></p>
+        <p>In order to make changes to this version of the game, you can make a an unlinked copy of it.</p>
+      </div>
+      <div class="block block-strong">
+        <p class="row">
+          <button class="col button button-fill button-raised color-blue">Make an unlinked copy</button>
+        </p>
+        <p class="row">
+          <button class="col button button-fill button-raised color-red">Remove this version</button>
+        <p>
+          <p class="row">
+            <button class="col button button-fill button-raised color-gray popup-close">Cancel</button>
+          <p>
+      </div>
+    </div>
+  </div>
+
   <div id="toolbar">
     <button id="statesButton" data-overlay="statesOverlay" class="toolbarButton" ><span class="tooltip">Game Library</span></button>
+    <button id="showAppButton" class="toolbarButton"><span class="tooltip">Show App</span></button>
     <div class="divider">&nbsp;</div>
     <button id="playersButton" data-overlay="playerOverlay" class="toolbarButton" ><span class="tooltip">Players & Settings</span></button>
     <div class="divider">&nbsp;</div>
     <button id="editButton" class="toolbarButton"><span class="tooltip">Edit Mode</span></button>
     <button id="addButton" data-overlay="addOverlay" class="toolbarButton"><span class="tooltip">Add Widget</span></button>
+    <button id="optionsButton" class="toolbarButton"><span class="tooltip">Sound</span></button>
+    <span id="options" class="hidden"><button id="muteButton" class="toolbarButton"></button><div class='volumeWrap'><input id="volume" type='range'min="0" max="100" value="30" ></div></span>
     <div class="divider">&nbsp;</div>
     <button id="fullscreenButton" class="toolbarButton"><span class="tooltip">Fullscreen</span></button>
     <button id="hideToolbarButton" class="toolbarButton"><span class="tooltip">Hide Toolbar</span></button>
@@ -161,33 +511,35 @@
     <div id="addOverlay" class="overlay">
       <div class="category">
         <h2>Cards</h2>
-        <button id="addHand">🖐️ Add hand</button>
+        <button class="ui-button" id="addHand">Add hand</button>
       </div>
       <div class="category">
         <h2>Game Pieces</h2>
       </div>
       <div class="category">
         <h2>Interactive</h2>
-        <button id="addCanvas">🎨 Add Canvas</button>
-        <button id="addSeat">🪑 Add Seat</button>
+        <button class="ui-button" id="addCanvas">Add Canvas</button>
+        <button class="ui-button" id="addSeat">Add Seat</button>
       </div>
       <div class="category">
         <h2>Decorative</h2>
       </div>
       <div class="category">
         <h2>Custom</h2>
-        <button id="uploadBoard">⬆️ Upload board</button>
-        <button id="uploadToken">⬆️ Upload token</button>
-        <button id="addBasicWidget">Add basic widget</button>
+        <button class="ui-button" id="uploadBoard">Upload Board</button>
+        <button class="ui-button" id="uploadToken">Upload Token</button>
+        <button class="ui-button" id="addBasicWidget">Add Basic Widget</button>
       </div>
     </div>
 
     <div id="buttonInputOverlay" class="overlay">
-      <form onsubmit="return false">
+      <form class=modal onsubmit="return false">
         <h1>Button Input</h1>
         <div id="buttonInputFields"></div>
-        <button id="buttonInputGo">Go</button>
-        <button id="buttonInputCancel">Cancel</button>
+        <div class=footer>
+          <button id="buttonInputGo" class=positiveInput><span class=UIicon></span><label></label></button>
+          <button id="buttonInputCancel" class=neutralInput><span class=UIicon></span><label></label></button>
+        </div>
       </form>
     </div>
 
@@ -197,9 +549,9 @@
         <div class="instructionalText">From here you can edit the name and color of any player.</div>
       </div>
       <div id="playerList">
-        <script id="template-playerlist-entry" type="text/template">
+        <template id="template-playerlist-entry" type="text/template">
           <input type="color" class="teamColor"></span> <input class="playerName" />
-        </script>
+        </template>
         <label class="me ui-line" data-label="Me »"> </label>
         <label class="otherPlayers ui-line" data-label="Other Players »"> </label>
         <label class="inactivePlayers ui-line"> </label>
@@ -212,47 +564,25 @@
     </div>
 
     <div id="statesOverlay" class="overlay">
-      <div id="stateFilters">
-        <div class="searchbar"><input id="filterByText" placeholder="Find a game..." /></div>
-        <span class="icon">👨‍👩‍👧</span>
-        <select id="filterByPlayers"><option>Any</option>
-          <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
-          <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
-          <option>11</option><option>12</option><option>13</option><option>14</option><option>15</option>
-          <option>16</option><option>17</option><option>18</option><option>19</option><option>20</option>
-        </select>
-        <span class="icon">💬</span>
-        <select id="filterByLanguage"><option>Any</option>
-          <option>UN</option><option>US</option>
-          <option>BR</option><option>CN</option><option>DE</option><option>GB</option>
-        </select>
-      </div>
-      <div id="statesList">
-        <script id="template-stateslist-category" type="text/template">
-          <h2 class="list-title">Title</h2>
-          <div class="list"></div>
-        </script>
-        <script id="template-stateslist-entry" type="text/template">
-          <div class="header">
-            <div class="title">
-            <div class="name">Name</div>
-            <div class="similar-to"></div>
-            </div>
+      <h1>Games</h1>
 
-            <div class="stats">⌛ <span class="time">0</span></div>
-            <div class="star"><input type="checkbox"></div>
-          </div>
+      <div id="statesList">
+        <template id="template-stateslist-category" type="text/template">
+          <h2 class="title">Title</h2>
+          <div class="list"></div>
+        </template>
+        <template id="template-stateslist-entry-old" type="text/template">
           <img>
           <div class="details">
-            <em><a class="bgg">Name (Year)</a></em>
-            <em>⌛ <span class="time">0</span> minutes - <a class="rules">Rules</a></em>
+            <a class="bgg" href="">Name (Year)</a>
+            <div class="stats"><span class="symbols">[sand_timer]</span> <span class="time">0</span> minutes | <a class="rules"><span class="symbols">[book_open]</span> Rules</a></div>
             <div class="variantsList"></div>
             <p><button class="prettyButton edit">Edit</button><button class="prettyButton star">★</button></p>
           </div>
-        </script>
-        <script id="template-variantslist-entry" type="text/template">
-          <button class="play">▶️ Play: <span class="language">🇺🇸</span> 👪 <span class="players">0</span><br><span class="variant"></span></button>
-        </script>
+        </template>
+        <template id="template-variantslist-entry-old" type="text/template">
+          <button class="prettyButton play">Play: <span class="language">🇺🇸</span><span class="symbols"> [group]</span><span class="players">0</span><br><span class="variant"></span></button>
+        </template>
         <div id="addState">
           <div class="image">➕</div>
           <div class="buttons">
@@ -274,25 +604,40 @@
         <div class="input"><label for="stateMode">Mode:</label> <input id="stateMode"/></div>
         <div class="input"><label for="stateTime">Time:</label> <input id="stateTime"/></div>
         <div class="input"><label for="stateBGG">BoardGameGeek link:</label> <input id="stateBGG"/></div>
-        <div class="input"><label for="stateImage">Image URL:</label> <input id="stateImage"/><button class="prettyButton uploadAsset">Upload</button></div>
+        <div class="input"><label for="stateImage">Image URL:</label> <input id="stateImage"/><button class="ui-button uploadAsset">Upload</button></div>
         <div class="input"><label for="stateLink">Update link:</label> <input id="stateLink"/></div>
       </div>
       <h2>Variants</h2>
       <div id="variantsEditList">
-        <script id="template-variantseditlist-entry" type="text/template">
+        <template id="template-variantseditlist-entry-old" type="text/template">
           <div class="input"><label>Language (country code):</label> <input class="stateLanguage"/></div>
           <div class="input"><label>Players:</label> <input class="statePlayers"/></div>
           <div class="input"><label>Variant:</label> <input class="stateVariant"/></div>
           <div class="input"><label>Attribution:</label> <textarea class="stateAttribution"></textarea></div>
           <div class="input"><label>Update link:</label> <input class="stateLink"/></div>
-          <button class="update">Update variant using current room state</button><button class="prettyButton download">Download variant</button><button class="prettyButton remove">Remove variant</button>
-        </script>
+          <div class="editOverlayButtonBar">
+            <button class="ui-button green update update-current-state">Update variant using current room state</button>
+            <button class="ui-button download download-variant">Download variant</button>
+            <button class="ui-button red remove remove-variant">Remove variant</button>
+          </div>
+        </template>
       </div>
       <div id="addVariant" class="buttons">
         Add variant:
-        <button class="prettyButton create">Use current room state</button><button class="prettyButton library">Public library</button><button class="prettyButton link">Enter link</button><button class="prettyButton upload">Upload file</button>
+        <div class="editOverlayButtonBar">
+          <button class="ui-button create create-current-state">Use current room state</button>
+          <button class="ui-button library create-from-library">From the Public library</button>
+          <button class="ui-button link create-from-link">Enter link</button>
+          <button class="ui-button upload create-upload-file">Upload file</button>
+        </div>
       </div>
-      <p><button class="prettyButton save">Save</button><button class="prettyButton share">Share link</button><button class="prettyButton download">Download</button><button class="prettyButton remove">Remove</button></p>
+      <hr/>
+      <div class="editOverlayButtonBar">
+        <button class="ui-button green save save-game">Save</button>
+        <button class="ui-button share share-game">Share link</button>
+        <button class="ui-button download download-game">Download</button>
+        <button class="ui-button red remove remove-game">Remove</button>
+      </div>
     </div>
 
     <div id="shareLinkOverlay" class="overlay">
@@ -306,44 +651,55 @@
       <button id="shareOK">OK</button>
     </div>
 
-    <div id="aboutOverlay" class="overlay">
-      <h1>About VirtualTabletop.io</h1>
-      <p>This project is licensed under GPLv3 and is <a href="https://github.com/ArnoldSmith86/virtualtabletop">available on GitHub</a>.</p>
-      <p>Come join our <a href="https://discord.gg/CEZz7wny9T">discord server</a>.</p>
-      <p>Check out our <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki">wiki page</a> for helpful information about how to make your own games.</p>
-      <h2>Copyright Attribution</h2>
-      <p>The default card deck was created by Adrian Kennard and released under CC0 Public Domain license: <a href="https://www.me.uk/cards/">https://www.me.uk/cards/</a>.</p>
-      <p>The copyright attribution information for all games and assets in the public library is available inside the "Variant" notes section of each game. All public library tutorials are released under the CC0 license. Detailed information about the various Creative Commons licenses referred to by abbreviations in variant notes can be found on the <a href="https://creativecommons.org/about/cclicenses/">Creative Commons webpage</a> or at the following links:</p>
-      <ul>
-      <li><a href="https://creativecommons.org/licenses/by/4.0/">CC BY</a></li>
-      <li><a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a></li>
-      <li><a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC</a></li>
-      <li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA</a></li>
-      <li><a href="https://creativecommons.org/licenses/by-nd/4.0/">CC BY-ND</a></li>
-      <li><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND</a></li>
-      <li><a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 (Public Domain)</a></li>
-      </ul>
-      <h2>Online Gameplay</h2>
-      <p>This is an open-source, free to use platform.</p>
-      <p>Anyone that knows the URL of the room that you are using may come in to the room at any time and take any action, including playing or changing games in the room or deleting games. Keep a personal backup of everything that you care about.</p>
-      <p>Know who you are playing with.  The platform is unmoderated and no one controls what may happen. Anything you do or share is your own responsibility.</p>
-      <p>Cheating is trivially easy, unpreventable, and undetectable.  Just play for fun.</p>
-      <p>If you are under the age of majority in the location you are from, be sure to comply with the rules for accessing online material that apply to you.</p>
-      <h2>Privacy Policy</h2>
-      <p>VirtualTabletop.io does not ask for or collect any personal identification information.</p>
-      <p>VirtualTabletop.io does not use cookies.</p>
-      <p>VirtualTabletop.io does, however, collect the "player name" and keeps that in local storage on the user's device.  The player name defaults to a number, but is customizable to any user entered data. VirtualTabletop.io does not analyze or use that information except to display it on the screen while accessing the website.</p>
-      <div id="betaText">
+    <div id="aboutOverlay" class="overlay"  style="display:none;">
+      <div class="header">
+        <div class="about_title">
+          <h1>About VirtualTabletop.io</h1>
+          <p>This project is licensed under GPLv3 and is <a href="https://github.com/ArnoldSmith86/virtualtabletop">available on GitHub</a>.</p>
+        </div>
+        <div class="about_joinus">
+          <a href="https://discord.gg/CEZz7wny9T"><img src="/i/branding/discord-logo.svg" /><br>Come join our discord server.</a>
+          <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki"><img src="/i/branding/github-logo.svg" /><br>Check out our wiki page for helpful information about how to make your own games.</a>
+        </div>
+      </div>
+      <div class="content-body">
+        <h2>Copyright Attribution</h2>
+        <p>Great care has been made to attribute the sources where appropriate. If you feel your work has been taken or used without your consent, please contact us on Discord and immediate action will be taken to remove any infringing works.</p>
+        <p>All graphics used on this site were either created by members of the VTT community and are released into the public domain, sourced from works in the public domain, or made available for public use through Creative Commons or other similar licenses.</p>
+        <p>Games and Assets available in the public library contain copyright attribution information in the variant notes section of each game. The default card deck was created by Adrian Kennard and released under CC0 Public Domain license at <a href="https://www.me.uk/cards/" class="external">https://www.me.uk/cards/</a>. All public library Tutorials are released into the public domain under the CC0 license.</p>
+        <p>Detailed information about the various Creative Commons licenses referred to by abbreviations in variant notes can be found on the <a href="https://creativecommons.org/about/cclicenses/">Creative Commons webpage</a> or at the following links:</p>
+        <ul>
+          <li><a href="https://creativecommons.org/licenses/by/4.0/">CC BY</a></li>
+          <li><a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a></li>
+          <li><a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC</a></li>
+          <li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA</a></li>
+          <li><a href="https://creativecommons.org/licenses/by-nd/4.0/">CC BY-ND</a></li>
+          <li><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND</a></li>
+          <li><a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 (Public Domain)</a></li>
+        </ul>
+        <h2>Online Gameplay</h2>
+        <p>This is an open-source, free to use platform.</p>
+        <p>Anyone that knows the URL of the room that you are using may come in to the room at any time and take any action, including playing or changing games in the room or deleting games. Keep a personal backup of everything that you care about.</p>
+        <p>Know who you are playing with.  The platform is unmoderated and no one controls what may happen. Anything you do or share is your own responsibility.</p>
+        <p>Cheating is trivially easy, unpreventable, and undetectable.  Just play for fun.</p>
+        <p>If you are under the age of majority in the location you are from, be sure to comply with the rules for accessing online material that apply to you.</p>
+        <h2>Privacy Policy</h2>
+        <p>VirtualTabletop.io does not ask for or collect any personal identification information.</p>
+        <p>VirtualTabletop.io does not use cookies.</p>
+        <p>VirtualTabletop.io does, however, collect the "player name" and keeps that in local storage on the user's device.  The player name defaults to a number, but is customizable to any user entered data. VirtualTabletop.io does not analyze or use that information except to display it on the screen while accessing the website.</p>
+      </div>
+      <div id="betaText" class="content-body">
         <h2>Beta</h2>
         <p>Play this game on an experimental preview server to help us test new features. Anyone joining this room will be redirected there until you switch back.</p>
-        <table id="betaServerList">
-          <th>Server</th><th>Returns the state to this server</th><th>Description</th>
+        <table id="betaServerListTable">
+          <thead><th>Server</th><th>Returns the state to this server</th><th>Description</th></thead>
+          <tbody id="betaServerList"></tbody>
         </table>
-        <script id="template-betaServerList-entry" type="text/template">
-          <td><button>Name</button></td>
-          <td class="return">Return?</td>
+        <template id="template-betaServerList-entry" type="text/template">
+          <td><button class="ui-button">Name</button></td>
+          <td class="return symbols">Return?</td>
           <td class="description">Description</td>
-        </script>
+        </template>
       </div>
     </div>
 
@@ -354,11 +710,18 @@
       <p>You can try to reload the page. It's very possible that you will run into the same problem again until it is fixed though.</p>
     </div>
 
-    <div id="connectionLostOverlay" class="overlay">
+    <div id="connectionLostOverlay" class="overlay" style="display:none;">
       <h1>Connection lost</h1>
+      <div class="disconnected">
+        <div class="cable">&nbsp;</div>
+        <div class="plug">&nbsp;</div>
+        <div class="cable">&nbsp;</div>
+      </div>
       <p>The connection to the server was lost. It should be reestablished in a few moments.</p>
       <p>In case that doesn't work, try reloading the page or use a different room.</p>
     </div>
+
+    <div id="playerCursors"></div>
   </div>
 
   <div id="jsonEditor">
@@ -388,9 +751,9 @@
 
   <div id="enlarged" class="hidden"></div>
 
-  <script type="module"> {{CONFIG}}  {{JS}} </script>
-  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+  <script type="module"> //*** CONFIG ***//  //*** JS ***// </script>
+  <script type="text/javascript" src="ui-core/framework7-bundle.js"></script>
+
 </body>
 
 </html>

@@ -19,6 +19,7 @@ const server = http.Server(app);
 
 const savedir = Config.directory('save');
 const assetsdir = Config.directory('assets');
+const librarydir = Config.directory('library');
 const sharedLinks = fs.existsSync(savedir + '/shares.json') ? JSON.parse(fs.readFileSync(savedir + '/shares.json')) : {};
 
 const serverStart = +new Date();
@@ -28,18 +29,18 @@ if(false) { // REMOVE BEFORE MERGE - used to mass edit library JSON files
   for(const gameInfo of JSON.parse(fs.readFileSync('library/library.json')))
     libraryMeta[gameInfo.link.substr(0, gameInfo.link.length-4)] = gameInfo;
 
-  fs.readdir('library/games', (err, files) => {
+  fs.readdir(librarydir + '/games', (err, files) => {
     for(const dir of files) {
-      fs.readdir('library/games/' + dir, (err, files) => {
+      fs.readdir(librarydir + '/games/' + dir, (err, files) => {
         for(const file of files) {
           if(file.match(/json$/)) {
-            const gameFile = JSON.parse(fs.readFileSync('library/games/' + dir + '/' + file));
+            const gameFile = JSON.parse(fs.readFileSync(librarydir + '/games/' + dir + '/' + file));
             if(libraryMeta[dir]) {
               gameFile._meta.info.similarName = libraryMeta[dir]['similar name'];
               gameFile._meta.info.similarLink = libraryMeta[dir]['similar link'];
               gameFile._meta.info.description = libraryMeta[dir]['notes'];
               console.log(dir, gameFile._meta.info);
-              fs.writeFileSync('library/games/' + dir + '/' + file, JSON.stringify(gameFile, null, '  '));
+              fs.writeFileSync(librarydir + '/games/' + dir + '/' + file, JSON.stringify(gameFile, null, '  '));
             }
           }
         }
@@ -100,7 +101,6 @@ function autosaveRooms() {
 MinifyRoom().then(function(result) {
   app.use('/', express.static(path.resolve() + '/client'));
   app.use('/i', express.static(path.resolve() + '/assets'));
-  app.use('/library', express.static(Config.directory('library')));
 
   app.post('/assetcheck', bodyParser.json({ limit: '10mb' }), function(req, res) {
     const result = {};
@@ -115,7 +115,7 @@ MinifyRoom().then(function(result) {
     if(!req.params.name.match(/^[0-9_-]+$/))
       return;
 
-    fs.readFile(publicLibraryAssets[req.params.name] ?? assetsdir + '/assets/' + req.params.name, function(err, content) {
+    fs.readFile(publicLibraryAssets[req.params.name] ?? assetsdir + '/' + req.params.name, function(err, content) {
       if(!content) {
         res.sendStatus(404);
         Logging.log(`WARNING: Could not load asset ${req.params.name}`);

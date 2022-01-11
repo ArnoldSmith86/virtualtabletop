@@ -83,6 +83,11 @@ i.error   { color: red; font-weight: bold; }
   width: var(--commandPaneWidth);
   right: 0;
   overflow: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
 }
 
 #jeWidgetLayers {
@@ -108,20 +113,9 @@ body.jsonEdit #jsonEditor {
   display: block;
 }
 
-body.jsonEdit #jeCommands > .jeTopButton {
-  display: inline-block;
-  text-align: center;
-}
-
-body.jsonEdit #jeCommands > .jeTopButton > button {
-  width: 28px;
-  height: 24px;
-  border: 0;
-  display: block;
-}
-
-body.jsonEdit #jeCommands > .jeTopButton > span.top {
-  display: none;
+body.jsonEdit #jeCommands > button {
+  width: 100%;
+  text-align: left;
 }
 
 body.jsonEdit #toolbar {
@@ -258,3 +252,112 @@ body.jsonEdit.jeZoomOut #topSurface {
   margin-left:20px;
   white-space: pre;
 }
+
+[id=jeTopButtons] button {
+  display: inline-block;
+  text-align: center;
+  width: 28px;
+  height: 28px;
+  font-size: 1.25em;
+  border: 0;
+  text-shadow: 0px 1px 2px rgb(9, 12, 51);
+  color: white;
+  font-family: 'VTT-Symbols';
+}
+
+#jeTopButtons button:disabled {
+  background: gray;
+  opacity: 0.5;
+}
+
+#jeCommands .context{
+  font-weight: bold;
+  margin-top: 8px;
+  width: 100%;
+}
+
+#jeCommands > button > b{
+  text-decoration: underline;
+  color: yellow;
+}
+
+#je_toggleZoom{
+}
+#je_copyState{
+}
+#je_callMacro{
+}
+#je_showWidget{
+}
+#je_tree{
+}
+#je_addNewWidget{
+  color: rgb(95, 167, 95);
+}
+#je_duplicateWidget{
+  color: yellow;
+}
+#je_removeWidget{
+  color: rgb(255, 73, 73);
+}
+#je_editMode{
+}
+#je_openParent{
+}
+#je_toggleWide{
+}
+
+#jeCommands > button::before{
+  margin-right: 4px;
+  font-family: 'VTT-Symbols';
+}
+
+#widget_backgroundColor::before, #widget_backgroundColorOH::before, #widget_borderColor::before, #widget_color::before, #widget_borderColorOH::before, #widget_textColor::before, #widget_textColorOH::before{
+  content: '[color]';
+}
+#widget_owner::before{
+  content: '[player_circle]';
+}
+#widget_classes::before{
+  content: '[tag]';
+}
+#widget_css::before{
+    content: '[style]';
+  }
+#widget_rotation::before{
+  content: '[rotate_right]';
+}
+#widget_grid::before{
+  content: '[grid]';
+}
+#widget_dropOffsetX::before{
+  content: '[height]';
+}
+#widget_dropOffsetY::before{
+  content: '[width]';
+}
+
+#jsonEditor input[type=number],
+#jsonEditor input[type=text]{
+  background: white;
+  display: inline;
+  margin-left: 1ch;
+  color: black;
+}
+#jsonEditor input[type=checkbox]{
+  float: left;
+}
+#jsonEditor {
+  pointer-events: none
+} 
+#jsonEditor > * {
+  pointer-events: initial
+}
+#jeCommands .numberInputRange{
+  display: none;
+}
+
+#jeCommands #jeCommandOptions input[type="number"]{
+  width: 6ch;
+}
+

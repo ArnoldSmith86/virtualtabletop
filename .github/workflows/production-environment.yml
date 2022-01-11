@@ -14,8 +14,6 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-      with:
-        submodules: recursive
     - name: Install Node.js 16.x
       uses: actions/setup-node@v1
       with:
@@ -24,6 +22,8 @@ jobs:
       run: npm ci
     - name: Start virtualtabletop server with production settings
       run: |
+        cp config.template.json config.json
+        sed -i 's/minifyJavascript": false/minifyJavascript": true/' config.json
         npm start &
         sleep 10
         curl -I http://localhost:8272
