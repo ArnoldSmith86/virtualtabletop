@@ -66,5 +66,16 @@ $UI('#app .hideApp').on('click', function() {
      $UI('#app').hide();
 });
 
+function addEvent(parent, evt, selector, handler) {
+  parent.addEventListener(evt, function(event) {
+    if (event.target.matches(selector + ', ' + selector + ' *')) {
+      handler.apply(event.target.closest(selector), arguments);
+    }
+  }, false);
+}
+
+addEvent(document, 'click', '.hide-app', function(e) {
+  $UI('#app').hide();
+});
 
 
