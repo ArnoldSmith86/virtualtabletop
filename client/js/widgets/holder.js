@@ -14,13 +14,15 @@ class Holder extends Widget {
       dropOffsetY: 4,
       dropLimit: -1,
       alignChildren: true,
+      preventPiles: false,
       childrenPerOwner: false,
 
       onEnter: {},
       onLeave: {},
 
       stackOffsetX: 0,
-      stackOffsetY: 0
+      stackOffsetY: 0,
+      borderRadius: 8
     });
   }
 
@@ -85,7 +87,7 @@ class Holder extends Widget {
     if(child.get('type') == 'deck')
       return await super.onChildAddAlign(child, oldParentID);
 
-    if(this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY')) && child.get('type') == 'pile') {
+    if((this.get('preventPiles') || this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY'))) && child.get('type') == 'pile') {
       let i=1;
       this.preventRearrangeDuringPileDrop = true;
       for(const w of child.children().reverse()) {
@@ -93,9 +95,17 @@ class Holder extends Widget {
         await w.set('y', child.get('y') - this.absoluteCoord('y') + i/100);
         await w.set('parent', this.get('id'));
         ++i;
+        if(this.get('preventPiles')) {
+          if(this.get('alignChildren') && !this.get('stackOffsetX') && !this.get('stackOffsetY')) {
+            await w.set('x', this.get('dropOffsetX'));
+            await w.set('y', this.get('dropOffsetY'));
+          }
+          await w.bringToFront();
+        }
       }
       delete this.preventRearrangeDuringPileDrop;
-      await this.receiveCard();
+      if(!this.get('preventPiles'))
+        await this.receiveCard();
       return true;
     }
 
@@ -139,7 +149,7 @@ class Holder extends Widget {
   }
 
   supportsPiles() {
-    return !this.get('alignChildren') || !this.get('stackOffsetX') && !this.get('stackOffsetY');
+    return !this.get('preventPiles') && (!this.get('alignChildren') || !this.get('stackOffsetX') && !this.get('stackOffsetY'));
   }
 
   async updateAfterShuffle() {

@@ -1,0 +1,389 @@
+@font-face {
+    font-family: "Roboto";
+    src:
+        url("/i/fonts/Roboto-Regular.woff2") format("woff2"),
+        url("/i/fonts/Roboto-Regular.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src:
+        url("/i/fonts/Roboto-Bold.woff2") format("woff2"),
+        url("/i/fonts/Roboto-Bold.woff") format("woff");
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src:
+        url("/i/fonts/Roboto-Italic.woff2") format("woff2"),
+        url("/i/fonts/Roboto-Italic.woff") format("woff");
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src:
+        url("/i/fonts/Roboto-BoldItalic.woff2") format("woff2"),
+        url("/i/fonts/Roboto-BoldItalic.woff") format("woff");
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src:
+        url("/i/fonts/Roboto-LightItalic.woff2") format("woff2"),
+        url("/i/fonts/Roboto-LightItalic.woff") format("woff");
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src:
+        url("/i/fonts/Roboto-Black.woff2") format("woff2"),
+        url("/i/fonts/Roboto-Black.woff") format("woff");
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src:
+        url("/i/fonts/Roboto-Medium.woff2") format("woff2"),
+        url("/i/fonts/Roboto-Medium.woff") format("woff");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src:
+        url("/i/fonts/Roboto-Light.woff2") format("woff2"),
+        url("/i/fonts/Roboto-Light.woff") format("woff");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src:
+        url("/i/fonts/Roboto-BlackItalic.woff2") format("woff2"),
+        url("/i/fonts/Roboto-BlackItalic.woff") format("woff");
+    font-weight: 900;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src:
+        url("/i/fonts/Roboto-Thin.woff2") format("woff2"),
+        url("/i/fonts/Roboto-Thin.woff") format("woff");
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src:
+        url("/i/fonts/Roboto-MediumItalic.woff2") format("woff2"),
+        url("/i/fonts/Roboto-MediumItalic.woff") format("woff");
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src:
+        url("/i/fonts/Roboto-ThinItalic.woff2") format("woff2"),
+        url("/i/fonts/Roboto-ThinItalic.woff") format("woff");
+    font-weight: 100;
+    font-style: italic;
+    font-display: swap;
+}
+
+.standard_font, .font-standard, .font-roboto, .font-sans-serif {
+    font-family: "Roboto";
+}
+
+@font-face {
+    font-family: "Roboto Condensed";
+    src: url("/i/fonts/RobotoCondensed-LightItalic.ttf") format("truetype");
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto Condensed";
+    src: url("/i/fonts/RobotoCondensed-Italic.ttf") format("truetype");
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto Condensed";
+    src: url("/i/fonts/RobotoCondensed-Bold.ttf") format("truetype");
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto Condensed";
+    src: url("/i/fonts/RobotoCondensed-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto Condensed";
+    src: url("/i/fonts/RobotoCondensed-BoldItalic.ttf") format("truetype");
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto Condensed";
+    src: url("/i/fonts/RobotoCondensed-Light.ttf") format("truetype");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+.condensed_font, .font-condensed, .font-roboto-condensed {
+    font-family: "Roboto Condensed";
+}
+
+@font-face {
+    font-family: "Neuton";
+    src: url("/i/fonts/Neuton-Bold.ttf") format("truetype");
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Neuton";
+    src: url("/i/fonts/Neuton-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Neuton";
+    src: url("/i/fonts/Neuton-Italic.ttf") format("truetype");
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+.serif_font, .font-serif {
+    font-family: "Neuton";
+}
+
+@font-face {
+    font-family: "Bokor";
+    src: url("/i/fonts/Bokor-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+.fantasy_font, .font-fantasy {
+    font-family: "Bokor";
+}
+
+@font-face {
+    font-family: "Metamorphous";
+    src: url("/i/fonts/Metamorphous-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+.gothic_font, .font-gothic {
+    font-family: "Metamorphous";
+}
+
+
+@font-face {
+    font-family: "Creepster";
+    src: url("/i/fonts/Creepster-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+.horror_font, .font-horror {
+    font-family: "Creepster";
+}
+
+@font-face {
+    font-family: "Gugi";
+    src: url("/i/fonts/Gugi-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+.tech_font, .font-tech {
+    font-family: "Gugi";
+}
+
+
+@font-face {
+    font-family: "Material Icons";
+    font-style: normal;
+    font-weight: 400;
+    src: url("/i/fonts/Material-Icons.woff2?version=6") format("woff2");
+}
+
+.font-material-icons{
+    font-family: "Material Icons";
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: "liga";
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "liga";
+}
+
+.material-icons {
+    font-family: "Material Icons";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: "liga";
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "liga";
+}
+
+@font-face {
+    font-family: "VTT-Symbols";
+    src: url("/i/fonts/VTT-Symbols.woff?version=6") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+.icon {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: "VTT-Symbols", "Material Icons" !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Enable Ligatures ================ */
+    letter-spacing: 0;
+    -webkit-font-feature-settings: "liga";
+    -moz-font-feature-settings: "liga=1";
+    -moz-font-feature-settings: "liga";
+    -ms-font-feature-settings: "liga" 1;
+    font-feature-settings: "liga";
+    -webkit-font-variant-ligatures: discretionary-ligatures;
+    font-variant-ligatures: discretionary-ligatures;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.symbols, .font-vtt-symbols, .font-symbols {
+    font-family: "VTT-Symbols";
+}
+
+@font-face {
+    font-family: "Handwriting Casual";
+    src:
+        url("/i/fonts/BrandonCasualRegular.woff2") format("woff2"),
+        url("/i/fonts/BrandonCasualRegular.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Handwriting";
+    src:
+        url("/i/fonts/BrandonHandRegular.woff2") format("woff2"),
+        url("/i/fonts/BrandonHandRegular.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Handwriting";
+    src:
+        url("/i/fonts/BrandonHandBold.woff2") format("woff2"),
+        url("/i/fonts/BrandonHandBold.woff") format("woff");
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Handwriting";
+    src:
+        url("/i/fonts/BrandonHandItalic.woff2") format("woff2"),
+        url("/i/fonts/BrandonHandItalic.woff") format("woff");
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Handwriting";
+    src:
+        url("/i/fonts/BrandonHandBoldItalic.woff2") format("woff2"),
+        url("/i/fonts/BrandonHandBoldItalic.woff") format("woff");
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+.handwriting_font, .font-handwriting {
+    font-family: "Handwriting";
+}
+
+.handwriting_casual_font, .font-handwriting-casual {
+    font-family: "Handwriting Casual";
+}
+
