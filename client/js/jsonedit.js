@@ -167,15 +167,6 @@ const jeCommands = [
     }
   },
   {
-    id: 'je_inputField',
-    name: 'add field',
-    context: '^.* ↦ \\(INPUT\\) ↦ fields',
-    call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
-      jeGetValue(jeContext.slice(1, routineIndex+4)).push( { type: "###SELECT ME###" } );
-      jeSetAndSelect('string');
-    })
-  },
-  {
     id: 'je_imageTemplate',
     name: 'image template',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects',
@@ -212,6 +203,15 @@ const jeCommands = [
       });
       jeSetAndSelect('text');
     }
+  },
+  {
+    id: 'je_inputField',
+    name: 'add field',
+    context: '^.* ↦ \\(INPUT\\) ↦ fields',
+    call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
+      jeGetValue(jeContext.slice(1, routineIndex+4)).push( { type: "###SELECT ME###" } );
+      jeSetAndSelect('string');
+    })
   },
   {
     id: 'je_css',
@@ -620,6 +620,13 @@ function jeAddCommands() {
   jeAddFaceCommand('properties', '', {});
   jeAddFaceCommand('radius', ' (rounded corners)', 1);
 
+  jeAddFieldCommand('text', '(subtitle, title, and text)', '');
+  jeAddFieldCommand('label', '', '');
+  jeAddFieldCommand('value', '', '');
+  jeAddFieldCommand('variable', '', '');
+  jeAddFieldCommand('min', '', 0);
+  jeAddFieldCommand('max', '', 10);
+
   jeAddEnumCommands('^[a-z]+ ↦ type', widgetTypes.slice(1));
   jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ value', [ '${}' ]);
   jeAddEnumCommands('^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ textAlign', [ 'left', 'center', 'right' ]);
@@ -631,7 +638,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(GET\\) ↦ aggregation', [ 'first', 'last', 'array', 'average', 'median', 'min', 'max', 'sum' ]);
   jeAddEnumCommands('^.*\\(IF\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=' ]);
   jeAddEnumCommands('^.*\\(IF\\) ↦ (operand1|operand2|condition)', [ '${}' ]);
-  jeAddEnumCommands('^.*\\(INPUT\\) ↦ fields ↦ [0-9]+ ↦ type', [ 'checkbox', 'color', 'number', 'string', 'text' ]);
+  jeAddEnumCommands('^.*\\(INPUT\\) ↦ fields ↦ [0-9]+ ↦ type', [ 'checkbox', 'color', 'number', 'select', 'string', 'subtitle', 'switch', 'title' ]);
   jeAddEnumCommands('^.*\\(LABEL\\) ↦ mode', [ 'set', 'dec', 'inc', 'append' ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ angle', [ 45, 60, 90, 135, 180 ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ mode', [ 'set', 'add' ]);
@@ -793,6 +800,18 @@ function jeAddFaceCommand(key, description, value) {
       jeStateNow.faceTemplates[+jeContext[2]][key] = '###SELECT ME###';
       jeSetAndSelect(value);
     }
+  });
+}
+
+function jeAddFieldCommand(key, description, value) {
+  jeCommands.push({
+    id: 'field_' + key+description,
+    name: key+description,
+    context: '^.*\\(INPUT\\) ↦ fields ↦ [0-9]+',
+    call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
+      jeGetValue(jeContext.slice(1, routineIndex+5))[key] = '###SELECT ME###';
+      jeSetAndSelect(value);
+    })
   });
 }
 
