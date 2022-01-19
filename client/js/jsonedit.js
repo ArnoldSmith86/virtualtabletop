@@ -209,7 +209,7 @@ const jeCommands = [
     name: 'add field',
     context: '^.* ↦ \\(INPUT\\) ↦ fields',
     call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
-      jeGetValue(jeContext.slice(1, routineIndex+4)).push( { type: "###SELECT ME###", label: "label", variable: "variable" } );
+      jeGetValue(jeContext.slice(1, routineIndex+4)).push( { type: "###SELECT ME###" } );
       jeSetAndSelect('string');
     })
   },
@@ -621,9 +621,9 @@ function jeAddCommands() {
   jeAddFaceCommand('radius', ' (rounded corners)', 1);
 
   jeAddFieldCommand('text', 'subtitle|title|text', '');
-  jeAddFieldCommand('label', '.*', '');
-  jeAddFieldCommand('value', 'string|number|color|switch|checkbox', '');
-  jeAddFieldCommand('variable', '.*', '');
+  jeAddFieldCommand('label', 'checkbox|color|number|select|string|switch', '');
+  jeAddFieldCommand('value', 'checkbox|color|number|string|switch', '');
+  jeAddFieldCommand('variable', 'checkbox|color|number|select|string|switch', '');
   jeAddFieldCommand('min', 'number', 0);
   jeAddFieldCommand('max', 'number', 10);
   jeAddFieldCommand('options', 'select', [ { value: 'value', text: 'text' } ]);
@@ -639,7 +639,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(GET\\) ↦ aggregation', [ 'first', 'last', 'array', 'average', 'median', 'min', 'max', 'sum' ]);
   jeAddEnumCommands('^.*\\(IF\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=' ]);
   jeAddEnumCommands('^.*\\(IF\\) ↦ (operand1|operand2|condition)', [ '${}' ]);
-  jeAddEnumCommands('^.*\\(INPUT\\) ↦ fields ↦ [0-9]+ ↦ type', [ 'checkbox', 'color', 'number', 'select', 'string', 'subtitle', 'switch', 'title' ]);
+  jeAddEnumCommands('^.*\\(INPUT\\) ↦ fields ↦ [0-9]+ ↦ type', [ 'checkbox', 'color', 'number', 'select', 'string', 'subtitle', 'switch', 'text', 'title' ]);
   jeAddEnumCommands('^.*\\(LABEL\\) ↦ mode', [ 'set', 'dec', 'inc', 'append' ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ angle', [ 45, 60, 90, 135, 180 ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ mode', [ 'set', 'add' ]);
