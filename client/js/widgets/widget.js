@@ -1,4 +1,4 @@
-import { $, removeFromDOM, asArray } from '../domhelpers.js';
+import { $, removeFromDOM, asArray, escapeCSS } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
@@ -26,6 +26,7 @@ export class Widget extends StateManaged {
     this.id = id;
     this.domElement = div;
     this.childArray = [];
+    this.propertiesUsedInCSS = [];
 
     if(StateManaged.inheritFromMapping[id] === undefined)
       StateManaged.inheritFromMapping[id] = [];
@@ -362,7 +363,11 @@ export class Widget extends StateManaged {
     }
   }
   css() {
-    let css = this.get('css');
+    this.propertiesUsedInCSS = [];
+    if($(`#${escapeCSS(this.id)}STYLESHEET`))
+      removeFromDOM($(`#${escapeCSS(this.id)}STYLESHEET`));
+    let css = this.cssReplaceProperties(this.cssAsText(this.get('css')));
+
     css = this.cssBorderRadius() + css;
     css += '; width:'  + this.get('width')  + 'px';
     css += '; height:' + this.get('height') + 'px';
@@ -372,6 +377,19 @@ export class Widget extends StateManaged {
     return css;
   }
 
+  cssAsText(css) {
+    if(typeof css == 'object') {
+      let cssText = '';
+      for(const key in css) {
+        if(typeof css[key] == 'object')
+          return this.cssToStylesheet(css);
+        cssText += `; ${key}: ${css[key]}`;
+      }
+      return cssText;
+    } else {
+      return css;
+    }
+  }
   cssBorderRadius() {
     let br = this.get('borderRadius');
     switch(typeof(br)) {
@@ -395,7 +413,26 @@ export class Widget extends StateManaged {
   }
 
   cssProperties() {
-    return [ 'css', 'height', 'inheritChildZ', 'layer', 'width' ];
+    return [ 'borderRadius', 'css', 'height', 'inheritChildZ', 'layer', 'width' ].concat(this.propertiesUsedInCSS);
+  }
+
+  cssReplaceProperties(css) {
+    for(const match of String(css).matchAll(/\$\{PROPERTY ([A-Za-z0-9_-]+)\}/g)) {
+      css = css.replace(match[0], this.get(match[1]));
+      this.propertiesUsedInCSS.push(match[1]);
+    }
+    return css;
+  }
+
+  cssToStylesheet(css) {
+    const style = document.createElement('style');
+    style.id = `${this.id}STYLESHEET`;
+    for(const key in css)
+      if(key != 'inline')
+        style.appendChild(document.createTextNode(`#${escapeCSS(this.id)}${key == 'default' ? '' : key} { ${this.cssReplaceProperties(this.cssAsText(css[key]))} }`));
+    $('head').appendChild(style);
+
+    return this.cssAsText(css.inline || '');
   }
 
   cssTransform() {
@@ -672,7 +709,7 @@ export class Widget extends StateManaged {
                   returnCollection = `(${result.collection.length} widgets)`;
                 jeLoggingRoutineOperationSummary(
                   `${a.routine} ${theWidget} and return variable '${a.variable}' and collection '${a.collection}'`,
-                  `${JSON.stringify(variables[a.variable])}; ${JSON.stringify(result.collection)}`)
+                  `${JSON.stringify(variables[a.variable])}; ${returnCollection}`)
               } else {
                 jeLoggingRoutineOperationSummary( `${a.routine} ${theWidget} and abort caller processing`)
               }
@@ -1537,6 +1574,10 @@ export class Widget extends StateManaged {
             if(audioElement.parentNode)
               audioElement.parentNode.removeChild(audioElement);
           };
+          audioElement.onerror = function() {
+            if(audioElement.parentNode)
+              audioElement.parentNode.removeChild(audioElement);
+          }
         }
       }
       setInterval(function(){

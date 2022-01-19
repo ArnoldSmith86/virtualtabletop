@@ -668,10 +668,10 @@ function populateAddWidgetOverlay() {
     addWidgetToAddWidgetOverlay(new BasicWidget('add-classic-'+color), {
       classes: 'classicPiece',
       color,
-      width: 90,
-      height: 90,
-      x: 510,
-      y: y + (43.83 - 90)/2
+      width: 56,
+      height: 84,
+      x: 528,
+      y: y + (43.83 - 84)/2
     });
     y += 88;
   }
