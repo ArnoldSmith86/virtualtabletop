@@ -1375,7 +1375,7 @@ function jeLoggingRoutineEnd(variables, collections) {
     // Make expander arrows that are parents of nodes with problems show up red.
     const problems = document.getElementsByClassName('jeLogHasProblems');
     for (i=0; i<problems.length; i++) {
-      let node = problems[i].parentNode;
+      let node = problems[i];
       while (node && !node.classList.contains('jeLog')) {
         if(node.classList.contains('jeLogOperation')) {
           node.firstElementChild.classList.remove('jeExpander');
