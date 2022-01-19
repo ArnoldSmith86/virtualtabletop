@@ -209,7 +209,7 @@ const jeCommands = [
     name: 'add field',
     context: '^.* ↦ \\(INPUT\\) ↦ fields',
     call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
-      jeGetValue(jeContext.slice(1, routineIndex+4)).push( { type: "###SELECT ME###" } );
+      jeGetValue(jeContext.slice(1, routineIndex+4)).push( { type: "###SELECT ME###", label: "label", variable: "variable" } );
       jeSetAndSelect('string');
     })
   },
@@ -620,12 +620,13 @@ function jeAddCommands() {
   jeAddFaceCommand('properties', '', {});
   jeAddFaceCommand('radius', ' (rounded corners)', 1);
 
-  jeAddFieldCommand('text', '(subtitle, title, and text)', '');
-  jeAddFieldCommand('label', '', '');
-  jeAddFieldCommand('value', '', '');
-  jeAddFieldCommand('variable', '', '');
-  jeAddFieldCommand('min', '', 0);
-  jeAddFieldCommand('max', '', 10);
+  jeAddFieldCommand('text', 'subtitle|title|text', '');
+  jeAddFieldCommand('label', '.*', '');
+  jeAddFieldCommand('value', 'string|number|color|switch|checkbox', '');
+  jeAddFieldCommand('variable', '.*', '');
+  jeAddFieldCommand('min', 'number', 0);
+  jeAddFieldCommand('max', 'number', 10);
+  jeAddFieldCommand('options', 'select', [ { value: 'value', text: 'text' } ]);
 
   jeAddEnumCommands('^[a-z]+ ↦ type', widgetTypes.slice(1));
   jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ value', [ '${}' ]);
@@ -803,11 +804,15 @@ function jeAddFaceCommand(key, description, value) {
   });
 }
 
-function jeAddFieldCommand(key, description, value) {
+function jeAddFieldCommand(key, types, value) {
   jeCommands.push({
-    id: 'field_' + key+description,
-    name: key+description,
+    id: 'field_' + key,
+    name: key,
     context: '^.*\\(INPUT\\) ↦ fields ↦ [0-9]+',
+    show: jeRoutineCall(function(routineIndex) {
+      const field = jeGetValue(jeContext.slice(1, routineIndex+5));
+      return typeof field[key] === 'undefined' && (field.type || '').match(types);
+    }, true),
     call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
       jeGetValue(jeContext.slice(1, routineIndex+5))[key] = '###SELECT ME###';
       jeSetAndSelect(value);
@@ -1412,7 +1417,7 @@ function jeLoggingRoutineEnd(variables, collections) {
         }
         node = node.parentNode;
       }
-    }    
+    }
   }
 }
 
