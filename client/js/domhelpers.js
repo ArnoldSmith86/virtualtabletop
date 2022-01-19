@@ -31,6 +31,12 @@ export function domByTemplate(id, type) {
   return div;
 }
 
+export function escapeCSS(id) {
+  if(!id)
+    return '';
+  return id.split('').map(s=>'\\' + s.charCodeAt(0).toString(16)).join('') + ' ';
+}
+
 export function formField(field, dom, id) {
   const label = document.createElement('label');
   dom.appendChild(label);
