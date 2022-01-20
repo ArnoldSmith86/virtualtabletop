@@ -19,23 +19,23 @@ async function downloadLink(link) {
     requestEtag = linkStatus[link].etag;
     if(requestEtag === null || linkStatus[link].time > +(new Date()) - 2*60*60*1000)
       return;
-  } else {
-    linkStatus[link] = {
-      filename: Math.random().toString(36).substring(3, 9)
-    };
   }
+  const currentLinkStatus = linkStatus[link] || {
+    filename: Math.random().toString(36).substring(3, 9)
+  };
 
   const response = await fetch(link, requestEtag ? { headers: { 'If-None-Match': requestEtag } } : {});
 
-  linkStatus[link].time = +new Date();
-  linkStatus[link].status = response.status;
+  currentLinkStatus.time = +new Date();
+  currentLinkStatus.status = response.status;
 
   if(response.status != 304) {
-    linkStatus[link].etag = response.headers.get('etag');
+    currentLinkStatus.etag = response.headers.get('etag');
     const states = await readStatesFromBuffer(await response.buffer());
-    fs.writeFileSync(`${dirname}/${linkStatus[link].filename}`, JSON.stringify(states));
+    fs.writeFileSync(`${dirname}/${currentLinkStatus.filename}`, JSON.stringify(states));
   }
 
+  linkStatus[link] = currentLinkStatus;
   fs.writeFileSync(filename, JSON.stringify(linkStatus));
 }
 
