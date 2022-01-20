@@ -192,7 +192,7 @@ MinifyRoom().then(function(result) {
     }).catch(next);
   });
 
-  app.put('/asset', bodyParser.raw({ limit: '100mb' }), function(req, res) {
+  app.put('/asset', bodyParser.raw({ limit: '10mb' }), function(req, res) {
     const filename = `/${CRC32.buf(req.body)}_${req.body.length}`;
     if(!fs.existsSync(assetsdir + filename))
       fs.writeFileSync(assetsdir + filename, req.body);
