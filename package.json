@@ -7,11 +7,12 @@
   "scripts": {
     "clean": "rm -rf coverage",
     "clobber": "npm clean && rm -rf save",
-    "debug": "cross-env NOCOMPRESS=1 nodemon -e js,mjs,css,html --ignore save --ignore coverage --ignore tests --inspect server.mjs",
+    "debug": "nodemon -e js,mjs,css,html,json --ignore save/ --ignore coverage/ --ignore tests/ --inspect server.mjs",
     "start": "node server.mjs",
+    "stresstest": "node tests/server/loadtest.js",
     "test": "node --experimental-vm-modules node_modules/.bin/jest --coverage",
     "test-debug": "node --experimental-vm-modules --inspect-brk=9239 node_modules/.bin/jest",
-    "test-cont": "nodemon -e js,mjs,css,html --ignore save --ignore coverage --experimental-vm-modules node_modules/.bin/jest",
+    "test-cont": "nodemon -e js,mjs,css,html --ignore save/ --ignore coverage/ --experimental-vm-modules node_modules/.bin/jest",
     "testcafe": "testcafe chrome tests/testcafe/tests.js",
     "testcafe-headless": "testcafe chrome:headless tests/testcafe/tests.js",
     "testcafe-chromium": "testcafe chromium tests/testcafe/tests.js",
@@ -44,18 +45,17 @@
     "@node-minify/no-compress": "^6.2.0",
     "@node-minify/uglify-es": "^6.2.0",
     "crc-32": "^1.2.0",
-    "express": "^4.17.1",
+    "express": "^4.17.2",
     "jszip": "^3.7.1",
     "node-fetch": "^2.6.1",
-    "ws": "^8.2.3"
+    "ws": "^8.4.2"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3",
-    "jest": "^27.3.1",
-    "jest-environment-jsdom": "^27.3.1",
+    "jest": "^27.4.7",
+    "jest-environment-jsdom": "^27.4.6",
     "jest-environment-jsdom-global": "^3.0.0",
-    "json-diff": "^0.5.4",
-    "nodemon": "^2.0.14",
-    "testcafe": "^1.17.0"
+    "json-diff": "^0.7.1",
+    "nodemon": "^2.0.15",
+    "testcafe": "^1.18.2"
   }
 }

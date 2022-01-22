@@ -1,11 +1,22 @@
-import { $, removeFromDOM, asArray } from '../domhelpers.js';
+import { $, removeFromDOM, asArray, escapeCSS } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
+import { center, distance, overlap, overlapScore, getOffset, applyTransformedOffset } from '../geometry.js';
 
-const readOnlyProperties = new Set(['_absoluteX', '_absoluteY', '_ancestor']);
+const readOnlyProperties = new Set([
+  '_absoluteRotation',
+  '_absoluteScale',
+  '_absoluteX',
+  '_absoluteY',
+  '_ancestor',
+  '_centerAbsoluteX',
+  '_centerAbsoluteY',
+  '_localOriginAbsoluteX',
+  '_localOriginAbsoluteY'
+]);
 
 export class Widget extends StateManaged {
   constructor(id) {
@@ -15,6 +26,7 @@ export class Widget extends StateManaged {
     this.id = id;
     this.domElement = div;
     this.childArray = [];
+    this.propertiesUsedInCSS = [];
 
     if(StateManaged.inheritFromMapping[id] === undefined)
       StateManaged.inheritFromMapping[id] = [];
@@ -26,6 +38,7 @@ export class Widget extends StateManaged {
       width: 100,
       height: 100,
       layer: 0,
+      borderRadius: null,
       rotation: 0,
       scale: 1,
 
@@ -35,6 +48,7 @@ export class Widget extends StateManaged {
       movable: true,
       movableInEdit: true,
       clickable: false,
+      clickSound: null,
 
       grid: [],
       enlarge: false,
@@ -89,7 +103,7 @@ export class Widget extends StateManaged {
   }
 
   absoluteCoord(coord) {
-    return this.get(coord) + (this.get('parent') ? widgets.get(this.get('parent')).absoluteCoord(coord) : 0);
+    return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})[coord]
   }
 
   applyChildAdd(child) {
@@ -128,6 +142,9 @@ export class Widget extends StateManaged {
 
   applyDeltaToDOM(delta) {
     this.applyCSS(delta);
+    if(delta.audio !== null)
+      this.addAudio(this);
+
     if(delta.z !== undefined)
       this.applyZ(true);
 
@@ -157,10 +174,9 @@ export class Widget extends StateManaged {
         const property = isGlobalUpdateRoutine[1] || '*';
         if(StateManaged.globalUpdateListeners[property] === undefined)
           StateManaged.globalUpdateListeners[property] = [];
+        StateManaged.globalUpdateListeners[property] = StateManaged.globalUpdateListeners[property].filter(x=>x[0]!=this);
         if(Array.isArray(delta[key]))
           StateManaged.globalUpdateListeners[property].push([ this, key ]);
-        else
-          StateManaged.globalUpdateListeners[property] = StateManaged.globalUpdateListeners[property].filter(x=>x[0]!=this);
       }
     }
 
@@ -215,6 +231,7 @@ export class Widget extends StateManaged {
       widgets.get(this.get('deck')).removeCard(this);
     removeFromDOM(this.domElement);
     this.inheritFromUnregister();
+    this.globalUpdateListenersUnregister();
   }
 
   applyZ(force) {
@@ -285,6 +302,9 @@ export class Widget extends StateManaged {
     if(!this.get('clickable') && !(mode == 'ignoreClickable' || mode =='ignoreAll'))
       return true;
 
+    if(this.get('clickSound'))
+      this.set('audio','source: ' + this.get('clickSound') + ', type: audio/mpeg , maxVolume: 1.0, length: null, player: null');
+
     if(Array.isArray(this.get('clickRoutine')) && !(mode == 'ignoreClickRoutine' || mode =='ignoreAll')) {
       await this.evaluateRoutine('clickRoutine', {}, {});
       return true;
@@ -293,9 +313,62 @@ export class Widget extends StateManaged {
     }
   }
 
+  coordGlobalFromCoordLocal(coord) {
+    return this.coordGlobalFromCoordParent(this.coordParentFromCoordLocal(coord));
+  }
+  coordGlobalFromCoordParent(coord) {
+    const p = this.get('parent');
+    return (widgets.has(p)) ? widgets.get(p).coordGlobalFromCoordLocal(coord) : coord;
+  }
+  coordGlobalInside(coord) {
+    const coordLocal = this.coordLocalFromCoordGlobal(coord);
+    return coordLocal.x >= 0 && coordLocal.y >= 0 && coordLocal.x <= this.get('width') && coordLocal.y <= this.get('height');
+  }
+  coordLocalFromCoordClient(coord) {
+    const s = this.get('_absoluteScale') * scale;
+    const rot = this.get('_absoluteRotation') % 360;
+    const localCenter = {x: this.get('width') / 2, y: this.get('height') / 2};
+    const offset = getOffset(center(this.domElement), coord);
+    return applyTransformedOffset(localCenter, offset, 1 / s, -rot );
+  }
+  coordLocalFromCoordGlobal(coord) {
+    return this.coordLocalFromCoordParent(this.coordParentFromCoordGlobal(coord));
+  }
+  coordLocalFromCoordParent(coord) {
+    const s = this.get('scale');
+    const rot = this.get('rotation') % 360;
+    if(s == 1 && rot == 0) {
+      return {x: coord.x - this.get('x'), y: coord.y - this.get('y')};
+    } else {
+      const localCenter = {x: this.get('width') / 2, y: this.get('height') / 2};
+      const parentCenter = {x: localCenter.x + this.get('x') , y: localCenter.y + this.get('y') };
+      const offset = getOffset(parentCenter, coord);
+      return applyTransformedOffset(localCenter, offset, 1 / s, -rot );
+    }
+  }
+  coordParentFromCoordGlobal(coord) {
+    const p = this.get('parent');
+    return (widgets.has(p)) ? widgets.get(p).coordLocalFromCoordGlobal(coord) : coord;
+  }
+  coordParentFromCoordLocal(coord) {
+    let s = this.get('scale');
+    let rot = this.get('rotation') % 360;
+    if(s == 1 && rot == 0) {
+      return {x: coord.x + this.get('x'), y: coord.y + this.get('y')};
+    } else {
+      const localCenter = {x: this.get('width') / 2, y: this.get('height') / 2};
+      const parentCenter = {x: localCenter.x + this.get('x') , y: localCenter.y + this.get('y') };
+      const offset = getOffset(localCenter, coord);
+      return applyTransformedOffset(parentCenter, offset, s, rot );
+    }
+  }
   css() {
-    let css = this.get('css');
+    this.propertiesUsedInCSS = [];
+    if($(`#${escapeCSS(this.id)}STYLESHEET`))
+      removeFromDOM($(`#${escapeCSS(this.id)}STYLESHEET`));
+    let css = this.cssReplaceProperties(this.cssAsText(this.get('css')));
 
+    css = this.cssBorderRadius() + css;
     css += '; width:'  + this.get('width')  + 'px';
     css += '; height:' + this.get('height') + 'px';
     css += '; z-index:' + this.calculateZ();
@@ -304,8 +377,62 @@ export class Widget extends StateManaged {
     return css;
   }
 
+  cssAsText(css) {
+    if(typeof css == 'object') {
+      let cssText = '';
+      for(const key in css) {
+        if(typeof css[key] == 'object')
+          return this.cssToStylesheet(css);
+        cssText += `; ${key}: ${css[key]}`;
+      }
+      return cssText;
+    } else {
+      return css;
+    }
+  }
+  cssBorderRadius() {
+    let br = this.get('borderRadius');
+    switch(typeof(br)) {
+      case 'number':
+        if(br >= 0)
+          return `border-radius:${br}px;`;
+        else
+          return '';
+      case 'string':
+        br = br.trim().replace(/\s+/g, ' ');
+        const value = '(?:0|\\+?(?:\\d+(?:\\.\\d+)?|\\.\\d+)(?:[eE][+-]?\\d+)?(?:px|%))';
+        const valueList = `(?:${value}(?: ${value}){0,3})`;
+        const re = new RegExp(`^${valueList}(?: ?\\/ ?${valueList})?` + '\x24');
+        if(br.match(re))
+          return `border-radius:${br};`;
+        else
+          return '';
+      default:
+        return ''
+    }
+  }
+
   cssProperties() {
-    return [ 'css', 'height', 'inheritChildZ', 'layer', 'width' ];
+    return [ 'borderRadius', 'css', 'height', 'inheritChildZ', 'layer', 'width' ].concat(this.propertiesUsedInCSS);
+  }
+
+  cssReplaceProperties(css) {
+    for(const match of String(css).matchAll(/\$\{PROPERTY ([A-Za-z0-9_-]+)\}/g)) {
+      css = css.replace(match[0], this.get(match[1]));
+      this.propertiesUsedInCSS.push(match[1]);
+    }
+    return css;
+  }
+
+  cssToStylesheet(css) {
+    const style = document.createElement('style');
+    style.id = `${this.id}STYLESHEET`;
+    for(const key in css)
+      if(key != 'inline')
+        style.appendChild(document.createTextNode(`#${escapeCSS(this.id)}${key == 'default' ? '' : key} { ${this.cssReplaceProperties(this.cssAsText(css[key]))} }`));
+    $('head').appendChild(style);
+
+    return this.cssAsText(css.inline || '');
   }
 
   cssTransform() {
@@ -325,14 +452,28 @@ export class Widget extends StateManaged {
 
   evaluateInputOverlay(o, resolve, reject, go) {
     const result = {};
-    for(const field of o.fields) {
-
-      if(field.type == 'checkbox') {
-        result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).checked;
-      } else if(field.type != 'text') {
-        result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).value;
+    if(go) {
+      for(const field of o.fields) {
+        if(field.type == 'checkbox') {
+          result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).checked;
+        } else if(field.type == 'switch') {
+          let thisresult = document.getElementById(this.get('id') + ';' + field.variable).checked;
+          if(thisresult){
+            result[field.variable] = 'on';
+          } else {
+            result[field.variable] = 'off';
+          }
+        } else if(field.type == 'number') {
+          let thisvalue = document.getElementById(this.get('id') + ';' + field.variable).value;
+          if(thisvalue > field.max)
+            thisvalue = field.max;
+          if(thisvalue < field.min)
+            thisvalue = field.min;
+          result[field.variable] = thisvalue
+        } else if(field.type != 'text' && field.type != 'subtitle' && field.type != 'title') {
+          result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).value;
+        }
       }
-
     }
 
     showOverlay(null);
@@ -414,10 +555,16 @@ export class Widget extends StateManaged {
           routine[key] = defaults[key];
     }
 
-    function isValidCollection(collection) {
+    function getCollection(collection) {
+      let newCollection=null;
       if(Array.isArray(collections[collection]))
-        return true;
-      problems.push(`Collection ${collection} does not exist.`);
+        newCollection = collection
+      else if (Array.isArray(collection)) {
+        newCollection = '$collection_' + batchDepth;
+        collections[newCollection] = widgetFilter(w=>collection.indexOf(w.id)!=-1);
+      } else
+        problems.push(`Collection ${collection} does not exist and is not an array.`);
+      return newCollection;
     }
 
     async function w(ids, callback) {
@@ -429,6 +576,8 @@ export class Widget extends StateManaged {
       return;
 
     batchStart();
+
+    let abortRoutine = false; // Set for CALL with 'return=false' or when INPUT is cancelled.
 
     if(tracingEnabled && typeof property == 'string')
       sendTraceEvent('evaluateRoutine', { id: this.get('id'), property });
@@ -527,6 +676,13 @@ export class Widget extends StateManaged {
         }
       }
 
+      if(a.func == 'AUDIO') {
+        setDefaults(a, { source: '', type: 'audio/mpeg', maxVolume: 1.0, length: null, player: null });
+        if(a.source !== undefined) {
+          this.set('audio', 'source: ' + a.source + ', type: ' + a.type + ', maxVolume: ' + a.maxVolume + ', length: ' + a.length + ', player: ' + a.player);
+        }
+      }
+
       if(a.func == 'CALL') {
         setDefaults(a, { widget: this.get('id'), routine: 'clickRoutine', 'return': true, arguments: {}, variable: 'result', collection: 'result' });
         if(!a.routine.match(/Routine$/)) {
@@ -552,14 +708,16 @@ export class Widget extends StateManaged {
                 if(!result.collection.length || result.collection.length >= 5)
                   returnCollection = `(${result.collection.length} widgets)`;
                 jeLoggingRoutineOperationSummary(
-                  `${a.routine} ${theWidget} and return variable ${a.variable} and collection ${a.collection}`,
-                  `${JSON.stringify(variables[a.variable])}; ${JSON.stringify(result.collection)}`)
+                  `${a.routine} ${theWidget} and return variable '${a.variable}' and collection '${a.collection}'`,
+                  `${JSON.stringify(variables[a.variable])}; ${returnCollection}`)
               } else {
                 jeLoggingRoutineOperationSummary( `${a.routine} ${theWidget} and abort caller processing`)
               }
             }
           }
         }
+        if (!a.return)
+          abortRoutine = true;
       }
 
       if(a.func == 'CANVAS') {
@@ -572,9 +730,14 @@ export class Widget extends StateManaged {
 
         const execute = async function(widget) {
           if(widget.get('type') == 'canvas') {
-            if(a.mode == 'setPixel')
-              await widget.setPixel(a.x, a.y, a.value);
-            else if(a.mode == 'set')
+            if(a.mode == 'setPixel') {
+              const res = widget.getResolution();
+              if(a.x >= 0 && a.y >= 0 && a.x < res && a.y < res) {
+                await widget.setPixel(a.x, a.y, a.value);
+              } else {
+                problems.push(`Pixel coordinate: (${a.x}, ${a.y}) out of range for resolution: ${res}.`);
+              }
+            } else if(a.mode == 'set')
               await widget.set('activeColor', a.value % widget.get('colorMap').length);
             else if(a.mode == 'reset')
               await widget.reset();
@@ -592,15 +755,16 @@ export class Widget extends StateManaged {
         };
 
         let phrase;
+        let collection;
 
         if(a.canvas !== undefined) {
           if(this.isValidID(a.canvas, problems)) {
             await w(a.canvas, execute);
             phrase = `canvas ${a.canvas}`;
           }
-        } else if(isValidCollection(a.collection)) {
-          if(collections[a.collection].length) {
-            for(const c of collections[a.collection].slice(0, a.count || 999999))
+        } else if(collection = getCollection(a.collection)) {
+          if(collections[collection].length) {
+            for(const c of collections[collection].slice(0, a.count || 999999))
               await execute(c);
             phrase = `canvas widgets in ${a.collection}`;
           } else {
@@ -622,13 +786,15 @@ export class Widget extends StateManaged {
 
       if(a.func == 'CLICK') {
         setDefaults(a, { collection: 'DEFAULT', count: 1 , mode: 'respect' });
+        const collection = getCollection(a.collection);
+
         if (['respect', 'ignoreClickable', 'ignoreClickRoutine', 'ignoreAll'].indexOf(a.mode) == -1) {
           problems.push(`Mode ${a.mode} is unsupported. Using 'respect' mode.`);
           a.mode = 'respect'
         };
-        if(isValidCollection(a.collection)) {
+        if(collection) {
           for(let i=0; i<a.count; ++i)
-            for(const w of collections[a.collection])
+            for(const w of collections[collection])
               await w.click(a.mode);
           if(jeRoutineLogging) {
             const theCount = a.count ? `${a.count} times` : '';
@@ -639,9 +805,10 @@ export class Widget extends StateManaged {
 
       if(a.func == 'CLONE') {
         setDefaults(a, { source: 'DEFAULT', count: 1, xOffset: 0, yOffset: 0, properties: {}, collection: 'DEFAULT' });
-        if(isValidCollection(a.source)) {
+        const source = getCollection(a.source);
+        if(source) {
           var c=[];
-          for(const w of collections[a.source]) {
+          for(const w of collections[source]) {
             for(let i=1; i<=a.count; ++i) {
               const clone = Object.assign(JSON.parse(JSON.stringify(w.state)), a.properties);
               const parent = clone.parent;
@@ -653,7 +820,7 @@ export class Widget extends StateManaged {
                   problems.push(`There is already a widget with id:${a.properties.id}, generating new ID.`);
               }
               delete clone.parent;
-              const cWidget = widgets.get(addWidgetLocal(clone));
+              const cWidget = widgets.get(await addWidgetLocal(clone));
 
               if(parent) {
                 // use moveToHolder so that CLONE triggers onEnter and similar features
@@ -699,14 +866,15 @@ export class Widget extends StateManaged {
 
       if(a.func == 'COUNT') {
         setDefaults(a, { collection: 'DEFAULT', variable: 'COUNT' });
+        let collection;
         let theItem;
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder,problems)) {
             variables[a.variable] = widgets.get(a.holder).children().length;
             theItem = `${a.holder}`;
           }
-        } else if(isValidCollection(a.collection)) {
-          variables[a.variable] = collections[a.collection].length;
+        } else if(collection = getCollection(a.collection)) {
+          variables[a.variable] = collections[collection].length;
           theItem = `${a.collection}`
         }
         if(jeRoutineLogging)
@@ -716,8 +884,9 @@ export class Widget extends StateManaged {
 
       if(a.func == 'DELETE') {
         setDefaults(a, { collection: 'DEFAULT' });
-        if(isValidCollection(a.collection)) {
-          for(const w of collections[a.collection]) {
+        const collection = getCollection(a.collection);
+        if(collection) {
+          for(const w of collections[collection]) {
             await removeWidgetLocal(w.get('id'));
             for(const c in collections)
               collections[c] = collections[c].filter(x=>x!=w);
@@ -729,6 +898,7 @@ export class Widget extends StateManaged {
 
       if(a.func == 'FLIP') {
         setDefaults(a, { count: 0, face: null, faceCyle: null, collection: 'DEFAULT' });
+        let collection;
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder,problems)) {
             await w(a.holder, async holder=>{
@@ -738,9 +908,9 @@ export class Widget extends StateManaged {
           }
           if(jeRoutineLogging)
               jeLoggingRoutineOperationSummary(`holder '${a.holder}'`);
-        } else if(isValidCollection(a.collection)) {
-          if(collections[a.collection].length) {
-            for(const c of collections[a.collection].slice(0, a.count || 999999))
+        } else if(collection = getCollection(a.collection)) {
+          if(collections[collection].length) {
+            for(const c of collections[collection].slice(0, a.count || 999999))
               c.flip && await c.flip(a.face,a.faceCycle);
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
@@ -752,6 +922,7 @@ export class Widget extends StateManaged {
 
       if(a.func == 'FOREACH') {
         setDefaults(a, { loopRoutine: [], collection: 'DEFAULT' });
+        let collection;
         const callWithAdditionalValues = async (addVariables, addCollections)=>{
           const variableBackups = {};
           const collectionBackups = {};
@@ -786,8 +957,8 @@ export class Widget extends StateManaged {
             await callWithAdditionalValues({ key, value: a.in[key] }, {});
           if(jeRoutineLogging)
             jeLoggingRoutineOperationSummary( `element in '${JSON.stringify(a.in)}'`);
-        } else if(isValidCollection(a.collection)) {
-          for(const widget of collections[a.collection])
+        } else if(collection = getCollection(a.collection)) {
+          for(const widget of collections[collection])
             await callWithAdditionalValues({ widgetID: widget.get('id') }, { DEFAULT: [ widget ] });
           if(jeRoutineLogging)
             jeLoggingRoutineOperationSummary( `widget in '${a.collection}'`);
@@ -796,8 +967,9 @@ export class Widget extends StateManaged {
 
       if(a.func == 'GET') {
         setDefaults(a, { variable: a.property || 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
-        if(isValidCollection(a.collection)) {
-          let c = collections[a.collection];
+        const collection = getCollection(a.collection);
+        if(collection) {
+          let c = collections[collection];
           if (a.skipMissing)
             c = c.filter(w=>w.get(String(a.property)) !== null && w.get(String(a.property)) !== undefined);
           c = JSON.parse(JSON.stringify(c.map(w=>w.get(String(a.property)))));
@@ -837,7 +1009,7 @@ export class Widget extends StateManaged {
             problems.push(`Collection ${a.collection} is empty.`);
           }
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary(`${a.aggregation} of '${a.property}' in '${a.collection}'`, `'${JSON.stringify(a.variable)}'`);
+            jeLoggingRoutineOperationSummary(`${a.aggregation} of '${a.property}' in '${a.collection}'`, `var ${a.variable} = ${JSON.stringify(variables[a.variable])}`);
         }
       }
 
@@ -856,7 +1028,7 @@ export class Widget extends StateManaged {
             await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true);
           if(jeRoutineLogging) {
             if (a.condition === undefined)
-              jeLoggingRoutineOperationSummary(`'${original.operand1}' ${original.relation} '${original.operand2}'`, `${JSON.stringify(condition)}`)
+              jeLoggingRoutineOperationSummary(`'${original.operand1}' ${a.relation} '${original.operand2}'`, `${JSON.stringify(condition)}`)
             else
               jeLoggingRoutineOperationSummary(`'${original.condition}'`, `${JSON.stringify(condition)}`)
           }
@@ -867,24 +1039,33 @@ export class Widget extends StateManaged {
       if(a.func == 'INPUT') {
         try {
           Object.assign(variables, await this.showInputOverlay(a, widgets, variables, problems));
-          if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary(`"${a.header}"`,`${JSON.stringify(a.variable)}`);
-
+          if(jeRoutineLogging) {
+            let varList = [];
+            let valueList = [];
+            a.fields.forEach(f=>{
+              if(f.variable) {
+                varList.push(f.variable);
+                valueList.push(variables[f.variable]);
+              }
+            });
+            jeLoggingRoutineOperationSummary(`${varList.join(', ')}`,`${valueList.join(', ')}`);
+          }
         } catch(e) {
-          problems.push(`Exception: ${e.toString()}`);
-          batchEnd();
-          return;
+          abortRoutine = true;
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary("INPUT cancelled");
         }
       }
 
       if(a.func == 'LABEL') {
         setDefaults(a, { value: 0, mode: 'set', collection: 'DEFAULT' });
+        let collection;
         if([ 'set', 'dec', 'inc', 'append' ].indexOf(a.mode) == -1)
           problems.push(`Warning: Mode ${a.mode} will be interpreted as set.`);
         if(a.label !== undefined) {
           if (this.isValidID(a.label, problems)) {
             await w(a.label, async widget=>{
-              await widget.setText(a.value, a.mode, this.get('debug'), problems)
+              await widget.setText(a.value, a.mode, problems)
             });
             if(jeRoutineLogging) {
               if(a.mode == 'inc' || a.mode == 'dec')
@@ -895,10 +1076,10 @@ export class Widget extends StateManaged {
                 jeLoggingRoutineOperationSummary(`set '${a.label}' to '${a.value}'`)
             }
           }
-        } else if(isValidCollection(a.collection)) {
-          if(collections[a.collection].length) {
-            for(const c of collections[a.collection])
-              await c.setText(a.value, a.mode, this.get('debug'), problems);
+        } else if(collection = getCollection(a.collection)) {
+          if(collections[collection].length) {
+            for(const c of collections[collection])
+              await c.setText(a.value, a.mode, problems);
             if(jeRoutineLogging) {
               if(a.mode == 'inc' || a.mode == 'dec')
                 jeLoggingRoutineOperationSummary(`${a.mode} widgets in '${a.collection}' by ${a.value}`)
@@ -960,16 +1141,17 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'MOVEXY') {
-        setDefaults(a, { count: 1, face: null, x: 0, y: 0 });
+        setDefaults(a, { count: 1, face: null, x: 0, y: 0, snapToGrid: true });
         if(this.isValidID(a.from, problems)) {
           await w(a.from, async source=>{
             for(const c of source.children().slice(0, a.count || 999999).reverse()) {
               if(a.face !== null && c.flip)
                 c.flip(a.face);
-              await c.set('parent', null);
               await c.bringToFront();
               await c.setPosition(a.x, a.y, a.z || c.get('z'));
-              await c.updatePiles();
+              if(a.snapToGrid)
+                await c.snapToGrid();
+              await c.set('parent', null);
             }
           });
           if(jeRoutineLogging) {
@@ -1004,6 +1186,7 @@ export class Widget extends StateManaged {
 
       if(a.func == 'ROTATE') {
         setDefaults(a, { count: 1, angle: 90, mode: 'add', collection: 'DEFAULT' });
+        let collection;
         const mode = a.mode == 'set' ? 'to' : 'by';
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
@@ -1015,9 +1198,9 @@ export class Widget extends StateManaged {
               jeLoggingRoutineOperationSummary(`${a.count == 0 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${a.holder}' ${mode} ${a.angle}`);
             }
           }
-        } else if(isValidCollection(a.collection)) {
-          if(collections[a.collection].length) {
-            for(const c of collections[a.collection].slice(0, a.count || 999999))
+        } else if(collection = getCollection(a.collection)) {
+          if(collections[collection].length) {
+            for(const c of collections[collection].slice(0, a.count || 999999))
               await c.rotate(a.angle, a.mode);
             if(jeRoutineLogging)
               jeLoggingRoutineOperationSummary(`${a.count == 0 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${a.collection}' ${mode} ${a.angle}`);
@@ -1029,10 +1212,11 @@ export class Widget extends StateManaged {
 
       if(a.func == 'SELECT') {
         setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all' });
-        if(a.source == 'all' || isValidCollection(a.source)) {
+        let source;
+        if(a.source == 'all' || (source = getCollection(a.source))) {
           if([ 'add', 'set', 'remove', 'intersect' ].indexOf(a.mode) == -1)
             problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
-          let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[a.source]).filter(function(w) {
+          let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[source]).filter(function(w) {
             if(w.isBeingRemoved)
               return false;
             if(a.type != 'all' && (w.get('type') != a.type && (a.type != 'card' || w.get('type') != 'pile')))
@@ -1084,6 +1268,7 @@ export class Widget extends StateManaged {
 
       if(a.func == 'SET') {
         setDefaults(a, { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
+        let collection;
         if(a.relation == '==') {
           problems.push(`Warning: Relation == interpreted as =`);
           a.relation = '=';
@@ -1092,32 +1277,34 @@ export class Widget extends StateManaged {
           problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
         } else if (readOnlyProperties.has(a.property)) {
           problems.push(`Tried setting read-only property ${a.property}.`);
-        } else if (a.property == 'id' && isValidCollection(a.collection)) {
-          for(const oldWidget of collections[a.collection]) {
-            const oldState = JSON.stringify(oldWidget.state);
-            const oldID = oldWidget.get('id');
-            var newState = JSON.parse(oldState);
+        } else if (collection = getCollection(a.collection)) {
+          if (a.property == 'id') {
+            for(const oldWidget of collections[collection]) {
+              const oldState = JSON.stringify(oldWidget.state);
+              const oldID = oldWidget.get('id');
+              var newState = JSON.parse(oldState);
 
-            newState.id = compute(a.relation, null, oldWidget.get(a.property), a.value);
-            if(!widgets.has(newState.id)) {
-              $('#editWidgetJSON').dataset.previousState = oldState;
-              $('#editWidgetJSON').value = JSON.stringify(newState);
-              await onClickUpdateWidget(false);
-              for(const c in collections)
-                collections[c] = collections[c].map(w=>w.id==oldID ? widgets.get(newState.id) : w);
-              sendDelta(true);
-            } else {
-              problems.push(`id ${newState.id} already in use, ignored.`);
+              newState.id = compute(a.relation, null, oldWidget.get(a.property), a.value);
+              if(!widgets.has(newState.id)) {
+                $('#editWidgetJSON').dataset.previousState = oldState;
+                $('#editWidgetJSON').value = JSON.stringify(newState);
+                await onClickUpdateWidget(false);
+                for(const c in collections)
+                  collections[c] = collections[c].map(w=>w.id==oldID ? widgets.get(newState.id) : w);
+                sendDelta(true);
+              } else {
+                problems.push(`id ${newState.id} already in use, ignored.`);
+              }
             }
-          }
-        } else if(isValidCollection(a.collection)) {
-          for(const w of collections[a.collection]) {
-            if(a.relation == '+' && w.get(String(a.property)) == null)
-              a.relation = '=';
-            if(a.relation == '+' && a.value == null)
-              problems.push(`null value being appended, SET ignored`);
-            else
-              await w.set(String(a.property), compute(a.relation, null, w.get(String(a.property)), a.value));
+          } else {
+            for(const w of collections[collection]) {
+              if(a.relation == '+' && w.get(String(a.property)) == null)
+                a.relation = '=';
+              if(a.relation == '+' && a.value == null)
+                problems.push(`null value being appended, SET ignored`);
+              else
+                await w.set(String(a.property), compute(a.relation, null, w.get(String(a.property)), a.value));
+            }
           }
         }
         if(jeRoutineLogging)
@@ -1126,6 +1313,7 @@ export class Widget extends StateManaged {
 
       if(a.func == 'SHUFFLE') {
         setDefaults(a, { collection: 'DEFAULT' });
+        let collection;
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
@@ -1136,9 +1324,9 @@ export class Widget extends StateManaged {
             if(jeRoutineLogging)
               jeLoggingRoutineOperationSummary(`holder ${a.holder}`);
           }
-        } else if(isValidCollection(a.collection)) {
-          if(collections[a.collection].length) {
-            for(const c of collections[a.collection])
+        } else if(collection = getCollection(a.collection)) {
+          if(collections[collection].length) {
+            for(const c of collections[collection])
               await c.set('z', Math.floor(Math.random()*10000));
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
@@ -1150,6 +1338,7 @@ export class Widget extends StateManaged {
 
       if(a.func == 'SORT') {
         setDefaults(a, { key: 'value', reverse: false, collection: 'DEFAULT' });
+        let collection;
         let reverse = a.reverse ? 'in reverse' : '';
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
@@ -1160,10 +1349,10 @@ export class Widget extends StateManaged {
           }
           if(jeRoutineLogging)
             jeLoggingRoutineOperationSummary(`widgets in '${a.holder}' by '${a.key}' ${reverse}`);
-        } else if(isValidCollection(a.collection)) {
-          if(collections[a.collection].length) {
-            await this.sortWidgets(collections[a.collection], a.key, a.reverse, a.locales, a.options, true);
-            await w(collections[a.collection].map(i=>i.get('parent')), async holder=>{
+        } else if(collection = getCollection(a.collection)) {
+          if(collections[collection].length) {
+            await this.sortWidgets(collections[collection], a.key, a.reverse, a.locales, a.options, true);
+            await w(collections[collection].map(i=>i.get('parent')), async holder=>{
               if(holder.get('type') == 'holder')
                 await holder.updateAfterShuffle();
             });
@@ -1177,6 +1366,7 @@ export class Widget extends StateManaged {
 
       if(a.func == 'TIMER') {
         setDefaults(a, { value: 0, seconds: 0, mode: 'toggle', collection: 'DEFAULT' });
+        let collection;
         if([ 'set', 'dec', 'inc', 'reset','pause', 'start', 'toggle' ].indexOf(a.mode) == -1) {
           problems.push(`Warning: Mode ${a.mode} interpreted as toggle.`);
           a.mode = 'toggle'
@@ -1189,9 +1379,9 @@ export class Widget extends StateManaged {
                   await widget.setPaused(a.mode);
               });
             }
-          } else if(isValidCollection(a.collection)) {
-            if(collections[a.collection].length) {
-              for(const c of collections[a.collection])
+          } else if(collection = getCollection(a.collection)) {
+            if(collections[collection].length) {
+              for(const c of collections[collection])
                 if(c.setPaused)
                   await c.setPaused(a.mode);
             } else {
@@ -1207,9 +1397,9 @@ export class Widget extends StateManaged {
                   await widget.setMilliseconds(a.seconds*1000 || a.value, a.mode);
               });
             }
-          } else if(isValidCollection(a.collection)) {
-            if(collections[a.collection].length) {
-              for(const c of collections[a.collection])
+          } else if(collection) {
+            if(collections[collection].length) {
+              for(const c of collections[collection])
                 if(c.setMilliseconds)
                   await c.setMilliseconds(a.seconds*1000 || a.value, a.mode);
             } else {
@@ -1218,7 +1408,7 @@ export class Widget extends StateManaged {
           }
         };
         if(jeRoutineLogging &&
-           (a.timer != undefined || (isValidCollection(a.collection) && collections[a.collection].length))) {
+           (a.timer != undefined || (collection && collections[collection].length))) {
           const phrase = (a.timer == undefined) ? `timers in '${a.collection}'` : `'${a.timer}'`;
           if(a.mode == 'set')
             jeLoggingRoutineOperationSummary(`${phrase} to ${a.value}`);
@@ -1294,7 +1484,7 @@ export class Widget extends StateManaged {
       if(!jeRoutineLogging && problems.length)
         console.log(problems);
 
-      if(a.func == 'CALL' && !a.return)
+      if(abortRoutine)
         break
 
     } // End iterate over functions in routine
@@ -1312,26 +1502,88 @@ export class Widget extends StateManaged {
       playerName = variables.playerName;
     }
 
-    return { variable: variables.result, collection: collections.result || [] };
+    return { variable: variables.result || null, collection: collections.result || [] };
   }
 
   get(property) {
-    if(property == '_ancestor') {
-      if(widgets.has(this.get('parent')) && widgets.get(this.get('parent')).get('type')=='pile') {
-        return widgets.get(this.get('parent')).get('_ancestor');
-      } else {
-        return this.get('parent');
-      }
-    } else if(property == '_absoluteX' || property == '_absoluteY') {
-      return this.absoluteCoord(property == '_absoluteX' ? 'x' : 'y')
-    } else {
+    if(!readOnlyProperties.has(property)) {
       return super.get(property);
+    } else {
+      const p = this.get('parent');
+      switch(property) {
+        case '_absoluteRotation':
+          return this.get('rotation') + (widgets.has(p)? widgets.get(p).get('_absoluteRotation') : 0);
+        case '_absoluteScale':
+          return this.get('scale') * (widgets.has(p)? widgets.get(p).get('_absoluteScale') : 1);
+        case '_absoluteX':
+          return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})['x'];
+        case '_absoluteY':
+          return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})['y'];
+        case '_ancestor':
+          return (widgets.has(p) && widgets.get(p).get('type')=='pile') ? widgets.get(p).get('_ancestor') : p;
+        case '_centerAbsoluteX':
+          return this.coordGlobalFromCoordParent({x:this.get('x')+this.get('width')/2,y:this.get('y')+this.get('height')/2})['x'];
+        case '_centerAbsoluteY':
+          return this.coordGlobalFromCoordParent({x:this.get('x')+this.get('width')/2,y:this.get('y')+this.get('height')/2})['y'];
+        case '_localOriginAbsoluteX':
+          return this.coordGlobalFromCoordLocal({x:0,y:0})['x'];
+        case '_localOriginAbsoluteY':
+          return this.coordGlobalFromCoordLocal({x:0,y:0})['y'];
+        default:
+          return super.get(property);
+      }
     }
   }
 
   hideEnlarged() {
     if (!this.domElement.className.match(/selected/))
       $('#enlarged').classList.add('hidden');
+  }
+
+  async addAudio(widget){
+    if(widget.get('audio')) {
+      const audioString = widget.get('audio');
+      const audioArray = audioString.split(/:\s|,\s/);
+      const source = audioArray[1];
+      const type = audioArray[3];
+      const maxVolume = audioArray[5];
+      const length = audioArray[7];
+      const pName = audioArray[9];
+
+      if(pName == "null" || pName == playerName) {
+        var audioElement = document.createElement('audio');
+        audioElement.setAttribute('class', 'audio');
+        audioElement.setAttribute('src', source);
+        audioElement.setAttribute('type', type);
+        audioElement.setAttribute('maxVolume', maxVolume);
+        audioElement.volume = Math.min(maxVolume * (((10 ** (document.getElementById('volume').value / 96.025)) / 10) - 0.1), 1); // converts slider to log scale with zero = no volume
+        document.body.appendChild(audioElement);
+        audioElement.play();
+
+        if(length != "null") {
+          setInterval(function(){
+            if(audioElement.currentTime>=0){
+              audioElement.pause();
+              clearInterval();
+              if(audioElement.parentNode)
+                audioElement.parentNode.removeChild(audioElement);
+            }}, length);
+        } else {
+          audioElement.onended = function() {
+            audioElement.pause();
+            clearInterval();
+            if(audioElement.parentNode)
+              audioElement.parentNode.removeChild(audioElement);
+          };
+          audioElement.onerror = function() {
+            if(audioElement.parentNode)
+              audioElement.parentNode.removeChild(audioElement);
+          }
+        }
+      }
+      setInterval(function(){
+        widget.set('audio', null);}, 100);
+    }
   }
 
   isValidID(id, problems) {
@@ -1362,7 +1614,6 @@ export class Widget extends StateManaged {
     if(!this.get('fixedParent')) {
       this.dropTargets = this.validDropTargets();
       this.currentParent = widgets.get(this.get('parent'));
-      this.hoverTargetDistance = 99999;
       this.hoverTarget = null;
 
       this.disablePileUpdateAfterParentChange = true;
@@ -1374,61 +1625,55 @@ export class Widget extends StateManaged {
     }
   }
 
-  async move(x, y) {
-    let newX = (jeZoomOut ? x : Math.max(0-this.get('width' )*0.25, Math.min(1600+this.get('width' )*0.25, x))) - this.get('width' )/2;
-    let newY = (jeZoomOut ? y : Math.max(0-this.get('height')*0.25, Math.min(1000+this.get('height')*0.25, y))) - this.get('height')/2;
-
-    if(this.get('fixedParent') && widgets.has(this.get('parent'))) {
-      newX -= widgets.get(this.get('parent')).absoluteCoord('x');
-      newY -= widgets.get(this.get('parent')).absoluteCoord('y');
-    }
+  async move(coordGlobal, localAnchor) {
+    const coordParent = this.coordParentFromCoordGlobal(coordGlobal);
+    const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), {x: this.get('x'), y: this.get('y')})
+    const newX = Math.round(coordParent.x + offset.x);
+    const newY = Math.round(coordParent.y + offset.y);
 
     if(tracingEnabled)
-      sendTraceEvent('move', { id: this.get('id'), x, y, newX, newY });
+      sendTraceEvent('move', { id: this.get('id'), coordGlobal, localAnchor, newX, newY });
 
     await this.setPosition(newX, newY, this.get('z'));
+    await this.snapToGrid();
 
     if(!this.get('fixedParent')) {
-      const myCenter = center(this.domElement);
       await this.checkParent();
 
-      this.hoverTargetChanged = false;
-      if(this.hoverTarget) {
-        if(overlap(this.domElement, this.hoverTarget.domElement)) {
-          this.hoverTargetDistance = distance(myCenter, this.hoverTargetCenter);
-        } else {
-          this.hoverTargetDistance = 99999;
-          this.hoverTarget = null;
-          this.hoverTargetChanged = true;
-        }
-      }
+      const lastHoverTarget = this.hoverTarget;
+      const myCenter = center(this.domElement);
+      const myMinDim = Math.min(this.get('width'), this.get('height')) * this.get('_absoluteScale');
+      this.hoverTarget = null;
+      let targetCursor = false;
+      let targetOverlap = 0;
+      let targetDist = 99999;
 
       for(const t of this.dropTargets) {
-        const tCenter = center(t.domElement);
-        const d = distance(myCenter, tCenter);
-        if(d < this.hoverTargetDistance) {
-          if(overlap(this.domElement, t.domElement)) {
-            this.hoverTargetChanged = this.hoverTarget != t;
+        const tOverlap = overlapScore(this.domElement, t.domElement);
+        if(tOverlap > 0) {
+          const tCursor = t.coordGlobalInside(coordGlobal);
+          const tDist = distance(center(t.domElement), myCenter) / scale;
+          const tMinDim = Math.min(t.get('width'),t.get('height')) * t.get('_absoluteScale');
+          const validTarget = tCursor || tDist <= (myMinDim + tMinDim) / 2;
+          const bestTarget = tDist <= targetDist;
+          if(validTarget && bestTarget) {
+            targetCursor = tCursor;
+            targetOverlap= tOverlap;
+            targetDist = tDist;
             this.hoverTarget = t;
-            this.hoverTargetCenter = tCenter;
-            this.hoverTargetDistance = d;
           }
         }
       }
-
-      if(this.hoverTargetChanged) {
-        if(this.lastHoverTarget)
-          this.lastHoverTarget.domElement.classList.remove('droptarget');
-        if(this.hoverTarget)
-          this.hoverTarget.domElement.classList.add('droptarget');
-        this.lastHoverTarget = this.hoverTarget;
-      }
+      if(lastHoverTarget)
+        lastHoverTarget.domElement.classList.remove('droptarget');
+      if(this.hoverTarget)
+        this.hoverTarget.domElement.classList.add('droptarget');
     }
   }
 
-  async moveEnd() {
+  async moveEnd(coord, localAnchor) {
     if(tracingEnabled)
-      sendTraceEvent('moveEnd', { id: this.get('id') });
+      sendTraceEvent('moveEnd', { id: this.get('id'), coord, localAnchor });
 
     if(!this.get('fixedParent')) {
       for(const t of this.dropTargets)
@@ -1437,6 +1682,11 @@ export class Widget extends StateManaged {
       await this.checkParent();
 
       if(this.hoverTarget) {
+        let coordNew = this.hoverTarget.coordLocalFromCoordClient({x: coord.clientX, y: coord.clientY});
+        const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), {x: this.get('x'), y: this.get('y')})
+        coordNew = this.hoverTarget.coordGlobalFromCoordLocal({x: Math.round(coordNew.x + offset.x), y: Math.round(coordNew.y + offset.y)});
+        this.setPosition(coordNew.x, coordNew.y, this.get('z'));
+        await this.snapToGrid();
         await this.moveToHolder(this.hoverTarget);
         this.hoverTarget.domElement.classList.remove('droptarget');
       }
@@ -1456,18 +1706,16 @@ export class Widget extends StateManaged {
   }
 
   async onChildAddAlign(child, oldParentID) {
-    let childX = child.get('x');
-    let childY = child.get('y');
+    let coordChild = {x: child.get('x'), y: child.get('y')};
 
     if(!oldParentID) {
-      childX -= this.absoluteCoord('x');
-      childY -= this.absoluteCoord('y');
+      coordChild = this.coordLocalFromCoordGlobal(coordChild);
     }
 
     if(this.get('alignChildren'))
       await child.setPosition(this.get('dropOffsetX'), this.get('dropOffsetY'), child.get('z'));
     else
-      await child.setPosition(childX, childY, child.get('z'));
+      await child.setPosition(Math.round(coordChild.x*1024)/1024, Math.round(coordChild.y*1024)/1024, child.get('z'));
   }
 
   async onChildRemove(child) {
@@ -1501,45 +1749,17 @@ export class Widget extends StateManaged {
       await this.set('rotation', degrees);
   }
 
-  async setPosition(x, y, z) {
-    if(this.get('grid').length && !this.get('parent')) {
-      let closest = null;
-      let closestDistance = 999999;
-
-      for(const grid of this.get('grid')) {
-        if(x < (grid.minX || -99999) || x > (grid.maxX || 99999))
-          continue;
-        if(y < (grid.minY || -99999) || y > (grid.maxY || 99999))
-          continue;
-
-        const snapX = x + grid.x/2 - mod(x - (grid.offsetX || 0), grid.x);
-        const snapY = y + grid.y/2 - mod(y - (grid.offsetY || 0), grid.y);
-
-        const distance = (snapX - x) ** 2 + (snapY - y) ** 2;
-        if(distance < closestDistance) {
-          closest = [ snapX, snapY, grid ];
-          closestDistance = distance;
-        }
-      }
-
-      if(closest) {
-        x = closest[0];
-        y = closest[1];
-        for(const p in closest[2])
-          if([ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY' ].indexOf(p) == -1)
-            await this.set(p, closest[2][p]);
-      }
-
-      this.snappingToGrid = false;
-    }
-    await super.setPosition(x, y, z);
-  }
-
-  async setText(text, mode, debug, problems) {
+  async setText(text, mode, problems) {
     if (this.get('text') !== undefined) {
-      if(mode == 'inc' || mode == 'dec')
-        await this.set('text', (parseInt(this.get('text')) || 0) + (mode == 'dec' ? -1 : 1) * text);
-      else if(mode == 'append')
+      if(mode == 'inc' || mode == 'dec') {
+        let newText = (parseFloat(this.get('text')) || 0) + (mode == 'dec' ? -1 : 1) * text;
+        const decimalPlacesOld = this.get('text').toString().match(/\..*$/);
+        const decimalPlacesChange = text.toString().match(/\..*$/);
+        const decimalPlaces = Math.max(decimalPlacesOld ? decimalPlacesOld[0].length-1 : 0, decimalPlacesChange ? decimalPlacesChange[0].length-1 : 0);
+        const factor = 10**decimalPlaces;
+        newText = Math.round(newText*factor)/factor;
+        await this.set('text', newText);
+      } else if(mode == 'append')
         await this.set('text', this.get('text') + text);
       else if(Array.isArray(text))
         await this.set('text', text.join(', '));
@@ -1577,12 +1797,36 @@ export class Widget extends StateManaged {
 
   async showInputOverlay(o, widgets, variables, problems) {
     return new Promise((resolve, reject) => {
-
-      $('#buttonInputOverlay h1').textContent = o.header || "Button Input";
+      const maxRandomRotate = o.randomRotation || 0;
+      const rotation = Math.floor(Math.random() * maxRandomRotate) - (maxRandomRotate / 2);
+      var confirmButtonText, cancelButtonText = "";
+      $('#buttonInputOverlay .modal').style = o.css || "";
+      $('#buttonInputOverlay .modal').style.transform = "rotate("+rotation+"deg)";
       $('#buttonInputFields').innerHTML = '';
+      if(o.header){
+        const dom = document.createElement('div');
+        dom.className = "inputtitle";
+        const thisheader = {label: o.header}
+        formField(thisheader, dom, null);
+        $('#buttonInputFields').appendChild(dom);
+      }
+      if(!o.confirmButtonText && !o.confirmButtonIcon){
+        confirmButtonText = "Go";
+      }
+      if(!o.cancelButtonText && !o.cancelButtonIcon){
+        cancelButtonText = "Cancel";
+      }
+
+      $('#buttonInputGo label').textContent = o.confirmButtonText || confirmButtonText;
+      $('#buttonInputCancel label').textContent = o.cancelButtonText || cancelButtonText;
+
+      $('#buttonInputGo span').textContent = o.confirmButtonIcon || "";
+      $('#buttonInputCancel span').textContent = o.cancelButtonIcon || "";
 
       for(const field of o.fields) {
         const dom = document.createElement('div');
+        dom.style = field.css || "";
+        dom.className = "input"+field.type;
         formField(field, dom, this.get('id') + ';' + field.variable);
         $('#buttonInputFields').appendChild(dom);
       }
@@ -1601,6 +1845,39 @@ export class Widget extends StateManaged {
       on('#buttonInputCancel', 'click', cancelHandler);
       showOverlay('buttonInputOverlay');
     });
+  }
+
+  async snapToGrid() {
+    if(this.get('grid').length) {
+      const x = this.get('x');
+      const y = this.get('y');
+
+      let closest = null;
+      let closestDistance = 999999;
+
+      for(const grid of this.get('grid')) {
+        if(x < (grid.minX || -99999) || x > (grid.maxX || 99999))
+          continue;
+        if(y < (grid.minY || -99999) || y > (grid.maxY || 99999))
+          continue;
+
+        const snapX = x + grid.x/2 - mod(x - (grid.offsetX || 0), grid.x);
+        const snapY = y + grid.y/2 - mod(y - (grid.offsetY || 0), grid.y);
+
+        const distance = (snapX - x) ** 2 + (snapY - y) ** 2;
+        if(distance < closestDistance) {
+          closest = [ snapX, snapY, grid ];
+          closestDistance = distance;
+        }
+      }
+
+      if(closest) {
+        this.setPosition(closest[0], closest[1], this.get('z'));
+        for(const p in closest[2])
+          if([ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY' ].indexOf(p) == -1)
+            await this.set(p, closest[2][p]);
+      }
+    }
   }
 
   async sortWidgets(w, key, reverse, locales, options, rearrange) {
@@ -1641,6 +1918,7 @@ export class Widget extends StateManaged {
     const thisX = this.get('x');
     const thisY = this.get('y');
     const thisOwner = this.get('owner');
+    const thisOnPileCreation = JSON.stringify(this.get('onPileCreation'));
     for(const [ widgetID, widget ] of widgets) {
       if(widget == this)
         continue;
@@ -1650,22 +1928,22 @@ export class Widget extends StateManaged {
 
       // check if this widget is closer than 10px from another widget in the same parent
       if(widget.get('parent') == thisParent && Math.abs(widget.get('x')-thisX) < 10 && Math.abs(widget.get('y')-thisY) < 10) {
-        if(widget.isBeingRemoved || widget.get('owner') !== thisOwner)
+        if(widget.isBeingRemoved || widget.get('owner') !== thisOwner || JSON.stringify(widget.get('onPileCreation')) !== thisOnPileCreation)
           continue;
 
         // if a card gets dropped onto a card, they create a new pile and are added to it
         if(thisType == 'card' && widgetType == 'card') {
-          const pile = {
+          const pile = Object.assign({
             type: 'pile',
             parent: this.get('parent'),
             x: widget.get('x'),
             y: widget.get('y'),
             width: this.get('width'),
             height: this.get('height')
-          };
+          }, this.get('onPileCreation'));
           if(thisOwner !== null)
             pile.owner = thisOwner;
-          const pileId = addWidgetLocal(pile);
+          const pileId = await addWidgetLocal(pile);
           await widget.set('parent', pileId);
           await this.bringToFront();
           await this.set('parent', pileId);

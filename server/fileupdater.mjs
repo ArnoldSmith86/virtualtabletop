@@ -1,4 +1,4 @@
-export const VERSION = 4;
+export const VERSION = 6;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -31,6 +31,8 @@ function updateProperties(properties, v) {
       updateRoutine(properties[property], v);
 
   v<4 && v4ModifyDropTargetEmptyArray(properties);
+  v<5 && v5DynamicFaceProperties(properties);
+  v<6 && v6cssPieces(properties);
 }
 
 function updateRoutine(routine, v) {
@@ -269,3 +271,51 @@ function v4ModifyDropTargetEmptyArray(properties) {
     properties.dropTarget = {};
 }
 
+function v5DynamicFaceProperties(properties) {
+  if(Array.isArray(properties.faceTemplates)) {
+    for(const face of properties.faceTemplates) {
+      if(Array.isArray(face.objects)) {
+        for(const object of face.objects) {
+          if(object.valueType != 'static' && object.value) {
+            if(typeof object.dynamicProperties != 'object')
+              object.dynamicProperties = { value: object.value }
+            else
+              object.dynamicProperties.value = object.value;
+            delete object.value;
+          }
+          delete object.valueType;
+        }
+      }
+    }
+  }
+}
+
+function v6cssPieces(properties) {
+  const pinRE = /\bpinPiece\b/;
+  const classicRE = /\bclassicPiece\b/;
+  if(!properties.classes || typeof properties.classes != 'string')
+    return;
+  if(properties.classes.match(pinRE)) {
+    if(properties.text || properties.css || !properties.height || properties.height > 60) {
+      properties.classes = properties.classes.replace(pinRE, 'legacyPinPiece');
+      return;
+    } else {
+      const length = Math.round(50 + 30 * (properties.height - 28.5)/15.33);
+      if(length !=80)
+        properties.css = `--pinLength: ${length}`;
+      properties.width = 35.85;
+      return;
+    }
+  } else if(properties.classes.match(classicRE)) {
+    if(properties.text || properties.css || properties.width < 74 || properties.height < 87) {
+      properties.classes = properties.classes.replace(classicRE, 'legacyClassicPiece');
+      return;
+    } else {
+      properties.x += 17;
+      properties.y += 3;
+      properties.width = 56;
+      properties.height = 84;
+      return;
+    }
+  }
+}

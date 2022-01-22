@@ -8,7 +8,7 @@ function generateUniqueWidgetID() {
   return id;
 }
 
-function addWidgetLocal(widget) {
+async function addWidgetLocal(widget) {
   if (!widget.id)
     widget.id = generateUniqueWidgetID();
 
@@ -17,8 +17,14 @@ function addWidgetLocal(widget) {
     return null;
   }
 
+  const isNewWidget = !widgets.has(widget.id);
   sendPropertyUpdate(widget.id, widget);
   sendDelta(true);
+  batchStart();
+  if(isNewWidget)
+    for(const [ w, routine ] of StateManaged.globalUpdateListeners['id'] || [])
+      await w.evaluateRoutine(routine, { widgetID: widget.id, oldValue: null, value: widget.id }, { widget: [ widgets.get(widget.id) ] });
+  batchEnd();
   return widget.id;
 }
 //This section holds the edit overlays for each widget
@@ -77,7 +83,6 @@ function applyEditOptionsBasic(widget) {
 function populateEditOptionsButton(widget) {
   $('#buttonText').value = widget.text || "~ no text found ~";
   $('#buttonImage').value = widget.image || "~ no image found ~";
-  $('#buttonDebug').checked = widget.debug;
   $('#buttonColorMain').value = widget.backgroundColor || "#1f5ca6";
   $('#buttonColorBorder').value = widget.borderColor || "#0d2f5e";
   $('#buttonColorText').value = widget.textColor || "#ffffff"
@@ -125,8 +130,6 @@ function applyEditOptionsButton(widget) {
     delete widget.textColor;
   else
     widget.textColor = $('#buttonColorText').value;
-
-  widget.debug = $('#buttonDebug').checked;
 }
 
 //canvas functions
@@ -189,7 +192,7 @@ async function applyEditOptionsDeck(widget) {
 
     for(let i=0; i<$('.count', type).value-$('.count', type).dataset.oldValue; ++i) {
       const card = { deck:widget.id, type:'card', cardType:oldID };
-      const cardId = addWidgetLocal(card);
+      const cardId = await addWidgetLocal(card);
       if(widget.parent)
         await widgets.get(cardId).moveToHolder(widgets.get(widget.parent));
     }
@@ -483,9 +486,9 @@ function generateCardDeckWidgets(id, x, y, addCards) {
     });
   }
 
-  const front = { type:'image', x:0, y:0, width:103, height:160, valueType:'dynamic', value:'image', color:'transparent' };
+  const front = { type:'image', x:0, y:0, width:103, height:160, color:'transparent', dynamicProperties:{value:'image'} };
   const back  = { ...front };
-  back.valueType = 'static';
+  delete back.dynamicProperties;
   back.value = '/i/cards-default/2B.svg';
   widgets.push({
     type: 'deck',
@@ -592,8 +595,8 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
     widgets.set(wi.id, w);
     w.applyDelta(wi);
     if(!wi.parent) {
-      w.domElement.addEventListener('click', _=>{
-        overlayDone(onClick());
+      w.domElement.addEventListener('click', async _=>{
+        overlayDone(await onClick());
       });
       $('#addOverlay').appendChild(w.domElement);
     }
@@ -602,10 +605,10 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
 
 function addWidgetToAddWidgetOverlay(w, wi) {
   w.applyDelta(wi);
-  w.domElement.addEventListener('click', _=>{
+  w.domElement.addEventListener('click', async _=>{
     const toAdd = {...wi};
     toAdd.z = getMaxZ(w.get('layer')) + 1;
-    const id = addWidgetLocal(toAdd);
+    const id = await addWidgetLocal(toAdd);
     overlayDone(id);
   });
   $('#addOverlay').appendChild(w.domElement);
@@ -628,16 +631,16 @@ function populateAddWidgetOverlay() {
     y: 130
   });
 
-  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-empty-deck', x, 320, false), function() {
+  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-empty-deck', x, 320, false), async function() {
     const id = generateUniqueWidgetID();
     for(const w of generateCardDeckWidgets(id, x, 320, false))
-      addWidgetLocal(w);
+      await addWidgetLocal(w);
     return id
   });
-  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', x, 550, true), function() {
+  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', x, 550, true), async function() {
     const id = generateUniqueWidgetID();
     for(const w of generateCardDeckWidgets(id, x, 550, true))
-      addWidgetLocal(w);
+      await addWidgetLocal(w);
     return id
   });
 
@@ -669,10 +672,10 @@ function populateAddWidgetOverlay() {
     addWidgetToAddWidgetOverlay(new BasicWidget('add-classic-'+color), {
       classes: 'classicPiece',
       color,
-      width: 90,
-      height: 90,
-      x: 510,
-      y: y + (43.83 - 90)/2
+      width: 56,
+      height: 84,
+      x: 528,
+      y: y + (43.83 - 84)/2
     });
     y += 88;
   }
@@ -741,18 +744,18 @@ function populateAddWidgetOverlay() {
   });
 
   // Add the composite timer widget
-  addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 710, 790), function() {
+  addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 710, 790), async function() {
     const id = generateUniqueWidgetID();
     for(const w of generateTimerWidgets(id, 710, 790))
-      addWidgetLocal(w);
+      await addWidgetLocal(w);
     return id
   });
 
   // Add the composite counter widget
-  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 767, 870), function() {
+  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 767, 870), async function() {
     const id = generateUniqueWidgetID();
     for(const w of generateCounterWidgets(id, 767, 870))
-      addWidgetLocal(w);
+      await addWidgetLocal(w);
     return id
   });
 
@@ -801,10 +804,10 @@ async function removeWidgetLocal(widgetID, keepChildren) {
 }
 
 function uploadWidget(preset) {
-  uploadAsset().then(function(asset) {
+  uploadAsset().then(async function(asset) {
     let id;
     if(asset && preset == 'board') {
-      id = addWidgetLocal({
+      id = await addWidgetLocal({
         image: asset,
         movable: false,
         width: 1600,
@@ -813,7 +816,7 @@ function uploadWidget(preset) {
       });
     }
     if(asset && preset == 'token') {
-      id = addWidgetLocal({
+      id = await addWidgetLocal({
         image: asset
       });
     }
@@ -856,7 +859,7 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
       if(widget[key] === undefined)
         widget[key] = null;
   }
-  const id = addWidgetLocal(widget);
+  const id = await addWidgetLocal(widget);
 
   for(const child of children)
     sendPropertyUpdate(child.get('id'), 'parent', id);
@@ -870,8 +873,8 @@ async function onClickUpdateWidget(applyChangesFromUI) {
   showOverlay();
 }
 
-function duplicateWidget(widget, recursive, inheritFrom, increment, incrementLetters, incrementIn, xOffset, yOffset, xCopies, yCopies) {
-  const clone = function(widget, recursive, newParent, xOffset, yOffset) {
+async function duplicateWidget(widget, recursive, inheritFrom, increment, incrementLetters, incrementIn, xOffset, yOffset, xCopies, yCopies) {
+  const clone = async function(widget, recursive, newParent, xOffset, yOffset) {
     let currentWidget = JSON.parse(JSON.stringify(widget.state))
 
     if(inheritFrom) {
@@ -917,11 +920,11 @@ function duplicateWidget(widget, recursive, inheritFrom, increment, incrementLet
     if(yOffset || !newParent && inheritFrom)
       currentWidget.y = widget.get('y') + yOffset;
 
-    const currentId = addWidgetLocal(currentWidget);
+    const currentId = await addWidgetLocal(currentWidget);
 
     if(recursive)
       for(const child of widgetFilter(w=>w.get('parent')==widget.id))
-        clone(child, true, currentId, 0, 0);
+        await clone(child, true, currentId, 0, 0);
 
     if(currentId)
       return currentWidget;
@@ -936,16 +939,16 @@ function duplicateWidget(widget, recursive, inheritFrom, increment, incrementLet
       x = xOffset;
       y = yOffset;
     }
-    var clonedWidget = clone(widget, recursive, false, x, y);
+    var clonedWidget = await clone(widget, recursive, false, x, y);
   }
   return clonedWidget;
 }
 
-function onClickDuplicateWidget() {
+async function onClickDuplicateWidget() {
   const widget = widgets.get(JSON.parse($('#editWidgetJSON').dataset.previousState).id);
   const xOffset = widget.absoluteCoord('x') > 1500 ? -20 : 20;
   const yOffset = widget.absoluteCoord('y') >  900 ? -20 : 20;
-  duplicateWidget(widget, true, false, true, false, [], xOffset, yOffset, 1, 0);
+  await duplicateWidget(widget, true, false, true, false, [], xOffset, yOffset, 1, 0);
   showOverlay();
 }
 
@@ -992,14 +995,14 @@ onLoad(function() {
   on('#editButton', 'click', toggleEditMode);
 
   // This now adds an empty basic widget
-  on('#addBasicWidget', 'click', function() {
-    const id = addWidgetLocal({
+  on('#addBasicWidget', 'click', async function() {
+    const id = await addWidgetLocal({
       text: "Basic widget"
     });
     overlayDone(id);
   });
 
-  on('#addHand', 'click', function() {
+  on('#addHand', 'click', async function() {
     const hand = {
       type: 'holder',
       onEnter: { activeFace: 1 },
@@ -1015,11 +1018,11 @@ onLoad(function() {
     }
     if(!widgets.has('hand'))
       hand.id = 'hand';
-    overlayDone(addWidgetLocal(hand));
+    overlayDone(await addWidgetLocal(hand));
   });
 
-  on('#addCanvas', 'click', function() {
-    const id = addWidgetLocal({
+  on('#addCanvas', 'click', async function() {
+    const id = await addWidgetLocal({
       type: "canvas",
 
       x: 400,
@@ -1067,7 +1070,7 @@ onLoad(function() {
       c84: "*1/1+1,11/1/101/101/101/101/101/101/1/11/1/01/010010",
       c85: "1%0"
     })
-    addWidgetLocal({
+    await addWidgetLocal({
       type: "button",
       id: id+"-Reset",
 
@@ -1089,10 +1092,11 @@ onLoad(function() {
           mode: "reset"
         }
       ],
-      css: "border-radius: 50% 0% 0% 0%;  border-width: 1px;  --wcBorder: #555; --wcBorderOH: black; --wcMainOH: #0d2f5e; ",
+      css: "border-width: 1px;  --wcBorder: #555; --wcBorderOH: black; --wcMainOH: #0d2f5e; ",
+      borderRadius: '50% 0% 0% 0%',
       text: "Reset"
     })
-    addWidgetLocal({
+    await addWidgetLocal({
       type: "button",
       id: id+"-Color",
 
@@ -1124,16 +1128,16 @@ onLoad(function() {
         }
       ],
       color: "#1F5CA6",
-      css: "border-radius: 0% 0% 0% 50%;  border-width: 1px; background-color: var(--color);  --wcBorder: #555; --wcBorderOH: black  "
-    }
-    );
+      css: "border-width: 1px; background-color: var(--color);  --wcBorder: #555; --wcBorderOH: black  ",
+      borderRadius: '0% 0% 0% 50%'
+    });
     overlayDone(id);
   });
 
-  on('#addSeat', 'click', function() {
+  on('#addSeat', 'click', async function() {
     const seats = widgetFilter(w=>w.get('type')=='seat');
     const maxIndex = Math.max(...seats.map(w=>w.get('index')));
-    addWidgetLocal({
+    await addWidgetLocal({
       type: 'seat',
       index: seats.length && maxIndex ? maxIndex+1 : 1,
       x: 840,
@@ -1145,7 +1149,7 @@ onLoad(function() {
   on('#uploadBoard', 'click', _=>uploadWidget('board'));
   on('#uploadToken', 'click', _=>uploadWidget('token'));
 
-  on('#addWidget', 'click', function() {
+  on('#addWidget', 'click', async function() {
     const widget = JSON.parse($('#widgetText').value);
 
     for(const key in widget)
@@ -1157,7 +1161,7 @@ onLoad(function() {
       return;
     }
 
-    const id = addWidgetLocal(widget);
+    const id = await addWidgetLocal(widget);
     overlayDone(id);
   });
 
