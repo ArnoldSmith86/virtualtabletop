@@ -63,7 +63,7 @@ async function addState(e, type, src, id) {
 
   let url = `/addState/${roomID}/${id}/${type}/${src && src.name && encodeURIComponent(src.name)}/`;
   waitingForStateCreation = id;
-  if(e && (e.target.parentNode == $('#addVariant') || e.target.className == 'update')) {
+  if(e && (e.target.parentNode.parentNode == $('#addVariant') || e.target.classList.contains('update'))) {
     waitingForStateCreation = $('#stateEditOverlay').dataset.id;
     url += $('#stateEditOverlay').dataset.id;
   }
