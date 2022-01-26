@@ -197,7 +197,7 @@ async function uploadAsset(multipleCallback) {
 }
 
 async function _uploadAsset(file) {
-    const response = await fetch('/asset', {
+    const response = await fetch('asset', {
       method: 'PUT',
       headers: {
         'Content-type': 'application/octet-stream'

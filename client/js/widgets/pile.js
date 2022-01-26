@@ -42,7 +42,7 @@ class Pile extends Widget {
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
     if(this.handle && delta.handleCSS !== undefined)
-      this.handle.style = this.get('handleCSS');
+      this.handle.style = mapAssetURLs(this.get('handleCSS'));
     if(this.handle && delta.text !== undefined)
       this.updateText();
     if(this.handle && (delta.width !== undefined || delta.height !== undefined || delta.handleSize !== undefined)) {
