@@ -194,6 +194,7 @@ body.jsonEdit.jeZoomOut #topSurface {
   font-size: 12px;
   background: #ffffff10;
   margin-left: 20px;
+  color:lightgray;
 }
 
 .jeLogSkipped {
@@ -218,6 +219,19 @@ body.jsonEdit.jeZoomOut #topSurface {
 
 /* Rotate the caret/arrow icon when clicked on (using JavaScript) */
 .jeExpander-down::before {
+  transform: rotate(90deg);
+}
+
+/* Create the red caret/arrow with a unicode, and style it */
+.jeRedExpander::before {
+  content: "\25B6";
+  color: red;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+/* Rotate the red caret/arrow icon when clicked on (using JavaScript) */
+.jeRedExpander-down::before {
   transform: rotate(90deg);
 }
 
@@ -336,3 +350,11 @@ body.jsonEdit.jeZoomOut #topSurface {
 #widget_dropOffsetY::before{
   content: '[width]';
 }
+#jeCommands .numberInputRange{
+  display: none;
+}
+
+#jeCommands #jeCommandOptions input[type="number"]{
+  width: 6ch;
+}
+
