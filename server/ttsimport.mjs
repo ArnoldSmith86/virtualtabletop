@@ -31,13 +31,20 @@ function getID(o) {
   return o.GUID || nextID++;
 }
 
+function extractNumber(property) {
+  if(typeof property == 'object' && property !== null)
+    return Object.values(property)[0];
+  else
+    return property;
+}
+
 async function addDeck(o, parent=null) {
-  const firstDeckID = Math.floor((o.DeckIDs || [ o.CardID ])[0]/100);
+  const firstDeckID = Math.floor(extractNumber((o.DeckIDs || [ o.CardID ])[0])/100);
 
   let [ deckWidth, deckHeight ] = await imgSize(processURL(o.CustomDeck[firstDeckID].FaceURL));
 
-  const cardsPerRow = o.CustomDeck[firstDeckID].NumWidth  || 10;
-  const cardsPerCol = o.CustomDeck[firstDeckID].NumHeight ||  7;
+  const cardsPerRow = extractNumber(o.CustomDeck[firstDeckID].NumWidth)  || 10;
+  const cardsPerCol = extractNumber(o.CustomDeck[firstDeckID].NumHeight) ||  7;
 
   let cardWidth = deckWidth / cardsPerRow;
   let cardHeight = deckHeight / cardsPerCol;
@@ -99,7 +106,8 @@ async function addDeck(o, parent=null) {
     ]
   };
 
-  for(const cardID of o.DeckIDs || [ o.CardID ]) {
+  for(let cardID of o.DeckIDs || [ o.CardID ]) {
+    cardID = extractNumber(cardID);
     const deckID = Math.floor(cardID/100);
     const offset = cardID%100;
 
@@ -128,14 +136,14 @@ async function addDeck(o, parent=null) {
       type: 'pile',
       width: cardWidth,
       height: cardHeight,
-      x: 800+o.Transform.posX*25,
-      y: 500-o.Transform.posZ*25,
+      x: 800+extractNumber(o.Transform.posX)*25,
+      y: 500-extractNumber(o.Transform.posZ)*25,
     };
   } else {
     for(const widget in widgets) {
       if(widgets[widget].type != 'deck') {
-        widgets[widget].x = 800+o.Transform.posX*25;
-        widgets[widget].y = 500+o.Transform.posZ*25;
+        widgets[widget].x = 800+extractNumber(o.Transform.posX)*25;
+        widgets[widget].y = 500+extractNumber(o.Transform.posZ)*25;
         widgets[widget].parent = parent;
       }
     }
@@ -172,8 +180,8 @@ async function addBag(o, parent) {
         property: 'owner'
       }
     ],
-    x: 800+o.Transform.posX*25,
-    y: 500-o.Transform.posZ*25,
+    x: 800+extractNumber(o.Transform.posX)*25,
+    y: 500-extractNumber(o.Transform.posZ)*25,
     text: o.Nickname || 'Open\nBag'
   };
   Object.assign(widgets, await addRecursive(o.ContainedObjects, o.GUID));
