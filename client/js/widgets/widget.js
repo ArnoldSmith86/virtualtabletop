@@ -674,7 +674,7 @@ export class Widget extends StateManaged {
             variables[variable] = getValue(variables[variable]);
           if(jeRoutineLogging) jeLoggingRoutineOperationSummary(a.substr(4), JSON.stringify(variables[variable]));
         } else {
-          const comment = a.match(new RegExp('^ *(?://(.*))?\x24'));
+          const comment = a.match(new RegExp('^(?://(.*))?\x24'));
           if (comment) {
             // ignore (but log) blank and comment only lines
             if(jeRoutineLogging) jeLoggingRoutineOperationSummary(comment[1]||'');
