@@ -672,7 +672,8 @@ export class Widget extends StateManaged {
             variables[variable] = getValue(variables[variable]);
           if(jeRoutineLogging) jeLoggingRoutineOperationSummary(a.substr(4), JSON.stringify(variables[variable]));
         } else if(a.match(new RegExp('^ *(?://.*)?\x24'))) {
-          // ignore blank and comment only lines
+          // ignore (but log) blank and comment only lines
+          if(jeRoutineLogging) jeLoggingRoutineOperationSummary(a.substr(3));
         } else {
           problems.push('String could not be interpreted as expression. Please check your syntax and note that many characters have to be escaped.');
         }
