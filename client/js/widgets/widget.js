@@ -229,6 +229,8 @@ export class Widget extends StateManaged {
       this.parent.applyChildRemove(this);
     if(this.get('deck') && widgets.has(this.get('deck')))
       widgets.get(this.get('deck')).removeCard(this);
+    if($(`#${escapeCSS(this.id)}STYLESHEET`))
+      removeFromDOM($(`#${escapeCSS(this.id)}STYLESHEET`));
     removeFromDOM(this.domElement);
     this.inheritFromUnregister();
     this.globalUpdateListenersUnregister();
