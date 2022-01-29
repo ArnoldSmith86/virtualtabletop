@@ -1432,7 +1432,7 @@ function jeLoggingRoutineOperationStart(original, applied) {
       fcn = applied
   else
     fcn = applied.func || '<COMMENT>'
-  jeHTMLStack.unshift([jeLoggingHTML, original, applied, fcn]);
+  jeHTMLStack.unshift([jeLoggingHTML, original, applied, html(fcn)]);
   jeLoggingHTML = '';
 }
 
