@@ -205,6 +205,15 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_inputField',
+    name: 'add field',
+    context: '^.* ↦ \\(INPUT\\) ↦ fields',
+    call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
+      jeGetValue(jeContext.slice(1, routineIndex+4)).push( { type: "###SELECT ME###" } );
+      jeSetAndSelect('string');
+    })
+  },
+  {
     id: 'je_css',
     name: 'css',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
@@ -588,7 +597,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('FOREACH', { loopRoutine: [], in: [], collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('GET', { variable: 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
   jeAddRoutineOperationCommands('IF', { condition: null, operand1: null, relation: '==', operand2: null, thenRoutine: [], elseRoutine: [], thenBreak: false, elseBreak: false, thenEnd: false, elseEnd: false });
-  // INPUT is missing
+  jeAddRoutineOperationCommands('INPUT', { cancelButtonIcon: null, cancelButtonText: "Cancel", confirmButtonIcon: null, confirmButtonText: "OK", fields: [] } );
   jeAddRoutineOperationCommands('LABEL', { value: 0, mode: 'set', label: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('MOVE', { count: 1, face: null, from: null, to: null });
   jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0, snapToGrid: true });
@@ -608,7 +617,16 @@ function jeAddCommands() {
 
   jeAddFaceCommand('border', '', 1);
   jeAddFaceCommand('css', '', '');
+  jeAddFaceCommand('properties', '', {});
   jeAddFaceCommand('radius', ' (rounded corners)', 1);
+
+  jeAddFieldCommand('text', 'subtitle|title|text', '');
+  jeAddFieldCommand('label', 'checkbox|color|number|select|string|switch', '');
+  jeAddFieldCommand('value', 'checkbox|color|number|string|switch', '');
+  jeAddFieldCommand('variable', 'checkbox|color|number|select|string|switch', '');
+  jeAddFieldCommand('min', 'number', 0);
+  jeAddFieldCommand('max', 'number', 10);
+  jeAddFieldCommand('options', 'select', [ { value: 'value', text: 'text' } ]);
 
   jeAddEnumCommands('^[a-z]+ ↦ type', widgetTypes.slice(1));
   jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ value', [ '${}' ]);
@@ -621,6 +639,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(GET\\) ↦ aggregation', [ 'first', 'last', 'array', 'average', 'median', 'min', 'max', 'sum' ]);
   jeAddEnumCommands('^.*\\(IF\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=' ]);
   jeAddEnumCommands('^.*\\(IF\\) ↦ (operand1|operand2|condition)', [ '${}' ]);
+  jeAddEnumCommands('^.*\\(INPUT\\) ↦ fields ↦ [0-9]+ ↦ type', [ 'checkbox', 'color', 'number', 'select', 'string', 'subtitle', 'switch', 'text', 'title' ]);
   jeAddEnumCommands('^.*\\(LABEL\\) ↦ mode', [ 'set', 'dec', 'inc', 'append' ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ angle', [ 45, 60, 90, 135, 180 ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ mode', [ 'set', 'add' ]);
@@ -782,6 +801,22 @@ function jeAddFaceCommand(key, description, value) {
       jeStateNow.faceTemplates[+jeContext[2]][key] = '###SELECT ME###';
       jeSetAndSelect(value);
     }
+  });
+}
+
+function jeAddFieldCommand(key, types, value) {
+  jeCommands.push({
+    id: 'field_' + key,
+    name: key,
+    context: '^.*\\(INPUT\\) ↦ fields ↦ [0-9]+',
+    show: jeRoutineCall(function(routineIndex) {
+      const field = jeGetValue(jeContext.slice(1, routineIndex+5));
+      return typeof field[key] === 'undefined' && (field.type || '').match(types);
+    }, true),
+    call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
+      jeGetValue(jeContext.slice(1, routineIndex+5))[key] = '###SELECT ME###';
+      jeSetAndSelect(value);
+    })
   });
 }
 
@@ -1374,7 +1409,7 @@ function jeLoggingRoutineEnd(variables, collections) {
     // Make expander arrows that are parents of nodes with problems show up red.
     const problems = document.getElementsByClassName('jeLogHasProblems');
     for (i=0; i<problems.length; i++) {
-      let node = problems[i].parentNode;
+      let node = problems[i];
       while (node && !node.classList.contains('jeLog')) {
         if(node.classList.contains('jeLogOperation')) {
           node.firstElementChild.classList.remove('jeExpander');
@@ -1382,12 +1417,22 @@ function jeLoggingRoutineEnd(variables, collections) {
         }
         node = node.parentNode;
       }
-    }    
+    }
   }
 }
 
 function jeLoggingRoutineOperationStart(original, applied) {
-  jeHTMLStack.unshift([jeLoggingHTML, original, applied, html(typeof applied == 'string' ? applied.split(' ')[0] : applied.func || '<COMMENT>')]);
+  let fcn;
+  if (typeof applied == 'string')
+    if (applied.substring(0,3) == 'var')
+      fcn = 'var'
+    else if (applied.substring(0,2) == '//')
+      fcn = '//'
+    else
+      fcn = applied
+  else
+    fcn = applied.func || '<COMMENT>'
+  jeHTMLStack.unshift([jeLoggingHTML, original, applied, html(fcn)]);
   jeLoggingHTML = '';
 }
 

@@ -1,4 +1,4 @@
-import { $, removeFromDOM, asArray } from '../domhelpers.js';
+import { $, removeFromDOM, asArray, escapeCSS } from '../domhelpers.js';
 import { StateManaged, endRoutine } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
@@ -27,6 +27,7 @@ export class Widget extends StateManaged {
     this.id = id;
     this.domElement = div;
     this.childArray = [];
+    this.propertiesUsedInCSS = [];
 
     if(StateManaged.inheritFromMapping[id] === undefined)
       StateManaged.inheritFromMapping[id] = [];
@@ -229,6 +230,8 @@ export class Widget extends StateManaged {
       this.parent.applyChildRemove(this);
     if(this.get('deck') && widgets.has(this.get('deck')))
       widgets.get(this.get('deck')).removeCard(this);
+    if($(`#${escapeCSS(this.id)}STYLESHEET`))
+      removeFromDOM($(`#${escapeCSS(this.id)}STYLESHEET`));
     removeFromDOM(this.domElement);
     this.inheritFromUnregister();
     this.globalUpdateListenersUnregister();
@@ -366,7 +369,11 @@ export class Widget extends StateManaged {
     }
   }
   css() {
-    let css = this.get('css');
+    this.propertiesUsedInCSS = [];
+    if($(`#${escapeCSS(this.id)}STYLESHEET`))
+      removeFromDOM($(`#${escapeCSS(this.id)}STYLESHEET`));
+    let css = this.cssReplaceProperties(this.cssAsText(this.get('css')));
+
     css = this.cssBorderRadius() + css;
     css += '; width:'  + this.get('width')  + 'px';
     css += '; height:' + this.get('height') + 'px';
@@ -376,6 +383,19 @@ export class Widget extends StateManaged {
     return css;
   }
 
+  cssAsText(css) {
+    if(typeof css == 'object') {
+      let cssText = '';
+      for(const key in css) {
+        if(typeof css[key] == 'object')
+          return this.cssToStylesheet(css);
+        cssText += `; ${key}: ${css[key]}`;
+      }
+      return cssText;
+    } else {
+      return css;
+    }
+  }
   cssBorderRadius() {
     let br = this.get('borderRadius');
     switch(typeof(br)) {
@@ -399,7 +419,26 @@ export class Widget extends StateManaged {
   }
 
   cssProperties() {
-    return [ 'borderRadius', 'css', 'height', 'inheritChildZ', 'layer', 'width' ];
+    return [ 'borderRadius', 'css', 'height', 'inheritChildZ', 'layer', 'width' ].concat(this.propertiesUsedInCSS);
+  }
+
+  cssReplaceProperties(css) {
+    for(const match of String(css).matchAll(/\$\{PROPERTY ([A-Za-z0-9_-]+)\}/g)) {
+      css = css.replace(match[0], this.get(match[1]));
+      this.propertiesUsedInCSS.push(match[1]);
+    }
+    return css;
+  }
+
+  cssToStylesheet(css) {
+    const style = document.createElement('style');
+    style.id = `${this.id}STYLESHEET`;
+    for(const key in css)
+      if(key != 'inline')
+        style.appendChild(document.createTextNode(`#${escapeCSS(this.id)}${key == 'default' ? '' : key} { ${this.cssReplaceProperties(this.cssAsText(css[key]))} }`));
+    $('head').appendChild(style);
+
+    return this.cssAsText(css.inline || '');
   }
 
   cssTransform() {
@@ -574,7 +613,9 @@ export class Widget extends StateManaged {
 
       let a = JSON.parse(JSON.stringify(original));
       if(typeof a == 'object')
-        a = evaluateVariablesRecursively(a);
+        a = evaluateVariablesRecursively(a)
+      else
+        a = original.trim();
 
       var problems = [];
       if(jeRoutineLogging) jeLoggingRoutineOperationStart(original, a)
@@ -643,7 +684,13 @@ export class Widget extends StateManaged {
             variables[variable] = getValue(variables[variable]);
           if(jeRoutineLogging) jeLoggingRoutineOperationSummary(a.substr(4), JSON.stringify(variables[variable]));
         } else {
-          problems.push('String could not be interpreted as expression. Please check your syntax and note that many characters have to be escaped.');
+          const comment = a.match(new RegExp('^(?://(.*))?\x24'));
+          if (comment) {
+            // ignore (but log) blank and comment only lines
+            if(jeRoutineLogging) jeLoggingRoutineOperationSummary(comment[1]||'');
+          } else {
+            problems.push('String could not be interpreted as expression. Please check your syntax and note that many characters have to be escaped.');
+          }
         }
       }
 
@@ -680,7 +727,7 @@ export class Widget extends StateManaged {
                   returnCollection = `(${result.collection.length} widgets)`;
                 jeLoggingRoutineOperationSummary(
                   `${a.routine} ${theWidget} and return variable '${a.variable}' and collection '${a.collection}'`,
-                  `${JSON.stringify(variables[a.variable])}; ${JSON.stringify(result.collection)}`)
+                  `${JSON.stringify(variables[a.variable])}; ${returnCollection}`)
               } else {
                 jeLoggingRoutineOperationSummary( `${a.routine} ${theWidget} and abort caller processing`)
               }
