@@ -28,7 +28,7 @@ async function removeGame(t, index) {
     .click('#statesButton')
     .hover(`.roomState:nth-of-type(${index || 1})`)
     .click(`.roomState:nth-of-type(${index || 1}) .edit`)
-    .click('p > .remove');
+    .click('.remove-game');
 }
 
 async function setName(t, name) {
@@ -48,31 +48,6 @@ function prepareClient() {
 
   // remove base element because it causes popups on form submit
   document.querySelector('base').parentNode.removeChild(document.querySelector('base'));
-}
-
-function publicLibraryTest(game, variant, md5, tests) {
-  test.after(async t => {
-    await removeGame(t);
-    await t.expect(Selector('#statesOverlay').visible).ok();
-  })(`Public library: ${game} (variant ${variant})`, async t => {
-    await ClientFunction(prepareClient)();
-    await t
-      .pressKey('esc')
-      .click('#statesButton')
-      .click(Selector('td.name').withExactText(game).prevSibling().child())
-      .hover('.roomState')
-      .click(Selector('button.play').nth(variant));
-    await setName(t);
-    await tests(t);
-    await compareState(t, md5);
-  });
-}
-
-function publicLibraryButtons(game, variant, md5, buttons) {
-  publicLibraryTest(game, variant, md5, async t => {
-    for(const b of buttons)
-      await t.click(`[id="${b}"]`);
-  });
 }
 
 async function compareState(t, md5) {
@@ -149,7 +124,7 @@ test('Create game using edit mode', async t => {
     .setNativeDialogHandler(() => true)
     .click('#removeWidget');
 
-  await compareState(t, '86635f53abbbbc75813e021c9e60f424');
+  await compareState(t, 'a91f2495b7e830d942c25201d483a691');
 });
 
 test('Compute', async t => {
@@ -300,31 +275,75 @@ test('Dynamic expressions', async t => {
     .click('[id="jyo6"]')
   const log = await Selector('#jeLog').textContent
   for (let i=0; i<ops.length; i++) {
-    await t.expect(log).contains('"'+ops[i][1]+'": '+ops[i][2])
+    const logContains = log.includes('"'+ops[i][1]+'": '+ops[i][2]);
+    await t.expect(logContains)
+           .ok('Test "' + ops[i] + '" failed.');
   };
   await t
     .pressKey('ctrl+j')
 });
 
-publicLibraryButtons('Blue',               0, 'ce94b53a7943ab19ff1c5a5618d12d58', [
+function publicLibraryTest(game, variant, md5, tests) {
+  test.after(async t => {
+    await removeGame(t);
+    await t.expect(Selector('#statesOverlay').visible).ok();
+  })(`Public library: ${game} (variant ${variant})`, async t => {
+    await ClientFunction(prepareClient)();
+    await t
+      .pressKey('esc')
+      .click('#statesButton')
+      .click(Selector('td.name').withExactText(game).prevSibling().child())
+      .hover('.roomState')
+      .click(Selector('button.play').nth(variant));
+    await setName(t);
+    await tests(t);
+    await compareState(t, md5);
+  });
+}
+
+function publicLibraryButtons(game, variant, md5, tests) {
+  publicLibraryTest(game, variant, md5, async t => {
+      for(const b of tests)
+        if(typeof b == "string") {
+          await t.click(`[id="${b}"]`)
+        } else {
+          await t.dragToElement(b[0](), b[1](), { speed:0.5 });
+        }
+  });
+}
+
+publicLibraryButtons('Blue',               0, '096bdf3bd07bb277c2c1f4cc132f0695', [
   'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton',
   'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton',
   'reset_button', 'buttonInputGo', 'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', '9n2q'
 ]);
+publicLibraryButtons('Bhukhar',            0, 'e00f92a157178e7f570302ccc6b8c41b', [ 'btnMenuSettings', 'btn8Players', 'btn4Packs', 'btnCloseSettings', 'btnSelectPlayer', 'btnDeal', 'btnPile4', 'btnStartGame', 'btnTakeOne', 'btnNextPlayer', 'btnPickUp' ]);
+publicLibraryButtons('Dice',               0, 'a68d28c20b624d6ddf87149bae230598', [ 'k18u', 'hy65', 'gghr', 'dsfa', 'f34a', 'fusq' ]);
+publicLibraryButtons('Dots',               0, '23894df38f786cb014fa1cd79f2345db', [ 'reset', 'buttonInputGo', 'col11', 'col21', 'col12', 'col22', 'row11', 'row31', 'row21', 'row32', 'row12', 'row42', 'row22', 'row23', 'col23' ]);
 publicLibraryButtons('FreeCell',           0, 'b3339b3c5d42f47f4def7a164be69823', [ 'reset', 'jemz', 'reset' ]);
-publicLibraryButtons('Reward',             0, '24bbc23f8b2d109c3172030f41a27253', [
+publicLibraryButtons('Mancala',            0, '92108a0e76fd295fee9881b6c7f8928b', ['btnRule1', 'btnRule2', 'getb5', 'getb5', 'getb5', 'getb5', 'getb1', 'getb1', 'getb1', 'getb1' ]);
+publicLibraryButtons('Reversi',            0, '35e0017570f9ecd206a2317c1528be36',
+       [
+         [ ()=>Selector("#zpiece15"), ()=>Selector("#sq23") ],
+         [ ()=>Selector("#zpiece78"), ()=>Selector("#sq22") ],
+         [ ()=>Selector("#zpiece40"), ()=>Selector("#sq32") ],
+         [ ()=>Selector("#zpiece72"), ()=>Selector("#sq12") ],
+         [ ()=>Selector("#zpiece72"), ()=>Selector("#sq24") ],
+         [ ()=>Selector("#zpiece19"), ()=>Selector("#sq35") ],
+         [ ()=>Selector("#zpiece08"), ()=>Selector("#sq53") ]
+       ]);
+publicLibraryButtons('Reward',             0, '7a0e6d7fda1143f21d64552c18f92a75', [
   'gmex', 'kprc', 'oksq', 'j1wz', 'vfhn', '0i6i', 'Orange Recall', 'buttonInputGo', 'b09z'
 ]);
-publicLibraryButtons('Rummy Tiles',        0, '875067f1af33f8df3447bf60b996e4a4', [ 'startMix', 'draw14' ]);
-publicLibraryButtons('Undercover',         1, '829c56cb5b12d363a53ab382b32a8e19', [ 'Reset', 'Spy Master Button' ]);
-publicLibraryButtons('Dice',               0, 'd8b6edd6f7a25767781af4294ecda8fc', [ 'k18u', 'hy65', 'gghr', 'dsfa', 'f34a', 'fusq' ]);
-publicLibraryButtons('Functions - CALL',   0, '843183453983a96f3465a60f19236312', [
+publicLibraryButtons('Rummy Tiles',        0, 'c93ac5accd3f22264839675bd8b5321d', [ 'startMix', 'draw14' ]);
+publicLibraryButtons('Undercover',         1, '967a258cffec728391e4b039f4899aae', [ 'Reset', 'Spy Master Button' ]);
+publicLibraryButtons('Functions - CALL',   0, '493d1f63f35366f82f7573ce04f2126e', [
   'n4cw_8_C', '5a52', '5a52', '66kr', 'qeg1', 'n4cwB', '8r6p', 'qeg1', 'qeg1', 'n5eu'
 ]);
-publicLibraryButtons('Functions - CLICK',  0, 'd98299a0065b24a44b0d03a79900e0ef', [ '7u2q' ]);
-publicLibraryButtons('Functions - ROTATE', 0, '747586b12401e43382a7db2b2505f25e', [ 'c44c', '9kdj', 'w53c', 'w53c' ]);
-publicLibraryButtons('Functions - SELECT', 0, '4db86f0a95509b1c4fe5ebd6a1f822a9', [ 'oeh9', '9fhb', 'njkk', 'ffwl', 'bomo' ]);
-publicLibraryButtons('Functions - SORT',   1, '40b54c927835422dd8cdc6dd8419a657', [
+publicLibraryButtons('Functions - CLICK',  0, 'd44e77e0782cadbc9594494e5a83dde0', [ '7u2q' ]);
+publicLibraryButtons('Functions - ROTATE', 0, '70782503b9e3fb2d4e24495f5c53ef1b', [ 'c44c', '9kdj', 'w53c', 'w53c' ]);
+publicLibraryButtons('Functions - SELECT', 2, '48f7b9da88137c1262cb5690c6f1d6b2', [ 'jkmt1']);
+publicLibraryButtons('Functions - SORT',   1, '35dc8ddd8f7c8cc8ebc31a188a51bd47', [
   'ingw', 'k131', 'cnfu', 'i6yz', 'z394', '0v3h', '1h8o', 'v5ra', 'ingw-copy001', 'k131-copy001', 'cnfu-copy001',
   'i6yz-copy001', 'z394-copy001', '0v3h-copy001'
 ]);

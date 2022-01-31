@@ -9,13 +9,17 @@ export const deckEditor = {
       dynamicProperties() {
         var properties = [];
         for(const face of this.widgetState.faceTemplates) {
-          for (const object of face.objects) {
-           if(object.valueType == 'dynamic'){
-             var propObject = {name: object.value, type: object.type}
-             if (!properties.some(prop => prop.name == propObject.name))
-                properties.push(propObject);
-        }}}
-      return properties;
+          for(const object of face.objects) {
+            if(typeof object.dynamicProperties == 'object') {
+              for(const parameter in object.dynamicProperties) {
+                var propObject = {name: object.dynamicProperties[parameter], type: (parameter == "value")? object.type : "text"}
+                if(!properties.some(prop => prop.name == propObject.name))
+                  properties.push(propObject);
+              }
+            }
+          }
+        }
+        return properties;
       }
     },
     methods: {
@@ -41,7 +45,7 @@ export const deckEditor = {
         addCardType(fileName, value);
         this.widgetState.cardTypes[fileName] = value;
         const card = { deck:this.widgetState.id, type:'card', cardType:fileName };
-        const cardId = addWidgetLocal(card);
+        const cardId = await addWidgetLocal(card);
         if(this.widgetState.parent)
           await widgets.get(cardId).moveToHolder(widgets.get(this.widgetState.parent));
       },
