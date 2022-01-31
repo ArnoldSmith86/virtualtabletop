@@ -241,6 +241,8 @@ export class Widget extends StateManaged {
       this.parent.applyChildRemove(this);
     if(this.get('deck') && widgets.has(this.get('deck')))
       widgets.get(this.get('deck')).removeCard(this);
+    if($(`#${escapeCSS(this.id)}STYLESHEET`))
+      removeFromDOM($(`#${escapeCSS(this.id)}STYLESHEET`));
     removeFromDOM(this.domBox);
     this.inheritFromUnregister();
     this.globalUpdateListenersUnregister();
@@ -619,7 +621,9 @@ export class Widget extends StateManaged {
     for(const original of routine) {
       let a = JSON.parse(JSON.stringify(original));
       if(typeof a == 'object')
-        a = evaluateVariablesRecursively(a);
+        a = evaluateVariablesRecursively(a)
+      else
+        a = original.trim();
 
       var problems = [];
       if(jeRoutineLogging) jeLoggingRoutineOperationStart(original, a)
@@ -688,7 +692,13 @@ export class Widget extends StateManaged {
             variables[variable] = getValue(variables[variable]);
           if(jeRoutineLogging) jeLoggingRoutineOperationSummary(a.substr(4), JSON.stringify(variables[variable]));
         } else {
-          problems.push('String could not be interpreted as expression. Please check your syntax and note that many characters have to be escaped.');
+          const comment = a.match(new RegExp('^(?://(.*))?\x24'));
+          if (comment) {
+            // ignore (but log) blank and comment only lines
+            if(jeRoutineLogging) jeLoggingRoutineOperationSummary(comment[1]||'');
+          } else {
+            problems.push('String could not be interpreted as expression. Please check your syntax and note that many characters have to be escaped.');
+          }
         }
       }
 
