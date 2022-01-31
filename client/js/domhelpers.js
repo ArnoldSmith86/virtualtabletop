@@ -32,7 +32,7 @@ export function domByTemplate(id, type) {
 }
 
 export function mapAssetURLs(str) {
-  return str.replaceAll(/url\((["']?)\//g, 'url($1');
+  return str.replaceAll(/(["' (])\/(assets|i)\//g, '$1$2/');
 }
 
 export function escapeCSS(id) {
