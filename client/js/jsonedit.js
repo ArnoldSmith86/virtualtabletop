@@ -839,7 +839,6 @@ function jeAddWidgetPropertyCommands(object) {
   for(const property in object.defaults)
     if(property != 'typeClasses')
       jeAddWidgetPropertyCommand(object, property);
-  object.applyRemove();
   const type = object.defaults.typeClasses.replace(/widget /, '');
   return type == 'basic' ? null : type;
 }
