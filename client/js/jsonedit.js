@@ -23,7 +23,7 @@ const jeState = {
   widget: null
 };
 
-const jeOrder = [ 'type', 'id#', 'parent', 'fixedParent', 'deck', 'cardType', 'index*', 'owner#', 'x*', 'y*', 'width*', 'height*', 'scale', 'rotation#', 'layer', 'z', 'inheritChildZ#', 'movable*', 'movableInEdit*#' ];
+const jeOrder = [ 'type', 'id#', 'parent', 'fixedParent', 'deck', 'cardType', 'index*', 'owner#', 'x*', 'y*', 'width*', 'height*', 'borderRadius', 'scale', 'rotation#', 'layer', 'z', 'inheritChildZ#', 'movable*', 'movableInEdit*#' ];
 
 const jeCommands = [
   {
@@ -203,6 +203,15 @@ const jeCommands = [
       });
       jeSetAndSelect('text');
     }
+  },
+  {
+    id: 'je_inputField',
+    name: 'add field',
+    context: '^.* ↦ \\(INPUT\\) ↦ fields',
+    call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
+      jeGetValue(jeContext.slice(1, routineIndex+4)).push( { type: "###SELECT ME###" } );
+      jeSetAndSelect('string');
+    })
   },
   {
     id: 'je_css',
@@ -588,7 +597,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('FOREACH', { loopRoutine: [], in: [], collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('GET', { variable: 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
   jeAddRoutineOperationCommands('IF', { condition: null, operand1: null, relation: '==', operand2: null, thenRoutine: [], elseRoutine: [] });
-  // INPUT is missing
+  jeAddRoutineOperationCommands('INPUT', { cancelButtonIcon: null, cancelButtonText: "Cancel", confirmButtonIcon: null, confirmButtonText: "OK", fields: [] } );
   jeAddRoutineOperationCommands('LABEL', { value: 0, mode: 'set', label: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('MOVE', { count: 1, face: null, from: null, to: null });
   jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0, snapToGrid: true });
@@ -608,7 +617,16 @@ function jeAddCommands() {
 
   jeAddFaceCommand('border', '', 1);
   jeAddFaceCommand('css', '', '');
+  jeAddFaceCommand('properties', '', {});
   jeAddFaceCommand('radius', ' (rounded corners)', 1);
+
+  jeAddFieldCommand('text', 'subtitle|title|text', '');
+  jeAddFieldCommand('label', 'checkbox|color|number|select|string|switch', '');
+  jeAddFieldCommand('value', 'checkbox|color|number|string|switch', '');
+  jeAddFieldCommand('variable', 'checkbox|color|number|select|string|switch', '');
+  jeAddFieldCommand('min', 'number', 0);
+  jeAddFieldCommand('max', 'number', 10);
+  jeAddFieldCommand('options', 'select', [ { value: 'value', text: 'text' } ]);
 
   jeAddEnumCommands('^[a-z]+ ↦ type', widgetTypes.slice(1));
   jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ value', [ '${}' ]);
@@ -621,6 +639,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(GET\\) ↦ aggregation', [ 'first', 'last', 'array', 'average', 'median', 'min', 'max', 'sum' ]);
   jeAddEnumCommands('^.*\\(IF\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=' ]);
   jeAddEnumCommands('^.*\\(IF\\) ↦ (operand1|operand2|condition)', [ '${}' ]);
+  jeAddEnumCommands('^.*\\(INPUT\\) ↦ fields ↦ [0-9]+ ↦ type', [ 'checkbox', 'color', 'number', 'select', 'string', 'subtitle', 'switch', 'text', 'title' ]);
   jeAddEnumCommands('^.*\\(LABEL\\) ↦ mode', [ 'set', 'dec', 'inc', 'append' ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ angle', [ 45, 60, 90, 135, 180 ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ mode', [ 'set', 'add' ]);
@@ -782,6 +801,22 @@ function jeAddFaceCommand(key, description, value) {
       jeStateNow.faceTemplates[+jeContext[2]][key] = '###SELECT ME###';
       jeSetAndSelect(value);
     }
+  });
+}
+
+function jeAddFieldCommand(key, types, value) {
+  jeCommands.push({
+    id: 'field_' + key,
+    name: key,
+    context: '^.*\\(INPUT\\) ↦ fields ↦ [0-9]+',
+    show: jeRoutineCall(function(routineIndex) {
+      const field = jeGetValue(jeContext.slice(1, routineIndex+5));
+      return typeof field[key] === 'undefined' && (field.type || '').match(types);
+    }, true),
+    call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
+      jeGetValue(jeContext.slice(1, routineIndex+5))[key] = '###SELECT ME###';
+      jeSetAndSelect(value);
+    })
   });
 }
 
@@ -1171,7 +1206,7 @@ function jeDisplayTree() {
   jeMode = 'tree';
   jeWidget = null;
   jeStateNow = null;
-  jeSet(jeStateBefore = result);
+  jeSet(jeStateBefore = result, true);
   jeGetContext();
   jeShowCommands();
 }
@@ -1329,6 +1364,7 @@ function jeInsert(context, key, value) {
 // START routine logging
 
 let jeRoutineLogging = false;
+let jeRoutineResetOnNextLog = true;
 let jeRoutineResult = '';
 let jeLoggingHTML = '';
 let jeLoggingDepth = 0;
@@ -1339,8 +1375,12 @@ function jeLoggingJSON(obj) {
 }
 
 function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference) {
-  if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine'].indexOf( jeHTMLStack[0][3] ) == -1 )
-    jeLoggingHTML = `
+  if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine'].indexOf( jeHTMLStack[0][3] ) == -1 ) {
+    if(jeRoutineResetOnNextLog) {
+      jeLoggingHTML = '';
+      jeRoutineResetOnNextLog = false;
+    }
+    jeLoggingHTML += `
       <div class="jeLog">
         <div class="jeExpander ${jeLoggingDepth ? '' : 'jeExpander-down'}">
           <span class="jeLogWidget">${widget.get('id')}</span>
@@ -1348,6 +1388,7 @@ function jeLoggingRoutineStart(widget, property, initialVariables, initialCollec
         </div>
         <div class="jeLogNested ${jeLoggingDepth ? '' : 'active'}">
     `;
+  }
   ++jeLoggingDepth;
 }
 
@@ -1356,19 +1397,42 @@ function jeLoggingRoutineEnd(variables, collections) {
   --jeLoggingDepth;
   if(!jeLoggingDepth) {
     $('#jeLog').innerHTML = jeLoggingHTML + '</div></div>';
-    var expanders = document.getElementsByClassName('jeExpander');
-    var i;
+    // Make it so clicking on the arrows expands the subtree
+    const expanders = document.getElementsByClassName('jeExpander');
+    let i;
     for (i=0; i < expanders.length; i++) {
       expanders[i].addEventListener('click', function() {
         this.classList.toggle('jeExpander-down');
-        this.parentElement.querySelector('.jeLogNested').classList.toggle('active');
+        this.parentNode.querySelector('.jeLogNested').classList.toggle('active');
       });
+    }
+    // Make expander arrows that are parents of nodes with problems show up red.
+    const problems = document.getElementsByClassName('jeLogHasProblems');
+    for (i=0; i<problems.length; i++) {
+      let node = problems[i];
+      while (node && !node.classList.contains('jeLog')) {
+        if(node.classList.contains('jeLogOperation')) {
+          node.firstElementChild.classList.remove('jeExpander');
+          node.firstElementChild.classList.add('jeRedExpander')
+        }
+        node = node.parentNode;
+      }
     }
   }
 }
 
 function jeLoggingRoutineOperationStart(original, applied) {
-  jeHTMLStack.unshift([jeLoggingHTML, original, applied, html(typeof applied == 'string' ? applied.split(' ')[0] : applied.func || '<COMMENT>')]);
+  let fcn;
+  if (typeof applied == 'string')
+    if (applied.substring(0,3) == 'var')
+      fcn = 'var'
+    else if (applied.substring(0,2) == '//')
+      fcn = '//'
+    else
+      fcn = applied
+  else
+    fcn = applied.func || '<COMMENT>'
+  jeHTMLStack.unshift([jeLoggingHTML, original, applied, html(fcn)]);
   jeLoggingHTML = '';
 }
 
@@ -1737,6 +1801,7 @@ window.addEventListener('mousemove', function(e) {
 window.addEventListener('mouseup', async function(e) {
   if(!jeEnabled)
     return;
+  jeRoutineResetOnNextLog = true;
   if(e.target == $('#jeText') && jeContext != 'macro') {
     jeGetContext();
     if(jeContext[0] == 'Tree' && jeContext[1] !== undefined) {

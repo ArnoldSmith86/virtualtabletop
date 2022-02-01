@@ -1,10 +1,10 @@
-.label {
+.widget.label {
   font-size: 16px;
   color: #6d6d6d;
   text-align: center;
 }
 
-.label > textarea {
+.widget.label > textarea {
   border: none;
   background: none;
   padding: 0;
@@ -15,6 +15,7 @@
   width: 100%;
   min-height: 100%;
   resize: none;
+  text-transform: inherit;
 }
 
 body.edit .widget.label {
@@ -27,3 +28,8 @@ body.edit .widget.label > * {
   left: 0;
   top: 0;
 }
+
+.widget.label > textarea:read-only {
+  pointer-events: none;
+}
+
