@@ -16,6 +16,7 @@
   width: 100%;
   resize: none;
   text-transform: inherit;
+  scrollbar-width: thin;
 }
 
 body.edit .widget.label {
