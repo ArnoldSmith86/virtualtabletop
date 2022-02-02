@@ -15,6 +15,7 @@
   font: inherit;
   width: 100%;
   resize: none;
+  text-transform: inherit;
 }
 
 body.edit .widget.label {
