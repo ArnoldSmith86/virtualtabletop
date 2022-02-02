@@ -587,7 +587,7 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
     if(wi.type == 'pile')   w = new Pile(wi.id);
     if(wi.type == 'timer')  w = new Timer(wi.id);
     widgets.set(wi.id, w);
-    w.applyDelta(wi);
+    w.applyInitialDelta(wi);
     if(!wi.parent) {
       w.domElement.addEventListener('click', async _=>{
         overlayDone(await onClick());
@@ -598,7 +598,7 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
 }
 
 function addWidgetToAddWidgetOverlay(w, wi) {
-  w.applyDelta(wi);
+  w.applyInitialDelta(wi);
   w.domElement.addEventListener('click', async _=>{
     const toAdd = {...wi};
     toAdd.z = getMaxZ(w.get('layer')) + 1;
@@ -666,10 +666,10 @@ function populateAddWidgetOverlay() {
     addWidgetToAddWidgetOverlay(new BasicWidget('add-classic-'+color), {
       classes: 'classicPiece',
       color,
-      width: 90,
-      height: 90,
-      x: 510,
-      y: y + (43.83 - 90)/2
+      width: 56,
+      height: 84,
+      x: 528,
+      y: y + (43.83 - 84)/2
     });
     y += 88;
   }
