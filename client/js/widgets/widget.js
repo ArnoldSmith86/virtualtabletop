@@ -1,4 +1,4 @@
-import { $, removeFromDOM, asArray } from '../domhelpers.js';
+import { $, removeFromDOM, asArray, escapeCSS } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
@@ -26,6 +26,7 @@ export class Widget extends StateManaged {
     this.id = id;
     this.domElement = div;
     this.childArray = [];
+    this.propertiesUsedInCSS = [];
 
     if(StateManaged.inheritFromMapping[id] === undefined)
       StateManaged.inheritFromMapping[id] = [];
@@ -37,6 +38,7 @@ export class Widget extends StateManaged {
       width: 100,
       height: 100,
       layer: 0,
+      borderRadius: null,
       rotation: 0,
       scale: 1,
 
@@ -227,6 +229,8 @@ export class Widget extends StateManaged {
       this.parent.applyChildRemove(this);
     if(this.get('deck') && widgets.has(this.get('deck')))
       widgets.get(this.get('deck')).removeCard(this);
+    if($(`#${escapeCSS(this.id)}STYLESHEET`))
+      removeFromDOM($(`#${escapeCSS(this.id)}STYLESHEET`));
     removeFromDOM(this.domElement);
     this.inheritFromUnregister();
     this.globalUpdateListenersUnregister();
@@ -361,8 +365,12 @@ export class Widget extends StateManaged {
     }
   }
   css() {
-    let css = this.get('css');
+    this.propertiesUsedInCSS = [];
+    if($(`#${escapeCSS(this.id)}STYLESHEET`))
+      removeFromDOM($(`#${escapeCSS(this.id)}STYLESHEET`));
+    let css = this.cssReplaceProperties(this.cssAsText(this.get('css')));
 
+    css = this.cssBorderRadius() + css;
     css += '; width:'  + this.get('width')  + 'px';
     css += '; height:' + this.get('height') + 'px';
     css += '; z-index:' + this.calculateZ();
@@ -371,8 +379,62 @@ export class Widget extends StateManaged {
     return css;
   }
 
+  cssAsText(css) {
+    if(typeof css == 'object') {
+      let cssText = '';
+      for(const key in css) {
+        if(typeof css[key] == 'object')
+          return this.cssToStylesheet(css);
+        cssText += `; ${key}: ${css[key]}`;
+      }
+      return cssText;
+    } else {
+      return css;
+    }
+  }
+  cssBorderRadius() {
+    let br = this.get('borderRadius');
+    switch(typeof(br)) {
+      case 'number':
+        if(br >= 0)
+          return `border-radius:${br}px;`;
+        else
+          return '';
+      case 'string':
+        br = br.trim().replace(/\s+/g, ' ');
+        const value = '(?:0|\\+?(?:\\d+(?:\\.\\d+)?|\\.\\d+)(?:[eE][+-]?\\d+)?(?:px|%))';
+        const valueList = `(?:${value}(?: ${value}){0,3})`;
+        const re = new RegExp(`^${valueList}(?: ?\\/ ?${valueList})?` + '\x24');
+        if(br.match(re))
+          return `border-radius:${br};`;
+        else
+          return '';
+      default:
+        return ''
+    }
+  }
+
   cssProperties() {
-    return [ 'css', 'height', 'inheritChildZ', 'layer', 'width' ];
+    return [ 'borderRadius', 'css', 'height', 'inheritChildZ', 'layer', 'width' ].concat(this.propertiesUsedInCSS);
+  }
+
+  cssReplaceProperties(css) {
+    for(const match of String(css).matchAll(/\$\{PROPERTY ([A-Za-z0-9_-]+)\}/g)) {
+      css = css.replace(match[0], this.get(match[1]));
+      this.propertiesUsedInCSS.push(match[1]);
+    }
+    return css;
+  }
+
+  cssToStylesheet(css) {
+    const style = document.createElement('style');
+    style.id = `${this.id}STYLESHEET`;
+    for(const key in css)
+      if(key != 'inline')
+        style.appendChild(document.createTextNode(`#${escapeCSS(this.id)}${key == 'default' ? '' : key} { ${this.cssReplaceProperties(this.cssAsText(css[key]))} }`));
+    $('head').appendChild(style);
+
+    return this.cssAsText(css.inline || '');
   }
 
   cssTransform() {
@@ -517,6 +579,8 @@ export class Widget extends StateManaged {
 
     batchStart();
 
+    let abortRoutine = false; // Set for CALL with 'return=false' or when INPUT is cancelled.
+
     if(tracingEnabled && typeof property == 'string')
       sendTraceEvent('evaluateRoutine', { id: this.get('id'), property });
     if(jeRoutineLogging)
@@ -541,7 +605,9 @@ export class Widget extends StateManaged {
     for(const original of routine) {
       let a = JSON.parse(JSON.stringify(original));
       if(typeof a == 'object')
-        a = evaluateVariablesRecursively(a);
+        a = evaluateVariablesRecursively(a)
+      else
+        a = original.trim();
 
       var problems = [];
       if(jeRoutineLogging) jeLoggingRoutineOperationStart(original, a)
@@ -610,7 +676,13 @@ export class Widget extends StateManaged {
             variables[variable] = getValue(variables[variable]);
           if(jeRoutineLogging) jeLoggingRoutineOperationSummary(a.substr(4), JSON.stringify(variables[variable]));
         } else {
-          problems.push('String could not be interpreted as expression. Please check your syntax and note that many characters have to be escaped.');
+          const comment = a.match(new RegExp('^(?://(.*))?\x24'));
+          if (comment) {
+            // ignore (but log) blank and comment only lines
+            if(jeRoutineLogging) jeLoggingRoutineOperationSummary(comment[1]||'');
+          } else {
+            problems.push('String could not be interpreted as expression. Please check your syntax and note that many characters have to be escaped.');
+          }
         }
       }
 
@@ -646,14 +718,16 @@ export class Widget extends StateManaged {
                 if(!result.collection.length || result.collection.length >= 5)
                   returnCollection = `(${result.collection.length} widgets)`;
                 jeLoggingRoutineOperationSummary(
-                  `${a.routine} ${theWidget} and return variable ${a.variable} and collection ${a.collection}`,
-                  `${JSON.stringify(variables[a.variable])}; ${JSON.stringify(result.collection)}`)
+                  `${a.routine} ${theWidget} and return variable '${a.variable}' and collection '${a.collection}'`,
+                  `${JSON.stringify(variables[a.variable])}; ${returnCollection}`)
               } else {
                 jeLoggingRoutineOperationSummary( `${a.routine} ${theWidget} and abort caller processing`)
               }
             }
           }
         }
+        if (!a.return)
+          abortRoutine = true;
       }
 
       if(a.func == 'CANVAS') {
@@ -986,11 +1060,10 @@ export class Widget extends StateManaged {
             });
             jeLoggingRoutineOperationSummary(`${varList.join(', ')}`,`${valueList.join(', ')}`);
           }
-
         } catch(e) {
-          problems.push(`Exception: ${e.toString()}`);
-          batchEnd();
-          return;
+          abortRoutine = true;
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary("INPUT cancelled");
         }
       }
 
@@ -1421,7 +1494,7 @@ export class Widget extends StateManaged {
       if(!jeRoutineLogging && problems.length)
         console.log(problems);
 
-      if(a.func == 'CALL' && !a.return)
+      if(abortRoutine)
         break
 
     } // End iterate over functions in routine
@@ -1439,7 +1512,7 @@ export class Widget extends StateManaged {
       playerName = variables.playerName;
     }
 
-    return { variable: variables.result, collection: collections.result || [] };
+    return { variable: variables.result || null, collection: collections.result || [] };
   }
 
   get(property) {
@@ -1512,6 +1585,10 @@ export class Widget extends StateManaged {
             if(audioElement.parentNode)
               audioElement.parentNode.removeChild(audioElement);
           };
+          audioElement.onerror = function() {
+            if(audioElement.parentNode)
+              audioElement.parentNode.removeChild(audioElement);
+          }
         }
       }
       setInterval(function(){
