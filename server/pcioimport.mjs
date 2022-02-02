@@ -38,9 +38,10 @@ export default async function convertPCIO(content) {
     if(name.match(/^\/img\//)) {
       name = 'https://playingcards.io' + name;
 
-      name = name.replace('https://playingcards.io/img/cardback-red.svg',                        '/i/cards-default/2B.svg');
-      name = name.replace(/https:\/\/playingcards\.io\/img\/cards(?:-french)?\/joker-black.svg/, '/i/cards-default/2J.svg');
-      name = name.replace(/https:\/\/playingcards\.io\/img\/cards(?:-french)?\/joker-red.svg/,   '/i/cards-default/1J.svg');
+      name = name.replace(/https:\/\/playingcards\.io\/img\/cardback.*blue.svg/,                      '/i/cards-default/1B.svg');
+      name = name.replace(/https:\/\/playingcards\.io\/img\/cardback.*red.svg/,                       '/i/cards-default/2B.svg');
+      name = name.replace(/https:\/\/playingcards\.io\/img\/cards(?:-french)?\/joker-black.svg/,      '/i/cards-default/2J.svg');
+      name = name.replace(/https:\/\/playingcards\.io\/img\/cards(?:-french)?\/joker-(red|blue).svg/, '/i/cards-default/1J.svg');
 
       const regex = /https:\/\/playingcards\.io\/img\/cards(?:-french)?\/(hearts|spades|diamonds|clubs)-([2-9jqka]|10).svg/;
       const match = regex.exec(name);
@@ -202,6 +203,9 @@ export default async function convertPCIO(content) {
         w.classes = 'transparent';
       addDimensions(w, widget, 111, 168);
 
+      if(widget.allowedDecks)
+        w.dropTarget = widget.allowedDecks.map(d=>({deck:d}));
+
       if(pileOverlaps[w.id]) {
         w.x += 4;
         w.y += 4;
@@ -278,11 +282,7 @@ export default async function convertPCIO(content) {
         w.faceTemplates.push(widget.backTemplate);
       if(widget.faceTemplate)
         w.faceTemplates.push(widget.faceTemplate);
-      w.cardDefaults = {
-        pilesWith: {
-          type: 'card'
-        }
-      };
+      w.cardDefaults = {};
       if(widget.cardWidth && widget.cardWidth != 103)
         w.cardDefaults.width = widget.cardWidth;
       if(widget.cardHeight && widget.cardHeight != 160)
@@ -300,18 +300,28 @@ export default async function convertPCIO(content) {
         delete face.includeBorder;
         delete face.includeRadius;
         for(const object of face.objects) {
-          object.value = mapName(object.value);
+          if(object.value)
+            object.value = mapName(object.value);
           object.width = object.w;
           object.height = object.h;
           delete object.w;
           delete object.h;
-          if(object.value == '/i/cards-default/2B.svg')
-            object.color = '#ffffff';
         }
+        face.objects.unshift({
+          width:     w.cardDefaults.width  || 103,
+          height:    w.cardDefaults.height || 160,
+          type:      'image',
+          color:     'white',
+          valueType: 'static',
+          value:     ''
+        });
       }
-      for(const type in w.cardTypes)
+      let sortingOrder = 0;
+      for(const type in w.cardTypes) {
         for(const key in w.cardTypes[type])
           w.cardTypes[type][key] = mapName(w.cardTypes[type][key]);
+        w.cardTypes[type].sortingOrder = ++sortingOrder;
+      }
     } else if(widget.type == 'card' || widget.type == 'piece') {
       if(!byID[widget.deck]) // orphan card without deck
         continue;
@@ -402,6 +412,17 @@ export default async function convertPCIO(content) {
       w.css = `font-size: ${widget.textSize}px; font-weight: ${weight}; text-align: ${widget.textAlign};`;
       addDimensions(w, widget, 100, 20);
       w.height = widget.textSize * 3.5;
+    } else if(widget.type == 'separator') {
+      w.movable = false;
+      w.layer = -1;
+      w.css = `background:#ddd`;
+      if(widget.separatorType == 'horizontal') {
+        w.width  = widget.width || 150;
+        w.height = 1;
+      } else {
+        w.height = widget.height || 150;
+        w.width  = 1;
+      }
     } else if(widget.type == 'seat') {
       w.type = 'seat';
       w.display = 'seatIndex';
@@ -409,11 +430,12 @@ export default async function convertPCIO(content) {
       w.hideWhenUnused = true;
       if(typeof widget.seatIndex == 'number')
         w.index = widget.seatIndex + 1;
-      w.x += 69;
-      w.y -= 38;
+      w.x = (widget.x || 0) + 69;
+      w.y = (widget.y || 0) - 38;
       w.height = 42;
       w.width = 42;
-      w.css = 'border-radius:100%;box-sizing:border-box;border-width:2px;';
+      w.css = 'box-sizing:border-box;border-width:2px;';
+      w.borderRadius = '50%';
       w.playerChangeRoutine = [
         {
           func: 'SELECT',
@@ -509,7 +531,8 @@ export default async function convertPCIO(content) {
         movableInEdit: false,
         TYPE: 'label',
         text: `Player ${widget.seatIndex + 1}`,
-        css: 'border-radius:36%;background:white;border:1px solid lightgrey;font-size:18px;display: flex;justify-content: center;align-items: center;',
+        css: 'background:white;border:1px solid lightgrey;font-size:18px;display: flex;justify-content: center;align-items: center;',
+        borderRadius: '36%',
         clickRoutine
       };
 
@@ -525,7 +548,8 @@ export default async function convertPCIO(content) {
         movable: false,
         movableInEdit: false,
         text: 'Sit Here',
-        css: 'background: white; border-radius: 4px; color: black;font-size:16px; border:1px solid lightgrey',
+        css: 'background: white; color: black;font-size:16px; border:1px solid lightgrey',
+        borderRadius: 4,
         clickRoutine
       };
 
@@ -542,7 +566,8 @@ export default async function convertPCIO(content) {
         owner: [],
         TYPE: 'count',
         text: 0,
-        css: 'background: white; border-radius: 4px; color: black;font-size:18px; border:1px solid lightgrey;display: flex;justify-content: center;align-items: center;',
+        css: 'background: white; color: black;font-size:18px; border:1px solid lightgrey;display: flex;justify-content: center;align-items: center;',
+        borderRadius: 4,
         clickRoutine,
         ownerGlobalUpdateRoutine: [
           "var parent = ${PROPERTY parent}",
@@ -576,7 +601,8 @@ export default async function convertPCIO(content) {
         movableInEdit: false,
         owner: [],
         TYPE: 'count',
-        css: 'background: white; border-radius: 4px; color: black;font-size:16px; border:1px solid lightgrey;transform-origin:bottom left'
+        css: 'background: white; color: black;font-size:16px; border:1px solid lightgrey;transform-origin:bottom left',
+        borderRadius: 4
       };
       output[widget.id + 'count2'] = {
         id: widget.id + 'count2',
@@ -591,7 +617,8 @@ export default async function convertPCIO(content) {
         movableInEdit: false,
         owner: [],
         TYPE: 'count',
-        css: 'background: white; border-radius: 4px; color: black;font-size:16px; border:1px solid lightgrey;transform-origin:bottom left'
+        css: 'background: white; border-radius: 4px; color: black;font-size:16px; border:1px solid lightgrey;transform-origin:bottom left',
+        borderRadius: 4
       };
     } else if(widget.type == 'timer') {
       w.type = 'timer';
@@ -660,13 +687,26 @@ export default async function convertPCIO(content) {
 
       w.clickRoutine = [];
 
+      if(widget.clickRoutine && widget.clickRoutine.popupMessage) {
+        w.clickRoutine.push({
+          func: 'INPUT',
+          fields: [
+            {
+              type: 'text',
+              text: widget.clickRoutine.popupMessage
+            }
+          ],
+          confirmButtonText: widget.label
+        });
+      }
+
       if(widget.type == 'turnButton') {
         w.clickRoutine.push({
           func: 'TURN'
         });
       }
 
-      for(let c of widget.clickRoutine || []) {
+      for(let c of widget.clickRoutine ? (widget.clickRoutine.steps || widget.clickRoutine) : []) {
         if(c.func == 'MOVE_CARDS_BETWEEN_HOLDERS') {
           if(!c.args.from || !c.args.to)
             continue;
@@ -690,6 +730,29 @@ export default async function convertPCIO(content) {
           if(moveFlip && moveFlip != 'none')
             c.face = moveFlip == 'faceDown' ? 0 : 1;
         }
+        if(c.func == 'RECALL_CARDS') {
+          if(!c.args.decks)
+            continue;
+          const holders = c.args.decks.value.map(d=>byID[d].parent);
+          const flip = c.args.flip;
+          c = {
+            func:   'RECALL',
+            holder: holders,
+            owned:  c.args.includeHands.value == 'hands'
+          };
+          if(c.holder.length == 1)
+            c.holder = c.holder[0];
+          if(c.owned)
+            delete c.owned;
+          if(!flip || flip.value != 'none') {
+            w.clickRoutine.push(c);
+            c = {
+              func:   'FLIP',
+              holder: holders,
+              face:   flip && flip.value == 'faceUp' ? 1 : 0
+            };
+          }
+        }
         if(c.func == 'SHUFFLE_CARDS') {
           if(!c.args.holders)
             continue;
@@ -699,6 +762,20 @@ export default async function convertPCIO(content) {
           };
           if(c.holder.length == 1)
             c.holder = c.holder[0];
+        }
+        if(c.func == 'SORT_CARDS') {
+          if(!c.args.sources)
+            continue;
+          c = {
+            func:   'SORT',
+            holder: c.args.sources.value,
+            key:    'sortingOrder',
+            reverse: !c.args.direction || c.args.direction.value != 'za'
+          };
+          if(c.holder.length == 1)
+            c.holder = c.holder[0];
+          if(!c.reverse)
+            delete c.reverse;
         }
         if(c.func == "FLIP_CARDS") {
           if(!c.args.holders)

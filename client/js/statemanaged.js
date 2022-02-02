@@ -9,7 +9,6 @@ export class StateManaged {
 
   addDefaults(defaults) {
     Object.assign(this.defaults, defaults);
-    this.applyDeltaToDOM(defaults);
   }
 
   applyDelta(delta) {
@@ -29,6 +28,7 @@ export class StateManaged {
   }
 
   applyInitialDelta(delta) {
+    this.applyDeltaToDOM(this.defaults);
     this.applyDelta(delta);
   }
 
@@ -52,6 +52,11 @@ export class StateManaged {
     }
   }
 
+  globalUpdateListenersUnregister() {
+    for(const property in StateManaged.globalUpdateListeners)
+      StateManaged.globalUpdateListeners[property] = StateManaged.globalUpdateListeners[property].filter(i=>i[0]!=this);
+  }
+
   inheritFrom() {
     const iF = this.state.inheritFrom;
     if(!iF)
@@ -67,7 +72,15 @@ export class StateManaged {
   }
 
   inheritFromIsValid(properties, key) {
-    return (properties == '*' || properties.indexOf(key) != -1) && [ 'id', 'type', 'deck', 'cardType' ].indexOf(key) == -1;
+    if([ 'id', 'type', 'deck', 'cardType', 'audio' ].indexOf(key) != -1)
+      return false;
+    if(properties == '*')
+      return true;
+
+    if(Array.isArray(properties) && properties.length && properties[0].length && properties[0][0] == '!')
+      return properties.indexOf('!'+key) == -1;
+    else
+      return properties.indexOf(key) != -1;
   }
 
   inheritFromUnregister() {
@@ -101,7 +114,7 @@ export class StateManaged {
 
     if(Array.isArray(this.get(`${property}ChangeRoutine`)))
       await this.evaluateRoutine(`${property}ChangeRoutine`, { oldValue, value }, {});
-    if(Array.isArray(this.get('changeRoutine')))
+    if(Array.isArray(this.get('changeRoutine')) && property != 'audio')
       await this.evaluateRoutine('changeRoutine', { property, oldValue, value }, {});
 
     if(!StateManaged.isInGlobalUpdateRoutine) {
