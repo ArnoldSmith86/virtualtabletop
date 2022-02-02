@@ -75,7 +75,8 @@ class Pile extends Widget {
 
   async click(mode='respect') {
     if(!await super.click(mode)) {
-      $('#pileOverlay').innerHTML = `<p>${this.handle.textContent} cards</p><p>Drag the handle with the number to drag the entire pile.</p>`;
+      const childCount = this.children().length;
+      $('#pileOverlay').innerHTML = `<p>${childCount} cards</p><p>Drag the handle with the number to drag the entire pile.</p>`;
 
       const flipButton = document.createElement('button');
       flipButton.textContent = 'Flip pile';
@@ -103,7 +104,6 @@ class Pile extends Widget {
       });
       $('#pileOverlay').appendChild(shuffleButton);
 
-      const childCount = this.children().length;
       const countDiv = document.createElement('div');
       countDiv.textContent = `/ ${childCount}`;
       $('#pileOverlay').appendChild(countDiv);
