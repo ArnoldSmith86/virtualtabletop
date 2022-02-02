@@ -320,7 +320,7 @@ publicLibraryButtons('Blue',               0, '096bdf3bd07bb277c2c1f4cc132f0695'
 publicLibraryButtons('Bhukhar',            0, 'e00f92a157178e7f570302ccc6b8c41b', [ 'btnMenuSettings', 'btn8Players', 'btn4Packs', 'btnCloseSettings', 'btnSelectPlayer', 'btnDeal', 'btnPile4', 'btnStartGame', 'btnTakeOne', 'btnNextPlayer', 'btnPickUp' ]);
 publicLibraryButtons('Dice',               0, 'a68d28c20b624d6ddf87149bae230598', [ 'k18u', 'hy65', 'gghr', 'dsfa', 'f34a', 'fusq' ]);
 publicLibraryButtons('Dots',               0, '23894df38f786cb014fa1cd79f2345db', [ 'reset', 'buttonInputGo', 'col11', 'col21', 'col12', 'col22', 'row11', 'row31', 'row21', 'row32', 'row12', 'row42', 'row22', 'row23', 'col23' ]);
-publicLibraryButtons('FreeCell',           0, 'b3339b3c5d42f47f4def7a164be69823', [ 'reset', 'jemz', 'reset' ]);
+publicLibraryButtons('Solitaire',          0, 'b3339b3c5d42f47f4def7a164be69823', [ 'reset', 'jemz', 'reset' ]);
 publicLibraryButtons('Mancala',            0, '92108a0e76fd295fee9881b6c7f8928b', ['btnRule1', 'btnRule2', 'getb5', 'getb5', 'getb5', 'getb5', 'getb1', 'getb1', 'getb1', 'getb1' ]);
 publicLibraryButtons('Reversi',            0, '35e0017570f9ecd206a2317c1528be36',
        [
