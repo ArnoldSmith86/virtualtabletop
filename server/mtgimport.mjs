@@ -10,7 +10,7 @@ export default async function convertMTG(content) {
   const zip = await JSZip.loadAsync(content);
 
   const decks = {};
-  const widgets = {};
+  const widgets = JSON.parse(fs.readFileSync(path.resolve() + '/server/mtgimport.json'));
   let id = 1;
 
   for(const file in zip.files) {
@@ -30,6 +30,7 @@ export default async function convertMTG(content) {
     }
   }
 
+  let deckCounter = 0;
   for(const deckTitle in decks) {
     widgets[deckTitle] = {
       id: deckTitle,
@@ -123,6 +124,10 @@ export default async function convertMTG(content) {
       width: 115,
       height: 160
     };
+
+    if(++deckCounter <= 2)
+      widgets[deckTitle].parent = widgets[deckTitle + '_pile'].parent = `Player ${deckCounter} - Library`;
+
     for(const card of decks[deckTitle].cards) {
       widgets[deckTitle].cardTypes[card.name] = {
         face: card.face
