@@ -2,7 +2,7 @@ import { $, $a, onLoad, selectFile, asArray } from './domhelpers.js';
 import { startWebSocket, toServer } from './connection.js';
 
 
-let scale = 1;
+export let scale = 1;
 let roomRectangle;
 let overlayActive = false;
 let muted = false;
@@ -244,7 +244,7 @@ onLoad(function() {
     if(overlay)
       showOverlay(overlay);
   });
-  
+
   on('#muteButton', 'click', function(){
     if(muted) {
       document.getElementById('volume').value = unmuteVol;
@@ -296,7 +296,9 @@ onLoad(function() {
     for(const betaServerName in config.betaServers) {
       const entry = domByTemplate('template-betaServerList-entry', 'tr');
       $('button', entry).textContent = betaServerName;
-      $('.return', entry).textContent = config.betaServers[betaServerName].return ? 'Yeah...' : 'Nope!';
+      var thisstatus = config.betaServers[betaServerName].return ? 'check' : 'cancel';
+      $('.return', entry).textContent = thisstatus;
+      $('.return', entry).classList.add(thisstatus);
       $('.description', entry).textContent = config.betaServers[betaServerName].description;
       $('#betaServerList').appendChild(entry);
     }

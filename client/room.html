@@ -12,7 +12,7 @@
   <link rel="mask-icon" href="/i/branding/mask-icon.svg">
   <script src="https://cdn.jsdelivr.net/combine/npm/vue@3.0.7/dist/vue.global.prod.js,npm/jszip@3.6.0/dist/jszip.min.js"></script>
   <base target="_blank">
-  <style> {{CSS}} </style>
+  <style> /*** CSS ***/ </style>
 </head>
 
 
@@ -162,33 +162,35 @@
     <div id="addOverlay" class="overlay">
       <div class="category">
         <h2>Cards</h2>
-        <button id="addHand">🖐️ Add hand</button>
+        <button class="ui-button" id="addHand">Add hand</button>
       </div>
       <div class="category">
         <h2>Game Pieces</h2>
       </div>
       <div class="category">
         <h2>Interactive</h2>
-        <button id="addCanvas">🎨 Add Canvas</button>
-        <button id="addSeat">🪑 Add Seat</button>
+        <button class="ui-button" id="addCanvas">Add Canvas</button>
+        <button class="ui-button" id="addSeat">Add Seat</button>
       </div>
       <div class="category">
         <h2>Decorative</h2>
       </div>
       <div class="category">
         <h2>Custom</h2>
-        <button id="uploadBoard">⬆️ Upload board</button>
-        <button id="uploadToken">⬆️ Upload token</button>
-        <button id="addBasicWidget">Add basic widget</button>
+        <button class="ui-button" id="uploadBoard">Upload Board</button>
+        <button class="ui-button" id="uploadToken">Upload Token</button>
+        <button class="ui-button" id="addBasicWidget">Add Basic Widget</button>
       </div>
     </div>
 
     <div id="buttonInputOverlay" class="overlay">
-      <form onsubmit="return false">
+      <form class=modal onsubmit="return false">
         <h1>Button Input</h1>
         <div id="buttonInputFields"></div>
-        <button id="buttonInputGo">Go</button>
-        <button id="buttonInputCancel">Cancel</button>
+        <div class=footer>
+          <button id="buttonInputGo" class=positiveInput><span class=UIicon></span><label></label></button>
+          <button id="buttonInputCancel" class=neutralInput><span class=UIicon></span><label></label></button>
+        </div>
       </form>
     </div>
 
@@ -198,9 +200,9 @@
         <div class="instructionalText">From here you can edit the name and color of any player.</div>
       </div>
       <div id="playerList">
-        <script id="template-playerlist-entry" type="text/template">
+        <template id="template-playerlist-entry" type="text/template">
           <input type="color" class="teamColor"></span> <input class="playerName" />
-        </script>
+        </template>
         <label class="me ui-line" data-label="Me »"> </label>
         <label class="otherPlayers ui-line" data-label="Other Players »"> </label>
         <label class="inactivePlayers ui-line"> </label>
@@ -218,7 +220,7 @@
         <h1>VirtualTabletop.io</h1>
         <p>There is no saved game in this room. You can save your progress or add games to it and play them with your friends and family by sharing the link.</p>
         <p>Bring your own voice chat. We recommend <a href="https://meet.jit.si/">Jitsi Meet</a> because it's free software, runs in the browser and requires no accounts.</p>
-        <div>
+        <div class="emptyRoomOptions">
           <div><p>Save what you are currently working on?</p><button class="prettyButton create">Save room state</button></div>
           <div><p>Do you have a *.vtt or *.pcio file?</p><button class="prettyButton upload">Upload files</button></div>
           <div><p>Do you have a link to one?</p><button class="prettyButton link">Enter link</button></div>
@@ -226,18 +228,18 @@
         <p>If you don't, you can create your own game or add one from the public library:</p>
       </div>
       <div id="statesList">
-        <script id="template-stateslist-entry" type="text/template">
+        <template id="template-stateslist-entry" type="text/template">
           <img>
           <div class="details">
-            <em><a class="bgg">Name (Year)</a></em>
-            <em>⌛ <span class="time">0</span> minutes - <a class="rules">Rules</a></em>
+            <a class="bgg" href="">Name (Year)</a>
+            <div class="stats"><span class="symbols">[sand_timer]</span> <span class="time">0</span> minutes | <a class="rules"><span class="symbols">[book_open]</span> Rules</a></div>
             <div class="variantsList"></div>
-            <p><button class="saveProgress" disabled>💾 Save in-progress game</button><button class="prettyButton  edit">Edit</button></p>
+            <p><button class="prettyButton saveProgress" disabled>Save progress</button><button class="prettyButton edit">Edit</button></p>
           </div>
-        </script>
-        <script id="template-variantslist-entry" type="text/template">
-          <button class="play">▶️ Play: <span class="language">🇺🇸</span> 👪 <span class="players">0</span><br><span class="variant"></span></button>
-        </script>
+        </template>
+        <template id="template-variantslist-entry" type="text/template">
+          <button class="prettyButton play">Play: <span class="language">🇺🇸</span><span class="symbols"> [group]</span><span class="players">0</span><br><span class="variant"></span></button>
+        </template>
         <div id="addState">
           <div class="image">➕</div>
           <div class="buttons">
@@ -254,18 +256,18 @@
     <div id="libraryOverlay" class="overlay">
       <h1>Public library</h1>
       <table id="libraryList">
-        <script id="template-librarylist-header" type="text/template">
+        <template id="template-librarylist-header" type="text/template">
           <th></th><th>Game</th><th>Similar to</th><th>Players</th><th>Language</th><th>Notes</th>
-        </script>
-        <script id="template-librarylist-entry" type="text/template">
-          <td><button class="add">Add</button></td><td class="name">Chess</td><td><a>Chess</a></td><td class="players">2</td><td class="language">🇺🇳</td><td class="notes"></td>
-        </script>
-        <script id="template-librarylist-section-title" type="text/template">
+        </template>
+        <template id="template-librarylist-entry" type="text/template">
+          <td><button class="prettyButton add">Add</button></td><td class="name">Chess</td><td><a>Chess</a></td><td class="players">2</td><td class="language">🇺🇳</td><td class="notes"></td>
+        </template>
+        <template id="template-librarylist-section-title" type="text/template">
           <td class="section" colspan="6">
             <div class="section-name">Section Name</div>
             <div class="notes">Section notes</div>
           </td>
-        </script>
+        </template>
       </table>
       <p>Loading...</p>
     </div>
@@ -279,25 +281,40 @@
         <div class="input"><label for="stateMode">Mode:</label> <input id="stateMode"/></div>
         <div class="input"><label for="stateTime">Time:</label> <input id="stateTime"/></div>
         <div class="input"><label for="stateBGG">BoardGameGeek link:</label> <input id="stateBGG"/></div>
-        <div class="input"><label for="stateImage">Image URL:</label> <input id="stateImage"/><button class="prettyButton uploadAsset">Upload</button></div>
+        <div class="input"><label for="stateImage">Image URL:</label> <input id="stateImage"/><button class="ui-button uploadAsset">Upload</button></div>
         <div class="input"><label for="stateLink">Update link:</label> <input id="stateLink"/></div>
       </div>
       <h2>Variants</h2>
       <div id="variantsEditList">
-        <script id="template-variantseditlist-entry" type="text/template">
+        <template id="template-variantseditlist-entry" type="text/template">
           <div class="input"><label>Language (country code):</label> <input class="stateLanguage"/></div>
           <div class="input"><label>Players:</label> <input class="statePlayers"/></div>
           <div class="input"><label>Variant:</label> <input class="stateVariant"/></div>
           <div class="input"><label>Attribution:</label> <textarea class="stateAttribution"></textarea></div>
           <div class="input"><label>Update link:</label> <input class="stateLink"/></div>
-          <button class="update">Update variant using current room state</button><button class="prettyButton download">Download variant</button><button class="prettyButton remove">Remove variant</button>
-        </script>
+          <div class="editOverlayButtonBar">
+            <button class="ui-button green update update-current-state">Update variant using current room state</button>
+            <button class="ui-button download download-variant">Download variant</button>
+            <button class="ui-button red remove remove-variant">Remove variant</button>
+          </div>
+        </template>
       </div>
       <div id="addVariant" class="buttons">
         Add variant:
-        <button class="prettyButton create">Use current room state</button><button class="prettyButton library">Public library</button><button class="prettyButton link">Enter link</button><button class="prettyButton upload">Upload file</button>
+        <div class="editOverlayButtonBar">
+          <button class="ui-button create create-current-state">Use current room state</button>
+          <button class="ui-button library create-from-library">From the Public library</button>
+          <button class="ui-button link create-from-link">Enter link</button>
+          <button class="ui-button upload create-upload-file">Upload file</button>
+        </div>
       </div>
-      <p><button class="prettyButton save">Save</button><button class="prettyButton share">Share link</button><button class="prettyButton download">Download</button><button class="prettyButton remove">Remove</button></p>
+      <hr/>
+      <div class="editOverlayButtonBar">
+        <button class="ui-button green save save-game">Save</button>
+        <button class="ui-button share share-game">Share link</button>
+        <button class="ui-button download download-game">Download</button>
+        <button class="ui-button red remove remove-game">Remove</button>
+      </div>
     </div>
 
     <div id="shareLinkOverlay" class="overlay">
@@ -311,44 +328,55 @@
       <button id="shareOK">OK</button>
     </div>
 
-    <div id="aboutOverlay" class="overlay">
-      <h1>About VirtualTabletop.io</h1>
-      <p>This project is licensed under GPLv3 and is <a href="https://github.com/ArnoldSmith86/virtualtabletop">available on GitHub</a>.</p>
-      <p>Come join our <a href="https://discord.gg/CEZz7wny9T">discord server</a>.</p>
-      <p>Check out our <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki">wiki page</a> for helpful information about how to make your own games.</p>
-      <h2>Copyright Attribution</h2>
-      <p>The default card deck was created by Adrian Kennard and released under CC0 Public Domain license: <a href="https://www.me.uk/cards/">https://www.me.uk/cards/</a>.</p>
-      <p>The copyright attribution information for all games and assets in the public library is available inside the "Variant" notes section of each game. All public library tutorials are released under the CC0 license. Detailed information about the various Creative Commons licenses referred to by abbreviations in variant notes can be found on the <a href="https://creativecommons.org/about/cclicenses/">Creative Commons webpage</a> or at the following links:</p>
-      <ul>
-      <li><a href="https://creativecommons.org/licenses/by/4.0/">CC BY</a></li>
-      <li><a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a></li>
-      <li><a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC</a></li>
-      <li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA</a></li>
-      <li><a href="https://creativecommons.org/licenses/by-nd/4.0/">CC BY-ND</a></li>
-      <li><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND</a></li>
-      <li><a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 (Public Domain)</a></li>
-      </ul>
-      <h2>Online Gameplay</h2>
-      <p>This is an open-source, free to use platform.</p>
-      <p>Anyone that knows the URL of the room that you are using may come in to the room at any time and take any action, including playing or changing games in the room or deleting games. Keep a personal backup of everything that you care about.</p>
-      <p>Know who you are playing with.  The platform is unmoderated and no one controls what may happen. Anything you do or share is your own responsibility.</p>
-      <p>Cheating is trivially easy, unpreventable, and undetectable.  Just play for fun.</p>
-      <p>If you are under the age of majority in the location you are from, be sure to comply with the rules for accessing online material that apply to you.</p>
-      <h2>Privacy Policy</h2>
-      <p>VirtualTabletop.io does not ask for or collect any personal identification information.</p>
-      <p>VirtualTabletop.io does not use cookies.</p>
-      <p>VirtualTabletop.io does, however, collect the "player name" and keeps that in local storage on the user's device.  The player name defaults to a number, but is customizable to any user entered data. VirtualTabletop.io does not analyze or use that information except to display it on the screen while accessing the website.</p>
-      <div id="betaText">
+    <div id="aboutOverlay" class="overlay"  style="display:none;">
+      <div class="header">
+        <div class="about_title">
+          <h1>About VirtualTabletop.io</h1>
+          <p>This project is licensed under GPLv3 and is <a href="https://github.com/ArnoldSmith86/virtualtabletop">available on GitHub</a>.</p>
+        </div>
+        <div class="about_joinus">
+          <a href="https://discord.gg/CEZz7wny9T"><img src="/i/branding/discord-logo.svg" /><br>Come join our discord server.</a>
+          <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki"><img src="/i/branding/github-logo.svg" /><br>Check out our wiki page for helpful information about how to make your own games.</a>
+        </div>
+      </div>
+      <div class="content-body">
+        <h2>Copyright Attribution</h2>
+        <p>Great care has been made to attribute the sources where appropriate. If you feel your work has been taken or used without your consent, please contact us on Discord and immediate action will be taken to remove any infringing works.</p>
+        <p>All graphics used on this site were either created by members of the VTT community and are released into the public domain, sourced from works in the public domain, or made available for public use through Creative Commons or other similar licenses.</p>
+        <p>Games and Assets available in the public library contain copyright attribution information in the variant notes section of each game. The default card deck was created by Adrian Kennard and released under CC0 Public Domain license at <a href="https://www.me.uk/cards/" class="external">https://www.me.uk/cards/</a>. All public library Tutorials are released into the public domain under the CC0 license.</p>
+        <p>Detailed information about the various Creative Commons licenses referred to by abbreviations in variant notes can be found on the <a href="https://creativecommons.org/about/cclicenses/">Creative Commons webpage</a> or at the following links:</p>
+        <ul>
+          <li><a href="https://creativecommons.org/licenses/by/4.0/">CC BY</a></li>
+          <li><a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a></li>
+          <li><a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC</a></li>
+          <li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA</a></li>
+          <li><a href="https://creativecommons.org/licenses/by-nd/4.0/">CC BY-ND</a></li>
+          <li><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND</a></li>
+          <li><a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 (Public Domain)</a></li>
+        </ul>
+        <h2>Online Gameplay</h2>
+        <p>This is an open-source, free to use platform.</p>
+        <p>Anyone that knows the URL of the room that you are using may come in to the room at any time and take any action, including playing or changing games in the room or deleting games. Keep a personal backup of everything that you care about.</p>
+        <p>Know who you are playing with.  The platform is unmoderated and no one controls what may happen. Anything you do or share is your own responsibility.</p>
+        <p>Cheating is trivially easy, unpreventable, and undetectable.  Just play for fun.</p>
+        <p>If you are under the age of majority in the location you are from, be sure to comply with the rules for accessing online material that apply to you.</p>
+        <h2>Privacy Policy</h2>
+        <p>VirtualTabletop.io does not ask for or collect any personal identification information.</p>
+        <p>VirtualTabletop.io does not use cookies.</p>
+        <p>VirtualTabletop.io does, however, collect the "player name" and keeps that in local storage on the user's device.  The player name defaults to a number, but is customizable to any user entered data. VirtualTabletop.io does not analyze or use that information except to display it on the screen while accessing the website.</p>
+      </div>
+      <div id="betaText" class="content-body">
         <h2>Beta</h2>
         <p>Play this game on an experimental preview server to help us test new features. Anyone joining this room will be redirected there until you switch back.</p>
-        <table id="betaServerList">
-          <th>Server</th><th>Returns the state to this server</th><th>Description</th>
+        <table id="betaServerListTable">
+          <thead><th>Server</th><th>Returns the state to this server</th><th>Description</th></thead>
+          <tbody id="betaServerList"></tbody>
         </table>
-        <script id="template-betaServerList-entry" type="text/template">
-          <td><button>Name</button></td>
-          <td class="return">Return?</td>
+        <template id="template-betaServerList-entry" type="text/template">
+          <td><button class="ui-button">Name</button></td>
+          <td class="return symbols">Return?</td>
           <td class="description">Description</td>
-        </script>
+        </template>
       </div>
     </div>
 
@@ -359,11 +387,18 @@
       <p>You can try to reload the page. It's very possible that you will run into the same problem again until it is fixed though.</p>
     </div>
 
-    <div id="connectionLostOverlay" class="overlay">
+    <div id="connectionLostOverlay" class="overlay" style="display:none;">
       <h1>Connection lost</h1>
+      <div class="disconnected">
+        <div class="cable">&nbsp;</div>
+        <div class="plug">&nbsp;</div>
+        <div class="cable">&nbsp;</div>
+      </div>
       <p>The connection to the server was lost. It should be reestablished in a few moments.</p>
       <p>In case that doesn't work, try reloading the page or use a different room.</p>
     </div>
+
+    <div id="playerCursors"></div>
   </div>
 
   <div id="jsonEditor">
@@ -393,7 +428,7 @@
 
   <div id="enlarged" class="hidden"></div>
 
-  <script type="module"> {{CONFIG}}  {{JS}} </script>
+  <script type="module"> //*** CONFIG ***//  //*** JS ***// </script>
 
 </body>
 

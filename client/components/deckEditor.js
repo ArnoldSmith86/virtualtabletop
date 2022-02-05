@@ -45,7 +45,7 @@ export const deckEditor = {
         addCardType(fileName, value);
         this.widgetState.cardTypes[fileName] = value;
         const card = { deck:this.widgetState.id, type:'card', cardType:fileName };
-        const cardId = addWidgetLocal(card);
+        const cardId = await addWidgetLocal(card);
         if(this.widgetState.parent)
           await widgets.get(cardId).moveToHolder(widgets.get(this.widgetState.parent));
       },
