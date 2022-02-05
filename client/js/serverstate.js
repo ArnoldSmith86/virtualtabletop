@@ -68,7 +68,11 @@ export function addWidget(widget, instance) {
     w.applyInitialDelta(widget);
   } catch(e) {
     console.error(`Could not add widget!`, widget, e);
-    removeWidget(widget.id);
+    try {
+      removeWidget(widget.id);
+    } catch(e) {
+      console.error(`Could not remove invalid widget!`, widget, e);
+    }
     return;
   }
   if(w.get('dropTarget'))
