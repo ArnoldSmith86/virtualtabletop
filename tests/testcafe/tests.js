@@ -332,7 +332,7 @@ publicLibraryButtons('Reversi',            0, '35e0017570f9ecd206a2317c1528be36'
          [ ()=>Selector("#zpiece19"), ()=>Selector("#sq35") ],
          [ ()=>Selector("#zpiece08"), ()=>Selector("#sq53") ]
        ]);
-publicLibraryButtons('Reward',             0, '7a0e6d7fda1143f21d64552c18f92a75', [
+publicLibraryButtons('Reward',             0, '0af033007e705016ca888e4ec372d5ce', [
   '5d94', 'szcv', 'go1k', 'x1iu', '8de1', 'secy', 'ubxq', 'li7i', 'seat3', 'next']);
 publicLibraryButtons('Rummy Tiles',        0, 'c93ac5accd3f22264839675bd8b5321d', [ 'startMix', 'draw14' ]);
 publicLibraryButtons('Undercover',         1, '967a258cffec728391e4b039f4899aae', [ 'Reset', 'Spy Master Button' ]);
