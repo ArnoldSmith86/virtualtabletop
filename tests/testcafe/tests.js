@@ -32,12 +32,10 @@ async function removeGame(t, index) {
 }
 
 async function setName(t, name, color) {
-  await ClientFunction((hex) => {
-    document.querySelector('.myPlayerEntry > .teamColor').value = hex || '#7f007f';  
-  })(color);
   await t
     .click('#playersButton')
     .typeText('.myPlayerEntry > .playerName', name || 'TestCafe', { replace: true })
+    .typeText('.myPlayerEntry > input[type=color]', '#7F007F', { replace: true })
     .click('#playersButton');
 }
 
@@ -126,6 +124,10 @@ test('Create game using edit mode', async t => {
     .click('#jyo2')
     .setNativeDialogHandler(() => true)
     .click('#removeWidget');
+//    .click('#editButton')
+//    .click('#addButton')
+//    .click('#addSeat')
+//    .click('#es5b');
 
   await compareState(t, 'a91f2495b7e830d942c25201d483a691');
 });
