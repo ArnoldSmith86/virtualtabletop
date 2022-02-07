@@ -31,7 +31,10 @@ async function removeGame(t, index) {
     .click('.remove-game');
 }
 
-async function setName(t, name) {
+async function setName(t, name, color) {
+  await ClientFunction((hex) => {
+    document.querySelector('.myPlayerEntry > .teamColor').value = hex || '#7f007f';  
+  })(color);
   await t
     .click('#playersButton')
     .typeText('.myPlayerEntry > .playerName', name || 'TestCafe', { replace: true })
