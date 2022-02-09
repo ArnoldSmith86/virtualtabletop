@@ -68,11 +68,7 @@ export function addWidget(widget, instance) {
     w.applyInitialDelta(widget);
   } catch(e) {
     console.error(`Could not add widget!`, widget, e);
-    try {
-      removeWidget(widget.id);
-    } catch(e) {
-      console.error(`Could not remove invalid widget!`, widget, e);
-    }
+    removeWidget(widget.id);
     return;
   }
   if(w.get('dropTarget'))
@@ -147,7 +143,11 @@ function receiveStateFromServer(args) {
 }
 
 function removeWidget(widgetID) {
-  widgets.get(widgetID).applyRemove();
+  try {
+    widgets.get(widgetID).applyRemove();
+  } catch(e) {
+    console.error(`Could not remove widget!`, widgetID, e);
+  }
   widgets.delete(widgetID);
   dropTargets.delete(widgetID);
 }
