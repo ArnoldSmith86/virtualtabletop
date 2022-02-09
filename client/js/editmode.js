@@ -589,7 +589,7 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
     if(wi.type == 'pile')   w = new Pile(wi.id);
     if(wi.type == 'timer')  w = new Timer(wi.id);
     widgets.set(wi.id, w);
-    w.applyDelta(wi);
+    w.applyInitialDelta(wi);
     if(!wi.parent) {
       w.domElement.addEventListener('click', async _=>{
         overlayDone(await onClick());
@@ -600,7 +600,7 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
 }
 
 function addWidgetToAddWidgetOverlay(w, wi) {
-  w.applyDelta(wi);
+  w.applyInitialDelta(wi);
   w.domElement.addEventListener('click', async _=>{
     const toAdd = {...wi};
     toAdd.z = getMaxZ(w.get('layer')) + 1;
