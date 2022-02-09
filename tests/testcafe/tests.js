@@ -333,7 +333,7 @@ publicLibraryButtons('Reversi',            0, '35e0017570f9ecd206a2317c1528be36'
          [ ()=>Selector("#zpiece08"), ()=>Selector("#sq53") ]
        ]);
 publicLibraryButtons('Reward',             0, '97f532ee982acfab7a511d0dfca35e14', [
-  '5d94', 'szcv', 'go1k', 'x1iu', '8de1', 'secy', 'ubxq', 'li7i', 'next']);
+  '5d94', 'szcv', 'go1k', 'x1iu', '8de1', 'secy', 'ubxq', 'li7i', 'seat3', 'next']);
 publicLibraryButtons('Rummy Tiles',        0, 'c93ac5accd3f22264839675bd8b5321d', [ 'startMix', 'draw14' ]);
 publicLibraryButtons('Undercover',         1, '967a258cffec728391e4b039f4899aae', [ 'Reset', 'Spy Master Button' ]);
 publicLibraryButtons('Functions - CALL',   0, '493d1f63f35366f82f7573ce04f2126e', [
