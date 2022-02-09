@@ -34,7 +34,12 @@ export function addWidget(widget, instance) {
     w = instance;
   } else if(widget.type == 'card') {
     if(widgets.has(widget.deck)) {
-      w = new Card(id);
+      if(widgets.get(widget.deck).get('type') == 'deck') {
+        w = new Card(id);
+      } else {
+        console.error(`Could not add widget!`, widget, 'card with invalid deck');
+        return;
+      }
     } else {
       if(!deferredCards[widget.deck])
         deferredCards[widget.deck] = [];
