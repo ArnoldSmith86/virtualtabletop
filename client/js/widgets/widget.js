@@ -1858,7 +1858,7 @@ export class Widget extends StateManaged {
   async shuffleWidgets(w) {
     const shuffle = Array.from({length: w.length}, ()=>Math.random()).map((rand,idx) => {
       return {idx, rand};
-    }).sort((a, b)=> b.rand - a.rand);
+    }).sort((a, b)=> a.rand - b.rand);
     for(let i of shuffle) {
       await w[i.idx].bringToFront();
     }

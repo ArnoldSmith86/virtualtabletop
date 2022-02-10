@@ -130,7 +130,7 @@ test('Create game using edit mode', async t => {
     .click('#addSeat')
     .click('#es5b');
 
-  await compareState(t, 'b1e0c720d3864999f11d29dc50fedaef');
+  await compareState(t, '1af2c0167fed09276b2f939ca1174d3f');
 });
 
 test('Compute', async t => {
@@ -318,15 +318,15 @@ function publicLibraryButtons(game, variant, md5, tests) {
   });
 }
 
-publicLibraryButtons('Blue',               0, '096bdf3bd07bb277c2c1f4cc132f0695', [
+publicLibraryButtons('Blue',               0, 'c0b6df4181e1e14db376c87cef71a1c3', [
   'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton',
   'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton',
   'reset_button', 'buttonInputGo', 'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', '9n2q'
 ]);
-publicLibraryButtons('Bhukhar',            0, 'e00f92a157178e7f570302ccc6b8c41b', [ 'btnMenuSettings', 'btn8Players', 'btn4Packs', 'btnCloseSettings', 'btnSelectPlayer', 'btnDeal', 'btnPile4', 'btnStartGame', 'btnTakeOne', 'btnNextPlayer', 'btnPickUp' ]);
+publicLibraryButtons('Bhukhar',            0, '2748e96293b8646894700440508dd280', [ 'btnMenuSettings', 'btn8Players', 'btn4Packs', 'btnCloseSettings', 'btnSelectPlayer', 'btnDeal', 'btnPile4', 'btnStartGame', 'btnTakeOne', 'btnNextPlayer', 'btnPickUp' ]);
 publicLibraryButtons('Dice',               0, 'a68d28c20b624d6ddf87149bae230598', [ 'k18u', 'hy65', 'gghr', 'dsfa', 'f34a', 'fusq' ]);
 publicLibraryButtons('Dots',               0, '23894df38f786cb014fa1cd79f2345db', [ 'reset', 'buttonInputGo', 'col11', 'col21', 'col12', 'col22', 'row11', 'row31', 'row21', 'row32', 'row12', 'row42', 'row22', 'row23', 'col23' ]);
-publicLibraryButtons('Solitaire',          0, 'b3339b3c5d42f47f4def7a164be69823', [ 'reset', 'jemz', 'reset' ]);
+publicLibraryButtons('Solitaire',          0, 'd5babf02d0c94500673d31188405ad9a', [ 'reset', 'jemz', 'reset' ]);
 publicLibraryButtons('Mancala',            0, '92108a0e76fd295fee9881b6c7f8928b', ['btnRule1', 'btnRule2', 'getb5', 'getb5', 'getb5', 'getb5', 'getb1', 'getb1', 'getb1', 'getb1' ]);
 publicLibraryButtons('Reversi',            0, '35e0017570f9ecd206a2317c1528be36',
        [
@@ -338,18 +338,18 @@ publicLibraryButtons('Reversi',            0, '35e0017570f9ecd206a2317c1528be36'
          [ ()=>Selector("#zpiece19"), ()=>Selector("#sq35") ],
          [ ()=>Selector("#zpiece08"), ()=>Selector("#sq53") ]
        ]);
-publicLibraryButtons('Reward',             0, '7a0e6d7fda1143f21d64552c18f92a75', [
+publicLibraryButtons('Reward',             0, '1a1526d9a0c3110355acf3786795f220', [
   'gmex', 'kprc', 'oksq', 'j1wz', 'vfhn', '0i6i', 'Orange Recall', 'buttonInputGo', 'b09z'
 ]);
-publicLibraryButtons('Rummy Tiles',        0, 'c93ac5accd3f22264839675bd8b5321d', [ 'startMix', 'draw14' ]);
-publicLibraryButtons('Undercover',         1, '967a258cffec728391e4b039f4899aae', [ 'Reset', 'Spy Master Button' ]);
-publicLibraryButtons('Functions - CALL',   0, '493d1f63f35366f82f7573ce04f2126e', [
+publicLibraryButtons('Rummy Tiles',        0, '6c5f8896284f52e874076bc60cca6325', [ 'startMix', 'draw14' ]);
+publicLibraryButtons('Undercover',         1, '97725a1d0733ef74dd5e1d0f9f260cb5', [ 'Reset', 'Spy Master Button' ]);
+publicLibraryButtons('Functions - CALL',   0, '4ef11451bfae5b8708e8f0eac2a06df4', [
   'n4cw_8_C', '5a52', '5a52', '66kr', 'qeg1', 'n4cwB', '8r6p', 'qeg1', 'qeg1', 'n5eu'
 ]);
 publicLibraryButtons('Functions - CLICK',  0, 'd44e77e0782cadbc9594494e5a83dde0', [ '7u2q' ]);
 publicLibraryButtons('Functions - ROTATE', 0, '70782503b9e3fb2d4e24495f5c53ef1b', [ 'c44c', '9kdj', 'w53c', 'w53c' ]);
-publicLibraryButtons('Functions - SELECT', 2, '48f7b9da88137c1262cb5690c6f1d6b2', [ 'jkmt1']);
-publicLibraryButtons('Functions - SORT',   1, '35dc8ddd8f7c8cc8ebc31a188a51bd47', [
+publicLibraryButtons('Functions - SELECT', 2, '498fe2328a51a15fd5f49bcbe30d7f66', [ 'jkmt1']);
+publicLibraryButtons('Functions - SORT',   1, '433948b27014f8236bd1978bdbe39443', [
   'ingw', 'k131', 'cnfu', 'i6yz', 'z394', '0v3h', '1h8o', 'v5ra', 'ingw-copy001', 'k131-copy001', 'cnfu-copy001',
   'i6yz-copy001', 'z394-copy001', '0v3h-copy001'
 ]);
