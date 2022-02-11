@@ -130,7 +130,7 @@ test('Create game using edit mode', async t => {
     .click('#addSeat')
     .click('#es5b');
 
-  await compareState(t, '899dc3fb02de39867c4936cb9a03bf6b');
+  await compareState(t, '748d3bd6db5ea53524bd157ba41c8dd3');
 });
 
 test('Compute', async t => {
@@ -323,7 +323,7 @@ publicLibraryButtons('Blue',               0, 'c0b6df4181e1e14db376c87cef71a1c3'
   'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton',
   'reset_button', 'buttonInputGo', 'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', '9n2q'
 ]);
-publicLibraryButtons('Bhukhar',            0, '1f646369ca6d80b40139660cb508f61e', [ 'btnMenuSettings', 'btn8Players', 'btn4Packs', 'btnCloseSettings', 'btnSelectPlayer', 'btnDeal', 'btnPile4', 'btnStartGame', 'btnTakeOne', 'btnNextPlayer', 'btnPickUp' ]);
+publicLibraryButtons('Bhukhar',            0, '2748e96293b8646894700440508dd280', [ 'btnMenuSettings', 'btn8Players', 'btn4Packs', 'btnCloseSettings', 'btnSelectPlayer', 'btnDeal', 'btnPile4', 'btnStartGame', 'btnTakeOne', 'btnNextPlayer', 'btnPickUp' ]);
 publicLibraryButtons('Dice',               0, 'a68d28c20b624d6ddf87149bae230598', [ 'k18u', 'hy65', 'gghr', 'dsfa', 'f34a', 'fusq' ]);
 publicLibraryButtons('Dots',               0, '23894df38f786cb014fa1cd79f2345db', [ 'reset', 'buttonInputGo', 'col11', 'col21', 'col12', 'col22', 'row11', 'row31', 'row21', 'row32', 'row12', 'row42', 'row22', 'row23', 'col23' ]);
 publicLibraryButtons('Solitaire',          0, 'd5babf02d0c94500673d31188405ad9a', [ 'reset', 'jemz', 'reset' ]);
@@ -338,7 +338,7 @@ publicLibraryButtons('Reversi',            0, '35e0017570f9ecd206a2317c1528be36'
          [ ()=>Selector("#zpiece19"), ()=>Selector("#sq35") ],
          [ ()=>Selector("#zpiece08"), ()=>Selector("#sq53") ]
        ]);
-publicLibraryButtons('Reward',             0, '52aa7d9da11ec950e27a68e18d7cba26', [
+publicLibraryButtons('Reward',             0, '011671469f1fa8455c1a4123fe7ff313', [
   'gmex', 'kprc', 'oksq', 'j1wz', 'vfhn', '0i6i', 'Orange Recall', 'buttonInputGo', 'b09z'
 ]);
 publicLibraryButtons('Rummy Tiles',        0, '6c5f8896284f52e874076bc60cca6325', [ 'startMix', 'draw14' ]);
