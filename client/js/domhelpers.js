@@ -34,7 +34,7 @@ export function domByTemplate(id, type) {
 export function escapeID(id) {
   if(!id)
     return '';
-  return id.toString.replaceAll(
+  return id.toString().replaceAll(
     /(_)|([^-_0-9A-Za-z])/g,
     (match, p1, p2) => {
       if(p1)
@@ -46,7 +46,7 @@ export function escapeID(id) {
 export function unescapeID(id) {
   if(!id)
     return '';
-  return id.toString.replaceAll(
+  return id.toString().replaceAll(
     /_(_)|_x([0-9A-Za-z]{4})_/g,
     (match, p1, p2) => {
       if(p1)
