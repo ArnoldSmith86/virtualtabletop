@@ -592,6 +592,7 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
       w.domElement.addEventListener('click', async _=>{
         overlayDone(await onClick());
       });
+      w.domElement.id = w.id;
       $('#addOverlay').appendChild(w.domElement);
     }
   }
@@ -605,6 +606,7 @@ function addWidgetToAddWidgetOverlay(w, wi) {
     const id = await addWidgetLocal(toAdd);
     overlayDone(id);
   });
+  w.domElement.id = w.id;
   $('#addOverlay').appendChild(w.domElement);
 }
 
