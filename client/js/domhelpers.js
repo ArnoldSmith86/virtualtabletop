@@ -35,7 +35,7 @@ export function escapeID(id) {
   if(!id)
     return '';
   return id.toString.replaceAll(
-    /(_)|[^-_0-9A-Za-z]/g,
+    /(_)|([^-_0-9A-Za-z])/g,
     (match, p1, p2) => {
       if(p1)
         return '__';
