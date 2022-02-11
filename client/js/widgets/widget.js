@@ -1,4 +1,4 @@
-import { $, removeFromDOM, asArray, escapeID, escapeCSS } from '../domhelpers.js';
+import { $, removeFromDOM, asArray, escapeID } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
