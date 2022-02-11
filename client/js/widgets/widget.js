@@ -1,4 +1,4 @@
-import { $, removeFromDOM, asArray, escapeCSS } from '../domhelpers.js';
+import { $, removeFromDOM, asArray, escapeID, escapeCSS } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
@@ -21,7 +21,7 @@ const readOnlyProperties = new Set([
 export class Widget extends StateManaged {
   constructor(id) {
     const div = document.createElement('div');
-    div.id = id;
+    div.id = 'w_' + escapeID(id);
     super();
     this.id = id;
     this.domElement = div;
@@ -229,8 +229,8 @@ export class Widget extends StateManaged {
       this.parent.applyChildRemove(this);
     if(this.get('deck') && widgets.has(this.get('deck')))
       widgets.get(this.get('deck')).removeCard(this);
-    if($(`#${escapeCSS(this.id)}STYLESHEET`))
-      removeFromDOM($(`#${escapeCSS(this.id)}STYLESHEET`));
+    if($(`#STYLES_${escapeID(this.id)}`))
+      removeFromDOM($(`#STYLES_${escapeID(this.id)}`));
     removeFromDOM(this.domElement);
     this.inheritFromUnregister();
     this.globalUpdateListenersUnregister();
@@ -366,8 +366,8 @@ export class Widget extends StateManaged {
   }
   css() {
     this.propertiesUsedInCSS = [];
-    if($(`#${escapeCSS(this.id)}STYLESHEET`))
-      removeFromDOM($(`#${escapeCSS(this.id)}STYLESHEET`));
+    if($(`#STYLES_${escapeID(this.id)}`))
+      removeFromDOM($(`#STYLES_${escapeID(this.id)}`));
     let css = this.cssReplaceProperties(this.cssAsText(this.get('css')));
 
     css = this.cssBorderRadius() + css;
@@ -428,10 +428,10 @@ export class Widget extends StateManaged {
 
   cssToStylesheet(css) {
     const style = document.createElement('style');
-    style.id = `${this.id}STYLESHEET`;
+    style.id = `STYLES_${escapeID(this.id)}`;
     for(const key in css)
       if(key != 'inline')
-        style.appendChild(document.createTextNode(`#${escapeCSS(this.id)}${key == 'default' ? '' : key} { ${this.cssReplaceProperties(this.cssAsText(css[key]))} }`));
+        style.appendChild(document.createTextNode(`#w_${escapeID(this.id)}${key == 'default' ? '' : key} { ${this.cssReplaceProperties(this.cssAsText(css[key]))} }`));
     $('head').appendChild(style);
 
     return this.cssAsText(css.inline || '');
