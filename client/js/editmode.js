@@ -588,11 +588,11 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
     if(wi.type == 'timer')  w = new Timer(wi.id);
     widgets.set(wi.id, w);
     w.applyInitialDelta(wi);
+    w.domElement.id = w.id;
     if(!wi.parent) {
       w.domElement.addEventListener('click', async _=>{
         overlayDone(await onClick());
       });
-      w.domElement.id = w.id;
       $('#addOverlay').appendChild(w.domElement);
     }
   }
