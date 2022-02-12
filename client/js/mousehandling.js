@@ -74,7 +74,7 @@ async function inputHandler(name, e) {
           movable = ms.moveTarget.get(editMovable ? 'movableInEdit' : 'movable');
         } else {
           ms.moveTarget = null;
-          moveable = false;
+          movable = false;
         }
       }
       if (movable) {
