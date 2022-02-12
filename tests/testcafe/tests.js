@@ -312,7 +312,7 @@ function publicLibraryButtons(game, variant, md5, tests) {
   publicLibraryTest(game, variant, md5, async t => {
       for(const b of tests)
         if(typeof b == "string") {
-          if(b.charAt(0) = '#') {
+          if(b.charAt(0) == '#') {
             await t.click(b);
           } else {
             await t.click(`[id="w_${escapeID(b)}"]`);
