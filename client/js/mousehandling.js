@@ -1,5 +1,3 @@
-import { widgets } from "./serverstate";
-
 let mouseTarget = null;
 const mouseStatus = {};
 
