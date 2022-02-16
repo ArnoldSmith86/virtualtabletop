@@ -6,7 +6,7 @@ DISP=${DISPLAY:1}
 
 Xvfb -screen "$DISP" "${CUSTOM_XVFB_WxHxD:=1920x1080x16}" -ac -pn -noreset &
 
-openbox &
+${WINDOW_MANAGER:-openbox} &
 
 VNC_PORT=$((5900 + "$DISP"))
 NOVNC_PORT=$((6080 + "$DISP"))
