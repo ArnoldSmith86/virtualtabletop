@@ -45,14 +45,14 @@
     "@node-minify/no-compress": "^6.2.0",
     "@node-minify/uglify-es": "^6.2.0",
     "crc-32": "^1.2.1",
-    "express": "^4.17.2",
+    "express": "^4.17.3",
     "jszip": "^3.7.1",
     "node-fetch": "^2.6.1",
-    "ws": "^8.4.2"
+    "ws": "^8.5.0"
   },
   "devDependencies": {
-    "jest": "^27.5.0",
-    "jest-environment-jsdom": "^27.5.0",
+    "jest": "^27.5.1",
+    "jest-environment-jsdom": "^27.5.1",
     "jest-environment-jsdom-global": "^3.0.0",
     "json-diff": "^0.7.1",
     "nodemon": "^2.0.15",
