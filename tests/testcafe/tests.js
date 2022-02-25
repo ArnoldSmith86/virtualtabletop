@@ -98,24 +98,24 @@ test('Create game using edit mode', async t => {
     .click('#add-holder')
     .click('#addButton')
     .click('#addHand')
-    .drag('[id="w_hand"]', 100, 100) // this shouldn't change anything because it's not movable
+    .drag('#w_hand', 100, 100) // this shouldn't change anything because it's not movable
     .click('#editButton')
-    .click('[id="w_hand"]')
+    .click('#w_hand')
     .click('#transparentHolder')
     .click('#updateWidget')
     .click('#editButton')
     .click('#addButton')
     .click('#add-deck_K_S')
-    .click('[id="w_3nsjB"]')
-    .click('[id="w_3nsjP"] > .handle')
+    .click('#w_3nsjB')
+    .click('#w_3nsjP > .handle')
     .click('#pileOverlay > button:nth-of-type(3)')
-    .click('[id="w_b86p"] > .handle')
+    .click('#w_b86p > .handle')
     .click('#pileOverlay > button:nth-of-type(1)')
-    .click('[id="w_b86p"] > .handle')
+    .click('#w_b86p > .handle')
     .click('#pileOverlay > button:nth-of-type(3)')
-    .click('[id="w_5ip4"] > .handle')
+    .click('#w_5ip4 > .handle')
     .click('#pileOverlay > button:nth-of-type(2)')
-    .dragToElement('[id="w_5ip4"] > .handle', '[id="w_hand"]')
+    .dragToElement('#w_5ip4 > .handle', '#w_hand')
     .click('#editButton')
     .click('#w_jyo2')
     .click('#duplicateWidget')
@@ -174,7 +174,7 @@ test('Compute', async t => {
       clickRoutine
     };
     await setRoomState(state);
-    await t.click(`[id="w_button${escapeID(op.name)}"]`);
+    await t.click(`#w_button${escapeID(op.name)}`);
     await compareState(t, op.hash);
   }
 });
@@ -279,7 +279,7 @@ test('Dynamic expressions', async t => {
     .pressKey('ctrl+j')
     .click('#room',{offsetX: 1, offsetY: 1, modifiers:{ctrl:true}})
     .typeText('#jeText', button, { replace: true, paste: true })
-    .click('[id="w_jyo6"]')
+    .click('#w_jyo6')
   const log = await Selector('#jeLog').textContent
   for (let i=0; i<ops.length; i++) {
     const logContains = log.includes('"'+ops[i][1]+'": '+ops[i][2]);
@@ -315,7 +315,7 @@ function publicLibraryButtons(game, variant, md5, tests) {
           if(b.charAt(0) == '#') {
             await t.click(b);
           } else {
-            await t.click(`[id="w_${escapeID(b)}"]`);
+            await t.click(`#w_${escapeID(b)}`);
           }
         } else {
           await t.dragToElement(b[0](), b[1](), { speed:0.5 });
