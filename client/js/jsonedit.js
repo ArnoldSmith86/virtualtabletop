@@ -1551,13 +1551,17 @@ function jePreProcessObject(o) {
   }
 
   for(const key of Object.keys(o).sort())
-    if(copy[key] === undefined && !key.match(/Routine$/) && jeWidget.getDefaultValue(key) !== undefined)
+    if(copy[key] === undefined && !key.match(/^c[0-9]{2}$/) && !key.match(/Routine$/) && jeWidget.getDefaultValue(key) !== undefined)
       copy[key] = o[key];
   copy[`LINEBREAKcustom`] = null;
   for(const key of Object.keys(o).sort())
-    if(copy[key] === undefined && !key.match(/Routine$/))
+    if(copy[key] === undefined && !key.match(/^c[0-9]{2}$/) && !key.match(/Routine$/))
       copy[key] = o[key];
   copy[`LINEBREAKroutines`] = null;
+  for(const key of Object.keys(o).sort())
+    if(copy[key] === undefined && !key.match(/^c[0-9]{2}$/))
+      copy[key] = o[key];
+  copy[`LINEBREAKcanvas`] = null;
   for(const key of Object.keys(o).sort())
     if(copy[key] === undefined)
       copy[key] = o[key];
