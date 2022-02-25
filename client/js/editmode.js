@@ -596,6 +596,9 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
       $('#addOverlay').appendChild(w.domElement);
     }
   }
+  for(const wi of widgetsToAdd) {
+    widgets.delete(wi.id)
+  }
 }
 
 function addWidgetToAddWidgetOverlay(w, wi) {
