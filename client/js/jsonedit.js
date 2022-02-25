@@ -1579,7 +1579,7 @@ function jePreProcessObject(o) {
 }
 
 function jePreProcessText(t) {
-  return t.replace(/(\n +"LINEBREAK.*": null,)+/g, '\n').replace(/(,\n +"LINEBREAK.*": null)+/g, '');
+  return t.replace(/(\n +"LINEBREAK.*": null,)+/g, '\n').replace(/(,\n?\n +"LINEBREAK.*": null)+/g, '');
 }
 
 // Select the characters in a given range in the text area.
