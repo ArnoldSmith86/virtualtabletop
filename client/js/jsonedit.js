@@ -837,7 +837,7 @@ function jeAddNumberCommand(name, key, callback) {
 
 function jeAddWidgetPropertyCommands(object) {
   for(const property in object.defaults)
-    if(property != 'typeClasses')
+    if(property != 'typeClasses' && !property.match(/^c[0-9]{2}$/))
       jeAddWidgetPropertyCommand(object, property);
   const type = object.defaults.typeClasses.replace(/widget /, '');
   return type == 'basic' ? null : type;
