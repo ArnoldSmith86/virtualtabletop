@@ -23,11 +23,19 @@
   --neutralInput: #1f5ca6;
 }
 
+html {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
 body {
   background: #484848;
   padding: 0;
   margin: 0;
-  overflow: hidden;
+  height: 100%;
+  overflow: auto;
+  position: relative;
   font-family: 'Roboto', sans-serif;
 }
 
