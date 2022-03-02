@@ -13,3 +13,5 @@ sudo chmod +x /usr/bin/start-vnc-session.sh
 
 echo "export DISPLAY=:0" >> /home/gitpod/.bashrc.d/300-vnc
 echo "[ ! -e /tmp/X0-lock ] && (/usr/bin/start-vnc-session.sh &> /tmp/display-\${DISPLAY}.log)" >> /home/gitpod/.bashrc.d/300-vnc
+
+. /home/gitpod/.bashrc.d/300-vnc
