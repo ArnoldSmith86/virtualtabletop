@@ -1837,7 +1837,7 @@ export class Widget extends StateManaged {
         const dom = document.createElement('div');
         dom.style = field.css || "";
         dom.className = "input"+field.type;
-        formField(field, dom, this.get('id') + ';' + field.variable);
+        formField(field, dom, 'INPUT_' + escapeID(this.get('id')) + ';' + field.variable);
         $('#buttonInputFields').appendChild(dom);
       }
 
