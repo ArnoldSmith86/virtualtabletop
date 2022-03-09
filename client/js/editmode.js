@@ -844,7 +844,7 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
   if(applyChangesFromUI)
     await applyEditOptions(widget);
 
-  const children = Widget.prototype.children.call(widgets.get(previousState.id));
+  const children = Widget.prototype.children.call(widgets.get(previousState.id)); // use Widget.children even for holders so it doesn't filter
   const cards = widgetFilter(w=>w.get('deck')==previousState.id);
 
   if(widget.id !== previousState.id || widget.type !== previousState.type) {
