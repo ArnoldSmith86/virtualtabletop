@@ -116,7 +116,7 @@ export function formField(field, dom, id) {
       const optionElement = document.createElement('option');
       optionElement.value = option.value || '';
       optionElement.textContent = option.text || option.value || '';
-      if(option.value == field.value || field.value === undefined && option.selected)
+      if(option.value == field.value || (field.value === undefined || field.value === null) && option.selected)
         optionElement.selected = true;
       input.appendChild(optionElement);
     }
