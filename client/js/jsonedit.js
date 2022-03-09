@@ -837,7 +837,7 @@ function jeAddNumberCommand(name, key, callback) {
 
 function jeAddWidgetPropertyCommands(object) {
   for(const property in object.defaults)
-    if(property != 'typeClasses')
+    if(property != 'typeClasses' && !property.match(/^c[0-9]{2}$/))
       jeAddWidgetPropertyCommand(object, property);
   const type = object.defaults.typeClasses.replace(/widget /, '');
   return type == 'basic' ? null : type;
@@ -1551,6 +1551,18 @@ function jePreProcessObject(o) {
   }
 
   for(const key of Object.keys(o).sort())
+    if(copy[key] === undefined && !key.match(/^c[0-9]{2}$/) && !key.match(/Routine$/) && jeWidget.getDefaultValue(key) !== undefined)
+      copy[key] = o[key];
+  copy[`LINEBREAKcustom`] = null;
+  for(const key of Object.keys(o).sort())
+    if(copy[key] === undefined && !key.match(/^c[0-9]{2}$/) && !key.match(/Routine$/))
+      copy[key] = o[key];
+  copy[`LINEBREAKroutines`] = null;
+  for(const key of Object.keys(o).sort())
+    if(copy[key] === undefined && !key.match(/^c[0-9]{2}$/))
+      copy[key] = o[key];
+  copy[`LINEBREAKcanvas`] = null;
+  for(const key of Object.keys(o).sort())
     if(copy[key] === undefined)
       copy[key] = o[key];
 
@@ -1567,7 +1579,7 @@ function jePreProcessObject(o) {
 }
 
 function jePreProcessText(t) {
-  return t.replace(/(\n +"LINEBREAK.*": null,)+/g, '\n').replace(/(,\n +"LINEBREAK.*": null)+/g, '');
+  return t.replace(/(\n +"LINEBREAK.*": null,)+/g, '\n').replace(/(,\n?\n +"LINEBREAK.*": null)+/g, '');
 }
 
 // Select the characters in a given range in the text area.
