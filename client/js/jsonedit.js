@@ -627,7 +627,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0, snapToGrid: true });
   jeAddRoutineOperationCommands('RECALL', { owned: true, holder: null });
   jeAddRoutineOperationCommands('ROTATE', { count: 1, angle: 90, mode: 'add', holder: null, collection: 'DEFAULT' });
-  jeAddRoutineOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all', sortBy: 'null' });
+  jeAddRoutineOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all', sortBy: { key: "z", reverse: false } });
   jeAddRoutineOperationCommands('SET', { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
   jeAddRoutineOperationCommands('SORT', { key: 'value', reverse: false, locales: null, options: null, holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('SHUFFLE', { holder: null, collection: 'DEFAULT' });
@@ -861,7 +861,7 @@ function jeAddNumberCommand(name, key, callback) {
 
 function jeAddWidgetPropertyCommands(object) {
   for(const property in object.defaults)
-    if(property != 'typeClasses')
+    if(property != 'typeClasses' && !property.match(/^c[0-9]{2}$/))
       jeAddWidgetPropertyCommand(object, property);
   const type = object.defaults.typeClasses.replace(/widget /, '');
   return type == 'basic' ? null : type;
@@ -1575,6 +1575,18 @@ function jePreProcessObject(o) {
   }
 
   for(const key of Object.keys(o).sort())
+    if(copy[key] === undefined && !key.match(/^c[0-9]{2}$/) && !key.match(/Routine$/) && jeWidget.getDefaultValue(key) !== undefined)
+      copy[key] = o[key];
+  copy[`LINEBREAKcustom`] = null;
+  for(const key of Object.keys(o).sort())
+    if(copy[key] === undefined && !key.match(/^c[0-9]{2}$/) && !key.match(/Routine$/))
+      copy[key] = o[key];
+  copy[`LINEBREAKroutines`] = null;
+  for(const key of Object.keys(o).sort())
+    if(copy[key] === undefined && !key.match(/^c[0-9]{2}$/))
+      copy[key] = o[key];
+  copy[`LINEBREAKcanvas`] = null;
+  for(const key of Object.keys(o).sort())
     if(copy[key] === undefined)
       copy[key] = o[key];
 
@@ -1591,7 +1603,7 @@ function jePreProcessObject(o) {
 }
 
 function jePreProcessText(t) {
-  return t.replace(/(\n +"LINEBREAK.*": null,)+/g, '\n').replace(/(,\n +"LINEBREAK.*": null)+/g, '');
+  return t.replace(/(\n +"LINEBREAK.*": null,)+/g, '\n').replace(/(,\n?\n +"LINEBREAK.*": null)+/g, '');
 }
 
 // Select the characters in a given range in the text area.
