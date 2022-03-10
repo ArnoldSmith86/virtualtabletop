@@ -646,7 +646,7 @@ function jeAddCommands() {
 
   jeAddFieldCommand('text', 'subtitle|title|text', '');
   jeAddFieldCommand('label', 'checkbox|color|number|select|string|switch', '');
-  jeAddFieldCommand('value', 'checkbox|color|number|string|switch', '');
+  jeAddFieldCommand('value', 'checkbox|color|number|select|string|switch', '');
   jeAddFieldCommand('variable', 'checkbox|color|number|select|string|switch', '');
   jeAddFieldCommand('min', 'number', 0);
   jeAddFieldCommand('max', 'number', 10);
