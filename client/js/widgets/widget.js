@@ -261,6 +261,17 @@ export class Widget extends StateManaged {
     return this.childArray.sort((a,b)=>b.get('z')-a.get('z'));
   }
 
+  childrenFiltered() {
+    let filteredList = [];
+    for(const c of this.children().filter(w=>w.get('type')!='deck' && w.get('fixedParent')!=true)) {
+      if(c.get('type') == 'pile')
+        filteredList.concat(c.childArray);
+      else
+        filteredList.push(c);
+    }
+    return filteredList;
+  }
+
   childrenOwned() {
     return this.children().filter(c=>!c.get('owner') || c.get('owner')==playerName);
   }
@@ -880,7 +891,7 @@ export class Widget extends StateManaged {
         let theItem;
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder,problems)) {
-            variables[a.variable] = widgets.get(a.holder).children().length;
+            variables[a.variable] = widgets.get(a.holder).childrenFiltered().length;
             theItem = `${a.holder}`;
           }
         } else if(collection = getCollection(a.collection)) {
@@ -912,7 +923,7 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder,problems)) {
             await w(a.holder, async holder=>{
-              for(const c of holder.children().slice(0, a.count || 999999))
+              for(const c of holder.childrenFiltered().slice(0, a.count || 999999))
                 c.flip && await c.flip(a.face,a.faceCycle);
             });
           }
@@ -1110,7 +1121,7 @@ export class Widget extends StateManaged {
 
         if(this.isValidID(a.from, problems) && this.isValidID(a.to, problems)) {
           await w(a.from, async source=>await w(a.to, async target=>{
-            for(const c of source.children().slice(0, count).reverse()) {
+            for(const c of source.childrenFiltered().slice(0, count).reverse()) {
               const applyFlip = async function() {
                 if(a.face !== null && c.flip)
                   await c.flip(a.face);
@@ -1154,7 +1165,7 @@ export class Widget extends StateManaged {
         setDefaults(a, { count: 1, face: null, x: 0, y: 0, snapToGrid: true });
         if(this.isValidID(a.from, problems)) {
           await w(a.from, async source=>{
-            for(const c of source.children().slice(0, a.count || 999999).reverse()) {
+            for(const c of source.childrenFiltered().slice(0, a.count || 999999).reverse()) {
               if(a.face !== null && c.flip)
                 c.flip(a.face);
               await c.bringToFront();
@@ -1201,7 +1212,7 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
-              for(const c of holder.children().slice(0, a.count || 999999))
+              for(const c of holder.childrenFiltered().slice(0, a.count || 999999))
                 await c.rotate(a.angle, a.mode);
             });
             if(jeRoutineLogging) {
@@ -1327,7 +1338,7 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
-              for(const c of holder.children())
+              for(const c of holder.childrenFiltered())
                 await c.set('z', Math.floor(Math.random()*10000));
               await holder.updateAfterShuffle();
             });
@@ -1342,7 +1353,7 @@ export class Widget extends StateManaged {
             problems.push(`Collection ${a.collection} is empty.`);
           }
           if(jeRoutineLogging)
-              jeLoggingRoutineOperationSummary(`collection '${a.collection}'`);
+            jeLoggingRoutineOperationSummary(`collection '${a.collection}'`);
         }
       }
 
@@ -1353,7 +1364,7 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
-              await this.sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options, true);
+              await this.sortWidgets(holder.childrenFiltered(), a.key, a.reverse, a.locales, a.options, true);
               await holder.updateAfterShuffle();
             });
           }
@@ -1712,6 +1723,7 @@ export class Widget extends StateManaged {
   async onChildAdd(child, oldParentID) {
     this.childArray = this.childArray.filter(c=>c!=child);
     this.childArray.push(child);
+    this.childArray = this.childArray.filter(w=>w.get('type')!='deck' && w.get('fixedParent')!=true);
     await this.onChildAddAlign(child, oldParentID);
   }
 
