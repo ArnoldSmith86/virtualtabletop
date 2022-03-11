@@ -1327,8 +1327,7 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
-              for(const c of holder.children())
-                await c.set('z', Math.floor(Math.random()*10000));
+              await this.shuffleWidgets(holder.children());
               await holder.updateAfterShuffle();
             });
             if(jeRoutineLogging)
@@ -1336,8 +1335,7 @@ export class Widget extends StateManaged {
           }
         } else if(collection = getCollection(a.collection)) {
           if(collections[collection].length) {
-            for(const c of collections[collection])
-              await c.set('z', Math.floor(Math.random()*10000));
+            await this.shuffleWidgets(collections[collection]);
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
@@ -1855,6 +1853,15 @@ export class Widget extends StateManaged {
       on('#buttonInputCancel', 'click', cancelHandler);
       showOverlay('buttonInputOverlay');
     });
+  }
+
+  async shuffleWidgets(w) {
+    const shuffle = w.map(widget => {
+      return {widget, rand:Math.random()};
+    }).sort((a, b)=> a.rand - b.rand);
+    for(let i of shuffle) {
+      await i.widget.bringToFront();
+    }
   }
 
   async snapToGrid() {
