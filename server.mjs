@@ -118,7 +118,10 @@ MinifyRoom().then(function(result) {
   });
 
   router.get('/', function(req, res) {
-    res.redirect(Math.random().toString(36).substring(3, 7));
+    let id = null;
+    while(!id || fs.existsSync(savedir + '/rooms/' + id + '.json'))
+      id = Math.random().toString(36).substring(3, 7);
+    res.redirect(id);
   });
 
   router.get('/dl/:room/:state/:variant', function(req, res, next) {

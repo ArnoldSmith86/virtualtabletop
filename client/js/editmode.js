@@ -587,7 +587,7 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
     if(wi.type == 'pile')   w = new Pile(wi.id);
     if(wi.type == 'timer')  w = new Timer(wi.id);
     widgets.set(wi.id, w);
-    w.applyDelta(wi);
+    w.applyInitialDelta(wi);
     if(!wi.parent) {
       w.domElement.addEventListener('click', async _=>{
         overlayDone(await onClick());
@@ -598,7 +598,7 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
 }
 
 function addWidgetToAddWidgetOverlay(w, wi) {
-  w.applyDelta(wi);
+  w.applyInitialDelta(wi);
   w.domElement.addEventListener('click', async _=>{
     const toAdd = {...wi};
     toAdd.z = getMaxZ(w.get('layer')) + 1;
@@ -839,7 +839,7 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
   if(applyChangesFromUI)
     await applyEditOptions(widget);
 
-  const children = Widget.prototype.children.call(widgets.get(previousState.id));
+  const children = Widget.prototype.children.call(widgets.get(previousState.id)); // use Widget.children even for holders so it doesn't filter
   const cards = widgetFilter(w=>w.get('deck')==previousState.id);
 
   if(widget.id !== previousState.id || widget.type !== previousState.type) {

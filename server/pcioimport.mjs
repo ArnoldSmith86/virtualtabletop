@@ -1,6 +1,7 @@
 import fs from 'fs';
-import path from 'path';
 import JSZip from 'jszip';
+
+import Config from './config.mjs';
 
 const pieceColors = {
   default: '#000000',
@@ -29,8 +30,8 @@ export default async function convertPCIO(content) {
     if(filename.match(/^\/?userassets/) && zip.files[filename]._data && zip.files[filename]._data.uncompressedSize < 2097152) {
       const targetFile = '/assets/' + zip.files[filename]._data.crc32 + '_' + zip.files[filename]._data.uncompressedSize;
       nameMap['package://' + filename] = targetFile;
-      if(targetFile.match(/^\/assets\/[0-9_-]+$/) && !fs.existsSync(path.resolve() + '/save' + targetFile))
-        fs.writeFileSync(path.resolve() + '/save' + targetFile, await zip.files[filename].async('nodebuffer'));
+      if(targetFile.match(/^\/assets\/[0-9_-]+$/) && !fs.existsSync(Config.directory('assets') + targetFile.substr(7)))
+        fs.writeFileSync(Config.directory('assets') + targetFile.substr(7), await zip.files[filename].async('nodebuffer'));
     }
   }
 
@@ -412,6 +413,17 @@ export default async function convertPCIO(content) {
       w.css = `font-size: ${widget.textSize}px; font-weight: ${weight}; text-align: ${widget.textAlign};`;
       addDimensions(w, widget, 100, 20);
       w.height = widget.textSize * 3.5;
+    } else if(widget.type == 'separator') {
+      w.movable = false;
+      w.layer = -1;
+      w.css = `background:#ddd`;
+      if(widget.separatorType == 'horizontal') {
+        w.width  = widget.width || 150;
+        w.height = 1;
+      } else {
+        w.height = widget.height || 150;
+        w.width  = 1;
+      }
     } else if(widget.type == 'seat') {
       w.type = 'seat';
       w.display = 'seatIndex';
@@ -419,8 +431,8 @@ export default async function convertPCIO(content) {
       w.hideWhenUnused = true;
       if(typeof widget.seatIndex == 'number')
         w.index = widget.seatIndex + 1;
-      w.x += 69;
-      w.y -= 38;
+      w.x = (widget.x || 0) + 69;
+      w.y = (widget.y || 0) - 38;
       w.height = 42;
       w.width = 42;
       w.css = 'box-sizing:border-box;border-width:2px;';
@@ -676,6 +688,19 @@ export default async function convertPCIO(content) {
 
       w.clickRoutine = [];
 
+      if(widget.clickRoutine && widget.clickRoutine.popupMessage) {
+        w.clickRoutine.push({
+          func: 'INPUT',
+          fields: [
+            {
+              type: 'text',
+              text: widget.clickRoutine.popupMessage
+            }
+          ],
+          confirmButtonText: widget.label
+        });
+      }
+
       if(widget.type == 'turnButton') {
         w.clickRoutine.push({
           func: 'TURN'
@@ -746,7 +771,7 @@ export default async function convertPCIO(content) {
             func:   'SORT',
             holder: c.args.sources.value,
             key:    'sortingOrder',
-            reverse: c.args.direction.value != 'za'
+            reverse: !c.args.direction || c.args.direction.value != 'za'
           };
           if(c.holder.length == 1)
             c.holder = c.holder[0];
