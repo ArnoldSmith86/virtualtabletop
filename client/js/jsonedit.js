@@ -23,6 +23,35 @@ const jeState = {
   widget: null
 };
 
+const jeMacroPreset = `
+// this code will be called for
+// every widget as variable w
+
+// variable v is a persistent object you
+// can use to store other information
+
+// EXAMPLES
+
+// add a property to all cards of a deck
+// if(w.deck == "deckName")
+//   w.customVariable = true;
+
+// change ID of matching widgets
+// var match = w.id.match(/^Player 3 - ((First|Second).*)$/)
+// if(match)
+//   w.id = "Player 5 - "+match[1]
+
+// move matching widgets to the left
+// if(w.id.match(/^Player [13] - (Score|Seat)/))
+//   w.x -= 20;
+
+// change all widget IDs to a counter prefixed by "w"
+// if(!v.i)
+//   v.i = 1
+// w.id = "w"+v.i
+// v.i++
+`;
+
 const jeOrder = [ 'type', 'id#', 'parent', 'fixedParent', 'deck', 'cardType', 'index*', 'owner#', 'x*', 'y*', 'width*', 'height*', 'borderRadius', 'scale', 'rotation#', 'layer', 'z', 'inheritChildZ#', 'movable*', 'movableInEdit*#' ];
 
 const jeCommands = [
@@ -205,6 +234,15 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_inputField',
+    name: 'add field',
+    context: '^.* ↦ \\(INPUT\\) ↦ fields',
+    call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
+      jeGetValue(jeContext.slice(1, routineIndex+4)).push( { type: "###SELECT ME###" } );
+      jeSetAndSelect('string');
+    })
+  },
+  {
     id: 'je_css',
     name: 'css',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
@@ -298,24 +336,19 @@ const jeCommands = [
       if(jeMode != 'macro') {
         jeWidget = null;
         jeMode = 'macro';
-        jeSetEditorContent('// this code will be called for\n// every widget as variable w\n\n// variable v is a persistent object you\n// can use to store other information\n\nif(w.deck)\n  w.gotit = true;');
+        jeSetEditorContent(jeMacroPreset);
         jeColorize();
       } else {
         jeJSONerror = null;
         try {
           const macro = new Function(`"use strict";return (function(w, v) {${jeGetEditorContent()}})`)();
           const variableState = {};
-          for(const [ id, w ] of widgets) {
+          for(const w of [...widgets.values()]) { // shallow copy because we might create new widgets by changing the id
             const s = JSON.stringify(w.state);
             const newState = JSON.parse(s);
             macro(newState, variableState);
             batchStart();
-            if(s != JSON.stringify(newState)) {
-              for(const key in w.state)
-                if(newState[key] === undefined)
-                  newState[key] = null;
-              sendPropertyUpdate(id, newState);
-            }
+            await updateWidget(JSON.stringify(newState), s);
             batchEnd();
           }
         } catch(e) {
@@ -588,13 +621,13 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('FOREACH', { loopRoutine: [], in: [], collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('GET', { variable: 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
   jeAddRoutineOperationCommands('IF', { condition: null, operand1: null, relation: '==', operand2: null, thenRoutine: [], elseRoutine: [] });
-  // INPUT is missing
+  jeAddRoutineOperationCommands('INPUT', { cancelButtonIcon: null, cancelButtonText: "Cancel", confirmButtonIcon: null, confirmButtonText: "OK", fields: [] } );
   jeAddRoutineOperationCommands('LABEL', { value: 0, mode: 'set', label: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('MOVE', { count: 1, face: null, from: null, to: null });
   jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0, snapToGrid: true });
   jeAddRoutineOperationCommands('RECALL', { owned: true, holder: null });
   jeAddRoutineOperationCommands('ROTATE', { count: 1, angle: 90, mode: 'add', holder: null, collection: 'DEFAULT' });
-  jeAddRoutineOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all', sortBy: 'null' });
+  jeAddRoutineOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all', sortBy: { key: "z", reverse: false } });
   jeAddRoutineOperationCommands('SET', { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
   jeAddRoutineOperationCommands('SORT', { key: 'value', reverse: false, locales: null, options: null, holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('SHUFFLE', { holder: null, collection: 'DEFAULT' });
@@ -611,6 +644,14 @@ function jeAddCommands() {
   jeAddFaceCommand('properties', '', {});
   jeAddFaceCommand('radius', ' (rounded corners)', 1);
 
+  jeAddFieldCommand('text', 'subtitle|title|text', '');
+  jeAddFieldCommand('label', 'checkbox|color|number|select|string|switch', '');
+  jeAddFieldCommand('value', 'checkbox|color|number|select|string|switch', '');
+  jeAddFieldCommand('variable', 'checkbox|color|number|select|string|switch', '');
+  jeAddFieldCommand('min', 'number', 0);
+  jeAddFieldCommand('max', 'number', 10);
+  jeAddFieldCommand('options', 'select', [ { value: 'value', text: 'text' } ]);
+
   jeAddEnumCommands('^[a-z]+ ↦ type', widgetTypes.slice(1));
   jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ value', [ '${}' ]);
   jeAddEnumCommands('^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ textAlign', [ 'left', 'center', 'right' ]);
@@ -622,6 +663,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(GET\\) ↦ aggregation', [ 'first', 'last', 'array', 'average', 'median', 'min', 'max', 'sum' ]);
   jeAddEnumCommands('^.*\\(IF\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=' ]);
   jeAddEnumCommands('^.*\\(IF\\) ↦ (operand1|operand2|condition)', [ '${}' ]);
+  jeAddEnumCommands('^.*\\(INPUT\\) ↦ fields ↦ [0-9]+ ↦ type', [ 'checkbox', 'color', 'number', 'select', 'string', 'subtitle', 'switch', 'text', 'title' ]);
   jeAddEnumCommands('^.*\\(LABEL\\) ↦ mode', [ 'set', 'dec', 'inc', 'append' ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ angle', [ 45, 60, 90, 135, 180 ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ mode', [ 'set', 'add' ]);
@@ -786,6 +828,22 @@ function jeAddFaceCommand(key, description, value) {
   });
 }
 
+function jeAddFieldCommand(key, types, value) {
+  jeCommands.push({
+    id: 'field_' + key,
+    name: key,
+    context: '^.*\\(INPUT\\) ↦ fields ↦ [0-9]+',
+    show: jeRoutineCall(function(routineIndex) {
+      const field = jeGetValue(jeContext.slice(1, routineIndex+5));
+      return typeof field[key] === 'undefined' && (field.type || '').match(types);
+    }, true),
+    call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
+      jeGetValue(jeContext.slice(1, routineIndex+5))[key] = '###SELECT ME###';
+      jeSetAndSelect(value);
+    })
+  });
+}
+
 function jeAddNumberCommand(name, key, callback) {
   jeCommands.push({
     id: 'number_' + name,
@@ -803,9 +861,8 @@ function jeAddNumberCommand(name, key, callback) {
 
 function jeAddWidgetPropertyCommands(object) {
   for(const property in object.defaults)
-    if(property != 'typeClasses')
+    if(property != 'typeClasses' && !property.match(/^c[0-9]{2}$/))
       jeAddWidgetPropertyCommand(object, property);
-  object.applyRemove();
   const type = object.defaults.typeClasses.replace(/widget /, '');
   return type == 'basic' ? null : type;
 }
@@ -1383,12 +1440,22 @@ function jeLoggingRoutineEnd(variables, collections) {
         }
         node = node.parentNode;
       }
-    }    
+    }
   }
 }
 
 function jeLoggingRoutineOperationStart(original, applied) {
-  jeHTMLStack.unshift([jeLoggingHTML, original, applied, html(typeof applied == 'string' ? applied.split(' ')[0] : applied.func || '<COMMENT>')]);
+  let fcn;
+  if (typeof applied == 'string')
+    if (applied.substring(0,3) == 'var')
+      fcn = 'var'
+    else if (applied.substring(0,2) == '//')
+      fcn = '//'
+    else
+      fcn = applied
+  else
+    fcn = applied.func || '<COMMENT>'
+  jeHTMLStack.unshift([jeLoggingHTML, original, applied, html(fcn)]);
   jeLoggingHTML = '';
 }
 
@@ -1508,6 +1575,18 @@ function jePreProcessObject(o) {
   }
 
   for(const key of Object.keys(o).sort())
+    if(copy[key] === undefined && !key.match(/^c[0-9]{2}$/) && !key.match(/Routine$/) && jeWidget.getDefaultValue(key) !== undefined)
+      copy[key] = o[key];
+  copy[`LINEBREAKcustom`] = null;
+  for(const key of Object.keys(o).sort())
+    if(copy[key] === undefined && !key.match(/^c[0-9]{2}$/) && !key.match(/Routine$/))
+      copy[key] = o[key];
+  copy[`LINEBREAKroutines`] = null;
+  for(const key of Object.keys(o).sort())
+    if(copy[key] === undefined && !key.match(/^c[0-9]{2}$/))
+      copy[key] = o[key];
+  copy[`LINEBREAKcanvas`] = null;
+  for(const key of Object.keys(o).sort())
     if(copy[key] === undefined)
       copy[key] = o[key];
 
@@ -1524,7 +1603,7 @@ function jePreProcessObject(o) {
 }
 
 function jePreProcessText(t) {
-  return t.replace(/(\n +"LINEBREAK.*": null,)+/g, '\n').replace(/(,\n +"LINEBREAK.*": null)+/g, '');
+  return t.replace(/(\n +"LINEBREAK.*": null,)+/g, '\n').replace(/(,\n?\n +"LINEBREAK.*": null)+/g, '');
 }
 
 // Select the characters in a given range in the text area.

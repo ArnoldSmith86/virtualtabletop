@@ -1,13 +1,13 @@
 import fs from 'fs';
-import path from 'path';
 import fetch from 'node-fetch';
 import JSZip from 'jszip';
 
 import { VERSION } from './fileupdater.mjs';
 import PCIO from './pcioimport.mjs';
 import Logging from './logging.mjs';
+import Config from './config.mjs';
 
-const dirname = path.resolve() + '/save/links';
+const dirname = Config.directory('save') + '/links';
 const filename = dirname + '.json';
 const linkStatus = fs.existsSync(filename) ? JSON.parse(fs.readFileSync(filename)) : {};
 
@@ -103,8 +103,8 @@ async function readVariantsFromBuffer(buffer) {
         if(zip.files[filename]._data.uncompressedSize >= 10485760)
           throw new Logging.UserError(403, `${filename} is bigger than 10 MiB.`);
         const targetFile = '/assets/' + zip.files[filename]._data.crc32 + '_' + zip.files[filename]._data.uncompressedSize;
-        if(targetFile.match(/^\/assets\/[0-9_-]+$/) && !fs.existsSync(path.resolve() + '/save' + targetFile))
-          fs.writeFileSync(path.resolve() + '/save' + targetFile, await zip.files[filename].async('nodebuffer'));
+        if(targetFile.match(/^\/assets\/[0-9_-]+$/) && !fs.existsSync(Config.directory('assets') + targetFile.substr(7)))
+          fs.writeFileSync(Config.directory('assets') + targetFile.substr(7), await zip.files[filename].async('nodebuffer'));
       }
 
     }

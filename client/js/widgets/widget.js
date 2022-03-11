@@ -1,4 +1,4 @@
-import { $, removeFromDOM, asArray, escapeCSS } from '../domhelpers.js';
+import { $, removeFromDOM, asArray, escapeID } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
@@ -21,7 +21,7 @@ const readOnlyProperties = new Set([
 export class Widget extends StateManaged {
   constructor(id) {
     const div = document.createElement('div');
-    div.id = id;
+    div.id = 'w_' + escapeID(id);
     super();
     this.id = id;
     this.domElement = div;
@@ -229,6 +229,8 @@ export class Widget extends StateManaged {
       this.parent.applyChildRemove(this);
     if(this.get('deck') && widgets.has(this.get('deck')))
       widgets.get(this.get('deck')).removeCard(this);
+    if($(`#STYLES_${escapeID(this.id)}`))
+      removeFromDOM($(`#STYLES_${escapeID(this.id)}`));
     removeFromDOM(this.domElement);
     this.inheritFromUnregister();
     this.globalUpdateListenersUnregister();
@@ -364,8 +366,8 @@ export class Widget extends StateManaged {
   }
   css() {
     this.propertiesUsedInCSS = [];
-    if($(`#${escapeCSS(this.id)}STYLESHEET`))
-      removeFromDOM($(`#${escapeCSS(this.id)}STYLESHEET`));
+    if($(`#STYLES_${escapeID(this.id)}`))
+      removeFromDOM($(`#STYLES_${escapeID(this.id)}`));
     let css = this.cssReplaceProperties(this.cssAsText(this.get('css')));
 
     css = this.cssBorderRadius() + css;
@@ -426,10 +428,10 @@ export class Widget extends StateManaged {
 
   cssToStylesheet(css) {
     const style = document.createElement('style');
-    style.id = `${this.id}STYLESHEET`;
+    style.id = `STYLES_${escapeID(this.id)}`;
     for(const key in css)
       if(key != 'inline')
-        style.appendChild(document.createTextNode(`#${escapeCSS(this.id)}${key == 'default' ? '' : key} { ${this.cssReplaceProperties(this.cssAsText(css[key]))} }`));
+        style.appendChild(document.createTextNode(`#w_${escapeID(this.id)}${key == 'default' ? '' : key} { ${this.cssReplaceProperties(this.cssAsText(css[key]))} }`));
     $('head').appendChild(style);
 
     return this.cssAsText(css.inline || '');
@@ -455,23 +457,23 @@ export class Widget extends StateManaged {
     if(go) {
       for(const field of o.fields) {
         if(field.type == 'checkbox') {
-          result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).checked;
+          result[field.variable] = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).checked;
         } else if(field.type == 'switch') {
-          let thisresult = document.getElementById(this.get('id') + ';' + field.variable).checked;
+          let thisresult = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).checked;
           if(thisresult){
             result[field.variable] = 'on';
           } else {
             result[field.variable] = 'off';
           }
         } else if(field.type == 'number') {
-          let thisvalue = document.getElementById(this.get('id') + ';' + field.variable).value;
+          let thisvalue = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).value;
           if(thisvalue > field.max)
             thisvalue = field.max;
           if(thisvalue < field.min)
             thisvalue = field.min;
           result[field.variable] = thisvalue
         } else if(field.type != 'text' && field.type != 'subtitle' && field.type != 'title') {
-          result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).value;
+          result[field.variable] = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).value;
         }
       }
     }
@@ -603,7 +605,9 @@ export class Widget extends StateManaged {
     for(const original of routine) {
       let a = JSON.parse(JSON.stringify(original));
       if(typeof a == 'object')
-        a = evaluateVariablesRecursively(a);
+        a = evaluateVariablesRecursively(a)
+      else
+        a = original.trim();
 
       var problems = [];
       if(jeRoutineLogging) jeLoggingRoutineOperationStart(original, a)
@@ -672,7 +676,13 @@ export class Widget extends StateManaged {
             variables[variable] = getValue(variables[variable]);
           if(jeRoutineLogging) jeLoggingRoutineOperationSummary(a.substr(4), JSON.stringify(variables[variable]));
         } else {
-          problems.push('String could not be interpreted as expression. Please check your syntax and note that many characters have to be escaped.');
+          const comment = a.match(new RegExp('^(?://(.*))?\x24'));
+          if (comment) {
+            // ignore (but log) blank and comment only lines
+            if(jeRoutineLogging) jeLoggingRoutineOperationSummary(comment[1]||'');
+          } else {
+            problems.push('String could not be interpreted as expression. Please check your syntax and note that many characters have to be escaped.');
+          }
         }
       }
 
@@ -1317,8 +1327,7 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
-              for(const c of holder.children())
-                await c.set('z', Math.floor(Math.random()*10000));
+              await this.shuffleWidgets(holder.children());
               await holder.updateAfterShuffle();
             });
             if(jeRoutineLogging)
@@ -1326,8 +1335,7 @@ export class Widget extends StateManaged {
           }
         } else if(collection = getCollection(a.collection)) {
           if(collections[collection].length) {
-            for(const c of collections[collection])
-              await c.set('z', Math.floor(Math.random()*10000));
+            await this.shuffleWidgets(collections[collection]);
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
@@ -1827,7 +1835,7 @@ export class Widget extends StateManaged {
         const dom = document.createElement('div');
         dom.style = field.css || "";
         dom.className = "input"+field.type;
-        formField(field, dom, this.get('id') + ';' + field.variable);
+        formField(field, dom, 'INPUT_' + escapeID(this.get('id')) + ';' + field.variable);
         $('#buttonInputFields').appendChild(dom);
       }
 
@@ -1845,6 +1853,15 @@ export class Widget extends StateManaged {
       on('#buttonInputCancel', 'click', cancelHandler);
       showOverlay('buttonInputOverlay');
     });
+  }
+
+  async shuffleWidgets(w) {
+    const shuffle = w.map(widget => {
+      return {widget, rand:Math.random()};
+    }).sort((a, b)=> a.rand - b.rand);
+    for(let i of shuffle) {
+      await i.widget.bringToFront();
+    }
   }
 
   async snapToGrid() {
