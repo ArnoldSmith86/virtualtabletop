@@ -6,6 +6,7 @@ import crypto from 'crypto';
 import { diffString, diff } from 'json-diff';
 
 import { compute_ops } from '../../client/js/compute.js';
+import { escapeID } from '../../client/js/domhelpers.js';
 
 const server = process.env.REFERENCE ? `http://212.47.248.129:${3000 + +process.env.REFERENCE}` : 'http://localhost:8272';
 const referenceDir = path.resolve() + '/save/testcafe-references';
@@ -92,43 +93,43 @@ test('Create game using edit mode', async t => {
   await t
     .click('#addButton')
     .click('#add-spinner6')
-    .click('#jyo2')
+    .click('#w_jyo2')
     .click('#addButton')
     .click('#add-holder')
     .click('#addButton')
     .click('#addHand')
-    .drag('[id="hand"]', 100, -100) // this shouldn't change anything because it's not movable
+    .drag('#w_hand', 100, -100) // this shouldn't change anything because it's not movable
     .click('#editButton')
-    .click('[id="hand"]')
+    .click('#w_hand')
     .click('#transparentHolder')
     .click('#updateWidget')
     .click('#editButton')
     .click('#addButton')
     .click('#add-deck_K_S')
-    .click('[id="3nsjB"]')
-    .click('[id="3nsjP"] > .handle')
+    .click('#w_3nsjB')
+    .click('#w_3nsjP > .handle')
     .click('#pileOverlay > button:nth-of-type(3)')
-    .click('[id="b86p"] > .handle')
+    .click('#w_b86p > .handle')
     .click('#pileOverlay > button:nth-of-type(1)')
-    .click('[id="b86p"] > .handle')
+    .click('#w_b86p > .handle')
     .click('#pileOverlay > button:nth-of-type(3)')
-    .click('[id="5ip4"] > .handle')
+    .click('#w_5ip4 > .handle')
     .click('#pileOverlay > button:nth-of-type(2)')
-    .dragToElement('[id="5ip4"] > .handle', '[id="hand"]')
+    .dragToElement('#w_5ip4 > .handle', '#w_hand')
     .click('#editButton')
-    .click('#jyo2')
+    .click('#w_jyo2')
     .click('#duplicateWidget')
-    .click('#jyo3')
+    .click('#w_jyo3')
     .click('#manualEdit')
     .typeText('#editWidgetJSON', '{"type":"spinner","options":[1,2],"angle": 5,"id": "jyo3"}', { replace: true })
     .click('#editJSONoverlay #updateWidget')
-    .click('#jyo2')
+    .click('#w_jyo2')
     .setNativeDialogHandler(() => true)
     .click('#removeWidget')
     .click('#editButton')
     .click('#addButton')
     .click('#addSeat')
-    .click('#es5b');
+    .click('#w_es5b');
 
   await compareState(t, '1af2c0167fed09276b2f939ca1174d3f');
 });
@@ -173,7 +174,7 @@ test('Compute', async t => {
       clickRoutine
     };
     await setRoomState(state);
-    await t.click(`[id="button${op.name}"]`);
+    await t.click(`#w_button${escapeID(op.name)}`);
     await compareState(t, op.hash);
   }
 });
@@ -278,7 +279,7 @@ test('Dynamic expressions', async t => {
     .pressKey('ctrl+j')
     .click('#room',{offsetX: 1, offsetY: 1, modifiers:{ctrl:true}})
     .typeText('#jeText', button, { replace: true, paste: true })
-    .click('[id="jyo6"]')
+    .click('#w_jyo6')
   const log = await Selector('#jeLog').textContent
   for (let i=0; i<ops.length; i++) {
     const logContains = log.includes('"'+ops[i][1]+'": '+ops[i][2]);
@@ -311,7 +312,11 @@ function publicLibraryButtons(game, variant, md5, tests) {
   publicLibraryTest(game, variant, md5, async t => {
       for(const b of tests)
         if(typeof b == "string") {
-          await t.click(`[id="${b}"]`)
+          if(b.charAt(0) == '#') {
+            await t.click(b);
+          } else {
+            await t.click(`#w_${escapeID(b)}`);
+          }
         } else {
           await t.dragToElement(b[0](), b[1](), { speed:0.5 });
         }
@@ -321,25 +326,25 @@ function publicLibraryButtons(game, variant, md5, tests) {
 publicLibraryButtons('Blue',               0, 'c0b6df4181e1e14db376c87cef71a1c3', [
   'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton',
   'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton',
-  'reset_button', 'buttonInputGo', 'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', '9n2q'
+  'reset_button', '#buttonInputGo', 'fcc3fa2c-c091-41bc-8737-54d8b9d3a929', '9n2q'
 ]);
 publicLibraryButtons('Bhukhar',            0, '2748e96293b8646894700440508dd280', [ 'btnMenuSettings', 'btn8Players', 'btn4Packs', 'btnCloseSettings', 'btnSelectPlayer', 'btnDeal', 'btnPile4', 'btnStartGame', 'btnTakeOne', 'btnNextPlayer', 'btnPickUp' ]);
 publicLibraryButtons('Dice',               0, 'a68d28c20b624d6ddf87149bae230598', [ 'k18u', 'hy65', 'gghr', 'dsfa', 'f34a', 'fusq' ]);
-publicLibraryButtons('Dots',               0, '23894df38f786cb014fa1cd79f2345db', [ 'reset', 'buttonInputGo', 'col11', 'col21', 'col12', 'col22', 'row11', 'row31', 'row21', 'row32', 'row12', 'row42', 'row22', 'row23', 'col23' ]);
+publicLibraryButtons('Dots',               0, '23894df38f786cb014fa1cd79f2345db', [ 'reset', '#buttonInputGo', 'col11', 'col21', 'col12', 'col22', 'row11', 'row31', 'row21', 'row32', 'row12', 'row42', 'row22', 'row23', 'col23' ]);
 publicLibraryButtons('Solitaire',          0, 'd5babf02d0c94500673d31188405ad9a', [ 'reset', 'jemz', 'reset' ]);
 publicLibraryButtons('Mancala',            0, '92108a0e76fd295fee9881b6c7f8928b', ['btnRule1', 'btnRule2', 'getb5', 'getb5', 'getb5', 'getb5', 'getb1', 'getb1', 'getb1', 'getb1' ]);
 publicLibraryButtons('Reversi',            0, '35e0017570f9ecd206a2317c1528be36',
        [
-         [ ()=>Selector("#zpiece15"), ()=>Selector("#sq23") ],
-         [ ()=>Selector("#zpiece78"), ()=>Selector("#sq22") ],
-         [ ()=>Selector("#zpiece40"), ()=>Selector("#sq32") ],
-         [ ()=>Selector("#zpiece72"), ()=>Selector("#sq12") ],
-         [ ()=>Selector("#zpiece72"), ()=>Selector("#sq24") ],
-         [ ()=>Selector("#zpiece19"), ()=>Selector("#sq35") ],
-         [ ()=>Selector("#zpiece08"), ()=>Selector("#sq53") ]
+         [ ()=>Selector("#w_zpiece15"), ()=>Selector("#w_sq23") ],
+         [ ()=>Selector("#w_zpiece78"), ()=>Selector("#w_sq22") ],
+         [ ()=>Selector("#w_zpiece40"), ()=>Selector("#w_sq32") ],
+         [ ()=>Selector("#w_zpiece72"), ()=>Selector("#w_sq12") ],
+         [ ()=>Selector("#w_zpiece72"), ()=>Selector("#w_sq24") ],
+         [ ()=>Selector("#w_zpiece19"), ()=>Selector("#w_sq35") ],
+         [ ()=>Selector("#w_zpiece08"), ()=>Selector("#w_sq53") ]
        ]);
 publicLibraryButtons('Reward',             0, '1a1526d9a0c3110355acf3786795f220', [
-  'gmex', 'kprc', 'oksq', 'j1wz', 'vfhn', '0i6i', 'Orange Recall', 'buttonInputGo', 'b09z'
+  'gmex', 'kprc', 'oksq', 'j1wz', 'vfhn', '0i6i', 'Orange Recall', '#buttonInputGo', 'b09z'
 ]);
 publicLibraryButtons('Rummy Tiles',        0, '6c5f8896284f52e874076bc60cca6325', [ 'startMix', 'draw14' ]);
 publicLibraryButtons('Undercover',         1, '97725a1d0733ef74dd5e1d0f9f260cb5', [ 'Reset', 'Spy Master Button' ]);

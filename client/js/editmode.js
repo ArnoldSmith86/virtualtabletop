@@ -588,12 +588,16 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
     if(wi.type == 'timer')  w = new Timer(wi.id);
     widgets.set(wi.id, w);
     w.applyInitialDelta(wi);
+    w.domElement.id = w.id;
     if(!wi.parent) {
       w.domElement.addEventListener('click', async _=>{
         overlayDone(await onClick());
       });
       $('#addOverlay').appendChild(w.domElement);
     }
+  }
+  for(const wi of widgetsToAdd) {
+    widgets.delete(wi.id)
   }
 }
 
@@ -605,6 +609,7 @@ function addWidgetToAddWidgetOverlay(w, wi) {
     const id = await addWidgetLocal(toAdd);
     overlayDone(id);
   });
+  w.domElement.id = w.id;
   $('#addOverlay').appendChild(w.domElement);
 }
 
