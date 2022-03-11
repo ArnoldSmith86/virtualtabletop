@@ -97,7 +97,7 @@ test('Create game using edit mode', async t => {
     .click('#add-holder')
     .click('#addButton')
     .click('#addHand')
-    .drag('[id="hand"]', 100, 100) // this shouldn't change anything because it's not movable
+    .drag('[id="hand"]', 100, -100) // this shouldn't change anything because it's not movable
     .click('#editButton')
     .click('[id="hand"]')
     .click('#transparentHolder')
