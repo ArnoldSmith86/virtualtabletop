@@ -95,6 +95,9 @@ body.edit .widget.legacyClassicPiece::after {
   top: 9px;
 }
 
+.checkersPiece {
+  border-radius: 50%;
+}
 .checkersPiece > .widget-content {
   background: var(--color);
 }

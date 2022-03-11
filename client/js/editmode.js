@@ -285,6 +285,7 @@ function applyEditOptionsPiece(widget) {
     widget.classes = "checkersPiece";
     widget.activeFace = 0;
     widget.faces = [{"classes": "checkersPiece"},{"classes": "checkersPiece crowned"}];
+    widget.borderRadius = "50%";
     widget.height = 73.5;
     widget.width = 73.5;
     widget.activeFace = (widget.activeFace ? 1 : 0);
@@ -662,6 +663,7 @@ function populateAddWidgetOverlay() {
         { classes: "checkersPiece crowned" }
       ],
       color,
+      borderRadius: "50%",
       width: 73.5,
       height: 73.5,
       x: 440,
