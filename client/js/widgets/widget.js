@@ -1,5 +1,5 @@
 import { $, removeFromDOM, asArray, escapeCSS } from '../domhelpers.js';
-import { StateManaged } from '../statemanaged.js';
+import { StateManaged, endRoutine } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay } from '../main.js';
@@ -17,6 +17,7 @@ const readOnlyProperties = new Set([
   '_localOriginAbsoluteX',
   '_localOriginAbsoluteY'
 ]);
+let breakRoutine = null;
 
 export class Widget extends StateManaged {
   constructor(id) {
@@ -309,7 +310,10 @@ export class Widget extends StateManaged {
 
     if(Array.isArray(this.get('clickRoutine')) && !(mode == 'ignoreClickRoutine' || mode =='ignoreAll')) {
       await this.evaluateRoutine('clickRoutine', {}, {});
-      return true;
+      if(endRoutine)
+        endRoutine = null;
+      else
+        return true;
     } else {
       return false;
     }
@@ -603,6 +607,10 @@ export class Widget extends StateManaged {
     const routine = this.get(property) !== null ? this.get(property) : property;
 
     for(const original of routine) {
+      if(endRoutine){
+        break;
+      }
+
       let a = JSON.parse(JSON.stringify(original));
       if(typeof a == 'object')
         a = evaluateVariablesRecursively(a)
@@ -1024,7 +1032,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'IF') {
-        setDefaults(a, { relation: '==' });
+        setDefaults(a, { relation: '==', thenBreak: false, elseBreak: false, thenEnd: false, elseEnd: false });
         if (['==', '!=', '<', '<=', '>=', '>'].indexOf(a.relation) < 0) {
           problems.push(`Relation ${a.relation} is unsupported. Using '==' relation.`);
           a.relation = '==';
@@ -1033,9 +1041,16 @@ export class Widget extends StateManaged {
           let condition = a.condition;
           if (condition === undefined)
             condition = compute(a.relation, null, a.operand1, a.operand2);
-          const branch = condition ? 'thenRoutine' : 'elseRoutine';
-          if(Array.isArray(a[branch]))
-            await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true);
+          if((a.thenBreak || a.thenEnd) && condition || (a.elseBreak || a.elseEnd) && !condition) {
+            breakRoutine = true;
+            if(a.thenEnd || a.elseEnd) {
+              endRoutine = true;
+            }
+          } else {
+            const branch = condition ? 'thenRoutine' : 'elseRoutine';
+            if(Array.isArray(a[branch]))
+              await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true);
+          }
           if(jeRoutineLogging) {
             if (a.condition === undefined)
               jeLoggingRoutineOperationSummary(`'${original.operand1}' ${a.relation} '${original.operand2}'`, `${JSON.stringify(condition)}`)
@@ -1492,9 +1507,10 @@ export class Widget extends StateManaged {
       if(!jeRoutineLogging && problems.length)
         console.log(problems);
 
-      if(abortRoutine)
-        break
-
+      if(abortRoutine || breakRoutine || a.func == 'CALL' && !a.return) {
+        breakRoutine = null;
+        break;
+      }
     } // End iterate over functions in routine
 
     if(jeRoutineLogging) jeLoggingRoutineEnd(variables, collections);
@@ -1736,14 +1752,17 @@ export class Widget extends StateManaged {
       if(oldValue) {
         const oldParent = widgets.get(oldValue);
         await oldParent.onChildRemove(this);
-        if(this.get('type') != 'holder' && Array.isArray(oldParent.get('leaveRoutine')))
+        if(this.get('type') != 'holder' && Array.isArray(oldParent.get('leaveRoutine'))) {
           await oldParent.evaluateRoutine('leaveRoutine', {}, { child: [ this ] });
+        }
       }
       if(newValue) {
         const newParent = widgets.get(newValue);
         await newParent.onChildAdd(this, oldValue);
-        if(Array.isArray(newParent.get('enterRoutine')))
+        if(Array.isArray(newParent.get('enterRoutine'))) {
           await newParent.evaluateRoutine('enterRoutine', { oldParentID: oldValue === undefined ? null : oldValue }, { child: [ this ] });
+          endRoutine = null;
+        }
       }
       if(!this.disablePileUpdateAfterParentChange)
         await this.updatePiles();
