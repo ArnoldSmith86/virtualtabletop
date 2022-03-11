@@ -457,23 +457,23 @@ export class Widget extends StateManaged {
     if(go) {
       for(const field of o.fields) {
         if(field.type == 'checkbox') {
-          result[field.variable] = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable)).checked;
+          result[field.variable] = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).checked;
         } else if(field.type == 'switch') {
-          let thisresult = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable)).checked;
+          let thisresult = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).checked;
           if(thisresult){
             result[field.variable] = 'on';
           } else {
             result[field.variable] = 'off';
           }
         } else if(field.type == 'number') {
-          let thisvalue = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable)).value;
+          let thisvalue = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).value;
           if(thisvalue > field.max)
             thisvalue = field.max;
           if(thisvalue < field.min)
             thisvalue = field.min;
           result[field.variable] = thisvalue
         } else if(field.type != 'text' && field.type != 'subtitle' && field.type != 'title') {
-          result[field.variable] = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable)).value;
+          result[field.variable] = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).value;
         }
       }
     }
