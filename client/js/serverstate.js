@@ -1,5 +1,5 @@
 import { toServer } from './connection.js';
-import { $, $a, onLoad } from './domhelpers.js';
+import { $, $a, onLoad, unescapeID } from './domhelpers.js';
 
 let roomID = self.location.pathname.substr(1);
 
@@ -34,7 +34,12 @@ export function addWidget(widget, instance) {
     w = instance;
   } else if(widget.type == 'card') {
     if(widgets.has(widget.deck)) {
-      w = new Card(id);
+      if(widgets.get(widget.deck).get('type') == 'deck') {
+        w = new Card(id);
+      } else {
+        console.error(`Could not add widget!`, widget, 'card with invalid deck');
+        return;
+      }
     } else {
       if(!deferredCards[widget.deck])
         deferredCards[widget.deck] = [];
@@ -120,9 +125,8 @@ function receiveDeltaFromServer(delta) {
 function receiveStateFromServer(args) {
   mouseTarget = null;
   deltaID = args._meta.deltaID;
-  for(const widget of $a('#room .widget'))
-    if(widget.id != 'enlarged')
-      widgets.get(widget.id).applyRemove();
+  for(const el of $a('[id^=w_]'))
+    widgets.get(unescapeID(el.id.slice(2))).applyRemove();
   widgets.clear();
   dropTargets.clear();
   maxZ = {};
@@ -143,7 +147,11 @@ function receiveStateFromServer(args) {
 }
 
 function removeWidget(widgetID) {
-  widgets.get(widgetID).applyRemove();
+  try {
+    widgets.get(widgetID).applyRemove();
+  } catch(e) {
+    console.error(`Could not remove widget!`, widgetID, e);
+  }
   widgets.delete(widgetID);
   dropTargets.delete(widgetID);
 }

@@ -9,7 +9,6 @@ export class StateManaged {
 
   addDefaults(defaults) {
     Object.assign(this.defaults, defaults);
-    this.applyDeltaToDOM(defaults);
   }
 
   applyDelta(delta) {
@@ -29,6 +28,7 @@ export class StateManaged {
   }
 
   applyInitialDelta(delta) {
+    this.applyDeltaToDOM(this.defaults);
     this.applyDelta(delta);
   }
 
