@@ -1,5 +1,5 @@
 import { toServer } from './connection.js';
-import { $, $a, onLoad } from './domhelpers.js';
+import { $, $a, onLoad, unescapeID } from './domhelpers.js';
 
 let roomID = self.location.pathname.substr(1);
 
@@ -128,9 +128,8 @@ function receiveDeltaFromServer(delta) {
 function receiveStateFromServer(args) {
   mouseTarget = null;
   deltaID = args._meta.deltaID;
-  for(const widget of $a('#room .widget'))
-    if(widget.id != 'enlarged')
-      widgets.get(widget.id).applyRemove();
+  for(const el of $a('[id^=w_]'))
+    widgets.get(unescapeID(el.id.slice(2))).applyRemove();
   widgets.clear();
   dropTargets.clear();
   maxZ = {};
