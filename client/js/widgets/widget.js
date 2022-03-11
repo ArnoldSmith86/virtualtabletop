@@ -1,4 +1,4 @@
-import { $, removeFromDOM, asArray, escapeCSS } from '../domhelpers.js';
+import { $, removeFromDOM, asArray, escapeID } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
@@ -21,7 +21,7 @@ const readOnlyProperties = new Set([
 export class Widget extends StateManaged {
   constructor(id) {
     const box = document.createElement('div');
-    box.id = id;
+    box.id = 'w_' + escapeID(id);
     box.className = 'widget';
     const inner = document.createElement('div');
     inner.className = 'widget-content';
@@ -241,8 +241,8 @@ export class Widget extends StateManaged {
       this.parent.applyChildRemove(this);
     if(this.get('deck') && widgets.has(this.get('deck')))
       widgets.get(this.get('deck')).removeCard(this);
-    if($(`#${escapeCSS(this.id)}STYLESHEET`))
-      removeFromDOM($(`#${escapeCSS(this.id)}STYLESHEET`));
+    if($(`#STYLES_${escapeID(this.id)}`))
+      removeFromDOM($(`#STYLES_${escapeID(this.id)}`));
     removeFromDOM(this.domBox);
     this.inheritFromUnregister();
     this.globalUpdateListenersUnregister();
@@ -424,8 +424,8 @@ export class Widget extends StateManaged {
   }
   cssInner() {
     this.propertiesUsedInCSS = [];
-    if($(`#${escapeCSS(this.id)}STYLESHEET`))
-      removeFromDOM($(`#${escapeCSS(this.id)}STYLESHEET`));
+    if($(`#STYLES_${escapeID(this.id)}`))
+      removeFromDOM($(`#STYLES_${escapeID(this.id)}`));
     let css = this.cssReplaceProperties(this.cssAsText(this.get('css')));
     css = this.cssBorderRadius() + css;
     return css;
@@ -444,10 +444,10 @@ export class Widget extends StateManaged {
 
   cssToStylesheet(css) {
     const style = document.createElement('style');
-    style.id = `${this.id}STYLESHEET`;
+    style.id = `STYLES_${escapeID(this.id)}`;
     for(const key in css)
       if(key != 'inline')
-        style.appendChild(document.createTextNode(`#${escapeCSS(this.id)} > .widget-content${key == 'default' ? '' : key} { ${this.cssReplaceProperties(this.cssAsText(css[key]))} }`));
+        style.appendChild(document.createTextNode(`#w_${escapeID(this.id)}${key == 'default' ? '' : key} { ${this.cssReplaceProperties(this.cssAsText(css[key]))} }`));
     $('head').appendChild(style);
 
     return this.cssAsText(css.inline || '');
@@ -1343,8 +1343,7 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
-              for(const c of holder.children())
-                await c.set('z', Math.floor(Math.random()*10000));
+              await this.shuffleWidgets(holder.children());
               await holder.updateAfterShuffle();
             });
             if(jeRoutineLogging)
@@ -1352,8 +1351,7 @@ export class Widget extends StateManaged {
           }
         } else if(collection = getCollection(a.collection)) {
           if(collections[collection].length) {
-            for(const c of collections[collection])
-              await c.set('z', Math.floor(Math.random()*10000));
+            await this.shuffleWidgets(collections[collection]);
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
@@ -1854,7 +1852,7 @@ export class Widget extends StateManaged {
         const dom = document.createElement('div');
         dom.style = field.css || "";
         dom.className = "input"+field.type;
-        formField(field, dom, this.get('id') + ';' + field.variable);
+        formField(field, dom, 'INPUT_' + escapeID(this.get('id')) + ';' + field.variable);
         $('#buttonInputFields').appendChild(dom);
       }
 
@@ -1872,6 +1870,15 @@ export class Widget extends StateManaged {
       on('#buttonInputCancel', 'click', cancelHandler);
       showOverlay('buttonInputOverlay');
     });
+  }
+
+  async shuffleWidgets(w) {
+    const shuffle = w.map(widget => {
+      return {widget, rand:Math.random()};
+    }).sort((a, b)=> a.rand - b.rand);
+    for(let i of shuffle) {
+      await i.widget.bringToFront();
+    }
   }
 
   async snapToGrid() {
