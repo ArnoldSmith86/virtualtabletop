@@ -320,7 +320,10 @@ onLoad(function() {
   startWebSocket();
 
   onMessage('warning', alert);
-  onMessage('error', alert);
+  onMessage('error', function(message) {
+    waitingForStateCreation = null;
+    alert(message);
+  });
   onMessage('internal_error', function() {
     preventReconnect();
     showOverlay('internalErrorOverlay');

@@ -115,7 +115,10 @@ MinifyRoom().then(function(result) {
   });
 
   app.get('/', function(req, res) {
-    res.redirect(Math.random().toString(36).substring(3, 7));
+    let id = null;
+    while(!id || fs.existsSync(savedir + '/rooms/' + id + '.json'))
+      id = Math.random().toString(36).substring(3, 7);
+    res.redirect(id);
   });
 
   app.get('/dl/:room/:state/:variant', function(req, res, next) {
@@ -192,7 +195,7 @@ MinifyRoom().then(function(result) {
     }).catch(next);
   });
 
-  app.put('/asset', bodyParser.raw({ limit: '100mb' }), function(req, res) {
+  app.put('/asset', bodyParser.raw({ limit: '10mb' }), function(req, res) {
     const filename = `/${CRC32.buf(req.body)}_${req.body.length}`;
     if(!fs.existsSync(assetsdir + filename))
       fs.writeFileSync(assetsdir + filename, req.body);
