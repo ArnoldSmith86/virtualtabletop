@@ -603,13 +603,13 @@ export class Widget extends StateManaged {
     const routine = this.get(property) !== null ? this.get(property) : property;
 
     for(const original of routine) {
+      var problems = [];
       let a = JSON.parse(JSON.stringify(original));
       if(typeof a == 'object')
         a = evaluateVariablesRecursively(a)
       else
         a = original.trim();
 
-      var problems = [];
       if(jeRoutineLogging) jeLoggingRoutineOperationStart(original, a)
 
       if(a.skip) {
@@ -1123,12 +1123,14 @@ export class Widget extends StateManaged {
                 if(target.get('type') == 'seat') {
                   if(target.get('hand') && target.get('player')) {
                     if(widgets.has(target.get('hand'))) {
+                      const targetHand = widgets.get(target.get('hand'));
                       await applyFlip();
-                      await c.moveToHolder(widgets.get(target.get('hand')));
-                      if(widgets.get(target.get('hand')).get('childrenPerOwner'))
+                      await c.moveToHolder(targetHand);
+                      if(targetHand.get('childrenPerOwner'))
                         await c.set('owner', target.get('player'));
                       c.bringToFront()
-                      widgets.get(target.get('hand')).updateAfterShuffle(); // this arranges the cards in the new owner's hand
+                      if(targetHand.get('type') == 'holder')
+                        targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
                     } else {
                       problems.push(`Seat ${target.id} declares 'hand: ${target.get('hand')}' which does not exist.`);
                     }
@@ -1328,7 +1330,8 @@ export class Widget extends StateManaged {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
               await this.shuffleWidgets(holder.children());
-              await holder.updateAfterShuffle();
+              if(holder.get('type') == 'holder')
+                await holder.updateAfterShuffle();
             });
             if(jeRoutineLogging)
               jeLoggingRoutineOperationSummary(`holder ${a.holder}`);
@@ -1352,7 +1355,8 @@ export class Widget extends StateManaged {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
               await this.sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options, true);
-              await holder.updateAfterShuffle();
+              if(holder.get('type') == 'holder')
+                await holder.updateAfterShuffle();
             });
           }
           if(jeRoutineLogging)
