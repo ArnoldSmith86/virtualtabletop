@@ -1,5 +1,4 @@
 import fs from 'fs';
-import path from 'path';
 
 import JSZip from 'jszip';
 import fetch from 'node-fetch';
@@ -66,7 +65,7 @@ export default class Room {
     } catch(e) {
       Logging.log(`ERROR LOADING FILE: ${e.toString()}`);
       try {
-        fs.writeFileSync(path.resolve() + '/save/errors/' + Math.random().toString(36).substring(3, 7), src);
+        fs.writeFileSync(Config.directory('save') + '/errors/' + Math.random().toString(36).substring(3, 7), src);
       } catch(e) {}
       throw e;
     }
@@ -194,8 +193,8 @@ export default class Room {
       zip.file(`${vID}.json`, JSON.stringify(state, null, '  '));
       if(includeAssets)
         for(const asset of this.getAssetList(state))
-          if(fs.existsSync(path.resolve() + '/save' + asset))
-            zip.file(asset.substr(1), fs.readFileSync(path.resolve() + '/save' + asset));
+          if(fs.existsSync(Config.directory('assets') + asset.substr(7)))
+            zip.file(asset.substr(1), fs.readFileSync(Config.directory('assets') + asset.substr(7)));
     }
 
     const zipBuffer = await zip.generateAsync({type:'nodebuffer', compression: 'DEFLATE'});
@@ -395,7 +394,7 @@ export default class Room {
   }
 
   roomFilename() {
-    return path.resolve() + '/save/rooms/' + this.id + '.json';
+    return Config.directory('save') + '/rooms/' + this.id + '.json';
   }
 
   sendMetaUpdate() {
@@ -464,7 +463,7 @@ export default class Room {
   trace(source, payload) {
     if(!this.enableTracing && source == 'client' && payload.type == 'enable') {
       this.enableTracing = true;
-      this.tracingFilename = `${path.resolve()}/save/${this.id}-${+new Date}.trace`;
+      this.tracingFilename = `${Config.directory('save')}/${this.id}-${+new Date}.trace`;
       this.broadcast('tracing', 'enable');
       payload.initialState = this.state;
       fs.writeFileSync(this.tracingFilename, '[\n');
@@ -507,6 +506,6 @@ export default class Room {
   }
 
   variantFilename(stateID, variantID) {
-    return path.resolve() + '/save/states/' + this.id + '-' + stateID.replace(/[^a-z0-9]/g, '_') + '-' + variantID.replace(/[^a-z0-9]/g, '_') + '.json';
+    return Config.directory('save') + '/states/' + this.id + '-' + stateID.replace(/[^a-z0-9]/g, '_') + '-' + variantID.replace(/[^a-z0-9]/g, '_') + '.json';
   }
 }

@@ -36,7 +36,7 @@ async function inputHandler(name, e) {
     document.activeElement.blur();
   }
   let target = e.target;
-  while(target && (!target.id || !widgets.has(target.id)))
+  while(target && (!target.id || target.id.slice(0,2) != 'w_' || !widgets.has(unescapeID(target.id.slice(2)))))
     target = target.parentNode;
 
   const coords = eventCoords(name, e);
@@ -46,64 +46,65 @@ async function inputHandler(name, e) {
     target = mouseTarget;
 
   if(target && target.id) {
+    let widget = widgets.get(unescapeID(target.id.slice(2)));
     batchStart();
-    if(!edit && (!jeEnabled || !e.ctrlKey) && widgets.get(target.id).passthroughMouse) {
+    if(!edit && (!jeEnabled || !e.ctrlKey) && widget.passthroughMouse) {
       if(name == 'mousedown' || name == 'touchstart') {
-        await widgets.get(target.id).mouseRaw('down', coords);
+        await widget.mouseRaw('down', coords);
       } else if (name == 'mouseup' || name == 'touchend') {
-        await widgets.get(target.id).mouseRaw('up', coords);
+        await widget.mouseRaw('up', coords);
       } else if (name == 'mousemove' || name == 'touchmove') {
-        await widgets.get(target.id).mouseRaw('move', coords);
+        await widget.mouseRaw('move', coords);
       }
     } else if(name == 'mousedown' || name == 'touchstart') {
       mouseStatus[target.id] = {
         status: 'initial',
         start: new Date(),
         downCoords: coords,
-        moveTarget: target
+        moveTarget: widget
       };
-      let movable = false;
-      let widget;
-      while (mouseStatus[target.id].moveTarget && !movable) {
-        widget = widgets.get(mouseStatus[target.id].moveTarget.id);
-        movable = widget.get(editMovable ? 'movableInEdit' : 'movable');
-        if (!movable) {
-          do {
-            mouseStatus[target.id].moveTarget = mouseStatus[target.id].moveTarget.parentNode;
-          } while (mouseStatus[target.id].moveTarget && (!mouseStatus[target.id].moveTarget.id || !widgets.has(mouseStatus[target.id].moveTarget.id)));
+      const ms = mouseStatus[target.id];
+      let movable = ms.moveTarget.get(editMovable ? 'movableInEdit' : 'movable');
+      while (ms.moveTarget && !movable) {
+        let parent = ms.moveTarget.get('parent');
+        if(parent && widgets.has(parent)) {
+          ms.moveTarget = widgets.get(parent);
+          movable = ms.moveTarget.get(editMovable ? 'movableInEdit' : 'movable');
+        } else {
+          ms.moveTarget = null;
+          movable = false;
         }
       }
       if (movable) {
-        mouseStatus[target.id].widget = widget;
-        mouseStatus[target.id].localAnchor = widget.coordLocalFromCoordClient({x: coords.clientX, y: coords.clientY});
+        ms.localAnchor = ms.moveTarget.coordLocalFromCoordClient({x: coords.clientX, y: coords.clientY});
       }
     } else if(name == 'mouseup' || name == 'touchend' && mouseStatus[target.id]) {
       const ms = mouseStatus[target.id];
       const timeSinceStart = +new Date() - ms.start;
       const pixelsMoved = ms.coords ? Math.abs(ms.coords.x - ms.downCoords.x) + Math.abs(ms.coords.y - ms.downCoords.y) : 0;
-      if(ms.status != 'initial' && mouseStatus[target.id].moveTarget)
-        await ms.widget.moveEnd(ms.coords, ms.localAnchor);
+      if(ms.status != 'initial' && ms.moveTarget)
+        await ms.moveTarget.moveEnd(ms.coords, ms.localAnchor);
       if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
         if(typeof jeEnabled == 'boolean' && jeEnabled)
-          await jeClick(widgets.get(target.id), e);
+          await jeClick(widget, e);
         else if(edit)
-          editClick(widgets.get(target.id));
+          editClick(widget);
         else
           if(!target.classList.contains('longtouch'))
-            await widgets.get(target.id).click();
+            await widget.click();
         else
-          widgets.get(target.id).domElement.classList.remove('longtouch');
+          widget.domElement.classList.remove('longtouch');
       }
       delete mouseStatus[target.id];
     } else if(name == 'mousemove' || name == 'touchmove' && mouseStatus[target.id]) {
       if(mouseStatus[target.id].status == 'initial') {
         mouseStatus[target.id].status = 'moving';
         if(mouseStatus[target.id].moveTarget)
-          await mouseStatus[target.id].widget.moveStart();
+          await mouseStatus[target.id].moveTarget.moveStart();
       }
       mouseStatus[target.id].coords = coords;
       if(mouseStatus[target.id].moveTarget)
-        await mouseStatus[target.id].widget.move(coords, mouseStatus[target.id].localAnchor);
+        await mouseStatus[target.id].moveTarget.move(coords, mouseStatus[target.id].localAnchor);
     }
     batchEnd();
   }
@@ -116,7 +117,7 @@ async function inputHandler(name, e) {
       x: Math.round(coords.x),
       y: Math.round(coords.y),
       pressed: (e.buttons & 1 == 1) || name == 'touchstart' || name == 'touchmove',
-      target: mouseTarget? mouseTarget.id : null
+      target: mouseTarget? unescapeID(mouseTarget.id.slice(2)) : null
     });
 }
 

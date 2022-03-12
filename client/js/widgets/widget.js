@@ -1,4 +1,4 @@
-import { $, removeFromDOM, asArray, escapeCSS } from '../domhelpers.js';
+import { $, removeFromDOM, asArray, escapeID } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
@@ -21,7 +21,7 @@ const readOnlyProperties = new Set([
 export class Widget extends StateManaged {
   constructor(id) {
     const div = document.createElement('div');
-    div.id = id;
+    div.id = 'w_' + escapeID(id);
     super();
     this.id = id;
     this.domElement = div;
@@ -229,8 +229,8 @@ export class Widget extends StateManaged {
       this.parent.applyChildRemove(this);
     if(this.get('deck') && widgets.has(this.get('deck')))
       widgets.get(this.get('deck')).removeCard(this);
-    if($(`#${escapeCSS(this.id)}STYLESHEET`))
-      removeFromDOM($(`#${escapeCSS(this.id)}STYLESHEET`));
+    if($(`#STYLES_${escapeID(this.id)}`))
+      removeFromDOM($(`#STYLES_${escapeID(this.id)}`));
     removeFromDOM(this.domElement);
     this.inheritFromUnregister();
     this.globalUpdateListenersUnregister();
@@ -366,8 +366,8 @@ export class Widget extends StateManaged {
   }
   css() {
     this.propertiesUsedInCSS = [];
-    if($(`#${escapeCSS(this.id)}STYLESHEET`))
-      removeFromDOM($(`#${escapeCSS(this.id)}STYLESHEET`));
+    if($(`#STYLES_${escapeID(this.id)}`))
+      removeFromDOM($(`#STYLES_${escapeID(this.id)}`));
     let css = this.cssReplaceProperties(this.cssAsText(this.get('css')));
 
     css = this.cssBorderRadius() + css;
@@ -428,10 +428,10 @@ export class Widget extends StateManaged {
 
   cssToStylesheet(css) {
     const style = document.createElement('style');
-    style.id = `${this.id}STYLESHEET`;
+    style.id = `STYLES_${escapeID(this.id)}`;
     for(const key in css)
       if(key != 'inline')
-        style.appendChild(document.createTextNode(`#${escapeCSS(this.id)}${key == 'default' ? '' : key} { ${this.cssReplaceProperties(this.cssAsText(css[key]))} }`));
+        style.appendChild(document.createTextNode(`#w_${escapeID(this.id)}${key == 'default' ? '' : key} { ${this.cssReplaceProperties(this.cssAsText(css[key]))} }`));
     $('head').appendChild(style);
 
     return this.cssAsText(css.inline || '');
@@ -457,23 +457,23 @@ export class Widget extends StateManaged {
     if(go) {
       for(const field of o.fields) {
         if(field.type == 'checkbox') {
-          result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).checked;
+          result[field.variable] = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).checked;
         } else if(field.type == 'switch') {
-          let thisresult = document.getElementById(this.get('id') + ';' + field.variable).checked;
+          let thisresult = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).checked;
           if(thisresult){
             result[field.variable] = 'on';
           } else {
             result[field.variable] = 'off';
           }
         } else if(field.type == 'number') {
-          let thisvalue = document.getElementById(this.get('id') + ';' + field.variable).value;
+          let thisvalue = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).value;
           if(thisvalue > field.max)
             thisvalue = field.max;
           if(thisvalue < field.min)
             thisvalue = field.min;
           result[field.variable] = thisvalue
         } else if(field.type != 'text' && field.type != 'subtitle' && field.type != 'title') {
-          result[field.variable] = document.getElementById(this.get('id') + ';' + field.variable).value;
+          result[field.variable] = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable).value;
         }
       }
     }
@@ -603,13 +603,13 @@ export class Widget extends StateManaged {
     const routine = this.get(property) !== null ? this.get(property) : property;
 
     for(const original of routine) {
+      var problems = [];
       let a = JSON.parse(JSON.stringify(original));
       if(typeof a == 'object')
         a = evaluateVariablesRecursively(a)
       else
         a = original.trim();
 
-      var problems = [];
       if(jeRoutineLogging) jeLoggingRoutineOperationStart(original, a)
 
       if(a.skip) {
@@ -1123,12 +1123,14 @@ export class Widget extends StateManaged {
                 if(target.get('type') == 'seat') {
                   if(target.get('hand') && target.get('player')) {
                     if(widgets.has(target.get('hand'))) {
+                      const targetHand = widgets.get(target.get('hand'));
                       await applyFlip();
-                      await c.moveToHolder(widgets.get(target.get('hand')));
-                      if(widgets.get(target.get('hand')).get('childrenPerOwner'))
+                      await c.moveToHolder(targetHand);
+                      if(targetHand.get('childrenPerOwner'))
                         await c.set('owner', target.get('player'));
                       c.bringToFront()
-                      widgets.get(target.get('hand')).updateAfterShuffle(); // this arranges the cards in the new owner's hand
+                      if(targetHand.get('type') == 'holder')
+                        targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
                     } else {
                       problems.push(`Seat ${target.id} declares 'hand: ${target.get('hand')}' which does not exist.`);
                     }
@@ -1327,17 +1329,16 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
-              for(const c of holder.children())
-                await c.set('z', Math.floor(Math.random()*10000));
-              await holder.updateAfterShuffle();
+              await this.shuffleWidgets(holder.children());
+              if(holder.get('type') == 'holder')
+                await holder.updateAfterShuffle();
             });
             if(jeRoutineLogging)
               jeLoggingRoutineOperationSummary(`holder ${a.holder}`);
           }
         } else if(collection = getCollection(a.collection)) {
           if(collections[collection].length) {
-            for(const c of collections[collection])
-              await c.set('z', Math.floor(Math.random()*10000));
+            await this.shuffleWidgets(collections[collection]);
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
@@ -1354,7 +1355,8 @@ export class Widget extends StateManaged {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
               await this.sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options, true);
-              await holder.updateAfterShuffle();
+              if(holder.get('type') == 'holder')
+                await holder.updateAfterShuffle();
             });
           }
           if(jeRoutineLogging)
@@ -1837,7 +1839,7 @@ export class Widget extends StateManaged {
         const dom = document.createElement('div');
         dom.style = field.css || "";
         dom.className = "input"+field.type;
-        formField(field, dom, this.get('id') + ';' + field.variable);
+        formField(field, dom, 'INPUT_' + escapeID(this.get('id')) + ';' + field.variable);
         $('#buttonInputFields').appendChild(dom);
       }
 
@@ -1855,6 +1857,15 @@ export class Widget extends StateManaged {
       on('#buttonInputCancel', 'click', cancelHandler);
       showOverlay('buttonInputOverlay');
     });
+  }
+
+  async shuffleWidgets(w) {
+    const shuffle = w.map(widget => {
+      return {widget, rand:Math.random()};
+    }).sort((a, b)=> a.rand - b.rand);
+    for(let i of shuffle) {
+      await i.widget.bringToFront();
+    }
   }
 
   async snapToGrid() {
