@@ -36,7 +36,7 @@ export class Button extends Widget {
 
     for(const property of Object.values(this.get('svgReplaces') || {}))
       if(delta[property] !== undefined)
-        this.domElement.style.cssText = this.css();
+        this.domElement.style.cssText = mapAssetURLs(this.css());
   }
 
   css() {
