@@ -5,8 +5,8 @@ let roomID = self.location.pathname.replace(/.*\//, '');
 
 export const widgets = new Map();
 
-const deferredCards = {};
-const deferredChildren = {};
+let deferredCards = {};
+let deferredChildren = {};
 
 let delta = { s: {} };
 let deltaChanged = false;
@@ -139,6 +139,16 @@ function receiveStateFromServer(args) {
       isEmpty = false;
     }
   }
+
+  if(Object.keys(deferredCards).length) {
+    console.error('Could not add these cards because their deck does not exist:', deferredCards);
+    deferredCards = {};
+  }
+  if(Object.keys(deferredChildren).length) {
+    console.error('Could not add these widgets because their parent does not exist:', deferredChildren);
+    deferredChildren = {};
+  }
+
   if(isEmpty && !overlayShownForEmptyRoom && !urlProperties.load && !urlProperties.askID) {
     showOverlay('statesOverlay');
     overlayShownForEmptyRoom = true;
