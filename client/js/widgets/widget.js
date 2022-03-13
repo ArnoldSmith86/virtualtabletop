@@ -1303,7 +1303,6 @@ export class Widget extends StateManaged {
                 await onClickUpdateWidget(false);
                 for(const c in collections)
                   collections[c] = collections[c].map(w=>w.id==oldID ? widgets.get(newState.id) : w);
-                sendDelta(true);
               } else {
                 problems.push(`id ${newState.id} already in use, ignored.`);
               }
