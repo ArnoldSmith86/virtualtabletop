@@ -197,7 +197,7 @@ async function uploadAsset(multipleCallback) {
 }
 
 async function _uploadAsset(file) {
-    const response = await fetch('/asset', {
+    const response = await fetch('asset', {
       method: 'PUT',
       headers: {
         'Content-type': 'application/octet-stream'
@@ -224,7 +224,7 @@ function getSVG(url, replaces, callback) {
 
   if(!svgCache[url]) {
     svgCache[url] = [];
-    fetch(url).then(r=>r.text()).then(t=>{
+    fetch(url.replace(/^\//, '')).then(r=>r.text()).then(t=>{
       const callbacks = svgCache[url];
       svgCache[url] = t;
       for(const c of callbacks)

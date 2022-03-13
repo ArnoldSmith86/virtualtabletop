@@ -1,4 +1,4 @@
-import { $, removeFromDOM, asArray, escapeID } from '../domhelpers.js';
+import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
@@ -127,7 +127,7 @@ export class Widget extends StateManaged {
 
     for(const property of this.cssProperties()) {
       if(delta[property] !== undefined) {
-        this.domElement.style.cssText = this.css();
+        this.domElement.style.cssText = mapAssetURLs(this.css());
         return;
       }
     }
@@ -1565,7 +1565,7 @@ export class Widget extends StateManaged {
       if(pName == "null" || pName == playerName) {
         var audioElement = document.createElement('audio');
         audioElement.setAttribute('class', 'audio');
-        audioElement.setAttribute('src', source);
+        audioElement.setAttribute('src', mapAssetURLs(source));
         audioElement.setAttribute('type', type);
         audioElement.setAttribute('maxVolume', maxVolume);
         audioElement.volume = Math.min(maxVolume * (((10 ** (document.getElementById('volume').value / 96.025)) / 10) - 0.1), 1); // converts slider to log scale with zero = no volume

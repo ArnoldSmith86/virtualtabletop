@@ -31,6 +31,10 @@ export function domByTemplate(id, type) {
   return div;
 }
 
+export function mapAssetURLs(str) {
+  return str.replaceAll(/(["' (])\/(assets|i)\//g, '$1$2/');
+}
+
 export function escapeID(id) {
   if(!id)
     return '';
