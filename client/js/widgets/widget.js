@@ -59,6 +59,7 @@ export class Widget extends StateManaged {
       fixedParent: false,
       inheritFrom: null,
       owner: null,
+      dragging: null,
       dropOffsetX: 0,
       dropOffsetY: 0,
       inheritChildZ: false,
@@ -290,11 +291,16 @@ export class Widget extends StateManaged {
       if(!widgetFilter(w=>asArray(this.get('linkedToSeat')).indexOf(w.get('id')) != -1 && w.get('player')).length)
         className += ' foreign';
 
+    if(typeof this.get('dragging') == 'string')
+      className += ' dragging';
+    if(this.get('dragging') == playerName)
+      className += ' draggingSelf';
+
     return className;
   }
 
   classesProperties() {
-    return [ 'classes', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses' ];
+    return [ 'classes', 'dragging', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses' ];
   }
 
   async click(mode='respect') {
@@ -1621,6 +1627,7 @@ export class Widget extends StateManaged {
       sendTraceEvent('moveStart', { id: this.get('id') });
 
     await this.bringToFront();
+    await this.set('dragging', playerName);
 
     if(!this.get('fixedParent')) {
       this.dropTargets = this.validDropTargets();
@@ -1685,6 +1692,8 @@ export class Widget extends StateManaged {
   async moveEnd(coord, localAnchor) {
     if(tracingEnabled)
       sendTraceEvent('moveEnd', { id: this.get('id'), coord, localAnchor });
+
+    await this.set('dragging', null);
 
     if(!this.get('fixedParent')) {
       for(const t of this.dropTargets)
