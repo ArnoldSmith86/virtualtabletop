@@ -31,10 +31,32 @@ export function domByTemplate(id, type) {
   return div;
 }
 
-export function escapeCSS(id) {
+export function mapAssetURLs(str) {
+  return str.replaceAll(/(["' (])\/(assets|i)\//g, '$1$2/');
+}
+
+export function escapeID(id) {
   if(!id)
     return '';
-  return id.split('').map(s=>'\\' + s.charCodeAt(0).toString(16)).join('') + ' ';
+  return id.toString().replaceAll(
+    /(_)|([^-_0-9A-Za-z])/g,
+    (match, p1, p2) => {
+      if(p1)
+        return '__';
+      return '_x' + p2.charCodeAt(0).toString(16).padStart(4,'0') + '_';
+    });
+}
+
+export function unescapeID(id) {
+  if(!id)
+    return '';
+  return id.toString().replaceAll(
+    /_(_)|_x([0-9A-Za-z]{4})_/g,
+    (match, p1, p2) => {
+      if(p1)
+        return '_';
+      return String.fromCharCode(parseInt(p2, 16));
+    });
 }
 
 export function formField(field, dom, id) {
@@ -116,6 +138,8 @@ export function formField(field, dom, id) {
       const optionElement = document.createElement('option');
       optionElement.value = option.value || '';
       optionElement.textContent = option.text || option.value || '';
+      if(option.value == field.value || field.value == null && option.selected)
+        optionElement.selected = true;
       input.appendChild(optionElement);
     }
     dom.appendChild(input);
