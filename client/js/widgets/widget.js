@@ -1,4 +1,4 @@
-import { $, removeFromDOM, asArray, escapeID } from '../domhelpers.js';
+import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
@@ -127,7 +127,7 @@ export class Widget extends StateManaged {
 
     for(const property of this.cssProperties()) {
       if(delta[property] !== undefined) {
-        this.domElement.style.cssText = this.css();
+        this.domElement.style.cssText = mapAssetURLs(this.css());
         return;
       }
     }
@@ -603,13 +603,13 @@ export class Widget extends StateManaged {
     const routine = this.get(property) !== null ? this.get(property) : property;
 
     for(const original of routine) {
+      var problems = [];
       let a = JSON.parse(JSON.stringify(original));
       if(typeof a == 'object')
         a = evaluateVariablesRecursively(a)
       else
         a = original.trim();
 
-      var problems = [];
       if(jeRoutineLogging) jeLoggingRoutineOperationStart(original, a)
 
       if(a.skip) {
@@ -1123,12 +1123,14 @@ export class Widget extends StateManaged {
                 if(target.get('type') == 'seat') {
                   if(target.get('hand') && target.get('player')) {
                     if(widgets.has(target.get('hand'))) {
+                      const targetHand = widgets.get(target.get('hand'));
                       await applyFlip();
-                      await c.moveToHolder(widgets.get(target.get('hand')));
-                      if(widgets.get(target.get('hand')).get('childrenPerOwner'))
+                      await c.moveToHolder(targetHand);
+                      if(targetHand.get('childrenPerOwner'))
                         await c.set('owner', target.get('player'));
                       c.bringToFront()
-                      widgets.get(target.get('hand')).updateAfterShuffle(); // this arranges the cards in the new owner's hand
+                      if(targetHand.get('type') == 'holder')
+                        targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
                     } else {
                       problems.push(`Seat ${target.id} declares 'hand: ${target.get('hand')}' which does not exist.`);
                     }
@@ -1301,7 +1303,6 @@ export class Widget extends StateManaged {
                 await onClickUpdateWidget(false);
                 for(const c in collections)
                   collections[c] = collections[c].map(w=>w.id==oldID ? widgets.get(newState.id) : w);
-                sendDelta(true);
               } else {
                 problems.push(`id ${newState.id} already in use, ignored.`);
               }
@@ -1328,7 +1329,8 @@ export class Widget extends StateManaged {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
               await this.shuffleWidgets(holder.children());
-              await holder.updateAfterShuffle();
+              if(holder.get('type') == 'holder')
+                await holder.updateAfterShuffle();
             });
             if(jeRoutineLogging)
               jeLoggingRoutineOperationSummary(`holder ${a.holder}`);
@@ -1352,7 +1354,8 @@ export class Widget extends StateManaged {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
               await this.sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options, true);
-              await holder.updateAfterShuffle();
+              if(holder.get('type') == 'holder')
+                await holder.updateAfterShuffle();
             });
           }
           if(jeRoutineLogging)
@@ -1561,7 +1564,7 @@ export class Widget extends StateManaged {
       if(pName == "null" || pName == playerName) {
         var audioElement = document.createElement('audio');
         audioElement.setAttribute('class', 'audio');
-        audioElement.setAttribute('src', source);
+        audioElement.setAttribute('src', mapAssetURLs(source));
         audioElement.setAttribute('type', type);
         audioElement.setAttribute('maxVolume', maxVolume);
         audioElement.volume = Math.min(maxVolume * (((10 ** (document.getElementById('volume').value / 96.025)) / 10) - 0.1), 1); // converts slider to log scale with zero = no volume
