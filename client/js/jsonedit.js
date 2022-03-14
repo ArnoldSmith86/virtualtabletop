@@ -430,7 +430,10 @@ const jeCommands = [
     ],
     call: async function(options) {
       for(const id of jeSelectedIDs()) {
-        const clonedWidget = await duplicateWidget(widgets.get(id), options.Recursive, options['Use inheritFrom'], options['Increment IDs'], options['Increment Letters'], options['Increment In'].split(','), options['X offset'], options['Y offset'], options['# Copies X'], options['# Copies Y']);
+        const problems = [];
+        const clonedWidget = await duplicateWidget(widgets.get(id), options.Recursive, options['Use inheritFrom'], options['Increment IDs'], options['Increment Letters'], options['Increment In'].split(','), options['X offset'], options['Y offset'], options['# Copies X'], options['# Copies Y'], problems);
+        if(problems.length)
+          jeJSONerror = problems.join('\n');
         if(clonedWidget) {
           jeSelectWidget(widgets.get(clonedWidget.id));
           jeStateNow.id = '###SELECT ME###';

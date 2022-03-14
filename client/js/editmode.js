@@ -880,7 +880,7 @@ async function onClickUpdateWidget(applyChangesFromUI) {
   showOverlay();
 }
 
-async function duplicateWidget(widget, recursive, inheritFrom, increment, incrementLetters, incrementIn, xOffset, yOffset, xCopies, yCopies) {
+async function duplicateWidget(widget, recursive, inheritFrom, increment, incrementLetters, incrementIn, xOffset, yOffset, xCopies, yCopies, problems) {
   const clone = async function(widget, recursive, newParent, xOffset, yOffset) {
     let currentWidget = JSON.parse(JSON.stringify(widget.state))
 
@@ -927,14 +927,25 @@ async function duplicateWidget(widget, recursive, inheritFrom, increment, increm
     if(yOffset || !newParent && inheritFrom)
       currentWidget.y = widget.get('y') + yOffset;
 
-    const currentId = await addWidgetLocal(currentWidget);
+    if(currentWidget.parent && !widgets.has(currentWidget.parent)) {
+      if(Array.isArray(problems))
+        problems.push(`Could not add duplicate of widget ${widget.id} to non-existent parent ${currentWidget.parent}.`);
+    } else if(currentWidget.type == 'card' && !widgets.has(currentWidget.deck)) {
+      if(Array.isArray(problems))
+        problems.push(`Could not add duplicate of card ${widget.id} with non-existent deck ${currentWidget.deck}.`);
+    } else if(currentWidget.type == 'card' && !widgets.get(currentWidget.deck).get('cardTypes')[currentWidget.cardType]) {
+      if(Array.isArray(problems))
+        problems.push(`Could not add duplicate of card ${widget.id} with non-existent cardType ${currentWidget.cardType}.`);
+    } else {
+      const currentId = await addWidgetLocal(currentWidget);
 
-    if(recursive)
-      for(const child of widgetFilter(w=>w.get('parent')==widget.id))
-        await clone(child, true, currentId, 0, 0);
+      if(recursive)
+        for(const child of widgetFilter(w=>w.get('parent')==widget.id))
+          await clone(child, true, currentId, 0, 0);
 
-    if(currentId)
-      return currentWidget;
+      if(currentId)
+        return currentWidget;
+    }
   };
 
   const gridX = xCopies + 1;
