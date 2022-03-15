@@ -16,7 +16,7 @@ export class StateManaged {
     for(const i in delta) {
       if(delta[i] === null) {
         delete this.state[i];
-        deltaForDOM[i] = this.getDefaultValue(i);
+        deltaForDOM[i] = this.get(i);
       } else {
         deltaForDOM[i] = this.state[i] = delta[i];
       }
@@ -36,7 +36,7 @@ export class StateManaged {
     for(const [ id, properties ] of Object.entries(this.inheritFrom()))
       if(this.inheritFromIsValid(properties, key) && widgets.has(id) && widgets.get(id).get(key) !== undefined)
         return widgets.get(id).get(key);
-    return this.defaults[key] === undefined ? null : this.defaults[key];
+    return this.defaults[key];
   }
 
   get(property) {
