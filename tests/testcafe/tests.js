@@ -8,7 +8,7 @@ import { diffString, diff } from 'json-diff';
 import { compute_ops } from '../../client/js/compute.js';
 import { escapeID } from '../../client/js/domhelpers.js';
 
-const server = process.env.REFERENCE ? `http://212.47.248.129:${3000 + +process.env.REFERENCE}` : 'http://localhost:8272';
+const server = process.env.REFERENCE ? `http://212.47.248.129:${process.env.REFERENCE}` : 'http://localhost:8272';
 const referenceDir = path.resolve() + '/save/testcafe-references';
 
 fs.mkdirSync(referenceDir, { recursive: true });
@@ -131,7 +131,7 @@ test('Create game using edit mode', async t => {
     .click('#addSeat')
     .click('#w_es5b');
 
-  await compareState(t, '1af2c0167fed09276b2f939ca1174d3f');
+  await compareState(t, '748d3bd6db5ea53524bd157ba41c8dd3');
 });
 
 test('Compute', async t => {
@@ -343,7 +343,7 @@ publicLibraryButtons('Reversi',            0, '35e0017570f9ecd206a2317c1528be36'
          [ ()=>Selector("#w_zpiece19"), ()=>Selector("#w_sq35") ],
          [ ()=>Selector("#w_zpiece08"), ()=>Selector("#w_sq53") ]
        ]);
-publicLibraryButtons('Reward',             0, '1a1526d9a0c3110355acf3786795f220', [
+publicLibraryButtons('Reward',             0, '011671469f1fa8455c1a4123fe7ff313', [
   'gmex', 'kprc', 'oksq', 'j1wz', 'vfhn', '0i6i', 'Orange Recall', '#buttonInputGo', 'b09z'
 ]);
 publicLibraryButtons('Rummy Tiles',        0, '6c5f8896284f52e874076bc60cca6325', [ 'startMix', 'draw14' ]);

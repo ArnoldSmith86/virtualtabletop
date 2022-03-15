@@ -34,7 +34,7 @@ class BasicWidget extends Widget {
 
     for(const property of Object.values(this.get('svgReplaces') || {}))
       if(delta[property] !== undefined) {
-        this.domInner.style.cssText = this.cssInner();
+        this.domInner.style.cssText = mapAssetURLs(this.cssInner());
         break;
       }
   }

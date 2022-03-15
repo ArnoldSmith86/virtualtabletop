@@ -520,17 +520,17 @@ html:-webkit-full-screen #fullscreenButton .tooltip::before {
 #optionsButton {
   background-size: 28px 28px;
   background-position: 6px 6px;
-  background-image:url(/i/icons-white/mute-svg.svg);
+  background-image:url(i/icons-white/mute-svg.svg);
 }
 
 #muteButton {
-  background-image:url(/i/icons-white/mute-svg.svg);
+  background-image:url(i/icons-white/mute-svg.svg);
   width: calc(var(--toolbarSize) - 12px);
   height: calc(var(--toolbarSize) - 12px);
 }
 
 #muteButton.toolbarButton.muted {
-  background-image:url(/i/icons-white/unmute-svg.svg);
+  background-image:url(i/icons-white/unmute-svg.svg);
 }
 
 /*Buttons css*/

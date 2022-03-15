@@ -42,7 +42,7 @@ class Pile extends Widget {
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
     if(this.handle && delta.handleCSS !== undefined)
-      this.handle.style = this.get('handleCSS');
+      this.handle.style = mapAssetURLs(this.get('handleCSS'));
     if(this.handle && delta.text !== undefined)
       this.updateText();
     if(this.handle && (delta.width !== undefined || delta.height !== undefined || delta.handleSize !== undefined)) {
@@ -75,7 +75,8 @@ class Pile extends Widget {
 
   async click(mode='respect') {
     if(!await super.click(mode)) {
-      $('#pileOverlay').innerHTML = `<p>${this.handle.textContent} cards</p><p>Drag the handle with the number to drag the entire pile.</p>`;
+      const childCount = this.children().length;
+      $('#pileOverlay').innerHTML = `<p>${childCount} cards</p><p>Drag the handle with the number to drag the entire pile.</p>`;
 
       const flipButton = document.createElement('button');
       flipButton.textContent = 'Flip pile';
@@ -102,7 +103,6 @@ class Pile extends Widget {
       });
       $('#pileOverlay').appendChild(shuffleButton);
 
-      const childCount = this.children().length;
       const countDiv = document.createElement('div');
       countDiv.textContent = `/ ${childCount}`;
       $('#pileOverlay').appendChild(countDiv);

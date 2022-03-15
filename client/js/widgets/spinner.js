@@ -85,12 +85,12 @@ class Spinner extends Widget {
 
     this.spinner = document.createElement('div');
     this.spinner.setAttribute('class', 'spinningPart');
-    this.spinner.setAttribute('style', this.get('spinnerCSS'));
+    this.spinner.setAttribute('style', mapAssetURLs(this.get('spinnerCSS')));
     this.domInner.appendChild(this.spinner);
 
     this.value = document.createElement('div');
     this.value.setAttribute('class', 'value');
-    this.value.setAttribute('style', this.get('valueCSS'));
+    this.value.setAttribute('style', mapAssetURLs(this.get('valueCSS')));
     this.value.textContent = this.get('value');
     this.domInner.appendChild(this.value);
   }

@@ -94,7 +94,7 @@ class Card extends Widget {
 
       faceDiv.classList.add('cardFace');
       if(face.css !== undefined)
-        faceDiv.style.cssText = face.css;
+        faceDiv.style.cssText = mapAssetURLs(face.css);
       faceDiv.style.border = face.border ? face.border + 'px black solid' : 'none';
       faceDiv.style.borderRadius = face.radius ? face.radius + 'px' : '0';
 
@@ -115,7 +115,7 @@ class Card extends Widget {
           let css = object.css ? object.css + '; ' : '';
           css += `left: ${x}px; top: ${y}px; width: ${object.width}px; height: ${object.height}px; font-size: ${object.fontSize}px; text-align: ${object.textAlign}`;
           css += object.rotation ? `; transform: rotate(${object.rotation}deg)` : '';
-          objectDiv.style.cssText = css;
+          objectDiv.style.cssText = mapAssetURLs(css);
 
           if(object.type == 'image') {
             if(object.value) {
@@ -125,7 +125,7 @@ class Card extends Widget {
                   replaces[key] = this.get(replaces[key]);
                 object.value = getSVG(object.value, replaces, _=>this.applyDeltaToDOM({ deck:this.get('deck') }));
               }
-              objectDiv.style.backgroundImage = `url("${object.value}")`;
+              objectDiv.style.backgroundImage = mapAssetURLs(`url("${object.value}")`);
             }
             objectDiv.style.backgroundColor = object.color || 'white';
           } else {
