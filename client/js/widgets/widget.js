@@ -1513,7 +1513,7 @@ export class Widget extends StateManaged {
       playerName = variables.playerName;
     }
 
-    return { variable: variables.result || null, collection: collections.result || [] };
+    return { variable: variables.result === undefined ? null : variables.result, collection: collections.result || [] };
   }
 
   get(property) {
