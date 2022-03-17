@@ -265,6 +265,13 @@ onLoad(function() {
     muted = !muted
   });
 
+  on('#lightsButton', 'click', function(){
+    if($('body').classList.contains('lightsOff'))
+      $('body').classList.remove('lightsOff');
+    else
+      $('body').classList.add('lightsOff');
+  });
+
   on('#optionsButton', 'click', function(){
     if(optionsHidden) {
       document.getElementById('options').classList.remove('hidden');
