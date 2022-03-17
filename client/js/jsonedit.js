@@ -491,6 +491,8 @@ const jeCommands = [
       $('#jsonEditor').classList.toggle('wide');
       setScale();
       $('#jeTextHighlight').scrollTop = $('#jeText').scrollTop;
+      if(jeMode == 'tree')
+        jeDisplayTree();
     }
   },
   {
@@ -1239,12 +1241,14 @@ function jeDisplayTreeAddWidgets(allWidgets, parent, indent) {
   for(const widget of (allWidgets.filter(w=>w.get('parent')==parent)).sort((w1,w2)=>w1.get('id').localeCompare(w2.get('id'), 'en', {numeric: true, ignorePunctuation: true}))) {
     const type = widget.get('type');
     result += `${indent}${widget.get('id')} (${type || 'basic'} - `;
-    if(type == 'card')
-      result += `${widget.get('cardType')} - `;
-    if(type == 'button' && widget.get('text'))
-      result += `${widget.get('text').replaceAll('\n', '\\n')} - `;
-    if(type == null && widget.get('classes'))
-      result += `${widget.get('classes')} - `;
+    if(widget.get('id').match(/^[0-9a-z]{4}$/) && $('#jsonEditor').classList.contains('wide')) {
+      if(type == 'card' && !widget.get('cardType').match(/^type-[0-9a-f-]{36}$/))
+        result += `${widget.get('cardType')} - `;
+      if(type == 'button' && widget.get('text'))
+        result += `${widget.get('text').replaceAll('\n', '\\n')} - `;
+      if(type == null && widget.get('classes'))
+        result += `${widget.get('classes')} - `;
+    }
     result += `${Math.floor(widget.get('x'))},${Math.floor(widget.get('y'))})\n`;
     result += jeDisplayTreeAddWidgets(allWidgets, widget.get('id'), indent+'  ');
     delete allWidgets[allWidgets.indexOf(widget)];
