@@ -12,8 +12,10 @@ async function addWidgetLocal(widget) {
   if (!widget.id)
     widget.id = generateUniqueWidgetID();
   const isNewWidget = !widgets.has(widget.id);
+  if(isNewWidget)
+    addWidget(widget);
   sendPropertyUpdate(widget.id, widget);
-  sendDelta(true);
+  sendDelta();
   batchStart();
   if(isNewWidget)
     for(const [ w, routine ] of StateManaged.globalUpdateListeners['id'] || [])

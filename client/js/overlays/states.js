@@ -27,7 +27,7 @@ async function addState(e, type, src, id) {
           assets[zip.files[filename]._data.crc32 + '_' + zip.files[filename]._data.uncompressedSize] = filename;
 
       status('Checking assets...');
-      const result = await fetch('/assetcheck', {
+      const result = await fetch('assetcheck', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(Object.keys(assets))
@@ -61,7 +61,7 @@ async function addState(e, type, src, id) {
     return;
   }
 
-  let url = `/addState/${roomID}/${id}/${type}/${src && src.name && encodeURIComponent(src.name)}/`;
+  let url = `addState/${roomID}/${id}/${type}/${src && src.name && encodeURIComponent(src.name)}/`;
   waitingForStateCreation = id;
   if(e && (e.target.parentNode.parentNode == $('#addVariant') || e.target.classList.contains('update'))) {
     waitingForStateCreation = $('#stateEditOverlay').dataset.id;
@@ -148,7 +148,7 @@ function fillStatesList(states, returnServer, activePlayers) {
 
     const entry = domByTemplate('template-stateslist-entry');
     entry.className = state.image ? 'roomState' : 'roomState noImage';
-    $('img', entry).src = state.image;
+    $('img', entry).src = state.image.replace(/^\//, '');
     $('.bgg', entry).textContent = `${state.name} (${state.year})`;
     $('.bgg', entry).href = state.bgg;
     $('.rules', entry).href = state.rules;
@@ -254,14 +254,14 @@ async function pickStateFromLibrary(changeOverlay) {
       if(this.dataset.url.match(/^http/))
         resolve(this.dataset.url);
       else
-        resolve(location.origin + '/library/' + this.dataset.url);
+        resolve(location.href.replace(/[^\/]*$/, 'library/') + this.dataset.url);
     });
   });
 }
 
 async function populateLibrary() {
   if(!$('#libraryList.populated')) {
-    const library = await fetch('/library/library.json');
+    const library = await fetch('library/library.json');
     var lEntry = null;
     // add sections and entries
     (await library.json()).forEach((entry, idx) => {
@@ -313,7 +313,7 @@ async function shareLink() {
   let url = $('#stateLink').value;
   if(!url) {
     const name = $('#stateName').value.replace(/[^A-Za-z0-9.-]/g, '_');
-    url = await fetch(`/share/${roomID}/${$('#stateEditOverlay').dataset.id}`);
+    url = await fetch(`share/${roomID}/${$('#stateEditOverlay').dataset.id}`);
     url = `${location.origin}${await url.text()}/${name}.vtt`;
   }
   $('#sharedLink').value = url;
