@@ -66,7 +66,7 @@ class Holder extends Widget {
     if(child.get('type') == 'deck')
       return;
 
-    if(child.get('owner') == null && this.get('childrenPerOwner'))
+    if(this.get('childrenPerOwner'))
       await child.set('owner', playerName);
 
     if(this != child.currentParent) { // FIXME: this isn't exactly pretty
