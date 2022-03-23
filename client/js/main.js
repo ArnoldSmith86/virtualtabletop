@@ -184,7 +184,7 @@ function setScale() {
   roomRectangle = $('#roomArea').getBoundingClientRect();
 }
 
-async function shuffleWidgets(collection) {
+export async function shuffleWidgets(collection) {
   const shuffle = collection.map(widget => {
     return {widget, rand:Math.random()};
   }).sort((a, b)=> a.rand - b.rand);
@@ -193,7 +193,7 @@ async function shuffleWidgets(collection) {
   }
 }
 
-async function sortWidgets(collection, keys, reverse, locales, options, rearrange) {
+export async function sortWidgets(collection, keys, reverse, locales, options, rearrange) {
   const r = asArray(reverse);
   const k = asArray(keys).map((key, i, k) => {
     const keyObj = {
