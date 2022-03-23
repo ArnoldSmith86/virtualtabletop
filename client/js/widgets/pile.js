@@ -97,7 +97,7 @@ class Pile extends Widget {
       shuffleButton.textContent = 'Shuffle pile';
       shuffleButton.addEventListener('click', async e=>{
         batchStart();
-        this.shuffleWidgets(this.children())
+        shuffleWidgets(this.children())
         showOverlay();
         batchEnd();
       });

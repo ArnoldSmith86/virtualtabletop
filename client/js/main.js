@@ -184,6 +184,55 @@ function setScale() {
   roomRectangle = $('#roomArea').getBoundingClientRect();
 }
 
+async function shuffleWidgets(collection) {
+  const shuffle = collection.map(widget => {
+    return {widget, rand:Math.random()};
+  }).sort((a, b)=> a.rand - b.rand);
+  for(let i of shuffle) {
+    await i.widget.bringToFront();
+  }
+}
+
+async function sortWidgets(collection, keys, reverse, locales, options, rearrange) {
+  const r = asArray(reverse);
+  const k = asArray(keys).map((key, i, k) => {
+    const keyObj = {
+      key, 
+      reverse: (r.length > i) ? r[i] : r[r.length - 1],
+      locales,
+      options
+    };
+    if(typeof(key) == 'object') {
+      return Object.assign(keyObj, key)
+    } else {
+      return keyObj
+    }
+  });
+  collection.sort((w1,w2)=>{
+    let comp = 0;
+    for(const keyObj of k) {
+      const key1 = w1.get(keyObj.key);
+      const key2 = w2.get(keyObj.key);
+      if(typeof key1 == 'number')
+        comp = key1 - key2;
+      else
+        if(key1 === null)
+          comp = key2 === null ?  0 : -1;
+        else
+          comp = key2 === null ? 1 : key1.localeCompare(key2, keyObj.locales, keyObj.options);
+      if(comp != 0) {
+        return keyObj.reverse ? -comp : comp;
+      }
+    }
+    return 0;
+  });
+  let z = 1;
+  if(rearrange)
+    for(const w of collection) {
+      await w.set('z', ++z);
+    }
+}
+
 async function uploadAsset(multipleCallback) {
   if(typeof(multipleCallback) === "function") {
     return selectFile('BINARY', async function (f) {

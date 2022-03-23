@@ -2,7 +2,7 @@ import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
-import { showOverlay } from '../main.js';
+import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { center, distance, overlap, overlapScore, getOffset, applyTransformedOffset } from '../geometry.js';
 
@@ -1267,7 +1267,7 @@ export class Widget extends StateManaged {
           collections[a.collection] = [...new Set(c)];
 
           if(a.sortBy)
-            await this.sortWidgets(collections[a.collection], a.sortBy.key, a.sortBy.reverse, a.sortBy.locales, a.sortBy.options);
+            await sortWidgets(collections[a.collection], a.sortBy.key, a.sortBy.reverse, a.sortBy.locales, a.sortBy.options);
 
           if(jeRoutineLogging) {
             let selectedWidgets = collections[a.collection].map(w=>w.get('id')).join(',');
@@ -1328,7 +1328,7 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
-              await this.shuffleWidgets(holder.children());
+              await shuffleWidgets(holder.children());
               if(holder.get('type') == 'holder')
                 await holder.updateAfterShuffle();
             });
@@ -1337,7 +1337,7 @@ export class Widget extends StateManaged {
           }
         } else if(collection = getCollection(a.collection)) {
           if(collections[collection].length) {
-            await this.shuffleWidgets(collections[collection]);
+            await shuffleWidgets(collections[collection]);
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
@@ -1353,7 +1353,7 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
-              await this.sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options, true);
+              await sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options, true);
               if(holder.get('type') == 'holder')
                 await holder.updateAfterShuffle();
             });
@@ -1362,7 +1362,7 @@ export class Widget extends StateManaged {
             jeLoggingRoutineOperationSummary(`widgets in '${a.holder}' by '${a.key}' ${reverse}`);
         } else if(collection = getCollection(a.collection)) {
           if(collections[collection].length) {
-            await this.sortWidgets(collections[collection], a.key, a.reverse, a.locales, a.options, true);
+            await sortWidgets(collections[collection], a.key, a.reverse, a.locales, a.options, true);
             await w(collections[collection].map(i=>i.get('parent')), async holder=>{
               if(holder.get('type') == 'holder')
                 await holder.updateAfterShuffle();
@@ -1858,15 +1858,6 @@ export class Widget extends StateManaged {
     });
   }
 
-  async shuffleWidgets(w) {
-    const shuffle = w.map(widget => {
-      return {widget, rand:Math.random()};
-    }).sort((a, b)=> a.rand - b.rand);
-    for(let i of shuffle) {
-      await i.widget.bringToFront();
-    }
-  }
-
   async snapToGrid() {
     if(this.get('grid').length) {
       const x = this.get('x');
@@ -1898,24 +1889,6 @@ export class Widget extends StateManaged {
             await this.set(p, closest[2][p]);
       }
     }
-  }
-
-  async sortWidgets(w, key, reverse, locales, options, rearrange) {
-    let z = 1;
-    let children = w.reverse().sort((w1,w2)=>{
-      if(typeof w1.get(key) == 'number')
-        return w1.get(key) - w2.get(key);
-      else
-        if(w1.get(key) === null)
-          return w2.get(key) === null ?  0 : -1;
-        else
-          return w2.get(key) === null ? 1 : w1.get(key).localeCompare(w2.get(key), locales, options);
-    });
-    if(reverse)
-      children = children.reverse();
-    if(rearrange)
-      for(const c of children)
-        await c.set('z', ++z);
   }
 
   supportsPiles() {
