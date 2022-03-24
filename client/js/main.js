@@ -195,6 +195,8 @@ export async function shuffleWidgets(collection) {
 
 export async function sortWidgets(collection, keys, reverse, locales, options, rearrange) {
   const r = asArray(reverse);
+  if(r.length == 0)
+    r.push(false);
   const k = asArray(keys).map((key, i, k) => {
     const keyObj = {
       key, 
