@@ -1349,25 +1349,17 @@ export class Widget extends StateManaged {
       if(a.func == 'SORT') {
         setDefaults(a, { key: 'value', reverse: false, collection: 'DEFAULT' });
         let collection;
-        let reverse = (a.reverse && !Array.isArray(a.reverse)) ? 'in reverse' : '';
+        let reverse = (a.reverse && !Array.isArray(a.reverse)) ? ' in reverse' : '';
         let key = asArray(a.key).map((k)=>{
           if(typeof k === 'object')
-            return typeof k.key == 'string'? k.key : k.toString;
+            return `'${typeof k.key == 'string'? k.key : k.toString()}'`;
           return k;
-        });
-        if(key.length == 1)
-          key = key[0];
+        }).join(', ');
         if(Array.isArray(a.key) && Array.isArray(a.reverse)) {
           if(a.reverse.length < a.key.length)
-            problems.push('Warning: Key array longer than reverse array, repeating last value in reverse array.');
+            problems.push('Warning: Reverse array shorter than key array, repeating last value in reverse array.');
           else if(a.reverse.length > a.key.length)
-            problems.push('Warning: Key array shorter than reverse array, ignoring extra values.')
-        }
-        if(Array.isArray(a.key) && Array.isArray(a.options)) {
-          if(a.options.length < a.key.length)
-            problems.push('Warning: Key array longer than options array, repeating last value in options array.');
-          else if(a.options.length > a.key.length)
-            problems.push('Warning: Key array shorter than options array, ignoring extra values.')
+            problems.push('Warning: Reverse array longer than key array, ignoring extra values in reverse array.')
         }
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
@@ -1378,7 +1370,7 @@ export class Widget extends StateManaged {
             });
           }
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary(`widgets in '${a.holder}' by '${key}' ${reverse}`);
+            jeLoggingRoutineOperationSummary(`widgets in '${a.holder}' by ${key}${reverse}`);
         } else if(collection = getCollection(a.collection)) {
           if(collections[collection].length) {
             await sortWidgets(collections[collection], a.key, a.reverse, a.locales, a.options, true);
@@ -1390,7 +1382,7 @@ export class Widget extends StateManaged {
             problems.push(`Collection ${a.collection} is empty.`);
           }
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary(`widgets in '${a.collection}' by '${key}' ${reverse}`);
+            jeLoggingRoutineOperationSummary(`widgets in '${a.collection}' by ${key}${reverse}`);
         }
       }
 
