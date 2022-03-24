@@ -94,7 +94,7 @@ function addStateFromLibrary(e) {
 
 function downloadState(variantID) {
   const stateID = $('#stateEditOverlay').dataset.id;
-  let url = `/dl/${roomID}`
+  let url = `dl/${roomID}`
   if(variantID !== null)
     url += `/${stateID}`;
   if(variantID)
