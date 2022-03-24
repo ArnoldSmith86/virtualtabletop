@@ -520,6 +520,8 @@ export class Widget extends StateManaged {
           return match[9] ? false : undefined;
 
         let indexName = evaluateIdentifier(match[3], match[4]);
+        if(varContent === null && indexName !== undefined)
+          problems.push(`Cannot index a variable that evaluates to 'null'.`);
         return varContent !== null && indexName !== undefined ? varContent[indexName] : varContent;
       }
 
