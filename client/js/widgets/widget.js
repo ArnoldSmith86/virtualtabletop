@@ -1355,7 +1355,7 @@ export class Widget extends StateManaged {
             return typeof k.key == 'string'? k.key : k.toString;
           return k;
         });
-        if(key.length = 1)
+        if(key.length == 1)
           key = key[0];
         if(Array.isArray(a.key) && Array.isArray(a.reverse)) {
           if(a.reverse.length < a.key.length)
