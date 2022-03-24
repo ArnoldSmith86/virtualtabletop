@@ -222,23 +222,23 @@ export async function sortWidgets(collection, keys, reverse, locales, options, r
     for(const keyObj of k) {
       const key1 = w1.get(keyObj.key);
       const key2 = w2.get(keyObj.key);
-      const o = keyObj.order;
-      if(Array.isArray(o)) {
-        const i1 = o.indexOf(key1);
-        const i2 = o.indexOf(key2);
-        if(i1 > -1) {
-          comp = (i2 > -1) ? i1 - i2 : -1 
-        } else if(i2 > -1) {
-          comp = 1;
-        }
+      let i1 = -1;
+      let i2 = -1;
+      if(Array.isArray(keyObj.order)) {
+        const o = keyObj.order.slice().reverse();
+        i1 = o.indexOf(key1);
+        i2 = o.indexOf(key2);
       }
-      if(typeof key1 == 'number')
+      if(i1 > -1 || i2 > -1)
+        comp = i2 - i1;
+      else if(typeof key1 == 'number')
         comp = key1 - key2;
+      else if(key1 === null)
+        comp = key2 === null ?  0 : -1;
+      else if(key2 === null)
+        comp = 1;
       else
-        if(key1 === null)
-          comp = key2 === null ?  0 : -1;
-        else
-          comp = key2 === null ? 1 : key1.localeCompare(key2, keyObj.locales, keyObj.options);
+        comp = key1.localeCompare(key2, keyObj.locales, keyObj.options);
       if(comp != 0) {
         return keyObj.reverse ? -comp : comp;
       }
