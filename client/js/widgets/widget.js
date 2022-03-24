@@ -1695,6 +1695,9 @@ export class Widget extends StateManaged {
         lastHoverTarget.domBox.classList.remove('droptarget');
       if(this.hoverTarget)
         this.hoverTarget.domBox.classList.add('droptarget');
+
+      if(lastHoverTarget != this.hoverTarget && this.hoverTarget != this.currentParent)
+        await this.checkParent(true);
     }
   }
 
@@ -1781,7 +1784,7 @@ export class Widget extends StateManaged {
       if(mode == 'inc' || mode == 'dec') {
         let newText = (parseFloat(this.get('text')) || 0) + (mode == 'dec' ? -1 : 1) * text;
         const decimalPlacesOld = this.get('text').toString().match(/\..*$/);
-        const decimalPlacesChange = text.toString().match(/\..*$/);
+        const decimalPlacesChange = (+text).toString().match(/\..*$/);
         const decimalPlaces = Math.max(decimalPlacesOld ? decimalPlacesOld[0].length-1 : 0, decimalPlacesChange ? decimalPlacesChange[0].length-1 : 0);
         const factor = 10**decimalPlaces;
         newText = Math.round(newText*factor)/factor;
