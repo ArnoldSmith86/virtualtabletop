@@ -3,7 +3,7 @@ const mouseStatus = {};
 
 function eventCoords(name, e) {
   let coords;
-  if(name == 'touchend')
+  if(name == 'touchend' || name == 'touchcancel')
     coords = e.changedTouches[0];
   else if(name == 'touchstart' || name == 'touchmove')
     coords = e.targetTouches[0];
@@ -51,7 +51,7 @@ async function inputHandler(name, e) {
     if(!edit && (!jeEnabled || !e.ctrlKey) && widget.passthroughMouse) {
       if(name == 'mousedown' || name == 'touchstart') {
         await widget.mouseRaw('down', coords);
-      } else if (name == 'mouseup' || name == 'touchend') {
+      } else if (name == 'mouseup' || name == 'touchend' || name == 'touchcancel') {
         await widget.mouseRaw('up', coords);
       } else if (name == 'mousemove' || name == 'touchmove') {
         await widget.mouseRaw('move', coords);
@@ -78,7 +78,7 @@ async function inputHandler(name, e) {
       if (movable) {
         ms.localAnchor = ms.moveTarget.coordLocalFromCoordClient({x: coords.clientX, y: coords.clientY});
       }
-    } else if(name == 'mouseup' || name == 'touchend' && mouseStatus[target.id]) {
+    } else if(name == 'mouseup' || (name == 'touchend' || name == 'touchcancel') && mouseStatus[target.id]) {
       const ms = mouseStatus[target.id];
       const timeSinceStart = +new Date() - ms.start;
       const pixelsMoved = ms.coords ? Math.abs(ms.coords.x - ms.downCoords.x) + Math.abs(ms.coords.y - ms.downCoords.y) : 0;
@@ -122,7 +122,7 @@ async function inputHandler(name, e) {
 }
 
 onLoad(function() {
-  [ 'touchstart', 'touchend', 'touchmove', 'mousedown', 'mousemove', 'mouseup', 'contextmenu' ].forEach(function(event) {
+  [ 'touchstart', 'touchend', 'touchmove', 'touchcancel', 'mousedown', 'mousemove', 'mouseup', 'contextmenu' ].forEach(function(event) {
     window.addEventListener(event, e => inputHandler(event, e));
   });
 });
