@@ -218,6 +218,16 @@ export async function sortWidgets(collection, keys, reverse, locales, options, r
     for(const keyObj of k) {
       const key1 = w1.get(keyObj.key);
       const key2 = w2.get(keyObj.key);
+      const o = keyObj.order;
+      if(Array.isArray(o)) {
+        const o1 = o.indexOf(key1);
+        const o2 = o.indexOf(key2);
+        if(o1 > -1) {
+          return (o2 > -1) ? o1 - o2 : -1 
+        } else if(o2 > -1) {
+          return 1;
+        }
+      }
       if(typeof key1 == 'number')
         comp = key1 - key2;
       else
