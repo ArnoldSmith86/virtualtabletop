@@ -520,7 +520,7 @@ export class Widget extends StateManaged {
           return match[9] ? false : undefined;
 
         let indexName = evaluateIdentifier(match[3], match[4]);
-        return indexName !== undefined ? varContent[indexName] : varContent;
+        return varContent !== null && indexName !== undefined ? varContent[indexName] : varContent;
       }
 
       // property
