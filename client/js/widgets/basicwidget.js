@@ -23,7 +23,7 @@ class BasicWidget extends Widget {
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
     if(delta.activeFace !== undefined || delta.faces !== undefined) {
-      let face = this.get('faces')[this.get('activeFace')];
+      let face = this.faces()[this.get('activeFace')];
       if(face !== undefined)
         this.applyDelta(face);
     }
@@ -72,22 +72,27 @@ class BasicWidget extends Widget {
     return p;
   }
 
+  faces() {
+    const faces = this.get('faces');
+    return Array.isArray(faces) ? faces : [];
+  }
+
   async flip(setFlip, faceCycle) {
     if(setFlip !== undefined && setFlip !== null)
       await this.set('activeFace', setFlip);
     else {
       const fC = (faceCycle !== undefined && faceCycle !== null) ? faceCycle : this.get('faceCycle');
       if (fC == 'backward')
-        await this.set('activeFace', this.get('activeFace') == 0 ? this.get('faces').length-1 : this.get('activeFace') -1);
+        await this.set('activeFace', this.get('activeFace') == 0 ? this.faces().length-1 : this.get('activeFace') -1);
       else
-        await this.set('activeFace', Math.floor(this.get('activeFace') + (fC == 'random' ? Math.random()*99999 : 1)) % this.get('faces').length);
+        await this.set('activeFace', Math.floor(this.get('activeFace') + (fC == 'random' ? Math.random()*99999 : 1)) % this.faces().length);
     }
   }
 
   getDefaultValue(property) {
-    if(property == 'faces' || property == 'activeFace' || !this.get('faces') || !this.get('faces')[this.get('activeFace')])
+    if(property == 'faces' || property == 'activeFace' || !this.faces() || !this.faces()[this.get('activeFace')])
       return super.getDefaultValue(property);
-    const d = this.get('faces')[this.get('activeFace')][property];
+    const d = this.faces()[this.get('activeFace')][property];
     if(d !== undefined)
       return d;
     return super.getDefaultValue(property);
