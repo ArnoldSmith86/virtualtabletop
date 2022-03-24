@@ -112,7 +112,7 @@ function receiveDelta(delta) {
     if(delta.s[widgetID] === null) {
       if(widgets.has(widgetID))
         removeWidget(widgetID);
-    } else {
+    } else if(widgets.has(widgetID)) { // addWidget above MIGHT have failed
       widgets.get(widgetID).applyDelta(delta.s[widgetID]);
     }
   }
