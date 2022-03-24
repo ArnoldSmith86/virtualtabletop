@@ -1679,6 +1679,9 @@ export class Widget extends StateManaged {
         lastHoverTarget.domElement.classList.remove('droptarget');
       if(this.hoverTarget)
         this.hoverTarget.domElement.classList.add('droptarget');
+
+      if(lastHoverTarget != this.hoverTarget && this.hoverTarget != this.currentParent)
+        await this.checkParent(true);
     }
   }
 
