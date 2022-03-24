@@ -213,7 +213,7 @@ export async function sortWidgets(collection, keys, reverse, locales, options, r
       key:"z",
       reverse: (reverse === true)
     });
-  if(!reverse)
+  if(!reverse && !Array.isArray(keys))
     collection.reverse();
   collection.sort((w1,w2)=>{
     let comp = 0;
@@ -222,12 +222,12 @@ export async function sortWidgets(collection, keys, reverse, locales, options, r
       const key2 = w2.get(keyObj.key);
       const o = keyObj.order;
       if(Array.isArray(o)) {
-        const o1 = o.indexOf(key1);
-        const o2 = o.indexOf(key2);
-        if(o1 > -1) {
-          return (o2 > -1) ? o1 - o2 : -1 
-        } else if(o2 > -1) {
-          return 1;
+        const i1 = o.indexOf(key1);
+        const i2 = o.indexOf(key2);
+        if(i1 > -1) {
+          comp = (i2 > -1) ? i1 - i2 : -1 
+        } else if(i2 > -1) {
+          comp = 1;
         }
       }
       if(typeof key1 == 'number')
