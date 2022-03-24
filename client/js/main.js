@@ -211,9 +211,11 @@ export async function sortWidgets(collection, keys, reverse, locales, options, r
   if(rearrange)
     k.push({
       key:"z",
-      reverse
+      reverse: (reverse === true)
     });
-  collection.reverse().sort((w1,w2)=>{
+  if(!reverse)
+    collection.reverse();
+  collection.sort((w1,w2)=>{
     let comp = 0;
     for(const keyObj of k) {
       const key1 = w1.get(keyObj.key);
