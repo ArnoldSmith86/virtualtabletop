@@ -447,7 +447,7 @@ export class Widget extends StateManaged {
     style.id = `STYLES_${escapeID(this.id)}`;
     for(const key in css)
       if(key != 'inline')
-        style.appendChild(document.createTextNode(`#w_${escapeID(this.id)}${key == 'default' ? '' : key} { ${this.cssReplaceProperties(this.cssAsText(css[key]))} }`));
+        style.appendChild(document.createTextNode(`#w_${escapeID(this.id)}${key == 'default' ? '' : key} { ${mapAssetURLs(this.cssReplaceProperties(this.cssAsText(css[key])))} }`));
     $('head').appendChild(style);
 
     return this.cssAsText(css.inline || '');
