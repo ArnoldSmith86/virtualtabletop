@@ -11,7 +11,7 @@
 
 .spinner > div.spinningPart {
   position: absolute;
-  background-image: url(/i/spinner/SpinnerVTTblue.svg);
+  background-image: url(i/spinner/SpinnerVTTblue.svg);
   background-size: 70% 70%;
   background-position: center center;
   background-repeat: no-repeat;
