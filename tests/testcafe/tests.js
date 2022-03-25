@@ -353,7 +353,7 @@ publicLibraryButtons('Functions - CALL',   0, '4ef11451bfae5b8708e8f0eac2a06df4'
 ]);
 publicLibraryButtons('Functions - CLICK',  0, 'd44e77e0782cadbc9594494e5a83dde0', [ '7u2q' ]);
 publicLibraryButtons('Functions - ROTATE', 0, '70782503b9e3fb2d4e24495f5c53ef1b', [ 'c44c', '9kdj', 'w53c', 'w53c' ]);
-publicLibraryButtons('Functions - SELECT', 2, '498fe2328a51a15fd5f49bcbe30d7f66', [ 'jkmt1']);
+publicLibraryButtons('Functions - SELECT', 2, '51f108279a644454323430b8d993068a', [ 'jkmt1']);
 publicLibraryButtons('Functions - SORT',   1, '433948b27014f8236bd1978bdbe39443', [
   'ingw', 'k131', 'cnfu', 'i6yz', 'z394', '0v3h', '1h8o', 'v5ra', 'ingw-copy001', 'k131-copy001', 'cnfu-copy001',
   'i6yz-copy001', 'z394-copy001', '0v3h-copy001'

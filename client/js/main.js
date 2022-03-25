@@ -222,12 +222,14 @@ export async function sortWidgets(collection, keys, reverse, locales, options, r
     for(const keyObj of k) {
       const key1 = w1.get(keyObj.key);
       const key2 = w2.get(keyObj.key);
+      if(key1 === key2)
+        continue;
       let i1 = -1;
       let i2 = -1;
       if(Array.isArray(keyObj.order)) {
         const o = keyObj.order.slice().reverse();
-        i1 = o.indexOf(key1);
-        i2 = o.indexOf(key2);
+        i1 = o.lastIndexOf(key1);
+        i2 = o.lastIndexOf(key2);
       }
       if(i1 > -1 || i2 > -1)
         comp = i2 - i1;
@@ -245,11 +247,12 @@ export async function sortWidgets(collection, keys, reverse, locales, options, r
     }
     return 0;
   });
-  let z = 1;
-  if(rearrange)
+  if(rearrange) {
+    let z = 1;
     for(const w of collection) {
       await w.set('z', ++z);
     }
+  }
 }
 
 async function uploadAsset(multipleCallback) {

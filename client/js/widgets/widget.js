@@ -1267,7 +1267,7 @@ export class Widget extends StateManaged {
           collections[a.collection] = [...new Set(c)];
 
           if(a.sortBy)
-            await sortWidgets(collections[a.collection], a.sortBy.key, a.sortBy.reverse, a.sortBy.locales, a.sortBy.options);
+            await sortWidgets(collections[a.collection], a.sortBy);
 
           if(jeRoutineLogging) {
             let selectedWidgets = collections[a.collection].map(w=>w.get('id')).join(',');
