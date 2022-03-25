@@ -816,14 +816,14 @@ export default async function convertPCIO(content) {
         if(c.func == 'CHANGE_TIMER_TIME') {
           if(!c.args.timers)
             continue;
-          if ((c.args.changeType && c.args.changeType.value)=="add"){
-            var mode = "inc"
-          } else if ((c.args.changeType && c.args.changeType.value)=="subtract"){
-            var mode = "dec"
-          } else if ((c.args.changeType && c.args.changeType.value)=="set"){
-            var mode = "set"
+          if ((c.args.changeType && c.args.changeType.value)=='add'){
+            var mode = 'inc'
+          } else if ((c.args.changeType && c.args.changeType.value)=='subtract'){
+            var mode = 'dec'
+          } else if ((c.args.changeType && c.args.changeType.value)=='set'){
+            var mode = 'set'
           } else {
-            var mode = "reset"
+            var mode = 'reset'
           };
           c = {
             func: 'TIMER',
