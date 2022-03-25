@@ -13,6 +13,7 @@ class Holder extends Widget {
       dropOffsetX: 4,
       dropOffsetY: 4,
       dropLimit: -1,
+      numbDraggedChildren: 0,
       alignChildren: true,
       preventPiles: false,
       childrenPerOwner: false,
@@ -56,9 +57,7 @@ class Holder extends Widget {
       }
     }
     if(this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY')))
-      await this.receiveCard(null);
-    if(Array.isArray(this.get('leaveRoutine')))
-      await this.evaluateRoutine('leaveRoutine', {}, { child: [ card ] });
+      await this.receiveCard(null); 
   }
 
   async onChildAdd(child, oldParentID) {

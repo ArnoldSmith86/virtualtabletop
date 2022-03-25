@@ -173,7 +173,9 @@ class Pile extends Widget {
 
       await c.set('x', c.get('x') + x);
       await c.set('y', c.get('y') + y);
+      c.skipEnterRoutine = true; // prevents enterRoutine on pile break
       await c.set('parent', p);
+      delete c.skipEnterRoutine;
 
       await removeWidgetLocal(this.get('id'));
     }
