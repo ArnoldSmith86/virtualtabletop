@@ -605,6 +605,7 @@ function jeAddCommands() {
   widgetTypes.push(jeAddWidgetPropertyCommands(new Canvas()));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Card()));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Deck()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Dice()));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Holder()));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Label()));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Pile()));

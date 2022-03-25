@@ -52,6 +52,8 @@ export function addWidget(widget, instance) {
     w = new Canvas(id);
   } else if(widget.type == 'deck') {
     w = new Deck(id);
+  } else if(widget.type == 'dice') {
+    w = new Dice(id);
   } else if(widget.type == 'holder') {
     w = new Holder(id);
   } else if(widget.type == 'spinner') {
