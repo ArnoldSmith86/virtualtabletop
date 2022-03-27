@@ -1,13 +1,20 @@
-.dice.widget {
+.dice.widget > .diceFaces {
   box-sizing: border-box;
 
   background: white;
   color: black;
   border: 0.5px solid black;
+  border-radius: inherit;
+
+  height: 100%;
+  width: 100%;
+  transition: transform 0.5s;
 }
 
-.dice.widget > .diceFace {
+.dice.widget > .diceFaces > .diceFace {
   display: none;
+  position: absolute;
+  top: 0;
   font-size: 50px;
 
   height: 100%;
@@ -21,10 +28,27 @@
   background-position: center center;
   background-size: contain;
 }
-.dice.widget > .active.diceFace {
+.dice.widget > .diceFaces > .active.diceFace {
   display: flex;
 }
 
-.dice.widget > .dicePip {
+.dice.widget > .diceFaces > .dicePip {
   font-family: VTT-Symbols;
+}
+
+
+.dice.widget > .diceFaces.animate1 {
+  transform: rotate(20deg);
+}
+.dice.widget > .diceFaces.animate1 > .active.diceFace, .dice.widget > .diceFaces.animate2 > .active.diceFace {
+  display: none;
+}
+.dice.widget > .diceFaces.animate1 > .diceFace:nth-child(1) {
+  display: flex;
+}
+.dice.widget > .diceFaces.animate2 {
+  transform: rotate(-20deg);
+}
+.dice.widget > .diceFaces.animate2 > .diceFace:nth-child(2) {
+  display: flex;
 }
