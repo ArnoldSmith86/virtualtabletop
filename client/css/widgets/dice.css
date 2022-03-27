@@ -87,15 +87,15 @@
 }
 
 .three-d.dice.widget > .diceFaces > .diceFace:nth-child(3) {
-  transform: rotateX( 90deg) translateZ(calc(var(--size) / 2));
-}
-
-.three-d.dice.widget > .diceFaces > .diceFace:nth-child(4) {
   transform: rotateY(-90deg) translateZ(calc(var(--size) / 2));
 }
 
-.three-d.dice.widget > .diceFaces > .diceFace:nth-child(5) {
+.three-d.dice.widget > .diceFaces > .diceFace:nth-child(4) {
   transform: rotateY( 90deg) translateZ(calc(var(--size) / 2));
+}
+
+.three-d.dice.widget > .diceFaces > .diceFace:nth-child(5) {
+  transform: rotateX( 90deg) translateZ(calc(var(--size) / 2));
 }
 
 .three-d.dice.widget > .diceFaces > .diceFace:nth-child(6) {
