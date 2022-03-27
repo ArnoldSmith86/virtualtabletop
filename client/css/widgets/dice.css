@@ -1,24 +1,15 @@
 .dice.widget > .diceFaces {
-  box-sizing: border-box;
-
-  background: var(--backgroundColor);
-  color: var(--pipColor);
-  border: 0.5px solid var(--pipColor);
-  border-radius: inherit;
-
   height: 100%;
   width: 100%;
-  transition: transform 0.5s;
 }
 
 .dice.widget > .diceFaces > .diceFace {
-  display: none;
   position: absolute;
-  top: 0;
-  font-size: var(--fontSize);
 
   height: 100%;
   width: 100%;
+
+  font-size: var(--size);
 
   justify-content: center;
   align-items: center;
@@ -28,27 +19,85 @@
   background-position: center center;
   background-size: contain;
 }
-.dice.widget > .diceFaces > .active.diceFace {
-  display: flex;
-}
 
 .dice.widget > .diceFaces > .dicePip {
   font-family: VTT-Symbols;
 }
 
 
-.dice.widget > .diceFaces.animate1 {
+.shaking.dice.widget > .diceFaces {
+  box-sizing: border-box;
+
+  background: var(--backgroundColor);
+  color: var(--pipColor);
+  border: 0.5px solid var(--pipColor);
+  border-radius: inherit;
+
+  transition: transform 0.5s;
+}
+
+.shaking.dice.widget > .diceFaces > .diceFace {
+  display: none;
+  top: 0;
+}
+.shaking.dice.widget > .diceFaces > .active.diceFace {
+  display: flex;
+}
+
+
+.shaking.dice.widget > .diceFaces.animate1 {
   transform: rotate(20deg);
 }
-.dice.widget > .diceFaces.animate1 > .active.diceFace, .dice.widget > .diceFaces.animate2 > .active.diceFace {
+.shaking.dice.widget > .diceFaces.animate1 > .active.diceFace, .shaking.dice.widget > .diceFaces.animate2 > .active.diceFace {
   display: none;
 }
-.dice.widget > .diceFaces.animate1 > .animate1active.diceFace {
+.shaking.dice.widget > .diceFaces.animate1 > .animate1active.diceFace {
   display: flex;
 }
-.dice.widget > .diceFaces.animate2 {
+.shaking.dice.widget > .diceFaces.animate2 {
   transform: rotate(-20deg);
 }
-.dice.widget > .diceFaces.animate2 > .animate2active.diceFace {
+.shaking.dice.widget > .diceFaces.animate2 > .animate2active.diceFace {
   display: flex;
+}
+
+
+.three-d.dice.widget {
+  perspective: 1600px;
+}
+
+.three-d.dice.widget > .diceFaces {
+  transform-style: preserve-3d;
+  transform: translateZ(calc(var(--size) / -2)) rotateX(var(--rotX)) rotateY(var(--rotY)) rotateZ(0deg);
+  transition: transform 0.5s;
+}
+
+.three-d.dice.widget > .diceFaces > .diceFace {
+  background-color: var(--backgroundColor);
+  color: var(--pipColor);
+  border: 0.5px solid var(--pipColor);
+}
+
+.three-d.dice.widget > .diceFaces > .diceFace:nth-child(1) {
+  transform: rotateY(  0deg) translateZ(calc(var(--size) / 2));
+}
+
+.three-d.dice.widget > .diceFaces > .diceFace:nth-child(2) {
+  transform: rotateX(-90deg) translateZ(calc(var(--size) / 2));
+}
+
+.three-d.dice.widget > .diceFaces > .diceFace:nth-child(3) {
+  transform: rotateX( 90deg) translateZ(calc(var(--size) / 2));
+}
+
+.three-d.dice.widget > .diceFaces > .diceFace:nth-child(4) {
+  transform: rotateY(-90deg) translateZ(calc(var(--size) / 2));
+}
+
+.three-d.dice.widget > .diceFaces > .diceFace:nth-child(5) {
+  transform: rotateY( 90deg) translateZ(calc(var(--size) / 2));
+}
+
+.three-d.dice.widget > .diceFaces > .diceFace:nth-child(6) {
+  transform: rotateY(180deg) translateZ(calc(var(--size) / 2));
 }

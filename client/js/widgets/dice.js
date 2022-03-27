@@ -6,6 +6,7 @@ class Dice extends Widget {
       width: 50,
       height: 50,
       typeClasses: 'widget dice',
+      classes: 'shaking',
       clickable: true,
       movable: false,
 
@@ -113,17 +114,24 @@ class Dice extends Widget {
   css() {
     let css = super.css();
 
-    css += '; --fontSize:' + Math.min(this.get('width'), this.get('height')) + 'px';
+    css += '; --size:' + Math.min(this.get('width'), this.get('height')) + 'px';
 
     css += '; --pipColor:' + this.get('pipColor');
     css += '; --backgroundColor:' + this.get('backgroundColor');
+
+    const xRotations = [ 0, 90, -90,  0,   0,   0 ];
+    const yRotations = [ 0,  0,   0, 90, -90, 180 ];
+    const i = this.get('options').indexOf(this.get('value'));
+
+    css += '; --rotX:' + (xRotations[i] + this.get('rollCount')*360) + 'deg';
+    css += '; --rotY:' + (yRotations[i] + this.get('rollCount')*360) + 'deg';
 
     return css;
   }
 
   cssProperties() {
     const p = super.cssProperties();
-    p.push('pipColor', 'backgroundColor');
+    p.push('pipColor', 'backgroundColor', 'value', 'rollCount');
     return p;
   }
 }
