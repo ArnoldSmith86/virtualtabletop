@@ -7,8 +7,9 @@ class Dice extends Widget {
       height: 50,
       typeClasses: 'widget dice',
       clickable: true,
+      movable: false,
 
-      borderRadius: 8,
+      borderRadius: '16%',
 
       options: [ 1, 2, 3, 4, 5, 6 ],
       value: 1,
@@ -95,5 +96,13 @@ class Dice extends Widget {
     for(const child of childNodes)
       if(String(child.className).match(/widget/))
         this.domElement.appendChild(child);
+  }
+
+  css() {
+    let css = super.css();
+
+    css += '; --fontSize:' + Math.min(this.get('width'), this.get('height')) + 'px';
+
+    return css;
   }
 }

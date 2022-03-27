@@ -15,7 +15,7 @@
   display: none;
   position: absolute;
   top: 0;
-  font-size: 50px;
+  font-size: var(--fontSize);
 
   height: 100%;
   width: 100%;
