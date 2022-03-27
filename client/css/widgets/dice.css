@@ -43,12 +43,12 @@
 .dice.widget > .diceFaces.animate1 > .active.diceFace, .dice.widget > .diceFaces.animate2 > .active.diceFace {
   display: none;
 }
-.dice.widget > .diceFaces.animate1 > .diceFace:nth-child(1) {
+.dice.widget > .diceFaces.animate1 > .animate1active.diceFace {
   display: flex;
 }
 .dice.widget > .diceFaces.animate2 {
   transform: rotate(-20deg);
 }
-.dice.widget > .diceFaces.animate2 > .diceFace:nth-child(2) {
+.dice.widget > .diceFaces.animate2 > .animate2active.diceFace {
   display: flex;
 }

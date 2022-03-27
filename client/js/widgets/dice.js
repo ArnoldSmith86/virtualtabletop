@@ -17,7 +17,6 @@ class Dice extends Widget {
       value: 1,
       rollCount: 0
     });
-    this.faceElements = {};
   }
 
   animate() {
@@ -28,15 +27,20 @@ class Dice extends Widget {
       clearTimeout(this.animateTimeout1);
     if(this.animateTimeout2)
       clearTimeout(this.animateTimeout2);
-    if(this.animateTimeout3)
-      clearTimeout(this.animateTimeout3);
+
+    const faceElements = Object.values(this.faceElements);
 
     this.facesElement.className = 'diceFaces animate1';
+
+    for(const face of faceElements)
+      face.classList.remove('animate1active', 'animate2active');
+    faceElements[(this.get('rollCount')*997) % faceElements.length].classList.add('animate1active');
+    faceElements[(this.get('rollCount')*887) % faceElements.length].classList.add('animate2active');
 
     this.animateTimeout1 = setTimeout(_=> {
       this.facesElement.className = 'diceFaces animate2';
     }, 100);
-    this.animateTimeout3 = setTimeout(_=> {
+    this.animateTimeout2 = setTimeout(_=> {
       this.facesElement.className = 'diceFaces';
     }, 300);
   }
@@ -79,6 +83,7 @@ class Dice extends Widget {
     this.facesElement = document.createElement('div');
     this.facesElement.className = 'diceFaces';
 
+    this.faceElements = {};
     const options = this.get('options');
     for(const i in options) {
       const content = options[i];
@@ -101,7 +106,7 @@ class Dice extends Widget {
     this.domElement.appendChild(this.facesElement);
 
     for(const child of childNodes)
-      if(String(child.className).match(/widget/))
+      if(child.classList.contains('widget'))
         this.domElement.appendChild(child);
   }
 
