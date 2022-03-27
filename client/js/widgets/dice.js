@@ -19,7 +19,7 @@ class Dice extends Widget {
   }
 
   animate() {
-    if(!this.facesElement)
+    if(!this.facesElement || !this.activateAnimation)
       return;
 
     if(this.animateTimeout1)
@@ -55,6 +55,11 @@ class Dice extends Widget {
       if(this.activeFace !== undefined)
         this.activeFace.classList.add('active');
     }
+  }
+
+  applyInitialDelta(delta) {
+    super.applyInitialDelta(delta);
+    this.activateAnimation = true;
   }
 
   async click(mode='respect') {
