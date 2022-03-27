@@ -119,8 +119,8 @@ class Dice extends Widget {
     css += '; --pipColor:' + this.get('pipColor');
     css += '; --backgroundColor:' + this.get('backgroundColor');
 
-    const xRotations = [ 0, 90, -90,  0,   0,   0 ];
-    const yRotations = [ 0,  0,   0, 90, -90, 180 ];
+    const xRotations = [ 0, 90,  0,   0, -90,   0 ];
+    const yRotations = [ 0,  0, 90, -90,   0, 180 ];
     const i = this.get('options').indexOf(this.get('value'));
 
     css += '; --rotX:' + (xRotations[i] + this.get('rollCount')*360) + 'deg';
