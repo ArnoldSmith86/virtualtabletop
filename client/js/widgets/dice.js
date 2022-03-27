@@ -10,6 +10,8 @@ class Dice extends Widget {
       movable: false,
 
       borderRadius: '16%',
+      pipColor: 'black',
+      backgroundColor: 'white',
 
       options: [ 1, 2, 3, 4, 5, 6 ],
       value: 1,
@@ -108,6 +110,15 @@ class Dice extends Widget {
 
     css += '; --fontSize:' + Math.min(this.get('width'), this.get('height')) + 'px';
 
+    css += '; --pipColor:' + this.get('pipColor');
+    css += '; --backgroundColor:' + this.get('backgroundColor');
+
     return css;
+  }
+
+  cssProperties() {
+    const p = super.cssProperties();
+    p.push('pipColor', 'backgroundColor');
+    return p;
   }
 }

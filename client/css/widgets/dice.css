@@ -1,9 +1,9 @@
 .dice.widget > .diceFaces {
   box-sizing: border-box;
 
-  background: white;
-  color: black;
-  border: 0.5px solid black;
+  background: var(--backgroundColor);
+  color: var(--pipColor);
+  border: 0.5px solid var(--pipColor);
   border-radius: inherit;
 
   height: 100%;
