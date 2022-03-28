@@ -15,7 +15,7 @@ class Dice extends Widget {
       backgroundColor: 'white',
 
       options: [ 1, 2, 3, 4, 5, 6 ],
-      value: 1,
+      activeFace: 0,
       rollCount: 0
     });
   }
@@ -29,7 +29,7 @@ class Dice extends Widget {
     if(this.animateTimeout2)
       clearTimeout(this.animateTimeout2);
 
-    const faceElements = Object.values(this.faceElements);
+    const faceElements = this.faceElements;
 
     this.facesElement.className = 'diceFaces animate1';
 
@@ -55,10 +55,10 @@ class Dice extends Widget {
     if(delta.rollCount !== undefined)
       this.animate();
 
-    if(delta.value !== undefined) {
+    if(delta.activeFace !== undefined) {
       if(this.activeFace !== undefined)
         this.activeFace.classList.remove('active');
-      this.activeFace = this.faceElements[delta.value];
+      this.activeFace = this.faceElements[delta.activeFace];
       if(this.activeFace !== undefined)
         this.activeFace.classList.add('active');
     }
@@ -71,8 +71,7 @@ class Dice extends Widget {
 
   async click(mode='respect') {
     if(!await super.click(mode)) {
-      const o = this.get('options');
-      await this.set('value', o[Math.floor(Math.random()*o.length)]);
+      await this.set('activeFace', Math.floor(Math.random()*this.get('options').length));
       await this.set('rollCount', this.get('rollCount')+1);
     }
   }
@@ -84,7 +83,7 @@ class Dice extends Widget {
     this.facesElement = document.createElement('div');
     this.facesElement.className = 'diceFaces';
 
-    this.faceElements = {};
+    this.faceElements = [];
     const options = this.get('options');
     for(const i in options) {
       const content = options[i];
@@ -101,7 +100,7 @@ class Dice extends Widget {
       face.classList.add(`diceFace`);
       face.classList.add(`face${+i+1}`);
       this.facesElement.appendChild(face);
-      this.faceElements[content] = face;
+      this.faceElements.push(face);
     }
 
     this.domElement.appendChild(this.facesElement);
@@ -121,17 +120,40 @@ class Dice extends Widget {
 
     const xRotations = [ 0, 90,  0,   0, -90,   0 ];
     const yRotations = [ 0,  0, 90, -90,   0, 180 ];
-    const i = this.get('options').indexOf(this.get('value'));
+    let i = this.get('activeFace');
+    if(typeof i != 'number')
+      i = 0;
 
-    css += '; --rotX:' + (xRotations[i] + this.get('rollCount')*360) + 'deg';
-    css += '; --rotY:' + (yRotations[i] + this.get('rollCount')*360) + 'deg';
+    css += '; --rotX:' + (xRotations[i % 6] + this.get('rollCount')*360) + 'deg';
+    css += '; --rotY:' + (yRotations[i % 6] + this.get('rollCount')*360) + 'deg';
 
     return css;
   }
 
   cssProperties() {
     const p = super.cssProperties();
-    p.push('pipColor', 'backgroundColor', 'value', 'rollCount');
+    p.push('pipColor', 'backgroundColor', 'activeFace', 'rollCount');
     return p;
+  }
+
+  getDefaultValue(property) {
+    if(property == 'value') {
+      const activeFace = this.get('activeFace');
+      const o = this.get('options');
+      if(Array.isArray(o) && typeof activeFace == 'number' && o.length > activeFace)
+        return o[activeFace];
+    }
+    return super.getDefaultValue(property);
+  }
+
+  set(property, value) {
+    if(property == 'value' && value != null) {
+      const o = this.get('options');
+      if(Array.isArray(o) && o.indexOf(value) > -1 && this.getDefaultValue(property) != value)
+        this.set('activeFace', o.indexOf(value));
+    } else if(property == 'activeFace' && this.state['value'] != undefined) {
+      this.set('value', null);
+    }
+    return super.set(property, value);
   }
 }
