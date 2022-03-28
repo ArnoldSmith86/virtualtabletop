@@ -1355,12 +1355,6 @@ export class Widget extends StateManaged {
             return `'${k.key}'`;
           return typeof k == 'string' ? `'${k}` : k;
         }).join(', ');
-        if(Array.isArray(a.key) && Array.isArray(a.reverse)) {
-          if(a.reverse.length < a.key.length)
-            problems.push('Warning: Reverse array shorter than key array, repeating last value in reverse array.');
-          else if(a.reverse.length > a.key.length)
-            problems.push('Warning: Reverse array longer than key array, ignoring extra values in reverse array.')
-        }
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
