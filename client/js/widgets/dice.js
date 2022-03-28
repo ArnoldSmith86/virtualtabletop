@@ -31,19 +31,28 @@ class Dice extends Widget {
 
     const faceElements = this.faceElements;
 
-    this.facesElement.className = 'diceFaces animate1';
+    const rc = this.get('rollCount');
+    const fc = faceElements.length;
+    const af =  this.get('activeFace');
+    const f0 = faceElements.indexOf(this.priorActiveFace);
+    const f1 = ((f0 > -1 ? f0 : af) + (rc * 997) % (fc - 1)) % fc;
+    let f2 = (f1 + (rc * 887) % (fc - (f0 == af ? 1 : 2))) % fc;
+    if(f2 == af)
+      f2 = (f2 + 1) % fc;
+
+    this.facesElement.className = `diceFaces animate animateBegin shake${Math.floor(Math.random()*8)}`;
 
     for(const face of faceElements)
       face.classList.remove('animate1active', 'animate2active');
-    faceElements[(this.get('rollCount')*997) % faceElements.length].classList.add('animate1active');
-    faceElements[(this.get('rollCount')*887) % faceElements.length].classList.add('animate2active');
+    faceElements[f1].classList.add('animate1active');
+    faceElements[f2].classList.add('animate2active');
 
     this.animateTimeout1 = setTimeout(_=> {
-      this.facesElement.className = 'diceFaces animate2';
-    }, 100);
+      this.facesElement.classList.remove('animateBegin');
+    }, 50);
     this.animateTimeout2 = setTimeout(_=> {
       this.facesElement.className = 'diceFaces';
-    }, 300);
+    }, 1000);
   }
 
   applyDeltaToDOM(delta) {
@@ -56,8 +65,10 @@ class Dice extends Widget {
       this.animate();
 
     if(delta.activeFace !== undefined) {
-      if(this.activeFace !== undefined)
+      if(this.activeFace !== undefined) {
+        this.priorActiveFace = this.activeFace;
         this.activeFace.classList.remove('active');
+      }
       this.activeFace = this.faceElements[delta.activeFace];
       if(this.activeFace !== undefined)
         this.activeFace.classList.add('active');

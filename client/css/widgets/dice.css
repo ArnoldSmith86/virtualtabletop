@@ -1,10 +1,12 @@
 .dice.widget > .diceFaces {
+  position: absolute;
   height: 100%;
   width: 100%;
 }
 
 .dice.widget > .diceFaces > .diceFace {
   position: absolute;
+  top: 0;
 
   height: 100%;
   width: 100%;
@@ -36,12 +38,64 @@
   transition: transform 0.5s;
 }
 
+.shaking.dice.widget > .diceFaces.animate {
+  animation-name: shake;
+  animation-duration: 0.5s;
+  --shakeX: 1;
+  --shakeY: 1;
+  --shakeR: 1;
+}
+.shaking.dice.widget > .diceFaces.animate.animateBegin {
+  animation: none;
+  transform: translate3d(calc(var(--shakeX) * 1px), 0, 0) rotate(calc(var(--shakeR) * -5deg));
+  transition: transform 50ms;
+}
+.shaking.dice.widget > .diceFaces.animate.shake1,
+.shaking.dice.widget > .diceFaces.animate.shake3,
+.shaking.dice.widget > .diceFaces.animate.shake5,
+.shaking.dice.widget > .diceFaces.animate.shake7 {
+  --shakeX: -1;
+}
+.shaking.dice.widget > .diceFaces.animate.shake2,
+.shaking.dice.widget > .diceFaces.animate.shake3,
+.shaking.dice.widget > .diceFaces.animate.shake6,
+.shaking.dice.widget > .diceFaces.animate.shake7 {
+  --shakeY: -1;
+}
+.shaking.dice.widget > .diceFaces.animate.shake4,
+.shaking.dice.widget > .diceFaces.animate.shake5,
+.shaking.dice.widget > .diceFaces.animate.shake6,
+.shaking.dice.widget > .diceFaces.animate.shake7 {
+  --shakeR: -1;
+}
+
 .shaking.dice.widget > .diceFaces > .diceFace {
   display: none;
-  top: 0;
 }
 .shaking.dice.widget > .diceFaces > .active.diceFace {
   display: flex;
+}
+.shaking.dice.widget > .diceFaces.animate > .diceFace {
+  display: flex;
+  --phase1: 0;
+  --phase2: 0;
+  --final: 0;
+  opacity: var(--final);
+  animation-name: faceChange;
+  animation-duration: inherit;
+}
+.shaking.dice.widget > .diceFaces.animate.animateBegin > .diceFace {
+  opacity: var(--phase1);
+  animation: none;
+}
+.shaking.dice.widget > .diceFaces.animate > .diceFace.active {
+  --final: 1;
+}
+.shaking.dice.widget > .diceFaces.animate > .diceFace.animate1active {
+  --phase1: 1;
+}
+.shaking.dice.widget > .diceFaces.animate > .diceFace.animate2active {
+  --phase2: 1;
 }
 
 
@@ -100,4 +154,84 @@
 
 .three-d.dice.widget > .diceFaces > .diceFace:nth-child(6) {
   transform: rotateY(180deg) translateZ(calc(var(--size) / 2));
+}
+
+@keyframes shake {
+  15% {
+    transform: translate3d(
+        calc(var(--shakeX) * 2px),
+        calc(var(--shakeY) * 1px),
+        0
+      )
+      rotate(calc(var(--shakeR) * -10deg));
+  }
+  30% {
+    transform: translate3d(
+        calc(var(--shakeX) * -4px),
+        calc(var(--shakeY) * 2px),
+        0
+      )
+      rotate(calc(var(--shakeR) * 15deg));
+  }
+  40% {
+    transform: translate3d(
+        calc(var(--shakeX) * 4px),
+        calc(var(--shakeY) * -4px),
+        0
+      )
+      rotate(calc(var(--shakeR) * -10deg));
+  }
+  50% {
+    transform: translate3d(
+        calc(var(--shakeX) * -2px),
+        calc(var(--shakeY) * 4px),
+        0
+      )
+      rotate(calc(var(--shakeR) * 5deg));
+  }
+  60% {
+    transform: translate3d(
+        calc(var(--shakeX) * 4px),
+        calc(var(--shakeY) * -2px),
+        0
+      )
+      rotate(calc(var(--shakeR) * 15deg));
+  }
+  70% {
+    transform: translate3d(
+        calc(var(--shakeX) * -2px),
+        calc(var(--shakeY) * 4px),
+        0
+      )
+      rotate(calc(var(--shakeR) * -20deg));
+  }
+  80% {
+    transform: translate3d(
+        calc(var(--shakeX) * -1px),
+        calc(var(--shakeY) * -2px),
+        0
+      )
+      rotate(calc(var(--shakeR) * 10deg));
+  }
+  90% {
+    transform: translate3d(0, calc(var(--shakeY) * -1px), 0)
+      rotate(calc(var(--shakeR) * 5deg));
+  }
+}
+@keyframes faceChange {
+  0% {
+    opacity: var(--phase1);
+  }
+  44% {
+    opacity: var(--phase1);
+  }
+  45% {
+    opacity: var(--phase2);
+  }
+  99% {
+    opacity: var(--phase2);
+  }
+  100% {
+    opacity: var(--final);
+  }
 }
