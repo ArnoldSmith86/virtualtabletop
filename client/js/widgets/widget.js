@@ -1347,7 +1347,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'SORT') {
-        setDefaults(a, { key: 'value', reverse: false, collection: 'DEFAULT' });
+        setDefaults(a, { key: 'value', reverse: false, collection: 'DEFAULT', rearrange: true });
         let collection;
         let reverse = (a.reverse && !Array.isArray(a.reverse)) ? ' in reverse' : '';
         let key = asArray(a.key).map((k)=>{
@@ -1373,7 +1373,7 @@ export class Widget extends StateManaged {
             jeLoggingRoutineOperationSummary(`widgets in '${a.holder}' by ${key}${reverse}`);
         } else if(collection = getCollection(a.collection)) {
           if(collections[collection].length) {
-            await sortWidgets(collections[collection], a.key, a.reverse, a.locales, a.options, true);
+            await sortWidgets(collections[collection], a.key, a.reverse, a.locales, a.options, a.rearrange);
             await w(collections[collection].map(i=>i.get('parent')), async holder=>{
               if(holder.get('type') == 'holder')
                 await holder.updateAfterShuffle();

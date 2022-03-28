@@ -200,7 +200,6 @@ export async function sortWidgets(collection, keys, reverse, locales, options, r
   const k = asArray(keys).map((key, i, k) => {
     const keyObj = {
       key, 
-      reverse: (r.length > i) ? r[i] : r[r.length - 1],
       locales,
       options
     };
@@ -212,11 +211,8 @@ export async function sortWidgets(collection, keys, reverse, locales, options, r
   });
   if(rearrange)
     k.push({
-      key:"z",
-      reverse: (reverse === true)
+      key:"z"
     });
-  if(!reverse && !Array.isArray(keys))
-    collection.reverse();
   collection.sort((w1,w2)=>{
     let comp = 0;
     for(const keyObj of k) {
@@ -247,6 +243,9 @@ export async function sortWidgets(collection, keys, reverse, locales, options, r
     }
     return 0;
   });
+  if(reverse) {
+    collection.reverse();
+  }
   if(rearrange) {
     let z = 1;
     for(const w of collection) {
