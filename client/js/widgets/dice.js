@@ -33,10 +33,10 @@ class Dice extends Widget {
 
     const rc = this.get('rollCount');
     const fc = faceElements.length;
-    const af =  this.get('activeFace');
+    const af = this.get('activeFace');
     const f0 = faceElements.indexOf(this.priorActiveFace);
-    const f1 = ((f0 > -1 ? f0 : af) + (rc * 997) % (fc - 1)) % fc;
-    let f2 = (f1 + (rc * 887) % (fc - (f0 == af ? 1 : 2))) % fc;
+    const f1 = ((f0 > -1 ? f0 : af) + (rc * 997) % (fc - 1) + 1) % fc;
+    let f2 = (f1 + (rc * 887) % (fc - (f0 == af ? 1 : 2)) + 1) % fc;
     if(f2 == af)
       f2 = (f2 + 1) % fc;
 
