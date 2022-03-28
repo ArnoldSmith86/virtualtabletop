@@ -70,8 +70,16 @@ class Dice extends Widget {
         this.activeFace.classList.remove('active');
       }
       this.activeFace = this.faceElements[delta.activeFace];
-      if(this.activeFace !== undefined)
+      if(this.activeFace !== undefined) {
         this.activeFace.classList.add('active');
+        if(this.faceElements.length > 6) {
+          this.activeFace.classList.remove('moreThanSix');
+          for(let i = delta.activeFace % 6; i < this.faceElements.length; i += 6) {
+            if(i != delta.activeFace)
+              this.faceElements[i].classList.add('moreThanSix');
+          }
+        }
+      }
     }
   }
 
