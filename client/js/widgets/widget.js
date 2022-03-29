@@ -429,9 +429,15 @@ export class Widget extends StateManaged {
   cssToStylesheet(css) {
     const style = document.createElement('style');
     style.id = `STYLES_${escapeID(this.id)}`;
-    for(const key in css)
-      if(key != 'inline')
-        style.appendChild(document.createTextNode(`#w_${escapeID(this.id)}${key == 'default' ? '' : key} { ${mapAssetURLs(this.cssReplaceProperties(this.cssAsText(css[key])))} }`));
+    for(const key in css) {
+      if(key == 'inline')
+        continue;
+
+      let selector = key == 'default' ? '' : key;
+      if(selector.charAt(0) != '@')
+        selector = `#w_${escapeID(this.id)}${selector}`;
+      style.appendChild(document.createTextNode(`${selector} { ${mapAssetURLs(this.cssReplaceProperties(this.cssAsText(css[key])))} }`));
+    }
     $('head').appendChild(style);
 
     return this.cssAsText(css.inline || '');
