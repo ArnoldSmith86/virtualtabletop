@@ -19,7 +19,6 @@ export default function minifyRoom() {
       compressor: cleanCSS,
       input: [
         'client/css/layout.css',
-        'client/css/fonts.css',
 
         'client/css/editmode.css',
         'client/css/jsonedit.css',
@@ -41,7 +40,9 @@ export default function minifyRoom() {
         'client/css/widgets/pile.css',
         'client/css/widgets/seat.css',
         'client/css/widgets/spinner.css',
-        'client/css/widgets/timer.css'
+        'client/css/widgets/timer.css',
+
+        'client/css/fonts.css',
       ],
       output: os.tmpdir() + '/out.css'
     }).then(function(min) {
