@@ -739,7 +739,7 @@ export default async function convertPCIO(content) {
           c = {
             func:   'RECALL',
             holder: holders,
-            owned:  c.args.includeHands.value == 'hands'
+            owned:  c.args.includeHands && c.args.includeHands.value == 'hands'
           };
           if(c.holder.length == 1)
             c.holder = c.holder[0];
