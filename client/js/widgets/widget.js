@@ -379,12 +379,12 @@ export class Widget extends StateManaged {
     return css;
   }
 
-  cssAsText(css) {
+  cssAsText(css, nested = false) {
     if(typeof css == 'object') {
       let cssText = '';
       for(const key in css) {
         if(typeof css[key] == 'object')
-          return this.cssToStylesheet(css);
+          return this.cssToStylesheet(css, nested);
         cssText += `; ${key}: ${css[key]}`;
       }
       return cssText;
@@ -426,20 +426,24 @@ export class Widget extends StateManaged {
     return css;
   }
 
-  cssToStylesheet(css) {
+  cssToStylesheet(css, nested = false) {
     const style = document.createElement('style');
     style.id = `STYLES_${escapeID(this.id)}`;
     for(const key in css) {
-      if(key == 'inline')
-        continue;
-
-      let selector = key == 'default' ? '' : key;
-      if(selector.charAt(0) != '@')
-        selector = `#w_${escapeID(this.id)}${selector}`;
-      style.appendChild(document.createTextNode(`${selector} { ${mapAssetURLs(this.cssReplaceProperties(this.cssAsText(css[key])))} }`));
+      let selector = key;
+      if(!nested) {
+        if(key == 'inline')
+          continue;
+        if(key == 'default')
+          selector = '';
+        if(selector.charAt(0) != '@')
+          selector = `#w_${escapeID(this.id)}${selector}`;
+      }
+      style.appendChild(document.createTextNode(`${selector} { ${mapAssetURLs(this.cssReplaceProperties(this.cssAsText(css[key], true)))} }`));
     }
+    if(nested)
+      return style.textContent;
     $('head').appendChild(style);
-
     return this.cssAsText(css.inline || '');
   }
 
