@@ -47,7 +47,7 @@
 }
 .shaking.dice.widget > .diceFaces.animate.animateBegin {
   animation: none;
-  transform: translate3d(calc(var(--shakeX) * 1px), 0, 0) rotate(calc(var(--shakeR) * -5deg));
+  transform: translate3d(calc(var(--shakeX) * 2%), 0, 0) rotate(calc(var(--shakeR) * -5deg));
   transition: transform 50ms;
 }
 .shaking.dice.widget > .diceFaces.animate.shake1,
@@ -163,62 +163,62 @@
 @keyframes shake {
   15% {
     transform: translate3d(
-        calc(var(--shakeX) * 2px),
-        calc(var(--shakeY) * 1px),
+        calc(var(--shakeX) * 4%),
+        calc(var(--shakeY) * 2%),
         0
       )
       rotate(calc(var(--shakeR) * -10deg));
   }
   30% {
     transform: translate3d(
-        calc(var(--shakeX) * -4px),
-        calc(var(--shakeY) * 2px),
+        calc(var(--shakeX) * -8%),
+        calc(var(--shakeY) * 4%),
         0
       )
       rotate(calc(var(--shakeR) * 15deg));
   }
   40% {
     transform: translate3d(
-        calc(var(--shakeX) * 4px),
-        calc(var(--shakeY) * -4px),
+        calc(var(--shakeX) * 8%),
+        calc(var(--shakeY) * -8%),
         0
       )
       rotate(calc(var(--shakeR) * -10deg));
   }
   50% {
     transform: translate3d(
-        calc(var(--shakeX) * -2px),
-        calc(var(--shakeY) * 4px),
+        calc(var(--shakeX) * -4%),
+        calc(var(--shakeY) * 8%),
         0
       )
       rotate(calc(var(--shakeR) * 5deg));
   }
   60% {
     transform: translate3d(
-        calc(var(--shakeX) * 4px),
-        calc(var(--shakeY) * -2px),
+        calc(var(--shakeX) * 8%),
+        calc(var(--shakeY) * -4%),
         0
       )
       rotate(calc(var(--shakeR) * 15deg));
   }
   70% {
     transform: translate3d(
-        calc(var(--shakeX) * -2px),
-        calc(var(--shakeY) * 4px),
+        calc(var(--shakeX) * -4%),
+        calc(var(--shakeY) * 8%),
         0
       )
       rotate(calc(var(--shakeR) * -20deg));
   }
   80% {
     transform: translate3d(
-        calc(var(--shakeX) * -1px),
-        calc(var(--shakeY) * -2px),
+        calc(var(--shakeX) * -2%),
+        calc(var(--shakeY) * -4%),
         0
       )
       rotate(calc(var(--shakeR) * 10deg));
   }
   90% {
-    transform: translate3d(0, calc(var(--shakeY) * -1px), 0)
+    transform: translate3d(0, calc(var(--shakeY) * -2%), 0)
       rotate(calc(var(--shakeR) * 5deg));
   }
 }
