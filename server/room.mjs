@@ -40,7 +40,7 @@ export default class Room {
       player.send('state', this.state);
     }
 
-    if(this.enableTracing) {
+    if(this.traceIsEnabled()) {
       this.trace('addPlayer', { player: player.name });
       player.send('tracing', 'enable');
     }
@@ -247,6 +247,8 @@ export default class Room {
     } else if(!fileOrLink) {
       Logging.log(`loading room ${this.id}`);
       this.state = FileUpdater(JSON.parse(fs.readFileSync(this.roomFilename())));
+      this.traceIsEnabled(this.traceIsEnabled());
+      this.trace('init', { initialState: this.state });
       this.broadcast('state', this.state);
     } else {
       let newState = emptyState;
@@ -367,9 +369,9 @@ export default class Room {
       if(!Object.values(this.state).filter(w=>w.player==player.name||w.owner==player.name||Array.isArray(w.owner)&&w.owner.indexOf(player.name)!=-1).length)
         delete this.state._meta.players[player.name];
 
+    this.sendMetaUpdate();
     if(this.players.length == 0)
       this.unload();
-    this.sendMetaUpdate();
   }
 
   removeState(player, stateID) {
@@ -461,30 +463,33 @@ export default class Room {
   }
 
   trace(source, payload) {
-    if(!this.enableTracing && source == 'client' && payload.type == 'enable') {
-      this.enableTracing = true;
-      this.tracingFilename = `${Config.directory('save')}/${this.id}-${+new Date}.trace`;
-      this.broadcast('tracing', 'enable');
+    if(!this.traceIsEnabled() && source == 'client' && payload.type == 'enable') {
+      this.traceIsEnabled(true);
       payload.initialState = this.state;
-      fs.writeFileSync(this.tracingFilename, '[\n');
-      Logging.log(`tracing enabled for room ${this.id} to file ${this.tracingFilename}`);
     }
-    if(this.enableTracing) {
+
+    if(this.traceIsEnabled()) {
       payload.servertime = +new Date;
       payload.source = source;
       payload.serverDeltaID = this.deltaID;
       const suffix = source == 'unload' ? '\n]' : ',\n';
       fs.appendFileSync(this.tracingFilename, `  ${JSON.stringify(payload)}${suffix}`);
-
-      if(source == 'unload') {
-        Logging.log(`tracing finished for room ${this.id} to file ${this.tracingFilename}`);
-        this.enableTracing = false;
-      }
     }
   }
 
+  traceIsEnabled(setEnabled) {
+    if(setEnabled && this.state && this.state._meta) {
+      this.state._meta.tracingEnabled = true;
+
+      this.tracingFilename = `${Config.directory('save')}/${this.id}-${+new Date}.trace`;
+      this.broadcast('tracing', 'enable');
+      fs.writeFileSync(this.tracingFilename, '[\n');
+      Logging.log(`tracing enabled for room ${this.id} to file ${this.tracingFilename}`);
+    }
+    return this.state && this.state._meta && this.state._meta.tracingEnabled;
+  }
+
   unload() {
-    this.trace('unload', {});
     if(this.state && this.state._meta) {
       if(Object.keys(this.state).length > 1 || Object.keys(this.state._meta.states).length || this.state._meta.redirectTo || this.state._meta.returnServer) {
         Logging.log(`unloading room ${this.id}`);
@@ -497,6 +502,7 @@ export default class Room {
     } else {
       Logging.log(`unloading broken room ${this.id}`);
     }
+    this.trace('unload', {});
     this.unloadCallback();
   }
 

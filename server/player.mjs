@@ -103,7 +103,7 @@ export default class Player {
   }
 
   trace(source, payload) {
-    if(this.room.enableTracing || source == 'client' && payload.type == 'enable') {
+    if(this.room.traceIsEnabled() || source == 'client' && payload.type == 'enable') {
       payload.player = this.name;
       this.room.trace(source, payload);
     }
