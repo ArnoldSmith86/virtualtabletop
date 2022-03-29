@@ -247,8 +247,6 @@ export default class Room {
     } else if(!fileOrLink) {
       Logging.log(`loading room ${this.id}`);
       this.state = FileUpdater(JSON.parse(fs.readFileSync(this.roomFilename())));
-      this.traceIsEnabled(this.traceIsEnabled());
-      this.trace('init', { initialState: this.state });
       this.broadcast('state', this.state);
     } else {
       let newState = emptyState;
@@ -269,6 +267,11 @@ export default class Room {
 
     if(!this.state._meta || typeof this.state._meta.version !== 'number')
       throw Error('Room state has invalid meta information.');
+
+    if(!fileOrLink) {
+      this.traceIsEnabled(Config.get('forceTracing') || this.traceIsEnabled());
+      this.trace('init', { initialState: this.state });
+    }
   }
 
   async loadState(player, stateID, variantID) {

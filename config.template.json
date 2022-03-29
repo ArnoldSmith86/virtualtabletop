@@ -3,6 +3,7 @@
   "externalURL": "http://localhost:8272",
   "urlPrefix": "",
   "minifyJavascript": false,
+  "forceTracing": false,
 
   "directories": {
     "library": "library",
