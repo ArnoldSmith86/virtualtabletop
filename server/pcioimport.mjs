@@ -104,7 +104,8 @@ export default async function convertPCIO(content) {
   for(const widget of widgets) {
     if(widget.type == 'card') {
       const index = widget.x + ',' + widget.y + ',' + (widget.parent || "") + ',' + (widget.owner || "");
-      cardsPerCoordinates[index] = (cardsPerCoordinates[index] || 0) + 1;
+      if(!widget.parent || !byID[widget.parent] || !byID[widget.parent].hideStackTab)
+        cardsPerCoordinates[index] = (cardsPerCoordinates[index] || 0) + 1;
     }
   }
 
@@ -206,6 +207,8 @@ export default async function convertPCIO(content) {
 
       if(widget.allowedDecks)
         w.dropTarget = widget.allowedDecks.map(d=>({deck:d}));
+      if(widget.hideStackTab)
+        w.preventPiles = true;
 
       if(pileOverlaps[w.id]) {
         w.x += 4;
