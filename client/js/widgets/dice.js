@@ -35,7 +35,7 @@ class Dice extends Widget {
     const fc = faceElements.length;
     const af = this.get('activeFace');
     const f0 = this.get('activeFaceBeforeRoll');
-    const f1 = f0 + (rc * 997) % (fc - 1) + 1) % fc;
+    const f1 = (f0 + (rc * 997) % (fc - 1) + 1) % fc;
     let f2 = (f1 + (rc * 887) % (fc - (f1 == af ? 1 : 2)) + 1) % fc;
     if(f2 == af)
       f2 = (f2 + 1) % fc;
