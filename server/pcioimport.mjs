@@ -315,7 +315,7 @@ export default async function convertPCIO(content) {
           width:     w.cardDefaults.width  || 103,
           height:    w.cardDefaults.height || 160,
           type:      'image',
-          color:     'white',
+          color:     widget.collectionType == 'pieces' ? 'transparent' : 'white',
           valueType: 'static',
           value:     ''
         });
