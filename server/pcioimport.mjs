@@ -178,6 +178,8 @@ export default async function convertPCIO(content) {
     } else if(widget.type == 'gamePiece') {
       w.image = `https://playingcards.io/img/pieces/${widget.color}-${widget.pieceType}.svg`;
       addDimensions(w, widget);
+    } else if(widget.type == 'dice') {
+      w.type = 'dice';
     } else if(widget.type == 'hand') {
       if(widget.enabled === false)
         continue;
