@@ -1352,7 +1352,7 @@ export class Widget extends StateManaged {
         let reverse = (a.reverse && !Array.isArray(a.reverse)) ? ' in reverse' : '';
         let key = asArray(a.key).map((k)=>{
           if(k !== null && typeof k.key == 'string')
-            return `'${k.key}'` + k.reverse ? 'desc' : '';
+            return `'${k.key}'${k.reverse ? ' desc' : ''}`;
           return typeof k == 'string' ? `'${k}'` : k;
         }).join(', ');
         if(a.holder !== undefined) {
