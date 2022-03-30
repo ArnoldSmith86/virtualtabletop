@@ -35,16 +35,16 @@ class Dice extends Widget {
 
     const faceElements = this.faceElements;
 
-    const rc = this.get('rollCount');
+    const hash = this.rollHash ? this.rollHash : 0;
     const fc = faceElements.length;
     const af = this.activeFace();
     const f0 = this.previousActiveFace;
-    const f1 = (f0 + (rc * 997) % (fc - 1) + 1) % fc;
-    let f2 = (f1 + (rc * 887) % (fc - (f1 == af ? 1 : 2)) + 1) % fc;
+    const f1 = (f0 + (hash) % (fc - 1) + 1) % fc;
+    let f2 = (f1 + (hash >>> 14) % (fc - (f1 == af ? 1 : 2)) + 1) % fc;
     if(f2 == af)
       f2 = (f2 + 1) % fc;
 
-    this.facesElement.className = `diceFaces animate animateBegin shake${Math.floor(Math.random()*8)}`;
+    this.facesElement.className = `diceFaces animate animateBegin shake${hash >>> 29}`;
 
     for(const face of faceElements)
       face.classList.remove('animate1active', 'animate2active');
@@ -65,8 +65,10 @@ class Dice extends Widget {
     if(delta.options !== undefined)
       this.createChildNodes();
 
-    if(delta.rollCount !== undefined)
+    if(delta.rollCount !== undefined) {
+      this.rollHash = funhash(this.get('id')+this.get('rollCount'));
       this.animate();
+    }
 
     if(delta.activeFace !== undefined) {
       if(this.activeFaceElement !== undefined) {
@@ -76,10 +78,18 @@ class Dice extends Widget {
       if(this.activeFaceElement !== undefined) {
         this.activeFaceElement.classList.add('active');
         if(this.faceElements.length > 6) {
-          this.activeFaceElement.classList.remove('moreThanSix');
-          for(let i = this.activeFace() % 6; i < this.faceElements.length; i += 6) {
-            if(i != this.activeFace())
-              this.faceElements[i].classList.add('moreThanSix');
+          const fc = this.faceElements.length;
+          const af = this.activeFace();
+          const hash = this.rollHash? this.rollHash : 0;
+          for(var side = 0; side < 6 && side < (fc - 6); side++) {
+            const visibleFace = (side == af % 6) ? af :
+              6 * ((hash >>> (side*5)) % Math.floor((fc - 1 - side) / 6 + 1)) + side;
+            for(var i = side; i < fc; i += 6 ) {
+              if(i == visibleFace)
+                this.faceElements[i].classList.remove('moreThanSix');
+              else
+                this.faceElements[i].classList.add('moreThanSix');                  
+            }
           }
         }
       }
