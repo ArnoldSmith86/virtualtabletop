@@ -39,8 +39,8 @@ class Dice extends Widget {
     const fc = faceElements.length;
     const af = this.activeFace();
     const f0 = this.previousActiveFace;
-    const f1 = (f0 + (hash) % (fc - 1) + 1) % fc;
-    let f2 = (f1 + (hash >>> 14) % (fc - (f1 == af ? 1 : 2)) + 1) % fc;
+    const f1 = (f0 + (hash) % (fc - 1) + 1) % fc || 0;
+    let f2 = (f1 + (hash >>> 14) % (fc - (f1 == af ? 1 : 2)) + 1) % fc || 0;
     if(f2 == af)
       f2 = (f2 + 1) % fc;
 
@@ -75,7 +75,7 @@ class Dice extends Widget {
         this.activeFaceElement.classList.remove('active');
       }
       this.activeFaceElement = this.faceElements[this.activeFace()];
-      if(this.activeFaceElement !== undefined) 
+      if(this.activeFaceElement !== undefined)
         this.activeFaceElement.classList.add('active');
       this.previousActiveFace = this.activeFace();
     }
@@ -185,9 +185,9 @@ class Dice extends Widget {
           if(i == visibleFace)
             this.faceElements[i].classList.remove('moreThanSix');
           else
-            this.faceElements[i].classList.add('moreThanSix');                  
+            this.faceElements[i].classList.add('moreThanSix');
         }
       }
-    }    
+    }
   }
 }
