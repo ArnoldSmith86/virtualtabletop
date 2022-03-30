@@ -34,7 +34,7 @@ class Dice extends Widget {
     const rc = this.get('rollCount');
     const fc = faceElements.length;
     const af = this.get('activeFace');
-    const f0 = this.get('activeFaceBeforeRoll');
+    const f0 = this.previousActiveFace;
     const f1 = (f0 + (rc * 997) % (fc - 1) + 1) % fc;
     let f2 = (f1 + (rc * 887) % (fc - (f1 == af ? 1 : 2)) + 1) % fc;
     if(f2 == af)
@@ -79,6 +79,7 @@ class Dice extends Widget {
           }
         }
       }
+      this.previousActiveFace = delta.activeFace;
     }
   }
 
@@ -89,7 +90,6 @@ class Dice extends Widget {
 
   async click(mode='respect') {
     if(!await super.click(mode)) {
-      await this.set('activeFaceBeforeRoll', this.get('activeFace'));
       await this.set('activeFace', Math.floor(Math.random()*this.get('options').length));
       await this.set('rollCount', this.get('rollCount')+1);
     }
