@@ -226,16 +226,16 @@
   0% {
     opacity: var(--phase1);
   }
-  44% {
+  24% {
     opacity: var(--phase1);
   }
-  45% {
+  25% {
     opacity: var(--phase2);
   }
-  99% {
+  49% {
     opacity: var(--phase2);
   }
-  100% {
+  60% {
     opacity: var(--final);
   }
 }
