@@ -856,6 +856,15 @@ export default async function convertPCIO(content) {
           if(c.value === 0)
             delete c.value;
         }
+        if(c.func == 'ROLL_DICE') {
+          if(!c.args.dice)
+            continue;
+          c = {
+            note:       'Roll dice',
+            func:       'CLICK',
+            collection: c.args.dice.value
+          };
+        }
         w.clickRoutine.push(c);
       }
 
