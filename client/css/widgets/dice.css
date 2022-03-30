@@ -11,7 +11,7 @@
   height: 100%;
   width: 100%;
 
-  font-size: var(--size);
+  font-size: calc(var(--size) * 0.95);
 
   justify-content: center;
   align-items: center;
