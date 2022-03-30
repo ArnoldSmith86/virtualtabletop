@@ -12,9 +12,7 @@ export function mockConnection() {
 }
 
 export function startWebSocket() {
-  let url = `ws://${location.host}`;
-  if(location.protocol == 'https:')
-    url = `wss://${location.host}`;
+  let url = location.href.replace(/\/[^\/]*$/, '').replace(/^http/, 'ws');
   console.log(`connecting to ${url}`);
   connection = new WebSocket(url);
 

@@ -57,7 +57,7 @@
 .teamColor::-webkit-color-swatch {
   border-radius: 100%;
   /* background properties broken up to avoid erasing the selected colors */
-  background-image: url(/i/icons-white/user-solid-svg.svg);
+  background-image: url(i/icons-white/user-solid-svg.svg);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 1em;
@@ -69,7 +69,7 @@
 .teamColor::-moz-color-swatch  {
   border-radius: 100%;
   /* background properties broken up to avoid erasing the selected colors */
-  background-image: url(/i/icons-white/user-solid-svg.svg);
+  background-image: url(i/icons-white/user-solid-svg.svg);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 1em;

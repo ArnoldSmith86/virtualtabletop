@@ -1,13 +1,13 @@
 import fs from 'fs';
-import path from 'path';
 import fetch from 'node-fetch';
 import JSZip from 'jszip';
 
 import { VERSION } from './fileupdater.mjs';
 import PCIO from './pcioimport.mjs';
 import Logging from './logging.mjs';
+import Config from './config.mjs';
 
-const dirname = path.resolve() + '/save/links';
+const dirname = Config.directory('save') + '/links';
 const filename = dirname + '.json';
 const linkStatus = fs.existsSync(filename) ? JSON.parse(fs.readFileSync(filename)) : {};
 
@@ -19,23 +19,23 @@ async function downloadLink(link) {
     requestEtag = linkStatus[link].etag;
     if(requestEtag === null || linkStatus[link].time > +(new Date()) - 2*60*60*1000)
       return;
-  } else {
-    linkStatus[link] = {
-      filename: Math.random().toString(36).substring(3, 9)
-    };
   }
+  const currentLinkStatus = linkStatus[link] || {
+    filename: Math.random().toString(36).substring(3, 9)
+  };
 
   const response = await fetch(link, requestEtag ? { headers: { 'If-None-Match': requestEtag } } : {});
 
-  linkStatus[link].time = +new Date();
-  linkStatus[link].status = response.status;
+  currentLinkStatus.time = +new Date();
+  currentLinkStatus.status = response.status;
 
   if(response.status != 304) {
-    linkStatus[link].etag = response.headers.get('etag');
+    currentLinkStatus.etag = response.headers.get('etag');
     const states = await readStatesFromBuffer(await response.buffer());
-    fs.writeFileSync(`${dirname}/${linkStatus[link].filename}`, JSON.stringify(states));
+    fs.writeFileSync(`${dirname}/${currentLinkStatus.filename}`, JSON.stringify(states));
   }
 
+  linkStatus[link] = currentLinkStatus;
   fs.writeFileSync(filename, JSON.stringify(linkStatus));
 }
 
@@ -99,10 +99,12 @@ async function readVariantsFromBuffer(buffer) {
         variants[filename] = variant;
       }
 
-      if(filename.match(/^\/?assets/) && zip.files[filename]._data && zip.files[filename]._data.uncompressedSize < 2097152) {
+      if(filename.match(/^\/?assets/) && zip.files[filename]._data) {
+        if(zip.files[filename]._data.uncompressedSize >= 10485760)
+          throw new Logging.UserError(403, `${filename} is bigger than 10 MiB.`);
         const targetFile = '/assets/' + zip.files[filename]._data.crc32 + '_' + zip.files[filename]._data.uncompressedSize;
-        if(targetFile.match(/^\/assets\/[0-9_-]+$/) && !fs.existsSync(path.resolve() + '/save' + targetFile))
-          fs.writeFileSync(path.resolve() + '/save' + targetFile, await zip.files[filename].async('nodebuffer'));
+        if(targetFile.match(/^\/assets\/[0-9_-]+$/) && !fs.existsSync(Config.directory('assets') + targetFile.substr(7)))
+          fs.writeFileSync(Config.directory('assets') + targetFile.substr(7), await zip.files[filename].async('nodebuffer'));
       }
 
     }

@@ -12,8 +12,10 @@ async function addWidgetLocal(widget) {
   if (!widget.id)
     widget.id = generateUniqueWidgetID();
   const isNewWidget = !widgets.has(widget.id);
+  if(isNewWidget)
+    addWidget(widget);
   sendPropertyUpdate(widget.id, widget);
-  sendDelta(true);
+  sendDelta();
   batchStart();
   if(isNewWidget)
     for(const [ w, routine ] of StateManaged.globalUpdateListeners['id'] || [])
@@ -587,7 +589,8 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
     if(wi.type == 'pile')   w = new Pile(wi.id);
     if(wi.type == 'timer')  w = new Timer(wi.id);
     widgets.set(wi.id, w);
-    w.applyDelta(wi);
+    w.applyInitialDelta(wi);
+    w.domElement.id = w.id;
     if(!wi.parent) {
       w.domElement.addEventListener('click', async _=>{
         overlayDone(await onClick());
@@ -595,16 +598,20 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
       $('#addOverlay').appendChild(w.domElement);
     }
   }
+  for(const wi of widgetsToAdd) {
+    widgets.delete(wi.id)
+  }
 }
 
 function addWidgetToAddWidgetOverlay(w, wi) {
-  w.applyDelta(wi);
+  w.applyInitialDelta(wi);
   w.domElement.addEventListener('click', async _=>{
     const toAdd = {...wi};
     toAdd.z = getMaxZ(w.get('layer')) + 1;
     const id = await addWidgetLocal(toAdd);
     overlayDone(id);
   });
+  w.domElement.id = w.id;
   $('#addOverlay').appendChild(w.domElement);
 }
 
@@ -666,10 +673,10 @@ function populateAddWidgetOverlay() {
     addWidgetToAddWidgetOverlay(new BasicWidget('add-classic-'+color), {
       classes: 'classicPiece',
       color,
-      width: 90,
-      height: 90,
-      x: 510,
-      y: y + (43.83 - 90)/2
+      width: 56,
+      height: 84,
+      x: 528,
+      y: y + (43.83 - 84)/2
     });
     y += 88;
   }
@@ -839,7 +846,7 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
   if(applyChangesFromUI)
     await applyEditOptions(widget);
 
-  const children = Widget.prototype.children.call(widgets.get(previousState.id));
+  const children = Widget.prototype.children.call(widgets.get(previousState.id)); // use Widget.children even for holders so it doesn't filter
   const cards = widgetFilter(w=>w.get('deck')==previousState.id);
 
   if(widget.id !== previousState.id || widget.type !== previousState.type) {

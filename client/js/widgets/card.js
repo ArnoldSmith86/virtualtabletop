@@ -53,6 +53,17 @@ class Card extends Widget {
         else
           this.domElement.children[i].classList.remove('active');
       }
+
+      const deltaForFaceChange = {};
+      if(this.previousFaceProperties)
+        for(const key in this.previousFaceProperties)
+          deltaForFaceChange[key] = this.get(key);
+      if(this.deck) {
+        this.previousFaceProperties = this.deck.getFaceProperties(this.get('activeFace'));
+        for(const key in this.previousFaceProperties)
+          deltaForFaceChange[key] = this.get(key);
+      }
+      this.applyDeltaToDOM(deltaForFaceChange);
     }
 
     if(this.dynamicProperties)
@@ -64,6 +75,7 @@ class Card extends Widget {
   }
 
   applyInitialDelta(delta) {
+    super.applyInitialDelta(delta);
     if(!delta.deck)
       throw `card "${delta.id}" requires property deck`;
     if(!delta.cardType)
@@ -72,7 +84,6 @@ class Card extends Widget {
       throw `card "${delta.id}" has "${delta.deck}" as a deck which is not a deck`;
     if(!widgets.get(delta.deck).get('cardTypes')[delta.cardType])
       throw `card type "${delta.cardType}" not found in deck "${delta.deck}"`;
-    super.applyInitialDelta(delta);
   }
 
   async click(mode='respect') {
@@ -87,7 +98,7 @@ class Card extends Widget {
 
       faceDiv.classList.add('cardFace');
       if(face.css !== undefined)
-        faceDiv.style.cssText = face.css;
+        faceDiv.style.cssText = mapAssetURLs(face.css);
       faceDiv.style.border = face.border ? face.border + 'px black solid' : 'none';
       faceDiv.style.borderRadius = face.radius ? face.radius + 'px' : '0';
 
@@ -108,7 +119,7 @@ class Card extends Widget {
           let css = object.css ? object.css + '; ' : '';
           css += `left: ${x}px; top: ${y}px; width: ${object.width}px; height: ${object.height}px; font-size: ${object.fontSize}px; text-align: ${object.textAlign}`;
           css += object.rotation ? `; transform: rotate(${object.rotation}deg)` : '';
-          objectDiv.style.cssText = css;
+          objectDiv.style.cssText = mapAssetURLs(css);
 
           if(object.type == 'image') {
             if(object.value) {
@@ -118,7 +129,7 @@ class Card extends Widget {
                   replaces[key] = this.get(replaces[key]);
                 object.value = getSVG(object.value, replaces, _=>this.applyDeltaToDOM({ deck:this.get('deck') }));
               }
-              objectDiv.style.backgroundImage = `url("${object.value}")`;
+              objectDiv.style.backgroundImage = mapAssetURLs(`url("${object.value}")`);
             }
             objectDiv.style.backgroundColor = object.color || 'white';
           } else {
@@ -165,8 +176,8 @@ class Card extends Widget {
   }
 
   getDefaultValue(property) {
-    if(this.deck && property != 'cardType') {
-      const d = this.deck.cardPropertyGet(this.get('cardType'), property);
+    if(this.deck && property != 'cardType' && property != 'activeFace') {
+      const d = this.deck.cardPropertyGet(this.get('cardType'), this.get('activeFace'), property);
       if(d !== undefined)
         return d;
     }
