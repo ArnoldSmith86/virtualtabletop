@@ -90,7 +90,7 @@ class BasicWidget extends Widget {
   }
 
   getDefaultValue(property) {
-    if(property == 'faces' || property == 'activeFace' || !this.faces() || !this.faces()[this.get('activeFace')])
+    if(property == 'faces' || property == 'activeFace' || !this.faces()[this.get('activeFace')])
       return super.getDefaultValue(property);
     const d = this.faces()[this.get('activeFace')][property];
     if(d !== undefined)
