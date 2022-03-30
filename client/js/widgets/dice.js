@@ -20,6 +20,10 @@ class Dice extends Widget {
     });
   }
 
+  activeFace() {
+    return Math.abs(Math.round(this.get('activeFace')) || 0);
+  }
+
   animate() {
     if(!this.facesElement || !this.activateAnimation)
       return;
@@ -33,7 +37,7 @@ class Dice extends Widget {
 
     const rc = this.get('rollCount');
     const fc = faceElements.length;
-    const af = this.get('activeFace');
+    const af = this.activeFace();
     const f0 = this.previousActiveFace;
     const f1 = (f0 + (rc * 997) % (fc - 1) + 1) % fc;
     let f2 = (f1 + (rc * 887) % (fc - (f1 == af ? 1 : 2)) + 1) % fc;
@@ -65,21 +69,21 @@ class Dice extends Widget {
       this.animate();
 
     if(delta.activeFace !== undefined) {
-      if(this.activeFace !== undefined) {
-        this.activeFace.classList.remove('active');
+      if(this.activeFaceElement !== undefined) {
+        this.activeFaceElement.classList.remove('active');
       }
-      this.activeFace = this.faceElements[delta.activeFace];
-      if(this.activeFace !== undefined) {
-        this.activeFace.classList.add('active');
+      this.activeFaceElement = this.faceElements[this.activeFace()];
+      if(this.activeFaceElement !== undefined) {
+        this.activeFaceElement.classList.add('active');
         if(this.faceElements.length > 6) {
-          this.activeFace.classList.remove('moreThanSix');
-          for(let i = delta.activeFace % 6; i < this.faceElements.length; i += 6) {
-            if(i != delta.activeFace)
+          this.activeFaceElement.classList.remove('moreThanSix');
+          for(let i = this.activeFace() % 6; i < this.faceElements.length; i += 6) {
+            if(i != this.activeFace())
               this.faceElements[i].classList.add('moreThanSix');
           }
         }
       }
-      this.previousActiveFace = delta.activeFace;
+      this.previousActiveFace = this.activeFace();
     }
   }
 
@@ -139,12 +143,9 @@ class Dice extends Widget {
 
     const xRotations = [ 0, 90,  0,   0, -90,   0 ];
     const yRotations = [ 0,  0, 90, -90,   0, 180 ];
-    let i = this.get('activeFace');
-    if(typeof i != 'number')
-      i = 0;
 
-    css += '; --rotX:' + (xRotations[i % 6] + this.get('rollCount')*360) + 'deg';
-    css += '; --rotY:' + (yRotations[i % 6] + this.get('rollCount')*360) + 'deg';
+    css += '; --rotX:' + (xRotations[this.activeFace() % 6] + this.get('rollCount')*360) + 'deg';
+    css += '; --rotY:' + (yRotations[this.activeFace() % 6] + this.get('rollCount')*360) + 'deg';
 
     return css;
   }
@@ -157,10 +158,9 @@ class Dice extends Widget {
 
   getDefaultValue(property) {
     if(property == 'value') {
-      const activeFace = this.get('activeFace');
       const o = this.get('options');
-      if(Array.isArray(o) && typeof activeFace == 'number' && o.length > activeFace)
-        return o[activeFace];
+      if(Array.isArray(o) && o.length > this.activeFace())
+        return o[this.activeFace()];
     }
     return super.getDefaultValue(property);
   }
