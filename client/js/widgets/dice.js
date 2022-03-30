@@ -75,27 +75,12 @@ class Dice extends Widget {
         this.activeFaceElement.classList.remove('active');
       }
       this.activeFaceElement = this.faceElements[this.activeFace()];
-      if(this.activeFaceElement !== undefined) {
+      if(this.activeFaceElement !== undefined) 
         this.activeFaceElement.classList.add('active');
-        if(this.faceElements.length > 6) {
-          const fc = this.faceElements.length;
-          const af = this.activeFace();
-          const hash = this.rollHash? this.rollHash : 0;
-          for(var side = 0; side < 6 && side < (fc - 6); side++) {
-            const facesOnSide = Math.floor((fc - 1 - side) / 6 ) + 1;
-            const visibleFace = (side == af % 6) ? af :
-              6 * ((hash >>> (side*5)) % facesOnSide) + side;
-            for(var i = side; i < fc; i += 6 ) {
-              if(i == visibleFace)
-                this.faceElements[i].classList.remove('moreThanSix');
-              else
-                this.faceElements[i].classList.add('moreThanSix');                  
-            }
-          }
-        }
-      }
       this.previousActiveFace = this.activeFace();
     }
+    if(delta.rollCount !== undefined || delta.activeFace !== undefined || delta.options !== undefined)
+      this.threeDFaces();
   }
 
   applyInitialDelta(delta) {
@@ -185,5 +170,24 @@ class Dice extends Widget {
       await this.set('value', null);
     }
     return await super.set(property, value);
+  }
+
+  threeDFaces() {
+    if(this.faceElements.length > 6) {
+      const fc = this.faceElements.length;
+      const af = this.activeFace();
+      const hash = this.rollHash? this.rollHash : 0;
+      for(var side = 0; side < 6 && side < (fc - 6); side++) {
+        const facesOnSide = Math.floor((fc - 1 - side) / 6 ) + 1;
+        const visibleFace = (side == af % 6) ? af :
+          6 * ((hash >>> (side*5)) % facesOnSide) + side;
+        for(var i = side; i < fc; i += 6 ) {
+          if(i == visibleFace)
+            this.faceElements[i].classList.remove('moreThanSix');
+          else
+            this.faceElements[i].classList.add('moreThanSix');                  
+        }
+      }
+    }    
   }
 }
