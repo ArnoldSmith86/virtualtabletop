@@ -139,11 +139,19 @@ class Dice extends Widget {
     css += '; --pipColor:' + this.get('pipColor');
     css += '; --backgroundColor:' + this.get('backgroundColor');
 
-    const xRotations = [ 0, 90,  0,   0, -90,   0 ];
-    const yRotations = [ 0,  0, 90, -90,   0, 180 ];
+    if(this.get('classes') == 'd6') {
+      const xRotations = [ 0, 90,  0,   0, -90,   0 ];
+      const yRotations = [ 0,  0, 90, -90,   0, 180 ];
 
-    css += '; --rotX:' + (xRotations[this.activeFace() % 6] + this.get('rollCount')*360) + 'deg';
-    css += '; --rotY:' + (yRotations[this.activeFace() % 6] + this.get('rollCount')*360) + 'deg';
+      css += '; --rotX:' + (xRotations[this.activeFace() % 6] + this.get('rollCount')*360) + 'deg';
+      css += '; --rotY:' + (yRotations[this.activeFace() % 6] + this.get('rollCount')*360) + 'deg';
+    } else {
+      const xRotations = [ 0,   0 ];
+      const yRotations = [ 0, 180 ];
+
+      css += '; --rotX:' + (xRotations[this.activeFace() % 2] + this.get('rollCount')*360) + 'deg';
+      css += '; --rotY:' + (yRotations[this.activeFace() % 2] + this.get('rollCount')*360) + 'deg';
+    }
 
     return css;
   }

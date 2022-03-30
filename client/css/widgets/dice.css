@@ -116,47 +116,66 @@
 }
 
 
-.three-d.dice.widget {
+.d2.dice.widget, .d6.dice.widget {
   perspective: 1600px;
 }
 
-.three-d.dice.widget > .diceFaces {
+.d2.dice.widget > .diceFaces, .d6.dice.widget > .diceFaces {
   transform-style: preserve-3d;
   transform: translateZ(calc(var(--size) / -2)) rotateX(var(--rotX)) rotateY(var(--rotY)) rotateZ(0deg);
   transition: transform 0.5s;
 }
 
-.three-d.dice.widget > .diceFaces > .diceFace {
+.d2.dice.widget > .diceFaces > .diceFace {
+  background-color: var(--backgroundColor);
+  color: var(--pipColor);
+  border: 0.5px solid var(--pipColor);
+  border-radius: 100%;
+}
+
+.d2.dice.widget > .diceFaces > .diceFace.moreThanSix {
+  display: none;
+}
+
+.d2.dice.widget > .diceFaces > .diceFace:nth-child(2n + 1) {
+  transform: rotateY(  0deg) translateZ(1px);
+}
+
+.d2.dice.widget > .diceFaces > .diceFace:nth-child(2n) {
+  transform: rotateY(180deg) translateZ(1px);
+}
+
+.d6.dice.widget > .diceFaces > .diceFace {
   background-color: var(--backgroundColor);
   color: var(--pipColor);
   border: 0.5px solid var(--pipColor);
 }
 
-.three-d.dice.widget > .diceFaces > .diceFace.moreThanSix {
+.d6.dice.widget > .diceFaces > .diceFace.moreThanSix {
   display: none;
 }
 
-.three-d.dice.widget > .diceFaces > .diceFace:nth-child(6n + 1) {
+.d6.dice.widget > .diceFaces > .diceFace:nth-child(6n + 1) {
   transform: rotateY(  0deg) translateZ(calc(var(--size) / 2));
 }
 
-.three-d.dice.widget > .diceFaces > .diceFace:nth-child(6n + 2) {
+.d6.dice.widget > .diceFaces > .diceFace:nth-child(6n + 2) {
   transform: rotateX(-90deg) translateZ(calc(var(--size) / 2));
 }
 
-.three-d.dice.widget > .diceFaces > .diceFace:nth-child(6n + 3) {
+.d6.dice.widget > .diceFaces > .diceFace:nth-child(6n + 3) {
   transform: rotateY(-90deg) translateZ(calc(var(--size) / 2));
 }
 
-.three-d.dice.widget > .diceFaces > .diceFace:nth-child(6n + 4) {
+.d6.dice.widget > .diceFaces > .diceFace:nth-child(6n + 4) {
   transform: rotateY( 90deg) translateZ(calc(var(--size) / 2));
 }
 
-.three-d.dice.widget > .diceFaces > .diceFace:nth-child(6n + 5) {
+.d6.dice.widget > .diceFaces > .diceFace:nth-child(6n + 5) {
   transform: rotateX( 90deg) translateZ(calc(var(--size) / 2));
 }
 
-.three-d.dice.widget > .diceFaces > .diceFace:nth-child(6n) {
+.d6.dice.widget > .diceFaces > .diceFace:nth-child(6n) {
   transform: rotateY(180deg) translateZ(calc(var(--size) / 2));
 }
 
