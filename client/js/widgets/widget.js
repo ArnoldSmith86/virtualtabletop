@@ -364,6 +364,7 @@ export class Widget extends StateManaged {
       return applyTransformedOffset(parentCenter, offset, s, rot );
     }
   }
+
   css() {
     this.propertiesUsedInCSS = [];
     if($(`#STYLES_${escapeID(this.id)}`))
@@ -392,6 +393,7 @@ export class Widget extends StateManaged {
       return css;
     }
   }
+
   cssBorderRadius() {
     let br = this.get('borderRadius');
     switch(typeof(br)) {
@@ -427,8 +429,7 @@ export class Widget extends StateManaged {
   }
 
   cssToStylesheet(css, nested = false) {
-    const style = document.createElement('style');
-    style.id = `STYLES_${escapeID(this.id)}`;
+    let styleString = '';
     for(const key in css) {
       let selector = key;
       if(!nested) {
@@ -439,11 +440,17 @@ export class Widget extends StateManaged {
         if(selector.charAt(0) != '@')
           selector = `#w_${escapeID(this.id)}${selector}`;
       }
-      style.appendChild(document.createTextNode(`${selector} { ${mapAssetURLs(this.cssReplaceProperties(this.cssAsText(css[key], true)))} }`));
+      styleString += `${selector} { ${mapAssetURLs(this.cssReplaceProperties(this.cssAsText(css[key], true)))} }\n`;
     }
+
     if(nested)
-      return style.textContent;
+      return styleString;
+
+    const style = document.createElement('style');
+    style.id = `STYLES_${escapeID(this.id)}`;
+    style.appendChild(document.createTextNode(styleString));
     $('head').appendChild(style);
+
     return this.cssAsText(css.inline || '');
   }
 
