@@ -36,11 +36,13 @@ class Dice extends Widget {
     const faceElements = this.faceElements;
 
     const hash = this.rollHash ? this.rollHash : 0;
-    const fc = faceElements.length;
+    const fc = faceElements.length? faceElements.length : 1;
     const af = this.activeFace();
     const f0 = this.previousActiveFace;
-    const f1 = (f0 + (hash) % (fc - 1) + 1) % fc || 0;
-    let f2 = (f1 + (hash >>> 14) % (fc - (f1 == af ? 1 : 2)) + 1) % fc || 0;
+    let f1 = (f0 + (hash) % (fc - 1) + 1) % fc || 0;
+    if(f1 == f0)
+      f1 = (f1 + 1) % fc;
+    let f2 = (f1 + (hash >>> 14) % (fc - (f1 == af ? 1 : 2)) + 1) % fc || (f1 + 1) % fc;
     if(f2 == af)
       f2 = (f2 + 1) % fc;
 
