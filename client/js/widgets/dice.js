@@ -165,14 +165,14 @@ class Dice extends Widget {
     return super.getDefaultValue(property);
   }
 
-  set(property, value) {
+  async set(property, value) {
     if(property == 'value' && value != null) {
       const o = this.get('options');
       if(Array.isArray(o) && o.indexOf(value) > -1 && this.getDefaultValue(property) != value)
-        this.set('activeFace', o.indexOf(value));
+        await this.set('activeFace', o.indexOf(value));
     } else if(property == 'activeFace' && this.state['value'] != undefined) {
-      this.set('value', null);
+      await this.set('value', null);
     }
-    return super.set(property, value);
+    return await super.set(property, value);
   }
 }
