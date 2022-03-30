@@ -857,6 +857,15 @@ export default async function convertPCIO(content) {
           if(c.value === 0)
             delete c.value;
         }
+        if(c.func == 'SPIN_SPINNER') {
+          if(!c.args.spinners)
+            continue;
+          c = {
+            note:       'Spin spinners',
+            func:       'CLICK',
+            collection: c.args.spinners.value
+          };
+        }
         w.clickRoutine.push(c);
       }
 
