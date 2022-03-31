@@ -75,7 +75,7 @@ class Dice extends Widget {
       this.animate();
     }
 
-    if(delta.activeFace !== undefined) {
+    if(delta.activeFace !== undefined || delta.options !== undefined) {
       if(this.activeFaceElement !== undefined) {
         this.activeFaceElement.classList.remove('active');
       }
