@@ -8,8 +8,6 @@
   height: 100%;
   width: 100%;
   border-radius: inherit;
-
-  transition: transform 0.5s;
 }
 
 .dice.widget > .diceFaces > .diceFace {
@@ -60,6 +58,7 @@
   --final: 0;
   opacity: var(--final);
   animation-name: faceChange;
+  animation-timing-function: step-start;
   animation-duration: inherit;
 }
 
@@ -243,16 +242,10 @@
   0% {
     opacity: var(--phase1);
   }
-  29% {
-    opacity: var(--phase1);
-  }
   30% {
     opacity: var(--phase2);
   }
-  69% {
-    opacity: var(--phase2);
-  }
-  70% {
+  65% {
     opacity: var(--final);
   }
 }
