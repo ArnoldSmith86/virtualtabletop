@@ -234,9 +234,9 @@ class Dice extends Widget {
     const shape = this.threeDshape();
     const af = this.activeFace();
     const rc = this.get('rollCount');
-    const xRot = rotations[shape]['x'];
-    const yRot = rotations[shape]['y'];
-    const zRot = rotations[shape]['z'];
+    const xRot = rotations[shape].x;
+    const yRot = rotations[shape].y;
+    const zRot = rotations[shape].z;
 
     let css = '';
     css += `; --rotX:${xRot[af % xRot.length] + rc * 360}deg`;
