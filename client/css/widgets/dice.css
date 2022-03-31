@@ -140,6 +140,7 @@
   display: none;
 }
 
+
 .d2.shape3D.dice.widget > .diceFaces > .diceFace {
   border-radius: inherit;
 }
@@ -151,6 +152,7 @@
 .d2.dice.widget > .diceFaces > .diceFace:nth-child(2n) {
   transform: rotateY(180deg) translateZ(1px);
 }
+
 
 .d4.dice.widget > .diceFaces.diceFaces.diceFaces {
   transform: rotateX(var(--rotX)) rotateZ(var(--rotZ));
@@ -182,6 +184,7 @@
   transform: rotateZ(180deg) rotateX(109.5deg);
 }
 
+
 .d6.dice.widget > .diceFaces.diceFaces.diceFaces {
   transform: translateZ(calc(var(--size) / -2)) rotateX(var(--rotX)) rotateY(var(--rotY));
 }
@@ -209,6 +212,63 @@
 .d6.dice.widget > .diceFaces > .diceFace:nth-child(6n) {
   transform: rotateY(180deg) translateZ(calc(var(--size) / 2));
 }
+
+
+.d8.dice.widget > .diceFaces.diceFaces.diceFaces {
+  transform: translateY(calc(var(--size) * -0.3)) rotateX(var(--rotX)) rotateY(var(--rotY));
+  transform-origin: 50% calc(var(--size) * 0.816496581);
+}
+
+.d8.dice.widget > .diceFaces > .diceFace {
+  clip-path: polygon(50% 0, 100% 100%, 0% 100%);
+  width: 110%;
+  height: 95%;
+  left: -5%;
+  padding-top: 25%;
+  border: none;
+  font-size: calc(var(--fontSize) * .7);
+}
+
+.d8.dice.widget > .diceFaces > .diceFace:nth-child(8n + 1) {
+  transform-origin: 50% 0%;
+  transform: rotateY(-90deg) rotateX(35.36deg);
+}
+
+.d8.dice.widget > .diceFaces > .diceFace:nth-child(8n + 2) {
+  transform-origin: 50% 0%;
+  transform: rotateY(-180deg) rotateX(35.36deg);
+}
+
+.d8.dice.widget > .diceFaces > .diceFace:nth-child(8n + 3) {
+  transform-origin: 50% 0%;
+  transform: rotateY(90deg) rotateX(35.36deg);
+}
+
+.d8.dice.widget > .diceFaces > .diceFace:nth-child(8n + 4) {
+  transform-origin: 50% 0%;
+  transform: translateY(163.2993162%) rotateY(90deg) rotateX(215.36deg);
+}
+
+.d8.dice.widget > .diceFaces > .diceFace:nth-child(8n + 5) {
+  transform-origin: 50% 0%;
+  transform: translateY(163.2993162%) rotateY(0deg) rotateX(215.36deg);
+}
+
+.d8.dice.widget > .diceFaces > .diceFace:nth-child(8n + 6) {
+  transform-origin: 50% 0%;
+  transform: translateY(163.2993162%) rotateY(180deg) rotateX(215.36deg);
+}
+
+.d8.dice.widget > .diceFaces > .diceFace:nth-child(8n + 7) {
+  transform-origin: 50% 0%;
+  transform: translateY(163.2993162%) rotateY(-90deg) rotateX(215.36deg);
+}
+
+.d8.dice.widget > .diceFaces > .diceFace:nth-child(8n) {
+  transform-origin: 50% 0%;
+  transform: rotateY(0deg) rotateX(35.36deg);
+}
+
 
 @keyframes shake {
   15% {
