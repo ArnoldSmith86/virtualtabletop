@@ -99,14 +99,14 @@ class Dice extends Widget {
 
     if(this.get('shape3d'))
       className += ` shape3D d${this.threeDshape()}`;
-    
+
     return className;
   }
 
   classesProperties() {
     const p = super.classesProperties();
     p.push('shape3d');
-    return p;    
+    return p;
   }
 
   async click(mode='respect') {
@@ -216,14 +216,19 @@ class Dice extends Widget {
   threeDrotationsCSS() {
     const rotations = {
       2: {
-        x: [ 0 ], 
+        x: [ 0 ],
         y: [ 0, 180 ],
-        z: [ 0 ] 
+        z: [ 0 ]
+      },
+      4: {
+        x: [ -109.5, -109.5, -109.5, 0 ],
+        y: [    0 ],
+        z: [   60,    -60,    180,   0 ]
       },
       6: {
         x: [ 0, 90,  0,   0, -90,   0 ],
         y: [ 0,  0, 90, -90,   0, 180 ],
-        z: [ 0 ] 
+        z: [ 0 ]
       }
     };
     const shape = this.threeDshape();
@@ -236,13 +241,13 @@ class Dice extends Widget {
     let css = '';
     css += `; --rotX:${xRot[af % xRot.length] + rc * 360}deg`;
     css += `; --rotY:${yRot[af % yRot.length] + rc * 360}deg`;
-    css += `; --rotZ:${yRot[af % zRot.length]}deg`;
+    css += `; --rotZ:${zRot[af % zRot.length] + rc * 360}deg`;
 
     return css;
   }
 
   threeDshape() {
-    const shapes = [2, 6];
+    const shapes = [2, 4, 6];
     let s3d = this.get('shape3d');
     if(shapes.indexOf(s3d) > -1)
       return s3d;
