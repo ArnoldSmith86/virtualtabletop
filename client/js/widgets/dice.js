@@ -19,6 +19,7 @@ class Dice extends Widget {
       activeFace: 0,
       rollCount: 0,
 
+      pipSymbols: true,
       shape3d: false
     });
   }
@@ -67,7 +68,7 @@ class Dice extends Widget {
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
 
-    if(delta.options !== undefined)
+    if(delta.options !== undefined || delta.pipSymbols !== undefined)
       this.createChildNodes();
 
     if(delta.rollCount !== undefined) {
@@ -75,7 +76,7 @@ class Dice extends Widget {
       this.animate();
     }
 
-    if(delta.activeFace !== undefined || delta.options !== undefined) {
+    if(delta.activeFace !== undefined || delta.options !== undefined || delta.pipSymbols !== undefined) {
       if(this.activeFaceElement !== undefined) {
         this.activeFaceElement.classList.remove('active');
       }
@@ -127,7 +128,7 @@ class Dice extends Widget {
     for(const i in options) {
       const content = options[i];
       const face = document.createElement('div');
-      if(typeof content == 'number' && content>=1 && content<=9) {
+      if(typeof content == 'number' && content>=1 && content<=9 && this.get('pipSymbols')) {
         face.textContent = `die_face_${content}`;
         face.className = 'dicePip';
       } else if(typeof content == 'string' && content.match(/^\/(assets|i)/)) {
