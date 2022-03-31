@@ -9,6 +9,7 @@ class Dice extends Widget {
       classes: 'shaking',
       clickable: true,
       movable: false,
+      layer: 1,
 
       borderRadius: '16%',
       pipColor: 'black',
