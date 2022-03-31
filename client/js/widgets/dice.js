@@ -189,7 +189,7 @@ class Dice extends Widget {
   }
 
   threeDfaces() {
-    if(!this.get('shape3D'))
+    if(!this.get('shape3d'))
       return;
     const n = this.threeDshape();
     if(this.faceElements.length > n) {
