@@ -254,8 +254,8 @@
 
 
 .d8.dice.widget > .diceFaces.diceFaces.diceFaces {
-  transform: translateY(calc(var(--size) * -0.3)) rotateX(var(--rotX)) rotateY(var(--rotY));
-  transform-origin: 50% calc(var(--size) * 0.816496581);
+  transform: translateY(-23.5%) rotateX(var(--rotX)) rotateY(var(--rotY));
+  transform-origin: 50% 77.6%;
 }
 
 .d8.dice.widget > .diceFaces > .diceFace {
