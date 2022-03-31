@@ -1,25 +1,47 @@
+.dice.widget {
+  --fontSize: calc(var(--size) * .95);
+  --faceBorder: 0.5px solid var(--pipColor);
+}
+
 .dice.widget > .diceFaces {
   position: absolute;
   height: 100%;
   width: 100%;
+  border-radius: inherit;
+
+  transition: transform 0.5s;
 }
 
 .dice.widget > .diceFaces > .diceFace {
   position: absolute;
+  display: none;
   top: 0;
+  left: 0;
 
   height: 100%;
   width: 100%;
 
-  font-size: calc(var(--size) * 0.95);
+  box-sizing: border-box;
+
+  font-size: var(--fontSize);
 
   justify-content: center;
   align-items: center;
   text-align: center;
 
+  color: var(--pipColor);
+  border: var(--faceBorder);
+
+  border-radius: inherit;
+
+  background-color: var(--backgroundColor);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: contain;
+}
+
+.dice.widget > .diceFaces > .active.diceFace {
+  display: flex;
 }
 
 .dice.widget > .diceFaces > .dicePip {
@@ -27,55 +49,11 @@
 }
 
 
-.shaking.dice.widget > .diceFaces {
-  box-sizing: border-box;
-
-  background: var(--backgroundColor);
-  color: var(--pipColor);
-  border: 0.5px solid var(--pipColor);
-  border-radius: inherit;
-
-  transition: transform 0.5s;
-}
-
-.shaking.dice.widget > .diceFaces.animate {
-  animation-name: shake;
+.dice.widget > .animate.diceFaces {
   animation-duration: 0.5s;
-  --shakeX: 1;
-  --shakeY: 1;
-  --shakeR: 1;
-}
-.shaking.dice.widget > .diceFaces.animate.animateBegin {
-  animation: none;
-  transform: translate3d(calc(var(--shakeX) * 2%), 0, 0) rotate(calc(var(--shakeR) * -5deg));
-  transition: transform 50ms;
-}
-.shaking.dice.widget > .diceFaces.animate.shake1,
-.shaking.dice.widget > .diceFaces.animate.shake3,
-.shaking.dice.widget > .diceFaces.animate.shake5,
-.shaking.dice.widget > .diceFaces.animate.shake7 {
-  --shakeX: -1;
-}
-.shaking.dice.widget > .diceFaces.animate.shake2,
-.shaking.dice.widget > .diceFaces.animate.shake3,
-.shaking.dice.widget > .diceFaces.animate.shake6,
-.shaking.dice.widget > .diceFaces.animate.shake7 {
-  --shakeY: -1;
-}
-.shaking.dice.widget > .diceFaces.animate.shake4,
-.shaking.dice.widget > .diceFaces.animate.shake5,
-.shaking.dice.widget > .diceFaces.animate.shake6,
-.shaking.dice.widget > .diceFaces.animate.shake7 {
-  --shakeR: -1;
 }
 
-.shaking.dice.widget > .diceFaces > .diceFace {
-  display: none;
-}
-.shaking.dice.widget > .diceFaces > .active.diceFace {
-  display: flex;
-}
-.shaking.dice.widget > .diceFaces.animate > .diceFace {
+.dice.widget > .animate.diceFaces > .diceFace {
   display: flex;
   --phase1: 0;
   --phase2: 0;
@@ -84,57 +62,87 @@
   animation-name: faceChange;
   animation-duration: inherit;
 }
-.shaking.dice.widget > .diceFaces.animate.animateBegin > .diceFace {
+
+.dice.widget > .animateBegin.animate.diceFaces > .diceFace {
   opacity: var(--phase1);
   animation: none;
 }
-.shaking.dice.widget > .diceFaces.animate > .diceFace.active {
+
+.dice.widget > .animate.diceFaces > .active.diceFace {
   --final: 1;
 }
-.shaking.dice.widget > .diceFaces.animate > .diceFace.animate1active {
+
+.dice.widget > .animate.diceFaces > .animate1active.diceFace {
   --phase1: 1;
 }
-.shaking.dice.widget > .diceFaces.animate > .diceFace.animate2active {
+
+.dice.widget > .animate.diceFaces > .animate2active.diceFace {
   --phase2: 1;
 }
 
 
-.shaking.dice.widget > .diceFaces.animate1 {
-  transform: rotate(20deg);
+.shaking.dice.widget > .animate.diceFaces {
+  animation-name: shake;
+  --shakeX: 1;
+  --shakeY: 1;
+  --shakeR: 1;
 }
-.shaking.dice.widget > .diceFaces.animate1 > .active.diceFace, .shaking.dice.widget > .diceFaces.animate2 > .active.diceFace {
-  display: none;
+
+.shaking.dice.widget > .animateBegin.animate.diceFaces {
+  animation: none;
+  transform: translate3d(calc(var(--shakeX) * 2%), 0, 0) rotate(calc(var(--shakeR) * -5deg));
+  transition: transform 50ms;
 }
-.shaking.dice.widget > .diceFaces.animate1 > .animate1active.diceFace {
-  display: flex;
+
+.shaking.dice.widget > .shake1.animate.diceFaces,
+.shaking.dice.widget > .shake3.animate.diceFaces,
+.shaking.dice.widget > .shake5.animate.diceFaces,
+.shaking.dice.widget > .shake7.animate.diceFaces {
+  --shakeX: -1;
 }
-.shaking.dice.widget > .diceFaces.animate2 {
-  transform: rotate(-20deg);
+
+.shaking.dice.widget > .shake2.animate.diceFaces,
+.shaking.dice.widget > .shake3.animate.diceFaces,
+.shaking.dice.widget > .shake6.animate.diceFaces,
+.shaking.dice.widget > .shake7.animate.diceFaces {
+  --shakeY: -1;
 }
-.shaking.dice.widget > .diceFaces.animate2 > .animate2active.diceFace {
-  display: flex;
+
+.shaking.dice.widget > .shake4.animate.diceFaces,
+.shaking.dice.widget > .shake5.animate.diceFaces,
+.shaking.dice.widget > .shake6.animate.diceFaces,
+.shaking.dice.widget > .shake7.animate.diceFaces {
+  --shakeR: -1;
 }
 
 
-.d2.dice.widget, .d6.dice.widget {
+.shape3D.dice.widget {
   perspective: 1600px;
 }
 
-.d2.dice.widget > .diceFaces, .d6.dice.widget > .diceFaces {
+.shape3D.dice.widget > .diceFaces.diceFaces.diceFaces {
   transform-style: preserve-3d;
-  transform: translateZ(calc(var(--size) / -2)) rotateX(var(--rotX)) rotateY(var(--rotY)) rotateZ(0deg);
+  transform: translateZ(calc(var(--size) / -2)) rotateX(var(--rotX)) rotateY(var(--rotY)) rotateZ(var(--rotZ));
+  animation: none;
   transition: transform 0.5s;
 }
 
-.d2.dice.widget > .diceFaces > .diceFace {
-  background-color: var(--backgroundColor);
-  color: var(--pipColor);
-  border: 0.5px solid var(--pipColor);
-  border-radius: 100%;
+.shape3D.dice.widget > .diceFaces > .diceFace {
+  display: flex;
+  border-radius: 0;
 }
 
-.d2.dice.widget > .diceFaces > .diceFace.moreThanSix {
+.shape3D.dice.widget > .animate.animate.diceFaces > .diceFace {
+  animation: none;
+  opacity: 1;
+}
+
+.shape3D.dice.widget > .diceFaces > .extra3Dface.diceFace {
   display: none;
+}
+
+.d2.shape3D.dice.widget > .diceFaces > .diceFace {
+  border-radius: inherit;
 }
 
 .d2.dice.widget > .diceFaces > .diceFace:nth-child(2n + 1) {
@@ -143,16 +151,6 @@
 
 .d2.dice.widget > .diceFaces > .diceFace:nth-child(2n) {
   transform: rotateY(180deg) translateZ(1px);
-}
-
-.d6.dice.widget > .diceFaces > .diceFace {
-  background-color: var(--backgroundColor);
-  color: var(--pipColor);
-  border: 0.5px solid var(--pipColor);
-}
-
-.d6.dice.widget > .diceFaces > .diceFace.moreThanSix {
-  display: none;
 }
 
 .d6.dice.widget > .diceFaces > .diceFace:nth-child(6n + 1) {
@@ -245,16 +243,16 @@
   0% {
     opacity: var(--phase1);
   }
-  24% {
+  29% {
     opacity: var(--phase1);
   }
-  25% {
+  30% {
     opacity: var(--phase2);
   }
-  59% {
+  69% {
     opacity: var(--phase2);
   }
-  60% {
+  70% {
     opacity: var(--final);
   }
 }

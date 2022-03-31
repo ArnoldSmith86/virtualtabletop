@@ -16,7 +16,9 @@ class Dice extends Widget {
 
       options: [ 1, 2, 3, 4, 5, 6 ],
       activeFace: 0,
-      rollCount: 0
+      rollCount: 0,
+
+      shape3d: false
     });
   }
 
@@ -81,13 +83,28 @@ class Dice extends Widget {
         this.activeFaceElement.classList.add('active');
       this.previousActiveFace = this.activeFace();
     }
-    if(delta.rollCount !== undefined || delta.activeFace !== undefined || delta.options !== undefined)
-      this.threeDFaces();
+    if(delta.rollCount !== undefined || delta.activeFace !== undefined || delta.options !== undefined || delta.shape3d !== undefined)
+      this.threeDfaces();
   }
 
   applyInitialDelta(delta) {
     super.applyInitialDelta(delta);
     this.activateAnimation = true;
+  }
+
+  classes() {
+    let className = super.classes();
+
+    if(this.get('shape3d'))
+      className += ` shape3D d${this.threeDshape()}`;
+    
+    return className;
+  }
+
+  classesProperties() {
+    const p = super.classesProperties();
+    p.push('shape3d');
+    return p;    
   }
 
   async click(mode='respect') {
@@ -139,26 +156,15 @@ class Dice extends Widget {
     css += '; --pipColor:' + this.get('pipColor');
     css += '; --backgroundColor:' + this.get('backgroundColor');
 
-    if(this.get('classes') == 'd6') {
-      const xRotations = [ 0, 90,  0,   0, -90,   0 ];
-      const yRotations = [ 0,  0, 90, -90,   0, 180 ];
-
-      css += '; --rotX:' + (xRotations[this.activeFace() % 6] + this.get('rollCount')*360) + 'deg';
-      css += '; --rotY:' + (yRotations[this.activeFace() % 6] + this.get('rollCount')*360) + 'deg';
-    } else {
-      const xRotations = [ 0,   0 ];
-      const yRotations = [ 0, 180 ];
-
-      css += '; --rotX:' + (xRotations[this.activeFace() % 2] + this.get('rollCount')*360) + 'deg';
-      css += '; --rotY:' + (yRotations[this.activeFace() % 2] + this.get('rollCount')*360) + 'deg';
-    }
+    if(this.get('shape3d'))
+      css += this.threeDrotationsCSS();
 
     return css;
   }
 
   cssProperties() {
     const p = super.cssProperties();
-    p.push('pipColor', 'backgroundColor', 'activeFace', 'rollCount');
+    p.push('pipColor', 'backgroundColor', 'activeFace', 'rollCount', 'shape3d');
     return p;
   }
 
@@ -182,22 +188,63 @@ class Dice extends Widget {
     return await super.set(property, value);
   }
 
-  threeDFaces() {
-    if(this.faceElements.length > 6) {
+  threeDfaces() {
+    if(!this.get('shape3D'))
+      return;
+    const n = this.threeDshape();
+    if(this.faceElements.length > n) {
+      const shift = Math.floor(32 / n);
       const fc = this.faceElements.length;
       const af = this.activeFace();
       const hash = this.rollHash? this.rollHash : 0;
-      for(var side = 0; side < 6 && side < (fc - 6); side++) {
-        const facesOnSide = Math.floor((fc - 1 - side) / 6 ) + 1;
-        const visibleFace = (side == af % 6) ? af :
-          6 * ((hash >>> (side*5)) % facesOnSide) + side;
-        for(var i = side; i < fc; i += 6 ) {
+      for(var side = 0; side < n && side < (fc - n); side++) {
+        const facesOnSide = Math.floor((fc - 1 - side) / n ) + 1;
+        const visibleFace = (side == af % n) ? af :
+          n * ((hash >>> (side*shift)) % facesOnSide) + side;
+        for(var i = side; i < fc; i += n ) {
           if(i == visibleFace)
-            this.faceElements[i].classList.remove('moreThanSix');
+            this.faceElements[i].classList.remove('extra3Dface');
           else
-            this.faceElements[i].classList.add('moreThanSix');
+            this.faceElements[i].classList.add('extra3Dface');
         }
       }
     }
+  }
+
+  threeDrotationsCSS() {
+    const rotations = {
+      2: {
+        x: [ 0 ], 
+        y: [ 0, 180 ],
+        z: [ 0 ] 
+      },
+      6: {
+        x: [ 0, 90,  0,   0, -90,   0 ],
+        y: [ 0,  0, 90, -90,   0, 180 ],
+        z: [ 0 ] 
+      }
+    };
+    const shape = this.threeDshape();
+    const af = this.activeFace();
+    const rc = this.get('rollCount');
+    const xRot = rotations[shape]['x'];
+    const yRot = rotations[shape]['y'];
+    const zRot = rotations[shape]['z'];
+
+    let css = '';
+    css += `; --rotX:${xRot[af % xRot.length] + rc * 360}deg`;
+    css += `; --rotY:${yRot[af % yRot.length] + rc * 360}deg`;
+    css += `; --rotZ:${yRot[af % zRot.length]}deg`;
+
+    return css;
+  }
+
+  threeDshape() {
+    const shapes = [2, 6];
+    let s3d = this.get('shape3d');
+    if(shapes.indexOf(s3d) > -1)
+      return s3d;
+    const o = this.get('options').length || 0;
+    return shapes.filter((v) => v>=o)[0] || shapes[shapes.length - 1];
   }
 }
