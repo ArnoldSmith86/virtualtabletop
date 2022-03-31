@@ -169,14 +169,43 @@
   transform-origin: 50% 66% calc(var(--size) * -0.22453656);
 }
 
-.d4.dice.widget > .diceFaces > .diceFace {
+.d4.dice.widget,
+.d8.dice.widget {
+  --fontSize: calc(var(--size) * .65);
+}
+
+.d4.dice.widget > .diceFaces > .diceFace,
+.d8.dice.widget > .diceFaces > .diceFace {
   clip-path: polygon(50% 0, 100% 100%, 0% 100%);
   width: 110%;
   height: 95%;
   left: -5%;
   padding-top: 25%;
-  border: none;
-  font-size: calc(var(--fontSize) * .7);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: var(--faceBorder);
+  font-size: var(--fontSize);
+}
+
+.d4.dice.widget > .diceFaces > .diceFace::before,
+.d4.dice.widget > .diceFaces > .diceFace::after,
+.d8.dice.widget > .diceFaces > .diceFace::before,
+.d8.dice.widget > .diceFaces > .diceFace::after {
+  display: block;
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(var(--size) * .95);
+  border-bottom: inherit;
+  transform-origin: 50% 66.7%;
+  transform: rotate(120deg);
+}
+.d4.dice.widget > .diceFaces > .diceFace::after,
+.d8.dice.widget > .diceFaces > .diceFace::after {
+  transform: rotate(-120deg);
 }
 
 .d4.dice.widget > .diceFaces > .diceFace:nth-child(4n + 1) {
@@ -227,16 +256,6 @@
 .d8.dice.widget > .diceFaces.diceFaces.diceFaces {
   transform: translateY(calc(var(--size) * -0.3)) rotateX(var(--rotX)) rotateY(var(--rotY));
   transform-origin: 50% calc(var(--size) * 0.816496581);
-}
-
-.d8.dice.widget > .diceFaces > .diceFace {
-  clip-path: polygon(50% 0, 100% 100%, 0% 100%);
-  width: 110%;
-  height: 95%;
-  left: -5%;
-  padding-top: 25%;
-  border: none;
-  font-size: calc(var(--fontSize) * .7);
 }
 
 .d8.dice.widget > .diceFaces > .diceFace:nth-child(8n + 1) {
