@@ -258,46 +258,35 @@
   transform-origin: 50% calc(var(--size) * 0.816496581);
 }
 
-.d8.dice.widget > .diceFaces > .diceFace:nth-child(8n + 1) {
+.d8.dice.widget > .diceFaces > .diceFace {
   transform-origin: 50% 0%;
-  transform: rotateY(-90deg) rotateX(35.36deg);
+  transform: translateY(var(--tY)) rotateY(var(--rY)) rotateX(var(--rX));
+}
+.d8.dice.widget > .diceFaces > .diceFace:nth-child(2n + 1) {
+  --rX: 35.36deg;
+  --tY: 0;
+}
+.d8.dice.widget > .diceFaces > .diceFace:nth-child(2n) {
+  --rX: -144.64deg;
+  --tY: 163.2993162%;
 }
 
-.d8.dice.widget > .diceFaces > .diceFace:nth-child(8n + 2) {
-  transform-origin: 50% 0%;
-  transform: rotateY(-180deg) rotateX(35.36deg);
-}
-
-.d8.dice.widget > .diceFaces > .diceFace:nth-child(8n + 3) {
-  transform-origin: 50% 0%;
-  transform: rotateY(90deg) rotateX(35.36deg);
-}
-
-.d8.dice.widget > .diceFaces > .diceFace:nth-child(8n + 4) {
-  transform-origin: 50% 0%;
-  transform: translateY(163.2993162%) rotateY(90deg) rotateX(215.36deg);
-}
-
-.d8.dice.widget > .diceFaces > .diceFace:nth-child(8n + 5) {
-  transform-origin: 50% 0%;
-  transform: translateY(163.2993162%) rotateY(0deg) rotateX(215.36deg);
-}
-
-.d8.dice.widget > .diceFaces > .diceFace:nth-child(8n + 6) {
-  transform-origin: 50% 0%;
-  transform: translateY(163.2993162%) rotateY(180deg) rotateX(215.36deg);
-}
-
-.d8.dice.widget > .diceFaces > .diceFace:nth-child(8n + 7) {
-  transform-origin: 50% 0%;
-  transform: translateY(163.2993162%) rotateY(-90deg) rotateX(215.36deg);
-}
-
+.d8.dice.widget > .diceFaces > .diceFace:nth-child(8n + 1),
 .d8.dice.widget > .diceFaces > .diceFace:nth-child(8n) {
-  transform-origin: 50% 0%;
-  transform: rotateY(0deg) rotateX(35.36deg);
+  --rY: -45deg;
 }
-
+.d8.dice.widget > .diceFaces > .diceFace:nth-child(8n + 3),
+.d8.dice.widget > .diceFaces > .diceFace:nth-child(8n + 6) {
+  --rY: -135deg;
+}
+.d8.dice.widget > .diceFaces > .diceFace:nth-child(8n + 5),
+.d8.dice.widget > .diceFaces > .diceFace:nth-child(8n + 4) {
+  --rY: 135deg;
+}
+.d8.dice.widget > .diceFaces > .diceFace:nth-child(8n + 7),
+.d8.dice.widget > .diceFaces > .diceFace:nth-child(8n + 2) {
+  --rY: 45deg;
+}
 
 @keyframes shake {
   15% {
