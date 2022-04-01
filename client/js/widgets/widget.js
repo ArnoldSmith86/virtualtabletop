@@ -1813,7 +1813,7 @@ export class Widget extends StateManaged {
       if(wStyle) {
         const eStyle = document.createElement('style');
         eStyle.id = "enlargeStyles";
-        eStyle.appendChild(document.createTextNode(wStyle.replace(`#w_${escapeID(id)}`,'#enlarged')));
+        eStyle.appendChild(document.createTextNode(wStyle.textContent.replace(`#w_${escapeID(id)}`,'#enlarged')));
         $('head').appendChild(eStyle);
       }
     }
