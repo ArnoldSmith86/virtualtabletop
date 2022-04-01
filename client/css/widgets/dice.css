@@ -289,9 +289,6 @@
 }
 
 
-.d12.dice.widget {
-  background: red;
-}
 .d12.dice.widget > .diceFaces.diceFaces.diceFaces {
   transform: scale(0.5) rotateX(var(--rotX)) rotateZ(var(--rotZ));
   transform-origin: 50% 50% calc(var(--size) * -1.113516364);
@@ -300,7 +297,6 @@
 .d12.dice.widget > .diceFaces > .diceFace {
   transform-origin: 50% 50% calc(var(--size) * -1.113516364);
   transform: rotateZ(var(--rZ)) rotateX(var(--rX));
-  opacity: 0.7;
 
   clip-path: polygon(50% 0, 100% 38.19%, 80.9% 100%, 19.1% 100%, 0 38.19%);
   height: 153.9%;
