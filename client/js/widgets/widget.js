@@ -1547,8 +1547,11 @@ export class Widget extends StateManaged {
   }
 
   hideEnlarged() {
-    if (!this.domElement.className.match(/selected/))
+    if (!this.domElement.className.match(/selected/)) {
       $('#enlarged').classList.add('hidden');
+      if($('#enlargeStyle'))
+        removeFromDOM($('#enlargeStyle'));
+    }
   }
 
   async addAudio(widget){
@@ -1795,15 +1798,24 @@ export class Widget extends StateManaged {
 
   showEnlarged(event) {
     if(this.get('enlarge')) {
+      const id = this.get('id');
       const e = $('#enlarged');
       e.innerHTML = this.domElement.innerHTML;
       e.className = this.domElement.className;
-      e.dataset.id = this.get('id');
+      e.dataset.id = id;
       e.style.cssText = this.domElement.style.cssText;
       e.style.display = this.domElement.style.display;
       e.style.transform = `scale(calc(${this.get('enlarge')} * var(--scale)))`;
       if(this.domElement.getBoundingClientRect().left < window.innerWidth/2)
         e.classList.add('right');
+      
+      const wStyle = $(`#STYLES_${escapeID(id)}`);
+      if(wStyle) {
+        const eStyle = document.createElement('style');
+        eStyle.id = "enlargeStyles";
+        eStyle.appendChild(document.createTextNode(wStyle.replace(`#w_${escapeID(id)}`,'#enlarged')));
+        $('head').appendChild(eStyle);
+      }
     }
     if(event)
       event.preventDefault();
