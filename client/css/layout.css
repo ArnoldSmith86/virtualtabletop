@@ -350,6 +350,16 @@ body.aspectTooGood #options {
   transform: translateY(273px) translateX(46px);
 }
 
+body.lightsOff, body.lightsOff #toolbar, body.lightsOff #toolbar .tooltip {
+  background: black;
+}
+body.lightsOff #toolbar {
+  opacity: 0.1;
+}
+body.lightsOff #toolbar:hover {
+  opacity: 1;
+}
+
 #options.hidden {
   visibility: hidden;
 }
@@ -507,6 +517,10 @@ html:not(:-webkit-full-screen) #fullscreenButton .tooltip::before {
 
 html:-webkit-full-screen #fullscreenButton .tooltip::before {
   content: 'Exit ';
+}
+
+#lightsButton::before {
+  content: '[auto_awesome]';
 }
 
 #hideToolbarButton::before {

@@ -431,7 +431,7 @@ export class Widget extends StateManaged {
     style.id = `STYLES_${escapeID(this.id)}`;
     for(const key in css)
       if(key != 'inline')
-        style.appendChild(document.createTextNode(`#w_${escapeID(this.id)}${key == 'default' ? '' : key} { ${this.cssReplaceProperties(this.cssAsText(css[key]))} }`));
+        style.appendChild(document.createTextNode(`#w_${escapeID(this.id)}${key == 'default' ? '' : key} { ${mapAssetURLs(this.cssReplaceProperties(this.cssAsText(css[key])))} }`));
     $('head').appendChild(style);
 
     return this.cssAsText(css.inline || '');
@@ -697,7 +697,7 @@ export class Widget extends StateManaged {
         setDefaults(a, { widget: this.get('id'), routine: 'clickRoutine', 'return': true, arguments: {}, variable: 'result', collection: 'result' });
         if(!a.routine.match(/Routine$/)) {
           problems.push('Routine parameters have to end with "Routine".');
-        } else if(this.isValidID(a.widget)) {
+        } else if(this.isValidID(a.widget, problems)) {
           if(!Array.isArray(widgets.get(a.widget).get(a.routine))) {
             problems.push(`Widget ${a.widget} does not contain ${a.routine} (or it is no array).`);
           } else {
@@ -712,7 +712,7 @@ export class Widget extends StateManaged {
             collections[a.collection] = result.collection;
 
             if(jeRoutineLogging) {
-              const theWidget = this.isValidID(a.widget) && a.widget != this.get('id') ? `in ${a.widget}` : '';
+              const theWidget = this.isValidID(a.widget, problems) && a.widget != this.get('id') ? `in ${a.widget}` : '';
               if (a.return) {
                 let returnCollection = result.collection.map(w=>w.get('id')).join(',');
                 if(!result.collection.length || result.collection.length >= 5)
@@ -1679,6 +1679,9 @@ export class Widget extends StateManaged {
         lastHoverTarget.domElement.classList.remove('droptarget');
       if(this.hoverTarget)
         this.hoverTarget.domElement.classList.add('droptarget');
+
+      if(lastHoverTarget != this.hoverTarget && this.hoverTarget != this.currentParent)
+        await this.checkParent(true);
     }
   }
 
@@ -1765,7 +1768,7 @@ export class Widget extends StateManaged {
       if(mode == 'inc' || mode == 'dec') {
         let newText = (parseFloat(this.get('text')) || 0) + (mode == 'dec' ? -1 : 1) * text;
         const decimalPlacesOld = this.get('text').toString().match(/\..*$/);
-        const decimalPlacesChange = text.toString().match(/\..*$/);
+        const decimalPlacesChange = (+text).toString().match(/\..*$/);
         const decimalPlaces = Math.max(decimalPlacesOld ? decimalPlacesOld[0].length-1 : 0, decimalPlacesChange ? decimalPlacesChange[0].length-1 : 0);
         const factor = 10**decimalPlaces;
         newText = Math.round(newText*factor)/factor;
