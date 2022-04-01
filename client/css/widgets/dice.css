@@ -288,6 +288,79 @@
   --rY: 45deg;
 }
 
+
+.d12.dice.widget {
+  background: red;
+}
+.d12.dice.widget > .diceFaces.diceFaces.diceFaces {
+  transform: rotateX(var(--rotX)) rotateZ(var(--rotZ));
+  transform-origin: 50% 50% calc(var(--size) * -1.113516364);
+}
+
+.d12.dice.widget > .diceFaces > .diceFace {
+  transform-origin: 50% 50% calc(var(--size) * -1.113516364);
+  transform: rotateZ(var(--rZ)) rotateX(var(--rX));
+  opacity: 0.7;
+
+  clip-path: polygon(50% 0, 100% 38.19%, 80.9% 100%, 19.1% 100%, 0 38.19%);
+  height: 153.9%;
+  width: 161.8%
+}
+.d12.dice.widget > .diceFaces > .diceFace:nth-child(12n + 1) {
+  --rX: 0;
+  --rZ: 0;
+}
+.d12.dice.widget > .diceFaces > .diceFace:nth-child(12n + 2) {
+  --rX: 73.435deg;
+  --rZ: 180deg;
+}
+.d12.dice.widget > .diceFaces > .diceFace:nth-child(12n + 3) {
+  --rX: 73.435deg;
+  --rZ: 108deg;
+}
+.d12.dice.widget > .diceFaces > .diceFace:nth-child(12n + 4) {
+  --rX: 73.435deg;
+  --rZ: 36deg;
+}
+.d12.dice.widget > .diceFaces > .diceFace:nth-child(12n + 5) {
+  --rX: 73.435deg;
+  --rZ: -36deg;
+}
+.d12.dice.widget > .diceFaces > .diceFace:nth-child(12n + 6) {
+  --rX: 73.435deg;
+  --rZ: -108deg;
+}
+
+.d12.dice.widget > .diceFaces > .diceFace:nth-child(12n + 7) {
+  --rX: 180deg;
+  --rZ: 0;
+}
+
+.d12.dice.widget > .diceFaces > .diceFace:nth-child(12n + 8) {
+  --rX: -126.7175deg;
+  --rZ: 180deg;
+}
+
+.d12.dice.widget > .diceFaces > .diceFace:nth-child(12n + 9) {
+  --rX: -126.7175deg;
+  --rZ: 36deg;
+}
+
+.d12.dice.widget > .diceFaces > .diceFace:nth-child(12n + 10) {
+  --rX: -126.7175deg;
+  --rZ: -36deg;
+}
+
+.d12.dice.widget > .diceFaces > .diceFace:nth-child(12n + 11) {
+  --rX: -126.7175deg;
+  --rZ: 108deg;
+}
+
+.d12.dice.widget > .diceFaces > .diceFace:nth-child(12n) {
+  --rX: -126.7175deg;
+  --rZ: -108deg;
+}
+
 @keyframes shake {
   15% {
     transform: translate3d(

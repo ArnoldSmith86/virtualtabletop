@@ -234,6 +234,11 @@ class Dice extends Widget {
         x: [ -35.36, 144.64 ],
         y: [  45, -45, 135, -135, -135, 135, -45, 45 ],
         z: [ 0 ]
+      },
+      12: {
+        x: [ 0, -73.435, -73.435, -73.435, -73.435, -73.435, -180, 126.7175, 126.7175, 126.7175, 126.7175, 126.7175 ],
+        y: [ 0 ],
+        z: [ 0, -180, -108, -36, 36, 108, 0, -180, -36, 36, -108, 108 ]
       }
     };
     const shape = this.threeDshape();
@@ -252,7 +257,7 @@ class Dice extends Widget {
   }
 
   threeDshape() {
-    const shapes = [2, 4, 6, 8];
+    const shapes = [2, 4, 6, 8, 12];
     let s3d = this.get('shape3d');
     if(shapes.indexOf(s3d) > -1)
       return s3d;
