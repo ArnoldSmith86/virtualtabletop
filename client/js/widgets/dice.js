@@ -85,7 +85,7 @@ class Dice extends Widget {
         this.activeFaceElement.classList.add('active');
       this.previousActiveFace = this.activeFace();
     }
-    if(delta.rollCount !== undefined || delta.activeFace !== undefined || delta.options !== undefined || delta.shape3d !== undefined)
+    if(delta.rollCount !== undefined || delta.activeFace !== undefined || delta.options !== undefined || delta.shape3d !== undefined || delta.pipSymbols !== undefined)
       this.threeDfaces();
   }
 
@@ -152,8 +152,6 @@ class Dice extends Widget {
 
   css() {
     let css = super.css();
-
-    css += '; --size:' + Math.min(this.get('width'), this.get('height')) + 'px';
 
     css += '; --pipColor:' + this.get('pipColor');
     css += '; --backgroundColor:' + this.get('backgroundColor');

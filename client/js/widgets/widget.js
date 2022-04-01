@@ -373,6 +373,7 @@ export class Widget extends StateManaged {
     css = this.cssBorderRadius() + css;
     css += '; width:'  + this.get('width')  + 'px';
     css += '; height:' + this.get('height') + 'px';
+    css += '; --size:' + Math.min(this.get('width'), this.get('height')) + 'px';
     css += '; z-index:' + this.calculateZ();
     css += '; transform:' + this.cssTransform();
 
