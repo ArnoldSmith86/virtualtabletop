@@ -25,7 +25,7 @@ class Dice extends Widget {
   }
 
   activeFace() {
-    return Math.abs(Math.round(this.get('activeFace')) || 0);
+    return mod(Math.round(this.get('activeFace')), this.faceElements.length) || 0;
   }
 
   animate() {
@@ -250,7 +250,7 @@ class Dice extends Widget {
         "faceX": [ 0, 180 ],
         "faceY": [ 0 ],
         "faceZ": [ 0 ],
-        "rollX": 3,
+        "rollX": 2,
         "rollY": 0,
         "rollZ": 0
       },

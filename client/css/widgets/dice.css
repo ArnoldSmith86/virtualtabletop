@@ -163,10 +163,45 @@
   transform: rotateY(180deg) translateZ(1px);
 }
 
-.d2-flip.dice.widget > .diceFaces > .diceFace:nth-child(2n) {
-  transform: rotateX(180deg) translateZ(1px);
+.d2-flip.dice.widget {
+  --edgeColor: var(--backgroundColor);
+}
+.d2-flip.dice.widget > .diceFaces > .diceFace {
+  transform-style: preserve-3d;
 }
 
+.d2-flip.dice.widget > .diceFaces > .diceFace:nth-child(2n + 1) {
+  transform: rotateX(  0deg) translateZ(calc(var(--size) * .05));
+}
+
+.d2-flip.dice.widget > .diceFaces > .diceFace:nth-child(2n) {
+  transform: rotateX(180deg) translateZ(calc(var(--size) * .05));
+}
+
+.d2-flip.dice.widget > .diceFaces > .diceFace::before,
+.d2-flip.dice.widget > .diceFaces > .diceFace::after {
+  display: block;
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: var(--faceBorder);
+  background: var(--edgeColor);
+  transform: translateZ(-1px);
+  border-radius: inherit;
+}
+
+.d2-flip.dice.widget > .diceFaces > .diceFace::after {
+  top: 50%;
+  height: calc(var(--size) * .06);
+  border-top: none;
+  border-bottom: none;
+  transform-origin: 50% 0;
+  transform: translateZ(-2px) rotateX(-90deg);
+  border-radius: 0;
+}
 
 .d4.dice.widget > .diceFaces.diceFaces.diceFaces {
   transform: rotateX(var(--rotX)) rotateZ(var(--rotZ));
