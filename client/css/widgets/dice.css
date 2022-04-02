@@ -8,11 +8,9 @@
   height: 100%;
   width: 100%;
   border-radius: inherit;
-  animation-duration: 0.5s;
-  transition-duration: 0.5s;
 }
 
-.dice.widget > * > .diceFace {
+.dice.widget > .diceFaces > .diceFace {
   position: absolute;
   display: none;
   top: 0;
@@ -40,15 +38,20 @@
   background-size: contain;
 }
 
-.dice.widget > * > .active.diceFace {
+.dice.widget > .diceFaces > .active.diceFace {
   display: flex;
 }
 
-.dice.widget > * > .dicePip {
+.dice.widget > .diceFaces > .dicePip {
   font-family: VTT-Symbols;
 }
 
-.dice.widget > .rolling > .diceFace {
+
+.dice.widget > .animate.diceFaces {
+  animation-duration: 0.5s;
+}
+
+.dice.widget > .animate.diceFaces > .diceFace {
   display: flex;
   --phase1: 0;
   --phase2: 0;
@@ -59,24 +62,25 @@
   animation-duration: inherit;
 }
 
-.dice.widget > .rolling.animateBegin > .diceFace {
+.dice.widget > .animateBegin.animate.diceFaces > .diceFace {
   opacity: var(--phase1);
   animation: none;
 }
 
-.dice.widget > .rolling > .active.diceFace {
+.dice.widget > .animate.diceFaces > .active.diceFace {
   --final: 1;
 }
 
-.dice.widget > .rolling > .rolling1active.diceFace {
+.dice.widget > .animate.diceFaces > .animate1active.diceFace {
   --phase1: 1;
 }
 
-.dice.widget > .rolling > .rolling2active.diceFace {
+.dice.widget > .animate.diceFaces > .animate2active.diceFace {
   --phase2: 1;
 }
 
-.shaking.dice.widget > .rolling {
+
+.shaking.dice.widget > .animate.diceFaces {
   animation-name: shake;
   --shakeX: 1;
   --shakeY: 1;
@@ -124,7 +128,7 @@
   transform-style: preserve-3d;
   transform: rotateX(var(--rotX)) rotateY(var(--rotY)) rotateZ(var(--rotZ));
   animation: none;
-  transition: transform 0.5s cubic-bezier(1, 1.65, 0.6, 0.85);
+  transition: transform 0.5s cubic-bezier(0, 0, 0, 1.2);
 }
 
 .shape3D.dice.widget > .diceFaces > .diceFace {
