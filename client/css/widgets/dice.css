@@ -10,7 +10,7 @@
   border-radius: inherit;
 }
 
-.dice.widget > .diceFaces > .diceFace {
+.dice.widget > * > .diceFace {
   position: absolute;
   display: none;
   top: 0;
@@ -38,20 +38,20 @@
   background-size: contain;
 }
 
-.dice.widget > .diceFaces > .active.diceFace {
+.dice.widget > * > .active.diceFace {
   display: flex;
 }
 
-.dice.widget > .diceFaces > .dicePip {
+.dice.widget > * > .dicePip {
   font-family: VTT-Symbols;
 }
 
 
-.dice.widget > .animate.diceFaces {
+.dice.widget > .animate {
   animation-duration: 0.5s;
 }
 
-.dice.widget > .animate.diceFaces > .diceFace {
+.dice.widget:not(.shape3D) > .animate > .diceFace {
   display: flex;
   --phase1: 0;
   --phase2: 0;
@@ -62,55 +62,55 @@
   animation-duration: inherit;
 }
 
-.dice.widget > .animateBegin.animate.diceFaces > .diceFace {
+.dice.widget:not(.shape3D) > .animateBegin > .diceFace {
   opacity: var(--phase1);
   animation: none;
 }
 
-.dice.widget > .animate.diceFaces > .active.diceFace {
+.dice.widget:not(.shape3D) > .animate > .active {
   --final: 1;
 }
 
-.dice.widget > .animate.diceFaces > .animate1active.diceFace {
+.dice.widget:not(.shape3D) > .animate > .animate1active {
   --phase1: 1;
 }
 
-.dice.widget > .animate.diceFaces > .animate2active.diceFace {
+.dice.widget:not(.shape3D) > .animate > .animate2active {
   --phase2: 1;
 }
 
 
-.shaking.dice.widget > .animate.diceFaces {
+.shaking.dice.widget:not(.shape3D) > .animate {
   animation-name: shake;
   --shakeX: 1;
   --shakeY: 1;
   --shakeR: 1;
 }
 
-.shaking.dice.widget > .animateBegin.animate.diceFaces {
+.shaking.dice.widget:not(.shape3D) > .animateBegin {
   animation: none;
   transform: translate3d(calc(var(--shakeX) * 2%), 0, 0) rotate(calc(var(--shakeR) * -5deg));
   transition: transform 50ms;
 }
 
-.shaking.dice.widget > .shake1.animate.diceFaces,
-.shaking.dice.widget > .shake3.animate.diceFaces,
-.shaking.dice.widget > .shake5.animate.diceFaces,
-.shaking.dice.widget > .shake7.animate.diceFaces {
+.shaking.dice.widget:not(.shape3D) > .shake1,
+.shaking.dice.widget:not(.shape3D) > .shake3,
+.shaking.dice.widget:not(.shape3D) > .shake5,
+.shaking.dice.widget:not(.shape3D) > .shake7 {
   --shakeX: -1;
 }
 
-.shaking.dice.widget > .shake2.animate.diceFaces,
-.shaking.dice.widget > .shake3.animate.diceFaces,
-.shaking.dice.widget > .shake6.animate.diceFaces,
-.shaking.dice.widget > .shake7.animate.diceFaces {
+.shaking.dice.widget:not(.shape3D) > .shake2,
+.shaking.dice.widget:not(.shape3D) > .shake3,
+.shaking.dice.widget:not(.shape3D) > .shake6,
+.shaking.dice.widget:not(.shape3D) > .shake7 {
   --shakeY: -1;
 }
 
-.shaking.dice.widget > .shake4.animate.diceFaces,
-.shaking.dice.widget > .shake5.animate.diceFaces,
-.shaking.dice.widget > .shake6.animate.diceFaces,
-.shaking.dice.widget > .shake7.animate.diceFaces {
+.shaking.dice.widget:not(.shape3D) > .shake4,
+.shaking.dice.widget:not(.shape3D) > .shake5,
+.shaking.dice.widget:not(.shape3D) > .shake6,
+.shaking.dice.widget:not(.shape3D) > .shake7 {
   --shakeR: -1;
 }
 
@@ -122,7 +122,7 @@
   align-items: center;
 }
 
-.shape3D.dice.widget > .diceFaces.diceFaces.diceFaces {
+.shape3D.dice.widget > .diceFaces {
   width: var(--size);
   height: var(--size);
   transform-style: preserve-3d;
@@ -131,35 +131,30 @@
   transition: transform 0.5s cubic-bezier(1, 1.65, 0.6, 0.85);
 }
 
-.shape3D.dice.widget > .diceFaces > .diceFace {
+.shape3D.dice.widget > * > .diceFace {
   display: flex;
   border-radius: 0;
 }
 
-.shape3D.dice.widget > .animate.animate.diceFaces > .diceFace {
-  animation: none;
-  opacity: 1;
-}
-
-.shape3D.dice.widget > .diceFaces > .extra3Dface.diceFace {
+.shape3D.dice.widget > * > .extra3Dface {
   display: none;
 }
 
 
-.d2.shape3D.dice.widget > .diceFaces.diceFaces.diceFaces {
+.d2.shape3D.dice.widget > .diceFaces {
   width: 100%;
   height: 100%;
 }
 
-.d2.shape3D.dice.widget > .diceFaces > .diceFace {
+.d2.shape3D.dice.widget > * > .diceFace {
   border-radius: inherit;
 }
 
-.d2.dice.widget > .diceFaces > .diceFace:nth-child(2n + 1) {
+.d2.dice.widget > * > .diceFace:nth-child(2n + 1) {
   transform: rotateY(  0deg) translateZ(1px);
 }
 
-.d2.dice.widget > .diceFaces > .diceFace:nth-child(2n) {
+.d2.dice.widget > * > .diceFace:nth-child(2n) {
   transform: rotateY(180deg) translateZ(1px);
 }
 
@@ -167,20 +162,20 @@
   --edgeColor: var(--backgroundColor);
 }
 
-.d2-flip.dice.widget > .diceFaces > .diceFace {
+.d2-flip.dice.widget > * > .diceFace {
   transform-style: preserve-3d;
 }
 
-.d2-flip.dice.widget > .diceFaces > .diceFace:nth-child(2n + 1) {
+.d2-flip.dice.widget > * > .diceFace:nth-child(2n + 1) {
   transform: rotateX(  0deg) translateZ(calc(var(--size) * .05));
 }
 
-.d2-flip.dice.widget > .diceFaces > .diceFace:nth-child(2n) {
+.d2-flip.dice.widget > * > .diceFace:nth-child(2n) {
   transform: rotateX(180deg) translateZ(calc(var(--size) * .05));
 }
 
-.d2-flip.dice.widget > .diceFaces > .diceFace::before,
-.d2-flip.dice.widget > .diceFaces > .diceFace::after {
+.d2-flip.dice.widget > * > .diceFace::before,
+.d2-flip.dice.widget > * > .diceFace::after {
   display: block;
   content: '';
   position: absolute;
@@ -194,7 +189,7 @@
   border-radius: inherit;
 }
 
-.d2-flip.dice.widget > .diceFaces > .diceFace::after {
+.d2-flip.dice.widget > * > .diceFace::after {
   top: 50%;
   height: calc(var(--size) * .06);
   border-top: none;
@@ -204,7 +199,7 @@
   border-radius: 0;
 }
 
-.d4.dice.widget > .diceFaces.diceFaces.diceFaces {
+.d4.dice.widget > .diceFaces {
   transform: rotateX(var(--rotX)) rotateZ(var(--rotZ));
   transform-origin: 50% 66% calc(var(--size) * -0.22453656);
 }
@@ -214,8 +209,8 @@
   --fontSize: calc(var(--size) * .65);
 }
 
-.d4.dice.widget > .diceFaces > .diceFace,
-.d8.dice.widget > .diceFaces > .diceFace {
+.d4.dice.widget > * > .diceFace,
+.d8.dice.widget > * > .diceFace {
   clip-path: polygon(50% 0, 100% 100%, 0% 100%);
   width: 110%;
   height: 95%;
@@ -228,10 +223,10 @@
   font-size: var(--fontSize);
 }
 
-.d4.dice.widget > .diceFaces > .diceFace::before,
-.d4.dice.widget > .diceFaces > .diceFace::after,
-.d8.dice.widget > .diceFaces > .diceFace::before,
-.d8.dice.widget > .diceFaces > .diceFace::after {
+.d4.dice.widget > * > .diceFace::before,
+.d4.dice.widget > * > .diceFace::after,
+.d8.dice.widget > * > .diceFace::before,
+.d8.dice.widget > * > .diceFace::after {
   display: block;
   position: absolute;
   content: '';
@@ -243,98 +238,98 @@
   transform-origin: 50% 66.7%;
   transform: rotate(120deg);
 }
-.d4.dice.widget > .diceFaces > .diceFace::after,
-.d8.dice.widget > .diceFaces > .diceFace::after {
+.d4.dice.widget > * > .diceFace::after,
+.d8.dice.widget > * > .diceFace::after {
   transform: rotate(-120deg);
 }
 
-.d4.dice.widget > .diceFaces > .diceFace:nth-child(4n + 1) {
+.d4.dice.widget > * > .diceFace:nth-child(4n + 1) {
   transform-origin: 0% 100%;
   transform: rotateZ(-60deg) rotateX(109.5deg);
 }
 
-.d4.dice.widget > .diceFaces > .diceFace:nth-child(4n + 2) {
+.d4.dice.widget > * > .diceFace:nth-child(4n + 2) {
   transform-origin: 100% 100%;
   transform: rotateZ(60deg) rotateX(109.5deg);
 }
 
-.d4.dice.widget > .diceFaces > .diceFace:nth-child(4n + 3) {
+.d4.dice.widget > * > .diceFace:nth-child(4n + 3) {
   transform-origin: 50% 100%;
   transform: rotateZ(180deg) rotateX(109.5deg);
 }
 
 
-.d6.dice.widget > .diceFaces.diceFaces.diceFaces {
+.d6.dice.widget > .diceFaces {
   transform: translateZ(calc(var(--size) / -2)) rotateX(var(--rotX)) rotateY(var(--rotY));
 }
 
-.d6.dice.widget > .diceFaces > .diceFace:nth-child(6n + 1) {
+.d6.dice.widget > * > .diceFace:nth-child(6n + 1) {
   transform: rotateY(  0deg) translateZ(calc(var(--size) / 2));
 }
 
-.d6.dice.widget > .diceFaces > .diceFace:nth-child(6n + 2) {
+.d6.dice.widget > * > .diceFace:nth-child(6n + 2) {
   transform: rotateX(-90deg) translateZ(calc(var(--size) / 2));
 }
 
-.d6.dice.widget > .diceFaces > .diceFace:nth-child(6n + 3) {
+.d6.dice.widget > * > .diceFace:nth-child(6n + 3) {
   transform: rotateY(-90deg) translateZ(calc(var(--size) / 2));
 }
 
-.d6.dice.widget > .diceFaces > .diceFace:nth-child(6n + 4) {
+.d6.dice.widget > * > .diceFace:nth-child(6n + 4) {
   transform: rotateY( 90deg) translateZ(calc(var(--size) / 2));
 }
 
-.d6.dice.widget > .diceFaces > .diceFace:nth-child(6n + 5) {
+.d6.dice.widget > * > .diceFace:nth-child(6n + 5) {
   transform: rotateX( 90deg) translateZ(calc(var(--size) / 2));
 }
 
-.d6.dice.widget > .diceFaces > .diceFace:nth-child(6n) {
+.d6.dice.widget > * > .diceFace:nth-child(6n) {
   transform: rotateY(180deg) translateZ(calc(var(--size) / 2));
 }
 
 
-.d8.dice.widget > .diceFaces.diceFaces.diceFaces {
+.d8.dice.widget > .diceFaces {
   transform: translateY(-23.5%) rotateX(var(--rotX)) rotateY(var(--rotY));
   transform-origin: 50% 77.6%;
 }
 
-.d8.dice.widget > .diceFaces > .diceFace {
+.d8.dice.widget > * > .diceFace {
   transform-origin: 50% 0%;
   transform: translateY(var(--tY)) rotateY(var(--rY)) rotateX(var(--rX));
 }
-.d8.dice.widget > .diceFaces > .diceFace:nth-child(2n + 1) {
+.d8.dice.widget > * > .diceFace:nth-child(2n + 1) {
   --rX: 35.36deg;
   --tY: 0;
 }
-.d8.dice.widget > .diceFaces > .diceFace:nth-child(2n) {
+.d8.dice.widget > * > .diceFace:nth-child(2n) {
   --rX: -144.64deg;
   --tY: 163.2993162%;
 }
 
-.d8.dice.widget > .diceFaces > .diceFace:nth-child(8n + 1),
-.d8.dice.widget > .diceFaces > .diceFace:nth-child(8n) {
+.d8.dice.widget > * > .diceFace:nth-child(8n + 1),
+.d8.dice.widget > * > .diceFace:nth-child(8n) {
   --rY: -45deg;
 }
-.d8.dice.widget > .diceFaces > .diceFace:nth-child(8n + 3),
-.d8.dice.widget > .diceFaces > .diceFace:nth-child(8n + 6) {
+.d8.dice.widget > * > .diceFace:nth-child(8n + 3),
+.d8.dice.widget > * > .diceFace:nth-child(8n + 6) {
   --rY: -135deg;
 }
-.d8.dice.widget > .diceFaces > .diceFace:nth-child(8n + 5),
-.d8.dice.widget > .diceFaces > .diceFace:nth-child(8n + 4) {
+.d8.dice.widget > * > .diceFace:nth-child(8n + 5),
+.d8.dice.widget > * > .diceFace:nth-child(8n + 4) {
   --rY: 135deg;
 }
-.d8.dice.widget > .diceFaces > .diceFace:nth-child(8n + 7),
-.d8.dice.widget > .diceFaces > .diceFace:nth-child(8n + 2) {
+.d8.dice.widget > * > .diceFace:nth-child(8n + 7),
+.d8.dice.widget > * > .diceFace:nth-child(8n + 2) {
   --rY: 45deg;
 }
 
 
-.d12.dice.widget > .diceFaces.diceFaces.diceFaces {
+.d12.dice.widget > .diceFaces {
   transform: scale(0.5) rotateX(var(--rotX)) rotateZ(var(--rotZ));
   transform-origin: 50% 50% calc(var(--size) * -1.113516364);
 }
 
-.d12.dice.widget > .diceFaces > .diceFace {
+.d12.dice.widget > * > .diceFace {
   transform-origin: 50% 50% calc(var(--size) * -1.113516364);
   transform: rotateZ(var(--rZ)) rotateX(var(--rX));
 
@@ -344,57 +339,57 @@
   top: -26.95%;
   left: -30.9%;
 }
-.d12.dice.widget > .diceFaces > .diceFace:nth-child(12n + 1) {
+.d12.dice.widget > * > .diceFace:nth-child(12n + 1) {
   --rX: 0;
   --rZ: 0;
 }
-.d12.dice.widget > .diceFaces > .diceFace:nth-child(12n + 2) {
+.d12.dice.widget > * > .diceFace:nth-child(12n + 2) {
   --rX: 73.435deg;
   --rZ: 180deg;
 }
-.d12.dice.widget > .diceFaces > .diceFace:nth-child(12n + 3) {
+.d12.dice.widget > * > .diceFace:nth-child(12n + 3) {
   --rX: 73.435deg;
   --rZ: 108deg;
 }
-.d12.dice.widget > .diceFaces > .diceFace:nth-child(12n + 4) {
+.d12.dice.widget > * > .diceFace:nth-child(12n + 4) {
   --rX: 73.435deg;
   --rZ: 36deg;
 }
-.d12.dice.widget > .diceFaces > .diceFace:nth-child(12n + 5) {
+.d12.dice.widget > * > .diceFace:nth-child(12n + 5) {
   --rX: 73.435deg;
   --rZ: -36deg;
 }
-.d12.dice.widget > .diceFaces > .diceFace:nth-child(12n + 6) {
+.d12.dice.widget > * > .diceFace:nth-child(12n + 6) {
   --rX: 73.435deg;
   --rZ: -108deg;
 }
 
-.d12.dice.widget > .diceFaces > .diceFace:nth-child(12n + 7) {
+.d12.dice.widget > * > .diceFace:nth-child(12n + 7) {
   --rX: 180deg;
   --rZ: 0;
 }
 
-.d12.dice.widget > .diceFaces > .diceFace:nth-child(12n + 8) {
+.d12.dice.widget > * > .diceFace:nth-child(12n + 8) {
   --rX: -126.7175deg;
   --rZ: 180deg;
 }
 
-.d12.dice.widget > .diceFaces > .diceFace:nth-child(12n + 9) {
+.d12.dice.widget > * > .diceFace:nth-child(12n + 9) {
   --rX: -126.7175deg;
   --rZ: 36deg;
 }
 
-.d12.dice.widget > .diceFaces > .diceFace:nth-child(12n + 10) {
+.d12.dice.widget > * > .diceFace:nth-child(12n + 10) {
   --rX: -126.7175deg;
   --rZ: -36deg;
 }
 
-.d12.dice.widget > .diceFaces > .diceFace:nth-child(12n + 11) {
+.d12.dice.widget > * > .diceFace:nth-child(12n + 11) {
   --rX: -126.7175deg;
   --rZ: 108deg;
 }
 
-.d12.dice.widget > .diceFaces > .diceFace:nth-child(12n) {
+.d12.dice.widget > * > .diceFace:nth-child(12n) {
   --rX: -126.7175deg;
   --rZ: -108deg;
 }
