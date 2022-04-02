@@ -250,7 +250,7 @@ class Dice extends Widget {
         "faceX": [ 0, 180 ],
         "faceY": [ 0 ],
         "faceZ": [ 0 ],
-        "rollX": 6,
+        "rollX": 3,
         "rollY": 0,
         "rollZ": 0
       },

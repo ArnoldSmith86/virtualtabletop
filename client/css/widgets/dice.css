@@ -128,7 +128,7 @@
   transform-style: preserve-3d;
   transform: rotateX(var(--rotX)) rotateY(var(--rotY)) rotateZ(var(--rotZ));
   animation: none;
-  transition: transform 0.5s cubic-bezier(0, 0, 0, 1.2);
+  transition: transform 0.5s cubic-bezier(1, 1.65, 0.6, 0.85);
 }
 
 .shape3D.dice.widget > .diceFaces > .diceFace {
