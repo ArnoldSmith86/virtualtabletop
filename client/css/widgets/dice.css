@@ -163,6 +163,10 @@
   transform: rotateY(180deg) translateZ(1px);
 }
 
+.d2-flip.dice.widget > .diceFaces > .diceFace:nth-child(2n) {
+  transform: rotateX(180deg) translateZ(1px);
+}
+
 
 .d4.dice.widget > .diceFaces.diceFaces.diceFaces {
   transform: rotateX(var(--rotX)) rotateZ(var(--rotZ));

@@ -98,7 +98,7 @@ class Dice extends Widget {
     let className = super.classes();
 
     if(this.get('shape3d'))
-      className += ` shape3D ${this.threeDshape().shapeName}`;
+      className += ` shape3D ${this.threeDshape().shapeName.split('-').map((s,i,a)=>a.slice(0,i+1).join('-')).join(' ')}`;
 
     return className;
   }
@@ -193,9 +193,12 @@ class Dice extends Widget {
     if(!s3d)
       return;
     const n = s3d.sides;
+    const fc = this.faceElements.length;
+    for(var i = 0; i < fc; i++) {
+      this.faceElements[i].classList.remove('extra3Dface');
+    }
     if(this.faceElements.length > n) {
       const shift = Math.floor(32 / n);
-      const fc = this.faceElements.length;
       const af = this.activeFace();
       const hash = this.rollHash? this.rollHash : 0;
       for(var side = 0; side < n && side < (fc - n); side++) {
@@ -203,9 +206,7 @@ class Dice extends Widget {
         const visibleFace = (side == af % n) ? af :
           n * ((hash >>> (side*shift)) % facesOnSide) + side;
         for(var i = side; i < fc; i += n ) {
-          if(i == visibleFace)
-            this.faceElements[i].classList.remove('extra3Dface');
-          else
+          if(i != visibleFace)
             this.faceElements[i].classList.add('extra3Dface');
         }
       }
@@ -213,33 +214,6 @@ class Dice extends Widget {
   }
 
   threeDrotationsCSS() {
-    const rotations = {
-      2: {
-        x: [ 0 ],
-        y: [ 0, 180 ],
-        z: [ 0 ]
-      },
-      4: {
-        x: [ -109.5, -109.5, -109.5, 0 ],
-        y: [    0 ],
-        z: [   60,    -60,    180,   0 ]
-      },
-      6: {
-        x: [ 0, 90,  0,   0, -90,   0 ],
-        y: [ 0,  0, 90, -90,   0, 180 ],
-        z: [ 0 ]
-      },
-      8: {
-        x: [ -35.36, 144.64 ],
-        y: [  45, -45, 135, -135, -135, 135, -45, 45 ],
-        z: [ 0 ]
-      },
-      12: {
-        x: [ 0, -73.435, -73.435, -73.435, -73.435, -73.435, -180, 126.7175, 126.7175, 126.7175, 126.7175, 126.7175 ],
-        y: [ 0 ],
-        z: [ 0, -180, -108, -36, 36, 108, 0, -180, -36, 36, -108, 108 ]
-      }
-    };
     const s3d = this.threeDshape();
     const af = this.activeFace();
     const rc = this.get('rollCount');
@@ -276,9 +250,9 @@ class Dice extends Widget {
         "faceX": [ 0, 180 ],
         "faceY": [ 0 ],
         "faceZ": [ 0 ],
-        "rollX": 4,
+        "rollX": 3,
         "rollY": 0,
-        "rollZ": 1
+        "rollZ": 0
       },
       {
         "shapeName": "d4",
