@@ -186,7 +186,7 @@ class Dice extends Widget {
     if(pipSymb != null)
       return pipSymb;
     const shape = this.threeDshape();
-    return (shape == null || shape == 'd6');      
+    return (shape == null || shape.shapeName == 'd6');      
   }
 
   async set(property, value) {
