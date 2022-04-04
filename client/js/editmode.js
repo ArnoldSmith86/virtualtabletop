@@ -12,8 +12,10 @@ async function addWidgetLocal(widget) {
   if (!widget.id)
     widget.id = generateUniqueWidgetID();
   const isNewWidget = !widgets.has(widget.id);
+  if(isNewWidget)
+    addWidget(widget);
   sendPropertyUpdate(widget.id, widget);
-  sendDelta(true);
+  sendDelta();
   batchStart();
   if(isNewWidget)
     for(const [ w, routine ] of StateManaged.globalUpdateListeners['id'] || [])
@@ -588,12 +590,16 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
     if(wi.type == 'timer')  w = new Timer(wi.id);
     widgets.set(wi.id, w);
     w.applyInitialDelta(wi);
+    w.domElement.id = w.id;
     if(!wi.parent) {
       w.domElement.addEventListener('click', async _=>{
         overlayDone(await onClick());
       });
       $('#addOverlay').appendChild(w.domElement);
     }
+  }
+  for(const wi of widgetsToAdd) {
+    widgets.delete(wi.id)
   }
 }
 
@@ -605,6 +611,7 @@ function addWidgetToAddWidgetOverlay(w, wi) {
     const id = await addWidgetLocal(toAdd);
     overlayDone(id);
   });
+  w.domElement.id = w.id;
   $('#addOverlay').appendChild(w.domElement);
 }
 
@@ -839,7 +846,7 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
   if(applyChangesFromUI)
     await applyEditOptions(widget);
 
-  const children = Widget.prototype.children.call(widgets.get(previousState.id));
+  const children = Widget.prototype.children.call(widgets.get(previousState.id)); // use Widget.children even for holders so it doesn't filter
   const cards = widgetFilter(w=>w.get('deck')==previousState.id);
 
   if(widget.id !== previousState.id || widget.type !== previousState.type) {
