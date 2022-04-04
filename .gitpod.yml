@@ -11,3 +11,6 @@ ports:
   - port: 9239
     visibility: private
     onOpen: ignore
+  - port: 5900
+    visibility: private
+    onOpen: ignore
