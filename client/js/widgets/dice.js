@@ -185,7 +185,7 @@ class Dice extends Widget {
     const pipSymb = this.get('pipSymbols');
     if(pipSymb != null)
       return pipSymb;
-    const shape = this.shape3d();
+    const shape = this.threeDshape();
     return (shape == null || shape == 'd6');      
   }
 
