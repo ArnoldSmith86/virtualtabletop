@@ -19,7 +19,7 @@ class Dice extends Widget {
       activeFace: 0,
       rollCount: 0,
 
-      pipSymbols: true,
+      pipSymbols: null,
       shape3d: false
     });
   }
@@ -68,7 +68,7 @@ class Dice extends Widget {
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
 
-    if(delta.options !== undefined || delta.pipSymbols !== undefined)
+    if(delta.options !== undefined || delta.shape3d !== undefined || delta.pipSymbols !== undefined)
       this.createChildNodes();
 
     if(delta.rollCount !== undefined) {
@@ -130,7 +130,7 @@ class Dice extends Widget {
     for(const i in options) {
       const content = options[i];
       const face = document.createElement('div');
-      if(typeof content == 'number' && content>=1 && content<=9 && this.get('pipSymbols')) {
+      if(typeof content == 'number' && content>=1 && content<=9 && this.pipSymbols()) {
         face.textContent = `die_face_${content}`;
         face.className = 'dicePip';
       } else if(typeof content == 'string' && content.match(/^\/(assets|i)/)) {
@@ -179,6 +179,14 @@ class Dice extends Widget {
         return o[this.activeFace()];
     }
     return super.getDefaultValue(property);
+  }
+
+  pipSymbols() {
+    const pipSymb = this.get('pipSymbols');
+    if(pipSymb != null)
+      return pipSymb;
+    const shape = this.shape3d();
+    return (shape == null || shape == 'd6');      
   }
 
   async set(property, value) {
@@ -236,7 +244,7 @@ class Dice extends Widget {
   threeDshape() {
     const s3d = this.get('shape3d');
     if(!s3d)
-      return;
+      return null;
     const shapes = [
       {
         "shapeName": "d2",

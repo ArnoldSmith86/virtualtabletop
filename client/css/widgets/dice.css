@@ -230,7 +230,7 @@
 .d4.dice.widget,
 .d8.dice.widget,
 .d20.dice.widget {
-  --fontSize: calc(var(--faceHeight) * .65);
+  --fontSize: calc(var(--faceHeight) * .45);
 }
 
 .triangle.dice.widget > .diceFaces,
@@ -367,7 +367,7 @@
 .d10.dice.widget {
   --faceWidth: calc(var(--size) * 0.6180339887);
   --faceHeight: calc(var(--faceWidth) * 1.268095046);
-  --fontSize: calc(var(--faceWidth) * 0.6);
+  --fontSize: calc(var(--faceWidth) * 0.5);
 }
 
 .d10.dice.widget > .diceFaces {
