@@ -1,6 +1,8 @@
 .dice.widget {
   --fontSize: calc(var(--size) * .95);
   --faceBorder: 0.5px solid var(--pipColor);
+  --faceWidth: var(--size);
+  --faceHeight: var(--size);
 }
 
 .dice.widget > .diceFaces {
@@ -46,6 +48,29 @@
   font-family: VTT-Symbols;
 }
 
+.dice.widget > * > .diceFace > .polygonBorder::before,
+.dice.widget > * > .diceFace > .polygonBorder::after,
+.dice.widget > * > .diceFace > .polygonBorder {
+  position: absolute;
+  box-sizing: border-box;
+  left: 0;
+  width: var(--faceWidth);
+  height: var(--faceHeight);
+  border-bottom: var(--faceBorder);
+}
+
+.dice.widget > * > .diceFace > .polygonBorder {
+  display: none;
+  bottom: 0;
+}
+
+.dice.widget > * > .diceFace > .polygonBorder::before,
+.dice.widget > * > .diceFace > .polygonBorder::after {
+  display: block;
+  content: '';
+  top: 0;
+  transform-origin: inherit;
+}
 
 .dice.widget > .animate {
   animation-duration: 0.5s;
@@ -123,12 +148,13 @@
 }
 
 .shape3D.dice.widget > .diceFaces {
-  width: var(--size);
-  height: var(--size);
+  width: var(--faceWidth);
+  height: var(--faceHeight);
   transform-style: preserve-3d;
-  transform: rotateX(var(--rotX)) rotateY(var(--rotY)) rotateZ(var(--rotZ));
-  animation: none;
+  transform: translateY(var(--translateY)) translateZ(var(--translateZ)) rotateX(var(--rotX)) rotateY(var(--rotY)) rotateZ(var(--rotZ));
   transition: transform 0.5s cubic-bezier(1, 1.65, 0.6, 0.85);
+  --translateY: 0;
+  --translateZ: calc(var(--size) / -2);
 }
 
 .shape3D.dice.widget > * > .diceFace {
@@ -144,6 +170,7 @@
 .d2.shape3D.dice.widget > .diceFaces {
   width: 100%;
   height: 100%;
+  --translateZ: 0;
 }
 
 .d2.shape3D.dice.widget > * > .diceFace {
@@ -199,69 +226,76 @@
   border-radius: 0;
 }
 
-.d4.dice.widget > .diceFaces {
-  transform: rotateX(var(--rotX)) rotateZ(var(--rotZ));
-  transform-origin: 50% 66% calc(var(--size) * -0.22453656);
-}
-
+.triangle.dice.widget,
 .d4.dice.widget,
-.d8.dice.widget {
-  --fontSize: calc(var(--size) * .65);
+.d8.dice.widget,
+.d20.dice.widget {
+  --fontSize: calc(var(--faceHeight) * .65);
 }
 
+.triangle.dice.widget > .diceFaces,
+.d4.dice.widget > .diceFaces,
+.d8.dice.widget > .diceFaces,
+.d20.dice.widget > .diceFaces {
+  transform-origin: 50% calc(100% * 2 / 3);
+}
+
+.triangle.dice.widget > * > .diceFace,
 .d4.dice.widget > * > .diceFace,
-.d8.dice.widget > * > .diceFace {
+.d8.dice.widget > * > .diceFace,
+.d20.dice.widget > * > .diceFace {
   clip-path: polygon(50% 0, 100% 100%, 0% 100%);
-  width: 110%;
-  height: 95%;
-  left: -5%;
   padding-top: 25%;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-bottom: var(--faceBorder);
-  font-size: var(--fontSize);
+  border: none;
 }
 
-.d4.dice.widget > * > .diceFace::before,
-.d4.dice.widget > * > .diceFace::after,
-.d8.dice.widget > * > .diceFace::before,
-.d8.dice.widget > * > .diceFace::after {
+.triangle.dice.widget > * > .diceFace > .polygonBorder,
+.d4.dice.widget > * > .diceFace > .polygonBorder,
+.d8.dice.widget > * > .diceFace > .polygonBorder,
+.d20.dice.widget > * > .diceFace > .polygonBorder {
   display: block;
-  position: absolute;
-  content: '';
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: calc(var(--size) * .95);
-  border-bottom: inherit;
-  transform-origin: 50% 66.7%;
-  transform: rotate(120deg);
+  transform-origin: 50% calc(100% * 2 / 3);
 }
-.d4.dice.widget > * > .diceFace::after,
-.d8.dice.widget > * > .diceFace::after {
-  transform: rotate(-120deg);
+
+.triangle.dice.widget > * > .diceFace > .polygonBorder::before,
+.d4.dice.widget > * > .diceFace > .polygonBorder::before,
+.d8.dice.widget > * > .diceFace > .polygonBorder::before,
+.d20.dice.widget > * > .diceFace > .polygonBorder::before {
+  transform: rotateZ(120deg);
+}
+
+.triangle.dice.widget > * > .diceFace > .polygonBorder::after,
+.d4.dice.widget > * > .diceFace > .polygonBorder::after,
+.d8.dice.widget > * > .diceFace > .polygonBorder::after,
+.d20.dice.widget > * > .diceFace > .polygonBorder::after {
+  transform: rotateZ(240deg);
+}
+
+.d4.dice.widget {
+  --faceHeight: var(--size);
+  --faceWidth: calc(var(--faceHeight) * 1.154700538);
+}
+
+.d4.dice.widget > .diceFaces {
+  transform-origin: 50% calc(100% * 2 / 3) calc(var(--faceWidth) * -0.2041241452);
+  --translateY: 0;
 }
 
 .d4.dice.widget > * > .diceFace:nth-child(4n + 1) {
-  transform-origin: 0% 100%;
-  transform: rotateZ(-60deg) rotateX(109.5deg);
-}
-
-.d4.dice.widget > * > .diceFace:nth-child(4n + 2) {
   transform-origin: 100% 100%;
   transform: rotateZ(60deg) rotateX(109.5deg);
 }
 
-.d4.dice.widget > * > .diceFace:nth-child(4n + 3) {
+.d4.dice.widget > * > .diceFace:nth-child(4n + 2) {
   transform-origin: 50% 100%;
   transform: rotateZ(180deg) rotateX(109.5deg);
 }
 
-
-.d6.dice.widget > .diceFaces {
-  transform: translateZ(calc(var(--size) / -2)) rotateX(var(--rotX)) rotateY(var(--rotY));
+.d4.dice.widget > * > .diceFace:nth-child(4n + 3) {
+  transform-origin: 0% 100%;
+  transform: rotateZ(-60deg) rotateX(109.5deg);
 }
+
 
 .d6.dice.widget > * > .diceFace:nth-child(6n + 1) {
   transform: rotateY(  0deg) translateZ(calc(var(--size) / 2));
@@ -272,15 +306,15 @@
 }
 
 .d6.dice.widget > * > .diceFace:nth-child(6n + 3) {
-  transform: rotateY(-90deg) translateZ(calc(var(--size) / 2));
+  transform: rotateY( 90deg) rotateZ(-90deg) translateZ(calc(var(--size) / 2));
 }
 
 .d6.dice.widget > * > .diceFace:nth-child(6n + 4) {
-  transform: rotateY( 90deg) translateZ(calc(var(--size) / 2));
+  transform: rotateY(-90deg) rotateZ(90deg) translateZ(calc(var(--size) / 2));
 }
 
 .d6.dice.widget > * > .diceFace:nth-child(6n + 5) {
-  transform: rotateX( 90deg) translateZ(calc(var(--size) / 2));
+  transform: rotateX( 90deg) rotateZ(180deg) translateZ(calc(var(--size) / 2));
 }
 
 .d6.dice.widget > * > .diceFace:nth-child(6n) {
@@ -288,111 +322,212 @@
 }
 
 
+.d8.dice.widget {
+  --faceHeight: calc(var(--faceWidth) * 0.8660254038);
+}
+
 .d8.dice.widget > .diceFaces {
-  transform: translateY(-23.5%) rotateX(var(--rotX)) rotateY(var(--rotY));
-  transform-origin: 50% 77.6%;
+  --translateY: -12.5%;
+  --translateZ: calc(var(--faceWidth) * -0.4);
 }
 
 .d8.dice.widget > * > .diceFace {
   transform-origin: 50% 0%;
-  transform: translateY(var(--tY)) rotateY(var(--rY)) rotateX(var(--rX));
+  transform: translateY(calc(100% * 2 / 3)) translateZ(var(--tZ)) rotateZ(var(--rZ)) rotateX(var(--rX));
 }
+
 .d8.dice.widget > * > .diceFace:nth-child(2n + 1) {
-  --rX: 35.36deg;
-  --tY: 0;
+  --rX: -54.7deg;
+  --tZ: calc(var(--faceWidth) * 0.7071067812);
 }
+
 .d8.dice.widget > * > .diceFace:nth-child(2n) {
-  --rX: -144.64deg;
-  --tY: 163.2993162%;
+  --rX: 125.3deg;
+  --tZ: calc(var(--faceWidth) * -0.7071067812);
 }
 
 .d8.dice.widget > * > .diceFace:nth-child(8n + 1),
 .d8.dice.widget > * > .diceFace:nth-child(8n) {
-  --rY: -45deg;
+  --rZ: -45deg;
 }
 .d8.dice.widget > * > .diceFace:nth-child(8n + 3),
 .d8.dice.widget > * > .diceFace:nth-child(8n + 6) {
-  --rY: -135deg;
+  --rZ: 135deg;
 }
 .d8.dice.widget > * > .diceFace:nth-child(8n + 5),
 .d8.dice.widget > * > .diceFace:nth-child(8n + 4) {
-  --rY: 135deg;
+  --rZ: -135deg;
 }
 .d8.dice.widget > * > .diceFace:nth-child(8n + 7),
 .d8.dice.widget > * > .diceFace:nth-child(8n + 2) {
-  --rY: 45deg;
+  --rZ: 45deg;
 }
 
 
+.d10.dice.widget {
+  --faceWidth: calc(var(--size) * 0.6180339887);
+  --faceHeight: calc(var(--faceWidth) * 1.268095046);
+  --fontSize: calc(var(--faceWidth) * 0.6);
+}
+
+.d10.dice.widget > .diceFaces {
+  --translateZ: 0;
+  --translateY: 3%;
+}
+
+.d10.dice.widget > * > .diceFace {
+  clip-path: polygon( 50% 0, 100% 80.90169944%, 50% 100%, 0 80.90169944% );
+  transform-origin: 50% 0;
+  transform: translateY(50%) translateZ(var(--tZ)) rotateZ(var(--rZ)) rotateX(var(--rX));
+  padding-top: 40%;
+}
+
+.d10.dice.widget > * > .diceFace:nth-child(2n + 1) {
+  --rX: -47.87038998deg;
+  --tZ: calc( var(--faceHeight) * 0.670809977 );
+}
+
+.d10.dice.widget > * > .diceFace:nth-child(2n) {
+  --rX: 132.12961deg;
+  --tZ: calc( var(--faceHeight) * -0.670809977 );
+}
+
+.d10.dice.widget > * > .diceFace:nth-child(10n + 1),
+.d10.dice.widget > * > .diceFace:nth-child(10n)  {
+  --rZ: 0deg;  
+}
+
+.d10.dice.widget > * > .diceFace:nth-child(10n + 2),
+.d10.dice.widget > * > .diceFace:nth-child(10n + 9) {
+  --rZ: 72deg;  
+}
+
+.d10.dice.widget > * > .diceFace:nth-child(10n + 3),
+.d10.dice.widget > * > .diceFace:nth-child(10n + 8) {
+  --rZ: 144deg;  
+}
+
+.d10.dice.widget > * > .diceFace:nth-child(10n + 4),
+.d10.dice.widget > * > .diceFace:nth-child(10n + 7) {
+  --rZ: 216deg;  
+}
+
+.d10.dice.widget > * > .diceFace:nth-child(10n + 5),
+.d10.dice.widget > * > .diceFace:nth-child(10n + 6) {
+  --rZ: 288deg;  
+}
+
+.d10.dice.widget > * > .diceFace > .polygonBorder {
+  display: block;
+  border: none;
+  right: 50%;
+}
+
+.d10.dice.widget > * > .diceFace > .polygonBorder + .polygonBorder {
+  transform: scaleX(-1);
+}
+
+.d10.dice.widget > * > .diceFace > .polygonBorder::before {
+  transform-origin: 100% 100%;
+  transform: translateX(-50%) rotateZ(25.84411869deg);
+}
+
+.d10.dice.widget > * > .diceFace > .polygonBorder::after {
+  transform-origin: 0 0;
+  transform: translateX(50%) rotateZ(25.98330659deg);
+  border-bottom: none;
+  border-left: var(--faceBorder);
+}
+
+
+.pentagon.dice.widget > * > .diceFace,
+.d12.dice.widget > * > .diceFace {
+  clip-path: polygon(50% 0, 100% 38.2%, 80.9% 100%, 19.1% 100%, 0 38.2%);
+  transform-origin: 50% 55.27864045%;
+  border-width: 0;
+  padding-top: 10%;
+}
+
+.pentagon.dice.widget > * > .diceFace > .polygonBorder,
+.d12.dice.widget > * > .diceFace > .polygonBorder {
+  display: block;
+  transform-origin: 50% 55.27864045%;
+}
+
+.pentagon.dice.widget > * > .diceFace > .polygonBorder + .polygonBorder,
+.d12.dice.widget > * > .diceFace > .polygonBorder + .polygonBorder {
+  transform: scaleX(-1);
+}
+
+.pentagon.dice.widget > * > .diceFace > .polygonBorder::before,
+.d12.dice.widget > * > .diceFace > .polygonBorder::before {
+  transform: rotate(72deg);
+}
+
+.pentagon.dice.widget > * > .diceFace > .polygonBorder::after,
+.d12.dice.widget > * > .diceFace > .polygonBorder::after {
+  transform: rotate(144deg);
+}
+
+
+.d12.dice.widget {
+  --faceWidth: calc(var(--size) * 0.726542528);
+  --faceHeight: calc(var(--faceWidth) * 0.9510565163);
+  --fontSize: calc(var(--faceWidth) * 0.6);
+}
+
 .d12.dice.widget > .diceFaces {
-  transform: scale(0.5) rotateX(var(--rotX)) rotateZ(var(--rotZ));
-  transform-origin: 50% 50% calc(var(--size) * -1.113516364);
+  transform-origin: 50% 55.27864045%;
+  --translateY: -3%;
 }
 
 .d12.dice.widget > * > .diceFace {
-  transform-origin: 50% 50% calc(var(--size) * -1.113516364);
-  transform: rotateZ(var(--rZ)) rotateX(var(--rX));
+  transform: rotateZ(var(--rZ)) rotateX(var(--rX)) translateZ(calc(var(--size)/2));
+}
 
-  clip-path: polygon(50% 0, 100% 38.19%, 80.9% 100%, 19.1% 100%, 0 38.19%);
-  height: 153.9%;
-  width: 161.8%;
-  top: -26.95%;
-  left: -30.9%;
+.d12.dice.widget > * > .diceFace:nth-child(2n + 1) {
+  --rX: 63.43494882deg;
 }
+
+.d12.dice.widget > * > .diceFace:nth-child(2n) {
+  --rX: -116.5650512deg;
+}
+
 .d12.dice.widget > * > .diceFace:nth-child(12n + 1) {
-  --rX: 0;
   --rZ: 0;
+  --rX: 0;
 }
-.d12.dice.widget > * > .diceFace:nth-child(12n + 2) {
-  --rX: 73.435deg;
+
+.d12.dice.widget > * > .diceFace:nth-child(12n + 2),
+.d12.dice.widget > * > .diceFace:nth-child(12n + 11) {
   --rZ: 180deg;
 }
-.d12.dice.widget > * > .diceFace:nth-child(12n + 3) {
-  --rX: 73.435deg;
+
+.d12.dice.widget > * > .diceFace:nth-child(12n + 3),
+.d12.dice.widget > * > .diceFace:nth-child(12n + 10) {
   --rZ: 108deg;
 }
-.d12.dice.widget > * > .diceFace:nth-child(12n + 4) {
-  --rX: 73.435deg;
+
+.d12.dice.widget > * > .diceFace:nth-child(12n + 4),
+.d12.dice.widget > * > .diceFace:nth-child(12n + 9) {
   --rZ: 36deg;
 }
-.d12.dice.widget > * > .diceFace:nth-child(12n + 5) {
-  --rX: 73.435deg;
+
+.d12.dice.widget > * > .diceFace:nth-child(12n + 5),
+.d12.dice.widget > * > .diceFace:nth-child(12n + 8) {
   --rZ: -36deg;
 }
-.d12.dice.widget > * > .diceFace:nth-child(12n + 6) {
-  --rX: 73.435deg;
+
+.d12.dice.widget > * > .diceFace:nth-child(12n + 6),
+.d12.dice.widget > * > .diceFace:nth-child(12n + 7) {
   --rZ: -108deg;
 }
 
-.d12.dice.widget > * > .diceFace:nth-child(12n + 7) {
+.d12.dice.widget > * > .diceFace:nth-child(12n) {
   --rX: 180deg;
   --rZ: 0;
 }
 
-.d12.dice.widget > * > .diceFace:nth-child(12n + 8) {
-  --rX: -126.7175deg;
-  --rZ: 180deg;
-}
-
-.d12.dice.widget > * > .diceFace:nth-child(12n + 9) {
-  --rX: -126.7175deg;
-  --rZ: 36deg;
-}
-
-.d12.dice.widget > * > .diceFace:nth-child(12n + 10) {
-  --rX: -126.7175deg;
-  --rZ: -36deg;
-}
-
-.d12.dice.widget > * > .diceFace:nth-child(12n + 11) {
-  --rX: -126.7175deg;
-  --rZ: 108deg;
-}
-
-.d12.dice.widget > * > .diceFace:nth-child(12n) {
-  --rX: -126.7175deg;
-  --rZ: -108deg;
-}
 
 @keyframes shake {
   15% {

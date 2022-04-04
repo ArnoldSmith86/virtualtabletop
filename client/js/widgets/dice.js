@@ -125,6 +125,8 @@ class Dice extends Widget {
 
     this.faceElements = [];
     const options = this.get('options');
+    const polygonBorder = document.createElement('span');
+    polygonBorder.className = "polygonBorder";
     for(const i in options) {
       const content = options[i];
       const face = document.createElement('div');
@@ -136,6 +138,8 @@ class Dice extends Widget {
       } else {
         face.textContent = content;
       }
+      face.appendChild(polygonBorder.cloneNode(true));
+      face.appendChild(polygonBorder.cloneNode(true));
 
       face.classList.add(`diceFace`);
       face.classList.add(`face${+i+1}`);
@@ -258,8 +262,8 @@ class Dice extends Widget {
         "shapeName": "d4",
         "sides": 4,
         "faceX": [ -109.5, -109.5, -109.5, 0 ],
-        "faceY": [ 0 ],
-        "faceZ": [   60,    -60,    180,   0 ],
+        "faceY": [ 0, 0, 0, 0 ],
+        "faceZ": [     300,    180,  60, 0 ],
         "rollX": 2,
         "rollY": 2,
         "rollZ": 2
@@ -267,9 +271,9 @@ class Dice extends Widget {
       {
         "shapeName": "d6",
         "sides": 6,
-        "faceX": [ 0, 90,  0,   0, -90,   0 ],
-        "faceY": [ 0,  0, 90, -90,   0, 180 ],
-        "faceZ": [ 0 ],
+        "faceX": [ 0, 90,  90,  90, 90,   180 ],
+        "faceY": [ 0,  0,  0, 0,  0, 0 ],
+        "faceZ": [ 0,  0, 90,  -90,  -180,   -180 ],
         "rollX": 2,
         "rollY": 2,
         "rollZ": 2
@@ -277,21 +281,31 @@ class Dice extends Widget {
       {
         "shapeName": "d8",
         "sides": 8,
-        "faceX": [ -35.36, 144.64 ],
-        "faceY": [ 45, -45, 135, -135, -135, 135, -45, 45 ],
-        "faceZ": [ 0 ],
-        "rollX": 2,
-        "rollY": 2,
+        "faceX": [ 54.7, -125.3 ],
+        "faceY": [ 0 ],
+        "faceZ": [ 45, -45, 225, 135, 135, 225, 315, 405 ],
+        "rollX": 1,
+        "rollY": 0,
+        "rollZ": 2
+      },
+      {
+        "shapeName": "d10",
+        "sides": 10,
+        "faceX": [ 65, -115 ],
+        "faceY": [ 0 ],
+        "faceZ": [ 0, -72, -144, -216, -288, -288, -216, -144, -72, 0 ],
+        "rollX": 1,
+        "rollY": 0,
         "rollZ": 2
       },
       {
         "shapeName": "d12",
         "sides": 12,
-        "faceX": [    0,  -73.435,  -73.435,  -73.435,  -73.435, -73.435,
-                   -180, 126.7175, 126.7175, 126.7175, 126.7175, 126.7175 ],
+        "faceX": [    0, 116.5650512, -63.43494882, 116.5650512, -63.43494882, 116.5650512, 
+           -63.43494882, 116.5650512, -63.43494882, 116.5650512, -63.43494882, -180 ],
         "faceY": [ 0 ],
         "faceZ": [     0,    -180,     -108,      -36,       36,     108,
-                       0,    -180,      -36,       36,     -108,     108 ],
+                       108,    36,      -36,       -108,     -180,     0 ],
         "rollX": 2,
         "rollY": 2,
         "rollZ": 2
