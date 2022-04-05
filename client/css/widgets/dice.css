@@ -537,7 +537,8 @@
 }
 
 .d20.dice.widget > .diceFaces {
-  ---translateZ: calc(var(--faceWidth) * -0.4);
+  --translateY: calc(100% * -1 / 6);
+  --translateZ: calc(var(--size) * -1 / 4);
 }
 
 .d20.dice.widget > * > .diceFace {
