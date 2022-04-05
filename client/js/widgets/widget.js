@@ -1806,8 +1806,11 @@ export class Widget extends StateManaged {
       e.style.cssText = this.domElement.style.cssText;
       e.style.display = this.domElement.style.display;
       e.style.transform = `scale(calc(${this.get('enlarge')} * var(--scale)))`;
-      if(this.domElement.getBoundingClientRect().left < window.innerWidth/2)
+      const box = this.domElement.getBoundingClientRect();
+      if(box.left+box.width/2 < window.innerWidth/2)
         e.classList.add('right');
+      if(box.top+box.height/2 < window.innerHeight/2)
+        e.classList.add('bottom');
       
       const wStyle = $(`#STYLES_${escapeID(id)}`);
       if(wStyle) {
