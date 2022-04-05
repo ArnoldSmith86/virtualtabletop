@@ -1811,9 +1811,11 @@ export class Widget extends StateManaged {
       
       const wStyle = $(`#STYLES_${escapeID(id)}`);
       if(wStyle) {
+        if($('#enlargeStyle'))
+          removeFromDOM($('#enlargeStyle'));
         const eStyle = document.createElement('style');
         eStyle.id = "enlargeStyle";
-        eStyle.appendChild(document.createTextNode(wStyle.textContent.replace(`#w_${escapeID(id)}`,'#enlarged')));
+        eStyle.appendChild(document.createTextNode(wStyle.textContent.replaceAll(`#w_${escapeID(id)}`,'#enlarged')));
         $('head').appendChild(eStyle);
       }
     }
