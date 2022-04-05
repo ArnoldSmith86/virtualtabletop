@@ -151,7 +151,7 @@
   width: var(--faceWidth);
   height: var(--faceHeight);
   transform-style: preserve-3d;
-  transform: translateY(var(--translateY)) translateZ(var(--translateZ)) rotateX(var(--rotX)) rotateY(var(--rotY)) rotateZ(var(--rotZ));
+  transform: translateY(var(--translateY)) translateZ(var(--translateZ)) rotateX(var(--rotX)) rotateZ(var(--rotZ)) rotateY(var(--rotY));
   transition: transform 0.5s cubic-bezier(1, 1.65, 0.6, 0.85);
   --translateY: 0;
   --translateZ: calc(var(--size) / -2);
@@ -230,6 +230,7 @@
 .d4.dice.widget,
 .d8.dice.widget,
 .d20.dice.widget {
+  --faceWidth: calc(var(--faceHeight) * 1.154700538);
   --fontSize: calc(var(--faceHeight) * .45);
 }
 
@@ -323,6 +324,7 @@
 
 
 .d8.dice.widget {
+  --faceWidth: var(--size);
   --faceHeight: calc(var(--faceWidth) * 0.8660254038);
 }
 
@@ -526,6 +528,63 @@
 .d12.dice.widget > * > .diceFace:nth-child(12n) {
   --rX: 180deg;
   --rZ: 0;
+}
+
+
+.d20.dice.widget {
+  --faceHeight: calc(var(--size) * 0.5729490169);
+  --fontSize: calc(var(--faceHeight) *0.4);
+}
+
+.d20.dice.widget > .diceFaces {
+  ---translateZ: calc(var(--faceWidth) * -0.4);
+}
+
+.d20.dice.widget > * > .diceFace {
+  transform-origin: 50% calc(100% * 2 / 3);
+  transform: translateY(calc(100% * 0 / 6))
+    rotateZ(var(--rZ)) rotate(var(--rY)) rotateX(var(--rX))
+    translateZ(calc(var(--size)/2));
+}
+
+.d20.dice.widget > * > .diceFace:nth-child(4n + 1) {
+  --rX: -37.37736814deg;
+  --rY: 0;
+}
+
+.d20.dice.widget > * > .diceFace:nth-child(4n + 2) {
+  --rX: -100.812317deg;
+  --rY: 180deg;
+}
+
+.d20.dice.widget > * > .diceFace:nth-child(4n + 3)  {
+  --rX: 79.18768304deg;
+  --rY: 180deg;
+}
+
+.d20.dice.widget > * > .diceFace:nth-child(4n)  {
+  --rX: 142.6226319deg;
+  --rY: 0;
+}
+
+.d20.dice.widget > * > .diceFace:nth-child(5n + 1) {
+  --rZ: 144deg;
+}
+
+.d20.dice.widget > * > .diceFace:nth-child(5n + 2) {
+  --rZ: 72deg;
+}
+
+.d20.dice.widget > * > .diceFace:nth-child(5n + 3) {
+  --rZ: 0;
+}
+
+.d20.dice.widget > * > .diceFace:nth-child(5n + 4) {
+  --rZ: -72deg;
+}
+
+.d20.dice.widget > * > .diceFace:nth-child(5n) {
+  --rZ: -144deg;
 }
 
 
