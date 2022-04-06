@@ -448,6 +448,7 @@ body.lightsOff #toolbar:hover {
 
 #enlarged {
   position: fixed;
+  visibility: visible;
   opacity: 1;
   top: 5vh;
   left: 5vw;
