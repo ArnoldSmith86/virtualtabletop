@@ -173,6 +173,10 @@ label.ui-line::before{
   transition-duration: 2s;
   pointer-events: none;
 }
+.cursor.self {
+  visibility: hidden;
+  opacity: 1;
+}
 .cursor.active, .cursor.pressed.foreign {
   --cursorOpacity: var(--cursorActiveOpacity);
   --cursorShowName: var(--cursorActiveShowName);
