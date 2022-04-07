@@ -34,13 +34,8 @@ class Dice extends Widget {
   }
 
   animate() {
-    if(!this.facesElement || !this.activateAnimation)
+    if(!this.facesElement)
       return;
-
-    if(this.animateTimeout1)
-      clearTimeout(this.animateTimeout1);
-    if(this.animateTimeout2)
-      clearTimeout(this.animateTimeout2);
 
     const faceElements = this.faceElements;
 
@@ -55,19 +50,21 @@ class Dice extends Widget {
     if(f2 == af)
       f2 = (f2 + 1) % fc;
 
-    this.facesElement.className = `diceFaces animate animateBegin shake${hash >>> 29}`;
+    this.facesElement.className = `diceFaces shake${hash >>> 29}`;
 
     for(const face of faceElements)
       face.classList.remove('animate1active', 'animate2active');
     faceElements[f1].classList.add('animate1active');
     faceElements[f2].classList.add('animate2active');
+  }
 
-    this.animateTimeout1 = setTimeout(_=> {
-      this.facesElement.classList.remove('animateBegin');
-    }, 50);
-    this.animateTimeout2 = setTimeout(_=> {
-      this.facesElement.className = 'diceFaces';
-    }, 1000);
+  animateProperties() {
+    const rules = super.animateProperties();
+    rules.unshift(
+      'rollCount',
+      { property: 'rollCount', className: 'animateBegin', duration: 50 }
+    );
+    return rules;
   }
 
   applyDeltaToDOM(delta) {
@@ -92,11 +89,6 @@ class Dice extends Widget {
     }
     if(delta.rollCount !== undefined || delta.activeFace !== undefined || delta.options !== undefined || delta.shape3d !== undefined || delta.pipSymbols !== undefined)
       this.threeDfaces();
-  }
-
-  applyInitialDelta(delta) {
-    super.applyInitialDelta(delta);
-    this.activateAnimation = true;
   }
 
   classes() {

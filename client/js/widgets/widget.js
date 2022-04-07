@@ -70,7 +70,9 @@ export class Widget extends StateManaged {
       changeRoutine: null,
       enterRoutine: null,
       leaveRoutine: null,
-      globalUpdateRoutine: null
+      globalUpdateRoutine: null,
+
+      animatePropertyChange: []
     });
     this.domElement.timer = false
 
@@ -100,10 +102,16 @@ export class Widget extends StateManaged {
       this.timer = null;
       this.domElement.classList.add('longtouch');
     }
+
+    this.animateTimeouts = {};
   }
 
   absoluteCoord(coord) {
     return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})[coord]
+  }
+
+  animateProperties() {
+    return asArray(this.get('animatePropertyChange'));
   }
 
   applyChildAdd(child) {
@@ -168,6 +176,24 @@ export class Widget extends StateManaged {
       }
     }
 
+    if(this.activateAnimation) {
+      this.animateProperties().forEach((prop)=>{
+        if(prop != null) {
+          const rule = (typeof prop == 'object')? prop : { property: prop };
+          if(delta[rule.property] !== undefined) {
+            if(rule.className == null)
+              rule.className = `animate_${escapeID(rule.property)}`;
+            if(typeof rule.duration != 'number')
+              rule.duration = 1000;
+            if(this.animateTimeouts[rule.className])
+              clearTimeout(this.animateTimeouts[rule.className]);
+            this.domElement.classList.add(rule.className);
+            this.animateTimeouts[rule.className] = setTimeout(()=>this.domElement.classList.remove(rule.className),rule.duration);
+          }
+        }
+      });
+    }
+
     for(const key in delta) {
       const isGlobalUpdateRoutine = key.match(/^(?:(.*)G|g)lobalUpdateRoutine$/);
       if(isGlobalUpdateRoutine) {
@@ -222,6 +248,11 @@ export class Widget extends StateManaged {
       }
     }
     this.applyDeltaToDOM(delta);
+  }
+
+  applyInitialDelta(delta) {
+    super.applyInitialDelta(delta);
+    this.activateAnimation = true;
   }
 
   applyRemove() {

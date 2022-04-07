@@ -3,6 +3,7 @@
   --faceBorder: 0.5px solid var(--pipColor);
   --faceWidth: var(--size);
   --faceHeight: var(--size);
+  animation-duration: 0.5s;
 }
 
 .dice.widget > .diceFaces {
@@ -10,6 +11,7 @@
   height: 100%;
   width: 100%;
   border-radius: inherit;
+  animation-duration: inherit;
 }
 
 .dice.widget > * > .diceFace {
@@ -72,11 +74,7 @@
   transform-origin: inherit;
 }
 
-.dice.widget > .animate {
-  animation-duration: 0.5s;
-}
-
-.dice.widget:not(.shape3D) > .animate > .diceFace {
+.animate_rollCount.dice.widget:not(.shape3D) > * > .diceFace {
   display: flex;
   --phase1: 0;
   --phase2: 0;
@@ -87,32 +85,32 @@
   animation-duration: inherit;
 }
 
-.dice.widget:not(.shape3D) > .animateBegin > .diceFace {
+.animateBegin.dice.widget:not(.shape3D) > * > .diceFace {
   opacity: var(--phase1);
   animation: none;
 }
 
-.dice.widget:not(.shape3D) > .animate > .active {
+.animate_rollCount.dice.widget:not(.shape3D) > * > .active {
   --final: 1;
 }
 
-.dice.widget:not(.shape3D) > .animate > .animate1active {
+.animate_rollCount.dice.widget:not(.shape3D) > * > .animate1active {
   --phase1: 1;
 }
 
-.dice.widget:not(.shape3D) > .animate > .animate2active {
+.animate_rollCount.dice.widget:not(.shape3D) > * > .animate2active {
   --phase2: 1;
 }
 
 
-.shaking.dice.widget:not(.shape3D) > .animate {
+.animate_rollCount.shaking.dice.widget:not(.shape3D) > .diceFaces {
   animation-name: shake;
   --shakeX: 1;
   --shakeY: 1;
   --shakeR: 1;
 }
 
-.shaking.dice.widget:not(.shape3D) > .animateBegin {
+.aminateBegin.shaking.dice.widget:not(.shape3D) > .diceFaces {
   animation: none;
   transform: translate3d(calc(var(--shakeX) * 2%), 0, 0) rotate(calc(var(--shakeR) * -5deg));
   transition: transform 50ms;
