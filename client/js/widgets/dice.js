@@ -2,6 +2,11 @@ class Dice extends Widget {
   constructor(id) {
     super(id);
 
+    this.facesElement = document.createElement('div');
+    this.facesElement.className = 'diceFaces';
+
+    this.domElement.appendChild(this.facesElement);
+
     this.addDefaults({
       width: 50,
       height: 50,
@@ -117,11 +122,7 @@ class Dice extends Widget {
   }
 
   createChildNodes() {
-    const childNodes = [...this.domElement.childNodes];
-    this.domElement.innerHTML = '';
-
-    this.facesElement = document.createElement('div');
-    this.facesElement.className = 'diceFaces';
+    this.facesElement.innerHTML = '';
 
     this.faceElements = [];
     const options = this.get('options');
@@ -146,12 +147,6 @@ class Dice extends Widget {
       this.facesElement.appendChild(face);
       this.faceElements.push(face);
     }
-
-    this.domElement.appendChild(this.facesElement);
-
-    for(const child of childNodes)
-      if(child.classList.contains('widget'))
-        this.domElement.appendChild(child);
   }
 
   css() {
