@@ -1,5 +1,3 @@
-import { clientPointer } from "./main";
-
 let mouseTarget = null;
 const mouseStatus = {};
 
