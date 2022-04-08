@@ -1,3 +1,5 @@
+import { clientPointer } from "./main";
+
 let mouseTarget = null;
 const mouseStatus = {};
 
@@ -111,6 +113,9 @@ async function inputHandler(name, e) {
 
   if(name == 'mouseup')
     mouseTarget = null;
+
+  clientPointer.style.top = `${coords.clientY}px`;
+  clientPointer.style.left = `${coords.clientX}px`;
 
   toServer('mouse',
     {

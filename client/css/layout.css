@@ -448,8 +448,24 @@ body.lightsOff #toolbar:hover {
   display: none !important;
 }
 
+#clientPointer {
+  visibility: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width:0;
+  height:0;
+  border: none;
+  margin: 0;
+  padding: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
 #enlarged {
   opacity: 1;
+  visibility: visible;
+  position: fixed;
   top: 5vh;
   left: 5vw;
   transition: opacity 200ms ease;

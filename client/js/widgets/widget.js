@@ -2,7 +2,7 @@ import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
-import { showOverlay } from '../main.js';
+import { clientPointer, showOverlay } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { center, distance, overlap, overlapScore, getOffset, applyTransformedOffset } from '../geometry.js';
 
@@ -1823,10 +1823,10 @@ export class Widget extends StateManaged {
       e.style.cssText = this.domElement.style.cssText;
       e.style.display = this.domElement.style.display;
       e.style.transform = `scale(calc(${this.get('enlarge')} * var(--scale)))`;
-      const box = this.domElement.getBoundingClientRect();
-      if(box.left+box.width/2 < window.innerWidth/2)
+      const cursor = clientPointer.getBoundingClientRect();
+      if(cursor.left < window.innerWidth/2)
         e.classList.add('right');
-      if(box.top+box.height/2 < window.innerHeight/2)
+      if(cursor.top < window.innerHeight/2)
         e.classList.add('bottom');
       
       const wStyle = $(`#STYLES_${escapeID(id)}`);
