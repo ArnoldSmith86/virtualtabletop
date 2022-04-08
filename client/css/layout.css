@@ -2,6 +2,8 @@
   --scale: 1;
   --roomWidth: 1600px;
   --roomHeight: 1000px;
+  --roomTop: calc((calc(var(--vh, 1vh) * 100) - var(--roomHeight) * var(--scale)) / 2 - var(--toolbarSize) / 2);
+  --roomLeft: 0px;
   --toolbarSize: 44px;
   --roomColor: #f0f0f0;
   --editColor: #7ba5f5;
@@ -69,8 +71,8 @@ button:hover {
   overflow: hidden;
   width: calc(var(--roomWidth) * var(--scale));
   height: calc(var(--roomHeight) * var(--scale));
-  top: calc((calc(var(--vh, 1vh) * 100) - var(--roomHeight) * var(--scale)) / 2 - var(--toolbarSize) / 2);
-  left: 0;
+  top: var(--roomTop);
+  left: var(--roomLeft);
   z-index: 1;
 }
 
@@ -241,9 +243,9 @@ button:hover {
     min-height: 16px;
   }
 
-  #roomArea {
-    top: 0;
-    left: calc((100vw - var(--roomWidth) * var(--scale)) / 2 + var(--toolbarSize) / 2);
+  :root {
+    --roomTop: 0px;
+    --roomLeft: calc((100vw - var(--roomWidth) * var(--scale)) / 2 + var(--toolbarSize) / 2);
   }
 }
 
@@ -328,9 +330,9 @@ body.aspectTooGood #toolbar .divider {
   max-width: 75px;
 }
 
-body.aspectTooGood #roomArea {
-  top: calc((100vh - var(--scale) * var(--roomHeight)) / 2);
-  left: var(--toolbarSize);
+body.aspectTooGood {
+  --roomTop: calc((100vh - var(--scale) * var(--roomHeight)) / 2);
+  --roomLeft: var(--toolbarSize);
 }
 
 body #hideToolbarButton,
@@ -338,8 +340,8 @@ body.aspectTooGood.hiddenToolbar #toolbar {
   display: none;
 }
 
-body.aspectTooGood.hiddenToolbar #roomArea {
-  left: calc((100vw - var(--scale) * var(--roomWidth)) / 2);
+body.aspectTooGood.hiddenToolbar {
+  --roomLeft: calc((100vw - var(--scale) * var(--roomWidth)) / 2);
 }
 
 body.aspectTooGood #hideToolbarButton {

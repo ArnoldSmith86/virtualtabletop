@@ -122,14 +122,17 @@ body.jsonEdit #toolbar {
   display: none;
 }
 
-body.jsonEdit #roomArea {
-  top: calc((100vh - var(--roomHeight) * var(--scale)) / 2);
-  left: 0;
+body.jsonEdit {
+  --roomTop: calc((100vh - var(--roomHeight) * var(--scale)) / 2);
+  --roomLeft: 0;
+}
+
+body.jsonEdit.jeZoomOut {
+  --roomTop: calc((100vh - var(--roomHeight) * var(--scale)) / 2);
+  --roomLeft: 12.5%;
 }
 
 body.jsonEdit.jeZoomOut #roomArea {
-  top: calc((100vh - var(--roomHeight) * var(--scale)) / 2);
-  left: 12.5%;
   overflow: visible;
 }
 
