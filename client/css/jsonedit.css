@@ -124,7 +124,7 @@ body.jsonEdit #toolbar {
 
 body.jsonEdit {
   --roomTop: calc((100vh - var(--roomHeight) * var(--scale)) / 2);
-  --roomLeft: 0;
+  --roomLeft: 0px;
 }
 
 body.jsonEdit.jeZoomOut {
