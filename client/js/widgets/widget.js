@@ -2,7 +2,7 @@ import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
-import { clientPointer, showOverlay } from '../main.js';
+import { showOverlay } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { center, distance, overlap, overlapScore, getOffset, applyTransformedOffset } from '../geometry.js';
 
