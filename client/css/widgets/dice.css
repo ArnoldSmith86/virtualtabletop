@@ -12,6 +12,30 @@
   width: 100%;
   border-radius: inherit;
   animation-duration: inherit;
+  --changeX: 1;
+  --changeY: 1;
+  --changeZ: 1;
+}
+
+.dice.widget > .diceFaces.shake1,
+.dice.widget > .diceFaces.shake3,
+.dice.widget > .diceFaces.shake5,
+.dice.widget > .diceFaces.shake7 {
+  --changeX: -1;
+}
+
+.dice.widget > .diceFaces.shake2,
+.dice.widget > .diceFaces.shake3,
+.dice.widget > .diceFaces.shake6,
+.dice.widget > .diceFaces.shake7 {
+  --changeY: -1;
+}
+
+.dice.widget > .diceFaces.shake4,
+.dice.widget > .diceFaces.shake5,
+.dice.widget > .diceFaces.shake6,
+.dice.widget > .diceFaces.shake7 {
+  --changeZ: -1;
 }
 
 .dice.widget > * > .diceFace {
@@ -105,36 +129,12 @@
 
 .animate_rollCount.shaking.dice.widget:not(.shape3D) > .diceFaces {
   animation-name: shake;
-  --shakeX: 1;
-  --shakeY: 1;
-  --shakeR: 1;
 }
 
 .aminateBegin.shaking.dice.widget:not(.shape3D) > .diceFaces {
   animation: none;
-  transform: translate3d(calc(var(--shakeX) * 2%), 0, 0) rotate(calc(var(--shakeR) * -5deg));
+  transform: translate3d(calc(var(--changeX) * 2%), 0, 0) rotate(calc(var(--changeZ) * -5deg));
   transition: transform 50ms;
-}
-
-.shaking.dice.widget:not(.shape3D) > .shake1,
-.shaking.dice.widget:not(.shape3D) > .shake3,
-.shaking.dice.widget:not(.shape3D) > .shake5,
-.shaking.dice.widget:not(.shape3D) > .shake7 {
-  --shakeX: -1;
-}
-
-.shaking.dice.widget:not(.shape3D) > .shake2,
-.shaking.dice.widget:not(.shape3D) > .shake3,
-.shaking.dice.widget:not(.shape3D) > .shake6,
-.shaking.dice.widget:not(.shape3D) > .shake7 {
-  --shakeY: -1;
-}
-
-.shaking.dice.widget:not(.shape3D) > .shake4,
-.shaking.dice.widget:not(.shape3D) > .shake5,
-.shaking.dice.widget:not(.shape3D) > .shake6,
-.shaking.dice.widget:not(.shape3D) > .shake7 {
-  --shakeR: -1;
 }
 
 
@@ -590,63 +590,67 @@
 @keyframes shake {
   15% {
     transform: translate3d(
-        calc(var(--shakeX) * 4%),
-        calc(var(--shakeY) * 2%),
+        calc(var(--changeX) * 4%),
+        calc(var(--changeY) * 2%),
         0
       )
-      rotate(calc(var(--shakeR) * -10deg));
+      rotate(calc(var(--changeZ) * -10deg));
   }
   30% {
     transform: translate3d(
-        calc(var(--shakeX) * -8%),
-        calc(var(--shakeY) * 4%),
+        calc(var(--changeX) * -8%),
+        calc(var(--changeY) * 4%),
         0
       )
-      rotate(calc(var(--shakeR) * 15deg));
+      rotate(calc(var(--changeZ) * 15deg));
   }
   40% {
     transform: translate3d(
-        calc(var(--shakeX) * 8%),
-        calc(var(--shakeY) * -8%),
+        calc(var(--changeX) * 8%),
+        calc(var(--changeY) * -8%),
         0
       )
-      rotate(calc(var(--shakeR) * -10deg));
+      rotate(calc(var(--changeZ) * -10deg));
   }
   50% {
     transform: translate3d(
-        calc(var(--shakeX) * -4%),
-        calc(var(--shakeY) * 8%),
+        calc(var(--changeX) * -4%),
+        calc(var(--changeY) * 8%),
         0
       )
-      rotate(calc(var(--shakeR) * 5deg));
+      rotate(calc(var(--changeZ) * 5deg));
   }
   60% {
     transform: translate3d(
-        calc(var(--shakeX) * 8%),
-        calc(var(--shakeY) * -4%),
+        calc(var(--changeX) * 8%),
+        calc(var(--changeY) * -4%),
         0
       )
-      rotate(calc(var(--shakeR) * 15deg));
+      rotate(calc(var(--changeZ) * 15deg));
   }
   70% {
     transform: translate3d(
-        calc(var(--shakeX) * -4%),
-        calc(var(--shakeY) * 8%),
+        calc(var(--changeX) * -4%),
+        calc(var(--changeY) * 8%),
         0
       )
-      rotate(calc(var(--shakeR) * -20deg));
+      rotate(calc(var(--changeZ) * -20deg));
   }
   80% {
     transform: translate3d(
-        calc(var(--shakeX) * -2%),
-        calc(var(--shakeY) * -4%),
+        calc(var(--changeX) * -2%),
+        calc(var(--changeY) * -4%),
         0
       )
-      rotate(calc(var(--shakeR) * 10deg));
+      rotate(calc(var(--changeZ) * 10deg));
   }
   90% {
-    transform: translate3d(0, calc(var(--shakeY) * -2%), 0)
-      rotate(calc(var(--shakeR) * 5deg));
+    transform: translate3d(
+        0, 
+        calc(var(--changeY) * -2%), 
+        0
+      )
+      rotate(calc(var(--changeR) * 5deg));
   }
 }
 @keyframes faceChange {
