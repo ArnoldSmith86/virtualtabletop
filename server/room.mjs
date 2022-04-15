@@ -309,7 +309,7 @@ export default class Room {
     const f = n => {
       const k = (n + hue / 30) % 12;
       const c = .5 - .5 * Math.max(Math.min(k - 3, 9 - k, 1), -1);
-      return Math.round(255 * c).toString(16).padStart(2, '0');
+      return Math.round((180 - 40 * Math.cos(hue/60*Math.PI)) * c).toString(16).padStart(2, '0');
     }
     return `#${f(0)}${f(8)}${f(4)}`;
   }
