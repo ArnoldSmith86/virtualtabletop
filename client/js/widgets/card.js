@@ -39,12 +39,12 @@ class Card extends Widget {
     }
 
     if((delta.cardType !== undefined || delta.deck !== undefined) && this.deck) {
+      const defaultsFromDeck = {}
       const applyDefaultsFromDeck = {};
       if(delta.deck !== undefined)
-        for(const [ k, v ] of Object.entries(this.deck.get('cardDefaults') || {}))
-          if(this.state[k] === undefined)
-            applyDefaultsFromDeck[k] = v;
-      for(const [ k, v ] of Object.entries(this.deck.get('cardTypes')[this.get('cardType')] || {}))
+        Object.assign(defaultsFromDeck, this.deck.get('cardDefaults') || {});
+      Object.assign(defaultsFromDeck, this.deck.get('cardTypes')[this.get('cardType')] || {});
+      for(const [ k, v ] of Object.entries(defaultsFromDeck))
         if(this.state[k] === undefined)
           applyDefaultsFromDeck[k] = v;
       this.applyDeltaToDOM(applyDefaultsFromDeck);
