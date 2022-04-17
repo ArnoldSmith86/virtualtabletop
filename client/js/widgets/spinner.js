@@ -55,7 +55,7 @@ class Spinner extends Widget {
 
     const bg = document.createElementNS(ns, 'svg');
     bg.setAttribute('class', 'background');
-    bg.setAttribute('style', this.get('backgroundCSS'));
+    bg.setAttribute('style', mapAssetURLs(this.get('backgroundCSS')));
     bg.setAttribute('viewBox', '0 0 100 100');
 
     const options = this.get('options');
