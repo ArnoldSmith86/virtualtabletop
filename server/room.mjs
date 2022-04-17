@@ -306,10 +306,12 @@ export default class Room {
       const gap = Math.max(...gaps);
       hue = (Math.random() * gap / 3 + hues[gaps.indexOf(gap)] + gap / 3) % 360;
     }
+    const v = [240, 220, 120, 200, 240, 240];
+    const value = v[Math.floor(hue/60)] * (60 - hue%60) / 60 + v[Math.ceil(hue/60) % 6] * (hue%60) / 60;
     const f = n => {
       const k = (n + hue / 30) % 12;
       const c = .5 - .5 * Math.max(Math.min(k - 3, 9 - k, 1), -1);
-      return Math.round(255 * c).toString(16).padStart(2, '0');
+      return Math.round(value * c).toString(16).padStart(2, '0');
     }
     return `#${f(0)}${f(8)}${f(4)}`;
   }
