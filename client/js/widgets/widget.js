@@ -364,6 +364,7 @@ export class Widget extends StateManaged {
       return applyTransformedOffset(parentCenter, offset, s, rot );
     }
   }
+
   css() {
     this.propertiesUsedInCSS = [];
     if($(`#STYLES_${escapeID(this.id)}`))
@@ -379,12 +380,12 @@ export class Widget extends StateManaged {
     return css;
   }
 
-  cssAsText(css) {
+  cssAsText(css, nested = false) {
     if(typeof css == 'object') {
       let cssText = '';
       for(const key in css) {
         if(typeof css[key] == 'object')
-          return this.cssToStylesheet(css);
+          return this.cssToStylesheet(css, nested);
         cssText += `; ${key}: ${css[key]}`;
       }
       return cssText;
@@ -392,6 +393,7 @@ export class Widget extends StateManaged {
       return css;
     }
   }
+
   cssBorderRadius() {
     let br = this.get('borderRadius');
     switch(typeof(br)) {
@@ -426,12 +428,27 @@ export class Widget extends StateManaged {
     return css;
   }
 
-  cssToStylesheet(css) {
+  cssToStylesheet(css, nested = false) {
+    let styleString = '';
+    for(const key in css) {
+      let selector = key;
+      if(!nested) {
+        if(key == 'inline')
+          continue;
+        if(key == 'default')
+          selector = '';
+        if(selector.charAt(0) != '@')
+          selector = `#w_${escapeID(this.id)}${selector}`;
+      }
+      styleString += `${selector} { ${mapAssetURLs(this.cssReplaceProperties(this.cssAsText(css[key], true)))} }\n`;
+    }
+
+    if(nested)
+      return styleString;
+
     const style = document.createElement('style');
     style.id = `STYLES_${escapeID(this.id)}`;
-    for(const key in css)
-      if(key != 'inline')
-        style.appendChild(document.createTextNode(`#w_${escapeID(this.id)}${key == 'default' ? '' : key} { ${mapAssetURLs(this.cssReplaceProperties(this.cssAsText(css[key])))} }`));
+    style.appendChild(document.createTextNode(styleString));
     $('head').appendChild(style);
 
     return this.cssAsText(css.inline || '');
@@ -699,7 +716,7 @@ export class Widget extends StateManaged {
         setDefaults(a, { widget: this.get('id'), routine: 'clickRoutine', 'return': true, arguments: {}, variable: 'result', collection: 'result' });
         if(!a.routine.match(/Routine$/)) {
           problems.push('Routine parameters have to end with "Routine".');
-        } else if(this.isValidID(a.widget)) {
+        } else if(this.isValidID(a.widget, problems)) {
           if(!Array.isArray(widgets.get(a.widget).get(a.routine))) {
             problems.push(`Widget ${a.widget} does not contain ${a.routine} (or it is no array).`);
           } else {
@@ -714,7 +731,7 @@ export class Widget extends StateManaged {
             collections[a.collection] = result.collection;
 
             if(jeRoutineLogging) {
-              const theWidget = this.isValidID(a.widget) && a.widget != this.get('id') ? `in ${a.widget}` : '';
+              const theWidget = this.isValidID(a.widget, problems) && a.widget != this.get('id') ? `in ${a.widget}` : '';
               if (a.return) {
                 let returnCollection = result.collection.map(w=>w.get('id')).join(',');
                 if(!result.collection.length || result.collection.length >= 5)

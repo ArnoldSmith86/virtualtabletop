@@ -44,7 +44,8 @@ class Spinner extends Widget {
       const angle = this.get('angle') + Math.floor((2+Math.random())*360);
       const o = this.get('options');
       await this.set('angle', angle);
-      await this.set('value', o[Math.floor(angle/(360/o.length))%o.length]);
+      if(o.length)
+        await this.set('value', o[Math.floor(angle/(360/o.length))%o.length]);
     }
   }
 
@@ -54,7 +55,7 @@ class Spinner extends Widget {
 
     const bg = document.createElementNS(ns, 'svg');
     bg.setAttribute('class', 'background');
-    bg.setAttribute('style', this.get('backgroundCSS'));
+    bg.setAttribute('style', mapAssetURLs(this.get('backgroundCSS')));
     bg.setAttribute('viewBox', '0 0 100 100');
 
     const options = this.get('options');
