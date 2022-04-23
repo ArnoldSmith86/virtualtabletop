@@ -1817,10 +1817,16 @@ export class Widget extends StateManaged {
     if(this.get('enlarge')) {
       const id = this.get('id');
       const e = $('#enlarged');
+      const boundBox = this.domElement.getBoundingClientRect();
+      let cssText = this.domElement.style.cssText;
+      cssText += `;--originalLeft:${boundBox.left}`;
+      cssText += `;--originalTop:${boundBox.top}`;
+      cssText += `;--originalRight:${boundBox.right}`;
+      cssText += `;--originalBottom:${boundBox.bottom}`;
       e.innerHTML = this.domElement.innerHTML;
       e.className = this.domElement.className;
       e.dataset.id = id;
-      e.style.cssText = this.domElement.style.cssText;
+      e.style.cssText = cssText;
       e.style.display = this.domElement.style.display;
       e.style.transform = `scale(calc(${this.get('enlarge')} * var(--scale)))`;
       const cursor = clientPointer.getBoundingClientRect();
