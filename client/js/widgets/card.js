@@ -99,6 +99,8 @@ class Card extends Widget {
       faceDiv.classList.add('cardFace');
       if(face.css !== undefined)
         faceDiv.style.cssText = mapAssetURLs(this.cssAsText(face.css,true));
+      if(face.classes !== undefined)
+        faceDiv.classList.add(face.classes);
       faceDiv.style.border = face.border ? face.border + 'px black solid' : 'none';
       faceDiv.style.borderRadius = face.radius ? face.radius + 'px' : '0';
 
@@ -120,6 +122,8 @@ class Card extends Widget {
           css += `left: ${x}px; top: ${y}px; width: ${object.width}px; height: ${object.height}px; font-size: ${object.fontSize}px; text-align: ${object.textAlign}`;
           css += object.rotation ? `; transform: rotate(${object.rotation}deg)` : '';
           objectDiv.style.cssText = mapAssetURLs(css);
+          if(object.classes)
+            objectDiv.classList.add(object.classes);
 
           if(object.type == 'image') {
             if(object.value) {
