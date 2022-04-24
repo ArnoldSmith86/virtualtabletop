@@ -1819,10 +1819,10 @@ export class Widget extends StateManaged {
       const e = $('#enlarged');
       const boundBox = this.domElement.getBoundingClientRect();
       let cssText = this.domElement.style.cssText;
-      cssText += `;--originalLeft:${boundBox.left}`;
-      cssText += `;--originalTop:${boundBox.top}`;
-      cssText += `;--originalRight:${boundBox.right}`;
-      cssText += `;--originalBottom:${boundBox.bottom}`;
+      cssText += `;--originalLeft:${boundBox.left}px`;
+      cssText += `;--originalTop:${boundBox.top}px`;
+      cssText += `;--originalRight:${boundBox.right}px`;
+      cssText += `;--originalBottom:${boundBox.bottom}px`;
       e.innerHTML = this.domElement.innerHTML;
       e.className = this.domElement.className;
       e.dataset.id = id;
