@@ -463,12 +463,16 @@ const jeCommands = [
               const propertyName = keys.shift();
               const property = JSON.parse(JSON.stringify(widget.get(propertyName)));
 
-              let pointer = property;
-              while(keys.length > 1)
-                pointer = pointer[keys.shift()];
-              pointer[keys[0]] = newAsset;
+              if(keys.length > 1) {
+                let pointer = property;
+                while(keys.length > 1)
+                  pointer = pointer[keys.shift()];
+                pointer[keys[0]] = newAsset;
 
-              await widget.set(propertyName, property);
+                await widget.set(propertyName, property);
+              } else {
+                await widget.set(propertyName, newAsset);
+              }
             } catch(e) {
               console.error(`Failed to update ${filename}. Please make sure the filename corresponds to a valid widget property.`);
             }
