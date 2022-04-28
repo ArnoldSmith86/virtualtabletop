@@ -463,7 +463,7 @@ const jeCommands = [
               const propertyName = keys.shift();
               const property = JSON.parse(JSON.stringify(widget.get(propertyName)));
 
-              if(keys.length > 1) {
+              if(keys.length > 0) {
                 let pointer = property;
                 while(keys.length > 1)
                   pointer = pointer[keys.shift()];
