@@ -383,6 +383,102 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_download',
+    name: 'Download assets for editing',
+    icon: '[download]',
+    forceKey: 'D',
+    options: [
+      { label: 'Property filenames', type: 'checkbox', value: true }
+    ],
+    call: async function(options) {
+      function getAssetKeysRecursive(obj, keyPrefix) {
+        const matches = {};
+        for(const [ key, value ] of Object.entries(obj)) {
+          if(typeof value == 'object' && value != null)
+            Object.assign(matches, getAssetKeysRecursive(value, `${keyPrefix} - ${key}`));
+          if(typeof value == 'string' && value.match(/^\/assets\/-?[0-9]+_[0-9]+$/))
+            matches[`${keyPrefix} - ${key}`] = value;
+        }
+        return matches;
+      }
+
+      function downloadURI(uri, name) {
+        // https://stackoverflow.com/a/15832662
+        const link = document.createElement("a");
+        link.download = name;
+        link.href = uri;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
+      const matches = {};
+      for(const [ id, widget ] of widgets)
+        Object.assign(matches, getAssetKeysRecursive(widget.state, `${widget.get('type') || 'basic'} ${id}`));
+
+      const zip = new JSZip();
+      for(const [ filename, asset ] of Object.entries(matches)) {
+        const blob  = await (await fetch(asset.substr(1))).blob()
+        zip.file((options['Property filenames'] ? filename : `asset ${asset.match(/[^\/]+$/)[0]}`) + '.' + blob.type.match(/[^\/]+$/)[0], blob);
+      }
+      downloadURI("data:application/zip;base64," + (await zip.generateAsync({type:"base64"})), 'assets.zip');
+    }
+  },
+  {
+    id: 'je_upload',
+    name: 'Upload assets after editing',
+    icon: '[upload]',
+    forceKey: 'U',
+    call: function() {
+      uploadAsset(async function(newAsset, filename) {
+        const tokens = filename.replace(/\.[^.]+$/, '').match(/^([^ ]+) (.*)$/);
+        if(tokens) {
+          batchStart();
+          if(tokens[1] == 'asset') {
+            try {
+              function replaceAssetRecursive(obj, oldAsset, newAsset) {
+                if(obj == oldAsset)
+                  return newAsset;
+                if(typeof obj == 'object' && obj != null)
+                  for(const [ key, value ] of Object.entries(obj))
+                    obj[key] = replaceAssetRecursive(value, oldAsset, newAsset);
+                return obj;
+              }
+              const oldAsset = `/assets/${tokens[2]}`;
+              if(newAsset != oldAsset) {
+                for(const [ id, widget ] of widgets) {
+                  for(const propertyName in widget.state) {
+                    const property = JSON.parse(JSON.stringify(widget.get(propertyName)));
+                    await widget.set(propertyName, replaceAssetRecursive(property, oldAsset, newAsset));
+                  }
+                }
+              }
+            } catch(e) {
+              console.error(`Failed to update ${filename}.`);
+            }
+          } else {
+            try {
+              const keys = tokens[2].split(' - ');
+              const widget = widgets.get(keys.shift());
+              const propertyName = keys.shift();
+              const property = JSON.parse(JSON.stringify(widget.get(propertyName)));
+
+              let pointer = property;
+              while(keys.length > 1)
+                pointer = pointer[keys.shift()];
+              pointer[keys[0]] = newAsset;
+
+              await widget.set(propertyName, property);
+            } catch(e) {
+              console.error(`Failed to update ${filename}. Please make sure the filename corresponds to a valid widget property.`);
+            }
+          }
+          batchEnd();
+        }
+      });
+    }
+  },
+  {
     id: 'je_removeProperty',
     name: _=>`remove property ${jeContext && jeContext[jeContext.length-1]}`,
     context: ' ↦ (?=[^"]+$)',
