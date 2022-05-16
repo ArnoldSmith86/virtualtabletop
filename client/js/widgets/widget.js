@@ -225,8 +225,8 @@ export class Widget extends StateManaged {
   }
 
   applyRemove() {
-    if(this.parent)
-      this.parent.applyChildRemove(this);
+    if(this.get('parent') && widgets.has(this.get('parent')))
+      widgets.get(this.get('parent')).applyChildRemove(this);
     if(this.get('deck') && widgets.has(this.get('deck')))
       widgets.get(this.get('deck')).removeCard(this);
     if($(`#STYLES_${escapeID(this.id)}`))
@@ -537,7 +537,9 @@ export class Widget extends StateManaged {
           return match[9] ? false : undefined;
 
         let indexName = evaluateIdentifier(match[3], match[4]);
-        return indexName !== undefined ? varContent[indexName] : varContent;
+        if(varContent === null && indexName !== undefined)
+          problems.push(`Cannot index a variable that evaluates to 'null'.`);
+        return varContent !== null && indexName !== undefined ? varContent[indexName] : varContent;
       }
 
       // property
@@ -1626,6 +1628,9 @@ export class Widget extends StateManaged {
   }
 
   async moveToHolder(holder) {
+    if(this.inRemovalQueue)
+      return;
+
     await this.bringToFront();
     if(this.get('parent') && !this.currentParent)
       this.currentParent = widgets.get(this.get('parent'));
