@@ -225,8 +225,8 @@ export class Widget extends StateManaged {
   }
 
   applyRemove() {
-    if(this.parent)
-      this.parent.applyChildRemove(this);
+    if(this.get('parent') && widgets.has(this.get('parent')))
+      widgets.get(this.get('parent')).applyChildRemove(this);
     if(this.get('deck') && widgets.has(this.get('deck')))
       widgets.get(this.get('deck')).removeCard(this);
     if($(`#STYLES_${escapeID(this.id)}`))
@@ -1564,8 +1564,11 @@ export class Widget extends StateManaged {
   }
 
   hideEnlarged() {
-    if (!this.domElement.className.match(/selected/))
+    if (!this.domElement.className.match(/selected/)) {
       $('#enlarged').classList.add('hidden');
+      if($('#enlargeStyle'))
+        removeFromDOM($('#enlargeStyle'));
+    }
   }
 
   async addAudio(widget){
@@ -1623,6 +1626,9 @@ export class Widget extends StateManaged {
   }
 
   async moveToHolder(holder) {
+    if(this.inRemovalQueue)
+      return;
+
     await this.bringToFront();
     if(this.get('parent') && !this.currentParent)
       this.currentParent = widgets.get(this.get('parent'));
@@ -1812,15 +1818,42 @@ export class Widget extends StateManaged {
 
   showEnlarged(event) {
     if(this.get('enlarge')) {
+      const id = this.get('id');
       const e = $('#enlarged');
+      const boundBox = this.domElement.getBoundingClientRect();
+      let cssText = this.domElement.style.cssText;
+      cssText += `;--originalLeft:${boundBox.left}px`;
+      cssText += `;--originalTop:${boundBox.top}px`;
+      cssText += `;--originalRight:${boundBox.right}px`;
+      cssText += `;--originalBottom:${boundBox.bottom}px`;
       e.innerHTML = this.domElement.innerHTML;
       e.className = this.domElement.className;
-      e.dataset.id = this.get('id');
-      e.style.cssText = this.domElement.style.cssText;
+      e.dataset.id = id;
+      for(const clone of e.querySelectorAll('canvas')) {
+        const original = this.domElement.querySelector(`canvas[data-id = '${clone.dataset.id}']`);
+        const context = clone.getContext('2d');
+        clone.width = original.width;
+        clone.height = original.height;
+        context.drawImage(original, 0, 0);
+      }
+      e.style.cssText = cssText;
       e.style.display = this.domElement.style.display;
       e.style.transform = `scale(calc(${this.get('enlarge')} * var(--scale)))`;
-      if(this.domElement.getBoundingClientRect().left < window.innerWidth/2)
+      const cursor = clientPointer.getBoundingClientRect();
+      if(cursor.left < window.innerWidth/2)
         e.classList.add('right');
+      if(cursor.top < window.innerHeight/2)
+        e.classList.add('bottom');
+      
+      const wStyle = $(`#STYLES_${escapeID(id)}`);
+      if(wStyle) {
+        if($('#enlargeStyle'))
+          removeFromDOM($('#enlargeStyle'));
+        const eStyle = document.createElement('style');
+        eStyle.id = "enlargeStyle";
+        eStyle.appendChild(document.createTextNode(wStyle.textContent.replaceAll(`#w_${escapeID(id)}`,'#enlarged')));
+        $('head').appendChild(eStyle);
+      }
     }
     if(event)
       event.preventDefault();

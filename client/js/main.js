@@ -16,6 +16,8 @@ let urlProperties = {};
 let maxZ = {};
 export const dropTargets = new Map();
 
+export const clientPointer = $('#clientPointer');
+
 function compareDropTarget(widget, t, exclude){
   for(const dropTargetObject of asArray(t.get('dropTarget'))) {
     let isValidObject = true;

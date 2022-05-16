@@ -44,9 +44,9 @@
     "@node-minify/html-minifier": "^6.2.0",
     "@node-minify/no-compress": "^6.2.0",
     "@node-minify/uglify-es": "^6.2.0",
-    "crc-32": "^1.2.1",
+    "crc-32": "^1.2.2",
     "express": "^4.17.3",
-    "jszip": "^3.7.1",
+    "jszip": "^3.9.1",
     "node-fetch": "^2.6.1",
     "ws": "^8.5.0"
   },
@@ -56,6 +56,6 @@
     "jest-environment-jsdom-global": "^3.0.0",
     "json-diff": "^0.7.3",
     "nodemon": "^2.0.15",
-    "testcafe": "^1.18.5"
+    "testcafe": "^1.18.6"
   }
 }
