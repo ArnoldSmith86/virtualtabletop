@@ -109,13 +109,12 @@ function receiveDelta(delta) {
       addWidget(delta.s[widgetID]);
 
   for(const widgetID in delta.s)
-    if(delta.s[widgetID] !== null)
+    if(delta.s[widgetID] !== null && widgets.has(widgetID)) // check widgets.has because addWidget above MIGHT have failed
       widgets.get(widgetID).applyDelta(delta.s[widgetID]);
 
   for(const widgetID in delta.s)
-    if(delta.s[widgetID] === null)
-      if(widgets.has(widgetID))
-        removeWidget(widgetID);
+    if(delta.s[widgetID] === null && widgets.has(widgetID))
+      removeWidget(widgetID);
 
   if(typeof jeEnabled != 'undefined' && jeEnabled)
     jeApplyDelta(delta);
