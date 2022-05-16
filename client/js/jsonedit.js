@@ -244,6 +244,16 @@ const jeCommands = [
     })
   },
   {
+    id: 'je_classes',
+    name: 'classes',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
+    show: _=>!jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].classes,
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].classes = '###SELECT ME###';
+      jeSetAndSelect('');
+    }
+  },
+  {
     id: 'je_css',
     name: 'css',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
@@ -643,6 +653,7 @@ function jeAddCommands() {
   jeAddCSScommands();
 
   jeAddFaceCommand('border', '', 1);
+  jeAddFaceCommand('classes', '', '');
   jeAddFaceCommand('css', '', '');
   jeAddFaceCommand('properties', '', {});
   jeAddFaceCommand('radius', ' (rounded corners)', 1);

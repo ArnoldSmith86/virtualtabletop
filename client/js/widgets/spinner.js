@@ -55,7 +55,7 @@ class Spinner extends Widget {
 
     const bg = document.createElementNS(ns, 'svg');
     bg.setAttribute('class', 'background');
-    bg.setAttribute('style', mapAssetURLs(this.get('backgroundCSS')));
+    bg.setAttribute('style', mapAssetURLs(this.cssAsText(this.get('backgroundCSS'),true)));
     bg.setAttribute('viewBox', '0 0 100 100');
 
     const options = this.get('options');
@@ -85,12 +85,12 @@ class Spinner extends Widget {
 
     this.spinner = document.createElement('div');
     this.spinner.setAttribute('class', 'spinningPart');
-    this.spinner.setAttribute('style', mapAssetURLs(this.get('spinnerCSS')));
+    this.spinner.setAttribute('style', mapAssetURLs(this.cssAsText(this.get('spinnerCSS'),true)));
     this.domElement.appendChild(this.spinner);
 
     this.value = document.createElement('div');
     this.value.setAttribute('class', 'value');
-    this.value.setAttribute('style', mapAssetURLs(this.get('valueCSS')));
+    this.value.setAttribute('style', mapAssetURLs(this.cssAsText(this.get('valueCSS'),true)));
     this.value.textContent = this.get('value');
     this.domElement.appendChild(this.value);
 
