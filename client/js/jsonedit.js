@@ -2,6 +2,7 @@ let jeEnabled = null;
 let jeZoomOut = false;
 let jeMode = null;
 let jeWidget = null;
+let jePlainWidget = null;
 let jeStateBefore = null;
 let jeStateBeforeRaw = null;
 let jeStateNow = null;
@@ -1097,6 +1098,7 @@ function jeSelectWidget(widget, dontFocus, addToSelection, restoreCursorPosition
   } else {
     jeMode = 'widget';
     jeWidget = widget;
+    jePlainWidget = new widget.constructor();
     jeKeyIsDownDeltas = [];
     jeStateNow = JSON.parse(JSON.stringify(widget.state));
     if(restoreCursorPosition && cursorState.defaultValueToAdd && jeStateNow[cursorState.defaultValueToAdd] === undefined)
@@ -1196,7 +1198,7 @@ function jeColorize() {
         }
 
         const c = {...l};
-        if(jeMode == 'widget' && match[1] == '  "' && l[2] == 'key' && [ 'id', 'type' ].indexOf(match[2]) == -1 && jeWidget.getDefaultValue(match[2]) === undefined)
+        if(jeMode == 'widget' && match[1] == '  "' && l[2] == 'key' && [ 'id', 'type' ].indexOf(match[2]) == -1 && jePlainWidget.getDefaultValue(match[2]) === undefined)
           c[2] = 'custom';
 
         for(let i=1; i<l.length; ++i) {
@@ -1586,9 +1588,10 @@ function jePreProcessObject(o) {
       copy[`LINEBREAK${match[1]}`] = null;
   }
 
-  for(const key of Object.keys(o).sort())
-    if(copy[key] === undefined && !key.match(/^c[0-9]{2}$/) && !key.match(/Routine$/) && jeWidget.getDefaultValue(key) !== undefined)
+  for(const key of Object.keys(o).sort()) {
+    if(copy[key] === undefined && !key.match(/^c[0-9]{2}$/) && !key.match(/Routine$/) && jePlainWidget.getDefaultValue(key) !== undefined)
       copy[key] = o[key];
+  }
   copy[`LINEBREAKcustom`] = null;
   for(const key of Object.keys(o).sort())
     if(copy[key] === undefined && !key.match(/^c[0-9]{2}$/) && !key.match(/Routine$/))
