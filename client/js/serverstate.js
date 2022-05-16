@@ -108,14 +108,15 @@ function receiveDelta(delta) {
     if(delta.s[widgetID] !== null && !widgets.has(widgetID))
       addWidget(delta.s[widgetID]);
 
-  for(const widgetID in delta.s) {
-    if(delta.s[widgetID] === null) {
+  for(const widgetID in delta.s)
+    if(delta.s[widgetID] !== null)
+      widgets.get(widgetID).applyDelta(delta.s[widgetID]);
+
+  for(const widgetID in delta.s)
+    if(delta.s[widgetID] === null)
       if(widgets.has(widgetID))
         removeWidget(widgetID);
-    } else {
-      widgets.get(widgetID).applyDelta(delta.s[widgetID]);
-    }
-  }
+
   if(typeof jeEnabled != 'undefined' && jeEnabled)
     jeApplyDelta(delta);
 }
