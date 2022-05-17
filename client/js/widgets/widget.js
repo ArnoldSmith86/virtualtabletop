@@ -1450,7 +1450,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'TURN') {
-        setDefaults(a, { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN' });
+        setDefaults(a, { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN', readonly: false });
         if([ 'forward', 'backward', 'random', 'position' ].indexOf(a.turnCycle) == -1) {
           problems.push(`Warning: turnCycle ${a.turnCycle} interpreted as forward.`);
           a.turnCycle = 'forward'
@@ -1496,11 +1496,17 @@ export class Widget extends StateManaged {
           const turn = indexList[mod(nextTurnIndex, indexList.length)];
 
           collections[a.collection] = [];
-          //saves turn into all seats and creates output collection with turn seats
-          for(const w of c) {
-            await w.set('turn', w.get('index') == turn);
-            if(w.get('turn') && w.get('player'))
-              collections[a.collection].push(w);
+
+          if(readonly) {
+            //saves turn into all seats and creates output collection with turn seats
+            for(const w of c) {
+              await w.set('turn', w.get('index') == turn);
+              if(w.get('turn') && w.get('player'))
+                collections[a.collection].push(w);
+            }
+          } else {
+            collections[a.collection] = c.filter(w=>w.get('index')==turn && w.get('player'));
+            variables.TURN = turn;
           }
 
           jeLoggingRoutineOperationSummary(`changed turn of seats from ${previousTurn} to ${turn} - active seats: ${JSON.stringify(indexList)}`);
@@ -1846,7 +1852,7 @@ export class Widget extends StateManaged {
         e.classList.add('right');
       if(cursor.top < window.innerHeight/2)
         e.classList.add('bottom');
-      
+
       const wStyle = $(`#STYLES_${escapeID(id)}`);
       if(wStyle) {
         if($('#enlargeStyle'))
