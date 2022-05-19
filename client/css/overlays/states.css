@@ -137,3 +137,7 @@
 .variantsList .prettyButton.play .variant:empty{
   display: none;
 }
+
+#stateFilters {
+  margin-bottom: 10px;
+}
