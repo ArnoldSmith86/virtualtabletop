@@ -598,7 +598,11 @@ export default class Room {
   }
 
   writeToFilesystem() {
-    const json = JSON.stringify(this.state);
+    const copy = JSON.parse(JSON.stringify(this.state));
+    for(const id in copy._meta.states)
+      if(id.match(/^PL:/))
+        delete copy._meta.states[id];
+    const json = JSON.stringify(copy);
     fs.writeFileSync(this.roomFilename(), json);
   }
 
