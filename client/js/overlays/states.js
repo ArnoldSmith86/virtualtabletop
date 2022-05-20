@@ -183,7 +183,11 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
       const validPlayers = [];
       const validLanguages = [];
       for(const variantID in state.variants) {
-        const variant = state.variants[variantID];
+        let variant = state.variants[variantID];
+        const stateIDforLoading = variant.plStateID || state.id;
+        const variantIDforLoading = variant.plVariantID || variantID;
+        if(variant.plStateID)
+          variant = states[variant.plStateID].variants[variant.plVariantID];
         const vEntry = domByTemplate('template-variantslist-entry');
         $('.language', vEntry).textContent = String.fromCodePoint(...[...variant.language].map(c => c.charCodeAt() + 0x1F1A5));
         $('.players', vEntry).textContent = variant.players;
@@ -191,7 +195,7 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
         validPlayers.push(...parsePlayers(variant.players));
         validLanguages.push(variant.language);
 
-        $('.play', vEntry).addEventListener('click', _=>{ toServer('loadState', { stateID: state.id, variantID }); showOverlay(); });
+        $('.play', vEntry).addEventListener('click', _=>{ toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading }); showOverlay(); });
         $('.variantsList', entry).appendChild(vEntry);
       }
 

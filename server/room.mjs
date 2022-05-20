@@ -235,18 +235,24 @@ export default class Room {
   getPublicLibraryGames() {
     if(!Room.publicLibrary) {
       Room.publicLibrary = {};
-      for(const dir of fs.readdirSync(Config.directory('library') + '/games')) {
-        for(const file of fs.readdirSync(Config.directory('library') + '/games/' + dir)) {
-          if(file.match(/json$/)) {
-            const gameFile = JSON.parse(fs.readFileSync(Config.directory('library') + '/games/' + dir + '/' + file));
-            const id = 'PL:' + gameFile._meta.info.name
-            if(!Room.publicLibrary[id]) {
-              Room.publicLibrary[id] = gameFile._meta.info;
-              Room.publicLibrary[id].publicLibrary = dir;
-              Room.publicLibrary[id].variants = {};
+      for(const subLibrary of [ 'Games', 'Tutorials', 'Assets' ]) {
+        for(const dir of fs.readdirSync(Config.directory('library') + '/' + subLibrary.toLowerCase())) {
+          const gameDir = Config.directory('library') + '/' + subLibrary.toLowerCase() + '/' + dir;
+          if(fs.lstatSync(gameDir).isDirectory()) {
+            for(const file of fs.readdirSync(gameDir)) {
+              if(file.match(/json$/)) {
+                const gameFile = JSON.parse(fs.readFileSync(gameDir + '/' + file));
+                const id = 'PL:' + gameFile._meta.info.name
+                if(!Room.publicLibrary[id]) {
+                  Room.publicLibrary[id] = gameFile._meta.info;
+                  Room.publicLibrary[id].publicLibrary = subLibrary.toLowerCase() + '/' + dir;
+                  Room.publicLibrary[id].publicLibraryCategory = subLibrary;
+                  Room.publicLibrary[id].variants = {};
+                }
+                Room.publicLibrary[id].variants[file] = JSON.parse(JSON.stringify(gameFile._meta.info));
+                Room.publicLibrary[id].variants[file].publicLibrary = subLibrary.toLowerCase() + '/' + dir + '/' + file;
+              }
             }
-            Room.publicLibrary[id].variants[file] = JSON.parse(JSON.stringify(gameFile._meta.info));
-            Room.publicLibrary[id].variants[file].publicLibrary = dir + '/' + file;
           }
         }
       }
@@ -258,6 +264,7 @@ export default class Room {
     const emptyState = {
       _meta: {
         version: 1,
+        metaVersion: 1,
         players: {},
         states: {}
       }
@@ -271,6 +278,9 @@ export default class Room {
       Logging.log(`loading room ${this.id}`);
       this.state = FileUpdater(JSON.parse(fs.readFileSync(this.roomFilename())));
       this.state._meta.states = Object.assign(this.state._meta.states, this.getPublicLibraryGames());
+
+      this.migrateOldPublicLibraryLinks();
+
       this.broadcast('state', this.state);
     } else {
       let newState = emptyState;
@@ -305,6 +315,51 @@ export default class Room {
       await this.load(variantInfo.link, player);
     else
       await this.load(this.variantFilename(stateID, variantID), player);
+  }
+
+  migrateOldPublicLibraryLinks() {
+    if(!this.state._meta.metaVersion) {
+      if(!this.state._meta.starred)
+        this.state._meta.starred = {};
+      for(const [ id, state ] of Object.entries(this.state._meta.states)) {
+        const match = state.link && state.link.match(/\/library\/(?:Tutorial - )?(.*)\.vtt/);
+        if(match && this.state._meta.states[`PL:${match[1]}`]) {
+          const targetState = this.state._meta.states[`PL:${match[1]}`];
+          let allVariantsFromPL = true;
+          for(const [ vID, variant ] of Object.entries(state.variants))
+            if((variant.link && variant.link.indexOf(state.link)) !== 0)
+              allVariantsFromPL = false;
+          if(allVariantsFromPL && state.name == targetState.name && state.image == targetState.image) {
+            Logging.log(`migrating PL:${match[1]} in room ${this.id}`);
+            this.state._meta.starred[targetState.publicLibrary] = true;
+            this.removeState(player, id);
+            continue;
+          }
+        } else if(match) {
+          Logging.log(`could not migrate public library game ${match[1]} in room ${this.id}`);
+        }
+
+        for(const [ vID, variant ] of Object.entries(state.variants)) {
+          const match = variant.link && variant.link.match(/\/library\/(?:Tutorial - )?(.*)\.vtt/);
+          if(match && this.state._meta.states[`PL:${match[1]}`]) {
+            for(const [ targetVid, targetVariant ] of Object.entries(this.state._meta.states[`PL:${match[1]}`].variants)) {
+              if(targetVariant.players == variant.players && targetVariant.language == variant.language && targetVariant.variant == variant.variant) {
+                this.state._meta.states[id].variants[vID] = {
+                  plStateID: `PL:${match[1]}`,
+                  plVariantID: targetVid
+                };
+                Logging.log(`migrating variant to PL:${match[1]}/${targetVid} in room ${this.id}`);
+              }
+            }
+          }
+
+          if(match && !this.state._meta.states[id].variants[vID].plStateID) {
+            Logging.log(`could not migrate variant to public library game ${match[1]} in room ${this.id}`);
+          }
+        }
+      }
+      this.state._meta.metaVersion = 1;
+    }
   }
 
   mouseMove(player, mouseState) {
@@ -549,7 +604,7 @@ export default class Room {
 
   variantFilename(stateID, variantID) {
     if(stateID.match(/^PL:/))
-      return Config.directory('library') + '/games/' + Room.publicLibrary[stateID].variants[variantID].publicLibrary;
+      return Config.directory('library') + '/' + Room.publicLibrary[stateID].variants[variantID].publicLibrary;
     else
       return Config.directory('save') + '/states/' + this.id + '-' + stateID.replace(/[^a-z0-9]/g, '_') + '-' + variantID.replace(/[^a-z0-9]/g, '_') + '.json';
   }
