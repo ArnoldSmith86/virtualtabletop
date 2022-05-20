@@ -236,6 +236,12 @@ export class Widget extends StateManaged {
     this.globalUpdateListenersUnregister();
   }
 
+  applyRemoveRecursive() {
+    for(const child of Widget.prototype.children.call(this)) // use Widget.children even for holders so it doesn't filter
+      child.applyRemoveRecursive();
+    this.applyRemove();
+  }
+
   applyZ(force) {
     const thisInheritChildZ = this.get('inheritChildZ');
     if(force || thisInheritChildZ) {
@@ -1846,7 +1852,7 @@ export class Widget extends StateManaged {
         e.classList.add('right');
       if(cursor.top < window.innerHeight/2)
         e.classList.add('bottom');
-      
+
       const wStyle = $(`#STYLES_${escapeID(id)}`);
       if(wStyle) {
         if($('#enlargeStyle'))
