@@ -130,7 +130,7 @@ function updateLibraryFilter() {
     const textMatch     = state.dataset.text.match(text);
     const playersMatch  = players  == 'Any' || state.dataset.players.split(',').indexOf(players) != -1;
     const languageMatch = language == 'Any' || state.dataset.languages.split(',').indexOf(language) != -1;
-    const modeMatch     = mode     == 'Any' || state.dataset.modes.split(',').indexOf(mode.toLowerCase()) != -1;
+    const modeMatch     = mode     == 'Any' || state.dataset.modes.split(',').indexOf(mode) != -1;
     state.style.display = textMatch && playersMatch && languageMatch && modeMatch ? 'block' : 'none';
   }
 }
@@ -160,6 +160,9 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
 
   let isEmpty = true;
   const sortedStates = Object.entries(states).sort((a, b) => a[1].name.localeCompare(b[1].name));
+
+  const languageOptions = {};
+  const modeOptions = {};
 
   for(const publicLibrary of [ false, true ]) {
     const category = domByTemplate('template-stateslist-category');
@@ -200,6 +203,8 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
         validPlayers.push(...parsePlayers(variant.players));
         validLanguages.push(variant.language);
         validModes.push(variant.mode);
+        languageOptions[variant.language] = true;
+        modeOptions[variant.mode] = true;
 
         $('.play', vEntry).addEventListener('click', _=>{ toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading }); showOverlay(); });
         $('.variantsList', entry).appendChild(vEntry);
@@ -224,6 +229,17 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
     $('#statesList').appendChild(category);
   }
   $('#statesList > div').appendChild(addDiv);
+
+  let languageHTML = '<option>Any</option>';
+  for(const languageOption in languageOptions)
+    languageHTML += `<option>${languageOption}</option>`;
+  $('#filterByLanguage').innerHTML = languageHTML;
+
+  let modeHTML = '<option>Any</option>';
+  for(const modeOption in modeOptions)
+    modeHTML += `<option>${modeOption}</option>`;
+  $('#filterByMode').innerHTML = modeHTML;
+
   updateLibraryFilter();
 }
 
