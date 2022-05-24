@@ -154,6 +154,10 @@ button:hover {
   display: block;
 }
 
+body.edit #toolbar .playOnly, body:not(.edit) #toolbar .editOnly {
+  display: none;
+}
+
 .toolbarButton::before,
 .ui-button::before,
 .prettyButton::before,

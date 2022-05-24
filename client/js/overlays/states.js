@@ -173,6 +173,8 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
       entry.className = state.image ? 'roomState' : 'roomState noImage';
       if(state.publicLibrary)
         entry.className += ' publicLibraryGame';
+      if(state.publicLibrary.match(/tutorial/))
+        entry.className += ' publicLibraryTutorial';
 
       $('img', entry).src = state.image.replace(/^\//, '');
       $('.bgg', entry).textContent = `${state.name} (${state.year})`;
@@ -281,6 +283,9 @@ async function shareLink() {
 
 onLoad(function() {
   onMessage('meta', args=>fillStatesList(args.meta.states, args.meta.starred, args.meta.returnServer, args.activePlayers));
+
+  on('#statesButton', 'click', e=>$('#statesOverlay').className='overlay games');
+  on('#tutorialsButton', 'click', e=>$('#statesOverlay').className='overlay tutorials');
 
   on('#filterByText', 'keyup', updateLibraryFilter);
   on('#filterByPlayers, #filterByLanguage', 'change', updateLibraryFilter);
