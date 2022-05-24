@@ -1839,6 +1839,8 @@ window.addEventListener('mousemove', function(e) {
       if(jeState.mouseY >= widget.absoluteCoord('y') && jeState.mouseY <= widget.absoluteCoord('y')+widget.get('height'))
         hoveredWidgets.push(widget);
 
+  hoveredWidgets.sort(function(w1,w2){return w2.calculateZ() - w1.calculateZ()});
+  
   for(let i=1; i<=11; ++i) {
     const hotkey = i>=4 ? i+1 : i;
     if(hoveredWidgets[i-1]) {
