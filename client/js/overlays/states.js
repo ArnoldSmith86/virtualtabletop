@@ -125,11 +125,13 @@ function updateLibraryFilter() {
   const text = $('#filterByText').value.toLowerCase();
   const players = $('#filterByPlayers').value;
   const language = $('#filterByLanguage').value;
+  const mode = $('#filterByMode').value;
   for(const state of $a('#statesList .list > div')) {
     const textMatch     = state.dataset.text.match(text);
     const playersMatch  = players  == 'Any' || state.dataset.players.split(',').indexOf(players) != -1;
     const languageMatch = language == 'Any' || state.dataset.languages.split(',').indexOf(language) != -1;
-    state.style.display = textMatch && playersMatch && languageMatch ? 'block' : 'none';
+    const modeMatch     = mode     == 'Any' || state.dataset.modes.split(',').indexOf(mode.toLowerCase()) != -1;
+    state.style.display = textMatch && playersMatch && languageMatch && modeMatch ? 'block' : 'none';
   }
 }
 
@@ -184,6 +186,7 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
 
       const validPlayers = [];
       const validLanguages = [];
+      const validModes = [];
       for(const variantID in state.variants) {
         let variant = state.variants[variantID];
         const stateIDforLoading = variant.plStateID || state.id;
@@ -196,6 +199,7 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
         $('.variant', vEntry).textContent = variant.variant;
         validPlayers.push(...parsePlayers(variant.players));
         validLanguages.push(variant.language);
+        validModes.push(variant.mode);
 
         $('.play', vEntry).addEventListener('click', _=>{ toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading }); showOverlay(); });
         $('.variantsList', entry).appendChild(vEntry);
@@ -208,6 +212,7 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
       entry.dataset.text = `${state.name} ${state.similarName} ${state.description}`.toLowerCase();
       entry.dataset.players = validPlayers.join();
       entry.dataset.languages = validLanguages.join();
+      entry.dataset.modes = validModes.join();
 
       if(state.id == waitingForStateCreation) {
         waitingForStateCreation = null;
@@ -288,7 +293,7 @@ onLoad(function() {
   on('#tutorialsButton', 'click', e=>$('#statesOverlay').className='overlay tutorials');
 
   on('#filterByText', 'keyup', updateLibraryFilter);
-  on('#filterByPlayers, #filterByLanguage', 'change', updateLibraryFilter);
+  on('#stateFilters select', 'change', updateLibraryFilter);
 
   on('#addState .create, #addVariant .create', 'click', e=>addState(e, 'state'));
   on('#addState .upload, #addVariant .upload', 'click', e=>selectFile(false, f=>addState(e, 'file', f)));
