@@ -35,10 +35,6 @@
   position: absolute;
 }
 
-.tutorials .roomState:not(.publicLibraryTutorial), #statesOverlay:not(.tutorials) .roomState.publicLibraryTutorial {
-  display: none !important;
-}
-
 .roomState a {
   color: black;
   font-weight: bolder;
