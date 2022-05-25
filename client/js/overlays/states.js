@@ -123,15 +123,17 @@ function toggleStateStar(state) {
 
 function updateLibraryFilter() {
   const text = $('#filterByText').value.toLowerCase();
+  const type = $('#filterByType').value;
   const players = $('#filterByPlayers').value;
   const language = $('#filterByLanguage').value;
   const mode = $('#filterByMode').value;
   for(const state of $a('#statesList .list > div')) {
     const textMatch     = state.dataset.text.match(text);
+    const typeMatch     = type     == 'Any' || state.dataset.type.split(',').indexOf(type) != -1;
     const playersMatch  = players  == 'Any' || state.dataset.players.split(',').indexOf(players) != -1;
     const languageMatch = language == 'Any' || state.dataset.languages.split(',').indexOf(language) != -1;
     const modeMatch     = mode     == 'Any' || state.dataset.modes.split(',').indexOf(mode) != -1;
-    state.style.display = textMatch && playersMatch && languageMatch && modeMatch ? 'block' : 'none';
+    state.style.display = textMatch && typeMatch && playersMatch && languageMatch && modeMatch ? 'block' : 'none';
   }
 }
 
@@ -216,6 +218,13 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
       entry.dataset.players = validPlayers.join();
       entry.dataset.languages = validLanguages.join();
       entry.dataset.modes = validModes.join();
+
+      if(state.publicLibrary && state.publicLibrary.match(/tutorials/))
+        entry.dataset.type = 'Tutorials';
+      else if(state.publicLibrary && state.publicLibrary.match(/assets/))
+        entry.dataset.type = 'Assets';
+      else
+        entry.dataset.type = 'Games';
 
       if(state.id == waitingForStateCreation) {
         waitingForStateCreation = null;
