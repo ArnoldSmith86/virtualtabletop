@@ -1,0 +1,1612 @@
+{
+  "_meta": {
+    "version": 4,
+    "info": {
+      "name": "Shape Sorter",
+      "image": "/assets/1633231935_15183",
+      "rules": "",
+      "bgg": "",
+      "year": "2006",
+      "mode": "vs",
+      "time": "45",
+      "players": "2-4",
+      "language": "UN",
+      "variant": "",
+      "attribution": "Board layout by ArnoldSmith86. Released to public domain under CC0.\n\nImages released under CC BY 3.0:\nhttps://game-icons.net/1x1/delapouite/plain-square.html (by Delapouite)\nhttps://game-icons.net/1x1/delapouite/plain-circle.html (by Delapouite)\nhttps://game-icons.net/1x1/delapouite/seven-pointed-star.html (by Delapouite)\nhttps://game-icons.net/1x1/darkzaitzev/star-shuriken.html (by DarkZaitzev)\nhttps://game-icons.net/1x1/skoll/divided-square.html (by Skoll)\nhttps://game-icons.net/1x1/sbed/health-normal.html (by sbed)",
+      "similarName": "Qwirkle",
+      "similarLink": "https://boardgamegeek.com/boardgame/25669/qwirkle",
+      "description": "Place blocks in patterns on board while matching 6 shapes and 6 colors.  Player with most points wins."
+    }
+  },
+  "Draw": {
+    "type": "holder",
+    "id": "Draw",
+    "width": 88,
+    "height": 88,
+    "x": 5,
+    "y": 5
+  },
+  "Deck": {
+    "type": "deck",
+    "id": "Deck",
+    "cardDefaults": {
+      "width": 80,
+      "height": 80,
+      "shift": true,
+      "grid": [
+        {
+          "x": 80,
+          "y": 80
+        }
+      ]
+    },
+    "cardTypes": {
+      "Purple Star": {
+        "image": "/assets/-849728462_387",
+        "color": "purple"
+      },
+      "Purple Shuriken": {
+        "image": "/assets/-333022907_601",
+        "color": "purple"
+      },
+      "Purple Square": {
+        "image": "/assets/1636040670_241",
+        "color": "purple"
+      },
+      "Purple Circle": {
+        "image": "/assets/-109256569_315",
+        "color": "purple"
+      },
+      "Purple Cross": {
+        "image": "/assets/1889467958_402",
+        "color": "purple"
+      },
+      "Purple Diamond": {
+        "image": "/assets/-8841087_577",
+        "color": "purple"
+      },
+      "Blue Star": {
+        "image": "/assets/-849728462_387",
+        "color": "blue"
+      },
+      "Blue Shuriken": {
+        "image": "/assets/-333022907_601",
+        "color": "blue"
+      },
+      "Blue Square": {
+        "image": "/assets/1636040670_241",
+        "color": "blue"
+      },
+      "Blue Circle": {
+        "image": "/assets/-109256569_315",
+        "color": "blue"
+      },
+      "Blue Cross": {
+        "image": "/assets/1889467958_402",
+        "color": "blue"
+      },
+      "Blue Diamond": {
+        "image": "/assets/-8841087_577",
+        "color": "blue"
+      },
+      "Red Star": {
+        "image": "/assets/-849728462_387",
+        "color": "red"
+      },
+      "Red Shuriken": {
+        "image": "/assets/-333022907_601",
+        "color": "red"
+      },
+      "Red Square": {
+        "image": "/assets/1636040670_241",
+        "color": "red"
+      },
+      "Red Circle": {
+        "image": "/assets/-109256569_315",
+        "color": "red"
+      },
+      "Red Cross": {
+        "image": "/assets/1889467958_402",
+        "color": "red"
+      },
+      "Red Diamond": {
+        "image": "/assets/-8841087_577",
+        "color": "red"
+      },
+      "Yellow Star": {
+        "image": "/assets/-849728462_387",
+        "color": "yellow"
+      },
+      "Yellow Shuriken": {
+        "image": "/assets/-333022907_601",
+        "color": "yellow"
+      },
+      "Yellow Square": {
+        "image": "/assets/1636040670_241",
+        "color": "yellow"
+      },
+      "Yellow Circle": {
+        "image": "/assets/-109256569_315",
+        "color": "yellow"
+      },
+      "Yellow Cross": {
+        "image": "/assets/1889467958_402",
+        "color": "yellow"
+      },
+      "Yellow Diamond": {
+        "image": "/assets/-8841087_577",
+        "color": "yellow"
+      },
+      "Green Star": {
+        "image": "/assets/-849728462_387",
+        "color": "green"
+      },
+      "Green Shuriken": {
+        "image": "/assets/-333022907_601",
+        "color": "green"
+      },
+      "Green Square": {
+        "image": "/assets/1636040670_241",
+        "color": "green"
+      },
+      "Green Circle": {
+        "image": "/assets/-109256569_315",
+        "color": "green"
+      },
+      "Green Cross": {
+        "image": "/assets/1889467958_402",
+        "color": "green"
+      },
+      "Green Diamond": {
+        "image": "/assets/-8841087_577",
+        "color": "green"
+      },
+      "Orange Star": {
+        "image": "/assets/-849728462_387",
+        "color": "orange"
+      },
+      "Orange Shuriken": {
+        "image": "/assets/-333022907_601",
+        "color": "orange"
+      },
+      "Orange Square": {
+        "image": "/assets/1636040670_241",
+        "color": "orange"
+      },
+      "Orange Circle": {
+        "image": "/assets/-109256569_315",
+        "color": "orange"
+      },
+      "Orange Cross": {
+        "image": "/assets/1889467958_402",
+        "color": "orange"
+      },
+      "Orange Diamond": {
+        "image": "/assets/-8841087_577",
+        "color": "orange"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "black",
+            "valueType": "static",
+            "value": "",
+            "width": 80,
+            "height": 80
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "black",
+            "valueType": "static",
+            "value": "",
+            "width": 80,
+            "height": 80
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 10,
+            "color": "transparent",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 60,
+            "height": 60,
+            "svgReplaces": {
+              "#fff": "color"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "Draw"
+  },
+  "zuv9": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Purple Star",
+    "id": "zuv9",
+    "parent": "f0z0",
+    "z": 6995
+  },
+  "w63m": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Purple Shuriken",
+    "id": "w63m",
+    "parent": "f0z0",
+    "z": 9738
+  },
+  "f0z0": {
+    "type": "pile",
+    "width": 80,
+    "height": 80,
+    "id": "f0z0",
+    "parent": "Draw"
+  },
+  "4f4z": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Purple Square",
+    "id": "4f4z",
+    "parent": "f0z0",
+    "z": 3532
+  },
+  "fnvv": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Purple Circle",
+    "id": "fnvv",
+    "parent": "f0z0",
+    "z": 5995
+  },
+  "p29t": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Purple Cross",
+    "id": "p29t",
+    "parent": "f0z0",
+    "z": 4056
+  },
+  "dfjq": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Purple Diamond",
+    "id": "dfjq",
+    "parent": "f0z0",
+    "z": 5132
+  },
+  "983u": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Blue Star",
+    "id": "983u",
+    "parent": "f0z0",
+    "z": 89
+  },
+  "yfyb": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Blue Shuriken",
+    "id": "yfyb",
+    "parent": "f0z0",
+    "z": 5061
+  },
+  "l5o3": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Blue Square",
+    "id": "l5o3",
+    "parent": "f0z0",
+    "z": 5066
+  },
+  "wwf5": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Blue Circle",
+    "id": "wwf5",
+    "parent": "f0z0",
+    "z": 2629
+  },
+  "xvi8": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Blue Cross",
+    "id": "xvi8",
+    "parent": "f0z0",
+    "z": 7709
+  },
+  "xmds": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Blue Diamond",
+    "id": "xmds",
+    "z": 3726,
+    "parent": "f0z0"
+  },
+  "wc7u": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Red Star",
+    "id": "wc7u",
+    "parent": "f0z0",
+    "z": 6996
+  },
+  "awkv": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Red Shuriken",
+    "id": "awkv",
+    "parent": "f0z0",
+    "z": 9064
+  },
+  "ioqc": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Red Square",
+    "id": "ioqc",
+    "parent": "f0z0",
+    "z": 5873
+  },
+  "a0ae": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Red Circle",
+    "id": "a0ae",
+    "z": 2077,
+    "parent": "f0z0"
+  },
+  "qion": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Red Cross",
+    "id": "qion",
+    "parent": "f0z0",
+    "z": 6946
+  },
+  "rx8f": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Red Diamond",
+    "id": "rx8f",
+    "parent": "f0z0",
+    "z": 1229
+  },
+  "xyhm": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Yellow Star",
+    "id": "xyhm",
+    "parent": "f0z0",
+    "z": 3317
+  },
+  "a6mj": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Yellow Shuriken",
+    "id": "a6mj",
+    "parent": "f0z0",
+    "z": 6824
+  },
+  "ym22": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Yellow Square",
+    "id": "ym22",
+    "parent": "f0z0",
+    "z": 6454
+  },
+  "d4ql": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Yellow Circle",
+    "id": "d4ql",
+    "parent": "f0z0",
+    "z": 3980
+  },
+  "79t6": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Yellow Cross",
+    "id": "79t6",
+    "parent": "f0z0",
+    "z": 6386
+  },
+  "vci2": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Yellow Diamond",
+    "id": "vci2",
+    "parent": "f0z0",
+    "z": 7340
+  },
+  "wlg4": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Green Star",
+    "id": "wlg4",
+    "parent": "f0z0",
+    "z": 1013
+  },
+  "9xr4": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Green Shuriken",
+    "id": "9xr4",
+    "parent": "f0z0",
+    "z": 603
+  },
+  "6qks": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Green Square",
+    "id": "6qks",
+    "parent": "f0z0",
+    "z": 2153
+  },
+  "vlse": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Green Circle",
+    "id": "vlse",
+    "parent": "f0z0",
+    "z": 7847
+  },
+  "hmok": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Green Cross",
+    "id": "hmok",
+    "parent": "f0z0",
+    "z": 9859
+  },
+  "hvyp": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Green Diamond",
+    "id": "hvyp",
+    "z": 706,
+    "parent": "f0z0"
+  },
+  "ixk3": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Orange Star",
+    "id": "ixk3",
+    "parent": "f0z0",
+    "z": 570
+  },
+  "mqm8": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Orange Shuriken",
+    "id": "mqm8",
+    "parent": "f0z0",
+    "z": 866
+  },
+  "uq7a": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Orange Square",
+    "id": "uq7a",
+    "parent": "f0z0",
+    "z": 1996
+  },
+  "sims": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Orange Circle",
+    "id": "sims",
+    "parent": "f0z0",
+    "z": 3870
+  },
+  "v9jd": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Orange Cross",
+    "id": "v9jd",
+    "parent": "f0z0",
+    "z": 9999
+  },
+  "333c": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Orange Diamond",
+    "id": "333c",
+    "parent": "f0z0",
+    "z": 4375
+  },
+  "59hp": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Purple Star",
+    "id": "59hp",
+    "parent": "f0z0",
+    "z": 2565
+  },
+  "aqa9": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Purple Shuriken",
+    "id": "aqa9",
+    "parent": "f0z0",
+    "z": 3035
+  },
+  "f3n5": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Purple Square",
+    "id": "f3n5",
+    "parent": "f0z0",
+    "z": 7928
+  },
+  "s0i8": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Purple Circle",
+    "id": "s0i8",
+    "parent": "f0z0",
+    "z": 2262
+  },
+  "32kn": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Purple Cross",
+    "id": "32kn",
+    "parent": "f0z0",
+    "z": 4662
+  },
+  "5z4a": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Purple Diamond",
+    "id": "5z4a",
+    "parent": "f0z0",
+    "z": 7558
+  },
+  "vn4i": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Blue Star",
+    "id": "vn4i",
+    "parent": "f0z0",
+    "z": 45
+  },
+  "reih": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Blue Shuriken",
+    "id": "reih",
+    "parent": "f0z0",
+    "z": 891
+  },
+  "cwxv": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Blue Square",
+    "id": "cwxv",
+    "parent": "f0z0",
+    "z": 7438
+  },
+  "row2": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Blue Circle",
+    "id": "row2",
+    "parent": "f0z0",
+    "z": 8523
+  },
+  "zebf": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Blue Cross",
+    "id": "zebf",
+    "parent": "f0z0",
+    "z": 104
+  },
+  "e8hq": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Blue Diamond",
+    "id": "e8hq",
+    "parent": "f0z0",
+    "z": 5501
+  },
+  "d5o5": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Red Star",
+    "id": "d5o5",
+    "parent": "f0z0",
+    "z": 1002
+  },
+  "7u24": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Red Shuriken",
+    "id": "7u24",
+    "parent": "f0z0",
+    "z": 8828
+  },
+  "ghzq": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Red Square",
+    "id": "ghzq",
+    "parent": "f0z0",
+    "z": 6469
+  },
+  "gof0": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Red Circle",
+    "id": "gof0",
+    "parent": "f0z0",
+    "z": 1605
+  },
+  "yqsf": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Red Cross",
+    "id": "yqsf",
+    "parent": "f0z0",
+    "z": 6156
+  },
+  "uubv": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Red Diamond",
+    "id": "uubv",
+    "z": 2684,
+    "parent": "f0z0"
+  },
+  "ckiy": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Yellow Star",
+    "id": "ckiy",
+    "parent": "f0z0",
+    "z": 7480
+  },
+  "307z": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Yellow Shuriken",
+    "id": "307z",
+    "z": 3614,
+    "parent": "f0z0"
+  },
+  "pxc3": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Yellow Square",
+    "id": "pxc3",
+    "z": 4077,
+    "parent": "f0z0"
+  },
+  "psk2": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Yellow Circle",
+    "id": "psk2",
+    "parent": "f0z0",
+    "z": 3383
+  },
+  "q71q": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Yellow Cross",
+    "id": "q71q",
+    "parent": "f0z0",
+    "z": 2261
+  },
+  "zfj1": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Yellow Diamond",
+    "id": "zfj1",
+    "parent": "f0z0",
+    "z": 8680
+  },
+  "6m4h": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Green Star",
+    "id": "6m4h",
+    "parent": "f0z0",
+    "z": 6260
+  },
+  "4bug": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Green Shuriken",
+    "id": "4bug",
+    "parent": "f0z0",
+    "z": 6655
+  },
+  "u9u6": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Green Square",
+    "id": "u9u6",
+    "z": 2709,
+    "parent": "f0z0"
+  },
+  "cpk6": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Green Circle",
+    "id": "cpk6",
+    "parent": "f0z0",
+    "z": 1007
+  },
+  "oofq": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Green Cross",
+    "id": "oofq",
+    "parent": "f0z0",
+    "z": 4990
+  },
+  "e7g2": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Green Diamond",
+    "id": "e7g2",
+    "parent": "f0z0",
+    "z": 2767
+  },
+  "oot5": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Orange Star",
+    "id": "oot5",
+    "parent": "f0z0",
+    "z": 5630
+  },
+  "fjdt": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Orange Shuriken",
+    "id": "fjdt",
+    "parent": "f0z0",
+    "z": 7845
+  },
+  "mw1t": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Orange Square",
+    "id": "mw1t",
+    "parent": "f0z0",
+    "z": 353
+  },
+  "ajwn": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Orange Circle",
+    "id": "ajwn",
+    "parent": "f0z0",
+    "z": 3320
+  },
+  "ss5r": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Orange Cross",
+    "id": "ss5r",
+    "parent": "f0z0",
+    "z": 1488
+  },
+  "k47o": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Orange Diamond",
+    "id": "k47o",
+    "parent": "f0z0",
+    "z": 4034
+  },
+  "8z7e": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Purple Star",
+    "id": "8z7e",
+    "parent": "f0z0",
+    "z": 7929
+  },
+  "kigz": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Purple Shuriken",
+    "id": "kigz",
+    "parent": "f0z0",
+    "z": 3767
+  },
+  "h91i": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Purple Square",
+    "id": "h91i",
+    "parent": "f0z0",
+    "z": 8389
+  },
+  "4n7h": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Purple Circle",
+    "id": "4n7h",
+    "parent": "f0z0",
+    "z": 7039
+  },
+  "mlbz": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Purple Cross",
+    "id": "mlbz",
+    "parent": "f0z0",
+    "z": 2711
+  },
+  "2pod": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Purple Diamond",
+    "id": "2pod",
+    "parent": "f0z0",
+    "z": 1267
+  },
+  "3bab": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Blue Star",
+    "id": "3bab",
+    "parent": "f0z0",
+    "z": 2560
+  },
+  "5pcp": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Blue Shuriken",
+    "id": "5pcp",
+    "z": 6990,
+    "parent": "f0z0"
+  },
+  "9z6p": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Blue Square",
+    "id": "9z6p",
+    "parent": "f0z0",
+    "z": 1858
+  },
+  "v359": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Blue Circle",
+    "id": "v359",
+    "parent": "f0z0",
+    "z": 7275
+  },
+  "mfxq": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Blue Cross",
+    "id": "mfxq",
+    "parent": "f0z0",
+    "z": 848
+  },
+  "ox58": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Blue Diamond",
+    "id": "ox58",
+    "parent": "f0z0",
+    "z": 6620
+  },
+  "um9x": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Red Star",
+    "id": "um9x",
+    "parent": "f0z0",
+    "z": 4113
+  },
+  "c1se": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Red Shuriken",
+    "id": "c1se",
+    "parent": "f0z0",
+    "z": 1942
+  },
+  "cok0": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Red Square",
+    "id": "cok0",
+    "parent": "f0z0",
+    "z": 7374
+  },
+  "6n6w": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Red Circle",
+    "id": "6n6w",
+    "parent": "f0z0",
+    "z": 5664
+  },
+  "ei8l": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Red Cross",
+    "id": "ei8l",
+    "parent": "f0z0",
+    "z": 4036
+  },
+  "vnn9": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Red Diamond",
+    "id": "vnn9",
+    "parent": "f0z0",
+    "z": 5254
+  },
+  "tazg": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Yellow Star",
+    "id": "tazg",
+    "parent": "f0z0",
+    "z": 9067
+  },
+  "mgju": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Yellow Shuriken",
+    "id": "mgju",
+    "parent": "f0z0",
+    "z": 5938
+  },
+  "zeq7": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Yellow Square",
+    "id": "zeq7",
+    "parent": "f0z0",
+    "z": 202
+  },
+  "1zax": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Yellow Circle",
+    "id": "1zax",
+    "parent": "f0z0",
+    "z": 4155
+  },
+  "yzhf": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Yellow Cross",
+    "id": "yzhf",
+    "parent": "f0z0",
+    "z": 6228
+  },
+  "56gs": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Yellow Diamond",
+    "id": "56gs",
+    "parent": "f0z0",
+    "z": 3556
+  },
+  "g9z4": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Green Star",
+    "id": "g9z4",
+    "parent": "f0z0",
+    "z": 6722
+  },
+  "rt7q": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Green Shuriken",
+    "id": "rt7q",
+    "parent": "f0z0",
+    "z": 9043
+  },
+  "53ov": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Green Square",
+    "id": "53ov",
+    "parent": "f0z0",
+    "z": 6047
+  },
+  "48g9": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Green Circle",
+    "id": "48g9",
+    "parent": "f0z0",
+    "z": 3967
+  },
+  "t6e6": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Green Cross",
+    "id": "t6e6",
+    "parent": "f0z0",
+    "z": 3334
+  },
+  "s4w7": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Green Diamond",
+    "id": "s4w7",
+    "z": 7810,
+    "parent": "f0z0"
+  },
+  "vfkc": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Orange Star",
+    "id": "vfkc",
+    "parent": "f0z0",
+    "z": 6955
+  },
+  "jggb": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Orange Shuriken",
+    "id": "jggb",
+    "parent": "f0z0",
+    "z": 3960
+  },
+  "icvb": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Orange Square",
+    "id": "icvb",
+    "parent": "f0z0",
+    "z": 7906
+  },
+  "yfe9": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Orange Circle",
+    "id": "yfe9",
+    "parent": "f0z0",
+    "z": 7409
+  },
+  "nzeb": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Orange Cross",
+    "id": "nzeb",
+    "parent": "f0z0",
+    "z": 9639
+  },
+  "mej1": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Orange Diamond",
+    "id": "mej1",
+    "parent": "f0z0",
+    "z": 8343
+  },
+  "Discard": {
+    "type": "holder",
+    "id": "Discard",
+    "y": 160,
+    "inheritFrom": "Draw",
+    "x": 5
+  },
+  "Hand": {
+    "type": "holder",
+    "id": "Hand",
+    "y": 507,
+    "inheritFrom": "Draw",
+    "childrenPerOwner": true,
+    "stackOffsetY": 80,
+    "height": 488,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "Fill": {
+    "type": "button",
+    "id": "Fill",
+    "parent": "Hand",
+    "x": 14,
+    "y": 414,
+    "width": 60,
+    "height": 60,
+    "clickRoutine": [
+      {
+        "func": "SHUFFLE",
+        "holder": "Draw"
+      },
+      {
+        "func": "SELECT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var count = 6 - ${COUNT}",
+      {
+        "func": "MOVE",
+        "from": "Draw",
+        "to": "Hand",
+        "count": "${count}"
+      }
+    ],
+    "color": "white",
+    "css": "background-size:75%",
+    "image": "/assets/-1232977354_1395",
+    "svgReplaces": {
+      "currentColor": "color"
+    }
+  },
+  "Reset": {
+    "type": "button",
+    "id": "Reset",
+    "x": 1535,
+    "y": 5,
+    "height": 60,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "Draw"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "Draw"
+      },
+      {
+        "func": "FLIP",
+        "holder": "Draw",
+        "face": 0
+      },
+      {
+        "func": "LABEL",
+        "label": [
+          "Player 1",
+          "Player 2",
+          "Player 3",
+          "Player 4"
+        ]
+      }
+    ],
+    "width": 60,
+    "color": "white",
+    "css": "background-size:75%",
+    "image": "/assets/1342248376_1383",
+    "svgReplaces": {
+      "currentColor": "color"
+    }
+  },
+  "u14vD": {
+    "id": "u14vD",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "Player 1"
+  },
+  "u14vU": {
+    "id": "u14vU",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "Player 1"
+  },
+  "Player 1": {
+    "type": "label",
+    "id": "Player 1",
+    "x": 1490,
+    "y": 750,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0
+  },
+  "Player 1 - Label": {
+    "type": "label",
+    "id": "Player 1 - Label",
+    "parent": "Player 1",
+    "text": "Player 1",
+    "x": -17.5,
+    "y": -24,
+    "editable": true
+  },
+  "Player 2": {
+    "type": "label",
+    "id": "Player 2",
+    "x": 1490,
+    "y": 819.3333333333334,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0
+  },
+  "u15vD": {
+    "id": "u15vD",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "Player 2"
+  },
+  "u15vU": {
+    "id": "u15vU",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "Player 2"
+  },
+  "Player 2 - Label": {
+    "type": "label",
+    "id": "Player 2 - Label",
+    "parent": "Player 2",
+    "text": "Player 2",
+    "x": -17.5,
+    "y": -24,
+    "editable": true
+  },
+  "Player 3": {
+    "type": "label",
+    "id": "Player 3",
+    "x": 1490,
+    "y": 888.6666666666666,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0
+  },
+  "u16vD": {
+    "id": "u16vD",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "Player 3"
+  },
+  "u16vU": {
+    "id": "u16vU",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "Player 3"
+  },
+  "Player 3 - Label": {
+    "type": "label",
+    "id": "Player 3 - Label",
+    "parent": "Player 3",
+    "text": "Player 3",
+    "x": -17.5,
+    "y": -24,
+    "editable": true
+  },
+  "Player 4": {
+    "type": "label",
+    "id": "Player 4",
+    "x": 1490,
+    "y": 958,
+    "width": 65,
+    "height": 40,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0
+  },
+  "u17vD": {
+    "id": "u17vD",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "parent": "Player 4"
+  },
+  "u17vU": {
+    "id": "u17vU",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "parent": "Player 4"
+  },
+  "Player 4 - Label": {
+    "type": "label",
+    "id": "Player 4 - Label",
+    "parent": "Player 4",
+    "text": "Player 4",
+    "x": -17.5,
+    "y": -24,
+    "editable": true
+  },
+  "Discard Button": {
+    "type": "button",
+    "id": "Discard Button",
+    "x": 19,
+    "y": 96.5,
+    "width": 60,
+    "height": 60,
+    "rotation": -90,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "Discard",
+        "to": "Draw",
+        "count": 0,
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "Draw"
+      }
+    ],
+    "color": "white",
+    "css": "background-size:75%",
+    "image": "/assets/992985589_649",
+    "svgReplaces": {
+      "currentColor": "color"
+    }
+  },
+  "floor": {
+    "type": "holder",
+    "id": "floor",
+    "x": -500,
+    "y": -820,
+    "width": 2600,
+    "height": 2000,
+    "layer": -9,
+    "z": 1,
+    "movableInEdit": false,
+    "alignChildren": false,
+    "classes": "transparent",
+    "css": "border: none",
+    "dropTarget": {
+      "shift": true
+    }
+  },
+  "shiftdown": {
+    "type": "button",
+    "id": "shiftdown",
+    "x": 1509,
+    "y": 667,
+    "width": 50,
+    "height": 50,
+    "layer": 2,
+    "z": 617,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "relation": "+",
+        "value": 80
+      }
+    ],
+    "css": "border-color:transparent;background-color:transparent;border-radius:25px",
+    "image": "/assets/-1712546135_277"
+  },
+  "shiftup": {
+    "type": "button",
+    "id": "shiftup",
+    "x": 1509,
+    "y": 587,
+    "width": 50,
+    "height": 50,
+    "layer": 2,
+    "z": 618,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "relation": "-",
+        "value": 80
+      }
+    ],
+    "css": "border-color:transparent;background-color:transparent;border-radius:25px",
+    "image": "/assets/979051549_277"
+  },
+  "shiftcenter": {
+    "type": "button",
+    "id": "shiftcenter",
+    "x": 1514,
+    "y": 632,
+    "width": 40,
+    "height": 40,
+    "layer": 2,
+    "z": 619,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": -500
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -500
+      }
+    ],
+    "css": "border-color:transparent;background-color:transparent;border-radius:25px",
+    "image": "/assets/-27377452_736"
+  },
+  "shiftleft": {
+    "type": "button",
+    "id": "shiftleft",
+    "x": 1470,
+    "y": 626,
+    "width": 50,
+    "height": 50,
+    "layer": 2,
+    "z": 620,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "-",
+        "value": 80
+      }
+    ],
+    "css": "border-color:transparent;background-color:transparent;border-radius:25px",
+    "image": "/assets/1502865726_277"
+  },
+  "shiftright": {
+    "type": "button",
+    "id": "shiftright",
+    "x": 1548,
+    "y": 626,
+    "width": 50,
+    "height": 50,
+    "layer": 2,
+    "z": 621,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "+",
+        "value": 80
+      }
+    ],
+    "css": "border-color:transparent;background-color:transparent;border-radius:25px",
+    "image": "/assets/822277903_277"
+  }
+}

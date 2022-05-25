@@ -1,0 +1,920 @@
+{
+  "d1Side1": {
+    "id": "d1Side1",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 2px solid black; background: #ff000080;transform: rotateY(  0deg) translateZ(calc(var(--size) / 2)) !important; ",
+    "parent": "d1Base",
+    "fixedParent": true
+  },
+  "d1Side2": {
+    "id": "d1Side2",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 2px solid black; background: #ffff0080;transform: rotateY(-90deg) translateZ(calc(var(--size) / 2)) !important; ",
+    "parent": "d1Base",
+    "fixedParent": true
+  },
+  "d1Side2Cover": {
+    "id": "d1Side2Cover",
+    "parent": "d1Side2",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important;background:orange;font-size:35px; text-align:center;line-height: 0.9",
+    "text": "\n2",
+    "fixedParent": true
+  },
+  "d1Side1Cover": {
+    "id": "d1Side1Cover",
+    "parent": "d1Side1",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important;background:red;font-size:35px; text-align:center;line-height: 0.9",
+    "text": "\n1",
+    "fixedParent": true
+  },
+  "d1Side3": {
+    "id": "d1Side3",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 2px solid black; background: #ff00ff80;transform: rotateX( -90deg) translateZ(calc(var(--size) / 2)) !important; ",
+    "parent": "d1Base",
+    "fixedParent": true
+  },
+  "d1Side3Cover": {
+    "id": "d1Side3Cover",
+    "parent": "d1Side3",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important;background:yellow;font-size:35px; text-align:center;line-height: 0.9",
+    "text": "\n3",
+    "fixedParent": true
+  },
+  "d1Side4": {
+    "id": "d1Side4",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 2px solid black; background: #00ffff80;transform: rotateX( 90deg) translateZ(calc(var(--size) / 2)) !important; ",
+    "parent": "d1Base",
+    "fixedParent": true
+  },
+  "d1Side4Cover": {
+    "id": "d1Side4Cover",
+    "parent": "d1Side4",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important;background:green;font-size:35px; text-align:center;line-height: 0.9",
+    "text": "\n4",
+    "fixedParent": true
+  },
+  "d1Side5": {
+    "id": "d1Side5",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 2px solid black; background: #0000ff80;transform: rotateY( 90deg) translateZ(calc(var(--size) / 2)) !important; ",
+    "parent": "d1Base",
+    "fixedParent": true
+  },
+  "d1Side5Cover": {
+    "id": "d1Side5Cover",
+    "parent": "d1Side5",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important;background:blue;font-size:35px; text-align:center;line-height: 0.9",
+    "text": "\n5",
+    "fixedParent": true
+  },
+  "d1Side6": {
+    "id": "d1Side6",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 2px solid black; background: #00ff0080;transform: rotateY(180deg) translateZ(calc(var(--size) / 2)) !important; ",
+    "parent": "d1Base",
+    "fixedParent": true
+  },
+  "d1Side6Cover": {
+    "id": "d1Side6Cover",
+    "parent": "d1Side6",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important;background:purple;font-size:35px; text-align:center;line-height: 0.9",
+    "text": "\n6",
+    "fixedParent": true
+  },
+  "d1Base": {
+    "id": "d1Base",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important;transform-style: preserve-3d;  transform: translateZ(calc(var(--size) / -2)) rotateX(   var(--rotX)) rotateY(var(--rotY)) rotateZ(var(--rotZ)) !important;  transition: transform 0.5s;",
+    "parent": "Text Die",
+    "fixedParent": true
+  },
+  "d1Cover": {
+    "id": "d1Cover",
+    "layer": 9,
+    "movable": false,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "${PROPERTY parent}",
+        "routine": "updateRoutine"
+      }
+    ],
+    "css": "width:var(--size) !important;height:var(--size) !important;",
+    "parent": "Text Die",
+    "fixedParent": true
+  },
+  "d2Base": {
+    "id": "d2Base",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important;transform-style: preserve-3d;  transform: translateZ(calc(var(--size) / -2)) rotateX(   var(--rotX)) rotateY(var(--rotY)) rotateZ(var(--rotZ)) !important;  transition: transform 0.5s;",
+    "parent": "Image Die",
+    "fixedParent": true
+  },
+  "d2Cover": {
+    "id": "d2Cover",
+    "layer": 9,
+    "movable": false,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "${PROPERTY parent}",
+        "routine": "updateRoutine"
+      }
+    ],
+    "css": "width:var(--size) !important;height:var(--size) !important;",
+    "parent": "Image Die",
+    "fixedParent": true
+  },
+  "d2Side1": {
+    "id": "d2Side1",
+    "parent": "d2Base",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 2px solid black; background: #ff000080;transform: rotateY(  0deg) translateZ(calc(var(--size) / 2)) !important; ",
+    "fixedParent": true
+  },
+  "d2Side1Cover": {
+    "id": "d2Side1Cover",
+    "parent": "d2Side1",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important",
+    "image": "/assets/-1988440046_30215",
+    "fixedParent": true
+  },
+  "d2Side2": {
+    "id": "d2Side2",
+    "parent": "d2Base",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 2px solid black; background: #ffff0080;transform: rotateY(-90deg) translateZ(calc(var(--size) / 2)) !important; ",
+    "fixedParent": true
+  },
+  "d2Side2Cover": {
+    "id": "d2Side2Cover",
+    "parent": "d2Side2",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important",
+    "image": "/assets/-807326126_1918",
+    "fixedParent": true
+  },
+  "d2Side3": {
+    "id": "d2Side3",
+    "parent": "d2Base",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 2px solid black; background: #ff00ff80;transform: rotateX( -90deg) translateZ(calc(var(--size) / 2)) !important; ",
+    "fixedParent": true
+  },
+  "d2Side3Cover": {
+    "id": "d2Side3Cover",
+    "parent": "d2Side3",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important",
+    "image": "/assets/1242550039_3992",
+    "fixedParent": true
+  },
+  "d2Side4": {
+    "id": "d2Side4",
+    "parent": "d2Base",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 2px solid black; background: #00ffff80;transform: rotateX( 90deg) translateZ(calc(var(--size) / 2)) !important; ",
+    "fixedParent": true
+  },
+  "d2Side4Cover": {
+    "id": "d2Side4Cover",
+    "parent": "d2Side4",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important",
+    "image": "/assets/-2133964339_13025",
+    "fixedParent": true
+  },
+  "d2Side5": {
+    "id": "d2Side5",
+    "parent": "d2Base",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 2px solid black; background: #0000ff80;transform: rotateY( 90deg) translateZ(calc(var(--size) / 2)) !important; ",
+    "fixedParent": true
+  },
+  "d2Side5Cover": {
+    "id": "d2Side5Cover",
+    "parent": "d2Side5",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important",
+    "image": "/assets/1742233512_1635",
+    "fixedParent": true
+  },
+  "d2Side6": {
+    "id": "d2Side6",
+    "parent": "d2Base",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 2px solid black; background: #00ff0080;transform: rotateY(180deg) translateZ(calc(var(--size) / 2)) !important; ",
+    "fixedParent": true
+  },
+  "d2Side6Cover": {
+    "id": "d2Side6Cover",
+    "parent": "d2Side6",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important",
+    "image": "/assets/-876371510_7488",
+    "fixedParent": true
+  },
+  "Base": {
+    "id": "Base",
+    "css": "width:var(--size) !important;height:var(--size) !important;transform-style: preserve-3d;  transform: translateZ(calc(var(--size) / -2)) rotateX(   var(--rotX)) rotateY(var(--rotY)) rotateZ(var(--rotZ)) !important;  transition: transform 0.5s;",
+    "movable": false,
+    "parent": "Classic Die",
+    "fixedParent": true
+  },
+  "Cover": {
+    "id": "Cover",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "${PROPERTY parent}",
+        "routine": "updateRoutine"
+      }
+    ],
+    "layer": 9,
+    "css": "width:var(--size) !important;height:var(--size) !important;",
+    "movable": false,
+    "z": 1,
+    "parent": "Classic Die",
+    "fixedParent": true
+  },
+  "Classic Die": {
+    "id": "Classic Die",
+    "x": 125,
+    "y": 240,
+    "z": 75264,
+    "backgroundColor": "white",
+    "css": "--size:100px; --rotX:-90deg; --rotY:0deg; --rotZ:0deg; background: none !important; perspective: 1600px;",
+    "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='100' height='100'%3E%3Cpath d='M1 1h100v100H1z' fill='b'/%3E%3Cuse xlink:href='%23A' fill='p1' x='20' y='20'/%3E%3Cuse xlink:href='%23A' fill='p2' x='20' y='50'/%3E%3Cuse xlink:href='%23A' fill='p3' x='20' y='80'/%3E%3Cuse xlink:href='%23A' fill='p4' x='50' y='20'/%3E%3Cuse xlink:href='%23A' fill='p5' x='50' y='50'/%3E%3Cuse xlink:href='%23A' fill='p6' x='50' y='80'/%3E%3Cuse xlink:href='%23A' fill='p7' x='80' y='20'/%3E%3Cuse xlink:href='%23A' fill='p8' x='80' y='50'/%3E%3Cuse xlink:href='%23A' fill='p9' x='80' y='80'/%3E%3Cdefs%3E%3Ccircle id='A' r='10'/%3E%3C/defs%3E%3C/svg%3E",
+    "updateRoutine": [
+      "var value = randInt 1 6",
+      "var valueX = ${PROPERTY xRotations} getIndex ${value}",
+      "var valueY = ${PROPERTY yRotations} getIndex ${value}",
+      "var randX = randInt 0 3",
+      "var randY = randInt 0 3",
+      "var randX = ${randX} * 360",
+      "var randY = ${randY} * 360",
+      "var sumX = ${randX} + ${valueX}",
+      "var sumY = ${randY} + ${valueY}",
+      "var css = '--size:' + ${PROPERTY width}",
+      "var css = ${css} + 'px; --rotX:'",
+      "var css = ${css} + ${sumX}",
+      "var css = ${css} + 'deg; --rotY:'",
+      "var css = ${css} + ${sumY}",
+      "var css = ${css} + 'deg; --rotZ:0deg; background: none !important; perspective: 1600px;'",
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "${css}",
+        "collection": "thisButton"
+      },
+      {
+        "func": "SET",
+        "property": "value",
+        "value": "${value}",
+        "collection": "thisButton"
+      }
+    ],
+    "value": 4,
+    "xRotations": [
+      0,
+      0,
+      0,
+      90,
+      -90,
+      0,
+      0
+    ],
+    "yRotations": [
+      0,
+      0,
+      90,
+      0,
+      0,
+      -90,
+      180
+    ],
+    "pipColor": "black"
+  },
+  "side1": {
+    "id": "side1",
+    "parent": "Base",
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 100,
+    "movable": false,
+    "movableInEdit": true,
+    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateY(  0deg) translateZ(calc(var(--size) / 2)) !important; ",
+    "inheritFrom": {
+      "Classic Die": [
+        "backgroundColor",
+        "pipColor",
+        "image"
+      ]
+    },
+    "svgReplaces": {
+      "b": "backgroundColor",
+      "p1": "backgroundColor",
+      "p2": "backgroundColor",
+      "p3": "backgroundColor",
+      "p4": "backgroundColor",
+      "p5": "pipColor",
+      "p6": "backgroundColor",
+      "p7": "backgroundColor",
+      "p8": "backgroundColor",
+      "p9": "backgroundColor"
+    },
+    "fixedParent": true
+  },
+  "side2": {
+    "id": "side2",
+    "parent": "Base",
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 100,
+    "movable": false,
+    "movableInEdit": true,
+    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateY(-90deg) translateZ(calc(var(--size) / 2)) !important; ",
+    "inheritFrom": {
+      "Classic Die": [
+        "backgroundColor",
+        "pipColor",
+        "image"
+      ]
+    },
+    "svgReplaces": {
+      "b": "backgroundColor",
+      "p1": "pipColor",
+      "p2": "backgroundColor",
+      "p3": "backgroundColor",
+      "p4": "backgroundColor",
+      "p5": "backgroundColor",
+      "p6": "backgroundColor",
+      "p7": "backgroundColor",
+      "p8": "backgroundColor",
+      "p9": "pipColor"
+    },
+    "fixedParent": true
+  },
+  "side3": {
+    "id": "side3",
+    "parent": "Base",
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 100,
+    "movable": false,
+    "movableInEdit": true,
+    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateX( -90deg) translateZ(calc(var(--size) / 2)) !important; ",
+    "inheritFrom": {
+      "Classic Die": [
+        "backgroundColor",
+        "pipColor",
+        "image"
+      ]
+    },
+    "svgReplaces": {
+      "b": "backgroundColor",
+      "p1": "pipColor",
+      "p2": "backgroundColor",
+      "p3": "backgroundColor",
+      "p4": "backgroundColor",
+      "p5": "pipColor",
+      "p6": "backgroundColor",
+      "p7": "backgroundColor",
+      "p8": "backgroundColor",
+      "p9": "pipColor"
+    },
+    "activeFace": 0,
+    "fixedParent": true
+  },
+  "side4": {
+    "id": "side4",
+    "parent": "Base",
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 100,
+    "movable": false,
+    "movableInEdit": true,
+    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black; transform: rotateX( 90deg) translateZ(calc(var(--size) / 2)) !important; ",
+    "inheritFrom": {
+      "Classic Die": [
+        "backgroundColor",
+        "pipColor",
+        "image"
+      ]
+    },
+    "svgReplaces": {
+      "b": "backgroundColor",
+      "p1": "pipColor",
+      "p2": "backgroundColor",
+      "p3": "pipColor",
+      "p4": "backgroundColor",
+      "p5": "backgroundColor",
+      "p6": "backgroundColor",
+      "p7": "pipColor",
+      "p8": "backgroundColor",
+      "p9": "pipColor"
+    },
+    "fixedParent": true
+  },
+  "side5": {
+    "id": "side5",
+    "parent": "Base",
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 100,
+    "movable": false,
+    "movableInEdit": true,
+    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateY( 90deg) translateZ(calc(var(--size) / 2)) !important; ",
+    "inheritFrom": {
+      "Classic Die": [
+        "backgroundColor",
+        "pipColor",
+        "image"
+      ]
+    },
+    "svgReplaces": {
+      "b": "backgroundColor",
+      "p1": "pipColor",
+      "p2": "backgroundColor",
+      "p3": "pipColor",
+      "p4": "backgroundColor",
+      "p5": "pipColor",
+      "p6": "backgroundColor",
+      "p7": "pipColor",
+      "p8": "backgroundColor",
+      "p9": "pipColor"
+    },
+    "fixedParent": true
+  },
+  "side6": {
+    "id": "side6",
+    "parent": "Base",
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 100,
+    "movable": false,
+    "movableInEdit": true,
+    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateY(180deg) translateZ(calc(var(--size) / 2)) !important; ",
+    "inheritFrom": {
+      "Classic Die": [
+        "backgroundColor",
+        "pipColor",
+        "image"
+      ]
+    },
+    "svgReplaces": {
+      "b": "backgroundColor",
+      "p1": "pipColor",
+      "p2": "pipColor",
+      "p3": "pipColor",
+      "p4": "backgroundColor",
+      "p5": "backgroundColor",
+      "p6": "backgroundColor",
+      "p7": "pipColor",
+      "p8": "pipColor",
+      "p9": "pipColor"
+    },
+    "fixedParent": true
+  },
+  "Text Die": {
+    "id": "Text Die",
+    "x": 1052,
+    "y": 240,
+    "z": 75266,
+    "css": "--size:100px; --rotX:-90deg; --rotY:360deg; --rotZ:0deg; background: none !important; perspective: 1600px;",
+    "updateRoutine": [
+      "var value = randInt 1 6",
+      "var valueX = ${PROPERTY xRotations} getIndex ${value}",
+      "var valueY = ${PROPERTY yRotations} getIndex ${value}",
+      "var randX = randInt 0 3",
+      "var randY = randInt 0 3",
+      "var randX = ${randX} * 360",
+      "var randY = ${randY} * 360",
+      "var sumX = ${randX} + ${valueX}",
+      "var sumY = ${randY} + ${valueY}",
+      "var css = '--size:' + ${PROPERTY width}",
+      "var css = ${css} + 'px; --rotX:'",
+      "var css = ${css} + ${sumX}",
+      "var css = ${css} + 'deg; --rotY:'",
+      "var css = ${css} + ${sumY}",
+      "var css = ${css} + 'deg; --rotZ:0deg; background: none !important; perspective: 1600px;'",
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "${css}",
+        "collection": "thisButton"
+      },
+      {
+        "func": "SET",
+        "property": "value",
+        "value": "${value}",
+        "collection": "thisButton"
+      }
+    ],
+    "value": 4,
+    "xRotations": [
+      0,
+      0,
+      0,
+      90,
+      -90,
+      0,
+      0
+    ],
+    "yRotations": [
+      0,
+      0,
+      90,
+      0,
+      0,
+      -90,
+      180
+    ]
+  },
+  "Image Die": {
+    "id": "Image Die",
+    "x": 1303,
+    "y": 240,
+    "z": 75267,
+    "css": "--size:100px; --rotX:1080deg; --rotY:540deg; --rotZ:0deg; background: none !important; perspective: 1600px;",
+    "updateRoutine": [
+      "var value = randInt 1 6",
+      "var valueX = ${PROPERTY xRotations} getIndex ${value}",
+      "var valueY = ${PROPERTY yRotations} getIndex ${value}",
+      "var randX = randInt 0 3",
+      "var randY = randInt 0 3",
+      "var randX = ${randX} * 360",
+      "var randY = ${randY} * 360",
+      "var sumX = ${randX} + ${valueX}",
+      "var sumY = ${randY} + ${valueY}",
+      "var css = '--size:' + ${PROPERTY width}",
+      "var css = ${css} + 'px; --rotX:'",
+      "var css = ${css} + ${sumX}",
+      "var css = ${css} + 'deg; --rotY:'",
+      "var css = ${css} + ${sumY}",
+      "var css = ${css} + 'deg; --rotZ:0deg; background: none !important; perspective: 1600px;'",
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "${css}",
+        "collection": "thisButton"
+      },
+      {
+        "func": "SET",
+        "property": "value",
+        "value": "${value}",
+        "collection": "thisButton"
+      }
+    ],
+    "value": 6,
+    "xRotations": [
+      0,
+      0,
+      0,
+      90,
+      -90,
+      0,
+      0
+    ],
+    "yRotations": [
+      0,
+      0,
+      90,
+      0,
+      0,
+      -90,
+      180
+    ]
+  },
+  "Cover1": {
+    "id": "Cover1",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "${PROPERTY parent}",
+        "routine": "updateRoutine"
+      }
+    ],
+    "layer": 9,
+    "css": "width:var(--size) !important;height:var(--size) !important;",
+    "movable": false,
+    "parent": "Classic Die 2",
+    "fixedParent": true
+  },
+  "Classic Die 2": {
+    "id": "Classic Die 2",
+    "x": 347,
+    "y": 240,
+    "z": 75265,
+    "backgroundColor": "red",
+    "css": "--size:100px; --rotX:990deg; --rotY:1080deg; --rotZ:0deg; background: none !important; perspective: 1600px;",
+    "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='100' height='100'%3E%3Cpath d='M1 1h100v100H1z' fill='b'/%3E%3Cuse xlink:href='%23A' fill='p1' x='20' y='20'/%3E%3Cuse xlink:href='%23A' fill='p2' x='20' y='50'/%3E%3Cuse xlink:href='%23A' fill='p3' x='20' y='80'/%3E%3Cuse xlink:href='%23A' fill='p4' x='50' y='20'/%3E%3Cuse xlink:href='%23A' fill='p5' x='50' y='50'/%3E%3Cuse xlink:href='%23A' fill='p6' x='50' y='80'/%3E%3Cuse xlink:href='%23A' fill='p7' x='80' y='20'/%3E%3Cuse xlink:href='%23A' fill='p8' x='80' y='50'/%3E%3Cuse xlink:href='%23A' fill='p9' x='80' y='80'/%3E%3Cdefs%3E%3Ccircle id='A' r='10'/%3E%3C/defs%3E%3C/svg%3E",
+    "pipColor": "white",
+    "updateRoutine": [
+      "var value = randInt 1 6",
+      "var valueX = ${PROPERTY xRotations} getIndex ${value}",
+      "var valueY = ${PROPERTY yRotations} getIndex ${value}",
+      "var randX = randInt 0 3",
+      "var randY = randInt 0 3",
+      "var randX = ${randX} * 360",
+      "var randY = ${randY} * 360",
+      "var sumX = ${randX} + ${valueX}",
+      "var sumY = ${randY} + ${valueY}",
+      "var css = '--size:' + ${PROPERTY width}",
+      "var css = ${css} + 'px; --rotX:'",
+      "var css = ${css} + ${sumX}",
+      "var css = ${css} + 'deg; --rotY:'",
+      "var css = ${css} + ${sumY}",
+      "var css = ${css} + 'deg; --rotZ:0deg; background: none !important; perspective: 1600px;'",
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "${css}",
+        "collection": "thisButton"
+      },
+      {
+        "func": "SET",
+        "property": "value",
+        "value": "${value}",
+        "collection": "thisButton"
+      }
+    ],
+    "value": 4,
+    "xRotations": [
+      0,
+      0,
+      0,
+      90,
+      -90,
+      0,
+      0
+    ],
+    "yRotations": [
+      0,
+      0,
+      90,
+      0,
+      0,
+      -90,
+      180
+    ]
+  },
+  "Base 2": {
+    "id": "Base 2",
+    "parent": "Classic Die 2",
+    "movable": false,
+    "css": "width:var(--size) !important;height:var(--size) !important;transform-style: preserve-3d;  transform: translateZ(calc(var(--size) / -2)) rotateX(   var(--rotX)) rotateY(var(--rotY)) rotateZ(var(--rotZ)) !important;  transition: transform 0.5s;",
+    "fixedParent": true
+  },
+  "side1-2": {
+    "id": "side1-2",
+    "parent": "Base 2",
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 100,
+    "movable": false,
+    "movableInEdit": true,
+    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateY(  0deg) translateZ(calc(var(--size) / 2)) !important; ",
+    "inheritFrom": {
+      "Classic Die 2": [
+        "backgroundColor",
+        "pipColor",
+        "image"
+      ]
+    },
+    "svgReplaces": {
+      "b": "backgroundColor",
+      "p1": "backgroundColor",
+      "p2": "backgroundColor",
+      "p3": "backgroundColor",
+      "p4": "backgroundColor",
+      "p5": "pipColor",
+      "p6": "backgroundColor",
+      "p7": "backgroundColor",
+      "p8": "backgroundColor",
+      "p9": "backgroundColor"
+    },
+    "fixedParent": true
+  },
+  "side2-2": {
+    "id": "side2-2",
+    "parent": "Base 2",
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 100,
+    "movable": false,
+    "movableInEdit": true,
+    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateY(-90deg) translateZ(calc(var(--size) / 2)) !important; ",
+    "inheritFrom": {
+      "Classic Die 2": [
+        "backgroundColor",
+        "pipColor",
+        "image"
+      ]
+    },
+    "svgReplaces": {
+      "b": "backgroundColor",
+      "p1": "pipColor",
+      "p2": "backgroundColor",
+      "p3": "backgroundColor",
+      "p4": "backgroundColor",
+      "p5": "backgroundColor",
+      "p6": "backgroundColor",
+      "p7": "backgroundColor",
+      "p8": "backgroundColor",
+      "p9": "pipColor"
+    },
+    "fixedParent": true
+  },
+  "side3-2": {
+    "id": "side3-2",
+    "parent": "Base 2",
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 100,
+    "movable": false,
+    "movableInEdit": true,
+    "activeFace": 0,
+    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateX( -90deg) translateZ(calc(var(--size) / 2)) !important; ",
+    "inheritFrom": {
+      "Classic Die 2": [
+        "backgroundColor",
+        "pipColor",
+        "image"
+      ]
+    },
+    "svgReplaces": {
+      "b": "backgroundColor",
+      "p1": "pipColor",
+      "p2": "backgroundColor",
+      "p3": "backgroundColor",
+      "p4": "backgroundColor",
+      "p5": "pipColor",
+      "p6": "backgroundColor",
+      "p7": "backgroundColor",
+      "p8": "backgroundColor",
+      "p9": "pipColor"
+    },
+    "fixedParent": true
+  },
+  "side4-2": {
+    "id": "side4-2",
+    "parent": "Base 2",
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 100,
+    "movable": false,
+    "movableInEdit": true,
+    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black; transform: rotateX( 90deg) translateZ(calc(var(--size) / 2)) !important; ",
+    "inheritFrom": {
+      "Classic Die 2": [
+        "backgroundColor",
+        "pipColor",
+        "image"
+      ]
+    },
+    "svgReplaces": {
+      "b": "backgroundColor",
+      "p1": "pipColor",
+      "p2": "backgroundColor",
+      "p3": "pipColor",
+      "p4": "backgroundColor",
+      "p5": "backgroundColor",
+      "p6": "backgroundColor",
+      "p7": "pipColor",
+      "p8": "backgroundColor",
+      "p9": "pipColor"
+    },
+    "fixedParent": true
+  },
+  "side5-2": {
+    "id": "side5-2",
+    "parent": "Base 2",
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 100,
+    "movable": false,
+    "movableInEdit": true,
+    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateY( 90deg) translateZ(calc(var(--size) / 2)) !important; ",
+    "inheritFrom": {
+      "Classic Die 2": [
+        "backgroundColor",
+        "pipColor",
+        "image"
+      ]
+    },
+    "svgReplaces": {
+      "b": "backgroundColor",
+      "p1": "pipColor",
+      "p2": "backgroundColor",
+      "p3": "pipColor",
+      "p4": "backgroundColor",
+      "p5": "pipColor",
+      "p6": "backgroundColor",
+      "p7": "pipColor",
+      "p8": "backgroundColor",
+      "p9": "pipColor"
+    },
+    "fixedParent": true
+  },
+  "side6-2": {
+    "id": "side6-2",
+    "parent": "Base 2",
+    "x": 0,
+    "y": 0,
+    "width": 100,
+    "height": 100,
+    "movable": false,
+    "movableInEdit": true,
+    "css": "width:var(--size) !important;height:var(--size) !important;position: absolute;  border: 1px solid black;transform: rotateY(180deg) translateZ(calc(var(--size) / 2)) !important; ",
+    "inheritFrom": {
+      "Classic Die 2": [
+        "backgroundColor",
+        "pipColor",
+        "image"
+      ]
+    },
+    "svgReplaces": {
+      "b": "backgroundColor",
+      "p1": "pipColor",
+      "p2": "pipColor",
+      "p3": "pipColor",
+      "p4": "backgroundColor",
+      "p5": "backgroundColor",
+      "p6": "backgroundColor",
+      "p7": "pipColor",
+      "p8": "pipColor",
+      "p9": "pipColor"
+    },
+    "fixedParent": true
+  },
+  "Label1": {
+    "id": "Label1",
+    "x": 209,
+    "y": 58,
+    "width": 1200,
+    "height": 150,
+    "z": 75268,
+    "movable": false,
+    "css": "font-size:25px",
+    "text": "The template for these dice is from ArnoldSmith86.  The 'classic' dice on the left consist of 9 separate widgets, each of which must be copied into the desired room.  The 'text' and 'image' dice on the right each consist of 15 separate widgets."
+  },
+  "Label2": {
+    "id": "Label2",
+    "x": 79,
+    "y": 435,
+    "width": 600,
+    "height": 400,
+    "z": 75269,
+    "movable": false,
+    "css": "font-size:25px",
+    "text": "To customize the colors of these dice, go to the main widget 'Custom Die.' Change the 'backGroundColor' and 'pipColor' properties. Also, each side of the die needs to have the 'inheritFrom' property link to the main widget. So if you copy this or rename it, you'll have to change the 'inheritFrom' reference on all 6 sides.  To resize the die, simply change the width and height properties in the main widget."
+  },
+  "Label3": {
+    "id": "Label3",
+    "x": 961,
+    "y": 426,
+    "width": 600,
+    "height": 400,
+    "z": 75271,
+    "movable": false,
+    "css": "font-size:25px",
+    "text": "To customize the text die, go to the widget id of 'd1Side1Cover' Change the css background color to the desired color.  Other css properties impacting the display of the text can also be changed such as font size, alignment, and line height. Also change the text property to whatever is desired.  Then change each of the other side widgets that have an id ending in Cover.\n\nTo change the image die, go to the widget id of 'd2Side1Cover' and change the image property to the new image file. Then change each of the other side cover widgets."
+  },
+  "_meta": {
+    "version": 4,
+    "info": {
+      "name": "Dice",
+      "image": "/assets/1259038922_38325",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Assets",
+      "time": "",
+      "players": "0",
+      "language": "US",
+      "variant": "Dice Animation",
+      "attribution": "Images on the dice released under the Pixabay License:\n\nhttps://pixabay.com/vectors/lion-animal-comic-drawing-simple-3221778/\n\nhttps://pixabay.com/vectors/owl-comic-animal-portrait-3218837/\n\nhttps://pixabay.com/vectors/pig-animal-comic-comic-drawing-3245668/\n\nhttps://pixabay.com/illustrations/diamond-isolated-transparent-1857736/\n\nhttps://pixabay.com/vectors/ninja-star-throwing-star-shuriken-297476/\n\nhttps://pixabay.com/vectors/raised-fist-fist-icon-logo-hand-6624189/"
+    }
+  }
+}

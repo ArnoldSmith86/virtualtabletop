@@ -9306,110 +9306,6 @@
     "movableInEdit": false,
     "z": 635
   },
-  "mby5": {
-    "type": "label",
-    "css": "font-size: 30px",
-    "height": 42,
-    "width": 200,
-    "x": 136,
-    "y": 14,
-    "z": 4,
-    "id": "mby5",
-    "editable": true,
-    "text": 1,
-    "movable": false
-  },
-  "f68n": {
-    "type": "label",
-    "css": "font-size: 30px",
-    "height": 42,
-    "width": 200,
-    "x": 136,
-    "y": 250,
-    "z": 5,
-    "editable": true,
-    "id": "f68n",
-    "text": 3,
-    "movable": false
-  },
-  "4e9a": {
-    "type": "label",
-    "css": "font-size: 30px",
-    "height": 42,
-    "width": 200,
-    "x": 136,
-    "y": 486,
-    "z": 6,
-    "editable": true,
-    "text": 5,
-    "id": "4e9a",
-    "movable": false
-  },
-  "e46p": {
-    "type": "label",
-    "css": "font-size: 30px",
-    "height": 42,
-    "width": 200,
-    "x": 136,
-    "y": 726,
-    "z": 7,
-    "editable": true,
-    "text": 7,
-    "id": "e46p",
-    "movable": false
-  },
-  "r88j": {
-    "type": "label",
-    "css": "font-size: 30px",
-    "height": 42,
-    "width": 200,
-    "x": 1217.5,
-    "y": 14,
-    "z": 8,
-    "editable": true,
-    "text": 2,
-    "id": "r88j",
-    "movable": false
-  },
-  "2ouv": {
-    "type": "label",
-    "css": "font-size: 30px",
-    "height": 42,
-    "width": 200,
-    "x": 1217.5,
-    "y": 250,
-    "z": 9,
-    "editable": true,
-    "text": 4,
-    "id": "2ouv",
-    "movable": false
-  },
-  "9mhm": {
-    "type": "label",
-    "css": "font-size: 30px",
-    "height": 42,
-    "width": 200,
-    "x": 1217.5,
-    "y": 486,
-    "z": 11,
-    "editable": true,
-    "text": 6,
-    "id": "9mhm",
-    "movable": false
-  },
-  "5f4x": {
-    "type": "label",
-    "css": "font-size: 30px",
-    "height": 42,
-    "width": 200,
-    "x": 1217.5,
-    "y": 726,
-    "z": 12,
-    "editable": true,
-    "text": 8,
-    "id": "5f4x",
-    "movable": false
-  },
   "onxu": {
     "image": "/assets/338955399_1727",
     "id": "onxu",
@@ -9491,577 +9387,782 @@
   },
   "3redscore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 25,
     "y": 443.5,
-    "z": 714,
-    "editable": true,
     "text": 0,
     "id": "3redscore",
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "3yellowscore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 103,
     "y": 443.5,
-    "z": 715,
-    "editable": true,
     "text": 0,
     "id": "3yellowscore",
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "3greenscore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 262,
     "y": 443.5,
-    "editable": true,
     "text": 0,
     "id": "3greenscore",
-    "z": 717,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "3whitescore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 343,
     "y": 443.5,
-    "editable": true,
     "text": 0,
     "id": "3whitescore",
-    "z": 718,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "5redscore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 24.5,
     "y": 684.5,
-    "editable": true,
     "text": 0,
     "id": "5redscore",
-    "z": 720,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "3totalscore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 450,
     "y": 443.5,
-    "editable": true,
     "text": 0,
     "id": "3totalscore",
-    "z": 719,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "5yellowscore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 102.5,
     "y": 684.5,
-    "editable": true,
     "text": 0,
     "id": "5yellowscore",
-    "z": 721,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "5bluescore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 181,
     "y": 684.5,
-    "editable": true,
     "text": 0,
     "id": "5bluescore",
-    "z": 722,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "5greenscore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 259.5,
     "y": 684.5,
-    "editable": true,
     "text": 0,
     "id": "5greenscore",
-    "z": 723,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "5whitescore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 343,
     "y": 684.5,
     "id": "5whitescore",
-    "editable": true,
     "text": 0,
-    "z": 724,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "5totalscore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 450,
     "y": 684.5,
-    "editable": true,
     "text": 0,
     "id": "5totalscore",
-    "z": 725,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "7redscore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 24.5,
     "y": 919.5,
-    "editable": true,
     "text": 0,
     "id": "7redscore",
-    "z": 726,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "7yellowscore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 102.5,
     "y": 919.5,
-    "editable": true,
     "text": 0,
     "id": "7yellowscore",
-    "z": 727,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "7bluescore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 181,
     "y": 919.5,
-    "editable": true,
     "text": 0,
     "id": "7bluescore",
-    "z": 728,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "7greenscore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 259.5,
     "y": 919.5,
-    "editable": true,
     "text": 0,
     "id": "7greenscore",
-    "z": 729,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "7whitescore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 343,
     "y": 919.5,
-    "editable": true,
     "text": 0,
     "id": "7whitescore",
-    "z": 730,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "7totalscore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 450,
     "y": 919.5,
-    "editable": true,
     "text": 0,
     "id": "7totalscore",
-    "z": 731,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "2redscore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 1070,
     "y": 210,
     "id": "2redscore",
-    "editable": true,
     "text": 0,
-    "z": 732,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "2yellowscore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 1147,
     "y": 210,
-    "editable": true,
     "text": 0,
     "id": "2yellowscore",
-    "z": 733,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "2bluescore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 1227,
     "y": 210,
-    "editable": true,
     "text": 0,
     "id": "2bluescore",
-    "z": 734,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "2greenscore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 1306,
     "y": 210,
-    "editable": true,
     "text": 0,
     "id": "2greenscore",
-    "z": 735,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "2whitescore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 1388,
     "y": 210,
-    "editable": true,
     "text": 0,
     "id": "2whitescore",
-    "z": 736,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "2totalscore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 1498,
     "y": 210,
-    "editable": true,
     "text": 0,
     "id": "2totalscore",
-    "z": 763,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "4redscore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 1070,
     "y": 446.5,
-    "editable": true,
     "text": 0,
     "id": "4redscore",
-    "z": 738,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "4yellowscore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 1147,
     "y": 446.5,
-    "editable": true,
     "text": 0,
     "id": "4yellowscore",
-    "z": 739,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "4bluescore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 1227,
     "y": 446.5,
     "id": "4bluescore",
-    "editable": true,
     "text": 0,
-    "z": 740,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "4greenscore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 1306,
     "y": 446.5,
-    "editable": true,
     "text": 0,
     "id": "4greenscore",
-    "z": 741,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "4whitescore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 1388,
     "y": 446.5,
-    "editable": true,
     "text": 0,
     "id": "4whitescore",
-    "z": 742,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "4totalscore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 1497,
     "y": 446.5,
-    "editable": true,
     "text": 0,
     "id": "4totalscore",
-    "z": 743,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "6redscore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 1070,
     "y": 684.5,
-    "editable": true,
     "text": 0,
     "id": "6redscore",
-    "z": 744,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "6yellowscore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 1147,
     "y": 684.5,
-    "editable": true,
     "text": 0,
     "id": "6yellowscore",
-    "z": 745,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "6bluescore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 1227,
     "y": 684.5,
-    "editable": true,
     "text": 0,
     "id": "6bluescore",
-    "z": 746,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "6greenscore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 1306,
     "y": 684.5,
-    "editable": true,
     "text": 0,
     "id": "6greenscore",
-    "z": 747,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "8whitescore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 1388,
     "y": 920,
     "id": "8whitescore",
-    "editable": true,
     "text": 0,
-    "z": 756,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "8yellowscore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 1147,
     "y": 920,
-    "editable": true,
     "text": 0,
     "id": "8yellowscore",
-    "z": 753,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "6totalscore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 1497,
     "y": 684.5,
-    "editable": true,
     "text": 0,
     "id": "6totalscore",
-    "z": 751,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "6whitescore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 1388,
     "y": 684.5,
-    "editable": true,
     "text": 0,
     "id": "6whitescore",
-    "z": 748,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "8greenscore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 1306,
     "y": 920,
-    "editable": true,
     "text": 0,
     "id": "8greenscore",
-    "z": 755,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "8bluescore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 1227,
     "y": 920,
-    "editable": true,
     "text": 0,
     "id": "8bluescore",
-    "z": 754,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "8redscore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 1070,
     "y": 920,
-    "editable": true,
     "text": 0,
     "id": "8redscore",
-    "z": 752,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "8totalscore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 1497,
     "y": 920,
-    "editable": true,
     "text": 0,
     "id": "8totalscore",
-    "z": 750,
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "j447": {
     "image": "/assets/-1622960898_57584",
@@ -10156,6 +10257,29 @@
       {
         "func": "CALL",
         "routine": "callRoutine"
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY started}",
+        "operand2": false,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "started",
+            "value": true
+          },
+          {
+            "func": "TURN",
+            "turnCycle": "position",
+            "turn": "first"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "TURN"
+          }
+        ]
       }
     ],
     "x": 879,
@@ -10241,21 +10365,27 @@
         "property": "rotation",
         "value": "${RANDOM}"
       }
-    ]
+    ],
+    "started": false
   },
   "3bluescore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 180,
     "y": 443.5,
-    "z": 757,
-    "editable": true,
     "text": 0,
-    "layer": 10,
     "id": "3bluescore",
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "redreturn": {
     "type": "button",
@@ -11306,17 +11436,17 @@
   },
   "1redscore": {
     "type": "label",
-    "css": "font-size: 30px",
+    "css": "font-size: 30px; display: flex; flex-direction: column;justify-content:center",
     "height": 40,
     "width": 60,
     "x": 24,
     "y": 207.6,
     "z": 758,
     "id": "1redscore",
-    "editable": true,
     "text": 0,
     "layer": 10,
-    "movable": false
+    "editable": true,
+    "movableInEdit": false
   },
   "Scores": {
     "image": "/assets/2053949189_5471",
@@ -11345,73 +11475,98 @@
   },
   "1yellowscore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
-    "x": 102.5,
-    "y": 207.89999999999998,
-    "z": 709,
-    "editable": true,
+    "x": 102,
+    "y": 207,
     "text": 0,
     "id": "1yellowscore",
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "1bluescore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 180,
     "y": 207,
-    "z": 762,
-    "editable": true,
     "text": 0,
     "id": "1bluescore",
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "1whitescore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 343,
-    "y": 208.2,
-    "z": 712,
-    "editable": true,
+    "y": 208,
     "text": 0,
     "id": "1whitescore",
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "1greenscore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 262,
     "y": 207.3,
-    "z": 761,
-    "editable": true,
     "text": 0,
-    "layer": 10,
     "id": "1greenscore",
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "1totalscore": {
     "type": "label",
-    "css": "font-size: 30px",
-    "height": 40,
-    "width": 60,
     "x": 450,
     "y": 208.5,
-    "z": 713,
-    "editable": true,
     "text": 0,
     "id": "1totalscore",
-    "layer": 10,
-    "movable": false
+    "inheritFrom": {
+      "1redscore": [
+        "width",
+        "height",
+        "layer",
+        "z",
+        "movable",
+        "movableInEdit",
+        "css",
+        "editable"
+      ]
+    }
   },
   "mqap": {
     "type": "button",
@@ -13103,7 +13258,7 @@
     "z": 816
   },
   "_meta": {
-    "version": 3,
+    "version": 5,
     "info": {
       "name": "Diced",
       "image": "/assets/1497875638_112785",
@@ -13944,5 +14099,197 @@
     "height": 80,
     "rotation": 6,
     "movable": false
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 136,
+    "y": 5,
+    "z": 2103,
+    "hideWhenUnused": true,
+    "css": "font-size: 20px; ",
+    "height": 30,
+    "layer": 4,
+    "width": 200,
+    "movableInEdit": false,
+    "clickRoutine": [
+      "var playerPrefix = substr ${playerName} 0 5",
+      {
+        "func": "IF",
+        "operand1": "${playerPrefix}",
+        "operand2": "Guest",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Enter your name and choice of player color.",
+            "fields": [
+              {
+                "type": "string",
+                "label": "Name",
+                "variable": "playerName",
+                "value": "${playerName}"
+              },
+              {
+                "type": "color",
+                "label": "Color",
+                "variable": "playerColor",
+                "value": "${playerColor}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ]
+  },
+  "seat2": {
+    "inheritFrom": {
+      "seat1": [
+        "clickRoutine",
+        "movable",
+        "movableInEdit",
+        "css",
+        "hideWhenUnused",
+        "width",
+        "height"
+      ]
+    },
+    "id": "seat2",
+    "type": "seat",
+    "x": 1217,
+    "y": 5,
+    "index": 2,
+    "z": 2102,
+    "color": "#999999",
+    "player": ""
+  },
+  "seat3": {
+    "inheritFrom": {
+      "seat1": [
+        "clickRoutine",
+        "movable",
+        "movableInEdit",
+        "css",
+        "hideWhenUnused",
+        "width",
+        "height"
+      ]
+    },
+    "id": "seat3",
+    "type": "seat",
+    "x": 136,
+    "y": 244,
+    "index": 3,
+    "z": 2101,
+    "color": "#999999"
+  },
+  "seat4": {
+    "inheritFrom": {
+      "seat1": [
+        "clickRoutine",
+        "movable",
+        "movableInEdit",
+        "css",
+        "hideWhenUnused",
+        "width",
+        "height"
+      ]
+    },
+    "id": "seat4",
+    "type": "seat",
+    "x": 1217,
+    "y": 244,
+    "index": 4,
+    "z": 2100,
+    "color": "#999999",
+    "player": ""
+  },
+  "seat5": {
+    "inheritFrom": {
+      "seat1": [
+        "clickRoutine",
+        "movable",
+        "movableInEdit",
+        "css",
+        "hideWhenUnused",
+        "width",
+        "height"
+      ]
+    },
+    "id": "seat5",
+    "type": "seat",
+    "x": 136,
+    "y": 480,
+    "index": 5,
+    "z": 2099,
+    "color": "#999999",
+    "player": ""
+  },
+  "seat6": {
+    "inheritFrom": {
+      "seat1": [
+        "clickRoutine",
+        "movable",
+        "movableInEdit",
+        "css",
+        "hideWhenUnused",
+        "width",
+        "height"
+      ]
+    },
+    "id": "seat6",
+    "type": "seat",
+    "x": 1217,
+    "y": 480,
+    "index": 6,
+    "z": 2098,
+    "color": "#999999",
+    "player": ""
+  },
+  "seat7": {
+    "inheritFrom": {
+      "seat1": [
+        "clickRoutine",
+        "movable",
+        "movableInEdit",
+        "css",
+        "hideWhenUnused",
+        "width",
+        "height"
+      ]
+    },
+    "id": "seat7",
+    "type": "seat",
+    "x": 136,
+    "y": 719,
+    "index": 7,
+    "z": 2097,
+    "color": "#999999",
+    "player": ""
+  },
+  "seat8": {
+    "inheritFrom": {
+      "seat1": [
+        "clickRoutine",
+        "movable",
+        "movableInEdit",
+        "css",
+        "hideWhenUnused",
+        "width",
+        "height"
+      ]
+    },
+    "id": "seat8",
+    "type": "seat",
+    "x": 1217,
+    "y": 719,
+    "index": 8,
+    "z": 2096,
+    "color": "#999999",
+    "player": ""
   }
 }

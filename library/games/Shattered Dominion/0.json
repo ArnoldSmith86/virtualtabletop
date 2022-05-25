@@ -1,0 +1,2116 @@
+{
+  "Deck": {
+    "id": "Deck",
+    "type": "deck",
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "black",
+            "valueType": "static",
+            "value": "",
+            "width": 160,
+            "height": 80
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "fontSize": 70,
+            "valueType": "dynamic",
+            "value": "value",
+            "textAlign": "center",
+            "width": 160,
+            "css": "color:darkgrey"
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "black",
+            "valueType": "static",
+            "value": "",
+            "width": 160,
+            "height": 80
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "valueType": "dynamic",
+            "value": "left",
+            "width": 80,
+            "height": 80
+          },
+          {
+            "type": "image",
+            "x": 80,
+            "y": 0,
+            "color": "transparent",
+            "valueType": "dynamic",
+            "value": "right",
+            "width": 80,
+            "height": 80
+          },
+          {
+            "type": "image",
+            "x": 5,
+            "y": 5,
+            "color": "transparent",
+            "valueType": "static",
+            "value": "/assets/-2128822533_14367",
+            "width": 80,
+            "height": 20.29,
+            "css": "width:calc(25px * var(--crowns)) !important;background-repeat:repeat-x;background-position:0 0;"
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "width": 160,
+      "height": 80,
+      "grid": [
+        {
+          "x": 40,
+          "y": 40,
+          "offsetX": -40,
+          "offsetY": -40
+        }
+      ],
+      "clickRoutine": [
+        {
+          "func": "IF",
+          "condition": "${PROPERTY activeFace}",
+          "elseRoutine": [
+            {
+              "func": "FLIP",
+              "collection": "thisButton"
+            }
+          ],
+          "thenRoutine": [
+            {
+              "func": "ROTATE",
+              "collection": "thisButton"
+            }
+          ]
+        }
+      ]
+    },
+    "cardTypes": {
+      "1": {
+        "value": 1,
+        "left": "/assets/-586359780_61370",
+        "right": "/assets/-586359780_61370",
+        "crowns": 0,
+        "css": "--crowns: 0"
+      },
+      "2": {
+        "value": 2,
+        "left": "/assets/-586359780_61370",
+        "right": "/assets/-586359780_61370",
+        "crowns": 0,
+        "css": "--crowns: 0"
+      },
+      "3": {
+        "value": 3,
+        "left": "/assets/378727692_26679",
+        "right": "/assets/378727692_26679",
+        "crowns": 0,
+        "css": "--crowns: 0"
+      },
+      "4": {
+        "value": 4,
+        "left": "/assets/378727692_26679",
+        "right": "/assets/378727692_26679",
+        "crowns": 0,
+        "css": "--crowns: 0"
+      },
+      "5": {
+        "value": 5,
+        "left": "/assets/378727692_26679",
+        "right": "/assets/378727692_26679",
+        "crowns": 0,
+        "css": "--crowns: 0"
+      },
+      "6": {
+        "value": 6,
+        "left": "/assets/378727692_26679",
+        "right": "/assets/378727692_26679",
+        "crowns": 0,
+        "css": "--crowns: 0"
+      },
+      "7": {
+        "value": 7,
+        "left": "/assets/573040401_38530",
+        "right": "/assets/573040401_38530",
+        "crowns": 0,
+        "css": "--crowns: 0"
+      },
+      "8": {
+        "value": 8,
+        "left": "/assets/573040401_38530",
+        "right": "/assets/573040401_38530",
+        "crowns": 0,
+        "css": "--crowns: 0"
+      },
+      "9": {
+        "value": 9,
+        "left": "/assets/573040401_38530",
+        "right": "/assets/573040401_38530",
+        "crowns": 0,
+        "css": "--crowns: 0"
+      },
+      "10": {
+        "value": 10,
+        "left": "/assets/1690666496_71723",
+        "right": "/assets/1690666496_71723",
+        "crowns": 0,
+        "css": "--crowns: 0"
+      },
+      "11": {
+        "value": 11,
+        "left": "/assets/1690666496_71723",
+        "right": "/assets/1690666496_71723",
+        "crowns": 0,
+        "css": "--crowns: 0"
+      },
+      "12": {
+        "value": 12,
+        "left": "/assets/-1742654694_43823",
+        "right": "/assets/-1742654694_43823",
+        "crowns": 0,
+        "css": "--crowns: 0"
+      },
+      "13": {
+        "value": 13,
+        "left": "/assets/-586359780_61370",
+        "right": "/assets/378727692_26679",
+        "crowns": 0,
+        "css": "--crowns: 0"
+      },
+      "14": {
+        "value": 14,
+        "left": "/assets/-586359780_61370",
+        "right": "/assets/573040401_38530",
+        "crowns": 0,
+        "css": "--crowns: 0"
+      },
+      "15": {
+        "value": 15,
+        "left": "/assets/-586359780_61370",
+        "right": "/assets/1690666496_71723",
+        "crowns": 0,
+        "css": "--crowns: 0"
+      },
+      "16": {
+        "value": 16,
+        "left": "/assets/-586359780_61370",
+        "right": "/assets/-1742654694_43823",
+        "crowns": 0,
+        "css": "--crowns: 0"
+      },
+      "17": {
+        "value": 17,
+        "left": "/assets/378727692_26679",
+        "right": "/assets/573040401_38530",
+        "crowns": 0,
+        "css": "--crowns: 0"
+      },
+      "18": {
+        "value": 18,
+        "left": "/assets/378727692_26679",
+        "right": "/assets/1690666496_71723",
+        "crowns": 0,
+        "css": "--crowns: 0"
+      },
+      "19": {
+        "value": 19,
+        "left": "/assets/-586359780_61370",
+        "right": "/assets/378727692_26679",
+        "crowns": 1,
+        "css": "--crowns: 1"
+      },
+      "20": {
+        "value": 20,
+        "left": "/assets/-586359780_61370",
+        "right": "/assets/573040401_38530",
+        "crowns": 1,
+        "css": "--crowns: 1"
+      },
+      "21": {
+        "value": 21,
+        "left": "/assets/-586359780_61370",
+        "right": "/assets/1690666496_71723",
+        "crowns": 1,
+        "css": "--crowns: 1"
+      },
+      "22": {
+        "value": 22,
+        "left": "/assets/-586359780_61370",
+        "right": "/assets/-1742654694_43823",
+        "crowns": 1,
+        "css": "--crowns: 1"
+      },
+      "23": {
+        "value": 23,
+        "left": "/assets/-586359780_61370",
+        "right": "/assets/623801088_27588",
+        "crowns": 1,
+        "css": "--crowns: 1"
+      },
+      "24": {
+        "value": 24,
+        "left": "/assets/378727692_26679",
+        "right": "/assets/-586359780_61370",
+        "crowns": 1,
+        "css": "--crowns: 1"
+      },
+      "25": {
+        "value": 25,
+        "left": "/assets/378727692_26679",
+        "right": "/assets/-586359780_61370",
+        "crowns": 1,
+        "css": "--crowns: 1"
+      },
+      "26": {
+        "value": 26,
+        "left": "/assets/378727692_26679",
+        "right": "/assets/-586359780_61370",
+        "crowns": 1,
+        "css": "--crowns: 1"
+      },
+      "27": {
+        "value": 27,
+        "left": "/assets/378727692_26679",
+        "right": "/assets/-586359780_61370",
+        "crowns": 1,
+        "css": "--crowns: 1"
+      },
+      "28": {
+        "value": 28,
+        "left": "/assets/378727692_26679",
+        "right": "/assets/573040401_38530",
+        "crowns": 1,
+        "css": "--crowns: 1"
+      },
+      "29": {
+        "value": 29,
+        "left": "/assets/378727692_26679",
+        "right": "/assets/1690666496_71723",
+        "crowns": 1,
+        "css": "--crowns: 1"
+      },
+      "30": {
+        "value": 30,
+        "left": "/assets/573040401_38530",
+        "right": "/assets/-586359780_61370",
+        "crowns": 1,
+        "css": "--crowns: 1"
+      },
+      "31": {
+        "value": 31,
+        "left": "/assets/573040401_38530",
+        "right": "/assets/-586359780_61370",
+        "crowns": 1,
+        "css": "--crowns: 1"
+      },
+      "32": {
+        "value": 32,
+        "left": "/assets/573040401_38530",
+        "right": "/assets/378727692_26679",
+        "crowns": 1,
+        "css": "--crowns: 1"
+      },
+      "33": {
+        "value": 33,
+        "left": "/assets/573040401_38530",
+        "right": "/assets/378727692_26679",
+        "crowns": 1,
+        "css": "--crowns: 1"
+      },
+      "34": {
+        "value": 34,
+        "left": "/assets/573040401_38530",
+        "right": "/assets/378727692_26679",
+        "crowns": 1,
+        "css": "--crowns: 1"
+      },
+      "35": {
+        "value": 35,
+        "left": "/assets/573040401_38530",
+        "right": "/assets/378727692_26679",
+        "crowns": 1,
+        "css": "--crowns: 1"
+      },
+      "36": {
+        "value": 36,
+        "left": "/assets/1690666496_71723",
+        "right": "/assets/-586359780_61370",
+        "crowns": 1,
+        "css": "--crowns: 1"
+      },
+      "37": {
+        "value": 37,
+        "left": "/assets/1690666496_71723",
+        "right": "/assets/573040401_38530",
+        "crowns": 1,
+        "css": "--crowns: 1"
+      },
+      "38": {
+        "value": 38,
+        "left": "/assets/-1742654694_43823",
+        "right": "/assets/-586359780_61370",
+        "crowns": 1,
+        "css": "--crowns: 1"
+      },
+      "39": {
+        "value": 39,
+        "left": "/assets/-1742654694_43823",
+        "right": "/assets/1690666496_71723",
+        "crowns": 1,
+        "css": "--crowns: 1"
+      },
+      "40": {
+        "value": 40,
+        "left": "/assets/623801088_27588",
+        "right": "/assets/-586359780_61370",
+        "crowns": 1,
+        "css": "--crowns: 1"
+      },
+      "41": {
+        "value": 41,
+        "left": "/assets/1690666496_71723",
+        "right": "/assets/-586359780_61370",
+        "crowns": 2,
+        "css": "--crowns: 2"
+      },
+      "42": {
+        "value": 42,
+        "left": "/assets/1690666496_71723",
+        "right": "/assets/573040401_38530",
+        "crowns": 2,
+        "css": "--crowns: 2"
+      },
+      "43": {
+        "value": 43,
+        "left": "/assets/-1742654694_43823",
+        "right": "/assets/-586359780_61370",
+        "crowns": 2,
+        "css": "--crowns: 2"
+      },
+      "44": {
+        "value": 44,
+        "left": "/assets/-1742654694_43823",
+        "right": "/assets/1690666496_71723",
+        "crowns": 2,
+        "css": "--crowns: 2"
+      },
+      "45": {
+        "value": 45,
+        "left": "/assets/623801088_27588",
+        "right": "/assets/-586359780_61370",
+        "crowns": 2,
+        "css": "--crowns: 2"
+      },
+      "46": {
+        "value": 46,
+        "left": "/assets/623801088_27588",
+        "right": "/assets/-1742654694_43823",
+        "crowns": 2,
+        "css": "--crowns: 2"
+      },
+      "47": {
+        "value": 47,
+        "left": "/assets/623801088_27588",
+        "right": "/assets/-1742654694_43823",
+        "crowns": 2,
+        "css": "--crowns: 2"
+      },
+      "48": {
+        "value": 48,
+        "left": "/assets/623801088_27588",
+        "right": "/assets/-586359780_61370",
+        "crowns": 3,
+        "css": "--crowns: 3"
+      }
+    },
+    "parent": "Draw"
+  },
+  "xvz1": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "1",
+    "id": "xvz1",
+    "z": 1,
+    "parent": "Selection 2",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "r07m": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "2",
+    "id": "r07m",
+    "z": 30485,
+    "parent": "p3cw"
+  },
+  "cg65": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "3",
+    "id": "cg65",
+    "z": 30449,
+    "parent": "p3cw"
+  },
+  "5wru": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "4",
+    "id": "5wru",
+    "z": 30487,
+    "parent": "p3cw"
+  },
+  "n8kd": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "5",
+    "id": "n8kd",
+    "z": 30441,
+    "parent": "p3cw"
+  },
+  "x38d": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "6",
+    "id": "x38d",
+    "z": 30477,
+    "parent": "p3cw"
+  },
+  "mhs4": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "7",
+    "id": "mhs4",
+    "z": 30475,
+    "parent": "p3cw"
+  },
+  "liup": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "8",
+    "id": "liup",
+    "z": 1897,
+    "parent": "mtnb"
+  },
+  "wba0": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "9",
+    "id": "wba0",
+    "z": 30469,
+    "parent": "p3cw"
+  },
+  "h8s3": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "10",
+    "id": "h8s3",
+    "z": 30421,
+    "parent": "p3cw"
+  },
+  "n38s": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "11",
+    "id": "n38s",
+    "z": 30439,
+    "parent": "p3cw"
+  },
+  "mu8o": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "12",
+    "id": "mu8o",
+    "z": 2072,
+    "parent": "mtnb"
+  },
+  "5oeh": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "13",
+    "id": "5oeh",
+    "z": 30427,
+    "parent": "p3cw"
+  },
+  "ni3p": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "14",
+    "id": "ni3p",
+    "z": 30489,
+    "parent": "p3cw"
+  },
+  "bvfm": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "15",
+    "id": "bvfm",
+    "z": 30465,
+    "parent": "p3cw"
+  },
+  "uyni": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "16",
+    "id": "uyni",
+    "parent": "p3cw",
+    "z": 30461
+  },
+  "9bbz": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "17",
+    "id": "9bbz",
+    "z": 2626,
+    "parent": "mtnb"
+  },
+  "kum5": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "18",
+    "id": "kum5",
+    "z": 1546,
+    "parent": "mtnb"
+  },
+  "3ucf": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "19",
+    "id": "3ucf",
+    "z": 30491,
+    "parent": "p3cw"
+  },
+  "5a5k": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "20",
+    "id": "5a5k",
+    "z": 30463,
+    "parent": "p3cw"
+  },
+  "fxcd": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "21",
+    "id": "fxcd",
+    "z": 30479,
+    "parent": "p3cw"
+  },
+  "tufk": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "22",
+    "id": "tufk",
+    "z": 2195,
+    "parent": "mtnb"
+  },
+  "lqvd": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "23",
+    "id": "lqvd",
+    "parent": "mtnb",
+    "z": 506
+  },
+  "ondi": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "24",
+    "id": "ondi",
+    "z": 30457,
+    "parent": "p3cw"
+  },
+  "r90l": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "25",
+    "id": "r90l",
+    "z": 30447,
+    "parent": "p3cw"
+  },
+  "dgbh": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "26",
+    "id": "dgbh",
+    "z": 350,
+    "parent": "mtnb"
+  },
+  "6k5z": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "27",
+    "id": "6k5z",
+    "z": 30431,
+    "parent": "p3cw"
+  },
+  "qoqa": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "28",
+    "id": "qoqa",
+    "z": 30481,
+    "parent": "p3cw"
+  },
+  "qnkx": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "29",
+    "id": "qnkx",
+    "z": 30459,
+    "parent": "p3cw"
+  },
+  "dwr1": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "30",
+    "id": "dwr1",
+    "z": 30471,
+    "parent": "p3cw"
+  },
+  "mead": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "31",
+    "id": "mead",
+    "z": 30451,
+    "parent": "p3cw"
+  },
+  "u2wz": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "32",
+    "id": "u2wz",
+    "z": 1425,
+    "parent": "mtnb"
+  },
+  "6pah": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "33",
+    "id": "6pah",
+    "z": 30445,
+    "parent": "p3cw"
+  },
+  "gpv3": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "34",
+    "id": "gpv3",
+    "z": 30423,
+    "parent": "p3cw"
+  },
+  "c6ue": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "35",
+    "id": "c6ue",
+    "z": 1,
+    "parent": "Selection 1",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "a8b2": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "36",
+    "id": "a8b2",
+    "z": 30433,
+    "parent": "p3cw"
+  },
+  "g8xw": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "37",
+    "id": "g8xw",
+    "z": 30425,
+    "parent": "p3cw"
+  },
+  "etjt": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "38",
+    "id": "etjt",
+    "z": 30483,
+    "parent": "p3cw"
+  },
+  "m7mx": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "39",
+    "id": "m7mx",
+    "parent": "p3cw",
+    "z": 30429
+  },
+  "jree": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "40",
+    "id": "jree",
+    "z": 30473,
+    "parent": "p3cw"
+  },
+  "jd0a": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "41",
+    "id": "jd0a",
+    "z": 364,
+    "parent": "mtnb"
+  },
+  "pgm7": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "42",
+    "id": "pgm7",
+    "z": 30435,
+    "parent": "p3cw"
+  },
+  "6wbn": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "43",
+    "id": "6wbn",
+    "parent": "p3cw",
+    "z": 30453
+  },
+  "xj00": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "44",
+    "id": "xj00",
+    "z": 30467,
+    "parent": "p3cw"
+  },
+  "lrup": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "45",
+    "id": "lrup",
+    "parent": "mtnb",
+    "z": 2122
+  },
+  "k62k": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "46",
+    "id": "k62k",
+    "z": 30455,
+    "parent": "p3cw"
+  },
+  "p2kr": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "47",
+    "id": "p2kr",
+    "parent": "p3cw",
+    "z": 30443
+  },
+  "7cvj": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "48",
+    "id": "7cvj",
+    "z": 30437,
+    "parent": "p3cw"
+  },
+  "Draw": {
+    "type": "holder",
+    "id": "Draw",
+    "x": 116,
+    "y": 121,
+    "width": 168,
+    "height": 88,
+    "resetRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY id}",
+        "face": 0
+      },
+      {
+        "func": "ROTATE",
+        "holder": "${PROPERTY id}",
+        "mode": "set",
+        "angle": 0,
+        "count": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${players}",
+        "relation": "<",
+        "operand2": 4,
+        "thenRoutine": [
+          "var cards = ${players} * 12",
+          "var cards = 48 - ${cards}",
+          {
+            "func": "MOVE",
+            "from": "${PROPERTY id}",
+            "to": "Discard",
+            "count": "${cards}"
+          }
+        ]
+      }
+    ],
+    "css": "background: #00000080; border-color: black"
+  },
+  "Reset": {
+    "type": "button",
+    "id": "Reset",
+    "x": 34,
+    "y": 24,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "player",
+        "relation": "!=",
+        "value": "",
+        "type": "seat"
+      },
+      {
+        "func": "COUNT",
+        "variable": "players"
+      },
+      {
+        "func": "IF",
+        "condition": "${players}",
+        "elseRoutine": [
+          "var players = 1"
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "Draw",
+        "routine": "resetRoutine",
+        "arguments": {
+          "players": "${players}"
+        }
+      },
+      {
+        "func": "CALL",
+        "widget": "Selection 2",
+        "routine": "fillRoutine",
+        "arguments": {
+          "players": "${players}"
+        }
+      },
+      {
+        "func": "CALL",
+        "widget": "New Tiles"
+      },
+      {
+        "func": "SELECT",
+        "property": "king",
+        "relation": "!="
+      },
+      {
+        "func": "SHUFFLE"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 283
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 280
+      },
+      {
+        "func": "IF",
+        "operand1": "${players}",
+        "operand2": 2,
+        "elseRoutine": [
+          {
+            "func": "SELECT",
+            "property": "king",
+            "value": 2
+          },
+          {
+            "func": "SET",
+            "property": "y",
+            "value": -700
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "Castle"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 160
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 160
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "Player ${PROPERTY index OF $widgetID} - Holder"
+          },
+          {
+            "func": "CALL",
+            "widget": "Player ${PROPERTY index OF $widgetID} - Score",
+            "routine": "calculateScoreRoutine"
+          }
+        ]
+      }
+    ],
+    "text": "New Game",
+    "height": 40,
+    "width": 100,
+    "parent": "Draw"
+  },
+  "Selection 1": {
+    "type": "holder",
+    "id": "Selection 1",
+    "x": 216,
+    "y": 330,
+    "height": 88,
+    "inheritFrom": "Draw",
+    "stackOffsetY": -84,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropOffsetY": 4
+  },
+  "Selection 2": {
+    "type": "holder",
+    "id": "Selection 2",
+    "x": 16,
+    "inheritFrom": "Selection 1",
+    "fillRoutine": [
+      {
+        "func": "IF",
+        "condition": "${players}",
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${players}",
+            "operand2": 2,
+            "thenRoutine": [
+              "var cards = 4"
+            ],
+            "elseRoutine": [
+              "var cards = ${players}"
+            ]
+          },
+          {
+            "func": "MOVE",
+            "from": "Draw",
+            "to": "${PROPERTY id}",
+            "count": "${cards}",
+            "face": 1
+          },
+          {
+            "func": "SORT",
+            "holder": "${PROPERTY id}",
+            "key": "value",
+            "reverse": true
+          },
+          "var height = ${cards} * 84",
+          "var height = ${height} + 4",
+          "var drop = ${height} - 84",
+          "var y = ${drop} + 20",
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "Selection 1"
+          },
+          {
+            "func": "SET",
+            "property": "height",
+            "value": "${height}"
+          },
+          {
+            "func": "SET",
+            "property": "dropOffsetY",
+            "value": "${drop}"
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "New Tiles"
+          },
+          {
+            "func": "SET",
+            "property": "y",
+            "value": "${y}"
+          }
+        ]
+      }
+    ],
+    "y": 330
+  },
+  "Player 1 - Seat": {
+    "type": "seat",
+    "id": "Player 1 - Seat",
+    "fixedParent": true,
+    "x": -165,
+    "y": 80,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "relation": "in",
+        "value": [
+          "Draw",
+          "Discard",
+          "Selection 1",
+          "Selection 2"
+        ],
+        "type": "card"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 48,
+        "thenRoutine": [
+          "var playerPrefix = substr ${playerName} 0 5",
+          {
+            "func": "IF",
+            "operand1": "${playerPrefix}",
+            "operand2": "Guest",
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Who are you?",
+                "fields": [
+                  {
+                    "type": "string",
+                    "label": "Name",
+                    "variable": "playerName",
+                    "value": "${playerName}"
+                  },
+                  {
+                    "type": "color",
+                    "label": "Color",
+                    "variable": "playerColor",
+                    "value": "${playerColor}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "func": "CLICK",
+            "collection": "thisButton",
+            "mode": "ignoreClickRoutine"
+          },
+          {
+            "func": "CALL",
+            "widget": "Reset"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Game in progress",
+            "fields": [
+              {
+                "type": "text",
+                "text": "It looks like the game is currently in progress and sitting down or standing up would reset it. Please use the button 'New Game' under the draw pile before changing the players."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "parent": "Player 1",
+    "hideWhenUnused": true
+  },
+  "Discard": {
+    "type": "holder",
+    "id": "Discard",
+    "y": 791,
+    "inheritFrom": "Draw"
+  },
+  "Player 1 - Shift Left": {
+    "type": "button",
+    "id": "Player 1 - Shift Left",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "value": "${PROPERTY parent}",
+        "type": "card"
+      },
+      {
+        "func": "SET",
+        "property": "${PROPERTY shiftProperty}",
+        "relation": "+",
+        "value": "${PROPERTY shiftOffset}"
+      }
+    ],
+    "text": "<",
+    "parent": "Player 1 - Holder",
+    "fixedParent": true,
+    "y": 80,
+    "shiftProperty": "x",
+    "shiftOffset": -80,
+    "height": 240,
+    "css": "font-size: 60px; color: black; border:none;background:none"
+  },
+  "Player 1 - Shift Right": {
+    "type": "button",
+    "id": "Player 1 - Shift Right",
+    "x": 320,
+    "inheritFrom": "Player 1 - Shift Left",
+    "text": ">",
+    "shiftOffset": 80,
+    "parent": "Player 1 - Holder"
+  },
+  "Player 1 - Shift Up": {
+    "type": "button",
+    "id": "Player 1 - Shift Up",
+    "x": 80,
+    "y": 0,
+    "inheritFrom": "Player 1 - Shift Left",
+    "text": "^",
+    "shiftProperty": "y",
+    "parent": "Player 1 - Holder",
+    "height": 80,
+    "width": 240
+  },
+  "Player 1 - Shift Down": {
+    "type": "button",
+    "id": "Player 1 - Shift Down",
+    "y": 320,
+    "inheritFrom": "Player 1 - Shift Up",
+    "text": "v",
+    "parent": "Player 1 - Holder",
+    "shiftOffset": 80
+  },
+  "New Tiles": {
+    "type": "button",
+    "id": "New Tiles",
+    "x": 34,
+    "y": 24,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "Selection 2",
+        "to": "${PROPERTY parent}",
+        "count": 0
+      },
+      {
+        "func": "SELECT",
+        "property": "player",
+        "relation": "!=",
+        "value": "",
+        "type": "seat"
+      },
+      {
+        "func": "COUNT",
+        "variable": "players"
+      },
+      {
+        "func": "IF",
+        "condition": "${players}",
+        "elseRoutine": [
+          "var players = 1"
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "Selection 2",
+        "routine": "fillRoutine",
+        "arguments": {
+          "players": "${players}"
+        }
+      },
+      {
+        "func": "SELECT",
+        "property": "king",
+        "relation": "!="
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "+",
+        "value": 194
+      }
+    ],
+    "text": "New Tiles",
+    "parent": "Selection 1",
+    "height": 40,
+    "width": 100
+  },
+  "King Template": {
+    "id": "King Template",
+    "x": 13.5,
+    "y": -58,
+    "width": 35,
+    "height": 50,
+    "color": "pink",
+    "image": "data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='25 -20 125 180'%3e%3cpath style='fill:currentColor;stroke:black;stroke-width:4px' d='M 32,152 68,72 52,80 40,59 81,38 71,12 92,-18 117,10 103,43 144,62 127,86 l -22,-8 33,74' /%3e%3c/svg%3e",
+    "svgReplaces": {
+      "currentColor": "color"
+    }
+  },
+  "Player 1 - King A": {
+    "id": "Player 1 - King A",
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "King Template": [
+        "image",
+        "svgReplaces",
+        "width",
+        "height"
+      ],
+      "Player 1 - Seat": [
+        "color",
+        "index"
+      ]
+    },
+    "king": 1,
+    "linkedToSeat": "Player 1 - Seat",
+    "x": 283,
+    "y": 280,
+    "z": 1792
+  },
+  "Player 1 - King B": {
+    "id": "Player 1 - King B",
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "King Template": [
+        "image",
+        "svgReplaces",
+        "width",
+        "height"
+      ],
+      "Player 1 - Seat": [
+        "color",
+        "index"
+      ]
+    },
+    "king": 2,
+    "linkedToSeat": "Player 1 - Seat",
+    "x": 283,
+    "y": -700,
+    "z": 8738
+  },
+  "Player 1 - Holder": {
+    "type": "holder",
+    "id": "Player 1 - Holder",
+    "width": 400,
+    "height": 400,
+    "alignChildren": false,
+    "css": "border-radius: 0;background: #00000080; border-color: black",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "linkedToSeat": "Player 1 - Seat",
+    "parent": "Player 1",
+    "movableInEdit": false,
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "widget": "${PROPERTY parent} - Score",
+        "routine": "calculateScoreRoutine"
+      }
+    ]
+  },
+  "Player 1": {
+    "id": "Player 1",
+    "x": 1140,
+    "y": 60,
+    "width": 400,
+    "height": 400,
+    "layer": -1,
+    "movable": false
+  },
+  "Player 2": {
+    "id": "Player 2",
+    "x": 1140,
+    "y": 540,
+    "width": 400,
+    "height": 400,
+    "layer": -1,
+    "movable": false
+  },
+  "Player 2 - Seat": {
+    "type": "seat",
+    "id": "Player 2 - Seat",
+    "fixedParent": true,
+    "x": -165,
+    "y": 80,
+    "parent": "Player 2",
+    "index": 2,
+    "hideWhenUnused": true,
+    "width": 150,
+    "height": 40,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "Player 1 - Seat": "clickRoutine"
+    },
+    "color": "#999999"
+  },
+  "Player 2 - King A": {
+    "id": "Player 2 - King A",
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "King Template": [
+        "image",
+        "svgReplaces",
+        "width",
+        "height"
+      ],
+      "Player 2 - Seat": [
+        "color",
+        "index"
+      ]
+    },
+    "king": 1,
+    "linkedToSeat": "Player 2 - Seat",
+    "x": 283,
+    "y": 280,
+    "z": 4606
+  },
+  "Player 2 - King B": {
+    "id": "Player 2 - King B",
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "King Template": [
+        "image",
+        "svgReplaces",
+        "width",
+        "height"
+      ],
+      "Player 2 - Seat": [
+        "color",
+        "index"
+      ]
+    },
+    "king": 2,
+    "linkedToSeat": "Player 2 - Seat",
+    "x": 283,
+    "y": -700,
+    "z": 9741
+  },
+  "Player 2 - Holder": {
+    "type": "holder",
+    "id": "Player 2 - Holder",
+    "width": 400,
+    "height": 400,
+    "alignChildren": false,
+    "css": "border-radius: 0;background: #00000080; border-color: black",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "linkedToSeat": "Player 2 - Seat",
+    "parent": "Player 2",
+    "movableInEdit": false,
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "widget": "${PROPERTY parent} - Score",
+        "routine": "calculateScoreRoutine"
+      }
+    ]
+  },
+  "Player 3": {
+    "id": "Player 3",
+    "x": 420,
+    "y": 540,
+    "width": 400,
+    "height": 400,
+    "layer": -1,
+    "movable": false
+  },
+  "Player 3 - Seat": {
+    "type": "seat",
+    "id": "Player 3 - Seat",
+    "fixedParent": true,
+    "x": 402,
+    "y": 280,
+    "parent": "Player 3",
+    "index": 3,
+    "hideWhenUnused": true,
+    "width": 150,
+    "height": 40,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "Player 1 - Seat": "clickRoutine"
+    }
+  },
+  "Player 3 - King A": {
+    "id": "Player 3 - King A",
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "King Template": [
+        "image",
+        "svgReplaces",
+        "width",
+        "height"
+      ],
+      "Player 3 - Seat": [
+        "color",
+        "index"
+      ]
+    },
+    "king": 1,
+    "linkedToSeat": "Player 3 - Seat",
+    "x": 283,
+    "y": 280,
+    "z": 5898
+  },
+  "Player 3 - King B": {
+    "id": "Player 3 - King B",
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "King Template": [
+        "image",
+        "svgReplaces",
+        "width",
+        "height"
+      ],
+      "Player 3 - Seat": [
+        "color",
+        "index"
+      ]
+    },
+    "king": 2,
+    "linkedToSeat": "Player 3 - Seat",
+    "x": 283,
+    "y": -700,
+    "z": 3887
+  },
+  "Player 3 - Holder": {
+    "type": "holder",
+    "id": "Player 3 - Holder",
+    "width": 400,
+    "height": 400,
+    "alignChildren": false,
+    "css": "border-radius: 0;background: #00000080; border-color: black",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "linkedToSeat": "Player 3 - Seat",
+    "parent": "Player 3",
+    "movableInEdit": false,
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "widget": "${PROPERTY parent} - Score",
+        "routine": "calculateScoreRoutine"
+      }
+    ]
+  },
+  "Player 4": {
+    "id": "Player 4",
+    "x": 420,
+    "y": 60,
+    "width": 400,
+    "height": 400,
+    "layer": -1,
+    "z": 10978,
+    "movable": false
+  },
+  "Player 4 - Seat": {
+    "type": "seat",
+    "id": "Player 4 - Seat",
+    "fixedParent": true,
+    "x": 402,
+    "y": 280,
+    "parent": "Player 4",
+    "index": 4,
+    "hideWhenUnused": true,
+    "width": 150,
+    "height": 40,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "Player 1 - Seat": "clickRoutine"
+    },
+    "color": "#999999"
+  },
+  "Player 4 - King A": {
+    "id": "Player 4 - King A",
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "King Template": [
+        "image",
+        "svgReplaces",
+        "width",
+        "height"
+      ],
+      "Player 4 - Seat": [
+        "color",
+        "index"
+      ]
+    },
+    "king": 1,
+    "linkedToSeat": "Player 4 - Seat",
+    "x": 283,
+    "y": 280,
+    "z": 6700
+  },
+  "Player 4 - King B": {
+    "id": "Player 4 - King B",
+    "rotation": 0,
+    "activeFace": 0,
+    "inheritFrom": {
+      "King Template": [
+        "image",
+        "svgReplaces",
+        "width",
+        "height"
+      ],
+      "Player 4 - Seat": [
+        "color",
+        "index"
+      ]
+    },
+    "king": 2,
+    "linkedToSeat": "Player 4 - Seat",
+    "x": 283,
+    "y": -700,
+    "z": 9245
+  },
+  "Player 4 - Holder": {
+    "type": "holder",
+    "id": "Player 4 - Holder",
+    "width": 400,
+    "height": 400,
+    "alignChildren": false,
+    "css": "border-radius: 0;background: #00000080; border-color: black",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "linkedToSeat": "Player 4 - Seat",
+    "parent": "Player 4",
+    "movableInEdit": false,
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "widget": "${PROPERTY parent} - Score",
+        "routine": "calculateScoreRoutine"
+      }
+    ]
+  },
+  "Castles": {
+    "id": "Castles",
+    "type": "deck",
+    "text": "Basic widget",
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "valueType": "static",
+            "value": "/assets/564115451_42678",
+            "width": 80,
+            "height": 80
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 10,
+            "color": "transparent",
+            "valueType": "static",
+            "value": "/assets/2057872747_6943",
+            "width": 60,
+            "height": 60
+          }
+        ]
+      }
+    ],
+    "cardTypes": {
+      "Castle": {}
+    },
+    "cardDefaults": {
+      "width": 80,
+      "height": 80,
+      "grid": [
+        {
+          "x": 80,
+          "y": 80,
+          "offsetX": -20,
+          "offsetY": -60
+        }
+      ]
+    }
+  },
+  "Player 4 - Castle": {
+    "type": "card",
+    "id": "Player 4 - Castle",
+    "deck": "Castles",
+    "cardType": "Castle",
+    "index": 4,
+    "z": 29982,
+    "x": 160,
+    "y": 160,
+    "parent": "Player 4 - Holder"
+  },
+  "Player 1 - Castle": {
+    "type": "card",
+    "id": "Player 1 - Castle",
+    "deck": "Castles",
+    "cardType": "Castle",
+    "x": 160,
+    "index": 1,
+    "parent": "Player 1 - Holder",
+    "y": 160
+  },
+  "Player 2 - Castle": {
+    "type": "card",
+    "id": "Player 2 - Castle",
+    "deck": "Castles",
+    "cardType": "Castle",
+    "x": 160,
+    "y": 160,
+    "index": 2,
+    "z": 29980,
+    "parent": "Player 2 - Holder"
+  },
+  "Player 3 - Castle": {
+    "type": "card",
+    "id": "Player 3 - Castle",
+    "deck": "Castles",
+    "cardType": "Castle",
+    "x": 160,
+    "y": 160,
+    "index": 3,
+    "z": 24569,
+    "parent": "Player 3 - Holder"
+  },
+  "Background Cover": {
+    "id": "Background Cover",
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "background: #000000b0"
+  },
+  "Background": {
+    "id": "Background",
+    "x": -60,
+    "y": -20,
+    "width": 1660,
+    "height": 1020,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "background-size:80px; background-repeat: repeat; background-position: 0 0",
+    "image": "/assets/564115451_42678"
+  },
+  "Draw Label": {
+    "id": "Draw Label",
+    "parent": "Draw",
+    "x": 34,
+    "y": -40,
+    "css": "color: black;font-size: 30px;text-align:center ",
+    "text": "Draw",
+    "height": 40
+  },
+  "Discard Label": {
+    "id": "Discard Label",
+    "inheritFrom": "Draw Label",
+    "parent": "Discard",
+    "text": "Discard"
+  },
+  "Player 2 - Shift Up": {
+    "inheritFrom": "Player 1 - Shift Up",
+    "id": "Player 2 - Shift Up",
+    "type": "button",
+    "parent": "Player 2 - Holder"
+  },
+  "Player 3 - Shift Up": {
+    "inheritFrom": "Player 1 - Shift Up",
+    "id": "Player 3 - Shift Up",
+    "type": "button",
+    "parent": "Player 3 - Holder"
+  },
+  "Player 4 - Shift Up": {
+    "inheritFrom": "Player 1 - Shift Up",
+    "id": "Player 4 - Shift Up",
+    "type": "button",
+    "parent": "Player 4 - Holder"
+  },
+  "Player 2 - Shift Left": {
+    "inheritFrom": "Player 1 - Shift Left",
+    "id": "Player 2 - Shift Left",
+    "type": "button",
+    "parent": "Player 2 - Holder"
+  },
+  "Player 3 - Shift Left": {
+    "inheritFrom": "Player 1 - Shift Left",
+    "id": "Player 3 - Shift Left",
+    "type": "button",
+    "parent": "Player 3 - Holder"
+  },
+  "Player 4 - Shift Left": {
+    "inheritFrom": "Player 1 - Shift Left",
+    "id": "Player 4 - Shift Left",
+    "type": "button",
+    "parent": "Player 4 - Holder"
+  },
+  "Player 2 - Shift Down": {
+    "inheritFrom": "Player 1 - Shift Down",
+    "id": "Player 2 - Shift Down",
+    "type": "button",
+    "parent": "Player 2 - Holder"
+  },
+  "Player 3 - Shift Down": {
+    "inheritFrom": "Player 1 - Shift Down",
+    "id": "Player 3 - Shift Down",
+    "type": "button",
+    "parent": "Player 3 - Holder"
+  },
+  "Player 4 - Shift Down": {
+    "inheritFrom": "Player 1 - Shift Down",
+    "id": "Player 4 - Shift Down",
+    "type": "button",
+    "parent": "Player 4 - Holder"
+  },
+  "Player 2 - Shift Right": {
+    "inheritFrom": "Player 1 - Shift Right",
+    "id": "Player 2 - Shift Right",
+    "type": "button",
+    "parent": "Player 2 - Holder"
+  },
+  "Player 3 - Shift Right": {
+    "inheritFrom": "Player 1 - Shift Right",
+    "id": "Player 3 - Shift Right",
+    "type": "button",
+    "parent": "Player 3 - Holder"
+  },
+  "Player 4 - Shift Right": {
+    "inheritFrom": "Player 1 - Shift Right",
+    "id": "Player 4 - Shift Right",
+    "type": "button",
+    "parent": "Player 4 - Holder"
+  },
+  "Player 4 - Score": {
+    "id": "Player 4 - Score",
+    "parent": "Player 4 - Holder",
+    "x": 402,
+    "y": 240,
+    "z": 10980,
+    "areas": {},
+    "calculateScoreRoutine": [
+      {
+        "func": "CALL",
+        "routine": "cardsToMapRoutine"
+      },
+      "var areas = {}",
+      {
+        "func": "FOREACH",
+        "in": "${PROPERTY map}",
+        "loopRoutine": [
+          "var type = ${PROPERTY map} getIndex ${key}",
+          {
+            "func": "IF",
+            "condition": "${type}",
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "routine": "getAreaRoutine",
+                "arguments": {
+                  "key": "${key}",
+                  "areaType": "${type}"
+                }
+              },
+              "var areas.$key = ${result}"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "areas",
+        "collection": "thisButton",
+        "value": "${areas}"
+      },
+      "var sum = 0",
+      {
+        "func": "FOREACH",
+        "in": "${areas}",
+        "loopRoutine": [
+          "var points = ${value.area} * ${value.crowns}",
+          "var sum = ${sum} + ${points}"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "collection": "thisButton",
+        "value": "Score: ${sum}"
+      }
+    ],
+    "cardsToMapRoutine": [
+      "var map = []",
+      "var crowns = []",
+      {
+        "func": "SELECT",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "deck",
+        "value": "Deck"
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          "var left = ${PROPERTY left OF $widgetID}",
+          "var right = ${PROPERTY right OF $widgetID}",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY rotation OF $widgetID}",
+            "operand2": 0,
+            "thenRoutine": [
+              "var leftX = ${PROPERTY x OF $widgetID} / 80",
+              "var leftY = ${PROPERTY y OF $widgetID} / 80",
+              "var rightX = ${leftX} + 1",
+              "var rightY = ${leftY}"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY rotation OF $widgetID}",
+            "operand2": 90,
+            "thenRoutine": [
+              "var leftX = ${PROPERTY x OF $widgetID} / 80",
+              "var leftY = ${PROPERTY y OF $widgetID} / 80",
+              "var leftX = ${leftX} + 0.5",
+              "var leftY = ${leftY} - 0.5",
+              "var rightX = ${leftX}",
+              "var rightY = ${leftY} + 1"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY rotation OF $widgetID}",
+            "operand2": 180,
+            "thenRoutine": [
+              "var rightX = ${PROPERTY x OF $widgetID} / 80",
+              "var rightY = ${PROPERTY y OF $widgetID} / 80",
+              "var leftX = ${rightX} + 1",
+              "var leftY = ${rightY}"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY rotation OF $widgetID}",
+            "operand2": 270,
+            "thenRoutine": [
+              "var leftX = ${PROPERTY x OF $widgetID} / 80",
+              "var leftY = ${PROPERTY y OF $widgetID} / 80",
+              "var leftX = ${leftX} + 0.5",
+              "var leftY = ${leftY} + 0.5",
+              "var rightX = ${leftX}",
+              "var rightY = ${leftY} - 1"
+            ]
+          },
+          "var leftIndex = ${leftY} * ${PROPERTY gridSize}",
+          "var leftIndex = ${leftIndex} + ${leftX}",
+          "var rightIndex = ${rightY} * ${PROPERTY gridSize}",
+          "var rightIndex = ${rightIndex} + ${rightX}",
+          "var map.$leftIndex = ${left}",
+          "var map.$rightIndex = ${right}",
+          "var crowns.$leftIndex = ${PROPERTY crowns OF $widgetID}"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "map",
+        "collection": "thisButton",
+        "value": "${map}"
+      },
+      {
+        "func": "SET",
+        "property": "crowns",
+        "collection": "thisButton",
+        "value": "${crowns}"
+      }
+    ],
+    "crowns": [],
+    "getAreaRoutine": [
+      "var tempResult = {}",
+      "var tempResult.area = 0",
+      "var tempResult.crowns = 0",
+      "var rightColumn = ${PROPERTY gridSize} - 1",
+      "var type = ${PROPERTY map} getIndex ${key}",
+      {
+        "func": "IF",
+        "operand1": "${type}",
+        "operand2": "${areaType}",
+        "thenRoutine": [
+          "var tempResult.area = 1",
+          "var crowns = ${PROPERTY crowns}",
+          "var tempResult.crowns = ${crowns.$key}",
+          "var map = ${PROPERTY map}",
+          "var map.$key = null",
+          {
+            "func": "SET",
+            "property": "map",
+            "collection": "thisButton",
+            "value": "${map}"
+          },
+          "var adjacent = {}",
+          "var column = ${key} % ${PROPERTY gridSize}",
+          {
+            "func": "IF",
+            "operand1": "${column}",
+            "relation": ">",
+            "operand2": 0,
+            "thenRoutine": [
+              "var adjacent.0 = ${key} - 1"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${column}",
+            "relation": "<",
+            "operand2": "${rightColumn}",
+            "thenRoutine": [
+              "var adjacent.1 = ${key} + 1"
+            ]
+          },
+          "var adjacent.2 = ${key} + ${PROPERTY gridSize}",
+          "var adjacent.3 = ${key} - ${PROPERTY gridSize}",
+          {
+            "func": "FOREACH",
+            "in": "${adjacent}",
+            "loopRoutine": [
+              {
+                "func": "CALL",
+                "routine": "getAreaRoutine",
+                "arguments": {
+                  "key": "${value}",
+                  "areaType": "${type}"
+                }
+              },
+              "var tempResult.area = ${tempResult.area} + ${result.area}",
+              "var tempResult.crowns = ${tempResult.crowns} + ${result.crowns}"
+            ]
+          }
+        ]
+      },
+      "var result = ${tempResult}"
+    ],
+    "gridSize": 5,
+    "map": [],
+    "text": "Score: 0",
+    "movable": false,
+    "fixedParent": true,
+    "css": "color:white;font-size:26px;text-align:center",
+    "width": 160
+  },
+  "Player 1 - Score": {
+    "id": "Player 1 - Score",
+    "inheritFrom": "Player 4 - Score",
+    "parent": "Player 1 - Holder",
+    "map": [],
+    "crowns": [],
+    "areas": {},
+    "text": "Score: 0",
+    "z": 10981,
+    "x": -165,
+    "y": 143
+  },
+  "Player 2 - Score": {
+    "id": "Player 2 - Score",
+    "inheritFrom": "Player 1 - Score",
+    "parent": "Player 2 - Holder",
+    "map": [],
+    "crowns": [],
+    "areas": {},
+    "text": "Score: 0"
+  },
+  "Player 3 - Score": {
+    "id": "Player 3 - Score",
+    "inheritFrom": "Player 4 - Score",
+    "parent": "Player 3 - Holder",
+    "map": [],
+    "crowns": [],
+    "areas": {},
+    "text": "Score: 0"
+  },
+  "_meta": {
+    "version": 4,
+    "info": {
+      "name": "Shattered Dominion",
+      "image": "/assets/1597719616_28558",
+      "rules": "",
+      "bgg": "",
+      "year": "2016",
+      "mode": "vs",
+      "time": "15",
+      "players": "2-4",
+      "language": "US",
+      "variant": "",
+      "attribution": "Board layout and \"king\" game piece by ArnoldSmith86. Released to public domain under CC0.\n\nPixabay license:\nhttps://pixabay.com/vectors/crown-golden-yellow-emperor-576226/\nhttps://pixabay.com/vectors/building-castle-fort-fortification-2024446/\n\nhttps://pixabay.com/photos/sheep-meadow-aerial-view-drone-939566/\nhttps://pixabay.com/photos/wheat-wheat-field-crop-spikelets-5581130/\nhttps://pixabay.com/photos/central-tien-shan-china-landscape-92365/\nhttps://pixabay.com/de/photos/erde-trocken-lehm-lehmhaltig-d%C3%BCrre-3483470/\nhttps://pixabay.com/photos/sand-texture-dune-beach-desert-5085975/\n\nPublic domain:\nhttps://www.piqsels.com/en/public-domain-photo-fmixo\nhttps://www.piqsels.com/en/public-domain-photo-sqflp\n",
+      "similarName": "Kingdomino",
+      "similarLink": "https://boardgamegeek.com/boardgame/204583/kingdomino",
+      "description": "Place tiles consisting of images of various types of terrain to connect to a matching type of terrain already on the 5x5 board. Earn points for connecting tiles and playing bonus symbol. Most points wins."
+    }
+  },
+  "mtnb": {
+    "type": "pile",
+    "parent": "Draw",
+    "x": 4,
+    "y": 4,
+    "width": 160,
+    "height": 80,
+    "id": "mtnb"
+  },
+  "p3cw": {
+    "type": "pile",
+    "parent": "Discard",
+    "x": 4,
+    "y": 4,
+    "width": 160,
+    "height": 80,
+    "id": "p3cw"
+  }
+}

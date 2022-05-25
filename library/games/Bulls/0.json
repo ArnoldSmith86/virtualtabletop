@@ -693,7 +693,6 @@
             "x": -10,
             "y": -10,
             "color": "transparent",
-            "valueType": "static",
             "value": "/assets/-607361757_73020",
             "width": 158,
             "height": 105
@@ -704,7 +703,6 @@
             "y": 0,
             "width": 138,
             "height": 85,
-            "valueType": "static",
             "value": "",
             "color": "#000000a0"
           }
@@ -719,7 +717,6 @@
             "x": -10,
             "y": -10,
             "color": "transparent",
-            "valueType": "static",
             "value": "/assets/-607361757_73020",
             "width": 158,
             "height": 105
@@ -730,7 +727,6 @@
             "y": 0,
             "width": 138,
             "height": 85,
-            "valueType": "static",
             "value": "",
             "color": "invalid",
             "css": "background-color: var(--color);"
@@ -740,22 +736,24 @@
             "x": 38,
             "y": 19,
             "fontSize": 44,
-            "valueType": "dynamic",
-            "value": "value",
             "textAlign": "center",
             "width": 80,
-            "css": "color: white; "
+            "css": "color: white; ",
+            "dynamicProperties": {
+              "value": "value"
+            }
           },
           {
             "type": "text",
             "x": 50,
             "y": 59,
             "fontSize": 20,
-            "valueType": "dynamic",
-            "value": "points",
             "textAlign": "right",
             "width": 80,
-            "css": "color: white; "
+            "css": "color: white; ",
+            "dynamicProperties": {
+              "value": "points"
+            }
           }
         ]
       }
@@ -1527,7 +1525,6 @@
     "id": "p1Get",
     "x": 33,
     "y": 6,
-    "movable": true,
     "clickRoutine": [
       {
         "func": "SELECT",
@@ -1684,7 +1681,7 @@
     "inheritFrom": "column1Button"
   },
   "_meta": {
-    "version": 3,
+    "version": 5,
     "info": {
       "name": "Bulls",
       "image": "/assets/1009941875_19053",

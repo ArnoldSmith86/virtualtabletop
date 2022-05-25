@@ -1,0 +1,4550 @@
+{
+  "_meta": {
+    "version": 6,
+    "info": {
+      "name": "Yoink",
+      "image": "/assets/42882860_185826",
+      "rules": "",
+      "bgg": "",
+      "year": "2019",
+      "mode": "vs",
+      "time": "15",
+      "players": "3-5",
+      "language": "US",
+      "variant": "",
+      "attribution": "INSTRUCTIONS: Players take seats. Game is highly automated and must have at least 3 for automation to work. Press Start Game button. Choose desired card orientation and press green check button to indicate ready to play. Once all players, are ready, random player chosen to start. To play cards from hand, click on desired cards then Play button. If accidentally make an illegal play, an Undo button is available. To Yoink a card from the played pile, drag it to the hand. After placing in hand, can move it to a different location and rotate it using the button prompts. Press green check button to set position and pass turn to next player. Again, an Undo button is available. To use Yoink + Play, after pressing green check button, click on Yoink + Play card in player's seat and turn will be set to player pressing the card. When round ends by rule, a next round button will appear. Press it to calculate scores and deal next round of cards. Repeat above steps until game is over.\n\nThe game layout and game room design are by LawDawg and by mousewax and are released to the Public Domain under CC0.\n\nThe card and game piece design is by mousewas and is released to the Public Domain under CC0.",
+      "similarName": "Scout",
+      "similarLink": "https://boardgamegeek.com/boardgame/291453/scout",
+      "description": "Play with deck with value 1-10 on one end and different 1-10 value on the other end. Once hand is dealt, cannot move cards but can rotate once. Then play sets or runs using cards in dealt order in your hand that are are higher than what opponent played. Play number of rounds equal to number of players. Highest score wins."
+    }
+  },
+  "deckHolder": {
+    "type": "holder",
+    "id": "deckHolder",
+    "x": 137,
+    "y": 759,
+    "z": 40,
+    "dropTarget": {
+      "type": "card"
+    },
+    "width": 144,
+    "height": 218,
+    "movableInEdit": false
+  },
+  "theDeck": {
+    "type": "deck",
+    "id": "theDeck",
+    "parent": "deckHolder",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "1-2": {
+        "image": "/assets/1077931057_127655"
+      },
+      "1-3": {
+        "image": "/assets/1043562614_218970"
+      },
+      "1-4": {
+        "image": "/assets/1257979847_216164"
+      },
+      "1-5": {
+        "image": "/assets/478252340_217789"
+      },
+      "1-6": {
+        "image": "/assets/-1540681424_217016"
+      },
+      "1-7": {
+        "image": "/assets/1550921691_217706"
+      },
+      "1-8": {
+        "image": "/assets/-784557309_219265"
+      },
+      "1-9": {
+        "image": "/assets/-867264630_217535"
+      },
+      "1-10": {
+        "image": "/assets/-428780373_216388",
+        "set": 3
+      },
+      "2-3": {
+        "image": "/assets/1416636030_220158"
+      },
+      "2-4": {
+        "image": "/assets/-954586583_217579"
+      },
+      "2-5": {
+        "image": "/assets/-700267907_219137"
+      },
+      "2-6": {
+        "image": "/assets/964467788_218373"
+      },
+      "2-7": {
+        "image": "/assets/1975174273_219046"
+      },
+      "2-8": {
+        "image": "/assets/-952484384_220860"
+      },
+      "2-9": {
+        "image": "/assets/-2124031819_218673"
+      },
+      "2-10": {
+        "image": "/assets/1984414365_435749",
+        "set": 3
+      },
+      "3-4": {
+        "image": "/assets/1731649080_220319"
+      },
+      "3-5": {
+        "image": "/assets/925036990_222184"
+      },
+      "3-6": {
+        "image": "/assets/-1311826593_221809"
+      },
+      "3-7": {
+        "image": "/assets/1643395033_222394"
+      },
+      "3-8": {
+        "image": "/assets/628868312_224104"
+      },
+      "3-9": {
+        "image": "/assets/-704075223_222054"
+      },
+      "3-10": {
+        "image": "/assets/-1449654031_220857",
+        "set": 3
+      },
+      "4-5": {
+        "image": "/assets/-245130236_218761"
+      },
+      "4-6": {
+        "image": "/assets/-1660821072_218714"
+      },
+      "4-7": {
+        "image": "/assets/-1936718405_219223"
+      },
+      "4-8": {
+        "image": "/assets/-2147441004_221008"
+      },
+      "4-9": {
+        "image": "/assets/310625301_218888"
+      },
+      "4-10": {
+        "image": "/assets/454180697_217704",
+        "set": 3
+      },
+      "5-6": {
+        "image": "/assets/-583675967_220509"
+      },
+      "5-7": {
+        "image": "/assets/766844962_221215"
+      },
+      "5-8": {
+        "image": "/assets/-211222156_222942"
+      },
+      "5-9": {
+        "image": "/assets/964993628_220829"
+      },
+      "5-10": {
+        "image": "/assets/2128151767_219544",
+        "set": 3
+      },
+      "6-7": {
+        "image": "/assets/1687014137_220361"
+      },
+      "6-8": {
+        "image": "/assets/-1782121531_222082"
+      },
+      "6-9": {
+        "image": "/assets/-644396205_219852"
+      },
+      "6-10": {
+        "image": "/assets/2094365652_218797",
+        "set": 3
+      },
+      "7-8": {
+        "image": "/assets/202057908_222392"
+      },
+      "7-9": {
+        "image": "/assets/-1919335108_220174"
+      },
+      "7-10": {
+        "image": "/assets/-1513355040_219183",
+        "set": 3
+      },
+      "8-9": {
+        "image": "/assets/-1592365170_221877"
+      },
+      "8-10": {
+        "image": "/assets/-66560645_220931",
+        "set": 3
+      },
+      "9-10": {
+        "image": "/assets/-1748724112_218492",
+        "set": 4
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 134,
+            "height": 208,
+            "color": "transparent",
+            "value": "/assets/1661139067_270685"
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 134,
+            "height": 208,
+            "color": "white",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "onPileCreation": {
+        "handleCSS": "box-shadow:0 1px 1px black;background:white;border-radius:100%;padding:10px;font-weight:900;font-size:2rem;line-height:30px;height:30px;width:30px;margin-left:0;color:purple;border:1px solid purple",
+        "handleOffset": 20,
+        "handlePosition": "bottomcenter",
+        "handleSize": 20
+      },
+      "width": 134,
+      "height": 208,
+      "lowerItRoutine": [
+        "// Lower card, decrease the count of raised cards by 1, and remove the card from the z array",
+        "var raisedCount = ${raisedCount} - 1",
+        {
+          "func": "SET",
+          "collection": [
+            "raises"
+          ],
+          "property": "${playerName}",
+          "value": "${raisedCount}"
+        },
+        {
+          "func": "SET",
+          "collection": [
+            "raises"
+          ],
+          "property": "raises",
+          "value": "${raisedCount}"
+        },
+        "var yVal = ${yVal} + ${PROPERTY raiseAmount OF theDeck}",
+        {
+          "func": "SET",
+          "collection": "thisButton",
+          "property": "y",
+          "value": "${yVal}"
+        },
+        {
+          "func": "SET",
+          "collection": "thisButton",
+          "property": "raised",
+          "value": false
+        },
+        "var lowerZ = ${tempArray} indexOf ${zVal}",
+        "var tempArray = ${lowerZ} remove 1",
+        {
+          "func": "SET",
+          "collection": [
+            "raises"
+          ],
+          "property": "${zArray}",
+          "value": "${tempArray}"
+        }
+      ],
+      "raiseItRoutine": [
+        "var tempArray = ${PROPERTY $zArray OF raises}",
+        "var raisedCount = ${raisedCount} + 1",
+        {
+          "func": "SET",
+          "collection": [
+            "raises"
+          ],
+          "property": "${playerName}",
+          "value": "${raisedCount}"
+        },
+        {
+          "func": "SET",
+          "collection": [
+            "raises"
+          ],
+          "property": "raises",
+          "value": "${raisedCount}"
+        },
+        "var yVal = ${yVal} - ${PROPERTY raiseAmount OF theDeck}",
+        {
+          "func": "SET",
+          "collection": "thisButton",
+          "property": "y",
+          "value": "${yVal}"
+        },
+        {
+          "func": "SET",
+          "collection": "thisButton",
+          "property": "raised",
+          "value": true
+        },
+        "// After raising the card, put the cards z value into the array of raised cards.",
+        {
+          "func": "GET",
+          "collection": "thisButton",
+          "property": "z",
+          "variable": "zVal"
+        },
+        "var tempArray = push ${zVal}",
+        "var tempArray = numericSort ${tempArray}",
+        {
+          "func": "SET",
+          "collection": [
+            "raises"
+          ],
+          "property": "${zArray}",
+          "value": "${tempArray}"
+        }
+      ],
+      "clickRoutine": [
+        "var zArray = ${playerName} + 'zArray'",
+        "// Check to see if player name exists in 'raises' widget.",
+        {
+          "func": "IF",
+          "operand1": "${PROPERTY $playerName OF raises}",
+          "operand2": null,
+          "thenRoutine": [
+            {
+              "func": "SET",
+              "collection": [
+                "raises"
+              ],
+              "property": "${playerName}",
+              "value": 0
+            },
+            {
+              "func": "SET",
+              "collection": [
+                "raises"
+              ],
+              "property": "${zArray}",
+              "value": []
+            }
+          ]
+        },
+        "// Check to see if it is this player's turn. If so, then run the raise/lower validation process.",
+        {
+          "func": "SELECT",
+          "type": "seat",
+          "property": "player",
+          "value": "${playerName}"
+        },
+        {
+          "func": "GET",
+          "property": "turn",
+          "variable": "isTurn"
+        },
+        {
+          "func": "IF",
+          "condition": "${isTurn}",
+          "thenRoutine": [
+            {
+              "func": "IF",
+              "condition": "${PROPERTY inHand}",
+              "thenRoutine": [
+                "//Set initial parameters",
+                {
+                  "func": "GET",
+                  "collection": "thisButton",
+                  "property": "z",
+                  "variable": "zVal"
+                },
+                "var yVal = ${PROPERTY y}",
+                "var raisedCount = ${PROPERTY $playerName OF raises}",
+                "var tempArray = ${PROPERTY $zArray OF raises}",
+                "var minZ = ${tempArray.0}",
+                "var minCheck = ${minZ} - ${zVal}",
+                "var length = ${PROPERTY $playerName OF raises} - 1",
+                "var maxZ = ${tempArray.$length}",
+                "var maxCheck = ${zVal} - ${maxZ}",
+                "//If the card is already raised, then check to make sure it is an end card (can't lower a card in the middle). If it is an end card, then call routine to lower it.",
+                {
+                  "func": "IF",
+                  "condition": "${PROPERTY raised}",
+                  "thenRoutine": [
+                    {
+                      "func": "IF",
+                      "operand1": "${zVal}",
+                      "operand2": "${minZ}",
+                      "thenRoutine": [
+                        {
+                          "func": "CALL",
+                          "routine": "lowerItRoutine"
+                        }
+                      ],
+                      "elseRoutine": [
+                        {
+                          "func": "IF",
+                          "operand1": "${zVal}",
+                          "operand2": "${maxZ}",
+                          "thenRoutine": [
+                            {
+                              "func": "CALL",
+                              "routine": "lowerItRoutine"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "elseRoutine": [
+                    "// If the card is not raised, and if this is the first card to be raised, then create a null array and call the routine to raise the card",
+                    {
+                      "func": "IF",
+                      "operand1": "${raisedCount}",
+                      "operand2": 0,
+                      "thenRoutine": [
+                        {
+                          "func": "SET",
+                          "collection": [
+                            "raises"
+                          ],
+                          "property": "${zArray}",
+                          "value": "${PROPERTY nullArray OF raises}"
+                        },
+                        {
+                          "func": "CALL",
+                          "routine": "raiseItRoutine"
+                        }
+                      ],
+                      "elseRoutine": [
+                        "// If the card is not raised, and if this is not the first card to be raised, then check to see if the card is next to another raised card.",
+                        {
+                          "func": "IF",
+                          "operand1": "${minCheck}",
+                          "operand2": 1,
+                          "thenRoutine": [
+                            {
+                              "func": "CALL",
+                              "routine": "raiseItRoutine"
+                            }
+                          ],
+                          "elseRoutine": [
+                            {
+                              "func": "IF",
+                              "operand1": "${maxCheck}",
+                              "operand2": 1,
+                              "thenRoutine": [
+                                {
+                                  "func": "CALL",
+                                  "routine": "raiseItRoutine"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "raiseAmount": 30
+  },
+  "hand": {
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "dropOffsetX": 10,
+    "dropOffsetY": 14,
+    "childrenPerOwner": true,
+    "x": 300,
+    "y": 759,
+    "width": 1000,
+    "height": 234,
+    "id": "hand",
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "inHand",
+        "value": true
+      },
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "scouted",
+        "variable": "scouted"
+      },
+      {
+        "func": "CALL",
+        "routine": "countCardsRoutine"
+      },
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "scouted",
+        "variable": "scouted"
+      },
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "owner",
+        "variable": "ownerID"
+      },
+      {
+        "func": "IF",
+        "operand1": "${scouted}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "adjustLabel"
+            ],
+            "property": "y",
+            "value": 665
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "playCards"
+            ],
+            "property": "turnIndex",
+            "value": 0
+          },
+          {
+            "func": "GET",
+            "collection": "child",
+            "property": "owner",
+            "variable": "owner"
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "owner",
+            "value": "${owner}"
+          },
+          {
+            "func": "COUNT"
+          },
+          "var xVal = ${COUNT} * 58",
+          "var xVal = ${xVal} + 230",
+          {
+            "func": "IF",
+            "operand1": "${xVal}",
+            "relation": "<",
+            "operand2": 30,
+            "thenRoutine": [
+              "var xVal = 30"
+            ]
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "adjustLabel"
+            ],
+            "property": "x",
+            "value": "${xVal}"
+          },
+          {
+            "func": "SELECT",
+            "type": "seat",
+            "property": "player",
+            "value": "${ownerID}"
+          },
+          {
+            "func": "GET",
+            "property": "index",
+            "variable": "seatIndex"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "adjustLabel"
+            ],
+            "property": "onlyVisibleForSeat",
+            "value": "seat${seatIndex}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "movable",
+            "value": false
+          }
+        ]
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "inHand",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "raised",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "movable",
+        "value": true
+      },
+      {
+        "func": "CALL",
+        "routine": "countCardsRoutine"
+      }
+    ],
+    "z": 24,
+    "stackOffsetX": 59,
+    "dropTarget": {
+      "deck": "theDeck"
+    },
+    "movableInEdit": false,
+    "countCardsRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "GET",
+        "aggregation": "array",
+        "property": "player",
+        "variable": "playerList"
+      },
+      {
+        "func": "FOREACH",
+        "in": "${playerList}",
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "_ancestor",
+            "value": "hand"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "owner",
+            "value": "${value}"
+          },
+          {
+            "func": "COUNT"
+          },
+          {
+            "func": "SELECT",
+            "type": "seat",
+            "property": "player",
+            "value": "${value}"
+          },
+          {
+            "func": "GET",
+            "property": "index",
+            "variable": "seatIndex"
+          },
+          {
+            "func": "LABEL",
+            "label": "cardCount${seatIndex}",
+            "mode": "set",
+            "value": "${COUNT}"
+          }
+        ]
+      }
+    ]
+  },
+  "raises": {
+    "id": "raises",
+    "z": 107,
+    "css": "background: grey; ",
+    "x": 420,
+    "y": 1140,
+    "nullArray": [],
+    "text": "raises",
+    "undoPlayArray": [],
+    "undoName": [],
+    "undoHandArray": [],
+    "playCount": 0,
+    "readyChangeRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "COUNT"
+      },
+      "// IF this is the beginning of the game, then when all players are ready, set the turn indicator to a random player. Then record the data for the player to start the next round.",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY round OF nextRound}",
+        "operand2": 2,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": "${PROPERTY ready}",
+            "thenRoutine": [
+              {
+                "func": "TURN",
+                "turnCycle": "random"
+              },
+              {
+                "func": "SELECT",
+                "type": "seat",
+                "property": "turn",
+                "value": true
+              },
+              {
+                "func": "GET",
+                "property": "index",
+                "variable": "seatIndex"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "startIndex",
+                "value": "${seatIndex}"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          "// Otherwise, get the next player to start, set the turn indicator to that player, and record the data for the next starting player.",
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": "${PROPERTY ready}",
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "type": "seat",
+                "property": "index",
+                "value": "${PROPERTY startIndex}"
+              },
+              {
+                "func": "SET",
+                "property": "turn",
+                "value": true
+              },
+              {
+                "func": "TURN"
+              },
+              {
+                "func": "SELECT",
+                "type": "seat",
+                "property": "turn",
+                "value": true
+              },
+              {
+                "func": "GET",
+                "property": "index",
+                "variable": "seatIndex"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "startIndex",
+                "value": "${seatIndex}"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "ready": 1,
+    "roundScoreRoutine": [
+      "// Move cards from play area to seat.",
+      {
+        "func": "GET",
+        "collection": [
+          "playedName"
+        ],
+        "property": "text",
+        "variable": "pName"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "value": "${pName}"
+      },
+      {
+        "func": "GET",
+        "property": "index",
+        "variable": "seatIndex"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "playArea"
+        ],
+        "property": "scout",
+        "value": false
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "playArea"
+      },
+      {
+        "func": "MOVE",
+        "from": "playArea",
+        "to": "holder${seatIndex}",
+        "count": 0
+      },
+      "// Calculate points",
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "_ancestor",
+            "value": "holder${value}"
+          },
+          {
+            "func": "COUNT",
+            "variable": "holderCount"
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "_ancestor",
+            "value": "vp${value}"
+          },
+          {
+            "func": "COUNT",
+            "variable": "vpCount"
+          },
+          "var total = ${holderCount} + ${vpCount}",
+          {
+            "func": "GET",
+            "collection": [
+              "score${value}"
+            ],
+            "property": "text",
+            "variable": "oldTotal"
+          },
+          "var total = ${total} + ${oldTotal}",
+          {
+            "func": "GET",
+            "collection": [
+              "cardCount${value}"
+            ],
+            "property": "text",
+            "variable": "cardsRemain"
+          },
+          "var total = ${total} - ${cardsRemain}",
+          {
+            "func": "SET",
+            "collection": [
+              "score${value}"
+            ],
+            "property": "text",
+            "value": "${total}"
+          }
+        ]
+      }
+    ],
+    "raises": 0,
+    "raisesChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY raises}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "playCards"
+            ],
+            "property": "scale",
+            "value": 1
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "playCards"
+            ],
+            "property": "scale",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "scoutCount": 0,
+    "fixZArray": [
+      12,
+      11,
+      10,
+      9,
+      8,
+      7,
+      6,
+      5,
+      4,
+      3,
+      2,
+      1
+    ],
+    "undoScout": "5l7d"
+  },
+  "tempHolder": {
+    "type": "holder",
+    "id": "tempHolder",
+    "x": 57,
+    "y": 1081,
+    "z": 13,
+    "width": 144,
+    "height": 218
+  },
+  "holder1": {
+    "type": "holder",
+    "id": "holder1",
+    "y": 32,
+    "z": 16,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "height": 218,
+    "width": 144,
+    "movableInEdit": false,
+    "linkedToSeat": "seat1",
+    "fixedParent": true,
+    "parent": "seat1",
+    "dropTarget": {
+      "deck": "theDeck"
+    },
+    "x": -55,
+    "scale": 0.8,
+    "rotation": -5,
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "widget": "raises",
+        "routine": "liveScoreRoutine"
+      }
+    ]
+  },
+  "playCards": {
+    "type": "button",
+    "id": "playCards",
+    "x": 730,
+    "y": 615,
+    "z": 72,
+    "text": "Play Cards",
+    "clickRoutine": [
+      "// Check to see if cards are actually going to be moved",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY $playerName OF raises}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          "// If cards will be moved, move the cards out of the play area and set up the undo array.",
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "_ancestor",
+            "value": "playArea",
+            "sortBy": {
+              "key": "z",
+              "reverse": true
+            }
+          },
+          {
+            "func": "GET",
+            "aggregation": "array",
+            "property": "id",
+            "variable": "undoPlayArray"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "raises"
+            ],
+            "property": "undoPlayArray",
+            "value": "${undoPlayArray}"
+          },
+          {
+            "func": "GET",
+            "collection": [
+              "playedName"
+            ],
+            "property": "text",
+            "variable": "undoName"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "raises"
+            ],
+            "property": "undoName",
+            "value": "${undoName}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "playedName"
+            ],
+            "property": "text",
+            "value": "${playerName}"
+          },
+          {
+            "func": "SELECT",
+            "type": "seat",
+            "property": "player",
+            "value": "${playerName}"
+          },
+          {
+            "func": "GET",
+            "property": "color",
+            "variable": "pColor"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "playedName"
+            ],
+            "property": "seatColor",
+            "value": "${pColor}"
+          },
+          {
+            "func": "SELECT",
+            "type": "seat",
+            "property": "player",
+            "value": "${playerName}"
+          },
+          {
+            "func": "GET",
+            "property": "index",
+            "variable": "seatIndex"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "playArea"
+            ],
+            "property": "scout",
+            "value": false
+          },
+          {
+            "func": "MOVE",
+            "from": "playArea",
+            "to": "holder${seatIndex}",
+            "count": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "playArea"
+            ],
+            "property": "scout",
+            "value": true
+          },
+          "//Set up array to undo hand.",
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "owner",
+            "value": "${playerName}",
+            "sortBy": {
+              "key": "z",
+              "reverse": true
+            }
+          },
+          {
+            "func": "GET",
+            "aggregation": "array",
+            "property": "id",
+            "variable": "undoHandArray"
+          },
+          {
+            "func": "GET",
+            "aggregation": "array",
+            "property": "z",
+            "variable": "fixZArray"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "raises"
+            ],
+            "property": "undoHandArray",
+            "value": "${undoHandArray}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "raises"
+            ],
+            "property": "fixZArray",
+            "value": "${fixZArray}"
+          },
+          "//Move selected cards from the hand to the play area.",
+          "var zArray = ${playerName} + 'zArray'",
+          "var tempArray = ${PROPERTY $zArray OF raises}",
+          "var tempArray = reverse ${tempArray}",
+          {
+            "func": "FOREACH",
+            "in": "${tempArray}",
+            "loopRoutine": [
+              {
+                "func": "SELECT",
+                "type": "card",
+                "property": "owner",
+                "value": "${playerName}"
+              },
+              {
+                "func": "SELECT",
+                "source": "DEFAULT",
+                "property": "z",
+                "value": "${value}"
+              },
+              {
+                "note": "this used to be set to 'playArea' but was changed to 'tempHolder' to allow the next set of functions below to fix z order to run",
+                "func": "SET",
+                "property": "parent",
+                "value": "tempHolder"
+              },
+              {
+                "func": "SET",
+                "property": "owner",
+                "value": null
+              },
+              {
+                "func": "SET",
+                "property": "movable",
+                "value": true
+              }
+            ]
+          },
+          "// This shouldn't be needed, but it is to fix a strange error that sometimes happens with z order",
+          "var fixArray = ${PROPERTY $zArray OF raises}",
+          {
+            "func": "FOREACH",
+            "in": "${tempArray}",
+            "loopRoutine": [
+              "var fixZ = ${fixArray} indexOf ${value}",
+              "var newZ = ${fixZArray} getIndex ${fixZ}",
+              {
+                "func": "SET",
+                "collection": [
+                  "${value}"
+                ],
+                "property": "z",
+                "value": "${newZ}"
+              }
+            ]
+          },
+          {
+            "func": "MOVE",
+            "from": "tempHolder",
+            "to": "playArea",
+            "count": 0
+          },
+          "//Close up the gap in the hand and reset data in raises",
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "owner",
+            "value": "${playerName}",
+            "sortBy": {
+              "key": "z",
+              "reverse": true
+            }
+          },
+          {
+            "func": "FOREACH",
+            "in": "DEFAULT",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "parent",
+                "value": "tempHolder"
+              },
+              {
+                "func": "SET",
+                "property": "parent",
+                "value": "hand"
+              }
+            ]
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "raises"
+            ],
+            "property": "${playerName}",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "raises"
+            ],
+            "property": "${zArray}",
+            "value": []
+          },
+          {
+            "func": "COUNT",
+            "holder": "playArea"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "raises"
+            ],
+            "property": "playCount",
+            "value": "${COUNT}"
+          },
+          "// Set undo button visibility and next turn.",
+          {
+            "func": "GET",
+            "collection": [
+              "playedName"
+            ],
+            "property": "text",
+            "variable": "playedName"
+          },
+          {
+            "func": "SELECT",
+            "type": "seat",
+            "property": "player",
+            "value": "${playedName}"
+          },
+          {
+            "func": "GET",
+            "property": "index",
+            "variable": "seatIndex"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "undo"
+            ],
+            "property": "onlyVisibleForSeat",
+            "value": "seat${seatIndex}"
+          },
+          {
+            "func": "TURN"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "raises"
+            ],
+            "property": "raises",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "raises"
+            ],
+            "property": "scoutCount",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "raises"
+            ],
+            "property": "undoScout",
+            "value": null
+          }
+        ]
+      }
+    ],
+    "turnIndex": 0,
+    "turnIndexChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "onlyVisibleForSeat",
+        "value": "seat${PROPERTY turnIndex}"
+      }
+    ],
+    "onlyVisibleForSeat": "seat0",
+    "width": 130,
+    "height": 45,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "font-size": "21px",
+        "background": "repeating-conic-gradient(#623687 5%, #ad5fca 10%, #623687 13%)",
+        "border-color": "white",
+        "font-weight": "500",
+        "text-shadow": "1px 1px 4px #c8ecf8",
+        "transition": "linear 0.4s"
+      },
+      ":hover": {
+        "background": "repeating-conic-gradient(#ad5fca 5%, #623687 10%, #ad5fca 13%)"
+      }
+    },
+    "scale": 0
+  },
+  "playedLabel": {
+    "id": "playedLabel",
+    "fixedParent": true,
+    "x": 5,
+    "y": -38,
+    "width": 185,
+    "height": 45,
+    "z": 10,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "30px",
+      "font-weight": "900"
+    },
+    "text": "Played by:",
+    "parent": "playArea"
+  },
+  "playedName": {
+    "id": "playedName",
+    "fixedParent": true,
+    "x": 165,
+    "y": -38,
+    "width": 303,
+    "height": 45,
+    "z": 10,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "30px",
+      "font-weight": "900",
+      "color": "${PROPERTY seatColor}"
+    },
+    "seatColor": "#f0004a",
+    "parent": "playArea"
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 45,
+    "y": 55,
+    "movableInEdit": false,
+    "hideWhenUnused": true,
+    "turnChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY turn}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "playCards"
+            ],
+            "property": "turnIndex",
+            "value": "${PROPERTY index}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "playCover"
+            ],
+            "property": "onlyVisibleForSeat",
+            "value": [
+              "seat2",
+              "seat3",
+              "seat4",
+              "seat5"
+            ]
+          }
+        ]
+      }
+    ],
+    "css": {
+      "opacity": "${PROPERTY seatOpacity}"
+    },
+    "seatOpacity": 1,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "operand2": "",
+        "relation": "!=",
+        "thenRoutine": [
+          "var comment = 'Do Nothing'"
+        ],
+        "elseRoutine": [
+          "var playerPrefix = substr ${playerName} 0 5",
+          {
+            "func": "IF",
+            "operand1": "${playerPrefix}",
+            "operand2": "Guest",
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "fields": [
+                  {
+                    "type": "title",
+                    "text": "Enter your name and choice of player color."
+                  },
+                  {
+                    "type": "string",
+                    "label": "Name",
+                    "variable": "playerName",
+                    "value": "${playerName}"
+                  },
+                  {
+                    "type": "color",
+                    "label": "Color",
+                    "variable": "playerColor",
+                    "value": "${playerColor}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ]
+  },
+  "score1": {
+    "type": "label",
+    "id": "score1",
+    "width": 150,
+    "height": 40,
+    "z": 1,
+    "css": {
+      "font-size": "45px",
+      "font-weight": "900",
+      "color": "black"
+    },
+    "fixedParent": true,
+    "parent": "seat1",
+    "linkedToSeat": "seat1",
+    "movableInEdit": false,
+    "y": -60,
+    "text": 0
+  },
+  "vp1": {
+    "type": "holder",
+    "id": "vp1",
+    "parent": "seat1",
+    "fixedParent": true,
+    "x": 78,
+    "y": 124,
+    "width": 73,
+    "height": 73,
+    "z": 42,
+    "linkedToSeat": "seat1",
+    "dropTarget": {
+      "deck": "vpDeck"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "scale": 0.8,
+    "borderRadius": 100,
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "widget": "raises",
+        "routine": "liveScoreRoutine"
+      }
+    ],
+    "movableInEdit": false
+  },
+  "double1": {
+    "type": "holder",
+    "id": "double1",
+    "parent": "seat1",
+    "fixedParent": true,
+    "x": 75,
+    "y": -16,
+    "width": 134,
+    "height": 208,
+    "z": 22,
+    "movableInEdit": false,
+    "linkedToSeat": "seat1",
+    "dropTarget": {
+      "deck": "doubleCards"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "scale": 0.5,
+    "rotation": 95
+  },
+  "seat2": {
+    "id": "seat2",
+    "type": "seat",
+    "x": 357,
+    "y": 55,
+    "index": 2,
+    "movableInEdit": false,
+    "hideWhenUnused": true,
+    "turnChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY turn}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "playCards"
+            ],
+            "property": "turnIndex",
+            "value": "${PROPERTY index}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "playCover"
+            ],
+            "property": "onlyVisibleForSeat",
+            "value": [
+              "seat1",
+              "seat3",
+              "seat4",
+              "seat5"
+            ]
+          }
+        ]
+      }
+    ],
+    "css": {
+      "opacity": "${PROPERTY seatOpacity}"
+    },
+    "seatOpacity": 1,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "operand2": "",
+        "relation": "!=",
+        "thenRoutine": [
+          "var comment = 'Do Nothing'"
+        ],
+        "elseRoutine": [
+          "var playerPrefix = substr ${playerName} 0 5",
+          {
+            "func": "IF",
+            "operand1": "${playerPrefix}",
+            "operand2": "Guest",
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "fields": [
+                  {
+                    "type": "title",
+                    "text": "Enter your name and choice of player color."
+                  },
+                  {
+                    "type": "string",
+                    "label": "Name",
+                    "variable": "playerName",
+                    "value": "${playerName}"
+                  },
+                  {
+                    "type": "color",
+                    "label": "Color",
+                    "variable": "playerColor",
+                    "value": "${playerColor}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ]
+  },
+  "holder2": {
+    "inheritFrom": "holder1",
+    "id": "holder2",
+    "type": "holder",
+    "parent": "seat2",
+    "linkedToSeat": "seat2"
+  },
+  "score2": {
+    "inheritFrom": "score1",
+    "id": "score2",
+    "type": "label",
+    "parent": "seat2",
+    "text": 0
+  },
+  "vp2": {
+    "inheritFrom": "vp1",
+    "id": "vp2",
+    "type": "holder",
+    "parent": "seat2",
+    "linkedToSeat": "seat2"
+  },
+  "double2": {
+    "inheritFrom": "double1",
+    "id": "double2",
+    "type": "holder",
+    "parent": "seat2",
+    "linkedToSeat": "seat2"
+  },
+  "seat3": {
+    "id": "seat3",
+    "type": "seat",
+    "x": 675,
+    "y": 55,
+    "index": 3,
+    "movableInEdit": false,
+    "hideWhenUnused": true,
+    "turnChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY turn}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "playCards"
+            ],
+            "property": "turnIndex",
+            "value": "${PROPERTY index}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "playCover"
+            ],
+            "property": "onlyVisibleForSeat",
+            "value": [
+              "seat1",
+              "seat2",
+              "seat4",
+              "seat5"
+            ]
+          }
+        ]
+      }
+    ],
+    "css": {
+      "opacity": "${PROPERTY seatOpacity}"
+    },
+    "seatOpacity": 1,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "operand2": "",
+        "relation": "!=",
+        "thenRoutine": [
+          "var comment = 'Do Nothing'"
+        ],
+        "elseRoutine": [
+          "var playerPrefix = substr ${playerName} 0 5",
+          {
+            "func": "IF",
+            "operand1": "${playerPrefix}",
+            "operand2": "Guest",
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "fields": [
+                  {
+                    "type": "title",
+                    "text": "Enter your name and choice of player color."
+                  },
+                  {
+                    "type": "string",
+                    "label": "Name",
+                    "variable": "playerName",
+                    "value": "${playerName}"
+                  },
+                  {
+                    "type": "color",
+                    "label": "Color",
+                    "variable": "playerColor",
+                    "value": "${playerColor}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ]
+  },
+  "holder3": {
+    "inheritFrom": "holder1",
+    "id": "holder3",
+    "type": "holder",
+    "parent": "seat3",
+    "linkedToSeat": "seat3"
+  },
+  "score3": {
+    "inheritFrom": "score1",
+    "id": "score3",
+    "type": "label",
+    "parent": "seat3",
+    "text": 0
+  },
+  "vp3": {
+    "inheritFrom": "vp1",
+    "id": "vp3",
+    "type": "holder",
+    "parent": "seat3",
+    "linkedToSeat": "seat3"
+  },
+  "double3": {
+    "inheritFrom": "double1",
+    "id": "double3",
+    "type": "holder",
+    "parent": "seat3",
+    "linkedToSeat": "seat3"
+  },
+  "seat4": {
+    "id": "seat4",
+    "type": "seat",
+    "x": 1000,
+    "y": 55,
+    "index": 4,
+    "movableInEdit": false,
+    "hideWhenUnused": true,
+    "turnChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY turn}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "playCards"
+            ],
+            "property": "turnIndex",
+            "value": "${PROPERTY index}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "playCover"
+            ],
+            "property": "onlyVisibleForSeat",
+            "value": [
+              "seat1",
+              "seat2",
+              "seat3",
+              "seat5"
+            ]
+          }
+        ]
+      }
+    ],
+    "css": {
+      "opacity": "${PROPERTY seatOpacity}"
+    },
+    "seatOpacity": 1,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "operand2": "",
+        "relation": "!=",
+        "thenRoutine": [
+          "var comment = 'Do Nothing'"
+        ],
+        "elseRoutine": [
+          "var playerPrefix = substr ${playerName} 0 5",
+          {
+            "func": "IF",
+            "operand1": "${playerPrefix}",
+            "operand2": "Guest",
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "fields": [
+                  {
+                    "type": "title",
+                    "text": "Enter your name and choice of player color."
+                  },
+                  {
+                    "type": "string",
+                    "label": "Name",
+                    "variable": "playerName",
+                    "value": "${playerName}"
+                  },
+                  {
+                    "type": "color",
+                    "label": "Color",
+                    "variable": "playerColor",
+                    "value": "${playerColor}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ]
+  },
+  "holder4": {
+    "inheritFrom": "holder1",
+    "id": "holder4",
+    "type": "holder",
+    "parent": "seat4",
+    "linkedToSeat": "seat4"
+  },
+  "score4": {
+    "inheritFrom": "score1",
+    "id": "score4",
+    "type": "label",
+    "parent": "seat4",
+    "text": 0
+  },
+  "vp4": {
+    "inheritFrom": "vp1",
+    "id": "vp4",
+    "type": "holder",
+    "parent": "seat4",
+    "linkedToSeat": "seat4"
+  },
+  "double4": {
+    "inheritFrom": "double1",
+    "id": "double4",
+    "type": "holder",
+    "parent": "seat4",
+    "linkedToSeat": "seat4"
+  },
+  "seat5": {
+    "id": "seat5",
+    "type": "seat",
+    "x": 1332,
+    "index": 5,
+    "y": 55,
+    "movableInEdit": false,
+    "hideWhenUnused": true,
+    "turnChangeRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY turn}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "playCards"
+            ],
+            "property": "turnIndex",
+            "value": "${PROPERTY index}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "playCover"
+            ],
+            "property": "onlyVisibleForSeat",
+            "value": [
+              "seat1",
+              "seat2",
+              "seat3",
+              "seat4"
+            ]
+          }
+        ]
+      }
+    ],
+    "css": {
+      "opacity": "${PROPERTY seatOpacity}"
+    },
+    "seatOpacity": 1,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "operand2": "",
+        "relation": "!=",
+        "thenRoutine": [
+          "var comment = 'Do Nothing'"
+        ],
+        "elseRoutine": [
+          "var playerPrefix = substr ${playerName} 0 5",
+          {
+            "func": "IF",
+            "operand1": "${playerPrefix}",
+            "operand2": "Guest",
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "fields": [
+                  {
+                    "type": "title",
+                    "text": "Enter your name and choice of player color."
+                  },
+                  {
+                    "type": "string",
+                    "label": "Name",
+                    "variable": "playerName",
+                    "value": "${playerName}"
+                  },
+                  {
+                    "type": "color",
+                    "label": "Color",
+                    "variable": "playerColor",
+                    "value": "${playerColor}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ]
+  },
+  "holder5": {
+    "inheritFrom": "holder1",
+    "id": "holder5",
+    "type": "holder",
+    "parent": "seat5",
+    "linkedToSeat": "seat5"
+  },
+  "score5": {
+    "inheritFrom": "score1",
+    "id": "score5",
+    "type": "label",
+    "parent": "seat5",
+    "text": 0
+  },
+  "vp5": {
+    "inheritFrom": "vp1",
+    "id": "vp5",
+    "type": "holder",
+    "parent": "seat5",
+    "linkedToSeat": "seat5"
+  },
+  "double5": {
+    "inheritFrom": "double1",
+    "id": "double5",
+    "type": "holder",
+    "parent": "seat5",
+    "linkedToSeat": "seat5"
+  },
+  "vpHolder": {
+    "type": "holder",
+    "id": "vpHolder",
+    "x": 1304,
+    "y": 836,
+    "z": 41,
+    "dropTarget": {
+      "type": "card"
+    },
+    "width": 73,
+    "height": 73,
+    "borderRadius": 100,
+    "scale": 0.8,
+    "movableInEdit": false
+  },
+  "vpDeck": {
+    "type": "deck",
+    "id": "vpDeck",
+    "parent": "vpHolder",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "JustOne": {}
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 67,
+            "height": 67,
+            "color": "transparent",
+            "value": "/assets/-1189579813_268002"
+          }
+        ],
+        "css": "border-radius:16px;"
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 67,
+            "height": 67,
+            "color": "transparent",
+            "value": "/assets/-1189579813_268002"
+          }
+        ],
+        "css": "border-radius:16px;"
+      }
+    ],
+    "cardDefaults": {
+      "width": 67,
+      "height": 67,
+      "css": "border-radius:100%;",
+      "onPileCreation": {
+        "handleCSS": "box-shadow:0 1px 1px black;background:white;border-radius:100%;padding:10px;font-weight:900;font-size:2rem;line-height:30px;height:30px;width:30px;margin-left:10px;color:purple;border:1px solid purple",
+        "handleOffset": 20,
+        "handlePosition": "rightbottom",
+        "handleSize": 20
+      }
+    },
+    "width": 67,
+    "height": 67
+  },
+  "adjustLabel": {
+    "id": "adjustLabel",
+    "z": 18,
+    "text": "Adjust Yoinked card",
+    "width": 200,
+    "height": 30,
+    "y": 1500,
+    "css": {
+      "font-size": "22px"
+    },
+    "movableInEdit": false,
+    "movable": false,
+    "onlyVisibleForSeat": "seat",
+    "x": 404
+  },
+  "scoutRotate": {
+    "type": "button",
+    "id": "scoutRotate",
+    "parent": "adjustLabel",
+    "fixedParent": true,
+    "y": 40,
+    "width": 50,
+    "height": 50,
+    "z": 49,
+    "classes": "material-icons",
+    "css": {
+      "line-height": 1.1,
+      "font-size": "40px"
+    },
+    "text": "rotate_right",
+    "clickRoutine": [
+      "//Rotate scouted card 180 degrees.",
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "scouted",
+        "value": true
+      },
+      {
+        "func": "GET",
+        "property": "rotation",
+        "variable": "scoutedRotation"
+      },
+      {
+        "func": "IF",
+        "operand1": "${scoutedRotation}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "rotation",
+            "value": 180
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "DEFAULT",
+            "property": "rotation",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "x": 10,
+    "movableInEdit": false
+  },
+  "scoutConfirm": {
+    "type": "button",
+    "id": "scoutConfirm",
+    "parent": "adjustLabel",
+    "fixedParent": true,
+    "x": 130,
+    "y": 40,
+    "width": 50,
+    "height": 50,
+    "z": 51,
+    "backgroundColor": "green",
+    "backgroundColorOH": "lightgreen",
+    "classes": "material-icons",
+    "css": {
+      "line-height": 1.1,
+      "font-size": "40px"
+    },
+    "text": "done",
+    "textColorOH": "black",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "hand"
+      },
+      {
+        "func": "SET",
+        "property": "scouted",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "movable",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "adjustLabel"
+        ],
+        "property": "y",
+        "value": 1500
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "undo"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": []
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "raises"
+        ],
+        "property": "undoScout",
+        "value": null
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "raises"
+        ],
+        "property": "scoutCount"
+      },
+      "var scoutCount = ${scoutCount} + 1",
+      "var playersMinus = ${PROPERTY players OF nextRound} - 1",
+      {
+        "func": "IF",
+        "operand1": "${scoutCount}",
+        "operand2": "${playersMinus}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "nextRound"
+            ],
+            "property": "scale",
+            "value": 1
+          },
+          {
+            "func": "SELECT",
+            "type": "seat",
+            "property": "player",
+            "relation": "!=",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "property": "turn",
+            "value": false
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "raises"
+            ],
+            "property": "scoutCount",
+            "value": "${scoutCount}"
+          },
+          {
+            "func": "TURN"
+          }
+        ]
+      }
+    ],
+    "movableInEdit": false
+  },
+  "buko": {
+    "deck": "vpDeck",
+    "type": "card",
+    "cardType": "JustOne",
+    "id": "buko",
+    "z": 50524,
+    "parent": "zixr"
+  },
+  "1klt": {
+    "deck": "vpDeck",
+    "type": "card",
+    "cardType": "JustOne",
+    "id": "1klt",
+    "z": 50526,
+    "parent": "zixr"
+  },
+  "zixr": {
+    "type": "pile",
+    "width": 67,
+    "height": 67,
+    "handleCSS": "box-shadow:0 1px 1px black;background:white;border-radius:100%;padding:10px;font-weight:900;font-size:2rem;line-height:30px;height:30px;width:30px;margin-left:10px;color:purple;border:1px solid purple",
+    "handleOffset": 20,
+    "handlePosition": "rightbottom",
+    "handleSize": 20,
+    "id": "zixr",
+    "z": 37,
+    "parent": "vpHolder"
+  },
+  "6eub": {
+    "deck": "vpDeck",
+    "type": "card",
+    "cardType": "JustOne",
+    "id": "6eub",
+    "z": 50528,
+    "parent": "zixr"
+  },
+  "k6l4": {
+    "deck": "vpDeck",
+    "type": "card",
+    "cardType": "JustOne",
+    "id": "k6l4",
+    "z": 50530,
+    "parent": "zixr"
+  },
+  "qpgl": {
+    "deck": "vpDeck",
+    "type": "card",
+    "cardType": "JustOne",
+    "id": "qpgl",
+    "z": 50532,
+    "parent": "zixr"
+  },
+  "tqkd": {
+    "deck": "vpDeck",
+    "type": "card",
+    "cardType": "JustOne",
+    "id": "tqkd",
+    "z": 50534,
+    "parent": "zixr"
+  },
+  "z1bp": {
+    "deck": "vpDeck",
+    "type": "card",
+    "cardType": "JustOne",
+    "id": "z1bp",
+    "z": 50536,
+    "parent": "zixr"
+  },
+  "ipml": {
+    "deck": "vpDeck",
+    "type": "card",
+    "cardType": "JustOne",
+    "id": "ipml",
+    "z": 50538,
+    "parent": "zixr"
+  },
+  "dtdu": {
+    "deck": "vpDeck",
+    "type": "card",
+    "cardType": "JustOne",
+    "id": "dtdu",
+    "z": 50540,
+    "parent": "zixr"
+  },
+  "hv4d": {
+    "deck": "vpDeck",
+    "type": "card",
+    "cardType": "JustOne",
+    "id": "hv4d",
+    "z": 50542,
+    "parent": "zixr"
+  },
+  "z65x": {
+    "deck": "vpDeck",
+    "type": "card",
+    "cardType": "JustOne",
+    "id": "z65x",
+    "z": 50544,
+    "parent": "zixr"
+  },
+  "l0g8": {
+    "deck": "vpDeck",
+    "type": "card",
+    "cardType": "JustOne",
+    "id": "l0g8",
+    "z": 50546,
+    "parent": "zixr"
+  },
+  "oo4c": {
+    "deck": "vpDeck",
+    "type": "card",
+    "cardType": "JustOne",
+    "id": "oo4c",
+    "z": 50548,
+    "parent": "zixr"
+  },
+  "qtza": {
+    "deck": "vpDeck",
+    "type": "card",
+    "cardType": "JustOne",
+    "id": "qtza",
+    "z": 50550,
+    "parent": "zixr"
+  },
+  "91kx": {
+    "deck": "vpDeck",
+    "type": "card",
+    "cardType": "JustOne",
+    "id": "91kx",
+    "z": 50552,
+    "parent": "zixr"
+  },
+  "6l6p": {
+    "deck": "vpDeck",
+    "type": "card",
+    "cardType": "JustOne",
+    "id": "6l6p",
+    "z": 50554,
+    "parent": "zixr"
+  },
+  "qyx2": {
+    "deck": "vpDeck",
+    "type": "card",
+    "cardType": "JustOne",
+    "id": "qyx2",
+    "z": 50556,
+    "parent": "zixr"
+  },
+  "wts7": {
+    "deck": "vpDeck",
+    "type": "card",
+    "cardType": "JustOne",
+    "id": "wts7",
+    "z": 50558,
+    "parent": "zixr"
+  },
+  "3ydu": {
+    "deck": "vpDeck",
+    "type": "card",
+    "cardType": "JustOne",
+    "id": "3ydu",
+    "z": 50560,
+    "parent": "zixr"
+  },
+  "xxdi": {
+    "deck": "vpDeck",
+    "type": "card",
+    "cardType": "JustOne",
+    "id": "xxdi",
+    "z": 50562,
+    "parent": "zixr"
+  },
+  "be40": {
+    "deck": "vpDeck",
+    "type": "card",
+    "cardType": "JustOne",
+    "id": "be40",
+    "z": 50564,
+    "parent": "zixr"
+  },
+  "391l": {
+    "deck": "vpDeck",
+    "type": "card",
+    "cardType": "JustOne",
+    "id": "391l",
+    "z": 50566,
+    "parent": "zixr"
+  },
+  "incd": {
+    "deck": "vpDeck",
+    "type": "card",
+    "cardType": "JustOne",
+    "id": "incd",
+    "z": 50568,
+    "parent": "zixr"
+  },
+  "buhg": {
+    "deck": "vpDeck",
+    "type": "card",
+    "cardType": "JustOne",
+    "id": "buhg",
+    "z": 50570,
+    "parent": "zixr"
+  },
+  "33ef": {
+    "deck": "vpDeck",
+    "type": "card",
+    "cardType": "JustOne",
+    "id": "33ef",
+    "z": 50572,
+    "parent": "zixr"
+  },
+  "doubleCards": {
+    "type": "deck",
+    "id": "doubleCards",
+    "parent": "double1",
+    "x": 12,
+    "y": 41,
+    "cardDefaults": {
+      "css": "border-radius:8px;padding:5px;background:white;border:1px solid gray;",
+      "width": 134,
+      "height": 208,
+      "movable": false,
+      "clickRoutine": [
+        {
+          "func": "IF",
+          "operand1": "${PROPERTY activeFace}",
+          "operand2": 0,
+          "thenRoutine": [
+            {
+              "func": "SET",
+              "collection": [
+                "seat1",
+                "seat2",
+                "seat3",
+                "seat4",
+                "seat5"
+              ],
+              "property": "turn",
+              "value": null
+            },
+            {
+              "func": "SELECT",
+              "type": "seat",
+              "property": "player",
+              "value": "${playerName}"
+            },
+            {
+              "func": "GET",
+              "property": "id",
+              "variable": "seatID"
+            },
+            {
+              "func": "SET",
+              "collection": [
+                "${seatID}"
+              ],
+              "property": "turn",
+              "value": true
+            }
+          ]
+        },
+        {
+          "func": "CLICK",
+          "collection": "thisButton",
+          "mode": "ignoreClickRoutine"
+        }
+      ]
+    },
+    "cardTypes": {
+      "JustOne": {}
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 134,
+            "height": 208,
+            "color": "transparent",
+            "value": "/assets/-2012975993_214939"
+          }
+        ],
+        "css": "border-radius:16px;"
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 134,
+            "height": 208,
+            "color": "transparent",
+            "value": "/assets/-1775951068_166071"
+          }
+        ],
+        "css": "border-radius:16px;"
+      }
+    ]
+  },
+  "w3x6": {
+    "deck": "doubleCards",
+    "type": "card",
+    "cardType": "JustOne",
+    "id": "w3x6",
+    "z": 35,
+    "parent": "double5"
+  },
+  "faox": {
+    "deck": "doubleCards",
+    "type": "card",
+    "cardType": "JustOne",
+    "id": "faox",
+    "z": 36,
+    "parent": "double4"
+  },
+  "96hp": {
+    "deck": "doubleCards",
+    "type": "card",
+    "cardType": "JustOne",
+    "id": "96hp",
+    "z": 34,
+    "parent": "double3"
+  },
+  "8i1b": {
+    "deck": "doubleCards",
+    "type": "card",
+    "cardType": "JustOne",
+    "id": "8i1b",
+    "z": 33,
+    "parent": "double2"
+  },
+  "k8bc": {
+    "deck": "doubleCards",
+    "type": "card",
+    "cardType": "JustOne",
+    "id": "k8bc",
+    "z": 1,
+    "parent": "double1"
+  },
+  "cardCount1": {
+    "id": "cardCount1",
+    "parent": "seat1",
+    "fixedParent": true,
+    "x": 155,
+    "width": 35,
+    "height": 50,
+    "borderRadius": 5,
+    "layer": 2,
+    "z": 102,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "box-shadow:0 1px 1px black;background-image:url(/assets/1661139067_270685);font-weight:900;font-size:1.5rem;line-height:50px;color:white;;text-shadow: 0px 0px 3px black;box-shadow: inset 0 0 0 1000px rgba(102, 51, 153,.5);",
+    "text": 0,
+    "textChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "nextRound"
+            ],
+            "property": "scale",
+            "value": 1
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "nextRound"
+            ],
+            "property": "scale",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "y": -5,
+    "rotation": -3
+  },
+  "cardCount2": {
+    "id": "cardCount2",
+    "parent": "seat2",
+    "inheritFrom": "cardCount1",
+    "text": 0
+  },
+  "cardCount3": {
+    "id": "cardCount3",
+    "parent": "seat3",
+    "inheritFrom": "cardCount1",
+    "text": 0
+  },
+  "cardCount4": {
+    "id": "cardCount4",
+    "parent": "seat4",
+    "inheritFrom": "cardCount1",
+    "text": 0
+  },
+  "cardCount5": {
+    "id": "cardCount5",
+    "parent": "seat5",
+    "inheritFrom": "cardCount1",
+    "text": 0
+  },
+  "rotate1": {
+    "type": "button",
+    "id": "rotate1",
+    "y": 1200,
+    "z": 57,
+    "text": "Rotate",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "collection": "DEFAULT",
+            "property": "rotation",
+            "variable": "cardRotation"
+          },
+          {
+            "func": "IF",
+            "operand1": "${cardRotation}",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "DEFAULT",
+                "property": "rotation",
+                "value": 180
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": "DEFAULT",
+                "property": "rotation",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "height": 40,
+    "width": 111,
+    "movableInEdit": false,
+    "onlyVisibleForSeat": "seat1",
+    "x": 690
+  },
+  "rotateConfirm1": {
+    "type": "button",
+    "id": "rotateConfirm1",
+    "parent": "rotate1",
+    "fixedParent": true,
+    "x": 128,
+    "width": 50,
+    "height": 50,
+    "z": 82,
+    "backgroundColor": "green",
+    "backgroundColorOH": "lightgreen",
+    "classes": "material-icons",
+    "css": {
+      "line-height": 1.1,
+      "font-size": "40px"
+    },
+    "text": "done",
+    "textColorOH": "black",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY parent}"
+        ],
+        "property": "y",
+        "value": 1200
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "raises"
+        ],
+        "property": "ready",
+        "variable": "readyCount"
+      },
+      "var readyCount = ${readyCount} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "raises"
+        ],
+        "property": "ready",
+        "value": "${readyCount}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat${PROPERTY seatIndex}"
+        ],
+        "property": "seatOpacity",
+        "value": 1
+      }
+    ],
+    "y": -6,
+    "movableInEdit": false,
+    "seatIndex": 1
+  },
+  "rotate2": {
+    "inheritFrom": "rotate1",
+    "id": "rotate2",
+    "type": "button",
+    "y": 1200,
+    "onlyVisibleForSeat": "seat2"
+  },
+  "rotateConfirm2": {
+    "inheritFrom": "rotateConfirm1",
+    "id": "rotateConfirm2",
+    "type": "button",
+    "parent": "rotate2",
+    "z": 80,
+    "x": 128,
+    "y": -6,
+    "seatIndex": 2
+  },
+  "rotate3": {
+    "inheritFrom": "rotate1",
+    "id": "rotate3",
+    "type": "button",
+    "y": 1200,
+    "onlyVisibleForSeat": "seat3"
+  },
+  "rotateConfirm3": {
+    "inheritFrom": "rotateConfirm1",
+    "id": "rotateConfirm3",
+    "type": "button",
+    "parent": "rotate3",
+    "z": 81,
+    "x": 128,
+    "y": -6,
+    "seatIndex": 3
+  },
+  "rotate4": {
+    "inheritFrom": "rotate1",
+    "id": "rotate4",
+    "type": "button",
+    "y": 1200,
+    "onlyVisibleForSeat": "seat4"
+  },
+  "rotateConfirm4": {
+    "inheritFrom": "rotateConfirm1",
+    "id": "rotateConfirm4",
+    "type": "button",
+    "parent": "rotate4",
+    "seatIndex": 4
+  },
+  "rotate5": {
+    "inheritFrom": "rotate1",
+    "id": "rotate5",
+    "type": "button",
+    "y": 1200,
+    "onlyVisibleForSeat": "seat5"
+  },
+  "rotateConfirm5": {
+    "inheritFrom": "rotateConfirm1",
+    "id": "rotateConfirm5",
+    "type": "button",
+    "parent": "rotate5",
+    "seatIndex": 5
+  },
+  "offBoard": {
+    "type": "holder",
+    "id": "offBoard",
+    "x": 251,
+    "y": 1081,
+    "z": 33,
+    "width": 144,
+    "height": 218
+  },
+  "nextRound": {
+    "type": "button",
+    "id": "nextRound",
+    "x": 1419,
+    "width": 130,
+    "height": 130,
+    "z": 83,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "nextRound"
+        ],
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "raises"
+        ],
+        "property": "scoutCount",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat1",
+          "seat2",
+          "seat3",
+          "seat4",
+          "seat5"
+        ],
+        "property": "seatOpacity",
+        "value": 0.2
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "deck",
+        "value": "doubleCards"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 0
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY round}",
+        "operand2": 1,
+        "thenRoutine": [
+          "var round = ${PROPERTY round} + 1",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "round",
+            "value": "${round}"
+          },
+          {
+            "func": "SELECT",
+            "type": "seat",
+            "property": "player",
+            "relation": "!=",
+            "value": ""
+          },
+          {
+            "func": "COUNT"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "players",
+            "value": "${COUNT}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "Round\n${PROPERTY round} of ${PROPERTY players}"
+          },
+          {
+            "func": "CALL",
+            "routine": "setupRoutine"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY round}",
+            "operand2": "${PROPERTY players}",
+            "relation": "<=",
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "fields": [
+                  {
+                    "type": "title",
+                    "text": "Ending round ..."
+                  },
+                  {
+                    "type": "subtitle",
+                    "text": "This will calculate the scores for this round and start the next round.  Are you sure?"
+                  }
+                ],
+                "confirmButtonText": "End Round",
+                "cancelButtonText": "Cancel"
+              },
+              "var round = ${PROPERTY round} + 1",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "round",
+                "value": "${round}"
+              },
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY round}",
+                "operand2": "${PROPERTY players}",
+                "relation": ">",
+                "thenRoutine": [
+                  {
+                    "func": "SET",
+                    "collection": "thisButton",
+                    "property": "text",
+                    "value": "End Game"
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "SET",
+                    "collection": "thisButton",
+                    "property": "text",
+                    "value": "Round ${PROPERTY round} of ${PROPERTY players}"
+                  }
+                ]
+              },
+              {
+                "func": "CALL",
+                "widget": "raises",
+                "routine": "roundScoreRoutine"
+              },
+              {
+                "func": "CALL",
+                "routine": "setupRoutine"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "INPUT",
+                "fields": [
+                  {
+                    "type": "title",
+                    "text": "Ending game ..."
+                  },
+                  {
+                    "type": "subtitle",
+                    "text": "This will calculate the scores for the last round and end the game.  Are you sure?"
+                  }
+                ],
+                "cancelButtonText": "Cancel",
+                "confirmButtonText": "End Game"
+              },
+              {
+                "func": "CALL",
+                "widget": "raises",
+                "routine": "roundScoreRoutine"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "seat1",
+                  "seat2",
+                  "seat3",
+                  "seat4",
+                  "seat5"
+                ],
+                "property": "seatOpacity",
+                "value": 1
+              }
+            ]
+          }
+        ]
+      },
+      "// This is used to prevent 2 players from accidentally pressing the button at the same time. Status is changed when the button reappears.",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "value": false
+      }
+    ],
+    "text": "Start Game",
+    "players": 0,
+    "round": 1,
+    "setupRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "playArea"
+        ],
+        "property": "scout",
+        "value": false
+      },
+      {
+        "func": "RECALL",
+        "holder": "deckHolder"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "playArea"
+        ],
+        "property": "scout",
+        "value": true
+      },
+      {
+        "func": "FLIP",
+        "holder": "deckHolder",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deckHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "vpHolder"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "playCards"
+        ],
+        "property": "turnIndex",
+        "value": 0
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "turn",
+        "value": null
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "deckHolder"
+      },
+      {
+        "func": "SET",
+        "property": "movable",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "scouted",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          "var random = randInt 0 1",
+          {
+            "func": "IF",
+            "operand1": "${random}",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "DEFAULT",
+                "property": "rotation",
+                "value": 0
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": "DEFAULT",
+                "property": "rotation",
+                "value": 180
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "in": "${activePlayers}",
+        "loopRoutine": [
+          "var zArray = ${value} + 'zArray'",
+          {
+            "func": "SET",
+            "collection": [
+              "raises"
+            ],
+            "property": "${value}",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "raises"
+            ],
+            "property": "${zArray}",
+            "value": []
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "playedName"
+        ],
+        "property": "text",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "raises"
+        ],
+        "property": "playCount",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "raises"
+        ],
+        "property": "undoHandArray",
+        "value": []
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "raises"
+        ],
+        "property": "undoPlayArray",
+        "value": []
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "raises"
+        ],
+        "property": "undoName",
+        "value": []
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "raises"
+        ],
+        "property": "ready",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "undo"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": []
+      },
+      "// Now remove cards if necessary and deal to hand based on number of seated players",
+      {
+        "func": "SET",
+        "collection": [
+          "rotate1",
+          "rotate2",
+          "rotate3",
+          "rotate4",
+          "rotate5"
+        ],
+        "property": "y",
+        "value": 710
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "from": "deckHolder",
+            "to": [
+              "seat1",
+              "seat2",
+              "seat3",
+              "seat4",
+              "seat5"
+            ],
+            "count": 9
+          },
+          {
+            "func": "CALL",
+            "widget": "hand",
+            "routine": "countCardsRoutine"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 4,
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "type": "card",
+                "property": "set",
+                "value": 4
+              },
+              {
+                "func": "SET",
+                "property": "parent",
+                "value": "offBoard"
+              },
+              {
+                "func": "MOVE",
+                "from": "deckHolder",
+                "to": [
+                  "seat1",
+                  "seat2",
+                  "seat3",
+                  "seat4",
+                  "seat5"
+                ],
+                "count": 11
+              },
+              {
+                "func": "CALL",
+                "widget": "hand",
+                "routine": "countCardsRoutine"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SELECT",
+                "type": "card",
+                "property": "set",
+                "value": 3
+              },
+              {
+                "func": "SELECT",
+                "type": "card",
+                "mode": "add",
+                "property": "set",
+                "value": 4
+              },
+              {
+                "func": "SET",
+                "property": "parent",
+                "value": "offBoard"
+              },
+              {
+                "func": "MOVE",
+                "from": "deckHolder",
+                "to": [
+                  "seat1",
+                  "seat2",
+                  "seat3",
+                  "seat4",
+                  "seat5"
+                ],
+                "count": 12
+              },
+              {
+                "func": "CALL",
+                "widget": "hand",
+                "routine": "countCardsRoutine"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "css": {
+      "default": {
+        "box-shadow": "0 1px 5px black",
+        "font-size": "29px",
+        "line-height": "25px",
+        "background": "url(/assets/1365448547_2727)",
+        "border-color": "white",
+        "font-weight": "900",
+        "text-shadow": "0px 0px 4px black",
+        "transition": "linear 0.2s"
+      },
+      ":hover": {
+        "background": "url(/assets/244539928_2572)"
+      }
+    },
+    "rotation": -15,
+    "y": 787,
+    "movableInEdit": false,
+    "scaleChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY scale}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "clickable",
+            "value": true
+          }
+        ]
+      }
+    ]
+  },
+  "undo": {
+    "type": "button",
+    "id": "undo",
+    "z": 76,
+    "text": "Undo Play",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY undoScout OF raises}",
+        "relation": "!=",
+        "operand2": null,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "undoScoutRoutine"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "routine": "undoHandRoutine"
+          }
+        ]
+      }
+    ],
+    "onlyVisibleForSeat": [],
+    "width": 130,
+    "height": 45,
+    "backgroundColor": "black",
+    "backgroundColorOH": "white",
+    "textColorOH": "black",
+    "borderColorOH": "black",
+    "borderColor": "white",
+    "css": {
+      "font-size": "24px",
+      "opacity": "0.5"
+    },
+    "x": 730,
+    "y": 615,
+    "undoHandRoutine": [
+      "// Move cards back to hand.",
+      {
+        "func": "FOREACH",
+        "in": "${PROPERTY undoHandArray OF raises}",
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "playArea"
+            ],
+            "property": "scout",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${value}"
+            ],
+            "property": "parent",
+            "value": "tempHolder"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${value}"
+            ],
+            "property": "parent",
+            "value": "hand"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "playArea"
+            ],
+            "property": "scout",
+            "value": true
+          }
+        ]
+      },
+      "// Move cards back to play area.",
+      {
+        "func": "FOREACH",
+        "in": "${PROPERTY undoPlayArray OF raises}",
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${value}"
+            ],
+            "property": "parent",
+            "value": "playArea"
+          },
+          {
+            "func": "COUNT",
+            "holder": "playArea"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "raises"
+            ],
+            "property": "playCount",
+            "value": "${COUNT}"
+          }
+        ]
+      },
+      "// Reset playername in play area.",
+      {
+        "func": "SET",
+        "collection": [
+          "playedName"
+        ],
+        "property": "text",
+        "value": "${PROPERTY undoName OF raises}"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "value": "${PROPERTY undoName OF raises}"
+      },
+      {
+        "func": "GET",
+        "property": "color",
+        "variable": "pColor"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "playedName"
+        ],
+        "property": "seatColor",
+        "value": "${pColor}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "undo"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": []
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "backward"
+      }
+    ],
+    "undoScoutRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "adjustLabel"
+        ],
+        "property": "y",
+        "value": 1500
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "playedName"
+        ],
+        "property": "text",
+        "variable": "pName"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "value": "${pName}"
+      },
+      {
+        "func": "GET",
+        "property": "index",
+        "variable": "seatIndex"
+      },
+      {
+        "func": "MOVE",
+        "from": "vp${seatIndex}",
+        "to": "vpHolder"
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "id",
+        "value": "${PROPERTY undoScout OF raises}"
+      },
+      {
+        "func": "SET",
+        "property": "scouted",
+        "value": null
+      },
+      {
+        "func": "GET",
+        "property": "position",
+        "variable": "position"
+      },
+      {
+        "func": "IF",
+        "operand1": "${position}",
+        "operand2": "left",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "z",
+            "value": -1
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "playArea"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "playArea"
+          },
+          {
+            "func": "SET",
+            "property": "z",
+            "value": 99
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "playArea",
+        "to": "tempHolder"
+      },
+      {
+        "func": "MOVE",
+        "from": "tempHolder",
+        "to": "playArea"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "undo"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": []
+      },
+      "var playCount = ${PROPERTY playCount OF raises} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "raises"
+        ],
+        "property": "playCount",
+        "value": "${playCount}"
+      }
+    ]
+  },
+  "reset": {
+    "type": "button",
+    "id": "reset",
+    "x": 1550,
+    "z": 84,
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Resetting game ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "This will reset the game. Are you sure?"
+          }
+        ],
+        "cancelButtonText": "Cancel",
+        "confirmButtonText": "Reset Game"
+      },
+      {
+        "func": "RECALL",
+        "holder": "deckHolder"
+      },
+      {
+        "func": "FLIP",
+        "holder": "deckHolder",
+        "face": 0
+      },
+      {
+        "func": "RECALL",
+        "holder": "vpHolder"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "playCards"
+        ],
+        "property": "turnIndex",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "raises"
+        ],
+        "property": "startIndex",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "raises"
+        ],
+        "property": "scoutCount",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "playedName"
+        ],
+        "property": "text",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "nextRound"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "undo"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": []
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "adjustLabel"
+        ],
+        "property": "y",
+        "value": 1500
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "nextRound"
+        ],
+        "property": "text",
+        "value": "Start Game"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "nextRound"
+        ],
+        "property": "players",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "nextRound"
+        ],
+        "property": "round",
+        "value": 1
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "score${value}"
+            ],
+            "property": "text",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "cardCount${value}"
+            ],
+            "property": "text",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "seat${value}"
+            ],
+            "property": "turn",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "seat${value}"
+            ],
+            "property": "seatOpacity",
+            "value": 1
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "rotate${value}"
+            ],
+            "property": "y",
+            "value": 1200
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "_ancestor",
+            "value": "double${value}"
+          },
+          {
+            "func": "SET",
+            "property": "activeFace",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "classes": "symbols",
+    "css": {
+      "font-size": "40px"
+    },
+    "width": 50,
+    "height": 50
+  },
+  "b2i1": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1-2",
+    "id": "b2i1",
+    "z": 50434,
+    "inHand": false,
+    "raised": false,
+    "parent": "4m0w"
+  },
+  "0mdf": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1-3",
+    "id": "0mdf",
+    "z": 50436,
+    "inHand": false,
+    "raised": false,
+    "parent": "4m0w"
+  },
+  "zk3f": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1-4",
+    "id": "zk3f",
+    "z": 50438,
+    "inHand": false,
+    "raised": false,
+    "parent": "4m0w"
+  },
+  "wql5": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1-5",
+    "id": "wql5",
+    "z": 50440,
+    "inHand": false,
+    "raised": false,
+    "position": "right",
+    "parent": "4m0w"
+  },
+  "pyec": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1-6",
+    "id": "pyec",
+    "z": 50442,
+    "inHand": false,
+    "raised": false,
+    "position": "right",
+    "parent": "4m0w"
+  },
+  "pcjr": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1-7",
+    "id": "pcjr",
+    "z": 50444,
+    "parent": "4m0w",
+    "inHand": false,
+    "raised": false,
+    "position": "right"
+  },
+  "l4y7": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1-8",
+    "id": "l4y7",
+    "z": 50446,
+    "inHand": false,
+    "raised": false,
+    "parent": "4m0w",
+    "rotation": 180
+  },
+  "s2ql": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1-9",
+    "id": "s2ql",
+    "z": 50448,
+    "inHand": false,
+    "raised": false,
+    "parent": "4m0w"
+  },
+  "tazw": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "1-10",
+    "id": "tazw",
+    "z": 50450,
+    "parent": "4m0w",
+    "inHand": false,
+    "raised": false
+  },
+  "511i": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2-3",
+    "id": "511i",
+    "z": 50452,
+    "inHand": false,
+    "raised": false,
+    "position": "right",
+    "parent": "4m0w"
+  },
+  "bnwb": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2-4",
+    "id": "bnwb",
+    "z": 50454,
+    "inHand": false,
+    "raised": false,
+    "position": "right",
+    "parent": "4m0w"
+  },
+  "b38d": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2-5",
+    "id": "b38d",
+    "z": 50456,
+    "inHand": false,
+    "raised": false,
+    "parent": "4m0w"
+  },
+  "0t5j": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2-6",
+    "id": "0t5j",
+    "z": 50458,
+    "inHand": false,
+    "raised": false,
+    "parent": "4m0w",
+    "rotation": 180
+  },
+  "5ja9": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2-7",
+    "id": "5ja9",
+    "z": 50460,
+    "inHand": false,
+    "raised": false,
+    "parent": "4m0w"
+  },
+  "nlpb": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2-8",
+    "id": "nlpb",
+    "z": 50462,
+    "inHand": false,
+    "raised": false,
+    "parent": "4m0w",
+    "rotation": 180
+  },
+  "fowc": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2-9",
+    "id": "fowc",
+    "z": 50464,
+    "inHand": false,
+    "raised": false,
+    "position": "right",
+    "parent": "4m0w"
+  },
+  "h696": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "2-10",
+    "id": "h696",
+    "z": 50466,
+    "parent": "4m0w",
+    "inHand": false,
+    "raised": false,
+    "rotation": 180
+  },
+  "nakz": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "3-4",
+    "id": "nakz",
+    "z": 50468,
+    "inHand": false,
+    "raised": false,
+    "parent": "4m0w",
+    "rotation": 180
+  },
+  "x88x": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "3-5",
+    "id": "x88x",
+    "z": 50470,
+    "inHand": false,
+    "raised": false,
+    "position": "right",
+    "parent": "4m0w",
+    "rotation": 180
+  },
+  "1rsc": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "3-6",
+    "id": "1rsc",
+    "z": 50472,
+    "inHand": false,
+    "raised": false,
+    "parent": "4m0w"
+  },
+  "iktq": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "3-7",
+    "id": "iktq",
+    "z": 50474,
+    "inHand": false,
+    "raised": false,
+    "parent": "4m0w"
+  },
+  "fkt9": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "3-8",
+    "id": "fkt9",
+    "z": 50476,
+    "inHand": false,
+    "raised": false,
+    "parent": "4m0w"
+  },
+  "w0yj": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "3-9",
+    "id": "w0yj",
+    "z": 50478,
+    "inHand": false,
+    "raised": false,
+    "position": "right",
+    "parent": "4m0w"
+  },
+  "shbv": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "3-10",
+    "id": "shbv",
+    "z": 50480,
+    "inHand": false,
+    "raised": false,
+    "parent": "4m0w"
+  },
+  "ecq7": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "4-5",
+    "id": "ecq7",
+    "z": 50482,
+    "inHand": false,
+    "raised": false,
+    "rotation": 180,
+    "parent": "4m0w"
+  },
+  "0jaw": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "4-6",
+    "id": "0jaw",
+    "z": 50484,
+    "inHand": false,
+    "raised": false,
+    "position": "right",
+    "parent": "4m0w"
+  },
+  "tgju": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "4-7",
+    "id": "tgju",
+    "z": 50486,
+    "inHand": false,
+    "raised": false,
+    "parent": "4m0w",
+    "rotation": 180
+  },
+  "j1m9": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "4-8",
+    "id": "j1m9",
+    "z": 50488,
+    "inHand": false,
+    "raised": false,
+    "position": "right",
+    "parent": "4m0w",
+    "rotation": 180
+  },
+  "shyi": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "4-9",
+    "id": "shyi",
+    "z": 50490,
+    "inHand": false,
+    "raised": false,
+    "position": "right",
+    "rotation": 180,
+    "parent": "4m0w"
+  },
+  "pnu5": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "4-10",
+    "id": "pnu5",
+    "z": 50492,
+    "inHand": false,
+    "raised": false,
+    "parent": "4m0w",
+    "rotation": 180
+  },
+  "gqtk": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "5-6",
+    "id": "gqtk",
+    "z": 50494,
+    "inHand": false,
+    "raised": false,
+    "position": "right",
+    "parent": "4m0w"
+  },
+  "pc5z": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "5-7",
+    "id": "pc5z",
+    "z": 50496,
+    "inHand": false,
+    "raised": false,
+    "position": "right",
+    "parent": "4m0w"
+  },
+  "ljzw": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "5-8",
+    "id": "ljzw",
+    "z": 50498,
+    "inHand": false,
+    "raised": false,
+    "position": "right",
+    "parent": "4m0w"
+  },
+  "tvy4": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "5-9",
+    "id": "tvy4",
+    "z": 50500,
+    "inHand": false,
+    "raised": false,
+    "parent": "4m0w"
+  },
+  "dr37": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "5-10",
+    "id": "dr37",
+    "z": 50502,
+    "inHand": false,
+    "raised": false,
+    "rotation": 180,
+    "parent": "4m0w"
+  },
+  "197m": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "6-7",
+    "id": "197m",
+    "z": 50504,
+    "inHand": false,
+    "raised": false,
+    "position": "right",
+    "parent": "4m0w"
+  },
+  "8dcb": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "6-8",
+    "id": "8dcb",
+    "z": 50506,
+    "inHand": false,
+    "raised": false,
+    "rotation": 180,
+    "parent": "4m0w"
+  },
+  "xgpt": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "6-9",
+    "id": "xgpt",
+    "z": 50508,
+    "inHand": false,
+    "raised": false,
+    "position": "right",
+    "parent": "4m0w",
+    "rotation": 180
+  },
+  "4zm3": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "6-10",
+    "id": "4zm3",
+    "z": 50510,
+    "inHand": false,
+    "raised": false,
+    "rotation": 180,
+    "parent": "4m0w"
+  },
+  "8m7n": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "7-8",
+    "id": "8m7n",
+    "z": 50512,
+    "inHand": false,
+    "raised": false,
+    "parent": "4m0w"
+  },
+  "ggsq": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "7-9",
+    "id": "ggsq",
+    "z": 50514,
+    "inHand": false,
+    "raised": false,
+    "parent": "4m0w",
+    "rotation": 180
+  },
+  "zfd3": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "7-10",
+    "id": "zfd3",
+    "z": 50516,
+    "inHand": false,
+    "raised": false,
+    "parent": "4m0w"
+  },
+  "5l7d": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "8-9",
+    "id": "5l7d",
+    "z": 50518,
+    "inHand": false,
+    "raised": false,
+    "position": "right",
+    "parent": "4m0w"
+  },
+  "mfyc": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "8-10",
+    "id": "mfyc",
+    "z": 50520,
+    "inHand": false,
+    "raised": false,
+    "parent": "4m0w",
+    "rotation": 180
+  },
+  "vstj": {
+    "deck": "theDeck",
+    "type": "card",
+    "cardType": "9-10",
+    "id": "vstj",
+    "z": 50522,
+    "inHand": false,
+    "raised": false,
+    "parent": "4m0w"
+  },
+  "background": {
+    "id": "background",
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background": "repeating-conic-gradient(#f0f0f0 5%, #ffffff 10%, #f0f0f0 13%)"
+    },
+    "height": 1000,
+    "width": 1600
+  },
+  "playArea": {
+    "type": "holder",
+    "id": "playArea",
+    "x": 550,
+    "y": 391,
+    "width": 500,
+    "height": 218,
+    "z": 25,
+    "movableInEdit": false,
+    "dropLimit": 0,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetX": 59,
+    "scout": true,
+    "enterRoutine": [
+      "// Make it so that only the end cards are movable",
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "playArea",
+        "collection": "canMove"
+      },
+      {
+        "func": "SET",
+        "collection": "canMove",
+        "property": "movable",
+        "value": false
+      },
+      {
+        "func": "GET",
+        "collection": "canMove",
+        "aggregation": "max",
+        "property": "z",
+        "variable": "zMax"
+      },
+      {
+        "func": "SELECT",
+        "source": "canMove",
+        "property": "z",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "property": "movable",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "position",
+        "value": "left"
+      },
+      {
+        "func": "SELECT",
+        "source": "canMove",
+        "property": "z",
+        "value": "${zMax}"
+      },
+      {
+        "func": "SET",
+        "property": "movable",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "position",
+        "value": "right"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "movable",
+        "value": true
+      },
+      {
+        "func": "CALL",
+        "routine": "enterRoutine"
+      },
+      "// The scout property is turned off when moving cards through automation so this routine doesn't trigger.  It only triggers when a player drags a card in a scouting move.",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY scout}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "scouted",
+            "value": true
+          },
+          {
+            "func": "GET",
+            "collection": [
+              "playedName"
+            ],
+            "property": "text",
+            "variable": "pName"
+          },
+          {
+            "func": "SELECT",
+            "type": "seat",
+            "property": "player",
+            "value": "${pName}"
+          },
+          {
+            "func": "GET",
+            "property": "index",
+            "variable": "seatIndex"
+          },
+          {
+            "func": "COUNT",
+            "holder": "playArea"
+          },
+          "var vp = ${PROPERTY playCount OF raises} - ${COUNT}",
+          {
+            "func": "SET",
+            "collection": [
+              "raises"
+            ],
+            "property": "playCount",
+            "value": "${COUNT}"
+          },
+          {
+            "func": "IF",
+            "operand1": "${vp}",
+            "operand2": 1,
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "from": "vpHolder",
+                "to": "vp${seatIndex}"
+              }
+            ]
+          },
+          "// Setup undo for the card leaving.",
+          {
+            "func": "GET",
+            "collection": "child",
+            "property": "id",
+            "variable": "scoutedID"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "raises"
+            ],
+            "property": "undoScout",
+            "value": "${scoutedID}"
+          },
+          {
+            "func": "SELECT",
+            "type": "seat",
+            "property": "player",
+            "value": "${playerName}"
+          },
+          {
+            "func": "GET",
+            "property": "id",
+            "variable": "seatID"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "undo"
+            ],
+            "property": "onlyVisibleForSeat",
+            "value": "${seatID}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "position",
+            "value": null
+          }
+        ]
+      }
+    ]
+  },
+  "playCover": {
+    "id": "playCover",
+    "x": 550,
+    "y": 391,
+    "width": 500,
+    "height": 218,
+    "layer": 5,
+    "z": 25,
+    "movable": false,
+    "movableInEdit": false,
+    "onlyVisibleForSeat": [
+      "seat2",
+      "seat3",
+      "seat4",
+      "seat5"
+    ]
+  },
+  "cardback1": {
+    "id": "cardback1",
+    "parent": "seat1",
+    "fixedParent": true,
+    "x": 160,
+    "y": -5,
+    "width": 35,
+    "height": 50,
+    "borderRadius": 5,
+    "z": 102,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "box-shadow:0 1px 1px black;background-image:url(/assets/1661139067_270685);font-weight:900;font-size:1.5rem;line-height:50px;color:white;text-shadow: 0px 0px 3px black;box-shadow: inset 0 0 0 1000px rgba(102, 51, 153,.5);",
+    "rotation": 5
+  },
+  "cardback2": {
+    "id": "cardback2",
+    "parent": "seat2",
+    "inheritFrom": "cardback1"
+  },
+  "cardback3": {
+    "id": "cardback3",
+    "parent": "seat3",
+    "inheritFrom": "cardback1"
+  },
+  "cardback4": {
+    "id": "cardback4",
+    "parent": "seat4",
+    "inheritFrom": "cardback1"
+  },
+  "cardback5": {
+    "id": "cardback5",
+    "parent": "seat5",
+    "inheritFrom": "cardback1"
+  },
+  "4m0w": {
+    "type": "pile",
+    "parent": "deckHolder",
+    "x": 4,
+    "y": 4,
+    "width": 134,
+    "height": 208,
+    "handleCSS": "box-shadow:0 1px 1px black;background:white;border-radius:100%;padding:10px;font-weight:900;font-size:2rem;line-height:30px;height:30px;width:30px;margin-left:0;color:purple;border:1px solid purple",
+    "handleOffset": 20,
+    "handlePosition": "bottomcenter",
+    "handleSize": 20,
+    "id": "4m0w"
+  }
+}

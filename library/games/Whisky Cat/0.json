@@ -7,7 +7,7 @@
     "y": 345.7,
     "width": 55,
     "height": 55,
-    "css": "background-size:75%",
+    "css": "font-size: 45px; ",
     "clickRoutine": [
       {
         "func": "MOVE",
@@ -23,12 +23,7 @@
       {
         "func": "SET",
         "property": "owner",
-        "applyVariables": [
-          {
-            "parameter": "value",
-            "variable": "playerName"
-          }
-        ]
+        "value": "${playerName}"
       },
       {
         "func": "MOVE",
@@ -37,11 +32,8 @@
         "count": 0
       }
     ],
-    "image": "/assets/-62777968_1970",
-    "color": "#ffffff",
-    "svgReplaces": {
-      "currentColor": "color"
-    }
+    "classes": "symbols",
+    "text": "card_6"
   },
   "hand": {
     "id": "hand",
@@ -105,13 +97,10 @@
         "holder": "pw73"
       }
     ],
-    "image": "/assets/888752271_2677",
     "x": 15,
-    "css": "background-size:60%",
-    "color": "#ffffff",
-    "svgReplaces": {
-      "currentColor": "color"
-    }
+    "css": "font-size: 30px; ",
+    "classes": "symbols",
+    "text": "shuffle+recall"
   },
   "pw73D": {
     "type": "deck",
@@ -618,7 +607,6 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
             "value": "/assets/338109234_359613",
             "color": "transparent"
           }
@@ -634,9 +622,10 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "dynamic",
-            "value": "image",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -1068,16 +1057,6 @@
       "activeFace": 1
     },
     "y": 0
-  },
-  "xmhz": {
-    "image": "/assets/894360449_106277",
-    "id": "xmhz",
-    "z": 17,
-    "movable": false,
-    "enlarge": 6,
-    "height": 160,
-    "width": 266.66,
-    "parent": "pfeil"
   },
   "9ee5": {
     "deck": "pw73D",
@@ -1534,16 +1513,6 @@
     "id": "3kr7",
     "z": 9849,
     "parent": "pw73"
-  },
-  "pfeil": {
-    "image": "/assets/-245657466_16427",
-    "id": "pfeil",
-    "width": 40,
-    "height": 160,
-    "z": 22,
-    "x": 1560,
-    "y": 379.25,
-    "movable": false
   },
   "brett": {
     "id": "brett",
@@ -3373,7 +3342,7 @@
     "y": 345.7,
     "width": 55,
     "height": 55,
-    "css": "background-size:75%",
+    "css": "font-size: 45px; ",
     "clickRoutine": [
       {
         "func": "MOVE",
@@ -3389,12 +3358,7 @@
       {
         "func": "SET",
         "property": "owner",
-        "applyVariables": [
-          {
-            "parameter": "value",
-            "variable": "playerName"
-          }
-        ]
+        "value": "${playerName}"
       },
       {
         "func": "MOVE",
@@ -3404,11 +3368,8 @@
       }
     ],
     "id": "yr30",
-    "image": "/assets/-923490446_1866",
-    "color": "#ffffff",
-    "svgReplaces": {
-      "currentColor": "color"
-    }
+    "classes": "symbols",
+    "text": "card_5"
   },
   "5bez": {
     "type": "button",
@@ -3417,7 +3378,7 @@
     "y": 345.7,
     "width": 55,
     "height": 55,
-    "css": "background-size:75%",
+    "css": "font-size: 45px; ",
     "clickRoutine": [
       {
         "func": "MOVE",
@@ -3433,12 +3394,7 @@
       {
         "func": "SET",
         "property": "owner",
-        "applyVariables": [
-          {
-            "parameter": "value",
-            "variable": "playerName"
-          }
-        ]
+        "value": "${playerName}"
       },
       {
         "func": "MOVE",
@@ -3448,11 +3404,8 @@
       }
     ],
     "id": "5bez",
-    "image": "/assets/-972762639_1633",
-    "color": "#ffffff",
-    "svgReplaces": {
-      "currentColor": "color"
-    }
+    "classes": "symbols",
+    "text": "card_4"
   },
   "hesb": {
     "type": "button",
@@ -3461,7 +3414,7 @@
     "y": 345.7,
     "width": 55,
     "height": 55,
-    "css": "background-size:75%",
+    "css": "font-size: 45px; ",
     "clickRoutine": [
       {
         "func": "MOVE",
@@ -3477,12 +3430,7 @@
       {
         "func": "SET",
         "property": "owner",
-        "applyVariables": [
-          {
-            "parameter": "value",
-            "variable": "playerName"
-          }
-        ]
+        "value": "${playerName}"
       },
       {
         "func": "MOVE",
@@ -3492,11 +3440,8 @@
       }
     ],
     "id": "hesb",
-    "image": "/assets/549246526_2053",
-    "color": "#ffffff",
-    "svgReplaces": {
-      "currentColor": "color"
-    }
+    "classes": "symbols",
+    "text": "card_3"
   },
   "2g48": {
     "type": "button",
@@ -3505,7 +3450,7 @@
     "y": 345.7,
     "width": 55,
     "height": 55,
-    "css": "background-size:75%",
+    "css": "font-size: 45px; ",
     "clickRoutine": [
       {
         "func": "MOVE",
@@ -3521,12 +3466,7 @@
       {
         "func": "SET",
         "property": "owner",
-        "applyVariables": [
-          {
-            "parameter": "value",
-            "variable": "playerName"
-          }
-        ]
+        "value": "${playerName}"
       },
       {
         "func": "MOVE",
@@ -3536,17 +3476,14 @@
       }
     ],
     "id": "2g48",
-    "image": "/assets/-1968965746_1784",
-    "color": "#ffffff",
-    "svgReplaces": {
-      "currentColor": "color"
-    }
+    "classes": "symbols",
+    "text": "card_2"
   },
   "_meta": {
-    "version": 1,
+    "version": 6,
     "info": {
       "name": "Whisky Cat",
-      "image": "/assets/2098812240_321349",
+      "image": "/assets/-765734730_247473",
       "rules": "",
       "bgg": "",
       "year": "1997",
@@ -3560,5 +3497,17 @@
       "similarLink": "https://boardgamegeek.com/boardgame/2633/dog",
       "description": "Move tokens from home around board to target area using card powers.  First to move all pieces to target wins."
     }
+  },
+  "xmhz": {
+    "id": "xmhz",
+    "x": 1410,
+    "y": 760,
+    "width": 150,
+    "height": 200,
+    "z": 10461,
+    "movable": false,
+    "css": "border: 1px solid black; ",
+    "enlarge": 4,
+    "image": "/assets/894360449_106277"
   }
 }

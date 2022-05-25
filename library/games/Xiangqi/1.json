@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "60",
       "players": "2",
-      "language": "CN",
+      "language": "UN",
       "variant": "",
       "attribution": "The library image by Drolexandre is from https://commons.wikimedia.org/wiki/File:Echecs_chinois.JPG and is available under a CC BY 3.0 license.\n\nThe game pieces images are from https://commons.wikimedia.org/wiki/File:Xiangqi_Cannon_(Trad).svg (and various other locations with similar file names) and have been released to the public domain.\n\nThe game layout, game board, and game piece designs were done by https://www.reddit.com/user/96LawDawg and also released to the public domain under CC0.",
       "similarName": "Chinese Chess",
@@ -39,9 +39,9 @@
     "x": -6
   },
   "99g3": {
-    "image": "/assets/1045334720_25191",
+    "image": "/assets/-905005500_25535",
     "id": "99g3",
-    "z": 427,
+    "z": 394,
     "x": 648.5,
     "y": 905,
     "grid": [
@@ -57,8 +57,8 @@
   },
   "801u": {
     "id": "801u",
-    "image": "/assets/1045334720_25191",
-    "z": 429,
+    "image": "/assets/-905005500_25535",
+    "z": 396,
     "x": 846.5,
     "y": 905,
     "grid": [
@@ -73,9 +73,9 @@
     ]
   },
   "q2wu": {
-    "image": "/assets/-1977732099_27659",
+    "image": "/assets/-118975984_26461",
     "id": "q2wu",
-    "z": 419,
+    "z": 382,
     "x": 1044.5,
     "y": 705,
     "grid": [
@@ -91,8 +91,8 @@
   },
   "9g2j": {
     "id": "9g2j",
-    "image": "/assets/-1977732099_27659",
-    "z": 422,
+    "image": "/assets/-118975984_26461",
+    "z": 390,
     "x": 450.5,
     "y": 705,
     "grid": [
@@ -107,9 +107,9 @@
     ]
   },
   "gnci": {
-    "image": "/assets/1516033890_27027",
+    "image": "/assets/-642068030_21470",
     "id": "gnci",
-    "z": 432,
+    "z": 385,
     "y": 905,
     "x": 1143.5,
     "grid": [
@@ -125,7 +125,7 @@
   },
   "ppfr": {
     "id": "ppfr",
-    "image": "/assets/2143438974_20838",
+    "image": "/assets/147191755_19670",
     "grid": [
       {
         "x": 99,
@@ -136,13 +136,13 @@
         "offsetY": -45
       }
     ],
-    "z": 401,
+    "z": 368,
     "y": 305,
     "x": 351.5
   },
   "prdo": {
     "id": "prdo",
-    "image": "/assets/522183472_23415",
+    "image": "/assets/-1057119341_22407",
     "grid": [
       {
         "x": 99,
@@ -153,14 +153,14 @@
         "offsetY": -45
       }
     ],
-    "z": 409,
+    "z": 366,
     "x": 450.5,
     "y": 5
   },
   "jsqs": {
     "id": "jsqs",
-    "image": "/assets/-1012343520_23784",
-    "z": 414,
+    "image": "/assets/-1487103577_23060",
+    "z": 374,
     "grid": [
       {
         "x": 99,
@@ -176,7 +176,7 @@
   },
   "5qen": {
     "id": "5qen",
-    "image": "/assets/373125790_21270",
+    "image": "/assets/-1817389268_18381",
     "grid": [
       {
         "x": 99,
@@ -187,14 +187,14 @@
         "offsetY": -45
       }
     ],
-    "z": 416,
+    "z": 376,
     "x": 1143.5,
     "y": 5
   },
   "6p80": {
     "id": "6p80",
-    "image": "/assets/-1861273338_23839",
-    "z": 406,
+    "image": "/assets/-2034797314_23060",
+    "z": 377,
     "y": 205,
     "x": 1044.5,
     "grid": [
@@ -210,8 +210,8 @@
   },
   "v3zs": {
     "id": "v3zs",
-    "image": "/assets/-1221507833_21000",
-    "z": 411,
+    "image": "/assets/1006112024_22287",
+    "z": 371,
     "y": 5,
     "grid": [
       {
@@ -227,7 +227,7 @@
   },
   "1kpl": {
     "id": "1kpl",
-    "image": "/assets/-1104971702_25991",
+    "image": "/assets/942127896_22886",
     "grid": [
       {
         "x": 99,
@@ -238,13 +238,13 @@
         "offsetY": -45
       }
     ],
-    "z": 423,
+    "z": 388,
     "x": 351.5,
     "y": 605
   },
   "wn6q": {
     "id": "wn6q",
-    "image": "/assets/-1104971702_25991",
+    "image": "/assets/942127896_22886",
     "grid": [
       {
         "x": 99,
@@ -255,13 +255,13 @@
         "offsetY": -45
       }
     ],
-    "z": 421,
+    "z": 389,
     "x": 549.5,
     "y": 605
   },
   "6zq4": {
     "id": "6zq4",
-    "image": "/assets/-1104971702_25991",
+    "image": "/assets/942127896_22886",
     "grid": [
       {
         "x": 99,
@@ -272,13 +272,13 @@
         "offsetY": -45
       }
     ],
-    "z": 420,
+    "z": 384,
     "x": 747.5,
     "y": 605
   },
   "0j4v": {
     "id": "0j4v",
-    "image": "/assets/-1104971702_25991",
+    "image": "/assets/942127896_22886",
     "grid": [
       {
         "x": 99,
@@ -289,13 +289,13 @@
         "offsetY": -45
       }
     ],
-    "z": 417,
+    "z": 381,
     "x": 1143.5,
     "y": 605
   },
   "on9q": {
     "id": "on9q",
-    "image": "/assets/989277438_28152",
+    "image": "/assets/1319541243_25660",
     "grid": [
       {
         "x": 99,
@@ -306,13 +306,13 @@
         "offsetY": -45
       }
     ],
-    "z": 431,
+    "z": 386,
     "x": 1044.5,
     "y": 905
   },
   "mkpq": {
     "id": "mkpq",
-    "image": "/assets/-1751677253_26446",
+    "image": "/assets/630055971_26386",
     "grid": [
       {
         "x": 99,
@@ -323,14 +323,14 @@
         "offsetY": -45
       }
     ],
-    "z": 430,
+    "z": 387,
     "x": 945.5,
     "y": 905
   },
   "tnpd": {
     "id": "tnpd",
-    "image": "/assets/1516033890_27027",
-    "z": 424,
+    "image": "/assets/-642068030_21470",
+    "z": 391,
     "grid": [
       {
         "x": 99,
@@ -345,9 +345,9 @@
     "y": 905
   },
   "ghbv": {
-    "image": "/assets/-1751677253_26446",
+    "image": "/assets/630055971_26386",
     "id": "ghbv",
-    "z": 426,
+    "z": 393,
     "x": 549.5,
     "y": 905,
     "grid": [
@@ -362,7 +362,7 @@
     ]
   },
   "uslv": {
-    "image": "/assets/1249104363_26522",
+    "image": "/assets/812488593_26212",
     "id": "uslv",
     "grid": [
       {
@@ -374,14 +374,14 @@
         "offsetY": -45
       }
     ],
-    "z": 428,
+    "z": 395,
     "x": 747.5,
     "y": 905
   },
   "s78q": {
-    "image": "/assets/989277438_28152",
+    "image": "/assets/1319541243_25660",
     "id": "s78q",
-    "z": 425,
+    "z": 392,
     "y": 905,
     "x": 450.5,
     "grid": [
@@ -396,9 +396,9 @@
     ]
   },
   "375c": {
-    "image": "/assets/-1104971702_25991",
+    "image": "/assets/942127896_22886",
     "id": "375c",
-    "z": 418,
+    "z": 383,
     "grid": [
       {
         "x": 99,
@@ -413,9 +413,9 @@
     "y": 605
   },
   "17w9": {
-    "image": "/assets/-1221507833_21000",
+    "image": "/assets/1006112024_22287",
     "id": "17w9",
-    "z": 413,
+    "z": 373,
     "x": 846.5,
     "y": 5,
     "grid": [
@@ -430,9 +430,9 @@
     ]
   },
   "o0bm": {
-    "image": "/assets/-1861273338_23839",
+    "image": "/assets/-2034797314_23060",
     "id": "o0bm",
-    "z": 403,
+    "z": 367,
     "x": 450.5,
     "y": 205,
     "grid": [
@@ -447,9 +447,9 @@
     ]
   },
   "hsof": {
-    "image": "/assets/373125790_21270",
+    "image": "/assets/-1817389268_18381",
     "id": "hsof",
-    "z": 408,
+    "z": 365,
     "y": 5,
     "x": 351.5,
     "grid": [
@@ -464,9 +464,9 @@
     ]
   },
   "kn6u": {
-    "image": "/assets/-1012343520_23784",
+    "image": "/assets/-1487103577_23060",
     "id": "kn6u",
-    "z": 410,
+    "z": 370,
     "y": 5,
     "x": 549.5,
     "grid": [
@@ -481,9 +481,9 @@
     ]
   },
   "wqpa": {
-    "image": "/assets/52701734_24277",
+    "image": "/assets/-759672227_22986",
     "id": "wqpa",
-    "z": 412,
+    "z": 372,
     "x": 747.5,
     "y": 5,
     "grid": [
@@ -498,9 +498,9 @@
     ]
   },
   "1j4q": {
-    "image": "/assets/522183472_23415",
+    "image": "/assets/-1057119341_22407",
     "id": "1j4q",
-    "z": 415,
+    "z": 375,
     "x": 1044.5,
     "y": 5,
     "grid": [
@@ -515,7 +515,7 @@
     ]
   },
   "u3u5": {
-    "image": "/assets/2143438974_20838",
+    "image": "/assets/147191755_19670",
     "id": "u3u5",
     "grid": [
       {
@@ -527,13 +527,13 @@
         "offsetY": -45
       }
     ],
-    "z": 402,
+    "z": 369,
     "x": 549.5,
     "y": 305
   },
   "bld4": {
     "id": "bld4",
-    "image": "/assets/2143438974_20838",
+    "image": "/assets/147191755_19670",
     "grid": [
       {
         "x": 99,
@@ -544,13 +544,13 @@
         "offsetY": -45
       }
     ],
-    "z": 404,
+    "z": 380,
     "x": 747.5,
     "y": 305
   },
   "0myn": {
     "id": "0myn",
-    "image": "/assets/2143438974_20838",
+    "image": "/assets/147191755_19670",
     "grid": [
       {
         "x": 99,
@@ -561,14 +561,14 @@
         "offsetY": -45
       }
     ],
-    "z": 405,
+    "z": 379,
     "y": 305,
     "x": 945.5
   },
   "zunm": {
     "id": "zunm",
-    "image": "/assets/2143438974_20838",
-    "z": 407,
+    "image": "/assets/147191755_19670",
+    "z": 378,
     "grid": [
       {
         "x": 99,
@@ -590,6 +590,8 @@
     "width": 50,
     "height": 50,
     "z": 1791,
+    "movable": null,
+    "movableInEdit": null,
     "btncolor": "white",
     "clickRoutine": [
       {

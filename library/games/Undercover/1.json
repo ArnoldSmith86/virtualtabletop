@@ -3,10 +3,10 @@
     "id": "grid001-1-1",
     "height": 50,
     "css": "background:#A2BBFB",
-    "z": 40817,
+    "z": 40864,
     "key": true,
     "color": "blue",
-    "parent": "grid005-2-1",
+    "parent": "grid005-1-5",
     "movable": false,
     "width": 260,
     "x": null
@@ -16,10 +16,10 @@
     "width": 260,
     "height": 50,
     "css": "background:#A2BBFB",
-    "z": 40816,
+    "z": 40878,
     "key": true,
     "color": "blue",
-    "parent": "grid005-1-5",
+    "parent": "grid005-4-4",
     "movable": false,
     "x": null
   },
@@ -27,10 +27,10 @@
     "id": "grid001-1-3",
     "height": 50,
     "css": "background:#A2BBFB",
-    "z": 40814,
+    "z": 40876,
     "key": true,
     "color": "blue",
-    "parent": "grid005-1-3",
+    "parent": "grid005-4-2",
     "movable": false,
     "width": 260,
     "x": null
@@ -41,32 +41,32 @@
     "css": "background:#A2BBFB",
     "key": true,
     "color": "blue",
-    "parent": "grid005-1-4",
+    "parent": "grid005-5-5",
     "movable": false,
     "width": 260,
     "x": null,
-    "z": 40815
+    "z": 40884
   },
   "grid001-1-5": {
     "id": "grid001-1-5",
     "width": 260,
     "height": 50,
     "css": "background:#A2BBFB",
-    "z": 40834,
+    "z": 40861,
     "key": true,
     "color": "blue",
     "movable": false,
-    "parent": "grid005-5-3"
+    "parent": "grid005-1-2"
   },
   "grid001-2-1": {
     "id": "grid001-2-1",
     "width": 260,
     "height": 50,
     "css": "background:#A2BBFB",
-    "z": 40829,
+    "z": 40870,
     "key": true,
     "color": "blue",
-    "parent": "grid005-4-3",
+    "parent": "grid005-3-1",
     "movable": false,
     "x": null
   },
@@ -75,7 +75,7 @@
     "width": 1000,
     "height": 10,
     "css": "background:#A2BBFB",
-    "z": 9848,
+    "z": 7802,
     "key": true,
     "color": "blue",
     "parent": "Beginning Team",
@@ -87,20 +87,20 @@
     "width": 260,
     "height": 50,
     "css": "background:#A2BBFB",
-    "z": 40827,
+    "z": 40879,
     "key": true,
     "color": "blue",
-    "parent": "grid005-4-1",
+    "parent": "grid005-4-5",
     "movable": false
   },
   "grid001-2-4": {
     "id": "grid001-2-4",
     "height": 50,
     "css": "background:#A2BBFB",
-    "z": 40830,
+    "z": 40869,
     "key": true,
     "color": "blue",
-    "parent": "grid005-4-4",
+    "parent": "grid005-2-5",
     "movable": false,
     "x": null,
     "width": 260
@@ -109,10 +109,10 @@
     "id": "grid001-2-5",
     "height": 50,
     "css": "background:#A2BBFB",
-    "z": 40832,
+    "z": 40877,
     "key": true,
     "color": "blue",
-    "parent": "grid005-5-1",
+    "parent": "grid005-4-3",
     "movable": false,
     "width": 260,
     "x": null
@@ -121,36 +121,34 @@
     "id": "grid002-1-1",
     "height": 50,
     "css": "background:#FD9696",
-    "z": 6629,
+    "z": 40883,
     "key": true,
     "color": "red",
-    "parent": "Key Tokens",
+    "parent": "grid005-5-4",
     "movable": false,
-    "width": 1000,
-    "x": null,
-    "y": 4
+    "width": 260,
+    "x": null
   },
   "grid002-1-2": {
     "id": "grid002-1-2",
     "height": 50,
     "css": "background:#FD9696",
-    "z": 4039,
+    "z": 40863,
     "key": true,
     "color": "red",
-    "parent": "Key Tokens",
+    "parent": "grid005-1-4",
     "movable": false,
-    "width": 1000,
-    "x": null,
-    "y": 4
+    "width": 260,
+    "x": null
   },
   "grid002-1-3": {
     "id": "grid002-1-3",
     "height": 50,
     "css": "background:#FD9696",
-    "z": 40823,
+    "z": 40868,
     "key": true,
     "color": "red",
-    "parent": "grid005-3-2",
+    "parent": "grid005-2-4",
     "movable": false,
     "width": 260,
     "x": null
@@ -159,22 +157,23 @@
     "id": "grid002-1-4",
     "height": 50,
     "css": "background:#FD9696",
-    "z": 40836,
+    "z": 2164,
     "key": true,
     "color": "red",
-    "parent": "grid005-5-5",
+    "parent": "Key Tokens",
     "movable": false,
-    "width": 260,
-    "x": null
+    "width": 1000,
+    "x": null,
+    "y": 4
   },
   "grid002-1-5": {
     "id": "grid002-1-5",
     "height": 50,
     "css": "background:#FD9696",
-    "z": 40824,
+    "z": 40875,
     "key": true,
     "color": "red",
-    "parent": "grid005-3-3",
+    "parent": "grid005-4-1",
     "movable": false,
     "width": 260,
     "x": null
@@ -185,21 +184,21 @@
     "css": "background:#FD9696",
     "key": true,
     "color": "red",
-    "parent": "grid005-1-1",
+    "parent": "grid005-1-3",
     "movable": false,
     "width": 260,
     "x": null,
-    "z": 131
+    "z": 40862
   },
   "grid002-2-2": {
     "id": "grid002-2-2",
     "width": 260,
     "height": 50,
     "css": "background:#FD9696",
-    "z": 40820,
+    "z": 40882,
     "key": true,
     "color": "red",
-    "parent": "grid005-2-4",
+    "parent": "grid005-5-3",
     "movable": false,
     "x": null
   },
@@ -207,7 +206,7 @@
     "id": "grid002-2-3",
     "height": 50,
     "css": "background:#FD9696",
-    "z": 40826,
+    "z": 40874,
     "key": true,
     "color": "red",
     "parent": "grid005-3-5",
@@ -219,22 +218,23 @@
     "id": "grid002-2-4",
     "height": 50,
     "css": "background:#FD9696",
-    "z": 40835,
+    "z": 534,
     "key": true,
     "color": "red",
-    "parent": "grid005-5-4",
+    "parent": "Key Tokens",
     "movable": false,
-    "width": 260,
-    "x": null
+    "width": 1000,
+    "x": null,
+    "y": 4
   },
   "grid002-2-5": {
     "id": "grid002-2-5",
     "height": 50,
     "css": "background:#FD9696",
-    "z": 40818,
+    "z": 40867,
     "key": true,
     "color": "red",
-    "parent": "grid005-2-2",
+    "parent": "grid005-2-3",
     "movable": false,
     "width": 260
   },
@@ -243,10 +243,10 @@
     "width": 260,
     "height": 50,
     "css": "background:#9E9E9E; border: 4px solid #000000; box-sizing: border-box",
-    "z": 40813,
+    "z": 40872,
     "key": true,
     "color": "black",
-    "parent": "grid005-1-2",
+    "parent": "grid005-3-3",
     "movable": false,
     "x": null
   },
@@ -255,10 +255,10 @@
     "width": 260,
     "height": 50,
     "css": "background:#FDD396",
-    "z": 40833,
+    "z": 40873,
     "key": true,
     "color": "white",
-    "parent": "grid005-5-2",
+    "parent": "grid005-3-4",
     "movable": false,
     "x": null
   },
@@ -267,10 +267,10 @@
     "width": 260,
     "height": 50,
     "css": "background:#FDD396",
-    "z": 40822,
+    "z": 40865,
     "key": true,
     "color": "white",
-    "parent": "grid005-3-1",
+    "parent": "grid005-2-1",
     "movable": false,
     "x": null
   },
@@ -279,10 +279,10 @@
     "width": 260,
     "height": 50,
     "css": "background:#FDD396",
-    "z": 40831,
+    "z": 40871,
     "key": true,
     "color": "white",
-    "parent": "grid005-4-5",
+    "parent": "grid005-3-2",
     "movable": false,
     "x": null
   },
@@ -291,10 +291,10 @@
     "width": 260,
     "height": 50,
     "css": "background:#FDD396",
-    "z": 40828,
+    "z": 40880,
     "key": true,
     "color": "white",
-    "parent": "grid005-4-2",
+    "parent": "grid005-5-1",
     "movable": false,
     "x": null
   },
@@ -305,9 +305,9 @@
     "css": "background:#FDD396",
     "key": true,
     "color": "white",
-    "parent": "grid005-2-3",
+    "parent": "grid005-2-2",
     "movable": false,
-    "z": 40819,
+    "z": 40866,
     "x": null
   },
   "grid004-2-1": {
@@ -315,10 +315,10 @@
     "width": 260,
     "height": 50,
     "css": "background:#FDD396",
-    "z": 40825,
+    "z": 365,
     "key": true,
     "color": "white",
-    "parent": "grid005-3-4",
+    "parent": "grid005-1-1",
     "movable": false,
     "x": null
   },
@@ -329,9 +329,9 @@
     "css": "background:#FDD396",
     "key": true,
     "color": "white",
-    "parent": "grid005-2-5",
+    "parent": "grid005-5-2",
     "movable": false,
-    "z": 40821,
+    "z": 40881,
     "x": null
   },
   "grid005-1-1": {
@@ -1178,7 +1178,7 @@
     "x": 10,
     "y": 76,
     "type": "label",
-    "text": "OBERFLÄCHE",
+    "text": "GOTT",
     "css": "font-size: 30px; color:black",
     "height": 42,
     "width": 280,
@@ -1190,7 +1190,7 @@
     "x": 291,
     "y": 76,
     "type": "label",
-    "text": "PARK",
+    "text": "GURKE",
     "css": "font-size: 30px; color:black",
     "height": 42,
     "width": 280,
@@ -1202,7 +1202,7 @@
     "x": 572,
     "y": 76,
     "type": "label",
-    "text": "SEITE",
+    "text": "COLLEGE",
     "css": "font-size: 30px; color:black",
     "height": 42,
     "width": 280,
@@ -1214,7 +1214,7 @@
     "x": 853,
     "y": 76,
     "type": "label",
-    "text": "BLUME",
+    "text": "HALS",
     "css": "font-size: 30px; color:black",
     "height": 42,
     "width": 280,
@@ -1226,7 +1226,7 @@
     "x": 1134,
     "y": 76,
     "type": "label",
-    "text": "BAD",
+    "text": "ABZEICHEN",
     "css": "font-size: 30px; color:black",
     "height": 42,
     "width": 280,
@@ -1238,7 +1238,7 @@
     "x": 10,
     "y": 255,
     "type": "label",
-    "text": "KOJOTE",
+    "text": "GANZE",
     "css": "font-size: 30px; color:black",
     "height": 42,
     "width": 280,
@@ -1250,7 +1250,7 @@
     "x": 291,
     "y": 255,
     "type": "label",
-    "text": "GEWOHNHEIT",
+    "text": "OHR",
     "css": "font-size: 30px; color:black",
     "height": 42,
     "width": 280,
@@ -1262,7 +1262,7 @@
     "x": 572,
     "y": 255,
     "type": "label",
-    "text": "ZUHAUSE",
+    "text": "HOSE",
     "css": "font-size: 30px; color:black",
     "height": 42,
     "width": 280,
@@ -1274,7 +1274,7 @@
     "x": 853,
     "y": 255,
     "type": "label",
-    "text": "POLO",
+    "text": "ANRUF",
     "css": "font-size: 30px; color:black",
     "height": 42,
     "width": 280,
@@ -1286,7 +1286,7 @@
     "x": 1134,
     "y": 255,
     "type": "label",
-    "text": "KÖRPER",
+    "text": "KIEFER",
     "css": "font-size: 30px; color:black",
     "height": 42,
     "width": 280,
@@ -1298,7 +1298,7 @@
     "x": 10,
     "y": 434,
     "type": "label",
-    "text": "TELLER",
+    "text": "MESSER",
     "css": "font-size: 30px; color:black",
     "height": 42,
     "width": 280,
@@ -1310,7 +1310,7 @@
     "x": 291,
     "y": 434,
     "type": "label",
-    "text": "AUSSICHT",
+    "text": "EUROPA",
     "css": "font-size: 30px; color:black",
     "height": 42,
     "width": 280,
@@ -1322,7 +1322,7 @@
     "x": 572,
     "y": 434,
     "type": "label",
-    "text": "STRASSE",
+    "text": "FLÖTE",
     "css": "font-size: 30px; color:black",
     "height": 42,
     "width": 280,
@@ -1334,7 +1334,7 @@
     "x": 853,
     "y": 434,
     "type": "label",
-    "text": "VERTRAG",
+    "text": "ABENDESSEN",
     "css": "font-size: 30px; color:black",
     "height": 42,
     "width": 280,
@@ -1346,7 +1346,7 @@
     "x": 1134,
     "y": 434,
     "type": "label",
-    "text": "FUSS",
+    "text": "PARK",
     "css": "font-size: 30px; color:black",
     "height": 42,
     "width": 280,
@@ -1370,7 +1370,7 @@
     "x": 291,
     "y": 613,
     "type": "label",
-    "text": "FEDER",
+    "text": "GESCHÄFT",
     "css": "font-size: 30px; color:black",
     "height": 42,
     "width": 280,
@@ -1382,7 +1382,7 @@
     "x": 572,
     "y": 613,
     "type": "label",
-    "text": "FENSTER",
+    "text": "NORD",
     "css": "font-size: 30px; color:black",
     "height": 42,
     "width": 280,
@@ -1394,7 +1394,7 @@
     "x": 853,
     "y": 613,
     "type": "label",
-    "text": "SHOW",
+    "text": "ANDEREN",
     "css": "font-size: 30px; color:black",
     "height": 42,
     "width": 280,
@@ -1406,7 +1406,7 @@
     "x": 1134,
     "y": 613,
     "type": "label",
-    "text": "WASSER",
+    "text": "HIMALAYA",
     "css": "font-size: 30px; color:black",
     "height": 42,
     "width": 280,
@@ -1418,7 +1418,7 @@
     "x": 10,
     "y": 792,
     "type": "label",
-    "text": "ABGRUND",
+    "text": "SCHIFF",
     "css": "font-size: 30px; color:black",
     "height": 42,
     "width": 280,
@@ -1430,7 +1430,7 @@
     "x": 291,
     "y": 792,
     "type": "label",
-    "text": "DANK",
+    "text": "DAME",
     "css": "font-size: 30px; color:black",
     "height": 42,
     "width": 280,
@@ -1442,7 +1442,7 @@
     "x": 572,
     "y": 792,
     "type": "label",
-    "text": "ABEND",
+    "text": "IDEE",
     "css": "font-size: 30px; color:black",
     "height": 42,
     "width": 280,
@@ -1454,7 +1454,7 @@
     "x": 853,
     "y": 792,
     "type": "label",
-    "text": "FRAU",
+    "text": "AUSDRUCK",
     "css": "font-size: 30px; color:black",
     "height": 42,
     "width": 280,
@@ -1466,7 +1466,7 @@
     "x": 1134,
     "y": 792,
     "type": "label",
-    "text": "TEAM",
+    "text": "LAND",
     "css": "font-size: 30px; color:black",
     "height": 42,
     "width": 280,
@@ -1539,51 +1539,51 @@
       null,
       null,
       null,
-      "OBERFLÄCHE",
+      "GOTT",
+      "GURKE",
+      "COLLEGE",
+      "HALS",
+      "ABZEICHEN",
+      null,
+      null,
+      null,
+      null,
+      null,
+      "GANZE",
+      "OHR",
+      "HOSE",
+      "ANRUF",
+      "KIEFER",
+      null,
+      null,
+      null,
+      null,
+      null,
+      "MESSER",
+      "EUROPA",
+      "FLÖTE",
+      "ABENDESSEN",
       "PARK",
-      "SEITE",
-      "BLUME",
-      "BAD",
-      null,
-      null,
-      null,
-      null,
-      null,
-      "KOJOTE",
-      "GEWOHNHEIT",
-      "ZUHAUSE",
-      "POLO",
-      "KÖRPER",
-      null,
-      null,
-      null,
-      null,
-      null,
-      "TELLER",
-      "AUSSICHT",
-      "STRASSE",
-      "VERTRAG",
-      "FUSS",
       null,
       null,
       null,
       null,
       null,
       "WEG",
-      "FEDER",
-      "FENSTER",
-      "SHOW",
-      "WASSER",
+      "GESCHÄFT",
+      "NORD",
+      "ANDEREN",
+      "HIMALAYA",
       null,
       null,
       null,
       null,
       null,
-      "ABGRUND",
-      "DANK",
-      "ABEND",
-      "FRAU",
-      "TEAM"
+      "SCHIFF",
+      "DAME",
+      "IDEE",
+      "AUSDRUCK",
+      "LAND"
     ]
   },
   "Words Button": {
@@ -1825,7 +1825,40 @@
     "width": 270,
     "height": 168,
     "layer": 2,
-    "classes": "transparent"
+    "classes": "transparent",
+    "clickRoutine": [
+      "var coords = ${PROPERTY id} substr 7 4",
+      {
+        "func": "SELECT",
+        "value": "grid005${coords}"
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "white",
+        "thenRoutine": [
+          "var color = 'no'"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "black",
+        "thenRoutine": [
+          "var color = 'ass'"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${color}agent",
+        "to": "${PROPERTY id}"
+      }
+    ],
+    "clickable": true
   },
   "grid006-1-2": {
     "id": "grid006-1-2",
@@ -1836,7 +1869,40 @@
     "width": 270,
     "height": 168,
     "layer": 2,
-    "classes": "transparent"
+    "classes": "transparent",
+    "clickRoutine": [
+      "var coords = ${PROPERTY id} substr 7 4",
+      {
+        "func": "SELECT",
+        "value": "grid005${coords}"
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "white",
+        "thenRoutine": [
+          "var color = 'no'"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "black",
+        "thenRoutine": [
+          "var color = 'ass'"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${color}agent",
+        "to": "${PROPERTY id}"
+      }
+    ],
+    "clickable": true
   },
   "grid006-1-3": {
     "id": "grid006-1-3",
@@ -1847,7 +1913,40 @@
     "width": 270,
     "height": 168,
     "layer": 2,
-    "classes": "transparent"
+    "classes": "transparent",
+    "clickRoutine": [
+      "var coords = ${PROPERTY id} substr 7 4",
+      {
+        "func": "SELECT",
+        "value": "grid005${coords}"
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "white",
+        "thenRoutine": [
+          "var color = 'no'"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "black",
+        "thenRoutine": [
+          "var color = 'ass'"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${color}agent",
+        "to": "${PROPERTY id}"
+      }
+    ],
+    "clickable": true
   },
   "grid006-1-4": {
     "id": "grid006-1-4",
@@ -1858,7 +1957,40 @@
     "width": 270,
     "height": 168,
     "layer": 2,
-    "classes": "transparent"
+    "classes": "transparent",
+    "clickRoutine": [
+      "var coords = ${PROPERTY id} substr 7 4",
+      {
+        "func": "SELECT",
+        "value": "grid005${coords}"
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "white",
+        "thenRoutine": [
+          "var color = 'no'"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "black",
+        "thenRoutine": [
+          "var color = 'ass'"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${color}agent",
+        "to": "${PROPERTY id}"
+      }
+    ],
+    "clickable": true
   },
   "grid006-1-5": {
     "id": "grid006-1-5",
@@ -1869,7 +2001,40 @@
     "width": 270,
     "height": 168,
     "layer": 2,
-    "classes": "transparent"
+    "classes": "transparent",
+    "clickRoutine": [
+      "var coords = ${PROPERTY id} substr 7 4",
+      {
+        "func": "SELECT",
+        "value": "grid005${coords}"
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "white",
+        "thenRoutine": [
+          "var color = 'no'"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "black",
+        "thenRoutine": [
+          "var color = 'ass'"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${color}agent",
+        "to": "${PROPERTY id}"
+      }
+    ],
+    "clickable": true
   },
   "grid006-2-1": {
     "id": "grid006-2-1",
@@ -1880,7 +2045,40 @@
     "width": 270,
     "height": 168,
     "layer": 2,
-    "classes": "transparent"
+    "classes": "transparent",
+    "clickRoutine": [
+      "var coords = ${PROPERTY id} substr 7 4",
+      {
+        "func": "SELECT",
+        "value": "grid005${coords}"
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "white",
+        "thenRoutine": [
+          "var color = 'no'"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "black",
+        "thenRoutine": [
+          "var color = 'ass'"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${color}agent",
+        "to": "${PROPERTY id}"
+      }
+    ],
+    "clickable": true
   },
   "grid006-2-2": {
     "id": "grid006-2-2",
@@ -1891,7 +2089,40 @@
     "width": 270,
     "height": 168,
     "layer": 2,
-    "classes": "transparent"
+    "classes": "transparent",
+    "clickRoutine": [
+      "var coords = ${PROPERTY id} substr 7 4",
+      {
+        "func": "SELECT",
+        "value": "grid005${coords}"
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "white",
+        "thenRoutine": [
+          "var color = 'no'"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "black",
+        "thenRoutine": [
+          "var color = 'ass'"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${color}agent",
+        "to": "${PROPERTY id}"
+      }
+    ],
+    "clickable": true
   },
   "grid006-2-3": {
     "id": "grid006-2-3",
@@ -1902,7 +2133,40 @@
     "width": 270,
     "height": 168,
     "layer": 2,
-    "classes": "transparent"
+    "classes": "transparent",
+    "clickRoutine": [
+      "var coords = ${PROPERTY id} substr 7 4",
+      {
+        "func": "SELECT",
+        "value": "grid005${coords}"
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "white",
+        "thenRoutine": [
+          "var color = 'no'"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "black",
+        "thenRoutine": [
+          "var color = 'ass'"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${color}agent",
+        "to": "${PROPERTY id}"
+      }
+    ],
+    "clickable": true
   },
   "grid006-2-4": {
     "id": "grid006-2-4",
@@ -1913,7 +2177,40 @@
     "width": 270,
     "height": 168,
     "layer": 2,
-    "classes": "transparent"
+    "classes": "transparent",
+    "clickRoutine": [
+      "var coords = ${PROPERTY id} substr 7 4",
+      {
+        "func": "SELECT",
+        "value": "grid005${coords}"
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "white",
+        "thenRoutine": [
+          "var color = 'no'"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "black",
+        "thenRoutine": [
+          "var color = 'ass'"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${color}agent",
+        "to": "${PROPERTY id}"
+      }
+    ],
+    "clickable": true
   },
   "grid006-2-5": {
     "id": "grid006-2-5",
@@ -1924,7 +2221,40 @@
     "width": 270,
     "height": 168,
     "layer": 2,
-    "classes": "transparent"
+    "classes": "transparent",
+    "clickRoutine": [
+      "var coords = ${PROPERTY id} substr 7 4",
+      {
+        "func": "SELECT",
+        "value": "grid005${coords}"
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "white",
+        "thenRoutine": [
+          "var color = 'no'"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "black",
+        "thenRoutine": [
+          "var color = 'ass'"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${color}agent",
+        "to": "${PROPERTY id}"
+      }
+    ],
+    "clickable": true
   },
   "grid006-3-1": {
     "id": "grid006-3-1",
@@ -1935,7 +2265,40 @@
     "width": 270,
     "height": 168,
     "layer": 2,
-    "classes": "transparent"
+    "classes": "transparent",
+    "clickRoutine": [
+      "var coords = ${PROPERTY id} substr 7 4",
+      {
+        "func": "SELECT",
+        "value": "grid005${coords}"
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "white",
+        "thenRoutine": [
+          "var color = 'no'"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "black",
+        "thenRoutine": [
+          "var color = 'ass'"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${color}agent",
+        "to": "${PROPERTY id}"
+      }
+    ],
+    "clickable": true
   },
   "grid006-3-2": {
     "id": "grid006-3-2",
@@ -1946,7 +2309,40 @@
     "width": 270,
     "height": 168,
     "layer": 2,
-    "classes": "transparent"
+    "classes": "transparent",
+    "clickRoutine": [
+      "var coords = ${PROPERTY id} substr 7 4",
+      {
+        "func": "SELECT",
+        "value": "grid005${coords}"
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "white",
+        "thenRoutine": [
+          "var color = 'no'"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "black",
+        "thenRoutine": [
+          "var color = 'ass'"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${color}agent",
+        "to": "${PROPERTY id}"
+      }
+    ],
+    "clickable": true
   },
   "grid006-3-3": {
     "id": "grid006-3-3",
@@ -1957,7 +2353,40 @@
     "width": 270,
     "height": 168,
     "layer": 2,
-    "classes": "transparent"
+    "classes": "transparent",
+    "clickRoutine": [
+      "var coords = ${PROPERTY id} substr 7 4",
+      {
+        "func": "SELECT",
+        "value": "grid005${coords}"
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "white",
+        "thenRoutine": [
+          "var color = 'no'"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "black",
+        "thenRoutine": [
+          "var color = 'ass'"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${color}agent",
+        "to": "${PROPERTY id}"
+      }
+    ],
+    "clickable": true
   },
   "grid006-3-4": {
     "id": "grid006-3-4",
@@ -1968,7 +2397,40 @@
     "width": 270,
     "height": 168,
     "layer": 2,
-    "classes": "transparent"
+    "classes": "transparent",
+    "clickRoutine": [
+      "var coords = ${PROPERTY id} substr 7 4",
+      {
+        "func": "SELECT",
+        "value": "grid005${coords}"
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "white",
+        "thenRoutine": [
+          "var color = 'no'"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "black",
+        "thenRoutine": [
+          "var color = 'ass'"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${color}agent",
+        "to": "${PROPERTY id}"
+      }
+    ],
+    "clickable": true
   },
   "grid006-3-5": {
     "id": "grid006-3-5",
@@ -1979,7 +2441,40 @@
     "width": 270,
     "height": 168,
     "layer": 2,
-    "classes": "transparent"
+    "classes": "transparent",
+    "clickRoutine": [
+      "var coords = ${PROPERTY id} substr 7 4",
+      {
+        "func": "SELECT",
+        "value": "grid005${coords}"
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "white",
+        "thenRoutine": [
+          "var color = 'no'"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "black",
+        "thenRoutine": [
+          "var color = 'ass'"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${color}agent",
+        "to": "${PROPERTY id}"
+      }
+    ],
+    "clickable": true
   },
   "grid006-4-1": {
     "id": "grid006-4-1",
@@ -1990,7 +2485,40 @@
     "width": 270,
     "height": 168,
     "layer": 2,
-    "classes": "transparent"
+    "classes": "transparent",
+    "clickRoutine": [
+      "var coords = ${PROPERTY id} substr 7 4",
+      {
+        "func": "SELECT",
+        "value": "grid005${coords}"
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "white",
+        "thenRoutine": [
+          "var color = 'no'"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "black",
+        "thenRoutine": [
+          "var color = 'ass'"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${color}agent",
+        "to": "${PROPERTY id}"
+      }
+    ],
+    "clickable": true
   },
   "grid006-4-2": {
     "id": "grid006-4-2",
@@ -2001,7 +2529,40 @@
     "width": 270,
     "height": 168,
     "layer": 2,
-    "classes": "transparent"
+    "classes": "transparent",
+    "clickRoutine": [
+      "var coords = ${PROPERTY id} substr 7 4",
+      {
+        "func": "SELECT",
+        "value": "grid005${coords}"
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "white",
+        "thenRoutine": [
+          "var color = 'no'"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "black",
+        "thenRoutine": [
+          "var color = 'ass'"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${color}agent",
+        "to": "${PROPERTY id}"
+      }
+    ],
+    "clickable": true
   },
   "grid006-4-3": {
     "id": "grid006-4-3",
@@ -2012,7 +2573,40 @@
     "width": 270,
     "height": 168,
     "layer": 2,
-    "classes": "transparent"
+    "classes": "transparent",
+    "clickRoutine": [
+      "var coords = ${PROPERTY id} substr 7 4",
+      {
+        "func": "SELECT",
+        "value": "grid005${coords}"
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "white",
+        "thenRoutine": [
+          "var color = 'no'"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "black",
+        "thenRoutine": [
+          "var color = 'ass'"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${color}agent",
+        "to": "${PROPERTY id}"
+      }
+    ],
+    "clickable": true
   },
   "grid006-4-4": {
     "id": "grid006-4-4",
@@ -2023,7 +2617,40 @@
     "width": 270,
     "height": 168,
     "layer": 2,
-    "classes": "transparent"
+    "classes": "transparent",
+    "clickRoutine": [
+      "var coords = ${PROPERTY id} substr 7 4",
+      {
+        "func": "SELECT",
+        "value": "grid005${coords}"
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "white",
+        "thenRoutine": [
+          "var color = 'no'"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "black",
+        "thenRoutine": [
+          "var color = 'ass'"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${color}agent",
+        "to": "${PROPERTY id}"
+      }
+    ],
+    "clickable": true
   },
   "grid006-4-5": {
     "id": "grid006-4-5",
@@ -2034,7 +2661,40 @@
     "width": 270,
     "height": 168,
     "layer": 2,
-    "classes": "transparent"
+    "classes": "transparent",
+    "clickRoutine": [
+      "var coords = ${PROPERTY id} substr 7 4",
+      {
+        "func": "SELECT",
+        "value": "grid005${coords}"
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "white",
+        "thenRoutine": [
+          "var color = 'no'"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "black",
+        "thenRoutine": [
+          "var color = 'ass'"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${color}agent",
+        "to": "${PROPERTY id}"
+      }
+    ],
+    "clickable": true
   },
   "grid006-5-1": {
     "id": "grid006-5-1",
@@ -2045,7 +2705,40 @@
     "width": 270,
     "height": 168,
     "layer": 2,
-    "classes": "transparent"
+    "classes": "transparent",
+    "clickRoutine": [
+      "var coords = ${PROPERTY id} substr 7 4",
+      {
+        "func": "SELECT",
+        "value": "grid005${coords}"
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "white",
+        "thenRoutine": [
+          "var color = 'no'"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "black",
+        "thenRoutine": [
+          "var color = 'ass'"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${color}agent",
+        "to": "${PROPERTY id}"
+      }
+    ],
+    "clickable": true
   },
   "grid006-5-2": {
     "id": "grid006-5-2",
@@ -2056,7 +2749,40 @@
     "width": 270,
     "height": 168,
     "layer": 2,
-    "classes": "transparent"
+    "classes": "transparent",
+    "clickRoutine": [
+      "var coords = ${PROPERTY id} substr 7 4",
+      {
+        "func": "SELECT",
+        "value": "grid005${coords}"
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "white",
+        "thenRoutine": [
+          "var color = 'no'"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "black",
+        "thenRoutine": [
+          "var color = 'ass'"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${color}agent",
+        "to": "${PROPERTY id}"
+      }
+    ],
+    "clickable": true
   },
   "grid006-5-3": {
     "id": "grid006-5-3",
@@ -2067,7 +2793,40 @@
     "width": 270,
     "height": 168,
     "layer": 2,
-    "classes": "transparent"
+    "classes": "transparent",
+    "clickRoutine": [
+      "var coords = ${PROPERTY id} substr 7 4",
+      {
+        "func": "SELECT",
+        "value": "grid005${coords}"
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "white",
+        "thenRoutine": [
+          "var color = 'no'"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "black",
+        "thenRoutine": [
+          "var color = 'ass'"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${color}agent",
+        "to": "${PROPERTY id}"
+      }
+    ],
+    "clickable": true
   },
   "grid006-5-4": {
     "id": "grid006-5-4",
@@ -2078,7 +2837,40 @@
     "width": 270,
     "height": 168,
     "layer": 2,
-    "classes": "transparent"
+    "classes": "transparent",
+    "clickRoutine": [
+      "var coords = ${PROPERTY id} substr 7 4",
+      {
+        "func": "SELECT",
+        "value": "grid005${coords}"
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "white",
+        "thenRoutine": [
+          "var color = 'no'"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "black",
+        "thenRoutine": [
+          "var color = 'ass'"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${color}agent",
+        "to": "${PROPERTY id}"
+      }
+    ],
+    "clickable": true
   },
   "grid006-5-5": {
     "id": "grid006-5-5",
@@ -2089,13 +2881,46 @@
     "width": 270,
     "height": 168,
     "layer": 2,
-    "classes": "transparent"
+    "classes": "transparent",
+    "clickRoutine": [
+      "var coords = ${PROPERTY id} substr 7 4",
+      {
+        "func": "SELECT",
+        "value": "grid005${coords}"
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "white",
+        "thenRoutine": [
+          "var color = 'no'"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "black",
+        "thenRoutine": [
+          "var color = 'ass'"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${color}agent",
+        "to": "${PROPERTY id}"
+      }
+    ],
+    "clickable": true
   },
   "cxzl": {
     "type": "card",
     "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e6",
     "id": "cxzl",
-    "z": 969,
+    "z": 6988,
     "layer": 2,
     "deck": "blueagentdeck",
     "parent": "q62e"
@@ -2104,7 +2929,7 @@
     "type": "card",
     "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e6",
     "id": "yi8y",
-    "z": 5786,
+    "z": 657,
     "layer": 2,
     "deck": "blueagentdeck",
     "parent": "q62e"
@@ -2113,7 +2938,7 @@
     "type": "card",
     "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e7",
     "id": "bagc",
-    "z": 9181,
+    "z": 8786,
     "layer": 2,
     "deck": "blueagentdeck",
     "parent": "q62e"
@@ -2122,7 +2947,7 @@
     "type": "card",
     "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e7",
     "id": "gsvd",
-    "z": 7962,
+    "z": 105,
     "layer": 2,
     "deck": "blueagentdeck",
     "parent": "q62e"
@@ -2131,7 +2956,7 @@
     "type": "card",
     "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e7",
     "id": "vsq5",
-    "z": 7582,
+    "z": 692,
     "layer": 2,
     "deck": "blueagentdeck",
     "parent": "q62e"
@@ -2140,7 +2965,7 @@
     "type": "card",
     "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e7",
     "id": "kxaq",
-    "z": 9652,
+    "z": 7304,
     "layer": 2,
     "deck": "blueagentdeck",
     "parent": "q62e"
@@ -2161,7 +2986,7 @@
     "type": "card",
     "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e6",
     "id": "zx8d",
-    "z": 6290,
+    "z": 7394,
     "deck": "redagentdeck",
     "layer": 2,
     "parent": "0ppd"
@@ -2170,7 +2995,7 @@
     "type": "card",
     "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e7",
     "id": "05ug",
-    "z": 979,
+    "z": 3372,
     "deck": "redagentdeck",
     "layer": 2,
     "parent": "0ppd"
@@ -2181,14 +3006,14 @@
     "id": "lt0w",
     "deck": "redagentdeck",
     "layer": 2,
-    "z": 314,
+    "z": 5821,
     "parent": "0ppd"
   },
   "habk": {
     "type": "card",
     "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e6",
     "id": "habk",
-    "z": 9632,
+    "z": 5164,
     "deck": "redagentdeck",
     "layer": 2,
     "parent": "0ppd"
@@ -2197,7 +3022,7 @@
     "type": "card",
     "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e6",
     "id": "dh8t",
-    "z": 5261,
+    "z": 3046,
     "deck": "redagentdeck",
     "layer": 2,
     "parent": "0ppd"
@@ -2206,7 +3031,7 @@
     "type": "card",
     "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e7",
     "id": "0va5",
-    "z": 9448,
+    "z": 4307,
     "deck": "redagentdeck",
     "layer": 2,
     "parent": "0ppd"
@@ -2215,7 +3040,7 @@
     "type": "card",
     "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e7",
     "id": "y9rl",
-    "z": 5755,
+    "z": 9516,
     "deck": "redagentdeck",
     "layer": 2,
     "parent": "0ppd"
@@ -2224,7 +3049,7 @@
     "type": "card",
     "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e7",
     "id": "tlzs",
-    "z": 7897,
+    "z": 8090,
     "deck": "redagentdeck",
     "layer": 2,
     "parent": "0ppd"
@@ -2235,14 +3060,14 @@
     "id": "jxbp",
     "deck": "noagentdeck",
     "layer": 2,
-    "z": 4645,
+    "z": 9609,
     "parent": "zicy"
   },
   "xju5": {
     "type": "card",
     "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e6",
     "id": "xju5",
-    "z": 8111,
+    "z": 7870,
     "deck": "noagentdeck",
     "layer": 2,
     "parent": "zicy"
@@ -2251,7 +3076,7 @@
     "type": "card",
     "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e6",
     "id": "4cwo",
-    "z": 6843,
+    "z": 3169,
     "deck": "noagentdeck",
     "layer": 2,
     "parent": "zicy"
@@ -2260,7 +3085,7 @@
     "type": "card",
     "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e7",
     "id": "pyap",
-    "z": 278,
+    "z": 4745,
     "deck": "noagentdeck",
     "layer": 2,
     "parent": "zicy"
@@ -2269,7 +3094,7 @@
     "type": "card",
     "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e7",
     "id": "qhk5",
-    "z": 8913,
+    "z": 9656,
     "deck": "noagentdeck",
     "layer": 2,
     "parent": "zicy"
@@ -2278,7 +3103,7 @@
     "type": "card",
     "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e7",
     "id": "9dp0",
-    "z": 8022,
+    "z": 680,
     "deck": "noagentdeck",
     "layer": 2,
     "parent": "zicy"
@@ -2287,7 +3112,7 @@
     "type": "card",
     "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e6",
     "id": "2ndn",
-    "z": 2919,
+    "z": 3852,
     "deck": "blueagentdeck",
     "layer": 2,
     "parent": "q62e"
@@ -2296,7 +3121,7 @@
     "type": "card",
     "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e6",
     "id": "5kpy",
-    "z": 9294,
+    "z": 4736,
     "deck": "blueagentdeck",
     "layer": 2,
     "parent": "q62e"
@@ -2657,7 +3482,7 @@
     "type": "card",
     "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e7",
     "id": "xjsv",
-    "z": 4517,
+    "z": 2447,
     "layer": 2,
     "parent": "zicy"
   },
@@ -2665,7 +3490,7 @@
     "type": "card",
     "cardType": "Double",
     "id": "pq0f",
-    "z": 3787,
+    "z": 1133,
     "x": 4,
     "deck": "assagentdeck",
     "layer": 2,
@@ -2756,7 +3581,7 @@
             "type": "image",
             "x": 0,
             "y": 0,
-            "color": "#3260FD",
+            "color": "#2D53D6",
             "valueType": "static",
             "value": "",
             "width": 264,
@@ -2811,33 +3636,7 @@
             "type": "image",
             "x": 0,
             "y": 0,
-            "color": "#FD3232",
-            "valueType": "static",
-            "value": "",
-            "width": 264,
-            "height": 160
-          },
-          {
-            "type": "image",
-            "x": 10,
-            "y": 10,
-            "color": "#FD5555",
-            "valueType": "dynamic",
-            "value": "image1",
-            "width": 244,
-            "height": 140
-          }
-        ],
-        "border": 1,
-        "radius": 8
-      },
-      {
-        "objects": [
-          {
-            "type": "image",
-            "x": 0,
-            "y": 0,
-            "color": "#FD3232",
+            "color": "#D12A2A",
             "valueType": "static",
             "value": "",
             "width": 264,
@@ -2875,11 +3674,9 @@
     "type": "card",
     "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e6",
     "id": "llf4",
-    "z": 1016,
-    "parent": "blueagent9",
+    "z": 40995,
     "layer": 2,
-    "x": 4,
-    "y": 4
+    "parent": "8urz"
   },
   "2elx": {
     "deck": "blueagentdeck-copy001",
@@ -2887,8 +3684,10 @@
     "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e7",
     "id": "2elx",
     "layer": 2,
-    "z": 40850,
-    "parent": "f5mz"
+    "z": 3116,
+    "parent": "blueagent9",
+    "x": 4,
+    "y": 4
   },
   "blueagent9": {
     "type": "holder",
@@ -2915,18 +3714,18 @@
     "type": "card",
     "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e6",
     "id": "0v0h",
-    "z": 40852,
+    "z": 40997,
     "layer": 2,
-    "parent": "f5mz"
+    "parent": "8urz"
   },
   "9rj5": {
     "deck": "redagentdeck-copy001",
     "type": "card",
     "cardType": "type-7f9a725a-8392-4604-a313-81a74508c6e7",
     "id": "9rj5",
-    "z": 40849,
+    "z": 40993,
     "layer": 2,
-    "parent": "f5mz"
+    "parent": "8urz"
   },
   "unneeded-agent": {
     "type": "holder",
@@ -2992,7 +3791,7 @@
     "id": "pygm"
   },
   "_meta": {
-    "version": 3,
+    "version": 4,
     "info": {
       "name": "Undercover",
       "image": "/assets/2045601153_25796",
@@ -3010,13 +3809,13 @@
       "description": "Team leader gives team member clues so they can guess words.  First team to guess all words without getting the assasin card wins."
     }
   },
-  "f5mz": {
+  "8urz": {
     "type": "pile",
     "parent": "unneeded-agent",
     "x": 4,
     "y": 4,
     "width": 262,
     "height": 160,
-    "id": "f5mz"
+    "id": "8urz"
   }
 }

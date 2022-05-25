@@ -1,0 +1,1629 @@
+{
+  "Deck": {
+    "type": "deck",
+    "id": "Deck",
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "valueType": "static",
+            "value": "/assets/-111262717_23581",
+            "width": 160,
+            "height": 240
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#000000a0",
+            "valueType": "static",
+            "value": "",
+            "width": 160,
+            "height": 240
+          },
+          {
+            "type": "image",
+            "x": 20,
+            "y": 40,
+            "color": "transparent",
+            "valueType": "static",
+            "value": "/assets/-1431085592_42429",
+            "width": 80,
+            "height": 80,
+            "css": "border-radius: 100%; background-size: cover"
+          },
+          {
+            "type": "image",
+            "x": 40,
+            "y": 80,
+            "color": "transparent",
+            "valueType": "static",
+            "value": "/assets/-314994489_25206",
+            "width": 80,
+            "height": 80,
+            "css": "border-radius: 100%; background-size: cover"
+          },
+          {
+            "type": "image",
+            "x": 60,
+            "y": 120,
+            "color": "transparent",
+            "valueType": "static",
+            "value": "/assets/-111262717_23581",
+            "width": 80,
+            "height": 80,
+            "css": "border-radius: 100%; background-size: cover"
+          }
+        ],
+        "radius": 30
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "valueType": "dynamic",
+            "value": "image",
+            "width": 160,
+            "height": 240,
+            "css": "background-size: cover"
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 20,
+            "fontSize": 120,
+            "valueType": "dynamic",
+            "value": "number",
+            "textAlign": "center",
+            "width": 160,
+            "css": "color: white; text-shadow: 4px 4px black;"
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 45,
+            "fontSize": 70,
+            "valueType": "dynamic",
+            "value": "smallnumber",
+            "textAlign": "center",
+            "width": 160,
+            "css": "color: white; text-shadow: 4px 4px black;"
+          }
+        ],
+        "radius": 30
+      }
+    ],
+    "cardTypes": {
+      "Fire 1": {
+        "image": "/assets/-314994489_25206",
+        "number": 1
+      },
+      "Ice 1": {
+        "image": "/assets/-111262717_23581",
+        "number": 1
+      },
+      "Stone 1": {
+        "image": "/assets/-1431085592_42429",
+        "number": 1
+      },
+      "Fire 2": {
+        "image": "/assets/-314994489_25206",
+        "number": 2
+      },
+      "Ice 2": {
+        "image": "/assets/-111262717_23581",
+        "number": 2
+      },
+      "Stone 2": {
+        "image": "/assets/-1431085592_42429",
+        "number": 2
+      },
+      "Fire 3": {
+        "image": "/assets/-314994489_25206",
+        "number": 3
+      },
+      "Ice 3": {
+        "image": "/assets/-111262717_23581",
+        "number": 3
+      },
+      "Stone 3": {
+        "image": "/assets/-1431085592_42429",
+        "number": 3
+      },
+      "Fire 4": {
+        "image": "/assets/-314994489_25206",
+        "number": 4
+      },
+      "Ice 4": {
+        "image": "/assets/-111262717_23581",
+        "number": 4
+      },
+      "Stone 4": {
+        "image": "/assets/-1431085592_42429",
+        "number": 4
+      },
+      "Fire 5": {
+        "image": "/assets/-314994489_25206",
+        "number": 5
+      },
+      "Ice 5": {
+        "image": "/assets/-111262717_23581",
+        "number": 5
+      },
+      "Stone 5": {
+        "image": "/assets/-1431085592_42429",
+        "number": 5
+      },
+      "Fire 6": {
+        "image": "/assets/-314994489_25206",
+        "number": 6
+      },
+      "Ice 6": {
+        "image": "/assets/-111262717_23581",
+        "number": 6
+      },
+      "Stone 6": {
+        "image": "/assets/-1431085592_42429",
+        "number": 6
+      },
+      "Fire 7": {
+        "image": "/assets/-314994489_25206",
+        "number": 7
+      },
+      "Ice 7": {
+        "image": "/assets/-111262717_23581",
+        "number": 7
+      },
+      "Stone 7": {
+        "image": "/assets/-1431085592_42429",
+        "number": 7
+      },
+      "Fire 8": {
+        "image": "/assets/-314994489_25206",
+        "number": 8
+      },
+      "Ice 8": {
+        "image": "/assets/-111262717_23581",
+        "number": 8
+      },
+      "Stone 8": {
+        "image": "/assets/-1431085592_42429",
+        "number": 8
+      },
+      "Fire 9": {
+        "image": "/assets/-314994489_25206",
+        "number": 9
+      },
+      "Ice 9": {
+        "image": "/assets/-111262717_23581",
+        "number": 9
+      },
+      "Stone 9": {
+        "image": "/assets/-1431085592_42429",
+        "number": 9
+      },
+      "Fire 10": {
+        "image": "/assets/-314994489_25206",
+        "number": 10
+      },
+      "Ice 10": {
+        "image": "/assets/-111262717_23581",
+        "number": 10
+      },
+      "Stone 10": {
+        "image": "/assets/-1431085592_42429",
+        "number": 10
+      },
+      "Number Wildcard": {
+        "smallnumber": "1-10",
+        "image": "/assets/-1034047360_372253"
+      },
+      "Color Wildcard": {
+        "image": "/assets/-170776426_30255"
+      }
+    },
+    "cardDefaults": {
+      "height": 240,
+      "width": 160
+    },
+    "parent": "Draw"
+  },
+  "k3dx": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Fire 1",
+    "id": "k3dx",
+    "z": 1711,
+    "parent": "wi6p"
+  },
+  "5l8d": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ice 1",
+    "id": "5l8d",
+    "z": 8078,
+    "parent": "wi6p"
+  },
+  "297p": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Stone 1",
+    "id": "297p",
+    "z": 4315,
+    "parent": "wi6p"
+  },
+  "kg4x": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Fire 2",
+    "id": "kg4x",
+    "z": 20822,
+    "parent": "wi6p"
+  },
+  "a1is": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ice 2",
+    "id": "a1is",
+    "z": 7858,
+    "parent": "wi6p"
+  },
+  "utp7": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Stone 2",
+    "id": "utp7",
+    "z": 8113,
+    "parent": "wi6p"
+  },
+  "whze": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Fire 3",
+    "id": "whze",
+    "z": 5194,
+    "parent": "wi6p"
+  },
+  "jecf": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ice 3",
+    "id": "jecf",
+    "z": 661,
+    "parent": "wi6p"
+  },
+  "rn90": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Stone 3",
+    "id": "rn90",
+    "z": 7954,
+    "parent": "wi6p"
+  },
+  "abbs": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Fire 4",
+    "id": "abbs",
+    "z": 812,
+    "parent": "wi6p"
+  },
+  "ve4s": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ice 4",
+    "id": "ve4s",
+    "z": 3669,
+    "parent": "wi6p"
+  },
+  "rzbj": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Stone 4",
+    "id": "rzbj",
+    "z": 5459,
+    "parent": "wi6p"
+  },
+  "hyvc": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Fire 5",
+    "id": "hyvc",
+    "z": 6799,
+    "parent": "wi6p"
+  },
+  "fszg": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ice 5",
+    "id": "fszg",
+    "z": 5490,
+    "parent": "wi6p"
+  },
+  "5pan": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Stone 5",
+    "id": "5pan",
+    "z": 141,
+    "parent": "wi6p"
+  },
+  "940u": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Fire 6",
+    "id": "940u",
+    "z": 9656,
+    "parent": "wi6p"
+  },
+  "hhai": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ice 6",
+    "id": "hhai",
+    "z": 5714,
+    "parent": "wi6p"
+  },
+  "xln0": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Stone 6",
+    "id": "xln0",
+    "z": 8838,
+    "parent": "wi6p"
+  },
+  "ll4g": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Fire 7",
+    "id": "ll4g",
+    "z": 9508,
+    "parent": "wi6p"
+  },
+  "2jjn": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ice 7",
+    "id": "2jjn",
+    "z": 3737,
+    "parent": "wi6p"
+  },
+  "hjmx": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Stone 7",
+    "id": "hjmx",
+    "z": 6346,
+    "parent": "wi6p"
+  },
+  "9ggs": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Fire 8",
+    "id": "9ggs",
+    "z": 9040,
+    "parent": "wi6p"
+  },
+  "ph2p": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ice 8",
+    "id": "ph2p",
+    "z": 8023,
+    "parent": "wi6p"
+  },
+  "5xlx": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Stone 8",
+    "id": "5xlx",
+    "z": 6490,
+    "parent": "wi6p"
+  },
+  "9t4v": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Fire 9",
+    "id": "9t4v",
+    "z": 8634,
+    "parent": "wi6p"
+  },
+  "oxpn": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ice 9",
+    "id": "oxpn",
+    "z": 5998,
+    "parent": "wi6p"
+  },
+  "12w9": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Stone 9",
+    "id": "12w9",
+    "z": 3075,
+    "parent": "wi6p"
+  },
+  "a13a": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Fire 10",
+    "id": "a13a",
+    "z": 1206,
+    "parent": "wi6p"
+  },
+  "3n09": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ice 10",
+    "id": "3n09",
+    "z": 3702,
+    "parent": "wi6p"
+  },
+  "s8xm": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Stone 10",
+    "id": "s8xm",
+    "z": 5003,
+    "parent": "wi6p"
+  },
+  "4ips": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Fire 1",
+    "id": "4ips",
+    "z": 1200,
+    "parent": "wi6p"
+  },
+  "jds2": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ice 1",
+    "id": "jds2",
+    "z": 8775,
+    "parent": "wi6p"
+  },
+  "3lbc": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Stone 1",
+    "id": "3lbc",
+    "z": 6088,
+    "parent": "wi6p"
+  },
+  "3atg": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Fire 2",
+    "id": "3atg",
+    "z": 43,
+    "parent": "wi6p"
+  },
+  "5tym": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ice 2",
+    "id": "5tym",
+    "z": 72,
+    "parent": "wi6p"
+  },
+  "79t7": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Stone 2",
+    "id": "79t7",
+    "z": 4298,
+    "parent": "wi6p"
+  },
+  "qrou": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Fire 3",
+    "id": "qrou",
+    "z": 5114,
+    "parent": "wi6p"
+  },
+  "dakb": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ice 3",
+    "id": "dakb",
+    "z": 3878,
+    "parent": "wi6p"
+  },
+  "96l2": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Stone 3",
+    "id": "96l2",
+    "z": 8875,
+    "parent": "wi6p"
+  },
+  "0xtf": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Fire 4",
+    "id": "0xtf",
+    "z": 7826,
+    "parent": "wi6p"
+  },
+  "rkbw": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ice 4",
+    "id": "rkbw",
+    "z": 8935,
+    "parent": "wi6p"
+  },
+  "a000": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Stone 4",
+    "id": "a000",
+    "z": 3775,
+    "parent": "wi6p"
+  },
+  "4o3x": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Fire 5",
+    "id": "4o3x",
+    "z": 9629,
+    "parent": "wi6p"
+  },
+  "3qqn": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ice 5",
+    "id": "3qqn",
+    "z": 5563,
+    "parent": "wi6p"
+  },
+  "pd18": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Stone 5",
+    "id": "pd18",
+    "z": 7013,
+    "parent": "wi6p"
+  },
+  "3vl8": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Fire 6",
+    "id": "3vl8",
+    "z": 383,
+    "parent": "wi6p"
+  },
+  "5amb": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ice 6",
+    "id": "5amb",
+    "z": 3628,
+    "parent": "wi6p"
+  },
+  "gzgb": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Stone 6",
+    "id": "gzgb",
+    "z": 8813,
+    "parent": "wi6p"
+  },
+  "rjb1": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Fire 7",
+    "id": "rjb1",
+    "z": 5167,
+    "parent": "wi6p"
+  },
+  "jyel": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ice 7",
+    "id": "jyel",
+    "z": 5719,
+    "parent": "wi6p"
+  },
+  "rvto": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Stone 7",
+    "id": "rvto",
+    "z": 9174,
+    "parent": "wi6p"
+  },
+  "3zzo": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Fire 8",
+    "id": "3zzo",
+    "z": 1387,
+    "parent": "wi6p"
+  },
+  "4k0d": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ice 8",
+    "id": "4k0d",
+    "z": 3961,
+    "parent": "wi6p"
+  },
+  "g3l8": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Stone 8",
+    "id": "g3l8",
+    "z": 770,
+    "parent": "wi6p"
+  },
+  "qwse": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Fire 9",
+    "id": "qwse",
+    "z": 9844,
+    "parent": "wi6p"
+  },
+  "ajng": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ice 9",
+    "id": "ajng",
+    "z": 8494,
+    "parent": "wi6p"
+  },
+  "cpk0": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Stone 9",
+    "id": "cpk0",
+    "z": 3504,
+    "parent": "wi6p"
+  },
+  "26vf": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Fire 10",
+    "id": "26vf",
+    "z": 1460,
+    "parent": "wi6p"
+  },
+  "w2oz": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ice 10",
+    "id": "w2oz",
+    "z": 5320,
+    "parent": "wi6p"
+  },
+  "uptd": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Stone 10",
+    "id": "uptd",
+    "z": 881,
+    "parent": "wi6p"
+  },
+  "jrd6": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Fire 1",
+    "id": "jrd6",
+    "z": 539,
+    "parent": "wi6p"
+  },
+  "v2u5": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ice 1",
+    "id": "v2u5",
+    "z": 3745,
+    "parent": "wi6p"
+  },
+  "vqb2": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Stone 1",
+    "id": "vqb2",
+    "z": 2127,
+    "parent": "wi6p"
+  },
+  "r1ze": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Fire 2",
+    "id": "r1ze",
+    "z": 7670,
+    "parent": "wi6p"
+  },
+  "mk31": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ice 2",
+    "id": "mk31",
+    "z": 3400,
+    "parent": "wi6p"
+  },
+  "h7dt": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Stone 2",
+    "id": "h7dt",
+    "z": 8588,
+    "parent": "wi6p"
+  },
+  "qos5": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Fire 3",
+    "id": "qos5",
+    "z": 1217,
+    "parent": "wi6p"
+  },
+  "96ic": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ice 3",
+    "id": "96ic",
+    "z": 6781,
+    "parent": "wi6p"
+  },
+  "n0tj": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Stone 3",
+    "id": "n0tj",
+    "z": 3702,
+    "parent": "wi6p"
+  },
+  "phy3": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Fire 4",
+    "id": "phy3",
+    "z": 4272,
+    "parent": "wi6p"
+  },
+  "m7cx": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ice 4",
+    "id": "m7cx",
+    "z": 2916,
+    "parent": "wi6p"
+  },
+  "pelo": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Stone 4",
+    "id": "pelo",
+    "z": 1938,
+    "parent": "wi6p"
+  },
+  "ntt0": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Fire 5",
+    "id": "ntt0",
+    "z": 3979,
+    "parent": "wi6p"
+  },
+  "l054": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ice 5",
+    "id": "l054",
+    "z": 1143,
+    "parent": "wi6p"
+  },
+  "2ef8": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Stone 5",
+    "id": "2ef8",
+    "z": 5325,
+    "parent": "wi6p"
+  },
+  "jdom": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Fire 6",
+    "id": "jdom",
+    "z": 3893,
+    "parent": "wi6p"
+  },
+  "ly3a": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ice 6",
+    "id": "ly3a",
+    "z": 9787,
+    "parent": "wi6p"
+  },
+  "c0fv": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Stone 6",
+    "id": "c0fv",
+    "z": 6441,
+    "parent": "wi6p"
+  },
+  "x4kw": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Fire 7",
+    "id": "x4kw",
+    "z": 1001,
+    "parent": "wi6p"
+  },
+  "ealt": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ice 7",
+    "id": "ealt",
+    "z": 2337,
+    "parent": "wi6p"
+  },
+  "2sv9": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Stone 7",
+    "id": "2sv9",
+    "z": 7086,
+    "parent": "wi6p"
+  },
+  "q5av": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Fire 8",
+    "id": "q5av",
+    "z": 9051,
+    "parent": "wi6p"
+  },
+  "jagt": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ice 8",
+    "id": "jagt",
+    "z": 6526,
+    "parent": "wi6p"
+  },
+  "r6ij": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Stone 8",
+    "id": "r6ij",
+    "z": 1817,
+    "parent": "wi6p"
+  },
+  "bjmk": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Fire 9",
+    "id": "bjmk",
+    "z": 32,
+    "parent": "wi6p"
+  },
+  "dlwz": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ice 9",
+    "id": "dlwz",
+    "z": 7668,
+    "parent": "wi6p"
+  },
+  "wayz": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Stone 9",
+    "id": "wayz",
+    "z": 5494,
+    "parent": "wi6p"
+  },
+  "47bp": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Fire 10",
+    "id": "47bp",
+    "z": 7993,
+    "parent": "wi6p"
+  },
+  "0t1r": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Ice 10",
+    "id": "0t1r",
+    "z": 2823,
+    "parent": "wi6p"
+  },
+  "5wa7": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Stone 10",
+    "id": "5wa7",
+    "z": 7368,
+    "parent": "wi6p"
+  },
+  "7jbh": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Number Wildcard",
+    "id": "7jbh",
+    "z": 4407,
+    "parent": "wi6p"
+  },
+  "fa1p": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Number Wildcard",
+    "id": "fa1p",
+    "z": 7372,
+    "parent": "wi6p"
+  },
+  "hpf9": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Number Wildcard",
+    "id": "hpf9",
+    "z": 820,
+    "parent": "wi6p"
+  },
+  "t96a": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Number Wildcard",
+    "id": "t96a",
+    "z": 8755,
+    "parent": "wi6p"
+  },
+  "xxum": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Number Wildcard",
+    "id": "xxum",
+    "z": 926,
+    "parent": "wi6p"
+  },
+  "k3du": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Color Wildcard",
+    "id": "k3du",
+    "z": 4003,
+    "parent": "wi6p"
+  },
+  "cg9l": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Color Wildcard",
+    "id": "cg9l",
+    "z": 8111,
+    "parent": "wi6p"
+  },
+  "6dn5": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Color Wildcard",
+    "id": "6dn5",
+    "z": 7873,
+    "parent": "wi6p"
+  },
+  "jjkm": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Color Wildcard",
+    "id": "jjkm",
+    "z": 4013,
+    "parent": "wi6p"
+  },
+  "yr4x": {
+    "deck": "Deck",
+    "type": "card",
+    "cardType": "Color Wildcard",
+    "id": "yr4x",
+    "z": 9641,
+    "parent": "wi6p"
+  },
+  "Draw": {
+    "type": "holder",
+    "id": "Draw",
+    "width": 168,
+    "height": 248,
+    "z": 9,
+    "x": 20,
+    "y": 400,
+    "css": "border-radius: 30px; background-color: #00000080; border-color: #000000"
+  },
+  "Reset": {
+    "type": "button",
+    "id": "Reset",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "Draw"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "Draw"
+      },
+      {
+        "func": "FLIP",
+        "holder": "Draw",
+        "face": 0
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "Game Over"
+      },
+      {
+        "func": "SET",
+        "value": "Discard"
+      },
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "+10"
+      },
+      {
+        "func": "SET",
+        "value": "Bonus"
+      }
+    ],
+    "text": "Reset",
+    "z": 3,
+    "x": 316,
+    "y": 164
+  },
+  "Hand": {
+    "type": "holder",
+    "id": "Hand",
+    "childrenPerOwner": true,
+    "y": 732,
+    "x": 20,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "stackOffsetX": 164,
+    "inheritFrom": "Draw",
+    "width": 1560
+  },
+  "Deck1": {
+    "inheritFrom": "Deck",
+    "id": "Deck1",
+    "type": "deck",
+    "parent": "Discard"
+  },
+  "Discard": {
+    "type": "holder",
+    "id": "Discard",
+    "x": 20,
+    "inheritFrom": "Draw",
+    "z": 11,
+    "y": 50
+  },
+  "Deck2": {
+    "inheritFrom": "Deck",
+    "id": "Deck2",
+    "type": "deck",
+    "parent": "Stack"
+  },
+  "Stack": {
+    "type": "holder",
+    "id": "Stack",
+    "x": 524,
+    "inheritFrom": "Draw",
+    "z": 8,
+    "y": 400
+  },
+  "Auxiliary Deck": {
+    "type": "deck",
+    "id": "Auxiliary Deck",
+    "cardDefaults": {
+      "height": 240,
+      "width": 160
+    },
+    "cardTypes": {
+      "+10": {
+        "bottomtext": "+10"
+      },
+      "Game Over": {
+        "text": "Game Over"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "valueType": "static",
+            "value": "/assets/-314994489_25206",
+            "width": 160,
+            "height": 240
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#00000080",
+            "valueType": "static",
+            "value": "",
+            "width": 160,
+            "height": 240
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 60,
+            "fontSize": 46,
+            "valueType": "dynamic",
+            "value": "text",
+            "textAlign": "center",
+            "width": 160,
+            "css": "color: white; text-shadow: 4px 4px black;"
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 180,
+            "fontSize": 46,
+            "valueType": "dynamic",
+            "value": "bottomtext",
+            "textAlign": "center",
+            "width": 160,
+            "css": "color: white; text-shadow: 4px 4px black;"
+          }
+        ],
+        "radius": 30
+      }
+    ]
+  },
+  "ncqk": {
+    "deck": "Auxiliary Deck",
+    "type": "card",
+    "cardType": "+10",
+    "id": "ncqk",
+    "z": 20810,
+    "parent": "tjjs"
+  },
+  "rn46": {
+    "deck": "Auxiliary Deck",
+    "type": "card",
+    "cardType": "+10",
+    "id": "rn46",
+    "z": 20811,
+    "parent": "tjjs"
+  },
+  "hwp9": {
+    "deck": "Auxiliary Deck",
+    "type": "card",
+    "cardType": "+10",
+    "id": "hwp9",
+    "z": 20812,
+    "parent": "tjjs"
+  },
+  "3vuk": {
+    "deck": "Auxiliary Deck",
+    "type": "card",
+    "cardType": "Game Over",
+    "id": "3vuk",
+    "z": 879,
+    "parent": "Discard",
+    "x": 4,
+    "y": 4
+  },
+  "Deck3": {
+    "inheritFrom": "Deck",
+    "id": "Deck3",
+    "type": "deck",
+    "parent": "Player 1"
+  },
+  "Player 1": {
+    "type": "holder",
+    "id": "Player 1",
+    "x": 1028,
+    "y": 50,
+    "z": 7,
+    "inheritFrom": "Draw",
+    "dropTarget": {
+      "deck": "Deck"
+    }
+  },
+  "Player 1 - Join": {
+    "type": "button",
+    "id": "Player 1 - Join",
+    "parent": "Player 1",
+    "x": 44,
+    "y": 114,
+    "text": "Join",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "cardType",
+        "value": "Game Over"
+      },
+      {
+        "func": "SET",
+        "value": "Stack"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "Draw"
+      },
+      {
+        "func": "MOVE",
+        "from": "Draw",
+        "to": "Hand",
+        "count": 6
+      },
+      {
+        "func": "SELECT",
+        "value": "Hand"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var players = ${COUNT} / 6",
+      "var targetHeight = ${PROPERTY targetHeight}",
+      "var targetHeightLow = ${targetHeight.$players} - 5",
+      "var targetHeightHigh = ${targetHeight.$players} + 5",
+      "var targetHeight = randInt ${targetHeightLow} ${targetHeightHigh}",
+      {
+        "func": "MOVE",
+        "from": "Draw",
+        "to": "Discard",
+        "count": "${targetHeight}"
+      },
+      {
+        "func": "MOVE",
+        "from": "Stack",
+        "to": "Draw"
+      },
+      {
+        "func": "MOVE",
+        "from": "Discard",
+        "to": "Draw",
+        "count": "${targetHeight}"
+      },
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent} - Label",
+        "value": "${playerName}"
+      }
+    ],
+    "targetHeight": [
+      50,
+      50,
+      44,
+      48,
+      42,
+      60,
+      54
+    ]
+  },
+  "Player 1 - Label": {
+    "type": "label",
+    "id": "Player 1 - Label",
+    "parent": "Player 1",
+    "text": "Player 1",
+    "width": 168,
+    "y": -32,
+    "css": "font-size: 24px; color: white; "
+  },
+  "Player 2": {
+    "inheritFrom": "Player 1",
+    "id": "Player 2",
+    "type": "holder",
+    "x": 1220
+  },
+  "Deck4": {
+    "inheritFrom": "Deck3",
+    "id": "Deck4",
+    "type": "deck",
+    "parent": "Player 2"
+  },
+  "Player 2 - Join": {
+    "inheritFrom": "Player 1 - Join",
+    "id": "Player 2 - Join",
+    "type": "button",
+    "parent": "Player 2"
+  },
+  "Player 2 - Label": {
+    "inheritFrom": "Player 1 - Label",
+    "id": "Player 2 - Label",
+    "type": "label",
+    "parent": "Player 2",
+    "text": "Player 2"
+  },
+  "Player 3": {
+    "inheritFrom": "Player 1",
+    "id": "Player 3",
+    "type": "holder",
+    "x": 1412
+  },
+  "Deck5": {
+    "inheritFrom": "Deck3",
+    "id": "Deck5",
+    "type": "deck",
+    "parent": "Player 3"
+  },
+  "Player 3 - Join": {
+    "inheritFrom": "Player 1 - Join",
+    "id": "Player 3 - Join",
+    "type": "button",
+    "parent": "Player 3"
+  },
+  "Player 3 - Label": {
+    "inheritFrom": "Player 1 - Label",
+    "id": "Player 3 - Label",
+    "type": "label",
+    "parent": "Player 3",
+    "text": "Player 3"
+  },
+  "Player 4": {
+    "inheritFrom": "Player 1",
+    "id": "Player 4",
+    "type": "holder",
+    "x": 1028,
+    "y": 400
+  },
+  "Deck6": {
+    "inheritFrom": "Deck3",
+    "id": "Deck6",
+    "type": "deck",
+    "parent": "Player 4"
+  },
+  "Player 4 - Join": {
+    "inheritFrom": "Player 1 - Join",
+    "id": "Player 4 - Join",
+    "type": "button",
+    "parent": "Player 4"
+  },
+  "Player 4 - Label": {
+    "inheritFrom": "Player 1 - Label",
+    "id": "Player 4 - Label",
+    "type": "label",
+    "parent": "Player 4",
+    "text": "Player 4"
+  },
+  "Player 5": {
+    "inheritFrom": "Player 4",
+    "id": "Player 5",
+    "type": "holder",
+    "x": 1220
+  },
+  "Deck7": {
+    "inheritFrom": "Deck3",
+    "id": "Deck7",
+    "type": "deck",
+    "parent": "Player 5"
+  },
+  "Player 5 - Join": {
+    "inheritFrom": "Player 1 - Join",
+    "id": "Player 5 - Join",
+    "type": "button",
+    "parent": "Player 5"
+  },
+  "Player 5 - Label": {
+    "inheritFrom": "Player 1 - Label",
+    "id": "Player 5 - Label",
+    "type": "label",
+    "parent": "Player 5",
+    "text": "Player 5"
+  },
+  "Player 6": {
+    "inheritFrom": "Player 4",
+    "id": "Player 6",
+    "type": "holder",
+    "x": 1412
+  },
+  "Deck8": {
+    "inheritFrom": "Deck3",
+    "id": "Deck8",
+    "type": "deck",
+    "parent": "Player 6"
+  },
+  "Player 6 - Join": {
+    "inheritFrom": "Player 1 - Join",
+    "id": "Player 6 - Join",
+    "type": "button",
+    "parent": "Player 6"
+  },
+  "Player 6 - Label": {
+    "inheritFrom": "Player 1 - Label",
+    "id": "Player 6 - Label",
+    "type": "label",
+    "parent": "Player 6",
+    "text": "Player 6"
+  },
+  "Draw Label": {
+    "type": "label",
+    "id": "Draw Label",
+    "parent": "Draw",
+    "inheritFrom": "Player 1 - Label",
+    "text": "Draw"
+  },
+  "Discard Label": {
+    "type": "label",
+    "id": "Discard Label",
+    "parent": "Discard",
+    "inheritFrom": "Player 1 - Label",
+    "text": "Discard"
+  },
+  "Stack Label": {
+    "type": "label",
+    "id": "Stack Label",
+    "parent": "Stack",
+    "inheritFrom": "Player 1 - Label",
+    "text": "Stack"
+  },
+  "_meta": {
+    "version": 3,
+    "info": {
+      "name": "Elemental",
+      "image": "/assets/-170776426_30255",
+      "rules": "",
+      "bgg": "",
+      "year": "2020",
+      "mode": "vs",
+      "time": "15",
+      "players": "2-6",
+      "language": "US",
+      "variant": "",
+      "attribution": "Board layout by ArnoldSmith86. Released to public domain under CC0.\n\nImages released under Pixabay License:\nhttps://pixabay.com/photos/rocks-stones-pebbles-background-1246668/\nhttps://pixabay.com/photos/ice-frost-winter-snow-snowflakes-6538605/\nhttps://pixabay.com/photos/fire-wood-fire-flame-burn-brand-171229/\nhttps://pixabay.com/photos/grass-lawn-field-meadow-grassy-84622/",
+      "similarName": "Spicy",
+      "similarLink": "https://boardgamegeek.com/boardgame/299169/spicy",
+      "description": "Bluffing card game. Play or pass each turn while declaring card. Penalties for getting caught lieing and wrong challenges. Collect reward cards for points.  Most points wins."
+    }
+  },
+  "Background": {
+    "id": "Background",
+    "width": 1600,
+    "height": 1000,
+    "layer": -10,
+    "css": "background-size: cover",
+    "image": "/assets/-1034047360_372253",
+    "movable": false
+  },
+  "Background Dimmer": {
+    "id": "Background Dimmer",
+    "width": 1600,
+    "height": 1000,
+    "layer": -9,
+    "css": "background-color: #000000b0",
+    "movable": false
+  },
+  "Deck9": {
+    "inheritFrom": "Deck3",
+    "id": "Deck9",
+    "type": "deck",
+    "parent": "Player 1 - Bonus"
+  },
+  "Player 1 - Bonus": {
+    "type": "holder",
+    "id": "Player 1 - Bonus",
+    "parent": "Player 1",
+    "x": 0,
+    "y": 60,
+    "dropTarget": {
+      "cardType": "+10"
+    },
+    "inheritFrom": "Player 1"
+  },
+  "Player 2 - Bonus": {
+    "type": "holder",
+    "id": "Player 2 - Bonus",
+    "parent": "Player 2",
+    "inheritFrom": "Player 1 - Bonus"
+  },
+  "Deck10": {
+    "inheritFrom": "Deck3",
+    "id": "Deck10",
+    "type": "deck",
+    "parent": "Player 2 - Bonus"
+  },
+  "Player 3 - Bonus": {
+    "type": "holder",
+    "id": "Player 3 - Bonus",
+    "parent": "Player 3",
+    "inheritFrom": "Player 1 - Bonus"
+  },
+  "Deck11": {
+    "inheritFrom": "Deck3",
+    "id": "Deck11",
+    "type": "deck",
+    "parent": "Player 3 - Bonus"
+  },
+  "Player 4 - Bonus": {
+    "type": "holder",
+    "id": "Player 4 - Bonus",
+    "parent": "Player 4",
+    "inheritFrom": "Player 1 - Bonus"
+  },
+  "Deck12": {
+    "inheritFrom": "Deck3",
+    "id": "Deck12",
+    "type": "deck",
+    "parent": "Player 4 - Bonus"
+  },
+  "Player 5 - Bonus": {
+    "type": "holder",
+    "id": "Player 5 - Bonus",
+    "parent": "Player 5",
+    "inheritFrom": "Player 1 - Bonus"
+  },
+  "Deck13": {
+    "inheritFrom": "Deck3",
+    "id": "Deck13",
+    "type": "deck",
+    "parent": "Player 5 - Bonus"
+  },
+  "Player 6 - Bonus": {
+    "type": "holder",
+    "id": "Player 6 - Bonus",
+    "parent": "Player 6",
+    "inheritFrom": "Player 1 - Bonus"
+  },
+  "Deck14": {
+    "inheritFrom": "Deck3",
+    "id": "Deck14",
+    "type": "deck",
+    "parent": "Player 6 - Bonus"
+  },
+  "Deck15": {
+    "inheritFrom": "Deck",
+    "id": "Deck15",
+    "type": "deck",
+    "parent": "Bonus"
+  },
+  "Bonus": {
+    "type": "holder",
+    "id": "Bonus",
+    "x": 524,
+    "y": 50,
+    "z": 8,
+    "inheritFrom": "Draw"
+  },
+  "Bonus Label": {
+    "type": "label",
+    "id": "Bonus Label",
+    "parent": "Bonus",
+    "inheritFrom": "Player 1 - Label",
+    "text": "Bonus"
+  },
+  "tjjs": {
+    "type": "pile",
+    "parent": "Bonus",
+    "x": 4,
+    "y": 4,
+    "width": 160,
+    "height": 240,
+    "id": "tjjs"
+  },
+  "wi6p": {
+    "type": "pile",
+    "parent": "Draw",
+    "x": 4,
+    "y": 4,
+    "width": 160,
+    "height": 240,
+    "id": "wi6p"
+  }
+}

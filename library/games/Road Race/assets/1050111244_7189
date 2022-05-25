@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:cc="http://creativecommons.org/ns#"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+    xmlns:svg="http://www.w3.org/2000/svg"
+    xmlns:ns1="http://sozi.baierouge.fr"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    id="svg2"
+    sodipodi:docname="traffic semaphore silhouette green.svg"
+    viewBox="0 0 289.33 486.21"
+    sodipodi:version="0.32"
+    version="1.0"
+    inkscape:output_extension="org.inkscape.output.svg.inkscape"
+    inkscape:version="0.46"
+  >
+  <sodipodi:namedview
+      id="base"
+      bordercolor="#666666"
+      inkscape:pageshadow="2"
+      inkscape:window-y="22"
+      pagecolor="#ffffff"
+      inkscape:window-height="719"
+      inkscape:zoom="0.35"
+      inkscape:window-x="0"
+      showgrid="false"
+      borderopacity="1.0"
+      inkscape:current-layer="layer1"
+      inkscape:cx="-263.45772"
+      inkscape:cy="171.27933"
+      inkscape:window-width="1280"
+      inkscape:pageopacity="0.0"
+      inkscape:document-units="px"
+  />
+  <g
+      id="layer1"
+      inkscape:label="Camada 1"
+      inkscape:groupmode="layer"
+      transform="translate(1159.4 -455.9)"
+    >
+    <g
+        id="g3235"
+      >
+      <rect
+          id="rect2383"
+          style="fill:#000000"
+          ry="45.745"
+          height="307.84"
+          width="140.66"
+          y="455.9"
+          x="-1085.1"
+      />
+      <path
+          id="path2391"
+          sodipodi:rx="68.690376"
+          sodipodi:ry="90.913727"
+          style="fill:#00ff00"
+          sodipodi:type="arc"
+          d="m404.06 351.32a68.69 90.914 0 1 1 -137.38 0 68.69 90.914 0 1 1 137.38 0z"
+          transform="matrix(.63328 0 0 .47848 -1227.1 534.14)"
+          sodipodi:cy="351.31631"
+          sodipodi:cx="335.37064"
+      />
+      <path
+          id="path2435"
+          sodipodi:rx="68.690376"
+          sodipodi:ry="90.913727"
+          style="fill:#ffffff"
+          sodipodi:type="arc"
+          d="m404.06 351.32a68.69 90.914 0 1 1 -137.38 0 68.69 90.914 0 1 1 137.38 0z"
+          transform="matrix(.63328 0 0 .47848 -1227.1 441.72)"
+          sodipodi:cy="351.31631"
+          sodipodi:cx="335.37064"
+      />
+      <path
+          id="path2437"
+          sodipodi:rx="68.690376"
+          sodipodi:ry="90.913727"
+          style="fill:#ffffff"
+          sodipodi:type="arc"
+          d="m404.06 351.32a68.69 90.914 0 1 1 -137.38 0 68.69 90.914 0 1 1 137.38 0z"
+          transform="matrix(.63328 0 0 .47848 -1227.1 349.3)"
+          sodipodi:cy="351.31631"
+          sodipodi:cx="335.37064"
+      />
+      <path
+          id="path2432"
+          sodipodi:nodetypes="cssscsss"
+          style="fill:#000000"
+          d="m-1108.5 740.84c-1.5-0.6-13.9-16.33-27.7-34.92-23-31.22-24.7-34.23-22.5-39.23 2.4-5.36 2.7-3.72 29.9-3.72h32.7v39.17c0 32.98-0.4 35.62-4.2 37.89-3.4 2.06-4.8 2.16-8.2 0.81z"
+      />
+      <path
+          id="path2441"
+          sodipodi:nodetypes="cssscsss"
+          style="fill:#000000"
+          d="m-1108.5 648.42c-1.5-0.6-13.9-16.33-27.7-34.92-23-31.22-24.7-34.22-22.5-39.23 2.4-5.36 2.7-3.71 29.9-3.71h32.7v39.16c0 32.98-0.4 35.62-4.2 37.89-3.4 2.06-4.8 2.16-8.2 0.81z"
+      />
+      <path
+          id="path2443"
+          sodipodi:nodetypes="cssscsss"
+          style="fill:#000000"
+          d="m-1108.5 556c-1.5-0.6-13.9-16.33-27.7-34.92-23-31.22-24.7-34.22-22.5-39.23 2.4-5.36 2.7-3.71 29.9-3.71h32.7v39.17c0 32.97-0.4 35.61-4.2 37.88-3.4 2.06-4.8 2.16-8.2 0.81z"
+      />
+      <g
+          id="g2451"
+          style="fill:#000000"
+          transform="translate(-32 -115.26)"
+        >
+        <path
+            id="path2445"
+            sodipodi:nodetypes="cssscsss"
+            style="fill:#000000"
+            d="m-889.02 856.09c1.49-0.6 13.94-16.32 27.66-34.92 23.05-31.21 24.77-34.22 22.54-39.23-2.39-5.36-2.74-3.71-29.92-3.71h-32.65v39.17c0 32.98 0.41 35.62 4.15 37.89 3.38 2.05 4.86 2.16 8.22 0.8z"
+        />
+        <path
+            id="path2447"
+            sodipodi:nodetypes="cssscsss"
+            style="fill:#000000"
+            d="m-889.02 763.67c1.49-0.6 13.94-16.32 27.66-34.92 23.05-31.21 24.77-34.22 22.54-39.23-2.39-5.35-2.74-3.71-29.92-3.71h-32.65v39.17c0 32.98 0.41 35.62 4.15 37.89 3.38 2.05 4.86 2.16 8.22 0.8z"
+        />
+        <path
+            id="path2449"
+            sodipodi:nodetypes="cssscsss"
+            style="fill:#000000"
+            d="m-889.02 671.26c1.49-0.61 13.94-16.33 27.66-34.93 23.05-31.21 24.77-34.22 22.54-39.23-2.39-5.35-2.74-3.71-29.92-3.71h-32.65v39.17c0 32.98 0.41 35.62 4.15 37.89 3.38 2.05 4.86 2.16 8.22 0.81z"
+        />
+      </g
+      >
+      <rect
+          id="rect3244"
+          style="fill:#000000"
+          ry="12.429"
+          height="167.43"
+          width="78.029"
+          y="774.68"
+          x="-1053.8"
+      />
+    </g
+    >
+  </g
+  >
+  <metadata
+    >
+    <rdf:RDF
+      >
+      <cc:Work
+        >
+        <dc:format
+          >image/svg+xml</dc:format
+        >
+        <dc:type
+            rdf:resource="http://purl.org/dc/dcmitype/StillImage"
+        />
+        <cc:license
+            rdf:resource="http://creativecommons.org/licenses/publicdomain/"
+        />
+        <dc:publisher
+          >
+          <cc:Agent
+              rdf:about="http://openclipart.org/"
+            >
+            <dc:title
+              >Openclipart</dc:title
+            >
+          </cc:Agent
+          >
+        </dc:publisher
+        >
+        <dc:title
+          >Traffic semaphore green light</dc:title
+        >
+        <dc:date
+          >2010-06-12T06:32:21</dc:date
+        >
+        <dc:description
+          >A silhouette of a traffic semaphore, with its green light on.</dc:description
+        >
+        <dc:source
+          >https://openclipart.org/detail/66421/traffic-semaphore-green-light-by-laobc</dc:source
+        >
+        <dc:creator
+          >
+          <cc:Agent
+            >
+            <dc:title
+              >laobc</dc:title
+            >
+          </cc:Agent
+          >
+        </dc:creator
+        >
+        <dc:subject
+          >
+          <rdf:Bag
+            >
+            <rdf:li
+              >black</rdf:li
+            >
+            <rdf:li
+              >semaphore</rdf:li
+            >
+            <rdf:li
+              >silhouette</rdf:li
+            >
+            <rdf:li
+              >traffic</rdf:li
+            >
+          </rdf:Bag
+          >
+        </dc:subject
+        >
+      </cc:Work
+      >
+      <cc:License
+          rdf:about="http://creativecommons.org/licenses/publicdomain/"
+        >
+        <cc:permits
+            rdf:resource="http://creativecommons.org/ns#Reproduction"
+        />
+        <cc:permits
+            rdf:resource="http://creativecommons.org/ns#Distribution"
+        />
+        <cc:permits
+            rdf:resource="http://creativecommons.org/ns#DerivativeWorks"
+        />
+      </cc:License
+      >
+    </rdf:RDF
+    >
+  </metadata
+  >
+</svg
+>

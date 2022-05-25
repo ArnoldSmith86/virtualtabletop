@@ -1,0 +1,4259 @@
+{
+  "_meta": {
+    "version": 5,
+    "info": {
+      "name": "Capture the Flag",
+      "image": "/assets/1891395122_1571537",
+      "rules": "",
+      "bgg": "",
+      "year": "1946",
+      "mode": "vs",
+      "time": "45",
+      "players": "2-4",
+      "language": "US",
+      "variant": "",
+      "attribution": "Game room layout, game pieces, and library image by LawDawg 96 and are released to the Public Domain through CC0.\n\nField background based on original photo by sasha set available at https://unsplash.com/photos/GURzQwO8Li0 under the Unsplash License.\n\nRock background available under the Pixabay License at https://pixabay.com/photos/volcanic-rock-background-template-3836723/.\n\nPiece icons from https://game-icons.net/ available as CC BY 3.0:\n- Flag by Lorc https://game-icons.net/1x1/lorc/flying-flag.html\n- Spy by Delapouite https://game-icons.net/1x1/delapouite/spy.html\n- Bomb by Lorc https://game-icons.net/1x1/lorc/unlit-bomb.html\n- Rank 1 by Delapouite https://game-icons.net/1x1/delapouite/star-formation.html\n- Rank 2 by Delapouite https://game-icons.net/1x1/delapouite/star-medal.html\n- Rank 3 by Skoll https://game-icons.net/1x1/skoll/rank-3.html\n- Rank 4 by Skoll https://game-icons.net/1x1/skoll/rank-2.html\n- Rank 5 by Skoll https://game-icons.net/1x1/skoll/rank-1.html\n- Rank 6 by Delapouite https://game-icons.net/1x1/delapouite/sergeant.html\n- Rank 7 by Delapouite https://game-icons.net/1x1/delapouite/corporal.html\n- Rank 8 by Delapouite https://game-icons.net/1x1/delapouite/private-first-class.html\n- Rank 9 by Delapouite https://game-icons.net/1x1/delapouite/private.html\n",
+      "similarName": "Stratego",
+      "similarLink": "https://boardgamegeek.com/boardgame/1917/stratego",
+      "description": "Strategically arrange movable army pieces, bombs, and flag on board. Attack and capture opponents pieces. First to capture opponent's flag wins."
+    }
+  },
+  "calls": {
+    "id": "calls",
+    "y": 475,
+    "z": 1257,
+    "text": "Calls in here",
+    "attackCheckRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${square}",
+        "collection": "both"
+      },
+      {
+        "func": "SELECT",
+        "source": "both",
+        "property": "defend",
+        "value": false,
+        "collection": "attacker"
+      },
+      {
+        "func": "GET",
+        "collection": "attacker",
+        "property": "id",
+        "variable": "attackID"
+      },
+      {
+        "func": "GET",
+        "collection": "attacker",
+        "property": "text",
+        "variable": "attackRank"
+      },
+      {
+        "func": "SELECT",
+        "source": "both",
+        "property": "defend",
+        "value": true,
+        "collection": "defender"
+      },
+      {
+        "func": "GET",
+        "collection": "defender",
+        "property": "id",
+        "variable": "defendID"
+      },
+      {
+        "func": "GET",
+        "collection": "defender",
+        "property": "text",
+        "variable": "defendRank"
+      },
+      "var attackColor = ${attackID} charAt 0",
+      "var defendColor = ${defendID} charAt 0",
+      {
+        "func": "IF",
+        "operand1": "${attackColor}",
+        "operand2": "${defendColor}",
+        "thenRoutine": [
+          {
+            "note": "Undo invalid move",
+            "func": "CLICK",
+            "collection": [
+              "undo"
+            ]
+          }
+        ],
+        "elseRoutine": [
+          "var numCheck = ${attackRank} + ${defendRank}",
+          "var numCheck = ${numCheck} / 1 //if either piece has a letter, the result will be 0",
+          {
+            "func": "IF",
+            "operand1": "${numCheck}",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "note": "Call routine for special pieces"
+              },
+              {
+                "func": "CALL",
+                "routine": "resolveSpecialRoutine"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "note": "Call routine for numbered pieces"
+              },
+              {
+                "func": "CALL",
+                "routine": "resolveNumberRoutine"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "resolveNumberRoutine": [
+      {
+        "note": "If rank is equal, send both home",
+        "func": "IF",
+        "operand1": "${attackRank}",
+        "operand2": "${defendRank}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "tie",
+            "value": true
+          },
+          {
+            "func": "CALL",
+            "routine": "attackerHomeRoutine"
+          },
+          {
+            "func": "CALL",
+            "routine": "defenderHomeRoutine"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "note": "If attacker is lower, send defender home",
+            "func": "IF",
+            "operand1": "${attackRank}",
+            "operand2": "${defendRank}",
+            "relation": "<",
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "routine": "defenderHomeRoutine"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "note": "If defender is lower, send attacker home",
+                "func": "CALL",
+                "routine": "attackerHomeRoutine"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "resolveSpecialRoutine": [
+      {
+        "note": "If both are Spys, send both home. This does not check to see if attacker is B or F since they cannot move.",
+        "func": "IF",
+        "operand1": "${attackRank}",
+        "operand2": "${defendRank}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "tie",
+            "value": true
+          },
+          {
+            "func": "CALL",
+            "routine": "attackerHomeRoutine"
+          },
+          {
+            "func": "CALL",
+            "routine": "defenderHomeRoutine"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${defendRank}",
+        "operand2": "S",
+        "thenRoutine": [
+          {
+            "note": "If defender is a Spy, it goes home",
+            "func": "CALL",
+            "routine": "defenderHomeRoutine"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${attackRank}",
+        "operand2": "S",
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${defendRank}",
+            "operand2": 1,
+            "thenRoutine": [
+              {
+                "note": "If attacker is a Spy and defender is 1, the 1 goes home",
+                "func": "CALL",
+                "routine": "defenderHomeRoutine"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "note": "If attacker is a Spy, it goes home unless defender is 1",
+                "func": "SELECT",
+                "property": "id",
+                "value": "${attackID}"
+              },
+              {
+                "func": "CALL",
+                "routine": "attackerHomeRoutine"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${defendRank}",
+        "operand2": "B",
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${attackRank}",
+            "operand2": 8,
+            "thenRoutine": [
+              {
+                "note": "If defender is a Bomb and attacker is 8, Bomb goes home.",
+                "func": "CALL",
+                "routine": "defenderHomeRoutine"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "note": "If defender is a Bomb and attacker is anything but 8, the attacker goes home.",
+                "func": "CALL",
+                "routine": "attackerHomeRoutine"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${defendRank}",
+        "operand2": "F",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "endGameRoutine"
+          }
+        ]
+      }
+    ],
+    "endGameRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "winner"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 600
+      },
+      {
+        "func": "IF",
+        "operand1": "${attackColor}",
+        "operand2": "b",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "text",
+            "value": "Blue Wins!"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "property": "text",
+            "value": "Red Wins!"
+          }
+        ]
+      }
+    ],
+    "css": "border: 1px solid black; background: white; ",
+    "x": -200,
+    "defenderHomeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${defendID}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "${PROPERTY home OF $defendID}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${attackID}"
+      },
+      {
+        "func": "SET",
+        "property": "defend",
+        "value": true
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY tie}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "tie",
+            "value": false
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "widget": "theTimer",
+            "routine": "showRankRoutine"
+          }
+        ]
+      }
+    ],
+    "attackerHomeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${attackID}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "${PROPERTY home OF $attackID}"
+      },
+      {
+        "func": "CALL",
+        "widget": "theTimer",
+        "routine": "showRankRoutine"
+      }
+    ]
+  },
+  "red0": {
+    "id": "red0",
+    "z": 1,
+    "css": "background: #6b0000; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1095116112_2513'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;",
+    "width": 60,
+    "height": 80,
+    "text": 1,
+    "x": -2,
+    "y": -2,
+    "home": "homeRed1",
+    "parent": "homeRed1"
+  },
+  "blue0": {
+    "id": "blue0",
+    "x": -2,
+    "z": 1,
+    "width": 60,
+    "height": 80,
+    "y": -2,
+    "text": 1,
+    "css": "background: #002a6b; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1095116112_2513'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;",
+    "home": "homeBlue1",
+    "parent": "homeBlue1"
+  },
+  "blue1": {
+    "inheritFrom": {
+      "blue0": [
+        "!parent"
+      ]
+    },
+    "id": "blue1",
+    "x": -2,
+    "y": -2,
+    "z": 1,
+    "text": 2,
+    "css": "background: #00398e; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/215547526_641'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;",
+    "activeFace": 0,
+    "home": "homeBlue2",
+    "parent": "homeBlue2"
+  },
+  "blue2": {
+    "inheritFrom": {
+      "blue0": [
+        "!parent"
+      ]
+    },
+    "id": "blue2",
+    "x": 28,
+    "y": -2,
+    "z": 2,
+    "text": 3,
+    "css": "background: #0047b2; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-1298068590_507'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;",
+    "activeFace": 0,
+    "home": "homeBlue3",
+    "parent": "homeBlue3"
+  },
+  "blue3": {
+    "inheritFrom": {
+      "blue2": [
+        "!parent"
+      ]
+    },
+    "id": "blue3",
+    "x": -2,
+    "y": -2,
+    "z": 1,
+    "parent": "homeBlue3",
+    "css": "background: #0047b2; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-1298068590_507'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "a0": {
+    "type": "holder",
+    "id": "a0",
+    "x": 300,
+    "width": 100,
+    "height": 100,
+    "z": 3,
+    "movableInEdit": false,
+    "dropTarget": {},
+    "dropOffsetX": 17,
+    "dropOffsetY": 7,
+    "leaveRoutine": [
+      {
+        "note": "Erase the defender status",
+        "func": "SET",
+        "collection": "child",
+        "property": "defend",
+        "value": null
+      },
+      {
+        "note": "Put the piece id into undo",
+        "func": "GET",
+        "property": "id",
+        "collection": "child"
+      },
+      "var undoPiece = ${PROPERTY undoPiece OF undo}",
+      "var undoPiece = ${id} push",
+      {
+        "func": "SET",
+        "collection": [
+          "undo"
+        ],
+        "property": "undoPiece",
+        "value": "${undoPiece}"
+      },
+      "var undoGrid = ${PROPERTY undoGrid OF undo} //put the grid id into undo",
+      "var undoGrid = ${PROPERTY id} push",
+      {
+        "func": "SET",
+        "collection": [
+          "undo"
+        ],
+        "property": "undoGrid",
+        "value": "${undoGrid}"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "note": "If this is the only widget in the holder then set it as the defender",
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "defend",
+            "value": true
+          }
+        ],
+        "elseRoutine": [
+          {
+            "note": "Otherwise, run the attack check",
+            "func": "SET",
+            "collection": "child",
+            "property": "defend",
+            "value": false
+          },
+          {
+            "func": "CALL",
+            "widget": "calls",
+            "routine": "attackCheckRoutine",
+            "arguments": {
+              "square": "${PROPERTY id}"
+            }
+          }
+        ]
+      },
+      {
+        "note": "Change turns only if playing and not if setting up.",
+        "func": "IF",
+        "operand1": "${PROPERTY playing OF startButton}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "TURN"
+          }
+        ]
+      }
+    ],
+    "classes": "transparent",
+    "gridSquare": true,
+    "dropLimit": 1
+  },
+  "b0": {
+    "type": "holder",
+    "id": "b0",
+    "x": 400,
+    "y": 0,
+    "inheritFrom": "a0",
+    "dropLimit": 1
+  },
+  "c0": {
+    "type": "holder",
+    "id": "c0",
+    "x": 500,
+    "y": 0,
+    "inheritFrom": "a0",
+    "dropLimit": 1
+  },
+  "d0": {
+    "type": "holder",
+    "id": "d0",
+    "x": 600,
+    "y": 0,
+    "inheritFrom": "a0",
+    "dropLimit": 1
+  },
+  "e0": {
+    "type": "holder",
+    "id": "e0",
+    "x": 700,
+    "y": 0,
+    "inheritFrom": "a0",
+    "dropLimit": 1
+  },
+  "f0": {
+    "type": "holder",
+    "id": "f0",
+    "x": 800,
+    "y": 0,
+    "inheritFrom": "a0",
+    "dropLimit": 1
+  },
+  "g0": {
+    "type": "holder",
+    "id": "g0",
+    "x": 900,
+    "y": 0,
+    "inheritFrom": "a0",
+    "dropLimit": 1
+  },
+  "h0": {
+    "type": "holder",
+    "id": "h0",
+    "x": 1000,
+    "y": 0,
+    "inheritFrom": "a0",
+    "dropLimit": 1
+  },
+  "i0": {
+    "type": "holder",
+    "id": "i0",
+    "x": 1100,
+    "y": 0,
+    "inheritFrom": "a0",
+    "dropLimit": 1
+  },
+  "j0": {
+    "type": "holder",
+    "id": "j0",
+    "x": 1200,
+    "y": 0,
+    "inheritFrom": "a0",
+    "dropLimit": 1
+  },
+  "a1": {
+    "inheritFrom": "a0",
+    "id": "a1",
+    "type": "holder",
+    "x": 300,
+    "y": 100,
+    "dropLimit": 1
+  },
+  "a2": {
+    "inheritFrom": "a0",
+    "id": "a2",
+    "type": "holder",
+    "x": 300,
+    "y": 200,
+    "dropLimit": 1
+  },
+  "a3": {
+    "inheritFrom": "a0",
+    "id": "a3",
+    "type": "holder",
+    "x": 300,
+    "y": 300,
+    "dropLimit": 1
+  },
+  "a4": {
+    "inheritFrom": "a0",
+    "id": "a4",
+    "type": "holder",
+    "x": 300,
+    "y": 400,
+    "buffer": true,
+    "dropLimit": 0
+  },
+  "a5": {
+    "inheritFrom": "a0",
+    "id": "a5",
+    "type": "holder",
+    "x": 300,
+    "y": 500,
+    "buffer": true,
+    "dropLimit": 0
+  },
+  "a6": {
+    "inheritFrom": "a0",
+    "id": "a6",
+    "type": "holder",
+    "x": 300,
+    "y": 600,
+    "dropLimit": 1
+  },
+  "a7": {
+    "inheritFrom": "a0",
+    "id": "a7",
+    "type": "holder",
+    "x": 300,
+    "y": 700,
+    "dropLimit": 1
+  },
+  "a8": {
+    "inheritFrom": "a0",
+    "id": "a8",
+    "type": "holder",
+    "x": 300,
+    "y": 800,
+    "dropLimit": 1
+  },
+  "a9": {
+    "inheritFrom": "a0",
+    "id": "a9",
+    "type": "holder",
+    "x": 300,
+    "y": 900,
+    "dropLimit": 1
+  },
+  "b1": {
+    "inheritFrom": "b0",
+    "id": "b1",
+    "type": "holder",
+    "x": 400,
+    "y": 100,
+    "dropLimit": 1
+  },
+  "b2": {
+    "inheritFrom": "b0",
+    "id": "b2",
+    "type": "holder",
+    "x": 400,
+    "y": 200,
+    "dropLimit": 1
+  },
+  "b3": {
+    "inheritFrom": "b0",
+    "id": "b3",
+    "type": "holder",
+    "x": 400,
+    "y": 300,
+    "dropLimit": 1
+  },
+  "b4": {
+    "inheritFrom": "b0",
+    "id": "b4",
+    "type": "holder",
+    "x": 400,
+    "y": 400,
+    "buffer": true,
+    "dropLimit": 0
+  },
+  "b5": {
+    "inheritFrom": "b0",
+    "id": "b5",
+    "type": "holder",
+    "x": 400,
+    "y": 500,
+    "buffer": true,
+    "dropLimit": 0
+  },
+  "b6": {
+    "inheritFrom": "b0",
+    "id": "b6",
+    "type": "holder",
+    "x": 400,
+    "y": 600,
+    "dropLimit": 1
+  },
+  "b7": {
+    "inheritFrom": "b0",
+    "id": "b7",
+    "type": "holder",
+    "x": 400,
+    "y": 700,
+    "dropLimit": 1
+  },
+  "b8": {
+    "inheritFrom": "b0",
+    "id": "b8",
+    "type": "holder",
+    "x": 400,
+    "y": 800,
+    "dropLimit": 1
+  },
+  "b9": {
+    "inheritFrom": "b0",
+    "id": "b9",
+    "type": "holder",
+    "x": 400,
+    "y": 900,
+    "dropLimit": 1
+  },
+  "c1": {
+    "inheritFrom": "c0",
+    "id": "c1",
+    "type": "holder",
+    "x": 500,
+    "y": 100,
+    "dropLimit": 1
+  },
+  "c2": {
+    "inheritFrom": "c0",
+    "id": "c2",
+    "type": "holder",
+    "x": 500,
+    "y": 200,
+    "dropLimit": 1
+  },
+  "c3": {
+    "inheritFrom": "c0",
+    "id": "c3",
+    "type": "holder",
+    "x": 500,
+    "y": 300,
+    "dropLimit": 1
+  },
+  "c4": {
+    "inheritFrom": "c0",
+    "id": "c4",
+    "type": "holder",
+    "x": 500,
+    "y": 400,
+    "dropTarget": [],
+    "css": "background:black;opacity: 0.5; border-radius:0",
+    "dropLimit": 1
+  },
+  "c5": {
+    "inheritFrom": "c0",
+    "id": "c5",
+    "type": "holder",
+    "x": 500,
+    "y": 500,
+    "dropTarget": [],
+    "css": "background:black;opacity: 0.5; border-radius:0",
+    "dropLimit": 1
+  },
+  "c6": {
+    "inheritFrom": "c0",
+    "id": "c6",
+    "type": "holder",
+    "x": 500,
+    "y": 600,
+    "dropLimit": 1
+  },
+  "c7": {
+    "inheritFrom": "c0",
+    "id": "c7",
+    "type": "holder",
+    "x": 500,
+    "y": 700,
+    "dropLimit": 1
+  },
+  "c8": {
+    "inheritFrom": "c0",
+    "id": "c8",
+    "type": "holder",
+    "x": 500,
+    "y": 800,
+    "dropLimit": 1
+  },
+  "c9": {
+    "inheritFrom": "c0",
+    "id": "c9",
+    "type": "holder",
+    "x": 500,
+    "y": 900,
+    "dropLimit": 1
+  },
+  "d1": {
+    "inheritFrom": "d0",
+    "id": "d1",
+    "type": "holder",
+    "x": 600,
+    "y": 100,
+    "dropLimit": 1
+  },
+  "d2": {
+    "inheritFrom": "d0",
+    "id": "d2",
+    "type": "holder",
+    "x": 600,
+    "y": 200,
+    "dropLimit": 1
+  },
+  "d3": {
+    "inheritFrom": "d0",
+    "id": "d3",
+    "type": "holder",
+    "x": 600,
+    "y": 300,
+    "dropLimit": 1
+  },
+  "d4": {
+    "inheritFrom": "d0",
+    "id": "d4",
+    "type": "holder",
+    "x": 600,
+    "y": 400,
+    "dropTarget": [],
+    "css": "background:black;opacity: 0.5; border-radius:0",
+    "dropLimit": 1
+  },
+  "d5": {
+    "inheritFrom": "d0",
+    "id": "d5",
+    "type": "holder",
+    "x": 600,
+    "y": 500,
+    "dropTarget": [],
+    "css": "background:black;opacity: 0.5; border-radius:0",
+    "dropLimit": 1
+  },
+  "d6": {
+    "inheritFrom": "d0",
+    "id": "d6",
+    "type": "holder",
+    "x": 600,
+    "y": 600,
+    "dropLimit": 1
+  },
+  "d7": {
+    "inheritFrom": "d0",
+    "id": "d7",
+    "type": "holder",
+    "x": 600,
+    "y": 700,
+    "dropLimit": 1
+  },
+  "d8": {
+    "inheritFrom": "d0",
+    "id": "d8",
+    "type": "holder",
+    "x": 600,
+    "y": 800,
+    "dropLimit": 1
+  },
+  "d9": {
+    "inheritFrom": "d0",
+    "id": "d9",
+    "type": "holder",
+    "x": 600,
+    "y": 900,
+    "dropLimit": 1
+  },
+  "e1": {
+    "inheritFrom": "e0",
+    "id": "e1",
+    "type": "holder",
+    "x": 700,
+    "y": 100,
+    "dropLimit": 1
+  },
+  "e2": {
+    "inheritFrom": "e0",
+    "id": "e2",
+    "type": "holder",
+    "x": 700,
+    "y": 200,
+    "dropLimit": 1
+  },
+  "e3": {
+    "inheritFrom": "e0",
+    "id": "e3",
+    "type": "holder",
+    "x": 700,
+    "y": 300,
+    "dropLimit": 1
+  },
+  "e4": {
+    "inheritFrom": "e0",
+    "id": "e4",
+    "type": "holder",
+    "x": 700,
+    "y": 400,
+    "buffer": true,
+    "dropLimit": 0
+  },
+  "e5": {
+    "inheritFrom": "e0",
+    "id": "e5",
+    "type": "holder",
+    "x": 700,
+    "y": 500,
+    "buffer": true,
+    "dropLimit": 0
+  },
+  "e6": {
+    "inheritFrom": "e0",
+    "id": "e6",
+    "type": "holder",
+    "x": 700,
+    "y": 600,
+    "dropLimit": 1
+  },
+  "e7": {
+    "inheritFrom": "e0",
+    "id": "e7",
+    "type": "holder",
+    "x": 700,
+    "y": 700,
+    "dropLimit": 1
+  },
+  "e8": {
+    "inheritFrom": "e0",
+    "id": "e8",
+    "type": "holder",
+    "x": 700,
+    "y": 800,
+    "dropLimit": 1
+  },
+  "e9": {
+    "inheritFrom": "e0",
+    "id": "e9",
+    "type": "holder",
+    "x": 700,
+    "y": 900,
+    "dropLimit": 1
+  },
+  "f1": {
+    "inheritFrom": "f0",
+    "id": "f1",
+    "type": "holder",
+    "x": 800,
+    "y": 100,
+    "dropLimit": 1
+  },
+  "f2": {
+    "inheritFrom": "f0",
+    "id": "f2",
+    "type": "holder",
+    "x": 800,
+    "y": 200,
+    "dropLimit": 1
+  },
+  "f3": {
+    "inheritFrom": "f0",
+    "id": "f3",
+    "type": "holder",
+    "x": 800,
+    "y": 300,
+    "dropLimit": 1
+  },
+  "f4": {
+    "inheritFrom": "f0",
+    "id": "f4",
+    "type": "holder",
+    "x": 800,
+    "y": 400,
+    "buffer": true,
+    "dropLimit": 0
+  },
+  "f5": {
+    "inheritFrom": "f0",
+    "id": "f5",
+    "type": "holder",
+    "x": 800,
+    "y": 500,
+    "buffer": true,
+    "dropLimit": 0
+  },
+  "f6": {
+    "inheritFrom": "f0",
+    "id": "f6",
+    "type": "holder",
+    "x": 800,
+    "y": 600,
+    "dropLimit": 1
+  },
+  "f7": {
+    "inheritFrom": "f0",
+    "id": "f7",
+    "type": "holder",
+    "x": 800,
+    "y": 700,
+    "dropLimit": 1
+  },
+  "f8": {
+    "inheritFrom": "f0",
+    "id": "f8",
+    "type": "holder",
+    "x": 800,
+    "y": 800,
+    "dropLimit": 1
+  },
+  "f9": {
+    "inheritFrom": "f0",
+    "id": "f9",
+    "type": "holder",
+    "x": 800,
+    "y": 900,
+    "dropLimit": 1
+  },
+  "g1": {
+    "inheritFrom": "g0",
+    "id": "g1",
+    "type": "holder",
+    "x": 900,
+    "y": 100,
+    "dropLimit": 1
+  },
+  "g2": {
+    "inheritFrom": "g0",
+    "id": "g2",
+    "type": "holder",
+    "x": 900,
+    "y": 200,
+    "dropLimit": 1
+  },
+  "g3": {
+    "inheritFrom": "g0",
+    "id": "g3",
+    "type": "holder",
+    "x": 900,
+    "y": 300,
+    "dropLimit": 1
+  },
+  "g4": {
+    "inheritFrom": "g0",
+    "id": "g4",
+    "type": "holder",
+    "x": 900,
+    "y": 400,
+    "dropTarget": [],
+    "css": "background:black;opacity: 0.5; border-radius:0",
+    "dropLimit": 1
+  },
+  "g5": {
+    "inheritFrom": "g0",
+    "id": "g5",
+    "type": "holder",
+    "x": 900,
+    "y": 500,
+    "dropTarget": [],
+    "css": "background:black;opacity: 0.5; border-radius:0",
+    "dropLimit": 1
+  },
+  "g6": {
+    "inheritFrom": "g0",
+    "id": "g6",
+    "type": "holder",
+    "x": 900,
+    "y": 600,
+    "dropLimit": 1
+  },
+  "g7": {
+    "inheritFrom": "g0",
+    "id": "g7",
+    "type": "holder",
+    "x": 900,
+    "y": 700,
+    "dropLimit": 1
+  },
+  "g8": {
+    "inheritFrom": "g0",
+    "id": "g8",
+    "type": "holder",
+    "x": 900,
+    "y": 800,
+    "dropLimit": 1
+  },
+  "g9": {
+    "inheritFrom": "g0",
+    "id": "g9",
+    "type": "holder",
+    "x": 900,
+    "y": 900,
+    "dropLimit": 1
+  },
+  "h1": {
+    "inheritFrom": "h0",
+    "id": "h1",
+    "type": "holder",
+    "x": 1000,
+    "y": 100,
+    "dropLimit": 1
+  },
+  "h2": {
+    "inheritFrom": "h0",
+    "id": "h2",
+    "type": "holder",
+    "x": 1000,
+    "y": 200,
+    "dropLimit": 1
+  },
+  "h3": {
+    "inheritFrom": "h0",
+    "id": "h3",
+    "type": "holder",
+    "x": 1000,
+    "y": 300,
+    "dropLimit": 1
+  },
+  "h4": {
+    "inheritFrom": "h0",
+    "id": "h4",
+    "type": "holder",
+    "x": 1000,
+    "y": 400,
+    "dropTarget": [],
+    "css": "background:black;opacity: 0.5; border-radius:0",
+    "dropLimit": 1
+  },
+  "h5": {
+    "inheritFrom": "h0",
+    "id": "h5",
+    "type": "holder",
+    "x": 1000,
+    "y": 500,
+    "dropTarget": [],
+    "css": "background:black;opacity: 0.5; border-radius:0",
+    "dropLimit": 1
+  },
+  "h6": {
+    "inheritFrom": "h0",
+    "id": "h6",
+    "type": "holder",
+    "x": 1000,
+    "y": 600,
+    "dropLimit": 1
+  },
+  "h7": {
+    "inheritFrom": "h0",
+    "id": "h7",
+    "type": "holder",
+    "x": 1000,
+    "y": 700,
+    "dropLimit": 1
+  },
+  "h8": {
+    "inheritFrom": "h0",
+    "id": "h8",
+    "type": "holder",
+    "x": 1000,
+    "y": 800,
+    "dropLimit": 1
+  },
+  "h9": {
+    "inheritFrom": "h0",
+    "id": "h9",
+    "type": "holder",
+    "x": 1000,
+    "y": 900,
+    "dropLimit": 1
+  },
+  "i1": {
+    "inheritFrom": "i0",
+    "id": "i1",
+    "type": "holder",
+    "x": 1100,
+    "y": 100,
+    "dropLimit": 1
+  },
+  "i2": {
+    "inheritFrom": "i0",
+    "id": "i2",
+    "type": "holder",
+    "x": 1100,
+    "y": 200,
+    "dropLimit": 1
+  },
+  "i3": {
+    "inheritFrom": "i0",
+    "id": "i3",
+    "type": "holder",
+    "x": 1100,
+    "y": 300,
+    "dropLimit": 1
+  },
+  "i4": {
+    "inheritFrom": "i0",
+    "id": "i4",
+    "type": "holder",
+    "x": 1100,
+    "y": 400,
+    "buffer": true,
+    "dropLimit": 0
+  },
+  "i5": {
+    "inheritFrom": "i0",
+    "id": "i5",
+    "type": "holder",
+    "x": 1100,
+    "y": 500,
+    "buffer": true,
+    "dropLimit": 0
+  },
+  "i6": {
+    "inheritFrom": "i0",
+    "id": "i6",
+    "type": "holder",
+    "x": 1100,
+    "y": 600,
+    "dropLimit": 1
+  },
+  "i7": {
+    "inheritFrom": "i0",
+    "id": "i7",
+    "type": "holder",
+    "x": 1100,
+    "y": 700,
+    "dropLimit": 1
+  },
+  "i8": {
+    "inheritFrom": "i0",
+    "id": "i8",
+    "type": "holder",
+    "x": 1100,
+    "y": 800,
+    "dropLimit": 1
+  },
+  "i9": {
+    "inheritFrom": "i0",
+    "id": "i9",
+    "type": "holder",
+    "x": 1100,
+    "y": 900,
+    "dropLimit": 1
+  },
+  "j1": {
+    "inheritFrom": "j0",
+    "id": "j1",
+    "type": "holder",
+    "x": 1200,
+    "y": 100,
+    "dropLimit": 1
+  },
+  "j2": {
+    "inheritFrom": "j0",
+    "id": "j2",
+    "type": "holder",
+    "x": 1200,
+    "y": 200,
+    "dropLimit": 1
+  },
+  "j3": {
+    "inheritFrom": "j0",
+    "id": "j3",
+    "type": "holder",
+    "x": 1200,
+    "y": 300,
+    "dropLimit": 1
+  },
+  "j4": {
+    "inheritFrom": "j0",
+    "id": "j4",
+    "type": "holder",
+    "x": 1200,
+    "y": 400,
+    "buffer": true,
+    "dropLimit": 0
+  },
+  "j5": {
+    "inheritFrom": "j0",
+    "id": "j5",
+    "type": "holder",
+    "x": 1200,
+    "y": 500,
+    "buffer": true,
+    "dropLimit": 0
+  },
+  "j6": {
+    "inheritFrom": "j0",
+    "id": "j6",
+    "type": "holder",
+    "x": 1200,
+    "y": 600,
+    "dropLimit": 1
+  },
+  "j7": {
+    "inheritFrom": "j0",
+    "id": "j7",
+    "type": "holder",
+    "x": 1200,
+    "y": 700,
+    "dropLimit": 1
+  },
+  "j8": {
+    "inheritFrom": "j0",
+    "id": "j8",
+    "type": "holder",
+    "x": 1200,
+    "y": 800,
+    "dropLimit": 1
+  },
+  "j9": {
+    "inheritFrom": "j0",
+    "id": "j9",
+    "type": "holder",
+    "x": 1200,
+    "y": 900,
+    "dropLimit": 1
+  },
+  "blue4": {
+    "inheritFrom": {
+      "blue0": [
+        "!parent"
+      ]
+    },
+    "id": "blue4",
+    "x": 58,
+    "y": -2,
+    "z": 3,
+    "text": 4,
+    "css": "background: #0055d6; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-1887673354_402'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;",
+    "parent": "homeBlue4",
+    "home": "homeBlue4"
+  },
+  "blue5": {
+    "inheritFrom": {
+      "blue4": [
+        "!parent"
+      ]
+    },
+    "id": "blue5",
+    "x": 28,
+    "y": -2,
+    "z": 2,
+    "parent": "homeBlue4",
+    "css": "background: #0055d6; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-1887673354_402'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "blue6": {
+    "inheritFrom": {
+      "blue4": [
+        "!parent"
+      ]
+    },
+    "id": "blue6",
+    "x": -2,
+    "y": -2,
+    "z": 1,
+    "parent": "homeBlue4",
+    "css": "background: #0055d6; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-1887673354_402'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "blue7": {
+    "inheritFrom": {
+      "blue0": [
+        "!parent"
+      ]
+    },
+    "id": "blue7",
+    "x": 88,
+    "y": -2,
+    "z": 4,
+    "text": 5,
+    "css": "background: #0064f9; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1594483847_337'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;",
+    "parent": "homeBlue5",
+    "home": "homeBlue5"
+  },
+  "blue8": {
+    "inheritFrom": {
+      "blue7": [
+        "!parent"
+      ]
+    },
+    "id": "blue8",
+    "x": 58,
+    "y": -2,
+    "z": 3,
+    "parent": "homeBlue5",
+    "css": "background: #0064f9; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1594483847_337'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "blue9": {
+    "inheritFrom": {
+      "blue7": [
+        "!parent"
+      ]
+    },
+    "id": "blue9",
+    "x": 28,
+    "y": -2,
+    "z": 2,
+    "parent": "homeBlue5",
+    "css": "background: #0064f9; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1594483847_337'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "blue10": {
+    "inheritFrom": {
+      "blue7": [
+        "!parent"
+      ]
+    },
+    "id": "blue10",
+    "x": -2,
+    "y": -2,
+    "z": 1,
+    "parent": "homeBlue5",
+    "css": "background: #0064f9; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1594483847_337'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "blue11": {
+    "inheritFrom": {
+      "blue0": [
+        "!parent"
+      ]
+    },
+    "id": "blue11",
+    "x": 88,
+    "y": -2,
+    "z": 4,
+    "text": 6,
+    "css": "background: #1e78ff; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-825557802_860'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;",
+    "parent": "homeBlue6",
+    "home": "homeBlue6"
+  },
+  "blue12": {
+    "inheritFrom": {
+      "blue11": [
+        "!parent"
+      ]
+    },
+    "id": "blue12",
+    "x": 58,
+    "y": -2,
+    "z": 3,
+    "parent": "homeBlue6",
+    "css": "background: #1e78ff; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-825557802_860'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "blue13": {
+    "inheritFrom": {
+      "blue11": [
+        "!parent"
+      ]
+    },
+    "id": "blue13",
+    "x": 28,
+    "y": -2,
+    "z": 2,
+    "parent": "homeBlue6",
+    "css": "background: #1e78ff; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-825557802_860'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "blue14": {
+    "inheritFrom": {
+      "blue11": [
+        "!parent"
+      ]
+    },
+    "id": "blue14",
+    "x": -2,
+    "y": -2,
+    "z": 1,
+    "parent": "homeBlue6",
+    "css": "background: #1e78ff; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-825557802_860'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "blue15": {
+    "inheritFrom": {
+      "blue0": [
+        "!parent"
+      ]
+    },
+    "id": "blue15",
+    "x": 88,
+    "y": -2,
+    "z": 4,
+    "text": 7,
+    "activeFace": 0,
+    "css": "background: #428dff; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/179609327_642'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;",
+    "parent": "homeBlue7",
+    "home": "homeBlue7"
+  },
+  "blue16": {
+    "inheritFrom": {
+      "blue15": [
+        "!parent"
+      ]
+    },
+    "id": "blue16",
+    "x": 58,
+    "y": -2,
+    "z": 3,
+    "parent": "homeBlue7",
+    "css": "background: #428dff; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/179609327_642'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "blue17": {
+    "inheritFrom": {
+      "blue15": [
+        "!parent"
+      ]
+    },
+    "id": "blue17",
+    "x": 28,
+    "y": -2,
+    "z": 2,
+    "parent": "homeBlue7",
+    "css": "background: #428dff; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/179609327_642'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "blue18": {
+    "inheritFrom": {
+      "blue15": [
+        "!parent"
+      ]
+    },
+    "id": "blue18",
+    "x": -2,
+    "y": -2,
+    "z": 1,
+    "parent": "homeBlue7",
+    "css": "background: #428dff; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/179609327_642'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "blue19": {
+    "inheritFrom": {
+      "blue0": [
+        "!parent"
+      ]
+    },
+    "id": "blue19",
+    "x": 118,
+    "y": -2,
+    "z": 5,
+    "text": 8,
+    "css": "background: #66a3ff; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1692787291_577'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;",
+    "parent": "homeBlue8",
+    "home": "homeBlue8"
+  },
+  "blue20": {
+    "inheritFrom": {
+      "blue19": [
+        "!parent"
+      ]
+    },
+    "id": "blue20",
+    "x": 88,
+    "y": -2,
+    "z": 4,
+    "parent": "homeBlue8",
+    "css": "background: #66a3ff; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1692787291_577'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "blue21": {
+    "inheritFrom": {
+      "blue19": [
+        "!parent"
+      ]
+    },
+    "id": "blue21",
+    "x": 58,
+    "y": -2,
+    "z": 3,
+    "parent": "homeBlue8",
+    "css": "background: #66a3ff; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1692787291_577'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "blue22": {
+    "inheritFrom": {
+      "blue19": [
+        "!parent"
+      ]
+    },
+    "id": "blue22",
+    "x": 28,
+    "y": -2,
+    "z": 2,
+    "parent": "homeBlue8",
+    "css": "background: #66a3ff; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1692787291_577'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "blue23": {
+    "inheritFrom": {
+      "blue19": [
+        "!parent"
+      ]
+    },
+    "id": "blue23",
+    "x": -2,
+    "y": -2,
+    "z": 1,
+    "parent": "homeBlue8",
+    "css": "background: #66a3ff; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1692787291_577'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "blue24": {
+    "inheritFrom": {
+      "blue0": [
+        "!parent"
+      ]
+    },
+    "id": "blue24",
+    "x": 208,
+    "y": -2,
+    "z": 8,
+    "text": 9,
+    "css": "background: #89b8ff; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1237256823_431'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;",
+    "parent": "homeBlue9",
+    "home": "homeBlue9"
+  },
+  "blue25": {
+    "inheritFrom": {
+      "blue24": [
+        "!parent"
+      ]
+    },
+    "id": "blue25",
+    "x": 178,
+    "y": -2,
+    "z": 7,
+    "parent": "homeBlue9",
+    "css": "background: #89b8ff; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1237256823_431'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "blue26": {
+    "inheritFrom": {
+      "blue24": [
+        "!parent"
+      ]
+    },
+    "id": "blue26",
+    "x": 148,
+    "y": -2,
+    "z": 6,
+    "parent": "homeBlue9",
+    "css": "background: #89b8ff; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1237256823_431'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "blue27": {
+    "inheritFrom": {
+      "blue24": [
+        "!parent"
+      ]
+    },
+    "id": "blue27",
+    "x": 118,
+    "y": -2,
+    "z": 5,
+    "parent": "homeBlue9",
+    "css": "background: #89b8ff; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1237256823_431'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "blue28": {
+    "inheritFrom": {
+      "blue24": [
+        "!parent"
+      ]
+    },
+    "id": "blue28",
+    "x": 88,
+    "y": -2,
+    "z": 4,
+    "parent": "homeBlue9",
+    "css": "background: #89b8ff; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1237256823_431'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "blue29": {
+    "inheritFrom": {
+      "blue24": [
+        "!parent"
+      ]
+    },
+    "id": "blue29",
+    "x": 58,
+    "y": -2,
+    "z": 3,
+    "parent": "homeBlue9",
+    "css": "background: #89b8ff; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1237256823_431'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "blue30": {
+    "inheritFrom": {
+      "blue24": [
+        "!parent"
+      ]
+    },
+    "id": "blue30",
+    "x": 28,
+    "y": -2,
+    "z": 2,
+    "parent": "homeBlue9",
+    "css": "background: #89b8ff; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1237256823_431'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "blue31": {
+    "inheritFrom": {
+      "blue24": [
+        "!parent"
+      ]
+    },
+    "id": "blue31",
+    "x": -2,
+    "y": -2,
+    "z": 1,
+    "parent": "homeBlue9",
+    "css": "background: #89b8ff; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1237256823_431'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "blue32": {
+    "inheritFrom": {
+      "blue0": [
+        "!parent"
+      ]
+    },
+    "id": "blue32",
+    "x": -2,
+    "y": -2,
+    "z": 1,
+    "text": "S",
+    "activeFace": 0,
+    "css": "background: #4848f9; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-1221404040_3942'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;",
+    "home": "homeBlueS",
+    "parent": "homeBlueS"
+  },
+  "blue33": {
+    "inheritFrom": {
+      "blue0": [
+        "!parent"
+      ]
+    },
+    "id": "blue33",
+    "x": 148,
+    "y": -2,
+    "z": 6,
+    "text": "B",
+    "css": "background: blue; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-1907406388_1226'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;",
+    "home": "homeBlueB",
+    "parent": "homeBlueB",
+    "movable": true
+  },
+  "blue34": {
+    "inheritFrom": {
+      "blue33": [
+        "!parent"
+      ]
+    },
+    "id": "blue34",
+    "x": 118,
+    "y": -2,
+    "z": 5,
+    "parent": "homeBlueB",
+    "movable": true,
+    "css": "background: blue; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-1907406388_1226'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "blue35": {
+    "inheritFrom": {
+      "blue33": [
+        "!parent"
+      ]
+    },
+    "id": "blue35",
+    "x": 88,
+    "y": -2,
+    "z": 4,
+    "parent": "homeBlueB",
+    "movable": true,
+    "css": "background: blue; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-1907406388_1226'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "blue36": {
+    "inheritFrom": {
+      "blue33": [
+        "!parent"
+      ]
+    },
+    "id": "blue36",
+    "x": 58,
+    "y": -2,
+    "z": 3,
+    "parent": "homeBlueB",
+    "movable": true,
+    "css": "background: blue; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-1907406388_1226'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "blue37": {
+    "inheritFrom": {
+      "blue33": [
+        "!parent"
+      ]
+    },
+    "id": "blue37",
+    "x": 28,
+    "y": -2,
+    "z": 2,
+    "parent": "homeBlueB",
+    "movable": true,
+    "css": "background: blue; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-1907406388_1226'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "blue38": {
+    "inheritFrom": {
+      "blue33": [
+        "!parent"
+      ]
+    },
+    "id": "blue38",
+    "x": -2,
+    "y": -2,
+    "z": 1,
+    "parent": "homeBlueB",
+    "movable": true,
+    "css": "background: blue; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-1907406388_1226'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "blue39": {
+    "inheritFrom": {
+      "blue0": [
+        "!parent"
+      ]
+    },
+    "id": "blue39",
+    "z": 1,
+    "text": "F",
+    "css": "background: lightgrey; border-radius: 35%;border:2px solid black;color: blue;font-size: 30px; text-align:center;background-image:url('/assets/1819905111_986'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;",
+    "x": -2,
+    "y": -2,
+    "home": "homeBlueF",
+    "parent": "homeBlueF",
+    "movable": true
+  },
+  "red1": {
+    "inheritFrom": {
+      "red0": [
+        "!parent"
+      ]
+    },
+    "id": "red1",
+    "x": -2,
+    "y": -2,
+    "z": 1,
+    "css": "background: #8e0000; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/215547526_641'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;",
+    "text": 2,
+    "home": "homeRed2",
+    "parent": "homeRed2"
+  },
+  "red2": {
+    "inheritFrom": {
+      "red0": [
+        "!parent"
+      ]
+    },
+    "id": "red2",
+    "x": 28,
+    "y": -2,
+    "z": 2,
+    "css": "background: #b20000; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-1298068590_507'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;",
+    "text": 3,
+    "home": "homeRed3",
+    "parent": "homeRed3"
+  },
+  "red3": {
+    "inheritFrom": {
+      "red2": [
+        "!parent"
+      ]
+    },
+    "id": "red3",
+    "x": -2,
+    "y": -2,
+    "z": 1,
+    "parent": "homeRed3",
+    "css": "background: #b20000; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-1298068590_507'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "red4": {
+    "inheritFrom": {
+      "red0": [
+        "!parent"
+      ]
+    },
+    "id": "red4",
+    "x": 58,
+    "y": -2,
+    "z": 3,
+    "css": "background: #d60000; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-1887673354_402'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;",
+    "text": 4,
+    "home": "homeRed4",
+    "parent": "homeRed4"
+  },
+  "red5": {
+    "inheritFrom": {
+      "red4": [
+        "!parent"
+      ]
+    },
+    "id": "red5",
+    "x": 28,
+    "y": -2,
+    "z": 2,
+    "parent": "homeRed4",
+    "css": "background: #d60000; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-1887673354_402'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "red6": {
+    "inheritFrom": {
+      "red4": [
+        "!parent"
+      ]
+    },
+    "id": "red6",
+    "x": -2,
+    "y": -2,
+    "z": 1,
+    "parent": "homeRed4",
+    "css": "background: #d60000; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-1887673354_402'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "red7": {
+    "inheritFrom": {
+      "red0": [
+        "!parent"
+      ]
+    },
+    "id": "red7",
+    "x": 88,
+    "y": -2,
+    "z": 4,
+    "css": "background: #f90000; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1594483847_337'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;",
+    "text": 5,
+    "parent": "homeRed5",
+    "home": "homeRed5"
+  },
+  "red8": {
+    "inheritFrom": {
+      "red7": [
+        "!parent"
+      ]
+    },
+    "id": "red8",
+    "x": 58,
+    "y": -2,
+    "z": 3,
+    "parent": "homeRed5",
+    "css": "background: #f90000; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1594483847_337'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "red9": {
+    "inheritFrom": {
+      "red7": [
+        "!parent"
+      ]
+    },
+    "id": "red9",
+    "x": 28,
+    "y": -2,
+    "z": 2,
+    "parent": "homeRed5",
+    "css": "background: #f90000; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1594483847_337'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "red10": {
+    "inheritFrom": {
+      "red7": [
+        "!parent"
+      ]
+    },
+    "id": "red10",
+    "x": -2,
+    "y": -2,
+    "z": 1,
+    "parent": "homeRed5",
+    "css": "background: #f90000; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1594483847_337'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "red11": {
+    "inheritFrom": {
+      "red0": [
+        "!parent"
+      ]
+    },
+    "id": "red11",
+    "x": 88,
+    "y": -2,
+    "z": 4,
+    "css": "background: #ff1e1e; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-825557802_860'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;",
+    "text": 6,
+    "parent": "homeRed6",
+    "home": "homeRed6"
+  },
+  "red12": {
+    "inheritFrom": {
+      "red11": [
+        "!parent"
+      ]
+    },
+    "id": "red12",
+    "x": 58,
+    "y": -2,
+    "z": 3,
+    "parent": "homeRed6",
+    "css": "background: #ff1e1e; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-825557802_860'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "red13": {
+    "inheritFrom": {
+      "red11": [
+        "!parent"
+      ]
+    },
+    "id": "red13",
+    "x": 28,
+    "y": -2,
+    "z": 2,
+    "parent": "homeRed6",
+    "css": "background: #ff1e1e; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-825557802_860'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "red14": {
+    "inheritFrom": {
+      "red11": [
+        "!parent"
+      ]
+    },
+    "id": "red14",
+    "x": -2,
+    "y": -2,
+    "z": 1,
+    "parent": "homeRed6",
+    "css": "background: #ff1e1e; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-825557802_860'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "red15": {
+    "inheritFrom": {
+      "red0": [
+        "!parent"
+      ]
+    },
+    "id": "red15",
+    "x": 88,
+    "y": -2,
+    "z": 4,
+    "css": "background: #ff4242; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/179609327_642'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;",
+    "text": 7,
+    "parent": "homeRed7",
+    "home": "homeRed7"
+  },
+  "red16": {
+    "inheritFrom": {
+      "red15": [
+        "!parent"
+      ]
+    },
+    "id": "red16",
+    "x": 58,
+    "y": -2,
+    "z": 3,
+    "parent": "homeRed7",
+    "css": "background: #ff4242; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/179609327_642'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "red17": {
+    "inheritFrom": {
+      "red15": [
+        "!parent"
+      ]
+    },
+    "id": "red17",
+    "x": 28,
+    "y": -2,
+    "z": 2,
+    "parent": "homeRed7",
+    "css": "background: #ff4242; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/179609327_642'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "red18": {
+    "inheritFrom": {
+      "red15": [
+        "!parent"
+      ]
+    },
+    "id": "red18",
+    "x": -2,
+    "y": -2,
+    "z": 1,
+    "parent": "homeRed7",
+    "css": "background: #ff4242; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/179609327_642'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "red19": {
+    "inheritFrom": {
+      "red0": [
+        "!parent"
+      ]
+    },
+    "id": "red19",
+    "x": 118,
+    "y": -2,
+    "z": 5,
+    "css": "background: #f66; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1692787291_577'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;",
+    "text": 8,
+    "parent": "homeRed8",
+    "home": "homeRed8"
+  },
+  "red20": {
+    "inheritFrom": {
+      "red19": [
+        "!parent"
+      ]
+    },
+    "id": "red20",
+    "x": 88,
+    "y": -2,
+    "z": 4,
+    "parent": "homeRed8",
+    "css": "background: #f66; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1692787291_577'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "red21": {
+    "inheritFrom": {
+      "red19": [
+        "!parent"
+      ]
+    },
+    "id": "red21",
+    "x": 58,
+    "y": -2,
+    "z": 3,
+    "parent": "homeRed8",
+    "css": "background: #f66; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1692787291_577'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "red22": {
+    "inheritFrom": {
+      "red19": [
+        "!parent"
+      ]
+    },
+    "id": "red22",
+    "x": 28,
+    "y": -2,
+    "z": 2,
+    "parent": "homeRed8",
+    "css": "background: #f66; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1692787291_577'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "red23": {
+    "inheritFrom": {
+      "red19": [
+        "!parent"
+      ]
+    },
+    "id": "red23",
+    "x": -2,
+    "y": -2,
+    "z": 1,
+    "parent": "homeRed8",
+    "css": "background: #f66; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1692787291_577'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "red24": {
+    "inheritFrom": {
+      "red0": [
+        "!parent"
+      ]
+    },
+    "id": "red24",
+    "x": 208,
+    "y": -2,
+    "z": 8,
+    "css": "background: #ff8989; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1237256823_431'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;",
+    "text": 9,
+    "parent": "homeRed9",
+    "home": "homeRed9"
+  },
+  "red25": {
+    "inheritFrom": {
+      "red24": [
+        "!parent"
+      ]
+    },
+    "id": "red25",
+    "x": 178,
+    "y": -2,
+    "z": 7,
+    "parent": "homeRed9",
+    "css": "background: #ff8989; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1237256823_431'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "red26": {
+    "inheritFrom": {
+      "red24": [
+        "!parent"
+      ]
+    },
+    "id": "red26",
+    "x": 148,
+    "y": -2,
+    "z": 6,
+    "parent": "homeRed9",
+    "css": "background: #ff8989; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1237256823_431'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "red27": {
+    "inheritFrom": {
+      "red24": [
+        "!parent"
+      ]
+    },
+    "id": "red27",
+    "x": 118,
+    "y": -2,
+    "z": 5,
+    "parent": "homeRed9",
+    "css": "background: #ff8989; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1237256823_431'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "red28": {
+    "inheritFrom": {
+      "red24": [
+        "!parent"
+      ]
+    },
+    "id": "red28",
+    "x": 88,
+    "y": -2,
+    "z": 4,
+    "parent": "homeRed9",
+    "css": "background: #ff8989; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1237256823_431'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "red29": {
+    "inheritFrom": {
+      "red24": [
+        "!parent"
+      ]
+    },
+    "id": "red29",
+    "x": 58,
+    "y": -2,
+    "z": 3,
+    "parent": "homeRed9",
+    "css": "background: #ff8989; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1237256823_431'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "red30": {
+    "inheritFrom": {
+      "red24": [
+        "!parent"
+      ]
+    },
+    "id": "red30",
+    "x": 28,
+    "y": -2,
+    "z": 2,
+    "parent": "homeRed9",
+    "css": "background: #ff8989; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1237256823_431'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "red31": {
+    "inheritFrom": {
+      "red24": [
+        "!parent"
+      ]
+    },
+    "id": "red31",
+    "x": -2,
+    "y": -2,
+    "z": 1,
+    "parent": "homeRed9",
+    "css": "background: #ff8989; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/1237256823_431'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "red32": {
+    "inheritFrom": {
+      "red0": [
+        "!parent"
+      ]
+    },
+    "id": "red32",
+    "x": -2,
+    "y": -2,
+    "z": 1,
+    "css": "background: #f90052; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-1221404040_3942'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;",
+    "text": "S",
+    "parent": "homeRedS",
+    "home": "homeRedS"
+  },
+  "red33": {
+    "inheritFrom": {
+      "red0": [
+        "!parent"
+      ]
+    },
+    "id": "red33",
+    "x": 148,
+    "y": -2,
+    "z": 6,
+    "css": "background: red; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-1907406388_1226'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;",
+    "text": "B",
+    "parent": "homeRedB",
+    "home": "homeRedB",
+    "movable": true
+  },
+  "red34": {
+    "inheritFrom": {
+      "red33": [
+        "!parent"
+      ]
+    },
+    "id": "red34",
+    "x": 118,
+    "y": -2,
+    "z": 5,
+    "parent": "homeRedB",
+    "movable": true,
+    "css": "background: red; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-1907406388_1226'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "red35": {
+    "inheritFrom": {
+      "red33": [
+        "!parent"
+      ]
+    },
+    "id": "red35",
+    "x": 88,
+    "y": -2,
+    "z": 4,
+    "parent": "homeRedB",
+    "movable": true,
+    "css": "background: red; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-1907406388_1226'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "red36": {
+    "inheritFrom": {
+      "red33": [
+        "!parent"
+      ]
+    },
+    "id": "red36",
+    "x": 58,
+    "y": -2,
+    "z": 3,
+    "parent": "homeRedB",
+    "movable": true,
+    "css": "background: red; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-1907406388_1226'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "red37": {
+    "inheritFrom": {
+      "red33": [
+        "!parent"
+      ]
+    },
+    "id": "red37",
+    "x": 28,
+    "y": -2,
+    "z": 2,
+    "parent": "homeRedB",
+    "movable": true,
+    "css": "background: red; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-1907406388_1226'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "red38": {
+    "inheritFrom": {
+      "red33": [
+        "!parent"
+      ]
+    },
+    "id": "red38",
+    "x": -2,
+    "y": -2,
+    "z": 1,
+    "parent": "homeRedB",
+    "movable": true,
+    "css": "background: red; border-radius: 35%; border:2px solid black;color: white;font-size: 30px; text-align:center;background-image:url('/assets/-1907406388_1226'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;"
+  },
+  "red39": {
+    "inheritFrom": {
+      "red0": [
+        "!parent"
+      ]
+    },
+    "id": "red39",
+    "x": -2,
+    "y": -2,
+    "z": 1,
+    "css": "background: lightgrey; border-radius: 35%;border:2px solid black;color:red;font-size: 30px; text-align:center;background-image:url('/assets/570074403_985'); background-size: 60%; background-repeat: no-repeat;background-position: center bottom;",
+    "text": "F",
+    "home": "homeRedF",
+    "parent": "homeRedF",
+    "movable": true
+  },
+  "coverblue0": {
+    "id": "coverblue0",
+    "width": 60,
+    "height": 80,
+    "z": 791,
+    "css": "background: blue; border-radius: 35%; border: 2px solid black; font-size:40px; text-align:center;color:blue;font-family:VTT-Symbols",
+    "fixedParent": true,
+    "parent": "blue0",
+    "movable": false,
+    "onlyVisibleForSeat": "redseat",
+    "movableInEdit": false,
+    "x": -1,
+    "y": -1,
+    "text": "circle\ncircle",
+    "coverBlue": true
+  },
+  "blueseat": {
+    "type": "seat",
+    "id": "blueseat",
+    "y": 10,
+    "z": 1,
+    "displayEmpty": "play blue",
+    "x": 65,
+    "layer": 10,
+    "clickRoutine": [
+      {
+        "func": "SHUFFLE",
+        "holder": "homeBlue0"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "homeRed0"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "start"
+        ],
+        "property": "x",
+        "value": 600
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "homeBlue0"
+        ],
+        "property": "x",
+        "value": 0
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ],
+    "movableInEdit": false,
+    "colorChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "operand2": "",
+        "relation": "!=",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "color",
+            "value": "blue"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "color",
+            "value": null
+          }
+        ]
+      }
+    ]
+  },
+  "redseat": {
+    "type": "seat",
+    "id": "redseat",
+    "index": 2,
+    "x": 1365,
+    "y": 10,
+    "z": 2,
+    "displayEmpty": "play red",
+    "layer": 10,
+    "clickRoutine": [
+      {
+        "func": "SHUFFLE",
+        "holder": "homeBlue0"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "homeRed0"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "start"
+        ],
+        "property": "x",
+        "value": 600
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "homeRed0"
+        ],
+        "property": "x",
+        "value": 1300
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ],
+    "movableInEdit": false,
+    "colorChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "operand2": "",
+        "relation": "!=",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "color",
+            "value": "red"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "color",
+            "value": null
+          }
+        ]
+      }
+    ]
+  },
+  "coverblue1": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue1",
+    "parent": "blue1",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue2": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue2",
+    "parent": "blue2",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue3": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue3",
+    "parent": "blue3",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue4": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue4",
+    "parent": "blue4",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue5": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue5",
+    "parent": "blue5",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue6": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue6",
+    "parent": "blue6",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue7": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue7",
+    "parent": "blue7",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue8": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue8",
+    "parent": "blue8",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue9": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue9",
+    "parent": "blue9",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue10": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue10",
+    "parent": "blue10",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue11": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue11",
+    "parent": "blue11",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue12": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue12",
+    "parent": "blue12",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue13": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue13",
+    "parent": "blue13",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue14": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue14",
+    "parent": "blue14",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue15": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue15",
+    "parent": "blue15",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue16": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue16",
+    "parent": "blue16",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue17": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue17",
+    "parent": "blue17",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue18": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue18",
+    "parent": "blue18",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue19": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue19",
+    "parent": "blue19",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue20": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue20",
+    "parent": "blue20",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue21": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue21",
+    "parent": "blue21",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue22": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue22",
+    "parent": "blue22",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue23": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue23",
+    "parent": "blue23",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue24": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue24",
+    "parent": "blue24",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue25": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue25",
+    "parent": "blue25",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue26": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue26",
+    "parent": "blue26",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue27": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue27",
+    "parent": "blue27",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue28": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue28",
+    "parent": "blue28",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue29": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue29",
+    "parent": "blue29",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue30": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue30",
+    "parent": "blue30",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue31": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue31",
+    "parent": "blue31",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue32": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue32",
+    "parent": "blue32",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue33": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue33",
+    "parent": "blue33",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue34": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue34",
+    "parent": "blue34",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue35": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue35",
+    "parent": "blue35",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue36": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue36",
+    "parent": "blue36",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue37": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue37",
+    "parent": "blue37",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue38": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue38",
+    "parent": "blue38",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverblue39": {
+    "inheritFrom": "coverblue0",
+    "id": "coverblue39",
+    "parent": "blue39",
+    "onlyVisibleForSeat": "redseat"
+  },
+  "coverred0": {
+    "id": "coverred0",
+    "parent": "red0",
+    "fixedParent": true,
+    "width": 60,
+    "height": 80,
+    "z": 791,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "background: red; border-radius: 35%; border: 2px solid black; font-size:40px; text-align:center;color:red;font-family:VTT-Symbols",
+    "onlyVisibleForSeat": "blueseat",
+    "x": -1,
+    "y": -1,
+    "text": "circle\ncircle",
+    "coverRed": true
+  },
+  "coverred1": {
+    "inheritFrom": "coverred0",
+    "id": "coverred1",
+    "parent": "red1",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred2": {
+    "inheritFrom": "coverred0",
+    "id": "coverred2",
+    "parent": "red2",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred3": {
+    "inheritFrom": "coverred0",
+    "id": "coverred3",
+    "parent": "red3",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred4": {
+    "inheritFrom": "coverred0",
+    "id": "coverred4",
+    "parent": "red4",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred5": {
+    "inheritFrom": "coverred0",
+    "id": "coverred5",
+    "parent": "red5",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred6": {
+    "inheritFrom": "coverred0",
+    "id": "coverred6",
+    "parent": "red6",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred7": {
+    "inheritFrom": "coverred0",
+    "id": "coverred7",
+    "parent": "red7",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred8": {
+    "inheritFrom": "coverred0",
+    "id": "coverred8",
+    "parent": "red8",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred9": {
+    "inheritFrom": "coverred0",
+    "id": "coverred9",
+    "parent": "red9",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred10": {
+    "inheritFrom": "coverred0",
+    "id": "coverred10",
+    "parent": "red10",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred11": {
+    "inheritFrom": "coverred0",
+    "id": "coverred11",
+    "parent": "red11",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred12": {
+    "inheritFrom": "coverred0",
+    "id": "coverred12",
+    "parent": "red12",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred13": {
+    "inheritFrom": "coverred0",
+    "id": "coverred13",
+    "parent": "red13",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred14": {
+    "inheritFrom": "coverred0",
+    "id": "coverred14",
+    "parent": "red14",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred15": {
+    "inheritFrom": "coverred0",
+    "id": "coverred15",
+    "parent": "red15",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred16": {
+    "inheritFrom": "coverred0",
+    "id": "coverred16",
+    "parent": "red16",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred17": {
+    "inheritFrom": "coverred0",
+    "id": "coverred17",
+    "parent": "red17",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred18": {
+    "inheritFrom": "coverred0",
+    "id": "coverred18",
+    "parent": "red18",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred19": {
+    "inheritFrom": "coverred0",
+    "id": "coverred19",
+    "parent": "red19",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred20": {
+    "inheritFrom": "coverred0",
+    "id": "coverred20",
+    "parent": "red20",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred21": {
+    "inheritFrom": "coverred0",
+    "id": "coverred21",
+    "parent": "red21",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred22": {
+    "inheritFrom": "coverred0",
+    "id": "coverred22",
+    "parent": "red22",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred23": {
+    "inheritFrom": "coverred0",
+    "id": "coverred23",
+    "parent": "red23",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred24": {
+    "inheritFrom": "coverred0",
+    "id": "coverred24",
+    "parent": "red24",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred25": {
+    "inheritFrom": "coverred0",
+    "id": "coverred25",
+    "parent": "red25",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred26": {
+    "inheritFrom": "coverred0",
+    "id": "coverred26",
+    "parent": "red26",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred27": {
+    "inheritFrom": "coverred0",
+    "id": "coverred27",
+    "parent": "red27",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred28": {
+    "inheritFrom": "coverred0",
+    "id": "coverred28",
+    "parent": "red28",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred29": {
+    "inheritFrom": "coverred0",
+    "id": "coverred29",
+    "parent": "red29",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred30": {
+    "inheritFrom": "coverred0",
+    "id": "coverred30",
+    "parent": "red30",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred31": {
+    "inheritFrom": "coverred0",
+    "id": "coverred31",
+    "parent": "red31",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred32": {
+    "inheritFrom": "coverred0",
+    "id": "coverred32",
+    "parent": "red32",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred33": {
+    "inheritFrom": "coverred0",
+    "id": "coverred33",
+    "parent": "red33",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred34": {
+    "inheritFrom": "coverred0",
+    "id": "coverred34",
+    "parent": "red34",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred35": {
+    "inheritFrom": "coverred0",
+    "id": "coverred35",
+    "parent": "red35",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred36": {
+    "inheritFrom": "coverred0",
+    "id": "coverred36",
+    "parent": "red36",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred37": {
+    "inheritFrom": "coverred0",
+    "id": "coverred37",
+    "parent": "red37",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred38": {
+    "inheritFrom": "coverred0",
+    "id": "coverred38",
+    "parent": "red38",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "coverred39": {
+    "inheritFrom": "coverred0",
+    "id": "coverred39",
+    "parent": "red39",
+    "onlyVisibleForSeat": "blueseat"
+  },
+  "homeBlue1": {
+    "type": "holder",
+    "id": "homeBlue1",
+    "z": 713,
+    "width": 70,
+    "height": 100,
+    "dropTarget": {},
+    "stackOffsetX": 30,
+    "parent": "blueRow1",
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "classes": "transparent",
+    "enterRoutine": [
+      {
+        "note": "Put the piece id into undo. This is only necessary because the undo routine needs the info to be in there twice because that is what happens on the board.",
+        "func": "GET",
+        "property": "id",
+        "collection": "child"
+      },
+      "var undoPiece = ${PROPERTY undoPiece OF undo}",
+      "var undoPiece = ${id} push",
+      {
+        "func": "SET",
+        "collection": [
+          "undo"
+        ],
+        "property": "undoPiece",
+        "value": "${undoPiece}"
+      },
+      "var undoGrid = ${PROPERTY undoGrid OF undo} //put the grid id into undo",
+      "var undoGrid = ${PROPERTY id} push",
+      {
+        "func": "SET",
+        "collection": [
+          "undo"
+        ],
+        "property": "undoGrid",
+        "value": "${undoGrid}"
+      },
+      {
+        "note": "Make the piece cover invisible",
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${id}"
+      },
+      {
+        "func": "SET",
+        "property": "onlyVisibleForSeat",
+        "value": []
+      }
+    ],
+    "movableInEdit": false,
+    "leaveRoutine": [
+      {
+        "note": "Make the piece cover visible.",
+        "func": "GET",
+        "property": "id",
+        "collection": "child"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${id}"
+      },
+      {
+        "func": "SET",
+        "property": "onlyVisibleForSeat",
+        "value": "redseat"
+      }
+    ]
+  },
+  "homeBlue0": {
+    "type": "holder",
+    "id": "homeBlue0",
+    "y": 100,
+    "z": 9169,
+    "dropTarget": {
+      "rowHolder": true
+    },
+    "stackOffsetY": 120,
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "height": 100,
+    "classes": "transparent",
+    "x": 2000
+  },
+  "homeBlue2": {
+    "type": "holder",
+    "id": "homeBlue2",
+    "z": 713,
+    "width": 70,
+    "height": 100,
+    "parent": "blueRow1",
+    "x": 100,
+    "y": 0,
+    "inheritFrom": "homeBlue1"
+  },
+  "homeBlue3": {
+    "type": "holder",
+    "id": "homeBlue3",
+    "z": 713,
+    "width": 70,
+    "height": 100,
+    "parent": "blueRow1",
+    "x": 200,
+    "y": 0,
+    "inheritFrom": "homeBlue1"
+  },
+  "homeBlue4": {
+    "type": "holder",
+    "id": "homeBlue4",
+    "z": 713,
+    "width": 100,
+    "height": 100,
+    "parent": "blueRow2",
+    "x": 0,
+    "y": 0,
+    "inheritFrom": "homeBlue1"
+  },
+  "homeBlue5": {
+    "type": "holder",
+    "id": "homeBlue5",
+    "z": 713,
+    "width": 100,
+    "height": 100,
+    "parent": "blueRow2",
+    "x": 150,
+    "y": 0,
+    "inheritFrom": "homeBlue1"
+  },
+  "homeBlue6": {
+    "type": "holder",
+    "id": "homeBlue6",
+    "z": 713,
+    "width": 100,
+    "height": 100,
+    "parent": "blueRow3",
+    "x": 0,
+    "y": 0,
+    "inheritFrom": "homeBlue1"
+  },
+  "homeBlue7": {
+    "type": "holder",
+    "id": "homeBlue7",
+    "z": 713,
+    "width": 100,
+    "height": 100,
+    "parent": "blueRow3",
+    "x": 150,
+    "y": 0,
+    "inheritFrom": "homeBlue1"
+  },
+  "homeBlue8": {
+    "type": "holder",
+    "id": "homeBlue8",
+    "z": 713,
+    "width": 100,
+    "height": 100,
+    "parent": "blueRow4",
+    "x": 0,
+    "y": 0,
+    "movable": false,
+    "movableInEdit": true,
+    "inheritFrom": "homeBlue1"
+  },
+  "homeBlue9": {
+    "type": "holder",
+    "id": "homeBlue9",
+    "z": 713,
+    "width": 100,
+    "height": 100,
+    "parent": "blueRow5",
+    "x": 0,
+    "y": 0,
+    "inheritFrom": "homeBlue1"
+  },
+  "blueRow1": {
+    "id": "blueRow1",
+    "y": 238,
+    "z": 3,
+    "rowHolder": true,
+    "x": -2,
+    "parent": "homeBlue0",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "blueRow2": {
+    "id": "blueRow2",
+    "y": 598,
+    "z": 6,
+    "rowHolder": true,
+    "x": -2,
+    "parent": "homeBlue0",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "blueRow3": {
+    "id": "blueRow3",
+    "y": 358,
+    "z": 4,
+    "x": -2,
+    "rowHolder": true,
+    "parent": "homeBlue0",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "blueRow4": {
+    "id": "blueRow4",
+    "y": -2,
+    "z": 1,
+    "x": -2,
+    "rowHolder": true,
+    "parent": "homeBlue0",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "blueRow5": {
+    "id": "blueRow5",
+    "y": 118,
+    "z": 2,
+    "x": -2,
+    "rowHolder": true,
+    "parent": "homeBlue0",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "blueRow6": {
+    "id": "blueRow6",
+    "y": 478,
+    "z": 5,
+    "x": -2,
+    "rowHolder": true,
+    "parent": "homeBlue0",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "blueRow7": {
+    "id": "blueRow7",
+    "y": 718,
+    "z": 7,
+    "x": -2,
+    "rowHolder": true,
+    "parent": "homeBlue0",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "homeBlueF": {
+    "type": "holder",
+    "id": "homeBlueF",
+    "parent": "blueRow6",
+    "width": 100,
+    "height": 100,
+    "z": 713,
+    "x": 150,
+    "y": 0,
+    "inheritFrom": "homeBlue1"
+  },
+  "homeBlueS": {
+    "type": "holder",
+    "id": "homeBlueS",
+    "parent": "blueRow6",
+    "width": 100,
+    "height": 100,
+    "z": 713,
+    "x": 0,
+    "y": 0,
+    "inheritFrom": "homeBlue1"
+  },
+  "homeBlueB": {
+    "type": "holder",
+    "id": "homeBlueB",
+    "parent": "blueRow7",
+    "width": 100,
+    "height": 100,
+    "z": 713,
+    "x": 0,
+    "y": 0,
+    "inheritFrom": "homeBlue1"
+  },
+  "redRow1": {
+    "id": "redRow1",
+    "x": -2,
+    "y": 598,
+    "z": 6,
+    "movable": false,
+    "movableInEdit": false,
+    "rowHolder": true,
+    "parent": "homeRed0"
+  },
+  "redRow2": {
+    "id": "redRow2",
+    "x": -2,
+    "y": -2,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "rowHolder": true,
+    "parent": "homeRed0"
+  },
+  "redRow3": {
+    "id": "redRow3",
+    "x": -2,
+    "y": 238,
+    "z": 3,
+    "movable": false,
+    "movableInEdit": false,
+    "rowHolder": true,
+    "parent": "homeRed0"
+  },
+  "redRow4": {
+    "id": "redRow4",
+    "x": -2,
+    "y": 718,
+    "z": 7,
+    "movable": false,
+    "movableInEdit": false,
+    "rowHolder": true,
+    "parent": "homeRed0"
+  },
+  "redRow5": {
+    "id": "redRow5",
+    "x": -2,
+    "y": 358,
+    "z": 4,
+    "movable": false,
+    "movableInEdit": false,
+    "rowHolder": true,
+    "parent": "homeRed0"
+  },
+  "redRow6": {
+    "id": "redRow6",
+    "x": -2,
+    "y": 118,
+    "z": 2,
+    "movable": false,
+    "movableInEdit": false,
+    "rowHolder": true,
+    "parent": "homeRed0"
+  },
+  "redRow72": {
+    "id": "redRow72",
+    "x": -2,
+    "y": 478,
+    "z": 5,
+    "movable": false,
+    "movableInEdit": false,
+    "rowHolder": true,
+    "parent": "homeRed0"
+  },
+  "homeRed0": {
+    "type": "holder",
+    "id": "homeRed0",
+    "x": 2000,
+    "y": 100,
+    "height": 100,
+    "z": 9169,
+    "classes": "transparent",
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {
+      "rowHolder": true
+    },
+    "stackOffsetY": 120
+  },
+  "homeRed2": {
+    "type": "holder",
+    "id": "homeRed2",
+    "parent": "redRow1",
+    "x": 100,
+    "width": 70,
+    "height": 100,
+    "z": 713,
+    "y": 0,
+    "inheritFrom": "homeRed1"
+  },
+  "homeRed3": {
+    "type": "holder",
+    "id": "homeRed3",
+    "parent": "redRow1",
+    "x": 200,
+    "width": 70,
+    "height": 100,
+    "z": 713,
+    "y": 0,
+    "inheritFrom": "homeRed1"
+  },
+  "homeRed4": {
+    "type": "holder",
+    "id": "homeRed4",
+    "parent": "redRow2",
+    "width": 100,
+    "height": 100,
+    "z": 713,
+    "x": 0,
+    "y": 0,
+    "inheritFrom": "homeRed1"
+  },
+  "homeRed5": {
+    "type": "holder",
+    "id": "homeRed5",
+    "parent": "redRow2",
+    "x": 150,
+    "width": 100,
+    "height": 100,
+    "z": 713,
+    "y": 0,
+    "inheritFrom": "homeRed1"
+  },
+  "homeRed6": {
+    "type": "holder",
+    "id": "homeRed6",
+    "parent": "redRow3",
+    "width": 100,
+    "height": 100,
+    "z": 713,
+    "x": 0,
+    "y": 0,
+    "inheritFrom": "homeRed1"
+  },
+  "homeRed7": {
+    "type": "holder",
+    "id": "homeRed7",
+    "parent": "redRow3",
+    "x": 150,
+    "width": 100,
+    "height": 100,
+    "z": 713,
+    "y": 0,
+    "inheritFrom": "homeRed1"
+  },
+  "homeRed8": {
+    "type": "holder",
+    "id": "homeRed8",
+    "parent": "redRow4",
+    "width": 100,
+    "height": 100,
+    "z": 713,
+    "x": 0,
+    "y": 0,
+    "inheritFrom": "homeRed1"
+  },
+  "homeRed9": {
+    "type": "holder",
+    "id": "homeRed9",
+    "parent": "redRow5",
+    "width": 100,
+    "height": 100,
+    "z": 713,
+    "x": 0,
+    "y": 0,
+    "inheritFrom": "homeRed1"
+  },
+  "homeRedS": {
+    "type": "holder",
+    "id": "homeRedS",
+    "parent": "redRow6",
+    "width": 100,
+    "height": 100,
+    "z": 713,
+    "x": 0,
+    "y": 0,
+    "inheritFrom": "homeRed1"
+  },
+  "homeRedF": {
+    "type": "holder",
+    "id": "homeRedF",
+    "parent": "redRow6",
+    "x": 150,
+    "width": 100,
+    "height": 100,
+    "z": 713,
+    "y": 0,
+    "inheritFrom": "homeRed1"
+  },
+  "homeRedB": {
+    "type": "holder",
+    "id": "homeRedB",
+    "parent": "redRow72",
+    "width": 100,
+    "height": 100,
+    "z": 713,
+    "x": 0,
+    "y": 0,
+    "inheritFrom": "homeRed1"
+  },
+  "backgroundField": {
+    "id": "backgroundField",
+    "width": 1600,
+    "height": 1000,
+    "layer": -5,
+    "movable": false,
+    "css": "opacity: 0.5",
+    "image": "/assets/-1997300328_2650328",
+    "movableInEdit": false
+  },
+  "backgroundRockRed": {
+    "id": "backgroundRockRed",
+    "x": 1280,
+    "width": 700,
+    "height": 1000,
+    "layer": -5,
+    "movable": false,
+    "css": "opacity: 0.3",
+    "image": "/assets/-1273811190_516854",
+    "movableInEdit": false
+  },
+  "backgroundRockBlue": {
+    "id": "backgroundRockBlue",
+    "x": -380,
+    "width": 700,
+    "height": 1000,
+    "layer": -5,
+    "movable": false,
+    "css": "opacity: 0.3",
+    "image": "/assets/-1273811190_516854",
+    "movableInEdit": false
+  },
+  "winner": {
+    "id": "winner",
+    "x": 2000,
+    "y": 425,
+    "width": 400,
+    "height": 150,
+    "z": 1214,
+    "css": "background: beige;border-radius: 5%; font-size: 60px; text-align:center",
+    "text": "Blue Wins!"
+  },
+  "i8c5": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "reset"
+        ]
+      }
+    ],
+    "y": 60,
+    "z": 9,
+    "id": "i8c5",
+    "fixedParent": true,
+    "parent": "winner",
+    "css": "font-size:60px",
+    "text": "play_arrow",
+    "x": 150,
+    "classes": "symbols"
+  },
+  "blueHomeCover": {
+    "id": "blueHomeCover",
+    "width": 700,
+    "movable": false,
+    "movableInEdit": false,
+    "height": 1000,
+    "onlyVisibleForSeat": "redseat",
+    "layer": 5,
+    "image": "/assets/-1273811190_516854",
+    "x": -380
+  },
+  "redHomeCover": {
+    "id": "redHomeCover",
+    "width": 700,
+    "height": 1000,
+    "movable": false,
+    "movableInEdit": false,
+    "onlyVisibleForSeat": "blueseat",
+    "x": 1280,
+    "layer": 5,
+    "image": "/assets/-1273811190_516854"
+  },
+  "undo": {
+    "type": "button",
+    "id": "undo",
+    "z": 16,
+    "classes": "symbols",
+    "clickRoutine": [
+      "var undoGrid = ${PROPERTY undoGrid}",
+      "var undoPiece = ${PROPERTY undoPiece}",
+      "var length = ${undoGrid} length",
+      "var length = ${length} - 2 ",
+      "var newGrid = ${PROPERTY undoGrid} pop",
+      "var newPiece = ${PROPERTY undoPiece} pop",
+      "var undoGrid = remove ${length} 2 //do it twice because leaveRoutine fires twice; may update this someday",
+      "var undoPiece = remove ${length} 2",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${newPiece}"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "${newGrid}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "undoGrid",
+        "value": "${undoGrid}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "undoPiece",
+        "value": "${undoPiece}"
+      }
+    ],
+    "css": "font-size: 35px; ",
+    "text": "skip_previous",
+    "undoGrid": [],
+    "undoPiece": [],
+    "undoPieceChangeRoutine": [
+      "var undoGrid = ${PROPERTY undoGrid} //This whole routine just limits the number of undos to 50 to keep the array size manageable. But leaving eliminating this routine completely would probably not slow down the game even if the move count got high.",
+      "var undoPiece = ${PROPERTY undoPiece}",
+      "var length = ${undoGrid} length",
+      {
+        "func": "IF",
+        "operand1": "${length}",
+        "operand2": 100,
+        "relation": ">=",
+        "thenRoutine": [
+          "var undoGrid = remove 0 2",
+          "var undoPiece = remove 0 2",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "undoGrid",
+            "value": "${undoGrid}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "undoPiece",
+            "value": "${undoPiece}"
+          }
+        ]
+      }
+    ],
+    "width": 46,
+    "height": 46,
+    "y": 15,
+    "x": 3,
+    "layer": 10
+  },
+  "reset": {
+    "type": "button",
+    "id": "reset",
+    "x": 1550,
+    "y": 15,
+    "width": 46,
+    "height": 46,
+    "z": 2080,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Resetting the board...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to reset the board. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "home",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "FOREACH",
+            "in": "${DEFAULT}",
+            "loopRoutine": [
+              {
+                "func": "GET",
+                "property": "home",
+                "variable": "homeID"
+              },
+              {
+                "func": "SET",
+                "property": "parent",
+                "value": "${homeID}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "homeBlue0"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "homeRed0"
+      },
+      {
+        "func": "SELECT",
+        "property": "gridSquare",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "dropLimit",
+        "value": 1
+      },
+      {
+        "func": "SELECT",
+        "property": "buffer",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "dropLimit",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "winner"
+        ],
+        "property": "x",
+        "value": 2000
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "start"
+        ],
+        "property": "x",
+        "value": 600
+      },
+      {
+        "func": "SELECT",
+        "property": "text",
+        "value": "F"
+      },
+      {
+        "func": "SET",
+        "property": "movable",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "property": "text",
+        "value": "B"
+      },
+      {
+        "func": "SET",
+        "property": "movable",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "blueHomeCover",
+          "redHomeCover"
+        ],
+        "property": "y",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "startButton"
+        ],
+        "property": "playing",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "undo"
+        ],
+        "property": "undoGrid",
+        "value": []
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "undo"
+        ],
+        "property": "undoPiece",
+        "value": []
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "blueseat",
+          "redseat"
+        ],
+        "property": "turn",
+        "value": false
+      },
+      {
+        "func": "SELECT",
+        "property": "coverBlue",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "onlyVisibleForSeat",
+        "value": "redseat"
+      },
+      {
+        "func": "SELECT",
+        "property": "coverRed",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "onlyVisibleForSeat",
+        "value": "blueseat"
+      }
+    ],
+    "color": "white",
+    "css": "font-size: 30px; --wcMain: black; --wcBorder:white; --wcMainOH: lightgrey; --wcBorderOH: green;--wcFontOH: green; ",
+    "classes": "symbols",
+    "text": "restart",
+    "layer": 10
+  },
+  "start": {
+    "id": "start",
+    "x": 600,
+    "y": 425,
+    "width": 400,
+    "height": 150,
+    "z": 1214,
+    "css": "background: beige;border-radius: 5%; font-size: 30px; text-align:center",
+    "text": "Press when all pieces are set"
+  },
+  "startButton": {
+    "type": "button",
+    "id": "startButton",
+    "parent": "start",
+    "fixedParent": true,
+    "x": 150,
+    "y": 60,
+    "z": 9,
+    "classes": "symbols",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "start"
+        ],
+        "property": "x",
+        "value": 2000
+      },
+      {
+        "func": "SELECT",
+        "property": "text",
+        "value": "F"
+      },
+      {
+        "func": "SET",
+        "property": "movable",
+        "value": false
+      },
+      {
+        "func": "SELECT",
+        "property": "text",
+        "value": "B"
+      },
+      {
+        "func": "SET",
+        "property": "movable",
+        "value": false
+      },
+      {
+        "func": "SELECT",
+        "property": "gridSquare",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "dropLimit",
+        "value": 2
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "blueHomeCover",
+          "redHomeCover"
+        ],
+        "property": "y",
+        "value": 1200
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "playing",
+        "value": true
+      }
+    ],
+    "css": "font-size:60px",
+    "text": "play_arrow",
+    "playing": false
+  },
+  "48kdP": {
+    "fixedParent": true,
+    "id": "48kdP",
+    "x": 120,
+    "y": -3,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "TIMER",
+        "timer": "${PROPERTY parent}"
+      }
+    ],
+    "image": "/i/button-icons/White-Play_Pause.svg",
+    "css": "background-size: 75% 75%",
+    "parent": "theTimer"
+  },
+  "48kdR": {
+    "fixedParent": true,
+    "id": "48kdR",
+    "x": 80,
+    "y": -3,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "TIMER",
+        "timer": "${PROPERTY parent}",
+        "mode": "reset"
+      }
+    ],
+    "image": "/i/button-icons/White-Reset.svg",
+    "css": "background-size: 80% 80%",
+    "parent": "theTimer"
+  },
+  "theTimer": {
+    "type": "timer",
+    "id": "theTimer",
+    "x": -203,
+    "y": 653,
+    "z": 10,
+    "css": "color: white; ",
+    "showRankRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton"
+      },
+      {
+        "note": "Put a big cover over the entire screen. Without this, if players move during the 3 second wait, things can get out of whack.",
+        "func": "SET",
+        "collection": [
+          "coverAll"
+        ],
+        "property": "y",
+        "value": 0
+      },
+      {
+        "note": "Remove the visibility limitations for the covers on back attacker and defender",
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${attackID}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "attackCoverID"
+      },
+      {
+        "func": "GET",
+        "property": "onlyVisibleForSeat",
+        "variable": "attackSeat"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${attackCoverID}"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": []
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "attackSeat",
+        "value": "${attackSeat}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "attackCoverID",
+        "value": "${attackCoverID}"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${defendID}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "defendCoverID"
+      },
+      {
+        "func": "GET",
+        "property": "onlyVisibleForSeat",
+        "variable": "defendSeat"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${defendCoverID}"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": []
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "defendSeat",
+        "value": "${defendSeat}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "defendCoverID",
+        "value": "${defendCoverID}"
+      },
+      {
+        "note": "Put a glow around the attacker and defender.",
+        "func": "SELECT",
+        "property": "id",
+        "value": "${attackID}",
+        "collection": "attackID"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${defendID}",
+        "collection": "defendID"
+      },
+      {
+        "func": "GET",
+        "collection": "attackID",
+        "property": "css",
+        "variable": "attackOriginalCSS"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "attackOriginalCSS",
+        "value": "${attackOriginalCSS}"
+      },
+      {
+        "func": "GET",
+        "collection": "defendID",
+        "property": "css",
+        "variable": "defendOriginalCSS"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "defendOriginalCSS",
+        "value": "${defendOriginalCSS}"
+      },
+      "var glowcss = '\\u003bbox-shadow\\u003a0px 0px 50px 15px purple'",
+      "var attackNewCSS = ${attackOriginalCSS} concat ${glowcss}",
+      "var defendNewCSS = ${defendOriginalCSS} concat ${glowcss}",
+      {
+        "func": "SET",
+        "collection": "attackID",
+        "property": "css",
+        "value": "${attackNewCSS}"
+      },
+      {
+        "func": "SET",
+        "collection": "defendID",
+        "property": "css",
+        "value": "${defendNewCSS}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "attackID",
+        "value": "${attackID}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "defendID",
+        "value": "${defendID}"
+      }
+    ],
+    "millisecondsChangeRoutine": [
+      {
+        "note": "After 3 seconds, set the cover visibility for both attacker and defender back to normal, reset the timer, and move the big cover out of the way. Then set css back to normal",
+        "func": "IF",
+        "operand1": "${PROPERTY milliseconds}",
+        "operand2": 3000,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "${PROPERTY attackCoverID}"
+          },
+          {
+            "func": "SET",
+            "property": "onlyVisibleForSeat",
+            "value": "${PROPERTY attackSeat}"
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "${PROPERTY defendCoverID}"
+          },
+          {
+            "func": "SET",
+            "property": "onlyVisibleForSeat",
+            "value": "${PROPERTY defendSeat}"
+          },
+          {
+            "func": "TIMER",
+            "timer": "theTimer",
+            "mode": "reset"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "coverAll"
+            ],
+            "property": "y",
+            "value": 1100
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "${PROPERTY attackID}"
+          },
+          {
+            "func": "SET",
+            "property": "css",
+            "value": "${PROPERTY attackOriginalCSS}"
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "${PROPERTY defendID}"
+          },
+          {
+            "func": "SET",
+            "property": "css",
+            "value": "${PROPERTY defendOriginalCSS}"
+          }
+        ]
+      }
+    ],
+    "attackCoverID": "coverred0",
+    "defendCoverID": "coverblue25",
+    "defendSeat": "redseat"
+  },
+  "coverAll": {
+    "id": "coverAll",
+    "width": 1570,
+    "height": 970,
+    "layer": 11,
+    "z": 9172,
+    "movableInEdit": false,
+    "css": "border: 15px solid orange",
+    "movable": false,
+    "y": 1100
+  },
+  "homeRed1": {
+    "type": "holder",
+    "id": "homeRed1",
+    "parent": "redRow1",
+    "width": 70,
+    "movable": false,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropOffsetX": -2,
+    "dropOffsetY": -2,
+    "dropTarget": {},
+    "enterRoutine": [
+      {
+        "note": "Put the piece id into undo. This is only necessary because the undo routine needs the info to be in there twice because that is what happens on the board.",
+        "func": "GET",
+        "property": "id",
+        "collection": "child"
+      },
+      "var undoPiece = ${PROPERTY undoPiece OF undo}",
+      "var undoPiece = ${id} push",
+      {
+        "func": "SET",
+        "collection": [
+          "undo"
+        ],
+        "property": "undoPiece",
+        "value": "${undoPiece}"
+      },
+      "var undoGrid = ${PROPERTY undoGrid OF undo} //put the grid id into undo",
+      "var undoGrid = ${PROPERTY id} push",
+      {
+        "func": "SET",
+        "collection": [
+          "undo"
+        ],
+        "property": "undoGrid",
+        "value": "${undoGrid}"
+      },
+      {
+        "note": "Make the piece cover invisible",
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${id}"
+      },
+      {
+        "func": "SET",
+        "property": "onlyVisibleForSeat",
+        "value": []
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "note": "Make the piece cover visible.",
+        "func": "GET",
+        "property": "id",
+        "collection": "child"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${id}"
+      },
+      {
+        "func": "SET",
+        "property": "onlyVisibleForSeat",
+        "value": "blueseat"
+      }
+    ],
+    "stackOffsetX": 30
+  }
+}

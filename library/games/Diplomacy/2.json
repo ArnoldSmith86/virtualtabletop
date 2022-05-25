@@ -86,7 +86,7 @@
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe",
     "x": 80,
-    "y": 69,
+    "y": 84,
     "z": 279,
     "type": "holder",
     "inheritChildZ": true,
@@ -228,8 +228,8 @@
   },
   "edb5b39b-a57e-4f7c-b89e-0de640648682": {
     "id": "edb5b39b-a57e-4f7c-b89e-0de640648682",
-    "x": 31.35,
-    "y": 45,
+    "x": 33,
+    "y": 62,
     "z": 1107,
     "type": "label",
     "text": "Player 1",
@@ -294,7 +294,7 @@
   },
   "4a996d64-afd1-444c-9c3f-f327093e9f8d": {
     "id": "4a996d64-afd1-444c-9c3f-f327093e9f8d",
-    "z": 11096,
+    "z": 10900,
     "type": "card",
     "deck": "31292ca3-7a2e-4fce-b12d-e7756d28ba36",
     "cardType": "type-b1978496-e76b-4ea9-a9bd-b7c40a1e5735",
@@ -302,7 +302,7 @@
   },
   "29533d18-48c0-4465-acbd-b84981bb1ec7": {
     "id": "29533d18-48c0-4465-acbd-b84981bb1ec7",
-    "z": 11098,
+    "z": 10902,
     "type": "card",
     "deck": "31292ca3-7a2e-4fce-b12d-e7756d28ba36",
     "cardType": "type-b1978496-e76b-4ea9-a9bd-b7c40a1e5735",
@@ -310,7 +310,7 @@
   },
   "4267d9c0-86d3-4bb7-8c48-b5e29fe9b6ef": {
     "id": "4267d9c0-86d3-4bb7-8c48-b5e29fe9b6ef",
-    "z": 11100,
+    "z": 10904,
     "type": "card",
     "deck": "31292ca3-7a2e-4fce-b12d-e7756d28ba36",
     "cardType": "type-b1978496-e76b-4ea9-a9bd-b7c40a1e5735",
@@ -318,7 +318,7 @@
   },
   "5f99d676-f078-4b51-8400-24d375b4a700": {
     "id": "5f99d676-f078-4b51-8400-24d375b4a700",
-    "z": 11102,
+    "z": 10906,
     "type": "card",
     "deck": "31292ca3-7a2e-4fce-b12d-e7756d28ba36",
     "cardType": "type-b1978496-e76b-4ea9-a9bd-b7c40a1e5735",
@@ -326,7 +326,7 @@
   },
   "923674f5-e7e9-4a8c-917f-f8515b46647c": {
     "id": "923674f5-e7e9-4a8c-917f-f8515b46647c",
-    "z": 11104,
+    "z": 10908,
     "type": "card",
     "deck": "31292ca3-7a2e-4fce-b12d-e7756d28ba36",
     "cardType": "type-b1978496-e76b-4ea9-a9bd-b7c40a1e5735",
@@ -334,7 +334,7 @@
   },
   "caaa848f-2d64-401c-8451-db8193d52300": {
     "id": "caaa848f-2d64-401c-8451-db8193d52300",
-    "z": 11106,
+    "z": 10910,
     "type": "card",
     "deck": "31292ca3-7a2e-4fce-b12d-e7756d28ba36",
     "cardType": "type-b1978496-e76b-4ea9-a9bd-b7c40a1e5735",
@@ -342,7 +342,7 @@
   },
   "cf3dfda4-97c1-469b-9592-4ac451696271": {
     "id": "cf3dfda4-97c1-469b-9592-4ac451696271",
-    "z": 11108,
+    "z": 10912,
     "type": "card",
     "deck": "31292ca3-7a2e-4fce-b12d-e7756d28ba36",
     "cardType": "type-b1978496-e76b-4ea9-a9bd-b7c40a1e5735",
@@ -350,7 +350,7 @@
   },
   "62cb0670-39c9-4755-9c64-db9ad2bdf023": {
     "id": "62cb0670-39c9-4755-9c64-db9ad2bdf023",
-    "z": 11110,
+    "z": 10914,
     "type": "card",
     "deck": "31292ca3-7a2e-4fce-b12d-e7756d28ba36",
     "cardType": "type-b1978496-e76b-4ea9-a9bd-b7c40a1e5735",
@@ -358,7 +358,7 @@
   },
   "c01451ba-b9aa-45a4-bd6a-14193a7bb8e4": {
     "id": "c01451ba-b9aa-45a4-bd6a-14193a7bb8e4",
-    "z": 11112,
+    "z": 10916,
     "type": "card",
     "deck": "31292ca3-7a2e-4fce-b12d-e7756d28ba36",
     "cardType": "type-b1978496-e76b-4ea9-a9bd-b7c40a1e5735",
@@ -366,7 +366,7 @@
   },
   "9be61a0e-66dc-4ded-881c-2e306d2628da": {
     "id": "9be61a0e-66dc-4ded-881c-2e306d2628da",
-    "z": 11114,
+    "z": 10918,
     "type": "card",
     "deck": "31292ca3-7a2e-4fce-b12d-e7756d28ba36",
     "cardType": "type-b1978496-e76b-4ea9-a9bd-b7c40a1e5735",
@@ -374,7 +374,7 @@
   },
   "fa4b1f7c-f4ce-4d72-818f-7dbc0540541e": {
     "id": "fa4b1f7c-f4ce-4d72-818f-7dbc0540541e",
-    "z": 11116,
+    "z": 10920,
     "type": "card",
     "deck": "31292ca3-7a2e-4fce-b12d-e7756d28ba36",
     "cardType": "type-b1978496-e76b-4ea9-a9bd-b7c40a1e5735",
@@ -382,7 +382,7 @@
   },
   "9a8d9bd4-f4a1-474a-96d5-eb743c143f15": {
     "id": "9a8d9bd4-f4a1-474a-96d5-eb743c143f15",
-    "z": 11118,
+    "z": 10922,
     "type": "card",
     "deck": "31292ca3-7a2e-4fce-b12d-e7756d28ba36",
     "cardType": "type-b1978496-e76b-4ea9-a9bd-b7c40a1e5735",
@@ -390,7 +390,7 @@
   },
   "767f8c70-8e35-4fa1-91bd-637961366f9a": {
     "id": "767f8c70-8e35-4fa1-91bd-637961366f9a",
-    "z": 11120,
+    "z": 10924,
     "type": "card",
     "deck": "31292ca3-7a2e-4fce-b12d-e7756d28ba36",
     "cardType": "type-b1978496-e76b-4ea9-a9bd-b7c40a1e5735",
@@ -398,7 +398,7 @@
   },
   "bd154aad-1b64-47f2-9cc9-04f710b12f6e": {
     "id": "bd154aad-1b64-47f2-9cc9-04f710b12f6e",
-    "z": 11122,
+    "z": 10926,
     "type": "card",
     "deck": "31292ca3-7a2e-4fce-b12d-e7756d28ba36",
     "cardType": "type-b1978496-e76b-4ea9-a9bd-b7c40a1e5735",
@@ -406,7 +406,7 @@
   },
   "d297caf2-1b94-466f-8c90-b625745ba619": {
     "id": "d297caf2-1b94-466f-8c90-b625745ba619",
-    "z": 11124,
+    "z": 10928,
     "type": "card",
     "deck": "31292ca3-7a2e-4fce-b12d-e7756d28ba36",
     "cardType": "type-b1978496-e76b-4ea9-a9bd-b7c40a1e5735",
@@ -414,7 +414,7 @@
   },
   "dad40844-3d6f-4c08-bfeb-8f2436ce7ced": {
     "id": "dad40844-3d6f-4c08-bfeb-8f2436ce7ced",
-    "z": 11126,
+    "z": 10930,
     "type": "card",
     "deck": "31292ca3-7a2e-4fce-b12d-e7756d28ba36",
     "cardType": "type-b1978496-e76b-4ea9-a9bd-b7c40a1e5735",
@@ -422,7 +422,7 @@
   },
   "bdd6dbaa-c102-45c1-8037-2659271493de": {
     "id": "bdd6dbaa-c102-45c1-8037-2659271493de",
-    "z": 11128,
+    "z": 10932,
     "type": "card",
     "deck": "31292ca3-7a2e-4fce-b12d-e7756d28ba36",
     "cardType": "type-b1978496-e76b-4ea9-a9bd-b7c40a1e5735",
@@ -430,7 +430,7 @@
   },
   "eb57d9fa-f9bc-44dc-8008-7996d40db9a5": {
     "id": "eb57d9fa-f9bc-44dc-8008-7996d40db9a5",
-    "z": 11130,
+    "z": 10934,
     "type": "card",
     "deck": "31292ca3-7a2e-4fce-b12d-e7756d28ba36",
     "cardType": "type-b1978496-e76b-4ea9-a9bd-b7c40a1e5735",
@@ -438,7 +438,7 @@
   },
   "96629d5f-f471-4f4a-ae92-f2fc97313d95": {
     "id": "96629d5f-f471-4f4a-ae92-f2fc97313d95",
-    "z": 11132,
+    "z": 10936,
     "type": "card",
     "deck": "31292ca3-7a2e-4fce-b12d-e7756d28ba36",
     "cardType": "type-b1978496-e76b-4ea9-a9bd-b7c40a1e5735",
@@ -446,7 +446,7 @@
   },
   "9b9802fd-17da-4961-b671-41c4017c2567": {
     "id": "9b9802fd-17da-4961-b671-41c4017c2567",
-    "z": 11134,
+    "z": 10938,
     "type": "card",
     "deck": "31292ca3-7a2e-4fce-b12d-e7756d28ba36",
     "cardType": "type-b1978496-e76b-4ea9-a9bd-b7c40a1e5735",
@@ -454,7 +454,7 @@
   },
   "bfbc5c8e-0947-4403-92b7-ef79c0239e62": {
     "id": "bfbc5c8e-0947-4403-92b7-ef79c0239e62",
-    "z": 11136,
+    "z": 10940,
     "type": "card",
     "deck": "31292ca3-7a2e-4fce-b12d-e7756d28ba36",
     "cardType": "type-b1978496-e76b-4ea9-a9bd-b7c40a1e5735",
@@ -462,7 +462,7 @@
   },
   "cec48dc2-3423-4865-810f-9d61035e8851": {
     "id": "cec48dc2-3423-4865-810f-9d61035e8851",
-    "z": 11138,
+    "z": 10942,
     "type": "card",
     "deck": "31292ca3-7a2e-4fce-b12d-e7756d28ba36",
     "cardType": "type-b1978496-e76b-4ea9-a9bd-b7c40a1e5735",
@@ -470,7 +470,7 @@
   },
   "88eebd94-7458-44ac-82de-07b74868d94a": {
     "id": "88eebd94-7458-44ac-82de-07b74868d94a",
-    "z": 11140,
+    "z": 10944,
     "type": "card",
     "deck": "31292ca3-7a2e-4fce-b12d-e7756d28ba36",
     "cardType": "type-b1978496-e76b-4ea9-a9bd-b7c40a1e5735",
@@ -478,7 +478,7 @@
   },
   "bc0ff0fd-4d73-4755-af87-1762288fbb73": {
     "id": "bc0ff0fd-4d73-4755-af87-1762288fbb73",
-    "z": 11142,
+    "z": 10946,
     "type": "card",
     "deck": "31292ca3-7a2e-4fce-b12d-e7756d28ba36",
     "cardType": "type-b1978496-e76b-4ea9-a9bd-b7c40a1e5735",
@@ -509,7 +509,7 @@
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001",
     "x": 213.35,
-    "y": 69,
+    "y": 84,
     "z": 630,
     "type": "holder",
     "inheritChildZ": true,
@@ -520,7 +520,7 @@
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002",
     "x": 80,
-    "y": 259,
+    "y": 324,
     "z": 279,
     "type": "holder",
     "inheritChildZ": true,
@@ -531,7 +531,7 @@
   "edb5b39b-a57e-4f7c-b89e-0de640648682-copy001": {
     "id": "edb5b39b-a57e-4f7c-b89e-0de640648682-copy001",
     "x": 31.35,
-    "y": 235,
+    "y": 301.42857142857144,
     "z": 1108,
     "type": "label",
     "text": "Player 3",
@@ -542,7 +542,7 @@
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001",
     "x": 213.35,
-    "y": 544,
+    "y": 684,
     "z": 630,
     "type": "holder",
     "inheritChildZ": true,
@@ -553,7 +553,7 @@
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001",
     "x": 80,
-    "y": 354,
+    "y": 444,
     "z": 279,
     "type": "holder",
     "inheritChildZ": true,
@@ -564,7 +564,7 @@
   "edb5b39b-a57e-4f7c-b89e-0de640648682-copy001-copy001": {
     "id": "edb5b39b-a57e-4f7c-b89e-0de640648682-copy001-copy001",
     "x": 31.35,
-    "y": 330,
+    "y": 421.14285714285717,
     "z": 636,
     "type": "label",
     "text": "Player 4",
@@ -575,7 +575,7 @@
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy001": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy001",
     "x": 213.35,
-    "y": 639,
+    "y": 804,
     "z": 630,
     "type": "holder",
     "inheritChildZ": true,
@@ -586,7 +586,7 @@
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001-copy001": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001-copy001",
     "x": 80,
-    "y": 449,
+    "y": 564,
     "z": 279,
     "type": "holder",
     "inheritChildZ": true,
@@ -597,7 +597,7 @@
   "edb5b39b-a57e-4f7c-b89e-0de640648682-copy001-copy001-copy001": {
     "id": "edb5b39b-a57e-4f7c-b89e-0de640648682-copy001-copy001-copy001",
     "x": 31,
-    "y": 424.5,
+    "y": 540.8571428571429,
     "z": 10975,
     "type": "label",
     "text": "Player 5",
@@ -608,7 +608,7 @@
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy001-copy001": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy001-copy001",
     "x": 213.35,
-    "y": 734,
+    "y": 924,
     "z": 630,
     "type": "holder",
     "inheritChildZ": true,
@@ -619,7 +619,7 @@
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001-copy001-copy001": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001-copy001-copy001",
     "x": 80,
-    "y": 544,
+    "y": 684,
     "z": 279,
     "type": "holder",
     "inheritChildZ": true,
@@ -630,7 +630,7 @@
   "edb5b39b-a57e-4f7c-b89e-0de640648682-copy001-copy001-copy001-copy001": {
     "id": "edb5b39b-a57e-4f7c-b89e-0de640648682-copy001-copy001-copy001-copy001",
     "x": 31.35,
-    "y": 520,
+    "y": 660.5714285714287,
     "z": 638,
     "type": "label",
     "text": "Player 6",
@@ -638,54 +638,10 @@
     "width": 300,
     "height": 63
   },
-  "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy001-copy001-copy001": {
-    "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy001-copy001-copy001",
-    "x": 213.35,
-    "y": 829,
-    "z": 630,
-    "type": "holder",
-    "inheritChildZ": true,
-    "width": 68,
-    "height": 68,
-    "css": "background:#FFFFFF55;"
-  },
-  "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001-copy001-copy001-copy001": {
-    "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001-copy001-copy001-copy001",
-    "x": 80,
-    "y": 924,
-    "z": 279,
-    "type": "holder",
-    "inheritChildZ": true,
-    "width": 68,
-    "height": 68,
-    "css": "background:#FFFFFF55;"
-  },
-  "edb5b39b-a57e-4f7c-b89e-0de640648682-copy001-copy001-copy001-copy001-copy001": {
-    "id": "edb5b39b-a57e-4f7c-b89e-0de640648682-copy001-copy001-copy001-copy001-copy001",
-    "x": 31.35,
-    "y": 900,
-    "z": 639,
-    "type": "label",
-    "text": "Player 10",
-    "css": "font-size: 18px; font-weight: bold; text-align: center;",
-    "width": 300,
-    "height": 63
-  },
-  "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy001-copy001-copy001-copy001": {
-    "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy001-copy001-copy001-copy001",
-    "x": 213.35,
-    "y": 924,
-    "z": 630,
-    "type": "holder",
-    "inheritChildZ": true,
-    "width": 68,
-    "height": 68,
-    "css": "background:#FFFFFF55;"
-  },
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy003": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy003",
     "x": 1320,
-    "y": 69,
+    "y": 84,
     "z": 279,
     "type": "holder",
     "inheritChildZ": true,
@@ -695,8 +651,8 @@
   },
   "8a017aa4-6acb-4de7-910f-81cff3db6c3b-copy001": {
     "id": "8a017aa4-6acb-4de7-910f-81cff3db6c3b-copy001",
-    "x": 1271.35,
-    "y": 5,
+    "x": 1273,
+    "y": 7,
     "z": 645,
     "type": "label",
     "text": "Treasury",
@@ -707,7 +663,7 @@
   "edb5b39b-a57e-4f7c-b89e-0de640648682-copy002": {
     "id": "edb5b39b-a57e-4f7c-b89e-0de640648682-copy002",
     "x": 1271.35,
-    "y": 45,
+    "y": 62,
     "z": 576,
     "type": "label",
     "text": "Player 1",
@@ -718,7 +674,7 @@
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy002": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy002",
     "x": 1453.35,
-    "y": 69,
+    "y": 84,
     "z": 630,
     "type": "holder",
     "inheritChildZ": true,
@@ -729,7 +685,7 @@
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy002": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy002",
     "x": 1320,
-    "y": 164,
+    "y": 204,
     "z": 279,
     "type": "holder",
     "inheritChildZ": true,
@@ -739,8 +695,8 @@
   },
   "edb5b39b-a57e-4f7c-b89e-0de640648682-copy001-copy002": {
     "id": "edb5b39b-a57e-4f7c-b89e-0de640648682-copy001-copy002",
-    "x": 1271.35,
-    "y": 140,
+    "x": 1273,
+    "y": 181.71428571428575,
     "z": 640,
     "type": "label",
     "text": "Player 2",
@@ -751,7 +707,7 @@
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy002": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy002",
     "x": 1453.35,
-    "y": 164,
+    "y": 204,
     "z": 630,
     "type": "holder",
     "inheritChildZ": true,
@@ -762,7 +718,7 @@
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001-copy002": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001-copy002",
     "x": 1320,
-    "y": 259,
+    "y": 324,
     "z": 279,
     "type": "holder",
     "inheritChildZ": true,
@@ -773,7 +729,7 @@
   "edb5b39b-a57e-4f7c-b89e-0de640648682-copy001-copy001-copy002": {
     "id": "edb5b39b-a57e-4f7c-b89e-0de640648682-copy001-copy001-copy002",
     "x": 1271.35,
-    "y": 235,
+    "y": 301.4285714285715,
     "z": 641,
     "type": "label",
     "text": "Player 3",
@@ -784,7 +740,7 @@
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy001-copy002": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy001-copy002",
     "x": 1453.35,
-    "y": 259,
+    "y": 324,
     "z": 630,
     "type": "holder",
     "inheritChildZ": true,
@@ -795,7 +751,7 @@
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001-copy001-copy002": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001-copy001-copy002",
     "x": 1320,
-    "y": 354,
+    "y": 444,
     "z": 279,
     "type": "holder",
     "inheritChildZ": true,
@@ -806,7 +762,7 @@
   "edb5b39b-a57e-4f7c-b89e-0de640648682-copy001-copy001-copy001-copy002": {
     "id": "edb5b39b-a57e-4f7c-b89e-0de640648682-copy001-copy001-copy001-copy002",
     "x": 1271.35,
-    "y": 330,
+    "y": 421.1428571428572,
     "z": 642,
     "type": "label",
     "text": "Player 4",
@@ -817,7 +773,7 @@
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy001-copy001-copy002": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy001-copy001-copy002",
     "x": 1453.35,
-    "y": 354,
+    "y": 444,
     "z": 630,
     "type": "holder",
     "inheritChildZ": true,
@@ -828,7 +784,7 @@
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001-copy001-copy001-copy002": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001-copy001-copy001-copy002",
     "x": 1320,
-    "y": 449,
+    "y": 564,
     "z": 279,
     "type": "holder",
     "inheritChildZ": true,
@@ -839,7 +795,7 @@
   "edb5b39b-a57e-4f7c-b89e-0de640648682-copy001-copy001-copy001-copy001-copy002": {
     "id": "edb5b39b-a57e-4f7c-b89e-0de640648682-copy001-copy001-copy001-copy001-copy002",
     "x": 1271.35,
-    "y": 425,
+    "y": 540.857142857143,
     "z": 643,
     "type": "label",
     "text": "Player 5",
@@ -850,40 +806,7 @@
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy001-copy001-copy001-copy002": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy001-copy001-copy001-copy002",
     "x": 1453.35,
-    "y": 449,
-    "z": 630,
-    "type": "holder",
-    "inheritChildZ": true,
-    "width": 68,
-    "height": 68,
-    "css": "background:#FFFFFF55;"
-  },
-  "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001-copy001-copy001-copy001-copy001": {
-    "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001-copy001-copy001-copy001-copy001",
-    "x": 1320,
-    "y": 924,
-    "z": 279,
-    "type": "holder",
-    "inheritChildZ": true,
-    "width": 68,
-    "height": 68,
-    "css": "background:#FFFFFF55;"
-  },
-  "edb5b39b-a57e-4f7c-b89e-0de640648682-copy001-copy001-copy001-copy001-copy001-copy001": {
-    "id": "edb5b39b-a57e-4f7c-b89e-0de640648682-copy001-copy001-copy001-copy001-copy001-copy001",
-    "x": 1271.35,
-    "y": 900,
-    "z": 644,
-    "type": "label",
-    "text": "Player 10",
-    "css": "font-size: 18px; font-weight: bold; text-align: center;",
-    "width": 300,
-    "height": 63
-  },
-  "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy001-copy001-copy001-copy001-copy001": {
-    "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy001-copy001-copy001-copy001-copy001",
-    "x": 1453.35,
-    "y": 924,
+    "y": 564,
     "z": 630,
     "type": "holder",
     "inheritChildZ": true,
@@ -1077,7 +1000,7 @@
   },
   "adfd4557-ea19-4c41-b251-6f2228830425": {
     "id": "adfd4557-ea19-4c41-b251-6f2228830425",
-    "z": 11086,
+    "z": 10890,
     "type": "card",
     "deck": "3ac1af6c-0a0b-419b-b978-c10620872a16",
     "cardType": "type-3e7d48ea-a56a-475b-8b6a-1776a4e14f40",
@@ -1085,7 +1008,7 @@
   },
   "30a2caf7-b6fc-46c1-8dec-98f45d97d3cc": {
     "id": "30a2caf7-b6fc-46c1-8dec-98f45d97d3cc",
-    "z": 11088,
+    "z": 10892,
     "type": "card",
     "deck": "3ac1af6c-0a0b-419b-b978-c10620872a16",
     "cardType": "type-3e7d48ea-a56a-475b-8b6a-1776a4e14f40",
@@ -1093,7 +1016,7 @@
   },
   "6f6cd283-0449-4841-8303-fe24da3ca2e4": {
     "id": "6f6cd283-0449-4841-8303-fe24da3ca2e4",
-    "z": 11090,
+    "z": 10894,
     "type": "card",
     "deck": "3ac1af6c-0a0b-419b-b978-c10620872a16",
     "cardType": "type-3e7d48ea-a56a-475b-8b6a-1776a4e14f40",
@@ -1101,7 +1024,7 @@
   },
   "5bafd366-8f34-4c2d-9fb0-d38908fd7206": {
     "id": "5bafd366-8f34-4c2d-9fb0-d38908fd7206",
-    "z": 11092,
+    "z": 10896,
     "type": "card",
     "deck": "3ac1af6c-0a0b-419b-b978-c10620872a16",
     "cardType": "type-3e7d48ea-a56a-475b-8b6a-1776a4e14f40",
@@ -1109,7 +1032,7 @@
   },
   "40a044e9-600f-4f88-ba87-cb96a89c68f1": {
     "id": "40a044e9-600f-4f88-ba87-cb96a89c68f1",
-    "z": 11094,
+    "z": 10898,
     "type": "card",
     "deck": "3ac1af6c-0a0b-419b-b978-c10620872a16",
     "cardType": "type-3e7d48ea-a56a-475b-8b6a-1776a4e14f40",
@@ -1212,7 +1135,7 @@
     "type": "card",
     "cardType": "Embassador",
     "id": "2xsl",
-    "z": 61,
+    "z": 4714,
     "parent": "w3xq"
   },
   "5ica": {
@@ -1220,7 +1143,7 @@
     "type": "card",
     "cardType": "Embassador",
     "id": "5ica",
-    "z": 4269,
+    "z": 1241,
     "parent": "w3xq"
   },
   "owxm": {
@@ -1228,7 +1151,7 @@
     "type": "card",
     "cardType": "Duke",
     "id": "owxm",
-    "z": 3658,
+    "z": 6016,
     "parent": "w3xq"
   },
   "n1lq": {
@@ -1236,7 +1159,7 @@
     "type": "card",
     "cardType": "Duke",
     "id": "n1lq",
-    "z": 4115,
+    "z": 648,
     "parent": "w3xq"
   },
   "0b1y": {
@@ -1244,7 +1167,7 @@
     "type": "card",
     "cardType": "Duke",
     "id": "0b1y",
-    "z": 3761,
+    "z": 7928,
     "parent": "w3xq"
   },
   "9zqs": {
@@ -1252,7 +1175,7 @@
     "type": "card",
     "cardType": "Contessa",
     "id": "9zqs",
-    "z": 6275,
+    "z": 675,
     "parent": "w3xq"
   },
   "zwej": {
@@ -1260,7 +1183,7 @@
     "type": "card",
     "cardType": "Contessa",
     "id": "zwej",
-    "z": 5274,
+    "z": 7116,
     "parent": "w3xq"
   },
   "e68e": {
@@ -1268,7 +1191,7 @@
     "type": "card",
     "cardType": "Contessa",
     "id": "e68e",
-    "z": 6786,
+    "z": 9377,
     "parent": "w3xq"
   },
   "kmkm": {
@@ -1276,7 +1199,7 @@
     "type": "card",
     "cardType": "Assassin",
     "id": "kmkm",
-    "z": 1366,
+    "z": 3074,
     "parent": "w3xq"
   },
   "4lut": {
@@ -1284,7 +1207,7 @@
     "type": "card",
     "cardType": "Assassin",
     "id": "4lut",
-    "z": 184,
+    "z": 8870,
     "parent": "w3xq"
   },
   "zjyv": {
@@ -1292,7 +1215,7 @@
     "type": "card",
     "cardType": "Assassin",
     "id": "zjyv",
-    "z": 8935,
+    "z": 1135,
     "parent": "w3xq"
   },
   "w9l3": {
@@ -1300,7 +1223,7 @@
     "type": "card",
     "cardType": "Captain",
     "id": "w9l3",
-    "z": 2646,
+    "z": 1262,
     "parent": "w3xq"
   },
   "c8wv": {
@@ -1308,7 +1231,7 @@
     "type": "card",
     "cardType": "Captain",
     "id": "c8wv",
-    "z": 6057,
+    "z": 1011,
     "parent": "w3xq"
   },
   "4wxf": {
@@ -1316,7 +1239,7 @@
     "type": "card",
     "cardType": "Captain",
     "id": "4wxf",
-    "z": 8378,
+    "z": 7447,
     "parent": "w3xq"
   },
   "i12m": {
@@ -1324,7 +1247,7 @@
     "type": "card",
     "cardType": "Embassador",
     "id": "i12m",
-    "z": 153,
+    "z": 637,
     "parent": "w3xq"
   },
   "w3xq": {
@@ -1346,7 +1269,7 @@
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy001-copy001-copy001-copy001-copy002": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy001-copy001-copy001-copy001-copy002",
     "x": 80,
-    "y": 164,
+    "y": 204,
     "type": "holder",
     "inheritChildZ": true,
     "width": 68,
@@ -1357,7 +1280,7 @@
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy001-copy001-copy001-copy001-copy003": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy001-copy001-copy001-copy001-copy003",
     "x": 80,
-    "y": 639,
+    "y": 804,
     "type": "holder",
     "inheritChildZ": true,
     "width": 68,
@@ -1368,7 +1291,7 @@
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy001-copy001-copy001-copy001-copy004": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy001-copy001-copy001-copy001-copy004",
     "x": 80,
-    "y": 734,
+    "y": 924,
     "type": "holder",
     "inheritChildZ": true,
     "width": 68,
@@ -1376,21 +1299,10 @@
     "css": "background:#FFFFFF55;",
     "z": 10953
   },
-  "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy001-copy001-copy001-copy001-copy005": {
-    "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy001-copy001-copy001-copy001-copy005",
-    "x": 80,
-    "y": 829,
-    "type": "holder",
-    "inheritChildZ": true,
-    "width": 68,
-    "height": 68,
-    "css": "background:#FFFFFF55;",
-    "z": 10954
-  },
   "edb5b39b-a57e-4f7c-b89e-0de640648682-copy003": {
     "id": "edb5b39b-a57e-4f7c-b89e-0de640648682-copy003",
     "x": 31.35,
-    "y": 140,
+    "y": 181.71428571428572,
     "type": "label",
     "text": "Player 2",
     "css": "font-size: 18px; font-weight: bold; text-align: center;",
@@ -1401,7 +1313,7 @@
   "edb5b39b-a57e-4f7c-b89e-0de640648682-copy004": {
     "id": "edb5b39b-a57e-4f7c-b89e-0de640648682-copy004",
     "x": 31.35,
-    "y": 615,
+    "y": 780.2857142857144,
     "type": "label",
     "text": "Player 7",
     "css": "font-size: 18px; font-weight: bold; text-align: center;",
@@ -1412,7 +1324,7 @@
   "edb5b39b-a57e-4f7c-b89e-0de640648682-copy005": {
     "id": "edb5b39b-a57e-4f7c-b89e-0de640648682-copy005",
     "x": 31.35,
-    "y": 710,
+    "y": 900.0000000000002,
     "type": "label",
     "text": "Player 8",
     "css": "font-size: 18px; font-weight: bold; text-align: center;",
@@ -1420,21 +1332,10 @@
     "height": 63,
     "z": 10957
   },
-  "edb5b39b-a57e-4f7c-b89e-0de640648682-copy006": {
-    "id": "edb5b39b-a57e-4f7c-b89e-0de640648682-copy006",
-    "x": 31.35,
-    "y": 805,
-    "type": "label",
-    "text": "Player 9",
-    "css": "font-size: 18px; font-weight: bold; text-align: center;",
-    "width": 300,
-    "height": 63,
-    "z": 10958
-  },
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy003": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy003",
     "x": 213,
-    "y": 449,
+    "y": 564,
     "type": "holder",
     "inheritChildZ": true,
     "width": 68,
@@ -1445,7 +1346,7 @@
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy004": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy004",
     "x": 213.35,
-    "y": 354,
+    "y": 444,
     "type": "holder",
     "inheritChildZ": true,
     "width": 68,
@@ -1456,7 +1357,7 @@
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy005": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy005",
     "x": 213.35,
-    "y": 259,
+    "y": 324,
     "type": "holder",
     "inheritChildZ": true,
     "width": 68,
@@ -1467,7 +1368,7 @@
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy006": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy006",
     "x": 213.35,
-    "y": 164,
+    "y": 204,
     "type": "holder",
     "inheritChildZ": true,
     "width": 68,
@@ -1475,21 +1376,10 @@
     "css": "background:#FFFFFF55;",
     "z": 10962
   },
-  "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001-copy001-copy001-copy001-copy001-copy001": {
-    "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001-copy001-copy001-copy001-copy001-copy001",
-    "x": 1320,
-    "y": 829,
-    "type": "holder",
-    "inheritChildZ": true,
-    "width": 68,
-    "height": 68,
-    "css": "background:#FFFFFF55;",
-    "z": 10963
-  },
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001-copy001-copy001-copy001-copy001-copy002": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001-copy001-copy001-copy001-copy001-copy002",
     "x": 1320,
-    "y": 734,
+    "y": 924,
     "type": "holder",
     "inheritChildZ": true,
     "width": 68,
@@ -1500,7 +1390,7 @@
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001-copy001-copy001-copy001-copy001-copy003": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001-copy001-copy001-copy001-copy001-copy003",
     "x": 1320,
-    "y": 639,
+    "y": 804,
     "type": "holder",
     "inheritChildZ": true,
     "width": 68,
@@ -1511,7 +1401,7 @@
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001-copy001-copy001-copy001-copy001-copy004": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001-copy001-copy001-copy001-copy001-copy004",
     "x": 1320,
-    "y": 544,
+    "y": 684,
     "type": "holder",
     "inheritChildZ": true,
     "width": 68,
@@ -1519,21 +1409,10 @@
     "css": "background:#FFFFFF55;",
     "z": 10966
   },
-  "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001-copy001-copy001-copy001-copy001-copy005": {
-    "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001-copy001-copy001-copy001-copy001-copy005",
-    "x": 1453.35,
-    "y": 829,
-    "type": "holder",
-    "inheritChildZ": true,
-    "width": 68,
-    "height": 68,
-    "css": "background:#FFFFFF55;",
-    "z": 10967
-  },
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001-copy001-copy001-copy001-copy001-copy006": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001-copy001-copy001-copy001-copy001-copy006",
     "x": 1453.35,
-    "y": 734,
+    "y": 924,
     "type": "holder",
     "inheritChildZ": true,
     "width": 68,
@@ -1544,7 +1423,7 @@
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001-copy001-copy001-copy001-copy001-copy007": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001-copy001-copy001-copy001-copy001-copy007",
     "x": 1453.35,
-    "y": 639,
+    "y": 804,
     "type": "holder",
     "inheritChildZ": true,
     "width": 68,
@@ -1555,7 +1434,7 @@
   "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001-copy001-copy001-copy001-copy001-copy008": {
     "id": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy002-copy001-copy001-copy001-copy001-copy001-copy008",
     "x": 1453.35,
-    "y": 544,
+    "y": 684,
     "type": "holder",
     "inheritChildZ": true,
     "width": 68,
@@ -1566,7 +1445,7 @@
   "edb5b39b-a57e-4f7c-b89e-0de640648682-copy001-copy001-copy001-copy001-copy002-copy001": {
     "id": "edb5b39b-a57e-4f7c-b89e-0de640648682-copy001-copy001-copy001-copy001-copy002-copy001",
     "x": 1271,
-    "y": 519.5,
+    "y": 660.5714285714288,
     "type": "label",
     "text": "Player 6",
     "css": "font-size: 18px; font-weight: bold; text-align: center;",
@@ -1577,7 +1456,7 @@
   "edb5b39b-a57e-4f7c-b89e-0de640648682-copy001-copy001-copy001-copy001-copy002-copy002": {
     "id": "edb5b39b-a57e-4f7c-b89e-0de640648682-copy001-copy001-copy001-copy001-copy002-copy002",
     "x": 1271.35,
-    "y": 615,
+    "y": 780.2857142857146,
     "type": "label",
     "text": "Player 7",
     "css": "font-size: 18px; font-weight: bold; text-align: center;",
@@ -1588,24 +1467,13 @@
   "edb5b39b-a57e-4f7c-b89e-0de640648682-copy001-copy001-copy001-copy001-copy002-copy003": {
     "id": "edb5b39b-a57e-4f7c-b89e-0de640648682-copy001-copy001-copy001-copy001-copy002-copy003",
     "x": 1271.35,
-    "y": 710,
+    "y": 900.0000000000003,
     "type": "label",
     "text": "Player 8",
     "css": "font-size: 18px; font-weight: bold; text-align: center;",
     "width": 300,
     "height": 63,
     "z": 10973
-  },
-  "edb5b39b-a57e-4f7c-b89e-0de640648682-copy001-copy001-copy001-copy001-copy002-copy004": {
-    "id": "edb5b39b-a57e-4f7c-b89e-0de640648682-copy001-copy001-copy001-copy001-copy002-copy004",
-    "x": 1271.35,
-    "y": 805,
-    "type": "label",
-    "text": "Player 9",
-    "css": "font-size: 18px; font-weight: bold; text-align: center;",
-    "width": 300,
-    "height": 63,
-    "z": 10974
   },
   "sppf": {
     "deck": "2b4d8e63-074c-4719-b05b-6a679fb3914a",
@@ -1695,84 +1563,44 @@
     "parent": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy001-copy001-copy001-copy001-copy001-copy002",
     "activeFace": 1
   },
-  "w5no": {
+  "2qdg": {
     "deck": "main deck",
     "type": "card",
     "cardType": "Embassador",
-    "id": "w5no",
-    "z": 11144,
+    "id": "2qdg",
+    "z": 10966,
     "parent": "w3xq"
   },
-  "62z8": {
-    "deck": "main deck",
-    "type": "card",
-    "cardType": "Embassador",
-    "id": "62z8",
-    "z": 11146,
-    "parent": "w3xq"
-  },
-  "mglm": {
+  "x7ny": {
     "deck": "main deck",
     "type": "card",
     "cardType": "Duke",
-    "id": "mglm",
-    "z": 11148,
+    "id": "x7ny",
+    "z": 10968,
     "parent": "w3xq"
   },
-  "bsd8": {
-    "deck": "main deck",
-    "type": "card",
-    "cardType": "Duke",
-    "id": "bsd8",
-    "z": 11150,
-    "parent": "w3xq"
-  },
-  "9qex": {
+  "8wxp": {
     "deck": "main deck",
     "type": "card",
     "cardType": "Contessa",
-    "id": "9qex",
-    "z": 11152,
+    "id": "8wxp",
+    "z": 10970,
     "parent": "w3xq"
   },
-  "rlw1": {
-    "deck": "main deck",
-    "type": "card",
-    "cardType": "Contessa",
-    "id": "rlw1",
-    "z": 11154,
-    "parent": "w3xq"
-  },
-  "86pv": {
+  "7cse": {
     "deck": "main deck",
     "type": "card",
     "cardType": "Assassin",
-    "id": "86pv",
-    "z": 11156,
+    "id": "7cse",
+    "z": 10972,
     "parent": "w3xq"
   },
-  "mv2c": {
-    "deck": "main deck",
-    "type": "card",
-    "cardType": "Assassin",
-    "id": "mv2c",
-    "z": 11158,
-    "parent": "w3xq"
-  },
-  "izyc": {
+  "ch6e": {
     "deck": "main deck",
     "type": "card",
     "cardType": "Captain",
-    "id": "izyc",
-    "z": 11160,
-    "parent": "w3xq"
-  },
-  "p2o0": {
-    "deck": "main deck",
-    "type": "card",
-    "cardType": "Captain",
-    "id": "p2o0",
-    "z": 11162,
+    "id": "ch6e",
+    "z": 10974,
     "parent": "w3xq"
   },
   "_meta": {
@@ -1785,7 +1613,7 @@
       "year": "2012",
       "mode": "vs",
       "time": "15",
-      "players": "9-10",
+      "players": "7-8",
       "language": "US",
       "variant": "",
       "attribution": "The files used for this game were taken from https://game-icons.net/ to be used under CC BY 3.0\n\nBackground image from https://unsplash.com/photos/odRbgZJ8aAU under license https://unsplash.com/license\n\nLayout by https://www.reddit.com/user/RaphaelAlvez/ to be used under CC BY 3.0",
