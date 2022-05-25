@@ -293,9 +293,12 @@ test('Dynamic expressions', async t => {
 function publicLibraryTest(game, variant, md5, tests) {
   test(`Public library: ${game} (variant ${variant})`, async t => {
     await ClientFunction(prepareClient)();
+    await ClientFunction(_=>Math.random())(); // game library overhaul removed the Math.random call for generating a new state ID
     await t
       .pressKey('esc')
       .click('#statesButton')
+      .click('#filterByType')
+      .click('#filterByType > option:nth-child(1)')
       .hover(Selector('.bgg').withText(`${game} (`).parent().parent())
       .click(Selector('.bgg').withText(`${game} (`).nextSibling().nextSibling().child().nth(variant).child());
     await setName(t);
