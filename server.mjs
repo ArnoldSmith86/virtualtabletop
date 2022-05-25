@@ -26,31 +26,6 @@ const serverStart = +new Date();
 
 app.use(Config.get('urlPrefix'), router);
 
-if(false) { // REMOVE BEFORE MERGE - used to mass edit library JSON files
-  const libraryMeta = {};
-  for(const gameInfo of JSON.parse(fs.readFileSync('library/library.json')))
-    libraryMeta[gameInfo.link.substr(0, gameInfo.link.length-4)] = gameInfo;
-
-  fs.readdir('library/games', (err, files) => {
-    for(const dir of files) {
-      fs.readdir('library/games/' + dir, (err, files) => {
-        for(const file of files) {
-          if(file.match(/json$/)) {
-            const gameFile = JSON.parse(fs.readFileSync('library/games/' + dir + '/' + file));
-            if(libraryMeta[dir]) {
-              gameFile._meta.info.similarName = libraryMeta[dir]['similar name'];
-              gameFile._meta.info.similarLink = libraryMeta[dir]['similar link'];
-              gameFile._meta.info.description = libraryMeta[dir]['notes'];
-              console.log(dir, gameFile._meta.info);
-              fs.writeFileSync('library/games/' + dir + '/' + file, JSON.stringify(gameFile, null, '  '));
-            }
-          }
-        }
-      });
-    }
-  });
-}
-
 const publicLibraryAssets = {};
 for(const category of [ 'games', 'assets', 'tutorials' ]) {
   const name = Config.directory('library') + '/' + category;
