@@ -47,6 +47,8 @@ export default class Room {
   }
 
   async addState(id, type, src, srcName, addAsVariant) {
+    console.log('addState', id, type, src, srcName, addAsVariant);
+
     const initialAddAsVariant = addAsVariant;
     let stateID = addAsVariant || id;
     let variantID = id;
@@ -91,6 +93,9 @@ export default class Room {
           link: '',
           attribution: ''
         };
+
+        if(stateID.match(/^PL:/))
+          return this.writePublicLibraryToFilesystem(stateID, variantID, variant);
 
         if(type != 'link')
           fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(variant));
@@ -595,6 +600,22 @@ export default class Room {
     }
     this.trace('unload', {});
     this.unloadCallback();
+  }
+
+  writePublicLibraryToFilesystem(stateID, variantID, state) {
+    console.log('writePublicLibraryToFilesystem', stateID, variantID);
+
+    const copy = JSON.parse(JSON.stringify(state));
+    copy._meta = {
+      version: copy._meta.version,
+      info: JSON.parse(JSON.stringify(this.state._meta.states[stateID].variants[variantID]))
+    };
+
+    delete copy._meta.info.publicLibrary;
+    delete copy._meta.info.publicLibraryCategory;
+    delete copy._meta.info.variants;
+
+    fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(copy, null, '  '));
   }
 
   writeToFilesystem() {

@@ -214,6 +214,9 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
       $('.star', entry).addEventListener('click', _=>toggleStateStar(state));
       $('.list', category).appendChild(entry);
 
+      if(state.publicLibrary && config.allowPublicLibraryEdits)
+        $('.edit', entry).style.display = 'block';
+
       entry.dataset.text = `${state.name} ${state.similarName} ${state.description}`.toLowerCase();
       entry.dataset.players = validPlayers.join();
       entry.dataset.languages = validLanguages.join();
