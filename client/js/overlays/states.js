@@ -129,15 +129,17 @@ function updateLibraryFilter() {
   const text = $('#filterByText').value.toLowerCase();
   const type = $('#filterByType').value;
   const players = $('#filterByPlayers').value;
+  const duration = $('#filterByDuration').value.split('-');
   const language = $('#filterByLanguage').value;
   const mode = $('#filterByMode').value;
   for(const state of $a('#statesList .list > div')) {
     const textMatch     = state.dataset.text.match(text);
     const typeMatch     = type     == 'Any' || state.dataset.type.split(',').indexOf(type) != -1;
     const playersMatch  = players  == 'Any' || state.dataset.players.split(',').indexOf(players) != -1;
+    const durationMatch = duration == 'Any' || state.dataset.duration >= duration[0] && state.dataset.duration <= duration[1];
     const languageMatch = language == 'Any' || state.dataset.languages.split(',').indexOf(language) != -1;
     const modeMatch     = mode     == 'Any' || state.dataset.modes.split(',').indexOf(mode) != -1;
-    state.style.display = textMatch && typeMatch && playersMatch && languageMatch && modeMatch ? 'block' : 'none';
+    state.style.display = textMatch && typeMatch && playersMatch && durationMatch && languageMatch && modeMatch ? 'block' : 'none';
   }
 }
 
@@ -194,6 +196,7 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
       const validPlayers = [];
       const validLanguages = [];
       const validModes = [];
+      let longestDuration = 0;
       for(const variantID in state.variants) {
         let variant = state.variants[variantID];
         const stateIDforLoading = variant.plStateID || state.id;
@@ -209,6 +212,7 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
         validModes.push(variant.mode);
         languageOptions[variant.language] = true;
         modeOptions[variant.mode] = true;
+        longestDuration = Math.max(longestDuration, variant.time.replace(/.*[^0-9]/, ''));
 
         $('.play', vEntry).addEventListener('click', _=>{ toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading }); showOverlay(); });
         $('.variantsList', entry).appendChild(vEntry);
@@ -223,6 +227,7 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
 
       entry.dataset.text = `${state.name} ${state.similarName} ${state.description}`.toLowerCase();
       entry.dataset.players = validPlayers.join();
+      entry.dataset.duration = longestDuration;
       entry.dataset.languages = validLanguages.join();
       entry.dataset.modes = validModes.join();
 
