@@ -602,6 +602,27 @@ export default class Room {
     this.unloadCallback();
   }
 
+  writePublicLibraryAssetsToFilesystem(stateID, variantID) {
+    const assetsDir = this.variantFilename(stateID, variantID).replace(/[0-9]+\.json$/, 'assets');
+
+    const usedAssets = {};
+    for(const vID in this.state._meta.states[stateID].variants)
+      for(const asset of this.getAssetList(JSON.parse(fs.readFileSync(this.variantFilename(stateID, vID)))))
+        usedAssets[asset.split('/')[2]] = true;
+
+    const savedAssets = {};
+    for(const file of fs.readdirSync(assetsDir))
+      savedAssets[file] = true;
+
+    for(const savedAsset in savedAssets)
+      if(!usedAssets[savedAsset])
+        fs.unlinkSync(assetsDir + '/' + savedAsset);
+
+    for(const usedAsset in usedAssets)
+      if(!savedAssets[usedAsset])
+        fs.copyFileSync(Config.directory('assets') + '/' + usedAsset, assetsDir + '/' + usedAsset);
+  }
+
   writePublicLibraryToFilesystem(stateID, variantID, state) {
     console.log('writePublicLibraryToFilesystem', stateID, variantID);
 
@@ -616,6 +637,7 @@ export default class Room {
     delete copy._meta.info.variants;
 
     fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(copy, null, '  '));
+    this.writePublicLibraryAssetsToFilesystem(stateID, variantID);
   }
 
   writeToFilesystem() {
