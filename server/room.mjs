@@ -211,6 +211,9 @@ export default class Room {
   }
 
   async editState(player, id, meta) {
+    if(id.match(/^PL:/))
+      return this.writePublicLibraryMetaToFilesystem(id, meta);
+
     this.deleteUnusedVariantFiles(id, this.state._meta.states[id], meta);
 
     // if update links were removed, download their current contents to files
@@ -623,7 +626,19 @@ export default class Room {
         fs.copyFileSync(Config.directory('assets') + '/' + usedAsset, assetsDir + '/' + usedAsset);
   }
 
-  writePublicLibraryToFilesystem(stateID, variantID, state) {
+  writePublicLibraryMetaToFilesystem(stateID, meta) {
+    for(const variantID in this.state._meta.states[stateID].variants) {
+      const state = JSON.parse(fs.readFileSync(this.variantFilename(stateID, variantID)));
+
+      state._meta.info = Object.assign(JSON.parse(JSON.stringify(meta)), JSON.parse(JSON.stringify(meta.variants[variantID])));
+
+      delete state._meta.info.variants;
+
+      fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(state, null, '  '));
+    }
+  }
+
+  writePublicLibraryToFilesystem(stateID, variantID, state, meta) {
     console.log('writePublicLibraryToFilesystem', stateID, variantID);
 
     const copy = JSON.parse(JSON.stringify(state));
