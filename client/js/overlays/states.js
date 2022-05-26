@@ -117,7 +117,11 @@ function editState() {
   showOverlay('statesOverlay');
 }
 
-function toggleStateStar(state) {
+function toggleStateStar(state, dom) {
+  const targetList = dom.parentElement.parentElement == $('#statesList > div:nth-of-type(1)')
+                   ? $('#statesList > div:nth-of-type(2) > .list')
+                   : $('#statesList > div:nth-of-type(1) > .list');
+  targetList.insertBefore(dom, [...targetList.children].filter(d=>$('.bgg', d).innerText>$('.bgg', dom).innerText)[0]);
   toServer('toggleStateStar', state.publicLibrary);
 }
 
@@ -211,7 +215,7 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
       }
 
       $('.edit', entry).addEventListener('click', _=>fillEditState(state));
-      $('.star', entry).addEventListener('click', _=>toggleStateStar(state));
+      $('.star', entry).addEventListener('click', _=>toggleStateStar(state, entry));
       $('.list', category).appendChild(entry);
 
       if(state.publicLibrary && config.allowPublicLibraryEdits)
