@@ -655,6 +655,7 @@ export default class Room {
 
     delete copy._meta.info.publicLibrary;
     delete copy._meta.info.publicLibraryCategory;
+    delete copy._meta.info.link;
     delete copy._meta.info.variants;
 
     fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(copy, null, '  '));
