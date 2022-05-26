@@ -627,6 +627,9 @@ export default class Room {
   }
 
   writePublicLibraryMetaToFilesystem(stateID, meta) {
+    if(!Config.get('allowPublicLibraryEdits'))
+      return;
+
     for(const variantID in this.state._meta.states[stateID].variants) {
       const state = JSON.parse(fs.readFileSync(this.variantFilename(stateID, variantID)));
 
@@ -638,8 +641,11 @@ export default class Room {
     }
   }
 
-  writePublicLibraryToFilesystem(stateID, variantID, state, meta) {
+  writePublicLibraryToFilesystem(stateID, variantID, state) {
     console.log('writePublicLibraryToFilesystem', stateID, variantID);
+
+    if(!Config.get('allowPublicLibraryEdits'))
+      return;
 
     const copy = JSON.parse(JSON.stringify(state));
     copy._meta = {
