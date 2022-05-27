@@ -242,15 +242,11 @@
         </template>
         <template id="template-stateslist-entry" type="text/template">
           <img>
+          <button class="prettyButton star">★</button>
           <div class="details">
-            <a class="bgg" href="">Name (Year)</a>
-            <div class="stats"><span class="symbols">[sand_timer]</span> <span class="time">0</span> minutes | <a class="rules"><span class="symbols">[book_open]</span> Rules</a></div>
-            <div class="variantsList"></div>
-            <p><button class="prettyButton edit">Edit</button><button class="prettyButton star">★</button></p>
+            <h3>Name</h3>
+            <h4>Similar Name</h4>
           </div>
-        </template>
-        <template id="template-variantslist-entry" type="text/template">
-          <button class="prettyButton play">Play: <span class="language">🇺🇸</span><span class="symbols"> [group]</span><span class="players">0</span><br><span class="variant"></span></button>
         </template>
         <div id="addState">
           <div class="image">➕</div>
@@ -262,6 +258,17 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div id="stateDetailsOverlay" class="overlay">
+      <h1>Game title</h1>
+      <p id="stateDescription"></p>
+      <template id="template-variantslist-entry" type="text/template">
+        <button class="prettyButton play">Play: <span class="language">🇺🇸</span><span class="symbols"> [group]</span><span class="players">0</span><br><span class="variant"></span></button>
+      </template>
+      <div class="stats"><span class="symbols">[sand_timer]</span> <span class="time">0</span> minutes | <a class="rules"><span class="symbols">[book_open]</span> Rules</a></div>
+      <div class="variantsList"></div>
+      <button class="prettyButton edit">Edit</button>
     </div>
 
     <div id="stateEditOverlay" class="overlay">

@@ -121,7 +121,7 @@ function toggleStateStar(state, dom) {
   const targetList = dom.parentElement.parentElement == $('#statesList > div:nth-of-type(1)')
                    ? $('#statesList > div:nth-of-type(2) > .list')
                    : $('#statesList > div:nth-of-type(1) > .list');
-  targetList.insertBefore(dom, [...targetList.children].filter(d=>$('.bgg', d).innerText>$('.bgg', dom).innerText)[0]);
+  targetList.insertBefore(dom, [...targetList.children].filter(d=>$('h3', d).innerText>$('h3', dom).innerText)[0]);
   toServer('toggleStateStar', state.publicLibrary);
 }
 
@@ -187,41 +187,32 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
       if(state.publicLibrary)
         entry.className += ' publicLibraryGame';
 
+      entry.addEventListener('click', _=>fillStateDetails(state));
+
       $('img', entry).src = state.image.replace(/^\//, '');
-      $('.bgg', entry).textContent = `${state.name} (${state.year})`;
-      $('.bgg', entry).href = state.bgg;
-      $('.rules', entry).href = state.rules;
-      $('.time', entry).textContent = state.time;
+      $('h3', entry).textContent = `${state.name}`;
+      $('h4', entry).textContent = state.similarName ? `Similar to ${state.similarName}` : '';
 
       const validPlayers = [];
       const validLanguages = [];
       const validModes = [];
       for(const variantID in state.variants) {
         let variant = state.variants[variantID];
-        const stateIDforLoading = variant.plStateID || state.id;
-        const variantIDforLoading = variant.plVariantID || variantID;
         if(variant.plStateID)
           variant = states[variant.plStateID].variants[variant.plVariantID];
-        const vEntry = domByTemplate('template-variantslist-entry');
-        $('.language', vEntry).textContent = String.fromCodePoint(...[...variant.language].map(c => c.charCodeAt() + 0x1F1A5));
-        $('.players', vEntry).textContent = variant.players;
-        $('.variant', vEntry).textContent = variant.variant;
+
         validPlayers.push(...parsePlayers(variant.players));
         validLanguages.push(variant.language);
         validModes.push(variant.mode);
         languageOptions[variant.language] = true;
         modeOptions[variant.mode] = true;
-
-        $('.play', vEntry).addEventListener('click', _=>{ toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading }); showOverlay(); });
-        $('.variantsList', entry).appendChild(vEntry);
       }
 
-      $('.edit', entry).addEventListener('click', _=>fillEditState(state));
-      $('.star', entry).addEventListener('click', _=>toggleStateStar(state, entry));
+      $('.star', entry).addEventListener('click', function(e) {
+        toggleStateStar(state, entry);
+        event.stopPropagation();
+      });
       $('.list', category).appendChild(entry);
-
-      if(state.publicLibrary && config.allowPublicLibraryEdits)
-        $('.edit', entry).style.display = 'block';
 
       entry.dataset.text = `${state.name} ${state.similarName} ${state.description}`.toLowerCase();
       entry.dataset.players = validPlayers.join();
@@ -258,6 +249,33 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
   $('#filterByMode').innerHTML = modeHTML;
 
   updateLibraryFilter();
+}
+
+function fillStateDetails(state) {
+  showOverlay('stateDetailsOverlay');
+  $('#stateDetailsOverlay h1').innerText = state.name;
+  $('#stateDetailsOverlay .time').innerText = state.time;
+  $('#stateDetailsOverlay .rules').href = state.rules;
+  $('#stateDescription').innerText = state.description || '';
+
+  $('#stateDetailsOverlay .variantsList').innerHTML = '';
+  for(const variantID in state.variants) {
+    let variant = state.variants[variantID];
+    const stateIDforLoading = variant.plStateID || state.id;
+    const variantIDforLoading = variant.plVariantID || variantID;
+    if(variant.plStateID)
+      variant = states[variant.plStateID].variants[variant.plVariantID];
+    const vEntry = domByTemplate('template-variantslist-entry');
+    $('.language', vEntry).textContent = String.fromCodePoint(...[...variant.language].map(c => c.charCodeAt() + 0x1F1A5));
+    $('.players', vEntry).textContent = variant.players;
+    $('.variant', vEntry).textContent = variant.variant;
+
+    $('.play', vEntry).addEventListener('click', _=>{ toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading }); showOverlay(); });
+    $('#stateDetailsOverlay .variantsList').appendChild(vEntry);
+  }
+
+  $('#stateDetailsOverlay .edit').addEventListener('click', _=>fillEditState(state));
+  $('#stateDetailsOverlay .edit').style.display = state.publicLibrary && !config.allowPublicLibraryEdits ? 'none' : 'block';
 }
 
 function fillEditState(state) {

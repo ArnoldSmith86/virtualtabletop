@@ -21,12 +21,19 @@
   overflow: hidden;
 }
 
-.roomState > div {
+.roomState > img {
   position: absolute;
   left: 0;
   bottom: 0;
   right: 0;
   top: 0;
+}
+
+.roomState > .details {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
   padding: 20px;
   background: rgba(255, 255, 255, 0.5);
 }
@@ -35,36 +42,19 @@
   position: absolute;
 }
 
-.roomState a {
-  color: black;
-  font-weight: bolder;
-  text-decoration: none;
-  font-style: normal;
-}
-
-.roomState .details, #addState .buttons {
-  display: none;
-  overflow: auto;
-}
-
 .roomState .star {
   display: none;
+  position: absolute;
+  top: 0;
+  margin: 10px;
 }
 
 .roomState.publicLibraryGame .star {
   display: block;
 }
 
-.roomState.publicLibraryGame .edit {
+.roomState.noImage img {
   display: none;
-}
-
-.roomState.noImage .details > *, .roomState.noImage img {
-  display: none;
-}
-
-.roomState.noImage .details, .roomState.noImage .details > em:first-child {
-  display: block;
 }
 
 #addState .image {
@@ -93,14 +83,6 @@
 .roomState em {
   display: block;
   margin-bottom: 20px;
-}
-
-.roomState:hover > div, .roomState:hover .details > *, #addState:hover > div, .roomState > div > a {
-  display: block;
-}
-
-.roomState:hover > img, #addState:hover .image {
-  filter: blur(5px);
 }
 
 .details .stats{
