@@ -54,12 +54,10 @@ async function ensureRoomIsLoaded(id) {
   return true;
 }
 
-function validateInput(res, next, values) {
-  for(const value of values) {
-    if(!value.match(/^[A-Za-z0-9.: _-]+$/)) {
-      next(new Logging.UserError(403, 'Invalid characters in parameters'));
-      return false;
-    }
+function validateInput(res, next, input) {
+  if(!input.match(/^[A-Za-z0-9.: _-]+$/)) {
+    next(new Logging.UserError(403, 'Invalid characters in parameters'));
+    return false;
   }
   return true;
 }
@@ -225,7 +223,7 @@ MinifyRoom().then(function(result) {
   });
 
   router.put('/addState/:room/:id/:type/:name/:addAsVariant?', bodyParser.raw({ limit: '500mb' }), async function(req, res, next) {
-    if(!validateInput(res, next, [ req.params.id, req.params.addAsVariant ])) return;
+    if(!validateInput(res, next, req.params.id) || !validateInput(res, next, req.params.addAsVariant)) return;
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
       if(isLoaded) {
         activeRooms.get(req.params.room).addState(req.params.id, req.params.type, req.body, req.params.name, req.params.addAsVariant).then(function() {
