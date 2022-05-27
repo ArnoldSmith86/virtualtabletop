@@ -250,7 +250,7 @@ export default class Room {
             for(const file of fs.readdirSync(gameDir)) {
               if(file.match(/json$/)) {
                 const gameFile = JSON.parse(fs.readFileSync(gameDir + '/' + file));
-                const id = 'PL:' + gameFile._meta.info.name
+                const id = 'PL:' + subLibrary.toLowerCase() + ':' + gameFile._meta.info.name
                 if(!Room.publicLibrary[id]) {
                   Room.publicLibrary[id] = gameFile._meta.info;
                   Room.publicLibrary[id].publicLibrary = subLibrary.toLowerCase() + '/' + dir;
