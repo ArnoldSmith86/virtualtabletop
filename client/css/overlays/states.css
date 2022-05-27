@@ -1,10 +1,57 @@
 #statesOverlay {
-  padding: 2%;
+  padding: 10px;
+  padding-right: 0;
 }
 
+#stateFilters {
+  justify-content: space-between;
+  display: flex;
+  padding-right: 10px;
+}
+
+#stateFilters > span {
+  white-space: nowrap;
+}
+
+#stateFilters input {
+  background: none;
+  border: 1px solid var(--VTTblue);
+  border-radius: 11px;
+  flex-grow: 1;
+  min-width: 0;
+  padding: 2px 6px;
+}
+
+#stateFilters select {
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--VTTblue);
+}
+
+#stateFilters select, #stateFilters input {
+  margin: 0 5px;
+}
+
+@media (max-width: 700px), (max-height: 500px) { #filterByDurationWrapper { display: none; } }
+@media (max-width: 550px), (max-height: 400px) { #filterByLanguageWrapper { display: none; } }
+@media (max-width: 470px), (max-height: 340px) { #filterByModeWrapper     { display: none; } }
+@media (max-width: 350px), (max-height: 280px) { #filterByTypeWrapper     { display: none; } }
+
 #statesList, #stateEditOverlay {
+  --columns: 5;
+  --size: calc((var(--roomWidth) * var(--scale) - 10px) / var(--columns) - 20px);
   overflow: auto;
 }
+
+@media (max-width: 600px), (max-height: 400px) {
+  #statesList { overflow: unset; }
+  #statesOverlay { overflow: auto; }
+}
+
+@media (max-width: 800px), (max-height: 530px) { #statesList { --columns: 4; } }
+@media (max-width: 680px), (max-height: 480px) { #statesList { --columns: 3; } }
+@media (max-width: 520px), (max-height: 300px) { #statesList { --columns: 2; } }
+@media (max-width: 320px), (max-height: 240px) { #statesList { --columns: 1; } }
 
 #statesList .title {
   clear: left;
@@ -12,13 +59,21 @@
   padding-bottom: 0;
 }
 
+#statesList div:nth-of-type(1) > .title {
+  padding-top: 0;
+  margin-top: 30px;
+}
+
 .roomState, #addState {
   color: black;
   float: left;
-  width: 260px;
-  height: 260px;
+  width: var(--size);
+  height: var(--size);
   position: relative;
   overflow: hidden;
+
+  box-shadow: 0 2px 10px #00000077;
+  margin: 8px;
 }
 
 .roomState > img {
@@ -34,8 +89,24 @@
   left: 0;
   bottom: 0;
   right: 0;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.5);
+  padding: 0;
+  background: #00000061;
+  text-shadow: 0 0 3px #000;
+  color: white;
+}
+
+.roomState h3 {
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1em;
+  margin: 4px;
+}
+
+.roomState h4 {
+  font-style: italic;
+  font-weight: 700;
+  font-size: .8rem;
+  margin: 4px;
 }
 
 #addState div {

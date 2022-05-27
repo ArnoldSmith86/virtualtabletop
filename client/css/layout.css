@@ -367,14 +367,14 @@ body.lightsOff #toolbar:hover {
 }
 
 .overlay {
-  color: white;
+  color: var(--VTTblue);
   display: none;
   position: absolute;
   left: 0;
   top: 0;
   height: 100%;
   width: 100%;
-  background: rgba(0, 0, 0, 0.75);
+  background: white;
   flex-direction: column;
   padding: 5% 10%;
   box-sizing: border-box;
@@ -397,10 +397,6 @@ body.lightsOff #toolbar:hover {
 #room {
   transform: scale(var(--scale));
   transform-origin: left top;
-}
-
-#roomArea.hasOverlay #room {
-  filter: blur(5px);
 }
 
 ::-webkit-scrollbar {

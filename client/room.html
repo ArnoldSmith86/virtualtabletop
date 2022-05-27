@@ -217,23 +217,32 @@
     </div>
 
     <div id="statesOverlay" class="overlay">
-      <h1>Games</h1>
       <div id="stateFilters">
-        🔍 <input id="filterByText" />
-        ♟️ <select id="filterByType"><option>Any</option>
-          <option selected>Games</option><option>Tutorials</option><option>Assets</option>
-        </select>
-        👪 <select id="filterByPlayers"><option>Any</option>
-          <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
-          <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
-          <option>11</option><option>12</option><option>13</option><option>14</option><option>15</option>
-          <option>16</option><option>17</option><option>18</option><option>19</option><option>20</option>
-        </select>
-        ⏳ <select id="filterByDuration"><option>Any</option>
-          <option value="0-30">&lt;= 30 minutes</option><option value="31-60">30-60 minutes</option><option value="61-999">&gt; 60 minutes</option>
-        </select>
-        🌐 <select id="filterByLanguage"></select>
-        ⚔️ <select id="filterByMode"></select>
+        <input id="filterByText" placeholder="🔍" />
+        <span id="filterByTypeWrapper">
+          ♟️ <select id="filterByType"><option>Any</option>
+            <option selected>Games</option><option>Tutorials</option><option>Assets</option>
+          </select>
+        </span>
+        <span id="filterByPlayersWrapper">
+          👪 <select id="filterByPlayers"><option>Any</option>
+            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+            <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+            <option>11</option><option>12</option><option>13</option><option>14</option><option>15</option>
+            <option>16</option><option>17</option><option>18</option><option>19</option><option>20</option>
+          </select>
+        </span>
+        <span id="filterByDurationWrapper">
+          ⏳ <select id="filterByDuration"><option>Any</option>
+            <option value="0-30">&lt;= 30 minutes</option><option value="31-60">30-60 minutes</option><option value="61-999">&gt; 60 minutes</option>
+          </select>
+        </span>
+        <span id="filterByLanguageWrapper">
+          🌐 <select id="filterByLanguage"></select>
+        </span>
+        <span id="filterByModeWrapper">
+          ⚔️ <select id="filterByMode"></select>
+        </span>
       </div>
       <div id="statesList">
         <template id="template-stateslist-category" type="text/template">

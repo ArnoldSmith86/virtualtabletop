@@ -89,7 +89,6 @@ export function showOverlay(id, forced) {
   if(id) {
     const style = $(`#${id}`).style;
     style.display = !forced && style.display === 'flex' ? 'none' : 'flex';
-    $('#roomArea').className = style.display === 'flex' ? 'hasOverlay' : '';
     overlayActive = style.display === 'flex';
     if(forced)
       overlayActive = 'forced';
@@ -100,7 +99,6 @@ export function showOverlay(id, forced) {
     }
     toServer('mouse',{inactive:true})
   } else {
-    $('#roomArea').className = '';
     vmEditOverlay.selectedWidget = {};
     overlayActive = false;
   }
