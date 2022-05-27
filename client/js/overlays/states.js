@@ -196,7 +196,6 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
       const validPlayers = [];
       const validLanguages = [];
       const validModes = [];
-      let longestDuration = 0;
       for(const variantID in state.variants) {
         let variant = state.variants[variantID];
         const stateIDforLoading = variant.plStateID || state.id;
@@ -212,7 +211,6 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
         validModes.push(variant.mode);
         languageOptions[variant.language] = true;
         modeOptions[variant.mode] = true;
-        longestDuration = Math.max(longestDuration, variant.time.replace(/.*[^0-9]/, ''));
 
         $('.play', vEntry).addEventListener('click', _=>{ toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading }); showOverlay(); });
         $('.variantsList', entry).appendChild(vEntry);
@@ -227,7 +225,7 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
 
       entry.dataset.text = `${state.name} ${state.similarName} ${state.description}`.toLowerCase();
       entry.dataset.players = validPlayers.join();
-      entry.dataset.duration = longestDuration;
+      entry.dataset.duration = state.time.replace(/.*[^0-9]/, '');
       entry.dataset.languages = validLanguages.join();
       entry.dataset.modes = validModes.join();
 
