@@ -256,7 +256,9 @@ function fillStateDetails(state) {
   $('#stateDetailsOverlay h1').innerText = state.name;
   $('#stateDetailsOverlay .time').innerText = state.time;
   $('#stateDetailsOverlay .rules').href = state.rules;
+
   $('#stateDescription').innerText = state.description || '';
+  $('#stateAttribution').innerText = state.attribution || '';
 
   $('#stateDetailsOverlay .variantsList').innerHTML = '';
   for(const variantID in state.variants) {
