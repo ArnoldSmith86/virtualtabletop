@@ -225,7 +225,7 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
 
       entry.dataset.text = `${state.name} ${state.similarName} ${state.description}`.toLowerCase();
       entry.dataset.players = validPlayers.join();
-      entry.dataset.duration = state.time.replace(/.*[^0-9]/, '');
+      entry.dataset.duration = String(state.time).replace(/.*[^0-9]/, '');
       entry.dataset.languages = validLanguages.join();
       entry.dataset.modes = validModes.join();
 
