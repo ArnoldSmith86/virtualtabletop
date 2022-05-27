@@ -56,7 +56,7 @@ async function ensureRoomIsLoaded(id) {
 
 function validateInput(res, next, values) {
   for(const value of values) {
-    if(!value.match(/^[A-Za-z0-9.: _-]+$/)) {
+    if(value && !value.match(/^[A-Za-z0-9.: _-]+$/)) {
       next(new Logging.UserError(403, 'Invalid characters in parameters'));
       return false;
     }
