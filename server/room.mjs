@@ -606,7 +606,7 @@ export default class Room {
   }
 
   writePublicLibraryAssetsToFilesystem(stateID, variantID) {
-    const assetsDir = this.variantFilename(stateID, variantID).replace(/[0-9]+\.json$/, 'assets');
+    const assetsDir = this.variantFilename(stateID, variantID).replace(/\/[0-9]+\.json$/, '/assets');
 
     const usedAssets = {};
     for(const vID in this.state._meta.states[stateID].variants)
