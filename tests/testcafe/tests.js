@@ -299,8 +299,8 @@ function publicLibraryTest(game, variant, md5, tests) {
       .click('#statesButton')
       .click('#filterByType')
       .click('#filterByType > option:nth-child(1)')
-      .hover(Selector('.bgg').withText(`${game} (`).parent().parent())
-      .click(Selector('.bgg').withText(`${game} (`).nextSibling().nextSibling().child().nth(variant).child());
+      .click(Selector('.roomState h3').withExactText(game))
+      .click(Selector(`.variantsList > div:nth-child(${variant+1}) > button`));
     await setName(t);
     await tests(t);
     await compareState(t, md5);
