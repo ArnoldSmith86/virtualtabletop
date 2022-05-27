@@ -46,7 +46,13 @@
   display: none;
   position: absolute;
   top: 0;
-  margin: 10px;
+  background: transparent;
+  font-size: 200%;
+  text-shadow: 1px 1px 2px #444;
+}
+
+div:nth-of-type(1) > .list > .roomState .star {
+  color: gold;
 }
 
 .roomState.publicLibraryGame .star {
