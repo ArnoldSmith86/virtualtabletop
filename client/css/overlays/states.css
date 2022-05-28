@@ -51,7 +51,6 @@
 @media (max-width: 800px), (max-height: 530px) { #statesList { --columns: 4; } }
 @media (max-width: 680px), (max-height: 480px) { #statesList { --columns: 3; } }
 @media (max-width: 520px), (max-height: 300px) { #statesList { --columns: 2; } }
-@media (max-width: 320px), (max-height: 240px) { #statesList { --columns: 1; } }
 
 #statesList .title {
   clear: left;
@@ -199,4 +198,32 @@ div:nth-of-type(1) > .list > .roomState .star {
 
 #stateFilters {
   margin-bottom: 10px;
+}
+
+@media (max-width: 320px), (max-height: 240px) {
+  #statesOverlay, #addState, .roomState {
+    margin:  0;
+    padding: 0;
+  }
+  #statesOverlay h2.title {
+    margin:  0 !important;
+    padding: 0 !important;
+  }
+  #filterByPlayersWrapper {
+    display: none;
+  }
+  #addState, .roomState {
+    height: 48px;
+    width:  100%;
+    margin-bottom: 4px;
+    box-shadow: unset;
+  }
+  .roomState > img {
+    height: 48px;
+    width:  48px;
+  }
+  .roomState > .details {
+    left: 48px;
+    height: 48px;
+  }
 }
