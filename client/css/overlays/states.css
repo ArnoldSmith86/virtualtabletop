@@ -9,17 +9,37 @@
   padding-right: 10px;
 }
 
-#stateFilters > span {
-  white-space: nowrap;
+#stateFilters .material-icons {
+  line-height: 0.5;
+  position: relative;
+  top: 6px;
 }
 
-#stateFilters input {
-  background: none;
+#filterByTextWrapper {
+  flex-grow: 1;
+  position: relative;
   border: 1px solid var(--VTTblue);
   border-radius: 11px;
-  flex-grow: 1;
-  min-width: 0;
-  padding: 2px 6px;
+}
+
+#filterByTextWrapper .material-icons {
+  font-size: 20px;
+  left: -2px;
+}
+
+#stateFilters > span {
+  white-space: nowrap;
+  padding-left: 5px;
+}
+
+#filterByText {
+  background: none;
+  border: none;
+  width: calc(100% - 5px - 20px - 10px);
+  padding: 2px;
+  position: absolute;
+  left: 20px;
+  top: 0;
 }
 
 #stateFilters select {

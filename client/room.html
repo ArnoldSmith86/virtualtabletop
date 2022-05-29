@@ -218,14 +218,19 @@
 
     <div id="statesOverlay" class="overlay">
       <div id="stateFilters">
-        <input id="filterByText" placeholder="🔍" />
+        <span id="filterByTextWrapper">
+          <i class="material-icons">search</i>
+          <input id="filterByText" />
+        </span>
         <span id="filterByTypeWrapper">
-          ♟️ <select id="filterByType"><option>Any</option>
+          <i class="material-icons">casino</i>
+          <select id="filterByType"><option>Any</option>
             <option selected>Games</option><option>Tutorials</option><option>Assets</option>
           </select>
         </span>
         <span id="filterByPlayersWrapper">
-          👪 <select id="filterByPlayers"><option>Any</option>
+          <i class="material-icons">person</i>
+          <select id="filterByPlayers"><option>Any</option>
             <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
             <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
             <option>11</option><option>12</option><option>13</option><option>14</option><option>15</option>
@@ -233,15 +238,18 @@
           </select>
         </span>
         <span id="filterByDurationWrapper">
-          ⏳ <select id="filterByDuration"><option>Any</option>
+          <i class="material-icons">schedule</i>
+          <select id="filterByDuration"><option>Any</option>
             <option value="0-30">&lt;= 30 minutes</option><option value="31-60">30-60 minutes</option><option value="61-999">&gt; 60 minutes</option>
           </select>
         </span>
         <span id="filterByLanguageWrapper">
-          🌐 <select id="filterByLanguage"></select>
+          <i class="material-icons">language</i>
+          <select id="filterByLanguage"></select>
         </span>
         <span id="filterByModeWrapper">
-          ⚔️ <select id="filterByMode"></select>
+          <i class="material-icons">groups</i>
+          <select id="filterByMode"></select>
         </span>
       </div>
       <div id="statesList">
