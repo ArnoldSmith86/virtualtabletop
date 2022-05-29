@@ -1840,10 +1840,14 @@ window.addEventListener('mousemove', function(e) {
         hoveredWidgets.push(widget);
 
   hoveredWidgets.sort(function(w1,w2) {
+    const hiddenParent =  function(widget) {
+      return widget ? widget.classes().includes('foreign') || hiddenParent(widget.parent) : false
+    };
+
     const w1card = w1.get('type') == 'card';
     const w2card = w2.get('type') == 'card';
-    const w1foreign = w1.classes().includes('foreign') && !w1card;
-    const w2foreign = w2.classes().includes('foreign') && !w2card;
+    const w1foreign = !w1card && hiddenParent(w1);
+    const w2foreign =  !w2card && hiddenParent(w2);
     const w1normal = !w1foreign && !w1card;
     const w2normal = !w2foreign && !w2card;
     return ((w1card && w2card) || (w1foreign && w2foreign) || (w1normal && w2normal)) ?
