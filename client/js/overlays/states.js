@@ -121,7 +121,7 @@ function toggleStateStar(state, dom) {
   const targetList = dom.parentElement.parentElement == $('#statesList > div:nth-of-type(1)')
                    ? $('#statesList > div:nth-of-type(2) > .list')
                    : $('#statesList > div:nth-of-type(1) > .list');
-  targetList.insertBefore(dom, [...targetList.children].filter(d=>$('h3', d).innerText>$('h3', dom).innerText)[0]);
+  targetList.insertBefore(dom, [...targetList.children].filter(d=>$('h3', d).innerText.localeCompare($('h3', dom).innerText) > 0)[0]);
   toServer('toggleStateStar', state.publicLibrary);
 }
 
