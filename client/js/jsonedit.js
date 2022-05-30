@@ -1839,6 +1839,22 @@ window.addEventListener('mousemove', function(e) {
       if(jeState.mouseY >= widget.absoluteCoord('y') && jeState.mouseY <= widget.absoluteCoord('y')+widget.get('height'))
         hoveredWidgets.push(widget);
 
+  hoveredWidgets.sort(function(w1,w2) {
+    const hiddenParent =  function(widget) {
+      return widget ? widget.classes().includes('foreign') || hiddenParent(widget.parent) : false
+    };
+
+    const w1card = w1.get('type') == 'card';
+    const w2card = w2.get('type') == 'card';
+    const w1foreign = !w1card && hiddenParent(w1);
+    const w2foreign =  !w2card && hiddenParent(w2);
+    const w1normal = !w1foreign && !w1card;
+    const w2normal = !w2foreign && !w2card;
+    return ((w1card && w2card) || (w1foreign && w2foreign) || (w1normal && w2normal)) ?
+      w2.calculateZ() - w1.calculateZ() :
+      ((w1card && !w2card) || (w1foreign && w2normal)) ? 1 : -1;
+  });
+  
   for(let i=1; i<=11; ++i) {
     const hotkey = i>=4 ? i+1 : i;
     if(hoveredWidgets[i-1]) {
