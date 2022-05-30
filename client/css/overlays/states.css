@@ -1,4 +1,6 @@
 #statesOverlay {
+  --columns: 5;
+  --size: calc((var(--roomWidth) * var(--scale) - 10px) / var(--columns) - 20px);
   padding: 10px;
   padding-right: 0;
 }
@@ -58,8 +60,6 @@
 @media (max-width: 350px), (max-height: 280px) { #filterByTypeWrapper     { display: none; } }
 
 #statesList, #stateEditOverlay {
-  --columns: 5;
-  --size: calc((var(--roomWidth) * var(--scale) - 10px) / var(--columns) - 20px);
   overflow: auto;
 }
 
@@ -68,9 +68,9 @@
   #statesOverlay { overflow: auto; }
 }
 
-@media (max-width: 800px), (max-height: 530px) { #statesList { --columns: 4; } }
-@media (max-width: 680px), (max-height: 480px) { #statesList { --columns: 3; } }
-@media (max-width: 520px), (max-height: 300px) { #statesList { --columns: 2; } }
+@media (max-width: 800px), (max-height: 530px) { #statesOverlay { --columns: 4; } }
+@media (max-width: 680px), (max-height: 480px) { #statesOverlay { --columns: 3; } }
+@media (max-width: 520px), (max-height: 300px) { #statesOverlay { --columns: 2; } }
 
 #statesList .title {
   clear: left;
@@ -83,7 +83,20 @@
   margin-top: 30px;
 }
 
-.roomState, #addState {
+#addState {
+  float: right;
+  margin: -51px 15px 0;
+}
+
+#emptyLibrary {
+  color: black;
+  height: calc(var(--size) - 80px - 4px);
+  font-style: italic;
+  padding: 40px 100px;
+  margin: 8px;
+}
+
+.roomState {
   color: black;
   float: left;
   width: var(--size);
@@ -128,10 +141,6 @@
   margin: 4px;
 }
 
-#addState div {
-  position: absolute;
-}
-
 .roomState .star {
   display: none;
   position: absolute;
@@ -153,27 +162,10 @@ div:nth-of-type(1) > .list > .roomState .star {
   display: none;
 }
 
-#addState .image {
-  font-size: 150px;
-  opacity: 0.7;
-}
-
-#addState button {
-  width: 180px;
-}
-
 .roomState > img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-#addState {
-  background: rgba(255, 255, 255, 0.5);
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
 }
 
 .roomState em {
@@ -220,8 +212,14 @@ div:nth-of-type(1) > .list > .roomState .star {
   margin-bottom: 10px;
 }
 
+@media (max-width: 430px) {
+  #addState {
+    margin-top: 4px;
+    float: unset;
+  }
+}
 @media (max-width: 320px), (max-height: 240px) {
-  #statesOverlay, #addState, .roomState {
+  #statesOverlay, .roomState, #emptyLibrary {
     margin:  0;
     padding: 0;
   }
@@ -232,7 +230,16 @@ div:nth-of-type(1) > .list > .roomState .star {
   #filterByPlayersWrapper {
     display: none;
   }
-  #addState, .roomState {
+  #addState {
+    float: right;
+    margin: 4px;
+    padding: 4px;
+  }
+  #emptyLibrary {
+    height: unset;
+    clear: both;
+  }
+  .roomState {
     height: 48px;
     width:  100%;
     margin-bottom: 4px;

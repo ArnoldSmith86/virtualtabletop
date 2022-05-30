@@ -265,16 +265,17 @@
             <h4>Similar Name</h4>
           </div>
         </template>
-        <div id="addState">
-          <div class="image">➕</div>
-          <div class="buttons">
-            <button class="prettyButton gameMenu create">Save room state</button>
-            <button class="prettyButton gameMenu link">Enter link</button>
-            <button class="prettyButton gameMenu upload">Upload files</button>
-            <button class="prettyButton gameMenu download">Download all</button>
-          </div>
-        </div>
+        <button class="prettyButton" id="addState"><i class="icon material-icons">add</i> Add game</button>
+        <p id="emptyLibrary">Your personal game library is currently empty.<br>Use the stars below to pin public library games or use the "Add game" button above.</p>
+        <!--<button class="prettyButton gameMenu download">Download all</button>-->
       </div>
+    </div>
+
+    <div id="stateAddOverlay" class="overlay">
+      <h1>Add game</h1>
+      <button class="prettyButton gameMenu create">Save room state</button>
+      <button class="prettyButton gameMenu link">Enter link</button>
+      <button class="prettyButton gameMenu upload">Upload files</button>
     </div>
 
     <div id="stateDetailsOverlay" class="overlay">

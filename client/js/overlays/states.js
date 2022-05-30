@@ -122,6 +122,7 @@ function toggleStateStar(state, dom) {
                    ? $('#statesList > div:nth-of-type(2) > .list')
                    : $('#statesList > div:nth-of-type(1) > .list');
   targetList.insertBefore(dom, [...targetList.children].filter(d=>$('h3', d).innerText.localeCompare($('h3', dom).innerText) > 0)[0]);
+  $('#emptyLibrary').style.display = $('#statesList > div:nth-of-type(1) .roomState') ? 'none' : 'block';
   toServer('toggleStateStar', state.publicLibrary);
 }
 
@@ -162,8 +163,8 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
   }
   $('#statesButton').dataset.overlay = 'statesOverlay';
 
-  const addDiv = $('#addState');
-  removeFromDOM(addDiv);
+  const emptyLibrary = $('#emptyLibrary');
+  const addState = $('#addState');
   removeFromDOM('#statesList > div');
 
   let isEmpty = true;
@@ -236,7 +237,10 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
 
     $('#statesList').appendChild(category);
   }
-  $('#statesList > div').appendChild(addDiv);
+
+  $('#statesList > div').insertBefore(emptyLibrary, $('#statesList > div > h2').nextSibling);
+  $('#statesList > div').insertBefore(addState, $('#statesList > div > h2').nextSibling);
+  emptyLibrary.style.display = $('#statesList > div:nth-of-type(1) .roomState') ? 'none' : 'block';
 
   let languageHTML = '<option>Any</option>';
   for(const languageOption in languageOptions)
@@ -345,9 +349,11 @@ onLoad(function() {
   on('#filterByText', 'keyup', updateLibraryFilter);
   on('#stateFilters select', 'change', updateLibraryFilter);
 
-  on('#addState .create, #addVariant .create', 'click', e=>addState(e, 'state'));
-  on('#addState .upload, #addVariant .upload', 'click', e=>selectFile(false, f=>addState(e, 'file', f)));
-  on('#addState .link,   #addVariant .link',   'click', e=>addState(e, 'link', prompt('Enter shared URL:')));
+  on('#addState', 'click', e=>showOverlay('stateAddOverlay'));
+
+  on('#stateAddOverlay .create, #addVariant .create', 'click', e=>addState(e, 'state'));
+  on('#stateAddOverlay .upload, #addVariant .upload', 'click', e=>selectFile(false, f=>addState(e, 'file', f)));
+  on('#stateAddOverlay .link,   #addVariant .link',   'click', e=>addState(e, 'link', prompt('Enter shared URL:')));
 
   on('#addState .download', 'click', _=>downloadState(null));
 
