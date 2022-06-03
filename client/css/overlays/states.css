@@ -107,6 +107,7 @@
 }
 
 .roomState {
+  display: none;
   color: black;
   float: left;
   width: var(--size);
@@ -117,6 +118,9 @@
   box-shadow: 0 2px 10px #00000077;
   margin: 8px;
   border-radius: 10px;
+}
+.roomState.visible {
+  display: block;
 }
 
 .roomState > img {
@@ -261,4 +265,138 @@ div:nth-of-type(1) > .list > .roomState .star {
     left: 48px;
     height: 48px;
   }
+}
+
+
+
+
+
+/* State details */
+
+#stateDetailsOverlay {
+  padding: 0;
+}
+
+#stateDetailsOverlay button.close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+#stateDetailsOverlay button.edit {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
+
+
+#mainDetails, #similarDetails, #variantsList, #helpTexts {
+  position: absolute;
+  width: 60%;
+  top: 10px;
+  left: 20%;
+  height: 300px;
+  box-sizing: border-box;
+  background: var(--roomColor);
+  padding-right: 20px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+#mainDetails img, #similarDetails img {
+  float: left;
+  margin-right: 20px;
+  height: 300px;
+  width: 300px;
+  object-fit: cover;
+}
+#mainDetails h1, #similarDetails h1 {
+  text-align: left;
+}
+#mainDetails .star {
+  position: absolute;
+  font-size: 50px;
+  background: none;
+  text-shadow: 2px 2px 4px #444;
+}
+#mainDetails .active.star {
+  color: gold;
+}
+
+#similarDetails {
+  top: unset;
+  bottom: 10px;
+  left: 10px;
+  width: calc(50% - 15px);
+  height: 200px;
+}
+#similarDetails h1 {
+  font-size: 1.3em;
+}
+#similarDetails img {
+  height: 200px;
+  width: 200px;
+}
+#similarDetails a {
+  color: var(--VTTblue);
+}
+
+#prevState, #nextState {
+  --size: 160px;
+  min-height: var(--size);
+  position: absolute;
+  top: calc(10px + ( 300px - var(--size) ) / 2);
+  left: calc(( 20% - var(--size) ) / 2);
+  margin: 0;
+}
+#nextState {
+  left: unset;
+  right: calc(( 20% - var(--size) ) / 2);
+}
+#prevState button, #nextState button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff8;
+}
+#prevState button i, #nextState button i {
+  color: black;
+  font-size: 140px;
+  margin: auto;
+}
+
+
+#variantsList {
+  top: 320px;
+  bottom: 220px;
+  left: 10px;
+  width: calc(50% - 15px);
+  height: unset;
+  padding: 0;
+}
+
+#variantsList > * {
+  display: inline-block;
+}
+
+#variantsList > .variantsList {
+  vertical-align: top;
+  padding: 10px;
+}
+
+#variantsList img {
+  height: 100%;
+}
+
+
+#helpTexts {
+  top: 320px;
+  bottom: 10px;
+  left: unset;
+  right: 10px;
+  width: calc(50% - 15px);
+  height: unset;
+  padding: 20px;
+  overflow: auto;
 }

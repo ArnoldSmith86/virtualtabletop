@@ -140,7 +140,10 @@ function updateLibraryFilter() {
     const durationMatch = duration == 'Any' || state.dataset.duration >= duration[0] && state.dataset.duration <= duration[1];
     const languageMatch = language == 'Any' || state.dataset.languages.split(',').indexOf(language) != -1;
     const modeMatch     = mode     == 'Any' || state.dataset.modes.split(',').indexOf(mode) != -1;
-    state.style.display = textMatch && typeMatch && playersMatch && durationMatch && languageMatch && modeMatch ? 'block' : 'none';
+    if(textMatch && typeMatch && playersMatch && durationMatch && languageMatch && modeMatch)
+      state.classList.add('visible');
+    else
+      state.classList.remove('visible');
   }
 }
 
@@ -182,13 +185,15 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
 
       const state = kvp[1];
       state.id = kvp[0];
+      state.starred = starred && starred[state.publicLibrary];
 
       const entry = domByTemplate('template-stateslist-entry');
+      entry.dataset.id = state.id;
       entry.className = state.image ? 'roomState' : 'roomState noImage';
       if(state.publicLibrary)
         entry.className += ' publicLibraryGame';
 
-      entry.addEventListener('click', _=>fillStateDetails(state));
+      entry.addEventListener('click', _=>fillStateDetails(state, entry));
 
       $('img', entry).src = state.image.replace(/^\//, '');
       $('h3', entry).textContent = `${state.name}`;
@@ -253,16 +258,55 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
   $('#filterByMode').innerHTML = modeHTML;
 
   updateLibraryFilter();
+
+  if($('#stateDetailsOverlay').style.display != 'none') {
+    showOverlay();
+    const stateID = $('#stateDetailsOverlay').dataset.id;
+    if(states[stateID])
+      fillStateDetails(states[stateID], $(`#statesOverlay .roomState[data-id="${stateID}"]`));
+  }
 }
 
-function fillStateDetails(state) {
+function fillStateDetails(state, dom) {
   showOverlay('stateDetailsOverlay');
+  $('#stateDetailsOverlay').dataset.id = state.id;
+  $('#mainDetails h1').innerText = state.name;
+  if(state.year && state.year != 0)
+    $('#similarDetails h1').innerText = `Similar to ${state.similarName} (${state.year})`;
+  else
+    $('#similarDetails h1').innerText = `Similar to ${state.similarName}`;
   $('#stateDetailsOverlay h1').innerText = state.name;
-  $('#stateDetailsOverlay .time').innerText = state.time;
-  $('#stateDetailsOverlay .rules').href = state.rules;
+  $('#stateDetailsOverlay img').src = state.image.replace(/^\//, '');
+  $('#detailsTime').innerText = state.time;
+  $('#detailsMode').innerText = state.mode;
+  if(state.starred)
+    $('#stateDetailsOverlay .star').classList.add('active');
+  else
+    $('#stateDetailsOverlay .star').classList.remove('active');
+
+  //$('#detailsSimilarRules').href = state.rules;
+  $('#detailsSimilarBGG').href = state.similarLink;
 
   $('#stateDescription').innerText = state.description || '';
   $('#stateAttribution').innerText = state.attribution || '';
+
+  const visibleStates = [...$a('#statesList .roomState.visible')];
+  const nextState = visibleStates[visibleStates.indexOf(dom)+1];
+  const prevState = visibleStates[visibleStates.indexOf(dom)-1];
+  $('#nextState').style.display = nextState ? 'block' : 'none';
+  if(nextState) {
+    $('#nextState').dataset.id = nextState.dataset.id;
+    $('#nextState img').src = $('img', nextState).src;
+    $('#nextState h3').innerText = $('h3', nextState).innerText;
+    $('#nextState h4').innerText = $('h4', nextState).innerText;
+  }
+  $('#prevState').style.display = prevState ? 'block' : 'none';
+  if(prevState) {
+    $('#prevState').dataset.id = prevState.dataset.id;
+    $('#prevState img').src = $('img', prevState).src;
+    $('#prevState h3').innerText = $('h3', prevState).innerText;
+    $('#prevState h4').innerText = $('h4', prevState).innerText;
+  }
 
   $('#stateDetailsOverlay .variantsList').innerHTML = '';
   for(const variantID in state.variants) {
@@ -356,6 +400,10 @@ onLoad(function() {
   on('#stateAddOverlay .link,   #addVariant .link',   'click', e=>addState(e, 'link', prompt('Enter shared URL:')));
 
   on('#addState .download', 'click', _=>downloadState(null));
+
+  on('#stateDetailsOverlay .close', 'click', _=>showOverlay('statesOverlay'));
+  on('#stateDetailsOverlay .star', 'click', e=>{e.currentTarget.classList.toggle('active');$(`#statesOverlay .roomState[data-id="${$('#stateDetailsOverlay').dataset.id}"] .star`).click();});
+  on('#nextState, #prevState', 'click', e=>{showOverlay(); $(`#statesOverlay .roomState[data-id="${e.currentTarget.dataset.id}"]`).click();});
 
   on('#stateEditOverlay .save',     'click', editState);
   on('#stateEditOverlay .download', 'click', _=>downloadState());

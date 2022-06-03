@@ -279,16 +279,55 @@
     </div>
 
     <div id="stateDetailsOverlay" class="overlay">
-      <h1>Game title</h1>
-      <p id="stateDescription"></p>
+      <button class="prettyButton close">X</button>
+      <div id="mainDetails">
+        <img>
+        <button class="prettyButton star">★</button>
+        <h1>Game title</h1>
+        <div><i class="material-icons">schedule</i> Time: <span id="detailsTime">30</span> minutes</div>
+        <div><i class="material-icons">groups</i> Mode: <span id="detailsMode">vs</span></div>
+        <div><i class="material-icons">psychology</i> Skill: <span id="detailsSkill">strategy and luck</span></div>
+        <p id="stateDescription"></p>
+      </div>
+      <div id="similarDetails">
+        <img src="assets/1067972190_27366">
+        <h1>Similar to: Hare & Tortoise (1973)</h1>
+        <div><i class="material-icons">military_tech</i> Spiel des Jahres 2001</div>
+        <div><i class="material-icons">link</i> <a href="https://boardgamegeek.com/boardgame/361/hare-tortoise" id="detailsSimilarBGG"><span class="symbols">[external]</span>Seite auf BoardGameGeek.com</span></div>
+        <div><i class="material-icons">movie</i> <a href="https://www.youtube.com/watch?v=R1qh-lhxy9s" id="detailsSimilarRules"><span class="symbols">[external]</span>How To Play auf YouTube.com</span></div>
+      </div>
       <template id="template-variantslist-entry" type="text/template">
         <button class="prettyButton play">Play: <span class="language">🇺🇸</span><span class="symbols"> [group]</span><span class="players">0</span><br><span class="variant"></span></button>
       </template>
-      <div class="stats"><span class="symbols">[sand_timer]</span> <span class="time">0</span> minutes | <a class="rules"><span class="symbols">[book_open]</span> Rules</a></div>
-      <div class="variantsList"></div>
+      <div id="variantsList">
+        <img src="assets/-1621736265_13854">
+        <div class="variantsList"></div>
+      </div>
       <button class="prettyButton edit">Edit</button>
-      <h3>Attribution</h3>
-      <p id="stateAttribution"></p>
+      <div id="prevState" class="roomState">
+        <img src="assets/-1758311402_1721439">
+        <div class="details">
+          <h3>Alpaca</h3>
+          <h4>Similar to L.L.A.M.A.</h4>
+        </div>
+        <button class="prettyButton prev"><i class="material-icons">arrow_back</i></button>
+      </div>
+      <div id="nextState" class="roomState">
+        <img src="assets/864541564_120911">
+        <div class="details">
+          <h3>Backgammon</h3>
+          <h4>Similar to Backgammon</h4>
+        </div>
+        <button class="prettyButton next"><i class="material-icons">arrow_forward</i></button>
+      </div>
+      <div id="helpTexts">
+        <h3>How to play the game</h3>
+        <p id="stateRuleText">Detailed textual rule description.</p>
+        <h3>How to use this implementation</h3>
+        <p id="stateHelpText">- Click Reset to select the expansions and shuffle the cards.<br>- Each player clicks a Join button.<br>- ...<br>- Profit.</p>
+        <h3>Attribution</h3>
+        <p id="stateAttribution"></p>
+      </div>
     </div>
 
     <div id="stateEditOverlay" class="overlay">
