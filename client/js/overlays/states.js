@@ -393,9 +393,10 @@ onLoad(function() {
   onMessage('meta', args=>fillStatesList(args.meta.states, args.meta.starred, args.meta.returnServer, args.activePlayers));
 
   on('#filterByText', 'keyup', updateLibraryFilter);
+  on('#clearSearch', 'click', _=>{$('#filterByText').value='';updateLibraryFilter();$('#filterByText').focus()});
   on('#stateFilters select', 'change', updateLibraryFilter);
 
-  on('#addState', 'click', e=>showOverlay('stateAddOverlay'));
+  on('#addState', 'click', _=>showOverlay('stateAddOverlay'));
 
   on('#stateAddOverlay .create, #addVariant .create', 'click', e=>addState(e, 'state'));
   on('#stateAddOverlay .upload, #addVariant .upload', 'click', e=>selectFile(false, f=>addState(e, 'file', f)));

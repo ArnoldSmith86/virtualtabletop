@@ -36,11 +36,21 @@
 #filterByText {
   background: none;
   border: none;
-  width: calc(100% - 5px - 20px - 10px);
+  width: calc(100% - 5px - 20px - 10px - 15px);
   padding: 2px;
   position: absolute;
   left: 20px;
   top: 0;
+}
+
+#filterByTextWrapper #clearSearch {
+  position: absolute;
+  right: 2px;
+  left: unset;
+  cursor: pointer;
+}
+#filterByText:placeholder-shown ~ #clearSearch {
+  display: none;
 }
 
 #stateFilters select {
