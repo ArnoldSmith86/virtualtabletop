@@ -2,6 +2,7 @@ let jeEnabled = null;
 let jeZoomOut = false;
 let jeMode = null;
 let jeWidget = null;
+let jePlainWidget = null;
 let jeStateBefore = null;
 let jeStateBeforeRaw = null;
 let jeStateNow = null;
@@ -241,6 +242,16 @@ const jeCommands = [
       jeGetValue(jeContext.slice(1, routineIndex+4)).push( { type: "###SELECT ME###" } );
       jeSetAndSelect('string');
     })
+  },
+  {
+    id: 'je_classes',
+    name: 'classes',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
+    show: _=>!jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].classes,
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].classes = '###SELECT ME###';
+      jeSetAndSelect('');
+    }
   },
   {
     id: 'je_css',
@@ -642,6 +653,7 @@ function jeAddCommands() {
   jeAddCSScommands();
 
   jeAddFaceCommand('border', '', 1);
+  jeAddFaceCommand('classes', '', '');
   jeAddFaceCommand('css', '', '');
   jeAddFaceCommand('properties', '', {});
   jeAddFaceCommand('radius', ' (rounded corners)', 1);
@@ -1097,6 +1109,7 @@ function jeSelectWidget(widget, dontFocus, addToSelection, restoreCursorPosition
   } else {
     jeMode = 'widget';
     jeWidget = widget;
+    jePlainWidget = new widget.constructor();
     jeKeyIsDownDeltas = [];
     jeStateNow = JSON.parse(JSON.stringify(widget.state));
     if(restoreCursorPosition && cursorState.defaultValueToAdd && jeStateNow[cursorState.defaultValueToAdd] === undefined)
@@ -1196,7 +1209,7 @@ function jeColorize() {
         }
 
         const c = {...l};
-        if(jeMode == 'widget' && match[1] == '  "' && l[2] == 'key' && [ 'id', 'type' ].indexOf(match[2]) == -1 && jeWidget.getDefaultValue(match[2]) === undefined)
+        if(jeMode == 'widget' && match[1] == '  "' && l[2] == 'key' && [ 'id', 'type' ].indexOf(match[2]) == -1 && jePlainWidget.getDefaultValue(match[2]) === undefined)
           c[2] = 'custom';
 
         for(let i=1; i<l.length; ++i) {
@@ -1586,9 +1599,10 @@ function jePreProcessObject(o) {
       copy[`LINEBREAK${match[1]}`] = null;
   }
 
-  for(const key of Object.keys(o).sort())
-    if(copy[key] === undefined && !key.match(/^c[0-9]{2}$/) && !key.match(/Routine$/) && jeWidget.getDefaultValue(key) !== undefined)
+  for(const key of Object.keys(o).sort()) {
+    if(copy[key] === undefined && !key.match(/^c[0-9]{2}$/) && !key.match(/Routine$/) && jePlainWidget.getDefaultValue(key) !== undefined)
       copy[key] = o[key];
+  }
   copy[`LINEBREAKcustom`] = null;
   for(const key of Object.keys(o).sort())
     if(copy[key] === undefined && !key.match(/^c[0-9]{2}$/) && !key.match(/Routine$/))
@@ -1825,6 +1839,22 @@ window.addEventListener('mousemove', function(e) {
       if(jeState.mouseY >= widget.absoluteCoord('y') && jeState.mouseY <= widget.absoluteCoord('y')+widget.get('height'))
         hoveredWidgets.push(widget);
 
+  hoveredWidgets.sort(function(w1,w2) {
+    const hiddenParent =  function(widget) {
+      return widget ? widget.classes().includes('foreign') || hiddenParent(widget.parent) : false
+    };
+
+    const w1card = w1.get('type') == 'card';
+    const w2card = w2.get('type') == 'card';
+    const w1foreign = !w1card && hiddenParent(w1);
+    const w2foreign =  !w2card && hiddenParent(w2);
+    const w1normal = !w1foreign && !w1card;
+    const w2normal = !w2foreign && !w2card;
+    return ((w1card && w2card) || (w1foreign && w2foreign) || (w1normal && w2normal)) ?
+      w2.calculateZ() - w1.calculateZ() :
+      ((w1card && !w2card) || (w1foreign && w2normal)) ? 1 : -1;
+  });
+  
   for(let i=1; i<=11; ++i) {
     const hotkey = i>=4 ? i+1 : i;
     if(hoveredWidgets[i-1]) {
