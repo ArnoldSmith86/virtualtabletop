@@ -247,14 +247,16 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
   $('#statesList > div').insertBefore(addState, $('#statesList > div > h2').nextSibling);
   emptyLibrary.style.display = $('#statesList > div:nth-of-type(1) .roomState') ? 'none' : 'block';
 
+  const previousLanguage = $('#filterByLanguage').value;
   let languageHTML = '<option>Any</option>';
   for(const languageOption in languageOptions)
-    languageHTML += `<option>${languageOption}</option>`;
+    languageHTML += `<option ${previousLanguage && previousLanguage == languageOption ? 'selected' : ''}>${languageOption}</option>`;
   $('#filterByLanguage').innerHTML = languageHTML;
 
+  const previousMode = $('#filterByMode').value;
   let modeHTML = '<option>Any</option>';
   for(const modeOption in modeOptions)
-    modeHTML += `<option>${modeOption}</option>`;
+    modeHTML += `<option ${previousMode && previousMode == modeOption ? 'selected' : ''}>${modeOption}</option>`;
   $('#filterByMode').innerHTML = modeHTML;
 
   updateLibraryFilter();
