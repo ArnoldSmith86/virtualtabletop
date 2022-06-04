@@ -246,6 +246,7 @@ div:nth-of-type(1) > .list > .roomState .star {
     padding: 0;
   }
   #statesOverlay h2.title {
+    position: unset;
     margin:  0 !important;
     padding: 0 !important;
   }
@@ -253,6 +254,7 @@ div:nth-of-type(1) > .list > .roomState .star {
     display: none;
   }
   #addState {
+    position: unset;
     float: right;
     margin: 4px;
     padding: 4px;
@@ -261,17 +263,25 @@ div:nth-of-type(1) > .list > .roomState .star {
     height: unset;
     clear: both;
   }
-  .roomState {
+  #statesOverlay .list {
+    display: block;
+    padding: 10px;
+  }
+  #statesOverlay .roomState {
+    float: unset;
     height: 48px;
     width:  100%;
     margin-bottom: 4px;
     box-shadow: unset;
   }
-  .roomState > img {
+  #statesOverlay .roomState h3, #statesOverlay .roomState h4 {
+    margin: 2px 4px;
+  }
+  #statesOverlay .roomState > img {
     height: 48px;
     width:  48px;
   }
-  .roomState > .details {
+  #statesOverlay .roomState > .details {
     left: 48px;
     height: 48px;
   }
