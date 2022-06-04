@@ -94,7 +94,7 @@
 }
 #statesList .list {
   display: inline-block;
-  padding: 0 10px 10px 10px;
+  padding: 0 0 10px 10px;
 }
 #statesList > div{
   position: relative;
