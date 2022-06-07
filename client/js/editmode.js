@@ -625,22 +625,22 @@ function overlayDone(id) {
 
 function populateAddWidgetOverlay() {
   // Populate the Cards panel in the add widget overlay
-  const x = 20+140-111/2;
+  const x = 30+140-111/2;
   addWidgetToAddWidgetOverlay(new Holder('add-holder'), {
     type: 'holder',
     x,
-    y: 130
+    y: 140
   });
 
   addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-empty-deck', x, 320, false), async function() {
     const id = generateUniqueWidgetID();
-    for(const w of generateCardDeckWidgets(id, x, 320, false))
+    for(const w of generateCardDeckWidgets(id, x, 330, false))
       await addWidgetLocal(w);
     return id
   });
   addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', x, 550, true), async function() {
     const id = generateUniqueWidgetID();
-    for(const w of generateCardDeckWidgets(id, x, 550, true))
+    for(const w of generateCardDeckWidgets(id, x, 560, true))
       await addWidgetLocal(w);
     return id
   });
@@ -718,7 +718,7 @@ function populateAddWidgetOverlay() {
       type: 'spinner',
       value: sides,
       options: Array.from({length: sides}, (_, i) => i + 1),
-      x: 675,
+      x: 925,
       y: y
     });
     y += 120;
@@ -730,7 +730,7 @@ function populateAddWidgetOverlay() {
       type: 'spinner',
       value: sides,
       options: Array.from({length: sides}, (_, i) => i + 1),
-      x: 810,
+      x: 1055,
       y: y
     });
     y += 120;
@@ -740,22 +740,22 @@ function populateAddWidgetOverlay() {
     type: 'button',
     text: 'DEAL',
     clickRoutine: [],
-    x: 760,
+    x: 1010,
     y: 660
   });
 
   // Add the composite timer widget
-  addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 710, 790), async function() {
+  addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 965, 790), async function() {
     const id = generateUniqueWidgetID();
-    for(const w of generateTimerWidgets(id, 710, 790))
+    for(const w of generateTimerWidgets(id, 965, 790))
       await addWidgetLocal(w);
     return id
   });
 
   // Add the composite counter widget
-  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 767, 870), async function() {
+  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 1020, 870), async function() {
     const id = generateUniqueWidgetID();
-    for(const w of generateCounterWidgets(id, 767, 870))
+    for(const w of generateCounterWidgets(id, 1020, 870))
       await addWidgetLocal(w);
     return id
   });
@@ -764,8 +764,8 @@ function populateAddWidgetOverlay() {
   addWidgetToAddWidgetOverlay(new Label('add-label'), {
     type: 'label',
     text: 'Label',
-    x: 1000,
-    y: 400
+    x: 1350,
+    y: 140
   });
 
   addWidgetToAddWidgetOverlay(new Label('add-heading'), {
@@ -774,8 +774,8 @@ function populateAddWidgetOverlay() {
     css: 'font-size: 30px',
     height: 42,
     width: 200,
-    x: 1000,
-    y: 600
+    x: 1300,
+    y: 200
   });
 }
 // end of JSON generators

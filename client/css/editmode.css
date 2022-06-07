@@ -3,28 +3,58 @@
   height: var(--roomHeight);
   transform: scale(var(--scale));
   transform-origin: left top;
-  flex-direction: row;
   padding: 0;
 }
 
-#addOverlay > .category {
+#gridContainerAddOverlay {
+  display: grid !important;
+  grid-template-areas: "a b b c d"
+  "a b b c e";
+  height:100%;
+  margin: 20px;
+  gap: 20px 20px;
+}
+
+
+#gridContainerAddOverlay > .category {
   background: var(--roomColor);
   width: 100%;
+  height: 100%;
   border-radius: 32px;
-  margin: 20px;
   text-align: center;
 }
 
-#addOverlay > .category > h2 {
+#gridContainerAddOverlay > .category > h2 {
   color: black;
 }
 
-#addOverlay > .category > button {
+#gridContainerAddOverlay > .category > button {
   display: flex;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 8px;
 }
+
+#CardsSection{
+  grid-area: a
+}
+
+#GamePiecesSection{
+  grid-area: b
+}
+
+#InteractiveSection{
+  grid-area: c
+}
+
+#DecorativeSection{
+  grid-area: d
+}
+
+#CustomSection{
+  grid-area: e
+}
+
 #uploadBoard::before, #uploadToken::before{
   content:'[upload]';
 }
