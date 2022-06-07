@@ -708,27 +708,6 @@ function populateAddWidgetOverlay() {
     y: y - 25
   });
 
-  //populate svg game pieces
-
-  addWidgetToAddWidgetOverlay(new BasicWidget('PinSVG'), {
-    x: 645,
-    y: 100,
-    width: 35,
-    height: 40,
-
-    color: "red",
-    css: "border-radius: 80% 80% 40% 110%",
-    image: "/i/game-pieces/pin.svg",
-    svgReplaces: {
-      borderWidth: "borderWidth",
-      borderColor: "borderColor",
-      primaryColor: "color"
-    },
-  
-    borderColor: "black",
-    borderWidth: "2"
-  });
-
   // Populate the Interactive panel in the add widget overlay.
   // Note that the Add Canvas and Add Seat buttons are in room.html.
 
