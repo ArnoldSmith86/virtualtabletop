@@ -33,14 +33,14 @@
     </radialGradient>
   </defs>
   <g>
-    <path d="M27.341,53.609,42.667,72.155c1.234,2.136,6.44,6.091,13.418,2.062S62.242,63.7,61.008,61.566L52.61,39.02Z" fill="primaryColor"/>
+    <path d="M27.341,53.609,42.667,72.155c1.234,2.136,6.44,6.091,13.418,2.062S62.242,63.7,61.008,61.566L52.61,39.02Z" fill="#primaryColor"/>
     <path d="M27.341,53.609,42.667,72.155c1.234,2.136,6.44,6.091,13.418,2.062S62.242,63.7,61.008,61.566L52.61,39.02Z" fill="url(#a)"/>
     <path d="M27.341,53.609,42.667,72.155c1.234,2.136,6.44,6.091,13.418,2.062S62.242,63.7,61.008,61.566L52.61,39.02Z" fill="url(#b)"/>
   </g>
-  <circle cx="32" cy="32.5" r="29.876" fill="primaryColor"/>
+  <circle cx="32" cy="32.5" r="29.876" fill="#primaryColor"/>
   <circle cx="32" cy="32.5" r="29.876" fill="url(#c)"/>
   <g>
-    <path d="M34.494,62.265l8.173,9.89c1.234,2.136,6.44,6.091,13.418,2.062S62.242,63.7,61.008,61.566l-4.477-12.02" fill="none" stroke="borderColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="borderWidth"/>
-    <circle cx="32" cy="32.5" r="29.876" fill="none" stroke="borderColor" stroke-miterlimit="10" stroke-width="borderWidth"/>
+    <path d="M34.494,62.265l8.173,9.89c1.234,2.136,6.44,6.091,13.418,2.062S62.242,63.7,61.008,61.566l-4.477-12.02" fill="none" stroke="#borderColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="#borderWidth"/>
+    <circle cx="32" cy="32.5" r="29.876" fill="none" stroke="#borderColor" stroke-miterlimit="10" stroke-width="#borderWidth"/>
   </g>
 </svg>

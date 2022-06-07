@@ -1,0 +1,21 @@
+<svg version="1.2" baseProfile="tiny-ps" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 31 120" width="31" height="120">
+	<title>Road120-3D-svg</title>
+	<style>
+		tspan { white-space:pre }
+		.shp0 { fill: #ff0000;stroke: #000000 } 
+		.shp1 { opacity: 0.502;mix-blend-mode: multiply;fill: #000000 } 
+		.shp2 { opacity: 0;mix-blend-mode: multiply;fill: #000000 } 
+		.shp3 { opacity: 0.2;mix-blend-mode: multiply;fill: #000000 } 
+		.shp4 { fill: none;stroke: #ffffff;stroke-linecap:round;stroke-linejoin:round;stroke-width: 0.25 } 
+	</style>
+	<g id="Layer">
+		<g id="Layer_1">
+			<path id="Layer" class="shp0" d="M27.92 9.8L27.96 110.22L16.26 116.97L4.08 109.97L4.04 9.55L15.34 3.03L27.92 9.8L27.92 9.8Z" />
+			<path id="Layer" class="shp1" d="M4.04 9.55L15.34 3.03L15.37 103.45L4.08 109.97L4.04 9.55L4.04 9.55Z" />
+			<path id="Layer" class="shp2" d="M27.96 110.22L15.37 103.45L15.34 3.03L27.92 9.8L27.96 110.22L27.96 110.22Z" />
+			<path id="Layer" class="shp3" d="M27.96 110.22L16.26 116.97L4.08 109.97L15.37 103.45L27.96 110.22L27.96 110.22Z" />
+			<path id="Layer" class="shp4" d="M27.96 110.22L15.37 103.45L15.34 3.03" />
+			<path id="Layer" class="shp4" d="M4.08 109.97L15.37 103.45" />
+		</g>
+	</g>
+</svg>
