@@ -2,6 +2,8 @@
   --scale: 1;
   --roomWidth: 1600px;
   --roomHeight: 1000px;
+  --roomTop: calc((calc(var(--vh, 1vh) * 100) - var(--roomHeight) * var(--scale)) / 2 - var(--toolbarSize) / 2);
+  --roomLeft: 0px;
   --toolbarSize: 44px;
   --roomColor: #f0f0f0;
   --editColor: #7ba5f5;
@@ -69,8 +71,8 @@ button:hover {
   overflow: hidden;
   width: calc(var(--roomWidth) * var(--scale));
   height: calc(var(--roomHeight) * var(--scale));
-  top: calc((calc(var(--vh, 1vh) * 100) - var(--roomHeight) * var(--scale)) / 2 - var(--toolbarSize) / 2);
-  left: 0;
+  top: var(--roomTop);
+  left: var(--roomLeft);
   z-index: 1;
 }
 
@@ -241,9 +243,9 @@ button:hover {
     min-height: 16px;
   }
 
-  #roomArea {
-    top: 0;
-    left: calc((100vw - var(--roomWidth) * var(--scale)) / 2 + var(--toolbarSize) / 2);
+  :root {
+    --roomTop: 0px;
+    --roomLeft: calc((100vw - var(--roomWidth) * var(--scale)) / 2 + var(--toolbarSize) / 2);
   }
 }
 
@@ -328,9 +330,9 @@ body.aspectTooGood #toolbar .divider {
   max-width: 75px;
 }
 
-body.aspectTooGood #roomArea {
-  top: calc((100vh - var(--scale) * var(--roomHeight)) / 2);
-  left: var(--toolbarSize);
+body.aspectTooGood {
+  --roomTop: calc((100vh - var(--scale) * var(--roomHeight)) / 2);
+  --roomLeft: var(--toolbarSize);
 }
 
 body #hideToolbarButton,
@@ -338,8 +340,8 @@ body.aspectTooGood.hiddenToolbar #toolbar {
   display: none;
 }
 
-body.aspectTooGood.hiddenToolbar #roomArea {
-  left: calc((100vw - var(--scale) * var(--roomWidth)) / 2);
+body.aspectTooGood.hiddenToolbar {
+  --roomLeft: calc((100vw - var(--scale) * var(--roomWidth)) / 2);
 }
 
 body.aspectTooGood #hideToolbarButton {
@@ -348,6 +350,16 @@ body.aspectTooGood #hideToolbarButton {
 
 body.aspectTooGood #options {
   transform: translateY(273px) translateX(46px);
+}
+
+body.lightsOff, body.lightsOff #toolbar, body.lightsOff #toolbar .tooltip {
+  background: black;
+}
+body.lightsOff #toolbar {
+  opacity: 0.1;
+}
+body.lightsOff #toolbar:hover {
+  opacity: 1;
 }
 
 #options.hidden {
@@ -436,8 +448,24 @@ body.aspectTooGood #options {
   display: none !important;
 }
 
+#clientPointer {
+  visibility: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width:0;
+  height:0;
+  border: none;
+  margin: 0;
+  padding: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
 #enlarged {
   opacity: 1;
+  visibility: visible;
+  position: fixed;
   top: 5vh;
   left: 5vw;
   transition: opacity 200ms ease;
@@ -509,6 +537,10 @@ html:-webkit-full-screen #fullscreenButton .tooltip::before {
   content: 'Exit ';
 }
 
+#lightsButton::before {
+  content: '[auto_awesome]';
+}
+
 #hideToolbarButton::before {
   content: '[hide_side_bar]';
 }
@@ -520,17 +552,17 @@ html:-webkit-full-screen #fullscreenButton .tooltip::before {
 #optionsButton {
   background-size: 28px 28px;
   background-position: 6px 6px;
-  background-image:url(/i/icons-white/mute-svg.svg);
+  background-image:url(i/icons-white/mute-svg.svg);
 }
 
 #muteButton {
-  background-image:url(/i/icons-white/mute-svg.svg);
+  background-image:url(i/icons-white/mute-svg.svg);
   width: calc(var(--toolbarSize) - 12px);
   height: calc(var(--toolbarSize) - 12px);
 }
 
 #muteButton.toolbarButton.muted {
-  background-image:url(/i/icons-white/unmute-svg.svg);
+  background-image:url(i/icons-white/unmute-svg.svg);
 }
 
 /*Buttons css*/

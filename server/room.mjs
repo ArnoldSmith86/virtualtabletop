@@ -1,5 +1,4 @@
 import fs from 'fs';
-import path from 'path';
 
 import JSZip from 'jszip';
 import fetch from 'node-fetch';
@@ -41,7 +40,7 @@ export default class Room {
       player.send('state', this.state);
     }
 
-    if(this.enableTracing) {
+    if(this.traceIsEnabled()) {
       this.trace('addPlayer', { player: player.name });
       player.send('tracing', 'enable');
     }
@@ -66,7 +65,7 @@ export default class Room {
     } catch(e) {
       Logging.log(`ERROR LOADING FILE: ${e.toString()}`);
       try {
-        fs.writeFileSync(path.resolve() + '/save/errors/' + Math.random().toString(36).substring(3, 7), src);
+        fs.writeFileSync(Config.directory('save') + '/errors/' + Math.random().toString(36).substring(3, 7), src);
       } catch(e) {}
       throw e;
     }
@@ -194,8 +193,8 @@ export default class Room {
       zip.file(`${vID}.json`, JSON.stringify(state, null, '  '));
       if(includeAssets)
         for(const asset of this.getAssetList(state))
-          if(fs.existsSync(path.resolve() + '/save' + asset))
-            zip.file(asset.substr(1), fs.readFileSync(path.resolve() + '/save' + asset));
+          if(fs.existsSync(Config.directory('assets') + asset.substr(7)))
+            zip.file(asset.substr(1), fs.readFileSync(Config.directory('assets') + asset.substr(7)));
     }
 
     const zipBuffer = await zip.generateAsync({type:'nodebuffer', compression: 'DEFLATE'});
@@ -245,9 +244,11 @@ export default class Room {
     if(!fileOrLink && !fs.existsSync(this.roomFilename())) {
       Logging.log(`creating room ${this.id}`);
       this.state = FileUpdater(emptyState);
+      this.traceIsEnabled(Config.get('forceTracing'));
     } else if(!fileOrLink) {
       Logging.log(`loading room ${this.id}`);
       this.state = FileUpdater(JSON.parse(fs.readFileSync(this.roomFilename())));
+      this.traceIsEnabled(Config.get('forceTracing') || this.traceIsEnabled());
       this.broadcast('state', this.state);
     } else {
       let newState = emptyState;
@@ -268,6 +269,9 @@ export default class Room {
 
     if(!this.state._meta || typeof this.state._meta.version !== 'number')
       throw Error('Room state has invalid meta information.');
+
+    if(!fileOrLink)
+      this.trace('init', { initialState: this.state });
   }
 
   async loadState(player, stateID, variantID) {
@@ -307,10 +311,12 @@ export default class Room {
       const gap = Math.max(...gaps);
       hue = (Math.random() * gap / 3 + hues[gaps.indexOf(gap)] + gap / 3) % 360;
     }
+    const v = [240, 220, 120, 200, 240, 240];
+    const value = v[Math.floor(hue/60)] * (60 - hue%60) / 60 + v[Math.ceil(hue/60) % 6] * (hue%60) / 60;
     const f = n => {
       const k = (n + hue / 30) % 12;
       const c = .5 - .5 * Math.max(Math.min(k - 3, 9 - k, 1), -1);
-      return Math.round(255 * c).toString(16).padStart(2, '0');
+      return Math.round(value * c).toString(16).padStart(2, '0');
     }
     return `#${f(0)}${f(8)}${f(4)}`;
   }
@@ -368,9 +374,9 @@ export default class Room {
       if(!Object.values(this.state).filter(w=>w.player==player.name||w.owner==player.name||Array.isArray(w.owner)&&w.owner.indexOf(player.name)!=-1).length)
         delete this.state._meta.players[player.name];
 
+    this.sendMetaUpdate();
     if(this.players.length == 0)
       this.unload();
-    this.sendMetaUpdate();
   }
 
   removeState(player, stateID) {
@@ -395,7 +401,7 @@ export default class Room {
   }
 
   roomFilename() {
-    return path.resolve() + '/save/rooms/' + this.id + '.json';
+    return Config.directory('save') + '/rooms/' + this.id + '.json';
   }
 
   sendMetaUpdate() {
@@ -462,30 +468,33 @@ export default class Room {
   }
 
   trace(source, payload) {
-    if(!this.enableTracing && source == 'client' && payload.type == 'enable') {
-      this.enableTracing = true;
-      this.tracingFilename = `${path.resolve()}/save/${this.id}-${+new Date}.trace`;
-      this.broadcast('tracing', 'enable');
+    if(!this.traceIsEnabled() && source == 'client' && payload.type == 'enable') {
+      this.traceIsEnabled(true);
       payload.initialState = this.state;
-      fs.writeFileSync(this.tracingFilename, '[\n');
-      Logging.log(`tracing enabled for room ${this.id} to file ${this.tracingFilename}`);
     }
-    if(this.enableTracing) {
+
+    if(this.traceIsEnabled()) {
       payload.servertime = +new Date;
       payload.source = source;
       payload.serverDeltaID = this.deltaID;
       const suffix = source == 'unload' ? '\n]' : ',\n';
       fs.appendFileSync(this.tracingFilename, `  ${JSON.stringify(payload)}${suffix}`);
-
-      if(source == 'unload') {
-        Logging.log(`tracing finished for room ${this.id} to file ${this.tracingFilename}`);
-        this.enableTracing = false;
-      }
     }
   }
 
+  traceIsEnabled(setEnabled) {
+    if(setEnabled && this.state && this.state._meta) {
+      this.state._meta.tracingEnabled = true;
+
+      this.tracingFilename = `${Config.directory('save')}/${this.id}-${+new Date}.trace`;
+      this.broadcast('tracing', 'enable');
+      fs.writeFileSync(this.tracingFilename, '[\n');
+      Logging.log(`tracing enabled for room ${this.id} to file ${this.tracingFilename}`);
+    }
+    return this.state && this.state._meta && this.state._meta.tracingEnabled;
+  }
+
   unload() {
-    this.trace('unload', {});
     if(this.state && this.state._meta) {
       if(Object.keys(this.state).length > 1 || Object.keys(this.state._meta.states).length || this.state._meta.redirectTo || this.state._meta.returnServer) {
         Logging.log(`unloading room ${this.id}`);
@@ -498,6 +507,7 @@ export default class Room {
     } else {
       Logging.log(`unloading broken room ${this.id}`);
     }
+    this.trace('unload', {});
     this.unloadCallback();
   }
 
@@ -507,6 +517,6 @@ export default class Room {
   }
 
   variantFilename(stateID, variantID) {
-    return path.resolve() + '/save/states/' + this.id + '-' + stateID.replace(/[^a-z0-9]/g, '_') + '-' + variantID.replace(/[^a-z0-9]/g, '_') + '.json';
+    return Config.directory('save') + '/states/' + this.id + '-' + stateID.replace(/[^a-z0-9]/g, '_') + '-' + variantID.replace(/[^a-z0-9]/g, '_') + '.json';
   }
 }
