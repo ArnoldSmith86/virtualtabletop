@@ -718,15 +718,15 @@ function populateAddWidgetOverlay() {
 
     color: "red",
     css: "border-radius: 80% 80% 40% 110%",
-    image: "/i/game-pieces/pin.svg",
+    image: "/i/game-pieces/3D/Pin-3D.svg",
     svgReplaces: {
-      borderWidth: "borderWidth",
-      borderColor: "borderColor",
-      primaryColor: "color"
+      "#borderWidth": "borderWidth",
+      "#borderColor": "borderColor",
+      "#primaryColor": "color"
     },
   
     borderColor: "black",
-    borderWidth: "2"
+    borderWidth: "1"
   });
 
   // Populate the Interactive panel in the add widget overlay.
