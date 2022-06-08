@@ -709,9 +709,10 @@ function populateAddWidgetOverlay() {
   });
 
   //populate svg game pieces
+  //line 1
 
-  addWidgetToAddWidgetOverlay(new BasicWidget('PinSVG'), {
-    x: 645,
+  addWidgetToAddWidgetOverlay(new BasicWidget('Pin3DSVG'), {
+    x: 600,
     y: 100,
     width: 35,
     height: 40,
@@ -728,6 +729,144 @@ function populateAddWidgetOverlay() {
     borderColor: "black",
     borderWidth: "1"
   });
+
+  addWidgetToAddWidgetOverlay(new BasicWidget('Marble3DSVG'), {
+    x: 645,
+    y: 100,
+    width: 45,
+    height: 45,
+
+    color: "#f00c",
+    css: "border-radius: 50%;",
+    image: "/i/game-pieces/3D/Marble-3D.svg",
+    svgReplaces: {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borberColor",
+      "#borderWidth": "borderWidth"
+    },
+
+    borberColor: "white",
+    borderWidth: 1,
+    secondaryColor: "black"
+  });
+
+  addWidgetToAddWidgetOverlay(new BasicWidget('Cube3DSVG'), {
+    x: 700,
+    y: 100,
+    width: 36,
+    height: 40,
+
+    color: "#f00c",
+    css: "border-radius: 50%/35%;",
+    image: "/i/game-pieces/3D/Cube-3D.svg",
+    svgReplaces: {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borberColor",
+      "#borderWidth": "borderWidth"
+    },
+
+    borberColor: "white",
+    borderWidth: 1,
+    secondaryColor: "black"
+  });
+
+  addWidgetToAddWidgetOverlay(new BasicWidget('House3DSVG'), {
+    x: 735,
+    y: 90,
+    width: 60,
+    height: 60,
+
+    color: "red",
+    css: "border-radius: 26% 74% 46% 54%/ 50% 55% 45% 50%;",
+    image: "/i/game-pieces/3D/House-3D.svg",
+    svgReplaces: {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borberColor",
+      "#borderWidth": "borderWidth"
+    },
+
+    borberColor: "black",
+    borderWidth: 1,
+    secondaryColor: "black"
+  });
+
+  addWidgetToAddWidgetOverlay(new BasicWidget('Building3DSVG'), {
+    x: 795,
+    y: 80,
+    width: 69,
+    height: 77,
+
+    color: "red",
+    css: "border-radius: 52% 48% 35% 65%/30% 70% 25% 45%;",
+    image: "/i/game-pieces/3D/Building-3D.svg",
+    svgReplaces: {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borberColor",
+      "#borderWidth": "borderWidth"
+    },
+
+    borberColor: "white",
+    borderWidth: 1,
+    secondaryColor: "black"
+  });
+
+  //line 2
+
+  addWidgetToAddWidgetOverlay(new BasicWidget('meeple3DSVG'), {
+    x: 615,
+    y: 160,
+    width: 66.5,
+    height: 70,
+
+    color: "red",
+    css: "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
+    faces: [
+      {
+        image: "i/game-pieces/3D/Meeple-3D.svg",
+        rotation: 0,
+        state: "alive"
+      },
+      {
+        image: "i/game-pieces/3D/Meeple240-3D-iso.svg",
+        rotation: 240,
+        state: "dead"
+      }
+    ],
+  image: "i/game-pieces/3D/Meeple-3D.svg",
+  svgReplaces: {
+    "#primaryColor": "color",
+    "#borderColor": "borberColor",
+    "#borderWidth": "borderWidth"
+  },
+
+  borberColor: "black",
+  borderWidth: 1,
+  state: "alive"
+  });
+
+  addWidgetToAddWidgetOverlay(new BasicWidget('Pig3DSVG'), {
+    x: 680,
+    y: 165,
+    width: 85.7,
+    height: 60,
+
+    color: "red",
+    css: "border-radius: 30% 40% 40% 40%/20% 30% 60% 100%; ",
+    image: "i/game-pieces/3D/Pig-3D.svg",
+    svgReplaces: {
+      "#primaryColor": "color",
+      "#borderColor": "borberColor",
+      "#borderWidth": "borderWidth"
+    },
+  
+    borberColor: "black",
+    borderWidth: 1
+  });
+
 
   // Populate the Interactive panel in the add widget overlay.
   // Note that the Add Canvas and Add Seat buttons are in room.html.
