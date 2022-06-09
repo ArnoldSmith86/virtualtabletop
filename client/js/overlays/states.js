@@ -201,7 +201,6 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
 
       const validPlayers = [];
       const validLanguages = [];
-      const validModes = [];
       for(const variantID in state.variants) {
         let variant = state.variants[variantID];
         if(variant.plStateID)
@@ -209,10 +208,10 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
 
         validPlayers.push(...parsePlayers(variant.players));
         validLanguages.push(variant.language);
-        validModes.push(variant.mode);
         languageOptions[variant.language] = true;
-        modeOptions[variant.mode] = true;
       }
+
+      modeOptions[state.mode] = true;
 
       $('.star', entry).addEventListener('click', function(e) {
         toggleStateStar(state, entry);
@@ -224,7 +223,7 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
       entry.dataset.players = validPlayers.join();
       entry.dataset.duration = String(state.time).replace(/.*[^0-9]/, '');
       entry.dataset.languages = validLanguages.join();
-      entry.dataset.modes = validModes.join();
+      entry.dataset.modes = state.mode;
 
       if(state.publicLibrary && state.publicLibrary.match(/tutorials/))
         entry.dataset.type = 'Tutorials';
