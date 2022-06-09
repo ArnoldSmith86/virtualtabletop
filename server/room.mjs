@@ -326,43 +326,53 @@ export default class Room {
   }
 
   migrateOldPublicLibraryLinks() {
+    function plTarget(match) {
+      if(!match)
+        return null;
+      if(match[1])
+        return `PL:tutorials:${match[2]}`;
+      if([ 'Decks', 'Dice', 'Marbles', 'Other Widgets', 'Spinners', 'Symbols' ].indexOf(match[2]) > -1)
+        return `PL:assets:${match[2]}`;
+      return `PL:games:${match[2]}`;
+    }
+
     if(!this.state._meta.metaVersion) {
       if(!this.state._meta.starred)
         this.state._meta.starred = {};
       for(const [ id, state ] of Object.entries(this.state._meta.states)) {
-        const match = state.link && state.link.match(/\/library\/(?:Tutorial - )?(.*)\.vtt/);
-        if(match && this.state._meta.states[`PL:${match[1]}`]) {
-          const targetState = this.state._meta.states[`PL:${match[1]}`];
+        const target = plTarget(state.link && state.link.match(/\/library\/(Tutorial - )?(.*)\.vtt/))
+        if(target && this.state._meta.states[target]) {
+          const targetState = this.state._meta.states[target];
           let allVariantsFromPL = true;
           for(const [ vID, variant ] of Object.entries(state.variants))
             if((variant.link && variant.link.indexOf(state.link)) !== 0)
               allVariantsFromPL = false;
           if(allVariantsFromPL && state.name == targetState.name && state.image == targetState.image) {
-            Logging.log(`migrating PL:${match[1]} in room ${this.id}`);
+            Logging.log(`migrating ${target} in room ${this.id}`);
             this.state._meta.starred[targetState.publicLibrary] = true;
             this.removeState(player, id);
             continue;
           }
-        } else if(match) {
-          Logging.log(`could not migrate public library game ${match[1]} in room ${this.id}`);
+        } else if(target) {
+          Logging.log(`could not migrate public library state ${target} in room ${this.id}`);
         }
 
         for(const [ vID, variant ] of Object.entries(state.variants)) {
-          const match = variant.link && variant.link.match(/\/library\/(?:Tutorial - )?(.*)\.vtt/);
-          if(match && this.state._meta.states[`PL:${match[1]}`]) {
-            for(const [ targetVid, targetVariant ] of Object.entries(this.state._meta.states[`PL:${match[1]}`].variants)) {
+          const target = plTarget(variant.link && variant.link.match(/\/library\/(Tutorial - )?(.*)\.vtt/))
+          if(target && this.state._meta.states[target]) {
+            for(const [ targetVid, targetVariant ] of Object.entries(this.state._meta.states[target].variants)) {
               if(targetVariant.players == variant.players && targetVariant.language == variant.language && targetVariant.variant == variant.variant) {
                 this.state._meta.states[id].variants[vID] = {
-                  plStateID: `PL:${match[1]}`,
+                  plStateID: target,
                   plVariantID: targetVid
                 };
-                Logging.log(`migrating variant to PL:${match[1]}/${targetVid} in room ${this.id}`);
+                Logging.log(`migrating variant to ${target}/${targetVid} in room ${this.id}`);
               }
             }
           }
 
-          if(match && !this.state._meta.states[id].variants[vID].plStateID) {
-            Logging.log(`could not migrate variant to public library game ${match[1]} in room ${this.id}`);
+          if(target && !this.state._meta.states[id].variants[vID].plStateID) {
+            Logging.log(`could not migrate variant to public library state ${target} in room ${this.id}`);
           }
         }
       }
