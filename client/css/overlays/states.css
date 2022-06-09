@@ -238,7 +238,7 @@ div:nth-of-type(1) > .list > .roomState .star {
 }
 
 
-@media (min-width: 1900px) and (min-height: 1000px) {
+@media (min-width: 1600px) and (min-height: 800px) {
   #playersButton, #playersButton + .divider {
     display: none;
   }
