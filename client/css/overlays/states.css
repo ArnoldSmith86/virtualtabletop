@@ -1,6 +1,6 @@
 #statesOverlay {
-  --columns: 5;
-  --size: calc((var(--roomWidth) * var(--scale) - 10px) / var(--columns) - 20px);
+  --columns: 10;
+  --size: calc((var(--roomWidth) * var(--scale) - 10px) / var(--columns) - 22px);
   padding: 0;
 }
 
@@ -77,9 +77,14 @@
   #statesOverlay { overflow: auto; }
 }
 
-@media (max-width: 800px), (max-height: 530px) { #statesOverlay { --columns: 4; } }
-@media (max-width: 680px), (max-height: 480px) { #statesOverlay { --columns: 3; } }
-@media (max-width: 520px), (max-height: 300px) { #statesOverlay { --columns: 2; } }
+@media (max-width: 2260px), (max-height: 1400px) { #statesOverlay { --columns: 9; } }
+@media (max-width: 2000px), (max-height: 1250px) { #statesOverlay { --columns: 8; } }
+@media (max-width: 1700px), (max-height: 1100px) { #statesOverlay { --columns: 7; } }
+@media (max-width: 1420px), (max-height:  940px) { #statesOverlay { --columns: 6; } }
+@media (max-width: 1120px), (max-height:  740px) { #statesOverlay { --columns: 5; } }
+@media (max-width:  800px), (max-height:  530px) { #statesOverlay { --columns: 4; } }
+@media (max-width:  680px), (max-height:  480px) { #statesOverlay { --columns: 3; } }
+@media (max-width:  520px), (max-height:  300px) { #statesOverlay { --columns: 2; } }
 
 #statesList .title {
   border-top: 1px solid black;
