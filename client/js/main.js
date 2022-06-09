@@ -241,6 +241,10 @@ onLoad(function() {
 
   on('.toolbarButton', 'click', function(e) {
     const overlay = e.target.dataset.overlay;
+    if(e.target.id == 'statesButton')
+      $('#statesOverlay').append($('#playerOverlay'));
+    if(e.target.id == 'playersButton')
+      $('#roomArea').append($('#playerOverlay'));
     if(overlay)
       showOverlay(overlay);
   });

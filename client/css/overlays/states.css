@@ -1,5 +1,5 @@
 #statesOverlay {
-  --columns: 5;
+  --columns: 10;
   --size: calc((var(--roomWidth) * var(--scale) - 10px) / var(--columns) - 20px);
   padding: 0;
 }
@@ -77,9 +77,13 @@
   #statesOverlay { overflow: auto; }
 }
 
-@media (max-width: 800px), (max-height: 530px) { #statesOverlay { --columns: 4; } }
-@media (max-width: 680px), (max-height: 480px) { #statesOverlay { --columns: 3; } }
-@media (max-width: 520px), (max-height: 300px) { #statesOverlay { --columns: 2; } }
+@media (max-width: 1640px), (max-height: 1025px) { #statesOverlay { --columns: 8; } }
+@media (max-width: 1460px), (max-height:  912px) { #statesOverlay { --columns: 7; } }
+@media (max-width: 1100px), (max-height:  800px) { #statesOverlay { --columns: 6; } }
+@media (max-width:  920px), (max-height:  687px) { #statesOverlay { --columns: 5; } }
+@media (max-width:  740px), (max-height:  575px) { #statesOverlay { --columns: 4; } }
+@media (max-width:  560px), (max-height:  462px) { #statesOverlay { --columns: 3; } }
+@media (max-width:  380px), (max-height:  350px) { #statesOverlay { --columns: 2; } }
 
 #statesList .title {
   border-top: 1px solid black;
@@ -231,6 +235,30 @@ div:nth-of-type(1) > .list > .roomState .star {
 }
 .variantsList .prettyButton.play .variant:empty{
   display: none;
+}
+
+
+@media (min-width: 1900px) and (min-height: 1000px) {
+  #playersButton, #playersButton + .divider {
+    display: none;
+  }
+  #statesOverlay > #playerOverlay {
+    display: block !important;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 300px;
+    height: unset;
+    left: unset;
+    padding: 10px;
+  }
+  #statesOverlay #playerList {
+    overflow: unset;
+  }
+  #statesList, #stateFilters {
+    width: calc(100% - 300px);
+  }
 }
 
 
