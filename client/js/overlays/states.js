@@ -176,6 +176,8 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
   const languageOptions = {};
   const modeOptions = {};
 
+  const publicLibraryLinksFound = {};
+
   for(const publicLibrary of [ false, true ]) {
     const category = domByTemplate('template-stateslist-category');
     $('.title', category).textContent = publicLibrary ? 'Public Library' : 'Your Game Shelf';
@@ -193,18 +195,22 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
       if(state.publicLibrary)
         entry.className += ' publicLibraryGame';
 
-      entry.addEventListener('click', _=>fillStateDetails(states, state, entry));
-
       $('img', entry).src = state.image.replace(/^\//, '');
-      $('h3', entry).textContent = `${state.name}`;
+      $('h3', entry).textContent = state.name;
       $('h4', entry).textContent = state.similarName ? `Similar to ${state.similarName}` : '';
 
       const validPlayers = [];
       const validLanguages = [];
+      let hasVariants = false;
       for(const variantID in state.variants) {
         let variant = state.variants[variantID];
-        if(variant.plStateID)
+        if(variant.plStateID) {
+          publicLibraryLinksFound[`${variant.plStateID} - ${variant.plVariantID}`] = true;
           variant = states[variant.plStateID].variants[variant.plVariantID];
+        }
+
+        if(!publicLibraryLinksFound[`${state.id} - ${variantID}`])
+          hasVariants = true;
 
         validPlayers.push(...parsePlayers(variant.players));
         validLanguages.push(variant.language);
@@ -213,11 +219,14 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
 
       modeOptions[state.mode] = true;
 
-      $('.star', entry).addEventListener('click', function(e) {
-        toggleStateStar(state, entry);
-        event.stopPropagation();
-      });
-      $('.list', category).appendChild(entry);
+      if(hasVariants) {
+        entry.addEventListener('click', _=>fillStateDetails(states, state, entry));
+        $('.star', entry).addEventListener('click', function(e) {
+          toggleStateStar(state, entry);
+          event.stopPropagation();
+        });
+        $('.list', category).appendChild(entry);
+      }
 
       entry.dataset.text = `${state.name} ${state.similarName} ${state.description}`.toLowerCase();
       entry.dataset.players = validPlayers.join();
