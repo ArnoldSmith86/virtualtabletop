@@ -193,7 +193,7 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
       if(state.publicLibrary)
         entry.className += ' publicLibraryGame';
 
-      entry.addEventListener('click', _=>fillStateDetails(state, entry));
+      entry.addEventListener('click', _=>fillStateDetails(states, state, entry));
 
       $('img', entry).src = state.image.replace(/^\//, '');
       $('h3', entry).textContent = `${state.name}`;
@@ -264,11 +264,11 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
     showOverlay();
     const stateID = $('#stateDetailsOverlay').dataset.id;
     if(states[stateID])
-      fillStateDetails(states[stateID], $(`#statesOverlay .roomState[data-id="${stateID}"]`));
+      fillStateDetails(states, states[stateID], $(`#statesOverlay .roomState[data-id="${stateID}"]`));
   }
 }
 
-function fillStateDetails(state, dom) {
+function fillStateDetails(states, state, dom) {
   showOverlay('stateDetailsOverlay');
   $('#stateDetailsOverlay').dataset.id = state.id;
   $('#mainDetails h1').innerText = state.name;
