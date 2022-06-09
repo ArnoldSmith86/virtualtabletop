@@ -646,10 +646,6 @@ body.edit::before {
   content: '[book_open]';
 }
 
-.play::before {
-  content: '[play_arrow]';
-}
-
 .save::before,
 .saveProgress::before {
   content: '[save]';

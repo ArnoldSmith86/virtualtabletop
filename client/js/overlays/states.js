@@ -326,9 +326,21 @@ function fillStateDetails(states, state, dom) {
     if(variant.plStateID)
       variant = states[variant.plStateID].variants[variant.plVariantID];
     const vEntry = domByTemplate('template-variantslist-entry');
+    vEntry.className = 'variant';
+
     $('.language', vEntry).textContent = String.fromCodePoint(...[...variant.language].map(c => c.charCodeAt() + 0x1F1A5));
     $('.players', vEntry).textContent = variant.players;
-    $('.variant', vEntry).textContent = variant.variant;
+
+    if(variant.variant) {
+      $('.variant-name', vEntry).textContent = variant.variant;
+    } else {
+      $('.variant-name', vEntry).textContent = 'Unnamed Variant';
+      $('.variant-name', vEntry).className += ' unnamed';
+    }
+    if(variant.variantImage)
+      $('.variant-image', vEntry).src = variant.variantImage.replace(/^\//, '');
+    else
+      $('.variant-image', vEntry).src = state.image.replace(/^\//, '');
 
     $('.play', vEntry).addEventListener('click', _=>{ toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading }); showOverlay(); });
     $('#stateDetailsOverlay .variantsList').appendChild(vEntry);

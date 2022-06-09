@@ -300,6 +300,11 @@ div:nth-of-type(1) > .list > .roomState .star {
 
 #stateDetailsOverlay {
   padding: 0;
+  color: black;
+}
+
+#stateDetailsOverlay h1, #stateDetailsOverlay h3 {
+  color: var(--VTTblue);
 }
 
 #stateDetailsOverlay button.close {
@@ -362,7 +367,7 @@ div:nth-of-type(1) > .list > .roomState .star {
   width: 200px;
 }
 #similarDetails a {
-  color: var(--VTTblue);
+  color: black;
 }
 
 #prevState, #nextState {
@@ -399,19 +404,103 @@ div:nth-of-type(1) > .list > .roomState .star {
   width: calc(50% - 15px);
   height: unset;
   padding: 0;
+  overflow: auto;
 }
 
-#variantsList > * {
-  display: inline-block;
+.variantsList {
+  padding: 1rem 0.5rem;
 }
 
-#variantsList > .variantsList {
-  vertical-align: top;
-  padding: 10px;
+.variant {
+  display: flex;
+  justify-content: space-between;
+  border-style: dotted;
+  border-color: lightgray;
+  border-width: 1px 0 1px 0;
+  padding: 0.25rem 0.5rem;
 }
 
-#variantsList img {
-  height: 100%;
+.play-button {
+  width: auto;
+  padding-right: 0.75rem;
+  flex-grow: 0;
+  font-weight: bold;
+  height: 34px;
+}
+
+.variant>div,
+.variant>button {
+  display: flex;
+  align-items: center;
+}
+
+.variant .variant-description,
+.variant .variant-attribution {
+  width: 100%;
+  font-size: 0.8rem;
+  line-height: 0.8rem!important;
+  padding: 0 0 5px;
+  font-weight: normal;
+}
+
+.variant .variant-attribution {
+  font-style: italic;
+}
+
+.variant .variant-description:empty,
+.variant .variant-attribution:empty {
+  display: none;
+}
+
+.variant .variant-name {
+  flex-grow: 1;
+  flex-direction: column;
+  align-content: flex-start;
+  align-items: flex-start;
+}
+
+.variant .variant-name>div {
+  line-height: 34px;
+}
+
+.variant .variant-image {
+  flex-grow: 0;
+  flex-shrink: 0;
+  height: 34px;
+  width: 34px;
+  margin: 1px 5px 1px 0;
+  border-radius: 3px;
+}
+
+.variant i {
+  margin-right: 0.25rem;
+}
+
+.variant .unnamed {
+  color: gray;
+  font-style: italic;
+}
+
+.language-info,
+.player-number-info,
+.has-attribution {
+  justify-content: center;
+  width: auto;
+  flex-grow: 0;
+  flex-shrink: 1;
+  padding: 0 0.75rem;
+  border-left: 1px dotted lightgray;
+  white-space: nowrap;
+  height: 34px;
+}
+
+.player-number-info {
+  min-width: 70px;
+}
+
+.has-attribution {
+  padding: 0;
+  border-left: none;
 }
 
 
@@ -424,4 +513,8 @@ div:nth-of-type(1) > .list > .roomState .star {
   height: unset;
   padding: 20px;
   overflow: auto;
+}
+
+#stateScreenshot {
+  width: 100%;
 }

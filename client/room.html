@@ -298,10 +298,20 @@
         <div><i class="material-icons">movie</i> <a href="https://www.youtube.com/watch?v=R1qh-lhxy9s" id="detailsSimilarRules"><span class="symbols">[external]</span>How To Play on YouTube.com</span></div>
       </div>
       <template id="template-variantslist-entry" type="text/template">
-        <button class="prettyButton play">Play: <span class="language">🇺🇸</span><span class="symbols"> [group]</span><span class="players">0</span><br><span class="variant"></span></button>
+        <img class="variant-image" />
+        <div class="variant-name">
+          <div class="label"></div>
+          <div class="accordion-item-content">
+            <div class="variant-description"></div>
+            <div class="variant-attribution"></div>
+          </div>
+        </div>
+        <div class="has-attribution"><i class="icon material-icons accordion-item-toggle">attribution</i></div>
+        <div class="language-info"><i class="material-icons">language</i><span class="language"></span></div>
+        <div class="player-number-info"><i class="material-icons">groups</i><span class="players">0</span></div>
+        <button class="play play-button hide-app"><i class="material-icons">play_arrow</i>PLAY</button>
       </template>
       <div id="variantsList">
-        <img src="assets/-1621736265_13854">
         <div class="variantsList"></div>
       </div>
       <button class="prettyButton edit">Edit</button>
@@ -325,6 +335,7 @@
         <h3>How to play the game</h3>
         <p id="stateRuleText">Detailed textual rule description.</p>
         <h3>How to use this implementation</h3>
+        <img id="stateScreenshot" src="assets/-1621736265_13854">
         <p id="stateHelpText">- Click Reset to select the expansions and shuffle the cards.<br>- Each player clicks a Join button.<br>- ...<br>- Profit.</p>
         <h3>Attribution</h3>
         <p id="stateAttribution"></p>
