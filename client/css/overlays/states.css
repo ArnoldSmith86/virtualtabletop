@@ -303,10 +303,6 @@ div:nth-of-type(1) > .list > .roomState .star {
   color: black;
 }
 
-#stateDetailsOverlay h1, #stateDetailsOverlay h3 {
-  color: var(--VTTblue);
-}
-
 #stateDetailsOverlay button.close {
   position: absolute;
   right: 10px;
@@ -340,6 +336,7 @@ div:nth-of-type(1) > .list > .roomState .star {
   object-fit: cover;
 }
 #mainDetails h1, #similarDetails h1 {
+  color: var(--VTTblue);
   text-align: left;
 }
 #mainDetails .star {
@@ -513,6 +510,10 @@ div:nth-of-type(1) > .list > .roomState .star {
   height: unset;
   padding: 20px;
   overflow: auto;
+}
+
+#helpTexts h3 {
+  color: var(--VTTblue);
 }
 
 #stateScreenshot {
