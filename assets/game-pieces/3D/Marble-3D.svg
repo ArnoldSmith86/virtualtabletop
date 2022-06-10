@@ -10,7 +10,7 @@
   </defs>
   <g style="isolation: isolate">
     <g>
-      <circle cx="49.994" cy="49.996" r="47.941" fill="none" stroke="#borderColor"; stroke-width="#borderWidth"; stroke-miterlimit="10"/>
+      <circle cx="49.994" cy="49.996" r="47.941" fill="none" stroke="#borderColor" stroke-width="#borderWidth" stroke-miterlimit="10"/>
       <circle cx="49.994" cy="49.996" r="47.941" fill="#primaryColor"/>
       <g>
         <circle cx="50" cy="50" r="47.947" transform="translate(-19.683 37.988) rotate(-35.219)" fill="url(#a)" style="mix-blend-mode: multiply"/>
