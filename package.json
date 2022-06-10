@@ -46,16 +46,16 @@
     "@node-minify/uglify-es": "^6.2.0",
     "crc-32": "^1.2.2",
     "express": "^4.18.1",
-    "jszip": "^3.9.1",
+    "jszip": "^3.10.0",
     "node-fetch": "^2.6.1",
-    "ws": "^8.6.0"
+    "ws": "^8.8.0"
   },
   "devDependencies": {
-    "jest": "^28.1.0",
-    "jest-environment-jsdom": "^28.1.0",
-    "jest-environment-jsdom-global": "^3.1.1",
-    "json-diff": "^0.7.4",
+    "jest": "^28.1.1",
+    "jest-environment-jsdom": "^28.1.1",
+    "jest-environment-jsdom-global": "^3.1.2",
+    "json-diff": "^0.9.0",
     "nodemon": "^2.0.16",
-    "testcafe": "^1.18.6"
+    "testcafe": "^1.19.0"
   }
 }

@@ -537,7 +537,9 @@ export class Widget extends StateManaged {
           return match[9] ? false : undefined;
 
         let indexName = evaluateIdentifier(match[3], match[4]);
-        return indexName !== undefined ? varContent[indexName] : varContent;
+        if(varContent === null && indexName !== undefined)
+          problems.push(`Cannot index a variable that evaluates to 'null'.`);
+        return varContent !== null && indexName !== undefined ? varContent[indexName] : varContent;
       }
 
       // property
@@ -698,7 +700,7 @@ export class Widget extends StateManaged {
             // ignore (but log) blank and comment only lines
             if(jeRoutineLogging) jeLoggingRoutineOperationSummary(comment[1]||'');
           } else {
-            problems.push('String could not be interpreted as expression. Please check your syntax and note that many characters have to be escaped.');
+            problems.push(`String '${a}' could not be interpreted as a valid expression. Please check your syntax and note that many characters have to be escaped.`);
           }
         }
       }
@@ -1844,7 +1846,7 @@ export class Widget extends StateManaged {
         e.classList.add('right');
       if(cursor.top < window.innerHeight/2)
         e.classList.add('bottom');
-      
+
       const wStyle = $(`#STYLES_${escapeID(id)}`);
       if(wStyle) {
         if($('#enlargeStyle'))
