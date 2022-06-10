@@ -316,31 +316,44 @@ div:nth-of-type(1) > .list > .roomState .star {
 }
 
 
+#stateDetailsOverlay {
+  --mainDetailsHeight: 300px;
+  --similarDetailsHeight: 200px;
+  --arrowButtonsSize: 160px;
+}
 #mainDetails, #similarDetails, #variantsList, #helpTexts {
   position: absolute;
   width: 60%;
   top: 10px;
   left: 20%;
-  height: 300px;
+  height: var(--mainDetailsHeight);
   box-sizing: border-box;
   background: var(--roomColor);
   padding-right: 20px;
   border-radius: 20px;
-  overflow: hidden;
+  overflow: auto;
 }
 #mainDetails img, #similarDetails img {
-  float: left;
-  margin-right: 20px;
-  height: 300px;
-  width: 300px;
+  position: fixed;
+  height: var(--mainDetailsHeight);
+  width: var(--mainDetailsHeight);
   object-fit: cover;
+  border-radius: 20px 0 0 20px;
+}
+#mainDetails .details {
+  margin-left: var(--mainDetailsHeight);
+  padding-left: 20px;
 }
 #mainDetails h1, #similarDetails h1 {
   color: var(--VTTblue);
   text-align: left;
 }
+#mainDetails .material-icons, #similarDetails .material-icons {
+  top: 5px;
+  position: relative;
+}
 #mainDetails .star {
-  position: absolute;
+  position: fixed;
   font-size: 50px;
   background: none;
   text-shadow: 2px 2px 4px #444;
@@ -354,30 +367,34 @@ div:nth-of-type(1) > .list > .roomState .star {
   bottom: 10px;
   left: 10px;
   width: calc(50% - 15px);
-  height: 200px;
+  height: var(--similarDetailsHeight);
+}
+#similarDetails .details {
+  margin-left: var(--similarDetailsHeight);
+  padding-left: 20px;
 }
 #similarDetails h1 {
   font-size: 1.3em;
 }
 #similarDetails img {
-  height: 200px;
-  width: 200px;
+  height: var(--similarDetailsHeight);
+  width: var(--similarDetailsHeight);
 }
 #similarDetails a {
   color: black;
 }
 
 #prevState, #nextState {
-  --size: 160px;
-  min-height: var(--size);
+  --size: var(--arrowButtonsSize);
+  min-height: var(--arrowButtonsSize);
   position: absolute;
-  top: calc(10px + ( 300px - var(--size) ) / 2);
-  left: calc(( 20% - var(--size) ) / 2);
+  top: calc(10px + ( var(--mainDetailsHeight) - var(--arrowButtonsSize) ) / 2);
+  left: calc(( 20% - var(--arrowButtonsSize) ) / 2);
   margin: 0;
 }
 #nextState {
   left: unset;
-  right: calc(( 20% - var(--size) ) / 2);
+  right: calc(( 20% - var(--arrowButtonsSize) ) / 2);
 }
 #prevState button, #nextState button {
   position: absolute;
@@ -389,14 +406,14 @@ div:nth-of-type(1) > .list > .roomState .star {
 }
 #prevState button i, #nextState button i {
   color: black;
-  font-size: 140px;
+  font-size: calc(0.8 * var(--arrowButtonsSize));
   margin: auto;
 }
 
 
 #variantsList {
-  top: 320px;
-  bottom: 220px;
+  top: calc(var(--mainDetailsHeight) + 20px);
+  bottom: calc(var(--similarDetailsHeight) + 20px);
   left: 10px;
   width: calc(50% - 15px);
   height: unset;
@@ -467,6 +484,7 @@ div:nth-of-type(1) > .list > .roomState .star {
   width: 34px;
   margin: 1px 5px 1px 0;
   border-radius: 3px;
+  object-fit: cover;
 }
 
 .variant i {
@@ -502,7 +520,7 @@ div:nth-of-type(1) > .list > .roomState .star {
 
 
 #helpTexts {
-  top: 320px;
+  top: calc(var(--mainDetailsHeight) + 20px);
   bottom: 10px;
   left: unset;
   right: 10px;
@@ -518,4 +536,103 @@ div:nth-of-type(1) > .list > .roomState .star {
 
 #stateScreenshot {
   width: 100%;
+}
+
+@media (max-width: 1360px), (max-height: 760px) {
+  #stateDetailsOverlay {
+    --mainDetailsHeight: 200px;
+    --similarDetailsHeight: 150px;
+    --arrowButtonsSize: 100px;
+  }
+  #mainDetails h1, #similarDetails h1 {
+    margin: 10px 0;
+  }
+  #mainDetails > .details > div {
+    display: inline-block;
+    font-size: 14px;
+    margin-right: 10px;
+  }
+  #mainDetails .material-icons {
+    font-size: 18px;
+    top: 3px;
+  }
+  #nextState .details, #prevState .details {
+    display: none;
+  }
+}
+@media (max-width: 1000px), (max-height: 600px) {
+  #stateDetailsOverlay {
+    --mainDetailsHeight: 150px;
+  }
+  #mainDetails, #similarDetails, #variantsList, #helpTexts {
+    position: unset;
+    overflow: unset;
+    margin: 20px auto;
+    width: 95%;
+    max-width: 38rem;
+    height: unset;
+    padding: 20px;
+  }
+  #mainDetails img, #similarDetails img {
+    position: unset;
+    border-radius: 10px;
+    float: left;
+    margin-right: 10px;
+  }
+  #mainDetails .star {
+    position: absolute;
+  }
+  #nextState, #prevState {
+    display: none !important;
+  }
+}
+@media (max-width: 800px), (max-height: 500px) {
+  #mainDetails {
+    margin-top: 60px;
+  }
+}
+@media (max-width: 500px), (max-height: 300px) {
+  #stateDetailsOverlay {
+    --mainDetailsHeight: 50px;
+    --similarDetailsHeight: 50px;
+  }
+  #mainDetails, #similarDetails, #variantsList, #helpTexts {
+    padding: 10px;
+    margin: 10px auto;
+  }
+  #mainDetails {
+    margin-top: 60px;
+  }
+  #mainDetails h1, #similarDetails h1 {
+    margin: 8px;
+    min-height: 40px;
+  }
+  #mainDetails .details, #similarDetails .details {
+    margin: unset;
+    padding: unset;
+  }
+  #mainDetails .star {
+    font-size: 32px;
+  }
+  #variantsList {
+    padding: 5px 0;
+  }
+  .variantsList {
+    padding: unset;
+  }
+/*}
+@media (max-width: 400px), (max-height: 250px) {*/
+  #variantsList .variant {
+    display: block;
+  }
+  #variantsList img {
+    float: left;
+  }
+  #variantsList .variant > div, #variantsList .play {
+    display: inline-flex;
+  }
+  #variantsList .variant > .variant-name {
+    display: block;
+    min-height: 40px;
+  }
 }
