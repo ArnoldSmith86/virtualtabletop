@@ -25,14 +25,19 @@ async function downloadLink(link) {
     filename: Math.random().toString(36).substring(3, 9)
   };
 
-  const response = await fetch(link, requestEtag ? { headers: { 'If-None-Match': requestEtag } } : {});
+  const response = await fetch(await TTS.resolveLink(link), requestEtag ? { headers: { 'If-None-Match': requestEtag } } : {});
 
   currentLinkStatus.time = +new Date();
   currentLinkStatus.status = response.status;
 
   if(response.status != 304) {
     currentLinkStatus.etag = response.headers.get('etag');
-    const states = await readStatesFromBuffer(await response.buffer());
+    let states = null;
+    if(TTS.isTTSlink(link)) {
+      states = await TTS.fromBSON(await response.buffer());
+    } else {
+      states = await readStatesFromBuffer(await response.buffer());
+    }
     fs.writeFileSync(`${dirname}/${currentLinkStatus.filename}`, JSON.stringify(states));
   }
 
@@ -87,7 +92,7 @@ async function readStatesFromLink(linkAndPath) {
 async function readVariantsFromBuffer(buffer) {
   const zip = await JSZip.loadAsync(buffer);
   if(Object.keys(zip.files).filter(f=>f.match(/WorkshopUpload/)).length) {
-    const tts = await TTS(buffer);
+    const tts = await TTS.fromZip(buffer);
     return { 'TTS': tts };
   } else if(zip.files['widgets.json']) {
     const pcio = await PCIO(buffer);

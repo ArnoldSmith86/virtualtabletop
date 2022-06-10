@@ -2,6 +2,9 @@ import fs from 'fs';
 import path from 'path';
 import JSZip from 'jszip';
 import fetch from 'node-fetch';
+import BSON from 'bson';
+
+import Logging from './logging.mjs';
 
 const imgSizeCache = {};
 async function imgSize(url) {
@@ -203,13 +206,17 @@ async function addRecursive(os, parent=null) {
   return widgets;
 }
 
-export default async function convertTTS(content) {
-  const zip = await JSZip.loadAsync(content);
-
+async function convertTTS(content, linkContent) {
   let json = {};
-  for(var file in zip.files)
-    if(file.match(/\.json$/))
-      json = JSON.parse(await zip.files[file].async('string'));
+
+  if(linkContent) {
+    json = BSON.deserialize(linkContent);
+  } else {
+    const zip = await JSZip.loadAsync(content);
+    for(var file in zip.files)
+      if(file.match(/\.json$/))
+        json = JSON.parse(await zip.files[file].async('string'));
+  }
 
   const widgets = await addRecursive(json.ObjectStates);
 
@@ -261,4 +268,40 @@ export default async function convertTTS(content) {
   };
 
   return widgets;
+}
+
+async function fromBSON(content) {
+  return {
+    TTS: {
+      '0.json': await convertTTS(null, content)
+    }
+  };
+}
+
+async function fromZIP(content) {
+  return await convertTTS(content);
+}
+
+function isTTSlink(link) {
+  return link.match(/\?id=([0-9]+)/);
+}
+
+async function resolveLink(link) {
+  const id = isTTSlink(link);
+  if(!id)
+    return link;
+
+  Logging.log(`resolving TTS link with ID ${id[1]}`);
+  return (await (await fetch('http://api.steampowered.com/ISteamRemoteStorage/GetPublishedFileDetails/v1', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: `itemcount=1&publishedfileids[0]=${id[1]}`
+  })).json()).response.publishedfiledetails[0].file_url;
+}
+
+export default {
+  fromBSON,
+  fromZIP,
+  isTTSlink,
+  resolveLink
 }
