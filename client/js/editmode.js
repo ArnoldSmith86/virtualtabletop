@@ -733,8 +733,8 @@ function populateAddWidgetOverlay() {
   addWidgetToAddWidgetOverlay(new BasicWidget('Marble3DSVG'), {
     x: 645,
     y: 100,
-    width: 45,
-    height: 45,
+    width: 35,
+    height: 35,
 
     color: "#f00c",
     css: "border-radius: 50%;",
