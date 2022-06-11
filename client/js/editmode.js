@@ -752,7 +752,7 @@ function populateAddWidgetOverlay() {
   });
 
   addWidgetToAddWidgetOverlay(new BasicWidget('Cube3DSVG'), {
-    x: 700,
+    x: 690,
     y: 100,
     width: 36,
     height: 40,
