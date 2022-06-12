@@ -2,7 +2,7 @@
 	<title>Road240-3D-svg</title>
 	<style>
 		tspan { white-space:pre }
-		.shp0 { fill: #ff0000;stroke: #000000 } 
+		.shp0 { fill:#primaryColor; stroke:#borderColor; stroke-width:#borderWidth; stroke-linecap:round;stroke-linejoin:round } 
 		.shp1 { opacity: 0;mix-blend-mode: multiply;fill: #000000 } 
 		.shp2 { opacity: 0.2;mix-blend-mode: multiply;fill: #000000 } 
 		.shp3 { opacity: 0.502;mix-blend-mode: multiply;fill: #000000 } 
