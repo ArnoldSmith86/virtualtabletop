@@ -350,7 +350,7 @@ export default class Room {
           if(allVariantsFromPL && state.name == targetState.name && state.image == targetState.image) {
             Logging.log(`migrating ${target} in room ${this.id}`);
             this.state._meta.starred[targetState.publicLibrary] = true;
-            this.removeState(player, id);
+            this.removeState(undefined, id);
             continue;
           }
         } else if(target) {
