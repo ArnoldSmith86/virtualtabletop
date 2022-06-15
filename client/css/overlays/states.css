@@ -303,18 +303,23 @@ div:nth-of-type(1) > .list > .roomState .star {
   color: black;
 }
 
-#stateDetailsOverlay button.close {
+#stateDetailsOverlay button[icon=close] {
   position: absolute;
   right: 10px;
   top: 10px;
 }
 
-#stateDetailsOverlay button.edit {
+#stateDetailsOverlay button[icon=edit], #stateDetailsOverlay button[icon=save] {
   position: absolute;
   left: 10px;
   top: 10px;
 }
-
+#stateDetailsOverlay.editing button[icon=edit] {
+  display: none;
+}
+#stateDetailsOverlay:not(.editing) button[icon=save] {
+  display: none;
+}
 
 #stateDetailsOverlay {
   --mainDetailsHeight: 300px;
@@ -434,16 +439,7 @@ div:nth-of-type(1) > .list > .roomState .star {
   padding: 0.25rem 0.5rem;
 }
 
-.play-button {
-  width: auto;
-  padding-right: 0.75rem;
-  flex-grow: 0;
-  font-weight: bold;
-  height: 34px;
-}
-
-.variant>div,
-.variant>button {
+.variant>div {
   display: flex;
   align-items: center;
 }
@@ -635,4 +631,15 @@ div:nth-of-type(1) > .list > .roomState .star {
     display: block;
     min-height: 40px;
   }
+}
+
+
+#stateDetailsOverlay [contenteditable=true] {
+  background-image: linear-gradient(-45deg, #1112 25%, #0002 25%, #0002 50%, #1112 50%, #1112 75%, #0002 75%, #0002);
+  background-size: 50px 50px;
+  background-repeat:repeat
+}
+
+#stateDetailsOverlay .hidden {
+  display: none !important;
 }

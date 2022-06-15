@@ -266,7 +266,7 @@
             <h4>Similar Name</h4>
           </div>
         </template>
-        <button class="prettyButton" id="addState"><i class="icon material-icons">add</i> Add game</button>
+        <button icon="add" id="addState">Add game</button>
         <p id="emptyLibrary">Your personal game library is currently empty.<br>Use the stars below to pin public library games or use the "Add game" button above.</p>
         <!--<button class="prettyButton gameMenu download">Download all</button>-->
       </div>
@@ -280,16 +280,16 @@
     </div>
 
     <div id="stateDetailsOverlay" class="overlay">
-      <button class="prettyButton close"><i class="material-icons">close</i></button>
+      <button icon="close"></button>
       <div id="mainDetails">
-        <img>
+        <img data-field="image" data-target="src">
         <button class="prettyButton star">★</button>
         <div class="details">
-          <h1>Game title</h1>
-          <div><i class="material-icons">schedule</i> Time: <span id="detailsTime">30</span> minutes</div>
-          <div><i class="material-icons">groups</i> Mode: <span id="detailsMode">vs</span></div>
-          <div><i class="material-icons">psychology</i> Skill: <span id="detailsSkill">strategy and luck</span></div>
-          <p id="stateDescription"></p>
+          <h1 data-field="name"></h1>
+          <div data-showFor="time"><i class="material-icons">schedule</i> Time: <span data-field="time"></span> minutes</div>
+          <div data-showFor="mode"><i class="material-icons">groups</i> Mode: <span data-field="mode"></span></div>
+          <div data-showFor="skill"><i class="material-icons">psychology</i> Skill: <span data-field="skill"></span></div>
+          <p data-field="description"></p>
         </div>
       </div>
       <template id="template-variantslist-entry" type="text/template">
@@ -304,45 +304,45 @@
         <div class="has-attribution"><i class="icon material-icons accordion-item-toggle">attribution</i></div>
         <div class="language-info"><i class="material-icons">language</i><span class="language"></span></div>
         <div class="player-number-info"><i class="material-icons">person</i><span class="players">0</span></div>
-        <button class="play play-button hide-app"><i class="material-icons">play_arrow</i>PLAY</button>
+        <button icon="play_arrow">Play</button>
       </template>
       <div id="variantsList">
         <div class="variantsList"></div>
       </div>
       <div id="similarDetails">
-        <img src="assets/1067972190_27366">
+        <img data-field="similarImage" data-target="src">
         <div class="details">
-          <h1>Similar to: Hare & Tortoise (1973)</h1>
-          <div><i class="material-icons">military_tech</i> Spiel des Jahres 2001</div>
-          <div><i class="material-icons">link</i> <a href="https://boardgamegeek.com/boardgame/361/hare-tortoise" id="detailsSimilarBGG"><span class="symbols">[external]</span>Page on BoardGameGeek.com</span></div>
-          <div><i class="material-icons">movie</i> <a href="https://www.youtube.com/watch?v=R1qh-lhxy9s" id="detailsSimilarRules"><span class="symbols">[external]</span>How To Play on YouTube.com</span></div>
+          <h1 data-showFor="similarName">Similar to: <span data-field="similarName"></span><span data-showFor="year"> (<span data-field="year"></span>)</span></h1>
+          <div data-showFor="similarAwards"><i class="material-icons">military_tech</i> <span data-field="similarAwards"></span></div>
+          <div data-showFor="similarLink"><i class="material-icons">link</i> <a data-field="similarLink" data-target="href"><span class="symbols">[external]</span>Page on BoardGameGeek.com</span></div>
+          <div data-showFor="similarVideo"><i class="material-icons">movie</i> <a data-field="similarVideo" data-target="href"><span class="symbols">[external]</span>How To Play on YouTube.com</span></div>
         </div>
       </div>
-      <button class="prettyButton edit">Edit</button>
+      <button icon="edit">Edit</button>
+      <button icon="save">Save</button>
       <div id="prevState" class="roomState">
-        <img src="assets/-1758311402_1721439">
+        <img>
         <div class="details">
-          <h3>Alpaca</h3>
-          <h4>Similar to L.L.A.M.A.</h4>
+          <h3>Previous</h3>
+          <h4>Similar to Previous</h4>
         </div>
         <button class="prettyButton prev"><i class="material-icons">arrow_back</i></button>
       </div>
       <div id="nextState" class="roomState">
-        <img src="assets/864541564_120911">
+        <img>
         <div class="details">
-          <h3>Backgammon</h3>
-          <h4>Similar to Backgammon</h4>
+          <h3>Next</h3>
+          <h4>Similar to Next</h4>
         </div>
         <button class="prettyButton next"><i class="material-icons">arrow_forward</i></button>
       </div>
       <div id="helpTexts">
-        <h3>How to play the game</h3>
-        <p id="stateRuleText">Detailed textual rule description.</p>
-        <h3>How to use this implementation</h3>
-        <img id="stateScreenshot" src="assets/-1621736265_13854">
-        <p id="stateHelpText">- Click Reset to select the expansions and shuffle the cards.<br>- Each player clicks a Join button.<br>- ...<br>- Profit.</p>
-        <h3>Attribution</h3>
-        <p id="stateAttribution"></p>
+        <h3 data-showFor="ruleText">How to play the game</h3>
+        <p data-field="ruleText"></p>
+        <h3 data-showFor="helpText">How to use this implementation</h3>
+        <p data-field="helpText"></p>
+        <h3 data-showFor="attribution">Attribution</h3>
+        <p data-field="attribution"></p>
       </div>
     </div>
 

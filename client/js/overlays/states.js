@@ -280,25 +280,31 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
 function fillStateDetails(states, state, dom) {
   showOverlay('stateDetailsOverlay');
   $('#stateDetailsOverlay').dataset.id = state.id;
-  $('#mainDetails h1').innerText = state.name;
-  if(state.year && state.year != 0)
-    $('#similarDetails h1').innerText = `Similar to ${state.similarName} (${state.year})`;
-  else
-    $('#similarDetails h1').innerText = `Similar to ${state.similarName}`;
-  $('#stateDetailsOverlay h1').innerText = state.name;
-  $('#stateDetailsOverlay img').src = state.image.replace(/^\//, '');
-  $('#detailsTime').innerText = state.time;
-  $('#detailsMode').innerText = state.mode;
+  $('#stateDetailsOverlay').classList.remove('editing');
+
+  for(const dom of [...$a('#stateDetailsOverlay [data-field]')]) {
+    if(state[dom.dataset.field] && state[dom.dataset.field] != 0) {
+      dom.classList.remove('hidden');
+      dom[dom.dataset.target || 'innerText'] = state[dom.dataset.field];
+      if(dom.dataset.target == 'src')
+        dom.src = dom.src.replace(/^\//, '');
+    } else {
+      dom[dom.dataset.target || 'innerText'] = '';
+      dom.classList.add('hidden');
+    }
+    for(const hideDom of [...$a(`#stateDetailsOverlay [data-showFor="${dom.dataset.field}"]`)]) {
+      if(state[dom.dataset.field]) {
+        hideDom.classList.remove('hidden');
+      } else {
+        hideDom.classList.add('hidden');
+      }
+    }
+  }
+
   if(state.starred)
     $('#stateDetailsOverlay .star').classList.add('active');
   else
     $('#stateDetailsOverlay .star').classList.remove('active');
-
-  //$('#detailsSimilarRules').href = state.rules;
-  $('#detailsSimilarBGG').href = state.similarLink;
-
-  $('#stateDescription').innerText = state.description || '';
-  $('#stateAttribution').innerText = state.attribution || '';
 
   const visibleStates = [...$a('#statesList .roomState.visible')];
   const nextState = visibleStates[visibleStates.indexOf(dom)+1];
@@ -342,12 +348,49 @@ function fillStateDetails(states, state, dom) {
     else
       $('.variant-image', vEntry).src = state.image.replace(/^\//, '');
 
-    $('.play', vEntry).addEventListener('click', _=>{ toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading }); showOverlay(); });
+    $('button', vEntry).addEventListener('click', _=>{ toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading }); showOverlay(); });
     $('#stateDetailsOverlay .variantsList').appendChild(vEntry);
   }
 
-  $('#stateDetailsOverlay .edit').addEventListener('click', _=>fillEditState(state));
-  $('#stateDetailsOverlay .edit').style.display = state.publicLibrary && !config.allowPublicLibraryEdits ? 'none' : 'block';
+  $('#stateDetailsOverlay [icon=edit]').onclick = function() {
+    $('#stateDetailsOverlay').classList.add('editing');
+
+    for(const dom of [...$a('#stateDetailsOverlay [data-field]:not([data-target])')]) {
+      dom.contentEditable = true;
+      dom.classList.remove('hidden');
+      if(!dom.innerText.trim())
+        dom.innerText = '<empty>';
+      for(const hideDom of [...$a(`#stateDetailsOverlay [data-showFor="${dom.dataset.field}"]`)])
+        hideDom.classList.remove('hidden');
+    }
+  };
+  $('#stateDetailsOverlay [icon=save]').onclick = function() {
+    $('#stateDetailsOverlay').classList.remove('editing');
+    const meta = JSON.parse(JSON.stringify(state));
+
+    for(const dom of [...$a('#stateDetailsOverlay [data-field]:not([data-target])')]) {
+      dom.contentEditable = false;
+      meta[dom.dataset.field] = dom.innerText.trim().replace('<empty>', '');
+      if(!meta[dom.dataset.field]) {
+        dom.innerText = '';
+        dom.classList.add('hidden');
+        for(const hideDom of [...$a(`#stateDetailsOverlay [data-showFor="${dom.dataset.field}"]`)])
+          hideDom.classList.add('hidden');
+      }
+    }
+
+    delete meta.id;
+    delete meta.starred;
+    delete meta.publicLibrary;
+    delete meta.publicLibraryCategory;
+    for(const vID in meta.variants)
+      for(const key in meta.variants[vID])
+        if([ 'players', 'language', 'variant', 'link', 'attribution' ].indexOf(key) == -1)
+          delete meta.variants[vID][key]
+
+    toServer('editState', { id: state.id, meta });
+  };
+  $('#stateDetailsOverlay [icon=edit]').style.display = state.publicLibrary && !config.allowPublicLibraryEdits ? 'none' : 'flex';
 }
 
 function fillEditState(state) {
@@ -424,7 +467,7 @@ onLoad(function() {
 
   on('#addState .download', 'click', _=>downloadState(null));
 
-  on('#stateDetailsOverlay .close', 'click', _=>showOverlay('statesOverlay'));
+  on('#stateDetailsOverlay [icon=close]', 'click', _=>showOverlay('statesOverlay'));
   on('#stateDetailsOverlay .star', 'click', e=>{e.currentTarget.classList.toggle('active');$(`#statesOverlay .roomState[data-id="${$('#stateDetailsOverlay').dataset.id}"] .star`).click();});
   on('#nextState, #prevState', 'click', e=>{showOverlay(); $(`#statesOverlay .roomState[data-id="${e.currentTarget.dataset.id}"]`).click();});
 

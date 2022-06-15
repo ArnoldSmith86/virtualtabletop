@@ -563,6 +563,28 @@ html:-webkit-full-screen #fullscreenButton .tooltip::before {
 
 /*Buttons css*/
 
+button[icon] {
+  display: flex;
+  align-items: center;
+  padding-right: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+button[icon]::before {
+  content: attr(icon);
+  font-family: "Material Icons";
+  text-transform: lowercase;
+  margin-right: .25rem;
+  font-size: 24px;
+  line-height: 1;
+}
+button[icon]:empty {
+  padding: 5px;
+}
+button[icon]:empty::before {
+  margin: 0;
+}
+
 .prettyButton {
   border: 5px;
   font-size: 16px;
