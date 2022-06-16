@@ -287,7 +287,7 @@ function fillStateDetails(states, state, dom) {
       dom.classList.remove('hidden');
       dom[dom.dataset.target || 'innerText'] = state[dom.dataset.field];
       if(dom.dataset.target == 'src')
-        dom.src = dom.src.replace(/^\//, '');
+        dom.src = state[dom.dataset.field].replace(/^\//, '');
     } else {
       dom[dom.dataset.target || 'innerText'] = '';
       dom.classList.add('hidden');
