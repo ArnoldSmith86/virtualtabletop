@@ -371,8 +371,8 @@ async function updateImage(currentImage) {
     showOverlay('updateImageOverlay');
     const o = $('#updateImageOverlay');
 
-    $('img.previous', o).src = currentImage;
-    $('img.current', o).src = currentImage;
+    $('img.previous', o).src = currentImage.replace(/^\//, '');
+    $('img.current', o).src = currentImage.replace(/^\//, '');
     $('input.current', o).value = currentImage;
 
     $('button[icon=upload]', o).onclick = async function() {
