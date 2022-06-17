@@ -166,6 +166,66 @@ export function formField(field, dom, id) {
   }
 }
 
+export function applyValuesToDOM(parent, obj) {
+  for(const dom of $a('[data-field]', parent)) {
+    if(obj[dom.dataset.field] && obj[dom.dataset.field] != 0) {
+      dom.classList.remove('hidden');
+      dom[dom.dataset.target || 'innerText'] = obj[dom.dataset.field];
+      if(dom.dataset.target == 'src')
+        dom.src = obj[dom.dataset.field].replace(/^\//, '');
+    } else {
+      dom[dom.dataset.target || 'innerText'] = '';
+      if(!dom.dataset.forceshow)
+        dom.classList.add('hidden');
+    }
+  }
+  for(const hideDom of $a('[data-showfor]', parent))
+    toggleClass(hideDom, 'hidden', !obj[hideDom.dataset.showfor]);
+}
+
+export function getValuesFromDOM(parent) {
+  const obj = {};
+  for(const dom of $a('[data-field]:not([data-target=href])', parent))
+    obj[dom.dataset.field] = dom[dom.dataset.target || 'innerText'].trim().replace('<empty>', '');
+  return obj;
+}
+
+export function enableEditing(parent, obj) {
+  parent.classList.add('editing');
+
+  for(const dom of $a('[data-field]:not([data-target])', parent)) {
+    dom.contentEditable = true;
+    dom.classList.remove('hidden');
+    if(!dom.innerText.trim())
+      dom.innerText = '<empty>';
+  }
+  for(const hideDom of $a('[data-showfor]', parent))
+    if(!obj[hideDom.dataset.showfor])
+      hideDom.classList.remove('hidden');
+}
+
+export function disableEditing(parent, obj) {
+  parent.classList.remove('editing');
+  for(const dom of $a('[data-field]:not([data-target=href])', parent)) {
+    dom.contentEditable = false;
+    if(!obj[dom.dataset.field]) {
+      dom[dom.dataset.target || 'innerText'] = '';
+      if(!dom.dataset.forceshow)
+        dom.classList.add('hidden');
+    }
+  }
+  for(const hideDom of $a('[data-showfor]', parent))
+    if(!obj[hideDom.dataset.showfor])
+      hideDom.classList.add('hidden');
+}
+
+export function toggleClass(dom, className, active) {
+  if(active)
+    dom.classList.add(className);
+  else
+    dom.classList.remove(className);
+}
+
 export function on(selector, eventName, callback) {
   for(const d of $a(selector))
     d.addEventListener(eventName, callback);

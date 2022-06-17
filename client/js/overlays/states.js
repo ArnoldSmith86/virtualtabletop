@@ -197,7 +197,7 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
 
       $('img', entry).src = state.image.replace(/^\//, '');
       $('h3', entry).textContent = state.name;
-      $('h4', entry).textContent = state.similarName ? `Similar to ${state.similarName}` : '';
+      $('h4', entry).textContent = state.similarName && state.name != state.similarName ? `Similar to ${state.similarName}` : '';
 
       const validPlayers = [];
       const validLanguages = [];
@@ -280,31 +280,12 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
 function fillStateDetails(states, state, dom) {
   showOverlay('stateDetailsOverlay');
   $('#stateDetailsOverlay').dataset.id = state.id;
-  $('#stateDetailsOverlay').classList.remove('editing');
 
-  for(const dom of [...$a('#stateDetailsOverlay [data-field]')]) {
-    if(state[dom.dataset.field] && state[dom.dataset.field] != 0) {
-      dom.classList.remove('hidden');
-      dom[dom.dataset.target || 'innerText'] = state[dom.dataset.field];
-      if(dom.dataset.target == 'src')
-        dom.src = state[dom.dataset.field].replace(/^\//, '');
-    } else {
-      dom[dom.dataset.target || 'innerText'] = '';
-      dom.classList.add('hidden');
-    }
-    for(const hideDom of [...$a(`#stateDetailsOverlay [data-showFor="${dom.dataset.field}"]`)]) {
-      if(state[dom.dataset.field]) {
-        hideDom.classList.remove('hidden');
-      } else {
-        hideDom.classList.add('hidden');
-      }
-    }
-  }
+  disableEditing($('#stateDetailsOverlay'), state);
+  applyValuesToDOM($('#stateDetailsOverlay'), state);
 
-  if(state.starred)
-    $('#stateDetailsOverlay .star').classList.add('active');
-  else
-    $('#stateDetailsOverlay .star').classList.remove('active');
+  toggleClass($('#stateDetailsOverlay .star'), 'active', state.starred);
+  toggleClass($('#stateDetailsOverlay .star'), 'hidden', !state.publicLibrary);
 
   const visibleStates = [...$a('#statesList .roomState.visible')];
   const nextState = visibleStates[visibleStates.indexOf(dom)+1];
@@ -343,41 +324,33 @@ function fillStateDetails(states, state, dom) {
       $('.variant-name', vEntry).textContent = 'Unnamed Variant';
       $('.variant-name', vEntry).className += ' unnamed';
     }
-    if(variant.variantImage)
-      $('.variant-image', vEntry).src = variant.variantImage.replace(/^\//, '');
-    else
-      $('.variant-image', vEntry).src = state.image.replace(/^\//, '');
+    toggleClass($('.variant-image', vEntry), 'hidden', !variant.variantImage && !state.image);
+    $('.variant-image', vEntry).src = (variant.variantImage || state.image).replace(/^\//, '');
 
     $('button', vEntry).addEventListener('click', _=>{ toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading }); showOverlay(); });
     $('#stateDetailsOverlay .variantsList').appendChild(vEntry);
   }
 
   $('#stateDetailsOverlay [icon=edit]').onclick = function() {
-    $('#stateDetailsOverlay').classList.add('editing');
+    enableEditing($('#stateDetailsOverlay'), state);
 
-    for(const dom of [...$a('#stateDetailsOverlay [data-field]:not([data-target])')]) {
-      dom.contentEditable = true;
-      dom.classList.remove('hidden');
-      if(!dom.innerText.trim())
-        dom.innerText = '<empty>';
-      for(const hideDom of [...$a(`#stateDetailsOverlay [data-showFor="${dom.dataset.field}"]`)])
-        hideDom.classList.remove('hidden');
+    for(const uploadButton of $a('div button[icon=image]')) {
+      uploadButton.onclick = async function() {
+        const img = $('img', uploadButton.parentNode.parentNode);
+        const newURL = await updateImage(uploadButton.value);
+        uploadButton.value = newURL;
+        toggleClass(img, 'hidden', !newURL);
+        img.src = newURL ? newURL.replace(/^\//, '') : '';
+        showOverlay('stateDetailsOverlay');
+      };
     }
   };
   $('#stateDetailsOverlay [icon=save]').onclick = function() {
-    $('#stateDetailsOverlay').classList.remove('editing');
     const meta = JSON.parse(JSON.stringify(state));
 
-    for(const dom of [...$a('#stateDetailsOverlay [data-field]:not([data-target])')]) {
-      dom.contentEditable = false;
-      meta[dom.dataset.field] = dom.innerText.trim().replace('<empty>', '');
-      if(!meta[dom.dataset.field]) {
-        dom.innerText = '';
-        dom.classList.add('hidden');
-        for(const hideDom of [...$a(`#stateDetailsOverlay [data-showFor="${dom.dataset.field}"]`)])
-          hideDom.classList.add('hidden');
-      }
-    }
+    Object.assign(meta, getValuesFromDOM($('#stateDetailsOverlay')));
+
+    disableEditing($('#stateDetailsOverlay'), meta);
 
     delete meta.id;
     delete meta.starred;
@@ -391,6 +364,37 @@ function fillStateDetails(states, state, dom) {
     toServer('editState', { id: state.id, meta });
   };
   $('#stateDetailsOverlay [icon=edit]').style.display = state.publicLibrary && !config.allowPublicLibraryEdits ? 'none' : 'flex';
+}
+
+async function updateImage(currentImage) {
+  return new Promise(function(resolve, reject) {
+    showOverlay('updateImageOverlay');
+    const o = $('#updateImageOverlay');
+
+    $('img.previous', o).src = currentImage;
+    $('img.current', o).src = currentImage;
+    $('input.current', o).value = currentImage;
+
+    $('button[icon=upload]', o).onclick = async function() {
+      $('img.current', o).src = $('input.current', o).value = await uploadAsset();
+    };
+    $('input ', o).oninput = async function() {
+      $('img.current', o).src = $('input ', o).value;
+    };
+
+    $('button[icon=undo]', o).onclick = function() {
+      showOverlay();
+      resolve(currentImage);
+    };
+    $('button[icon=image_not_supported]', o).onclick = function() {
+      showOverlay();
+      resolve('');
+    };
+    $('button[icon=check]', o).onclick = function() {
+      showOverlay();
+      resolve($('input.current', o).value);
+    };
+  });
 }
 
 function fillEditState(state) {

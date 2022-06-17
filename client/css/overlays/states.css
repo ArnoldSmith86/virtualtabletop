@@ -338,12 +338,28 @@ div:nth-of-type(1) > .list > .roomState .star {
   border-radius: 20px;
   overflow: auto;
 }
-#mainDetails img, #similarDetails img {
-  position: fixed;
+#stateDetailsOverlay img {
+  object-fit: cover;
+}
+#mainImage, #similarImage {
+  position: absolute;
   height: var(--mainDetailsHeight);
   width: var(--mainDetailsHeight);
-  object-fit: cover;
   border-radius: 20px 0 0 20px;
+}
+#mainImage img, #similarImage img, #mainImage div, #similarImage div {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+#mainImage div, #similarImage div {
+  background: #fff8;
+}
+#stateDetailsOverlay:not(.editing) #mainImage div, #stateDetailsOverlay:not(.editing) #similarImage div {
+  display: none;
+}
+#mainImage div button, #similarImage div button {
+  margin: calc(50% - 17px) auto;
 }
 #mainDetails .details {
   margin-left: var(--mainDetailsHeight);
@@ -381,7 +397,7 @@ div:nth-of-type(1) > .list > .roomState .star {
 #similarDetails h1 {
   font-size: 1.3em;
 }
-#similarDetails img {
+#similarImage {
   height: var(--similarDetailsHeight);
   width: var(--similarDetailsHeight);
 }
@@ -480,7 +496,6 @@ div:nth-of-type(1) > .list > .roomState .star {
   width: 34px;
   margin: 1px 5px 1px 0;
   border-radius: 3px;
-  object-fit: cover;
 }
 
 .variant i {
@@ -569,11 +584,15 @@ div:nth-of-type(1) > .list > .roomState .star {
     height: unset;
     padding: 20px;
   }
-  #mainDetails img, #similarDetails img {
+  #mainImage, #similarImage {
     position: unset;
     border-radius: 10px;
     float: left;
     margin-right: 10px;
+  }
+  #mainImage img, #similarImage img, #mainImage div, #similarImage div {
+    height: var(--mainDetailsHeight);
+    width: var(--mainDetailsHeight);
   }
   #mainDetails .star {
     position: absolute;
@@ -610,14 +629,19 @@ div:nth-of-type(1) > .list > .roomState .star {
   #mainDetails .star {
     font-size: 32px;
   }
+  #mainImage button, #similarImage button {
+    font-size: 0;
+    padding: 5px;
+  }
+  #mainImage button::before, #similarImage button::before {
+    margin: 0;
+  }
   #variantsList {
     padding: 5px 0;
   }
   .variantsList {
     padding: unset;
   }
-/*}
-@media (max-width: 400px), (max-height: 250px) {*/
   #variantsList .variant {
     display: block;
   }
@@ -637,9 +661,94 @@ div:nth-of-type(1) > .list > .roomState .star {
 #stateDetailsOverlay [contenteditable=true] {
   background-image: linear-gradient(-45deg, #1112 25%, #0002 25%, #0002 50%, #1112 50%, #1112 75%, #0002 75%, #0002);
   background-size: 50px 50px;
-  background-repeat:repeat
+  background-repeat: repeat
 }
 
 #stateDetailsOverlay .hidden {
   display: none !important;
+}
+
+
+
+
+
+/* updateImageOverlay */
+
+#updateImageOverlay > h1 {
+  margin-top: 0;
+}
+
+#updateImageOverlay > div:nth-child(2) {
+  display: flex;
+  justify-content: space-evenly;
+  flex-grow: 1;
+}
+
+#updatePreviousImage, #updateCurrentImage {
+  display: inline-flex;
+  width: 40%;
+  background: var(--roomColor);
+  border-radius: 20px;
+  padding: 20px;
+  flex-direction: column;
+}
+
+#updateCurrentImage label {
+  margin: 8px 0 2px;
+  color: black;
+}
+
+#updateImageOverlay h2 {
+  margin-top: 0;
+  height: 40px;
+}
+
+#updateImageOverlay button[icon=upload] {
+  display: inline-flex;
+  float: right;
+  position: relative;
+  top: -3px;
+}
+
+#updateImageOverlay img {
+  width: 100%;
+  flex-basis: 0;
+  min-height: 0;
+  object-fit: contain;
+  flex-grow: 1;
+}
+
+#updateButtonBar {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 20px;
+}
+
+
+@media (max-width: 800px), (max-height: 500px) {
+  #updateImageOverlay {
+    padding: 5px;
+  }
+
+  #updateImageOverlay > div:nth-child(2), #updateButtonBar {
+    flex-direction: column;
+  }
+
+  #updatePreviousImage, #updateCurrentImage {
+    width: unset;
+  }
+
+  #updateImageOverlay h2 {
+    height: unset;
+  }
+
+  #updateImageOverlay button[icon=upload] {
+    display: flex;
+    position: unset;
+    float: unset;
+  }
+
+  #updateImageOverlay img {
+    flex-basis: unset;
+  }
 }
