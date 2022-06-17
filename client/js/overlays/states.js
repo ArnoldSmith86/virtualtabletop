@@ -376,10 +376,11 @@ async function updateImage(currentImage) {
     $('input.current', o).value = currentImage;
 
     $('button[icon=upload]', o).onclick = async function() {
-      $('img.current', o).src = $('input.current', o).value = await uploadAsset();
+      $('input', o).value = await uploadAsset();
+      $('img.current', o).src = $('input', o).value.replace(/^\//, '');
     };
     $('input ', o).oninput = async function() {
-      $('img.current', o).src = $('input ', o).value;
+      $('img.current', o).src = $('input', o).value.replace(/^\//, '');
     };
 
     $('button[icon=undo]', o).onclick = function() {
