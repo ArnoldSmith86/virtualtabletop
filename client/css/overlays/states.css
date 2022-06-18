@@ -342,15 +342,15 @@ div:nth-of-type(1) > .list > .roomState .star {
   object-fit: cover;
 }
 #mainImage, #similarImage {
-  position: absolute;
+  position: fixed;
   height: var(--mainDetailsHeight);
   width: var(--mainDetailsHeight);
-  border-radius: 20px 0 0 20px;
 }
 #mainImage img, #similarImage img, #mainImage div, #similarImage div {
   position: absolute;
   height: 100%;
   width: 100%;
+  border-radius: 20px 0 0 20px;
 }
 #mainImage div, #similarImage div {
   background: #fff8;
@@ -587,13 +587,13 @@ div:nth-of-type(1) > .list > .roomState .star {
   }
   #mainImage, #similarImage {
     position: unset;
-    border-radius: 10px;
     float: left;
     margin-right: 10px;
   }
   #mainImage img, #similarImage img, #mainImage div, #similarImage div {
     height: var(--mainDetailsHeight);
     width: var(--mainDetailsHeight);
+    border-radius: 10px;
   }
   #mainDetails .star {
     position: absolute;
