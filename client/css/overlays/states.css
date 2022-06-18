@@ -687,11 +687,12 @@ div:nth-of-type(1) > .list > .roomState .star {
 
 #updatePreviousImage, #updateCurrentImage {
   display: inline-flex;
-  width: 40%;
   background: var(--roomColor);
   border-radius: 20px;
   padding: 20px;
+  margin: 20px;
   flex-direction: column;
+  flex-grow: 1;
 }
 
 #updateCurrentImage label {
@@ -709,6 +710,7 @@ div:nth-of-type(1) > .list > .roomState .star {
   float: right;
   position: relative;
   top: -3px;
+  left: 4px;
 }
 
 #updateImageOverlay img {
@@ -722,16 +724,30 @@ div:nth-of-type(1) > .list > .roomState .star {
 #updateButtonBar {
   display: flex;
   justify-content: space-evenly;
-  margin-top: 20px;
 }
 
 
-@media (max-width: 800px), (max-height: 500px) {
+@media (max-width: 1000px), (max-height: 625px) {
   #updateImageOverlay {
-    padding: 5px;
+    padding: 10px;
   }
 
-  #updateImageOverlay > div:nth-child(2), #updateButtonBar {
+  #updatePreviousImage, #updateCurrentImage {
+    padding: 10px;
+    margin: 10px;
+  }
+
+  #updateImageOverlay h2 {
+    margin-left: 4px;
+  }
+}
+@media (max-width: 800px), (max-height: 500px) {
+  #updateImageOverlay h1 {
+    display: none;
+  }
+}
+@media (max-width: 600px), (max-height: 375px) {
+  #updateImageOverlay > div:nth-child(2) {
     flex-direction: column;
   }
 
@@ -739,6 +755,17 @@ div:nth-of-type(1) > .list > .roomState .star {
     width: unset;
   }
 
+  #updateImageOverlay img {
+    flex-basis: unset;
+    max-height: 400px;
+  }
+}
+@media (max-width: 400px), (max-height: 250px) {
+  #updateButtonBar {
+    flex-direction: column;
+  }
+}
+@media (max-width: 300px), (max-height: 180px) {
   #updateImageOverlay h2 {
     height: unset;
   }
@@ -747,9 +774,5 @@ div:nth-of-type(1) > .list > .roomState .star {
     display: flex;
     position: unset;
     float: unset;
-  }
-
-  #updateImageOverlay img {
-    flex-basis: unset;
   }
 }
