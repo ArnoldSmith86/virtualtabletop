@@ -115,7 +115,7 @@
 
 #emptyLibrary {
   color: black;
-  height: calc(var(--size) - 80px - 4px);
+  height: calc(var(--size) - 80px + 3px);
   font-style: italic;
   padding: 40px 100px;
   margin: 8px;
