@@ -553,7 +553,7 @@ div:nth-of-type(1) > .list > .roomState .star {
 @media (max-width: 1360px), (max-height: 760px) {
   #stateDetailsOverlay {
     --mainDetailsHeight: 200px;
-    --similarDetailsHeight: 150px;
+    --similarDetailsHeight: 160px;
     --arrowButtonsSize: 100px;
   }
   #mainDetails h1, #similarDetails h1 {
