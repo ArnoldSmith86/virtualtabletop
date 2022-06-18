@@ -168,7 +168,7 @@ export function formField(field, dom, id) {
 
 export function applyValuesToDOM(parent, obj) {
   for(const dom of $a('[data-field]', parent)) {
-    if(obj[dom.dataset.field] && obj[dom.dataset.field] != 0) {
+    if(obj[dom.dataset.field]) {
       dom.classList.remove('hidden');
       dom[dom.dataset.target || 'innerText'] = obj[dom.dataset.field];
       if(dom.dataset.target == 'src')
