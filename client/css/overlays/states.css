@@ -539,6 +539,7 @@ div:nth-of-type(1) > .list > .roomState .star {
   height: unset;
   padding: 20px;
   overflow: auto;
+  overflow-wrap: break-word;
 }
 
 #helpTexts h3 {
