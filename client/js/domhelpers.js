@@ -180,7 +180,7 @@ export function applyValuesToDOM(parent, obj) {
     }
   }
   for(const hideDom of $a('[data-showfor]', parent))
-    toggleClass(hideDom, 'hidden', !obj[hideDom.dataset.showfor]);
+    toggleClass(hideDom, 'hidden', !hideDom.dataset.showfor.split('|').filter(field=>obj[field]).length);
 }
 
 export function getValuesFromDOM(parent) {
@@ -200,8 +200,7 @@ export function enableEditing(parent, obj) {
       dom.innerText = '<empty>';
   }
   for(const hideDom of $a('[data-showfor]', parent))
-    if(!obj[hideDom.dataset.showfor])
-      hideDom.classList.remove('hidden');
+    hideDom.classList.remove('hidden');
 }
 
 export function disableEditing(parent, obj) {
@@ -215,7 +214,7 @@ export function disableEditing(parent, obj) {
     }
   }
   for(const hideDom of $a('[data-showfor]', parent))
-    if(!obj[hideDom.dataset.showfor])
+    if(!hideDom.dataset.showfor.split('|').filter(field=>obj[field]).length)
       hideDom.classList.add('hidden');
 }
 
