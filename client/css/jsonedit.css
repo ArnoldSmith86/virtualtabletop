@@ -32,12 +32,47 @@
   box-sizing: border-box;
 }
 
-#jeText, #jeTextHighlight {
-  white-space: pre-wrap;
-  overflow-y: auto;
+/*** Tree and widget display area ***/
+#jeEditArea {
+  --treeheight: 40%;
+  display: grid;
+  grid-template-columns: 60% 40%;
+  grid-template-rows: 5% var(--treeheight) auto;
+  row-gap: 5px;
+  top: 0;
   height: 100%;
   width: var(--editorPaneWidth);
   right: var(--commandPaneWidth);
+}
+
+#jeEditHeader {
+  grid-column-start: 1;
+  grid-row-start: 1;
+}
+
+#jeMouseCoords {
+  grid-column-start: 2;
+  grid-row-start: 1;
+  display: block;
+  text-align: right;
+  right: calc(var(--commandPaneWidth) + 20px);
+}
+
+#jeTree {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  overflow-wrap: break-word;
+  overflow-y: auto;
+  white-space: pre-wrap;
+}
+
+#jeText, #jeTextHighlight {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 3;
+  white-space: pre-wrap;
+  overflow-y: auto;
   overflow-wrap: break-word;
 }
 
@@ -52,16 +87,9 @@
   -webkit-text-fill-color: white;
 }
 
-#var_results > table {
-  table-layout: fixed;
-}
+/*** End setup of edit area grid ***/
 
-#var_results > table > tbody > tr > td:nth-child(1) {
-  min-width: 60px;
-  max-width: 60px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+/*** Formatting for edit area grid regions ***/
 
 #jsonEditor i {
   font-style: normal;
@@ -76,6 +104,19 @@ i.null    { color: blue;    }
 i.default { color: #606060; }
 i.variable{ color: #40e0d0; }
 i.error   { color: red; font-weight: bold; }
+
+/*** End formatting for edit area grid regions ***/
+
+#var_results > table {
+  table-layout: fixed;
+}
+
+#var_results > table > tbody > tr > td:nth-child(1) {
+  min-width: 60px;
+  max-width: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 #jeCommands {
   white-space: pre-wrap;
@@ -138,11 +179,6 @@ body.jsonEdit.jeZoomOut #roomArea {
 
 body.jsonEdit.jeZoomOut #topSurface {
   overflow: visible;
-}
-
-#jeMouseCoords {
-  display: block;
-  right: calc(var(--commandPaneWidth) + 20px);
 }
 
 #jeLogWrapper {
