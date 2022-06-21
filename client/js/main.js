@@ -173,12 +173,15 @@ function setScale() {
   } else {
     scale = w/h < 1600/1000 ? w/1600 : h/1000;
   }
+  $('body').classList.remove('wideToolbar');
   if(w-scale*1600 + h-scale*1000 < 44) {
     $('body').classList.add('aspectTooGood');
     if(!$('body').className.match(/hiddenToolbar/))
       scale = (w-44)/1600;
   } else {
     $('body').classList.remove('aspectTooGood');
+    if(w - scale*1600 > 200)
+      $('body').classList.add('wideToolbar');
   }
   document.documentElement.style.setProperty('--scale', scale);
   roomRectangle = $('#roomArea').getBoundingClientRect();

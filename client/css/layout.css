@@ -151,7 +151,7 @@ button:hover {
 }
 
 .toolbarButton:hover .tooltip {
-  display: block;
+  display: block !important;
 }
 
 .toolbarButton::before,
@@ -223,7 +223,7 @@ button:hover {
     max-width: 75px;
   }
 
-  .toolbarButton .tooltip {
+  body:not(.wideToolbar) .toolbarButton .tooltip {
     display: none;
     position: absolute;
     padding: 2px 12px;
@@ -243,9 +243,48 @@ button:hover {
     min-height: 16px;
   }
 
-  :root {
+  body {
     --roomTop: 0px;
     --roomLeft: calc((100vw - var(--roomWidth) * var(--scale)) / 2 + var(--toolbarSize) / 2);
+  }
+
+  .wideToolbar {
+    --toolbarSize: 200px;
+  }
+  .wideToolbar #toolbar {
+    background-image: url(i/branding/logo.svg);
+    background-size: 160px;
+    background-repeat: no-repeat;
+    background-position: center 30px;
+    padding-top: 110px;
+  }
+  .wideToolbar .toolbarButton {
+    height: 32px;
+    justify-content: left;
+    padding: 5px;
+  }
+  .wideToolbar .toolbarButton::before {
+    font-size: 32px;
+    line-height: 32px;
+    height: 32px;
+    width: 32px;
+  }
+  .wideToolbar #optionsButton {
+    background-position: 2px;
+  }
+  .wideToolbar #muteButton {
+    --toolbarSize: 44px;
+  }
+  .wideToolbar #options {
+    transform: translateY(353px) translateX(202px);
+  }
+  .wideToolbar .toolbarButton .tooltip {
+    margin-left: 32px;
+    line-height: unset;
+    height: unset;
+  }
+  .wideToolbar #toolbar .divider {
+    max-width: 100%;
   }
 }
 
@@ -353,7 +392,7 @@ body.aspectTooGood #options {
 }
 
 body.lightsOff, body.lightsOff #toolbar, body.lightsOff #toolbar .tooltip {
-  background: black;
+  background-color: black;
 }
 body.lightsOff #toolbar {
   opacity: 0.1;
