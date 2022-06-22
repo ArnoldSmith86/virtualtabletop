@@ -567,7 +567,10 @@ export default class Room {
   toggleStateStar(player, publicLibraryName) {
     if(!this.state._meta.starred)
       this.state._meta.starred = {};
-    this.state._meta.starred[publicLibraryName] = !this.state._meta.starred[publicLibraryName];
+    if(this.state._meta.starred[publicLibraryName])
+      delete this.state._meta.starred[publicLibraryName];
+    else
+      this.state._meta.starred[publicLibraryName] = 1;
     this.sendMetaUpdate();
   }
 
