@@ -37,17 +37,19 @@
   --treeheight: 40%;
   display: grid;
   grid-template-columns: 60% 40%;
-  grid-template-rows: 5% var(--treeheight) auto;
-  row-gap: 5px;
+  grid-template-rows: 4% var(--treeheight)  8px auto;
+  row-gap: 0px;
   top: 0;
   height: 100%;
   width: var(--editorPaneWidth);
   right: var(--commandPaneWidth);
+  border: 1px solid white;
 }
 
 #jeEditHeader {
   grid-column-start: 1;
   grid-row-start: 1;
+  border-bottom: 1px solid white;
 }
 
 #jeMouseCoords {
@@ -56,6 +58,7 @@
   display: block;
   text-align: right;
   right: calc(var(--commandPaneWidth) + 20px);
+  border-bottom: 1px solid white;
 }
 
 #jeTree {
@@ -67,10 +70,19 @@
   white-space: pre-wrap;
 }
 
-#jeText, #jeTextHighlight {
+#jeResize {
+  content: '';
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 3;
+  cursor: ns-resize;
+  background-color: #b8c6db;
+  background-image: linear-gradient(#b8c6db 0%, #f5f7fa 20%, #b8c6db 80%);
+}
+#jeText, #jeTextHighlight {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 4;
   white-space: pre-wrap;
   overflow-y: auto;
   overflow-wrap: break-word;

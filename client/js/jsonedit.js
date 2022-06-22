@@ -1237,16 +1237,44 @@ function jeColorize() {
   $('#jeTextHighlight').innerHTML = out.join('\n');
 }
 
+/* Displaying and controlling tree subpane of edit area */
+
+const editPanel = document.getElementById("jeEditArea");
+
+let mouse_pos;
+
+function resize(e){
+  const panelHeight = editPanel.clientHeight;
+  const resizeHeight = document.getElementById("jeResize").clientHeight;
+  const headerHeight = document.getElementById("jeEditHeader").clientHeight;
+  const treeHeight = document.querySelector('#jeTree').clientHeight;
+  const height = Math.max(0,Math.min(panelHeight - resizeHeight - headerHeight, treeHeight + e.y - mouse_pos));
+  editPanel.style.setProperty('--treeheight', height + "px"); 
+  mouse_pos = e.y;
+}
+
+editPanel.addEventListener("mousedown", function(e){
+  mouse_pos = e.y;
+  document.addEventListener("mousemove", resize, false);
+}, false);
+
+document.addEventListener("mouseup", function(){
+  document.removeEventListener("mousemove", resize, false);
+}, false);
+
 function jeDisplayTree() {
   const allWidgets = Array.from(widgets.values());
   let result = '<i class=extern>Room</i>\n';
   result += jeDisplayTreeAddWidgets(allWidgets, null, '  ');
   $('#jeTree').innerHTML = result;
   jeMode = 'tree';
+/*
   jeWidget = null;
   jeStateNow = null;
   jeSet(jeStateBefore = result, true);
   jeGetContext();
+*/
+  jeContext = ["Tree"];
   jeShowCommands();
 }
 
@@ -1273,6 +1301,8 @@ function jeDisplayTreeAddWidgets(allWidgets, parent, indent) {
   }
   return result;
 }
+
+/* End of tree subpane control */
 
 function jeGetContext() {
   const aO = getSelection().anchorOffset;
