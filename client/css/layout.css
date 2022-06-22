@@ -251,13 +251,6 @@ button:hover {
   .wideToolbar {
     --toolbarSize: 200px;
   }
-  .wideToolbar #toolbar {
-    background-image: url(i/branding/logo.svg);
-    background-size: 160px;
-    background-repeat: no-repeat;
-    background-position: center 30px;
-    padding-top: 110px;
-  }
   .wideToolbar .toolbarButton {
     height: 32px;
     justify-content: left;
@@ -276,7 +269,7 @@ button:hover {
     --toolbarSize: 44px;
   }
   .wideToolbar #options {
-    transform: translateY(353px) translateX(202px);
+    transform: translateY(243px) translateX(202px);
   }
   .wideToolbar .toolbarButton .tooltip {
     margin-left: 32px;
@@ -285,6 +278,19 @@ button:hover {
   }
   .wideToolbar #toolbar .divider {
     max-width: 100%;
+  }
+}
+
+@media (min-aspect-ratio: 1600/1000) and (min-height: 440px) {
+  .wideToolbar #toolbar {
+    background-image: url(i/branding/logo.svg);
+    background-size: 160px;
+    background-repeat: no-repeat;
+    background-position: center 30px;
+    padding-top: 110px;
+  }
+  .wideToolbar #options {
+    transform: translateY(353px) translateX(202px);
   }
 }
 
