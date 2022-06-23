@@ -280,6 +280,8 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
 function fillStateDetails(states, state, dom) {
   showOverlay('stateDetailsOverlay');
   $('#stateDetailsOverlay').dataset.id = state.id;
+  for(const dom of $a('#stateDetailsOverlay, #stateDetailsOverlay > *'))
+    dom.scrollTop = 0;
 
   disableEditing($('#stateDetailsOverlay'), state);
   applyValuesToDOM($('#stateDetailsOverlay'), state);
