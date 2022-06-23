@@ -63,28 +63,28 @@
   margin: 0 5px;
 }
 
-@media (max-width: 700px), (max-height: 500px) { #filterByDurationWrapper { display: none; } }
-@media (max-width: 550px), (max-height: 400px) { #filterByLanguageWrapper { display: none; } }
-@media (max-width: 470px), (max-height: 340px) { #filterByModeWrapper     { display: none; } }
-@media (max-width: 350px), (max-height: 280px) { #filterByTypeWrapper     { display: none; } }
+@media (max-width: 700px), (max-height: 437px) { #filterByDurationWrapper { display: none; } }
+@media (max-width: 550px), (max-height: 343px) { #filterByLanguageWrapper { display: none; } }
+@media (max-width: 470px), (max-height: 293px) { #filterByModeWrapper     { display: none; } }
+@media (max-width: 350px), (max-height: 218px) { #filterByTypeWrapper     { display: none; } }
 
 #statesList, #stateEditOverlay {
   overflow: auto;
 }
 
-@media (max-width: 600px), (max-height: 400px) {
+@media (max-width: 600px), (max-height: 375px) {
   #statesList { overflow: unset; }
   #statesOverlay { overflow: auto; }
 }
 
-@media (max-width: 2260px), (max-height: 1400px) { #statesOverlay { --columns: 9; } }
+@media (max-width: 2260px), (max-height: 1412px) { #statesOverlay { --columns: 9; } }
 @media (max-width: 2000px), (max-height: 1250px) { #statesOverlay { --columns: 8; } }
-@media (max-width: 1700px), (max-height: 1100px) { #statesOverlay { --columns: 7; } }
-@media (max-width: 1420px), (max-height:  940px) { #statesOverlay { --columns: 6; } }
-@media (max-width: 1120px), (max-height:  740px) { #statesOverlay { --columns: 5; } }
-@media (max-width:  800px), (max-height:  530px) { #statesOverlay { --columns: 4; } }
-@media (max-width:  680px), (max-height:  480px) { #statesOverlay { --columns: 3; } }
-@media (max-width:  520px), (max-height:  300px) { #statesOverlay { --columns: 2; } }
+@media (max-width: 1700px), (max-height: 1062px) { #statesOverlay { --columns: 7; } }
+@media (max-width: 1420px), (max-height:  887px) { #statesOverlay { --columns: 6; } }
+@media (max-width: 1120px), (max-height:  700px) { #statesOverlay { --columns: 5; } }
+@media (max-width:  800px), (max-height:  500px) { #statesOverlay { --columns: 4; } }
+@media (max-width:  680px), (max-height:  425px) { #statesOverlay { --columns: 3; } }
+@media (max-width:  520px), (max-height:  325px) { #statesOverlay { --columns: 2; } }
 
 #statesList .title {
   border-top: 1px solid black;
@@ -227,13 +227,13 @@ div:nth-of-type(1) > .list > .roomState .star {
 }
 
 
-@media (max-width: 430px) {
+@media (max-width: 430px), (max-height: 268px) {
   #addState {
     margin-top: 4px;
     float: unset;
   }
 }
-@media (max-width: 320px), (max-height: 240px) {
+@media (max-width: 320px), (max-height: 200px) {
   #statesOverlay, .roomState, #emptyLibrary {
     margin:  0;
     padding: 0;
@@ -533,12 +533,12 @@ div:nth-of-type(1) > .list > .roomState .star {
   width: 100%;
 }
 
-@media (min-width: 1001px) and (min-height: 601px) {
+@media (min-width: 1001px) and (min-height: 626px) {
   #stateDetailsOverlay #helpTexts, #stateDetailsOverlay #similarDetails {
     display: block !important;
   }
 }
-@media (max-width: 1360px), (max-height: 760px) {
+@media (max-width: 1360px), (max-height: 850px) {
   #stateDetailsOverlay {
     --mainDetailsHeight: 200px;
     --similarDetailsHeight: 160px;
@@ -560,7 +560,7 @@ div:nth-of-type(1) > .list > .roomState .star {
     display: none;
   }
 }
-@media (max-width: 1000px), (max-height: 600px) {
+@media (max-width: 1000px), (max-height: 625px) {
   #stateDetailsOverlay {
     --mainDetailsHeight: 150px;
   }
@@ -595,7 +595,7 @@ div:nth-of-type(1) > .list > .roomState .star {
     margin-top: 60px;
   }
 }
-@media (max-width: 500px), (max-height: 300px) {
+@media (max-width: 500px), (max-height: 312px) {
   #stateDetailsOverlay {
     --mainDetailsHeight: 50px;
     --similarDetailsHeight: 50px;
@@ -753,7 +753,7 @@ div:nth-of-type(1) > .list > .roomState .star {
     flex-direction: column;
   }
 }
-@media (max-width: 300px), (max-height: 180px) {
+@media (max-width: 300px), (max-height: 187px) {
   #updateImageOverlay h2 {
     height: unset;
   }
