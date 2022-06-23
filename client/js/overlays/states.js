@@ -304,6 +304,16 @@ function fillStateDetails(states, state, dom) {
     $('#prevState h3').innerText = $('h3', prevState).innerText;
     $('#prevState h4').innerText = $('h4', prevState).innerText;
   }
+  $('#nextState').onclick = function() {
+    showOverlay();
+    nextState.click();
+  };
+  $('#prevState').onclick = function() {
+    showOverlay();
+    prevState.click();
+  };
+
+  toggleClass($('#stateDetailsOverlay > [icon=edit]'), 'hidden', state.publicLibrary && !config.allowPublicLibraryEdits);
 
   $('#stateDetailsOverlay .variantsList').innerHTML = '';
   for(const variantID in state.variants) {
@@ -312,29 +322,34 @@ function fillStateDetails(states, state, dom) {
     const variantIDforLoading = variant.plVariantID || variantID;
     if(variant.plStateID)
       variant = states[variant.plStateID].variants[variant.plVariantID];
-    const vEntry = domByTemplate('template-variantslist-entry');
+    const vEntry = domByTemplate('template-variantslist-entry', variant);
     vEntry.className = 'variant';
 
-    $('.language', vEntry).textContent = String.fromCodePoint(...[...variant.language].map(c => c.charCodeAt() + 0x1F1A5));
-    $('.players', vEntry).textContent = variant.players;
+    toggleClass($('img', vEntry), 'hidden', !variant.variantImage && !state.image);
+    $('img', vEntry).src = (variant.variantImage || state.image).replace(/^\//, '');
 
-    if(variant.variant) {
-      $('.variant-name', vEntry).textContent = variant.variant;
-    } else {
-      $('.variant-name', vEntry).textContent = 'Unnamed Variant';
-      $('.variant-name', vEntry).className += ' unnamed';
-    }
-    toggleClass($('.variant-image', vEntry), 'hidden', !variant.variantImage && !state.image);
-    $('.variant-image', vEntry).src = (variant.variantImage || state.image).replace(/^\//, '');
+    $('[icon=play_arrow]', vEntry).onclick = function() {
+      toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading });
+      showOverlay();
+    };
 
-    $('button', vEntry).addEventListener('click', _=>{ toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading }); showOverlay(); });
     $('#stateDetailsOverlay .variantsList').appendChild(vEntry);
   }
 
-  $('#stateDetailsOverlay [icon=edit]').onclick = function() {
+
+
+  $('#stateDetailsOverlay [icon=close]').onclick = function() {
+    showOverlay('statesOverlay');
+  };
+  $('#stateDetailsOverlay .star').onclick = function(e) {
+    e.currentTarget.classList.toggle('active');
+    $(`#statesOverlay .roomState[data-id="${state.id}"] .star`).click();
+  };
+
+  $('#stateDetailsOverlay > [icon=edit]').onclick = function() {
     enableEditing($('#stateDetailsOverlay'), state);
 
-    for(const uploadButton of $a('div button[icon=image]')) {
+    for(const uploadButton of $a('#stateDetailsOverlay button[icon=image]')) {
       uploadButton.onclick = async function() {
         const img = $('img', uploadButton.parentNode.parentNode);
         const newURL = await updateImage(uploadButton.value);
@@ -345,25 +360,26 @@ function fillStateDetails(states, state, dom) {
       };
     }
   };
-  $('#stateDetailsOverlay [icon=save]').onclick = function() {
+  $('#stateDetailsOverlay > [icon=save]').onclick = function() {
     const meta = JSON.parse(JSON.stringify(state));
 
     Object.assign(meta, getValuesFromDOM($('#stateDetailsOverlay')));
-
-    disableEditing($('#stateDetailsOverlay'), meta);
 
     delete meta.id;
     delete meta.starred;
     delete meta.publicLibrary;
     delete meta.publicLibraryCategory;
-    for(const vID in meta.variants)
+    for(const vID in meta.variants) {
+      Object.assign(meta.variants[vID], getValuesFromDOM($a('#variantsList .variant')[vID]));
+      disableEditing($a('#variantsList .variant')[vID], meta.variants[vID]);
       for(const key in meta.variants[vID])
-        if([ 'players', 'language', 'variant', 'link', 'attribution' ].indexOf(key) == -1)
-          delete meta.variants[vID][key]
+        if([ 'players', 'language', 'variant', 'link', 'variantImage', 'plStateID', 'plVariantID' ].indexOf(key) == -1)
+          delete meta.variants[vID][key];
+    }
 
+    disableEditing($('#stateDetailsOverlay'), meta);
     toServer('editState', { id: state.id, meta });
   };
-  $('#stateDetailsOverlay [icon=edit]').style.display = state.publicLibrary && !config.allowPublicLibraryEdits ? 'none' : 'flex';
 }
 
 async function updateImage(currentImage) {
@@ -471,10 +487,6 @@ onLoad(function() {
   on('#stateAddOverlay .link,   #addVariant .link',   'click', e=>addState(e, 'link', prompt('Enter shared URL:')));
 
   on('#addState .download', 'click', _=>downloadState(null));
-
-  on('#stateDetailsOverlay [icon=close]', 'click', _=>showOverlay('statesOverlay'));
-  on('#stateDetailsOverlay .star', 'click', e=>{e.currentTarget.classList.toggle('active');$(`#statesOverlay .roomState[data-id="${$('#stateDetailsOverlay').dataset.id}"] .star`).click();});
-  on('#nextState, #prevState', 'click', e=>{showOverlay(); $(`#statesOverlay .roomState[data-id="${e.currentTarget.dataset.id}"]`).click();});
 
   on('#stateEditOverlay .save',     'click', editState);
   on('#stateEditOverlay .download', 'click', _=>downloadState());

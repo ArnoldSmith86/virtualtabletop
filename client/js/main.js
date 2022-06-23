@@ -302,7 +302,7 @@ onLoad(function() {
 
   if(Object.keys(config.betaServers).length) {
     for(const betaServerName in config.betaServers) {
-      const entry = domByTemplate('template-betaServerList-entry', 'tr');
+      const entry = domByTemplate('template-betaServerList-entry', {}, 'tr');
       $('button', entry).textContent = betaServerName;
       var thisstatus = config.betaServers[betaServerName].return ? 'check' : 'cancel';
       $('.return', entry).textContent = thisstatus;

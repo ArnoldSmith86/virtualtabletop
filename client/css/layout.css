@@ -621,6 +621,7 @@ button[icon]::before {
   text-transform: lowercase;
   margin-right: .25rem;
   font-size: 24px;
+  font-weight: normal;
   line-height: 1;
 }
 button[icon]:empty {

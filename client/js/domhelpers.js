@@ -25,10 +25,11 @@ export function removeFromDOM(node) {
   }
 }
 
-export function domByTemplate(id, type) {
-  const div = document.createElement(type || 'div');
-  div.innerHTML = document.getElementById(id).innerHTML;
-  return div;
+export function domByTemplate(id, obj, type='div') {
+  const dom = document.createElement(type);
+  dom.innerHTML = document.getElementById(id).innerHTML;
+  applyValuesToDOM(dom, obj || {});
+  return dom;
 }
 
 export function mapAssetURLs(str) {
@@ -192,6 +193,7 @@ export function getValuesFromDOM(parent) {
 
 export function enableEditing(parent, obj) {
   parent.classList.add('editing');
+  parent.classList.remove('notEditing');
 
   for(const dom of $a('[data-field]:not([data-target])', parent)) {
     dom.contentEditable = true;
@@ -205,12 +207,16 @@ export function enableEditing(parent, obj) {
 
 export function disableEditing(parent, obj) {
   parent.classList.remove('editing');
+  parent.classList.add('notEditing');
+
   for(const dom of $a('[data-field]:not([data-target=href])', parent)) {
-    dom.contentEditable = false;
-    if(!obj[dom.dataset.field]) {
-      dom[dom.dataset.target || 'innerText'] = '';
-      if(!dom.dataset.forceshow)
-        dom.classList.add('hidden');
+    if(dom.contentEditable != 'false') {
+      dom.contentEditable = false;
+      if(!obj[dom.dataset.field]) {
+        dom[dom.dataset.target || 'innerText'] = '';
+        if(!dom.dataset.forceshow)
+          dom.classList.add('hidden');
+      }
     }
   }
   for(const hideDom of $a('[data-showfor]', parent))

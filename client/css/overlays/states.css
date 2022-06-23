@@ -225,18 +225,6 @@ div:nth-of-type(1) > .list > .roomState .star {
 #stateEditOverlay .input{
   display: flex;
 }
-.variantsList .prettyButton.play{
-  flex-wrap: wrap;
-}
-
-.variantsList .prettyButton.play .variant{
-  padding-top: 4px;
-  border-top: 1px solid #ffffffaa;
-  width: 100%;
-}
-.variantsList .prettyButton.play .variant:empty{
-  display: none;
-}
 
 
 @media (max-width: 430px) {
@@ -303,22 +291,16 @@ div:nth-of-type(1) > .list > .roomState .star {
   color: black;
 }
 
-#stateDetailsOverlay button[icon=close] {
+#stateDetailsOverlay > button[icon=close] {
   position: absolute;
   right: 10px;
   top: 10px;
 }
 
-#stateDetailsOverlay button[icon=edit], #stateDetailsOverlay button[icon=save] {
+#stateDetailsOverlay > button[icon=edit], #stateDetailsOverlay > button[icon=save] {
   position: absolute;
   left: 10px;
   top: 10px;
-}
-#stateDetailsOverlay.editing button[icon=edit] {
-  display: none;
-}
-#stateDetailsOverlay:not(.editing) button[icon=save] {
-  display: none;
 }
 
 #stateDetailsOverlay {
@@ -346,19 +328,22 @@ div:nth-of-type(1) > .list > .roomState .star {
   height: var(--mainDetailsHeight);
   width: var(--mainDetailsHeight);
 }
-#mainImage img, #similarImage img, #mainImage div, #similarImage div {
+#mainImage img, #similarImage img, .variant-image img, #mainImage div, #similarImage div, .variant-image div {
   position: absolute;
   height: 100%;
   width: 100%;
   border-radius: 20px 0 0 20px;
 }
-#mainImage div, #similarImage div {
+#mainImage div, #similarImage div, .variant-image div {
   background: #fff8;
 }
-#stateDetailsOverlay:not(.editing) #mainImage div, #stateDetailsOverlay:not(.editing) #similarImage div {
+.notEditing .onlyForEdit {
   display: none;
 }
-#mainImage div button, #similarImage div button {
+.editing .hideForEdit {
+  display: none;
+}
+#mainImage div button, #similarImage div button, .variant-image div button {
   margin: calc(50% - 17px) auto;
 }
 #mainDetails .details {
@@ -460,8 +445,7 @@ div:nth-of-type(1) > .list > .roomState .star {
   align-items: center;
 }
 
-.variant .variant-description,
-.variant .variant-attribution {
+.variant .variant-description {
   width: 100%;
   font-size: 0.8rem;
   line-height: 0.8rem!important;
@@ -469,12 +453,7 @@ div:nth-of-type(1) > .list > .roomState .star {
   font-weight: normal;
 }
 
-.variant .variant-attribution {
-  font-style: italic;
-}
-
-.variant .variant-description:empty,
-.variant .variant-attribution:empty {
+.variant .variant-description:empty {
   display: none;
 }
 
@@ -490,11 +469,17 @@ div:nth-of-type(1) > .list > .roomState .star {
 }
 
 .variant .variant-image {
+  position: relative;
   flex-grow: 0;
   flex-shrink: 0;
   height: 34px;
   width: 34px;
   margin: 1px 5px 1px 0;
+  border-radius: 3px;
+}
+.variant img {
+  height: 34px;
+  width: 34px;
   border-radius: 3px;
 }
 
@@ -508,8 +493,7 @@ div:nth-of-type(1) > .list > .roomState .star {
 }
 
 .language-info,
-.player-number-info,
-.has-attribution {
+.player-number-info {
   justify-content: center;
   width: auto;
   flex-grow: 0;
@@ -524,9 +508,8 @@ div:nth-of-type(1) > .list > .roomState .star {
   min-width: 70px;
 }
 
-.has-attribution {
-  padding: 0;
-  border-left: none;
+#variantsList [icon=add] {
+  margin: 40px auto;
 }
 
 

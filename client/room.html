@@ -279,13 +279,13 @@
       <button class="prettyButton gameMenu upload">Upload files</button>
     </div>
 
-    <div id="stateDetailsOverlay" class="overlay">
+    <div id="stateDetailsOverlay" class="overlay" class="notEditing">
       <button icon="close"></button>
       <div id="mainDetails">
         <div id="mainImage">
           <img data-field="image" data-target="src">
           <button class="prettyButton star">★</button>
-          <div>
+          <div class="onlyForEdit">
             <button icon="image" data-field="image" data-target="value" data-forceshow="true">Change</button>
           </div>
         </div>
@@ -298,26 +298,29 @@
         </div>
       </div>
       <template id="template-variantslist-entry" type="text/template">
-        <img class="variant-image" />
-        <div class="variant-name">
-          <div class="label"></div>
-          <div class="accordion-item-content">
-            <div class="variant-description"></div>
-            <div class="variant-attribution"></div>
+        <div class="variant-image">
+          <img data-target="src">
+          <div class="onlyForEdit">
+            <button icon="image" data-field="variantImage" data-target="value" data-forceshow="true"></button>
           </div>
         </div>
-        <div class="has-attribution"><i class="icon material-icons accordion-item-toggle">attribution</i></div>
-        <div class="language-info"><i class="material-icons">language</i><span class="language"></span></div>
-        <div class="player-number-info"><i class="material-icons">person</i><span class="players">0</span></div>
-        <button icon="play_arrow">Play</button>
+        <div class="variant-name" data-field="variant" data-forceshow="true"></div>
+        <div class="language-info"><i class="material-icons">language</i><span data-field="language"></span></div>
+        <div class="player-number-info"><i class="material-icons">person</i><span data-field="players"></span></div>
+        <button icon="play_arrow" class="hideForEdit">Play</button>
+        <button icon="content_paste_go" class="onlyForEdit"></button>
+        <button icon="north" class="onlyForEdit"></button>
+        <button icon="south" class="onlyForEdit"></button>
+        <button icon="delete" class="onlyForEdit"></button>
       </template>
       <div id="variantsList">
         <div class="variantsList"></div>
+        <button icon="add" class="onlyForEdit">Add variant</button>
       </div>
       <div id="similarDetails" data-showfor="similarImage|similarName|similarAwards|similarLink|similarVideo">
         <div id="similarImage">
           <img data-field="similarImage" data-target="src">
-          <div>
+          <div class="onlyForEdit">
             <button icon="image" data-field="similarImage" data-target="value" data-forceshow="true">Change</button>
           </div>
         </div>
@@ -328,8 +331,8 @@
           <div data-showfor="similarVideo"><i class="material-icons">movie</i> <a data-field="similarVideo" data-target="href">How To Play on YouTube.com</a></div>
         </div>
       </div>
-      <button icon="edit">Edit</button>
-      <button icon="save">Save</button>
+      <button icon="edit" class="hideForEdit">Edit</button>
+      <button icon="save" class="onlyForEdit">Save</button>
       <div id="prevState" class="roomState">
         <img>
         <div class="details">
