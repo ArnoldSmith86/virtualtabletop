@@ -533,6 +533,11 @@ div:nth-of-type(1) > .list > .roomState .star {
   width: 100%;
 }
 
+@media (min-width: 1001px) and (min-height: 601px) {
+  #stateDetailsOverlay #helpTexts, #stateDetailsOverlay #similarDetails {
+    display: block !important;
+  }
+}
 @media (max-width: 1360px), (max-height: 760px) {
   #stateDetailsOverlay {
     --mainDetailsHeight: 200px;
