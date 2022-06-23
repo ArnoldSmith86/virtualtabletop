@@ -287,31 +287,23 @@ function fillStateDetails(states, state, dom) {
   toggleClass($('#stateDetailsOverlay .star'), 'active', state.starred);
   toggleClass($('#stateDetailsOverlay .star'), 'hidden', !state.publicLibrary);
 
-  const visibleStates = [...$a('#statesList .roomState.visible')];
-  const nextState = visibleStates[visibleStates.indexOf(dom)+1];
-  const prevState = visibleStates[visibleStates.indexOf(dom)-1];
-  $('#nextState').style.display = nextState ? 'block' : 'none';
-  if(nextState) {
-    $('#nextState').dataset.id = nextState.dataset.id;
-    $('#nextState img').src = $('img', nextState).src;
-    $('#nextState h3').innerText = $('h3', nextState).innerText;
-    $('#nextState h4').innerText = $('h4', nextState).innerText;
+  function fillArrowButton(arrowDom, targetDom) {
+    arrowDom.style.display = targetDom ? 'block' : 'none';
+    if(targetDom) {
+      arrowDom.dataset.id = targetDom.dataset.id;
+      $('img', arrowDom).src = $('img', targetDom).src;
+      toggleClass($('img', arrowDom), 'hidden', $('img', arrowDom).src == location.href);
+      $('h3', arrowDom).innerText = $('h3', targetDom).innerText;
+      $('h4', arrowDom).innerText = $('h4', targetDom).innerText;
+    }
+    arrowDom.onclick = function() {
+      showOverlay();
+      targetDom.click();
+    };
   }
-  $('#prevState').style.display = prevState ? 'block' : 'none';
-  if(prevState) {
-    $('#prevState').dataset.id = prevState.dataset.id;
-    $('#prevState img').src = $('img', prevState).src;
-    $('#prevState h3').innerText = $('h3', prevState).innerText;
-    $('#prevState h4').innerText = $('h4', prevState).innerText;
-  }
-  $('#nextState').onclick = function() {
-    showOverlay();
-    nextState.click();
-  };
-  $('#prevState').onclick = function() {
-    showOverlay();
-    prevState.click();
-  };
+  const visibleStates = [...$a('.roomState.visible', dom.parentElement)];
+  fillArrowButton($('#nextState'), visibleStates[visibleStates.indexOf(dom)+1])
+  fillArrowButton($('#prevState'), visibleStates[visibleStates.indexOf(dom)-1])
 
   toggleClass($('#stateDetailsOverlay > [icon=edit]'), 'hidden', state.publicLibrary && !config.allowPublicLibraryEdits);
 
