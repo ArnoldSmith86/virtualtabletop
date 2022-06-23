@@ -353,6 +353,7 @@ div:nth-of-type(1) > .list > .roomState .star {
 #mainDetails h1, #similarDetails h1 {
   color: var(--VTTblue);
   text-align: left;
+  margin-bottom: 10px;
 }
 #mainDetails .material-icons, #similarDetails .material-icons {
   top: 5px;
@@ -538,7 +539,7 @@ div:nth-of-type(1) > .list > .roomState .star {
     display: block !important;
   }
 }
-@media (max-width: 1360px), (max-height: 850px) {
+@media (max-width: 1260px), (max-height: 787px) {
   #stateDetailsOverlay {
     --mainDetailsHeight: 200px;
     --similarDetailsHeight: 160px;
