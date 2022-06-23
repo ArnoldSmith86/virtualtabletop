@@ -27,7 +27,7 @@ const jeState = {
 const jeMacroPreset = `
 // this code will be called for
 // every widget as variable w
-
+s
 // variable v is a persistent object you
 // can use to store other information
 
@@ -504,6 +504,7 @@ const jeCommands = [
       $('#jeTextHighlight').scrollTop = $('#jeText').scrollTop;
       if(jeMode == 'tree')
         jeDisplayTree();
+
     }
   },
   {
@@ -1244,11 +1245,16 @@ const editPanel = document.getElementById("jeEditArea");
 let mouse_pos;
 
 function resize(e){
+  function pad(w) {
+    return parseInt(window.getComputedStyle(document.getElementById("jeEditArea")).getPropertyValue(w).slice(0,-2))
+  };
   const panelHeight = editPanel.clientHeight;
   const resizeHeight = document.getElementById("jeResize").clientHeight;
   const headerHeight = document.getElementById("jeEditHeader").clientHeight;
   const treeHeight = document.querySelector('#jeTree').clientHeight;
-  const height = Math.max(0,Math.min(panelHeight - resizeHeight - headerHeight, treeHeight + e.y - mouse_pos));
+  const padding = pad('padding-top') + pad('padding-bottom');
+
+  const height = Math.max(0,Math.min(panelHeight - resizeHeight - headerHeight - padding, treeHeight + e.y - mouse_pos));
   editPanel.style.setProperty('--treeheight', height + "px"); 
   mouse_pos = e.y;
 }
@@ -1268,13 +1274,7 @@ function jeDisplayTree() {
   result += jeDisplayTreeAddWidgets(allWidgets, null, '  ');
   $('#jeTree').innerHTML = result;
   jeMode = 'tree';
-/*
-  jeWidget = null;
-  jeStateNow = null;
-  jeSet(jeStateBefore = result, true);
-  jeGetContext();
-*/
-  jeContext = ["Tree"];
+  jeContext = ['Tree'];
   jeShowCommands();
 }
 
@@ -1916,7 +1916,9 @@ window.addEventListener('mouseup', async function(e) {
     return;
   jeRoutineResetOnNextLog = true;
   if(e.target.parentElement.className == 'jeTreeWidget') {
-    jeSelectWidget(widgets.get(e.target.parentElement.children[0].textContent));
+    jeContext = [ 'Tree', `"${e.target.parentElement.children[0].textContent}"`];
+    await jeCallCommand(jeCommands.find(o => o.id == 'je_openWidgetById'));
+    jeGetContext();
   } else if(e.target == $('#jeText') && jeContext != 'macro') {
     jeGetContext();
   }

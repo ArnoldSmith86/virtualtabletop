@@ -34,7 +34,7 @@
 
 /*** Tree and widget display area ***/
 #jeEditArea {
-  --treeheight: 40%;
+  --treeheight: 70%;
   display: grid;
   grid-template-columns: 60% 40%;
   grid-template-rows: 4% var(--treeheight)  8px auto;
