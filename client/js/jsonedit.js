@@ -384,7 +384,7 @@ const jeCommands = [
       jeShowCommands();
     }
   },
-  {
+/*  {
     id: 'je_tree',
     name: 'Show Tree',
     icon: '[to_top]',
@@ -392,7 +392,7 @@ const jeCommands = [
     call: async function() {
       jeDisplayTree();
     }
-  },
+  },*/
   {
     id: 'je_removeProperty',
     name: _=>`remove property ${jeContext && jeContext[jeContext.length-1]}`,
@@ -411,15 +411,6 @@ const jeCommands = [
     },
     show: function() {
       return jeGetValue(jeContext.slice(0, -1))[jeContext[jeContext.length-1]] !== undefined;
-    }
-  },
-  {
-    id: 'je_addNewWidget',
-    name: 'Add new widget',
-    icon: '[add_circle]',
-    forceKey: 'A',
-    call: async function() {
-      showOverlay("addOverlay")
     }
   },
   {
@@ -447,6 +438,15 @@ const jeCommands = [
           jeStateNow.id = clonedWidget.id;
         }
       }
+    }
+  },
+  {
+    id: 'je_addNewWidget',
+    name: 'Add new widget',
+    icon: '[add_circle]',
+    forceKey: 'A',
+    call: async function() {
+      showOverlay("addOverlay")
     }
   },
   {
