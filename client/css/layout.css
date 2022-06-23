@@ -358,6 +358,7 @@ body.aspectTooGood .toolbarButton .tooltip {
   left: 4px;
   line-height: 14px;
   min-height: 16px;
+  margin-left: 40px;
 }
 
 body.aspectTooGood .toolbarButton:hover .tooltip {
