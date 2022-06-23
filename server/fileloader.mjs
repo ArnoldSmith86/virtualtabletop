@@ -84,10 +84,9 @@ async function readStatesFromLink(linkAndPath) {
 async function readVariantsFromBuffer(buffer) {
   const zip = await JSZip.loadAsync(buffer);
   if(zip.files['widgets.json']) {
-    const pcio = await PCIO(buffer);
-    return { 'PCIO': pcio };
+    return [ await PCIO(buffer) ];
   } else {
-    const variants = {};
+    const variants = [];
     for(const filename in zip.files) {
 
       if(filename.match(/^[^\/]+\.json$/) && filename != 'asset-map.json' && zip.files[filename]._data) {
@@ -96,7 +95,7 @@ async function readVariantsFromBuffer(buffer) {
         const variant = JSON.parse(await zip.files[filename].async('string'));
         if(typeof variant._meta.version != 'number' || variant._meta.version > VERSION || variant._meta.version < 0)
           throw new Logging.UserError(403, `Found a valid JSON file but version ${variant._meta.version} is not supported. Please update your server.`);
-        variants[filename] = variant;
+        variants.push(variant);
       }
 
       if(filename.match(/^\/?assets/) && zip.files[filename]._data) {
@@ -108,7 +107,7 @@ async function readVariantsFromBuffer(buffer) {
       }
 
     }
-    if(!Object.keys(variants).length)
+    if(!variants.length)
       throw new Logging.UserError(404, 'Did not find any JSON files in the ZIP file.');
     return variants;
   }

@@ -93,15 +93,15 @@ function downloadState(variantID) {
 }
 
 function editState() {
-  const variants = {};
+  const variants = [];
   for(const variant of $a('#variantsEditList > div')) {
-    variants[variant.dataset.id] = {
+    variants.push({
       players: $('.statePlayers', variant).value,
       language: $('.stateLanguage', variant).value,
       variant: $('.stateVariant', variant).value,
       link: $('.stateLink', variant).value,
       attribution: $('.stateAttribution', variant).value
-    };
+    });
   }
   toServer('editState', { id: $('#stateEditOverlay').dataset.id, meta: {
     name:    $('#stateName').value,

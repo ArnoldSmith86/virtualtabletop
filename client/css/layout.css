@@ -431,7 +431,7 @@ body.lightsOff #toolbar:hover {
 }
 
 .overlay a {
-  color: white;
+  color: var(--VTTblue);
   font-weight: bold;
 }
 

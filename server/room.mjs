@@ -47,11 +47,8 @@ export default class Room {
   }
 
   async addState(id, type, src, srcName, addAsVariant) {
-    console.log('addState', id, type, src, srcName, addAsVariant);
-
     const initialAddAsVariant = addAsVariant;
     let stateID = addAsVariant || id;
-    let variantID = id;
 
     let states = { room: [ this.state ] };
     let etag = null;
@@ -74,6 +71,7 @@ export default class Room {
 
     for(const state in states) {
       for(const v in states[state]) {
+        const newVariantID = String(addAsVariant ? this.state._meta.states[stateID].variants.length : 0);
         let name = type == 'file' && srcName || 'Unnamed';
         if(state.match(/\.pcio$/))
           name = state;
@@ -95,10 +93,10 @@ export default class Room {
         };
 
         if(stateID.match(/^PL:/))
-          return this.writePublicLibraryToFilesystem(stateID, variantID, variant);
+          return this.writePublicLibraryToFilesystem(stateID, newVariantID, variant);
 
         if(type != 'link')
-          fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(variant));
+          fs.writeFileSync(this.variantFilename(stateID, newVariantID), JSON.stringify(variant));
 
         const variantMeta = {
           players: meta.players,
@@ -119,25 +117,22 @@ export default class Room {
         delete meta.attribution;
 
         if(addAsVariant) {
-          if(!this.state._meta.states[stateID].variants[variantID])
-            this.state._meta.states[stateID].variants[variantID] = variantMeta;
+          if(!this.state._meta.states[stateID].variants[newVariantID])
+            this.state._meta.states[stateID].variants[newVariantID] = variantMeta;
           else if(type != 'link')
-            delete this.state._meta.states[stateID].variants[variantID].link;
+            delete this.state._meta.states[stateID].variants[newVariantID].link;
         } else {
-          meta.variants = {};
-          meta.variants[variantID] = variantMeta;
+          meta.variants = [ variantMeta ];
           this.state._meta.states[stateID] = meta;
         }
 
         addAsVariant = true;
-        variantID = Math.random().toString(36).substring(3, 7);
       }
 
       if(!initialAddAsVariant) {
         addAsVariant = false;
         stateID = Math.random().toString(36).substring(3, 7);
       }
-      variantID = Math.random().toString(36).substring(3, 7);
     }
     this.sendMetaUpdate();
   }
@@ -255,10 +250,10 @@ export default class Room {
                   Room.publicLibrary[id] = gameFile._meta.info;
                   Room.publicLibrary[id].publicLibrary = subLibrary.toLowerCase() + '/' + dir;
                   Room.publicLibrary[id].publicLibraryCategory = subLibrary;
-                  Room.publicLibrary[id].variants = {};
+                  Room.publicLibrary[id].variants = [];
                 }
-                Room.publicLibrary[id].variants[file] = JSON.parse(JSON.stringify(gameFile._meta.info));
-                Room.publicLibrary[id].variants[file].publicLibrary = subLibrary.toLowerCase() + '/' + dir + '/' + file;
+                Room.publicLibrary[id].variants[file.replace(/\.json$/, '')] = JSON.parse(JSON.stringify(gameFile._meta.info));
+                Room.publicLibrary[id].variants[file.replace(/\.json$/, '')].publicLibrary = subLibrary.toLowerCase() + '/' + dir + '/' + file;
               }
             }
           }
@@ -376,6 +371,20 @@ export default class Room {
           }
         }
       }
+
+      for(const [ id, state ] of Object.entries(this.state._meta.states)) {
+        if(state.publicLibrary)
+          continue;
+
+        const newVariants = [];
+        for(const [ variantID, variant ] of Object.entries(state.variants)) {
+          if(!variant.plStateID && !variant.link)
+            fs.renameSync(this.variantFilename(id, variantID), this.variantFilename(id, newVariants.length));
+          newVariants.push(variant);
+        }
+        state.variants = newVariants;
+      }
+
       this.state._meta.metaVersion = 1;
     }
   }
@@ -477,7 +486,7 @@ export default class Room {
   }
 
   removeState(player, stateID) {
-    this.deleteUnusedVariantFiles(stateID, this.state._meta.states[stateID], { variants: {} });
+    this.deleteUnusedVariantFiles(stateID, this.state._meta.states[stateID], { variants: [] });
     delete this.state._meta.states[stateID];
     this.sendMetaUpdate();
   }
@@ -565,8 +574,6 @@ export default class Room {
   }
 
   toggleStateStar(player, publicLibraryName) {
-    if(!this.state._meta.starred)
-      this.state._meta.starred = {};
     if(this.state._meta.starred[publicLibraryName])
       delete this.state._meta.starred[publicLibraryName];
     else
@@ -688,6 +695,6 @@ export default class Room {
     if(stateID.match(/^PL:/))
       return Config.directory('library') + '/' + Room.publicLibrary[stateID].variants[variantID].publicLibrary;
     else
-      return Config.directory('save') + '/states/' + this.id + '-' + stateID.replace(/[^a-z0-9]/g, '_') + '-' + variantID.replace(/[^a-z0-9]/g, '_') + '.json';
+      return Config.directory('save') + '/states/' + this.id + '-' + stateID.replace(/[^a-z0-9]/g, '_') + '-' + String(variantID).replace(/[^a-z0-9]/g, '_') + '.json';
   }
 }
