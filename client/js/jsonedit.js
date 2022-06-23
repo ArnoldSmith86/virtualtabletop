@@ -1270,22 +1270,36 @@ document.addEventListener("mouseup", function(){
 
 function jeDisplayTree() {
   const allWidgets = Array.from(widgets.values());
-  let result = '<i class=extern>Room</i>\n';
-  result += jeDisplayTreeAddWidgets(allWidgets, null, '  ');
-  $('#jeTree').innerHTML = result;
+  $('#jeTree').innerHTML = '<ul class=jeTreeDisplay><i class=extern>Room</i>\n' + jeDisplayTreeAddWidgets(allWidgets, null) + '</ul>';
+  
+  let toggler = document.getElementsByClassName("jeTreeExpander");
+  let i;
+  for (i = 0; i < toggler.length; i++) {
+    toggler[i].addEventListener("click", function(e) {
+      if(e.target.classList.contains("jeTreeExpander")) {
+        e.target.parentElement.querySelector(".nested").classList.toggle("active");
+        e.target.classList.toggle("jeTreeExpander-down");
+      }
+    });
+  } 
   jeMode = 'tree';
   jeContext = ['Tree'];
   jeShowCommands();
 }
 
-function jeDisplayTreeAddWidgets(allWidgets, parent, indent) {
+function jeDisplayTreeAddWidgets(allWidgets, parent) {
   function colored(str, kind) {
     return `<i class=${kind}>${html(str)}</i>`
   }
   let result = '';
   for(const widget of (allWidgets.filter(w=>w.get('parent')==parent)).sort((w1,w2)=>w1.get('id').localeCompare(w2.get('id'), 'en', {numeric: true, ignorePunctuation: true}))) {
     const type = widget.get('type');
-    result += `<div class=jeTreeWidget>${indent}${colored(widget.get('id'), 'key')} (${colored(type || 'basic','string')} - `;
+    const children = jeDisplayTreeAddWidgets(allWidgets, widget.get('id'));
+
+    result += '<li class="jeTreeWidget">';
+    if(children)
+      result += '<span class="jeTreeWidget jeTreeExpander jeTreeExpander-down">';
+    result += `${colored(widget.get('id'), 'key')} (${colored(type || 'basic','string')} - `;
     if(widget.get('id').match(/^[0-9a-z]{4}$/) && $('#jsonEditor').classList.contains('wide')) {
       if(type == 'card' && !widget.get('cardType').match(/^type-[0-9a-f-]{36}$/))
         result += `${widget.get('cardType')} - `;
@@ -1295,8 +1309,11 @@ function jeDisplayTreeAddWidgets(allWidgets, parent, indent) {
         result += `${widget.get('classes')} - `;
     }
     result += `${colored(String(Math.floor(widget.get('x')),'number'))},` +
-               `${colored(String(Math.floor(widget.get('y')),'number'))})</div>`;
-    result += jeDisplayTreeAddWidgets(allWidgets, widget.get('id'), indent + '  ');
+      `${colored(String(Math.floor(widget.get('y')),'number'))})</span>`;
+    if(children)
+      result += `<ul class="jeNestedTree nested active">${children}</ul>`;
+    result += '</li>';
+      
     delete allWidgets[allWidgets.indexOf(widget)];
   }
   return result;
@@ -1915,7 +1932,7 @@ window.addEventListener('mouseup', async function(e) {
   if(!jeEnabled)
     return;
   jeRoutineResetOnNextLog = true;
-  if(e.target.parentElement.className == 'jeTreeWidget') {
+  if(e.target.parentElement.classList.contains('jeTreeWidget')) {
     jeContext = [ 'Tree', `"${e.target.parentElement.children[0].textContent}"`];
     await jeCallCommand(jeCommands.find(o => o.id == 'je_openWidgetById'));
     jeGetContext();

@@ -68,6 +68,50 @@
   overflow-wrap: break-word;
   overflow-y: auto;
   white-space: pre-wrap;
+  cursor: pointer;
+}
+
+ul, .jeTreeDisplay, .jeNestedTree {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+li, .jeNestedTree {
+    margin-left: 10px;
+    padding-left: 0;
+}
+
+/* Style the caret/arrow */
+.jeTreeExpander, .jeTreeExpander-down {
+  user-select: none; /* Prevent text selection */
+}
+
+/* Create the caret/arrow with a unicode, and style it */
+.jeTreeExpander::before {
+  content: "\25B6";
+  color: white;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+/* Rotate the caret/arrow icon when clicked on (using JavaScript) */
+.jeTreeExpander-down::before {
+  content: "\25B6";
+  color: white;
+  display: inline-block;
+  margin-right: 6px;
+  transform: rotate(90deg);
+}
+
+/* Hide the nested list */
+.nested {
+  display: none;
+}
+
+/* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
+.active {
+  display: block;
 }
 
 #jeResize {
