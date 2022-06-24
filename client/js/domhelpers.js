@@ -171,7 +171,10 @@ export function applyValuesToDOM(parent, obj) {
   for(const dom of $a('[data-field]', parent)) {
     if(obj[dom.dataset.field]) {
       dom.classList.remove('hidden');
-      dom[dom.dataset.target || 'innerText'] = obj[dom.dataset.field];
+      if(dom.dataset.html)
+        dom.innerHTML = DOMPurify.sanitize(mapAssetURLs(obj[dom.dataset.field]), { USE_PROFILES: { html: true } });
+      else
+        dom[dom.dataset.target || 'innerText'] = obj[dom.dataset.field];
       if(dom.dataset.target == 'src')
         dom.src = obj[dom.dataset.field].replace(/^\//, '');
     } else {
@@ -186,8 +189,12 @@ export function applyValuesToDOM(parent, obj) {
 
 export function getValuesFromDOM(parent) {
   const obj = {};
-  for(const dom of $a('[data-field]:not([data-target=href])', parent))
-    obj[dom.dataset.field] = dom[dom.dataset.target || 'innerText'].trim().replace('<empty>', '');
+  for(const dom of $a('[data-field]:not([data-target=href])', parent)) {
+    if(dom.dataset.html && dom.innerText != '<empty>')
+      obj[dom.dataset.field] = DOMPurify.sanitize(dom.innerHTML, { USE_PROFILES: { html: true } });
+    else
+      obj[dom.dataset.field] = dom[dom.dataset.target || 'innerText'].trim().replace('<empty>', '');
+  }
   return obj;
 }
 

@@ -50,6 +50,8 @@ export default function minifyRoom() {
       return minify({
         compressor: Config.get('minifyJavascript') ? uglifyES : noCompress,
         input: [
+          'node_modules/dompurify/dist/purify.js',
+
           'client/js/domhelpers.js',
           'client/js/connection.js',
           'client/js/serverstate.js',
