@@ -526,7 +526,7 @@ div:nth-of-type(1) > .list > .roomState .star {
   right: 10px;
   width: calc(50% - 15px);
   height: unset;
-  padding: 20px;
+  padding: 0 20px;
   overflow: auto;
   overflow-wrap: break-word;
 }
@@ -601,6 +601,9 @@ div:nth-of-type(1) > .list > .roomState .star {
   #nextState, #prevState {
     display: none !important;
   }
+  #helpTexts {
+    padding: 0 20px;
+  }
 }
 @media (max-width: 800px), (max-height: 500px) {
   #mainDetails {
@@ -655,6 +658,9 @@ div:nth-of-type(1) > .list > .roomState .star {
   #variantsList .variant > .variant-name {
     display: block;
     min-height: 40px;
+  }
+  #helpTexts {
+    padding: 0 10px;
   }
 }
 
