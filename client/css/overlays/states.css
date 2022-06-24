@@ -346,13 +346,16 @@ div:nth-of-type(1) > .list > .roomState .star {
 #mainImage div button, #similarImage div button, .variant-image div button {
   margin: calc(50% - 17px) auto;
 }
-#mainDetails .details {
+#mainDetails .details, #similarDetails .details {
   margin-left: var(--mainDetailsHeight);
   padding-left: 20px;
+  padding-top: 14px;
+  padding-bottom: 14px;
 }
 #mainDetails h1, #similarDetails h1 {
   color: var(--VTTblue);
   text-align: left;
+  margin-top: 0;
   margin-bottom: 10px;
 }
 #mainDetails .material-icons, #similarDetails .material-icons {
@@ -368,6 +371,9 @@ div:nth-of-type(1) > .list > .roomState .star {
 #mainDetails .active.star {
   color: gold;
 }
+#mainDetails p, #similarDetails p {
+  margin-bottom: 0;
+}
 
 #similarDetails {
   top: unset;
@@ -378,7 +384,6 @@ div:nth-of-type(1) > .list > .roomState .star {
 }
 #similarDetails .details {
   margin-left: var(--similarDetailsHeight);
-  padding-left: 20px;
 }
 #similarDetails h1 {
   font-size: 1.3em;
@@ -545,8 +550,9 @@ div:nth-of-type(1) > .list > .roomState .star {
     --similarDetailsHeight: 160px;
     --arrowButtonsSize: 100px;
   }
-  #mainDetails h1, #similarDetails h1 {
-    margin: 10px 0;
+  #mainDetails .details, #similarDetails .details {
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
   #mainDetails > .details > div {
     display: inline-block;
@@ -564,6 +570,7 @@ div:nth-of-type(1) > .list > .roomState .star {
 @media (max-width: 1000px), (max-height: 625px) {
   #stateDetailsOverlay {
     --mainDetailsHeight: 150px;
+    --similarDetailsHeight: 150px;
   }
   #mainDetails, #similarDetails, #variantsList, #helpTexts {
     position: unset;
@@ -583,6 +590,10 @@ div:nth-of-type(1) > .list > .roomState .star {
     height: var(--mainDetailsHeight);
     width: var(--mainDetailsHeight);
     border-radius: 10px;
+  }
+  #mainDetails .details, #similarDetails .details {
+    padding-top: 0;
+    padding-bottom: 0;
   }
   #mainDetails .star {
     position: absolute;

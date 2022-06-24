@@ -291,6 +291,9 @@
     -webkit-font-smoothing: antialiased;
     font-feature-settings: "liga";
 }
+.material-icons.intext {
+    font-size: 20px;
+}
 
 @font-face {
     font-family: "VTT-Symbols";

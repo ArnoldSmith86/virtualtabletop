@@ -309,6 +309,12 @@ function fillStateDetails(states, state, dom) {
 
   toggleClass($('#stateDetailsOverlay > [icon=edit]'), 'hidden', state.publicLibrary && !config.allowPublicLibraryEdits);
 
+  function updateStateDetailsDomains(state) {
+    $('#similarDetailsDomain').innerText = String(state.similarDetailsLink).replace(/^https?:\/\/(www\.)?/, '').replace(/\/.*/, '');
+    $('#similarRulesDomain').innerText = String(state.similarRulesLink).replace(/^https?:\/\/(www\.)?/, '').replace(/\/.*/, '');
+  }
+  updateStateDetailsDomains(state);
+
   $('#stateDetailsOverlay .variantsList').innerHTML = '';
   for(const variantID in state.variants) {
     let variant = state.variants[variantID];
@@ -372,6 +378,7 @@ function fillStateDetails(states, state, dom) {
     }
 
     disableEditing($('#stateDetailsOverlay'), meta);
+    updateStateDetailsDomains(meta);
     toServer('editState', { id: state.id, meta });
   };
 }
