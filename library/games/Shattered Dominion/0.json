@@ -2082,7 +2082,7 @@
       "name": "Shattered Dominion",
       "image": "/assets/1597719616_28558",
       "rules": "",
-      "bgg": "",
+      "bgg": "https://boardgamegeek.com/boardgame/204583/kingdomino",
       "year": "2016",
       "mode": "vs",
       "time": "15",
@@ -2091,7 +2091,6 @@
       "variant": "",
       "attribution": "Board layout and \"king\" game piece by ArnoldSmith86. Released to public domain under CC0.\n\nPixabay license:\nhttps://pixabay.com/vectors/crown-golden-yellow-emperor-576226/\nhttps://pixabay.com/vectors/building-castle-fort-fortification-2024446/\n\nhttps://pixabay.com/photos/sheep-meadow-aerial-view-drone-939566/\nhttps://pixabay.com/photos/wheat-wheat-field-crop-spikelets-5581130/\nhttps://pixabay.com/photos/central-tien-shan-china-landscape-92365/\nhttps://pixabay.com/de/photos/erde-trocken-lehm-lehmhaltig-d%C3%BCrre-3483470/\nhttps://pixabay.com/photos/sand-texture-dune-beach-desert-5085975/\n\nPublic domain:\nhttps://www.piqsels.com/en/public-domain-photo-fmixo\nhttps://www.piqsels.com/en/public-domain-photo-sqflp\n",
       "similarName": "Kingdomino",
-      "similarLink": "https://boardgamegeek.com/boardgame/204583/kingdomino",
       "description": "Place tiles consisting of images of various types of terrain to connect to a matching type of terrain already on the 5x5 board. Earn points for connecting tiles and playing bonus symbol. Most points wins."
     }
   },

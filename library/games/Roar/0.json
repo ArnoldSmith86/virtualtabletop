@@ -1549,7 +1549,7 @@
       "name": "Roar",
       "image": "/assets/1242550039_3992",
       "rules": "",
-      "bgg": "",
+      "bgg": "https://boardgamegeek.com/boardgame/8129/sluff",
       "year": "2003",
       "mode": "vs",
       "time": "30",
@@ -1558,7 +1558,6 @@
       "variant": "",
       "attribution": "Board layout by ArnoldSmith86. Released to public domain under CC0.\n\nImages released under Pixabay License:\nhttps://pixabay.com/vectors/ape-animal-cartoon-character-comic-3224416/\nhttps://pixabay.com/vectors/frog-animal-comic-comic-drawing-3241108/\nhttps://pixabay.com/vectors/lion-animal-comic-drawing-simple-3221778/\nhttps://pixabay.com/vectors/owl-comic-animal-portrait-3218837/\nhttps://pixabay.com/vectors/pig-animal-comic-comic-drawing-3245668/\nhttps://pixabay.com/vectors/death-halloween-skeleton-undead-159120/",
       "similarName": "Sluff Off!",
-      "similarLink": "https://boardgamegeek.com/boardgame/8129/sluff",
       "description": "Trick-taking card game with 15 cards in 5 suits. Points lost for not taking exact number of bids.  One player serves as a foil and instead of taking tricks, tries to force other players to take them.  Fewest penalty points at end of game wins."
     }
   },

@@ -310,8 +310,8 @@ function fillStateDetails(states, state, dom) {
   toggleClass($('#stateDetailsOverlay > [icon=edit]'), 'hidden', state.publicLibrary && !config.allowPublicLibraryEdits);
 
   function updateStateDetailsDomains(state) {
-    $('#similarDetailsDomain').innerText = String(state.similarDetailsLink).replace(/^https?:\/\/(www\.)?/, '').replace(/\/.*/, '');
-    $('#similarRulesDomain').innerText = String(state.similarRulesLink).replace(/^https?:\/\/(www\.)?/, '').replace(/\/.*/, '');
+    $('#similarDetailsDomain').innerText = String(state.bgg).replace(/^https?:\/\/(www\.)?/, '').replace(/\/.*/, '');
+    $('#similarRulesDomain').innerText = String(state.rules).replace(/^https?:\/\/(www\.)?/, '').replace(/\/.*/, '');
   }
   updateStateDetailsDomains(state);
 

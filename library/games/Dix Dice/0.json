@@ -3750,7 +3750,7 @@
       "name": "Dix Dice",
       "image": "/assets/-1880411500_33630",
       "rules": "",
-      "bgg": "",
+      "bgg": "https://boardgamegeek.com/boardgame/2578/phase-10-dice",
       "year": "1993",
       "mode": "vs",
       "time": "30",
@@ -3759,7 +3759,6 @@
       "variant": "",
       "attribution": "The room state, library image, and all game elements are by LawDawg96 are are released to the Public Domain under CC0.",
       "similarName": "Phase 10 Dice",
-      "similarLink": "https://boardgamegeek.com/boardgame/2578/phase-10-dice",
       "description": "Complete a series of levels by rolling dice in runs, sets, or colors.  First to complete 10 levels wins."
     }
   }

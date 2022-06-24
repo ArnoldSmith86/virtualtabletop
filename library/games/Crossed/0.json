@@ -3800,7 +3800,7 @@
       "name": "Crossed",
       "image": "/assets/1786145751_17624",
       "rules": "",
-      "bgg": "",
+      "bgg": "https://boardgamegeek.com/boardgame/206931/encore",
       "year": "2016",
       "mode": "vs",
       "time": "20",
@@ -3809,7 +3809,6 @@
       "variant": "",
       "attribution": "Board layout and library image by ArnoldSmith86 and released to public domain (CC0).\n\nCross image is CC0: https://www.svgrepo.com/svg/28063/cross",
       "similarName": "Encore!",
-      "similarLink": "https://boardgamegeek.com/boardgame/206931/encore",
       "description": "Take turns rolling dice to figure out which sections on scoresheet to mark off. Player rolling dice can remove two dice and other players choose from remaining dice. Highest score wins."
     }
   },

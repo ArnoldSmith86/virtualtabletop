@@ -1917,7 +1917,7 @@
       "name": "Wordy",
       "image": "/assets/-1478225327_204716",
       "rules": "",
-      "bgg": "",
+      "bgg": "https://boardgamegeek.com/boardgame/320/scrabble",
       "year": "1948",
       "mode": "vs",
       "time": "90",
@@ -1926,7 +1926,6 @@
       "variant": "German",
       "attribution": "The game layout, images, and Wordy logo were done by https://www.reddit.com/user/96LawDawg and are released to the Public Domain.\n\nThe library image contains a photograph from https://pixabay.com/photos/printing-plate-letters-font-type-1030849/ and is available without copyright restriction under the Pixabay License.\n\nGerman translation by ArnoldSmith86.",
       "similarName": "Scrabble",
-      "similarLink": "https://boardgamegeek.com/boardgame/320/scrabble",
       "description": "Use letter tiles to build words with extra points for playing in certain locations.  Most points wins."
     }
   },

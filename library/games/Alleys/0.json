@@ -5,7 +5,7 @@
       "name": "Alleys",
       "image": "/assets/820000023_33584",
       "rules": "",
-      "bgg": "",
+      "bgg": "https://boardgamegeek.com/boardgame/624/quoridor",
       "year": "1997",
       "mode": "vs",
       "time": "15",
@@ -14,7 +14,6 @@
       "variant": "",
       "attribution": "The game layout and images (including the library image) were done by https://www.reddit.com/user/96LawDawg and are released to the public domain under the CC0 license.\n\nThe pawn pieces are based on the 3d models provided by Microsoft without a license restriction.",
       "similarName": "Quoridor",
-      "similarLink": "https://boardgamegeek.com/boardgame/624/quoridor",
       "description": "Build walls to create corridors to move token and to block opponent.  First to cross to other side of board wins."
     }
   },

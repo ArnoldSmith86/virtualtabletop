@@ -1480,7 +1480,7 @@
       "name": "Elemental",
       "image": "/assets/-170776426_30255",
       "rules": "",
-      "bgg": "",
+      "bgg": "https://boardgamegeek.com/boardgame/299169/spicy",
       "year": "2020",
       "mode": "vs",
       "time": "15",
@@ -1489,7 +1489,6 @@
       "variant": "",
       "attribution": "Board layout by ArnoldSmith86. Released to public domain under CC0.\n\nImages released under Pixabay License:\nhttps://pixabay.com/photos/rocks-stones-pebbles-background-1246668/\nhttps://pixabay.com/photos/ice-frost-winter-snow-snowflakes-6538605/\nhttps://pixabay.com/photos/fire-wood-fire-flame-burn-brand-171229/\nhttps://pixabay.com/photos/grass-lawn-field-meadow-grassy-84622/",
       "similarName": "Spicy",
-      "similarLink": "https://boardgamegeek.com/boardgame/299169/spicy",
       "description": "Bluffing card game. Play or pass each turn while declaring card. Penalties for getting caught lieing and wrong challenges. Collect reward cards for points.  Most points wins."
     }
   },

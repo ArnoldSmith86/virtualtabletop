@@ -547,7 +547,7 @@
       "name": "Quad Line",
       "image": "/assets/-1262399743_3193",
       "rules": "",
-      "bgg": "",
+      "bgg": "https://boardgamegeek.com/boardgame/2719/connect-four",
       "year": "1974",
       "mode": "vs",
       "time": "10",
@@ -556,7 +556,6 @@
       "variant": "",
       "attribution": "Room layout and library image by ArnoldSmith86 and put into public domain (CC0)",
       "similarName": "Connect Four",
-      "similarLink": "https://boardgamegeek.com/boardgame/2719/connect-four",
       "description": "Stack checkers in columns to link 4 horizontally, vertically, or diagonally.  First to connect four in a row wins."
     }
   },

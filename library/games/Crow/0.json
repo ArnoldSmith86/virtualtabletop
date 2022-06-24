@@ -779,7 +779,7 @@
       "name": "Crow",
       "image": "/assets/60225402_68993",
       "rules": "",
-      "bgg": "",
+      "bgg": "https://boardgamegeek.com/boardgame/1260/rook",
       "year": "1906",
       "mode": "vs",
       "time": "45",
@@ -788,7 +788,6 @@
       "variant": "",
       "attribution": "The room layout, game design, and card designs are by LawDawg96 and released to the Public Domain by CC0.\n\nThe following graphics are from Pixabay and are available under the Pixabay license.\n\n - Library image: https://pixabay.com/photos/sunset-crow-lawn-bird-night-glow-2247748/\n - Card back: https://pixabay.com/photos/raven-crow-bird-black-bird-avian-5588641/\n - Rook card: https://pixabay.com/vectors/animal-bird-black-crow-raven-2025562/",
       "similarName": "Rook",
-      "similarLink": "https://boardgamegeek.com/boardgame/1260/rook",
       "description": "Classic trick taking card game using 4 suited deck with cards 1-14 and a bird card."
     }
   },

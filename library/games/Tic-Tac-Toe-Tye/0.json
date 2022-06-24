@@ -1099,7 +1099,7 @@
       "name": "Tic-Tac-Toe-Tye",
       "image": "/assets/-2121046400_220493",
       "rules": "",
-      "bgg": "",
+      "bgg": "https://www.boardgamegeek.com/boardgame/188465/otrio",
       "year": "2015",
       "mode": "vs",
       "time": "20-30",
@@ -1108,7 +1108,6 @@
       "variant": "",
       "attribution": "The game state, room design, library image, and all graphics are by LawDawg and are released to the Public Domain by CC0.",
       "similarName": "Otrio",
-      "similarLink": "https://www.boardgamegeek.com/boardgame/188465/otrio",
       "description": "Classic game of X's and O's with a twist; 3 different size markers fit in each square.  Link 3 colored tokens in one of 3 ways to win."
     }
   }

@@ -8136,7 +8136,7 @@
       "name": "Adedanha",
       "image": "/assets/81992686_676222",
       "rules": "",
-      "bgg": "",
+      "bgg": "https://www.boardgamegeek.com/boardgame/2381/scattergories",
       "year": "1988",
       "mode": "vs",
       "time": "30",
@@ -8145,7 +8145,6 @@
       "variant": "With timer",
       "attribution": "The game design and all game board elements are by RaphaelAlvez and are released to the Public Domain by CC0.",
       "similarName": "Scattergories",
-      "similarLink": "https://www.boardgamegeek.com/boardgame/2381/scattergories",
       "description": "Starting with a random letter, list words in designated categories.  First to complete list wins."
     }
   }
