@@ -47,7 +47,7 @@
     "layer": -3,
     "z": 127,
     "css": "font-size: 25px; ",
-    "text": "Decks are widgets containing a number of cards.  In the deck, `cardTypes` is a listing of each particular type of card and each kind of card can have multiple copies of that card. Each card can also have unique properties that apply only to that type of card.  `cardDefaults` contain properties that apply to every card in a deck. '`cardTypes` overrides `cardDefaults` in the event of conflict. `faceTemplates` defines the layout for each face of the card.  Cards in VTT can contain any number of faces."
+    "text": "Decks are widgets containing a number of cards.  In the deck, 'cardTypes' is a listing of each particular type of card and each kind of card can have multiple copies of that card. Each card can also have unique properties that apply only to that type of card.  'cardDefaults' contain properties that apply to every card in a deck. 'cardTypes' overrides 'cardDefaults' in the event of conflict. 'faceTemplates' defines the layout for each face of the card.  Cards in VTT can contain any number of faces."
   },
   "btn1": {
     "type": "button",
@@ -795,8 +795,8 @@
     "z": 10052,
     "movable": false,
     "movableInEdit": false,
-    "css": "font-size: 20px; ",
-    "text": "This is the standard deck. To view a deck, enter the JSON Editor. You can see how many cards are in the deck by pressing the icon that looks like a pencil in the upper right of the screen. The standard deck has 52 cards, but 54 `cardTypes`, as jokers are not included in the available cards by default. Press that button again to exit Edit view. Mouse over the holder near the center and the deck should show up as available under F2 with the name 'deck1'. Press function key 2 (or whatever function key shows up for you). This displays the JSON for the deck widget. The greyed out width and height of 86 at the top of the JSON simply define the shape of the widget in Edit mode (the round circle visible in Edit mode. These have nothing to do with the size of the cards or anything on the cards.\n\nThe standard deck does not have any entries for `cardDefaults`.\n\nUnder `cardTypes` there are 54 entries. Each starts with the name of the card (from 'T 1J' to 'S 4K'. Names can be any string of characters. Following the name is a list of properties for each card within curly brackets. In this case, each card is an image. The remaining entries for suit, rank, etc. are properties for each card used in various SORT routines. In this case, they do not have anything to do with what is actually displayed on the card.\n\nAt the bottom is the `faceTemplate` area. For the standard deck there are two faces. Neither face has a border or border radius set.  Each face type is 'image'. The first face (0) which is the back of the card) has an image that is 103px wide by 160px high and the image is placed at coordinates 0,0 on the card. When using an image, usually you should set `color:transparent` to prevent unwanted effects from showing up on the card. Face 0 uses a static face, so the same image appears on the back of every card. The second face (1) has similar properties except that each image can be different per card. Using the property value of `image` each card will have face 1 as defined in the `image` property in `cardTypes`."
+    "css": "font-size: 19px; ",
+    "text": "This is the standard deck. To view a deck, enter the JSON Editor. You can see how many cards are in the deck by pressing the icon that looks like a pencil in the upper right of the screen. The standard deck has 52 cards, but 54 'cardTypes' as jokers are not included in the available cards by default. Press that button again to exit Edit view. Mouse over the holder near the center and the deck should show up as available under F2 with the name 'deck1'. Press function key 2 (or whatever function key shows up for you). This displays the JSON for the deck widget. The greyed-out width and height of 86 at the top of the JSON simply define the shape of the widget in Edit mode (the round circle visible in Edit mode). These have nothing to do with the size of the cards or anything on the cards.\n\nThe standard deck does not have any entries for 'cardDefaults'.\n\nUnder 'cardTypes' there are 54 entries. Each starts with the name of the card (from 'T 1J' to 'S 4K'). Names can be any string of characters. Following the name is a list of properties for each card within curly brackets. In this case, each card is an image. The remaining entries for suit, rank, etc. are properties for each card used in various SORT routines. In this case, they do not have anything to do with what is actually displayed on the card.\n\nAt the bottom is the 'faceTemplate' area. For the standard deck there are two faces. Neither face has a border or border radius set.  Each face type is 'image'. The first face, 0, which is the back of the card, has an image that is 103px wide by 160px high and the image is placed at coordinates 0,0 on the card. When using an image, you can set 'color:transparent' to prevent a background color from showing up on the card. Face 0 uses a static face, so the same image appears on the back of every card. The second face, 1, has similar properties except that each image can be different per card. Using the property value of 'image' each card will have face 1 as defined in the 'image' property in 'cardTypes'.\n\nFinally, this deck also implements 'dynamicProperties'. If a property in the object array is set directly, then it is the same for each card. But using 'dynamicProperties' (such as image in this example), you can make the property on each card unique."
   },
   "details2": {
     "id": "details2",
@@ -808,7 +808,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 20px; ",
-    "text": "This deck, from the public library game Shape Sorter, adds a `cardDefaults` property. In this case, every card has a defined height and width of 80px, has a custom property of `shift` set to true, and has a grid applied.\n\nIn the `cardTypes`, you can see the name of each card, the URL source for the image that is on the card, and a custom property called `color` that is different for each color group of cards.\n\nIn `faceTemplates`, the first face is just solid black. Although it uses the `type:image` there is no actual image on the card. It is just a color that is 80x80. The second face starts with the same black image and then layers another, but dynamic, image on top of that. When building cards, the first object on each face will be the lowest, meaning it is applied first. Other objects are placed on the card in the order listed in the object. The layering is important to remember when building complex cards.The second object on the second face is the shape, as represented by a dynamic image that will be different for each card. The image is smaller than the card (60x60) and is positioned at coordinates 10,10. This object also uses the `svgReplaces` function to change the color of the svg image. Each card gets the color specified in the `color` property on each card in `cardTypes`. "
+    "text": "This deck, from the public library game Shape Sorter, adds a 'cardDefaults' property. In this case, every card has a defined height and width of 80px, has a custom property of 'shift' set to true, and has a grid applied.\n\nIn the 'cardTypes', you can see the name of each card, the URL source for the image that is on the card, and a custom property called 'color' that is different for each color group of cards.\n\nIn 'faceTemplates', the first face is just solid black. Although it uses the 'type:image' there is no actual image on the card. It is just a color that is 80x80. The second face starts with the same black image and then layers another, but dynamic, image on top of that. When building cards, the first object on each face will be the lowest, meaning it is applied first. Other objects are placed on the card in the order listed in the object. The layering is important to remember when building complex cards.The second object on the second face is the shape, as represented by a dynamic image that will be different for each card. The image is smaller than the card (60x60) and is positioned at coordinates 10,10. This object also uses the 'svgReplaces' function to change the color of the svg image. Each card gets the color specified in the 'color' property on each card in 'cardTypes'."
   },
   "xzx3": {
     "type": "pile",
@@ -825,7 +825,7 @@
     "type": "card",
     "cardType": "C 01",
     "id": "ikfe",
-    "z": 52271,
+    "z": 62593,
     "parent": "xzx3"
   },
   "k39x": {
@@ -833,7 +833,7 @@
     "type": "card",
     "cardType": "C 02",
     "id": "k39x",
-    "z": 52276,
+    "z": 62595,
     "parent": "xzx3"
   },
   "ui27": {
@@ -841,7 +841,7 @@
     "type": "card",
     "cardType": "C 03",
     "id": "ui27",
-    "z": 52307,
+    "z": 62592,
     "parent": "xzx3"
   },
   "sb3g": {
@@ -849,15 +849,17 @@
     "type": "card",
     "cardType": "C 04",
     "id": "sb3g",
-    "z": 52269,
-    "parent": "xzx3"
+    "z": 63081,
+    "x": 605,
+    "y": 265,
+    "activeFace": 1
   },
   "zisj": {
     "deck": "deck1",
     "type": "card",
     "cardType": "C 05",
     "id": "zisj",
-    "z": 52305,
+    "z": 62604,
     "parent": "xzx3"
   },
   "xjza": {
@@ -865,7 +867,7 @@
     "type": "card",
     "cardType": "C 06",
     "id": "xjza",
-    "z": 52297,
+    "z": 62622,
     "parent": "xzx3"
   },
   "fadf": {
@@ -873,7 +875,7 @@
     "type": "card",
     "cardType": "C 07",
     "id": "fadf",
-    "z": 52265,
+    "z": 62598,
     "parent": "xzx3"
   },
   "jinh": {
@@ -881,7 +883,7 @@
     "type": "card",
     "cardType": "C 08",
     "id": "jinh",
-    "z": 52275,
+    "z": 62617,
     "parent": "xzx3"
   },
   "2n1k": {
@@ -889,7 +891,7 @@
     "type": "card",
     "cardType": "C 09",
     "id": "2n1k",
-    "z": 52264,
+    "z": 62612,
     "parent": "xzx3"
   },
   "nc9l": {
@@ -897,7 +899,7 @@
     "type": "card",
     "cardType": "C 10",
     "id": "nc9l",
-    "z": 52300,
+    "z": 62584,
     "parent": "xzx3"
   },
   "9yen": {
@@ -905,17 +907,15 @@
     "type": "card",
     "cardType": "C 2J",
     "id": "9yen",
-    "z": 52763,
-    "x": 745,
-    "y": 265,
-    "activeFace": 1
+    "z": 62605,
+    "parent": "xzx3"
   },
   "5uv1": {
     "deck": "deck1",
     "type": "card",
     "cardType": "C 3Q",
     "id": "5uv1",
-    "z": 52284,
+    "z": 62619,
     "parent": "xzx3"
   },
   "mo4o": {
@@ -923,7 +923,7 @@
     "type": "card",
     "cardType": "C 4K",
     "id": "mo4o",
-    "z": 52298,
+    "z": 62594,
     "parent": "xzx3"
   },
   "xlu3": {
@@ -931,7 +931,7 @@
     "type": "card",
     "cardType": "D 01",
     "id": "xlu3",
-    "z": 52289,
+    "z": 62601,
     "parent": "xzx3"
   },
   "7gal": {
@@ -939,7 +939,7 @@
     "type": "card",
     "cardType": "D 02",
     "id": "7gal",
-    "z": 52296,
+    "z": 62611,
     "parent": "xzx3"
   },
   "zu7i": {
@@ -947,7 +947,7 @@
     "type": "card",
     "cardType": "D 03",
     "id": "zu7i",
-    "z": 52292,
+    "z": 62582,
     "parent": "xzx3"
   },
   "y0m5": {
@@ -955,7 +955,7 @@
     "type": "card",
     "cardType": "D 04",
     "id": "y0m5",
-    "z": 52301,
+    "z": 62583,
     "parent": "xzx3"
   },
   "aor1": {
@@ -963,7 +963,7 @@
     "type": "card",
     "cardType": "D 05",
     "id": "aor1",
-    "z": 52278,
+    "z": 62624,
     "parent": "xzx3"
   },
   "kii4": {
@@ -971,7 +971,7 @@
     "type": "card",
     "cardType": "D 06",
     "id": "kii4",
-    "z": 52293,
+    "z": 62609,
     "parent": "xzx3"
   },
   "pvi0": {
@@ -979,7 +979,7 @@
     "type": "card",
     "cardType": "D 07",
     "id": "pvi0",
-    "z": 52294,
+    "z": 62625,
     "parent": "xzx3"
   },
   "fs2a": {
@@ -987,7 +987,7 @@
     "type": "card",
     "cardType": "D 08",
     "id": "fs2a",
-    "z": 52266,
+    "z": 62602,
     "parent": "xzx3"
   },
   "xf7u": {
@@ -995,7 +995,7 @@
     "type": "card",
     "cardType": "D 09",
     "id": "xf7u",
-    "z": 52286,
+    "z": 62608,
     "parent": "xzx3"
   },
   "js05": {
@@ -1003,7 +1003,7 @@
     "type": "card",
     "cardType": "D 10",
     "id": "js05",
-    "z": 52270,
+    "z": 62587,
     "parent": "xzx3"
   },
   "vtl7": {
@@ -1011,7 +1011,7 @@
     "type": "card",
     "cardType": "D 2J",
     "id": "vtl7",
-    "z": 52285,
+    "z": 62615,
     "parent": "xzx3"
   },
   "dvdn": {
@@ -1019,15 +1019,17 @@
     "type": "card",
     "cardType": "D 3Q",
     "id": "dvdn",
-    "z": 52282,
-    "parent": "xzx3"
+    "z": 63080,
+    "x": 465,
+    "y": 265,
+    "activeFace": 1
   },
   "45ot": {
     "deck": "deck1",
     "type": "card",
     "cardType": "D 4K",
     "id": "45ot",
-    "z": 52272,
+    "z": 62600,
     "parent": "xzx3"
   },
   "bbng": {
@@ -1035,7 +1037,7 @@
     "type": "card",
     "cardType": "H 01",
     "id": "bbng",
-    "z": 52303,
+    "z": 62623,
     "parent": "xzx3"
   },
   "03dh": {
@@ -1043,7 +1045,7 @@
     "type": "card",
     "cardType": "H 02",
     "id": "03dh",
-    "z": 52291,
+    "z": 62591,
     "parent": "xzx3"
   },
   "u0zd": {
@@ -1051,15 +1053,17 @@
     "type": "card",
     "cardType": "H 03",
     "id": "u0zd",
-    "z": 52274,
-    "parent": "xzx3"
+    "z": 63082,
+    "x": 745,
+    "y": 265,
+    "activeFace": 1
   },
   "8cre": {
     "deck": "deck1",
     "type": "card",
     "cardType": "H 04",
     "id": "8cre",
-    "z": 52263,
+    "z": 62616,
     "parent": "xzx3"
   },
   "0pxh": {
@@ -1067,7 +1071,7 @@
     "type": "card",
     "cardType": "H 05",
     "id": "0pxh",
-    "z": 52267,
+    "z": 62626,
     "parent": "xzx3"
   },
   "zuam": {
@@ -1075,7 +1079,7 @@
     "type": "card",
     "cardType": "H 06",
     "id": "zuam",
-    "z": 52273,
+    "z": 62597,
     "parent": "xzx3"
   },
   "cpra": {
@@ -1083,7 +1087,7 @@
     "type": "card",
     "cardType": "H 07",
     "id": "cpra",
-    "z": 52287,
+    "z": 62606,
     "parent": "xzx3"
   },
   "tohh": {
@@ -1091,7 +1095,7 @@
     "type": "card",
     "cardType": "H 08",
     "id": "tohh",
-    "z": 52261,
+    "z": 62585,
     "parent": "xzx3"
   },
   "2d1d": {
@@ -1099,7 +1103,7 @@
     "type": "card",
     "cardType": "H 09",
     "id": "2d1d",
-    "z": 52302,
+    "z": 62627,
     "parent": "xzx3"
   },
   "dckz": {
@@ -1107,7 +1111,7 @@
     "type": "card",
     "cardType": "H 10",
     "id": "dckz",
-    "z": 52290,
+    "z": 62586,
     "parent": "xzx3"
   },
   "a5lj": {
@@ -1115,7 +1119,7 @@
     "type": "card",
     "cardType": "H 2J",
     "id": "a5lj",
-    "z": 52277,
+    "z": 62607,
     "parent": "xzx3"
   },
   "6tuo": {
@@ -1123,7 +1127,7 @@
     "type": "card",
     "cardType": "H 3Q",
     "id": "6tuo",
-    "z": 52304,
+    "z": 62590,
     "parent": "xzx3"
   },
   "9ni2": {
@@ -1131,7 +1135,7 @@
     "type": "card",
     "cardType": "H 4K",
     "id": "9ni2",
-    "z": 52306,
+    "z": 62599,
     "parent": "xzx3"
   },
   "suyq": {
@@ -1139,27 +1143,23 @@
     "type": "card",
     "cardType": "S 01",
     "id": "suyq",
-    "z": 52761,
-    "x": 465,
-    "y": 265,
-    "activeFace": 1
+    "z": 62621,
+    "parent": "xzx3"
   },
   "hkol": {
     "deck": "deck1",
     "type": "card",
     "cardType": "S 02",
     "id": "hkol",
-    "z": 52760,
-    "x": 325,
-    "y": 265,
-    "activeFace": 1
+    "z": 62596,
+    "parent": "xzx3"
   },
   "m6fp": {
     "deck": "deck1",
     "type": "card",
     "cardType": "S 03",
     "id": "m6fp",
-    "z": 52279,
+    "z": 62580,
     "parent": "xzx3"
   },
   "8h64": {
@@ -1167,7 +1167,7 @@
     "type": "card",
     "cardType": "S 04",
     "id": "8h64",
-    "z": 52281,
+    "z": 62588,
     "parent": "xzx3"
   },
   "tuss": {
@@ -1175,7 +1175,7 @@
     "type": "card",
     "cardType": "S 05",
     "id": "tuss",
-    "z": 52308,
+    "z": 62618,
     "parent": "xzx3"
   },
   "6dlt": {
@@ -1183,7 +1183,7 @@
     "type": "card",
     "cardType": "S 06",
     "id": "6dlt",
-    "z": 52262,
+    "z": 62589,
     "parent": "xzx3"
   },
   "y7ed": {
@@ -1191,7 +1191,7 @@
     "type": "card",
     "cardType": "S 07",
     "id": "y7ed",
-    "z": 52280,
+    "z": 62620,
     "parent": "xzx3"
   },
   "qius": {
@@ -1199,7 +1199,7 @@
     "type": "card",
     "cardType": "S 08",
     "id": "qius",
-    "z": 52288,
+    "z": 62603,
     "parent": "xzx3"
   },
   "vncw": {
@@ -1207,17 +1207,15 @@
     "type": "card",
     "cardType": "S 09",
     "id": "vncw",
-    "z": 52762,
-    "x": 605,
-    "y": 265,
-    "activeFace": 1
+    "z": 62613,
+    "parent": "xzx3"
   },
   "r6a0": {
     "deck": "deck1",
     "type": "card",
     "cardType": "S 10",
     "id": "r6a0",
-    "z": 52299,
+    "z": 62581,
     "parent": "xzx3"
   },
   "e75t": {
@@ -1225,15 +1223,17 @@
     "type": "card",
     "cardType": "S 2J",
     "id": "e75t",
-    "z": 52268,
-    "parent": "xzx3"
+    "z": 63079,
+    "x": 325,
+    "y": 265,
+    "activeFace": 1
   },
   "bzri": {
     "deck": "deck1",
     "type": "card",
     "cardType": "S 3Q",
     "id": "bzri",
-    "z": 52295,
+    "z": 62614,
     "parent": "xzx3"
   },
   "tiyc": {
@@ -1241,7 +1241,7 @@
     "type": "card",
     "cardType": "S 4K",
     "id": "tiyc",
-    "z": 52283,
+    "z": 62610,
     "parent": "xzx3"
   },
   "name1": {
@@ -1522,7 +1522,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 20px; ",
-    "text": "This deck, from the public library game Tittle, is similar to the Example 2. However, it shows that within `cardDefaults`, you can add routines. In this case, there is a `parentChangeRoutine` which activates whenever the card gains or loses a parent. You can also add a `clickRoutine` which will activate whenever the card is clicked. This will override the default reaction of changing faces, so if changing faces is needed, include that as part of the `clickRoutine`. \n\nIn the `faceTemplates`, the first face is a gray square, but with a border radius of 1px so it is very slightly rounded. In the first object of the second face, you can see the additon of css which adds a 3px wide solid border. The image of this object is dynamic and will be the shape shown on the card. The second object is a text object. It has `fontSize` of 35, white color, and will be center aligned. Each of those attributes is individually listed, but they could also be combined into a single css property. The text value, like the image in the first object, is dynamic and will display the number on the card linked to the `cardValue` property for each card in the `cardTypes`."
+    "text": "This deck, from the public library game Tittle, is similar to the Example 2. However, it shows that within 'cardDefaults', you can add routines. In this case, there is a 'parentChangeRoutine' which activates whenever the card gains or loses a parent. You can also add a 'clickRoutine' which will activate whenever the card is clicked. This will override the default reaction of changing faces, so if changing faces is needed, include that as part of the 'clickRoutine'. Note that the 'clickRoutine' and 'parentChangeRoutine' will not actually work in this tutorial and only function properly in the game where the deck is from.\n\nIn the 'faceTemplates', the first face is a gray square, but with a border radius of 1px so it is very slightly rounded. In the first object of the second face, you can see the additon of css which adds a 3px wide solid border. The image of this object is dynamic and will be the shape shown on the card. The second object is a text object. It has 'fontSize' of 35, white color, and will be center aligned. Each of those attributes is individually listed, but they could also be combined into a single css property. The text value, like the image in the first object, is dynamic and will display the number on the card linked to the 'cardValue' property for each card in the 'cardTypes'."
   },
   "name3": {
     "id": "name3",
@@ -1954,7 +1954,7 @@
     "type": "card",
     "cardType": "Purple Star",
     "id": "x434",
-    "z": 52398,
+    "z": 62732,
     "parent": "e9sb"
   },
   "bp51": {
@@ -1962,7 +1962,7 @@
     "type": "card",
     "cardType": "Purple Shuriken",
     "id": "bp51",
-    "z": 52416,
+    "z": 62709,
     "parent": "e9sb"
   },
   "e9sb": {
@@ -1980,7 +1980,7 @@
     "type": "card",
     "cardType": "Purple Square",
     "id": "3ad1",
-    "z": 52408,
+    "z": 62716,
     "parent": "e9sb"
   },
   "s7uc": {
@@ -1988,7 +1988,7 @@
     "type": "card",
     "cardType": "Purple Circle",
     "id": "s7uc",
-    "z": 52389,
+    "z": 62710,
     "parent": "e9sb"
   },
   "6q38": {
@@ -1996,7 +1996,7 @@
     "type": "card",
     "cardType": "Purple Cross",
     "id": "6q38",
-    "z": 52396,
+    "z": 62730,
     "parent": "e9sb"
   },
   "jdze": {
@@ -2004,7 +2004,7 @@
     "type": "card",
     "cardType": "Purple Diamond",
     "id": "jdze",
-    "z": 52393,
+    "z": 62718,
     "parent": "e9sb"
   },
   "5rgn": {
@@ -2012,7 +2012,7 @@
     "type": "card",
     "cardType": "Blue Star",
     "id": "5rgn",
-    "z": 52405,
+    "z": 62737,
     "parent": "e9sb"
   },
   "i937": {
@@ -2020,7 +2020,7 @@
     "type": "card",
     "cardType": "Blue Shuriken",
     "id": "i937",
-    "z": 52420,
+    "z": 62714,
     "parent": "e9sb"
   },
   "fla4": {
@@ -2028,7 +2028,7 @@
     "type": "card",
     "cardType": "Blue Square",
     "id": "fla4",
-    "z": 52404,
+    "z": 62705,
     "parent": "e9sb"
   },
   "q67w": {
@@ -2036,7 +2036,7 @@
     "type": "card",
     "cardType": "Blue Circle",
     "id": "q67w",
-    "z": 52402,
+    "z": 62733,
     "parent": "e9sb"
   },
   "qqzr": {
@@ -2044,7 +2044,7 @@
     "type": "card",
     "cardType": "Blue Cross",
     "id": "qqzr",
-    "z": 52391,
+    "z": 62713,
     "parent": "e9sb"
   },
   "98pm": {
@@ -2052,7 +2052,7 @@
     "type": "card",
     "cardType": "Blue Diamond",
     "id": "98pm",
-    "z": 52397,
+    "z": 62736,
     "parent": "e9sb"
   },
   "2jg1": {
@@ -2060,7 +2060,7 @@
     "type": "card",
     "cardType": "Red Star",
     "id": "2jg1",
-    "z": 52411,
+    "z": 62734,
     "parent": "e9sb"
   },
   "qr4j": {
@@ -2068,7 +2068,7 @@
     "type": "card",
     "cardType": "Red Shuriken",
     "id": "qr4j",
-    "z": 52395,
+    "z": 62721,
     "parent": "e9sb"
   },
   "5ndi": {
@@ -2076,7 +2076,7 @@
     "type": "card",
     "cardType": "Red Square",
     "id": "5ndi",
-    "z": 52392,
+    "z": 62729,
     "parent": "e9sb"
   },
   "8do3": {
@@ -2084,7 +2084,7 @@
     "type": "card",
     "cardType": "Red Circle",
     "id": "8do3",
-    "z": 52403,
+    "z": 62711,
     "parent": "e9sb"
   },
   "8txr": {
@@ -2092,7 +2092,7 @@
     "type": "card",
     "cardType": "Red Cross",
     "id": "8txr",
-    "z": 52386,
+    "z": 62735,
     "parent": "e9sb"
   },
   "afzu": {
@@ -2100,7 +2100,7 @@
     "type": "card",
     "cardType": "Red Diamond",
     "id": "afzu",
-    "z": 52401,
+    "z": 62704,
     "parent": "e9sb"
   },
   "6fdh": {
@@ -2108,7 +2108,7 @@
     "type": "card",
     "cardType": "Yellow Star",
     "id": "6fdh",
-    "z": 52410,
+    "z": 62712,
     "parent": "e9sb"
   },
   "8qia": {
@@ -2116,7 +2116,7 @@
     "type": "card",
     "cardType": "Yellow Shuriken",
     "id": "8qia",
-    "z": 52419,
+    "z": 62722,
     "parent": "e9sb"
   },
   "p5vi": {
@@ -2124,7 +2124,7 @@
     "type": "card",
     "cardType": "Yellow Square",
     "id": "p5vi",
-    "z": 52394,
+    "z": 62723,
     "parent": "e9sb"
   },
   "v92f": {
@@ -2132,7 +2132,7 @@
     "type": "card",
     "cardType": "Yellow Circle",
     "id": "v92f",
-    "z": 52413,
+    "z": 62717,
     "parent": "e9sb"
   },
   "ks53": {
@@ -2140,7 +2140,7 @@
     "type": "card",
     "cardType": "Yellow Cross",
     "id": "ks53",
-    "z": 52385,
+    "z": 62720,
     "parent": "e9sb"
   },
   "qpz4": {
@@ -2148,7 +2148,7 @@
     "type": "card",
     "cardType": "Yellow Diamond",
     "id": "qpz4",
-    "z": 52414,
+    "z": 62706,
     "parent": "e9sb"
   },
   "xdt8": {
@@ -2156,7 +2156,7 @@
     "type": "card",
     "cardType": "Green Star",
     "id": "xdt8",
-    "z": 52388,
+    "z": 62719,
     "parent": "e9sb"
   },
   "7nho": {
@@ -2164,7 +2164,7 @@
     "type": "card",
     "cardType": "Green Shuriken",
     "id": "7nho",
-    "z": 52417,
+    "z": 62726,
     "parent": "e9sb"
   },
   "ymn6": {
@@ -2172,7 +2172,7 @@
     "type": "card",
     "cardType": "Green Square",
     "id": "ymn6",
-    "z": 52399,
+    "z": 62708,
     "parent": "e9sb"
   },
   "e3md": {
@@ -2180,7 +2180,7 @@
     "type": "card",
     "cardType": "Green Circle",
     "id": "e3md",
-    "z": 52415,
+    "z": 62739,
     "parent": "e9sb"
   },
   "vsna": {
@@ -2188,7 +2188,7 @@
     "type": "card",
     "cardType": "Green Cross",
     "id": "vsna",
-    "z": 52409,
+    "z": 62715,
     "parent": "e9sb"
   },
   "vy24": {
@@ -2196,7 +2196,7 @@
     "type": "card",
     "cardType": "Green Diamond",
     "id": "vy24",
-    "z": 52418,
+    "z": 62727,
     "parent": "e9sb"
   },
   "pnq4": {
@@ -2204,7 +2204,7 @@
     "type": "card",
     "cardType": "Orange Star",
     "id": "pnq4",
-    "z": 52400,
+    "z": 62731,
     "parent": "e9sb"
   },
   "4kis": {
@@ -2212,7 +2212,7 @@
     "type": "card",
     "cardType": "Orange Shuriken",
     "id": "4kis",
-    "z": 52390,
+    "z": 62725,
     "parent": "e9sb"
   },
   "01i7": {
@@ -2220,7 +2220,7 @@
     "type": "card",
     "cardType": "Orange Square",
     "id": "01i7",
-    "z": 52407,
+    "z": 62707,
     "parent": "e9sb"
   },
   "tcsr": {
@@ -2228,7 +2228,7 @@
     "type": "card",
     "cardType": "Orange Circle",
     "id": "tcsr",
-    "z": 52387,
+    "z": 62724,
     "parent": "e9sb"
   },
   "53nf": {
@@ -2236,7 +2236,7 @@
     "type": "card",
     "cardType": "Orange Cross",
     "id": "53nf",
-    "z": 52406,
+    "z": 62738,
     "parent": "e9sb"
   },
   "joow": {
@@ -2244,7 +2244,7 @@
     "type": "card",
     "cardType": "Orange Diamond",
     "id": "joow",
-    "z": 52412,
+    "z": 62728,
     "parent": "e9sb"
   },
   "example4": {
@@ -2293,7 +2293,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 20px; ",
-    "text": "This deck, from the public library game Tutti Frutti, shows how you can customize piles in the `cardType` area using `onPileCreation`. See the wiki and the Piles tutorial for more information about customizing pile handles. The `clickRoutine` moves the card from the hand to a designated holder if in the hand, but otherwise just normally flips the card over. The `cardTypes` area contains many custom properties which are linked to dynamic objects in `faceTemplates`. The only custom property which not used to change the appearance is `rank` which is used in that game for sorting purposes.\n\nThe back (face 0) of the card is an image at coordinates -100,y and of sixe 303x360. That image is larger than the card back but the overflow area on a card is not shown. Those values were chosen to make the best visual appearance of the image in the card space. Both faces have a border and a border radius defined.\n\nThe second face also has an enlarge property set that only applies to that face so when looking at the back in face 0, there is no enlargement. The second face has 8 objects. Some are images and some are text. The `note` is used just to describe for a person looking at the JSON what each object does, but has no effect on the appearance of the card. The first object is just a color that uses a CSS shading gradient unique to each card. The second object is also just a color, but it is the same gray gradient rectangle at the bottom of each card and therefore does not need to by dynamic. The third object is the main image of the fruit. Because each fruit image is slightly different, dynamic values for x, y, width, and height are used in addition to the image value to make the image display correctly. The fourth, fifth, and sixth objects represent the small fruit image in the upper left. Most of the cards only display the image once, but the orange cards can display the fruit from one to three times. This object structure allows that to work. The last two objects add text to the bottom of the card reflecting the name/type of card as well as the card's scoring value. The name of the card has a dynamic CSS used to change the color of the text on each card."
+    "text": "This deck, from the public library game Tutti Frutti, shows how you can customize piles in the 'cardType' area using 'onPileCreation'. See the wiki and the Piles tutorial for more information about customizing pile handles. The 'clickRoutine' (which will not actually work in this tutorial) moves the card from the hand to a designated holder if in the hand, but otherwise just normally flips the card over. The 'cardTypes' area contains many custom properties which are linked to dynamic objects in 'faceTemplates'. The only custom property not used to change the appearance is 'rank', which is used in that game for sorting purposes.\n\nThe back (face 0) of the card is an image at coordinates -100,y and of sixe 303x360. That image is larger than the card back but the overflow area on a card is not shown. Those values were chosen to make the best visual appearance of the image in the card space. Both faces have a border and a border radius defined.\n\nThe second face also has an enlarge property set that only applies to that face so when looking at the back in face 0, there is no enlargement. The second face has 8 objects. Some are images and some are text. The 'note' is used just to describe for a person looking at the JSON what each object does, but has no effect on the appearance of the card. The first object is just a color that uses a CSS shading gradient unique to each card. The second object is also just a color, but it is the same gray gradient rectangle at the bottom of each card and therefore does not need to be dynamic. The third object is the main image of the fruit. Because each fruit image is slightly different, dynamic values for x, y, width, and height are used in addition to the image value to make the image display correctly. The fourth, fifth, and sixth objects represent the small fruit image in the upper left. Most of the cards only display the image once, but the orange cards can display the fruit from one to three times. This object structure allows that to work. The last two objects add text to the bottom of the card reflecting the name/type of card as well as the card's scoring value. The name of the card has a dynamic CSS used to change the color of the text on each card."
   },
   "name4": {
     "id": "name4",
@@ -2719,7 +2719,7 @@
     "type": "card",
     "cardType": "Circle Blue 1",
     "id": "ox5n",
-    "z": 52585,
+    "z": 62872,
     "parent": "i2fx"
   },
   "9h5n": {
@@ -2727,7 +2727,7 @@
     "type": "card",
     "cardType": "Circle Green 1",
     "id": "9h5n",
-    "z": 52575,
+    "z": 62900,
     "parent": "i2fx"
   },
   "i2fx": {
@@ -2745,7 +2745,7 @@
     "type": "card",
     "cardType": "Circle Red 1",
     "id": "g3g9",
-    "z": 52561,
+    "z": 62907,
     "parent": "i2fx"
   },
   "qsb1": {
@@ -2753,7 +2753,7 @@
     "type": "card",
     "cardType": "Circle Yellow 1",
     "id": "qsb1",
-    "z": 52554,
+    "z": 62871,
     "parent": "i2fx"
   },
   "sx1z": {
@@ -2761,7 +2761,7 @@
     "type": "card",
     "cardType": "Cross Blue 1",
     "id": "sx1z",
-    "z": 52588,
+    "z": 62924,
     "parent": "i2fx"
   },
   "6wbr": {
@@ -2769,7 +2769,7 @@
     "type": "card",
     "cardType": "Cross Green 1",
     "id": "6wbr",
-    "z": 52569,
+    "z": 62885,
     "parent": "i2fx"
   },
   "ck9j": {
@@ -2777,7 +2777,7 @@
     "type": "card",
     "cardType": "Cross Red 1",
     "id": "ck9j",
-    "z": 52562,
+    "z": 62880,
     "parent": "i2fx"
   },
   "iu1e": {
@@ -2785,7 +2785,7 @@
     "type": "card",
     "cardType": "Cross Yellow 1",
     "id": "iu1e",
-    "z": 52596,
+    "z": 62883,
     "parent": "i2fx"
   },
   "l0sg": {
@@ -2793,7 +2793,7 @@
     "type": "card",
     "cardType": "Square Blue 1",
     "id": "l0sg",
-    "z": 52604,
+    "z": 62917,
     "parent": "i2fx"
   },
   "y0xu": {
@@ -2801,7 +2801,7 @@
     "type": "card",
     "cardType": "Square Green 1",
     "id": "y0xu",
-    "z": 52614,
+    "z": 62893,
     "parent": "i2fx"
   },
   "zd12": {
@@ -2809,7 +2809,7 @@
     "type": "card",
     "cardType": "Square Yellow 1",
     "id": "zd12",
-    "z": 52567,
+    "z": 62923,
     "parent": "i2fx"
   },
   "t44k": {
@@ -2817,7 +2817,7 @@
     "type": "card",
     "cardType": "Square Red 1",
     "id": "t44k",
-    "z": 52589,
+    "z": 62928,
     "parent": "i2fx"
   },
   "2nfl": {
@@ -2825,7 +2825,7 @@
     "type": "card",
     "cardType": "Triangle Blue 1",
     "id": "2nfl",
-    "z": 52571,
+    "z": 62879,
     "parent": "i2fx"
   },
   "fngd": {
@@ -2833,7 +2833,7 @@
     "type": "card",
     "cardType": "Triangle Green 1",
     "id": "fngd",
-    "z": 52595,
+    "z": 62873,
     "parent": "i2fx"
   },
   "40tf": {
@@ -2841,7 +2841,7 @@
     "type": "card",
     "cardType": "Triangle Red 1",
     "id": "40tf",
-    "z": 52605,
+    "z": 62891,
     "parent": "i2fx"
   },
   "fqz6": {
@@ -2849,7 +2849,7 @@
     "type": "card",
     "cardType": "Triangle Yellow 1",
     "id": "fqz6",
-    "z": 52573,
+    "z": 62906,
     "parent": "i2fx"
   },
   "z36b": {
@@ -2857,7 +2857,7 @@
     "type": "card",
     "cardType": "Circle Blue 2",
     "id": "z36b",
-    "z": 52563,
+    "z": 62919,
     "parent": "i2fx"
   },
   "hbxh": {
@@ -2865,7 +2865,7 @@
     "type": "card",
     "cardType": "Circle Green 2",
     "id": "hbxh",
-    "z": 52579,
+    "z": 62918,
     "parent": "i2fx"
   },
   "xg0i": {
@@ -2873,7 +2873,7 @@
     "type": "card",
     "cardType": "Circle Red 2",
     "id": "xg0i",
-    "z": 52583,
+    "z": 62930,
     "parent": "i2fx"
   },
   "0myl": {
@@ -2881,7 +2881,7 @@
     "type": "card",
     "cardType": "Circle Yellow 2",
     "id": "0myl",
-    "z": 52581,
+    "z": 62882,
     "parent": "i2fx"
   },
   "4om5": {
@@ -2889,7 +2889,7 @@
     "type": "card",
     "cardType": "Cross Blue 2",
     "id": "4om5",
-    "z": 52556,
+    "z": 62912,
     "parent": "i2fx"
   },
   "8r2x": {
@@ -2897,7 +2897,7 @@
     "type": "card",
     "cardType": "Cross Green 2",
     "id": "8r2x",
-    "z": 52576,
+    "z": 62915,
     "parent": "i2fx"
   },
   "0nve": {
@@ -2905,7 +2905,7 @@
     "type": "card",
     "cardType": "Cross Red 2",
     "id": "0nve",
-    "z": 52574,
+    "z": 62876,
     "parent": "i2fx"
   },
   "q6pn": {
@@ -2913,7 +2913,7 @@
     "type": "card",
     "cardType": "Square Green 2",
     "id": "q6pn",
-    "z": 52611,
+    "z": 62887,
     "parent": "i2fx"
   },
   "ifet": {
@@ -2921,7 +2921,7 @@
     "type": "card",
     "cardType": "Square Red 2",
     "id": "ifet",
-    "z": 52584,
+    "z": 62925,
     "parent": "i2fx"
   },
   "ecra": {
@@ -2929,7 +2929,7 @@
     "type": "card",
     "cardType": "Cross Yellow 2",
     "id": "ecra",
-    "z": 52591,
+    "z": 62931,
     "parent": "i2fx"
   },
   "y2fc": {
@@ -2937,7 +2937,7 @@
     "type": "card",
     "cardType": "Square Blue 2",
     "id": "y2fc",
-    "z": 52607,
+    "z": 62926,
     "parent": "i2fx"
   },
   "xlh7": {
@@ -2945,7 +2945,7 @@
     "type": "card",
     "cardType": "Square Yellow 2",
     "id": "xlh7",
-    "z": 52612,
+    "z": 62892,
     "parent": "i2fx"
   },
   "bgq9": {
@@ -2953,7 +2953,7 @@
     "type": "card",
     "cardType": "Triangle Blue 2",
     "id": "bgq9",
-    "z": 52553,
+    "z": 62932,
     "parent": "i2fx"
   },
   "1wou": {
@@ -2961,7 +2961,7 @@
     "type": "card",
     "cardType": "Triangle Green 2",
     "id": "1wou",
-    "z": 52586,
+    "z": 62929,
     "parent": "i2fx"
   },
   "au91": {
@@ -2969,7 +2969,7 @@
     "type": "card",
     "cardType": "Triangle Red 2",
     "id": "au91",
-    "z": 52610,
+    "z": 62927,
     "parent": "i2fx"
   },
   "wus7": {
@@ -2977,7 +2977,7 @@
     "type": "card",
     "cardType": "Triangle Yellow 2",
     "id": "wus7",
-    "z": 52613,
+    "z": 62902,
     "parent": "i2fx"
   },
   "ey3t": {
@@ -2985,7 +2985,7 @@
     "type": "card",
     "cardType": "Circle Blue 3",
     "id": "ey3t",
-    "z": 52558,
+    "z": 62894,
     "parent": "i2fx"
   },
   "lywv": {
@@ -2993,7 +2993,7 @@
     "type": "card",
     "cardType": "Circle Green 3",
     "id": "lywv",
-    "z": 52587,
+    "z": 62904,
     "parent": "i2fx"
   },
   "ncbt": {
@@ -3001,7 +3001,7 @@
     "type": "card",
     "cardType": "Circle Red 3",
     "id": "ncbt",
-    "z": 52609,
+    "z": 62897,
     "parent": "i2fx"
   },
   "mvs3": {
@@ -3009,7 +3009,7 @@
     "type": "card",
     "cardType": "Cross Blue 3",
     "id": "mvs3",
-    "z": 52565,
+    "z": 62910,
     "parent": "i2fx"
   },
   "ef68": {
@@ -3017,7 +3017,7 @@
     "type": "card",
     "cardType": "Circle Yellow 3",
     "id": "ef68",
-    "z": 52559,
+    "z": 62922,
     "parent": "i2fx"
   },
   "wklb": {
@@ -3025,7 +3025,7 @@
     "type": "card",
     "cardType": "Cross Red 3",
     "id": "wklb",
-    "z": 52551,
+    "z": 62903,
     "parent": "i2fx"
   },
   "c06s": {
@@ -3033,7 +3033,7 @@
     "type": "card",
     "cardType": "Cross Green 3",
     "id": "c06s",
-    "z": 52592,
+    "z": 62934,
     "parent": "i2fx"
   },
   "qvno": {
@@ -3041,7 +3041,7 @@
     "type": "card",
     "cardType": "Square Red 3",
     "id": "qvno",
-    "z": 52557,
+    "z": 62870,
     "parent": "i2fx"
   },
   "gq5v": {
@@ -3049,7 +3049,7 @@
     "type": "card",
     "cardType": "Cross Yellow 3",
     "id": "gq5v",
-    "z": 52555,
+    "z": 62899,
     "parent": "i2fx"
   },
   "67x0": {
@@ -3057,7 +3057,7 @@
     "type": "card",
     "cardType": "Square Blue 3",
     "id": "67x0",
-    "z": 52582,
+    "z": 62889,
     "parent": "i2fx"
   },
   "ulf8": {
@@ -3065,7 +3065,7 @@
     "type": "card",
     "cardType": "Square Green 3",
     "id": "ulf8",
-    "z": 52578,
+    "z": 62911,
     "parent": "i2fx"
   },
   "itsp": {
@@ -3073,7 +3073,7 @@
     "type": "card",
     "cardType": "Square Yellow 3",
     "id": "itsp",
-    "z": 52552,
+    "z": 62913,
     "parent": "i2fx"
   },
   "f8wa": {
@@ -3081,7 +3081,7 @@
     "type": "card",
     "cardType": "Triangle Blue 3",
     "id": "f8wa",
-    "z": 52603,
+    "z": 62874,
     "parent": "i2fx"
   },
   "msoj": {
@@ -3089,7 +3089,7 @@
     "type": "card",
     "cardType": "Triangle Green 3",
     "id": "msoj",
-    "z": 52598,
+    "z": 62901,
     "parent": "i2fx"
   },
   "3prt": {
@@ -3097,7 +3097,7 @@
     "type": "card",
     "cardType": "Triangle Red 3",
     "id": "3prt",
-    "z": 52606,
+    "z": 62890,
     "parent": "i2fx"
   },
   "4lea": {
@@ -3105,7 +3105,7 @@
     "type": "card",
     "cardType": "Triangle Yellow 3",
     "id": "4lea",
-    "z": 52564,
+    "z": 62914,
     "parent": "i2fx"
   },
   "8su8": {
@@ -3113,7 +3113,7 @@
     "type": "card",
     "cardType": "Circle Blue 4",
     "id": "8su8",
-    "z": 52570,
+    "z": 62895,
     "parent": "i2fx"
   },
   "hjop": {
@@ -3121,7 +3121,7 @@
     "type": "card",
     "cardType": "Circle Green 4",
     "id": "hjop",
-    "z": 52560,
+    "z": 62898,
     "parent": "i2fx"
   },
   "qhuk": {
@@ -3129,7 +3129,7 @@
     "type": "card",
     "cardType": "Circle Red 4",
     "id": "qhuk",
-    "z": 52594,
+    "z": 62886,
     "parent": "i2fx"
   },
   "ixav": {
@@ -3137,7 +3137,7 @@
     "type": "card",
     "cardType": "Circle Yellow 4",
     "id": "ixav",
-    "z": 52615,
+    "z": 62888,
     "parent": "i2fx"
   },
   "zt71": {
@@ -3145,7 +3145,7 @@
     "type": "card",
     "cardType": "Cross Blue 4",
     "id": "zt71",
-    "z": 52608,
+    "z": 62884,
     "parent": "i2fx"
   },
   "x402": {
@@ -3153,7 +3153,7 @@
     "type": "card",
     "cardType": "Cross Green 4",
     "id": "x402",
-    "z": 52566,
+    "z": 62881,
     "parent": "i2fx"
   },
   "cihn": {
@@ -3161,7 +3161,7 @@
     "type": "card",
     "cardType": "Cross Red 4",
     "id": "cihn",
-    "z": 52580,
+    "z": 62875,
     "parent": "i2fx"
   },
   "kv7h": {
@@ -3169,7 +3169,7 @@
     "type": "card",
     "cardType": "Cross Yellow 4",
     "id": "kv7h",
-    "z": 52600,
+    "z": 62908,
     "parent": "i2fx"
   },
   "v1gt": {
@@ -3177,7 +3177,7 @@
     "type": "card",
     "cardType": "Square Blue 4",
     "id": "v1gt",
-    "z": 52577,
+    "z": 62878,
     "parent": "i2fx"
   },
   "adsf": {
@@ -3185,7 +3185,7 @@
     "type": "card",
     "cardType": "Square Green 4",
     "id": "adsf",
-    "z": 52572,
+    "z": 62920,
     "parent": "i2fx"
   },
   "9uel": {
@@ -3193,7 +3193,7 @@
     "type": "card",
     "cardType": "Square Red 4",
     "id": "9uel",
-    "z": 52568,
+    "z": 62933,
     "parent": "i2fx"
   },
   "5yft": {
@@ -3201,7 +3201,7 @@
     "type": "card",
     "cardType": "Triangle Red 4",
     "id": "5yft",
-    "z": 52602,
+    "z": 62877,
     "parent": "i2fx"
   },
   "stuh": {
@@ -3209,7 +3209,7 @@
     "type": "card",
     "cardType": "Triangle Yellow 4",
     "id": "stuh",
-    "z": 52599,
+    "z": 62896,
     "parent": "i2fx"
   },
   "4keu": {
@@ -3217,7 +3217,7 @@
     "type": "card",
     "cardType": "Square Yellow 4",
     "id": "4keu",
-    "z": 52590,
+    "z": 62916,
     "parent": "i2fx"
   },
   "xkjk": {
@@ -3225,7 +3225,7 @@
     "type": "card",
     "cardType": "Triangle Blue 4",
     "id": "xkjk",
-    "z": 52601,
+    "z": 62909,
     "parent": "i2fx"
   },
   "ymv7": {
@@ -3233,7 +3233,7 @@
     "type": "card",
     "cardType": "Triangle Green 4",
     "id": "ymv7",
-    "z": 52593,
+    "z": 62905,
     "parent": "i2fx"
   },
   "fruw": {
@@ -3241,7 +3241,7 @@
     "type": "card",
     "cardType": "Wild Card",
     "id": "fruw",
-    "z": 52597,
+    "z": 62921,
     "parent": "i2fx"
   },
   "btn5": {
@@ -3317,7 +3317,7 @@
     "type": "card",
     "cardType": "icecream",
     "id": "ryt3",
-    "z": 52650,
+    "z": 62966,
     "parent": "1xo5"
   },
   "x3wn": {
@@ -3325,7 +3325,7 @@
     "type": "card",
     "cardType": "spoon",
     "id": "x3wn",
-    "z": 52640,
+    "z": 62967,
     "parent": "1xo5"
   },
   "k7lx": {
@@ -3333,7 +3333,7 @@
     "type": "card",
     "cardType": "yogurt",
     "id": "k7lx",
-    "z": 52641,
+    "z": 62969,
     "parent": "1xo5"
   },
   "mqn6": {
@@ -3341,7 +3341,7 @@
     "type": "card",
     "cardType": "blackberry",
     "id": "mqn6",
-    "z": 52648,
+    "z": 62960,
     "parent": "1xo5"
   },
   "kxah": {
@@ -3349,7 +3349,7 @@
     "type": "card",
     "cardType": "raspberry",
     "id": "kxah",
-    "z": 52651,
+    "z": 62964,
     "parent": "1xo5"
   },
   "rnjn": {
@@ -3357,7 +3357,7 @@
     "type": "card",
     "cardType": "strawberry",
     "id": "rnjn",
-    "z": 52649,
+    "z": 62970,
     "parent": "1xo5"
   },
   "lb3j": {
@@ -3365,7 +3365,7 @@
     "type": "card",
     "cardType": "orange3",
     "id": "lb3j",
-    "z": 52645,
+    "z": 62959,
     "parent": "1xo5"
   },
   "7ibu": {
@@ -3373,7 +3373,7 @@
     "type": "card",
     "cardType": "orange2",
     "id": "7ibu",
-    "z": 52647,
+    "z": 62961,
     "parent": "1xo5"
   },
   "s5z9": {
@@ -3381,7 +3381,7 @@
     "type": "card",
     "cardType": "orange",
     "id": "s5z9",
-    "z": 52642,
+    "z": 62965,
     "parent": "1xo5"
   },
   "cvhu": {
@@ -3389,7 +3389,7 @@
     "type": "card",
     "cardType": "grape",
     "id": "cvhu",
-    "z": 52643,
+    "z": 62968,
     "parent": "1xo5"
   },
   "gulm": {
@@ -3397,7 +3397,7 @@
     "type": "card",
     "cardType": "banana",
     "id": "gulm",
-    "z": 52646,
+    "z": 62963,
     "parent": "1xo5"
   },
   "sr7n": {
@@ -3405,7 +3405,7 @@
     "type": "card",
     "cardType": "cherry",
     "id": "sr7n",
-    "z": 52644,
+    "z": 62962,
     "parent": "1xo5"
   },
   "example5": {
@@ -3454,7 +3454,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 20px; ",
-    "text": "This deck, from the public library game Lost Temples, has 4 identical decks in the game which must be kept separate. To do this, the `cardDefaults` uses the `onPileCreation` property to prevent piles forming between decks. This deck also uses only one image so it is defined in `cardDefaults` rather than in each `cardType`. Finally, these cards are not movable by dragging, but only by operating buttons in the game, so `movable:false` is set.\n\nThe image in this deck is a sprite consisting of various elements used on the card. For example, the sprite includes variations of shade for the green background as well as different roads, and jewels. The full sprite is shown above. Mouse over to enlarge. There is only one face on these cards. The card uses CSS variables, calcuations, and rotation transformations to select which area of the sprite will be displayed. Remember, layering is important, so each card starts with the green background. Then roads, jewels, and the yellow circle are added. This technique is also used in the public library game Cities. A description of how to create cards using this technique is beyond the scope of this tutorial. But there is a room available at https://virtualtabletop.io/DemoLibrary called Tile Generator that can assist with the calculations.\n\nThe last object on the face is a text number that is displayed on each card using the `cardNumber` dynamic value on each `cardType`."
+    "text": "This deck, from the public library game Lost Temples, has 4 identical decks in the game which must be kept separate. To do this, the 'cardDefaults' uses the 'onPileCreation' property to prevent piles forming between decks. This deck also uses only one image so it is defined in 'cardDefaults' rather than in each 'cardType'. Finally, these cards are not movable by dragging, but only by operating buttons in the game, so 'movable:false' is set.\n\nThe image in this deck is a sprite consisting of various elements used on the card. For example, the sprite includes variations of shade for the green background as well as different roads, and jewels. The full sprite is shown above. Mouse over to enlarge. There is only one face on these cards. The card uses CSS variables, calculations, and rotation transformations to select which area of the sprite will be displayed. Remember, layering is important, so each card starts with the green background. Then roads, jewels, and the yellow circle are added. This technique is also used in the public library game Cities. A description of how to create cards using this technique is beyond the scope of this tutorial. But there is a room available at https://virtualtabletop.io/DemoLibrary called Tile Generator that can assist with the calculations.\n\nThe last object on the face is a text number that is displayed on each card using the 'cardNumber' dynamic value on each 'cardType'."
   },
   "name5": {
     "id": "name5",
@@ -3724,7 +3724,7 @@
     "type": "card",
     "cardType": "1",
     "id": "ktsl",
-    "z": 52746,
+    "z": 63048,
     "parent": "3852"
   },
   "u6m1": {
@@ -3732,7 +3732,7 @@
     "type": "card",
     "cardType": "2",
     "id": "u6m1",
-    "z": 52751,
+    "z": 63065,
     "parent": "3852"
   },
   "163w": {
@@ -3740,7 +3740,7 @@
     "type": "card",
     "cardType": "3",
     "id": "163w",
-    "z": 52739,
+    "z": 63058,
     "parent": "3852"
   },
   "g0nm": {
@@ -3748,7 +3748,7 @@
     "type": "card",
     "cardType": "4",
     "id": "g0nm",
-    "z": 52728,
+    "z": 63053,
     "parent": "3852"
   },
   "jcq3": {
@@ -3756,7 +3756,7 @@
     "type": "card",
     "cardType": "5",
     "id": "jcq3",
-    "z": 52724,
+    "z": 63056,
     "parent": "3852"
   },
   "wrbe": {
@@ -3764,7 +3764,7 @@
     "type": "card",
     "cardType": "6",
     "id": "wrbe",
-    "z": 52759,
+    "z": 63049,
     "parent": "3852"
   },
   "mbe4": {
@@ -3772,7 +3772,7 @@
     "type": "card",
     "cardType": "7",
     "id": "mbe4",
-    "z": 52742,
+    "z": 63050,
     "parent": "3852"
   },
   "jybc": {
@@ -3780,7 +3780,7 @@
     "type": "card",
     "cardType": "8",
     "id": "jybc",
-    "z": 52740,
+    "z": 63071,
     "parent": "3852"
   },
   "gi0v": {
@@ -3788,7 +3788,7 @@
     "type": "card",
     "cardType": "9",
     "id": "gi0v",
-    "z": 52753,
+    "z": 63073,
     "parent": "3852"
   },
   "ii30": {
@@ -3796,7 +3796,7 @@
     "type": "card",
     "cardType": "10",
     "id": "ii30",
-    "z": 52736,
+    "z": 63063,
     "parent": "3852"
   },
   "fhai": {
@@ -3804,7 +3804,7 @@
     "type": "card",
     "cardType": "11",
     "id": "fhai",
-    "z": 52731,
+    "z": 63077,
     "parent": "3852"
   },
   "9ih8": {
@@ -3812,7 +3812,7 @@
     "type": "card",
     "cardType": "12",
     "id": "9ih8",
-    "z": 52749,
+    "z": 63045,
     "parent": "3852"
   },
   "l03t": {
@@ -3820,7 +3820,7 @@
     "type": "card",
     "cardType": "13",
     "id": "l03t",
-    "z": 52743,
+    "z": 63043,
     "parent": "3852"
   },
   "ibr1": {
@@ -3828,7 +3828,7 @@
     "type": "card",
     "cardType": "14",
     "id": "ibr1",
-    "z": 52745,
+    "z": 63047,
     "parent": "3852"
   },
   "zv3y": {
@@ -3836,7 +3836,7 @@
     "type": "card",
     "cardType": "15",
     "id": "zv3y",
-    "z": 52741,
+    "z": 63068,
     "parent": "3852"
   },
   "r8n3": {
@@ -3844,7 +3844,7 @@
     "type": "card",
     "cardType": "16",
     "id": "r8n3",
-    "z": 52747,
+    "z": 63069,
     "parent": "3852"
   },
   "h11x": {
@@ -3852,7 +3852,7 @@
     "type": "card",
     "cardType": "17",
     "id": "h11x",
-    "z": 52758,
+    "z": 63070,
     "parent": "3852"
   },
   "ordu": {
@@ -3860,7 +3860,7 @@
     "type": "card",
     "cardType": "18",
     "id": "ordu",
-    "z": 52754,
+    "z": 63044,
     "parent": "3852"
   },
   "vjsz": {
@@ -3868,7 +3868,7 @@
     "type": "card",
     "cardType": "19",
     "id": "vjsz",
-    "z": 52727,
+    "z": 63072,
     "parent": "3852"
   },
   "3ylr": {
@@ -3876,7 +3876,7 @@
     "type": "card",
     "cardType": "20",
     "id": "3ylr",
-    "z": 52748,
+    "z": 63046,
     "parent": "3852"
   },
   "dve6": {
@@ -3884,7 +3884,7 @@
     "type": "card",
     "cardType": "21",
     "id": "dve6",
-    "z": 52734,
+    "z": 63074,
     "parent": "3852"
   },
   "rf3c": {
@@ -3892,7 +3892,7 @@
     "type": "card",
     "cardType": "22",
     "id": "rf3c",
-    "z": 52737,
+    "z": 63066,
     "parent": "3852"
   },
   "ux5g": {
@@ -3900,7 +3900,7 @@
     "type": "card",
     "cardType": "23",
     "id": "ux5g",
-    "z": 52730,
+    "z": 63059,
     "parent": "3852"
   },
   "ftm4": {
@@ -3908,7 +3908,7 @@
     "type": "card",
     "cardType": "24",
     "id": "ftm4",
-    "z": 52725,
+    "z": 63078,
     "parent": "3852"
   },
   "7cu9": {
@@ -3916,7 +3916,7 @@
     "type": "card",
     "cardType": "25",
     "id": "7cu9",
-    "z": 52755,
+    "z": 63061,
     "parent": "3852"
   },
   "kefq": {
@@ -3924,7 +3924,7 @@
     "type": "card",
     "cardType": "26",
     "id": "kefq",
-    "z": 52750,
+    "z": 63055,
     "parent": "3852"
   },
   "1m4l": {
@@ -3932,7 +3932,7 @@
     "type": "card",
     "cardType": "27",
     "id": "1m4l",
-    "z": 52757,
+    "z": 63051,
     "parent": "3852"
   },
   "kuqs": {
@@ -3940,7 +3940,7 @@
     "type": "card",
     "cardType": "28",
     "id": "kuqs",
-    "z": 52744,
+    "z": 63052,
     "parent": "3852"
   },
   "uvb0": {
@@ -3948,7 +3948,7 @@
     "type": "card",
     "cardType": "29",
     "id": "uvb0",
-    "z": 52738,
+    "z": 63076,
     "parent": "3852"
   },
   "jyv4": {
@@ -3956,7 +3956,7 @@
     "type": "card",
     "cardType": "30",
     "id": "jyv4",
-    "z": 52756,
+    "z": 63057,
     "parent": "3852"
   },
   "qr3w": {
@@ -3964,7 +3964,7 @@
     "type": "card",
     "cardType": "31",
     "id": "qr3w",
-    "z": 52752,
+    "z": 63075,
     "parent": "3852"
   },
   "dwjn": {
@@ -3972,7 +3972,7 @@
     "type": "card",
     "cardType": "32",
     "id": "dwjn",
-    "z": 52735,
+    "z": 63062,
     "parent": "3852"
   },
   "nuh1": {
@@ -3980,7 +3980,7 @@
     "type": "card",
     "cardType": "33",
     "id": "nuh1",
-    "z": 52733,
+    "z": 63054,
     "parent": "3852"
   },
   "4sjr": {
@@ -3988,7 +3988,7 @@
     "type": "card",
     "cardType": "34",
     "id": "4sjr",
-    "z": 52732,
+    "z": 63067,
     "parent": "3852"
   },
   "ztzv": {
@@ -3996,7 +3996,7 @@
     "type": "card",
     "cardType": "35",
     "id": "ztzv",
-    "z": 52726,
+    "z": 63064,
     "parent": "3852"
   },
   "w38f": {
@@ -4004,7 +4004,7 @@
     "type": "card",
     "cardType": "36",
     "id": "w38f",
-    "z": 52729,
+    "z": 63060,
     "parent": "3852"
   },
   "7nd3": {

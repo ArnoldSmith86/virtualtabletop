@@ -63,17 +63,7 @@
       {
         "image": "/assets/-706534031_588",
         "height": 175,
-        "rotation": 0
-      },
-      {
-        "image": "/assets/-706534031_588",
-        "height": 175,
         "rotation": 90
-      },
-      {
-        "image": "/assets/-706534031_588",
-        "height": 175,
-        "rotation": 180
       },
       {
         "image": "/assets/-706534031_588",
@@ -88,7 +78,8 @@
     "width": 100,
     "height": 100,
     "image": "/assets/1520771680_598",
-    "inheritFrom": "icehouse-root"
+    "inheritFrom": "icehouse-root",
+    "rotation": 0
   },
   "icehouse-2": {
     "id": "icehouse-2",
@@ -104,17 +95,7 @@
       {
         "image": "/assets/616714550_542",
         "height": 138,
-        "rotation": 0
-      },
-      {
-        "image": "/assets/616714550_542",
-        "height": 138,
         "rotation": 90
-      },
-      {
-        "image": "/assets/616714550_542",
-        "height": 138,
-        "rotation": 180
       },
       {
         "image": "/assets/616714550_542",
@@ -127,7 +108,8 @@
     "height": 78,
     "image": "/assets/-1464912410_548",
     "inheritFrom": "icehouse-root",
-    "activeFace": 0
+    "activeFace": 0,
+    "rotation": 0
   },
   "icehouse-1": {
     "id": "icehouse-1",
@@ -144,17 +126,7 @@
       {
         "image": "/assets/1979309443_497",
         "height": 100,
-        "rotation": 0
-      },
-      {
-        "image": "/assets/1979309443_497",
-        "height": 100,
         "rotation": 90
-      },
-      {
-        "image": "/assets/1979309443_497",
-        "height": 100,
-        "rotation": 180
       },
       {
         "image": "/assets/1979309443_497",
@@ -261,12 +233,11 @@
   "b2-1": {
     "type": "icehouse-piece",
     "id": "b2-1",
-    "parent": "icehouse-bank",
-    "x": 130,
+    "x": 170,
     "y": 10,
     "height": 78,
     "rotation": 0,
-    "z": 4,
+    "z": 5,
     "activeFace": 0,
     "image": "/assets/-1464912410_548",
     "inheritFrom": {
@@ -278,7 +249,8 @@
         "color",
         "label"
       ]
-    }
+    },
+    "parent": "icehouse-bank"
   },
   "b2-2": {
     "type": "icehouse-piece",
@@ -306,11 +278,11 @@
     "type": "icehouse-piece",
     "id": "b2-3",
     "parent": "icehouse-bank",
-    "x": 170,
+    "x": 130,
     "y": 10,
     "height": 78,
     "rotation": 0,
-    "z": 5,
+    "z": 4,
     "activeFace": 0,
     "image": "/assets/-1464912410_548",
     "inheritFrom": {
@@ -349,7 +321,6 @@
   "b1-2": {
     "type": "icehouse-piece",
     "id": "b1-2",
-    "parent": "icehouse-bank",
     "x": 10,
     "y": 10,
     "height": 56,
@@ -366,7 +337,8 @@
         "color",
         "label"
       ]
-    }
+    },
+    "parent": "icehouse-bank"
   },
   "b1-3": {
     "type": "icehouse-piece",

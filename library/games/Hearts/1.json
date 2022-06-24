@@ -595,280 +595,280 @@
     "deck": "a7vuD",
     "type": "card",
     "cardType": "C 02",
-    "z": 67786,
-    "parent": "38o1"
+    "z": 73131,
+    "parent": "5gd1"
   },
   "a7vu_3_C": {
     "id": "a7vu_3_C",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "C 03",
-    "z": 67761,
-    "parent": "38o1"
+    "z": 73103,
+    "parent": "5gd1"
   },
   "a7vu_4_C": {
     "id": "a7vu_4_C",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "C 04",
-    "z": 67753,
-    "parent": "38o1"
+    "z": 73136,
+    "parent": "5gd1"
   },
   "a7vu_5_C": {
     "id": "a7vu_5_C",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "C 05",
-    "z": 67779,
-    "parent": "38o1"
+    "z": 73107,
+    "parent": "5gd1"
   },
   "a7vu_6_C": {
     "id": "a7vu_6_C",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "C 06",
-    "z": 67781,
-    "parent": "38o1"
+    "z": 73116,
+    "parent": "5gd1"
   },
   "a7vu_7_C": {
     "id": "a7vu_7_C",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "C 07",
-    "z": 67760,
-    "parent": "38o1"
+    "z": 73118,
+    "parent": "5gd1"
   },
   "a7vu_8_C": {
     "id": "a7vu_8_C",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "C 08",
-    "z": 67743,
-    "parent": "38o1"
+    "z": 73132,
+    "parent": "5gd1"
   },
   "a7vu_9_C": {
     "id": "a7vu_9_C",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "C 09",
-    "z": 67744,
-    "parent": "38o1"
+    "z": 73140,
+    "parent": "5gd1"
   },
   "a7vu_T_C": {
     "id": "a7vu_T_C",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "C 10",
-    "z": 67777,
-    "parent": "38o1"
+    "z": 73110,
+    "parent": "5gd1"
   },
   "a7vu_J_C": {
     "id": "a7vu_J_C",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "C 2J",
-    "z": 67766,
-    "parent": "38o1"
+    "z": 73122,
+    "parent": "5gd1"
   },
   "a7vu_Q_C": {
     "id": "a7vu_Q_C",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "C 3Q",
-    "z": 67785,
-    "parent": "38o1"
+    "z": 73104,
+    "parent": "5gd1"
   },
   "a7vu_K_C": {
     "id": "a7vu_K_C",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "C 4K",
-    "z": 67738,
-    "parent": "38o1"
+    "z": 73095,
+    "parent": "5gd1"
   },
   "a7vu_2_D": {
     "id": "a7vu_2_D",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "D 02",
-    "z": 67776,
-    "parent": "38o1"
+    "z": 73112,
+    "parent": "5gd1"
   },
   "a7vu_3_D": {
     "id": "a7vu_3_D",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "D 03",
-    "z": 67783,
-    "parent": "38o1"
+    "z": 73100,
+    "parent": "5gd1"
   },
   "a7vu_4_D": {
     "id": "a7vu_4_D",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "D 04",
-    "z": 67780,
-    "parent": "38o1"
+    "z": 73099,
+    "parent": "5gd1"
   },
   "a7vu_5_D": {
     "id": "a7vu_5_D",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "D 05",
-    "z": 67768,
-    "parent": "38o1"
+    "z": 73102,
+    "parent": "5gd1"
   },
   "a7vu_6_D": {
     "id": "a7vu_6_D",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "D 06",
-    "z": 67757,
-    "parent": "38o1"
+    "z": 73113,
+    "parent": "5gd1"
   },
   "a7vu_7_D": {
     "id": "a7vu_7_D",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "D 07",
-    "z": 67756,
-    "parent": "38o1"
+    "z": 73105,
+    "parent": "5gd1"
   },
   "a7vu_8_D": {
     "id": "a7vu_8_D",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "D 08",
-    "z": 67769,
-    "parent": "38o1"
+    "z": 73098,
+    "parent": "5gd1"
   },
   "a7vu_9_D": {
     "id": "a7vu_9_D",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "D 09",
-    "z": 67764,
-    "parent": "38o1"
+    "z": 73135,
+    "parent": "5gd1"
   },
   "a7vu_T_D": {
     "id": "a7vu_T_D",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "D 10",
-    "z": 67740,
-    "parent": "38o1"
+    "z": 73126,
+    "parent": "5gd1"
   },
   "a7vu_J_D": {
     "id": "a7vu_J_D",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "D 2J",
-    "z": 67739,
-    "parent": "38o1"
+    "z": 73138,
+    "parent": "5gd1"
   },
   "a7vu_Q_D": {
     "id": "a7vu_Q_D",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "D 3Q",
-    "z": 67755,
-    "parent": "38o1"
+    "z": 73143,
+    "parent": "5gd1"
   },
   "a7vu_K_D": {
     "id": "a7vu_K_D",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "D 4K",
-    "z": 67771,
-    "parent": "38o1"
+    "z": 73123,
+    "parent": "5gd1"
   },
   "a7vu_2_S": {
     "id": "a7vu_2_S",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "S 02",
-    "z": 67749,
-    "parent": "38o1"
+    "z": 73115,
+    "parent": "5gd1"
   },
   "a7vu_3_S": {
     "id": "a7vu_3_S",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "S 03",
-    "z": 67741,
-    "parent": "38o1"
+    "z": 73137,
+    "parent": "5gd1"
   },
   "a7vu_4_S": {
     "id": "a7vu_4_S",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "S 04",
-    "z": 67773,
-    "parent": "38o1"
+    "z": 73120,
+    "parent": "5gd1"
   },
   "a7vu_5_S": {
     "id": "a7vu_5_S",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "S 05",
-    "z": 67751,
-    "parent": "38o1"
+    "z": 73119,
+    "parent": "5gd1"
   },
   "a7vu_6_S": {
     "id": "a7vu_6_S",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "S 06",
-    "z": 67787,
-    "parent": "38o1"
+    "z": 73096,
+    "parent": "5gd1"
   },
   "a7vu_7_S": {
     "id": "a7vu_7_S",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "S 07",
-    "z": 67772,
-    "parent": "38o1"
+    "z": 73130,
+    "parent": "5gd1"
   },
   "a7vu_8_S": {
     "id": "a7vu_8_S",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "S 08",
-    "z": 67774,
-    "parent": "38o1"
+    "z": 73127,
+    "parent": "5gd1"
   },
   "a7vu_9_S": {
     "id": "a7vu_9_S",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "S 09",
-    "z": 67765,
-    "parent": "38o1"
+    "z": 73128,
+    "parent": "5gd1"
   },
   "a7vu_T_S": {
     "id": "a7vu_T_S",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "S 10",
-    "z": 67747,
-    "parent": "38o1"
+    "z": 73129,
+    "parent": "5gd1"
   },
   "a7vu_J_S": {
     "id": "a7vu_J_S",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "S 2J",
-    "z": 67778,
-    "parent": "38o1"
+    "z": 73125,
+    "parent": "5gd1"
   },
   "a7vu_K_S": {
     "id": "a7vu_K_S",
     "deck": "a7vuD",
     "type": "card",
     "cardType": "S 4K",
-    "z": 67754,
-    "parent": "38o1"
+    "z": 73117,
+    "parent": "5gd1"
   },
   "72dnD": {
     "id": "72dnD",
@@ -1073,7 +1073,6 @@
     "height": 168,
     "inheritFrom": "tricks1",
     "trickCountNum": "trickCount2",
-    "preventPiles": false,
     "passID": "pass2"
   },
   "tricks1": {
@@ -1095,6 +1094,11 @@
             ],
             "property": "onlyVisibleForSeat",
             "value": "x"
+          },
+          {
+            "func": "CALL",
+            "widget": "reset",
+            "routine": "cardCountRoutine"
           }
         ],
         "elseRoutine": [
@@ -1118,6 +1122,13 @@
       {
         "func": "IF",
         "condition": "${PROPERTY passing}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": "reset",
+            "routine": "cardCountRoutine"
+          }
+        ],
         "elseRoutine": [
           {
             "func": "CALL",
@@ -1132,7 +1143,11 @@
       }
     ],
     "passID": "pass1",
-    "passing": true
+    "passing": false,
+    "dropTarget": {
+      "taken": true
+    },
+    "preventPiles": true
   },
   "tricks3": {
     "type": "holder",
@@ -1144,7 +1159,6 @@
     "height": 168,
     "inheritFrom": "tricks1",
     "trickCountNum": "trickCount3",
-    "preventPiles": false,
     "passID": "pass3"
   },
   "tricks4": {
@@ -1157,7 +1171,6 @@
     "height": 168,
     "inheritFrom": "tricks1",
     "trickCountNum": "trickCount4",
-    "preventPiles": false,
     "passID": "pass4"
   },
   "seat3": {
@@ -1280,6 +1293,14 @@
         "func": "SET",
         "property": "turn",
         "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "drop"
+        ],
+        "property": "firstSuit",
+        "value": null
       }
     ],
     "text": "Take",
@@ -1294,6 +1315,25 @@
     "z": 30,
     "movableInEdit": false,
     "enterRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY firstSuit}",
+        "operand2": null,
+        "thenRoutine": [
+          {
+            "func": "GET",
+            "collection": "child",
+            "property": "suit",
+            "variable": "firstSuit"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "firstSuit",
+            "value": "${firstSuit}"
+          }
+        ]
+      },
       {
         "func": "IF",
         "operand1": "${PROPERTY scale OF reminder}",
@@ -1366,6 +1406,35 @@
             ],
             "property": "turn",
             "value": false
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "_ancestor",
+            "value": "drop"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "suit",
+            "value": "${PROPERTY firstSuit}",
+            "sortBy": {
+              "key": "rankA",
+              "reverse": true
+            }
+          },
+          {
+            "func": "GET",
+            "property": "oldOwner",
+            "variable": "oldOwner"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "take"
+            ],
+            "property": "owner",
+            "value": "${oldOwner}"
           }
         ]
       }
@@ -1373,10 +1442,7 @@
     "onEnter": {
       "activeFace": 1
     },
-    "stackOffsetX": 40,
-    "dropTarget": {
-      "none": "none"
-    }
+    "stackOffsetX": 40
   },
   "draw": {
     "type": "holder",
@@ -1664,8 +1730,8 @@
     "type": "button",
     "id": "reset",
     "x": 1364,
-    "y": 68,
-    "z": 45,
+    "y": 60,
+    "z": 55,
     "clickRoutine": [
       {
         "func": "INPUT",
@@ -1683,90 +1749,8 @@
         "cancelButtonText": "No"
       },
       {
-        "func": "IF",
-        "operand1": "${PROPERTY score OF settings}",
-        "operand2": true,
-        "thenRoutine": [
-          {
-            "func": "CALL",
-            "routine": "scoreRoutine"
-          }
-        ]
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "reminder"
-        ],
-        "property": "scale",
-        "value": 1
-      },
-      {
-        "func": "RECALL",
-        "holder": "draw"
-      },
-      {
-        "func": "FLIP",
-        "holder": "draw",
-        "face": 0
-      },
-      {
-        "func": "SHUFFLE",
-        "holder": "draw"
-      },
-      {
-        "func": "MOVE",
-        "from": "draw",
-        "to": [
-          "seat1",
-          "seat2",
-          "seat3",
-          "seat4"
-        ],
-        "count": 13
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "seat1",
-          "seat2",
-          "seat3",
-          "seat4"
-        ],
-        "property": "turn",
-        "value": false
-      },
-      "var a = ${PROPERTY passingDirection} + 1",
-      "var b = ${a} % 4",
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "passingDirection",
-        "value": "${b}"
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "drop"
-        ],
-        "property": "dropTarget",
-        "value": "${PROPERTY drops}"
-      },
-      {
-        "func": "IF",
-        "operand1": "${b}",
-        "relation": "<=",
-        "operand2": 2,
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": [
-              "tricks1"
-            ],
-            "property": "passing",
-            "value": true
-          }
-        ]
+        "func": "CALL",
+        "routine": "nextHandRoutine"
       }
     ],
     "countRoutine": [
@@ -1913,143 +1897,441 @@
     "passingDirection": 3,
     "drops": {
       "none": "none"
-    }
+    },
+    "cardCountRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "relation": "in",
+        "value": [
+          "tricks1",
+          "tricks2",
+          "tricks3",
+          "tricks4"
+        ]
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "cardCount",
+        "value": "${COUNT}"
+      }
+    ],
+    "cardCount": 0,
+    "cardCountChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "passMaster"
+        ],
+        "property": "y",
+        "value": 1500
+      },
+      "var cardCount = ${PROPERTY cardCount} / 4",
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "tricks1"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": "${PROPERTY pass OF settings}",
+        "thenRoutine": [
+          "var logical1 = true"
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${logical1}",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "_ancestor",
+            "value": "tricks2"
+          },
+          {
+            "func": "COUNT"
+          },
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": "${PROPERTY pass OF settings}",
+            "thenRoutine": [
+              "var logical2 = true"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${logical2}",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "_ancestor",
+            "value": "tricks3"
+          },
+          {
+            "func": "COUNT"
+          },
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": "${PROPERTY pass OF settings}",
+            "thenRoutine": [
+              "var logical3 = true"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${logical3}",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "_ancestor",
+            "value": "tricks4"
+          },
+          {
+            "func": "COUNT"
+          },
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": "${PROPERTY pass OF settings}",
+            "thenRoutine": [
+              "var logical4 = true"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${logical4}",
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY tally OF passMaster}",
+            "operand2": 4,
+            "thenRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${cardCount}",
+                "operand2": "${PROPERTY pass OF settings}",
+                "thenRoutine": [
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "passMaster"
+                    ],
+                    "property": "y",
+                    "value": 410
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "movableInEdit": false,
+    "nextHandRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY score OF settings}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "scoreRoutine"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY pass OF settings}",
+        "relation": "!=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "reminder"
+            ],
+            "property": "scale",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "draw"
+      },
+      {
+        "func": "FLIP",
+        "holder": "draw",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "draw"
+      },
+      {
+        "func": "MOVE",
+        "from": "draw",
+        "to": [
+          "seat1",
+          "seat2",
+          "seat3",
+          "seat4"
+        ],
+        "count": 13
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat1",
+          "seat2",
+          "seat3",
+          "seat4"
+        ],
+        "property": "turn",
+        "value": false
+      },
+      "var a = ${PROPERTY passingDirection} + 1",
+      "var b = ${a} % 4",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "passingDirection",
+        "value": "${b}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "drop"
+        ],
+        "property": "dropTarget",
+        "value": "${PROPERTY drops}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${b}",
+        "relation": "<=",
+        "operand2": 2,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY pass OF settings}",
+            "relation": "!=",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "tricks1"
+                ],
+                "property": "passing",
+                "value": true
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "CALL",
+                "widget": "settings",
+                "routine": "passingFalseRoutine"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "widget": "settings",
+            "routine": "passingFalseRoutine"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "cardCount",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "take"
+        ],
+        "property": "x",
+        "value": -100
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "take"
+        ],
+        "property": "owner",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "drop"
+        ],
+        "property": "firstSuit",
+        "value": null
+      }
+    ]
   },
   "zrp8_A_C": {
     "type": "card",
     "id": "zrp8_A_C",
     "deck": "a7vuD",
     "cardType": "C 5A",
-    "z": 67767,
-    "parent": "38o1"
+    "z": 73142,
+    "parent": "5gd1"
   },
   "egaz_A_D": {
     "type": "card",
     "id": "egaz_A_D",
     "deck": "a7vuD",
     "cardType": "D 5A",
-    "z": 67763,
-    "parent": "38o1"
+    "z": 73108,
+    "parent": "5gd1"
   },
   "aok3_A_S": {
     "type": "card",
     "id": "aok3_A_S",
     "deck": "a7vuD",
     "cardType": "S 5A",
-    "z": 67782,
-    "parent": "38o1"
+    "z": 73145,
+    "parent": "5gd1"
   },
   "snnh": {
     "deck": "a7vuD",
     "type": "card",
     "cardType": "zH 5A",
     "id": "snnh",
-    "z": 67770,
-    "parent": "38o1"
+    "z": 73124,
+    "parent": "5gd1"
   },
   "gqsu": {
     "deck": "a7vuD",
     "type": "card",
     "cardType": "zH 02",
     "id": "gqsu",
-    "z": 67775,
-    "parent": "38o1"
+    "z": 73121,
+    "parent": "5gd1"
   },
   "jsxo": {
     "deck": "a7vuD",
     "type": "card",
     "cardType": "zH 03",
     "id": "jsxo",
-    "z": 67748,
-    "parent": "38o1"
+    "z": 73094,
+    "parent": "5gd1"
   },
   "d3xf": {
     "deck": "a7vuD",
     "type": "card",
     "cardType": "zH 04",
     "id": "d3xf",
-    "z": 67736,
-    "parent": "38o1"
+    "z": 73139,
+    "parent": "5gd1"
   },
   "fnke": {
     "deck": "a7vuD",
     "type": "card",
     "cardType": "zH 05",
     "id": "fnke",
-    "z": 67762,
-    "parent": "38o1"
+    "z": 73111,
+    "parent": "5gd1"
   },
   "gxmb": {
     "deck": "a7vuD",
     "type": "card",
     "cardType": "zH 06",
     "id": "gxmb",
-    "z": 67752,
-    "parent": "38o1"
+    "z": 73097,
+    "parent": "5gd1"
   },
   "b7v5": {
     "deck": "a7vuD",
     "type": "card",
     "cardType": "zH 07",
     "id": "b7v5",
-    "z": 67742,
-    "parent": "38o1"
+    "z": 73144,
+    "parent": "5gd1"
   },
   "0rax": {
     "deck": "a7vuD",
     "type": "card",
     "cardType": "zH 08",
     "id": "0rax",
-    "z": 67759,
-    "parent": "38o1"
+    "z": 73133,
+    "parent": "5gd1"
   },
   "rf1l": {
     "deck": "a7vuD",
     "type": "card",
     "cardType": "zH 09",
     "id": "rf1l",
-    "z": 67750,
-    "parent": "38o1"
+    "z": 73134,
+    "parent": "5gd1"
   },
   "nruo": {
     "deck": "a7vuD",
     "type": "card",
     "cardType": "zH 10",
     "id": "nruo",
-    "z": 67746,
-    "parent": "38o1"
+    "z": 73141,
+    "parent": "5gd1"
   },
   "yprl": {
     "deck": "a7vuD",
     "type": "card",
     "cardType": "zH 2J",
     "id": "yprl",
-    "z": 67758,
-    "parent": "38o1"
+    "z": 73114,
+    "parent": "5gd1"
   },
   "6v3p": {
     "deck": "a7vuD",
     "type": "card",
     "cardType": "zH 3Q",
     "id": "6v3p",
-    "z": 67784,
-    "parent": "38o1"
+    "z": 73106,
+    "parent": "5gd1"
   },
   "74eb": {
     "deck": "a7vuD",
     "type": "card",
     "cardType": "zH 4K",
     "id": "74eb",
-    "z": 67737,
-    "parent": "38o1"
+    "z": 73101,
+    "parent": "5gd1"
   },
   "ypy2": {
     "deck": "a7vuD",
     "type": "card",
     "cardType": "S 3Q",
     "id": "ypy2",
-    "z": 67745,
-    "parent": "38o1"
+    "z": 73109,
+    "parent": "5gd1"
   },
   "points1": {
     "id": "points1",
@@ -2102,11 +2384,11 @@
   "settings": {
     "type": "button",
     "id": "settings",
-    "x": 1512,
-    "y": 912,
-    "z": 44,
+    "x": 1532,
+    "y": 934,
+    "z": 57,
     "classes": "material-icons",
-    "css": "font-size: 60px; line-height:1.15",
+    "css": "font-size: 40px; line-height:1.05",
     "text": "settings",
     "score": true,
     "show": true,
@@ -2139,6 +2421,14 @@
             "label": "Shoot the moon reduces own score by 26 (rather than increase opponents' scores)?",
             "value": "${PROPERTY shoot}",
             "variable": "shoot"
+          },
+          {
+            "type": "number",
+            "label": "Pass this many cards each round (clockwise, counterclockwise, across, none)?",
+            "value": "${PROPERTY pass}",
+            "variable": "pass",
+            "min": 0,
+            "max": 13
           }
         ],
         "confirmButtonText": "Confirm",
@@ -2155,6 +2445,13 @@
         "collection": "thisButton",
         "property": "score",
         "value": "${score}"
+      },
+      "var pass = ${pass} parseFloat",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "pass",
+        "value": "${pass}"
       },
       {
         "func": "SET",
@@ -2202,7 +2499,117 @@
         ]
       }
     ],
-    "shoot": false
+    "shoot": false,
+    "pass": 3,
+    "passChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY pass}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "passingFalseRoutine"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "routine": "passingTrueRoutine"
+          }
+        ]
+      }
+    ],
+    "passingFalseRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "drop"
+        ],
+        "property": "dropTarget",
+        "value": "${PROPERTY dropsHere OF passMaster}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "tricks1"
+        ],
+        "property": "dropTarget",
+        "value": "${PROPERTY dropsThere OF passMaster}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "tricks1"
+        ],
+        "property": "preventPiles",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "tricks1"
+        ],
+        "property": "passing",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "pass1",
+          "pass2",
+          "pass3",
+          "pass4"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": "x"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "passMaster"
+        ],
+        "property": "tally",
+        "value": 0
+      }
+    ],
+    "passingTrueRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "drop"
+        ],
+        "property": "dropTarget",
+        "value": "${PROPERTY drops OF reset}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "tricks1"
+        ],
+        "property": "dropTarget",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "tricks1"
+        ],
+        "property": "preventPiles",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "tricks1"
+        ],
+        "property": "passing",
+        "value": true
+      }
+    ],
+    "width": 50,
+    "height": 50,
+    "movableInEdit": false
   },
   "reminder": {
     "id": "reminder",
@@ -2313,8 +2720,8 @@
     ],
     "height": 164,
     "borderRadius": 8,
-    "text": "\n\n\nPass\nHere",
-    "bColor": "#999999",
+    "text": "\n\nLawDawg\nPass\nHere",
+    "bColor": "#1e00ff",
     "onlyVisibleForSeatChangeRoutine": [
       {
         "func": "IF",
@@ -2406,8 +2813,8 @@
         ]
       }
     ],
-    "text": "\n\n\nPass\nHere",
-    "bColor": "#999999",
+    "text": "\n\nTop\nPass\nHere",
+    "bColor": "#b200f0",
     "onlyVisibleForSeat": "x",
     "y": 370,
     "onlyVisibleForSeatChangeRoutine": [
@@ -2499,8 +2906,8 @@
         ]
       }
     ],
-    "text": "\n\n\nPass\nHere",
-    "bColor": "#999999",
+    "text": "\n\nRight\nPass\nHere",
+    "bColor": "#04f000",
     "onlyVisibleForSeat": "x",
     "y": 181,
     "onlyVisibleForSeatChangeRoutine": [
@@ -2592,8 +2999,8 @@
         ]
       }
     ],
-    "text": "\n\n\nPass\nHere",
-    "bColor": "#999999",
+    "text": "\n\nBottom\nPass\nHere",
+    "bColor": "#f000bc",
     "onlyVisibleForSeat": "x",
     "y": 370,
     "onlyVisibleForSeatChangeRoutine": [
@@ -2651,12 +3058,20 @@
         "value": "${PROPERTY color OF $from}"
       },
       {
-        "func": "SET",
-        "collection": [
-          "${callID}"
-        ],
-        "property": "onlyVisibleForSeat",
-        "value": "${from}"
+        "func": "IF",
+        "operand1": "${PROPERTY pass OF settings}",
+        "relation": "!=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "${callID}"
+            ],
+            "property": "onlyVisibleForSeat",
+            "value": "${from}"
+          }
+        ]
       },
       {
         "func": "SET",
@@ -2672,7 +3087,7 @@
           "${to}"
         ],
         "property": "preventPiles",
-        "value": false
+        "value": null
       }
     ],
     "clickRoutine": [
@@ -2754,30 +3169,142 @@
       }
     ],
     "y": 1500,
-    "tallyChangeRoutine": [
+    "backgroundColor": "red",
+    "tally": 0
+  },
+  "restart": {
+    "type": "button",
+    "id": "restart",
+    "x": 10,
+    "y": 10,
+    "z": 56,
+    "classes": "symbols",
+    "css": "font-size: 40px; line-height:1.05",
+    "text": "restart",
+    "clickRoutine": [
       {
-        "func": "IF",
-        "operand1": "${PROPERTY tally}",
-        "operand2": 4,
-        "thenRoutine": [
+        "func": "INPUT",
+        "fields": [
           {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "y",
-            "value": 410
+            "type": "title",
+            "text": "Resetting board ..."
+          },
+          {
+            "type": "text",
+            "text": "This will reset the board. Do you want to continue?"
           }
-        ]
+        ],
+        "confirmButtonText": "Reset board",
+        "cancelButtonText": "Cancel"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "reminder"
+        ],
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "RECALL",
+        "holder": "draw"
+      },
+      {
+        "func": "FLIP",
+        "holder": "draw",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "draw"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat1",
+          "seat2",
+          "seat3",
+          "seat4"
+        ],
+        "property": "turn",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "reset"
+        ],
+        "property": "passingDirection",
+        "value": 3
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "drop"
+        ],
+        "property": "dropTarget",
+        "value": "${PROPERTY drops OF reset}"
+      },
+      {
+        "func": "CALL",
+        "widget": "settings",
+        "routine": "passingFalseRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "reset"
+        ],
+        "property": "cardCount",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "take"
+        ],
+        "property": "x",
+        "value": -100
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "take"
+        ],
+        "property": "owner",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "bids1",
+          "bids2",
+          "bids3",
+          "bids4"
+        ],
+        "property": "text",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "drop"
+        ],
+        "property": "firstSuit",
+        "value": null
       }
     ],
-    "backgroundColor": "red"
+    "width": 50,
+    "height": 50,
+    "movableInEdit": false
   },
-  "38o1": {
+  "5gd1": {
     "type": "pile",
     "parent": "draw",
     "x": 4,
     "y": 4,
     "width": 103,
     "height": 160,
-    "id": "38o1"
+    "id": "5gd1"
   }
 }

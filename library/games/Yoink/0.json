@@ -12,7 +12,7 @@
       "players": "3-5",
       "language": "US",
       "variant": "",
-      "attribution": "INSTRUCTIONS: Players take seats. Game is highly automated and must have at least 3 for automation to work. Press Start Game button. Choose desired card orientation and press green check button to indicate ready to play. Once all players, are ready, random player chosen to start. To play cards from hand, click on desired cards then Play button. If accidentally make an illegal play, an Undo button is available. To Yoink a card from the played pile, drag it to the hand. After placing in hand, can move it to a different location and rotate it using the button prompts. Press green check button to set position and pass turn to next player. Again, an Undo button is available. To use Yoink + Play, after pressing green check button, click on Yoink + Play card in player's seat and turn will be set to player pressing the card. When round ends by rule, a next round button will appear. Press it to calculate scores and deal next round of cards. Repeat above steps until game is over.\n\nThe game layout and game room design are by LawDawg and by mousewax and are released to the Public Domain under CC0.\n\nThe card and game piece design is by mousewas and is released to the Public Domain under CC0.",
+      "attribution": "INSTRUCTIONS: Players take seats. Game is highly automated and must have at least 3 for automation to work. Press Start Game button. Choose desired card orientation and press green check button to indicate ready to play. Once all players, are ready, random player chosen to start. To play cards from hand, click on desired cards then Play button. If accidentally make an illegal play, an Undo button is available. To Yoink a card from the played pile, drag it to the hand. After placing in hand, can move it to a different location and rotate it using the button prompts. Press green check button to set position and pass turn to next player. Again, an Undo button is available. To use Yoink + Play, after pressing green check button, click on Yoink + Play card in player's seat and turn will be set to player pressing the card. If turn gets out of synch, use the skip/next button in lower right to manually change turns. When round ends by rule, a next round button will appear. Press it to calculate scores and deal next round of cards. Repeat above steps until game is over.\n\nThe game layout and game room design are by LawDawg and by mousewax and are released to the Public Domain under CC0.\n\nThe card and game piece design is by mousewas and is released to the Public Domain under CC0.",
       "similarName": "Scout",
       "similarLink": "https://boardgamegeek.com/boardgame/291453/scout",
       "description": "Play with deck with value 1-10 on one end and different 1-10 value on the other end. Once hand is dealt, cannot move cards but can rotate once. Then play sets or runs using cards in dealt order in your hand that are are higher than what opponent played. Play number of rounds equal to number of players. Highest score wins."
@@ -690,10 +690,28 @@
     "y": 1140,
     "nullArray": [],
     "text": "raises",
-    "undoPlayArray": [],
-    "undoName": [],
-    "undoHandArray": [],
-    "playCount": 0,
+    "undoPlayArray": [
+      "tvy4",
+      "fowc",
+      "8m7n",
+      "iktq"
+    ],
+    "undoName": "LawDawg",
+    "undoHandArray": [
+      "nakz",
+      "zk3f",
+      "fkt9",
+      "xgpt",
+      "5ja9",
+      "pc5z",
+      "j1m9",
+      "ggsq",
+      "5l7d",
+      "ecq7",
+      "1rsc",
+      "8dcb"
+    ],
+    "playCount": 2,
     "readyChangeRoutine": [
       {
         "func": "SELECT",
@@ -783,48 +801,8 @@
         ]
       }
     ],
-    "ready": 1,
+    "ready": 3,
     "roundScoreRoutine": [
-      "// Move cards from play area to seat.",
-      {
-        "func": "GET",
-        "collection": [
-          "playedName"
-        ],
-        "property": "text",
-        "variable": "pName"
-      },
-      {
-        "func": "SELECT",
-        "type": "seat",
-        "property": "player",
-        "value": "${pName}"
-      },
-      {
-        "func": "GET",
-        "property": "index",
-        "variable": "seatIndex"
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "playArea"
-        ],
-        "property": "scout",
-        "value": false
-      },
-      {
-        "func": "SELECT",
-        "type": "card",
-        "property": "_ancestor",
-        "value": "playArea"
-      },
-      {
-        "func": "MOVE",
-        "from": "playArea",
-        "to": "holder${seatIndex}",
-        "count": 0
-      },
       "// Calculate points",
       {
         "func": "FOREACH",
@@ -836,6 +814,14 @@
           5
         ],
         "loopRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "playArea"
+            ],
+            "property": "scout",
+            "value": false
+          },
           {
             "func": "SELECT",
             "type": "card",
@@ -884,6 +870,52 @@
             "value": "${total}"
           }
         ]
+      },
+      "// If no players used all their cards, then the last player to play cards does not have cards in his hand count against his total, so this adds those cards back in.",
+      {
+        "func": "IF",
+        "condition": "${PROPERTY allScouts}",
+        "thenRoutine": [
+          {
+            "func": "GET",
+            "collection": [
+              "playedName"
+            ],
+            "property": "text",
+            "variable": "pName"
+          },
+          {
+            "func": "SELECT",
+            "type": "seat",
+            "property": "player",
+            "value": "${pName}"
+          },
+          {
+            "func": "GET",
+            "property": "index",
+            "variable": "seatIndex"
+          },
+          {
+            "func": "GET",
+            "collection": [
+              "cardCount${seatIndex}"
+            ],
+            "property": "text",
+            "variable": "lastPlayerCardsRemain"
+          },
+          {
+            "func": "LABEL",
+            "label": "score${seatIndex}",
+            "mode": "inc",
+            "value": "${lastPlayerCardsRemain}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "allScouts",
+            "value": false
+          }
+        ]
       }
     ],
     "raises": 0,
@@ -930,7 +962,7 @@
       2,
       1
     ],
-    "undoScout": "5l7d"
+    "allScouts": false
   },
   "tempHolder": {
     "type": "holder",
@@ -1359,7 +1391,7 @@
       "font-weight": "900",
       "color": "${PROPERTY seatColor}"
     },
-    "seatColor": "#f0004a",
+    "seatColor": "#00f01c",
     "parent": "playArea"
   },
   "seat1": {
@@ -2067,8 +2099,8 @@
     },
     "movableInEdit": false,
     "movable": false,
-    "onlyVisibleForSeat": "seat",
-    "x": 404
+    "onlyVisibleForSeat": "seat3",
+    "x": 752
   },
   "scoutRotate": {
     "type": "button",
@@ -2221,6 +2253,14 @@
             "func": "SET",
             "property": "turn",
             "value": false
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "raises"
+            ],
+            "property": "allScouts",
+            "value": true
           }
         ],
         "elseRoutine": [
@@ -2245,7 +2285,7 @@
     "type": "card",
     "cardType": "JustOne",
     "id": "buko",
-    "z": 50524,
+    "z": 62126,
     "parent": "zixr"
   },
   "1klt": {
@@ -2253,7 +2293,7 @@
     "type": "card",
     "cardType": "JustOne",
     "id": "1klt",
-    "z": 50526,
+    "z": 62128,
     "parent": "zixr"
   },
   "zixr": {
@@ -2273,7 +2313,7 @@
     "type": "card",
     "cardType": "JustOne",
     "id": "6eub",
-    "z": 50528,
+    "z": 62130,
     "parent": "zixr"
   },
   "k6l4": {
@@ -2281,7 +2321,7 @@
     "type": "card",
     "cardType": "JustOne",
     "id": "k6l4",
-    "z": 50530,
+    "z": 62132,
     "parent": "zixr"
   },
   "qpgl": {
@@ -2289,7 +2329,7 @@
     "type": "card",
     "cardType": "JustOne",
     "id": "qpgl",
-    "z": 50532,
+    "z": 62134,
     "parent": "zixr"
   },
   "tqkd": {
@@ -2297,7 +2337,7 @@
     "type": "card",
     "cardType": "JustOne",
     "id": "tqkd",
-    "z": 50534,
+    "z": 62136,
     "parent": "zixr"
   },
   "z1bp": {
@@ -2305,7 +2345,7 @@
     "type": "card",
     "cardType": "JustOne",
     "id": "z1bp",
-    "z": 50536,
+    "z": 62138,
     "parent": "zixr"
   },
   "ipml": {
@@ -2313,7 +2353,7 @@
     "type": "card",
     "cardType": "JustOne",
     "id": "ipml",
-    "z": 50538,
+    "z": 62140,
     "parent": "zixr"
   },
   "dtdu": {
@@ -2321,7 +2361,7 @@
     "type": "card",
     "cardType": "JustOne",
     "id": "dtdu",
-    "z": 50540,
+    "z": 62142,
     "parent": "zixr"
   },
   "hv4d": {
@@ -2329,7 +2369,7 @@
     "type": "card",
     "cardType": "JustOne",
     "id": "hv4d",
-    "z": 50542,
+    "z": 62144,
     "parent": "zixr"
   },
   "z65x": {
@@ -2337,7 +2377,7 @@
     "type": "card",
     "cardType": "JustOne",
     "id": "z65x",
-    "z": 50544,
+    "z": 62146,
     "parent": "zixr"
   },
   "l0g8": {
@@ -2345,7 +2385,7 @@
     "type": "card",
     "cardType": "JustOne",
     "id": "l0g8",
-    "z": 50546,
+    "z": 62148,
     "parent": "zixr"
   },
   "oo4c": {
@@ -2353,7 +2393,7 @@
     "type": "card",
     "cardType": "JustOne",
     "id": "oo4c",
-    "z": 50548,
+    "z": 62150,
     "parent": "zixr"
   },
   "qtza": {
@@ -2361,7 +2401,7 @@
     "type": "card",
     "cardType": "JustOne",
     "id": "qtza",
-    "z": 50550,
+    "z": 62152,
     "parent": "zixr"
   },
   "91kx": {
@@ -2369,7 +2409,7 @@
     "type": "card",
     "cardType": "JustOne",
     "id": "91kx",
-    "z": 50552,
+    "z": 62154,
     "parent": "zixr"
   },
   "6l6p": {
@@ -2377,7 +2417,7 @@
     "type": "card",
     "cardType": "JustOne",
     "id": "6l6p",
-    "z": 50554,
+    "z": 62156,
     "parent": "zixr"
   },
   "qyx2": {
@@ -2385,7 +2425,7 @@
     "type": "card",
     "cardType": "JustOne",
     "id": "qyx2",
-    "z": 50556,
+    "z": 62158,
     "parent": "zixr"
   },
   "wts7": {
@@ -2393,7 +2433,7 @@
     "type": "card",
     "cardType": "JustOne",
     "id": "wts7",
-    "z": 50558,
+    "z": 62160,
     "parent": "zixr"
   },
   "3ydu": {
@@ -2401,7 +2441,7 @@
     "type": "card",
     "cardType": "JustOne",
     "id": "3ydu",
-    "z": 50560,
+    "z": 62162,
     "parent": "zixr"
   },
   "xxdi": {
@@ -2409,7 +2449,7 @@
     "type": "card",
     "cardType": "JustOne",
     "id": "xxdi",
-    "z": 50562,
+    "z": 62164,
     "parent": "zixr"
   },
   "be40": {
@@ -2417,7 +2457,7 @@
     "type": "card",
     "cardType": "JustOne",
     "id": "be40",
-    "z": 50564,
+    "z": 62166,
     "parent": "zixr"
   },
   "391l": {
@@ -2425,7 +2465,7 @@
     "type": "card",
     "cardType": "JustOne",
     "id": "391l",
-    "z": 50566,
+    "z": 62168,
     "parent": "zixr"
   },
   "incd": {
@@ -2433,7 +2473,7 @@
     "type": "card",
     "cardType": "JustOne",
     "id": "incd",
-    "z": 50568,
+    "z": 62170,
     "parent": "zixr"
   },
   "buhg": {
@@ -2441,7 +2481,7 @@
     "type": "card",
     "cardType": "JustOne",
     "id": "buhg",
-    "z": 50570,
+    "z": 62172,
     "parent": "zixr"
   },
   "33ef": {
@@ -2449,7 +2489,7 @@
     "type": "card",
     "cardType": "JustOne",
     "id": "33ef",
-    "z": 50572,
+    "z": 62174,
     "parent": "zixr"
   },
   "doubleCards": {
@@ -2845,49 +2885,14 @@
     "z": 83,
     "clickRoutine": [
       {
-        "func": "SET",
-        "collection": [
-          "nextRound"
-        ],
-        "property": "scale",
-        "value": 0
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "raises"
-        ],
-        "property": "scoutCount",
-        "value": 0
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "seat1",
-          "seat2",
-          "seat3",
-          "seat4",
-          "seat5"
-        ],
-        "property": "seatOpacity",
-        "value": 0.2
-      },
-      {
-        "func": "SELECT",
-        "type": "card",
-        "property": "deck",
-        "value": "doubleCards"
-      },
-      {
-        "func": "SET",
-        "property": "activeFace",
-        "value": 0
-      },
-      {
         "func": "IF",
         "operand1": "${PROPERTY round}",
         "operand2": 1,
         "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "commonFunctionsRoutine"
+          },
           "var round = ${PROPERTY round} + 1",
           {
             "func": "SET",
@@ -2943,6 +2948,10 @@
                 ],
                 "confirmButtonText": "End Round",
                 "cancelButtonText": "Cancel"
+              },
+              {
+                "func": "CALL",
+                "routine": "commonFunctionsRoutine"
               },
               "var round = ${PROPERTY round} + 1",
               {
@@ -3001,6 +3010,10 @@
               },
               {
                 "func": "CALL",
+                "routine": "commonFunctionsRoutine"
+              },
+              {
+                "func": "CALL",
                 "widget": "raises",
                 "routine": "roundScoreRoutine"
               },
@@ -3019,13 +3032,6 @@
             ]
           }
         ]
-      },
-      "// This is used to prevent 2 players from accidentally pressing the button at the same time. Status is changed when the button reappears.",
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "clickable",
-        "value": false
       }
     ],
     "text": "Start Game",
@@ -3362,6 +3368,54 @@
           }
         ]
       }
+    ],
+    "commonFunctionsRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "nextRound"
+        ],
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "raises"
+        ],
+        "property": "scoutCount",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat1",
+          "seat2",
+          "seat3",
+          "seat4",
+          "seat5"
+        ],
+        "property": "seatOpacity",
+        "value": 0.2
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "deck",
+        "value": "doubleCards"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 0
+      },
+      "// This is used to prevent 2 players from accidentally pressing the button at the same time. Status is changed when the button reappears.",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "clickable",
+        "value": false
+      }
     ]
   },
   "undo": {
@@ -3680,6 +3734,14 @@
       {
         "func": "SET",
         "collection": [
+          "raises"
+        ],
+        "property": "allScouts",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
           "playedName"
         ],
         "property": "text",
@@ -3809,157 +3871,156 @@
     "type": "card",
     "cardType": "1-2",
     "id": "b2i1",
-    "z": 50434,
+    "z": 62036,
     "inHand": false,
     "raised": false,
-    "parent": "4m0w"
+    "parent": "37vc"
   },
   "0mdf": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "1-3",
     "id": "0mdf",
-    "z": 50436,
+    "z": 62038,
     "inHand": false,
     "raised": false,
-    "parent": "4m0w"
+    "parent": "37vc"
   },
   "zk3f": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "1-4",
     "id": "zk3f",
-    "z": 50438,
+    "z": 62040,
     "inHand": false,
     "raised": false,
-    "parent": "4m0w"
+    "parent": "37vc"
   },
   "wql5": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "1-5",
     "id": "wql5",
-    "z": 50440,
+    "z": 62042,
     "inHand": false,
     "raised": false,
-    "position": "right",
-    "parent": "4m0w"
+    "parent": "37vc",
+    "rotation": 180
   },
   "pyec": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "1-6",
     "id": "pyec",
-    "z": 50442,
+    "z": 62044,
     "inHand": false,
     "raised": false,
-    "position": "right",
-    "parent": "4m0w"
+    "parent": "37vc"
   },
   "pcjr": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "1-7",
     "id": "pcjr",
-    "z": 50444,
-    "parent": "4m0w",
+    "z": 62046,
+    "parent": "37vc",
     "inHand": false,
-    "raised": false,
-    "position": "right"
+    "raised": false
   },
   "l4y7": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "1-8",
     "id": "l4y7",
-    "z": 50446,
+    "z": 62048,
     "inHand": false,
     "raised": false,
-    "parent": "4m0w",
-    "rotation": 180
+    "position": "right",
+    "parent": "37vc"
   },
   "s2ql": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "1-9",
     "id": "s2ql",
-    "z": 50448,
+    "z": 62050,
     "inHand": false,
     "raised": false,
-    "parent": "4m0w"
+    "parent": "37vc",
+    "rotation": 180
   },
   "tazw": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "1-10",
     "id": "tazw",
-    "z": 50450,
-    "parent": "4m0w",
+    "z": 62052,
+    "parent": "37vc",
     "inHand": false,
-    "raised": false
+    "raised": false,
+    "rotation": 180
   },
   "511i": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "2-3",
     "id": "511i",
-    "z": 50452,
+    "z": 62054,
     "inHand": false,
     "raised": false,
-    "position": "right",
-    "parent": "4m0w"
+    "parent": "37vc"
   },
   "bnwb": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "2-4",
     "id": "bnwb",
-    "z": 50454,
+    "z": 62056,
     "inHand": false,
     "raised": false,
-    "position": "right",
-    "parent": "4m0w"
+    "parent": "37vc",
+    "rotation": 180
   },
   "b38d": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "2-5",
     "id": "b38d",
-    "z": 50456,
+    "z": 62058,
     "inHand": false,
     "raised": false,
-    "parent": "4m0w"
+    "parent": "37vc"
   },
   "0t5j": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "2-6",
     "id": "0t5j",
-    "z": 50458,
+    "z": 62060,
     "inHand": false,
     "raised": false,
-    "parent": "4m0w",
-    "rotation": 180
+    "parent": "37vc"
   },
   "5ja9": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "2-7",
     "id": "5ja9",
-    "z": 50460,
+    "z": 62062,
     "inHand": false,
     "raised": false,
-    "parent": "4m0w"
+    "parent": "37vc",
+    "rotation": 180
   },
   "nlpb": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "2-8",
     "id": "nlpb",
-    "z": 50462,
+    "z": 62064,
     "inHand": false,
     "raised": false,
-    "parent": "4m0w",
+    "parent": "37vc",
     "rotation": 180
   },
   "fowc": {
@@ -3967,19 +4028,19 @@
     "type": "card",
     "cardType": "2-9",
     "id": "fowc",
-    "z": 50464,
+    "z": 62066,
     "inHand": false,
     "raised": false,
-    "position": "right",
-    "parent": "4m0w"
+    "parent": "37vc",
+    "rotation": 180
   },
   "h696": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "2-10",
     "id": "h696",
-    "z": 50466,
-    "parent": "4m0w",
+    "z": 62068,
+    "parent": "37vc",
     "inHand": false,
     "raised": false,
     "rotation": 180
@@ -3989,106 +4050,106 @@
     "type": "card",
     "cardType": "3-4",
     "id": "nakz",
-    "z": 50468,
+    "z": 62070,
     "inHand": false,
     "raised": false,
-    "parent": "4m0w",
-    "rotation": 180
+    "parent": "37vc"
   },
   "x88x": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "3-5",
     "id": "x88x",
-    "z": 50470,
+    "z": 62072,
     "inHand": false,
     "raised": false,
     "position": "right",
-    "parent": "4m0w",
-    "rotation": 180
+    "parent": "37vc"
   },
   "1rsc": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "3-6",
     "id": "1rsc",
-    "z": 50472,
+    "z": 62074,
     "inHand": false,
     "raised": false,
-    "parent": "4m0w"
+    "parent": "37vc"
   },
   "iktq": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "3-7",
     "id": "iktq",
-    "z": 50474,
+    "z": 62076,
     "inHand": false,
     "raised": false,
-    "parent": "4m0w"
+    "parent": "37vc",
+    "rotation": 180
   },
   "fkt9": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "3-8",
     "id": "fkt9",
-    "z": 50476,
+    "z": 62078,
     "inHand": false,
     "raised": false,
-    "parent": "4m0w"
+    "position": "left",
+    "parent": "37vc"
   },
   "w0yj": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "3-9",
     "id": "w0yj",
-    "z": 50478,
+    "z": 62080,
     "inHand": false,
     "raised": false,
-    "position": "right",
-    "parent": "4m0w"
+    "parent": "37vc"
   },
   "shbv": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "3-10",
     "id": "shbv",
-    "z": 50480,
+    "z": 62082,
     "inHand": false,
     "raised": false,
-    "parent": "4m0w"
+    "parent": "37vc",
+    "rotation": 180
   },
   "ecq7": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "4-5",
     "id": "ecq7",
-    "z": 50482,
+    "z": 62084,
     "inHand": false,
     "raised": false,
-    "rotation": 180,
-    "parent": "4m0w"
+    "parent": "37vc"
   },
   "0jaw": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "4-6",
     "id": "0jaw",
-    "z": 50484,
+    "z": 62086,
     "inHand": false,
     "raised": false,
     "position": "right",
-    "parent": "4m0w"
+    "parent": "37vc",
+    "rotation": 180
   },
   "tgju": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "4-7",
     "id": "tgju",
-    "z": 50486,
+    "z": 62088,
     "inHand": false,
     "raised": false,
-    "parent": "4m0w",
+    "parent": "37vc",
     "rotation": 180
   },
   "j1m9": {
@@ -4096,11 +4157,10 @@
     "type": "card",
     "cardType": "4-8",
     "id": "j1m9",
-    "z": 50488,
+    "z": 62090,
     "inHand": false,
     "raised": false,
-    "position": "right",
-    "parent": "4m0w",
+    "parent": "37vc",
     "rotation": 180
   },
   "shyi": {
@@ -4108,185 +4168,181 @@
     "type": "card",
     "cardType": "4-9",
     "id": "shyi",
-    "z": 50490,
+    "z": 62092,
     "inHand": false,
     "raised": false,
-    "position": "right",
-    "rotation": 180,
-    "parent": "4m0w"
+    "parent": "37vc",
+    "position": "left",
+    "rotation": 180
   },
   "pnu5": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "4-10",
     "id": "pnu5",
-    "z": 50492,
+    "z": 62094,
     "inHand": false,
     "raised": false,
-    "parent": "4m0w",
-    "rotation": 180
+    "parent": "37vc"
   },
   "gqtk": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "5-6",
     "id": "gqtk",
-    "z": 50494,
+    "z": 62096,
     "inHand": false,
     "raised": false,
-    "position": "right",
-    "parent": "4m0w"
+    "parent": "37vc"
   },
   "pc5z": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "5-7",
     "id": "pc5z",
-    "z": 50496,
+    "z": 62098,
     "inHand": false,
     "raised": false,
-    "position": "right",
-    "parent": "4m0w"
+    "parent": "37vc"
   },
   "ljzw": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "5-8",
     "id": "ljzw",
-    "z": 50498,
+    "z": 62100,
     "inHand": false,
     "raised": false,
-    "position": "right",
-    "parent": "4m0w"
+    "parent": "37vc",
+    "rotation": 180
   },
   "tvy4": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "5-9",
     "id": "tvy4",
-    "z": 50500,
+    "z": 62102,
     "inHand": false,
     "raised": false,
-    "parent": "4m0w"
+    "parent": "37vc"
   },
   "dr37": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "5-10",
     "id": "dr37",
-    "z": 50502,
+    "z": 62104,
     "inHand": false,
     "raised": false,
-    "rotation": 180,
-    "parent": "4m0w"
+    "parent": "37vc",
+    "rotation": 180
   },
   "197m": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "6-7",
     "id": "197m",
-    "z": 50504,
+    "z": 62106,
     "inHand": false,
     "raised": false,
-    "position": "right",
-    "parent": "4m0w"
+    "parent": "37vc",
+    "rotation": 180
   },
   "8dcb": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "6-8",
     "id": "8dcb",
-    "z": 50506,
+    "z": 62108,
     "inHand": false,
     "raised": false,
-    "rotation": 180,
-    "parent": "4m0w"
+    "position": "right",
+    "parent": "37vc",
+    "rotation": 180
   },
   "xgpt": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "6-9",
     "id": "xgpt",
-    "z": 50508,
+    "z": 62110,
     "inHand": false,
     "raised": false,
-    "position": "right",
-    "parent": "4m0w",
-    "rotation": 180
+    "position": "left",
+    "parent": "37vc"
   },
   "4zm3": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "6-10",
     "id": "4zm3",
-    "z": 50510,
+    "z": 62112,
     "inHand": false,
     "raised": false,
-    "rotation": 180,
-    "parent": "4m0w"
+    "parent": "37vc",
+    "rotation": 180
   },
   "8m7n": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "7-8",
     "id": "8m7n",
-    "z": 50512,
+    "z": 62114,
     "inHand": false,
     "raised": false,
-    "parent": "4m0w"
+    "parent": "37vc",
+    "rotation": 180
   },
   "ggsq": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "7-9",
     "id": "ggsq",
-    "z": 50514,
+    "z": 62116,
     "inHand": false,
     "raised": false,
-    "parent": "4m0w",
-    "rotation": 180
+    "parent": "37vc"
   },
   "zfd3": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "7-10",
     "id": "zfd3",
-    "z": 50516,
+    "z": 62118,
     "inHand": false,
     "raised": false,
-    "parent": "4m0w"
+    "parent": "37vc",
+    "rotation": 180
   },
   "5l7d": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "8-9",
     "id": "5l7d",
-    "z": 50518,
+    "z": 62120,
     "inHand": false,
     "raised": false,
-    "position": "right",
-    "parent": "4m0w"
+    "parent": "37vc"
   },
   "mfyc": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "8-10",
     "id": "mfyc",
-    "z": 50520,
+    "z": 62122,
     "inHand": false,
     "raised": false,
-    "parent": "4m0w",
-    "rotation": 180
+    "parent": "37vc"
   },
   "vstj": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "9-10",
     "id": "vstj",
-    "z": 50522,
+    "z": 62124,
     "inHand": false,
     "raised": false,
-    "parent": "4m0w"
+    "parent": "37vc"
   },
   "background": {
     "id": "background",
@@ -4313,7 +4369,7 @@
       "activeFace": 1
     },
     "stackOffsetX": 59,
-    "scout": true,
+    "scout": false,
     "enterRoutine": [
       "// Make it so that only the end cards are movable",
       {
@@ -4493,8 +4549,8 @@
     "movable": false,
     "movableInEdit": false,
     "onlyVisibleForSeat": [
+      "seat1",
       "seat2",
-      "seat3",
       "seat4",
       "seat5"
     ]
@@ -4534,7 +4590,26 @@
     "parent": "seat5",
     "inheritFrom": "cardback1"
   },
-  "4m0w": {
+  "turn": {
+    "type": "button",
+    "id": "turn",
+    "x": 1550,
+    "width": 50,
+    "height": 50,
+    "z": 84,
+    "classes": "symbols",
+    "css": {
+      "font-size": "40px"
+    },
+    "clickRoutine": [
+      {
+        "func": "TURN"
+      }
+    ],
+    "y": 950,
+    "text": "skip_next"
+  },
+  "37vc": {
     "type": "pile",
     "parent": "deckHolder",
     "x": 4,
@@ -4545,6 +4620,6 @@
     "handleOffset": 20,
     "handlePosition": "bottomcenter",
     "handleSize": 20,
-    "id": "4m0w"
+    "id": "37vc"
   }
 }
