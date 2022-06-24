@@ -163,6 +163,7 @@ i.error   { color: red; font-weight: bold; }
 
 /*** End formatting for edit area grid regions ***/
 
+/*** CSS to handle search box for compute operations ***/
 #var_results > table {
   table-layout: fixed;
 }
@@ -173,7 +174,24 @@ i.error   { color: red; font-weight: bold; }
   overflow: hidden;
   text-overflow: ellipsis;
 }
+/*** End compute operations CSS ***/
 
+/*** CSS to handle search box for tree widget ***/
+#tree_results > table {
+    table-layout: fixed;
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    color: white;
+    background-color: black;
+}
+
+#tree_results > table > tbody > tr > td:nth-child(1) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/*** End tree widget CSS ***/
 #jeCommands {
   white-space: pre-wrap;
   height: 100%;

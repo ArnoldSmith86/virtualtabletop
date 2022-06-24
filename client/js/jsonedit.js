@@ -1270,8 +1270,9 @@ document.addEventListener("mouseup", function(){
 
 function jeDisplayTree() {
   const allWidgets = Array.from(widgets.values());
-  $('#jeTree').innerHTML = '<ul class=jeTreeDisplay><i class=extern>Room</i>\n' + jeDisplayTreeAddWidgets(allWidgets, null) + '</ul>';
-  
+  $('#jeTree').innerHTML = '<ul class=jeTreeDisplay><i class=extern>Room</i><input id="tree_search" name="tree_search" type="text"><div id="tree_results"></div>\n' + jeDisplayTreeAddWidgets(allWidgets, null) + '</ul>';
+
+  // Add handlers to tree elements to display widget contents
   let toggler = document.getElementsByClassName("jeTreeExpander");
   let i;
   for (i = 0; i < toggler.length; i++) {
@@ -1281,7 +1282,13 @@ function jeDisplayTree() {
         e.target.classList.toggle("jeTreeExpander-down");
       }
     });
-  } 
+  }
+
+  // Add handler to search box to display widget list
+  on('#tree_search', 'input', jeDisplayFilteredWidgets);
+  on('#tree_search', 'click', jeDisplayFilteredWidgets);
+
+  // Show commands panel
   jeMode = 'tree';
   jeContext = ['Tree'];
   jeShowCommands();
@@ -1319,6 +1326,16 @@ function jeDisplayTreeAddWidgets(allWidgets, parent) {
   return result;
 }
 
+function jeDisplayFilteredWidgets() {
+  const subtext = $('#tree_search').value.toLowerCase();
+  const widgetIds = (Array.from(widgets.keys())).sort();
+  let results = widgetIds.filter(o => o.toLowerCase().includes(subtext));
+  let resultTable = '<table>';
+  for(const w of results)
+    resultTable += '<tr valign=top><td><b>' + w + '</b></td></tr>';
+  resultTable += '</table>';
+  $('#tree_results').innerHTML = resultTable;
+}
 /* End of tree subpane control */
 
 function jeGetContext() {
