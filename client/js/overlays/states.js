@@ -331,7 +331,7 @@ function fillStateDetails(states, state, dom) {
 
     $('[icon=play_arrow]', vEntry).onclick = function() {
       toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading });
-      showOverlay();
+      $('#activeGameButton').click();
     };
 
     $('#stateDetailsOverlay .variantsList').appendChild(vEntry);
