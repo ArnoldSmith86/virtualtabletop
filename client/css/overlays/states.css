@@ -356,7 +356,7 @@ div:nth-of-type(1) > .list > .roomState .star {
   color: var(--VTTblue);
   text-align: left;
   margin-top: 0;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 #mainDetails .material-icons, #similarDetails .material-icons {
   top: 5px;
@@ -372,6 +372,7 @@ div:nth-of-type(1) > .list > .roomState .star {
   color: gold;
 }
 #mainDetails p, #similarDetails p {
+  margin-top: 8px;
   margin-bottom: 0;
 }
 
@@ -568,6 +569,11 @@ div:nth-of-type(1) > .list > .roomState .star {
     display: none;
   }
 }
+@media (max-width: 1040px), (max-height: 650px) {
+  .variant {
+    padding: .11rem .5rem;
+  }
+}
 @media (max-width: 1000px), (max-height: 625px) {
   #stateDetailsOverlay {
     --mainDetailsHeight: 150px;
@@ -601,6 +607,9 @@ div:nth-of-type(1) > .list > .roomState .star {
   }
   #nextState, #prevState {
     display: none !important;
+  }
+  .variant {
+    padding: .25rem .5rem;
   }
   #helpTexts {
     padding: 0 20px;
