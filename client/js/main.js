@@ -104,6 +104,11 @@ export function showOverlay(id, forced) {
   }
 }
 
+export function showStatesOverlay(id) {
+  showOverlay(id);
+  $('#statesButton').dataset.overlay = id;
+}
+
 function checkURLproperties(connected) {
   if(!connected) {
 
@@ -242,13 +247,26 @@ function getSVG(url, replaces, callback) {
 onLoad(function() {
   on('#pileOverlay', 'click', e=>e.target.id=='pileOverlay'&&showOverlay());
 
+  on('#activeGameButton, #statesButton, #playersButton', 'click', function(e) {
+    if(e.target.classList.contains('active')) {
+      e.stopImmediatePropagation();
+      return;
+    }
+    for(const tabButton of $a('#activeGameButton, #statesButton, #playersButton'))
+      toggleClass(tabButton, 'active', tabButton == e.target);
+  });
+
   on('.toolbarButton', 'click', function(e) {
     const overlay = e.target.dataset.overlay;
     if(overlay)
       showOverlay(overlay);
   });
 
-  on('#muteButton', 'click', function(){
+  on('#activeGameButton', 'click', function() {
+    showOverlay();
+  });
+
+  on('#muteButton', 'click', function() {
     if(muted) {
       $('#volume').value = unmuteVol;
       $('#muteButton').classList.remove('muted');

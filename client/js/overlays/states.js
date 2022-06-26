@@ -278,7 +278,7 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
 }
 
 function fillStateDetails(states, state, dom) {
-  showOverlay('stateDetailsOverlay');
+  showStatesOverlay('stateDetailsOverlay');
   $('#stateDetailsOverlay').dataset.id = state.id;
   for(const dom of $a('#stateDetailsOverlay, #stateDetailsOverlay > *'))
     dom.scrollTop = 0;
@@ -339,7 +339,7 @@ function fillStateDetails(states, state, dom) {
 
 
   $('#closeDetails').onclick = function() {
-    showOverlay('statesOverlay');
+    showStatesOverlay('statesOverlay');
   };
   $('#stateDetailsOverlay .star').onclick = function(e) {
     e.currentTarget.classList.toggle('active');
@@ -352,16 +352,17 @@ function fillStateDetails(states, state, dom) {
     for(const uploadButton of $a('#stateDetailsOverlay button[icon=image]')) {
       uploadButton.onclick = async function() {
         const img = $('img', uploadButton.parentNode.parentNode);
+        $('#statesButton').dataset.overlay = 'updateImageOverlay';
         const newURL = await updateImage(uploadButton.value);
         uploadButton.value = newURL;
         toggleClass(img, 'hidden', !newURL);
         img.src = newURL ? newURL.replace(/^\//, '') : '';
-        showOverlay('stateDetailsOverlay');
+        showStatesOverlay('stateDetailsOverlay');
       };
     }
   };
   $('#discardDetails').onclick = function() {
-    showOverlay('statesOverlay');
+    showStatesOverlay('statesOverlay');
     dom.click();
   };
   $('#stateDetailsOverlay > [icon=save]').onclick = function() {
@@ -485,7 +486,7 @@ onLoad(function() {
   on('#clearSearch', 'click', _=>{$('#filterByText').value='';updateLibraryFilter();$('#filterByText').focus()});
   on('#stateFilters select', 'change', updateLibraryFilter);
 
-  on('#addState', 'click', _=>showOverlay('stateAddOverlay'));
+  on('#addState', 'click', _=>showStatesOverlay('stateAddOverlay'));
 
   on('#stateAddOverlay .create, #addVariant .create', 'click', e=>addState(e, 'state'));
   on('#stateAddOverlay .upload, #addVariant .upload', 'click', e=>selectFile(false, f=>addState(e, 'file', f)));

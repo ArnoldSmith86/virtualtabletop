@@ -133,6 +133,11 @@ button:hover {
   border-color: transparent;
 }
 
+.toolbarButton.active {
+  background-color: white;
+  color: var(--VTTblue);
+}
+
 .toolbarButton .tooltip {
   font-family: 'Roboto';
   display: inline-block;
@@ -275,6 +280,9 @@ button:hover {
     margin-left: 32px;
     line-height: unset;
     height: unset;
+  }
+  .wideToolbar .active.toolbarButton .tooltip {
+    color: var(--VTTblue);
   }
   body.wideToolbar.lightsOff #toolbar .tooltip {
     background-color: unset;
