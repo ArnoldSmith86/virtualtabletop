@@ -338,7 +338,7 @@ function fillStateDetails(states, state, dom) {
 
 
 
-  $('#stateDetailsOverlay [icon=close]').onclick = function() {
+  $('#closeDetails').onclick = function() {
     showOverlay('statesOverlay');
   };
   $('#stateDetailsOverlay .star').onclick = function(e) {
@@ -359,6 +359,10 @@ function fillStateDetails(states, state, dom) {
         showOverlay('stateDetailsOverlay');
       };
     }
+  };
+  $('#discardDetails').onclick = function() {
+    showOverlay('statesOverlay');
+    dom.click();
   };
   $('#stateDetailsOverlay > [icon=save]').onclick = function() {
     const meta = JSON.parse(JSON.stringify(state));
