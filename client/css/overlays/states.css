@@ -574,7 +574,7 @@ div:nth-of-type(1) > .list > .roomState .star {
     padding: .11rem .5rem;
   }
 }
-@media (max-width: 1000px), (max-height: 625px) {
+@media (max-width: 957px), (max-height: 600px), (max-width: 1000px) and (max-height: 643px) {
   #stateDetailsOverlay {
     --mainDetailsHeight: 150px;
     --similarDetailsHeight: 150px;
