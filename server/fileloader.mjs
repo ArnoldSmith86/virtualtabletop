@@ -95,7 +95,11 @@ async function readVariantsFromBuffer(buffer) {
         const variant = JSON.parse(await zip.files[filename].async('string'));
         if(typeof variant._meta.version != 'number' || variant._meta.version > VERSION || variant._meta.version < 0)
           throw new Logging.UserError(403, `Found a valid JSON file but version ${variant._meta.version} is not supported. Please update your server.`);
-        variants.push(variant);
+        const isNumeric = filename.match(/^([0-9]+)\.json$/);
+        if(isNumeric)
+          variants[isNumeric[1]] = variant;
+        else
+          variants.push(variant);
       }
 
       if(filename.match(/^\/?assets/) && zip.files[filename]._data) {
