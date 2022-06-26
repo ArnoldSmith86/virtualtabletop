@@ -511,7 +511,7 @@ div:nth-of-type(1) > .list > .roomState .star {
 }
 
 .player-number-info {
-  min-width: 70px;
+  min-width: 60px;
 }
 
 #variantsList [icon=add] {
