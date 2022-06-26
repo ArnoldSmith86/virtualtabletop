@@ -308,6 +308,7 @@ function fillStateDetails(states, state, dom) {
   fillArrowButton($('#prevState'), visibleStates[visibleStates.indexOf(dom)-1])
 
   toggleClass($('#stateDetailsOverlay > [icon=edit]'), 'hidden', state.publicLibrary && !config.allowPublicLibraryEdits);
+  toggleClass($('#stateDetailsOverlay > [icon=edit_off]'), 'hidden', !state.publicLibrary || config.allowPublicLibraryEdits);
 
   function updateStateDetailsDomains(state) {
     $('#similarDetailsDomain').innerText = String(state.bgg).replace(/^ *https?:\/\/(www\.)?/, '').replace(/\/.*/, '');

@@ -297,7 +297,7 @@ div:nth-of-type(1) > .list > .roomState .star {
   top: 10px;
 }
 
-#stateDetailsOverlay > button[icon=edit], #stateDetailsOverlay > button[icon=save] {
+#stateDetailsOverlay > button[icon=edit], #stateDetailsOverlay > button[icon=edit_off], #stateDetailsOverlay > button[icon=save] {
   position: absolute;
   left: 10px;
   top: 10px;
