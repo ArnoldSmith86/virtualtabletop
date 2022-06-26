@@ -276,6 +276,9 @@ button:hover {
     line-height: unset;
     height: unset;
   }
+  body.wideToolbar.lightsOff #toolbar .tooltip {
+    background-color: unset;
+  }
   .wideToolbar #toolbar .divider {
     max-width: 100%;
   }
