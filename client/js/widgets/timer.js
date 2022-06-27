@@ -77,7 +77,7 @@ export class Timer extends Widget {
   }
 
   getImage() {
-    if(!Object.keys(this.get('svgReplaces')).length)
+    if(!Object.keys(this.get('svgReplaces') || {}).length)
       return this.get('image');
 
     const replaces = {};
