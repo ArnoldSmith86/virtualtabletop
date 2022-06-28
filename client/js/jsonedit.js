@@ -1255,7 +1255,7 @@ function resize(e){
   const padding = pad('padding-top') + pad('padding-bottom');
 
   const height = Math.max(0,Math.min(panelHeight - resizeHeight - headerHeight - padding, treeHeight + e.y - mouse_pos));
-  editPanel.style.setProperty('--treeheight', height + "px"); 
+  editPanel.style.setProperty('--treeHeight', height + "px"); 
   mouse_pos = e.y;
 }
 
@@ -1270,8 +1270,10 @@ document.addEventListener("mouseup", function(){
 
 function jeDisplayTree() {
   const allWidgets = Array.from(widgets.values());
-  $('#jeTree').innerHTML = '<ul class=jeTreeDisplay><i class=extern>Room</i><input id="tree_search" name="tree_search" type="text"><div id="tree_results"></div>\n' + jeDisplayTreeAddWidgets(allWidgets, null) + '</ul>';
+  $('#jeTree').innerHTML = '<ul class=jeTreeDisplay><i class=extern>Room</i>' + jeDisplayTreeAddWidgets(allWidgets, null) + '</ul>';
 
+  $('#jeWidgetSearch').innerHTML = '<input id="jeWidgetSearchBox" type="text"><div id="jeWidgetSearchResults"></div>';
+  
   // Add handlers to tree elements to display widget contents
   let toggler = document.getElementsByClassName("jeTreeExpander");
   let i;
@@ -1285,8 +1287,8 @@ function jeDisplayTree() {
   }
 
   // Add handler to search box to display widget list
-  on('#tree_search', 'input', jeDisplayFilteredWidgets);
-  on('#tree_search', 'click', jeDisplayFilteredWidgets);
+  on('#jeWidgetSearchBox', 'input', jeDisplayFilteredWidgets);
+  on('#jeWidgetSearchBox', 'click', jeDisplayFilteredWidgets);
 
   // Show commands panel
   jeMode = 'tree';
@@ -1299,13 +1301,14 @@ function jeDisplayTreeAddWidgets(allWidgets, parent) {
     return `<i class=${kind}>${html(str)}</i>`
   }
   let result = '';
+
   for(const widget of (allWidgets.filter(w=>w.get('parent')==parent)).sort((w1,w2)=>w1.get('id').localeCompare(w2.get('id'), 'en', {numeric: true, ignorePunctuation: true}))) {
     const type = widget.get('type');
     const children = jeDisplayTreeAddWidgets(allWidgets, widget.get('id'));
 
     result += '<li class="jeTreeWidget">';
     if(children)
-      result += '<span class="jeTreeWidget jeTreeExpander jeTreeExpander-down">';
+      result += `<span class="jeTreeWidget jeTreeExpander ${(widget.get('type')=='pile') ? '' : 'jeTreeExpander-down'}">`;
     result += `${colored(widget.get('id'), 'key')} (${colored(type || 'basic','string')} - `;
     if(widget.get('id').match(/^[0-9a-z]{4}$/) && $('#jsonEditor').classList.contains('wide')) {
       if(type == 'card' && !widget.get('cardType').match(/^type-[0-9a-f-]{36}$/))
@@ -1315,10 +1318,10 @@ function jeDisplayTreeAddWidgets(allWidgets, parent) {
       if(type == null && widget.get('classes'))
         result += `${widget.get('classes')} - `;
     }
-    result += `${colored(String(Math.floor(widget.get('x')),'number'))},` +
-      `${colored(String(Math.floor(widget.get('y')),'number'))})</span>`;
+    result += `${colored(String(Math.floor(widget.get('x'))),'number')},` +
+      `${colored(String(Math.floor(widget.get('y'))),'number')})</span>`;
     if(children)
-      result += `<ul class="jeNestedTree nested active">${children}</ul>`;
+      result += `<ul class="jeNestedTree nested ${widget.get('type')=='pile' ? '' : 'active'}">${children}</ul>`;
     result += '</li>';
       
     delete allWidgets[allWidgets.indexOf(widget)];
@@ -1327,15 +1330,30 @@ function jeDisplayTreeAddWidgets(allWidgets, parent) {
 }
 
 function jeDisplayFilteredWidgets() {
-  const subtext = $('#tree_search').value.toLowerCase();
+  const subtext = $('#jeWidgetSearchBox').value.toLowerCase();
   const widgetIds = (Array.from(widgets.keys())).sort();
   let results = widgetIds.filter(o => o.toLowerCase().includes(subtext));
-  let resultTable = '<table>';
+  let resultTable = '<table id="jeSearchTable">';
   for(const w of results)
-    resultTable += '<tr valign=top><td><b>' + w + '</b></td></tr>';
+    resultTable += '<tr valign=top><td class="jeInSearchWindow"><b>' + w + '</b></td></tr>';
   resultTable += '</table>';
-  $('#tree_results').innerHTML = resultTable;
+  $('#jeWidgetSearchResults').innerHTML = resultTable;
 }
+
+function jeShowSelectedWidget(widget) {
+  jeContext = [ 'Tree', `"${widget.textContent}"`];
+  jeCallCommand(jeCommands.find(o => o.id == 'je_openWidgetById'));
+  editPanel.style.setProperty('--treeHeight', "20%");
+  let entry = Array.from(document.getElementsByClassName("key")).filter( w => w.textContent == widget.textContent);
+  entry[0].scrollIntoView();
+  jeGetContext();
+}
+
+function jeRemoveSearchResults() {
+  $('#jeWidgetSearchBox').value = '';
+  $('#jeWidgetSearchResults').innerHTML = '';
+}
+
 /* End of tree subpane control */
 
 function jeGetContext() {
@@ -1949,10 +1967,8 @@ window.addEventListener('mouseup', async function(e) {
   if(!jeEnabled)
     return;
   jeRoutineResetOnNextLog = true;
-  if(e.target.parentElement.classList.contains('jeTreeWidget')) {
-    jeContext = [ 'Tree', `"${e.target.parentElement.children[0].textContent}"`];
-    await jeCallCommand(jeCommands.find(o => o.id == 'je_openWidgetById'));
-    jeGetContext();
+  if(e.target.parentElement && e.target.parentElement.classList.contains('jeTreeWidget')) {
+    jeShowSelectedWidget(e.target.parentElement.children[0]);
   } else if(e.target == $('#jeText') && jeContext != 'macro') {
     jeGetContext();
   }
@@ -2024,6 +2040,23 @@ on('#jsonEditor', 'keydown', function(e) {
   if(e.key == 'Enter') {
     jeNewline();
     e.preventDefault();
+  }
+});
+
+window.addEventListener('click', function(e) {
+  if(!jeEnabled)
+    return;
+  if(e.target.classList.contains("jeInSearchWindow") || (e.target.parentElement && e.target.parentElement.classList.contains("jeInSearchWindow"))) {
+    let widget;
+    if(e.target.classList.contains("jeInSearchWindow"))
+      widget = e.target;
+    else
+      widget = e.target.parentElement;
+    jeShowSelectedWidget(widget);
+    jeRemoveSearchResults();
+  } else
+    if( !(e.target.classList.contains("jeInSearchWindow") || e.target.id=="jeSearchTable" || e.target.id=="jeWidgetSearchBox" || (e.target.parentElement && e.target.parentElement.classList.contains("jeInSearchWindow"))) ) {
+      jeRemoveSearchResults();
   }
 });
 

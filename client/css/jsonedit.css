@@ -32,12 +32,13 @@
   box-sizing: border-box;
 }
 
-/*** Tree and widget display area ***/
+/*** Tree and widget display/edit area ***/
+/**** CSS to set up the grid ****/
 #jeEditArea {
-  --treeheight: 70%;
+  --treeHeight: 70%;
   display: grid;
   grid-template-columns: 60% 40%;
-  grid-template-rows: 4% var(--treeheight)  8px auto;
+  grid-template-rows: 4% 25px var(--treeHeight)  8px auto;
   row-gap: 0px;
   top: 0;
   height: 100%;
@@ -47,29 +48,55 @@
 }
 
 #jeEditHeader {
-  grid-column-start: 1;
-  grid-row-start: 1;
+  grid-column: 1 / span 1;
+  grid-row: 1 / span 1;
   border-bottom: 1px solid white;
 }
 
 #jeMouseCoords {
-  grid-column-start: 2;
-  grid-row-start: 1;
+  grid-column: 2 / span 1;
+  grid-row: 1 /span 1;
   display: block;
   text-align: right;
   right: calc(var(--commandPaneWidth) + 20px);
   border-bottom: 1px solid white;
 }
 
+#jeWidgetSearch {
+  grid-column: 1 / span 2;
+  grid-row: 2 / span 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
 #jeTree {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 2;
+  grid-column: 1 / span 2;
+  grid-row: 3 / span 1;
   overflow-wrap: break-word;
   overflow-y: auto;
   white-space: pre-wrap;
   cursor: pointer;
+  border-top: 1px solid gray;
 }
+
+#jeResize {
+  content: '';
+  grid-column: 1 / span 2;
+  grid-row: 4 / span 1;
+  cursor: ns-resize;
+  background-color: #b8c6db;
+  background-image: linear-gradient(#b8c6db 0%, #f5f7fa 20%, #b8c6db 80%);
+}
+
+#jeText, #jeTextHighlight {
+  grid-column: 1 / span 2;
+  grid-row: 5 / span 1;
+  white-space: pre-wrap;
+  overflow-y: auto;
+  overflow-wrap: break-word;
+}
+/**** End of grid layout ****/
 
 ul, .jeTreeDisplay, .jeNestedTree {
   margin: 0;
@@ -114,38 +141,49 @@ li, .jeNestedTree {
   display: block;
 }
 
-#jeResize {
-  content: '';
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 3;
-  cursor: ns-resize;
-  background-color: #b8c6db;
-  background-image: linear-gradient(#b8c6db 0%, #f5f7fa 20%, #b8c6db 80%);
-}
-#jeText, #jeTextHighlight {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 4;
-  white-space: pre-wrap;
-  overflow-y: auto;
-  overflow-wrap: break-word;
-}
-
 #jeText {
   background: none;
   -webkit-text-fill-color: transparent;
   text-fill-color: transparent;
   outline: none;
 }
+
 #jeText::selection {
   background-color: #808080;
   -webkit-text-fill-color: white;
 }
 
-/*** End setup of edit area grid ***/
+/*** CSS to handle search box for tree widget ***/
+#jeWidgetSearchBox {
+    position: relative;
+    top: 1px;
+    width: calc(0.6 * var(--editorPaneWidth));
+    left: calc(0.2 * var(--editorPaneWidth));
+}
 
-/*** Formatting for edit area grid regions ***/
+#jeWidgetSearchResults {
+    display: block;
+    height: 100%;
+    overflow:scroll
+}
+
+#jeWidgetSearchResults > table {
+    display: block;
+    width: calc(0.6 * var(--editorPaneWidth));
+    height: 80%;
+    position: relative;
+    left: calc(0.2 * var(--editorPaneWidth));
+    color: black;
+    background-color: gray;
+    border:1 px solid black;
+    opacity: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+/**** End tree search CSS ****/
+
+/**** Color formatting for widgets ****/
 
 #jsonEditor i {
   font-style: normal;
@@ -161,7 +199,9 @@ i.default { color: #606060; }
 i.variable{ color: #40e0d0; }
 i.error   { color: red; font-weight: bold; }
 
-/*** End formatting for edit area grid regions ***/
+/**** End color formatting ****/
+
+/*** End setup of edit area ***/
 
 /*** CSS to handle search box for compute operations ***/
 #var_results > table {
@@ -176,22 +216,6 @@ i.error   { color: red; font-weight: bold; }
 }
 /*** End compute operations CSS ***/
 
-/*** CSS to handle search box for tree widget ***/
-#tree_results > table {
-    table-layout: fixed;
-    position: absolute;
-    top: 25px;
-    left: 25px;
-    color: white;
-    background-color: black;
-}
-
-#tree_results > table > tbody > tr > td:nth-child(1) {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/*** End tree widget CSS ***/
 #jeCommands {
   white-space: pre-wrap;
   height: 100%;
