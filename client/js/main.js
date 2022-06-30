@@ -179,6 +179,7 @@ function setScale() {
     scale = w/h < 1600/1000 ? w/1600 : h/1000;
   }
   $('body').classList.remove('wideToolbar');
+  $('body').classList.remove('horizontalToolbar');
   if(w-scale*1600 + h-scale*1000 < 44) {
     $('body').classList.add('aspectTooGood');
     if(!$('body').className.match(/hiddenToolbar/))
@@ -187,6 +188,8 @@ function setScale() {
     $('body').classList.remove('aspectTooGood');
     if(w - scale*1600 > 200)
       $('body').classList.add('wideToolbar');
+    else if(w/h < 1600/1000)
+      $('body').classList.add('horizontalToolbar');
   }
   document.documentElement.style.setProperty('--scale', scale);
   roomRectangle = $('#roomArea').getBoundingClientRect();
@@ -247,17 +250,20 @@ function getSVG(url, replaces, callback) {
 onLoad(function() {
   on('#pileOverlay', 'click', e=>e.target.id=='pileOverlay'&&showOverlay());
 
-  on('#activeGameButton, #statesButton, #playersButton', 'click', function(e) {
-    if(e.target.classList.contains('active')) {
+  on('.toolbarTab', 'click', function(e) {
+    if(e.currentTarget.classList.contains('active')) {
       e.stopImmediatePropagation();
       return;
     }
-    for(const tabButton of $a('#activeGameButton, #statesButton, #playersButton'))
-      toggleClass(tabButton, 'active', tabButton == e.target);
+    for(const tabButton of $a('.toolbarTab'))
+      toggleClass(tabButton, 'active', tabButton == e.currentTarget);
+
+    if(e.currentTarget == $('#editButton') || edit)
+      toggleEditMode();
   });
 
   on('.toolbarButton', 'click', function(e) {
-    const overlay = e.target.dataset.overlay;
+    const overlay = e.currentTarget.dataset.overlay;
     if(overlay)
       showOverlay(overlay);
   });
@@ -329,7 +335,7 @@ onLoad(function() {
       $('#betaServerList').appendChild(entry);
     }
     on('#betaServerList button', 'click', function(e) {
-      toServer('setRedirect', e.target.textContent);
+      toServer('setRedirect', e.currentTarget.textContent);
     });
   } else {
     removeFromDOM($('#betaText'));
@@ -368,10 +374,8 @@ window.onresize = function(event) {
 
 window.onkeyup = function(event) {
   if(event.key == 'Escape') {
-    if(overlayActive)
-      showOverlay();
-    else if(edit)
-      toggleEditMode();
+    if(overlayActive || edit)
+      $('#activeGameButton').click();
     else if(jeEnabled)
       jeToggle();
   }

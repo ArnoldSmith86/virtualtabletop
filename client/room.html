@@ -19,23 +19,20 @@
 <body>
 
   <div id="toolbar">
-    <button id="activeGameButton" class="active toolbarButton" ><span class="tooltip">Active Game</span></button>
-    <button id="statesButton" data-overlay="statesOverlay" class="toolbarButton" ><span class="tooltip">Game Shelf</span></button>
-    <button id="playersButton" data-overlay="playerOverlay" class="toolbarButton" ><span class="tooltip">Players & Settings</span></button>
-    <div class="divider">&nbsp;</div>
-    <div class="divider">&nbsp;</div>
-    <button id="editButton" class="toolbarButton"><span class="tooltip">Edit Mode</span></button>
+    <div class="divider"></div>
+    <button id="activeGameButton" class="active toolbarButton toolbarTab" ><span class="tooltip">Active Game</span></button>
+    <button id="statesButton" data-overlay="statesOverlay" class="toolbarButton toolbarTab" ><span class="tooltip">Game Shelf</span></button>
+    <button id="playersButton" data-overlay="playerOverlay" class="toolbarButton toolbarTab" ><span class="tooltip">Players</span></button>
+    <button id="aboutButton" data-overlay="aboutOverlay" class="toolbarButton toolbarTab"><span class="tooltip">About</span></button>
+    <button id="editButton" class="toolbarButton toolbarTab"><span class="tooltip">Edit Mode</span></button>
+    <div class="spacer"></div>
+    <div class="divider"></div>
     <button id="addButton" data-overlay="addOverlay" class="toolbarButton"><span class="tooltip">Add Widget</span></button>
-    <div class="divider">&nbsp;</div>
+    <div id="optionsAnchor"><div id="options" class="hidden"><button id="muteButton" class="toolbarButton"></button><input id="volume" type="range" min="0" max="100" value="30"></div></div>
     <button id="optionsButton" class="toolbarButton"><span class="tooltip">Sound</span></button>
-    <span id="options" class="hidden"><button id="muteButton" class="toolbarButton"></button><div class='volumeWrap'><input id="volume" type='range'min="0" max="100" value="30" ></div></span>
     <button id="lightsButton" class="toolbarButton"><span class="tooltip">Lights</span></button>
-    <div class="divider">&nbsp;</div>
     <button id="fullscreenButton" class="toolbarButton"><span class="tooltip">Fullscreen</span></button>
     <button id="hideToolbarButton" class="toolbarButton"><span class="tooltip">Hide Toolbar</span></button>
-    <div class="spacer">&nbsp;</div>
-    <div class="divider">&nbsp;</div>
-    <button id="aboutButton" data-overlay="aboutOverlay" class="toolbarButton"><span class="tooltip">About VirtualTabletop.io</span></button>
   </div>
 
   <div id="roomArea">

@@ -978,8 +978,6 @@ function toggleEditMode() {
 }
 
 onLoad(function() {
-  on('#editButton', 'click', toggleEditMode);
-
   // This now adds an empty basic widget
   on('#addBasicWidget', 'click', async function() {
     const id = await addWidgetLocal({
