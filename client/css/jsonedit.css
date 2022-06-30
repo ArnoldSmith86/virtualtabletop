@@ -77,7 +77,7 @@
   overflow-y: auto;
   white-space: pre-wrap;
   cursor: pointer;
-  border-top: 1px solid gray;
+  border-top: 1px dashed gray;
 }
 
 #jeResize {
@@ -179,6 +179,10 @@ li, .jeNestedTree {
     opacity: 100%;
     overflow-x: hidden;
     overflow-y: scroll;
+}
+
+.jeHighlightRow {
+    background-color: gray;
 }
 
 /**** End tree search CSS ****/

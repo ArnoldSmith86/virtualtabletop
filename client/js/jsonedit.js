@@ -1344,8 +1344,12 @@ function jeShowSelectedWidget(widget) {
   jeContext = [ 'Tree', `"${widget.textContent}"`];
   jeCallCommand(jeCommands.find(o => o.id == 'je_openWidgetById'));
   editPanel.style.setProperty('--treeHeight', "20%");
-  let entry = Array.from(document.getElementsByClassName("key")).filter( w => w.textContent == widget.textContent);
-  entry[0].scrollIntoView();
+  let widgetList = Array.from(document.getElementsByClassName("key"));
+  widgetList.forEach( w => w.parentElement.classList.toggle("jeHighlightRow", false) );
+  let selection = widgetList.filter( w => w.textContent == widget.textContent)[0];
+  selection.scrollIntoView({block: "center"});
+  selection.parentElement.classList.toggle("jeHighlightRow");
+
   jeGetContext();
 }
 
