@@ -228,6 +228,7 @@ body.aspectTooGood.hiddenToolbar {
       color: #fff;
       background: var(--VTTblue);
       box-shadow: 0 0 5px #0005;
+      pointer-events: none;
     }
 
     .toolbarButton:hover .tooltip, body.wideToolbar .toolbarButton .tooltip {
