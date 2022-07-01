@@ -1260,13 +1260,15 @@ function resize(e){
 }
 
 editPanel.addEventListener("mousedown", function(e){
-  mouse_pos = e.y;
-  document.addEventListener("mousemove", resize, false);
-}, false);
+  if(e.target == $('#jeResize')) {
+    mouse_pos = e.y;
+    document.addEventListener("mousemove", resize, false);
+  }
+});
 
 document.addEventListener("mouseup", function(){
   document.removeEventListener("mousemove", resize, false);
-}, false);
+});
 
 function jeDisplayTree() {
   const allWidgets = Array.from(widgets.values());
