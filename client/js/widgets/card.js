@@ -187,4 +187,12 @@ class Card extends Widget {
     }
     return super.getDefaultValue(property);
   }
+
+  async onPropertyChange(property, oldValue, newValue) {
+    await super.onPropertyChange(property, oldValue, newValue)
+    if((property == 'owner' || "onPileCreation") && widgets.get(this.get("parent").get("type")=="pile")) {
+      this.set('parent', null);
+    }
+  }
+  
 }
