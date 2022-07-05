@@ -27,7 +27,7 @@ const jeState = {
 const jeMacroPreset = `
 // this code will be called for
 // every widget as variable w
-s
+
 // variable v is a persistent object you
 // can use to store other information
 
@@ -384,15 +384,6 @@ const jeCommands = [
       jeShowCommands();
     }
   },
-/*  {
-    id: 'je_tree',
-    name: 'Show Tree',
-    icon: '[to_top]',
-    forceKey: 'T',
-    call: async function() {
-      jeDisplayTree();
-    }
-  },*/
   {
     id: 'je_removeProperty',
     name: _=>`remove property ${jeContext && jeContext[jeContext.length-1]}`,
@@ -504,7 +495,6 @@ const jeCommands = [
       $('#jeTextHighlight').scrollTop = $('#jeText').scrollTop;
       if(jeMode == 'tree')
         jeDisplayTree();
-
     }
   },
   {
@@ -1116,6 +1106,14 @@ function jeSelectWidget(widget, dontFocus, addToSelection, restoreCursorPosition
     if(restoreCursorPosition && cursorState.defaultValueToAdd && jeStateNow[cursorState.defaultValueToAdd] === undefined)
       jeStateNow[cursorState.defaultValueToAdd] = jeWidget.getDefaultValue(cursorState.defaultValueToAdd);
     jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(jeStateNow), null, '  ')), dontFocus);
+    editPanel.style.setProperty('--treeHeight', "20%");
+    let widgetList = Array.from(document.getElementsByClassName("key"));
+    widgetList.forEach( w => w.parentElement.classList.toggle("jeHighlightRow", false) );
+    let selection = widgetList.filter( w => w.textContent == widget.get('id'))[0];
+    selection.scrollIntoView({block: "center"});
+    selection.parentElement.classList.toggle("jeHighlightRow");
+
+    jeGetContext();
   }
 
   if(restoreCursorPosition)
@@ -1973,12 +1971,24 @@ window.addEventListener('mouseup', async function(e) {
   if(!jeEnabled)
     return;
   jeRoutineResetOnNextLog = true;
-  if(e.target.parentElement && e.target.parentElement.classList.contains('jeTreeWidget')) {
-    jeShowSelectedWidget(e.target.parentElement.children[0]);
-  } else if(e.target == $('#jeText') && jeContext != 'macro') {
-    jeGetContext();
-  }
+  if(e.target.id!="jeWidgetSearchBox") {
+    jeRemoveSearchResults(); // Clear the search results
+    /* Check to see if user is selecting a widget for display */
+    let newWidget = null;
+    if(e.target.parentElement && e.target.parentElement.classList.contains('jeTreeWidget')) 
+      newWidget = e.target.parentElement.children[0];
+    else if (e.target.classList.contains("jeInSearchWindow"))
+      newWidget = e.target;
+    else if (e.target.parentElement && e.target.parentElement.classList.contains("jeInSearchWindow"))
+      newWidget = e.target.parentElement;
 
+    if(newWidget) {
+      jeContext = [ 'Tree', `"${newWidget.textContent}"`];
+      jeCallCommand(jeCommands.find(o => o.id == 'je_openWidgetById'));
+    } else if(e.target == $('#jeText') && jeContext != 'macro') {// Click in widget text, fix context
+      jeGetContext();
+    }
+  }
 });
 
 onLoad(function() {
@@ -2046,23 +2056,6 @@ on('#jsonEditor', 'keydown', function(e) {
   if(e.key == 'Enter') {
     jeNewline();
     e.preventDefault();
-  }
-});
-
-window.addEventListener('click', function(e) {
-  if(!jeEnabled)
-    return;
-  if(e.target.classList.contains("jeInSearchWindow") || (e.target.parentElement && e.target.parentElement.classList.contains("jeInSearchWindow"))) {
-    let widget;
-    if(e.target.classList.contains("jeInSearchWindow"))
-      widget = e.target;
-    else
-      widget = e.target.parentElement;
-    jeShowSelectedWidget(widget);
-    jeRemoveSearchResults();
-  } else
-    if( !(e.target.classList.contains("jeInSearchWindow") || e.target.id=="jeSearchTable" || e.target.id=="jeWidgetSearchBox" || (e.target.parentElement && e.target.parentElement.classList.contains("jeInSearchWindow"))) ) {
-      jeRemoveSearchResults();
   }
 });
 
