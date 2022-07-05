@@ -1270,9 +1270,9 @@ document.addEventListener("mouseup", function(){
 
 function jeDisplayTree() {
   const allWidgets = Array.from(widgets.values());
-  $('#jeTree').innerHTML = '<ul class=jeTreeDisplay><i class=extern>Room</i>' + jeDisplayTreeAddWidgets(allWidgets, null) + '</ul>';
+  $('#jeTree').innerHTML = '<ul class=jeTreeDisplay>' + jeDisplayTreeAddWidgets(allWidgets, null) + '</ul>';
 
-  $('#jeWidgetSearch').innerHTML = '<input id="jeWidgetSearchBox" type="text"><div id="jeWidgetSearchResults"></div>';
+  $('#jeWidgetSearch').innerHTML = '<i class=extern>Search Room:  </i><input id="jeWidgetSearchBox" type="text"><div id="jeWidgetSearchResults"></div>';
   
   // Add handlers to tree elements to display widget contents
   let toggler = document.getElementsByClassName("jeTreeExpander");
@@ -1338,24 +1338,6 @@ function jeDisplayFilteredWidgets() {
     resultTable += '<tr valign=top><td class="jeInSearchWindow"><b>' + w + '</b></td></tr>';
   resultTable += '</table>';
   $('#jeWidgetSearchResults').innerHTML = resultTable;
-}
-
-function jeShowSelectedWidget(widget) {
-  jeContext = [ 'Tree', `"${widget.textContent}"`];
-  jeCallCommand(jeCommands.find(o => o.id == 'je_openWidgetById'));
-  editPanel.style.setProperty('--treeHeight', "20%");
-  let widgetList = Array.from(document.getElementsByClassName("key"));
-  widgetList.forEach( w => w.parentElement.classList.toggle("jeHighlightRow", false) );
-  let selection = widgetList.filter( w => w.textContent == widget.textContent)[0];
-  selection.scrollIntoView({block: "center"});
-  selection.parentElement.classList.toggle("jeHighlightRow");
-
-  jeGetContext();
-}
-
-function jeRemoveSearchResults() {
-  $('#jeWidgetSearchBox').value = '';
-  $('#jeWidgetSearchResults').innerHTML = '';
 }
 
 /* End of tree subpane control */
@@ -1972,7 +1954,10 @@ window.addEventListener('mouseup', async function(e) {
     return;
   jeRoutineResetOnNextLog = true;
   if(e.target.id!="jeWidgetSearchBox") {
-    jeRemoveSearchResults(); // Clear the search results
+    // Clear the search results
+    $('#jeWidgetSearchBox').value = '';
+    $('#jeWidgetSearchResults').innerHTML = '';
+
     /* Check to see if user is selecting a widget for display */
     let newWidget = null;
     if(e.target.parentElement && e.target.parentElement.classList.contains('jeTreeWidget')) 
