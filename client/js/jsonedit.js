@@ -493,8 +493,7 @@ const jeCommands = [
       $('#jsonEditor').classList.toggle('wide');
       setScale();
       $('#jeTextHighlight').scrollTop = $('#jeText').scrollTop;
-      if(jeMode == 'tree')
-        jeDisplayTree();
+      jeDisplayTree();
     }
   },
   {
@@ -981,8 +980,7 @@ function jeApplyDelta(delta) {
     }
   }
 
-  if(jeMode == 'tree')
-    jeDisplayTree();
+  jeDisplayTree();
 }
 
 async function jeApplyExternalChanges(state) {
@@ -1285,11 +1283,6 @@ function jeDisplayTree() {
   on('#jeWidgetSearchBox', 'input', jeDisplayFilteredWidgets);
   on('#jeWidgetSearchBox', 'click', jeDisplayFilteredWidgets);
 
-  // Show commands panel
-  jeMode = 'tree';
-  jeContext = ['Tree'];
-  jeShowCommands();
-
   on('.jeTreeWidget', 'click', function(e) {
     jeSelectWidget(widgets.get($('.key', e.currentTarget).innerText), false, e.shiftKey);
     e.stopPropagation();
@@ -1302,11 +1295,14 @@ function jeDisplayTreeAddWidgets(allWidgets, parent) {
   }
   let result = '';
 
+  const selectedIDs = jeSelectedIDs();
   for(const widget of (allWidgets.filter(w=>w.get('parent')==parent)).sort((w1,w2)=>w1.get('id').localeCompare(w2.get('id'), 'en', {numeric: true, ignorePunctuation: true}))) {
     const type = widget.get('type');
     const children = jeDisplayTreeAddWidgets(allWidgets, widget.get('id'));
+    const isSelected = selectedIDs.indexOf(widget.get('id')) != -1 ? 'jeHighlightRow' : '';
 
-    result += '<li class="jeTreeWidget">';
+
+    result += `<li class="jeTreeWidget ${isSelected}">`;
     if(children)
       result += `<span class="jeTreeWidget jeTreeExpander ${(widget.get('type')=='pile') ? '' : 'jeTreeExpander-down'}">`;
     result += `${colored(widget.get('id'), 'key')} (${colored(type || 'basic','string')} - `;
@@ -1365,15 +1361,6 @@ function jeGetContext() {
 
   const select = v.substr(s, Math.min(e-s, 100)).replace(/\n/g, '\\n');
   const line = v.split('\n')[v.substr(0, s).split('\n').length-1];
-
-  if(jeMode == 'tree') {
-    jeContext = [ 'Tree' ];
-    const match = line.match(/^(  )+(.*?) \([a-z]+ - /);
-    if(match)
-      jeContext.push(`"${match[2]}"`);
-    jeShowCommands();
-    return jeContext;
-  }
 
   if(jeMode == 'macro') {
     jeContext = [ 'Macro' ];
