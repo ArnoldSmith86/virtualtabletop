@@ -1108,17 +1108,19 @@ function jeSelectWidget(widget, dontFocus, addToSelection, restoreCursorPosition
     jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(jeStateNow), null, '  ')), dontFocus);
     editPanel.style.setProperty('--treeHeight', "20%");
 
-    for(const widgetDOM of $a('#jeTree .key')) {
-      widgetDOM.parentElement.classList.toggle('jeHighlightRow', widgetDOM.textContent == widget.id);
-      if(widgetDOM.textContent == widget.get('id'))
-        widgetDOM.scrollIntoView({ block: 'center' });
-    }
-
-    for(const widgetDOM of $a('.widget'))
-      widgetDOM.classList.toggle('selectedInEdit', widgetDOM == widget.domElement);
-
     jeGetContext();
   }
+
+  const selectedIDs = jeSelectedIDs();
+
+  for(const widgetDOM of $a('#jeTree .key')) {
+    widgetDOM.parentElement.classList.toggle('jeHighlightRow', selectedIDs.indexOf(widgetDOM.textContent) != -1);
+    if(selectedIDs.indexOf(widgetDOM.textContent) != -1)
+      widgetDOM.scrollIntoView({ block: 'center' });
+  }
+
+  for(const [ id, w ] of widgets)
+    w.domElement.classList.toggle('selectedInEdit', selectedIDs.indexOf(id) != -1);
 
   if(restoreCursorPosition)
     jeCursorStateSet(cursorState);
