@@ -67,6 +67,19 @@ body.aspectTooGood.hiddenToolbar {
     background-position: 20px 20px;
     height: 100vh;
   }
+  body::after {
+    position: absolute;
+    display: flex;
+    align-items: center;
+
+    bottom: 0;
+    height: calc(var(--roomTop) - 40px);
+
+    content: "Please rotate your device to landscape orientation and switch to fullscreen.";
+    margin: 20px;
+    font-size: 20px;
+    color: #fff2;
+  }
 }
 
 
