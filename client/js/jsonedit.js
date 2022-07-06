@@ -1274,16 +1274,12 @@ function jeDisplayTree() {
   $('#jeWidgetSearch').innerHTML = '<i class=extern>Search Room:  </i><input id="jeWidgetSearchBox" type="text"><div id="jeWidgetSearchResults"></div>';
 
   // Add handlers to tree elements to display widget contents
-  let toggler = document.getElementsByClassName("jeTreeExpander");
-  let i;
-  for (i = 0; i < toggler.length; i++) {
-    toggler[i].addEventListener("click", function(e) {
-      if(e.target.classList.contains("jeTreeExpander")) {
-        e.target.parentElement.querySelector(".nested").classList.toggle("active");
-        e.target.classList.toggle("jeTreeExpander-down");
-      }
-    });
-  }
+  on('.jeTreeExpander', 'click', function(e) {
+    if(e.target.classList.contains('jeTreeExpander')) {
+      $('.nested', e.target.parentElement).classList.toggle('active');
+      e.target.classList.toggle('jeTreeExpander-down');
+    }
+  });
 
   // Add handler to search box to display widget list
   on('#jeWidgetSearchBox', 'input', jeDisplayFilteredWidgets);
