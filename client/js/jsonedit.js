@@ -1248,7 +1248,7 @@ let mouse_reference;
 let resizer_reference;
 
 function resize(e){
-  const height = Math.min(editPanel.offsetHeight - 200, Math.max(0, resizer_reference - mouse_reference + e.y));
+  const height = Math.min(editPanel.offsetHeight - 75, Math.max(0, resizer_reference - mouse_reference + e.y));
   editPanel.style.setProperty('--treeHeight', height + "px");
 }
 
