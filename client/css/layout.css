@@ -401,6 +401,36 @@ body.aspectTooGood.hiddenToolbar {
       }
     }
 
+    @media (max-width: 760px) {
+      body.horizontalToolbar #editButton, body.horizontalToolbar #addButton {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 530px) {
+      body.horizontalToolbar #editButton, body.horizontalToolbar #addButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 430px) {
+      body.horizontalToolbar .divider, body.horizontalToolbar #optionsButton, body.horizontalToolbar #lightsButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 340px) {
+      body.horizontalToolbar #aboutButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 270px) {
+      body.horizontalToolbar #playersButton {
+        display: none;
+      }
+    }
+
   /* sound settings */
 
     #optionsAnchor {
