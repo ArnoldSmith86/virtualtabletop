@@ -157,7 +157,8 @@ li, .jeNestedTree {
 #jeWidgetSearchBox {
   position: relative;
   top: 1px;
-  width: calc(0.5 * var(--editorPaneWidth));
+  width: calc(0.4 * var(--editorPaneWidth));
+  left: 0;
 }
 
 #jeWidgetSearchResults {
@@ -168,10 +169,10 @@ li, .jeNestedTree {
 
 #jeWidgetSearchResults > table {
   display: block;
-  width: calc(0.6 * var(--editorPaneWidth));
+  width: calc(0.4 * var(--editorPaneWidth));
   height: 80%;
   position: relative;
-  left: calc(0.2 * var(--editorPaneWidth));
+  left: calc(0.15 * var(--editorPaneWidth));
   color: black;
   background-color: gray;
   border:1 px solid black;
