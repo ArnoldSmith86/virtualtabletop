@@ -388,20 +388,32 @@ body.aspectTooGood.hiddenToolbar {
       display: none;
     }
 
-    @media (max-height: 510px) {
+    @media (max-height: 520px) {
       body.wideToolbar #editButton, body.wideToolbar #addButton {
         display: none;
       }
     }
 
-    @media (max-height: 500px) {
-      body:not(.wideToolbar,.horizontalToolbar) #editButton, body:not(.wideToolbar,.horizontalToolbar) #addButton {
+    @media (max-width: 760px) {
+      body.aspectTooGood #editButton, body.aspectTooGood #addButton {
+        display: none;
+      }
+    }
+
+    @media (max-height: 420px) {
+      body:not(.wideToolbar,.horizontalToolbar,.aspectTooGood) #editButton, body:not(.wideToolbar,.horizontalToolbar,.aspectTooGood) #addButton {
         display: none;
       }
     }
 
     @media (max-height: 340px) {
-      body:not(.horizontalToolbar) .divider, body:not(.horizontalToolbar) #optionsButton, body:not(.horizontalToolbar) #lightsButton {
+      body:not(.horizontalToolbar,.aspectTooGood) .divider, body:not(.horizontalToolbar,.aspectTooGood) #optionsButton, body:not(.horizontalToolbar,.aspectTooGood) #lightsButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 630px) {
+      body.aspectTooGood .divider, body.aspectTooGood #optionsButton, body.aspectTooGood #lightsButton {
         display: none;
       }
     }
@@ -412,8 +424,26 @@ body.aspectTooGood.hiddenToolbar {
       }
     }
 
+    @media (max-width: 490px) {
+      body.aspectTooGood #aboutButton {
+        display: none;
+      }
+    }
+
     @media (max-height: 200px) {
       body:not(.horizontalToolbar) #playersButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 420px) {
+      body.aspectTooGood #playersButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 350px) {
+      body.aspectTooGood #hideToolbarButton {
         display: none;
       }
     }
