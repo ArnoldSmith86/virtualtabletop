@@ -1268,7 +1268,7 @@ function jeDisplayTree() {
   const allWidgets = Array.from(widgets.values());
   $('#jeTree').innerHTML = '<ul class=jeTreeDisplay>' + jeDisplayTreeAddWidgets(allWidgets, null) + '</ul>';
 
-  $('#jeWidgetSearch').innerHTML = '<label for="jeWidgetSearchBox">Search Room: </label><input id="jeWidgetSearchBox" type="text"><div id="jeWidgetSearchResults"></div>';
+  $('#jeWidgetSearch').innerHTML = '<label for="jeWidgetSearchBox" class=extern>Search Room: </label><input id="jeWidgetSearchBox" type="text"><div id="jeWidgetSearchResults"></div>';
 
   // Add handlers to tree elements to display widget contents
   on('.jeTreeExpander', 'click', function(e) {
