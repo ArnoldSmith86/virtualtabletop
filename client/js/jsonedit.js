@@ -1107,18 +1107,15 @@ function jeSelectWidget(widget, dontFocus, addToSelection, restoreCursorPosition
       jeStateNow[cursorState.defaultValueToAdd] = jeWidget.getDefaultValue(cursorState.defaultValueToAdd);
     jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(jeStateNow), null, '  ')), dontFocus);
     editPanel.style.setProperty('--treeHeight', "20%");
-    let widgetList = Array.from(document.getElementsByClassName("key"));
-    widgetList.forEach( w => w.parentElement.classList.toggle("jeHighlightRow", false) );
-    let selection = widgetList.filter( w => w.textContent == widget.get('id'))[0];
-    selection.scrollIntoView({block: "center"});
-    selection.parentElement.classList.toggle("jeHighlightRow");
-    widgetList = Array.from(document.getElementsByClassName("widget"));
-    widgetList.forEach( w => w.classList.toggle("selectedInEdit", false) );
-    console.log(widgetList);
-    selection = widgetList.filter( w => w.id == 'w_' + widget.get('id') )[0];
-    console.log(selection);
-    selection.classList.toggle("selectedInEdit", true);
-    console.log(selection);
+
+    for(const widgetDOM of $a('#jeTree .key')) {
+      widgetDOM.parentElement.classList.toggle('jeHighlightRow', widgetDOM.textContent == widget.id);
+      if(widgetDOM.textContent == widget.get('id'))
+        widgetDOM.scrollIntoView({ block: 'center' });
+    }
+
+    for(const widgetDOM of $a('.widget'))
+      widgetDOM.classList.toggle('selectedInEdit', widgetDOM == widget.domElement);
 
     jeGetContext();
   }
