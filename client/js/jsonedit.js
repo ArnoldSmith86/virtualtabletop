@@ -1245,28 +1245,20 @@ function jeColorize() {
 
 /* Displaying and controlling tree subpane of edit area */
 
-const editPanel = document.getElementById("jeEditArea");
+const editPanel = $('#jeEditArea');
 
-let mouse_pos;
+let mouse_reference;
+let resizer_reference;
 
 function resize(e){
-  function pad(w) {
-    return parseInt(window.getComputedStyle(document.getElementById("jeEditArea")).getPropertyValue(w).slice(0,-2))
-  };
-  const panelHeight = editPanel.clientHeight;
-  const resizeHeight = document.getElementById("jeResize").clientHeight;
-  const headerHeight = document.getElementById("jeEditHeader").clientHeight;
-  const treeHeight = document.querySelector('#jeTree').clientHeight;
-  const padding = pad('padding-top') + pad('padding-bottom');
-
-  const height = Math.max(0,Math.min(panelHeight - resizeHeight - headerHeight - padding, treeHeight + e.y - mouse_pos));
-  editPanel.style.setProperty('--treeHeight', height + "px"); 
-  mouse_pos = e.y;
+  const height = Math.min(editPanel.offsetHeight - 200, Math.max(0, resizer_reference - mouse_reference + e.y));
+  editPanel.style.setProperty('--treeHeight', height + "px");
 }
 
 editPanel.addEventListener("mousedown", function(e){
   if(e.target == $('#jeResize')) {
-    mouse_pos = e.y;
+    mouse_reference = e.y;
+    resizer_reference = $('#jeTree').offsetHeight;
     document.addEventListener("mousemove", resize, false);
   }
 });
@@ -1280,7 +1272,7 @@ function jeDisplayTree() {
   $('#jeTree').innerHTML = '<ul class=jeTreeDisplay>' + jeDisplayTreeAddWidgets(allWidgets, null) + '</ul>';
 
   $('#jeWidgetSearch').innerHTML = '<i class=extern>Search Room:  </i><input id="jeWidgetSearchBox" type="text"><div id="jeWidgetSearchResults"></div>';
-  
+
   // Add handlers to tree elements to display widget contents
   let toggler = document.getElementsByClassName("jeTreeExpander");
   let i;
@@ -1330,7 +1322,7 @@ function jeDisplayTreeAddWidgets(allWidgets, parent) {
     if(children)
       result += `<ul class="jeNestedTree nested ${widget.get('type')=='pile' ? '' : 'active'}">${children}</ul>`;
     result += '</li>';
-      
+
     delete allWidgets[allWidgets.indexOf(widget)];
   }
   return result;
@@ -1935,7 +1927,7 @@ window.addEventListener('mousemove', function(e) {
       w2.calculateZ() - w1.calculateZ() :
       ((w1card && !w2card) || (w1foreign && w2normal)) ? 1 : -1;
   });
-  
+
   for(let i=1; i<=11; ++i) {
     const hotkey = i>=4 ? i+1 : i;
     if(hoveredWidgets[i-1]) {
@@ -1967,7 +1959,7 @@ window.addEventListener('mouseup', async function(e) {
 
     /* Check to see if user is selecting a widget for display */
     let newWidget = null;
-    if(e.target.parentElement && e.target.parentElement.classList.contains('jeTreeWidget')) 
+    if(e.target.parentElement && e.target.parentElement.classList.contains('jeTreeWidget'))
       newWidget = e.target.parentElement.children[0];
     else if (e.target.classList.contains("jeInSearchWindow"))
       newWidget = e.target;
