@@ -205,14 +205,15 @@ body.aspectTooGood.hiddenToolbar {
       color: var(--VTTblue);
     }
 
-    body.wideToolbar .toolbarTab::before {
+    body.wideToolbar .toolbarTab::before, body.horizontalToolbar .toolbarTab::before {
       font-size: 24px;
     }
 
     body.horizontalToolbar .toolbarTab {
       border-radius: 20px 20px 0 0;
       margin: auto 2px 0 2px;
-      max-width: 180px;
+      padding: 0 16px;
+      width: unset;
     }
 
   /* button tooltips */
@@ -240,7 +241,7 @@ body.aspectTooGood.hiddenToolbar {
       background: none;
     }
 
-    body.wideToolbar .toolbarButton .tooltip {
+    body.wideToolbar .toolbarButton .tooltip, body.horizontalToolbar .toolbarButton .tooltip {
       margin-left: -4px;
       font-size: 12px;
     }
@@ -368,7 +369,7 @@ body.aspectTooGood.hiddenToolbar {
       }
     }
 
-    @media (max-width: 910px) {
+    @media (max-width: 960px) {
       body.horizontalToolbar #editButton, body.horizontalToolbar #addButton {
         display: none;
       }
