@@ -1277,6 +1277,7 @@ function jeDisplayTree() {
     if(e.target.classList.contains('jeTreeExpander')) {
       $('.nested', e.target.parentElement).classList.toggle('active');
       e.target.classList.toggle('jeTreeExpander-down');
+      e.stopImmediatePropagation();
     }
   });
 
@@ -1288,6 +1289,11 @@ function jeDisplayTree() {
   jeMode = 'tree';
   jeContext = ['Tree'];
   jeShowCommands();
+
+  on('.jeTreeWidget', 'click', function(e) {
+    jeSelectWidget(widgets.get($('.key', e.currentTarget).innerText));
+    e.stopPropagation();
+  });
 }
 
 function jeDisplayTreeAddWidgets(allWidgets, parent) {
@@ -1339,6 +1345,10 @@ function jeDisplayFilteredWidgets() {
     resultTable += '<tr valign=top><td class="jeInSearchWindow"><i class=key>' + html(w.get('id')) + '</i> - <i class=string>' + html(w.get('type') || 'basic') + '</i></td></tr>';
   resultTable += '</table>';
   $('#jeWidgetSearchResults').innerHTML = resultTable;
+
+  on('.jeInSearchWindow', 'click', function(e) {
+    jeSelectWidget(widgets.get($('.key', e.currentTarget).innerText));
+  });
 }
 
 /* End of tree subpane control */
@@ -1954,27 +1964,9 @@ window.addEventListener('mouseup', async function(e) {
   if(!jeEnabled)
     return;
   jeRoutineResetOnNextLog = true;
-  if(e.target.id!="jeWidgetSearchBox") {
-    // Clear the search results
-    $('#jeWidgetSearchBox').value = '';
-    $('#jeWidgetSearchResults').innerHTML = '';
 
-    /* Check to see if user is selecting a widget for display */
-    let newWidget = null;
-    if(e.target.parentElement && e.target.parentElement.classList.contains('jeTreeWidget'))
-      newWidget = e.target.parentElement.children[0];
-    else if (e.target.classList.contains("jeInSearchWindow"))
-      newWidget = e.target.children[0];
-    else if (e.target.parentElement && e.target.parentElement.classList.contains("jeInSearchWindow"))
-      newWidget = e.target.parentElement.children[0];
-
-    if(newWidget) {
-      jeContext = [ 'Tree', `"${newWidget.textContent}"`];
-      jeCallCommand(jeCommands.find(o => o.id == 'je_openWidgetById'));
-    } else if(e.target == $('#jeText') && jeContext != 'macro') {// Click in widget text, fix context
-      jeGetContext();
-    }
-  }
+  if(e.target == $('#jeText') && jeContext != 'macro') // Click in widget text, fix context
+    jeGetContext();
 });
 
 onLoad(function() {
@@ -2042,6 +2034,13 @@ on('#jsonEditor', 'keydown', function(e) {
   if(e.key == 'Enter') {
     jeNewline();
     e.preventDefault();
+  }
+});
+
+on('body', 'click', function(e) {
+  if(jeEnabled) {
+    $('#jeWidgetSearchBox').value = '';
+    $('#jeWidgetSearchResults').innerHTML = '';
   }
 });
 
