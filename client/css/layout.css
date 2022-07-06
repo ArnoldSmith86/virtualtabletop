@@ -401,7 +401,7 @@ body.aspectTooGood.hiddenToolbar {
       }
     }
 
-    @media (max-width: 760px) {
+    @media (max-width: 759px) {
       body.horizontalToolbar #editButton, body.horizontalToolbar #addButton {
         display: flex;
       }
