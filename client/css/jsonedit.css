@@ -105,8 +105,8 @@ ul, .jeTreeDisplay, .jeNestedTree {
 }
 
 li, .jeNestedTree {
-    margin-left: 10px;
-    padding-left: 0;
+  margin-left: 10px;
+  padding-left: 0;
 }
 
 /* Style the caret/arrow */
@@ -155,33 +155,33 @@ li, .jeNestedTree {
 
 /*** CSS to handle search box for tree widget ***/
 #jeWidgetSearchBox {
-    position: relative;
-    top: 1px;
-    width: calc(0.5 * var(--editorPaneWidth));
+  position: relative;
+  top: 1px;
+  width: calc(0.5 * var(--editorPaneWidth));
 }
 
 #jeWidgetSearchResults {
-    display: block;
-    height: 100%;
-    overflow:scroll
+  display: block;
+  height: 100%;
+  overflow:scroll
 }
 
 #jeWidgetSearchResults > table {
-    display: block;
-    width: calc(0.6 * var(--editorPaneWidth));
-    height: 80%;
-    position: relative;
-    left: calc(0.2 * var(--editorPaneWidth));
-    color: black;
-    background-color: gray;
-    border:1 px solid black;
-    opacity: 100%;
-    overflow-x: hidden;
-    overflow-y: scroll;
+  display: block;
+  width: calc(0.6 * var(--editorPaneWidth));
+  height: 80%;
+  position: relative;
+  left: calc(0.2 * var(--editorPaneWidth));
+  color: black;
+  background-color: gray;
+  border:1 px solid black;
+  opacity: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .jeHighlightRow {
-    background-color: gray;
+  background-color: gray;
 }
 
 /**** End tree search CSS ****/
@@ -201,6 +201,10 @@ i.null    { color: blue;    }
 i.default { color: #606060; }
 i.variable{ color: #40e0d0; }
 i.error   { color: red; font-weight: bold; }
+
+body.jsonEdit .selectedInEdit {
+  box-shadow: 0px 0px 0px 5px yellow;
+}
 
 /**** End color formatting ****/
 
@@ -476,7 +480,7 @@ body.jsonEdit.jeZoomOut #topSurface {
   content: '[tag]';
 }
 #widget_css::before{
-    content: '[style]';
+  content: '[style]';
   }
 #widget_rotation::before{
   content: '[rotate_right]';

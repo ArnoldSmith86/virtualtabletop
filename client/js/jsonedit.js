@@ -1112,6 +1112,13 @@ function jeSelectWidget(widget, dontFocus, addToSelection, restoreCursorPosition
     let selection = widgetList.filter( w => w.textContent == widget.get('id'))[0];
     selection.scrollIntoView({block: "center"});
     selection.parentElement.classList.toggle("jeHighlightRow");
+    widgetList = Array.from(document.getElementsByClassName("widget"));
+    widgetList.forEach( w => w.classList.toggle("selectedInEdit", false) );
+    console.log(widgetList);
+    selection = widgetList.filter( w => w.id == 'w_' + widget.get('id') )[0];
+    console.log(selection);
+    selection.classList.toggle("selectedInEdit", true);
+    console.log(selection);
 
     jeGetContext();
   }
