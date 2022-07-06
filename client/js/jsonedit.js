@@ -1268,7 +1268,7 @@ function jeDisplayTree() {
   const allWidgets = Array.from(widgets.values());
   $('#jeTree').innerHTML = '<ul class=jeTreeDisplay>' + jeDisplayTreeAddWidgets(allWidgets, null) + '</ul>';
 
-  $('#jeWidgetSearch').innerHTML = '<label for="jeWidgetSearchBox" class=extern>Search Room: </label><input id="jeWidgetSearchBox" type="text"><div id="jeWidgetSearchResults"></div>';
+  $('#jeWidgetSearch').innerHTML = '<label for="jeWidgetSearchBox" class=extern>Search Room: </label><input id="jeWidgetSearchBox" type="text" style="margin-bottom: 4px;"><div id="jeWidgetSearchResults"></div>';
 
   // Add handlers to tree elements to display widget contents
   on('.jeTreeExpander', 'click', function(e) {
@@ -1323,11 +1323,18 @@ function jeDisplayTreeAddWidgets(allWidgets, parent) {
 
 function jeDisplayFilteredWidgets() {
   const subtext = $('#jeWidgetSearchBox').value.toLowerCase();
-  const widgetIds = (Array.from(widgets.keys())).sort();
-  let results = widgetIds.filter(o => o.toLowerCase().includes(subtext));
+  const results = widgetFilter(o => o.get('id').toLowerCase().includes(subtext) ||
+          o.get('type') && o.get('type').toLowerCase().includes(subtext) ||
+          !o.get('type') && 'basic'.includes(subtext)).sort(
+            function(a,b) {
+              const na = a.get('id').toLowerCase();
+              const nb = b.get('id').toLowerCase();
+              return na < nb ? -1 : na > nb ? 1 : 0
+            }
+          );
   let resultTable = '<table id="jeSearchTable">';
   for(const w of results)
-    resultTable += '<tr valign=top><td class="jeInSearchWindow"><b>' + html(w) + '</b></td></tr>';
+    resultTable += '<tr valign=top><td class="jeInSearchWindow"><i class=key>' + html(w.get('id')) + '</i> - <i class=string>' + html(w.get('type') || 'basic') + '</i></td></tr>';
   resultTable += '</table>';
   $('#jeWidgetSearchResults').innerHTML = resultTable;
 }
@@ -1955,9 +1962,9 @@ window.addEventListener('mouseup', async function(e) {
     if(e.target.parentElement && e.target.parentElement.classList.contains('jeTreeWidget'))
       newWidget = e.target.parentElement.children[0];
     else if (e.target.classList.contains("jeInSearchWindow"))
-      newWidget = e.target;
+      newWidget = e.target.children[0];
     else if (e.target.parentElement && e.target.parentElement.classList.contains("jeInSearchWindow"))
-      newWidget = e.target.parentElement;
+      newWidget = e.target.parentElement.children[0];
 
     if(newWidget) {
       jeContext = [ 'Tree', `"${newWidget.textContent}"`];

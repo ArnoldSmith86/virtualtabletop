@@ -164,21 +164,20 @@ li, .jeNestedTree {
 #jeWidgetSearchResults {
   display: block;
   height: 100%;
-  overflow:scroll
+  overflow:scroll;
 }
 
 #jeWidgetSearchResults > table {
   display: block;
-  width: calc(0.4 * var(--editorPaneWidth));
-  height: 80%;
+  width: var(--editorPaneWidth);
+  height: 100%;
+  left: 0;
   position: relative;
-  left: calc(0.15 * var(--editorPaneWidth));
-  color: black;
-  background-color: gray;
-  border:1 px solid black;
+  background-color: #484848;
   opacity: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
+  z-index: 1;
 }
 
 .jeHighlightRow {
