@@ -269,7 +269,8 @@ export default class Room {
         version: 1,
         metaVersion: 1,
         players: {},
-        states: {}
+        states: {},
+        starred: {}
       }
     };
 
