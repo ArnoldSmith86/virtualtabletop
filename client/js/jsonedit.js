@@ -1291,7 +1291,7 @@ function jeDisplayTree() {
   jeShowCommands();
 
   on('.jeTreeWidget', 'click', function(e) {
-    jeSelectWidget(widgets.get($('.key', e.currentTarget).innerText));
+    jeSelectWidget(widgets.get($('.key', e.currentTarget).innerText), false, e.shiftKey);
     e.stopPropagation();
   });
 }
@@ -1347,7 +1347,9 @@ function jeDisplayFilteredWidgets() {
   $('#jeWidgetSearchResults').innerHTML = resultTable;
 
   on('.jeInSearchWindow', 'click', function(e) {
-    jeSelectWidget(widgets.get($('.key', e.currentTarget).innerText));
+    jeSelectWidget(widgets.get($('.key', e.currentTarget).innerText), false, e.shiftKey);
+    if(e.shiftKey)
+      e.stopPropagation();
   });
 }
 
