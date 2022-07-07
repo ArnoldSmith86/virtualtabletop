@@ -38,7 +38,7 @@
   --treeHeight: 70%;
   display: grid;
   grid-template-columns: 60% 40%;
-  grid-template-rows: 4% 25px var(--treeHeight)  8px auto;
+  grid-template-rows: min-content 25px var(--treeHeight)  8px auto;
   row-gap: 0px;
   top: 0;
   height: 100%;
