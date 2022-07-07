@@ -62,22 +62,27 @@
   border-bottom: 1px solid white;
 }
 
-#jeWidgetSearch {
-  grid-column: 1 / span 2;
-  grid-row: 2 / span 2;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  cursor: pointer;
-}
-
 #jeTree {
   grid-column: 1 / span 2;
   grid-row: 3 / span 1;
   overflow-wrap: break-word;
   overflow-y: auto;
   white-space: pre-wrap;
-  cursor: pointer;
   border-top: 1px dashed gray;
+}
+
+#jeWidgetSearch {
+  grid-column: 1 / span 2;
+  grid-row: 2;
+}
+
+#jeWidgetSearchResults {
+  grid-column: 1 / span 2;
+  grid-row: 3;
+  overflow: hidden auto;
+  display: none;
+  height: 100%;
+  background-color: #484848;
 }
 
 #jeResize {
@@ -109,13 +114,17 @@ li, .jeNestedTree {
   padding-left: 0;
 }
 
+.jeInSearchWindow, .jeTreeWidget {
+  cursor: pointer;
+}
+
 /* Style the caret/arrow */
 .jeTreeExpander, .jeTreeExpander-down {
   user-select: none; /* Prevent text selection */
 }
 
 /* Create the caret/arrow with a unicode, and style it */
-.jeTreeExpander::before {
+.jeTreeExpander::before, .jeTreeExpander-down::before {
   content: "\25B6";
   color: white;
   display: inline-block;
@@ -124,11 +133,7 @@ li, .jeNestedTree {
 
 /* Rotate the caret/arrow icon when clicked on (using JavaScript) */
 .jeTreeExpander-down::before {
-  content: "\25B6";
-  color: white;
-  display: inline-block;
-  margin-right: 6px;
-  transform: rotate(90deg);
+  content: "\25BC";
 }
 
 /* Hide the nested list */
@@ -155,29 +160,11 @@ li, .jeNestedTree {
 
 /*** CSS to handle search box for tree widget ***/
 #jeWidgetSearchBox {
-  position: relative;
-  top: 1px;
-  width: calc(0.4 * var(--editorPaneWidth));
-  left: 0;
+  margin-top: 1px;
 }
 
-#jeWidgetSearchResults {
-  display: block;
-  height: 100%;
-  overflow:scroll;
-}
-
-#jeWidgetSearchResults > table {
-  display: block;
-  width: var(--editorPaneWidth);
-  height: 100%;
-  left: 0;
-  position: relative;
-  background-color: #484848;
-  opacity: 100%;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  z-index: 1;
+#jeSearchTable {
+  overflow-wrap: anywhere;
 }
 
 .jeHighlightRow {

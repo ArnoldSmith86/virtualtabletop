@@ -1269,8 +1269,6 @@ function jeDisplayTree() {
   const allWidgets = Array.from(widgets.values());
   $('#jeTree').innerHTML = '<ul class=jeTreeDisplay>' + jeDisplayTreeAddWidgets(allWidgets, null) + '</ul>';
 
-  $('#jeWidgetSearch').innerHTML = '<label for="jeWidgetSearchBox" class=extern>Search Room: </label><input id="jeWidgetSearchBox" type="text" style="margin-bottom: 4px;"><div id="jeWidgetSearchResults"></div>';
-
   for(const dom of $a('#jeTree .key'))
     treeNodes[dom.innerText] = dom.parentNode;
 
@@ -1368,6 +1366,7 @@ function jeDisplayFilteredWidgets(e) {
     resultTable += '<tr valign=top><td class="jeInSearchWindow"><i class=key>' + html(w.get('id')) + '</i> - <i class=string>' + html(w.get('type') || 'basic') + '</i></td></tr>';
   resultTable += '</table>';
   $('#jeWidgetSearchResults').innerHTML = resultTable;
+  $('#jeWidgetSearchResults').style.display = 'block';
 
   on('.jeInSearchWindow', 'click', function(e) {
     jeSelectWidget(widgets.get($('.key', e.currentTarget).innerText), false, e.shiftKey);
@@ -2066,7 +2065,7 @@ on('#jsonEditor', 'keydown', function(e) {
 window.addEventListener('click', function(e) {
   if(jeEnabled && e.target != $('#jeSearchTable')) {
     $('#jeWidgetSearchBox').value = '';
-    $('#jeWidgetSearchResults').innerHTML = '';
+    $('#jeWidgetSearchResults').style.display = 'none';
   }
 });
 
