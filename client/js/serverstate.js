@@ -104,7 +104,7 @@ function receiveDelta(delta) {
     if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && widgets.has(widgetID))
       $('#topSurface').appendChild(widgets.get(widgetID).domElement);
 
-  const widgetWasAdded = false;
+  let widgetWasAdded = false;
   for(const widgetID in delta.s) {
     if(delta.s[widgetID] !== null && !widgets.has(widgetID)) {
       addWidget(delta.s[widgetID]);
