@@ -203,7 +203,11 @@ i.default { color: #606060; }
 i.variable{ color: #40e0d0; }
 i.error   { color: red; font-weight: bold; }
 
-body.jsonEdit .selectedInEdit {
+body.jsonEdit .selectedInEdit:not(.pile) {
+  box-shadow: 0px 0px 0px 5px yellow;
+}
+
+body.jsonEdit .selectedInEdit.pile .handle {
   box-shadow: 0px 0px 0px 5px yellow;
 }
 
