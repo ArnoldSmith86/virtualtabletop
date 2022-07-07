@@ -104,9 +104,13 @@ function receiveDelta(delta) {
     if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && widgets.has(widgetID))
       $('#topSurface').appendChild(widgets.get(widgetID).domElement);
 
-  for(const widgetID in delta.s)
-    if(delta.s[widgetID] !== null && !widgets.has(widgetID))
+  const widgetWasAdded = false;
+  for(const widgetID in delta.s) {
+    if(delta.s[widgetID] !== null && !widgets.has(widgetID)) {
       addWidget(delta.s[widgetID]);
+      widgetWasAdded = true;
+    }
+  }
 
   for(const widgetID in delta.s)
     if(delta.s[widgetID] !== null && widgets.has(widgetID)) // check widgets.has because addWidget above MIGHT have failed
@@ -117,7 +121,7 @@ function receiveDelta(delta) {
       removeWidget(widgetID);
 
   if(typeof jeEnabled != 'undefined' && jeEnabled)
-    jeApplyDelta(delta);
+    jeApplyDelta(delta, widgetWasAdded);
 }
 
 function receiveDeltaFromServer(delta) {

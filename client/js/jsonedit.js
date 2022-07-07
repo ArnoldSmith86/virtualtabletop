@@ -946,7 +946,7 @@ async function jeApplyChangesMulti() {
   }
 }
 
-function jeApplyDelta(delta) {
+function jeApplyDelta(delta, widgetWasAdded) {
   if(jeMode == 'widget') {
     for(const field of [ 'id', 'deck' ]) {
       if(!jeDeltaIsOurs && jeStateNow && jeStateNow[field] && delta.s[jeStateNow[field]] !== undefined) {
@@ -980,7 +980,10 @@ function jeApplyDelta(delta) {
     }
   }
 
-  jeDisplayTree();
+  if(widgetWasAdded || Object.values(delta.s).filter(s=>s===null).length)
+    jeDisplayTree();
+  else
+    jeUpdateTree(delta.s);
 }
 
 async function jeApplyExternalChanges(state) {
@@ -1196,8 +1199,7 @@ function jeColorize() {
     [ /^( +")(.*)(":.*)$/, null, 'key', null ],
     [ /^(Room)$/, 'extern' ],
     [ /^( +"var )(.*)( = )(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?( )?([0-9a-zA-Z_-]+|[=+*/%<!>&|-]{1,3})?(🧮(?:[0-9a-zA-Z_-]+|[=+*/%<!>&|-]{1,2}))?( )?(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?( )?(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?( )?(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?(.*)(",?)$/, 'default', 'custom', null, 'number', 'null', 'variable', 'string', null, null, 'variable', null, 'number', 'null', 'variable', 'string', null, 'number', 'null', 'variable', 'string', null, 'number', 'null', 'variable', 'string', null, 'default' ],
-    [ /^( +")(.*)(",?)$/, null, 'string', null ],
-    [ /^( +)(.*)( \()([a-z]+)( - )(?:(.*?)( - ))?([0-9-]+)(,)([0-9-]+)(.*)$/, null, 'key', null, 'string', null, 'extern', null, 'number', null, 'number', null ]
+    [ /^( +")(.*)(",?)$/, null, 'string', null ]
   ];
   let out = [];
   for(let line of jeGetEditorContent().split('\n')) {
@@ -1244,6 +1246,7 @@ function jeColorize() {
 
 const editPanel = $('#jeEditArea');
 
+let treeNodes = {};
 let mouse_reference;
 let resizer_reference;
 
@@ -1269,6 +1272,9 @@ function jeDisplayTree() {
   $('#jeTree').innerHTML = '<ul class=jeTreeDisplay>' + jeDisplayTreeAddWidgets(allWidgets, null) + '</ul>';
 
   $('#jeWidgetSearch').innerHTML = '<label for="jeWidgetSearchBox" class=extern>Search Room: </label><input id="jeWidgetSearchBox" type="text" style="margin-bottom: 4px;"><div id="jeWidgetSearchResults"></div>';
+
+  for(const dom of $a('#jeTree .key'))
+    treeNodes[dom.innerText] = dom.parentNode;
 
   // Add handlers to tree elements to display widget contents
   on('.jeTreeExpander', 'click', function(e) {
@@ -1297,32 +1303,54 @@ function jeDisplayTreeAddWidgets(allWidgets, parent) {
 
   const selectedIDs = jeSelectedIDs();
   for(const widget of (allWidgets.filter(w=>w.get('parent')==parent)).sort((w1,w2)=>w1.get('id').localeCompare(w2.get('id'), 'en', {numeric: true, ignorePunctuation: true}))) {
-    const type = widget.get('type');
     const children = jeDisplayTreeAddWidgets(allWidgets, widget.get('id'));
     const isSelected = selectedIDs.indexOf(widget.get('id')) != -1 ? 'jeHighlightRow' : '';
-
 
     result += `<li class="jeTreeWidget ${isSelected}">`;
     if(children)
       result += `<span class="jeTreeWidget jeTreeExpander ${(widget.get('type')=='pile') ? '' : 'jeTreeExpander-down'}">`;
-    result += `${colored(widget.get('id'), 'key')} (${colored(type || 'basic','string')} - `;
-    if(widget.get('id').match(/^[0-9a-z]{4}$/) && $('#jsonEditor').classList.contains('wide')) {
-      if(type == 'card' && !widget.get('cardType').match(/^type-[0-9a-f-]{36}$/))
-        result += `${widget.get('cardType')} - `;
-      if(type == 'button' && widget.get('text'))
-        result += `${colored(widget.get('text').replaceAll('\n', '\\n'),'extern')} - `;
-      if(type == null && widget.get('classes'))
-        result += `${widget.get('classes')} - `;
-    }
-    result += `${colored(String(Math.floor(widget.get('x'))),'number')},` +
-      `${colored(String(Math.floor(widget.get('y'))),'number')})</span>`;
+
+    result += jeTreeGetWidgetHTML(widget);
+
     if(children)
-      result += `<ul class="jeNestedTree nested ${widget.get('type')=='pile' ? '' : 'active'}">${children}</ul>`;
+      result += `</span><ul class="jeNestedTree nested ${widget.get('type')=='pile' ? '' : 'active'}">${children}</ul>`;
     result += '</li>';
 
     delete allWidgets[allWidgets.indexOf(widget)];
   }
   return result;
+}
+
+function jeTreeGetWidgetHTML(widget) {
+  function colored(str, kind) {
+    return `<i class=${kind}>${html(str)}</i>`
+  }
+  const type = widget.get('type');
+
+  let result = `${colored(widget.get('id'), 'key')} (${colored(type || 'basic','string')} - `;
+  if(widget.get('id').match(/^[0-9a-z]{4}$/) && $('#jsonEditor').classList.contains('wide')) {
+    if(type == 'card' && !widget.get('cardType').match(/^type-[0-9a-f-]{36}$/))
+      result += `${colored(widget.get('cardType'),'extern')} - `;
+    if(type == 'button' && widget.get('text'))
+      result += `${colored(widget.get('text').replaceAll('\n', '\\n'),'extern')} - `;
+    if(type == null && widget.get('classes'))
+      result += `${colored(widget.get('classes'),'extern')} - `;
+  }
+  result += `${colored(String(Math.floor(widget.get('x'))),'number')},` +
+    `${colored(String(Math.floor(widget.get('y'))),'number')})`;
+
+  return result;
+}
+
+function jeUpdateTree(delta) {
+  for(const id in delta) {
+    if(typeof treeNodes[id] != 'undefined' && typeof delta[id].parent == 'undefined') {
+      treeNodes[id].innerHTML = jeTreeGetWidgetHTML(widgets.get(id));
+    } else {
+      jeDisplayTree();
+      break;
+    }
+  }
 }
 
 function jeDisplayFilteredWidgets() {
