@@ -211,6 +211,11 @@ body.jsonEdit .selectedInEdit.pile .handle {
   box-shadow: 0px 0px 0px 5px yellow;
 }
 
+body.jsonEdit:not(.edit) .selectedInEdit.deck {
+  display: block;
+  font-size: 0;
+}
+
 /**** End color formatting ****/
 
 /*** End setup of edit area ***/
