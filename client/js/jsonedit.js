@@ -944,7 +944,7 @@ async function jeApplyChangesMulti() {
   }
 }
 
-function jeApplyDelta(delta, widgetWasAdded) {
+function jeApplyDelta(delta) {
   if(jeMode == 'widget') {
     for(const field of [ 'id', 'deck' ]) {
       if(!jeDeltaIsOurs && jeStateNow && jeStateNow[field] && delta.s[jeStateNow[field]] !== undefined) {
@@ -978,10 +978,7 @@ function jeApplyDelta(delta, widgetWasAdded) {
     }
   }
 
-  if(widgetWasAdded || Object.values(delta.s).filter(s=>s===null).length)
-    jeDisplayTree();
-  else
-    jeUpdateTree(delta.s);
+  jeUpdateTree(delta.s);
 }
 
 async function jeApplyExternalChanges(state) {
@@ -1343,7 +1340,7 @@ function jeTreeGetWidgetHTML(widget) {
 
 function jeUpdateTree(delta) {
   for(const id in delta) {
-    if(typeof treeNodes[id] != 'undefined' && typeof delta[id].parent == 'undefined') {
+    if(typeof treeNodes[id] != 'undefined' && delta[id] != null && typeof delta[id].parent == 'undefined') {
       treeNodes[id].innerHTML = jeTreeGetWidgetHTML(widgets.get(id));
     } else {
       jeDisplayTree();
