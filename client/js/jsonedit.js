@@ -1367,7 +1367,8 @@ function jeDisplayFilteredWidgets(e) {
 
   on('.jeInSearchWindow', 'click', function(e) {
     jeSelectWidget(widgets.get($('.key', e.currentTarget).innerText), false, e.shiftKey);
-    e.stopPropagation();
+    if(e.shiftKey)
+      e.stopPropagation();
   });
 
   e.stopPropagation();
