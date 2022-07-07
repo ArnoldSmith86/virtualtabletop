@@ -1352,7 +1352,7 @@ function jeUpdateTree(delta) {
   }
 }
 
-function jeDisplayFilteredWidgets() {
+function jeDisplayFilteredWidgets(e) {
   const subtext = $('#jeWidgetSearchBox').value.toLowerCase();
   const results = widgetFilter(o => o.get('id').toLowerCase().includes(subtext) ||
           o.get('type') && o.get('type').toLowerCase().includes(subtext) ||
@@ -1371,9 +1371,10 @@ function jeDisplayFilteredWidgets() {
 
   on('.jeInSearchWindow', 'click', function(e) {
     jeSelectWidget(widgets.get($('.key', e.currentTarget).innerText), false, e.shiftKey);
-    if(e.shiftKey)
-      e.stopPropagation();
+    e.stopPropagation();
   });
+
+  e.stopPropagation();
 }
 
 /* End of tree subpane control */
@@ -2062,8 +2063,8 @@ on('#jsonEditor', 'keydown', function(e) {
   }
 });
 
-on('body', 'click', function(e) {
-  if(jeEnabled) {
+window.addEventListener('click', function(e) {
+  if(jeEnabled && e.target != $('#jeSearchTable')) {
     $('#jeWidgetSearchBox').value = '';
     $('#jeWidgetSearchResults').innerHTML = '';
   }
