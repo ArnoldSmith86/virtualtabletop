@@ -1304,9 +1304,10 @@ function jeDisplayTreeAddWidgets(allWidgets, parent) {
     const children = jeDisplayTreeAddWidgets(allWidgets, widget.get('id'));
     const isSelected = selectedIDs.indexOf(widget.get('id')) != -1 ? 'jeHighlightRow' : '';
 
-    result += `<li class="jeTreeWidget ${isSelected}">`;
     if(children)
-      result += `<span class="jeTreeWidget jeTreeExpander ${(widget.get('type')=='pile') ? '' : 'jeTreeExpander-down'}">`;
+      result += `<li class="jeTreeWidget"><span class="jeTreeWidget ${isSelected} jeTreeExpander ${(widget.get('type')=='pile') ? '' : 'jeTreeExpander-down'}">`;
+    else
+      result += `<li class="jeTreeWidget ${isSelected}">`;
 
     result += jeTreeGetWidgetHTML(widget);
 
