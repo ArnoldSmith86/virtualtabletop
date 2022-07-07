@@ -449,9 +449,7 @@ const jeCommands = [
     call: async function() {
       for(const id of jeSelectedIDs())
         await removeWidgetLocal(id);
-      jeStateNow = null;
-      jeWidget = null;
-      jeDisplayTree();
+      jeEmpty();
     }
   },
   {
@@ -951,7 +949,7 @@ function jeApplyDelta(delta, widgetWasAdded) {
     for(const field of [ 'id', 'deck' ]) {
       if(!jeDeltaIsOurs && jeStateNow && jeStateNow[field] && delta.s[jeStateNow[field]] !== undefined) {
         if(delta.s[jeStateNow[field]] === null) {
-          jeDisplayTree();
+          jeEmpty();
         } else {
           if(jeKeyIsDown) {
             jeKeyIsDownDeltas.push(delta.s[jeStateNow[field]]);
@@ -1900,12 +1898,9 @@ function jeShowCommands() {
 
 function jeToggle() {
   if(jeEnabled === null) {
-    $('#jeEditHeader').innerHTML = 'CTRL-click a widget on\nthe left to edit it.';
-    jeAddCommands();
-    jeDisplayTree();
+    jeEmpty();
     $('#jeText').addEventListener('input', jeColorize);
     $('#jeText').onscroll = e=>$('#jeTextHighlight').scrollTop = e.target.scrollTop;
-    jeColorize();
   }
   jeEnabled = !jeEnabled;
   jeRoutineLogging = jeEnabled;
@@ -1918,9 +1913,21 @@ function jeToggle() {
   setScale();
 }
 
+function jeEmpty() {
+  jeMode = 'empty';
+  jeContext = [ 'No widget selected.' ];
+  jeStateNow = null;
+  jeWidget = null;
+
+  jeSet('');
+  jeAddCommands();
+  jeDisplayTree();
+  jeShowCommands();
+}
+
 const clickButton = async function(event) {
   await jeCallCommand(jeCommands.find(o => o.id == event.currentTarget.id));
-  if (jeContext != 'macro') {
+  if(jeMode != 'macro' && jeMode != 'empty') {
     jeGetContext();
     if((jeWidget || jeMode == 'multi') && !jeJSONerror)
       await jeApplyChanges();
