@@ -2060,7 +2060,7 @@ on('#jsonEditor', 'keydown', function(e) {
 });
 
 window.addEventListener('click', function(e) {
-  if(jeEnabled && e.target != $('#jeSearchTable')) {
+  if(jeEnabled && e.target != $('#jeWidgetSearchResults')) {
     $('#jeWidgetSearchBox').value = '';
     $('#jeWidgetSearchResults').style.display = 'none';
   }
