@@ -161,6 +161,7 @@ li, .jeNestedTree {
 /*** CSS to handle search box for tree widget ***/
 #jeWidgetSearchBox {
   margin-top: 1px;
+  width: 50%;
 }
 
 #jeSearchTable {
