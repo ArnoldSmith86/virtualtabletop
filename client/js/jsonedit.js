@@ -1116,7 +1116,7 @@ function jeSelectWidget(widget, dontFocus, addToSelection, restoreCursorPosition
   }
 
   for(const [ id, w ] of widgets)
-    w.domElement.classList.toggle('selectedInEdit', selectedIDs.indexOf(id) != -1);
+    w.setHighlighted(selectedIDs.indexOf(id) != -1);
 
   if(restoreCursorPosition)
     jeCursorStateSet(cursorState);
