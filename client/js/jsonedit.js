@@ -1342,8 +1342,6 @@ function jeUpdateTree(delta) {
       treeNodes[id].innerHTML = jeTreeGetWidgetHTML(widgets.get(id));
     } else {
       jeDisplayTree();
-      if(delta[id] != null && typeof delta[id].id == 'string')
-        jeSelectWidget(widgets.get(delta[id].id));
       break;
     }
   }
