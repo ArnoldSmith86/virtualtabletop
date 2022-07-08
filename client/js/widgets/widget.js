@@ -1147,7 +1147,6 @@ export class Widget extends StateManaged {
                       c.targetPlayer = target.get('player')
                       await c.moveToHolder(targetHand);
                       delete c.targetPlayer
-                      c.bringToFront()
                     } else {
                       problems.push(`Seat ${target.id} declares 'hand: ${target.get('hand')}' which does not exist.`);
                     }
