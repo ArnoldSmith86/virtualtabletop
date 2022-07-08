@@ -1148,7 +1148,9 @@ export class Widget extends StateManaged {
                       await c.moveToHolder(targetHand);
                       delete c.targetPlayer
                       c.bringToFront()
-                      if(targetHand.get('type') !== 'holder')
+                      if(targetHand.get('type') == 'holder')
+                        targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
+                    } else {
                       problems.push(`Seat ${target.id} declares 'hand: ${target.get('hand')}' which does not exist.`);
                     }
                   } else {
