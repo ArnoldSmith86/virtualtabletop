@@ -71,9 +71,11 @@ body.aspectTooGood.hiddenToolbar {
     position: absolute;
     display: flex;
     align-items: center;
+    justify-content: center;
 
     bottom: 0;
     height: calc(var(--roomTop) - 40px);
+    width: calc(100vw - 40px);
 
     content: "Please rotate your device to landscape orientation and switch to fullscreen.";
     margin: 20px;
