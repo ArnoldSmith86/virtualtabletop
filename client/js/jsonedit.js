@@ -1107,16 +1107,7 @@ function jeSelectWidget(widget, dontFocus, addToSelection, restoreCursorPosition
     jeGetContext();
   }
 
-  const selectedIDs = jeSelectedIDs();
-
-  for(const widgetDOM of $a('#jeTree .key')) {
-    widgetDOM.parentElement.classList.toggle('jeHighlightRow', selectedIDs.indexOf(widgetDOM.textContent) != -1);
-    if(selectedIDs.indexOf(widgetDOM.textContent) != -1)
-      widgetDOM.scrollIntoView({ block: 'center' });
-  }
-
-  for(const [ id, w ] of widgets)
-    w.setHighlighted(selectedIDs.indexOf(id) != -1);
+  jeCenterSelection();
 
   if(restoreCursorPosition)
     jeCursorStateSet(cursorState);
@@ -1163,6 +1154,19 @@ function jeSelectedIDs() {
     return jeMultiSelectedWidgets().map(w=>w.get('id'));
   else
     return [ jeStateNow.id ];
+}
+
+function jeCenterSelection() {
+  const selectedIDs = jeSelectedIDs();
+
+  for(const widgetDOM of $a('#jeTree .key')) {
+    widgetDOM.parentElement.classList.toggle('jeHighlightRow', selectedIDs.indexOf(widgetDOM.textContent) != -1);
+    if(selectedIDs.indexOf(widgetDOM.textContent) != -1)
+      widgetDOM.scrollIntoView({ block: 'center' });
+  }
+
+  for(const [ id, w ] of widgets)
+    w.setHighlighted(selectedIDs.indexOf(id) != -1);
 }
 
 function jeUpdateMulti(dontFocus) {
@@ -1266,6 +1270,7 @@ function jeDisplayTree() {
   const allWidgets = Array.from(widgets.values());
   $('#jeTree').innerHTML = '<ul class=jeTreeDisplay>' + jeDisplayTreeAddWidgets(allWidgets, null) + '</ul>';
 
+  treeNodes = {};
   for(const dom of $a('#jeTree .key'))
     treeNodes[dom.innerText] = dom.parentNode;
 
@@ -1342,6 +1347,8 @@ function jeUpdateTree(delta) {
       treeNodes[id].innerHTML = jeTreeGetWidgetHTML(widgets.get(id));
     } else {
       jeDisplayTree();
+      if(jeDeltaIsOurs && delta[id] != null && typeof delta[id].id == 'string')
+        jeCenterSelection();
       break;
     }
   }
