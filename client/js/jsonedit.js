@@ -397,7 +397,7 @@ const jeCommands = [
   {
     id: 'je_reverseFkeys',
     name: 'Reverse order of F-key shortcuts',
-    icon: '[height]',
+    icon: '[swap_vert]',
     forceKey: 'K',
     call: async function() {
       jeFKeyOrderDescending = -jeFKeyOrderDescending;
