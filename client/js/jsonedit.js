@@ -9,6 +9,7 @@ let jeStateNow = null;
 let jeJSONerror = null;
 let jeCommandError = null;
 let jeCommandWithOptions = null;
+let jeFKeyOrderDescending = 1;
 let jeContext = null;
 let jeSecondaryWidget = null;
 let jeDeltaIsOurs = false;
@@ -391,6 +392,15 @@ const jeCommands = [
     forceKey: 'T',
     call: async function() {
       jeDisplayTree();
+    }
+  },
+  {
+    id: 'je_reverseFkeys',
+    name: 'Reverse order of F-key shortcuts',
+    icon: '[height]',
+    forceKey: 'K',
+    call: async function() {
+      jeFKeyOrderDescending = -jeFKeyOrderDescending;
     }
   },
   {
@@ -1851,7 +1861,7 @@ window.addEventListener('mousemove', function(e) {
     const w1normal = !w1foreign && !w1card;
     const w2normal = !w2foreign && !w2card;
     return ((w1card && w2card) || (w1foreign && w2foreign) || (w1normal && w2normal)) ?
-      w2.calculateZ() - w1.calculateZ() :
+      jeFKeyOrderDescending*(w2.calculateZ() - w1.calculateZ()) :
       ((w1card && !w2card) || (w1foreign && w2normal)) ? 1 : -1;
   });
   
