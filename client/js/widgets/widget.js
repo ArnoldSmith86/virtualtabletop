@@ -225,8 +225,8 @@ export class Widget extends StateManaged {
   }
 
   applyRemove() {
-    if(this.parent)
-      this.parent.applyChildRemove(this);
+    if(this.get('parent') && widgets.has(this.get('parent')))
+      widgets.get(this.get('parent')).applyChildRemove(this);
     if(this.get('deck') && widgets.has(this.get('deck')))
       widgets.get(this.get('deck')).removeCard(this);
     if($(`#STYLES_${escapeID(this.id)}`))
@@ -364,6 +364,7 @@ export class Widget extends StateManaged {
       return applyTransformedOffset(parentCenter, offset, s, rot );
     }
   }
+
   css() {
     this.propertiesUsedInCSS = [];
     if($(`#STYLES_${escapeID(this.id)}`))
@@ -379,12 +380,12 @@ export class Widget extends StateManaged {
     return css;
   }
 
-  cssAsText(css) {
+  cssAsText(css, nested = false) {
     if(typeof css == 'object') {
       let cssText = '';
       for(const key in css) {
         if(typeof css[key] == 'object')
-          return this.cssToStylesheet(css);
+          return this.cssToStylesheet(css, nested);
         cssText += `; ${key}: ${css[key]}`;
       }
       return cssText;
@@ -392,6 +393,7 @@ export class Widget extends StateManaged {
       return css;
     }
   }
+
   cssBorderRadius() {
     let br = this.get('borderRadius');
     switch(typeof(br)) {
@@ -426,12 +428,27 @@ export class Widget extends StateManaged {
     return css;
   }
 
-  cssToStylesheet(css) {
+  cssToStylesheet(css, nested = false) {
+    let styleString = '';
+    for(const key in css) {
+      let selector = key;
+      if(!nested) {
+        if(key == 'inline')
+          continue;
+        if(key == 'default')
+          selector = '';
+        if(selector.charAt(0) != '@')
+          selector = `#w_${escapeID(this.id)}${selector}`;
+      }
+      styleString += `${selector} { ${mapAssetURLs(this.cssReplaceProperties(this.cssAsText(css[key], true)))} }\n`;
+    }
+
+    if(nested)
+      return styleString;
+
     const style = document.createElement('style');
     style.id = `STYLES_${escapeID(this.id)}`;
-    for(const key in css)
-      if(key != 'inline')
-        style.appendChild(document.createTextNode(`#w_${escapeID(this.id)}${key == 'default' ? '' : key} { ${mapAssetURLs(this.cssReplaceProperties(this.cssAsText(css[key])))} }`));
+    style.appendChild(document.createTextNode(styleString));
     $('head').appendChild(style);
 
     return this.cssAsText(css.inline || '');
@@ -520,7 +537,9 @@ export class Widget extends StateManaged {
           return match[9] ? false : undefined;
 
         let indexName = evaluateIdentifier(match[3], match[4]);
-        return indexName !== undefined ? varContent[indexName] : varContent;
+        if(varContent === null && indexName !== undefined)
+          problems.push(`Cannot index a variable that evaluates to 'null'.`);
+        return varContent !== null && indexName !== undefined ? varContent[indexName] : varContent;
       }
 
       // property
@@ -681,7 +700,7 @@ export class Widget extends StateManaged {
             // ignore (but log) blank and comment only lines
             if(jeRoutineLogging) jeLoggingRoutineOperationSummary(comment[1]||'');
           } else {
-            problems.push('String could not be interpreted as expression. Please check your syntax and note that many characters have to be escaped.');
+            problems.push(`String '${a}' could not be interpreted as a valid expression. Please check your syntax and note that many characters have to be escaped.`);
           }
         }
       }
@@ -1562,8 +1581,11 @@ export class Widget extends StateManaged {
   }
 
   hideEnlarged() {
-    if (!this.domElement.className.match(/selected/))
+    if (!this.domElement.className.match(/selected/)) {
       $('#enlarged').classList.add('hidden');
+      if($('#enlargeStyle'))
+        removeFromDOM($('#enlargeStyle'));
+    }
   }
 
   async addAudio(widget){
@@ -1621,6 +1643,9 @@ export class Widget extends StateManaged {
   }
 
   async moveToHolder(holder) {
+    if(this.inRemovalQueue)
+      return;
+
     await this.bringToFront();
     if(this.get('parent') && !this.currentParent)
       this.currentParent = widgets.get(this.get('parent'));
@@ -1810,15 +1835,42 @@ export class Widget extends StateManaged {
 
   showEnlarged(event) {
     if(this.get('enlarge')) {
+      const id = this.get('id');
       const e = $('#enlarged');
+      const boundBox = this.domElement.getBoundingClientRect();
+      let cssText = this.domElement.style.cssText;
+      cssText += `;--originalLeft:${boundBox.left}px`;
+      cssText += `;--originalTop:${boundBox.top}px`;
+      cssText += `;--originalRight:${boundBox.right}px`;
+      cssText += `;--originalBottom:${boundBox.bottom}px`;
       e.innerHTML = this.domElement.innerHTML;
       e.className = this.domElement.className;
-      e.dataset.id = this.get('id');
-      e.style.cssText = this.domElement.style.cssText;
+      e.dataset.id = id;
+      for(const clone of e.querySelectorAll('canvas')) {
+        const original = this.domElement.querySelector(`canvas[data-id = '${clone.dataset.id}']`);
+        const context = clone.getContext('2d');
+        clone.width = original.width;
+        clone.height = original.height;
+        context.drawImage(original, 0, 0);
+      }
+      e.style.cssText = cssText;
       e.style.display = this.domElement.style.display;
       e.style.transform = `scale(calc(${this.get('enlarge')} * var(--scale)))`;
-      if(this.domElement.getBoundingClientRect().left < window.innerWidth/2)
+      const cursor = clientPointer.getBoundingClientRect();
+      if(cursor.left < window.innerWidth/2)
         e.classList.add('right');
+      if(cursor.top < window.innerHeight/2)
+        e.classList.add('bottom');
+
+      const wStyle = $(`#STYLES_${escapeID(id)}`);
+      if(wStyle) {
+        if($('#enlargeStyle'))
+          removeFromDOM($('#enlargeStyle'));
+        const eStyle = document.createElement('style');
+        eStyle.id = "enlargeStyle";
+        eStyle.appendChild(document.createTextNode(wStyle.textContent.replaceAll(`#w_${escapeID(id)}`,'#enlarged')));
+        $('head').appendChild(eStyle);
+      }
     }
     if(event)
       event.preventDefault();
