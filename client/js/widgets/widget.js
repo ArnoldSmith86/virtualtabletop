@@ -1144,6 +1144,9 @@ export class Widget extends StateManaged {
               }
             }
 
+            sourceWidgets.filter(w=>w.get('type')=='pile').forEach(w=>sourceWidgets.push(...w.children()));
+            sourceWidgets = sourceWidgets.filter(w=>w.get('type')!='pile');
+
             for(const c of sourceWidgets.slice(0, count).reverse()) {
               const applyFlip = async function() {
                 if(a.face !== null && c.flip)
