@@ -397,7 +397,7 @@ const jeCommands = [
   {
     id: 'je_reverseFkeys',
     name: 'Reverse order of F-key shortcuts',
-    icon: '[swap_vert]',
+    icon: 'swap_vert',
     forceKey: 'K',
     call: async function() {
       jeFKeyOrderDescending = -jeFKeyOrderDescending;
@@ -1745,8 +1745,8 @@ function jeShowCommands() {
     if(contextMatch && contextMatch[0] == "") {
       const name = (typeof command.name == 'function' ? command.name() : command.name);
       const icon = (typeof command.icon == 'function' ? command.icon() : command.icon);
-      let keyName = displayKey(command.forceKey);
-      commandText += `<button class='top' id='${command.id}' title='${name}' ${!command.show || command.show() ? '' : 'disabled'}>${icon}</button>`;
+      const isMaterial = String(icon).match(/^[^[]/) ? 'material' : '';
+      commandText += `<button class='top ${isMaterial}' id='${command.id}' title='${name}' ${!command.show || command.show() ? '' : 'disabled'}>${icon}</button>`;
     }
   }
   commandText += `</div>`;
@@ -1864,7 +1864,7 @@ window.addEventListener('mousemove', function(e) {
       jeFKeyOrderDescending*(w2.calculateZ() - w1.calculateZ()) :
       ((w1card && !w2card) || (w1foreign && w2normal)) ? 1 : -1;
   });
-  
+
   for(let i=1; i<=11; ++i) {
     const hotkey = i>=4 ? i+1 : i;
     if(hoveredWidgets[i-1]) {
