@@ -981,6 +981,11 @@ function jeApplyDelta(delta) {
   jeUpdateTree(delta.s);
 }
 
+function jeApplyState(state) {
+  jeEmpty();
+  jeDisplayTree();
+}
+
 async function jeApplyExternalChanges(state) {
   const before = JSON.parse(jeStateBefore);
   if(state.type == 'card' && state.deck === before.deck) {
@@ -1399,6 +1404,9 @@ function jeGetContext() {
     jeShowCommands();
     return jeContext;
   }
+
+  if(jeMode == 'empty')
+    return jeContext;
 
   if(jeMode == 'trace') {
     jeContext = [ 'Trace' ];
@@ -1904,6 +1912,7 @@ function jeShowCommands() {
 
 function jeToggle() {
   if(jeEnabled === null) {
+    jeAddCommands();
     jeEmpty();
     $('#jeText').addEventListener('input', jeColorize);
     $('#jeText').onscroll = e=>$('#jeTextHighlight').scrollTop = e.target.scrollTop;
@@ -1913,6 +1922,9 @@ function jeToggle() {
   jeLoggingHTML = '';
   if(jeEnabled) {
     $('body').classList.add('jsonEdit');
+    jeDisplayTree();
+    if(jeWidget && !widgets.has(jeWidget.id))
+      jeEmpty();
   } else {
     $('body').classList.remove('jsonEdit');
   }
@@ -1926,7 +1938,6 @@ function jeEmpty() {
   jeWidget = null;
 
   jeSet('');
-  jeAddCommands();
   jeDisplayTree();
   jeShowCommands();
 }
