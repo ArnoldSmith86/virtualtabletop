@@ -1162,9 +1162,9 @@ export class Widget extends StateManaged {
                     if(widgets.has(target.get('hand'))) {
                       const targetHand = widgets.get(target.get('hand'));
                       await applyFlip();
+                      c.targetPlayer = target.get('player')
                       await c.moveToHolder(targetHand);
-                      if(targetHand.get('childrenPerOwner'))
-                        await c.set('owner', target.get('player'));
+                      delete c.targetPlayer
                       c.bringToFront()
                       if(targetHand.get('type') == 'holder')
                         targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
