@@ -1589,6 +1589,26 @@ function populateAddWidgetOverlay() {
     x: 1300,
     y: 200
   });
+
+  addWidgetToAddWidgetOverlay(new BasicWidget('LineVertical'), {
+    x: 1300,
+    y: 325,
+    width: 200,
+    height: 0,
+  
+    css: "border: 3px solid #666; border-radius: 3px;"
+  });
+
+  addWidgetToAddWidgetOverlay(new BasicWidget('LineHorizontal'), {
+    x: 1535,
+    y: 190,
+    width: 0,
+    height: 200,
+  
+    css: "border: 3px solid #666; border-radius: 3px;"
+  });
+
+  
 }
 // end of JSON generators
 
