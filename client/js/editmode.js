@@ -1165,58 +1165,359 @@ function populateAddWidgetOverlay() {
     primaryColor: "#000000"
   });
 
-    //Poker column 2
-
-    addWidgetToAddWidgetOverlay(new BasicWidget('EmptyPoker3DSVG'), {
-      x: 690,
-      y: 560,
-      width: 75,
-      height: 54.75,
-
-      classes: "chip3D",
-      color: "#FF0000",
-      css: "color: #ffffffcc; font-size: 1.8rem",
-      image: "i/game-pieces/3D/Poker-3D.svg",
-      svgReplaces: {
-        "#accentColor1": "color",
-        "#accentColor2": "color",
-        "#borderColor": "borderColor",
-        "#borderWidth": "borderWidth",
-        "#labelColor": "labelColor",
-        "#primaryColor": "color"
-      },
-    
-      borderColor: "#000000",
-      borderWidth: 2,
-      labelColor: "#00000022"
-    });
-  
-    addWidgetToAddWidgetOverlay(new BasicWidget('1Poker2DSVG'), {
-      
-    });
-  
-    addWidgetToAddWidgetOverlay(new BasicWidget('10Poker2DSVG'), {
-      
-    });
-  
-    addWidgetToAddWidgetOverlay(new BasicWidget('100Poker2DSVG'), {
-      
-    });
-  
-    addWidgetToAddWidgetOverlay(new BasicWidget('1000Poker3DSVG'), {
-      
-    });
-  
-  
-
-
+  //Poker column 2
 
   addWidgetToAddWidgetOverlay(new BasicWidget('EmptyPoker3DSVG'), {
-    
+    x: 690,
+    y: 560,
+    width: 75,
+    height: 54.75,
+
+    classes: "chip3D",
+    color: "#FF0000",
+    css: "color: #ffffffcc; font-size: 1.8rem",
+    image: "i/game-pieces/3D/Poker-3D.svg",
+    svgReplaces: {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+  
+    borderColor: "#000000",
+    borderWidth: 2,
+    labelColor: "#00000022"
   });
 
+  addWidgetToAddWidgetOverlay(new BasicWidget('1Poker2DSVG'), {
+    x: 690,
+    y: 644,
+    width: 73,
+    height: 73,
+  
+    classes: "chip",
+    css: "font-size:1.5rem",
+    image: "i/game-pieces/2D/Poker-2D.svg",
+    svgReplaces: {
+      "#accentColor1": "accentColor1",
+      "#accentColor2": "accentColor2",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "primaryColor"
+    },
+    text: "1",
+  
+    accentColor1: "#808080",
+    accentColor2: "#add8e6",
+    borderColor: "#000000",
+    borderWidth: 2,
+    labelColor: "#d3d3d3",
+    primaryColor: "#ffffff"
+  });
+
+  addWidgetToAddWidgetOverlay(new BasicWidget('10Poker2DSVG'), {
+    x: 690,
+    y: 725,
+    width: 73,
+    height: 73,
+  
+    classes: "chip",
+    css: "font-size:1.5rem",
+    image: "i/game-pieces/2D/Poker-2D.svg",
+    svgReplaces: {
+      "#accentColor1": "accentColor1",
+      "#accentColor2": "accentColor2",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "primaryColor"
+    },
+    text: "10",
+  
+    accentColor1: "#ffffff",
+    accentColor2: "#87ceeb",
+    borderColor: "#000000",
+    borderWidth: 2,
+    labelColor: "#b0c4de",
+    primaryColor: "#000080"
+  });
+
+  addWidgetToAddWidgetOverlay(new BasicWidget('100Poker2DSVG'), {
+    x: 690,
+    y: 810,
+    width: 73,
+    height: 73,
+  
+    classes: "chip",
+    css: "font-size:1.5rem",
+    image: "i/game-pieces/2D/Poker-2D.svg",
+    svgReplaces: {
+      "#accentColor1": "accentColor1",
+      "#accentColor2": "accentColor2",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "primaryColor"
+    },
+    text: "100",
+  
+    accentColor1: "#ffffff",
+    accentColor2: "#ffc0cb",
+    borderColor: "#000000",
+    borderWidth: 2,
+    labelColor: "#ee82ee",
+    primaryColor: "#4b0082"
+  });
+
+  addWidgetToAddWidgetOverlay(new BasicWidget('1000Poker3DSVG'), {
+    x: 690,
+    y: 889,
+    width: 73,
+    height: 73,
+  
+    classes: "chip",
+    css: "font-size:1.5rem",
+    image: "i/game-pieces/2D/Poker-2D.svg",
+    svgReplaces: {
+      "#accentColor1": "accentColor1",
+      "#accentColor2": "accentColor2",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "primaryColor"
+    },
+    text: "1000",
+  
+    accentColor1: "#ff0000",
+    accentColor2: "#daa520",
+    borderColor: "#000000",
+    borderWidth: 2,
+    labelColor: "#ffff00",
+    primaryColor: "#ffd700"
+  });
+  
+  //Poker column 3
 
 
+
+  addWidgetToAddWidgetOverlay(new BasicWidget('DealerPoker3DSVG'), {
+    x: 780,
+    y: 513,
+    width: 75,
+    height: 54.75,
+
+    classes: "chip3D",
+    css: "font-size:0.9rem",
+    image: "i/game-pieces/3D/Poker-3D.svg",
+    svgReplaces: {
+      "#accentColor1": "accentColor1",
+      "#accentColor2": "accentColor2",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "primaryColor"
+    },
+    text: "Dealer",
+  
+    accentColor1: "#55bb66",
+    accentColor2: "#55bb66",
+    borderColor: "#000000",
+    borderWidth: 2,
+    labelColor: "#ffffff",
+    primaryColor: "#55bb66"
+  });
+
+  addWidgetToAddWidgetOverlay(new BasicWidget('1Poker3DSVG'), {
+    x: 780,
+    y: 569.5714285714286,
+    width: 75,
+    height: 54.75,
+  
+    classes: "chip3D",
+    css: "font-size:1.3rem",
+    image: "i/game-pieces/3D/Poker-3D.svg",
+    svgReplaces: {
+      "#accentColor1": "accentColor1",
+      "#accentColor2": "accentColor2",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "primaryColor"
+    },
+    text: "1",
+  
+    accentColor1: "#808080",
+    accentColor2: "#add8e6",
+    borderColor: "#000000",
+    borderWidth: 2,
+    labelColor: "#d3d3d3",
+    primaryColor: "#ffffff"
+  });
+
+  addWidgetToAddWidgetOverlay(new BasicWidget('5Poker3DSVG'), {
+    x: 780,
+    y: 626.1428571428571,
+    width: 75,
+    height: 54.75,
+  
+    classes: "chip3D",
+    css: "font-size:1.3rem",
+    image: "i/game-pieces/3D/Poker-3D.svg",
+    svgReplaces: {
+      "#accentColor1": "accentColor1",
+      "#accentColor2": "accentColor2",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "primaryColor"
+    },
+    text: "5",
+  
+    accentColor1: "#ffffff",
+    accentColor2: "#ffff00",
+    borderColor: "#000000",
+    borderWidth: 2,
+    labelColor: "#ed8080",
+    primaryColor: "#ff0000"
+  });
+
+  addWidgetToAddWidgetOverlay(new BasicWidget('10Poker3DSVG'), {
+    x: 780,
+    y: 682.7142857142858,
+    width: 75,
+    height: 54.75,
+  
+    classes: "chip3D",
+    css: "font-size:1.3rem",
+    image: "i/game-pieces/3D/Poker-3D.svg",
+    svgReplaces: {
+      "#accentColor1": "accentColor1",
+      "#accentColor2": "accentColor2",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "primaryColor"
+    },
+    text: "10",
+  
+    accentColor1: "#ffffff",
+    accentColor2: "#87ceeb",
+    borderColor: "#000000",
+    borderWidth: 2,
+    labelColor: "#b0c4de",
+    primaryColor: "#000080"
+  });
+
+  addWidgetToAddWidgetOverlay(new BasicWidget('25Poker3DSVG'), {
+    x: 780,
+    y: 739.2857142857142,
+    width: 75,
+    height: 54.75,
+  
+    classes: "chip3D",
+    css: "font-size:1.3rem",
+    image: "i/game-pieces/3D/Poker-3D.svg",
+    svgReplaces: {
+      "#accentColor1": "accentColor1",
+      "#accentColor2": "accentColor2",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "primaryColor"
+    },
+    text: "25",
+  
+    accentColor1: "#ffffff",
+    accentColor2: "#000000",
+    borderColor: "#000000",
+    borderWidth: 2,
+    labelColor: "#22ba22",
+    primaryColor: "#008000"
+  });
+
+  addWidgetToAddWidgetOverlay(new BasicWidget('100Poker3DSVG'), {
+    x: 780,
+    y: 794,
+    width: 75,
+    height: 54.75,
+  
+    classes: "chip3D",
+    css: "font-size:1.3rem",
+    image: "i/game-pieces/3D/Poker-3D.svg",
+    svgReplaces: {
+      "#accentColor1": "accentColor1",
+      "#accentColor2": "accentColor2",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "primaryColor"
+    },
+    text: "100",
+  
+    accentColor1: "#ffffff",
+    accentColor2: "#ffc0cb",
+    borderColor: "#000000",
+    borderWidth: 2,
+    labelColor: "#ee82ee",
+    primaryColor: "#4b0082"
+  });
+
+  addWidgetToAddWidgetOverlay(new BasicWidget('500Poker3DSVG'), {
+    x: 780,
+    y: 852.4285714285713,
+    width: 75,
+    height: 54.75,
+  
+    classes: "chip3D",
+    css: "font-size:1.3rem",
+    image: "i/game-pieces/3D/Poker-3D.svg",
+    svgReplaces: {
+      "#accentColor1": "accentColor1",
+      "#accentColor2": "accentColor2",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "primaryColor"
+    },
+    text: "500",
+  
+    accentColor1: "#ffffff",
+    accentColor2: "#808080",
+    borderColor: "#000000",
+    borderWidth: 2,
+    labelColor: "#a9a9a9",
+    primaryColor: "#000000"
+  });
+
+  addWidgetToAddWidgetOverlay(new BasicWidget('1000Poker3DSVG'), {
+    x: 780,
+    y: 909,
+    width: 75,
+    height: 54.75,
+  
+    classes: "chip3D",
+    css: "font-size:1.3rem",
+    image: "i/game-pieces/3D/Poker-3D.svg",
+    svgReplaces: {
+      "#accentColor1": "accentColor1",
+      "#accentColor2": "accentColor2",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "primaryColor"
+    },
+    text: "1000",
+  
+    accentColor1: "#ff0000",
+    accentColor2: "#daa520",
+    borderColor: "#000000",
+    borderWidth: 2,
+    labelColor: "#ffff00",
+    primaryColor: "#ffd700"
+  });
 
 
   // Populate the Interactive panel in the add widget overlay.
