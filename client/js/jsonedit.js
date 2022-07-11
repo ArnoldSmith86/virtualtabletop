@@ -9,6 +9,7 @@ let jeStateNow = null;
 let jeJSONerror = null;
 let jeCommandError = null;
 let jeCommandWithOptions = null;
+let jeFKeyOrderDescending = 1;
 let jeContext = null;
 let jeSecondaryWidget = null;
 let jeDeltaIsOurs = false;
@@ -382,6 +383,15 @@ const jeCommands = [
       else
         jeSecondaryWidget = null;
       jeShowCommands();
+    }
+  },
+  {
+    id: 'je_reverseFkeys',
+    name: 'Reverse order of F-key shortcuts',
+    icon: 'swap_vert',
+    forceKey: 'K',
+    call: async function() {
+      jeFKeyOrderDescending = -jeFKeyOrderDescending;
     }
   },
   {
@@ -1848,8 +1858,8 @@ function jeShowCommands() {
     if(contextMatch && contextMatch[0] == "") {
       const name = (typeof command.name == 'function' ? command.name() : command.name);
       const icon = (typeof command.icon == 'function' ? command.icon() : command.icon);
-      let keyName = displayKey(command.forceKey);
-      commandText += `<button class='top' id='${command.id}' title='${name}' ${!command.show || command.show() ? '' : 'disabled'}>${icon}</button>`;
+      const isMaterial = String(icon).match(/^[^[]/) ? 'material' : '';
+      commandText += `<button class='top ${isMaterial}' id='${command.id}' title='${name}' ${!command.show || command.show() ? '' : 'disabled'}>${icon}</button>`;
     }
   }
   commandText += `</div>`;
@@ -1977,7 +1987,7 @@ window.addEventListener('mousemove', function(e) {
     const w1normal = !w1foreign && !w1card;
     const w2normal = !w2foreign && !w2card;
     return ((w1card && w2card) || (w1foreign && w2foreign) || (w1normal && w2normal)) ?
-      w2.calculateZ() - w1.calculateZ() :
+      jeFKeyOrderDescending*(w2.calculateZ() - w1.calculateZ()) :
       ((w1card && !w2card) || (w1foreign && w2normal)) ? 1 : -1;
   });
 
