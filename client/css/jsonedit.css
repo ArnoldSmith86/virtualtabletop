@@ -281,6 +281,9 @@ body.jsonEdit.jeZoomOut #topSurface {
   color: white;
   font-family: 'VTT-Symbols';
 }
+[id=jeTopButtons] button.material {
+  font-family: 'Material Icons';
+}
 
 #jeTopButtons button:disabled {
   background: gray;
