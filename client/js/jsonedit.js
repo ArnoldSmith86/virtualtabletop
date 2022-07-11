@@ -415,6 +415,27 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_addNewWidget',
+    name: 'Add new widget',
+    icon: '[add_circle]',
+    forceKey: 'A',
+    call: async function() {
+      showOverlay("addOverlay")
+    }
+  },
+  {
+    id: 'je_removeWidget',
+    name: 'Remove widget',
+    icon: '[remove_circle]',
+    forceKey: 'R',
+    show: _=>jeStateNow,
+    call: async function() {
+      for(const id of jeSelectedIDs())
+        await removeWidgetLocal(id);
+      jeEmpty();
+    }
+  },
+  {
     id: 'je_duplicateWidget',
     name: 'Duplicate widget',
     icon: '[auto_awesome]',
@@ -439,27 +460,6 @@ const jeCommands = [
           jeStateNow.id = clonedWidget.id;
         }
       }
-    }
-  },
-  {
-    id: 'je_addNewWidget',
-    name: 'Add new widget',
-    icon: '[add_circle]',
-    forceKey: 'A',
-    call: async function() {
-      showOverlay("addOverlay")
-    }
-  },
-  {
-    id: 'je_removeWidget',
-    name: 'Remove widget',
-    icon: '[remove_circle]',
-    forceKey: 'R',
-    show: _=>jeStateNow,
-    call: async function() {
-      for(const id of jeSelectedIDs())
-        await removeWidgetLocal(id);
-      jeEmpty();
     }
   },
   {
