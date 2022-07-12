@@ -320,7 +320,7 @@ function v6cssPieces(properties) {
     }
   }
 
-  v7CanvasLayer(properties) {
+  function v7CanvasLayer(properties) {
     if (properties.layer < -3){
       properties.layer-=1
     }
