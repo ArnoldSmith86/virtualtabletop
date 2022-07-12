@@ -8,6 +8,9 @@ class Canvas extends Widget {
     const defaults = {
       width: 400,
       height: 400,
+
+      layer: -4,
+
       typeClasses: 'widget canvas',
       clickable: true,
       artist: null,
