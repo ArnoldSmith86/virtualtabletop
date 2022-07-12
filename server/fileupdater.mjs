@@ -1,4 +1,4 @@
-export const VERSION = 6;
+export const VERSION = 7;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -33,6 +33,7 @@ function updateProperties(properties, v) {
   v<4 && v4ModifyDropTargetEmptyArray(properties);
   v<5 && v5DynamicFaceProperties(properties);
   v<6 && v6cssPieces(properties);
+  v<7 && v7CanvasLayer(properties);
 }
 
 function updateRoutine(routine, v) {
@@ -316,6 +317,12 @@ function v6cssPieces(properties) {
       properties.width = 56;
       properties.height = 84;
       return;
+    }
+  }
+
+  v7CanvasLayer(properties) {
+    if (properties.layer < -3){
+      properties.layer-=1
     }
   }
 }

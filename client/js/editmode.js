@@ -49,7 +49,7 @@ function applyWidthHeight(widget, value, dimension) {
 
 function applyEditOptionsBasic(widget) {
   if ($('#basicTypeBoard').checked == true){
-    widget.layer = -4;
+    widget.layer = -5;
     widget.movable = false;
   } else {
     widget.layer = 1;
@@ -815,7 +815,7 @@ function uploadWidget(preset) {
         movable: false,
         width: 1600,
         height: 1000,
-        layer: -4
+        layer: -5
       });
     }
     if(asset && preset == 'token') {
