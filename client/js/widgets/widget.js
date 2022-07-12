@@ -1779,6 +1779,9 @@ export class Widget extends StateManaged {
       if(!this.disablePileUpdateAfterParentChange)
         await this.updatePiles();
     }
+    if((property == 'dropOffsetX' || property == 'dropOffsetY' || property == 'stackOffsetX' || property == 'stackOffsetY') && this.get('type') == 'holder') {
+          this.updateAfterShuffle();
+      }
   }
 
   async rotate(degrees, mode) {
