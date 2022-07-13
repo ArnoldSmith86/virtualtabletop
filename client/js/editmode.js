@@ -555,7 +555,7 @@ function generateTimerWidgets(id, x, y) {
       ],
       classes: 'symbols',
       css: 'font-size: 28px',
-      text: 'skip_next',
+      text: 'play_pause',
     },
     {
       parent: id,
