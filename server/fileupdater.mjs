@@ -1,4 +1,4 @@
-export const VERSION = 6;
+export const VERSION = 7;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -33,6 +33,7 @@ function updateProperties(properties, v) {
   v<4 && v4ModifyDropTargetEmptyArray(properties);
   v<5 && v5DynamicFaceProperties(properties);
   v<6 && v6cssPieces(properties);
+  v<7 && v7HolderClickable(properties);
 }
 
 function updateRoutine(routine, v) {
@@ -317,5 +318,11 @@ function v6cssPieces(properties) {
       properties.height = 84;
       return;
     }
+  }
+}
+
+function v7HolderClickable(properties) {
+  if (properties.clickRoutine && !properties.clickable && properties.type=='holder'){
+    properties.clickable=false;
   }
 }
