@@ -520,7 +520,9 @@ function generateCounterWidgets(id, x, y) {
     height: 36,
     type: 'button',
     movableInEdit: false,
-    text: '-',
+    classes: 'symbols',
+    css: 'font-size: 28px',
+    text: 'remove',
 
     clickRoutine: [ r ]
   };
@@ -528,7 +530,7 @@ function generateCounterWidgets(id, x, y) {
   return [
     { type:'label', text: 0, id, x, y, width: 65, height: 40, css:'font-size: 30px;', editable: true },
     down,
-    Object.assign({ ...down }, { id: id+'U', text: '+', x: 68, clickRoutine: [ Object.assign({ ...r }, { mode: 'inc' }) ] })
+    Object.assign({ ...down }, { id: id+'U', text: 'add', x: 68, clickRoutine: [ Object.assign({ ...r }, { mode: 'inc' }) ] })
   ];
 }
 
@@ -551,8 +553,9 @@ function generateTimerWidgets(id, x, y) {
           timer: '${PROPERTY parent}'
         }
       ],
-      image: "/i/button-icons/White-Play_Pause.svg",
-      css: "background-size: 75% 75%"
+      classes: 'symbols',
+      css: 'font-size: 28px',
+      text: 'skip_next',
     },
     {
       parent: id,
@@ -571,8 +574,9 @@ function generateTimerWidgets(id, x, y) {
           mode: "reset"
         }
       ],
-      image: "/i/button-icons/White-Reset.svg",
-      css: "background-size: 80% 80%"
+      classes: 'symbols',
+      css: 'font-size: 28px',
+      text: 'reload',
     }
   ];
 }
