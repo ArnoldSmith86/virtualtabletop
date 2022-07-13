@@ -27,3 +27,11 @@
 body.edit .widget.droppable.droptarget {
   border-width: 3px !important;
 }
+
+.droppable.highlight {
+  filter:brightness(70%)
+}
+
+.droptarget.highlight {
+  filter:brightness(50%)
+}

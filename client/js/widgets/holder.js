@@ -10,6 +10,8 @@ class Holder extends Widget {
       typeClasses: 'widget holder',
 
       dropTarget: { type: 'card' },
+      dropTargetHighlight: false,
+
       dropOffsetX: 4,
       dropOffsetY: 4,
       dropLimit: -1,
@@ -40,6 +42,21 @@ class Holder extends Widget {
 
       return compareDropTarget(w, this, true);
     });
+  }
+
+  classes() {
+    let className = super.classes();
+
+    if(this.get('dropTargetHighlight'))
+      className += ' highlight';
+
+    return className;
+  }
+
+  classesProperties() {
+    const p = super.classesProperties();
+    p.push('dropTargetHighlight');
+    return p;
   }
 
   async dispenseCard(card) {
