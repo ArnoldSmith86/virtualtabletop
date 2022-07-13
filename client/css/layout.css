@@ -699,8 +699,14 @@ button[icon]:empty::before {
 button[icon].red {
   background-color: darkred;
 }
+button[icon].red:hover {
+  background-color: #580000;
+}
 button[icon].green {
   background-color: darkgreen;
+}
+button[icon].green:hover {
+  background-color: #004f00;
 }
 
 .prettyButton {
