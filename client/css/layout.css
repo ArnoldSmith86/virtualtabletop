@@ -209,7 +209,7 @@ body.aspectTooGood.hiddenToolbar {
     }
 
     body.horizontalToolbar .toolbarButton:not(.toolbarTab) {
-      justify-content: right;
+      justify-content: flex-end;
     }
 
   /* tabs */
