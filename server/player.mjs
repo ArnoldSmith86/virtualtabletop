@@ -28,7 +28,7 @@ export default class Player {
       if(func == 'delta')
         this.receiveDelta(args);
       if(func == 'editState')
-        await this.room.editState(this, args.id, args.meta);
+        await this.room.editState(this, args.id, args.meta, args.variantInput, args.variantOperationQueue);
       if(func == 'loadState')
         await this.room.loadState(this, args.stateID, args.variantID);
       if(func == 'mouse')

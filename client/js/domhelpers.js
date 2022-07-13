@@ -232,7 +232,7 @@ export function disableEditing(parent, obj) {
 }
 
 export function toggleClass(dom, className, active) {
-  if(active)
+  if(active || typeof active == 'undefined' && !dom.classList.contains(className))
     dom.classList.add(className);
   else
     dom.classList.remove(className);

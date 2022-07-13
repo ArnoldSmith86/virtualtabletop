@@ -217,6 +217,13 @@ MinifyRoom().then(function(result) {
     }).catch(next);
   });
 
+  router.get('/createTempState/:room', async function(req, res, next) {
+    ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
+      if(isLoaded)
+        res.send(activeRooms.get(req.params.room).createTempState());
+    }).catch(next);
+  });
+
   router.put('/asset', bodyParser.raw({ limit: '10mb' }), function(req, res) {
     const filename = `/${CRC32.buf(req.body)}_${req.body.length}`;
     if(!fs.existsSync(assetsdir + filename))

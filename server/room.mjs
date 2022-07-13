@@ -145,6 +145,15 @@ export default class Room {
         player.send(func, args);
   }
 
+  createTempState() {
+    const filenameSuffix = String(+new Date()) + Math.random().toString(36).substring(3, 7);
+
+    const copy = {...this.state};
+    delete copy._meta;
+    fs.writeFileSync(`${Config.directory('save')}/states/${this.id}--TEMPSTATE--${filenameSuffix}.json`, JSON.stringify(copy));
+    return filenameSuffix;
+  }
+
   deleteUnusedVariantFiles(stateID, oldState, newState) {
     for(const oldVariantID in oldState.variants) {
       if(!newState.variants[oldVariantID]) {
@@ -205,21 +214,77 @@ export default class Room {
     };
   }
 
-  async editState(player, id, meta) {
-    if(id.match(/^PL:/))
+  async editState(player, id, meta, variantInput, variantOperationQueue) {
+    if(String(id).match(/^PL:/))
       return this.writePublicLibraryMetaToFilesystem(id, meta);
 
-    this.deleteUnusedVariantFiles(id, this.state._meta.states[id], meta);
+    const variants = this.state._meta.states[id].variants;
+
+    for(const o of variantOperationQueue) {
+
+      if(o.operation == 'save') {
+        if(String(o.filenameSuffix).match(/^[0-9]+[0-9a-z]{4}$/))
+          fs.renameSync(`${Config.directory('save')}/states/${this.id}--TEMPSTATE--${o.filenameSuffix}.json`, this.variantFilename(id, o.variantID));
+      }
+
+      if(o.operation == 'up') {
+        if(o.variantID) {
+          fs.renameSync(this.variantFilename(id, o.variantID),   this.variantFilename(id, player.name));
+          fs.renameSync(this.variantFilename(id, o.variantID-1), this.variantFilename(id, o.variantID));
+          fs.renameSync(this.variantFilename(id, player.name),   this.variantFilename(id, o.variantID-1));
+
+          variants.splice(o.variantID-1, 0, variants.splice(o.variantID, 1)[0]);
+        } else {
+          fs.renameSync(this.variantFilename(id, o.variantID), this.variantFilename(id, player.name));
+          for(let i=1; i<variants.length; ++i)
+            fs.renameSync(this.variantFilename(id, i), this.variantFilename(id, i-1));
+          fs.renameSync(this.variantFilename(id, player.name), this.variantFilename(id, variants.length-1));
+
+          variants.push(variants.shift());
+        }
+      }
+
+      if(o.operation == 'down') {
+        if(o.variantID < variants.length-1) {
+          fs.renameSync(this.variantFilename(id, o.variantID),   this.variantFilename(id, player.name));
+          fs.renameSync(this.variantFilename(id, o.variantID+1), this.variantFilename(id, o.variantID));
+          fs.renameSync(this.variantFilename(id, player.name),   this.variantFilename(id, o.variantID+1));
+
+          variants.splice(o.variantID+1, 0, variants.splice(o.variantID, 1)[0]);
+        } else {
+          fs.renameSync(this.variantFilename(id, o.variantID), this.variantFilename(id, player.name));
+          for(let i=variants.length-2; i>=0; --i)
+            fs.renameSync(this.variantFilename(id, i), this.variantFilename(id, i+1));
+          fs.renameSync(this.variantFilename(id, player.name), this.variantFilename(id, 0));
+
+          variants.unshift(variants.pop());
+        }
+      }
+
+      if(o.operation == 'delete') {
+        fs.unlinkSync(this.variantFilename(id, o.variantID));
+        for(let i=o.variantID+1; i<variants.length; ++i)
+          fs.renameSync(this.variantFilename(id, i), this.variantFilename(id, i-1));
+
+        variants.splice(o.variantID, 1);
+      }
+
+    }
 
     // if update links were removed, download their current contents to files
-    const currentState = this.state._meta.states[id];
-    for(const variantID in meta.variants) {
+    // FIXME: make links work again in general
+    /*const currentState = this.state._meta.states[id];
+    for(const variantID in variants) {
       if(currentState.variants[variantID].link && !meta.variants[variantID].link) {
         const state = await FileLoader.readVariantFromLink(currentState.variants[variantID].link);
         fs.writeFileSync(this.variantFilename(id, variantID), JSON.stringify(state));
       }
-    }
+    }*/
 
+    for(const variantID in variantInput)
+      Object.assign(variants[variantID], variantInput[variantID]);
+
+    meta.variants = variants;
     Object.assign(this.state._meta.states[id], meta);
     this.sendMetaUpdate();
   }

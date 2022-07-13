@@ -439,6 +439,7 @@ div:nth-of-type(1) > .list > .roomState .star {
 
 .variant {
   display: flex;
+  flex-flow: row wrap;
   justify-content: space-between;
   border-style: dotted;
   border-color: lightgray;
@@ -449,6 +450,19 @@ div:nth-of-type(1) > .list > .roomState .star {
 .variant>div {
   display: flex;
   align-items: center;
+}
+
+.variant .variantEdit, .variant.editingVariant .variantNoEdit {
+  display: none;
+}
+
+#stateDetailsOverlay.editing .variant.editingVariant .variantEdit {
+  display: flex;
+}
+
+.variant > div.variantEdit {
+  width: 100%;
+  justify-content: right;
 }
 
 .variant .variant-description {

@@ -279,7 +279,7 @@
 
     <div id="stateDetailsOverlay" class="overlay" class="notEditing">
       <button icon="close" class="hideForEdit" id="closeDetails">Close</button>
-      <button icon="close" class="onlyForEdit" id="discardDetails">Discard</button>
+      <button icon="close" class="onlyForEdit red" id="discardDetails">Discard</button>
       <div id="mainDetails">
         <div id="mainImage">
           <img data-field="image" data-target="src">
@@ -299,7 +299,7 @@
       <template id="template-variantslist-entry" type="text/template">
         <div class="variant-image">
           <img data-target="src">
-          <div class="onlyForEdit">
+          <div class="variantEdit">
             <button icon="image" data-field="variantImage" data-target="value" data-forceshow="true"></button>
           </div>
         </div>
@@ -307,10 +307,13 @@
         <div class="language-info"><i class="material-icons">language</i><span data-field="language"></span></div>
         <div class="player-number-info"><i class="material-icons">person</i><span data-field="players"></span></div>
         <button icon="play_arrow" class="hideForEdit">Play</button>
-        <button icon="content_paste_go" class="onlyForEdit"></button>
-        <button icon="north" class="onlyForEdit"></button>
-        <button icon="south" class="onlyForEdit"></button>
-        <button icon="delete" class="onlyForEdit"></button>
+        <button icon="edit" class="onlyForEdit">Edit</button>
+        <div class="variantEdit">
+          <button icon="save">Update from Active Game</button>
+          <button icon="north">Move up</button>
+          <button icon="south">Move down</button>
+          <button icon="delete" class="red">Delete</button>
+        </div>
       </template>
       <div id="variantsList">
         <div class="variantsList"></div>
@@ -334,7 +337,7 @@
       </div>
       <button icon="edit_off" disabled>Read-only</button>
       <button icon="edit" class="hideForEdit">Edit</button>
-      <button icon="save" class="onlyForEdit">Save</button>
+      <button icon="save" class="onlyForEdit green">Save</button>
       <div id="prevState" class="roomState">
         <img>
         <div class="details">

@@ -286,7 +286,7 @@ function fillStateDetails(states, state, dom) {
   disableEditing($('#stateDetailsOverlay'), state);
   applyValuesToDOM($('#stateDetailsOverlay'), state);
 
-  toggleClass($('#stateDetailsOverlay .star'), 'active', state.starred);
+  toggleClass($('#stateDetailsOverlay .star'), 'active', !!state.starred);
   toggleClass($('#stateDetailsOverlay .star'), 'hidden', !state.publicLibrary);
 
   function fillArrowButton(arrowDom, targetDom) {
@@ -307,7 +307,7 @@ function fillStateDetails(states, state, dom) {
   fillArrowButton($('#nextState'), visibleStates[visibleStates.indexOf(dom)+1])
   fillArrowButton($('#prevState'), visibleStates[visibleStates.indexOf(dom)-1])
 
-  toggleClass($('#stateDetailsOverlay > [icon=edit]'), 'hidden', state.publicLibrary && !config.allowPublicLibraryEdits);
+  toggleClass($('#stateDetailsOverlay > [icon=edit]'), 'hidden', !!state.publicLibrary && !config.allowPublicLibraryEdits);
   toggleClass($('#stateDetailsOverlay > [icon=edit_off]'), 'hidden', !state.publicLibrary || config.allowPublicLibraryEdits);
 
   function updateStateDetailsDomains(state) {
@@ -315,6 +315,8 @@ function fillStateDetails(states, state, dom) {
     $('#similarRulesDomain').innerText = String(state.rules).replace(/^ *https?:\/\/(www\.)?/, '').replace(/\/.*/, '');
   }
   updateStateDetailsDomains(state);
+
+  const variantOperationQueue = [];
 
   $('#stateDetailsOverlay .variantsList').innerHTML = '';
   for(const variantID in state.variants) {
@@ -332,6 +334,50 @@ function fillStateDetails(states, state, dom) {
     $('[icon=play_arrow]', vEntry).onclick = function() {
       toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading });
       $('#activeGameButton').click();
+    };
+
+    $('[icon=edit]',  vEntry).onclick = function(e) {
+      for(const variantDOM of $a('#stateDetailsOverlay .variantsList .variant'))
+        toggleClass(variantDOM, 'editingVariant', e.target == $('[icon=edit]', variantDOM) && !variantDOM.classList.contains('editingVariant'));
+    };
+
+    $('[icon=save]', vEntry).onclick = async function(e) {
+      const previousText = e.target.innerText;
+      e.target.innerText = 'Copying active game...';
+      for(const button of $a('button', vEntry))
+        button.disabled = true;
+      variantOperationQueue.push({
+        operation: 'save',
+        variantID: [...$a('#stateDetailsOverlay .variant')].indexOf(vEntry),
+        filenameSuffix: await (await fetch(`createTempState/${roomID}`)).text()
+      });
+      for(const button of $a('button', vEntry))
+        button.disabled = false;
+      e.target.innerText = previousText;
+    };
+    $('[icon=north]', vEntry).onclick = function() {
+      variantOperationQueue.push({
+        operation: 'up',
+        variantID: [...$a('#stateDetailsOverlay .variant')].indexOf(vEntry)
+      });
+      vEntry.parentNode.insertBefore(vEntry, vEntry.previousSibling);
+    };
+    $('[icon=south]', vEntry).onclick = function() {
+      variantOperationQueue.push({
+        operation: 'down',
+        variantID: [...$a('#stateDetailsOverlay .variant')].indexOf(vEntry)
+      });
+      if(vEntry.nextSibling)
+        vEntry.nextSibling.after(vEntry);
+      else
+        vEntry.parentNode.prepend(vEntry);
+    };
+    $('[icon=delete]', vEntry).onclick = function() {
+      variantOperationQueue.push({
+        operation: 'delete',
+        variantID: [...$a('#stateDetailsOverlay .variant')].indexOf(vEntry)
+      });
+      removeFromDOM(vEntry);
     };
 
     $('#stateDetailsOverlay .variantsList').appendChild(vEntry);
@@ -367,25 +413,24 @@ function fillStateDetails(states, state, dom) {
     dom.click();
   };
   $('#stateDetailsOverlay > [icon=save]').onclick = function() {
-    const meta = JSON.parse(JSON.stringify(state));
+    const meta = Object.assign(JSON.parse(JSON.stringify(state)), getValuesFromDOM($('#stateDetailsOverlay')));
 
-    Object.assign(meta, getValuesFromDOM($('#stateDetailsOverlay')));
-
-    delete meta.id;
-    delete meta.starred;
-    delete meta.publicLibrary;
-    delete meta.publicLibraryCategory;
-    for(const vID in meta.variants) {
-      Object.assign(meta.variants[vID], getValuesFromDOM($a('#variantsList .variant')[vID]));
-      disableEditing($a('#variantsList .variant')[vID], meta.variants[vID]);
-      for(const key in meta.variants[vID])
-        if([ 'players', 'language', 'variant', 'link', 'variantImage', 'plStateID', 'plVariantID' ].indexOf(key) == -1)
-          delete meta.variants[vID][key];
+    const variantInput = [];
+    for(const variantDOM of $a('#variantsList .variant')) {
+      const input = getValuesFromDOM(variantDOM);
+      variantInput.push(input);
+      disableEditing(variantDOM, input);
     }
 
     disableEditing($('#stateDetailsOverlay'), meta);
     updateStateDetailsDomains(meta);
-    toServer('editState', { id: state.id, meta });
+
+    toServer('editState', {
+      id: meta.id,
+      meta,
+      variantInput,
+      variantOperationQueue
+    });
   };
 }
 

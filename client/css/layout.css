@@ -696,6 +696,12 @@ button[icon]:empty {
 button[icon]:empty::before {
   margin: 0;
 }
+button[icon].red {
+  background-color: darkred;
+}
+button[icon].green {
+  background-color: darkgreen;
+}
 
 .prettyButton {
   border: 5px;
