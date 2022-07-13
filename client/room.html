@@ -278,8 +278,17 @@
     </div>
 
     <div id="stateDetailsOverlay" class="overlay" class="notEditing">
-      <button icon="close" class="hideForEdit" id="closeDetails">Close</button>
-      <button icon="close" class="onlyForEdit red" id="discardDetails">Discard</button>
+      <div class="buttons one">
+        <button icon="download" class="hideForEdit">Download</button>
+        <button icon="close" class="hideForEdit" id="closeDetails">Close</button>
+        <button icon="close" class="onlyForEdit red" id="discardDetails">Discard</button>
+      </div>
+      <div class="buttons two">
+        <button icon="edit_off" disabled>Read-only</button>
+        <button icon="edit" class="hideForEdit">Edit</button>
+        <button icon="save" class="onlyForEdit green">Save</button>
+        <button icon="delete" class="hideForEdit red">Delete</button>
+      </div>
       <div id="mainDetails">
         <div id="mainImage">
           <img data-field="image" data-target="src">
@@ -335,9 +344,6 @@
           <div class="onlyForEdit"><i class="material-icons">auto_stories</i> Rules overview link: <span data-field="rules"></span></div>
         </div>
       </div>
-      <button icon="edit_off" disabled>Read-only</button>
-      <button icon="edit" class="hideForEdit">Edit</button>
-      <button icon="save" class="onlyForEdit green">Save</button>
       <div id="prevState" class="roomState">
         <img>
         <div class="details">
@@ -426,6 +432,15 @@
         <button icon="undo">Use previous image</button>
         <button icon="image_not_supported">Use no image</button>
         <button icon="check">Use new image</button>
+      </div>
+    </div>
+
+    <div id="confirmOverlay" class="overlay">
+      <h1 data-field="title"></h1>
+      <p data-field="text"></p>
+      <div id="confirmButtonBar">
+        <button icon="close" data-field="cancelButton"></button>
+        <button icon="check" data-field="confirmButton"></button>
       </div>
     </div>
 

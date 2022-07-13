@@ -307,8 +307,10 @@ function fillStateDetails(states, state, dom) {
   fillArrowButton($('#nextState'), visibleStates[visibleStates.indexOf(dom)+1])
   fillArrowButton($('#prevState'), visibleStates[visibleStates.indexOf(dom)-1])
 
-  toggleClass($('#stateDetailsOverlay > [icon=edit]'), 'hidden', !!state.publicLibrary && !config.allowPublicLibraryEdits);
-  toggleClass($('#stateDetailsOverlay > [icon=edit_off]'), 'hidden', !state.publicLibrary || config.allowPublicLibraryEdits);
+  const editable = !state.publicLibrary || config.allowPublicLibraryEdits;
+  toggleClass($('#stateDetailsOverlay .buttons [icon=edit]'), 'hidden', !editable);
+  toggleClass($('#stateDetailsOverlay .buttons [icon=delete]'), 'hidden', !editable);
+  toggleClass($('#stateDetailsOverlay .buttons [icon=edit_off]'), 'hidden', editable);
 
   function updateStateDetailsDomains(state) {
     $('#similarDetailsDomain').innerText = String(state.bgg).replace(/^ *https?:\/\/(www\.)?/, '').replace(/\/.*/, '');
@@ -388,12 +390,27 @@ function fillStateDetails(states, state, dom) {
   $('#closeDetails').onclick = function() {
     showStatesOverlay('statesOverlay');
   };
+  $('#stateDetailsOverlay .buttons [icon=download]').onclick = function() {
+    window.open(`dl/${roomID}/${state.id}`);
+  };
+  $('#stateDetailsOverlay .buttons [icon=delete]').onclick = async function() {
+    $('#statesButton').dataset.overlay = 'confirmOverlay';
+    if(await confirmOverlay('Delete game', 'Are you sure you want to completely remove this game from your game shelf?', 'Delete', 'Keep')) {
+      toServer('removeState', state.id);
+      removeFromDOM(dom);
+      $('#emptyLibrary').style.display = $('#statesList > div:nth-of-type(1) .roomState') ? 'none' : 'block';
+      showStatesOverlay('statesOverlay');
+    } else {
+      showStatesOverlay('stateDetailsOverlay');
+    }
+  };
+
   $('#stateDetailsOverlay .star').onclick = function(e) {
     e.currentTarget.classList.toggle('active');
     $(`#statesOverlay .roomState[data-id="${state.id}"] .star`).click();
   };
 
-  $('#stateDetailsOverlay > [icon=edit]').onclick = function() {
+  $('#stateDetailsOverlay .buttons [icon=edit]').onclick = function() {
     enableEditing($('#stateDetailsOverlay'), state);
 
     for(const uploadButton of $a('#stateDetailsOverlay button[icon=image]')) {
@@ -412,7 +429,7 @@ function fillStateDetails(states, state, dom) {
     showStatesOverlay('statesOverlay');
     dom.click();
   };
-  $('#stateDetailsOverlay > [icon=save]').onclick = function() {
+  $('.buttons [icon=save]').onclick = function() {
     const meta = Object.assign(JSON.parse(JSON.stringify(state)), getValuesFromDOM($('#stateDetailsOverlay')));
 
     const variantInput = [];
@@ -462,6 +479,22 @@ async function updateImage(currentImage) {
     $('button[icon=check]', o).onclick = function() {
       showOverlay();
       resolve($('input.current', o).value);
+    };
+  });
+}
+
+async function confirmOverlay(title, text, confirmButton, cancelButton) {
+  return new Promise(function(resolve, reject) {
+    showOverlay('confirmOverlay');
+    applyValuesToDOM($('#confirmOverlay'), { title, text, confirmButton, cancelButton });
+
+    $('#confirmOverlay button:nth-of-type(1)').onclick = function() {
+      showOverlay();
+      resolve(false);
+    };
+    $('#confirmOverlay button:nth-of-type(2)').onclick = function() {
+      showOverlay();
+      resolve(true);
     };
   });
 }
