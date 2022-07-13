@@ -147,6 +147,9 @@ function receiveStateFromServer(args) {
     overlayShownForEmptyRoom = true;
   }
   toServer('confirm');
+
+  if(typeof jeEnabled != 'undefined' && jeEnabled)
+    jeApplyState(args);
 }
 
 function removeWidget(widgetID) {
