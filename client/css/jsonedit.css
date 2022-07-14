@@ -421,6 +421,7 @@ body.jsonEdit.jeZoomOut #topSurface {
   font-family: 'VTT-Symbols';
   vertical-align: top;
 }
+
 [id=jeTopButtons] button.material {
   font-family: 'Material Icons';
 }
