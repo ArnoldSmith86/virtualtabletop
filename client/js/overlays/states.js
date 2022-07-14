@@ -279,6 +279,7 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
 
 function fillStateDetails(states, state, dom) {
   //showStatesOverlay('stateDetailsOverlay');
+  toggleClass($('#statesOverlay'), 'withDetails', true);
   $('#stateDetailsOverlay').dataset.id = state.id;
   for(const dom of $a('#stateDetailsOverlay, #stateDetailsOverlay > *'))
     dom.scrollTop = 0;
@@ -388,7 +389,7 @@ function fillStateDetails(states, state, dom) {
 
 
   $('#closeDetails').onclick = function() {
-    showStatesOverlay('statesOverlay');
+    toggleClass($('#statesOverlay'), 'withDetails', false);
   };
   $('#stateDetailsOverlay .buttons [icon=download]').onclick = function() {
     window.open(`dl/${roomID}/${state.id}`);

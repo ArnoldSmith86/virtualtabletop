@@ -279,14 +279,13 @@ div:nth-of-type(1) > .list > .roomState .star {
   }
 }
 @media (min-width: 200px) {
-  #statesOverlay {
-    padding-right: 600px;
-    --size: calc((var(--roomWidth) * var(--scale) - 610px) / 4 - 22px);
+  #statesOverlay.withDetails {
+    padding-right: calc((var(--size) + 22px) * 3);
   }
-  #statesOverlay > #stateDetailsOverlay {
+  #statesOverlay.withDetails > #stateDetailsOverlay {
     display: block !important;
     position: absolute;
-    width: 600px;
+    width: calc((var(--size) + 22px) * 3);
     right: 0;
     left: unset;
   }
