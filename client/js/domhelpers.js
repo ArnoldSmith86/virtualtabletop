@@ -190,10 +190,10 @@ export function applyValuesToDOM(parent, obj) {
 export function getValuesFromDOM(parent) {
   const obj = {};
   for(const dom of $a('[data-field]:not([data-target=href])', parent)) {
-    if(dom.dataset.html && dom.innerText != '<empty>')
+    if(dom.dataset.html && dom.innerText != (dom.dataset.placeholder || '<empty>'))
       obj[dom.dataset.field] = DOMPurify.sanitize(dom.innerHTML, { USE_PROFILES: { html: true } });
     else
-      obj[dom.dataset.field] = dom[dom.dataset.target || 'innerText'].trim().replace('<empty>', '');
+      obj[dom.dataset.field] = dom[dom.dataset.target || 'innerText'].trim().replace(dom.dataset.placeholder || '<empty>', '');
   }
   return obj;
 }
@@ -206,7 +206,7 @@ export function enableEditing(parent, obj) {
     dom.contentEditable = true;
     dom.classList.remove('hidden');
     if(!dom.innerText.trim())
-      dom.innerText = '<empty>';
+      dom.innerText = dom.dataset.placeholder || '<empty>';
   }
   for(const hideDom of $a('[data-showfor]', parent))
     hideDom.classList.remove('hidden');
