@@ -264,6 +264,10 @@ onLoad(function() {
 
   on('.toolbarButton', 'click', function(e) {
     const overlay = e.currentTarget.dataset.overlay;
+
+    if(e.target.id == 'statesButton')
+      $('#statesOverlay').append($('#stateDetailsOverlay'));
+
     if(overlay)
       showOverlay(overlay);
   });
