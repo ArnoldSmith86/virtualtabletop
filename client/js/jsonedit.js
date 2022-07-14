@@ -1420,8 +1420,10 @@ function jeGetContext() {
     return jeContext;
   }
 
-  if(jeMode == 'empty')
+  if(jeMode == 'empty') {
+    jeShowCommands();
     return jeContext;
+  }
 
   if(jeMode == 'trace') {
     jeContext = [ 'Trace' ];
@@ -1959,8 +1961,8 @@ function jeEmpty() {
 
 const clickButton = async function(event) {
   await jeCallCommand(jeCommands.find(o => o.id == event.currentTarget.id));
+  jeGetContext();
   if(jeMode != 'macro' && jeMode != 'empty') {
-    jeGetContext();
     if((jeWidget || jeMode == 'multi') && !jeJSONerror)
       await jeApplyChanges();
     if (jeContext[0] == '###SELECT ME###')
