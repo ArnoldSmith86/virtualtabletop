@@ -270,10 +270,13 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
   updateLibraryFilter();
 
   if($('#stateDetailsOverlay').style.display != 'none') {
-    showOverlay();
     const stateID = $('#stateDetailsOverlay').dataset.id;
-    if(states[stateID])
+    if(!states[stateID]) {
+      showStatesOverlay('statesOverlay');
+    } else if(!$('#stateDetailsOverlay').classList.contains('editing')) {
+      showOverlay();
       fillStateDetails(states, states[stateID], $(`#statesOverlay .roomState[data-id="${stateID}"]`));
+    }
   }
 }
 
