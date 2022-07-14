@@ -330,11 +330,15 @@ function fillStateDetails(states, state, dom) {
     const variantIDforLoading = variant.plVariantID || variantID;
     if(variant.plStateID)
       variant = states[variant.plStateID].variants[variant.plVariantID];
+
+    if(!variant.variantImage)
+      variant.variantImage = state.image;
+
     const vEntry = domByTemplate('template-variantslist-entry', variant);
     vEntry.className = 'variant';
 
-    toggleClass($('img', vEntry), 'hidden', !variant.variantImage && !state.image);
-    $('img', vEntry).src = (variant.variantImage || state.image).replace(/^\//, '');
+    toggleClass($('img', vEntry), 'hidden', !variant.variantImage);
+    $('img', vEntry).src = String(variant.variantImage).replace(/^\//, '');
 
     $('[icon=play_arrow]', vEntry).onclick = function() {
       toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading });
@@ -418,9 +422,12 @@ function fillStateDetails(states, state, dom) {
 
     for(const uploadButton of $a('#stateDetailsOverlay button[icon=image]')) {
       uploadButton.onclick = async function() {
+        const isVariantImage = uploadButton.parentNode.classList.contains('variantEdit');
         const img = $('img', uploadButton.parentNode.parentNode);
         $('#statesButton').dataset.overlay = 'updateImageOverlay';
-        const newURL = await updateImage(uploadButton.value);
+        let newURL = await updateImage(uploadButton.value, isVariantImage ? 'Use state image' : null);
+        if(!newURL && isVariantImage)
+          newURL = state.image;
         uploadButton.value = newURL;
         toggleClass(img, 'hidden', !newURL);
         img.src = newURL ? newURL.replace(/^\//, '') : '';
@@ -438,6 +445,8 @@ function fillStateDetails(states, state, dom) {
     const variantInput = [];
     for(const variantDOM of $a('#variantsList .variant')) {
       const input = getValuesFromDOM(variantDOM);
+      if(input.variantImage == meta.image)
+        input.variantImage = '';
       variantInput.push(input);
       disableEditing(variantDOM, input);
     }
@@ -454,7 +463,7 @@ function fillStateDetails(states, state, dom) {
   };
 }
 
-async function updateImage(currentImage) {
+async function updateImage(currentImage, noImageText) {
   return new Promise(function(resolve, reject) {
     showOverlay('updateImageOverlay');
     const o = $('#updateImageOverlay');
@@ -462,6 +471,8 @@ async function updateImage(currentImage) {
     $('img.previous', o).src = currentImage.replace(/^\//, '');
     $('img.current', o).src = currentImage.replace(/^\//, '');
     $('input.current', o).value = currentImage;
+
+    $('button[icon=image_not_supported]', o).innerText = noImageText || 'Use no image';
 
     $('button[icon=upload]', o).onclick = async function() {
       $('input', o).value = await uploadAsset();
