@@ -131,7 +131,7 @@ test('Create game using edit mode', async t => {
     .click('#addSeat')
     .click('#w_es5b');
 
-  await compareState(t, '748d3bd6db5ea53524bd157ba41c8dd3');
+  await compareState(t, 'aa18d5494b8ff254f478f773b9dcc5c9');
 });
 
 test('Compute', async t => {
