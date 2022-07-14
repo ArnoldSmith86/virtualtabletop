@@ -38,7 +38,7 @@ async function setName(t, name, color) {
     .click('.myPlayerEntry > input[type=color]')
     .typeText('.myPlayerEntry > input[type=color]', color || '#7F007F', { replace: true })
     .typeText('.myPlayerEntry > .playerName', name || 'TestCafe', { replace: true })
-    .click('#playersButton');
+    .click('#activeGameButton');
 }
 
 function prepareClient() {
@@ -103,7 +103,7 @@ test('Create game using edit mode', async t => {
     .click('#w_hand')
     .click('#transparentHolder')
     .click('#updateWidget')
-    .click('#editButton')
+    .click('#activeGameButton')
     .click('#addButton')
     .click('#add-deck_K_S')
     .click('#w_3nsjB')
@@ -126,7 +126,7 @@ test('Create game using edit mode', async t => {
     .click('#w_jyo2')
     .setNativeDialogHandler(() => true)
     .click('#removeWidget')
-    .click('#editButton')
+    .click('#activeGameButton')
     .click('#addButton')
     .click('#addSeat')
     .click('#w_es5b');
