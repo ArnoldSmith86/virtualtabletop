@@ -149,7 +149,7 @@ export default class Room {
     const filenameSuffix = String(+new Date()) + Math.random().toString(36).substring(3, 7);
 
     const copy = {...this.state};
-    delete copy._meta;
+    copy._meta = { version: copy._meta.version };
     fs.writeFileSync(`${Config.directory('save')}/states/${this.id}--TEMPSTATE--${filenameSuffix}.json`, JSON.stringify(copy));
     return filenameSuffix;
   }
