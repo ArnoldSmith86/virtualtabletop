@@ -2,12 +2,14 @@ let jeEnabled = null;
 let jeZoomOut = false;
 let jeMode = null;
 let jeWidget = null;
+let jePlainWidget = null;
 let jeStateBefore = null;
 let jeStateBeforeRaw = null;
 let jeStateNow = null;
 let jeJSONerror = null;
 let jeCommandError = null;
 let jeCommandWithOptions = null;
+let jeFKeyOrderDescending = 1;
 let jeContext = null;
 let jeSecondaryWidget = null;
 let jeDeltaIsOurs = false;
@@ -243,6 +245,16 @@ const jeCommands = [
     })
   },
   {
+    id: 'je_classes',
+    name: 'classes',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
+    show: _=>!jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].classes,
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].classes = '###SELECT ME###';
+      jeSetAndSelect('');
+    }
+  },
+  {
     id: 'je_css',
     name: 'css',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
@@ -296,7 +308,7 @@ const jeCommands = [
   },
   {
     id: 'je_toggleZoom',
-    name: 'Zoggle zoom',
+    name: 'Toggle zoom',
     icon: '[zoom_in]',
     forceKey: 'Z',
     call: async function() {
@@ -374,12 +386,12 @@ const jeCommands = [
     }
   },
   {
-    id: 'je_tree',
-    name: 'Show Tree',
-    icon: '[to_top]',
-    forceKey: 'T',
+    id: 'je_reverseFkeys',
+    name: 'Reverse order of F-key shortcuts',
+    icon: 'swap_vert',
+    forceKey: 'K',
     call: async function() {
-      jeDisplayTree();
+      jeFKeyOrderDescending = -jeFKeyOrderDescending;
     }
   },
   {
@@ -412,6 +424,18 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_removeWidget',
+    name: 'Remove widget',
+    icon: '[remove_circle]',
+    forceKey: 'R',
+    show: _=>jeStateNow,
+    call: async function() {
+      for(const id of jeSelectedIDs())
+        await removeWidgetLocal(id);
+      jeEmpty();
+    }
+  },
+  {
     id: 'je_duplicateWidget',
     name: 'Duplicate widget',
     icon: '[auto_awesome]',
@@ -436,20 +460,6 @@ const jeCommands = [
           jeStateNow.id = clonedWidget.id;
         }
       }
-    }
-  },
-  {
-    id: 'je_removeWidget',
-    name: 'Remove widget',
-    icon: '[remove_circle]',
-    forceKey: 'R',
-    show: _=>jeStateNow,
-    call: async function() {
-      for(const id of jeSelectedIDs())
-        await removeWidgetLocal(id);
-      jeStateNow = null;
-      jeWidget = null;
-      jeDisplayTree();
     }
   },
   {
@@ -491,8 +501,7 @@ const jeCommands = [
       $('#jsonEditor').classList.toggle('wide');
       setScale();
       $('#jeTextHighlight').scrollTop = $('#jeText').scrollTop;
-      if(jeMode == 'tree')
-        jeDisplayTree();
+      jeDisplayTree();
     }
   },
   {
@@ -642,6 +651,7 @@ function jeAddCommands() {
   jeAddCSScommands();
 
   jeAddFaceCommand('border', '', 1);
+  jeAddFaceCommand('classes', '', '');
   jeAddFaceCommand('css', '', '');
   jeAddFaceCommand('properties', '', {});
   jeAddFaceCommand('radius', ' (rounded corners)', 1);
@@ -949,7 +959,7 @@ function jeApplyDelta(delta) {
     for(const field of [ 'id', 'deck' ]) {
       if(!jeDeltaIsOurs && jeStateNow && jeStateNow[field] && delta.s[jeStateNow[field]] !== undefined) {
         if(delta.s[jeStateNow[field]] === null) {
-          jeDisplayTree();
+          jeEmpty();
         } else {
           if(jeKeyIsDown) {
             jeKeyIsDownDeltas.push(delta.s[jeStateNow[field]]);
@@ -978,8 +988,12 @@ function jeApplyDelta(delta) {
     }
   }
 
-  if(jeMode == 'tree')
-    jeDisplayTree();
+  jeUpdateTree(delta.s);
+}
+
+function jeApplyState(state) {
+  jeEmpty();
+  jeDisplayTree();
 }
 
 async function jeApplyExternalChanges(state) {
@@ -1097,12 +1111,18 @@ function jeSelectWidget(widget, dontFocus, addToSelection, restoreCursorPosition
   } else {
     jeMode = 'widget';
     jeWidget = widget;
+    jePlainWidget = new widget.constructor();
     jeKeyIsDownDeltas = [];
     jeStateNow = JSON.parse(JSON.stringify(widget.state));
     if(restoreCursorPosition && cursorState.defaultValueToAdd && jeStateNow[cursorState.defaultValueToAdd] === undefined)
       jeStateNow[cursorState.defaultValueToAdd] = jeWidget.getDefaultValue(cursorState.defaultValueToAdd);
     jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(jeStateNow), null, '  ')), dontFocus);
+    editPanel.style.setProperty('--treeHeight', "20%");
+
+    jeGetContext();
   }
+
+  jeCenterSelection();
 
   if(restoreCursorPosition)
     jeCursorStateSet(cursorState);
@@ -1151,6 +1171,19 @@ function jeSelectedIDs() {
     return [ jeStateNow.id ];
 }
 
+function jeCenterSelection() {
+  const selectedIDs = jeSelectedIDs();
+
+  for(const widgetDOM of $a('#jeTree .key')) {
+    widgetDOM.parentElement.classList.toggle('jeHighlightRow', selectedIDs.indexOf(widgetDOM.textContent) != -1);
+    if(selectedIDs.indexOf(widgetDOM.textContent) != -1)
+      widgetDOM.scrollIntoView({ block: 'center' });
+  }
+
+  for(const [ id, w ] of widgets)
+    w.setHighlighted(selectedIDs.indexOf(id) != -1);
+}
+
 function jeUpdateMulti(dontFocus) {
   const keys = [ 'x', 'y', 'width', 'height', 'parent', 'z', 'layer' ];
   for(const usedKey in jeStateNow || [])
@@ -1180,8 +1213,7 @@ function jeColorize() {
     [ /^( +")(.*)(":.*)$/, null, 'key', null ],
     [ /^(Room)$/, 'extern' ],
     [ /^( +"var )(.*)( = )(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?( )?([0-9a-zA-Z_-]+|[=+*/%<!>&|-]{1,3})?(🧮(?:[0-9a-zA-Z_-]+|[=+*/%<!>&|-]{1,2}))?( )?(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?( )?(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?( )?(-?[0-9.]+)?(null|true|false)?(\$\{[^}]+\})?('(?:[a-zA-Z0-9,.() _-]|\\\\u[0-9a-fA-F]{4})*')?(.*)(",?)$/, 'default', 'custom', null, 'number', 'null', 'variable', 'string', null, null, 'variable', null, 'number', 'null', 'variable', 'string', null, 'number', 'null', 'variable', 'string', null, 'number', 'null', 'variable', 'string', null, 'default' ],
-    [ /^( +")(.*)(",?)$/, null, 'string', null ],
-    [ /^( +)(.*)( \()([a-z]+)( - )(?:(.*?)( - ))?([0-9-]+)(,)([0-9-]+)(.*)$/, null, 'key', null, 'string', null, 'extern', null, 'number', null, 'number', null ]
+    [ /^( +")(.*)(",?)$/, null, 'string', null ]
   ];
   let out = [];
   for(let line of jeGetEditorContent().split('\n')) {
@@ -1196,7 +1228,7 @@ function jeColorize() {
         }
 
         const c = {...l};
-        if(jeMode == 'widget' && match[1] == '  "' && l[2] == 'key' && [ 'id', 'type' ].indexOf(match[2]) == -1 && jeWidget.getDefaultValue(match[2]) === undefined)
+        if(jeMode == 'widget' && match[1] == '  "' && l[2] == 'key' && [ 'id', 'type' ].indexOf(match[2]) == -1 && jePlainWidget.getDefaultValue(match[2]) === undefined)
           c[2] = 'custom';
 
         for(let i=1; i<l.length; ++i) {
@@ -1224,37 +1256,147 @@ function jeColorize() {
   $('#jeTextHighlight').innerHTML = out.join('\n');
 }
 
-function jeDisplayTree() {
-  const allWidgets = Array.from(widgets.values());
-  let result = 'CTRL-click a widget on\nthe left to edit it.\n\nRoom\n';
-  result += jeDisplayTreeAddWidgets(allWidgets, null, '  ');
-  jeMode = 'tree';
-  jeWidget = null;
-  jeStateNow = null;
-  jeSet(jeStateBefore = result, true);
-  jeGetContext();
-  jeShowCommands();
+/* Displaying and controlling tree subpane of edit area */
+
+const editPanel = $('#jeEditArea');
+
+let treeNodes = {};
+let mouse_reference;
+let resizer_reference;
+
+function resize(e){
+  const height = Math.min(editPanel.offsetHeight - 75, Math.max(0, resizer_reference - mouse_reference + e.y));
+  editPanel.style.setProperty('--treeHeight', height + "px");
 }
 
-function jeDisplayTreeAddWidgets(allWidgets, parent, indent) {
-  let result = '';
-  for(const widget of (allWidgets.filter(w=>w.get('parent')==parent)).sort((w1,w2)=>w1.get('id').localeCompare(w2.get('id'), 'en', {numeric: true, ignorePunctuation: true}))) {
-    const type = widget.get('type');
-    result += `${indent}${widget.get('id')} (${type || 'basic'} - `;
-    if(widget.get('id').match(/^[0-9a-z]{4}$/) && $('#jsonEditor').classList.contains('wide')) {
-      if(type == 'card' && !widget.get('cardType').match(/^type-[0-9a-f-]{36}$/))
-        result += `${widget.get('cardType')} - `;
-      if(type == 'button' && widget.get('text'))
-        result += `${widget.get('text').replaceAll('\n', '\\n')} - `;
-      if(type == null && widget.get('classes'))
-        result += `${widget.get('classes')} - `;
+editPanel.addEventListener("mousedown", function(e){
+  if(e.target == $('#jeResize')) {
+    mouse_reference = e.y;
+    resizer_reference = $('#jeTree').offsetHeight;
+    document.addEventListener("mousemove", resize, false);
+  }
+});
+
+document.addEventListener("mouseup", function(){
+  document.removeEventListener("mousemove", resize, false);
+});
+
+function jeDisplayTree() {
+  const allWidgets = Array.from(widgets.values());
+  $('#jeTree').innerHTML = '<ul class=jeTreeDisplay>' + jeDisplayTreeAddWidgets(allWidgets, null) + '</ul>';
+
+  treeNodes = {};
+  for(const dom of $a('#jeTree .key'))
+    treeNodes[dom.innerText] = dom.parentNode;
+
+  // Add handlers to tree elements to display widget contents
+  on('.jeTreeExpander', 'click', function(e) {
+    if(e.target.classList.contains('jeTreeExpander')) {
+      $('.nested', e.target.parentElement).classList.toggle('active');
+      e.target.classList.toggle('jeTreeExpander-down');
+      e.stopImmediatePropagation();
     }
-    result += `${Math.floor(widget.get('x'))},${Math.floor(widget.get('y'))})\n`;
-    result += jeDisplayTreeAddWidgets(allWidgets, widget.get('id'), indent+'  ');
+  });
+
+  // Add handler to search box to display widget list
+  on('#jeWidgetSearchBox', 'input', jeDisplayFilteredWidgets);
+  on('#jeWidgetSearchBox', 'click', jeDisplayFilteredWidgets);
+
+  on('.jeTreeWidget', 'click', function(e) {
+    jeSelectWidget(widgets.get($('.key', e.currentTarget).innerText), false, e.shiftKey);
+    e.stopPropagation();
+  });
+}
+
+function jeDisplayTreeAddWidgets(allWidgets, parent) {
+  function colored(str, kind) {
+    return `<i class=${kind}>${html(str)}</i>`
+  }
+  let result = '';
+
+  const selectedIDs = jeSelectedIDs();
+  for(const widget of (allWidgets.filter(w=>w.get('parent')==parent)).sort((w1,w2)=>w1.get('id').localeCompare(w2.get('id'), 'en', {numeric: true, ignorePunctuation: true}))) {
+    const children = jeDisplayTreeAddWidgets(allWidgets, widget.get('id'));
+    const isSelected = selectedIDs.indexOf(widget.get('id')) != -1 ? 'jeHighlightRow' : '';
+
+    if(children)
+      result += `<li class="jeTreeWidget"><span class="jeTreeWidget ${isSelected} jeTreeExpander ${(widget.get('type')=='pile') ? '' : 'jeTreeExpander-down'}">`;
+    else
+      result += `<li class="jeTreeWidget ${isSelected}">`;
+
+    result += jeTreeGetWidgetHTML(widget);
+
+    if(children)
+      result += `</span><ul class="jeNestedTree nested ${widget.get('type')=='pile' ? '' : 'active'}">${children}</ul>`;
+    result += '</li>';
+
     delete allWidgets[allWidgets.indexOf(widget)];
   }
   return result;
 }
+
+function jeTreeGetWidgetHTML(widget) {
+  function colored(str, kind) {
+    return `<i class=${kind}>${html(str)}</i>`
+  }
+  const type = widget.get('type');
+
+  let result = `${colored(widget.get('id'), 'key')} (${colored(type || 'basic','string')} - `;
+  if(widget.get('id').match(/^[0-9a-z]{4}$/) && $('#jsonEditor').classList.contains('wide')) {
+    if(type == 'card' && !widget.get('cardType').match(/^type-[0-9a-f-]{36}$/))
+      result += `${colored(widget.get('cardType'),'extern')} - `;
+    if(type == 'button' && widget.get('text'))
+      result += `${colored(widget.get('text').replaceAll('\n', '\\n'),'extern')} - `;
+    if(type == null && widget.get('classes'))
+      result += `${colored(widget.get('classes'),'extern')} - `;
+  }
+  result += `${colored(String(Math.floor(widget.get('x'))),'number')},` +
+    `${colored(String(Math.floor(widget.get('y'))),'number')})`;
+
+  return result;
+}
+
+function jeUpdateTree(delta) {
+  for(const id in delta) {
+    if(typeof treeNodes[id] != 'undefined' && delta[id] != null && typeof delta[id].parent == 'undefined') {
+      treeNodes[id].innerHTML = jeTreeGetWidgetHTML(widgets.get(id));
+    } else {
+      jeDisplayTree();
+      if(jeDeltaIsOurs && delta[id] != null && typeof delta[id].id == 'string')
+        jeCenterSelection();
+      break;
+    }
+  }
+}
+
+function jeDisplayFilteredWidgets(e) {
+  const subtext = $('#jeWidgetSearchBox').value.toLowerCase();
+  const results = widgetFilter(o => o.get('id').toLowerCase().includes(subtext) ||
+          o.get('type') && o.get('type').toLowerCase().includes(subtext) ||
+          !o.get('type') && 'basic'.includes(subtext)).sort(
+            function(a,b) {
+              const na = a.get('id').toLowerCase();
+              const nb = b.get('id').toLowerCase();
+              return na < nb ? -1 : na > nb ? 1 : 0
+            }
+          );
+  let resultTable = '<table id="jeSearchTable">';
+  for(const w of results)
+    resultTable += '<tr valign=top><td class="jeInSearchWindow"><i class=key>' + html(w.get('id')) + '</i> - <i class=string>' + html(w.get('type') || 'basic') + '</i></td></tr>';
+  resultTable += '</table>';
+  $('#jeWidgetSearchResults').innerHTML = resultTable;
+  $('#jeWidgetSearchResults').style.display = 'block';
+
+  on('.jeInSearchWindow', 'click', function(e) {
+    jeSelectWidget(widgets.get($('.key', e.currentTarget).innerText), false, e.shiftKey);
+    if(e.shiftKey)
+      e.stopPropagation();
+  });
+
+  e.stopPropagation();
+}
+
+/* End of tree subpane control */
 
 function jeGetContext() {
   const aO = getSelection().anchorOffset;
@@ -1267,20 +1409,14 @@ function jeGetContext() {
   const select = v.substr(s, Math.min(e-s, 100)).replace(/\n/g, '\\n');
   const line = v.split('\n')[v.substr(0, s).split('\n').length-1];
 
-  if(jeMode == 'tree') {
-    jeContext = [ 'Tree' ];
-    const match = line.match(/^(  )+(.*?) \([a-z]+ - /);
-    if(match)
-      jeContext.push(`"${match[2]}"`);
-    jeShowCommands();
-    return jeContext;
-  }
-
   if(jeMode == 'macro') {
     jeContext = [ 'Macro' ];
     jeShowCommands();
     return jeContext;
   }
+
+  if(jeMode == 'empty')
+    return jeContext;
 
   if(jeMode == 'trace') {
     jeContext = [ 'Trace' ];
@@ -1586,9 +1722,10 @@ function jePreProcessObject(o) {
       copy[`LINEBREAK${match[1]}`] = null;
   }
 
-  for(const key of Object.keys(o).sort())
-    if(copy[key] === undefined && !key.match(/^c[0-9]{2}$/) && !key.match(/Routine$/) && jeWidget.getDefaultValue(key) !== undefined)
+  for(const key of Object.keys(o).sort()) {
+    if(copy[key] === undefined && !key.match(/^c[0-9]{2}$/) && !key.match(/Routine$/) && jePlainWidget.getDefaultValue(key) !== undefined)
       copy[key] = o[key];
+  }
   copy[`LINEBREAKcustom`] = null;
   for(const key of Object.keys(o).sort())
     if(copy[key] === undefined && !key.match(/^c[0-9]{2}$/) && !key.match(/Routine$/))
@@ -1721,8 +1858,8 @@ function jeShowCommands() {
     if(contextMatch && contextMatch[0] == "") {
       const name = (typeof command.name == 'function' ? command.name() : command.name);
       const icon = (typeof command.icon == 'function' ? command.icon() : command.icon);
-      let keyName = displayKey(command.forceKey);
-      commandText += `<button class='top' id='${command.id}' title='${name}' ${!command.show || command.show() ? '' : 'disabled'}>${icon}</button>`;
+      const isMaterial = String(icon).match(/^[^[]/) ? 'material' : '';
+      commandText += `<button class='top ${isMaterial}' id='${command.id}' title='${name}' ${!command.show || command.show() ? '' : 'disabled'}>${icon}</button>`;
     }
   }
   commandText += `</div>`;
@@ -1786,25 +1923,38 @@ function jeShowCommands() {
 function jeToggle() {
   if(jeEnabled === null) {
     jeAddCommands();
-    jeDisplayTree();
+    jeEmpty();
     $('#jeText').addEventListener('input', jeColorize);
     $('#jeText').onscroll = e=>$('#jeTextHighlight').scrollTop = e.target.scrollTop;
-    jeColorize();
   }
   jeEnabled = !jeEnabled;
   jeRoutineLogging = jeEnabled;
   jeLoggingHTML = '';
   if(jeEnabled) {
     $('body').classList.add('jsonEdit');
+    jeDisplayTree();
+    if(jeWidget && !widgets.has(jeWidget.id))
+      jeEmpty();
   } else {
     $('body').classList.remove('jsonEdit');
   }
   setScale();
 }
 
+function jeEmpty() {
+  jeMode = 'empty';
+  jeContext = [ 'No widget selected.' ];
+  jeStateNow = null;
+  jeWidget = null;
+
+  jeSet('');
+  jeDisplayTree();
+  jeShowCommands();
+}
+
 const clickButton = async function(event) {
   await jeCallCommand(jeCommands.find(o => o.id == event.currentTarget.id));
-  if (jeContext != 'macro') {
+  if(jeMode != 'macro' && jeMode != 'empty') {
     jeGetContext();
     if((jeWidget || jeMode == 'multi') && !jeJSONerror)
       await jeApplyChanges();
@@ -1824,6 +1974,22 @@ window.addEventListener('mousemove', function(e) {
     if(jeState.mouseX >= widget.absoluteCoord('x') && jeState.mouseX <= widget.absoluteCoord('x')+widget.get('width'))
       if(jeState.mouseY >= widget.absoluteCoord('y') && jeState.mouseY <= widget.absoluteCoord('y')+widget.get('height'))
         hoveredWidgets.push(widget);
+
+  hoveredWidgets.sort(function(w1,w2) {
+    const hiddenParent =  function(widget) {
+      return widget ? widget.classes().includes('foreign') || hiddenParent(widget.parent) : false
+    };
+
+    const w1card = w1.get('type') == 'card';
+    const w2card = w2.get('type') == 'card';
+    const w1foreign = !w1card && hiddenParent(w1);
+    const w2foreign =  !w2card && hiddenParent(w2);
+    const w1normal = !w1foreign && !w1card;
+    const w2normal = !w2foreign && !w2card;
+    return ((w1card && w2card) || (w1foreign && w2foreign) || (w1normal && w2normal)) ?
+      jeFKeyOrderDescending*(w2.calculateZ() - w1.calculateZ()) :
+      ((w1card && !w2card) || (w1foreign && w2normal)) ? 1 : -1;
+  });
 
   for(let i=1; i<=11; ++i) {
     const hotkey = i>=4 ? i+1 : i;
@@ -1849,14 +2015,9 @@ window.addEventListener('mouseup', async function(e) {
   if(!jeEnabled)
     return;
   jeRoutineResetOnNextLog = true;
-  if(e.target == $('#jeText') && jeContext != 'macro') {
-    jeGetContext();
-    if(jeContext[0] == 'Tree' && jeContext[1] !== undefined) {
-      await jeCallCommand(jeCommands.find(o => o.id == 'je_openWidgetById'));
-      jeGetContext();
-    }
-  }
 
+  if(e.target == $('#jeText') && jeContext != 'macro') // Click in widget text, fix context
+    jeGetContext();
 });
 
 onLoad(function() {
@@ -1924,6 +2085,13 @@ on('#jsonEditor', 'keydown', function(e) {
   if(e.key == 'Enter') {
     jeNewline();
     e.preventDefault();
+  }
+});
+
+window.addEventListener('click', function(e) {
+  if(jeEnabled && e.target != $('#jeWidgetSearchResults')) {
+    $('#jeWidgetSearchBox').value = '';
+    $('#jeWidgetSearchResults').style.display = 'none';
   }
 });
 
