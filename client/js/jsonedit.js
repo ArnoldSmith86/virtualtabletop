@@ -10,6 +10,7 @@ let jeJSONerror = null;
 let jeCommandError = null;
 let jeCommandWithOptions = null;
 let jeFKeyOrderDescending = 1;
+let jeInMacroExecution = false;
 let jeContext = null;
 let jeSecondaryWidget = null;
 let jeDeltaIsOurs = false;
@@ -350,8 +351,10 @@ const jeCommands = [
         jeMode = 'macro';
         jeSetEditorContent(jeMacroPreset);
         jeColorize();
+        editPanel.style.setProperty('--treeHeight', "20%");
       } else {
         jeJSONerror = null;
+        jeInMacroExecution = true;
         try {
           const macro = new Function(`"use strict";return (function(w, v) {${jeGetEditorContent()}})`)();
           const variableState = {};
@@ -366,6 +369,8 @@ const jeCommands = [
         } catch(e) {
           jeJSONerror = e;
         }
+        jeDisplayTree();
+        jeInMacroExecution = false;
       }
       jeShowCommands();
     }
@@ -388,10 +393,11 @@ const jeCommands = [
   {
     id: 'je_reverseFkeys',
     name: 'Reverse order of F-key shortcuts',
-    icon: 'swap_vert',
+    icon:  _=>jeFKeyOrderDescending ==1 ? '[arrow_down]' : '[arrow_up]',
     forceKey: 'K',
     call: async function() {
       jeFKeyOrderDescending = -jeFKeyOrderDescending;
+      jeShowCommands();
     }
   },
   {
@@ -1360,7 +1366,7 @@ function jeUpdateTree(delta) {
   for(const id in delta) {
     if(typeof treeNodes[id] != 'undefined' && delta[id] != null && typeof delta[id].parent == 'undefined') {
       treeNodes[id].innerHTML = jeTreeGetWidgetHTML(widgets.get(id));
-    } else {
+    } else if(!jeInMacroExecution) {
       jeDisplayTree();
       if(jeDeltaIsOurs && delta[id] != null && typeof delta[id].id == 'string')
         jeCenterSelection();
@@ -1415,8 +1421,10 @@ function jeGetContext() {
     return jeContext;
   }
 
-  if(jeMode == 'empty')
+  if(jeMode == 'empty') {
+    jeShowCommands();
     return jeContext;
+  }
 
   if(jeMode == 'trace') {
     jeContext = [ 'Trace' ];
@@ -1954,8 +1962,8 @@ function jeEmpty() {
 
 const clickButton = async function(event) {
   await jeCallCommand(jeCommands.find(o => o.id == event.currentTarget.id));
+  jeGetContext();
   if(jeMode != 'macro' && jeMode != 'empty') {
-    jeGetContext();
     if((jeWidget || jeMode == 'multi') && !jeJSONerror)
       await jeApplyChanges();
     if (jeContext[0] == '###SELECT ME###')
