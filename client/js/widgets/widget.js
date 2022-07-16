@@ -1494,6 +1494,7 @@ export class Widget extends StateManaged {
           if(typeof nextTurnIndex != 'number' || !isFinite(nextTurnIndex))
             nextTurnIndex = 0;
           const turn = indexList[mod(nextTurnIndex, indexList.length)];
+          variables.TURN = turn;
 
           collections[a.collection] = [];
 
@@ -1504,7 +1505,6 @@ export class Widget extends StateManaged {
             }
             jeLoggingRoutineOperationSummary(`changed turn of seats from ${previousTurn} to ${turn} - active seats: ${JSON.stringify(indexList)}`);
           } else {
-            variables.TURN = turn;
             jeLoggingRoutineOperationSummary(`SIMULATED turn of seats: from ${previousTurn} to ${turn} - active seats: ${JSON.stringify(indexList)}`);
           }
 
