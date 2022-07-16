@@ -167,7 +167,7 @@ function setScale() {
   if(jeEnabled) {
     const targetWidth = jeZoomOut ? 3200 : 1600;
     const targetHeight = jeZoomOut ? 2000 : 1000;
-    const availableWidth = $('#jeText').offsetLeft;
+    const availableWidth = $('#jeEditArea').offsetLeft;
     if(availableWidth/(h-70) < 1600/1000)
       scale = availableWidth/targetWidth;
     else
