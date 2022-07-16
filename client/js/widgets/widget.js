@@ -290,6 +290,9 @@ export class Widget extends StateManaged {
       if(!widgetFilter(w=>asArray(this.get('linkedToSeat')).indexOf(w.get('id')) != -1 && w.get('player')).length)
         className += ' foreign';
 
+    if(this.isHighlighted)
+      className += ' selectedInEdit';
+
     return className;
   }
 
@@ -1144,9 +1147,9 @@ export class Widget extends StateManaged {
                     if(widgets.has(target.get('hand'))) {
                       const targetHand = widgets.get(target.get('hand'));
                       await applyFlip();
+                      c.targetPlayer = target.get('player')
                       await c.moveToHolder(targetHand);
-                      if(targetHand.get('childrenPerOwner'))
-                        await c.set('owner', target.get('player'));
+                      delete c.targetPlayer
                       c.bringToFront()
                       if(targetHand.get('type') == 'holder')
                         targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
@@ -1786,6 +1789,11 @@ export class Widget extends StateManaged {
       await this.set('rotation', (this.get('rotation') + degrees) % 360);
     else
       await this.set('rotation', degrees);
+  }
+
+  setHighlighted(isHighlighted) {
+    this.isHighlighted = isHighlighted;
+    this.domElement.className = this.classes();
   }
 
   async setText(text, mode, problems) {
