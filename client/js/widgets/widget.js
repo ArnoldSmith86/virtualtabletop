@@ -1772,15 +1772,14 @@ export class Widget extends StateManaged {
             //saves turn into all seats and creates output collection with turn seats
             for(const w of c) {
               await w.set('turn', w.get('index') == turn);
-              if(w.get('turn') && w.get('player'))
-                collections[a.collection].push(w);
             }
             jeLoggingRoutineOperationSummary(`changed turn of seats from ${previousTurn} to ${turn} - active seats: ${JSON.stringify(indexList)}`);
           } else {
-            collections[a.collection] = c.filter(w=>w.get('index')==turn && w.get('player'));
             variables.TURN = turn;
             jeLoggingRoutineOperationSummary(`SIMULATED turn of seats: from ${previousTurn} to ${turn} - active seats: ${JSON.stringify(indexList)}`);
           }
+
+          collections[a.collection] = c.filter(w=>w.get('index')==turn && w.get('player'));
 
         } else {
           jeLoggingRoutineOperationSummary(`no active seats found`);
