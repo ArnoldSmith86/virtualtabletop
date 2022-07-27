@@ -363,11 +363,11 @@
       </div>
       <div id="helpTexts" data-showfor="ruleText|helpText|attribution">
         <h3 data-showfor="ruleText">How to play the game</h3>
-        <p data-field="ruleText" data-html="true"></p>
+        <div data-field="ruleText" data-html="true"></div>
         <h3 data-showfor="helpText">How to use this implementation</h3>
-        <p data-field="helpText" data-html="true"></p>
+        <div data-field="helpText" data-html="true"></div>
         <h3 data-showfor="attribution">Attribution</h3>
-        <p data-field="attribution" data-html="true"></p>
+        <div data-field="attribution" data-html="true"></div>
       </div>
     </div>
 
@@ -568,6 +568,20 @@
   <div id="clientPointer">
     <div id="enlarged" class="hidden"></div>
   </div>
+
+  <template id="template-richtext-controls" type="text/template">
+    <button icon="format_bold"            data-command="bold"></button>
+    <button icon="format_italic"          data-command="italic"></button>
+    <button icon="format_strikethrough"   data-command="strikeThrough"></button>
+    <span class="divider"></span>
+    <button icon="format_list_numbered"   data-command="insertorderedlist"></button>
+    <button icon="format_list_bulleted"   data-command="insertunorderedlist"></button>
+    <button icon="format_indent_increase" data-command="indent"></button>
+    <button icon="format_indent_decrease" data-command="outdent"></button>
+    <span class="divider"></span>
+    <button icon="format_size"></button>
+    <button icon="palette"></button>
+  </template>
 
   <script type="module"> //*** CONFIG ***//  //*** JS ***// </script>
 

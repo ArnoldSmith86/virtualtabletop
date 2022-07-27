@@ -207,6 +207,8 @@ export function enableEditing(parent, obj) {
     dom.classList.remove('hidden');
     if(!dom.innerText.trim())
       dom.innerText = dom.dataset.placeholder || '<empty>';
+    if(dom.dataset.html)
+      addRichtextControls(dom);
   }
   for(const hideDom of $a('[data-showfor]', parent))
     hideDom.classList.remove('hidden');
@@ -224,11 +226,46 @@ export function disableEditing(parent, obj) {
         if(!dom.dataset.forceshow)
           dom.classList.add('hidden');
       }
+      if(dom.dataset.html)
+        removeRichtextControls(dom);
     }
   }
   for(const hideDom of $a('[data-showfor]', parent))
     if(!hideDom.dataset.showfor.split('|').filter(field=>obj[field]).length)
       hideDom.classList.add('hidden');
+}
+
+export function addRichtextControls(dom) {
+  const controls = domByTemplate('template-richtext-controls');
+  controls.classList.add('richtext-controls');
+  dom.parentNode.insertBefore(controls, dom);
+  for(const button of $a('[data-command]', controls)) {
+    button.onclick = function() {
+      document.execCommand(button.dataset.command, false, button.dataset.payload);
+      dom.focus();
+    };
+  }
+  $('[icon=format_size]', controls).onclick = function() {
+    const parent = window.getSelection().getRangeAt(0).startContainer.parentNode;
+    if(parent.nodeName == 'H4')
+      parent.replaceWith(parent.innerText);
+    else
+      document.execCommand('formatBlock', false, 'h4');
+    dom.focus();
+  };
+  $('[icon=palette]', controls).onclick = function() {
+    const input = document.createElement('input');
+    input.type = 'color';
+    input.onchange = function() {
+      document.execCommand('forecolor', false, input.value);
+      dom.focus();
+    };
+    input.click();
+  };
+}
+
+export function removeRichtextControls(dom) {
+  removeFromDOM(dom.previousSibling);
 }
 
 export function toggleClass(dom, className, active) {

@@ -735,6 +735,16 @@ button[icon].green:hover {
   line-height: 18px;
 }
 
+.richtext-controls button {
+  display: inline-flex;
+  margin-bottom: 2px;
+  padding: 2px;
+}
+
+.richtext-controls button:empty {
+  padding: 2px;
+}
+
 .symbols {
   font-family: 'VTT-Symbols';
 }

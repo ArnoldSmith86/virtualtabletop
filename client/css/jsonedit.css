@@ -103,13 +103,13 @@
 }
 /**** End of grid layout ****/
 
-ul, .jeTreeDisplay, .jeNestedTree {
+#jeTree ul, .jeTreeDisplay, .jeNestedTree {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
 
-li, .jeNestedTree {
+#jeTree li, .jeNestedTree {
   margin-left: 10px;
   padding-left: 0;
 }
