@@ -1428,7 +1428,8 @@
     "z": 26763,
     "movable": false,
     "css": "text-align: center;font-size: 25px; ",
-    "text": 0
+    "text": 0,
+    "scale": 0
   },
   "bids2": {
     "type": "label",
@@ -1516,7 +1517,8 @@
     "z": 26768,
     "movable": false,
     "css": "text-align: center;font-size: 25px; ",
-    "text": 0
+    "text": 0,
+    "scale": 0
   },
   "bids3": {
     "type": "label",
@@ -1592,7 +1594,8 @@
     "z": 26768,
     "movable": false,
     "css": "text-align: center;font-size: 25px; ",
-    "text": 0
+    "text": 0,
+    "scale": 0
   },
   "reset": {
     "type": "button",
@@ -2182,7 +2185,8 @@
     "z": 32596,
     "movable": false,
     "css": "text-align: right;font-size: 25px; ",
-    "text": "Points:"
+    "text": "Points:",
+    "scale": 0
   },
   "points2": {
     "id": "points2",
@@ -2194,7 +2198,8 @@
     "z": 26762,
     "movable": false,
     "css": "text-align: right;font-size: 25px; ",
-    "text": "Points:"
+    "text": "Points:",
+    "scale": 0
   },
   "points3": {
     "id": "points3",
@@ -2206,7 +2211,8 @@
     "z": 32597,
     "movable": false,
     "css": "text-align: right;font-size: 25px; ",
-    "text": "Points:"
+    "text": "Points:",
+    "scale": 0
   },
   "settings": {
     "type": "button",
@@ -2218,7 +2224,7 @@
     "css": "font-size: 40px; line-height:1.05",
     "text": "settings",
     "score": true,
-    "show": true,
+    "show": false,
     "clickRoutine": [
       {
         "func": "INPUT",
@@ -2444,7 +2450,8 @@
     "movableInEdit": false,
     "css": "font-size: 22px; color:red ",
     "text": "Reminder: This turn,",
-    "scale": 0
+    "scale": 0,
+    "layer": 0
   },
   "passing": {
     "id": "passing",
@@ -2547,7 +2554,8 @@
     "onlyVisibleForSeat": "x",
     "x": 740,
     "clickable": false,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "layer": 0
   },
   "pass2": {
     "id": "pass2",
@@ -2623,7 +2631,8 @@
       }
     ],
     "clickable": false,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "layer": 0
   },
   "pass3": {
     "id": "pass3",
@@ -2699,7 +2708,8 @@
       }
     ],
     "clickable": false,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "layer": 0
   },
   "passMaster": {
     "type": "button",
