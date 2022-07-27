@@ -870,12 +870,16 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
       if(widget[key] === undefined)
         widget[key] = null;
   }
+
   const id = await addWidgetLocal(widget);
 
-  for(const child of children)
-    sendPropertyUpdate(child.get('id'), 'parent', id);
-  for(const card of cards)
-    sendPropertyUpdate(card.get('id'), 'deck', id);
+  if(widget.id !== previousState.id) {
+    for(const child of children)
+      sendPropertyUpdate(child.get('id'), 'parent', id);
+    for(const card of cards)
+      sendPropertyUpdate(card.get('id'), 'deck', id);
+  }
+
   batchEnd();
 }
 
