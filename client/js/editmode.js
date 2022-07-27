@@ -832,11 +832,14 @@ function uploadWidget(preset) {
 }
 
 async function updateWidget(currentState, oldState, applyChangesFromUI) {
+  batchStart();
+
   const previousState = JSON.parse(oldState);
   try {
     var widget = JSON.parse(currentState);
   } catch(e) {
     alert(e.toString());
+    batchEnd();
     return;
   }
 
@@ -846,6 +849,7 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
 
   if(widget.parent !== undefined && !widgets.has(widget.parent)) {
     alert(`Parent widget ${widget.parent} does not exist.`);
+    batchEnd();
     return;
   }
 
@@ -872,6 +876,7 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
     sendPropertyUpdate(child.get('id'), 'parent', id);
   for(const card of cards)
     sendPropertyUpdate(card.get('id'), 'deck', id);
+  batchEnd();
 }
 
 async function onClickUpdateWidget(applyChangesFromUI) {

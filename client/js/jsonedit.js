@@ -362,9 +362,7 @@ const jeCommands = [
             const s = JSON.stringify(w.state);
             const newState = JSON.parse(s);
             macro(newState, variableState);
-            batchStart();
             await updateWidget(JSON.stringify(newState), s);
-            batchEnd();
           }
         } catch(e) {
           jeJSONerror = e;
