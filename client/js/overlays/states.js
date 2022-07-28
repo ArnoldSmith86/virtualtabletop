@@ -164,7 +164,6 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
     overlayShownForEmptyRoom = true;
     return;
   }
-  $('#statesButton').dataset.overlay = 'statesOverlay';
 
   const emptyLibrary = $('#emptyLibrary');
   const addState = $('#addState');
