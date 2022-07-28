@@ -497,6 +497,7 @@ body.aspectTooGood.hiddenToolbar {
       left: calc(var(--toolbarSize) + 4px);
       top: -2px;
       padding: 2px;
+      pointer-events: unset;
     }
 
     #options.hidden {
