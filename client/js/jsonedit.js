@@ -1404,8 +1404,8 @@ function jeGetContext() {
   const s = Math.min(aO, fO);
   const e = Math.max(aO, fO);
   const v = jeGetEditorContent();
-  const t = jeStateNow && jeStateNow.type || 'basic';
-
+  let t;
+  
   const select = v.substr(s, Math.min(e-s, 100)).replace(/\n/g, '\\n');
   const line = v.split('\n')[v.substr(0, s).split('\n').length-1];
 
@@ -1426,6 +1426,7 @@ function jeGetContext() {
 
   try {
     jeStateNow = JSON.parse(v);
+    t = jeStateNow && jeStateNow.type || 'basic';
 
     if(!jeStateNow.id)
       jeJSONerror = 'No ID given.';
