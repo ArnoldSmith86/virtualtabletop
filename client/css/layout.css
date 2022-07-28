@@ -735,14 +735,28 @@ button[icon].green:hover {
   line-height: 18px;
 }
 
+.richtext-controls {
+  background: var(--VTTblue);
+  margin: 4px;
+  border-radius: 4px;
+  padding: 2px;
+  font-size: 0;
+}
+
 .richtext-controls button {
   display: inline-flex;
-  margin-bottom: 2px;
   padding: 2px;
 }
 
 .richtext-controls button:empty {
   padding: 2px;
+}
+
+.richtext-controls .divider {
+  border-left: 1px solid #fff6;
+  margin: 2px 4px;
+  display: inline-block;
+  height: 20px;
 }
 
 .symbols {
