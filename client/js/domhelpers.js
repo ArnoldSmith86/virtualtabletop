@@ -272,6 +272,12 @@ export function addRichtextControls(dom) {
       document.execCommand('inserthtml', false, `<img class="richtextAsset" src="${asset.substring(1)}">`);
     dom.focus();
   };
+  $('[icon=movie]', controls).onclick = async function() {
+    const asset = await uploadAsset();
+    if(asset)
+      document.execCommand('inserthtml', false, `<video class="richtextAsset" src="${asset.substring(1)}" controls></video>`);
+    dom.focus();
+  };
 }
 
 export function removeRichtextControls(dom) {
