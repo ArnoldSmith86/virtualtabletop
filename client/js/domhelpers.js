@@ -245,6 +245,7 @@ export function addRichtextControls(dom) {
       dom.focus();
     };
   }
+
   $('[icon=format_size]', controls).onclick = function() {
     const parent = window.getSelection().getRangeAt(0).startContainer.parentNode;
     if(parent.nodeName == 'H4')
@@ -261,6 +262,15 @@ export function addRichtextControls(dom) {
       dom.focus();
     };
     input.click();
+  };
+
+  $('[icon=add_photo_alternate]', controls).onclick = async function() {
+    $('#statesButton').dataset.overlay = 'updateImageOverlay';
+    const asset = await updateImage('', 'Cancel');
+    showStatesOverlay('stateDetailsOverlay');
+    if(asset)
+      document.execCommand('inserthtml', false, `<img class="richtextAsset" src="${asset.substring(1)}">`);
+    dom.focus();
   };
 }
 

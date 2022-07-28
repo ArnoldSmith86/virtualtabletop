@@ -35,7 +35,7 @@ body {
 
 #roomArea {
   position: fixed;
-  overflow: hidden;
+  overflow: clip;
   width: calc(var(--roomWidth) * var(--scale));
   height: calc(var(--roomHeight) * var(--scale));
   top: var(--roomTop);
@@ -758,6 +758,12 @@ button[icon].green:hover {
   margin: 2px 4px;
   display: inline-block;
   height: 20px;
+}
+
+.richtextAsset {
+  max-width: 80%;
+  display: block;
+  margin: 20px auto;
 }
 
 .symbols {
