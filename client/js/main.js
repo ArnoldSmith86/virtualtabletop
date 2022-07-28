@@ -262,6 +262,11 @@ onLoad(function() {
       toggleEditMode();
   });
 
+  on('#addButton', 'click', function(e) {
+    if(!$a('#activeGameButton.active, #editButton.active').length)
+      $('#activeGameButton').click();
+  });
+
   on('.toolbarButton', 'click', function(e) {
     const overlay = e.currentTarget.dataset.overlay;
     if(overlay)
