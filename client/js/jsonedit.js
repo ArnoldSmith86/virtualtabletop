@@ -1408,7 +1408,6 @@ function jeGetContext() {
   const s = Math.min(aO, fO);
   const e = Math.max(aO, fO);
   const v = jeGetEditorContent();
-  let t;
   
   const select = v.substr(s, Math.min(e-s, 100)).replace(/\n/g, '\\n');
   const line = v.split('\n')[v.substr(0, s).split('\n').length-1];
@@ -1432,7 +1431,6 @@ function jeGetContext() {
 
   try {
     jeStateNow = JSON.parse(v);
-    t = jeStateNow && jeStateNow.type || 'basic';
 
     if(!jeStateNow.id)
       jeJSONerror = 'No ID given.';
@@ -1454,7 +1452,7 @@ function jeGetContext() {
   }
 
   // go through all the lines up until the cursor and use the indentation to figure out the context
-  let keys = [ t ];
+  let keys = [ jeStateNow && jeStateNow.type || 'basic' ];
   for(const line of v.split('\n').slice(0, v.substr(0, s).split('\n').length)) {
     const m = line.match(/^( +)(["{])([^"]*)/);
     if(m) {
