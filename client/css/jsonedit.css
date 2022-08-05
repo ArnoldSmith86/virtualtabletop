@@ -12,7 +12,7 @@
 
 #jsonEditor.wide {
   --commandPaneWidth: 320px;
-  --editorPaneWidth: 600px;
+  --editorPaneWidth: 602px;
 }
 
 #jsonEditor.notHighEnough #jeWidgetLayers, #jsonEditor.notHighEnough #jeLogWrapper {
@@ -504,4 +504,3 @@ body.jsonEdit.jeZoomOut #topSurface {
 #jeCommands #jeCommandOptions input[type="number"]{
   width: 6ch;
 }
-
