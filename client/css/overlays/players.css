@@ -159,7 +159,7 @@ label.ui-line::before{
   --cursorSize: 10;
   --cursorOpacity: 0;
   --cursorActiveOpacity: 0.3;
-  --cursorPressedOpacity: 0.5;
+  --cursorPressedOpacity: 0.3;
 }
 .cursor {
   position: absolute;
