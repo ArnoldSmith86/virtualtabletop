@@ -885,7 +885,7 @@ function jeAddWidgetPropertyCommands(object) {
 
 function jeAddWidgetPropertyCommand(object, property) {
   jeCommands.push({
-    id: 'widget_' + property,
+    id: 'widget_' + object.getDefaultValue('typeClasses').replace('widget ', '') + '_' + property,
     name: property,
     class: 'property',
     context: `^${object.getDefaultValue('typeClasses').replace('widget ', '')}`,
