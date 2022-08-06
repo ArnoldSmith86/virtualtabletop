@@ -911,7 +911,7 @@ async function jeApplyChanges() {
     return await jeApplyChangesMulti();
 
   const currentStateRaw = jeGetEditorContent();
-  const completeState = JSON.parse(jePostProcessText(currentStateRaw));
+  const completeState = JSON.parse(jePostProcessText(currentStateRaw).replace(/,(?=\n *[\]}],?$)/gm, ''));
 
   // apply external changes that happened while the key was pressed
   for(const delta of jeKeyIsDownDeltas)
@@ -1408,8 +1408,7 @@ function jeGetContext() {
   const s = Math.min(aO, fO);
   const e = Math.max(aO, fO);
   const v = jeGetEditorContent();
-  const t = jeStateNow && jeStateNow.type || 'basic';
-
+  
   const select = v.substr(s, Math.min(e-s, 100)).replace(/\n/g, '\\n');
   const line = v.split('\n')[v.substr(0, s).split('\n').length-1];
 
@@ -1431,7 +1430,7 @@ function jeGetContext() {
   }
 
   try {
-    jeStateNow = JSON.parse(v);
+    jeStateNow = JSON.parse(v.replace(/,(?=\n *[\]}],?$)/gm, ''));
 
     if(!jeStateNow.id)
       jeJSONerror = 'No ID given.';
@@ -1453,7 +1452,7 @@ function jeGetContext() {
   }
 
   // go through all the lines up until the cursor and use the indentation to figure out the context
-  let keys = [ t ];
+  let keys = [ jeStateNow && jeStateNow.type || 'basic' ];
   for(const line of v.split('\n').slice(0, v.substr(0, s).split('\n').length)) {
     const m = line.match(/^( +)(["{])([^"]*)/);
     if(m) {
