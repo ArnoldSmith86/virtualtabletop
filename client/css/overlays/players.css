@@ -176,12 +176,10 @@ label.ui-line::before{
 }
 .cursor.active, .cursor.pressed.foreign {
   --cursorOpacity: var(--cursorActiveOpacity);
-  --cursorShowName: var(--cursorActiveShowName);
   transition: none;
 }
 .cursor.pressed {
   --cursorOpacity: var(--cursorPressedOpacity);
-  --cursorShowName: var(--cursorPressedShowName);
   border: none;
   background-color: var(--playerColor);
 }
