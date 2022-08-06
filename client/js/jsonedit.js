@@ -911,7 +911,7 @@ async function jeApplyChanges() {
     return await jeApplyChangesMulti();
 
   const currentStateRaw = jeGetEditorContent();
-  const completeState = JSON.parse(jePostProcessText(currentStateRaw));
+  const completeState = JSON.parse(jePostProcessText(currentStateRaw).replace(/,(?=\n *[\]}],?$)/gm, ''));
 
   // apply external changes that happened while the key was pressed
   for(const delta of jeKeyIsDownDeltas)
@@ -1430,7 +1430,7 @@ function jeGetContext() {
   }
 
   try {
-    jeStateNow = JSON.parse(v);
+    jeStateNow = JSON.parse(v.replace(/,(?=\n *[\]}],?$)/gm, ''));
 
     if(!jeStateNow.id)
       jeJSONerror = 'No ID given.';
