@@ -571,7 +571,7 @@ function jeAddRoutineExpressionCommands(variable, expression) {
         routine.push(`var ###SELECT ME### = ${expression}`);
       else
         routine.splice(operationIndex+1, 0, `var ###SELECT ME### = ${expression}`);
-      jeSetAndSelect(variable, true);
+      jeSetAndSelect(variable, 'insideString');
     }),
     show: jeRoutineCall((_, routine)=>Array.isArray(routine), true)
   });
@@ -1531,7 +1531,15 @@ function jeInsert(context, key, value) {
   if(!jeJSONerror) {
     let pointer = jeGetValue(context);
     pointer[key] = '###SELECT ME###';
-    jeSetAndSelect(value);
+    let insertMode;
+    if (value && ((Array.isArray(value) && value.length==0) || (typeof value === 'object' && Object.keys(value).length === 0)))
+      insertMode = 'brackets';
+    else if (value && typeof value === 'object')
+      insertMode = 'object';
+    else if (value && value == '${}')
+      insertMode = 'dollar';
+
+    jeSetAndSelect(value, insertMode);
   }
 }
 
@@ -1807,22 +1815,37 @@ function jeSet(text, dontFocus) {
 
 // Replace ###SELECT ME### in JSON string in jeStateNow by the string given in replaceBy,
 // display the results in the text area by calling jeSet, and select the replaced text by calling jeSelect.
-function jeSetAndSelect(replaceBy, insideString) {
+function jeSetAndSelect(replaceBy, insertMode) {
+  const insideString = insertMode == 'insideString'; // ###SELECT ME### inside of 'var' statement
+  const brackets = insertMode == 'brackets'; // ###SELECT ME### should be replaced by [] or {}
+  const dollar = insertMode == 'dollar'; // ###SELECT ME### should be replaced by ${} (and this will be in a string)
+  const object = insertMode == 'object'; // E.g. for droptarget, which inserts { "type": "card" }
+
   if(jeMode == 'widget')
     var jsonString = jePreProcessText(JSON.stringify(jePreProcessObject(jeStateNow), null, '  '));
   else
     var jsonString = JSON.stringify(jeStateNow, null, '  ');
   const startIndex = jsonString.indexOf(insideString ? '###SELECT ME###' : '"###SELECT ME###"');
-  let length = jsonString.length-15-(insideString ? 0 : 2);
+  let length = jsonString.length-15-(insideString ? 0 : 2); // Length of json ignoring string to be replaced.
 
-  if(insideString)
+  // Replace the entire quoted string if the ###SELECT ME### is not inside a string, otherwise
+  // just replace ###SELECT ME###
+  if(insideString || dollar)
     jsonString = jsonString.replace(/###SELECT ME###/, JSON.stringify(replaceBy).substr(1, JSON.stringify(replaceBy).length-2));
   else
     jsonString = jsonString.replace(/"###SELECT ME###"/, JSON.stringify(replaceBy));
 
+  // Set left and right ranges for selection based on what is being inserted.
   jeSet(jsonString);
-  const quote = typeof replaceBy == 'string' && !insideString ? 1 : 0;
-  jeSelect(startIndex + quote, startIndex+jsonString.length-length - quote, true);
+  let leftOffset = 0;
+  let rightOffset = 0;
+  if(brackets || (typeof replaceBy == 'string' && !insideString && !dollar)){
+    leftOffset = rightOffset = 1;
+  } else if (dollar) {
+    leftOffset = 3;
+    rightOffset = 2;
+  }
+  jeSelect(startIndex + leftOffset, startIndex+jsonString.length-length - rightOffset, true);
 }
 
 function jeSetEditorContent(content) {
