@@ -20,135 +20,6 @@
     "dropOffsetY": 2,
     "stackOffsetY": 60
   },
-  "shiftup": {
-    "type": "button",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "floor"
-      },
-      {
-        "func": "SET",
-        "property": "y",
-        "relation": "-",
-        "value": 60
-      }
-    ],
-    "x": 1509,
-    "y": 867,
-    "z": 613,
-    "css": "border-color:transparent;background-color:transparent;border-radius:25px",
-    "id": "shiftup",
-    "width": 50,
-    "height": 50,
-    "layer": 2,
-    "image": "/assets/979051549_277"
-  },
-  "shiftright": {
-    "type": "button",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "floor"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "relation": "+",
-        "value": 60
-      }
-    ],
-    "x": 1548,
-    "y": 907,
-    "z": 612,
-    "id": "shiftright",
-    "css": "border-color:transparent;background-color:transparent;border-radius:25px",
-    "width": 50,
-    "height": 50,
-    "layer": 2,
-    "image": "/assets/822277903_277"
-  },
-  "shiftdown": {
-    "type": "button",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "floor"
-      },
-      {
-        "func": "SET",
-        "property": "y",
-        "relation": "+",
-        "value": 60
-      }
-    ],
-    "x": 1509,
-    "y": 947,
-    "z": 611,
-    "css": "border-color:transparent;background-color:transparent;border-radius:25px",
-    "id": "shiftdown",
-    "width": 50,
-    "height": 50,
-    "layer": 2,
-    "image": "/assets/-1712546135_277"
-  },
-  "shiftleft": {
-    "type": "button",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "floor"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "relation": "-",
-        "value": 60
-      }
-    ],
-    "y": 907,
-    "z": 614,
-    "css": "border-color:transparent;background-color:transparent;border-radius:25px",
-    "id": "shiftleft",
-    "width": 50,
-    "height": 50,
-    "layer": 2,
-    "image": "/assets/1502865726_277",
-    "x": 1470
-  },
-  "shiftcenter": {
-    "type": "button",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "floor"
-      },
-      {
-        "func": "SET",
-        "property": "x",
-        "value": -500
-      },
-      {
-        "func": "SET",
-        "property": "y",
-        "value": -500
-      }
-    ],
-    "x": 1514,
-    "y": 912,
-    "z": 615,
-    "css": "border-color:transparent;background-color:transparent;border-radius:25px",
-    "id": "shiftcenter",
-    "width": 40,
-    "height": 40,
-    "layer": 2,
-    "image": "/assets/-27377452_736"
-  },
   "bnd1": {
     "type": "card",
     "cardType": "Circle Blue 1",
@@ -612,7 +483,6 @@
             "x": 0,
             "y": 0,
             "color": "grey",
-            "valueType": "static",
             "value": "",
             "width": 60,
             "height": 60
@@ -628,11 +498,12 @@
             "x": 0,
             "y": 0,
             "color": "black",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 60,
             "height": 60,
-            "css": "border: 3px solid white"
+            "css": "border: 3px solid white",
+            "dynamicProperties": {
+              "value": "image"
+            }
           },
           {
             "type": "text",
@@ -640,11 +511,12 @@
             "y": 10,
             "fontSize": 35,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "cardValue",
             "textAlign": "center",
             "width": 60,
-            "height": 60
+            "height": 60,
+            "dynamicProperties": {
+              "value": "cardValue"
+            }
           }
         ],
         "border": false,
@@ -1344,23 +1216,9 @@
     "movableInEdit": false,
     "image": "/assets/-753447363_159340"
   },
-  "p2Score": {
-    "type": "label",
-    "id": "p2Score",
-    "x": -1,
-    "y": 655,
-    "width": 140,
-    "height": 44,
-    "layer": 15,
-    "z": 2474,
-    "css": "font-size: 30px",
-    "editable": true,
-    "text": 0
-  },
   "p2ScoreMinus": {
     "type": "button",
     "id": "p2ScoreMinus",
-    "parent": "p2Score",
     "x": 4,
     "y": -2,
     "width": 36,
@@ -1374,17 +1232,17 @@
     "clickRoutine": [
       {
         "func": "LABEL",
-        "label": "p2Score",
+        "label": "p1Score",
         "mode": "inc",
         "value": -1
       }
     ],
-    "text": "-"
+    "text": "-",
+    "parent": "p1Score"
   },
   "p2ScorePlus": {
     "type": "button",
     "id": "p2ScorePlus",
-    "parent": "p2Score",
     "x": 100,
     "y": -2,
     "width": 36,
@@ -1398,43 +1256,17 @@
     "clickRoutine": [
       {
         "func": "LABEL",
-        "label": "p2Score",
+        "label": "p1Score",
         "mode": "inc",
         "value": 1
       }
     ],
-    "text": "+"
-  },
-  "p2Name": {
-    "type": "label",
-    "id": "p2Name",
-    "parent": "p2Score",
-    "y": -40,
-    "width": 140,
-    "height": 40,
-    "layer": -1,
-    "movableInEdit": false,
-    "css": "font-size: 30px",
-    "editable": true,
-    "text": "P1"
-  },
-  "p1Score": {
-    "type": "label",
-    "id": "p1Score",
-    "x": -1,
-    "y": 755,
-    "width": 140,
-    "height": 44,
-    "layer": 15,
-    "z": 10365,
-    "css": "font-size: 30px",
-    "editable": true,
-    "text": 0
+    "text": "+",
+    "parent": "p1Score"
   },
   "p1ScoreMinus": {
     "type": "button",
     "id": "p1ScoreMinus",
-    "parent": "p1Score",
     "x": 4,
     "y": -2,
     "width": 36,
@@ -1448,17 +1280,17 @@
     "clickRoutine": [
       {
         "func": "LABEL",
-        "label": "p1Score",
+        "label": "p2Score",
         "mode": "inc",
         "value": -1
       }
     ],
-    "text": "-"
+    "text": "-",
+    "parent": "p2Score"
   },
   "p1ScorePlus": {
     "type": "button",
     "id": "p1ScorePlus",
-    "parent": "p1Score",
     "x": 100,
     "y": -2,
     "width": 36,
@@ -1472,51 +1304,27 @@
     "clickRoutine": [
       {
         "func": "LABEL",
-        "label": "p1Score",
+        "label": "p2Score",
         "mode": "inc",
         "value": 1
       }
     ],
-    "text": "+"
-  },
-  "p1Name": {
-    "type": "label",
-    "id": "p1Name",
-    "parent": "p1Score",
-    "y": -40,
-    "width": 140,
-    "height": 40,
-    "layer": -1,
-    "movableInEdit": false,
-    "css": "font-size: 30px",
-    "editable": true,
-    "text": "P2"
-  },
-  "p3Name": {
-    "type": "label",
-    "id": "p3Name",
-    "y": -40,
-    "width": 140,
-    "height": 40,
-    "layer": -1,
-    "movableInEdit": false,
-    "css": "font-size: 30px",
-    "editable": true,
-    "text": "P4",
-    "parent": "p3Score"
+    "text": "+",
+    "parent": "p2Score"
   },
   "p3Score": {
     "type": "label",
     "id": "p3Score",
-    "x": -1,
-    "y": 955,
+    "x": 10,
+    "y": 950,
     "width": 140,
     "height": 44,
     "layer": 15,
     "z": 2481,
     "css": "font-size: 30px",
     "editable": true,
-    "text": 0
+    "text": 0,
+    "linkedToSeat": "seat4"
   },
   "p3ScoreMinus": {
     "type": "button",
@@ -1569,28 +1377,16 @@
   "p4Score": {
     "type": "label",
     "id": "p4Score",
-    "x": -1,
-    "y": 855,
+    "x": 10,
+    "y": 815,
     "width": 140,
     "height": 44,
     "layer": 15,
     "z": 2494,
     "css": "font-size: 30px",
     "editable": true,
-    "text": 0
-  },
-  "p4Name": {
-    "type": "label",
-    "id": "p4Name",
-    "parent": "p4Score",
-    "y": -40,
-    "width": 140,
-    "height": 40,
-    "layer": -1,
-    "movableInEdit": false,
-    "css": "font-size: 30px",
-    "editable": true,
-    "text": "P3"
+    "text": 0,
+    "linkedToSeat": "seat3"
   },
   "p4ScoreMinus": {
     "type": "button",
@@ -1657,7 +1453,6 @@
     "y": -500,
     "width": 2600,
     "height": 2000,
-    "layer": -1,
     "z": 5,
     "movableInEdit": false,
     "alignChildren": false,
@@ -1670,11 +1465,10 @@
   "restart": {
     "type": "button",
     "id": "restart",
-    "y": 2,
     "width": 50,
     "height": 50,
     "layer": 15,
-    "z": 10374,
+    "z": 10375,
     "clickRoutine": [
       {
         "func": "INPUT",
@@ -1688,8 +1482,7 @@
       },
       {
         "func": "RECALL",
-        "holder": "cardHolder",
-        "owned": "${owned}"
+        "holder": "cardHolder"
       },
       {
         "func": "FLIP",
@@ -1746,15 +1539,44 @@
       }
     ],
     "color": "white",
-    "css": "background-size: 80%; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
-    "image": "/assets/1342248376_1383",
-    "svgReplaces": {
-      "currentColor": "color"
-    },
-    "x": 1547
+    "css": "font-size: 40px; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
+    "x": 1545,
+    "classes": "symbols",
+    "text": "restart",
+    "startUpRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "cardHolder"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "RECALL",
+            "holder": "cardHolder"
+          },
+          {
+            "func": "FLIP",
+            "holder": "cardHolder",
+            "face": 0
+          },
+          {
+            "func": "SHUFFLE",
+            "holder": "cardHolder"
+          }
+        ]
+      }
+    ]
   },
   "_meta": {
-    "version": 3,
+    "version": 6,
     "info": {
       "name": "Tittle",
       "image": "/assets/371528430_9397",
@@ -1766,7 +1588,7 @@
       "players": "2-4",
       "language": "US",
       "variant": "",
-      "attribution": "The game layout and images (including the library image) were done by LawDawg96 and are released to the Public Domain under CC0.\n\nThe background picture is by Dawn Hudson (cropped and colors modified) and released to the public domain under the CC0 license at https://publicdomainpictures.net/en/view-image.php?image=71643&picture=colourful-flame-background.\n\n\nThe black \"dead end\" squares are optional. You can use them to indicate a line that is impossible to complete because a card has already been played elsewhere.",
+      "attribution": "INSTRUCTIONS: Players take seats. Move 4 cards to hand on right of screen using +4 button. Play cards and keep score manually. Replace cards using +1 button. The black \"dead end\" squares are optional. You can use them to indicate a line that is impossible to complete because a card has already been played elsewhere.\n\nThe game layout and images (including the library image) were done by LawDawg and are released to the Public Domain under CC0.\n\nThe background picture is by Dawn Hudson (cropped and colors modified) and released to the public domain under the CC0 license at https://publicdomainpictures.net/en/view-image.php?image=71643&picture=colourful-flame-background.\n",
       "similarName": "IOTA",
       "description": "Place cards in tile pattern on board matching 4 shapes and 4 colors.  Player with most points wins."
     }
@@ -1829,5 +1651,301 @@
     "clonedFrom": "masterMarker",
     "id": "oj9g",
     "parent": "markerHolder"
+  },
+  "shiftup": {
+    "id": "shiftup",
+    "x": 1514,
+    "y": 875,
+    "width": 50,
+    "height": 50,
+    "layer": 2,
+    "z": 613,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "relation": "-",
+        "value": 50
+      }
+    ],
+    "css": {
+      "default": {
+        "font-size": "50px"
+      },
+      ":hover": {
+        "color": "grey"
+      }
+    },
+    "text": "arrow_up"
+  },
+  "shiftcenter": {
+    "id": "shiftcenter",
+    "x": 1519,
+    "y": 920,
+    "width": 40,
+    "height": 40,
+    "layer": 2,
+    "z": 615,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": -500
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -500
+      }
+    ],
+    "css": {
+      "default": {
+        "font-size": "40px"
+      },
+      ":hover": {
+        "color": "grey"
+      }
+    },
+    "text": "visibility"
+  },
+  "shiftright": {
+    "id": "shiftright",
+    "x": 1558,
+    "y": 915,
+    "width": 50,
+    "height": 50,
+    "layer": 2,
+    "z": 612,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "+",
+        "value": 50
+      }
+    ],
+    "css": {
+      "default": {
+        "font-size": "50px"
+      },
+      ":hover": {
+        "color": "grey"
+      }
+    },
+    "text": "arrow_right"
+  },
+  "shiftdown": {
+    "id": "shiftdown",
+    "x": 1514,
+    "y": 955,
+    "width": 50,
+    "height": 50,
+    "layer": 2,
+    "z": 611,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "relation": "+",
+        "value": 50
+      }
+    ],
+    "css": {
+      "default": {
+        "font-size": "50px"
+      },
+      ":hover": {
+        "color": "grey"
+      }
+    },
+    "text": "arrow_down"
+  },
+  "shiftleft": {
+    "id": "shiftleft",
+    "x": 1470,
+    "y": 915,
+    "width": 50,
+    "height": 50,
+    "layer": 2,
+    "z": 614,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "-",
+        "value": 50
+      }
+    ],
+    "css": {
+      "default": {
+        "font-size": "50px"
+      },
+      ":hover": {
+        "color": "grey"
+      }
+    },
+    "text": "arrow_left"
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "z": 2083,
+    "movableInEdit": false,
+    "y": 5,
+    "hideWhenUnused": true,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "restart",
+        "routine": "startUpRoutine"
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ]
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "y": 140,
+    "z": 2083,
+    "movableInEdit": false,
+    "hideWhenUnused": true,
+    "index": 2,
+    "turn": true,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "restart",
+        "routine": "startUpRoutine"
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ]
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "y": 750,
+    "z": 2083,
+    "movableInEdit": false,
+    "hideWhenUnused": true,
+    "index": 3,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "restart",
+        "routine": "startUpRoutine"
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ]
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "y": 890,
+    "z": 2083,
+    "movableInEdit": false,
+    "index": 4,
+    "hideWhenUnused": true,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "restart",
+        "routine": "startUpRoutine"
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ]
+  },
+  "p2Score": {
+    "type": "label",
+    "id": "p2Score",
+    "x": 10,
+    "y": 200,
+    "width": 140,
+    "height": 44,
+    "layer": 15,
+    "z": 10365,
+    "css": "font-size: 30px",
+    "editable": true,
+    "text": 0,
+    "linkedToSeat": "seat2"
+  },
+  "p1Score": {
+    "type": "label",
+    "id": "p1Score",
+    "x": 10,
+    "y": 65,
+    "width": 140,
+    "height": 44,
+    "layer": 15,
+    "z": 2474,
+    "css": "font-size: 30px",
+    "editable": true,
+    "text": 0,
+    "linkedToSeat": "seat1"
+  },
+  "next": {
+    "type": "button",
+    "id": "next",
+    "x": 1514,
+    "y": 777,
+    "z": 2097,
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ],
+    "text": "Next Player",
+    "movableInEdit": false
   }
 }

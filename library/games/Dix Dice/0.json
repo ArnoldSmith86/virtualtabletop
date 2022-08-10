@@ -1139,9 +1139,10 @@
     "y": 710,
     "height": 45,
     "z": 25,
-    "css": "border-radius: 0;font-size: 25px; background: white; color:black; text-align:center",
+    "css": "border-radius: 0;font-size: 25px; background: white; color:black; text-align:center;line-height:40px",
     "text": 0,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat1"
   },
   "bonusP1": {
     "id": "bonusP1",
@@ -1151,119 +1152,56 @@
     "z": 23,
     "css": "border-radius: 0;font-size: 25px; background:white;color:black;text-align:center",
     "layer": 2,
-    "movableInEdit": false
-  },
-  "1a3v": {
-    "type": "label",
-    "x": 260,
-    "z": 8,
-    "id": "1a3v",
-    "y": 16,
-    "editable": true,
-    "text": 1,
-    "movableInEdit": false
-  },
-  "odj1": {
-    "type": "label",
-    "x": 380,
-    "z": 5,
-    "id": "odj1",
-    "y": 16,
-    "editable": true,
-    "text": 2,
-    "movableInEdit": false
-  },
-  "24h8": {
-    "type": "label",
-    "x": 620,
-    "z": 7,
-    "id": "24h8",
-    "y": 16,
-    "editable": true,
-    "text": 4,
-    "movableInEdit": false
-  },
-  "9xc6": {
-    "type": "label",
-    "x": 500,
-    "z": 6,
-    "id": "9xc6",
-    "y": 16,
-    "editable": true,
-    "text": 3,
-    "movableInEdit": false
-  },
-  "ix75": {
-    "type": "label",
-    "x": 740,
-    "z": 9,
-    "id": "ix75",
-    "y": 16,
-    "editable": true,
-    "text": 5,
-    "movableInEdit": false
-  },
-  "vilp": {
-    "type": "label",
-    "x": 860,
-    "z": 10,
-    "id": "vilp",
-    "y": 16,
-    "editable": true,
-    "text": 6,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat1"
   },
   "totalP2": {
     "id": "totalP2",
     "x": 380,
     "y": 710,
-    "width": null,
     "height": 45,
     "z": 3888,
-    "movable": null,
     "movableInEdit": false,
-    "css": "border-radius: 0;font-size: 25px; background: white; color:black; text-align:center",
+    "css": "border-radius: 0;font-size: 25px; background: white; color:black; text-align:center;line-height:40px",
     "text": 0,
-    "clickable": false
+    "clickable": false,
+    "linkedToSeat": "seat2"
   },
   "totalP3": {
     "id": "totalP3",
     "x": 500,
     "y": 710,
-    "width": null,
     "height": 45,
     "z": 3900,
-    "movable": null,
     "movableInEdit": false,
-    "css": "border-radius: 0;font-size: 25px; background: white; color:black; text-align:center",
+    "css": "border-radius: 0;font-size: 25px; background: white; color:black; text-align:center;line-height:40px",
     "text": 0,
-    "clickable": false
+    "clickable": false,
+    "linkedToSeat": "seat3"
   },
   "totalP4": {
     "id": "totalP4",
     "x": 620,
     "y": 710,
-    "width": null,
     "height": 45,
     "z": 3913,
-    "movable": null,
     "movableInEdit": false,
-    "css": "border-radius: 0;font-size: 25px; background: white; color:black; text-align:center",
+    "css": "border-radius: 0;font-size: 25px; background: white; color:black; text-align:center;line-height:40px",
     "text": 0,
-    "clickable": false
+    "clickable": false,
+    "linkedToSeat": "seat4"
   },
   "totalP5": {
     "id": "totalP5",
     "x": 740,
     "y": 710,
-    "width": null,
     "height": 45,
     "z": 3926,
-    "movable": null,
     "movableInEdit": false,
-    "css": "border-radius: 0;font-size: 25px; background: white; color:black; text-align:center",
+    "css": "border-radius: 0;font-size: 25px; background: white; color:black; text-align:center;line-height:40px",
     "text": 0,
-    "clickable": false
+    "clickable": false,
+    "linkedToSeat": "seat5"
   },
   "totalP6": {
     "id": "totalP6",
@@ -1272,9 +1210,10 @@
     "height": 45,
     "z": 3939,
     "movableInEdit": false,
-    "css": "border-radius: 0;font-size: 25px; background: white; color:black; text-align:center",
+    "css": "border-radius: 0;font-size: 25px; background: white; color:black; text-align:center;line-height:40px",
     "text": 0,
-    "clickable": false
+    "clickable": false,
+    "linkedToSeat": "seat6"
   },
   "finishP1": {
     "type": "button",
@@ -1326,7 +1265,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": 0,
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat1"
   },
   "scoreSheet": {
     "type": "button",
@@ -1491,8 +1431,8 @@
     "width": 100,
     "height": 45,
     "z": 3942,
-    "backgroundColor": "#00000060",
-    "backgroundColorOH": "#00000060",
+    "backgroundColor": "#00000080",
+    "backgroundColorOH": "white",
     "borderColor": "transparent",
     "borderColorOH": "transparent",
     "clickRoutine": [
@@ -1508,7 +1448,9 @@
     ],
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat1",
+    "textColorOH": "black"
   },
   "P1lvl1": {
     "type": "button",
@@ -1537,7 +1479,8 @@
     "text": "--",
     "textColorOH": "black",
     "clickable": false,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat1"
   },
   "P1lvl2": {
     "type": "button",
@@ -1566,7 +1509,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat1"
   },
   "P1lvl3": {
     "type": "button",
@@ -1595,7 +1539,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat1"
   },
   "P1lvl4": {
     "type": "button",
@@ -1624,7 +1569,8 @@
     "text": "--",
     "textColorOH": "black",
     "clickable": false,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat1"
   },
   "P1lvl5": {
     "type": "button",
@@ -1653,7 +1599,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat1"
   },
   "P1lvl6": {
     "type": "button",
@@ -1682,7 +1629,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat1"
   },
   "P1lvl7": {
     "type": "button",
@@ -1711,7 +1659,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat1"
   },
   "P1lvl8": {
     "type": "button",
@@ -1740,7 +1689,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat1"
   },
   "P2lvl0": {
     "type": "button",
@@ -1768,7 +1718,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat2"
   },
   "P1lvl9": {
     "type": "button",
@@ -1798,7 +1749,8 @@
     "clickable": false,
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
-    "textColorOH": "black"
+    "textColorOH": "black",
+    "linkedToSeat": "seat1"
   },
   "P2lvl1": {
     "type": "button",
@@ -1827,7 +1779,8 @@
     "text": "--",
     "textColorOH": "black",
     "clickable": false,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat2"
   },
   "P2lvl2": {
     "type": "button",
@@ -1856,7 +1809,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat2"
   },
   "P2lvl3": {
     "type": "button",
@@ -1885,7 +1839,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat2"
   },
   "P2lvl4": {
     "type": "button",
@@ -1914,7 +1869,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat2"
   },
   "P2lvl5": {
     "type": "button",
@@ -1943,7 +1899,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat2"
   },
   "P2lvl6": {
     "type": "button",
@@ -1972,7 +1929,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat2"
   },
   "P2lvl7": {
     "type": "button",
@@ -2001,7 +1959,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat2"
   },
   "P2lvl8": {
     "type": "button",
@@ -2030,7 +1989,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat2"
   },
   "P2lvl9": {
     "type": "button",
@@ -2059,7 +2019,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat2"
   },
   "finishP2": {
     "type": "button",
@@ -2111,7 +2072,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": 0,
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat2"
   },
   "finishP3": {
     "type": "button",
@@ -2163,7 +2125,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": 0,
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat3"
   },
   "finishP4": {
     "type": "button",
@@ -2215,7 +2178,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": 0,
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat4"
   },
   "finishP5": {
     "type": "button",
@@ -2268,7 +2232,8 @@
     ],
     "css": "border-radius: 0;font-size: 25px; ",
     "text": 0,
-    "textColorOH": "black"
+    "textColorOH": "black",
+    "linkedToSeat": "seat5"
   },
   "finishP6": {
     "type": "button",
@@ -2320,7 +2285,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": 0,
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat6"
   },
   "bonusP2": {
     "id": "bonusP2",
@@ -2333,7 +2299,8 @@
     "movable": null,
     "movableInEdit": false,
     "clickable": false,
-    "css": "border-radius: 0;font-size: 25px; background:white;color:black;text-align:center"
+    "css": "border-radius: 0;font-size: 25px; background:white;color:black;text-align:center",
+    "linkedToSeat": "seat2"
   },
   "bonusP3": {
     "id": "bonusP3",
@@ -2345,7 +2312,8 @@
     "z": 3901,
     "movable": null,
     "movableInEdit": false,
-    "css": "border-radius: 0;font-size: 25px; background:white;color:black;text-align:center"
+    "css": "border-radius: 0;font-size: 25px; background:white;color:black;text-align:center",
+    "linkedToSeat": "seat3"
   },
   "bonusP4": {
     "id": "bonusP4",
@@ -2357,7 +2325,8 @@
     "z": 3914,
     "movable": null,
     "movableInEdit": false,
-    "css": "border-radius: 0;font-size: 25px; background:white;color:black;text-align:center"
+    "css": "border-radius: 0;font-size: 25px; background:white;color:black;text-align:center",
+    "linkedToSeat": "seat4"
   },
   "bonusP5": {
     "id": "bonusP5",
@@ -2370,7 +2339,8 @@
     "movable": null,
     "movableInEdit": false,
     "clickable": false,
-    "css": "border-radius: 0;font-size: 25px; background:white;color:black;text-align:center"
+    "css": "border-radius: 0;font-size: 25px; background:white;color:black;text-align:center",
+    "linkedToSeat": "seat5"
   },
   "bonusP6": {
     "id": "bonusP6",
@@ -2383,14 +2353,27 @@
     "movable": null,
     "movableInEdit": false,
     "clickable": false,
-    "css": "border-radius: 0;font-size: 25px; background:white;color:black;text-align:center"
+    "css": "border-radius: 0;font-size: 25px; background:white;color:black;text-align:center",
+    "linkedToSeat": "seat6"
   },
   "undoBtn": {
     "type": "button",
     "id": "undoBtn",
-    "x": 15,
+    "x": 65,
     "z": 3947,
     "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Undoing last score...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "Do you want to erase the last score?"
+          }
+        ],
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No"
+      },
       {
         "func": "IF",
         "operand1": "${PROPERTY lvl}",
@@ -2529,7 +2512,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat3"
   },
   "P3lvl0": {
     "type": "button",
@@ -2556,7 +2540,8 @@
     ],
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat3"
   },
   "P3lvl3": {
     "type": "button",
@@ -2585,7 +2570,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat3"
   },
   "P3lvl2": {
     "type": "button",
@@ -2614,7 +2600,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat3"
   },
   "P3lvl4": {
     "type": "button",
@@ -2643,7 +2630,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat3"
   },
   "P3lvl5": {
     "type": "button",
@@ -2672,7 +2660,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat3"
   },
   "P3lvl6": {
     "type": "button",
@@ -2701,7 +2690,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat3"
   },
   "P3lvl7": {
     "type": "button",
@@ -2730,7 +2720,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat3"
   },
   "P3lvl8": {
     "type": "button",
@@ -2759,7 +2750,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat3"
   },
   "P3lvl9": {
     "type": "button",
@@ -2788,7 +2780,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat3"
   },
   "P4lvl0": {
     "type": "button",
@@ -2815,7 +2808,8 @@
     ],
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat4"
   },
   "P4lvl1": {
     "type": "button",
@@ -2844,7 +2838,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat4"
   },
   "P4lvl2": {
     "type": "button",
@@ -2873,7 +2868,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat4"
   },
   "P4lvl3": {
     "type": "button",
@@ -2902,7 +2898,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat4"
   },
   "P4lvl4": {
     "type": "button",
@@ -2931,7 +2928,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat4"
   },
   "P4lvl5": {
     "type": "button",
@@ -2960,7 +2958,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat4"
   },
   "P4lvl6": {
     "type": "button",
@@ -2989,7 +2988,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat4"
   },
   "P4lvl7": {
     "type": "button",
@@ -3018,7 +3018,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat4"
   },
   "P4lvl8": {
     "type": "button",
@@ -3047,7 +3048,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat4"
   },
   "P4lvl9": {
     "type": "button",
@@ -3076,7 +3078,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat4"
   },
   "P5lvl0": {
     "type": "button",
@@ -3103,7 +3106,8 @@
     ],
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat5"
   },
   "P5lvl1": {
     "type": "button",
@@ -3132,7 +3136,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat5"
   },
   "P5lvl2": {
     "type": "button",
@@ -3161,7 +3166,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat5"
   },
   "P5lvl3": {
     "type": "button",
@@ -3190,7 +3196,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat5"
   },
   "P5lvl4": {
     "type": "button",
@@ -3219,7 +3226,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat5"
   },
   "P5lvl5": {
     "type": "button",
@@ -3248,7 +3256,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat5"
   },
   "P5lvl6": {
     "type": "button",
@@ -3277,7 +3286,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat5"
   },
   "P5lvl7": {
     "type": "button",
@@ -3306,7 +3316,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat5"
   },
   "P5lvl8": {
     "type": "button",
@@ -3335,7 +3346,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat5"
   },
   "P5lvl9": {
     "type": "button",
@@ -3364,7 +3376,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat5"
   },
   "P6lvl0": {
     "type": "button",
@@ -3391,7 +3404,8 @@
     ],
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat6"
   },
   "P6lvl1": {
     "type": "button",
@@ -3420,7 +3434,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat6"
   },
   "P6lvl2": {
     "type": "button",
@@ -3449,7 +3464,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat6"
   },
   "P6lvl3": {
     "type": "button",
@@ -3478,7 +3494,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat6"
   },
   "P6lvl4": {
     "type": "button",
@@ -3507,7 +3524,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat6"
   },
   "P6lvl5": {
     "type": "button",
@@ -3536,7 +3554,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat6"
   },
   "P6lvl6": {
     "type": "button",
@@ -3565,7 +3584,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat6"
   },
   "P6lvl7": {
     "type": "button",
@@ -3594,7 +3614,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat6"
   },
   "P6lvl8": {
     "type": "button",
@@ -3623,7 +3644,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat6"
   },
   "P6lvl9": {
     "type": "button",
@@ -3652,7 +3674,8 @@
     "css": "border-radius: 0;font-size: 25px; ",
     "text": "--",
     "textColorOH": "black",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "linkedToSeat": "seat6"
   },
   "rollCount": {
     "id": "rollCount",
@@ -3739,13 +3762,16 @@
         "func": "SET",
         "property": "text",
         "value": 0
+      },
+      {
+        "func": "TURN"
       }
     ],
     "text": "Recall Dice",
     "movableInEdit": false
   },
   "_meta": {
-    "version": 3,
+    "version": 6,
     "info": {
       "name": "Dix Dice",
       "image": "/assets/-1880411500_33630",
@@ -3757,9 +3783,168 @@
       "players": "1-6",
       "language": "US",
       "variant": "",
-      "attribution": "The room state, library image, and all game elements are by LawDawg96 are are released to the Public Domain under CC0.",
+      "attribution": "INSTRUCTIONS: Players take seats. Press Recall Dice button until desired first player's seat is highlighted. That player presses Roll button. Save dice by moving to the Set or Run/Color holders at the bottom. Dice to be re-rolled stay in holder on the right. After 3 rolls, if player does not make goal or does not want to enter score, press Recall Dice button to pass turn to next player. To enter score, click on the appropriate score entry label. Scoring and passing turn is automatic in that case. If score was entered by mistake, last score can be undone by pressing Undo Last Score button in upper left.\n\nThe room state, library image, and all game elements are by LawDawg96 are are released to the Public Domain under CC0.",
       "similarName": "Phase 10 Dice",
       "description": "Complete a series of levels by rolling dice in runs, sets, or colors.  First to complete 10 levels wins."
     }
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 230,
+    "scale": 0.7,
+    "z": 3951
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "x": 350,
+    "scale": 0.7,
+    "z": 3951,
+    "index": 2
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "x": 470,
+    "scale": 0.7,
+    "z": 3951,
+    "index": 3
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "x": 590,
+    "scale": 0.7,
+    "z": 3951,
+    "index": 4
+  },
+  "seat5": {
+    "type": "seat",
+    "id": "seat5",
+    "x": 710,
+    "scale": 0.7,
+    "z": 3951,
+    "index": 5
+  },
+  "seat6": {
+    "type": "seat",
+    "id": "seat6",
+    "x": 830,
+    "scale": 0.7,
+    "z": 3951,
+    "index": 6
+  },
+  "reset": {
+    "type": "button",
+    "id": "reset",
+    "x": 5,
+    "width": 50,
+    "height": 50,
+    "z": 2088,
+    "classes": "symbols",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Resetting game...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "Do you want to reset the game, including the scores?"
+          }
+        ],
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No"
+      },
+      {
+        "func": "SELECT",
+        "property": "linkedToSeat",
+        "relation": "in",
+        "value": [
+          "seat1",
+          "seat2",
+          "seat3",
+          "seat4",
+          "seat5",
+          "seat6"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "--"
+      },
+      {
+        "func": "SET",
+        "property": "clickable",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "P1lvl0",
+          "P2lvl0",
+          "P3lvl0",
+          "P4lvl0",
+          "P5lvl0",
+          "P6lvl0"
+        ],
+        "property": "clickable",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "bonusP1",
+          "bonusP2",
+          "bonusP3",
+          "bonusP4",
+          "bonusP5",
+          "bonusP6"
+        ],
+        "property": "text",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "totalP1",
+          "totalP2",
+          "totalP3",
+          "totalP4",
+          "totalP5",
+          "totalP6"
+        ],
+        "property": "text",
+        "value": 0
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "recallDice"
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "rollBtn"
+        ]
+      }
+    ],
+    "color": "white",
+    "css": "font-size: 40px; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
+    "scoreArray": [
+      "score1",
+      "score2",
+      "score3",
+      "score4",
+      "score5",
+      "score6",
+      "score7",
+      "score8",
+      "score9",
+      "score10"
+    ],
+    "text": "restart"
   }
 }

@@ -987,7 +987,7 @@
         "offsetY": 8
       }
     ],
-    "z": 2498,
+    "z": 21854,
     "green4": true,
     "parent": "g04h"
   },
@@ -1401,13 +1401,18 @@
     "clickRoutine": [
       {
         "func": "INPUT",
-        "header": "Resetting board...",
         "fields": [
           {
+            "type": "title",
+            "text": "New game..."
+          },
+          {
             "type": "text",
-            "text": "Are you sure you want to reset the board?  Press Go to continue or Cancel to exit."
+            "text": "Start new game?"
           }
-        ]
+        ],
+        "confirmButtonIcon": "check",
+        "cancelButtonIcon": "close"
       },
       {
         "func": "SELECT",
@@ -1461,14 +1466,6 @@
       },
       {
         "func": "SELECT",
-        "property": "id",
-        "value": "countblue"
-      },
-      {
-        "func": "CLICK"
-      },
-      {
-        "func": "SELECT",
         "property": "red1",
         "value": true
       },
@@ -1516,14 +1513,6 @@
         "func": "SET",
         "property": "parent",
         "value": "r05h"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "countred"
-      },
-      {
-        "func": "CLICK"
       },
       {
         "func": "SELECT",
@@ -1577,14 +1566,6 @@
       },
       {
         "func": "SELECT",
-        "property": "id",
-        "value": "countgreen"
-      },
-      {
-        "func": "CLICK"
-      },
-      {
-        "func": "SELECT",
         "property": "yellow1",
         "value": true
       },
@@ -1635,14 +1616,6 @@
       },
       {
         "func": "SELECT",
-        "property": "id",
-        "value": "countyellow"
-      },
-      {
-        "func": "CLICK"
-      },
-      {
-        "func": "SELECT",
         "property": "score",
         "value": true
       },
@@ -1653,13 +1626,12 @@
       }
     ],
     "x": 1560,
-    "css": "background-size: 80%; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
-    "z": 2094,
-    "image": "/assets/1342248376_1383",
-    "svgReplaces": {
-      "currentColor": "color"
-    },
-    "color": "white"
+    "css": "background-size: 80%; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black;font-size:30px",
+    "z": 2100,
+    "color": "white",
+    "y": -2,
+    "classes": "symbols",
+    "text": "restart"
   },
   "eaq2": {
     "image": "/assets/-1980769904_526218",
@@ -2777,7 +2749,7 @@
         "offsetY": 8
       }
     ],
-    "z": 2505,
+    "z": 21853,
     "green4": true,
     "id": "1ka7",
     "parent": "g04h"
@@ -2799,7 +2771,7 @@
         "offsetY": 8
       }
     ],
-    "z": 2507,
+    "z": 21852,
     "green4": true,
     "id": "2v4g",
     "parent": "g04h"
@@ -2821,7 +2793,7 @@
         "offsetY": 8
       }
     ],
-    "z": 21828,
+    "z": 21843,
     "green4": true,
     "id": "9eqk",
     "parent": "g04h"
@@ -2843,7 +2815,7 @@
         "offsetY": 8
       }
     ],
-    "z": 21827,
+    "z": 21849,
     "green4": true,
     "id": "uws5",
     "parent": "g04h"
@@ -3191,7 +3163,7 @@
         "offsetY": 8
       }
     ],
-    "z": 21834,
+    "z": 21845,
     "yellow4": true,
     "id": "75ta",
     "parent": "y04h"
@@ -3258,7 +3230,7 @@
       }
     ],
     "css": "background-color:#96BFE1; color:blue; border: 3px solid blue",
-    "parent": "kg3w"
+    "parent": "score1"
   },
   "kg3wU": {
     "id": "kg3wU",
@@ -3278,7 +3250,7 @@
       }
     ],
     "css": "background-color:#96BFE1; color:blue; border: 3px solid blue",
-    "parent": "kg3w"
+    "parent": "score1"
   },
   "9wdkD": {
     "id": "9wdkD",
@@ -3298,7 +3270,7 @@
       }
     ],
     "css": "background-color:#F7C8C8; color:red; border: 3px solid red",
-    "parent": "9wdk"
+    "parent": "score2"
   },
   "9wdkU": {
     "id": "9wdkU",
@@ -3318,7 +3290,7 @@
       }
     ],
     "css": "background-color:#F7C8C8; color:red; border: 3px solid red",
-    "parent": "9wdk"
+    "parent": "score2"
   },
   "sjhiD": {
     "id": "sjhiD",
@@ -3338,7 +3310,7 @@
       }
     ],
     "css": "background-color:#CEFBD8; color:green; border: 3px solid green",
-    "parent": "sjhi"
+    "parent": "score3"
   },
   "sjhiU": {
     "id": "sjhiU",
@@ -3358,7 +3330,7 @@
       }
     ],
     "css": "background-color:#CEFBD8; color:green; border: 3px solid green",
-    "parent": "sjhi"
+    "parent": "score3"
   },
   "jypuD": {
     "id": "jypuD",
@@ -3378,7 +3350,7 @@
       }
     ],
     "css": "background-color:#FBFBCE; color:orange; border: 3px solid orange",
-    "parent": "jypu"
+    "parent": "score4"
   },
   "jypuU": {
     "id": "jypuU",
@@ -3398,107 +3370,7 @@
       }
     ],
     "css": "background-color:#FBFBCE; color:orange; border: 3px solid orange",
-    "parent": "jypu"
-  },
-  "qyne": {
-    "type": "label",
-    "css": "font-size: 27px",
-    "height": 37,
-    "width": 200,
-    "x": 173,
-    "y": 18.5,
-    "z": 8,
-    "id": "qyne",
-    "editable": true,
-    "text": 1
-  },
-  "9i37": {
-    "type": "label",
-    "css": "font-size: 27px",
-    "height": 37,
-    "width": 200,
-    "x": 183,
-    "y": 518.5,
-    "z": 9,
-    "id": "9i37",
-    "editable": true,
-    "text": 2
-  },
-  "tisp": {
-    "type": "label",
-    "css": "font-size: 27px",
-    "height": 37,
-    "width": 200,
-    "x": 1201,
-    "y": 23.5,
-    "z": 10,
-    "id": "tisp",
-    "editable": true,
-    "text": 3
-  },
-  "c97a": {
-    "type": "label",
-    "css": "font-size: 27px",
-    "height": 37,
-    "width": 200,
-    "x": 1203,
-    "y": 519.5,
-    "z": 11,
-    "id": "c97a",
-    "editable": true,
-    "text": 4
-  },
-  "kg3w": {
-    "type": "label",
-    "text": 0,
-    "id": "kg3w",
-    "x": 198,
-    "y": 65,
-    "width": 140,
-    "height": 44,
-    "css": "font-size: 30px;",
-    "editable": true,
-    "z": 1,
-    "score": true
-  },
-  "sjhi": {
-    "type": "label",
-    "text": 0,
-    "id": "sjhi",
-    "x": 1233,
-    "y": 81,
-    "width": 140,
-    "height": 44,
-    "css": "font-size: 30px;",
-    "editable": true,
-    "z": 3,
-    "score": true
-  },
-  "9wdk": {
-    "type": "label",
-    "text": 0,
-    "id": "9wdk",
-    "x": 212,
-    "y": 563,
-    "width": 140,
-    "height": 44,
-    "css": "font-size: 30px;",
-    "editable": true,
-    "z": 2,
-    "score": true
-  },
-  "jypu": {
-    "type": "label",
-    "text": 0,
-    "id": "jypu",
-    "x": 1235,
-    "y": 572,
-    "width": 140,
-    "height": 44,
-    "css": "font-size: 30px;",
-    "editable": true,
-    "z": 4,
-    "score": true
+    "parent": "score4"
   },
   "thedice": {
     "id": "thedice",
@@ -4131,7 +4003,7 @@
         "value": "${rotation}"
       }
     ],
-    "z": 21800,
+    "z": 21841,
     "parent": "b05h"
   },
   "b015-copy002": {
@@ -4783,7 +4655,7 @@
         "value": null
       }
     ],
-    "z": 21801,
+    "z": 21856,
     "parent": "b03h"
   },
   "b017-copy002": {
@@ -6468,7 +6340,7 @@
     "clicks": 0,
     "rotation": 90,
     "image": "/assets/-1261117867_300",
-    "z": 21830,
+    "z": 21855,
     "parent": "g01h"
   },
   "g014-copy003": {
@@ -6743,7 +6615,7 @@
         "value": null
       }
     ],
-    "z": 21833,
+    "z": 21847,
     "parent": "g05h"
   },
   "g015-copy002": {
@@ -6956,7 +6828,7 @@
         "value": null
       }
     ],
-    "z": 21832,
+    "z": 21851,
     "parent": "g03h"
   },
   "g017-copy002": {
@@ -7228,7 +7100,7 @@
     "rotation": 90,
     "image": "/assets/-1723773_286",
     "clicks": 0,
-    "z": 21837,
+    "z": 21848,
     "parent": "g02h"
   },
   "g013-copy002": {
@@ -7338,7 +7210,7 @@
     "rotation": 90,
     "image": "/assets/-1723773_286",
     "clicks": 0,
-    "z": 21836,
+    "z": 21850,
     "parent": "g02h"
   },
   "g013-copy003": {
@@ -7448,7 +7320,7 @@
     "rotation": 90,
     "image": "/assets/-1723773_286",
     "clicks": 0,
-    "z": 21840,
+    "z": 21844,
     "parent": "g02h"
   },
   "g013-copy004": {
@@ -7668,7 +7540,7 @@
     ],
     "image": "/assets/-802436164_300",
     "clicks": 0,
-    "z": 21818,
+    "z": 21846,
     "parent": "y01h"
   },
   "y014-copy002": {
@@ -8866,7 +8738,7 @@
     "parent": "y02h"
   },
   "_meta": {
-    "version": 3,
+    "version": 6,
     "info": {
       "name": "Connex",
       "image": "/assets/1978638219_40671",
@@ -8878,9 +8750,122 @@
       "players": "2-4",
       "language": "UN",
       "variant": "",
-      "attribution": "The game layout, board, piece designs, and library image were done by https://www.reddit.com/user/96LawDawg and are released to the Public Domain under CC0.",
+      "attribution": "INSTRUCTIONS: Players take seats. Click die at top of screen to choose random piece to play. Place piece on board. Press next icon button to indicate turn is over.\n\nThe game layout, board, piece designs, and library image were done by LawDawg and are released to the Public Domain under CC0.",
       "similarName": "Tetris Link",
       "description": "Place colored, shaped blocks into playing area to connect as many pieces as possible to earn points and block opponents.  Highest score wins. "
     }
+  },
+  "score1": {
+    "type": "label",
+    "id": "score1",
+    "x": 198,
+    "y": 80,
+    "width": 140,
+    "height": 44,
+    "z": 1,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "score": true,
+    "text": 0,
+    "movableInEdit": false
+  },
+  "score4": {
+    "type": "label",
+    "id": "score4",
+    "x": 1235,
+    "y": 575,
+    "width": 140,
+    "height": 44,
+    "z": 4,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "score": true,
+    "text": 0
+  },
+  "score3": {
+    "type": "label",
+    "id": "score3",
+    "x": 1233,
+    "y": 80,
+    "width": 140,
+    "height": 44,
+    "z": 3,
+    "movableInEdit": false,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "score": true,
+    "text": 0
+  },
+  "score2": {
+    "type": "label",
+    "id": "score2",
+    "x": 212,
+    "y": 575,
+    "width": 140,
+    "height": 44,
+    "z": 2,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "score": true,
+    "text": 0
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 190,
+    "y": 16,
+    "z": 2097,
+    "movableInEdit": false,
+    "hideWhenUnused": true
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "x": 1225,
+    "y": 510,
+    "z": 2098,
+    "index": 4,
+    "movableInEdit": false,
+    "hideWhenUnused": true
+  },
+  "next": {
+    "type": "button",
+    "id": "next",
+    "y": 135,
+    "z": 2099,
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ],
+    "color": "none",
+    "classes": "material-icons",
+    "text": "skip_next",
+    "width": 50,
+    "height": 50,
+    "x": 780,
+    "movableInEdit": false,
+    "css": "font-size: 40px; "
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "index": 2,
+    "x": 199,
+    "y": 510,
+    "z": 2097,
+    "movableInEdit": false,
+    "hideWhenUnused": true
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "index": 3,
+    "x": 1225,
+    "y": 16,
+    "z": 2097,
+    "movableInEdit": false,
+    "hideWhenUnused": true
   }
 }

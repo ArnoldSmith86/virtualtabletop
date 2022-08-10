@@ -7939,7 +7939,7 @@
     "movableInEdit": false
   },
   "_meta": {
-    "version": 3,
+    "version": 6,
     "info": {
       "name": "Stratagem",
       "image": "/assets/1642569835_24223",
@@ -7951,7 +7951,7 @@
       "players": "2-4",
       "language": "UN",
       "variant": "",
-      "attribution": "The game layout, board, piece designs, and library image were done by https://www.reddit.com/user/96LawDawg and are released to the Public Domain under CC0.",
+      "attribution": "INSTRUCTIONS: Seats are optional. Use arrows to show or hide trays with colored pieces.\n\nThe game layout, board, piece designs, and library image were done by LawDawg and are released to the Public Domain under CC0.",
       "similarName": "Blokus",
       "description": "Place colored shapes onto board with corners touching.  Fewest unit squares remaning wins."
     }
@@ -8862,5 +8862,38 @@
     "svgReplaces": {
       "currentColor": "color"
     }
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 470,
+    "movableInEdit": false,
+    "hideWhenUnused": true
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "x": 965,
+    "movableInEdit": false,
+    "hideWhenUnused": true,
+    "index": 2
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "x": 470,
+    "movableInEdit": false,
+    "hideWhenUnused": true,
+    "y": 945,
+    "index": 3
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "x": 965,
+    "movableInEdit": false,
+    "hideWhenUnused": true,
+    "index": 4,
+    "y": 945
   }
 }

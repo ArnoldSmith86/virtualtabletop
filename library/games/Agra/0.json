@@ -12,7 +12,7 @@
       "players": "2",
       "language": "UN",
       "variant": "",
-      "attribution": "INSTRUCTIONS: Players take seats. Press restart button in upper right to begin game. After each player's turn, press skip-next button to advance turn indicator and auto-fill market with 5 cards. Each player can only see the count of camel cards for themself. At end of round, each player press the sigma/sum button to calculate and show score. Drag victory point token to circle holder by player name and press restart button to go to next round.\n\nRoom layout and design by LawDawg and released to the public domain by CC0.\n\nGame piece icons are available as follows:\n\nFrom https://game-icons.net/ and available under CC BY 3.0:\nDelapouite\n  - Jug https://game-icons.net/1x1/delapouite/jug.html\n  - Grain https://game-icons.net/1x1/delapouite/grain.html\n  - Gold https://game-icons.net/1x1/delapouite/gold-stack.html\n  - Camel https://game-icons.net/1x1/delapouite/camel.html\n  - Camel head https://game-icons.net/1x1/delapouite/camel-head.html\n  - Palace https://game-icons.net/1x1/delapouite/indian-palace.html\n\nLucas\n  - Shirt https://game-icons.net/1x1/lucasms/shirt.html\n\nLorc\n  - Chest https://game-icons.net/1x1/lorc/locked-chest.html\n  - Diamond https://game-icons.net/1x1/lorc/cut-diamond.html\n  - Coins https://game-icons.net/1x1/lorc/cash.html\n\nTaj Mahal victory chip icon by Freepik available under the FlatIcon license at https://www.flaticon.com/free-icons/taj-mahal\n\nAladin Font by Sudtipos available under Open Font License, Version 1.1 from https://fonts.google.com/specimen/Aladin?query=aladin.\n\nBackground picture by shalender kumar available at https://pixabay.com/photos/taj-mahal-sunset-taj-mahal-india-4808227/ under the Pixabay license.",
+      "attribution": "INSTRUCTIONS: Players take seats. Press restart button in upper right to begin game. After each player's turn, press skip-next button to advance turn indicator and auto-fill market with 5 cards. Each player can only see the count of camel cards for themself. At end of round, each player press the sigma/sum button to calculate and show score. Drag victory point token to circle holder by player name and press restart button to go to next round.\n\nRoom layout and design by LawDawg and released to the public domain by CC0.\n\nGame piece icons are available as follows:\n\nFrom https://game-icons.net/ and available under CC BY 3.0:\nDelapouite\n  - Jug https://game-icons.net/1x1/delapouite/jug.html\n  - Grain https://game-icons.net/1x1/delapouite/grain.html\n  - Gold https://game-icons.net/1x1/delapouite/gold-stack.html\n  - Camel https://game-icons.net/1x1/delapouite/camel.html\n  - Camel head https://game-icons.net/1x1/delapouite/camel-head.html\n  - Palace https://game-icons.net/1x1/delapouite/indian-palace.html\n\nLucas\n  - Shirt https://game-icons.net/1x1/lucasms/shirt.html\n\nLorc\n  - Chest https://game-icons.net/1x1/lorc/locked-chest.html\n  - Diamond https://game-icons.net/1x1/lorc/cut-diamond.html\n  - Coins https://game-icons.net/1x1/lorc/cash.html\n\nTaj Mahal victory chip icon by Freepik available under the FlatIcon license at https://www.flaticon.com/free-icon/taj-mahal_760023\n\nAladin Font by Sudtipos available under Open Font License, Version 1.1 from https://fonts.google.com/specimen/Aladin?query=aladin.\n\nBackground picture by shalender kumar available at https://pixabay.com/photos/taj-mahal-sunset-taj-mahal-india-4808227/ under the Pixabay license.",
       "similarName": "Jaipur",
       "description": "Players take turns either taking cards from common market area or selling cards in exchange for 6 different goods tokens worth varying points. Play until card pile is depleted or 3 types of goods are depleted. Most points at end of round wins the round. First to win 2 rounds is overall winner."
     }
@@ -82,7 +82,7 @@
     "type": "card",
     "cardType": "camel",
     "id": "dgi4",
-    "z": 19353,
+    "z": 20641,
     "deck": "cardDeck",
     "parent": "febf"
   },
@@ -189,7 +189,12 @@
       },
       {
         "func": "SHUFFLE",
-        "holder": "cardDeckHolder"
+        "holder": [
+          "cardDeckHolder",
+          "3DeckHolder",
+          "4DeckHolder",
+          "5DeckHolder"
+        ]
       },
       {
         "func": "SELECT",
@@ -376,7 +381,7 @@
     "type": "card",
     "cardType": "jug",
     "id": "kb9u",
-    "z": 19310,
+    "z": 20603,
     "parent": "febf"
   },
   "nddr": {
@@ -384,7 +389,7 @@
     "type": "card",
     "cardType": "grain",
     "id": "nddr",
-    "z": 19286,
+    "z": 20579,
     "parent": "febf"
   },
   "nnx3": {
@@ -392,7 +397,7 @@
     "type": "card",
     "cardType": "shirt",
     "id": "nnx3",
-    "z": 19300,
+    "z": 20587,
     "parent": "febf"
   },
   "99q1": {
@@ -400,7 +405,7 @@
     "type": "card",
     "cardType": "chest",
     "id": "99q1",
-    "z": 19297,
+    "z": 20598,
     "parent": "febf"
   },
   "es4e": {
@@ -408,7 +413,7 @@
     "type": "card",
     "cardType": "gold",
     "id": "es4e",
-    "z": 19316,
+    "z": 20578,
     "parent": "febf"
   },
   "xs2h": {
@@ -416,7 +421,7 @@
     "type": "card",
     "cardType": "diamond",
     "id": "xs2h",
-    "z": 19314,
+    "z": 20561,
     "parent": "febf"
   },
   "3Deck": {
@@ -828,7 +833,7 @@
     "type": "card",
     "cardType": "5-8",
     "id": "4m4v",
-    "z": 19274,
+    "z": 20630,
     "parent": "9cf2"
   },
   "i3xt": {
@@ -836,7 +841,7 @@
     "type": "card",
     "cardType": "5-8",
     "id": "i3xt",
-    "z": 19276,
+    "z": 20627,
     "parent": "9cf2"
   },
   "7mkv": {
@@ -844,7 +849,7 @@
     "type": "card",
     "cardType": "5-9",
     "id": "7mkv",
-    "z": 19278,
+    "z": 20626,
     "parent": "9cf2"
   },
   "bkxk": {
@@ -852,7 +857,7 @@
     "type": "card",
     "cardType": "5-10",
     "id": "bkxk",
-    "z": 19280,
+    "z": 20629,
     "parent": "9cf2"
   },
   "7l7m": {
@@ -860,7 +865,7 @@
     "type": "card",
     "cardType": "5-10",
     "id": "7l7m",
-    "z": 19282,
+    "z": 20628,
     "parent": "9cf2"
   },
   "y7s2": {
@@ -868,7 +873,7 @@
     "type": "card",
     "cardType": "4-4",
     "id": "y7s2",
-    "z": 19262,
+    "z": 20621,
     "parent": "evmu"
   },
   "nk34": {
@@ -876,7 +881,7 @@
     "type": "card",
     "cardType": "4-4",
     "id": "nk34",
-    "z": 19264,
+    "z": 20620,
     "parent": "evmu"
   },
   "xpfk": {
@@ -884,7 +889,7 @@
     "type": "card",
     "cardType": "4-5",
     "id": "xpfk",
-    "z": 19266,
+    "z": 20623,
     "parent": "evmu"
   },
   "v3tc": {
@@ -892,7 +897,7 @@
     "type": "card",
     "cardType": "4-5",
     "id": "v3tc",
-    "z": 19268,
+    "z": 20622,
     "parent": "evmu"
   },
   "4ob1": {
@@ -900,7 +905,7 @@
     "type": "card",
     "cardType": "4-6",
     "id": "4ob1",
-    "z": 19270,
+    "z": 20624,
     "parent": "evmu"
   },
   "l4x1": {
@@ -908,7 +913,7 @@
     "type": "card",
     "cardType": "4-6",
     "id": "l4x1",
-    "z": 19272,
+    "z": 20625,
     "parent": "evmu"
   },
   "qj16": {
@@ -916,7 +921,7 @@
     "type": "card",
     "cardType": "3-1",
     "id": "qj16",
-    "z": 19248,
+    "z": 20614,
     "parent": "l758"
   },
   "i2oa": {
@@ -924,7 +929,7 @@
     "type": "card",
     "cardType": "3-1",
     "id": "i2oa",
-    "z": 19250,
+    "z": 20618,
     "parent": "l758"
   },
   "ed0a": {
@@ -932,7 +937,7 @@
     "type": "card",
     "cardType": "3-2",
     "id": "ed0a",
-    "z": 19252,
+    "z": 20616,
     "parent": "l758"
   },
   "asuu": {
@@ -940,7 +945,7 @@
     "type": "card",
     "cardType": "3-2",
     "id": "asuu",
-    "z": 19254,
+    "z": 20617,
     "parent": "l758"
   },
   "vonk": {
@@ -948,7 +953,7 @@
     "type": "card",
     "cardType": "3-2",
     "id": "vonk",
-    "z": 19256,
+    "z": 20619,
     "parent": "l758"
   },
   "cpp7": {
@@ -956,7 +961,7 @@
     "type": "card",
     "cardType": "3-3",
     "id": "cpp7",
-    "z": 19258,
+    "z": 20613,
     "parent": "l758"
   },
   "60av": {
@@ -964,7 +969,7 @@
     "type": "card",
     "cardType": "3-3",
     "id": "60av",
-    "z": 19260,
+    "z": 20615,
     "parent": "l758"
   },
   "silverDeckHolder": {
@@ -2573,7 +2578,8 @@
     "classes": "symbols",
     "css": "font-size: 60px; opacity:0.4",
     "text": "trash",
-    "movable": false
+    "movable": false,
+    "layer": -2
   },
   "vpDeckHolder": {
     "type": "holder",
@@ -2612,7 +2618,7 @@
     "type": "card",
     "cardType": "camel",
     "id": "g73h",
-    "z": 19356,
+    "z": 20638,
     "parent": "febf"
   },
   "oy2r": {
@@ -2620,7 +2626,7 @@
     "type": "card",
     "cardType": "camel",
     "id": "oy2r",
-    "z": 19359,
+    "z": 20635,
     "parent": "febf"
   },
   "dhrw": {
@@ -2628,7 +2634,7 @@
     "type": "card",
     "cardType": "camel",
     "id": "dhrw",
-    "z": 19305,
+    "z": 20573,
     "parent": "febf"
   },
   "mvbk": {
@@ -2636,7 +2642,7 @@
     "type": "card",
     "cardType": "camel",
     "id": "mvbk",
-    "z": 19325,
+    "z": 20570,
     "parent": "febf"
   },
   "xkxl": {
@@ -2644,7 +2650,7 @@
     "type": "card",
     "cardType": "camel",
     "id": "xkxl",
-    "z": 19295,
+    "z": 20599,
     "parent": "febf"
   },
   "gw7x": {
@@ -2652,7 +2658,7 @@
     "type": "card",
     "cardType": "camel",
     "id": "gw7x",
-    "z": 19335,
+    "z": 20576,
     "parent": "febf"
   },
   "320s": {
@@ -2660,7 +2666,7 @@
     "type": "card",
     "cardType": "camel",
     "id": "320s",
-    "z": 19283,
+    "z": 20593,
     "parent": "febf"
   },
   "jzb2": {
@@ -2668,7 +2674,7 @@
     "type": "card",
     "cardType": "camel",
     "id": "jzb2",
-    "z": 19311,
+    "z": 20584,
     "parent": "febf"
   },
   "f02z": {
@@ -2676,7 +2682,7 @@
     "type": "card",
     "cardType": "camel",
     "id": "f02z",
-    "z": 19329,
+    "z": 20606,
     "parent": "febf"
   },
   "6n8y": {
@@ -2684,7 +2690,7 @@
     "type": "card",
     "cardType": "camel",
     "id": "6n8y",
-    "z": 19319,
+    "z": 20585,
     "parent": "febf"
   },
   "ysv3": {
@@ -2692,7 +2698,7 @@
     "type": "card",
     "cardType": "jug",
     "id": "ysv3",
-    "z": 19302,
+    "z": 20563,
     "parent": "febf"
   },
   "hhrq": {
@@ -2700,7 +2706,7 @@
     "type": "card",
     "cardType": "jug",
     "id": "hhrq",
-    "z": 19307,
+    "z": 20608,
     "parent": "febf"
   },
   "hek9": {
@@ -2708,7 +2714,7 @@
     "type": "card",
     "cardType": "jug",
     "id": "hek9",
-    "z": 19350,
+    "z": 20559,
     "parent": "febf"
   },
   "vmja": {
@@ -2716,7 +2722,7 @@
     "type": "card",
     "cardType": "jug",
     "id": "vmja",
-    "z": 19326,
+    "z": 20564,
     "parent": "febf"
   },
   "0jsw": {
@@ -2724,7 +2730,7 @@
     "type": "card",
     "cardType": "jug",
     "id": "0jsw",
-    "z": 19287,
+    "z": 20569,
     "parent": "febf"
   },
   "f6a7": {
@@ -2732,7 +2738,7 @@
     "type": "card",
     "cardType": "jug",
     "id": "f6a7",
-    "z": 19330,
+    "z": 20583,
     "parent": "febf"
   },
   "7xx3": {
@@ -2740,7 +2746,7 @@
     "type": "card",
     "cardType": "jug",
     "id": "7xx3",
-    "z": 19288,
+    "z": 20604,
     "parent": "febf"
   },
   "5p8t": {
@@ -2748,7 +2754,7 @@
     "type": "card",
     "cardType": "jug",
     "id": "5p8t",
-    "z": 19306,
+    "z": 20566,
     "parent": "febf"
   },
   "dmh1": {
@@ -2756,7 +2762,7 @@
     "type": "card",
     "cardType": "jug",
     "id": "dmh1",
-    "z": 19322,
+    "z": 20581,
     "parent": "febf"
   },
   "cwas": {
@@ -2764,7 +2770,7 @@
     "type": "card",
     "cardType": "grain",
     "id": "cwas",
-    "z": 19317,
+    "z": 20602,
     "parent": "febf"
   },
   "wh86": {
@@ -2772,7 +2778,7 @@
     "type": "card",
     "cardType": "grain",
     "id": "wh86",
-    "z": 19318,
+    "z": 20586,
     "parent": "febf"
   },
   "35jz": {
@@ -2780,7 +2786,7 @@
     "type": "card",
     "cardType": "grain",
     "id": "35jz",
-    "z": 19312,
+    "z": 20596,
     "parent": "febf"
   },
   "d0o9": {
@@ -2788,7 +2794,7 @@
     "type": "card",
     "cardType": "grain",
     "id": "d0o9",
-    "z": 19301,
+    "z": 20588,
     "parent": "febf"
   },
   "sz8z": {
@@ -2796,7 +2802,7 @@
     "type": "card",
     "cardType": "grain",
     "id": "sz8z",
-    "z": 19328,
+    "z": 20591,
     "parent": "febf"
   },
   "01e7": {
@@ -2804,7 +2810,7 @@
     "type": "card",
     "cardType": "grain",
     "id": "01e7",
-    "z": 19303,
+    "z": 20609,
     "parent": "febf"
   },
   "iy0r": {
@@ -2812,7 +2818,7 @@
     "type": "card",
     "cardType": "grain",
     "id": "iy0r",
-    "z": 19284,
+    "z": 20565,
     "parent": "febf"
   },
   "ge79": {
@@ -2820,7 +2826,7 @@
     "type": "card",
     "cardType": "shirt",
     "id": "ge79",
-    "z": 19285,
+    "z": 20644,
     "parent": "febf"
   },
   "2th8": {
@@ -2828,7 +2834,7 @@
     "type": "card",
     "cardType": "shirt",
     "id": "2th8",
-    "z": 19323,
+    "z": 20595,
     "parent": "febf"
   },
   "6ng5": {
@@ -2836,7 +2842,7 @@
     "type": "card",
     "cardType": "shirt",
     "id": "6ng5",
-    "z": 19289,
+    "z": 20592,
     "parent": "febf"
   },
   "dxfe": {
@@ -2844,7 +2850,7 @@
     "type": "card",
     "cardType": "shirt",
     "id": "dxfe",
-    "z": 19315,
+    "z": 20589,
     "parent": "febf"
   },
   "co5a": {
@@ -2852,7 +2858,7 @@
     "type": "card",
     "cardType": "shirt",
     "id": "co5a",
-    "z": 19333,
+    "z": 20601,
     "parent": "febf"
   },
   "vej8": {
@@ -2860,7 +2866,7 @@
     "type": "card",
     "cardType": "shirt",
     "id": "vej8",
-    "z": 19347,
+    "z": 20574,
     "parent": "febf"
   },
   "66q3": {
@@ -2868,7 +2874,7 @@
     "type": "card",
     "cardType": "shirt",
     "id": "66q3",
-    "z": 19292,
+    "z": 20558,
     "parent": "febf"
   },
   "ttfn": {
@@ -2876,7 +2882,7 @@
     "type": "card",
     "cardType": "chest",
     "id": "ttfn",
-    "z": 19296,
+    "z": 20597,
     "parent": "febf"
   },
   "nnnq": {
@@ -2884,7 +2890,7 @@
     "type": "card",
     "cardType": "chest",
     "id": "nnnq",
-    "z": 19332,
+    "z": 20562,
     "parent": "febf"
   },
   "8djt": {
@@ -2892,7 +2898,7 @@
     "type": "card",
     "cardType": "chest",
     "id": "8djt",
-    "z": 19294,
+    "z": 20582,
     "parent": "febf"
   },
   "3geq": {
@@ -2900,7 +2906,7 @@
     "type": "card",
     "cardType": "chest",
     "id": "3geq",
-    "z": 19299,
+    "z": 20568,
     "parent": "febf"
   },
   "4fkq": {
@@ -2908,7 +2914,7 @@
     "type": "card",
     "cardType": "chest",
     "id": "4fkq",
-    "z": 19321,
+    "z": 20590,
     "parent": "febf"
   },
   "n2xo": {
@@ -2916,7 +2922,7 @@
     "type": "card",
     "cardType": "gold",
     "id": "n2xo",
-    "z": 19331,
+    "z": 20575,
     "parent": "febf"
   },
   "pbh6": {
@@ -2924,7 +2930,7 @@
     "type": "card",
     "cardType": "gold",
     "id": "pbh6",
-    "z": 19293,
+    "z": 20647,
     "parent": "febf"
   },
   "iyz1": {
@@ -2932,7 +2938,7 @@
     "type": "card",
     "cardType": "gold",
     "id": "iyz1",
-    "z": 19313,
+    "z": 20572,
     "parent": "febf"
   },
   "3pol": {
@@ -2940,7 +2946,7 @@
     "type": "card",
     "cardType": "gold",
     "id": "3pol",
-    "z": 19291,
+    "z": 20594,
     "parent": "febf"
   },
   "hvkp": {
@@ -2948,7 +2954,7 @@
     "type": "card",
     "cardType": "gold",
     "id": "hvkp",
-    "z": 19290,
+    "z": 20560,
     "parent": "febf"
   },
   "lkl6": {
@@ -2956,7 +2962,7 @@
     "type": "card",
     "cardType": "diamond",
     "id": "lkl6",
-    "z": 19304,
+    "z": 20580,
     "parent": "febf"
   },
   "2ohu": {
@@ -2964,7 +2970,7 @@
     "type": "card",
     "cardType": "diamond",
     "id": "2ohu",
-    "z": 19327,
+    "z": 20577,
     "parent": "febf"
   },
   "6lf0": {
@@ -2972,7 +2978,7 @@
     "type": "card",
     "cardType": "diamond",
     "id": "6lf0",
-    "z": 19309,
+    "z": 20610,
     "parent": "febf"
   },
   "gzqn": {
@@ -2980,7 +2986,7 @@
     "type": "card",
     "cardType": "diamond",
     "id": "gzqn",
-    "z": 19298,
+    "z": 20607,
     "parent": "febf"
   },
   "1m4k": {
@@ -2988,7 +2994,7 @@
     "type": "card",
     "cardType": "diamond",
     "id": "1m4k",
-    "z": 19320,
+    "z": 20605,
     "parent": "febf"
   },
   "qcoq": {
@@ -2996,7 +3002,7 @@
     "type": "card",
     "cardType": "camelToken",
     "id": "qcoq",
-    "z": 19208,
+    "z": 20483,
     "parent": "camelDeckHolder"
   },
   "fill": {

@@ -254,42 +254,13 @@
     "type": "holder",
     "id": "ilkd",
     "x": 11,
-    "y": 800,
+    "y": 830,
     "dropTarget": {
       "type": "card"
     },
     "z": 8,
     "width": 108,
     "height": 108
-  },
-  "ilkdB": {
-    "id": "ilkdB",
-    "parent": "ilkd",
-    "y": 120,
-    "type": "button",
-    "movableInEdit": false,
-    "clickRoutine": [
-      {
-        "func": "RECALL",
-        "holder": "ilkd"
-      },
-      {
-        "func": "FLIP",
-        "holder": "ilkd",
-        "face": 0
-      },
-      {
-        "func": "SHUFFLE",
-        "holder": "ilkd"
-      }
-    ],
-    "image": "/assets/888752271_2677",
-    "css": "border-color:transparent;background-color:transparent;border-radius:0",
-    "svgReplaces": {
-      "currentColor": "color"
-    },
-    "color": "blue",
-    "x": 10
   },
   "ilkdD": {
     "type": "deck",
@@ -644,10 +615,11 @@
             "y": 0,
             "width": 100,
             "height": 100,
-            "valueType": "dynamic",
-            "value": "tangram",
             "color": "black",
-            "css": "font-size:20px;text-align:center;border: 1px solid black;background:white"
+            "css": "font-size:20px;text-align:center;border: 1px solid black;background:white",
+            "dynamicProperties": {
+              "value": "tangram"
+            }
           }
         ]
       },
@@ -661,9 +633,10 @@
             "y": 0,
             "width": 100,
             "height": 100,
-            "valueType": "dynamic",
-            "value": "image2",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image2"
+            }
           }
         ]
       },
@@ -677,9 +650,10 @@
             "y": 0,
             "width": 100,
             "height": 100,
-            "valueType": "dynamic",
-            "value": "image",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -692,561 +666,561 @@
     "type": "card",
     "cardType": "Apple",
     "id": "0uhg",
-    "z": 3542,
+    "z": 6284,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "f653": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Arch",
     "id": "f653",
-    "z": 6825,
+    "z": 4013,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "8mg7": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Arrow",
     "id": "8mg7",
-    "z": 5886,
+    "z": 1553,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "2tir": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Barn",
     "id": "2tir",
-    "z": 3299,
+    "z": 5391,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "crab": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Bear",
     "id": "crab",
-    "z": 3861,
+    "z": 7494,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "miil": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Bed",
     "id": "miil",
-    "z": 3398,
+    "z": 7692,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "s868": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Boat",
     "id": "s868",
-    "z": 2032,
+    "z": 6917,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "bfuc": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Boot",
     "id": "bfuc",
-    "z": 7501,
+    "z": 9164,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "buox": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Bowl",
     "id": "buox",
-    "z": 4604,
+    "z": 7923,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "7pi8": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Camel",
     "id": "7pi8",
-    "z": 2268,
+    "z": 8553,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "20vt": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Candle",
     "id": "20vt",
-    "z": 6107,
+    "z": 3514,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "8tho": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Chair",
     "id": "8tho",
-    "z": 732,
+    "z": 3029,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "587e": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Crab",
     "id": "587e",
-    "z": 7143,
+    "z": 7007,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "4vq1": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Chicken",
     "id": "4vq1",
-    "z": 2158,
+    "z": 2276,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "k917": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Crow",
     "id": "k917",
-    "z": 2746,
+    "z": 4825,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "hq4b": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Cube",
     "id": "hq4b",
-    "z": 8529,
+    "z": 9791,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "3h2l": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Dagger",
     "id": "3h2l",
-    "z": 9736,
+    "z": 346,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "5br5": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Dancing",
     "id": "5br5",
-    "z": 4401,
+    "z": 72,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "yylt": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Dog",
     "id": "yylt",
-    "z": 7901,
+    "z": 5943,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "0od9": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Duck",
     "id": "0od9",
-    "z": 3027,
+    "z": 4748,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "ufly": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Equestrian",
     "id": "ufly",
-    "z": 9732,
+    "z": 6156,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "yhgc": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Falling",
     "id": "yhgc",
-    "z": 4531,
+    "z": 3045,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "5app": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Fish",
     "id": "5app",
-    "z": 5981,
+    "z": 1999,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "44t8": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Fox",
     "id": "44t8",
-    "z": 8287,
+    "z": 9071,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "fxuy": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Hammer",
     "id": "fxuy",
-    "z": 2955,
+    "z": 5288,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "unzz": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Heart",
     "id": "unzz",
-    "z": 4259,
+    "z": 3232,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "4oet": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Helicopter",
     "id": "4oet",
-    "z": 5266,
+    "z": 2904,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "15fc": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Heron",
     "id": "15fc",
-    "z": 2495,
+    "z": 4715,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "hps0": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Horse",
     "id": "hps0",
-    "z": 8197,
+    "z": 6856,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "jo37": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "House",
     "id": "jo37",
-    "z": 258,
+    "z": 205,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "0c5e": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Iron",
     "id": "0c5e",
-    "z": 8189,
+    "z": 3307,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "wl0j": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Kangaroo",
     "id": "wl0j",
-    "z": 9498,
+    "z": 5016,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "tbz0": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Key",
     "id": "tbz0",
-    "z": 5259,
+    "z": 4471,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "w65o": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Kicking",
     "id": "w65o",
-    "z": 9110,
+    "z": 148,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "93o4": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Mountains",
     "id": "93o4",
-    "z": 9525,
+    "z": 810,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "hjvt": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Pagoda",
     "id": "hjvt",
-    "z": 8646,
+    "z": 3931,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "1klu": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Parallelogram",
     "id": "1klu",
-    "z": 3812,
+    "z": 3722,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "hc5w": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Pigeon",
     "id": "hc5w",
-    "z": 9016,
+    "z": 6491,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "yxyy": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Pinwheel",
     "id": "yxyy",
-    "z": 740,
+    "z": 4831,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "x0a6": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Pipe",
     "id": "x0a6",
-    "z": 5633,
+    "z": 5904,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "kknr": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Plane",
     "id": "kknr",
-    "z": 7247,
+    "z": 7309,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "ydr7": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Pyramids",
     "id": "ydr7",
-    "z": 9427,
+    "z": 2203,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "m0cs": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Rabbit",
     "id": "m0cs",
-    "z": 4268,
+    "z": 6202,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "ye49": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Rocket",
     "id": "ye49",
-    "z": 2730,
+    "z": 1854,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "ohv7": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Rooster",
     "id": "ohv7",
-    "z": 2160,
+    "z": 3599,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "zc0e": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Running",
     "id": "zc0e",
-    "z": 5159,
+    "z": 808,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "rkp0": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Sea Lion",
     "id": "rkp0",
-    "z": 2531,
+    "z": 2911,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "cqoy": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Shirt",
     "id": "cqoy",
-    "z": 9734,
+    "z": 3178,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "jd1u": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Sitting",
     "id": "jd1u",
-    "z": 1157,
+    "z": 3297,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "3vir": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Skating",
     "id": "3vir",
-    "z": 1930,
+    "z": 7605,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "51r9": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Spaceship",
     "id": "51r9",
-    "z": 9920,
+    "z": 4340,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "gb7b": {
     "deck": "ilkdD",
@@ -1264,168 +1238,168 @@
     "type": "card",
     "cardType": "Stroller",
     "id": "r3ay",
-    "z": 6740,
+    "z": 7867,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "ugld": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Submarine",
     "id": "ugld",
-    "z": 696,
+    "z": 4524,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "r2f2": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Swan",
     "id": "r2f2",
-    "z": 7051,
+    "z": 9429,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "s7fh": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Table",
     "id": "s7fh",
-    "z": 7734,
+    "z": 2385,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "yyb7": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Teapot",
     "id": "yyb7",
-    "z": 2238,
+    "z": 1007,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "t16b": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Trapezoid",
     "id": "t16b",
-    "z": 9847,
+    "z": 3376,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "kx86": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Tree.png",
     "id": "kx86",
-    "z": 7155,
+    "z": 6218,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "g3uh": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Triangle",
     "id": "g3uh",
-    "z": 8316,
+    "z": 8918,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "pwkf": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Turtle",
     "id": "pwkf",
-    "z": 8818,
+    "z": 299,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "6kft": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Vase",
     "id": "6kft",
-    "z": 8917,
+    "z": 2929,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "sjkh": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Vulture",
     "id": "sjkh",
-    "z": 9842,
+    "z": 513,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "oyvt": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Watering Can",
     "id": "oyvt",
-    "z": 4854,
+    "z": 5921,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "fl30": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Whale",
     "id": "fl30",
-    "z": 3664,
+    "z": 9852,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "0acm": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Windmill",
     "id": "0acm",
-    "z": 5954,
+    "z": 147,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "51xf": {
     "deck": "ilkdD",
     "type": "card",
     "cardType": "Wrench",
     "id": "51xf",
-    "z": 7830,
+    "z": 3915,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
+    "parent": "s88o"
   },
   "_meta": {
-    "version": 3,
+    "version": 6,
     "info": {
       "name": "Tangrams",
       "image": "/assets/654370634_32256",
@@ -1447,36 +1421,32 @@
     "type": "card",
     "cardType": "Shovel",
     "id": "zgvu",
-    "z": 7136,
+    "z": 1506,
     "width": 100,
     "height": 100,
     "enlarge": 4,
-    "parent": "sdag"
-  },
-  "sdag": {
-    "type": "pile",
-    "parent": "ilkd",
-    "x": 4,
-    "y": 4,
-    "width": 100,
-    "height": 100,
-    "id": "sdag"
+    "parent": "s88o"
   },
   "restart_button": {
     "id": "restart_button",
-    "width": 46,
-    "height": 46,
+    "width": 50,
+    "height": 50,
     "type": "button",
     "clickRoutine": [
       {
         "func": "INPUT",
-        "header": "Resetting board...",
         "fields": [
           {
+            "type": "title",
+            "text": "New game..."
+          },
+          {
             "type": "text",
-            "text": "You're about to start over and reset the board. Are you sure?"
+            "text": "Start new game?"
           }
-        ]
+        ],
+        "confirmButtonIcon": "check",
+        "cancelButtonIcon": "close"
       },
       {
         "func": "SELECT",
@@ -1643,12 +1613,61 @@
       }
     ],
     "x": 1550,
-    "z": 2088,
+    "z": 2089,
+    "classes": "symbols",
+    "text": "restart",
+    "css": "font-size: 40px; "
+  },
+  "reset1": {
+    "type": "button",
+    "id": "reset1",
+    "x": 40,
+    "y": 945,
+    "width": 50,
+    "height": 50,
+    "z": 2092,
+    "classes": "symbols",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Recalling cards..."
+          },
+          {
+            "type": "text",
+            "text": "Recall and shuffle cards?"
+          }
+        ],
+        "confirmButtonIcon": "check",
+        "cancelButtonIcon": "close"
+      },
+      {
+        "func": "RECALL",
+        "holder": "ilkd"
+      },
+      {
+        "func": "FLIP",
+        "holder": "ilkd",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "ilkd"
+      }
+    ],
     "color": "white",
-    "image": "/assets/1342248376_1383",
-    "svgReplaces": {
-      "currentColor": "color"
-    },
-    "y": 2
+    "css": "font-size: 33px",
+    "text": "recall"
+  },
+  "s88o": {
+    "type": "pile",
+    "parent": "ilkd",
+    "x": 4,
+    "y": 4,
+    "width": 100,
+    "height": 100,
+    "id": "s88o"
   }
 }
