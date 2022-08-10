@@ -571,7 +571,7 @@ function jeAddRoutineExpressionCommands(variable, expression) {
         routine.push(`var ###SELECT ME### = ${expression}`);
       else
         routine.splice(operationIndex+1, 0, `var ###SELECT ME### = ${expression}`);
-      jeSetAndSelect(variable, 'insideString');
+      jeSetAndSelect(variable, true);
     }),
     show: jeRoutineCall((_, routine)=>Array.isArray(routine), true)
   });
@@ -1531,15 +1531,7 @@ function jeInsert(context, key, value) {
   if(!jeJSONerror) {
     let pointer = jeGetValue(context);
     pointer[key] = '###SELECT ME###';
-    let insertMode;
-    if (value && ((Array.isArray(value) && value.length==0) || (typeof value === 'object' && Object.keys(value).length === 0)))
-      insertMode = 'brackets';
-    else if (value && typeof value === 'object')
-      insertMode = 'object';
-    else if (value && value == '${}')
-      insertMode = 'dollar';
-
-    jeSetAndSelect(value, insertMode);
+    jeSetAndSelect(value);
   }
 }
 
@@ -1815,11 +1807,11 @@ function jeSet(text, dontFocus) {
 
 // Replace ###SELECT ME### in JSON string in jeStateNow by the string given in replaceBy,
 // display the results in the text area by calling jeSet, and select the replaced text by calling jeSelect.
-function jeSetAndSelect(replaceBy, insertMode) {
-  const insideString = insertMode == 'insideString'; // ###SELECT ME### inside of 'var' statement
-  const brackets = insertMode == 'brackets'; // ###SELECT ME### should be replaced by [] or {}
-  const dollar = insertMode == 'dollar'; // ###SELECT ME### should be replaced by ${} (and this will be in a string)
-  const object = insertMode == 'object'; // E.g. for droptarget, which inserts { "type": "card" }
+function jeSetAndSelect(replaceBy, insideString) {
+
+  const emptyBrackets = replaceBy && ((Array.isArray(replaceBy) && replaceBy.length==0) || (typeof replaceBy === 'object' && Object.keys(replaceBy).length === 0)); // ###SELECT ME### should be replaced by [] or {}
+  const object = replaceBy && typeof replaceBy === 'object'; // E.g. for droptarget, which inserts { "type": "card" }
+  const dollar = replaceBy && replaceBy == '${}'; // ###SELECT ME### should be replaced by ${} (and this will be in a string)
 
   if(jeMode == 'widget')
     var jsonString = jePreProcessText(JSON.stringify(jePreProcessObject(jeStateNow), null, '  '));
@@ -1835,17 +1827,20 @@ function jeSetAndSelect(replaceBy, insertMode) {
   else
     jsonString = jsonString.replace(/"###SELECT ME###"/, JSON.stringify(replaceBy));
 
+  const insertedLength = jsonString.length - length; // Length of inserted string.
+
   // Set left and right ranges for selection based on what is being inserted.
   jeSet(jsonString);
   let leftOffset = 0;
   let rightOffset = 0;
-  if(brackets || (typeof replaceBy == 'string' && !insideString && !dollar)){
+  if(emptyBrackets || (typeof replaceBy == 'string' && !insideString && !dollar)){
     leftOffset = rightOffset = 1;
   } else if (dollar) {
     leftOffset = 3;
     rightOffset = 2;
-  }
-  jeSelect(startIndex + leftOffset, startIndex+jsonString.length-length - rightOffset, true);
+  } // Need branch here for object insertion. 
+
+  jeSelect(startIndex + leftOffset, startIndex + insertedLength - rightOffset, true);
 }
 
 function jeSetEditorContent(content) {
