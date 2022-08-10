@@ -42,7 +42,7 @@
     "@node-minify/clean-css": "^6.4.0",
     "@node-minify/core": "^6.4.0",
     "@node-minify/html-minifier": "^6.4.0",
-    "@node-minify/no-compress": "^6.4.0",
+    "@node-minify/no-compress": "^7.0.0",
     "@node-minify/uglify-es": "^6.4.0",
     "crc-32": "^1.2.2",
     "express": "^4.18.1",
