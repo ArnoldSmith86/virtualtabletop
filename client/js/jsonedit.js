@@ -1827,7 +1827,7 @@ function jeSetAndSelect(replaceBy, insideString) {
   else
     jsonString = jsonString.replace(/"###SELECT ME###"/, JSON.stringify(replaceBy));
 
-  const insertedLength = jsonString.length - length; // Length of inserted string.
+  let insertedLength = jsonString.length - length; // Length of inserted string.
 
   // Set left and right ranges for selection based on what is being inserted.
   jeSet(jsonString);
@@ -1838,7 +1838,17 @@ function jeSetAndSelect(replaceBy, insideString) {
   } else if (dollar) {
     leftOffset = 3;
     rightOffset = 2;
-  } // Need branch here for object insertion. 
+  } else if (object && !insideString) { // Note that this branch must come *after* the emptyBrackets branch.
+    // This is kind of a special case. First we re-stringify the replacement string so that it looks as it will
+    // in $('#jeText').textContent. If the input is "{ type: 'card' }", this will give '{\n  "type": "card"\n}'.
+    // We can use that string together with the current indent to figure out the bounds for the new selection.
+    const insertedString = JSON.stringify(replaceBy, null, '  ');
+    const currentIndent = jeGetEditorContent().substr(0,startIndex).match(/( *)[^\n]*$/).length;
+    insertedLength = insertedString.length + 2*currentIndent; // The last term accounts for the two new lines, properly indented.
+    leftOffset = 4 + currentIndent; // 4 for the opening '{\n  '.
+    rightOffset = currentIndent + 2 // '+ 2' for the '\n' and the closing '}'
+  }
+
 
   jeSelect(startIndex + leftOffset, startIndex + insertedLength - rightOffset, true);
 }
