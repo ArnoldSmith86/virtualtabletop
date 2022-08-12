@@ -12,7 +12,7 @@
 
 #jsonEditor.wide {
   --commandPaneWidth: 320px;
-  --editorPaneWidth: 600px;
+  --editorPaneWidth: 602px;
 }
 
 #jsonEditor.notHighEnough #jeWidgetLayers, #jsonEditor.notHighEnough #jeLogWrapper {
@@ -419,7 +419,9 @@ body.jsonEdit.jeZoomOut #topSurface {
   text-shadow: 0px 1px 2px rgb(9, 12, 51);
   color: white;
   font-family: 'VTT-Symbols';
+  vertical-align: top;
 }
+
 [id=jeTopButtons] button.material {
   font-family: 'Material Icons';
 }
@@ -502,4 +504,3 @@ body.jsonEdit.jeZoomOut #topSurface {
 #jeCommands #jeCommandOptions input[type="number"]{
   width: 6ch;
 }
-
