@@ -533,6 +533,36 @@ const jeCommands = [
       }
       jeUpdateMulti();
     }
+  },
+  {
+    id: 'je_selectSortBy',
+    name: 'sortBy',
+    context: '^button ↦ clickRoutine ↦ [0-9]+ ↦ \\(SELECT\\) ↦ ',
+    show: jeRoutineCall(function(routineIndex) {
+      return !Object.keys(jeGetValue(jeContext.slice(1, routineIndex+2))).includes("sortBy");
+    }, true),
+    call: async function() {
+      jeStateNow.clickRoutine[+jeContext[2]].sortBy = {
+        "key": "###SELECT ME###",
+        "reverse": false
+      };
+      jeSetAndSelect('z');
+    }
+  },
+  {
+    id: 'widget_holder_dropTarget',
+    name: "dropTarget",
+    class: 'property',
+    context: '^holder',
+    show: jeRoutineCall(function(routineIndex) {
+      return !Object.keys(jeGetValue(jeContext.slice(1, routineIndex+2))).includes("dropTarget");
+    }, true),
+    call: async function() {
+      jeStateNow.dropTarget = {
+        "type": "###SELECT ME###"
+      };
+      jeSetAndSelect('card');
+    }
   }
 ];
 
@@ -642,7 +672,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0, snapToGrid: true });
   jeAddRoutineOperationCommands('RECALL', { owned: true, holder: null });
   jeAddRoutineOperationCommands('ROTATE', { count: 1, angle: 90, mode: 'add', holder: null, collection: 'DEFAULT' });
-  jeAddRoutineOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all', sortBy: { key: "z", reverse: false } });
+  jeAddRoutineOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all'});
   jeAddRoutineOperationCommands('SET', { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
   jeAddRoutineOperationCommands('SORT', { key: 'value', reverse: false, locales: null, options: null, holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('SHUFFLE', { holder: null, collection: 'DEFAULT' });
@@ -854,8 +884,14 @@ function jeAddFieldCommand(key, types, value) {
       return typeof field[key] === 'undefined' && (field.type || '').match(types);
     }, true),
     call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
-      jeGetValue(jeContext.slice(1, routineIndex+5))[key] = '###SELECT ME###';
-      jeSetAndSelect(value);
+      jeGetValue(jeContext.slice(1, routineIndex+5))[key] = key != 'options' ? '###SELECT ME###' :
+        [
+          {
+            value: "###SELECT ME###",
+            text: "text"
+          }
+        ];
+      jeSetAndSelect( key != 'options' ? value : "value");
     })
   });
 }
@@ -877,7 +913,7 @@ function jeAddNumberCommand(name, key, callback) {
 
 function jeAddWidgetPropertyCommands(object) {
   for(const property in object.defaults)
-    if(property != 'typeClasses' && !property.match(/^c[0-9]{2}$/))
+    if(property != 'typeClasses' && property != 'dropTarget' && !property.match(/^c[0-9]{2}$/))
       jeAddWidgetPropertyCommand(object, property);
   const type = object.defaults.typeClasses.replace(/widget /, '');
   return type == 'basic' ? null : type;
@@ -1810,7 +1846,6 @@ function jeSet(text, dontFocus) {
 function jeSetAndSelect(replaceBy, insideString) {
 
   const emptyBrackets = replaceBy && ((Array.isArray(replaceBy) && replaceBy.length==0) || (typeof replaceBy === 'object' && Object.keys(replaceBy).length === 0)); // ###SELECT ME### should be replaced by [] or {}
-  const object = replaceBy && typeof replaceBy === 'object'; // E.g. for droptarget, which inserts { "type": "card" }
   const dollar = replaceBy && replaceBy == '${}'; // ###SELECT ME### should be replaced by ${} (and this will be in a string)
 
   if(jeMode == 'widget')
@@ -1838,17 +1873,7 @@ function jeSetAndSelect(replaceBy, insideString) {
   } else if (dollar) {
     leftOffset = 3;
     rightOffset = 2;
-  } else if (object && !insideString) { // Note that this branch must come *after* the emptyBrackets branch.
-    // This is kind of a special case. First we re-stringify the replacement string so that it looks as it will
-    // in $('#jeText').textContent. If the input is "{ type: 'card' }", this will give '{\n  "type": "card"\n}'.
-    // We can use that string together with the current indent to figure out the bounds for the new selection.
-    const insertedString = JSON.stringify(replaceBy, null, '  ');
-    const currentIndent = jeGetEditorContent().substr(0,startIndex).match(/( *)[^\n]*$/).length;
-    insertedLength = insertedString.length + 2*currentIndent; // The last term accounts for the two new lines, properly indented.
-    leftOffset = 4 + currentIndent; // 4 for the opening '{\n  '.
-    rightOffset = currentIndent + 2 // '+ 2' for the '\n' and the closing '}'
   }
-
 
   jeSelect(startIndex + leftOffset, startIndex + insertedLength - rightOffset, true);
 }
