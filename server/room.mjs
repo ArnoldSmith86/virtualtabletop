@@ -101,8 +101,7 @@ export default class Room {
         const variantMeta = {
           players: meta.players,
           language: meta.language,
-          variant: meta.variant,
-          attribution: meta.attribution
+          variant: meta.variant
         };
         if(type == 'link') {
           const baseLink = src.replace(/#.*/, '');
@@ -114,13 +113,16 @@ export default class Room {
         delete meta.players;
         delete meta.language;
         delete meta.variant;
-        delete meta.attribution;
 
         if(addAsVariant) {
           if(!this.state._meta.states[stateID].variants[newVariantID])
             this.state._meta.states[stateID].variants[newVariantID] = variantMeta;
           else if(type != 'link')
             delete this.state._meta.states[stateID].variants[newVariantID].link;
+          if(!this.state._meta.states[stateID].attribution)
+            this.state._meta.states[stateID].attribution = meta.attribution;
+          if(meta.attribution && meta.attribution != this.state._meta.states[stateID].attribution)
+            this.state._meta.states[stateID].attribution += '\n\n--\n\n'+meta.attribution;
         } else {
           meta.variants = [ variantMeta ];
           this.state._meta.states[stateID] = meta;
@@ -128,6 +130,7 @@ export default class Room {
 
         addAsVariant = true;
       }
+
 
       if(!initialAddAsVariant) {
         addAsVariant = false;
