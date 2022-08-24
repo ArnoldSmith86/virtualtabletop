@@ -68,7 +68,7 @@
 @media (max-width: 470px), (max-height: 293px) { #filterByModeWrapper     { display: none; } }
 @media (max-width: 350px), (max-height: 218px) { #filterByTypeWrapper     { display: none; } }
 
-#statesList, #stateEditOverlay {
+#statesList {
   overflow: auto;
 }
 
@@ -205,25 +205,6 @@ div:nth-of-type(1) > .list > .roomState .star {
 
 .details .stats{
   margin-bottom: 8px;
-}
-
-
-#stateEditOverlay label {
-  width: 200px;
-  display: inline-block;
-}
-
-#stateEditOverlay textarea {
-  width: 400px;
-  height: 300px;
-}
-
-#variantsEditList > div {
-  margin-bottom: 30px;
-}
-
-#stateEditOverlay .input{
-  display: flex;
 }
 
 

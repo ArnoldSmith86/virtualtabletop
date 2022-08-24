@@ -82,41 +82,6 @@ async function addState(e, type, src, id) {
   req.send(blob);
 }
 
-function downloadState(variantID) {
-  const stateID = $('#stateEditOverlay').dataset.id;
-  let url = `dl/${roomID}`
-  if(variantID !== null)
-    url += `/${stateID}`;
-  if(variantID)
-    url += `/${variantID}`;
-  window.location.href = url;
-}
-
-function editState() {
-  const variants = [];
-  for(const variant of $a('#variantsEditList > div')) {
-    variants.push({
-      players: $('.statePlayers', variant).value,
-      language: $('.stateLanguage', variant).value,
-      variant: $('.stateVariant', variant).value,
-      link: $('.stateLink', variant).value,
-      attribution: $('.stateAttribution', variant).value
-    });
-  }
-  toServer('editState', { id: $('#stateEditOverlay').dataset.id, meta: {
-    name:    $('#stateName').value,
-    image:   $('#stateImage').value,
-    rules:   $('#stateRules').value,
-    bgg:     $('#stateBGG').value,
-    year:    $('#stateYear').value,
-    mode:    $('#stateMode').value,
-    time:    $('#stateTime').value,
-    link:    $('#stateLink').value,
-    variants
-  }});
-  showOverlay('statesOverlay');
-}
-
 function toggleStateStar(state, dom) {
   const targetList = dom.parentElement.parentElement == $('#statesList > div:nth-of-type(1)')
                    ? $('#statesList > div:nth-of-type(2) > .list')
@@ -512,54 +477,6 @@ async function confirmOverlay(title, text, confirmButton, cancelButton) {
   });
 }
 
-function fillEditState(state) {
-  $('#stateEditOverlay').dataset.id = state.id;
-
-  $('#stateName').value = state.name;
-  $('#stateImage').value = state.image;
-  $('#stateRules').value = state.rules;
-  $('#stateBGG').value = state.bgg;
-  $('#stateYear').value = state.year;
-  $('#stateMode').value = state.mode;
-  $('#stateTime').value = state.time;
-  $('#stateLink').value = state.link || '';
-  $('#stateLink').parentNode.style.display = state.link ? 'block' : 'none';
-
-  removeFromDOM('#variantsEditList > div');
-  for(const variantID in state.variants) {
-    const variant = state.variants[variantID];
-    const vEntry = domByTemplate('template-variantseditlist-entry');
-    vEntry.dataset.id = variantID;
-    $('.stateLanguage', vEntry).value = variant.language;
-    $('.statePlayers', vEntry).value = variant.players;
-    $('.stateVariant', vEntry).value = variant.variant;
-    $('.stateLink', vEntry).value = variant.link || '';
-    $('.stateAttribution', vEntry).value = variant.attribution || '';
-    $('.stateLink', vEntry).parentNode.style.display = variant.link ? 'block' : 'none';
-
-    if(variantID == variantIDjustUpdated) {
-      variantIDjustUpdated = null;
-      $('.update', vEntry).textContent = '✔️ Done';
-      $('.update', vEntry).disabled = true;
-    }
-    $('.update', vEntry).addEventListener('click', e=>{
-      addState(e, 'state', undefined, variantID);
-      variantIDjustUpdated = variantID;
-    });
-    $('.download', vEntry).addEventListener('click', _=>downloadState(variantID));
-    $('.remove', vEntry).addEventListener('click', _=>removeFromDOM(vEntry));
-    $('#variantsEditList').appendChild(vEntry);
-  }
-
-  showOverlay(null);
-  showOverlay('stateEditOverlay');
-}
-
-function removeState() {
-  toServer('removeState', $('#stateEditOverlay').dataset.id);
-  showOverlay('statesOverlay');
-}
-
 async function shareLink() {
   showOverlay('shareLinkOverlay');
   let url = $('#stateLink').value;
@@ -585,16 +502,6 @@ onLoad(function() {
   on('#stateAddOverlay .link,   #addVariant .link',   'click', e=>addState(e, 'link', prompt('Enter shared URL:')));
 
   on('#addState .download', 'click', _=>downloadState(null));
-
-  on('#stateEditOverlay .save',     'click', editState);
-  on('#stateEditOverlay .download', 'click', _=>downloadState());
-  on('#stateEditOverlay .remove',   'click', removeState);
-
-  on('#stateEditOverlay .uploadAsset', 'click', _=>uploadAsset().then(function(asset) {
-    if(asset)
-      $('#stateImage').value = asset;
-  }));
-  on('#stateEditOverlay .share', 'click', _=>shareLink());
 
   on('#shareOK', 'click', _=>showOverlay('stateEditOverlay'));
 });

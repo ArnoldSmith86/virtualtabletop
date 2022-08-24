@@ -371,51 +371,6 @@
       </div>
     </div>
 
-    <div id="stateEditOverlay" class="overlay">
-      <h1>Edit game</h1>
-      <div class="details">
-        <div class="input"><label for="stateName">Name:</label> <input id="stateName"/></div>
-        <div class="input"><label for="stateYear">Year:</label> <input id="stateYear"/></div>
-        <div class="input"><label for="stateRules">Rules link:</label> <input id="stateRules"/></div>
-        <div class="input"><label for="stateMode">Mode:</label> <input id="stateMode"/></div>
-        <div class="input"><label for="stateTime">Time:</label> <input id="stateTime"/></div>
-        <div class="input"><label for="stateBGG">BoardGameGeek link:</label> <input id="stateBGG"/></div>
-        <div class="input"><label for="stateImage">Image URL:</label> <input id="stateImage"/><button class="ui-button uploadAsset">Upload</button></div>
-        <div class="input"><label for="stateLink">Update link:</label> <input id="stateLink"/></div>
-      </div>
-      <h2>Variants</h2>
-      <div id="variantsEditList">
-        <template id="template-variantseditlist-entry" type="text/template">
-          <div class="input"><label>Language (country code):</label> <input class="stateLanguage"/></div>
-          <div class="input"><label>Players:</label> <input class="statePlayers"/></div>
-          <div class="input"><label>Variant:</label> <input class="stateVariant"/></div>
-          <div class="input"><label>Attribution:</label> <textarea class="stateAttribution"></textarea></div>
-          <div class="input"><label>Update link:</label> <input class="stateLink"/></div>
-          <div class="editOverlayButtonBar">
-            <button class="ui-button green update update-current-state">Update variant using current room state</button>
-            <button class="ui-button download download-variant">Download variant</button>
-            <button class="ui-button red remove remove-variant">Remove variant</button>
-          </div>
-        </template>
-      </div>
-      <div id="addVariant" class="buttons">
-        Add variant:
-        <div class="editOverlayButtonBar">
-          <button class="ui-button create create-current-state">Use current room state</button>
-          <button class="ui-button library create-from-library">From the Public library</button>
-          <button class="ui-button link create-from-link">Enter link</button>
-          <button class="ui-button upload create-upload-file">Upload file</button>
-        </div>
-      </div>
-      <hr/>
-      <div class="editOverlayButtonBar">
-        <button class="ui-button green save save-game">Save</button>
-        <button class="ui-button share share-game">Share link</button>
-        <button class="ui-button download download-game">Download</button>
-        <button class="ui-button red remove remove-game">Remove</button>
-      </div>
-    </div>
-
     <div id="updateImageOverlay" class="overlay">
       <h1>Update image</h1>
       <div>
