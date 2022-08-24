@@ -101,7 +101,8 @@ export default class Room {
         const variantMeta = {
           players: meta.players,
           language: meta.language,
-          variant: meta.variant
+          variant: meta.variant,
+          variantImage: meta.variantImage
         };
         if(type == 'link') {
           const baseLink = src.replace(/#.*/, '');
@@ -113,6 +114,7 @@ export default class Room {
         delete meta.players;
         delete meta.language;
         delete meta.variant;
+        delete meta.variantImage;
 
         if(addAsVariant) {
           if(!this.state._meta.states[stateID].variants[newVariantID])
@@ -218,9 +220,6 @@ export default class Room {
   }
 
   async editState(player, id, meta, variantInput, variantOperationQueue) {
-    if(String(id).match(/^PL:/))
-      return this.writePublicLibraryMetaToFilesystem(id, meta);
-
     const variants = this.state._meta.states[id].variants;
 
     for(const o of variantOperationQueue) {
@@ -289,6 +288,10 @@ export default class Room {
 
     meta.variants = variants;
     Object.assign(this.state._meta.states[id], meta);
+
+    if(String(id).match(/^PL:/))
+      this.writePublicLibraryMetaToFilesystem(id, meta);
+
     this.sendMetaUpdate();
   }
 
@@ -320,8 +323,17 @@ export default class Room {
                   Room.publicLibrary[id].publicLibraryCategory = subLibrary;
                   Room.publicLibrary[id].variants = [];
                 }
-                Room.publicLibrary[id].variants[file.replace(/\.json$/, '')] = JSON.parse(JSON.stringify(gameFile._meta.info));
-                Room.publicLibrary[id].variants[file.replace(/\.json$/, '')].publicLibrary = subLibrary.toLowerCase() + '/' + dir + '/' + file;
+                Room.publicLibrary[id].variants[file.replace(/\.json$/, '')] = {
+                  players: gameFile._meta.info.players,
+                  language: gameFile._meta.info.language,
+                  variant: gameFile._meta.info.variant,
+                  variantImage: gameFile._meta.info.variantImage,
+                  publicLibrary: subLibrary.toLowerCase() + '/' + dir + '/' + file
+                };
+                delete gameFile._meta.info.players;
+                delete gameFile._meta.info.language;
+                delete gameFile._meta.info.variant;
+                delete gameFile._meta.info.variantImage;
               }
             }
           }
@@ -695,6 +707,9 @@ export default class Room {
   }
 
   writePublicLibraryAssetsToFilesystem(stateID, variantID) {
+    if(!Config.get('allowPublicLibraryEdits'))
+      return;
+
     const assetsDir = this.variantFilename(stateID, variantID).replace(/\/[0-9]+\.json$/, '/assets');
 
     const usedAssets = {};
@@ -724,10 +739,18 @@ export default class Room {
 
       state._meta.info = Object.assign(JSON.parse(JSON.stringify(meta)), JSON.parse(JSON.stringify(meta.variants[variantID])));
 
+      delete state._meta.info.id;
       delete state._meta.info.variants;
+      delete state._meta.info.starred;
+      delete state._meta.info.publicLibrary;
+      delete state._meta.info.publicLibraryCategory;
 
       fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(state, null, '  '));
+      this.writePublicLibraryAssetsToFilesystem(stateID, variantID);
     }
+
+    delete Room.publicLibrary;
+    this.getPublicLibraryGames();
   }
 
   writePublicLibraryToFilesystem(stateID, variantID, state) {
@@ -761,8 +784,8 @@ export default class Room {
   }
 
   variantFilename(stateID, variantID) {
-    if(stateID.match(/^PL:/))
-      return Config.directory('library') + '/' + Room.publicLibrary[stateID].variants[variantID].publicLibrary;
+    if(stateID.match(/^PL:/) && String(variantID).match(/^[0-9]+$/))
+      return Config.directory('library') + '/' + Room.publicLibrary[stateID].variants[variantID].publicLibrary.replace(/[^\/]+\.json/, variantID + '.json');
     else
       return Config.directory('save') + '/states/' + this.id + '-' + stateID.replace(/[^a-z0-9]/g, '_') + '-' + String(variantID).replace(/[^a-z0-9]/g, '_') + '.json';
   }
