@@ -207,8 +207,7 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
 
       if(state.id == waitingForStateCreation) {
         waitingForStateCreation = null;
-        if(state.name == 'Unnamed' || $('#stateEditOverlay').style.display == 'flex')
-          fillEditState(state);
+        showStatesOverlay('statesOverlay');
       }
     }
 
