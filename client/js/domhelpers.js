@@ -235,6 +235,35 @@ export function disableEditing(parent, obj) {
       hideDom.classList.add('hidden');
 }
 
+let symbolData = null;
+export async function loadSymbolPicker() {
+  if(symbolData === null) {
+    symbolData = 'loading';
+    symbolData = await (await fetch('i/fonts/symbols.json')).json();
+    let list = '';
+    for(const [ category, symbols ] of Object.entries(symbolData)) {
+      list += `<h1>${category}</h1>`;
+      for(const [ symbol, keywords ] of Object.entries(symbols)) {
+        let className = 'emoji';
+        if(symbol[0] == '[')
+          className = 'symbols';
+        else if(symbol.match(/^[a-z0-9_]+$/))
+          className = 'material-icons';
+        list += `<i class="${className}" data-keywords="${symbol},${keywords.join().toLowerCase()}">${symbol}</i>`;
+      }
+    }
+    $('#symbolList').innerHTML = list;
+
+    $('#symbolPicker input').onkeyup = function() {
+      const text = $('#symbolPicker input').value.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, m=>'\\'+m[0]);
+      for(const icon of $a('#symbolList i'))
+        toggleClass(icon, 'hidden', !icon.dataset.keywords.match(text));
+      for(const title of $a('#symbolList h1'))
+        toggleClass(title, 'hidden', text);
+    };
+  }
+}
+
 export function addRichtextControls(dom) {
   const controls = domByTemplate('template-richtext-controls');
   controls.classList.add('richtext-controls');
@@ -245,6 +274,8 @@ export function addRichtextControls(dom) {
       dom.focus();
     };
   }
+
+  loadSymbolPicker();
 
   $('[icon=format_size]', controls).onclick = function() {
     const parent = window.getSelection().getRangeAt(0).startContainer.parentNode;
@@ -277,6 +308,30 @@ export function addRichtextControls(dom) {
     if(asset)
       document.execCommand('inserthtml', false, `<video class="richtextAsset" src="${asset.substring(1)}" controls></video>`);
     dom.focus();
+  };
+  $('[icon=add_reaction]', controls).onclick = async function() {
+    const range = window.getSelection().getRangeAt(0);
+
+    $('#symbolPicker').style.display = 'block';
+    $('#symbolPicker').scrollTop = 0;
+    $('#symbolPicker input').value = '';
+    $('#symbolPicker input').focus();
+    $('#symbolPicker input').onkeyup();
+    for(const icon of $a('#symbolList i')) {
+      icon.onclick = function() {
+        $('#symbolPicker').style.display = 'none';
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+        let className = 'emoji';
+        if(icon.innerText[0] == '[')
+          className = 'symbols';
+        else if(icon.innerText.match(/^[a-z0-9_]+$/))
+          className = 'material-icons';
+        document.execCommand('inserthtml', false, `<span class="richtextSymbol ${className}">${icon.innerText}</span>`);
+        for(const insertedSymbol of $a('.richtextSymbol'))
+          insertedSymbol.contentEditable = false; // adding the property above causes Chrome to insert two icons
+      };
+    }
   };
 }
 

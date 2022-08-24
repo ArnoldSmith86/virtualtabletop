@@ -766,6 +766,18 @@ button[icon].green:hover {
   margin: 20px auto;
 }
 
+.richtextSymbol.richtextSymbol {
+  font-size: 18px;
+  position: relative;
+  line-height: 10px;
+}
+.richtextSymbol.symbols {
+  top: 2px;
+}
+.richtextSymbol.material-icons {
+  top: 4px;
+}
+
 .symbols {
   font-family: 'VTT-Symbols';
 }

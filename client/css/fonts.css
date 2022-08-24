@@ -256,7 +256,7 @@
     font-family: "Material Icons";
     font-style: normal;
     font-weight: 400;
-    src: url("i/fonts/Material-Icons.woff2?version=6") format("woff2");
+    src: url("i/fonts/Material-Icons.woff2?version=7") format("woff2");
 }
 
 .font-material-icons{
@@ -390,3 +390,52 @@
     font-family: "Handwriting Casual";
 }
 
+#symbolPicker {
+  display: none;
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  height: 50%;
+  width: 50%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: white;
+  word-wrap: anywhere;
+  border: 5px solid #fff;
+  box-sizing: border-box;
+  outline: 10000px solid #0008;
+}
+
+@media (max-width: 700px), (max-height: 437px) {
+  #symbolPicker {
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+}
+
+#symbolPicker input {
+  width: 80%;
+}
+
+#symbolPicker h1 {
+  font-size: 16px;
+  border-bottom: 1px solid black;
+  padding-left: 4px;
+}
+
+#symbolPicker i {
+  font-style: normal;
+  font-size: 24px;
+  margin-left: 4px;
+  cursor: pointer;
+}
+
+#symbolPicker i.emoji {
+  word-break: break-all;
+}
+
+#symbolPicker .hidden {
+  display: none;
+}
