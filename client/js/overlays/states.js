@@ -207,7 +207,8 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
 
       if(state.id == waitingForStateCreation) {
         waitingForStateCreation = null;
-        showStatesOverlay('statesOverlay');
+        if($('#statesButton').dataset.overlay !== 'statesOverlay')
+          showStatesOverlay('statesOverlay');
       }
     }
 
