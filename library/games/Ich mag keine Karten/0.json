@@ -887,9 +887,10 @@
       "players": "3-7",
       "language": "UN",
       "variant": "",
-      "attribution": "INSTRUCTIONS: Players take seats. Press play button in bottom right corner to start. A random player is selected to start. Players either move a token to the large circle or press the hand button to take the visible card and tokens. At end of round, press scoreboard icon to auto-calculate scores. Press recall and shuffle button to start again.\n\nThe game layout, game pieces, and game design are by LawDawg and are released to the Public Domain under CC0.\n\nThe wood grain background is available under the Pixabay License from: https://pixabay.com/photos/board-wood-gray-grain-texture-503944/\n\nThe card background is in the Public Domain under CC0 from https://publicdomainpictures.net/en/view-image.php?image=71643&picture=colourful-flame-background.",
+      "attribution": "The game layout, game pieces, and game design are by LawDawg and are released to the Public Domain under CC0.\n\nThe wood grain background is available under the Pixabay License from: https://pixabay.com/photos/board-wood-gray-grain-texture-503944/\n\nThe card background is in the Public Domain under CC0 from https://publicdomainpictures.net/en/view-image.php?image=71643&picture=colourful-flame-background.",
       "similarName": "No Thanks!",
-      "description": "Play with deck of cards numbered 3-35. Cards worth their face value, but lower if in a run. During turn, either play a chip to avoid taking a card, or pick up and play the face up card and gain chips played on it. After playing 24 cards, lowest score wins."
+      "description": "Play with deck of cards numbered 3-35. Cards worth their face value, but lower if in a run. During turn, either play a chip to avoid taking a card, or pick up and play the face up card and gain chips played on it. After playing 24 cards, lowest score wins.",
+      "helpText": "Players take seats. Press play button in bottom right corner to start. A random player is selected to start. Players either move a token to the large circle or press the hand button to take the visible card and tokens. At end of round, press scoreboard icon to auto-calculate scores. Press recall and shuffle button to start again."
     }
   },
   "tokenDeck": {

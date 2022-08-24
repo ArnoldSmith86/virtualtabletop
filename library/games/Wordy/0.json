@@ -757,9 +757,10 @@
       "players": "2-4",
       "language": "US DE BR",
       "variant": "",
-      "attribution": "INSTRUCTIONS: Choose language by selecting button with dashed outline of globe. Players take seats. Players press hand icon (hand inside dashed square) to deal 7 cards to their own hand. Play tiles on board. To exchange tiles, manually flip tiles upside down in hand then drag to swap holder. Press swap icon (opposite facing arrows). New cards are added to hand; swapped cards are returned to pile and it is shuffled.\n\n\nThe game layout, game pieces, images, and Wordy logo were done by LawDawg96 and are released to the Public Domain under CC0\n\nThe library image contains a photograph from https://pixabay.com/photos/printing-plate-letters-font-type-1030849/ and is available under the Pixabay License.",
+      "attribution": "The game layout, game pieces, images, and Wordy logo were done by LawDawg96 and are released to the Public Domain under CC0\n\nThe library image contains a photograph from https://pixabay.com/photos/printing-plate-letters-font-type-1030849/ and is available under the Pixabay License.",
       "similarName": "Scrabble",
-      "description": "Use letter tiles to build words with extra points for playing in certain locations. Play until tile bag runs out. Most points wins."
+      "description": "Use letter tiles to build words with extra points for playing in certain locations. Play until tile bag runs out. Most points wins.",
+      "helpText": "Choose language by selecting button with dashed outline of globe. Players take seats. Players press hand icon (hand inside dashed square) to deal 7 cards to their own hand. Play tiles on board. To exchange tiles, manually flip tiles upside down in hand then drag to swap holder. Press swap icon (opposite facing arrows). New cards are added to hand; swapped cards are returned to pile and it is shuffled."
     }
   },
   "recall": {

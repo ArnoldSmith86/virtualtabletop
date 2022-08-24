@@ -12,9 +12,10 @@
       "players": "2",
       "language": "US",
       "variant": "",
-      "attribution": "INSTRUCTIONS: Players take seats.  Choose options (standard or alternate deck). Press play button. Move cards according to rules. Cards drawn from play area are dropped in holder below player's seat. Press turn button if necessary to change turn indicator. When ready to knock or yield, press button. Cards will be moved from hand so players can see other player's cards. Score is automatically updated.\n\nThe game layout and room design are by LawDawg and are released to the Public Domain under CC0.\n\nCard back and library image by Adam Kring is available under the Unsplash License at https://unsplash.com/photos/Spzz_JO7s5k.",
+      "attribution": "The game layout and room design are by LawDawg and are released to the Public Domain under CC0.\n\nCard back and library image by Adam Kring is available under the Unsplash License at https://unsplash.com/photos/Spzz_JO7s5k.",
       "similarName": "Elements",
-      "description": "Use a 16 card deck consisting of numbers 1 to 6. During turn, either play, draw, discard, knock, or fold. Goal is have higher sum than opponent but equal or less than sum played on table. Winner of each round gets 1 or 2 points. First player to 6 points wins."
+      "description": "Use a 16 card deck consisting of numbers 1 to 6. During turn, either play, draw, discard, knock, or fold. Goal is have higher sum than opponent but equal or less than sum played on table. Winner of each round gets 1 or 2 points. First player to 6 points wins.",
+      "helpText": "Players take seats.  Choose options (standard or alternate deck). Press play button. Move cards according to rules. Cards drawn from play area are dropped in holder below player's seat. Press turn button if necessary to change turn indicator. When ready to knock or yield, press button. Cards will be moved from hand so players can see other player's cards. Score is automatically updated."
     }
   },
   "hand": {

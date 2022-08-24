@@ -117,9 +117,10 @@
       "players": "2-4",
       "language": "UN",
       "variant": "",
-      "attribution": "INSTRUCTIONS: Players take seats. Press restart button in top right to select number of players. Press start arrow button to begin. Move tiles from the factory area to the tall, thin holder next to the player's board. Press the empty button to send extra tiles to central holders.  The turn button will advance the turn indicator and ensure 10 cards are available in the supply area. After round is over, players manually calculate scores. Press start arrow button to advance to next round.\n\nBoard layout and game design by LawDawg 96 and released to the Public Domain as CC0.\n\nThe window and person icons are by Delapouite and are available under CC BY 3.0 from https://game-icons.net/1x1/delapouite/window.html and https://game-icons.net/1x1/delapouite/person.html.",
+      "attribution": "Board layout and game design by LawDawg 96 and released to the Public Domain as CC0.\n\nThe window and person icons are by Delapouite and are available under CC BY 3.0 from https://game-icons.net/1x1/delapouite/window.html and https://game-icons.net/1x1/delapouite/person.html.",
       "similarName": "Azul: Summer Pavilion",
-      "description": "Choose colored tiles to place on board in matching colors with extra points for specific patterns and sets.  A new twist on the classic Blue using different shapes and tiles and a more complex board. Play 6 rounds. Highest score wins."
+      "description": "Choose colored tiles to place on board in matching colors with extra points for specific patterns and sets.  A new twist on the classic Blue using different shapes and tiles and a more complex board. Play 6 rounds. Highest score wins.",
+      "helpText": "Players take seats. Press restart button in top right to select number of players. Press start arrow button to begin. Move tiles from the factory area to the tall, thin holder next to the player's board. Press the empty button to send extra tiles to central holders.  The turn button will advance the turn indicator and ensure 10 cards are available in the supply area. After round is over, players manually calculate scores. Press start arrow button to advance to next round."
     }
   },
   "display01-02": {

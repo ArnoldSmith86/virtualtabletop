@@ -8750,9 +8750,10 @@
       "players": "2-4",
       "language": "UN",
       "variant": "",
-      "attribution": "INSTRUCTIONS: Players take seats. Click die at top of screen to choose random piece to play. Place piece on board. Press next icon button to indicate turn is over.\n\nThe game layout, board, piece designs, and library image were done by LawDawg and are released to the Public Domain under CC0.",
+      "attribution": "The game layout, board, piece designs, and library image were done by LawDawg and are released to the Public Domain under CC0.",
       "similarName": "Tetris Link",
-      "description": "Place colored, shaped blocks into playing area to connect as many pieces as possible to earn points and block opponents.  Highest score wins. "
+      "description": "Place colored, shaped blocks into playing area to connect as many pieces as possible to earn points and block opponents.  Highest score wins. ",
+      "helpText": "Players take seats. Click die at top of screen to choose random piece to play. Place piece on board. Press next icon button to indicate turn is over."
     }
   },
   "score1": {

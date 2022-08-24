@@ -7951,9 +7951,10 @@
       "players": "2-4",
       "language": "UN",
       "variant": "",
-      "attribution": "INSTRUCTIONS: Seats are optional. Use arrows to show or hide trays with colored pieces.\n\nThe game layout, board, piece designs, and library image were done by LawDawg and are released to the Public Domain under CC0.",
+      "attribution": "The game layout, board, piece designs, and library image were done by LawDawg and are released to the Public Domain under CC0.",
       "similarName": "Blokus",
-      "description": "Place colored shapes onto board with corners touching.  Fewest unit squares remaning wins."
+      "description": "Place colored shapes onto board with corners touching.  Fewest unit squares remaning wins.",
+      "helpText": "Seats are optional. Use arrows to show or hide trays with colored pieces."
     }
   },
   "recall_button": {
