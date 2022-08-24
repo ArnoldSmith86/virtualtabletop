@@ -127,7 +127,7 @@ function toggleStateStar(state, dom) {
 }
 
 function updateLibraryFilter() {
-  const text = $('#filterByText').value.toLowerCase();
+  const text = $('#filterByText').value.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, m=>'\\'+m[0]);
   const type = $('#filterByType').value;
   const players = $('#filterByPlayers').value;
   const duration = $('#filterByDuration').value.split('-');
