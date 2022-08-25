@@ -203,6 +203,9 @@ export default class Room {
       Object.assign(state._meta.info, state._meta.info.variants[vID]);
       delete state._meta.info.variants;
       delete state._meta.info.link;
+      delete state._meta.info.publicLibrary;
+      delete state._meta.info.publicLibraryCategory;
+      delete state._meta.info.starred;
 
       zip.file(`${vID}.json`, JSON.stringify(state, null, '  '));
       if(includeAssets)
@@ -767,6 +770,7 @@ export default class Room {
 
     delete copy._meta.info.publicLibrary;
     delete copy._meta.info.publicLibraryCategory;
+    delete copy._meta.info.starred;
     delete copy._meta.info.link;
     delete copy._meta.info.variants;
 
