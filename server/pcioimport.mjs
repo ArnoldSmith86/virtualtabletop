@@ -28,10 +28,10 @@ export default async function convertPCIO(content) {
 
   for(const filename in zip.files) {
     if(filename.match(/^\/?userassets/) && zip.files[filename]._data && zip.files[filename]._data.uncompressedSize < 2097152) {
-      const targetFile = '/assets/' + zip.files[filename]._data.crc32 + '_' + zip.files[filename]._data.uncompressedSize;
+      const targetFile = zip.files[filename]._data.crc32 + '_' + zip.files[filename]._data.uncompressedSize;
       nameMap['package://' + filename] = targetFile;
-      if(targetFile.match(/^\/assets\/[0-9_-]+$/) && !fs.existsSync(Config.directory('assets') + targetFile.substr(7)))
-        fs.writeFileSync(Config.directory('assets') + targetFile.substr(7), await zip.files[filename].async('nodebuffer'));
+      if(!Config.resolveAsset(targetFile))
+        fs.writeFileSync(Config.directory('assets') + '/' + targetFile, await zip.files[filename].async('nodebuffer'));
     }
   }
 

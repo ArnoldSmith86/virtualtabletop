@@ -26,15 +26,6 @@ const serverStart = +new Date();
 
 app.use(Config.get('urlPrefix'), router);
 
-const publicLibraryAssets = {};
-for(const category of [ 'games', 'assets', 'tutorials' ]) {
-  const name = Config.directory('library') + '/' + category;
-  for(const dir of fs.readdirSync(name))
-    if(fs.existsSync(name + '/' + dir + '/assets'))
-      for(const file of fs.readdirSync(name + '/' + dir + '/assets'))
-        publicLibraryAssets[file] = name + '/' + dir + '/assets/' + file;
-}
-
 fs.mkdirSync(assetsdir, { recursive: true });
 fs.mkdirSync(savedir + '/rooms',  { recursive: true });
 fs.mkdirSync(savedir + '/states', { recursive: true });
@@ -94,7 +85,7 @@ MinifyRoom().then(function(result) {
     if(Array.isArray(req.body))
       for(const asset of req.body)
         if(asset.match(/^[0-9_-]+$/))
-          result[asset] = fs.existsSync(assetsdir + '/' + asset);
+          result[asset] = !!Config.resolveAsset(asset);
     res.send(result);
   });
 
@@ -102,7 +93,7 @@ MinifyRoom().then(function(result) {
     if(!req.params.name.match(/^[0-9_-]+$/))
       return;
 
-    fs.readFile(publicLibraryAssets[req.params.name] ?? assetsdir + '/' + req.params.name, function(err, content) {
+    fs.readFile(Config.resolveAsset(req.params.name), function(err, content) {
       if(!content) {
         res.sendStatus(404);
         Logging.log(`WARNING: Could not load asset ${req.params.name}`);
@@ -226,7 +217,7 @@ MinifyRoom().then(function(result) {
 
   router.put('/asset', bodyParser.raw({ limit: '10mb' }), function(req, res) {
     const filename = `/${CRC32.buf(req.body)}_${req.body.length}`;
-    if(!fs.existsSync(assetsdir + filename))
+    if(!Config.resolveAsset(filename.substr(1)))
       fs.writeFileSync(assetsdir + filename, req.body);
     res.send(`/assets${filename}`);
   });

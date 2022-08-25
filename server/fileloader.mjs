@@ -105,9 +105,9 @@ async function readVariantsFromBuffer(buffer) {
       if(filename.match(/^\/?assets/) && zip.files[filename]._data) {
         if(zip.files[filename]._data.uncompressedSize >= 10485760)
           throw new Logging.UserError(403, `${filename} is bigger than 10 MiB.`);
-        const targetFile = '/assets/' + zip.files[filename]._data.crc32 + '_' + zip.files[filename]._data.uncompressedSize;
-        if(targetFile.match(/^\/assets\/[0-9_-]+$/) && !fs.existsSync(Config.directory('assets') + targetFile.substr(7)))
-          fs.writeFileSync(Config.directory('assets') + targetFile.substr(7), await zip.files[filename].async('nodebuffer'));
+        const targetFile = zip.files[filename]._data.crc32 + '_' + zip.files[filename]._data.uncompressedSize;
+        if(!Config.resolveAsset(targetFile))
+          fs.writeFileSync(Config.directory('assets') + '/' + targetFile, await zip.files[filename].async('nodebuffer'));
       }
 
     }

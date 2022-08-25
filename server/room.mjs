@@ -210,8 +210,8 @@ export default class Room {
       zip.file(`${vID}.json`, JSON.stringify(state, null, '  '));
       if(includeAssets)
         for(const asset of this.getAssetList(state))
-          if(fs.existsSync(Config.directory('assets') + asset.substr(7)))
-            zip.file(asset.substr(1), fs.readFileSync(Config.directory('assets') + asset.substr(7)));
+          if(Config.resolveAsset(asset.substr(8)))
+            zip.file(asset.substr(1), fs.readFileSync(Config.resolveAsset(asset.substr(8))));
     }
 
     const zipBuffer = await zip.generateAsync({type:'nodebuffer', compression: 'DEFLATE'});
@@ -623,8 +623,8 @@ export default class Room {
           const zip = new JSZip();
           zip.file(`${this.id}.json`, JSON.stringify(this.state, null, '  '));
           for(const asset in assetStatus)
-            if(!assetStatus[asset] && fs.existsSync(Config.directory('assets') + '/' + asset))
-              zip.file('assets/' + asset, fs.readFileSync(Config.directory('assets') + '/' + asset));
+            if(!assetStatus[asset] && Config.resolveAsset(asset))
+              zip.file('assets/' + asset, fs.readFileSync(Config.resolveAsset(asset)));
 
           zipBuffer = await zip.generateAsync({type:'nodebuffer'});
         }
