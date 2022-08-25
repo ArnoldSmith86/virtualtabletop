@@ -368,6 +368,7 @@ export default class Room {
       this.state._meta.states = Object.assign(this.state._meta.states, this.getPublicLibraryGames());
 
       this.migrateOldPublicLibraryLinks();
+      this.updateLinkedStates();
 
       this.traceIsEnabled(Config.get('forceTracing') || this.traceIsEnabled());
       this.broadcast('state', this.state);
@@ -707,6 +708,12 @@ export default class Room {
     }
     this.trace('unload', {});
     this.unloadCallback();
+  }
+
+  updateLinkedStates() {
+    for(const [ id, state ] of Object.entries(this.state._meta.states))
+      if(state.link)
+        this.addState(id, 'link', state.link);
   }
 
   writePublicLibraryAssetsToFilesystem(stateID, variantID) {
