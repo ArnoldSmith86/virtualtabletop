@@ -274,10 +274,11 @@ function fillStateDetails(states, state, dom) {
   fillArrowButton($('#nextState'), visibleStates[visibleStates.indexOf(dom)+1])
   fillArrowButton($('#prevState'), visibleStates[visibleStates.indexOf(dom)-1])
 
-  const editable = !state.publicLibrary || config.allowPublicLibraryEdits;
+  const deletable = !state.publicLibrary || config.allowPublicLibraryEdits;
+  const editable  = !state.link && deletable;
   toggleClass($('#stateDetailsOverlay .buttons [icon=edit]'), 'hidden', !editable);
-  toggleClass($('#stateDetailsOverlay .buttons [icon=delete]'), 'hidden', !editable);
-  toggleClass($('#stateDetailsOverlay .buttons [icon=edit_off]'), 'hidden', editable);
+  toggleClass($('#stateDetailsOverlay .buttons [icon=delete]'), 'hidden', !deletable);
+  toggleClass($('#stateDetailsOverlay .buttons [icon=edit_off]'), 'hidden', editable || deletable);
 
   function updateStateDetailsDomains(state) {
     $('#similarDetailsDomain').innerText = String(state.bgg).replace(/^ *https?:\/\/(www\.)?/, '').replace(/\/.*/, '');
