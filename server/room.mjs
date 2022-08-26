@@ -227,9 +227,11 @@ export default class Room {
 
     for(const o of variantOperationQueue) {
 
-      if(o.operation == 'save') {
+      if(o.operation == 'create' || o.operation == 'save') {
         if(String(o.filenameSuffix).match(/^[0-9]+[0-9a-z]{4}$/))
           fs.renameSync(`${Config.directory('save')}/states/${this.id}--TEMPSTATE--${o.filenameSuffix}.json`, this.variantFilename(id, o.variantID));
+        if(o.operation == 'create')
+          variants.push({});
       }
 
       if(o.operation == 'up') {

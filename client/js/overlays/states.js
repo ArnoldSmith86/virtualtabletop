@@ -1,7 +1,7 @@
 let waitingForStateCreation = null;
 let variantIDjustUpdated = null;
 
-async function addState(e, type, src, id) {
+async function addState(e, type, src, id, addAsVariant) {
   const initialStatus = e && (e.target.dataset.initialText || e.target.innerText);
   if(e && !e.target.dataset.initialText)
     e.target.dataset.initialText = initialStatus;
@@ -62,11 +62,9 @@ async function addState(e, type, src, id) {
   }
 
   let url = `addState/${roomID}/${id}/${type}/${src && src.name && encodeURIComponent(src.name)}/`;
-  waitingForStateCreation = id;
-  if(e && (e.target.parentNode.parentNode == $('#addVariant') || e.target.classList.contains('update'))) {
-    waitingForStateCreation = $('#stateEditOverlay').dataset.id;
-    url += $('#stateEditOverlay').dataset.id;
-  }
+  if(addAsVariant)
+    url += addAsVariant;
+  waitingForStateCreation = addAsVariant || id;
 
   var req = new XMLHttpRequest();
   req.onload = function(e) {
@@ -288,9 +286,22 @@ function fillStateDetails(states, state, dom) {
 
   const variantOperationQueue = [];
 
-  $('#stateDetailsOverlay .variantsList').innerHTML = '';
-  for(const variantID in state.variants) {
-    let variant = state.variants[variantID];
+  const createTempState = async function(e, operation, variantID, buttons) {
+    const previousText = e.target.innerText;
+    e.target.innerText = 'Copying active game...';
+    for(const button of buttons)
+      button.disabled = true;
+    variantOperationQueue.push({
+      operation,
+      variantID,
+      filenameSuffix: await (await fetch(`createTempState/${roomID}`)).text()
+    });
+    for(const button of buttons)
+      button.disabled = false;
+    e.target.innerText = previousText;
+  }
+
+  const addVariant = function(variantID, variant) {
     const stateIDforLoading = variant.plStateID || state.id;
     const variantIDforLoading = variant.plVariantID || variantID;
     if(variant.plStateID)
@@ -315,19 +326,8 @@ function fillStateDetails(states, state, dom) {
         toggleClass(variantDOM, 'editingVariant', e.target == $('[icon=edit]', variantDOM) && !variantDOM.classList.contains('editingVariant'));
     };
 
-    $('[icon=save]', vEntry).onclick = async function(e) {
-      const previousText = e.target.innerText;
-      e.target.innerText = 'Copying active game...';
-      for(const button of $a('button', vEntry))
-        button.disabled = true;
-      variantOperationQueue.push({
-        operation: 'save',
-        variantID: [...$a('#stateDetailsOverlay .variant')].indexOf(vEntry),
-        filenameSuffix: await (await fetch(`createTempState/${roomID}`)).text()
-      });
-      for(const button of $a('button', vEntry))
-        button.disabled = false;
-      e.target.innerText = previousText;
+    $('[icon=save]', vEntry).onclick = function(e) {
+      createTempState(e, 'save', [...$a('#stateDetailsOverlay .variant')].indexOf(vEntry), $a('button', vEntry));
     };
     $('[icon=north]', vEntry).onclick = function() {
       variantOperationQueue.push({
@@ -355,9 +355,31 @@ function fillStateDetails(states, state, dom) {
     };
 
     $('#stateDetailsOverlay .variantsList').appendChild(vEntry);
+    return vEntry;
   }
 
+  $('#stateDetailsOverlay .variantsList').innerHTML = '';
+  for(const variantID in state.variants)
+    addVariant(variantID, state.variants[variantID]);
 
+
+
+  $('#variantsList > [icon=add]').onclick = function() {
+    showStatesOverlay('variantAddOverlay');
+  };
+  $('#variantAddOverlay [icon=save]').onclick = async function(e) {
+    const variantID = $a('#stateDetailsOverlay .variant').length;
+    await createTempState(e, 'create', variantID, $a('#variantAddOverlay button'));
+    showStatesOverlay('stateDetailsOverlay');
+    const emptyVariant = { variantImage: state.image };
+    const vEntry = addVariant(variantID, emptyVariant);
+    enableEditing(vEntry, emptyVariant);
+  };
+  $('#variantAddOverlay [icon=upload]').onclick = function(e) {
+    selectFile(false, async function(f) {
+      // TODO
+    });
+  };
 
   $('#closeDetails').onclick = function() {
     showStatesOverlay('statesOverlay');
