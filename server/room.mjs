@@ -436,6 +436,7 @@ export default class Room {
             this.removeState(undefined, id);
             continue;
           }
+          delete state.link;
         } else if(target) {
           Logging.log(`could not migrate public library state ${target} in room ${this.id}`);
         }

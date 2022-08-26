@@ -364,6 +364,9 @@ div:nth-of-type(1) > .list > .roomState .star {
   width: calc(50% - 15px);
   height: var(--similarDetailsHeight);
 }
+#stateDetailsOverlay #similarDetails.hidden, #stateDetailsOverlay #helpTexts.hidden {
+  display: block !important;
+}
 #similarDetails .details {
   margin-left: var(--similarDetailsHeight);
 }
@@ -536,11 +539,6 @@ div:nth-of-type(1) > .list > .roomState .star {
   width: 100%;
 }
 
-@media not all and (max-width: 957px), not all and (max-height: 600px), not all and (max-width: 1000px) and (max-height: 643px) {
-  #stateDetailsOverlay #helpTexts, #stateDetailsOverlay #similarDetails {
-    display: block !important;
-  }
-}
 @media (max-width: 1260px), (max-height: 787px) {
   #stateDetailsOverlay {
     --mainDetailsHeight: 200px;
@@ -591,6 +589,9 @@ div:nth-of-type(1) > .list > .roomState .star {
     max-width: 38rem;
     height: unset;
     padding: 20px;
+  }
+  #stateDetailsOverlay #similarDetails.hidden, #stateDetailsOverlay #helpTexts.hidden {
+    display: none !important;
   }
   #mainDetails {
     margin-top: 60px;
