@@ -533,21 +533,6 @@ const jeCommands = [
       }
       jeUpdateMulti();
     }
-  },
-  {
-    id: 'widget_holder_dropTarget',
-    name: "dropTarget",
-    class: 'property',
-    context: '^holder',
-    show: jeRoutineCall(function(routineIndex) {
-      return !Object.keys(jeGetValue(jeContext.slice(1, routineIndex+2))).includes("dropTarget");
-    }, true),
-    call: async function() {
-      jeStateNow.dropTarget = {
-        "type": "###SELECT ME###"
-      };
-      jeSetAndSelect('card');
-    }
   }
 ];
 
@@ -906,7 +891,7 @@ function jeAddNumberCommand(name, key, callback) {
 
 function jeAddWidgetPropertyCommands(object) {
   for(const property in object.defaults)
-    if(property != 'typeClasses' && property != 'dropTarget' && !property.match(/^c[0-9]{2}$/))
+    if(property != 'typeClasses' && !property.match(/^c[0-9]{2}$/))
       jeAddWidgetPropertyCommand(object, property);
   const type = object.defaults.typeClasses.replace(/widget /, '');
   return type == 'basic' ? null : type;
@@ -918,9 +903,16 @@ function jeAddWidgetPropertyCommand(object, property) {
     name: property,
     class: 'property',
     context: `^${object.getDefaultValue('typeClasses').replace('widget ', '')}`,
-    call: async function() {
-      jeInsert([], property, property.match(/Routine$/) ? [] : object.getDefaultValue(property));
-    },
+    call: property!='dropTarget' ?
+      async function() {
+        jeInsert([], property, property.match(/Routine$/) ? [] : object.getDefaultValue(property));
+      } :
+      async function() {
+        jeStateNow.dropTarget = {
+          "type": "###SELECT ME###"
+        };
+        jeSetAndSelect('card');
+      },
     show: function() {
       return jeStateNow[property] === undefined;
     }
