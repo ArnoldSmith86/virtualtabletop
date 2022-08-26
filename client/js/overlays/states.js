@@ -304,6 +304,7 @@ function fillStateDetails(states, state, dom) {
   const addVariant = function(variantID, variant) {
     const stateIDforLoading = variant.plStateID || state.id;
     const variantIDforLoading = variant.plVariantID || variantID;
+    const isLinkedVariant = !!variant.plStateID;
     if(variant.plStateID)
       variant = states[variant.plStateID].variants[variant.plVariantID];
 
@@ -311,7 +312,11 @@ function fillStateDetails(states, state, dom) {
       variant.variantImage = state.image;
 
     const vEntry = domByTemplate('template-variantslist-entry', variant);
-    vEntry.className = 'variant';
+    vEntry.className = isLinkedVariant ? 'linked variant' : 'variant';
+
+    if(isLinkedVariant)
+      for(const dom of $a('[data-field]', vEntry))
+        dom.classList.add('uneditable');
 
     toggleClass($('img', vEntry), 'hidden', !variant.variantImage);
     $('img', vEntry).src = String(variant.variantImage).replace(/^\//, '');

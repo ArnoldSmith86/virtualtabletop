@@ -202,7 +202,7 @@ export function enableEditing(parent, obj) {
   parent.classList.add('editing');
   parent.classList.remove('notEditing');
 
-  for(const dom of $a('[data-field]:not([data-target])', parent)) {
+  for(const dom of $a('[data-field]:not([data-target],.uneditable)', parent)) {
     dom.contentEditable = true;
     dom.classList.remove('hidden');
     if(!dom.innerText.trim())
@@ -218,7 +218,7 @@ export function disableEditing(parent, obj) {
   parent.classList.remove('editing');
   parent.classList.add('notEditing');
 
-  for(const dom of $a('[data-field]:not([data-target=href])', parent)) {
+  for(const dom of $a('[data-field]:not([data-target=href],.uneditable)', parent)) {
     if(dom.contentEditable != 'false') {
       dom.contentEditable = false;
       if(!obj[dom.dataset.field]) {

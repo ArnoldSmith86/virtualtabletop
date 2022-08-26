@@ -445,6 +445,10 @@ div:nth-of-type(1) > .list > .roomState .star {
   display: flex;
 }
 
+#stateDetailsOverlay.editing .variant.linked .variant-image > .variantEdit, .variant.linked [icon=save] {
+  display: none;
+}
+
 .variant > div.variantEdit {
   width: 100%;
   justify-content: right;
@@ -514,7 +518,7 @@ div:nth-of-type(1) > .list > .roomState .star {
 }
 
 #variantsList [icon=add] {
-  margin: 40px auto;
+  margin: 20px auto;
 }
 
 
