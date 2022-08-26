@@ -222,8 +222,13 @@ export default class Room {
     };
   }
 
-  async editState(player, id, meta, variantInput, variantOperationQueue) {
+  editState(player, id, meta, variantInput, variantOperationQueue) {
     const variants = this.state._meta.states[id].variants;
+
+    const renameVariantFile = (stateID, oldVariantID, newVariantID)=>{
+      if(oldVariantID == player.name && fs.existsSync(this.variantFilename(stateID, oldVariantID)) || oldVariantID != player.name && !variants[oldVariantID].plStateID && !variants[oldVariantID].link)
+        fs.renameSync(this.variantFilename(stateID, oldVariantID), this.variantFilename(stateID, newVariantID));
+    };
 
     for(const o of variantOperationQueue) {
 
@@ -234,18 +239,22 @@ export default class Room {
           variants.push({});
       }
 
+      if(o.operation == 'newLink') {
+        variants.push(o.variant);
+      }
+
       if(o.operation == 'up') {
         if(o.variantID) {
-          fs.renameSync(this.variantFilename(id, o.variantID),   this.variantFilename(id, player.name));
-          fs.renameSync(this.variantFilename(id, o.variantID-1), this.variantFilename(id, o.variantID));
-          fs.renameSync(this.variantFilename(id, player.name),   this.variantFilename(id, o.variantID-1));
+          renameVariantFile(id, o.variantID,   player.name);
+          renameVariantFile(id, o.variantID-1, o.variantID);
+          renameVariantFile(id, player.name,   o.variantID-1);
 
           variants.splice(o.variantID-1, 0, variants.splice(o.variantID, 1)[0]);
         } else {
-          fs.renameSync(this.variantFilename(id, o.variantID), this.variantFilename(id, player.name));
+          renameVariantFile(id, o.variantID, player.name);
           for(let i=1; i<variants.length; ++i)
-            fs.renameSync(this.variantFilename(id, i), this.variantFilename(id, i-1));
-          fs.renameSync(this.variantFilename(id, player.name), this.variantFilename(id, variants.length-1));
+            renameVariantFile(id, i, i-1);
+          renameVariantFile(id, player.name, variants.length-1);
 
           variants.push(variants.shift());
         }
@@ -253,40 +262,31 @@ export default class Room {
 
       if(o.operation == 'down') {
         if(o.variantID < variants.length-1) {
-          fs.renameSync(this.variantFilename(id, o.variantID),   this.variantFilename(id, player.name));
-          fs.renameSync(this.variantFilename(id, o.variantID+1), this.variantFilename(id, o.variantID));
-          fs.renameSync(this.variantFilename(id, player.name),   this.variantFilename(id, o.variantID+1));
+          renameVariantFile(id, o.variantID,   player.name);
+          renameVariantFile(id, o.variantID+1, o.variantID);
+          renameVariantFile(id, player.name,   o.variantID+1);
 
           variants.splice(o.variantID+1, 0, variants.splice(o.variantID, 1)[0]);
         } else {
-          fs.renameSync(this.variantFilename(id, o.variantID), this.variantFilename(id, player.name));
+          renameVariantFile(id, o.variantID, player.name);
           for(let i=variants.length-2; i>=0; --i)
-            fs.renameSync(this.variantFilename(id, i), this.variantFilename(id, i+1));
-          fs.renameSync(this.variantFilename(id, player.name), this.variantFilename(id, 0));
+            renameVariantFile(id, i, i+1);
+          renameVariantFile(id, player.name, 0);
 
           variants.unshift(variants.pop());
         }
       }
 
       if(o.operation == 'delete') {
-        fs.unlinkSync(this.variantFilename(id, o.variantID));
+        if(!variants[o.variantID].plStateID && !variants[o.variantID].link)
+          fs.unlinkSync(this.variantFilename(id, o.variantID));
         for(let i=o.variantID+1; i<variants.length; ++i)
-          fs.renameSync(this.variantFilename(id, i), this.variantFilename(id, i-1));
+          renameVariantFile(id, i, i-1);
 
         variants.splice(o.variantID, 1);
       }
 
     }
-
-    // if update links were removed, download their current contents to files
-    // FIXME: make links work again in general
-    /*const currentState = this.state._meta.states[id];
-    for(const variantID in variants) {
-      if(currentState.variants[variantID].link && !meta.variants[variantID].link) {
-        const state = await FileLoader.readVariantFromLink(currentState.variants[variantID].link);
-        fs.writeFileSync(this.variantFilename(id, variantID), JSON.stringify(state));
-      }
-    }*/
 
     for(const variantID in variantInput)
       Object.assign(variants[variantID], variantInput[variantID]);
@@ -371,6 +371,7 @@ export default class Room {
 
       this.migrateOldPublicLibraryLinks();
       this.updateLinkedStates();
+      this.removeInvalidPublicLibraryLinks(player);
 
       this.traceIsEnabled(Config.get('forceTracing') || this.traceIsEnabled());
       this.broadcast('state', this.state);
@@ -556,6 +557,17 @@ export default class Room {
   recolorPlayer(renamingPlayer, playerName, color) {
     this.state._meta.players[playerName] = color;
     this.sendMetaUpdate();
+  }
+
+  removeInvalidPublicLibraryLinks(player) {
+    for(const [ id, state ] of Object.entries(this.state._meta.states)) {
+      const operations = [];
+      for(const [ variantID, variant ] of Object.entries(state.variants))
+        if(variant.plStateID && (!this.state._meta.states[variant.plStateID] || !this.state._meta.states[variant.plStateID].variants[variant.plVariantID]))
+          operations.push({ operation: 'delete', variantID });
+      if(operations.length)
+        this.editState(player, id, state, state.variants, operations);
+    }
   }
 
   removePlayer(player) {

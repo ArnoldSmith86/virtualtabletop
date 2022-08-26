@@ -366,6 +366,17 @@ function fillStateDetails(states, state, dom) {
 
   $('#variantsList > [icon=add]').onclick = function() {
     showStatesOverlay('variantAddOverlay');
+    $('#variantAddOverlay select').innerHTML = '';
+    for(const [ id, state ] of Object.entries(states)) {
+      if(state.publicLibrary) {
+        for(const [ variantID, variant ] of Object.entries(state.variants)) {
+          const option = document.createElement('option');
+          option.value = `${id}/${variantID}`;
+          option.innerText = `${state.name} - ${variant.players} - ${variant.language} - ${variant.variant}`;
+          $('#variantAddOverlay select').appendChild(option);
+        }
+      }
+    }
   };
   $('#variantAddOverlay [icon=save]').onclick = async function(e) {
     const variantID = $a('#stateDetailsOverlay .variant').length;
@@ -378,6 +389,17 @@ function fillStateDetails(states, state, dom) {
   $('#variantAddOverlay [icon=upload]').onclick = function(e) {
     selectFile(false, async function(f) {
       // TODO
+    });
+  };
+  $('#variantAddOverlay [icon=link]').onclick = function(e) {
+    showStatesOverlay('stateDetailsOverlay');
+    const tokens = $('#variantAddOverlay select').value.split('/');
+    const newVariant = { plStateID: tokens[0], plVariantID: tokens[1] };
+    const vEntry = addVariant($a('#stateDetailsOverlay .variant').length, newVariant);
+    enableEditing(vEntry, newVariant);
+    variantOperationQueue.push({
+      operation: 'newLink',
+      variant: newVariant
     });
   };
 
