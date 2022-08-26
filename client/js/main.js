@@ -252,6 +252,8 @@ onLoad(function() {
 
   on('.toolbarTab', 'click', function(e) {
     if(e.currentTarget.classList.contains('active')) {
+      if($('#stateDetailsOverlay.notEditing') && $('#stateDetailsOverlay.notEditing').style.display == 'flex')
+        showStatesOverlay('statesOverlay');
       e.stopImmediatePropagation();
       return;
     }
