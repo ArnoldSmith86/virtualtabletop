@@ -535,21 +535,6 @@ const jeCommands = [
     }
   },
   {
-    id: 'je_selectSortBy',
-    name: 'sortBy',
-    context: '^button ↦ clickRoutine ↦ [0-9]+ ↦ \\(SELECT\\) ↦ ',
-    show: jeRoutineCall(function(routineIndex) {
-      return !Object.keys(jeGetValue(jeContext.slice(1, routineIndex+2))).includes("sortBy");
-    }, true),
-    call: async function() {
-      jeStateNow.clickRoutine[+jeContext[2]].sortBy = {
-        "key": "###SELECT ME###",
-        "reverse": false
-      };
-      jeSetAndSelect('z');
-    }
-  },
-  {
     id: 'widget_holder_dropTarget',
     name: "dropTarget",
     class: 'property',
@@ -629,9 +614,17 @@ function jeAddRoutineOperationCommands(command, defaults) {
       id: 'default_' + command + '_' + property,
       name: property,
       context: `^.* ↦ \\(${command}\\) ↦ `,
-      call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
-        jeInsert(jeContext.slice(1, routineIndex+2), property, defaults[property]);
-      }),
+      call: property != 'sortBy' ? // Special case for sortBy; emulate jeInsert w/special replacement
+        jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
+          jeInsert(jeContext.slice(1, routineIndex+2), property, defaults[property]);
+        }) :
+        jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
+          jeGetValue(jeContext.slice(1,routineIndex+2)).sortBy = {
+            "key": "###SELECT ME###",
+            "reverse": false
+          };
+          jeSetAndSelect('z');
+        }),
       show: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
         return operation && operation[property] === undefined;
       }, true)
@@ -672,7 +665,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0, snapToGrid: true });
   jeAddRoutineOperationCommands('RECALL', { owned: true, holder: null });
   jeAddRoutineOperationCommands('ROTATE', { count: 1, angle: 90, mode: 'add', holder: null, collection: 'DEFAULT' });
-  jeAddRoutineOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all'});
+  jeAddRoutineOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all', sortBy: '###SEE jeAddRoutineOperation###'});
   jeAddRoutineOperationCommands('SET', { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
   jeAddRoutineOperationCommands('SORT', { key: 'value', reverse: false, locales: null, options: null, holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('SHUFFLE', { holder: null, collection: 'DEFAULT' });
