@@ -548,7 +548,14 @@ onLoad(function() {
   on('#addState', 'click', _=>showStatesOverlay('stateAddOverlay'));
 
   on('#stateAddOverlay .create, #addVariant .create', 'click', e=>addState(e, 'state'));
-  on('#stateAddOverlay .upload, #addVariant .upload', 'click', e=>selectFile(false, f=>addState(e, 'file', f)));
+  on('#stateAddOverlay .upload, #addVariant .upload', 'click', e=>{
+    if(typeof JSZip == 'undefined') {
+      const node = document.createElement('script');
+      node.src = 'scripts/jszip';
+      $('head').appendChild(node);
+    }
+    selectFile(false, f=>addState(e, 'file', f));
+  });
   on('#stateAddOverlay .link,   #addVariant .link',   'click', e=>addState(e, 'link', prompt('Enter shared URL:')));
 
   on('#addState .download', 'click', _=>downloadState(null));

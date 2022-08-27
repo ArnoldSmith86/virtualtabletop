@@ -80,6 +80,12 @@ MinifyRoom().then(function(result) {
   router.use('/', express.static(path.resolve() + '/client'));
   router.use('/i', express.static(path.resolve() + '/assets'));
 
+  router.get('/scripts/:name', function(req, res) {
+    res.setHeader('Content-Type', 'application/javascript');
+    if(req.params.name == 'jszip')
+      res.send(fs.readFileSync('node_modules/jszip/dist/jszip.min.js'));
+  });
+
   router.post('/assetcheck', bodyParser.json({ limit: '10mb' }), function(req, res) {
     const result = {};
     if(Array.isArray(req.body))
