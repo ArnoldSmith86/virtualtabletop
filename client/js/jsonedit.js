@@ -903,16 +903,26 @@ function jeAddWidgetPropertyCommand(object, property) {
     name: property,
     class: 'property',
     context: `^${object.getDefaultValue('typeClasses').replace('widget ', '')}`,
-    call: property!='dropTarget' ?
-      async function() {
-        jeInsert([], property, property.match(/Routine$/) ? [] : object.getDefaultValue(property));
-      } :
-      async function() {
-        jeStateNow.dropTarget = {
-          "type": "###SELECT ME###"
-        };
-        jeSetAndSelect('card');
-      },
+    call: property=='dropTarget'? // Special case for dropTarget, faces, and spinner options
+            async function() {
+              jeStateNow.dropTarget = {
+                "type": "###SELECT ME###"
+              };
+              jeSetAndSelect('card');
+            }
+        : property=='faces' ?
+            async function() {
+              jeStateNow.faces = ["###SELECT ME###"];
+              jeSetAndSelect({});
+            }
+        : object.getDefaultValue('typeClasses').replace('widget ', '') + '_' + property == 'spinner_options' ?
+            async function() {
+              jeStateNow.options = "###SELECT ME###";
+              jeSetAndSelect([]);
+            }
+        :  async function() {
+             jeInsert([], property, property.match(/Routine$/) ? [] : object.getDefaultValue(property));
+           },
     show: function() {
       return jeStateNow[property] === undefined;
     }

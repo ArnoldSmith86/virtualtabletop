@@ -8,7 +8,7 @@ class Spinner extends Widget {
       typeClasses: 'widget spinner',
       clickable: true,
 
-      options: [],
+      options: [ 1, 2, 3, 4, 5, 6 ],
       value: '🎲',
       angle: 0,
 
