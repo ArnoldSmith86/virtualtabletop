@@ -599,16 +599,16 @@ function jeAddRoutineOperationCommands(command, defaults) {
       id: 'default_' + command + '_' + property,
       name: property,
       context: `^.* ↦ \\(${command}\\) ↦ `,
-      call: property != 'sortBy' ? // Special case for sortBy; emulate jeInsert w/special replacement
-        jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
-          jeInsert(jeContext.slice(1, routineIndex+2), property, defaults[property]);
-        }) :
+      call: property == 'sortBy' ? // Special case for sortBy; emulate jeInsert w/special replacement
         jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
           jeGetValue(jeContext.slice(1,routineIndex+2)).sortBy = {
             "key": "###SELECT ME###",
             "reverse": false
           };
           jeSetAndSelect('z');
+        }) :
+        jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
+          jeInsert(jeContext.slice(1, routineIndex+2), property, defaults[property]);
         }),
       show: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
         return operation && operation[property] === undefined;
