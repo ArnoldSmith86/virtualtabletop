@@ -1840,8 +1840,8 @@ function jeSet(text, dontFocus) {
 // display the results in the text area by calling jeSet, and select the replaced text by calling jeSelect.
 function jeSetAndSelect(replaceBy, insideString) {
 
-  const emptyBrackets = replaceBy && ((Array.isArray(replaceBy) && replaceBy.length==0) || (typeof replaceBy === 'object' && Object.keys(replaceBy).length === 0)); // ###SELECT ME### should be replaced by [] or {}
-  const dollar = replaceBy && replaceBy == '${}'; // ###SELECT ME### should be replaced by ${} (and this will be in a string)
+  const emptyBrackets = replaceBy && (typeof replaceBy === 'object' && Object.keys(replaceBy).length === 0); // ###SELECT ME### should be replaced by [] or {}
+  const dollar = replaceBy == '${}'; // ###SELECT ME### should be replaced by ${} (and this will be in a string)
 
   if(jeMode == 'widget')
     var jsonString = jePreProcessText(JSON.stringify(jePreProcessObject(jeStateNow), null, '  '));
