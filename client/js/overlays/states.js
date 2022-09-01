@@ -319,6 +319,8 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
       entry.className = state.image ? 'roomState' : 'roomState noImage';
       if(state.publicLibrary)
         entry.className += ' publicLibraryGame';
+      if(state.link)
+        entry.className += ' linkedGame';
 
       $('img', entry).src = state.image.replace(/^\//, '');
       $('h3', entry).textContent = state.name;
@@ -426,6 +428,7 @@ function fillStateDetails(states, state, dom) {
 
   toggleClass($('#stateDetailsOverlay .star'), 'active', !!state.starred);
   toggleClass($('#stateDetailsOverlay .star'), 'hidden', !state.publicLibrary);
+  toggleClass($('#mainImage > i'),             'hidden', !state.link);
 
   function fillArrowButton(arrowDom, targetDom) {
     arrowDom.style.display = targetDom ? 'block' : 'none';

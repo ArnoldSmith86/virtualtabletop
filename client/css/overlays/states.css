@@ -177,7 +177,7 @@
   margin: 4px 8px 8px 8px;
 }
 
-.roomState .star {
+.roomState .star, .roomState > i {
   display: none;
   position: absolute;
   top: 0;
@@ -186,11 +186,16 @@
   text-shadow: 1px 1px 2px #444;
 }
 
+.roomState > i {
+  color: white;
+  padding: 9px;
+}
+
 div:nth-of-type(1) > .list > .roomState .star {
   color: gold;
 }
 
-.roomState.publicLibraryGame .star {
+.roomState.publicLibraryGame .star, .roomState.linkedGame > i {
   display: block;
 }
 
@@ -349,11 +354,16 @@ div:nth-of-type(1) > .list > .roomState .star {
   top: 5px;
   position: relative;
 }
-#mainDetails .star {
+#mainDetails .star, #mainDetails #mainImage > i {
   position: fixed;
   font-size: 50px;
   background: none;
   text-shadow: 2px 2px 4px #444;
+}
+#mainDetails #mainImage > i {
+  top: unset;
+  color: white;
+  padding: 9px;
 }
 #mainDetails .active.star {
   color: gold;
@@ -620,7 +630,7 @@ div:nth-of-type(1) > .list > .roomState .star {
     padding-top: 0;
     padding-bottom: 0;
   }
-  #mainDetails .star {
+  #mainDetails .star, #mainDetails #mainImage > i {
     position: absolute;
   }
   #nextState, #prevState {
@@ -653,7 +663,7 @@ div:nth-of-type(1) > .list > .roomState .star {
     margin: unset;
     padding: unset;
   }
-  #mainDetails .star {
+  #mainDetails .star, #mainDetails #mainImage > i {
     font-size: 32px;
   }
   #mainImage button, #similarImage button {
