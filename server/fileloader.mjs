@@ -57,12 +57,40 @@ async function readStatesFromBuffer(buffer) {
   return states;
 }
 
+function checkForLinkToOwnServer(link) {
+  if(!fs.existsSync(Config.directory('save') + '/shares.json'))
+    return null;
+
+  const localPrefix = Config.get('externalURL').replace(/[.*+?^${}()|[\]\\]/g, m=>'\\'+m[0]);
+  const match = link.match(`^${localPrefix}(/s/[0-9a-z]{8})/`);
+
+  if(match) {
+    const sharedLinks = JSON.parse(fs.readFileSync(Config.directory('save') + '/shares.json'));
+    const m = sharedLinks[match[1]].split('/');
+
+    const states = {};
+    states[m[3]] = [];
+
+    const room = JSON.parse(fs.readFileSync(Config.directory('save') + '/rooms/' + m[2] + '.json'));
+    for(const [ i, variant ] of Object.entries(room._meta.states[m[3]].variants)) {
+      states[m[3]].push(JSON.parse(fs.readFileSync(Config.directory('save') + `/states/${m[2]}-${m[3]}-${i}.json`)));
+      states[m[3]][i]._meta = { version: states[m[3]][i]._meta.version, info: Object.assign(room._meta.states[m[3]], variant) };
+    }
+
+    return states;
+  }
+}
+
 async function readStatesFromLink(linkAndPath) {
   const link = linkAndPath.replace(/#.*/, '');
   const path = linkAndPath.match(/#/) ? linkAndPath.replace(/.*#/, '').split('/') : [];
 
-  await downloadLink(link);
-  const states = JSON.parse(fs.readFileSync(`${dirname}/${linkStatus[link].filename}`));
+  let states = checkForLinkToOwnServer(link);
+
+  if(!states) {
+    await downloadLink(link);
+    states = JSON.parse(fs.readFileSync(`${dirname}/${linkStatus[link].filename}`));
+  }
 
   if(path.length == 0)
     return states;
