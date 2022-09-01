@@ -599,9 +599,17 @@ function jeAddRoutineOperationCommands(command, defaults) {
       id: 'default_' + command + '_' + property,
       name: property,
       context: `^.* ↦ \\(${command}\\) ↦ `,
-      call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
-        jeInsert(jeContext.slice(1, routineIndex+2), property, defaults[property]);
-      }),
+      call: property == 'sortBy' ? // Special case for sortBy; emulate jeInsert w/special replacement
+        jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
+          jeGetValue(jeContext.slice(1,routineIndex+2)).sortBy = {
+            "key": "###SELECT ME###",
+            "reverse": false
+          };
+          jeSetAndSelect('z');
+        }) :
+        jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
+          jeInsert(jeContext.slice(1, routineIndex+2), property, defaults[property]);
+        }),
       show: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
         return operation && operation[property] === undefined;
       }, true)
@@ -642,7 +650,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0, snapToGrid: true });
   jeAddRoutineOperationCommands('RECALL', { owned: true, holder: null });
   jeAddRoutineOperationCommands('ROTATE', { count: 1, angle: 90, mode: 'add', holder: null, collection: 'DEFAULT' });
-  jeAddRoutineOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all', sortBy: { key: "z", reverse: false } });
+  jeAddRoutineOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all', sortBy: '###SEE jeAddRoutineOperation###'});
   jeAddRoutineOperationCommands('SET', { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
   jeAddRoutineOperationCommands('SORT', { key: 'value', reverse: false, locales: null, options: null, holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('SHUFFLE', { holder: null, collection: 'DEFAULT' });
@@ -854,8 +862,14 @@ function jeAddFieldCommand(key, types, value) {
       return typeof field[key] === 'undefined' && (field.type || '').match(types);
     }, true),
     call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
-      jeGetValue(jeContext.slice(1, routineIndex+5))[key] = '###SELECT ME###';
-      jeSetAndSelect(value);
+      jeGetValue(jeContext.slice(1, routineIndex+5))[key] = key != 'options' ? '###SELECT ME###' :
+        [
+          {
+            value: "###SELECT ME###",
+            text: "text"
+          }
+        ];
+      jeSetAndSelect( key != 'options' ? value : "value");
     })
   });
 }
@@ -889,9 +903,26 @@ function jeAddWidgetPropertyCommand(object, property) {
     name: property,
     class: 'property',
     context: `^${object.getDefaultValue('typeClasses').replace('widget ', '')}`,
-    call: async function() {
-      jeInsert([], property, property.match(/Routine$/) ? [] : object.getDefaultValue(property));
-    },
+    call: property=='dropTarget'? // Special case for dropTarget, faces, and spinner options
+            async function() {
+              jeStateNow.dropTarget = {
+                "type": "###SELECT ME###"
+              };
+              jeSetAndSelect('card');
+            }
+        : property=='faces' ?
+            async function() {
+              jeStateNow.faces = ["###SELECT ME###"];
+              jeSetAndSelect({});
+            }
+        : object.getDefaultValue('typeClasses').replace('widget ', '') + '_' + property == 'spinner_options' ?
+            async function() {
+              jeStateNow.options = "###SELECT ME###";
+              jeSetAndSelect([]);
+            }
+        :  async function() {
+             jeInsert([], property, property.match(/Routine$/) ? [] : object.getDefaultValue(property));
+           },
     show: function() {
       return jeStateNow[property] === undefined;
     }
@@ -1808,21 +1839,38 @@ function jeSet(text, dontFocus) {
 // Replace ###SELECT ME### in JSON string in jeStateNow by the string given in replaceBy,
 // display the results in the text area by calling jeSet, and select the replaced text by calling jeSelect.
 function jeSetAndSelect(replaceBy, insideString) {
+
+  const emptyBrackets = replaceBy && (typeof replaceBy === 'object' && Object.keys(replaceBy).length === 0); // ###SELECT ME### should be replaced by [] or {}
+  const dollar = replaceBy == '${}'; // ###SELECT ME### should be replaced by ${} (and this will be in a string)
+
   if(jeMode == 'widget')
     var jsonString = jePreProcessText(JSON.stringify(jePreProcessObject(jeStateNow), null, '  '));
   else
     var jsonString = JSON.stringify(jeStateNow, null, '  ');
   const startIndex = jsonString.indexOf(insideString ? '###SELECT ME###' : '"###SELECT ME###"');
-  let length = jsonString.length-15-(insideString ? 0 : 2);
+  let length = jsonString.length-15-(insideString ? 0 : 2); // Length of json ignoring string to be replaced.
 
-  if(insideString)
+  // Replace the entire quoted string if the ###SELECT ME### is not inside a string, otherwise
+  // just replace ###SELECT ME###
+  if(insideString || dollar)
     jsonString = jsonString.replace(/###SELECT ME###/, JSON.stringify(replaceBy).substr(1, JSON.stringify(replaceBy).length-2));
   else
     jsonString = jsonString.replace(/"###SELECT ME###"/, JSON.stringify(replaceBy));
 
+  let insertedLength = jsonString.length - length; // Length of inserted string.
+
+  // Set left and right ranges for selection based on what is being inserted.
   jeSet(jsonString);
-  const quote = typeof replaceBy == 'string' && !insideString ? 1 : 0;
-  jeSelect(startIndex + quote, startIndex+jsonString.length-length - quote, true);
+  let leftOffset = 0;
+  let rightOffset = 0;
+  if(emptyBrackets || (typeof replaceBy == 'string' && !insideString && !dollar)){
+    leftOffset = rightOffset = 1;
+  } else if (dollar) {
+    leftOffset = 3;
+    rightOffset = 2;
+  }
+
+  jeSelect(startIndex + leftOffset, startIndex + insertedLength - rightOffset, true);
 }
 
 function jeSetEditorContent(content) {
