@@ -1,21 +1,63 @@
 let waitingForStateCreation = null;
 let variantIDjustUpdated = null;
 
+function loadJSZip() {
+  const node = document.createElement('script');
+  node.src = 'scripts/jszip';
+  $('head').appendChild(node);
+}
+
 async function waitForJSZip() {
   while(typeof JSZip == 'undefined')
     await sleep(50)
 }
 
+async function resolveStateCollections(file, callback) {
+  if(file.name.match(/\.vttc$/)) {
+    await waitForJSZip();
+    for(const [ filename, f ] of Object.entries((await JSZip.loadAsync(file)).files))
+      callback(new File([await f.async('blob')], filename));
+  } else {
+    callback(file);
+  }
+}
+
 function selectVTTfile(callback) {
-  selectFile(false, async function(f) {
-    if(f.name.match(/\.vttc$/)) {
-      await waitForJSZip();
-      for(const [ filename, file ] of Object.entries((await JSZip.loadAsync(f)).files))
-        callback(new File([await file.async('blob')], filename));
-    } else {
-      callback(f);
+  selectFile(false, file=>resolveStateCollections(file, callback));
+}
+
+function addStateFile(f) {
+  const stateDOM = domByTemplate('template-stateslist-entry');
+  let id;
+  do {
+    id = Math.random().toString(36).substring(3, 7);
+  } while($(`.roomState[data-id="${id}"]`));
+  stateDOM.dataset.id = id;
+  stateDOM.className = 'uploading visible roomState noImage';
+
+  function metaCallback(name, similarName, image) {
+    if(image) {
+      stateDOM.classList.remove('noImage');
+      $('img', stateDOM).src = image;
     }
-  });
+
+    $('h3', stateDOM).textContent = name;
+    $('h4', stateDOM).textContent = similarName && name != similarName ? `Similar to ${similarName}` : '';
+
+    uploadingStates.push(stateDOM);
+    insertUploadingState(stateDOM, $('#statesList > div'));
+    updateEmptyLibraryHint();
+
+    stateDOM.scrollIntoView(false);
+  }
+  function progressCallback(percent) {
+    stateDOM.style.setProperty('--progress', percent);
+  }
+  function doneCallback() {
+    uploadingStates = uploadingStates.filter(s=>s!=stateDOM);
+  }
+
+  uploadStateFile(f, `addState/${roomID}/${id}/file/${f.name}`, metaCallback, progressCallback, doneCallback);
 }
 
 async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCallback, loadCallback) {
@@ -89,6 +131,22 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
   req.open('PUT', targetURL, true);
   req.setRequestHeader('Content-type', 'application/octet-stream');
   req.send(blob);
+}
+
+function insertUploadingState(uploadingState, category) {
+  const title = $('h3', uploadingState).textContent;
+  if(!$(`.list [data-id="${uploadingState.dataset.id}"]`, category)) {
+    let found = false;
+    for(const existingState of $a('.roomState', category)) {
+      if(title.localeCompare($('h3', existingState).textContent) < 0) {
+        $('.list', category).insertBefore(uploadingState, existingState);
+        found = true;
+        break;
+      }
+    }
+    if(!found)
+      $('.list', category).appendChild(uploadingState);
+  }
 }
 
 async function addState(e, type, src, id, addAsVariant) {
@@ -237,22 +295,6 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
 
   const publicLibraryLinksFound = {};
 
-  function insertUploadingState(uploadingState, category) {
-    const title = $('h3', uploadingState).textContent;
-    if(!$(`.list [data-id="${uploadingState.dataset.id}"]`, category)) {
-      let found = false;
-      for(const existingState of $a('.roomState', category)) {
-        if(title.localeCompare($('h3', existingState).textContent) < 0) {
-          $('.list', category).insertBefore(uploadingState, existingState);
-          found = true;
-          break;
-        }
-      }
-      if(!found)
-        $('.list', category).appendChild(uploadingState);
-    }
-  }
-
   for(const publicLibrary of [ false, true ]) {
     const category = domByTemplate('template-stateslist-category');
     $('.title', category).textContent = publicLibrary ? 'Public Library' : 'Your Game Shelf';
@@ -359,45 +401,9 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
   }
 
   $('#stateAddOverlay .upload').onclick = function() {
-    if(typeof JSZip == 'undefined') {
-      const node = document.createElement('script');
-      node.src = 'scripts/jszip';
-      $('head').appendChild(node);
-    }
+    loadJSZip();
     showStatesOverlay('statesOverlay');
-    selectVTTfile(function(f) {
-      const stateDOM = domByTemplate('template-stateslist-entry');
-      let id;
-      do {
-        id = Math.random().toString(36).substring(3, 7);
-      } while(states[id]);
-      stateDOM.dataset.id = id;
-      stateDOM.className = 'uploading visible roomState noImage';
-
-      function metaCallback(name, similarName, image) {
-        if(image) {
-          stateDOM.classList.remove('noImage');
-          $('img', stateDOM).src = image;
-        }
-
-        $('h3', stateDOM).textContent = name;
-        $('h4', stateDOM).textContent = similarName && name != similarName ? `Similar to ${similarName}` : '';
-
-        uploadingStates.push(stateDOM);
-        insertUploadingState(stateDOM, $('#statesList > div'));
-        updateEmptyLibraryHint();
-
-        stateDOM.scrollIntoView(false);
-      }
-      function progressCallback(percent) {
-        stateDOM.style.setProperty('--progress', percent);
-      }
-      function doneCallback() {
-        uploadingStates = uploadingStates.filter(s=>s!=stateDOM);
-      }
-
-      uploadStateFile(f, `addState/${roomID}/${id}/file/${f.name}`, metaCallback, progressCallback, doneCallback);
-    });
+    selectVTTfile(addStateFile);
   };
 }
 
@@ -708,11 +714,7 @@ onLoad(function() {
 
   on('#stateAddOverlay .create, #addVariant .create', 'click', e=>addState(e, 'state'));
   on('#addVariant .upload', 'click', e=>{
-    if(typeof JSZip == 'undefined') {
-      const node = document.createElement('script');
-      node.src = 'scripts/jszip';
-      $('head').appendChild(node);
-    }
+    loadJSZip();
     selectFile(false, f=>addState(e, 'file', f));
   });
   on('#stateAddOverlay .link,   #addVariant .link',   'click', e=>addState(e, 'link', prompt('Enter shared URL:')));
@@ -720,4 +722,16 @@ onLoad(function() {
   on('#addState .download', 'click', _=>downloadState(null));
 
   on('#shareOK', 'click', _=>showOverlay('stateEditOverlay'));
+
+  document.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'copy';
+    $('#statesButton').click();
+  });
+  document.addEventListener('drop', function(e) {
+    e.preventDefault();
+    loadJSZip();
+    for(const file of e.dataTransfer.files)
+      resolveStateCollections(file, addStateFile);
+  });
 });
