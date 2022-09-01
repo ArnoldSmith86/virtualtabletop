@@ -137,6 +137,12 @@
 .roomState.visible {
   display: block;
 }
+.uploading.roomState {
+  --progress: 0;
+}
+.uploading.roomState .details {
+  background: linear-gradient(90deg, #00000061 calc(var(--progress) * 100%), red calc(var(--progress) * 100%));
+}
 
 .roomState > img {
   position: absolute;

@@ -1,6 +1,96 @@
 let waitingForStateCreation = null;
 let variantIDjustUpdated = null;
 
+async function waitForJSZip() {
+  while(typeof JSZip == 'undefined')
+    await sleep(50)
+}
+
+function selectVTTfile(callback) {
+  selectFile(false, async function(f) {
+    if(f.name.match(/\.vttc$/)) {
+      await waitForJSZip();
+      for(const [ filename, file ] of Object.entries((await JSZip.loadAsync(f)).files))
+        callback(new File([await file.async('blob')], filename));
+    } else {
+      callback(f);
+    }
+  });
+}
+
+async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCallback, loadCallback) {
+  await waitForJSZip();
+
+  let zip = null;
+  try {
+    zip = await JSZip.loadAsync(sourceFile);
+  } catch(e) {
+    alert(`${sourceFile.name} is not a valid VTT, VTTC or PCIO file.`);
+    return;
+  }
+
+  let json = null;
+  const assets = {};
+  for(const [ filename, file ] of Object.entries(zip.files)) {
+    if(filename.match(/json$/))
+      json = JSON.parse(await file.async('string'));
+    if(filename.match(/^\/?(user)?assets/) && file._data && file._data.crc32)
+      assets[file._data.crc32 + '_' + file._data.uncompressedSize] = filename;
+  }
+
+  if(json === null) {
+    alert(`${sourceFile.name} is not a valid VTT, VTTC or PCIO file.`);
+    return;
+  } else if(Array.isArray(json)) {
+    metaCallback(sourceFile.name.replace(/\.[^.]+$/, ''), '', null);
+  } else {
+    const image = await zip.file(json._meta.info.image.substr(1)).async('base64');
+    let imageURL = null;
+    for(const [ type, pattern ] of Object.entries({ jpeg: '^\\/9j\\/', png: '^iVBO', 'svg+xml': '^PHN2', gif: '^R0lG', webp: '^UklG' }))
+      if(image.match(pattern))
+        imageURL = `data:image/${type};base64,${image}`;
+
+    metaCallback(json._meta.info.name, json._meta.info.similarName, imageURL);
+  }
+
+  const result = await fetch('assetcheck', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(Object.keys(assets))
+  });
+
+  const exist = await result.json();
+
+  let total = 0;
+  let removed = 0;
+  for(const asset in exist) {
+    ++total;
+    if(exist[asset]) {
+      ++removed;
+      zip.remove(assets[asset]);
+    }
+  }
+
+  let blob = sourceFile;
+  if(removed > total/2) {
+    zip.file('asset-map.json', JSON.stringify(assets));
+    console.log(`Uploading ${sourceFile.name}: rebuilding zip file because ${removed}/${total} assets are already on the server.`);
+    blob = await zip.generateAsync({ type: 'blob', compression: total-removed < 5 ? 'DEFLATE' : 'STORE' });
+  }
+
+  var req = new XMLHttpRequest();
+  req.onload = function(e) {
+    if(e.target.status != 200)
+      alert(`${e.target.status}: ${e.target.response}`);
+    loadCallback();
+  };
+  req.upload.onprogress = e=>progressCallback(e.loaded/e.total);
+
+  req.open('PUT', targetURL, true);
+  req.setRequestHeader('Content-type', 'application/octet-stream');
+  req.send(blob);
+}
+
 async function addState(e, type, src, id, addAsVariant) {
   const initialStatus = e && (e.target.dataset.initialText || e.target.innerText);
   if(e && !e.target.dataset.initialText)
@@ -80,12 +170,16 @@ async function addState(e, type, src, id, addAsVariant) {
   req.send(blob);
 }
 
+function updateEmptyLibraryHint() {
+  $('#emptyLibrary').style.display = $('#statesList > div:nth-of-type(1) .roomState') ? 'none' : 'block';
+}
+
 function toggleStateStar(state, dom) {
   const targetList = dom.parentElement.parentElement == $('#statesList > div:nth-of-type(1)')
                    ? $('#statesList > div:nth-of-type(2) > .list')
                    : $('#statesList > div:nth-of-type(1) > .list');
   targetList.insertBefore(dom, [...targetList.children].filter(d=>$('h3', d).innerText.localeCompare($('h3', dom).innerText) > 0)[0]);
-  $('#emptyLibrary').style.display = $('#statesList > div:nth-of-type(1) .roomState') ? 'none' : 'block';
+  updateEmptyLibraryHint();
   toServer('toggleStateStar', state.publicLibrary);
 }
 
@@ -97,6 +191,8 @@ function updateLibraryFilter() {
   const language = $('#filterByLanguage').value;
   const mode = $('#filterByMode').value;
   for(const state of $a('#statesList .list > div')) {
+    if(state.classList.contains('uploading'))
+      continue;
     const textMatch     = state.dataset.text.match(text);
     const typeMatch     = type     == 'Any' || state.dataset.type.split(',').indexOf(type) != -1;
     const playersMatch  = players  == 'Any' || state.dataset.players.split(',').indexOf(players) != -1;
@@ -121,6 +217,7 @@ function parsePlayers(players) {
   return validPlayers;
 }
 
+let uploadingStates = [];
 function fillStatesList(states, starred, returnServer, activePlayers) {
   if(returnServer) {
     $('#statesButton').dataset.overlay = 'returnOverlay';
@@ -139,6 +236,22 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
   const modeOptions = {};
 
   const publicLibraryLinksFound = {};
+
+  function insertUploadingState(uploadingState, category) {
+    const title = $('h3', uploadingState).textContent;
+    if(!$(`.list [data-id="${uploadingState.dataset.id}"]`, category)) {
+      let found = false;
+      for(const existingState of $a('.roomState', category)) {
+        if(title.localeCompare($('h3', existingState).textContent) < 0) {
+          $('.list', category).insertBefore(uploadingState, existingState);
+          found = true;
+          break;
+        }
+      }
+      if(!found)
+        $('.list', category).appendChild(uploadingState);
+    }
+  }
 
   for(const publicLibrary of [ false, true ]) {
     const category = domByTemplate('template-stateslist-category');
@@ -210,12 +323,16 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
       }
     }
 
+    if(!publicLibrary)
+      for(const uploadingState of uploadingStates)
+        insertUploadingState(uploadingState, category);
+
     $('#statesList').appendChild(category);
   }
 
   $('#statesList > div').insertBefore(emptyLibrary, $('#statesList > div > h2').nextSibling);
   $('#statesList > div').insertBefore(addState, $('#statesList > div > h2').nextSibling);
-  emptyLibrary.style.display = $('#statesList > div:nth-of-type(1) .roomState') ? 'none' : 'block';
+  updateEmptyLibraryHint();
 
   const previousLanguage = $('#filterByLanguage').value;
   let languageHTML = '<option>Any</option>';
@@ -240,6 +357,48 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
       fillStateDetails(states, states[stateID], $(`#statesOverlay .roomState[data-id="${stateID}"]`));
     }
   }
+
+  $('#stateAddOverlay .upload').onclick = function() {
+    if(typeof JSZip == 'undefined') {
+      const node = document.createElement('script');
+      node.src = 'scripts/jszip';
+      $('head').appendChild(node);
+    }
+    showStatesOverlay('statesOverlay');
+    selectVTTfile(function(f) {
+      const stateDOM = domByTemplate('template-stateslist-entry');
+      let id;
+      do {
+        id = Math.random().toString(36).substring(3, 7);
+      } while(states[id]);
+      stateDOM.dataset.id = id;
+      stateDOM.className = 'uploading visible roomState noImage';
+
+      function metaCallback(name, similarName, image) {
+        if(image) {
+          stateDOM.classList.remove('noImage');
+          $('img', stateDOM).src = image;
+        }
+
+        $('h3', stateDOM).textContent = name;
+        $('h4', stateDOM).textContent = similarName && name != similarName ? `Similar to ${similarName}` : '';
+
+        uploadingStates.push(stateDOM);
+        insertUploadingState(stateDOM, $('#statesList > div'));
+        updateEmptyLibraryHint();
+
+        stateDOM.scrollIntoView(false);
+      }
+      function progressCallback(percent) {
+        stateDOM.style.setProperty('--progress', percent);
+      }
+      function doneCallback() {
+        uploadingStates = uploadingStates.filter(s=>s!=stateDOM);
+      }
+
+      uploadStateFile(f, `addState/${roomID}/${id}/file/${f.name}`, metaCallback, progressCallback, doneCallback);
+    });
+  };
 }
 
 function fillStateDetails(states, state, dom) {
@@ -419,7 +578,7 @@ function fillStateDetails(states, state, dom) {
     if(await confirmOverlay('Delete game', 'Are you sure you want to completely remove this game from your game shelf?', 'Delete', 'Keep')) {
       toServer('removeState', state.id);
       removeFromDOM(dom);
-      $('#emptyLibrary').style.display = $('#statesList > div:nth-of-type(1) .roomState') ? 'none' : 'block';
+      updateEmptyLibraryHint();
       showStatesOverlay('statesOverlay');
     } else {
       showStatesOverlay('stateDetailsOverlay');
@@ -548,7 +707,7 @@ onLoad(function() {
   on('#addState', 'click', _=>showStatesOverlay('stateAddOverlay'));
 
   on('#stateAddOverlay .create, #addVariant .create', 'click', e=>addState(e, 'state'));
-  on('#stateAddOverlay .upload, #addVariant .upload', 'click', e=>{
+  on('#addVariant .upload', 'click', e=>{
     if(typeof JSZip == 'undefined') {
       const node = document.createElement('script');
       node.src = 'scripts/jszip';

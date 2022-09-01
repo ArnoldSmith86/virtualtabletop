@@ -6,6 +6,8 @@ export function $a(selector, parent) {
   return (parent || document).querySelectorAll(selector);
 }
 
+const sleep = delay => new Promise(resolve => setTimeout(resolve, delay));
+
 export function setText(node, text) {
   for(const child of node.childNodes) {
     if(child.nodeType == Node.TEXT_NODE) {
