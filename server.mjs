@@ -214,10 +214,17 @@ MinifyRoom().then(function(result) {
     }).catch(next);
   });
 
-  router.get('/createTempState/:room', async function(req, res, next) {
-    ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
+  router.get('/createTempState/:room', function(req, res, next) {
+    ensureRoomIsLoaded(req.params.room).then(async function(isLoaded) {
       if(isLoaded)
-        res.send(activeRooms.get(req.params.room).createTempState());
+        res.send(await activeRooms.get(req.params.room).createTempState());
+    }).catch(next);
+  });
+
+  router.put('/createTempState/:room/:tempID', bodyParser.raw({ limit: '500mb' }), function(req, res, next) {
+    ensureRoomIsLoaded(req.params.room).then(async function(isLoaded) {
+      if(isLoaded && req.params.tempID.match(/^[a-z0-9]{8}$/))
+        res.send(await activeRooms.get(req.params.room).createTempState(req.params.tempID, req.body));
     }).catch(next);
   });
 

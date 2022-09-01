@@ -74,8 +74,16 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
   let json = null;
   const assets = {};
   for(const [ filename, file ] of Object.entries(zip.files)) {
-    if(filename.match(/json$/))
-      json = JSON.parse(await file.async('string'));
+    if(filename.match(/json$/)) {
+      const content = JSON.parse(await file.async('string'));
+      if(!json) {
+        json = content;
+        if(json._meta)
+          json._meta.info.variants = [];
+      }
+      if(json._meta)
+        json._meta.info.variants.push(content._meta.info);
+    }
     if(filename.match(/^\/?(user)?assets/) && file._data && file._data.crc32)
       assets[file._data.crc32 + '_' + file._data.uncompressedSize] = filename;
   }
@@ -84,7 +92,7 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
     alert(`${sourceFile.name} is not a valid VTT, VTTC or PCIO file.`);
     return;
   } else if(Array.isArray(json)) {
-    metaCallback(sourceFile.name.replace(/\.[^.]+$/, ''), '', null);
+    metaCallback(sourceFile.name.replace(/\.[^.]+$/, ''), '', null, [{}]);
   } else {
     const image = await zip.file(json._meta.info.image.substr(1)).async('base64');
     let imageURL = null;
@@ -92,7 +100,7 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
       if(image.match(pattern))
         imageURL = `data:image/${type};base64,${image}`;
 
-    metaCallback(json._meta.info.name, json._meta.info.similarName, imageURL);
+    metaCallback(json._meta.info.name, json._meta.info.similarName, imageURL, json._meta.info.variants);
   }
 
   const result = await fetch('assetcheck', {
@@ -557,9 +565,39 @@ function fillStateDetails(states, state, dom) {
     enableEditing(vEntry, emptyVariant);
   };
   $('#variantAddOverlay [icon=upload]').onclick = function(e) {
-    selectFile(false, async function(f) {
-      // TODO
+    loadJSZip();
+    selectVTTfile(function(f) {
+      $('#stateDetailsOverlay').classList.add('uploading');
+
+      const variantDOM = [];
+      const filenameSuffix = Math.random().toString(36).substring(3, 11);
+
+      function metaCallback(name, similarName, image, variants) {
+        variantOperationQueue.push({
+          operation: 'create',
+          filenameSuffix
+        });
+        for(const variant of variants) {
+          const vEntry = addVariant($a('#stateDetailsOverlay .variant').length, variant);
+          vEntry.classList.add('uploading');
+          enableEditing(vEntry, variant);
+          variantDOM.push(vEntry);
+        }
+      }
+      function progressCallback(percent) {
+        for(const d of variantDOM)
+          d.style.setProperty('--progress', percent);
+      }
+      function doneCallback() {
+        for(const d of variantDOM)
+          d.classList.remove('uploading');
+        if(!$('#stateDetailsOverlay .uploading.variant'))
+          $('#stateDetailsOverlay').classList.remove('uploading');
+      }
+
+      uploadStateFile(f, `createTempState/${roomID}/${filenameSuffix}`, metaCallback, progressCallback, doneCallback);
     });
+    showStatesOverlay('stateDetailsOverlay');
   };
   $('#variantAddOverlay [icon=link]').onclick = function(e) {
     showStatesOverlay('stateDetailsOverlay');
@@ -712,14 +750,8 @@ onLoad(function() {
 
   on('#addState', 'click', _=>showStatesOverlay('stateAddOverlay'));
 
-  on('#stateAddOverlay .create, #addVariant .create', 'click', e=>addState(e, 'state'));
-  on('#addVariant .upload', 'click', e=>{
-    loadJSZip();
-    selectFile(false, f=>addState(e, 'file', f));
-  });
-  on('#stateAddOverlay .link,   #addVariant .link',   'click', e=>addState(e, 'link', prompt('Enter shared URL:')));
-
-  on('#addState .download', 'click', _=>downloadState(null));
+  on('#stateAddOverlay .create', 'click', e=>addState(e, 'state'));
+  on('#stateAddOverlay .link',   'click', e=>addState(e, 'link', prompt('Enter shared URL:')));
 
   on('#shareOK', 'click', _=>showOverlay('stateEditOverlay'));
 

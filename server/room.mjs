@@ -150,12 +150,18 @@ export default class Room {
         player.send(func, args);
   }
 
-  createTempState() {
-    const filenameSuffix = String(+new Date()) + Math.random().toString(36).substring(3, 7);
+  async createTempState(tempID, fileContent) {
+    const filenameSuffix = tempID || String(+new Date()) + Math.random().toString(36).substring(3, 7);
 
-    const copy = {...this.state};
-    copy._meta = { version: copy._meta.version };
-    fs.writeFileSync(`${Config.directory('save')}/states/${this.id}--TEMPSTATE--${filenameSuffix}.json`, JSON.stringify(copy));
+    let states = { VTT: [ {...this.state} ] };
+    states.VTT[0]._meta = { version: states.VTT[0]._meta.version };
+    if(fileContent)
+      states = await FileLoader.readStatesFromBuffer(fileContent)
+
+    for(const state of Object.values(states))
+      for(const [ i, variant ] of Object.entries(state))
+        fs.writeFileSync(`${Config.directory('save')}/states/${this.id}--TEMPSTATE--${filenameSuffix}--${i}.json`, JSON.stringify(variant));
+
     return filenameSuffix;
   }
 
@@ -233,10 +239,14 @@ export default class Room {
     for(const o of variantOperationQueue) {
 
       if(o.operation == 'create' || o.operation == 'save') {
-        if(String(o.filenameSuffix).match(/^[0-9]+[0-9a-z]{4}$/))
-          fs.renameSync(`${Config.directory('save')}/states/${this.id}--TEMPSTATE--${o.filenameSuffix}.json`, this.variantFilename(id, o.variantID));
-        if(o.operation == 'create')
-          variants.push({});
+        if(String(o.filenameSuffix).match(/^([0-9]+|[0-9a-z]{4})[0-9a-z]{4}$/)) {
+          const prefix = `${Config.directory('save')}/states/${this.id}--TEMPSTATE--${o.filenameSuffix}--`;
+          for(let i=0; fs.existsSync(`${prefix}${i}.json`); ++i) {
+            fs.renameSync(`${prefix}${i}.json`, this.variantFilename(id, o.operation == 'save' ? o.variantID : variants.length));
+            if(o.operation == 'create')
+              variants.push({});
+          }
+        }
       }
 
       if(o.operation == 'newLink') {
