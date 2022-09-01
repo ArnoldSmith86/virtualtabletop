@@ -199,6 +199,15 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_grid',
+    name: 'grid element',
+    context: '^.* ↦ grid',
+    call: async function() {
+      jeStateNow.grid.push('###SELECT ME###');
+      jeSetAndSelect({});
+    }
+  },
+  {
     id: 'je_imageTemplate',
     name: 'image template',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects',
@@ -668,6 +677,14 @@ function jeAddCommands() {
   jeAddFaceCommand('properties', '', {});
   jeAddFaceCommand('radius', ' (rounded corners)', 1);
 
+  jeAddGridCommand('x', '', 103);
+  jeAddGridCommand('y', '', 160);
+  jeAddGridCommand('minX', '', 0);
+  jeAddGridCommand('minY', '', 0);
+  jeAddGridCommand('offsetX', '', 0);
+  jeAddGridCommand('offsetY', '', 0);
+  jeAddGridCommand('rotation', '', 0);
+
   jeAddFieldCommand('text', 'subtitle|title|text', '');
   jeAddFieldCommand('label', 'checkbox|color|number|select|string|switch', '');
   jeAddFieldCommand('value', 'checkbox|color|number|select|string|switch', '');
@@ -720,6 +737,7 @@ function jeAddAlignmentCommands() {
     id: 'jeCenterInParent',
     name: 'center in parent',
     context: '^.* ↦ (x|y)( ↦ "[0-9]+")?' + String.fromCharCode(36), // the minifier doesn't like "$" or "\x24" here
+    show: _=>!jeContext.includes('grid'),
     call: async function() {
       const key = jeGetLastKey();
       const sizeKey = key == 'x' ? 'width' : 'height';
@@ -871,6 +889,19 @@ function jeAddFieldCommand(key, types, value) {
         ];
       jeSetAndSelect( key != 'options' ? value : "value");
     })
+  });
+}
+
+function jeAddGridCommand(key, description, value) {
+  jeCommands.push({
+    id: 'grid_' + key+description,
+    name: key+description,
+    context: '^.* ↦ grid ↦ [0-9]+',
+    show: _=>!jeStateNow.grid[+jeContext[2]][key],
+    call: async function() {
+      jeStateNow.grid[+jeContext[2]][key] = '###SELECT ME###';
+      jeSetAndSelect(value);
+    }
   });
 }
 
