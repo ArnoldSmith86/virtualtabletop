@@ -203,8 +203,12 @@ const jeCommands = [
     name: 'grid element',
     context: '^.* ↦ grid',
     call: async function() {
-      jeStateNow.grid.push('###SELECT ME###');
-      jeSetAndSelect({});
+      const w = widgets.get(jeStateNow.id);
+      jeStateNow.grid.push({
+        x: '###SELECT ME###',
+        y: w.get('y')
+      });
+      jeSetAndSelect(w.get('x'));
     }
   },
   {
@@ -677,13 +681,13 @@ function jeAddCommands() {
   jeAddFaceCommand('properties', '', {});
   jeAddFaceCommand('radius', ' (rounded corners)', 1);
 
-  jeAddGridCommand('x', '', 103);
-  jeAddGridCommand('y', '', 160);
-  jeAddGridCommand('minX', '', 0);
-  jeAddGridCommand('minY', '', 0);
-  jeAddGridCommand('offsetX', '', 0);
-  jeAddGridCommand('offsetY', '', 0);
-  jeAddGridCommand('rotation', '', 0);
+  jeAddGridCommand('x', 0);
+  jeAddGridCommand('y', 0);
+  jeAddGridCommand('minX', 0);
+  jeAddGridCommand('minY', 0);
+  jeAddGridCommand('offsetX', 0);
+  jeAddGridCommand('offsetY', 0);
+  jeAddGridCommand('rotation', 0);
 
   jeAddFieldCommand('text', 'subtitle|title|text', '');
   jeAddFieldCommand('label', 'checkbox|color|number|select|string|switch', '');
@@ -892,12 +896,12 @@ function jeAddFieldCommand(key, types, value) {
   });
 }
 
-function jeAddGridCommand(key, description, value) {
+function jeAddGridCommand(key, value) {
   jeCommands.push({
-    id: 'grid_' + key+description,
-    name: key+description,
+    id: 'grid_' + key,
+    name: key,
     context: '^.* ↦ grid ↦ [0-9]+',
-    show: _=>!jeStateNow.grid[+jeContext[2]][key],
+    show: _=>!(key in jeStateNow.grid[+jeContext[2]]),
     call: async function() {
       jeStateNow.grid[+jeContext[2]][key] = '###SELECT ME###';
       jeSetAndSelect(value);
