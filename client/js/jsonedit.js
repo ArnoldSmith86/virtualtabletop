@@ -206,9 +206,9 @@ const jeCommands = [
       const w = widgets.get(jeStateNow.id);
       jeStateNow.grid.push({
         x: '###SELECT ME###',
-        y: w.get('y')
+        y: w.get('height')
       });
-      jeSetAndSelect(w.get('x'));
+      jeSetAndSelect(w.get('width'));
     }
   },
   {
