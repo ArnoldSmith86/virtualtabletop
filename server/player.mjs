@@ -23,6 +23,8 @@ export default class Player {
       this.trace('messageReceived', { func, args });
 
     try {
+      if(func == 'addStateToPublicLibrary')
+        this.room.addStateToPublicLibrary(this, args);
       if(func == 'confirm')
         this.waitingForStateConfirmation = false;
       if(func == 'delta')

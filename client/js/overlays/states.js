@@ -426,9 +426,10 @@ function fillStateDetails(states, state, dom) {
   disableEditing($('#stateDetailsOverlay'), state);
   applyValuesToDOM($('#stateDetailsOverlay'), state);
 
-  toggleClass($('#stateDetailsOverlay .star'), 'active', !!state.starred);
-  toggleClass($('#stateDetailsOverlay .star'), 'hidden', !state.publicLibrary);
-  toggleClass($('#mainImage > i'),             'hidden', !state.link);
+  toggleClass($('#stateDetailsOverlay .star'),         'active', !!state.starred);
+  toggleClass($('#stateDetailsOverlay .star'),         'hidden', !state.publicLibrary);
+  toggleClass($('#mainImage > i'),                     'hidden', !state.link);
+  toggleClass($('#stateDetailsOverlay [icon=upload]'), 'hidden', state.publicLibrary || !config.allowPublicLibraryEdits);
 
   function fillArrowButton(arrowDom, targetDom) {
     arrowDom.style.display = targetDom ? 'block' : 'none';
@@ -630,6 +631,10 @@ function fillStateDetails(states, state, dom) {
     } else {
       showStatesOverlay('stateDetailsOverlay');
     }
+  };
+  $('#stateDetailsOverlay .buttons [icon=upload]').onclick = function() {
+    $('#statesButton').dataset.overlay = 'confirmOverlay';
+    toServer('addStateToPublicLibrary', state.id);
   };
 
   $('#stateDetailsOverlay .star').onclick = function(e) {

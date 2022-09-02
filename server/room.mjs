@@ -142,6 +142,28 @@ export default class Room {
     this.sendMetaUpdate();
   }
 
+  addStateToPublicLibrary(player, id) {
+    if(!Config.get('allowPublicLibraryEdits'))
+      return;
+
+    const variantData = {};
+    for(const variantID in this.state._meta.states[id].variants)
+      variantData[variantID] = JSON.parse(fs.readFileSync(this.variantFilename(id, variantID)));
+
+    this.state._meta.states[id].publicLibrary = `games/${this.state._meta.states[id].name.replace(/[^a-zA-Z0-9 _-]/g, '_')}`;
+    fs.mkdirSync(Config.directory('library') + '/' + this.state._meta.states[id].publicLibrary);
+    fs.mkdirSync(Config.directory('library') + '/' + this.state._meta.states[id].publicLibrary + '/assets');
+
+    Room.publicLibrary['PL:NEW'] = this.state._meta.states['PL:NEW'] = this.state._meta.states[id];
+    for(const variantID in this.state._meta.states[id].variants) {
+      this.state._meta.states['PL:NEW'].variants[variantID] = JSON.parse(JSON.stringify(Object.assign(this.state._meta.states['PL:NEW'], this.state._meta.states['PL:NEW'].variants[variantID])));
+      delete this.state._meta.states['PL:NEW'].variants[variantID].variants;
+      this.writePublicLibraryToFilesystem('PL:NEW', variantID, variantData[variantID]);
+    }
+
+    this.removeState(player, id);
+  }
+
   broadcast(func, args, exceptPlayer) {
     if(func != 'mouse')
       this.trace('broadcast', { func, args, exceptPlayer: exceptPlayer?.name });
