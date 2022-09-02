@@ -82,8 +82,8 @@ function checkForLinkToOwnServer(link) {
 }
 
 async function readStatesFromLink(linkAndPath) {
-  const link = linkAndPath.replace(/#.*/, '');
-  const path = linkAndPath.match(/#/) ? linkAndPath.replace(/.*#/, '').split('/') : [];
+  const link = linkAndPath.replace(/#.*$/, '');
+  const path = linkAndPath.match(/#/) ? linkAndPath.replace(/^.*#/, '').split('/') : [];
 
   let states = checkForLinkToOwnServer(link);
 
