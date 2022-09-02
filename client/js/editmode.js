@@ -673,7 +673,7 @@ function populateAddWidgetOverlay() {
       width: 73.5,
       height: 73.5,
       x: 440,
-      y: y + (43.83 - 73.5)/2
+      y: Math.round(y + (43.83 - 73.5)/2)
     });
 
     addWidgetToAddWidgetOverlay(new BasicWidget('add-classic-'+color), {
@@ -682,7 +682,7 @@ function populateAddWidgetOverlay() {
       width: 56,
       height: 84,
       x: 528,
-      y: y + (43.83 - 84)/2
+      y: Math.round(y + (43.83 - 84)/2)
     });
     y += 88;
   }
