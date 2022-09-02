@@ -1156,7 +1156,7 @@ function jeSelectWidget(widget, dontFocus, addToSelection, restoreCursorPosition
   }
 
   jeCenterSelection();
-  
+
   if(restoreCursorPosition)
     jeCursorStateSet(cursorState);
   
