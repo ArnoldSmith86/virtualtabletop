@@ -207,8 +207,13 @@ export function enableEditing(parent, obj) {
   for(const dom of $a('[data-field]:not([data-target],.uneditable)', parent)) {
     dom.contentEditable = true;
     dom.classList.remove('hidden');
-    if(!dom.innerText.trim())
+    if(!dom.innerText.trim()) {
       dom.innerText = dom.dataset.placeholder || '<empty>';
+      dom.onclick = function(e) {
+        if(dom.innerText == (dom.dataset.placeholder || '<empty>'))
+          document.execCommand('selectAll', false, null);
+      };
+    }
     if(dom.dataset.html)
       addRichtextControls(dom);
   }
