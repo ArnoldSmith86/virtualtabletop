@@ -1153,14 +1153,14 @@ function jeSelectWidget(widget, dontFocus, addToSelection, restoreCursorPosition
       jeStateNow[cursorState.defaultValueToAdd] = jeWidget.getDefaultValue(cursorState.defaultValueToAdd);
     jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(jeStateNow), null, '  ')), dontFocus);
     editPanel.style.setProperty('--treeHeight', "20%");
-
-    jeGetContext();
   }
 
   jeCenterSelection();
-
+  
   if(restoreCursorPosition)
     jeCursorStateSet(cursorState);
+  
+  jeGetContext();
 }
 
 function jeSelectWidgetMulti(widget, dontFocus) {
