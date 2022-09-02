@@ -458,6 +458,7 @@ function fillStateDetails(states, state, dom) {
   function updateStateDetailsDomains(state) {
     $('#similarDetailsDomain').innerText = String(state.bgg).replace(/^ *https?:\/\/(www\.)?/, '').replace(/\/.*/, '');
     $('#similarRulesDomain').innerText = String(state.rules).replace(/^ *https?:\/\/(www\.)?/, '').replace(/\/.*/, '');
+    $('.hideForEdit [data-field=similarAwards]').innerText = String(state.similarAwards);
   }
   updateStateDetailsDomains(state);
 
@@ -664,7 +665,7 @@ function fillStateDetails(states, state, dom) {
     showStatesOverlay('statesOverlay');
     dom.click();
   };
-  $('.buttons [icon=save]').onclick = function() {
+  $('#stateDetailsOverlay .buttons [icon=save]').onclick = function() {
     const meta = Object.assign(JSON.parse(JSON.stringify(state)), getValuesFromDOM($('#stateDetailsOverlay')));
 
     const variantInput = [];
