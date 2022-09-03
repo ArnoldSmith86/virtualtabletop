@@ -16,7 +16,7 @@ export class StateManaged {
     for(const i in delta) {
       if(delta[i] === null) {
         delete this.state[i];
-        deltaForDOM[i] = this.getDefaultValue(i);
+        deltaForDOM[i] = this.get(i);
       } else {
         deltaForDOM[i] = this.state[i] = delta[i];
       }

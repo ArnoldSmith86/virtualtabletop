@@ -526,7 +526,9 @@ function generateCounterWidgets(id, x, y) {
     height: 36,
     type: 'button',
     movableInEdit: false,
-    text: '-',
+    classes: 'symbols',
+    css: 'font-size: 28px',
+    text: 'remove',
 
     clickRoutine: [ r ]
   };
@@ -534,7 +536,7 @@ function generateCounterWidgets(id, x, y) {
   return [
     { type:'label', text: 0, id, x, y, width: 65, height: 40, css:'font-size: 30px;', editable: true },
     down,
-    Object.assign({ ...down }, { id: id+'U', text: '+', x: 68, clickRoutine: [ Object.assign({ ...r }, { mode: 'inc' }) ] })
+    Object.assign({ ...down }, { id: id+'U', text: 'add', x: 68, clickRoutine: [ Object.assign({ ...r }, { mode: 'inc' }) ] })
   ];
 }
 
@@ -557,8 +559,9 @@ function generateTimerWidgets(id, x, y) {
           timer: '${PROPERTY parent}'
         }
       ],
-      image: "/i/button-icons/White-Play_Pause.svg",
-      css: "background-size: 75% 75%"
+      classes: 'symbols',
+      css: 'font-size: 28px',
+      text: 'play_pause',
     },
     {
       parent: id,
@@ -577,8 +580,9 @@ function generateTimerWidgets(id, x, y) {
           mode: "reset"
         }
       ],
-      image: "/i/button-icons/White-Reset.svg",
-      css: "background-size: 80% 80%"
+      classes: 'symbols',
+      css: 'font-size: 28px',
+      text: 'reload',
     }
   ];
 }
@@ -599,7 +603,9 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
     w.domElement.id = w.id;
     if(!wi.parent) {
       w.domElement.addEventListener('click', async _=>{
+        batchStart();
         overlayDone(await onClick());
+        batchEnd();
       });
       $('#addOverlay').appendChild(w.domElement);
     }
@@ -673,7 +679,7 @@ function populateAddWidgetOverlay() {
       width: 73.5,
       height: 73.5,
       x: 440,
-      y: y + (43.83 - 73.5)/2
+      y: Math.round(y + (43.83 - 73.5)/2)
     });
 
     addWidgetToAddWidgetOverlay(new BasicWidget('add-classic-'+color), {
@@ -682,7 +688,7 @@ function populateAddWidgetOverlay() {
       width: 56,
       height: 84,
       x: 528,
-      y: y + (43.83 - 84)/2
+      y: Math.round(y + (43.83 - 84)/2)
     });
     y += 88;
   }
@@ -832,11 +838,14 @@ function uploadWidget(preset) {
 }
 
 async function updateWidget(currentState, oldState, applyChangesFromUI) {
+  batchStart();
+
   const previousState = JSON.parse(oldState);
   try {
     var widget = JSON.parse(currentState);
   } catch(e) {
     alert(e.toString());
+    batchEnd();
     return;
   }
 
@@ -846,6 +855,7 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
 
   if(widget.parent !== undefined && !widgets.has(widget.parent)) {
     alert(`Parent widget ${widget.parent} does not exist.`);
+    batchEnd();
     return;
   }
 
@@ -866,12 +876,17 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
       if(widget[key] === undefined)
         widget[key] = null;
   }
+
   const id = await addWidgetLocal(widget);
 
-  for(const child of children)
-    sendPropertyUpdate(child.get('id'), 'parent', id);
-  for(const card of cards)
-    sendPropertyUpdate(card.get('id'), 'deck', id);
+  if(widget.id !== previousState.id) {
+    for(const child of children)
+      sendPropertyUpdate(child.get('id'), 'parent', id);
+    for(const card of cards)
+      sendPropertyUpdate(card.get('id'), 'deck', id);
+  }
+
+  batchEnd();
 }
 
 async function onClickUpdateWidget(applyChangesFromUI) {

@@ -59,6 +59,7 @@ export class Widget extends StateManaged {
       fixedParent: false,
       inheritFrom: null,
       owner: null,
+      dragging: null,
       dropOffsetX: 0,
       dropOffsetY: 0,
       inheritChildZ: false,
@@ -225,8 +226,8 @@ export class Widget extends StateManaged {
   }
 
   applyRemove() {
-    if(this.parent)
-      this.parent.applyChildRemove(this);
+    if(this.get('parent') && widgets.has(this.get('parent')))
+      widgets.get(this.get('parent')).applyChildRemove(this);
     if(this.get('deck') && widgets.has(this.get('deck')))
       widgets.get(this.get('deck')).removeCard(this);
     if($(`#STYLES_${escapeID(this.id)}`))
@@ -290,11 +291,19 @@ export class Widget extends StateManaged {
       if(!widgetFilter(w=>asArray(this.get('linkedToSeat')).indexOf(w.get('id')) != -1 && w.get('player')).length)
         className += ' foreign';
 
+    if(typeof this.get('dragging') == 'string')
+      className += ' dragging';
+    if(this.get('dragging') == playerName)
+      className += ' draggingSelf';
+
+    if(this.isHighlighted)
+      className += ' selectedInEdit';
+
     return className;
   }
 
   classesProperties() {
-    return [ 'classes', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses' ];
+    return [ 'classes', 'dragging', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses' ];
   }
 
   async click(mode='respect') {
@@ -364,6 +373,7 @@ export class Widget extends StateManaged {
       return applyTransformedOffset(parentCenter, offset, s, rot );
     }
   }
+
   css() {
     this.propertiesUsedInCSS = [];
     if($(`#STYLES_${escapeID(this.id)}`))
@@ -379,12 +389,12 @@ export class Widget extends StateManaged {
     return css;
   }
 
-  cssAsText(css) {
+  cssAsText(css, nested = false) {
     if(typeof css == 'object') {
       let cssText = '';
       for(const key in css) {
         if(typeof css[key] == 'object')
-          return this.cssToStylesheet(css);
+          return this.cssToStylesheet(css, nested);
         cssText += `; ${key}: ${css[key]}`;
       }
       return cssText;
@@ -392,6 +402,7 @@ export class Widget extends StateManaged {
       return css;
     }
   }
+
   cssBorderRadius() {
     let br = this.get('borderRadius');
     switch(typeof(br)) {
@@ -426,12 +437,27 @@ export class Widget extends StateManaged {
     return css;
   }
 
-  cssToStylesheet(css) {
+  cssToStylesheet(css, nested = false) {
+    let styleString = '';
+    for(const key in css) {
+      let selector = key;
+      if(!nested) {
+        if(key == 'inline')
+          continue;
+        if(key == 'default')
+          selector = '';
+        if(selector.charAt(0) != '@')
+          selector = `#w_${escapeID(this.id)}${selector}`;
+      }
+      styleString += `${selector} { ${mapAssetURLs(this.cssReplaceProperties(this.cssAsText(css[key], true)))} }\n`;
+    }
+
+    if(nested)
+      return styleString;
+
     const style = document.createElement('style');
     style.id = `STYLES_${escapeID(this.id)}`;
-    for(const key in css)
-      if(key != 'inline')
-        style.appendChild(document.createTextNode(`#w_${escapeID(this.id)}${key == 'default' ? '' : key} { ${this.cssReplaceProperties(this.cssAsText(css[key]))} }`));
+    style.appendChild(document.createTextNode(styleString));
     $('head').appendChild(style);
 
     return this.cssAsText(css.inline || '');
@@ -520,7 +546,9 @@ export class Widget extends StateManaged {
           return match[9] ? false : undefined;
 
         let indexName = evaluateIdentifier(match[3], match[4]);
-        return indexName !== undefined ? varContent[indexName] : varContent;
+        if(varContent === null && indexName !== undefined)
+          problems.push(`Cannot index a variable that evaluates to 'null'.`);
+        return varContent !== null && indexName !== undefined ? varContent[indexName] : varContent;
       }
 
       // property
@@ -681,7 +709,7 @@ export class Widget extends StateManaged {
             // ignore (but log) blank and comment only lines
             if(jeRoutineLogging) jeLoggingRoutineOperationSummary(comment[1]||'');
           } else {
-            problems.push('String could not be interpreted as expression. Please check your syntax and note that many characters have to be escaped.');
+            problems.push(`String '${a}' could not be interpreted as a valid expression. Please check your syntax and note that many characters have to be escaped.`);
           }
         }
       }
@@ -697,7 +725,7 @@ export class Widget extends StateManaged {
         setDefaults(a, { widget: this.get('id'), routine: 'clickRoutine', 'return': true, arguments: {}, variable: 'result', collection: 'result' });
         if(!a.routine.match(/Routine$/)) {
           problems.push('Routine parameters have to end with "Routine".');
-        } else if(this.isValidID(a.widget)) {
+        } else if(this.isValidID(a.widget, problems)) {
           if(!Array.isArray(widgets.get(a.widget).get(a.routine))) {
             problems.push(`Widget ${a.widget} does not contain ${a.routine} (or it is no array).`);
           } else {
@@ -712,7 +740,7 @@ export class Widget extends StateManaged {
             collections[a.collection] = result.collection;
 
             if(jeRoutineLogging) {
-              const theWidget = this.isValidID(a.widget) && a.widget != this.get('id') ? `in ${a.widget}` : '';
+              const theWidget = this.isValidID(a.widget, problems) && a.widget != this.get('id') ? `in ${a.widget}` : '';
               if (a.return) {
                 let returnCollection = result.collection.map(w=>w.get('id')).join(',');
                 if(!result.collection.length || result.collection.length >= 5)
@@ -1125,9 +1153,9 @@ export class Widget extends StateManaged {
                     if(widgets.has(target.get('hand'))) {
                       const targetHand = widgets.get(target.get('hand'));
                       await applyFlip();
+                      c.targetPlayer = target.get('player')
                       await c.moveToHolder(targetHand);
-                      if(targetHand.get('childrenPerOwner'))
-                        await c.set('owner', target.get('player'));
+                      delete c.targetPlayer
                       c.bringToFront()
                       if(targetHand.get('type') == 'holder')
                         targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
@@ -1513,7 +1541,7 @@ export class Widget extends StateManaged {
       playerName = variables.playerName;
     }
 
-    return { variable: variables.result || null, collection: collections.result || [] };
+    return { variable: variables.result === undefined ? null : variables.result, collection: collections.result || [] };
   }
 
   get(property) {
@@ -1547,8 +1575,11 @@ export class Widget extends StateManaged {
   }
 
   hideEnlarged() {
-    if (!this.domElement.className.match(/selected/))
+    if (!this.domElement.className.match(/selected/)) {
       $('#enlarged').classList.add('hidden');
+      if($('#enlargeStyle'))
+        removeFromDOM($('#enlargeStyle'));
+    }
   }
 
   async addAudio(widget){
@@ -1606,6 +1637,9 @@ export class Widget extends StateManaged {
   }
 
   async moveToHolder(holder) {
+    if(this.inRemovalQueue)
+      return;
+
     await this.bringToFront();
     if(this.get('parent') && !this.currentParent)
       this.currentParent = widgets.get(this.get('parent'));
@@ -1621,6 +1655,7 @@ export class Widget extends StateManaged {
       sendTraceEvent('moveStart', { id: this.get('id') });
 
     await this.bringToFront();
+    await this.set('dragging', playerName);
 
     if(!this.get('fixedParent')) {
       this.dropTargets = this.validDropTargets();
@@ -1679,12 +1714,17 @@ export class Widget extends StateManaged {
         lastHoverTarget.domElement.classList.remove('droptarget');
       if(this.hoverTarget)
         this.hoverTarget.domElement.classList.add('droptarget');
+
+      if(lastHoverTarget != this.hoverTarget && this.hoverTarget != this.currentParent)
+        await this.checkParent(true);
     }
   }
 
   async moveEnd(coord, localAnchor) {
     if(tracingEnabled)
       sendTraceEvent('moveEnd', { id: this.get('id'), coord, localAnchor });
+
+    await this.set('dragging', null);
 
     if(!this.get('fixedParent')) {
       for(const t of this.dropTargets)
@@ -1760,12 +1800,17 @@ export class Widget extends StateManaged {
       await this.set('rotation', degrees);
   }
 
+  setHighlighted(isHighlighted) {
+    this.isHighlighted = isHighlighted;
+    this.domElement.className = this.classes();
+  }
+
   async setText(text, mode, problems) {
     if (this.get('text') !== undefined) {
       if(mode == 'inc' || mode == 'dec') {
         let newText = (parseFloat(this.get('text')) || 0) + (mode == 'dec' ? -1 : 1) * text;
         const decimalPlacesOld = this.get('text').toString().match(/\..*$/);
-        const decimalPlacesChange = text.toString().match(/\..*$/);
+        const decimalPlacesChange = (+text).toString().match(/\..*$/);
         const decimalPlaces = Math.max(decimalPlacesOld ? decimalPlacesOld[0].length-1 : 0, decimalPlacesChange ? decimalPlacesChange[0].length-1 : 0);
         const factor = 10**decimalPlaces;
         newText = Math.round(newText*factor)/factor;
@@ -1792,15 +1837,42 @@ export class Widget extends StateManaged {
 
   showEnlarged(event) {
     if(this.get('enlarge')) {
+      const id = this.get('id');
       const e = $('#enlarged');
+      const boundBox = this.domElement.getBoundingClientRect();
+      let cssText = this.domElement.style.cssText;
+      cssText += `;--originalLeft:${boundBox.left}px`;
+      cssText += `;--originalTop:${boundBox.top}px`;
+      cssText += `;--originalRight:${boundBox.right}px`;
+      cssText += `;--originalBottom:${boundBox.bottom}px`;
       e.innerHTML = this.domElement.innerHTML;
       e.className = this.domElement.className;
-      e.dataset.id = this.get('id');
-      e.style.cssText = this.domElement.style.cssText;
+      e.dataset.id = id;
+      for(const clone of e.querySelectorAll('canvas')) {
+        const original = this.domElement.querySelector(`canvas[data-id = '${clone.dataset.id}']`);
+        const context = clone.getContext('2d');
+        clone.width = original.width;
+        clone.height = original.height;
+        context.drawImage(original, 0, 0);
+      }
+      e.style.cssText = cssText;
       e.style.display = this.domElement.style.display;
       e.style.transform = `scale(calc(${this.get('enlarge')} * var(--scale)))`;
-      if(this.domElement.getBoundingClientRect().left < window.innerWidth/2)
+      const cursor = clientPointer.getBoundingClientRect();
+      if(cursor.left < window.innerWidth/2)
         e.classList.add('right');
+      if(cursor.top < window.innerHeight/2)
+        e.classList.add('bottom');
+
+      const wStyle = $(`#STYLES_${escapeID(id)}`);
+      if(wStyle) {
+        if($('#enlargeStyle'))
+          removeFromDOM($('#enlargeStyle'));
+        const eStyle = document.createElement('style');
+        eStyle.id = "enlargeStyle";
+        eStyle.appendChild(document.createTextNode(wStyle.textContent.replaceAll(`#w_${escapeID(id)}`,'#enlarged')));
+        $('head').appendChild(eStyle);
+      }
     }
     if(event)
       event.preventDefault();
