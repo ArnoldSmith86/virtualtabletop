@@ -770,7 +770,7 @@ function jeAddAlignmentCommands() {
       selected.sort((a,b)=>a.absoluteCoord(key) - b.absoluteCoord(key));
       for(const widget of selected) {
         const before = selected.slice(0, selected.findIndex(w=>w.id == widget.id));
-        await widget.set(key, min + before.map(w=>w.get(sizeKey) + spacing).reduce((a,b)=>a + b, 0) - (widget.get('parent') ? widgets.get(widget.get('parent')).absoluteCoord(key) : 0));
+        await widget.set(key, Math.round(min + before.map(w=>w.get(sizeKey) + spacing).reduce((a,b)=>a + b, 0) - (widget.get('parent') ? widgets.get(widget.get('parent')).absoluteCoord(key) : 0)));
       }
       jeUpdateMulti();
     }
