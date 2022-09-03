@@ -627,6 +627,10 @@ function fillStateDetails(states, state, dom) {
   $('#stateDetailsOverlay .buttons [icon=download]').onclick = function() {
     window.open(`dl/${roomID}/${state.id}`);
   };
+  $('#stateDetailsOverlay .buttons [icon=link]').onclick = function() {
+    shareLink(state);
+  };
+  $('#shareOK').onclick = _=>showStatesOverlay('stateDetailsOverlay');
   $('#stateDetailsOverlay .buttons [icon=delete]').onclick = async function() {
     $('#statesButton').dataset.overlay = 'confirmOverlay';
     if(await confirmOverlay('Delete game', 'Are you sure you want to completely remove this game from your game shelf?', 'Delete', 'Keep')) {
@@ -744,12 +748,12 @@ async function confirmOverlay(title, text, confirmButton, cancelButton) {
   });
 }
 
-async function shareLink() {
+async function shareLink(state) {
   showOverlay('shareLinkOverlay');
-  let url = $('#stateLink').value;
+  let url = state.link;
   if(!url) {
-    const name = $('#stateName').value.replace(/[^A-Za-z0-9.-]/g, '_');
-    url = await fetch(`share/${roomID}/${$('#stateEditOverlay').dataset.id}`);
+    const name = state.name.replace(/[^A-Za-z0-9.-]/g, '_');
+    url = await fetch(`share/${roomID}/${state.id}`);
     url = `${location.origin}${await url.text()}/${name}.vtt`;
   }
   $('#sharedLink').value = url;
@@ -766,8 +770,6 @@ onLoad(function() {
 
   on('#stateAddOverlay .create', 'click', e=>addState(e, 'state'));
   on('#stateAddOverlay .link',   'click', e=>addState(e, 'link', prompt('Enter shared URL:')));
-
-  on('#shareOK', 'click', _=>showOverlay('stateEditOverlay'));
 
   document.addEventListener('dragover', function(e) {
     e.preventDefault();
