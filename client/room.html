@@ -288,16 +288,19 @@
 
     <div id="stateDetailsOverlay" class="overlay" class="notEditing">
       <div class="buttons one">
-        <button icon="download" class="hideForEdit">Download</button>
-        <button icon="close" class="hideForEdit" id="closeDetails">Close</button>
+        <button icon="close" class="hideForEdit" id="closeDetails"></button>
         <button icon="close" class="onlyForEdit red" id="discardDetails">Discard</button>
       </div>
       <div class="buttons two">
-        <button icon="edit_off" disabled>Read-only</button>
-        <button icon="edit" class="hideForEdit">Edit</button>
+        <button icon="menu" class="hideForEdit"></button>
+        <div class="hidden hideForEdit">
+          <button icon="download">Download</button>
+          <button icon="edit_off" disabled>Read-only</button>
+          <button icon="edit">Edit</button>
+          <button icon="delete" class="red">Delete</button>
+          <button icon="upload" class="hidden">Add to public library</button>
+        </div>
         <button icon="save" class="onlyForEdit green">Save</button>
-        <button icon="delete" class="hideForEdit red">Delete</button>
-        <button icon="upload" class="hidden"></button>
       </div>
       <div id="mainDetails">
         <div id="mainImage">

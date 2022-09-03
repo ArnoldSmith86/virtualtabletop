@@ -619,6 +619,11 @@ function fillStateDetails(states, state, dom) {
   $('#closeDetails').onclick = function() {
     showStatesOverlay('statesOverlay');
   };
+  $('#stateDetailsOverlay .buttons [icon=menu]').onclick = function(e) {
+    $('#stateDetailsOverlay .buttons > div').classList.toggle('hidden');
+    e.stopPropagation();
+    document.addEventListener('click', e=>$('#stateDetailsOverlay .buttons > div').classList.add('hidden'));
+  };
   $('#stateDetailsOverlay .buttons [icon=download]').onclick = function() {
     window.open(`dl/${roomID}/${state.id}`);
   };

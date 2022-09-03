@@ -292,10 +292,15 @@ div:nth-of-type(1) > .list > .roomState .star {
   position: absolute;
   left: 10px;
   top: 10px;
+  z-index: 1;
 }
 
 #stateDetailsOverlay > .buttons > button {
   display: inline-flex;
+}
+
+#stateDetailsOverlay > .buttons > div > button {
+  width: 100%;
 }
 
 #stateDetailsOverlay {
@@ -582,15 +587,6 @@ div:nth-of-type(1) > .list > .roomState .star {
     display: none;
   }
 }
-@media (max-width: 1140px), (max-height: 712px) {
-  #closeDetails {
-    font-size: 0;
-    padding: 5px;
-  }
-  #closeDetails::before {
-    margin: 0;
-  }
-}
 @media (max-width: 1040px), (max-height: 650px) {
   .variant {
     padding: .11rem .5rem;
@@ -698,16 +694,6 @@ div:nth-of-type(1) > .list > .roomState .star {
   }
   #helpTexts {
     padding: 0 10px;
-  }
-}
-@media (max-width: 356px), (max-height: 222px) {
-  #stateDetailsOverlay > .buttons.one, #stateDetailsOverlay > .buttons.two {
-    position: unset;
-    display: inline-block;
-    margin: 2px auto;
-  }
-  #mainDetails {
-    margin-top: 10px;
   }
 }
 
