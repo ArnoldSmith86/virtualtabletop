@@ -293,6 +293,7 @@ export function addRichtextControls(dom) {
     dom.focus();
   };
   $('[icon=palette]', controls).onclick = function() {
+    document.execCommand('forecolor', false, '#000000');
     const input = document.createElement('input');
     input.type = 'color';
     input.onchange = function() {
