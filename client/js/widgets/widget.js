@@ -1801,8 +1801,13 @@ export class Widget extends StateManaged {
   }
 
   setHighlighted(isHighlighted) {
-    this.isHighlighted = isHighlighted;
-    this.domElement.className = this.classes();
+    if(this.isHighlighted != isHighlighted) {
+      this.isHighlighted = isHighlighted;
+      if(isHighlighted)
+        this.domElement.classList.add('selectedInEdit');
+      else
+        this.domElement.classList.remove('selectedInEdit');
+    }
   }
 
   async setText(text, mode, problems) {
