@@ -94,10 +94,6 @@ class Seat extends Widget {
   }
 
   updateLinkedWidgets() {
-    for(const seat of widgetFilter(w=>w.get('type') == 'seat')) {
-      const inProperty = p=>asArray(p).indexOf(seat.id) != -1;
-      widgetFilter(w=>inProperty(w.get('linkedToSeat')) || inProperty(w.get('onlyVisibleForSeat'))).forEach(wc=>wc.updateOwner());
-      seat.updateOwner();
-    }
+    widgetFilter(w=>w.get('onlyVisibleForSeat') || w.get('linkedToSeat') || w.get('type') == 'seat').forEach(wc=>wc.updateOwner());
   }
 }
