@@ -14,6 +14,7 @@ let jeInMacroExecution = false;
 let jeContext = null;
 let jeSecondaryWidget = null;
 let jeDeltaIsOurs = false;
+let jeMouseButtonIsDown = false;
 let jeKeyIsDown = true;
 let jeKeyIsDownDeltas = [];
 let jeKeyword = '';
@@ -1059,6 +1060,7 @@ function jeApplyDelta(delta) {
   }
 
   jeUpdateTree(delta.s);
+  widgetCoordCache = null;
 }
 
 function jeApplyState(state) {
@@ -2049,22 +2051,28 @@ const clickButton = async function(event) {
   }
 }
 
+let widgetCoordCache = null;
 window.addEventListener('mousemove', function(e) {
   if(!jeEnabled)
     return;
-  jeState.mouseX = Math.floor((e.clientX - roomRectangle.left) / scale);
-  jeState.mouseY = Math.floor((e.clientY - roomRectangle.top ) / scale);
+  const x = jeState.mouseX = Math.floor((e.clientX - roomRectangle.left) / scale);
+  const y = jeState.mouseY = Math.floor((e.clientY - roomRectangle.top ) / scale);
 
-  if(!jeZoomOut && jeState.mouseX > 1600)
+  if(!jeZoomOut && x > 1600 || jeMouseButtonIsDown)
     return;
 
-  const hoveredWidgets = [];
-  for(const [ widgetID, widget ] of widgets) {
-    const coords = widget.coordGlobalFromCoordParent({x:widget.get('x'),y:widget.get('y')});
-    if(jeState.mouseX >= coords.x && jeState.mouseY >= coords.y)
-      if(jeState.mouseX <= coords.x+widget.get('width') && jeState.mouseY <= coords.y+widget.get('height'))
-        hoveredWidgets.push(widget);
+  if(!widgetCoordCache) {
+    widgetCoordCache = [];
+    for(const [ widgetID, widget ] of widgets) {
+      const coords = widget.coordGlobalFromCoordParent({x:widget.get('x'),y:widget.get('y')});
+      coords.r = coords.x + widget.get('width');
+      coords.b = coords.y + widget.get('height');
+      coords.widget = widget;
+      widgetCoordCache.push(coords);
+    }
   }
+
+  const hoveredWidgets = widgetCoordCache.filter(c=>x>=c.x && x<=c.r && y>=c.y && y<=c.b).map(c=>c.widget);
 
   hoveredWidgets.sort(function(w1,w2) {
     const hiddenParent =  function(widget) {
@@ -2102,10 +2110,12 @@ window.addEventListener('mousemove', function(e) {
   }
 });
 
+window.addEventListener('mousedown', _=>jeMouseButtonIsDown = true);
 window.addEventListener('mouseup', async function(e) {
   if(!jeEnabled)
     return;
   jeRoutineResetOnNextLog = true;
+  jeMouseButtonIsDown = false;
 
   if(e.target == $('#jeText') && jeContext != 'macro') // Click in widget text, fix context
     jeGetContext();
