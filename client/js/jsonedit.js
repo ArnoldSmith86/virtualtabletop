@@ -2060,16 +2060,15 @@ window.addEventListener('mousemove', function(e) {
 
   const hoveredWidgets = [];
   for(const [ widgetID, widget ] of widgets) {
-    const x = widget.absoluteCoord('x');
-    const y = widget.absoluteCoord('y');
-    if(jeState.mouseX >= x && jeState.mouseX <= x+widget.get('width'))
-      if(jeState.mouseY >= y && jeState.mouseY <= y+widget.get('height'))
+    const coords = widget.coordGlobalFromCoordParent({x:widget.get('x'),y:widget.get('y')});
+    if(jeState.mouseX >= coords.x && jeState.mouseY >= coords.y)
+      if(jeState.mouseX <= coords.x+widget.get('width') && jeState.mouseY <= coords.y+widget.get('height'))
         hoveredWidgets.push(widget);
   }
 
   hoveredWidgets.sort(function(w1,w2) {
     const hiddenParent =  function(widget) {
-      return widget ? widget.domElement.classList.contains('foreign') || hiddenParent(widget.parent) : false
+      return widget ? widget.domElement.classList.contains('foreign') || hiddenParent(widgets.get(widget.get('parent'))) : false;
     };
 
     const w1card = w1.get('type') == 'card';
