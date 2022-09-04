@@ -1472,7 +1472,7 @@ function jeGetContext() {
   const s = Math.min(aO, fO);
   const e = Math.max(aO, fO);
   const v = jeGetEditorContent();
-  
+
   const select = v.substr(s, Math.min(e-s, 100)).replace(/\n/g, '\\n');
   const line = v.split('\n')[v.substr(0, s).split('\n').length-1];
 
@@ -2055,15 +2055,21 @@ window.addEventListener('mousemove', function(e) {
   jeState.mouseX = Math.floor((e.clientX - roomRectangle.left) / scale);
   jeState.mouseY = Math.floor((e.clientY - roomRectangle.top ) / scale);
 
+  if(!jeZoomOut && jeState.mouseX > 1600)
+    return;
+
   const hoveredWidgets = [];
-  for(const [ widgetID, widget ] of widgets)
-    if(jeState.mouseX >= widget.absoluteCoord('x') && jeState.mouseX <= widget.absoluteCoord('x')+widget.get('width'))
-      if(jeState.mouseY >= widget.absoluteCoord('y') && jeState.mouseY <= widget.absoluteCoord('y')+widget.get('height'))
+  for(const [ widgetID, widget ] of widgets) {
+    const x = widget.absoluteCoord('x');
+    const y = widget.absoluteCoord('y');
+    if(jeState.mouseX >= x && jeState.mouseX <= x+widget.get('width'))
+      if(jeState.mouseY >= y && jeState.mouseY <= y+widget.get('height'))
         hoveredWidgets.push(widget);
+  }
 
   hoveredWidgets.sort(function(w1,w2) {
     const hiddenParent =  function(widget) {
-      return widget ? widget.classes().includes('foreign') || hiddenParent(widget.parent) : false
+      return widget ? widget.domElement.classList.contains('foreign') || hiddenParent(widget.parent) : false
     };
 
     const w1card = w1.get('type') == 'card';
