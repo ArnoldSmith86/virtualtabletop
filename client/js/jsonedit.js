@@ -2110,7 +2110,7 @@ window.addEventListener('mousemove', function(e) {
   }
 });
 
-window.addEventListener('mousedown', _=>jeMouseButtonIsDown = true);
+window.addEventListener('mousedown', _=>jeMouseButtonIsDown = jeEnabled);
 window.addEventListener('mouseup', async function(e) {
   if(!jeEnabled)
     return;
