@@ -351,6 +351,10 @@ body.jsonEdit.jeZoomOut #topSurface {
   color: orange;
 }
 
+.jeLogTime {
+  color: #444;
+}
+
 /* Create the caret/arrow with a unicode, and style it */
 .jeExpander::before {
   content: "\25B6";

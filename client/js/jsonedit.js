@@ -1610,6 +1610,7 @@ let jeRoutineResetOnNextLog = true;
 let jeRoutineResult = '';
 let jeLoggingHTML = '';
 let jeLoggingDepth = 0;
+let jeLoggingStart = 0;
 let jeHTMLStack = [];
 
 function jeLoggingJSON(obj) {
@@ -1620,6 +1621,7 @@ function jeLoggingRoutineStart(widget, property, initialVariables, initialCollec
   if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine'].indexOf( jeHTMLStack[0][3] ) == -1 ) {
     if(jeRoutineResetOnNextLog) {
       jeLoggingHTML = '';
+      jeLoggingStart = +new Date();
       jeRoutineResetOnNextLog = false;
     }
     jeLoggingHTML += `
@@ -1744,7 +1746,8 @@ function jeLoggingRoutineOperationEnd(problems, variables, collections, skipped)
 
 function jeLoggingRoutineOperationSummary(definition, result) {
   jeRoutineResult = `<span class="jeLogSummary">${html(definition)}</span>
-     ${result ? '=&gt;' : ''} <span class="jeLogResult">${html(result || '')}</span>`;
+     ${result ? '=&gt;' : ''} <span class="jeLogResult">${html(result || '')}</span> <span class="jeLogTime">${+new Date() - jeLoggingStart}ms</span>
+`;
 }
 
 // END routine logging
