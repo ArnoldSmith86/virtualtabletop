@@ -144,11 +144,15 @@ function receiveStateFromServer(args) {
   }
 
   if(Object.keys(deferredCards).length) {
-    console.error('Could not add these cards because their deck does not exist:', deferredCards);
+    for(const [ deckID, widgets ] of Object.entries(deferredCards))
+      for(const widget of widgets)
+        console.error(`Could not add card "${widget.id}" because its deck "${deckID}" does not exist!`);
     deferredCards = {};
   }
   if(Object.keys(deferredChildren).length) {
-    console.error('Could not add these widgets because their parent does not exist:', deferredChildren);
+    for(const [ deckID, widgets ] of Object.entries(deferredChildren))
+      for(const widget of widgets)
+        console.error(`Could not add widget "${widget.id}" because its parent "${deckID}" does not exist!`);
     deferredChildren = {};
   }
 
