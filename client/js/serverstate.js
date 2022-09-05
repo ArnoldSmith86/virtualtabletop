@@ -1,7 +1,7 @@
 import { toServer } from './connection.js';
 import { $, $a, onLoad, unescapeID } from './domhelpers.js';
 
-let roomID = self.location.pathname.substr(1);
+let roomID = self.location.pathname.replace(/.*\//, '');
 
 export const widgets = new Map();
 
@@ -104,15 +104,18 @@ function receiveDelta(delta) {
     if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && widgets.has(widgetID))
       $('#topSurface').appendChild(widgets.get(widgetID).domElement);
 
-  for(const widgetID in delta.s) {
-    if(delta.s[widgetID] === null) {
-      removeWidget(widgetID);
-    } else if(!widgets.has(widgetID)) {
+  for(const widgetID in delta.s)
+    if(delta.s[widgetID] !== null && !widgets.has(widgetID))
       addWidget(delta.s[widgetID]);
-    } else {
+
+  for(const widgetID in delta.s)
+    if(delta.s[widgetID] !== null && widgets.has(widgetID)) // check widgets.has because addWidget above MIGHT have failed
       widgets.get(widgetID).applyDelta(delta.s[widgetID]);
-    }
-  }
+
+  for(const widgetID in delta.s)
+    if(delta.s[widgetID] === null && widgets.has(widgetID))
+      removeWidget(widgetID);
+
   if(typeof jeEnabled != 'undefined' && jeEnabled)
     jeApplyDelta(delta);
 }
@@ -144,6 +147,9 @@ function receiveStateFromServer(args) {
     overlayShownForEmptyRoom = true;
   }
   toServer('confirm');
+
+  if(typeof jeEnabled != 'undefined' && jeEnabled)
+    jeApplyState(args);
 }
 
 function removeWidget(widgetID) {
@@ -156,8 +162,8 @@ function removeWidget(widgetID) {
   dropTargets.delete(widgetID);
 }
 
-function sendDelta(force) {
-  if(!batchDepth || force) {
+function sendDelta() {
+  if(!batchDepth) {
     if(deltaChanged) {
       receiveDelta(delta);
       delta.id = deltaID;

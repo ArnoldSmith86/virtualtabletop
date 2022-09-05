@@ -16,6 +16,8 @@ let urlProperties = {};
 let maxZ = {};
 export const dropTargets = new Map();
 
+export const clientPointer = $('#clientPointer');
+
 function compareDropTarget(widget, t, exclude){
   for(const dropTargetObject of asArray(t.get('dropTarget'))) {
     let isValidObject = true;
@@ -165,7 +167,7 @@ function setScale() {
   if(jeEnabled) {
     const targetWidth = jeZoomOut ? 3200 : 1600;
     const targetHeight = jeZoomOut ? 2000 : 1000;
-    const availableWidth = $('#jeText').offsetLeft;
+    const availableWidth = $('#jeEditArea').offsetLeft;
     if(availableWidth/(h-70) < 1600/1000)
       scale = availableWidth/targetWidth;
     else
@@ -197,7 +199,7 @@ async function uploadAsset(multipleCallback) {
 }
 
 async function _uploadAsset(file) {
-    const response = await fetch('/asset', {
+    const response = await fetch('asset', {
       method: 'PUT',
       headers: {
         'Content-type': 'application/octet-stream'
@@ -224,7 +226,7 @@ function getSVG(url, replaces, callback) {
 
   if(!svgCache[url]) {
     svgCache[url] = [];
-    fetch(url).then(r=>r.text()).then(t=>{
+    fetch(url.replace(/^\//, '')).then(r=>r.text()).then(t=>{
       const callbacks = svgCache[url];
       svgCache[url] = t;
       for(const c of callbacks)
@@ -247,17 +249,15 @@ onLoad(function() {
 
   on('#muteButton', 'click', function(){
     if(muted) {
-      document.getElementById('volume').value = unmuteVol;
-      document.getElementById('muteButton').classList.remove('muted');
-      var allAudios = document.querySelectorAll('audio');
-      allAudios.forEach(function(audio){
+      $('#volume').value = unmuteVol;
+      $('#muteButton').classList.remove('muted');
+      $a('audio').forEach(function(audio){
         audio.volume = Math.min(audio.getAttribute('maxVolume') * (((10 ** (unmuteVol / 96.025)) / 10) - 0.1), 1);
       });
     } else {
       unmuteVol = document.getElementById('volume').value;
-      document.getElementById("volume").value = 0;
-      var allAudios = document.querySelectorAll('audio');
-      allAudios.forEach(function(audio){
+      $('#volume').value = 0;
+      $a('audio').forEach(function(audio){
         audio.volume = 0;
       });
       document.getElementById('muteButton').classList.add('muted');
@@ -265,11 +265,18 @@ onLoad(function() {
     muted = !muted
   });
 
+  on('#lightsButton', 'click', function(){
+    if($('body').classList.contains('lightsOff'))
+      $('body').classList.remove('lightsOff');
+    else
+      $('body').classList.add('lightsOff');
+  });
+
   on('#optionsButton', 'click', function(){
     if(optionsHidden) {
-      document.getElementById('options').classList.remove('hidden');
+      $('#options').classList.remove('hidden');
     } else {
-      document.getElementById('options').classList.add('hidden');
+      $('#options').classList.add('hidden');
     }
     optionsHidden = !optionsHidden
   });
@@ -351,15 +358,14 @@ window.onkeyup = function(event) {
   }
 }
 
-if(document.getElementById("volume")) {
-    document.getElementById("volume").addEventListener("input", function(){ // allows volume to be adjusted in real time
-      if(muted) {
-        document.getElementById('muteButton').classList.remove('muted');
-        muted = !muted
-      }
-    var allAudios = document.querySelectorAll('audio');
-    allAudios.forEach(function(audio){
-      audio.volume = Math.min(audio.getAttribute('maxVolume') * (((10 ** (document.getElementById('volume').value / 96.025)) / 10) - 0.1), 1);
+if($('#volume')) {
+  on('#volume', 'input', function(){ // allows volume to be adjusted in real time
+    if(muted) {
+      $('#muteButton').classList.remove('muted');
+      muted = !muted
+    }
+    $a('audio').forEach(function(audio){
+      audio.volume = Math.min(audio.getAttribute('maxVolume') * (((10 ** ($('#volume').value / 96.025)) / 10) - 0.1), 1);
     });
   });
 }

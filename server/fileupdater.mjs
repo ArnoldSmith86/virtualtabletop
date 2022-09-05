@@ -1,4 +1,4 @@
-export const VERSION = 7;
+export const VERSION = 8;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -33,7 +33,8 @@ function updateProperties(properties, v) {
   v<4 && v4ModifyDropTargetEmptyArray(properties);
   v<5 && v5DynamicFaceProperties(properties);
   v<6 && v6cssPieces(properties);
-  v<7 && v7EnlargeTinyLabels(properties);
+  v<7 && v7HolderClickable(properties);
+  v<8 && v8EnlargeTinyLabels(properties);
 }
 
 function updateRoutine(routine, v) {
@@ -321,7 +322,13 @@ function v6cssPieces(properties) {
   }
 }
 
-function v7EnlargeTinyLabels(properties) {
+function v7HolderClickable(properties) {
+  if (properties.clickRoutine && !properties.clickable && properties.type=='holder'){
+    properties.clickable=false;
+  }
+}
+
+function v8EnlargeTinyLabels(properties) {
   if(properties.type == 'label') {
     const match = (properties.css || '').match(/font-size: *([0-9]+) *px/);
     const fontSize = match ? +match[1] : 16;
