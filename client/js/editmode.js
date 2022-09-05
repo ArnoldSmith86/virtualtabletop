@@ -895,7 +895,7 @@ async function onClickUpdateWidget(applyChangesFromUI) {
   showOverlay();
 }
 
-async function duplicateWidget(widget, recursive, inheritFrom, increment, incrementLetters, incrementIn, xOffset, yOffset, xCopies, yCopies, problems) {
+async function duplicateWidget(widget, recursive, inheritFrom, incrementKind, incrementIn, xOffset, yOffset, xCopies, yCopies, problems) { // incrementKind: '', 'Letters', 'Numbers'
   const clone = async function(widget, recursive, newParent, xOffset, yOffset) {
     let currentWidget = JSON.parse(JSON.stringify(widget.state))
 
@@ -907,16 +907,16 @@ async function duplicateWidget(widget, recursive, inheritFrom, increment, increm
       currentWidget = inheritWidget;
     }
 
-    if(increment) {
+    if(incrementKind) {
       let match = currentWidget.id.match(/^(.*?)([0-9]+)([^0-9]*)$/);
       let sourceNumber = match ? parseInt(match[2]) : 0;
-      if(incrementLetters) {
-        match = currentWidget.id.match(/^(.*?)([A-Z]+)([^A-Z]*)$/);
+      if(incrementKind=='Letters') {
+        match = currentWidget.id.match(/^(.*?)([A-Z])([^A-Z]*)$/);
         sourceNumber = match ? match[2] : "A";
       }
       let targetNumber = sourceNumber;
       while(widgets.has(currentWidget.id)) {
-        if(incrementLetters)
+        if(incrementKind=='Letters')
           targetNumber = String.fromCharCode(targetNumber.charCodeAt(0)+1);
         else
           ++targetNumber;
@@ -981,7 +981,7 @@ async function onClickDuplicateWidget() {
   const widget = widgets.get(JSON.parse($('#editWidgetJSON').dataset.previousState).id);
   const xOffset = widget.absoluteCoord('x') > 1500 ? -20 : 20;
   const yOffset = widget.absoluteCoord('y') >  900 ? -20 : 20;
-  await duplicateWidget(widget, true, false, true, false, [], xOffset, yOffset, 1, 0);
+  await duplicateWidget(widget, true, false, 'Numbers', [], xOffset, yOffset, 1, 0);
   showOverlay();
 }
 
