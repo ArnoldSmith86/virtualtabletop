@@ -25,8 +25,10 @@
     <div class="divider">&nbsp;</div>
     <button id="editButton" class="toolbarButton"><span class="tooltip">Edit Mode</span></button>
     <button id="addButton" data-overlay="addOverlay" class="toolbarButton"><span class="tooltip">Add Widget</span></button>
+    <div class="divider">&nbsp;</div>
     <button id="optionsButton" class="toolbarButton"><span class="tooltip">Sound</span></button>
     <span id="options" class="hidden"><button id="muteButton" class="toolbarButton"></button><div class='volumeWrap'><input id="volume" type='range'min="0" max="100" value="30" ></div></span>
+    <button id="lightsButton" class="toolbarButton"><span class="tooltip">Lights</span></button>
     <div class="divider">&nbsp;</div>
     <button id="fullscreenButton" class="toolbarButton"><span class="tooltip">Fullscreen</span></button>
     <button id="hideToolbarButton" class="toolbarButton"><span class="tooltip">Hide Toolbar</span></button>
@@ -415,9 +417,20 @@
       <div id="jeWidgetLayer11"></div>
       <div id="jeWidgetLayer12"></div>
     </div>
-    <div id="jeTextHighlight"></div>
-    <div id="jeText" contenteditable="true" spellcheck="false"></div>
-    <div id="jeMouseCoords"></div>
+
+    <div id="jeEditArea">
+      <div id="jeEditHeader">CTRL-click a widget on<br>the left to edit it.</div>
+      <div id="jeMouseCoords"></div>
+      <div id="jeTree"></div>
+      <div id="jeWidgetSearch">
+        <label for="jeWidgetSearchBox" class="extern">Search Room:</label>
+        <input id="jeWidgetSearchBox">
+      </div>
+      <div id="jeWidgetSearchResults"></div>
+      <div id="jeResize"></div>
+      <div id="jeTextHighlight"></div>
+      <div id="jeText" contenteditable="true" spellcheck="false"></div>
+    </div>
     <div id="jeCommands"></div>
     <div id="jeLogWrapper">
       <div id="jeLog"><h1>No debug information yet.</h1></div>
@@ -426,7 +439,9 @@
     <div id="traceUI"><input type="range" id="traceInput"></div>
   </div>
 
-  <div id="enlarged" class="hidden"></div>
+  <div id="clientPointer">
+    <div id="enlarged" class="hidden"></div>
+  </div>
 
   <script type="module"> //*** CONFIG ***//  //*** JS ***// </script>
 
