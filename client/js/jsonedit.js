@@ -2066,7 +2066,7 @@ window.addEventListener('mousemove', function(e) {
 
   if(!widgetCoordCache) {
     widgetCoordCache = [];
-    for(const [ widgetID, widget ] of widgets) {
+    for(const widget of widgets.values()) {
       const coords = widget.coordGlobalFromCoordParent({x:widget.get('x'),y:widget.get('y')});
       coords.r = coords.x + widget.get('width');
       coords.b = coords.y + widget.get('height');
