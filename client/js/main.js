@@ -218,10 +218,15 @@ async function _uploadAsset(file) {
 const svgCache = {};
 function getSVG(url, replaces, callback) {
   if(typeof svgCache[url] == 'string') {
+    const cacheKey = url + JSON.stringify(replaces);
+    if(svgCache[cacheKey])
+      return svgCache[cacheKey];
+
     let svg = svgCache[url];
     for(const replace in replaces)
       svg = svg.split(replace).join(replaces[replace]);
-    return 'data:image/svg+xml,'+encodeURIComponent(svg);
+    svgCache[cacheKey] = 'data:image/svg+xml,'+encodeURIComponent(svg);
+    return svgCache[cacheKey];
   }
 
   if(!svgCache[url]) {
