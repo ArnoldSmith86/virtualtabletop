@@ -4,7 +4,6 @@ class Seat extends Widget {
 
     this.addDefaults({
       typeClasses: 'widget seat',
-      clickable: true,
       width: 150,
       height: 40,
       movable: false,
