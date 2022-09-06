@@ -330,7 +330,7 @@ function v7HolderClickable(properties) {
 
 function v8EnlargeTinyLabels(properties) {
   if(properties.type == 'label') {
-    const match = (properties.css || '').match(/font-size: *([0-9]+) *px/);
+    const match = JSON.stringify(properties.css || '').match(/font-size"?:"? *([0-9]+) *px/);
     const fontSize = match ? +match[1] : 16;
     if((properties.height || 20) < fontSize + 2)
       properties.height = fontSize + 2;
