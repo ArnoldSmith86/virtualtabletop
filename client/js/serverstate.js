@@ -5,8 +5,8 @@ let roomID = self.location.pathname.replace(/.*\//, '');
 
 export const widgets = new Map();
 
-const deferredCards = {};
-const deferredChildren = {};
+let deferredCards = {};
+let deferredChildren = {};
 
 let delta = { s: {} };
 let deltaChanged = false;
@@ -138,10 +138,28 @@ function receiveStateFromServer(args) {
   let isEmpty = true;
   for(const widgetID in args) {
     if(widgetID != '_meta') {
+      if(widgetID != args[widgetID].id) {
+        console.error(`Could not add widget!`, widgetID, args[widgetID], 'ID does not equal key in state');
+        continue;
+      }
       addWidget(args[widgetID]);
       isEmpty = false;
     }
   }
+
+  if(Object.keys(deferredCards).length) {
+    for(const [ deckID, widgets ] of Object.entries(deferredCards))
+      for(const widget of widgets)
+        console.error(`Could not add card "${widget.id}" because its deck "${deckID}" does not exist!`);
+    deferredCards = {};
+  }
+  if(Object.keys(deferredChildren).length) {
+    for(const [ deckID, widgets ] of Object.entries(deferredChildren))
+      for(const widget of widgets)
+        console.error(`Could not add widget "${widget.id}" because its parent "${deckID}" does not exist!`);
+    deferredChildren = {};
+  }
+
   if(isEmpty && !overlayShownForEmptyRoom && !urlProperties.load && !urlProperties.askID) {
     showOverlay('statesOverlay');
     overlayShownForEmptyRoom = true;
