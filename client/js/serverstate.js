@@ -138,6 +138,10 @@ function receiveStateFromServer(args) {
   let isEmpty = true;
   for(const widgetID in args) {
     if(widgetID != '_meta') {
+      if(widgetID != args[widgetID].id) {
+        console.error(`Could not add widget!`, widgetID, args[widgetID], 'ID does not equal key in state');
+        continue;
+      }
       addWidget(args[widgetID]);
       isEmpty = false;
     }
