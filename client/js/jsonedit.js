@@ -1196,7 +1196,7 @@ function jeSelectWidget(widget, dontFocus, addToSelection, restoreCursorPosition
 
   if(restoreCursorPosition)
     jeCursorStateSet(cursorState);
-  
+
   jeGetContext();
 }
 
@@ -1746,7 +1746,7 @@ function jeLoggingRoutineOperationEnd(problems, variables, collections, skipped)
 
 function jeLoggingRoutineOperationSummary(definition, result) {
   jeRoutineResult = `<span class="jeLogSummary">${html(definition)}</span>
-     ${result ? '=&gt;' : ''} <span class="jeLogResult">${html(result || '')}</span> <span class="jeLogTime">${+new Date() - jeLoggingStart}ms</span>
+     ${result ? '=&gt;' : ''} <span class="jeLogResult">${html(result || '')}</span> <span class="jeLogTime">(${+new Date() - jeLoggingStart}ms)</span>
 `;
 }
 

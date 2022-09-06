@@ -352,7 +352,7 @@ body.jsonEdit.jeZoomOut #topSurface {
 }
 
 .jeLogTime {
-  color: #444;
+  color: yellow;
 }
 
 /* Create the caret/arrow with a unicode, and style it */
