@@ -431,10 +431,19 @@
       <div id="jeTextHighlight"></div>
       <div id="jeText" contenteditable="true" spellcheck="false"></div>
     </div>
-    <div id="jeCommands"></div>
-    <div id="jeLogWrapper">
-      <div id="jeLog"><h1>No debug information yet.</h1></div>
-      <h1>Show Routine Debug Output</h1>
+    <div id="jeContextCommands"></div>
+    <div id="jeGlobalCommands">
+      <div id="jeMenuButtons">
+        <button class="menu-item button-item" id="jeAppearance">Appearance</button>
+        <button class="menu-item button-item" id="jeWidgets">Widgets</button>
+        <button class="menu-item button-item" id="jeUtilities">Utilities</button>
+        <button class="menu-item debug-item" id="jeShowLog">Show Debug Information</button>
+      </div>
+<!--      <div id="jeLogWrapper">
+        <div id="jeLog"><h1>No debug information yet.</h1></div>
+        <h1>Show Routine Debug Output</h1>
+        </div>
+-->        
     </div>
     <div id="traceUI"><input type="range" id="traceInput"></div>
   </div>

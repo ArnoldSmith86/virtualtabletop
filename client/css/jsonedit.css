@@ -221,7 +221,13 @@ body.jsonEdit:not(.edit) .selectedInEdit.deck {
 }
 /*** End compute operations CSS ***/
 
-#jeCommands {
+#jeGlobalCommands {
+  position: fixed;
+  bottom: 0;
+  white-space: normal;
+}
+
+#jeContextCommands {
   white-space: pre-wrap;
   height: 100%;
   width: var(--commandPaneWidth);
@@ -257,7 +263,7 @@ body.jsonEdit #jsonEditor {
   display: block;
 }
 
-body.jsonEdit #jeCommands > button {
+body.jsonEdit #jeContextCommands > button {
   width: 100%;
   text-align: left;
 }
@@ -285,9 +291,9 @@ body.jsonEdit.jeZoomOut #topSurface {
 }
 
 #jeLogWrapper {
-  position: fixed;
+/*  position: fixed; 
   bottom: 0;
-  white-space: normal;
+  white-space: normal; */
 }
 
 #jeLog {
@@ -409,6 +415,42 @@ body.jsonEdit.jeZoomOut #topSurface {
   white-space: pre;
 }
 
+#jeMenuButtons {
+  display: normal;
+  margin-bottom: 15px;
+}
+
+ /* Style the tab */
+#jeMenuButtons {
+  overflow: hidden;
+}
+
+/* Style the buttons that are used to open the tab content */
+#jeMenuButtons .menu-item {
+  background-color: #1f5ca6;
+  float: left;
+  border-radius: 0px;
+  outline: none;
+  cursor: pointer;
+  padding: 5px 7px;
+  margin: 0px;
+  transition: 0.3s;
+}
+
+#jeMenuButtons .debug-item {
+  margin-left: 20px;
+}
+
+/* Change background color of buttons on hover */
+#jeMenuButtons button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+#jeMenuButtons button.active {
+  background-color: #ccc;
+}
+
 [id=jeTopButtons] button {
   display: inline-block;
   text-align: center;
@@ -422,22 +464,18 @@ body.jsonEdit.jeZoomOut #topSurface {
   vertical-align: top;
 }
 
-[id=jeTopButtons] button.material {
-  font-family: 'Material Icons';
-}
-
 #jeTopButtons button:disabled {
   background: gray;
   opacity: 0.5;
 }
 
-#jeCommands .context{
+#jeContextCommands .context{
   font-weight: bold;
   margin-top: 8px;
   width: 100%;
 }
 
-#jeCommands > button > b{
+#jeContextCommands > button > b{
   text-decoration: underline;
   color: yellow;
 }
@@ -468,7 +506,7 @@ body.jsonEdit.jeZoomOut #topSurface {
 #je_toggleWide{
 }
 
-#jeCommands > button::before{
+#jeContextCommands > button::before{
   margin-right: 4px;
   font-family: 'VTT-Symbols';
 }
@@ -497,10 +535,10 @@ body.jsonEdit.jeZoomOut #topSurface {
 #widget_dropOffsetY::before{
   content: '[width]';
 }
-#jeCommands .numberInputRange{
+#jeContextCommands .numberInputRange{
   display: none;
 }
 
-#jeCommands #jeCommandOptions input[type="number"]{
+#jeContextCommands #jeCommandOptions input[type="number"]{
   width: 6ch;
 }
