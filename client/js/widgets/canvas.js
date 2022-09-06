@@ -9,7 +9,6 @@ class Canvas extends Widget {
       width: 400,
       height: 400,
       typeClasses: 'widget canvas',
-      clickable: true,
       artist: null,
 
       resolution: 100,
