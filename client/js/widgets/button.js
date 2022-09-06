@@ -11,7 +11,6 @@ export class Button extends Widget {
       typeClasses: 'widget button',
       layer: -1,
       movable: false,
-      clickable: true,
 
       image: '',
       color: 'black',
@@ -69,7 +68,7 @@ export class Button extends Widget {
   }
 
   getImage() {
-    if(!Object.keys(this.get('svgReplaces')).length)
+    if(!Object.keys(this.get('svgReplaces') || {}).length)
       return this.get('image');
 
     const replaces = {};

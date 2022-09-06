@@ -47,7 +47,7 @@ export class Widget extends StateManaged {
       css: '',
       movable: true,
       movableInEdit: true,
-      clickable: false,
+      clickable: true,
       clickSound: null,
 
       grid: [],
@@ -59,6 +59,7 @@ export class Widget extends StateManaged {
       fixedParent: false,
       inheritFrom: null,
       owner: null,
+      dragging: null,
       dropOffsetX: 0,
       dropOffsetY: 0,
       inheritChildZ: false,
@@ -225,8 +226,8 @@ export class Widget extends StateManaged {
   }
 
   applyRemove() {
-    if(this.parent)
-      this.parent.applyChildRemove(this);
+    if(this.get('parent') && widgets.has(this.get('parent')))
+      widgets.get(this.get('parent')).applyChildRemove(this);
     if(this.get('deck') && widgets.has(this.get('deck')))
       widgets.get(this.get('deck')).removeCard(this);
     if($(`#STYLES_${escapeID(this.id)}`))
@@ -290,11 +291,19 @@ export class Widget extends StateManaged {
       if(!widgetFilter(w=>asArray(this.get('linkedToSeat')).indexOf(w.get('id')) != -1 && w.get('player')).length)
         className += ' foreign';
 
+    if(typeof this.get('dragging') == 'string')
+      className += ' dragging';
+    if(this.get('dragging') == playerName)
+      className += ' draggingSelf';
+
+    if(this.isHighlighted)
+      className += ' selectedInEdit';
+
     return className;
   }
 
   classesProperties() {
-    return [ 'classes', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses' ];
+    return [ 'classes', 'dragging', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses' ];
   }
 
   async click(mode='respect') {
@@ -537,7 +546,9 @@ export class Widget extends StateManaged {
           return match[9] ? false : undefined;
 
         let indexName = evaluateIdentifier(match[3], match[4]);
-        return indexName !== undefined ? varContent[indexName] : varContent;
+        if(varContent === null && indexName !== undefined)
+          problems.push(`Cannot index a variable that evaluates to 'null'.`);
+        return varContent !== null && indexName !== undefined ? varContent[indexName] : varContent;
       }
 
       // property
@@ -698,7 +709,7 @@ export class Widget extends StateManaged {
             // ignore (but log) blank and comment only lines
             if(jeRoutineLogging) jeLoggingRoutineOperationSummary(comment[1]||'');
           } else {
-            problems.push('String could not be interpreted as expression. Please check your syntax and note that many characters have to be escaped.');
+            problems.push(`String '${a}' could not be interpreted as a valid expression. Please check your syntax and note that many characters have to be escaped.`);
           }
         }
       }
@@ -1142,9 +1153,9 @@ export class Widget extends StateManaged {
                     if(widgets.has(target.get('hand'))) {
                       const targetHand = widgets.get(target.get('hand'));
                       await applyFlip();
+                      c.targetPlayer = target.get('player')
                       await c.moveToHolder(targetHand);
-                      if(targetHand.get('childrenPerOwner'))
-                        await c.set('owner', target.get('player'));
+                      delete c.targetPlayer
                       c.bringToFront()
                       if(targetHand.get('type') == 'holder')
                         targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
@@ -1626,6 +1637,9 @@ export class Widget extends StateManaged {
   }
 
   async moveToHolder(holder) {
+    if(this.inRemovalQueue)
+      return;
+
     await this.bringToFront();
     if(this.get('parent') && !this.currentParent)
       this.currentParent = widgets.get(this.get('parent'));
@@ -1641,6 +1655,7 @@ export class Widget extends StateManaged {
       sendTraceEvent('moveStart', { id: this.get('id') });
 
     await this.bringToFront();
+    await this.set('dragging', playerName);
 
     if(!this.get('fixedParent')) {
       this.dropTargets = this.validDropTargets();
@@ -1708,6 +1723,8 @@ export class Widget extends StateManaged {
   async moveEnd(coord, localAnchor) {
     if(tracingEnabled)
       sendTraceEvent('moveEnd', { id: this.get('id'), coord, localAnchor });
+
+    await this.set('dragging', null);
 
     if(!this.get('fixedParent')) {
       for(const t of this.dropTargets)
@@ -1783,6 +1800,11 @@ export class Widget extends StateManaged {
       await this.set('rotation', degrees);
   }
 
+  setHighlighted(isHighlighted) {
+    this.isHighlighted = isHighlighted;
+    this.domElement.className = this.classes();
+  }
+
   async setText(text, mode, problems) {
     if (this.get('text') !== undefined) {
       if(mode == 'inc' || mode == 'dec') {
@@ -1841,7 +1863,7 @@ export class Widget extends StateManaged {
         e.classList.add('right');
       if(cursor.top < window.innerHeight/2)
         e.classList.add('bottom');
-      
+
       const wStyle = $(`#STYLES_${escapeID(id)}`);
       if(wStyle) {
         if($('#enlargeStyle'))

@@ -15,7 +15,7 @@ function enableTracing() {
     return number;
   };
 
-  alert('Tracing is now enabled until everyone leaves the room.\nPress F9 again whenever a bug occurs.');
+  alert('Tracing is now enabled for this room.\nPress F9 again whenever a bug occurs.');
 }
 
 function sendTraceEvent(type, payload) {
