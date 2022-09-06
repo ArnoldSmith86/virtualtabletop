@@ -27,9 +27,10 @@ export class Label extends Widget {
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
     if(this.input && (delta.text !== undefined || delta.twoRowBottomAlign !== undefined || delta.height !== undefined || delta.width !== undefined || delta.css !== undefined)) {
-      const fontSizeMatch = JSON.stringify(this.get('css')).match(/font-size"?:"? *([0-9]+) *px/);
+      const css = JSON.stringify(this.get('css'));
+      const fontSizeMatch = css.match(/font-size"?:"? *([0-9]+) *px/);
       const fontSize = fontSizeMatch ? +fontSizeMatch[1] : 16;
-      if(this.get('css').match(/line-height/))
+      if(css.match(/line-height/))
         this.input.style.removeProperty('line-height');
       else
         this.input.style.lineHeight = `${Math.round(fontSize*1.2)}px`;
