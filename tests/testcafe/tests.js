@@ -299,7 +299,7 @@ function publicLibraryTest(game, variant, md5, tests) {
       .click('#statesButton')
       .click('#filterByType')
       .click('#filterByType > option:nth-child(1)')
-      .click(Selector('.roomState h3').withExactText(game))
+      .click(Selector('.roomState h3').withExactText(game).parent().parent())
       .click(Selector(`.variantsList > div:nth-child(${variant+1}) > button`));
     await setName(t);
     await tests(t);
