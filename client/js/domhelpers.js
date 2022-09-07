@@ -8,6 +8,10 @@ export function $a(selector, parent) {
 
 const sleep = delay => new Promise(resolve => setTimeout(resolve, delay));
 
+export function regexEscape(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, m=>'\\'+m[0]);
+}
+
 export function setText(node, text) {
   for(const child of node.childNodes) {
     if(child.nodeType == Node.TEXT_NODE) {
@@ -262,7 +266,7 @@ export async function loadSymbolPicker() {
     $('#symbolList').innerHTML = list;
 
     $('#symbolPicker input').onkeyup = function() {
-      const text = $('#symbolPicker input').value.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, m=>'\\'+m[0]);
+      const text = regexEscape($('#symbolPicker input').value.toLowerCase());
       for(const icon of $a('#symbolList i'))
         toggleClass(icon, 'hidden', !icon.dataset.keywords.match(text));
       for(const title of $a('#symbolList h1'))

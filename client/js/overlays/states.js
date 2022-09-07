@@ -250,7 +250,7 @@ function toggleStateStar(state, dom) {
 }
 
 function updateLibraryFilter() {
-  const text = $('#filterByText').value.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, m=>'\\'+m[0]);
+  const text = regexEscape($('#filterByText').value.toLowerCase());
   const type = $('#filterByType').value;
   const players = $('#filterByPlayers').value;
   const duration = $('#filterByDuration').value.split('-');
@@ -281,6 +281,36 @@ function parsePlayers(players) {
         validPlayers.push(i);
   }
   return validPlayers;
+}
+
+let loadedFromURLproperties = false;
+function loadGameFromURLproperties(states) {
+  if(widgets.size || !urlProperties.load)
+    return;
+
+  const match = String(urlProperties.load).match(`^${regexEscape(config.externalURL)}/library/(.*?)(#VTT/([0-9]+)(\.json)?)?`+String.fromCharCode(36));
+  if(match) {
+    let targetStateID = 'PL:games:' + match[1].substr(0, match[1].length-4);
+    if(match[1].match(/^Tutorial%20-%20/))
+      targetStateID = 'PL:tutorials:'+match[1].substr(15, match[1].length-19);
+    else if(match[1].match(/^Assets%20-%20/))
+      targetStateID = 'PL:assets:'+match[1].substr(13, match[1].length-17);
+
+    if(states[targetStateID])
+      toServer('loadState', { stateID: targetStateID, variantID: match[3] || 0 });
+    else
+      console.error(`Tried to load library game from a legacy URL but could not find ID ${targetStateID}.`);
+  } else if(urlProperties.load && !loadedFromURLproperties) {
+    addState(null, 'link', urlProperties.load);
+    loadedFromURLproperties = true;
+  } else if(urlProperties.load) {
+    const urlMatch = String(urlProperties.load).match(`^(.*?)(#VTT/([0-9]+)(\.json)?)?`+String.fromCharCode(36))
+    const foundStates = (Object.values(states).filter(s=>s.link && s.link.match(`^${regexEscape(urlMatch[1])}`)));
+    if(foundStates.length) {
+      toServer('loadState', { stateID: foundStates[0].id, variantID: urlMatch[3] || 0 });
+      delete urlProperties.load;
+    }
+  }
 }
 
 let uploadingStates = [];
@@ -415,6 +445,8 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
     showStatesOverlay('statesOverlay');
     selectVTTfile(addStateFile);
   };
+
+  loadGameFromURLproperties(states);
 }
 
 function fillStateDetails(states, state, dom) {
