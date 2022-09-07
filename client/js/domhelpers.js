@@ -196,7 +196,7 @@ export function applyValuesToDOM(parent, obj) {
 export function getValuesFromDOM(parent) {
   const obj = {};
   for(const dom of $a('[data-field]:not([data-target=href])', parent)) {
-    if(dom.dataset.html && dom.innerText != (dom.dataset.placeholder || '<empty>'))
+    if(dom.dataset.html && (dom.innerText.trim() || dom.innerHTML.match(/<img|<video/)) && dom.innerText != (dom.dataset.placeholder || '<empty>'))
       obj[dom.dataset.field] = DOMPurify.sanitize(dom.innerHTML, { USE_PROFILES: { html: true } });
     else
       obj[dom.dataset.field] = dom[dom.dataset.target || 'innerText'].trim().replace(dom.dataset.placeholder || '<empty>', '');
@@ -211,7 +211,7 @@ export function enableEditing(parent, obj) {
   for(const dom of $a('[data-field]:not([data-target],.uneditable)', parent)) {
     dom.contentEditable = true;
     dom.classList.remove('hidden');
-    if(!dom.innerText.trim()) {
+    if(!dom.innerText.trim() && !dom.innerHTML.match(/<img|<video/)) {
       dom.innerText = dom.dataset.placeholder || '<empty>';
       dom.onclick = function(e) {
         if(dom.innerText == (dom.dataset.placeholder || '<empty>'))
