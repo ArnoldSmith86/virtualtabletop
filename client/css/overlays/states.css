@@ -133,6 +133,9 @@
   box-shadow: 0 2px 10px #00000077;
   margin: 8px;
   border-radius: 10px;
+
+  cursor: pointer;
+  user-select: none;
 }
 .roomState.visible {
   display: block;
