@@ -199,6 +199,10 @@ div:nth-of-type(1) > .list > .roomState .star {
   display: block;
 }
 
+.roomState.publicLibraryTutorial .details {
+  display: none;
+}
+
 .roomState.noImage img {
   display: none;
 }

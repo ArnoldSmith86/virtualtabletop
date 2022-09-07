@@ -306,6 +306,8 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
       entry.className = state.image ? 'roomState' : 'roomState noImage';
       if(state.publicLibrary)
         entry.className += ' publicLibraryGame';
+      if(state.publicLibrary && state.publicLibrary.match(/tutorial/))
+        entry.className += ' publicLibraryTutorial';
       if(state.link)
         entry.className += ' linkedGame';
 
