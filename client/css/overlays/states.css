@@ -554,7 +554,7 @@ div:nth-of-type(1) > .list > .roomState .star {
   right: 10px;
   width: calc(50% - 15px);
   height: unset;
-  padding: 0 20px;
+  padding: 0 20px 20px 20px;
   overflow: auto;
   overflow-wrap: break-word;
   white-space: pre-line;
@@ -640,7 +640,7 @@ div:nth-of-type(1) > .list > .roomState .star {
     padding: .25rem .5rem;
   }
   #helpTexts {
-    padding: 0 20px;
+    padding: 0 20px 20px 20px;
   }
 }
 @media (max-width: 500px), (max-height: 312px) {
@@ -697,7 +697,10 @@ div:nth-of-type(1) > .list > .roomState .star {
     align-items: flex-start;
   }
   #helpTexts {
-    padding: 0 10px;
+    padding: 0 10px 10px 10px;
+  }
+  #helpTexts h3 {
+    margin: 10px 0;
   }
 }
 
