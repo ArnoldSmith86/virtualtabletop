@@ -310,6 +310,10 @@ div:nth-of-type(1) > .list > .roomState .star {
   width: 100%;
 }
 
+#stateDetailsOverlay.uploading > .buttons [icon=save], #stateDetailsOverlay:not(.uploading) > .buttons [icon=upload] {
+  display: none;
+}
+
 #stateDetailsOverlay {
   --mainDetailsHeight: 300px;
   --similarDetailsHeight: 200px;
@@ -458,6 +462,11 @@ div:nth-of-type(1) > .list > .roomState .star {
   border-color: lightgray;
   border-width: 1px 0 1px 0;
   padding: 0.25rem 0.5rem;
+}
+
+.uploading.variant {
+  --progress: 0;
+  background: linear-gradient(90deg, #00000061 calc(var(--progress) * 100%), red calc(var(--progress) * 100%));
 }
 
 .variant>div {
