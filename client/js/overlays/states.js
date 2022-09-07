@@ -172,50 +172,7 @@ async function addState(e, type, src, id, addAsVariant) {
   if(!id)
     id = Math.random().toString(36).substring(3, 7);
 
-  let blob = null;
-  try {
-    if(type == 'file') {
-      status('Loading file...');
-      const zip = await JSZip.loadAsync(src);
-      const assets = {};
-      for(const filename in zip.files)
-        if(filename.match(/^\/?(user)?assets/) && zip.files[filename]._data && zip.files[filename]._data.crc32)
-          assets[zip.files[filename]._data.crc32 + '_' + zip.files[filename]._data.uncompressedSize] = filename;
-
-      status('Checking assets...');
-      const result = await fetch('assetcheck', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(Object.keys(assets))
-      });
-
-      const exist = await result.json();
-
-      let total = 0;
-      let removed = 0;
-      for(const asset in exist) {
-        ++total;
-        if(exist[asset]) {
-          ++removed;
-          zip.remove(assets[asset]);
-        }
-      }
-
-      if(removed > total/2) {
-        zip.file('asset-map.json', JSON.stringify(assets));
-        status(`Rebuilding file (${removed}/${total} assets already exist)...`);
-        blob = await zip.generateAsync({ type: 'blob', compression: total-removed < 5 ? 'DEFLATE' : 'STORE' });
-      } else {
-        blob = src;
-      }
-    } else {
-      blob = new Blob([ src ], { type: 'text/plain' });
-    }
-  } catch(e) {
-    alert(e);
-    status(initialStatus);
-    return;
-  }
+  const blob = new Blob([ src ], { type: 'text/plain' });
 
   let url = `addState/${roomID}/${id}/${type}/${src && src.name && encodeURIComponent(src.name)}/`;
   if(addAsVariant)
