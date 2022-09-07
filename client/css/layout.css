@@ -681,6 +681,7 @@ button[icon] {
   padding-right: 0.75rem;
   font-weight: bold;
   text-transform: uppercase;
+  overflow-wrap: normal; /* fixes richtext controls in older Chrome (85) */
 }
 button[icon]::before {
   content: attr(icon);
