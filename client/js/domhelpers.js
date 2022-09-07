@@ -299,10 +299,13 @@ export function addRichtextControls(dom) {
     dom.focus();
   };
   $('[icon=palette]', controls).onclick = function() {
+    const range = window.getSelection().getRangeAt(0);
     document.execCommand('forecolor', false, '#000000');
     const input = document.createElement('input');
     input.type = 'color';
     input.onchange = function() {
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
       document.execCommand('forecolor', false, input.value);
       dom.focus();
     };
