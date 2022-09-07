@@ -359,6 +359,10 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
         waitingForStateCreation = null;
         if($('#statesButton').dataset.overlay !== 'statesOverlay')
           showStatesOverlay('statesOverlay');
+        if(state.name == 'Unnamed') {
+          fillStateDetails(states, state, entry);
+          $('#stateDetailsOverlay .buttons [icon=edit]').click();
+        }
       }
     }
 
