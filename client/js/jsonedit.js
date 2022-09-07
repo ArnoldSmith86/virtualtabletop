@@ -199,6 +199,19 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_grid',
+    name: 'grid element',
+    context: '^.* ↦ grid',
+    call: async function() {
+      const w = widgets.get(jeStateNow.id);
+      jeStateNow.grid.push({
+        x: '###SELECT ME###',
+        y: w.get('height')
+      });
+      jeSetAndSelect(w.get('width'));
+    }
+  },
+  {
     id: 'je_imageTemplate',
     name: 'image template',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects',
@@ -668,6 +681,14 @@ function jeAddCommands() {
   jeAddFaceCommand('properties', '', {});
   jeAddFaceCommand('radius', ' (rounded corners)', 1);
 
+  jeAddGridCommand('x', 0);
+  jeAddGridCommand('y', 0);
+  jeAddGridCommand('minX', 0);
+  jeAddGridCommand('minY', 0);
+  jeAddGridCommand('offsetX', 0);
+  jeAddGridCommand('offsetY', 0);
+  jeAddGridCommand('rotation', 0);
+
   jeAddFieldCommand('text', 'subtitle|title|text', '');
   jeAddFieldCommand('label', 'checkbox|color|number|select|string|switch', '');
   jeAddFieldCommand('value', 'checkbox|color|number|select|string|switch', '');
@@ -720,6 +741,7 @@ function jeAddAlignmentCommands() {
     id: 'jeCenterInParent',
     name: 'center in parent',
     context: '^.* ↦ (x|y)( ↦ "[0-9]+")?' + String.fromCharCode(36), // the minifier doesn't like "$" or "\x24" here
+    show: _=>!jeContext.includes('grid'),
     call: async function() {
       const key = jeGetLastKey();
       const sizeKey = key == 'x' ? 'width' : 'height';
@@ -770,7 +792,7 @@ function jeAddAlignmentCommands() {
       selected.sort((a,b)=>a.absoluteCoord(key) - b.absoluteCoord(key));
       for(const widget of selected) {
         const before = selected.slice(0, selected.findIndex(w=>w.id == widget.id));
-        await widget.set(key, min + before.map(w=>w.get(sizeKey) + spacing).reduce((a,b)=>a + b, 0) - (widget.get('parent') ? widgets.get(widget.get('parent')).absoluteCoord(key) : 0));
+        await widget.set(key, Math.round(min + before.map(w=>w.get(sizeKey) + spacing).reduce((a,b)=>a + b, 0) - (widget.get('parent') ? widgets.get(widget.get('parent')).absoluteCoord(key) : 0)));
       }
       jeUpdateMulti();
     }
@@ -871,6 +893,19 @@ function jeAddFieldCommand(key, types, value) {
         ];
       jeSetAndSelect( key != 'options' ? value : "value");
     })
+  });
+}
+
+function jeAddGridCommand(key, value) {
+  jeCommands.push({
+    id: 'grid_' + key,
+    name: key,
+    context: '^.* ↦ grid ↦ [0-9]+',
+    show: _=>!(key in jeStateNow.grid[+jeContext[2]]),
+    call: async function() {
+      jeStateNow.grid[+jeContext[2]][key] = '###SELECT ME###';
+      jeSetAndSelect(value);
+    }
   });
 }
 
@@ -1153,14 +1188,14 @@ function jeSelectWidget(widget, dontFocus, addToSelection, restoreCursorPosition
       jeStateNow[cursorState.defaultValueToAdd] = jeWidget.getDefaultValue(cursorState.defaultValueToAdd);
     jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(jeStateNow), null, '  ')), dontFocus);
     editPanel.style.setProperty('--treeHeight', "20%");
-
-    jeGetContext();
   }
 
   jeCenterSelection();
 
   if(restoreCursorPosition)
     jeCursorStateSet(cursorState);
+  
+  jeGetContext();
 }
 
 function jeSelectWidgetMulti(widget, dontFocus) {
