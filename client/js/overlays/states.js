@@ -43,6 +43,7 @@ function addStateFile(f) {
 
     $('h3', stateDOM).textContent = name;
     $('h4', stateDOM).textContent = similarName && name != similarName ? `Similar to ${similarName}` : '';
+    $('i', stateDOM).textContent = 'upload';
 
     uploadingStates.push(stateDOM);
     insertUploadingState(stateDOM, $('#statesList > div'));
