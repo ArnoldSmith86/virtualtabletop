@@ -294,7 +294,7 @@
       "mode": "Tutorial",
       "time": "0",
       "players": "1",
-      "language": "US",
+      "language": "en-US",
       "variant": "Hexagonal Grid",
       "attribution": "Good reference guide:\nhttps://www.redblobgames.com/grids/hexagons/#size-and-spacing\n\nAlso see the separate tutorial about hexagons."
     }
