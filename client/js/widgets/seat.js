@@ -4,7 +4,6 @@ class Seat extends Widget {
 
     this.addDefaults({
       typeClasses: 'widget seat',
-      clickable: true,
       width: 150,
       height: 40,
       movable: false,
@@ -20,7 +19,8 @@ class Seat extends Widget {
 
       color: '#999999',
       colorEmpty: '#999999',
-      layer: -1
+      layer: -1,
+      borderRadius: 5
     });
   }
 

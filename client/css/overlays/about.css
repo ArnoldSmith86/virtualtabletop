@@ -1,0 +1,129 @@
+#aboutOverlay{
+  padding: 0;
+  background: rgba(0,0,0,.85);
+  display: flex;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+#aboutOverlay .header{
+  box-sizing: content-box;
+  background: white;
+  border-radius: 8px;
+  width: 95%;
+  max-width: 38rem;
+  margin: 1rem;
+  padding:1rem;
+}
+#aboutOverlay .header * {
+  color: var(--VTTblue);
+}
+
+#aboutOverlay .header .about_title{
+  padding: 1rem 1rem 1rem 5rem;
+  flex-grow: 1;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cpath d='M156.72,51.88a7.607,7.607,0,0,0-.35-1.21L155,47.14a7.384,7.384,0,0,0-1.93-3,8.611,8.611,0,0,0-3.83-2,12.168,12.168,0,0,0-4.34-.24l-37.46,4.3a25.871,25.871,0,0,1-3.5,11l38.58-4.07-23.26,66.1a2.66,2.66,0,0,1-.4.71,3.474,3.474,0,0,1-.66.61,2.335,2.335,0,0,1-.67.31,1.01,1.01,0,0,1-.32,0l-82.1-11.59,27.81-47a1.651,1.651,0,0,1,.25-.32,2.8,2.8,0,0,1,.4-.37,2.346,2.346,0,0,1,.28-.17l8.95-.94A15.994,15.994,0,0,1,77,58.59a24.846,24.846,0,0,1-3.84-8.49l-8.94,1a10.52,10.52,0,0,0-3.12.9,15.674,15.674,0,0,0-2.72,1.61A18.539,18.539,0,0,0,56,55.78a15.932,15.932,0,0,0-2,2.61L25.15,106.76a15.083,15.083,0,0,0-1.54,3.41,10.226,10.226,0,0,0-.46,3.59,7.359,7.359,0,0,0,.43,2.1l.77,2.2a6.231,6.231,0,0,0,1,2,6,6,0,0,0,3.85,2.29l43.05,7.76h0L108,136.57h0l8.18,1.47h0a12.809,12.809,0,0,0,2.06.17,13.3,13.3,0,0,0,3.34-.43,16,16,0,0,0,4.89-2.17,17.672,17.672,0,0,0,4-3.65,16.18,16.18,0,0,0,2.71-4.85v-.08l23.05-70.62A8.575,8.575,0,0,0,156.72,51.88Zm-13.27-1.36Z' fill='%231f5ca6'/%3E%3Cpath d='M115.06,79.7c-1.08-5-2.73-9.23-5-12.26a13.1,13.1,0,0,0-9-5.53l-5.14-.79H96l3.24-4.07a21.448,21.448,0,0,0,4.4-13.29c0-10.46-6.53-18.2-13.65-18.2H88.65c-6.45.81-12.31,8.44-12.31,18.2A21.24,21.24,0,0,0,81,57.25l3.27,4H84.2l-5,.94h0a13,13,0,0,0-8.42,5.63A35.408,35.408,0,0,0,65.56,80c-2.17,8.93-2.64,19.82-2.72,29.43H74.69l.11,1.41,30.7,4.32.37-5.73h11.29C117.15,99.74,117,88.69,115.06,79.7Z' fill='%231f5ca6'/%3E%3Cpath d='M78,153.09a57.793,57.793,0,0,0,25,0l.88-13.27L76.6,134.9Z' fill='%231f5ca6'/%3E%3C/svg%3E%0A");
+  background-repeat: no-repeat;
+  background-size: 5rem;
+  background-position: 0rem 0rem;
+  min-height: 4.25rem;
+}
+#aboutOverlay .header .about_title h1{
+  text-align: left;
+  margin: 0;
+}
+#aboutOverlay .header .about_title p{
+  text-align: left;
+  margin: 0;
+}
+
+
+#aboutOverlay .header .about_joinus{
+  text-align: center;
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  width: 100%;
+}
+#aboutOverlay .header .about_joinus a{
+  padding: 1rem;
+  width: 50%;
+  font-size: 0.8rem;
+  text-decoration: none;
+  color: var(--VTTblue);
+}
+#aboutOverlay .header .about_joinus a:last-of-type{
+  border-left: 1px solid black;
+}
+#aboutOverlay .header .about_joinus img{
+  height: 40px;
+  width: 40px;
+  background-color: var(--VTTblue);
+  border-radius: 100%;
+  border: 5px solid  var(--VTTblue);
+}
+
+#aboutOverlay .content-body{
+  box-sizing: content-box;
+  background: white;
+  border-radius: 8px;
+  width: 95%;
+  max-width: 38rem;
+  margin: 1rem;
+  padding:1rem;
+}
+#aboutOverlay .content-body > *{
+}
+#aboutOverlay .content-body * {
+  color: black;
+}
+#aboutOverlay .content-body h2{
+  padding-top: 1rem;
+  color: var(--VTTblue);
+  border-top: 1px solid #ffffff44;
+}
+
+#aboutOverlay .content-body h2:first-of-type {
+  padding-top: 0;
+  margin-top: 0;
+}
+
+#betaServerListTable{
+  border-collapse: collapse;
+}
+#betaServerListTable thead{
+  font-size: 12px;
+  vertical-align: bottom;
+  padding-bottom: 5px;
+  border-bottom: 1px dotted #b5b5b5;
+}
+#betaServerList td{
+  padding: 5px 2px;
+}
+#betaServerList tr{
+  border-bottom: 1px dotted #b5b5b5;
+}
+
+#betaServerList tr:nth-child(even) {
+    background:#e2e2e2;
+}
+
+#betaServerList .ui-button{
+  color: white;
+  width: 100%;
+  justify-content: center;
+}
+#betaServerList td.return{
+  text-align: center;
+  font-size: 2rem;
+}
+#betaServerList td.return.check{
+  color: #009502;
+}
+#betaServerList td.return.cancel{
+  color: #950000;
+}
+
+#betaServerList td.description{
+  font-size: 0.8rem;
+}

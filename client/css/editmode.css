@@ -20,14 +20,46 @@
 }
 
 #addOverlay > .category > button {
-  display: block;
+  display: flex;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 8px;
 }
-
+#uploadBoard::before, #uploadToken::before{
+  content:'[upload]';
+}
+#addBasicWidget::before{
+  content:'[widget_add]';
+}
+#addCanvas::before{
+  content:'[color]';
+}
+#addSeat::before{
+  content:'[chair]';
+}
+#addHand::before{
+  content:'[holder_hand]';
+}
 #addOverlay .widget, #addOverlay textarea {
   cursor: pointer;
+}
+
+#editJSONoverlay {
+  padding: 10px;
+}
+
+#editJSONoverlay h1 {
+  margin: 0;
+}
+
+#editJSONoverlay textarea {
+  height: 100%;
+}
+
+@media only screen and (max-width: 500px) {
+  #editJSONoverlay textarea {
+    min-height: 100%;
+  }
 }
 
 #editOverlay {
@@ -40,6 +72,10 @@
   border-radius: 5vh;
   height: 90%;
   width: 90%;
+}
+
+.editOverlayButtonBar{
+  display: flex;
 }
 
 #editOverlay::-webkit-scrollbar-track {

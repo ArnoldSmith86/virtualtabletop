@@ -1,10 +1,13 @@
 import { $, $a, onLoad, selectFile, asArray } from './domhelpers.js';
-import { startWebSocket } from './connection.js';
+import { startWebSocket, toServer } from './connection.js';
 
 
-let scale = 1;
+export let scale = 1;
 let roomRectangle;
 let overlayActive = false;
+let muted = false;
+let unmuteVol = 30;
+let optionsHidden = true;
 
 var vmEditOverlay;
 
@@ -12,6 +15,8 @@ let urlProperties = {};
 
 let maxZ = {};
 export const dropTargets = new Map();
+
+export const clientPointer = $('#clientPointer');
 
 function compareDropTarget(widget, t, exclude){
   for(const dropTargetObject of asArray(t.get('dropTarget'))) {
@@ -93,6 +98,7 @@ export function showOverlay(id, forced) {
     if (id == 'buttonInputOverlay') {
       $('#buttonInputGo').focus();
     }
+    toServer('mouse',{inactive:true})
   } else {
     $('#roomArea').className = '';
     vmEditOverlay.selectedWidget = {};
@@ -100,36 +106,56 @@ export function showOverlay(id, forced) {
   }
 }
 
-function checkURLproperties() {
-  try {
-    if(location.hash)
-      urlProperties = JSON.parse(decodeURIComponent(location.hash.substr(1)));
-  } catch(e) {
-    console.error('Could not parse URL parameters.', e);
-    urlProperties = {};
-  }
+function checkURLproperties(connected) {
+  if(!connected) {
 
-  if(urlProperties.hideToolbar) {
-    $('#toolbar').style.display = 'none';
-    document.documentElement.style.setProperty('--toolbarSize', 0);
-  }
-  if(urlProperties.askID) {
-    on('#askIDoverlay button', 'click', function() {
-      roomID = urlProperties.askID + $('#enteredID').value;
-      toServer('room', { playerName, roomID });
-      $('#legacy-link').href += `#${roomID}`;
-      showOverlay();
-    });
-    showOverlay('askIDoverlay');
-  }
-  if(urlProperties.css) {
-    const link = document.createElement('link');
+    try {
+      if(location.hash) {
+        const playerParams = location.hash.match(/^#player:([^:]+):%23([0-9a-f]{6})$/);
+        if(playerParams) {
+          urlProperties = { player: decodeURIComponent(playerParams[1]), color: '#'+playerParams[2] };
+        } else {
+          urlProperties = JSON.parse(decodeURIComponent(location.hash.substr(1)));
+        }
+        history.pushState("", document.title, window.location.pathname);
+      }
+    } catch(e) {
+      console.error('Could not parse URL parameters.', e);
+      urlProperties = {};
+    }
 
-    link.type = 'text/css';
-    link.rel = 'stylesheet';
-    link.href = urlProperties.css;
+    if(urlProperties.player) {
+      playerName = urlProperties.player;
+      localStorage.setItem('playerName', playerName);
+    }
+    if(urlProperties.hideToolbar) {
+      $('#toolbar').style.display = 'none';
+      document.documentElement.style.setProperty('--toolbarSize', 0);
+    }
+    if(urlProperties.askID) {
+      on('#askIDoverlay button', 'click', function() {
+        roomID = urlProperties.askID + $('#enteredID').value;
+        toServer('room', { playerName, roomID });
+        $('#legacy-link').href += `#${roomID}`;
+        showOverlay();
+      });
+      showOverlay('askIDoverlay');
+    }
+    if(urlProperties.css) {
+      const link = document.createElement('link');
 
-    document.head.appendChild(link);
+      link.type = 'text/css';
+      link.rel = 'stylesheet';
+      link.href = urlProperties.css;
+
+      document.head.appendChild(link);
+    }
+
+  } else {
+
+    if(urlProperties.color)
+      toServer('playerColor', { player: playerName, color: urlProperties.color });
+
   }
 }
 
@@ -141,7 +167,7 @@ function setScale() {
   if(jeEnabled) {
     const targetWidth = jeZoomOut ? 3200 : 1600;
     const targetHeight = jeZoomOut ? 2000 : 1000;
-    const availableWidth = $('#jeText').offsetLeft;
+    const availableWidth = $('#jeEditArea').offsetLeft;
     if(availableWidth/(h-70) < 1600/1000)
       scale = availableWidth/targetWidth;
     else
@@ -173,7 +199,7 @@ async function uploadAsset(multipleCallback) {
 }
 
 async function _uploadAsset(file) {
-    const response = await fetch('/asset', {
+    const response = await fetch('asset', {
       method: 'PUT',
       headers: {
         'Content-type': 'application/octet-stream'
@@ -200,7 +226,7 @@ function getSVG(url, replaces, callback) {
 
   if(!svgCache[url]) {
     svgCache[url] = [];
-    fetch(url).then(r=>r.text()).then(t=>{
+    fetch(url.replace(/^\//, '')).then(r=>r.text()).then(t=>{
       const callbacks = svgCache[url];
       svgCache[url] = t;
       for(const c of callbacks)
@@ -221,6 +247,40 @@ onLoad(function() {
       showOverlay(overlay);
   });
 
+  on('#muteButton', 'click', function(){
+    if(muted) {
+      $('#volume').value = unmuteVol;
+      $('#muteButton').classList.remove('muted');
+      $a('audio').forEach(function(audio){
+        audio.volume = Math.min(audio.getAttribute('maxVolume') * (((10 ** (unmuteVol / 96.025)) / 10) - 0.1), 1);
+      });
+    } else {
+      unmuteVol = document.getElementById('volume').value;
+      $('#volume').value = 0;
+      $a('audio').forEach(function(audio){
+        audio.volume = 0;
+      });
+      document.getElementById('muteButton').classList.add('muted');
+    }
+    muted = !muted
+  });
+
+  on('#lightsButton', 'click', function(){
+    if($('body').classList.contains('lightsOff'))
+      $('body').classList.remove('lightsOff');
+    else
+      $('body').classList.add('lightsOff');
+  });
+
+  on('#optionsButton', 'click', function(){
+    if(optionsHidden) {
+      $('#options').classList.remove('hidden');
+    } else {
+      $('#options').classList.add('hidden');
+    }
+    optionsHidden = !optionsHidden
+  });
+
   on('#fullscreenButton', 'click', function() {
     if(document.documentElement.requestFullscreen) {
       if(!document.fullscreenElement)
@@ -239,15 +299,47 @@ onLoad(function() {
     setScale();
   });
 
-  checkURLproperties();
+  if(Object.keys(config.betaServers).length) {
+    for(const betaServerName in config.betaServers) {
+      const entry = domByTemplate('template-betaServerList-entry', 'tr');
+      $('button', entry).textContent = betaServerName;
+      var thisstatus = config.betaServers[betaServerName].return ? 'check' : 'cancel';
+      $('.return', entry).textContent = thisstatus;
+      $('.return', entry).classList.add(thisstatus);
+      $('.description', entry).textContent = config.betaServers[betaServerName].description;
+      $('#betaServerList').appendChild(entry);
+    }
+    on('#betaServerList button', 'click', function(e) {
+      toServer('setRedirect', e.target.textContent);
+    });
+  } else {
+    removeFromDOM($('#betaText'));
+  }
+  onMessage('redirect', function(url) {
+    window.location.href = `${url}#player:${encodeURIComponent(playerName)}:${encodeURIComponent(playerColor)}`;
+  });
+  on('#returnOverlay button', 'click', function() {
+    toServer('setRedirect', 'return');
+  });
+
+  checkURLproperties(false);
   setScale();
   startWebSocket();
 
   onMessage('warning', alert);
-  onMessage('error', alert);
+  onMessage('error', function(message) {
+    waitingForStateCreation = null;
+    alert(message);
+  });
   onMessage('internal_error', function() {
     preventReconnect();
     showOverlay('internalErrorOverlay');
+  });
+  let checkedOnce = false;
+  onMessage('meta', function() {
+    if(!checkedOnce)
+      checkURLproperties(true);
+    checkedOnce = true;
   });
 });
 
@@ -264,4 +356,16 @@ window.onkeyup = function(event) {
     else if(jeEnabled)
       jeToggle();
   }
+}
+
+if($('#volume')) {
+  on('#volume', 'input', function(){ // allows volume to be adjusted in real time
+    if(muted) {
+      $('#muteButton').classList.remove('muted');
+      muted = !muted
+    }
+    $a('audio').forEach(function(audio){
+      audio.volume = Math.min(audio.getAttribute('maxVolume') * (((10 ** ($('#volume').value / 96.025)) / 10) - 0.1), 1);
+    });
+  });
 }

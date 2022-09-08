@@ -39,6 +39,8 @@ export default class Player {
         this.room.removeState(this, args);
       if(func == 'rename')
         this.room.renamePlayer(this, args.oldName, args.newName);
+      if(func == 'setRedirect')
+        this.room.setRedirect(this, args);
       if(func == 'trace')
         this.trace('client', args);
     } catch(e) {
@@ -101,7 +103,7 @@ export default class Player {
   }
 
   trace(source, payload) {
-    if(this.room.enableTracing || source == 'client' && payload.type == 'enable') {
+    if(this.room.traceIsEnabled() || source == 'client' && payload.type == 'enable') {
       payload.player = this.name;
       this.room.trace(source, payload);
     }

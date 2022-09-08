@@ -24,6 +24,8 @@ jobs:
       run: npm ci
     - name: Start virtualtabletop server with production settings
       run: |
+        cp config.template.json config.json
+        sed -i 's/minifyJavascript": false/minifyJavascript": true/' config.json
         npm start &
         sleep 10
         curl -I http://localhost:8272
