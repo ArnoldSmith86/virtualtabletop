@@ -668,9 +668,14 @@ function fillStateDetails(states, state, dom) {
       };
     }
   };
-  $('#discardDetails').onclick = function() {
-    showStatesOverlay('statesOverlay');
-    dom.click();
+  $('#discardDetails').onclick = async function() {
+    $('#statesButton').dataset.overlay = 'confirmOverlay';
+    if(await confirmOverlay('Discard changes', 'Are you sure you want to discard any changes you made to this game?', 'Discard', 'Keep')) {
+      showStatesOverlay('statesOverlay');
+      dom.click();
+    } else {
+      showStatesOverlay('stateDetailsOverlay');
+    }
   };
   $('#stateDetailsOverlay .buttons [icon=save]').onclick = function() {
     const meta = Object.assign(JSON.parse(JSON.stringify(state)), getValuesFromDOM($('#stateDetailsOverlay')));
