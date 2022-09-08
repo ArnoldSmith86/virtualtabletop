@@ -1720,7 +1720,7 @@ function jeLoggingRoutineOperationEnd(problems, variables, collections, skipped)
     ${savedHTML[0]}
     <div class="jeLogOperation ${skipped ? 'jeLogSkipped' : ''} ${problems.length ? 'jeLogHasProblems' : ''}">
       <div class="jeExpander">
-        <span class="jeLogName">${opFunction}</span> ${jeRoutineResult}<span class="jeLogTime">(${+new Date() - startTime}ms)</span>
+        <span class="jeLogName">${opFunction}</span> ${jeRoutineResult} <span class="jeLogTime">(${+new Date() - startTime}ms)</span>
       </div>
       <div class="jeLogNested">
         ${opProblems}
