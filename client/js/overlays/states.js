@@ -218,11 +218,11 @@ function updateLibraryFilter() {
     if(state.classList.contains('uploading'))
       continue;
     const textMatch     = state.dataset.text.match(text);
-    const typeMatch     = type     == 'Any' || state.dataset.type.split(',').indexOf(type) != -1;
-    const playersMatch  = players  == 'Any' || state.dataset.players.split(',').indexOf(players) != -1;
+    const typeMatch     = type     == 'Any' || state.dataset.type.split(/[,;] */).indexOf(type) != -1;
+    const playersMatch  = players  == 'Any' || state.dataset.players.split(/[,;] */).indexOf(players) != -1;
     const durationMatch = duration == 'Any' || state.dataset.duration >= duration[0] && state.dataset.duration <= duration[1];
-    const languageMatch = language == 'Any' || state.dataset.languages.split(',').indexOf(language) != -1;
-    const modeMatch     = mode     == 'Any' || state.dataset.modes.split(',').indexOf(mode) != -1;
+    const languageMatch = language == 'Any' || state.dataset.languages.split(/[,;] */).indexOf(language) != -1;
+    const modeMatch     = mode     == 'Any' || state.dataset.modes.split(/[,;] */).indexOf(mode) != -1;
     if(textMatch && typeMatch && playersMatch && durationMatch && languageMatch && modeMatch)
       state.classList.add('visible');
     else
@@ -331,10 +331,12 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
 
         validPlayers.push(...parsePlayers(variant.players));
         validLanguages.push(variant.language);
-        languageOptions[variant.language] = true;
+        for(const lang of variant.language.split(/[,;] */))
+          languageOptions[lang] = true;
       }
 
-      modeOptions[state.mode] = true;
+      for(const mode of state.mode.split(/[,;] */))
+        modeOptions[mode] = true;
 
       if(hasVariants) {
         entry.addEventListener('click', _=>fillStateDetails(states, state, entry));
@@ -382,13 +384,13 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
 
   const previousLanguage = $('#filterByLanguage').value;
   let languageHTML = '<option>Any</option>';
-  for(const languageOption in languageOptions)
-    languageHTML += `<option ${previousLanguage && previousLanguage == languageOption ? 'selected' : ''}>${languageOption}</option>`;
+  for(const languageOption of Object.keys(languageOptions).sort())
+    languageHTML += `<option ${previousLanguage && previousLanguage == languageOption ? 'selected' : ''} value="${languageOption}">${languageOption.replace(/^$/, 'None')}</option>`;
   $('#filterByLanguage').innerHTML = languageHTML;
 
   const previousMode = $('#filterByMode').value;
   let modeHTML = '<option>Any</option>';
-  for(const modeOption in modeOptions)
+  for(const modeOption of Object.keys(modeOptions).sort((a, b) => a.localeCompare(b)))
     modeHTML += `<option ${previousMode && previousMode == modeOption ? 'selected' : ''}>${modeOption}</option>`;
   $('#filterByMode').innerHTML = modeHTML;
 
