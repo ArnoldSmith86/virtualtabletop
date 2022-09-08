@@ -900,7 +900,7 @@ async function duplicateWidget(widget, recursive, inheritFrom, incrementKind, in
     let currentWidget = JSON.parse(JSON.stringify(widget.state))
 
     if(inheritFrom) {
-      const inheritWidget = { inheritFrom: currentWidget.id };
+      const inheritWidget = { inheritFrom: widget.get('id') };
       for(const key of [ 'id', 'type', 'deck', 'cardType' ])
         if(currentWidget[key] !== undefined)
           inheritWidget[key] = currentWidget[key];
@@ -928,7 +928,7 @@ async function duplicateWidget(widget, recursive, inheritFrom, incrementKind, in
       for(const property of incrementIn) {
         if(property == 'index' && widget.state.type == 'seat' && widget.state.index === undefined)
           currentWidget.index = 1;
-        if(currentWidget[property] !== undefined)
+        if(currentWidget[property] !== undefined && (property != 'inheritFrom' || !inheritFrom)) // Don't change inheritFrom if it was just added to new widget
           currentWidget[property] = JSON.parse(JSON.stringify(currentWidget[property]).replaceAll(sourceNumber, targetNumber));
       }
     } else {
@@ -968,7 +968,7 @@ async function duplicateWidget(widget, recursive, inheritFrom, incrementKind, in
   for(let i=1; i<gridX*gridY; ++i) {
     let x = xOffset*(i%gridX);
     let y = yOffset*Math.floor(i/gridX);
-    if(xCopies + yCopies == 1) {
+    if(xCopies + yCopies == 1) { // If just one copy, use both offsets as given.
       x = xOffset;
       y = yOffset;
     }
