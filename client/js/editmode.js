@@ -912,12 +912,12 @@ async function duplicateWidget(widget, recursive, inheritFrom, incrementKind, in
       let sourceNumber = match ? parseInt(match[2]) : 0;
       if(incrementKind=='Letters') {
         match = currentWidget.id.match(/^(.*?)([A-Z])([^A-Z]*)$/);
-        sourceNumber = match ? match[2] : "A";
+        sourceNumber = match ? match[2] : "@";
       }
       let targetNumber = sourceNumber;
       while(widgets.has(currentWidget.id)) {
         if(incrementKind=='Letters')
-          targetNumber = String.fromCharCode(targetNumber.charCodeAt(0)+1);
+          targetNumber = targetNumber.charCodeAt(0) != 90 ? String.fromCharCode(targetNumber.charCodeAt(0)+1) : 'a';
         else
           ++targetNumber;
         if(match)
