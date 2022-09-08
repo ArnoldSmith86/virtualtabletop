@@ -1745,8 +1745,7 @@ function jeLoggingRoutineOperationEnd(problems, variables, collections, skipped)
 
 function jeLoggingRoutineOperationSummary(definition, result) {
   jeRoutineResult = `<span class="jeLogSummary">${html(definition)}</span>
-     ${result ? '=&gt;' : ''} <span class="jeLogResult">${html(result || '')}</span> 
-`;
+     ${result ? '=&gt;' : ''} <span class="jeLogResult">${html(result || '')}</span>`;
 }
 
 // END routine logging
