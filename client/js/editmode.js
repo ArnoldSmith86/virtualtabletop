@@ -904,6 +904,16 @@ async function onClickUpdateWidget(applyChangesFromUI) {
 }
 
 async function duplicateWidget(widget, recursive, inheritFrom, incrementKind, incrementIn, xOffset, yOffset, xCopies, yCopies, problems) { // incrementKind: '', 'Letters', 'Numbers'
+
+  const incrementCaps = function(l) {
+    const m = l.match(/Z+$/);
+    const zs = m ? m[0].length : 0;
+    if(m && zs == l.length)
+      return 'A'+[...Array(zs)].map(l=>'A').join('');
+    else
+      return l.substr(0, l.length-zs-1) + String.fromCharCode(l.charCodeAt(l.length-zs-1)+1) + [...Array(zs)].map(l=>'A').join('');
+  };
+
   const clone = async function(widget, recursive, newParent, xOffset, yOffset) {
     let currentWidget = JSON.parse(JSON.stringify(widget.state))
 
@@ -919,19 +929,17 @@ async function duplicateWidget(widget, recursive, inheritFrom, incrementKind, in
       let match = currentWidget.id.match(/^(.*?)([0-9]+)([^0-9]*)$/);
       let sourceNumber = match ? parseInt(match[2]) : 0;
       if(incrementKind=='Letters') {
-        match = currentWidget.id.match(/^(.*?)([A-Z])([^A-Z]*)$/);
-        sourceNumber = match ? match[2] : "@";
+        match = currentWidget.id.match(/^(.*?)([A-Z]+)([^A-Z]*)$/);
+        sourceNumber = match ? match[2] : "@"; // If no caps, insert A, which is @+1.
       }
       let targetNumber = sourceNumber;
+      const idHead = match ? match[1] : widget.id;
+      const idTail = match ? match[3] : '';
       while(widgets.has(currentWidget.id)) {
-        if(incrementKind=='Letters')
-          targetNumber = targetNumber.charCodeAt(0) != 90 ? String.fromCharCode(targetNumber.charCodeAt(0)+1) : 'a';
+        if(incrementKind=='Letters') 
+          currentWidget.id = `${idHead}${incrementCaps(sourceNumber)}${idTail}`;
         else
-          ++targetNumber;
-        if(match)
-          currentWidget.id = `${match[1]}${targetNumber}${match[3]}`;
-        else
-          currentWidget.id = `${widget.id}${targetNumber}`;
+          currentWidget.id = `${idHead}${++targetNumber}${idTail}`;
       }
       for(const property of incrementIn) {
         if(property == 'index' && widget.state.type == 'seat' && widget.state.index === undefined)
