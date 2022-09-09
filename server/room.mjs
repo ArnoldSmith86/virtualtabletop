@@ -428,6 +428,9 @@ export default class Room {
       await this.load(variantInfo.link, player);
     else
       await this.load(this.variantFilename(stateID, variantID), player);
+
+    this.state._meta.activeState = { stateID, variantID };
+    this.sendMetaUpdate();
   }
 
   migrateOldPublicLibraryLinks() {
@@ -703,6 +706,8 @@ export default class Room {
   }
 
   setState(state) {
+    delete this.state._meta.activeState;
+
     this.trace('setState', { state });
     const meta = this.state._meta;
     this.state = state;

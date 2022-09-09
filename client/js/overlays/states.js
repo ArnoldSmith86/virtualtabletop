@@ -272,7 +272,7 @@ function loadGameFromURLproperties(states) {
 }
 
 let uploadingStates = [];
-function fillStatesList(states, starred, returnServer, activePlayers) {
+function fillStatesList(states, starred, activeState, returnServer, activePlayers) {
   if(returnServer) {
     $('#statesButton').dataset.overlay = 'returnOverlay';
     overlayShownForEmptyRoom = true;
@@ -311,6 +311,8 @@ function fillStatesList(states, starred, returnServer, activePlayers) {
         entry.className += ' publicLibraryTutorial';
       if(state.link)
         entry.className += ' linkedGame';
+      if(activeState && activeState.stateID == state.id)
+        entry.className += ' activeGame';
 
       $('img', entry).src = state.image.replace(/^\//, '');
       $('h3', entry).textContent = state.name;
@@ -763,7 +765,7 @@ async function shareLink(state) {
 }
 
 onLoad(function() {
-  onMessage('meta', args=>fillStatesList(args.meta.states, args.meta.starred, args.meta.returnServer, args.activePlayers));
+  onMessage('meta', args=>fillStatesList(args.meta.states, args.meta.starred, args.meta.activeState, args.meta.returnServer, args.activePlayers));
 
   on('#filterByText', 'keyup', updateLibraryFilter);
   on('#clearSearch', 'click', _=>{$('#filterByText').value='';updateLibraryFilter();$('#filterByText').focus()});

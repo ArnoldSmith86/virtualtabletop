@@ -146,6 +146,13 @@
 .uploading.roomState .details {
   background: linear-gradient(90deg, #00000061 calc(var(--progress) * 100%), red calc(var(--progress) * 100%));
 }
+.roomState.activeGame {
+  box-shadow: 0 2px 20px green;
+}
+.roomState.activeGame .active {
+  display: block;
+  right: 0;
+}
 
 .roomState > img {
   position: absolute;
@@ -198,7 +205,7 @@ div:nth-of-type(1) > .list > .roomState .star {
   color: gold;
 }
 
-.roomState.publicLibraryGame .star, .roomState.uploading > i, .roomState.linkedGame > i {
+.roomState.publicLibraryGame .star, .roomState.uploading > i.linked, .roomState.linkedGame > i.linked {
   display: block;
 }
 
