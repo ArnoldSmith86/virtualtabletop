@@ -929,7 +929,7 @@ async function duplicateWidget(widget, recursive, inheritFrom, incrementKind, in
       let match = currentWidget.id.match(/^(.*?)([0-9]+)([^0-9]*)$/);
       let sourceNumber = match ? parseInt(match[2]) : 0;
       if(incrementKind=='Letters') {
-        match = currentWidget.id.match(/^(.*?)([A-Z]+)([^A-Z].*)?$/);
+        match = currentWidget.id.match(/^(.*?)([A-Z]+)([^A-Z]*)$/);
         sourceNumber = match ? match[2] : "@"; // If no caps, insert A, which is @+1.
       }
       let targetNumber = sourceNumber;
