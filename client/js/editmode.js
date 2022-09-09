@@ -11,6 +11,12 @@ function generateUniqueWidgetID() {
 async function addWidgetLocal(widget) {
   if (!widget.id)
     widget.id = generateUniqueWidgetID();
+
+  if(widget.parent && !widgets.has(widget.parent)) {
+    console.error(`Refusing to add widget ${widget.id} with invalid parent ${widget.parent}.`);
+    return null;
+  }
+
   const isNewWidget = !widgets.has(widget.id);
   if(isNewWidget)
     addWidget(widget);
@@ -889,27 +895,41 @@ async function onClickUpdateWidget(applyChangesFromUI) {
   showOverlay();
 }
 
-async function duplicateWidget(widget, recursive, inheritFrom, increment, xOffset, yOffset, xCopies, yCopies) {
+async function duplicateWidget(widget, recursive, inheritFrom, incrementKind, incrementIn, xOffset, yOffset, xCopies, yCopies, problems) { // incrementKind: '', 'Letters', 'Numbers'
   const clone = async function(widget, recursive, newParent, xOffset, yOffset) {
     let currentWidget = JSON.parse(JSON.stringify(widget.state))
 
     if(inheritFrom) {
-      const inheritWidget = { inheritFrom: currentWidget.id };
+      const inheritWidget = { inheritFrom: widget.get('id') };
       for(const key of [ 'id', 'type', 'deck', 'cardType' ])
         if(currentWidget[key] !== undefined)
           inheritWidget[key] = currentWidget[key];
       currentWidget = inheritWidget;
     }
 
-    if(increment) {
-      const match = currentWidget.id.match(/^(.*?)([0-9]+)([^0-9]*)$/);
-      let number = match ? parseInt(match[2]) : 0;
+    if(incrementKind) {
+      let match = currentWidget.id.match(/^(.*?)([0-9]+)([^0-9]*)$/);
+      let sourceNumber = match ? parseInt(match[2]) : 0;
+      if(incrementKind=='Letters') {
+        match = currentWidget.id.match(/^(.*?)([A-Z])([^A-Z]*)$/);
+        sourceNumber = match ? match[2] : "@";
+      }
+      let targetNumber = sourceNumber;
       while(widgets.has(currentWidget.id)) {
-        ++number;
-        if(match)
-          currentWidget.id = `${match[1]}${number}${match[3]}`;
+        if(incrementKind=='Letters')
+          targetNumber = targetNumber.charCodeAt(0) != 90 ? String.fromCharCode(targetNumber.charCodeAt(0)+1) : 'a';
         else
-          currentWidget.id = `${widget.id}${number}`;
+          ++targetNumber;
+        if(match)
+          currentWidget.id = `${match[1]}${targetNumber}${match[3]}`;
+        else
+          currentWidget.id = `${widget.id}${targetNumber}`;
+      }
+      for(const property of incrementIn) {
+        if(property == 'index' && widget.state.type == 'seat' && widget.state.index === undefined)
+          currentWidget.index = 1;
+        if(currentWidget[property] !== undefined && (property != 'inheritFrom' || !inheritFrom)) // Don't change inheritFrom if it was just added to new widget
+          currentWidget[property] = JSON.parse(JSON.stringify(currentWidget[property]).replaceAll(sourceNumber, targetNumber));
       }
     } else {
       delete currentWidget.id;
@@ -922,13 +942,25 @@ async function duplicateWidget(widget, recursive, inheritFrom, increment, xOffse
     if(yOffset || !newParent && inheritFrom)
       currentWidget.y = widget.get('y') + yOffset;
 
-    const currentId = await addWidgetLocal(currentWidget);
+    if(currentWidget.parent && !widgets.has(currentWidget.parent)) {
+      if(Array.isArray(problems))
+        problems.push(`Could not add duplicate of widget ${widget.id} to non-existent parent ${currentWidget.parent}.`);
+    } else if(currentWidget.type == 'card' && !widgets.has(currentWidget.deck)) {
+      if(Array.isArray(problems))
+        problems.push(`Could not add duplicate of card ${widget.id} with non-existent deck ${currentWidget.deck}.`);
+    } else if(currentWidget.type == 'card' && !widgets.get(currentWidget.deck).get('cardTypes')[currentWidget.cardType]) {
+      if(Array.isArray(problems))
+        problems.push(`Could not add duplicate of card ${widget.id} with non-existent cardType ${currentWidget.cardType}.`);
+    } else {
+      const currentId = await addWidgetLocal(currentWidget);
 
-    if(recursive)
-      for(const child of widgetFilter(w=>w.get('parent')==widget.id))
-        await clone(child, true, currentId, 0, 0);
+      if(recursive)
+        for(const child of widgetFilter(w=>w.get('parent')==widget.id))
+          await clone(child, true, currentId, 0, 0);
 
-    return currentWidget;
+      if(currentId)
+        return currentWidget;
+    }
   };
 
   const gridX = xCopies + 1;
@@ -936,7 +968,7 @@ async function duplicateWidget(widget, recursive, inheritFrom, increment, xOffse
   for(let i=1; i<gridX*gridY; ++i) {
     let x = xOffset*(i%gridX);
     let y = yOffset*Math.floor(i/gridX);
-    if(xCopies + yCopies == 1) {
+    if(xCopies + yCopies == 1) { // If just one copy, use both offsets as given.
       x = xOffset;
       y = yOffset;
     }
@@ -949,7 +981,7 @@ async function onClickDuplicateWidget() {
   const widget = widgets.get(JSON.parse($('#editWidgetJSON').dataset.previousState).id);
   const xOffset = widget.absoluteCoord('x') > 1500 ? -20 : 20;
   const yOffset = widget.absoluteCoord('y') >  900 ? -20 : 20;
-  await duplicateWidget(widget, true, false, true, xOffset, yOffset, 1, 0);
+  await duplicateWidget(widget, true, false, 'Numbers', [], xOffset, yOffset, 1, 0);
   showOverlay();
 }
 
