@@ -284,11 +284,21 @@ export class Widget extends StateManaged {
       className += ' foreign';
     if(typeof this.get('owner') == 'string' && this.get('owner') != playerName)
       className += ' foreign';
-    if(this.get('onlyVisibleForSeat'))
-      if(!widgetFilter(w=>w.get('player') == playerName && asArray(this.get('onlyVisibleForSeat')).indexOf(w.get('id')) != -1).length)
-        className += ' foreign';
-    if(this.get('linkedToSeat') && widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == playerName).length)
-      if(!widgetFilter(w=>asArray(this.get('linkedToSeat')).indexOf(w.get('id')) != -1 && w.get('player')).length)
+
+    const onlyVisibleForSeat = this.get('onlyVisibleForSeat');
+    let invisible = onlyVisibleForSeat !== null;
+    for(const seatID of asArray(onlyVisibleForSeat) || []) {
+      if(widgets.has(seatID) && widgets.get(seatID).get('player') == playerName) {
+        invisible = false;
+        break;
+      }
+    }
+    if(invisible)
+      className += ' foreign';
+
+    const linkedToSeat = this.get('linkedToSeat');
+    if(linkedToSeat && widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == playerName).length)
+      if(!widgetFilter(w=>asArray(linkedToSeat).indexOf(w.get('id')) != -1 && w.get('player')).length)
         className += ' foreign';
 
     if(typeof this.get('dragging') == 'string')
@@ -1801,8 +1811,13 @@ export class Widget extends StateManaged {
   }
 
   setHighlighted(isHighlighted) {
-    this.isHighlighted = isHighlighted;
-    this.domElement.className = this.classes();
+    if(this.isHighlighted != isHighlighted) {
+      this.isHighlighted = isHighlighted;
+      if(isHighlighted)
+        this.domElement.classList.add('selectedInEdit');
+      else
+        this.domElement.classList.remove('selectedInEdit');
+    }
   }
 
   async setText(text, mode, problems) {

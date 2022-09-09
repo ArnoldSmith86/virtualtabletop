@@ -877,13 +877,21 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
         widget[key] = null;
   }
 
-  const id = await addWidgetLocal(widget);
+  if(widget.id !== previousState.id || widget.type !== previousState.type) {
+    const id = await addWidgetLocal(widget);
 
-  if(widget.id !== previousState.id) {
     for(const child of children)
       sendPropertyUpdate(child.get('id'), 'parent', id);
     for(const card of cards)
       sendPropertyUpdate(card.get('id'), 'deck', id);
+  } else {
+    for(const key in widget) {
+      if(widget[key] !== previousState[key] && JSON.stringify(widget[key]) !== JSON.stringify(previousState[key])) {
+        if(widget[key] === null && previousState[key] === widgets.get(widget.id).getDefaultValue(key))
+          continue;
+        sendPropertyUpdate(widget.id, key, widget[key]);
+      }
+    }
   }
 
   batchEnd();
