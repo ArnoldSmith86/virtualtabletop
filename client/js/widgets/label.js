@@ -10,6 +10,7 @@ export class Label extends Widget {
       movable: false,
       layer: -2,
       typeClasses: 'widget label',
+      clickable: false,
 
       text: '',
       editable: false,
