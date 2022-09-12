@@ -1951,7 +1951,7 @@ function jeShowCommands() {
     if(contextMatch && contextMatch[0] == "") {
       const name = (typeof command.name == 'function' ? command.name() : command.name);
       const icon = (typeof command.icon == 'function' ? command.icon() : command.icon);
-      const isMaterial = String(icon).match(/^[^[]/) ? 'material' : '';
+      const isMaterial = String(icon).match(/^[^[]/) ? 'material-icons' : '';
       commandText += `<button class='top ${isMaterial}' id='${command.id}' title='${name}' ${!command.show || command.show() ? '' : 'disabled'}>${icon}</button>`;
     }
   }
