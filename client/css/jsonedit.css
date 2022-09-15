@@ -12,7 +12,7 @@
 
 #jsonEditor.wide {
   --commandPaneWidth: 320px;
-  --editorPaneWidth: 600px;
+  --editorPaneWidth: 602px;
 }
 
 #jsonEditor.notHighEnough #jeWidgetLayers, #jsonEditor.notHighEnough #jeLogWrapper {
@@ -351,6 +351,10 @@ body.jsonEdit.jeZoomOut #topSurface {
   color: orange;
 }
 
+.jeLogTime {
+  color: yellow;
+}
+
 /* Create the caret/arrow with a unicode, and style it */
 .jeExpander::before {
   content: "\25B6";
@@ -504,4 +508,3 @@ body.jsonEdit.jeZoomOut #topSurface {
 #jeCommands #jeCommandOptions input[type="number"]{
   width: 6ch;
 }
-
