@@ -241,7 +241,6 @@ const jeCommands = [
       jeStateNow.inheritFrom = {};
       jeStateNow.inheritFrom[w] = ['###SELECT ME###'];
       jeSetAndSelect("*");
-      jeApplyChanges();
     }
   },
   {
@@ -252,6 +251,24 @@ const jeCommands = [
     call: async function() {
       jeStateNow.inheritFrom["###SELECT ME###"] = "height, width";
       jeSetAndSelect("widget ID");
+    }
+  },
+  {
+    id: 'je_cssString',
+    name: 'convert to object',
+    context: '^.* ↦ css',
+    show:  _=>typeof jeStateNow.css == "string",
+    call: async function() {
+      const elements = jeStateNow.css.split(/[;:]/);
+      let css_formatted = "{\n";
+      for(let i=0; i<elements.length/2; i++) 
+        css_formatted += `  "${elements[2*i]}": "${elements[2*i+1]}",\n`;
+      css_formatted += "}";
+      jeStateNow.css = {};
+      jeStateNow.css['###SELECT ME###'] = {};
+      for( let i=0; i<elements.length/2; i++) 
+        jeStateNow.css['###SELECT ME###'][elements[2*i].trim()] = elements[2*i+1].trim();
+      jeSetAndSelect("default");
     }
   },
   {
@@ -293,13 +310,13 @@ const jeCommands = [
     }
   },
   {
-    id: 'je_css',
+    id: 'je_faceTemplate_css',
     name: 'css',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
     show: _=>!jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].css,
     call: async function() {
       jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].css = '###SELECT ME###';
-      jeSetAndSelect('');
+      jeSetAndSelect({});
     }
   },
   {
@@ -705,7 +722,7 @@ function jeAddCommands() {
 
   jeAddFaceCommand('border', '', 1);
   jeAddFaceCommand('classes', '', '');
-  jeAddFaceCommand('css', '', '');
+  jeAddFaceCommand('css', '', {});
   jeAddFaceCommand('properties', '', {});
   jeAddFaceCommand('radius', ' (rounded corners)', 1);
 

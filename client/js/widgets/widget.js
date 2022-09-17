@@ -44,7 +44,7 @@ export class Widget extends StateManaged {
 
       typeClasses: 'widget',
       classes: '',
-      css: '',
+      css: {},
       movable: true,
       movableInEdit: true,
       clickable: true,
