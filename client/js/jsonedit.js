@@ -232,6 +232,29 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_inheritFrom',
+    name: 'convert to object',
+    context: '^.* ↦ inheritFrom',
+    show:  _=>typeof jeStateNow.inheritFrom == "string",
+    call: async function() {
+      const w = jeStateNow.inheritFrom;
+      jeStateNow.inheritFrom = {};
+      jeStateNow.inheritFrom[w] = ['###SELECT ME###'];
+      jeSetAndSelect("*");
+      jeApplyChanges();
+    }
+  },
+  {
+    id: 'je_inheritFrom_obj',
+    name: 'add field',
+    context: '^.* ↦ inheritFrom',
+    show:  _=>typeof jeStateNow.inheritFrom == "object",
+    call: async function() {
+      jeStateNow.inheritFrom["###SELECT ME###"] = "height, width";
+      jeSetAndSelect("widget ID");
+    }
+  },
+  {
     id: 'je_textTemplate',
     name: 'text template',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects',
