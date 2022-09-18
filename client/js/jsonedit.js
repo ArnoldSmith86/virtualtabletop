@@ -232,7 +232,7 @@ const jeCommands = [
     }
   },
   {
-    id: 'je_inheritFrom',
+    id: 'je_inheritFromString',
     name: 'convert to object',
     context: '^.* ↦ inheritFrom',
     show:  _=>typeof jeStateNow.inheritFrom == "string",
@@ -244,7 +244,7 @@ const jeCommands = [
     }
   },
   {
-    id: 'je_inheritFrom_obj',
+    id: 'je_inheritFromObject',
     name: 'add field',
     context: '^.* ↦ inheritFrom',
     show:  _=>typeof jeStateNow.inheritFrom == "object",
@@ -260,13 +260,9 @@ const jeCommands = [
     show:  _=>typeof jeStateNow.css == "string",
     call: async function() {
       const elements = jeStateNow.css.split(/[;:]/);
-      let css_formatted = "{\n";
-      for(let i=0; i<elements.length/2; i++) 
-        css_formatted += `  "${elements[2*i]}": "${elements[2*i+1]}",\n`;
-      css_formatted += "}";
       jeStateNow.css = {};
       jeStateNow.css['###SELECT ME###'] = {};
-      for( let i=0; i<elements.length/2; i++) 
+      for( let i=0; i<Math.floor(elements.length/2); i++) 
         jeStateNow.css['###SELECT ME###'][elements[2*i].trim()] = elements[2*i+1].trim();
       jeSetAndSelect("default");
     }
@@ -859,32 +855,58 @@ function displayComputeOps() {
 
 function jeAddCSScommands() {
   const presets = {
-    '[a-z]+': [
-      'border: 1px solid black', 'background: white', 'font-size: 30px', 'color: black' , 'border-radius: 100%'
-    ],
-    'button': [
-      '--wcMain: #1f5ca6', '--wcMainOH: #0d2f5e', '--wcBorder: #0d2f5e', '--wcBorderOH: #1f5ca6', '--wcFont: #ffffff', '--wcFontOH: #ffffff'
+/*    '[a-z]+': [
+      '"border": "1px solid black"', '"background": "white"', '"font-size": "30px"', '"color": "black"'
     ],
     'seat': [
       '--wcShadowTurn: 0px 0px 20px 5px var(--color)'
     ],
     'timer': [
       '--wcBorderNormal: #00000000', '--wcBorderAlert: red', '--wcFontAlert: red', '--wcFontPaused: #6d6d6d', '--wcAnimationAlert: blinker 1s linear infinite', '--wcAnimationPaused: none'
-    ]
+    ],*/
+    '[a-z]+': {
+      'default': {"border": "1px solid black", "background": "white", "font-size": "30px", "color": "black" }
+    },
+    '[a-z]+': {
+      ':hover': {"border": "1px solid black", "background": "white", "font-size": "30px", "color": "black" }
+    },
+    'seat': {
+      '.seated.turn': {"box-shadow": "0px 0px 20px 5px var(--color)"}
+    },
+    'timer': {
+      '.alert': {"color": "red", "animation": "blinker 1s linear infinite"}, '.paused':{"color": "#6d6d6d", "animation": "none"}
+    }
   };
   for(const type in presets) {
-    for(const css of presets[type]) {
+    for(const css_style of Object.keys(presets[type])) {
       jeCommands.push({
-        id: 'css_' + css,
-        name: css,
+        id: 'css_' + css_style,
+        name: css_style,
         context: `^${type} ↦ (css|[a-z]+CSS)`,
         call: async function() {
-          jePasteText(css + '; ', true);
+          jeStateNow.css[css_style] = '###SELECT ME###';
+          jeSetAndSelect({});
         },
         show: function() {
-          return !String(jeGetValue()[jeGetLastKey()]).match(css.split(':')[0]);
+          const contents = jeStateNow.css;
+          return typeof contents == "object" && (contents[css_style] == undefined || JSON.stringify(contents[css_style])=='{}');
         }
       });
+      for(const cssProperty of Object.keys(presets[type][css_style])) {
+        jeCommands.push({
+          id: 'css_' + css_style + '_' + cssProperty,
+          name: cssProperty,
+          context: `^${type} ↦ (css|[a-z]+CSS) ↦ .*`,
+          call: async function() {
+            jeStateNow.css[css_style][cssProperty] = '###SELECT ME###';
+            jeSetAndSelect(presets[type][css_style][cssProperty]);
+          },
+          show: function() {
+            const contents = jeStateNow.css[css_style];
+            return typeof contents == "object" && !(cssProperty in contents);
+          }
+        });
+      }
     }
   }
 }
