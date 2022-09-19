@@ -1,19 +1,1337 @@
 {
-  "grid001-2-9-copy003-copy002-copy001": {
-    "id": "grid001-2-9-copy003-copy002-copy001",
-    "x": -692,
-    "y": 96,
-    "type": "hand",
-    "width": 168,
-    "height": 111,
-    "z": 9963
+  "playerSwitchboard": {
+    "type": "holder",
+    "x": 1661,
+    "z": 40177,
+    "id": "playerSwitchboard",
+    "width": 40,
+    "height": 280,
+    "layer": 4,
+    "y": 21,
+    "movable": true
   },
-  "2a381f5e-0f16-4393-8ced-55b1dbea5017": {
-    "id": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
+  "changePlayers": {
+    "id": "changePlayers",
+    "z": 70743,
+    "type": "button",
+    "width": 60,
+    "height": 60,
+    "movableInEdit": false,
+    "x": 1520,
+    "y": 920,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "select",
+            "label": "choose number of players",
+            "variable": "playerCount",
+            "value": "2",
+            "options": [
+              {
+                "value": "2",
+                "text": "2",
+                "selected": true
+              },
+              {
+                "value": "3",
+                "text": "3"
+              },
+              {
+                "value": "4",
+                "text": "4"
+              },
+              {
+                "value": "5",
+                "text": "5"
+              },
+              {
+                "value": "6",
+                "text": "6"
+              },
+              {
+                "value": "7",
+                "text": "7"
+              },
+              {
+                "value": "8",
+                "text": "8"
+              }
+            ]
+          },
+          {
+            "type": "checkbox",
+            "label": "automatic penalty button",
+            "variable": "autoMode",
+            "value": true
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "autoMode",
+        "value": "${autoMode}",
+        "collection": [
+          "checkCorrectness"
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "${playerCount}PButton"
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "resetFruitCountRoutine"
+      },
+      {
+        "func": "SET",
+        "property": "gameStart",
+        "value": true,
+        "collection": [
+          "clearBell"
+        ]
+      }
+    ],
+    "resetFruitCountRoutine": [
+      {
+        "func": "SELECT",
+        "property": "type",
+        "value": "holder"
+      },
+      {
+        "func": "SET",
+        "property": "fruit",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "fruitCount",
+        "value": null
+      }
+    ],
+    "classes": "symbols",
+    "text": "[restart]",
+    "css": {
+      "font-size": "40px"
+    }
+  },
+  "player1Zone": {
+    "type": "holder",
+    "x": 800,
+    "y": 16,
+    "id": "player1Zone",
+    "width": 0,
+    "z": 1,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "alignChildren": false,
+    "classes": "transparent",
+    "height": 968,
+    "movableInEdit": false,
+    "linkedToSeat": "p1",
+    "task": "playerField"
+  },
+  "player2Zone": {
+    "type": "holder",
+    "x": 800,
+    "y": 16,
+    "width": 0,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "alignChildren": false,
+    "classes": "transparent",
+    "id": "player2Zone",
+    "height": 968,
+    "z": 2,
+    "movableInEdit": false,
+    "linkedToSeat": "p2",
+    "task": "playerField",
+    "rotation": 180
+  },
+  "player3Zone": {
+    "type": "holder",
+    "x": 1900,
+    "id": "player3Zone",
+    "width": 0,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "alignChildren": false,
+    "classes": "transparent",
+    "z": 3,
+    "y": 16,
+    "height": 968,
+    "movableInEdit": false,
+    "linkedToSeat": "p3",
+    "task": "playerField"
+  },
+  "player4Zone": {
+    "type": "holder",
+    "x": 1900,
+    "y": 16,
+    "id": "player4Zone",
+    "width": 0,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "alignChildren": false,
+    "classes": "transparent",
+    "z": 4,
+    "height": 968,
+    "movableInEdit": false,
+    "linkedToSeat": "p4",
+    "task": "playerField"
+  },
+  "player5Zone": {
+    "type": "holder",
+    "x": 1900,
+    "y": 16,
+    "id": "player5Zone",
+    "width": 0,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "alignChildren": false,
+    "classes": "transparent",
+    "z": 5,
+    "height": 968,
+    "movableInEdit": false,
+    "linkedToSeat": "p5",
+    "task": "playerField"
+  },
+  "player6Zone": {
+    "type": "holder",
+    "x": 1900,
+    "y": 16,
+    "id": "player6Zone",
+    "width": 0,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "alignChildren": false,
+    "classes": "transparent",
+    "z": 6,
+    "height": 968,
+    "movableInEdit": false,
+    "linkedToSeat": "p6",
+    "task": "playerField"
+  },
+  "player7Zone": {
+    "type": "holder",
+    "x": 1900,
+    "y": 16,
+    "id": "player7Zone",
+    "width": 0,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "alignChildren": false,
+    "classes": "transparent",
+    "z": 7,
+    "height": 968,
+    "movableInEdit": false,
+    "linkedToSeat": "p7",
+    "task": "playerField"
+  },
+  "player8Zone": {
+    "type": "holder",
+    "x": 1900,
+    "y": 16,
+    "id": "player8Zone",
+    "width": 0,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "alignChildren": false,
+    "classes": "transparent",
+    "z": 8,
+    "height": 968,
+    "movableInEdit": false,
+    "linkedToSeat": "p8",
+    "task": "playerField"
+  },
+  "6w5a": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-557e44e1-bde4-4ed8-ad29-1ffb68660e62",
+    "id": "6w5a",
+    "z": 68555,
+    "activeFace": 1,
+    "parent": "vvfx"
+  },
+  "1k7k": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-41801a52-847b-4caa-b5f7-df3062a18a09",
+    "id": "1k7k",
+    "z": 68539,
+    "parent": "f1mg",
+    "activeFace": 1
+  },
+  "w3nz": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-35b2501e-166e-4670-aef9-b5316873883d",
+    "id": "w3nz",
+    "z": 68556,
+    "parent": "0c14",
+    "activeFace": 1
+  },
+  "51ra": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-4e6cc6df-e704-4453-919b-9a6cba7a3312",
+    "id": "51ra",
+    "z": 68486,
+    "parent": "wl2k",
+    "activeFace": 1
+  },
+  "rxke": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-5f6ffa96-0fd8-4c91-aa47-c7ac4e843f08",
+    "id": "rxke",
+    "z": 68485,
+    "activeFace": 1,
+    "parent": "by6a"
+  },
+  "c2a3": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-9103d8ec-b3e6-4912-8794-954c3e5d1321",
+    "id": "c2a3",
+    "z": 68488,
+    "activeFace": 1,
+    "parent": "431g"
+  },
+  "p805": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-12c0a63a-ef4b-42cc-ad33-43a05d0d49fe",
+    "id": "p805",
+    "z": 68557,
+    "activeFace": 1,
+    "parent": "8pex"
+  },
+  "ptsj": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-e771a46d-ab8c-41b8-8902-7005a3cdbd0f",
+    "id": "ptsj",
+    "z": 68558,
+    "activeFace": 1,
+    "parent": "ssfc"
+  },
+  "5t8n": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-db27ecf4-1724-4acb-8c0c-cb524cca51f3",
+    "id": "5t8n",
+    "z": 68507,
+    "activeFace": 1,
+    "parent": "c1kx"
+  },
+  "kknt": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-175848ff-164b-400c-96e7-cbf906b6697e",
+    "id": "kknt",
+    "z": 68497,
+    "activeFace": 1,
+    "parent": "ijs5"
+  },
+  "r8z0": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-e30435a0-0abf-4527-8028-815278c62038",
+    "id": "r8z0",
+    "z": 68559,
+    "activeFace": 1,
+    "parent": "6jgh"
+  },
+  "kh5f": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-602c5fe1-571e-4154-b4e0-da520935b43b",
+    "id": "kh5f",
+    "z": 68493,
+    "activeFace": 1,
+    "parent": "qkqy"
+  },
+  "d42t": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-0993ff3b-efa9-45fb-9e8f-e27cf9140ad5",
+    "id": "d42t",
+    "z": 68491,
+    "activeFace": 1,
+    "parent": "97u9"
+  },
+  "bxat": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-1e6e7a4b-2326-4fc7-81d5-90cc6cf1a22b",
+    "id": "bxat",
+    "z": 68509,
+    "activeFace": 1,
+    "parent": "v8n0"
+  },
+  "hgsw": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-6da11462-a5b7-4537-83c1-c7388859ef30",
+    "id": "hgsw",
+    "z": 68490,
+    "activeFace": 1,
+    "parent": "t6eu"
+  },
+  "0pwv": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-5075b811-26f2-43d2-8a94-cdba121690d8",
+    "id": "0pwv",
+    "z": 68574,
+    "activeFace": 1,
+    "parent": "4q3y"
+  },
+  "0xdk": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-fcfdb778-b3aa-4ecd-92b1-72a5a3f70d6b",
+    "id": "0xdk",
+    "z": 68487,
+    "x": 512,
+    "y": 768,
+    "activeFace": 1
+  },
+  "cf8z": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-4509b151-91b5-4886-921a-270e6ca8998c",
+    "id": "cf8z",
+    "z": 68537,
+    "activeFace": 1,
+    "x": 512,
+    "y": 72
+  },
+  "r7dp": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-aba439f2-b067-4229-be65-829728d2271b",
+    "id": "r7dp",
+    "z": 68521,
+    "activeFace": 1,
+    "x": 512,
+    "y": 304
+  },
+  "3bte": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-f958a384-79aa-4d56-b873-f9221284f52f",
+    "id": "3bte",
+    "z": 68492,
+    "activeFace": 1,
+    "x": 512,
+    "y": 536
+  },
+  "5vur": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-557e44e1-bde4-4ed8-ad29-1ffb68660e62",
+    "id": "5vur",
+    "z": 68540,
+    "parent": "vvfx",
+    "activeFace": 1
+  },
+  "hqe4": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-557e44e1-bde4-4ed8-ad29-1ffb68660e62",
+    "id": "hqe4",
+    "z": 68494,
+    "parent": "vvfx",
+    "activeFace": 1
+  },
+  "zk1p": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-557e44e1-bde4-4ed8-ad29-1ffb68660e62",
+    "id": "zk1p",
+    "z": 68541,
+    "parent": "vvfx",
+    "activeFace": 1
+  },
+  "rbra": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-557e44e1-bde4-4ed8-ad29-1ffb68660e62",
+    "id": "rbra",
+    "z": 68560,
+    "activeFace": 1,
+    "parent": "vvfx"
+  },
+  "dgyh": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-41801a52-847b-4caa-b5f7-df3062a18a09",
+    "id": "dgyh",
+    "z": 68542,
+    "parent": "f1mg",
+    "activeFace": 1
+  },
+  "tyw9": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-41801a52-847b-4caa-b5f7-df3062a18a09",
+    "id": "tyw9",
+    "z": 68561,
+    "activeFace": 1,
+    "parent": "f1mg"
+  },
+  "s5mk": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-35b2501e-166e-4670-aef9-b5316873883d",
+    "id": "s5mk",
+    "z": 68532,
+    "parent": "0c14",
+    "activeFace": 1
+  },
+  "qgar": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-35b2501e-166e-4670-aef9-b5316873883d",
+    "id": "qgar",
+    "z": 68562,
+    "parent": "0c14",
+    "activeFace": 1
+  },
+  "yg3d": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-4e6cc6df-e704-4453-919b-9a6cba7a3312",
+    "id": "yg3d",
+    "z": 68543,
+    "parent": "wl2k",
+    "activeFace": 1
+  },
+  "kv45": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-41801a52-847b-4caa-b5f7-df3062a18a09",
+    "id": "kv45",
+    "z": 68563,
+    "activeFace": 1,
+    "parent": "f1mg"
+  },
+  "bqzk": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-41801a52-847b-4caa-b5f7-df3062a18a09",
+    "id": "bqzk",
+    "z": 68544,
+    "parent": "f1mg",
+    "activeFace": 1
+  },
+  "4hzl": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-35b2501e-166e-4670-aef9-b5316873883d",
+    "id": "4hzl",
+    "z": 68564,
+    "activeFace": 1,
+    "parent": "0c14"
+  },
+  "4ljp": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-35b2501e-166e-4670-aef9-b5316873883d",
+    "id": "4ljp",
+    "z": 68565,
+    "activeFace": 1,
+    "parent": "0c14"
+  },
+  "3fqz": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-4e6cc6df-e704-4453-919b-9a6cba7a3312",
+    "id": "3fqz",
+    "z": 68545,
+    "parent": "wl2k",
+    "activeFace": 1
+  },
+  "tn89": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-4e6cc6df-e704-4453-919b-9a6cba7a3312",
+    "id": "tn89",
+    "z": 68546,
+    "activeFace": 1,
+    "parent": "wl2k"
+  },
+  "nqrd": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-4e6cc6df-e704-4453-919b-9a6cba7a3312",
+    "id": "nqrd",
+    "z": 68566,
+    "activeFace": 1,
+    "parent": "wl2k"
+  },
+  "m09l": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-5f6ffa96-0fd8-4c91-aa47-c7ac4e843f08",
+    "id": "m09l",
+    "z": 68547,
+    "activeFace": 1,
+    "parent": "by6a"
+  },
+  "af0w": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-5f6ffa96-0fd8-4c91-aa47-c7ac4e843f08",
+    "id": "af0w",
+    "z": 68548,
+    "activeFace": 1,
+    "parent": "by6a"
+  },
+  "unsf": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-9103d8ec-b3e6-4912-8794-954c3e5d1321",
+    "id": "unsf",
+    "z": 68549,
+    "activeFace": 1,
+    "parent": "431g"
+  },
+  "tb0c": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-9103d8ec-b3e6-4912-8794-954c3e5d1321",
+    "id": "tb0c",
+    "z": 68550,
+    "activeFace": 1,
+    "parent": "431g"
+  },
+  "joxf": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-12c0a63a-ef4b-42cc-ad33-43a05d0d49fe",
+    "id": "joxf",
+    "z": 68567,
+    "activeFace": 1,
+    "parent": "8pex"
+  },
+  "x4h5": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-12c0a63a-ef4b-42cc-ad33-43a05d0d49fe",
+    "id": "x4h5",
+    "z": 68503,
+    "activeFace": 1,
+    "parent": "8pex"
+  },
+  "hdhv": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-e771a46d-ab8c-41b8-8902-7005a3cdbd0f",
+    "id": "hdhv",
+    "z": 68568,
+    "activeFace": 1,
+    "parent": "ssfc"
+  },
+  "qbym": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-e771a46d-ab8c-41b8-8902-7005a3cdbd0f",
+    "id": "qbym",
+    "z": 68502,
+    "activeFace": 1,
+    "parent": "ssfc"
+  },
+  "6awn": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-db27ecf4-1724-4acb-8c0c-cb524cca51f3",
+    "id": "6awn",
+    "z": 68551,
+    "activeFace": 1,
+    "parent": "c1kx"
+  },
+  "zh6s": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-db27ecf4-1724-4acb-8c0c-cb524cca51f3",
+    "id": "zh6s",
+    "z": 68552,
+    "activeFace": 1,
+    "parent": "c1kx"
+  },
+  "k5pn": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-175848ff-164b-400c-96e7-cbf906b6697e",
+    "id": "k5pn",
+    "z": 68569,
+    "activeFace": 1,
+    "parent": "ijs5"
+  },
+  "jcvi": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-175848ff-164b-400c-96e7-cbf906b6697e",
+    "id": "jcvi",
+    "z": 68553,
+    "activeFace": 1,
+    "parent": "ijs5"
+  },
+  "siqj": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-e30435a0-0abf-4527-8028-815278c62038",
+    "id": "siqj",
+    "z": 68527,
+    "activeFace": 1,
+    "parent": "6jgh"
+  },
+  "w0k7": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-e30435a0-0abf-4527-8028-815278c62038",
+    "id": "w0k7",
+    "z": 68554,
+    "activeFace": 1,
+    "parent": "6jgh"
+  },
+  "vwee": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-602c5fe1-571e-4154-b4e0-da520935b43b",
+    "id": "vwee",
+    "z": 68570,
+    "activeFace": 1,
+    "parent": "qkqy"
+  },
+  "znn3": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-602c5fe1-571e-4154-b4e0-da520935b43b",
+    "id": "znn3",
+    "z": 68571,
+    "activeFace": 1,
+    "parent": "qkqy"
+  },
+  "mmlq": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-0993ff3b-efa9-45fb-9e8f-e27cf9140ad5",
+    "id": "mmlq",
+    "z": 68575,
+    "activeFace": 1,
+    "parent": "97u9"
+  },
+  "47lv": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-1e6e7a4b-2326-4fc7-81d5-90cc6cf1a22b",
+    "id": "47lv",
+    "z": 68572,
+    "activeFace": 1,
+    "parent": "v8n0"
+  },
+  "ilrg": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-6da11462-a5b7-4537-83c1-c7388859ef30",
+    "id": "ilrg",
+    "z": 68573,
+    "activeFace": 1,
+    "parent": "t6eu"
+  },
+  "3zor": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "type-5075b811-26f2-43d2-8a94-cdba121690d8",
+    "id": "3zor",
+    "z": 68530,
+    "activeFace": 1,
+    "parent": "4q3y"
+  },
+  "clearBell": {
+    "type": "button",
+    "id": "clearBell",
+    "width": 60,
+    "height": 60,
+    "z": 70743,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "condition": "${PROPERTY gameStart}",
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "dealNewCardsRoutine"
+          },
+          {
+            "func": "SET",
+            "property": "gameStart",
+            "value": false,
+            "collection": "thisButton"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "",
+        "collection": [
+          "displayFirstPlayer",
+          "displayOtherPlayers"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 1200,
+        "collection": [
+          "rightBtn",
+          "wrongBtn"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "owner",
+        "value": "${activePlayers}",
+        "collection": [
+          "clickCover"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "playersClicked",
+        "value": [],
+        "collection": [
+          "bell"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "task",
+        "value": "enforcer"
+      },
+      {
+        "func": "GET",
+        "property": "css",
+        "variable": "css",
+        "aggregation": "first"
+      },
+      "var css.pointer-events = 'auto'",
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "${css}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "goodCount",
+        "value": null
+      },
+      {
+        "func": "SELECT",
+        "property": "task",
+        "value": "playHolder"
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          "var Nr = ${widgetID.1}",
+          {
+            "func": "MOVE",
+            "from": "p${Nr}Play",
+            "to": "p${Nr}Draw",
+            "count": 56
+          }
+        ]
+      }
+    ],
+    "x": 1520,
+    "y": 840,
+    "dealNewCardsRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "shuffler"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SELECT",
+        "property": "activeSeat",
+        "value": true,
+        "type": "seat"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var dealCount = 56 / ${COUNT}",
+      "var dealCount = floor ${dealCount}",
+      {
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "deckHolder",
+            "to": "${widgetID}Draw",
+            "count": "${dealCount}"
+          }
+        ]
+      }
+    ],
+    "gameStart": false,
+    "classes": "symbols",
+    "text": "[play_arrow]",
+    "css": {
+      "font-size": "40px"
+    }
+  },
+  "shuffler": {
+    "type": "button",
+    "id": "shuffler",
+    "y": 180,
+    "z": 70747,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "deckHolder"
+      },
+      {
+        "func": "FLIP",
+        "face": 0,
+        "holder": "deckHolder"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deckHolder"
+      }
+    ],
+    "text": "RECALL",
+    "parent": "deckHolder"
+  },
+  "displayFirstPlayer": {
+    "id": "displayFirstPlayer",
+    "type": "",
+    "x": 700,
+    "y": 500,
+    "width": 200,
+    "height": 120,
+    "css": {
+      "border": "0px solid red",
+      "font-size": "30px",
+      "color": "#303030",
+      "text-align": "center",
+      "pointer-events": "none"
+    },
+    "movableInEdit": false
+  },
+  "wrongBtn": {
+    "type": "button",
+    "id": "wrongBtn",
+    "x": 644,
+    "y": 1200,
+    "width": 312,
+    "height": 50,
+    "layer": 2,
+    "z": 14,
+    "backgroundColor": "red",
+    "backgroundColorOH": "pink",
+    "borderColor": "white",
+    "borderColorOH": "red",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "displayFirstPlayer"
+      },
+      {
+        "func": "GET",
+        "property": "text",
+        "variable": "loser"
+      },
+      {
+        "func": "SELECT",
+        "property": "player",
+        "value": "${loser}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "loserSeat"
+      },
+      {
+        "func": "SELECT",
+        "property": "activeSeat",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "property": "task",
+        "value": "drawHolder",
+        "source": "DEFAULT"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${loserSeat}Draw",
+        "source": "DEFAULT",
+        "mode": "remove"
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "count": 1,
+            "face": 0,
+            "from": "${loserSeat}Draw",
+            "to": "${widgetID}"
+          }
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "clearBell"
+        ]
+      }
+    ],
+    "css": "font-size:25px;border-width:6px;",
+    "text": "Wrong. Click for penalty."
+  },
+  "rightBtn": {
+    "type": "button",
+    "id": "rightBtn",
+    "x": 644,
+    "y": 1200,
+    "width": 312,
+    "height": 50,
+    "layer": 2,
+    "z": 13,
+    "backgroundColor": "green",
+    "backgroundColorOH": "lightgreen",
+    "borderColor": "white",
+    "borderColorOH": "green",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "displayFirstPlayer"
+      },
+      {
+        "func": "GET",
+        "property": "text",
+        "variable": "winner"
+      },
+      {
+        "func": "SELECT",
+        "property": "player",
+        "value": "${winner}"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "winnerSeat"
+      },
+      {
+        "func": "SELECT",
+        "property": "activeSeat",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "property": "task",
+        "value": "playHolder",
+        "source": "DEFAULT"
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "${widgetID}",
+            "to": "${winnerSeat}Draw",
+            "face": 0,
+            "count": 56
+          }
+        ]
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${winnerSeat}Draw"
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "clearBell"
+        ]
+      }
+    ],
+    "css": "font-size:24px;border-width:6px;",
+    "text": "Correct. Click to collect."
+  },
+  "deal": {
+    "type": "button",
+    "id": "deal",
+    "width": 140,
+    "height": 60,
+    "z": 70802,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "shuffler"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SELECT",
+        "property": "activeSeat",
+        "value": true,
+        "type": "seat"
+      },
+      {
+        "func": "COUNT"
+      },
+      "var dealCount = 56 / ${COUNT}",
+      "var dealCount = floor ${dealCount}",
+      {
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "deckHolder",
+            "to": "${widgetID}Draw",
+            "count": "${dealCount}"
+          }
+        ]
+      }
+    ],
+    "text": "Deal",
+    "x": 1636,
+    "y": 339
+  },
+  "_meta": {
+    "version": 7,
+    "info": {
+      "name": "Speedy Fruits",
+      "image": "/assets/1560517833_99964",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/2944/halli-galli",
+      "year": "1990",
+      "mode": "vs",
+      "time": "10",
+      "players": "2-8",
+      "language": "en-US",
+      "variant": "",
+      "attribution": "How to use the room:\nFirstly click the reset button on the bottom right and choose the player count, as well as the way penalities are handeled (automatically if you want to stick to the official rules and manually if you have some house rules). Now you can take a seat. After everyone is seated press the play button. There is a \"safety switch\" built in, to guarantee that nobody is cheating and hovering with the mouse ofer the bell. Before you can click the bell you have to click your discard holder and then your click on the bell will have an effect. To clear the bell press the play button.\n\nThe room design, library image, bell sound, and other room elements are by Ingegneus and are released to the Public Domain under CC0.\n\nThe wood background by Nathan Dumlao is from-https://unsplash.com/photos/J2gEgTPM_OA and is available under the Unsplash license.\n\nThe deck back image by Michael Schwarzenberger is from https://pixabay.com/photos/playing-card-back-pattern-568200/ and is available under the Pixabay License.\n\nThe UI elements from the player menu are from-https://www.kenney.nl/assets/ui-pack-rpg-expansion and are in the public domain under CC0.",
+      "similarName": "Halli Galli",
+      "description": "Flip cards to reveal matching fruits and ring bell when 5 of a kind are displayed to win opponent cards.  Player with most cards wins."
+    }
+  },
+  "p2": {
+    "type": "seat",
+    "id": "p2",
+    "parent": "player2Zone",
+    "rotation": 180,
+    "inheritFrom": {
+      "p1": [
+        "!player"
+      ]
+    },
+    "index": 1,
+    "color": "#999999",
+    "activeSeat": false
+  },
+  "p1": {
+    "type": "seat",
+    "id": "p1",
+    "parent": "player1Zone",
+    "x": -106,
+    "y": 180,
+    "width": 212,
+    "height": 50,
+    "layer": 2,
+    "z": 10,
+    "movableInEdit": false,
+    "css": {
+      "box-sizing": "border-box"
+    },
+    "colorChangeRoutine": [
+      "var Nr = ${PROPERTY id}",
+      "var Nr = ${Nr.1}",
+      {
+        "func": "SET",
+        "property": "playerColor",
+        "value": "${PROPERTY color}",
+        "collection": [
+          "p${Nr}Enforcer"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "activeSeat",
+            "value": false,
+            "collection": [
+              "p${Nr}Draw",
+              "p${Nr}Play",
+              "p${Nr}"
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "property": "activeSeat",
+            "value": true,
+            "collection": [
+              "p${Nr}Draw",
+              "p${Nr}Play",
+              "p${Nr}"
+            ]
+          }
+        ]
+      }
+    ],
+    "borderRadius": 100,
+    "activeSeat": false
+  },
+  "tableBackground": {
+    "id": "tableBackground",
+    "width": 1600,
+    "height": 1000,
+    "layer": -9,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/-2000921333_378618"
+  },
+  "p3": {
+    "type": "seat",
+    "id": "p3",
+    "parent": "player3Zone",
+    "inheritFrom": {
+      "p1": [
+        "!player"
+      ]
+    },
+    "rotation": 180,
+    "color": "#999999",
+    "activeSeat": false
+  },
+  "p4": {
+    "type": "seat",
+    "id": "p4",
+    "parent": "player4Zone",
+    "inheritFrom": {
+      "p1": [
+        "!player"
+      ]
+    },
+    "rotation": 0,
+    "color": "#999999",
+    "activeSeat": false
+  },
+  "p5": {
+    "type": "seat",
+    "id": "p5",
+    "parent": "player5Zone",
+    "rotation": 180,
+    "inheritFrom": {
+      "p1": [
+        "!player"
+      ]
+    },
+    "color": "#999999",
+    "activeSeat": false
+  },
+  "p6": {
+    "type": "seat",
+    "id": "p6",
+    "parent": "player6Zone",
+    "inheritFrom": {
+      "p1": [
+        "!player"
+      ]
+    },
+    "rotation": 180,
+    "color": "#999999",
+    "activeSeat": false
+  },
+  "p7": {
+    "type": "seat",
+    "id": "p7",
+    "parent": "player7Zone",
+    "inheritFrom": {
+      "p1": [
+        "!player"
+      ]
+    },
+    "rotation": 180,
+    "color": "#999999",
+    "activeSeat": false
+  },
+  "p8": {
+    "type": "seat",
+    "id": "p8",
+    "parent": "player8Zone",
+    "inheritFrom": {
+      "p1": [
+        "!player"
+      ]
+    },
+    "rotation": 180,
+    "color": "#999999",
+    "activeSeat": false
+  },
+  "deckHolder": {
+    "type": "holder",
+    "id": "deckHolder",
+    "x": 1648,
+    "y": 435,
+    "z": 40192,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "preventPiles": true
+  },
+  "cardDeck": {
+    "type": "deck",
+    "id": "cardDeck",
+    "parent": "deckHolder",
     "x": 4,
     "y": 4,
     "z": 13690,
-    "type": "deck",
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 103,
+      "height": 160
+    },
     "cardTypes": {
       "type-557e44e1-bde4-4ed8-ad29-1ffb68660e62": {
         "image": "/assets/-1971292287_19466",
@@ -143,7 +1461,6 @@
             "type": "image",
             "x": 0,
             "y": 0,
-            "valueType": "static",
             "value": "/assets/338109234_359613",
             "width": 103,
             "height": 160
@@ -159,5143 +1476,2159 @@
             "x": 0,
             "y": 0,
             "color": "white",
-            "valueType": "dynamic",
-            "value": "image",
             "width": 103,
-            "height": 160
+            "height": 160,
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ],
         "border": 1,
         "radius": 8
       }
-    ],
-    "cardDefaults": {
-      "pilesWith": {
-        "type": "card"
-      },
-      "width": 103,
-      "height": 160
-    },
-    "parent": "deck"
-  },
-  "playerSwitchboard": {
-    "type": "holder",
-    "x": 1700,
-    "z": 40152,
-    "id": "playerSwitchboard",
-    "dropTarget": {},
-    "alignChildren": false,
-    "width": 400,
-    "css": "background-color:#00000000;border-color:#00000000",
-    "height": 296,
-    "layer": 4,
-    "movableInEdit": false
-  },
-  "changePlayers": {
-    "id": "changePlayers",
-    "z": 70743,
-    "type": "button",
-    "text": "Change Players",
-    "width": 140,
-    "height": 60,
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "playerSwitchboard",
-        "collection": "playerSwitchboard"
-      },
-      {
-        "func": "SET",
-        "collection": "playerSwitchboard",
-        "property": "x",
-        "relation": "=",
-        "value": 600
-      },
-      {
-        "func": "SET",
-        "collection": "playerSwitchboard",
-        "property": "y",
-        "relation": "=",
-        "value": 260
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "plusCounter",
-        "collection": "counter"
-      },
-      {
-        "func": "CLICK",
-        "collection": "counter"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "counterLabel",
-        "collection": "label"
-      },
-      {
-        "func": "GET",
-        "collection": "label",
-        "property": "text",
-        "variable": "anzahlClicks"
-      },
-      "var result = ${anzahlClicks} % 2",
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "playerSwitchboard",
-        "collection": "playerSwitchboard",
-        "mode": "add",
-        "skip": "${result}"
-      },
-      {
-        "func": "SET",
-        "collection": "playerSwitchboard",
-        "property": "x",
-        "relation": "=",
-        "value": 1700,
-        "skip": "${result}"
-      },
-      {
-        "func": "SET",
-        "collection": "playerSwitchboard",
-        "property": "y",
-        "relation": "=",
-        "value": 0,
-        "skip": "${result}"
-      }
-    ],
-    "css": "color:#303030;font-size:18px;background-color:#00000000;border-width:0px;",
-    "parent": "be7f",
-    "movableInEdit": false,
-    "clearCountRoutine": [
-      {
-        "func": "SELECT",
-        "property": "type",
-        "value": "holder"
-      },
-      {
-        "func": "SET",
-        "property": "fruit",
-        "value": null
-      },
-      {
-        "func": "SET",
-        "property": "fruitCount",
-        "value": null
-      }
     ]
   },
-  "hctwD": {
-    "id": "hctwD",
-    "x": 4,
-    "y": -2,
-    "width": 36,
-    "height": 36,
+  "4PButton": {
     "type": "button",
-    "movableInEdit": false,
-    "text": "-",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "hctw",
-        "mode": "dec",
-        "value": 1
-      }
-    ],
-    "parent": "counterLabel"
-  },
-  "counterLabel": {
-    "type": "label",
-    "id": "counterLabel",
-    "x": 1623,
-    "y": 437,
-    "width": 140,
-    "height": 44,
-    "css": "font-size: 30px;",
-    "editable": true,
-    "z": 3038,
-    "text": 204
-  },
-  "plusCounter": {
-    "id": "plusCounter",
-    "x": 100,
-    "y": -2,
-    "width": 36,
-    "height": 36,
-    "type": "button",
-    "movableInEdit": false,
-    "text": "+",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "counterLabel",
-        "mode": "inc",
-        "value": 1
-      }
-    ],
-    "parent": "counterLabel"
-  },
-  "player1Zone": {
-    "type": "holder",
-    "x": 800,
-    "y": 16,
-    "id": "player1Zone",
-    "width": 0,
-    "z": 1,
-    "dropTarget": {
-      "type": "holder"
-    },
-    "alignChildren": false,
-    "playerField": true,
-    "classes": "transparent",
-    "height": 968,
-    "movableInEdit": false,
-    "rotation": -90
-  },
-  "3k3q": {
-    "type": "button",
-    "text": "2P",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "playerField",
-        "value": true,
-        "collection": "Players"
-      },
-      {
-        "func": "SET",
-        "collection": "Players",
-        "property": "x",
-        "relation": "=",
-        "value": 1900
-      },
-      {
-        "func": "SET",
-        "collection": "Players",
-        "property": "rotation",
-        "relation": "=",
-        "value": 0
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player1Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": -90
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player2Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": 90
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "changePlayers"
-      },
-      {
-        "func": "CLICK"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "shuffler",
-        "collection": "shuffler"
-      },
-      {
-        "func": "CLICK",
-        "collection": "shuffler"
-      },
-      {
-        "func": "MOVE",
-        "from": "deck",
-        "to": [
-          "draw1",
-          "draw2"
-        ],
-        "count": 28
-      },
-      {
-        "func": "SELECT",
-        "property": "drawPile",
-        "value": 1,
-        "relation": "=="
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 180
-      },
-      {
-        "func": "SELECT",
-        "property": "drawPile",
-        "value": 2,
-        "relation": "=="
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 180
-      },
-      {
-        "func": "SELECT",
-        "property": "playPile",
-        "value": 1,
-        "relation": "=="
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 180
-      },
-      {
-        "func": "SELECT",
-        "property": "playPile",
-        "value": 2,
-        "relation": "=="
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 180
-      },
-      {
-        "//": "ab hier sind die nameLabel"
-      },
-      {
-        "func": "SELECT",
-        "property": "nameLabel",
-        "value": 1,
-        "relation": "=="
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 180
-      },
-      {
-        "func": "SELECT",
-        "property": "nameLabel",
-        "value": 2,
-        "relation": "=="
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 180
-      },
-      {
-        "func": "CALL",
-        "widget": "changePlayers",
-        "routine": "clearCountRoutine"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "clearBell"
-      },
-      {
-        "func": "CLICK"
-      },
-      {
-        "func": "FOREACH",
-        "in": [
-          "draw1",
-          "draw2"
-        ],
-        "loopRoutine": [
-          {
-            "func": "SELECT",
-            "property": "id",
-            "value": "${value}"
-          },
-          {
-            "func": "SET",
-            "property": "activeSeat",
-            "value": true
-          }
-        ]
-      },
-      {
-        "func": "FOREACH",
-        "in": [
-          "draw3",
-          "draw4",
-          "draw5",
-          "draw6",
-          "draw7",
-          "draw8"
-        ],
-        "loopRoutine": [
-          {
-            "func": "SELECT",
-            "property": "id",
-            "value": "${value}"
-          },
-          {
-            "func": "SET",
-            "property": "activeSeat",
-            "value": false
-          }
-        ]
-      }
-    ],
-    "z": 40073,
-    "id": "3k3q",
-    "css": "color:#303030;font-size:18px;background-color:#00000000;border-width:0px;",
-    "width": 70,
-    "height": 60,
-    "parent": "PB2",
+    "id": "4PButton",
+    "parent": "playerSwitchboard",
+    "width": 40,
+    "height": 40,
     "layer": 4,
-    "movableInEdit": false
-  },
-  "player2Zone": {
-    "type": "holder",
-    "x": 800,
-    "y": 16,
-    "width": 0,
-    "dropTarget": {
-      "type": "holder"
-    },
-    "alignChildren": false,
-    "playerField": true,
-    "classes": "transparent",
-    "id": "player2Zone",
-    "height": 968,
-    "z": 2,
-    "movableInEdit": false,
-    "rotation": 90
-  },
-  "ckgx": {
-    "type": "button",
-    "text": "3P",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "playerField",
-        "value": true,
-        "collection": "Players"
-      },
-      {
-        "func": "SET",
-        "collection": "Players",
-        "property": "x",
-        "relation": "=",
-        "value": 1900
-      },
-      {
-        "func": "SET",
-        "collection": "Players",
-        "property": "rotation",
-        "relation": "=",
-        "value": 0
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player1Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": 0
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player2Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": 120
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player3Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": 240
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "changePlayers"
-      },
-      {
-        "func": "CLICK"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "shuffler",
-        "collection": "shuffler"
-      },
-      {
-        "func": "CLICK",
-        "collection": "shuffler"
-      },
-      {
-        "func": "MOVE",
-        "from": "deck",
-        "to": [
-          "draw1",
-          "draw2",
-          "draw3"
-        ],
-        "count": 18
-      },
-      {
-        "func": "SELECT",
-        "property": "drawPile",
-        "value": 1,
-        "relation": ">="
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 0
-      },
-      {
-        "func": "SELECT",
-        "property": "drawPile",
-        "value": 1,
-        "relation": ">"
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 180
-      },
-      {
-        "func": "SELECT",
-        "property": "playPile",
-        "value": 1,
-        "relation": ">="
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 0
-      },
-      {
-        "func": "SELECT",
-        "property": "playPile",
-        "value": 1,
-        "relation": ">"
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 180
-      },
-      {
-        "//": "ab hier sind die nameLabel"
-      },
-      {
-        "func": "SELECT",
-        "property": "nameLabel",
-        "value": 1,
-        "relation": ">="
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 0
-      },
-      {
-        "func": "SELECT",
-        "property": "nameLabel",
-        "value": 1,
-        "relation": ">"
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 180
-      },
-      {
-        "func": "CALL",
-        "widget": "changePlayers",
-        "routine": "clearCountRoutine"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "clearBell"
-      },
-      {
-        "func": "CLICK"
-      },
-      {
-        "func": "FOREACH",
-        "in": [
-          "draw1",
-          "draw2",
-          "draw3"
-        ],
-        "loopRoutine": [
-          {
-            "func": "SELECT",
-            "property": "id",
-            "value": "${value}"
-          },
-          {
-            "func": "SET",
-            "property": "activeSeat",
-            "value": true
-          }
-        ]
-      },
-      {
-        "func": "FOREACH",
-        "in": [
-          "draw4",
-          "draw5",
-          "draw6",
-          "draw7",
-          "draw8"
-        ],
-        "loopRoutine": [
-          {
-            "func": "SELECT",
-            "property": "id",
-            "value": "${value}"
-          },
-          {
-            "func": "SET",
-            "property": "activeSeat",
-            "value": false
-          }
-        ]
-      }
-    ],
-    "z": 40059,
-    "css": "color:#303030;font-size:18px;background-color:#00000000;border-width:0px;",
-    "width": 70,
-    "height": 60,
-    "id": "ckgx",
-    "parent": "PB3",
-    "layer": 4,
-    "movableInEdit": false
-  },
-  "qc4m": {
-    "type": "button",
     "text": "4P",
     "clickRoutine": [
       {
         "func": "SELECT",
-        "property": "playerField",
-        "value": true,
-        "collection": "Players"
+        "property": "task",
+        "value": "playerField"
       },
       {
         "func": "SET",
-        "collection": "Players",
         "property": "x",
         "relation": "=",
         "value": 1900
       },
       {
         "func": "SET",
-        "collection": "Players",
         "property": "rotation",
         "relation": "=",
         "value": 0
       },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player1Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": -45
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player2Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": 45
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player3Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": 135
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player4Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": 225
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "changePlayers"
-      },
-      {
-        "func": "CLICK"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "shuffler",
-        "collection": "shuffler"
-      },
-      {
-        "func": "CLICK",
-        "collection": "shuffler"
-      },
-      {
-        "func": "MOVE",
-        "from": "deck",
-        "to": [
-          "draw1",
-          "draw2",
-          "draw3",
-          "draw4"
-        ],
-        "count": 14
-      },
-      {
-        "func": "SELECT",
-        "property": "drawPile",
-        "value": 1,
-        "relation": ">="
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 0
-      },
-      {
-        "func": "SELECT",
-        "property": "drawPile",
-        "value": 2,
-        "relation": ">"
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 180
-      },
-      {
-        "func": "SELECT",
-        "property": "playPile",
-        "value": 1,
-        "relation": ">="
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 0
-      },
-      {
-        "func": "SELECT",
-        "property": "playPile",
-        "value": 2,
-        "relation": ">"
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 180
-      },
-      {
-        "//": "ab hier sind die nameLabel"
-      },
-      {
-        "func": "SELECT",
-        "property": "nameLabel",
-        "value": 1,
-        "relation": ">="
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 0
-      },
-      {
-        "func": "SELECT",
-        "property": "nameLabel",
-        "value": 2,
-        "relation": ">"
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 180
-      },
-      {
-        "func": "CALL",
-        "widget": "changePlayers",
-        "routine": "clearCountRoutine"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "clearBell"
-      },
-      {
-        "func": "CLICK"
-      },
+      "var i = 0",
+      "var Nr = ${PROPERTY id}",
+      "var Nr = ${Nr.0}",
+      "var a = ${Nr} % 2",
+      "var a = ${a} * 2",
+      "var a = ${a} + 2",
+      "var deltaPhi = 360 / ${Nr}",
+      "var angleOffset = ${deltaPhi} / ${a}",
+      "var angleOffset = -90 + ${angleOffset}",
       {
         "func": "FOREACH",
         "in": [
-          "draw1",
-          "draw2",
-          "draw3",
-          "draw4"
+          "player1Zone",
+          "player2Zone",
+          "player3Zone",
+          "player4Zone"
         ],
         "loopRoutine": [
+          "var angle = ${i} * ${deltaPhi}",
+          "var angle = ${angle} + ${angleOffset}",
           {
-            "func": "SELECT",
-            "property": "id",
-            "value": "${value}"
+            "func": "CALL",
+            "routine": "setPropertiesByIDRoutine",
+            "widget": "codeLibrary",
+            "arguments": {
+              "properties": {
+                "x": 800,
+                "rotation": "${angle}"
+              },
+              "ID": "${value}"
+            }
           },
-          {
-            "func": "SET",
-            "property": "activeSeat",
-            "value": true
-          }
+          "var i = ${i} + 1"
         ]
       },
       {
-        "func": "FOREACH",
-        "in": [
-          "draw5",
-          "draw6",
-          "draw7",
-          "draw8"
-        ],
-        "loopRoutine": [
-          {
-            "func": "SELECT",
-            "property": "id",
-            "value": "${value}"
-          },
-          {
-            "func": "SET",
-            "property": "activeSeat",
-            "value": false
-          }
+        "func": "SET",
+        "property": "rotation",
+        "value": 0,
+        "collection": [
+          "p1",
+          "p1Draw",
+          "p1Play",
+          "p2",
+          "p2Draw",
+          "p2Play"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "value": 180,
+        "collection": [
+          "p3",
+          "p3Draw",
+          "p3Play",
+          "p4",
+          "p4Draw",
+          "p4Play"
         ]
       }
     ],
-    "z": 40166,
-    "layer": 4,
-    "css": "color:#303030;font-size:18px;background-color:#00000000;border-width:0px;",
-    "width": 70,
-    "height": 60,
-    "id": "qc4m",
-    "x": 212,
-    "y": 46,
-    "parent": "playerSwitchboard",
-    "movableInEdit": false
+    "fixedParent": true,
+    "y": 80
   },
-  "kxj7": {
+  "5PButton": {
     "type": "button",
+    "id": "5PButton",
+    "parent": "playerSwitchboard",
+    "width": 40,
+    "height": 40,
+    "layer": 4,
     "text": "5P",
     "clickRoutine": [
       {
         "func": "SELECT",
-        "property": "playerField",
-        "value": true,
-        "collection": "Players"
+        "property": "task",
+        "value": "playerField"
       },
       {
         "func": "SET",
-        "collection": "Players",
         "property": "x",
         "relation": "=",
         "value": 1900
       },
       {
         "func": "SET",
-        "collection": "Players",
         "property": "rotation",
         "relation": "=",
         "value": 0
       },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player1Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": -72
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player2Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": 0
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player3Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": 72
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player4Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": 144
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player5Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": -144
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "changePlayers"
-      },
-      {
-        "func": "CLICK"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "shuffler",
-        "collection": "shuffler"
-      },
-      {
-        "func": "CLICK",
-        "collection": "shuffler"
-      },
-      {
-        "func": "MOVE",
-        "from": "deck",
-        "to": [
-          "draw1",
-          "draw2",
-          "draw3",
-          "draw4",
-          "draw5"
-        ],
-        "count": 11
-      },
-      {
-        "func": "SELECT",
-        "property": "drawPile",
-        "value": 1,
-        "relation": ">="
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 0
-      },
-      {
-        "func": "SELECT",
-        "property": "drawPile",
-        "value": 3,
-        "relation": ">"
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 180
-      },
-      {
-        "func": "SELECT",
-        "property": "playPile",
-        "value": 1,
-        "relation": ">="
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 0
-      },
-      {
-        "func": "SELECT",
-        "property": "playPile",
-        "value": 3,
-        "relation": ">"
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 180
-      },
-      {
-        "//": "ab hier sind die nameLabel"
-      },
-      {
-        "func": "SELECT",
-        "property": "nameLabel",
-        "value": 1,
-        "relation": ">="
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 0
-      },
-      {
-        "func": "SELECT",
-        "property": "nameLabel",
-        "value": 3,
-        "relation": ">"
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 180
-      },
-      {
-        "func": "CALL",
-        "widget": "changePlayers",
-        "routine": "clearCountRoutine"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "clearBell"
-      },
-      {
-        "func": "CLICK"
-      },
+      "var i = 0",
+      "var Nr = ${PROPERTY id}",
+      "var Nr = ${Nr.0}",
+      "var a = ${Nr} % 2",
+      "var a = ${a} * 2",
+      "var a = ${a} + 2",
+      "var deltaPhi = 360 / ${Nr}",
+      "var angleOffset = ${deltaPhi} / ${a}",
+      "var angleOffset = -90 + ${angleOffset}",
       {
         "func": "FOREACH",
         "in": [
-          "draw1",
-          "draw2",
-          "draw3",
-          "draw4",
-          "draw5"
+          "player1Zone",
+          "player2Zone",
+          "player3Zone",
+          "player4Zone",
+          "player5Zone"
         ],
         "loopRoutine": [
+          "var angle = ${i} * ${deltaPhi}",
+          "var angle = ${angle} + ${angleOffset}",
           {
-            "func": "SELECT",
-            "property": "id",
-            "value": "${value}"
+            "func": "CALL",
+            "routine": "setPropertiesByIDRoutine",
+            "widget": "codeLibrary",
+            "arguments": {
+              "properties": {
+                "x": 800,
+                "rotation": "${angle}"
+              },
+              "ID": "${value}"
+            }
           },
-          {
-            "func": "SET",
-            "property": "activeSeat",
-            "value": true
-          }
+          "var i = ${i} + 1"
         ]
       },
       {
-        "func": "FOREACH",
-        "in": [
-          "draw6",
-          "draw7",
-          "draw8"
-        ],
-        "loopRoutine": [
-          {
-            "func": "SELECT",
-            "property": "id",
-            "value": "${value}"
-          },
-          {
-            "func": "SET",
-            "property": "activeSeat",
-            "value": false
-          }
+        "func": "SET",
+        "property": "rotation",
+        "value": 0,
+        "collection": [
+          "p1",
+          "p1Draw",
+          "p1Play",
+          "p2",
+          "p2Draw",
+          "p2Play"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "value": 180,
+        "collection": [
+          "p3",
+          "p3Draw",
+          "p3Play",
+          "p4",
+          "p4Draw",
+          "p4Play",
+          "p5",
+          "p5Draw",
+          "p5Play"
         ]
       }
     ],
-    "z": 40162,
-    "css": "color:#303030;font-size:18px;background-color:#00000000;border-width:0px;",
-    "width": 70,
-    "height": 60,
-    "id": "kxj7",
-    "layer": 4,
-    "x": 303,
-    "y": 47,
-    "parent": "playerSwitchboard",
-    "movableInEdit": false
+    "fixedParent": true,
+    "y": 120
   },
-  "varv": {
+  "2PButton": {
     "type": "button",
-    "text": "6P",
+    "id": "2PButton",
+    "parent": "playerSwitchboard",
+    "width": 40,
+    "height": 40,
+    "layer": 4,
+    "text": "2P",
     "clickRoutine": [
       {
         "func": "SELECT",
-        "property": "playerField",
-        "value": true,
-        "collection": "Players"
+        "property": "task",
+        "value": "playerField"
       },
       {
         "func": "SET",
-        "collection": "Players",
         "property": "x",
         "relation": "=",
         "value": 1900
       },
       {
         "func": "SET",
-        "collection": "Players",
         "property": "rotation",
         "relation": "=",
         "value": 0
       },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player1Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": -60
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player2Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": 0
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player3Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": 60
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player4Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": 120
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player5Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": 180
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player6Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": 240
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "changePlayers"
-      },
-      {
-        "func": "CLICK"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "shuffler",
-        "collection": "shuffler"
-      },
-      {
-        "func": "CLICK",
-        "collection": "shuffler"
-      },
-      {
-        "func": "MOVE",
-        "from": "deck",
-        "to": [
-          "draw1",
-          "draw2",
-          "draw3",
-          "draw4",
-          "draw5",
-          "draw6"
-        ],
-        "count": 9
-      },
-      {
-        "func": "SELECT",
-        "property": "drawPile",
-        "value": 1,
-        "relation": ">="
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 0
-      },
-      {
-        "func": "SELECT",
-        "property": "drawPile",
-        "value": 3,
-        "relation": ">"
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 180
-      },
-      {
-        "func": "SELECT",
-        "property": "playPile",
-        "value": 1,
-        "relation": ">="
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 0
-      },
-      {
-        "func": "SELECT",
-        "property": "playPile",
-        "value": 3,
-        "relation": ">"
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 180
-      },
-      {
-        "//": "ab hier sind die nameLabel"
-      },
-      {
-        "func": "SELECT",
-        "property": "nameLabel",
-        "value": 1,
-        "relation": ">="
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 0
-      },
-      {
-        "func": "SELECT",
-        "property": "nameLabel",
-        "value": 3,
-        "relation": ">"
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 180
-      },
-      {
-        "func": "CALL",
-        "widget": "changePlayers",
-        "routine": "clearCountRoutine"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "clearBell"
-      },
-      {
-        "func": "CLICK"
-      },
+      "var i = 0",
+      "var Nr = ${PROPERTY id}",
+      "var Nr = ${Nr.0}",
+      "var a = ${Nr} % 2",
+      "var a = ${a} * 2",
+      "var a = ${a} + 2",
+      "var deltaPhi = 360 / ${Nr}",
+      "var angleOffset = ${deltaPhi} / ${a}",
+      "var angleOffset = -90 + ${angleOffset}",
       {
         "func": "FOREACH",
         "in": [
-          "draw1",
-          "draw2",
-          "draw3",
-          "draw4",
-          "draw5",
-          "draw6"
+          "player1Zone",
+          "player2Zone"
         ],
         "loopRoutine": [
+          "var angle = ${i} * ${deltaPhi}",
+          "var angle = ${angle} + ${angleOffset}",
           {
-            "func": "SELECT",
-            "property": "id",
-            "value": "${value}"
+            "func": "CALL",
+            "routine": "setPropertiesByIDRoutine",
+            "widget": "codeLibrary",
+            "arguments": {
+              "properties": {
+                "x": 800,
+                "rotation": "${angle}"
+              },
+              "ID": "${value}"
+            }
           },
-          {
-            "func": "SET",
-            "property": "activeSeat",
-            "value": true
-          }
+          "var i = ${i} + 1"
         ]
       },
       {
-        "func": "FOREACH",
-        "in": [
-          "draw7",
-          "draw8"
-        ],
-        "loopRoutine": [
-          {
-            "func": "SELECT",
-            "property": "id",
-            "value": "${value}"
-          },
-          {
-            "func": "SET",
-            "property": "activeSeat",
-            "value": false
-          }
+        "func": "SET",
+        "property": "rotation",
+        "value": 0,
+        "collection": [
+          "p1",
+          "p1Draw",
+          "p1Play"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "value": 180,
+        "collection": [
+          "p2",
+          "p2Draw",
+          "p2Play"
         ]
       }
     ],
-    "z": 40154,
-    "css": "color:#303030;font-size:18px;background-color:#00000000;border-width:0px;",
-    "width": 70,
-    "height": 60,
-    "id": "varv",
-    "layer": 4,
-    "parent": "PB6"
+    "fixedParent": true
   },
-  "m0r7": {
+  "3PButton": {
     "type": "button",
+    "id": "3PButton",
+    "parent": "playerSwitchboard",
+    "width": 40,
+    "height": 40,
+    "layer": 4,
+    "text": "3P",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "task",
+        "value": "playerField"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "=",
+        "value": 1900
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "relation": "=",
+        "value": 0
+      },
+      "var i = 0",
+      "var Nr = ${PROPERTY id}",
+      "var Nr = ${Nr.0}",
+      "var a = ${Nr} % 2",
+      "var a = ${a} * 2",
+      "var a = ${a} + 2",
+      "var deltaPhi = 360 / ${Nr}",
+      "var angleOffset = ${deltaPhi} / ${a}",
+      "var angleOffset = -90 + ${angleOffset}",
+      {
+        "func": "FOREACH",
+        "in": [
+          "player1Zone",
+          "player2Zone",
+          "player3Zone"
+        ],
+        "loopRoutine": [
+          "var angle = ${i} * ${deltaPhi}",
+          "var angle = ${angle} + ${angleOffset}",
+          {
+            "func": "CALL",
+            "routine": "setPropertiesByIDRoutine",
+            "widget": "codeLibrary",
+            "arguments": {
+              "properties": {
+                "x": 800,
+                "rotation": "${angle}"
+              },
+              "ID": "${value}"
+            }
+          },
+          "var i = ${i} + 1"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "value": 0,
+        "collection": [
+          "p1",
+          "p1Draw",
+          "p1Play",
+          "p2",
+          "p2Draw",
+          "p2Play"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "value": 180,
+        "collection": [
+          "p3",
+          "p3Draw",
+          "p3Play"
+        ]
+      }
+    ],
+    "fixedParent": true,
+    "y": 40
+  },
+  "8PButton": {
+    "type": "button",
+    "id": "8PButton",
+    "parent": "playerSwitchboard",
+    "width": 40,
+    "height": 40,
+    "layer": 4,
     "text": "8P",
     "clickRoutine": [
       {
         "func": "SELECT",
-        "property": "playerField",
-        "value": true,
-        "collection": "Players"
+        "property": "task",
+        "value": "playerField"
       },
       {
         "func": "SET",
-        "collection": "Players",
         "property": "x",
         "relation": "=",
         "value": 1900
       },
       {
         "func": "SET",
-        "collection": "Players",
         "property": "rotation",
         "relation": "=",
         "value": 0
       },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player1Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": -67.5
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player2Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": -22.5
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player3Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": 22.5
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player4Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": 67.5
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player5Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": 112.5
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player6Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": 157.5
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player7Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": -157.5
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player8Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": -112.5
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "changePlayers"
-      },
-      {
-        "func": "CLICK"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "shuffler",
-        "collection": "shuffler"
-      },
-      {
-        "func": "CLICK",
-        "collection": "shuffler"
-      },
-      {
-        "func": "MOVE",
-        "from": "deck",
-        "to": [
-          "draw1",
-          "draw2",
-          "draw3",
-          "draw4",
-          "draw5",
-          "draw6",
-          "draw7",
-          "draw8"
-        ],
-        "count": 7
-      },
-      {
-        "func": "SELECT",
-        "property": "drawPile",
-        "value": 1,
-        "relation": ">="
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 0
-      },
-      {
-        "func": "SELECT",
-        "property": "drawPile",
-        "value": 4,
-        "relation": ">"
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 180
-      },
-      {
-        "func": "SELECT",
-        "property": "playPile",
-        "value": 1,
-        "relation": ">="
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 0
-      },
-      {
-        "func": "SELECT",
-        "property": "playPile",
-        "value": 4,
-        "relation": ">"
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 180
-      },
-      {
-        "//": "ab hier sind die nameLabel"
-      },
-      {
-        "func": "SELECT",
-        "property": "nameLabel",
-        "value": 1,
-        "relation": ">="
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 0
-      },
-      {
-        "func": "SELECT",
-        "property": "nameLabel",
-        "value": 4,
-        "relation": ">"
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 180
-      },
-      {
-        "func": "CALL",
-        "widget": "changePlayers",
-        "routine": "clearCountRoutine"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "clearBell"
-      },
-      {
-        "func": "CLICK"
-      },
+      "var i = 0",
+      "var Nr = ${PROPERTY id}",
+      "var Nr = ${Nr.0}",
+      "var a = ${Nr} % 2",
+      "var a = ${a} * 2",
+      "var a = ${a} + 2",
+      "var deltaPhi = 360 / ${Nr}",
+      "var angleOffset = ${deltaPhi} / ${a}",
+      "var angleOffset = -90 + ${angleOffset}",
       {
         "func": "FOREACH",
         "in": [
-          "draw1",
-          "draw2",
-          "draw3",
-          "draw4",
-          "draw5",
-          "draw6",
-          "draw7",
-          "draw8"
+          "player1Zone",
+          "player2Zone",
+          "player3Zone",
+          "player4Zone",
+          "player5Zone",
+          "player6Zone",
+          "player7Zone",
+          "player8Zone"
         ],
         "loopRoutine": [
+          "var angle = ${i} * ${deltaPhi}",
+          "var angle = ${angle} + ${angleOffset}",
           {
-            "func": "SELECT",
-            "property": "id",
-            "value": "${value}"
+            "func": "CALL",
+            "routine": "setPropertiesByIDRoutine",
+            "widget": "codeLibrary",
+            "arguments": {
+              "properties": {
+                "x": 800,
+                "rotation": "${angle}"
+              },
+              "ID": "${value}"
+            }
           },
-          {
-            "func": "SET",
-            "property": "activeSeat",
-            "value": true
-          }
+          "var i = ${i} + 1"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "value": 0,
+        "collection": [
+          "p1",
+          "p1Draw",
+          "p1Play",
+          "p2",
+          "p2Draw",
+          "p2Play",
+          "p3",
+          "p3Draw",
+          "p3Play",
+          "p4",
+          "p4Draw",
+          "p4Play"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "value": 180,
+        "collection": [
+          "p5",
+          "p5Draw",
+          "p5Play",
+          "p6",
+          "p6Draw",
+          "p6Play",
+          "p7",
+          "p7Draw",
+          "p7Play",
+          "p8",
+          "p8Draw",
+          "p8Play"
         ]
       }
     ],
-    "z": 40164,
-    "css": "color:#303030;font-size:18px;background-color:#00000000;border-width:0px;",
-    "width": 70,
-    "height": 60,
-    "id": "m0r7",
-    "layer": 4,
-    "parent": "PB8",
-    "movableInEdit": false
+    "fixedParent": true,
+    "y": 240
   },
-  "player3Zone": {
-    "type": "holder",
-    "x": 1900,
-    "id": "player3Zone",
-    "width": 0,
-    "dropTarget": {
-      "type": "holder"
-    },
-    "alignChildren": false,
-    "playerField": true,
-    "classes": "transparent",
-    "z": 3,
-    "y": 16,
-    "height": 968,
-    "movableInEdit": false
-  },
-  "player4Zone": {
-    "type": "holder",
-    "x": 1900,
-    "y": 16,
-    "id": "player4Zone",
-    "width": 0,
-    "dropTarget": {
-      "type": "holder"
-    },
-    "alignChildren": false,
-    "playerField": true,
-    "classes": "transparent",
-    "z": 4,
-    "height": 968,
-    "movableInEdit": false
-  },
-  "player5Zone": {
-    "type": "holder",
-    "x": 1900,
-    "y": 16,
-    "id": "player5Zone",
-    "width": 0,
-    "dropTarget": {
-      "type": "holder"
-    },
-    "alignChildren": false,
-    "playerField": true,
-    "classes": "transparent",
-    "z": 5,
-    "height": 968,
-    "movableInEdit": false
-  },
-  "player6Zone": {
-    "type": "holder",
-    "x": 1900,
-    "y": 16,
-    "id": "player6Zone",
-    "width": 0,
-    "dropTarget": {
-      "type": "holder"
-    },
-    "alignChildren": false,
-    "playerField": true,
-    "classes": "transparent",
-    "z": 6,
-    "height": 968,
-    "movableInEdit": false
-  },
-  "player7Zone": {
-    "type": "holder",
-    "x": 1900,
-    "y": 16,
-    "id": "player7Zone",
-    "width": 0,
-    "dropTarget": {
-      "type": "holder"
-    },
-    "alignChildren": false,
-    "playerField": true,
-    "classes": "transparent",
-    "z": 7,
-    "height": 968,
-    "movableInEdit": false
-  },
-  "player8Zone": {
-    "type": "holder",
-    "x": 1900,
-    "y": 16,
-    "id": "player8Zone",
-    "width": 0,
-    "dropTarget": {
-      "type": "holder"
-    },
-    "alignChildren": false,
-    "playerField": true,
-    "classes": "transparent",
-    "z": 8,
-    "height": 968,
-    "movableInEdit": false
-  },
-  "t1sr": {
+  "7PButton": {
     "type": "button",
+    "id": "7PButton",
+    "parent": "playerSwitchboard",
+    "width": 40,
+    "height": 40,
+    "layer": 4,
     "text": "7P",
     "clickRoutine": [
       {
         "func": "SELECT",
-        "property": "playerField",
-        "value": true,
-        "collection": "Players"
+        "property": "task",
+        "value": "playerField"
       },
       {
         "func": "SET",
-        "collection": "Players",
         "property": "x",
         "relation": "=",
         "value": 1900
       },
       {
         "func": "SET",
-        "collection": "Players",
         "property": "rotation",
         "relation": "=",
         "value": 0
       },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player1Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": -51.3
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player2Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": 0
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player3Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": 51.3
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player4Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": 102.6
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player5Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": 153.9
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player6Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": 205.2
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "player7Zone",
-        "collection": "onePlayer"
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "x",
-        "relation": "=",
-        "value": 800
-      },
-      {
-        "func": "SET",
-        "collection": "onePlayer",
-        "property": "rotation",
-        "relation": "=",
-        "value": 255.5
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "changePlayers"
-      },
-      {
-        "func": "CLICK"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "shuffler",
-        "collection": "shuffler"
-      },
-      {
-        "func": "CLICK",
-        "collection": "shuffler"
-      },
-      {
-        "func": "MOVE",
-        "from": "deck",
-        "to": [
-          "draw1",
-          "draw2",
-          "draw3",
-          "draw4",
-          "draw5",
-          "draw6",
-          "draw7"
-        ],
-        "count": 8
-      },
-      {
-        "func": "SELECT",
-        "property": "drawPile",
-        "value": 1,
-        "relation": ">="
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 0
-      },
-      {
-        "func": "SELECT",
-        "property": "drawPile",
-        "value": 3,
-        "relation": ">"
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 180
-      },
-      {
-        "func": "SELECT",
-        "property": "playPile",
-        "value": 1,
-        "relation": ">="
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 0
-      },
-      {
-        "func": "SELECT",
-        "property": "playPile",
-        "value": 3,
-        "relation": ">"
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 180
-      },
-      {
-        "//": "ab hier sind die nameLabel"
-      },
-      {
-        "func": "SELECT",
-        "property": "nameLabel",
-        "value": 1,
-        "relation": ">="
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 0
-      },
-      {
-        "func": "SELECT",
-        "property": "nameLabel",
-        "value": 3,
-        "relation": ">"
-      },
-      {
-        "func": "SET",
-        "property": "rotation",
-        "value": 180
-      },
-      {
-        "func": "CALL",
-        "widget": "changePlayers",
-        "routine": "clearCountRoutine"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "clearBell"
-      },
-      {
-        "func": "CLICK"
-      },
+      "var i = 0",
+      "var Nr = ${PROPERTY id}",
+      "var Nr = ${Nr.0}",
+      "var a = ${Nr} % 2",
+      "var a = ${a} * 2",
+      "var a = ${a} + 2",
+      "var deltaPhi = 360 / ${Nr}",
+      "var angleOffset = ${deltaPhi} / ${a}",
+      "var angleOffset = -90 + ${angleOffset}",
       {
         "func": "FOREACH",
         "in": [
-          "draw1",
-          "draw2",
-          "draw3",
-          "draw4",
-          "draw5",
-          "draw6",
-          "draw7"
+          "player1Zone",
+          "player2Zone",
+          "player3Zone",
+          "player4Zone",
+          "player5Zone",
+          "player6Zone",
+          "player7Zone"
         ],
         "loopRoutine": [
+          "var angle = ${i} * ${deltaPhi}",
+          "var angle = ${angle} + ${angleOffset}",
           {
-            "func": "SELECT",
-            "property": "id",
-            "value": "${value}"
+            "func": "CALL",
+            "routine": "setPropertiesByIDRoutine",
+            "widget": "codeLibrary",
+            "arguments": {
+              "properties": {
+                "x": 800,
+                "rotation": "${angle}"
+              },
+              "ID": "${value}"
+            }
           },
-          {
-            "func": "SET",
-            "property": "activeSeat",
-            "value": true
-          }
+          "var i = ${i} + 1"
         ]
       },
       {
-        "func": "FOREACH",
-        "in": [
-          "draw8"
-        ],
-        "loopRoutine": [
-          {
-            "func": "SELECT",
-            "property": "id",
-            "value": "${value}"
-          },
-          {
-            "func": "SET",
-            "property": "activeSeat",
-            "value": false
-          }
+        "func": "SET",
+        "property": "rotation",
+        "value": 0,
+        "collection": [
+          "p1",
+          "p1Draw",
+          "p1Play",
+          "p2",
+          "p2Draw",
+          "p2Play",
+          "p3",
+          "p3Draw",
+          "p3Play",
+          "p4",
+          "p4Draw",
+          "p4Play"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "value": 180,
+        "collection": [
+          "p5",
+          "p5Draw",
+          "p5Play",
+          "p6",
+          "p6Draw",
+          "p6Play",
+          "p7",
+          "p7Draw",
+          "p7Play"
         ]
       }
     ],
-    "z": 40071,
-    "css": "color:#303030;font-size:18px;background-color:#00000000;border-width:0px;",
-    "width": 70,
-    "height": 60,
-    "id": "t1sr",
-    "parent": "PB7",
+    "fixedParent": true,
+    "y": 200
+  },
+  "6PButton": {
+    "type": "button",
+    "id": "6PButton",
+    "parent": "playerSwitchboard",
+    "width": 40,
+    "height": 40,
     "layer": 4,
-    "movableInEdit": false
+    "text": "6P",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "task",
+        "value": "playerField"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "=",
+        "value": 1900
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "relation": "=",
+        "value": 0
+      },
+      "var i = 0",
+      "var Nr = ${PROPERTY id}",
+      "var Nr = ${Nr.0}",
+      "var a = ${Nr} % 2",
+      "var a = ${a} * 2",
+      "var a = ${a} + 2",
+      "var deltaPhi = 360 / ${Nr}",
+      "var angleOffset = ${deltaPhi} / ${a}",
+      "var angleOffset = -90 + ${angleOffset}",
+      {
+        "func": "FOREACH",
+        "in": [
+          "player1Zone",
+          "player2Zone",
+          "player3Zone",
+          "player4Zone",
+          "player5Zone",
+          "player6Zone"
+        ],
+        "loopRoutine": [
+          "var angle = ${i} * ${deltaPhi}",
+          "var angle = ${angle} + ${angleOffset}",
+          {
+            "func": "CALL",
+            "routine": "setPropertiesByIDRoutine",
+            "widget": "codeLibrary",
+            "arguments": {
+              "properties": {
+                "x": 800,
+                "rotation": "${angle}"
+              },
+              "ID": "${value}"
+            }
+          },
+          "var i = ${i} + 1"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "value": 0,
+        "collection": [
+          "p1",
+          "p1Draw",
+          "p1Play",
+          "p2",
+          "p2Draw",
+          "p2Play",
+          "p3",
+          "p3Draw",
+          "p3Play"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "value": 180,
+        "collection": [
+          "p4",
+          "p4Draw",
+          "p4Play",
+          "p5",
+          "p5Draw",
+          "p5Play",
+          "p6",
+          "p6Draw",
+          "p6Play"
+        ]
+      }
+    ],
+    "fixedParent": true,
+    "y": 160
   },
-  "be7f": {
-    "image": "/assets/-1004567241_11721",
-    "id": "be7f",
-    "z": 70787,
-    "x": 1452,
-    "y": 860,
-    "width": 140,
-    "height": 60,
+  "clickCover": {
+    "id": "clickCover",
+    "css": {
+      "background": "#ffffff00"
+    },
+    "width": 200,
+    "height": 200,
+    "owner": [
+      "Ingegneus Edge",
+      "Ingegneus",
+      "Mr.Mister"
+    ],
+    "z": 75746,
     "movable": false,
-    "movableInEdit": false
+    "parent": "bell",
+    "borderRadius": "50%"
   },
-  "be7f-copy003-copy001": {
-    "image": "/assets/2078926599_18912",
-    "id": "be7f-copy003-copy001",
-    "width": 400,
-    "height": 296,
-    "layer": -3,
-    "movable": false,
-    "z": 40178,
-    "parent": "playerSwitchboard",
-    "movableInEdit": false
-  },
-  "PB2": {
-    "image": "/assets/1703743045_28840",
-    "z": 70810,
-    "x": 30,
-    "y": 50,
-    "height": 70,
-    "width": 70,
-    "id": "PB2",
-    "inheritChildZ": true,
-    "movableInEdit": false,
-    "parent": "playerSwitchboard"
-  },
-  "PB5": {
-    "image": "/assets/1703743045_28840",
-    "x": 300,
-    "y": 50,
-    "height": 70,
-    "width": 70,
-    "id": "PB5",
-    "parent": "be7f-copy003-copy001",
-    "z": 6000,
-    "inheritChildZ": true,
-    "movableInEdit": false
-  },
-  "PB4": {
-    "image": "/assets/1703743045_28840",
-    "x": 210,
-    "y": 50,
-    "height": 70,
-    "width": 70,
-    "id": "PB4",
-    "parent": "be7f-copy003-copy001",
-    "z": 6000,
-    "inheritChildZ": true,
-    "movableInEdit": false
-  },
-  "PB3": {
-    "image": "/assets/1703743045_28840",
-    "x": 122,
-    "y": 49,
-    "height": 70,
-    "width": 70,
-    "id": "PB3",
-    "z": 70814,
-    "inheritChildZ": true,
-    "movableInEdit": false,
-    "parent": "playerSwitchboard"
-  },
-  "PB8": {
-    "image": "/assets/1703743045_28840",
-    "x": 259,
-    "y": 174,
-    "height": 70,
-    "width": 70,
-    "id": "PB8",
-    "z": 70805,
-    "inheritChildZ": true,
-    "movableInEdit": false,
-    "parent": "playerSwitchboard"
-  },
-  "PB7": {
-    "image": "/assets/1703743045_28840",
-    "x": 167,
-    "y": 174,
-    "height": 70,
-    "width": 70,
-    "id": "PB7",
-    "z": 70801,
-    "inheritChildZ": true,
-    "parent": "playerSwitchboard",
-    "movableInEdit": false
-  },
-  "PB6": {
-    "image": "/assets/1703743045_28840",
-    "x": 75,
-    "y": 174,
-    "height": 70,
-    "width": 70,
-    "id": "PB6",
-    "z": 70772,
-    "inheritChildZ": true,
-    "parent": "playerSwitchboard"
-  },
-  "gubg": {
-    "image": "/assets/-2000921333_378618",
-    "movable": false,
-    "width": 1600,
-    "height": 1000,
-    "layer": -9,
-    "id": "gubg",
-    "movableInEdit": false
-  },
-  "wxlq": {
-    "id": "wxlq",
-    "width": 800,
-    "height": 800,
-    "css": "border: 5px solid red; border-radius:50%;border-style:dashed",
-    "x": 400,
-    "y": 100,
-    "layer": -8,
-    "z": 40190,
-    "movable": false,
-    "movableInEdit": false
-  },
-  "draw7": {
+  "p1Play": {
     "type": "holder",
-    "id": "draw7",
-    "parent": "player7Zone",
-    "drawPile": 7,
-    "x": 7.5,
-    "rotation": 180,
-    "text": "",
-    "css": "background-color:#ffffffc0;",
-    "movableInEdit": false,
-    "activeSeat": false
-  },
-  "draw8": {
-    "type": "holder",
-    "id": "draw8",
-    "parent": "player8Zone",
-    "drawPile": 8,
-    "x": 7.5,
-    "rotation": 180,
-    "text": "",
-    "css": "background-color:#ffffffc0;",
-    "movableInEdit": false,
-    "activeSeat": false
-  },
-  "draw1": {
-    "type": "holder",
-    "id": "draw1",
+    "id": "p1Play",
     "parent": "player1Zone",
-    "z": null,
-    "drawPile": 1,
-    "x": 7.5,
-    "text": "",
-    "css": "background-color:#ffffffc0;",
+    "x": -118.5,
     "movableInEdit": false,
-    "activeSeat": true,
-    "rotation": 180
-  },
-  "draw2": {
-    "type": "holder",
-    "id": "draw2",
-    "parent": "player2Zone",
-    "drawPile": 2,
-    "layer": 7,
-    "x": 7.5,
-    "text": "",
-    "css": "background-color:#ffffffc0;",
-    "movableInEdit": false,
-    "activeSeat": true,
-    "rotation": 180
-  },
-  "draw3": {
-    "type": "holder",
-    "id": "draw3",
-    "parent": "player3Zone",
-    "drawPile": 3,
-    "x": 7.5,
-    "text": "",
-    "css": "background-color:#ffffffc0;",
-    "movableInEdit": false,
+    "css": {
+      "background-color": "#ffffff66"
+    },
+    "playerColor": "#999999",
+    "seatedPlayer": "Ingegneus",
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "fruit",
+        "variable": "fruit"
+      },
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "quantity",
+        "variable": "quantity"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "fruit",
+        "value": "${fruit}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "fruitCount",
+        "value": "${quantity}"
+      }
+    ],
     "activeSeat": false,
-    "rotation": 180
+    "onEnter": {
+      "activeFace": 1
+    },
+    "task": "playHolder",
+    "fruit": "kiwi",
+    "fruitCount": 4
   },
-  "draw5": {
+  "p1Draw": {
     "type": "holder",
-    "id": "draw5",
-    "parent": "player5Zone",
-    "drawPile": 5,
+    "id": "p1Draw",
+    "parent": "player1Zone",
     "x": 7.5,
-    "rotation": 180,
-    "text": "",
-    "css": "background-color:#ffffffc0;",
     "movableInEdit": false,
-    "activeSeat": false
-  },
-  "draw6": {
-    "type": "holder",
-    "id": "draw6",
-    "drawPile": 6,
-    "parent": "player6Zone",
-    "x": 7.5,
-    "rotation": 180,
-    "text": "",
-    "css": "background-color:#ffffffc0;",
-    "movableInEdit": false,
-    "activeSeat": false
-  },
-  "draw4": {
-    "type": "holder",
-    "id": "draw4",
-    "drawPile": 4,
-    "x": 7.5,
-    "z": 40189,
-    "parent": "player4Zone",
-    "text": "",
-    "css": "background-color:#ffffffc0;",
-    "movableInEdit": false,
+    "css": {
+      "background-color": "#ffffff66"
+    },
     "activeSeat": false,
-    "rotation": 180
-  },
-  "deck": {
-    "type": "holder",
-    "x": 50,
-    "y": 1100,
-    "z": 40182,
-    "id": "deck",
+    "playerColor": "#999999",
+    "seatedPlayer": "Ingegneus",
+    "text": "",
+    "task": "drawHolder",
     "onEnter": {
       "activeFace": 0
     }
   },
-  "6w5a": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-557e44e1-bde4-4ed8-ad29-1ffb68660e62",
-    "id": "6w5a",
-    "z": 43653,
-    "activeFace": 1,
-    "parent": "o20d"
+  "p2Play": {
+    "type": "holder",
+    "id": "p2Play",
+    "parent": "player2Zone",
+    "x": -118.5,
+    "movableInEdit": false,
+    "css": {
+      "background-color": "#ffffff66"
+    },
+    "onEnter": {
+      "activeFace": 1
+    },
+    "seatedPlayer": "Ingegneus",
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "fruit",
+        "variable": "fruit"
+      },
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "quantity",
+        "variable": "quantity"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "fruit",
+        "value": "${fruit}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "fruitCount",
+        "value": "${quantity}"
+      }
+    ],
+    "activeSeat": false,
+    "task": "playHolder",
+    "rotation": 180,
+    "fruit": "fig",
+    "fruitCount": 5
   },
-  "1k7k": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-41801a52-847b-4caa-b5f7-df3062a18a09",
-    "id": "1k7k",
-    "z": 43716,
-    "activeFace": 1,
-    "parent": "o4vu"
+  "p4Play": {
+    "type": "holder",
+    "id": "p4Play",
+    "parent": "player4Zone",
+    "x": -118.5,
+    "movableInEdit": false,
+    "css": {
+      "background-color": "#ffffff66"
+    },
+    "onEnter": {
+      "activeFace": 1
+    },
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "fruit",
+        "variable": "fruit"
+      },
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "quantity",
+        "variable": "quantity"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "fruit",
+        "value": "${fruit}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "fruitCount",
+        "value": "${quantity}"
+      }
+    ],
+    "activeSeat": false,
+    "task": "playHolder"
   },
-  "w3nz": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-35b2501e-166e-4670-aef9-b5316873883d",
-    "id": "w3nz",
-    "z": 43645,
-    "activeFace": 1,
-    "parent": "by97"
+  "p3Play": {
+    "type": "holder",
+    "id": "p3Play",
+    "parent": "player3Zone",
+    "x": -118.5,
+    "movableInEdit": false,
+    "css": {
+      "background-color": "#ffffff66"
+    },
+    "onEnter": {
+      "activeFace": 1
+    },
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "fruit",
+        "variable": "fruit"
+      },
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "quantity",
+        "variable": "quantity"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "fruit",
+        "value": "${fruit}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "fruitCount",
+        "value": "${quantity}"
+      }
+    ],
+    "activeSeat": false,
+    "task": "playHolder",
+    "rotation": 180
   },
-  "51ra": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-4e6cc6df-e704-4453-919b-9a6cba7a3312",
-    "id": "51ra",
-    "z": 43685,
-    "activeFace": 1,
-    "parent": "pomh"
+  "p5Play": {
+    "type": "holder",
+    "id": "p5Play",
+    "parent": "player5Zone",
+    "x": -118.5,
+    "rotation": 180,
+    "movableInEdit": false,
+    "css": {
+      "background-color": "#ffffff66"
+    },
+    "onEnter": {
+      "activeFace": 1
+    },
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "fruit",
+        "variable": "fruit"
+      },
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "quantity",
+        "variable": "quantity"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "fruit",
+        "value": "${fruit}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "fruitCount",
+        "value": "${quantity}"
+      }
+    ],
+    "activeSeat": false,
+    "task": "playHolder"
   },
-  "rxke": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-5f6ffa96-0fd8-4c91-aa47-c7ac4e843f08",
-    "id": "rxke",
-    "z": 43651,
-    "activeFace": 1,
-    "parent": "ijzk"
+  "p6Draw": {
+    "type": "holder",
+    "id": "p6Draw",
+    "parent": "player6Zone",
+    "x": 7.5,
+    "rotation": 180,
+    "movableInEdit": false,
+    "css": {
+      "background-color": "#ffffff66"
+    },
+    "activeSeat": false,
+    "text": "",
+    "task": "drawHolder",
+    "onEnter": {
+      "activeFace": 0
+    }
   },
-  "c2a3": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-9103d8ec-b3e6-4912-8794-954c3e5d1321",
-    "id": "c2a3",
-    "z": 43676,
-    "activeFace": 1,
-    "parent": "exu5"
+  "p7Draw": {
+    "type": "holder",
+    "id": "p7Draw",
+    "parent": "player7Zone",
+    "x": 7.5,
+    "rotation": 180,
+    "movableInEdit": false,
+    "css": {
+      "background-color": "#ffffff66"
+    },
+    "activeSeat": false,
+    "text": "",
+    "task": "drawHolder",
+    "onEnter": {
+      "activeFace": 0
+    }
   },
-  "p805": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-12c0a63a-ef4b-42cc-ad33-43a05d0d49fe",
-    "id": "p805",
-    "z": 43753,
-    "activeFace": 1,
-    "parent": "ocdm"
+  "p7Play": {
+    "type": "holder",
+    "id": "p7Play",
+    "parent": "player7Zone",
+    "x": -118.5,
+    "rotation": 180,
+    "movableInEdit": false,
+    "css": {
+      "background-color": "#ffffff66"
+    },
+    "onEnter": {
+      "activeFace": 1
+    },
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "fruit",
+        "variable": "fruit"
+      },
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "quantity",
+        "variable": "quantity"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "fruit",
+        "value": "${fruit}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "fruitCount",
+        "value": "${quantity}"
+      }
+    ],
+    "activeSeat": false,
+    "task": "playHolder"
   },
-  "ptsj": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-e771a46d-ab8c-41b8-8902-7005a3cdbd0f",
-    "id": "ptsj",
-    "z": 43748,
-    "activeFace": 1,
-    "parent": "fncu"
+  "p8Play": {
+    "type": "holder",
+    "id": "p8Play",
+    "parent": "player8Zone",
+    "x": -118.5,
+    "rotation": 180,
+    "movableInEdit": false,
+    "css": {
+      "background-color": "#ffffff66"
+    },
+    "onEnter": {
+      "activeFace": 1
+    },
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "fruit",
+        "variable": "fruit"
+      },
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "quantity",
+        "variable": "quantity"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "fruit",
+        "value": "${fruit}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "fruitCount",
+        "value": "${quantity}"
+      }
+    ],
+    "activeSeat": false,
+    "task": "playHolder"
   },
-  "5t8n": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-db27ecf4-1724-4acb-8c0c-cb524cca51f3",
-    "id": "5t8n",
-    "z": 43729,
-    "activeFace": 1,
-    "parent": "zip1"
+  "p8Draw": {
+    "type": "holder",
+    "id": "p8Draw",
+    "parent": "player8Zone",
+    "x": 7.5,
+    "rotation": 180,
+    "movableInEdit": false,
+    "css": {
+      "background-color": "#ffffff66"
+    },
+    "activeSeat": false,
+    "text": "",
+    "task": "drawHolder",
+    "onEnter": {
+      "activeFace": 0
+    }
   },
-  "kknt": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-175848ff-164b-400c-96e7-cbf906b6697e",
-    "id": "kknt",
-    "z": 43708,
-    "activeFace": 1,
-    "parent": "1aql"
+  "p6Play": {
+    "type": "holder",
+    "id": "p6Play",
+    "parent": "player6Zone",
+    "x": -118.5,
+    "rotation": 180,
+    "movableInEdit": false,
+    "css": {
+      "background-color": "#ffffff66"
+    },
+    "onEnter": {
+      "activeFace": 1
+    },
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "fruit",
+        "variable": "fruit"
+      },
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "quantity",
+        "variable": "quantity"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "fruit",
+        "value": "${fruit}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "fruitCount",
+        "value": "${quantity}"
+      }
+    ],
+    "activeSeat": false,
+    "task": "playHolder"
   },
-  "r8z0": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-e30435a0-0abf-4527-8028-815278c62038",
-    "id": "r8z0",
-    "z": 43722,
-    "activeFace": 1,
-    "parent": "o8sx"
+  "p5Draw": {
+    "type": "holder",
+    "id": "p5Draw",
+    "parent": "player5Zone",
+    "x": 7.5,
+    "rotation": 180,
+    "movableInEdit": false,
+    "css": {
+      "background-color": "#ffffff66"
+    },
+    "activeSeat": false,
+    "text": "",
+    "task": "drawHolder",
+    "onEnter": {
+      "activeFace": 0
+    }
   },
-  "kh5f": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-602c5fe1-571e-4154-b4e0-da520935b43b",
-    "id": "kh5f",
-    "z": 43721,
-    "activeFace": 1,
-    "parent": "2kos"
+  "p4Draw": {
+    "type": "holder",
+    "id": "p4Draw",
+    "parent": "player4Zone",
+    "x": 7.5,
+    "movableInEdit": false,
+    "css": "background-color:#ffffff66;",
+    "activeSeat": false,
+    "text": "",
+    "task": "drawHolder",
+    "onEnter": {
+      "activeFace": 0
+    }
   },
-  "d42t": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-0993ff3b-efa9-45fb-9e8f-e27cf9140ad5",
-    "id": "d42t",
-    "z": 43732,
-    "activeFace": 1,
-    "parent": "c8z9"
+  "p3Draw": {
+    "type": "holder",
+    "id": "p3Draw",
+    "parent": "player3Zone",
+    "x": 7.5,
+    "movableInEdit": false,
+    "css": {
+      "background-color": "#ffffff66"
+    },
+    "activeSeat": false,
+    "text": "",
+    "task": "drawHolder",
+    "rotation": 180,
+    "onEnter": {
+      "activeFace": 0
+    }
   },
-  "bxat": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-1e6e7a4b-2326-4fc7-81d5-90cc6cf1a22b",
-    "id": "bxat",
-    "z": 43661,
-    "activeFace": 1,
-    "parent": "phnv"
+  "p2Draw": {
+    "type": "holder",
+    "id": "p2Draw",
+    "parent": "player2Zone",
+    "x": 7.5,
+    "movableInEdit": false,
+    "css": {
+      "background-color": "#ffffff66"
+    },
+    "activeSeat": false,
+    "seatedPlayer": "Ingegneus",
+    "text": "",
+    "task": "drawHolder",
+    "rotation": 180,
+    "onEnter": {
+      "activeFace": 0
+    }
   },
-  "hgsw": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-6da11462-a5b7-4537-83c1-c7388859ef30",
-    "id": "hgsw",
-    "z": 43775,
-    "activeFace": 1,
-    "parent": "kgk4"
+  "codeLibrary": {
+    "id": "codeLibrary",
+    "x": 1655,
+    "y": 845,
+    "z": 75747,
+    "css": {
+      "background": "white"
+    },
+    "text": "codeLibrary",
+    "calculateEvenSpacingRoutine": [
+      {
+        "func": "GET",
+        "property": "${dimension}",
+        "collection": [
+          "${widget}"
+        ],
+        "variable": "widgetDim"
+      },
+      {
+        "func": "GET",
+        "property": "parent",
+        "collection": [
+          "${widget}"
+        ],
+        "variable": "parent"
+      },
+      {
+        "func": "IF",
+        "operand1": "${parent}",
+        "operand2": null,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${dimension}",
+            "operand2": "width",
+            "thenRoutine": [
+              "var parentDim = 1600"
+            ],
+            "elseRoutine": [
+              "var parentDim = 1000"
+            ]
+          }
+        ],
+        "variable": "parentWidth",
+        "elseRoutine": [
+          {
+            "func": "GET",
+            "property": "${dimension}",
+            "collection": [
+              "${parent}"
+            ]
+          }
+        ]
+      },
+      "var totalWidgetDim = ${dimCount} * ${widgetDim}",
+      "var totalDiff = ${parentDim} - ${totalWidgetDim}",
+      "var nrPaddings = ${dimCount} + 1",
+      "var emptyDim = ${totalDiff} / ${nrPaddings}",
+      "var paddingPos = ${posIndex} + 1",
+      "var emptyDim = ${emptyDim} * ${paddingPos}",
+      "var posWidgetDim = ${widgetDim} * ${posIndex}",
+      "var result = ${emptyDim} + ${posWidgetDim}"
+    ],
+    "selectTopCardRoutine": [
+      {
+        "passed arguments": "id of the holder",
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${holderID}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "type": "card",
+        "property": "id",
+        "relation": "!=",
+        "value": null,
+        "sortBy": {
+          "key": "z",
+          "reverse": true
+        }
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "max": 1,
+        "property": "id",
+        "relation": "!=",
+        "value": null,
+        "collection": "result"
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "result"
+      }
+    ],
+    "selectWidgetsByPropertiesRoutine": [
+      "var i = 0",
+      {
+        "passed arguments": "object of properties",
+        "func": "FOREACH",
+        "in": "${properties}",
+        "loopRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${i}",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "property": "${key}",
+                "value": "${value}",
+                "type": "${type}"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SELECT",
+                "property": "${key}",
+                "value": "${value}",
+                "source": "DEFAULT",
+                "type": "${type}"
+              }
+            ]
+          },
+          "var i = ${i} + 1"
+        ]
+      }
+    ],
+    "setEvenSpacingRoutine": [
+      "var i = 0",
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "CALL",
+            "routine": "calculateEvenSpacingRoutine",
+            "arguments": {
+              "posIndex": "${i}",
+              "widget": "${widgetID}",
+              "dimCount": "${dimCount}",
+              "dimension": "${dimension}"
+            }
+          },
+          "var i = ${i} + 1",
+          {
+            "func": "IF",
+            "operand1": "${dimension}",
+            "operand2": "width",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "property": "x",
+                "value": "${result}",
+                "collection": [
+                  "${widgetID}"
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "property": "y",
+                "value": "${result}",
+                "collection": [
+                  "${widgetID}"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "setPropertiesByCollectionRoutine": [
+      {
+        "func": "FOREACH",
+        "in": "${properties}",
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "property": "${key}",
+            "value": "${value}"
+          }
+        ]
+      }
+    ],
+    "setPropertiesByIDRoutine": [
+      "var isArray = isArray ${ID}",
+      {
+        "func": "IF",
+        "condition": "${isArray}",
+        "thenRoutine": [
+          {
+            "passed arguments": "object of properties and one ID",
+            "func": "FOREACH",
+            "in": "${properties}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}",
+                "collection": "${ID}"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "passed arguments": "object of properties and one ID",
+            "func": "FOREACH",
+            "in": "${properties}",
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "property": "${key}",
+                "value": "${value}",
+                "collection": [
+                  "${ID}"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "truncNegativeNumbersRoutine": [
+      "var sign = sign ${num}",
+      "var sign = ${sign} + 1",
+      "var sign = ${sign} / 2",
+      "var result = ${sign} * ${num}"
+    ]
   },
-  "0pwv": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-5075b811-26f2-43d2-8a94-cdba121690d8",
-    "id": "0pwv",
-    "z": 43725,
-    "activeFace": 1,
-    "parent": "57m1"
-  },
-  "0xdk": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-fcfdb778-b3aa-4ecd-92b1-72a5a3f70d6b",
-    "id": "0xdk",
-    "z": 43778,
-    "activeFace": 1,
-    "x": 631.5,
-    "y": 29
-  },
-  "cf8z": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-4509b151-91b5-4886-921a-270e6ca8998c",
-    "id": "cf8z",
-    "z": 43763,
-    "activeFace": 1,
-    "x": 631.5,
-    "y": 215
-  },
-  "r7dp": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-aba439f2-b067-4229-be65-829728d2271b",
-    "id": "r7dp",
-    "z": 43776,
-    "activeFace": 1,
-    "x": 631.5,
-    "y": 639
-  },
-  "3bte": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-f958a384-79aa-4d56-b873-f9221284f52f",
-    "id": "3bte",
-    "z": 43770,
-    "activeFace": 1,
-    "x": 631.5,
-    "y": 828
-  },
-  "5vur": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-557e44e1-bde4-4ed8-ad29-1ffb68660e62",
-    "id": "5vur",
-    "z": 43700,
-    "activeFace": 1,
-    "parent": "o20d"
-  },
-  "hqe4": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-557e44e1-bde4-4ed8-ad29-1ffb68660e62",
-    "id": "hqe4",
-    "z": 43695,
-    "activeFace": 1,
-    "parent": "o20d"
-  },
-  "zk1p": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-557e44e1-bde4-4ed8-ad29-1ffb68660e62",
-    "id": "zk1p",
-    "z": 43689,
-    "activeFace": 1,
-    "parent": "o20d"
-  },
-  "rbra": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-557e44e1-bde4-4ed8-ad29-1ffb68660e62",
-    "id": "rbra",
-    "z": 43643,
-    "activeFace": 1,
-    "parent": "o20d"
-  },
-  "dgyh": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-41801a52-847b-4caa-b5f7-df3062a18a09",
-    "id": "dgyh",
-    "z": 43670,
-    "activeFace": 1,
-    "parent": "o4vu"
-  },
-  "tyw9": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-41801a52-847b-4caa-b5f7-df3062a18a09",
-    "id": "tyw9",
-    "z": 43698,
-    "activeFace": 1,
-    "parent": "o4vu"
-  },
-  "s5mk": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-35b2501e-166e-4670-aef9-b5316873883d",
-    "id": "s5mk",
-    "z": 43673,
-    "activeFace": 1,
-    "parent": "by97"
-  },
-  "qgar": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-35b2501e-166e-4670-aef9-b5316873883d",
-    "id": "qgar",
-    "z": 43734,
-    "activeFace": 1,
-    "parent": "by97"
-  },
-  "yg3d": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-4e6cc6df-e704-4453-919b-9a6cba7a3312",
-    "id": "yg3d",
-    "z": 43656,
-    "activeFace": 1,
-    "parent": "pomh"
-  },
-  "kv45": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-41801a52-847b-4caa-b5f7-df3062a18a09",
-    "id": "kv45",
-    "z": 43672,
-    "activeFace": 1,
-    "parent": "o4vu"
-  },
-  "bqzk": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-41801a52-847b-4caa-b5f7-df3062a18a09",
-    "id": "bqzk",
-    "z": 43665,
-    "activeFace": 1,
-    "parent": "o4vu"
-  },
-  "4hzl": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-35b2501e-166e-4670-aef9-b5316873883d",
-    "id": "4hzl",
-    "z": 43675,
-    "activeFace": 1,
-    "parent": "by97"
-  },
-  "4ljp": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-35b2501e-166e-4670-aef9-b5316873883d",
-    "id": "4ljp",
-    "z": 43705,
-    "activeFace": 1,
-    "parent": "by97"
-  },
-  "3fqz": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-4e6cc6df-e704-4453-919b-9a6cba7a3312",
-    "id": "3fqz",
-    "z": 43765,
-    "activeFace": 1,
-    "parent": "pomh"
-  },
-  "tn89": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-4e6cc6df-e704-4453-919b-9a6cba7a3312",
-    "id": "tn89",
-    "z": 43739,
-    "activeFace": 1,
-    "parent": "pomh"
-  },
-  "nqrd": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-4e6cc6df-e704-4453-919b-9a6cba7a3312",
-    "id": "nqrd",
-    "z": 43746,
-    "activeFace": 1,
-    "parent": "pomh"
-  },
-  "m09l": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-5f6ffa96-0fd8-4c91-aa47-c7ac4e843f08",
-    "id": "m09l",
-    "z": 43644,
-    "activeFace": 1,
-    "parent": "ijzk"
-  },
-  "af0w": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-5f6ffa96-0fd8-4c91-aa47-c7ac4e843f08",
-    "id": "af0w",
-    "z": 43648,
-    "activeFace": 1,
-    "parent": "ijzk"
-  },
-  "unsf": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-9103d8ec-b3e6-4912-8794-954c3e5d1321",
-    "id": "unsf",
-    "z": 43731,
-    "activeFace": 1,
-    "parent": "exu5"
-  },
-  "tb0c": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-9103d8ec-b3e6-4912-8794-954c3e5d1321",
-    "id": "tb0c",
-    "z": 43727,
-    "activeFace": 1,
-    "parent": "exu5"
-  },
-  "joxf": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-12c0a63a-ef4b-42cc-ad33-43a05d0d49fe",
-    "id": "joxf",
-    "z": 43687,
-    "activeFace": 1,
-    "parent": "ocdm"
-  },
-  "x4h5": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-12c0a63a-ef4b-42cc-ad33-43a05d0d49fe",
-    "id": "x4h5",
-    "z": 43717,
-    "activeFace": 1,
-    "parent": "ocdm"
-  },
-  "hdhv": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-e771a46d-ab8c-41b8-8902-7005a3cdbd0f",
-    "id": "hdhv",
-    "z": 43663,
-    "activeFace": 1,
-    "parent": "fncu"
-  },
-  "qbym": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-e771a46d-ab8c-41b8-8902-7005a3cdbd0f",
-    "id": "qbym",
-    "z": 43737,
-    "activeFace": 1,
-    "parent": "fncu"
-  },
-  "6awn": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-db27ecf4-1724-4acb-8c0c-cb524cca51f3",
-    "id": "6awn",
-    "z": 43706,
-    "activeFace": 1,
-    "parent": "zip1"
-  },
-  "zh6s": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-db27ecf4-1724-4acb-8c0c-cb524cca51f3",
-    "id": "zh6s",
-    "z": 43724,
-    "activeFace": 1,
-    "parent": "zip1"
-  },
-  "k5pn": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-175848ff-164b-400c-96e7-cbf906b6697e",
-    "id": "k5pn",
-    "z": 43709,
-    "activeFace": 1,
-    "parent": "1aql"
-  },
-  "jcvi": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-175848ff-164b-400c-96e7-cbf906b6697e",
-    "id": "jcvi",
-    "z": 43711,
-    "activeFace": 1,
-    "parent": "1aql"
-  },
-  "siqj": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-e30435a0-0abf-4527-8028-815278c62038",
-    "id": "siqj",
-    "z": 43736,
-    "activeFace": 1,
-    "parent": "o8sx"
-  },
-  "w0k7": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-e30435a0-0abf-4527-8028-815278c62038",
-    "id": "w0k7",
-    "z": 43686,
-    "activeFace": 1,
-    "parent": "o8sx"
-  },
-  "vwee": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-602c5fe1-571e-4154-b4e0-da520935b43b",
-    "id": "vwee",
-    "z": 43701,
-    "activeFace": 1,
-    "parent": "2kos"
-  },
-  "znn3": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-602c5fe1-571e-4154-b4e0-da520935b43b",
-    "id": "znn3",
-    "z": 43690,
-    "activeFace": 1,
-    "parent": "2kos"
-  },
-  "mmlq": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-0993ff3b-efa9-45fb-9e8f-e27cf9140ad5",
-    "id": "mmlq",
-    "z": 43707,
-    "activeFace": 1,
-    "parent": "c8z9"
-  },
-  "47lv": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-1e6e7a4b-2326-4fc7-81d5-90cc6cf1a22b",
-    "id": "47lv",
-    "z": 43649,
-    "activeFace": 1,
-    "parent": "phnv"
-  },
-  "ilrg": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-6da11462-a5b7-4537-83c1-c7388859ef30",
-    "id": "ilrg",
-    "z": 43774,
-    "activeFace": 1,
-    "parent": "kgk4"
-  },
-  "3zor": {
-    "deck": "2a381f5e-0f16-4393-8ced-55b1dbea5017",
-    "type": "card",
-    "cardType": "type-5075b811-26f2-43d2-8a94-cdba121690d8",
-    "id": "3zor",
-    "z": 43750,
-    "activeFace": 1,
-    "parent": "57m1"
-  },
-  "10nh": {
-    "image": "/assets/1818689057_23795",
-    "id": "10nh",
-    "z": 70788,
-    "y": 400,
+  "bell": {
+    "id": "bell",
     "x": 700,
+    "y": 400,
     "width": 200,
     "height": 200,
     "layer": -4,
-    "movable": false,
-    "movableInEdit": false
-  },
-  "be7f2": {
-    "id": "be7f2",
-    "x": 1452,
-    "y": 790,
-    "width": 140,
-    "height": 60,
-    "z": 70786,
-    "image": "/assets/-1004567241_11721",
-    "movable": false,
-    "movableInEdit": false
-  },
-  "clearBell": {
-    "type": "button",
-    "id": "clearBell",
-    "width": 140,
-    "height": 60,
-    "z": 70743,
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "parent",
-        "value": "buttons"
-      },
-      {
-        "func": "SET",
-        "property": "clickable",
-        "value": true
-      },
-      {
-        "func": "SET",
-        "property": "owner",
-        "value": null
-      },
-      {
-        "func": "SELECT",
-        "property": "display",
-        "value": true
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": ""
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "relation": "in",
-        "value": [
-          "rightBtn",
-          "wrongBtn"
-        ]
-      },
-      {
-        "func": "SET",
-        "property": "y",
-        "value": 1200
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "goodCount",
-        "value": null
-      }
-    ],
-    "css": "color:#303030;font-size:18px;background-color:#00000000;border-width:0px;",
-    "text": "Clear Bell",
-    "fruitCountRoutine": [
-      {
-        "func": "SELECT",
-        "property": "type",
-        "value": "holder",
-        "collection": "fruitHolders"
-      },
-      {
-        "func": "SELECT",
-        "source": "fruitHolders",
-        "property": "fruit",
-        "value": "pineapple",
-        "collection": "allPineapple"
-      },
-      {
-        "func": "SELECT",
-        "source": "fruitHolders",
-        "property": "fruit",
-        "value": "apple",
-        "collection": "allApple"
-      },
-      {
-        "func": "SELECT",
-        "source": "fruitHolders",
-        "property": "fruit",
-        "value": "fig",
-        "collection": "allFig"
-      },
-      {
-        "func": "SELECT",
-        "source": "fruitHolders",
-        "property": "fruit",
-        "value": "kiwi",
-        "collection": "allKiwi"
-      },
-      {
-        "func": "GET",
-        "collection": "allPineapple",
-        "aggregation": "sum",
-        "property": "fruitCount",
-        "variable": "sumPineapple"
-      },
-      {
-        "func": "GET",
-        "collection": "allApple",
-        "aggregation": "sum",
-        "property": "fruitCount",
-        "variable": "sumApple"
-      },
-      {
-        "func": "GET",
-        "collection": "allFig",
-        "aggregation": "sum",
-        "property": "fruitCount",
-        "variable": "sumFig"
-      },
-      {
-        "func": "GET",
-        "collection": "allKiwi",
-        "aggregation": "sum",
-        "property": "fruitCount",
-        "variable": "sumKiwi"
-      },
-      "var pineapple = 5 == ${sumPineapple}",
-      "var apple = 5 == ${sumApple}",
-      "var fig = 5 == ${sumFig}",
-      "var kiwi = 5 == ${sumKiwi}",
-      {
-        "func": "IF",
-        "condition": "${pineapple}",
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "goodCount",
-            "value": true
-          }
-        ]
-      },
-      {
-        "func": "IF",
-        "condition": "${apple}",
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "goodCount",
-            "value": true
-          }
-        ]
-      },
-      {
-        "func": "IF",
-        "condition": "${fig}",
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "goodCount",
-            "value": true
-          }
-        ]
-      },
-      {
-        "func": "IF",
-        "condition": "${kiwi}",
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "goodCount",
-            "value": true
-          }
-        ]
-      },
-      {
-        "func": "IF",
-        "operand1": "${PROPERTY goodCount}",
-        "operand2": true,
-        "thenRoutine": [
-          {
-            "func": "SELECT",
-            "property": "id",
-            "value": "rightBtn"
-          },
-          {
-            "func": "SET",
-            "property": "y",
-            "value": 320
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "SELECT",
-            "property": "id",
-            "value": "wrongBtn"
-          },
-          {
-            "func": "SET",
-            "property": "y",
-            "value": 320
-          }
-        ]
-      }
-    ],
-    "parent": "be7f2"
-  },
-  "shuffler": {
-    "type": "button",
-    "id": "shuffler",
-    "y": 180,
-    "z": 70747,
-    "clickRoutine": [
-      {
-        "func": "RECALL",
-        "holder": "deck"
-      },
-      {
-        "func": "FLIP",
-        "face": 0
-      },
-      {
-        "func": "SHUFFLE",
-        "holder": "deck"
-      }
-    ],
-    "text": "RECALL",
-    "parent": "deck"
-  },
-  "Glocke1": {
-    "type": "button",
-    "id": "Glocke1",
-    "width": 200,
-    "height": 200,
-    "z": 70744,
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "displayPlayers"
-      },
-      {
-        "func": "GET",
-        "property": "text",
-        "variable": "playersNow"
-      },
-      "var string = ${playersNow} concat ${playerName}",
-      "var string = ${string} concat '\\u000a'",
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${string}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "Glocke1"
-      },
-      {
-        "func": "SET",
-        "property": "clickable",
-        "value": false,
-        "collection": "thisButton"
-      },
-      {
-        "func": "SET",
-        "property": "owner",
-        "value": "${playerName}"
-      }
-    ],
-    "css": "background-color:#00000000;border-color:#00000000;",
-    "parent": "buttons",
-    "movableInEdit": false
-  },
-  "Glocke2": {
-    "type": "button",
-    "id": "Glocke2",
-    "width": 200,
-    "height": 200,
     "z": 70788,
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "displayPlayers"
-      },
-      {
-        "func": "GET",
-        "property": "text",
-        "variable": "playersNow"
-      },
-      "var string = ${playersNow} concat ${playerName}",
-      "var string = ${string} concat '\\u000a'",
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${string}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "Glocke2"
-      },
-      {
-        "func": "SET",
-        "property": "clickable",
-        "value": false,
-        "collection": "thisButton"
-      },
-      {
-        "func": "SET",
-        "property": "owner",
-        "value": "${playerName}"
-      }
-    ],
-    "css": "background-color:#00000000;border-color:#00000000;",
-    "parent": "buttons",
-    "movableInEdit": false
-  },
-  "Glocke3": {
-    "type": "button",
-    "id": "Glocke3",
-    "width": 200,
-    "height": 200,
-    "z": 70789,
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "displayPlayers"
-      },
-      {
-        "func": "GET",
-        "property": "text",
-        "variable": "playersNow"
-      },
-      "var string = ${playersNow} concat ${playerName}",
-      "var string = ${string} concat '\\u000a'",
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${string}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "Glocke3"
-      },
-      {
-        "func": "SET",
-        "property": "clickable",
-        "value": false,
-        "collection": "thisButton"
-      },
-      {
-        "func": "SET",
-        "property": "owner",
-        "value": "${playerName}"
-      }
-    ],
-    "css": "background-color:#00000000;border-color:#00000000;",
-    "parent": "buttons",
-    "movableInEdit": false
-  },
-  "Glocke8": {
-    "type": "button",
-    "id": "Glocke8",
-    "width": 200,
-    "height": 200,
-    "z": 70790,
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "displayPlayers"
-      },
-      {
-        "func": "GET",
-        "property": "text",
-        "variable": "playersNow"
-      },
-      "var string = ${playersNow} concat ${playerName}",
-      "var string = ${string} concat '\\u000a'",
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${string}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "Glocke8"
-      },
-      {
-        "func": "SET",
-        "property": "clickable",
-        "value": false,
-        "collection": "thisButton"
-      },
-      {
-        "func": "SET",
-        "property": "owner",
-        "value": "${playerName}"
-      }
-    ],
-    "css": "background-color:#00000000;border-color:#00000000;",
-    "parent": "buttons",
-    "movableInEdit": false
-  },
-  "Glocke7": {
-    "type": "button",
-    "id": "Glocke7",
-    "width": 200,
-    "height": 200,
-    "z": 70794,
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "timer"
-      },
-      {
-        "func": "CLICK"
-      }
-    ],
-    "css": "background-color:#00000000;border-color:#00000000;",
-    "parent": "buttons",
-    "movableInEdit": false
-  },
-  "Glocke6": {
-    "type": "button",
-    "id": "Glocke6",
-    "width": 200,
-    "height": 200,
-    "z": 70793,
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "displayPlayers"
-      },
-      {
-        "func": "GET",
-        "property": "text",
-        "variable": "playersNow"
-      },
-      "var string = ${playersNow} concat ${playerName}",
-      "var string = ${string} concat '\\u000a'",
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${string}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "Glocke6"
-      },
-      {
-        "func": "SET",
-        "property": "clickable",
-        "value": false,
-        "collection": "thisButton"
-      },
-      {
-        "func": "SET",
-        "property": "owner",
-        "value": "${playerName}"
-      }
-    ],
-    "css": "background-color:#00000000;border-color:#00000000;",
-    "parent": "buttons",
-    "movableInEdit": false
-  },
-  "Glocke5": {
-    "type": "button",
-    "id": "Glocke5",
-    "width": 200,
-    "height": 200,
-    "z": 70792,
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "displayPlayers"
-      },
-      {
-        "func": "GET",
-        "property": "text",
-        "variable": "playersNow"
-      },
-      "var string = ${playersNow} concat ${playerName}",
-      "var string = ${string} concat '\\u000a'",
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${string}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "Glocke5"
-      },
-      {
-        "func": "SET",
-        "property": "clickable",
-        "value": false,
-        "collection": "thisButton"
-      },
-      {
-        "func": "SET",
-        "property": "owner",
-        "value": "${playerName}"
-      }
-    ],
-    "css": "background-color:#00000000;border-color:#00000000;",
-    "parent": "buttons",
-    "movableInEdit": false
-  },
-  "Glocke4": {
-    "type": "button",
-    "id": "Glocke4",
-    "width": 200,
-    "height": 200,
-    "z": 70791,
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "displayPlayers"
-      },
-      {
-        "func": "GET",
-        "property": "text",
-        "variable": "playersNow"
-      },
-      "var string = ${playersNow} concat ${playerName}",
-      "var string = ${string} concat '\\u000a'",
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "${string}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "Glocke4"
-      },
-      {
-        "func": "SET",
-        "property": "clickable",
-        "value": false,
-        "collection": "thisButton"
-      },
-      {
-        "func": "SET",
-        "property": "owner",
-        "value": "${playerName}"
-      }
-    ],
-    "css": "background-color:#00000000;border-color:#00000000;",
-    "parent": "buttons",
-    "movableInEdit": false
-  },
-  "buttons": {
-    "type": "holder",
-    "id": "buttons",
-    "width": 200,
-    "height": 200,
-    "y": 400,
-    "x": 700,
-    "layer": 2,
-    "css": "border-color:#00000000;background-color:#00000000",
-    "dropTarget": {
-      "type": "button"
-    },
-    "movableInEdit": false
-  },
-  "displayPlayers": {
-    "type": "label",
-    "id": "displayPlayers",
-    "x": 700,
-    "y": 600,
-    "width": 200,
-    "height": 200,
-    "layer": -5,
-    "css": "border: 0px solid red;font-size:20px;color:lightgrey;text-align:center",
-    "display": true,
-    "movableInEdit": false
-  },
-  "displayFirstPlayer": {
-    "id": "displayFirstPlayer",
-    "type": "label",
-    "x": 700,
-    "y": 500,
-    "width": 200,
-    "height": 120,
-    "css": "border: 0px solid red;font-size:30px;color:#303030;text-align:center",
-    "display": true,
-    "movableInEdit": false
-  },
-  "8q9l": {
-    "type": "holder",
-    "id": "8q9l",
-    "parent": "displayFirstPlayer",
-    "width": 200,
-    "height": 120,
-    "css": "background-color:#00000000;border-color:#00000000",
-    "dropTarget": {
-      "type": "label"
-    },
-    "movableInEdit": false
-  },
-  "mq7g": {
-    "type": "holder",
-    "id": "mq7g",
-    "parent": "displayPlayers",
-    "width": 200,
-    "height": 200,
-    "css": "border-color:#00000000!important;border-radius:0;background-color:#00000000",
-    "dropTarget": {
-      "type": "label"
-    },
-    "movableInEdit": false,
-    "layer": -1
-  },
-  "w44r": {
-    "type": "button",
-    "id": "w44r",
-    "width": 212,
-    "height": 50,
-    "css": "font-size:25px;background-color:#ffffffc0;border-width:6px;border-color:#ffffff;",
-    "clickRoutine": [
-      "var cssString = 'font-size:25px;background-color:#ffffffc0;border-width:6px;border-color:' concat ${playerColor}",
-      "var cssString = ${cssString} concat ';'",
-      {
-        "func": "SET",
-        "property": "css",
-        "collection": "thisButton",
-        "value": "${cssString}"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "collection": "thisButton",
-        "value": "${playerName}"
-      },
-      {
-        "func": "SELECT",
-        "property": "drawPile",
-        "value": 4
-      },
-      {
-        "func": "SELECT",
-        "mode": "add",
-        "property": "playPile",
-        "value": 4
-      },
-      {
-        "func": "SET",
-        "property": "seatedPlayer",
-        "value": "${playerName}"
-      }
-    ],
-    "nameLabel": 4,
-    "parent": "player4Zone",
-    "x": -106,
-    "y": 180,
-    "layer": 2,
-    "z": 10,
-    "text": "Sit Here",
-    "movableInEdit": false,
-    "rotation": 180
-  },
-  "74r4": {
-    "type": "button",
-    "id": "74r4",
-    "width": 212,
-    "height": 50,
-    "css": "font-size:25px;background-color:#ffffffc0;border-width:6px;border-color:#ffffff;",
-    "clickRoutine": [
-      "var cssString = 'font-size:25px;background-color:#ffffffc0;border-width:6px;border-color:' concat ${playerColor}",
-      "var cssString = ${cssString} concat ';'",
-      {
-        "func": "SET",
-        "property": "css",
-        "collection": "thisButton",
-        "value": "${cssString}"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "collection": "thisButton",
-        "value": "${playerName}"
-      },
-      {
-        "func": "SELECT",
-        "property": "drawPile",
-        "value": 1
-      },
-      {
-        "func": "SELECT",
-        "mode": "add",
-        "property": "playPile",
-        "value": 1
-      },
-      {
-        "func": "SET",
-        "property": "seatedPlayer",
-        "value": "${playerName}"
-      }
-    ],
-    "nameLabel": 1,
-    "parent": "player1Zone",
-    "x": -106,
-    "y": 180,
-    "layer": 2,
-    "z": 10,
-    "text": "Sit Here",
-    "movableInEdit": false,
-    "rotation": 180
-  },
-  "hlvn": {
-    "type": "button",
-    "id": "hlvn",
-    "width": 212,
-    "height": 50,
-    "css": "font-size:25px;background-color:#ffffffc0;border-width:6px;border-color:#ffffff;",
-    "clickRoutine": [
-      "var cssString = 'font-size:25px;background-color:#ffffffc0;border-width:6px;border-color:' concat ${playerColor}",
-      "var cssString = ${cssString} concat ';'",
-      {
-        "func": "SET",
-        "property": "css",
-        "collection": "thisButton",
-        "value": "${cssString}"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "collection": "thisButton",
-        "value": "${playerName}"
-      },
-      {
-        "func": "SELECT",
-        "property": "drawPile",
-        "value": 2
-      },
-      {
-        "func": "SELECT",
-        "mode": "add",
-        "property": "playPile",
-        "value": 2
-      },
-      {
-        "func": "SET",
-        "property": "seatedPlayer",
-        "value": "${playerName}"
-      }
-    ],
-    "nameLabel": 2,
-    "parent": "player2Zone",
-    "x": -106,
-    "y": 180,
-    "layer": 2,
-    "z": 10,
-    "text": "Sit Here",
-    "movableInEdit": false,
-    "rotation": 180
-  },
-  "vxha": {
-    "type": "button",
-    "id": "vxha",
-    "width": 212,
-    "height": 50,
-    "css": "font-size:25px;background-color:#ffffffc0;border-width:6px;border-color:#ffffff;",
-    "clickRoutine": [
-      "var cssString = 'font-size:25px;background-color:#ffffffc0;border-width:6px;border-color:' concat ${playerColor}",
-      "var cssString = ${cssString} concat ';'",
-      {
-        "func": "SET",
-        "property": "css",
-        "collection": "thisButton",
-        "value": "${cssString}"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "collection": "thisButton",
-        "value": "${playerName}"
-      },
-      {
-        "func": "SELECT",
-        "property": "drawPile",
-        "value": 3
-      },
-      {
-        "func": "SELECT",
-        "mode": "add",
-        "property": "playPile",
-        "value": 3
-      },
-      {
-        "func": "SET",
-        "property": "seatedPlayer",
-        "value": "${playerName}"
-      }
-    ],
-    "nameLabel": 3,
-    "parent": "player3Zone",
-    "x": -106,
-    "y": 180,
-    "layer": 2,
-    "z": 10,
-    "text": "Sit Here",
-    "movableInEdit": false,
-    "rotation": 180
-  },
-  "opfx": {
-    "type": "button",
-    "id": "opfx",
-    "width": 212,
-    "height": 50,
-    "css": "font-size:25px;background-color:#ffffffc0;border-width:6px;border-color:#ffffff;",
-    "clickRoutine": [
-      "var cssString = 'font-size:25px;background-color:#ffffffc0;border-width:6px;border-color:' concat ${playerColor}",
-      "var cssString = ${cssString} concat ';'",
-      {
-        "func": "SET",
-        "property": "css",
-        "collection": "thisButton",
-        "value": "${cssString}"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "collection": "thisButton",
-        "value": "${playerName}"
-      },
-      {
-        "func": "SELECT",
-        "property": "drawPile",
-        "value": 5
-      },
-      {
-        "func": "SELECT",
-        "mode": "add",
-        "property": "playPile",
-        "value": 5
-      },
-      {
-        "func": "SET",
-        "property": "seatedPlayer",
-        "value": "${playerName}"
-      }
-    ],
-    "nameLabel": 5,
-    "parent": "player5Zone",
-    "x": -106,
-    "y": 180,
-    "rotation": 180,
-    "layer": 2,
-    "z": 10,
-    "text": "Sit Here",
-    "movableInEdit": false
-  },
-  "006e": {
-    "type": "button",
-    "id": "006e",
-    "width": 212,
-    "height": 50,
-    "css": "font-size:25px;background-color:#ffffffc0;border-width:6px;border-color:#ffffff;",
-    "clickRoutine": [
-      "var cssString = 'font-size:25px;background-color:#ffffffc0;border-width:6px;border-color:' concat ${playerColor}",
-      "var cssString = ${cssString} concat ';'",
-      {
-        "func": "SET",
-        "property": "css",
-        "collection": "thisButton",
-        "value": "${cssString}"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "collection": "thisButton",
-        "value": "${playerName}"
-      },
-      {
-        "func": "SELECT",
-        "property": "drawPile",
-        "value": 6
-      },
-      {
-        "func": "SELECT",
-        "mode": "add",
-        "property": "playPile",
-        "value": 6
-      },
-      {
-        "func": "SET",
-        "property": "seatedPlayer",
-        "value": "${playerName}"
-      }
-    ],
-    "nameLabel": 5,
-    "parent": "player6Zone",
-    "x": -106,
-    "y": 180,
-    "rotation": 180,
-    "layer": 2,
-    "z": 10,
-    "text": "Sit Here",
-    "movableInEdit": false
-  },
-  "knj2": {
-    "type": "button",
-    "id": "knj2",
-    "width": 212,
-    "height": 50,
-    "css": "font-size:25px;background-color:#ffffffc0;border-width:6px;border-color:#ffffff;",
-    "clickRoutine": [
-      "var cssString = 'font-size:25px;background-color:#ffffffc0;border-width:6px;border-color:' concat ${playerColor}",
-      "var cssString = ${cssString} concat ';'",
-      {
-        "func": "SET",
-        "property": "css",
-        "collection": "thisButton",
-        "value": "${cssString}"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "collection": "thisButton",
-        "value": "${playerName}"
-      },
-      {
-        "func": "SELECT",
-        "property": "drawPile",
-        "value": 7
-      },
-      {
-        "func": "SELECT",
-        "mode": "add",
-        "property": "playPile",
-        "value": 7
-      },
-      {
-        "func": "SET",
-        "property": "seatedPlayer",
-        "value": "${playerName}"
-      }
-    ],
-    "nameLabel": 5,
-    "parent": "player7Zone",
-    "x": -106,
-    "y": 180,
-    "rotation": 180,
-    "layer": 2,
-    "z": 10,
-    "text": "Sit Here",
-    "movableInEdit": false
-  },
-  "2lil": {
-    "type": "button",
-    "id": "2lil",
-    "width": 212,
-    "height": 50,
-    "css": "font-size:25px;background-color:#ffffffc0;border-width:6px;border-color:#ffffff;",
-    "clickRoutine": [
-      "var cssString = 'font-size:25px;background-color:#ffffffc0;border-width:6px;border-color:' concat ${playerColor}",
-      "var cssString = ${cssString} concat ';'",
-      {
-        "func": "SET",
-        "property": "css",
-        "collection": "thisButton",
-        "value": "${cssString}"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "collection": "thisButton",
-        "value": "${playerName}"
-      },
-      {
-        "func": "SELECT",
-        "property": "drawPile",
-        "value": 8
-      },
-      {
-        "func": "SELECT",
-        "mode": "add",
-        "property": "playPile",
-        "value": 8
-      },
-      {
-        "func": "SET",
-        "property": "seatedPlayer",
-        "value": "${playerName}"
-      }
-    ],
-    "nameLabel": 5,
-    "parent": "player8Zone",
-    "x": -106,
-    "y": 180,
-    "rotation": 180,
-    "layer": 2,
-    "z": 10,
-    "text": "Sit Here",
-    "movableInEdit": false
-  },
-  "7qvb": {
-    "image": "/assets/-1004567241_11721",
-    "id": "7qvb",
-    "z": 70787,
-    "x": 1452,
-    "y": 930,
-    "width": 140,
-    "height": 60,
-    "movable": false,
-    "movableInEdit": false
-  },
-  "u9io": {
-    "type": "button",
-    "id": "u9io",
-    "parent": "7qvb",
-    "width": 140,
-    "height": 60,
-    "css": "color:#303030;font-size:18px;background-color:#00000000;border-width:0px;",
-    "text": "Reset Seats",
-    "clickRoutine": [
-      {
-        "func": "INPUT",
-        "header": "Resetting seats...",
-        "fields": [
-          {
-            "type": "text",
-            "text": "You are about to reset all the current seating arrangements. Are you sure?"
-          }
-        ]
-      },
-      {
-        "func": "SELECT",
-        "property": "nameLabel",
-        "value": 1,
-        "relation": ">="
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "Sit Here"
-      },
-      {
-        "func": "SET",
-        "property": "clickable",
-        "value": true
-      },
-      {
-        "func": "SET",
-        "property": "css",
-        "value": "font-size:25px;background-color:#ffffffc0;border-width:6px;border-color:#ffffff;"
-      },
-      {
-        "func": "SELECT",
-        "property": "type",
-        "value": "holder"
-      },
-      {
-        "func": "SET",
-        "property": "seatedPlayer",
-        "value": null
-      }
-    ],
-    "movableInEdit": false
-  },
-  "wrongBtn": {
-    "type": "button",
-    "id": "wrongBtn",
-    "x": 639,
-    "y": 1200,
-    "width": 312,
-    "height": 50,
-    "layer": 2,
-    "z": 11,
-    "backgroundColor": "red",
-    "backgroundColorOH": "pink",
-    "borderColor": "white",
-    "borderColorOH": "red",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "displayFirstPlayer"
-      },
-      {
-        "func": "GET",
-        "property": "text",
-        "variable": "loser"
-      },
-      {
-        "func": "SELECT",
-        "property": "seatedPlayer",
-        "value": "${loser}"
-      },
-      {
-        "func": "SELECT",
-        "source": "DEFAULT",
-        "property": "drawPile",
-        "relation": "!=",
-        "value": null
-      },
-      {
-        "func": "GET",
-        "property": "id",
-        "variable": "loserID"
-      },
-      {
-        "func": "SELECT",
-        "property": "activeSeat",
-        "value": true,
-        "collection": "activeSeats"
-      },
-      {
-        "func": "FOREACH",
-        "collection": "activeSeats",
-        "loopRoutine": [
-          {
-            "func": "MOVE",
-            "count": 1,
-            "face": 0,
-            "from": "${loserID}",
-            "to": "${widgetID}"
-          }
-        ]
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "clearBell"
-      },
-      {
-        "func": "CLICK"
-      }
-    ],
-    "css": "font-size:25px;border-width:6px;",
-    "text": "Wrong. Click for penalty."
-  },
-  "rightBtn": {
-    "type": "button",
-    "id": "rightBtn",
-    "x": 640,
-    "y": 1200,
-    "width": 312,
-    "height": 50,
-    "layer": 2,
-    "z": 10,
-    "backgroundColor": "green",
-    "backgroundColorOH": "lightgreen",
-    "borderColor": "white",
-    "borderColorOH": "green",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "displayFirstPlayer"
-      },
-      {
-        "func": "GET",
-        "property": "text",
-        "variable": "winner"
-      },
-      {
-        "func": "SELECT",
-        "property": "seatedPlayer",
-        "value": "${winner}"
-      },
-      {
-        "func": "SELECT",
-        "source": "DEFAULT",
-        "property": "drawPile",
-        "relation": "!=",
-        "value": null
-      },
-      {
-        "func": "GET",
-        "property": "id",
-        "variable": "winnerID"
-      },
-      {
-        "func": "SELECT",
-        "property": "playPile",
-        "relation": "!=",
-        "value": null,
-        "collection": "playPiles"
-      },
-      {
-        "func": "FOREACH",
-        "collection": "playPiles",
-        "loopRoutine": [
-          {
-            "func": "MOVE",
-            "from": "${widgetID}",
-            "to": "${winnerID}",
-            "face": 0,
-            "count": 999
-          }
-        ]
-      },
-      {
-        "func": "SHUFFLE",
-        "holder": "${winnerID}"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "clearBell"
-      },
-      {
-        "func": "CLICK"
-      },
-      {
-        "func": "CALL",
-        "widget": "changePlayers",
-        "routine": "clearCountRoutine"
-      }
-    ],
-    "css": "font-size:24px;border-width:6px;",
-    "text": "Correct. Click to collect."
-  },
-  "play1": {
-    "type": "holder",
-    "id": "play1",
-    "parent": "player1Zone",
-    "x": -118.5,
-    "movableInEdit": false,
-    "css": "background-color:#ffffffc0;",
-    "enterRoutine": [
-      {
-        "func": "GET",
-        "collection": "child",
-        "property": "fruit",
-        "variable": "fruit"
-      },
-      {
-        "func": "GET",
-        "collection": "child",
-        "property": "quantity",
-        "variable": "quantity"
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "fruit",
-        "value": "${fruit}"
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "fruitCount",
-        "value": "${quantity}"
-      }
-    ],
-    "onEnter": {
-      "activeFace": 1
-    },
-    "playPile": 1,
-    "rotation": 180
-  },
-  "play2": {
-    "type": "holder",
-    "id": "play2",
-    "parent": "player2Zone",
-    "x": -118.5,
-    "movableInEdit": false,
-    "css": "background-color:#ffffffc0;",
-    "enterRoutine": [
-      {
-        "func": "GET",
-        "collection": "child",
-        "property": "fruit",
-        "variable": "fruit"
-      },
-      {
-        "func": "GET",
-        "collection": "child",
-        "property": "quantity",
-        "variable": "quantity"
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "fruit",
-        "value": "${fruit}"
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "fruitCount",
-        "value": "${quantity}"
-      }
-    ],
-    "onEnter": {
-      "activeFace": 1
-    },
-    "playPile": 2,
-    "rotation": 180
-  },
-  "play3": {
-    "type": "holder",
-    "id": "play3",
-    "parent": "player3Zone",
-    "x": -118.5,
-    "movableInEdit": false,
-    "css": "background-color:#ffffffc0;",
-    "enterRoutine": [
-      {
-        "func": "GET",
-        "collection": "child",
-        "property": "fruit",
-        "variable": "fruit"
-      },
-      {
-        "func": "GET",
-        "collection": "child",
-        "property": "quantity",
-        "variable": "quantity"
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "fruit",
-        "value": "${fruit}"
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "fruitCount",
-        "value": "${quantity}"
-      }
-    ],
-    "onEnter": {
-      "activeFace": 1
-    },
-    "playPile": 3,
-    "rotation": 180
-  },
-  "play4": {
-    "type": "holder",
-    "id": "play4",
-    "parent": "player4Zone",
-    "x": -118.5,
-    "movableInEdit": false,
-    "css": "background-color:#ffffffc0;",
-    "enterRoutine": [
-      {
-        "func": "GET",
-        "collection": "child",
-        "property": "fruit",
-        "variable": "fruit"
-      },
-      {
-        "func": "GET",
-        "collection": "child",
-        "property": "quantity",
-        "variable": "quantity"
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "fruit",
-        "value": "${fruit}"
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "fruitCount",
-        "value": "${quantity}"
-      }
-    ],
-    "onEnter": {
-      "activeFace": 1
-    },
-    "playPile": 4,
-    "rotation": 180
-  },
-  "play5": {
-    "type": "holder",
-    "id": "play5",
-    "parent": "player5Zone",
-    "x": -118.5,
-    "rotation": 180,
-    "movableInEdit": false,
-    "css": "background-color:#ffffffc0;",
-    "enterRoutine": [
-      {
-        "func": "GET",
-        "collection": "child",
-        "property": "fruit",
-        "variable": "fruit"
-      },
-      {
-        "func": "GET",
-        "collection": "child",
-        "property": "quantity",
-        "variable": "quantity"
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "fruit",
-        "value": "${fruit}"
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "fruitCount",
-        "value": "${quantity}"
-      }
-    ],
-    "onEnter": {
-      "activeFace": 1
-    },
-    "playPile": 5
-  },
-  "play6": {
-    "type": "holder",
-    "id": "play6",
-    "parent": "player6Zone",
-    "x": -118.5,
-    "rotation": 180,
-    "movableInEdit": false,
-    "css": "background-color:#ffffffc0;",
-    "enterRoutine": [
-      {
-        "func": "GET",
-        "collection": "child",
-        "property": "fruit",
-        "variable": "fruit"
-      },
-      {
-        "func": "GET",
-        "collection": "child",
-        "property": "quantity",
-        "variable": "quantity"
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "fruit",
-        "value": "${fruit}"
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "fruitCount",
-        "value": "${quantity}"
-      }
-    ],
-    "onEnter": {
-      "activeFace": 1
-    },
-    "playPile": 6
-  },
-  "play7": {
-    "type": "holder",
-    "id": "play7",
-    "parent": "player7Zone",
-    "x": -118.5,
-    "rotation": 180,
-    "movableInEdit": false,
-    "css": "background-color:#ffffffc0;",
-    "enterRoutine": [
-      {
-        "func": "GET",
-        "collection": "child",
-        "property": "fruit",
-        "variable": "fruit"
-      },
-      {
-        "func": "GET",
-        "collection": "child",
-        "property": "quantity",
-        "variable": "quantity"
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "fruit",
-        "value": "${fruit}"
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "fruitCount",
-        "value": "${quantity}"
-      }
-    ],
-    "onEnter": {
-      "activeFace": 1
-    },
-    "playPile": 7
-  },
-  "play8": {
-    "type": "holder",
-    "id": "play8",
-    "parent": "player8Zone",
-    "x": -118.5,
-    "rotation": 180,
-    "movableInEdit": false,
-    "css": "background-color:#ffffffc0;",
-    "enterRoutine": [
-      {
-        "func": "GET",
-        "collection": "child",
-        "property": "fruit",
-        "variable": "fruit"
-      },
-      {
-        "func": "GET",
-        "collection": "child",
-        "property": "quantity",
-        "variable": "quantity"
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "fruit",
-        "value": "${fruit}"
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "fruitCount",
-        "value": "${quantity}"
-      }
-    ],
-    "onEnter": {
-      "activeFace": 1
-    },
-    "playPile": 8
-  },
-  "clearBell1": {
-    "type": "button",
-    "id": "clearBell1",
-    "width": 140,
-    "height": 60,
-    "z": 70743,
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "parent",
-        "value": "buttons"
-      },
-      {
-        "func": "SET",
-        "property": "clickable",
-        "value": true
-      },
-      {
-        "func": "SET",
-        "property": "owner",
-        "value": null
-      },
-      {
-        "func": "SELECT",
-        "property": "display",
-        "value": true
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": ""
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "relation": "in",
-        "value": [
-          "rightBtn",
-          "wrongBtn"
-        ]
-      },
-      {
-        "func": "SET",
-        "property": "y",
-        "value": 1200
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "goodCount",
-        "value": null
-      }
-    ],
-    "css": "color:#303030;font-size:18px;background-color:#00000000;border-width:0px;",
-    "text": "Deal",
-    "fruitCountRoutine": [
-      {
-        "func": "SELECT",
-        "property": "type",
-        "value": "holder",
-        "collection": "fruitHolders"
-      },
-      {
-        "func": "SELECT",
-        "source": "fruitHolders",
-        "property": "fruit",
-        "value": "pineapple",
-        "collection": "allPineapple"
-      },
-      {
-        "func": "SELECT",
-        "source": "fruitHolders",
-        "property": "fruit",
-        "value": "apple",
-        "collection": "allApple"
-      },
-      {
-        "func": "SELECT",
-        "source": "fruitHolders",
-        "property": "fruit",
-        "value": "fig",
-        "collection": "allFig"
-      },
-      {
-        "func": "SELECT",
-        "source": "fruitHolders",
-        "property": "fruit",
-        "value": "kiwi",
-        "collection": "allKiwi"
-      },
-      {
-        "func": "GET",
-        "collection": "allPineapple",
-        "aggregation": "sum",
-        "property": "fruitCount",
-        "variable": "sumPineapple"
-      },
-      {
-        "func": "GET",
-        "collection": "allApple",
-        "aggregation": "sum",
-        "property": "fruitCount",
-        "variable": "sumApple"
-      },
-      {
-        "func": "GET",
-        "collection": "allFig",
-        "aggregation": "sum",
-        "property": "fruitCount",
-        "variable": "sumFig"
-      },
-      {
-        "func": "GET",
-        "collection": "allKiwi",
-        "aggregation": "sum",
-        "property": "fruitCount",
-        "variable": "sumKiwi"
-      },
-      "var pineapple = 5 == ${sumPineapple}",
-      "var apple = 5 == ${sumApple}",
-      "var fig = 5 == ${sumFig}",
-      "var kiwi = 5 == ${sumKiwi}",
-      {
-        "func": "IF",
-        "condition": "${pineapple}",
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "goodCount",
-            "value": true
-          }
-        ]
-      },
-      {
-        "func": "IF",
-        "condition": "${apple}",
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "goodCount",
-            "value": true
-          }
-        ]
-      },
-      {
-        "func": "IF",
-        "condition": "${fig}",
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "goodCount",
-            "value": true
-          }
-        ]
-      },
-      {
-        "func": "IF",
-        "condition": "${kiwi}",
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "goodCount",
-            "value": true
-          }
-        ]
-      },
-      {
-        "func": "IF",
-        "operand1": "${PROPERTY goodCount}",
-        "operand2": true,
-        "thenRoutine": [
-          {
-            "func": "SELECT",
-            "property": "id",
-            "value": "rightBtn"
-          },
-          {
-            "func": "SET",
-            "property": "y",
-            "value": 320
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "SELECT",
-            "property": "id",
-            "value": "wrongBtn"
-          },
-          {
-            "func": "SET",
-            "property": "y",
-            "value": 320
-          }
-        ]
-      }
-    ],
-    "parent": "be7f2",
-    "y": -100
-  },
-  "be7f3": {
-    "id": "be7f3",
-    "x": 1452,
-    "width": 140,
-    "height": 60,
-    "z": 70786,
-    "image": "/assets/-1004567241_11721",
     "movable": false,
     "movableInEdit": false,
-    "y": 720
-  },
-  "deal": {
-    "type": "button",
-    "id": "deal",
-    "parent": "be7f3",
-    "width": 140,
-    "height": 60,
-    "z": 70743,
+    "image": "/assets/1818689057_23795",
+    "playersClicked": [],
     "clickRoutine": [
+      "var playersClicked = ${PROPERTY playersClicked}",
+      "var playersClicked = push ${playerName}",
       {
-        "func": "INPUT",
-        "header": "Dealing new cards cards...",
-        "fields": [
-          {
-            "type": "text",
-            "text": "You are about to recall all the cards amd deal again. Are you sure?"
-          }
+        "func": "SET",
+        "property": "playersClicked",
+        "value": "${playersClicked}",
+        "collection": "thisButton"
+      },
+      "var cantClick = ${PROPERTY owner OF clickCover}",
+      "var cantClick = push ${playerName}",
+      {
+        "func": "SET",
+        "property": "owner",
+        "value": "${cantClick}",
+        "collection": [
+          "clickCover"
         ]
       },
       {
-        "func": "SELECT",
-        "property": "id",
-        "value": "shuffler"
+        "func": "TIMER",
+        "mode": "start",
+        "timer": "checkCorrectness"
       },
       {
-        "func": "CLICK"
-      },
+        "func": "AUDIO",
+        "source": "/assets/-1791211104_48901"
+      }
+    ]
+  },
+  "p1Enforcer": {
+    "type": "button",
+    "id": "p1Enforcer",
+    "parent": "p1Play",
+    "z": 70801,
+    "css": {
+      "background-color": "transparent",
+      "border-color": "transparent",
+      "pointer-events": "auto"
+    },
+    "clickRoutine": [
+      "var Nr = ${PROPERTY id}",
+      "var Nr = ${Nr.1}",
+      "var cantClick = ${PROPERTY owner OF clickCover}",
+      "var idx = indexOf ${cantClick} ${playerName}",
+      "var cantClick = remove ${idx}",
       {
-        "func": "SELECT",
-        "property": "activeSeat",
-        "value": true
-      },
-      {
-        "func": "COUNT"
-      },
-      "var dealCount = 56 / ${COUNT}",
-      "var dealCount = floor ${dealCount}",
-      {
-        "func": "FOREACH",
-        "collection": "DEFAULT",
-        "loopRoutine": [
-          {
-            "func": "MOVE",
-            "from": "deck",
-            "to": "${widgetID}",
-            "count": "${dealCount}"
-          }
+        "func": "SET",
+        "property": "owner",
+        "value": "${cantClick}",
+        "collection": [
+          "clickCover"
         ]
+      },
+      {
+        "func": "TIMER",
+        "timer": "p${Nr}EnforcerTimer",
+        "mode": "start"
       }
     ],
-    "css": "color:#303030;font-size:18px;background-color:#00000000;border-width:0px;",
-    "text": "Deal"
+    "width": 111,
+    "height": 168,
+    "borderRadius": 0,
+    "task": "enforcer",
+    "playerColor": "#999999",
+    "layer": 1
   },
-  "timer": {
+  "checkCorrectness": {
     "type": "timer",
-    "id": "timer",
-    "x": 1621,
-    "y": 494,
-    "z": 70799,
-    "changeRoutine": [
-      {
-        "func": "IF",
-        "operand1": "${PROPERTY milliseconds}",
-        "operand2": 100,
-        "thenRoutine": [
-          {
-            "func": "SELECT",
-            "property": "id",
-            "value": "displayFirstPlayer"
-          },
-          {
-            "func": "SET",
-            "property": "text",
-            "value": "${playerName}"
-          },
-          {
-            "func": "SELECT",
-            "property": "id",
-            "value": "Glocke7"
-          },
-          {
-            "func": "SET",
-            "property": "clickable",
-            "value": false
-          },
-          {
-            "func": "SET",
-            "property": "owner",
-            "value": "${playerName}"
-          },
-          {
-            "func": "CALL",
-            "widget": "clearBell",
-            "routine": "fruitCountRoutine"
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "paused",
-            "value": false
-          }
-        ]
-      },
+    "id": "checkCorrectness",
+    "x": 1641,
+    "y": 738,
+    "z": 70805,
+    "precision": 500,
+    "millisecondsChangeRoutine": [
       {
         "func": "IF",
         "operand1": "${PROPERTY milliseconds}",
         "operand2": 500,
         "thenRoutine": [
+          "var playersClicked = ${PROPERTY playersClicked OF bell}",
+          "var first = shift ${playersClicked}",
+          {
+            "func": "SET",
+            "property": "text",
+            "value": "${first}",
+            "collection": [
+              "displayFirstPlayer"
+            ]
+          },
+          "var playerString = join ${playersClicked} ${PROPERTY newline}",
+          {
+            "func": "SET",
+            "property": "text",
+            "value": "${playerString}",
+            "collection": [
+              "displayOtherPlayers"
+            ]
+          },
+          {
+            "func": "SELECT",
+            "property": "task",
+            "value": "enforcer"
+          },
+          {
+            "func": "GET",
+            "property": "css",
+            "variable": "css",
+            "aggregation": "first"
+          },
+          "var css.pointer-events = 'none'",
+          {
+            "func": "SET",
+            "property": "css",
+            "value": "${css}"
+          },
+          {
+            "func": "CALL",
+            "routine": "fruitCountRoutine"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY milliseconds}",
+        "operand2": 1000,
+        "thenRoutine": [
           {
             "func": "TIMER",
-            "timer": "timer",
+            "timer": "checkCorrectness",
             "mode": "reset"
           }
         ]
       }
     ],
-    "precision": 100
-  },
-  "timerReset": {
-    "type": "button",
-    "id": "timerReset",
-    "parent": "timer",
-    "x": 80,
-    "y": -3,
-    "width": 36,
-    "height": 36,
-    "movableInEdit": false,
-    "clickRoutine": [
+    "fruitCountRoutine": [
       {
-        "func": "TIMER",
-        "timer": "${PROPERTY parent}",
-        "mode": "reset"
+        "func": "SELECT",
+        "property": "type",
+        "value": "holder",
+        "collection": "fruitHolders"
+      },
+      {
+        "func": "SELECT",
+        "source": "fruitHolders",
+        "property": "fruit",
+        "value": "pineapple",
+        "collection": "allPineapple"
+      },
+      {
+        "func": "SELECT",
+        "source": "fruitHolders",
+        "property": "fruit",
+        "value": "apple",
+        "collection": "allApple"
+      },
+      {
+        "func": "SELECT",
+        "source": "fruitHolders",
+        "property": "fruit",
+        "value": "fig",
+        "collection": "allFig"
+      },
+      {
+        "func": "SELECT",
+        "source": "fruitHolders",
+        "property": "fruit",
+        "value": "kiwi",
+        "collection": "allKiwi"
+      },
+      {
+        "func": "GET",
+        "collection": "allPineapple",
+        "aggregation": "sum",
+        "property": "fruitCount",
+        "variable": "sumPineapple"
+      },
+      {
+        "func": "GET",
+        "collection": "allApple",
+        "aggregation": "sum",
+        "property": "fruitCount",
+        "variable": "sumApple"
+      },
+      {
+        "func": "GET",
+        "collection": "allFig",
+        "aggregation": "sum",
+        "property": "fruitCount",
+        "variable": "sumFig"
+      },
+      {
+        "func": "GET",
+        "collection": "allKiwi",
+        "aggregation": "sum",
+        "property": "fruitCount",
+        "variable": "sumKiwi"
+      },
+      "var pineapple = 5 == ${sumPineapple}",
+      "var apple = 5 == ${sumApple}",
+      "var fig = 5 == ${sumFig}",
+      "var kiwi = 5 == ${sumKiwi}",
+      {
+        "func": "IF",
+        "condition": "${pineapple}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "goodCount",
+            "value": true
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${apple}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "goodCount",
+            "value": true
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${fig}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "goodCount",
+            "value": true
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${kiwi}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "goodCount",
+            "value": true
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY autoMode}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY goodCount}",
+            "operand2": true,
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "rightBtn"
+              },
+              {
+                "func": "SET",
+                "property": "y",
+                "value": 320
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "wrongBtn"
+              },
+              {
+                "func": "SET",
+                "property": "y",
+                "value": 320
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "goodCount",
+        "value": false,
+        "collection": "thisButton"
       }
     ],
-    "css": "background-size: 80% 80%",
-    "image": "/i/button-icons/White-Reset.svg"
+    "goodCount": false,
+    "css": {
+      "background-color": "white",
+      "font-size": "40px"
+    },
+    "width": 100,
+    "height": 50,
+    "newline": "\n",
+    "autoMode": true
   },
-  "ijzk": {
-    "type": "pile",
-    "parent": null,
-    "x": 179.83333333333334,
-    "y": 29,
-    "width": 103,
-    "height": 160,
-    "id": "ijzk",
-    "z": 43755
-  },
-  "o20d": {
-    "type": "pile",
-    "parent": null,
-    "x": 29,
-    "y": 29,
-    "width": 103,
-    "height": 160,
-    "id": "o20d",
-    "z": 43754
-  },
-  "phnv": {
-    "type": "pile",
-    "parent": null,
-    "x": 481.5,
-    "y": 216,
-    "width": 103,
-    "height": 160,
-    "id": "phnv",
-    "z": 43762
-  },
-  "o4vu": {
-    "type": "pile",
-    "parent": null,
-    "x": 29,
-    "y": 216,
-    "width": 103,
-    "height": 160,
-    "id": "o4vu",
-    "z": 43759
-  },
-  "by97": {
-    "type": "pile",
-    "parent": null,
-    "x": 29,
-    "y": 639,
-    "width": 103,
-    "height": 160,
-    "id": "by97",
-    "z": 43771
-  },
-  "pomh": {
-    "type": "pile",
-    "parent": null,
-    "x": 29,
-    "y": 828,
-    "width": 103,
-    "height": 160,
-    "id": "pomh",
-    "z": 43766
-  },
-  "2kos": {
-    "type": "pile",
-    "parent": null,
-    "x": 330.6666666666667,
-    "y": 828,
-    "width": 103,
-    "height": 160,
-    "id": "2kos",
-    "z": 43768
-  },
-  "1aql": {
-    "type": "pile",
-    "parent": null,
-    "x": 330.6666666666667,
-    "y": 216,
-    "width": 103,
-    "height": 160,
-    "id": "1aql",
-    "z": 43761
-  },
-  "ocdm": {
-    "type": "pile",
-    "parent": null,
-    "x": 179.83333333333334,
-    "y": 639,
-    "width": 103,
-    "height": 160,
-    "id": "ocdm",
-    "z": 43772
-  },
-  "o8sx": {
-    "type": "pile",
-    "parent": null,
-    "x": 330.6666666666667,
-    "y": 639,
-    "width": 103,
-    "height": 160,
-    "id": "o8sx",
-    "z": 43773
-  },
-  "zip1": {
-    "type": "pile",
-    "parent": null,
-    "x": 330.6666666666667,
-    "y": 29,
-    "width": 103,
-    "height": 160,
-    "id": "zip1",
-    "z": 43756
-  },
-  "exu5": {
-    "type": "pile",
-    "parent": null,
-    "x": 179.83333333333334,
-    "y": 216,
-    "width": 103,
-    "height": 160,
-    "id": "exu5",
-    "z": 43760
-  },
-  "c8z9": {
-    "type": "pile",
-    "parent": null,
-    "x": 481.5,
-    "y": 29,
-    "width": 103,
-    "height": 160,
-    "id": "c8z9",
-    "z": 43777
-  },
-  "fncu": {
-    "type": "pile",
-    "parent": null,
-    "x": 179.83333333333334,
-    "y": 828,
-    "width": 103,
-    "height": 160,
-    "id": "fncu",
-    "z": 43767
-  },
-  "57m1": {
-    "type": "pile",
-    "parent": null,
-    "x": 481.5,
-    "y": 828,
-    "width": 103,
-    "height": 160,
-    "id": "57m1",
-    "z": 43769
-  },
-  "kgk4": {
-    "type": "pile",
-    "parent": null,
-    "x": 481.5,
-    "y": 639,
-    "width": 103,
-    "height": 160,
-    "id": "kgk4"
-  },
-  "_meta": {
-    "version": 3,
-    "info": {
-      "name": "Speedy Fruits",
-      "image": "/assets/1560517833_99964",
-      "rules": "",
-      "bgg": "https://boardgamegeek.com/boardgame/2944/halli-galli",
-      "year": "1990",
-      "mode": "vs",
-      "time": "10",
-      "players": "2-8",
-      "language": "en-US",
-      "variant": "",
-      "attribution": "The room design, library image, and other room elements are by Ingegneus and are released to the Public Domain under CC0.\n\nThe wood background by Nathan Dumlao is from-https://unsplash.com/photos/J2gEgTPM_OA and is available under the Unsplash license.\n\nThe deck back image by Michael Schwarzenberger is from https://pixabay.com/photos/playing-card-back-pattern-568200/ and is available under the Pixabay License.\n\nThe UI elements from the player menu are from-https://www.kenney.nl/assets/ui-pack-rpg-expansion and are in the public domain under CC0.",
-      "similarName": "Halli Galli",
-      "description": "Flip cards to reveal matching fruits and ring bell when 5 of a kind are displayed to win opponent cards.  Player with most cards wins."
+  "p1EnforcerTimer": {
+    "type": "timer",
+    "id": "p1EnforcerTimer",
+    "parent": "p1Enforcer",
+    "millisecondsChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY milliseconds}",
+        "operand2": 1000,
+        "thenRoutine": [
+          "var cantClick = ${PROPERTY owner OF clickCover}",
+          "var cantClick = push ${playerName}",
+          {
+            "func": "SET",
+            "property": "owner",
+            "value": "${cantClick}",
+            "collection": [
+              "clickCover"
+            ]
+          },
+          {
+            "func": "TIMER",
+            "mode": "reset",
+            "timer": "${thisID}"
+          }
+        ]
+      }
+    ],
+    "precision": 500,
+    "clickable": false,
+    "css": {
+      "pointer-events": "none",
+      "color": "transparent"
     }
+  },
+  "p2Enforcer": {
+    "inheritFrom": "p1Enforcer",
+    "id": "p2Enforcer",
+    "type": "button",
+    "x": 0,
+    "y": 0,
+    "parent": "p2Play",
+    "css": {
+      "background-color": "transparent",
+      "border-color": "transparent",
+      "pointer-events": "auto"
+    },
+    "playerColor": "#999999"
+  },
+  "p2EnforcerTimer": {
+    "inheritFrom": "p1EnforcerTimer",
+    "id": "p2EnforcerTimer",
+    "type": "timer",
+    "parent": "p2Enforcer",
+    "paused": false,
+    "milliseconds": 0,
+    "alert": false
+  },
+  "p3Enforcer": {
+    "inheritFrom": "p1Enforcer",
+    "id": "p3Enforcer",
+    "type": "button",
+    "x": 0,
+    "y": 0,
+    "parent": "p3Play",
+    "css": {
+      "background-color": "transparent",
+      "border-color": "transparent",
+      "pointer-events": "auto"
+    },
+    "playerColor": "#999999"
+  },
+  "p3EnforcerTimer": {
+    "inheritFrom": "p1EnforcerTimer",
+    "id": "p3EnforcerTimer",
+    "type": "timer",
+    "parent": "p3Enforcer",
+    "paused": true,
+    "milliseconds": 0,
+    "alert": false
+  },
+  "p4Enforcer": {
+    "inheritFrom": "p1Enforcer",
+    "id": "p4Enforcer",
+    "type": "button",
+    "x": 0,
+    "y": 0,
+    "parent": "p4Play",
+    "css": {
+      "background-color": "transparent",
+      "border-color": "transparent",
+      "pointer-events": "auto"
+    }
+  },
+  "p4EnforcerTimer": {
+    "inheritFrom": "p1EnforcerTimer",
+    "id": "p4EnforcerTimer",
+    "type": "timer",
+    "parent": "p4Enforcer",
+    "paused": true,
+    "milliseconds": 0,
+    "alert": false
+  },
+  "p5Enforcer": {
+    "inheritFrom": "p1Enforcer",
+    "id": "p5Enforcer",
+    "type": "button",
+    "x": 0,
+    "y": 0,
+    "parent": "p5Play",
+    "css": {
+      "background-color": "transparent",
+      "border-color": "transparent",
+      "pointer-events": "auto"
+    },
+    "playerColor": "#999999"
+  },
+  "p5EnforcerTimer": {
+    "inheritFrom": "p1EnforcerTimer",
+    "id": "p5EnforcerTimer",
+    "type": "timer",
+    "parent": "p5Enforcer",
+    "paused": true,
+    "milliseconds": 0,
+    "alert": false
+  },
+  "p6Enforcer": {
+    "inheritFrom": "p1Enforcer",
+    "id": "p6Enforcer",
+    "type": "button",
+    "x": 0,
+    "y": 0,
+    "parent": "p6Play",
+    "playerColor": "#999999",
+    "css": {
+      "background-color": "transparent",
+      "border-color": "transparent",
+      "pointer-events": "auto"
+    }
+  },
+  "p6EnforcerTimer": {
+    "inheritFrom": "p1EnforcerTimer",
+    "id": "p6EnforcerTimer",
+    "type": "timer",
+    "parent": "p6Enforcer",
+    "paused": true,
+    "milliseconds": 0,
+    "alert": false
+  },
+  "p7Enforcer": {
+    "inheritFrom": "p1Enforcer",
+    "id": "p7Enforcer",
+    "type": "button",
+    "x": 0,
+    "y": 0,
+    "parent": "p7Play",
+    "css": {
+      "background-color": "transparent",
+      "border-color": "transparent",
+      "pointer-events": "auto"
+    },
+    "playerColor": "#999999"
+  },
+  "p7EnforcerTimer": {
+    "inheritFrom": "p1EnforcerTimer",
+    "id": "p7EnforcerTimer",
+    "type": "timer",
+    "parent": "p7Enforcer",
+    "paused": true,
+    "milliseconds": 0,
+    "alert": false
+  },
+  "p8Enforcer": {
+    "inheritFrom": "p1Enforcer",
+    "id": "p8Enforcer",
+    "type": "button",
+    "x": 0,
+    "y": 0,
+    "parent": "p8Play",
+    "css": {
+      "background-color": "transparent",
+      "border-color": "transparent",
+      "pointer-events": "auto"
+    }
+  },
+  "p8EnforcerTimer": {
+    "inheritFrom": "p1EnforcerTimer",
+    "id": "p8EnforcerTimer",
+    "type": "timer",
+    "parent": "p8Enforcer",
+    "paused": true,
+    "milliseconds": 0,
+    "alert": false
+  },
+  "displayOtherPlayers": {
+    "type": "label",
+    "id": "displayOtherPlayers",
+    "x": 700,
+    "y": 600,
+    "width": 200,
+    "height": 200,
+    "layer": -5,
+    "movableInEdit": false,
+    "css": {
+      "border": "0px solid red",
+      "font-size": "20px",
+      "color": "lightgrey",
+      "text-align": "center",
+      "pointer-events": "none"
+    },
+    "display": true
+  },
+  "spreadCardsToLoad": {
+    "type": "button",
+    "id": "spreadCardsToLoad",
+    "x": 1800,
+    "y": 300,
+    "z": 70808,
+    "text": "layCardsOut",
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "shuffler"
+        ]
+      },
+      "var offsetX = 20",
+      "var offsetY = 72",
+      {
+        "func": "FOREACH",
+        "in": [
+          "apple",
+          "fig",
+          "kiwi",
+          "pineapple"
+        ],
+        "loopRoutine": [
+          "var fruit = ${value}",
+          {
+            "func": "FOREACH",
+            "in": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "loopRoutine": [
+              {
+                "func": "SELECT",
+                "property": "quantity",
+                "value": "${value}"
+              },
+              {
+                "func": "SELECT",
+                "property": "fruit",
+                "value": "${fruit}",
+                "source": "DEFAULT"
+              },
+              {
+                "func": "SET",
+                "property": "x",
+                "value": "${offsetX}"
+              },
+              {
+                "func": "SET",
+                "property": "y",
+                "value": "${offsetY}"
+              },
+              "var offsetX = ${offsetX} + 123"
+            ]
+          },
+          "var offsetX = 20",
+          "var offsetY = ${offsetY} + 232"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "deckHolder",
+        "type": "card"
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": null
+      }
+    ]
+  },
+  "vvfx": {
+    "type": "pile",
+    "parent": null,
+    "x": 20,
+    "y": 768,
+    "width": 103,
+    "height": 160,
+    "id": "vvfx"
+  },
+  "f1mg": {
+    "type": "pile",
+    "parent": null,
+    "x": 20,
+    "y": 72,
+    "width": 103,
+    "height": 160,
+    "id": "f1mg"
+  },
+  "wl2k": {
+    "type": "pile",
+    "parent": null,
+    "x": 20,
+    "y": 536,
+    "width": 103,
+    "height": 160,
+    "id": "wl2k"
+  },
+  "by6a": {
+    "type": "pile",
+    "parent": null,
+    "x": 143,
+    "y": 768,
+    "width": 103,
+    "height": 160,
+    "id": "by6a"
+  },
+  "431g": {
+    "type": "pile",
+    "parent": null,
+    "x": 143,
+    "y": 72,
+    "width": 103,
+    "height": 160,
+    "id": "431g"
+  },
+  "c1kx": {
+    "type": "pile",
+    "parent": null,
+    "x": 266,
+    "y": 768,
+    "width": 103,
+    "height": 160,
+    "id": "c1kx"
+  },
+  "ijs5": {
+    "type": "pile",
+    "parent": null,
+    "x": 266,
+    "y": 72,
+    "width": 103,
+    "height": 160,
+    "id": "ijs5"
+  },
+  "6jgh": {
+    "type": "pile",
+    "parent": null,
+    "x": 266,
+    "y": 304,
+    "width": 103,
+    "height": 160,
+    "id": "6jgh"
+  },
+  "0c14": {
+    "type": "pile",
+    "parent": null,
+    "x": 20,
+    "y": 304,
+    "width": 103,
+    "height": 160,
+    "id": "0c14"
+  },
+  "8pex": {
+    "type": "pile",
+    "parent": null,
+    "x": 143,
+    "y": 304,
+    "width": 103,
+    "height": 160,
+    "id": "8pex"
+  },
+  "ssfc": {
+    "type": "pile",
+    "parent": null,
+    "x": 143,
+    "y": 536,
+    "width": 103,
+    "height": 160,
+    "id": "ssfc"
+  },
+  "qkqy": {
+    "type": "pile",
+    "parent": null,
+    "x": 266,
+    "y": 536,
+    "width": 103,
+    "height": 160,
+    "id": "qkqy"
+  },
+  "v8n0": {
+    "type": "pile",
+    "parent": null,
+    "x": 389,
+    "y": 72,
+    "width": 103,
+    "height": 160,
+    "id": "v8n0"
+  },
+  "t6eu": {
+    "type": "pile",
+    "parent": null,
+    "x": 389,
+    "y": 304,
+    "width": 103,
+    "height": 160,
+    "id": "t6eu"
+  },
+  "4q3y": {
+    "type": "pile",
+    "parent": null,
+    "x": 389,
+    "y": 536,
+    "width": 103,
+    "height": 160,
+    "id": "4q3y"
+  },
+  "97u9": {
+    "type": "pile",
+    "parent": null,
+    "x": 389,
+    "y": 768,
+    "width": 103,
+    "height": 160,
+    "id": "97u9"
   }
 }

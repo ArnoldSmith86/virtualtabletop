@@ -4,24 +4,24 @@
     "type": "card",
     "cardType": "green",
     "id": "1054",
-    "z": 65309,
-    "parent": "gwxw"
+    "z": 82321,
+    "parent": "m5e0"
   },
   "8342": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "red",
     "id": "8342",
-    "z": 65432,
-    "parent": "gwxw"
+    "z": 82283,
+    "parent": "m5e0"
   },
   "8483": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "purple",
     "id": "8483",
-    "z": 65328,
-    "parent": "gwxw"
+    "z": 82332,
+    "parent": "m5e0"
   },
   "tileBag": {
     "id": "tileBag",
@@ -35,7 +35,15 @@
     "dropOffsetY": 0,
     "dropTarget": {
       "deck": "theDeck"
-    }
+    },
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "sideHolder",
+        "value": null
+      }
+    ]
   },
   "display01-01": {
     "id": "display01-01",
@@ -70,7 +78,15 @@
     "dropOffsetY": 0,
     "dropTarget": {
       "deck": "theDeck"
-    }
+    },
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "sideHolder",
+        "value": null
+      }
+    ]
   },
   "hsvo": {
     "id": "hsvo",
@@ -108,7 +124,7 @@
     "version": 6,
     "info": {
       "name": "Blue - Winter Alcove",
-      "image": "/assets/2060165300_49398",
+      "image": "/assets/759696995_49019",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/287954/azul-summer-pavilion",
       "year": "2019",
@@ -117,10 +133,10 @@
       "players": "2-4",
       "language": "",
       "variant": "",
-      "attribution": "Board layout and game design by LawDawg 96 and released to the Public Domain as CC0.\n\nThe window and person icons are by Delapouite and are available under CC BY 3.0 from https://game-icons.net/1x1/delapouite/window.html and https://game-icons.net/1x1/delapouite/person.html.",
+      "attribution": "Room layout, library image, and game design by LawDawg 96 and released to the Public Domain as CC0.",
       "similarName": "Azul: Summer Pavilion",
       "description": "Choose colored tiles to place on board in matching colors with extra points for specific patterns and sets.  A new twist on the classic Blue using different shapes and tiles and a more complex board. Play 6 rounds. Highest score wins.",
-      "helpText": "Players take seats. Press restart button in top right to select number of players. Press start arrow button to begin. Move tiles from the factory area to the tall, thin holder next to the player's board. Press the empty button to send extra tiles to central holders.  The turn button will advance the turn indicator and ensure 10 cards are available in the supply area. After round is over, players manually calculate scores. Press start arrow button to advance to next round."
+      "helpText": "Players take seats. Press restart button in top right to select number of players. Press start arrow button to begin. Move tiles from the factory area to the tall, thin holder next to the player's board. Press the empty button to send extra tiles to central holders and advance to the next turn.  The turn button will advance the turn indicator and ensure 10 cards are available in the supply area. After round is over, players manually calculate scores. Press start trianble button to advance to next round. Turn indicator will be set to the player that last moved the \"1st\" tile."
     }
   },
   "display01-02": {
@@ -870,9 +886,25 @@
     "type": "card",
     "cardType": "startToken",
     "id": "b1io",
-    "z": 16904,
+    "z": 16957,
     "deck": "startTokenDeck",
     "layer": 5,
+    "draggingChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY dragging}",
+        "relation": "!=",
+        "operand2": null,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "lastMovedBy",
+            "value": "${value}"
+          }
+        ]
+      }
+    ],
     "parent": "startTokenHolder"
   },
   "startTokenDeck": {
@@ -923,22 +955,28 @@
     },
     "cardTypes": {
       "orange": {
-        "css": "background:#ffa500; clip-path: polygon(50% 0, 79% 50%, 50% 100%, 21% 50%)"
+        "css": "background:#ffa500; clip-path: polygon(50% 0, 79% 50%, 50% 100%, 21% 50%)",
+        "sorting": 1
       },
       "red": {
-        "css": "background:#ff0000; clip-path: polygon(50% 0, 79% 50%, 50% 100%, 21% 50%)"
+        "css": "background:#ff0000; clip-path: polygon(50% 0, 79% 50%, 50% 100%, 21% 50%)",
+        "sorting": 2
       },
       "purple": {
-        "css": "background:#994073; clip-path: polygon(50% 0, 79% 50%, 50% 100%, 21% 50%)"
+        "css": "background:#994073; clip-path: polygon(50% 0, 79% 50%, 50% 100%, 21% 50%)",
+        "sorting": 3
       },
       "blue": {
-        "css": "background:#0000ff; clip-path: polygon(50% 0, 79% 50%, 50% 100%, 21% 50%)"
+        "css": "background:#0000ff; clip-path: polygon(50% 0, 79% 50%, 50% 100%, 21% 50%)",
+        "sorting": 4
       },
       "green": {
-        "css": "background:#008000; clip-path: polygon(50% 0, 79% 50%, 50% 100%, 21% 50%)"
+        "css": "background:#008000; clip-path: polygon(50% 0, 79% 50%, 50% 100%, 21% 50%)",
+        "sorting": 5
       },
       "yellow": {
-        "css": "background:#ffea00; clip-path: polygon(50% 0, 79% 50%, 50% 100%, 21% 50%)"
+        "css": "background:#ffea00; clip-path: polygon(50% 0, 79% 50%, 50% 100%, 21% 50%)",
+        "sorting": 6
       }
     },
     "faceTemplates": [
@@ -955,7 +993,7 @@
     "width": 500,
     "height": 500,
     "z": 15307,
-    "image": "/assets/2060165300_49398",
+    "image": "/assets/759696995_49019",
     "layer": -4,
     "movable": false,
     "movableInEdit": false,
@@ -991,7 +1029,10 @@
     "y": 55,
     "z": 15344,
     "rotation": 60,
-    "parent": "board1"
+    "parent": "board1",
+    "dropTarget": {
+      "cardType": "orange"
+    }
   },
   "pieceHolder3": {
     "inheritFrom": "pieceHolder1",
@@ -1001,7 +1042,10 @@
     "y": 101,
     "z": 15349,
     "rotation": 120,
-    "parent": "board1"
+    "parent": "board1",
+    "dropTarget": {
+      "cardType": "orange"
+    }
   },
   "pieceHolder4": {
     "inheritFrom": "pieceHolder1",
@@ -1010,7 +1054,10 @@
     "x": 133,
     "y": 122,
     "z": 15350,
-    "parent": "board1"
+    "parent": "board1",
+    "dropTarget": {
+      "cardType": "orange"
+    }
   },
   "pieceHolder5": {
     "inheritFrom": "pieceHolder1",
@@ -1020,7 +1067,10 @@
     "y": 101,
     "z": 15351,
     "rotation": -120,
-    "parent": "board1"
+    "parent": "board1",
+    "dropTarget": {
+      "cardType": "orange"
+    }
   },
   "pieceHolder6": {
     "inheritFrom": "pieceHolder1",
@@ -1030,7 +1080,10 @@
     "y": 55,
     "z": 15352,
     "rotation": -60,
-    "parent": "board1"
+    "parent": "board1",
+    "dropTarget": {
+      "cardType": "orange"
+    }
   },
   "pieceHolder7": {
     "inheritFrom": "pieceHolder1",
@@ -1432,12 +1485,12 @@
     "inheritFrom": "pieceHolder1",
     "id": "pieceHolder43",
     "type": "holder",
-    "x": 3,
-    "y": 16,
+    "x": 12,
+    "y": 14,
     "z": 15355,
-    "rotation": 30,
+    "rotation": 50,
     "dropTarget": {
-      "deck": "theDeck"
+      "sideHolder": true
     },
     "parent": "board1"
   },
@@ -1445,26 +1498,26 @@
     "inheritFrom": "pieceHolder43",
     "id": "pieceHolder44",
     "type": "holder",
-    "x": 420,
-    "y": 16,
-    "rotation": -30,
+    "x": 417,
+    "y": 17,
+    "rotation": -50,
     "parent": "board1"
   },
   "pieceHolder45": {
     "inheritFrom": "pieceHolder43",
     "id": "pieceHolder45",
     "type": "holder",
-    "x": 1,
-    "y": 416,
-    "rotation": -30,
+    "x": 7,
+    "y": 415,
+    "rotation": -50,
     "parent": "board1"
   },
   "pieceHolder46": {
     "inheritFrom": "pieceHolder43",
     "id": "pieceHolder46",
     "type": "holder",
-    "x": 421,
-    "y": 416,
+    "x": 416,
+    "y": 415,
     "parent": "board1"
   },
   "factory1": {
@@ -1477,6 +1530,9 @@
     "css": "border: 8px solid #a1b6cd",
     "text": "EMPTY",
     "clickRoutine": [
+      {
+        "func": "TURN"
+      },
       {
         "func": "MOVE",
         "from": [
@@ -1512,6 +1568,9 @@
     "text": "EMPTY",
     "clickRoutine": [
       {
+        "func": "TURN"
+      },
+      {
         "func": "MOVE",
         "from": [
           "display02-01",
@@ -1525,11 +1584,9 @@
       {
         "func": "CALL",
         "widget": "applyButton",
+        "routine": "emptyRoutine",
         "arguments": {
-          "from": "tmp-holder",
-          "grid": 5,
-          "row": 1,
-          "unlimited": true
+          "from": "tmp-holder"
         }
       }
     ],
@@ -1546,6 +1603,9 @@
     "css": "border: 8px solid #a1b6cd",
     "text": "EMPTY",
     "clickRoutine": [
+      {
+        "func": "TURN"
+      },
       {
         "func": "MOVE",
         "from": [
@@ -1580,6 +1640,9 @@
     "text": "EMPTY",
     "clickRoutine": [
       {
+        "func": "TURN"
+      },
+      {
         "func": "MOVE",
         "from": [
           "display05-01",
@@ -1612,6 +1675,9 @@
     "css": "border: 8px solid #a1b6cd",
     "text": "EMPTY",
     "clickRoutine": [
+      {
+        "func": "TURN"
+      },
       {
         "func": "MOVE",
         "from": [
@@ -1646,6 +1712,9 @@
     "text": "EMPTY",
     "clickRoutine": [
       {
+        "func": "TURN"
+      },
+      {
         "func": "MOVE",
         "from": [
           "display07-01",
@@ -1676,6 +1745,9 @@
     "css": "border: 8px solid #a1b6cd",
     "text": "EMPTY",
     "clickRoutine": [
+      {
+        "func": "TURN"
+      },
       {
         "func": "MOVE",
         "from": [
@@ -1712,6 +1784,9 @@
     "text": "EMPTY",
     "clickRoutine": [
       {
+        "func": "TURN"
+      },
+      {
         "func": "MOVE",
         "from": [
           "display08-01",
@@ -1744,6 +1819,9 @@
     "css": "border: 8px solid #a1b6cd",
     "text": "EMPTY",
     "clickRoutine": [
+      {
+        "func": "TURN"
+      },
       {
         "func": "MOVE",
         "from": [
@@ -2059,14 +2137,27 @@
     "height": 500,
     "z": 15365,
     "dropOffsetX": -12,
-    "dropOffsetY": -2,
-    "stackOffsetY": 25,
+    "dropOffsetY": 3,
+    "stackOffsetY": 30,
     "movableInEdit": false,
     "layer": 3,
     "linkedToSeat": "seat1",
     "dropTarget": {
       "deck": "theDeck"
-    }
+    },
+    "enterRoutine": [
+      {
+        "func": "SORT",
+        "holder": "${PROPERTY id}",
+        "key": "sorting"
+      },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "sideHolder",
+        "value": true
+      }
+    ]
   },
   "sideHolder2": {
     "inheritFrom": "sideHolder1",
@@ -2081,89 +2172,89 @@
     "type": "card",
     "cardType": "orange",
     "id": "2gmc",
-    "z": 65385,
-    "parent": "gwxw"
+    "z": 82367,
+    "parent": "m5e0"
   },
   "9dz6": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "orange",
     "id": "9dz6",
-    "z": 65434,
-    "parent": "gwxw"
+    "z": 82364,
+    "parent": "m5e0"
   },
   "hj7h": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "orange",
     "id": "hj7h",
-    "z": 65331,
-    "parent": "gwxw"
+    "z": 82269,
+    "parent": "m5e0"
   },
   "lc0i": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "orange",
     "id": "lc0i",
-    "z": 65373,
-    "parent": "gwxw",
-    "activeFace": 1
+    "z": 82346,
+    "activeFace": 1,
+    "parent": "m5e0"
   },
   "5bk3": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "orange",
     "id": "5bk3",
-    "z": 65395,
-    "parent": "gwxw"
+    "z": 82261,
+    "parent": "m5e0"
   },
   "3sag": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "orange",
     "id": "3sag",
-    "z": 65345,
-    "parent": "gwxw"
+    "z": 82325,
+    "parent": "m5e0"
   },
   "oh44": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "orange",
     "id": "oh44",
-    "z": 65371,
-    "parent": "gwxw"
+    "z": 82288,
+    "parent": "m5e0"
   },
   "e7th": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "orange",
     "id": "e7th",
-    "z": 65414,
-    "parent": "gwxw"
+    "z": 82312,
+    "parent": "m5e0"
   },
   "fqfm": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "orange",
     "id": "fqfm",
-    "z": 65372,
-    "parent": "gwxw"
+    "z": 82300,
+    "parent": "m5e0"
   },
   "y8kd": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "orange",
     "id": "y8kd",
-    "z": 65402,
-    "parent": "gwxw"
+    "z": 82348,
+    "parent": "m5e0"
   },
   "mxd2": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "orange",
     "id": "mxd2",
-    "z": 65436,
-    "parent": "gwxw",
+    "z": 82365,
+    "parent": "m5e0",
     "activeFace": 1
   },
   "jv48": {
@@ -2171,16 +2262,16 @@
     "type": "card",
     "cardType": "orange",
     "id": "jv48",
-    "z": 65404,
-    "parent": "gwxw"
+    "z": 82274,
+    "parent": "m5e0"
   },
   "tso2": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "orange",
     "id": "tso2",
-    "z": 65341,
-    "parent": "gwxw",
+    "z": 82354,
+    "parent": "m5e0",
     "activeFace": 1
   },
   "38ee": {
@@ -2188,167 +2279,167 @@
     "type": "card",
     "cardType": "orange",
     "id": "38ee",
-    "z": 65344,
-    "parent": "gwxw"
+    "z": 82273,
+    "parent": "m5e0"
   },
   "0bdr": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "orange",
     "id": "0bdr",
-    "z": 65310,
-    "parent": "gwxw"
+    "z": 82292,
+    "parent": "m5e0"
   },
   "hh07": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "orange",
     "id": "hh07",
-    "z": 65348,
-    "parent": "gwxw"
+    "z": 82381,
+    "parent": "m5e0"
   },
   "98fu": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "orange",
     "id": "98fu",
-    "z": 65399,
-    "parent": "gwxw",
-    "activeFace": 1
+    "z": 82286,
+    "activeFace": 1,
+    "parent": "m5e0"
   },
   "9biu": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "orange",
     "id": "9biu",
-    "z": 65358,
-    "parent": "gwxw",
-    "activeFace": 1
+    "z": 82383,
+    "activeFace": 1,
+    "parent": "m5e0"
   },
   "r4aw": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "orange",
     "id": "r4aw",
-    "z": 65437,
+    "z": 82361,
     "activeFace": 1,
-    "parent": "gwxw"
+    "parent": "m5e0"
   },
   "wc1d": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "orange",
     "id": "wc1d",
-    "z": 65428,
-    "parent": "gwxw"
+    "z": 82336,
+    "parent": "m5e0"
   },
   "z5i4": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "orange",
     "id": "z5i4",
-    "z": 65408,
-    "parent": "gwxw",
-    "activeFace": 1
+    "z": 82351,
+    "activeFace": 1,
+    "parent": "m5e0"
   },
   "1ur5": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "orange",
     "id": "1ur5",
-    "z": 65347,
-    "parent": "gwxw"
+    "z": 82360,
+    "parent": "m5e0"
   },
   "ti5n": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "red",
     "id": "ti5n",
-    "z": 65332,
-    "parent": "gwxw"
+    "z": 82376,
+    "parent": "m5e0"
   },
   "lvq5": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "red",
     "id": "lvq5",
-    "z": 65375,
-    "parent": "gwxw",
-    "activeFace": 1
+    "z": 82271,
+    "activeFace": 1,
+    "parent": "m5e0"
   },
   "z2jd": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "red",
     "id": "z2jd",
-    "z": 65380,
+    "z": 82293,
     "activeFace": 1,
-    "parent": "gwxw"
+    "parent": "m5e0"
   },
   "c0hq": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "red",
     "id": "c0hq",
-    "z": 65317,
-    "parent": "gwxw"
+    "z": 82301,
+    "parent": "m5e0"
   },
   "qeqy": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "red",
     "id": "qeqy",
-    "z": 65419,
-    "parent": "gwxw"
+    "z": 82285,
+    "parent": "m5e0"
   },
   "jmi0": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "red",
     "id": "jmi0",
-    "z": 65335,
-    "parent": "gwxw"
+    "z": 82298,
+    "parent": "m5e0"
   },
   "5az8": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "red",
     "id": "5az8",
-    "z": 65421,
-    "parent": "gwxw"
+    "z": 82276,
+    "parent": "m5e0"
   },
   "3knq": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "red",
     "id": "3knq",
-    "z": 65400,
-    "parent": "gwxw"
+    "z": 82369,
+    "parent": "m5e0"
   },
   "qc1u": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "red",
     "id": "qc1u",
-    "z": 65340,
-    "parent": "gwxw"
+    "z": 82352,
+    "parent": "m5e0"
   },
   "r2tq": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "red",
     "id": "r2tq",
-    "z": 65369,
+    "z": 82263,
     "activeFace": 1,
-    "parent": "gwxw"
+    "parent": "m5e0"
   },
   "c4nt": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "red",
     "id": "c4nt",
-    "z": 65415,
-    "parent": "gwxw",
+    "z": 82322,
+    "parent": "m5e0",
     "activeFace": 1
   },
   "5mcc": {
@@ -2356,40 +2447,40 @@
     "type": "card",
     "cardType": "red",
     "id": "5mcc",
-    "z": 65307,
-    "parent": "gwxw"
+    "z": 82347,
+    "parent": "m5e0"
   },
   "hn8j": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "red",
     "id": "hn8j",
-    "z": 65403,
-    "parent": "gwxw"
+    "z": 82371,
+    "parent": "m5e0"
   },
   "262w": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "red",
     "id": "262w",
-    "z": 65367,
-    "parent": "gwxw"
+    "z": 82350,
+    "parent": "m5e0"
   },
   "gc22": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "red",
     "id": "gc22",
-    "z": 65321,
-    "parent": "gwxw"
+    "z": 82338,
+    "parent": "m5e0"
   },
   "z244": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "red",
     "id": "z244",
-    "z": 65435,
-    "parent": "gwxw",
+    "z": 82287,
+    "parent": "m5e0",
     "activeFace": 1
   },
   "x2je": {
@@ -2397,148 +2488,148 @@
     "type": "card",
     "cardType": "red",
     "id": "x2je",
-    "z": 65333,
-    "parent": "gwxw"
+    "z": 82374,
+    "parent": "m5e0"
   },
   "ipej": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "red",
     "id": "ipej",
-    "z": 65386,
-    "parent": "gwxw"
+    "z": 82260,
+    "parent": "m5e0"
   },
   "jgh2": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "red",
     "id": "jgh2",
-    "z": 65384,
-    "parent": "gwxw"
+    "z": 82382,
+    "parent": "m5e0"
   },
   "uijj": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "red",
     "id": "uijj",
-    "z": 65382,
-    "parent": "gwxw"
+    "z": 82256,
+    "parent": "m5e0"
   },
   "2mud": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "red",
     "id": "2mud",
-    "z": 65325,
-    "parent": "gwxw"
+    "z": 82339,
+    "parent": "m5e0"
   },
   "62kv": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "purple",
     "id": "62kv",
-    "z": 65433,
-    "parent": "gwxw"
+    "z": 82323,
+    "parent": "m5e0"
   },
   "006l": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "purple",
     "id": "006l",
-    "z": 65361,
-    "parent": "gwxw",
-    "activeFace": 1
+    "z": 82344,
+    "activeFace": 1,
+    "parent": "m5e0"
   },
   "zay1": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "purple",
     "id": "zay1",
-    "z": 65350,
-    "parent": "gwxw",
-    "activeFace": 1
+    "z": 82328,
+    "activeFace": 1,
+    "parent": "m5e0"
   },
   "unn6": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "purple",
     "id": "unn6",
-    "z": 65353,
+    "z": 82331,
     "activeFace": 1,
-    "parent": "gwxw"
+    "parent": "m5e0"
   },
   "j5do": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "purple",
     "id": "j5do",
-    "z": 65423,
-    "parent": "gwxw"
+    "z": 82255,
+    "parent": "m5e0"
   },
   "zgjn": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "purple",
     "id": "zgjn",
-    "z": 65365,
-    "parent": "gwxw"
+    "z": 82272,
+    "parent": "m5e0"
   },
   "yx29": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "purple",
     "id": "yx29",
-    "z": 65351,
-    "parent": "gwxw"
+    "z": 82330,
+    "parent": "m5e0"
   },
   "nw6j": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "purple",
     "id": "nw6j",
-    "z": 65417,
-    "parent": "gwxw"
+    "z": 82379,
+    "parent": "m5e0"
   },
   "10em": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "purple",
     "id": "10em",
-    "z": 65401,
-    "parent": "gwxw"
+    "z": 82284,
+    "parent": "m5e0"
   },
   "6fow": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "purple",
     "id": "6fow",
-    "z": 65431,
-    "parent": "gwxw"
+    "z": 82316,
+    "parent": "m5e0"
   },
   "136r": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "purple",
     "id": "136r",
-    "z": 65354,
-    "parent": "gwxw",
-    "activeFace": 1
+    "z": 82275,
+    "activeFace": 1,
+    "parent": "m5e0"
   },
   "yiwr": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "purple",
     "id": "yiwr",
-    "z": 65366,
-    "parent": "gwxw"
+    "z": 82366,
+    "parent": "m5e0"
   },
   "rkpv": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "purple",
     "id": "rkpv",
-    "z": 65378,
-    "parent": "gwxw",
+    "z": 82306,
+    "parent": "m5e0",
     "activeFace": 1
   },
   "s8ow": {
@@ -2546,17 +2637,17 @@
     "type": "card",
     "cardType": "purple",
     "id": "s8ow",
-    "z": 65370,
+    "z": 82380,
     "activeFace": 1,
-    "parent": "gwxw"
+    "parent": "m5e0"
   },
   "67a9": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "purple",
     "id": "67a9",
-    "z": 65324,
-    "parent": "gwxw",
+    "z": 82345,
+    "parent": "m5e0",
     "activeFace": 1
   },
   "tkyy": {
@@ -2564,279 +2655,279 @@
     "type": "card",
     "cardType": "purple",
     "id": "tkyy",
-    "z": 65336,
-    "parent": "gwxw"
+    "z": 82342,
+    "parent": "m5e0"
   },
   "k4f1": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "purple",
     "id": "k4f1",
-    "z": 65407,
-    "parent": "gwxw"
+    "z": 82307,
+    "parent": "m5e0"
   },
   "lp3x": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "purple",
     "id": "lp3x",
-    "z": 65363,
-    "parent": "gwxw"
+    "z": 82278,
+    "parent": "m5e0"
   },
   "1pxv": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "purple",
     "id": "1pxv",
-    "z": 65410,
-    "parent": "gwxw",
-    "activeFace": 1
+    "z": 82337,
+    "activeFace": 1,
+    "parent": "m5e0"
   },
   "ztzv": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "purple",
     "id": "ztzv",
-    "z": 65330,
-    "parent": "gwxw"
+    "z": 82270,
+    "parent": "m5e0"
   },
   "j14l": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "purple",
     "id": "j14l",
-    "z": 65359,
-    "parent": "gwxw"
+    "z": 82313,
+    "parent": "m5e0"
   },
   "sx42": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "blue",
     "id": "sx42",
-    "z": 65352,
-    "parent": "gwxw"
+    "z": 82299,
+    "parent": "m5e0"
   },
   "5wtw": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "blue",
     "id": "5wtw",
-    "z": 65346,
+    "z": 82368,
     "activeFace": 1,
-    "parent": "gwxw"
+    "parent": "m5e0"
   },
   "nmhq": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "blue",
     "id": "nmhq",
-    "z": 65319,
-    "parent": "gwxw"
+    "z": 82359,
+    "parent": "m5e0"
   },
   "dbs8": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "blue",
     "id": "dbs8",
-    "z": 65326,
-    "parent": "gwxw"
+    "z": 82257,
+    "parent": "m5e0"
   },
   "6kti": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "blue",
     "id": "6kti",
-    "z": 65312,
-    "parent": "gwxw"
+    "z": 82314,
+    "parent": "m5e0"
   },
   "jszf": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "blue",
     "id": "jszf",
-    "z": 65338,
-    "parent": "gwxw"
+    "z": 82355,
+    "parent": "m5e0"
   },
   "rtm4": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "blue",
     "id": "rtm4",
-    "z": 65343,
-    "parent": "gwxw"
+    "z": 82304,
+    "parent": "m5e0"
   },
   "36lc": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "blue",
     "id": "36lc",
-    "z": 65322,
-    "parent": "gwxw"
+    "z": 82378,
+    "parent": "m5e0"
   },
   "xsdt": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "blue",
     "id": "xsdt",
-    "z": 65405,
-    "parent": "gwxw"
+    "z": 82279,
+    "parent": "m5e0"
   },
   "0awt": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "blue",
     "id": "0awt",
-    "z": 65387,
-    "parent": "gwxw"
+    "z": 82343,
+    "parent": "m5e0"
   },
   "zmjc": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "blue",
     "id": "zmjc",
-    "z": 65425,
-    "parent": "gwxw"
+    "z": 82324,
+    "parent": "m5e0"
   },
   "kn1p": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "blue",
     "id": "kn1p",
-    "z": 65424,
-    "parent": "gwxw",
-    "activeFace": 1
+    "z": 82357,
+    "activeFace": 1,
+    "parent": "m5e0"
   },
   "ara6": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "blue",
     "id": "ara6",
-    "z": 65314,
-    "parent": "gwxw"
+    "z": 82290,
+    "parent": "m5e0"
   },
   "t2nw": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "blue",
     "id": "t2nw",
-    "z": 65356,
-    "parent": "gwxw"
+    "z": 82262,
+    "parent": "m5e0"
   },
   "2kuc": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "blue",
     "id": "2kuc",
-    "z": 65422,
-    "parent": "gwxw"
+    "z": 82303,
+    "parent": "m5e0"
   },
   "hms7": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "blue",
     "id": "hms7",
-    "z": 65394,
+    "z": 82356,
     "activeFace": 1,
-    "parent": "gwxw"
+    "parent": "m5e0"
   },
   "fcsn": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "blue",
     "id": "fcsn",
-    "z": 65342,
-    "parent": "gwxw"
+    "z": 82349,
+    "parent": "m5e0"
   },
   "oybr": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "blue",
     "id": "oybr",
-    "z": 65357,
-    "parent": "gwxw"
+    "z": 82305,
+    "parent": "m5e0"
   },
   "mdt1": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "blue",
     "id": "mdt1",
-    "z": 65426,
-    "parent": "gwxw"
+    "z": 82308,
+    "parent": "m5e0"
   },
   "euwl": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "blue",
     "id": "euwl",
-    "z": 65411,
-    "parent": "gwxw"
+    "z": 82318,
+    "parent": "m5e0"
   },
   "7rmx": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "blue",
     "id": "7rmx",
-    "z": 65320,
-    "parent": "gwxw"
+    "z": 82341,
+    "parent": "m5e0"
   },
   "nu4g": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "blue",
     "id": "nu4g",
-    "z": 65362,
+    "z": 82317,
     "activeFace": 1,
-    "parent": "gwxw"
+    "parent": "m5e0"
   },
   "0l5i": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "green",
     "id": "0l5i",
-    "z": 65396,
-    "parent": "gwxw"
+    "z": 82268,
+    "parent": "m5e0"
   },
   "l40u": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "green",
     "id": "l40u",
-    "z": 65349,
-    "parent": "gwxw"
+    "z": 82309,
+    "parent": "m5e0"
   },
   "qyto": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "green",
     "id": "qyto",
-    "z": 65337,
-    "parent": "gwxw",
-    "activeFace": 1
+    "z": 82375,
+    "activeFace": 1,
+    "parent": "m5e0"
   },
   "ixpl": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "green",
     "id": "ixpl",
-    "z": 65315,
-    "parent": "gwxw"
+    "z": 82327,
+    "parent": "m5e0"
   },
   "8x9n": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "green",
     "id": "8x9n",
-    "z": 65391,
-    "parent": "gwxw",
-    "activeFace": 1
+    "z": 82372,
+    "activeFace": 1,
+    "parent": "m5e0"
   },
   "g9vu": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "green",
     "id": "g9vu",
-    "z": 65438,
-    "parent": "gwxw",
+    "z": 82289,
+    "parent": "m5e0",
     "activeFace": 1
   },
   "8h3t": {
@@ -2844,16 +2935,16 @@
     "type": "card",
     "cardType": "green",
     "id": "8h3t",
-    "z": 65323,
-    "parent": "gwxw"
+    "z": 82302,
+    "parent": "m5e0"
   },
   "9w49": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "green",
     "id": "9w49",
-    "z": 65374,
-    "parent": "gwxw",
+    "z": 82377,
+    "parent": "m5e0",
     "activeFace": 1
   },
   "0aor": {
@@ -2861,49 +2952,49 @@
     "type": "card",
     "cardType": "green",
     "id": "0aor",
-    "z": 65427,
-    "parent": "gwxw"
+    "z": 82340,
+    "parent": "m5e0"
   },
   "vgpg": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "green",
     "id": "vgpg",
-    "z": 65392,
-    "parent": "gwxw"
+    "z": 82259,
+    "parent": "m5e0"
   },
   "9qkg": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "green",
     "id": "9qkg",
-    "z": 65398,
-    "parent": "gwxw",
-    "activeFace": 1
+    "z": 82315,
+    "activeFace": 1,
+    "parent": "m5e0"
   },
   "73ve": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "green",
     "id": "73ve",
-    "z": 65406,
-    "parent": "gwxw"
+    "z": 82334,
+    "parent": "m5e0"
   },
   "u0eg": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "green",
     "id": "u0eg",
-    "z": 65327,
-    "parent": "gwxw"
+    "z": 82319,
+    "parent": "m5e0"
   },
   "eknq": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "green",
     "id": "eknq",
-    "z": 65393,
-    "parent": "gwxw",
+    "z": 82353,
+    "parent": "m5e0",
     "activeFace": 1
   },
   "hnm2": {
@@ -2911,80 +3002,80 @@
     "type": "card",
     "cardType": "green",
     "id": "hnm2",
-    "z": 65339,
-    "parent": "gwxw"
+    "z": 82333,
+    "parent": "m5e0"
   },
   "snbk": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "green",
     "id": "snbk",
-    "z": 65412,
-    "parent": "gwxw"
+    "z": 82370,
+    "parent": "m5e0"
   },
   "13co": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "green",
     "id": "13co",
-    "z": 65376,
-    "parent": "gwxw"
+    "z": 82277,
+    "parent": "m5e0"
   },
   "0bpf": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "green",
     "id": "0bpf",
-    "z": 65381,
-    "parent": "gwxw"
+    "z": 82296,
+    "parent": "m5e0"
   },
   "hfgv": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "green",
     "id": "hfgv",
-    "z": 65429,
-    "parent": "gwxw"
+    "z": 82294,
+    "parent": "m5e0"
   },
   "pu8p": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "green",
     "id": "pu8p",
-    "z": 65409,
-    "parent": "gwxw"
+    "z": 82297,
+    "parent": "m5e0"
   },
   "60uz": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "green",
     "id": "60uz",
-    "z": 65377,
-    "parent": "gwxw"
+    "z": 82291,
+    "parent": "m5e0"
   },
   "72wz": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "yellow",
     "id": "72wz",
-    "z": 65388,
-    "parent": "gwxw"
+    "z": 82264,
+    "parent": "m5e0"
   },
   "i4k6": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "yellow",
     "id": "i4k6",
-    "z": 65360,
-    "parent": "gwxw"
+    "z": 82335,
+    "parent": "m5e0"
   },
   "faoh": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "yellow",
     "id": "faoh",
-    "z": 65383,
-    "parent": "gwxw",
+    "z": 82310,
+    "parent": "m5e0",
     "activeFace": 1
   },
   "oks3": {
@@ -2992,122 +3083,122 @@
     "type": "card",
     "cardType": "yellow",
     "id": "oks3",
-    "z": 65397,
-    "parent": "gwxw"
+    "z": 82358,
+    "parent": "m5e0"
   },
   "nvus": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "yellow",
     "id": "nvus",
-    "z": 65430,
-    "parent": "gwxw"
+    "z": 82385,
+    "parent": "m5e0"
   },
   "qsbz": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "yellow",
     "id": "qsbz",
-    "z": 65416,
-    "parent": "gwxw",
-    "activeFace": 1
+    "z": 82384,
+    "activeFace": 1,
+    "parent": "m5e0"
   },
   "oupr": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "yellow",
     "id": "oupr",
-    "z": 65318,
+    "z": 82326,
     "activeFace": 1,
-    "parent": "gwxw"
+    "parent": "m5e0"
   },
   "7siq": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "yellow",
     "id": "7siq",
-    "z": 65334,
-    "parent": "gwxw"
+    "z": 82329,
+    "parent": "m5e0"
   },
   "xxg5": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "yellow",
     "id": "xxg5",
-    "z": 65329,
-    "parent": "gwxw"
+    "z": 82267,
+    "parent": "m5e0"
   },
   "a7c6": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "yellow",
     "id": "a7c6",
-    "z": 65308,
-    "parent": "gwxw"
+    "z": 82363,
+    "parent": "m5e0"
   },
   "yz4v": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "yellow",
     "id": "yz4v",
-    "z": 65368,
-    "parent": "gwxw"
+    "z": 82282,
+    "parent": "m5e0"
   },
   "ou7t": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "yellow",
     "id": "ou7t",
-    "z": 65379,
-    "parent": "gwxw"
+    "z": 82295,
+    "parent": "m5e0"
   },
   "anwp": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "yellow",
     "id": "anwp",
-    "z": 65413,
-    "parent": "gwxw"
+    "z": 82258,
+    "parent": "m5e0"
   },
   "501e": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "yellow",
     "id": "501e",
-    "z": 65313,
-    "parent": "gwxw"
+    "z": 82373,
+    "parent": "m5e0"
   },
   "ntvs": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "yellow",
     "id": "ntvs",
-    "z": 65418,
-    "parent": "gwxw"
+    "z": 82311,
+    "parent": "m5e0"
   },
   "vam9": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "yellow",
     "id": "vam9",
-    "z": 65420,
-    "parent": "gwxw"
+    "z": 82266,
+    "parent": "m5e0"
   },
   "u0as": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "yellow",
     "id": "u0as",
-    "z": 65390,
-    "parent": "gwxw"
+    "z": 82254,
+    "parent": "m5e0"
   },
   "6lib": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "yellow",
     "id": "6lib",
-    "z": 65311,
-    "parent": "gwxw",
+    "z": 82320,
+    "parent": "m5e0",
     "activeFace": 1
   },
   "rc8p": {
@@ -3115,33 +3206,33 @@
     "type": "card",
     "cardType": "yellow",
     "id": "rc8p",
-    "z": 65364,
-    "parent": "gwxw"
+    "z": 82362,
+    "parent": "m5e0"
   },
   "nsea": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "yellow",
     "id": "nsea",
-    "z": 65389,
+    "z": 82265,
     "activeFace": 1,
-    "parent": "gwxw"
+    "parent": "m5e0"
   },
   "uzyd": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "yellow",
     "id": "uzyd",
-    "z": 65355,
-    "parent": "gwxw"
+    "z": 82280,
+    "parent": "m5e0"
   },
   "k6c9": {
     "deck": "theDeck",
     "type": "card",
     "cardType": "yellow",
     "id": "k6c9",
-    "z": 65316,
-    "parent": "gwxw"
+    "z": 82281,
+    "parent": "m5e0"
   },
   "board3": {
     "inheritFrom": "board1",
@@ -3745,7 +3836,7 @@
     "id": "ofso1",
     "x": 72.60000000000002,
     "y": 61,
-    "pieceColor": "#aaa98e",
+    "pieceColor": "#8ab878",
     "parent": "extraHolder"
   },
   "ofso2": {
@@ -3753,7 +3844,7 @@
     "id": "ofso2",
     "x": 149.20000000000005,
     "y": 61,
-    "pieceColor": "#d7ad72",
+    "pieceColor": "#f4ca78",
     "parent": "extraHolder"
   },
   "ofso3": {
@@ -3761,7 +3852,7 @@
     "id": "ofso3",
     "x": 225.79999999999995,
     "y": 61,
-    "pieceColor": "#fff8ab",
+    "pieceColor": "#f6ed78aa",
     "activeFace": 0,
     "parent": "extraHolder"
   },
@@ -3777,7 +3868,7 @@
     "inheritFrom": "ofso",
     "id": "ofso5",
     "x": 378,
-    "pieceColor": "#ce8683",
+    "pieceColor": "#f27878",
     "parent": "extraHolder",
     "z": 20,
     "layer": 0
@@ -3787,7 +3878,7 @@
     "z": 19,
     "x": 26,
     "css": "color: black; font-size: 24px; ",
-    "text": "1           2          3          4           5           6",
+    "text": "1           2          3           4          5           6",
     "fixedParent": true,
     "parent": "extraHolder",
     "y": 83,
@@ -3808,7 +3899,7 @@
     "z": 9,
     "movableInEdit": false,
     "image": "/assets/-686774926_184",
-    "pieceColor": "#b38b9f",
+    "pieceColor": "#c298b2",
     "svgReplaces": {
       "currentColor": "pieceColor"
     },
@@ -3882,17 +3973,18 @@
   "seat1": {
     "type": "seat",
     "id": "seat1",
-    "x": 171,
+    "x": 170,
     "y": -4,
     "scale": 0.8,
     "z": 15177,
     "movableInEdit": false,
-    "hideWhenUnused": true
+    "hideWhenUnused": true,
+    "turn": true
   },
   "seat2": {
     "type": "seat",
     "id": "seat2",
-    "x": 1271,
+    "x": 1270,
     "y": -4,
     "scale": 0.8,
     "z": 15177,
@@ -3903,19 +3995,18 @@
   "seat3": {
     "type": "seat",
     "id": "seat3",
-    "x": 171,
+    "x": 170,
     "y": 500,
     "scale": 0.8,
     "z": 15177,
     "movableInEdit": false,
     "index": 3,
-    "hideWhenUnused": true,
-    "turn": true
+    "hideWhenUnused": true
   },
   "seat4": {
     "type": "seat",
     "id": "seat4",
-    "x": 1271,
+    "x": 1270,
     "y": 500,
     "scale": 0.8,
     "z": 15177,
@@ -3970,7 +4061,7 @@
   "score1": {
     "type": "label",
     "id": "score1",
-    "x": 215,
+    "x": 217,
     "y": 442,
     "width": 65,
     "height": 40,
@@ -3985,7 +4076,7 @@
   "score2": {
     "type": "label",
     "id": "score2",
-    "x": 1317,
+    "x": 1318,
     "y": 442,
     "width": 65,
     "height": 40,
@@ -4044,7 +4135,7 @@
   "score3": {
     "type": "label",
     "id": "score3",
-    "x": 215,
+    "x": 217,
     "y": 942,
     "width": 65,
     "height": 40,
@@ -4103,7 +4194,7 @@
   "score4": {
     "type": "label",
     "id": "score4",
-    "x": 1317,
+    "x": 1318,
     "y": 942,
     "width": 65,
     "height": 40,
@@ -4354,6 +4445,12 @@
             "max": 4
           },
           {
+            "type": "checkbox",
+            "label": "Use back (uncolored) side of board?",
+            "value": "${PROPERTY backSide}",
+            "variable": "backSide"
+          },
+          {
             "type": "subtitle",
             "text": "You are about to reset the board. Are you sure?"
           }
@@ -4365,6 +4462,12 @@
         "collection": "thisButton",
         "property": "players",
         "value": "${players}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "backSide",
+        "value": "${backSide}"
       },
       {
         "func": "RECALL",
@@ -4464,9 +4567,211 @@
         ],
         "property": "state",
         "value": 5
+      },
+      {
+        "func": "IF",
+        "condition": "${PROPERTY backSide}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "board1"
+            ],
+            "property": "image",
+            "value": "/assets/198300865_43072"
+          },
+          {
+            "func": "FOREACH",
+            "collection": [
+              "pieceHolder1",
+              "pieceHolder2",
+              "pieceHolder3",
+              "pieceHolder4",
+              "pieceHolder5",
+              "pieceHolder6",
+              "pieceHolder7",
+              "pieceHolder8",
+              "pieceHolder9",
+              "pieceHolder10",
+              "pieceHolder11",
+              "pieceHolder12",
+              "pieceHolder13",
+              "pieceHolder14",
+              "pieceHolder15",
+              "pieceHolder16",
+              "pieceHolder17",
+              "pieceHolder18",
+              "pieceHolder20",
+              "pieceHolder22",
+              "pieceHolder24",
+              "pieceHolder26",
+              "pieceHolder28",
+              "pieceHolder30",
+              "pieceHolder31",
+              "pieceHolder32",
+              "pieceHolder33",
+              "pieceHolder34",
+              "pieceHolder35",
+              "pieceHolder36",
+              "pieceHolder37",
+              "pieceHolder38",
+              "pieceHolder39",
+              "pieceHolder40",
+              "pieceHolder41",
+              "pieceHolder42"
+            ],
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "collection": "DEFAULT",
+                "property": "dropTarget",
+                "value": {
+                  "deck": "theDeck"
+                }
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "board1"
+            ],
+            "property": "image",
+            "value": "/assets/759696995_49019"
+          },
+          {
+            "func": "FOREACH",
+            "collection": [
+              "pieceHolder1",
+              "pieceHolder2",
+              "pieceHolder3",
+              "pieceHolder4",
+              "pieceHolder5",
+              "pieceHolder6"
+            ],
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "collection": "DEFAULT",
+                "property": "dropTarget",
+                "value": {
+                  "cardType": "orange"
+                }
+              }
+            ]
+          },
+          {
+            "func": "FOREACH",
+            "collection": [
+              "pieceHolder7",
+              "pieceHolder8",
+              "pieceHolder9",
+              "pieceHolder10",
+              "pieceHolder11",
+              "pieceHolder12"
+            ],
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "collection": "DEFAULT",
+                "property": "dropTarget",
+                "value": {
+                  "cardType": "red"
+                }
+              }
+            ]
+          },
+          {
+            "func": "FOREACH",
+            "collection": [
+              "pieceHolder13",
+              "pieceHolder14",
+              "pieceHolder15",
+              "pieceHolder16",
+              "pieceHolder17",
+              "pieceHolder18"
+            ],
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "collection": "DEFAULT",
+                "property": "dropTarget",
+                "value": {
+                  "cardType": "purple"
+                }
+              }
+            ]
+          },
+          {
+            "func": "FOREACH",
+            "collection": [
+              "pieceHolder20",
+              "pieceHolder22",
+              "pieceHolder24",
+              "pieceHolder26",
+              "pieceHolder28",
+              "pieceHolder30"
+            ],
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "collection": "DEFAULT",
+                "property": "dropTarget",
+                "value": {
+                  "cardType": "blue"
+                }
+              }
+            ]
+          },
+          {
+            "func": "FOREACH",
+            "collection": [
+              "pieceHolder31",
+              "pieceHolder32",
+              "pieceHolder33",
+              "pieceHolder34",
+              "pieceHolder35",
+              "pieceHolder36"
+            ],
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "collection": "DEFAULT",
+                "property": "dropTarget",
+                "value": {
+                  "cardType": "green"
+                }
+              }
+            ]
+          },
+          {
+            "func": "FOREACH",
+            "collection": [
+              "pieceHolder37",
+              "pieceHolder38",
+              "pieceHolder39",
+              "pieceHolder40",
+              "pieceHolder41",
+              "pieceHolder42"
+            ],
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "collection": "DEFAULT",
+                "property": "dropTarget",
+                "value": {
+                  "cardType": "yellow"
+                }
+              }
+            ]
+          }
+        ]
       }
     ],
-    "movableInEdit": false
+    "movableInEdit": false,
+    "backSide": false
   },
   "startTokenHolder": {
     "type": "holder",
@@ -4747,15 +5052,71 @@
         ],
         "property": "parent",
         "value": "roundHolder${b}"
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "deck",
+        "value": "startTokenDeck"
+      },
+      {
+        "func": "GET",
+        "property": "lastMovedBy",
+        "variable": "startingPlayer"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "value": "${startingPlayer}"
+      },
+      {
+        "func": "GET",
+        "property": "index",
+        "variable": "seatIndex"
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "position",
+        "turn": "${seatIndex}"
+      },
+      {
+        "func": "RECALL",
+        "holder": "startTokenHolder"
       }
     ],
     "state": 5
   },
-  "9igc": {
+  "turn": {
     "type": "button",
+    "id": "turn",
+    "x": 800,
+    "y": 733,
+    "width": 60,
+    "height": 40,
+    "z": 15187,
+    "movableInEdit": false,
+    "text": "Turn",
     "clickRoutine": [
       {
         "func": "TURN"
+      },
+      {
+        "func": "COUNT",
+        "holder": "tileBag"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "from": "discardPile",
+            "to": "tileBag",
+            "count": 0
+          }
+        ]
       },
       {
         "func": "COUNT",
@@ -4770,6 +5131,10 @@
         "relation": ">",
         "thenRoutine": [
           {
+            "func": "SHUFFLE",
+            "holder": "tileBag"
+          },
+          {
             "func": "MOVE",
             "from": "tileBag",
             "to": "extraHolder",
@@ -4777,17 +5142,9 @@
           }
         ]
       }
-    ],
-    "x": 800,
-    "z": 15187,
-    "id": "9igc",
-    "text": "Turn",
-    "movableInEdit": false,
-    "height": 40,
-    "width": 60,
-    "y": 733
+    ]
   },
-  "gwxw": {
+  "m5e0": {
     "type": "pile",
     "parent": "tileBag",
     "x": -12,
@@ -4796,6 +5153,109 @@
     "height": 75,
     "handleSize": 25,
     "handleOffset": 1,
-    "id": "gwxw"
+    "id": "m5e0"
+  },
+  "bonus1": {
+    "id": "bonus1",
+    "x": 678,
+    "y": 970,
+    "width": 30,
+    "height": 30,
+    "z": 22,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "": {
+        "background": "${PROPERTY pieceColor}",
+        "clip-path": "polygon(50% 0, 67% 25%, 100% 25%, 75% 50%, 100% 75%, 67% 75%, 50% 100%, 33% 75%, 0 75%, 25% 50%, 0 25%, 33% 25%)",
+        "color": "${PROPERTY textColor}",
+        "font-size": "15px",
+        "text-align": "center",
+        "line-height": "1.9"
+      }
+    },
+    "text": "12",
+    "textColor": "white",
+    "pieceColor": "#7f797e",
+    "layer": -5
+  },
+  "bonus2": {
+    "inheritFrom": "bonus1",
+    "id": "bonus2",
+    "x": 713,
+    "y": 970,
+    "text": "14",
+    "pieceColor": "#f27878",
+    "textColor": "black"
+  },
+  "bonus3": {
+    "inheritFrom": "bonus1",
+    "id": "bonus3",
+    "x": 748,
+    "y": 970,
+    "text": "15",
+    "pieceColor": "#9bbbd1",
+    "textColor": "black"
+  },
+  "bonus4": {
+    "inheritFrom": "bonus1",
+    "id": "bonus4",
+    "x": 783,
+    "y": 970,
+    "text": "16",
+    "pieceColor": "#f6ed78aa",
+    "textColor": "black"
+  },
+  "bonus5": {
+    "inheritFrom": "bonus1",
+    "id": "bonus5",
+    "x": 818,
+    "y": 970,
+    "text": "17",
+    "pieceColor": "#f4ca78",
+    "textColor": "black"
+  },
+  "bonus6": {
+    "inheritFrom": "bonus1",
+    "id": "bonus6",
+    "x": 853,
+    "y": 970,
+    "text": "18",
+    "pieceColor": "#8ab878",
+    "textColor": "black"
+  },
+  "bonus7": {
+    "inheritFrom": "bonus1",
+    "id": "bonus7",
+    "x": 888,
+    "y": 970,
+    "text": "20",
+    "pieceColor": "#c298b2",
+    "textColor": "black"
+  },
+  "352d": {
+    "id": "352d",
+    "z": 25,
+    "x": 680,
+    "y": 920,
+    "text": "1's = 4\n2's = 8",
+    "width": 50,
+    "height": 40,
+    "movable": false,
+    "movableInEdit": false,
+    "layer": -5,
+    "css": "color: grey; "
+  },
+  "353d": {
+    "id": "353d",
+    "z": 26,
+    "x": 855,
+    "y": 920,
+    "text": "3's = 12\n4's = 16",
+    "width": 55,
+    "height": 40,
+    "movable": false,
+    "layer": -5,
+    "css": "color: grey; "
   }
 }

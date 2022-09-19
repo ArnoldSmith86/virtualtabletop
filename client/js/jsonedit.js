@@ -10,10 +10,12 @@ let jeJSONerror = null;
 let jeCommandError = null;
 let jeCommandWithOptions = null;
 let jeFKeyOrderDescending = 1;
+let jeWidgetHighlighting = true;
 let jeInMacroExecution = false;
 let jeContext = null;
 let jeSecondaryWidget = null;
 let jeDeltaIsOurs = false;
+let jeMouseButtonIsDown = false;
 let jeKeyIsDown = true;
 let jeKeyIsDownDeltas = [];
 let jeKeyword = '';
@@ -459,17 +461,21 @@ const jeCommands = [
     forceKey: 'D',
     show: _=>jeStateNow,
     options: [
-      { label: 'Recursive',       type: 'checkbox', value: true  },
-      { label: 'Increment IDs',   type: 'checkbox', value: true  },
-      { label: 'Use inheritFrom', type: 'checkbox', value: false },
-      { label: 'X offset',        type: 'number',   value: 0,   min: -1600, max: 1600 },
-      { label: 'Y offset',        type: 'number',   value: 0,   min: -1000, max: 1000 },
-      { label: '# Copies X',      type: 'number',   value: 1,   min:     0, max:  100 },
-      { label: '# Copies Y',      type: 'number',   value: 0,   min:     0, max:  100 }
+      { label: 'Increment IDs',          type: 'select', options: [ { value: 'Numbers', text: 'Numbers' }, { value: 'Letters', text: 'Letters' }, { value: '', text: 'None'  } ] },
+      { label: 'Increment In',           type: 'string',   value: 'dropTarget,hand,index,inheritFrom,linkedToSeat,onlyVisibleForSeat,text' },
+      { label: 'Copy using inheritFrom', type: 'checkbox', value: false },
+      { label: 'Copy recursively',       type: 'checkbox', value: true  },
+      { label: 'X offset',               type: 'number',   value: 0,   min: -1600, max: 1600 },
+      { label: 'Y offset',               type: 'number',   value: 0,   min: -1000, max: 1000 },
+      { label: '# Copies X',             type: 'number',   value: 1,   min:     0, max:  100 },
+      { label: '# Copies Y',             type: 'number',   value: 0,   min:     0, max:  100 }
     ],
     call: async function(options) {
       for(const id of jeSelectedIDs()) {
-        const clonedWidget = await duplicateWidget(widgets.get(id), options.Recursive, options['Use inheritFrom'], options['Increment IDs'], options['X offset'], options['Y offset'], options['# Copies X'], options['# Copies Y']);
+        const problems = [];
+        const clonedWidget = await duplicateWidget(widgets.get(id), options['Copy recursively'], options['Copy using inheritFrom'], options['Increment IDs'], options['Increment In'].split(','), options['X offset'], options['Y offset'], options['# Copies X'], options['# Copies Y'], problems);
+        if(problems.length)
+          jeJSONerror = problems.join('\n');
         if(clonedWidget) {
           jeSelectWidget(widgets.get(clonedWidget.id));
           jeStateNow.id = '###SELECT ME###';
@@ -519,6 +525,17 @@ const jeCommands = [
       setScale();
       $('#jeTextHighlight').scrollTop = $('#jeText').scrollTop;
       jeDisplayTree();
+    }
+  },
+  {
+    id: 'je_toggleHighlight',
+    name: 'Toggle widget highlighting',
+    icon: _=>jeWidgetHighlighting ? 'flashlight_on' : 'flashlight_off',
+    forceKey: 'H',
+    call: async function() {
+      jeWidgetHighlighting = ! jeWidgetHighlighting;
+      jeShowCommands();
+      jeHighlightWidgets();
     }
   },
   {
@@ -1059,6 +1076,7 @@ function jeApplyDelta(delta) {
   }
 
   jeUpdateTree(delta.s);
+  widgetCoordCache = null;
 }
 
 function jeApplyState(state) {
@@ -1194,7 +1212,7 @@ function jeSelectWidget(widget, dontFocus, addToSelection, restoreCursorPosition
 
   if(restoreCursorPosition)
     jeCursorStateSet(cursorState);
-  
+
   jeGetContext();
 }
 
@@ -1250,8 +1268,13 @@ function jeCenterSelection() {
       widgetDOM.scrollIntoView({ block: 'center' });
   }
 
+  jeHighlightWidgets();
+}
+
+function jeHighlightWidgets() {
+  const selectedIDs = jeSelectedIDs();
   for(const [ id, w ] of widgets)
-    w.setHighlighted(selectedIDs.indexOf(id) != -1);
+    w.setHighlighted(jeWidgetHighlighting && selectedIDs.indexOf(id) != -1);
 }
 
 function jeUpdateMulti(dontFocus) {
@@ -1472,7 +1495,7 @@ function jeGetContext() {
   const s = Math.min(aO, fO);
   const e = Math.max(aO, fO);
   const v = jeGetEditorContent();
-  
+
   const select = v.substr(s, Math.min(e-s, 100)).replace(/\n/g, '\\n');
   const line = v.split('\n')[v.substr(0, s).split('\n').length-1];
 
@@ -1672,7 +1695,7 @@ function jeLoggingRoutineOperationStart(original, applied) {
       fcn = applied
   else
     fcn = applied.func || '<COMMENT>'
-  jeHTMLStack.unshift([jeLoggingHTML, original, applied, html(fcn)]);
+  jeHTMLStack.unshift([jeLoggingHTML, original, applied, html(fcn), +new Date()]);
   jeLoggingHTML = '';
 }
 
@@ -1687,6 +1710,7 @@ function jeLoggingRoutineOperationEnd(problems, variables, collections, skipped)
   const applied = savedHTML[2];
   const appliedText  = jeLoggingJSON(applied);
   const opFunction = savedHTML[3];
+  const startTime = savedHTML[4];
 
   const opProblems = problems.length ?
        `<div class="jeLogDetails">
@@ -1717,7 +1741,7 @@ function jeLoggingRoutineOperationEnd(problems, variables, collections, skipped)
     ${savedHTML[0]}
     <div class="jeLogOperation ${skipped ? 'jeLogSkipped' : ''} ${problems.length ? 'jeLogHasProblems' : ''}">
       <div class="jeExpander">
-        <span class="jeLogName">${opFunction}</span> ${jeRoutineResult}
+        <span class="jeLogName">${opFunction}</span> ${jeRoutineResult} <span class="jeLogTime">(${+new Date() - startTime}ms)</span>
       </div>
       <div class="jeLogNested">
         ${opProblems}
@@ -2049,21 +2073,32 @@ const clickButton = async function(event) {
   }
 }
 
+let widgetCoordCache = null;
 window.addEventListener('mousemove', function(e) {
   if(!jeEnabled)
     return;
-  jeState.mouseX = Math.floor((e.clientX - roomRectangle.left) / scale);
-  jeState.mouseY = Math.floor((e.clientY - roomRectangle.top ) / scale);
+  const x = jeState.mouseX = Math.floor((e.clientX - roomRectangle.left) / scale);
+  const y = jeState.mouseY = Math.floor((e.clientY - roomRectangle.top ) / scale);
 
-  const hoveredWidgets = [];
-  for(const [ widgetID, widget ] of widgets)
-    if(jeState.mouseX >= widget.absoluteCoord('x') && jeState.mouseX <= widget.absoluteCoord('x')+widget.get('width'))
-      if(jeState.mouseY >= widget.absoluteCoord('y') && jeState.mouseY <= widget.absoluteCoord('y')+widget.get('height'))
-        hoveredWidgets.push(widget);
+  if(!jeZoomOut && x > 1600 || jeMouseButtonIsDown)
+    return;
+
+  if(!widgetCoordCache) {
+    widgetCoordCache = [];
+    for(const widget of widgets.values()) {
+      const coords = widget.coordGlobalFromCoordParent({x:widget.get('x'),y:widget.get('y')});
+      coords.r = coords.x + widget.get('width');
+      coords.b = coords.y + widget.get('height');
+      coords.widget = widget;
+      widgetCoordCache.push(coords);
+    }
+  }
+
+  const hoveredWidgets = widgetCoordCache.filter(c=>x>=c.x && x<=c.r && y>=c.y && y<=c.b).map(c=>c.widget);
 
   hoveredWidgets.sort(function(w1,w2) {
     const hiddenParent =  function(widget) {
-      return widget ? widget.classes().includes('foreign') || hiddenParent(widget.parent) : false
+      return widget ? widget.domElement.classList.contains('foreign') || hiddenParent(widgets.get(widget.get('parent'))) : false;
     };
 
     const w1card = w1.get('type') == 'card';
@@ -2097,10 +2132,12 @@ window.addEventListener('mousemove', function(e) {
   }
 });
 
+window.addEventListener('mousedown', _=>jeMouseButtonIsDown = jeEnabled);
 window.addEventListener('mouseup', async function(e) {
   if(!jeEnabled)
     return;
   jeRoutineResetOnNextLog = true;
+  jeMouseButtonIsDown = false;
 
   if(e.target == $('#jeText') && jeContext != 'macro') // Click in widget text, fix context
     jeGetContext();
