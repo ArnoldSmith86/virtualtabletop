@@ -1980,35 +1980,11 @@ function jeSetEditorContent(content) {
 }
 
 function jeShowCommands() {
-  const activeCommands = {};
 
-  const context = jeContext.join(' ↦ ');
+  // First set up top buttons
+  let commandText = `<div id='jeTopButtons'>`;
   for(const command of jeCommands) {
-    delete command.currentKey;
-    const contextMatch = context.match(new RegExp(command.context));
-    if(contextMatch && (!command.context || jeStateNow && !jeJSONerror) && (!command.show || command.show())) {
-      if(activeCommands[contextMatch[0]] === undefined)
-        activeCommands[contextMatch[0]] = [];
-      activeCommands[contextMatch[0]].push(command);
-    };
-  }
-
-  const usedKeys = { a: 1, c: 1, x: 1, v: 1, w: 1, n: 1, t: 1, q: 1, j: 1, z: 1 };
-  let commandText = '';
-
-  const sortByName = function(a, b) {
-    const nameA = typeof a.name == 'function' ? a.name() : a.name;
-    const nameB = typeof b.name == 'function' ? b.name() : b.name;
-    return nameA.localeCompare(nameB);
-  }
-
-  const displayKey = function (k) {
-    return { ArrowUp: '⬆', ArrowDown: '⬇'} [k] || k;
-  }
-  commandText += `<div id='jeTopButtons'>`;
-  for(const command of jeCommands) {
-    const contextMatch = context.match(new RegExp(command.context));
-    if(contextMatch && contextMatch[0] == "") {
+    if(command.context == undefined) {
       const name = (typeof command.name == 'function' ? command.name() : command.name);
       const icon = (typeof command.icon == 'function' ? command.icon() : command.icon);
       const isMaterial = String(icon).match(/^[^[]/) ? 'material' : '';
@@ -2016,7 +1992,19 @@ function jeShowCommands() {
     }
   }
   commandText += `</div>`;
-  delete activeCommands[""];
+
+  // Next figure out which context commands are active here.
+  const activeCommands = {};
+  const context = jeContext.join(' ↦ ');
+  for(const command of jeCommands) {
+    delete command.currentKey;
+    const contextMatch = context.match(new RegExp(command.context));
+    if(contextMatch && contextMatch[0]!= "" && (!command.context || jeStateNow && !jeJSONerror) && (!command.show || command.show())) {
+      if(activeCommands[contextMatch[0]] === undefined)
+        activeCommands[contextMatch[0]] = [];
+      activeCommands[contextMatch[0]].push(command);
+    };
+  }
 
   if(jeContext[jeContext.length-1] == '(var expression)') {
     commandText += `\n  <b>var expression</b>\n<label>Search </label><input id="var_search" name="var_search" type="text"><br>`;
@@ -2024,6 +2012,18 @@ function jeShowCommands() {
   }
 
   if(!jeJSONerror && jeStateNow) {
+    const usedKeys = { a: 1, c: 1, x: 1, v: 1, w: 1, n: 1, t: 1, q: 1, j: 1, z: 1 };
+
+    const sortByName = function(a, b) {
+      const nameA = typeof a.name == 'function' ? a.name() : a.name;
+      const nameB = typeof b.name == 'function' ? b.name() : b.name;
+      return nameA.localeCompare(nameB);
+    }
+
+    const displayKey = function (k) {
+      return { ArrowUp: '⬆', ArrowDown: '⬇'} [k] || k;
+    }
+
     for(const contextMatch of (Object.keys(activeCommands).sort((a,b)=>b.length-a.length))) {
       commandText += `\n  <div class="context">${html(contextMatch)}</div>\n`;
       for(const command of activeCommands[contextMatch].sort(sortByName)) {
