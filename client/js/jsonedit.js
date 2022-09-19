@@ -249,7 +249,7 @@ const jeCommands = [
     context: '^.* ↦ inheritFrom',
     show:  _=>typeof jeStateNow.inheritFrom == "object" && jeStateNow.inheritFrom[""]==undefined,
     call: async function() {
-      jeStateNow.inheritFrom["###SELECT ME###"] = "height, width";
+      jeStateNow.inheritFrom["###SELECT ME###"] = ["height", "width"];
       jeSetAndSelect("");
     }
   },
