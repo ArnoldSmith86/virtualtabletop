@@ -147,11 +147,7 @@
   background: linear-gradient(90deg, #00000061 calc(var(--progress) * 100%), red calc(var(--progress) * 100%));
 }
 .roomState.activeGame {
-  box-shadow: 0 2px 20px green;
-}
-.roomState.activeGame .active {
-  display: block;
-  right: 0;
+  box-shadow: 6px 6px 10px var(--VTTblue), -6px -6px 10px var(--VTTblue), 6px -6px 10px var(--VTTblue), -6px 6px 10px var(--VTTblue);
 }
 
 .roomState > img {
