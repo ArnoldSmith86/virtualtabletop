@@ -247,10 +247,10 @@ const jeCommands = [
     id: 'je_inheritFromObject',
     name: 'add field',
     context: '^.* ↦ inheritFrom',
-    show:  _=>typeof jeStateNow.inheritFrom == "object",
+    show:  _=>typeof jeStateNow.inheritFrom == "object" && jeStateNow.inheritFrom[""]==undefined,
     call: async function() {
       jeStateNow.inheritFrom["###SELECT ME###"] = "height, width";
-      jeSetAndSelect("widget ID");
+      jeSetAndSelect("");
     }
   },
   {
@@ -865,9 +865,7 @@ function jeAddCSScommands() {
       '--wcBorderNormal: #00000000', '--wcBorderAlert: red', '--wcFontAlert: red', '--wcFontPaused: #6d6d6d', '--wcAnimationAlert: blinker 1s linear infinite', '--wcAnimationPaused: none'
     ],*/
     '[a-z]+': {
-      'default': {"border": "1px solid black", "background": "white", "font-size": "30px", "color": "black" }
-    },
-    '[a-z]+': {
+      'default': {"border": "1px solid black", "background": "white", "font-size": "30px", "color": "black" },
       ':hover': {"border": "1px solid black", "background": "white", "font-size": "30px", "color": "black" }
     },
     'seat': {
@@ -883,13 +881,13 @@ function jeAddCSScommands() {
         id: 'css_' + css_style,
         name: css_style,
         context: `^${type} ↦ (css|[a-z]+CSS)`,
+        show: function() {
+          const contents = jeStateNow.css;
+          return typeof contents == "object" && contents[css_style] == undefined;
+        },
         call: async function() {
           jeStateNow.css[css_style] = '###SELECT ME###';
           jeSetAndSelect({});
-        },
-        show: function() {
-          const contents = jeStateNow.css;
-          return typeof contents == "object" && (contents[css_style] == undefined || JSON.stringify(contents[css_style])=='{}');
         }
       });
       for(const cssProperty of Object.keys(presets[type][css_style])) {
@@ -897,13 +895,13 @@ function jeAddCSScommands() {
           id: 'css_' + css_style + '_' + cssProperty,
           name: cssProperty,
           context: `^${type} ↦ (css|[a-z]+CSS) ↦ .*`,
-          call: async function() {
-            jeStateNow.css[css_style][cssProperty] = '###SELECT ME###';
-            jeSetAndSelect(presets[type][css_style][cssProperty]);
-          },
           show: function() {
             const contents = jeStateNow.css[css_style];
             return typeof contents == "object" && !(cssProperty in contents);
+          },
+          call: async function() {
+            jeStateNow.css[css_style][cssProperty] = '###SELECT ME###';
+            jeSetAndSelect(presets[type][css_style][cssProperty]);
           }
         });
       }
@@ -1992,7 +1990,7 @@ function jeShowCommands() {
       if(activeCommands[contextMatch[0]] === undefined)
         activeCommands[contextMatch[0]] = [];
       activeCommands[contextMatch[0]].push(command);
-    }
+    };
   }
 
   const usedKeys = { a: 1, c: 1, x: 1, v: 1, w: 1, n: 1, t: 1, q: 1, j: 1, z: 1 };
