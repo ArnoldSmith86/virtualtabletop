@@ -239,7 +239,7 @@ const jeCommands = [
     call: async function() {
       const w = jeStateNow.inheritFrom;
       jeStateNow.inheritFrom = {};
-      jeStateNow.inheritFrom[w] = ['###SELECT ME###'];
+      jeStateNow.inheritFrom[w] = '###SELECT ME###';
       jeSetAndSelect("*");
     }
   },
@@ -255,15 +255,37 @@ const jeCommands = [
   },
   {
     id: 'je_cssString',
-    name: 'convert to object',
+    name: 'convert to simple object',
     context: '^.* ↦ css',
     show:  _=>typeof jeStateNow.css == "string",
     call: async function() {
       const elements = jeStateNow.css.split(/[;:]/);
+      const selectedKey = elements[0];
+      elements[0] = "###SELECT ME###";
       jeStateNow.css = {};
-      jeStateNow.css['###SELECT ME###'] = {};
       for( let i=0; i<Math.floor(elements.length/2); i++) 
-        jeStateNow.css['###SELECT ME###'][elements[2*i].trim()] = elements[2*i+1].trim();
+        jeStateNow.css[elements[2*i].trim()] = elements[2*i+1].trim();
+      jeSetAndSelect(selectedKey.trim());
+    }
+  },
+  {
+    id: 'je_cssObject',
+    name: 'convert to nested object',
+    context: '^.* ↦ css',
+    show:  function() {
+      if(typeof jeStateNow.css != "object")
+        return false;
+      for(const property in jeStateNow.css)
+        if(typeof jeStateNow.css[property] == "object")
+          return false;
+      return true;
+    },
+    call: async function() {
+      const newCSS = {};
+      for(const property in jeStateNow.css)
+        newCSS[property] = jeStateNow.css[property];
+      jeStateNow.css = {};
+      jeStateNow.css['###SELECT ME###'] = newCSS;
       jeSetAndSelect("default");
     }
   },
@@ -853,8 +875,6 @@ function displayComputeOps() {
   jeKeyword = keyword;
 }
 
-function jeAddCSScommands() {
-  const presets = {
 /*    '[a-z]+': [
       '"border": "1px solid black"', '"background": "white"', '"font-size": "30px"', '"color": "black"'
     ],
@@ -864,9 +884,14 @@ function jeAddCSScommands() {
     'timer': [
       '--wcBorderNormal: #00000000', '--wcBorderAlert: red', '--wcFontAlert: red', '--wcFontPaused: #6d6d6d', '--wcAnimationAlert: blinker 1s linear infinite', '--wcAnimationPaused: none'
     ],*/
+function jeAddCSScommands() {
+  const string_presets = {
+    "border": "1px solid black", "background": "white", "font-size": "16px", "color": "black"
+  };
+  const nested_presets = {
     '[a-z]+': {
-      'default': {"border": "1px solid black", "background": "white", "font-size": "30px", "color": "black" },
-      ':hover': {"border": "1px solid black", "background": "white", "font-size": "30px", "color": "black" }
+      'default': string_presets,
+      ':hover': string_presets
     },
     'seat': {
       '.seated.turn': {"box-shadow": "0px 0px 20px 5px var(--color)"}
@@ -875,37 +900,64 @@ function jeAddCSScommands() {
       '.alert': {"color": "red", "animation": "blinker 1s linear infinite"}, '.paused':{"color": "#6d6d6d", "animation": "none"}
     }
   };
-  for(const type in presets) {
-    for(const css_style of Object.keys(presets[type])) {
+
+  // Add nested object button items
+  for(const type in nested_presets) {
+    for(const cssSection of Object.keys(nested_presets[type])) {
       jeCommands.push({
-        id: 'css_' + css_style,
-        name: css_style,
+        id: 'css_' + cssSection,
+        name: cssSection,
         context: `^${type} ↦ (css|[a-z]+CSS)`,
-        show: function() {
-          const contents = jeStateNow.css;
-          return typeof contents == "object" && contents[css_style] == undefined;
+        show:  function() {
+          if(typeof jeStateNow.css != "object" || JSON.stringify(jeStateNow.css) == '{}')
+            return false;
+          for(const property in jeStateNow.css)
+            if(typeof jeStateNow.css[property] != "object")
+              return false;
+          return jeStateNow.css[cssSection] == undefined ? true : false;
         },
         call: async function() {
-          jeStateNow.css[css_style] = '###SELECT ME###';
+          jeStateNow.css[cssSection] = '###SELECT ME###';
           jeSetAndSelect({});
         }
       });
-      for(const cssProperty of Object.keys(presets[type][css_style])) {
+      for(const cssProperty of Object.keys(nested_presets[type][cssSection])) {
         jeCommands.push({
-          id: 'css_' + css_style + '_' + cssProperty,
+          id: 'css_' + cssSection + '_' + cssProperty,
           name: cssProperty,
-          context: `^${type} ↦ (css|[a-z]+CSS) ↦ .*`,
+          context: `^${type} ↦ (css|[a-z]+CSS) ↦ [^↦]*`,
           show: function() {
-            const contents = jeStateNow.css[css_style];
-            return typeof contents == "object" && !(cssProperty in contents);
+            const contents = jeStateNow.css[cssSection];
+            return typeof contents == "object" && jeContext.includes(cssSection) && !(cssProperty in contents);
           },
           call: async function() {
-            jeStateNow.css[css_style][cssProperty] = '###SELECT ME###';
-            jeSetAndSelect(presets[type][css_style][cssProperty]);
+            jeStateNow.css[cssSection][cssProperty] = '###SELECT ME###';
+            jeSetAndSelect(nested_presets[type][cssSection][cssProperty]);
           }
         });
       }
     }
+  }
+
+  // Add simple object button items
+  for(const cssProperty of Object.keys(string_presets)) {
+    jeCommands.push({
+      id: 'css_string_' + cssProperty,
+      name: cssProperty,
+      context: `.* ↦ (css|[a-z]+CSS)`,
+      show:  function() {
+        if(typeof jeStateNow.css != "object")
+          return false;
+        for(const property in jeStateNow.css)
+          if(typeof jeStateNow.css[property] == "object")
+            return false;
+        return true;
+      },
+      call: async function() {
+        jeStateNow.css[cssProperty] = '###SELECT ME###';
+        jeSetAndSelect(string_presets[cssProperty]);
+      }
+    });
   }
 }
 
