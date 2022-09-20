@@ -463,6 +463,7 @@ const jeCommands = [
       { label: 'Increment IDs',          type: 'select', options: [ { value: 'Numbers', text: 'Numbers' }, { value: 'Letters', text: 'Letters' }, { value: '', text: 'None'  } ] },
       { label: 'Increment In',           type: 'string',   value: 'dropTarget,hand,index,inheritFrom,linkedToSeat,onlyVisibleForSeat,text' },
       { label: 'Copy using inheritFrom', type: 'checkbox', value: false },
+      { label: 'Inherit properties',     type: 'string', value: '' },
       { label: 'Copy recursively',       type: 'checkbox', value: true  },
       { label: 'X offset',               type: 'number',   value: 0,   min: -1600, max: 1600 },
       { label: 'Y offset',               type: 'number',   value: 0,   min: -1000, max: 1000 },
@@ -472,7 +473,7 @@ const jeCommands = [
     call: async function(options) {
       for(const id of jeSelectedIDs()) {
         const problems = [];
-        const clonedWidget = await duplicateWidget(widgets.get(id), options['Copy recursively'], options['Copy using inheritFrom'], options['Increment IDs'], options['Increment In'].split(','), options['X offset'], options['Y offset'], options['# Copies X'], options['# Copies Y'], problems);
+        const clonedWidget = await duplicateWidget(widgets.get(id), options['Copy recursively'], options['Copy using inheritFrom'], options['Inherit properties'].split(',').map(e => e.trim()),options['Increment IDs'], options['Increment In'].split(','), options['X offset'], options['Y offset'], options['# Copies X'], options['# Copies Y'], problems);
         if(problems.length)
           jeJSONerror = problems.join('\n');
         if(clonedWidget) {
