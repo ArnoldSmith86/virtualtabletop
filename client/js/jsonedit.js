@@ -249,7 +249,7 @@ const jeCommands = [
     context: '^.* ↦ inheritFrom',
     show:  _=>typeof jeStateNow.inheritFrom == "object" && jeStateNow.inheritFrom[""]==undefined,
     call: async function() {
-      jeStateNow.inheritFrom["###SELECT ME###"] = ["height", "width"];
+      jeStateNow.inheritFrom["###SELECT ME###"] = [];
       jeSetAndSelect("");
     }
   },
@@ -894,10 +894,16 @@ function jeAddCSScommands() {
       ':hover': string_presets
     },
     'seat': {
-      '.seated.turn': {"box-shadow": "0px 0px 20px 5px var(--color)"}
+      '.seated.turn': {}
     },
     'timer': {
-      '.alert': {"color": "red", "animation": "blinker 1s linear infinite"}, '.paused':{"color": "#6d6d6d", "animation": "none"}
+      '.alert': {}, '.paused':{}
+    },
+    'holder': {
+      '.droptarget': {"border": "calc(1px / var(--scale)) solid #333 !important"}
+    },
+    'pile': {
+      '.pile .handle': {}
     }
   };
 

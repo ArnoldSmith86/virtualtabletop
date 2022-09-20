@@ -16,16 +16,15 @@ export class Button extends Widget {
       color: 'black',
       svgReplaces: {},
 
-      backgroundColor: null,
-      borderColor: null,
-      textColor:null,
-      backgroundColorOH: null,
-      borderColorOH: null,
-      textColorOH:null,
-
       text: '',
       borderRadius: 800
     });
+    let backgroundColor = null;
+    let borderColor = null;
+    let textColor = null;
+    let backgroundColorOH = null;
+    let borderColorOH = null;
+    let textColorOH = null;
   }
 
   applyDeltaToDOM(delta) {
