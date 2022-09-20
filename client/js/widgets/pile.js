@@ -12,7 +12,6 @@ class Pile extends Widget {
       height: 1,
       alignChildren: true,
       inheritChildZ: true,
-      clickable: true,
 
       text: null,
 
@@ -42,7 +41,7 @@ class Pile extends Widget {
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
     if(this.handle && delta.handleCSS !== undefined)
-      this.handle.style = mapAssetURLs(this.get('handleCSS'));
+      this.handle.style = mapAssetURLs(this.cssAsText(this.get('handleCSS'),true));
     if(this.handle && delta.text !== undefined)
       this.updateText();
     if(this.handle && (delta.width !== undefined || delta.height !== undefined || delta.handleSize !== undefined)) {

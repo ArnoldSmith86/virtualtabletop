@@ -11,6 +11,12 @@ function generateUniqueWidgetID() {
 async function addWidgetLocal(widget) {
   if (!widget.id)
     widget.id = generateUniqueWidgetID();
+
+  if(widget.parent && !widgets.has(widget.parent)) {
+    console.error(`Refusing to add widget ${widget.id} with invalid parent ${widget.parent}.`);
+    return null;
+  }
+
   const isNewWidget = !widgets.has(widget.id);
   if(isNewWidget)
     addWidget(widget);
@@ -521,7 +527,9 @@ function generateCounterWidgets(id, x, y) {
     height: 36,
     type: 'button',
     movableInEdit: false,
-    text: '-',
+    classes: 'symbols',
+    css: 'font-size: 28px',
+    text: 'remove',
 
     clickRoutine: [ r ]
   };
@@ -529,7 +537,7 @@ function generateCounterWidgets(id, x, y) {
   return [
     { type:'label', text: 0, id, x, y, width: 65, height: 40, css:'font-size: 30px;', editable: true },
     down,
-    Object.assign({ ...down }, { id: id+'U', text: '+', x: 68, clickRoutine: [ Object.assign({ ...r }, { mode: 'inc' }) ] })
+    Object.assign({ ...down }, { id: id+'U', text: 'add', x: 68, clickRoutine: [ Object.assign({ ...r }, { mode: 'inc' }) ] })
   ];
 }
 
@@ -552,8 +560,9 @@ function generateTimerWidgets(id, x, y) {
           timer: '${PROPERTY parent}'
         }
       ],
-      image: "/i/button-icons/White-Play_Pause.svg",
-      css: "background-size: 75% 75%"
+      classes: 'symbols',
+      css: 'font-size: 28px',
+      text: 'play_pause',
     },
     {
       parent: id,
@@ -572,8 +581,9 @@ function generateTimerWidgets(id, x, y) {
           mode: "reset"
         }
       ],
-      image: "/i/button-icons/White-Reset.svg",
-      css: "background-size: 80% 80%"
+      classes: 'symbols',
+      css: 'font-size: 28px',
+      text: 'reload',
     }
   ];
 }
@@ -594,7 +604,9 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
     w.domBox.id = w.id;
     if(!wi.parent) {
       w.domBox.addEventListener('click', async _=>{
+        batchStart();
         overlayDone(await onClick());
+        batchEnd();
       });
       $('#addOverlay').appendChild(w.domBox);
     }
@@ -669,7 +681,7 @@ function populateAddWidgetOverlay() {
       width: 73.5,
       height: 73.5,
       x: 440,
-      y: y + (43.83 - 73.5)/2
+      y: Math.round(y + (43.83 - 73.5)/2)
     });
 
     addWidgetToAddWidgetOverlay(new BasicWidget('add-classic-'+color), {
@@ -678,7 +690,7 @@ function populateAddWidgetOverlay() {
       width: 56,
       height: 84,
       x: 528,
-      y: y + (43.83 - 84)/2
+      y: Math.round(y + (43.83 - 84)/2)
     });
     y += 88;
   }
@@ -828,11 +840,14 @@ function uploadWidget(preset) {
 }
 
 async function updateWidget(currentState, oldState, applyChangesFromUI) {
+  batchStart();
+
   const previousState = JSON.parse(oldState);
   try {
     var widget = JSON.parse(currentState);
   } catch(e) {
     alert(e.toString());
+    batchEnd();
     return;
   }
 
@@ -842,6 +857,7 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
 
   if(widget.parent !== undefined && !widgets.has(widget.parent)) {
     alert(`Parent widget ${widget.parent} does not exist.`);
+    batchEnd();
     return;
   }
 
@@ -862,12 +878,25 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
       if(widget[key] === undefined)
         widget[key] = null;
   }
-  const id = await addWidgetLocal(widget);
 
-  for(const child of children)
-    sendPropertyUpdate(child.get('id'), 'parent', id);
-  for(const card of cards)
-    sendPropertyUpdate(card.get('id'), 'deck', id);
+  if(widget.id !== previousState.id || widget.type !== previousState.type) {
+    const id = await addWidgetLocal(widget);
+
+    for(const child of children)
+      sendPropertyUpdate(child.get('id'), 'parent', id);
+    for(const card of cards)
+      sendPropertyUpdate(card.get('id'), 'deck', id);
+  } else {
+    for(const key in widget) {
+      if(widget[key] !== previousState[key] && JSON.stringify(widget[key]) !== JSON.stringify(previousState[key])) {
+        if(widget[key] === null && previousState[key] === widgets.get(widget.id).getDefaultValue(key))
+          continue;
+        sendPropertyUpdate(widget.id, key, widget[key]);
+      }
+    }
+  }
+
+  batchEnd();
 }
 
 async function onClickUpdateWidget(applyChangesFromUI) {
@@ -876,27 +905,50 @@ async function onClickUpdateWidget(applyChangesFromUI) {
   showOverlay();
 }
 
-async function duplicateWidget(widget, recursive, inheritFrom, increment, xOffset, yOffset, xCopies, yCopies) {
+async function duplicateWidget(widget, recursive, inheritFrom, incrementKind, incrementIn, xOffset, yOffset, xCopies, yCopies, problems) { // incrementKind: '', 'Letters', 'Numbers'
+
+  const incrementCaps = function(l) {
+    const m = l.match(/Z+$/);
+    const zs = m ? m[0].length : 0;
+    if(m && zs == l.length)
+      return 'A'+[...Array(zs)].map(l=>'A').join('');
+    else
+      return l.substr(0, l.length-zs-1) + String.fromCharCode(l.charCodeAt(l.length-zs-1)+1) + [...Array(zs)].map(l=>'A').join('');
+  };
+
   const clone = async function(widget, recursive, newParent, xOffset, yOffset) {
     let currentWidget = JSON.parse(JSON.stringify(widget.state))
 
     if(inheritFrom) {
-      const inheritWidget = { inheritFrom: currentWidget.id };
+      const inheritWidget = { inheritFrom: widget.get('id') };
       for(const key of [ 'id', 'type', 'deck', 'cardType' ])
         if(currentWidget[key] !== undefined)
           inheritWidget[key] = currentWidget[key];
       currentWidget = inheritWidget;
     }
 
-    if(increment) {
-      const match = currentWidget.id.match(/^(.*?)([0-9]+)([^0-9]*)$/);
-      let number = match ? parseInt(match[2]) : 0;
+    if(incrementKind) {
+      let match = currentWidget.id.match(/^(.*?)([0-9]+)([^0-9]*)$/);
+      let sourceNumber = match ? parseInt(match[2]) : 0;
+      if(incrementKind=='Letters') {
+        match = currentWidget.id.match(/^(.*?)([A-Z]+)([^A-Z]*)$/);
+        sourceNumber = match ? match[2] : "@"; // If no caps, insert A, which is @+1.
+      }
+      let targetNumber = sourceNumber;
+      const idHead = match ? match[1] : widget.id;
+      const idTail = match && match[3] ? match[3] : '';
       while(widgets.has(currentWidget.id)) {
-        ++number;
-        if(match)
-          currentWidget.id = `${match[1]}${number}${match[3]}`;
-        else
-          currentWidget.id = `${widget.id}${number}`;
+        if(incrementKind=='Letters') {
+          targetNumber = incrementCaps(targetNumber);
+          currentWidget.id = `${idHead}${targetNumber}${idTail}`;
+        } else
+          currentWidget.id = `${idHead}${++targetNumber}${idTail}`;
+      }
+      for(const property of incrementIn) {
+        if(property == 'index' && widget.state.type == 'seat' && widget.state.index === undefined)
+          currentWidget.index = 1;
+        if(currentWidget[property] !== undefined && (property != 'inheritFrom' || !inheritFrom)) // Don't change inheritFrom if it was just added to new widget
+          currentWidget[property] = JSON.parse(JSON.stringify(currentWidget[property]).replaceAll(sourceNumber, targetNumber));
       }
     } else {
       delete currentWidget.id;
@@ -909,13 +961,25 @@ async function duplicateWidget(widget, recursive, inheritFrom, increment, xOffse
     if(yOffset || !newParent && inheritFrom)
       currentWidget.y = widget.get('y') + yOffset;
 
-    const currentId = await addWidgetLocal(currentWidget);
+    if(currentWidget.parent && !widgets.has(currentWidget.parent)) {
+      if(Array.isArray(problems))
+        problems.push(`Could not add duplicate of widget ${widget.id} to non-existent parent ${currentWidget.parent}.`);
+    } else if(currentWidget.type == 'card' && !widgets.has(currentWidget.deck)) {
+      if(Array.isArray(problems))
+        problems.push(`Could not add duplicate of card ${widget.id} with non-existent deck ${currentWidget.deck}.`);
+    } else if(currentWidget.type == 'card' && !widgets.get(currentWidget.deck).get('cardTypes')[currentWidget.cardType]) {
+      if(Array.isArray(problems))
+        problems.push(`Could not add duplicate of card ${widget.id} with non-existent cardType ${currentWidget.cardType}.`);
+    } else {
+      const currentId = await addWidgetLocal(currentWidget);
 
-    if(recursive)
-      for(const child of widgetFilter(w=>w.get('parent')==widget.id))
-        await clone(child, true, currentId, 0, 0);
+      if(recursive)
+        for(const child of widgetFilter(w=>w.get('parent')==widget.id))
+          await clone(child, true, currentId, 0, 0);
 
-    return currentWidget;
+      if(currentId)
+        return currentWidget;
+    }
   };
 
   const gridX = xCopies + 1;
@@ -923,7 +987,7 @@ async function duplicateWidget(widget, recursive, inheritFrom, increment, xOffse
   for(let i=1; i<gridX*gridY; ++i) {
     let x = xOffset*(i%gridX);
     let y = yOffset*Math.floor(i/gridX);
-    if(xCopies + yCopies == 1) {
+    if(xCopies + yCopies == 1) { // If just one copy, use both offsets as given.
       x = xOffset;
       y = yOffset;
     }
@@ -936,7 +1000,7 @@ async function onClickDuplicateWidget() {
   const widget = widgets.get(JSON.parse($('#editWidgetJSON').dataset.previousState).id);
   const xOffset = widget.absoluteCoord('x') > 1500 ? -20 : 20;
   const yOffset = widget.absoluteCoord('y') >  900 ? -20 : 20;
-  await duplicateWidget(widget, true, false, true, xOffset, yOffset, 1, 0);
+  await duplicateWidget(widget, true, false, 'Numbers', [], xOffset, yOffset, 1, 0);
   showOverlay();
 }
 

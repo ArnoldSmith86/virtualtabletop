@@ -16,6 +16,8 @@ let urlProperties = {};
 let maxZ = {};
 export const dropTargets = new Map();
 
+export const clientPointer = $('#clientPointer');
+
 function compareDropTarget(widget, t, exclude){
   for(const dropTargetObject of asArray(t.get('dropTarget'))) {
     let isValidObject = true;
@@ -165,7 +167,7 @@ function setScale() {
   if(jeEnabled) {
     const targetWidth = jeZoomOut ? 3200 : 1600;
     const targetHeight = jeZoomOut ? 2000 : 1000;
-    const availableWidth = $('#jeText').offsetLeft;
+    const availableWidth = $('#jeEditArea').offsetLeft;
     if(availableWidth/(h-70) < 1600/1000)
       scale = availableWidth/targetWidth;
     else
@@ -216,10 +218,15 @@ async function _uploadAsset(file) {
 const svgCache = {};
 function getSVG(url, replaces, callback) {
   if(typeof svgCache[url] == 'string') {
+    const cacheKey = url + JSON.stringify(replaces);
+    if(svgCache[cacheKey])
+      return svgCache[cacheKey];
+
     let svg = svgCache[url];
     for(const replace in replaces)
       svg = svg.split(replace).join(replaces[replace]);
-    return 'data:image/svg+xml,'+encodeURIComponent(svg);
+    svgCache[cacheKey] = 'data:image/svg+xml,'+encodeURIComponent(svg);
+    return svgCache[cacheKey];
   }
 
   if(!svgCache[url]) {

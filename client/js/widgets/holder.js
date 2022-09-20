@@ -67,7 +67,7 @@ class Holder extends Widget {
       return;
 
     if(this.get('childrenPerOwner'))
-      await child.set('owner', playerName);
+      await child.set('owner', child.targetPlayer||playerName);
 
     if(this != child.currentParent) { // FIXME: this isn't exactly pretty
       let toProcess = [ child ];

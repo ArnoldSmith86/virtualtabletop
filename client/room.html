@@ -417,9 +417,20 @@
       <div id="jeWidgetLayer11"></div>
       <div id="jeWidgetLayer12"></div>
     </div>
-    <div id="jeTextHighlight"></div>
-    <div id="jeText" contenteditable="true" spellcheck="false"></div>
-    <div id="jeMouseCoords"></div>
+
+    <div id="jeEditArea">
+      <div id="jeEditHeader">CTRL-click a widget on<br>the left to edit it.</div>
+      <div id="jeMouseCoords"></div>
+      <div id="jeTree"></div>
+      <div id="jeWidgetSearch">
+        <label for="jeWidgetSearchBox" class="extern">Search Room:</label>
+        <input id="jeWidgetSearchBox">
+      </div>
+      <div id="jeWidgetSearchResults"></div>
+      <div id="jeResize"></div>
+      <div id="jeTextHighlight"></div>
+      <div id="jeText" contenteditable="true" spellcheck="false"></div>
+    </div>
     <div id="jeCommands"></div>
     <div id="jeLogWrapper">
       <div id="jeLog"><h1>No debug information yet.</h1></div>
@@ -428,7 +439,9 @@
     <div id="traceUI"><input type="range" id="traceInput"></div>
   </div>
 
-  <div id="enlarged" class="hidden"></div>
+  <div id="clientPointer">
+    <div id="enlarged" class="hidden"></div>
+  </div>
 
   <script type="module"> //*** CONFIG ***//  //*** JS ***// </script>
 

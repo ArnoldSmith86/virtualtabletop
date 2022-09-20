@@ -112,6 +112,9 @@ async function inputHandler(name, e) {
   if(name == 'mouseup')
     mouseTarget = null;
 
+  clientPointer.style.top = `${coords.clientY}px`;
+  clientPointer.style.left = `${coords.clientX}px`;
+
   toServer('mouse',
     {
       x: Math.round(coords.x),

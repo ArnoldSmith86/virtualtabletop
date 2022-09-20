@@ -2,13 +2,13 @@ class Canvas extends Widget {
   constructor(id) {
     super(id);
     this.canvas = document.createElement('canvas');
+    this.canvas.dataset.id = id;
     this.context = this.canvas.getContext('2d');
 
     const defaults = {
       width: 400,
       height: 400,
       typeClasses: 'widget canvas',
-      clickable: true,
       artist: null,
 
       resolution: 100,
