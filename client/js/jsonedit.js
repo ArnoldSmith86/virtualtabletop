@@ -2098,7 +2098,7 @@ window.addEventListener('mousemove', function(e) {
 
   hoveredWidgets.sort(function(w1,w2) {
     const hiddenParent =  function(widget) {
-      return widget ? widget.domElement.classList.contains('foreign') || hiddenParent(widgets.get(widget.get('parent'))) : false;
+      return widget ? widget.domBox.classList.contains('foreign') || hiddenParent(widgets.get(widget.get('parent'))) : false;
     };
 
     const w1card = w1.get('type') == 'card';

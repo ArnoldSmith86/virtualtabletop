@@ -1829,9 +1829,9 @@ export class Widget extends StateManaged {
     if(this.isHighlighted != isHighlighted) {
       this.isHighlighted = isHighlighted;
       if(isHighlighted)
-        this.domElement.classList.add('selectedInEdit');
+        this.domBox.classList.add('selectedInEdit');
       else
-        this.domElement.classList.remove('selectedInEdit');
+        this.domBox.classList.remove('selectedInEdit');
     }
   }
 
@@ -1880,14 +1880,14 @@ export class Widget extends StateManaged {
       e.className = this.domBox.className;
       e.dataset.id = id;
       for(const clone of e.querySelectorAll('canvas')) {
-        const original = this.domElement.querySelector(`canvas[data-id = '${clone.dataset.id}']`);
+        const original = this.domBox.querySelector(`canvas[data-id = '${clone.dataset.id}']`);
         const context = clone.getContext('2d');
         clone.width = original.width;
         clone.height = original.height;
         context.drawImage(original, 0, 0);
       }
       e.style.cssText = cssText;
-      e.style.display = this.domElement.style.display;
+      e.style.display = this.domBox.style.display;
       e.style.transform = `scale(calc(${this.get('enlarge')} * var(--scale)))`;
       const cursor = clientPointer.getBoundingClientRect();
       if(cursor.left < window.innerWidth/2)
