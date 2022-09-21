@@ -44,7 +44,7 @@ export class Widget extends StateManaged {
 
       typeClasses: 'widget',
       classes: '',
-      css: {},
+      css: '',
       movable: true,
       movableInEdit: true,
       clickable: true,
@@ -57,7 +57,7 @@ export class Widget extends StateManaged {
 
       parent: null,
       fixedParent: false,
-      inheritFrom: {},
+      inheritFrom: null,
       owner: null,
       dragging: null,
       dropOffsetX: 0,

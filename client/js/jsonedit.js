@@ -1055,6 +1055,8 @@ function jeAddWidgetPropertyCommands(object) {
   return type == 'basic' ? null : type;
 }
 
+const buttonColorProperties = ['backgroundColor', 'borderColor', 'textColor', 'backgroundColorOH', 'borderColorOH', 'textColorOH'];
+
 function jeAddWidgetPropertyCommand(object, property) {
   jeCommands.push({
     id: 'widget_' + object.getDefaultValue('typeClasses').replace('widget ', '') + '_' + property,
@@ -1078,11 +1080,16 @@ function jeAddWidgetPropertyCommand(object, property) {
               jeStateNow.options = "###SELECT ME###";
               jeSetAndSelect([]);
             }
-        :  async function() {
+        : property == 'inheritFrom' || property == 'css' ? // Special case to override defaults for these two
+            async function() {
+              jeStateNow[property] = '###SELECT ME###';
+              jeSetAndSelect({});
+            }
+        : async function() {
              jeInsert([], property, property.match(/Routine$/) ? [] : object.getDefaultValue(property));
            },
     show: function() {
-      return jeStateNow[property] === undefined;
+      return jeStateNow[property] === undefined && !(object.getDefaultValue('typeClasses').replace('widget ', '') == 'button' && buttonColorProperties.includes(property));
     }
   });
 }
