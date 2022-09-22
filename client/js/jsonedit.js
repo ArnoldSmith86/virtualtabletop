@@ -260,12 +260,17 @@ const jeCommands = [
     show:  _=>typeof jeStateNow.css == "string",
     call: async function() {
       const elements = jeStateNow.css.split(/[;:]/);
-      const selectedKey = elements[0];
-      elements[0] = "###SELECT ME###";
-      jeStateNow.css = {};
-      for( let i=0; i<Math.floor(elements.length/2); i++) 
-        jeStateNow.css[elements[2*i].trim()] = elements[2*i+1].trim();
-      jeSetAndSelect(selectedKey.trim());
+      if(elements.length > 1) {
+        const selectedKey = elements[0];
+        elements[0] = "###SELECT ME###";
+        jeStateNow.css = {};
+        for( let i=0; i<Math.floor(elements.length/2); i++) 
+          jeStateNow.css[elements[2*i].trim()] = elements[2*i+1].trim();
+        jeSetAndSelect(elements.length > 1 ? selectedKey.trim() : {})
+      } else {
+        jeStateNow.css = '###SELECT ME###';
+        jeSetAndSelect({});
+      }
     }
   },
   {
@@ -875,18 +880,9 @@ function displayComputeOps() {
   jeKeyword = keyword;
 }
 
-/*    '[a-z]+': [
-      '"border": "1px solid black"', '"background": "white"', '"font-size": "30px"', '"color": "black"'
-    ],
-    'seat': [
-      '--wcShadowTurn: 0px 0px 20px 5px var(--color)'
-    ],
-    'timer': [
-      '--wcBorderNormal: #00000000', '--wcBorderAlert: red', '--wcFontAlert: red', '--wcFontPaused: #6d6d6d', '--wcAnimationAlert: blinker 1s linear infinite', '--wcAnimationPaused: none'
-    ],*/
 function jeAddCSScommands() {
   const string_presets = {
-    "border": "1px solid black", "background": "white", "font-size": "16px", "color": "black"
+    "border": "1px solid black", "background": "white", "font-size": "16px", "color": "black", "background-image": "url('')"
   };
   const nested_presets = {
     '[a-z]+': {
