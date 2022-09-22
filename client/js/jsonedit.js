@@ -10,6 +10,7 @@ let jeJSONerror = null;
 let jeCommandError = null;
 let jeCommandWithOptions = null;
 let jeFKeyOrderDescending = 1;
+let jeWidgetHighlighting = true;
 let jeInMacroExecution = false;
 let jeContext = null;
 let jeSecondaryWidget = null;
@@ -590,6 +591,17 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_toggleHighlight',
+    name: 'Toggle widget highlighting',
+    icon: _=>jeWidgetHighlighting ? 'flashlight_on' : 'flashlight_off',
+    forceKey: 'H',
+    call: async function() {
+      jeWidgetHighlighting = ! jeWidgetHighlighting;
+      jeShowCommands();
+      jeHighlightWidgets();
+    }
+  },
+  {
     id: 'je_addMultiProperty',
     name: 'add property',
     context: '^Multi-Selection',
@@ -733,8 +745,8 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('ROTATE', { count: 1, angle: 90, mode: 'add', holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all', sortBy: '###SEE jeAddRoutineOperation###'});
   jeAddRoutineOperationCommands('SET', { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
-  jeAddRoutineOperationCommands('SORT', { key: 'value', reverse: false, locales: null, options: null, holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('SHUFFLE', { holder: null, collection: 'DEFAULT' });
+  jeAddRoutineOperationCommands('SORT', { key: 'value', reverse: false, rearrange: false, locales: null, options: null, holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('TIMER', { value: 0, seconds: 0, mode: 'toggle', timer: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('TURN', { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN' });
 
@@ -1377,8 +1389,13 @@ function jeCenterSelection() {
       widgetDOM.scrollIntoView({ block: 'center' });
   }
 
+  jeHighlightWidgets();
+}
+
+function jeHighlightWidgets() {
+  const selectedIDs = jeSelectedIDs();
   for(const [ id, w ] of widgets)
-    w.setHighlighted(selectedIDs.indexOf(id) != -1);
+    w.setHighlighted(jeWidgetHighlighting && selectedIDs.indexOf(id) != -1);
 }
 
 function jeUpdateMulti(dontFocus) {
