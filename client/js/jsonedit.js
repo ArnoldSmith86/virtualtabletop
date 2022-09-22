@@ -256,19 +256,24 @@ const jeCommands = [
   {
     id: 'je_cssString',
     name: 'convert to simple object',
-    context: '^.* ↦ css',
-    show:  _=>typeof jeStateNow.css == "string",
+    context: '^.* ↦ (css|[a-z]+CSS)',
+    show: function() {
+      const cssKind = jeContext.join(' ').match(/(?:.*) (css|[a-z]+CSS)/)[1];
+      return typeof jeStateNow[cssKind] == "string";
+    },
+//    _=>typeof jeStateNow.css == "string",
     call: async function() {
-      const elements = jeStateNow.css.split(/[;:]/);
+      const cssKind = jeContext.join(' ').match(/(?:.*) (css|[a-z]+CSS)/)[1];
+      const elements = jeStateNow[cssKind].split(/[;:]/);
       if(elements.length > 1) {
         const selectedKey = elements[0];
         elements[0] = "###SELECT ME###";
-        jeStateNow.css = {};
+        jeStateNow[cssKind] = {};
         for( let i=0; i<Math.floor(elements.length/2); i++) 
-          jeStateNow.css[elements[2*i].trim()] = elements[2*i+1].trim();
+          jeStateNow[cssKind][elements[2*i].trim()] = elements[2*i+1].trim();
         jeSetAndSelect(elements.length > 1 ? selectedKey.trim() : {})
       } else {
-        jeStateNow.css = '###SELECT ME###';
+        jeStateNow[cssKind] = '###SELECT ME###';
         jeSetAndSelect({});
       }
     }
@@ -909,7 +914,7 @@ function jeAddCSScommands() {
       jeCommands.push({
         id: 'css_' + cssSection,
         name: cssSection,
-        context: `^${type} ↦ (css|[a-z]+CSS)`,
+        context: `^${type} ↦ css`,
         show:  function() {
           if(typeof jeStateNow.css != "object" || JSON.stringify(jeStateNow.css) == '{}')
             return false;
@@ -927,7 +932,7 @@ function jeAddCSScommands() {
         jeCommands.push({
           id: 'css_' + cssSection + '_' + cssProperty,
           name: cssProperty,
-          context: `^${type} ↦ (css|[a-z]+CSS) ↦ [^↦]*`,
+          context: `^${type} ↦ css ↦ [^↦]*`,
           show: function() {
             const contents = jeStateNow.css[cssSection];
             return typeof contents == "object" && jeContext.includes(cssSection) && !(cssProperty in contents);
@@ -948,15 +953,17 @@ function jeAddCSScommands() {
       name: cssProperty,
       context: `.* ↦ (css|[a-z]+CSS)`,
       show:  function() {
-        if(typeof jeStateNow.css != "object")
+        const cssKind = jeContext.join(' ').match(/(?:.*) (css|[a-z]+CSS)/)[1];
+        if(typeof jeStateNow[cssKind] != "object")
           return false;
-        for(const property in jeStateNow.css)
-          if(typeof jeStateNow.css[property] == "object")
+        for(const property in jeStateNow[cssKind])
+          if(typeof jeStateNow[cssKind][property] == "object")
             return false;
         return true;
       },
       call: async function() {
-        jeStateNow.css[cssProperty] = '###SELECT ME###';
+        const cssKind = jeContext.join(' ').match(/(?:.*) (css|[a-z]+CSS)/)[1];
+        jeStateNow[cssKind][cssProperty] = '###SELECT ME###';
         jeSetAndSelect(string_presets[cssProperty]);
       }
     });
