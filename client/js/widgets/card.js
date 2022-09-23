@@ -33,12 +33,16 @@ class Card extends Widget {
       }
     }
 
-    if(delta.cardType !== undefined && this.deck) {
-      const applyForCardType = {};
-      for(const [ k, v ] of Object.entries(this.deck.get('cardTypes')[this.get('cardType')] || {}))
+    if((delta.cardType !== undefined || delta.deck !== undefined) && this.deck) {
+      const defaultsFromDeck = {}
+      const applyDefaultsFromDeck = {};
+      if(delta.deck !== undefined)
+        Object.assign(defaultsFromDeck, this.deck.get('cardDefaults') || {});
+      Object.assign(defaultsFromDeck, this.deck.get('cardTypes')[this.get('cardType')] || {});
+      for(const [ k, v ] of Object.entries(defaultsFromDeck))
         if(this.state[k] === undefined)
-          applyForCardType[k] = v;
-      this.applyDeltaToDOM(applyForCardType);
+          applyDefaultsFromDeck[k] = v;
+      this.applyDeltaToDOM(applyDefaultsFromDeck);
     }
 
     if(delta.deck !== undefined || delta.activeFace !== undefined) {
