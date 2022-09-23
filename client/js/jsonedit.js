@@ -259,12 +259,12 @@ const jeCommands = [
     name: 'convert to simple object',
     context: '^.* ↦ (css|[a-z]+CSS)',
     show: function() {
-      const cssKind = jeContext.join(' ').match(/(?:.*) (css|[a-z]+CSS)/)[1];
+      const cssKind = jeContext.join(' ↦ ').match(this.context)[1];
       return typeof jeStateNow[cssKind] == "string";
     },
 //    _=>typeof jeStateNow.css == "string",
     call: async function() {
-      const cssKind = jeContext.join(' ').match(/(?:.*) (css|[a-z]+CSS)/)[1];
+      const cssKind = jeContext.join(' ↦ ').match(this.context)[1];
       const elements = jeStateNow[cssKind].split(/[;:]/);
       if(elements.length > 1) {
         const selectedKey = elements[0];
@@ -922,7 +922,7 @@ function jeAddCSScommands() {
 
   // Add nested object button items
   for(const type in nested_presets) {
-    for(const cssSection of Object.keys(nested_presets[type])) {
+    for(const cssSection of Object.keys(nested_presets[type])) { // Add CSS sections
       jeCommands.push({
         id: 'css_' + cssSection,
         name: cssSection,
@@ -940,7 +940,7 @@ function jeAddCSScommands() {
           jeSetAndSelect({});
         }
       });
-      for(const cssProperty of Object.keys(nested_presets[type][cssSection])) {
+      for(const cssProperty of Object.keys(nested_presets[type][cssSection])) { // Add entries per-section
         jeCommands.push({
           id: 'css_' + cssSection + '_' + cssProperty,
           name: cssProperty,
@@ -959,22 +959,32 @@ function jeAddCSScommands() {
   }
 
   // Add simple object button items
-  for(const cssProperty of Object.keys(string_presets)) {
+  for(const cssProperty of Object.keys(string_presets)) { // Add entries in "default" (only) section
     jeCommands.push({
       id: 'css_string_' + cssProperty,
       name: cssProperty,
       context: `.* ↦ (css|[a-z]+CSS)`,
-      show:  function() {
-        const cssKind = jeContext.join(' ').match(/(?:.*) (css|[a-z]+CSS)/)[1];
+      show: function() { // Need to make sure it is a simple object (contents are "key": "string" pairs)
+        const cssKind = jeContext.join(' ↦ ').match(this.context)[1];
+        const contents = jeStateNow[cssKind];
+        if(typeof contents != "object" || cssProperty in contents) // simple object, property already there
+          return false;
+        for(const property in jeStateNow[cssKind]) // Check to see if any sub-objects
+          if(typeof jeStateNow[cssKind][property] == "object")
+            return false;
+        return true; // All OK
+      },
+/*      show:  function() {
+        const cssKind = jeContext.join(' ↦ ').match(this.context)[1];
         if(typeof jeStateNow[cssKind] != "object")
           return false;
         for(const property in jeStateNow[cssKind])
           if(typeof jeStateNow[cssKind][property] == "object")
             return false;
         return true;
-      },
+      },*/
       call: async function() {
-        const cssKind = jeContext.join(' ').match(/(?:.*) (css|[a-z]+CSS)/)[1];
+        const cssKind = jeContext.join(' ↦ ').match(this.context)[1];
         jeStateNow[cssKind][cssProperty] = '###SELECT ME###';
         jeSetAndSelect(string_presets[cssProperty]);
       }
