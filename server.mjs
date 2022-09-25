@@ -136,6 +136,12 @@ MinifyRoom().then(function(result) {
     downloadState(res, req.params.room).catch(next);
   });
 
+  router.options('/state/:room', function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,OPTIONS');
+    res.sendStatus(200);
+  });
+
   router.get('/state/:room', function(req, res, next) {
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
       if(isLoaded) {
