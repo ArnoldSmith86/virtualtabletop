@@ -271,7 +271,7 @@ const jeCommands = [
         jeStateNow[cssKind] = {};
         for( let i=0; i<Math.floor(elements.length/2); i++) 
           jeStateNow[cssKind][elements[2*i].trim()] = elements[2*i+1].trim();
-        jeSetAndSelect(elements.length > 1 ? selectedKey.trim() : {})
+        jeSetAndSelect(selectedKey.trim())
       } else {
         jeStateNow[cssKind] = '###SELECT ME###';
         jeSetAndSelect({});
@@ -291,11 +291,7 @@ const jeCommands = [
       return true;
     },
     call: async function() {
-      const newCSS = {};
-      for(const property in jeStateNow.css)
-        newCSS[property] = jeStateNow.css[property];
-      jeStateNow.css = {};
-      jeStateNow.css['###SELECT ME###'] = newCSS;
+      jeStateNow.css = { '###SELECT ME###': jeStateNow.css };
       jeSetAndSelect("default");
     }
   },
@@ -912,6 +908,7 @@ function jeAddCSScommands() {
       '.alert': {}, '.paused':{}
     },
     'holder': {
+      '.droppable': {"border": "calc(1px / var(--scale)) solid #aaa !important"},
       '.droptarget': {"border": "calc(1px / var(--scale)) solid #333 !important"}
     },
     'pile': {
@@ -921,7 +918,7 @@ function jeAddCSScommands() {
 
   // Add nested object button items
   for(const type in nested_presets) {
-    for(const cssSection of Object.keys(nested_presets[type])) { // Add CSS sections
+    for(const cssSection in nested_presets[type]) { // Add CSS sections
       jeCommands.push({
         id: 'css_' + cssSection,
         name: cssSection,
@@ -932,14 +929,14 @@ function jeAddCSScommands() {
           for(const property in jeStateNow.css)
             if(typeof jeStateNow.css[property] != "object")
               return false;
-          return jeStateNow.css[cssSection] == undefined ? true : false;
+          return jeStateNow.css[cssSection] == undefined;
         },
         call: async function() {
           jeStateNow.css[cssSection] = '###SELECT ME###';
           jeSetAndSelect({});
         }
       });
-      for(const cssProperty of Object.keys(nested_presets[type][cssSection])) { // Add entries per-section
+      for(const cssProperty in nested_presets[type][cssSection]) { // Add entries per-section
         jeCommands.push({
           id: 'css_' + cssSection + '_' + cssProperty,
           name: cssProperty,
@@ -958,7 +955,7 @@ function jeAddCSScommands() {
   }
 
   // Add simple object button items
-  for(const cssProperty of Object.keys(string_presets)) { // Add entries in "default" (only) section
+  for(const cssProperty in string_presets) { // Add entries in "default" (only) section
     jeCommands.push({
       id: 'css_string_' + cssProperty,
       name: cssProperty,
