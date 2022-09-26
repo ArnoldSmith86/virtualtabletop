@@ -1279,6 +1279,7 @@ function jeHighlightWidgets() {
 }
 
 function jeUpdateMulti(dontFocus) {
+  jeCenterSelection();
   const keys = [ 'x', 'y', 'width', 'height', 'parent', 'z', 'layer' ];
   for(const usedKey in jeStateNow || [])
     if(usedKey != 'widgets' && keys.indexOf(usedKey) == -1)
