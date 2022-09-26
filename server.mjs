@@ -81,8 +81,10 @@ MinifyRoom().then(function(result) {
   });
 
   router.get('/assets/:name', function(req, res) {
-    if(!req.params.name.match(/^[0-9_-]+$/))
+    if(!req.params.name.match(/^[0-9_-]+$/)) {
+      res.sendStatus(404);
       return;
+    }
     fs.readFile(assetsdir + '/' + req.params.name, function(err, content) {
       if(!content) {
         res.sendStatus(404);
