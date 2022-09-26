@@ -262,7 +262,6 @@ const jeCommands = [
       const cssKind = jeContext.join(' ↦ ').match(this.context)[1];
       return typeof jeStateNow[cssKind] == "string";
     },
-//    _=>typeof jeStateNow.css == "string",
     call: async function() {
       const cssKind = jeContext.join(' ↦ ').match(this.context)[1];
       const elements = jeStateNow[cssKind].split(/[;:]/);
@@ -974,15 +973,6 @@ function jeAddCSScommands() {
             return false;
         return true; // All OK
       },
-/*      show:  function() {
-        const cssKind = jeContext.join(' ↦ ').match(this.context)[1];
-        if(typeof jeStateNow[cssKind] != "object")
-          return false;
-        for(const property in jeStateNow[cssKind])
-          if(typeof jeStateNow[cssKind][property] == "object")
-            return false;
-        return true;
-      },*/
       call: async function() {
         const cssKind = jeContext.join(' ↦ ').match(this.context)[1];
         jeStateNow[cssKind][cssProperty] = '###SELECT ME###';
