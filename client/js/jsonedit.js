@@ -283,7 +283,7 @@ const jeCommands = [
     name: 'convert to nested object',
     context: '^.* ↦ css',
     show:  function() {
-      if(typeof jeStateNow.css != "object" || jeStateNow === null)
+      if(typeof jeStateNow.css != "object" || jeStateNow.css === null)
         return false;
       for(const property in jeStateNow.css)
         if(typeof jeStateNow.css[property] == "object")
