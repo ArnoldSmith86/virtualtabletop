@@ -233,6 +233,69 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_inheritFromString',
+    name: 'convert to object',
+    context: '^.* ↦ inheritFrom',
+    show:  _=>typeof jeStateNow.inheritFrom == "string",
+    call: async function() {
+      const w = jeStateNow.inheritFrom;
+      jeStateNow.inheritFrom = {};
+      jeStateNow.inheritFrom[w] = '###SELECT ME###';
+      jeSetAndSelect("*");
+    }
+  },
+  {
+    id: 'je_inheritFromObject',
+    name: 'add field',
+    context: '^.* ↦ inheritFrom',
+    show:  _=>typeof jeStateNow.inheritFrom == "object" && jeStateNow.inheritFrom[""]==undefined,
+    call: async function() {
+      jeStateNow.inheritFrom["###SELECT ME###"] = [""];
+      jeSetAndSelect("");
+    }
+  },
+  {
+    id: 'je_cssString',
+    name: 'convert to simple object',
+    context: '^.* ↦ (css|[a-z]+CSS)',
+    show: function() {
+      const cssKind = jeContext.join(' ↦ ').match(this.context)[1];
+      return typeof jeStateNow[cssKind] == "string";
+    },
+    call: async function() {
+      const cssKind = jeContext.join(' ↦ ').match(this.context)[1];
+      const elements = jeStateNow[cssKind].split(/[;:]/);
+      if(elements.length > 1) {
+        const selectedKey = elements[0];
+        elements[0] = "###SELECT ME###";
+        jeStateNow[cssKind] = {};
+        for( let i=0; i<Math.floor(elements.length/2); i++) 
+          jeStateNow[cssKind][elements[2*i].trim()] = elements[2*i+1].trim();
+        jeSetAndSelect(selectedKey.trim())
+      } else {
+        jeStateNow[cssKind] = '###SELECT ME###';
+        jeSetAndSelect({});
+      }
+    }
+  },
+  {
+    id: 'je_cssObject',
+    name: 'convert to nested object',
+    context: '^.* ↦ css',
+    show:  function() {
+      if(typeof jeStateNow.css != "object" || jeStateNow.css === null)
+        return false;
+      for(const property in jeStateNow.css)
+        if(typeof jeStateNow.css[property] == "object")
+          return false;
+      return true;
+    },
+    call: async function() {
+      jeStateNow.css = { '###SELECT ME###': jeStateNow.css };
+      jeSetAndSelect("default");
+    }
+  },
+  {
     id: 'je_textTemplate',
     name: 'text template',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects',
@@ -271,13 +334,13 @@ const jeCommands = [
     }
   },
   {
-    id: 'je_css',
+    id: 'je_faceTemplate_css',
     name: 'css',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
     show: _=>!jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].css,
     call: async function() {
       jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].css = '###SELECT ME###';
-      jeSetAndSelect('');
+      jeSetAndSelect({});
     }
   },
   {
@@ -695,7 +758,7 @@ function jeAddCommands() {
 
   jeAddFaceCommand('border', '', 1);
   jeAddFaceCommand('classes', '', '');
-  jeAddFaceCommand('css', '', '');
+  jeAddFaceCommand('css', '', {});
   jeAddFaceCommand('properties', '', {});
   jeAddFaceCommand('radius', ' (rounded corners)', 1);
 
@@ -831,34 +894,89 @@ function displayComputeOps() {
 }
 
 function jeAddCSScommands() {
-  const presets = {
-    '[a-z]+': [
-      'border: 1px solid black', 'background: white', 'font-size: 30px', 'color: black' , 'border-radius: 100%'
-    ],
-    'button': [
-      '--wcMain: #1f5ca6', '--wcMainOH: #0d2f5e', '--wcBorder: #0d2f5e', '--wcBorderOH: #1f5ca6', '--wcFont: #ffffff', '--wcFontOH: #ffffff'
-    ],
-    'seat': [
-      '--wcShadowTurn: 0px 0px 20px 5px var(--color)'
-    ],
-    'timer': [
-      '--wcBorderNormal: #00000000', '--wcBorderAlert: red', '--wcFontAlert: red', '--wcFontPaused: #6d6d6d', '--wcAnimationAlert: blinker 1s linear infinite', '--wcAnimationPaused: none'
-    ]
+  const string_presets = {
+    "border": "1px solid black", "background": "white", "font-size": "16px", "color": "black", "background-image": "url('')"
   };
-  for(const type in presets) {
-    for(const css of presets[type]) {
+  const nested_presets = {
+    '[a-z]+': {
+      'default': string_presets,
+      ':hover': string_presets
+    },
+    'seat': {
+      '.seated.turn': {}
+    },
+    'timer': {
+      '.alert': {}, '.paused':{}
+    },
+    'holder': {
+      '.droppable': {"border": "calc(1px / var(--scale)) solid #aaa !important"},
+      '.droptarget': {"border": "calc(1px / var(--scale)) solid #333 !important"}
+    },
+    'pile': {
+      '.pile .handle': {}
+    }
+  };
+
+  // Add nested object button items
+  for(const type in nested_presets) {
+    for(const cssSection in nested_presets[type]) { // Add CSS sections
       jeCommands.push({
-        id: 'css_' + css,
-        name: css,
-        context: `^${type} ↦ (css|[a-z]+CSS)`,
-        call: async function() {
-          jePasteText(css + '; ', true);
+        id: 'css_' + cssSection,
+        name: cssSection,
+        context: `^${type} ↦ css`,
+        show:  function() {
+          if(typeof jeStateNow.css != "object" || jeStateNow.css === null || JSON.stringify(jeStateNow.css) == '{}')
+            return false;
+          for(const property in jeStateNow.css)
+            if(typeof jeStateNow.css[property] != "object")
+              return false;
+          return jeStateNow.css[cssSection] == undefined;
         },
-        show: function() {
-          return !String(jeGetValue()[jeGetLastKey()]).match(css.split(':')[0]);
+        call: async function() {
+          jeStateNow.css[cssSection] = '###SELECT ME###';
+          jeSetAndSelect({});
         }
       });
+      for(const cssProperty in nested_presets[type][cssSection]) { // Add entries per-section
+        jeCommands.push({
+          id: 'css_' + cssSection + '_' + cssProperty,
+          name: cssProperty,
+          context: `^${type} ↦ css ↦ [^↦]*`,
+          show: function() {
+            const contents = jeStateNow.css[cssSection];
+            return typeof contents == "object" && contents !== null && jeContext.includes(cssSection) && !(cssProperty in contents);
+          },
+          call: async function() {
+            jeStateNow.css[cssSection][cssProperty] = '###SELECT ME###';
+            jeSetAndSelect(nested_presets[type][cssSection][cssProperty]);
+          }
+        });
+      }
     }
+  }
+
+  // Add simple object button items
+  for(const cssProperty in string_presets) { // Add entries in "default" (only) section
+    jeCommands.push({
+      id: 'css_string_' + cssProperty,
+      name: cssProperty,
+      context: `.* ↦ (css|[a-z]+CSS)`,
+      show: function() { // Need to make sure it is a simple object (contents are "key": "string" pairs)
+        const cssKind = jeContext.join(' ↦ ').match(this.context)[1];
+        const contents = jeStateNow[cssKind];
+        if(typeof contents != "object" || contents === null || cssProperty in contents) // simple object, property already there
+          return false;
+        for(const property in jeStateNow[cssKind]) // Check to see if any sub-objects
+          if(typeof jeStateNow[cssKind][property] == "object")
+            return false;
+        return true; // All OK
+      },
+      call: async function() {
+        const cssKind = jeContext.join(' ↦ ').match(this.context)[1];
+        jeStateNow[cssKind][cssProperty] = '###SELECT ME###';
+        jeSetAndSelect(string_presets[cssProperty]);
+      }
+    });
   }
 }
 
@@ -950,6 +1068,8 @@ function jeAddWidgetPropertyCommands(object) {
   return type == 'basic' ? null : type;
 }
 
+const buttonColorProperties = ['backgroundColor', 'borderColor', 'textColor', 'backgroundColorOH', 'borderColorOH', 'textColorOH'];
+
 function jeAddWidgetPropertyCommand(object, property) {
   jeCommands.push({
     id: 'widget_' + object.getDefaultValue('typeClasses').replace('widget ', '') + '_' + property,
@@ -973,11 +1093,16 @@ function jeAddWidgetPropertyCommand(object, property) {
               jeStateNow.options = "###SELECT ME###";
               jeSetAndSelect([]);
             }
-        :  async function() {
+        : property == 'inheritFrom' || property == 'css' ? // Special case to override defaults for these two
+            async function() {
+              jeStateNow[property] = '###SELECT ME###';
+              jeSetAndSelect({});
+            }
+        : async function() {
              jeInsert([], property, property.match(/Routine$/) ? [] : object.getDefaultValue(property));
            },
     show: function() {
-      return jeStateNow[property] === undefined;
+      return jeStateNow[property] === undefined && !(object.getDefaultValue('typeClasses').replace('widget ', '') == 'button' && buttonColorProperties.includes(property));
     }
   });
 }
@@ -1939,35 +2064,11 @@ function jeSetEditorContent(content) {
 }
 
 function jeShowCommands() {
-  const activeCommands = {};
 
-  const context = jeContext.join(' ↦ ');
+  // First set up top buttons
+  let commandText = `<div id='jeTopButtons'>`;
   for(const command of jeCommands) {
-    delete command.currentKey;
-    const contextMatch = context.match(new RegExp(command.context));
-    if(contextMatch && (!command.context || jeStateNow && !jeJSONerror) && (!command.show || command.show())) {
-      if(activeCommands[contextMatch[0]] === undefined)
-        activeCommands[contextMatch[0]] = [];
-      activeCommands[contextMatch[0]].push(command);
-    }
-  }
-
-  const usedKeys = { a: 1, c: 1, x: 1, v: 1, w: 1, n: 1, t: 1, q: 1, j: 1, z: 1 };
-  let commandText = '';
-
-  const sortByName = function(a, b) {
-    const nameA = typeof a.name == 'function' ? a.name() : a.name;
-    const nameB = typeof b.name == 'function' ? b.name() : b.name;
-    return nameA.localeCompare(nameB);
-  }
-
-  const displayKey = function (k) {
-    return { ArrowUp: '⬆', ArrowDown: '⬇'} [k] || k;
-  }
-  commandText += `<div id='jeTopButtons'>`;
-  for(const command of jeCommands) {
-    const contextMatch = context.match(new RegExp(command.context));
-    if(contextMatch && contextMatch[0] == "") {
+    if(command.context == undefined) {
       const name = (typeof command.name == 'function' ? command.name() : command.name);
       const icon = (typeof command.icon == 'function' ? command.icon() : command.icon);
       const isMaterial = String(icon).match(/^[^[]/) ? 'material' : '';
@@ -1975,7 +2076,19 @@ function jeShowCommands() {
     }
   }
   commandText += `</div>`;
-  delete activeCommands[""];
+
+  // Next figure out which context commands are active here.
+  const activeCommands = {};
+  const context = jeContext.join(' ↦ ');
+  for(const command of jeCommands) {
+    delete command.currentKey;
+    const contextMatch = context.match(new RegExp(command.context));
+    if(contextMatch && contextMatch[0]!= "" && (!command.context || jeStateNow && !jeJSONerror) && (!command.show || command.show())) {
+      if(activeCommands[contextMatch[0]] === undefined)
+        activeCommands[contextMatch[0]] = [];
+      activeCommands[contextMatch[0]].push(command);
+    };
+  }
 
   if(jeContext[jeContext.length-1] == '(var expression)') {
     commandText += `\n  <b>var expression</b>\n<label>Search </label><input id="var_search" name="var_search" type="text"><br>`;
@@ -1983,6 +2096,18 @@ function jeShowCommands() {
   }
 
   if(!jeJSONerror && jeStateNow) {
+    const usedKeys = { a: 1, c: 1, x: 1, v: 1, w: 1, n: 1, t: 1, q: 1, j: 1, z: 1 };
+
+    const sortByName = function(a, b) {
+      const nameA = typeof a.name == 'function' ? a.name() : a.name;
+      const nameB = typeof b.name == 'function' ? b.name() : b.name;
+      return nameA.localeCompare(nameB);
+    }
+
+    const displayKey = function (k) {
+      return { ArrowUp: '⬆', ArrowDown: '⬇'} [k] || k;
+    }
+
     for(const contextMatch of (Object.keys(activeCommands).sort((a,b)=>b.length-a.length))) {
       commandText += `\n  <div class="context">${html(contextMatch)}</div>\n`;
       for(const command of activeCommands[contextMatch].sort(sortByName)) {
