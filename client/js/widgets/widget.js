@@ -4,7 +4,7 @@ import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
-import { center, distance, overlap, overlapScore, getOffset, applyTransformedOffset } from '../geometry.js';
+import { center, distance, overlap, overlapScore, containScore, getOffset, applyTransformedOffset } from '../geometry.js';
 
 const readOnlyProperties = new Set([
   '_absoluteRotation',
@@ -1708,6 +1708,7 @@ export class Widget extends StateManaged {
       let targetCursor = false;
       let targetOverlap = 0;
       let targetDist = 99999;
+      let minZ = -99999999;
 
       for(const t of this.dropTargets) {
         const tOverlap = overlapScore(this.domElement, t.domElement);
@@ -1715,12 +1716,19 @@ export class Widget extends StateManaged {
           const tCursor = t.coordGlobalInside(coordGlobal);
           const tDist = distance(center(t.domElement), myCenter) / scale;
           const tMinDim = Math.min(t.get('width'),t.get('height')) * t.get('_absoluteScale');
-          const validTarget = tCursor || tDist <= (myMinDim + tMinDim) / 2;
+          const tZ = parseInt(getComputedStyle(t.domElement).zIndex) || 0;
+          const validTarget = (tCursor || tDist <= (myMinDim + tMinDim) / 2) && tZ >= minZ;
           const bestTarget = tDist <= targetDist;
-          if(validTarget && bestTarget) {
+          const contained = containScore(this.domElement, t.domElement) > 0.8;
+
+          if(validTarget && (contained || bestTarget)) {
             targetCursor = tCursor;
             targetOverlap= tOverlap;
             targetDist = tDist;
+            // If this target mostly contains the dragged element, don't consider anything behind it.
+            if (contained) {
+              minZ = tZ;
+            }
             this.hoverTarget = t;
           }
         }
