@@ -1715,7 +1715,7 @@ export class Widget extends StateManaged {
           const tDist = distance(center(t.domElement), myCenter) / scale;
           const tMinDim = Math.min(t.get('width'),t.get('height')) * t.get('_absoluteScale');
           const tZ = t.zArray();
-          const validTarget = (tCursor || tDist <= (myMinDim + tMinDim) / 2) && minZ.reduce((p,c,i)=>(p?p:(tZ[i]?tZ[i]:0)-c),0)>=0;
+          const validTarget = (tCursor || tDist <= (myMinDim + tMinDim) / 2) && minZ.reduce((p,c,i)=>(p?p:(tZ[i]?tZ[i]-c:-1)),0)>=0;
           const bestTarget = tDist <= targetDist;
           const contained = tContains > 0.8;
 
