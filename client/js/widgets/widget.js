@@ -1707,6 +1707,7 @@ export class Widget extends StateManaged {
       this.hoverTarget = null;
       let targetDist = 99999;
       let minZ = [];
+      let hitElements = [].slice.apply(document.elementsFromPoint(myCenter.x, myCenter.y));
 
       for(const t of this.dropTargets) {
         const tContains = containScore(this.domElement, t.domElement);
@@ -1717,7 +1718,8 @@ export class Widget extends StateManaged {
           const tZ = t.zArray();
           const validTarget = (tCursor || tDist <= (myMinDim + tMinDim) / 2) && minZ.reduce((p,c,i)=>(p?p:(tZ[i]?tZ[i]-c:-1)),0)>=0;
           const bestTarget = tDist <= targetDist;
-          const contained = tContains > 0.8;
+          // Check if the midpoint was within this holder.
+          const contained = hitElements.indexOf(t.domElement) != -1;
 
           if(validTarget && (contained || bestTarget)) {
             targetDist = tDist;
