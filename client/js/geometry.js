@@ -22,14 +22,6 @@ export function containScore(obj, container) {
   return oA ? intersectionArea / oA : 0;
 }
 
-export function overlapScore(a, b) {
-  const aR = a.getBoundingClientRect();
-  const bR = b.getBoundingClientRect();
-  const maxOverlap = Math.min(aR.width, bR.width) * Math.min(aR.height, bR.height);
-  const area = Math.max(Math.min(aR.right, bR.right) - Math.max(aR.left, bR.left), 0) * Math.max(Math.min(aR.bottom, bR.bottom) - Math.max(aR.top, bR.top), 0);
-  return maxOverlap ? area / maxOverlap : 0;
-}
-
 export function getOffset(origin, target) {
   return {x: target.x - origin.x, y: target.y - origin.y}
 }

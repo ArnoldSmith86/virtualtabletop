@@ -1705,25 +1705,21 @@ export class Widget extends StateManaged {
       const myCenter = center(this.domElement);
       const myMinDim = Math.min(this.get('width'), this.get('height')) * this.get('_absoluteScale');
       this.hoverTarget = null;
-      let targetCursor = false;
-      let targetOverlap = 0;
       let targetDist = 99999;
       let minZ = [];
 
       for(const t of this.dropTargets) {
-        const tOverlap = overlapScore(this.domElement, t.domElement);
-        if(tOverlap > 0) {
+        const tContains = containScore(this.domElement, t.domElement);
+        if(tContains > 0) {
           const tCursor = t.coordGlobalInside(coordGlobal);
           const tDist = distance(center(t.domElement), myCenter) / scale;
           const tMinDim = Math.min(t.get('width'),t.get('height')) * t.get('_absoluteScale');
           const tZ = t.zArray();
           const validTarget = (tCursor || tDist <= (myMinDim + tMinDim) / 2) && tZ.map((c, i)=>(i>=minZ.length||c>=minZ[i])).reduce((p,c)=>p&&c, true);
           const bestTarget = tDist <= targetDist;
-          const contained = containScore(this.domElement, t.domElement) > 0.8;
+          const contained = tContains > 0.8;
 
           if(validTarget && (contained || bestTarget)) {
-            targetCursor = tCursor;
-            targetOverlap= tOverlap;
             targetDist = tDist;
             // If this target mostly contains the dragged element, don't consider anything behind it.
             if (contained) {
