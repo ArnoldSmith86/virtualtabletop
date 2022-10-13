@@ -1708,7 +1708,7 @@ export class Widget extends StateManaged {
       let targetCursor = false;
       let targetOverlap = 0;
       let targetDist = 99999;
-      let minZ = -99999999;
+      let minZ = [];
 
       for(const t of this.dropTargets) {
         const tOverlap = overlapScore(this.domElement, t.domElement);
@@ -1716,8 +1716,8 @@ export class Widget extends StateManaged {
           const tCursor = t.coordGlobalInside(coordGlobal);
           const tDist = distance(center(t.domElement), myCenter) / scale;
           const tMinDim = Math.min(t.get('width'),t.get('height')) * t.get('_absoluteScale');
-          const tZ = parseInt(getComputedStyle(t.domElement).zIndex) || 0;
-          const validTarget = (tCursor || tDist <= (myMinDim + tMinDim) / 2) && tZ >= minZ;
+          const tZ = t.zArray();
+          const validTarget = (tCursor || tDist <= (myMinDim + tMinDim) / 2) && tZ.map((c, i)=>(i>=minZ.length||c>=minZ[i])).reduce((p,c)=>p&&c, true);
           const bestTarget = tDist <= targetDist;
           const contained = containScore(this.domElement, t.domElement) > 0.8;
 
@@ -2074,5 +2074,12 @@ export class Widget extends StateManaged {
 
   validDropTargets() {
     return getValidDropTargets(this);
+  }
+
+  zArray() {
+    if(this.get('parent') && widgets.has(this.get('parent')))
+      return widgets.get(this.get('parent')).zArray().concat(this.z)
+    else
+      return [ this.z ]
   }
 }
