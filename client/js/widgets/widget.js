@@ -4,7 +4,7 @@ import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
-import { center, distance, overlap, containScore, getOffset, applyTransformedOffset } from '../geometry.js';
+import { center, distance, overlap, getOffset, applyTransformedOffset } from '../geometry.js';
 
 const readOnlyProperties = new Set([
   '_absoluteRotation',
@@ -1710,8 +1710,7 @@ export class Widget extends StateManaged {
       let hitElements = [].slice.apply(document.elementsFromPoint(myCenter.x, myCenter.y));
 
       for(const t of this.dropTargets) {
-        const tContains = containScore(this.domElement, t.domElement);
-        if(tContains > 0) {
+        if(overlap(this.domElement, t.domElement)) {
           const tCursor = t.coordGlobalInside(coordGlobal);
           const tDist = distance(center(t.domElement), myCenter) / scale;
           const tMinDim = Math.min(t.get('width'),t.get('height')) * t.get('_absoluteScale');

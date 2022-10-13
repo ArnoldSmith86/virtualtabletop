@@ -14,14 +14,6 @@ export function overlap(a, b) {
   return !(aR.top+aR.height <= bR.top || aR.top >= bR.top+bR.height || aR.left+aR.width <= bR.left || aR.left >= bR.left+bR.width);
 }
 
-export function containScore(obj, container) {
-  const oR = obj.getBoundingClientRect();
-  const cR = container.getBoundingClientRect();
-  const intersectionArea = Math.max(Math.min(oR.right, cR.right) - Math.max(oR.left, cR.left), 0) * Math.max(Math.min(oR.bottom, cR.bottom) - Math.max(oR.top, cR.top), 0);
-  const oA = (oR.width * oR.height);
-  return oA ? intersectionArea / oA : 0;
-}
-
 export function getOffset(origin, target) {
   return {x: target.x - origin.x, y: target.y - origin.y}
 }
