@@ -66,6 +66,7 @@ export class Widget extends StateManaged {
 
       linkedToSeat: null,
       onlyVisibleForSeat: null,
+      childrenInheritVisibleForSeat: false,
 
       clickRoutine: null,
       changeRoutine: null,
@@ -1730,8 +1731,15 @@ export class Widget extends StateManaged {
       if(this.hoverTarget)
         this.hoverTarget.domElement.classList.add('droptarget');
 
-      if(lastHoverTarget != this.hoverTarget && this.hoverTarget != this.currentParent)
-        await this.checkParent(true);
+      if (lastHoverTarget != this.hoverTarget) {
+        if (this.hoverTarget && this.hoverTarget.get('childrenInheritVisibleForSeat'))
+          await this.set('onlyVisibleForSeat', this.hoverTarget.get('onlyVisibleForSeat'));
+        else if (lastHoverTarget && lastHoverTarget.get('childrenInheritVisibleForSeat'))
+          await this.set('onlyVisibleForSeat', null);
+
+        if(this.hoverTarget != this.currentParent)
+          await this.checkParent(true);
+      }
     }
   }
 
