@@ -1723,7 +1723,6 @@ export class Widget extends StateManaged {
             const tCursor = t.coordGlobalInside(coordGlobal);
             const tDist = distance(center(t.domElement), myCenter) / scale;
             const tMinDim = Math.min(t.get('width'),t.get('height')) * t.get('_absoluteScale');
-            const tZ = t.zArray();
             const validTarget = (tCursor || tDist <= (myMinDim + tMinDim) / 2);
             const bestTarget = tDist <= targetDist;
 
@@ -2077,10 +2076,4 @@ export class Widget extends StateManaged {
     return getValidDropTargets(this);
   }
 
-  zArray() {
-    if(this.get('parent') && widgets.has(this.get('parent')))
-      return widgets.get(this.get('parent')).zArray().concat(this.z)
-    else
-      return [ this.z ]
-  }
 }
