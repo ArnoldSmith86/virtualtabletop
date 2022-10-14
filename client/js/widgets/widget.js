@@ -286,16 +286,35 @@ export class Widget extends StateManaged {
     if(typeof this.get('owner') == 'string' && this.get('owner') != playerName)
       className += ' foreign';
 
-    const onlyVisibleForSeat = this.get('onlyVisibleForSeat');
-    let invisible = onlyVisibleForSeat !== null;
-    for(const seatID of asArray(onlyVisibleForSeat) || []) {
-      if(widgets.has(seatID) && widgets.get(seatID).get('player') == playerName) {
-        invisible = false;
-        break;
+    let onlyVisibleForSeat = this.get('onlyVisibleForSeat');
+    if (onlyVisibleForSeat)
+      onlyVisibleForSeat = new Set(asArray(onlyVisibleForSeat));
+
+    // If the element is currently hovering over a holder which resricts visible seats,
+    // intersect the visible seats.
+    const hoverTarget = this.get('hoverTarget') ? widgets.get(this.get('hoverTarget')) : null;
+    let restrictVisibleSeats = hoverTarget ? hoverTarget.inheritedSeatVisibility() : null;
+    if (restrictVisibleSeats) {
+      let visibleSeats = new Set();
+      for (const seatID of asArray(restrictVisibleSeats)) {
+        if (onlyVisibleForSeat && !onlyVisibleForSeat.has(seatID))
+          continue;
+        visibleSeats.add(seatID);
       }
+      onlyVisibleForSeat = visibleSeats;
     }
-    if(invisible)
-      className += ' foreign';
+
+    if (onlyVisibleForSeat) {
+      let invisible = true;
+      for(const seatID of onlyVisibleForSeat) {
+        if(widgets.has(seatID) && widgets.get(seatID).get('player') == playerName) {
+          invisible = false;
+          break;
+        }
+      }
+      if(invisible)
+        className += ' foreign';
+    }
 
     const linkedToSeat = this.get('linkedToSeat');
     if(linkedToSeat && widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == playerName).length)
@@ -314,7 +333,7 @@ export class Widget extends StateManaged {
   }
 
   classesProperties() {
-    return [ 'classes', 'dragging', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses' ];
+    return [ 'classes', 'dragging', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses' ];
   }
 
   async click(mode='respect') {
@@ -1732,13 +1751,7 @@ export class Widget extends StateManaged {
         this.hoverTarget.domElement.classList.add('droptarget');
 
       if (lastHoverTarget != this.hoverTarget) {
-        const inheritedSeatVisibility = this.hoverTarget ? this.hoverTarget.inheritedSeatVisibility() : null;
-        const lastInheritedSeatVisibility = lastHoverTarget ? lastHoverTarget.inheritedSeatVisibility() : null;
-        if (inheritedSeatVisibility)
-          await this.set('onlyVisibleForSeat', inheritedSeatVisibility);
-        else if (lastInheritedSeatVisibility)
-          await this.set('onlyVisibleForSeat', null);
-
+        await this.set('hoverTarget', this.hoverTarget ? this.hoverTarget.get('id') : null);
         if(this.hoverTarget != this.currentParent)
           await this.checkParent(true);
       }
@@ -1750,6 +1763,7 @@ export class Widget extends StateManaged {
       sendTraceEvent('moveEnd', { id: this.get('id'), coord, localAnchor });
 
     await this.set('dragging', null);
+    await this.set('hoverTarget', null);
 
     if(!this.get('fixedParent')) {
       for(const t of this.dropTargets)
