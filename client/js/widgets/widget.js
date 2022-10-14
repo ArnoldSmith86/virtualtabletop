@@ -1706,12 +1706,11 @@ export class Widget extends StateManaged {
       const myMinDim = Math.min(this.get('width'), this.get('height')) * this.get('_absoluteScale');
       this.hoverTarget = null;
       let hitElements = document.elementsFromPoint(myCenter.x, myCenter.y);
-      let targets = new Set(this.dropTargets);
 
       // First, check for elements under the midpoint in order in which they were hit.
       for (let i = 0; i < hitElements.length; i++) {
         let widget = widgets.get(unescapeID(hitElements[i].id.slice(2)));
-        if (widget && targets.has(widget)) {
+        if (hitElements[i].classList.contains('droppable') && widget) {
           this.hoverTarget = widget;
           break;
         }
