@@ -2075,5 +2075,4 @@ export class Widget extends StateManaged {
   validDropTargets() {
     return getValidDropTargets(this);
   }
-
 }
