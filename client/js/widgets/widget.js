@@ -1704,29 +1704,29 @@ export class Widget extends StateManaged {
       const lastHoverTarget = this.hoverTarget;
       const myCenter = center(this.domElement);
       const myMinDim = Math.min(this.get('width'), this.get('height')) * this.get('_absoluteScale');
-      this.hoverTarget = null;
-      let targetDist = 99999;
-      let minZ = [];
-      let hitElements = [].slice.apply(document.elementsFromPoint(myCenter.x, myCenter.y));
+      this.hoverTarget = undefined;
+      let hitElements = document.elementsFromPoint(myCenter.x, myCenter.y);
 
-      for(const t of this.dropTargets) {
-        if(overlap(this.domElement, t.domElement)) {
-          const tCursor = t.coordGlobalInside(coordGlobal);
-          const tDist = distance(center(t.domElement), myCenter) / scale;
-          const tMinDim = Math.min(t.get('width'),t.get('height')) * t.get('_absoluteScale');
-          const tZ = t.zArray();
-          const validTarget = (tCursor || tDist <= (myMinDim + tMinDim) / 2) && minZ.reduce((p,c,i)=>(p?p:(tZ[i]?tZ[i]-c:-1)),0)>=0;
-          const bestTarget = tDist <= targetDist;
-          // Check if the midpoint was within this holder.
-          const contained = hitElements.indexOf(t.domElement) != -1;
+      // First, check for elements under the midpoint in order in which they were hit.
+      for (let i = 0; !this.hoverTarget && i < hitElements.length; i++) {
+        this.hoverTarget = this.dropTargets.find((t) => {return t.domElement == hitElements[i];});
+      }
+      // Then, look for nearby elements if nothing found in the previous pass.
+      if (!this.hoverTarget) {
+        let targetDist = 99999;
+        for(const t of this.dropTargets) {
+          if(overlap(this.domElement, t.domElement)) {
+            const tCursor = t.coordGlobalInside(coordGlobal);
+            const tDist = distance(center(t.domElement), myCenter) / scale;
+            const tMinDim = Math.min(t.get('width'),t.get('height')) * t.get('_absoluteScale');
+            const tZ = t.zArray();
+            const validTarget = (tCursor || tDist <= (myMinDim + tMinDim) / 2);
+            const bestTarget = tDist <= targetDist;
 
-          if(validTarget && (contained || bestTarget)) {
-            targetDist = tDist;
-            // If this target mostly contains the dragged element, don't consider anything behind it.
-            if (contained) {
-              minZ = tZ;
+            if(validTarget && bestTarget) {
+              targetDist = tDist;
+              this.hoverTarget = t;
             }
-            this.hoverTarget = t;
           }
         }
       }
