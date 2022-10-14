@@ -903,7 +903,7 @@ async function onClickUpdateWidget(applyChangesFromUI) {
   showOverlay();
 }
 
-async function duplicateWidget(widget, recursive, inheritFrom, incrementKind, incrementIn, xOffset, yOffset, xCopies, yCopies, problems) { // incrementKind: '', 'Letters', 'Numbers'
+async function duplicateWidget(widget, recursive, inheritFrom, inheritProperties, incrementKind, incrementIn, xOffset, yOffset, xCopies, yCopies, problems) { // incrementKind: '', 'Letters', 'Numbers'
 
   const incrementCaps = function(l) {
     const m = l.match(/Z+$/);
@@ -918,9 +918,14 @@ async function duplicateWidget(widget, recursive, inheritFrom, incrementKind, in
     let currentWidget = JSON.parse(JSON.stringify(widget.state))
 
     if(inheritFrom) {
-      const inheritWidget = { inheritFrom: widget.get('id') };
-      for(const key of [ 'id', 'type', 'deck', 'cardType' ])
-        if(currentWidget[key] !== undefined)
+      const inheritAll = JSON.stringify(inheritProperties) == '[""]';
+      const inheritWidget = {};
+      inheritWidget['inheritFrom'] = {};
+      inheritWidget['inheritFrom'][widget.get('id')] = inheritAll ? "*" : inheritProperties;
+
+      // Copy properties from source to new object unless inheritAll is set or the property is in the inherit list.
+      for(const key of Object.keys(currentWidget))
+        if(currentWidget[key] != undefined && (['id','type','deck','cardType'].includes(key) || !(inheritAll || inheritProperties.includes(key))))
           inheritWidget[key] = currentWidget[key];
       currentWidget = inheritWidget;
     }
@@ -998,7 +1003,7 @@ async function onClickDuplicateWidget() {
   const widget = widgets.get(JSON.parse($('#editWidgetJSON').dataset.previousState).id);
   const xOffset = widget.absoluteCoord('x') > 1500 ? -20 : 20;
   const yOffset = widget.absoluteCoord('y') >  900 ? -20 : 20;
-  await duplicateWidget(widget, true, false, 'Numbers', [], xOffset, yOffset, 1, 0);
+  await duplicateWidget(widget, true, false, [], 'Numbers', [], xOffset, yOffset, 1, 0);
   showOverlay();
 }
 
