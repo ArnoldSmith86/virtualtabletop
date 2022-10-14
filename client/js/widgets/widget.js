@@ -63,7 +63,7 @@ export class Widget extends StateManaged {
       dropOffsetX: 0,
       dropOffsetY: 0,
       inheritChildZ: false,
-      hoverTarget: false,
+      hoverTarget: null,
 
       linkedToSeat: null,
       onlyVisibleForSeat: null,
