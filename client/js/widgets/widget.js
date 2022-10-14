@@ -1732,9 +1732,11 @@ export class Widget extends StateManaged {
         this.hoverTarget.domElement.classList.add('droptarget');
 
       if (lastHoverTarget != this.hoverTarget) {
-        if (this.hoverTarget && this.hoverTarget.get('childrenInheritVisibleForSeat'))
-          await this.set('onlyVisibleForSeat', this.hoverTarget.get('onlyVisibleForSeat'));
-        else if (lastHoverTarget && lastHoverTarget.get('childrenInheritVisibleForSeat'))
+        const inheritedSeatVisibility = this.hoverTarget ? this.hoverTarget.inheritedSeatVisibility() : null;
+        const lastInheritedSeatVisibility = lastHoverTarget ? lastHoverTarget.inheritedSeatVisibility() : null;
+        if (inheritedSeatVisibility)
+          await this.set('onlyVisibleForSeat', inheritedSeatVisibility);
+        else if (lastInheritedSeatVisibility)
           await this.set('onlyVisibleForSeat', null);
 
         if(this.hoverTarget != this.currentParent)
@@ -2075,4 +2077,14 @@ export class Widget extends StateManaged {
   validDropTargets() {
     return getValidDropTargets(this);
   }
+
+  inheritedSeatVisibility() {
+    if (this.get('childrenInheritVisibleForSeat'))
+      return this.get('onlyVisibleForSeat');
+    const thisParent = this.get('parent');
+    if (thisParent)
+      return widgets.get(thisParent).inheritedSeatVisibility();
+    return null;
+  }
+
 }
