@@ -1704,12 +1704,17 @@ export class Widget extends StateManaged {
       const lastHoverTarget = this.hoverTarget;
       const myCenter = center(this.domElement);
       const myMinDim = Math.min(this.get('width'), this.get('height')) * this.get('_absoluteScale');
-      this.hoverTarget = undefined;
+      this.hoverTarget = null;
       let hitElements = document.elementsFromPoint(myCenter.x, myCenter.y);
+      let targets = new Set(this.dropTargets);
 
       // First, check for elements under the midpoint in order in which they were hit.
-      for (let i = 0; !this.hoverTarget && i < hitElements.length; i++) {
-        this.hoverTarget = this.dropTargets.find((t) => {return t.domElement == hitElements[i];});
+      for (let i = 0; i < hitElements.length; i++) {
+        let widget = widgets.get(unescapeID(hitElements[i].id.slice(2)));
+        if (widget && targets.has(widget)) {
+          this.hoverTarget = widget;
+          break;
+        }
       }
       // Then, look for nearby elements if nothing found in the previous pass.
       if (!this.hoverTarget) {
