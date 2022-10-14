@@ -652,6 +652,24 @@ export default class Room {
     return Config.directory('save') + '/rooms/' + this.id + '.json';
   }
 
+  saveState(player, players) {
+    const id = Math.random().toString(36).substring(3, 7);
+
+    this.state._meta.states[id] = {...this.state._meta.states[this.state._meta.activeState.stateID]};
+    this.state._meta.states[id].variants = [];
+    this.state._meta.states[id].saveState = this.state._meta.activeState.stateID;
+    this.state._meta.states[id].saveVariant = this.state._meta.activeState.variantID;
+    this.state._meta.states[id].savePlayers = players;
+    this.state._meta.states[id].saveDate = +new Date();
+
+    delete this.state._meta.states[id].publicLibrary;
+    delete this.state._meta.states[id].publicLibraryCategory;
+    delete this.state._meta.states[id].starred;
+    delete this.state._meta.states[id].link;
+
+    this.addState(id, 'room', null, null, id);
+  }
+
   sendMetaUpdate() {
     this.broadcast('meta', { meta: this.state._meta, activePlayers: this.players.map(p=>p.name) });
   }

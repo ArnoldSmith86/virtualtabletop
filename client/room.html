@@ -265,7 +265,10 @@
             <h4>Similar Name</h4>
           </div>
         </template>
-        <button icon="add" id="addState">Add game</button>
+        <div class="buttons">
+          <button icon="save" id="saveState">Save active game</button>
+          <button icon="add" id="addState">Add game</button>
+        </div>
         <p id="emptyLibrary">Your personal game library is currently empty.<br>Use the stars below to pin public library games, use the "Add game" button above or drag VTT files here.</p>
         <!--<button class="prettyButton gameMenu download">Download all</button>-->
       </div>
@@ -276,6 +279,14 @@
       <button class="prettyButton gameMenu create">Save room state</button>
       <button class="prettyButton gameMenu link">Enter link</button>
       <button class="prettyButton gameMenu upload">Upload files</button>
+    </div>
+
+    <div id="stateSaveOverlay" class="overlay">
+      <h1>Save game</h1>
+      <p>This creates a save state of the currently active game so that you can start a different game and come back to this one later.</p>
+      <p>Active players: <input></p>
+      <button icon="save">Save game</button>
+      <button icon="undo">Cancel</button>
     </div>
 
     <div id="variantAddOverlay" class="overlay">

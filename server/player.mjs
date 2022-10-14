@@ -41,6 +41,8 @@ export default class Player {
         this.room.removeState(this, args);
       if(func == 'rename')
         this.room.renamePlayer(this, args.oldName, args.newName);
+      if(func == 'saveState')
+        this.room.saveState(this, args);
       if(func == 'setRedirect')
         this.room.setRedirect(this, args);
       if(func == 'toggleStateStar')
