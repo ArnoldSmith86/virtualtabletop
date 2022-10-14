@@ -6,7 +6,6 @@ class Card extends Widget {
       width: 103,
       height: 160,
       typeClasses: 'widget card',
-      clickable: true,
 
       faceCycle: 'forward',
       activeFace: 0,
@@ -38,12 +37,16 @@ class Card extends Widget {
           this.domElement.appendChild(child);
     }
 
-    if(delta.cardType !== undefined && this.deck) {
-      const applyForCardType = {};
-      for(const [ k, v ] of Object.entries(this.deck.get('cardTypes')[this.get('cardType')] || {}))
+    if((delta.cardType !== undefined || delta.deck !== undefined) && this.deck) {
+      const defaultsFromDeck = {}
+      const applyDefaultsFromDeck = {};
+      if(delta.deck !== undefined)
+        Object.assign(defaultsFromDeck, this.deck.get('cardDefaults') || {});
+      Object.assign(defaultsFromDeck, this.deck.get('cardTypes')[this.get('cardType')] || {});
+      for(const [ k, v ] of Object.entries(defaultsFromDeck))
         if(this.state[k] === undefined)
-          applyForCardType[k] = v;
-      this.applyDeltaToDOM(applyForCardType);
+          applyDefaultsFromDeck[k] = v;
+      this.applyDeltaToDOM(applyDefaultsFromDeck);
     }
 
     if(delta.deck !== undefined || delta.activeFace !== undefined) {
@@ -98,7 +101,9 @@ class Card extends Widget {
 
       faceDiv.classList.add('cardFace');
       if(face.css !== undefined)
-        faceDiv.style.cssText = face.css;
+        faceDiv.style.cssText = mapAssetURLs(this.cssAsText(face.css,true));
+      if(face.classes !== undefined)
+        faceDiv.classList.add(face.classes);
       faceDiv.style.border = face.border ? face.border + 'px black solid' : 'none';
       faceDiv.style.borderRadius = face.radius ? face.radius + 'px' : '0';
 
@@ -116,10 +121,12 @@ class Card extends Widget {
 
           const x = face.border ? object.x-face.border : object.x;
           const y = face.border ? object.y-face.border : object.y;
-          let css = object.css ? object.css + '; ' : '';
+          let css = object.css ? this.cssAsText(object.css,true) + '; ' : '';
           css += `left: ${x}px; top: ${y}px; width: ${object.width}px; height: ${object.height}px; font-size: ${object.fontSize}px; text-align: ${object.textAlign}`;
           css += object.rotation ? `; transform: rotate(${object.rotation}deg)` : '';
-          objectDiv.style.cssText = css;
+          objectDiv.style.cssText = mapAssetURLs(css);
+          if(object.classes)
+            objectDiv.classList.add(object.classes);
 
           if(object.type == 'image') {
             if(object.value) {
@@ -129,7 +136,7 @@ class Card extends Widget {
                   replaces[key] = this.get(replaces[key]);
                 object.value = getSVG(object.value, replaces, _=>this.applyDeltaToDOM({ deck:this.get('deck') }));
               }
-              objectDiv.style.backgroundImage = `url("${object.value}")`;
+              objectDiv.style.backgroundImage = mapAssetURLs(`url("${object.value}")`);
             }
             objectDiv.style.backgroundColor = object.color || 'white';
           } else {

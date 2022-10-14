@@ -12,7 +12,6 @@ class Pile extends Widget {
       height: 1,
       alignChildren: true,
       inheritChildZ: true,
-      clickable: true,
 
       text: null,
 
@@ -42,7 +41,7 @@ class Pile extends Widget {
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
     if(this.handle && delta.handleCSS !== undefined)
-      this.handle.style = this.get('handleCSS');
+      this.handle.style = mapAssetURLs(this.cssAsText(this.get('handleCSS'),true));
     if(this.handle && delta.text !== undefined)
       this.updateText();
     if(this.handle && (delta.width !== undefined || delta.height !== undefined || delta.handleSize !== undefined)) {
@@ -89,7 +88,8 @@ class Pile extends Widget {
 
 
 
-      $('#pileOverlay > .modal').innerHTML = `<div class="inputtitle"><label>${this.handle.textContent} cards</label></div><div class="inputtext"><label>TIP: Drag the handle with the number to drag the entire pile.</label></div>`;
+      const childCount = this.children().length;
+      $('#pileOverlay > .modal').innerHTML = `<div class="inputtitle"><label>${childCount} cards</label></div><div class="inputtext"><label>TIP: Drag the handle with the number to drag the entire pile.</label></div>`;
 
       const buttonBar1 = document.createElement('div');
       buttonBar1.className = 'button-bar';
@@ -126,8 +126,7 @@ class Pile extends Widget {
       shuffleButton.className = 'ui-button';
       shuffleButton.addEventListener('click', async e=>{
         batchStart();
-        for(const c of this.children())
-          await c.set('z', Math.floor(Math.random()*10000));
+        shuffleWidgets(this.children())
         showOverlay();
         batchEnd();
       });
@@ -142,7 +141,6 @@ class Pile extends Widget {
       formField(thisField, splitLabel, 'pileTitle')
       $('#pileOverlay > .modal').appendChild(splitLabel);
 
-      const childCount = this.children().length;
       const countDiv = document.createElement('div');
       countDiv.className = 'countInput';
 

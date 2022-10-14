@@ -1,6 +1,7 @@
 import fs from 'fs';
-import path from 'path';
 import JSZip from 'jszip';
+
+import Config from './config.mjs';
 
 const pieceColors = {
   default: '#000000',
@@ -29,8 +30,8 @@ export default async function convertPCIO(content) {
     if(filename.match(/^\/?userassets/) && zip.files[filename]._data && zip.files[filename]._data.uncompressedSize < 2097152) {
       const targetFile = '/assets/' + zip.files[filename]._data.crc32 + '_' + zip.files[filename]._data.uncompressedSize;
       nameMap['package://' + filename] = targetFile;
-      if(targetFile.match(/^\/assets\/[0-9_-]+$/) && !fs.existsSync(path.resolve() + '/save' + targetFile))
-        fs.writeFileSync(path.resolve() + '/save' + targetFile, await zip.files[filename].async('nodebuffer'));
+      if(targetFile.match(/^\/assets\/[0-9_-]+$/) && !fs.existsSync(Config.directory('assets') + targetFile.substr(7)))
+        fs.writeFileSync(Config.directory('assets') + targetFile.substr(7), await zip.files[filename].async('nodebuffer'));
     }
   }
 
@@ -103,7 +104,8 @@ export default async function convertPCIO(content) {
   for(const widget of widgets) {
     if(widget.type == 'card') {
       const index = widget.x + ',' + widget.y + ',' + (widget.parent || "") + ',' + (widget.owner || "");
-      cardsPerCoordinates[index] = (cardsPerCoordinates[index] || 0) + 1;
+      if(!widget.parent || !byID[widget.parent] || !byID[widget.parent].hideStackTab)
+        cardsPerCoordinates[index] = (cardsPerCoordinates[index] || 0) + 1;
     }
   }
 
@@ -205,6 +207,8 @@ export default async function convertPCIO(content) {
 
       if(widget.allowedDecks)
         w.dropTarget = widget.allowedDecks.map(d=>({deck:d}));
+      if(widget.hideStackTab)
+        w.preventPiles = true;
 
       if(pileOverlaps[w.id]) {
         w.x += 4;
@@ -311,7 +315,7 @@ export default async function convertPCIO(content) {
           width:     w.cardDefaults.width  || 103,
           height:    w.cardDefaults.height || 160,
           type:      'image',
-          color:     'white',
+          color:     widget.collectionType == 'pieces' ? 'transparent' : 'white',
           valueType: 'static',
           value:     ''
         });
@@ -738,7 +742,7 @@ export default async function convertPCIO(content) {
           c = {
             func:   'RECALL',
             holder: holders,
-            owned:  c.args.includeHands.value == 'hands'
+            owned:  c.args.includeHands && c.args.includeHands.value == 'hands' || false
           };
           if(c.holder.length == 1)
             c.holder = c.holder[0];
@@ -815,14 +819,14 @@ export default async function convertPCIO(content) {
         if(c.func == 'CHANGE_TIMER_TIME') {
           if(!c.args.timers)
             continue;
-          if ((c.args.changeType && c.args.changeType.value)=="add"){
-            var mode = "inc"
-          } else if ((c.args.changeType && c.args.changeType.value)=="subtract"){
-            var mode = "dec"
-          } else if ((c.args.changeType && c.args.changeType.value)=="set"){
-            var mode = "set"
+          if ((c.args.changeType && c.args.changeType.value)=='add'){
+            var mode = 'inc'
+          } else if ((c.args.changeType && c.args.changeType.value)=='subtract'){
+            var mode = 'dec'
+          } else if ((c.args.changeType && c.args.changeType.value)=='set'){
+            var mode = 'set'
           } else {
-            var mode = "reset"
+            var mode = 'reset'
           };
           c = {
             func: 'TIMER',
@@ -852,6 +856,15 @@ export default async function convertPCIO(content) {
             delete c.mode;
           if(c.value === 0)
             delete c.value;
+        }
+        if(c.func == 'SPIN_SPINNER') {
+          if(!c.args.spinners)
+            continue;
+          c = {
+            note:       'Spin spinners',
+            func:       'CLICK',
+            collection: c.args.spinners.value
+          };
         }
         w.clickRoutine.push(c);
       }

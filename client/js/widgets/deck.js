@@ -6,6 +6,7 @@ class Deck extends Widget {
       width: 86,
       height: 86,
       typeClasses: 'widget deck',
+      clickable: false,
       cardDefaults: {},
       cardTypes: {},
       faceTemplates: [],
