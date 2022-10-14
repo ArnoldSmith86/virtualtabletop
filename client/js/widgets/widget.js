@@ -237,6 +237,12 @@ export class Widget extends StateManaged {
     this.globalUpdateListenersUnregister();
   }
 
+  applyRemoveRecursive() {
+    for(const child of Widget.prototype.children.call(this)) // use Widget.children even for holders so it doesn't filter
+      child.applyRemoveRecursive();
+    this.applyRemove();
+  }
+
   applyZ(force) {
     const thisInheritChildZ = this.get('inheritChildZ');
     if(force || thisInheritChildZ) {
