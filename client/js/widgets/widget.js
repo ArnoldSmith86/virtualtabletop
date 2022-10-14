@@ -1664,6 +1664,15 @@ export class Widget extends StateManaged {
     }
   }
 
+  inheritedSeatVisibility() {
+    if (this.get('childrenInheritVisibleForSeat'))
+      return this.get('onlyVisibleForSeat');
+    const thisParent = this.get('parent');
+    if (thisParent)
+      return widgets.get(thisParent).inheritedSeatVisibility();
+    return null;
+  }
+
   isValidID(id, problems) {
     if(Array.isArray(id))
       return !id.map(i=>this.isValidID(i, problems)).filter(r=>r!==true).length;
@@ -2091,15 +2100,6 @@ export class Widget extends StateManaged {
 
   validDropTargets() {
     return getValidDropTargets(this);
-  }
-
-  inheritedSeatVisibility() {
-    if (this.get('childrenInheritVisibleForSeat'))
-      return this.get('onlyVisibleForSeat');
-    const thisParent = this.get('parent');
-    if (thisParent)
-      return widgets.get(thisParent).inheritedSeatVisibility();
-    return null;
   }
 
 }
