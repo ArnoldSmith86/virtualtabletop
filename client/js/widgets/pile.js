@@ -23,6 +23,8 @@ class Pile extends Widget {
 
     this.domElement.appendChild(this.handle);
     this.childCount = 0;
+    this.visibleChildren = new Set();
+    this.visibleChildLimit = 5;
     this.updateText();
   }
 
@@ -30,12 +32,21 @@ class Pile extends Widget {
     super.applyChildAdd(child);
     ++this.childCount;
     this.updateText();
+    this.updateVisibleChildren();
+  }
+
+  applyChildZ(child) {
+    super.applyChildZ();
+    this.updateVisibleChildren();
   }
 
   applyChildRemove(child) {
     super.applyChildRemove(child);
     --this.childCount;
     this.updateText();
+    if (this.visibleChildren.has(child)) {
+      this.updateVisibleChildren();
+    }
   }
 
   applyDeltaToDOM(delta) {
@@ -196,6 +207,17 @@ class Pile extends Widget {
   updateText() {
     const text = this.get('text');
     this.handle.textContent = text === null ? this.childCount : text;
+  }
+
+  updateVisibleChildren() {
+    for (let child of this.visibleChildren) {
+      child.domElement.classList.remove('visible-in-pile');
+    }
+    this.visibleChildren.clear();
+    for(const child of this.children().slice(0, this.visibleChildLimit)) {
+      this.visibleChildren.add(child);
+      child.domElement.classList.add('visible-in-pile');
+    }
   }
 
   validDropTargets() {

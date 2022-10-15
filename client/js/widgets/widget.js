@@ -272,7 +272,7 @@ export class Widget extends StateManaged {
   }
 
   children() {
-    return this.childArray.sort((a,b)=>b.get('z')-a.get('z'));
+    return this.childArray.sort((a,b)=>b.z-a.z);
   }
 
   childrenOwned() {

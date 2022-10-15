@@ -2,6 +2,10 @@
   will-change: transform;
 }
 
+.pile > :not(.visible-in-pile):not(.handle) {
+  display: none;
+}
+
 .pile .handle {
   position: absolute;
   left: var(--phPosition);
