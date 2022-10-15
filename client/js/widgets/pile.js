@@ -23,7 +23,7 @@ class Pile extends Widget {
 
     this.domElement.appendChild(this.handle);
     this.childCount = 0;
-    this.visibleChildren = new Set();
+    this.visibleChildrenElements = new Set();
     this.visibleChildLimit = 5;
     this.updateText();
   }
@@ -44,9 +44,7 @@ class Pile extends Widget {
     super.applyChildRemove(child);
     --this.childCount;
     this.updateText();
-    if (this.visibleChildren.has(child)) {
-      this.updateVisibleChildren();
-    }
+    this.updateVisibleChildren();
   }
 
   applyDeltaToDOM(delta) {
@@ -210,13 +208,19 @@ class Pile extends Widget {
   }
 
   updateVisibleChildren() {
-    for (let child of this.visibleChildren) {
-      child.domElement.classList.remove('visible-in-pile');
+    for (let child of this.visibleChildrenElements) {
+      child.classList.remove('visible-in-pile');
     }
-    this.visibleChildren.clear();
-    for(const child of this.childArray.reverse().sort((a, b)=>b.z-a.z).slice(0, this.visibleChildLimit)) {
-      this.visibleChildren.add(child);
-      child.domElement.classList.add('visible-in-pile');
+    this.visibleChildrenElements.clear();
+    let z = function (e) {
+      let zIndex = getComputedStyle(e).zIndex;
+      if (zIndex == 'auto')
+        return 0;
+      return zIndex;
+    }
+    for(const child of [].slice.apply(this.domElement.children).filter(e => e != this.handle).reverse().sort((a, b)=>z(b)-z(a)).slice(0, this.visibleChildLimit)) {
+      this.visibleChildrenElements.add(child);
+      child.classList.add('visible-in-pile');
     }
   }
 
