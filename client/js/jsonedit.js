@@ -283,7 +283,7 @@ const jeCommands = [
     name: 'convert to nested object',
     context: '^.* ↦ css',
     show:  function() {
-      if(typeof jeStateNow.css != "object")
+      if(typeof jeStateNow.css != "object" || jeStateNow.css === null)
         return false;
       for(const property in jeStateNow.css)
         if(typeof jeStateNow.css[property] == "object")
@@ -925,7 +925,7 @@ function jeAddCSScommands() {
         name: cssSection,
         context: `^${type} ↦ css`,
         show:  function() {
-          if(typeof jeStateNow.css != "object" || JSON.stringify(jeStateNow.css) == '{}')
+          if(typeof jeStateNow.css != "object" || jeStateNow.css === null || JSON.stringify(jeStateNow.css) == '{}')
             return false;
           for(const property in jeStateNow.css)
             if(typeof jeStateNow.css[property] != "object")
@@ -944,7 +944,7 @@ function jeAddCSScommands() {
           context: `^${type} ↦ css ↦ [^↦]*`,
           show: function() {
             const contents = jeStateNow.css[cssSection];
-            return typeof contents == "object" && jeContext.includes(cssSection) && !(cssProperty in contents);
+            return typeof contents == "object" && contents !== null && jeContext.includes(cssSection) && !(cssProperty in contents);
           },
           call: async function() {
             jeStateNow.css[cssSection][cssProperty] = '###SELECT ME###';
@@ -964,7 +964,7 @@ function jeAddCSScommands() {
       show: function() { // Need to make sure it is a simple object (contents are "key": "string" pairs)
         const cssKind = jeContext.join(' ↦ ').match(this.context)[1];
         const contents = jeStateNow[cssKind];
-        if(typeof contents != "object" || cssProperty in contents) // simple object, property already there
+        if(typeof contents != "object" || contents === null || cssProperty in contents) // simple object, property already there
           return false;
         for(const property in jeStateNow[cssKind]) // Check to see if any sub-objects
           if(typeof jeStateNow[cssKind][property] == "object")
@@ -1404,6 +1404,7 @@ function jeHighlightWidgets() {
 }
 
 function jeUpdateMulti(dontFocus) {
+  jeCenterSelection();
   const keys = [ 'x', 'y', 'width', 'height', 'parent', 'z', 'layer' ];
   for(const usedKey in jeStateNow || [])
     if(usedKey != 'widgets' && keys.indexOf(usedKey) == -1)
