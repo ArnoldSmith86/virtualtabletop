@@ -208,15 +208,13 @@ class Pile extends Widget {
   }
 
   updateVisibleChildren() {
-    for (let child of this.visibleChildrenElements) {
+    for (const child of this.visibleChildrenElements) {
       child.classList.remove('visible-in-pile');
     }
     this.visibleChildrenElements.clear();
     let z = function (e) {
-      let zIndex = getComputedStyle(e).zIndex;
-      if (zIndex == 'auto')
-        return 0;
-      return zIndex;
+      // 'auto' should sort as 0.
+      return parseInt(getComputedStyle(e).zIndex) || 0;
     }
     for(const child of [].slice.apply(this.domElement.children).filter(e => e != this.handle).reverse().sort((a, b)=>z(b)-z(a)).slice(0, this.visibleChildLimit)) {
       this.visibleChildrenElements.add(child);
