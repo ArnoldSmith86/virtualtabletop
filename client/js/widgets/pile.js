@@ -214,7 +214,7 @@ class Pile extends Widget {
       child.domElement.classList.remove('visible-in-pile');
     }
     this.visibleChildren.clear();
-    for(const child of this.childArray.sort((a, b)=>b.z-a.z).slice(0, this.visibleChildLimit)) {
+    for(const child of this.childArray.reverse().sort((a, b)=>b.z-a.z).slice(0, this.visibleChildLimit)) {
       this.visibleChildren.add(child);
       child.domElement.classList.add('visible-in-pile');
     }
