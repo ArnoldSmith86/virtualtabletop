@@ -119,7 +119,7 @@ export class Widget extends StateManaged {
   }
 
   applyChildZ(child) {
-    if(this.get('inheritChildZ') && child.z > this.z)
+    if(this.get('inheritChildZ'))
       this.applyZ();
   }
 
