@@ -288,34 +288,21 @@ export class Widget extends StateManaged {
       className += ' foreign';
 
     let onlyVisibleForSeat = this.get('onlyVisibleForSeat');
-    if (onlyVisibleForSeat)
-      onlyVisibleForSeat = new Set(asArray(onlyVisibleForSeat));
 
-    // If the element is currently hovering over a holder which resricts visible seats,
-    // intersect the visible seats.
+    // If the element is currently being dragged we may inherit restricted seat visibility.
     const hoverTarget = this.get('hoverTarget') ? widgets.get(this.get('hoverTarget')) : null;
-    let restrictVisibleSeats = hoverTarget ? hoverTarget.inheritedSeatVisibility() : null;
-    if (restrictVisibleSeats) {
-      let visibleSeats = new Set();
-      for (const seatID of asArray(restrictVisibleSeats)) {
-        if (onlyVisibleForSeat && !onlyVisibleForSeat.has(seatID))
-          continue;
-        visibleSeats.add(seatID);
-      }
-      onlyVisibleForSeat = visibleSeats;
-    }
+    if (hoverTarget)
+      onlyVisibleForSeat = hoverTarget.inheritSeatVisibility(onlyVisibleForSeat);
 
-    if (onlyVisibleForSeat) {
-      let invisible = true;
-      for(const seatID of onlyVisibleForSeat) {
-        if(widgets.has(seatID) && widgets.get(seatID).get('player') == playerName) {
-          invisible = false;
-          break;
-        }
+    let invisible = onlyVisibleForSeat !== null;
+    for(const seatID of asArray(onlyVisibleForSeat) || []) {
+      if(widgets.has(seatID) && widgets.get(seatID).get('player') == playerName) {
+        invisible = false;
+        break;
       }
-      if(invisible)
-        className += ' foreign';
     }
+    if(invisible)
+      className += ' foreign';
 
     const linkedToSeat = this.get('linkedToSeat');
     if(linkedToSeat && widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == playerName).length)
@@ -1664,13 +1651,23 @@ export class Widget extends StateManaged {
     }
   }
 
-  inheritedSeatVisibility() {
-    if (this.get('childrenInheritVisibleForSeat'))
-      return this.get('onlyVisibleForSeat');
+  inheritSeatVisibility(seatVisibility) {
+    if (this.get('childrenInheritVisibleForSeat')) {
+      const widgetSeatVisibility = this.get('onlyVisibleForSeat');
+      if (widgetSeatVisibility) {
+        // Filter seatVisibility by current widgets seats.
+        if (!seatVisibility) {
+          seatVisibility = widgetSeatVisibility;
+        } else {
+          let filterTo = new Set(asArray(widgetSeatVisibility));
+          seatVisibility = asArray(seatVisibility).filter((seatId) => { return filterTo.has(seatId); });
+        }
+      }
+    }
     const thisParent = this.get('parent');
     if (thisParent)
-      return widgets.get(thisParent).inheritedSeatVisibility();
-    return null;
+      seatVisibility = widgets.get(thisParent).inheritSeatVisibility(seatVisibility);
+    return seatVisibility;
   }
 
   isValidID(id, problems) {
