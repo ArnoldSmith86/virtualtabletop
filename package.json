@@ -13,12 +13,12 @@
     "test": "node --experimental-vm-modules node_modules/.bin/jest --coverage",
     "test-debug": "node --experimental-vm-modules --inspect-brk=9239 node_modules/.bin/jest",
     "test-cont": "nodemon -e js,mjs,css,html --ignore save/ --ignore coverage/ --experimental-vm-modules node_modules/.bin/jest",
-    "testcafe": "testcafe chrome tests/testcafe/tests.js",
-    "testcafe-headless": "testcafe chrome:headless tests/testcafe/tests.js",
-    "testcafe-chromium": "testcafe chromium tests/testcafe/tests.js",
-    "testcafe-chromium-headless": "testcafe chromium:headless tests/testcafe/tests.js",
-    "testcafe-firefox": "testcafe firefox tests/testcafe/tests.js",
-    "testcafe-firefox-headless": "testcafe firefox:headless tests/testcafe/tests.js",
+    "testcafe": "testcafe chrome tests/testcafe",
+    "testcafe-headless": "testcafe chrome:headless",
+    "testcafe-chromium": "testcafe chromium",
+    "testcafe-chromium-headless": "testcafe chromium:headless",
+    "testcafe-firefox": "testcafe firefox",
+    "testcafe-firefox-headless": "testcafe firefox:headless",
     "testcafe-gitpod": "bash tests/testcafe/gitpod.sh"
   },
   "repository": {
