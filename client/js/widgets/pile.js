@@ -56,8 +56,8 @@ class Pile extends Widget {
     }
   }
 
-  applyChildZ(child) {
-    super.applyChildZ();
+  applyChildZ(child, previousZ) {
+    super.applyChildZ(child, previousZ);
     if (this.visibleChildren && this.visibleChildren.has(child))
       this.updateVisibleChildren();
   }
