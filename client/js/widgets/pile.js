@@ -1,3 +1,18 @@
+// Compare the relative z order of two widgets with the same parent.
+function compareChildStackOrder(a, b) {
+  if (a == b)
+    return 0;
+  const aZ = a.z || 0;
+  const bZ = b.z || 0;
+  if (aZ != bZ)
+    return bZ - aZ;
+  let domOrder = a.domElement.compareDocumentPosition(b.domElement);
+  if (domOrder == 2) // Node.DOCUMENT_POSITION_PRECEDING (b preceeds a)
+    return -1;
+  else // Node.DOCUMENT_POSITION_FOLLOWING (4) (b follows a)
+    return 1;
+}
+
 class Pile extends Widget {
   constructor(id) {
     super(id);
@@ -23,7 +38,8 @@ class Pile extends Widget {
 
     this.domElement.appendChild(this.handle);
     this.childCount = 0;
-    this.visibleChildrenElements = new Set();
+    this.visibleChildren = new Set();
+    this.lowestVisibleChild = null;
     this.visibleChildLimit = 5;
     this.updateText();
   }
@@ -32,19 +48,22 @@ class Pile extends Widget {
     super.applyChildAdd(child);
     ++this.childCount;
     this.updateText();
-    this.updateVisibleChildren();
+    if(this.visibleChildren.size < this.visibleChildLimit || compareChildStackOrder(this.lowestVisibleChild, child) >= 0)
+      this.updateVisibleChildren();
   }
 
   applyChildZ(child) {
     super.applyChildZ();
-    this.updateVisibleChildren();
+    if (this.visibleChildren.has(child))
+      this.updateVisibleChildren();
   }
 
   applyChildRemove(child) {
     super.applyChildRemove(child);
     --this.childCount;
     this.updateText();
-    this.updateVisibleChildren();
+    if (this.visibleChildren.has(child))
+      this.updateVisibleChildren();
   }
 
   applyDeltaToDOM(delta) {
@@ -79,6 +98,13 @@ class Pile extends Widget {
         }
       }
     }
+  }
+
+  childClasses(child) {
+    let classes = super.childClasses(child);
+    if (this.visibleChildren.has(child))
+      classes += ' visible-in-pile';
+    return classes;
   }
 
   async click(mode='respect') {
@@ -208,17 +234,20 @@ class Pile extends Widget {
   }
 
   updateVisibleChildren() {
-    for (const child of this.visibleChildrenElements) {
-      child.classList.remove('visible-in-pile');
+    let modified = new Set(this.visibleChildren);
+    this.visibleChildren.clear();
+    this.lowestVisibleChild = null;
+    for(const child of this.childArray.sort(compareChildStackOrder).slice(0, this.visibleChildLimit)) {
+      this.visibleChildren.add(child);
+      this.lowestVisibleChild = child;
+      // If the child was previously visible, its state has not been modified.
+      if (modified.has(child))
+        modified.delete(child);
+      else
+        modified.add(child);
     }
-    this.visibleChildrenElements.clear();
-    let z = function (e) {
-      // 'auto' should sort as 0.
-      return parseInt(getComputedStyle(e).zIndex) || 0;
-    }
-    for(const child of [].slice.apply(this.domElement.children).filter(e => e != this.handle).reverse().sort((a, b)=>z(b)-z(a)).slice(0, this.visibleChildLimit)) {
-      this.visibleChildrenElements.add(child);
-      child.classList.add('visible-in-pile');
+    for (const child of modified) {
+      child.updateClasses();
     }
   }
 

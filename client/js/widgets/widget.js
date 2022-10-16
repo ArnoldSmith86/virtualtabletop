@@ -126,7 +126,7 @@ export class Widget extends StateManaged {
   applyCSS(delta) {
     for(const property of this.classesProperties()) {
       if(delta[property] !== undefined) {
-        this.domElement.className = this.classes();
+        this.updateClasses();
         break;
       }
     }
@@ -290,8 +290,14 @@ export class Widget extends StateManaged {
     }
   }
 
+  childClasses(child) {
+    return '';
+  }
+
   classes() {
     let className = this.get('typeClasses') + ' ' + this.get('classes');
+    if(this.get('parent') && widgets.has(this.get('parent')))
+      className += ' ' + widgets.get(this.get('parent')).childClasses(this);
 
     if(Array.isArray(this.get('owner')) && this.get('owner').indexOf(playerName) == -1)
       className += ' foreign';
@@ -2008,8 +2014,12 @@ export class Widget extends StateManaged {
     return true;
   }
 
-  updateOwner() {
+  updateClasses() {
     this.domElement.className = this.classes();
+  }
+
+  updateOwner() {
+    this.updateClasses();
   }
 
   async updatePiles() {
