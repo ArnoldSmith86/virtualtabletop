@@ -27,7 +27,7 @@ async function addState(e, type, src, id) {
           assets[zip.files[filename]._data.crc32 + '_' + zip.files[filename]._data.uncompressedSize] = filename;
 
       status('Checking assets...');
-      const result = await fetch('/assetcheck', {
+      const result = await fetch('assetcheck', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(Object.keys(assets))
@@ -61,9 +61,9 @@ async function addState(e, type, src, id) {
     return;
   }
 
-  let url = `/addState/${roomID}/${id}/${type}/${src && src.name && encodeURIComponent(src.name)}/`;
+  let url = `addState/${roomID}/${id}/${type}/${src && src.name && encodeURIComponent(src.name)}/`;
   waitingForStateCreation = id;
-  if(e && (e.target.parentNode == $('#addVariant') || e.target.className == 'update')) {
+  if(e && (e.target.parentNode.parentNode == $('#addVariant') || e.target.classList.contains('update'))) {
     waitingForStateCreation = $('#stateEditOverlay').dataset.id;
     url += $('#stateEditOverlay').dataset.id;
   }
@@ -94,7 +94,7 @@ function addStateFromLibrary(e) {
 
 function downloadState(variantID) {
   const stateID = $('#stateEditOverlay').dataset.id;
-  let url = `/dl/${roomID}`
+  let url = `dl/${roomID}`
   if(variantID !== null)
     url += `/${stateID}`;
   if(variantID)
@@ -127,7 +127,14 @@ function editState() {
   showOverlay('statesOverlay');
 }
 
-function fillStatesList(states, activePlayers) {
+function fillStatesList(states, returnServer, activePlayers) {
+  if(returnServer) {
+    $('#statesButton').dataset.overlay = 'returnOverlay';
+    overlayShownForEmptyRoom = true;
+    return;
+  }
+  $('#statesButton').dataset.overlay = 'statesOverlay';
+
   const addDiv = $('#addState');
   removeFromDOM(addDiv);
   removeFromDOM('#statesList > div');
@@ -141,7 +148,7 @@ function fillStatesList(states, activePlayers) {
 
     const entry = domByTemplate('template-stateslist-entry');
     entry.className = state.image ? 'roomState' : 'roomState noImage';
-    $('img', entry).src = state.image;
+    $('img', entry).src = state.image.replace(/^\//, '');
     $('.bgg', entry).textContent = `${state.name} (${state.year})`;
     $('.bgg', entry).href = state.bgg;
     $('.rules', entry).href = state.rules;
@@ -247,14 +254,14 @@ async function pickStateFromLibrary(changeOverlay) {
       if(this.dataset.url.match(/^http/))
         resolve(this.dataset.url);
       else
-        resolve(location.origin + '/library/' + this.dataset.url);
+        resolve(location.href.replace(/[^\/]*$/, 'library/') + this.dataset.url);
     });
   });
 }
 
 async function populateLibrary() {
   if(!$('#libraryList.populated')) {
-    const library = await fetch('/library/library.json');
+    const library = await fetch('library/library.json');
     var lEntry = null;
     // add sections and entries
     (await library.json()).forEach((entry, idx) => {
@@ -306,14 +313,14 @@ async function shareLink() {
   let url = $('#stateLink').value;
   if(!url) {
     const name = $('#stateName').value.replace(/[^A-Za-z0-9.-]/g, '_');
-    url = await fetch(`/share/${roomID}/${$('#stateEditOverlay').dataset.id}`);
+    url = await fetch(`share/${roomID}/${$('#stateEditOverlay').dataset.id}`);
     url = `${location.origin}${await url.text()}/${name}.vtt`;
   }
   $('#sharedLink').value = url;
 }
 
 onLoad(function() {
-  onMessage('meta', args=>fillStatesList(args.meta.states, args.activePlayers));
+  onMessage('meta', args=>fillStatesList(args.meta.states, args.meta.returnServer, args.activePlayers));
 
   on('#addState .create,  #addVariant .create, #emptyRoom .create',  'click', e=>addState(e, 'state'));
   on('#addState .library, #addVariant .library', 'click', e=>addStateFromLibrary(e));

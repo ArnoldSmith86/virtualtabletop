@@ -9,7 +9,6 @@ export class Timer extends Widget {
       typeClasses: 'widget timer',
       layer: -1,
       movable: false,
-      clickable: true,
 
       milliseconds: 0,
       precision: 1000,
@@ -67,8 +66,8 @@ export class Timer extends Widget {
     return p;
   }
 
-  async click() {
-    if(!await super.click())
+  async click(mode='respect') {
+    if(!await super.click(mode))
       await this.setPaused();
   }
 
@@ -77,7 +76,7 @@ export class Timer extends Widget {
   }
 
   getImage() {
-    if(!Object.keys(this.get('svgReplaces')).length)
+    if(!Object.keys(this.get('svgReplaces') || {}).length)
       return this.get('image');
 
     const replaces = {};
