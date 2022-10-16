@@ -68,6 +68,8 @@ class Pile extends Widget {
     this.updateText();
     if (this.visibleChildren && this.visibleChildren.has(child))
       this.updateVisibleChildren();
+    else if (this.childCount == 0)
+      this.visibleChildren = new Set();
   }
 
   applyDeltaToDOM(delta) {
