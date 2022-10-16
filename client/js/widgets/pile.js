@@ -2,10 +2,8 @@
 function compareChildStackOrder(a, b) {
   if (a == b)
     return 0;
-  const aZ = a.z || 0;
-  const bZ = b.z || 0;
-  if (aZ != bZ)
-    return bZ - aZ;
+  if (a.z != b.z)
+    return b.z - a.z;
   let domOrder = a.domElement.compareDocumentPosition(b.domElement);
   if (domOrder == 2) // Node.DOCUMENT_POSITION_PRECEDING (b preceeds a)
     return -1;
