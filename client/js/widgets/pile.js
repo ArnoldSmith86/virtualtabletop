@@ -107,12 +107,9 @@ class Pile extends Widget {
   canOptimizeVisibility(child) {
     // If a new child doesn't match all of the other children in the pile,
     // we will stop hiding deeper children.
-    return this.lowestVisibleChild == null || (
-        child.get('x') == this.lowestVisibleChild.get('x') &&
-        child.get('y') == this.lowestVisibleChild.get('y') &&
-        child.get('width') == this.lowestVisibleChild.get('width') &&
-        child.get('height') == this.lowestVisibleChild.get('height') &&
-        child.get('rotation') == this.lowestVisibleChild.get('rotation'));
+    return this.lowestVisibleChild == null ||
+        ['x', 'y', 'width', 'height', 'rotation', 'scale', 'borderRadius'].reduce(
+            (matches, prop) => matches && child.get(prop) == this.lowestVisibleChild.get(prop), true);
   }
 
   childClasses(child) {
