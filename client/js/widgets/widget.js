@@ -118,8 +118,8 @@ export class Widget extends StateManaged {
     this.applyZ();
   }
 
-  applyChildZ(child) {
-    if(this.get('inheritChildZ'))
+  applyChildZ(child, previousZ) {
+    if(this.get('inheritChildZ') && this.z == previousZ || child.z > this.z)
       this.applyZ();
   }
 
@@ -266,7 +266,7 @@ export class Widget extends StateManaged {
         this.z = Math.max(this.z, child.z);
     if (this.z != pZ) {
       if(this.get('parent') && widgets.has(this.get('parent')))
-        widgets.get(this.get('parent')).applyChildZ(this);
+        widgets.get(this.get('parent')).applyChildZ(this, pZ);
     }
     return this.z;
   }
