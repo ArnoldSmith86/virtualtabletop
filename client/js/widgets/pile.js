@@ -48,13 +48,17 @@ class Pile extends Widget {
     super.applyChildAdd(child);
     ++this.childCount;
     this.updateText();
-    if(this.visibleChildren.size < this.visibleChildLimit || compareChildStackOrder(this.lowestVisibleChild, child) >= 0)
-      this.updateVisibleChildren();
+    if(this.visibleChildren) {
+      if (!this.canOptimizeVisibility(child))
+        this.updateAllChildrenVisible();
+      else if(this.visibleChildren.size < this.visibleChildLimit || compareChildStackOrder(this.lowestVisibleChild, child) >= 0)
+        this.updateVisibleChildren();
+    }
   }
 
   applyChildZ(child) {
     super.applyChildZ();
-    if (this.visibleChildren.has(child))
+    if (this.visibleChildren && this.visibleChildren.has(child))
       this.updateVisibleChildren();
   }
 
@@ -62,7 +66,7 @@ class Pile extends Widget {
     super.applyChildRemove(child);
     --this.childCount;
     this.updateText();
-    if (this.visibleChildren.has(child))
+    if (this.visibleChildren && this.visibleChildren.has(child))
       this.updateVisibleChildren();
   }
 
@@ -100,10 +104,28 @@ class Pile extends Widget {
     }
   }
 
+  canOptimizeVisibility(child) {
+    // If a new child doesn't match all of the other children in the pile,
+    // we will stop hiding deeper children.
+    return this.lowestVisibleChild == null || (
+        child.get('x') == this.lowestVisibleChild.get('x') &&
+        child.get('y') == this.lowestVisibleChild.get('y') &&
+        child.get('width') == this.lowestVisibleChild.get('width') &&
+        child.get('height') == this.lowestVisibleChild.get('height') &&
+        child.get('rotation') == this.lowestVisibleChild.get('rotation'));
+  }
+
   childClasses(child) {
     let classes = super.childClasses(child);
-    if (this.visibleChildren.has(child))
+    if (this.visibleChildren && this.visibleChildren.has(child))
       classes += ' visible-in-pile';
+    return classes;
+  }
+
+  classes() {
+    let classes = super.classes();
+    if (this.visibleChildren)
+      classes += ' optimize-visibility';
     return classes;
   }
 
@@ -233,9 +255,19 @@ class Pile extends Widget {
     this.handle.textContent = text === null ? this.childCount : text;
   }
 
+  updateAllChildrenVisible() {
+    let modified = this.visibleChildren;
+    this.visibleChildren = null;
+    this.lowestVisibleChild = null;
+    this.updateClasses();
+    for (const child of modified) {
+      child.updateClasses();
+    }
+  }
+
   updateVisibleChildren() {
-    let modified = new Set(this.visibleChildren);
-    this.visibleChildren.clear();
+    let modified = this.visibleChildren;
+    this.visibleChildren = new Set();
     this.lowestVisibleChild = null;
     for(const child of this.childArray.sort(compareChildStackOrder).slice(0, this.visibleChildLimit)) {
       this.visibleChildren.add(child);

@@ -2,7 +2,7 @@
   will-change: transform;
 }
 
-.pile > :not(.visible-in-pile):not(.handle) {
+.pile.optimize-visibility > :not(.visible-in-pile):not(.handle) {
   display: none;
 }
 
