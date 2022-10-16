@@ -5,9 +5,9 @@ function compareChildStackOrder(a, b) {
   if (a.z != b.z)
     return b.z - a.z;
   let domOrder = a.domElement.compareDocumentPosition(b.domElement);
-  if (domOrder == 2) // Node.DOCUMENT_POSITION_PRECEDING (b preceeds a)
+  if (domOrder == Node.DOCUMENT_POSITION_PRECEDING) // (b preceeds a)
     return -1;
-  else // Node.DOCUMENT_POSITION_FOLLOWING (4) (b follows a)
+  else // Node.DOCUMENT_POSITION_FOLLOWING (b follows a)
     return 1;
 }
 
