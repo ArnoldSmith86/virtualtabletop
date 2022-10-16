@@ -1,7 +1,7 @@
 import { Selector, ClientFunction } from 'testcafe';
 
 import { escapeID } from '../../client/js/domhelpers.js';
-import { compareState, prepareClient, setName, setupTestEnvironment } from './util.js';
+import { compareState, prepareClient, setName, setupTestEnvironment } from './test-util.js';
 
 setupTestEnvironment();
 

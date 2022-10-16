@@ -6,7 +6,7 @@ import crypto from 'crypto';
 import { diffString, diff } from 'json-diff';
 
 const referenceDir = path.resolve() + '/save/testcafe-references';
-let server;
+let server = null;
 
 export function setupTestEnvironment() {
   if (!server) {
