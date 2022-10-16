@@ -6,14 +6,12 @@ import crypto from 'crypto';
 import { diffString, diff } from 'json-diff';
 
 const referenceDir = path.resolve() + '/save/testcafe-references';
+fs.mkdirSync(referenceDir, { recursive: true });
 let server = null;
 
 export function setupTestEnvironment() {
-  if (!server) {
-    server = process.env.REFERENCE ? `http://212.47.248.129:${process.env.REFERENCE}` : 'http://localhost:8272';
-    fs.mkdirSync(referenceDir, { recursive: true });
-    fixture('virtualtabletop.io').page(`${server}/testcafe-testing`).beforeEach(_=>setRoomState()).after(_=>setRoomState());
-  }
+  server = process.env.REFERENCE ? `http://212.47.248.129:${process.env.REFERENCE}` : 'http://localhost:8272';
+  fixture('virtualtabletop.io').page(`${server}/testcafe-testing`).beforeEach(_=>setRoomState()).after(_=>setRoomState());
 }
 
 export function prepareClient() {
