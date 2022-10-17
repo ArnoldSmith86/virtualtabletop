@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "jest": "^29.2.0",
-    "jest-environment-jsdom": "^29.1.2",
+    "jest-environment-jsdom": "^29.2.0",
     "jest-environment-jsdom-global": "^4.0.0",
     "json-diff": "^0.9.0",
     "nodemon": "^2.0.20",
