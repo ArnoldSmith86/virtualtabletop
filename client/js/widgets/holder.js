@@ -120,7 +120,7 @@ class Holder extends Widget {
   async onPropertyChange(property, oldValue, newValue) {
     await super.onPropertyChange(property, oldValue, newValue);
     if(property == 'dropOffsetX' || property == 'dropOffsetY' || property == 'stackOffsetX' || property == 'stackOffsetY') {
-      this.updateAfterShuffle();
+      await this.updateAfterShuffle();
     }
   }
 
