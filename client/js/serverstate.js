@@ -5,8 +5,8 @@ let roomID = self.location.pathname.replace(/.*\//, '');
 
 export const widgets = new Map();
 
-const deferredCards = {};
-const deferredChildren = {};
+let deferredCards = {};
+let deferredChildren = {};
 
 let delta = { s: {} };
 let deltaChanged = false;
@@ -110,14 +110,14 @@ function receiveDelta(delta) {
     if(delta.s[widgetID] !== null && !widgets.has(widgetID))
       addWidget(delta.s[widgetID]);
 
-  for(const widgetID in delta.s) {
-    if(delta.s[widgetID] === null) {
-      if(widgets.has(widgetID))
-        removeWidget(widgetID);
-    } else {
+  for(const widgetID in delta.s)
+    if(delta.s[widgetID] !== null && widgets.has(widgetID)) // check widgets.has because addWidget above MIGHT have failed
       widgets.get(widgetID).applyDelta(delta.s[widgetID]);
-    }
-  }
+
+  for(const widgetID in delta.s)
+    if(delta.s[widgetID] === null && widgets.has(widgetID))
+      removeWidget(widgetID);
+
   if(typeof jeEnabled != 'undefined' && jeEnabled)
     jeApplyDelta(delta);
 }
@@ -130,8 +130,8 @@ function receiveDeltaFromServer(delta) {
 function receiveStateFromServer(args) {
   mouseTarget = null;
   deltaID = args._meta.deltaID;
-  for(const el of $a('[id^=w_]'))
-    widgets.get(unescapeID(el.id.slice(2))).applyRemove();
+  for(const widget of widgetFilter(w=>w.get('parent')===null))
+    widget.applyRemoveRecursive();
   widgets.clear();
   dropTargets.clear();
   maxZ = {};
@@ -140,15 +140,36 @@ function receiveStateFromServer(args) {
   let isEmpty = true;
   for(const widgetID in args) {
     if(widgetID != '_meta') {
+      if(widgetID != args[widgetID].id) {
+        console.error(`Could not add widget!`, widgetID, args[widgetID], 'ID does not equal key in state');
+        continue;
+      }
       addWidget(args[widgetID]);
       isEmpty = false;
     }
   }
+
+  if(Object.keys(deferredCards).length) {
+    for(const [ deckID, widgets ] of Object.entries(deferredCards))
+      for(const widget of widgets)
+        console.error(`Could not add card "${widget.id}" because its deck "${deckID}" does not exist!`);
+    deferredCards = {};
+  }
+  if(Object.keys(deferredChildren).length) {
+    for(const [ deckID, widgets ] of Object.entries(deferredChildren))
+      for(const widget of widgets)
+        console.error(`Could not add widget "${widget.id}" because its parent "${deckID}" does not exist!`);
+    deferredChildren = {};
+  }
+
   if(isEmpty && !overlayShownForEmptyRoom && !urlProperties.load && !urlProperties.askID) {
     showOverlay('statesOverlay');
     overlayShownForEmptyRoom = true;
   }
   toServer('confirm');
+
+  if(typeof jeEnabled != 'undefined' && jeEnabled)
+    jeApplyState(args);
 }
 
 function removeWidget(widgetID) {

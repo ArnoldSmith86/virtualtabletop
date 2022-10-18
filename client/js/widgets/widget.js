@@ -2,9 +2,9 @@ import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
-import { showOverlay } from '../main.js';
+import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
-import { center, distance, overlap, overlapScore, getOffset, applyTransformedOffset } from '../geometry.js';
+import { center, distance, overlap, getOffset, applyTransformedOffset } from '../geometry.js';
 
 const readOnlyProperties = new Set([
   '_absoluteRotation',
@@ -47,7 +47,7 @@ export class Widget extends StateManaged {
       css: '',
       movable: true,
       movableInEdit: true,
-      clickable: false,
+      clickable: true,
       clickSound: null,
 
       grid: [],
@@ -59,6 +59,7 @@ export class Widget extends StateManaged {
       fixedParent: false,
       inheritFrom: null,
       owner: null,
+      dragging: null,
       dropOffsetX: 0,
       dropOffsetY: 0,
       inheritChildZ: false,
@@ -256,8 +257,8 @@ export class Widget extends StateManaged {
   }
 
   applyRemove() {
-    if(this.parent)
-      this.parent.applyChildRemove(this);
+    if(this.get('parent') && widgets.has(this.get('parent')))
+      widgets.get(this.get('parent')).applyChildRemove(this);
     if(this.get('deck') && widgets.has(this.get('deck')))
       widgets.get(this.get('deck')).removeCard(this);
     if($(`#STYLES_${escapeID(this.id)}`))
@@ -265,6 +266,12 @@ export class Widget extends StateManaged {
     removeFromDOM(this.domElement);
     this.inheritFromUnregister();
     this.globalUpdateListenersUnregister();
+  }
+
+  applyRemoveRecursive() {
+    for(const child of Widget.prototype.children.call(this)) // use Widget.children even for holders so it doesn't filter
+      child.applyRemoveRecursive();
+    this.applyRemove();
   }
 
   applyZ(force) {
@@ -314,18 +321,36 @@ export class Widget extends StateManaged {
       className += ' foreign';
     if(typeof this.get('owner') == 'string' && this.get('owner') != playerName)
       className += ' foreign';
-    if(this.get('onlyVisibleForSeat'))
-      if(!widgetFilter(w=>w.get('player') == playerName && asArray(this.get('onlyVisibleForSeat')).indexOf(w.get('id')) != -1).length)
+
+    const onlyVisibleForSeat = this.get('onlyVisibleForSeat');
+    let invisible = onlyVisibleForSeat !== null;
+    for(const seatID of asArray(onlyVisibleForSeat) || []) {
+      if(widgets.has(seatID) && widgets.get(seatID).get('player') == playerName) {
+        invisible = false;
+        break;
+      }
+    }
+    if(invisible)
+      className += ' foreign';
+
+    const linkedToSeat = this.get('linkedToSeat');
+    if(linkedToSeat && widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == playerName).length)
+      if(!widgetFilter(w=>asArray(linkedToSeat).indexOf(w.get('id')) != -1 && w.get('player')).length)
         className += ' foreign';
-    if(this.get('linkedToSeat') && widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == playerName).length)
-      if(!widgetFilter(w=>asArray(this.get('linkedToSeat')).indexOf(w.get('id')) != -1 && w.get('player')).length)
-        className += ' foreign';
+
+    if(typeof this.get('dragging') == 'string')
+      className += ' dragging';
+    if(this.get('dragging') == playerName)
+      className += ' draggingSelf';
+
+    if(this.isHighlighted)
+      className += ' selectedInEdit';
 
     return className;
   }
 
   classesProperties() {
-    return [ 'classes', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses' ];
+    return [ 'classes', 'dragging', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses' ];
   }
 
   async click(mode='respect') {
@@ -395,6 +420,7 @@ export class Widget extends StateManaged {
       return applyTransformedOffset(parentCenter, offset, s, rot );
     }
   }
+
   css() {
     this.propertiesUsedInCSS = [];
     if($(`#STYLES_${escapeID(this.id)}`))
@@ -411,12 +437,12 @@ export class Widget extends StateManaged {
     return css;
   }
 
-  cssAsText(css) {
+  cssAsText(css, nested = false) {
     if(typeof css == 'object') {
       let cssText = '';
       for(const key in css) {
         if(typeof css[key] == 'object')
-          return this.cssToStylesheet(css);
+          return this.cssToStylesheet(css, nested);
         cssText += `; ${key}: ${css[key]}`;
       }
       return cssText;
@@ -424,6 +450,7 @@ export class Widget extends StateManaged {
       return css;
     }
   }
+
   cssBorderRadius() {
     let br = this.get('borderRadius');
     switch(typeof(br)) {
@@ -458,12 +485,27 @@ export class Widget extends StateManaged {
     return css;
   }
 
-  cssToStylesheet(css) {
+  cssToStylesheet(css, nested = false) {
+    let styleString = '';
+    for(const key in css) {
+      let selector = key;
+      if(!nested) {
+        if(key == 'inline')
+          continue;
+        if(key == 'default')
+          selector = '';
+        if(selector.charAt(0) != '@')
+          selector = `#w_${escapeID(this.id)}${selector}`;
+      }
+      styleString += `${selector} { ${mapAssetURLs(this.cssReplaceProperties(this.cssAsText(css[key], true)))} }\n`;
+    }
+
+    if(nested)
+      return styleString;
+
     const style = document.createElement('style');
     style.id = `STYLES_${escapeID(this.id)}`;
-    for(const key in css)
-      if(key != 'inline')
-        style.appendChild(document.createTextNode(`#w_${escapeID(this.id)}${key == 'default' ? '' : key} { ${mapAssetURLs(this.cssReplaceProperties(this.cssAsText(css[key])))} }`));
+    style.appendChild(document.createTextNode(styleString));
     $('head').appendChild(style);
 
     return this.cssAsText(css.inline || '');
@@ -552,7 +594,9 @@ export class Widget extends StateManaged {
           return match[9] ? false : undefined;
 
         let indexName = evaluateIdentifier(match[3], match[4]);
-        return indexName !== undefined ? varContent[indexName] : varContent;
+        if(varContent === null && indexName !== undefined)
+          problems.push(`Cannot index a variable that evaluates to 'null'.`);
+        return varContent !== null && indexName !== undefined ? varContent[indexName] : varContent;
       }
 
       // property
@@ -713,7 +757,7 @@ export class Widget extends StateManaged {
             // ignore (but log) blank and comment only lines
             if(jeRoutineLogging) jeLoggingRoutineOperationSummary(comment[1]||'');
           } else {
-            problems.push('String could not be interpreted as expression. Please check your syntax and note that many characters have to be escaped.');
+            problems.push(`String '${a}' could not be interpreted as a valid expression. Please check your syntax and note that many characters have to be escaped.`);
           }
         }
       }
@@ -1157,9 +1201,9 @@ export class Widget extends StateManaged {
                     if(widgets.has(target.get('hand'))) {
                       const targetHand = widgets.get(target.get('hand'));
                       await applyFlip();
+                      c.targetPlayer = target.get('player')
                       await c.moveToHolder(targetHand);
-                      if(targetHand.get('childrenPerOwner'))
-                        await c.set('owner', target.get('player'));
+                      delete c.targetPlayer
                       c.bringToFront()
                       if(targetHand.get('type') == 'holder')
                         targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
@@ -1299,7 +1343,7 @@ export class Widget extends StateManaged {
           collections[a.collection] = [...new Set(c)];
 
           if(a.sortBy)
-            await this.sortWidgets(collections[a.collection], a.sortBy.key, a.sortBy.reverse, a.sortBy.locales, a.sortBy.options);
+            await sortWidgets(collections[a.collection], a.sortBy);
 
           if(jeRoutineLogging) {
             let selectedWidgets = collections[a.collection].map(w=>w.get('id')).join(',');
@@ -1360,7 +1404,7 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
-              await this.shuffleWidgets(holder.children());
+              await shuffleWidgets(holder.children());
               if(holder.get('type') == 'holder')
                 await holder.updateAfterShuffle();
             });
@@ -1369,7 +1413,7 @@ export class Widget extends StateManaged {
           }
         } else if(collection = getCollection(a.collection)) {
           if(collections[collection].length) {
-            await this.shuffleWidgets(collections[collection]);
+            await shuffleWidgets(collections[collection]);
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
@@ -1379,22 +1423,27 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'SORT') {
-        setDefaults(a, { key: 'value', reverse: false, collection: 'DEFAULT' });
+        setDefaults(a, { key: 'value', reverse: false, collection: 'DEFAULT', rearrange: true });
         let collection;
-        let reverse = a.reverse ? 'in reverse' : '';
+        let reverse = (a.reverse && !Array.isArray(a.reverse)) ? ' in reverse' : '';
+        let key = asArray(a.key).map((k)=>{
+          if(k !== null && typeof k.key == 'string')
+            return `'${k.key}'${k.reverse ? ' desc' : ''}`;
+          return typeof k == 'string' ? `'${k}'` : k;
+        }).join(', ');
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
-              await this.sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options, true);
+              await sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options, true);
               if(holder.get('type') == 'holder')
                 await holder.updateAfterShuffle();
             });
           }
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary(`widgets in '${a.holder}' by '${a.key}' ${reverse}`);
+            jeLoggingRoutineOperationSummary(`widgets in '${a.holder}' by ${key}${reverse}`);
         } else if(collection = getCollection(a.collection)) {
           if(collections[collection].length) {
-            await this.sortWidgets(collections[collection], a.key, a.reverse, a.locales, a.options, true);
+            await sortWidgets(collections[collection], a.key, a.reverse, a.locales, a.options, a.rearrange);
             await w(collections[collection].map(i=>i.get('parent')), async holder=>{
               if(holder.get('type') == 'holder')
                 await holder.updateAfterShuffle();
@@ -1403,7 +1452,7 @@ export class Widget extends StateManaged {
             problems.push(`Collection ${a.collection} is empty.`);
           }
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary(`widgets in '${a.collection}' by '${a.key}' ${reverse}`);
+            jeLoggingRoutineOperationSummary(`widgets in '${a.collection}' by ${key}${reverse}`);
         }
       }
 
@@ -1579,8 +1628,11 @@ export class Widget extends StateManaged {
   }
 
   hideEnlarged() {
-    if (!this.domElement.className.match(/selected/))
+    if (!this.domElement.className.match(/selected/)) {
       $('#enlarged').classList.add('hidden');
+      if($('#enlargeStyle'))
+        removeFromDOM($('#enlargeStyle'));
+    }
   }
 
   async addAudio(widget){
@@ -1638,6 +1690,9 @@ export class Widget extends StateManaged {
   }
 
   async moveToHolder(holder) {
+    if(this.inRemovalQueue)
+      return;
+
     await this.bringToFront();
     if(this.get('parent') && !this.currentParent)
       this.currentParent = widgets.get(this.get('parent'));
@@ -1653,6 +1708,7 @@ export class Widget extends StateManaged {
       sendTraceEvent('moveStart', { id: this.get('id') });
 
     await this.bringToFront();
+    await this.set('dragging', playerName);
 
     if(!this.get('fixedParent')) {
       this.dropTargets = this.validDropTargets();
@@ -1687,23 +1743,31 @@ export class Widget extends StateManaged {
       const myCenter = center(this.domElement);
       const myMinDim = Math.min(this.get('width'), this.get('height')) * this.get('_absoluteScale');
       this.hoverTarget = null;
-      let targetCursor = false;
-      let targetOverlap = 0;
-      let targetDist = 99999;
+      let hitElements = document.elementsFromPoint(myCenter.x, myCenter.y);
 
-      for(const t of this.dropTargets) {
-        const tOverlap = overlapScore(this.domElement, t.domElement);
-        if(tOverlap > 0) {
-          const tCursor = t.coordGlobalInside(coordGlobal);
-          const tDist = distance(center(t.domElement), myCenter) / scale;
-          const tMinDim = Math.min(t.get('width'),t.get('height')) * t.get('_absoluteScale');
-          const validTarget = tCursor || tDist <= (myMinDim + tMinDim) / 2;
-          const bestTarget = tDist <= targetDist;
-          if(validTarget && bestTarget) {
-            targetCursor = tCursor;
-            targetOverlap= tOverlap;
-            targetDist = tDist;
-            this.hoverTarget = t;
+      // First, check for elements under the midpoint in order in which they were hit.
+      for (let i = 0; i < hitElements.length; i++) {
+        let widget = widgets.get(unescapeID(hitElements[i].id.slice(2)));
+        if (hitElements[i].classList.contains('droppable') && widget) {
+          this.hoverTarget = widget;
+          break;
+        }
+      }
+      // Then, look for nearby elements if nothing found in the previous pass.
+      if (!this.hoverTarget) {
+        let targetDist = 99999;
+        for(const t of this.dropTargets) {
+          if(overlap(this.domElement, t.domElement)) {
+            const tCursor = t.coordGlobalInside(coordGlobal);
+            const tDist = distance(center(t.domElement), myCenter) / scale;
+            const tMinDim = Math.min(t.get('width'),t.get('height')) * t.get('_absoluteScale');
+            const validTarget = (tCursor || tDist <= (myMinDim + tMinDim) / 2);
+            const bestTarget = tDist <= targetDist;
+
+            if(validTarget && bestTarget) {
+              targetDist = tDist;
+              this.hoverTarget = t;
+            }
           }
         }
       }
@@ -1720,6 +1784,8 @@ export class Widget extends StateManaged {
   async moveEnd(coord, localAnchor) {
     if(tracingEnabled)
       sendTraceEvent('moveEnd', { id: this.get('id'), coord, localAnchor });
+
+    await this.set('dragging', null);
 
     if(!this.get('fixedParent')) {
       for(const t of this.dropTargets)
@@ -1795,6 +1861,16 @@ export class Widget extends StateManaged {
       await this.set('rotation', degrees);
   }
 
+  setHighlighted(isHighlighted) {
+    if(this.isHighlighted != isHighlighted) {
+      this.isHighlighted = isHighlighted;
+      if(isHighlighted)
+        this.domElement.classList.add('selectedInEdit');
+      else
+        this.domElement.classList.remove('selectedInEdit');
+    }
+  }
+
   async setText(text, mode, problems) {
     if (this.get('text') !== undefined) {
       if(mode == 'inc' || mode == 'dec') {
@@ -1827,15 +1903,42 @@ export class Widget extends StateManaged {
 
   showEnlarged(event) {
     if(this.get('enlarge')) {
+      const id = this.get('id');
       const e = $('#enlarged');
+      const boundBox = this.domElement.getBoundingClientRect();
+      let cssText = this.domElement.style.cssText;
+      cssText += `;--originalLeft:${boundBox.left}px`;
+      cssText += `;--originalTop:${boundBox.top}px`;
+      cssText += `;--originalRight:${boundBox.right}px`;
+      cssText += `;--originalBottom:${boundBox.bottom}px`;
       e.innerHTML = this.domElement.innerHTML;
       e.className = this.domElement.className;
-      e.dataset.id = this.get('id');
-      e.style.cssText = this.domElement.style.cssText;
+      e.dataset.id = id;
+      for(const clone of e.querySelectorAll('canvas')) {
+        const original = this.domElement.querySelector(`canvas[data-id = '${clone.dataset.id}']`);
+        const context = clone.getContext('2d');
+        clone.width = original.width;
+        clone.height = original.height;
+        context.drawImage(original, 0, 0);
+      }
+      e.style.cssText = cssText;
       e.style.display = this.domElement.style.display;
       e.style.transform = `scale(calc(${this.get('enlarge')} * var(--scale)))`;
-      if(this.domElement.getBoundingClientRect().left < window.innerWidth/2)
+      const cursor = clientPointer.getBoundingClientRect();
+      if(cursor.left < window.innerWidth/2)
         e.classList.add('right');
+      if(cursor.top < window.innerHeight/2)
+        e.classList.add('bottom');
+
+      const wStyle = $(`#STYLES_${escapeID(id)}`);
+      if(wStyle) {
+        if($('#enlargeStyle'))
+          removeFromDOM($('#enlargeStyle'));
+        const eStyle = document.createElement('style');
+        eStyle.id = "enlargeStyle";
+        eStyle.appendChild(document.createTextNode(wStyle.textContent.replaceAll(`#w_${escapeID(id)}`,'#enlarged')));
+        $('head').appendChild(eStyle);
+      }
     }
     if(event)
       event.preventDefault();
@@ -1893,15 +1996,6 @@ export class Widget extends StateManaged {
     });
   }
 
-  async shuffleWidgets(w) {
-    const shuffle = w.map(widget => {
-      return {widget, rand:Math.random()};
-    }).sort((a, b)=> a.rand - b.rand);
-    for(let i of shuffle) {
-      await i.widget.bringToFront();
-    }
-  }
-
   async snapToGrid() {
     if(this.get('grid').length) {
       const x = this.get('x');
@@ -1933,24 +2027,6 @@ export class Widget extends StateManaged {
             await this.set(p, closest[2][p]);
       }
     }
-  }
-
-  async sortWidgets(w, key, reverse, locales, options, rearrange) {
-    let z = 1;
-    let children = w.reverse().sort((w1,w2)=>{
-      if(typeof w1.get(key) == 'number')
-        return w1.get(key) - w2.get(key);
-      else
-        if(w1.get(key) === null)
-          return w2.get(key) === null ?  0 : -1;
-        else
-          return w2.get(key) === null ? 1 : w1.get(key).localeCompare(w2.get(key), locales, options);
-    });
-    if(reverse)
-      children = children.reverse();
-    if(rearrange)
-      for(const c of children)
-        await c.set('z', ++z);
   }
 
   supportsPiles() {

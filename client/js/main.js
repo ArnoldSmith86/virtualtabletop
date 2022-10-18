@@ -16,6 +16,8 @@ let urlProperties = {};
 let maxZ = {};
 export const dropTargets = new Map();
 
+export const clientPointer = $('#clientPointer');
+
 function compareDropTarget(widget, t, exclude){
   for(const dropTargetObject of asArray(t.get('dropTarget'))) {
     let isValidObject = true;
@@ -165,7 +167,7 @@ function setScale() {
   if(jeEnabled) {
     const targetWidth = jeZoomOut ? 3200 : 1600;
     const targetHeight = jeZoomOut ? 2000 : 1000;
-    const availableWidth = $('#jeText').offsetLeft;
+    const availableWidth = $('#jeEditArea').offsetLeft;
     if(availableWidth/(h-70) < 1600/1000)
       scale = availableWidth/targetWidth;
     else
@@ -182,6 +184,76 @@ function setScale() {
   }
   document.documentElement.style.setProperty('--scale', scale);
   roomRectangle = $('#roomArea').getBoundingClientRect();
+}
+
+export async function shuffleWidgets(collection) {
+  const shuffle = collection.map(widget => {
+    return {widget, rand:Math.random()};
+  }).sort((a, b)=> a.rand - b.rand);
+  for(let i of shuffle) {
+    await i.widget.bringToFront();
+  }
+}
+
+export async function sortWidgets(collection, keys, reverse, locales, options, rearrange) {
+  const r = asArray(reverse);
+  if(r.length == 0)
+    r.push(false);
+  const k = asArray(keys).map((key, i, k) => {
+    const keyObj = {
+      key, 
+      locales,
+      options
+    };
+    if(typeof(key) == 'object') {
+      return Object.assign(keyObj, key)
+    } else {
+      return keyObj
+    }
+  });
+  if(rearrange)
+    k.push({
+      key:"z"
+    });
+  collection.sort((w1,w2)=>{
+    let comp = 0;
+    for(const keyObj of k) {
+      const key1 = w1.get(keyObj.key);
+      const key2 = w2.get(keyObj.key);
+      if(key1 === key2)
+        continue;
+      let i1 = -1;
+      let i2 = -1;
+      if(Array.isArray(keyObj.order)) {
+        const o = keyObj.order.slice().reverse();
+        i1 = o.lastIndexOf(key1);
+        i2 = o.lastIndexOf(key2);
+      }
+      if(i1 > -1 || i2 > -1)
+        comp = i2 - i1;
+      else if(typeof key1 == 'number')
+        comp = key1 - key2;
+      else if(key1 === null)
+        comp = key2 === null ?  0 : -1;
+      else if(key2 === null)
+        comp = 1;
+      else
+        comp = key1.localeCompare(key2, keyObj.locales, keyObj.options);
+      if(comp != 0) {
+        return keyObj.reverse ? -comp : comp;
+      }
+    }
+    return 0;
+  });
+  if(reverse) {
+    collection.reverse();
+  }
+  if(rearrange) {
+    let z = 1;
+    for(const w of collection) {
+      await w.set('z', ++z);
+    }
+  }
 }
 
 async function uploadAsset(multipleCallback) {
@@ -216,10 +288,15 @@ async function _uploadAsset(file) {
 const svgCache = {};
 function getSVG(url, replaces, callback) {
   if(typeof svgCache[url] == 'string') {
+    const cacheKey = url + JSON.stringify(replaces);
+    if(svgCache[cacheKey])
+      return svgCache[cacheKey];
+
     let svg = svgCache[url];
     for(const replace in replaces)
       svg = svg.split(replace).join(replaces[replace]);
-    return 'data:image/svg+xml,'+encodeURIComponent(svg);
+    svgCache[cacheKey] = 'data:image/svg+xml,'+encodeURIComponent(svg);
+    return svgCache[cacheKey];
   }
 
   if(!svgCache[url]) {

@@ -104,7 +104,8 @@ export default async function convertPCIO(content) {
   for(const widget of widgets) {
     if(widget.type == 'card') {
       const index = widget.x + ',' + widget.y + ',' + (widget.parent || "") + ',' + (widget.owner || "");
-      cardsPerCoordinates[index] = (cardsPerCoordinates[index] || 0) + 1;
+      if(!widget.parent || !byID[widget.parent] || !byID[widget.parent].hideStackTab)
+        cardsPerCoordinates[index] = (cardsPerCoordinates[index] || 0) + 1;
     }
   }
 
@@ -208,6 +209,8 @@ export default async function convertPCIO(content) {
 
       if(widget.allowedDecks)
         w.dropTarget = widget.allowedDecks.map(d=>({deck:d}));
+      if(widget.hideStackTab)
+        w.preventPiles = true;
 
       if(pileOverlaps[w.id]) {
         w.x += 4;
@@ -314,7 +317,7 @@ export default async function convertPCIO(content) {
           width:     w.cardDefaults.width  || 103,
           height:    w.cardDefaults.height || 160,
           type:      'image',
-          color:     'white',
+          color:     widget.collectionType == 'pieces' ? 'transparent' : 'white',
           valueType: 'static',
           value:     ''
         });
@@ -741,7 +744,7 @@ export default async function convertPCIO(content) {
           c = {
             func:   'RECALL',
             holder: holders,
-            owned:  c.args.includeHands.value == 'hands'
+            owned:  c.args.includeHands && c.args.includeHands.value == 'hands' || false
           };
           if(c.holder.length == 1)
             c.holder = c.holder[0];
@@ -863,6 +866,15 @@ export default async function convertPCIO(content) {
             note:       'Roll dice',
             func:       'CLICK',
             collection: c.args.dice.value
+          };
+        }
+        if(c.func == 'SPIN_SPINNER') {
+          if(!c.args.spinners)
+            continue;
+          c = {
+            note:       'Spin spinners',
+            func:       'CLICK',
+            collection: c.args.spinners.value
           };
         }
         w.clickRoutine.push(c);
