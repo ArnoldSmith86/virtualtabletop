@@ -392,17 +392,21 @@ export default class Room {
       this.state._meta.states = Object.assign(this.state._meta.states, this.getPublicLibraryGames());
 
       this.migrateOldPublicLibraryLinks();
-      this.updateLinkedStates();
+      await this.updateLinkedStates();
       this.removeInvalidPublicLibraryLinks(player);
 
       this.traceIsEnabled(Config.get('forceTracing') || this.traceIsEnabled());
       this.broadcast('state', this.state);
     } else {
       let newState = emptyState;
-      if(fileOrLink.match(/^http/))
-        newState = await FileLoader.readVariantFromLink(fileOrLink);
-      else
-        newState = JSON.parse(fs.readFileSync(fileOrLink));
+      try {
+        if(fileOrLink.match(/^http/))
+          newState = await FileLoader.readVariantFromLink(fileOrLink);
+        else
+          newState = JSON.parse(fs.readFileSync(fileOrLink));
+      } catch(e) {
+        newState = null;
+      }
       if(newState) {
         Logging.log(`loading room ${this.id} from ${fileOrLink}`);
         this.setState(newState);
@@ -787,10 +791,16 @@ export default class Room {
     this.unloadCallback();
   }
 
-  updateLinkedStates() {
-    for(const [ id, state ] of Object.entries(this.state._meta.states))
-      if(state.link)
-        this.addState(id, 'link', state.link);
+  async updateLinkedStates() {
+    for(const [ id, state ] of Object.entries(this.state._meta.states)) {
+      if(state.link) {
+        try {
+          await this.addState(id, 'link', state.link);
+        } catch(e) {
+          Logging.log(`ERROR: updating linked state ${id} in room ${this.id} failed: ${e}`);
+        }
+      }
+    }
   }
 
   writePublicLibraryAssetsToFilesystem(stateID) {
