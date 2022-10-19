@@ -400,7 +400,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
       waitingForStateCreation = null;
       if($('#statesButton').dataset.overlay !== 'statesOverlay')
         showStatesOverlay('statesOverlay');
-      if(state.name == 'Unnamed') {
+      if(state.name == 'Unnamed' && !state.link && !state.savePlayers) {
         fillStateDetails(states, state, entry);
         $('#stateDetailsOverlay .buttons [icon=edit]').click();
       }
