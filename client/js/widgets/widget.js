@@ -4,7 +4,7 @@ import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
-import { center, distance, overlap, overlapScore, getOffset, applyTransformedOffset } from '../geometry.js';
+import { center, distance, overlap, getOffset, applyTransformedOffset } from '../geometry.js';
 
 const readOnlyProperties = new Set([
   '_absoluteRotation',
@@ -235,6 +235,12 @@ export class Widget extends StateManaged {
     removeFromDOM(this.domElement);
     this.inheritFromUnregister();
     this.globalUpdateListenersUnregister();
+  }
+
+  applyRemoveRecursive() {
+    for(const child of Widget.prototype.children.call(this)) // use Widget.children even for holders so it doesn't filter
+      child.applyRemoveRecursive();
+    this.applyRemove();
   }
 
   applyZ(force) {
@@ -1705,23 +1711,31 @@ export class Widget extends StateManaged {
       const myCenter = center(this.domElement);
       const myMinDim = Math.min(this.get('width'), this.get('height')) * this.get('_absoluteScale');
       this.hoverTarget = null;
-      let targetCursor = false;
-      let targetOverlap = 0;
-      let targetDist = 99999;
+      let hitElements = document.elementsFromPoint(myCenter.x, myCenter.y);
 
-      for(const t of this.dropTargets) {
-        const tOverlap = overlapScore(this.domElement, t.domElement);
-        if(tOverlap > 0) {
-          const tCursor = t.coordGlobalInside(coordGlobal);
-          const tDist = distance(center(t.domElement), myCenter) / scale;
-          const tMinDim = Math.min(t.get('width'),t.get('height')) * t.get('_absoluteScale');
-          const validTarget = tCursor || tDist <= (myMinDim + tMinDim) / 2;
-          const bestTarget = tDist <= targetDist;
-          if(validTarget && bestTarget) {
-            targetCursor = tCursor;
-            targetOverlap= tOverlap;
-            targetDist = tDist;
-            this.hoverTarget = t;
+      // First, check for elements under the midpoint in order in which they were hit.
+      for (let i = 0; i < hitElements.length; i++) {
+        let widget = widgets.get(unescapeID(hitElements[i].id.slice(2)));
+        if (hitElements[i].classList.contains('droppable') && widget) {
+          this.hoverTarget = widget;
+          break;
+        }
+      }
+      // Then, look for nearby elements if nothing found in the previous pass.
+      if (!this.hoverTarget) {
+        let targetDist = 99999;
+        for(const t of this.dropTargets) {
+          if(overlap(this.domElement, t.domElement)) {
+            const tCursor = t.coordGlobalInside(coordGlobal);
+            const tDist = distance(center(t.domElement), myCenter) / scale;
+            const tMinDim = Math.min(t.get('width'),t.get('height')) * t.get('_absoluteScale');
+            const validTarget = (tCursor || tDist <= (myMinDim + tMinDim) / 2);
+            const bestTarget = tDist <= targetDist;
+
+            if(validTarget && bestTarget) {
+              targetDist = tDist;
+              this.hoverTarget = t;
+            }
           }
         }
       }
