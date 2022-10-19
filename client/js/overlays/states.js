@@ -35,19 +35,21 @@ function addStateFile(f) {
   stateDOM.dataset.id = id;
   stateDOM.className = 'uploading visible roomState noImage';
 
-  function metaCallback(name, similarName, image) {
+  let isSave = false;
+  function metaCallback(name, similarName, image, variants, savePlayers, saveDate) {
     if(image) {
       stateDOM.classList.remove('noImage');
       $('img', stateDOM).src = image;
     }
 
-    $('h3', stateDOM).textContent = name;
-    $('h4', stateDOM).textContent = similarName && name != similarName ? `Similar to ${similarName}` : '';
-    $('i', stateDOM).textContent = 'upload';
+    isSave = !!savePlayers;
+    fillStateTileTitles(stateDOM, name, similarName, savePlayers, saveDate)
 
-    uploadingStates.push(stateDOM);
-    insertUploadingState(stateDOM, $('#statesList > div'));
+    uploadingStates[isSave ? 0 : 1].push(stateDOM);
+    insertUploadingState(stateDOM, $a('#statesList > div')[isSave ? 0 : 1]);
     updateEmptyLibraryHint();
+    if($('#statesList > div:nth-of-type(1) .roomState'))
+      $('#statesList > div:nth-of-type(1)').classList.remove('empty');
 
     stateDOM.scrollIntoView(false);
   }
@@ -55,7 +57,8 @@ function addStateFile(f) {
     stateDOM.style.setProperty('--progress', percent);
   }
   function doneCallback() {
-    uploadingStates = uploadingStates.filter(s=>s!=stateDOM);
+    uploadingStates[isSave ? 0 : 1] = uploadingStates[isSave ? 0 : 1].filter(s=>s!=stateDOM);
+    removeFromDOM(stateDOM);
   }
 
   uploadStateFile(f, `addState/${roomID}/${id}/file/${f.name}`, metaCallback, progressCallback, doneCallback);
@@ -93,7 +96,7 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
     alert(`${sourceFile.name} is not a valid VTT, VTTC or PCIO file.`);
     return;
   } else if(Array.isArray(json)) {
-    metaCallback(sourceFile.name.replace(/\.[^.]+$/, ''), '', null, [{}]);
+    metaCallback(sourceFile.name.replace(/\.[^.]+$/, ''), '', null, [{}], null, null);
   } else {
     const image = await zip.file(json._meta.info.image.substr(1)).async('base64');
     let imageURL = null;
@@ -101,7 +104,7 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
       if(image.match(pattern))
         imageURL = `data:image/${type};base64,${image}`;
 
-    metaCallback(json._meta.info.name, json._meta.info.similarName, imageURL, json._meta.info.variants);
+    metaCallback(json._meta.info.name, json._meta.info.similarName, imageURL, json._meta.info.variants, json._meta.info.savePlayers, json._meta.info.saveDate);
   }
 
   const result = await fetch('assetcheck', {
@@ -284,7 +287,20 @@ function loadGameFromURLproperties(states) {
   }
 }
 
-let uploadingStates = [];
+function fillStateTileTitles(dom, name, similarName, savePlayers, saveDate) {
+  $('h3', dom).textContent = name;
+  if(savePlayers) {
+    const date = new Date(saveDate);
+    $('.linked', dom).textContent = 'save';
+    $('h4', dom).textContent = `${savePlayers}`;
+    $('h4', dom).innerHTML += `<br><br>`;
+    $('h4', dom).append(`${date.toLocaleString("en-US", { month: "long" })} ${date.getDate()}, ${date.getFullYear()}`);
+  } else {
+    $('h4', dom).textContent = similarName && name != similarName ? `Similar to ${similarName}` : '';
+  }
+}
+
+let uploadingStates = [[],[]];
 function fillStatesList(states, starred, activeState, returnServer, activePlayers) {
   if(returnServer) {
     $('#statesButton').dataset.overlay = 'returnOverlay';
@@ -341,16 +357,8 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     }
 
     $('img', entry).src = state.image.replace(/^\//, '');
-    $('h3', entry).textContent = state.name;
-    if(state.savePlayers) {
-      const date = new Date(state.saveDate);
-      $('.linked', entry).textContent = 'save';
-      $('h4', entry).textContent = `${state.savePlayers}`;
-      $('h4', entry).innerHTML += `<br><br>`;
-      $('h4', entry).append(`${date.toLocaleString("en-US", { month: "long" })} ${date.getDate()}, ${date.getFullYear()}`);
-    } else {
-      $('h4', entry).textContent = state.similarName && state.name != state.similarName ? `Similar to ${state.similarName}` : '';
-    }
+
+    fillStateTileTitles(entry, state.name, state.similarName, state.savePlayers, state.saveDate);
 
     const validPlayers = [];
     const validLanguages = [];
@@ -407,8 +415,9 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     }
   }
 
-  for(const uploadingState of uploadingStates)
-    insertUploadingState(uploadingState, categories['Game Shelf']);
+  for(const [ categoryIndex, categoryUploadingStates ] of Object.entries(uploadingStates))
+    for(const uploadingState of categoryUploadingStates)
+      insertUploadingState(uploadingState, Object.values(categories)[categoryIndex]);
 
   for(const [ title, category ] of Object.entries(categories)) {
     $('.title', category).textContent = title;
