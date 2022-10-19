@@ -517,6 +517,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   flex-direction: column;
   align-content: flex-start;
   align-items: flex-start;
+  width: 1px;
 }
 
 .variant .variant-name>div {
