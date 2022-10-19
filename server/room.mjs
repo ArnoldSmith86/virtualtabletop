@@ -207,8 +207,10 @@ export default class Room {
     if(!this.state._meta.states[stateID])
       throw new Logging.UserError(404, `State ${stateID} does not exist.`);
 
-    for(const vID of variantID ? [ variantID ] : Object.keys(this.state._meta.states[stateID].variants)) {
-      const v = this.state._meta.states[stateID].variants[vID];
+    const s = this.state._meta.states[stateID];
+
+    for(const vID of variantID ? [ variantID ] : Object.keys(s.variants)) {
+      const v = s.variants[vID];
       if(!v)
         throw new Logging.UserError(404, `Variant ${vID} does not exist.`);
 
@@ -217,7 +219,7 @@ export default class Room {
         state = await FileLoader.readVariantFromLink(v.link);
       else
         state = JSON.parse(fs.readFileSync(this.variantFilename(stateID, vID)));
-      state._meta = { version: state._meta.version, info: { ...this.state._meta.states[stateID] } };
+      state._meta = { version: state._meta.version, info: { ...s } };
       Object.assign(state._meta.info, state._meta.info.variants[vID]);
       delete state._meta.info.variants;
       delete state._meta.info.link;
@@ -233,8 +235,13 @@ export default class Room {
     }
 
     const zipBuffer = await zip.generateAsync({type:'nodebuffer', compression: 'DEFLATE'});
+
+    let name = s.name + '.vtt';
+    if(s.savePlayers)
+      name = `${s.name} ${new Date(s.saveDate).toISOString().substr(0,10)} ${s.savePlayers}.vtts`;
+
     return {
-      name: this.state._meta.states[stateID].name + '.vtt',
+      name,
       type: 'application/zip',
       content: zipBuffer
     };

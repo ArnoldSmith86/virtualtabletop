@@ -71,7 +71,7 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
   try {
     zip = await JSZip.loadAsync(sourceFile);
   } catch(e) {
-    alert(`${sourceFile.name} is not a valid VTT, VTTC or PCIO file.`);
+    alert(`${sourceFile.name} is not a valid VTT, VTTC, VTTS or PCIO file.`);
     return;
   }
 
@@ -93,7 +93,7 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
   }
 
   if(json === null) {
-    alert(`${sourceFile.name} is not a valid VTT, VTTC or PCIO file.`);
+    alert(`${sourceFile.name} is not a valid VTT, VTTC, VTTS or PCIO file.`);
     return;
   } else if(Array.isArray(json)) {
     metaCallback(sourceFile.name.replace(/\.[^.]+$/, ''), '', null, [{}], null, null);
