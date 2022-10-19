@@ -685,7 +685,7 @@ function fillStateDetails(states, state, dom) {
   $('#shareOK').onclick = _=>showStatesOverlay('stateDetailsOverlay');
   $('#stateDetailsOverlay .buttons [icon=delete]').onclick = async function() {
     $('#statesButton').dataset.overlay = 'confirmOverlay';
-    if(await confirmOverlay('Delete game', 'Are you sure you want to completely remove this game from your game shelf?', 'Delete', 'Keep')) {
+    if(await confirmOverlay('Delete game', 'Are you sure you want to completely remove this game from your game shelf?', 'Delete', 'Keep', 'delete', 'undo', 'red')) {
       toServer('removeState', state.id);
       removeFromDOM(dom);
       updateEmptyLibraryHint();
@@ -726,7 +726,7 @@ function fillStateDetails(states, state, dom) {
   };
   $('#discardDetails').onclick = async function() {
     $('#statesButton').dataset.overlay = 'confirmOverlay';
-    if(await confirmOverlay('Discard changes', 'Are you sure you want to discard any changes you made to this game?', 'Discard', 'Keep')) {
+    if(await confirmOverlay('Discard changes', 'Are you sure you want to discard any changes you made to this game?', 'Discard', 'Keep', 'delete', 'undo', 'red')) {
       showStatesOverlay('statesOverlay');
       dom.click();
     } else {
@@ -791,15 +791,19 @@ async function updateImage(currentImage, noImageText) {
   });
 }
 
-async function confirmOverlay(title, text, confirmButton, cancelButton) {
+async function confirmOverlay(title, text, confirmButton, cancelButton, confirmIcon, cancelIcon, confirmClass, cancelClass) {
   return new Promise(function(resolve, reject) {
     showOverlay('confirmOverlay');
     applyValuesToDOM($('#confirmOverlay'), { title, text, confirmButton, cancelButton });
 
+    $('#confirmOverlay button:nth-of-type(1)').setAttribute('icon', cancelIcon || 'close');
+    $('#confirmOverlay button:nth-of-type(1)').className = cancelClass || '';
     $('#confirmOverlay button:nth-of-type(1)').onclick = function() {
       showOverlay();
       resolve(false);
     };
+    $('#confirmOverlay button:nth-of-type(2)').setAttribute('icon', confirmIcon || 'check');
+    $('#confirmOverlay button:nth-of-type(2)').className = confirmClass || '';
     $('#confirmOverlay button:nth-of-type(2)').onclick = function() {
       showOverlay();
       resolve(true);
