@@ -512,8 +512,10 @@ const jeCommands = [
     forceKey: 'R',
     show: _=>jeStateNow,
     call: async function() {
+      batchStart();
       for(const id of jeSelectedIDs())
         await removeWidgetLocal(id);
+      batchEnd();
       jeEmpty();
     }
   },
