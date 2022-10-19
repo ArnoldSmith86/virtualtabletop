@@ -103,7 +103,8 @@ body.aspectTooGood.hiddenToolbar {
       width: var(--toolbarSize);
       height: 100%;
 
-      background: var(--VTTblue);
+      --toolbarColor: var(--VTTblue);
+      background: var(--toolbarColor);
       padding: 20px 0 10px 0;
     }
 
@@ -173,6 +174,7 @@ body.aspectTooGood.hiddenToolbar {
       align-items: center;
       justify-content: center;
       margin: 2px;
+      background: var(--toolbarColor);
     }
 
     .toolbarButton::before,
@@ -227,7 +229,7 @@ body.aspectTooGood.hiddenToolbar {
 
     .toolbarTab.active {
       background-color: white;
-      color: var(--VTTblue);
+      color: var(--toolbarColor);
     }
 
     body.wideToolbar .toolbarTab::before {
@@ -258,7 +260,7 @@ body.aspectTooGood.hiddenToolbar {
       border-radius: 4px;
       white-space: nowrap;
       color: #fff;
-      background: var(--VTTblue);
+      background: var(--toolbarColor);
       box-shadow: 0 0 5px #0005;
       pointer-events: none;
     }
@@ -282,7 +284,7 @@ body.aspectTooGood.hiddenToolbar {
     }
 
     body.wideToolbar .active.toolbarTab .tooltip {
-      color: var(--VTTblue);
+      color: var(--toolbarColor);
     }
 
     body.horizontalToolbar .toolbarButton .tooltip {
@@ -306,7 +308,7 @@ body.aspectTooGood.hiddenToolbar {
       }
 
       body.horizontalToolbar .active.toolbarTab .tooltip {
-        color: var(--VTTblue);
+        color: var(--toolbarColor);
       }
 
       body.horizontalToolbar .toolbarTab .tooltip {
@@ -524,7 +526,8 @@ body.aspectTooGood.hiddenToolbar {
 
   /* lights off */
 
-    body.lightsOff, body.lightsOff #toolbar, body.lightsOff .toolbarButton:not(.active), body.lightsOff .toolbarButton:not(.active) .tooltip, body.lightsOff:not(.wideToolbar,.horizontalToolbar) .toolbarButton .tooltip, body.lightsOff #options {
+    body.lightsOff, body.lightsOff #toolbar {
+      --toolbarColor: black;
       background-color: black;
     }
 
@@ -534,10 +537,6 @@ body.aspectTooGood.hiddenToolbar {
 
     body.lightsOff #toolbar:hover {
       opacity: 1;
-    }
-
-    body.lightsOff .toolbarTab.active, body.lightsOff.wideToolbar .active.toolbarButton .tooltip, body.lightsOff.horizontalToolbar .active.toolbarButton .tooltip {
-      color: black;
     }
 
 
