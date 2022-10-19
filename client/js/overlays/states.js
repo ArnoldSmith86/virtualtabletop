@@ -204,8 +204,12 @@ async function saveState() {
   showStatesOverlay('stateSaveOverlay');
 
   $('#stateSaveOverlay [icon=save]').onclick = function() {
-    toServer('saveState', $('#stateSaveOverlay input').value);
-    showStatesOverlay('statesOverlay');
+    if($('#stateSaveOverlay input').value) {
+      toServer('saveState', $('#stateSaveOverlay input').value);
+      showStatesOverlay('statesOverlay');
+    } else {
+      alert('Please enter active players or a different identifier.');
+    }
   };
   $('#stateSaveOverlay [icon=undo]').onclick = _=>showStatesOverlay('statesOverlay');
 }
