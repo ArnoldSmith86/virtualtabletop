@@ -195,16 +195,21 @@ MinifyRoom().then(function(result) {
     downloadState(res, tokens[2], tokens[3]).catch(next);
   });
 
-  router.get('/share/:room/:state', function(req, res) {
+  router.get('/share/:room/:state', function(req, res, next) {
     const target = `${Config.get('urlPrefix')}/dl/${req.params.room}/${req.params.state}`;
     for(const link in sharedLinks)
       if(sharedLinks[link] == target)
         return res.send(link);
 
-    const newLink = `${Config.get('urlPrefix')}/s/${Math.random().toString(36).substring(3, 11)}`;
-    sharedLinks[newLink] = target;
-    fs.writeFileSync(savedir + '/shares.json', JSON.stringify(sharedLinks));
-    res.send(newLink);
+    ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
+      if(isLoaded)
+        activeRooms.get(req.params.room).writeToFilesystem();
+
+      const newLink = `${Config.get('urlPrefix')}/s/${Math.random().toString(36).substring(3, 11)}`;
+      sharedLinks[newLink] = target;
+      fs.writeFileSync(savedir + '/shares.json', JSON.stringify(sharedLinks));
+      res.send(newLink);
+    }).catch(next);
   });
 
   router.get('/:room', function(req, res, next) {
