@@ -2170,9 +2170,9 @@ function jeToggle() {
   jeLoggingHTML = '';
   if(jeEnabled) {
     $('body').classList.add('jsonEdit');
-    jeDisplayTree();
     if(jeWidget && !widgets.has(jeWidget.id))
       jeEmpty();
+    jeDisplayTree();
   } else {
     $('body').classList.remove('jsonEdit');
   }
@@ -2186,7 +2186,6 @@ function jeEmpty() {
   jeWidget = null;
 
   jeSet('');
-  jeDisplayTree();
   jeShowCommands();
 }
 
