@@ -269,7 +269,7 @@ const jeCommands = [
         const selectedKey = elements[0];
         elements[0] = "###SELECT ME###";
         jeStateNow[cssKind] = {};
-        for( let i=0; i<Math.floor(elements.length/2); i++) 
+        for( let i=0; i<Math.floor(elements.length/2); i++)
           jeStateNow[cssKind][elements[2*i].trim()] = elements[2*i+1].trim();
         jeSetAndSelect(selectedKey.trim())
       } else {
@@ -1503,7 +1503,7 @@ document.addEventListener("mouseup", function(){
 
 function jeDisplayTree() {
   const allWidgets = Array.from(widgets.values());
-  $('#jeTree').innerHTML = '<ul class=jeTreeDisplay>' + jeDisplayTreeAddWidgets(allWidgets, null) + '</ul>';
+  $('#jeTree').innerHTML = '<ul class=jeTreeDisplay>' + jeDisplayTreeAddWidgets(allWidgets, null, jeSelectedIDs()) + '</ul>';
 
   treeNodes = {};
   for(const dom of $a('#jeTree .key'))
@@ -1528,15 +1528,14 @@ function jeDisplayTree() {
   });
 }
 
-function jeDisplayTreeAddWidgets(allWidgets, parent) {
+function jeDisplayTreeAddWidgets(allWidgets, parent, selectedIDs) {
   function colored(str, kind) {
     return `<i class=${kind}>${html(str)}</i>`
   }
   let result = '';
 
-  const selectedIDs = jeSelectedIDs();
   for(const widget of (allWidgets.filter(w=>w.get('parent')==parent)).sort((w1,w2)=>w1.get('id').localeCompare(w2.get('id'), 'en', {numeric: true, ignorePunctuation: true}))) {
-    const children = jeDisplayTreeAddWidgets(allWidgets, widget.get('id'));
+    const children = jeDisplayTreeAddWidgets(allWidgets, widget.get('id'), selectedIDs);
     const isSelected = selectedIDs.indexOf(widget.get('id')) != -1 ? 'jeHighlightRow' : '';
 
     if(children)
