@@ -119,7 +119,7 @@
   display: inline-flex;
 }
 
-#emptyLibrary {
+#emptyLibrary, #emptyLibraryByFilter {
   color: black;
   height: calc(var(--size) - 80px + 3px);
   font-style: italic;
@@ -248,7 +248,7 @@ div:nth-of-type(2) > .list > .roomState .star {
     margin: 4px;
     padding: 4px;
   }
-  #emptyLibrary {
+  #emptyLibrary, #emptyLibraryByFilter {
     margin: 10px;
     padding: 0;
     height: unset;
@@ -256,7 +256,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   }
 }
 @media (max-width: 320px), (max-height: 200px) {
-  #statesOverlay, .roomState, #emptyLibrary {
+  #statesOverlay, .roomState, #emptyLibrary, #emptyLibraryByFilter {
     margin:  0;
     padding: 0;
   }

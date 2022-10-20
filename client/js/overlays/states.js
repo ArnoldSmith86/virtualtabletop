@@ -215,7 +215,9 @@ async function saveState() {
 }
 
 function updateEmptyLibraryHint() {
-  $('#emptyLibrary').style.display = $('#statesList > div:nth-of-type(2) .roomState') ? 'none' : 'block';
+  const isEmpty = !$('#statesList > div:nth-of-type(2) .roomState');
+  $('#emptyLibrary').style.display = isEmpty ? 'block' : 'none';
+  $('#emptyLibraryByFilter').style.display = $('#statesList .list:nth-of-type(2) > div.visible') || isEmpty ? 'none' : 'block';
 }
 
 function toggleStateStar(state, dom) {
@@ -248,6 +250,8 @@ function updateLibraryFilter() {
     else
       state.classList.remove('visible');
   }
+
+  updateEmptyLibraryHint();
 }
 
 function parsePlayers(players) {
@@ -313,6 +317,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
   }
 
   const emptyLibrary = $('#emptyLibrary');
+  const emptyLibraryByFilter = $('#emptyLibraryByFilter');
   const buttons = $('#statesOverlay .buttons');
   $('#saveState').style.display = 'none';
   removeFromDOM('#statesList > div');
@@ -432,6 +437,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     categories['In-Progress Games'].classList.add('empty');
 
   categories['Game Shelf'].insertBefore(emptyLibrary, $('h2', categories['Game Shelf']).nextSibling);
+  categories['Game Shelf'].insertBefore(emptyLibraryByFilter, $('h2', categories['Game Shelf']).nextSibling);
   categories['Game Shelf'].insertBefore(buttons, $('h2', categories['Game Shelf']).nextSibling);
   updateEmptyLibraryHint();
 
