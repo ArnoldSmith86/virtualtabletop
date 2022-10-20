@@ -513,8 +513,7 @@ const jeCommands = [
     show: _=>jeStateNow,
     call: async function() {
       batchStart();
-      const selectedIDs = jeSelectedIDs();
-      for(const id of selectedIDs)
+      for(const id of jeSelectedIDs())
         await removeWidgetLocal(id);
       batchEnd();
       jeEmpty();
@@ -538,8 +537,7 @@ const jeCommands = [
       { label: '# Copies Y',             type: 'number',   value: 0,   min:     0, max:  100 }
     ],
     call: async function(options) {
-      const selectedIDs = jeSelectedIDs();
-      for(const id of selectedIDs) {
+      for(const id of jeSelectedIDs()) {
         const problems = [];
         const clonedWidget = await duplicateWidget(widgets.get(id), options['Copy recursively'], options['Copy using inheritFrom'], options['Inherit properties'].split(',').map(e => e.trim()),options['Increment IDs'], options['Increment In'].split(','), options['X offset'], options['Y offset'], options['# Copies X'], options['# Copies Y'], problems);
         if(problems.length)
@@ -1579,7 +1577,6 @@ function jeTreeGetWidgetHTML(widget) {
 
 function jeUpdateTree(delta) {
   for(const id in delta) {
-    // If modifying an existing widget without changing its parent, just substitute new HTML for that widget.
     if(typeof treeNodes[id] != 'undefined' && delta[id] != null && typeof delta[id].parent == 'undefined') {
       treeNodes[id].innerHTML = jeTreeGetWidgetHTML(widgets.get(id));
     } else if(!jeInMacroExecution) {
