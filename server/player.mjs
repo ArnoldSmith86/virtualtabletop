@@ -49,6 +49,8 @@ export default class Player {
         this.room.toggleStateStar(this, args);
       if(func == 'trace')
         this.trace('client', args);
+      if(func == 'unlinkState')
+        await this.room.unlinkState(this, args);
     } catch(e) {
       Logging.handleWebSocketException(func, args, e);
       this.send('internal_error', func);

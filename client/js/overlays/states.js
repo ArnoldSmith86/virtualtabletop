@@ -525,6 +525,7 @@ function fillStateDetails(states, state, dom) {
   toggleClass($('#stateDetailsOverlay .buttons [icon=delete]'), 'hidden', !deletable);
   toggleClass($('#stateDetailsOverlay .buttons [icon=edit_off]'), 'hidden', editable || deletable);
   toggleClass($('#stateDetailsOverlay .buttons [icon=link]'), 'hidden', !!state.savePlayers || !!state.publicLibrary);
+  toggleClass($('#stateDetailsOverlay .buttons [icon=link_off]'), 'hidden', !state.link);
 
   function updateStateDetailsDomains(state) {
     $('#similarDetailsDomain').innerText = String(state.bgg).replace(/^ *https?:\/\/(www\.)?/, '').replace(/\/.*/, '');
@@ -704,6 +705,10 @@ function fillStateDetails(states, state, dom) {
   };
   $('#stateDetailsOverlay .buttons [icon=link]').onclick = function() {
     shareLink(state);
+  };
+  $('#stateDetailsOverlay .buttons [icon=link_off]').onclick = function() {
+    $('#mainImage > i').classList.add('hidden');
+    toServer('unlinkState', state.id);
   };
   $('#shareOK').onclick = _=>showStatesOverlay('stateDetailsOverlay');
   $('#stateDetailsOverlay .buttons [icon=delete]').onclick = async function() {

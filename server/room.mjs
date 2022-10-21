@@ -786,6 +786,15 @@ export default class Room {
     return this.state && this.state._meta && this.state._meta.tracingEnabled;
   }
 
+  async unlinkState(player, stateID) {
+    for(const [ variantID, variant ] of Object.entries(this.state._meta.states[stateID].variants)) {
+      const variantState = await FileLoader.readVariantFromLink(variant.link);
+      fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(variantState, null, '  '));
+      delete variant.link;
+    }
+    delete this.state._meta.states[stateID].link;
+  }
+
   unload() {
     if(this.state && this.state._meta) {
       if(Object.keys(this.state).length > 1 || Object.keys(this.state._meta.states).length || this.state._meta.redirectTo || this.state._meta.returnServer) {
