@@ -478,7 +478,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     }
   }
 
-  $('#stateAddOverlay .upload').onclick = function() {
+  $('#stateAddOverlay [icon=upload]').onclick = function() {
     loadJSZip();
     showStatesOverlay('statesOverlay');
     selectVTTfile(addStateFile);
@@ -860,8 +860,8 @@ onLoad(function() {
   on('#addState', 'click', _=>showStatesOverlay('stateAddOverlay'));
   on('#saveState', 'click', saveState);
 
-  on('#stateAddOverlay .create', 'click', e=>addState(e, 'state'));
-  on('#stateAddOverlay .link',   'click', e=>addState(e, 'link', prompt('Enter shared URL:')));
+  on('#stateAddOverlay [icon=save]', 'click', e=>addState(e, 'state'));
+  on('#stateAddOverlay [icon=link]', 'click', e=>addState(e, 'link', prompt('Enter shared URL:')));
 
   document.addEventListener('dragover', function(e) {
     e.preventDefault();
