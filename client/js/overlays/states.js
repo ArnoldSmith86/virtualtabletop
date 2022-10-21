@@ -235,7 +235,7 @@ function updateLibraryFilter() {
     text:     regexEscape($('#filterByText').value.toLowerCase()),
     type:     $('#filterByType').value,
     players:  $('#filterByPlayers').value,
-    duration: $('#filterByDuration').value.split('-'),
+    duration: $('#filterByDuration').value,
     language: $('#filterByLanguage').value,
     mode:     $('#filterByMode').value
   };
@@ -245,7 +245,7 @@ function updateLibraryFilter() {
       const textMatch     = dataset.text.match(filters.text);
       const typeMatch     = filters.type     == 'Any' || dataset.type.split(/[,;] */).indexOf(filters.type) != -1;
       const playersMatch  = filters.players  == 'Any' || dataset.players.split(/[,;] */).indexOf(filters.players) != -1;
-      const durationMatch = filters.duration == 'Any' || dataset.duration >= filters.duration[0] && dataset.duration <= filters.duration[1];
+      const durationMatch = filters.duration == 'Any' || dataset.duration >= filters.duration.split('-')[0] && dataset.duration <= filters.duration.split('-')[1];
       const languageMatch = filters.language == 'Any' || dataset.languages.split(/[,;] */).indexOf(filters.language) != -1;
       const modeMatch     = filters.mode     == 'Any' || dataset.modes.split(/[,;] */).indexOf(filters.mode) != -1;
       callback(dom, textMatch && typeMatch && playersMatch && durationMatch && languageMatch && modeMatch);
@@ -253,6 +253,17 @@ function updateLibraryFilter() {
   }
 
   applyFilters(activeFilters, (dom,match)=>toggleClass(dom, 'visible', match));
+
+  for(const select of $a('#stateFilters select')) {
+    for(const option of $a('option', select)) {
+      const filterOverride = {};
+      filterOverride[select.id.substr(8).toLowerCase()] = option.value;
+      let foundState = false;
+      applyFilters(Object.assign({...activeFilters}, filterOverride), (dom,match)=>foundState|=match);
+      toggleClass(option, 'noMatch', !foundState);
+    }
+  }
+
   updateEmptyLibraryHint();
 }
 

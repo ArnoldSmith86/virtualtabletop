@@ -59,6 +59,10 @@
   border-bottom: 1px solid var(--VTTblue);
 }
 
+#stateFilters select option.noMatch {
+  display: none;
+}
+
 #stateFilters select, #stateFilters input {
   margin: 0 5px;
 }
