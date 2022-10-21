@@ -570,12 +570,16 @@ function fillStateDetails(states, state, dom) {
     toggleClass($('img', vEntry), 'hidden', !variant.variantImage);
     $('img', vEntry).src = String(variant.variantImage).replace(/^\//, '');
 
-    $('[icon=play_arrow]', vEntry).onclick = function() {
-      toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading });
-      $('#activeGameButton').click();
+    $('[icon=play_arrow]', vEntry).onclick = async function() {
+      if(!widgets.size || await confirmOverlay('Start game', 'Are you sure you want to load a new game? You will lose all unsaved progress in the current game.', 'Start new game', 'Resume current game', 'play_arrow', 'undo')) {
+        toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading });
+        $('#activeGameButton').click();
+      } else {
+        showStatesOverlay('stateDetailsOverlay');
+      }
     };
 
-    $('[icon=edit]',  vEntry).onclick = function(e) {
+    $('[icon=edit]', vEntry).onclick = function(e) {
       for(const variantDOM of $a('#stateDetailsOverlay .variantsList .variant'))
         toggleClass(variantDOM, 'editingVariant', e.target == $('[icon=edit]', variantDOM) && !variantDOM.classList.contains('editingVariant'));
     };
