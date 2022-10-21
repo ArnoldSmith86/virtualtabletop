@@ -230,27 +230,29 @@ function toggleStateStar(state, dom) {
 }
 
 function updateLibraryFilter() {
-  const text = regexEscape($('#filterByText').value.toLowerCase());
-  const type = $('#filterByType').value;
-  const players = $('#filterByPlayers').value;
-  const duration = $('#filterByDuration').value.split('-');
-  const language = $('#filterByLanguage').value;
-  const mode = $('#filterByMode').value;
-  for(const state of $a('#statesList .list > div')) {
-    if(state.classList.contains('uploading'))
-      continue;
-    const textMatch     = state.dataset.text.match(text);
-    const typeMatch     = type     == 'Any' || state.dataset.type.split(/[,;] */).indexOf(type) != -1;
-    const playersMatch  = players  == 'Any' || state.dataset.players.split(/[,;] */).indexOf(players) != -1;
-    const durationMatch = duration == 'Any' || state.dataset.duration >= duration[0] && state.dataset.duration <= duration[1];
-    const languageMatch = language == 'Any' || state.dataset.languages.split(/[,;] */).indexOf(language) != -1;
-    const modeMatch     = mode     == 'Any' || state.dataset.modes.split(/[,;] */).indexOf(mode) != -1;
-    if(textMatch && typeMatch && playersMatch && durationMatch && languageMatch && modeMatch)
-      state.classList.add('visible');
-    else
-      state.classList.remove('visible');
+  const states = [...$a('#statesList .list > div')].map(d=>[ d, d.dataset ]);
+  const activeFilters = {
+    text:     regexEscape($('#filterByText').value.toLowerCase()),
+    type:     $('#filterByType').value,
+    players:  $('#filterByPlayers').value,
+    duration: $('#filterByDuration').value.split('-'),
+    language: $('#filterByLanguage').value,
+    mode:     $('#filterByMode').value
+  };
+
+  function applyFilters(filters, callback) {
+    for(const [ dom, dataset ] of states) {
+      const textMatch     = dataset.text.match(filters.text);
+      const typeMatch     = filters.type     == 'Any' || dataset.type.split(/[,;] */).indexOf(filters.type) != -1;
+      const playersMatch  = filters.players  == 'Any' || dataset.players.split(/[,;] */).indexOf(filters.players) != -1;
+      const durationMatch = filters.duration == 'Any' || dataset.duration >= filters.duration[0] && dataset.duration <= filters.duration[1];
+      const languageMatch = filters.language == 'Any' || dataset.languages.split(/[,;] */).indexOf(filters.language) != -1;
+      const modeMatch     = filters.mode     == 'Any' || dataset.modes.split(/[,;] */).indexOf(filters.mode) != -1;
+      callback(dom, textMatch && typeMatch && playersMatch && durationMatch && languageMatch && modeMatch);
+    }
   }
 
+  applyFilters(activeFilters, (dom,match)=>toggleClass(dom, 'visible', match));
   updateEmptyLibraryHint();
 }
 
