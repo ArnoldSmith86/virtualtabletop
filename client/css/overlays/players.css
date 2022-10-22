@@ -158,8 +158,9 @@ label.ui-line::before{
   height:100%;
   --cursorSize: 10;
   --cursorOpacity: 0;
-  --cursorActiveOpacity: 0.2;
-  --cursorPressedOpacity: 0.5;
+  --cursorActiveOpacity: 0.3;
+  --cursorPressedOpacity: 0.3;
+  --cursorActiveDuration: 100; /* milliseconds */
 }
 .cursor {
   position: absolute;
@@ -167,7 +168,8 @@ label.ui-line::before{
   left: calc(var(--cursorSize) * -1px * var(--scale));
   width: calc(var(--cursorSize) * 2px * var(--scale));
   height: calc(var(--cursorSize) * 2px * var(--scale));
-  background-color: var(--playerColor);
+  box-sizing: border-box;
+  border: 4px solid var(--playerColor);
   border-radius: 100%;
   opacity: var(--cursorOpacity);
   transition-duration: 2s;
@@ -175,10 +177,10 @@ label.ui-line::before{
 }
 .cursor.active, .cursor.pressed.foreign {
   --cursorOpacity: var(--cursorActiveOpacity);
-  --cursorShowName: var(--cursorActiveShowName);
   transition: none;
 }
 .cursor.pressed {
   --cursorOpacity: var(--cursorPressedOpacity);
-  --cursorShowName: var(--cursorPressedShowName);
+  border: none;
+  background-color: var(--playerColor);
 }

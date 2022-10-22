@@ -12,7 +12,6 @@ class Pile extends Widget {
       height: 1,
       alignChildren: true,
       inheritChildZ: true,
-      clickable: true,
 
       text: null,
 
@@ -97,7 +96,7 @@ class Pile extends Widget {
       shuffleButton.textContent = 'Shuffle pile';
       shuffleButton.addEventListener('click', async e=>{
         batchStart();
-        this.shuffleWidgets(this.children())
+        shuffleWidgets(this.children())
         showOverlay();
         batchEnd();
       });
