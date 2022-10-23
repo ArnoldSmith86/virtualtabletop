@@ -44,6 +44,7 @@ function extractNumber(property) {
 async function addDeck(o, parent=null) {
   const firstDeckID = Math.floor(extractNumber((o.DeckIDs || [ o.CardID ])[0])/100);
 
+  const decks = {};
   let [ deckWidth, deckHeight ] = await imgSize(processURL(o.CustomDeck[firstDeckID].FaceURL));
 
   const cardsPerRow = extractNumber(o.CustomDeck[firstDeckID].NumWidth)  || 10;
@@ -69,25 +70,25 @@ async function addDeck(o, parent=null) {
     type: 'deck',
     cardTypes: {},
     cardDefaults: {
-      width: cardWidth,
-      height: cardHeight,
+      width: Math.round(cardWidth),
+      height: Math.round(cardHeight),
       enlarge: 4
     },
     faceTemplates: [
       {
         objects: [{
           type: 'image',
-          width:  deckWidth,
-          height: deckHeight,
           dynamicProperties: {
             value: 'back',
             x: 'offsetX',
-            y: 'offsetY'
+            y: 'offsetY',
+            width: 'deckWidth',
+            height: 'deckHeight'
           }
         },{
           type: 'image',
-          width:  cardWidth,
-          height: cardHeight,
+          width:  Math.round(cardWidth),
+          height: Math.round(cardHeight),
           color: 'transparent',
           dynamicProperties: {
             value: 'simpleBack'
@@ -97,12 +98,12 @@ async function addDeck(o, parent=null) {
       {
         objects: [{
           type: 'image',
-          width:  deckWidth,
-          height: deckHeight,
           dynamicProperties: {
             value: 'face',
             x: 'offsetX',
-            y: 'offsetY'
+            y: 'offsetY',
+            width: 'deckWidth',
+            height: 'deckHeight'
           }
         }]
       }
@@ -114,11 +115,21 @@ async function addDeck(o, parent=null) {
     const deckID = Math.floor(cardID/100);
     const offset = cardID%100;
 
+    if(!decks[deckID]) {
+      decks[deckID] = {
+        size: await imgSize(processURL(o.CustomDeck[deckID].FaceURL)),
+        cardsPerRow: extractNumber(o.CustomDeck[deckID].NumWidth)  || 10,
+        cardsPerCol: extractNumber(o.CustomDeck[deckID].NumHeight) ||  7
+      };
+    }
+
     deck.cardTypes[cardID] = {
       face: processURL(o.CustomDeck[deckID].FaceURL),
       back: processURL(o.CustomDeck[deckID].BackURL),
-      offsetX: (offset%cardsPerRow) * -cardWidth,
-      offsetY: Math.floor(offset/cardsPerRow) * -cardHeight
+      offsetX: Math.round((offset%decks[deckID].cardsPerRow) * -cardWidth),
+      offsetY: Math.round(Math.floor(offset/decks[deckID].cardsPerRow) * -cardHeight),
+      deckWidth: Math.round(cardWidth*decks[deckID].cardsPerRow),
+      deckHeight: Math.round(cardHeight*decks[deckID].cardsPerCol)
     };
     if(!o.CustomDeck[deckID].UniqueBack) {
       deck.cardTypes[cardID].simpleBack = deck.cardTypes[cardID].back;
