@@ -406,8 +406,10 @@ const jeCommands = [
     name: '🍉 widgets in',
     forceKey: 'I',
     call: async function() {
+      batchStart();
       for(const state of jeCopyBuffer)
         addWidgetLocal(state);
+      batchEnd();
     }
   },
   {
