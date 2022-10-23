@@ -83,7 +83,7 @@ onLoad(function() {
           playerCursors[args.player].classList.add('foreign');
         else
           playerCursors[args.player].classList.remove('foreign');
-        playerCursorsTimeout[args.player] = setTimeout(()=>{playerCursors[args.player].classList.remove('active')}, 100 )
+        playerCursorsTimeout[args.player] = setTimeout(()=>{playerCursors[args.player].classList.remove('active')}, parseInt(getComputedStyle(playerCursors[args.player]).getPropertyValue('--cursorActiveDuration')))
       }
     }
   });
