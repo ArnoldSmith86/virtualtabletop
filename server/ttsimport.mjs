@@ -45,6 +45,7 @@ async function addDeck(o, parent=null) {
   const firstDeckID = Math.floor(extractNumber((o.DeckIDs || [ o.CardID ])[0])/100);
 
   const decks = {};
+  const cardCounts = {};
   let [ deckWidth, deckHeight ] = await imgSize(processURL(o.CustomDeck[firstDeckID].FaceURL));
 
   const cardsPerRow = extractNumber(o.CustomDeck[firstDeckID].NumWidth)  || 10;
@@ -135,8 +136,9 @@ async function addDeck(o, parent=null) {
       deck.cardTypes[cardID].simpleBack = deck.cardTypes[cardID].back;
       delete deck.cardTypes[cardID].back;
     }
-    widgets[`${id}-${cardID}`] = {
-      id: `${id}-${cardID}`,
+    const i = cardCounts[`${id}-${cardID}`] = (cardCounts[`${id}-${cardID}`] || 0) + 1;
+    widgets[`${id}-${cardID}-${i}`] = {
+      id: `${id}-${cardID}-${i}`,
       type: 'card',
       parent: `${id}-pile`,
       deck: id,
@@ -222,6 +224,7 @@ async function convertTTS(content, linkContent) {
 
   if(linkContent) {
     json = BSON.deserialize(linkContent);
+    fs.writeFileSync('/tmp/tts.json', JSON.stringify(json, null, '  '));
   } else {
     const zip = await JSZip.loadAsync(content);
     for(var file in zip.files)

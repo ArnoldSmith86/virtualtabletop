@@ -10,7 +10,7 @@ import Config from './config.mjs';
 
 const dirname = Config.directory('save') + '/links';
 const filename = dirname + '.json';
-const linkStatus = fs.existsSync(filename) ? JSON.parse(fs.readFileSync(filename)) : {};
+const linkStatus = {}; //fs.existsSync(filename) ? JSON.parse(fs.readFileSync(filename)) : {};
 
 async function downloadLink(link) {
   link = link.replace(/#.*/, '');
