@@ -277,9 +277,31 @@
 
     <div id="stateAddOverlay" class="overlay">
       <h1>Add game</h1>
-      <button icon="save">Save room state</button>
-      <button icon="link">Enter link</button>
-      <button icon="upload">Upload files</button>
+      <button icon="close"></button>
+      <div>
+        <div>
+          <i class="material-icons">upload</i>
+          <p>Upload VTT or PCIO files you downloaded from the web.</p>
+          <p>You can find compatible game files on <a href="https://boardgamegeek.com/geeklist/272690/games-implemented-playingcardsio">a boardgamegeek.com geeklist</a>,
+          <a href="https://www.reddit.com/r/PlayingCardsIO/">the PlayingCardsIO subreddit</a>,
+          <a href="https://www.notion.so/4d27ed5a430d422b99b3fa21b66714e6">its notion.so database</a> or
+          <a href="https://github.com/search?utf8=%E2%9C%93&amp;q=playingcards.io">GitHub</a>.</p>
+          <p>Please note that PCIO files might not be 100% compatible. Please <a href="https://github.com/ArnoldSmith86/virtualtabletop/issues/new">open an issue on GitHub</a> if a file is unplayable.</p>
+          <button icon="upload">Upload files</button>
+        </div>
+        <div>
+          <i class="material-icons">link</i>
+          <p>If you have a direct link to a VTT or PCIO file (for example by sharing a link from virtualtabletop.io), you can add the game using the link and you will always play the latest version.</p>
+          <input placeholder="URL">
+          <button icon="link">Add link</button>
+        </div>
+        <div>
+          <i class="material-icons">save</i>
+          <p>Use the current state of this room as a new game.</p>
+          <p>This is usually used when using Edit Mode to create a new game from scratch.</p>
+          <button icon="save">Save room state</button>
+        </div>
+      </div>
     </div>
 
     <div id="stateSaveOverlay" class="overlay">

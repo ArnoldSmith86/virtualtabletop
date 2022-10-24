@@ -66,7 +66,7 @@ export default class Room {
       try {
         fs.writeFileSync(Config.directory('save') + '/errors/' + Math.random().toString(36).substring(3, 7), src);
       } catch(e) {}
-      throw e;
+      throw new Logging.UserError(404, 'Unable to load and add the game.');
     }
 
     for(const state in states) {

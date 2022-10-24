@@ -860,8 +860,14 @@ onLoad(function() {
   on('#addState', 'click', _=>showStatesOverlay('stateAddOverlay'));
   on('#saveState', 'click', saveState);
 
+  on('#stateAddOverlay [icon=close]', 'click', e=>showStatesOverlay('statesOverlay'));
   on('#stateAddOverlay [icon=save]', 'click', e=>addState(e, 'state'));
-  on('#stateAddOverlay [icon=link]', 'click', e=>addState(e, 'link', prompt('Enter shared URL:')));
+  on('#stateAddOverlay [icon=link]', 'click', function(e) {
+    if($('#stateAddOverlay input').value.match(/^http/))
+      addState(e, 'link', $('#stateAddOverlay input').value);
+    else
+      alert('Please enter a link.');
+  });
 
   document.addEventListener('dragover', function(e) {
     e.preventDefault();
