@@ -793,6 +793,7 @@ export default class Room {
       delete variant.link;
     }
     delete this.state._meta.states[stateID].link;
+    this.sendMetaUpdate();
   }
 
   unload() {
