@@ -349,7 +349,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     'Public Library': domByTemplate('template-stateslist-category')
   };
 
-  for(const kvp of Object.entries(states).sort((a, b) => a[1].name.localeCompare(b[1].name))) {
+  for(const kvp of Object.entries(states).sort((a, b) => a[1].name.localeCompare(b[1].name)).sort((a, b) => !!a[1].publicLibrary - !!b[1].publicLibrary)) {
     const state = kvp[1];
     state.id = kvp[0];
     state.starred = starred && starred[state.publicLibrary];

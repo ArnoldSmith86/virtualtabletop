@@ -481,7 +481,7 @@ export default class Room {
           const target = plTarget(variant.link && variant.link.match(/\/library\/(Tutorial - )?(.*)\.vtt/))
           if(target && this.state._meta.states[target]) {
             for(const [ targetVid, targetVariant ] of Object.entries(this.state._meta.states[target].variants)) {
-              if(targetVariant.players == variant.players && targetVariant.language == variant.language && targetVariant.variant == variant.variant) {
+              if(targetVariant.players == variant.players && (targetVariant.language.match(variant.language) || targetVariant.language === '' && variant.language == 'UN') && targetVariant.variant == variant.variant) {
                 this.state._meta.states[id].variants[vID] = {
                   plStateID: target,
                   plVariantID: targetVid
