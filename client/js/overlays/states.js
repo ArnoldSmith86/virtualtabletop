@@ -43,7 +43,8 @@ function addStateFile(f) {
     }
 
     isSave = !!savePlayers;
-    fillStateTileTitles(stateDOM, name, similarName, savePlayers, saveDate)
+    fillStateTileTitles(stateDOM, name, similarName, savePlayers, saveDate);
+    $('i', stateDOM).textContent = 'upload';
 
     uploadingStates[isSave ? 0 : 1].push(stateDOM);
     insertUploadingState(stateDOM, $a('#statesList > div')[isSave ? 0 : 1]);
