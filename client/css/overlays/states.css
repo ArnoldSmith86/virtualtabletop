@@ -121,6 +121,8 @@
 }
 #statesOverlay .buttons > button {
   display: inline-flex;
+  position: relative;
+  top: -2px;
 }
 
 #emptyLibrary, #emptyLibraryByFilter {
@@ -239,7 +241,7 @@ div:nth-of-type(2) > .list > .roomState .star {
 }
 
 
-@media (max-width: 460px), (max-height: 287px) {
+@media (max-width: 480px), (max-height: 300px) {
   #statesOverlay h2.title {
     position: unset;
     margin:  0 !important;
