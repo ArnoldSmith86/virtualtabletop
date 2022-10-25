@@ -332,7 +332,8 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 
   const emptyLibrary = $('#emptyLibrary');
   const emptyLibraryByFilter = $('#emptyLibraryByFilter');
-  const buttons = $('#statesOverlay .buttons');
+  const saveButton = $('#saveState');
+  const addButton = $('#addState');
   $('#saveState').style.display = 'none';
   removeFromDOM('#statesList > div');
 
@@ -376,7 +377,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
       entry.className += ' savedGame';
     if(activeState && activeState.stateID == state.id) {
       entry.className += ' activeGame';
-      $('#saveState', buttons).style.display = 'inline-flex';
+      saveButton.style.display = 'inline-flex';
     }
 
     $('img', entry).src = state.image.replace(/^\//, '');
@@ -447,12 +448,16 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     $('#statesList').appendChild(category);
   }
 
-  if(!$('.roomState', categories['In-Progress Games']))
+  if(!$('.roomState', categories['In-Progress Games'])) {
     categories['In-Progress Games'].classList.add('empty');
+    $('.buttons', categories['Game Shelf']).appendChild(saveButton);
+  } else {
+    $('.buttons', categories['In-Progress Games']).appendChild(saveButton);
+  }
 
-  categories['Game Shelf'].insertBefore(emptyLibrary, $('h2', categories['Game Shelf']).nextSibling);
-  categories['Game Shelf'].insertBefore(emptyLibraryByFilter, $('h2', categories['Game Shelf']).nextSibling);
-  categories['Game Shelf'].insertBefore(buttons, $('h2', categories['Game Shelf']).nextSibling);
+  categories['Game Shelf'].insertBefore(emptyLibrary, $('.list', categories['Game Shelf']));
+  categories['Game Shelf'].insertBefore(emptyLibraryByFilter, $('.list', categories['Game Shelf']));
+  $('.buttons', categories['Game Shelf']).appendChild(addButton);
   updateEmptyLibraryHint();
 
   const previousLanguage = $('#filterByLanguage').value;

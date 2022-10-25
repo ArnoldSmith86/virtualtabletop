@@ -254,6 +254,7 @@
       <div id="statesList">
         <template id="template-stateslist-category" type="text/template">
           <h2 class="title">Title</h2>
+          <div class="buttons"></div>
           <div class="list"></div>
         </template>
         <template id="template-stateslist-entry" type="text/template">
@@ -265,10 +266,8 @@
             <h4>Similar Name</h4>
           </div>
         </template>
-        <div class="buttons">
-          <button icon="save" id="saveState">Save active game</button>
-          <button icon="add" id="addState">Add game</button>
-        </div>
+        <button icon="save" id="saveState">Save active game</button>
+        <button icon="add" id="addState">Add game</button>
         <p id="emptyLibrary">Your personal game library is currently empty.<br>Use the stars below to pin public library games, use the "Add game" button above or drag VTT files here.</p>
         <p id="emptyLibraryByFilter">No games displayed.<br>Adjust the filters above to show them.</p>
         <!--<button class="prettyButton gameMenu download">Download all</button>-->
