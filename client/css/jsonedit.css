@@ -15,7 +15,7 @@
   --editorPaneWidth: 602px;
 }
 
-#jsonEditor.notHighEnough #jeWidgetLayers, #jsonEditor.notHighEnough #jeLogWrapper {
+#jsonEditor.notHighEnough #jeWidgetLayers, #jsonEditor.notHighEnough #jeLogWrapper, #jeShowDebugOutput {
   display: none;
 }
 
@@ -318,12 +318,30 @@ body.jsonEdit.jeZoomOut #topSurface {
   margin: 0;
 }
 
-#jeLogWrapper:hover #jeLog {
-  display: block;
+#jeLog.active {
+  display: inline;
 }
 
-#jeLogWrapper:hover > h1, .jeLogNested {
-  display: none;
+#jeShowDebugOutput.active {
+  position:relative;
+  bottom:0px;
+  display:block;
+  font-size: 18pt;
+}
+
+#jeHideDebugOutput {
+  position: sticky;
+  top: 0px;
+  float:right;
+  margin-right:15px;
+  width: 28px;
+  height: 28px;
+  font-size:18pt;
+  border-radius:100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
 }
 
 /* Show the nested list when the user clicks on the caret/arrow */
