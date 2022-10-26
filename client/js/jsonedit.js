@@ -1789,14 +1789,14 @@ function jeLoggingRoutineEnd(variables, collections) {
   if(!jeLoggingDepth) {
     $('#jeLog').innerHTML = '<button id="jeHideDebugOutput">X</button>' + jeLoggingHTML + '</div></div>';
     // Enable the "Show Routine Debug Output" button
-    if ( !$('#jeShowDebugOutput').className.match(/(?:^|\s)active(?!\S)/) )
-      $('#jeShowDebugOutput').className += " active";
+    if ( !$('#jeShowDebugOutput').classList.contains('show') )
+      $('#jeShowDebugOutput').className += " show";
     // and attach click routines to the show/hide debug output buttons.
     $('#jeHideDebugOutput').onclick = function() {
-      $('#jeLog').classList.toggle('active');
+      $('#jeLog').classList.toggle('show');
     };
     $('#jeShowDebugOutput').onclick = function() {
-      $('#jeLog').classList.toggle('active');
+      $('#jeLog').classList.toggle('show');
     };
 
     // Make it so clicking on the arrows expands the subtree

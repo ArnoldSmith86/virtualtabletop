@@ -15,7 +15,7 @@
   --editorPaneWidth: 602px;
 }
 
-#jsonEditor.notHighEnough #jeWidgetLayers, #jsonEditor.notHighEnough #jeLogWrapper, #jeShowDebugOutput {
+#jsonEditor.notHighEnough #jeWidgetLayers, #jsonEditor.notHighEnough #jeLogWrapper, #jeShowDebugOutput, .jeLogNested {
   display: none;
 }
 
@@ -318,15 +318,17 @@ body.jsonEdit.jeZoomOut #topSurface {
   margin: 0;
 }
 
-#jeLog.active {
+#jeLog.show {
   display: inline;
 }
 
-#jeShowDebugOutput.active {
+#jeShowDebugOutput.show {
   position:relative;
   bottom:0px;
   display:block;
   font-size: 18pt;
+  background-color:white;
+  color: var(--VTTblue);
 }
 
 #jeHideDebugOutput {
@@ -341,7 +343,8 @@ body.jsonEdit.jeZoomOut #topSurface {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-
+  background-color:white;
+  color: var(--VTTblue);
 }
 
 /* Show the nested list when the user clicks on the caret/arrow */
