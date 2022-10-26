@@ -1787,16 +1787,16 @@ function jeLoggingRoutineEnd(variables, collections) {
   if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine'].indexOf( jeHTMLStack[0][3] ) == -1 ) jeLoggingHTML += '</div></div>';
   --jeLoggingDepth;
   if(!jeLoggingDepth) {
-    $('#jeLog').innerHTML = '<button id="jeHideDebugOutput">X</button>' + jeLoggingHTML + '</div></div>';
-    // Enable the "Show Routine Debug Output" button
-    if ( !$('#jeShowDebugOutput').classList.contains('show') )
-      $('#jeShowDebugOutput').className += " show";
+    $('#jeLog').innerHTML = '<button id="jeHideDebugOutput">[close_circle_white]</button>' + jeLoggingHTML + '</div></div>';
+    // Enable the "Show Routine Debug Output" button the first time a routine is executed.
+    if ( !$('#jeShowDebugOutput').classList.contains('active') )
+      $('#jeShowDebugOutput').className += " active";
     // and attach click routines to the show/hide debug output buttons.
     $('#jeHideDebugOutput').onclick = function() {
-      $('#jeLog').classList.toggle('show');
+      $('#jeLog').classList.toggle('active');
     };
     $('#jeShowDebugOutput').onclick = function() {
-      $('#jeLog').classList.toggle('show');
+      $('#jeLog').classList.toggle('active');
     };
 
     // Make it so clicking on the arrows expands the subtree

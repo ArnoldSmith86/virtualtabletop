@@ -318,17 +318,17 @@ body.jsonEdit.jeZoomOut #topSurface {
   margin: 0;
 }
 
-#jeLog.show {
-  display: inline;
+#jeLog.active {
+  display: block;
 }
 
-#jeShowDebugOutput.show {
+#jeShowDebugOutput.active {
   position:relative;
   bottom:0px;
   display:block;
   font-size: 18pt;
   background-color:white;
-  color: var(--VTTblue);
+  color: black;
 }
 
 #jeHideDebugOutput {
@@ -343,13 +343,8 @@ body.jsonEdit.jeZoomOut #topSurface {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  background-color:white;
-  color: var(--VTTblue);
-}
-
-/* Show the nested list when the user clicks on the caret/arrow */
-.jeLogNested.active {
-  display: block;
+  background-color:black;
+  font-family: 'VTT-Symbols';
 }
 
 .jeLog {
