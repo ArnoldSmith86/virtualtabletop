@@ -15,7 +15,7 @@
   --editorPaneWidth: 602px;
 }
 
-#jsonEditor.notHighEnough #jeWidgetLayers, #jsonEditor.notHighEnough #jeLogWrapper, #jeShowDebugOutput, .jeLogNested {
+#jsonEditor.notHighEnough #jeWidgetLayers, #jsonEditor.notHighEnough #jeLogWrapper, .jeLogNested {
   display: none;
 }
 
@@ -322,31 +322,6 @@ body.jsonEdit.jeZoomOut #topSurface {
   display: block;
 }
 
-#jeShowDebugOutput.active {
-  position:relative;
-  bottom:0px;
-  display:block;
-  font-size: 18pt;
-  background-color:white;
-  color: black;
-}
-
-#jeHideDebugOutput {
-  position: sticky;
-  top: 0px;
-  float:right;
-  margin-right:15px;
-  width: 28px;
-  height: 28px;
-  font-size:18pt;
-  border-radius:100%;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  background-color:black;
-  font-family: 'VTT-Symbols';
-}
-
 .jeLog {
   white-space: normal;
   font-size: 12px;
@@ -487,6 +462,12 @@ body.jsonEdit.jeZoomOut #topSurface {
 }
 #je_toggleWide{
 }
+
+/* Used to put a diagonal slash across debug button */
+.diagonal {
+  background: linear-gradient(to bottom right, var(--VTTblue) calc(50% - 2px), #fff , var(--VTTblue) calc(50% + 2px) )
+}
+
 
 #jeCommands > button::before{
   margin-right: 4px;

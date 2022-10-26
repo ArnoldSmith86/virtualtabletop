@@ -11,6 +11,7 @@ let jeCommandError = null;
 let jeCommandWithOptions = null;
 let jeFKeyOrderDescending = 1;
 let jeWidgetHighlighting = true;
+let jeDebugViewing = null;
 let jeInMacroExecution = false;
 let jeContext = null;
 let jeSecondaryWidget = null;
@@ -602,6 +603,18 @@ const jeCommands = [
       jeWidgetHighlighting = ! jeWidgetHighlighting;
       jeShowCommands();
       jeHighlightWidgets();
+    }
+  },
+  {
+    id: 'je_toggleDebug',
+    name: 'Toggle debug information',
+    icon: 'pest_control',
+    forceKey: 'B',
+    auxClasses: _=> jeDebugViewing ? 'diagonal' : '',
+    show: _=>jeDebugViewing != null,
+    call: async function() {
+      jeDebugViewing = ! jeDebugViewing;
+      $('#jeLog').classList.toggle('active');
     }
   },
   {
@@ -1787,17 +1800,12 @@ function jeLoggingRoutineEnd(variables, collections) {
   if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine'].indexOf( jeHTMLStack[0][3] ) == -1 ) jeLoggingHTML += '</div></div>';
   --jeLoggingDepth;
   if(!jeLoggingDepth) {
-    $('#jeLog').innerHTML = '<button id="jeHideDebugOutput">[close_circle_white]</button>' + jeLoggingHTML + '</div></div>';
+    $('#jeLog').innerHTML = jeLoggingHTML + '</div></div>';
     // Enable the "Show Routine Debug Output" button the first time a routine is executed.
-    if ( !$('#jeShowDebugOutput').classList.contains('active') )
-      $('#jeShowDebugOutput').className += " active";
-    // and attach click routines to the show/hide debug output buttons.
-    $('#jeHideDebugOutput').onclick = function() {
-      $('#jeLog').classList.toggle('active');
-    };
-    $('#jeShowDebugOutput').onclick = function() {
-      $('#jeLog').classList.toggle('active');
-    };
+    if ( jeDebugViewing == null) {
+      jeDebugViewing = false;
+      jeShowCommands()
+    }
 
     // Make it so clicking on the arrows expands the subtree
     const expanders = document.getElementsByClassName('jeExpander');
@@ -2083,8 +2091,9 @@ function jeShowCommands() {
     if(command.context == undefined) {
       const name = (typeof command.name == 'function' ? command.name() : command.name);
       const icon = (typeof command.icon == 'function' ? command.icon() : command.icon);
+      const classes = typeof command.auxClasses == 'function' ? command.auxClasses() : command.auxClasses || '';
       const isMaterial = String(icon).match(/^[^[]/) ? 'material' : '';
-      commandText += `<button class='top ${isMaterial}' id='${command.id}' title='${name}' ${!command.show || command.show() ? '' : 'disabled'}>${icon}</button>`;
+      commandText += `<button class='top ${isMaterial} ${classes}' id='${command.id}' title='${name}' ${!command.show || command.show() ? '' : 'disabled'}>${icon}</button>`;
     }
   }
   commandText += `</div>`;
