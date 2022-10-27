@@ -830,18 +830,20 @@ async function confirmOverlay(title, text, confirmButton, cancelButton, confirmI
     showOverlay('confirmOverlay');
     applyValuesToDOM($('#confirmOverlay'), { title, text, confirmButton, cancelButton });
 
-    $('#confirmOverlay button:nth-of-type(1)').setAttribute('icon', cancelIcon || 'close');
-    $('#confirmOverlay button:nth-of-type(1)').className = cancelClass || '';
-    $('#confirmOverlay button:nth-of-type(1)').onclick = function() {
+    $('#confirmOverlay .buttons button:nth-of-type(1)').setAttribute('icon', cancelIcon || 'close');
+    $('#confirmOverlay .buttons button:nth-of-type(1)').className = cancelClass || '';
+    $('#confirmOverlay .buttons button:nth-of-type(1)').onclick = function() {
       showOverlay();
       resolve(false);
     };
-    $('#confirmOverlay button:nth-of-type(2)').setAttribute('icon', confirmIcon || 'check');
-    $('#confirmOverlay button:nth-of-type(2)').className = confirmClass || '';
-    $('#confirmOverlay button:nth-of-type(2)').onclick = function() {
+    $('#confirmOverlay .buttons button:nth-of-type(2)').setAttribute('icon', confirmIcon || 'check');
+    $('#confirmOverlay .buttons button:nth-of-type(2)').className = confirmClass || '';
+    $('#confirmOverlay .buttons button:nth-of-type(2)').onclick = function() {
       showOverlay();
       resolve(true);
     };
+
+    $('#confirmOverlay > button').onclick = $('#confirmOverlay .buttons button:nth-of-type(1)').onclick;
   });
 }
 

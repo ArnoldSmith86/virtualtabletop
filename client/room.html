@@ -443,10 +443,15 @@
 
     <div id="confirmOverlay" class="overlay">
       <h1 data-field="title"></h1>
-      <p data-field="text"></p>
-      <div id="confirmButtonBar">
-        <button icon="close" data-field="cancelButton"></button>
-        <button icon="check" data-field="confirmButton"></button>
+      <button icon="close"></button>
+      <div>
+        <div icon="warning">
+          <p data-field="text"></p>
+          <div class="buttons">
+            <button icon="close" data-field="cancelButton"></button>
+            <button icon="check" data-field="confirmButton"></button>
+          </div>
+        </div>
       </div>
     </div>
 

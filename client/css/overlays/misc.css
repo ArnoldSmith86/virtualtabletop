@@ -1,0 +1,46 @@
+/* confirmOverlay */
+
+  #confirmOverlay {
+    justify-content: center;
+  }
+
+  #confirmOverlay h1 {
+    margin-top: 0;
+  }
+
+  #confirmOverlay > button {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
+
+  #confirmOverlay > div > div {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  #confirmOverlay .buttons {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 500px), (max-height: 312px) {
+    #confirmOverlay {
+      justify-content: unset;
+    }
+  }
+
+  @media (max-width: 300px), (max-height: 187px) {
+    #confirmOverlay {
+      padding: 0;
+    }
+    #confirmOverlay > h1 {
+      text-align: left;
+      margin: 10px 50px 10px 5px;
+    }
+    #confirmOverlay > div > div {
+      padding: 5px;
+      border-radius: 10px;
+    }
+  }

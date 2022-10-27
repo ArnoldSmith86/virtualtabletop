@@ -571,6 +571,32 @@ body.aspectTooGood.hiddenToolbar {
   background: #00000022;
 }
 
+div[icon] {
+  background: var(--roomColor);
+  position: relative;
+  padding: 20px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+div[icon]::before {
+  content: attr(icon);
+  font-family: "Material Icons";
+  color: #f8f8f8;
+  font-size: 250px;
+  position: absolute;
+  right: -40px;
+  top: -40px;
+}
+
+div[icon] * {
+  position: relative;
+}
+
+div[icon] > :nth-child(1) {
+  margin-top: 0;
+}
+
 #room {
   transform: scale(var(--scale));
   transform-origin: left top;

@@ -24,6 +24,7 @@ export default function minifyRoom() {
         'client/css/jsonedit.css',
         'client/css/tracing.css',
 
+        'client/css/overlays/misc.css',
         'client/css/overlays/players.css',
         'client/css/overlays/states.css',
         'client/css/overlays/connectionlost.css',
