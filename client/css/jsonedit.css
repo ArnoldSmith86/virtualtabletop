@@ -426,6 +426,12 @@ body.jsonEdit.jeZoomOut #topSurface {
   opacity: 0.5;
 }
 
+/* For the zoom, edit, wide, highlight, and debug "on" states */
+[id=jeTopButtons] button.onState {
+  color: yellow
+}
+
+
 #jeCommands .context{
   font-weight: bold;
   margin-top: 8px;
@@ -445,16 +451,15 @@ body.jsonEdit.jeZoomOut #topSurface {
 }
 #je_showWidget{
 }
-#je_tree{
+#je_reverseFkeys{
 }
 #je_addNewWidget{
   color: rgb(95, 167, 95);
 }
-#je_duplicateWidget{
-  color: yellow;
-}
 #je_removeWidget{
   color: rgb(255, 73, 73);
+}
+#je_duplicateWidget{
 }
 #je_editMode{
 }
@@ -462,12 +467,10 @@ body.jsonEdit.jeZoomOut #topSurface {
 }
 #je_toggleWide{
 }
-
-/* Used to put a diagonal slash across debug button */
-.diagonal {
-  background: linear-gradient(to bottom right, var(--VTTblue) calc(50% - 2px), #fff , var(--VTTblue) calc(50% + 2px) )
+#je_toggleHighlight{
 }
-
+#je_toggleDebug{
+}
 
 #jeCommands > button::before{
   margin-right: 4px;
