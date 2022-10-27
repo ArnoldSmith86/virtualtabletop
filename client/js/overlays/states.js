@@ -484,7 +484,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     }
   }
 
-  $('#stateAddOverlay [icon=upload]').onclick = function() {
+  $('#stateAddOverlay button[icon=upload]').onclick = function() {
     loadJSZip();
     showStatesOverlay('statesOverlay');
     selectVTTfile(addStateFile);
@@ -869,8 +869,8 @@ onLoad(function() {
   on('#saveState', 'click', saveState);
 
   on('#stateAddOverlay [icon=close]', 'click', e=>showStatesOverlay('statesOverlay'));
-  on('#stateAddOverlay [icon=save]', 'click', e=>addState(e, 'state'));
-  on('#stateAddOverlay [icon=link]', 'click', function(e) {
+  on('#stateAddOverlay button[icon=save]', 'click', e=>addState(e, 'state'));
+  on('#stateAddOverlay button[icon=link]', 'click', function(e) {
     if($('#stateAddOverlay input').value.match(/^http/))
       addState(e, 'link', $('#stateAddOverlay input').value);
     else

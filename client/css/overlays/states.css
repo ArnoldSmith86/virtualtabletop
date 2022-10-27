@@ -772,29 +772,6 @@ div:nth-of-type(2) > .list > .roomState .star {
 #stateAddOverlay > div > div:nth-of-type(1) {
   grid-column: 1 / span 2;
 }
-#stateAddOverlay > div > div {
-  background: var(--roomColor);
-  position: relative;
-  padding: 20px;
-  border-radius: 20px;
-  overflow: hidden;
-}
-#stateAddOverlay p:nth-of-type(1) {
-  margin-top: 0;
-}
-#stateAddOverlay > div > div > * {
-  position: relative;
-  z-index: 1;
-}
-#stateAddOverlay > div > div > i {
-  color: #f8f8f8;
-  font-size: 250px;
-  position: absolute;
-  right: -40px;
-  top: -40px;
-  z-index: 0;
-  user-select: none;
-}
 @media (min-width: 1300px), (min-height: 875px) {
   #stateAddOverlay > div {
     margin: 5% 10% 0 10%;
