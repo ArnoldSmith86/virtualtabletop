@@ -247,7 +247,7 @@ function updateLibraryFilter() {
       const typeMatch     = filters.type     == 'Any' || dataset.type.split(/[,;] */).indexOf(filters.type) != -1;
       const playersMatch  = filters.players  == 'Any' || dataset.players.split(/[,;] */).indexOf(filters.players) != -1;
       const durationMatch = filters.duration == 'Any' || dataset.duration >= filters.duration.split('-')[0] && dataset.duration <= filters.duration.split('-')[1];
-      const languageMatch = filters.language == 'Any' || dataset.languages.split(/[,;] */).indexOf(filters.language) != -1;
+      const languageMatch = filters.language == 'Any' || dataset.languages.split(/[,;] */).indexOf(filters.language.replace(/ \+ None/, '')) != -1 || filters.language.match(/None$/) && dataset.languages.split(/[,;] */).indexOf('') != -1;
       const modeMatch     = filters.mode     == 'Any' || dataset.modes.split(/[,;] */).indexOf(filters.mode) != -1;
       callback(dom, textMatch && typeMatch && playersMatch && durationMatch && languageMatch && modeMatch);
     }
@@ -399,8 +399,11 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 
       validPlayers.push(...parsePlayers(variant.players));
       validLanguages.push(variant.language);
-      for(const lang of variant.language.split(/[,;] */))
+      for(const lang of variant.language.split(/[,;] */)) {
         languageOptions[lang] = true;
+        if(lang && !lang.match(/^en/))
+          languageOptions[`${lang} + None`] = true;
+      }
     }
 
     for(const mode of state.mode.split(/[,;] */))
