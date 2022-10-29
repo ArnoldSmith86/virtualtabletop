@@ -722,7 +722,7 @@ function fillStateDetails(states, state, dom) {
   $('#shareOK').onclick = _=>showStatesOverlay('stateDetailsOverlay');
   $('#stateDetailsOverlay .buttons [icon=delete]').onclick = async function() {
     $('#statesButton').dataset.overlay = 'confirmOverlay';
-    const type     = state.savePlayers ? 'savegame'          : 'game';
+    const type     = state.savePlayers ? 'saved game'        : 'game';
     const category = state.savePlayers ? 'in-progress games' : 'game shelf';
     if(await confirmOverlay(`Delete ${type}`, `Are you sure you want to completely remove this ${type} from your ${category}?`, 'Delete', 'Keep', 'delete', 'undo', 'red')) {
       toServer('removeState', state.id);
