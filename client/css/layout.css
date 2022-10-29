@@ -597,6 +597,12 @@ div[icon] > :nth-child(1) {
   margin-top: 0;
 }
 
+div[icon] .buttons {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
 #room {
   transform: scale(var(--scale));
   transform-origin: left top;

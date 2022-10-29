@@ -19,12 +19,6 @@
     margin: 0 auto;
   }
 
-  #confirmOverlay .buttons {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
-
   @media (max-width: 500px), (max-height: 312px) {
     #confirmOverlay {
       justify-content: unset;

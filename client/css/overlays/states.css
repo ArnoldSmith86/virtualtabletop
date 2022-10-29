@@ -806,6 +806,56 @@ div:nth-of-type(2) > .list > .roomState .star {
 
 
 
+/* stateSaveOverlay */
+
+#stateSaveOverlay {
+  justify-content: center;
+}
+
+#stateSaveOverlay h1 {
+  margin-top: 0;
+}
+
+#stateSaveOverlay > button {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+#stateSaveOverlay input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#stateSaveOverlay > div > div {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+@media (max-width: 500px), (max-height: 312px) {
+  #stateSaveOverlay {
+    justify-content: unset;
+  }
+}
+
+@media (max-width: 300px), (max-height: 187px) {
+  #stateSaveOverlay {
+    padding: 0;
+  }
+  #stateSaveOverlay > h1 {
+    text-align: left;
+    margin: 10px 50px 10px 5px;
+  }
+  #stateSaveOverlay > div > div {
+    padding: 5px;
+    border-radius: 10px;
+  }
+}
+
+
+
+
+
 /* updateImageOverlay */
 
 #updateImageOverlay > h1 {

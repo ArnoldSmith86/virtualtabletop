@@ -204,7 +204,7 @@ async function saveState() {
     $('#stateSaveOverlay input').value = activePlayers.sort().join(', ');
   showStatesOverlay('stateSaveOverlay');
 
-  $('#stateSaveOverlay [icon=save]').onclick = function() {
+  $('#stateSaveOverlay button[icon=save]').onclick = function() {
     if($('#stateSaveOverlay input').value) {
       toServer('saveState', $('#stateSaveOverlay input').value);
       showStatesOverlay('statesOverlay');
@@ -212,7 +212,7 @@ async function saveState() {
       alert('Please enter active players or a different identifier.');
     }
   };
-  $('#stateSaveOverlay [icon=undo]').onclick = _=>showStatesOverlay('statesOverlay');
+  $('#stateSaveOverlay [icon=undo]').onclick = $('#stateSaveOverlay [icon=close]').onclick = _=>showStatesOverlay('statesOverlay');
 }
 
 function updateEmptyLibraryHint() {
