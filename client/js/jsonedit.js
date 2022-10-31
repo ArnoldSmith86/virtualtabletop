@@ -660,6 +660,7 @@ function jeAddCommands() {
   widgetTypes.push(jeAddWidgetPropertyCommands(new Holder()));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Label()));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Pile()));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new ScoreBoard()));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Seat()));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Spinner()));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Timer()));
@@ -2088,8 +2089,9 @@ window.addEventListener('mousemove', function(e) {
     widgetCoordCache = [];
     for(const widget of widgets.values()) {
       const coords = widget.coordGlobalFromCoordParent({x:widget.get('x'),y:widget.get('y')});
-      coords.r = coords.x + widget.get('width');
-      coords.b = coords.y + widget.get('height');
+      const w = '#w_'+widget.id;
+      coords.r = coords.x + $(w).offsetWidth;
+      coords.b = coords.y + $(w).offsetHeight;
       coords.widget = widget;
       widgetCoordCache.push(coords);
     }

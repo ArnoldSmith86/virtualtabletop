@@ -1,0 +1,38 @@
+.scoreboard {
+  box-sizing: border-box;
+  background: #ffffff;
+  color: #ffffff;
+  border: 2px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.scoreboard table {
+  border-collapse: collapse;
+}
+
+.scoreboard th {
+  color: black;
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+}
+
+.scoreboard td {
+  color: var(--VTTblueDark);
+}
+
+.scoreboard th, .scoreboard td {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-collapse: collapse;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: right;
+}
+
+.scoreboard .totalsLine {
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+}
+
