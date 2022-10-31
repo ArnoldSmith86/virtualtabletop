@@ -53,21 +53,22 @@ class ScoreBoard extends Widget {
     // Compute transposed scores array
     let pScores = [];
     let totals = [];
+    let numRounds = 0;
     for (let i=0; i < players.length; i++) {
       const score = players[i].get('score');
       if(Array.isArray(score)) {
         pScores[i] = score;
         totals[i] = score.reduce((partialSum, a) => partialSum + a, 0);
+        if(score.length > numRounds)
+          numRounds = score.length;
       } else {
         pScores[i] = [];
         totals[i] = Number.isInteger(score) ? parseInt(score) : 0;
       }
     }
-      
-    pScores = pScores[0].map((_, colIndex) => pScores.map(row => row[colIndex]));
 
     // Fill in table rows
-    for (let j = 0; j < pScores.length; j++) {
+    for (let j = 0; j < numRounds; j++) {
       const tr = document.createElement('tr');
       if(useRounds) {
         const th = document.createElement('th');
@@ -76,7 +77,7 @@ class ScoreBoard extends Widget {
       }
       for (let i = 0; i < players.length; i++) {
         const td = tr.insertCell();
-        td.textContent=pScores[j][i] || '';
+        td.textContent=pScores[i][j] || '';
       }
       tbody.appendChild(tr);
     }
