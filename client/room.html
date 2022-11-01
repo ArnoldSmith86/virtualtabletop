@@ -470,6 +470,20 @@
       <button id="shareOK">OK</button>
     </div>
 
+    <div id="symbolPickerOverlay" class="overlay">
+      <h1>Pick icon</h1>
+      <button icon="close"></button>
+      <div>
+        <div icon="add_reaction">
+          <input placeholder="Search" />
+          <p icon="devices_other">Please note that emoji will display slightly differently on different devices; the black icons will look the same.</p>
+          <div id="symbolList">
+            Loading...
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div id="aboutOverlay" class="overlay"  style="display:none;">
       <div class="header">
         <div class="about_title">
@@ -541,13 +555,6 @@
     </div>
 
     <div id="playerCursors"></div>
-
-    <div id="symbolPicker">
-      <input placeholder="Search" />
-      <div id="symbolList">
-        Loading...
-      </div>
-    </div>
   </div>
 
   <div id="jsonEditor">

@@ -390,52 +390,89 @@
     font-family: "Handwriting Casual";
 }
 
-#symbolPicker {
-  display: none;
+
+
+#symbolPickerOverlay > button {
   position: absolute;
-  top: 25%;
-  left: 25%;
-  height: 50%;
-  width: 50%;
+  right: 10px;
+  top: 10px;
+}
+
+#symbolPickerOverlay input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#symbolList {
+  color: black;
   overflow-x: hidden;
   overflow-y: auto;
-  background: white;
   word-wrap: anywhere;
-  border: 5px solid #fff;
-  box-sizing: border-box;
-  outline: 10000px solid #0008;
 }
 
-@media (max-width: 700px), (max-height: 437px) {
-  #symbolPicker {
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-  }
+#symbolPickerOverlay h1 {
+  margin-top: 0;
 }
 
-#symbolPicker input {
-  width: 80%;
-}
-
-#symbolPicker h1 {
+#symbolPickerOverlay h2 {
   font-size: 16px;
   border-bottom: 1px solid black;
   padding-left: 4px;
 }
 
-#symbolPicker i {
+#symbolPickerOverlay i {
   font-style: normal;
   font-size: 24px;
   margin-left: 4px;
   cursor: pointer;
 }
 
-#symbolPicker i.emoji {
+#symbolPickerOverlay i.emoji {
   word-break: break-all;
 }
 
-#symbolPicker .hidden {
+#symbolPickerOverlay .hidden {
   display: none;
+}
+
+@media (max-width: 600px), (max-height: 375px) {
+  #symbolPickerOverlay {
+    padding: 2%;
+  }
+}
+@media (max-width: 300px), (max-height: 187px) {
+  #symbolPickerOverlay {
+    padding: 0;
+  }
+  #symbolPickerOverlay > h1 {
+    text-align: left;
+    margin: 10px 50px 10px 5px;
+  }
+  #symbolPickerOverlay div[icon] {
+    padding: 5px;
+    border-radius: 10px;
+  }
+}
+
+p[icon] {
+  color: black;
+  margin: 20px;
+  margin-left: 60px;
+}
+p[icon]::before {
+  content: attr(icon);
+  font-family: "Material Icons";
+  font-size: 200%;
+  position: absolute;
+  left: -40px;
+}
+@media (max-width: 600px), (max-height: 375px) {
+  p[icon] {
+    margin: 10px;
+    margin-left: 40px;
+  }
+  p[icon]::before {
+    font-size: 150%;
+    left: -30px;
+  }
 }

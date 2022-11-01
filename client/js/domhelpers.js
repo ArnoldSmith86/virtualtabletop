@@ -255,7 +255,7 @@ export async function loadSymbolPicker() {
     symbolData = await (await fetch('i/fonts/symbols.json')).json();
     let list = '';
     for(const [ category, symbols ] of Object.entries(symbolData)) {
-      list += `<h1>${category}</h1>`;
+      list += `<h2>${category}</h2>`;
       for(const [ symbol, keywords ] of Object.entries(symbols)) {
         let className = 'emoji';
         if(symbol[0] == '[')
@@ -267,11 +267,11 @@ export async function loadSymbolPicker() {
     }
     $('#symbolList').innerHTML = list;
 
-    $('#symbolPicker input').onkeyup = function() {
-      const text = regexEscape($('#symbolPicker input').value.toLowerCase());
+    $('#symbolPickerOverlay input').onkeyup = function() {
+      const text = regexEscape($('#symbolPickerOverlay input').value.toLowerCase());
       for(const icon of $a('#symbolList i'))
         toggleClass(icon, 'hidden', !icon.dataset.keywords.match(text));
-      for(const title of $a('#symbolList h1'))
+      for(const title of $a('#symbolList h2'))
         toggleClass(title, 'hidden', text);
     };
   }
@@ -329,14 +329,17 @@ export function addRichtextControls(dom) {
   $('[icon=add_reaction]', controls).onclick = async function() {
     const range = window.getSelection().getRangeAt(0);
 
-    $('#symbolPicker').style.display = 'block';
-    $('#symbolPicker').scrollTop = 0;
-    $('#symbolPicker input').value = '';
-    $('#symbolPicker input').focus();
-    $('#symbolPicker input').onkeyup();
+    showStatesOverlay('symbolPickerOverlay');
+    $('#symbolPickerOverlay').scrollTop = 0;
+    $('#symbolPickerOverlay input').value = '';
+    $('#symbolPickerOverlay input').focus();
+    $('#symbolPickerOverlay input').onkeyup();
+
+    $('#symbolPickerOverlay [icon=close]').onclick = _=>showStatesOverlay('stateDetailsOverlay');
+
     for(const icon of $a('#symbolList i')) {
       icon.onclick = function() {
-        $('#symbolPicker').style.display = 'none';
+        showStatesOverlay('stateDetailsOverlay');
         window.getSelection().removeAllRanges();
         window.getSelection().addRange(range);
         let className = 'emoji';
