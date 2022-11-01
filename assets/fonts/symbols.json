@@ -1,69 +1,5 @@
 {
-  "VTT Icons": {
-    "[vtt_logo]": [],
-    "[cube]": [],
-    "[cube_3d]": [],
-    "[village]": [],
-    "[village_3d]": [],
-    "[house]": [],
-    "[house_3d]": [],
-    "[meeple]": [],
-    "[meeple_3d]": [],
-    "[poker_chip]": [],
-    "[pawn]": [],
-    "[height]": [],
-    "[hex_grid_horizontal]": [],
-    "[hex_grid_vertical]": [],
-    "[hexagon_horizontal]": [],
-    "[hexagon_vertical]": [],
-    "[property]": [],
-    "[property_add]": [],
-    "[property_off]": [],
-    "[property_remove]": [],
-    "[subproperty]": [],
-    "[subproperty_add]": [],
-    "[subproperty_remove]": [],
-    "[width]": [],
-    "[hide_side_bar]": [],
-    "[routine]": [],
-    "[routine_add]": [],
-    "[routine_remove]": [],
-    "[screen_change]": [],
-    "[edit]": [],
-    "[book_open]": [],
-    "[deal_face_down]": [],
-    "[deal_face_up]": [],
-    "[discard]": [],
-    "[flip_face_down]": [],
-    "[flip_face_up]": [],
-    "[holder]": [],
-    "[holder_add]": [],
-    "[holder_hand]": [],
-    "[holder_remove]": [],
-    "[library]": [],
-    "[pile]": [],
-    "[pile_widgets]": [],
-    "[recall]": [],
-    "[recall_dice]": [],
-    "[shuffle]": [],
-    "[sort_ascending]": [],
-    "[sort_descending]": [],
-    "[trash]": [],
-    "[widget]": [],
-    "[widget_add]": [],
-    "[widget_remove]": [],
-    "[die_face_1]": [],
-    "[die_face_2]": [],
-    "[die_face_3]": [],
-    "[die_face_4]": [],
-    "[die_face_5]": [],
-    "[die_face_6]": [],
-    "[die_face_7]": [],
-    "[die_face_8]": [],
-    "[die_face_9]": [],
-    "[die]": [],
-    "[die_add]": [],
-    "[die_remove]": [],
+  "VTT Icons - cards": {
     "[rotate_card_down_ccw]": [],
     "[rotate_card_down_cw]": [],
     "[rotate_card_left_ccw]": [],
@@ -125,7 +61,79 @@
     "[card_W]": [],
     "[card_X]": [],
     "[card_Y]": [],
-    "[card_Z]": []
+    "[card_Z]": [],
+    "[deal_face_down]": [],
+    "[deal_face_up]": [],
+    "[recall]": [],
+    "[flip_face_down]": [],
+    "[flip_face_up]": [],
+    "[discard]": []
+  },
+  "VTT Icons - dice": {
+    "[die_face_1]": [],
+    "[die_face_2]": [],
+    "[die_face_3]": [],
+    "[die_face_4]": [],
+    "[die_face_5]": [],
+    "[die_face_6]": [],
+    "[die_face_7]": [],
+    "[die_face_8]": [],
+    "[die_face_9]": [],
+    "[die]": [],
+    "[die_add]": [],
+    "[die_remove]": [],
+    "[recall_dice]": []
+  },
+  "VTT Icons - game pieces": {
+    "[cube]": [],
+    "[cube_3d]": [],
+    "[village]": [],
+    "[village_3d]": [],
+    "[house]": [],
+    "[house_3d]": [],
+    "[meeple]": [],
+    "[meeple_3d]": [],
+    "[poker_chip]": [],
+    "[pawn]": []
+  },
+  "VTT Icons - misc": {
+    "[height]": [],
+    "[hex_grid_horizontal]": [],
+    "[hex_grid_vertical]": [],
+    "[hexagon_horizontal]": [],
+    "[hexagon_vertical]": [],
+    "[property]": [],
+    "[property_add]": [],
+    "[property_off]": [],
+    "[property_remove]": [],
+    "[subproperty]": [],
+    "[subproperty_add]": [],
+    "[subproperty_remove]": [],
+    "[width]": [],
+    "[routine]": [],
+    "[routine_add]": [],
+    "[routine_remove]": [],
+    "[screen_change]": [],
+    "[edit]": [],
+    "[book_open]": [],
+    "[holder]": [],
+    "[holder_add]": [],
+    "[holder_hand]": [],
+    "[holder_remove]": [],
+    "[pile]": [],
+    "[pile_widgets]": [],
+    "[shuffle]": [],
+    "[sort_ascending]": [],
+    "[sort_descending]": [],
+    "[trash]": [],
+    "[widget]": [],
+    "[widget_add]": [],
+    "[widget_remove]": []
+  },
+  "VTT Icons - internal UI": {
+    "[vtt_logo]": [],
+    "[library]": [],
+    "[hide_side_bar]": []
   },
   "Material Icons - av": {
     "10k": [
@@ -28371,7 +28379,7 @@
       "website"
     ]
   },
-  "Emojis - Smileys & Emotion": {
+  "Emoji - Smileys & Emotion": {
     "😀": [
       "grinning_face",
       "face",
@@ -29509,7 +29517,7 @@
       "dream"
     ]
   },
-  "Emojis - People & Body": {
+  "Emoji - People & Body": {
     "👋": [
       "waving_hand",
       "hands",
@@ -31686,7 +31694,7 @@
       "beach"
     ]
   },
-  "Emojis - Animals & Nature": {
+  "Emoji - Animals & Nature": {
     "🐵": [
       "monkey_face",
       "animal",
@@ -32549,7 +32557,7 @@
       "spring"
     ]
   },
-  "Emojis - Food & Drink": {
+  "Emoji - Food & Drink": {
     "🍇": [
       "grapes",
       "fruit",
@@ -33378,7 +33386,7 @@
       "jar"
     ]
   },
-  "Emojis - Travel & Places": {
+  "Emoji - Travel & Places": {
     "🌍": [
       "globe_showing_europe_africa",
       "globe",
@@ -34759,7 +34767,7 @@
       "disaster"
     ]
   },
-  "Emojis - Activities": {
+  "Emoji - Activities": {
     "🎃": [
       "jack_o_lantern",
       "halloween",
@@ -35251,7 +35259,7 @@
       "knit"
     ]
   },
-  "Emojis - Objects": {
+  "Emoji - Objects": {
     "👓": [
       "glasses",
       "fashion",
@@ -36715,7 +36723,7 @@
       "moai"
     ]
   },
-  "Emojis - Symbols": {
+  "Emoji - Symbols": {
     "🏧": [
       "atm_sign",
       "money",
@@ -38113,7 +38121,7 @@
       "frame"
     ]
   },
-  "Emojis - Flags": {
+  "Emoji - Flags": {
     "🏁": [
       "chequered_flag",
       "contest",
