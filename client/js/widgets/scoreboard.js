@@ -11,7 +11,8 @@ class ScoreBoard extends Widget {
       typeClasses: 'widget scoreboard',
       usePlayerColors: true,
       playersInColumns: true,
-      rounds: null
+      rounds: null,
+      sortBy: null
     });
   }
 
@@ -39,11 +40,9 @@ class ScoreBoard extends Widget {
     // Construct player scores array, remember maximum number of scores.
     let pScores = [];
     let totals = [];
-    const colors = []; // Array of player colors
     let numRounds = 0;
     for (let i=0; i < players.length; i++) {
       const score = players[i].get('score');
-      colors.push(players[i].get('color'));
       if(Array.isArray(score) && score.length > numRounds)
         numRounds = score.length;
     }
@@ -60,13 +59,41 @@ class ScoreBoard extends Widget {
       pScores[i].push(totals[i]);
       pScores[i].unshift(players[i].get('player'));
     }
+    // Sort player scores if requested
+    if(this.get('sortBy') == 'playerAsc')
+      pScores.sort((a,b) => a[0]<b[0] ? -1 : 1);
+    else if (this.get('sortBy') == 'playerDesc')
+      pScores.sort((a,b) => a[0]<b[0] ? 1 : -1);
+    else if (this.get('sortBy') == 'scoresAsc')
+      pScores.sort((a,b) =>a[a.length-1] < b[b.length-1] ? -1 : 1);
+    else if (this.get('sortBy') == 'scoresDesc')
+      pScores.sort((a,b) => a[a.length-1] < b[b.length-1] ? 1 : -1);
+    else if (this.get('sortBy') == 'seatAsc' || this.get('sortBy') == 'seatDesc')
+      pScores.sort((a,b) => {
+        const pa = players.filter(x=> x.get('player') == a[0])[0].get('index');
+        const pb = players.filter(x=> x.get('player') == b[0])[0].get('index');
+        if(pa < pb)
+          return this.get('sortBy') == 'seatAsc' ? -1 : 1;
+        else
+          return this.get('sortBy') == 'seatAsc' ? 1 : -1;
+      });
+
+    // Get player colors if needed
+    const colors = []; // Array of player colors
+    if(this.get('usePlayerColors'))
+      for (let i=0; i < pScores.length; i++) 
+        colors.push(players.filter(x=> x.get('player') == pScores[i][0])[0].get('color'));
+
     // Create round name headers
     let rounds = this.get('rounds');
-    rounds = Array.isArray(rounds) ? [...rounds] : [];
-    rounds = rounds.concat(Array(numRounds).fill('')).slice(0,numRounds);
+    if(Array.isArray(rounds)) 
+      rounds = rounds.concat(Array(numRounds).fill('')).slice(0,numRounds);
+    else
+      rounds = [...Array(numRounds).keys()].map(i => i+1);
     rounds.push('Totals');
     rounds.unshift('Round');
 
+    // Finally, build the table
     let tbl = document.createElement('table');
     if(this.get('playersInColumns')) {
       const names = pScores.map(x => x[0]);
