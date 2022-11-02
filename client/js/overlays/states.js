@@ -646,15 +646,16 @@ function fillStateDetails(states, state, dom) {
       }
     }
   };
-  $('#variantAddOverlay [icon=save]').onclick = async function(e) {
+  $('#variantAddOverlay button[icon=close]').onclick = _=>showStatesOverlay('stateDetailsOverlay');
+  $('#variantAddOverlay button[icon=save]').onclick = async function(e) {
     const variantID = $a('#stateDetailsOverlay .variant').length;
-    await createTempState(e, 'create', variantID, $a('#variantAddOverlay button'));
+    await createTempState(e, 'create', variantID, $a('#variantAddOverlay div button'));
     showStatesOverlay('stateDetailsOverlay');
     const emptyVariant = { variantImage: state.image };
     const vEntry = addVariant(variantID, emptyVariant);
     enableEditing(vEntry, emptyVariant);
   };
-  $('#variantAddOverlay [icon=upload]').onclick = function(e) {
+  $('#variantAddOverlay button[icon=upload]').onclick = function(e) {
     loadJSZip();
     selectVTTfile(function(f) {
       $('#stateDetailsOverlay').classList.add('uploading');
@@ -689,7 +690,7 @@ function fillStateDetails(states, state, dom) {
     });
     showStatesOverlay('stateDetailsOverlay');
   };
-  $('#variantAddOverlay [icon=link]').onclick = function(e) {
+  $('#variantAddOverlay button[icon=link]').onclick = function(e) {
     showStatesOverlay('stateDetailsOverlay');
     const tokens = $('#variantAddOverlay select').value.split('/');
     const newVariant = { plStateID: tokens[0], plVariantID: tokens[1] };

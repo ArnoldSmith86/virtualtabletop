@@ -317,10 +317,23 @@
 
     <div id="variantAddOverlay" class="overlay">
       <h1>Add variant</h1>
-      <button icon="save">Save room state</button>
-      <button icon="upload">Upload files</button>
-      <select></select>
-      <button icon="link">Link to public library</button>
+      <button icon="close"></button>
+      <div>
+        <div icon="save">
+          <p>The most common use-case for adding new variants to a game is when you are actually editing it.</p>
+          <p>This button will take the current state of this room and it as a new variant.</p>
+          <button icon="save">Save room state</button>
+        </div>
+        <div icon="upload">
+          <p>If you have a VTT or PCIO file, you can add their variants as new variants here.</p>
+          <button icon="upload">Upload files</button>
+        </div>
+        <div icon="link">
+          <p>You can add a variant from the public library to your game in case you want to combine different games into one or if you want to change the game metadata.</p>
+          <select></select>
+          <button icon="link">Link to public library</button>
+        </div>
+      </div>
     </div>
 
     <div id="stateDetailsOverlay" class="overlay" class="notEditing">
