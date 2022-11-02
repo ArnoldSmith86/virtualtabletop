@@ -67,7 +67,7 @@ export class Widget extends StateManaged {
 
       linkedToSeat: null,
       onlyVisibleForSeat: null,
-      childrenInheritVisibleForSeat: false,
+      hoverInheritVisibleForSeat: false,
 
       clickRoutine: null,
       changeRoutine: null,
@@ -1665,7 +1665,7 @@ export class Widget extends StateManaged {
   }
 
   inheritSeatVisibility(seatVisibility) {
-    if (this.get('childrenInheritVisibleForSeat')) {
+    if (this.get('hoverInheritVisibleForSeat')) {
       const widgetSeatVisibility = this.get('onlyVisibleForSeat');
       if (widgetSeatVisibility) {
         // Filter seatVisibility by current widgets seats.
