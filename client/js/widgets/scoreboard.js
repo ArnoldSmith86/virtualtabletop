@@ -12,15 +12,16 @@ class ScoreBoard extends Widget {
       usePlayerColors: true,
       playersInColumns: true,
       rounds: null,
-      sortBy: null
+      sortField: 'player',
+      sortOrder: 'ascending'
     });
   }
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
-    const players = widgetFilter(w => w.get('type') == 'seat' && w.get('player') != '').sort((a,b) => a.get('index') - b.get('index'));
-    if(players.length)
-      this.tableCreate(players)
+    const filledSeats = widgetFilter(w => w.get('type') == 'seat' && w.get('player') != '').sort((a,b) => a.get('player') < b.get('player') ? -1 : 1);
+    if(filledSeats.length)
+      this.tableCreate(filledSeats)
   }
   
   applyInitiaDelta() {
@@ -35,54 +36,51 @@ class ScoreBoard extends Widget {
     return tr;
   }
 
-  tableCreate(players) {
+  tableCreate(filledSeats) {
 
     // Construct player scores array, remember maximum number of scores.
     let pScores = [];
     let totals = [];
     let numRounds = 0;
-    for (let i=0; i < players.length; i++) {
-      const score = players[i].get('score');
+    for (let i=0; i < filledSeats.length; i++) {
+      const score = filledSeats[i].get('score');
       if(Array.isArray(score) && score.length > numRounds)
         numRounds = score.length;
     }
-    for (let i=0; i < players.length; i++) {
-      const score = players[i].get('score');
+    for (let i=0; i < filledSeats.length; i++) {
+      const score = filledSeats[i].get('score');
       if(Array.isArray(score)) {
-        pScores[i] = [...score];
-        totals[i] = score.reduce((partialSum, a) => partialSum + a, 0);
+        pScores[i] = score.map( s => isNaN(parseFloat(s)) ? 0 : parseFloat(s));
+        totals[i] = pScores[i].reduce((partialSum, a) => partialSum + a, 0);
       } else {
         pScores[i] = [];
-        totals[i] = Number.isInteger(score) ? parseInt(score) : 0;
+        totals[i] = parseFloat(score);
+        if (isNaN(parseFloat(totals[i])))
+          totals[i] = 0;
       }
       pScores[i] = pScores[i].concat(Array(numRounds).fill('')).slice(0,numRounds);
       pScores[i].push(totals[i]);
-      pScores[i].unshift(players[i].get('player'));
+      pScores[i].unshift(filledSeats[i].get('player'));
     }
     // Sort player scores if requested
-    if(this.get('sortBy') == 'playerAsc')
-      pScores.sort((a,b) => a[0]<b[0] ? -1 : 1);
-    else if (this.get('sortBy') == 'playerDesc')
-      pScores.sort((a,b) => a[0]<b[0] ? 1 : -1);
-    else if (this.get('sortBy') == 'scoresAsc')
+    if(this.get('sortField') == 'total')
       pScores.sort((a,b) =>a[a.length-1] < b[b.length-1] ? -1 : 1);
-    else if (this.get('sortBy') == 'scoresDesc')
-      pScores.sort((a,b) => a[a.length-1] < b[b.length-1] ? 1 : -1);
-    else if (this.get('sortBy') == 'seatAsc' || this.get('sortBy') == 'seatDesc')
+    else if(this.get('sortField')) {
+      const fld = this.get('sortField');
       pScores.sort((a,b) => {
-        const pa = players.filter(x=> x.get('player') == a[0])[0].get('index');
-        const pb = players.filter(x=> x.get('player') == b[0])[0].get('index');
-        if(pa < pb)
-          return this.get('sortBy') == 'seatAsc' ? -1 : 1;
-        else
-          return this.get('sortBy') == 'seatAsc' ? 1 : -1;
+        const pa = filledSeats.filter(x=> x.get('player') == a[0])[0].get(fld);
+        const pb = filledSeats.filter(x=> x.get('player') == b[0])[0].get(fld);
+        return pa < pb ? -1 : 1;
       });
+    }
+    if(this.get('sortOrder') == 'descending')
+      pScores = pScores.reverse();
 
     // Get player colors if needed
     const colors = []; // Array of player colors
     if(this.get('usePlayerColors'))
       for (let i=0; i < pScores.length; i++) 
-        colors.push(players.filter(x=> x.get('player') == pScores[i][0])[0].get('color'));
+        colors.push(filledSeats.filter(x=> x.get('player') == pScores[i][0])[0].get('color'));
 
     // Create round name headers
     let rounds = this.get('rounds');
@@ -101,8 +99,11 @@ class ScoreBoard extends Widget {
       tbl.innerHTML += '<thead></thead>';
       const tr = this.addRowToTable($('thead', tbl), names, 'th');
       if(this.get('usePlayerColors'))
-        for (let i=0; i<players.length; i++ )
-          tr.cells[i+1].style.color = colors[i];
+        for (let i=0; i<filledSeats.length; i++ ) {
+          tr.cells[i+1].style.backgroundColor = colors[i];
+          tr.cells[i+1].style.color = 'white';
+          tr.cells[i+1].style.textShadow = '1px 1px 1px #000';
+        }
       tbl.innerHTML += '<tbody></tbody>';
       for( let i=1; i < pScores[0].length; i++ ) {
         const pRow = pScores.map(x => x[i]);
@@ -118,8 +119,11 @@ class ScoreBoard extends Widget {
       for( let i=0; i < pScores.length; i++) {
         const tr = this.addRowToTable(tbl, pScores[i], 'td');
         tr.cells[0].outerHTML = `<th>${tr.cells[0].innerHTML}</th>`;
-        if(this.get('usePlayerColors'))
-            tr.cells[0].style.color = colors[i];
+        if(this.get('usePlayerColors')) {
+          tr.cells[0].style.backgroundColor = colors[i];
+          tr.cells[0].style.color = 'white';
+          tr.cells[0].style.textShadow = '1px 1px 1px #000';
+        }
       }
     }
 
