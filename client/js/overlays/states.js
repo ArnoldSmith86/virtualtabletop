@@ -719,7 +719,7 @@ function fillStateDetails(states, state, dom) {
     $('#mainImage > i').classList.add('hidden');
     toServer('unlinkState', state.id);
   };
-  $('#shareOK').onclick = _=>showStatesOverlay('stateDetailsOverlay');
+  $('#shareLinkOverlay [icon=close]').onclick = $('#shareLinkOverlay [icon=check]').onclick = _=>showStatesOverlay('stateDetailsOverlay');
   $('#stateDetailsOverlay .buttons [icon=delete]').onclick = async function() {
     $('#statesButton').dataset.overlay = 'confirmOverlay';
     const type     = state.savePlayers ? 'saved game'        : 'game';
@@ -853,7 +853,7 @@ async function confirmOverlay(title, text, confirmButton, cancelButton, confirmI
 }
 
 async function shareLink(state) {
-  showOverlay('shareLinkOverlay');
+  showStatesOverlay('shareLinkOverlay');
   let url = state.link;
   if(!url) {
     const name = state.name.replace(/[^A-Za-z0-9.-]/g, '_');
