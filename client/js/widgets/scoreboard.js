@@ -130,8 +130,8 @@ class ScoreBoard extends Widget {
     const myDom = this.domElement;
     myDom.innerHTML = '';
     myDom.appendChild(tbl);
-    myDom.style.width = (tbl.offsetWidth +20)+'px';
-    myDom.style.height = (tbl.offsetHeight + 20)+ 'px';
+    this.set('width',(tbl.offsetWidth +20));
+    this.set('height',(tbl.offsetHeight + 20));
   }
   
 /*
