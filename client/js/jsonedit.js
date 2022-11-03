@@ -247,7 +247,7 @@ const jeCommands = [
     name: 'Toggle widget highlighting',
     icon: 'flashlight_on',
     forceKey: 'H',
-    classes: _=> jeWidgetHighlighting ? 'material onState' : 'material',
+    classes: _=> jeWidgetHighlighting ? ' onState' : '',
     call: async function() {
       jeWidgetHighlighting = ! jeWidgetHighlighting;
       jeShowCommands();
@@ -259,7 +259,7 @@ const jeCommands = [
     name: 'Toggle debug information',
     icon: 'pest_control',
     forceKey: 'B',
-    classes: _=> jeDebugViewing ? 'material onState' : 'material',
+    classes: _=> jeDebugViewing ? 'onState' : '',
     show: _=>jeDebugViewing != null,
     call: async function() {
       jeDebugViewing = ! jeDebugViewing;
@@ -1807,7 +1807,7 @@ function jeLoggingRoutineEnd(variables, collections) {
   --jeLoggingDepth;
   if(!jeLoggingDepth) {
     $('#jeLog').innerHTML = jeLoggingHTML + '</div></div>';
-    // Enable the "Show Routine Debug Output" button the first time a routine is executed.
+    // Enable the je_toggleDebug button the first time a routine is executed.
     if ( jeDebugViewing == null) {
       jeDebugViewing = false;
       jeShowCommands()
@@ -2097,8 +2097,9 @@ function jeShowCommands() {
     if(command.context == undefined) {
       const name = (typeof command.name == 'function' ? command.name() : command.name);
       const icon = (typeof command.icon == 'function' ? command.icon() : command.icon);
+      const material = String(icon).match(/^[^[]/) ? 'material' : '';
       const classes = typeof command.classes == 'function' ? command.classes() : command.classes || '';
-      commandText += `<button class='top ${classes}' id='${command.id}' title='${name}' ${!command.show || command.show() ? '' : 'disabled'}>${icon}</button>`;
+      commandText += `<button class='top ${material} ${classes}' id='${command.id}' title='${name}' ${!command.show || command.show() ? '' : 'disabled'}>${icon}</button>`;
     }
   }
   commandText += `</div>`;
