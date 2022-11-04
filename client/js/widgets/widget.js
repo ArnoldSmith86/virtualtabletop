@@ -67,7 +67,7 @@ export class Widget extends StateManaged {
 
       linkedToSeat: null,
       onlyVisibleForSeat: null,
-      hoverInheritVisibleForSeat: false,
+      hoverInheritVisibleForSeat: true,
 
       clickRoutine: null,
       changeRoutine: null,
