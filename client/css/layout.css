@@ -577,6 +577,7 @@ div[icon] {
   padding: 20px;
   border-radius: 20px;
   overflow: hidden;
+  color: #444;
 }
 
 div[icon]::before {
@@ -595,6 +596,10 @@ div[icon] * {
 
 div[icon] > :nth-child(1) {
   margin-top: 0;
+}
+
+div[icon] a {
+  color: #444;
 }
 
 div[icon] .buttons {
