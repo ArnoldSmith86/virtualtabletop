@@ -218,7 +218,7 @@ async function saveState() {
 function updateEmptyLibraryHint() {
   const isEmpty = !$('#statesList > div:nth-of-type(2) .roomState');
   $('#emptyLibrary').style.display = isEmpty ? 'block' : 'none';
-  $('#emptyLibraryByFilter').style.display = $('#statesList .list:nth-of-type(2) > div.visible') || isEmpty ? 'none' : 'block';
+  $('#emptyLibraryByFilter').style.display = $('#statesList > div:nth-of-type(2) .visible.roomState') || isEmpty ? 'none' : 'block';
 }
 
 function toggleStateStar(state, dom) {
