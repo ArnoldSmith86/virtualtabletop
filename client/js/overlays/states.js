@@ -836,6 +836,8 @@ async function confirmOverlay(title, text, confirmButton, cancelButton, confirmI
     showOverlay('confirmOverlay');
     applyValuesToDOM($('#confirmOverlay'), { title, text, confirmButton, cancelButton });
 
+    $('#confirmOverlay div[icon]').setAttribute('icon', confirmIcon || 'check');
+
     $('#confirmOverlay .buttons button:nth-of-type(1)').setAttribute('icon', cancelIcon || 'close');
     $('#confirmOverlay .buttons button:nth-of-type(1)').className = cancelClass || '';
     $('#confirmOverlay .buttons button:nth-of-type(1)').onclick = function() {
