@@ -720,7 +720,15 @@ function fillStateDetails(states, state, dom) {
     $('#mainImage > i').classList.add('hidden');
     toServer('unlinkState', state.id);
   };
-  $('#shareLinkOverlay [icon=close]').onclick = $('#shareLinkOverlay [icon=check]').onclick = _=>showStatesOverlay('stateDetailsOverlay');
+  $('#shareLinkOverlay button[icon=close]').onclick = _=>showStatesOverlay('stateDetailsOverlay');
+  $('#shareLinkOverlay button[icon=link]').onclick = async function() {
+    try {
+      await navigator.clipboard.writeText($('#shareLinkOverlay input').value);
+      $('#shareLinkOverlay input').value += ' (copied)';
+    } catch(e) {
+      $('#shareLinkOverlay input').value += ' (NOT copied)';
+    }
+  }
   $('#stateDetailsOverlay .buttons [icon=delete]').onclick = async function() {
     $('#statesButton').dataset.overlay = 'confirmOverlay';
     const type     = state.savePlayers ? 'saved game'        : 'game';
