@@ -4,7 +4,7 @@ import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
-import { center, distance, overlap, getOffset, applyTransformedOffset } from '../geometry.js';
+import { center, distance, overlap, getOffset, applyTransformedOffset, screenCoordFromLocalPoint } from '../geometry.js';
 
 const readOnlyProperties = new Set([
   '_absoluteRotation',
@@ -60,6 +60,7 @@ export class Widget extends StateManaged {
       inheritFrom: null,
       owner: null,
       dragging: null,
+      dropAnchor: null,
       dropOffsetX: 0,
       dropOffsetY: 0,
       inheritChildZ: false,
@@ -408,6 +409,8 @@ export class Widget extends StateManaged {
     css += '; height:' + this.get('height') + 'px';
     css += '; z-index:' + this.calculateZ();
     css += '; transform:' + this.cssTransform();
+    if (this.dropAnchor())
+      css += '; transform-origin: ' + this.get('dropAnchor');
 
     return css;
   }
@@ -449,7 +452,7 @@ export class Widget extends StateManaged {
   }
 
   cssProperties() {
-    return [ 'borderRadius', 'css', 'height', 'inheritChildZ', 'layer', 'width' ].concat(this.propertiesUsedInCSS);
+    return [ 'borderRadius', 'css', 'dropAnchor', 'height', 'inheritChildZ', 'layer', 'width' ].concat(this.propertiesUsedInCSS);
   }
 
   cssReplaceProperties(css) {
@@ -499,6 +502,19 @@ export class Widget extends StateManaged {
 
   cssTransformProperties() {
     return [ 'rotation', 'scale', 'x', 'y' ];
+  }
+
+  dropAnchor() {
+    let anchorOrigin = this.get('dropAnchor');
+    if (!anchorOrigin)
+      return null;
+    // For now expects exactly two percentage values. This could be relaxed
+    // to support more valid transform-origin syntaxes in the future.
+    let parts = anchorOrigin.match(/^\s*(-?[\d.]+)% (-?[\d].+)%\s*$/);
+    if (!parts)
+      return null;
+    return {x: this.get('width') * parseFloat(parts[1]) * 0.01,
+            y: this.get('height') * parseFloat(parts[2]) * 0.01};
   }
 
   evaluateInputOverlay(o, resolve, reject, go) {
@@ -1715,10 +1731,11 @@ export class Widget extends StateManaged {
       await this.checkParent();
 
       const lastHoverTarget = this.hoverTarget;
-      const myCenter = center(this.domElement);
+      let anchor = this.dropAnchor();
+      let dropPoint = anchor ? screenCoordFromLocalPoint(this.domElement, anchor) : center(this.domElement);
       const myMinDim = Math.min(this.get('width'), this.get('height')) * this.get('_absoluteScale');
       this.hoverTarget = null;
-      let hitElements = document.elementsFromPoint(myCenter.x, myCenter.y);
+      let hitElements = document.elementsFromPoint(dropPoint.x, dropPoint.y);
 
       // First, check for elements under the midpoint in order in which they were hit.
       for (let i = 0; i < hitElements.length; i++) {
@@ -1734,7 +1751,7 @@ export class Widget extends StateManaged {
         for(const t of this.dropTargets) {
           if(overlap(this.domElement, t.domElement)) {
             const tCursor = t.coordGlobalInside(coordGlobal);
-            const tDist = distance(center(t.domElement), myCenter) / scale;
+            const tDist = distance(center(t.domElement), dropPoint) / scale;
             const tMinDim = Math.min(t.get('width'),t.get('height')) * t.get('_absoluteScale');
             const validTarget = (tCursor || tDist <= (myMinDim + tMinDim) / 2);
             const bestTarget = tDist <= targetDist;
@@ -1769,7 +1786,13 @@ export class Widget extends StateManaged {
       await this.checkParent();
 
       if(this.hoverTarget) {
-        let coordNew = this.hoverTarget.coordLocalFromCoordClient({x: coord.clientX, y: coord.clientY});
+        const anchor = this.dropAnchor();
+        let dropPoint = {x: coord.clientX, y: coord.clientY};
+        if (anchor) {
+          dropPoint = screenCoordFromLocalPoint(this.domElement, anchor);
+          localAnchor = anchor;
+        }
+        let coordNew = this.hoverTarget.coordLocalFromCoordClient(dropPoint);
         const offset = getOffset(this.coordParentFromCoordLocal(localAnchor), {x: this.get('x'), y: this.get('y')})
         coordNew = this.hoverTarget.coordGlobalFromCoordLocal({x: Math.round(coordNew.x + offset.x), y: Math.round(coordNew.y + offset.y)});
         this.setPosition(coordNew.x, coordNew.y, this.get('z'));

@@ -18,6 +18,20 @@ export function getOffset(origin, target) {
   return {x: target.x - origin.x, y: target.y - origin.y}
 }
 
+export function getScreenSpaceTransform(e) {
+  if (!e)
+    return new DOMMatrix();
+  let matrix = getScreenSpaceTransform(e.offsetParent);
+  matrix.translateSelf(e.offsetLeft, e.offsetTop);
+  matrix.multiplySelf(new DOMMatrix(getComputedStyle(e).transform));
+  return matrix;
+}
+
+export function screenCoordFromLocalPoint(e, p) {
+  let matrix = getScreenSpaceTransform(e);
+  return matrix.transformPoint(new DOMPoint(p.x, p.y));
+}
+
 export function applyTransformedOffset(origin, offset, scale, rotation) {
   if(rotation % 360 == 0) {
     return {x: origin.x + offset.x * scale, y: origin.y + offset.y * scale}
