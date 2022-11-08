@@ -117,6 +117,13 @@ class Holder extends Widget {
       await this.receiveCard(child, [ child.get('x') - this.absoluteCoord('x'), child.get('y') - this.absoluteCoord('y') ]);
   }
 
+  async onPropertyChange(property, oldValue, newValue) {
+    await super.onPropertyChange(property, oldValue, newValue);
+    if(property == 'dropOffsetX' || property == 'dropOffsetY' || property == 'stackOffsetX' || property == 'stackOffsetY') {
+      await this.updateAfterShuffle();
+    }
+  }
+
   async receiveCard(card, pos) {
     // get children sorted by X or Y position
     // replace coordinates of the received card to its previous coordinates so it gets dropped at the correct position
