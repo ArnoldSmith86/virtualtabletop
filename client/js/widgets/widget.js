@@ -1678,7 +1678,7 @@ export class Widget extends StateManaged {
       }
     }
     const thisParent = this.get('parent');
-    if (thisParent)
+    if (thisParent && widgets.has(thisParent))
       seatVisibility = widgets.get(thisParent).inheritSeatVisibility(seatVisibility);
     return seatVisibility;
   }
@@ -2049,7 +2049,7 @@ export class Widget extends StateManaged {
       return;
 
     const thisParent = this.get('parent');
-    if(this.isBeingRemoved || thisParent && !widgets.get(thisParent).supportsPiles())
+    if(this.isBeingRemoved || thisParent && widgets.has(thisParent) && !widgets.get(thisParent).supportsPiles())
       return;
 
     const thisX = this.get('x');
