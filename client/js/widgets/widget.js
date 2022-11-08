@@ -118,6 +118,11 @@ export class Widget extends StateManaged {
     this.applyZ();
   }
 
+  applyChildZ(child, previousZ) {
+    if(this.get('inheritChildZ') && (this.z == previousZ || child.z > this.z))
+      this.applyZ();
+  }
+
   applyCSS(delta) {
     for(const property of this.classesProperties()) {
       if(delta[property] !== undefined) {
@@ -244,11 +249,8 @@ export class Widget extends StateManaged {
   }
 
   applyZ(force) {
-    const thisInheritChildZ = this.get('inheritChildZ');
-    if(force || thisInheritChildZ) {
+    if(force || this.get('inheritChildZ')) {
       this.domElement.style.zIndex = this.calculateZ();
-      if(thisInheritChildZ && this.get('parent'))
-        widgets.get(this.get('parent')).applyZ();
     }
   }
 
@@ -257,10 +259,15 @@ export class Widget extends StateManaged {
   }
 
   calculateZ() {
+    const pZ = this.z;
     this.z = ((this.get('layer') + 10) * 100000) + this.get('z');
     if(this.get('inheritChildZ'))
       for(const child of this.childrenOwned())
         this.z = Math.max(this.z, child.z);
+    if (this.z != pZ) {
+      if(this.get('parent') && widgets.has(this.get('parent')))
+        widgets.get(this.get('parent')).applyChildZ(this, pZ);
+    }
     return this.z;
   }
 
