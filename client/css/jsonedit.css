@@ -15,7 +15,7 @@
   --editorPaneWidth: 602px;
 }
 
-#jsonEditor.notHighEnough #jeWidgetLayers, #jsonEditor.notHighEnough #jeLogWrapper {
+#jsonEditor.notHighEnough #jeWidgetLayers, #jsonEditor.notHighEnough #jeLogWrapper, .jeLogNested {
   display: none;
 }
 
@@ -318,16 +318,7 @@ body.jsonEdit.jeZoomOut #topSurface {
   margin: 0;
 }
 
-#jeLogWrapper:hover #jeLog {
-  display: block;
-}
-
-#jeLogWrapper:hover > h1, .jeLogNested {
-  display: none;
-}
-
-/* Show the nested list when the user clicks on the caret/arrow */
-.jeLogNested.active {
+#jeLog.active {
   display: block;
 }
 
@@ -435,6 +426,24 @@ body.jsonEdit.jeZoomOut #topSurface {
   opacity: 0.5;
 }
 
+/* For the zoom, edit, wide, highlight, and debug "on" states */
+[id=jeTopButtons] button.onState {
+  color: yellow
+}
+#je_toggleHighlight.onState {
+  position: relative;
+}
+#je_toggleHighlight.onState::before {
+  position: absolute;
+  height: 22px;
+  width: 17px;
+  content: '';
+  top: 1px;
+  left: 4px;
+  border: 2px solid yellow;
+  border-radius: 20%;
+}
+
 #jeCommands .context{
   font-weight: bold;
   margin-top: 8px;
@@ -454,22 +463,25 @@ body.jsonEdit.jeZoomOut #topSurface {
 }
 #je_showWidget{
 }
-#je_tree{
+#je_reverseFkeys{
 }
 #je_addNewWidget{
   color: rgb(95, 167, 95);
 }
-#je_duplicateWidget{
-  color: yellow;
-}
 #je_removeWidget{
   color: rgb(255, 73, 73);
+}
+#je_duplicateWidget{
 }
 #je_editMode{
 }
 #je_openParent{
 }
 #je_toggleWide{
+}
+#je_toggleHighlight{
+}
+#je_toggleDebug{
 }
 
 #jeCommands > button::before{
