@@ -213,6 +213,11 @@ async function saveState() {
     }
   };
   $('#stateSaveOverlay [icon=undo]').onclick = $('#stateSaveOverlay [icon=close]').onclick = _=>showStatesOverlay('statesOverlay');
+
+  $('#stateSaveOverlay input').onkeyup = function(e) {
+    if(e.key == 'Enter')
+      $('#stateSaveOverlay button[icon=save]').click();
+  };
 }
 
 function updateEmptyLibraryHint() {
