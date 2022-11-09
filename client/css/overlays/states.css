@@ -325,7 +325,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   width: 100%;
 }
 
-#stateDetailsOverlay.uploading > .buttons [icon=save], #stateDetailsOverlay:not(.uploading) > .buttons [icon=upload] {
+#stateDetailsOverlay.uploading > .buttons [icon=save], #stateDetailsOverlay:not(.uploading) > .buttons > [icon=upload] {
   display: none;
 }
 
