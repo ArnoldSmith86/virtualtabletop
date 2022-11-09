@@ -57,6 +57,7 @@
   background: none;
   border: none;
   border-bottom: 1px solid var(--VTTblue);
+  color: var(--overlayFontColor);
 }
 
 #stateFilters select option.noMatch {
@@ -321,7 +322,7 @@ div:nth-of-type(2) > .list > .roomState .star {
 
 #stateDetailsOverlay {
   padding: 0;
-  color: black;
+  color: var(--overlayFontColor);
 }
 
 #stateDetailsOverlay > .buttons.one {
@@ -445,7 +446,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   width: var(--similarDetailsHeight);
 }
 #similarDetails a {
-  color: black;
+  color: var(--overlayFontColor);
 }
 
 #prevState, #nextState {

@@ -7,6 +7,7 @@
   --toolbarSize: 44px;
   --roomColor: #f0f0f0;
   --editColor: #7ba5f5;
+  --overlayFontColor: #222326;
   --VTTblue: #1f5ca6;
   --VTTblueDark: #0d2f5e;
   --VTTblueLight: #a9c6e8;
@@ -577,7 +578,7 @@ div[icon] {
   padding: 20px;
   border-radius: 20px;
   overflow: hidden;
-  color: #444;
+  color: var(--overlayFontColor);
 }
 
 div[icon]::before {
@@ -598,8 +599,8 @@ div[icon] > :nth-child(1) {
   margin-top: 0;
 }
 
-div[icon] a {
-  color: #444;
+div[icon] a, div[icon] input, div[icon] select {
+  color: var(--overlayFontColor);
 }
 
 div[icon] .buttons {
