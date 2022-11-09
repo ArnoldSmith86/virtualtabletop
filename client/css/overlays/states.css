@@ -159,13 +159,14 @@
   from { background-position:  0      0; }
   to   { background-position: 28.28px 0; }
 }
-.uploading.roomState .details::before {
+.uploading.roomState .details::before, .uploading.variant::before {
   --stripesColor1: #0004;
   --stripesColor2: #0006;
   content: '';
   position: absolute;
-  width: 100%;
+  width: calc(100% - var(--progress) * 100%);
   height: 100%;
+  top: 0;
   left: calc(var(--progress) * 100%);
   background-image: linear-gradient(135deg, var(--stripesColor1) 25%, var(--stripesColor2) 25%, var(--stripesColor2) 50%, var(--stripesColor1) 50%, var(--stripesColor1) 75%, var(--stripesColor2) 75%, var(--stripesColor2) 100%);
   background-size: 28.28px 28.28px;
@@ -490,6 +491,7 @@ div:nth-of-type(2) > .list > .roomState .star {
 
 .variant {
   display: flex;
+  position: relative;
   flex-flow: row wrap;
   justify-content: space-between;
   border-style: dotted;
@@ -500,7 +502,10 @@ div:nth-of-type(2) > .list > .roomState .star {
 
 .uploading.variant {
   --progress: 0;
-  background: linear-gradient(90deg, #00000061 calc(var(--progress) * 100%), red calc(var(--progress) * 100%));
+}
+
+.uploading.variant > div, .uploading.variant > button {
+  position: relative;
 }
 
 .variant>div {
