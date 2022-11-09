@@ -13,6 +13,7 @@ import Room       from './server/room.mjs';
 import MinifyRoom from './server/minify.mjs';
 import Logging    from './server/logging.mjs';
 import Config     from './server/config.mjs';
+import Statistics from './server/statistics.mjs';
 
 const app = express();
 const server = http.Server(app);
@@ -73,6 +74,7 @@ function autosaveRooms() {
         Logging.handleGenericException('autosaveRooms', e);
       }
     }
+    Statistics.writeToFilesystem();
   }, 60*1000);
 }
 
@@ -293,6 +295,7 @@ autosaveRooms();
   process.on(eventType, function() {
     for(const [ _, room ] of activeRooms)
       room.unload();
+    Statistics.writeToFilesystem();
     if(eventType != 'exit')
       process.exit();
   });

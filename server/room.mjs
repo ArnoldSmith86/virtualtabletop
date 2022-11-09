@@ -6,6 +6,7 @@ import FileLoader from './fileloader.mjs';
 import FileUpdater from './fileupdater.mjs';
 import Logging from './logging.mjs';
 import Config from './config.mjs';
+import Statistics from './statistics.mjs';
 
 export default class Room {
   players = [];
@@ -761,6 +762,9 @@ export default class Room {
       delete this.state._meta.starred[publicLibraryName];
     else
       this.state._meta.starred[publicLibraryName] = 1;
+
+    Statistics.toggleStateStar(publicLibraryName, this.state._meta.starred[publicLibraryName]);
+
     this.sendMetaUpdate();
   }
 
