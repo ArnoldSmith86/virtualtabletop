@@ -155,8 +155,25 @@
 .uploading.roomState {
   --progress: 0;
 }
-.uploading.roomState .details {
-  background: linear-gradient(90deg, #00000061 calc(var(--progress) * 100%), red calc(var(--progress) * 100%));
+@keyframes uploadingAnimation {
+  from { background-position:  0      0; }
+  to   { background-position: 28.28px 0; }
+}
+.uploading.roomState .details::before {
+  --stripesColor1: #0004;
+  --stripesColor2: #0006;
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: calc(var(--progress) * 100%);
+  background-image: linear-gradient(135deg, var(--stripesColor1) 25%, var(--stripesColor2) 25%, var(--stripesColor2) 50%, var(--stripesColor1) 50%, var(--stripesColor1) 75%, var(--stripesColor2) 75%, var(--stripesColor2) 100%);
+  background-size: 28.28px 28.28px;
+  animation-name: uploadingAnimation;
+  animation-duration: 2s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  border-left: 2px solid var(--stripesColor2);
 }
 .roomState.activeGame {
   box-shadow: 6px 6px 10px var(--VTTblue), -6px -6px 10px var(--VTTblue), 6px -6px 10px var(--VTTblue), -6px 6px 10px var(--VTTblue);
@@ -182,6 +199,7 @@
 }
 
 .roomState h3 {
+  position: relative;
   font-weight: 700;
   font-size: 1.5rem;
   line-height: 1em;
@@ -189,6 +207,7 @@
 }
 
 .roomState h4 {
+  position: relative;
   font-style: italic;
   font-weight: 700;
   font-size: .8rem;
