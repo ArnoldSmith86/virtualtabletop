@@ -375,7 +375,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
       entry.className += ' linkedGame';
     if(state.savePlayers)
       entry.className += ' savedGame';
-    if(activeState && activeState.stateID == state.id) {
+    if(activeState && (activeState.stateID == state.id || activeState.saveStateID == state.id)) {
       entry.className += ' activeGame';
       saveButton.style.display = 'inline-flex';
     }

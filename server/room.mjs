@@ -433,14 +433,19 @@ export default class Room {
   }
 
   async loadState(player, stateID, variantID) {
-    const variantInfo = this.state._meta.states[stateID].variants[variantID];
+    const stateInfo = this.state._meta.states[stateID];
+    const variantInfo = stateInfo.variants[variantID];
 
     if(variantInfo.link)
       await this.load(variantInfo.link, player);
     else
       await this.load(this.variantFilename(stateID, variantID), player);
 
-    this.state._meta.activeState = { stateID, variantID };
+    if(stateInfo.savePlayers)
+      this.state._meta.activeState = { saveStateID: stateID, stateID: stateInfo.saveState, variantID: stateInfo.saveVariant };
+    else
+      this.state._meta.activeState = { stateID, variantID };
+
     this.sendMetaUpdate();
   }
 
