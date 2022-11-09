@@ -142,7 +142,7 @@
 }
 
 /* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
-.jeNestedTree.active {
+.jeNestedTree.active, .jeLogNested.active {
   display: block;
 }
 
