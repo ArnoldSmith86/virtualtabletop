@@ -581,8 +581,10 @@ function fillStateDetails(states, state, dom) {
     $('img', vEntry).src = String(variant.variantImage).replace(/^\//, '');
 
     $('[icon=play_arrow]', vEntry).onclick = async function() {
+      $('#statesButton').dataset.overlay = 'confirmOverlay';
       if(!widgets.size || await confirmOverlay('Start game', 'Are you sure you want to load a new game? You will lose all unsaved progress in the current game.', 'Start new game', 'Resume current game', 'play_arrow', 'undo')) {
         toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading });
+        showStatesOverlay('stateDetailsOverlay');
         $('#activeGameButton').click();
       } else {
         showStatesOverlay('stateDetailsOverlay');
@@ -745,7 +747,6 @@ function fillStateDetails(states, state, dom) {
     }
   };
   $('#stateDetailsOverlay .buttons [icon=upload]').onclick = function() {
-    $('#statesButton').dataset.overlay = 'confirmOverlay';
     toServer('addStateToPublicLibrary', state.id);
   };
 
