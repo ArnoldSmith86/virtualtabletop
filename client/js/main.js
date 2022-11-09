@@ -210,7 +210,7 @@ export async function sortWidgets(collection, keys, reverse, locales, options, r
     r.push(false);
   const k = asArray(keys).map((key, i, k) => {
     const keyObj = {
-      key, 
+      key,
       locales,
       options
     };
@@ -344,14 +344,14 @@ onLoad(function() {
       $('#activeGameButton').click();
   });
 
+  on('#activeGameButton', 'click', function() {
+    showOverlay();
+  });
+
   on('.toolbarButton', 'click', function(e) {
     const overlay = e.currentTarget.dataset.overlay;
     if(overlay)
       showOverlay(overlay);
-  });
-
-  on('#activeGameButton', 'click', function() {
-    showOverlay();
   });
 
   on('#muteButton', 'click', function() {
