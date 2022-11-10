@@ -428,7 +428,6 @@ div:nth-of-type(2) > .list > .roomState .star {
   text-align: center;
   color: white;
   font-weight: bold;
-  background: none !important;
 }
 #mainDetails p, #similarDetails p {
   margin-top: 8px;
