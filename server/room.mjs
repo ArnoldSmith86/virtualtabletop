@@ -375,6 +375,7 @@ export default class Room {
         }
       }
     }
+    Statistics.updateDataInsideStates(Room.publicLibrary);
     return Room.publicLibrary;
   }
 

@@ -16,6 +16,11 @@ class Statistics {
     this.data.starsPerState[publicLibraryStateID] = (this.data.starsPerState[publicLibraryStateID] ?? 0) + (starred ? 1 : -1);
   }
 
+  updateDataInsideStates(states) {
+    for(const [ id, state ] of Object.entries(states))
+      state.stars = this.data.starsPerState[state.publicLibrary] || 0;
+  }
+
   writeToFilesystem() {
     fs.writeFileSync(statisticsFilename, JSON.stringify(this.data));
   }
