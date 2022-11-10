@@ -231,7 +231,7 @@ function toggleStateStar(state, dom) {
                    ? $('#statesList > div:nth-of-type(3) > .list')
                    : $('#statesList > div:nth-of-type(2) > .list');
   const states = [...targetList.children].concat(dom);
-  states.sort((a,b)=>resortStatesCallback(a.dataset,b.dataset));
+  states.sort((a,b)=>sortStatesCallback(a.dataset,b.dataset));
   targetList.insertBefore(dom, states[states.indexOf(dom)+1]);
   updateEmptyLibraryHint();
   toServer('toggleStateStar', state.publicLibrary);
@@ -334,7 +334,7 @@ function fillStateTileTitles(dom, name, similarName, savePlayers, saveDate) {
 }
 
 let sortBy = $('#librarySort').value;
-function resortStatesCallback(stateA, stateB) {
+function sortStatesCallback(stateA, stateB) {
   if(sortBy == 'year' && stateB.year != stateA.year)
     return stateB.year - stateA.year;
   if(sortBy == 'stars' && stateB.stars != stateA.stars)
@@ -347,7 +347,7 @@ function resortStatesCallback(stateA, stateB) {
 }
 function resortStatesList() {
   for(const list of $a('#statesList .list')) {
-    const states = [...$a('.roomState', list)].map(d=>[ d, d.dataset ]).sort((a, b) => resortStatesCallback(a[1], b[1]));
+    const states = [...$a('.roomState', list)].map(d=>[ d, d.dataset ]).sort((a, b) => sortStatesCallback(a[1], b[1]));
     for(const [ stateDOM, stateData ] of states)
       list.appendChild(stateDOM);
   }
@@ -374,6 +374,12 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
   const modeOptions = {};
 
   const publicLibraryLinksFound = {};
+  for(const state of Object.values(states)) {
+    state.starred = starred && starred[state.publicLibrary];
+    for(const variant of state.variants)
+      if(variant.plStateID)
+        publicLibraryLinksFound[`${variant.plStateID} - ${variant.plVariantID}`] = true;
+  }
 
   const categories = {
     'In-Progress Games': domByTemplate('template-stateslist-category'),
@@ -381,10 +387,9 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     'Public Library': domByTemplate('template-stateslist-category')
   };
 
-  for(const kvp of Object.entries(states).sort((a, b) => resortStatesCallback(a[1], b[1])).sort((a, b) => !!a[1].publicLibrary - !!b[1].publicLibrary)) {
+  for(const kvp of Object.entries(states).sort((a, b) => sortStatesCallback(a[1], b[1])).sort((a, b) => (!!a[1].publicLibrary && !a[1].starred) - (!!b[1].publicLibrary && !b[1].starred))) {
     const state = kvp[1];
     state.id = kvp[0];
-    state.starred = starred && starred[state.publicLibrary];
 
     let target = 'Game Shelf';
     if(state.savePlayers)
@@ -420,10 +425,8 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     let hasVariants = false;
     for(const variantID in state.variants) {
       let variant = state.variants[variantID];
-      if(variant.plStateID) {
-        publicLibraryLinksFound[`${variant.plStateID} - ${variant.plVariantID}`] = true;
+      if(variant.plStateID)
         variant = states[variant.plStateID].variants[variant.plVariantID];
-      }
 
       if(!publicLibraryLinksFound[`${state.id} - ${variantID}`])
         hasVariants = true;
