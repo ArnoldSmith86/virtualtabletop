@@ -337,6 +337,8 @@ let sortBy = $('#librarySort').value;
 function resortStatesCallback(stateA, stateB) {
   if(sortBy == 'year' && stateB.year != stateA.year)
     return stateB.year - stateA.year;
+  if(sortBy == 'similarName' && stateB.similarName != stateA.similarName)
+    return (stateA.similarName||stateA.name).localeCompare(stateB.similarName||stateB.name);
   return stateA.name.localeCompare(stateB.name);
 }
 function resortStatesList() {
@@ -444,6 +446,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     }
 
     entry.dataset.name = state.name;
+    entry.dataset.similarName = state.similarName;
     entry.dataset.year = state.year;
     entry.dataset.text = `${state.name} ${state.similarName} ${state.description}`.toLowerCase();
     entry.dataset.players = validPlayers.join();
