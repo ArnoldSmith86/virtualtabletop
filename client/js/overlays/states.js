@@ -230,7 +230,9 @@ function toggleStateStar(state, dom) {
   const targetList = dom.parentElement.parentElement == $('#statesList > div:nth-of-type(2)')
                    ? $('#statesList > div:nth-of-type(3) > .list')
                    : $('#statesList > div:nth-of-type(2) > .list');
-  targetList.insertBefore(dom, [...targetList.children].filter(d=>$('h3', d).innerText.localeCompare($('h3', dom).innerText) > 0)[0]);
+  const states = [...targetList.children].concat(dom);
+  states.sort((a,b)=>resortStatesCallback(a.dataset,b.dataset));
+  targetList.insertBefore(dom, states[states.indexOf(dom)+1]);
   updateEmptyLibraryHint();
   toServer('toggleStateStar', state.publicLibrary);
 }
@@ -271,6 +273,10 @@ function updateLibraryFilter() {
   }
 
   updateEmptyLibraryHint();
+  if(sortBy != $('#librarySort').value) {
+    sortBy = $('#librarySort').value;
+    resortStatesList();
+  }
 }
 
 function parsePlayers(players) {
@@ -327,6 +333,20 @@ function fillStateTileTitles(dom, name, similarName, savePlayers, saveDate) {
   }
 }
 
+let sortBy = $('#librarySort').value;
+function resortStatesCallback(stateA, stateB) {
+  if(sortBy == 'year' && stateB.year != stateA.year)
+    return stateB.year - stateA.year;
+  return stateA.name.localeCompare(stateB.name);
+}
+function resortStatesList() {
+  for(const list of $a('#statesList .list')) {
+    const states = [...$a('.roomState', list)].map(d=>[ d, d.dataset ]).sort((a, b) => resortStatesCallback(a[1], b[1]));
+    for(const [ stateDOM, stateData ] of states)
+      list.appendChild(stateDOM);
+  }
+}
+
 let uploadingStates = [[],[]];
 function fillStatesList(states, starred, activeState, returnServer, activePlayers) {
   if(returnServer) {
@@ -355,7 +375,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     'Public Library': domByTemplate('template-stateslist-category')
   };
 
-  for(const kvp of Object.entries(states).sort((a, b) => a[1].name.localeCompare(b[1].name)).sort((a, b) => !!a[1].publicLibrary - !!b[1].publicLibrary)) {
+  for(const kvp of Object.entries(states).sort((a, b) => resortStatesCallback(a[1], b[1])).sort((a, b) => !!a[1].publicLibrary - !!b[1].publicLibrary)) {
     const state = kvp[1];
     state.id = kvp[0];
     state.starred = starred && starred[state.publicLibrary];
@@ -423,6 +443,8 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
       $('.list', category).appendChild(entry);
     }
 
+    entry.dataset.name = state.name;
+    entry.dataset.year = state.year;
     entry.dataset.text = `${state.name} ${state.similarName} ${state.description}`.toLowerCase();
     entry.dataset.players = validPlayers.join();
     entry.dataset.duration = String(state.time).replace(/.*[^0-9]/, '');
