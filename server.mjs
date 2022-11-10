@@ -69,6 +69,7 @@ function autosaveRooms() {
   setInterval(function() {
     for(const [ _, room ] of activeRooms) {
       try {
+        room.updateTimeStatistics();
         room.writeToFilesystem();
       } catch(e) {
         Logging.handleGenericException('autosaveRooms', e);

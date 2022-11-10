@@ -12,6 +12,7 @@ export default class Room {
   players = [];
   state = {};
   deltaID = 0;
+  lastStatisticsDeltaID = 0;
 
   constructor(id, unloadCallback) {
     this.id = id;
@@ -836,6 +837,13 @@ export default class Room {
           Logging.log(`ERROR: updating linked state ${id} in room ${this.id} failed: ${e}`);
         }
       }
+    }
+  }
+
+  updateTimeStatistics() {
+    if(this.deltaID > this.lastStatisticsDeltaID && this.state._meta.activeState && this.state._meta.activeState.stateID.match(/^PL/)) {
+      Statistics.updateTimeStatistics(this.state._meta.states[this.state._meta.activeState.stateID].publicLibrary, this.players.length);
+      this.lastStatisticsDeltaID = this.deltaID;
     }
   }
 

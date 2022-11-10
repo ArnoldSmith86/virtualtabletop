@@ -339,6 +339,8 @@ function resortStatesCallback(stateA, stateB) {
     return stateB.year - stateA.year;
   if(sortBy == 'stars' && stateB.stars != stateA.stars)
     return stateB.stars - stateA.stars;
+  if(sortBy == 'timePlayed' && stateB.timePlayed != stateA.timePlayed)
+    return stateB.timePlayed - stateA.timePlayed;
   if(sortBy == 'similarName' && stateB.similarName != stateA.similarName)
     return (stateA.similarName||stateA.name).localeCompare(stateB.similarName||stateB.name);
   return stateA.name.localeCompare(stateB.name);
@@ -451,6 +453,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     entry.dataset.similarName = state.similarName;
     entry.dataset.year = state.year;
     entry.dataset.stars = state.stars;
+    entry.dataset.timePlayed = state.timePlayed;
     entry.dataset.text = `${state.name} ${state.similarName} ${state.description}`.toLowerCase();
     entry.dataset.players = validPlayers.join();
     entry.dataset.duration = String(state.time).replace(/.*[^0-9]/, '');
