@@ -228,6 +228,8 @@ export default class Room {
       delete state._meta.info.publicLibrary;
       delete state._meta.info.publicLibraryCategory;
       delete state._meta.info.starred;
+      delete state._meta.info.stars;
+      delete state._meta.info.timePlayed;
 
       zip.file(`${vID}.json`, JSON.stringify(state, null, '  '));
       if(includeAssets)
@@ -685,6 +687,8 @@ export default class Room {
     delete this.state._meta.states[id].publicLibrary;
     delete this.state._meta.states[id].publicLibraryCategory;
     delete this.state._meta.states[id].starred;
+    delete this.state._meta.states[id].stars;
+    delete this.state._meta.states[id].timePlayed;
     delete this.state._meta.states[id].link;
 
     this.addState(id, 'room', null, null, id);
@@ -883,6 +887,8 @@ export default class Room {
       delete state._meta.info.id;
       delete state._meta.info.variants;
       delete state._meta.info.starred;
+      delete state._meta.info.stars;
+      delete state._meta.info.timePlayed;
       delete state._meta.info.publicLibrary;
       delete state._meta.info.publicLibraryCategory;
 
@@ -908,6 +914,8 @@ export default class Room {
     delete copy._meta.info.publicLibrary;
     delete copy._meta.info.publicLibraryCategory;
     delete copy._meta.info.starred;
+    delete copy._meta.info.stars;
+    delete copy._meta.info.timePlayed;
     delete copy._meta.info.link;
     delete copy._meta.info.variants;
 
