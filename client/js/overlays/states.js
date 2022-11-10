@@ -785,6 +785,8 @@ function fillStateDetails(states, state, dom) {
 
   $('#stateDetailsOverlay .star').onclick = function(e) {
     e.currentTarget.classList.toggle('active');
+    $('#stateDetailsOverlay .star + span').innerText = (+$('#stateDetailsOverlay .star + span').innerText + (e.currentTarget.classList.contains('active') ? 1 : -1)) || '';
+    $('#stateDetailsOverlay .star + span').classList.remove('hidden');
     $(`#statesOverlay .roomState[data-id="${state.id}"] .star`).click();
   };
 

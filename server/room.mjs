@@ -766,6 +766,9 @@ export default class Room {
       this.state._meta.starred[publicLibraryName] = 1;
 
     Statistics.toggleStateStar(publicLibraryName, this.state._meta.starred[publicLibraryName]);
+    for(const state of Object.values(this.state._meta.states))
+      if(state.publicLibrary == publicLibraryName)
+        state.stars += this.state._meta.starred[publicLibraryName] ? 1 : -1;
 
     this.sendMetaUpdate();
   }

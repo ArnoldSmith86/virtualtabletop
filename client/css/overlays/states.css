@@ -406,7 +406,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   top: 5px;
   position: relative;
 }
-#mainDetails .star, #mainDetails #mainImage > i {
+#mainDetails .star, #mainDetails #mainImage > i, #mainImage span {
   position: fixed;
   font-size: 50px;
   background: none;
@@ -417,8 +417,18 @@ div:nth-of-type(2) > .list > .roomState .star {
   color: white;
   padding: 9px;
 }
-#mainDetails .active.star {
+#mainImage .active.star, #mainImage .active.star + span {
   color: gold;
+}
+#mainImage span {
+  position: absolute;
+  font-size: 16px;
+  top: 53px;
+  width: 68px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  background: none !important;
 }
 #mainDetails p, #similarDetails p {
   margin-top: 8px;
@@ -670,7 +680,7 @@ div:nth-of-type(2) > .list > .roomState .star {
     margin-top: 60px;
   }
   #mainImage, #similarImage {
-    position: unset;
+    position: relative;
     float: left;
     margin-right: 10px;
   }
@@ -725,6 +735,9 @@ div:nth-of-type(2) > .list > .roomState .star {
   }
   #mainImage button::before, #similarImage button::before {
     margin: 0;
+  }
+  #mainImage span {
+    display: none;
   }
   #variantsList {
     padding: 5px 0;
