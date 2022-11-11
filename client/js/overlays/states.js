@@ -446,6 +446,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     if(hasVariants) {
       entry.addEventListener('click', _=>fillStateDetails(states, state, entry));
       $('.star', entry).addEventListener('click', function(e) {
+        entry.dataset.stars = +entry.dataset.stars + (state.starred ? -1 : 1);
         toggleStateStar(state, entry);
         event.stopPropagation();
       });
