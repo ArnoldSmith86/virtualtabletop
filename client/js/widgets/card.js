@@ -142,6 +142,8 @@ class Card extends Widget {
           } else if (object.type == 'html') {
             objectDiv.innerHTML = object.value;
             objectDiv.style.color = object.color;
+            for (const part of objectDiv.querySelectorAll('[data-dynamic]'))
+              part.innerHTML = this.get(part.getAttribute('data-dynamic'));
           } else {
             objectDiv.textContent = object.value;
             objectDiv.style.color = object.color;
