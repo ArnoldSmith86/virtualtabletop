@@ -33,13 +33,12 @@ class Seat extends Widget {
       displayedText = displayedText.replaceAll('playerName',this.get('player'))
       setText(this.domElement, displayedText);
     }
-    if(delta.player !== undefined || delta.score !== undefined) {
-      const scoreboard = widgetFilter(w => w.get('type') == 'scoreboard');
-      if(scoreboard.length > 0)
-        scoreboard[0].applyDeltaToDOM(delta);
-      if(delta.player !== undefined)
-        this.updateLinkedWidgets();
-    }
+    const scoreboard = widgetFilter(w => w.get('type') == 'scoreboard');
+    for (const board of scoreboard)
+      board.applyDeltaToDOM(null);
+    
+    if(delta.player !== undefined)
+      this.updateLinkedWidgets();
   }
 
   applyInitialDelta(delta) {

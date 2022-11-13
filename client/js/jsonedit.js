@@ -2089,9 +2089,8 @@ window.addEventListener('mousemove', function(e) {
     widgetCoordCache = [];
     for(const widget of widgets.values()) {
       const coords = widget.coordGlobalFromCoordParent({x:widget.get('x'),y:widget.get('y')});
-      const w = '#w_'+widget.id;
-      coords.r = coords.x + $(w).offsetWidth;
-      coords.b = coords.y + $(w).offsetHeight;
+      coords.r = coords.x + widget.get('width');
+      coords.b = coords.y + widget.get('height');
       coords.widget = widget;
       widgetCoordCache.push(coords);
     }

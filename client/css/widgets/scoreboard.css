@@ -9,18 +9,22 @@
 }
 
 .scoreboard table {
-  border:  2px solid #333;
+  padding: none;
+  border:  none;
   border-collapse: collapse;
+  display: block;
+  overflow-x: scroll;
+  overflow-y: scroll;
 }
 
-.scoreboard th {
-  color: black;
-  background-color: rgb(203, 220, 233);
-  border-bottom: 1px solid #ddd;
-  border-right: 1px solid #ddd;
-  padding: 5px;
-  text-shadow: 1px 1px 1px #fff;
-  white-space: nowrap;
+.scoreboard .firstRow {
+  position: sticky;
+  top: 0;
+}
+
+.scoreboard .firstCol {
+  position: sticky;
+  left: 0;
 }
 
 .scoreboard tbody td {
