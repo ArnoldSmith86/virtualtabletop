@@ -139,6 +139,9 @@ class Card extends Widget {
               objectDiv.style.backgroundImage = mapAssetURLs(`url("${object.value}")`);
             }
             objectDiv.style.backgroundColor = object.color || 'white';
+          } else if (object.type == 'html') {
+            objectDiv.innerHTML = object.value;
+            objectDiv.style.color = object.color;
           } else {
             objectDiv.textContent = object.value;
             objectDiv.style.color = object.color;
