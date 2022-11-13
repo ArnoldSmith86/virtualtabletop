@@ -32,7 +32,7 @@ export default class Player {
       if(func == 'editState')
         await this.room.editState(this, args.id, args.meta, args.variantInput, args.variantOperationQueue);
       if(func == 'loadState')
-        await this.room.loadState(this, args.stateID, args.variantID);
+        await this.room.loadState(this, args.stateID, args.variantID, args.linkSourceStateID);
       if(func == 'mouse')
         this.room.mouseMove(this, args);
       if(func == 'playerColor')

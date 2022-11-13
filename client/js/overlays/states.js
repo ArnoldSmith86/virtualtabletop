@@ -411,7 +411,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
       entry.className += ' linkedGame';
     if(state.savePlayers)
       entry.className += ' savedGame';
-    if(activeState && (activeState.stateID == state.id || activeState.saveStateID == state.id)) {
+    if(activeState && (activeState.stateID == state.id || activeState.saveStateID == state.id || activeState.linkStateID == state.id)) {
       entry.className += ' activeGame';
       saveButton.style.display = 'inline-flex';
     }
@@ -623,7 +623,7 @@ function fillStateDetails(states, state, dom) {
     $('[icon=play_arrow]', vEntry).onclick = async function() {
       $('#statesButton').dataset.overlay = 'confirmOverlay';
       if(!widgets.size || await confirmOverlay('Start game', 'Are you sure you want to load a new game? You will lose all unsaved progress in the current game.', 'Start new game', 'Resume current game', 'play_arrow', 'undo')) {
-        toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading });
+        toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading, linkSourceStateID: state.id });
         showStatesOverlay('stateDetailsOverlay');
         $('#activeGameButton').click();
       } else {

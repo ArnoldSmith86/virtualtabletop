@@ -437,7 +437,7 @@ export default class Room {
       this.trace('init', { initialState: this.state });
   }
 
-  async loadState(player, stateID, variantID) {
+  async loadState(player, stateID, variantID, linkSourceStateID) {
     const stateInfo = this.state._meta.states[stateID];
     const variantInfo = stateInfo.variants[variantID];
 
@@ -446,7 +446,9 @@ export default class Room {
     else
       await this.load(this.variantFilename(stateID, variantID), player);
 
-    if(stateInfo.savePlayers)
+    if(linkSourceStateID != stateID)
+      this.state._meta.activeState = { linkStateID: linkSourceStateID, stateID, variantID };
+    else if(stateInfo.savePlayers)
       this.state._meta.activeState = { saveStateID: stateID, stateID: stateInfo.saveState, variantID: stateInfo.saveVariant };
     else
       this.state._meta.activeState = { stateID, variantID };
