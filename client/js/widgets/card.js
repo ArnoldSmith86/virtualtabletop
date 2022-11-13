@@ -108,7 +108,7 @@ class Card extends Widget {
       faceDiv.style.borderRadius = face.radius ? face.radius + 'px' : '0';
 
       for(const original of face.objects) {
-        const objectDiv = document.createElement('div');
+        const objectDiv = document.createElement(original.type == 'html' ? 'iframe' : 'div');
         objectDiv.classList.add('cardFaceObject');
 
         const setValue = _=>{
@@ -140,15 +140,15 @@ class Card extends Widget {
             }
             objectDiv.style.backgroundColor = object.color || 'white';
           } else if (object.type == 'html') {
-            objectDiv.innerHTML = object.value;
-            objectDiv.style.color = object.color;
-            for (let part of objectDiv.querySelectorAll('[data-dynamic]')) {
-              const value = this.get(part.getAttribute('data-dynamic'));
-              if (value !== null)
-                part.innerHTML = value;
-              else
-                part.remove();
-            }
+            // Prevent input from going to frame.
+            objectDiv.style.pointerEvents = 'none';
+            objectDiv.setAttribute('sandbox', "");
+            objectDiv.setAttribute('width', object.width);
+            objectDiv.setAttribute('height', object.height);
+            const variable = /\${([^} ]*)}/g;
+            objectDiv.srcdoc = object.value.replaceAll(variable, (m, n) => {
+              return this.get(n) || ""
+            });
           } else {
             objectDiv.textContent = object.value;
             objectDiv.style.color = object.color;
