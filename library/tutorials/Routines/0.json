@@ -12,7 +12,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "Intro and clickRoutine",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   },
   "8fr3": {

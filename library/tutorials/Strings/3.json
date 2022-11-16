@@ -23,7 +23,8 @@
       "players": "2-4",
       "language": "en-US",
       "variant": "Example: CSS",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   },
   "2pt0": {

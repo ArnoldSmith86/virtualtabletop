@@ -14,7 +14,8 @@
       "variant": "",
       "attribution": "The game room design and layout, game pieces, and library image are by Nick \"nupa\" Lamicela and are released to the Public Domain under CC0.\n\nThe night sky background is released under CC0 by Petr Kratochvil: https://www.publicdomainpictures.net/en/view-image.php?image=125056&picture=night-sky-background",
       "similarName": "Homeworlds",
-      "description": "Abstract, free-form strategy game using upright pyramids and pyramids laying on their side. Use different size and color pyramids to represent star systems and starships. Win by destroying opponent's home star or all ships at opponent's home star."
+      "description": "Abstract, free-form strategy game using upright pyramids and pyramids laying on their side. Use different size and color pyramids to represent star systems and starships. Win by destroying opponent's home star or all ships at opponent's home star.",
+      "showName": true
     }
   },
   "icehouse-bank": {

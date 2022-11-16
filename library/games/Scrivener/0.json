@@ -54,7 +54,8 @@
       "variant": "",
       "attribution": "Original room layout, game design, and card design by Zoql. Adapted to virtualtabletop.io by LawDawg96. Ink bottle icon by LawDawg96. All released to the Public Domain as CC0.\n\nRoom background image by ChrisFiedler available under the Pixabay license from https://pixabay.com/photos/paper-old-texture-parchment-1074131/.\n\nSkull, compas, magnifying glass, and heart icons are by Lorc and are available under CC BY 3.0 from:\n - https://game-icons.net/1x1/lorc/piece-skull.html\n - https://game-icons.net/1x1/lorc/compass.html\n - https://game-icons.net/1x1/lorc/magnifying-glass.html\n - https://game-icons.net/1x1/lorc/cupidon-arrow.html",
       "similarName": "Hardback",
-      "description": "Build a deck of letters with various powers. Form words from letters to score points and buy ink and remover. Play until first player reaches 60 points. Highest score wins."
+      "description": "Build a deck of letters with various powers. Form words from letters to score points and buy ink and remover. Play until first player reaches 60 points. Highest score wins.",
+      "showName": true
     }
   },
   "hand": {

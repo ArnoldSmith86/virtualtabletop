@@ -122,7 +122,8 @@
       "players": "2-4",
       "language": "en-US",
       "variant": "Example: Self Locking Button",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   }
 }

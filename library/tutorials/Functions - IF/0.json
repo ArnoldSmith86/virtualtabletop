@@ -1223,7 +1223,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "Overview",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   },
   "4gwy": {

@@ -12,7 +12,8 @@
       "players": "",
       "language": "en-US",
       "variant": "General",
-      "attribution": "See https://github.com/ArnoldSmith86/virtualtabletop/wiki/Fonts for usage instructions."
+      "attribution": "See https://github.com/ArnoldSmith86/virtualtabletop/wiki/Fonts for usage instructions.",
+      "showName": false
     }
   },
   "icons": {

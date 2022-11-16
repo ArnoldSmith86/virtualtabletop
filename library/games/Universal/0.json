@@ -15,6 +15,7 @@
       "attribution": "Room layout, card design, and all game elements are by LawDawg96 and are released to the public domain as CC0.",
       "similarName": "Mandala",
       "description": "Play cards into one of two common board areas. Once a board area is filled with each of 6 different colors of cards, players collect cards of like colors to store for later counting. Play until card pile runs out or first player collects cards of all 6 colors. Highest score wins.",
+      "showName": true,
       "helpText": "Players take seat. Press the restart button in the lower left to shuffle and start the game. All game mechanics are manual except that you can press the +1 button to add a single card to your hand. You can also press the +2 button in the mountain areas to add 2 cards to the mountain and also move any cards in the field to the discard pile. The hand is sorted automatically by color. Each player can see the count of cards in that player's cup displayed by the cup holder. At the end of the game, move all scorable cards to the appropriate river holder and press the sigma button to autoscore."
     }
   },

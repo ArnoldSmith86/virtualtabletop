@@ -53,7 +53,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "Turns",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   },
   "qaui": {

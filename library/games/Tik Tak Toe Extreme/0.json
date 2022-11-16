@@ -14,7 +14,8 @@
       "variant": "",
       "attribution": "The room design, library image, and other room elements are by Ingegneus and are released to the Public Domain under CC0.\n\nThe wood background by Nathan Dumlao is from-https://unsplash.com/photos/J2gEgTPM_OA and is available under the Unsplash license.\n",
       "similarName": "Quarto",
-      "description": "A 3-D twist on the classic game of X's and O's. Use a 4x4 grid board with 16 different pieces with one of two attributes in each of these categories: color, height, shape, and hollowness. Opponent chooses the piece the other player places on board. First to get 4 in a row with at least one attribute in common wins."
+      "description": "A 3-D twist on the classic game of X's and O's. Use a 4x4 grid board with 16 different pieces with one of two attributes in each of these categories: color, height, shape, and hollowness. Opponent chooses the piece the other player places on board. First to get 4 in a row with at least one attribute in common wins.",
+      "showName": true
     }
   },
   "table": {

@@ -956,7 +956,8 @@
       "variant": "",
       "attribution": "Room layout by ArnoldSmith86 and put into public domain (CC0)\n\nBoard image is public domain (colors modified): https://commons.wikimedia.org/wiki/File:Nine_Men%27s_Morris_board.svg",
       "similarName": "Nine Men's Morris",
-      "description": "Place and slide pieces to intersections of board to make lines of three and remove opponents piece.  First player to have 2 pieces remaining loses."
+      "description": "Place and slide pieces to intersections of board to make lines of three and remove opponents piece.  First player to have 2 pieces remaining loses.",
+      "showName": true
     }
   }
 }

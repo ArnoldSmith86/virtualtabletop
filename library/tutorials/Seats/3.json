@@ -12,7 +12,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "Board Demo",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   },
   "bsbm": {

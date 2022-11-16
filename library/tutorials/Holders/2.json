@@ -1280,7 +1280,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "Offset: Advanced",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   },
   "8fr3": {

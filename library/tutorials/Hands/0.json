@@ -1380,7 +1380,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "Direct Deal",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   },
   "52zg": {

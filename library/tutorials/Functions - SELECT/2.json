@@ -12,7 +12,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "Mode and Sort",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   },
   "8fr3": {

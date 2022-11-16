@@ -296,7 +296,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "2) Grid",
-      "attribution": "\nCalculator for hexagons: https://hexagoncalculator.apphb.com/\n\nGood reference guide:\nhttps://www.redblobgames.com/grids/hexagons/\n\n--\n\n\nGood reference guide:\nhttps://www.redblobgames.com/grids/hexagons/#size-and-spacing"
+      "attribution": "\nCalculator for hexagons: https://hexagoncalculator.apphb.com/\n\nGood reference guide:\nhttps://www.redblobgames.com/grids/hexagons/\n\n--\n\n\nGood reference guide:\nhttps://www.redblobgames.com/grids/hexagons/#size-and-spacing",
+      "showName": false
     }
   },
   "34s0": {

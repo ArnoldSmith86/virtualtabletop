@@ -546,7 +546,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "Example: Random Word",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   },
   "Word Button": {

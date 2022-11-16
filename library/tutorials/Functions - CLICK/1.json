@@ -374,7 +374,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "Modes",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   }
 }

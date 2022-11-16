@@ -405,8 +405,8 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     entry.className = state.image ? 'roomState' : 'roomState noImage';
     if(state.publicLibrary)
       entry.className += ' publicLibraryGame';
-    if(state.publicLibrary && state.publicLibrary.match(/tutorial/))
-      entry.className += ' publicLibraryTutorial';
+    if(state.showName === false)
+      entry.className += ' hideName';
     if(state.link)
       entry.className += ' linkedGame';
     if(state.savePlayers)
@@ -543,7 +543,7 @@ function fillStateDetails(states, state, dom) {
     dom.scrollTop = 0;
 
   disableEditing($('#stateDetailsOverlay'), state);
-  applyValuesToDOM($('#stateDetailsOverlay'), state);
+  applyValuesToDOM($('#stateDetailsOverlay'), Object.assign({ showName: true }, state));
 
   toggleClass($('#stateDetailsOverlay .star'),         'active', !!state.starred);
   toggleClass($('#stateDetailsOverlay .star'),         'hidden', !state.publicLibrary);

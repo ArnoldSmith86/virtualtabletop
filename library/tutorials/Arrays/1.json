@@ -542,7 +542,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "Evaluating",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   },
   "pc6t": {

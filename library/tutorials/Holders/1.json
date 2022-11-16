@@ -863,7 +863,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "Offset: Basic",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   },
   "5gtd": {

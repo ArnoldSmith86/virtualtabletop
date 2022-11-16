@@ -591,7 +591,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "Modifying - Advanced",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   },
   "output2": {

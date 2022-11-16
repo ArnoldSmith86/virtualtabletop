@@ -865,7 +865,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "Moving: Basic",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   },
   "xr0n": {

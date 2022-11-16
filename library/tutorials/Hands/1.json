@@ -12,7 +12,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "Custom Visibility",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   },
   "w2ab": {

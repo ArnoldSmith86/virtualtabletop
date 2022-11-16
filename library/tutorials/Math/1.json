@@ -23,7 +23,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "Constants",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   },
   "i1bj": {

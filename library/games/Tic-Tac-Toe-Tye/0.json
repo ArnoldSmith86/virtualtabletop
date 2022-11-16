@@ -1108,7 +1108,8 @@
       "variant": "",
       "attribution": "The game state, room design, library image, and all graphics are by LawDawg and are released to the Public Domain by CC0.",
       "similarName": "Otrio",
-      "description": "Classic game of X's and O's with a twist; 3 different size markers fit in each square.  Link 3 colored tokens in one of 3 ways to win."
+      "description": "Classic game of X's and O's with a twist; 3 different size markers fit in each square.  Link 3 colored tokens in one of 3 ways to win.",
+      "showName": true
     }
   }
 }

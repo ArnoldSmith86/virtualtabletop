@@ -296,7 +296,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "Modifying",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   },
   "string": {

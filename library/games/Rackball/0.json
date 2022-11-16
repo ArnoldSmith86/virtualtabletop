@@ -1881,7 +1881,8 @@
       "variant": "",
       "attribution": "The woodgrain image by David Robarts is available in the Rummy Tiles game on the VirtualTabletop public library.  It is available under CC BY-NC-SA 4.0.\n\n\nThe room design, library image, and other room elements are by RogerLipsett and are released to the Public Domain under CC0.",
       "similarName": "Rack-o",
-      "description": "Using 60 card deck, exchange one card each turn to improve hand. Be first to arrange 10 cards from lowest to highest in hand. First to 500 points wins."
+      "description": "Using 60 card deck, exchange one card each turn to improve hand. Be first to arrange 10 cards from lowest to highest in hand. First to 500 points wins.",
+      "showName": true
     }
   },
   "Reset": {

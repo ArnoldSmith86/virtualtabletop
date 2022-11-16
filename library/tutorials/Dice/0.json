@@ -1024,7 +1024,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "",
-      "attribution": "The assets used in this tutorial are in the public domain by CC0 as described in the Assets - Dice file."
+      "attribution": "The assets used in this tutorial are in the public domain by CC0 as described in the Assets - Dice file.",
+      "showName": false
     }
   },
   "8fr3": {

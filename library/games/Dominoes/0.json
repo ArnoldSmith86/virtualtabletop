@@ -67,6 +67,7 @@
       "attribution": "The game layout was done by LawDawg and released to the public domain as CC0.\n\nThe library image is CC0:\nhttps://www.publicdomainpictures.net/en/view-image.php?image=305475&picture=vintage-dominoes-game.\n\nThe background image by Martin Stokow is CC0: https://publicdomainpictures.net/en/view-image.php?image=370218&picture=grunge-background-texture-marble.",
       "similarName": "Dominoes",
       "description": "Classic tile-based strategy game using dominoes with 0 to 15 pips.  Multiple rule variations and winning conditions.",
+      "showName": true,
       "helpText": "Players sit in seats. Press settings button (gear icon) to choose domino set to use and scoring options. Add dominoes to hand by pressing + buttons on bottom left. Calculate score. Deal next hand by pressing recall button (icon above gear)."
     }
   },

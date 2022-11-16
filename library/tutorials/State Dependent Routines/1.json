@@ -322,7 +322,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "Inbuilt states",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   }
 }

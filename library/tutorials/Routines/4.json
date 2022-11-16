@@ -730,7 +730,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "clickRoutine Equivalents",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   },
   "8fr3": {

@@ -627,7 +627,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "Advanced",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   },
   "a5gk": {

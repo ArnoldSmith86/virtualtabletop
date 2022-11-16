@@ -12253,7 +12253,8 @@
       "variant": "",
       "attribution": "The game layout, library image, and other game elements were done by RogerLipsett. They are released to the Public Domain.",
       "similarName": "Dots and Dashes",
-      "description": "Add lines to complete squares.  Most completed squares wins."
+      "description": "Add lines to complete squares.  Most completed squares wins.",
+      "showName": true
     }
   },
   "8muz": {

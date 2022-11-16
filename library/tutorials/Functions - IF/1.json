@@ -1601,7 +1601,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "Used Buttons",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   },
   "8fr3": {

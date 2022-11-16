@@ -23,7 +23,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "Randomization",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   },
   "i1bj": {

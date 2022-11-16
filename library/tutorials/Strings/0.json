@@ -96,7 +96,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "Creating",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   },
   "tw2s": {

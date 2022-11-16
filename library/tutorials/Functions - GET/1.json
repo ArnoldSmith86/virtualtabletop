@@ -12,7 +12,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "Virtual Properties",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   },
   "4l3m": {

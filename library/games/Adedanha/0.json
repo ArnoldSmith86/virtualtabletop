@@ -9851,7 +9851,8 @@
       "variant": "",
       "attribution": "The game design and all game board elements are by RaphaelAlvez and are released to the Public Domain by CC0.",
       "similarName": "Scattergories",
-      "description": "Starting with a random letter, list words in designated categories.  First to complete list wins."
+      "description": "Starting with a random letter, list words in designated categories.  First to complete list wins.",
+      "showName": true
     }
   }
 }

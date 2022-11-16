@@ -1625,7 +1625,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "Occupied Holders",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   },
   "8fr3": {

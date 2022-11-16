@@ -1188,7 +1188,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   },
   "5eeo": {

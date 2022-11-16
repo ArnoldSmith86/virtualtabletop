@@ -14,7 +14,8 @@
       "variant": "",
       "attribution": "Board layout by ArnoldSmith86. Released to public domain under CC0.\n\nImages released under CC BY 3.0:\nhttps://game-icons.net/1x1/delapouite/plain-square.html (by Delapouite)\nhttps://game-icons.net/1x1/delapouite/plain-circle.html (by Delapouite)\nhttps://game-icons.net/1x1/delapouite/seven-pointed-star.html (by Delapouite)\nhttps://game-icons.net/1x1/darkzaitzev/star-shuriken.html (by DarkZaitzev)\nhttps://game-icons.net/1x1/skoll/divided-square.html (by Skoll)\nhttps://game-icons.net/1x1/sbed/health-normal.html (by sbed)",
       "similarName": "Qwirkle",
-      "description": "Place blocks in patterns on board while matching 6 shapes and 6 colors.  Player with most points wins."
+      "description": "Place blocks in patterns on board while matching 6 shapes and 6 colors.  Player with most points wins.",
+      "showName": true
     }
   },
   "Draw": {

@@ -23,7 +23,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "Custom Background",
-      "attribution": "Background color CSS: https://www.w3schools.com/cssref/pr_background-color.asp\nFont color CSS: https://www.w3schools.com/cssref/pr_text_color.asp\nBorder color CSS: https://www.w3schools.com/cssref/pr_border-color.asp"
+      "attribution": "Background color CSS: https://www.w3schools.com/cssref/pr_background-color.asp\nFont color CSS: https://www.w3schools.com/cssref/pr_text_color.asp\nBorder color CSS: https://www.w3schools.com/cssref/pr_border-color.asp",
+      "showName": false
     }
   },
   "b3u3": {

@@ -173,7 +173,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "Basic",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   },
   "qaui": {

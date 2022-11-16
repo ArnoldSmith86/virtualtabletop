@@ -947,7 +947,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   },
   "0a5z": {

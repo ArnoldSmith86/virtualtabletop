@@ -556,7 +556,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "Example: Moving Widget",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   },
   "arrayText": {

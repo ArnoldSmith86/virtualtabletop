@@ -3809,7 +3809,8 @@
       "variant": "",
       "attribution": "Board layout and library image by ArnoldSmith86 and released to public domain (CC0).\n\nCross image is CC0: https://www.svgrepo.com/svg/28063/cross",
       "similarName": "Encore!",
-      "description": "Take turns rolling dice to figure out which sections on scoresheet to mark off. Player rolling dice can remove two dice and other players choose from remaining dice. Highest score wins."
+      "description": "Take turns rolling dice to figure out which sections on scoresheet to mark off. Player rolling dice can remove two dice and other players choose from remaining dice. Highest score wins.",
+      "showName": true
     }
   },
   "Player 2 - Joker 1": {

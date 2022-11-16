@@ -1413,7 +1413,8 @@
       "variant": "",
       "attribution": "The room layout, library image, and all game elements are by BicycleIndividual and LawDawg96 and are released to the Public Domain under CC0.",
       "similarName": "Tangrams",
-      "description": "Solo puzzle game.  Use triangles, a square, and a parallelogram to make designs. "
+      "description": "Solo puzzle game.  Use triangles, a square, and a parallelogram to make designs. ",
+      "showName": true
     }
   },
   "zgvu": {

@@ -980,7 +980,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "Sliders",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   },
   "fl9q": {

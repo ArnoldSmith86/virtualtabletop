@@ -23,7 +23,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "Format",
-      "attribution": ""
+      "attribution": "",
+      "showName": false
     }
   },
   "i1bj": {
