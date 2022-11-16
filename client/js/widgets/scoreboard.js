@@ -107,6 +107,8 @@ class ScoreBoard extends Widget {
     let tbl = document.createElement('table');
     tbl.style.height = (this.get('height') - 8) + 'px';
     tbl.style.width = (this.get('width') - 8) + 'px';
+    let numRows;
+    let numCols;
     if(this.get('playersInColumns')) {
       const names = pScores.map(x => x[0]);
       names.unshift('Round');
@@ -123,12 +125,14 @@ class ScoreBoard extends Widget {
         pRow.unshift(rounds[i]);
         const tr = this.addRowToTable($('tbody',tbl), pRow, 'td');
         tr.cells[0].classList.add('firstCol');
-        if(i == pScores[0].length - 1)
-          for(let j=0; j <= pScores.length; j++)
-            tr.cells[j].classList.add('totalsLine');
       }
+      numCols = filledSeats.length + 1;
+      numRows = numRounds + 1 + (addTotals ? 1 : 0);
+      if(addTotals)
+          for(let j=0; j < numCols; j++)
+            tbl.rows[numRows-1].cells[j].classList.add('totalsLine');
     } else {
-      this.addRowToTable(tbl, rounds, 'th');
+      this.addRowToTable(tbl, rounds, 'td');
       for( let i=0; i < pScores.length; i++) {
         const tr = this.addRowToTable(tbl, pScores[i], 'td');
         tr.cells[0].classList.add('firstCol');
@@ -141,11 +145,16 @@ class ScoreBoard extends Widget {
           tr.cells[0].style.textShadow = '1px 1px 1px #000';
         }
       }
+      numCols = numRounds + 1 + (addTotals ? 1 : 0);
+      numRows = filledSeats.length + 1;
+      if(addTotals)
+          for(let j=0; j < numRows; j++)
+            tbl.rows[j].cells[numCols-1].classList.add('totalsLine');
     }
     // Make top row, left column non-scrollable
-    for (let i=0; i<=pScores.length; i++) 
+    for (let i=0; i<numRows; i++) 
       tbl.rows[i].cells[0].classList.add('firstCol');
-    for (let i=0; i<= filledSeats.length; i++)
+    for (let i=0; i< numCols; i++)
       tbl.rows[0].cells[i].classList.add('firstRow');
 
     const myDom = this.domElement;
@@ -153,36 +162,5 @@ class ScoreBoard extends Widget {
     myDom.appendChild(tbl);
   }
   
-/*
-  cssProperties() {
-    const p = super.cssProperties();
-    p.push('format');
-    return p;
-  }
-
-  css() {
-    let css = super.css();
-
-    return css;
-  }
-*/
-
-  classes() {
-    let className = super.classes();
-
-    if(this.get('format')=='turns')
-      className += ' turns';
-
-    return className;
-  }
-
-  classesProperties() {
-    const p = super.classesProperties();
-    p.push('format');
-    return p;
-  }
-
-/*  applyRemove() {
-  }\*/
 }
 

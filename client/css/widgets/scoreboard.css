@@ -13,18 +13,25 @@
   border:  none;
   border-collapse: collapse;
   display: block;
-  overflow-x: scroll;
-  overflow-y: scroll;
+  overflow-x: auto;
+  overflow-y: auto;
+}
+
+.scoreboard .firstRow.firstCol {
+  z-index: 2;
 }
 
 .scoreboard .firstRow {
   position: sticky;
+  z-index: 1;
   top: 0;
+  background-color: #ddd;
 }
 
 .scoreboard .firstCol {
   position: sticky;
   left: 0;
+  background-color: #ddd;
 }
 
 .scoreboard tbody td {
@@ -35,10 +42,10 @@
   text-shadow: 1px 1px 1px #fff;
   text-align: right;
   white-space: nowrap;
+  background-color: #f8f8f8;
 }
 
 .scoreboard .totalsLine {
-  border-bottom: 1px solid black;
-  border-top: 1px solid #ddd;
+  background-color: #ddd;
 }
 
