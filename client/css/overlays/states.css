@@ -113,14 +113,14 @@
   display: none;
 }
 
-#statesOverlay .buttons {
+#statesList .buttons {
   position: sticky;
   top: 10px;
   float: right;
   z-index: 3;
   margin: -60px 10px 0 0;
 }
-#statesOverlay .buttons > button {
+#statesList .buttons > button {
   display: inline-flex;
   position: relative;
   top: -2px;
@@ -317,7 +317,6 @@ div:nth-of-type(2) > .list > .roomState .star {
     height: 48px;
   }
 }
-
 
 
 
@@ -642,7 +641,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   font-size: 18px;
 }
 
-@media (max-width: 1260px), (max-height: 787px) {
+@media (max-width: 1260px), (max-height: 787px), (min-width: 1421px) and (min-height: 888px) {
   #stateDetailsOverlay {
     --mainDetailsHeight: 200px;
     --similarDetailsHeight: 160px;
@@ -665,12 +664,12 @@ div:nth-of-type(2) > .list > .roomState .star {
     display: none;
   }
 }
-@media (max-width: 1040px), (max-height: 650px) {
+@media (max-width: 1040px), (max-height: 650px), (min-width: 1421px) and (min-height: 888px) {
   .variant {
     padding: .11rem .5rem;
   }
 }
-@media (max-width: 957px), (max-height: 600px), (max-width: 1000px) and (max-height: 643px) {
+@media (max-width: 957px), (max-height: 600px), (max-width: 1000px) and (max-height: 643px), (min-width: 1421px) and (min-height: 888px) {
   #stateDetailsOverlay {
     --mainDetailsHeight: 150px;
     --similarDetailsHeight: 150px;
@@ -790,6 +789,25 @@ div:nth-of-type(2) > .list > .roomState .star {
   }
   #helpTexts h3 {
     margin: 10px 0;
+  }
+}
+@media (min-width: 1421px) and (min-height: 888px) { /* sidebar */
+  #statesOverlay.withDetails {
+    padding-right: calc((var(--size) + 22px) * 3);
+  }
+  #statesOverlay.withDetails > #stateDetailsOverlay {
+    display: flex !important;
+    position: absolute;
+    width: calc((var(--size) + 22px) * 3);
+    right: 0;
+    left: unset;
+  }
+
+  #stateDetailsOverlay {
+    background: var(--roomColor);
+  }
+  #helpTexts, #mainDetails, #similarDetails, #variantsList {
+    background: white;
   }
 }
 

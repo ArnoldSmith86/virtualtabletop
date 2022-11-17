@@ -318,7 +318,7 @@ export function addRichtextControls(dom) {
   $('[icon=add_photo_alternate]', controls).onclick = async function() {
     $('#statesButton').dataset.overlay = 'updateImageOverlay';
     const asset = await updateImage('', 'Cancel');
-    showStatesOverlay('stateDetailsOverlay');
+    showStatesOverlay(detailsOverlay);
     if(asset)
       document.execCommand('inserthtml', false, `<img class="richtextAsset" src="${asset.substring(1)}">`);
     dom.focus();
@@ -338,11 +338,11 @@ export function addRichtextControls(dom) {
     $('#symbolPickerOverlay input').focus();
     $('#symbolPickerOverlay input').onkeyup();
 
-    $('#symbolPickerOverlay [icon=close]').onclick = _=>showStatesOverlay('stateDetailsOverlay');
+    $('#symbolPickerOverlay [icon=close]').onclick = _=>showStatesOverlay(detailsOverlay);
 
     for(const icon of $a('#symbolList i')) {
       icon.onclick = function() {
-        showStatesOverlay('stateDetailsOverlay');
+        showStatesOverlay(detailsOverlay);
         window.getSelection().removeAllRanges();
         window.getSelection().addRange(range);
         let className = 'emoji';

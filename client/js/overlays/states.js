@@ -1,6 +1,9 @@
 let waitingForStateCreation = null;
 let variantIDjustUpdated = null;
 
+let detailsInSidebar = false;
+let detailsOverlay = 'stateDetailsOverlay';
+
 function loadJSZip() {
   const node = document.createElement('script');
   node.src = 'scripts/jszip';
@@ -537,7 +540,10 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 }
 
 function fillStateDetails(states, state, dom) {
-  showStatesOverlay('stateDetailsOverlay');
+  if(!detailsInSidebar)
+    showStatesOverlay(detailsOverlay);
+  toggleClass($('#statesOverlay'), 'withDetails', true);
+
   $('#stateDetailsOverlay').dataset.id = state.id;
   for(const dom of $a('#stateDetailsOverlay, #stateDetailsOverlay > *'))
     dom.scrollTop = 0;
@@ -624,10 +630,10 @@ function fillStateDetails(states, state, dom) {
       $('#statesButton').dataset.overlay = 'confirmOverlay';
       if(!widgets.size || await confirmOverlay('Start game', 'Are you sure you want to load a new game? You will lose all unsaved progress in the current game.', 'Start new game', 'Resume current game', 'play_arrow', 'undo')) {
         toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading, linkSourceStateID: state.id });
-        showStatesOverlay('stateDetailsOverlay');
+        showStatesOverlay(detailsOverlay);
         $('#activeGameButton').click();
       } else {
-        showStatesOverlay('stateDetailsOverlay');
+        showStatesOverlay(detailsOverlay);
       }
     };
 
@@ -688,11 +694,11 @@ function fillStateDetails(states, state, dom) {
       }
     }
   };
-  $('#variantAddOverlay button[icon=close]').onclick = _=>showStatesOverlay('stateDetailsOverlay');
+  $('#variantAddOverlay button[icon=close]').onclick = _=>showStatesOverlay(detailsOverlay);
   $('#variantAddOverlay button[icon=save]').onclick = async function(e) {
     const variantID = $a('#stateDetailsOverlay .variant').length;
     await createTempState(e, 'create', variantID, $a('#variantAddOverlay div button'));
-    showStatesOverlay('stateDetailsOverlay');
+    showStatesOverlay(detailsOverlay);
     const emptyVariant = { variantImage: state.image };
     const vEntry = addVariant(variantID, emptyVariant);
     enableEditing(vEntry, emptyVariant);
@@ -730,10 +736,10 @@ function fillStateDetails(states, state, dom) {
 
       uploadStateFile(f, `createTempState/${roomID}/${filenameSuffix}`, metaCallback, progressCallback, doneCallback);
     });
-    showStatesOverlay('stateDetailsOverlay');
+    showStatesOverlay(detailsOverlay);
   };
   $('#variantAddOverlay button[icon=link]').onclick = function(e) {
-    showStatesOverlay('stateDetailsOverlay');
+    showStatesOverlay(detailsOverlay);
     const tokens = $('#variantAddOverlay select').value.split('/');
     const newVariant = { plStateID: tokens[0], plVariantID: tokens[1] };
     const vEntry = addVariant($a('#stateDetailsOverlay .variant').length, newVariant);
@@ -745,7 +751,9 @@ function fillStateDetails(states, state, dom) {
   };
 
   $('#closeDetails').onclick = function() {
-    showStatesOverlay('statesOverlay');
+    if(!detailsInSidebar)
+      showStatesOverlay('statesOverlay');
+    toggleClass($('#statesOverlay'), 'withDetails', false);
   };
   $('#stateDetailsOverlay .buttons [icon=menu]').onclick = function(e) {
     $('#stateDetailsOverlay .buttons > div').classList.toggle('hidden');
@@ -762,7 +770,7 @@ function fillStateDetails(states, state, dom) {
     $('#mainImage > i').classList.add('hidden');
     toServer('unlinkState', state.id);
   };
-  $('#shareLinkOverlay button[icon=close]').onclick = _=>showStatesOverlay('stateDetailsOverlay');
+  $('#shareLinkOverlay button[icon=close]').onclick = _=>showStatesOverlay(detailsOverlay);
   $('#shareLinkOverlay button[icon=link]').onclick = async function() {
     try {
       await navigator.clipboard.writeText($('#shareLinkOverlay input').value);
@@ -783,7 +791,7 @@ function fillStateDetails(states, state, dom) {
         $('#statesList > div:nth-of-type(1)').classList.add('empty');
       showStatesOverlay('statesOverlay');
     } else {
-      showStatesOverlay('stateDetailsOverlay');
+      showStatesOverlay(detailsOverlay);
     }
   };
   $('#stateDetailsOverlay .buttons [icon=upload]').onclick = function() {
@@ -811,7 +819,7 @@ function fillStateDetails(states, state, dom) {
         uploadButton.value = newURL;
         toggleClass(img, 'hidden', !newURL);
         img.src = newURL ? newURL.replace(/^\//, '') : '';
-        showStatesOverlay('stateDetailsOverlay');
+        showStatesOverlay(detailsOverlay);
       };
     }
   };
@@ -821,7 +829,7 @@ function fillStateDetails(states, state, dom) {
       showStatesOverlay('statesOverlay');
       dom.click();
     } else {
-      showStatesOverlay('stateDetailsOverlay');
+      showStatesOverlay(detailsOverlay);
     }
   };
   $('#stateDetailsOverlay .buttons [icon=save]').onclick = function() {
@@ -846,6 +854,27 @@ function fillStateDetails(states, state, dom) {
       variantOperationQueue
     });
   };
+}
+
+function setSidebar() {
+  const vw = Math.max(document.documentElement.clientWidth  || 0, window.innerWidth  || 0)
+  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+  const bigEnough = vw >= 1421 && vh >= 888;
+
+  if(detailsInSidebar != bigEnough) {
+    detailsInSidebar = bigEnough;
+    detailsOverlay = detailsInSidebar ? 'statesOverlay' : 'stateDetailsOverlay';
+
+    if(detailsInSidebar) {
+      if($('#statesButton').dataset.overlay == 'stateDetailsOverlay')
+        showStatesOverlay(detailsOverlay);
+      $('#statesOverlay').append($('#stateDetailsOverlay'));
+    } else {
+      $('#roomArea').insertBefore($('#stateDetailsOverlay'), $('#updateImageOverlay'));
+      if($('#statesButton').dataset.overlay == 'statesOverlay' && $('#statesOverlay.withDetails'))
+        showStatesOverlay(detailsOverlay);
+    }
+  }
 }
 
 async function updateImage(currentImage, noImageText) {
@@ -918,6 +947,8 @@ async function shareLink(state) {
 }
 
 onLoad(function() {
+  setSidebar();
+
   onMessage('meta', args=>fillStatesList(args.meta.states, args.meta.starred, args.meta.activeState, args.meta.returnServer, args.activePlayers));
 
   on('#filterByText', 'keyup', updateLibraryFilter);
@@ -936,6 +967,7 @@ onLoad(function() {
       alert('Please enter a link.');
   });
 
+  window.addEventListener('resize', setSidebar);
   document.addEventListener('dragover', function(e) {
     e.preventDefault();
     e.dataTransfer.dropEffect = 'copy';
