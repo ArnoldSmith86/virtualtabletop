@@ -379,6 +379,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
   const publicLibraryLinksFound = {};
   for(const state of Object.values(states)) {
     state.starred = starred && starred[state.publicLibrary];
+    state.stars = state.stars || 0;
     for(const variant of state.variants)
       if(variant.plStateID)
         publicLibraryLinksFound[`${variant.plStateID} - ${variant.plVariantID}`] = true;
