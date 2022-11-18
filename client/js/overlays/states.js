@@ -449,9 +449,11 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 
     if(hasVariants) {
       entry.addEventListener('click', async function(e) {
-        let loadGame = !$('#statesOverlay.withDetails') || !$('#stateDetailsOverlay.editing');
+        let loadGame = $('#stateDetailsOverlay.notEditing');
         if(!loadGame) {
           loadGame = await confirmOverlay('Discard changes', `Are you sure you want to discard any changes you made to ${$('#mainDetails h1').innerText}?`, 'Discard', 'Keep', 'delete', 'undo', 'red');
+          if(loadGame)
+            disableEditing($('#stateDetailsOverlay'), state);
           showStatesOverlay('statesOverlay');
         }
         if(loadGame)
@@ -489,11 +491,13 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 
     if(state.id == waitingForStateCreation) {
       waitingForStateCreation = null;
-      if($('#statesButton').dataset.overlay !== 'statesOverlay')
-        showStatesOverlay('statesOverlay');
-      if(state.name == 'Unnamed' && !state.link && !state.savePlayers) {
-        fillStateDetails(states, state, entry);
-        $('#stateDetailsOverlay .buttons [icon=edit]').click();
+      if($('#stateDetailsOverlay.notEditing')) {
+        if($('#statesButton').dataset.overlay !== 'statesOverlay')
+          showStatesOverlay('statesOverlay');
+        if(state.name == 'Unnamed' && !state.link && !state.savePlayers) {
+          fillStateDetails(states, state, entry);
+          $('#stateDetailsOverlay .buttons [icon=edit]').click();
+        }
       }
     }
   }
@@ -561,7 +565,6 @@ function fillStateDetails(states, state, dom) {
   for(const dom of $a('#stateDetailsOverlay, #stateDetailsOverlay > *'))
     dom.scrollTop = 0;
 
-  disableEditing($('#stateDetailsOverlay'), state);
   applyValuesToDOM($('#stateDetailsOverlay'), Object.assign({ showName: true }, state));
 
   toggleClass($('#stateDetailsOverlay .star'),         'active', !!state.starred);
@@ -839,6 +842,7 @@ function fillStateDetails(states, state, dom) {
   $('#discardDetails').onclick = async function() {
     $('#statesButton').dataset.overlay = 'confirmOverlay';
     if(await confirmOverlay('Discard changes', 'Are you sure you want to discard any changes you made to this game?', 'Discard', 'Keep', 'delete', 'undo', 'red')) {
+      disableEditing($('#stateDetailsOverlay'), state);
       showStatesOverlay('statesOverlay');
       dom.click();
     } else {
@@ -972,7 +976,10 @@ onLoad(function() {
   on('#saveState', 'click', saveState);
 
   on('#stateAddOverlay [icon=close]', 'click', e=>showStatesOverlay('statesOverlay'));
-  on('#stateAddOverlay button[icon=save]', 'click', e=>addState(e, 'state'));
+  on('#stateAddOverlay button[icon=save]', 'click', function(e) {
+    showStatesOverlay('statesOverlay');
+    addState(e, 'state');
+  });
   on('#stateAddOverlay button[icon=link]', 'click', function(e) {
     if($('#stateAddOverlay input').value.match(/^http/))
       addState(e, 'link', $('#stateAddOverlay input').value);
