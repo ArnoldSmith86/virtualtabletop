@@ -17,6 +17,7 @@ class ScoreBoard extends Widget {
       sortField: 'player',
       sortAscending: true,
       scoreProperty: 'score',
+      includeAllSeats: false,
       addTotals: true,
       seats: null
     });
@@ -25,9 +26,9 @@ class ScoreBoard extends Widget {
   applyDeltaToDOM(delta) {
     if(delta) // Don't call super unless this is a real delta to the scoreboard rather than from a seat
       super.applyDeltaToDOM(delta);
-    const filledSeats = widgetFilter(w => w.get('type') == 'seat' && w.get('player') != '' && (!this.get('seats') || this.get('seats').includes(w.get('id')))).sort((a,b) => a.get('player') < b.get('player') ? -1 : 1);
-    if(filledSeats.length)
-      this.tableCreate(filledSeats)
+    const includedSeats = widgetFilter(w => w.get('type') == 'seat' && (this.get('includeAllSeats') || w.get('player') != '') && (!this.get('seats') || this.get('seats').includes(w.get('id')))).sort((a,b) => a.get('player') < b.get('player') ? -1 : 1);
+    if(includedSeats.length)
+      this.tableCreate(includedSeats)
   }
   
   applyInitiaDelta() {
@@ -42,7 +43,7 @@ class ScoreBoard extends Widget {
     return tr;
   }
 
-  tableCreate(filledSeats) {
+  tableCreate(includedSeats) {
     const addTotals = this.get('addTotals');
     const scoreProperty = this.get('scoreProperty');
     const sortField = this.get('sortField');
@@ -52,26 +53,26 @@ class ScoreBoard extends Widget {
     let pScores = [];
     let totals = [];
     let numRounds = 0;
-    for (let i=0; i < filledSeats.length; i++) {
-      const score = filledSeats[i].get(scoreProperty);
+    for (let i=0; i < includedSeats.length; i++) {
+      const score = includedSeats[i].get(scoreProperty);
       if(Array.isArray(score) && score.length > numRounds)
         numRounds = score.length;
     }
-    for (let i=0; i < filledSeats.length; i++) {
-      const score = filledSeats[i].get(scoreProperty);
+    for (let i=0; i < includedSeats.length; i++) {
+      const score = includedSeats[i].get(scoreProperty);
       if(Array.isArray(score)) {
         pScores[i] = score.map( s => isNaN(parseFloat(s)) ? 0 : parseFloat(s));
         totals[i] = pScores[i].reduce((partialSum, a) => partialSum + a, 0);
       } else {
         pScores[i] = [];
         totals[i] = parseFloat(score);
-        if (isNaN(parseFloat(totals[i])))
+        if(isNaN(totals[i]))
           totals[i] = 0;
       }
       pScores[i] = pScores[i].concat(Array(numRounds).fill('')).slice(0,numRounds);
       if(addTotals)
         pScores[i].push(totals[i]);
-      pScores[i].unshift(filledSeats[i].get('player'));
+      pScores[i].unshift(includedSeats[i].get('player'));
     }
     // Sort player scores if requested
     if(sortField == 'total')
@@ -79,8 +80,8 @@ class ScoreBoard extends Widget {
         pScores.sort((a,b) =>a[a.length-1] < b[b.length-1] ? -1 : 1);
     else if(sortField) {
       pScores.sort((a,b) => {
-        const pa = filledSeats.filter(x=> x.get('player') == a[0])[0].get(sortField);
-        const pb = filledSeats.filter(x=> x.get('player') == b[0])[0].get(sortField);
+        const pa = includedSeats.filter(x=> x.get('player') == a[0])[0].get(sortField);
+        const pb = includedSeats.filter(x=> x.get('player') == b[0])[0].get(sortField);
         return pa < pb ? -1 : 1;
       });
     }
@@ -91,7 +92,12 @@ class ScoreBoard extends Widget {
     const colors = []; // Array of player colors
     if(usePlayerColors)
       for (let i=0; i < pScores.length; i++) 
-        colors.push(filledSeats.filter(x=> x.get('player') == pScores[i][0])[0].get('color'));
+        colors.push(includedSeats.filter(x=> x.get('player') == pScores[i][0])[0].get('color'));
+
+    // Fill empty player names with 'None'
+    for (let i=0; i < includedSeats.length; i++)
+      if(pScores[i][0]=='')
+        pScores[i][0] = 'None';
 
     // Create round name headers
     let rounds = this.get('rounds');
@@ -115,7 +121,7 @@ class ScoreBoard extends Widget {
       tbl.innerHTML += '<tbody></tbody>';
       const tr = this.addRowToTable($('tbody', tbl), names, 'td');
       if(usePlayerColors)
-        for (let i=0; i<filledSeats.length; i++ ) {
+        for (let i=0; i<includedSeats.length; i++ ) {
           tr.cells[i+1].style.backgroundColor = colors[i];
           tr.cells[i+1].style.color = 'white';
           tr.cells[i+1].style.textShadow = '1px 1px 1px #000';
@@ -126,7 +132,7 @@ class ScoreBoard extends Widget {
         const tr = this.addRowToTable($('tbody',tbl), pRow, 'td');
         tr.cells[0].classList.add('firstCol');
       }
-      numCols = filledSeats.length + 1;
+      numCols = includedSeats.length + 1;
       numRows = numRounds + 1 + (addTotals ? 1 : 0);
       if(addTotals)
           for(let j=0; j < numCols; j++)
@@ -137,7 +143,7 @@ class ScoreBoard extends Widget {
         const tr = this.addRowToTable(tbl, pScores[i], 'td');
         tr.cells[0].classList.add('firstCol');
         if(i==0)
-          for (let j=0; j<= filledSeats.length; j++)
+          for (let j=0; j<= includedSeats.length; j++)
             tr.cells[i].classList.add('firstRow');
         if(usePlayerColors) {
           tr.cells[0].style.backgroundColor = colors[i];
@@ -146,11 +152,12 @@ class ScoreBoard extends Widget {
         }
       }
       numCols = numRounds + 1 + (addTotals ? 1 : 0);
-      numRows = filledSeats.length + 1;
+      numRows = includedSeats.length + 1;
       if(addTotals)
           for(let j=0; j < numRows; j++)
             tbl.rows[j].cells[numCols-1].classList.add('totalsLine');
     }
+
     // Make top row, left column non-scrollable
     for (let i=0; i<numRows; i++) 
       tbl.rows[i].cells[0].classList.add('firstCol');

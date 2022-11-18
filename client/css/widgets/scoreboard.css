@@ -9,9 +9,9 @@
 }
 
 .scoreboard table {
-  padding: none;
   border:  none;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   display: block;
   overflow-x: auto;
   overflow-y: auto;
@@ -47,5 +47,7 @@
 
 .scoreboard .totalsLine {
   background-color: #ddd;
+  position: sticky;
+  bottom: 0;
 }
 
