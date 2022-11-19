@@ -397,44 +397,6 @@ const jeCommands = [
     }
   },
   {
-    id: 'je_importCSV',
-    name: _=>`import from csv`,
-    options: [
-      { label: 'CSV',     type: 'string', value: '' },
-      { label: 'mode',    type: 'select', options: [ { value: 'add', text: 'add' }, { value: 'set', text: 'set' } ] }
-    ],
-    context: '^deck ↦ cardTypes',
-    call: async function(options) {
-      var lines=options['CSV'].split("* ");
-      var headers=lines[0].split(",");
-
-      for(var i=1;i<lines.length;i++){
-
-          var obj = {};
-          var currentline=lines[i].split(",");
-
-          for(var j=0;j<headers.length;j++){
-              if (parseFloat(currentline[j])==currentline[j]){
-                obj[headers[j]] = parseFloat(currentline[j]);
-              } else if (currentline[j]=="NULL") {
-                obj[headers[j]] = null
-              } else if (currentline[j]=="TRUE") {
-                obj[headers[j]] = true
-              } else if (currentline[j]=="FALSE") {
-                obj[headers[j]] = false
-              } else {
-                obj[headers[j]] = currentline[j];
-              }
-              
-          }
-
-          jeStateNow.cardTypes[obj.id||generateUniqueWidgetID()]= obj ;
-          
-      }
-      jeSetAndSelect()
-    }
-  },
-  {
     id: 'je_faceTemplate',
     name: 'face template',
     context: '^deck ↦ faceTemplates',
