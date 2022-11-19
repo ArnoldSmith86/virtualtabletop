@@ -397,6 +397,85 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_importCSV',
+    name: _=>`import from csv`,
+    options: [
+      { label: 'CSV',     type: 'string', value: '' },
+      { label: 'mode',    type: 'select', options: [ { value: 'add', text: 'add' }, { value: 'set', text: 'set' } ] }
+    ],
+    context: '^deck ↦ cardTypes',
+    call: async function(options) {
+
+      function csvToArray(text) {
+        let p = '', row = [''], ret = [row], i = 0, r = 0, s = !0, l;
+        for (l of text) {
+            if ('"' === l) {
+                if (s && l === p) row[i] += l;
+                s = !s;
+            } else if (',' === l && s) l = row[++i] = '';
+            else if ('\*' === l && s) {
+                if ('\r' === p) row[i] = row[i].slice(0, -1);
+                row = ret[++r] = [l = '']; i = 0;
+            } else row[i] += l;
+            p = l;
+        }
+        return ret;
+      };
+
+      /* correct version to be applied when i figure out how to use multy line text input
+      source : https://stackoverflow.com/questions/8493195/how-can-i-parse-a-csv-string-with-javascript-which-contains-comma-in-data/41563966#41563966
+      
+      function csvToArray(text) {
+        let p = '', row = [''], ret = [row], i = 0, r = 0, s = !0, l;
+        for (l of text) {
+            if ('"' === l) {
+                if (s && l === p) row[i] += l;
+                s = !s;
+            } else if (',' === l && s) l = row[++i] = '';
+            else if ('\n' === l && s) {
+                if ('\r' === p) row[i] = row[i].slice(0, -1);
+                row = ret[++r] = [l = '']; i = 0;
+            } else row[i] += l;
+            p = l;
+        }
+        return ret;
+      };
+      */
+
+      var lines=csvToArray(options["CSV"]);
+      var headers=lines[0];
+
+      for(var i=1;i<lines.length;i++){
+
+          var obj = {};
+          var currentline=lines[i]
+
+          for(var j=0;j<headers.length;j++){
+              if (parseFloat(currentline[j])==currentline[j]){
+                obj[headers[j]] = parseFloat(currentline[j]);
+              } else if (currentline[j]=="NULL") {
+                obj[headers[j]] = null
+              } else if (currentline[j]=="TRUE") {
+                obj[headers[j]] = true
+              } else if (currentline[j]=="FALSE") {
+                obj[headers[j]] = false
+              } else if (currentline[j]=="''") {
+                obj[headers[j]] = ""
+              } else if (currentline[j]=="") {
+                //leave as non defined value
+              } else {
+                obj[headers[j]] = currentline[j];
+              }
+              
+          }
+
+          jeStateNow.cardTypes[obj.cardTypeID||generateUniqueWidgetID()]= obj ;
+          
+      }
+      jeSetAndSelect()
+    }
+  },
+  {
     id: 'je_faceTemplate',
     name: 'face template',
     context: '^deck ↦ faceTemplates',
