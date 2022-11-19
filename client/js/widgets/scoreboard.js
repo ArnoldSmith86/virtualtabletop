@@ -62,7 +62,7 @@ class ScoreBoard extends Widget {
       if(Array.isArray(score) && score.length > numRounds)
         numRounds = score.length;
     }
-    if(Array.isArray(rounds))
+    if(this.get('showAllRounds') && Array.isArray(rounds))
       numRounds = Math.max(rounds.length, numRounds);
 
     for (let i=0; i < includedSeats.length; i++) {
