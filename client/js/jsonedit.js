@@ -442,6 +442,10 @@ const jeCommands = [
       };
       */
 
+      if (options["mode"]== "set") {
+        jeStateNow.cardTypes = {};
+      }
+
       var lines=csvToArray(options["CSV"]);
       var headers=lines[0];
 
