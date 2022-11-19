@@ -473,7 +473,9 @@ const jeCommands = [
               
           }
 
-          jeStateNow.cardTypes[obj.cardTypeID||generateUniqueWidgetID()]= obj ;
+          let cardTypeID = obj.cardTypeID
+          delete obj.cardTypeID
+          jeStateNow.cardTypes[cardTypeID||generateUniqueWidgetID()]= obj ;
           
       }
       jeSetAndSelect()
