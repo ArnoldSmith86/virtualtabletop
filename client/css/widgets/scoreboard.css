@@ -32,6 +32,7 @@
   position: sticky;
   left: 0;
   background-color: #ddd;
+  z-index: 1;
 }
 
 .scoreboard tbody td {

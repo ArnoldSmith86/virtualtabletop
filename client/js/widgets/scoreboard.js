@@ -19,7 +19,9 @@ class ScoreBoard extends Widget {
       scoreProperty: 'score',
       includeAllSeats: false,
       addTotals: true,
-      seats: null
+      seats: null,
+      showAllRounds: false,
+      roundLabel: 'Round'
     });
   }
 
@@ -53,11 +55,16 @@ class ScoreBoard extends Widget {
     let pScores = [];
     let totals = [];
     let numRounds = 0;
+    let rounds = this.get('rounds');
+
     for (let i=0; i < includedSeats.length; i++) {
       const score = includedSeats[i].get(scoreProperty);
       if(Array.isArray(score) && score.length > numRounds)
         numRounds = score.length;
     }
+    if(Array.isArray(rounds))
+      numRounds = Math.max(rounds.length, numRounds);
+
     for (let i=0; i < includedSeats.length; i++) {
       const score = includedSeats[i].get(scoreProperty);
       if(Array.isArray(score)) {
@@ -100,7 +107,6 @@ class ScoreBoard extends Widget {
         pScores[i][0] = 'None';
 
     // Create round name headers
-    let rounds = this.get('rounds');
     if(Array.isArray(rounds)) 
       rounds = rounds.concat(Array(numRounds).fill('')).slice(0,numRounds);
     else
@@ -117,7 +123,7 @@ class ScoreBoard extends Widget {
     let numCols;
     if(this.get('playersInColumns')) {
       const names = pScores.map(x => x[0]);
-      names.unshift('Round');
+      names.unshift(this.get('roundLabel'));
       tbl.innerHTML += '<tbody></tbody>';
       const tr = this.addRowToTable($('tbody', tbl), names, 'td');
       if(usePlayerColors)
