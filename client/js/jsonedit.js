@@ -444,6 +444,10 @@ const jeCommands = [
 
       if (options["mode"]== "set") {
         jeStateNow.cardTypes = {};
+
+        //taken from remove all
+        for(const card of widgetFilter(w=>w.get('deck')==jeStateNow.id))
+          await removeWidgetLocal(card.get('id'));
       }
 
       var lines=csvToArray(options["CSV"]);
@@ -473,10 +477,22 @@ const jeCommands = [
               
           }
 
-          let cardTypeID = obj.cardTypeID
+          let cardTypeID = obj.cardTypeID||generateUniqueWidgetID()
           delete obj.cardTypeID
-          jeStateNow.cardTypes[cardTypeID||generateUniqueWidgetID()]= obj ;
+
+          let cardTypeCount = obj.cardTypeCount
+          delete obj.cardTypeCount
+
+          jeStateNow.cardTypes[cardTypeID]= obj ;
           
+          for(var j=0;j<cardTypeCount;j++){
+            const card = { deck:jeStateNow.id, type:'card', cardType:cardTypeID };
+            await addWidgetLocal(card);
+            if(jeStateNow.parent)
+              await widgets.get(card.id).moveToHolder(widgets.get(jeStateNow.parent));
+            else
+              await widgets.get(card.id).updatePiles();
+          }
       }
       jeSetAndSelect()
     }
