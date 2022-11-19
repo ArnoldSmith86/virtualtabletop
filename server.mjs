@@ -81,8 +81,10 @@ MinifyRoom().then(function(result) {
   });
 
   router.get('/assets/:name', function(req, res) {
-    if(!req.params.name.match(/^[0-9_-]+$/))
+    if(!req.params.name.match(/^[0-9_-]+$/)) {
+      res.sendStatus(404);
       return;
+    }
     fs.readFile(assetsdir + '/' + req.params.name, function(err, content) {
       if(!content) {
         res.sendStatus(404);
@@ -134,6 +136,13 @@ MinifyRoom().then(function(result) {
 
   router.get('/dl/:room', function(req, res, next) {
     downloadState(res, req.params.room).catch(next);
+  });
+
+  router.options('/state/:room', function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.sendStatus(200);
   });
 
   router.get('/state/:room', function(req, res, next) {

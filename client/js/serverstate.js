@@ -130,8 +130,8 @@ function receiveDeltaFromServer(delta) {
 function receiveStateFromServer(args) {
   mouseTarget = null;
   deltaID = args._meta.deltaID;
-  for(const el of $a('[id^=w_]'))
-    widgets.get(unescapeID(el.id.slice(2))).applyRemove();
+  for(const widget of widgetFilter(w=>w.get('parent')===null))
+    widget.applyRemoveRecursive();
   widgets.clear();
   dropTargets.clear();
   maxZ = {};
