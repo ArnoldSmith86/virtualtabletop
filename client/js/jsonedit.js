@@ -400,31 +400,15 @@ const jeCommands = [
     id: 'je_importCSV',
     name: _=>`import from csv`,
     options: [
-      { label: 'CSV',     type: 'string', value: '' },
-      { label: 'mode',    type: 'select', options: [ { value: 'add', text: 'add' }, { value: 'set', text: 'set' } ] }
+      { label: 'mode',    type: 'select',    options: [ { value: 'add', text: 'add' }, { value: 'set', text: 'set' } ] }
     ],
     context: '^deck ↦ cardTypes',
     call: async function(options) {
 
-      function csvToArray(text) {
-        let p = '', row = [''], ret = [row], i = 0, r = 0, s = !0, l;
-        for (l of text) {
-            if ('"' === l) {
-                if (s && l === p) row[i] += l;
-                s = !s;
-            } else if (',' === l && s) l = row[++i] = '';
-            else if ('\\' === l && s) {
-                if ('\r' === p) row[i] = row[i].slice(0, -1);
-                row = ret[++r] = [l = '']; i = 0;
-            } else row[i] += l;
-            p = l;
-        }
-        return ret;
-      };
+      let csv = await selectFile('TEXT')
 
-      /* correct version to be applied when i figure out how to use multy line text input
-      source : https://stackoverflow.com/questions/8493195/how-can-i-parse-a-csv-string-with-javascript-which-contains-comma-in-data/41563966#41563966
-      
+      //source : https://stackoverflow.com/questions/8493195/how-can-i-parse-a-csv-string-with-javascript-which-contains-comma-in-data/41563966#41563966
+
       function csvToArray(text) {
         let p = '', row = [''], ret = [row], i = 0, r = 0, s = !0, l;
         for (l of text) {
@@ -440,7 +424,6 @@ const jeCommands = [
         }
         return ret;
       };
-      */
 
       if (options["mode"]== "set") {
         jeStateNow.cardTypes = {};
@@ -450,7 +433,7 @@ const jeCommands = [
           await removeWidgetLocal(card.get('id'));
       }
 
-      var lines=csvToArray(options["CSV"]);
+      var lines=csvToArray(csv.content);
       var headers=lines[0];
 
       for(var i=1;i<lines.length;i++){
@@ -485,6 +468,7 @@ const jeCommands = [
 
           jeStateNow.cardTypes[cardTypeID]= obj ;
           
+          /*taken from addCard
           for(var j=0;j<cardTypeCount;j++){
             const card = { deck:jeStateNow.id, type:'card', cardType:cardTypeID };
             await addWidgetLocal(card);
@@ -492,7 +476,8 @@ const jeCommands = [
               await widgets.get(card.id).moveToHolder(widgets.get(jeStateNow.parent));
             else
               await widgets.get(card.id).updatePiles();
-          }
+            
+          }*/  
       }
       jeSetAndSelect()
     }
