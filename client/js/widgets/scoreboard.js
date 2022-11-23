@@ -29,8 +29,7 @@ class ScoreBoard extends Widget {
     if(delta) // Don't call super unless this is a real delta to the scoreboard rather than from a seat
       super.applyDeltaToDOM(delta);
     const includedSeats = widgetFilter(w => w.get('type') == 'seat' && (this.get('includeAllSeats') || w.get('player') != '') && (!this.get('seats') || this.get('seats').includes(w.get('id')))).sort((a,b) => a.get('player') < b.get('player') ? -1 : 1);
-    if(includedSeats.length)
-      this.tableCreate(includedSeats)
+    this.tableCreate(includedSeats)
   }
   
   applyInitiaDelta() {
@@ -51,12 +50,11 @@ class ScoreBoard extends Widget {
     const sortField = this.get('sortField');
     const usePlayerColors = this.get('usePlayerColors');
 
-    // Construct player scores array, remember maximum number of scores.
-    let pScores = [];
-    let totals = [];
-    let numRounds = 0;
-    let rounds = this.get('rounds');
+    let pScores = []; // Array of scores. pScores[i][0] is player name, last is total (or last score if addTotals is false)
+    let numRounds = 0; // Number of rounds to display
+    let rounds = this.get('rounds'); // User-supplied round names
 
+    // Compute number of scoring rounds to show
     for (let i=0; i < includedSeats.length; i++) {
       const score = includedSeats[i].get(scoreProperty);
       if(Array.isArray(score) && score.length > numRounds)
@@ -65,27 +63,30 @@ class ScoreBoard extends Widget {
     if(this.get('showAllRounds') && Array.isArray(rounds))
       numRounds = Math.max(rounds.length, numRounds);
 
+    // Fill player score array, totals array
     for (let i=0; i < includedSeats.length; i++) {
       const score = includedSeats[i].get(scoreProperty);
+      let total;
       if(Array.isArray(score)) {
         pScores[i] = score.map( s => isNaN(parseFloat(s)) ? 0 : parseFloat(s));
-        totals[i] = pScores[i].reduce((partialSum, a) => partialSum + a, 0);
+        total = pScores[i].reduce((partialSum, a) => partialSum + a, 0);
       } else {
         pScores[i] = [];
-        totals[i] = parseFloat(score);
-        if(isNaN(totals[i]))
-          totals[i] = 0;
+        total = parseFloat(score);
+        if(isNaN(total))
+          total = 0;
       }
       pScores[i] = pScores[i].concat(Array(numRounds).fill('')).slice(0,numRounds);
       if(addTotals)
-        pScores[i].push(totals[i]);
+        pScores[i].push(total);
       pScores[i].unshift(includedSeats[i].get('player'));
     }
+    
     // Sort player scores if requested
-    if(sortField == 'total')
+    if(sortField == 'total') {
       if(addTotals)
-        pScores.sort((a,b) =>a[a.length-1] < b[b.length-1] ? -1 : 1);
-    else if(sortField) {
+        pScores.sort((a,b) =>a[a.length-1] < b[b.length-1] ? -1 : 1)
+    } else if(sortField) {
       pScores.sort((a,b) => {
         const pa = includedSeats.filter(x=> x.get('player') == a[0])[0].get(sortField);
         const pb = includedSeats.filter(x=> x.get('player') == b[0])[0].get(sortField);
@@ -98,7 +99,7 @@ class ScoreBoard extends Widget {
     // Get player colors if needed
     const colors = []; // Array of player colors
     if(usePlayerColors)
-      for (let i=0; i < pScores.length; i++) 
+      for (let i=0; i < includedSeats.length; i++) 
         colors.push(includedSeats.filter(x=> x.get('player') == pScores[i][0])[0].get('color'));
 
     // Fill empty player names with 'None'
@@ -113,7 +114,7 @@ class ScoreBoard extends Widget {
       rounds = [...Array(numRounds).keys()].map(i => i+1);
     if(addTotals)
       rounds.push('Totals');
-    rounds.unshift('Round');
+    rounds.unshift(this.get('roundLabel'));
 
     // Finally, build the table
     let tbl = document.createElement('table');
@@ -122,6 +123,11 @@ class ScoreBoard extends Widget {
     let numRows;
     let numCols;
     if(this.get('playersInColumns')) {
+      // Compute total number of rows and columns in table
+      numCols = includedSeats.length + 1;
+      numRows = numRounds + 1 + (addTotals ? 1 : 0);
+
+      // Add header row
       const names = pScores.map(x => x[0]);
       names.unshift(this.get('roundLabel'));
       tbl.innerHTML += '<tbody></tbody>';
@@ -130,35 +136,35 @@ class ScoreBoard extends Widget {
         for (let i=0; i<includedSeats.length; i++ ) {
           tr.cells[i+1].style.backgroundColor = colors[i];
           tr.cells[i+1].style.color = 'white';
-          tr.cells[i+1].style.textShadow = '1px 1px 1px #000';
         }
-      for( let i=1; i < pScores[0].length; i++ ) {
+      // Add remaining rows
+      for( let i=1; i < numRows; i++ ) {
         const pRow = pScores.map(x => x[i]);
         pRow.unshift(rounds[i]);
         const tr = this.addRowToTable($('tbody',tbl), pRow, 'td');
         tr.cells[0].classList.add('firstCol');
       }
-      numCols = includedSeats.length + 1;
-      numRows = numRounds + 1 + (addTotals ? 1 : 0);
       if(addTotals)
           for(let j=0; j < numCols; j++)
             tbl.rows[numRows-1].cells[j].classList.add('totalsLine');
-    } else {
-      this.addRowToTable(tbl, rounds, 'td');
-      for( let i=0; i < pScores.length; i++) {
+    } else { // Players are in rows
+      // Compute total number of rows and columns in table
+      numCols = numRounds + 1 + (addTotals ? 1 : 0);
+      numRows = includedSeats.length + 1;
+
+      // First row contains round names
+      const tr = this.addRowToTable(tbl, rounds, 'td');
+      for (let j=0; j<numCols; j++)
+        tr.cells[j].classList.add('firstRow');
+      // Remaining rows are one row per player.
+      for( let i=0; i < includedSeats.length; i++) {
         const tr = this.addRowToTable(tbl, pScores[i], 'td');
         tr.cells[0].classList.add('firstCol');
-        if(i==0)
-          for (let j=0; j<= includedSeats.length; j++)
-            tr.cells[i].classList.add('firstRow');
         if(usePlayerColors) {
           tr.cells[0].style.backgroundColor = colors[i];
           tr.cells[0].style.color = 'white';
-          tr.cells[0].style.textShadow = '1px 1px 1px #000';
         }
       }
-      numCols = numRounds + 1 + (addTotals ? 1 : 0);
-      numRows = includedSeats.length + 1;
       if(addTotals)
           for(let j=0; j < numRows; j++)
             tbl.rows[j].cells[numCols-1].classList.add('totalsLine');
