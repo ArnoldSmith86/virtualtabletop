@@ -2195,6 +2195,7 @@ function jeToggle() {
   jeRoutineLogging = jeEnabled;
   jeLoggingHTML = '';
   if(jeEnabled) {
+    $('#activeGameButton').click();
     $('body').classList.add('jsonEdit');
     if(jeWidget && !widgets.has(jeWidget.id))
       jeEmpty();
