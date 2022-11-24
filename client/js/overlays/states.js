@@ -883,13 +883,19 @@ function setSidebar() {
     detailsOverlay = detailsInSidebar ? 'statesOverlay' : 'stateDetailsOverlay';
 
     if(detailsInSidebar) {
-      if($('#statesButton').dataset.overlay == 'stateDetailsOverlay')
-        showStatesOverlay(detailsOverlay);
+      if($('#statesButton').dataset.overlay == 'stateDetailsOverlay') {
+        $('#statesButton').dataset.overlay = detailsOverlay;
+        if($('#statesButton.active'))
+          showStatesOverlay(detailsOverlay);
+      }
       $('#statesOverlay').append($('#stateDetailsOverlay'));
     } else {
       $('#roomArea').insertBefore($('#stateDetailsOverlay'), $('#updateImageOverlay'));
-      if($('#statesButton').dataset.overlay == 'statesOverlay' && $('#statesOverlay.withDetails'))
-        showStatesOverlay(detailsOverlay);
+      if($('#statesButton').dataset.overlay == 'statesOverlay' && $('#statesOverlay.withDetails')) {
+        $('#statesButton').dataset.overlay = detailsOverlay;
+        if($('#statesButton.active'))
+          showStatesOverlay(detailsOverlay);
+      }
     }
   }
 }
