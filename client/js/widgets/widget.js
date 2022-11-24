@@ -1281,6 +1281,42 @@ export class Widget extends StateManaged {
         }
       }
 
+      /* NOTE: as coded, both seated and unseated seats are included. */
+      /* NOTE: what to do if the round specified is greater than the number of rounds+1?*/
+      if(a.func == 'SCORE') {
+        setDefaults(a, { seats: null, mode: 'set', property: 'score'});
+        if([ 'set', 'inc', 'dec' ].indexOf(a.mode) == -1) {
+          problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
+          a.mode = 'set'
+        }
+        
+        // Set the default for value
+        if(a.value === undefined)
+          a.value = a.mode == 'set' ? 0 : 1;
+
+        //copied from TURN
+        let c = (a.seats == null ? Array.from(widgets.values()) : collections[getCollection(a.seats)]).filter(w=>w.get('type')=='seat');
+
+        const maxLen = c.filter(w => w.get('player') != null).filter(w => w.get(a.property) != null).reduce((currentMax, w) => currentMax > asArray(w.get(a.property)).length ? currentMax : asArray(w.get(a.property)).length, 0);
+
+        // Set default for round to be changed
+        if(a.round === undefined)
+          a.round = maxLen+1;
+
+        const relation = (a.mode == 'set') ? '=' : (a.mode == 'dec' ? '-' : '+');
+        for(const seat of c) {
+          if(a.round > maxLen) {
+            const score = asArray(seat.get(String(a.property)));
+            score.push(0);
+            await seat.set(String(a.property), score);
+          }
+          const newScores = [...seat.get(String(a.property))];
+          newScores[a.round] = compute(relation, null, seat.get(String(a.property))[a.round-1], a.value);
+          console.log(newScores);
+          await seat.set(String(a.property), newScores);
+        }
+      }
+      
       if(a.func == 'SELECT') {
         setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all' });
         let source;

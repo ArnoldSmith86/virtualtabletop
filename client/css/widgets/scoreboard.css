@@ -35,6 +35,10 @@
   z-index: 1;
 }
 
+.scoreboard .currentRound {
+  background-color: #FDF5E6;
+}
+
 .scoreboard tbody td {
   border-bottom: 1px solid #ddd;
   border-right: 1px solid #ddd;

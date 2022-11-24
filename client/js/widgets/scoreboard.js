@@ -21,14 +21,16 @@ class ScoreBoard extends Widget {
       addTotals: true,
       seats: null,
       showAllRounds: false,
-      roundLabel: 'Round'
+      roundLabel: 'Round',
+      currentRound: null
     });
   }
 
   applyDeltaToDOM(delta) {
     if(delta) // Don't call super unless this is a real delta to the scoreboard rather than from a seat
       super.applyDeltaToDOM(delta);
-    const includedSeats = widgetFilter(w => w.get('type') == 'seat' && (this.get('includeAllSeats') || w.get('player') != '') && (!this.get('seats') || this.get('seats').includes(w.get('id')))).sort((a,b) => a.get('player') < b.get('player') ? -1 : 1);
+    let includedSeats = widgetFilter(w => w.get('type') == 'seat' && (this.get('includeAllSeats') || w.get('player') != '') && (!this.get('seats') || this.get('seats').includes(w.get('id'))));
+    includedSeats.sort((a,b) => a.get('player') < b.get('player') ? -1 : 1);
     this.tableCreate(includedSeats)
   }
   
@@ -122,6 +124,11 @@ class ScoreBoard extends Widget {
     tbl.style.width = (this.get('width') - 8) + 'px';
     let numRows;
     let numCols;
+    let currentRound = parseInt(this.get('currentRound'));
+
+    if (isNaN(currentRound) || currentRound <1 || currentRound > numRounds)
+      currentRound = null;
+    
     if(this.get('playersInColumns')) {
       // Compute total number of rows and columns in table
       numCols = includedSeats.length + 1;
@@ -133,20 +140,23 @@ class ScoreBoard extends Widget {
       tbl.innerHTML += '<tbody></tbody>';
       const tr = this.addRowToTable($('tbody', tbl), names, 'td');
       if(usePlayerColors)
-        for (let i=0; i<includedSeats.length; i++ ) {
-          tr.cells[i+1].style.backgroundColor = colors[i];
-          tr.cells[i+1].style.color = 'white';
+        for (let c=0; c<includedSeats.length; c++ ) {
+          tr.cells[c+1].style.backgroundColor = colors[c];
+          tr.cells[c+1].style.color = 'white';
         }
       // Add remaining rows
-      for( let i=1; i < numRows; i++ ) {
-        const pRow = pScores.map(x => x[i]);
-        pRow.unshift(rounds[i]);
+      for( let r=1; r < numRows; r++ ) {
+        const pRow = pScores.map(x => x[r]);
+        pRow.unshift(rounds[r]);
         const tr = this.addRowToTable($('tbody',tbl), pRow, 'td');
         tr.cells[0].classList.add('firstCol');
+        if(r == currentRound)
+          for(let c=1; c < numCols; c++)
+            tr.cells[c].classList.add('currentRound');
       }
       if(addTotals)
-          for(let j=0; j < numCols; j++)
-            tbl.rows[numRows-1].cells[j].classList.add('totalsLine');
+          for(let c=0; c < numCols; c++)
+            tbl.rows[numRows-1].cells[c].classList.add('totalsLine');
     } else { // Players are in rows
       // Compute total number of rows and columns in table
       numCols = numRounds + 1 + (addTotals ? 1 : 0);
@@ -154,27 +164,30 @@ class ScoreBoard extends Widget {
 
       // First row contains round names
       const tr = this.addRowToTable(tbl, rounds, 'td');
-      for (let j=0; j<numCols; j++)
-        tr.cells[j].classList.add('firstRow');
+      for (let c=0; c < numCols; c++)
+        tr.cells[c].classList.add('firstRow');
       // Remaining rows are one row per player.
-      for( let i=0; i < includedSeats.length; i++) {
-        const tr = this.addRowToTable(tbl, pScores[i], 'td');
+      for( let r=0; r < includedSeats.length; r++) {
+        const tr = this.addRowToTable(tbl, pScores[r], 'td');
         tr.cells[0].classList.add('firstCol');
         if(usePlayerColors) {
-          tr.cells[0].style.backgroundColor = colors[i];
+          tr.cells[0].style.backgroundColor = colors[r];
           tr.cells[0].style.color = 'white';
         }
       }
-      if(addTotals)
-          for(let j=0; j < numRows; j++)
-            tbl.rows[j].cells[numCols-1].classList.add('totalsLine');
+      for(let r=1; r < numRows; r++) {
+        if(currentRound)
+          tbl.rows[r].cells[currentRound].classList.add('currentRound');
+        if(addTotals)
+          tbl.rows[r].cells[numCols-1].classList.add('totalsLine');
+      }
     }
 
     // Make top row, left column non-scrollable
-    for (let i=0; i<numRows; i++) 
-      tbl.rows[i].cells[0].classList.add('firstCol');
-    for (let i=0; i< numCols; i++)
-      tbl.rows[0].cells[i].classList.add('firstRow');
+    for (let r=0; r<numRows; r++) 
+      tbl.rows[r].cells[0].classList.add('firstCol');
+    for (let c=0; c< numCols; c++)
+      tbl.rows[0].cells[c].classList.add('firstRow');
 
     const myDom = this.domElement;
     myDom.innerHTML = '';
