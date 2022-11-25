@@ -4,6 +4,8 @@ let variantIDjustUpdated = null;
 let detailsInSidebar = false;
 let detailsOverlay = 'stateDetailsOverlay';
 
+const stateFilterSpans = $a('#stateFilters > span');
+
 function loadJSZip() {
   const node = document.createElement('script');
   node.src = 'scripts/jszip';
@@ -354,6 +356,14 @@ function resortStatesList() {
     for(const [ stateDOM, stateData ] of states)
       list.appendChild(stateDOM);
   }
+}
+
+function updateFilterOverflow() {
+  for(const span of stateFilterSpans)
+    $('#stateFilters').insertBefore(span, $('#filterOverflow'));
+  for(const span of [...stateFilterSpans].sort((a,b)=>b.dataset.priority-a.dataset.priority))
+    if($('#filterByTextWrapper').clientWidth < 200)
+      $('#filterOverflow').appendChild(span);
 }
 
 let uploadingStates = [[],[]];
@@ -993,7 +1003,10 @@ onLoad(function() {
       alert('Please enter a link.');
   });
 
-  window.addEventListener('resize', setSidebar);
+  window.addEventListener('resize', function() {
+    setSidebar();
+    updateFilterOverflow();
+  });
   document.addEventListener('dragover', function(e) {
     e.preventDefault();
     e.dataTransfer.dropEffect = 'copy';

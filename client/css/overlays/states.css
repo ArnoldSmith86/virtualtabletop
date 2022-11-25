@@ -68,10 +68,9 @@
   margin: 0 5px;
 }
 
-@media (max-width: 700px), (max-height: 437px) { #filterByDurationWrapper { display: none; } }
-@media (max-width: 550px), (max-height: 343px) { #filterByLanguageWrapper { display: none; } }
-@media (max-width: 470px), (max-height: 293px) { #filterByModeWrapper     { display: none; } }
-@media (max-width: 350px), (max-height: 218px) { #filterByTypeWrapper     { display: none; } }
+#filterOverflow {
+  display: none;
+}
 
 #statesList {
   overflow: auto;
@@ -290,9 +289,6 @@ div:nth-of-type(2) > .list > .roomState .star {
   #statesOverlay, .roomState, #emptyLibrary, #emptyLibraryByFilter {
     margin:  0;
     padding: 0;
-  }
-  #filterByPlayersWrapper {
-    display: none;
   }
   #statesOverlay .list {
     display: block;

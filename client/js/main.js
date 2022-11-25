@@ -350,8 +350,11 @@ onLoad(function() {
 
   on('.toolbarButton', 'click', function(e) {
     const overlay = e.currentTarget.dataset.overlay;
-    if(overlay)
+    if(overlay) {
       showOverlay(overlay);
+      if(overlay == 'statesOverlay')
+        updateFilterOverflow();
+    }
   });
 
   on('#muteButton', 'click', function() {

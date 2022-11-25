@@ -216,18 +216,18 @@
 
     <div id="statesOverlay" class="overlay">
       <div id="stateFilters">
-        <span id="filterByTextWrapper">
+        <span id="filterByTextWrapper" data-priority="1">
           <i class="material-icons">search</i>
           <input id="filterByText" name="filterByText" placeholder="Search" />
           <i class="material-icons" id="clearSearch">close</i>
         </span>
-        <span id="filterByTypeWrapper">
+        <span id="filterByTypeWrapper" data-priority="3">
           <i class="material-icons">casino</i>
           <select id="filterByType"><option>Any</option>
             <option selected>Games</option><option>Tutorials</option><option>Assets</option>
           </select>
         </span>
-        <span id="filterByPlayersWrapper">
+        <span id="filterByPlayersWrapper" data-priority="2">
           <i class="material-icons">person</i>
           <select id="filterByPlayers"><option>Any</option>
             <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
@@ -236,24 +236,25 @@
             <option>16</option><option>17</option><option>18</option><option>19</option><option>20</option>
           </select>
         </span>
-        <span id="filterByDurationWrapper">
+        <span id="filterByDurationWrapper" data-priority="6">
           <i class="material-icons">schedule</i>
           <select id="filterByDuration"><option>Any</option>
             <option value="0-30">&lt;= 30 minutes</option><option value="31-60">30-60 minutes</option><option value="61-999">&gt; 60 minutes</option>
           </select>
         </span>
-        <span id="filterByLanguageWrapper">
+        <span id="filterByLanguageWrapper" data-priority="5">
           <i class="material-icons">language</i>
           <select id="filterByLanguage"></select>
         </span>
-        <span id="filterByModeWrapper">
+        <span id="filterByModeWrapper" data-priority="4">
           <i class="material-icons">groups</i>
           <select id="filterByMode"></select>
         </span>
-        <span id="librarySortWrapper">
+        <span id="librarySortWrapper" data-priority="7">
           <i class="material-icons">sort_by_alpha</i>
           <select id="librarySort"><option value="name">by Name</option><option value="similarName">by Similar Name</option><option value="stars">by Stars</option><option value="timePlayed">by Popularity</option><option value="year">by Year</option></select>
         </span>
+        <div id="filterOverflow"></div>
       </div>
       <div id="statesList">
         <template id="template-stateslist-category" type="text/template">
