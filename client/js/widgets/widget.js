@@ -1282,38 +1282,40 @@ export class Widget extends StateManaged {
       }
 
       /* NOTE: as coded, both seated and unseated seats are included. */
-      /* NOTE: what to do if the round specified is greater than the number of rounds+1?*/
       if(a.func == 'SCORE') {
-        setDefaults(a, { seats: null, mode: 'set', property: 'score'});
+        setDefaults(a, { seats: null, includeAllSeats: false, mode: 'set', property: 'score', round: null, value: null, sortField: 'player', sortAscending: true});
         if([ 'set', 'inc', 'dec' ].indexOf(a.mode) == -1) {
           problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
           a.mode = 'set'
         }
         
-        // Set the default for value
-        if(a.value === undefined)
+        // Retrieve affected seat widgets
+        let seats = (a.seats == null ? Array.from(widgets.values()) : collections[getCollection(a.seats)]).filter(w=>w.get('type')=='seat').filter(w => a.includeAllSeats || w.get('player'));
+
+        // Compute the value array
+        if(a.value === null)
           a.value = a.mode == 'set' ? 0 : 1;
-
-        //copied from TURN
-        let c = (a.seats == null ? Array.from(widgets.values()) : collections[getCollection(a.seats)]).filter(w=>w.get('type')=='seat');
-
-        const maxLen = c.filter(w => w.get('player') != null).filter(w => w.get(a.property) != null).reduce((currentMax, w) => currentMax > asArray(w.get(a.property)).length ? currentMax : asArray(w.get(a.property)).length, 0);
-
-        // Set default for round to be changed
-        if(a.round === undefined)
-          a.round = maxLen+1;
+        a.value = asArray(a.value).concat(Array(seats.length).fill(Array.isArray(a.value) ? 0 : a.value)).slice(0,seats.length);
 
         const relation = (a.mode == 'set') ? '=' : (a.mode == 'dec' ? '-' : '+');
-        for(const seat of c) {
-          if(a.round > maxLen) {
-            const score = asArray(seat.get(String(a.property)));
-            score.push(0);
-            await seat.set(String(a.property), score);
+        for(let i=0; i < seats.length; i++) {
+          let score = [...asArray(seats[i].get(String(a.property)) || 0)];
+          if(a.round === null) {
+            score[score.length] = compute(relation, null, 0, a.value[i]);
+          } else  {
+            if(a.round > score.length)
+              score = score.concat(Array(a.round).fill(0)).slice(0,a.round);
+            score[a.round-1] = compute(relation, null, score[a.round-1], a.value[i]);
           }
-          const newScores = [...seat.get(String(a.property))];
-          newScores[a.round] = compute(relation, null, seat.get(String(a.property))[a.round-1], a.value);
-          console.log(newScores);
-          await seat.set(String(a.property), newScores);
+          await seats[i].set(String(a.property), score);
+        }
+
+        if(jeRoutineLogging) {
+          const seatIds = seats.map(w => w.get('id'));
+          if(a.mode == 'inc' || a.mode == 'dec')
+            jeLoggingRoutineOperationSummary(`${a.mode} round ${a.round} in seats ${JSON.stringify(seatIds)} by ${a.value}`)
+          else
+            jeLoggingRoutineOperationSummary(`set round ${a.round} in seats ${JSON.stringify(seatIds)} to ${a.value}`)
         }
       }
       

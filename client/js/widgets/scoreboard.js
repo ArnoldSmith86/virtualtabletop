@@ -14,7 +14,7 @@ class ScoreBoard extends Widget {
       usePlayerColors: true,
       playersInColumns: true,
       rounds: null,
-      sortField: 'player',
+      sortField: 'index',
       sortAscending: true,
       scoreProperty: 'score',
       includeAllSeats: false,
@@ -29,7 +29,7 @@ class ScoreBoard extends Widget {
   applyDeltaToDOM(delta) {
     if(delta) // Don't call super unless this is a real delta to the scoreboard rather than from a seat
       super.applyDeltaToDOM(delta);
-    let includedSeats = widgetFilter(w => w.get('type') == 'seat' && (this.get('includeAllSeats') || w.get('player') != '') && (!this.get('seats') || this.get('seats').includes(w.get('id'))));
+    let includedSeats = widgetFilter(w => w.get('type') == 'seat' && (this.get('includeAllSeats') || w.get('player')) && (!this.get('seats') || this.get('seats').includes(w.get('id'))));
     includedSeats.sort((a,b) => a.get('player') < b.get('player') ? -1 : 1);
     this.tableCreate(includedSeats)
   }
