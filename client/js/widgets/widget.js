@@ -15,7 +15,8 @@ const readOnlyProperties = new Set([
   '_centerAbsoluteX',
   '_centerAbsoluteY',
   '_localOriginAbsoluteX',
-  '_localOriginAbsoluteY'
+  '_localOriginAbsoluteY',
+  '_totals' // Property of scoreboards
 ]);
 
 export class Widget extends StateManaged {

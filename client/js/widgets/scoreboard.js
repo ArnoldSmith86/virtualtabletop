@@ -29,12 +29,37 @@ class ScoreBoard extends Widget {
   applyDeltaToDOM(delta) {
     if(delta) // Don't call super unless this is a real delta to the scoreboard rather than from a seat
       super.applyDeltaToDOM(delta);
-    let includedSeats = widgetFilter(w => w.get('type') == 'seat' && (this.get('includeAllSeats') || w.get('player')) && (!this.get('seats') || this.get('seats').includes(w.get('id'))));
-    includedSeats.sort((a,b) => a.get('player') < b.get('player') ? -1 : 1);
-    this.tableCreate(includedSeats)
+    this.tableCreate(this.getIncludedSeats())
   }
   
   applyInitiaDelta() {
+  }
+
+  get(property) {
+    if(property != '_totals')
+      return super.get(property)
+    else if(!this.get('addTotals'))
+      return [];
+    else {
+      const totals = [];
+      let seats = this.getIncludedSeats();
+      for (const seat of seats) {
+        const score = seat.get(this.get('scoreProperty'));
+        const index = seat.get('index');
+        if(Array.isArray(score)) {
+          totals[index] = score.reduce((partialSum, a) => partialSum + a, 0);
+        } else {
+          totals[index] = parseFloat(score);
+          if(isNaN(totals[index]))
+            totals[index] = 0;
+        }
+      }
+      return totals;
+    }
+  }
+
+  getIncludedSeats() {
+    return widgetFilter(w => w.get('type') == 'seat' && (this.get('includeAllSeats') || w.get('player')) && (!this.get('seats') || this.get('seats').includes(w.get('id'))));
   }
 
   addRowToTable(parent, values, cellType = 'td') {
@@ -85,15 +110,16 @@ class ScoreBoard extends Widget {
     }
     
     // Sort player scores if requested
-    if(sortField == 'total') {
-      if(addTotals)
+    if(sortField == 'total' && addTotals) {
         pScores.sort((a,b) =>a[a.length-1] < b[b.length-1] ? -1 : 1)
-    } else if(sortField) {
+    } else if(sortField && sortField != 'total') {
       pScores.sort((a,b) => {
         const pa = includedSeats.filter(x=> x.get('player') == a[0])[0].get(sortField);
         const pb = includedSeats.filter(x=> x.get('player') == b[0])[0].get(sortField);
         return pa < pb ? -1 : 1;
       });
+    } else {
+      pScores.sort((a,b) => a.get('player') < b.get('player') ? -1 : 1);
     }
     if(!this.get('sortAscending'))
       pScores = pScores.reverse();
