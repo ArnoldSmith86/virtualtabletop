@@ -444,9 +444,13 @@
   #symbolPickerOverlay {
     padding: 0;
   }
-  #symbolPickerOverlay > h1 {
+  #symbolPickerOverlay h1 {
     text-align: left;
     margin: 10px 50px 10px 5px;
+  }
+  #symbolPickerOverlay .titleWithCloseButton button {
+    right: 10px;
+    top: 10px;
   }
   #symbolPickerOverlay div[icon] {
     padding: 5px;

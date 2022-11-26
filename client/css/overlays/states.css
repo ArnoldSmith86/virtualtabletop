@@ -975,18 +975,21 @@ div:nth-of-type(2) > .list > .roomState .star {
   justify-content: center;
 }
 
-#shareLinkOverlay .title {
+.titleWithCloseButton {
   position: relative;
-  max-width: 640px;
   margin: 0 auto;
   width: 100%;
+}
+
+#shareLinkOverlay .titleWithCloseButton {
+  max-width: 640px;
 }
 
 #shareLinkOverlay h1 {
   margin-top: 0;
 }
 
-#shareLinkOverlay .title button {
+.titleWithCloseButton button {
   position: absolute;
   right: 0;
   top: 0;
@@ -1017,7 +1020,7 @@ div:nth-of-type(2) > .list > .roomState .star {
     text-align: left;
     margin: 10px 50px 10px 5px;
   }
-  #shareLinkOverlay .title button {
+  #shareLinkOverlay .titleWithCloseButton button {
     right: 10px;
     top: 10px;
   }
