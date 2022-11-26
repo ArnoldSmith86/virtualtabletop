@@ -975,14 +975,21 @@ div:nth-of-type(2) > .list > .roomState .star {
   justify-content: center;
 }
 
+#shareLinkOverlay .title {
+  position: relative;
+  max-width: 640px;
+  margin: 0 auto;
+  width: 100%;
+}
+
 #shareLinkOverlay h1 {
   margin-top: 0;
 }
 
-#shareLinkOverlay > button {
+#shareLinkOverlay .title button {
   position: absolute;
-  right: 10px;
-  top: 10px;
+  right: 0;
+  top: 0;
 }
 
 #shareLinkOverlay input {
@@ -1005,9 +1012,14 @@ div:nth-of-type(2) > .list > .roomState .star {
   #shareLinkOverlay {
     padding: 0;
   }
-  #shareLinkOverlay > h1 {
+  #shareLinkOverlay h1 {
+    position: unset;
     text-align: left;
     margin: 10px 50px 10px 5px;
+  }
+  #shareLinkOverlay .title button {
+    right: 10px;
+    top: 10px;
   }
   #shareLinkOverlay > div > div {
     padding: 5px;
