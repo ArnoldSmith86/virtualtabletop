@@ -359,11 +359,15 @@ function resortStatesList() {
 }
 
 function updateFilterOverflow() {
+  $('#filterOverflow').classList.add('empty');
   for(const span of stateFilterSpans)
     $('#stateFilters').insertBefore(span, $('#filterOverflow'));
-  for(const span of [...stateFilterSpans].sort((a,b)=>b.dataset.priority-a.dataset.priority))
-    if($('#filterByTextWrapper').clientWidth < 200)
-      $('#filterOverflow').appendChild(span);
+  for(const span of [...stateFilterSpans].sort((a,b)=>b.dataset.priority-a.dataset.priority)) {
+    if($('#filterByTextWrapper') != span && $('#filterByTextWrapper').clientWidth < 200) {
+      $('#filterOverflow > div').insertBefore(span, $('#filterOverflow > div').firstChild);
+      $('#filterOverflow').classList.remove('empty');
+    }
+  }
 }
 
 let uploadingStates = [[],[]];
@@ -984,6 +988,12 @@ onLoad(function() {
 
   onMessage('meta', args=>fillStatesList(args.meta.states, args.meta.starred, args.meta.activeState, args.meta.returnServer, args.activePlayers));
 
+  on('#filterOverflow > div', 'click', e=>e.stopPropagation());
+  on('#filterOverflow > button', 'click', function(e) {
+    $('#filterOverflow').classList.toggle('active');
+    e.stopPropagation();
+    document.addEventListener('click', e=>$('#filterOverflow').classList.remove('active'));
+  });
   on('#filterByText', 'keyup', updateLibraryFilter);
   on('#clearSearch', 'click', _=>{$('#filterByText').value='';updateLibraryFilter();$('#filterByText').focus()});
   on('#stateFilters select', 'change', updateLibraryFilter);
