@@ -901,7 +901,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   }
 }
 @media (max-width: 300px), (max-height: 187px) {
-#stateAddOverlay > h1, #variantAddOverlay > h1 {
+  #stateAddOverlay > h1, #variantAddOverlay > h1 {
     text-align: left;
     margin: 10px 50px 10px 5px;
   }

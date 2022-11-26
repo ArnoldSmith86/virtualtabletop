@@ -968,7 +968,7 @@ async function confirmOverlay(title, text, confirmButton, cancelButton, confirmI
       resolve(true);
     };
 
-    $('#confirmOverlay > button').onclick = $('#confirmOverlay .buttons button:nth-of-type(1)').onclick;
+    $('#confirmOverlay .titleWithCloseButton button').onclick = $('#confirmOverlay .buttons button:nth-of-type(1)').onclick;
   });
 }
 

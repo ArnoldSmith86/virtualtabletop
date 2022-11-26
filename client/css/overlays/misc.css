@@ -4,14 +4,12 @@
     justify-content: center;
   }
 
-  #confirmOverlay h1 {
-    margin-top: 0;
+  #confirmOverlay .titleWithCloseButton {
+    max-width: 640px;
   }
 
-  #confirmOverlay > button {
-    position: absolute;
-    right: 10px;
-    top: 10px;
+  #confirmOverlay h1 {
+    margin-top: 0;
   }
 
   #confirmOverlay > div > div {
@@ -29,9 +27,13 @@
     #confirmOverlay {
       padding: 0;
     }
-    #confirmOverlay > h1 {
+    #confirmOverlay h1 {
       text-align: left;
       margin: 10px 50px 10px 5px;
+    }
+    #confirmOverlay .titleWithCloseButton button {
+      right: 10px;
+      top: 10px;
     }
     #confirmOverlay > div > div {
       padding: 5px;
