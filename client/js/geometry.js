@@ -29,7 +29,7 @@ export function getScreenTransform(elem) {
 }
 
 function parseLengths(str) {
-  return str.match(/^(-?[0-9.]*)px (-?[0-9.]*)px$/).slice(1, 3).map(s => parseFloat(s))
+  return str.split(' ').map(s => parseFloat(s))
 }
 
 export function dehomogenize(point) {
