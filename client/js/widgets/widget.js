@@ -367,13 +367,15 @@ export class Widget extends StateManaged {
     return coordLocal.x >= 0 && coordLocal.y >= 0 && coordLocal.x <= this.get('width') && coordLocal.y <= this.get('height');
   }
   coordLocalFromCoordClient(coord) {
-    return getPointOnPlane(getScreenTransform(this.domElement), coord.x, coord.y);
+    const result = getPointOnPlane(getScreenTransform(this.domElement), coord.x, coord.y);
+    return result || new DOMPoint();
   }
   coordLocalFromCoordGlobal(coord) {
     return this.coordLocalFromCoordParent(this.coordParentFromCoordGlobal(coord));
   }
   coordLocalFromCoordParent(coord) {
-    return getPointOnPlane(getElementTransform(this.domElement), coord.x, coord.y);
+    const result = getPointOnPlane(getElementTransform(this.domElement), coord.x, coord.y);
+    return result || new DOMPoint();
   }
   coordParentFromCoordGlobal(coord) {
     const p = this.get('parent');
