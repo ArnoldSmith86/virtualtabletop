@@ -74,15 +74,6 @@ class Card extends Widget {
         for(const callback of (this.dynamicProperties[p] || []))
           callback();
 
-    if(this.dynamicCssCallbacks) {
-      for(const property of this.classesProperties()) {
-        if(delta[property] !== undefined) {
-          for (const callback of this.dynamicCssCallbacks)
-            callback();
-          break;
-        }
-      }
-    }
     super.applyDeltaToDOM(delta);
   }
 
@@ -105,7 +96,6 @@ class Card extends Widget {
 
   createFaces(faceTemplates) {
     this.dynamicProperties = {};
-    this.dynamicCssCallbacks = undefined;
     for(const face of faceTemplates) {
       const faceDiv = document.createElement('div');
 
@@ -164,7 +154,7 @@ class Card extends Widget {
             const extraStyles = typeof css == 'object' ? this.cssToStylesheet(css, true) : '';
             const html = `<!DOCTYPE html>\n` +
                 `<html><head><style>html,body {height: 100%; margin: 0;}${extraStyles}` +
-                `</style></head><body class="${this.classes()}">${content}</body></html>`;
+                `</style></head><body class="${object.classes || ""}">${content}</body></html>`;
             objectDiv.srcdoc = html;
           } else {
             objectDiv.textContent = object.value;
@@ -181,11 +171,8 @@ class Card extends Widget {
           for(const dp of Object.keys(original.dynamicProperties))
             if(original[dp] === undefined)
               properties.push(original.dynamicProperties[dp]);
-        // html additionally may reference classes and properties from css.
+        // html additionally may reference properties from css.
         if (original.type == 'html') {
-          if (!this.dynamicCssCallbacks)
-            this.dynamicCssCallbacks = [];
-          this.dynamicCssCallbacks.push(setValue);
           for (const p of this.propertiesUsedInCSS)
             if (properties.indexOf(p) == -1)
               properties.push(p);
