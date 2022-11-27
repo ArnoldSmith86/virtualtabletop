@@ -74,6 +74,15 @@ class Card extends Widget {
         for(const callback of (this.dynamicProperties[p] || []))
           callback();
 
+    if(this.dynamicCssCallbacks) {
+      for(const property of this.classesProperties()) {
+        if(delta[property] !== undefined) {
+          for (const callback of this.dynamicCssCallbacks)
+            callback();
+          break;
+        }
+      }
+    }
     super.applyDeltaToDOM(delta);
   }
 
@@ -96,6 +105,7 @@ class Card extends Widget {
 
   createFaces(faceTemplates) {
     this.dynamicProperties = {};
+    this.dynamicCssCallbacks = undefined;
     for(const face of faceTemplates) {
       const faceDiv = document.createElement('div');
 
@@ -145,15 +155,25 @@ class Card extends Widget {
             objectDiv.setAttribute('sandbox', "");
             objectDiv.setAttribute('width', object.width);
             objectDiv.setAttribute('height', object.height);
-            const variable = /\${([^} ]*)}/g;
-            objectDiv.srcdoc = object.value.replaceAll(variable, (m, n) => {
+            const content = object.value.replaceAll(/\$\{PROPERTY ([A-Za-z0-9_-]+)\}/g, (m, n) => {
               return object[n] || ""
             });
+            // Applies a template which fills available space, uses the same classes and applies
+            // nested CSS style rules.
+            const css = object['css'];
+            const extraStyles = typeof css == 'object' ? this.cssToStylesheet(css, true) : '';
+            const html = `<!DOCTYPE html>\n` +
+                `<html><head><style>html,body {height: 100%; margin: 0;}${extraStyles}` +
+                `</style></head><body class="${this.classes()}">${content}</body></html>`;
+            objectDiv.srcdoc = html;
           } else {
             objectDiv.textContent = object.value;
             objectDiv.style.color = object.color;
           }
         }
+
+        // Call setValue first to collect properties used in CSS.
+        setValue();
 
         // add a callback that makes sure dynamic property changes are reflected on the DOM
         const properties = original.svgReplaces ? Object.values(original.svgReplaces) : [];
@@ -161,13 +181,21 @@ class Card extends Widget {
           for(const dp of Object.keys(original.dynamicProperties))
             if(original[dp] === undefined)
               properties.push(original.dynamicProperties[dp]);
+        // html additionally may reference classes and properties from css.
+        if (original.type == 'html') {
+          if (!this.dynamicCssCallbacks)
+            this.dynamicCssCallbacks = [];
+          this.dynamicCssCallbacks.push(setValue);
+          for (const p of this.propertiesUsedInCSS)
+            if (properties.indexOf(p) == -1)
+              properties.push(p);
+        }
         for(const p of properties) {
           if(!this.dynamicProperties[p])
             this.dynamicProperties[p] = [];
           this.dynamicProperties[p].push(setValue);
         }
 
-        setValue();
         faceDiv.appendChild(objectDiv);
       }
       this.domElement.appendChild(faceDiv);
