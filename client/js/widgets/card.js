@@ -147,7 +147,7 @@ class Card extends Widget {
             objectDiv.setAttribute('height', object.height);
             const variable = /\${([^} ]*)}/g;
             objectDiv.srcdoc = object.value.replaceAll(variable, (m, n) => {
-              return this.get(n) || ""
+              return object[n] || ""
             });
           } else {
             objectDiv.textContent = object.value;
