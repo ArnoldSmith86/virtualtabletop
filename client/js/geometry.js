@@ -73,3 +73,33 @@ export function getElementTransform(elem) {
   transform.translateSelf(elem.offsetLeft, elem.offsetTop);
   return transform;
 }
+
+function closestAncestor(a, b) {
+  let ancestors = new Set();
+  while (a) {
+    ancestors.add(a);
+    a = a.offsetParent;
+  }
+  ancestors.add(null);
+  while (!ancestors.has(b)) {
+    b = b.offsetParent;
+  }
+  return b;
+}
+
+export function getElementTransformRelativeTo(elem, parent) {
+  if (!elem.offsetParent)
+    return null;
+  let ancestor = closestAncestor(elem, parent);
+  let transform = getElementTransform(elem);
+  while (elem.offsetParent != ancestor) {
+    elem = elem.offsetParent;
+    transform.preMultiplySelf(getElementTransform(elem));
+  }
+  let destTransform = new DOMMatrix();
+  while (parent != ancestor) {
+    destTransform.preMultiplySelf(getElementTransform(parent));
+    parent = parent.offsetParent;
+  }
+  return transform.preMultiplySelf(destTransform.inverse());
+}
