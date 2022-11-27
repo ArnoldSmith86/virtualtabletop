@@ -460,15 +460,18 @@ export class Widget extends StateManaged {
     return [ 'borderRadius', 'css', 'height', 'inheritChildZ', 'layer', 'width' ].concat(this.propertiesUsedInCSS);
   }
 
-  cssReplaceProperties(css) {
+  cssReplaceProperties(css, properties = null) {
     for(const match of String(css).matchAll(/\$\{PROPERTY ([A-Za-z0-9_-]+)\}/g)) {
-      css = css.replace(match[0], this.get(match[1]));
-      this.propertiesUsedInCSS.push(match[1]);
+      let value = properties ? properties[match[1]] : this.get(match[1]);
+      css = css.replace(match[0], value);
+      // If a custom properties dictionary was used, don't update propertiesUsedInCSS.
+      if (!properties)
+        this.propertiesUsedInCSS.push(match[1]);
     }
     return css;
   }
 
-  cssToStylesheet(css, nested = false) {
+  cssToStylesheet(css, nested = false, properties = null) {
     let styleString = '';
     for(const key in css) {
       let selector = key;
@@ -480,7 +483,7 @@ export class Widget extends StateManaged {
         if(selector.charAt(0) != '@')
           selector = `#w_${escapeID(this.id)}${selector}`;
       }
-      styleString += `${selector} { ${mapAssetURLs(this.cssReplaceProperties(this.cssAsText(css[key], true)))} }\n`;
+      styleString += `${selector} { ${mapAssetURLs(this.cssReplaceProperties(this.cssAsText(css[key], true), properties))} }\n`;
     }
 
     if(nested)

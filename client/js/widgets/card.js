@@ -151,7 +151,7 @@ class Card extends Widget {
             // Applies a template which fills available space, uses the same classes and applies
             // nested CSS style rules.
             const css = object['css'];
-            const extraStyles = typeof css == 'object' ? this.cssToStylesheet(css, true) : '';
+            const extraStyles = typeof css == 'object' ? this.cssToStylesheet(css, true, object) : '';
             const html = `<!DOCTYPE html>\n` +
                 `<html><head><style>html,body {height: 100%; margin: 0;}${extraStyles}` +
                 `</style></head><body class="${object.classes || ""}">${content}</body></html>`;
@@ -171,12 +171,6 @@ class Card extends Widget {
           for(const dp of Object.keys(original.dynamicProperties))
             if(original[dp] === undefined)
               properties.push(original.dynamicProperties[dp]);
-        // html additionally may reference properties from css.
-        if (original.type == 'html') {
-          for (const p of this.propertiesUsedInCSS)
-            if (properties.indexOf(p) == -1)
-              properties.push(p);
-        }
         for(const p of properties) {
           if(!this.dynamicProperties[p])
             this.dynamicProperties[p] = [];
