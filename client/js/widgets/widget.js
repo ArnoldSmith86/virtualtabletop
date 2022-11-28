@@ -938,12 +938,16 @@ export class Widget extends StateManaged {
         let collection;
         let theItem;
         if(a.holder !== undefined) {
-          if(this.isValidID(a.holder,problems))
-            if(widgets.get(a.holder) && widgets.get(a.holder).get('type')=='holder') {
+          if(this.isValidID(a.holder,problems)) {
+            if(Array.isArray(a.holder))
+              problems.push("'holder' cannot be an array.");
+            else if (!widgets.get(a.holder) || widgets.get(a.holder).get('type')!='holder') 
+              problems.push("'holder' does not refer to a holder.");
+            else {
               variables[a.variable] = widgets.get(a.holder).children().length;
               theItem = `${a.holder}`;
-            } else
-              problems.push("'holder' parameter is not a holder (check to make sure it is not an array)");
+            }
+          }
         } else if(collection = getCollection(a.collection)) {
           variables[a.variable] = collections[collection].length;
           theItem = `${a.collection}`
