@@ -864,48 +864,61 @@ div:nth-of-type(2) > .list > .roomState .star {
 
 #stateAddOverlay, #variantAddOverlay {
   padding: 0;
+  justify-content: center;
 }
-#stateAddOverlay > h1, #variantAddOverlay > h1 {
-  margin: 20px 0 0 0;
-}
-#stateAddOverlay > button, #variantAddOverlay > button {
-  position: absolute;
-  right: 10px;
-  top: 10px;
+#stateAddOverlay h1, #variantAddOverlay h1 {
+  margin: 0;
 }
 #stateAddOverlay input, #variantAddOverlay select {
   width: 100%;
   box-sizing: border-box;
 }
-#stateAddOverlay > div, #variantAddOverlay > div {
+#stateAddOverlay > div:not(.titleWithCloseButton), #variantAddOverlay > div:not(.titleWithCloseButton) {
   display: grid;
   gap: 20px;
   padding: 20px;
+  max-width: 850px;
+  margin: 0 auto;
+}
+#stateAddOverlay > .titleWithCloseButton, #variantAddOverlay > .titleWithCloseButton {
+  max-width: 890px;
+}
+#stateAddOverlay > .titleWithCloseButton button, #variantAddOverlay > .titleWithCloseButton button {
+  margin-right: 20px;
 }
 #stateAddOverlay > div > div:nth-of-type(1), #variantAddOverlay > div > div:nth-of-type(1) {
   grid-column: 1 / span 2;
 }
-@media (min-width: 1300px), (min-height: 875px) {
-  #stateAddOverlay > div, #variantAddOverlay > div {
-    margin: 5% 10% 0 10%;
+@media (max-width: 880px), (max-height: 550px) {
+  #stateAddOverlay, #variantAddOverlay {
+    justify-content: unset;
   }
-}
-@media (min-width: 1900px), (min-height: 1187px) {
-  #stateAddOverlay > div, #variantAddOverlay > div {
-    margin: 5% 20% 0 20%;
+  #stateAddOverlay .titleWithCloseButton, #variantAddOverlay .titleWithCloseButton {
+    margin-top: 20px;
   }
 }
 @media (max-width: 600px), (max-height: 375px) {
+  #stateAddOverlay, #variantAddOverlay {
+    padding: 0;
+  }
   #stateAddOverlay > div > div:nth-of-type(1), #variantAddOverlay > div > div:nth-of-type(1) {
     grid-column: unset;
   }
 }
 @media (max-width: 300px), (max-height: 187px) {
-  #stateAddOverlay > h1, #variantAddOverlay > h1 {
-    text-align: left;
-    margin: 10px 50px 10px 5px;
+  #stateAddOverlay .titleWithCloseButton, #variantAddOverlay .titleWithCloseButton {
+    margin-top: 10px;
   }
-  #stateAddOverlay > div, #variantAddOverlay > div {
+  #stateAddOverlay h1, #variantAddOverlay h1 {
+    text-align: left;
+    margin: 0 50px 10px 5px;
+  }
+  #stateAddOverlay .titleWithCloseButton button, #variantAddOverlay .titleWithCloseButton button {
+    right: 0;
+    top: 0;
+    margin-right: 10px;
+  }
+  #stateAddOverlay > div:not(.titleWithCloseButton), #variantAddOverlay > div:not(.titleWithCloseButton) {
     gap: 10px;
     padding: 0;
   }
