@@ -410,7 +410,7 @@ const jeCommands = [
   {
     id: 'je_grid',
     name: 'grid element',
-    context: '^.* ↦ grid',
+    context: '^[^ ]* ↦ grid',
     call: async function() {
       const w = widgets.get(jeStateNow.id);
       jeStateNow.grid.push({
@@ -1057,7 +1057,7 @@ function jeAddGridCommand(key, value) {
   jeCommands.push({
     id: 'grid_' + key,
     name: key,
-    context: '^.* ↦ grid ↦ [0-9]+',
+    context: '^[^ ]* ↦ grid ↦ [0-9]+',
     show: _=>!(key in jeStateNow.grid[+jeContext[2]]),
     call: async function() {
       jeStateNow.grid[+jeContext[2]][key] = '###SELECT ME###';

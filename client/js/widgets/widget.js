@@ -727,7 +727,7 @@ export class Widget extends StateManaged {
 
           const variable = match[1] !== undefined ? variables[unescape(match[2])] : unescape(match[2]);
           const index = match[3] !== undefined ? variables[unescape(match[4])] : unescape(match[4]);
-          if(index !== undefined && typeof variables[variable] != 'object')
+          if(index !== undefined && (typeof variables[variable] != 'object' || variables[variable] === null))
             problems.push(`The variable ${variable} is not an object, so indexing it doesn't work.`)
           else if(index !== undefined)
             variables[variable][index] = getValue(variables[variable][index]);
