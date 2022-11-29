@@ -63,9 +63,11 @@ export class Widget extends StateManaged {
       dropOffsetX: 0,
       dropOffsetY: 0,
       inheritChildZ: false,
+      hoverTarget: null,
 
       linkedToSeat: null,
       onlyVisibleForSeat: null,
+      hoverInheritVisibleForSeat: true,
 
       clickRoutine: null,
       changeRoutine: null,
@@ -124,6 +126,11 @@ export class Widget extends StateManaged {
   applyChildRemove(child) {
     this.childArray = this.childArray.filter(c=>c!=child);
     this.applyZ();
+  }
+
+  applyChildZ(child, previousZ) {
+    if(this.get('inheritChildZ') && (this.z == previousZ || child.z > this.z))
+      this.applyZ();
   }
 
   applyCSS(delta) {
@@ -275,11 +282,8 @@ export class Widget extends StateManaged {
   }
 
   applyZ(force) {
-    const thisInheritChildZ = this.get('inheritChildZ');
-    if(force || thisInheritChildZ) {
+    if(force || this.get('inheritChildZ')) {
       this.domElement.style.zIndex = this.calculateZ();
-      if(thisInheritChildZ && this.get('parent'))
-        widgets.get(this.get('parent')).applyZ();
     }
   }
 
@@ -288,10 +292,15 @@ export class Widget extends StateManaged {
   }
 
   calculateZ() {
+    const pZ = this.z;
     this.z = ((this.get('layer') + 10) * 100000) + this.get('z');
     if(this.get('inheritChildZ'))
       for(const child of this.childrenOwned())
         this.z = Math.max(this.z, child.z);
+    if (this.z != pZ) {
+      if(this.get('parent') && widgets.has(this.get('parent')))
+        widgets.get(this.get('parent')).applyChildZ(this, pZ);
+    }
     return this.z;
   }
 
@@ -322,7 +331,13 @@ export class Widget extends StateManaged {
     if(typeof this.get('owner') == 'string' && this.get('owner') != playerName)
       className += ' foreign';
 
-    const onlyVisibleForSeat = this.get('onlyVisibleForSeat');
+    let onlyVisibleForSeat = this.get('onlyVisibleForSeat');
+
+    // If the element is currently being dragged we may inherit restricted seat visibility.
+    const hoverTarget = this.get('hoverTarget') ? widgets.get(this.get('hoverTarget')) : null;
+    if (hoverTarget)
+      onlyVisibleForSeat = hoverTarget.inheritSeatVisibility(onlyVisibleForSeat);
+
     let invisible = onlyVisibleForSeat !== null;
     for(const seatID of asArray(onlyVisibleForSeat) || []) {
       if(widgets.has(seatID) && widgets.get(seatID).get('player') == playerName) {
@@ -350,7 +365,7 @@ export class Widget extends StateManaged {
   }
 
   classesProperties() {
-    return [ 'classes', 'dragging', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses' ];
+    return [ 'classes', 'dragging', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses' ];
   }
 
   async click(mode='respect') {
@@ -744,7 +759,7 @@ export class Widget extends StateManaged {
 
           const variable = match[1] !== undefined ? variables[unescape(match[2])] : unescape(match[2]);
           const index = match[3] !== undefined ? variables[unescape(match[4])] : unescape(match[4]);
-          if(index !== undefined && typeof variables[variable] != 'object')
+          if(index !== undefined && (typeof variables[variable] != 'object' || variables[variable] === null))
             problems.push(`The variable ${variable} is not an object, so indexing it doesn't work.`)
           else if(index !== undefined)
             variables[variable][index] = getValue(variables[variable][index]);
@@ -1681,6 +1696,25 @@ export class Widget extends StateManaged {
     }
   }
 
+  inheritSeatVisibility(seatVisibility) {
+    if (this.get('hoverInheritVisibleForSeat')) {
+      const widgetSeatVisibility = this.get('onlyVisibleForSeat');
+      if (widgetSeatVisibility) {
+        // Filter seatVisibility by current widgets seats.
+        if (!seatVisibility) {
+          seatVisibility = widgetSeatVisibility;
+        } else {
+          let filterTo = new Set(asArray(widgetSeatVisibility));
+          seatVisibility = asArray(seatVisibility).filter((seatId) => { return filterTo.has(seatId); });
+        }
+      }
+    }
+    const thisParent = this.get('parent');
+    if (thisParent && widgets.has(thisParent))
+      seatVisibility = widgets.get(thisParent).inheritSeatVisibility(seatVisibility);
+    return seatVisibility;
+  }
+
   isValidID(id, problems) {
     if(Array.isArray(id))
       return !id.map(i=>this.isValidID(i, problems)).filter(r=>r!==true).length;
@@ -1776,8 +1810,11 @@ export class Widget extends StateManaged {
       if(this.hoverTarget)
         this.hoverTarget.domElement.classList.add('droptarget');
 
-      if(lastHoverTarget != this.hoverTarget && this.hoverTarget != this.currentParent)
-        await this.checkParent(true);
+      if (lastHoverTarget != this.hoverTarget) {
+        await this.set('hoverTarget', this.hoverTarget ? this.hoverTarget.get('id') : null);
+        if(this.hoverTarget != this.currentParent)
+          await this.checkParent(true);
+      }
     }
   }
 
@@ -1786,6 +1823,7 @@ export class Widget extends StateManaged {
       sendTraceEvent('moveEnd', { id: this.get('id'), coord, localAnchor });
 
     await this.set('dragging', null);
+    await this.set('hoverTarget', null);
 
     if(!this.get('fixedParent')) {
       for(const t of this.dropTargets)
@@ -2043,7 +2081,7 @@ export class Widget extends StateManaged {
       return;
 
     const thisParent = this.get('parent');
-    if(this.isBeingRemoved || thisParent && !widgets.get(thisParent).supportsPiles())
+    if(this.isBeingRemoved || thisParent && widgets.has(thisParent) && !widgets.get(thisParent).supportsPiles())
       return;
 
     const thisX = this.get('x');
