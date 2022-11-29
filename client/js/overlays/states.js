@@ -104,11 +104,18 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
   } else if(Array.isArray(json)) {
     metaCallback(sourceFile.name.replace(/\.[^.]+$/, ''), '', null, [{}], null, null);
   } else {
-    const image = await zip.file(json._meta.info.image.substr(1)).async('base64');
     let imageURL = null;
-    for(const [ type, pattern ] of Object.entries({ jpeg: '^\\/9j\\/', png: '^iVBO', 'svg+xml': '^PHN2', gif: '^R0lG', webp: '^UklG' }))
-      if(image.match(pattern))
-        imageURL = `data:image/${type};base64,${image}`;
+
+    if(json._meta.info.image) {
+      if(json._meta.info.image.match(/^http/)) {
+        imageURL = json._meta.info.image;
+      } else if(zip.files[json._meta.info.image.substr(1)]) {
+        const image = await zip.file(json._meta.info.image.substr(1)).async('base64');
+        for(const [ type, pattern ] of Object.entries({ jpeg: '^\\/9j\\/', png: '^iVBO', 'svg+xml': '^PHN2', gif: '^R0lG', webp: '^UklG' }))
+          if(image.match(pattern))
+            imageURL = `data:image/${type};base64,${image}`;
+      }
+    }
 
     metaCallback(json._meta.info.name, json._meta.info.similarName, imageURL, json._meta.info.variants, json._meta.info.savePlayers, json._meta.info.saveDate);
   }
