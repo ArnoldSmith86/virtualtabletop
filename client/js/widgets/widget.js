@@ -805,51 +805,46 @@ export class Widget extends StateManaged {
         }
 
         const execute = async function(widget) {
-          if(widget.get('type') == 'canvas') {
-            if(a.mode == 'setPixel') {
-              const res = widget.getResolution();
-              if(a.x >= 0 && a.y >= 0 && a.x < res && a.y < res) {
-                await widget.setPixel(a.x, a.y, a.value);
-              } else {
-                problems.push(`Pixel coordinate: (${a.x}, ${a.y}) out of range for resolution: ${res}.`);
-              }
-            } else if(a.mode == 'set')
-              await widget.set('activeColor', a.value % widget.get('colorMap').length);
-            else if(a.mode == 'reset')
-              await widget.reset();
-            else if(a.mode == 'dec')
-              await widget.set('activeColor', (widget.get('activeColor')+widget.get('colorMap').length - (a.value % widget.get('colorMap').length)) % widget.get('colorMap').length);
-            else if(a.mode == 'change') {
-              var CM = widget.get('colorMap');
-              var index = ((a.value || 1) % CM.length) || 0;
-              CM[index] = a.color || '#1f5ca6' ;
-              await widget.set('colorMap', CM);
+          if(a.mode == 'setPixel') {
+            const res = widget.getResolution();
+            if(a.x >= 0 && a.y >= 0 && a.x < res && a.y < res) {
+              await widget.setPixel(a.x, a.y, a.value);
+            } else {
+              problems.push(`Pixel coordinate: (${a.x}, ${a.y}) out of range for resolution: ${res}.`);
             }
-            else
-              await widget.set('activeColor', (widget.get('activeColor')+ a.value) % widget.get('colorMap').length);
+          } else if(a.mode == 'set')
+            await widget.set('activeColor', a.value % widget.get('colorMap').length);
+          else if(a.mode == 'reset')
+            await widget.reset();
+          else if(a.mode == 'dec')
+            await widget.set('activeColor', (widget.get('activeColor')+widget.get('colorMap').length - (a.value % widget.get('colorMap').length)) % widget.get('colorMap').length);
+          else if(a.mode == 'change') {
+            var CM = widget.get('colorMap');
+            var index = ((a.value || 1) % CM.length) || 0;
+            CM[index] = a.color || '#1f5ca6' ;
+            await widget.set('colorMap', CM);
           }
+          else
+            await widget.set('activeColor', (widget.get('activeColor')+ a.value) % widget.get('colorMap').length);
         };
 
         let phrase;
-        let collection;
 
         if(a.canvas !== undefined) {
-          if(this.isValidID(a.canvas, problems)) {
-            if(Array.isArray(a.canvas)) {
-              if(a.canvas.length > 1)
-                problems.push('Canvas parameter must refer to only one canvas, first canvas used.');
-            }
-            await w(asArray(a.canvas)[0], execute);
-            phrase = `canvas ${a.canvas}`;
-          }
-        } else if(collection = getCollection(a.collection)) {
-          if(collections[collection].length) {
-            for(const c of collections[collection].slice(0, a.count || 999999))
+          a.collection = asArray(a.canvas);
+          delete a.canvas
+        }
+        const collection = getCollection(a.collection);
+        if(collections[collection].length) {
+          for(const c of collections[collection].slice(0, a.count || 999999)) {
+            if(c.get('type') == 'canvas')
               await execute(c);
-            phrase = `canvas widgets in ${a.collection}`;
-          } else {
-            problems.push(`Collection ${a.collection} is empty.`);
+            else
+              problems.push(`Widget ${c.get('id')} is not a canvas.`);
           }
+          phrase = `canvas widgets in ${a.collection}`;
+        } else {
+          problems.push(`Collection ${a.collection} is empty.`);
         }
 
         if(jeRoutineLogging) {
