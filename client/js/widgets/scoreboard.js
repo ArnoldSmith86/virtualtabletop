@@ -50,9 +50,9 @@ class ScoreBoard extends Widget {
           totals[index] = score.reduce((partialSum, a) => partialSum + a, 0);
         } else {
           totals[index] = parseFloat(score);
-          if(isNaN(totals[index]))
-            totals[index] = 0;
         }
+        if(isNaN(totals[index]))
+          totals[index] = 0;
       }
       return totals;
     }
@@ -74,7 +74,7 @@ class ScoreBoard extends Widget {
   tableCreate(includedSeats) {
     const addTotals = this.get('addTotals');
     const scoreProperty = this.get('scoreProperty');
-    const sortField = this.get('sortField');
+    let sortField = this.get('sortField');
     const usePlayerColors = this.get('usePlayerColors');
 
     let pScores = []; // Array of scores. pScores[i][0] is player name, last is total (or last score if addTotals is false)
@@ -109,18 +109,17 @@ class ScoreBoard extends Widget {
       pScores[i].unshift(includedSeats[i].get('player'));
     }
     
-    // Sort player scores if requested
-    if(sortField == 'total' && addTotals) {
+    // Sort player scores as requested
+    if(sortField == 'total' && !addTotals) // Use default sort if no totals
+      sortField = 'index';
+    if(sortField == 'total')
         pScores.sort((a,b) =>a[a.length-1] < b[b.length-1] ? -1 : 1)
-    } else if(sortField && sortField != 'total') {
+    else
       pScores.sort((a,b) => {
         const pa = includedSeats.filter(x=> x.get('player') == a[0])[0].get(sortField);
         const pb = includedSeats.filter(x=> x.get('player') == b[0])[0].get(sortField);
         return pa < pb ? -1 : 1;
       });
-    } else {
-      pScores.sort((a,b) => a.get('player') < b.get('player') ? -1 : 1);
-    }
     if(!this.get('sortAscending'))
       pScores = pScores.reverse();
 
