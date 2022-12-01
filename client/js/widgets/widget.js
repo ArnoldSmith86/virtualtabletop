@@ -1282,41 +1282,36 @@ export class Widget extends StateManaged {
         }
       }
 
-      /* NOTE: as coded, both seated and unseated seats are included. */
       if(a.func == 'SCORE') {
-        setDefaults(a, { seats: null, includeAllSeats: false, mode: 'set', property: 'score', round: null, value: null, sortField: 'player', sortAscending: true});
+        setDefaults(a, { mode: 'set', property: 'score', round: null, scores: []});
         if([ 'set', 'inc', 'dec' ].indexOf(a.mode) == -1) {
           problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
           a.mode = 'set'
         }
+
+        const seats = widgetFilter(w => w.get('type')=='seat' && a.scores[w.get('index')]!=null);
         
-        // Retrieve affected seat widgets
-        let seats = (a.seats == null ? Array.from(widgets.values()) : collections[getCollection(a.seats)]).filter(w=>w.get('type')=='seat').filter(w => a.includeAllSeats || w.get('player'));
-
-        // Compute the value array
-        if(a.value === null)
-          a.value = a.mode == 'set' ? 0 : 1;
-        a.value = asArray(a.value).concat(Array(seats.length).fill(Array.isArray(a.value) ? 0 : a.value)).slice(0,seats.length);
-
         const relation = (a.mode == 'set') ? '=' : (a.mode == 'dec' ? '-' : '+');
         for(let i=0; i < seats.length; i++) {
-          let score = [...asArray(seats[i].get(String(a.property)) || 0)];
+          let newScore = [...asArray(seats[i].get(String(a.property)) || 0)];
+          const amt = a.scores[seats[i].get('index')];
           if(a.round === null) {
-            score[score.length] = compute(relation, null, 0, a.value[i]);
+            newScore[newScore.length] = compute(relation, null, 0, amt);
           } else  {
-            if(a.round > score.length)
-              score = score.concat(Array(a.round).fill(0)).slice(0,a.round);
-            score[a.round-1] = compute(relation, null, score[a.round-1], a.value[i]);
+            if(a.round > newScore.length)
+              newScore = newScore.concat(Array(a.round).fill(0)).slice(0,a.round);
+            newScore[a.round-1] = compute(relation, null, newScore[a.round-1], amt);
           }
-          await seats[i].set(String(a.property), score);
+          await seats[i].set(String(a.property), newScore);
         }
 
         if(jeRoutineLogging) {
-          const seatIds = seats.map(w => w.get('id'));
+          const seatIdx = seats.map(w => w.get('index'));
+          const values = a.scores.filter( a => a != null );
           if(a.mode == 'inc' || a.mode == 'dec')
-            jeLoggingRoutineOperationSummary(`${a.mode} round ${a.round} in seats ${JSON.stringify(seatIds)} by ${a.value}`)
+            jeLoggingRoutineOperationSummary(`${a.mode} round ${a.round} in seats ${JSON.stringify(seatIdx)} by ${values}`)
           else
-            jeLoggingRoutineOperationSummary(`set round ${a.round} in seats ${JSON.stringify(seatIds)} to ${a.value}`)
+            jeLoggingRoutineOperationSummary(`set round ${a.round} in seats ${JSON.stringify(seatIdx)} to ${values}`)
         }
       }
       
