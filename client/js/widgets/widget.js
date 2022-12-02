@@ -1288,21 +1288,47 @@ export class Widget extends StateManaged {
           problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
           a.mode = 'set'
         }
-
-        const seats = widgetFilter(w => w.get('type')=='seat' && a.scores[w.get('index')]!=null);
+        a.property = String(a.property);
         
+        const seats = widgetFilter(w => w.get('type')=='seat' && a.scores[w.get('index')]!=null);
+
+        // Validate round input
+        let round = a.round;
+        let roundErr = false;
+        if(round == 'total') {
+          for(let i=0; i < seats.length; i++) {
+            if(Array.isArray(seats[i].get(a.property)))
+              roundErr = true;
+          }
+        } else {
+          round = parseInt(round);
+          if(isNaN(round)) {
+            problems.push(`round ${a.round} must be null, an integer, or 'total'. Using null.`);
+            round = null;
+          }
+        }
+        if(roundErr) { // Just execute next statement.
+          problems.push(`round 'total' used with array score property, SCORE statement ignored.`);
+          continue;
+        }
+
         const relation = (a.mode == 'set') ? '=' : (a.mode == 'dec' ? '-' : '+');
         for(let i=0; i < seats.length; i++) {
-          let newScore = [...asArray(seats[i].get(String(a.property)) || 0)];
+          let newScore;
           const amt = a.scores[seats[i].get('index')];
-          if(a.round === null) {
-            newScore[newScore.length] = compute(relation, null, 0, amt);
-          } else  {
-            if(a.round > newScore.length)
-              newScore = newScore.concat(Array(a.round).fill(0)).slice(0,a.round);
-            newScore[a.round-1] = compute(relation, null, newScore[a.round-1], amt);
+          if(a.round == 'total') {
+            newScore = seats[i].get(a.property) + amt;
+          } else {
+            newScore = [...asArray(seats[i].get(a.property) || 0)];
+            if(a.round === null) {
+              newScore[newScore.length] = compute(relation, null, 0, amt);
+            } else  {
+              if(a.round > newScore.length)
+                newScore = newScore.concat(Array(a.round).fill(0)).slice(0,a.round);
+              newScore[a.round-1] = compute(relation, null, newScore[a.round-1], amt);
+            }
           }
-          await seats[i].set(String(a.property), newScore);
+          await seats[i].set(a.property, newScore);
         }
 
         if(jeRoutineLogging) {
