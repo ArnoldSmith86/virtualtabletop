@@ -1027,15 +1027,17 @@ export class Widget extends StateManaged {
           if(jeRoutineLogging)
             jeLoggingRoutineOperationSummary( `elements in '${JSON.stringify(a.in)}'`);
         } else if(a.range) {
-          const range = a.range;
-          if(range.length < 2) {
-            problems.push(`Range ${JSON.stringify(range)} should be an array with at least two elements.`);
+          let range = a.range;
+          if(!Array.isArray(range))
+            range = [1,range];
+          if(range.length < 2 || range[1]<0 ||(range[1] && range[1]<0)) {
+            problems.push(`Range ${JSON.stringify(range)} should be either an array with at least two elements, or a positive number, [1,1] used.`);
             range = [1,1]
           }
           let start = range[0];
           let end = range[1];
           let step = range[2] || (start < end ? 1 : -1);
-          if((start < end && step < 0) || (start > end && step > 0)) {
+          if( isNaN(parseFloat(start)) || isNaN(parseFloat(end)) || isNaN(parseFloat(step)) || (start < end && step < 0) || (start > end && step > 0) ) {
             problems.push(`Invalid range ${JSON.stringify(range)}, [1,1,1] used`);
             start = end = step = 1;
           }
