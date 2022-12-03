@@ -18,7 +18,7 @@ class ScoreBoard extends Widget {
       sortAscending: true,
       scoreProperty: 'score',
       includeAllSeats: false,
-      addTotals: true,
+      showTotals: true,
       seats: null,
       showAllRounds: false,
       roundLabel: 'Round',
@@ -38,7 +38,7 @@ class ScoreBoard extends Widget {
   get(property) {
     if(property != '_totals')
       return super.get(property)
-    else if(!this.get('addTotals'))
+    else if(!this.get('showTotals'))
       return [];
     else {
       // First get total score for each relevant seat
@@ -110,7 +110,7 @@ class ScoreBoard extends Widget {
      * There are lots of other things going on, to get the totals line, round names, etc
      * correct.
      */
-    const addTotals = this.get('addTotals');
+    const showTotals = this.get('showTotals');
     const scoreProperty = this.get('scoreProperty');
     let sortField = this.get('sortField');
     let usePlayerColors = this.get('usePlayerColors');
@@ -127,7 +127,7 @@ class ScoreBoard extends Widget {
     if(this.get('showAllRounds') && Array.isArray(rounds))
       numRounds = Math.max(rounds.length, numRounds);
 
-    let pScores = []; // Array of scores. pScores[i][0] is player name or team name, last is total (or last score if addTotals is false)
+    let pScores = []; // Array of scores. pScores[i][0] is player name or team name, last is total (or last score if showTotals is false)
     const displayItems = this.get('seats') || includedSeats;
     if(Array.isArray(displayItems)) { // Show individual seats
       // Fill player score array, totals array
@@ -144,13 +144,13 @@ class ScoreBoard extends Widget {
             total = 0;
         }
         pScores[i] = pScores[i].concat(Array(numRounds).fill('')).slice(0,numRounds);
-        if(addTotals)
+        if(showTotals)
           pScores[i].push(total);
         pScores[i].unshift(includedSeats[i].get('player'));
       }
 
       // Sort player scores as requested
-      if(sortField == 'total' && !addTotals) // Use default sort if no totals
+      if(sortField == 'total' && !showTotals) // Use default sort if no totals
         sortField = 'index';
       if(sortField == 'total')
         pScores.sort((a,b) =>a[a.length-1] < b[b.length-1] ? -1 : 1)
@@ -176,7 +176,7 @@ class ScoreBoard extends Widget {
         const n = seatScores.reduce((max, xs) => Math.max(max, xs.length), 0);
         pScores[i] = Array(n).fill(0).map((_,i) => this.getTotal(seatScores.map(xs => xs[i] || 0)));
         pScores[i] = pScores[i].concat(Array(numRounds).fill('')).slice(0,numRounds);
-        if(addTotals)
+        if(showTotals)
           pScores[i].push(this.getTotal(pScores[i]));
         pScores[i].unshift(team);
         i++
@@ -195,7 +195,7 @@ class ScoreBoard extends Widget {
       rounds = rounds.concat(Array(numRounds).fill('')).slice(0,numRounds);
     else
       rounds = [...Array(numRounds).keys()].map(i => i+1);
-    if(addTotals)
+    if(showTotals)
       rounds.push('Totals');
     rounds.unshift(this.get('roundLabel'));
 
@@ -213,7 +213,7 @@ class ScoreBoard extends Widget {
     if(this.get('playersInColumns')) {
       // Compute total number of rows and columns in table
       numCols = pScores.length + 1;
-      numRows = numRounds + 1 + (addTotals ? 1 : 0);
+      numRows = numRounds + 1 + (showTotals ? 1 : 0);
 
       // Add header row
       const names = pScores.map(x => x[0]);
@@ -235,12 +235,12 @@ class ScoreBoard extends Widget {
           for(let c=1; c < numCols; c++)
             tr.cells[c].classList.add('currentRound');
       }
-      if(addTotals)
+      if(showTotals)
           for(let c=0; c < numCols; c++)
             tbl.rows[numRows-1].cells[c].classList.add('totalsLine');
     } else { // Players are in rows
       // Compute total number of rows and columns in table
-      numCols = numRounds + 1 + (addTotals ? 1 : 0);
+      numCols = numRounds + 1 + (showTotals ? 1 : 0);
       numRows = pScores.length + 1;
 
       // First row contains round names
@@ -259,7 +259,7 @@ class ScoreBoard extends Widget {
       for(let r=1; r < numRows; r++) {
         if(currentRound)
           tbl.rows[r].cells[currentRound].classList.add('currentRound');
-        if(addTotals)
+        if(showTotals)
           tbl.rows[r].cells[numCols-1].classList.add('totalsLine');
       }
     }
