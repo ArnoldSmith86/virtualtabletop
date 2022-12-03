@@ -806,27 +806,27 @@ export class Widget extends StateManaged {
 
         const execute = async function(widget) {
           if(widget.get('type') == 'canvas') {
-          if(a.mode == 'setPixel') {
-            const res = widget.getResolution();
-            if(a.x >= 0 && a.y >= 0 && a.x < res && a.y < res) {
-              await widget.setPixel(a.x, a.y, a.value);
-            } else {
-              problems.push(`Pixel coordinate: (${a.x}, ${a.y}) out of range for resolution: ${res}.`);
+            if(a.mode == 'setPixel') {
+              const res = widget.getResolution();
+              if(a.x >= 0 && a.y >= 0 && a.x < res && a.y < res) {
+                await widget.setPixel(a.x, a.y, a.value);
+              } else {
+                problems.push(`Pixel coordinate: (${a.x}, ${a.y}) out of range for resolution: ${res}.`);
+              }
+            } else if(a.mode == 'set')
+              await widget.set('activeColor', a.value % widget.get('colorMap').length);
+            else if(a.mode == 'reset')
+              await widget.reset();
+            else if(a.mode == 'dec')
+              await widget.set('activeColor', (widget.get('activeColor')+widget.get('colorMap').length - (a.value % widget.get('colorMap').length)) % widget.get('colorMap').length);
+            else if(a.mode == 'change') {
+              var CM = widget.get('colorMap');
+              var index = ((a.value || 1) % CM.length) || 0;
+              CM[index] = a.color || '#1f5ca6' ;
+              await widget.set('colorMap', CM);
             }
-          } else if(a.mode == 'set')
-            await widget.set('activeColor', a.value % widget.get('colorMap').length);
-          else if(a.mode == 'reset')
-            await widget.reset();
-          else if(a.mode == 'dec')
-            await widget.set('activeColor', (widget.get('activeColor')+widget.get('colorMap').length - (a.value % widget.get('colorMap').length)) % widget.get('colorMap').length);
-          else if(a.mode == 'change') {
-            var CM = widget.get('colorMap');
-            var index = ((a.value || 1) % CM.length) || 0;
-            CM[index] = a.color || '#1f5ca6' ;
-            await widget.set('colorMap', CM);
-          }
-          else
-            await widget.set('activeColor', (widget.get('activeColor')+ a.value) % widget.get('colorMap').length);
+            else
+              await widget.set('activeColor', (widget.get('activeColor')+ a.value) % widget.get('colorMap').length);
           } else
             problems.push(`Widget ${c.get('id')} is not a canvas.`);
         };
