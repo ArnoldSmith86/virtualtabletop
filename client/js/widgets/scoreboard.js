@@ -87,7 +87,7 @@ class ScoreBoard extends Widget {
   }
 
   getTotal(array) {
-    return array.reduce((partialSum, a) => partialSum + a)
+    return array.reduce((partialSum, a) => partialSum + a, 0)
   }
 
   addRowToTable(parent, values, cellType = 'td') {
