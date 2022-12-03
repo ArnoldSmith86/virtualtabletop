@@ -805,6 +805,7 @@ export class Widget extends StateManaged {
         }
 
         const execute = async function(widget) {
+          if(widget.get('type') == 'canvas') {
           if(a.mode == 'setPixel') {
             const res = widget.getResolution();
             if(a.x >= 0 && a.y >= 0 && a.x < res && a.y < res) {
@@ -826,6 +827,8 @@ export class Widget extends StateManaged {
           }
           else
             await widget.set('activeColor', (widget.get('activeColor')+ a.value) % widget.get('colorMap').length);
+          } else
+            problems.push(`Widget ${c.get('id')} is not a canvas.`);
         };
 
         let phrase;
@@ -836,12 +839,8 @@ export class Widget extends StateManaged {
         }
         const collection = getCollection(a.collection);
         if(collections[collection].length) {
-          for(const c of collections[collection].slice(0, a.count || 999999)) {
-            if(c.get('type') == 'canvas')
+          for(const c of collections[collection].slice(0, a.count || 999999))
               await execute(c);
-            else
-              problems.push(`Widget ${c.get('id')} is not a canvas.`);
-          }
           phrase = `canvas widgets in ${a.collection}`;
         } else {
           problems.push(`Collection ${a.collection} is empty.`);
