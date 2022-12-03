@@ -1025,12 +1025,29 @@ export class Widget extends StateManaged {
           for(const key in a.in)
             await callWithAdditionalValues({ key, value: a.in[key] }, {});
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary( `element in '${JSON.stringify(a.in)}'`);
+            jeLoggingRoutineOperationSummary( `elements in '${JSON.stringify(a.in)}'`);
+        } else if(a.range) {
+          const range = a.range;
+          if(range.length < 2) {
+            problems.push(`Range ${JSON.stringify(range)} should be an array with at least two elements.`);
+            range = [1,1]
+          }
+          let start = range[0];
+          let end = range[1];
+          let step = range[2] || (start < end ? 1 : -1);
+          if((start < end && step < 0) || (start > end && step > 0)) {
+            problems.push(`Invalid range ${JSON.stringify(range)}, [1,1,1] used`);
+            start = end = step = 1;
+          }
+          for (let index=start; (step > 0) ? index <= end : index >= end; index += step)
+            await callWithAdditionalValues({ value: index });
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary( `values in range '${JSON.stringify(a.range)}'`);
         } else if(collection = getCollection(a.collection)) {
           for(const widget of collections[collection])
             await callWithAdditionalValues({ widgetID: widget.get('id') }, { DEFAULT: [ widget ] });
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary( `widget in '${a.collection}'`);
+            jeLoggingRoutineOperationSummary( `widgets in '${a.collection}'`);
         }
       }
 
