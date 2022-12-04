@@ -109,6 +109,8 @@ class ScoreBoard extends Widget {
      * pScores array to construct the HTML table.
      * There are lots of other things going on, to get the totals line, round names, etc
      * correct.
+     *
+     * includedSeats contains a list of all valid seats referenced in the `seats` parameter.
      */
     const showTotals = this.get('showTotals');
     const scoreProperty = this.get('scoreProperty');
@@ -128,7 +130,7 @@ class ScoreBoard extends Widget {
       numRounds = Math.max(rounds.length, numRounds);
 
     let pScores = []; // Array of scores. pScores[i][0] is player name or team name, last is total (or last score if showTotals is false)
-    const displayItems = this.get('seats') || includedSeats;
+    const displayItems = this.get('seats') || includedSeats; // One item per displayed row/column.
     if(Array.isArray(displayItems)) { // Show individual seats
       // Fill player score array, totals array
       for (let i=0; i < includedSeats.length; i++) {
@@ -168,14 +170,19 @@ class ScoreBoard extends Widget {
         for (let i=0; i < includedSeats.length; i++)
           colors.push(includedSeats.filter(x=> x.get('player') == pScores[i][0])[0].get('color'));
     } else if(displayItems && typeof displayItems == 'object') { // Display team scores
-      // Separate team names and score arrays
       usePlayerColors = false; // No predefined colors for teams
       let i = 0;
       for (const team in displayItems) {
-        const seatScores = displayItems[team].map(w =>  asArray(widgets.get(w).get(scoreProperty)));
+        // Get array of (arrays of) seat scores, first removing invalid seat names from the team.
+        const thisTeam = displayItems[team].filter(w => widgets.has(w) && includedSeats.includes(widgets.get(w)));
+        const seatScores = thisTeam.map(w =>  asArray(widgets.get(w).get(scoreProperty)));
+
+        // Make all score arrays for this the same length, then add element-by-element
         const n = seatScores.reduce((max, xs) => Math.max(max, xs.length), 0);
         pScores[i] = Array(n).fill(0).map((_,i) => this.getTotal(seatScores.map(xs => xs[i] || 0)));
         pScores[i] = pScores[i].concat(Array(numRounds).fill('')).slice(0,numRounds);
+
+        // Add totals and team name
         if(showTotals)
           pScores[i].push(this.getTotal(pScores[i]));
         pScores[i].unshift(team);

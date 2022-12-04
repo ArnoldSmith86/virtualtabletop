@@ -1301,23 +1301,25 @@ export class Widget extends StateManaged {
               roundErr = true;
           }
         } else {
-          round = parseInt(round);
-          if(isNaN(round)) {
+          if(round && isNaN(parseInt(round))) {
             problems.push(`round ${a.round} must be null, an integer, or 'total'. Using null.`);
             round = null;
           }
         }
         if(roundErr) { // Just execute next statement.
-          problems.push(`round 'total' used with array score property, SCORE statement ignored.`);
+          problems.push(`round 'total' used with array score property.`);
           continue;
         }
+
+        if(!Array.isArray(a.scores))
+          problems.push(`'scores' must be an array.`);
 
         const relation = (a.mode == 'set') ? '=' : (a.mode == 'dec' ? '-' : '+');
         for(let i=0; i < seats.length; i++) {
           let newScore;
           const amt = a.scores[seats[i].get('index')];
           if(a.round == 'total') {
-            newScore = seats[i].get(a.property) + amt;
+            newScore = compute(relation, null, seats[i].get(a.property) || 0, amt);
           } else {
             newScore = [...asArray(seats[i].get(a.property) || 0)];
             if(a.round === null) {
@@ -1333,11 +1335,12 @@ export class Widget extends StateManaged {
 
         if(jeRoutineLogging) {
           const seatIdx = seats.map(w => w.get('index'));
-          const values = a.scores.filter( a => a != null );
+          const values = asArray(a.scores).filter( a => a != null );
+          const phrase = round===null ? 'new round' : `round ${a.round}`;
           if(a.mode == 'inc' || a.mode == 'dec')
-            jeLoggingRoutineOperationSummary(`${a.mode} round ${a.round} in seats ${JSON.stringify(seatIdx)} by ${values}`)
+            jeLoggingRoutineOperationSummary(`${a.mode} ${phrase} in seats ${JSON.stringify(seatIdx)} by ${values}`)
           else
-            jeLoggingRoutineOperationSummary(`set round ${a.round} in seats ${JSON.stringify(seatIdx)} to ${values}`)
+            jeLoggingRoutineOperationSummary(`set ${phrase} in seats ${JSON.stringify(seatIdx)} to ${values}`)
         }
       }
       
