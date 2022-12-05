@@ -79,10 +79,11 @@ class ScoreBoard extends Widget {
        return widgetFilter(w => w.get('type') == 'seat' && (this.get('includeAllSeats') || w.get('player')) && (!seats || seats.includes(w.get('id'))))
     else if(typeof seats == 'object') { // Scoreboard using teams
       let included = [];
-      for (const team in seats)
+      for (const team in seats) {
         if(!Array.isArray(seats[team]))
           seats[team] = asArray(seats[team]);
-      included.push(... widgetFilter(w => w.get('type') == 'seat' && (this.get('includeAllSeats') || w.get('player')) && seats[team].includes(w.get('id'))));
+        included.push(... widgetFilter(w => w.get('type') == 'seat' && (this.get('includeAllSeats') || w.get('player')) && seats[team].includes(w.get('id'))));
+      }
       return included;
     } else // 'seats' property is not array or object, ignore it.
       return null;
