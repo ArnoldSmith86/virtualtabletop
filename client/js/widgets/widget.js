@@ -1027,19 +1027,29 @@ export class Widget extends StateManaged {
           if(jeRoutineLogging)
             jeLoggingRoutineOperationSummary( `elements in '${JSON.stringify(a.in)}'`);
         } else if(a.range) {
-          let range = a.range;
-          if(!Array.isArray(range))
-            range = [1,range];
-          if(range.length < 2 || range[1]<0 ||(range[1] && range[1]<0)) {
-            problems.push(`Range ${JSON.stringify(range)} should be either an array with at least two elements, or a positive number, [1,1] used.`);
-            range = [1,1]
+          let range = asArray(a.range);
+          if(range.length == 1)
+            range.unshift(1);
+          if(range.length == 2)
+            range.push(1);
+          let start = parseFloat(range[0]);
+          let end = parseFloat(range[1]);
+          let step = parseFloat(range[2]);
+          if(isNaN(start)) {
+            problems.push(`Invalid start of range ${JSON.stringify(range[0])}, 1 used`);
+            start = 1;
           }
-          let start = range[0];
-          let end = range[1];
-          let step = range[2] || (start < end ? 1 : -1);
-          if( isNaN(parseFloat(start)) || isNaN(parseFloat(end)) || isNaN(parseFloat(step)) || (start < end && step < 0) || (start > end && step > 0) ) {
-            problems.push(`Invalid range ${JSON.stringify(range)}, [1,1,1] used`);
-            start = end = step = 1;
+          if(isNaN(end)) {
+            problems.push(`Invalid end of range ${JSON.stringify(range[1])}, 1 used`);
+            end = 1;
+          }
+          if(isNaN(step) || step == 0) {
+            problems.push(`Invalid step value ${JSON.stringify(range[2])}, 1 used`);
+            step = 1;
+          }
+          if(start>end && step>0 || start<end && step<0) {
+            step = -step;
+            problems.push(`Step ${JSON.stringify(range[2])} changed to ${step}`)
           }
           for (let index=start; (step > 0) ? index <= end : index >= end; index += step)
             await callWithAdditionalValues({ value: index });
