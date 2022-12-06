@@ -1283,67 +1283,51 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'SCORE') {
-        setDefaults(a, { mode: 'set', property: 'score', round: null, scores: []});
+        setDefaults(a, { mode: 'set', property: 'score', seats: null, round: null, value: null});
         if([ 'set', 'inc', 'dec' ].indexOf(a.mode) == -1) {
           problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
           a.mode = 'set'
         }
-        a.property = String(a.property);
         
-        const seats = widgetFilter(w => w.get('type')=='seat' && a.scores[w.get('index')]!=null);
+        if(a.value === null)
+          a.value = a.mode=='set' ? 0 : 1;
+        if(isNaN(parseFloat(a.value))) {
+          problems.push(`value ${a.value} must be a number, assuming 0.`);
+          a.value = 0;
+        }
+        a.value = parseFloat(a.value);
 
-        // Validate round input
         let round = a.round;
-        let roundErr = false;
-        if(round == 'total') {
-          for(let i=0; i < seats.length; i++) {
-            if(Array.isArray(seats[i].get(a.property)))
-              roundErr = true;
-          }
-        } else {
-          if(round && isNaN(parseInt(round))) {
-            problems.push(`round ${a.round} must be null, an integer, or 'total'. Using null.`);
-            round = null;
-          }
-        }
-        if(roundErr) { // Just execute next statement.
-          problems.push(`round 'total' used with array score property.`);
-          continue;
+        if(round != null && (isNaN(parseInt(round)) || round < 1)) {
+          problems.push(`round ${a.round} must be null or a positive integer, assuming null.`);
+          round = null;
         }
 
-        if(!Array.isArray(a.scores))
-          problems.push(`'scores' must be an array.`);
+        const seats = widgetFilter(w => w.get('type')=='seat' && (a.seats===null || asArray(a.seats).includes(w.get('id'))));
 
         const relation = (a.mode == 'set') ? '=' : (a.mode == 'dec' ? '-' : '+');
         for(let i=0; i < seats.length; i++) {
-          let newScore;
-          const amt = a.scores[seats[i].get('index')];
-          if(a.round == 'total') {
-            newScore = compute(relation, null, seats[i].get(a.property) || 0, amt);
-          } else {
-            newScore = [...asArray(seats[i].get(a.property) || 0)];
-            if(a.round === null) {
-              newScore[newScore.length] = compute(relation, null, 0, amt);
-            } else  {
-              if(a.round > newScore.length)
-                newScore = newScore.concat(Array(a.round).fill(0)).slice(0,a.round);
-              newScore[a.round-1] = compute(relation, null, newScore[a.round-1], amt);
-            }
+          let newScore = [...asArray(seats[i].get(a.property) || 0)];
+          if(a.round === null) {
+            newScore[newScore.length] = compute(relation, null, 0, a.value);
+          } else  {
+            if(a.round > newScore.length)
+              newScore = newScore.concat(Array(a.round).fill(0)).slice(0,a.round);
+            newScore[a.round-1] = compute(relation, null, newScore[a.round-1], a.value);
           }
           await seats[i].set(a.property, newScore);
         }
 
         if(jeRoutineLogging) {
-          const seatIdx = seats.map(w => w.get('index'));
-          const values = asArray(a.scores).filter( a => a != null );
           const phrase = round===null ? 'new round' : `round ${a.round}`;
+          const seatIds = seats.map(w => w.get('id'));
           if(a.mode == 'inc' || a.mode == 'dec')
-            jeLoggingRoutineOperationSummary(`${a.mode} ${phrase} in seats ${JSON.stringify(seatIdx)} by ${values}`)
+            jeLoggingRoutineOperationSummary(`${a.mode} ${phrase} in seats ${JSON.stringify(seatIds)} by ${a.value}`)
           else
-            jeLoggingRoutineOperationSummary(`set ${phrase} in seats ${JSON.stringify(seatIdx)} to ${values}`)
+            jeLoggingRoutineOperationSummary(`set ${phrase} in seats ${JSON.stringify(seatIds)} to ${a.value}`)
         }
       }
-      
+
       if(a.func == 'SELECT') {
         setDefaults(a, { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all' });
         let source;
