@@ -124,7 +124,12 @@ class ScoreBoard extends Widget {
     if(typeof(seats)=='object') // Array of all seats for team use
       includedSeats = Object.keys(seats).reduce((union,key) => union.concat(seats[key]), []);
 
-    let numRounds = includedSeats.reduce((maximum, s) => Math.max(maximum, s.get(scoreProperty).length || 1), 0);
+    let numRounds=0;
+    for (let i=0; i < includedSeats.length; i++) {
+      const score = includedSeats[i].get(scoreProperty);
+      if(Array.isArray(score) && score.length > numRounds)
+        numRounds = score.length;
+    }
     if(this.get('showAllRounds') && Array.isArray(rounds))
       numRounds = Math.max(rounds.length, numRounds);
 
