@@ -268,7 +268,8 @@ function updateLibraryFilter() {
       const durationMatch = filters.duration == 'Any' || dataset.duration >= filters.duration.split('-')[0] && dataset.duration <= filters.duration.split('-')[1];
       const languageMatch = filters.language == 'Any' || dataset.languages.split(/[,;] */).indexOf(filters.language.replace(/ \+ None/, '')) != -1 || filters.language.match(/None$/) && dataset.languages.split(/[,;] */).indexOf('') != -1;
       const modeMatch     = filters.mode     == 'Any' || dataset.modes.split(/[,;] */).indexOf(filters.mode) != -1;
-      callback(dom, textMatch && typeMatch && playersMatch && durationMatch && languageMatch && modeMatch);
+      const categoryMatch = filters.type     == 'Any' || !!dataset.categories.split(/;/).filter(c=>c.startsWith(filters.type)).length;
+      callback(dom, textMatch && (typeMatch || categoryMatch) && playersMatch && durationMatch && languageMatch && modeMatch);
     }
   }
 
@@ -396,6 +397,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 
   const languageOptions = {};
   const modeOptions = {};
+  const categoryOptions = { Games: true, Tutorials: true, Assets: true};
 
   const publicLibraryLinksFound = {};
   for(const state of Object.values(states)) {
@@ -467,6 +469,9 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 
     for(const mode of state.mode.split(/[,;] */))
       modeOptions[mode] = true;
+    if(state.categories)
+      for(const category of String(state.categories).split(/\n/))
+        categoryOptions[category] = true;
 
     if(hasVariants) {
       entry.addEventListener('click', async function(e) {
@@ -500,6 +505,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     entry.dataset.text = `${state.name} ${state.similarName} ${state.description}`.toLowerCase();
     entry.dataset.players = validPlayers.join();
     entry.dataset.duration = String(state.time).replace(/.*[^0-9]/, '');
+    entry.dataset.categories = String(state.categories).replace(/\n/g, ';');
     entry.dataset.languages = validLanguages.join();
     entry.dataset.modes = state.mode;
 
@@ -555,6 +561,33 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
   for(const modeOption of Object.keys(modeOptions).sort((a, b) => a.localeCompare(b)))
     modeHTML += `<option ${previousMode && previousMode == modeOption ? 'selected' : ''}>${modeOption}</option>`;
   $('#filterByMode').innerHTML = modeHTML;
+
+  function getCategories(inputString) {
+    /* written by ChatGPT - https://is.gd/E7i5Vt */
+    const categories = new Set();
+
+    const lines = inputString.split('\n');
+    lines.forEach(line => {
+      const category = line.split(' > ');
+
+      let current = [];
+      category.forEach(cat => {
+        current.push(cat);
+        const path = current.join(' > ');
+        categories.add(path);
+      });
+    });
+
+    return [...categories];
+  }
+
+  const typeOptions = getCategories(Object.keys(categoryOptions).join('\n'));
+
+  const previousType = $('#filterByType').value;
+  let typeHTML = '<option>Any</option>';
+  for(const typeOption of typeOptions.sort((a, b) => a.localeCompare(b)))
+    typeHTML += `<option ${previousType && previousType == typeOption ? 'selected' : ''} value="${typeOption}">${typeOption.replace(/[^>]+ > /g, '> ')}</option>`;
+  $('#filterByType').innerHTML = typeHTML;
 
   updateLibraryFilter();
 
