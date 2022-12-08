@@ -1,4 +1,4 @@
-export const VERSION = 7;
+export const VERSION = 8;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -34,6 +34,7 @@ function updateProperties(properties, v) {
   v<5 && v5DynamicFaceProperties(properties);
   v<6 && v6cssPieces(properties);
   v<7 && v7HolderClickable(properties);
+  v<8 && v8HoverInheritVisibleForSeat(properties);
 }
 
 function updateRoutine(routine, v) {
@@ -325,4 +326,9 @@ function v7HolderClickable(properties) {
   if (properties.clickRoutine && !properties.clickable && properties.type=='holder'){
     properties.clickable=false;
   }
+}
+
+function v8HoverInheritVisibleForSeat(properties) {
+  if (properties.onlyVisibleForSeat)
+    properties.hoverInheritVisibleForSeat = false;
 }
