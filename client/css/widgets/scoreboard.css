@@ -1,15 +1,18 @@
 .scoreboard {
   box-sizing: border-box;
-  background: #ffffff;
-  color: #ffffff;
-  border: 2px solid black;
+  background: white;
+  border-width: 0px;
+  border-radius: 8px;
+  outline: none;
+  box-shadow: 0 0 0 2pt black;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .scoreboard table {
-  border:  none;
+  border-width: 0px;
+  border-radius: 8px;
   border-collapse: separate;
   border-spacing: 0;
   display: block;

@@ -210,8 +210,8 @@ class ScoreBoard extends Widget {
 
     // Finally, build the table
     let tbl = document.createElement('table');
-    tbl.style.height = (this.get('height') - 8) + 'px';
-    tbl.style.width = (this.get('width') - 8) + 'px';
+    tbl.style.height = this.get('height') + 'px';
+    tbl.style.width = this.get('width')+ 'px';
     let numRows;
     let numCols;
     let currentRound = parseInt(this.get('currentRound'));
