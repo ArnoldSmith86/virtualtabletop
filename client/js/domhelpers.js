@@ -321,7 +321,7 @@ export function addRichtextControls(dom) {
     showStatesOverlay(detailsOverlay);
     if(asset) {
       const floating = e.target == $('[icon=art_track]', controls) ? 'floating' : '';
-      document.execCommand('inserthtml', false, `<img class="${floating} richtextAsset" src="${asset.substring(1)}">`);
+      document.execCommand('inserthtml', false, `<a href="${asset.substring(1)}"><img class="${floating} richtextAsset" src="${asset.substring(1)}"></a>`);
     }
     dom.focus();
   };
