@@ -807,7 +807,7 @@ button[icon].green:hover {
 .floating.richtextAsset {
   max-width: 50%;
   float: left;
-  margin-right: 20px;
+  margin: 0 20px 20px 0;
 }
 
 .richtextSymbol.richtextSymbol {
