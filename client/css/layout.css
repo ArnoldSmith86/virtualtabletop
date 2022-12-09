@@ -804,6 +804,12 @@ button[icon].green:hover {
   margin: 20px auto;
 }
 
+.floating.richtextAsset {
+  max-width: 50%;
+  float: left;
+  margin-right: 20px;
+}
+
 .richtextSymbol.richtextSymbol {
   font-size: 18px;
   position: relative;

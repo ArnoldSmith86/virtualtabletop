@@ -315,12 +315,14 @@ export function addRichtextControls(dom) {
     input.click();
   };
 
-  $('[icon=add_photo_alternate]', controls).onclick = async function() {
+  $('[icon=art_track]', controls).onclick = $('[icon=add_photo_alternate]', controls).onclick = async function(e) {
     $('#statesButton').dataset.overlay = 'updateImageOverlay';
     const asset = await updateImage('', 'Cancel');
     showStatesOverlay(detailsOverlay);
-    if(asset)
-      document.execCommand('inserthtml', false, `<img class="richtextAsset" src="${asset.substring(1)}">`);
+    if(asset) {
+      const floating = e.target == $('[icon=art_track]', controls) ? 'floating' : '';
+      document.execCommand('inserthtml', false, `<img class="${floating} richtextAsset" src="${asset.substring(1)}">`);
+    }
     dom.focus();
   };
   $('[icon=movie]', controls).onclick = async function() {
