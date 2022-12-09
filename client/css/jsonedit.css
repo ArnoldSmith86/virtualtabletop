@@ -372,10 +372,16 @@ body.jsonEdit.jeZoomOut #topSurface {
   transform: rotate(90deg);
 }
 
+/* .jeLogHasProblems and .jeLogHasNoProblems control the text color of the first item displayed. */
 .jeLogHasProblems, .jeLogProblems {
   color: red;
 }
 
+.jeLogHasNoProblems {
+  color: white;
+}
+
+/* .jeLogProblems controls the color and display of the problem text */
 .jeLogProblems {
   display: none;
 }

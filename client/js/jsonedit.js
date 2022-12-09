@@ -708,7 +708,6 @@ function jeAddRoutineOperationCommands(command, defaults) {
     show: jeRoutineCall((_, routine)=>Array.isArray(routine), true)
   });
 
-  defaults.skip = false;
   for(const property in defaults) {
     jeCommands.push({
       id: 'default_' + command + '_' + property,
@@ -1892,7 +1891,7 @@ function jeLoggingRoutineOperationEnd(problems, variables, collections, skipped)
 
   jeLoggingHTML =  `
     ${savedHTML[0]}
-    <div class="jeLogOperation ${skipped ? 'jeLogSkipped' : ''} ${problems.length ? 'jeLogHasProblems' : ''}">
+    <div class="jeLogOperation ${skipped ? 'jeLogSkipped' : ''} ${problems.length ? 'jeLogHasProblems' : 'jeLogHasNoProblems'}">
       <div class="jeExpander">
         <span class="jeLogName">${opFunction}</span> ${jeRoutineResult} <span class="jeLogTime">(${+new Date() - startTime}ms)</span>
       </div>
