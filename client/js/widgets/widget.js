@@ -1007,7 +1007,7 @@ export class Widget extends StateManaged {
             jeLoggingRoutineOperationStart( "loopRoutine", "loopRoutine" );
           await this.evaluateRoutine(a.loopRoutine, variables, collections, (depth || 0) + 1, true);
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationEnd(problems, variables, collections, false);
+            jeLoggingRoutineOperationEnd([], variables, collections, false);
           for(const add in addVariables) {
             if(variableBackups[add] !== undefined)
               variables[add] = variableBackups[add];
