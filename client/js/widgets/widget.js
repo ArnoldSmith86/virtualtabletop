@@ -1027,32 +1027,43 @@ export class Widget extends StateManaged {
           if(jeRoutineLogging)
             jeLoggingRoutineOperationSummary( `elements in '${JSON.stringify(a.in)}'`);
         } else if(a.range) {
+          const rangeProblems = []; // To avoid repeated error messages in each loop iteration
           let range = asArray(a.range);
-          if(range.length == 1)
-            range.unshift(1);
-          if(range.length == 2)
-            range.push(1);
+          
+          if(range.length == 0) {
+            rangeProblems.push(`Empty range given, [1] used.`);
+            range = [1]
+          }
           let start = parseFloat(range[0]);
-          let end = parseFloat(range[1]);
-          let step = parseFloat(range[2]);
           if(isNaN(start)) {
-            problems.push(`Invalid start of range ${JSON.stringify(range[0])}, 1 used`);
+            rangeProblems.push(`Invalid start of range ${JSON.stringify(range[0])}, 1 used`);
             start = 1;
           }
+          
+          if(range.length == 1)
+            range.unshift(1);
+          let end = parseFloat(range[1]);
           if(isNaN(end)) {
-            problems.push(`Invalid end of range ${JSON.stringify(range[1])}, 1 used`);
+            rangeProblems.push(`Invalid end of range ${JSON.stringify(range[1])}, 1 used`);
             end = 1;
           }
+          
+          if(range.length == 2)
+            range.push(end > start ? 1 : -1);
+          let step = parseFloat(range[2]);
           if(isNaN(step) || step == 0) {
-            problems.push(`Invalid step value ${JSON.stringify(range[2])}, 1 used`);
-            step = 1;
+            step = end > start ? 1 : -1;
+            rangeProblems.push(`Invalid step value ${JSON.stringify(range[2])}, ${step} used`);
           }
+          
           if(start>end && step>0 || start<end && step<0) {
             step = -step;
-            problems.push(`Step ${JSON.stringify(range[2])} changed to ${step}`)
+            rangeProblems.push(`Step ${-step} changed to ${step}`)
           }
+          
           for (let index=start; (step > 0) ? index <= end : index >= end; index += step)
             await callWithAdditionalValues({ value: index });
+          problems = rangeProblems;
           if(jeRoutineLogging)
             jeLoggingRoutineOperationSummary( `values in range '${JSON.stringify(a.range)}'`);
         } else if(collection = getCollection(a.collection)) {
