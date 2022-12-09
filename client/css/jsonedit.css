@@ -378,7 +378,7 @@ body.jsonEdit.jeZoomOut #topSurface {
 }
 
 .jeLogHasNoProblems {
-  color: white;
+  color: lightgray;
 }
 
 /* .jeLogProblems controls the color and display of the problem text */

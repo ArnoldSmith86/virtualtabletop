@@ -1825,8 +1825,8 @@ function jeLoggingRoutineEnd(variables, collections) {
     const problems = document.getElementsByClassName('jeLogHasProblems');
     for (i=0; i<problems.length; i++) {
       let node = problems[i];
-      while (node && !node.classList.contains('jeLog')) {
-        if(node.classList.contains('jeLogOperation')) {
+      while (node && node.id != 'jeLog') {
+        if(node.classList.contains('jeLogOperation') || node.classList.contains('jeLog')) {
           node.firstElementChild.classList.remove('jeExpander');
           node.firstElementChild.classList.add('jeRedExpander')
         }
