@@ -106,6 +106,8 @@ export function showOverlay(id, forced) {
 
 export function showStatesOverlay(id) {
   showOverlay(id);
+  if(id == 'statesOverlay')
+    updateFilterOverflow();
   $('#statesButton').dataset.overlay = id;
 }
 
