@@ -852,7 +852,7 @@
     },
     "x": 0,
     "y": 0,
-    "movable": true,
+    "movable": false,
     "movableInEdit": true,
     "inheritFrom": {
       "cupCover1": [
@@ -1133,7 +1133,8 @@
         "!player",
         "!color"
       ]
-    }
+    },
+    "color": "#999999"
   },
   "p5": {
     "type": "seat",
@@ -5265,7 +5266,7 @@
     "num": 5,
     "myMovable": true,
     "remaining": "5",
-    "z": 652,
+    "z": 686,
     "linkedToSeat": "p5",
     "parent": "tableVignette"
   },
@@ -7445,11 +7446,10 @@
         "image": "/assets/1285703129_44251"
       }
     ],
-    "centerX": 88.04226065180615,
-    "centerY": 37.6393202250021,
-    "jumpX": 85.04226065180615,
-    "jumpY": 35.6393202250021,
-    "activeFace": 9,
+    "centerX": 90,
+    "centerY": 50,
+    "jumpX": 89,
+    "jumpY": 49,
     "x": 88.04226065180615,
     "y": 37.6393202250021,
     "css": {
@@ -7459,7 +7459,8 @@
     },
     "parent": "p4DiceHolder",
     "onlyVisibleForSeat": "p4",
-    "belongsToSeat": "p4"
+    "belongsToSeat": "p4",
+    "activeFace": 10
   },
   "p4d2": {
     "type": "dice",
@@ -7565,11 +7566,10 @@
         "image": "/assets/1285703129_44251"
       }
     ],
-    "centerX": 73.51141009169893,
-    "centerY": 82.36067977499789,
-    "jumpX": 69.51141009169893,
-    "jumpY": 82.36067977499789,
-    "activeFace": 5,
+    "centerX": 50,
+    "centerY": 90,
+    "jumpX": 53,
+    "jumpY": 90,
     "x": 73.51141009169893,
     "y": 82.36067977499789,
     "css": {
@@ -7579,7 +7579,8 @@
     },
     "parent": "p4DiceHolder",
     "onlyVisibleForSeat": "p4",
-    "belongsToSeat": "p4"
+    "belongsToSeat": "p4",
+    "activeFace": 18
   },
   "p4d3": {
     "type": "dice",
@@ -7685,11 +7686,10 @@
         "image": "/assets/1285703129_44251"
       }
     ],
-    "centerX": 26.48858990830108,
-    "centerY": 82.36067977499789,
-    "jumpX": 24.48858990830108,
-    "jumpY": 84.36067977499789,
-    "activeFace": 13,
+    "centerX": 10,
+    "centerY": 50.00000000000001,
+    "jumpX": 7,
+    "jumpY": 50.00000000000001,
     "x": 26.48858990830108,
     "y": 82.36067977499789,
     "css": {
@@ -7699,7 +7699,8 @@
     },
     "parent": "p4DiceHolder",
     "onlyVisibleForSeat": "p4",
-    "belongsToSeat": "p4"
+    "belongsToSeat": "p4",
+    "activeFace": 20
   },
   "p4d4": {
     "type": "dice",
@@ -7805,11 +7806,10 @@
         "image": "/assets/1285703129_44251"
       }
     ],
-    "centerX": 11.957739348193861,
-    "centerY": 37.639320225002095,
-    "jumpX": 10.957739348193861,
-    "jumpY": 32.639320225002095,
-    "activeFace": 11,
+    "centerX": 49.99999999999999,
+    "centerY": 10,
+    "jumpX": 49.99999999999999,
+    "jumpY": 7,
     "x": 11.957739348193861,
     "y": 37.639320225002095,
     "css": {
@@ -7818,8 +7818,9 @@
       "opacity": "100%"
     },
     "parent": "p4DiceHolder",
-    "onlyVisibleForSeat": "p4",
-    "belongsToSeat": "p4"
+    "belongsToSeat": "p4",
+    "activeFace": 14,
+    "onlyVisibleForSeat": "p4"
   },
   "p4d5": {
     "type": "dice",
@@ -7927,9 +7928,8 @@
     ],
     "centerX": 49.99999999999999,
     "centerY": 10,
-    "jumpX": 44.99999999999999,
-    "jumpY": 14,
-    "activeFace": 16,
+    "jumpX": 47.99999999999999,
+    "jumpY": 5,
     "x": 49.99999999999999,
     "y": 10,
     "css": {
@@ -7938,8 +7938,8 @@
       "opacity": "100%"
     },
     "parent": "p4DiceHolder",
-    "onlyVisibleForSeat": "p4",
-    "belongsToSeat": "p4"
+    "belongsToSeat": "p4",
+    "onlyVisibleForSeat": "p4"
   },
   "p5d2": {
     "type": "dice",
@@ -8045,10 +8045,10 @@
         "image": "/assets/1285703129_44251"
       }
     ],
-    "centerX": 50,
-    "centerY": 90,
-    "jumpX": 49,
-    "jumpY": 87,
+    "centerX": 15.35898384862245,
+    "centerY": 70,
+    "jumpX": 16.35898384862245,
+    "jumpY": 68,
     "x": 73.51141009169893,
     "y": 82.36067977499789,
     "css": {
@@ -8058,8 +8058,8 @@
     },
     "parent": "p5DiceHolder",
     "belongsToSeat": "p5",
-    "activeFace": 11,
-    "onlyVisibleForSeat": "p5"
+    "onlyVisibleForSeat": "p5",
+    "activeFace": 8
   },
   "p5d5": {
     "type": "dice",
@@ -8167,8 +8167,8 @@
     ],
     "centerX": 49.99999999999999,
     "centerY": 10,
-    "jumpX": 54.99999999999999,
-    "jumpY": 14,
+    "jumpX": 49.99999999999999,
+    "jumpY": 10,
     "x": 49.99999999999999,
     "y": 10,
     "css": {
@@ -8178,6 +8178,7 @@
     },
     "parent": "p5DiceHolder",
     "belongsToSeat": "p5",
+    "activeFace": 21,
     "onlyVisibleForSeat": "p5"
   },
   "p5d3": {
@@ -8284,10 +8285,10 @@
         "image": "/assets/1285703129_44251"
       }
     ],
-    "centerX": 10,
-    "centerY": 50.00000000000001,
-    "jumpX": 6,
-    "jumpY": 52.00000000000001,
+    "centerX": 49.99999999999999,
+    "centerY": 10,
+    "jumpX": 49.99999999999999,
+    "jumpY": 12,
     "x": 26.48858990830108,
     "y": 82.36067977499789,
     "css": {
@@ -8297,8 +8298,8 @@
     },
     "parent": "p5DiceHolder",
     "belongsToSeat": "p5",
-    "activeFace": 4,
-    "onlyVisibleForSeat": "p5"
+    "onlyVisibleForSeat": "p5",
+    "activeFace": 2
   },
   "p5d1": {
     "type": "dice",
@@ -8404,10 +8405,10 @@
         "image": "/assets/1285703129_44251"
       }
     ],
-    "centerX": 90,
-    "centerY": 50,
-    "jumpX": 87,
-    "jumpY": 55,
+    "centerX": 84.64101615137756,
+    "centerY": 70,
+    "jumpX": 81.64101615137756,
+    "jumpY": 74,
     "x": 88.04226065180615,
     "y": 37.6393202250021,
     "css": {
@@ -8417,8 +8418,8 @@
     },
     "parent": "p5DiceHolder",
     "belongsToSeat": "p5",
-    "activeFace": 11,
-    "onlyVisibleForSeat": "p5"
+    "onlyVisibleForSeat": "p5",
+    "activeFace": 19
   },
   "p5d4": {
     "type": "dice",
@@ -8526,8 +8527,8 @@
     ],
     "centerX": 49.99999999999999,
     "centerY": 10,
-    "jumpX": 53.99999999999999,
-    "jumpY": 5,
+    "jumpX": 48.99999999999999,
+    "jumpY": 12,
     "x": 11.957739348193861,
     "y": 37.639320225002095,
     "css": {
@@ -8537,6 +8538,7 @@
     },
     "parent": "p5DiceHolder",
     "belongsToSeat": "p5",
+    "activeFace": 18,
     "onlyVisibleForSeat": "p5"
   },
   "p1d5b": {
@@ -8574,7 +8576,7 @@
     "movableInEdit": false,
     "css": "opacity:0",
     "text": "roll",
-    "variabilityFactor": 20,
+    "variabilityFactor": 35,
     "clickRoutine": [
       {
         "func": "GET",
@@ -10084,8 +10086,8 @@
     },
     "activeFace": 12,
     "parent": "p6DiceHolder",
-    "onlyVisibleForSeat": "p6",
-    "belongsToSeat": "p6"
+    "belongsToSeat": "p6",
+    "onlyVisibleForSeat": "p6"
   },
   "p6d1": {
     "type": "dice",
@@ -10324,8 +10326,8 @@
     },
     "activeFace": 13,
     "parent": "p6DiceHolder",
-    "onlyVisibleForSeat": "p6",
-    "belongsToSeat": "p6"
+    "belongsToSeat": "p6",
+    "onlyVisibleForSeat": "p6"
   },
   "p7d1": {
     "type": "dice",
@@ -11605,7 +11607,7 @@
     "id": "p4DiceHolder",
     "x": 1403,
     "y": 600,
-    "z": 615,
+    "z": 683,
     "movable": true,
     "inheritFrom": {
       "grid": [
@@ -11619,8 +11621,8 @@
     "shake": "false",
     "myMovable": true,
     "remaining": "5",
-    "parent": "tableVignette",
-    "linkedToSeat": "p4"
+    "linkedToSeat": "p4",
+    "parent": "tableVignette"
   },
   "p6DiceHolder": {
     "type": "holder",
@@ -12175,6 +12177,12 @@
         "property": "y",
         "value": "${y}",
         "collection": "child"
+      },
+      {
+        "func": "SET",
+        "property": "movable",
+        "value": false,
+        "collection": "child"
       }
     ],
     "borderRadius": "50%",
@@ -12187,7 +12195,15 @@
     "css": {
       "background-color": "transparent",
       "border": "4px solid gold !important"
-    }
+    },
+    "leaveRoutine": [
+      {
+        "func": "SET",
+        "property": "movable",
+        "value": true,
+        "collection": "child"
+      }
+    ]
   },
   "p1d6": {
     "type": "dice",

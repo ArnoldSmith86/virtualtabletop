@@ -11,7 +11,7 @@
     "hoverStatus": 1
   },
   "_meta": {
-    "version": 6,
+    "version": 7,
     "info": {
       "name": "Dungeon Speeders",
       "image": "/assets/-593066566_564377",
@@ -110,8 +110,19 @@
         "timer": "timer"
       },
       {
-        "func": "RECALL",
-        "holder": "turnsTakenMarker1-8"
+        "func": "SELECT",
+        "property": "deck",
+        "value": "turnMarkerDeck"
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "turnsTakenMarker${PROPERTY holder OF $widgetID}"
+          }
+        ]
       },
       {
         "func": "GET",
@@ -212,22 +223,34 @@
         ]
       },
       {
-        "func": "CLICK",
-        "collection": [
-          "alchemistMarkerHolderP1",
-          "alchemistMarkerHolderP2",
-          "alchemistMarkerHolderP3",
-          "alchemistMarkerHolderP4",
-          "alchemistMarkerHolderP5",
-          "alchemistMarkerHolderP6",
-          "alchemistMarkerHolderP7",
-          "alchemistMarkerHolderP8"
+        "func": "SELECT",
+        "property": "task",
+        "value": "helpMarker"
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "property": "deck",
+            "variable": "deck"
+          },
+          {
+            "func": "GET",
+            "property": "cardType",
+            "variable": "cardType"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "${cardType}HolderP${deck.14}"
+          }
         ]
       },
       {
         "func": "SELECT",
         "property": "task",
-        "value": "marker"
+        "value": "posMarker"
       },
       {
         "func": "FOREACH",
@@ -312,18 +335,16 @@
       17
     ],
     "remainingFaceValues": [
-      1,
       2,
-      3,
-      4,
       5,
-      6,
       7,
       9,
       10,
+      12,
       14,
       15,
-      16
+      16,
+      17
     ]
   },
   "newXLetter": {
@@ -442,7 +463,7 @@
     "borderRadius": "15%",
     "movableInEdit": false,
     "clickable": false,
-    "rotation": 37440,
+    "rotation": 41040,
     "activeFace": 8
   },
   "newYLetter": {
@@ -453,7 +474,7 @@
     "faceCycle": "random",
     "task": "letterCoord",
     "clickable": false,
-    "rotation": 40320,
+    "rotation": 43920,
     "y": 26.66,
     "inheritFrom": "newXLetter",
     "text": "I",
@@ -479,7 +500,7 @@
       16,
       17
     ],
-    "activeFace": 0
+    "activeFace": 1
   },
   "p1": {
     "type": "seat",
@@ -554,7 +575,7 @@
     "type": "card",
     "cardType": "1turns",
     "id": "kb10b",
-    "z": 1,
+    "z": 6564,
     "deck": "turnMarkerDeck",
     "parent": "turnsTakenMarker1-8"
   },
@@ -562,7 +583,7 @@
     "type": "card",
     "cardType": "2turns",
     "id": "yasw1",
-    "z": 2,
+    "z": 6599,
     "deck": "turnMarkerDeck",
     "y": 80,
     "parent": "turnsTakenMarker1-8"
@@ -571,7 +592,7 @@
     "type": "card",
     "cardType": "3turns",
     "id": "ihtp1",
-    "z": 3,
+    "z": 6601,
     "deck": "turnMarkerDeck",
     "y": 160,
     "parent": "turnsTakenMarker1-8"
@@ -580,7 +601,7 @@
     "type": "card",
     "cardType": "4turns",
     "id": "feih1",
-    "z": 4,
+    "z": 6551,
     "deck": "turnMarkerDeck",
     "y": 240,
     "parent": "turnsTakenMarker1-8"
@@ -628,41 +649,24 @@
     "z": 34,
     "enterRoutine": [
       {
-        "func": "SET",
-        "property": "alignChildren",
-        "value": true,
-        "collection": "thisButton"
-      },
-      {
         "func": "GET",
-        "property": "id",
-        "variable": "childID",
+        "property": "value",
+        "variable": "val",
+        "collection": "child"
+      },
+      "var Y = ${val} - 1",
+      "var Y = ${Y} * 80",
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 0,
         "collection": "child"
       },
       {
-        "func": "IF",
-        "operand1": "${PROPERTY value OF $childID}",
-        "operand2": 8,
-        "relation": ">",
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "property": "parent",
-            "value": "turnsTakenMarker9-16",
-            "collection": "child"
-          }
-        ]
-      },
-      {
-        "func": "SORT",
-        "key": "value",
-        "holder": "${thisID}"
-      },
-      {
         "func": "SET",
-        "property": "alignChildren",
-        "value": false,
-        "collection": "thisButton"
+        "property": "y",
+        "value": "${Y}",
+        "collection": "child"
       }
     ],
     "width": 68,
@@ -674,10 +678,9 @@
     "dropOffsetX": 0,
     "dropOffsetY": 0,
     "x": 40,
-    "stackOffsetY": 80,
     "movableInEdit": false,
     "dropTarget": {
-      "deck": "turnMarkerDeck"
+      "holder": "1-8"
     },
     "alignChildren": false
   },
@@ -689,66 +692,38 @@
     "z": 33,
     "enterRoutine": [
       {
-        "func": "SET",
-        "property": "alignChildren",
-        "value": true,
-        "collection": "thisButton"
-      },
-      {
         "func": "GET",
-        "property": "id",
-        "variable": "childID",
+        "property": "value",
+        "variable": "val",
+        "collection": "child"
+      },
+      "var Y = ${val} - 9",
+      "var Y = ${Y} * 80",
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 0,
         "collection": "child"
       },
       {
-        "func": "IF",
-        "operand1": "${PROPERTY value OF $childID}",
-        "operand2": 9,
-        "relation": "<",
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "property": "parent",
-            "value": "turnsTakenMarker1-8",
-            "collection": "child"
-          }
-        ]
-      },
-      {
-        "func": "IF",
-        "operand1": "${PROPERTY value OF $childID}",
-        "operand2": 16,
-        "relation": ">",
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "property": "parent",
-            "value": "turnsTakenMarker17-24",
-            "collection": "child"
-          }
-        ]
-      },
-      {
-        "func": "SORT",
-        "key": "value",
-        "holder": "${thisID}"
-      },
-      {
         "func": "SET",
-        "property": "alignChildren",
-        "value": false,
-        "collection": "thisButton"
+        "property": "y",
+        "value": "${Y}",
+        "collection": "child"
       }
     ],
     "inheritFrom": "turnsTakenMarker1-8",
     "parent": "turnsTakenMarker1-8",
-    "alignChildren": false
+    "alignChildren": false,
+    "dropTarget": {
+      "holder": "9-16"
+    }
   },
   "veuz2": {
     "type": "card",
     "cardType": "9turns",
     "id": "veuz2",
-    "z": 1,
+    "z": 6553,
     "deck": "turnMarkerDeck",
     "parent": "turnsTakenMarker9-16"
   },
@@ -756,16 +731,16 @@
     "type": "card",
     "cardType": "10turns",
     "id": "hy11u",
-    "z": 2,
+    "z": 6574,
     "deck": "turnMarkerDeck",
-    "parent": "turnsTakenMarker9-16",
-    "y": 80
+    "y": 80,
+    "parent": "turnsTakenMarker9-16"
   },
   "nsfw2": {
     "type": "card",
     "cardType": "11turns",
     "id": "nsfw2",
-    "z": 3,
+    "z": 6576,
     "deck": "turnMarkerDeck",
     "y": 160,
     "parent": "turnsTakenMarker9-16"
@@ -774,10 +749,10 @@
     "type": "card",
     "cardType": "12turns",
     "id": "e2hn",
-    "z": 4,
+    "z": 6578,
     "deck": "turnMarkerDeck",
-    "parent": "turnsTakenMarker9-16",
-    "y": 240
+    "y": 240,
+    "parent": "turnsTakenMarker9-16"
   },
   "turnsTakenMarker17-24": {
     "type": "holder",
@@ -787,55 +762,41 @@
     "z": 11,
     "enterRoutine": [
       {
-        "func": "SET",
-        "property": "alignChildren",
-        "value": true,
-        "collection": "thisButton"
-      },
-      {
         "func": "GET",
-        "property": "id",
-        "variable": "childID",
+        "property": "value",
+        "variable": "val",
+        "collection": "child"
+      },
+      "var Y = ${val} - 17",
+      "var Y = ${Y} * 80",
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 0,
         "collection": "child"
       },
       {
-        "func": "IF",
-        "operand1": "${PROPERTY value OF $childID}",
-        "operand2": 17,
-        "relation": "<",
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "property": "parent",
-            "value": "turnsTakenMarker1-8",
-            "collection": "child"
-          }
-        ]
-      },
-      {
-        "func": "SORT",
-        "key": "value",
-        "holder": "${thisID}"
-      },
-      {
         "func": "SET",
-        "property": "alignChildren",
-        "value": false,
-        "collection": "thisButton"
+        "property": "y",
+        "value": "${Y}",
+        "collection": "child"
       }
     ],
     "inheritFrom": "turnsTakenMarker1-8",
     "parent": "turnsTakenMarker9-16",
-    "alignChildren": false
+    "alignChildren": false,
+    "dropTarget": {
+      "holder": "17-24"
+    }
   },
   "7b4z": {
     "deck": "turnMarkerDeck",
     "type": "card",
     "cardType": "13turns",
     "id": "7b4z",
-    "z": 5,
-    "parent": "turnsTakenMarker9-16",
-    "y": 320
+    "z": 6581,
+    "y": 320,
+    "parent": "turnsTakenMarker9-16"
   },
   "4in5": {
     "deck": "turnMarkerDeck",
@@ -843,15 +804,15 @@
     "cardType": "14turns",
     "id": "4in5",
     "z": 6,
-    "parent": "turnsTakenMarker9-16",
-    "y": 400
+    "y": 400,
+    "parent": "turnsTakenMarker9-16"
   },
   "ufut": {
     "deck": "turnMarkerDeck",
     "type": "card",
     "cardType": "15turns",
     "id": "ufut",
-    "z": 7,
+    "z": 6587,
     "y": 480,
     "parent": "turnsTakenMarker9-16"
   },
@@ -860,7 +821,7 @@
     "type": "card",
     "cardType": "16turns",
     "id": "uau7",
-    "z": 8,
+    "z": 6589,
     "y": 560,
     "parent": "turnsTakenMarker9-16"
   },
@@ -869,7 +830,7 @@
     "type": "card",
     "cardType": "17turns",
     "id": "1etd",
-    "z": 1,
+    "z": 6563,
     "parent": "turnsTakenMarker17-24"
   },
   "yjcc": {
@@ -877,18 +838,18 @@
     "type": "card",
     "cardType": "18turns",
     "id": "yjcc",
-    "z": 2,
-    "parent": "turnsTakenMarker17-24",
-    "y": 80
+    "z": 6593,
+    "y": 80,
+    "parent": "turnsTakenMarker17-24"
   },
   "tt56": {
     "deck": "turnMarkerDeck",
     "type": "card",
     "cardType": "19turns",
     "id": "tt56",
-    "z": 3,
-    "parent": "turnsTakenMarker17-24",
-    "y": 160
+    "z": 6597,
+    "y": 160,
+    "parent": "turnsTakenMarker17-24"
   },
   "uvz6": {
     "deck": "turnMarkerDeck",
@@ -3917,8 +3878,19 @@
         "timer": "timer"
       },
       {
-        "func": "RECALL",
-        "holder": "turnsTakenMarker1-8"
+        "func": "SELECT",
+        "property": "deck",
+        "value": "turnMarkerDeck"
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "turnsTakenMarker${PROPERTY holder OF $widgetID}"
+          }
+        ]
       },
       {
         "func": "SELECT",
@@ -4017,16 +3989,28 @@
         ]
       },
       {
-        "func": "CLICK",
-        "collection": [
-          "alchemistMarkerHolderP1",
-          "alchemistMarkerHolderP2",
-          "alchemistMarkerHolderP3",
-          "alchemistMarkerHolderP4",
-          "alchemistMarkerHolderP5",
-          "alchemistMarkerHolderP6",
-          "alchemistMarkerHolderP7",
-          "alchemistMarkerHolderP8"
+        "func": "SELECT",
+        "property": "task",
+        "value": "helpMarker"
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "property": "deck",
+            "variable": "deck"
+          },
+          {
+            "func": "GET",
+            "property": "cardType",
+            "variable": "cardType"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "${cardType}HolderP${deck.14}"
+          }
         ]
       },
       {
@@ -4043,7 +4027,7 @@
       {
         "func": "SELECT",
         "property": "task",
-        "value": "marker"
+        "value": "posMarker"
       },
       {
         "func": "FOREACH",
@@ -4241,8 +4225,8 @@
     "z": 6350,
     "deck": "heroDeck",
     "note": "board",
-    "x": 650,
-    "y": 350,
+    "x": 900,
+    "y": 600,
     "parent": "map"
   },
   "z4lf": {
@@ -4250,9 +4234,9 @@
     "cardType": "ranger",
     "id": "z4lf",
     "z": 6394,
-    "x": 1100,
+    "x": 450,
     "deck": "heroDeck",
-    "y": 800,
+    "y": 150,
     "note": "board",
     "parent": "map"
   },
@@ -4261,8 +4245,8 @@
     "cardType": "barbarian",
     "id": "pse8",
     "z": 6368,
-    "x": 900,
-    "y": 600,
+    "x": 650,
+    "y": 350,
     "deck": "heroDeck",
     "note": "board",
     "parent": "map"
@@ -4283,8 +4267,8 @@
     "cardType": "bard",
     "id": "0wie",
     "z": 6354,
-    "x": 450,
-    "y": 150,
+    "x": 1100,
+    "y": 800,
     "deck": "heroDeck",
     "note": "board",
     "parent": "map"
@@ -4294,8 +4278,8 @@
     "cardType": "rogue",
     "id": "j7qa",
     "z": 6307,
-    "x": 800,
-    "y": 500,
+    "x": 750,
+    "y": 450,
     "deck": "heroDeck",
     "note": "board",
     "parent": "map"
@@ -4304,9 +4288,9 @@
     "type": "card",
     "cardType": "alchemist",
     "id": "g9cy",
-    "z": 6374,
-    "x": 750,
-    "y": 450,
+    "z": 6443,
+    "x": 800,
+    "y": 500,
     "deck": "heroDeck",
     "note": "board",
     "parent": "map"
@@ -4555,56 +4539,56 @@
         "tokenBorderColor": "#bf0603",
         "tokenBackgroundColor": "#bf060388",
         "tokenCss": "border-radius:50%; border: 4px solid #bf0603;",
-        "image": "/assets/46862354_159271"
+        "image": "/assets/-1588559973_159432"
       },
       "mage": {
         "skill": "/assets/-2012049914_61484",
         "tokenBorderColor": "#040683",
         "tokenBackgroundColor": "#04068388",
         "tokenCss": "border-radius:50%; border: 4px solid #040683;",
-        "image": "/assets/-100667104_173941"
+        "image": "/assets/-194523231_173961"
       },
       "ranger": {
         "skill": "/assets/-2037373314_8394",
         "tokenBorderColor": "#008000",
         "tokenBackgroundColor": "#00800088",
         "tokenCss": "border-radius:50%; border: 4px solid #008000;",
-        "image": "/assets/208921082_159305"
+        "image": "/assets/-2085429880_159399"
       },
       "barbarian": {
         "skill": "/assets/209940307_1592",
         "tokenBorderColor": "#ff0a7d",
         "tokenBackgroundColor": "#ff0a7d66",
         "tokenCss": "border-radius:50%; border: 4px solid #ff0a7d;",
-        "image": "/assets/-1779780975_159308"
+        "image": "/assets/-2056883663_159401"
       },
       "cleric": {
         "skill": "/assets/-1625391825_4397",
         "tokenBorderColor": "#ff9500",
         "tokenBackgroundColor": "#ff950066",
         "tokenCss": "border-radius:50%; border: 4px solid #ff9500;",
-        "image": "/assets/1958281824_159292"
+        "image": "/assets/376571925_159380"
       },
       "bard": {
         "skill": "/assets/669517403_1005",
         "tokenBorderColor": "#000000",
         "tokenBackgroundColor": "#00000066",
         "tokenCss": "border-radius:50%; border: 4px solid #000000;",
-        "image": "/assets/-1296513891_159241"
+        "image": "/assets/-1186311569_159254"
       },
       "rogue": {
         "skill": "/assets/-470971408_1534",
         "tokenBorderColor": "#5a189a",
         "tokenBackgroundColor": "#5a189a66",
         "tokenCss": "border-radius:50%; border: 4px solid #5a189a;",
-        "image": "/assets/1380316906_159291"
+        "image": "/assets/2091034374_159329"
       },
       "alchemist": {
         "skill": "/assets/726106412_211581",
         "tokenBorderColor": "#fc4b00",
         "tokenBackgroundColor": "#fc4b0088",
         "tokenCss": "border-radius:50%; border: 4px solid #fc4b00;",
-        "image": "/assets/-284913122_159440"
+        "image": "/assets/187359389_159481"
       }
     },
     "faceTemplates": [
@@ -4620,11 +4604,7 @@
             "dynamicProperties": {
               "value": "image"
             },
-            "type": "image",
-            "svgReplaces": {
-              "#00ff00": "tokenBorderColor",
-              "#0000ff": "tokenBackgroundColor"
-            }
+            "type": "image"
           },
           {
             "width": 50,
@@ -4666,6 +4646,7 @@
     "y": 3,
     "z": 4,
     "cardDefaults": {
+      "task": "helpMarker",
       "onlyVisibleForSeat": "p1",
       "xChangeRoutine": [
         {
@@ -4809,73 +4790,65 @@
         "order": 1,
         "skill": "/assets/-187766858_4422",
         "tokenBorderColor": "#bf0603",
-        "tokenBackgroundColor": "#bf060388",
         "tokenCss": "border-radius:15%; border: 4px solid #bf0603;",
         "hoverNote": "The Fighter may move one space orthogonally: left, right, up, or down. Her ability counts as a separate move.",
-        "image": "/assets/46862354_159271"
+        "image": "/assets/-1588559973_159432"
       },
       "mageMarker": {
         "order": 2,
         "skill": "/assets/-2012049914_61484",
         "tokenBorderColor": "#040683",
-        "tokenBackgroundColor": "#04068388",
         "tokenCss": "border-radius:15%; border: 4px solid #040683;",
         "hoverNote": "The Mage can teleport from anywhere directly to any Mage symbol. After she teleports, she stops. Teleporting counts as a move.",
-        "image": "/assets/-100667104_173941"
+        "image": "/assets/-194523231_173961"
       },
       "rangerMarker": {
         "order": 3,
         "skill": "/assets/-2037373314_8394",
         "tokenBorderColor": "#008000",
-        "tokenBackgroundColor": "#00800088",
         "tokenCss": "border-radius:15%; border: 4px solid #008000;",
         "hoverNote": "The Ranger wraps around the dungeon edges. Use the letters on the edges as guides. When he uses his ability to go off the edge of the map, he'll reappear on the opposite side of the map at the same letter, and will continue moving in the direction he was moving until he is stopped by a Hero or a wall. His ability does not count as an additional move.",
-        "image": "/assets/208921082_159305"
+        "image": "/assets/-2085429880_159399"
       },
       "barbarianMarker": {
         "order": 2,
         "skill": "/assets/209940307_1592",
         "tokenBorderColor": "#ff0a7d",
-        "tokenBackgroundColor": "#ff0a7d66",
         "tokenCss": "border-radius:15%; border: 4px solid #ff0a7d;",
         "hoverNote": "The Barbarian may pass through any wall. After passing through a wall, the Barbarian continues in the direction he was moving and only stops when he hits another wall, another hero, or a dungeon edge. This ability does not count as an additional move.",
-        "image": "/assets/-1779780975_159308"
+        "image": "/assets/-2056883663_159401"
       },
       "clericMarker": {
         "order": 4,
         "skill": "/assets/-1625391825_4397",
         "tokenBorderColor": "#ff9500",
-        "tokenBackgroundColor": "#ff950066",
         "tokenCss": "border-radius:15%; border: 4px solid #ff9500;",
         "hoverNote": "The Cleric may move one space diagonally. He may move past a wall, but not through it (where two walls join to make a corner). He may move past a Hero or 'between' Heroes. His ability counts as an additional move.",
-        "image": "/assets/1958281824_159292"
+        "image": "/assets/376571925_159380"
       },
       "bardMarker": {
         "order": 3,
         "skill": "/assets/669517403_1005",
         "tokenBorderColor": "#000000",
-        "tokenBackgroundColor": "#00000066",
         "tokenCss": "border-radius:15%; border: 4px solid #000000;",
         "hoverNote": "The Bard may use the ability of any Hero who is not yet in your party. She may use any single ability once per round, and may never use more than one power per round.",
-        "image": "/assets/-1296513891_159241"
+        "image": "/assets/-1186311569_159254"
       },
       "rogueMarker": {
         "order": 4,
         "skill": "/assets/-470971408_1534",
         "tokenBorderColor": "#5a189a",
-        "tokenBackgroundColor": "#5a189a66",
         "tokenCss": "border-radius:15%; border: 4px solid #5a189a;",
         "hoverNote": "The Rogue jumps three spaces (neither more nor less) orthogonally: left, right, up, or down. He jumps over any walls and Heros on those two spaces. The space he lands on cannot have a Hero on it. This ability counts as a separate move.",
-        "image": "/assets/1380316906_159291"
+        "image": "/assets/2091034374_159329"
       },
       "alchemistMarker": {
         "order": 1,
         "tokenBorderColor": "#fc4b00",
-        "tokenBackgroundColor": "#fc4b0088",
         "skill": "/assets/726106412_211581",
         "tokenCss": "border-radius:15%; border: 4px solid #fc4b00;",
         "hoverNote": "The Alchemist may stop one space short of any wall, Hero, or dungeon edge. Her ability does not count as an additional move.",
-        "image": "/assets/-284913122_159440"
+        "image": "/assets/187359389_159481"
       }
     },
     "faceTemplates": [
@@ -4889,11 +4862,7 @@
               "value": "image"
             },
             "css": "border-radius:15% !important",
-            "type": "image",
-            "svgReplaces": {
-              "#00ff00": "tokenBorderColor",
-              "#0000ff": "tokenBackgroundColor"
-            }
+            "type": "image"
           },
           {
             "width": 68,
@@ -4917,11 +4886,7 @@
               "value": "image"
             },
             "type": "image",
-            "css": "border-radius:15% !important",
-            "svgReplaces": {
-              "#00ff00": "tokenBorderColor",
-              "#0000ff": "tokenBackgroundColor"
-            }
+            "css": "border-radius:15% !important"
           },
           {
             "width": 68,
@@ -4940,16 +4905,13 @@
             "color": "#00000088"
           },
           {
-            "x": 10,
-            "y": 10,
+            "x": 14,
+            "y": 12,
             "width": 40,
             "height": 40,
             "color": "#00000000",
-            "value": "/assets/1040518520_14074",
-            "type": "image",
-            "svgReplaces": {
-              "#ffffff": "gold"
-            }
+            "value": "/assets/-1158073244_26119",
+            "type": "image"
           }
         ]
       }
@@ -5052,12 +5014,6 @@
       }
     ],
     "playerNr": 1,
-    "clickRoutine": [
-      {
-        "func": "RECALL",
-        "holder": "${thisID}"
-      }
-    ],
     "clickable": true,
     "layer": 2,
     "dropTarget": {
@@ -5577,6 +5533,7 @@
     "x": 3,
     "y": 3,
     "cardDefaults": {
+      "task": "helpMarker",
       "onlyVisibleForSeat": "p2",
       "xChangeRoutine": [
         {
@@ -5715,157 +5672,17 @@
         }
       }
     },
-    "cardTypes": {
-      "fighterMarker": {
-        "order": 1,
-        "skill": "/assets/-187766858_4422",
-        "tokenBorderColor": "#bf0603",
-        "tokenBackgroundColor": "#bf060388",
-        "tokenCss": "border-radius:15%; border: 4px solid #bf0603;",
-        "hoverNote": "The Fighter may move one space orthogonally: left, right, up, or down. Her ability counts as a separate move.",
-        "image": "/assets/46862354_159271"
-      },
-      "mageMarker": {
-        "order": 2,
-        "skill": "/assets/-2012049914_61484",
-        "tokenBorderColor": "#040683",
-        "tokenBackgroundColor": "#04068388",
-        "tokenCss": "border-radius:15%; border: 4px solid #040683;",
-        "hoverNote": "The Mage can teleport from anywhere directly to any Mage symbol. After she teleports, she stops. Teleporting counts as a move.",
-        "image": "/assets/-100667104_173941"
-      },
-      "rangerMarker": {
-        "order": 3,
-        "skill": "/assets/-2037373314_8394",
-        "tokenBorderColor": "#008000",
-        "tokenBackgroundColor": "#00800088",
-        "tokenCss": "border-radius:15%; border: 4px solid #008000;",
-        "hoverNote": "The Ranger wraps around the dungeon edges. Use the letters on the edges as guides. When he uses his ability to go off the edge of the map, he'll reappear on the opposite side of the map at the same letter, and will continue moving in the direction he was moving until he is stopped by a Hero or a wall. His ability does not count as an additional move.",
-        "image": "/assets/208921082_159305"
-      },
-      "barbarianMarker": {
-        "order": 2,
-        "skill": "/assets/209940307_1592",
-        "tokenBorderColor": "#ff0a7d",
-        "tokenBackgroundColor": "#ff0a7d66",
-        "tokenCss": "border-radius:15%; border: 4px solid #ff0a7d;",
-        "hoverNote": "The Barbarian may pass through any wall. After passing through a wall, the Barbarian continues in the direction he was moving and only stops when he hits another wall, another hero, or a dungeon edge. This ability does not count as an additional move.",
-        "image": "/assets/-1779780975_159308"
-      },
-      "clericMarker": {
-        "order": 4,
-        "skill": "/assets/-1625391825_4397",
-        "tokenBorderColor": "#ff9500",
-        "tokenBackgroundColor": "#ff950066",
-        "tokenCss": "border-radius:15%; border: 4px solid #ff9500;",
-        "hoverNote": "The Cleric may move one space diagonally. He may move past a wall, but not through it (where two walls join to make a corner). He may move past a Hero or 'between' Heroes. His ability counts as an additional move.",
-        "image": "/assets/1958281824_159292"
-      },
-      "bardMarker": {
-        "order": 3,
-        "skill": "/assets/669517403_1005",
-        "tokenBorderColor": "#000000",
-        "tokenBackgroundColor": "#00000066",
-        "tokenCss": "border-radius:15%; border: 4px solid #000000;",
-        "hoverNote": "The Bard may use the ability of any Hero who is not yet in your party. She may use any single ability once per round, and may never use more than one power per round.",
-        "image": "/assets/-1296513891_159241"
-      },
-      "rogueMarker": {
-        "order": 4,
-        "skill": "/assets/-470971408_1534",
-        "tokenBorderColor": "#5a189a",
-        "tokenBackgroundColor": "#5a189a66",
-        "tokenCss": "border-radius:15%; border: 4px solid #5a189a;",
-        "hoverNote": "The Rogue jumps three spaces (neither more nor less) orthogonally: left, right, up, or down. He jumps over any walls and Heros on those two spaces. The space he lands on cannot have a Hero on it. This ability counts as a separate move.",
-        "image": "/assets/1380316906_159291"
-      },
-      "alchemistMarker": {
-        "order": 1,
-        "tokenBorderColor": "#fc4b00",
-        "tokenBackgroundColor": "#fc4b0088",
-        "skill": "/assets/726106412_211581",
-        "tokenCss": "border-radius:15%; border: 4px solid #fc4b00;",
-        "hoverNote": "The Alchemist may stop one space short of any wall, Hero, or dungeon edge. Her ability does not count as an additional move.",
-        "image": "/assets/-284913122_159440"
-      }
-    },
-    "faceTemplates": [
-      {
-        "classes": "fantasy_font",
-        "objects": [
-          {
-            "width": 68,
-            "height": 68,
-            "dynamicProperties": {
-              "value": "image"
-            },
-            "css": "border-radius:15% !important",
-            "type": "image",
-            "svgReplaces": {
-              "#00ff00": "tokenBorderColor",
-              "#0000ff": "tokenBackgroundColor"
-            }
-          },
-          {
-            "width": 68,
-            "height": 68,
-            "color": "transparent",
-            "dynamicProperties": {
-              "css": "tokenCss"
-            },
-            "type": "image"
-          }
-        ]
-      },
-      {
-        "classes": "fantasy_font",
-        "objects": [
-          {
-            "width": 68,
-            "height": 68,
-            "color": "white",
-            "dynamicProperties": {
-              "value": "image"
-            },
-            "type": "image",
-            "css": "border-radius:15% !important",
-            "svgReplaces": {
-              "#00ff00": "tokenBorderColor",
-              "#0000ff": "tokenBackgroundColor"
-            }
-          },
-          {
-            "width": 68,
-            "height": 68,
-            "color": "transparent",
-            "dynamicProperties": {
-              "css": "tokenCss"
-            },
-            "type": "image"
-          },
-          {
-            "type": "image",
-            "css": "border-radius:15% !important",
-            "width": 68,
-            "height": 68,
-            "color": "#00000088"
-          },
-          {
-            "x": 10,
-            "y": 10,
-            "width": 40,
-            "height": 40,
-            "color": "#00000000",
-            "value": "/assets/1040518520_14074",
-            "type": "image",
-            "svgReplaces": {
-              "#ffffff": "gold"
-            }
-          }
-        ]
-      }
-    ],
-    "parent": "alchemistMarkerHolderP2"
+    "parent": "alchemistMarkerHolderP2",
+    "width": 86,
+    "height": 86,
+    "movable": true,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "heroMarkerDeck1": [
+        "cardTypes",
+        "faceTemplates"
+      ]
+    }
   },
   "barbarianMarkerHolderP2": {
     "type": "holder",
@@ -5954,7 +5771,7 @@
     "type": "card",
     "cardType": "fighterMarker",
     "id": "gulv",
-    "z": 19756,
+    "z": 19822,
     "x": 3,
     "y": 3,
     "hoverStatus": 1,
@@ -5987,7 +5804,7 @@
     "type": "card",
     "cardType": "barbarianMarker",
     "id": "ed8q",
-    "z": 19759,
+    "z": 19828,
     "x": 3,
     "y": 3,
     "hoverStatus": 1,
@@ -6031,7 +5848,7 @@
     "type": "card",
     "cardType": "alchemistMarker",
     "id": "4bwk",
-    "z": 19763,
+    "z": 19834,
     "x": 3,
     "y": 3,
     "hoverStatus": 1,
@@ -6561,6 +6378,7 @@
     "x": 3,
     "y": 3,
     "cardDefaults": {
+      "task": "helpMarker",
       "onlyVisibleForSeat": "p3",
       "xChangeRoutine": [
         {
@@ -6699,157 +6517,13 @@
         }
       }
     },
-    "cardTypes": {
-      "fighterMarker": {
-        "order": 1,
-        "skill": "/assets/-187766858_4422",
-        "tokenBorderColor": "#bf0603",
-        "tokenBackgroundColor": "#bf060388",
-        "tokenCss": "border-radius:15%; border: 4px solid #bf0603;",
-        "hoverNote": "The Fighter may move one space orthogonally: left, right, up, or down. Her ability counts as a separate move.",
-        "image": "/assets/46862354_159271"
-      },
-      "mageMarker": {
-        "order": 2,
-        "skill": "/assets/-2012049914_61484",
-        "tokenBorderColor": "#040683",
-        "tokenBackgroundColor": "#04068388",
-        "tokenCss": "border-radius:15%; border: 4px solid #040683;",
-        "hoverNote": "The Mage can teleport from anywhere directly to any Mage symbol. After she teleports, she stops. Teleporting counts as a move.",
-        "image": "/assets/-100667104_173941"
-      },
-      "rangerMarker": {
-        "order": 3,
-        "skill": "/assets/-2037373314_8394",
-        "tokenBorderColor": "#008000",
-        "tokenBackgroundColor": "#00800088",
-        "tokenCss": "border-radius:15%; border: 4px solid #008000;",
-        "hoverNote": "The Ranger wraps around the dungeon edges. Use the letters on the edges as guides. When he uses his ability to go off the edge of the map, he'll reappear on the opposite side of the map at the same letter, and will continue moving in the direction he was moving until he is stopped by a Hero or a wall. His ability does not count as an additional move.",
-        "image": "/assets/208921082_159305"
-      },
-      "barbarianMarker": {
-        "order": 2,
-        "skill": "/assets/209940307_1592",
-        "tokenBorderColor": "#ff0a7d",
-        "tokenBackgroundColor": "#ff0a7d66",
-        "tokenCss": "border-radius:15%; border: 4px solid #ff0a7d;",
-        "hoverNote": "The Barbarian may pass through any wall. After passing through a wall, the Barbarian continues in the direction he was moving and only stops when he hits another wall, another hero, or a dungeon edge. This ability does not count as an additional move.",
-        "image": "/assets/-1779780975_159308"
-      },
-      "clericMarker": {
-        "order": 4,
-        "skill": "/assets/-1625391825_4397",
-        "tokenBorderColor": "#ff9500",
-        "tokenBackgroundColor": "#ff950066",
-        "tokenCss": "border-radius:15%; border: 4px solid #ff9500;",
-        "hoverNote": "The Cleric may move one space diagonally. He may move past a wall, but not through it (where two walls join to make a corner). He may move past a Hero or 'between' Heroes. His ability counts as an additional move.",
-        "image": "/assets/1958281824_159292"
-      },
-      "bardMarker": {
-        "order": 3,
-        "skill": "/assets/669517403_1005",
-        "tokenBorderColor": "#000000",
-        "tokenBackgroundColor": "#00000066",
-        "tokenCss": "border-radius:15%; border: 4px solid #000000;",
-        "hoverNote": "The Bard may use the ability of any Hero who is not yet in your party. She may use any single ability once per round, and may never use more than one power per round.",
-        "image": "/assets/-1296513891_159241"
-      },
-      "rogueMarker": {
-        "order": 4,
-        "skill": "/assets/-470971408_1534",
-        "tokenBorderColor": "#5a189a",
-        "tokenBackgroundColor": "#5a189a66",
-        "tokenCss": "border-radius:15%; border: 4px solid #5a189a;",
-        "hoverNote": "The Rogue jumps three spaces (neither more nor less) orthogonally: left, right, up, or down. He jumps over any walls and Heros on those two spaces. The space he lands on cannot have a Hero on it. This ability counts as a separate move.",
-        "image": "/assets/1380316906_159291"
-      },
-      "alchemistMarker": {
-        "order": 1,
-        "tokenBorderColor": "#fc4b00",
-        "tokenBackgroundColor": "#fc4b0088",
-        "skill": "/assets/726106412_211581",
-        "tokenCss": "border-radius:15%; border: 4px solid #fc4b00;",
-        "hoverNote": "The Alchemist may stop one space short of any wall, Hero, or dungeon edge. Her ability does not count as an additional move.",
-        "image": "/assets/-284913122_159440"
-      }
-    },
-    "faceTemplates": [
-      {
-        "classes": "fantasy_font",
-        "objects": [
-          {
-            "width": 68,
-            "height": 68,
-            "dynamicProperties": {
-              "value": "image"
-            },
-            "css": "border-radius:15% !important",
-            "type": "image",
-            "svgReplaces": {
-              "#00ff00": "tokenBorderColor",
-              "#0000ff": "tokenBackgroundColor"
-            }
-          },
-          {
-            "width": 68,
-            "height": 68,
-            "color": "transparent",
-            "dynamicProperties": {
-              "css": "tokenCss"
-            },
-            "type": "image"
-          }
-        ]
-      },
-      {
-        "classes": "fantasy_font",
-        "objects": [
-          {
-            "width": 68,
-            "height": 68,
-            "color": "white",
-            "dynamicProperties": {
-              "value": "image"
-            },
-            "type": "image",
-            "css": "border-radius:15% !important",
-            "svgReplaces": {
-              "#00ff00": "tokenBorderColor",
-              "#0000ff": "tokenBackgroundColor"
-            }
-          },
-          {
-            "width": 68,
-            "height": 68,
-            "color": "transparent",
-            "dynamicProperties": {
-              "css": "tokenCss"
-            },
-            "type": "image"
-          },
-          {
-            "type": "image",
-            "css": "border-radius:15% !important",
-            "width": 68,
-            "height": 68,
-            "color": "#00000088"
-          },
-          {
-            "x": 10,
-            "y": 10,
-            "width": 40,
-            "height": 40,
-            "color": "#00000000",
-            "value": "/assets/1040518520_14074",
-            "type": "image",
-            "svgReplaces": {
-              "#ffffff": "gold"
-            }
-          }
-        ]
-      }
-    ],
-    "parent": "alchemistMarkerHolderP3"
+    "parent": "alchemistMarkerHolderP3",
+    "inheritFrom": {
+      "heroMarkerDeck1": [
+        "cardTypes",
+        "faceTemplates"
+      ]
+    }
   },
   "barbarianMarkerHolderP3": {
     "type": "holder",
@@ -7456,6 +7130,7 @@
     "id": "heroMarkerDeck4",
     "parent": "alchemistMarkerHolderP4",
     "cardDefaults": {
+      "task": "helpMarker",
       "onlyVisibleForSeat": "p4",
       "xChangeRoutine": [
         {
@@ -7594,158 +7269,18 @@
         }
       }
     },
-    "cardTypes": {
-      "fighterMarker": {
-        "order": 1,
-        "skill": "/assets/-187766858_4422",
-        "tokenBorderColor": "#bf0603",
-        "tokenBackgroundColor": "#bf060388",
-        "tokenCss": "border-radius:15%; border: 4px solid #bf0603;",
-        "hoverNote": "The Fighter may move one space orthogonally: left, right, up, or down. Her ability counts as a separate move.",
-        "image": "/assets/46862354_159271"
-      },
-      "mageMarker": {
-        "order": 2,
-        "skill": "/assets/-2012049914_61484",
-        "tokenBorderColor": "#040683",
-        "tokenBackgroundColor": "#04068388",
-        "tokenCss": "border-radius:15%; border: 4px solid #040683;",
-        "hoverNote": "The Mage can teleport from anywhere directly to any Mage symbol. After she teleports, she stops. Teleporting counts as a move.",
-        "image": "/assets/-100667104_173941"
-      },
-      "rangerMarker": {
-        "order": 3,
-        "skill": "/assets/-2037373314_8394",
-        "tokenBorderColor": "#008000",
-        "tokenBackgroundColor": "#00800088",
-        "tokenCss": "border-radius:15%; border: 4px solid #008000;",
-        "hoverNote": "The Ranger wraps around the dungeon edges. Use the letters on the edges as guides. When he uses his ability to go off the edge of the map, he'll reappear on the opposite side of the map at the same letter, and will continue moving in the direction he was moving until he is stopped by a Hero or a wall. His ability does not count as an additional move.",
-        "image": "/assets/208921082_159305"
-      },
-      "barbarianMarker": {
-        "order": 2,
-        "skill": "/assets/209940307_1592",
-        "tokenBorderColor": "#ff0a7d",
-        "tokenBackgroundColor": "#ff0a7d66",
-        "tokenCss": "border-radius:15%; border: 4px solid #ff0a7d;",
-        "hoverNote": "The Barbarian may pass through any wall. After passing through a wall, the Barbarian continues in the direction he was moving and only stops when he hits another wall, another hero, or a dungeon edge. This ability does not count as an additional move.",
-        "image": "/assets/-1779780975_159308"
-      },
-      "clericMarker": {
-        "order": 4,
-        "skill": "/assets/-1625391825_4397",
-        "tokenBorderColor": "#ff9500",
-        "tokenBackgroundColor": "#ff950066",
-        "tokenCss": "border-radius:15%; border: 4px solid #ff9500;",
-        "hoverNote": "The Cleric may move one space diagonally. He may move past a wall, but not through it (where two walls join to make a corner). He may move past a Hero or 'between' Heroes. His ability counts as an additional move.",
-        "image": "/assets/1958281824_159292"
-      },
-      "bardMarker": {
-        "order": 3,
-        "skill": "/assets/669517403_1005",
-        "tokenBorderColor": "#000000",
-        "tokenBackgroundColor": "#00000066",
-        "tokenCss": "border-radius:15%; border: 4px solid #000000;",
-        "hoverNote": "The Bard may use the ability of any Hero who is not yet in your party. She may use any single ability once per round, and may never use more than one power per round.",
-        "image": "/assets/-1296513891_159241"
-      },
-      "rogueMarker": {
-        "order": 4,
-        "skill": "/assets/-470971408_1534",
-        "tokenBorderColor": "#5a189a",
-        "tokenBackgroundColor": "#5a189a66",
-        "tokenCss": "border-radius:15%; border: 4px solid #5a189a;",
-        "hoverNote": "The Rogue jumps three spaces (neither more nor less) orthogonally: left, right, up, or down. He jumps over any walls and Heros on those two spaces. The space he lands on cannot have a Hero on it. This ability counts as a separate move.",
-        "image": "/assets/1380316906_159291"
-      },
-      "alchemistMarker": {
-        "order": 1,
-        "tokenBorderColor": "#fc4b00",
-        "tokenBackgroundColor": "#fc4b0088",
-        "skill": "/assets/726106412_211581",
-        "tokenCss": "border-radius:15%; border: 4px solid #fc4b00;",
-        "hoverNote": "The Alchemist may stop one space short of any wall, Hero, or dungeon edge. Her ability does not count as an additional move.",
-        "image": "/assets/-284913122_159440"
-      }
-    },
-    "faceTemplates": [
-      {
-        "classes": "fantasy_font",
-        "objects": [
-          {
-            "width": 68,
-            "height": 68,
-            "dynamicProperties": {
-              "value": "image"
-            },
-            "css": "border-radius:15% !important",
-            "type": "image",
-            "svgReplaces": {
-              "#00ff00": "tokenBorderColor",
-              "#0000ff": "tokenBackgroundColor"
-            }
-          },
-          {
-            "width": 68,
-            "height": 68,
-            "color": "transparent",
-            "dynamicProperties": {
-              "css": "tokenCss"
-            },
-            "type": "image"
-          }
-        ]
-      },
-      {
-        "classes": "fantasy_font",
-        "objects": [
-          {
-            "width": 68,
-            "height": 68,
-            "color": "white",
-            "dynamicProperties": {
-              "value": "image"
-            },
-            "type": "image",
-            "css": "border-radius:15% !important",
-            "svgReplaces": {
-              "#00ff00": "tokenBorderColor",
-              "#0000ff": "tokenBackgroundColor"
-            }
-          },
-          {
-            "width": 68,
-            "height": 68,
-            "color": "transparent",
-            "dynamicProperties": {
-              "css": "tokenCss"
-            },
-            "type": "image"
-          },
-          {
-            "type": "image",
-            "css": "border-radius:15% !important",
-            "width": 68,
-            "height": 68,
-            "color": "#00000088"
-          },
-          {
-            "x": 10,
-            "y": 10,
-            "width": 40,
-            "height": 40,
-            "color": "#00000000",
-            "value": "/assets/1040518520_14074",
-            "type": "image",
-            "svgReplaces": {
-              "#ffffff": "gold"
-            }
-          }
-        ]
-      }
-    ],
     "y": 3,
-    "x": 3
+    "x": 3,
+    "width": 86,
+    "height": 86,
+    "movable": true,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "heroMarkerDeck1": [
+        "cardTypes",
+        "faceTemplates"
+      ]
+    }
   },
   "barbarianMarkerHolderP4": {
     "type": "holder",
@@ -8353,6 +7888,7 @@
     "x": 3,
     "y": 3,
     "cardDefaults": {
+      "task": "helpMarker",
       "onlyVisibleForSeat": "p5",
       "xChangeRoutine": [
         {
@@ -8491,157 +8027,17 @@
         }
       }
     },
-    "cardTypes": {
-      "fighterMarker": {
-        "order": 1,
-        "skill": "/assets/-187766858_4422",
-        "tokenBorderColor": "#bf0603",
-        "tokenBackgroundColor": "#bf060388",
-        "tokenCss": "border-radius:15%; border: 4px solid #bf0603;",
-        "hoverNote": "The Fighter may move one space orthogonally: left, right, up, or down. Her ability counts as a separate move.",
-        "image": "/assets/46862354_159271"
-      },
-      "mageMarker": {
-        "order": 2,
-        "skill": "/assets/-2012049914_61484",
-        "tokenBorderColor": "#040683",
-        "tokenBackgroundColor": "#04068388",
-        "tokenCss": "border-radius:15%; border: 4px solid #040683;",
-        "hoverNote": "The Mage can teleport from anywhere directly to any Mage symbol. After she teleports, she stops. Teleporting counts as a move.",
-        "image": "/assets/-100667104_173941"
-      },
-      "rangerMarker": {
-        "order": 3,
-        "skill": "/assets/-2037373314_8394",
-        "tokenBorderColor": "#008000",
-        "tokenBackgroundColor": "#00800088",
-        "tokenCss": "border-radius:15%; border: 4px solid #008000;",
-        "hoverNote": "The Ranger wraps around the dungeon edges. Use the letters on the edges as guides. When he uses his ability to go off the edge of the map, he'll reappear on the opposite side of the map at the same letter, and will continue moving in the direction he was moving until he is stopped by a Hero or a wall. His ability does not count as an additional move.",
-        "image": "/assets/208921082_159305"
-      },
-      "barbarianMarker": {
-        "order": 2,
-        "skill": "/assets/209940307_1592",
-        "tokenBorderColor": "#ff0a7d",
-        "tokenBackgroundColor": "#ff0a7d66",
-        "tokenCss": "border-radius:15%; border: 4px solid #ff0a7d;",
-        "hoverNote": "The Barbarian may pass through any wall. After passing through a wall, the Barbarian continues in the direction he was moving and only stops when he hits another wall, another hero, or a dungeon edge. This ability does not count as an additional move.",
-        "image": "/assets/-1779780975_159308"
-      },
-      "clericMarker": {
-        "order": 4,
-        "skill": "/assets/-1625391825_4397",
-        "tokenBorderColor": "#ff9500",
-        "tokenBackgroundColor": "#ff950066",
-        "tokenCss": "border-radius:15%; border: 4px solid #ff9500;",
-        "hoverNote": "The Cleric may move one space diagonally. He may move past a wall, but not through it (where two walls join to make a corner). He may move past a Hero or 'between' Heroes. His ability counts as an additional move.",
-        "image": "/assets/1958281824_159292"
-      },
-      "bardMarker": {
-        "order": 3,
-        "skill": "/assets/669517403_1005",
-        "tokenBorderColor": "#000000",
-        "tokenBackgroundColor": "#00000066",
-        "tokenCss": "border-radius:15%; border: 4px solid #000000;",
-        "hoverNote": "The Bard may use the ability of any Hero who is not yet in your party. She may use any single ability once per round, and may never use more than one power per round.",
-        "image": "/assets/-1296513891_159241"
-      },
-      "rogueMarker": {
-        "order": 4,
-        "skill": "/assets/-470971408_1534",
-        "tokenBorderColor": "#5a189a",
-        "tokenBackgroundColor": "#5a189a66",
-        "tokenCss": "border-radius:15%; border: 4px solid #5a189a;",
-        "hoverNote": "The Rogue jumps three spaces (neither more nor less) orthogonally: left, right, up, or down. He jumps over any walls and Heros on those two spaces. The space he lands on cannot have a Hero on it. This ability counts as a separate move.",
-        "image": "/assets/1380316906_159291"
-      },
-      "alchemistMarker": {
-        "order": 1,
-        "tokenBorderColor": "#fc4b00",
-        "tokenBackgroundColor": "#fc4b0088",
-        "skill": "/assets/726106412_211581",
-        "tokenCss": "border-radius:15%; border: 4px solid #fc4b00;",
-        "hoverNote": "The Alchemist may stop one space short of any wall, Hero, or dungeon edge. Her ability does not count as an additional move.",
-        "image": "/assets/-284913122_159440"
-      }
-    },
-    "faceTemplates": [
-      {
-        "classes": "fantasy_font",
-        "objects": [
-          {
-            "width": 68,
-            "height": 68,
-            "dynamicProperties": {
-              "value": "image"
-            },
-            "css": "border-radius:15% !important",
-            "type": "image",
-            "svgReplaces": {
-              "#00ff00": "tokenBorderColor",
-              "#0000ff": "tokenBackgroundColor"
-            }
-          },
-          {
-            "width": 68,
-            "height": 68,
-            "color": "transparent",
-            "dynamicProperties": {
-              "css": "tokenCss"
-            },
-            "type": "image"
-          }
-        ]
-      },
-      {
-        "classes": "fantasy_font",
-        "objects": [
-          {
-            "width": 68,
-            "height": 68,
-            "color": "white",
-            "dynamicProperties": {
-              "value": "image"
-            },
-            "type": "image",
-            "css": "border-radius:15% !important",
-            "svgReplaces": {
-              "#00ff00": "tokenBorderColor",
-              "#0000ff": "tokenBackgroundColor"
-            }
-          },
-          {
-            "width": 68,
-            "height": 68,
-            "color": "transparent",
-            "dynamicProperties": {
-              "css": "tokenCss"
-            },
-            "type": "image"
-          },
-          {
-            "type": "image",
-            "css": "border-radius:15% !important",
-            "width": 68,
-            "height": 68,
-            "color": "#00000088"
-          },
-          {
-            "x": 10,
-            "y": 10,
-            "width": 40,
-            "height": 40,
-            "color": "#00000000",
-            "value": "/assets/1040518520_14074",
-            "type": "image",
-            "svgReplaces": {
-              "#ffffff": "gold"
-            }
-          }
-        ]
-      }
-    ],
-    "parent": "alchemistMarkerHolderP5"
+    "parent": "alchemistMarkerHolderP5",
+    "width": 86,
+    "height": 86,
+    "movable": true,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "heroMarkerDeck1": [
+        "cardTypes",
+        "faceTemplates"
+      ]
+    }
   },
   "barbarianMarkerHolderP5": {
     "type": "holder",
@@ -9250,6 +8646,7 @@
     "x": 3,
     "y": 3,
     "cardDefaults": {
+      "task": "helpMarker",
       "onlyVisibleForSeat": "p6",
       "xChangeRoutine": [
         {
@@ -9388,157 +8785,17 @@
         }
       }
     },
-    "cardTypes": {
-      "fighterMarker": {
-        "order": 1,
-        "skill": "/assets/-187766858_4422",
-        "tokenBorderColor": "#bf0603",
-        "tokenBackgroundColor": "#bf060388",
-        "tokenCss": "border-radius:15%; border: 4px solid #bf0603;",
-        "hoverNote": "The Fighter may move one space orthogonally: left, right, up, or down. Her ability counts as a separate move.",
-        "image": "/assets/46862354_159271"
-      },
-      "mageMarker": {
-        "order": 2,
-        "skill": "/assets/-2012049914_61484",
-        "tokenBorderColor": "#040683",
-        "tokenBackgroundColor": "#04068388",
-        "tokenCss": "border-radius:15%; border: 4px solid #040683;",
-        "hoverNote": "The Mage can teleport from anywhere directly to any Mage symbol. After she teleports, she stops. Teleporting counts as a move.",
-        "image": "/assets/-100667104_173941"
-      },
-      "rangerMarker": {
-        "order": 3,
-        "skill": "/assets/-2037373314_8394",
-        "tokenBorderColor": "#008000",
-        "tokenBackgroundColor": "#00800088",
-        "tokenCss": "border-radius:15%; border: 4px solid #008000;",
-        "hoverNote": "The Ranger wraps around the dungeon edges. Use the letters on the edges as guides. When he uses his ability to go off the edge of the map, he'll reappear on the opposite side of the map at the same letter, and will continue moving in the direction he was moving until he is stopped by a Hero or a wall. His ability does not count as an additional move.",
-        "image": "/assets/208921082_159305"
-      },
-      "barbarianMarker": {
-        "order": 2,
-        "skill": "/assets/209940307_1592",
-        "tokenBorderColor": "#ff0a7d",
-        "tokenBackgroundColor": "#ff0a7d66",
-        "tokenCss": "border-radius:15%; border: 4px solid #ff0a7d;",
-        "hoverNote": "The Barbarian may pass through any wall. After passing through a wall, the Barbarian continues in the direction he was moving and only stops when he hits another wall, another hero, or a dungeon edge. This ability does not count as an additional move.",
-        "image": "/assets/-1779780975_159308"
-      },
-      "clericMarker": {
-        "order": 4,
-        "skill": "/assets/-1625391825_4397",
-        "tokenBorderColor": "#ff9500",
-        "tokenBackgroundColor": "#ff950066",
-        "tokenCss": "border-radius:15%; border: 4px solid #ff9500;",
-        "hoverNote": "The Cleric may move one space diagonally. He may move past a wall, but not through it (where two walls join to make a corner). He may move past a Hero or 'between' Heroes. His ability counts as an additional move.",
-        "image": "/assets/1958281824_159292"
-      },
-      "bardMarker": {
-        "order": 3,
-        "skill": "/assets/669517403_1005",
-        "tokenBorderColor": "#000000",
-        "tokenBackgroundColor": "#00000066",
-        "tokenCss": "border-radius:15%; border: 4px solid #000000;",
-        "hoverNote": "The Bard may use the ability of any Hero who is not yet in your party. She may use any single ability once per round, and may never use more than one power per round.",
-        "image": "/assets/-1296513891_159241"
-      },
-      "rogueMarker": {
-        "order": 4,
-        "skill": "/assets/-470971408_1534",
-        "tokenBorderColor": "#5a189a",
-        "tokenBackgroundColor": "#5a189a66",
-        "tokenCss": "border-radius:15%; border: 4px solid #5a189a;",
-        "hoverNote": "The Rogue jumps three spaces (neither more nor less) orthogonally: left, right, up, or down. He jumps over any walls and Heros on those two spaces. The space he lands on cannot have a Hero on it. This ability counts as a separate move.",
-        "image": "/assets/1380316906_159291"
-      },
-      "alchemistMarker": {
-        "order": 1,
-        "tokenBorderColor": "#fc4b00",
-        "tokenBackgroundColor": "#fc4b0088",
-        "skill": "/assets/726106412_211581",
-        "tokenCss": "border-radius:15%; border: 4px solid #fc4b00;",
-        "hoverNote": "The Alchemist may stop one space short of any wall, Hero, or dungeon edge. Her ability does not count as an additional move.",
-        "image": "/assets/-284913122_159440"
-      }
-    },
-    "faceTemplates": [
-      {
-        "classes": "fantasy_font",
-        "objects": [
-          {
-            "width": 68,
-            "height": 68,
-            "dynamicProperties": {
-              "value": "image"
-            },
-            "css": "border-radius:15% !important",
-            "type": "image",
-            "svgReplaces": {
-              "#00ff00": "tokenBorderColor",
-              "#0000ff": "tokenBackgroundColor"
-            }
-          },
-          {
-            "width": 68,
-            "height": 68,
-            "color": "transparent",
-            "dynamicProperties": {
-              "css": "tokenCss"
-            },
-            "type": "image"
-          }
-        ]
-      },
-      {
-        "classes": "fantasy_font",
-        "objects": [
-          {
-            "width": 68,
-            "height": 68,
-            "color": "white",
-            "dynamicProperties": {
-              "value": "image"
-            },
-            "type": "image",
-            "css": "border-radius:15% !important",
-            "svgReplaces": {
-              "#00ff00": "tokenBorderColor",
-              "#0000ff": "tokenBackgroundColor"
-            }
-          },
-          {
-            "width": 68,
-            "height": 68,
-            "color": "transparent",
-            "dynamicProperties": {
-              "css": "tokenCss"
-            },
-            "type": "image"
-          },
-          {
-            "type": "image",
-            "css": "border-radius:15% !important",
-            "width": 68,
-            "height": 68,
-            "color": "#00000088"
-          },
-          {
-            "x": 10,
-            "y": 10,
-            "width": 40,
-            "height": 40,
-            "color": "#00000000",
-            "value": "/assets/1040518520_14074",
-            "type": "image",
-            "svgReplaces": {
-              "#ffffff": "gold"
-            }
-          }
-        ]
-      }
-    ],
-    "parent": "alchemistMarkerHolderP6"
+    "parent": "alchemistMarkerHolderP6",
+    "width": 86,
+    "height": 86,
+    "movable": true,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "heroMarkerDeck1": [
+        "cardTypes",
+        "faceTemplates"
+      ]
+    }
   },
   "barbarianMarkerHolderP6": {
     "type": "holder",
@@ -10146,6 +9403,7 @@
     "x": 3,
     "y": 3,
     "cardDefaults": {
+      "task": "helpMarker",
       "onlyVisibleForSeat": "p7",
       "xChangeRoutine": [
         {
@@ -10284,157 +9542,17 @@
         }
       }
     },
-    "cardTypes": {
-      "fighterMarker": {
-        "order": 1,
-        "skill": "/assets/-187766858_4422",
-        "tokenBorderColor": "#bf0603",
-        "tokenBackgroundColor": "#bf060388",
-        "tokenCss": "border-radius:15%; border: 4px solid #bf0603;",
-        "hoverNote": "The Fighter may move one space orthogonally: left, right, up, or down. Her ability counts as a separate move.",
-        "image": "/assets/46862354_159271"
-      },
-      "mageMarker": {
-        "order": 2,
-        "skill": "/assets/-2012049914_61484",
-        "tokenBorderColor": "#040683",
-        "tokenBackgroundColor": "#04068388",
-        "tokenCss": "border-radius:15%; border: 4px solid #040683;",
-        "hoverNote": "The Mage can teleport from anywhere directly to any Mage symbol. After she teleports, she stops. Teleporting counts as a move.",
-        "image": "/assets/-100667104_173941"
-      },
-      "rangerMarker": {
-        "order": 3,
-        "skill": "/assets/-2037373314_8394",
-        "tokenBorderColor": "#008000",
-        "tokenBackgroundColor": "#00800088",
-        "tokenCss": "border-radius:15%; border: 4px solid #008000;",
-        "hoverNote": "The Ranger wraps around the dungeon edges. Use the letters on the edges as guides. When he uses his ability to go off the edge of the map, he'll reappear on the opposite side of the map at the same letter, and will continue moving in the direction he was moving until he is stopped by a Hero or a wall. His ability does not count as an additional move.",
-        "image": "/assets/208921082_159305"
-      },
-      "barbarianMarker": {
-        "order": 2,
-        "skill": "/assets/209940307_1592",
-        "tokenBorderColor": "#ff0a7d",
-        "tokenBackgroundColor": "#ff0a7d66",
-        "tokenCss": "border-radius:15%; border: 4px solid #ff0a7d;",
-        "hoverNote": "The Barbarian may pass through any wall. After passing through a wall, the Barbarian continues in the direction he was moving and only stops when he hits another wall, another hero, or a dungeon edge. This ability does not count as an additional move.",
-        "image": "/assets/-1779780975_159308"
-      },
-      "clericMarker": {
-        "order": 4,
-        "skill": "/assets/-1625391825_4397",
-        "tokenBorderColor": "#ff9500",
-        "tokenBackgroundColor": "#ff950066",
-        "tokenCss": "border-radius:15%; border: 4px solid #ff9500;",
-        "hoverNote": "The Cleric may move one space diagonally. He may move past a wall, but not through it (where two walls join to make a corner). He may move past a Hero or 'between' Heroes. His ability counts as an additional move.",
-        "image": "/assets/1958281824_159292"
-      },
-      "bardMarker": {
-        "order": 3,
-        "skill": "/assets/669517403_1005",
-        "tokenBorderColor": "#000000",
-        "tokenBackgroundColor": "#00000066",
-        "tokenCss": "border-radius:15%; border: 4px solid #000000;",
-        "hoverNote": "The Bard may use the ability of any Hero who is not yet in your party. She may use any single ability once per round, and may never use more than one power per round.",
-        "image": "/assets/-1296513891_159241"
-      },
-      "rogueMarker": {
-        "order": 4,
-        "skill": "/assets/-470971408_1534",
-        "tokenBorderColor": "#5a189a",
-        "tokenBackgroundColor": "#5a189a66",
-        "tokenCss": "border-radius:15%; border: 4px solid #5a189a;",
-        "hoverNote": "The Rogue jumps three spaces (neither more nor less) orthogonally: left, right, up, or down. He jumps over any walls and Heros on those two spaces. The space he lands on cannot have a Hero on it. This ability counts as a separate move.",
-        "image": "/assets/1380316906_159291"
-      },
-      "alchemistMarker": {
-        "order": 1,
-        "tokenBorderColor": "#fc4b00",
-        "tokenBackgroundColor": "#fc4b0088",
-        "skill": "/assets/726106412_211581",
-        "tokenCss": "border-radius:15%; border: 4px solid #fc4b00;",
-        "hoverNote": "The Alchemist may stop one space short of any wall, Hero, or dungeon edge. Her ability does not count as an additional move.",
-        "image": "/assets/-284913122_159440"
-      }
-    },
-    "faceTemplates": [
-      {
-        "classes": "fantasy_font",
-        "objects": [
-          {
-            "width": 68,
-            "height": 68,
-            "dynamicProperties": {
-              "value": "image"
-            },
-            "css": "border-radius:15% !important",
-            "type": "image",
-            "svgReplaces": {
-              "#00ff00": "tokenBorderColor",
-              "#0000ff": "tokenBackgroundColor"
-            }
-          },
-          {
-            "width": 68,
-            "height": 68,
-            "color": "transparent",
-            "dynamicProperties": {
-              "css": "tokenCss"
-            },
-            "type": "image"
-          }
-        ]
-      },
-      {
-        "classes": "fantasy_font",
-        "objects": [
-          {
-            "width": 68,
-            "height": 68,
-            "color": "white",
-            "dynamicProperties": {
-              "value": "image"
-            },
-            "type": "image",
-            "css": "border-radius:15% !important",
-            "svgReplaces": {
-              "#00ff00": "tokenBorderColor",
-              "#0000ff": "tokenBackgroundColor"
-            }
-          },
-          {
-            "width": 68,
-            "height": 68,
-            "color": "transparent",
-            "dynamicProperties": {
-              "css": "tokenCss"
-            },
-            "type": "image"
-          },
-          {
-            "type": "image",
-            "css": "border-radius:15% !important",
-            "width": 68,
-            "height": 68,
-            "color": "#00000088"
-          },
-          {
-            "x": 10,
-            "y": 10,
-            "width": 40,
-            "height": 40,
-            "color": "#00000000",
-            "value": "/assets/1040518520_14074",
-            "type": "image",
-            "svgReplaces": {
-              "#ffffff": "gold"
-            }
-          }
-        ]
-      }
-    ],
-    "parent": "alchemistMarkerHolderP7"
+    "parent": "alchemistMarkerHolderP7",
+    "width": 86,
+    "height": 86,
+    "movable": true,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "heroMarkerDeck1": [
+        "cardTypes",
+        "faceTemplates"
+      ]
+    }
   },
   "barbarianMarkerHolderP7": {
     "type": "holder",
@@ -11042,6 +10160,7 @@
     "x": 3,
     "y": 3,
     "cardDefaults": {
+      "task": "helpMarker",
       "onlyVisibleForSeat": "p8",
       "xChangeRoutine": [
         {
@@ -11180,157 +10299,17 @@
         }
       }
     },
-    "cardTypes": {
-      "fighterMarker": {
-        "order": 1,
-        "skill": "/assets/-187766858_4422",
-        "tokenBorderColor": "#bf0603",
-        "tokenBackgroundColor": "#bf060388",
-        "tokenCss": "border-radius:15%; border: 4px solid #bf0603;",
-        "hoverNote": "The Fighter may move one space orthogonally: left, right, up, or down. Her ability counts as a separate move.",
-        "image": "/assets/46862354_159271"
-      },
-      "mageMarker": {
-        "order": 2,
-        "skill": "/assets/-2012049914_61484",
-        "tokenBorderColor": "#040683",
-        "tokenBackgroundColor": "#04068388",
-        "tokenCss": "border-radius:15%; border: 4px solid #040683;",
-        "hoverNote": "The Mage can teleport from anywhere directly to any Mage symbol. After she teleports, she stops. Teleporting counts as a move.",
-        "image": "/assets/-100667104_173941"
-      },
-      "rangerMarker": {
-        "order": 3,
-        "skill": "/assets/-2037373314_8394",
-        "tokenBorderColor": "#008000",
-        "tokenBackgroundColor": "#00800088",
-        "tokenCss": "border-radius:15%; border: 4px solid #008000;",
-        "hoverNote": "The Ranger wraps around the dungeon edges. Use the letters on the edges as guides. When he uses his ability to go off the edge of the map, he'll reappear on the opposite side of the map at the same letter, and will continue moving in the direction he was moving until he is stopped by a Hero or a wall. His ability does not count as an additional move.",
-        "image": "/assets/208921082_159305"
-      },
-      "barbarianMarker": {
-        "order": 2,
-        "skill": "/assets/209940307_1592",
-        "tokenBorderColor": "#ff0a7d",
-        "tokenBackgroundColor": "#ff0a7d66",
-        "tokenCss": "border-radius:15%; border: 4px solid #ff0a7d;",
-        "hoverNote": "The Barbarian may pass through any wall. After passing through a wall, the Barbarian continues in the direction he was moving and only stops when he hits another wall, another hero, or a dungeon edge. This ability does not count as an additional move.",
-        "image": "/assets/-1779780975_159308"
-      },
-      "clericMarker": {
-        "order": 4,
-        "skill": "/assets/-1625391825_4397",
-        "tokenBorderColor": "#ff9500",
-        "tokenBackgroundColor": "#ff950066",
-        "tokenCss": "border-radius:15%; border: 4px solid #ff9500;",
-        "hoverNote": "The Cleric may move one space diagonally. He may move past a wall, but not through it (where two walls join to make a corner). He may move past a Hero or 'between' Heroes. His ability counts as an additional move.",
-        "image": "/assets/1958281824_159292"
-      },
-      "bardMarker": {
-        "order": 3,
-        "skill": "/assets/669517403_1005",
-        "tokenBorderColor": "#000000",
-        "tokenBackgroundColor": "#00000066",
-        "tokenCss": "border-radius:15%; border: 4px solid #000000;",
-        "hoverNote": "The Bard may use the ability of any Hero who is not yet in your party. She may use any single ability once per round, and may never use more than one power per round.",
-        "image": "/assets/-1296513891_159241"
-      },
-      "rogueMarker": {
-        "order": 4,
-        "skill": "/assets/-470971408_1534",
-        "tokenBorderColor": "#5a189a",
-        "tokenBackgroundColor": "#5a189a66",
-        "tokenCss": "border-radius:15%; border: 4px solid #5a189a;",
-        "hoverNote": "The Rogue jumps three spaces (neither more nor less) orthogonally: left, right, up, or down. He jumps over any walls and Heros on those two spaces. The space he lands on cannot have a Hero on it. This ability counts as a separate move.",
-        "image": "/assets/1380316906_159291"
-      },
-      "alchemistMarker": {
-        "order": 1,
-        "tokenBorderColor": "#fc4b00",
-        "tokenBackgroundColor": "#fc4b0088",
-        "skill": "/assets/726106412_211581",
-        "tokenCss": "border-radius:15%; border: 4px solid #fc4b00;",
-        "hoverNote": "The Alchemist may stop one space short of any wall, Hero, or dungeon edge. Her ability does not count as an additional move.",
-        "image": "/assets/-284913122_159440"
-      }
-    },
-    "faceTemplates": [
-      {
-        "classes": "fantasy_font",
-        "objects": [
-          {
-            "width": 68,
-            "height": 68,
-            "dynamicProperties": {
-              "value": "image"
-            },
-            "css": "border-radius:15% !important",
-            "type": "image",
-            "svgReplaces": {
-              "#00ff00": "tokenBorderColor",
-              "#0000ff": "tokenBackgroundColor"
-            }
-          },
-          {
-            "width": 68,
-            "height": 68,
-            "color": "transparent",
-            "dynamicProperties": {
-              "css": "tokenCss"
-            },
-            "type": "image"
-          }
-        ]
-      },
-      {
-        "classes": "fantasy_font",
-        "objects": [
-          {
-            "width": 68,
-            "height": 68,
-            "color": "white",
-            "dynamicProperties": {
-              "value": "image"
-            },
-            "type": "image",
-            "css": "border-radius:15% !important",
-            "svgReplaces": {
-              "#00ff00": "tokenBorderColor",
-              "#0000ff": "tokenBackgroundColor"
-            }
-          },
-          {
-            "width": 68,
-            "height": 68,
-            "color": "transparent",
-            "dynamicProperties": {
-              "css": "tokenCss"
-            },
-            "type": "image"
-          },
-          {
-            "type": "image",
-            "css": "border-radius:15% !important",
-            "width": 68,
-            "height": 68,
-            "color": "#00000088"
-          },
-          {
-            "x": 10,
-            "y": 10,
-            "width": 40,
-            "height": 40,
-            "color": "#00000000",
-            "value": "/assets/1040518520_14074",
-            "type": "image",
-            "svgReplaces": {
-              "#ffffff": "gold"
-            }
-          }
-        ]
-      }
-    ],
-    "parent": "alchemistMarkerHolderP8"
+    "parent": "alchemistMarkerHolderP8",
+    "width": 86,
+    "height": 86,
+    "movable": true,
+    "movableInEdit": true,
+    "inheritFrom": {
+      "heroMarkerDeck1": [
+        "cardTypes",
+        "faceTemplates"
+      ]
+    }
   },
   "barbarianMarkerHolderP8": {
     "type": "holder",
@@ -12482,15 +11461,15 @@
     },
     "layer": -2,
     "parent": "map",
-    "task": "marker",
-    "x": 650,
-    "y": 350
+    "task": "posMarker",
+    "x": 900,
+    "y": 600
   },
   "posMarkerAlchemist": {
     "id": "posMarkerAlchemist",
     "parent": "map",
-    "x": 750,
-    "y": 450,
+    "x": 800,
+    "y": 500,
     "width": 50,
     "height": 50,
     "borderRadius": "50%",
@@ -12501,7 +11480,7 @@
       "background-color": "#fc4b0088"
     },
     "belongsTo": "alchemist",
-    "task": "marker"
+    "task": "posMarker"
   },
   "posMarkerCleric": {
     "id": "posMarkerCleric",
@@ -12518,44 +11497,10 @@
       "background-color": "#ff950066"
     },
     "belongsTo": "cleric",
-    "task": "marker"
+    "task": "posMarker"
   },
   "posMarkerRanger": {
     "id": "posMarkerRanger",
-    "parent": "map",
-    "x": 1100,
-    "y": 800,
-    "width": 50,
-    "height": 50,
-    "borderRadius": "50%",
-    "layer": -2,
-    "z": 1175,
-    "movable": false,
-    "css": {
-      "background-color": "#00800088"
-    },
-    "belongsTo": "ranger",
-    "task": "marker"
-  },
-  "posMarkerRogue": {
-    "id": "posMarkerRogue",
-    "parent": "map",
-    "x": 800,
-    "y": 500,
-    "width": 50,
-    "height": 50,
-    "borderRadius": "50%",
-    "layer": -2,
-    "z": 1175,
-    "movable": false,
-    "css": {
-      "background-color": "#5a189a66"
-    },
-    "belongsTo": "rogue",
-    "task": "marker"
-  },
-  "posMarkerBard": {
-    "id": "posMarkerBard",
     "parent": "map",
     "x": 450,
     "y": 150,
@@ -12566,10 +11511,44 @@
     "z": 1175,
     "movable": false,
     "css": {
+      "background-color": "#00800088"
+    },
+    "belongsTo": "ranger",
+    "task": "posMarker"
+  },
+  "posMarkerRogue": {
+    "id": "posMarkerRogue",
+    "parent": "map",
+    "x": 750,
+    "y": 450,
+    "width": 50,
+    "height": 50,
+    "borderRadius": "50%",
+    "layer": -2,
+    "z": 1175,
+    "movable": false,
+    "css": {
+      "background-color": "#5a189a66"
+    },
+    "belongsTo": "rogue",
+    "task": "posMarker"
+  },
+  "posMarkerBard": {
+    "id": "posMarkerBard",
+    "parent": "map",
+    "x": 1100,
+    "y": 800,
+    "width": 50,
+    "height": 50,
+    "borderRadius": "50%",
+    "layer": -2,
+    "z": 1175,
+    "movable": false,
+    "css": {
       "background-color": "#00000066"
     },
     "belongsTo": "bard",
-    "task": "marker"
+    "task": "posMarker"
   },
   "posMarkerFighter": {
     "id": "posMarkerFighter",
@@ -12586,13 +11565,13 @@
       "background-color": "#bf060388"
     },
     "belongsTo": "fighter",
-    "task": "marker"
+    "task": "posMarker"
   },
   "posMarkerBarbarian": {
     "id": "posMarkerBarbarian",
     "parent": "map",
-    "x": 900,
-    "y": 600,
+    "x": 650,
+    "y": 350,
     "width": 50,
     "height": 50,
     "borderRadius": "50%",
@@ -12603,7 +11582,7 @@
       "background-color": "#ff0a7d66"
     },
     "belongsTo": "barbarian",
-    "task": "marker"
+    "task": "posMarker"
   },
   "normalMap": {
     "id": "normalMap",
@@ -13776,76 +12755,100 @@
     },
     "cardTypes": {
       "1turns": {
-        "value": 1
+        "value": 1,
+        "holder": "1-8"
       },
       "2turns": {
-        "value": 2
+        "value": 2,
+        "holder": "1-8"
       },
       "3turns": {
-        "value": 3
+        "value": 3,
+        "holder": "1-8"
       },
       "4turns": {
-        "value": 4
+        "value": 4,
+        "holder": "1-8"
       },
       "5turns": {
-        "value": 5
+        "value": 5,
+        "holder": "1-8"
       },
       "6turns": {
-        "value": 6
+        "value": 6,
+        "holder": "1-8"
       },
       "7turns": {
-        "value": 7
+        "value": 7,
+        "holder": "1-8"
       },
       "8turns": {
-        "value": 8
+        "value": 8,
+        "holder": "1-8"
       },
       "9turns": {
-        "value": 9
+        "value": 9,
+        "holder": "9-16"
       },
       "10turns": {
-        "value": 10
+        "value": 10,
+        "holder": "9-16"
       },
       "11turns": {
-        "value": 11
+        "value": 11,
+        "holder": "9-16"
       },
       "12turns": {
-        "value": 12
+        "value": 12,
+        "holder": "9-16"
       },
       "13turns": {
-        "value": 13
+        "value": 13,
+        "holder": "9-16"
       },
       "14turns": {
-        "value": 14
+        "value": 14,
+        "holder": "9-16"
       },
       "15turns": {
-        "value": 15
+        "value": 15,
+        "holder": "9-16"
       },
       "16turns": {
-        "value": 16
+        "value": 16,
+        "holder": "9-16"
       },
       "17turns": {
-        "value": 17
+        "value": 17,
+        "holder": "17-24"
       },
       "18turns": {
-        "value": 18
+        "value": 18,
+        "holder": "17-24"
       },
       "19turns": {
-        "value": 19
+        "value": 19,
+        "holder": "17-24"
       },
       "20turns": {
-        "value": 20
+        "value": 20,
+        "holder": "17-24"
       },
       "21turns": {
-        "value": 21
+        "value": 21,
+        "holder": "17-24"
       },
       "22turns": {
-        "value": 22
+        "value": 22,
+        "holder": "17-24"
       },
       "23turns": {
-        "value": 23
+        "value": 23,
+        "holder": "17-24"
       },
       "24turns": {
-        "value": 24
+        "value": 24,
+        "holder": "17-24"
       }
     },
     "faceTemplates": [

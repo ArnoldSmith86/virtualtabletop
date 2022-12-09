@@ -7,7 +7,7 @@
    width="500"
    height="500"
    viewBox="0 0 500.00002 499.99999"
-   sodipodi:docname="cleric.svg"
+   sodipodi:docname="rouge.svg"
    inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -1223,33 +1223,33 @@
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g8" />
+     inkscape:current-layer="layer6" />
   <g
      inkscape:groupmode="layer"
      inkscape:label="Image"
      id="g8"
      style="display:inline">
     <rect
-       style="display:inline;fill:#0000ff;fill-opacity:1;stroke:#0000ff;stroke-width:0.6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="display:inline;fill:#5a189a;fill-opacity:0.40000001;stroke:#0000ff;stroke-width:0.6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect1378"
        width="500"
        height="500"
-       x="1.4210855e-14"
-       y="0" />
+       x="0"
+       y="1.6444092e-05" />
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer6"
      inkscape:label="rouge"
-     style="display:none">
+     style="display:inline">
     <g
        id="g3110"
        transform="matrix(1.3333333,0,0,1.3333333,-545.1368,-251.4256)"
-       style="stroke:#00ff00;stroke-width:8.25;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">
+       style="stroke:#5a189a;stroke-width:8.25;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;fill:none;fill-opacity:1">
       <g
          id="g3202"
          transform="matrix(0.49980384,0,0,0.49980384,421.42119,236.12376)"
-         style="fill:none;fill-opacity:1;stroke:#00ff00;stroke-width:16.5065;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">
+         style="fill:none;fill-opacity:1;stroke:#5a189a;stroke-width:16.5065;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">
         <path
            transform="matrix(5.6,0,0,5.6,70,0)"
            d="M 78.006,53.998 C 74.6913,50.6868 69.3153,50.6868 66,53.998 L 53.999,66 c -3.3078,3.3112 -3.3078,8.6879 0.0077,12.002 l 2.998,-3.0022 c -1.6609,-1.6539 -1.6609,-4.3443 -0.0042,-5.9982 l 12.006,-12.002 c 1.6532,-1.6567 4.3443,-1.6567 5.994,0 z m 0,0"
@@ -1259,7 +1259,7 @@
            stroke-linejoin="round"
            stroke-miterlimit="10"
            id="path2912"
-           style="fill:none;fill-opacity:1;stroke:#00ff00;stroke-width:2.94759;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+           style="fill:none;fill-opacity:1;stroke:#5a189a;stroke-width:2.94759;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
         <path
            transform="matrix(5.6,0,0,5.6,70,0)"
            d="m 64.005,56.001 -8.0001,8.0001 -16.004,-12.002 -30.001,-41.999 41.999,29.997 z m 0,0"
@@ -1269,7 +1269,7 @@
            stroke-linejoin="round"
            stroke-miterlimit="10"
            id="path2914"
-           style="fill:none;fill-opacity:1;stroke:#00ff00;stroke-width:2.94759;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+           style="fill:none;fill-opacity:1;stroke:#5a189a;stroke-width:2.94759;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
         <path
            transform="matrix(5.6,0,0,5.6,70,0)"
            d="m 10,10 36.005,35.998 z m 0,0"
@@ -1279,7 +1279,7 @@
            stroke-linejoin="round"
            stroke-miterlimit="10"
            id="path2916"
-           style="fill:none;fill-opacity:1;stroke:#00ff00;stroke-width:2.94759;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+           style="fill:none;fill-opacity:1;stroke:#5a189a;stroke-width:2.94759;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
         <path
            transform="matrix(5.6,0,0,5.6,70,0)"
            d="m 51.999,51.999 8.0001,8.0001 z m 0,0"
@@ -1289,7 +1289,7 @@
            stroke-linejoin="round"
            stroke-miterlimit="10"
            id="path2918"
-           style="fill:none;fill-opacity:1;stroke:#00ff00;stroke-width:2.94759;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+           style="fill:none;fill-opacity:1;stroke:#5a189a;stroke-width:2.94759;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
         <path
            transform="matrix(5.6,0,0,5.6,70,0)"
            d="M 90,75.995 V 90 l -14.001,-0.0042 0.0084,-13.997 z m 0,0"
@@ -1299,7 +1299,7 @@
            stroke-linejoin="round"
            stroke-miterlimit="10"
            id="path2920"
-           style="fill:none;fill-opacity:1;stroke:#00ff00;stroke-width:2.94759;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+           style="fill:none;fill-opacity:1;stroke:#5a189a;stroke-width:2.94759;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
         <path
            transform="matrix(5.6,0,0,5.6,70,0)"
            d="m 80.005,80.003 h 6.001 v 6.001 h -6.001 z m 0,0"
@@ -1309,7 +1309,7 @@
            stroke-linejoin="round"
            stroke-miterlimit="10"
            id="path2922"
-           style="fill:none;fill-opacity:1;stroke:#00ff00;stroke-width:2.94759;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+           style="fill:none;fill-opacity:1;stroke:#5a189a;stroke-width:2.94759;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
         <path
            transform="matrix(5.6,0,0,5.6,70,0)"
            d="m 76.007,75.999 h 5.9926 l -16,-16 -6.001,6.001 16,16 z m 0,0"
@@ -1319,7 +1319,7 @@
            stroke-linejoin="round"
            stroke-miterlimit="10"
            id="path2924"
-           style="fill:none;fill-opacity:1;stroke:#00ff00;stroke-width:2.94759;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+           style="fill:none;fill-opacity:1;stroke:#5a189a;stroke-width:2.94759;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
         <path
            transform="matrix(5.6,0,0,5.6,70,0)"
            d="m 63.001,68.999 6.001,-6.001 z m 0,0"
@@ -1329,7 +1329,7 @@
            stroke-linejoin="round"
            stroke-miterlimit="10"
            id="path2926"
-           style="fill:none;fill-opacity:1;stroke:#00ff00;stroke-width:2.94759;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+           style="fill:none;fill-opacity:1;stroke:#5a189a;stroke-width:2.94759;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
         <path
            transform="matrix(5.6,0,0,5.6,70,0)"
            d="m 67.003,72.997 5.9968,-5.9968 z m 0,0"
@@ -1339,7 +1339,7 @@
            stroke-linejoin="round"
            stroke-miterlimit="10"
            id="path2928"
-           style="fill:none;fill-opacity:1;stroke:#00ff00;stroke-width:2.94759;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+           style="fill:none;fill-opacity:1;stroke:#5a189a;stroke-width:2.94759;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
         <path
            transform="matrix(5.6,0,0,5.6,70,0)"
            d="m 71.001,76.999 6.001,-6.001 z m 0,0"
@@ -1349,7 +1349,7 @@
            stroke-linejoin="round"
            stroke-miterlimit="10"
            id="path2930"
-           style="fill:none;fill-opacity:1;stroke:#00ff00;stroke-width:2.94759;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+           style="fill:none;fill-opacity:1;stroke:#5a189a;stroke-width:2.94759;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       </g>
     </g>
   </g>
@@ -1494,7 +1494,7 @@
      inkscape:groupmode="layer"
      id="layer4"
      inkscape:label="cleric"
-     style="display:inline">
+     style="display:none">
     <g
        id="g5062"
        transform="matrix(1.3333333,0,0,1.3333333,-122.49367,-230.1264)">

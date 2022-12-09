@@ -25,7 +25,7 @@
     "parent": "2ifg"
   },
   "_meta": {
-    "version": 6,
+    "version": 7,
     "info": {
       "name": "Stardust Butterfly",
       "image": "/assets/1621426706_261001",
@@ -3393,7 +3393,7 @@
         "fields": [
           {
             "type": "title",
-            "text": "Endiong the round ..."
+            "text": "Ending the round ..."
           },
           {
             "type": "subtitle",
