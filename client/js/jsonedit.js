@@ -397,8 +397,31 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_exportCSV',
+    name: 'export to CSV',
+    context: '^deck ↦ cardTypes',
+    call: async function() {
+
+      function downloadCSV(csv, filename) {
+        const csvFile = new Blob([csv], {type:"text/csv"});
+        const downloadLink = document.createElement("a");
+        downloadLink.download = filename;
+        downloadLink.href = window.URL.createObjectURL(csvFile);
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        downloadLink.remove();
+      }
+
+      const allProperties = [...new Set(Object.values(jeStateNow.cardTypes).reduce((a,t)=>a.concat(...Object.keys(t)), []))];
+      let csvText = `id::INTERNAL;${allProperties.join(';')};cardCount::INTERNAL\n`;
+      for(const [ id, type ] of Object.entries(jeStateNow.cardTypes))
+        csvText += `${id};${allProperties.map(p=>type[p]).join(';')};0\n`;
+      downloadCSV(csvText, `${jeStateNow.id} cardTypes.csv`);
+    }
+  },
+  {
     id: 'je_importCSV',
-    name: _=>`import from csv`,
+    name: 'import from CSV',
     options: [
       { label: 'mode',    type: 'select',    options: [ { value: 'add', text: 'add' }, { value: 'set', text: 'set' } ] }
     ],
@@ -457,7 +480,7 @@ const jeCommands = [
               } else {
                 obj[headers[j]] = currentline[j];
               }
-              
+
           }
 
           let cardTypeID = obj.cardTypeID||generateUniqueWidgetID()
@@ -467,7 +490,7 @@ const jeCommands = [
           delete obj.cardTypeCount
 
           jeStateNow.cardTypes[cardTypeID]= obj ;
-          
+
           /*taken from addCard
           for(var j=0;j<cardTypeCount;j++){
             const card = { deck:jeStateNow.id, type:'card', cardType:cardTypeID };
@@ -476,8 +499,8 @@ const jeCommands = [
               await widgets.get(card.id).moveToHolder(widgets.get(jeStateNow.parent));
             else
               await widgets.get(card.id).updatePiles();
-            
-          }*/  
+
+          }*/
       }
       jeSetAndSelect()
     }
