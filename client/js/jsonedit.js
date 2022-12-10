@@ -412,10 +412,19 @@ const jeCommands = [
         downloadLink.remove();
       }
 
+      function escapeField(v) {
+        if(v === undefined)
+          return '';
+        if(typeof v == 'number')
+          return v.toString();
+
+        return typeof v == 'string' && !v.match(/^$|^-?[0-9]*(\.[0-9]+)?(e[0-9]+)?$|^JSON:/) ? `"${v.replace(/"/g, '""')}"` : `"JSON:${JSON.stringify(v).replace(/"/g, '""')}"`;
+      }
+
       const allProperties = [...new Set(Object.values(jeStateNow.cardTypes).reduce((a,t)=>a.concat(...Object.keys(t)), []))];
-      let csvText = `id::INTERNAL;${allProperties.join(';')};cardCount::INTERNAL\n`;
+      let csvText = `id::INTERNAL;${allProperties.map(escapeField).join(';')};cardCount::INTERNAL\n`;
       for(const [ id, type ] of Object.entries(jeStateNow.cardTypes))
-        csvText += `${id};${allProperties.map(p=>type[p]).join(';')};0\n`;
+        csvText += `${id};${allProperties.map(p=>escapeField(type[p])).join(';')};0\n`;
       downloadCSV(csvText, `${jeStateNow.id} cardTypes.csv`);
     }
   },
