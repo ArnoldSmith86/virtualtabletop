@@ -513,7 +513,8 @@ const jeCommands = [
 
         }*/
       }
-      jeSetAndSelect()
+      jeSetAndSelect();
+      jeApplyChanges();
     }
   },
   {
