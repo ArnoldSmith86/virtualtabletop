@@ -423,8 +423,10 @@ const jeCommands = [
 
       const allProperties = [...new Set(Object.values(jeStateNow.cardTypes).reduce((a,t)=>a.concat(...Object.keys(t)), []))];
       let csvText = `id::INTERNAL;${allProperties.map(escapeField).join(';')};cardCount::INTERNAL\n`;
-      for(const [ id, type ] of Object.entries(jeStateNow.cardTypes))
-        csvText += `${id};${allProperties.map(p=>escapeField(type[p])).join(';')};0\n`;
+      for(const [ id, type ] of Object.entries(jeStateNow.cardTypes)) {
+        const cardCount = widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==id).length;
+        csvText += `${id};${allProperties.map(p=>escapeField(type[p])).join(';')};${cardCount}\n`;
+      }
       downloadCSV(csvText, `${jeStateNow.id} cardTypes.csv`);
     }
   },
