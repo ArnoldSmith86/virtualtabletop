@@ -488,7 +488,7 @@ const jeCommands = [
         const obj = {};
         const currentline=lines[i]
 
-        if(!lines[i])
+        if(lines[i].length == 1 && !lines[i][0])
           continue;
 
         for(let j=0;j<Math.min(headers.length, currentline.length);j++)
