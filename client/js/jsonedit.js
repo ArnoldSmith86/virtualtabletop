@@ -472,16 +472,14 @@ const jeCommands = [
         }
       }
 
-      if (options["mode"]== "set") {
-        jeStateNow.cardTypes = {};
+      const oldCardTypeIDs = Object.keys(jeStateNow.cardTypes);
 
-        //taken from remove all
-        for(const card of widgetFilter(w=>w.get('deck')==jeStateNow.id))
-          await removeWidgetLocal(card.get('id'));
-      }
+      if(options["mode"]== "set")
+        jeStateNow.cardTypes = {};
 
       const lines=csvToArray(csv.content);
       const headers=lines[0].map(unescapeField);
+      const targetCounts = {};
 
       for(let i=1;i<lines.length;i++){
 
@@ -497,24 +495,36 @@ const jeCommands = [
         const cardTypeID = obj['id::INTERNAL'] || generateUniqueWidgetID();
         delete obj['id::INTERNAL'];
 
-        const cardTypeCount = obj['cardCount::INTERNAL'];
+        targetCounts[cardTypeID] = obj['cardCount::INTERNAL'];
         delete obj['cardCount::INTERNAL'];
 
         jeStateNow.cardTypes[cardTypeID] = obj;
-
-        /*taken from addCard
-        for(var j=0;j<cardTypeCount;j++){
-          const card = { deck:jeStateNow.id, type:'card', cardType:cardTypeID };
-          await addWidgetLocal(card);
-          if(jeStateNow.parent)
-            await widgets.get(card.id).moveToHolder(widgets.get(jeStateNow.parent));
-          else
-            await widgets.get(card.id).updatePiles();
-
-        }*/
       }
+
+      batchStart();
+
+      for(const oldID of oldCardTypeIDs)
+        if(!jeStateNow.cardTypes[oldID])
+          for(const card of widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==oldID))
+            await removeWidgetLocal(card.get('id'));
+
       jeSetAndSelect();
       jeApplyChanges();
+
+      for(const [ id, targetCount ] of Object.entries(targetCounts)) {
+        const currentCount = widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==id).length;
+        for(let i=0; i<targetCount-currentCount; ++i) {
+          const cardId = await addWidgetLocal({ deck:jeStateNow.id, type:'card', cardType:id });
+          if(jeStateNow.parent)
+            await widgets.get(cardId).moveToHolder(widgets.get(jeStateNow.parent));
+        }
+        for(let i=0; i<currentCount-targetCount; ++i) {
+          const card = widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==id)[0];
+          await removeWidgetLocal(card.get('id'));
+        }
+      }
+
+      batchEnd();
     }
   },
   {
