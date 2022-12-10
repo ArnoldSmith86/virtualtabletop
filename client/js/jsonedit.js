@@ -434,7 +434,7 @@ const jeCommands = [
     id: 'je_importCSV',
     name: 'import from CSV',
     options: [
-      { label: 'mode',    type: 'select',    options: [ { value: 'add', text: 'add' }, { value: 'set', text: 'set' } ] }
+      { label: 'mode',    type: 'select',    options: [ { value: 'set', text: 'set' }, { value: 'add', text: 'add' } ] }
     ],
     context: '^deck ↦ cardTypes',
     call: async function(options) {
