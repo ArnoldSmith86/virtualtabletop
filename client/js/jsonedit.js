@@ -2198,6 +2198,8 @@ function jeToggle() {
     if(jeWidget && !widgets.has(jeWidget.id))
       jeEmpty();
     jeDisplayTree();
+    if(jeDebugViewing)
+      jeCallCommand(jeCommands.find(o => o.id == 'je_toggleDebug'))
   } else {
     $('body').classList.remove('jsonEdit');
   }
