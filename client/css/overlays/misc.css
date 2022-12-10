@@ -23,7 +23,7 @@
     }
   }
 
-  @media (max-width: 300px), (max-height: 187px) {
+  @media (max-width: 340px), (max-height: 212px) {
     #confirmOverlay {
       padding: 0;
     }

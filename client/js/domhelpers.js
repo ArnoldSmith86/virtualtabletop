@@ -326,10 +326,16 @@ export function addRichtextControls(dom) {
     dom.focus();
   };
   $('[icon=movie]', controls).onclick = async function() {
-    const asset = await uploadAsset();
-    if(asset)
-      document.execCommand('inserthtml', false, `<video class="richtextAsset" src="${asset.substring(1)}" controls></video>`);
-    dom.focus();
+    $('#statesButton').dataset.overlay = 'confirmOverlay';
+    if(await confirmOverlay('Upload video', 'Please note that VTT will not do video processing like YouTube to make sure your video plays everywhere.\n\nUse WebM or MPEG-4/H.264 format because those are well supported.', 'Upload', 'Cancel', 'upload', 'cancel')) {
+      showStatesOverlay(detailsOverlay);
+      const asset = await uploadAsset();
+      if(asset)
+        document.execCommand('inserthtml', false, `<video class="richtextAsset" src="${asset.substring(1)}" controls></video>`);
+      dom.focus();
+    } else {
+      showStatesOverlay(detailsOverlay);
+    }
   };
   $('[icon=add_reaction]', controls).onclick = async function() {
     const range = window.getSelection().getRangeAt(0);
