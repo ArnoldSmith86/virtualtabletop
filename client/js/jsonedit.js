@@ -418,14 +418,14 @@ const jeCommands = [
         if(typeof v == 'number')
           return v.toString();
 
-        return typeof v == 'string' && !v.match(/^$|^-?[0-9]*(\.[0-9]+)?(e[0-9]+)?$|^JSON:/) ? `"${v.replace(/"/g, '""')}"` : `"JSON:${JSON.stringify(v).replace(/"/g, '""')}"`;
+        return typeof v == 'string' && !v.match(/^-?[0-9]*(\.[0-9]+)?(e[0-9]+)?$|^JSON:/) ? `"${v.replace(/"/g, '""')}"` : `"JSON:${JSON.stringify(v).replace(/"/g, '""')}"`;
       }
 
       const allProperties = [...new Set(Object.values(jeStateNow.cardTypes).reduce((a,t)=>a.concat(...Object.keys(t)), []))];
       let csvText = `id::INTERNAL;${allProperties.map(escapeField).join(';')};cardCount::INTERNAL\n`;
       for(const [ id, type ] of Object.entries(jeStateNow.cardTypes)) {
         const cardCount = widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==id).length;
-        csvText += `${id};${allProperties.map(p=>escapeField(type[p])).join(';')};${cardCount}\n`;
+        csvText += `${escapeField(id)};${allProperties.map(p=>escapeField(type[p])).join(';')};${cardCount}\n`;
       }
       downloadCSV(csvText, `${jeStateNow.id} cardTypes.csv`);
     }
@@ -449,7 +449,7 @@ const jeCommands = [
             if ('"' === l) {
                 if (s && l === p) row[i] += l;
                 s = !s;
-            } else if (',' === l && s) l = row[++i] = '';
+            } else if (';' === l && s) l = row[++i] = '';
             else if ('\n' === l && s) {
                 if ('\r' === p) row[i] = row[i].slice(0, -1);
                 row = ret[++r] = [l = '']; i = 0;
@@ -459,6 +459,19 @@ const jeCommands = [
         return ret;
       };
 
+      function unescapeField(v) {
+        try {
+          if(v.match(/^JSON:/))
+            return JSON.parse(v.substr(5));
+          else if(v && v.match(/^-?[0-9]*(\.[0-9]+)?(e[0-9]+)?$/))
+            return parseFloat(v);
+          else if(v)
+            return v;
+        } catch(e) {
+          return e.toString();
+        }
+      }
+
       if (options["mode"]== "set") {
         jeStateNow.cardTypes = {};
 
@@ -467,51 +480,38 @@ const jeCommands = [
           await removeWidgetLocal(card.get('id'));
       }
 
-      var lines=csvToArray(csv.content);
-      var headers=lines[0];
+      const lines=csvToArray(csv.content);
+      const headers=lines[0].map(unescapeField);
 
-      for(var i=1;i<lines.length;i++){
+      for(let i=1;i<lines.length;i++){
 
-          var obj = {};
-          var currentline=lines[i]
+        const obj = {};
+        const currentline=lines[i]
 
-          for(var j=0;j<headers.length;j++){
-              if (parseFloat(currentline[j])==currentline[j]){
-                obj[headers[j]] = parseFloat(currentline[j]);
-              } else if (currentline[j]=="NULL") {
-                obj[headers[j]] = null
-              } else if (currentline[j]=="TRUE") {
-                obj[headers[j]] = true
-              } else if (currentline[j]=="FALSE") {
-                obj[headers[j]] = false
-              } else if (currentline[j]=="''") {
-                obj[headers[j]] = ""
-              } else if (currentline[j]=="") {
-                //leave as non defined value
-              } else {
-                obj[headers[j]] = currentline[j];
-              }
+        if(!lines[i])
+          continue;
 
-          }
+        for(let j=0;j<Math.min(headers.length, currentline.length);j++)
+          obj[headers[j]] = unescapeField(currentline[j]);
 
-          let cardTypeID = obj.cardTypeID||generateUniqueWidgetID()
-          delete obj.cardTypeID
+        const cardTypeID = obj['id::INTERNAL'] || generateUniqueWidgetID();
+        delete obj['id::INTERNAL'];
 
-          let cardTypeCount = obj.cardTypeCount
-          delete obj.cardTypeCount
+        const cardTypeCount = obj['cardCount::INTERNAL'];
+        delete obj['cardCount::INTERNAL'];
 
-          jeStateNow.cardTypes[cardTypeID]= obj ;
+        jeStateNow.cardTypes[cardTypeID] = obj;
 
-          /*taken from addCard
-          for(var j=0;j<cardTypeCount;j++){
-            const card = { deck:jeStateNow.id, type:'card', cardType:cardTypeID };
-            await addWidgetLocal(card);
-            if(jeStateNow.parent)
-              await widgets.get(card.id).moveToHolder(widgets.get(jeStateNow.parent));
-            else
-              await widgets.get(card.id).updatePiles();
+        /*taken from addCard
+        for(var j=0;j<cardTypeCount;j++){
+          const card = { deck:jeStateNow.id, type:'card', cardType:cardTypeID };
+          await addWidgetLocal(card);
+          if(jeStateNow.parent)
+            await widgets.get(card.id).moveToHolder(widgets.get(jeStateNow.parent));
+          else
+            await widgets.get(card.id).updatePiles();
 
-          }*/
+        }*/
       }
       jeSetAndSelect()
     }
