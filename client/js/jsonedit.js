@@ -443,13 +443,13 @@ const jeCommands = [
 
       //source : https://stackoverflow.com/questions/8493195/how-can-i-parse-a-csv-string-with-javascript-which-contains-comma-in-data/41563966#41563966
 
-      function csvToArray(text) {
+      function csvToArray(text, delimiter) {
         let p = '', row = [''], ret = [row], i = 0, r = 0, s = !0, l;
         for (l of text) {
             if ('"' === l) {
                 if (s && l === p) row[i] += l;
                 s = !s;
-            } else if (';' === l && s) l = row[++i] = '';
+            } else if (delimiter === l && s) l = row[++i] = '';
             else if ('\n' === l && s) {
                 if ('\r' === p) row[i] = row[i].slice(0, -1);
                 row = ret[++r] = [l = '']; i = 0;
@@ -477,7 +477,7 @@ const jeCommands = [
       if(options["mode"]== "set")
         jeStateNow.cardTypes = {};
 
-      const lines=csvToArray(csv.content);
+      const lines=csvToArray(csv.content, csv.content.split(';').length > csv.content.split(',').length ? ';' : ',');
       const headers=lines[0].map(unescapeField);
       const targetCounts = {};
 
