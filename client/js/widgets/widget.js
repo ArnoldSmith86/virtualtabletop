@@ -1027,20 +1027,20 @@ export class Widget extends StateManaged {
           if(jeRoutineLogging)
             jeLoggingRoutineOperationSummary( `elements in '${JSON.stringify(a.in)}'`);
         } else if(a.range) {
-          let range = asArray(a.range);
+          let range = [...asArray(a.range)];
 
           if(range.length == 0) {
             problems.push(`Empty range given, [1] used.`);
             range = [1]
           }
+          if(range.length == 1)
+            range.unshift(1);
           let start = parseFloat(range[0]);
           if(isNaN(start)) {
             problems.push(`Invalid start of range ${JSON.stringify(range[0])}, 1 used`);
             start = 1;
           }
 
-          if(range.length == 1)
-            range.unshift(1);
           let end = parseFloat(range[1]);
           if(isNaN(end)) {
             problems.push(`Invalid end of range ${JSON.stringify(range[1])}, 1 used`);
