@@ -428,9 +428,10 @@ window.onkeyup = function(event) {
       showOverlay();
     else if(edit)
       toggleEditMode();
-    else if(jeEnabled && jeDebugViewing)
+    else if(jeEnabled && jeDebugViewing) {
       jeCallCommand(jeCommands.find(o => o.id == 'je_toggleDebug'));
-    else if(jeEnabled)
+      jeShowCommands();
+    } else if(jeEnabled)
       jeToggle();
   }
 }

@@ -2197,9 +2197,11 @@ function jeToggle() {
     $('body').classList.add('jsonEdit');
     if(jeWidget && !widgets.has(jeWidget.id))
       jeEmpty();
+    if(jeDebugViewing) {
+      jeCallCommand(jeCommands.find(o => o.id == 'je_toggleDebug'));
+      jeShowCommands()
+    }
     jeDisplayTree();
-    if(jeDebugViewing)
-      jeCallCommand(jeCommands.find(o => o.id == 'je_toggleDebug'))
   } else {
     $('body').classList.remove('jsonEdit');
   }
