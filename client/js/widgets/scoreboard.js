@@ -1,7 +1,7 @@
 import { $, $a, removeFromDOM, asArray, escapeID } from '../domhelpers.js';
 import { Widget } from './widget.js';
 
-class ScoreBoard extends Widget {
+class Scoreboard extends Widget {
   constructor(object, surface) {
     super(object, surface);
 
@@ -42,7 +42,7 @@ class ScoreBoard extends Widget {
     else {
       // First get total score for each relevant seat
       const totals = [];
-      let seats = this.getIncludedSeats();
+      const seats = this.getIncludedSeats();
       if(Array.isArray(seats)) {// Getting seat totals
         for (const seat of seats) {
           const score = seat.get(this.get('scoreProperty'));

@@ -59,7 +59,7 @@ export function addWidget(widget, instance) {
   } else if(widget.type == 'seat') {
     w = new Seat(id);
   } else if(widget.type == 'scoreboard') {
-    w = new ScoreBoard(id);
+    w = new Scoreboard(id);
   } else if(widget.type == 'timer') {
     w = new Timer(id);
   } else if(widget.type == 'label') {
