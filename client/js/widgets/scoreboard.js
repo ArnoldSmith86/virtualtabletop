@@ -280,7 +280,8 @@ class ScoreBoard extends Widget {
       tbl.rows[0].cells[c].classList.add('firstRow');
 
     const myDom = this.domElement;
-    myDom.innerHTML = '';
+    const tableElements = myDom.querySelectorAll('tr, td, th, table'); //This line and next suggested by ChatGPT
+    tableElements.forEach(element => element.remove());
     myDom.appendChild(tbl);
   }
   
