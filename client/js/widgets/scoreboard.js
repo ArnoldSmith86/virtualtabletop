@@ -33,9 +33,6 @@ class ScoreBoard extends Widget {
     if(seats !== null)
       this.tableCreate(seats)
   }
-  
-  applyInitiaDelta() {
-  }
 
   get(property) {
     if(property != '_totals')
@@ -200,7 +197,7 @@ class ScoreBoard extends Widget {
         pScores[i][0] = 'None';
 
     // Create round name headers
-    if(Array.isArray(rounds)) 
+    if(Array.isArray(rounds))
       rounds = rounds.concat(Array(numRounds).fill('')).slice(0,numRounds);
     else
       rounds = [...Array(numRounds).keys()].map(i => i+1);
@@ -209,16 +206,22 @@ class ScoreBoard extends Widget {
     rounds.unshift(this.get('roundLabel'));
 
     // Finally, build the table
-    let tbl = document.createElement('table');
-    tbl.style.height = this.get('height') + 'px';
-    tbl.style.width = this.get('width')+ 'px';
+    if(!this.tableDOM) {
+      this.tableDOM = document.createElement('table');
+      this.domElement.appendChild(this.tableDOM);
+    } else {
+      this.tableDOM.innerHTML = '';
+    }
+
+    this.tableDOM.style.height = this.get('height') + 'px';
+    this.tableDOM.style.width = this.get('width')+ 'px';
     let numRows;
     let numCols;
     let currentRound = parseInt(this.get('currentRound'));
 
     if (isNaN(currentRound) || currentRound <1 || currentRound > numRounds)
       currentRound = null;
-    
+
     if(this.get('playersInColumns')) {
       // Compute total number of rows and columns in table
       numCols = pScores.length + 1;
@@ -227,8 +230,8 @@ class ScoreBoard extends Widget {
       // Add header row
       const names = pScores.map(x => x[0]);
       names.unshift(this.get('roundLabel'));
-      tbl.innerHTML += '<tbody></tbody>';
-      const tr = this.addRowToTable($('tbody', tbl), names, 'td');
+      this.tableDOM.innerHTML += '<tbody></tbody>';
+      const tr = this.addRowToTable($('tbody', this.tableDOM), names, 'td');
       if(usePlayerColors)
         for (let c=0; c<pScores.length; c++ ) {
           tr.cells[c+1].style.backgroundColor = colors[c];
@@ -238,7 +241,7 @@ class ScoreBoard extends Widget {
       for( let r=1; r < numRows; r++ ) {
         const pRow = pScores.map(x => x[r]);
         pRow.unshift(rounds[r]);
-        const tr = this.addRowToTable($('tbody',tbl), pRow, 'td');
+        const tr = this.addRowToTable($('tbody',this.tableDOM), pRow, 'td');
         tr.cells[0].classList.add('firstCol');
         if(r == currentRound)
           for(let c=1; c < numCols; c++)
@@ -246,19 +249,19 @@ class ScoreBoard extends Widget {
       }
       if(showTotals)
           for(let c=0; c < numCols; c++)
-            tbl.rows[numRows-1].cells[c].classList.add('totalsLine');
+            this.tableDOM.rows[numRows-1].cells[c].classList.add('totalsLine');
     } else { // Scores are in rows
       // Compute total number of rows and columns in table
       numCols = numRounds + 1 + (showTotals ? 1 : 0);
       numRows = pScores.length + 1;
 
       // First row contains round names
-      const tr = this.addRowToTable(tbl, rounds, 'td');
+      const tr = this.addRowToTable(this.tableDOM, rounds, 'td');
       for (let c=0; c < numCols; c++)
         tr.cells[c].classList.add('firstRow');
       // Remaining rows are one row per player.
       for( let r=0; r < pScores.length; r++) {
-        const tr = this.addRowToTable(tbl, pScores[r], 'td');
+        const tr = this.addRowToTable(this.tableDOM, pScores[r], 'td');
         tr.cells[0].classList.add('firstCol');
         if(usePlayerColors) {
           tr.cells[0].style.backgroundColor = colors[r];
@@ -267,23 +270,18 @@ class ScoreBoard extends Widget {
       }
       for(let r=1; r < numRows; r++) {
         if(currentRound)
-          tbl.rows[r].cells[currentRound].classList.add('currentRound');
+          this.tableDOM.rows[r].cells[currentRound].classList.add('currentRound');
         if(showTotals)
-          tbl.rows[r].cells[numCols-1].classList.add('totalsLine');
+          this.tableDOM.rows[r].cells[numCols-1].classList.add('totalsLine');
       }
     }
 
     // Make top row, left column non-scrollable
-    for (let r=0; r<numRows; r++) 
-      tbl.rows[r].cells[0].classList.add('firstCol');
+    for (let r=0; r<numRows; r++)
+      this.tableDOM.rows[r].cells[0].classList.add('firstCol');
     for (let c=0; c< numCols; c++)
-      tbl.rows[0].cells[c].classList.add('firstRow');
-
-    const myDom = this.domElement;
-    const tableElements = myDom.querySelectorAll('tr, td, th, table'); //This line and next suggested by ChatGPT
-    tableElements.forEach(element => element.remove());
-    myDom.appendChild(tbl);
+      this.tableDOM.rows[0].cells[c].classList.add('firstRow');
   }
-  
+
 }
 
