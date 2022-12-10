@@ -155,12 +155,12 @@ class Scoreboard extends Widget {
       if(sortField == 'total' && !showTotals) // Use default sort if no totals
         sortField = 'index';
       if(sortField == 'total')
-        pScores.sort((a,b) =>a[a.length-1] < b[b.length-1] ? -1 : 1)
+        pScores.sort((a,b) => a[a.length-1] - b[b.length-1])
       else
         pScores.sort((a,b) => {
           const pa = includedSeats.filter(x=> x.get('player') == a[0])[0].get(sortField);
           const pb = includedSeats.filter(x=> x.get('player') == b[0])[0].get(sortField);
-          return pa < pb ? -1 : 1;
+          return pa < pb ? -1 : pa > pb ? 1 : 0; // These need not be numeric
         });
       if(!this.get('sortAscending'))
         pScores = pScores.reverse();
