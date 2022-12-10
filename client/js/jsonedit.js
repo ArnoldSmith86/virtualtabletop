@@ -399,8 +399,11 @@ const jeCommands = [
   {
     id: 'je_exportCSV',
     name: 'export to CSV',
+    options: [
+      { label: 'separator',    type: 'select',    options: [ { value: ',', text: ',' }, { value: ';', text: ';' } ] }
+    ],
     context: '^deck ↦ cardTypes',
-    call: async function() {
+    call: async function(options) {
 
       function downloadCSV(csv, filename) {
         const csvFile = new Blob([csv], {type:"text/csv"});
@@ -422,10 +425,10 @@ const jeCommands = [
       }
 
       const allProperties = [...new Set(Object.values(jeStateNow.cardTypes).reduce((a,t)=>a.concat(...Object.keys(t)), []))];
-      let csvText = `id::INTERNAL;${allProperties.map(escapeField).join(';')};cardCount::INTERNAL\n`;
+      let csvText = `id::INTERNAL${options["separator"]}${allProperties.map(escapeField).join(options["separator"])}${options["separator"]}cardCount::INTERNAL\n`;
       for(const [ id, type ] of Object.entries(jeStateNow.cardTypes)) {
         const cardCount = widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==id).length;
-        csvText += `${escapeField(id)};${allProperties.map(p=>escapeField(type[p])).join(';')};${cardCount}\n`;
+        csvText += `${escapeField(id)}${options["separator"]}${allProperties.map(p=>escapeField(type[p])).join(options["separator"])}${options["separator"]}${cardCount}\n`;
       }
       downloadCSV(csvText, `${jeStateNow.id} cardTypes.csv`);
     }
