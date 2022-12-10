@@ -213,8 +213,6 @@ class Scoreboard extends Widget {
       this.tableDOM.innerHTML = '';
     }
 
-    this.tableDOM.style.height = this.get('height') + 'px';
-    this.tableDOM.style.width = this.get('width')+ 'px';
     let numRows;
     let numCols;
     let currentRound = parseInt(this.get('currentRound'));
