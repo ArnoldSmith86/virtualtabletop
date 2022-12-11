@@ -701,6 +701,8 @@ export default class Room {
     this.state._meta.states[id].variants[0].variant = players;
     this.state._meta.states[id].variants[0].players = this.state._meta.states[this.state._meta.activeState.stateID].variants[this.state._meta.activeState.variantID].players;
 
+    this.state._meta.activeState.saveStateID = id;
+
     this.sendMetaUpdate();
   }
 
