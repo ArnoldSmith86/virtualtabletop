@@ -579,9 +579,11 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 }
 
 function fillStateDetails(states, state, dom) {
+  toggleClass($('#statesOverlay'), 'withDetails', detailsInSidebar);
   if(!detailsInSidebar)
     showStatesOverlay(detailsOverlay);
-  toggleClass($('#statesOverlay'), 'withDetails', detailsInSidebar);
+  else
+    updateFilterOverflow();
 
   $('#stateDetailsOverlay').dataset.id = state.id;
   for(const dom of $a('#stateDetailsOverlay, #stateDetailsOverlay > *'))
@@ -786,9 +788,11 @@ function fillStateDetails(states, state, dom) {
   };
 
   $('#closeDetails').onclick = function() {
+    toggleClass($('#statesOverlay'), 'withDetails', false);
     if(!detailsInSidebar)
       showStatesOverlay('statesOverlay');
-    toggleClass($('#statesOverlay'), 'withDetails', false);
+    else
+      updateFilterOverflow();
   };
   $('#stateDetailsOverlay .buttons [icon=menu]').onclick = function(e) {
     $('#stateDetailsOverlay .buttons > div').classList.toggle('hidden');
