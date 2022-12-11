@@ -109,6 +109,10 @@ body.aspectTooGood.hiddenToolbar {
       padding: 20px 0 10px 0;
     }
 
+    #toolbar > img {
+      display: none;
+    }
+
     body.wideToolbar {
       --toolbarSize: 200px;
     }
@@ -134,14 +138,11 @@ body.aspectTooGood.hiddenToolbar {
     }
 
     @media (min-height: 440px) {
-      body.wideToolbar #toolbar {
-        background-image: url(i/branding/logo.svg);
-        background-size: 160px;
-        background-repeat: no-repeat;
-        background-position: center 30px;
-        padding-top: 84px;
+      body.wideToolbar #toolbar > img {
+        display: block;
+        margin: 10px 20px 3px 20px;
       }
-      body.wideToolbar #toolbar .divider:first-child {
+      body.wideToolbar #toolbar .divider:nth-child(2) {
         display: block;
         margin: 20px 10%;
       }
@@ -154,7 +155,7 @@ body.aspectTooGood.hiddenToolbar {
       margin: 10px 10%;
     }
 
-    #toolbar .divider:first-child {
+    #toolbar .divider:nth-child(2) {
       display: none;
     }
 
