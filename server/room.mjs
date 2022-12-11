@@ -516,9 +516,12 @@ export default class Room {
 
         const newVariants = [];
         for(const [ variantID, variant ] of Object.entries(state.variants)) {
-          if(!variant.plStateID && !variant.link)
+          if(variant.plStateID || variant.link) {
+            newVariants.push(variant);
+          } else if(fs.existsSync(this.variantFilename(id, variantID))) {
             fs.renameSync(this.variantFilename(id, variantID), this.variantFilename(id, newVariants.length));
-          newVariants.push(variant);
+            newVariants.push(variant);
+          }
         }
         state.variants = newVariants;
       }
