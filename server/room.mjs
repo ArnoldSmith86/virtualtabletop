@@ -133,6 +133,9 @@ export default class Room {
         }
 
         addAsVariant = true;
+
+        if(type == 'state')
+          this.state._meta.activeState = { stateID, variantID: newVariantID };
       }
 
 
