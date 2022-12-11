@@ -98,6 +98,15 @@ class Scoreboard extends Widget {
     return tr;
   }
 
+  // Compute desired text color from luminance of background
+  // See https://stackoverflow.com/questions/3942878
+  getFgColor(bgColor) {
+    const red = parseInt(bgColor.slice(1,3),16);
+    const green = parseInt(bgColor.slice(3,5),16);
+    const blue = parseInt(bgColor.slice(5,7),16);
+    return red*0.299 + green*0.587 + blue*0.114 > 186 ? "#000000" : "#ffffff";
+  }
+
   tableCreate(seats) {
     /* This routine creates the HTML table for display in the scoreboard. It is
      * complicated by the fact that the `seats` property can be either an array of
@@ -112,14 +121,15 @@ class Scoreboard extends Widget {
     const showTotals = this.get('showTotals');
     const scoreProperty = this.get('scoreProperty');
     let sortField = this.get('sortField');
-    let usePlayerColors = this.get('usePlayerColors');
-    const colors = []; // Array of player colors
 
     // Compute number of scoring rounds to show
     let rounds = this.get('rounds'); // User-supplied round names
     let includedSeats = seats; // Array of all relevant seats
     if(typeof(seats)=='object') // Array of all seats for team use
       includedSeats = Object.keys(seats).reduce((union,key) => union.concat(seats[key]), []);
+
+    // Do not use player colors if team scores are being shown.
+    let usePlayerColors = this.get('usePlayerColors') && Array.isArray(seats);
 
     let numRounds=0;
     for (let i=0; i < includedSeats.length; i++) {
@@ -165,12 +175,7 @@ class Scoreboard extends Widget {
       if(!this.get('sortAscending'))
         pScores = pScores.reverse();
 
-      // Get player colors if needed
-      if(usePlayerColors)
-        for (let i=0; i < seats.length; i++)
-          colors.push(seats.filter(x=> x.get('player') == pScores[i][0])[0].get('color'));
     } else if(typeof seats == 'object') { // Display team scores
-      usePlayerColors = false; // No predefined colors for teams
       let i = 0;
       for (const team in seats) {
         // Get array of (arrays of) seat scores.
@@ -191,7 +196,7 @@ class Scoreboard extends Widget {
       return null;
 
 
-    // Fill empty player names with 'None'
+    // Fill empty player/team names with 'None'
     for (let i=0; i < pScores.length; i++)
       if(pScores[i][0]=='')
         pScores[i][0] = 'None';
@@ -215,12 +220,12 @@ class Scoreboard extends Widget {
 
     let numRows;
     let numCols;
-    let currentRound = parseInt(this.get('currentRound'));
 
-    if (isNaN(currentRound) || currentRound <1 || currentRound > numRounds)
+    let currentRound = parseInt(this.get('currentRound'));
+    if (isNaN(currentRound) || currentRound < 1 || currentRound > numRounds)
       currentRound = null;
 
-    if(this.get('playersInColumns')) {
+    if(this.get('playersInColumns')) { // Scores are in columns
       // Compute total number of rows and columns in table
       numCols = pScores.length + 1;
       numRows = numRounds + 1 + (showTotals ? 1 : 0);
@@ -230,17 +235,19 @@ class Scoreboard extends Widget {
       names.unshift(this.get('roundLabel'));
       this.tableDOM.innerHTML += '<tbody></tbody>';
       const tr = this.addRowToTable($('tbody', this.tableDOM), names, 'td');
+      const defaultColor = window.getComputedStyle(tr.cells[0]).getPropertyValue('background-color');
+      // Get player colors if needed
       if(usePlayerColors)
         for (let c=0; c<pScores.length; c++ ) {
-          tr.cells[c+1].style.backgroundColor = colors[c];
-          tr.cells[c+1].style.color = 'white';
+          const bgColor = pScores[c][0]=='None' ? defaultColor : seats.filter(x=> x.get('player') == pScores[c][0])[0].get('color');
+          tr.cells[c+1].style.backgroundColor = bgColor;
+          tr.cells[c+1].style.color = this.getFgColor(bgColor);
         }
       // Add remaining rows
       for( let r=1; r < numRows; r++ ) {
         const pRow = pScores.map(x => x[r]);
         pRow.unshift(rounds[r]);
         const tr = this.addRowToTable($('tbody',this.tableDOM), pRow, 'td');
-        tr.cells[0].classList.add('firstCol');
         if(r == currentRound)
           for(let c=1; c < numCols; c++)
             tr.cells[c].classList.add('currentRound');
@@ -255,15 +262,14 @@ class Scoreboard extends Widget {
 
       // First row contains round names
       const tr = this.addRowToTable(this.tableDOM, rounds, 'td');
-      for (let c=0; c < numCols; c++)
-        tr.cells[c].classList.add('firstRow');
+      const defaultColor = window.getComputedStyle(tr.cells[0]).getPropertyValue('background-color');
       // Remaining rows are one row per player.
       for( let r=0; r < pScores.length; r++) {
         const tr = this.addRowToTable(this.tableDOM, pScores[r], 'td');
-        tr.cells[0].classList.add('firstCol');
         if(usePlayerColors) {
-          tr.cells[0].style.backgroundColor = colors[r];
-          tr.cells[0].style.color = 'white';
+          const bgColor = pScores[r][0]=='None' ? defaultColor : seats.filter(x=> x.get('player') == pScores[r][0])[0].get('color');
+          tr.cells[0].style.backgroundColor = bgColor;
+          tr.cells[0].style.color = this.getFgColor(bgColor);
         }
       }
       for(let r=1; r < numRows; r++) {
@@ -273,13 +279,6 @@ class Scoreboard extends Widget {
           this.tableDOM.rows[r].cells[numCols-1].classList.add('totalsLine');
       }
     }
-
-    // Make top row, left column non-scrollable
-    for (let r=0; r<numRows; r++)
-      this.tableDOM.rows[r].cells[0].classList.add('firstCol');
-    for (let c=0; c< numCols; c++)
-      this.tableDOM.rows[0].cells[c].classList.add('firstRow');
   }
-
 }
 
