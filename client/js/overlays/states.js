@@ -859,7 +859,7 @@ function fillStateDetails(states, state, dom) {
   };
   $('#discardDetails').onclick = async function() {
     $('#statesButton').dataset.overlay = 'confirmOverlay';
-    if(await confirmOverlay('Discard changes', 'Are you sure you want to discard any changes you made to this game?', 'Discard', 'Keep', 'delete', 'undo', 'red')) {
+    if(await confirmOverlay('Discard changes', "Are you sure you want to discard any changes you made to this game's variants and metadata?", 'Discard', 'Keep', 'delete', 'undo', 'red')) {
       disableEditing($('#stateDetailsOverlay'), state);
       showStatesOverlay('statesOverlay');
       dom.click();
