@@ -708,7 +708,6 @@ function jeAddRoutineOperationCommands(command, defaults) {
     show: jeRoutineCall((_, routine)=>Array.isArray(routine), true)
   });
 
-  defaults.skip = false;
   for(const property in defaults) {
     jeCommands.push({
       id: 'default_' + command + '_' + property,
@@ -757,7 +756,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, properties: null });
   jeAddRoutineOperationCommands('DELETE', { collection: 'DEFAULT'});
   jeAddRoutineOperationCommands('FLIP', { count: 0, face: null, faceCycle: 'forward', holder: null, collection: 'DEFAULT' });
-  jeAddRoutineOperationCommands('FOREACH', { loopRoutine: [], in: [], collection: 'DEFAULT' });
+  jeAddRoutineOperationCommands('FOREACH', { loopRoutine: [], in: [], range: [], collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('GET', { variable: 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
   jeAddRoutineOperationCommands('IF', { condition: null, operand1: null, relation: '==', operand2: null, thenRoutine: [], elseRoutine: [] });
   jeAddRoutineOperationCommands('INPUT', { cancelButtonIcon: null, cancelButtonText: "Cancel", confirmButtonIcon: null, confirmButtonText: "OK", fields: [] } );
@@ -1830,8 +1829,8 @@ function jeLoggingRoutineEnd(variables, collections) {
     const problems = document.getElementsByClassName('jeLogHasProblems');
     for (i=0; i<problems.length; i++) {
       let node = problems[i];
-      while (node && !node.classList.contains('jeLog')) {
-        if(node.classList.contains('jeLogOperation')) {
+      while (node && node.id != 'jeLog') {
+        if(node.classList.contains('jeLogOperation') || node.classList.contains('jeLog')) {
           node.firstElementChild.classList.remove('jeExpander');
           node.firstElementChild.classList.add('jeRedExpander')
         }
@@ -1896,7 +1895,7 @@ function jeLoggingRoutineOperationEnd(problems, variables, collections, skipped)
 
   jeLoggingHTML =  `
     ${savedHTML[0]}
-    <div class="jeLogOperation ${skipped ? 'jeLogSkipped' : ''} ${problems.length ? 'jeLogHasProblems' : ''}">
+    <div class="jeLogOperation ${skipped ? 'jeLogSkipped' : ''} ${problems.length ? 'jeLogHasProblems' : 'jeLogHasNoProblems'}">
       <div class="jeExpander">
         <span class="jeLogName">${opFunction}</span> ${jeRoutineResult} <span class="jeLogTime">(${+new Date() - startTime}ms)</span>
       </div>
@@ -2202,6 +2201,10 @@ function jeToggle() {
     $('body').classList.add('jsonEdit');
     if(jeWidget && !widgets.has(jeWidget.id))
       jeEmpty();
+    if(jeDebugViewing) {
+      jeCallCommand(jeCommands.find(o => o.id == 'je_toggleDebug'));
+      jeShowCommands()
+    }
     jeDisplayTree();
   } else {
     $('body').classList.remove('jsonEdit');
