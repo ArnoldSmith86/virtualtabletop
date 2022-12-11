@@ -837,6 +837,7 @@ export class Widget extends StateManaged {
           a.collection = asArray(a.canvas);
           delete a.canvas
         }
+        this.isValidID(a.collection, problems); // Validate widget IDs in collection
         const collection = getCollection(a.collection);
         if(collections[collection].length) {
           for(const c of collections[collection].slice(0, a.count || 999999))
@@ -943,15 +944,10 @@ export class Widget extends StateManaged {
         let collection;
         let theItem;
         if(a.holder !== undefined) {
-          const holders = asArray(a.holder).filter(w=> widgets.has(w) && widgets.get(w).get('type')=='holder');
-          if(holders.length != asArray(a.holder).length)
-            problems.push("Holder parameter must consist only of holders.");
-          if(this.isValidID(holders,problems)) {
-            variables[a.variable] = 0;
-            theItem = `${a.holder}`;
-            for (const h of holders)
-              variables[a.variable] += widgets.get(h).children().length;
-          }
+          variables[a.variable] = 0;
+          theItem = `${a.holder}`;
+          for (const h of asArray(a.holder))
+            variables[a.variable] += this.isValidID(h, problems) ? widgets.get(h).children().length : 0;
         } else if(collection = getCollection(a.collection)) {
           variables[a.variable] = collections[collection].length;
           theItem = `${a.collection}`
@@ -1694,7 +1690,7 @@ export class Widget extends StateManaged {
   }
 
   isValidID(id, problems) {
-    if(Array.isArray(id)) 
+    if(Array.isArray(id))
       return !id.map(i=>this.isValidID(i, problems)).filter(r=>r!==true).length;
     if(widgets.has(id))
       return true;
