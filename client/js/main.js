@@ -327,6 +327,8 @@ function getSVG(url, replaces, callback) {
 onLoad(function() {
   on('#pileOverlay', 'click', e=>e.target.id=='pileOverlay'&&showOverlay());
 
+  on('#toolbar > img', 'click', e=>$('#statesButton').click());
+
   on('.toolbarTab', 'click', function(e) {
     if(e.currentTarget.classList.contains('active')) {
       if($('#stateDetailsOverlay.notEditing') && $('#stateDetailsOverlay.notEditing').style.display == 'flex')
