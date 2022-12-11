@@ -558,12 +558,13 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 
   updateLibraryFilter();
 
-  if($('#stateDetailsOverlay').style.display != 'none') {
+  if($('#stateDetailsOverlay').style.display != 'none' || $('#statesOverlay.withDetails')) {
     const stateID = $('#stateDetailsOverlay').dataset.id;
     if(!states[stateID]) {
-      showStatesOverlay('statesOverlay');
+      $('#closeDetails').click();
     } else if(!$('#stateDetailsOverlay').classList.contains('editing')) {
-      showOverlay();
+      if(!$('#statesOverlay.withDetails'))
+        showOverlay();
       fillStateDetails(states, states[stateID], $(`#statesOverlay .roomState[data-id="${stateID}"]`));
     }
   }
@@ -580,7 +581,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 function fillStateDetails(states, state, dom) {
   if(!detailsInSidebar)
     showStatesOverlay(detailsOverlay);
-  toggleClass($('#statesOverlay'), 'withDetails', true);
+  toggleClass($('#statesOverlay'), 'withDetails', detailsInSidebar);
 
   $('#stateDetailsOverlay').dataset.id = state.id;
   for(const dom of $a('#stateDetailsOverlay, #stateDetailsOverlay > *'))
