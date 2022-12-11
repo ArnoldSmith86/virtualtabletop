@@ -836,6 +836,9 @@ div:nth-of-type(2) > .list > .roomState .star {
     right: 0;
     left: unset;
   }
+  #statesOverlay.withDetails #filterOverflow > div {
+    right: calc((var(--size) + 22px) * 3 + 10px);
+  }
 
   #stateDetailsOverlay {
     background: var(--roomColor);
