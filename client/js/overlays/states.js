@@ -497,7 +497,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     entry.dataset.year = state.year;
     entry.dataset.stars = state.stars;
     entry.dataset.timePlayed = state.timePlayed;
-    entry.dataset.text = `${state.name} ${state.similarName} ${state.description}`.toLowerCase();
+    entry.dataset.text = `${state.name} ${state.similarName} ${state.description} ${state.similarAwards}`.toLowerCase();
     entry.dataset.players = validPlayers.join();
     entry.dataset.duration = String(state.time).replace(/.*[^0-9]/, '');
     entry.dataset.languages = validLanguages.join();
