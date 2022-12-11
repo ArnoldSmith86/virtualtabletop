@@ -665,7 +665,7 @@ function fillStateDetails(states, state, dom) {
 
     $('[icon=play_arrow]', vEntry).onclick = async function() {
       $('#statesButton').dataset.overlay = 'confirmOverlay';
-      if(!widgets.size || await confirmOverlay('Start game', 'Are you sure you want to load a new game? You will lose all unsaved progress in the current game.', 'Start new game', 'Resume current game', 'play_arrow', 'undo')) {
+      if(!widgets.size || await confirmOverlay('Switch game', 'Are you sure you want to load a new game? You will lose all unsaved progress in the current game.', 'Load new game', 'Resume current game', 'play_arrow', 'undo')) {
         toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading, linkSourceStateID: state.id });
         showStatesOverlay(detailsOverlay);
         $('#activeGameButton').click();
