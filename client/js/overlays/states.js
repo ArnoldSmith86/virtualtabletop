@@ -807,7 +807,7 @@ function fillStateDetails(states, state, dom) {
   $('#shareLinkOverlay button[icon=close]').onclick = _=>showStatesOverlay(detailsOverlay);
   $('#shareLinkOverlay button[icon=link]').onclick = async function() {
     try {
-      await navigator.clipboard.writeText($('#shareLinkOverlay input').value);
+      await navigator.clipboard.writeText($('#shareLinkOverlay input').value.replace(/( \(copied\))+$/, ''));
       $('#shareLinkOverlay input').value += ' (copied)';
     } catch(e) {
       $('#shareLinkOverlay input').value += ' (NOT copied)';
