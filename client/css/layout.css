@@ -587,9 +587,10 @@ div[icon]::before {
   font-family: "Material Icons";
   color: #f8f8f8;
   font-size: 250px;
+  line-height: 250px;
   position: absolute;
   right: -40px;
-  top: -40px;
+  top: -10px;
 }
 
 div[icon] * {
