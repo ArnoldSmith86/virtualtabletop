@@ -668,10 +668,19 @@ function fillStateDetails(states, state, dom) {
 
     $('[icon=play_arrow]', vEntry).onclick = async function() {
       $('#statesButton').dataset.overlay = 'confirmOverlay';
-      if(!widgets.size || await confirmOverlay('Switch game', 'Are you sure you want to load a new game? You will lose all unsaved progress in the current game.', 'Load new game', 'Resume current game', 'play_arrow', 'undo'))
+      let switchToActiveGame = true;
+      let loadNewState = true;
+
+      if(widgets.size) {
+        loadNewState = await confirmOverlay('Switch game', 'Are you sure you want to load a new game? You will lose all unsaved progress in the current game.', 'Load new game', 'Resume current game', 'play_arrow', 'undo');
+        switchToActiveGame = loadNewState !== null;
+      }
+
+      if(loadNewState)
         toServer('loadState', { stateID: stateIDforLoading, variantID: variantIDforLoading, linkSourceStateID: state.id });
       showStatesOverlay(detailsOverlay);
-      $('#activeGameButton').click();
+      if(switchToActiveGame)
+        $('#activeGameButton').click();
     };
 
     $('[icon=edit]', vEntry).onclick = function(e) {
@@ -977,7 +986,10 @@ async function confirmOverlay(title, text, confirmButton, cancelButton, confirmI
       resolve(true);
     };
 
-    $('#confirmOverlay .titleWithCloseButton button').onclick = $('#confirmOverlay .buttons button:nth-of-type(1)').onclick;
+    $('#confirmOverlay .titleWithCloseButton button').onclick = function() {
+      showOverlay();
+      resolve(null);
+    };
   });
 }
 
