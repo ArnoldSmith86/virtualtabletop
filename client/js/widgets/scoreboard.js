@@ -11,17 +11,17 @@ class Scoreboard extends Widget {
       height: 200,
       layer: -1,
       typeClasses: 'widget scoreboard',
-      usePlayerColors: true,
       playersInColumns: true,
       rounds: null,
-      sortField: 'index',
-      sortAscending: true,
+      roundLabel: 'Round',
       scoreProperty: 'score',
-      includeAllSeats: false,
-      showTotals: true,
       seats: null,
       showAllRounds: false,
-      roundLabel: 'Round',
+      showAllSeats: false,
+      showPlayerColors: true,
+      showTotals: true,
+      sortField: 'index',
+      sortAscending: true,
       currentRound: null
     });
   }
@@ -74,12 +74,12 @@ class Scoreboard extends Widget {
     if(typeof seats == 'string') // Allow "seats": "Seat1"
       seats = asArray(seats);
     if(Array.isArray(seats) || seats === null) // Scoreboard just using seats
-       return [...widgetFilter(w => w.get('type') == 'seat' && (this.get('includeAllSeats') || w.get('player')) && (!seats || seats.includes(w.get('id'))))]
+       return [...widgetFilter(w => w.get('type') == 'seat' && (this.get('showAllSeats') || w.get('player')) && (!seats || seats.includes(w.get('id'))))]
     else if(typeof seats == 'object') { // Scoreboard using teams
       const newSeats = {};
       for (const team in seats) {
         newSeats[team] = asArray(seats[team]);
-        newSeats[team] = [... widgetFilter(w => w.get('type') == 'seat' && (this.get('includeAllSeats') || w.get('player')) && newSeats[team].includes(w.get('id')))];
+        newSeats[team] = [... widgetFilter(w => w.get('type') == 'seat' && (this.get('showAllSeats') || w.get('player')) && newSeats[team].includes(w.get('id')))];
       }
       return newSeats;
     } else // 'seats' property is not array or object, return null so table will be cleared.
@@ -199,7 +199,7 @@ class Scoreboard extends Widget {
         pScores = pScores.reverse();
       
       for(let i=0; i<pScores.length; i++)
-        pScores[i][0] = widgets.get(pScores[i][0]).get('player') || 'None';
+        pScores[i][0] = widgets.get(pScores[i][0]).get('player') || '-';
       
     } else if(typeof seats == 'object') { // Display team scores
       let i = 0;
@@ -215,7 +215,7 @@ class Scoreboard extends Widget {
         // Add totals and team name
         if(showTotals)
           pScores[i].push(this.getTotal(pScores[i]));
-        pScores[i].unshift(team || 'None');
+        pScores[i].unshift(team || '-');
         i++
       }
     } else { // Should never happen.
@@ -232,7 +232,7 @@ class Scoreboard extends Widget {
     }
 
     // Do not use player colors if team scores are being shown.
-    let usePlayerColors = this.get('usePlayerColors') && Array.isArray(seats);
+    let showPlayerColors = this.get('showPlayerColors') && Array.isArray(seats);
 
     let currentRound = parseInt(this.get('currentRound'));
     if (isNaN(currentRound) || currentRound < 1 || currentRound > numRounds)
@@ -250,9 +250,9 @@ class Scoreboard extends Widget {
       const tr = this.addRowToTable($('tbody', this.tableDOM), names, 'td');
       const defaultColor = window.getComputedStyle(tr.cells[0]).getPropertyValue('background-color');
       // Get player colors if needed
-      if(usePlayerColors)
+      if(showPlayerColors)
         for (let c=0; c<pScores.length; c++ ) {
-          const bgColor = pScores[c][0]=='None' ? defaultColor : seats.filter(x=> x.get('player') == pScores[c][0])[0].get('color');
+          const bgColor = pScores[c][0]=='-' ? defaultColor : seats.filter(x=> x.get('player') == pScores[c][0])[0].get('color');
           tr.cells[c+1].style.backgroundColor = bgColor;
           tr.cells[c+1].style.color = this.getFgColor(bgColor);
         }
@@ -279,8 +279,8 @@ class Scoreboard extends Widget {
       // Remaining rows are one row per player.
       for( let r=0; r < pScores.length; r++) {
         const tr = this.addRowToTable(this.tableDOM, pScores[r], 'td');
-        if(usePlayerColors) {
-          const bgColor = pScores[r][0]=='None' ? defaultColor : seats.filter(x=> x.get('player') == pScores[r][0])[0].get('color');
+        if(showPlayerColors) {
+          const bgColor = pScores[r][0]=='-' ? defaultColor : seats.filter(x=> x.get('player') == pScores[r][0])[0].get('color');
           tr.cells[0].style.backgroundColor = bgColor;
           tr.cells[0].style.color = this.getFgColor(bgColor);
         }
