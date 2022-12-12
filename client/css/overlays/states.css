@@ -69,6 +69,13 @@
   margin: 0 5px;
 }
 
+#librarySortWrapper i {
+  color: green;
+}
+#librarySortWrapper select {
+  border-color: green;
+}
+
 #filterOverflow.empty, #filterOverflow:not(.active) > div {
   display: none;
 }
