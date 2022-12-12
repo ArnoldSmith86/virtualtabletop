@@ -105,10 +105,16 @@ class Scoreboard extends Widget {
   // Compute desired text color from luminance of background
   // See https://stackoverflow.com/questions/3942878
   getFgColor(bgColor) {
-    const red = parseInt(bgColor.slice(1,3),16);
-    const green = parseInt(bgColor.slice(3,5),16);
-    const blue = parseInt(bgColor.slice(5,7),16);
-    return red*0.299 + green*0.587 + blue*0.114 > 186 ? "#000000" : "#ffffff";
+    function getHexColor(color) {
+      const a = document.createElement('div');
+      a.style.color = color;
+      const colorStr = window.getComputedStyle( document.body.appendChild(a) ).color;
+      const colors = colorStr.match(/\d+/g).map(function(a){ return parseInt(a,10); });
+      document.body.removeChild(a);
+      return colors;
+    }
+    const bg = getHexColor(bgColor);
+    return bg[0]*0.299 + bg[1]*0.587 + bg[2]*0.114 > 186 ? "#000000" : "#ffffff";
   }
 
   tableCreate(seats) {
