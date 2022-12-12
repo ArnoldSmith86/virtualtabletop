@@ -149,13 +149,11 @@ export class Widget extends StateManaged {
   }
 
   applyDeltaToDOM(delta) {
-    let previousTransition = null;
     let fromTransform = null;
     let newParent = undefined;
     if(delta.parent !== undefined) {
       newParent = delta.parent ? widgets.get(delta.parent).domElement : $('#topSurface');
       fromTransform = getElementTransformRelativeTo(this.domElement, newParent);
-      previousTransition = this.domElement.style.transition;
     }
 
     this.applyCSS(delta);
@@ -178,10 +176,9 @@ export class Widget extends StateManaged {
         // to allow for a smooth transition animation.
         const newTransform = this.domElement.style.transform;
         this.domElement.style.transform = fromTransform;
-        // Force style recalc to commit transform with updated class list.
-        this.domElement.style.transition = 'none !important';
+        // Force style recalc to commit from transform and start a transition
+        // on applying the destination transform.
         this.domElement.offsetTop;
-        this.domElement.style.transition = previousTransition;
         this.domElement.style.transform = newTransform;
       }
 
