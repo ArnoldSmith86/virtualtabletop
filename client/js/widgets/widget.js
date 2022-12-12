@@ -4,7 +4,7 @@ import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
-import { center, distance, overlap, getOffset, applyTransformedOffset } from '../geometry.js';
+import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize } from '../geometry.js';
 
 const readOnlyProperties = new Set([
   '_absoluteRotation',
@@ -367,42 +367,23 @@ export class Widget extends StateManaged {
     return coordLocal.x >= 0 && coordLocal.y >= 0 && coordLocal.x <= this.get('width') && coordLocal.y <= this.get('height');
   }
   coordLocalFromCoordClient(coord) {
-    const s = this.get('_absoluteScale') * scale;
-    const rot = this.get('_absoluteRotation') % 360;
-    const localCenter = {x: this.get('width') / 2, y: this.get('height') / 2};
-    const offset = getOffset(center(this.domElement), coord);
-    return applyTransformedOffset(localCenter, offset, 1 / s, -rot );
+    const result = getPointOnPlane(getScreenTransform(this.domElement), coord.x, coord.y);
+    return result || new DOMPoint();
   }
   coordLocalFromCoordGlobal(coord) {
     return this.coordLocalFromCoordParent(this.coordParentFromCoordGlobal(coord));
   }
   coordLocalFromCoordParent(coord) {
-    const s = this.get('scale');
-    const rot = this.get('rotation') % 360;
-    if(s == 1 && rot == 0) {
-      return {x: coord.x - this.get('x'), y: coord.y - this.get('y')};
-    } else {
-      const localCenter = {x: this.get('width') / 2, y: this.get('height') / 2};
-      const parentCenter = {x: localCenter.x + this.get('x') , y: localCenter.y + this.get('y') };
-      const offset = getOffset(parentCenter, coord);
-      return applyTransformedOffset(localCenter, offset, 1 / s, -rot );
-    }
+    const result = getPointOnPlane(getElementTransform(this.domElement), coord.x, coord.y);
+    return result || new DOMPoint();
   }
   coordParentFromCoordGlobal(coord) {
     const p = this.get('parent');
     return (widgets.has(p)) ? widgets.get(p).coordLocalFromCoordGlobal(coord) : coord;
   }
   coordParentFromCoordLocal(coord) {
-    let s = this.get('scale');
-    let rot = this.get('rotation') % 360;
-    if(s == 1 && rot == 0) {
-      return {x: coord.x + this.get('x'), y: coord.y + this.get('y')};
-    } else {
-      const localCenter = {x: this.get('width') / 2, y: this.get('height') / 2};
-      const parentCenter = {x: localCenter.x + this.get('x') , y: localCenter.y + this.get('y') };
-      const offset = getOffset(localCenter, coord);
-      return applyTransformedOffset(parentCenter, offset, s, rot );
-    }
+    const transform = getElementTransform(this.domElement);
+    return dehomogenize(transform.transformPoint(new DOMPoint(coord.x, coord.y)));
   }
 
   css() {
