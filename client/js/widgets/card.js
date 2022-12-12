@@ -142,11 +142,12 @@ class Card extends Widget {
           } else if (object.type == 'html') {
             // Prevent input from going to frame.
             objectDiv.style.pointerEvents = 'none';
-            objectDiv.setAttribute('sandbox', "");
+            objectDiv.setAttribute('sandbox', '');
             objectDiv.setAttribute('width', object.width);
             objectDiv.setAttribute('height', object.height);
+            objectDiv.setAttribute('allow', 'autoplay');
             const content = object.value.replaceAll(/\$\{PROPERTY ([A-Za-z0-9_-]+)\}/g, (m, n) => {
-              return object[n] || ""
+              return object[n] || '';
             });
             // Applies a template which fills available space, uses the same classes and applies
             // nested CSS style rules.
