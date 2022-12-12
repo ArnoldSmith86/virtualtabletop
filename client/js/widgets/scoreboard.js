@@ -29,9 +29,7 @@ class Scoreboard extends Widget {
   applyDeltaToDOM(delta) {
     if(delta) // Don't call super unless this is a real delta to the scoreboard rather than from a seat
       super.applyDeltaToDOM(delta);
-    const seats = this.getIncludedSeats();
-    if(seats !== null)
-      this.tableCreate(seats)
+    this.tableCreate(this.getIncludedSeats())
   }
 
   get(property) {
@@ -68,17 +66,19 @@ class Scoreboard extends Widget {
 
   // Return a modified 'seat' array or object including the seat widgets (not just the seat ids) to actually be used.
   getIncludedSeats() {
-    const seats = this.get('seats');
+    let seats = this.get('seats');
+    if(typeof seats == 'string') // Allow "seats": "Seat1"
+      seats = asArray(seats);
     if(Array.isArray(seats) || seats === null) // Scoreboard just using seats
        return [...widgetFilter(w => w.get('type') == 'seat' && (this.get('includeAllSeats') || w.get('player')) && (!seats || seats.includes(w.get('id'))))]
-    else if(seats !== null && typeof seats == 'object') { // Scoreboard using teams
+    else if(typeof seats == 'object') { // Scoreboard using teams
       const newSeats = {};
       for (const team in seats) {
         newSeats[team] = asArray(seats[team]);
         newSeats[team] = [... widgetFilter(w => w.get('type') == 'seat' && (this.get('includeAllSeats') || w.get('player')) && newSeats[team].includes(w.get('id')))];
       }
       return newSeats;
-    } else // 'seats' property is not array or object, ignore it.
+    } else // 'seats' property is not array or object, return null so table will be cleared.
       return null;
   }
 
@@ -118,6 +118,15 @@ class Scoreboard extends Widget {
      * There are lots of other things going on, to get the totals line, round names, etc
      * correct.
      */
+
+    // First deal with cases where we just need to clear the table; invalid set of seats.
+    // We choose here to regard a result of [] or {} as a valid set of seats/teams with no entries.
+    if(seats===null) {
+      if(this.tableDOM)
+        this.tableDOM.innerHTML = '';
+      return
+    }
+      
     const showTotals = this.get('showTotals');
     const scoreProperty = this.get('scoreProperty');
     let sortField = this.get('sortField');
@@ -192,9 +201,10 @@ class Scoreboard extends Widget {
         pScores[i].unshift(team);
         i++
       }
-    } else // 'seats' property is not null, array, or object, ignore it.
-      return null;
-
+    } else { // Should never happen.
+      console.log('Internal error: invalid seats in tableCreate');
+      return
+    }
 
     // Fill empty player/team names with 'None'
     for (let i=0; i < pScores.length; i++)
