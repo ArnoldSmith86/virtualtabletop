@@ -153,7 +153,7 @@ class Card extends Widget {
             const css = object['css'];
             const extraStyles = typeof css == 'object' ? this.cssToStylesheet(css, true, object) : '';
             const html = `<!DOCTYPE html>\n` +
-                `<html><head><style>html,body {height: 100%; margin: 0;}${extraStyles}` +
+                `<html><head><style>html,body {height: 100%; margin: 0;} html {font-size: 14px; font-family: 'Roboto', sans-serif;} body {overflow: hidden;}${extraStyles}` +
                 `</style></head><body class="${object.classes || ""}">${content}</body></html>`;
             objectDiv.srcdoc = html;
           } else {
