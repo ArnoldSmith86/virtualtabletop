@@ -141,25 +141,29 @@ class Scoreboard extends Widget {
     const scoreProperty = this.get('scoreProperty');
     let sortField = this.get('sortField');
 
-    // Compute number of scoring rounds to show
+    // Compute number of scoring rounds to show and create round names table
     let rounds = this.get('rounds'); // User-supplied round names
-    let includedSeats = seats; // Array of all relevant seats
-    if(typeof(seats)=='object') // Array of all seats for team use
-      includedSeats = Object.keys(seats).reduce((union,key) => union.concat(seats[key]), []);
-
-    // Do not use player colors if team scores are being shown.
-    let usePlayerColors = this.get('usePlayerColors') && Array.isArray(seats);
-
     let numRounds=0;
-    for (let i=0; i < includedSeats.length; i++) {
-      const score = includedSeats[i].get(scoreProperty);
+    const arrayOfSeats = Array.isArray(seats) ? seats : Object.keys(seats).reduce((union,key) => union.concat(seats[key]), []);
+    for (let i=0; i < arrayOfSeats.length; i++) {
+      const score = arrayOfSeats[i].get(scoreProperty);
       if(Array.isArray(score) && score.length > numRounds)
         numRounds = score.length;
     }
     if(this.get('showAllRounds') && Array.isArray(rounds))
       numRounds = Math.max(rounds.length, numRounds);
 
-    let pScores = []; // Array of scores. pScores[i][0] is player name or team name, last is total (or last score if showTotals is false)
+    if(Array.isArray(rounds))
+      rounds = rounds.concat(Array(numRounds).fill('')).slice(0,numRounds);
+    else
+      rounds = [...Array(numRounds).keys()].map(i => i+1);
+    if(showTotals)
+      rounds.push('Totals');
+    rounds.unshift(this.get('roundLabel'));
+
+    // Fill scores array. pScores[i][0] is player name or team name, last is total
+    // (or last score if showTotals is false)    
+    let pScores = []; 
     if(Array.isArray(seats)) { // Show individual seats
       // Fill player score array, totals array
       for (let i=0; i < seats.length; i++) {
@@ -177,7 +181,7 @@ class Scoreboard extends Widget {
         pScores[i] = pScores[i].concat(Array(numRounds).fill('')).slice(0,numRounds);
         if(showTotals)
           pScores[i].push(total);
-        pScores[i].unshift(seats[i].get('player'));
+        pScores[i].unshift(seats[i].get('id')); // Temporarily use the seat id here
       }
 
       // Sort player scores as requested
@@ -187,13 +191,16 @@ class Scoreboard extends Widget {
         pScores.sort((a,b) => a[a.length-1] - b[b.length-1])
       else
         pScores.sort((a,b) => {
-          const pa = includedSeats.filter(x=> x.get('player') == a[0])[0].get(sortField);
-          const pb = includedSeats.filter(x=> x.get('player') == b[0])[0].get(sortField);
+          const pa = seats.filter(x=> x.get('id') == a[0])[0].get(sortField);
+          const pb = seats.filter(x=> x.get('id') == b[0])[0].get(sortField);
           return pa < pb ? -1 : pa > pb ? 1 : 0; // These need not be numeric
         });
       if(!this.get('sortAscending'))
         pScores = pScores.reverse();
-
+      
+      for(let i=0; i<pScores.length; i++)
+        pScores[i][0] = widgets.get(pScores[i][0]).get('player') || 'None';
+      
     } else if(typeof seats == 'object') { // Display team scores
       let i = 0;
       for (const team in seats) {
@@ -208,27 +215,13 @@ class Scoreboard extends Widget {
         // Add totals and team name
         if(showTotals)
           pScores[i].push(this.getTotal(pScores[i]));
-        pScores[i].unshift(team);
+        pScores[i].unshift(team || 'None');
         i++
       }
     } else { // Should never happen.
       console.log('Internal error: invalid seats in tableCreate');
       return
     }
-
-    // Fill empty player/team names with 'None'
-    for (let i=0; i < pScores.length; i++)
-      if(pScores[i][0]=='')
-        pScores[i][0] = 'None';
-
-    // Create round name headers
-    if(Array.isArray(rounds))
-      rounds = rounds.concat(Array(numRounds).fill('')).slice(0,numRounds);
-    else
-      rounds = [...Array(numRounds).keys()].map(i => i+1);
-    if(showTotals)
-      rounds.push('Totals');
-    rounds.unshift(this.get('roundLabel'));
 
     // Finally, build the table
     if(!this.tableDOM) {
@@ -238,8 +231,8 @@ class Scoreboard extends Widget {
       this.tableDOM.innerHTML = '';
     }
 
-    let numRows;
-    let numCols;
+    // Do not use player colors if team scores are being shown.
+    let usePlayerColors = this.get('usePlayerColors') && Array.isArray(seats);
 
     let currentRound = parseInt(this.get('currentRound'));
     if (isNaN(currentRound) || currentRound < 1 || currentRound > numRounds)
@@ -247,8 +240,8 @@ class Scoreboard extends Widget {
 
     if(this.get('playersInColumns')) { // Scores are in columns
       // Compute total number of rows and columns in table
-      numCols = pScores.length + 1;
-      numRows = numRounds + 1 + (showTotals ? 1 : 0);
+      const numCols = pScores.length + 1;
+      const numRows = numRounds + 1 + (showTotals ? 1 : 0);
 
       // Add header row
       const names = pScores.map(x => x[0]);
@@ -277,8 +270,8 @@ class Scoreboard extends Widget {
             this.tableDOM.rows[numRows-1].cells[c].classList.add('totalsLine');
     } else { // Scores are in rows
       // Compute total number of rows and columns in table
-      numCols = numRounds + 1 + (showTotals ? 1 : 0);
-      numRows = pScores.length + 1;
+      const numCols = numRounds + 1 + (showTotals ? 1 : 0);
+      const numRows = pScores.length + 1;
 
       // First row contains round names
       const tr = this.addRowToTable(this.tableDOM, rounds, 'td');
