@@ -465,7 +465,10 @@ window.onkeyup = function(event) {
   if(event.key == 'Escape') {
     if(overlayActive || edit)
       $('#activeGameButton').click();
-    else if(jeEnabled)
+    else if(jeEnabled && jeDebugViewing) {
+      jeCallCommand(jeCommands.find(o => o.id == 'je_toggleDebug'));
+      jeShowCommands();
+    } else if(jeEnabled)
       jeToggle();
   }
 }
