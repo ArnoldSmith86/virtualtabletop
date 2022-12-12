@@ -1,4 +1,4 @@
-export const VERSION = 8;
+export const VERSION = 9;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -41,7 +41,9 @@ function updateRoutine(routine, v) {
   if(!Array.isArray(routine))
     return;
 
-  for(const operation of routine) {
+  for(let i = 0; i < routine.length; i++) {
+    const operation = routine[i];
+
     if(operation.func == 'CLONE') {
       updateProperties(operation.properties, v);
     }
@@ -52,10 +54,15 @@ function updateRoutine(routine, v) {
       updateRoutine(operation.thenRoutine, v);
       updateRoutine(operation.elseRoutine, v);
     }
+
+    if (typeof operation === 'string') {
+      routine[i] = operation.replace('numericSort', 'numericStringSort');
+    }
   }
 
   v<2 && v2UpdateSelectDefault(routine);
   v<3 && v3RemoveComputeAndRandomAndApplyVariables(routine);
+  v<9 && v9NumericStringSort(routine);
 }
 
 function v2UpdateSelectDefault(routine) {
@@ -331,4 +338,14 @@ function v7HolderClickable(properties) {
 function v8HoverInheritVisibleForSeat(properties) {
   if (properties.onlyVisibleForSeat)
     properties.hoverInheritVisibleForSeat = false;
+}
+
+function v9NumericStringSort(routine) {
+  for (const key in routine) {
+    if (typeof routine[key] === "string" && routine[key].includes("numericSort")) {
+      routine[key] = routine[key].replace("numericSort", "numericStringSort");
+    } else if (typeof routine[key] === "object") {
+      v9NumericStringSort(routine[key]);
+    }
+  }
 }
