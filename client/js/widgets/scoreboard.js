@@ -64,6 +64,10 @@ class Scoreboard extends Widget {
     }
   }
 
+  isTypeSpecificReadOnlyProperty(property) {
+    return property == '_totals';
+  }
+
   // Return a modified 'seat' array or object including the seat widgets (not just the seat ids) to actually be used.
   getIncludedSeats() {
     let seats = this.get('seats');

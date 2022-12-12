@@ -15,8 +15,7 @@ const readOnlyProperties = new Set([
   '_centerAbsoluteX',
   '_centerAbsoluteY',
   '_localOriginAbsoluteX',
-  '_localOriginAbsoluteY',
-  '_totals' // Property of scoreboards
+  '_localOriginAbsoluteY'
 ]);
 
 export class Widget extends StateManaged {
@@ -1336,7 +1335,7 @@ export class Widget extends StateManaged {
         a.value = parseFloat(a.value);
 
         let round = a.round;
-        if(round != null && (isNaN(parseInt(round)) || round < 1)) {
+        if(round !== null && (isNaN(parseInt(round)) || round < 1)) {
           problems.push(`round ${a.round} must be null or a positive integer, assuming null.`);
           round = null;
         }
@@ -1431,8 +1430,6 @@ export class Widget extends StateManaged {
         }
         if((a.property == 'parent' || a.property == 'deck') && a.value !== null && !widgets.has(a.value)) {
           problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
-        } else if (readOnlyProperties.has(a.property)) {
-          problems.push(`Tried setting read-only property ${a.property}.`);
         } else if (collection = getCollection(a.collection)) {
           if (a.property == 'id') {
             for(const oldWidget of collections[collection]) {
@@ -1453,6 +1450,11 @@ export class Widget extends StateManaged {
             }
           } else {
             for(const w of collections[collection]) {
+              if (readOnlyProperties.has(a.property) || w.isTypeSpecificReadOnlyProperty(a.property)) {
+                problems.push(`Tried setting read-only property ${a.property}.`);
+                continue;
+              }
+
               if(a.relation == '+' && w.get(String(a.property)) == null)
                 a.relation = '=';
               if(a.relation == '+' && a.value == null)
@@ -1766,6 +1768,10 @@ export class Widget extends StateManaged {
     if (thisParent && widgets.has(thisParent))
       seatVisibility = widgets.get(thisParent).inheritSeatVisibility(seatVisibility);
     return seatVisibility;
+  }
+
+  isTypeSpecificReadOnlyProperty(property) {
+    return false;
   }
 
   isValidID(id, problems) {
