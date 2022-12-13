@@ -30,6 +30,11 @@
   background-color: #f8f8f8;
 }
 
+.scoreboard.equalWidth td {
+  white-space: normal;
+  width: calc(100% / var(--columns));
+}
+
 .scoreboard tbody tr:nth-child(1) td:nth-child(1) {
   z-index: 2;
 }
@@ -39,6 +44,8 @@
   z-index: 1;
   top: 0;
   background-color: #ddd;
+  word-break: break-all;
+  text-align:center;
 }
 
 .scoreboard tbody tr td:nth-child(1) {
@@ -46,6 +53,9 @@
   z-index: 1;
   left: 0;
   background-color: #ddd;
+  word-break: break-all;
+  text-align: center;
+  width: var(--firstColWidth);
 }
 
 .scoreboard .currentRound {

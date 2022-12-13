@@ -22,7 +22,8 @@ class Scoreboard extends Widget {
       showTotals: true,
       sortField: 'index',
       sortAscending: true,
-      currentRound: null
+      currentRound: null,
+      autosizeColumns: true
     });
   }
 
@@ -30,6 +31,21 @@ class Scoreboard extends Widget {
     if(delta) // Don't call super unless this is a real delta to the scoreboard rather than from a seat
       super.applyDeltaToDOM(delta);
     this.tableCreate(this.getIncludedSeats())
+  }
+
+  classes() {
+    let className = super.classes();
+
+    if(this.get('autosizeColumns') != '')
+      className += ' equalWidth';
+
+    return className;
+  }
+
+  classesProperties() {
+    const p = super.classesProperties();
+    p.push('autosizeColumns');
+    return p;
   }
 
   get(property) {
@@ -231,6 +247,8 @@ class Scoreboard extends Widget {
       this.tableDOM.innerHTML = '';
     }
 
+    let numCols;
+    let numRows;
     // Do not use player colors if team scores are being shown.
     let showPlayerColors = this.get('showPlayerColors') && Array.isArray(seats);
 
@@ -240,8 +258,8 @@ class Scoreboard extends Widget {
 
     if(this.get('playersInColumns')) { // Scores are in columns
       // Compute total number of rows and columns in table
-      const numCols = pScores.length + 1;
-      const numRows = numRounds + 1 + (showTotals ? 1 : 0);
+      numCols = pScores.length + 1;
+      numRows = numRounds + 1 + (showTotals ? 1 : 0);
 
       // Add header row
       const names = pScores.map(x => x[0]);
@@ -270,8 +288,8 @@ class Scoreboard extends Widget {
             this.tableDOM.rows[numRows-1].cells[c].classList.add('totalsLine');
     } else { // Scores are in rows
       // Compute total number of rows and columns in table
-      const numCols = numRounds + 1 + (showTotals ? 1 : 0);
-      const numRows = pScores.length + 1;
+      numCols = numRounds + 1 + (showTotals ? 1 : 0);
+      numRows = pScores.length + 1;
 
       // First row contains round names
       const tr = this.addRowToTable(this.tableDOM, rounds, 'td');
@@ -292,6 +310,8 @@ class Scoreboard extends Widget {
           this.tableDOM.rows[r].cells[numCols-1].classList.add('totalsLine');
       }
     }
+    this.domElement.style.setProperty('--firstColWidth', '50px');
+    this.domElement.style.setProperty('--columns', numCols);
   }
 }
 
