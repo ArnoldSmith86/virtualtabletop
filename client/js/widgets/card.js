@@ -142,7 +142,7 @@ class Card extends Widget {
           } else if (object.type == 'html') {
             // Prevent input from going to frame.
             objectDiv.style.pointerEvents = 'none';
-            objectDiv.setAttribute('sandbox', 'allow-same-origin');
+            objectDiv.setAttribute('sandbox', '');
             objectDiv.setAttribute('width', object.width);
             objectDiv.setAttribute('height', object.height);
             objectDiv.setAttribute('allow', 'autoplay');

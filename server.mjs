@@ -68,9 +68,20 @@ function autosaveRooms() {
 
 MinifyRoom().then(function(result) {
   router.use('/', express.static(path.resolve() + '/client'));
+
   // fonts.css is specifically made available for use from card html iframe. It must
-  // be fetched from the root in order for the relative paths to fonts to work.
+  // be fetched from the root in order for the relative paths to fonts to work. CORS
+  // headers are returned to allow fetching from a different origin (sandboxed frame).
+  function allowCors(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+  }
+  router.use('/fonts.css', allowCors);
   router.use('/fonts.css', express.static(path.resolve() + '/client/css/fonts.css'));
+  router.use('/i/fonts/', allowCors);
+
   router.use('/i', express.static(path.resolve() + '/assets'));
   router.use('/library', express.static(Config.directory('library')));
 
