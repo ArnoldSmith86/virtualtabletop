@@ -41,8 +41,7 @@ function updateRoutine(routine, v) {
   if(!Array.isArray(routine))
     return;
 
-  for(let i = 0; i < routine.length; i++) {
-    const operation = routine[i];
+  for(const operation of routine) {
 
     if(operation.func == 'CLONE') {
       updateProperties(operation.properties, v);
@@ -55,9 +54,6 @@ function updateRoutine(routine, v) {
       updateRoutine(operation.elseRoutine, v);
     }
 
-    if (typeof operation === 'string') {
-      routine[i] = operation.replace('numericSort', 'numericStringSort');
-    }
   }
 
   v<2 && v2UpdateSelectDefault(routine);
@@ -341,11 +337,7 @@ function v8HoverInheritVisibleForSeat(properties) {
 }
 
 function v9NumericStringSort(routine) {
-  for (const key in routine) {
-    if (typeof routine[key] === "string" && routine[key].includes("numericSort")) {
-      routine[key] = routine[key].replace("numericSort", "numericStringSort");
-    } else if (typeof routine[key] === "object") {
-      v9NumericStringSort(routine[key]);
-    }
-  }
+  for(const key in routine)
+    if(typeof routine[key] === 'string')
+      routine[key] = routine[key].replace('numericSort', 'numericStringSort');
 }
