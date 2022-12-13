@@ -10,7 +10,7 @@ class Scoreboard extends Widget {
       width: 300,
       height: 200,
       layer: -1,
-      typeClasses: 'widget scoreboard',
+      typeClasses: 'widget scoreboard equalwidth',
       playersInColumns: true,
       rounds: null,
       roundLabel: 'Round',
@@ -238,10 +238,12 @@ class Scoreboard extends Widget {
     if (isNaN(currentRound) || currentRound < 1 || currentRound > numRounds)
       currentRound = null;
 
+    let numCols;
+    let numRows;
     if(this.get('playersInColumns')) { // Scores are in columns
       // Compute total number of rows and columns in table
-      const numCols = pScores.length + 1;
-      const numRows = numRounds + 1 + (showTotals ? 1 : 0);
+      numCols = pScores.length + 1;
+      numRows = numRounds + 1 + (showTotals ? 1 : 0);
 
       // Add header row
       const names = pScores.map(x => x[0]);
@@ -292,6 +294,8 @@ class Scoreboard extends Widget {
           this.tableDOM.rows[r].cells[numCols-1].classList.add('totalsLine');
       }
     }
+    this.domElement.style.setProperty('--firstColWidth', '50px');
+    this.domElement.style.setProperty('--columns', numCols);
   }
 }
 
