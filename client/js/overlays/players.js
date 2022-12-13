@@ -5,12 +5,14 @@ let playerCursorsTimeout = {};
 let playerName = localStorage.getItem('playerName') || 'Guest' + Math.floor(Math.random()*1000);
 let playerColor = 'red';
 let activePlayers = [];
+let playerContrastColor = ''
 localStorage.setItem('playerName', playerName);
 
 export {
   playerName,
   playerColor,
-  activePlayers
+  activePlayers,
+  playerContrastColor
 }
 
 function addPlayerCursor(playerName, playerColor) {
@@ -40,6 +42,11 @@ function fillPlayerList(players, active) {
     if(player == playerName) {
       entry.className = 'myPlayerEntry';
       playerColor = players[player];
+      let rColor = parseInt(playerColor.slice(1, 3), 16);
+      let gColor = parseInt(playerColor.slice(3, 5), 16);
+      let bColor = parseInt(playerColor.slice(5, 7), 16);
+      let luminance = (0.2126 * rColor + 0.7152 * gColor + 0.0722 * bColor) / 255;
+      playerContrastColor = (luminance <= 0.5) ? '#ffffff' : '#000000';            
     } else {
       entry.className = 'activePlayerEntry';
     }
