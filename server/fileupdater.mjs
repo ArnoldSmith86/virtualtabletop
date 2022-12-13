@@ -42,7 +42,6 @@ function updateRoutine(routine, v) {
     return;
 
   for(const operation of routine) {
-
     if(operation.func == 'CLONE') {
       updateProperties(operation.properties, v);
     }
@@ -53,7 +52,6 @@ function updateRoutine(routine, v) {
       updateRoutine(operation.thenRoutine, v);
       updateRoutine(operation.elseRoutine, v);
     }
-
   }
 
   v<2 && v2UpdateSelectDefault(routine);
