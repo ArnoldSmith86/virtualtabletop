@@ -46,26 +46,26 @@ export function addWidget(widget, instance) {
       deferredCards[widget.deck].push(widget);
       return;
     }
-  } else if(widget.type == 'pile') {
-    w = new Pile(id);
+  } else if(widget.type == 'button') {
+    w = new Button(id);
   } else if(widget.type == 'canvas') {
     w = new Canvas(id);
   } else if(widget.type == 'deck') {
     w = new Deck(id);
   } else if(widget.type == 'holder') {
     w = new Holder(id);
-  } else if(widget.type == 'spinner') {
-    w = new Spinner(id);
-  } else if(widget.type == 'seat') {
-    w = new Seat(id);
-  } else if(widget.type == 'scoreboard') {
-    w = new Scoreboard(id);
-  } else if(widget.type == 'timer') {
-    w = new Timer(id);
   } else if(widget.type == 'label') {
     w = new Label(id);
-  } else if(widget.type == 'button') {
-    w = new Button(id);
+  } else if(widget.type == 'pile') {
+    w = new Pile(id);
+  } else if(widget.type == 'scoreboard') {
+    w = new Scoreboard(id);
+  } else if(widget.type == 'seat') {
+    w = new Seat(id);
+  } else if(widget.type == 'spinner') {
+    w = new Spinner(id);
+  } else if(widget.type == 'timer') {
+    w = new Timer(id);
   } else {
     w = new BasicWidget(id);
   }
