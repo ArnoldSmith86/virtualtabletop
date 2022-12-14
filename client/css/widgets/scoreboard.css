@@ -20,6 +20,10 @@
   width: 100%;
 }
 
+.scoreboard td.editing {
+  background-color: #f8ff88;
+}
+
 .scoreboard tbody td {
   border-bottom: 1px solid #ddd;
   border-right: 1px solid #ddd;

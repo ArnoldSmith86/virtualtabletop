@@ -312,6 +312,89 @@ class Scoreboard extends Widget {
     }
     this.domElement.style.setProperty('--firstColWidth', '50px');
     this.domElement.style.setProperty('--columns', numCols);
+
+    this.enableEditing();
   }
+
+  enableEditing() {
+    // Table editing code
+    let editCell = {
+      // Properties
+      selected : null,  // current selected cell
+      value : "", // current selected cell value
+
+      // Make cell editable and wait
+      edit : evt => {
+        const cell = evt.target;
+        if(editCell.selected && cell != editCell.selected) { // Click in some other cell, abort edit in progress
+            editCell.close(false);
+            evt.preventDefault();
+            evt.stopPropagation();
+            return;
+          }
+        // Make content editable, give it focus and colorize
+        cell.contentEditable = true;
+        cell.focus();
+        cell.classList.add("editing");
+        // Remember the cell and its original value
+        editCell.selected = cell;
+        editCell.value = cell.innerHTML;
+        // Wait for enter (accept) or ESC (cancel), or click outside of cells
+        window.addEventListener("click", editCell.click);
+        cell.onkeydown = evt => {
+          if (evt.key=="Enter" || evt.key=="Escape") {
+            editCell.close(evt.key=="Enter" ? true : false);
+            evt.stopPropagation();
+          }
+        };
+        evt.preventDefault();
+        evt.stopPropagation();
+      },
+
+      // Click somewhere
+      click : evt => {
+        if(evt.target != editCell.selected) {
+          editCell.close(false);
+          evt.preventDefault();
+          evt.stopPropagation();
+        }
+      },
+        
+      // End edit mode (true = accepted, false = cancel)
+      close : accept => {
+        // On cancel, restore previous value
+        if (!accept) {
+          editCell.selected.innerHTML = editCell.value;
+        }
+
+        // Make content no longer editable
+        window.getSelection().removeAllRanges();
+        editCell.selected.contentEditable = false;
+
+        // Remove added click listener
+        window.removeEventListener("click", editCell.click);
+ 
+        // Remove edited cell formatting, restore state of editCell
+        let cell = editCell.selected;
+        cell.classList.remove("editing");
+        editCell.selected = null;
+        editCell.value = "";
+
+        // Here is where you can write back to the score array.
+        if (accept) {
+          console.log("New cell value: ",cell.innerHTML);
+          // check value?
+          // send value to server?
+          // update calculations in table?
+        }
+      }
+    };
+    for (let cell of $a('td',this.tableDOM)) {
+      cell.addEventListener('click', editCell.edit);
+//      cell.onclick = () => editCell.edit(cell);
+    }
+  }
+
 }
+
 
