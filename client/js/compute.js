@@ -740,21 +740,22 @@ const compute_ops = [
     desc: 'converts an rgb color in format rgb(5,2,37) to hex',
     sample: 'var a = rgbToHex ${x}',
     call: function(v, x) {
-      function componentFromStr(numStr, percent) {
-        var num = Math.max(0, parseInt(numStr, 10));
-        return percent ?
-            Math.floor(255 * Math.min(100, num) / 100) : Math.min(255, num);
-      };
-      var rgbRegex = /^rgb\(\s*(-?\d+)(%?)\s*,\s*(-?\d+)(%?)\s*,\s*(-?\d+)(%?)\s*\)$/;
-      var result, r, g, b, hex = "";
-      if ( (result = rgbRegex.exec(x)) ) {
-          r = componentFromStr(result[1], result[2]);
-          g = componentFromStr(result[3], result[4]);
-          b = componentFromStr(result[5], result[6]);
-  
-          hex = "#" + (0x1000000 + (r << 16) + (g << 8) + b).toString(16).slice(1);
-      }
+      let colors = x.match(/\d+/g).map(function(a){ return parseInt(a,10); });
+      let hex = '#' + colors.map(c => c.toString(16).padStart(2,"0")).join('');
       return v = hex;
+    },
+    hash: '123'
+  },
+  {
+    name: 'hexToRGB',
+    desc: 'converts a hex color in format #000 or #ffffff to RGB in format rgb(0,9,210)',
+    sample: 'var a = hexToRGB ${x}',
+    call: function(v, x) {    
+        let hex = x.replace('#', '');
+        var rgb = hex.match(new RegExp('(.{' + hex.length/3 + '})', 'g')).map(function(l) {
+        return parseInt(hex.length%2 ? l+l : l, 16);
+        });
+      return v = `rgb(${rgb.join(',')})`;      
     },
     hash: '123'
   }
