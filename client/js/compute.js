@@ -751,10 +751,10 @@ const compute_ops = [
     desc: 'converts a hex color in format #000 or #ffffff to RGB in format rgb(0,9,210)',
     sample: 'var a = hexToRGB ${x}',
     call: function(v, x) {    
-        let hex = x.replace('#', '');
-        var rgb = hex.match(new RegExp('(.{' + hex.length/3 + '})', 'g')).map(function(l) {
-        return parseInt(hex.length%2 ? l+l : l, 16);
-        });
+      let hex = x.replace('#', '');
+      var rgb = hex.match(new RegExp('(.{' + hex.length/3 + '})', 'g')).map(function(l) {
+      return parseInt(hex.length%2 ? l+l : l, 16);
+      });
       return v = `rgb(${rgb.join(',')})`;      
     },
     hash: '123'
