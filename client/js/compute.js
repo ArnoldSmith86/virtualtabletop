@@ -684,6 +684,43 @@ const compute_ops = [
     sample: 'var a = randRange ${x} ${y} ${z}',
     call: function(v, x, y, z) { return v = Math.round(Math.floor((Math.random() * (y - x) / (z || 1))) * (z || 1) + x) },
     hash: '4758cba8f404cfe3ef0a300cebf3938a'
+  },
+  {
+    name: 'colorMono',
+    desc: 'returns a color value of #000000 or #ffffff, whichever provides better contrast to the provided color',
+    sample: 'var a = colorMono ${x}',
+    call: function(v, x) {
+      // Code created by https://chat.openai.com/chat
+      let rColor = parseInt(x.slice(1, 3), 16);
+      let gColor = parseInt(x.slice(3, 5), 16);
+      let bColor = parseInt(x.slice(5, 7), 16);
+      let luminance = (0.2126 * rColor + 0.7152 * gColor + 0.0722 * bColor) / 255;
+      return v = (luminance <= 0.5) ? '#ffffff' : '#000000';
+    },
+    hash: '123'
+  },
+  {
+    name: 'rgbToHex',
+    desc: 'converts an rgb color in format rgb(5,2,37) to hex',
+    sample: 'var a = rgbToHex ${x}',
+    call: function(v, x) {
+      function componentFromStr(numStr, percent) {
+        var num = Math.max(0, parseInt(numStr, 10));
+        return percent ?
+            Math.floor(255 * Math.min(100, num) / 100) : Math.min(255, num);
+      };
+      var rgbRegex = /^rgb\(\s*(-?\d+)(%?)\s*,\s*(-?\d+)(%?)\s*,\s*(-?\d+)(%?)\s*\)$/;
+      var result, r, g, b, hex = "";
+      if ( (result = rgbRegex.exec(x)) ) {
+          r = componentFromStr(result[1], result[2]);
+          g = componentFromStr(result[3], result[4]);
+          b = componentFromStr(result[5], result[6]);
+  
+          hex = "#" + (0x1000000 + (r << 16) + (g << 8) + b).toString(16).slice(1);
+      }
+      return hex;
+    },
+    hash: '123'
   }
 ];
 
