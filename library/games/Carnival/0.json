@@ -1624,7 +1624,6 @@
   },
   "pbtc": {
     "type": "button",
-    "text": "skip_next",
     "clickRoutine": [
       {
         "func": "MOVE",
@@ -1662,6 +1661,7 @@
     "width": 70,
     "height": 70,
     "movableInEdit": false
+    "text": "play_arrow"
   },
   "carnivalLine": {
     "type": "holder",
