@@ -5,3 +5,11 @@ export function hexRGB(inputColor) {
   });
   return `rgb(${rgb.join(',')})`;    
 }
+
+export function toHex(inputColor) {
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = inputColor;
+  const hexColor = ctx.fillStyle;  
+  return hexColor;
+}

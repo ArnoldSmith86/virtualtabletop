@@ -738,14 +738,10 @@ const compute_ops = [
     hash: '123'
   },
   {
-    name: 'rgbToHex',
-    desc: 'converts an rgb color in format rgb(5,2,37) to hex',
-    sample: 'var a = rgbToHex ${x}',
-    call: function(v, x) {
-      let colors = x.match(/\d+/g).map(function(a){ return parseInt(a,10); });
-      let hex = '#' + colors.map(c => c.toString(16).padStart(2,"0")).join('');
-      return v = hex;
-    },
+    name: 'colorToHex',
+    desc: 'converts any color that the browser can interpret to hex',
+    sample: 'var a = colorToHex ${x}',
+    call: function(v, x) { return v = toHex(x); },
     hash: '123'
   },
   {
