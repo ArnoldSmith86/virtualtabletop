@@ -697,7 +697,7 @@ const compute_ops = [
     desc: 'converts any color that the browser can interpret to hex',
     sample: 'var a = colorToHex ${x}',
     call: function(v, x) { return v = toHex(x); },
-    hash: '123tohex'
+    hash: '2eff46ec1af852a29fa4c14dcf685c00'
   },
   {
     name: 'colorToRGB',
