@@ -69,11 +69,13 @@
   margin: 0 5px;
 }
 
-#librarySortWrapper i {
-  color: green;
+#librarySortWrapper {
+  background: var(--roomColor);
+  border-radius: 5px;
 }
+
 #librarySortWrapper select {
-  border-color: green;
+  border: none;
 }
 
 #filterOverflow.empty, #filterOverflow:not(.active) > div {
@@ -87,8 +89,8 @@
 }
 
 #filterOverflow > button::before {
-  font-size: 22px;
-  width: 22px;
+  font-size: 23px;
+  width: 23px;
 }
 
 #filterOverflow > div {
