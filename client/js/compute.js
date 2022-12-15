@@ -690,21 +690,21 @@ const compute_ops = [
     desc: 'converts any color that the browser can interpret to a contrasting color with different luminance',
     sample: 'var a = colorContrast ${x} ${y} ${z}',
     call: function(v, x, y, z) { return v = contrastAnyColor(x, y, z); }, 
-    hash: '123'
+    hash: '67d5ab2258634e9b5a0a5e0810f2009c'
   },
   {
     name: 'colorToHex',
     desc: 'converts any color that the browser can interpret to hex',
     sample: 'var a = colorToHex ${x}',
     call: function(v, x) { return v = toHex(x); },
-    hash: '123'
+    hash: '123tohex'
   },
   {
     name: 'colorToRGB',
     desc: 'converts any color that the browser can interpret to RGB in format rgb(0,9,210)',
     sample: 'var a = colorToRGB ${x}',
     call: function(v, x) { return v = toRGB(x); },
-    hash: '123'
+    hash: '123torgb'
   }
 ];
 
