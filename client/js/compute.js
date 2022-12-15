@@ -1,5 +1,3 @@
-import { hexRGB } from './color';
-
 const compute_ops = [
   {
     name: '=',
@@ -688,53 +686,10 @@ const compute_ops = [
     hash: '4758cba8f404cfe3ef0a300cebf3938a'
   },
   {
-    name: 'colorMono',
-    desc: 'returns a color value of #000000 or #ffffff, whichever provides better contrast to the provided color',
-    sample: 'var a = colorMono ${x}',
-    call: function(v, x) {
-      // Code created by https://chat.openai.com/chat
-      let r = parseInt(x.slice(1, 3), 16);
-      let g = parseInt(x.slice(3, 5), 16);
-      let b = parseInt(x.slice(5, 7), 16);
-      let luminance = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
-      return v = (luminance <= 0.5) ? '#ffffff' : '#000000';
-    },
-    hash: '123'
-  },
-  {
-    name: 'colorHue',
-    desc: 'returns a hex color value in the same hue but different luminance of the provided color to provide contrast',
-    sample: 'var a = colorHue ${x} ${y} ${z}',
-    call: function(v, x, y, z) {
-      // Code created by https://chat.openai.com/chat
-      const color = x.slice(1);
-      const r = parseInt(color.substring(0, 2), 16);
-      const g = parseInt(color.substring(2, 4), 16);
-      const b = parseInt(color.substring(4, 6), 16);
-      const luminance = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
-      let outputColor;
-      let modifier;
-      if (y == 1) {
-        y = 0.6;
-      }
-      if (z == -1) {
-        modifier = (luminance > 0.5) ? y : -y;
-      } else {
-        modifier = (luminance > 0.5) ? -y : y;
-      }      
-      const colors = [r, g, b];
-      const adjustedColors = [];
-      for (let i = 0; i < colors.length; i++) {
-        const adjustedColor = Math.round(Math.max(0, Math.min(colors[i] + modifier * 255, 255)));
-        adjustedColors.push(adjustedColor);
-      }
-      const [adjustedR, adjustedG, adjustedB] = adjustedColors;
-      return v = 
-        "#" +
-        adjustedR.toString(16).padStart(2, '0') +
-        adjustedG.toString(16).padStart(2, '0') +
-        adjustedB.toString(16).padStart(2, '0');
-    },
+    name: 'colorContrast',
+    desc: 'converts any color that the browser can interpret to a contrasting color with different luminance',
+    sample: 'var a = colorContrast ${x} ${y} ${z}',
+    call: function(v, x, y, z) { return v = contrastAnyColor(x, y, z); }, 
     hash: '123'
   },
   {
@@ -745,10 +700,10 @@ const compute_ops = [
     hash: '123'
   },
   {
-    name: 'hexToRGB',
-    desc: 'converts a hex color in format #000 or #ffffff to RGB in format rgb(0,9,210)',
-    sample: 'var a = hexToRGB ${x}',
-    call: function(v, x) { return v = hexRGB(x); },
+    name: 'colorToRGB',
+    desc: 'converts any color that the browser can interpret to RGB in format rgb(0,9,210)',
+    sample: 'var a = colorToRGB ${x}',
+    call: function(v, x) { return v = toRGB(x); },
     hash: '123'
   }
 ];
