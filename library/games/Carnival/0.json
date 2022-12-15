@@ -32,7 +32,7 @@
     "childrenPerOwner": true,
     "x": 673,
     "y": 818,
-    "width": 320,
+    "width": 285,
     "height": 180,
     "id": "hand",
     "z": 113,
@@ -96,7 +96,7 @@
       }
     ],
     "z": 56,
-    "x": 1030,
+    "x": 1015,
     "classes": "symbols",
     "css": {
       "default": {
@@ -1635,13 +1635,18 @@
           "SEAT3",
           "SEAT4",
           "SEAT5",
-          "SEAT6",
-          "carnivalLine"
+          "SEAT6"
         ],
+        "count": 5
+      },
+      {
+        "func": "MOVE",
+        "from": "DEAL",
+        "to": "carnivalLine",
         "count": 6
       }
     ],
-    "x": 1025,
+    "x": 1010,
     "y": 825,
     "z": 54,
     "id": "pbtc",
