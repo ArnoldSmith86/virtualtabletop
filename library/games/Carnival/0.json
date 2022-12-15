@@ -1660,7 +1660,7 @@
     },
     "width": 70,
     "height": 70,
-    "movableInEdit": false
+    "movableInEdit": false,
     "text": "play_arrow"
   },
   "carnivalLine": {
