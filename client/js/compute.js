@@ -1,4 +1,4 @@
-import hexRGB from './color';
+import { hexRGB } from './color';
 
 const compute_ops = [
   {
@@ -752,7 +752,7 @@ const compute_ops = [
     name: 'hexToRGB',
     desc: 'converts a hex color in format #000 or #ffffff to RGB in format rgb(0,9,210)',
     sample: 'var a = hexToRGB ${x}',
-    call: function(v, x) { v.hexRGB(x); return v },
+    call: function(v, x) { return v = hexRGB(x); },
     hash: '123'
   }
 ];
