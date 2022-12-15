@@ -10,7 +10,6 @@ export function toRGB(inputColor) {
 export function contrastAnyColor(inputColor, intensity, direction) {
   // Code created by https://chat.openai.com/chat
   let color = toHex(inputColor);
-  //color = color.slice(1);
   const r = parseInt(color.slice(1, 3), 16);
   const g = parseInt(color.slice(3, 5), 16);
   const b = parseInt(color.slice(5, 7), 16);
