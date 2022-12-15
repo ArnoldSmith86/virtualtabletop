@@ -118,6 +118,8 @@ export default class Room {
         delete meta.variant;
         delete meta.variantImage;
 
+        meta.lastUpdate = +new Date();
+
         if(addAsVariant) {
           if(!this.state._meta.states[stateID].variants[newVariantID])
             this.state._meta.states[stateID].variants[newVariantID] = variantMeta;

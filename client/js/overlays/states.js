@@ -349,6 +349,8 @@ let sortBy = $('#librarySort').value;
 function sortStatesCallback(stateA, stateB) {
   if(sortBy == 'year' && stateB.year != stateA.year)
     return stateB.year - stateA.year;
+  if(sortBy == 'lastUpdate' && (stateB.lastUpdate || stateB.saveDate) != (stateA.lastUpdate || stateA.saveDate))
+    return (stateB.lastUpdate || stateB.saveDate) - (stateA.lastUpdate || stateA.saveDate);
   if(sortBy == 'stars' && stateB.stars != stateA.stars)
     return stateB.stars - stateA.stars;
   if(sortBy == 'timePlayed' && stateB.timePlayed != stateA.timePlayed)
@@ -499,6 +501,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     entry.dataset.timePlayed = state.timePlayed;
     entry.dataset.text = `${state.name} ${state.similarName} ${state.description} ${state.similarAwards}`.toLowerCase();
     entry.dataset.players = validPlayers.join();
+    entry.dataset.lastUpdate = state.lastUpdate || state.saveDate;
     entry.dataset.duration = String(state.time).replace(/.*[^0-9]/, '');
     entry.dataset.languages = validLanguages.join();
     entry.dataset.modes = state.mode;
