@@ -711,7 +711,7 @@ const compute_ops = [
     desc: 'compares 2 colors in any format the the broswer can interpret to obtain the contrast ratio',
     sample: 'var a = colorContrastRatio ${x} ${y}',
     call: function(v, x, y) { return v = calcContrast(x, y); },
-    hash: '123ratio'
+    hash: 'f0c87b733f49b7af419698cdf6ed1137'
   }
 ];
 

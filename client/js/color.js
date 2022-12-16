@@ -29,6 +29,10 @@ export function calcLuminance(inputColor) {
   return luminance
 }
 
+export function calcContrast(color1, color2) {
+  return (Math.max(calcLuminance(color1),calcLuminance(color2))+0.05) / (Math.min(calcLuminance(color1),calcLuminance(color2))+0.05);  
+}
+
 export function contrastAnyColor(inputColor, intensity, direction) {
   // Code created by https://chat.openai.com/chat
   let color = toHex(inputColor);
@@ -51,8 +55,3 @@ export function contrastAnyColor(inputColor, intensity, direction) {
     adjustedB.toString(16).padStart(2, '0')
   )
 }
-
-export function calcContrast(color1, color2) {
-  return (Math.max(calcLuminance(color1),calcLuminance(color2))+0.05) / (Math.min(calcLuminance(color1),calcLuminance(color2))+0.05);  
-}
-
