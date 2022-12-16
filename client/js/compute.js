@@ -687,28 +687,28 @@ const compute_ops = [
   },
   {
     name: 'colorContrast',
-    desc: 'converts any color that the browser can interpret to a contrasting color with different luminance',
+    desc: 'converts color in any format that the browser can interpret to another color in the same hue but with different luminance',
     sample: 'var a = colorContrast ${x} ${y} ${z}',
     call: function(v, x, y, z) { return v = contrastAnyColor(x, y, z); }, 
     hash: '83181e89c7f0245a49644ce864625481'
   },
   {
     name: 'colorToHex',
-    desc: 'converts any color that the browser can interpret to hex',
+    desc: 'converts color in any format that the browser can interpret to hex',
     sample: 'var a = colorToHex ${x}',
     call: function(v, x) { return v = toHex(x); },
     hash: '2eff46ec1af852a29fa4c14dcf685c00'
   },
   {
     name: 'colorToRGB',
-    desc: 'converts any color that the browser can interpret to RGB in format rgb(0,9,210)',
+    desc: 'converts color in any format that the browser can interpret to RGB in format rgb(0,9,210)',
     sample: 'var a = colorToRGB ${x}',
     call: function(v, x) { return v = toRGB(x); },
     hash: 'faa247cc277b7e9ad645e55a51e47195'
   },
   {
     name: 'colorContrastRatio',
-    desc: 'compares 2 colors in any format the the broswer can interpret to obtain the contrast ratio',
+    desc: 'compares 2 colors in any format that the broswer can interpret to obtain the contrast ratio in range 1-21',
     sample: 'var a = colorContrastRatio ${x} ${y}',
     call: function(v, x, y) { return v = calcContrast(x, y); },
     hash: 'f0c87b733f49b7af419698cdf6ed1137'
