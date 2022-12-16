@@ -718,7 +718,7 @@ const compute_ops = [
     desc: 'accepts color in any format the browser can interpret and returns the luminance value',
     sample: 'var a = colorCLuminance ${x}',
     call: function(v, x, y) { return v = calcLuminance(x); },
-    hash: '123luminance'
+    hash: 'f4284956510e3fe59c2babed665b544d'
   }
 ];
 
