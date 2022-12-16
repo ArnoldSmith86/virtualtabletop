@@ -1,5 +1,5 @@
 export function toHex(inputColor) {
-  const hexPattern = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+  const hexPattern = /^#([A-Fa-f0-9]{6})$/;
   if (hexPattern.test(inputColor)) {    
     return inputColor;
   }
@@ -51,3 +51,19 @@ export function contrastAnyColor(inputColor, intensity, direction) {
     adjustedB.toString(16).padStart(2, '0')
   )
 }
+
+export function calcContrast(color1, color2) {
+  // Code created by https://chat.openai.com/chat
+  const luminance1 = calcLuminance(color1);
+  const luminance2 = calcLuminance(color2);
+  let lighterLuminance, darkerLuminance;
+  if (luminance1 > luminance2) {
+    lighterLuminance = luminance1;
+    darkerLuminance = luminance2;
+  } else {
+    lighterLuminance = luminance2;
+    darkerLuminance = luminance1;
+  }
+  return (lighterLuminance + 0.05) / (darkerLuminance + 0.05);
+}
+
