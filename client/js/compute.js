@@ -690,7 +690,7 @@ const compute_ops = [
     desc: 'converts any color that the browser can interpret to a contrasting color with different luminance',
     sample: 'var a = colorContrast ${x} ${y} ${z}',
     call: function(v, x, y, z) { return v = contrastAnyColor(x, y, z); }, 
-    hash: '67d5ab2258634e9b5a0a5e0810f2009c'
+    hash: '83181e89c7f0245a49644ce864625481'
   },
   {
     name: 'colorToHex',
