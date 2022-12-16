@@ -350,7 +350,7 @@ function sortStatesCallback(stateA, stateB) {
   if(sortBy == 'year' && stateB.year != stateA.year)
     return stateB.year - stateA.year;
   if(sortBy == 'lastUpdate' && (stateB.lastUpdate || stateB.saveDate) != (stateA.lastUpdate || stateA.saveDate))
-    return (stateB.lastUpdate || stateB.saveDate) - (stateA.lastUpdate || stateA.saveDate);
+    return (stateB.lastUpdate || stateB.saveDate || 0) - (stateA.lastUpdate || stateA.saveDate || 0);
   if(sortBy == 'stars' && stateB.stars != stateA.stars)
     return stateB.stars - stateA.stars;
   if(sortBy == 'timePlayed' && stateB.timePlayed != stateA.timePlayed)
