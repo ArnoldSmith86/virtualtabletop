@@ -499,7 +499,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     entry.dataset.year = state.year;
     entry.dataset.stars = state.stars;
     entry.dataset.timePlayed = state.timePlayed;
-    entry.dataset.text = `${state.name} ${state.similarName} ${state.description} ${state.similarAwards}`.toLowerCase();
+    entry.dataset.text = `${state.name} ${state.similarName} ${state.description} ${state.similarAwards} ${state.savePlayers}`.toLowerCase();
     entry.dataset.players = validPlayers.join();
     entry.dataset.lastUpdate = state.saveDate || state.lastUpdate || 0;
     entry.dataset.duration = String(state.time).replace(/.*[^0-9]/, '');
