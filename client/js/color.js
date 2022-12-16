@@ -13,11 +13,10 @@ export function toHex(inputColor) {
 
 export function toRGB(inputColor) {
   let hex = toHex(inputColor)
-  hex = hex.slice(1);
-  var rgb = hex.match(new RegExp('(.{' + hex.length/3 + '})', 'g')).map(function(l) {
-    return parseInt(hex.length%2 ? l+l : l, 16);
-  });
-  return `rgb(${rgb.join(',')})`;    
+  let r = parseInt(hex.slice(1, 3), 16);
+  let g = parseInt(hex.slice(3, 5), 16);
+  let b = parseInt(hex.slice(5, 7), 16);
+  return `rgb(${r},${g},${b})`; 
 }
 
 export function calcLuminance(inputColor) {
