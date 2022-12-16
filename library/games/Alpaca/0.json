@@ -16,7 +16,8 @@
       "similarName": "L.L.A.M.A.",
       "description": "Start with 6 cards and get rid of as many cards as possible. To play, must play same number as top card or one higher. Round ends when one player empties hand of cards or all players quit. Fewest points once another player reaches 40 points wins.",
       "showName": true,
-      "helpText": "Players take seats. Press play button in middle of screen to start. A random player will be chosen. Drag card to holder in middle of screen to play. To quit/pass, press trash button on bottom left. When round is over, press scoreboard button to auto-calculate scores. Then press recall and shuffle button to start next round. Scoring note: if a player gets rid of all cards, maximum points will be added back (either 0, 1, or 10) based on the player's current score."
+      "helpText": "Players take seats. Press play button in middle of screen to start. A random player will be chosen. Drag card to holder in middle of screen to play. To quit/pass, press trash button on bottom left. When round is over, press scoreboard button to auto-calculate scores. Then press recall and shuffle button to start next round. Scoring note: if a player gets rid of all cards, maximum points will be added back (either 0, 1, or 10) based on the player's current score.",
+      "lastUpdate": 1650427506000
     }
   },
   "theDeck": {

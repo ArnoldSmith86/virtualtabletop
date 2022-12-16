@@ -16,7 +16,8 @@
       "similarName": "Karuba",
       "description": "Tile-laying race game. Players start with identical empty boards and each place the same piece and move tokens to be the first to reach temples and collect treasure. Player with most points wins.",
       "showName": true,
-      "helpText": "Players take seats. (A player that wants to change playerColor, must leave the seat and return for the new color to take effect.)  Press play in lower left corner. An option is provided to randomly distribute starting pieces. If pieces not moved randomly, players manually move temples to letters and explorers to numbers on board. Press blue next card button in lower left which will appear only when time for another card. Each player moves card to their board. Move treasure pieces, diamonds, and gold, to the loot area for the collecting player for automatic score keeping. Peek at another player’s board by pressing buttons along bottom. Player’s currently peeking at your board are displayed next to eye icon at top."
+      "helpText": "Players take seats. (A player that wants to change playerColor, must leave the seat and return for the new color to take effect.)  Press play in lower left corner. An option is provided to randomly distribute starting pieces. If pieces not moved randomly, players manually move temples to letters and explorers to numbers on board. Press blue next card button in lower left which will appear only when time for another card. Each player moves card to their board. Move treasure pieces, diamonds, and gold, to the loot area for the collecting player for automatic score keeping. Peek at another player’s board by pressing buttons along bottom. Player’s currently peeking at your board are displayed next to eye icon at top.",
+      "lastUpdate": 1642203156000
     }
   },
   "tac8": {

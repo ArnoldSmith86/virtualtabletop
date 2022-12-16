@@ -3787,7 +3787,8 @@
       "similarName": "Phase 10 Dice",
       "description": "Complete a series of levels by rolling dice in runs, sets, or colors.  First to complete 10 levels wins.",
       "showName": true,
-      "helpText": "Players take seats. Press Recall Dice button until desired first player's seat is highlighted. That player presses Roll button. Save dice by moving to the Set or Run/Color holders at the bottom. Dice to be re-rolled stay in holder on the right. After 3 rolls, if player does not make goal or does not want to enter score, press Recall Dice button to pass turn to next player. To enter score, click on the appropriate score entry label. Scoring and passing turn is automatic in that case. If score was entered by mistake, last score can be undone by pressing Undo Last Score button in upper left."
+      "helpText": "Players take seats. Press Recall Dice button until desired first player's seat is highlighted. That player presses Roll button. Save dice by moving to the Set or Run/Color holders at the bottom. Dice to be re-rolled stay in holder on the right. After 3 rolls, if player does not make goal or does not want to enter score, press Recall Dice button to pass turn to next player. To enter score, click on the appropriate score entry label. Scoring and passing turn is automatic in that case. If score was entered by mistake, last score can be undone by pressing Undo Last Score button in upper left.",
+      "lastUpdate": 1659321088000
     }
   },
   "seat1": {

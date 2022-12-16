@@ -13,7 +13,8 @@
       "language": "en-US",
       "variant": "AUDIO and clickSound",
       "attribution": "The rolling dice and card moving sounds in this tutorial are by Interitus and are released to the Public Domain by CC0.",
-      "showName": false
+      "showName": false,
+      "lastUpdate": 1652065010000
     }
   },
   "Classic Die": {

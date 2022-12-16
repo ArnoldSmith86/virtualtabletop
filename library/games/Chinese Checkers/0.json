@@ -2400,7 +2400,8 @@
       "similarName": "Chinese Checkers",
       "description": "Jump over own or opponent pieces to move to opposite side of board.  First to relocate all 10 pieces wins.",
       "showName": true,
-      "helpText": "Players take seat. Press gear icon to choose marble style. Move one desired colored marble to end point of board. Press START. After player ends turn, click Next Player button to advance turn."
+      "helpText": "Players take seat. Press gear icon to choose marble style. Move one desired colored marble to end point of board. Press START. After player ends turn, click Next Player button to advance turn.",
+      "lastUpdate": 1659321088000
     }
   },
   "mRed1": {

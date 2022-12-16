@@ -40,7 +40,8 @@
       "similarName": "Mahjong",
       "description": "Traditional Chinese game using illustrated tiles. Take turns drawing from stock pile or other players' discards to create sets and runs from tiles in hand. Play until all tiles used then start another round. Highest score wins.",
       "showName": true,
-      "helpText": "Players take seats. Press settings button (gear icon) to choose options. Set target points (if needed) in bottom left. Press skip/next icon (top of screen) to choose random player to start. Players add tiles to hand using +13 and +1 buttons. Players can sort using the sort button to left of hand. Turn advances to next player automatically when a tile is dropped into green discard area. If turn indicator is out of synch, press skip/next to advance as needed. At end of hand, winning player can press the reveal button in the top right (two open hands) to move their hand to the open display area. Calculate score and manually enter scores. Press recall button (bottom right) to start next hand."
+      "helpText": "Players take seats. Press settings button (gear icon) to choose options. Set target points (if needed) in bottom left. Press skip/next icon (top of screen) to choose random player to start. Players add tiles to hand using +13 and +1 buttons. Players can sort using the sort button to left of hand. Turn advances to next player automatically when a tile is dropped into green discard area. If turn indicator is out of synch, press skip/next to advance as needed. At end of hand, winning player can press the reveal button in the top right (two open hands) to move their hand to the open display area. Calculate score and manually enter scores. Press recall button (bottom right) to start next hand.",
+      "lastUpdate": 1654391055000
     }
   },
   "deckHolder": {

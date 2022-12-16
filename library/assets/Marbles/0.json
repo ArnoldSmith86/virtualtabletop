@@ -678,7 +678,8 @@
       "language": "en-US",
       "variant": "",
       "attribution": "Original svg marble design and colors by DragonArt, http://dragonartz.wordpress.com/ and http://dragonartz.net. Downloaded from https://vector.me/download/699706/colorful_marbels_vector. Available under CC BY-NC-SA 3.0.\n\nModifications to svg code to make svgReplaces work with these marbles on VirtualTabletop by LawDawg96.",
-      "showName": false
+      "showName": false,
+      "lastUpdate": 1619036880000
     }
   }
 }

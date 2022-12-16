@@ -553,7 +553,8 @@
       "attribution": "Room layout and library image by ArnoldSmith86 and put into public domain (CC0)",
       "similarName": "Connect Four 3D",
       "description": "Stack checkers in 3-dimensional columns to link 4 horizontally, vertically, or diagonally.  First to connect four in a row wins.",
-      "showName": true
+      "showName": true,
+      "lastUpdate": 1618589525000
     }
   },
   "pin31": {

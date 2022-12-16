@@ -1592,7 +1592,8 @@
       "similarName": "IOTA",
       "description": "Place cards in tile pattern on board matching 4 shapes and 4 colors.  Player with most points wins.",
       "showName": true,
-      "helpText": "Players take seats. Move 4 cards to hand on right of screen using +4 button. Play cards and keep score manually. Replace cards using +1 button. The black \"dead end\" squares are optional. You can use them to indicate a line that is impossible to complete because a card has already been played elsewhere."
+      "helpText": "Players take seats. Move 4 cards to hand on right of screen using +4 button. Play cards and keep score manually. Replace cards using +1 button. The black \"dead end\" squares are optional. You can use them to indicate a line that is impossible to complete because a card has already been played elsewhere.",
+      "lastUpdate": 1659321088000
     }
   },
   "plus7": {

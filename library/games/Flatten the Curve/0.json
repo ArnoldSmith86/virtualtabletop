@@ -24,7 +24,8 @@
       "similarName": "Pandemic",
       "description": "Cooperative game where players move around board to eliminate diseases. Players win by curing all four diseases and lose if diseases spread too far or cures take too long.",
       "showName": true,
-      "helpText": "Players choose seats. Select options using gear icon. Press restart icon to begin (and to automatically set up board if that option is chosen). After play begins, all disease markers are moved by players. To automatically move disease markers of that city color, click on that city holder. To return disease marker to holder, click on marker. Cities only hold 3 markers; manually place other markers nearby. To change outbreak counter, just click on it. If a card needs to be removed from the board, drag it to the trash can holder in the bottom right."
+      "helpText": "Players choose seats. Select options using gear icon. Press restart icon to begin (and to automatically set up board if that option is chosen). After play begins, all disease markers are moved by players. To automatically move disease markers of that city color, click on that city holder. To return disease marker to holder, click on marker. Cities only hold 3 markers; manually place other markers nearby. To change outbreak counter, just click on it. If a card needs to be removed from the board, drag it to the trash can holder in the bottom right.",
+      "lastUpdate": 1647839274000
     }
   },
   "map": {

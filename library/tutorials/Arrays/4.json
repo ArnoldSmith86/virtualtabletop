@@ -547,7 +547,8 @@
       "language": "en-US",
       "variant": "Example: Random Word",
       "attribution": "",
-      "showName": false
+      "showName": false,
+      "lastUpdate": 1625237253000
     }
   },
   "Word Button": {
