@@ -712,6 +712,13 @@ const compute_ops = [
     sample: 'var a = colorContrastRatio ${x} ${y}',
     call: function(v, x, y) { return v = calcContrast(x, y); },
     hash: 'f0c87b733f49b7af419698cdf6ed1137'
+  },
+  {
+    name: 'colorLuminance',
+    desc: 'accepts color in any format the browser can interpret and returns the luminance value',
+    sample: 'var a = colorCLuminance ${x}',
+    call: function(v, x, y) { return v = calcLuminance(x); },
+    hash: '123luminance'
   }
 ];
 
