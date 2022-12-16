@@ -53,17 +53,6 @@ export function contrastAnyColor(inputColor, intensity, direction) {
 }
 
 export function calcContrast(color1, color2) {
-  // Code created by https://chat.openai.com/chat
-  const luminance1 = calcLuminance(color1);
-  const luminance2 = calcLuminance(color2);
-  let lighterLuminance, darkerLuminance;
-  if (luminance1 > luminance2) {
-    lighterLuminance = luminance1;
-    darkerLuminance = luminance2;
-  } else {
-    lighterLuminance = luminance2;
-    darkerLuminance = luminance1;
-  }
-  return (lighterLuminance + 0.05) / (darkerLuminance + 0.05);
+  return (Math.max(calcLuminance(color1),calcLuminance(color2))+0.05) / (Math.min(calcLuminance(color1),calcLuminance(color2))+0.05);  
 }
 
