@@ -705,6 +705,13 @@ const compute_ops = [
     sample: 'var a = colorToRGB ${x}',
     call: function(v, x) { return v = toRGB(x); },
     hash: 'faa247cc277b7e9ad645e55a51e47195'
+  },
+  {
+    name: 'colorContrastRatio',
+    desc: 'compares 2 colors in any format the the broswer can interpret to obtain the contrast ratio',
+    sample: 'var a = colorContrastRatio ${x} ${y}',
+    call: function(v, x, y) { return v = calcContrast(x, y); },
+    hash: '123ratio'
   }
 ];
 
