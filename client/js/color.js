@@ -23,8 +23,11 @@ export function calcLuminance(inputColor) {
   let hex = toHex(inputColor);
   let rgbString = toRGB(hex);
   let [r, g, b] = rgbString.match(/\d+/g).map(str => parseInt(str, 10));
-  const luminance = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
-  return luminance
+  let R = r / 255;
+  let G = g / 255;
+  let B = b / 255;
+  const luminance = (0.2126 * R) + (0.7152 * G) + (0.0722 * B);
+  return luminance;
 }
 
 export function calcContrast(color1, color2) {
