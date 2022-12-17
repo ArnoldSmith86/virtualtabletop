@@ -5,14 +5,14 @@ let playerCursorsTimeout = {};
 let playerName = localStorage.getItem('playerName') || 'Guest' + Math.floor(Math.random()*1000);
 let playerColor = 'red';
 let activePlayers = [];
-let playerCoord = [];
+let playerCoords = [];
 localStorage.setItem('playerName', playerName);
 
 export {
   playerName,
   playerColor,
   activePlayers,
-  playerCoord
+  playerCoords
 }
 
 function addPlayerCursor(playerName, playerColor) {
@@ -42,18 +42,6 @@ function fillPlayerList(players, active) {
     if(player == playerName) {
       entry.className = 'myPlayerEntry';
       playerColor = players[player];
-      function mouseMoveListener(event) {
-        var x = Math.floor((event.clientX - roomRectangle.left) / scale);
-        var y = Math.floor((event.clientY - roomRectangle.top) / scale);
-        playerCoord = [x, y];
-      }
-      function touchMoveListener(event) {
-        var x = Math.floor((event.touches[0].clientX - roomRectangle.left) / scale);
-        var y = Math.floor((event.touches[0].clientY - roomRectangle.top) / scale);
-        playerCoord = [x, y];
-      }
-      document.addEventListener('mousemove', mouseMoveListener);
-      document.addEventListener('touchmove', touchMoveListener);
     } else {
       entry.className = 'activePlayerEntry';
     }
