@@ -20,12 +20,24 @@ export function toRGB(inputColor) {
 }
 
 export function calcLuminance(inputColor) {
+  // Function created by https://chat.openai.com/chat
   let hex = toHex(inputColor);
   let rgbString = toRGB(hex);
   let [r, g, b] = rgbString.match(/\d+/g).map(str => parseInt(str, 10));
-  let R = r / 255;
-  let G = g / 255;
-  let B = b / 255;
+  let RsRGB = r / 255;
+  let GsRGB = g / 255;
+  let BsRGB = b / 255;
+  let R, G, B;
+  function applyGammaCorrection(value) {
+    if (value <= 0.03928) {
+      return value / 12.92;
+    } else {
+      return Math.pow((value + 0.055) / 1.055, 2.4);
+    }
+  }
+  R = applyGammaCorrection(RsRGB);
+  G = applyGammaCorrection(GsRGB);
+  B = applyGammaCorrection(BsRGB);
   const luminance = (0.2126 * R) + (0.7152 * G) + (0.0722 * B);
   return luminance;
 }
@@ -35,7 +47,7 @@ export function calcContrast(color1, color2) {
 }
 
 export function contrastAnyColor(inputColor, intensity, direction) {
-  // Code created by https://chat.openai.com/chat
+  // Function created by https://chat.openai.com/chat
   let color = toHex(inputColor);
   const r = parseInt(color.slice(1, 3), 16);
   const g = parseInt(color.slice(3, 5), 16);
