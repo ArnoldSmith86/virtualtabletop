@@ -633,6 +633,7 @@ export class Widget extends StateManaged {
         playerName,
         playerColor,
         activePlayers,
+        playerCoord,
         thisID : this.get('id')
       });
       collections = Object.assign({}, initialCollections, {
