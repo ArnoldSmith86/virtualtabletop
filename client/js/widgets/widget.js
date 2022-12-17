@@ -1587,8 +1587,9 @@ export class Widget extends StateManaged {
 
     batchEnd();
 
-    if(variables.playerColor != playerColor && typeof variables.playerColor == 'string' && variables.playerColor.match(/^#[0-9a-fA-F]{6}$/)) {
-      toServer('playerColor', { player: playerName, color: variables.playerColor });
+    if(variables.playerColor != playerColor && typeof variables.playerColor == 'string') {
+      const hexColor = toHex(variables.playerColor);
+      toServer('playerColor', { player: playerName, color: hexColor });
       playerColor = variables.playerColor;
     }
     if(variables.playerName != playerName && typeof variables.playerName == 'string') {
