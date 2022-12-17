@@ -54,14 +54,10 @@ export function contrastAnyColor(inputColor, intensity, direction) {
   const r = parseInt(color.slice(1, 3), 16);
   const g = parseInt(color.slice(3, 5), 16);
   const b = parseInt(color.slice(5, 7), 16);
-  calcLuminance(color)
   const luminance = calcLuminance(color)
-  let modifier;  
-  if (direction === -1) {
-    modifier = (luminance > 0.5) ? intensity : -intensity;
-  } else {
-    modifier = (luminance > 0.5) ? -intensity : intensity;
-  }      
+  let modifier = (direction === -1)
+    ? (luminance > 0.5 ? intensity : -intensity)
+    : (luminance > 0.5 ? -intensity : intensity);
   const [adjustedR, adjustedG, adjustedB] = [r,g,b].map(c => Math.round(Math.max(0, Math.min(c+ modifier * 255, 255))));
   const defaultColor = (
     "#" +
@@ -77,11 +73,7 @@ export function contrastAnyColor(inputColor, intensity, direction) {
       adjusted_G.toString(16).padStart(2, '0') +
       adjusted_B.toString(16).padStart(2, '0')
     );
-    if (calcContrast(defaultColor,color) > calcContrast(reversedColor,color)) {
-      return defaultColor;
-    } else {
-      return reversedColor;
-    }
+    return calcContrast(defaultColor, color) > calcContrast(reversedColor, color) ? defaultColor : reversedColor;
   }
   return defaultColor
 }
