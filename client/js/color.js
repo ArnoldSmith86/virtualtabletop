@@ -43,7 +43,9 @@ export function calcLuminance(inputColor) {
 }
 
 export function calcContrast(color1, color2) {
-  return (Math.max(calcLuminance(color1),calcLuminance(color2))+0.05) / (Math.min(calcLuminance(color1),calcLuminance(color2))+0.05);  
+  let hex1 = toHex(color1);
+  let hex2 = toHex(color2);
+  return (Math.max(calcLuminance(hex1),calcLuminance(hex2))+0.05) / (Math.min(calcLuminance(hex1),calcLuminance(hex2))+0.05);  
 }
 
 export function contrastAnyColor(inputColor, intensity, direction) {
@@ -52,8 +54,8 @@ export function contrastAnyColor(inputColor, intensity, direction) {
   const r = parseInt(color.slice(1, 3), 16);
   const g = parseInt(color.slice(3, 5), 16);
   const b = parseInt(color.slice(5, 7), 16);
-  calcLuminance(inputColor)
-  const luminance = calcLuminance(inputColor)
+  calcLuminance(color)
+  const luminance = calcLuminance(color)
   let modifier;  
   if (direction === -1) {
     modifier = (luminance > 0.5) ? intensity : -intensity;
