@@ -29,7 +29,7 @@ export function calcLuminance(inputColor) {
   let BsRGB = b / 255;
   let R, G, B;
   function applyGammaCorrection(value) {
-    if (value <= 0.03928) {
+    if (value <= 0.04045) {
       return value / 12.92;
     } else {
       return Math.pow((value + 0.055) / 1.055, 2.4);
