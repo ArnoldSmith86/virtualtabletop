@@ -58,22 +58,12 @@ export function contrastAnyColor(inputColor, intensity, direction) {
   let modifier = (direction === -1)
     ? (luminance > 0.5 ? intensity : -intensity)
     : (luminance > 0.5 ? -intensity : intensity);
-  const [adjustedR, adjustedG, adjustedB] = [r,g,b].map(c => Math.round(Math.max(0, Math.min(c+ modifier * 255, 255))));
-  const defaultColor = (
-    "#" +
-    adjustedR.toString(16).padStart(2, '0') +
-    adjustedG.toString(16).padStart(2, '0') +
-    adjustedB.toString(16).padStart(2, '0')
-  );
+  const adjustColor = (r, g, b, modifier) => [r, g, b].map(c => Math.round(Math.max(0, Math.min(c + modifier * 255, 255))));
+  const toHexString = (r, g, b) => '#' + r.toString(16).padStart(2, '0') + g.toString(16).padStart(2, '0') + b.toString(16).padStart(2, '0');
+  const defaultColor = toHexString(...adjustColor(r, g, b, modifier));
   if (intensity === 1) {
-    const [adjusted_R, adjusted_G, adjusted_B] = [r,g,b].map(c => Math.round(Math.max(0, Math.min(c + (-1 * modifier) * 255, 255))));
-    const reversedColor = (
-      "#" +
-      adjusted_R.toString(16).padStart(2, '0') +
-      adjusted_G.toString(16).padStart(2, '0') +
-      adjusted_B.toString(16).padStart(2, '0')
-    );
+    const reversedColor = toHexString(...adjustColor(r, g, b, -modifier));
     return calcContrast(defaultColor, color) > calcContrast(reversedColor, color) ? defaultColor : reversedColor;
   }
-  return defaultColor
+  return defaultColor;
 }
