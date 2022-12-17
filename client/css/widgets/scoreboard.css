@@ -28,7 +28,7 @@
 
 .scoreboard.equalWidth td {
   white-space: normal;
-  width: calc(100% / var(--columns));
+  width: calc((100% - var(--firstColWidth)) / (var(--columns) - 1));
 }
 
 .scoreboard tbody tr:nth-child(1) td:nth-child(1) {
@@ -51,7 +51,7 @@
   background-color: #ddd;
   word-break: break-all;
   text-align: center;
-  width: var(--firstColWidth);
+  min-width: var(--firstColWidth);
 }
 
 .scoreboard .currentRound {
