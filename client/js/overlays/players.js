@@ -29,7 +29,7 @@ function fillPlayerList(players, active) {
   activePlayers = [...new Set(active)];
   removeFromDOM('#playerList > div, #playerCursors > .cursor');
 
-   for(const player in players) {
+    for(const player in players) {
     const entry = domByTemplate('template-playerlist-entry');
     $('.teamColor', entry).value = players[player];
     $('.playerName', entry).value = player;
