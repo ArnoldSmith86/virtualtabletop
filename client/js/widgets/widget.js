@@ -1315,7 +1315,7 @@ export class Widget extends StateManaged {
         }
         a.value = parseFloat(a.value);
 
-        let round = a.round;
+        let round = a.round ? parseInt(a.round) : null;
         if(round !== null && (isNaN(parseInt(round)) || round < 1)) {
           problems.push(`round ${a.round} must be null or a positive integer, assuming null.`);
           round = null;
@@ -1326,13 +1326,10 @@ export class Widget extends StateManaged {
         const relation = (a.mode == 'set') ? '=' : (a.mode == 'dec' ? '-' : '+');
         for(let i=0; i < seats.length; i++) {
           let newScore = [...asArray(seats[i].get(a.property) || 0)];
-          if(a.round === null) {
-            newScore[newScore.length] = compute(relation, null, 0, a.value);
-          } else  {
-            if(a.round > newScore.length)
-              newScore = newScore.concat(Array(a.round).fill(0)).slice(0,a.round);
-            newScore[a.round-1] = compute(relation, null, newScore[a.round-1], a.value);
-          }
+          const seatRound = a.round === null ? newScore.length + 1 : a.round;
+          if(a.round > newScore.length)
+            newScore = newScore.concat(Array(a.round - newScore.length).fill(0));
+          newScore[seatRound-1] = compute(relation, null, newScore[seatRound-1] || 0, a.value);
           await seats[i].set(a.property, newScore);
         }
 
@@ -1431,7 +1428,7 @@ export class Widget extends StateManaged {
             }
           } else {
             for(const w of collections[collection]) {
-              if (readOnlyProperties.has(a.property) || w.isTypeSpecificReadOnlyProperty(a.property)) {
+              if (w.readOnlyProperties().has(a.property)) {
                 problems.push(`Tried setting read-only property ${a.property}.`);
                 continue;
               }
@@ -1751,10 +1748,6 @@ export class Widget extends StateManaged {
     return seatVisibility;
   }
 
-  isTypeSpecificReadOnlyProperty(property) {
-    return false;
-  }
-
   isValidID(id, problems) {
     if(Array.isArray(id))
       return !id.map(i=>this.isValidID(i, problems)).filter(r=>r!==true).length;
@@ -1930,6 +1923,10 @@ export class Widget extends StateManaged {
       if(!this.disablePileUpdateAfterParentChange)
         await this.updatePiles();
     }
+  }
+
+  readOnlyProperties() {
+    return readOnlyProperties;
   }
 
   async rotate(degrees, mode) {

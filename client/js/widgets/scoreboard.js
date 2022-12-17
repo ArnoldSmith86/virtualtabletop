@@ -51,8 +51,6 @@ class Scoreboard extends Widget {
   get(property) {
     if(property != '_totals')
       return super.get(property)
-    else if(!this.get('showTotals'))
-      return [];
     else {
       // First get total score for each relevant seat
       const totals = [];
@@ -75,13 +73,13 @@ class Scoreboard extends Widget {
           teamTotals.push(this.getTotal(seatsTotals));
         }
         return teamTotals;
-      } else // Neither, ignore request
-        return null;
+      }
+      return null; // Neither array nor object, return null.
     }
   }
 
-  isTypeSpecificReadOnlyProperty(property) {
-    return property == '_totals';
+  readOnlyProperties() {
+    return new Set([...super.readOnlyProperties(), '_totals']);
   }
 
   // Return a modified 'seat' array or object including the seat widgets (not just the seat ids) to actually be used.
