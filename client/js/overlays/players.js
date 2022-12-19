@@ -5,12 +5,14 @@ let playerCursorsTimeout = {};
 let playerName = localStorage.getItem('playerName') || 'Guest' + Math.floor(Math.random()*1000);
 let playerColor = 'red';
 let activePlayers = [];
+let activeColors = [];
 localStorage.setItem('playerName', playerName);
 
 export {
   playerName,
   playerColor,
-  activePlayers
+  activePlayers,
+  activeColors
 }
 
 function addPlayerCursor(playerName, playerColor) {
@@ -50,6 +52,8 @@ function fillPlayerList(players, active) {
 
     if(player != playerName && activePlayers.indexOf(player) != -1)
       addPlayerCursor(player, players[player]);
+
+    activeColors.push(players[player]);
   }
   if(activePlayers.length < 2){
     document.getElementById("template-playerlist-entry").insertAdjacentHTML("afterend", "<div class='nothingtoshow'>There are no other players at this table.</div>");
