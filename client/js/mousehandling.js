@@ -40,7 +40,7 @@ async function inputHandler(name, e) {
     target = target.parentNode;
 
   const coords = eventCoords(name, e);
-  playerCoords = [Math.round(coords.x), Math.round(coords.y)];
+  mouseCoords = [Math.round(coords.x), Math.round(coords.y)];
   if(name == 'mousedown')
     mouseTarget = target;
   else if(name == 'mousemove' || name == 'mouseup')

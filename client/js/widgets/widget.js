@@ -1,6 +1,6 @@
 import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
-import { playerName, playerColor, activePlayers, playerCoords } from '../overlays/players.js';
+import { playerName, playerColor, activePlayers, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
@@ -633,7 +633,7 @@ export class Widget extends StateManaged {
         playerName,
         playerColor,
         activePlayers,
-        playerCoords,
+        mouseCoords,
         thisID : this.get('id')
       });
       collections = Object.assign({}, initialCollections, {

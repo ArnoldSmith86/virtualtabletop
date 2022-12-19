@@ -5,14 +5,14 @@ let playerCursorsTimeout = {};
 let playerName = localStorage.getItem('playerName') || 'Guest' + Math.floor(Math.random()*1000);
 let playerColor = 'red';
 let activePlayers = [];
-let playerCoords = [];
+let mouseCoords = [];
 localStorage.setItem('playerName', playerName);
 
 export {
   playerName,
   playerColor,
   activePlayers,
-  playerCoords
+  mouseCoords
 }
 
 function addPlayerCursor(playerName, playerColor) {
