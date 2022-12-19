@@ -50,9 +50,9 @@ export function calcContrast(color1, color2) {
 
 export function contrastAnyColor(inputColor, intensity, direction) {
   // Function created by https://chat.openai.com/chat
-  if (intensity == 1)
-    return calcContrast(inputColor, '#000000') >= calcContrast(inputColor, '#ffffff') ? '#000000' : '#ffffff'
   let color = toHex(inputColor);
+  if (intensity == 1)
+    return calcContrast(color, '#000000') >= calcContrast(color, '#ffffff') ? '#000000' : '#ffffff'
   const r = parseInt(color.slice(1, 3), 16);
   const g = parseInt(color.slice(3, 5), 16);
   const b = parseInt(color.slice(5, 7), 16);
