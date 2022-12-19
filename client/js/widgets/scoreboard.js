@@ -228,7 +228,7 @@ class Scoreboard extends Widget {
 
         // Add totals and team name
         if(showTotals)
-          pScores[i].push(this.getTotal(pScores[i]));
+          pScores[i].push(this.getTotal(pScores[i].slice(0,n)));
         pScores[i].unshift(team || '-');
         i++
       }
