@@ -809,7 +809,7 @@ export class Widget extends StateManaged {
             else
               await widget.set('activeColor', (widget.get('activeColor')+ a.value) % widget.get('colorMap').length);
           } else
-            problems.push(`Widget ${c.get('id')} is not a canvas.`);
+            problems.push(`Widget ${widget.get('id')} is not a canvas.`);
         };
 
         let phrase;
