@@ -1,4 +1,4 @@
-export const VERSION = 8;
+export const VERSION = 9;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -56,6 +56,7 @@ function updateRoutine(routine, v) {
 
   v<2 && v2UpdateSelectDefault(routine);
   v<3 && v3RemoveComputeAndRandomAndApplyVariables(routine);
+  v<9 && v9SeatVariables(routine);
 }
 
 function v2UpdateSelectDefault(routine) {
@@ -331,4 +332,12 @@ function v7HolderClickable(properties) {
 function v8HoverInheritVisibleForSeat(properties) {
   if (properties.onlyVisibleForSeat)
     properties.hoverInheritVisibleForSeat = false;
+}
+
+function v9SeatVariables(routine) {
+  for(const key in routine)
+    if(typeof routine[key] === 'string')
+      routine[key] = routine[key].replace('seatID', 'oldVersionSeatID');
+      routine[key] = routine[key].replace('seatIndex', 'oldVersionSeatIndex');
+      routine[key] = routine[key].replace('playerSeats', 'oldVersionPlayerSeats');
 }
