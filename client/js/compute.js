@@ -1,5 +1,3 @@
-import { activeColors } from "./overlays/players";
-
 const compute_ops = [
   {
     name: '=',
@@ -724,9 +722,9 @@ const compute_ops = [
   },
   {
     name: 'colorCreateHue',
-    desc: 'returns a visually distinct, random hex color using linear interpolation based on all active player colors',
+    desc: 'returns a random, as visually distinct as possible, hex color using linear interpolation',
     sample: 'var a = colorCreateHue',
-    call: function(v, x, y) { return v = calcHue(activeColors); },
+    call: function(v, x) { return v = randomHue(x); },
     hash: 'hue123'
   }
 ];

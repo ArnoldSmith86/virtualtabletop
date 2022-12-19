@@ -1,3 +1,5 @@
+import { activeColors } from "./overlays/players";
+
 export function toHex(inputColor) {
   const hexPattern = /^#([A-Fa-f0-9]{6})$/;
   if (hexPattern.test(inputColor)) {    
@@ -63,11 +65,14 @@ export function contrastAnyColor(inputColor, intensity) {
   return toHexString(...adjustColor(r, g, b, intensity));
 }
 
-export function calcHue(startingColors) {
+export function randomHue(startingColors) {
   let hue = 0;
   const hues = [];
+  if (!startingColors) {
+    startingColors = activeColors
+  }
   for(const player in startingColors) {
-    const hex = startingColors[player];
+    const hex = toHex(startingColors[player]);
     const r = parseInt(hex.slice(1,3), 16) / 255;
     const g = parseInt(hex.slice(3,5), 16) / 255;
     const b = parseInt(hex.slice(5,7), 16) / 255;
