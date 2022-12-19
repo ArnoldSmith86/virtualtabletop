@@ -690,8 +690,8 @@ const compute_ops = [
   {
     name: 'colorContrast',
     desc: 'converts color in any format that the browser can interpret to another color in the same hue but with different luminance',
-    sample: 'var a = colorContrast ${x} ${y} ${z}',
-    call: function(v, x, y, z) { return v = contrastAnyColor(x, y, z); }, 
+    sample: 'var a = colorContrast ${x} ${y}',
+    call: function(v, x, y) { return v = contrastAnyColor(x, y); }, 
     hash: '83181e89c7f0245a49644ce864625481'
   },
   {
