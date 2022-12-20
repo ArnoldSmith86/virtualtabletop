@@ -14,7 +14,7 @@ export function toHex(inputColor) {
 }
 
 export function toRGB(inputColor) {
-  let hex = toHex(inputColor)
+  let hex = toHex(inputColor);
   let r = parseInt(hex.slice(1, 3), 16);
   let g = parseInt(hex.slice(3, 5), 16);
   let b = parseInt(hex.slice(5, 7), 16);
@@ -69,7 +69,7 @@ export function randomHue(startingColors) {
   let hue = 0;
   const hues = [];
   if (startingColors == 1) {
-    startingColors = activeColors
+    startingColors = activeColors;
   }
   for(const player in startingColors) {
     const hex = toHex(startingColors[player]);
