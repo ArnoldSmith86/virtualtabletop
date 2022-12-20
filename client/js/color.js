@@ -68,7 +68,7 @@ export function contrastAnyColor(inputColor, intensity) {
 export function randomHue(startingColors) {
   let hue = 0;
   const hues = [];
-  if (!startingColors) {
+  if (startingColors == 1) {
     startingColors = activeColors
   }
   for(const player in startingColors) {
