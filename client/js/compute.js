@@ -725,7 +725,7 @@ const compute_ops = [
     desc: 'returns a random, as visually distinct as possible, hex color using linear interpolation',
     sample: 'var a = colorCreateHue',
     call: function(v, x) { return v = randomHue(x); },
-    hash: 'hue123'
+    hash: '52422d76f0dbb89af543f4b7972711f0'
   }
 ];
 
