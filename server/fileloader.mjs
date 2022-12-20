@@ -24,7 +24,12 @@ async function downloadLink(link) {
     filename: Math.random().toString(36).substring(3, 9)
   };
 
-  const response = await fetch(link, requestEtag ? { headers: { 'If-None-Match': requestEtag } } : {});
+  // if the link is to our own server, use the local link instead so we can skip external auth, if any
+  var actual_link = link;
+  if (Config.get("externalURL") && link.startsWith(Config.get("externalURL"))) {
+    actual_link = link.replace(Config.get("externalURL"), Config.get("internalURL"));
+  }
+  const response = await fetch(actual_link, requestEtag ? { headers: { 'If-None-Match': requestEtag } } : {});
 
   currentLinkStatus.time = +new Date();
   currentLinkStatus.status = response.status;

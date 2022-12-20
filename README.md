@@ -64,6 +64,39 @@ If you use "GitHub Desktop" you should follow these steps:
 4. Go to Repository -> Open in Command Prompt.
 5. Do `npm install` so Node.js downloads all the dependencies of the project.
 
+## Configure the server
+
+If you just want to run VirtualTabletop locally, you likely don't need to change anything. You can skip this section.
+
+However, if you have some custom setup, for example:
+
+1. Your virtualtabletop server is behind [a reverse proxy](https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/)
+2. Your virtualtabletop server is not at the root path, e.g. `https://example.domain.com/games/virtualtabletop`
+3. You use a different port.
+4. Your web stack has an authentication layer.
+5. You are using different paths for `library`, `save`, or `assets`.
+
+then you can edit the configuration file.
+
+1. Make a copy of `config.template.json` and name it `config.json`. (If `config.json` already exists, you can just edit it.)
+2. Change the values in `config.json`.
+
+Most fields are obvious.
+
+`externalURL` is the URL seen by the world. `internalURL` is the URL seen from your VirtualTabletop server environment. For example, a typical cloud setup may be like this:
+
+* Your server is sitting behind an NGINX reverse proxy, so that public users can visit your virtualtabletop server at https://example.domain.com/games/virtualtabletop
+* You are running VirtualTabletop in a docker container and it's port is set to 8272. NGINX sees your server at http://localhost:8272
+* You have an authentication layer in front of NGINX, e.g. OpenID or Google OAuth, so your users need to login to see https://example.domain.com/games/virtualtabletop Because of this authentication layer, VirtualTabletop cannot fetch files within https://example.domain.com/games/virtualtabletop (it will be blocked by OpenID or Google OAuth). In this case, you need to provide `internalURL` for file fetching.
+
+Example configuration (partial):
+```
+"port": 8272,
+"externalURL": "https://example.domain.com",
+"internalURL": "http://localhost:8272",
+"urlPrefix": "/games/virtualtabletop/",
+```
+
 ## Starting the server
 
 Now you can start the server by typing:
