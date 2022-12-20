@@ -1,4 +1,4 @@
-import { activeColors } from "./overlays/players";
+import { activeColors } from "./overlays/players.js";
 
 export function toHex(inputColor) {
   const hexPattern = /^#([A-Fa-f0-9]{6})$/;
