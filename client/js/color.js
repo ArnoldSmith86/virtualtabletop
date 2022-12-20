@@ -54,11 +54,11 @@ export function contrastAnyColor(inputColor, intensity) {
   // Function created by https://chat.openai.com/chat
   let color = toHex(inputColor);
   if (intensity == 1)
-    return calcContrast(color, '#000000') >= calcContrast(color, '#ffffff') ? '#000000' : '#ffffff'
+    return calcContrast(color, '#000000') >= calcContrast(color, '#ffffff') ? '#000000' : '#ffffff';
   const r = parseInt(color.slice(1, 3), 16);
   const g = parseInt(color.slice(3, 5), 16);
   const b = parseInt(color.slice(5, 7), 16);
-  const luminance = calcLuminance(color)
+  const luminance = calcLuminance(color);
   if (luminance > 0.5) intensity = -intensity;
   const adjustColor = (r, g, b, intensity) => [r, g, b].map(c => Math.round(Math.max(0, Math.min(c + intensity * 255, 255))));
   const toHexString = (r, g, b) => '#' + r.toString(16).padStart(2, '0') + g.toString(16).padStart(2, '0') + b.toString(16).padStart(2, '0');
