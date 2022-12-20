@@ -1,9 +1,10 @@
 import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
-import { playerName, playerColor, activePlayers } from '../overlays/players.js';
+import { playerName, playerColor, activePlayers, activeColors } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
+import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize } from '../geometry.js';
 
 const readOnlyProperties = new Set([
@@ -633,6 +634,7 @@ export class Widget extends StateManaged {
         playerName,
         playerColor,
         activePlayers,
+        activeColors,
         thisID : this.get('id')
       });
       collections = Object.assign({}, initialCollections, {
@@ -1590,7 +1592,7 @@ export class Widget extends StateManaged {
     if(variables.playerColor != playerColor && typeof variables.playerColor == 'string') {
       const hexColor = toHex(variables.playerColor);
       toServer('playerColor', { player: playerName, color: hexColor });
-      playerColor = variables.playerColor;
+      playerColor = hexColor;
     }
     if(variables.playerName != playerName && typeof variables.playerName == 'string') {
       toServer('rename', { oldName: playerName, newName: variables.playerName });

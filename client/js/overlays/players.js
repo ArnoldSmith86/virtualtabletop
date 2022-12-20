@@ -27,6 +27,7 @@ function addPlayerCursor(playerName, playerColor) {
 
 function fillPlayerList(players, active) {
   activePlayers = [...new Set(active)];
+  activeColors = activePlayers.map(playerName=>players[playerName]);
   removeFromDOM('#playerList > div, #playerCursors > .cursor');
 
   for(const player in players) {
@@ -52,8 +53,6 @@ function fillPlayerList(players, active) {
 
     if(player != playerName && activePlayers.indexOf(player) != -1)
       addPlayerCursor(player, players[player]);
-
-    activeColors.push(players[player]);
   }
   if(activePlayers.length < 2){
     document.getElementById("template-playerlist-entry").insertAdjacentHTML("afterend", "<div class='nothingtoshow'>There are no other players at this table.</div>");
