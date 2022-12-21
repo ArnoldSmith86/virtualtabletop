@@ -466,6 +466,8 @@ export default class Room {
 
     if(linkSourceStateID != stateID)
       this.state._meta.activeState = { linkStateID: linkSourceStateID, stateID, variantID };
+    else if(stateInfo.savePlayers && stateInfo.saveLinkState)
+      this.state._meta.activeState = { saveStateID: stateID, stateID: stateInfo.saveState, variantID: stateInfo.saveVariant, linkStateID: stateInfo.saveLinkState };
     else if(stateInfo.savePlayers)
       this.state._meta.activeState = { saveStateID: stateID, stateID: stateInfo.saveState, variantID: stateInfo.saveVariant };
     else
@@ -700,10 +702,12 @@ export default class Room {
   saveState(player, players) {
     const id = Math.random().toString(36).substring(3, 7);
 
-    this.state._meta.states[id] = {...this.state._meta.states[this.state._meta.activeState.stateID]};
+    this.state._meta.states[id] = {...this.state._meta.states[this.state._meta.activeState.linkStateID || this.state._meta.activeState.stateID]};
     this.state._meta.states[id].variants = [];
     this.state._meta.states[id].saveState = this.state._meta.activeState.stateID;
     this.state._meta.states[id].saveVariant = this.state._meta.activeState.variantID;
+    if(this.state._meta.activeState.linkStateID)
+      this.state._meta.states[id].saveLinkState = this.state._meta.activeState.linkStateID;
     this.state._meta.states[id].savePlayers = players;
     this.state._meta.states[id].saveDate = +new Date();
 
