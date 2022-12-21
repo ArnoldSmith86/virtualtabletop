@@ -8,7 +8,7 @@ export function toHex(inputColor) {
   ctx.fillStyle = inputColor;
   const hexColor = ctx.fillStyle;  
   canvas.remove();
-  return hexColor;
+  return hexPattern.test(hexColor) ? hexColor : '#000000';
 }
 
 export function toRGB(inputColor) {
