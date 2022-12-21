@@ -181,7 +181,7 @@ class Scoreboard extends Widget {
         pScores[i] = pScores[i].concat(Array(numRounds).fill('')).slice(0,numRounds);
         // Add totals if requested and (temporarily) seat id instead of team name for sorting.
         if(showTotals)
-          pScores[i].push(this.getTotal(pScores[i]));
+          pScores[i].push(this.getTotal(score)); // Do not use pScores[i] here b/c of scalars.
         pScores[i].unshift(seats[i].get('id')); // Temporarily use the seat id here
       }
 
