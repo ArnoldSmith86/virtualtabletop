@@ -285,6 +285,9 @@ div:nth-of-type(2) > .list > .roomState .star {
 .roomState.hideName.savedGame .details h3 {
   display: none;
 }
+.roomState.hideName.savedGame .details h4 {
+  margin: 8px;
+}
 
 .roomState.noImage img {
   display: none;
