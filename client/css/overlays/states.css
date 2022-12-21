@@ -279,7 +279,10 @@ div:nth-of-type(2) > .list > .roomState .star {
   display: block;
 }
 
-.roomState.hideName .details {
+.roomState.hideName:not(.savedGame) .details {
+  display: none;
+}
+.roomState.hideName.savedGame .details h3 {
   display: none;
 }
 
