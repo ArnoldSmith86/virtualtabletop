@@ -59,17 +59,15 @@ class Scoreboard extends Widget {
         for (const seat of seats) {
           const score = seat.get(this.get('scoreProperty'));
           const index = seat.get('index');
-          totals[index] = this.getTotal(asArray(score).map(s => parseFloat(s)));
-          if(isNaN(totals[index]))
-            totals[index] = 0;
+          totals[index] = this.getTotal(score);
         }
         return totals
       } else if (typeof seats == 'object') { // Getting team totals
         const teamTotals = [null];
         for (const team in seats) {
           const seatsInTeam = widgetFilter(w => w.get('type') == 'seat' && seats[team].includes(w));
-          const seatsScores = asArray(seats[team].map(w => w.get(this.get('scoreProperty'))));
-          const seatsTotals = seatsScores.map( s => this.getTotal(asArray(s)) );
+          const seatsScores = seats[team].map(w => w.get(this.get('scoreProperty')));
+          const seatsTotals = asArray(seatsScores).map( s => this.getTotal(s) );
           teamTotals.push(this.getTotal(seatsTotals));
         }
         return teamTotals;
@@ -100,11 +98,8 @@ class Scoreboard extends Widget {
       return null;
   }
 
-  getTotal(array) {
-    let sum = array.reduce((partialSum, a) => partialSum + parseFloat(a), 0);
-    if(isNaN(sum))
-      sum = 0
-    return sum;
+  getTotal(x) {
+    return asArray(x).reduce((partialSum, a) => partialSum + (parseFloat(a) || 0), 0)
   }
 
   addRowToTable(parent, values, cellType = 'td') {
@@ -182,19 +177,10 @@ class Scoreboard extends Widget {
       // Fill player score array, totals array
       for (let i=0; i < seats.length; i++) {
         const score = seats[i].get(scoreProperty);
-        let total;
-        if(Array.isArray(score)) {
-          pScores[i] = score.map( s => isNaN(parseFloat(s)) ? 0 : parseFloat(s));
-          total = this.getTotal(pScores[i]);
-        } else {
-          pScores[i] = [];
-          total = parseFloat(score);
-          if(isNaN(total))
-            total = 0;
-        }
-        pScores[i] = pScores[i].concat(Array(numRounds).fill('')).slice(0,numRounds);
+        pScores[i] = Array.isArray(score) ? [...score] : [];
+        // Add totals if requested and (temporarily) seat id instead of team name for sorting.
         if(showTotals)
-          pScores[i].push(total);
+          pScores[i].push(this.getTotal(pScores[i]));
         pScores[i].unshift(seats[i].get('id')); // Temporarily use the seat id here
       }
 
@@ -211,7 +197,8 @@ class Scoreboard extends Widget {
         });
       if(!this.get('sortAscending'))
         pScores = pScores.reverse();
-      
+
+      // Replace seat id with player name for display
       for(let i=0; i<pScores.length; i++)
         pScores[i][0] = widgets.get(pScores[i][0]).get('player') || '-';
       
@@ -221,9 +208,9 @@ class Scoreboard extends Widget {
         // Get array of (arrays of) seat scores.
         const seatScores = seats[team].map(w =>  asArray(w.get(scoreProperty)));
 
-        // Make all score arrays for this the same length, then add them element-by-element
+        // Make all score arrays for this team the same length, then add them element-by-element
         const n = seatScores.reduce((max, xs) => Math.max(max, xs.length), 0);
-        pScores[i] = Array(n).fill(0).map((_,i) => this.getTotal(seatScores.map(xs => xs[i] || 0)));
+        pScores[i] = Array(n).fill(0).map((_,i) => this.getTotal(seatScores.map(xs => xs[i])));
         pScores[i] = pScores[i].concat(Array(numRounds).fill('')).slice(0,numRounds);
 
         // Add totals and team name
