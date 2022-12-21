@@ -178,6 +178,7 @@ class Scoreboard extends Widget {
       for (let i=0; i < seats.length; i++) {
         const score = seats[i].get(scoreProperty);
         pScores[i] = Array.isArray(score) ? [...score] : [];
+        pScores[i] = pScores[i].concat(Array(numRounds).fill('')).slice(0,numRounds);
         // Add totals if requested and (temporarily) seat id instead of team name for sorting.
         if(showTotals)
           pScores[i].push(this.getTotal(pScores[i]));
@@ -201,7 +202,7 @@ class Scoreboard extends Widget {
       // Replace seat id with player name for display
       for(let i=0; i<pScores.length; i++)
         pScores[i][0] = widgets.get(pScores[i][0]).get('player') || '-';
-      
+
     } else if(typeof seats == 'object') { // Display team scores
       let i = 0;
       for (const team in seats) {
