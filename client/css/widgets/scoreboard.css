@@ -1,4 +1,4 @@
-.scoreboard {
+.scoreboard > div.scoreboardIntermediate {
     border: 2px solid black;
     box-sizing: border-box;
     background: #fff;
@@ -7,16 +7,18 @@
     justify-content: center;
     align-items: center;
     overflow: auto;
+    height: 100%;
+    width: 100%;
 }
 
-.scoreboard table {
+.scoreboard > div.scoreboardIntermediate > table {
     border-collapse: separate;
     border-spacing: 0;
     height: 100%;
     width: 100%;
 }
 
-.scoreboard tbody td {
+.scoreboard > div.scoreboardIntermediate > table tbody td {
   border-bottom: 1px solid #ddd;
   border-right: 1px solid #ddd;
   color: #333;
@@ -26,16 +28,16 @@
   background-color: #f8f8f8;
 }
 
-.scoreboard.equalWidth td {
+.scoreboard.equalWidth > div.scoreboardIntermediate > table td {
   white-space: normal;
   width: calc((100% - var(--firstColWidth)) / (var(--columns) - 1));
 }
 
-.scoreboard tbody tr:nth-child(1) td:nth-child(1) {
+.scoreboard > div.scoreboardIntermediate > table tbody tr:nth-child(1) td:nth-child(1) {
   z-index: 2;
 }
 
-.scoreboard tbody tr:nth-child(1) td {
+.scoreboard > div.scoreboardIntermediate > table tbody tr:nth-child(1) td {
   position: sticky;
   z-index: 1;
   top: 0;
@@ -44,7 +46,7 @@
   text-align:center;
 }
 
-.scoreboard tbody tr td:nth-child(1) {
+.scoreboard > div.scoreboardIntermediate > table tbody tr td:nth-child(1) {
   position: sticky;
   z-index: 1;
   left: 0;
@@ -54,11 +56,11 @@
   min-width: var(--firstColWidth);
 }
 
-.scoreboard .currentRound {
+.scoreboard > div.scoreboardIntermediate > table .currentRound {
   background-color: #fdf5e6;
 }
 
-.scoreboard .totalsLine {
+.scoreboard > div.scoreboardIntermediate > table .totalsLine {
   background-color: #ddd;
   position: sticky;
   bottom: 0;

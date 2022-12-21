@@ -145,7 +145,7 @@ class Scoreboard extends Widget {
         this.tableDOM.innerHTML = '';
       return
     }
-      
+
     const showTotals = this.get('showTotals');
     const scoreProperty = this.get('scoreProperty');
     let sortField = this.get('sortField');
@@ -171,8 +171,8 @@ class Scoreboard extends Widget {
     rounds.unshift(this.get('roundLabel'));
 
     // Fill scores array. pScores[i][0] is player name or team name, last is total
-    // (or last score if showTotals is false)    
-    let pScores = []; 
+    // (or last score if showTotals is false)
+    let pScores = [];
     if(Array.isArray(seats)) { // Show individual seats
       // Fill player score array, totals array
       for (let i=0; i < seats.length; i++) {
@@ -228,7 +228,10 @@ class Scoreboard extends Widget {
     // Finally, build the table
     if(!this.tableDOM) {
       this.tableDOM = document.createElement('table');
-      this.domElement.appendChild(this.tableDOM);
+      const intermediateDiv = document.createElement('div');
+      intermediateDiv.className = 'scoreboardIntermediate';
+      this.domElement.appendChild(intermediateDiv);
+      intermediateDiv.appendChild(this.tableDOM);
     } else {
       this.tableDOM.innerHTML = '';
     }
