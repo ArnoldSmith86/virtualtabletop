@@ -365,6 +365,18 @@ div:nth-of-type(2) > .list > .roomState .star {
     left: 48px;
     height: 48px;
   }
+  .roomState.hideName:not(.savedGame) .details {
+    display: block;
+  }
+  .roomState.savedGame h3 {
+    font-size: 1rem;
+  }
+  .roomState.savedGame h4 {
+    font-size: 0.6rem;
+  }
+  .roomState.savedGame br + br {
+    display: none;
+  }
 }
 
 
