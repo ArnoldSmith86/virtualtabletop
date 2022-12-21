@@ -432,7 +432,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     entry.className = state.image ? 'roomState' : 'roomState noImage';
     if(state.publicLibrary)
       entry.className += ' publicLibraryGame';
-    if(state.showName === false)
+    if(state.showName === false && !state.savePlayers)
       entry.className += ' hideName';
     if(state.link)
       entry.className += ' linkedGame';
