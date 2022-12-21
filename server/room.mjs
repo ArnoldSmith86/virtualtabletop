@@ -100,19 +100,32 @@ export default class Room {
         if(type != 'link')
           fs.writeFileSync(this.variantFilename(stateID, newVariantID), JSON.stringify(variant));
 
-        const variantMeta = {
+        let variantMeta = {
           players: meta.players,
           language: meta.language,
           variant: meta.variant,
           variantImage: meta.variantImage
         };
+
+        if(String(meta.link).match(/#.+\/.+/))
+          variantMeta.link = meta.link;
+        if(meta.plStateID) {
+          variantMeta = {
+            plStateID: meta.plStateID,
+            plVariantID: meta.plVariantID
+          };
+        }
+
         if(type == 'link') {
           const baseLink = src.replace(/#.*/, '');
           meta.link = `${baseLink}#${state}`;
-          variantMeta.link = `${meta.link}/${v}`;
-          if(src.match(/#.*\//))
-            meta.link = variantMeta.link;
+          if(!variantMeta.link && !variantMeta.plStateID) {
+            variantMeta.link = `${meta.link}/${v}`;
+            if(src.match(/#.*\//))
+              meta.link = variantMeta.link;
+          }
         }
+
         delete meta.players;
         delete meta.language;
         delete meta.variant;

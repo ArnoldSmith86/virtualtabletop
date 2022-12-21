@@ -73,8 +73,14 @@ function checkForLinkToOwnServer(link) {
 
     const room = JSON.parse(fs.readFileSync(Config.directory('save') + '/rooms/' + m[2] + '.json'));
     for(const [ i, variant ] of Object.entries(room._meta.states[m[3]].variants)) {
-      states[m[3]].push(JSON.parse(fs.readFileSync(Config.directory('save') + `/states/${m[2]}-${m[3]}-${i}.json`)));
-      states[m[3]][i]._meta = { version: states[m[3]][i]._meta.version, info: Object.assign(room._meta.states[m[3]], variant) };
+      const info = Object.assign({...room._meta.states[m[3]]}, variant);
+      if(variant.link || variant.plStateID) {
+        states[m[3]].push({ _meta: { version: 8, info } });
+      } else {
+        states[m[3]].push(JSON.parse(fs.readFileSync(Config.directory('save') + `/states/${m[2]}-${m[3]}-${i}.json`)));
+        states[m[3]][i]._meta = { version: states[m[3]][i]._meta.version, info };
+      }
+      delete states[m[3]][i]._meta.info.variants;
     }
 
     return states;
