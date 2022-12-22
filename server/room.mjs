@@ -701,7 +701,16 @@ export default class Room {
     return Config.directory('save') + '/rooms/' + this.id + '.json';
   }
 
-  saveState(player, players) {
+  saveState(player, players, updateCurrentSave) {
+    if(updateCurrentSave) {
+      const stateID = this.state._meta.activeState.saveStateID;
+      const newContent = {...this.state};
+      delete newContent._meta;
+      this.state._meta.states[stateID].saveDate = +new Date();
+      fs.writeFileSync(this.variantFilename(stateID, 0), JSON.stringify(newContent));
+      return this.sendMetaUpdate();
+    }
+
     const id = Math.random().toString(36).substring(3, 7);
 
     this.state._meta.states[id] = {...this.state._meta.states[this.state._meta.activeState.linkStateID || this.state._meta.activeState.stateID]};

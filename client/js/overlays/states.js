@@ -210,7 +210,10 @@ async function addState(e, type, src, id, addAsVariant) {
   req.send(blob);
 }
 
-async function saveState() {
+async function saveState(e) {
+  if(e.target == $('#updateSaveState'))
+    return toServer('saveState', { players: $('#stateSaveOverlay input').value, updateCurrentSave: true });
+
   $('#stateSaveOverlay input').value = [...new Set(widgetFilter(w=>w.get('type')=='seat'&&w.get('player')).map(w=>w.get('player')))].sort().join(', ');
   if(!$('#stateSaveOverlay input').value)
     $('#stateSaveOverlay input').value = activePlayers.sort().join(', ');
@@ -218,7 +221,7 @@ async function saveState() {
 
   $('#stateSaveOverlay button[icon=save]').onclick = function() {
     if($('#stateSaveOverlay input').value) {
-      toServer('saveState', $('#stateSaveOverlay input').value);
+      toServer('saveState', { players: $('#stateSaveOverlay input').value });
       showStatesOverlay('statesOverlay');
     } else {
       alert('Please enter active players or a different identifier.');
@@ -390,8 +393,9 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
   const emptyLibrary = $('#emptyLibrary');
   const emptyLibraryByFilter = $('#emptyLibraryByFilter');
   const saveButton = $('#saveState');
+  const updateSaveButton = $('#updateSaveState');
   const addButton = $('#addState');
-  $('#saveState').style.display = 'none';
+  $('#saveState').style.display = $('#updateSaveState').style.display = 'none';
   removeFromDOM('#statesList > div');
 
   let isEmpty = true;
@@ -441,6 +445,8 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     if(activeState && (activeState.stateID == state.id || activeState.saveStateID == state.id || activeState.linkStateID == state.id)) {
       entry.className += ' activeGame';
       saveButton.style.display = 'inline-flex';
+      if(activeState.saveStateID)
+        updateSaveButton.style.display = 'inline-flex';
     }
 
     $('img', entry).src = state.image.replace(/^\//, '');
@@ -537,9 +543,11 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 
   if(!$('.roomState', categories['In-Progress Games'])) {
     categories['In-Progress Games'].classList.add('empty');
-    $('.buttons', categories['Game Shelf']).appendChild(saveButton);
+    for(const button of [ updateSaveButton, saveButton ])
+      $('.buttons', categories['Game Shelf']).appendChild(button);
   } else {
-    $('.buttons', categories['In-Progress Games']).appendChild(saveButton);
+    for(const button of [ updateSaveButton, saveButton ])
+      $('.buttons', categories['In-Progress Games']).appendChild(button);
   }
 
   categories['Game Shelf'].insertBefore(emptyLibrary, $('.list', categories['Game Shelf']));
@@ -1037,7 +1045,7 @@ onLoad(function() {
   on('#stateFilters select', 'change', updateLibraryFilter);
 
   on('#addState', 'click', _=>showStatesOverlay('stateAddOverlay'));
-  on('#saveState', 'click', saveState);
+  on('#saveState, #updateSaveState', 'click', saveState);
 
   on('#stateAddOverlay [icon=close]', 'click', e=>showStatesOverlay('statesOverlay'));
   on('#stateAddOverlay button[icon=save]', 'click', function(e) {
