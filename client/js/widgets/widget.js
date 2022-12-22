@@ -855,23 +855,22 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'CHOOSE') {  
-        let numFaces;
         const faceDetails = {};
         for (const [key, value] of Object.entries(this.get('faces'))) {
           faceDetails[key] = value;
         }
-        numFaces = this.faces().length;
-        console.log(faceDetails)
+        let numFaces = this.faces().length;
         setDefaults(a, { source: 'DEFAULT', count: numFaces, xOffset: 0, yOffset: 0, properties: {}, collection: 'CHOOSER' });
+        // Somehow, need to change the collection so that it know the collection is this.id. Right now, have to put a SELECT in the routine to make it work.
         const source = getCollection(a.source);
         if(source) {
           var c=[];
           const numRows = Math.ceil(Math.sqrt(numFaces));
           const numColumns = Math.ceil(numFaces / numRows);
-          const xSpacing = 100; // The distance between each column
-          const ySpacing = 100; // The distance between each row
-          let x = -numColumns / 2 * xSpacing; // The starting x coordinate
-          let y = -numRows / 2 * ySpacing; // The starting y coordinate
+          const xSpacing = this.get('width');
+          const ySpacing = this.get('height');
+          let x = -numColumns / 2 * xSpacing + this.get('width') / 2;
+          let y = -numRows / 2 * ySpacing + this.get('height') / 2;
       
           for(const w of collections[source]) {
             for(let i=1; i<=a.count; ++i) {
@@ -885,12 +884,13 @@ export class Widget extends StateManaged {
                   problems.push(`There is already a widget with id:${a.properties.id}, generating new ID.`);
               }
               delete clone.faces;
-              delete clone.clickRoutine;
-              // clone.movable = false  ADD This back in later
+              delete clone.clickRoutine; // Need to add in a special clickRoutine to do the choosing part.
+              clone.movable = false
               clone.parent = this.id;
               clone.x = x;
               clone.y = y;
-              for (const [key, value] of Object.entries(faceDetails)) {
+ 
+              for (const [key, value] of Object.entries(faceDetails)) { //This is not working to put unique faces properties on each widget
                 clone[key] = value;
               }
               const cWidget = widgets.get(await addWidgetLocal(clone));
@@ -899,7 +899,7 @@ export class Widget extends StateManaged {
       
               x += xSpacing;
               if(x >= numColumns / 2 * xSpacing) {
-                x = -numColumns / 2 * xSpacing;
+                x = -numColumns / 2 * xSpacing + this.get('width') / 2;
                 y += ySpacing;
               }
             }
