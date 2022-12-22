@@ -702,6 +702,10 @@ div:nth-of-type(2) > .list > .roomState .star {
   font-size: 18px;
 }
 
+#helpTexts [contenteditable="true"] {
+  padding: 5px;
+}
+
 @media (max-width: 1260px), (max-height: 787px), (min-width: 1421px) and (min-height: 888px) {
   #stateDetailsOverlay {
     --mainDetailsHeight: 200px;
