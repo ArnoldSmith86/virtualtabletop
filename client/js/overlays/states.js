@@ -860,16 +860,28 @@ function fillStateDetails(states, state, dom) {
     enableEditing($('#stateDetailsOverlay'), state);
 
     for(const uploadButton of $a('#stateDetailsOverlay button[icon=image]')) {
+      const updateImageValue = function(button, newURL) {
+        const img = $('img', button.parentNode.parentNode);
+        button.value = newURL;
+        toggleClass(img, 'hidden', !newURL);
+        img.src = newURL ? newURL.replace(/^\//, '') : '';
+      }
+
       uploadButton.onclick = async function() {
         const isVariantImage = uploadButton.parentNode.classList.contains('variantEdit');
-        const img = $('img', uploadButton.parentNode.parentNode);
         $('#statesButton').dataset.overlay = 'updateImageOverlay';
         let newURL = await updateImage(uploadButton.value, isVariantImage ? 'Use state image' : null);
         if(!newURL && isVariantImage)
           newURL = state.image;
-        uploadButton.value = newURL;
-        toggleClass(img, 'hidden', !newURL);
-        img.src = newURL ? newURL.replace(/^\//, '') : '';
+
+        // update variant images if they were the same as the main image
+        if(uploadButton.dataset.field == 'image')
+          for(const variantButton of $a('#stateDetailsOverlay .variant button[icon=image]'))
+            if(variantButton.value == uploadButton.value)
+              updateImageValue(variantButton, newURL);
+
+        updateImageValue(uploadButton, newURL);
+
         showStatesOverlay(detailsOverlay);
       };
     }
