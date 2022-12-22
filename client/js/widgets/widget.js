@@ -5,6 +5,7 @@ import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize } from '../geometry.js';
+import { Widget } from './widget';
 
 const readOnlyProperties = new Set([
   '_absoluteRotation',
@@ -852,6 +853,63 @@ export class Widget extends StateManaged {
           }
         }
       }
+
+      if(a.func == 'CHOOSE') {  
+        let numFaces;
+        const faceDetails = {};
+        for (const [key, value] of Object.entries(this.get('faces'))) {
+          faceDetails[key] = value;
+        }
+        numFaces = this.faces().length;
+        console.log(faceDetails)
+        setDefaults(a, { source: 'DEFAULT', count: numFaces, xOffset: 0, yOffset: 0, properties: {}, collection: 'CHOOSER' });
+        const source = getCollection(a.source);
+        if(source) {
+          var c=[];
+          const numRows = Math.ceil(Math.sqrt(numFaces));
+          const numColumns = Math.ceil(numFaces / numRows);
+          const xSpacing = 100; // The distance between each column
+          const ySpacing = 100; // The distance between each row
+          let x = -numColumns / 2 * xSpacing; // The starting x coordinate
+          let y = -numRows / 2 * ySpacing; // The starting y coordinate
+      
+          for(const w of collections[source]) {
+            for(let i=1; i<=a.count; ++i) {
+              const clone = Object.assign(JSON.parse(JSON.stringify(w.state)), a.properties);
+              const parent = clone.parent;
+              clone.clonedFrom = w.get('id');
+      
+              if(widgets.has(clone.id)) {
+                delete clone.id;
+                if(a.properties.id !== undefined)
+                  problems.push(`There is already a widget with id:${a.properties.id}, generating new ID.`);
+              }
+              delete clone.faces;
+              delete clone.clickRoutine;
+              // clone.movable = false  ADD This back in later
+              clone.parent = this.id;
+              clone.x = x;
+              clone.y = y;
+              for (const [key, value] of Object.entries(faceDetails)) {
+                clone[key] = value;
+              }
+              const cWidget = widgets.get(await addWidgetLocal(clone));
+          
+              c.push(cWidget);
+      
+              x += xSpacing;
+              if(x >= numColumns / 2 * xSpacing) {
+                x = -numColumns / 2 * xSpacing;
+                y += ySpacing;
+              }
+            }
+          }
+          collections[a.collection]=c;
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary( `'${a.source}'`, `'${JSON.stringify(a.collection)}'`)
+        }
+      }
+      
 
       if(a.func == 'CLONE') {
         setDefaults(a, { source: 'DEFAULT', count: 1, xOffset: 0, yOffset: 0, properties: {}, collection: 'DEFAULT' });
