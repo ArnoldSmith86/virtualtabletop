@@ -52,9 +52,13 @@ export default class Player {
       if(func == 'unlinkState')
         await this.room.unlinkState(this, args);
     } catch(e) {
-      Logging.handleWebSocketException(func, args, e);
-      this.send('internal_error', func);
-      this.connection.close();
+      if(e instanceof Logging.UserError) {
+        this.send('error', `${e.code} - ${e.message}`);
+      } else {
+        Logging.handleWebSocketException(func, args, e);
+        this.send('internal_error', func);
+        this.connection.close();
+      }
     }
   }
 
