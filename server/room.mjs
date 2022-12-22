@@ -429,22 +429,24 @@ export default class Room {
       this.broadcast('state', this.state);
     } else {
       let newState = emptyState;
+      let errorMessage = 'Error loading state.';
       try {
         if(fileOrLink.match(/^http/))
           newState = await FileLoader.readVariantFromLink(fileOrLink);
         else
           newState = JSON.parse(fs.readFileSync(fileOrLink));
       } catch(e) {
+        errorMessage = `Error loading state:\n${e.toString()}`;
         newState = null;
       }
       if(newState) {
         Logging.log(`loading room ${this.id} from ${fileOrLink}`);
         this.setState(newState);
       } else {
-        Logging.log(`loading room ${this.id} from ${fileOrLink} FAILED`);
+        Logging.log(`loading room ${this.id} from ${fileOrLink} FAILED: ${errorMessage}`);
         this.setState(emptyState);
         if(player)
-          player.send('error', 'Error loading state.');
+          player.send('error', errorMessage);
       }
     }
 

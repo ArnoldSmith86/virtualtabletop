@@ -83,6 +83,10 @@ function checkForLinkToOwnServer(link) {
     states[m[3]] = [];
 
     const room = JSON.parse(fs.readFileSync(Config.directory('save') + '/rooms/' + m[2] + '.json'));
+
+    if(!room._meta.states[m[3]])
+      throw Error('The link target has been deleted.');
+
     for(const [ i, variant ] of Object.entries(room._meta.states[m[3]].variants)) {
       const info = Object.assign({...room._meta.states[m[3]]}, variant);
       if(variant.link || variant.plStateID) {
