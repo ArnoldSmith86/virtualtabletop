@@ -449,7 +449,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
         updateSaveButton.style.display = 'inline-flex';
     }
 
-    $('img', entry).src = state.image.replace(/^\//, '');
+    $('img', entry).src = mapAssetURLs(state.image);
 
     fillStateTileTitles(entry, state.name, state.similarName, state.savePlayers, state.saveDate);
 
@@ -675,7 +675,7 @@ function fillStateDetails(states, state, dom) {
         dom.classList.add('uneditable');
 
     toggleClass($('img', vEntry), 'hidden', !variant.variantImage);
-    $('img', vEntry).src = String(variant.variantImage).replace(/^\//, '');
+    $('img', vEntry).src = mapAssetURLs(variant.variantImage);
 
     $('[icon=play_arrow]', vEntry).onclick = async function() {
       $('#statesButton').dataset.overlay = 'confirmOverlay';
@@ -872,7 +872,7 @@ function fillStateDetails(states, state, dom) {
         const img = $('img', button.parentNode.parentNode);
         button.value = newURL;
         toggleClass(img, 'hidden', !newURL);
-        img.src = newURL ? newURL.replace(/^\//, '') : '';
+        img.src = newURL ? mapAssetURLs(newURL) : '';
       }
 
       uploadButton.onclick = async function() {
@@ -962,18 +962,18 @@ async function updateImage(currentImage, noImageText) {
     showOverlay('updateImageOverlay');
     const o = $('#updateImageOverlay');
 
-    $('img.previous', o).src = currentImage.replace(/^\//, '');
-    $('img.current', o).src = currentImage.replace(/^\//, '');
+    $('img.previous', o).src = mapAssetURLs(currentImage);
+    $('img.current', o).src = mapAssetURLs(currentImage);
     $('input.current', o).value = currentImage;
 
     $('button[icon=image_not_supported]', o).innerText = noImageText || 'Use no image';
 
     $('button[icon=upload]', o).onclick = async function() {
       $('input', o).value = await uploadAsset();
-      $('img.current', o).src = $('input', o).value.replace(/^\//, '');
+      $('img.current', o).src = mapAssetURLs($('input', o).value);
     };
     $('input ', o).oninput = async function() {
-      $('img.current', o).src = $('input', o).value.replace(/^\//, '');
+      $('img.current', o).src = mapAssetURLs($('input', o).value);
     };
 
     $('button[icon=undo]', o).onclick = function() {
