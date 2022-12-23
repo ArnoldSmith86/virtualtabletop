@@ -298,9 +298,9 @@ export function addRichtextControls(dom) {
   loadSymbolPicker();
 
   $('[icon=format_size]', controls).onclick = function() {
-    const parent = window.getSelection().getRangeAt(0).startContainer.parentNode;
-    if(parent.nodeName == 'H4')
-      parent.replaceWith(parent.innerText);
+    const parent = window.getSelection().getRangeAt(0).startContainer.parentNode.closest('h4');
+    if(parent)
+      parent.replaceWith(...parent.children);
     else
       document.execCommand('formatBlock', false, 'h4');
     dom.focus();

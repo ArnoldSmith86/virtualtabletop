@@ -309,7 +309,7 @@ div:nth-of-type(2) > .list > .roomState .star {
 }
 
 
-@media (max-width: 480px), (max-height: 300px) {
+@media (max-width: 600px), (max-height: 375px) {
   #statesOverlay h2.title {
     position: unset;
     margin:  0 !important;
@@ -321,6 +321,8 @@ div:nth-of-type(2) > .list > .roomState .star {
     margin-top: 4px;
     margin: 4px;
     padding: 4px;
+    text-align: right;
+    float: unset;
   }
   #emptyLibrary, #emptyLibraryByFilter {
     margin: 10px;
@@ -882,6 +884,15 @@ div:nth-of-type(2) > .list > .roomState .star {
   }
   #helpTexts h3 {
     margin: 10px 0;
+  }
+}
+@media (max-width: 270px), (max-height: 168px) {
+  #stateDetailsOverlay.editing #mainDetails {
+    margin-top: 0;
+  }
+  #stateDetailsOverlay.editing > .buttons {
+    position: unset;
+    margin: 10px;
   }
 }
 @media (min-width: 1421px) and (min-height: 888px) { /* sidebar */
