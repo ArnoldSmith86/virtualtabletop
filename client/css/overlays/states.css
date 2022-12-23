@@ -69,11 +69,13 @@
   margin: 0 5px;
 }
 
-#librarySortWrapper i {
-  color: green;
+#librarySortWrapper {
+  background: var(--roomColor);
+  border-radius: 5px;
 }
+
 #librarySortWrapper select {
-  border-color: green;
+  border: none;
 }
 
 #filterOverflow.empty, #filterOverflow:not(.active) > div {
@@ -87,8 +89,8 @@
 }
 
 #filterOverflow > button::before {
-  font-size: 22px;
-  width: 22px;
+  font-size: 23px;
+  width: 23px;
 }
 
 #filterOverflow > div {
@@ -277,8 +279,14 @@ div:nth-of-type(2) > .list > .roomState .star {
   display: block;
 }
 
-.roomState.hideName .details {
+.roomState.hideName:not(.savedGame) .details {
   display: none;
+}
+.roomState.hideName.savedGame .details h3 {
+  display: none;
+}
+.roomState.hideName.savedGame .details h4 {
+  margin: 8px;
 }
 
 .roomState.noImage img {
@@ -356,6 +364,18 @@ div:nth-of-type(2) > .list > .roomState .star {
   #statesOverlay .roomState > .details {
     left: 48px;
     height: 48px;
+  }
+  .roomState.hideName:not(.savedGame) .details {
+    display: block;
+  }
+  .roomState.savedGame h3 {
+    font-size: 1rem;
+  }
+  .roomState.savedGame h4 {
+    font-size: 0.6rem;
+  }
+  .roomState.savedGame br + br {
+    display: none;
   }
 }
 
@@ -499,6 +519,21 @@ div:nth-of-type(2) > .list > .roomState .star {
 #similarDetails .details {
   margin-left: var(--similarDetailsHeight);
 }
+#similarDetails > .details > .hideForEdit {
+  position: relative;
+  min-height: 24px;
+}
+#similarDetails > .details > .hideForEdit > i.material-icons {
+  position: absolute;
+  top: -2px;
+}
+#similarDetails > .details > .hideForEdit > span, #similarDetails > .details > .hideForEdit > a {
+  margin-left: 28px;
+  display: inline-block;
+}
+#similarDetails > .details > .hideForEdit > a .material-icons {
+  line-height: 0;
+}
 #similarDetails h1 {
   font-size: 1.3em;
 }
@@ -508,6 +543,16 @@ div:nth-of-type(2) > .list > .roomState .star {
 }
 #similarDetails a {
   color: var(--overlayFontColor);
+}
+#stateDetailsOverlay.notEditing #similarDetails.noImage {
+  padding-left: 20px;
+}
+#stateDetailsOverlay.notEditing #similarDetails.noImage #similarImage {
+  display: none;
+}
+#stateDetailsOverlay.notEditing #similarDetails.noImage .details {
+  margin-left: 0;
+  padding-left: 0;
 }
 
 #prevState, #nextState {
@@ -682,6 +727,10 @@ div:nth-of-type(2) > .list > .roomState .star {
   font-size: 18px;
 }
 
+#helpTexts [contenteditable="true"] {
+  padding: 5px;
+}
+
 @media (max-width: 1260px), (max-height: 787px), (min-width: 1421px) and (min-height: 888px) {
   #stateDetailsOverlay {
     --mainDetailsHeight: 200px;
@@ -824,6 +873,9 @@ div:nth-of-type(2) > .list > .roomState .star {
   .variant > .variantEdit {
     flex-direction: column;
     align-items: flex-start;
+  }
+  #stateDetailsOverlay.notEditing #similarDetails.noImage {
+    padding-left: 10px;
   }
   #helpTexts {
     padding: 0 10px 10px 10px;

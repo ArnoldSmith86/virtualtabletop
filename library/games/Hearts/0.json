@@ -949,7 +949,8 @@
       "attribution": "Board layout by LawDawg and released to public domain (CC0).\n\nLibrary icon by Skoll under CC BY 3.0: https://game-icons.net/1x1/skoll/hearts.html",
       "similarName": "Hearts",
       "description": "Classic trick-taking card game where players try to avoid taking hearts and the queen of spades. When one player reaches agreed maximum score, player with fewest points wins.",
-      "showName": true
+      "showName": true,
+      "lastUpdate": 1656358260000
     }
   },
   "e398": {

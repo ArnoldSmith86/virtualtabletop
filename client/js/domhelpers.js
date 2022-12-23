@@ -39,7 +39,11 @@ export function domByTemplate(id, obj, type='div') {
 }
 
 export function mapAssetURLs(str) {
-  return str.replaceAll(/(^|["' (])\/(assets|i)\//g, '$1$2/');
+  return String(str).replaceAll(/(^|["' (])\/(assets|i)\//g, '$1$2/');
+}
+
+export function unmapAssetURLs(str) {
+  return String(str).replaceAll(/(^|["' (])(assets|i)\//g, '$1/$2/');
 }
 
 export function escapeID(id) {
@@ -182,7 +186,7 @@ export function applyValuesToDOM(parent, obj) {
       else
         dom[dom.dataset.target || 'innerText'] = obj[dom.dataset.field];
       if(dom.dataset.target == 'src')
-        dom.src = obj[dom.dataset.field].replace(/^\//, '');
+        dom.src = mapAssetURLs(obj[dom.dataset.field]);
     } else {
       dom[dom.dataset.target || 'innerText'] = '';
       if(!dom.dataset.forceshow)
@@ -199,7 +203,7 @@ export function getValuesFromDOM(parent) {
     if(dom.dataset.target == 'checked')
       obj[dom.dataset.field] = dom.checked;
     else if(dom.dataset.html && (dom.innerText.trim() || dom.innerHTML.match(/<img|<video/)) && dom.innerText != (dom.dataset.placeholder || '<empty>'))
-      obj[dom.dataset.field] = DOMPurify.sanitize(dom.innerHTML, { USE_PROFILES: { html: true } });
+      obj[dom.dataset.field] = unmapAssetURLs(DOMPurify.sanitize(dom.innerHTML, { USE_PROFILES: { html: true } }));
     else
       obj[dom.dataset.field] = dom[dom.dataset.target || 'innerText'].trim().replace(dom.dataset.placeholder || '<empty>', '');
   }
@@ -321,7 +325,7 @@ export function addRichtextControls(dom) {
     showStatesOverlay(detailsOverlay);
     if(asset) {
       const floating = e.target == $('[icon=art_track]', controls) ? 'floating' : '';
-      document.execCommand('inserthtml', false, `<a href="${asset.substring(1)}"><img class="${floating} richtextAsset" src="${asset.substring(1)}"></a>`);
+      document.execCommand('inserthtml', false, `<a href="${mapAssetURLs(asset)}"><img class="${floating} richtextAsset" src="${mapAssetURLs(asset)}"></a>`);
     }
     dom.focus();
   };
@@ -331,7 +335,7 @@ export function addRichtextControls(dom) {
       showStatesOverlay(detailsOverlay);
       const asset = await uploadAsset();
       if(asset)
-        document.execCommand('inserthtml', false, `<video class="richtextAsset" src="${asset.substring(1)}" controls></video>`);
+        document.execCommand('inserthtml', false, `<video class="richtextAsset" src="${mapAssetURLs(asset)}" controls></video>`);
       dom.focus();
     } else {
       showStatesOverlay(detailsOverlay);

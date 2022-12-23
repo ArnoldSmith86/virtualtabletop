@@ -68,7 +68,8 @@
       "similarName": "Dominoes",
       "description": "Classic tile-based strategy game using dominoes with 0 to 15 pips.  Multiple rule variations and winning conditions.",
       "showName": true,
-      "helpText": "Players sit in seats. Press settings button (gear icon) to choose domino set to use and scoring options. Add dominoes to hand by pressing + buttons on bottom left. Calculate score. Deal next hand by pressing recall button (icon above gear)."
+      "helpText": "Players sit in seats. Press settings button (gear icon) to choose domino set to use and scoring options. Add dominoes to hand by pressing + buttons on bottom left. Calculate score. Deal next hand by pressing recall button (icon above gear).",
+      "lastUpdate": 1659321088000
     }
   },
   "plus7": {

@@ -27,7 +27,8 @@
       "attribution": "The room design and other room elements are by RogerLipsett and are released to the Public Domain under CC0.\n\nThe library image is by AlbertHerring and is available under CC BY 2.0 from https://en.wikipedia.org/wiki/Yahtzee#/media/File:Yahtzee_game_example.jpg.",
       "similarName": "Yahtzee",
       "description": "Classic dice game. Roll dice up to three times to complete designated tasks on scorecard. Highest score wins.",
-      "showName": true
+      "showName": true,
+      "lastUpdate": 1650427506000
     }
   },
   "xprj": {

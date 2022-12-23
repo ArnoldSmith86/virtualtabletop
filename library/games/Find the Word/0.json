@@ -1519,7 +1519,8 @@
       "attribution": "Room layout and background image by Roger Lipsett and released to the public domain (CC0).",
       "similarName": "Jotto",
       "description": "Players secretly choose a 5-letter word. Opponents take turns guessing letters one at a time and to find out if letter is in the secret word and clues about its position. First to guess opponent's word wins.",
-      "showName": true
+      "showName": true,
+      "lastUpdate": 1647037629000
     }
   },
   "corr1_1": {

@@ -210,7 +210,10 @@ async function addState(e, type, src, id, addAsVariant) {
   req.send(blob);
 }
 
-async function saveState() {
+async function saveState(e) {
+  if(e.target == $('#updateSaveState'))
+    return toServer('saveState', { players: $('#stateSaveOverlay input').value, updateCurrentSave: true });
+
   $('#stateSaveOverlay input').value = [...new Set(widgetFilter(w=>w.get('type')=='seat'&&w.get('player')).map(w=>w.get('player')))].sort().join(', ');
   if(!$('#stateSaveOverlay input').value)
     $('#stateSaveOverlay input').value = activePlayers.sort().join(', ');
@@ -218,7 +221,7 @@ async function saveState() {
 
   $('#stateSaveOverlay button[icon=save]').onclick = function() {
     if($('#stateSaveOverlay input').value) {
-      toServer('saveState', $('#stateSaveOverlay input').value);
+      toServer('saveState', { players: $('#stateSaveOverlay input').value });
       showStatesOverlay('statesOverlay');
     } else {
       alert('Please enter active players or a different identifier.');
@@ -349,6 +352,8 @@ let sortBy = $('#librarySort').value;
 function sortStatesCallback(stateA, stateB) {
   if(sortBy == 'year' && stateB.year != stateA.year)
     return stateB.year - stateA.year;
+  if(sortBy == 'lastUpdate' && (stateB.saveDate || stateB.lastUpdate) != (stateA.saveDate || stateA.lastUpdate))
+    return (stateB.saveDate || stateB.lastUpdate || 0) - (stateA.saveDate || stateA.lastUpdate || 0);
   if(sortBy == 'stars' && stateB.stars != stateA.stars)
     return stateB.stars - stateA.stars;
   if(sortBy == 'timePlayed' && stateB.timePlayed != stateA.timePlayed)
@@ -388,8 +393,9 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
   const emptyLibrary = $('#emptyLibrary');
   const emptyLibraryByFilter = $('#emptyLibraryByFilter');
   const saveButton = $('#saveState');
+  const updateSaveButton = $('#updateSaveState');
   const addButton = $('#addState');
-  $('#saveState').style.display = 'none';
+  $('#saveState').style.display = $('#updateSaveState').style.display = 'none';
   removeFromDOM('#statesList > div');
 
   let isEmpty = true;
@@ -439,9 +445,11 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     if(activeState && (activeState.stateID == state.id || activeState.saveStateID == state.id || activeState.linkStateID == state.id)) {
       entry.className += ' activeGame';
       saveButton.style.display = 'inline-flex';
+      if(activeState.saveStateID)
+        updateSaveButton.style.display = 'inline-flex';
     }
 
-    $('img', entry).src = state.image.replace(/^\//, '');
+    $('img', entry).src = mapAssetURLs(state.image);
 
     fillStateTileTitles(entry, state.name, state.similarName, state.savePlayers, state.saveDate);
 
@@ -497,8 +505,9 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     entry.dataset.year = state.year;
     entry.dataset.stars = state.stars;
     entry.dataset.timePlayed = state.timePlayed;
-    entry.dataset.text = `${state.name} ${state.similarName} ${state.description} ${state.similarAwards}`.toLowerCase();
+    entry.dataset.text = `${state.name} ${state.similarName} ${state.description} ${state.similarAwards} ${state.savePlayers}`.toLowerCase();
     entry.dataset.players = validPlayers.join();
+    entry.dataset.lastUpdate = state.saveDate || state.lastUpdate || 0;
     entry.dataset.duration = String(state.time).replace(/.*[^0-9]/, '');
     entry.dataset.languages = validLanguages.join();
     entry.dataset.modes = state.mode;
@@ -534,9 +543,11 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 
   if(!$('.roomState', categories['In-Progress Games'])) {
     categories['In-Progress Games'].classList.add('empty');
-    $('.buttons', categories['Game Shelf']).appendChild(saveButton);
+    for(const button of [ updateSaveButton, saveButton ])
+      $('.buttons', categories['Game Shelf']).appendChild(button);
   } else {
-    $('.buttons', categories['In-Progress Games']).appendChild(saveButton);
+    for(const button of [ updateSaveButton, saveButton ])
+      $('.buttons', categories['In-Progress Games']).appendChild(button);
   }
 
   categories['Game Shelf'].insertBefore(emptyLibrary, $('.list', categories['Game Shelf']));
@@ -590,6 +601,8 @@ function fillStateDetails(states, state, dom) {
     dom.scrollTop = 0;
 
   applyValuesToDOM($('#stateDetailsOverlay'), Object.assign({ showName: true }, state));
+  toggleClass($('#mainDetails'), 'noImage', !state.image);
+  toggleClass($('#similarDetails'), 'noImage', !state.similarImage);
 
   toggleClass($('#stateDetailsOverlay .star'),         'active', !!state.starred);
   toggleClass($('#stateDetailsOverlay .star'),         'hidden', !state.publicLibrary);
@@ -664,7 +677,8 @@ function fillStateDetails(states, state, dom) {
         dom.classList.add('uneditable');
 
     toggleClass($('img', vEntry), 'hidden', !variant.variantImage);
-    $('img', vEntry).src = String(variant.variantImage).replace(/^\//, '');
+    toggleClass(vEntry, 'noImage', !variant.variantImage);
+    $('img', vEntry).src = mapAssetURLs(variant.variantImage);
 
     $('[icon=play_arrow]', vEntry).onclick = async function() {
       $('#statesButton').dataset.overlay = 'confirmOverlay';
@@ -672,7 +686,10 @@ function fillStateDetails(states, state, dom) {
       let loadNewState = true;
 
       if(widgets.size) {
-        loadNewState = await confirmOverlay('Switch game', 'Are you sure you want to load a new game? You will lose all unsaved progress in the current game.', 'Load new game', 'Resume current game', 'play_arrow', 'undo');
+        if(state.savePlayers)
+          loadNewState = await confirmOverlay('Switch game', 'Are you sure you want to switch games? You will lose all unsaved progress in the current game.', ' Load in-progress game', 'Return to active game', 'play_arrow', 'undo');
+        else
+          loadNewState = await confirmOverlay('Switch game', 'Are you sure you want to load a new game? You will lose all unsaved progress in the current game.', 'Load new game', 'Resume current game', 'play_arrow', 'undo');
         switchToActiveGame = loadNewState !== null;
       }
 
@@ -857,16 +874,29 @@ function fillStateDetails(states, state, dom) {
     enableEditing($('#stateDetailsOverlay'), state);
 
     for(const uploadButton of $a('#stateDetailsOverlay button[icon=image]')) {
+      const updateImageValue = function(button, newURL) {
+        const img = $('img', button.parentNode.parentNode);
+        button.value = newURL;
+        toggleClass(img, 'hidden', !newURL);
+        toggleClass(img.parentNode.parentNode, 'noImage', !newURL);
+        img.src = newURL ? mapAssetURLs(newURL) : '';
+      }
+
       uploadButton.onclick = async function() {
         const isVariantImage = uploadButton.parentNode.classList.contains('variantEdit');
-        const img = $('img', uploadButton.parentNode.parentNode);
         $('#statesButton').dataset.overlay = 'updateImageOverlay';
         let newURL = await updateImage(uploadButton.value, isVariantImage ? 'Use state image' : null);
         if(!newURL && isVariantImage)
           newURL = state.image;
-        uploadButton.value = newURL;
-        toggleClass(img, 'hidden', !newURL);
-        img.src = newURL ? newURL.replace(/^\//, '') : '';
+
+        // update variant images if they were the same as the main image
+        if(uploadButton.dataset.field == 'image')
+          for(const variantButton of $a('#stateDetailsOverlay .variant button[icon=image]'))
+            if(variantButton.value == uploadButton.value)
+              updateImageValue(variantButton, newURL);
+
+        updateImageValue(uploadButton, newURL);
+
         showStatesOverlay(detailsOverlay);
       };
     }
@@ -917,6 +947,7 @@ function setSidebar() {
     if(detailsInSidebar) {
       if($('#statesButton').dataset.overlay == 'stateDetailsOverlay') {
         $('#statesButton').dataset.overlay = detailsOverlay;
+        $('#statesOverlay').classList.add('withDetails');
         if($('#statesButton.active'))
           showStatesOverlay(detailsOverlay);
       }
@@ -925,6 +956,7 @@ function setSidebar() {
       $('#roomArea').insertBefore($('#stateDetailsOverlay'), $('#updateImageOverlay'));
       if($('#statesButton').dataset.overlay == 'statesOverlay' && $('#statesOverlay.withDetails')) {
         $('#statesButton').dataset.overlay = detailsOverlay;
+        $('#statesOverlay').classList.remove('withDetails');
         if($('#statesButton.active'))
           showStatesOverlay(detailsOverlay);
       }
@@ -937,18 +969,18 @@ async function updateImage(currentImage, noImageText) {
     showOverlay('updateImageOverlay');
     const o = $('#updateImageOverlay');
 
-    $('img.previous', o).src = currentImage.replace(/^\//, '');
-    $('img.current', o).src = currentImage.replace(/^\//, '');
+    $('img.previous', o).src = mapAssetURLs(currentImage);
+    $('img.current', o).src = mapAssetURLs(currentImage);
     $('input.current', o).value = currentImage;
 
     $('button[icon=image_not_supported]', o).innerText = noImageText || 'Use no image';
 
     $('button[icon=upload]', o).onclick = async function() {
       $('input', o).value = await uploadAsset();
-      $('img.current', o).src = $('input', o).value.replace(/^\//, '');
+      $('img.current', o).src = mapAssetURLs($('input', o).value);
     };
     $('input ', o).oninput = async function() {
-      $('img.current', o).src = $('input', o).value.replace(/^\//, '');
+      $('img.current', o).src = mapAssetURLs($('input', o).value);
     };
 
     $('button[icon=undo]', o).onclick = function() {
@@ -1020,7 +1052,7 @@ onLoad(function() {
   on('#stateFilters select', 'change', updateLibraryFilter);
 
   on('#addState', 'click', _=>showStatesOverlay('stateAddOverlay'));
-  on('#saveState', 'click', saveState);
+  on('#saveState, #updateSaveState', 'click', saveState);
 
   on('#stateAddOverlay [icon=close]', 'click', e=>showStatesOverlay('statesOverlay'));
   on('#stateAddOverlay button[icon=save]', 'click', function(e) {

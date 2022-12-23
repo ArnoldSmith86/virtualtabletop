@@ -16,7 +16,8 @@
       "similarName": "Herbaceous",
       "description": "Collect pieces to score points. The more pieces that match the patterns (all the same, all different, multiple pairs, etc.), the more points the player earns. During turn, draw a piece and play it or put it in communal area. Most points wins.",
       "showName": true,
-      "helpText": "Players take seats. Set options. Press play button. Random player is chosen to start. Drag game tokens from tan holder. Play either in common area (in designated space) or in player personal area (in designated space). Scoring is automatic and updated with every move. Scores displayed by player seats. Turn indicator advances automatically. If turn indicator is incorrect (this happens when drawing an action card from the expansion pack), use turn button in lower left to change indicator to correct player. For single player version, a discard area is added."
+      "helpText": "Players take seats. Set options. Press play button. Random player is chosen to start. Drag game tokens from tan holder. Play either in common area (in designated space) or in player personal area (in designated space). Scoring is automatic and updated with every move. Scores displayed by player seats. Turn indicator advances automatically. If turn indicator is incorrect (this happens when drawing an action card from the expansion pack), use turn button in lower left to change indicator to correct player. For single player version, a discard area is added.",
+      "lastUpdate": 1650427506000
     }
   },
   "theDeck": {

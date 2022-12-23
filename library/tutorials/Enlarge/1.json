@@ -13,7 +13,8 @@
       "language": "en-US",
       "variant": "Cards",
       "attribution": "The pawn used in this variant is a VTT asset released to the public domain under CC0.",
-      "showName": false
+      "showName": false,
+      "lastUpdate": 1654391055000
     }
   },
   "smgd": {

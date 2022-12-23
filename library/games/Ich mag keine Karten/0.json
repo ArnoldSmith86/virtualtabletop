@@ -891,7 +891,8 @@
       "similarName": "No Thanks!",
       "description": "Play with deck of cards numbered 3-35. Cards worth their face value, but lower if in a run. During turn, either play a chip to avoid taking a card, or pick up and play the face up card and gain chips played on it. After playing 24 cards, lowest score wins.",
       "showName": true,
-      "helpText": "Players take seats. Press play button in bottom right corner to start. A random player is selected to start. Players either move a token to the large circle or press the hand button to take the visible card and tokens. At end of round, press scoreboard icon to auto-calculate scores. Press recall and shuffle button to start again."
+      "helpText": "Players take seats. Press play button in bottom right corner to start. A random player is selected to start. Players either move a token to the large circle or press the hand button to take the visible card and tokens. At end of round, press scoreboard icon to auto-calculate scores. Press recall and shuffle button to start again.",
+      "lastUpdate": 1650427506000
     }
   },
   "tokenDeck": {

@@ -24,7 +24,8 @@
       "similarName": "Love Letter Premium",
       "description": "Start with one card. Then draw a card and play a card. Use card powers to expose others and knock them out of the game. First player to win designated number of rounds (4-7 based on number of players) wins.",
       "showName": true,
-      "helpText": "Players take seats. 2-4 players use original deck and 5-8 players use premium deck. Deck sorting and initial card distribution is done automatically based on number of players in seats. For 2 player version, the 3 extra cards are dealt where seat 8 would be. Press play button to start. During play, if another play is allowed to see your hand, press \"Send Peek\" button. The viewing player will press the appropriate \"Start Peek\" then \"Stop Peek\" button. Manually drag card(s) back to your hand. After round is over, manually adjust scores to show affection tokens won. Manually adjust next starting player using \"Turn +1\" button. Press \"Next Round\" button."
+      "helpText": "Players take seats. 2-4 players use original deck and 5-8 players use premium deck. Deck sorting and initial card distribution is done automatically based on number of players in seats. For 2 player version, the 3 extra cards are dealt where seat 8 would be. Press play button to start. During play, if another play is allowed to see your hand, press \"Send Peek\" button. The viewing player will press the appropriate \"Start Peek\" then \"Stop Peek\" button. Manually drag card(s) back to your hand. After round is over, manually adjust scores to show affection tokens won. Manually adjust next starting player using \"Turn +1\" button. Press \"Next Round\" button.",
+      "lastUpdate": 1650427506000
     }
   },
   "deckHolder": {
