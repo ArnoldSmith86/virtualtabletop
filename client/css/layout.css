@@ -816,6 +816,7 @@ button[icon].green:hover {
   font-size: 18px;
   position: relative;
   line-height: 10px;
+  font-style: normal;
 }
 .richtextSymbol.symbols {
   top: 2px;

@@ -362,7 +362,7 @@ export function addRichtextControls(dom) {
           className = 'symbols';
         else if(icon.innerText.match(/^[a-z0-9_]+$/))
           className = 'material-icons';
-        document.execCommand('inserthtml', false, `<span class="richtextSymbol ${className}">${icon.innerText}</span>`);
+        document.execCommand('inserthtml', false, `<i class="richtextSymbol ${className}">${icon.innerText}</i>`);
         for(const insertedSymbol of $a('.richtextSymbol'))
           insertedSymbol.contentEditable = false; // adding the property above causes Chrome to insert two icons
       };
