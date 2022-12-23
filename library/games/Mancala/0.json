@@ -3675,7 +3675,8 @@
       "attribution": "The game layout, game board, and library image were done by LawDawg96 and released to the Public Domain under CC0. The game pieces are from the VirtualTabletop assets.\n\nNote: to use the automatic marble moving features, click on the hand icon above or below the cup you want to move.  Keep clicking the same icon until all the marbles are distributed.",
       "similarName": "Mancala",
       "description": "Move marbles around pits in board to collect your own and opponents marbles.  Player with most marbles wins.",
-      "showName": true
+      "showName": true,
+      "lastUpdate": 1619036880000
     }
   },
   "oo4f": {

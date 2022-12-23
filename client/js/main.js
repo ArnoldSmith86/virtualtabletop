@@ -312,7 +312,7 @@ function getSVG(url, replaces, callback) {
 
   if(!svgCache[url]) {
     svgCache[url] = [];
-    fetch(url.replace(/^\//, '')).then(r=>r.text()).then(t=>{
+    fetch(mapAssetURLs(url)).then(r=>r.text()).then(t=>{
       const callbacks = svgCache[url];
       svgCache[url] = t;
       for(const c of callbacks)

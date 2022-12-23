@@ -68,7 +68,8 @@
       "similarName": "Arboretum",
       "description": "Create sets of floral cards in tiled sequences to connect the same species of flower.  Highest score wins.",
       "showName": true,
-      "helpText": "Players choose seats. Press play button to begin. Sort cards in hand by pressing staggered line icon at bottom left. Click +2 button to add 2 cards to hand. Place card on playing area. Use arrow keys to move view around and eye button to recenter view. All players have the same view. Put discard in holder below seat."
+      "helpText": "Players choose seats. Press play button to begin. Sort cards in hand by pressing staggered line icon at bottom left. Click +2 button to add 2 cards to hand. Place card on playing area. Use arrow keys to move view around and eye button to recenter view. All players have the same view. Put discard in holder below seat.",
+      "lastUpdate": 1659321088000
     }
   },
   "discard1": {

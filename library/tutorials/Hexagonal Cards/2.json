@@ -144,7 +144,8 @@
       "language": "en-US",
       "variant": "Demo",
       "attribution": "\nCalculator for hexagons: https://hexagoncalculator.apphb.com/\n\nGood reference guide:\nhttps://www.redblobgames.com/grids/hexagons/\n\n--\n\n\nGood reference guide:\nhttps://www.redblobgames.com/grids/hexagons/#size-and-spacing",
-      "showName": false
+      "showName": false,
+      "lastUpdate": 1622843648000
     }
   },
   "34s0": {

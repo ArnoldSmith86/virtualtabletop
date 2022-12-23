@@ -1940,7 +1940,8 @@
       "attribution": "Board layout by ArnoldSmith86 and released to public domain (CC0).\n\nLibrary icon by Skoll under CC BY 3.0: https://game-icons.net/1x1/skoll/spades.html\n\n--\n\nBoard layout by LawDawg and released to public domain (CC0).\n\nLibrary icon by Skoll under CC BY 3.0: https://game-icons.net/1x1/skoll/spades.html\n\n--\n\nBoard layout by LawDawg and released to public domain (CC0).\n\nLibrary icon by Skoll under CC BY 3.0: https://game-icons.net/1x1/skoll/spades.html",
       "similarName": "Spades",
       "description": "Classic trick-taking card game using spades as trumps. Bid anticipated number of tricks and score based on how well players do. First to agreed-upon point total wins.",
-      "showName": true
+      "showName": true,
+      "lastUpdate": 1647130548000
     }
   },
   "e398": {

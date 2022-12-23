@@ -42,7 +42,7 @@ export default class Player {
       if(func == 'rename')
         this.room.renamePlayer(this, args.oldName, args.newName);
       if(func == 'saveState')
-        this.room.saveState(this, args);
+        this.room.saveState(this, args.players, args.updateCurrentSave);
       if(func == 'setRedirect')
         this.room.setRedirect(this, args);
       if(func == 'toggleStateStar')
@@ -52,9 +52,13 @@ export default class Player {
       if(func == 'unlinkState')
         await this.room.unlinkState(this, args);
     } catch(e) {
-      Logging.handleWebSocketException(func, args, e);
-      this.send('internal_error', func);
-      this.connection.close();
+      if(e instanceof Logging.UserError) {
+        this.send('error', `${e.code} - ${e.message}`);
+      } else {
+        Logging.handleWebSocketException(func, args, e);
+        this.send('internal_error', func);
+        this.connection.close();
+      }
     }
   }
 

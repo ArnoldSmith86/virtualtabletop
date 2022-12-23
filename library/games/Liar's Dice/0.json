@@ -15,7 +15,8 @@
       "attribution": "How to use the room:\nFirstly press the reset button in the upper right corner and choose whether you want to play with 5 or 6 dice. After that take a seat. By clicking on the cup you tilt the cup to look underneath at your dice, or to cover them up. While the dice are covered you can shake the cup to randomize the dice. Once you release the cup you can't move it again until the next round starts. Click the visibility button to see all dice, then the person that looses a die, needs to click the rightmost center button. Click the play button at the left, to start the next round, thus enabling the movement of the cups again.\n\nThe room design, library image, and other room elements are by Ingegneus and are released to the Public Domain under CC0.\n\nThe wood background by Nathan Dumlao is from:\n-https://unsplash.com/photos/J2gEgTPM_OA and is available under the Unsplash license.\n\nThe Dice are from VTT's Public Domain assets.",
       "similarName": "Liar's Dice",
       "description": "Make claims about value of rolled dice to bluff opponents and get them to challenge.  Lose dice if caught in a lie.  Last player with dice wins.",
-      "showName": true
+      "showName": true,
+      "lastUpdate": 1669254070000
     }
   },
   "table": {

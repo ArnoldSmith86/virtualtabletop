@@ -3330,7 +3330,8 @@
       "attribution": "Artwork and initial game layout released as CC BY-NC by https://www.reddit.com/user/jaojins/.\n\nLayout adapted for VTT by ArnoldSmith86, with minor changes by LawDawg and more automation buttons added by jade-alarm: also CC BY-NC.",
       "similarName": "Azul",
       "description": "Choose colored tiles to place on board in matching colors with extra points for specific patterns and sets.  Play until one player fills a row on their board. Highest score wins.",
-      "showName": true
+      "showName": true,
+      "lastUpdate": 1625331881000
     }
   },
   "display01-02": {

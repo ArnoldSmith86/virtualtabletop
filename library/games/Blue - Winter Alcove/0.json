@@ -137,7 +137,8 @@
       "similarName": "Azul: Summer Pavilion",
       "description": "Choose colored tiles to place on board in matching colors with extra points for specific patterns and sets.  A new twist on the classic Blue using different shapes and tiles and a more complex board. Play 6 rounds. Highest score wins.",
       "showName": true,
-      "helpText": "Players take seats. Press restart button in top right to select number of players. Press start arrow button to begin. Move tiles from the factory area to the tall, thin holder next to the player's board. Press the empty button to send extra tiles to central holders and advance to the next turn.  The turn button will advance the turn indicator and ensure 10 cards are available in the supply area. After round is over, players manually calculate scores. Press start trianble button to advance to next round. Turn indicator will be set to the player that last moved the \"1st\" tile."
+      "helpText": "Players take seats. Press restart button in top right to select number of players. Press start arrow button to begin. Move tiles from the factory area to the tall, thin holder next to the player's board. Press the empty button to send extra tiles to central holders and advance to the next turn.  The turn button will advance the turn indicator and ensure 10 cards are available in the supply area. After round is over, players manually calculate scores. Press start trianble button to advance to next round. Turn indicator will be set to the player that last moved the \"1st\" tile.",
+      "lastUpdate": 1662819167000
     }
   },
   "display01-02": {

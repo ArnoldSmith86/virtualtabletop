@@ -31,7 +31,7 @@ async function downloadLink(link) {
 
   if(response.status != 304) {
     currentLinkStatus.etag = response.headers.get('etag');
-    const states = await readStatesFromBuffer(await response.buffer());
+    const states = await readStatesFromBuffer(await response.buffer(), true);
     fs.writeFileSync(`${dirname}/${currentLinkStatus.filename}`, JSON.stringify(states));
   }
 
@@ -39,7 +39,7 @@ async function downloadLink(link) {
   fs.writeFileSync(filename, JSON.stringify(linkStatus));
 }
 
-async function readStatesFromBuffer(buffer) {
+async function readStatesFromBuffer(buffer, includeVariantNameList) {
   const zip = await JSZip.loadAsync(buffer);
 
   if(zip.files['widgets.json'])
@@ -47,8 +47,19 @@ async function readStatesFromBuffer(buffer) {
 
   const states = {};
   for(const filename in zip.files) {
-    if(filename.match(/^[^\/]+\.json$/) && zip.files[filename]._data)
-      return { 'VTT': await readVariantsFromBuffer(buffer) };
+    if(filename.match(/^[^\/]+\.json$/) && zip.files[filename]._data) {
+      const result = { 'VTT': await readVariantsFromBuffer(buffer) };
+
+      if(includeVariantNameList) {
+        result._variantNameList = {};
+        let i = 0;
+        for(const name in zip.files)
+          if(name.match(/^[^\/]+\.json$/))
+            result._variantNameList[name.substr(0, name.length-5)] = i++;
+      }
+
+      return result;
+    }
     if(filename.match(/\.(vtt|pcio)$/) && zip.files[filename]._data)
       states[filename] = await readVariantsFromBuffer(await zip.files[filename].async('nodebuffer'));
   }
@@ -72,16 +83,26 @@ function checkForLinkToOwnServer(link) {
     states[m[3]] = [];
 
     const room = JSON.parse(fs.readFileSync(Config.directory('save') + '/rooms/' + m[2] + '.json'));
+
+    if(!room._meta.states[m[3]])
+      throw new Logging.UserError(404, 'The link target has been deleted.');
+
     for(const [ i, variant ] of Object.entries(room._meta.states[m[3]].variants)) {
-      states[m[3]].push(JSON.parse(fs.readFileSync(Config.directory('save') + `/states/${m[2]}-${m[3]}-${i}.json`)));
-      states[m[3]][i]._meta = { version: states[m[3]][i]._meta.version, info: Object.assign(room._meta.states[m[3]], variant) };
+      const info = Object.assign({...room._meta.states[m[3]]}, variant);
+      if(variant.link || variant.plStateID) {
+        states[m[3]].push({ _meta: { version: 8, info } });
+      } else {
+        states[m[3]].push(JSON.parse(fs.readFileSync(Config.directory('save') + `/states/${m[2]}-${m[3]}-${i}.json`)));
+        states[m[3]][i]._meta = { version: states[m[3]][i]._meta.version, info };
+      }
+      delete states[m[3]][i]._meta.info.variants;
     }
 
     return states;
   }
 }
 
-async function readStatesFromLink(linkAndPath) {
+async function readStatesFromLink(linkAndPath, includeVariantNameList) {
   const link = linkAndPath.replace(/#[^#]*$/, '');
   const path = linkAndPath.match(/#/) ? linkAndPath.replace(/^[^#]*#/, '').split('/') : [];
 
@@ -92,8 +113,11 @@ async function readStatesFromLink(linkAndPath) {
     states = JSON.parse(fs.readFileSync(`${dirname}/${linkStatus[link].filename}`));
   }
 
-  if(path.length == 0)
+  if(path.length == 0) {
+    if(!includeVariantNameList)
+      delete states._variantNameList;
     return states;
+  }
 
   if(path.length == 1) {
     const returnStates = {};
@@ -104,7 +128,10 @@ async function readStatesFromLink(linkAndPath) {
   if(path.length == 2) {
     const returnStates = {};
     returnStates[path[0]] = {};
-    returnStates[path[0]][path[1]] = states[path[0]][path[1]];
+    if(states._variantNameList && states._variantNameList[path[1].replace(/\.json$/, '')])
+      returnStates[path[0]][states._variantNameList[path[1].replace(/\.json$/, '')]] = returnStates[path[0]][path[1]] = states[path[0]][states._variantNameList[path[1].replace(/\.json$/, '')]];
+    else
+      returnStates[path[0]][path[1]] = states[path[0]][path[1]];
     return returnStates;
   }
 }
@@ -148,8 +175,8 @@ async function readVariantsFromBuffer(buffer) {
 async function readVariantFromLink(linkAndPath) {
   const link = linkAndPath.replace(/#.*/, '');
   const path = linkAndPath.replace(/.*#/, '').split('/');
-  const states = await readStatesFromLink(link);
-  return states[path[0]][path[1]];
+  const states = await readStatesFromLink(link, true);
+  return states[path[0]][states._variantNameList ? states._variantNameList[path[1].replace(/\.json$/, '')] : path[1]];
 }
 
 export default {

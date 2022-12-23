@@ -15,7 +15,8 @@
       "attribution": "Room layout and all room elements by LawDawg96 and released to the Public Domain by CC0.  List of nouns randomly generated from https://www.randomlists.com/nouns, https://randomwordgenerator.com/noun.php, and https://jimpix.co.uk/words/word-generator.asp.\n\nBackground available under the Pixabay license: https://pixabay.com/photos/texture-handwriting-s%c3%bctterlin-1362873/.",
       "similarName": "Just One",
       "description": "Cooperative game where one player guesses word based on clues provided by other players. Try to get as many correct as possible.",
-      "showName": true
+      "showName": true,
+      "lastUpdate": 1637895026000
     }
   },
   "seat1": {

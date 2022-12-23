@@ -16,7 +16,8 @@
       "similarName": "Tiny Towns",
       "description": "Place colored resource blocks into designated patterns on individual 4x4 grid board. When pattern is completed, turn resource cubes into buildings with special point scoring powers. Play until all players can no longer place resources. Highest score wins.",
       "showName": true,
-      "helpText": "Players take seats. Press reset button in upper right and choose options. Press turn button to advance turn indicator for player that is the Master Builder. At end of game, enter scores into table on left. Sum is calculated automatically. Be sure to enter 0 or a negative number for the space with the X indicating blank squares remaining. Players can click on the eye icon beneath any player's seat to see that player's board. Click back on the eye icon beneath your own seat to view your board."
+      "helpText": "Players take seats. Press reset button in upper right and choose options. Press turn button to advance turn indicator for player that is the Master Builder. At end of game, enter scores into table on left. Sum is calculated automatically. Be sure to enter 0 or a negative number for the space with the X indicating blank squares remaining. Players can click on the eye icon beneath any player's seat to see that player's board. Click back on the eye icon beneath your own seat to view your board.",
+      "lastUpdate": 1659650063000
     }
   },
   "tbbq": {

@@ -7955,7 +7955,8 @@
       "similarName": "Blokus",
       "description": "Place colored shapes onto board with corners touching.  Fewest unit squares remaning wins.",
       "showName": true,
-      "helpText": "Seats are optional. Use arrows to show or hide trays with colored pieces."
+      "helpText": "Seats are optional. Use arrows to show or hide trays with colored pieces.",
+      "lastUpdate": 1659321088000
     }
   },
   "recall_button": {

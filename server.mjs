@@ -99,7 +99,7 @@ MinifyRoom().then(function(result) {
   });
 
   router.get('/assets/:name', function(req, res) {
-    if(!req.params.name.match(/^[0-9_-]+$/)) {
+    if(!req.params.name.match(/^[0-9_-]+$/) || !Config.resolveAsset(req.params.name)) {
       res.sendStatus(404);
       return;
     }

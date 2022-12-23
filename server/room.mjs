@@ -100,23 +100,38 @@ export default class Room {
         if(type != 'link')
           fs.writeFileSync(this.variantFilename(stateID, newVariantID), JSON.stringify(variant));
 
-        const variantMeta = {
+        let variantMeta = {
           players: meta.players,
           language: meta.language,
           variant: meta.variant,
           variantImage: meta.variantImage
         };
+
+        if(String(meta.link).match(/#.+\/.+/))
+          variantMeta.link = meta.link;
+        if(meta.plStateID) {
+          variantMeta = {
+            plStateID: meta.plStateID,
+            plVariantID: meta.plVariantID
+          };
+        }
+
         if(type == 'link') {
           const baseLink = src.replace(/#.*/, '');
           meta.link = `${baseLink}#${state}`;
-          variantMeta.link = `${meta.link}/${v}`;
-          if(src.match(/#.*\//))
-            meta.link = variantMeta.link;
+          if(!variantMeta.link && !variantMeta.plStateID) {
+            variantMeta.link = `${meta.link}/${v}`;
+            if(src.match(/#.*\//))
+              meta.link = variantMeta.link;
+          }
         }
+
         delete meta.players;
         delete meta.language;
         delete meta.variant;
         delete meta.variantImage;
+
+        meta.lastUpdate = +new Date();
 
         if(addAsVariant) {
           if(!this.state._meta.states[stateID].variants[newVariantID])
@@ -414,22 +429,24 @@ export default class Room {
       this.broadcast('state', this.state);
     } else {
       let newState = emptyState;
+      let errorMessage = 'Error loading state.';
       try {
         if(fileOrLink.match(/^http/))
           newState = await FileLoader.readVariantFromLink(fileOrLink);
         else
           newState = JSON.parse(fs.readFileSync(fileOrLink));
       } catch(e) {
+        errorMessage = `Error loading state:\n${e.toString()}`;
         newState = null;
       }
       if(newState) {
         Logging.log(`loading room ${this.id} from ${fileOrLink}`);
         this.setState(newState);
       } else {
-        Logging.log(`loading room ${this.id} from ${fileOrLink} FAILED`);
+        Logging.log(`loading room ${this.id} from ${fileOrLink} FAILED: ${errorMessage}`);
         this.setState(emptyState);
         if(player)
-          player.send('error', 'Error loading state.');
+          player.send('error', errorMessage);
       }
     }
 
@@ -451,6 +468,8 @@ export default class Room {
 
     if(linkSourceStateID != stateID)
       this.state._meta.activeState = { linkStateID: linkSourceStateID, stateID, variantID };
+    else if(stateInfo.savePlayers && stateInfo.saveLinkState)
+      this.state._meta.activeState = { saveStateID: stateID, stateID: stateInfo.saveState, variantID: stateInfo.saveVariant, linkStateID: stateInfo.saveLinkState };
     else if(stateInfo.savePlayers)
       this.state._meta.activeState = { saveStateID: stateID, stateID: stateInfo.saveState, variantID: stateInfo.saveVariant };
     else
@@ -497,7 +516,7 @@ export default class Room {
           const target = plTarget(variant.link && variant.link.match(/\/library\/(Tutorial - )?(.*)\.vtt/))
           if(target && this.state._meta.states[target]) {
             for(const [ targetVid, targetVariant ] of Object.entries(this.state._meta.states[target].variants)) {
-              if(targetVariant.players == variant.players && (targetVariant.language.match(variant.language) || targetVariant.language === '' && variant.language == 'UN') && targetVariant.variant == variant.variant) {
+              if(targetVariant.players == variant.players && (targetVariant.language.match(variant.language) || targetVariant.language === '' && variant.language == 'UN') && targetVariant.variant == variant.variant || this.state._meta.states[target].variants.length == 1 || target == 'PL:games:Diced' && targetVid == 0) {
                 this.state._meta.states[id].variants[vID] = {
                   plStateID: target,
                   plVariantID: targetVid
@@ -507,8 +526,14 @@ export default class Room {
             }
           }
 
-          if(target && !this.state._meta.states[id].variants[vID].plStateID) {
+          if(target && !this.state._meta.states[id].variants[vID].plStateID)
             Logging.log(`could not migrate variant to public library state ${target} in room ${this.id}`);
+
+          // map languages that existed in the old public library to their new values
+          if(!target) {
+            const languageMap = { BR: 'pt-BR', CN: 'zh-CN', DE: 'de-DE', GB: 'en-GB', UN: '', US: 'en-US' };
+            if(languageMap[variant.language] !== undefined)
+              variant.language = languageMap[variant.language]
           }
         }
       }
@@ -682,13 +707,24 @@ export default class Room {
     return Config.directory('save') + '/rooms/' + this.id + '.json';
   }
 
-  saveState(player, players) {
+  saveState(player, players, updateCurrentSave) {
+    if(updateCurrentSave) {
+      const stateID = this.state._meta.activeState.saveStateID;
+      const newContent = {...this.state};
+      delete newContent._meta;
+      this.state._meta.states[stateID].saveDate = +new Date();
+      fs.writeFileSync(this.variantFilename(stateID, 0), JSON.stringify(newContent));
+      return this.sendMetaUpdate();
+    }
+
     const id = Math.random().toString(36).substring(3, 7);
 
-    this.state._meta.states[id] = {...this.state._meta.states[this.state._meta.activeState.stateID]};
+    this.state._meta.states[id] = {...this.state._meta.states[this.state._meta.activeState.linkStateID || this.state._meta.activeState.stateID]};
     this.state._meta.states[id].variants = [];
     this.state._meta.states[id].saveState = this.state._meta.activeState.stateID;
     this.state._meta.states[id].saveVariant = this.state._meta.activeState.variantID;
+    if(this.state._meta.activeState.linkStateID)
+      this.state._meta.states[id].saveLinkState = this.state._meta.activeState.linkStateID;
     this.state._meta.states[id].savePlayers = players;
     this.state._meta.states[id].saveDate = +new Date();
 
