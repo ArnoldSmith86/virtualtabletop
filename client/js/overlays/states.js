@@ -601,6 +601,8 @@ function fillStateDetails(states, state, dom) {
     dom.scrollTop = 0;
 
   applyValuesToDOM($('#stateDetailsOverlay'), Object.assign({ showName: true }, state));
+  toggleClass($('#mainDetails'), 'noImage', !state.image);
+  toggleClass($('#similarDetails'), 'noImage', !state.similarImage);
 
   toggleClass($('#stateDetailsOverlay .star'),         'active', !!state.starred);
   toggleClass($('#stateDetailsOverlay .star'),         'hidden', !state.publicLibrary);
@@ -675,6 +677,7 @@ function fillStateDetails(states, state, dom) {
         dom.classList.add('uneditable');
 
     toggleClass($('img', vEntry), 'hidden', !variant.variantImage);
+    toggleClass(vEntry, 'noImage', !variant.variantImage);
     $('img', vEntry).src = mapAssetURLs(variant.variantImage);
 
     $('[icon=play_arrow]', vEntry).onclick = async function() {
@@ -872,6 +875,7 @@ function fillStateDetails(states, state, dom) {
         const img = $('img', button.parentNode.parentNode);
         button.value = newURL;
         toggleClass(img, 'hidden', !newURL);
+        toggleClass(img.parentNode.parentNode, 'noImage', !newURL);
         img.src = newURL ? mapAssetURLs(newURL) : '';
       }
 
