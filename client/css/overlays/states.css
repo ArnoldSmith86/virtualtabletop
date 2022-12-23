@@ -894,6 +894,9 @@ div:nth-of-type(2) > .list > .roomState .star {
     position: unset;
     margin: 10px;
   }
+  #stateDetailsOverlay.editing .richtext-controls {
+    position: unset;
+  }
 }
 @media (min-width: 1421px) and (min-height: 888px) { /* sidebar */
   #statesOverlay.withDetails {
