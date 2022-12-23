@@ -886,6 +886,15 @@ div:nth-of-type(2) > .list > .roomState .star {
     margin: 10px 0;
   }
 }
+@media (max-width: 270px), (max-height: 168px) {
+  #stateDetailsOverlay.editing #mainDetails {
+    margin-top: 0;
+  }
+  #stateDetailsOverlay.editing > .buttons {
+    position: unset;
+    margin: 10px;
+  }
+}
 @media (min-width: 1421px) and (min-height: 888px) { /* sidebar */
   #statesOverlay.withDetails {
     padding-right: calc((var(--size) + 22px) * 3);
