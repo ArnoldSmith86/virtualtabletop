@@ -689,7 +689,7 @@ function fillStateDetails(states, state, dom) {
         if(state.savePlayers)
           loadNewState = await confirmOverlay('Switch game', 'Are you sure you want to switch games? You will lose all unsaved progress in the current game.', ' Load in-progress game', 'Return to active game', 'play_arrow', 'undo');
         else
-          loadNewState = await confirmOverlay('Switch game', 'Are you sure you want to load a new game? You will lose all unsaved progress in the current game.', 'Load new game', 'Resume current game', 'play_arrow', 'undo');
+          loadNewState = await confirmOverlay('Switch game', 'Are you sure you want to load a new game? You will lose all unsaved progress in the current game.', 'Load new game', 'Return to active game', 'play_arrow', 'undo');
         switchToActiveGame = loadNewState !== null;
       }
 
