@@ -777,6 +777,8 @@ button[icon].green:hover {
 }
 
 .richtext-controls {
+  position: sticky;
+  top: 10px;
   background: var(--VTTblue);
   margin: 4px;
   border-radius: 4px;
