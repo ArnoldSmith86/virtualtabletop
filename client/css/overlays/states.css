@@ -519,6 +519,21 @@ div:nth-of-type(2) > .list > .roomState .star {
 #similarDetails .details {
   margin-left: var(--similarDetailsHeight);
 }
+#similarDetails > .details > .hideForEdit {
+  position: relative;
+  min-height: 24px;
+}
+#similarDetails > .details > .hideForEdit > i.material-icons {
+  position: absolute;
+  top: -2px;
+}
+#similarDetails > .details > .hideForEdit > span, #similarDetails > .details > .hideForEdit > a {
+  margin-left: 28px;
+  display: inline-block;
+}
+#similarDetails > .details > .hideForEdit > a .material-icons {
+  line-height: 0;
+}
 #similarDetails h1 {
   font-size: 1.3em;
 }
