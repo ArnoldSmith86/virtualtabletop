@@ -605,7 +605,7 @@ export class Widget extends StateManaged {
         newCollection = '$collection_' + batchDepth;
         collections[newCollection] = widgetFilter(w=>collection.indexOf(w.id)!=-1);
       } else
-        problems.push(`Collection ${collection} does not exist and is not an array.`);
+        problems.push(`Collection ${collection} does not exist or is not an array.`);
       return newCollection;
     }
 
@@ -820,7 +820,7 @@ export class Widget extends StateManaged {
         }
         this.isValidID(a.collection, problems); // Validate widget IDs in collection
         const collection = getCollection(a.collection);
-        if(collections[collection].length) {
+        if(collections[collection] && collections[collection].length) {
           for(const c of collections[collection].slice(0, a.count || 999999))
               await execute(c);
           phrase = `canvas widgets in ${a.collection}`;
