@@ -526,8 +526,14 @@ export default class Room {
             }
           }
 
-          if(target && !this.state._meta.states[id].variants[vID].plStateID) {
+          if(target && !this.state._meta.states[id].variants[vID].plStateID)
             Logging.log(`could not migrate variant to public library state ${target} in room ${this.id}`);
+
+          // map languages that existed in the old public library to their new values
+          if(!target) {
+            const languageMap = { BR: 'pt-BR', CN: 'zh-CN', DE: 'de-DE', GB: 'en-GB', UN: '', US: 'en-US' };
+            if(languageMap[variant.language] !== undefined)
+              variant.language = languageMap[variant.language]
           }
         }
       }
