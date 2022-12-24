@@ -173,8 +173,8 @@ async function readVariantsFromBuffer(buffer) {
 }
 
 async function readVariantFromLink(linkAndPath) {
-  const link = linkAndPath.replace(/#.*$/, '');
-  const path = linkAndPath.replace(/^.*#/, '').split('/');
+  const link = linkAndPath.replace(/#[^#]*$/, '');
+  const path = linkAndPath.replace(/^[^#]*#/, '').split('/');
   const states = await readStatesFromLink(link, true);
   return states[path[0]][states._variantNameList ? states._variantNameList[path[1].replace(/\.json$/, '')] : path[1]];
 }

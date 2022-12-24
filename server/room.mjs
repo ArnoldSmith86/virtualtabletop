@@ -107,7 +107,7 @@ export default class Room {
           variantImage: meta.variantImage
         };
 
-        if(String(meta.link).match(/#.+\/.+/))
+        if(String(meta.link).match(/#[^#\/]+\/[^#\/]+/))
           variantMeta.link = meta.link;
         if(meta.plStateID) {
           variantMeta = {
