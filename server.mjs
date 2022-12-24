@@ -71,6 +71,15 @@ MinifyRoom().then(function(result) {
 
   // fonts.css is specifically made available for use from card html iframe. It must
   // be fetched from the root in order for the relative paths to fonts to work.
+  // Additionally allow cached use of fonts for a short period of time to allow
+  // immediate rendering in subframes.
+  function cache5m(req, res, next) {
+    res.setHeader('Cache-Control', 'public, max-age=300');
+    res.setHeader('Expires', new Date(Date.now() + 300000).toUTCString());
+    next();
+  }
+  router.get('/fonts.css', cache5m);
+  router.get('/i/fonts/', cache5m);
   router.use('/fonts.css', express.static(path.resolve() + '/client/css/fonts.css'));
 
   router.use('/i', express.static(path.resolve() + '/assets'));
