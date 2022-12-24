@@ -67,7 +67,7 @@ v.i++
 
 // Adds pseudo players to seats
 /*
-if (w.type=="seat" && w.player==null)) {
+if (w.type=="seat" && w.player==null) {
   w.player = "player " + (w.index||1)
   w.color = "hsl("+Math.floor(Math.random() * 360)+", 100%, 50%)"
 }
