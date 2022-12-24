@@ -11,19 +11,23 @@ export function toHex(inputColor) {
   return hexPattern.test(hexColor) ? hexColor : '#000000';
 }
 
-export function toRGB(inputColor) {
+export function toRGBArray(inputColor) {
   let hex = toHex(inputColor);
-  let r = parseInt(hex.slice(1, 3), 16);
-  let g = parseInt(hex.slice(3, 5), 16);
-  let b = parseInt(hex.slice(5, 7), 16);
-  return `rgb(${r},${g},${b})`; 
+  return [
+    parseInt(hex.slice(1, 3), 16),
+    parseInt(hex.slice(3, 5), 16),
+    parseInt(hex.slice(5, 7), 16)
+  ];
+}
+
+export function toRGBString(inputColor) {
+  let rgbArray = toRGBArray(inputColor);
+  return `rgb(${rgbArray[0]},${rgbArray[1]},${rgbArray[2]})`;  
 }
 
 export function calcLuminance(inputColor) {
-  // Function created by https://chat.openai.com/chat
-  let hex = toHex(inputColor);
-  let rgbString = toRGB(hex);
-  let [r, g, b] = rgbString.match(/\d+/g).map(str => parseInt(str, 10));
+  // Function partially written by https://chat.openai.com/chat
+  let [r, g, b] = toRGBArray(toHex(inputColor));
   let RsRGB = r / 255;
   let GsRGB = g / 255;
   let BsRGB = b / 255;
@@ -49,17 +53,15 @@ export function calcContrast(color1, color2) {
 }
 
 export function contrastAnyColor(inputColor, intensity) {
-  // Function created by https://chat.openai.com/chat
-  let color = toHex(inputColor);
-  const luminance = calcLuminance(color);
+  // Function partially written by https://chat.openai.com/chat
+  let hex = toHex(inputColor);
+  let [r, g, b] = toRGBArray(hex);
+  const luminance = calcLuminance(hex);
   if (luminance > 0.1791) intensity = -intensity;
   if (intensity == 1)
     return '#ffffff';
   else if (intensity == -1)
     return '#000000';
-  const r = parseInt(color.slice(1, 3), 16);
-  const g = parseInt(color.slice(3, 5), 16);
-  const b = parseInt(color.slice(5, 7), 16);
   const adjustColor = (r, g, b, intensity) => [r, g, b].map(c => Math.round(Math.max(0, Math.min(c + intensity * 255, 255))));
   const toHexString = (r, g, b) => '#' + r.toString(16).padStart(2, '0') + g.toString(16).padStart(2, '0') + b.toString(16).padStart(2, '0');
   return toHexString(...adjustColor(r, g, b, intensity));
@@ -73,9 +75,7 @@ export function randomHue(startingColors) {
   }
   for(const player in startingColors) {
     const hex = toHex(startingColors[player]);
-    const r = parseInt(hex.slice(1,3), 16) / 255;
-    const g = parseInt(hex.slice(3,5), 16) / 255;
-    const b = parseInt(hex.slice(5,7), 16) / 255;
+    let [r, g, b] = toRGBArray(hex).map(x => x / 255);
     const max = Math.max(r,g,b);
     const d = max - Math.min(r,g,b);
     if(d < .25) continue;

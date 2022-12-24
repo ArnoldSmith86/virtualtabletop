@@ -703,7 +703,7 @@ const compute_ops = [
     name: 'colorToRGB',
     desc: 'converts color in any format that the browser can interpret to RGB in format rgb(0,9,210)',
     sample: 'var a = colorToRGB ${x}',
-    call: function(v, x) { return v = toRGB(x); },
+    call: function(v, x) { return v = toRGBString(x); },
     hash: 'faa247cc277b7e9ad645e55a51e47195'
   },
   {
