@@ -157,12 +157,14 @@ MinifyRoom().then(function(result) {
     downloadState(res, req.params.room).catch(next);
   });
 
-  router.options('/state/:room', function(req, res, next) {
+  function allowCORS(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     res.sendStatus(200);
-  });
+  }
+
+  router.options('/state/:room', allowCORS);
 
   router.get('/state/:room', function(req, res, next) {
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
@@ -190,9 +192,24 @@ MinifyRoom().then(function(result) {
     }
   });
 
+  router.options('/api/shareDetails/:share', allowCORS);
+  router.get('/api/shareDetails/:share', function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    if(!sharedLinks[`/s/${req.params.share}`])
+      return res.sendStatus(404);
+
+    const tokens = sharedLinks[`/s/${req.params.share}`].split('/');
+    ensureRoomIsLoaded(tokens[2]).then(function(isLoaded) {
+      if(isLoaded) {
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify(activeRooms.get(tokens[2]).state._meta.states[tokens[3]]));
+      }
+    }).catch(next);
+  });
+
   router.get('/s/:link/:junk', function(req, res, next) {
     if(!sharedLinks[`/s/${req.params.link}`])
-      return res.status(404);
+      return res.sendStatus(404);
 
     const tokens = sharedLinks[`/s/${req.params.link}`].split('/');
     downloadState(res, tokens[2], tokens[3]).catch(next);
