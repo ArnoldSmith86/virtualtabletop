@@ -117,11 +117,11 @@ export default class Room {
         }
 
         if(type == 'link') {
-          const baseLink = src.replace(/#.*/, '');
+          const baseLink = src.replace(/#[^#]*$/, '');
           meta.link = `${baseLink}#${state}`;
           if(!variantMeta.link && !variantMeta.plStateID) {
             variantMeta.link = `${meta.link}/${v}`;
-            if(src.match(/#.*\//))
+            if(src.match(/#[^#\/]+\/[^#\/]+/))
               meta.link = variantMeta.link;
           }
         }
