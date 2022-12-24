@@ -1,3 +1,5 @@
+// Functions in color.js are called from both server and client files
+
 export function toHex(inputColor) {
   const hexPattern = /^#([A-Fa-f0-9]{6})$/;
   if (hexPattern.test(inputColor)) {    
