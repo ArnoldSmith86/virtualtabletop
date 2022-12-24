@@ -192,6 +192,21 @@ MinifyRoom().then(function(result) {
     }
   });
 
+  router.options('/api/addShareToRoom/:room/:share', allowCORS);
+  router.get('/api/addShareToRoom/:room/:share', function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    if(!sharedLinks[`/s/${req.params.share}`])
+      return res.sendStatus(404);
+
+    const tokens = sharedLinks[`/s/${req.params.share}`].split('/');
+    ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
+      if(isLoaded) {
+        activeRooms.get(req.params.room).addState('', 'link', `${Config.get('externalURL')}/s/${req.params.share}/name.vtt`, '');
+        res.send('OK');
+      }
+    }).catch(next);
+  });
+
   router.options('/api/shareDetails/:share', allowCORS);
   router.get('/api/shareDetails/:share', function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
