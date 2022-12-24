@@ -333,6 +333,8 @@ onLoad(function() {
     if(e.currentTarget.classList.contains('active')) {
       if($('#stateDetailsOverlay.notEditing') && $('#stateDetailsOverlay.notEditing').style.display == 'flex')
         showStatesOverlay('statesOverlay');
+      if(e.currentTarget == $('#activeGameButton') && $('#addOverlay').style.display == 'flex')
+        showOverlay();
       e.stopImmediatePropagation();
       return;
     }
