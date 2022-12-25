@@ -1,5 +1,6 @@
 import { toServer } from './connection.js';
 import { $, $a, onLoad, unescapeID } from './domhelpers.js';
+import { getElementTransformRelativeTo } from './geometry.js';
 
 let roomID = self.location.pathname.replace(/.*\//, '');
 
