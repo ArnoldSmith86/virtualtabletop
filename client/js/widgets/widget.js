@@ -4,7 +4,7 @@ import { playerName, playerColor, activePlayers } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
-import { center, distance, overlap, getOffset, applyTransformedOffset, screenCoordFromLocalPoint } from '../geometry.js';
+import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize } from '../geometry.js';
 
 const readOnlyProperties = new Set([
   '_absoluteRotation',
@@ -64,9 +64,11 @@ export class Widget extends StateManaged {
       dropOffsetX: 0,
       dropOffsetY: 0,
       inheritChildZ: false,
+      hoverTarget: null,
 
       linkedToSeat: null,
       onlyVisibleForSeat: null,
+      hoverInheritVisibleForSeat: true,
 
       clickRoutine: null,
       changeRoutine: null,
@@ -299,7 +301,13 @@ export class Widget extends StateManaged {
     if(typeof this.get('owner') == 'string' && this.get('owner') != playerName)
       className += ' foreign';
 
-    const onlyVisibleForSeat = this.get('onlyVisibleForSeat');
+    let onlyVisibleForSeat = this.get('onlyVisibleForSeat');
+
+    // If the element is currently being dragged we may inherit restricted seat visibility.
+    const hoverTarget = this.get('hoverTarget') ? widgets.get(this.get('hoverTarget')) : null;
+    if (hoverTarget)
+      onlyVisibleForSeat = hoverTarget.inheritSeatVisibility(onlyVisibleForSeat);
+
     let invisible = onlyVisibleForSeat !== null;
     for(const seatID of asArray(onlyVisibleForSeat) || []) {
       if(widgets.has(seatID) && widgets.get(seatID).get('player') == playerName) {
@@ -327,7 +335,7 @@ export class Widget extends StateManaged {
   }
 
   classesProperties() {
-    return [ 'classes', 'dragging', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses' ];
+    return [ 'classes', 'dragging', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses' ];
   }
 
   async click(mode='respect') {
@@ -360,42 +368,23 @@ export class Widget extends StateManaged {
     return coordLocal.x >= 0 && coordLocal.y >= 0 && coordLocal.x <= this.get('width') && coordLocal.y <= this.get('height');
   }
   coordLocalFromCoordClient(coord) {
-    const s = this.get('_absoluteScale') * scale;
-    const rot = this.get('_absoluteRotation') % 360;
-    const localCenter = {x: this.get('width') / 2, y: this.get('height') / 2};
-    const offset = getOffset(center(this.domElement), coord);
-    return applyTransformedOffset(localCenter, offset, 1 / s, -rot );
+    const result = getPointOnPlane(getScreenTransform(this.domElement), coord.x, coord.y);
+    return result || new DOMPoint();
   }
   coordLocalFromCoordGlobal(coord) {
     return this.coordLocalFromCoordParent(this.coordParentFromCoordGlobal(coord));
   }
   coordLocalFromCoordParent(coord) {
-    const s = this.get('scale');
-    const rot = this.get('rotation') % 360;
-    if(s == 1 && rot == 0) {
-      return {x: coord.x - this.get('x'), y: coord.y - this.get('y')};
-    } else {
-      const localCenter = {x: this.get('width') / 2, y: this.get('height') / 2};
-      const parentCenter = {x: localCenter.x + this.get('x') , y: localCenter.y + this.get('y') };
-      const offset = getOffset(parentCenter, coord);
-      return applyTransformedOffset(localCenter, offset, 1 / s, -rot );
-    }
+    const result = getPointOnPlane(getElementTransform(this.domElement), coord.x, coord.y);
+    return result || new DOMPoint();
   }
   coordParentFromCoordGlobal(coord) {
     const p = this.get('parent');
     return (widgets.has(p)) ? widgets.get(p).coordLocalFromCoordGlobal(coord) : coord;
   }
   coordParentFromCoordLocal(coord) {
-    let s = this.get('scale');
-    let rot = this.get('rotation') % 360;
-    if(s == 1 && rot == 0) {
-      return {x: coord.x + this.get('x'), y: coord.y + this.get('y')};
-    } else {
-      const localCenter = {x: this.get('width') / 2, y: this.get('height') / 2};
-      const parentCenter = {x: localCenter.x + this.get('x') , y: localCenter.y + this.get('y') };
-      const offset = getOffset(localCenter, coord);
-      return applyTransformedOffset(parentCenter, offset, s, rot );
-    }
+    const transform = getElementTransform(this.domElement);
+    return dehomogenize(transform.transformPoint(new DOMPoint(coord.x, coord.y)));
   }
 
   css() {
@@ -735,7 +724,7 @@ export class Widget extends StateManaged {
 
           const variable = match[1] !== undefined ? variables[unescape(match[2])] : unescape(match[2]);
           const index = match[3] !== undefined ? variables[unescape(match[4])] : unescape(match[4]);
-          if(index !== undefined && typeof variables[variable] != 'object')
+          if(index !== undefined && (typeof variables[variable] != 'object' || variables[variable] === null))
             problems.push(`The variable ${variable} is not an object, so indexing it doesn't work.`)
           else if(index !== undefined)
             variables[variable][index] = getValue(variables[variable][index]);
@@ -1015,7 +1004,7 @@ export class Widget extends StateManaged {
             jeLoggingRoutineOperationStart( "loopRoutine", "loopRoutine" );
           await this.evaluateRoutine(a.loopRoutine, variables, collections, (depth || 0) + 1, true);
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationEnd(problems, variables, collections, false);
+            jeLoggingRoutineOperationEnd([], variables, collections, false);
           for(const add in addVariables) {
             if(variableBackups[add] !== undefined)
               variables[add] = variableBackups[add];
@@ -1033,12 +1022,50 @@ export class Widget extends StateManaged {
           for(const key in a.in)
             await callWithAdditionalValues({ key, value: a.in[key] }, {});
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary( `element in '${JSON.stringify(a.in)}'`);
+            jeLoggingRoutineOperationSummary( `elements in '${JSON.stringify(a.in)}'`);
+        } else if(a.range) {
+          let range = [...asArray(a.range)];
+
+          if(range.length == 0) {
+            problems.push(`Empty range given, [1] used.`);
+            range = [1]
+          }
+          if(range.length == 1)
+            range.unshift(1);
+          let start = parseFloat(range[0]);
+          if(isNaN(start)) {
+            problems.push(`Invalid start of range ${JSON.stringify(range[0])}, 1 used`);
+            start = 1;
+          }
+
+          let end = parseFloat(range[1]);
+          if(isNaN(end)) {
+            problems.push(`Invalid end of range ${JSON.stringify(range[1])}, 1 used`);
+            end = 1;
+          }
+
+          if(range.length == 2)
+            range.push(end > start ? 1 : -1);
+          let step = parseFloat(range[2]);
+          if(isNaN(step) || step == 0) {
+            step = end > start ? 1 : -1;
+            problems.push(`Invalid step value ${JSON.stringify(range[2])}, ${step} used`);
+          }
+
+          if(start>end && step>0 || start<end && step<0) {
+            step = -step;
+            problems.push(`Step ${-step} changed to ${step}`)
+          }
+
+          for (let index=start; (step > 0) ? index <= end : index >= end; index += step)
+            await callWithAdditionalValues({ value: index });
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary( `values in range '${JSON.stringify(a.range)}'`);
         } else if(collection = getCollection(a.collection)) {
           for(const widget of collections[collection])
             await callWithAdditionalValues({ widgetID: widget.get('id') }, { DEFAULT: [ widget ] });
           if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary( `widget in '${a.collection}'`);
+            jeLoggingRoutineOperationSummary( `widgets in '${a.collection}'`);
         }
       }
 
@@ -1672,6 +1699,25 @@ export class Widget extends StateManaged {
     }
   }
 
+  inheritSeatVisibility(seatVisibility) {
+    if (this.get('hoverInheritVisibleForSeat')) {
+      const widgetSeatVisibility = this.get('onlyVisibleForSeat');
+      if (widgetSeatVisibility) {
+        // Filter seatVisibility by current widgets seats.
+        if (!seatVisibility) {
+          seatVisibility = widgetSeatVisibility;
+        } else {
+          let filterTo = new Set(asArray(widgetSeatVisibility));
+          seatVisibility = asArray(seatVisibility).filter((seatId) => { return filterTo.has(seatId); });
+        }
+      }
+    }
+    const thisParent = this.get('parent');
+    if (thisParent && widgets.has(thisParent))
+      seatVisibility = widgets.get(thisParent).inheritSeatVisibility(seatVisibility);
+    return seatVisibility;
+  }
+
   isValidID(id, problems) {
     if(Array.isArray(id))
       return !id.map(i=>this.isValidID(i, problems)).filter(r=>r!==true).length;
@@ -1768,8 +1814,11 @@ export class Widget extends StateManaged {
       if(this.hoverTarget)
         this.hoverTarget.domElement.classList.add('droptarget');
 
-      if(lastHoverTarget != this.hoverTarget && this.hoverTarget != this.currentParent)
-        await this.checkParent(true);
+      if (lastHoverTarget != this.hoverTarget) {
+        await this.set('hoverTarget', this.hoverTarget ? this.hoverTarget.get('id') : null);
+        if(this.hoverTarget != this.currentParent)
+          await this.checkParent(true);
+      }
     }
   }
 
@@ -1778,6 +1827,7 @@ export class Widget extends StateManaged {
       sendTraceEvent('moveEnd', { id: this.get('id'), coord, localAnchor });
 
     await this.set('dragging', null);
+    await this.set('hoverTarget', null);
 
     if(!this.get('fixedParent')) {
       for(const t of this.dropTargets)
@@ -2041,7 +2091,7 @@ export class Widget extends StateManaged {
       return;
 
     const thisParent = this.get('parent');
-    if(this.isBeingRemoved || thisParent && !widgets.get(thisParent).supportsPiles())
+    if(this.isBeingRemoved || thisParent && widgets.has(thisParent) && !widgets.get(thisParent).supportsPiles())
       return;
 
     const thisX = this.get('x');

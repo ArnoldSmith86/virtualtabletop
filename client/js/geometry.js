@@ -18,26 +18,61 @@ export function getOffset(origin, target) {
   return {x: target.x - origin.x, y: target.y - origin.y}
 }
 
-export function getScreenSpaceTransform(e) {
-  if (!e)
-    return new DOMMatrix();
-  let matrix = getScreenSpaceTransform(e.offsetParent);
-  matrix.translateSelf(e.offsetLeft, e.offsetTop);
-  matrix.multiplySelf(new DOMMatrix(getComputedStyle(e).transform));
-  return matrix;
-}
-
-export function screenCoordFromLocalPoint(e, p) {
-  let matrix = getScreenSpaceTransform(e);
-  return matrix.transformPoint(new DOMPoint(p.x, p.y));
-}
-
-export function applyTransformedOffset(origin, offset, scale, rotation) {
-  if(rotation % 360 == 0) {
-    return {x: origin.x + offset.x * scale, y: origin.y + offset.y * scale}
-  } else {
-    const dist = distance({x:0,y:0},offset) * scale;
-    const angle = Math.atan2(offset.y ,offset.x) + rotation * Math.PI / 180;
-    return {x: origin.x + dist * Math.cos(angle), y: origin.y + dist * Math.sin(angle)};
+export function getScreenTransform(elem) {
+  let transform = new DOMMatrix();
+  while (elem) {
+    transform.preMultiplySelf(getElementTransform(elem));
+    elem = elem.offsetParent;
   }
+  return transform;
+}
+
+export function screenCoordFromLocalPoint(elem, coord) {
+  return getScreenTransform(elem).transformPoint(new DOMPoint(coord.x, coord.y));
+}
+
+function parseLengths(str) {
+  return str.split(' ').map(s => parseFloat(s))
+}
+
+export function dehomogenize(point) {
+  return new DOMPoint(point.x / point.w, point.y / point.w, point.z / point.w);
+}
+
+export function getPointOnPlane(transform, x, y) {
+  const inv = transform.inverse();
+  const p0 = dehomogenize(inv.transformPoint(new DOMPoint(x, y, 0)));
+  // Get transformed direction vector of ray in (0, 0, 1) direction.
+  let dir = dehomogenize(inv.transformPoint(new DOMPoint(x, y, 1)));
+  dir.x -= p0.x;
+  dir.y -= p0.y;
+  dir.z -= p0.z;
+  // If the projected line is parallel with the plane, no intersection point can be determined.
+  if (dir.z == 0)
+    return null;
+  // Find point of intersection with plane.
+  const t = -p0.z / dir.z;
+  return new DOMPoint(p0.x + dir.x * t, p0.y + dir.y * t, p0.z + dir.z * t);
+}
+
+export function getElementTransform(elem) {
+  let transform = new DOMMatrix();
+  const computedPerspective = getComputedStyle(elem).perspective;
+  if (computedPerspective != 'none' && computedPerspective != '0px') {
+    const perspective = parseFloat(computedPerspective);
+    const perspectiveOrigin = parseLengths(getComputedStyle(elem).perspectiveOrigin);
+    // From https://w3c.github.io/csswg-drafts/css-transforms-2/#PerspectiveDefined
+    transform.translateSelf(perspectiveOrigin[0], perspectiveOrigin[1]);
+    transform.multiplySelf(new DOMMatrix([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -1/perspective, 0, 0, 0, 1]));
+    transform.translateSelf(-perspectiveOrigin[0], -perspectiveOrigin[1]);
+  }
+  const computedTransform = getComputedStyle(elem).transform;
+  if (computedTransform !='none') {
+    const transformOrigin = parseLengths(getComputedStyle(elem).transformOrigin);
+    transform.translateSelf(transformOrigin[0], transformOrigin[1]);
+    transform.multiplySelf(new DOMMatrix(getComputedStyle(elem).transform));
+    transform.translateSelf(-transformOrigin[0], -transformOrigin[1]);
+  }
+  transform.translateSelf(elem.offsetLeft, elem.offsetTop);
+  return transform;
 }
