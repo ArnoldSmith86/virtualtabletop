@@ -29,7 +29,7 @@ export function toRGBString(inputColor) {
 
 export function calcLuminance(inputColor) {
   // Function partially written by https://chat.openai.com/chat
-  let [r, g, b] = toRGBArray(toHex(inputColor));
+  let [r, g, b] = toRGBArray(inputColor);
   let RsRGB = r / 255;
   let GsRGB = g / 255;
   let BsRGB = b / 255;
