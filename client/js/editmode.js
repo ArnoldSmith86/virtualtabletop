@@ -1223,6 +1223,13 @@ onLoad(function() {
           "property": "text",
           "value": "${COUNT}"
         }
+      ],
+      playerGlobalUpdateRoutine: [
+        {
+          "func": "CALL",
+          "routine": "ownerGlobalUpdateRoutine",
+          "widget": "${PROPERTY id}"
+        }
       ]
     });
     overlayDone(id);
