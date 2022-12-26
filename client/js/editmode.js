@@ -1209,7 +1209,7 @@ onLoad(function() {
       movableInEdit: false,
       clickable: false,
       css: {'font-size':'18px', 'display':'flex','align-items':'center','justify-content':'center','color':'#6d6d6d','background':'#e4e4e4','border':'2px solid #999999'},
-      text: '',
+      text: '0',
       ownerGlobalUpdateRoutine: [
         'var parent = ${PROPERTY parent}',
         {
