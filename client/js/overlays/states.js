@@ -373,7 +373,8 @@ function resortStatesList() {
 function updateFilterOverflow() {
   $('#filterOverflow').classList.add('empty');
   for(const span of stateFilterSpans)
-    $('#stateFilters').insertBefore(span, $('#filterOverflow'));
+    if($('#filterByTextWrapper') != span)
+      $('#stateFilters').insertBefore(span, $('#filterOverflow'));
   for(const span of [...stateFilterSpans].sort((a,b)=>b.dataset.priority-a.dataset.priority)) {
     if($('#filterByTextWrapper') != span && $('#filterByTextWrapper').clientWidth < 200) {
       $('#filterOverflow > div').insertBefore(span, $('#filterOverflow > div').firstChild);
