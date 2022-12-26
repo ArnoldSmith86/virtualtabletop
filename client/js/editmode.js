@@ -1211,7 +1211,7 @@ onLoad(function() {
       svgReplaces: {'currentColor':'textColor'},
       text: '',
       textColor: '#dcdcdc',
-      parentGlobalUpdateRoutine: [
+      ownerGlobalUpdateRoutine: [
         'var parent = ${PROPERTY parent}',
         {
           "func": "COUNT",
