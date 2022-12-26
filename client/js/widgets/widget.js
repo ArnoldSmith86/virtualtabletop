@@ -916,25 +916,25 @@ export class Widget extends StateManaged {
 
       if(a.func == 'COUNT') {
         setDefaults(a, { collection: 'DEFAULT', variable: 'COUNT' });
-        setDefaults(a, { collection: 'DEFAULT', variable: 'COUNT', perOwner: null });
+        setDefaults(a, { collection: 'DEFAULT', variable: 'COUNT', owner: null });
         let collection;
         let theItem;
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder,problems)) {
             variables[a.variable] = widgets.get(a.holder).children().length;
-            if(a.perOwner === null) {
+            if(a.owner === null) {
               variables[a.variable] = widgets.get(a.holder).children().length;
             } else {
-              variables[a.variable] = widgets.get(a.holder).children().filter(widget => widget.get('owner') === a.perOwner).length;
+              variables[a.variable] = widgets.get(a.holder).children().filter(widget => widget.get('owner') === a.owner).length;
             }
             theItem = `${a.holder}`;
           }
         } else if(collection = getCollection(a.collection)) {
           variables[a.variable] = collections[collection].length;
-          if(a.perOwner === null) {
+          if(a.owner === null) {
             variables[a.variable] = collections[collection].length;
           } else {
-            variables[a.variable] = collections[collection].filter(widget => widget.get('owner') === a.perOwner).length;
+            variables[a.variable] = collections[collection].filter(widget => widget.get('owner') === a.owner).length;
           }
           theItem = `${a.collection}`
         }

@@ -1200,23 +1200,22 @@ onLoad(function() {
       id: id+'C',
       parent: id,
       fixedParent: true,
-      x: 50,
-      y: -50,
-      width: 50,
-      height: 50,
+      x: -20,
+      y: -20,
+      width: 30,
+      height: 30,
+      borderRadius: 100,
       movable: false,
       movableInEdit: false,
-      css: {'font-size':'18px', 'display':'flex','align-items':'center','justify-content':'center'},
-      image: 'i/icons/cards.svg',
-      svgReplaces: {'currentColor':'textColor'},
+      clickabel: false,
+      css: {'font-size':'18px', 'display':'flex','align-items':'center','justify-content':'center','color':'#6d6d6d','background':'#e4e4e4','border':'2px solid #999999'},
       text: '',
-      textColor: '#dcdcdc',
       ownerGlobalUpdateRoutine: [
         'var parent = ${PROPERTY parent}',
         {
           "func": "COUNT",
           "holder": "${PROPERTY hand OF $parent}",
-          "perOwner": "${PROPERTY player OF $parent}"
+          "owner": "${PROPERTY player OF $parent}"
         },
         {
           "func": "SET",
