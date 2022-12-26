@@ -630,11 +630,12 @@ export class Widget extends StateManaged {
     let variables = initialVariables;
     let collections = initialCollections;
     if(!byReference) {
-      variables = Object.assign({}, initialVariables, {
+      variables = Object.assign({
+        activeColors
+      }, initialVariables, {
         playerName,
         playerColor,
         activePlayers,
-        activeColors,
         thisID : this.get('id')
       });
       collections = Object.assign({}, initialCollections, {
