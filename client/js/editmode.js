@@ -1212,6 +1212,7 @@ onLoad(function() {
       text: '0',
       ownerGlobalUpdateRoutine: [
         'var parent = ${PROPERTY parent}',
+        "var COUNT = 0",
         {
           "func": "COUNT",
           "holder": "${PROPERTY hand OF $parent}",
