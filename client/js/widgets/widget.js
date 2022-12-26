@@ -1187,7 +1187,8 @@ export class Widget extends StateManaged {
 
       if(a.func == 'MOVE') {
         setDefaults(a, { count: 1, face: null });
-        const count = a.count || 999999;
+        const count = a.count || 0;
+        count = a.count === 'all' ? 999999 : a.count;
 
         if(this.isValidID(a.from, problems) && this.isValidID(a.to, problems)) {
           await w(a.from, async source=>await w(a.to, async target=>{
@@ -1227,8 +1228,8 @@ export class Widget extends StateManaged {
             }
           }));
           if(jeRoutineLogging) {
-            const count = a.count==1 ? '1 widget' : `${a.count} widgets`;
-            jeLoggingRoutineOperationSummary(`${count} from '${a.from}' to '${a.to}'`)
+            const counted = count==1 ? '1 widget' : `${a.count} widgets`;
+            jeLoggingRoutineOperationSummary(`${counted} from '${a.from}' to '${a.to}'`)
           }
         }
       }
