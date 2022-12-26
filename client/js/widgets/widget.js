@@ -1282,12 +1282,14 @@ export class Widget extends StateManaged {
 
       if(a.func == 'ROTATE') {
         setDefaults(a, { count: 1, angle: 90, mode: 'add', collection: 'DEFAULT' });
+        const count = a.count || 0;
+        count = a.count === 'all' ? 999999 : a.count;
         let collection;
         const mode = a.mode == 'set' ? 'to' : 'by';
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
-              for(const c of holder.children().slice(0, a.count || 999999))
+              for(const c of holder.children().slice(0, count))
                 await c.rotate(a.angle, a.mode);
             });
             if(jeRoutineLogging) {
@@ -1296,7 +1298,7 @@ export class Widget extends StateManaged {
           }
         } else if(collection = getCollection(a.collection)) {
           if(collections[collection].length) {
-            for(const c of collections[collection].slice(0, a.count || 999999))
+            for(const c of collections[collection].slice(0, count))
               await c.rotate(a.angle, a.mode);
             if(jeRoutineLogging)
               jeLoggingRoutineOperationSummary(`${a.count == 0 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${a.collection}' ${mode} ${a.angle}`);
