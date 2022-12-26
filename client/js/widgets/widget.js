@@ -948,11 +948,14 @@ export class Widget extends StateManaged {
 
       if(a.func == 'FLIP') {
         setDefaults(a, { count: 0, face: null, faceCyle: null, collection: 'DEFAULT' });
+        const count = a.count || 0;
+        count = a.count === 'all' ? 999999 : a.count;
+
         let collection;
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder,problems)) {
             await w(a.holder, async holder=>{
-              for(const c of holder.children().slice(0, a.count || 999999))
+              for(const c of holder.children().slice(0, count))
                 c.flip && await c.flip(a.face,a.faceCycle);
             });
           }
@@ -960,7 +963,7 @@ export class Widget extends StateManaged {
               jeLoggingRoutineOperationSummary(`holder '${a.holder}'`);
         } else if(collection = getCollection(a.collection)) {
           if(collections[collection].length) {
-            for(const c of collections[collection].slice(0, a.count || 999999))
+            for(const c of collections[collection].slice(0, count))
               c.flip && await c.flip(a.face,a.faceCycle);
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
