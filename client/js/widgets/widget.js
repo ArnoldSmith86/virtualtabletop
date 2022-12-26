@@ -1236,9 +1236,11 @@ export class Widget extends StateManaged {
 
       if(a.func == 'MOVEXY') {
         setDefaults(a, { count: 1, face: null, x: 0, y: 0, snapToGrid: true });
+        const count = a.count || 0;
+        count = a.count === 'all' ? 999999 : a.count;
         if(this.isValidID(a.from, problems)) {
           await w(a.from, async source=>{
-            for(const c of source.children().slice(0, a.count || 999999).reverse()) {
+            for(const c of source.children().slice(0, count).reverse()) {
               if(a.face !== null && c.flip)
                 c.flip(a.face);
               await c.bringToFront();
@@ -1249,8 +1251,8 @@ export class Widget extends StateManaged {
             }
           });
           if(jeRoutineLogging) {
-            const count = a.count==1 ? '1 widget' : `${a.count} widgets`;
-            jeLoggingRoutineOperationSummary(`${count} from '${a.from}' to (${a.x}, ${a.y})`)
+            const counted = count==1 ? '1 widget' : `${a.count} widgets`;
+            jeLoggingRoutineOperationSummary(`${counted} from '${a.from}' to (${a.x}, ${a.y})`)
           }
         }
       }
