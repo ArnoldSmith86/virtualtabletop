@@ -1190,13 +1190,43 @@ onLoad(function() {
   on('#addSeat', 'click', async function() {
     const seats = widgetFilter(w=>w.get('type')=='seat');
     const maxIndex = Math.max(...seats.map(w=>w.get('index')));
-    await addWidgetLocal({
+    const id = await addWidgetLocal({
       type: 'seat',
       index: seats.length && maxIndex ? maxIndex+1 : 1,
       x: 840,
       y: 90
+    })
+    await addWidgetLocal({
+      id: id+'C',
+      parent: id,
+      fixedParent: true,
+      x: 50,
+      y: -50,
+      width: 50,
+      height: 50,
+      movable: false,
+      movableInEdit: false,
+      css: {'font-size':'18px', 'display':'flex','align-items':'center','justify-content':'center'},
+      image: 'i/icons/cards.svg',
+      svgReplaces: {'currentColor':'textColor'},
+      text: '',
+      textColor: '#dcdcdc',
+      parentGlobalUpdateRoutine: [
+        'var parent = ${PROPERTY parent}',
+        {
+          "func": "COUNT",
+          "holder": "${PROPERTY hand OF $parent}",
+          "perOwner": "${PROPERTY player OF $parent}"
+        },
+        {
+          "func": "SET",
+          "collection": "thisButton",
+          "property": "text",
+          "value": "${COUNT}"
+        }
+      ]
     });
-    showOverlay();
+    overlayDone(id);
   });
 
   on('#uploadBoard', 'click', _=>uploadWidget('board'));
