@@ -605,7 +605,7 @@ export class Widget extends StateManaged {
         newCollection = '$collection_' + batchDepth;
         collections[newCollection] = widgetFilter(w=>collection.indexOf(w.id)!=-1);
       } else
-        problems.push(`Collection ${collection} does not exist and is not an array.`);
+        problems.push(`Collection ${collection} does not exist or is not an array.`);
       return newCollection;
     }
 
@@ -735,9 +735,16 @@ export class Widget extends StateManaged {
 
       if(a.func == 'CALL') {
         setDefaults(a, { widget: this.get('id'), routine: 'clickRoutine', 'return': true, arguments: {}, variable: 'result', collection: 'result' });
+        if(Array.isArray(a.routine)) {
+          if(a.routine.length > 1)
+            problems.push('Routine parameter must refer to only one routine, first routine executed.');
+          a.routine = a.routine[0]
+        }
         if(!a.routine.match(/Routine$/)) {
           problems.push('Routine parameters have to end with "Routine".');
         } else if(this.isValidID(a.widget, problems)) {
+          if(Array.isArray(a.widget))
+            a.widget = a.widget[0];
           if(!Array.isArray(widgets.get(a.widget).get(a.routine))) {
             problems.push(`Widget ${a.widget} does not contain ${a.routine} (or it is no array).`);
           } else {
@@ -752,7 +759,7 @@ export class Widget extends StateManaged {
             collections[a.collection] = result.collection;
 
             if(jeRoutineLogging) {
-              const theWidget = this.isValidID(a.widget, problems) && a.widget != this.get('id') ? `in ${a.widget}` : '';
+              const theWidget = a.widget != this.get('id') ? `in ${a.widget}` : '';
               if (a.return) {
                 let returnCollection = result.collection.map(w=>w.get('id')).join(',');
                 if(!result.collection.length || result.collection.length >= 5)
@@ -801,25 +808,24 @@ export class Widget extends StateManaged {
             }
             else
               await widget.set('activeColor', (widget.get('activeColor')+ a.value) % widget.get('colorMap').length);
-          }
+          } else
+            problems.push(`Widget ${widget.get('id')} is not a canvas.`);
         };
 
         let phrase;
-        let collection;
 
         if(a.canvas !== undefined) {
-          if(this.isValidID(a.canvas, problems)) {
-            await w(a.canvas, execute);
-            phrase = `canvas ${a.canvas}`;
-          }
-        } else if(collection = getCollection(a.collection)) {
-          if(collections[collection].length) {
-            for(const c of collections[collection].slice(0, a.count || 999999))
+          a.collection = asArray(a.canvas);
+          delete a.canvas
+        }
+        this.isValidID(a.collection, problems); // Validate widget IDs in collection
+        const collection = getCollection(a.collection);
+        if(collections[collection] && collections[collection].length) {
+          for(const c of collections[collection].slice(0, a.count || 999999))
               await execute(c);
-            phrase = `canvas widgets in ${a.collection}`;
-          } else {
-            problems.push(`Collection ${a.collection} is empty.`);
-          }
+          phrase = `canvas widgets in ${a.collection}`;
+        } else {
+          problems.push(`Collection ${a.collection} is empty.`);
         }
 
         if(jeRoutineLogging) {
@@ -920,14 +926,17 @@ export class Widget extends StateManaged {
         let collection;
         let theItem;
         if(a.holder !== undefined) {
-          if(this.isValidID(a.holder,problems)) {
-            variables[a.variable] = widgets.get(a.holder).children().length;
-            if(a.owner === null) {
-              variables[a.variable] = widgets.get(a.holder).children().length;
-            } else {
-              variables[a.variable] = widgets.get(a.holder).children().filter(widget => widget.get('owner') === a.owner).length;
+          theItem = `${a.holder}`;
+          variables[a.variable] = 0;
+          for (const h of asArray(a.holder)) {
+            if(this.isValidID(h,problems)) {
+              const children = widgets.get(h).children();
+              if(a.owner === null) {
+                variables[a.variable] += children.length;
+              } else {
+                variables[a.variable] += children.filter(widget => widget.get('owner') === a.owner).length;
+              }
             }
-            theItem = `${a.holder}`;
           }
         } else if(collection = getCollection(a.collection)) {
           variables[a.variable] = collections[collection].length;
@@ -1719,6 +1728,7 @@ export class Widget extends StateManaged {
     if(widgets.has(id))
       return true;
     problems.push(`Widget ID ${id} does not exist.`);
+    return false;
   }
 
   async moveToHolder(holder) {
