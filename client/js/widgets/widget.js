@@ -939,7 +939,6 @@ export class Widget extends StateManaged {
             }
           }
         } else if(collection = getCollection(a.collection)) {
-          variables[a.variable] = collections[collection].length;
           if(a.owner === null) {
             variables[a.variable] = collections[collection].length;
           } else {
