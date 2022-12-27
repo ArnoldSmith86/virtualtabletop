@@ -134,9 +134,13 @@ class Card extends Widget {
                 const replaces = { ...object.svgReplaces };
                 for(const key in replaces)
                   replaces[key] = this.get(replaces[key]);
-                object.value = getSVG(object.value, replaces, _=>this.applyDeltaToDOM({ deck:this.get('deck') }));
+                const svgResult = getSVG(object.value, replaces, _=>{
+                  objectDiv.style.backgroundImage = `url("${getSVG(object.value, replaces)}")`;
+                });
+                objectDiv.style.backgroundImage = `url("${svgResult}")`;
+              } else {
+                objectDiv.style.backgroundImage = mapAssetURLs(`url("${object.value}")`);
               }
-              objectDiv.style.backgroundImage = mapAssetURLs(`url("${object.value}")`);
             }
             objectDiv.style.backgroundColor = object.color || 'white';
           } else {
