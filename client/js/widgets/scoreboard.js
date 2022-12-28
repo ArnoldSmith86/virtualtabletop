@@ -208,13 +208,21 @@ class Scoreboard extends Widget {
      * correct.
      */
 
-    // First deal with cases where we just need to clear the table; invalid set of seats.
-    // We choose here to regard a result of [] or {} as a valid set of seats/teams with no entries.
-    if(seats===null) {
-      if(this.tableDOM)
-        this.tableDOM.innerHTML = '';
-      return
+    // First, empty the table
+    if(!this.tableDOM) {
+      this.tableDOM = document.createElement('table');
+      const intermediateDiv = document.createElement('div');
+      intermediateDiv.className = 'scoreboardIntermediate';
+      this.domElement.appendChild(intermediateDiv);
+      intermediateDiv.appendChild(this.tableDOM);
+    } else {
+      this.tableDOM.innerHTML = '';
     }
+
+    // Deal with cases where we just need to clear the table; invalid set of seats.
+    // We choose here to regard a result of [] or {} as a valid set of seats/teams with no entries.
+    if(seats===null)
+      return
 
     const showTotals = this.get('showTotals');
     const scoreProperty = this.get('scoreProperty');
@@ -280,17 +288,6 @@ class Scoreboard extends Widget {
     } else { // Should never happen.
       console.log('Internal error: invalid seats in tableCreate');
       return
-    }
-
-    // Finally, build the table
-    if(!this.tableDOM) {
-      this.tableDOM = document.createElement('table');
-      const intermediateDiv = document.createElement('div');
-      intermediateDiv.className = 'scoreboardIntermediate';
-      this.domElement.appendChild(intermediateDiv);
-      intermediateDiv.appendChild(this.tableDOM);
-    } else {
-      this.tableDOM.innerHTML = '';
     }
 
     let numCols;
