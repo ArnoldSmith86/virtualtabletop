@@ -172,12 +172,12 @@ class Scoreboard extends Widget {
     return asArray(x).reduce((partialSum, a) => partialSum + (parseFloat(a) || 0), 0)
   }
 
-  addRowToTable(parent, values, cellType = 'td') {
+  addRowToTable(parent, values) {
     const tr = parent.insertRow();
     const v = asArray(values);
-    tr.innerHTML = Array(values.length).fill(`<${cellType}></${cellType}>`).join('');
+    tr.innerHTML = Array(values.length).fill('<td></td>').join('');
     for (let i=0; i < values.length; i++)
-      $a(cellType, tr)[i].innerText = values[i];
+      $a('td', tr)[i].innerText = values[i];
     return tr;
   }
 
@@ -311,7 +311,7 @@ class Scoreboard extends Widget {
       const names = pScores.map(x => x[0]);
       names.unshift(this.get('roundLabel'));
       this.tableDOM.innerHTML += '<tbody></tbody>';
-      const tr = this.addRowToTable($('tbody', this.tableDOM), names, 'td');
+      const tr = this.addRowToTable($('tbody', this.tableDOM), names);
       const defaultColor = window.getComputedStyle(tr.cells[0]).getPropertyValue('background-color');
       // Get player colors if needed
       if(showPlayerColors)
@@ -324,7 +324,7 @@ class Scoreboard extends Widget {
       for( let r=1; r < numRows; r++ ) {
         const pRow = pScores.map(x => x[r]);
         pRow.unshift(rounds[r]);
-        const tr = this.addRowToTable($('tbody',this.tableDOM), pRow, 'td');
+        const tr = this.addRowToTable($('tbody',this.tableDOM), pRow);
         if(r == currentRound)
           for(let c=1; c < numCols; c++)
             tr.cells[c].classList.add('currentRound');
@@ -338,11 +338,11 @@ class Scoreboard extends Widget {
       numRows = pScores.length + 1;
 
       // First row contains round names
-      const tr = this.addRowToTable(this.tableDOM, rounds, 'td');
+      const tr = this.addRowToTable(this.tableDOM, rounds);
       const defaultColor = window.getComputedStyle(tr.cells[0]).getPropertyValue('background-color');
       // Remaining rows are one row per player.
       for( let r=0; r < pScores.length; r++) {
-        const tr = this.addRowToTable(this.tableDOM, pScores[r], 'td');
+        const tr = this.addRowToTable(this.tableDOM, pScores[r]);
         if(showPlayerColors) {
           const bgColor = pScores[r][0]=='-' ? defaultColor : seats.filter(x=> x.get('player') == pScores[r][0])[0].get('color');
           tr.cells[0].style.backgroundColor = bgColor;
