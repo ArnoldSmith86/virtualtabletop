@@ -2,10 +2,7 @@
   border: 2px solid black;
   box-sizing: border-box;
   background: #fff;
-  border-width: 2px;
   border-radius: 8px;
-  justify-content: center;
-  align-items: center;
   overflow: auto;
   height: 100%;
   width: 100%;
