@@ -1,4 +1,6 @@
 .scoreboard > div.scoreboardIntermediate {
+  position: relative;
+  z-index: 0;
   border: 2px solid black;
   box-sizing: border-box;
   background: #fff;
