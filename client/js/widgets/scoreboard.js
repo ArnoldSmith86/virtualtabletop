@@ -184,7 +184,7 @@ class Scoreboard extends Widget {
   // Compute desired text color from luminance of background
   // See https://stackoverflow.com/questions/3942878
   getFgColor(bgColor) {
-    function getHexColor(color) {
+    function toRGB(color) {
       const a = document.createElement('div');
       a.style.color = color;
       const colorStr = window.getComputedStyle( document.body.appendChild(a) ).color;
@@ -192,7 +192,7 @@ class Scoreboard extends Widget {
       document.body.removeChild(a);
       return colors;
     }
-    const bg = getHexColor(bgColor);
+    const bg = toRGB(bgColor);
     return bg[0]*0.299 + bg[1]*0.587 + bg[2]*0.114 > 186 ? "#000000" : "#ffffff";
   }
 
