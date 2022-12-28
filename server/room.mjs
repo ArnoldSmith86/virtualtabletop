@@ -529,11 +529,18 @@ export default class Room {
           if(target && !this.state._meta.states[id].variants[vID].plStateID)
             Logging.log(`could not migrate variant to public library state ${target} in room ${this.id}`);
 
-          // map languages that existed in the old public library to their new values
           if(!target) {
+            // map languages that existed in the old public library to their new values
             const languageMap = { BR: 'pt-BR', CN: 'zh-CN', DE: 'de-DE', GB: 'en-GB', UN: '', US: 'en-US' };
             if(languageMap[variant.language] !== undefined)
               variant.language = languageMap[variant.language]
+
+            // move attribution from variant to state
+            if(!state.attribution)
+              state.attribution = variant.attribution;
+            if(variant.attribution && variant.attribution != state.attribution)
+              state.attribution += '\n\n--\n\n'+variant.attribution;
+            delete variant.attribution;
           }
         }
       }
