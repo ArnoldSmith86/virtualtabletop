@@ -327,8 +327,8 @@ class Scoreboard extends Widget {
             tr.cells[c].classList.add('currentRound');
       }
       if(showTotals)
-          for(let c=0; c < numCols; c++)
-            this.tableDOM.rows[numRows-1].cells[c].classList.add('totalsLine');
+        for(let c=0; c < numCols; c++)
+          this.tableDOM.rows[numRows-1].cells[c].classList.add('totalsLine');
     } else { // Scores are in rows
       // Compute total number of rows and columns in table
       numCols = numRounds + 1 + (showTotals ? 1 : 0);
