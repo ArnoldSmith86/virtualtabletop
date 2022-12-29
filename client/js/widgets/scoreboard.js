@@ -29,9 +29,8 @@ class Scoreboard extends Widget {
   }
 
   applyDeltaToDOM(delta) {
-    if(delta) // Don't call super unless this is a real delta to the scoreboard rather than from a seat
-      super.applyDeltaToDOM(delta);
-    this.tableCreate(this.getIncludedSeats())
+    super.applyDeltaToDOM(delta);
+    this.updateTable();
   }
 
   classes() {
@@ -197,7 +196,7 @@ class Scoreboard extends Widget {
     return bg[0]*0.299 + bg[1]*0.587 + bg[2]*0.114 > 186 ? "#000000" : "#ffffff";
   }
 
-  tableCreate(seats) {
+  updateTable() {
     /* This routine creates the HTML table for display in the scoreboard. It is
      * complicated by the fact that the `seats` property can be either an array of
      * seat IDs or an object whose keys are team names and each of whose values is an
@@ -209,6 +208,7 @@ class Scoreboard extends Widget {
      * correct.
      */
 
+    const seats = this.getIncludedSeats();
     // First, empty the table
     if(!this.tableDOM) {
       this.tableDOM = document.createElement('table');
@@ -287,7 +287,7 @@ class Scoreboard extends Widget {
         i++
       }
     } else { // Should never happen.
-      console.log('Internal error: invalid seats in tableCreate');
+      console.log('Internal error: invalid seats in updateTable');
       return
     }
 
