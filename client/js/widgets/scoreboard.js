@@ -90,7 +90,7 @@ class Scoreboard extends Widget {
           scores = [...scores];
         else
           scores = [];
-        scores[result.round-1] = result.score;
+        scores[result.round-1] = +result.score;
         await seat.set(scoreProperty, scores);
       } catch(e) {}
     }
