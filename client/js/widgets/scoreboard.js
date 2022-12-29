@@ -23,7 +23,8 @@ class Scoreboard extends Widget {
       sortField: 'index',
       sortAscending: true,
       currentRound: null,
-      autosizeColumns: true
+      autosizeColumns: true,
+      borderRadius: 8
     });
   }
 

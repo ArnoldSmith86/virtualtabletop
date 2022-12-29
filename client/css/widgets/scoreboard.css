@@ -1,10 +1,14 @@
+.scoreboard {
+  background: #fff;
+  color: #333;
+}
+
 .scoreboard > div.scoreboardIntermediate {
   position: relative;
   z-index: 0;
   border: 2px solid black;
   box-sizing: border-box;
-  background: #fff;
-  border-radius: 8px;
+  border-radius: inherit;
   overflow: auto;
   height: 100%;
   width: 100%;
@@ -19,11 +23,9 @@
 .scoreboard > div.scoreboardIntermediate > table tbody td {
   border-bottom: 1px solid #ddd;
   border-right: 1px solid #ddd;
-  color: #333;
   padding: 5px;
   text-align: right;
   white-space: nowrap;
-  background-color: #f8f8f8;
 }
 
 .scoreboard.equalWidth > div.scoreboardIntermediate > table td {
