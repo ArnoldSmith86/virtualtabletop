@@ -1410,11 +1410,20 @@
       "mode": "vs",
       "time": "60",
       "type": "file",
-      "attribution": "Library image is CC0 Public Domain:\nhttps://www.publicdomainpictures.net/en/view-image.php?image=44722&picture=chess-king\n\nThe game file itself was created by ArnoldSmith86 and is hereby released to the public domain by CC0.",
+      "attribution": "Library image is CC0 Public Domain:\nhttps://www.publicdomainpictures.net/en/view-image.php?image=44722&amp;picture=chess-king\n\nThe game file itself was created by ArnoldSmith86 and is hereby released to the public domain by CC0.",
       "lastUpdate": 1671813976118,
+      "showName": true,
+      "skill": "",
+      "description": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
       "players": "2",
-      "language": "UN",
-      "variant": ""
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   }
 }
