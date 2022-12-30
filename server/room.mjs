@@ -482,9 +482,9 @@ export default class Room {
     function plTarget(match) {
       if(!match)
         return null;
-      if(match[1])
+      if(match[1] == 'Tutorial')
         return `PL:tutorials:${match[2]}`;
-      if([ 'Decks', 'Dice', 'Marbles', 'Other Widgets', 'Spinners', 'Symbols' ].indexOf(match[2]) > -1)
+      if(match[1] == 'Assets')
         return `PL:assets:${match[2]}`;
       return `PL:games:${match[2]}`;
     }
@@ -493,7 +493,7 @@ export default class Room {
       if(!this.state._meta.starred)
         this.state._meta.starred = {};
       for(const [ id, state ] of Object.entries(this.state._meta.states)) {
-        const target = plTarget(state.link && state.link.match(/\/library\/(Tutorial - )?(.*)\.vtt/))
+        const target = plTarget(state.link && state.link.match(/\/library\/(?:(Tutorial|Assets) - )?(.*)\.vtt/))
         if(target && this.state._meta.states[target]) {
           const targetState = this.state._meta.states[target];
           let allVariantsFromPL = true;
@@ -513,7 +513,7 @@ export default class Room {
         }
 
         for(const [ vID, variant ] of Object.entries(state.variants)) {
-          const target = plTarget(variant.link && variant.link.match(/\/library\/(Tutorial - )?(.*)\.vtt/))
+          const target = plTarget(variant.link && variant.link.match(/\/library\/((Tutorial|Assets) - )?(.*)\.vtt/))
           if(target && this.state._meta.states[target]) {
             for(const [ targetVid, targetVariant ] of Object.entries(this.state._meta.states[target].variants)) {
               if(targetVariant.players == variant.players && (targetVariant.language.match(variant.language) || targetVariant.language === '' && variant.language == 'UN') && targetVariant.variant == variant.variant || this.state._meta.states[target].variants.length == 1 || target == 'PL:games:Diced' && targetVid == 0) {
