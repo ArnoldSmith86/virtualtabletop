@@ -1,0 +1,165 @@
+<?xml version="1.0"?>
+<svg
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:cc="http://creativecommons.org/ns#"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:svg="http://www.w3.org/2000/svg"
+    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+    xmlns:ns1="http://sozi.baierouge.fr"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    id="svg2"
+    viewBox="0 0 177.69 133.28"
+    version="1.1"
+  >
+  <g
+      id="layer1"
+      transform="translate(-194.61 -45.527)"
+    >
+    <path
+        id="path2830"
+        d="m351.07 116.65c0 10.454-24.145 18.929-53.929 18.929s-53.929-8.4746-53.929-18.929 24.145-18.929 53.929-18.929 53.929 8.4746 53.929 18.929z"
+        transform="matrix(1.5319 0 0 1.8038 -171.73 -72.188)"
+        stroke="#442f2f"
+        stroke-width="1.6086"
+        fill="#381d1d"
+    />
+    <path
+        id="path3604"
+        d="m234.27 142.76c39.099 21.906 69.362 15.03 97.415 0.95504l-11.938-76.404c-2.2819-14.604-56.177-21.53-60.049-8.7148l-25.428 84.164z"
+        stroke="#353535"
+        stroke-width="2.6741"
+        fill="#381d1d"
+    />
+    <path
+        id="path3686"
+        d="m262.03 65.467-16.643 56.927 5.2011 2.7398 16.346-56.318-4.9039-3.3487z"
+        stroke="#442f2f"
+        fill="#442f2f"
+    />
+    <path
+        id="path3661"
+        d="m239.29 127c28.644 13.831 61.633 18.493 89.775 1.6713l2.6264 14.803-6.6853 3.5814-14.087 5.2528-12.893 3.1039-11.699 1.1938h-10.028l-11.699-1.9101-16.475-5.014-11.938-5.4915-2.1488-1.4326 5.2528-15.758z"
+        fill="#492323"
+    />
+    <path
+        id="path3628"
+        d="m319.97 67.4c-2.2819-14.604-56.392-21.623-60.488-8.7165 17.066 13.696 40.12 16.536 60.488 8.7165z"
+        stroke="#442f2f"
+        stroke-width="2.674"
+        fill="#381d1d"
+    />
+    <path
+        id="path3631"
+        d="m218.76 133.21c-1.4591 3.734-1.4398 8.3111 1.5696 11.387 2.9835 3.0497 6.5811 5.4745 10.451 7.0082 15.547 6.1612 32.008 11.26 48.533 14.278 1.8889 0.34494 3.9698 2.9731 0.74243 3.002-25.377-1.3843-65.757-10.526-72.707-27.249-2.1901-5.2694-0.10362-12.041 5.2153-14.166 2.3149-0.92501 8.9012-3.9133 8.5439 0.36534-0.163 1.952-1.6306 3.537-2.3487 5.3748z"
+        fill="#442f2f"
+    />
+    <path
+        id="path3637"
+        d="m249.73 128.13-4.1821 19.446 25.549 7.8433 2.8852-20.659-24.252-6.6304zm3.4282 4.1645 16.559 4.8515-2.2747 13.293-16.96-5.369 2.6762-12.776z"
+        stroke="#f3c81e"
+        stroke-width="1.3157px"
+        fill="#f3c81e"
+    />
+    <path
+        id="path3604-4"
+        d="m234.27 142.76c39.099 21.906 69.362 15.03 97.415 0.95504l-11.938-76.404c-2.2819-14.604-56.177-21.53-60.049-8.7148l-25.428 84.164z"
+        stroke="#442f2f"
+        stroke-width="2.674"
+        fill="none"
+    />
+  </g
+  >
+  <metadata
+    >
+    <rdf:RDF
+      >
+      <cc:Work
+        >
+        <dc:format
+          >image/svg+xml</dc:format
+        >
+        <dc:type
+            rdf:resource="http://purl.org/dc/dcmitype/StillImage"
+        />
+        <cc:license
+            rdf:resource="http://creativecommons.org/licenses/publicdomain/"
+        />
+        <dc:publisher
+          >
+          <cc:Agent
+              rdf:about="http://openclipart.org/"
+            >
+            <dc:title
+              >Openclipart</dc:title
+            >
+          </cc:Agent
+          >
+        </dc:publisher
+        >
+        <dc:title
+          >Brown Hat</dc:title
+        >
+        <dc:date
+          >2013-11-01T01:34:35</dc:date
+        >
+        <dc:description
+          >Brown Hat</dc:description
+        >
+        <dc:source
+          >https://openclipart.org/detail/188191/brown-hat-by-pippi2011-188191</dc:source
+        >
+        <dc:creator
+          >
+          <cc:Agent
+            >
+            <dc:title
+              >Pippi2011</dc:title
+            >
+          </cc:Agent
+          >
+        </dc:creator
+        >
+        <dc:subject
+          >
+          <rdf:Bag
+            >
+            <rdf:li
+              >brown hat</rdf:li
+            >
+            <rdf:li
+              >hat</rdf:li
+            >
+            <rdf:li
+              >pilgrim</rdf:li
+            >
+            <rdf:li
+              >thanksgiving</rdf:li
+            >
+          </rdf:Bag
+          >
+        </dc:subject
+        >
+      </cc:Work
+      >
+      <cc:License
+          rdf:about="http://creativecommons.org/licenses/publicdomain/"
+        >
+        <cc:permits
+            rdf:resource="http://creativecommons.org/ns#Reproduction"
+        />
+        <cc:permits
+            rdf:resource="http://creativecommons.org/ns#Distribution"
+        />
+        <cc:permits
+            rdf:resource="http://creativecommons.org/ns#DerivativeWorks"
+        />
+      </cc:License
+      >
+    </rdf:RDF
+    >
+  </metadata
+  >
+</svg
+>
