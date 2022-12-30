@@ -492,15 +492,15 @@ export default class Room {
         target = `assets/${match[2]}`;
       return decodeURI(target);
     }
-    function compareNameAndImage(a, b) {
-      const map = {
-        '/assets/1479011481_9212': '/assets/1368104302_9195',
-        'JSON Editor User Guide': 'JSON User Guide'
-      };
-      for(const [ from, to ] of Object.entries(map))
-        map[to] = from;
 
-      return (a.name == b.name || a.name == map[b.name]) && (a.image == b.image || a.image == map[b.image]);
+    const comparisonMap = {
+      'JSON Editor User Guide': 'JSON User Guide',
+      '/assets/1479011481_9212': '/assets/1368104302_9195'
+    };
+    for(const [ from, to ] of Object.entries(comparisonMap))
+      comparisonMap[to] = from;
+    function compareNameAndImage(a, b) {
+      return (a.name == b.name || a.name == comparisonMap[b.name]) && (a.image == b.image || a.image == comparisonMap[b.image]);
     }
 
     if(!this.state._meta.metaVersion) {
