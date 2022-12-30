@@ -1,0 +1,623 @@
+{
+  "_meta": {
+    "version": 5,
+    "info": {
+      "name": "Routines",
+      "image": "/assets/703240081_4102",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "0",
+      "players": "1",
+      "language": "en-US",
+      "variant": "globalUpdateRoutine",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1640793026000
+    }
+  },
+  "8fr3": {
+    "type": "label",
+    "id": "8fr3",
+    "x": 287,
+    "y": -6,
+    "width": 1000,
+    "height": 60,
+    "z": 322,
+    "css": "font-size: 60px",
+    "text": "Routines: globalUpdateRoutine"
+  },
+  "v5h4": {
+    "id": "v5h4",
+    "x": 39,
+    "y": 105,
+    "width": 1550,
+    "z": 324,
+    "movable": false,
+    "css": "font-size: 30px",
+    "text": "The 'globalUpdateRoutine' activates whenever any property of any widget changes.  Usually, you would want to restrict its exeuction to changes in a particular property.  To do that, specify the property at the beginning.  For example, 'textGlobalUpdateRoutine' will be called only when the `text` property of any widget changes.  In the example below, there is a leaderboard that is modified everytime the `'text' property changes.  You could accomplish the same thing by having a `textChangeRoutine` in each of the labels.  And with `globalUpdateRoutine` you should be careful that you understand times that it may be called that you were not anticipating.\n\nTo see the Leaderboard demo, change the scores and/or names in the labels below.\n\nThe JSON is in 'theBoard' widget with the tables of scores and names. "
+  },
+  "player1": {
+    "type": "label",
+    "id": "player1",
+    "width": 65,
+    "height": 40,
+    "z": 332,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "fixedParent": true,
+    "parent": "labelPlayer1",
+    "x": 61.5,
+    "y": 60
+  },
+  "player1D": {
+    "type": "button",
+    "id": "player1D",
+    "parent": "player1",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "clickRoutine": [
+      "var theParent = ${PROPERTY parent}",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text OF $theParent}",
+        "relation": "<=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "LABEL",
+            "label": "${PROPERTY parent}",
+            "mode": "set",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "LABEL",
+            "label": "${PROPERTY parent}",
+            "mode": "dec",
+            "value": 5
+          }
+        ]
+      }
+    ],
+    "text": "-"
+  },
+  "player1U": {
+    "type": "button",
+    "id": "player1U",
+    "parent": "player1",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 5
+      }
+    ],
+    "text": "+"
+  },
+  "labelPlayer1": {
+    "type": "label",
+    "id": "labelPlayer1",
+    "x": 51,
+    "y": 827,
+    "width": 200,
+    "height": 42,
+    "z": 326,
+    "css": "font-size: 30px; display: flex; flex-direction: column;justify-content:center",
+    "editable": true,
+    "text": "Alex"
+  },
+  "labelPlayer2": {
+    "type": "label",
+    "id": "labelPlayer2",
+    "x": 301,
+    "y": 827,
+    "width": 200,
+    "height": 42,
+    "z": 326,
+    "css": "font-size: 30px; display: flex; flex-direction: column;justify-content:center",
+    "editable": true,
+    "text": "Bob"
+  },
+  "player2": {
+    "type": "label",
+    "id": "player2",
+    "width": 65,
+    "height": 40,
+    "z": 323,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 15,
+    "fixedParent": true,
+    "parent": "labelPlayer2",
+    "x": 62,
+    "y": 60
+  },
+  "player2D": {
+    "type": "button",
+    "id": "player2D",
+    "parent": "player2",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "clickRoutine": [
+      "var theParent = ${PROPERTY parent}",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text OF $theParent}",
+        "relation": "<=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "LABEL",
+            "label": "${PROPERTY parent}",
+            "mode": "set",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "LABEL",
+            "label": "${PROPERTY parent}",
+            "mode": "dec",
+            "value": 5
+          }
+        ]
+      }
+    ],
+    "text": "-"
+  },
+  "player2U": {
+    "type": "button",
+    "id": "player2U",
+    "parent": "player2",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 5
+      }
+    ],
+    "text": "+"
+  },
+  "labelPlayer3": {
+    "type": "label",
+    "id": "labelPlayer3",
+    "x": 551,
+    "y": 827,
+    "width": 200,
+    "height": 42,
+    "z": 326,
+    "css": "font-size: 30px; display: flex; flex-direction: column;justify-content:center",
+    "editable": true,
+    "text": "Cathy"
+  },
+  "player3": {
+    "type": "label",
+    "id": "player3",
+    "width": 65,
+    "height": 40,
+    "z": 323,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 20,
+    "fixedParent": true,
+    "parent": "labelPlayer3",
+    "x": 62,
+    "y": 60
+  },
+  "player3D": {
+    "type": "button",
+    "id": "player3D",
+    "parent": "player3",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "clickRoutine": [
+      "var theParent = ${PROPERTY parent}",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text OF $theParent}",
+        "relation": "<=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "LABEL",
+            "label": "${PROPERTY parent}",
+            "mode": "set",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "LABEL",
+            "label": "${PROPERTY parent}",
+            "mode": "dec",
+            "value": 5
+          }
+        ]
+      }
+    ],
+    "text": "-"
+  },
+  "player3U": {
+    "type": "button",
+    "id": "player3U",
+    "parent": "player3",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 5
+      }
+    ],
+    "text": "+"
+  },
+  "labelPlayer4": {
+    "type": "label",
+    "id": "labelPlayer4",
+    "x": 801,
+    "y": 827,
+    "width": 200,
+    "height": 42,
+    "z": 326,
+    "css": "font-size: 30px; display: flex; flex-direction: column;justify-content:center",
+    "editable": true,
+    "text": "David"
+  },
+  "player4": {
+    "type": "label",
+    "id": "player4",
+    "width": 65,
+    "height": 40,
+    "z": 323,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 10,
+    "fixedParent": true,
+    "parent": "labelPlayer4",
+    "x": 62,
+    "y": 60
+  },
+  "player4D": {
+    "type": "button",
+    "id": "player4D",
+    "parent": "player4",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "clickRoutine": [
+      "var theParent = ${PROPERTY parent}",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text OF $theParent}",
+        "relation": "<=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "LABEL",
+            "label": "${PROPERTY parent}",
+            "mode": "set",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "LABEL",
+            "label": "${PROPERTY parent}",
+            "mode": "dec",
+            "value": 5
+          }
+        ]
+      }
+    ],
+    "text": "-"
+  },
+  "player4U": {
+    "type": "button",
+    "id": "player4U",
+    "parent": "player4",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 5
+      }
+    ],
+    "text": "+"
+  },
+  "labelPlayer5": {
+    "type": "label",
+    "id": "labelPlayer5",
+    "x": 1051,
+    "y": 827,
+    "width": 200,
+    "height": 42,
+    "z": 326,
+    "css": "font-size: 30px; display: flex; flex-direction: column;justify-content:center",
+    "editable": true,
+    "text": "Elizabeth"
+  },
+  "player5": {
+    "type": "label",
+    "id": "player5",
+    "width": 65,
+    "height": 40,
+    "z": 323,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 15,
+    "fixedParent": true,
+    "parent": "labelPlayer5",
+    "x": 62,
+    "y": 60
+  },
+  "player5D": {
+    "type": "button",
+    "id": "player5D",
+    "parent": "player5",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "clickRoutine": [
+      "var theParent = ${PROPERTY parent}",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text OF $theParent}",
+        "relation": "<=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "LABEL",
+            "label": "${PROPERTY parent}",
+            "mode": "set",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "LABEL",
+            "label": "${PROPERTY parent}",
+            "mode": "dec",
+            "value": 5
+          }
+        ]
+      }
+    ],
+    "text": "-"
+  },
+  "player5U": {
+    "type": "button",
+    "id": "player5U",
+    "parent": "player5",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 5
+      }
+    ],
+    "text": "+"
+  },
+  "labelPlayer6": {
+    "type": "label",
+    "id": "labelPlayer6",
+    "x": 1301,
+    "y": 827,
+    "width": 200,
+    "height": 42,
+    "z": 326,
+    "css": "font-size: 30px; display: flex; flex-direction: column;justify-content:center",
+    "editable": true,
+    "text": "Frank"
+  },
+  "player6": {
+    "type": "label",
+    "id": "player6",
+    "width": 65,
+    "height": 40,
+    "z": 323,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 5,
+    "fixedParent": true,
+    "parent": "labelPlayer6",
+    "x": 62,
+    "y": 60
+  },
+  "player6D": {
+    "type": "button",
+    "id": "player6D",
+    "parent": "player6",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "clickRoutine": [
+      "var theParent = ${PROPERTY parent}",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text OF $theParent}",
+        "relation": "<=",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "LABEL",
+            "label": "${PROPERTY parent}",
+            "mode": "set",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "LABEL",
+            "label": "${PROPERTY parent}",
+            "mode": "dec",
+            "value": 5
+          }
+        ]
+      }
+    ],
+    "text": "-"
+  },
+  "player6U": {
+    "type": "button",
+    "id": "player6U",
+    "parent": "player6",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 5
+      }
+    ],
+    "text": "+"
+  },
+  "labelLeader": {
+    "type": "label",
+    "id": "labelLeader",
+    "x": 1299,
+    "y": 384,
+    "width": 200,
+    "height": 42,
+    "z": 334,
+    "css": "font-size: 30px;color: black; background: white; ",
+    "text": "Leaderboard"
+  },
+  "theBoard": {
+    "id": "theBoard",
+    "x": 1300,
+    "y": 436,
+    "width": 200,
+    "height": 220,
+    "z": 327,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 30px; background: grey; ",
+    "text": "20\tCathy\n15\tElizabeth\n15\tBob\n10\tDavid\n5\tFrank\n0\tAlex\n",
+    "textGlobalUpdateRoutine": [
+      {
+        "note": "Get the scores into an array.",
+        "func": "GET",
+        "collection": [
+          "player1",
+          "player2",
+          "player3",
+          "player4",
+          "player5",
+          "player6"
+        ],
+        "aggregation": "array",
+        "property": "text",
+        "variable": "scoreArray"
+      },
+      "var finalBoard = [] // Arrays must be declared before use in FOREACH",
+      {
+        "func": "FOREACH",
+        "in": [
+          "player1",
+          "player2",
+          "player3",
+          "player4",
+          "player5",
+          "player6"
+        ],
+        "loopRoutine": [
+          {
+            "Note": "For every score label, create the following 3 properties"
+          },
+          "var pName = ${PROPERTY parent OF $value}",
+          "var pName = ${PROPERTY text OF $pName} // pName is the name each player created and put into the label",
+          "var pScore = ${PROPERTY text OF $value} // pScore is the score for each player",
+          "var indexScore = ${scoreArray.$key} // indexScore is each index, in turn, from the array created at the beginning",
+          {
+            "Note": "As the FOREACH cycles through all the players, it checks to see if the score in the array matches the score in the label and if so, completes thenRoutine.",
+            "func": "IF",
+            "operand1": "${pScore}",
+            "operand2": "${indexScore}",
+            "thenRoutine": [
+              "var tempBoard = ${scoreArray.$key} // Start with the score",
+              "var tempBoard = ${tempBoard} + '\\u0009' // Add a tab",
+              "var tempBoard = ${tempBoard} + ${pName} // Add the name of the player",
+              "var tempBoard = ${tempBoard} + '\\u000a' // Add a line feed",
+              "var finalBoard = ${finalBoard} concatArray ${tempBoard} // Build an array for all players"
+            ]
+          }
+        ]
+      },
+      "var finalBoard = ${finalBoard} numericSort // Sort the array from smallest to largest.  Also numericSort does not work for negative or null numbers so in this tutorial, the minus buttons are set up to keep the numbers from being negative.",
+      "var finalBoard = ${finalBoard} reverse // Reverse the order so the highest numbers are first",
+      "var finalBoard = ${finalBoard} join '' // Convert the array to a string and remove the commas",
+      {
+        "note": "Store the final result as the text property of this widget.",
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${finalBoard}"
+      }
+    ]
+  }
+}

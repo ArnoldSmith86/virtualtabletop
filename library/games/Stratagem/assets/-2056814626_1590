@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+	<defs>
+		<image width="40" height="40" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoAQMAAAC2MCouAAAAAXNSR0IB2cksfwAAAAZQTFRFVb9AVb9Aj1H4zwAAAAJ0Uk5TZv9oNu6UAAAAFUlEQVR4nGNgQAL2/////zMMSSQAAADxl+HkbmsrAAAAAElFTkSuQmCC"/>
+		<image width="40" height="40" id="img2" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoAQMAAAC2MCouAAAAAXNSR0IB2cksfwAAAAZQTFRFVb9AVb9Aj1H4zwAAAAJ0Uk5TZv9oNu6UAAAAFUlEQVR4nGNgQAL2/////zMMSSQAAADxl+HkbmsrAAAAAElFTkSuQmCC"/>
+		<image width="40" height="40" id="img3" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoAQMAAAC2MCouAAAAAXNSR0IB2cksfwAAAAZQTFRFVb9AVb9Aj1H4zwAAAAJ0Uk5TZv9oNu6UAAAAFUlEQVR4nGNgQAL2/////zMMSSQAAADxl+HkbmsrAAAAAElFTkSuQmCC"/>
+		<image width="40" height="40" id="img4" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoAQMAAAC2MCouAAAAAXNSR0IB2cksfwAAAAZQTFRFVb9AVb9Aj1H4zwAAAAJ0Uk5TZv9oNu6UAAAAFUlEQVR4nGNgQAL2/////zMMSSQAAADxl+HkbmsrAAAAAElFTkSuQmCC"/>
+		<image width="40" height="40" id="img5" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoAQMAAAC2MCouAAAAAXNSR0IB2cksfwAAAAZQTFRFVb9AVb9Aj1H4zwAAAAJ0Uk5TZv9oNu6UAAAAFUlEQVR4nGNgQAL2/////zMMSSQAAADxl+HkbmsrAAAAAElFTkSuQmCC"/>
+	</defs>
+	<style>
+		tspan { white-space:pre }
+	</style>
+	<use id="Layer 1" href="#img1" x="40" y="0" />
+	<use id="Layer 2" href="#img2" x="40" y="80" />
+	<use id="Layer 3" href="#img3" x="40" y="40" />
+	<use id="Layer 4" href="#img4" x="0" y="0" />
+	<use id="Layer 5" href="#img5" x="80" y="80" />
+</svg>

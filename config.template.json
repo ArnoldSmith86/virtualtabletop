@@ -5,6 +5,8 @@
   "minifyJavascript": false,
   "forceTracing": false,
 
+  "allowPublicLibraryEdits": false,
+
   "directories": {
     "library": "library",
     "save": "save",

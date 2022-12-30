@@ -1,0 +1,5925 @@
+{
+  "2280": {
+    "type": "label",
+    "text": "2 players get one extra territory each.  Choose 2 colors:",
+    "css": "test-align:center;font-family:Arial;color:black;font-size:30px",
+    "height": 80,
+    "width": 600,
+    "y": 304,
+    "z": 292308,
+    "layer": 2,
+    "x": 116,
+    "id": "2280",
+    "parent": "P4Holder"
+  },
+  "3869": {
+    "type": "button",
+    "text": "+1",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "GreenHolder",
+          "count": 1
+        }
+      }
+    ],
+    "x": 1550,
+    "y": 140,
+    "z": 6,
+    "id": "3869",
+    "width": 33,
+    "height": 33,
+    "css": "background: #ffffff80; color: #70ad47; border-color: hidden; border-width: 1px; font-family:Arial"
+  },
+  "8947": {
+    "y": 382,
+    "width": 80,
+    "height": 30,
+    "type": "button",
+    "text": "Orange",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "OrangeHolder",
+        "to": "Reinforcements",
+        "count": 1
+      }
+    ],
+    "css": "background: #ed7d31; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:20px",
+    "z": 44,
+    "x": 183,
+    "id": "8947",
+    "parent": "P4Holder"
+  },
+  "_meta": {
+    "version": 6,
+    "info": {
+      "name": "Reward",
+      "image": "/assets/-588125920_555837",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/181/risk",
+      "year": "2003",
+      "mode": "vs",
+      "time": "60",
+      "players": "2-6",
+      "language": "en-US",
+      "variant": "",
+      "attribution": "The board, by Gr0gmint, is from https://commons.wikimedia.org/wiki/File:Risk_board.svg available under CC BY-SA 3.0 license. The card territory outlines are based on the same source.\n\nOther card artwork is available under CC0 as follows:\n - Sword: https://publicdomainvectors.org/en/free-clipart/Gray-sword/40644.html\n - Cannon: https://publicdomainvectors.org/en/free-clipart/Medieval-cannon/46988.html\n - Soldier: https://publicdomainvectors.org/en/free-clipart/Soldier-marching/62235.html\n\nThe library image, game layout, and other game elements were done by LawDawg96 and RaphaelAlvez, with edits by BicycleIndividual and Interitus, and are released to the Public Domain under CC0.",
+      "similarName": "Risk",
+      "description": "Move armies around board using dice rolls to conquer territory.  Player who conquers all 42 territories wins.",
+      "showName": true,
+      "helpText": "Players take seats. Follow on screen options for setting up player territories. When attacking, move attacking pieces to red Active Attackers and defenders to white Active Defenders holders. Roll dice. For each lost piece, click the recall button once to move pieces from Active to Defeated. When attack ends, drag pile of defeated tokens back to storage. To add reinforcements, click on +1 or +5 to create needed amount. They appear in Reinforcements holder at top of board. Press Next Player button to pass turn to next player.",
+      "lastUpdate": 1659321088000
+    }
+  },
+  "hand": {
+    "id": "hand",
+    "y": 865,
+    "z": 16,
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "inheritChildZ": true,
+    "childrenPerOwner": true,
+    "width": 400,
+    "height": 130,
+    "x": 2,
+    "css": "border-radius:10px; background:#ffffff80",
+    "stackOffsetX": 30
+  },
+  "Red Recall": {
+    "id": "Red Recall",
+    "y": 10.5,
+    "width": 60,
+    "height": 30,
+    "type": "button",
+    "text": "Recall",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Recalling red tokens...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "Recall all red tokens?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "label",
+        "value": "Red"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": null
+      },
+      {
+        "func": "RECALL",
+        "holder": "RedHolder"
+      }
+    ],
+    "css": "background: #bc1420; color: white; border-color: hidden; border-width: 1px; font-family:Arial",
+    "z": 17,
+    "x": 190.5,
+    "parent": "Buttonsholder"
+  },
+  "Orange Recall": {
+    "id": "Orange Recall",
+    "y": 10.5,
+    "width": 60,
+    "height": 30,
+    "type": "button",
+    "text": "Recall",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Recalling orange tokens...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "Recall all orange tokens?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "label",
+        "value": "Orange"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": null
+      },
+      {
+        "func": "RECALL",
+        "holder": "OrangeHolder"
+      }
+    ],
+    "css": "background: #ed7d31; color: white; border-color: hidden; border-width: 1px; font-family:Arial",
+    "z": 19,
+    "x": 122.5,
+    "parent": "Buttonsholder"
+  },
+  "Yellow Recall": {
+    "id": "Yellow Recall",
+    "x": 58.5,
+    "y": 10.5,
+    "width": 60,
+    "height": 30,
+    "type": "button",
+    "text": "Recall",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Recalling yellow tokens...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "Recall all yellow tokens?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "label",
+        "value": "Yellow"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": null
+      },
+      {
+        "func": "RECALL",
+        "holder": "YellowHolder"
+      }
+    ],
+    "css": "background: #fcba03; color: white; border-color: hidden; border-width: 1px; font-family:Arial",
+    "z": 20,
+    "parent": "Buttonsholder"
+  },
+  "Black Recall": {
+    "id": "Black Recall",
+    "width": 60,
+    "height": 30,
+    "type": "button",
+    "text": "Recall",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Recalling black tokens...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "Recall all black tokens?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "label",
+        "value": "Black"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": null
+      },
+      {
+        "func": "RECALL",
+        "holder": "BlackHolder"
+      }
+    ],
+    "css": "background: #000000; color: white; border-color: hidden; border-width: 1px; font-family:Arial",
+    "z": 16,
+    "x": 380.5,
+    "y": 10.5,
+    "parent": "Buttonsholder"
+  },
+  "Blue Recall": {
+    "id": "Blue Recall",
+    "x": 317.5,
+    "y": 10.5,
+    "width": 60,
+    "height": 30,
+    "type": "button",
+    "text": "Recall",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Recalling blue tokens...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "Recall all blue tokens?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "label",
+        "value": "Blue"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": null
+      },
+      {
+        "func": "RECALL",
+        "holder": "BlueHolder"
+      }
+    ],
+    "css": "background: #231eea; color: white; border-color: hidden; border-width: 1px; font-family:Arial",
+    "z": 15,
+    "parent": "Buttonsholder"
+  },
+  "Green Recall": {
+    "id": "Green Recall",
+    "x": 254.5,
+    "y": 10.5,
+    "width": 60,
+    "height": 30,
+    "type": "button",
+    "text": "Recall",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Recalling green tokens...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "Recall all green tokens?"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "label",
+        "value": "Green"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": null
+      },
+      {
+        "func": "RECALL",
+        "holder": "GreenHolder"
+      }
+    ],
+    "css": "background: #70ad47; color: white; border-color: hidden; border-width: 1px; font-family:Arial",
+    "z": 18,
+    "parent": "Buttonsholder"
+  },
+  "zd3l": {
+    "type": "spinner",
+    "value": 3,
+    "options": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "x": 150,
+    "z": 63,
+    "id": "zd3l",
+    "width": 70,
+    "height": 70,
+    "angle": 18482,
+    "y": 5,
+    "movable": false,
+    "valueCSS": "color:white; background: #bc1420"
+  },
+  "2dg9": {
+    "type": "spinner",
+    "value": 1,
+    "options": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "x": 225,
+    "y": 5,
+    "z": 70,
+    "id": "2dg9",
+    "width": 70,
+    "height": 70,
+    "angle": 19464,
+    "movable": false,
+    "valueCSS": "color:white; background: #bc1420"
+  },
+  "2frz": {
+    "type": "spinner",
+    "value": 6,
+    "options": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "x": 300,
+    "y": 5,
+    "z": 65,
+    "id": "2frz",
+    "width": 70,
+    "height": 70,
+    "angle": 27691,
+    "movable": false,
+    "valueCSS": "color:white; background: #bc1420"
+  },
+  "hxxc": {
+    "type": "spinner",
+    "value": 5,
+    "options": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "x": 1375,
+    "y": 5,
+    "z": 64,
+    "id": "hxxc",
+    "width": 70,
+    "height": 70,
+    "angle": 16807,
+    "movable": false,
+    "valueCSS": "color:#1f2394; background: #f2f2f2; border: 1px solid #1f2394; border-color:#1f2394; font-family:Arial; box-sizing:border-box"
+  },
+  "qa3e": {
+    "type": "spinner",
+    "value": 4,
+    "options": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "x": 1300,
+    "y": 5,
+    "z": 71,
+    "id": "qa3e",
+    "width": 70,
+    "height": 70,
+    "angle": 28675,
+    "movable": false,
+    "valueCSS": "color:#1f2394; background: #f2f2f2; border: 1px solid #1f2394; font-family:Arial; box-sizing:border-box"
+  },
+  "q9da": {
+    "type": "label",
+    "text": "Reinforcements",
+    "css": "font-size: 25px; font-family:Arial",
+    "height": 42,
+    "width": 200,
+    "x": 638,
+    "y": -2,
+    "z": 4,
+    "id": "q9da"
+  },
+  "Reinforcements": {
+    "id": "Reinforcements",
+    "x": 719.5,
+    "y": 28.5,
+    "z": 12,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:100px; background:#ffffff80",
+    "addRoutine": [
+      {
+        "func": "SELECT",
+        "value": "${from}",
+        "property": "parent",
+        "type": "card",
+        "max": 1
+      },
+      {
+        "func": "MOVE",
+        "from": "${from}",
+        "to": "${thisID}",
+        "count": 1
+      },
+      "var count = ${count} - 1",
+      {
+        "func": "CLONE",
+        "count": "${count}"
+      }
+    ],
+    "deployRoutine": [
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Afghanistan"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Alaska"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Alberta"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Argentina"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Brazil"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Central Africa"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Central America"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "China"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "East Africa"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Eastern Australia"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Eastern Canada"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Eastern United States"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Egypt"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Great Britain"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Greenland"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Iceland"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "India"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Indonesia"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Irkutsk"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Japan"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Kamchatka"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Madagascar"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Middle East"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Mongolia"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "New Guinea"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "North Africa"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Northern Europe"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Northwest Territory"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Ontario"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Peru"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Russia"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Scandinavia"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Siberia"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "South Africa"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Southeast Asia"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Southern Europe"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Ural"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Venezuela"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Western Australia"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Western Europe"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Western United States"
+      },
+      {
+        "func": "MOVE",
+        "from": "Reinforcements",
+        "to": "Yakutsk"
+      }
+    ]
+  },
+  "6iko": {
+    "type": "button",
+    "text": "+5",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "RedHolder",
+          "count": 5
+        }
+      }
+    ],
+    "x": 10,
+    "y": 180,
+    "z": 2,
+    "id": "6iko",
+    "width": 33,
+    "height": 33,
+    "css": "background: #ffffff80; color: #bc1420; border-color: hidden; border-width: 1px; font-family:Arial"
+  },
+  "6ik1": {
+    "type": "button",
+    "text": "+1",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "RedHolder",
+          "count": 1
+        }
+      }
+    ],
+    "x": 10,
+    "y": 140,
+    "z": 1,
+    "id": "6ik1",
+    "width": 33,
+    "height": 33,
+    "css": "background: #ffffff80; color: #bc1420; border-color: hidden; border-width: 1px; font-family:Arial"
+  },
+  "6ik2": {
+    "type": "button",
+    "text": "+1",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "OrangeHolder",
+          "count": 1
+        }
+      }
+    ],
+    "x": 10,
+    "y": 340,
+    "z": 3,
+    "id": "6ik2",
+    "width": 33,
+    "height": 33,
+    "css": "background: #ffffff80; color: #ed7d31; border-color: hidden; border-width: 1px; font-family:Arial"
+  },
+  "6ik3": {
+    "type": "button",
+    "text": "+5",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "OrangeHolder",
+          "count": 5
+        }
+      }
+    ],
+    "x": 9.5,
+    "y": 380.5,
+    "z": 4,
+    "id": "6ik3",
+    "width": 33,
+    "height": 33,
+    "css": "background: #ffffff80; color: #ed7d31; border-color: hidden; border-width: 1px; font-family:Arial"
+  },
+  "73q8": {
+    "type": "button",
+    "text": "+1",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "YellowHolder",
+          "count": 1
+        }
+      }
+    ],
+    "x": 10,
+    "y": 540,
+    "z": 11,
+    "id": "73q8",
+    "width": 33,
+    "height": 33,
+    "css": "background: #ffffff80; color: #fcba03; border-color: hidden; border-width: 1px; font-family:Arial"
+  },
+  "73q9": {
+    "type": "button",
+    "text": "+5",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "YellowHolder",
+          "count": 5
+        }
+      }
+    ],
+    "x": 9.5,
+    "y": 581.5,
+    "z": 12,
+    "id": "73q9",
+    "width": 33,
+    "height": 33,
+    "css": "background: #ffffff80; color: #fcba03; border-color: hidden; border-width: 1px; font-family:Arial"
+  },
+  "legr": {
+    "type": "button",
+    "text": "+1",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "BlueHolder",
+          "count": 1
+        }
+      }
+    ],
+    "x": 1550,
+    "y": 340,
+    "z": 5,
+    "id": "legr",
+    "width": 33,
+    "height": 33,
+    "css": "background: #ffffff80; color: #231eea; border-color: hidden; border-width: 1px; font-family:Arial"
+  },
+  "x1gh": {
+    "type": "button",
+    "text": "+5",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "BlueHolder",
+          "count": 5
+        }
+      }
+    ],
+    "x": 1550,
+    "y": 380,
+    "z": 7,
+    "id": "x1gh",
+    "width": 33,
+    "height": 33,
+    "css": "background: #ffffff80; color: #231eea; border-color: hidden; border-width: 1px; font-family:Arial"
+  },
+  "oc7k": {
+    "type": "button",
+    "text": "+5",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "GreenHolder",
+          "count": 5
+        }
+      }
+    ],
+    "x": 1550,
+    "y": 180,
+    "z": 8,
+    "id": "oc7k",
+    "width": 33,
+    "height": 33,
+    "css": "background: #ffffff80; color: #70ad47; border-color: hidden; border-width: 1px; font-family:Arial"
+  },
+  "avaq": {
+    "type": "button",
+    "text": "+5",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "BlackHolder",
+          "count": 5
+        }
+      }
+    ],
+    "x": 1550,
+    "y": 580,
+    "z": 9,
+    "id": "avaq",
+    "width": 33,
+    "height": 33,
+    "css": "background: #ffffff80; color: black; border-color: hidden; border-width: 1px; font-family:Arial"
+  },
+  "11ik": {
+    "type": "button",
+    "text": "+1",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "BlackHolder",
+          "count": 1
+        }
+      }
+    ],
+    "x": 1550,
+    "y": 540,
+    "z": 10,
+    "width": 33,
+    "height": 33,
+    "css": "background: #ffffff80; color: black; border-color: hidden; border-width: 1px; font-family:Arial",
+    "id": "11ik"
+  },
+  "x7j5": {
+    "type": "label",
+    "text": "Active Attackers",
+    "x": 384,
+    "y": 3,
+    "z": 34,
+    "id": "x7j5",
+    "css": "font-family:Arial; color:#bc1420;text-align:center",
+    "width": 68,
+    "height": 75
+  },
+  "w6yu": {
+    "type": "holder",
+    "x": 398.5,
+    "y": 45,
+    "z": 63,
+    "id": "w6yu",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:100px; background-color:#ffffff80"
+  },
+  "MissionHolder": {
+    "id": "MissionHolder",
+    "x": 701.5,
+    "y": 871,
+    "z": 15,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 85,
+    "height": 128,
+    "css": "border-radius:10px; background:#ffffff80"
+  },
+  "RedHolder": {
+    "id": "RedHolder",
+    "x": 10,
+    "y": 100,
+    "z": 8,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "background: #ffffff80; border-radius: 100px",
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}",
+        "type": "card"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": 1,
+        "relation": "<",
+        "operand2": "${COUNT}",
+        "thenRoutine": [
+          {
+            "func": "DELETE",
+            "collection": "child"
+          }
+        ]
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}",
+        "type": "card"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": 0,
+        "relation": "==",
+        "operand2": "${COUNT}",
+        "thenRoutine": [
+          {
+            "func": "CLONE",
+            "source": "child"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "${thisID}"
+          },
+          {
+            "func": "MOVE",
+            "from": "${thisID}",
+            "to": "${thisID}"
+          }
+        ]
+      }
+    ],
+    "dropTarget": {
+      "cardType": "redArmy"
+    }
+  },
+  "OrangeHolder": {
+    "id": "OrangeHolder",
+    "x": 10,
+    "y": 300,
+    "z": 9,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "background: #ffffff80; border-radius: 100px",
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}",
+        "type": "card"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": 1,
+        "relation": "<",
+        "operand2": "${COUNT}",
+        "thenRoutine": [
+          {
+            "func": "DELETE",
+            "collection": "child"
+          }
+        ]
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}",
+        "type": "card"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": 0,
+        "relation": "==",
+        "operand2": "${COUNT}",
+        "thenRoutine": [
+          {
+            "func": "CLONE",
+            "source": "child"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "${thisID}"
+          },
+          {
+            "func": "MOVE",
+            "from": "${thisID}",
+            "to": "${thisID}"
+          }
+        ]
+      }
+    ],
+    "dropTarget": {
+      "cardType": "orangeArmy"
+    }
+  },
+  "YellowHolder": {
+    "id": "YellowHolder",
+    "x": 10,
+    "y": 500,
+    "z": 10,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "background: #ffffff80; border-radius: 100px",
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}",
+        "type": "card"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": 1,
+        "relation": "<",
+        "operand2": "${COUNT}",
+        "thenRoutine": [
+          {
+            "func": "DELETE",
+            "collection": "child"
+          }
+        ]
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}",
+        "type": "card"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": 0,
+        "relation": "==",
+        "operand2": "${COUNT}",
+        "thenRoutine": [
+          {
+            "func": "CLONE",
+            "source": "child"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "${thisID}"
+          },
+          {
+            "func": "MOVE",
+            "from": "${thisID}",
+            "to": "${thisID}"
+          }
+        ]
+      }
+    ],
+    "dropTarget": {
+      "cardType": "yellowArmy"
+    }
+  },
+  "GreenHolder": {
+    "id": "GreenHolder",
+    "x": 1550,
+    "y": 100,
+    "z": 13,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "background: #ffffff80;border-radius:100px",
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}",
+        "type": "card"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": 1,
+        "relation": "<",
+        "operand2": "${COUNT}",
+        "thenRoutine": [
+          {
+            "func": "DELETE",
+            "collection": "child"
+          }
+        ]
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}",
+        "type": "card"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": 0,
+        "relation": "==",
+        "operand2": "${COUNT}",
+        "thenRoutine": [
+          {
+            "func": "CLONE",
+            "source": "child"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "${thisID}"
+          },
+          {
+            "func": "MOVE",
+            "from": "${thisID}",
+            "to": "${thisID}"
+          }
+        ]
+      }
+    ],
+    "dropTarget": {
+      "cardType": "greenArmy"
+    }
+  },
+  "BlueHolder": {
+    "id": "BlueHolder",
+    "x": 1550,
+    "y": 300,
+    "z": 14,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "background: #ffffff80;border-radius:100px",
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}",
+        "type": "card"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": 1,
+        "relation": "<",
+        "operand2": "${COUNT}",
+        "thenRoutine": [
+          {
+            "func": "DELETE",
+            "collection": "child"
+          }
+        ]
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}",
+        "type": "card"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": 0,
+        "relation": "==",
+        "operand2": "${COUNT}",
+        "thenRoutine": [
+          {
+            "func": "CLONE",
+            "source": "child"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "${thisID}"
+          },
+          {
+            "func": "MOVE",
+            "from": "${thisID}",
+            "to": "${thisID}"
+          }
+        ]
+      }
+    ],
+    "dropTarget": {
+      "cardType": "blueArmy"
+    }
+  },
+  "BlackHolder": {
+    "id": "BlackHolder",
+    "x": 1550,
+    "y": 500,
+    "z": 11,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "background: #ffffff80;border-radius:100px",
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}",
+        "type": "card"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": 1,
+        "relation": "<",
+        "operand2": "${COUNT}",
+        "thenRoutine": [
+          {
+            "func": "DELETE",
+            "collection": "child"
+          }
+        ]
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}",
+        "type": "card"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": 0,
+        "relation": "==",
+        "operand2": "${COUNT}",
+        "thenRoutine": [
+          {
+            "func": "CLONE",
+            "source": "child"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "${thisID}"
+          },
+          {
+            "func": "MOVE",
+            "from": "${thisID}",
+            "to": "${thisID}"
+          }
+        ]
+      }
+    ],
+    "dropTarget": {
+      "cardType": "blackArmy"
+    }
+  },
+  "RewardRecall": {
+    "id": "RewardRecall",
+    "y": 1100,
+    "width": 110,
+    "height": 30,
+    "type": "button",
+    "text": "Recall/Shuffle",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "RewardHolder"
+      },
+      {
+        "func": "FLIP",
+        "holder": "RewardHolder",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "RewardHolder"
+      }
+    ],
+    "css": "background: #588FDF; color: white; border-color: hidden; border-width: 1px;font-family:Arial",
+    "z": 22,
+    "x": 573
+  },
+  "MissionRecall": {
+    "id": "MissionRecall",
+    "y": 1100,
+    "width": 110,
+    "height": 30,
+    "type": "button",
+    "text": "Recall/Shuffle",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "MissionHolder"
+      },
+      {
+        "func": "FLIP",
+        "holder": "MissionHolder",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "MissionHolder"
+      }
+    ],
+    "css": "background: #2ABE89; color: white; border-color: hidden; border-width: 1px;font-family:Arial",
+    "z": 13,
+    "x": 689
+  },
+  "Bonus": {
+    "image": "/assets/227575910_36484",
+    "id": "Bonus",
+    "z": 72,
+    "x": -1.5,
+    "y": 772.5,
+    "width": 293,
+    "height": 101,
+    "movable": false,
+    "movableInEdit": false,
+    "layer": 0
+  },
+  "Holder8": {
+    "type": "holder",
+    "y": 5,
+    "z": 11946,
+    "id": "Holder8",
+    "width": 15,
+    "height": 15,
+    "css": "border-radius: 30px; background: transparent",
+    "x": 5,
+    "parent": "sj8r",
+    "dropTarget": {
+      "passenger": "yes"
+    },
+    "dropOffsetX": -5,
+    "dropOffsetY": -5
+  },
+  "jgpg": {
+    "type": "holder",
+    "x": 5,
+    "y": 30,
+    "z": 11952,
+    "id": "jgpg",
+    "width": 115,
+    "height": 115,
+    "css": "border-radius: 30px;",
+    "parent": "sj8r",
+    "dropTarget": {
+      "passenger": "yes"
+    },
+    "dropOffsetX": -5,
+    "dropOffsetY": 35
+  },
+  "4Holder": {
+    "type": "holder",
+    "x": 13.5,
+    "y": 812,
+    "z": 292068,
+    "id": "4Holder",
+    "width": 15,
+    "height": 15,
+    "css": "border-radius: 30px;background:transparent",
+    "dropTarget": {
+      "passenger": "yes"
+    },
+    "dropOffsetX": -20,
+    "dropOffsetY": -30,
+    "layer": 5,
+    "movableInEdit": false
+  },
+  "8Holder": {
+    "type": "holder",
+    "x": 81.5,
+    "y": 812,
+    "z": 292070,
+    "id": "8Holder",
+    "width": 15,
+    "height": 15,
+    "css": "border-radius: 30px;background:transparent",
+    "dropTarget": {
+      "passenger": "yes"
+    },
+    "dropOffsetX": -20,
+    "dropOffsetY": -30,
+    "layer": 5,
+    "movableInEdit": false
+  },
+  "6Holder": {
+    "type": "holder",
+    "x": 48.5,
+    "y": 812,
+    "z": 292069,
+    "id": "6Holder",
+    "width": 15,
+    "height": 15,
+    "css": "border-radius: 30px;background:transparent",
+    "dropTarget": {
+      "passenger": "yes"
+    },
+    "dropOffsetX": -20,
+    "dropOffsetY": -30,
+    "layer": 5,
+    "movableInEdit": false
+  },
+  "10Holder": {
+    "type": "holder",
+    "x": 116.5,
+    "y": 812,
+    "z": 292071,
+    "id": "10Holder",
+    "width": 15,
+    "height": 15,
+    "css": "border-radius: 30px;background:transparent",
+    "dropTarget": {
+      "passenger": "yes"
+    },
+    "dropOffsetX": -20,
+    "dropOffsetY": -30,
+    "layer": 5,
+    "movableInEdit": false
+  },
+  "12Holder": {
+    "type": "holder",
+    "x": 149.5,
+    "y": 812.5,
+    "z": 292072,
+    "id": "12Holder",
+    "width": 15,
+    "height": 15,
+    "css": "border-radius: 30px;background:transparent",
+    "dropTarget": {
+      "passenger": "yes"
+    },
+    "dropOffsetX": -20,
+    "dropOffsetY": -30,
+    "layer": 5,
+    "movableInEdit": true
+  },
+  "15Holder": {
+    "type": "holder",
+    "x": 187.5,
+    "y": 812,
+    "z": 292073,
+    "id": "15Holder",
+    "width": 15,
+    "height": 15,
+    "css": "border-radius: 30px;background:transparent",
+    "dropTarget": {
+      "passenger": "yes"
+    },
+    "dropOffsetX": -20,
+    "dropOffsetY": -30,
+    "layer": 5,
+    "movableInEdit": false
+  },
+  "20Holder": {
+    "type": "holder",
+    "x": 217.5,
+    "y": 812,
+    "z": 292074,
+    "id": "20Holder",
+    "width": 15,
+    "height": 15,
+    "css": "border-radius: 30px;background:transparent",
+    "dropTarget": {
+      "passenger": "yes"
+    },
+    "dropOffsetX": -20,
+    "dropOffsetY": -30,
+    "layer": 5,
+    "movableInEdit": false
+  },
+  "25Holder": {
+    "type": "holder",
+    "x": 253.5,
+    "y": 812,
+    "z": 292075,
+    "id": "25Holder",
+    "width": 15,
+    "height": 15,
+    "css": "border-radius: 30px;background:transparent",
+    "dropTarget": {
+      "passenger": "yes"
+    },
+    "dropOffsetX": -20,
+    "dropOffsetY": -30,
+    "layer": 5,
+    "movableInEdit": false
+  },
+  "Alaska": {
+    "id": "Alaska",
+    "x": 243.5,
+    "y": 166.5,
+    "z": 27,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:10px; background:#ffffff80; border-radius: 100px"
+  },
+  "Northwest Territory": {
+    "id": "Northwest Territory",
+    "x": 295.5,
+    "y": 184.5,
+    "z": 28,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:10px; background:#ffffff80; border-radius: 100px"
+  },
+  "Greenland": {
+    "id": "Greenland",
+    "x": 584.5,
+    "y": 147.5,
+    "z": 30,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:10px; background:#ffffff80; border-radius: 100px"
+  },
+  "Alberta": {
+    "id": "Alberta",
+    "x": 346.5,
+    "y": 246.5,
+    "z": 29,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:10px; background:#ffffff80; border-radius: 100px"
+  },
+  "Ontario": {
+    "id": "Ontario",
+    "x": 413.5,
+    "y": 252.5,
+    "z": 32,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:10px; background:#ffffff80; border-radius: 100px"
+  },
+  "Eastern United States": {
+    "id": "Eastern United States",
+    "x": 473.5,
+    "y": 345.5,
+    "z": 33,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:10px; background:#ffffff80; border-radius: 100px"
+  },
+  "Western United States": {
+    "id": "Western United States",
+    "x": 352.5,
+    "y": 349.5,
+    "z": 34,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:10px; background:#ffffff80; border-radius: 100px"
+  },
+  "Eastern Canada": {
+    "id": "Eastern Canada",
+    "x": 492.5,
+    "y": 288.5,
+    "z": 31,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:10px; background:#ffffff80; border-radius: 100px"
+  },
+  "Central America": {
+    "id": "Central America",
+    "x": 325.5,
+    "y": 405.5,
+    "z": 35,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:10px; background:#ffffff80; border-radius: 100px"
+  },
+  "Venezuela": {
+    "id": "Venezuela",
+    "x": 428.5,
+    "y": 536.5,
+    "z": 36,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:10px; background:#ffffff80; border-radius: 100px"
+  },
+  "Brazil": {
+    "type": "holder",
+    "x": 536.5,
+    "y": 601.5,
+    "z": 20,
+    "id": "Brazil",
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:10px; background:#ffffff80; border-radius: 100px"
+  },
+  "Peru": {
+    "id": "Peru",
+    "x": 462.5,
+    "y": 626.5,
+    "z": 37,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:10px; background:#ffffff80; border-radius: 100px"
+  },
+  "Argentina": {
+    "id": "Argentina",
+    "x": 471.5,
+    "y": 740.5,
+    "z": 38,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:10px; background:#ffffff80; border-radius: 100px"
+  },
+  "Iceland": {
+    "id": "Iceland",
+    "x": 693.5,
+    "y": 219.5,
+    "z": 23,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:10px; background:#ffffff80; border-radius: 100px"
+  },
+  "Great Britain": {
+    "id": "Great Britain",
+    "x": 683.5,
+    "y": 329.5,
+    "z": 22,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:10px; background:#ffffff80; border-radius: 100px"
+  },
+  "Western Europe": {
+    "id": "Western Europe",
+    "x": 699.5,
+    "y": 455.5,
+    "z": 42,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:10px; background:#ffffff80; border-radius: 100px"
+  },
+  "Southern Europe": {
+    "id": "Southern Europe",
+    "x": 762.5,
+    "y": 399.5,
+    "z": 43,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:10px; background:#ffffff80; border-radius: 100px"
+  },
+  "Northern Europe": {
+    "id": "Northern Europe",
+    "x": 773.5,
+    "y": 349.5,
+    "z": 41,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:10px; background:#ffffff80; border-radius: 100px"
+  },
+  "Scandinavia": {
+    "id": "Scandinavia",
+    "x": 784.5,
+    "y": 248.5,
+    "z": 39,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:10px; background:#ffffff80; border-radius: 100px"
+  },
+  "Russia": {
+    "id": "Russia",
+    "x": 897.5,
+    "y": 276.5,
+    "z": 40,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:10px; background:#ffffff80; border-radius: 100px"
+  },
+  "North Africa": {
+    "id": "North Africa",
+    "x": 742.5,
+    "y": 565.5,
+    "z": 17,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:10px; background:#ffffff80; border-radius: 100px"
+  },
+  "Egypt": {
+    "id": "Egypt",
+    "x": 847.5,
+    "y": 536.5,
+    "z": 44,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:10px; background:#ffffff80; border-radius: 100px"
+  },
+  "East Africa": {
+    "id": "East Africa",
+    "x": 892.5,
+    "y": 630.5,
+    "z": 45,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:10px; background:#ffffff80; border-radius: 100px"
+  },
+  "Central Africa": {
+    "id": "Central Africa",
+    "x": 831.5,
+    "y": 654.5,
+    "z": 46,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:10px; background:#ffffff80; border-radius: 100px"
+  },
+  "South Africa": {
+    "id": "South Africa",
+    "x": 845.5,
+    "y": 769.5,
+    "z": 47,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:10px; background:#ffffff80; border-radius: 100px"
+  },
+  "Madagascar": {
+    "id": "Madagascar",
+    "x": 952.5,
+    "y": 788.5,
+    "z": 21,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:10px; background:#ffffff80; border-radius: 100px"
+  },
+  "Western Australia": {
+    "type": "holder",
+    "x": 1243.5,
+    "y": 761.5,
+    "z": 56,
+    "id": "Western Australia",
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:100px; background:#ffffff80"
+  },
+  "Eastern Australia": {
+    "type": "holder",
+    "x": 1355.5,
+    "y": 779.5,
+    "z": 57,
+    "id": "Eastern Australia",
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:100px; background:#ffffff80"
+  },
+  "New Guinea": {
+    "type": "holder",
+    "x": 1301.5,
+    "y": 631.5,
+    "z": 67,
+    "id": "New Guinea",
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:100px; background:#ffffff80"
+  },
+  "Southeast Asia": {
+    "type": "holder",
+    "x": 1183.5,
+    "y": 541.5,
+    "z": 55,
+    "id": "Southeast Asia",
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:100px; background:#ffffff80"
+  },
+  "India": {
+    "id": "India",
+    "x": 1073.5,
+    "y": 489.5,
+    "z": 54,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:100px; background:#ffffff80"
+  },
+  "Middle East": {
+    "type": "holder",
+    "x": 926.5,
+    "y": 497.5,
+    "z": 48,
+    "id": "Middle East",
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:10px; background:#ffffff80; border-radius: 100px"
+  },
+  "China": {
+    "type": "holder",
+    "x": 1139.5,
+    "y": 405.5,
+    "z": 18,
+    "id": "China",
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:100px; background:#ffffff80"
+  },
+  "Afghanistan": {
+    "type": "holder",
+    "x": 1001.5,
+    "y": 367.5,
+    "z": 49,
+    "id": "Afghanistan",
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:100px; background:#ffffff80"
+  },
+  "Japan": {
+    "type": "holder",
+    "x": 1309.5,
+    "y": 355.5,
+    "z": 19,
+    "id": "Japan",
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:100px; background:#ffffff80"
+  },
+  "Mongolia": {
+    "type": "holder",
+    "x": 1182.5,
+    "y": 355.5,
+    "z": 53,
+    "id": "Mongolia",
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:100px; background:#ffffff80"
+  },
+  "Ural": {
+    "type": "holder",
+    "x": 1023.5,
+    "y": 254.5,
+    "z": 24,
+    "id": "Ural",
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:100px; background:#ffffff80"
+  },
+  "Irkutsk": {
+    "type": "holder",
+    "x": 1172.5,
+    "y": 252.5,
+    "z": 52,
+    "id": "Irkutsk",
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:100px; background:#ffffff80"
+  },
+  "Kamchatka": {
+    "type": "holder",
+    "x": 1256.5,
+    "y": 179.5,
+    "z": 51,
+    "id": "Kamchatka",
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:100px; background:#ffffff80"
+  },
+  "Yakutsk": {
+    "type": "holder",
+    "x": 1176.5,
+    "y": 171.5,
+    "z": 50,
+    "id": "Yakutsk",
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:100px; background:#ffffff80"
+  },
+  "Siberia": {
+    "type": "holder",
+    "x": 1090.5,
+    "y": 193.5,
+    "z": 25,
+    "id": "Siberia",
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:100px; background:#ffffff80"
+  },
+  "Off": {
+    "type": "holder",
+    "x": 1154,
+    "y": 973,
+    "z": 2,
+    "width": 25,
+    "height": 25,
+    "dropTarget": {
+      "type": "holder"
+    },
+    "id": "Off",
+    "movableInEdit": "no",
+    "dropOffsetY": 100,
+    "css": "background-color:transparent;border-style:none"
+  },
+  "Buttonsholder": {
+    "type": "holder",
+    "x": 4,
+    "y": 100,
+    "z": 204,
+    "id": "Buttonsholder",
+    "width": 445,
+    "height": 45,
+    "css": "background:transparent;border-style:none",
+    "dropTarget": {
+      "type": "button"
+    },
+    "alignChildren": false,
+    "parent": "Off"
+  },
+  "m13f": {
+    "image": "/assets/669822378_8116",
+    "id": "m13f",
+    "z": 1,
+    "x": 2,
+    "y": 4,
+    "parent": "jqqk",
+    "enlarge": 4
+  },
+  "sne5": {
+    "image": "/assets/-2126703607_11697",
+    "id": "sne5",
+    "z": 2,
+    "x": 103,
+    "y": 4,
+    "parent": "jqqk",
+    "enlarge": 4
+  },
+  "jqqk": {
+    "type": "holder",
+    "x": 0.5,
+    "y": 672.5,
+    "z": 61,
+    "id": "jqqk",
+    "dropTarget": {},
+    "css": "background:transparent; border-style:none;",
+    "alignChildren": false,
+    "height": 25,
+    "width": 325
+  },
+  "RewardHolder": {
+    "id": "RewardHolder",
+    "x": 583.5,
+    "y": 871,
+    "z": 62,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 85,
+    "height": 128,
+    "css": "border-radius:10px; background:#ffffff80"
+  },
+  "xz0l": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "w6yu",
+        "to": "sthu"
+      }
+    ],
+    "x": 439,
+    "z": 2099,
+    "id": "xz0l",
+    "css": "background:transparent;border-style:none;font-size:40px;--wcFont:#bc1420;--wcFontOH: #000000",
+    "y": 22,
+    "classes": "symbols",
+    "text": "recall",
+    "rotation": 180
+  },
+  "7ydq": {
+    "type": "label",
+    "text": "Defeated Attackers",
+    "x": 514,
+    "y": 3,
+    "z": 35,
+    "css": "font-family:Arial; color:#bc1420;text-align:center",
+    "width": 70,
+    "height": 75,
+    "id": "7ydq"
+  },
+  "sthu": {
+    "type": "holder",
+    "x": 528.5,
+    "y": 45,
+    "z": 64,
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:100px; background-color:#ffffff80",
+    "id": "sthu"
+  },
+  "51e8": {
+    "type": "label",
+    "text": "Active Defenders",
+    "x": 1208,
+    "y": 3,
+    "z": 36,
+    "css": "font-family:Arial; color:white;text-align:center",
+    "width": 75,
+    "height": 75,
+    "id": "51e8"
+  },
+  "hp0e": {
+    "type": "label",
+    "text": "Defeated Defenders",
+    "x": 1061.5,
+    "y": 3,
+    "z": 38,
+    "css": "font-family:Arial; color:white;text-align:center",
+    "width": 75,
+    "height": 75,
+    "id": "hp0e"
+  },
+  "gx6b": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "78ty",
+        "to": "47wo"
+      }
+    ],
+    "x": 1134,
+    "z": 24,
+    "css": "background:transparent;border-style:none;font-size:40px;--wcFont:white;--wcFontOH: #000000; ",
+    "y": 22,
+    "id": "gx6b",
+    "classes": "symbols",
+    "text": "recall"
+  },
+  "47wo": {
+    "type": "holder",
+    "x": 1079.5,
+    "y": 45,
+    "z": 66,
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:100px;background-color:#ffffff80",
+    "id": "47wo"
+  },
+  "78ty": {
+    "type": "holder",
+    "x": 1227.5,
+    "y": 45,
+    "z": 65,
+    "id": "78ty",
+    "inheritChildZ": true,
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:100px;background-color:#ffffff80"
+  },
+  "Startholder": {
+    "type": "holder",
+    "z": 115,
+    "id": "Startholder",
+    "dropTarget": {},
+    "alignChildren": false,
+    "width": 800,
+    "height": 500,
+    "x": 400,
+    "y": 250,
+    "css": {
+      "background": "radial-gradient(#6991e5, #49be87)",
+      "border-radius": "20px"
+    },
+    "movableInEdit": false
+  },
+  "gyzz": {
+    "type": "label",
+    "text": "Welcome to Reward",
+    "css": "test-align:center;font-family:Arial;color:white;font-size:50px",
+    "height": 80,
+    "width": 600,
+    "x": 100,
+    "y": 30,
+    "z": 50,
+    "id": "gyzz",
+    "layer": 2,
+    "parent": "Startholder"
+  },
+  "rbwz": {
+    "type": "label",
+    "text": "Choose how to start",
+    "css": "test-align:center;font-family:Arial;color:black;font-size:30px",
+    "height": 40,
+    "width": 600,
+    "x": 96,
+    "y": 106,
+    "z": 76,
+    "layer": 2,
+    "id": "rbwz",
+    "parent": "Startholder"
+  },
+  "6k8a": {
+    "type": "label",
+    "text": "Players choose own territories",
+    "css": "test-align:center;font-family:Arial;color:black;font-size:20px",
+    "height": 30,
+    "width": 300,
+    "x": 9,
+    "y": 179,
+    "z": 292313,
+    "layer": 2,
+    "id": "6k8a",
+    "parent": "Startholder"
+  },
+  "ww77": {
+    "type": "label",
+    "text": "Random territories assigned. Pick number of players:",
+    "css": "test-align:center;font-family:Arial;color:black;font-size:20px",
+    "height": 60,
+    "width": 280,
+    "x": 493,
+    "y": 183,
+    "z": 66,
+    "layer": 2,
+    "id": "ww77",
+    "parent": "Startholder"
+  },
+  "4avy": {
+    "y": 244,
+    "width": 120,
+    "height": 30,
+    "type": "button",
+    "text": "Start Game",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "Startholder"
+        ],
+        "property": "y",
+        "value": 1200
+      }
+    ],
+    "css": "background-color: white; color: black; border-color: white; border-width: 1px; font-family:Arial",
+    "z": 292207,
+    "x": 90,
+    "id": "4avy",
+    "parent": "Startholder",
+    "layer": 2
+  },
+  "0jct": {
+    "y": 244,
+    "width": 120,
+    "height": 30,
+    "type": "button",
+    "text": "2 Players",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "Sideon",
+        "to": "Startoff"
+      },
+      {
+        "func": "MOVE",
+        "from": "P2off",
+        "to": "Sideon"
+      }
+    ],
+    "css": "background-color: white; color: black; border-color: white; border-width: 1px; font-family:Arial",
+    "z": 37,
+    "x": 513,
+    "id": "0jct",
+    "parent": "Startholder"
+  },
+  "gmex": {
+    "y": 244,
+    "width": 120,
+    "height": 30,
+    "type": "button",
+    "text": "3 Players",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "Startholder"
+        ],
+        "property": "y",
+        "value": 1200
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "P3Holder"
+        ],
+        "property": "y",
+        "value": 250
+      }
+    ],
+    "css": "background-color: white; color: black; border-color: white; border-width: 1px; font-family:Arial",
+    "z": 292265,
+    "x": 637,
+    "id": "gmex",
+    "layer": 2,
+    "parent": "Startholder"
+  },
+  "5d94": {
+    "y": 289,
+    "width": 120,
+    "height": 30,
+    "type": "button",
+    "text": "4 Players",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "Startholder"
+        ],
+        "property": "y",
+        "value": 1200
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "P4Holder"
+        ],
+        "property": "y",
+        "value": 250
+      }
+    ],
+    "css": "background-color: white; color: black; border-color: white; border-width: 1px; font-family:Arial",
+    "z": 292261,
+    "x": 513,
+    "id": "5d94",
+    "layer": 2,
+    "parent": "Startholder"
+  },
+  "d4ib": {
+    "y": 289,
+    "width": 120,
+    "height": 30,
+    "type": "button",
+    "text": "5 Players",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "Startholder"
+        ],
+        "property": "y",
+        "value": 1200
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "P5Holder"
+        ],
+        "property": "y",
+        "value": 250
+      }
+    ],
+    "css": "background-color: white; color: black; border-color: white; border-width: 1px; font-family:Arial",
+    "z": 292263,
+    "x": 637,
+    "id": "d4ib",
+    "layer": 2,
+    "parent": "Startholder"
+  },
+  "ebdm": {
+    "y": 413,
+    "width": 120,
+    "height": 30,
+    "type": "button",
+    "text": "6 Players",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "YellowHolder",
+          "count": 7
+        }
+      },
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "OrangeHolder",
+          "count": 7
+        }
+      },
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "RedHolder",
+          "count": 7
+        }
+      },
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "GreenHolder",
+          "count": 7
+        }
+      },
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "BlueHolder",
+          "count": 7
+        }
+      },
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "BlackHolder",
+          "count": 7
+        }
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "Reinforcements"
+      },
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "deployRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "Startholder"
+        ],
+        "property": "y",
+        "value": 1200
+      }
+    ],
+    "css": "background-color: white; color: black; border-color: white; border-width: 1px; font-family:Arial",
+    "z": 292259,
+    "x": 577,
+    "id": "ebdm",
+    "layer": 2,
+    "parent": "Startholder"
+  },
+  "Indonesia": {
+    "type": "holder",
+    "x": 1196.5,
+    "y": 655.5,
+    "z": 26,
+    "id": "Indonesia",
+    "width": 33,
+    "height": 33,
+    "css": "border-radius:100px; background:#ffffff80"
+  },
+  "98b2": {
+    "type": "label",
+    "text": "3 Players",
+    "css": "test-align:center;font-family:Arial;color:white;font-size:50px",
+    "height": 80,
+    "width": 600,
+    "x": 100,
+    "y": 3,
+    "z": 292269,
+    "layer": 2,
+    "id": "98b2",
+    "movableInEdit": false,
+    "parent": "P3Holder"
+  },
+  "1fzk": {
+    "type": "label",
+    "text": "Choose player colors",
+    "css": "test-align:center;font-family:Arial;color:black;font-size:30px",
+    "height": 40,
+    "width": 600,
+    "x": 106,
+    "y": 89,
+    "z": 292227,
+    "layer": 2,
+    "id": "1fzk",
+    "parent": "P3Holder"
+  },
+  "jjrn": {
+    "x": 80,
+    "y": 150,
+    "width": 160,
+    "height": 50,
+    "type": "button",
+    "text": "Yellow",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "YellowHolder",
+          "count": 14
+        }
+      }
+    ],
+    "css": "background: #fcba03; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:30px",
+    "z": 29,
+    "id": "jjrn",
+    "parent": "P3Holder"
+  },
+  "j1wz": {
+    "y": 250,
+    "width": 160,
+    "height": 50,
+    "type": "button",
+    "text": "Orange",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "OrangeHolder",
+          "count": 14
+        }
+      }
+    ],
+    "css": "background: #ed7d31; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:30px",
+    "z": 25,
+    "x": 80,
+    "id": "j1wz",
+    "parent": "P3Holder"
+  },
+  "9lrq": {
+    "y": 150,
+    "width": 160,
+    "height": 50,
+    "type": "button",
+    "text": "Red",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "RedHolder",
+          "count": 14
+        }
+      }
+    ],
+    "css": "background: #bc1420; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:30px",
+    "z": 26,
+    "x": 320,
+    "id": "9lrq",
+    "parent": "P3Holder"
+  },
+  "kprc": {
+    "x": 320,
+    "y": 250,
+    "width": 160,
+    "height": 50,
+    "type": "button",
+    "text": "Green",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "GreenHolder",
+          "count": 14
+        }
+      }
+    ],
+    "css": "background: #70ad47; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:30px",
+    "z": 27,
+    "id": "kprc",
+    "parent": "P3Holder"
+  },
+  "oksq": {
+    "x": 580,
+    "y": 150,
+    "width": 160,
+    "height": 50,
+    "type": "button",
+    "text": "Blue",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "BlueHolder",
+          "count": 14
+        }
+      }
+    ],
+    "css": "background: #231eea; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:30px",
+    "z": 30,
+    "id": "oksq",
+    "parent": "P3Holder"
+  },
+  "b6ej": {
+    "width": 160,
+    "height": 50,
+    "type": "button",
+    "text": "Black",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "BlackHolder",
+          "count": 14
+        }
+      }
+    ],
+    "css": "background: #000000; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:30px",
+    "z": 28,
+    "x": 580,
+    "y": 250,
+    "id": "b6ej",
+    "parent": "P3Holder"
+  },
+  "vfhn": {
+    "y": 425,
+    "width": 160,
+    "height": 50,
+    "type": "button",
+    "text": "Start Game",
+    "clickRoutine": [
+      {
+        "func": "SHUFFLE",
+        "holder": "Reinforcements"
+      },
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "deployRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "P3Holder"
+        ],
+        "property": "y",
+        "value": 1200
+      }
+    ],
+    "css": "background-color: white; color: black; border-color: white; border-width: 1px; font-family:Arial; font-size:30px",
+    "z": 292237,
+    "x": 320,
+    "layer": 2,
+    "id": "vfhn",
+    "parent": "P3Holder"
+  },
+  "P2Holder": {
+    "type": "holder",
+    "z": 114,
+    "dropTarget": {},
+    "alignChildren": false,
+    "width": 800,
+    "height": 500,
+    "id": "P2Holder",
+    "x": 400,
+    "y": 1200,
+    "css": {
+      "background": "radial-gradient(#6991e5, #49be87)",
+      "border-radius": "20px"
+    }
+  },
+  "8hd5": {
+    "type": "label",
+    "text": "2 Players",
+    "css": "test-align:center;font-family:Arial;color:white;font-size:50px",
+    "height": 80,
+    "width": 600,
+    "z": 292239,
+    "layer": 2,
+    "id": "8hd5",
+    "parent": "P2Holder",
+    "x": 100,
+    "y": 17
+  },
+  "ry2d": {
+    "type": "label",
+    "text": "Choose player colors",
+    "css": "test-align:center;font-family:Arial;color:black;font-size:30px",
+    "height": 40,
+    "width": 600,
+    "x": 100,
+    "y": 92,
+    "z": 292241,
+    "layer": 2,
+    "id": "ry2d",
+    "parent": "P2Holder"
+  },
+  "dnbn": {
+    "x": 80,
+    "y": 150,
+    "width": 160,
+    "height": 50,
+    "type": "button",
+    "text": "Yellow",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "YellowHolder",
+          "count": 21
+        }
+      }
+    ],
+    "css": "background: #fcba03; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:30px",
+    "z": 31,
+    "id": "dnbn",
+    "parent": "P2Holder"
+  },
+  "jlk7": {
+    "y": 150,
+    "width": 160,
+    "height": 50,
+    "type": "button",
+    "text": "Red",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "RedHolder",
+          "count": 21
+        }
+      }
+    ],
+    "css": "background: #bc1420; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:30px",
+    "z": 32,
+    "x": 320,
+    "id": "jlk7",
+    "parent": "P2Holder"
+  },
+  "ixpl": {
+    "x": 580,
+    "y": 150,
+    "width": 160,
+    "height": 50,
+    "type": "button",
+    "text": "Blue",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "BlueHolder",
+          "count": 21
+        }
+      }
+    ],
+    "css": "background: #231eea; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:30px",
+    "z": 33,
+    "id": "ixpl",
+    "parent": "P2Holder"
+  },
+  "zmn5": {
+    "y": 250,
+    "width": 160,
+    "height": 50,
+    "type": "button",
+    "text": "Orange",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "OrangeHolder",
+          "count": 21
+        }
+      }
+    ],
+    "css": "background: #ed7d31; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:30px",
+    "z": 36,
+    "x": 80,
+    "id": "zmn5",
+    "parent": "P2Holder"
+  },
+  "8qq6": {
+    "x": 320,
+    "y": 250,
+    "width": 160,
+    "height": 50,
+    "type": "button",
+    "text": "Green",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "GreenHolder",
+          "count": 21
+        }
+      }
+    ],
+    "css": "background: #70ad47; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:30px",
+    "z": 34,
+    "id": "8qq6",
+    "parent": "P2Holder"
+  },
+  "mrdl": {
+    "width": 160,
+    "height": 50,
+    "type": "button",
+    "text": "Black",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "BlackHolder",
+          "count": 21
+        }
+      }
+    ],
+    "css": "background: #000000; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:30px",
+    "z": 35,
+    "x": 580,
+    "y": 250,
+    "id": "mrdl",
+    "parent": "P2Holder"
+  },
+  "cyf3": {
+    "y": 425,
+    "width": 160,
+    "height": 50,
+    "type": "button",
+    "text": "Start Game",
+    "clickRoutine": [
+      {
+        "func": "SHUFFLE",
+        "holder": "Reinforcements"
+      },
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "deployRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "P2Holder"
+        ],
+        "property": "y",
+        "value": 1200
+      }
+    ],
+    "css": "background-color: white; color: black; border-color: white; border-width: 1px; font-family:Arial; font-size:30px",
+    "z": 292243,
+    "x": 320,
+    "layer": 2,
+    "id": "cyf3",
+    "parent": "P2Holder"
+  },
+  "pkl9": {
+    "type": "label",
+    "text": "For six, each player chooses color before starting.  Choices: red, orange, yellow, green, blue, black.",
+    "css": "test-align:center;font-family:Arial;color:black;font-size:15px",
+    "height": 60,
+    "width": 280,
+    "x": 501,
+    "y": 351,
+    "z": 292257,
+    "layer": 2,
+    "id": "pkl9",
+    "parent": "Startholder"
+  },
+  "5a2l": {
+    "type": "label",
+    "text": "4 Players",
+    "css": "test-align:center;font-family:Arial;color:white;font-size:50px",
+    "height": 80,
+    "width": 600,
+    "x": 100,
+    "y": 17,
+    "z": 292281,
+    "layer": 2,
+    "id": "5a2l",
+    "parent": "P4Holder",
+    "movableInEdit": false
+  },
+  "P4Holder": {
+    "type": "holder",
+    "z": 105,
+    "dropTarget": {},
+    "alignChildren": false,
+    "width": 800,
+    "height": 500,
+    "id": "P4Holder",
+    "y": 1200,
+    "x": 400,
+    "css": {
+      "background": "radial-gradient(#6991e5, #49be87)",
+      "border-radius": "20px"
+    }
+  },
+  "gkx8": {
+    "type": "label",
+    "text": "Choose player colors",
+    "css": "test-align:center;font-family:Arial;color:black;font-size:30px",
+    "height": 40,
+    "width": 600,
+    "z": 292291,
+    "layer": 2,
+    "id": "gkx8",
+    "x": 100,
+    "y": 88,
+    "parent": "P4Holder"
+  },
+  "szcv": {
+    "x": 80,
+    "y": 150,
+    "width": 160,
+    "height": 50,
+    "type": "button",
+    "text": "Yellow",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "YellowHolder",
+          "count": 10
+        }
+      }
+    ],
+    "css": "background: #fcba03; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:30px",
+    "z": 46,
+    "id": "szcv",
+    "parent": "P4Holder"
+  },
+  "1c7l": {
+    "y": 150,
+    "width": 160,
+    "height": 50,
+    "type": "button",
+    "text": "Red",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "RedHolder",
+          "count": 10
+        }
+      }
+    ],
+    "css": "background: #bc1420; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:30px",
+    "z": 38,
+    "x": 320,
+    "id": "1c7l",
+    "parent": "P4Holder"
+  },
+  "x1iu": {
+    "x": 580,
+    "y": 150,
+    "width": 160,
+    "height": 50,
+    "type": "button",
+    "text": "Blue",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "BlueHolder",
+          "count": 10
+        }
+      }
+    ],
+    "css": "background: #231eea; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:30px",
+    "z": 39,
+    "id": "x1iu",
+    "parent": "P4Holder"
+  },
+  "go1k": {
+    "y": 250,
+    "width": 160,
+    "height": 50,
+    "type": "button",
+    "text": "Orange",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "OrangeHolder",
+          "count": 10
+        }
+      }
+    ],
+    "css": "background: #ed7d31; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:30px",
+    "z": 40,
+    "x": 80,
+    "id": "go1k",
+    "parent": "P4Holder"
+  },
+  "oonn": {
+    "x": 320,
+    "y": 250,
+    "width": 160,
+    "height": 50,
+    "type": "button",
+    "text": "Green",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "GreenHolder",
+          "count": 10
+        }
+      }
+    ],
+    "css": "background: #70ad47; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:30px",
+    "z": 41,
+    "id": "oonn",
+    "parent": "P4Holder"
+  },
+  "8de1": {
+    "width": 160,
+    "height": 50,
+    "type": "button",
+    "text": "Black",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "BlackHolder",
+          "count": 10
+        }
+      }
+    ],
+    "css": "background: #000000; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:30px",
+    "z": 50,
+    "x": 580,
+    "y": 250,
+    "id": "8de1",
+    "parent": "P4Holder"
+  },
+  "secy": {
+    "x": 80,
+    "y": 382,
+    "width": 80,
+    "height": 30,
+    "type": "button",
+    "text": "Yellow",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "YellowHolder",
+        "to": "Reinforcements",
+        "count": 1
+      }
+    ],
+    "css": "background: #fcba03; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:20px",
+    "z": 43,
+    "id": "secy",
+    "parent": "P4Holder"
+  },
+  "izzy": {
+    "y": 382,
+    "width": 80,
+    "height": 30,
+    "type": "button",
+    "text": "Red",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "RedHolder",
+        "to": "Reinforcements",
+        "count": 1
+      }
+    ],
+    "css": "background: #bc1420; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:20px",
+    "z": 45,
+    "x": 295,
+    "id": "izzy",
+    "parent": "P4Holder"
+  },
+  "lznh": {
+    "x": 414,
+    "y": 382,
+    "width": 80,
+    "height": 30,
+    "type": "button",
+    "text": "Green",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "GreenHolder",
+        "to": "Reinforcements",
+        "count": 1
+      }
+    ],
+    "css": "background: #70ad47; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:20px",
+    "z": 60,
+    "id": "lznh",
+    "parent": "P4Holder"
+  },
+  "f4hn": {
+    "x": 526,
+    "y": 382,
+    "width": 80,
+    "height": 30,
+    "type": "button",
+    "text": "Blue",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "BlueHolder",
+        "to": "Reinforcements",
+        "count": 1
+      }
+    ],
+    "css": "background: #231eea; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:20px",
+    "z": 61,
+    "id": "f4hn",
+    "parent": "P4Holder"
+  },
+  "ubxq": {
+    "width": 80,
+    "height": 30,
+    "type": "button",
+    "text": "Black",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "BlackHolder",
+        "to": "Reinforcements",
+        "count": 1
+      }
+    ],
+    "css": "background: #000000; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:20px",
+    "z": 42,
+    "x": 648,
+    "y": 382,
+    "id": "ubxq",
+    "parent": "P4Holder"
+  },
+  "li7i": {
+    "y": 439,
+    "width": 160,
+    "height": 50,
+    "type": "button",
+    "text": "Start Game",
+    "clickRoutine": [
+      {
+        "func": "SHUFFLE",
+        "holder": "Reinforcements"
+      },
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "deployRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "P4Holder"
+        ],
+        "property": "y",
+        "value": 1200
+      }
+    ],
+    "css": "background-color: white; color: black; border-color: white; border-width: 1px; font-family:Arial; font-size:30px",
+    "z": 292289,
+    "x": 320,
+    "layer": 2,
+    "id": "li7i",
+    "parent": "P4Holder"
+  },
+  "P5Holder": {
+    "type": "holder",
+    "z": 109,
+    "dropTarget": {},
+    "alignChildren": false,
+    "width": 800,
+    "height": 500,
+    "x": 400,
+    "id": "P5Holder",
+    "y": 1200,
+    "css": {
+      "background": "radial-gradient(#6991e5, #49be87)",
+      "border-radius": "20px"
+    }
+  },
+  "v5md": {
+    "type": "label",
+    "text": "5 Players",
+    "css": "test-align:center;font-family:Arial;color:white;font-size:50px",
+    "height": 80,
+    "width": 600,
+    "x": 100,
+    "y": 17,
+    "z": 292293,
+    "layer": 2,
+    "id": "v5md",
+    "parent": "P5Holder",
+    "movableInEdit": false
+  },
+  "4obs": {
+    "x": 80,
+    "y": 150,
+    "width": 160,
+    "height": 50,
+    "type": "button",
+    "text": "Yellow",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "YellowHolder",
+          "count": 8
+        }
+      }
+    ],
+    "css": "background: #fcba03; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:30px",
+    "z": 52,
+    "id": "4obs",
+    "parent": "P5Holder"
+  },
+  "jiyf": {
+    "y": 150,
+    "width": 160,
+    "height": 50,
+    "type": "button",
+    "text": "Red",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "RedHolder",
+          "count": 8
+        }
+      }
+    ],
+    "css": "background: #bc1420; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:30px",
+    "z": 47,
+    "x": 320,
+    "id": "jiyf",
+    "parent": "P5Holder"
+  },
+  "0w9y": {
+    "x": 580,
+    "y": 150,
+    "width": 160,
+    "height": 50,
+    "type": "button",
+    "text": "Blue",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "BlueHolder",
+          "count": 8
+        }
+      }
+    ],
+    "css": "background: #231eea; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:30px",
+    "z": 48,
+    "id": "0w9y",
+    "parent": "P5Holder"
+  },
+  "0nuh": {
+    "y": 250,
+    "width": 160,
+    "height": 50,
+    "type": "button",
+    "text": "Orange",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "OrangeHolder",
+          "count": 8
+        }
+      }
+    ],
+    "css": "background: #ed7d31; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:30px",
+    "z": 53,
+    "x": 80,
+    "id": "0nuh",
+    "parent": "P5Holder"
+  },
+  "9mwx": {
+    "x": 320,
+    "y": 250,
+    "width": 160,
+    "height": 50,
+    "type": "button",
+    "text": "Green",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "GreenHolder",
+          "count": 8
+        }
+      }
+    ],
+    "css": "background: #70ad47; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:30px",
+    "z": 49,
+    "id": "9mwx",
+    "parent": "P5Holder"
+  },
+  "9bnt": {
+    "width": 160,
+    "height": 50,
+    "type": "button",
+    "text": "Black",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "addRoutine",
+        "arguments": {
+          "from": "BlackHolder",
+          "count": 8
+        }
+      }
+    ],
+    "css": "background: #000000; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:30px",
+    "z": 51,
+    "x": 580,
+    "y": 250,
+    "id": "9bnt",
+    "parent": "P5Holder"
+  },
+  "wg55": {
+    "type": "label",
+    "text": "2 players get one extra territory each.  Choose 2 colors:",
+    "css": "test-align:center;font-family:Arial;color:black;font-size:30px",
+    "height": 80,
+    "width": 600,
+    "y": 304,
+    "z": 292297,
+    "layer": 2,
+    "x": 110,
+    "id": "wg55",
+    "parent": "P5Holder"
+  },
+  "lmsw": {
+    "x": 80,
+    "y": 382,
+    "width": 80,
+    "height": 30,
+    "type": "button",
+    "text": "Yellow",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "YellowHolder",
+        "to": "Reinforcements",
+        "count": 1
+      }
+    ],
+    "css": "background: #fcba03; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:20px",
+    "z": 54,
+    "id": "lmsw",
+    "parent": "P5Holder"
+  },
+  "x3ck": {
+    "y": 382,
+    "width": 80,
+    "height": 30,
+    "type": "button",
+    "text": "Orange",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "OrangeHolder",
+        "to": "Reinforcements",
+        "count": 1
+      }
+    ],
+    "css": "background: #ed7d31; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:20px",
+    "z": 55,
+    "x": 183,
+    "id": "x3ck",
+    "parent": "P5Holder"
+  },
+  "s1v0": {
+    "y": 382,
+    "width": 80,
+    "height": 30,
+    "type": "button",
+    "text": "Red",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "RedHolder",
+        "to": "Reinforcements",
+        "count": 1
+      }
+    ],
+    "css": "background: #bc1420; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:20px",
+    "z": 56,
+    "x": 295,
+    "id": "s1v0",
+    "parent": "P5Holder"
+  },
+  "1kxd": {
+    "x": 416,
+    "y": 382,
+    "width": 80,
+    "height": 30,
+    "type": "button",
+    "text": "Green",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "GreenHolder",
+        "to": "Reinforcements",
+        "count": 1
+      }
+    ],
+    "css": "background: #70ad47; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:20px",
+    "z": 59,
+    "id": "1kxd",
+    "parent": "P5Holder"
+  },
+  "pikm": {
+    "x": 534,
+    "y": 382,
+    "width": 80,
+    "height": 30,
+    "type": "button",
+    "text": "Blue",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "BlueHolder",
+        "to": "Reinforcements",
+        "count": 1
+      }
+    ],
+    "css": "background: #231eea; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:20px",
+    "z": 58,
+    "id": "pikm",
+    "parent": "P5Holder"
+  },
+  "vaka": {
+    "width": 80,
+    "height": 30,
+    "type": "button",
+    "text": "Black",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "BlackHolder",
+        "to": "Reinforcements",
+        "count": 1
+      }
+    ],
+    "css": "background: #000000; color: white; border-color: hidden; border-width: 1px; font-family:Arial; font-size:20px",
+    "z": 57,
+    "x": 648,
+    "y": 382,
+    "id": "vaka",
+    "parent": "P5Holder"
+  },
+  "wygl": {
+    "y": 439,
+    "width": 160,
+    "height": 50,
+    "type": "button",
+    "text": "Start Game",
+    "clickRoutine": [
+      {
+        "func": "SHUFFLE",
+        "holder": "Reinforcements"
+      },
+      {
+        "func": "CALL",
+        "widget": "Reinforcements",
+        "routine": "deployRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "P5Holder"
+        ],
+        "property": "y",
+        "value": 1200
+      }
+    ],
+    "css": "background-color: white; color: black; border-color: white; border-width: 1px; font-family:Arial; font-size:30px",
+    "z": 292304,
+    "x": 320,
+    "layer": 2,
+    "id": "wygl",
+    "parent": "P5Holder"
+  },
+  "bou6": {
+    "type": "button",
+    "text": "X",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "Startholder"
+        ],
+        "property": "y",
+        "value": 250
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "P2Holder"
+        ],
+        "property": "y",
+        "value": 1200
+      },
+      {
+        "func": "RECALL",
+        "holder": "RedHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "OrangeHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "YellowHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "GreenHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "BlueHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "BlackHolder"
+      }
+    ],
+    "z": 62,
+    "id": "bou6",
+    "css": "background: white; color: black; border-style: none; font-family:Arial",
+    "width": 35,
+    "height": 35,
+    "x": 750.5,
+    "y": 9.5,
+    "parent": "P2Holder"
+  },
+  "mkxj": {
+    "type": "button",
+    "text": "X",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "Startholder"
+        ],
+        "property": "y",
+        "value": 250
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "P3Holder"
+        ],
+        "property": "y",
+        "value": 1200
+      },
+      {
+        "func": "RECALL",
+        "holder": "RedHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "OrangeHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "YellowHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "GreenHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "BlueHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "BlackHolder"
+      }
+    ],
+    "z": 63,
+    "css": "background: white; color: black; border-style: none; font-family:Arial",
+    "width": 35,
+    "height": 35,
+    "x": 749.5,
+    "y": 10.5,
+    "id": "mkxj",
+    "parent": "P3Holder"
+  },
+  "cxbe": {
+    "type": "button",
+    "text": "X",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "Startholder"
+        ],
+        "property": "y",
+        "value": 250
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "P4Holder"
+        ],
+        "property": "y",
+        "value": 1200
+      },
+      {
+        "func": "RECALL",
+        "holder": "RedHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "OrangeHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "YellowHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "GreenHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "BlueHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "BlackHolder"
+      }
+    ],
+    "z": 64,
+    "css": "background: white; color: black; border-style: none; font-family:Arial",
+    "width": 35,
+    "height": 35,
+    "x": 748.5,
+    "y": 12.5,
+    "id": "cxbe",
+    "parent": "P4Holder"
+  },
+  "12vi": {
+    "type": "button",
+    "text": "X",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "Startholder"
+        ],
+        "property": "y",
+        "value": 250
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "P5Holder"
+        ],
+        "property": "y",
+        "value": 1200
+      },
+      {
+        "func": "RECALL",
+        "holder": "RedHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "OrangeHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "YellowHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "GreenHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "BlueHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "BlackHolder"
+      }
+    ],
+    "z": 65,
+    "css": "background: white; color: black; border-style: none; font-family:Arial",
+    "width": 35,
+    "height": 35,
+    "x": 748.5,
+    "y": 12.5,
+    "id": "12vi",
+    "parent": "P5Holder"
+  },
+  "02v9": {
+    "type": "label",
+    "text": "Choose player colors",
+    "css": "test-align:center;font-family:Arial;color:black;font-size:30px",
+    "height": 40,
+    "width": 600,
+    "z": 292311,
+    "layer": 2,
+    "x": 100,
+    "y": 81,
+    "id": "02v9",
+    "parent": "P5Holder"
+  },
+  "2f3g": {
+    "image": "/assets/934032075_7834",
+    "id": "2f3g",
+    "z": 3,
+    "y": 6.5,
+    "x": 199.5,
+    "enlarge": 4.5,
+    "height": 96,
+    "parent": "jqqk"
+  },
+  "redArmies": {
+    "type": "deck",
+    "id": "redArmies",
+    "parent": "RedHolder",
+    "x": 4,
+    "y": 4,
+    "z": 12,
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 25,
+      "height": 25
+    },
+    "cardTypes": {
+      "redArmy": {
+        "label": "Red"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "",
+            "color": "#bc1420",
+            "width": 25,
+            "height": 25
+          }
+        ],
+        "border": false,
+        "radius": 15
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 25,
+            "height": 25,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "",
+            "color": "#bc1420",
+            "width": 25,
+            "height": 25
+          }
+        ],
+        "border": false,
+        "radius": 15
+      }
+    ]
+  },
+  "orangeArmies": {
+    "type": "deck",
+    "id": "orangeArmies",
+    "parent": "OrangeHolder",
+    "x": 4,
+    "y": 4,
+    "z": 13,
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 25,
+      "height": 25
+    },
+    "cardTypes": {
+      "orangeArmy": {
+        "label": "Orange"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "",
+            "color": "#ed7d31",
+            "width": 25,
+            "height": 25
+          }
+        ],
+        "border": false,
+        "radius": 80
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 25,
+            "height": 25,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "",
+            "color": "#ed7d31",
+            "width": 25,
+            "height": 25
+          }
+        ],
+        "border": false,
+        "radius": 15
+      }
+    ]
+  },
+  "odvi": {
+    "x": null,
+    "y": null
+  },
+  "1f8c875b-3f06-483f-a202-d8e5c95e6ef6": {
+    "x": null,
+    "y": null
+  },
+  "yellowArmies": {
+    "type": "deck",
+    "id": "yellowArmies",
+    "parent": "YellowHolder",
+    "x": 4,
+    "y": 4,
+    "z": 14,
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 25,
+      "height": 25
+    },
+    "cardTypes": {
+      "yellowArmy": {
+        "label": "Yellow"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "",
+            "color": "#fcba03",
+            "width": 25,
+            "height": 25
+          }
+        ],
+        "border": false,
+        "radius": 80
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 25,
+            "height": 25,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "",
+            "color": "#fcba03",
+            "width": 25,
+            "height": 25
+          }
+        ],
+        "border": false,
+        "radius": 100
+      }
+    ]
+  },
+  "mtgv": {
+    "x": null,
+    "y": null
+  },
+  "eae4bb1d-4f52-449a-8436-17636271dc37": {
+    "x": null,
+    "y": null
+  },
+  "greenArmies": {
+    "type": "deck",
+    "id": "greenArmies",
+    "parent": "GreenHolder",
+    "x": 4,
+    "y": 4,
+    "z": 66,
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 25,
+      "height": 25
+    },
+    "cardTypes": {
+      "greenArmy": {
+        "label": "Green"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "#70ad47",
+            "color": "#70ad47",
+            "width": 25,
+            "height": 25
+          }
+        ],
+        "border": false,
+        "radius": 80
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 25,
+            "height": 25,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "",
+            "color": "#70ad47",
+            "width": 25,
+            "height": 25
+          }
+        ],
+        "border": false,
+        "radius": 150
+      }
+    ]
+  },
+  "blueArmies": {
+    "type": "deck",
+    "id": "blueArmies",
+    "parent": "BlueHolder",
+    "x": 4,
+    "y": 4,
+    "z": 15,
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 25,
+      "height": 25
+    },
+    "cardTypes": {
+      "blueArmy": {
+        "label": "Blue"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "#70ad47",
+            "color": "#231eea",
+            "width": 25,
+            "height": 25
+          }
+        ],
+        "border": false,
+        "radius": 80
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 25,
+            "height": 25,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "",
+            "color": "#231eea",
+            "width": 25,
+            "height": 25
+          }
+        ],
+        "border": false,
+        "radius": 150
+      }
+    ]
+  },
+  "zs5v": {
+    "z": 2513,
+    "type": "card",
+    "cardType": "type-4af1107b-ab9b-4873-81a4-1140ea166497",
+    "clonedFrom": "t4sg",
+    "x": 4,
+    "y": 4,
+    "deck": "blueArmies",
+    "id": "zs5v"
+  },
+  "cvuy": {
+    "z": 2513,
+    "type": "card",
+    "cardType": "type-4af1107b-ab9b-4873-81a4-1140ea166497",
+    "clonedFrom": "t4sg",
+    "x": 1549.5,
+    "y": 303.5,
+    "deck": "blueArmies",
+    "id": "cvuy"
+  },
+  "blackArmies": {
+    "type": "deck",
+    "id": "blackArmies",
+    "parent": "BlackHolder",
+    "x": 4,
+    "y": 4,
+    "z": 16,
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 25,
+      "height": 25
+    },
+    "cardTypes": {
+      "blackArmy": {
+        "label": "Black"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "",
+            "color": "#000000",
+            "width": 25,
+            "height": 25
+          }
+        ],
+        "border": false,
+        "radius": 80
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 25,
+            "height": 25,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "",
+            "color": "#000000",
+            "width": 25,
+            "height": 25
+          }
+        ],
+        "border": false,
+        "radius": 150
+      }
+    ]
+  },
+  "u35z": {
+    "y": 244,
+    "width": 120,
+    "height": 30,
+    "type": "button",
+    "text": "2 Players",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "Startholder"
+        ],
+        "property": "y",
+        "value": 1200
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "P2Holder"
+        ],
+        "property": "y",
+        "value": 250
+      }
+    ],
+    "css": "background-color: white; color: black; border-color: white; border-width: 1px; font-family:Arial",
+    "z": 292265,
+    "x": 513,
+    "id": "u35z",
+    "layer": 2,
+    "parent": "Startholder"
+  },
+  "board": {
+    "id": "board",
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/-1246265190_231033"
+  },
+  "wd77": {
+    "z": 3956
+  },
+  "74ky": {
+    "z": 3990
+  },
+  "dtus": {
+    "z": 4024
+  },
+  "mluq": {
+    "z": 4058
+  },
+  "ikj3": {
+    "z": 4095
+  },
+  "l3b0": {
+    "z": 4129
+  },
+  "2utw": {
+    "z": 5125
+  },
+  "d43w": {
+    "z": 5159
+  },
+  "8taj": {
+    "z": 5193
+  },
+  "pk9v": {
+    "z": 5227
+  },
+  "j895": {
+    "z": 5261
+  },
+  "mdwr": {
+    "z": 5295
+  },
+  "kklx": {
+    "z": 5400
+  },
+  "kae9": {
+    "z": 5428
+  },
+  "h4u8": {
+    "z": 5456
+  },
+  "fvwe": {
+    "z": 5484
+  },
+  "qbqu": {
+    "z": 5512
+  },
+  "olll": {
+    "z": 5540
+  },
+  "97hj": {
+    "z": 10142
+  },
+  "c5yq": {
+    "z": 10218
+  },
+  "75r6": {
+    "z": 10306
+  },
+  "xfwc": {
+    "z": 10438
+  },
+  "6x2r": {
+    "z": 10501
+  },
+  "9nm3": {
+    "z": 10598
+  },
+  "0pm6": {
+    "z": 10761
+  },
+  "ao8q": {
+    "z": 10844
+  },
+  "fn9h": {
+    "z": 10925
+  },
+  "8jsh": {
+    "z": 10946
+  },
+  "btnRestart": {
+    "type": "button",
+    "id": "btnRestart",
+    "x": 1555,
+    "width": 40,
+    "height": 40,
+    "z": 2098,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Resetting board...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to reset the board. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "Startholder"
+        ],
+        "property": "y",
+        "value": 250
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "P2Holder",
+          "P3Holder",
+          "P4Holder",
+          "P5Holder"
+        ],
+        "property": "y",
+        "value": 1200
+      },
+      {
+        "func": "RECALL",
+        "holder": "RedHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "OrangeHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "YellowHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "GreenHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "BlueHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "BlackHolder"
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "RewardRecall",
+          "MissionRecall"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "peg"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": -20
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -30
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "4Holder"
+      }
+    ],
+    "css": "font-size: 30px; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
+    "classes": "symbols",
+    "text": "restart",
+    "y": 950
+  },
+  "P3Holder": {
+    "type": "holder",
+    "id": "P3Holder",
+    "x": 400,
+    "y": 1200,
+    "width": 800,
+    "height": 500,
+    "z": 101,
+    "alignChildren": false,
+    "css": {
+      "background": "radial-gradient(#6991e5, #49be87)",
+      "border-radius": "20px"
+    },
+    "dropTarget": {}
+  },
+  "closeMenu": {
+    "type": "button",
+    "id": "closeMenu",
+    "parent": "Buttonsholder",
+    "x": 15,
+    "y": 9,
+    "width": 35,
+    "height": 35,
+    "z": 21,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "Off",
+        "to": "Temp"
+      },
+      {
+        "func": "MOVE",
+        "from": "On",
+        "to": "Off"
+      },
+      {
+        "func": "MOVE",
+        "from": "Temp",
+        "to": "On"
+      }
+    ],
+    "css": "background: white; color: black; border-style: none; font-family:Arial",
+    "text": "X"
+  },
+  "peg": {
+    "id": "peg",
+    "x": -20,
+    "y": -30,
+    "width": 35.85,
+    "height": 43.83,
+    "scale": 0.7,
+    "layer": 4,
+    "z": 20,
+    "classes": "pinPiece",
+    "color": "#e2a633",
+    "passenger": "yes",
+    "parent": "4Holder"
+  },
+  "rewardDeck": {
+    "type": "deck",
+    "id": "rewardDeck",
+    "parent": "RewardHolder",
+    "x": 12,
+    "y": 41,
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "",
+            "color": "#6190e2",
+            "width": 77,
+            "height": 120
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 33,
+            "fontSize": "22",
+            "value": "Reward Card",
+            "textAlign": "center",
+            "width": 77,
+            "height": 120
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 77,
+            "height": 120,
+            "dynamicProperties": {
+              "css": "shading"
+            }
+          },
+          {
+            "type": "image",
+            "x": 13,
+            "y": 15,
+            "color": "transparent",
+            "width": 51,
+            "height": 80,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 77,
+            "height": 120,
+            "dynamicProperties": {
+              "value": "wild"
+            }
+          },
+          {
+            "type": "image",
+            "x": 18,
+            "y": 64,
+            "color": "transparent",
+            "width": 38,
+            "height": 68,
+            "dynamicProperties": {
+              "value": "sword"
+            }
+          },
+          {
+            "type": "image",
+            "x": 24,
+            "y": 67,
+            "color": "transparent",
+            "width": 28,
+            "height": 51,
+            "dynamicProperties": {
+              "value": "soldier"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 56,
+            "color": "transparent",
+            "width": 62,
+            "height": 96,
+            "dynamicProperties": {
+              "value": "cannon"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 3,
+            "color": "black",
+            "fontSize": "12",
+            "textAlign": "center",
+            "width": 77,
+            "height": 120,
+            "dynamicProperties": {
+              "value": "territory"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "width": 77,
+      "height": 120,
+      "border": 1,
+      "radius": 8,
+      "enlarge": 2
+    },
+    "cardTypes": {
+      "Afghanistan": {
+        "image": "/assets/1092728228_18113",
+        "shading": "background-image: linear-gradient(#9cbf5d,#7d994b)",
+        "sword": "/assets/-1635602695_9549",
+        "territory": "Afghanistan"
+      },
+      "Alaska": {
+        "image": "/assets/1474303670_14093",
+        "shading": "background-image: linear-gradient(#e05167,#ba4456)",
+        "soldier": "/assets/1150855731_67874",
+        "territory": "Alaska"
+      },
+      "Alberta": {
+        "image": "/assets/-1638416121_28747",
+        "shading": "background-image: linear-gradient(#9cbf5d,#7d994b)",
+        "sword": "/assets/-1635602695_9549",
+        "territory": "Alberta"
+      },
+      "Argentina": {
+        "image": "/assets/286029270_18026",
+        "shading": "background-image: linear-gradient(#e05167,#ba4456)",
+        "soldier": "/assets/1150855731_67874",
+        "territory": "Argentina"
+      },
+      "Brazil": {
+        "image": "/assets/815891191_20078",
+        "shading": "background-image: linear-gradient(#f9c800,#d3aa00)",
+        "cannon": "/assets/55394340_119795",
+        "territory": "Brazil"
+      },
+      "Central Africa": {
+        "image": "/assets/1952469634_16825",
+        "shading": "background-image: linear-gradient(#e05167,#ba4456)",
+        "soldier": "/assets/1150855731_67874",
+        "territory": "Central Africa"
+      },
+      "Central America": {
+        "image": "/assets/1584690204_36979",
+        "shading": "background-image: linear-gradient(#f9c800,#d3aa00)",
+        "cannon": "/assets/55394340_119795",
+        "territory": "Central America"
+      },
+      "China": {
+        "image": "/assets/1430986326_16518",
+        "shading": "background-image: linear-gradient(#e05167,#ba4456)",
+        "soldier": "/assets/1150855731_67874",
+        "territory": "China"
+      },
+      "East Africa": {
+        "image": "/assets/880609381_18557",
+        "shading": "background-image: linear-gradient(#e05167,#ba4456)",
+        "soldier": "/assets/1150855731_67874",
+        "territory": "East Africa"
+      },
+      "Eastern Canada": {
+        "image": "/assets/-567109273_43952",
+        "shading": "background-image: linear-gradient(#9cbf5d,#7d994b)",
+        "sword": "/assets/-1635602695_9549",
+        "territory": "Eastern Canada"
+      },
+      "Eastern Australia": {
+        "image": "/assets/-1535600027_18178",
+        "shading": "background-image: linear-gradient(#f9c800,#d3aa00)",
+        "cannon": "/assets/55394340_119795",
+        "territory": "Eastern Australia"
+      },
+      "Eastern United States": {
+        "image": "/assets/56143898_49794",
+        "shading": "background-image: linear-gradient(#f9c800,#d3aa00)",
+        "cannon": "/assets/55394340_119795",
+        "territory": "Eastern United States"
+      },
+      "Egypt": {
+        "image": "/assets/1800675071_38105",
+        "shading": "background-image: linear-gradient(#e05167,#ba4456)",
+        "soldier": "/assets/1150855731_67874",
+        "territory": "Egypt"
+      },
+      "Great Britain": {
+        "image": "/assets/-183500767_53223",
+        "shading": "background-image: linear-gradient(#f9c800,#d3aa00)",
+        "cannon": "/assets/55394340_119795",
+        "territory": "Great Britain"
+      },
+      "Greenland": {
+        "image": "/assets/1157675817_45526",
+        "shading": "background-image: linear-gradient(#9cbf5d,#7d994b)",
+        "sword": "/assets/-1635602695_9549",
+        "territory": "Greenland"
+      },
+      "Iceland": {
+        "image": "/assets/1736927594_37859",
+        "shading": "background-image: linear-gradient(#e05167,#ba4456)",
+        "soldier": "/assets/1150855731_67874",
+        "territory": "Iceland"
+      },
+      "Indonesia": {
+        "image": "/assets/1447275401_66933",
+        "shading": "background-image: linear-gradient(#f9c800,#d3aa00)",
+        "cannon": "/assets/55394340_119795",
+        "territory": "Indonesia"
+      },
+      "India": {
+        "image": "/assets/1176560416_26143",
+        "shading": "background-image: linear-gradient(#9cbf5d,#7d994b)",
+        "sword": "/assets/-1635602695_9549",
+        "territory": "India"
+      },
+      "Irkutsk": {
+        "image": "/assets/888172755_34787",
+        "shading": "background-image: linear-gradient(#9cbf5d,#7d994b)",
+        "sword": "/assets/-1635602695_9549",
+        "territory": "Irkutsk"
+      },
+      "Japan": {
+        "image": "/assets/-1935253212_40275",
+        "shading": "background-image: linear-gradient(#f9c800,#d3aa00)",
+        "cannon": "/assets/55394340_119795",
+        "territory": "Japan"
+      },
+      "Kamchatka": {
+        "image": "/assets/1434858470_43708",
+        "shading": "background-image: linear-gradient(#e05167,#ba4456)",
+        "soldier": "/assets/1150855731_67874",
+        "territory": "Kamchatka"
+      },
+      "Madagascar": {
+        "image": "/assets/939620475_36840",
+        "shading": "background-image: linear-gradient(#9cbf5d,#7d994b)",
+        "sword": "/assets/-1635602695_9549",
+        "territory": "Madagascar"
+      },
+      "Middle East": {
+        "image": "/assets/1064503318_34054",
+        "shading": "background-image: linear-gradient(#e05167,#ba4456)",
+        "soldier": "/assets/1150855731_67874",
+        "territory": "Middle East"
+      },
+      "Mongolia": {
+        "image": "/assets/-1738995636_37521",
+        "shading": "background-image: linear-gradient(#e05167,#ba4456)",
+        "soldier": "/assets/1150855731_67874",
+        "territory": "Mongolia"
+      },
+      "New Guinea": {
+        "image": "/assets/491333366_53286",
+        "shading": "background-image: linear-gradient(#e05167,#ba4456)",
+        "soldier": "/assets/1150855731_67874",
+        "territory": "New Guinea"
+      },
+      "North Africa": {
+        "image": "/assets/-170606926_45040",
+        "shading": "background-image: linear-gradient(#9cbf5d,#7d994b)",
+        "sword": "/assets/-1635602695_9549",
+        "territory": "North Africa"
+      },
+      "Northern Europe": {
+        "image": "/assets/980041317_19384",
+        "shading": "background-image: linear-gradient(#f9c800,#d3aa00)",
+        "cannon": "/assets/55394340_119795",
+        "territory": "Northern Europe"
+      },
+      "Northwest Territory": {
+        "image": "/assets/2978862_30292",
+        "shading": "background-image: linear-gradient(#f9c800,#d3aa00)",
+        "cannon": "/assets/55394340_119795",
+        "territory": "Northwest Territory"
+      },
+      "Ontario": {
+        "image": "/assets/-1166688834_34262",
+        "shading": "background-image: linear-gradient(#9cbf5d,#7d994b)",
+        "sword": "/assets/-1635602695_9549",
+        "territory": "Ontario"
+      },
+      "Peru": {
+        "image": "/assets/1969926951_48995",
+        "shading": "background-image: linear-gradient(#e05167,#ba4456)",
+        "soldier": "/assets/1150855731_67874",
+        "territory": "Peru"
+      },
+      "Russia": {
+        "image": "/assets/-1960835785_35174",
+        "shading": "background-image: linear-gradient(#9cbf5d,#7d994b)",
+        "sword": "/assets/-1635602695_9549",
+        "territory": "Russia"
+      },
+      "Scandinavia": {
+        "image": "/assets/2066945451_44399",
+        "shading": "background-image: linear-gradient(#9cbf5d,#7d994b)",
+        "sword": "/assets/-1635602695_9549",
+        "territory": "Scandinavia"
+      },
+      "Siberia": {
+        "image": "/assets/-818466127_26123",
+        "shading": "background-image: linear-gradient(#9cbf5d,#7d994b)",
+        "sword": "/assets/-1635602695_9549",
+        "territory": "Siberia"
+      },
+      "South Africa": {
+        "image": "/assets/-1362304695_43097",
+        "shading": "background-image: linear-gradient(#f9c800,#d3aa00)",
+        "cannon": "/assets/55394340_119795",
+        "territory": "South Africa"
+      },
+      "Southeast Asia": {
+        "image": "/assets/-689112976_33370",
+        "shading": "background-image: linear-gradient(#e05167,#ba4456)",
+        "soldier": "/assets/1150855731_67874",
+        "territory": "Southeast Asia"
+      },
+      "Southern Europe": {
+        "image": "/assets/-2048539808_21917",
+        "shading": "background-image: linear-gradient(#f9c800,#d3aa00)",
+        "cannon": "/assets/55394340_119795",
+        "territory": "Southern Europe"
+      },
+      "Ural": {
+        "image": "/assets/809857531_25126",
+        "shading": "background-image: linear-gradient(#9cbf5d,#7d994b)",
+        "sword": "/assets/-1635602695_9549",
+        "territory": "Ural"
+      },
+      "Venezuela": {
+        "image": "/assets/699394351_44359",
+        "shading": "background-image: linear-gradient(#e05167,#ba4456)",
+        "soldier": "/assets/1150855731_67874",
+        "territory": "Venezuela"
+      },
+      "Western Australia": {
+        "image": "/assets/-139757916_15281",
+        "shading": "background-image: linear-gradient(#f9c800,#d3aa00)",
+        "cannon": "/assets/55394340_119795",
+        "territory": "Western Australia"
+      },
+      "Western United States": {
+        "image": "/assets/1820120482_29609",
+        "shading": "background-image: linear-gradient(#f9c800,#d3aa00)",
+        "cannon": "/assets/55394340_119795",
+        "territory": "Western United States"
+      },
+      "Western Europe": {
+        "image": "/assets/185474565_36462",
+        "shading": "background-image: linear-gradient(#f9c800,#d3aa00)",
+        "cannon": "/assets/55394340_119795",
+        "territory": "Western Europe"
+      },
+      "Yaktutsk": {
+        "image": "/assets/-1188546324_35412",
+        "shading": "background-image: linear-gradient(#9cbf5d,#7d994b)",
+        "sword": "/assets/-1635602695_9549",
+        "territory": "Yaktutsk"
+      },
+      "Wild": {
+        "wild": "/assets/-838417012_157643"
+      }
+    }
+  },
+  "ciwa": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Afghanistan",
+    "id": "ciwa",
+    "z": 1256,
+    "parent": "kb96"
+  },
+  "a570": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Alaska",
+    "id": "a570",
+    "z": 5074,
+    "parent": "kb96"
+  },
+  "ril8": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Alberta",
+    "id": "ril8",
+    "z": 3820,
+    "parent": "kb96"
+  },
+  "uvkz": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Argentina",
+    "id": "uvkz",
+    "z": 8958,
+    "parent": "kb96"
+  },
+  "pd3t": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Brazil",
+    "id": "pd3t",
+    "z": 6746,
+    "parent": "kb96"
+  },
+  "0ejw": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Central Africa",
+    "id": "0ejw",
+    "z": 9311,
+    "parent": "kb96"
+  },
+  "3uud": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Central America",
+    "id": "3uud",
+    "z": 265,
+    "parent": "kb96"
+  },
+  "rnmo": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "China",
+    "id": "rnmo",
+    "z": 9631,
+    "parent": "kb96"
+  },
+  "anfh": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "East Africa",
+    "id": "anfh",
+    "z": 4814,
+    "parent": "kb96"
+  },
+  "j7s3": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Eastern Canada",
+    "id": "j7s3",
+    "z": 9922,
+    "parent": "kb96"
+  },
+  "xd4b": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Eastern Australia",
+    "id": "xd4b",
+    "z": 8934,
+    "parent": "kb96"
+  },
+  "unf8": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Eastern United States",
+    "id": "unf8",
+    "z": 97,
+    "parent": "kb96"
+  },
+  "gddc": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Egypt",
+    "id": "gddc",
+    "z": 5519,
+    "parent": "kb96"
+  },
+  "vvp9": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Great Britain",
+    "id": "vvp9",
+    "z": 5204,
+    "parent": "kb96"
+  },
+  "iccu": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Greenland",
+    "id": "iccu",
+    "z": 8878,
+    "parent": "kb96"
+  },
+  "350w": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Iceland",
+    "id": "350w",
+    "z": 398,
+    "parent": "kb96"
+  },
+  "xax5": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Indonesia",
+    "id": "xax5",
+    "z": 4639,
+    "parent": "kb96"
+  },
+  "bof7": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "India",
+    "id": "bof7",
+    "z": 8640,
+    "parent": "kb96"
+  },
+  "td8r": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Irkutsk",
+    "id": "td8r",
+    "z": 6257,
+    "parent": "kb96"
+  },
+  "5t1k": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Japan",
+    "id": "5t1k",
+    "z": 8255,
+    "parent": "kb96"
+  },
+  "0y5i": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Kamchatka",
+    "id": "0y5i",
+    "z": 4919,
+    "parent": "kb96"
+  },
+  "bkyk": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Madagascar",
+    "id": "bkyk",
+    "z": 3496,
+    "parent": "kb96"
+  },
+  "wez9": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Middle East",
+    "id": "wez9",
+    "z": 8846,
+    "parent": "kb96"
+  },
+  "z8dj": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Mongolia",
+    "id": "z8dj",
+    "z": 9316,
+    "parent": "kb96"
+  },
+  "87ku": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "New Guinea",
+    "id": "87ku",
+    "z": 1180,
+    "parent": "kb96"
+  },
+  "ueli": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "North Africa",
+    "id": "ueli",
+    "z": 2979,
+    "parent": "kb96"
+  },
+  "hjo3": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Northern Europe",
+    "id": "hjo3",
+    "z": 1013,
+    "parent": "kb96"
+  },
+  "nygw": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Northwest Territory",
+    "id": "nygw",
+    "z": 783,
+    "parent": "kb96"
+  },
+  "5e8x": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Ontario",
+    "id": "5e8x",
+    "z": 9109,
+    "parent": "kb96"
+  },
+  "xi1n": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Peru",
+    "id": "xi1n",
+    "z": 7214,
+    "parent": "kb96"
+  },
+  "het4": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Russia",
+    "id": "het4",
+    "z": 2557,
+    "parent": "kb96"
+  },
+  "6xco": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Scandinavia",
+    "id": "6xco",
+    "z": 7609,
+    "parent": "kb96"
+  },
+  "lmow": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Siberia",
+    "id": "lmow",
+    "z": 9682,
+    "parent": "kb96"
+  },
+  "umer": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "South Africa",
+    "id": "umer",
+    "z": 2213,
+    "parent": "kb96"
+  },
+  "3cei": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Southeast Asia",
+    "id": "3cei",
+    "z": 8696,
+    "parent": "kb96"
+  },
+  "5yxs": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Southern Europe",
+    "id": "5yxs",
+    "z": 6674,
+    "parent": "kb96"
+  },
+  "ld4k": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Ural",
+    "id": "ld4k",
+    "z": 2623,
+    "parent": "kb96"
+  },
+  "fzuv": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Venezuela",
+    "id": "fzuv",
+    "z": 1174,
+    "parent": "kb96"
+  },
+  "lb78": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Western Australia",
+    "id": "lb78",
+    "z": 6870,
+    "parent": "kb96"
+  },
+  "nsj1": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Western United States",
+    "id": "nsj1",
+    "z": 6900,
+    "parent": "kb96"
+  },
+  "qf8c": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Western Europe",
+    "id": "qf8c",
+    "z": 88,
+    "parent": "kb96"
+  },
+  "wp3l": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Yaktutsk",
+    "id": "wp3l",
+    "z": 7797,
+    "parent": "kb96"
+  },
+  "m8im": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Wild",
+    "id": "m8im",
+    "z": 9442,
+    "parent": "kb96"
+  },
+  "vafh": {
+    "deck": "rewardDeck",
+    "type": "card",
+    "cardType": "Wild",
+    "id": "vafh",
+    "z": 9946,
+    "parent": "kb96"
+  },
+  "kb96": {
+    "type": "pile",
+    "width": 77,
+    "height": 120,
+    "id": "kb96",
+    "z": 17257,
+    "parent": "RewardHolder"
+  },
+  "missionDeck": {
+    "type": "deck",
+    "id": "missionDeck",
+    "parent": "MissionHolder",
+    "x": 4,
+    "y": 4,
+    "z": 67,
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 77,
+      "height": 120,
+      "enlarge": 2
+    },
+    "cardTypes": {
+      "Eliminate Red": {
+        "text1": "Eliminate",
+        "text2": "Reds",
+        "text3": "Last Piece",
+        "text4": "Successful player is new target",
+        "enlarge": 2
+      },
+      "Eliminate Blue": {
+        "text1": "Eliminate",
+        "text2": "Blues",
+        "text3": "Last Piece",
+        "text4": "Successful player is new target",
+        "enlarge": 2
+      },
+      "Eliminate Yellow": {
+        "text1": "Eliminate",
+        "text2": "Yellows",
+        "text3": "Last Piece",
+        "text4": "Successful player is new target",
+        "enlarge": 2
+      },
+      "Eliminate Green": {
+        "text1": "Eliminate",
+        "text2": "Greens",
+        "text3": "Last Piece",
+        "text4": "Successful player is new target",
+        "enlarge": 2
+      },
+      "Eliminate Black": {
+        "text1": "Eliminate",
+        "text2": "Blacks",
+        "text3": "Last Piece",
+        "text4": "Successful player is new target",
+        "enlarge": 2
+      },
+      "Eliminate Orange": {
+        "text1": "Eliminate",
+        "text2": "Oranges",
+        "text3": "Last Piece",
+        "text4": "Successful player is new target",
+        "enlarge": 2
+      },
+      "Conquer Asia and S America": {
+        "text1": "Conquer",
+        "text4": "Asia & South America",
+        "enlarge": 2
+      },
+      "Conquer Asia and Africa": {
+        "text1": "Conquer",
+        "text4": "Asia & Africa",
+        "enlarge": 2
+      },
+      "Conquer N America and Africa": {
+        "text1": "Conquer",
+        "text4": "North America & Africa",
+        "enlarge": 2
+      },
+      "Conquer N America and Australia": {
+        "text1": "Conquer",
+        "text4": "North America & Australia",
+        "enlarge": 2
+      },
+      "Conquer Europe and S America": {
+        "text1": "Conquer",
+        "text4": "Europe, South America, & 3rd Continent of Your Choice",
+        "enlarge": 2
+      },
+      "Conquer Europe and Australia": {
+        "text1": "Conquer",
+        "text4": "Europe, Australia, & 3rd Continent of Your Choice",
+        "enlarge": 2
+      },
+      "Occupy 18": {
+        "text1": "Occupy",
+        "text4": "18 Territories With At Least 2 Armies in Each",
+        "enlarge": 2
+      },
+      "Occupy 24": {
+        "text1": "Occupy",
+        "text4": "24 Territories",
+        "enlarge": 2
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "",
+            "color": "#2abe89",
+            "width": 77,
+            "height": 120
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 25.48387096774194,
+            "fontSize": "20",
+            "value": "Secret Mission Card",
+            "textAlign": "center",
+            "textFont": "abbasy-calligraphy",
+            "width": 77
+          }
+        ],
+        "border": false,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 77,
+            "height": 120,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0.7741935483870958,
+            "fontSize": "16",
+            "textAlign": "center",
+            "textFont": null,
+            "width": 77,
+            "dynamicProperties": {
+              "value": "text1"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 17.741935483870964,
+            "fontSize": 16,
+            "textAlign": "center",
+            "textFont": null,
+            "width": 77,
+            "dynamicProperties": {
+              "value": "text2"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 32.8387096774193,
+            "fontSize": "16",
+            "textAlign": "center",
+            "textFont": null,
+            "width": 77,
+            "dynamicProperties": {
+              "value": "text3"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 60,
+            "fontSize": "12",
+            "textAlign": "center",
+            "textFont": null,
+            "width": 77,
+            "dynamicProperties": {
+              "value": "text4"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 5
+      }
+    ]
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": -15,
+    "y": 445,
+    "scale": 0.8,
+    "z": 2102,
+    "hideWhenUnused": true
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "x": -15,
+    "y": 245,
+    "scale": 0.8,
+    "z": 2102,
+    "index": 2,
+    "hideWhenUnused": true
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "x": -15,
+    "y": 50,
+    "scale": 0.8,
+    "z": 2102,
+    "index": 3,
+    "hideWhenUnused": true
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "x": 1450,
+    "y": 50,
+    "scale": 0.8,
+    "z": 2105,
+    "hideWhenUnused": true
+  },
+  "seat5": {
+    "type": "seat",
+    "id": "seat5",
+    "y": 245,
+    "scale": 0.8,
+    "z": 2104,
+    "x": 1450,
+    "index": 5,
+    "hideWhenUnused": true
+  },
+  "seat6": {
+    "type": "seat",
+    "id": "seat6",
+    "x": 1450,
+    "y": 445,
+    "scale": 0.8,
+    "z": 2103,
+    "index": 6,
+    "hideWhenUnused": true
+  },
+  "next": {
+    "type": "button",
+    "id": "next",
+    "x": 890,
+    "y": 9,
+    "z": 2106,
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ],
+    "color": "none",
+    "text": "Next Player"
+  },
+  "gblj": {
+    "deck": "missionDeck",
+    "type": "card",
+    "cardType": "Eliminate Red",
+    "id": "gblj",
+    "z": 9186,
+    "parent": "3ii2"
+  },
+  "vskf": {
+    "deck": "missionDeck",
+    "type": "card",
+    "cardType": "Eliminate Blue",
+    "id": "vskf",
+    "z": 8111,
+    "parent": "3ii2"
+  },
+  "uzv5": {
+    "deck": "missionDeck",
+    "type": "card",
+    "cardType": "Eliminate Yellow",
+    "id": "uzv5",
+    "z": 3933,
+    "parent": "3ii2"
+  },
+  "vjto": {
+    "deck": "missionDeck",
+    "type": "card",
+    "cardType": "Eliminate Green",
+    "id": "vjto",
+    "z": 1891,
+    "parent": "3ii2"
+  },
+  "vzor": {
+    "deck": "missionDeck",
+    "type": "card",
+    "cardType": "Eliminate Black",
+    "id": "vzor",
+    "z": 2458,
+    "parent": "3ii2"
+  },
+  "48w2": {
+    "deck": "missionDeck",
+    "type": "card",
+    "cardType": "Eliminate Orange",
+    "id": "48w2",
+    "z": 1114,
+    "parent": "3ii2"
+  },
+  "pleb": {
+    "deck": "missionDeck",
+    "type": "card",
+    "cardType": "Conquer Asia and S America",
+    "id": "pleb",
+    "z": 541,
+    "parent": "3ii2"
+  },
+  "0jse": {
+    "deck": "missionDeck",
+    "type": "card",
+    "cardType": "Conquer Asia and Africa",
+    "id": "0jse",
+    "z": 9688,
+    "parent": "3ii2"
+  },
+  "tqlr": {
+    "deck": "missionDeck",
+    "type": "card",
+    "cardType": "Conquer N America and Africa",
+    "id": "tqlr",
+    "z": 5113,
+    "parent": "3ii2"
+  },
+  "7sox": {
+    "deck": "missionDeck",
+    "type": "card",
+    "cardType": "Conquer N America and Australia",
+    "id": "7sox",
+    "z": 4185,
+    "parent": "3ii2"
+  },
+  "138y": {
+    "deck": "missionDeck",
+    "type": "card",
+    "cardType": "Conquer Europe and S America",
+    "id": "138y",
+    "z": 6326,
+    "parent": "3ii2"
+  },
+  "vejh": {
+    "deck": "missionDeck",
+    "type": "card",
+    "cardType": "Conquer Europe and Australia",
+    "id": "vejh",
+    "z": 1246,
+    "parent": "3ii2"
+  },
+  "dvyt": {
+    "deck": "missionDeck",
+    "type": "card",
+    "cardType": "Occupy 18",
+    "id": "dvyt",
+    "z": 3233,
+    "parent": "3ii2"
+  },
+  "86ox": {
+    "deck": "missionDeck",
+    "type": "card",
+    "cardType": "Occupy 24",
+    "id": "86ox",
+    "z": 6024,
+    "parent": "3ii2"
+  },
+  "14l8": {
+    "z": 17388,
+    "type": "card",
+    "cardType": "yellowArmy",
+    "clonedFrom": "j4hm",
+    "deck": "yellowArmies",
+    "x": 4,
+    "y": 4,
+    "id": "14l8",
+    "parent": "YellowHolder"
+  },
+  "xarl": {
+    "z": 17387,
+    "type": "card",
+    "cardType": "orangeArmy",
+    "clonedFrom": "qwdy",
+    "deck": "orangeArmies",
+    "x": 4,
+    "y": 4,
+    "id": "xarl",
+    "parent": "OrangeHolder"
+  },
+  "a40k": {
+    "z": 17386,
+    "type": "card",
+    "cardType": "redArmy",
+    "clonedFrom": "up9e",
+    "deck": "redArmies",
+    "x": 4,
+    "y": 4,
+    "id": "a40k",
+    "parent": "RedHolder"
+  },
+  "ig05": {
+    "z": 17389,
+    "type": "card",
+    "cardType": "greenArmy",
+    "clonedFrom": "twi4",
+    "deck": "greenArmies",
+    "x": 4,
+    "y": 4,
+    "id": "ig05",
+    "parent": "GreenHolder"
+  },
+  "fju6": {
+    "z": 17390,
+    "type": "card",
+    "cardType": "blueArmy",
+    "clonedFrom": "rig4",
+    "deck": "blueArmies",
+    "x": 4,
+    "y": 4,
+    "id": "fju6",
+    "parent": "BlueHolder"
+  },
+  "hcnd": {
+    "z": 17391,
+    "type": "card",
+    "cardType": "blackArmy",
+    "clonedFrom": "opr7",
+    "deck": "blackArmies",
+    "x": 4,
+    "y": 4,
+    "id": "hcnd",
+    "parent": "BlackHolder"
+  },
+  "MissionHolder1": {
+    "id": "MissionHolder1",
+    "x": 1074,
+    "y": 871,
+    "z": 210,
+    "type": "holder",
+    "inheritChildZ": true,
+    "width": 85,
+    "height": 128,
+    "css": "border-radius:10px; background:#ffffff80"
+  },
+  "missionDeck1": {
+    "type": "deck",
+    "id": "missionDeck1",
+    "parent": "MissionHolder1",
+    "x": 4,
+    "y": 4,
+    "z": 67,
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 77,
+      "height": 120,
+      "enlarge": 2
+    },
+    "cardTypes": {
+      "Eliminate Red": {
+        "text1": "Eliminate",
+        "text2": "Reds",
+        "text3": "Last Piece",
+        "text4": "Successful player is new target",
+        "enlarge": 2
+      },
+      "Eliminate Blue": {
+        "text1": "Eliminate",
+        "text2": "Blues",
+        "text3": "Last Piece",
+        "text4": "Successful player is new target",
+        "enlarge": 2
+      },
+      "Eliminate Yellow": {
+        "text1": "Eliminate",
+        "text2": "Yellows",
+        "text3": "Last Piece",
+        "text4": "Successful player is new target",
+        "enlarge": 2
+      },
+      "Eliminate Green": {
+        "text1": "Eliminate",
+        "text2": "Greens",
+        "text3": "Last Piece",
+        "text4": "Successful player is new target",
+        "enlarge": 2
+      },
+      "Eliminate Black": {
+        "text1": "Eliminate",
+        "text2": "Blacks",
+        "text3": "Last Piece",
+        "text4": "Successful player is new target",
+        "enlarge": 2
+      },
+      "Eliminate Orange": {
+        "text1": "Eliminate",
+        "text2": "Oranges",
+        "text3": "Last Piece",
+        "text4": "Successful player is new target",
+        "enlarge": 2
+      },
+      "Conquer Asia and S America": {
+        "text1": "Conquer",
+        "text4": "Asia & South America",
+        "enlarge": 2
+      },
+      "Conquer Asia and Africa": {
+        "text1": "Conquer",
+        "text4": "Asia & Africa",
+        "enlarge": 2
+      },
+      "Conquer N America and Africa": {
+        "text1": "Conquer",
+        "text4": "North America & Africa",
+        "enlarge": 2
+      },
+      "Conquer N America and Australia": {
+        "text1": "Conquer",
+        "text4": "North America & Australia",
+        "enlarge": 2
+      },
+      "Conquer Europe and S America": {
+        "text1": "Conquer",
+        "text4": "Europe, South America, & 3rd Continent of Your Choice",
+        "enlarge": 2
+      },
+      "Conquer Europe and Australia": {
+        "text1": "Conquer",
+        "text4": "Europe, Australia, & 3rd Continent of Your Choice",
+        "enlarge": 2
+      },
+      "Occupy 18": {
+        "text1": "Occupy",
+        "text4": "18 Territories With At Least 2 Armies in Each",
+        "enlarge": 2
+      },
+      "Occupy 24": {
+        "text1": "Occupy",
+        "text4": "24 Territories",
+        "enlarge": 2
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "",
+            "color": "#2abe89",
+            "width": 77,
+            "height": 120
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 25.48387096774194,
+            "fontSize": "20",
+            "value": "Secret Mission Card",
+            "textAlign": "center",
+            "textFont": "abbasy-calligraphy",
+            "width": 77
+          }
+        ],
+        "border": false,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 77,
+            "height": 120,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0.7741935483870958,
+            "fontSize": "16",
+            "textAlign": "center",
+            "textFont": null,
+            "width": 77,
+            "dynamicProperties": {
+              "value": "text1"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 17.741935483870964,
+            "fontSize": 16,
+            "textAlign": "center",
+            "textFont": null,
+            "width": 77,
+            "dynamicProperties": {
+              "value": "text2"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 32.8387096774193,
+            "fontSize": "16",
+            "textAlign": "center",
+            "textFont": null,
+            "width": 77,
+            "dynamicProperties": {
+              "value": "text3"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 60,
+            "fontSize": "12",
+            "textAlign": "center",
+            "textFont": null,
+            "width": 77,
+            "dynamicProperties": {
+              "value": "text4"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 5
+      }
+    ]
+  },
+  "q1sw": {
+    "id": "q1sw",
+    "z": 6,
+    "x": 1089,
+    "y": 848,
+    "text": "Discard",
+    "movable": false,
+    "height": 20
+  },
+  "3ii2": {
+    "type": "pile",
+    "parent": "MissionHolder",
+    "x": 4,
+    "y": 4,
+    "width": 77,
+    "height": 120,
+    "id": "3ii2"
+  }
+}
