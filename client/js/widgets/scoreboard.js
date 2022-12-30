@@ -52,9 +52,13 @@ class Scoreboard extends Widget {
     if(!await super.click(mode)) {
       const scoreProperty = this.get('scoreProperty');
       const seats = this.getIncludedSeats();
-      let players = Object.keys(seats).map(function(s) { return { text: s, value: s }; });
+      let players = [];
       if(Array.isArray(seats))
-        players = seats.map(function(s) { return { value: s.get('id'), text: s.get('player') }; });
+        players = seats.map(function(s) { return { value: s.get('id'), text: s.get('player') }; })
+      else { // Teams
+        for (const team in seats)
+          players = players.concat(seats[team].map(function(s) { return { value: s.get('id'), text: `${s.get('player')} (${team})` } }))
+      }
 
       const rounds = this.getRounds(seats, scoreProperty, 1).map(function(r, i) { return { text: r, value: i+1 }; });
 
@@ -67,7 +71,7 @@ class Scoreboard extends Widget {
           fields: [
             {
               type: 'select',
-              label: Array.isArray(seats) ? 'Player' : 'Team',
+              label: 'Player',
               options: players,
               variable: 'player'
             },
@@ -84,7 +88,7 @@ class Scoreboard extends Widget {
             }
           ]
         });
-        const seat = Array.isArray(seats) ? widgets.get(result.player) : seats[result.player][0];
+        const seat = widgets.get(result.player);
         let scores = seat.get(scoreProperty);
         if(Array.isArray(scores))
           scores = [...scores];
