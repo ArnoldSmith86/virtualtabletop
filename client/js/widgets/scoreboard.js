@@ -36,7 +36,7 @@ class Scoreboard extends Widget {
   classes() {
     let className = super.classes();
 
-    if(this.get('autosizeColumns') != '')
+    if(this.get('autosizeColumns'))
       className += ' equalWidth';
 
     return className;
@@ -138,8 +138,7 @@ class Scoreboard extends Widget {
     else if(typeof seats == 'object') { // Scoreboard using teams
       const newSeats = {};
       for (const team in seats) {
-        newSeats[team] = asArray(seats[team]);
-        newSeats[team] = [... widgetFilter(w => w.get('type') == 'seat' && (this.get('showAllSeats') || w.get('player')) && newSeats[team].includes(w.get('id')))];
+        newSeats[team] = [... widgetFilter(w => w.get('type') == 'seat' && (this.get('showAllSeats') || w.get('player')) && asArray(seats[team]).includes(w.get('id')))];
       }
       return newSeats;
     } else // 'seats' property is not array or object, return null so table will be cleared.
