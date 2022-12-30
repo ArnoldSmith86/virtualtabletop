@@ -484,11 +484,13 @@ export default class Room {
         return null;
       if(match[2] == 'JSON User Guide')
         return `tutorials/JSON Editor User Guide`;
+
+      let target = `games/${match[2]}`;
       if(match[1] == 'Tutorial')
-        return `tutorials/${match[2]}`;
+        target = `tutorials/${match[2]}`;
       if(match[1] == 'Assets')
-        return `assets/${match[2]}`;
-      return `games/${match[2]}`;
+        target = `assets/${match[2]}`;
+      return decodeURI(target);
     }
     function compareNameAndImage(a, b) {
       const map = {
