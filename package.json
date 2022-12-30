@@ -49,7 +49,7 @@
     "@node-minify/clean-css": "^7.0.0",
     "@node-minify/core": "^7.0.0",
     "@node-minify/html-minifier": "^7.0.0",
-    "@node-minify/no-compress": "^7.0.0",
+    "@node-minify/no-compress": "^7.1.0",
     "@node-minify/uglify-es": "^7.0.0",
     "crc-32": "^1.2.2",
     "dompurify": "^2.3.8",
