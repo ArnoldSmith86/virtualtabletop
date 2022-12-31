@@ -4325,7 +4325,7 @@
       {
         "func": "GET",
         "property": "text",
-        "variable": "playerName"
+        "variable": "playerNameText"
       },
       {
         "func": "COMPUTE",
@@ -4356,7 +4356,7 @@
         "applyVariables": [
           {
             "parameter": "value",
-            "variable": "playerName"
+            "variable": "playerNameText"
           }
         ]
       },
