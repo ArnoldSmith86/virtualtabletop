@@ -14,6 +14,14 @@ let deltaID = 0;
 let batchDepth = 0;
 let overlayShownForEmptyRoom = false;
 
+function generateUniqueWidgetID() {
+  let id;
+  do {
+    id = Math.random().toString(36).substring(3, 7);
+  } while (widgets.has(id));
+  return id;
+}
+
 export function addWidget(widget, instance) {
   if(widget.parent && !widgets.has(widget.parent)) {
     if(!deferredChildren[widget.parent])
@@ -89,6 +97,28 @@ export function addWidget(widget, instance) {
   delete deferredChildren[widget.id];
 }
 
+async function addWidgetLocal(widget) {
+  if (!widget.id)
+    widget.id = generateUniqueWidgetID();
+
+  if(widget.parent && !widgets.has(widget.parent)) {
+    console.error(`Refusing to add widget ${widget.id} with invalid parent ${widget.parent}.`);
+    return null;
+  }
+
+  const isNewWidget = !widgets.has(widget.id);
+  if(isNewWidget)
+    addWidget(widget);
+  sendPropertyUpdate(widget.id, widget);
+  sendDelta();
+  batchStart();
+  if(isNewWidget)
+    for(const [ w, routine ] of StateManaged.globalUpdateListeners['id'] || [])
+      await w.evaluateRoutine(routine, { widgetID: widget.id, oldValue: null, value: widget.id }, { widget: [ widgets.get(widget.id) ] });
+  batchEnd();
+  return widget.id;
+}
+
 export function batchStart() {
   ++batchDepth;
 }
@@ -116,7 +146,7 @@ function receiveDelta(delta) {
     if(delta.s[widgetID] === null && widgets.has(widgetID))
       removeWidget(widgetID);
 
-  if(typeof jeEnabled != 'undefined' && jeEnabled)
+  if(jeEnabled)
     jeApplyDelta(delta);
 }
 
@@ -166,7 +196,7 @@ function receiveStateFromServer(args) {
   }
   toServer('confirm');
 
-  if(typeof jeEnabled != 'undefined' && jeEnabled)
+  if(jeEnabled)
     jeApplyState(args);
 }
 
@@ -178,6 +208,30 @@ function removeWidget(widgetID) {
   }
   widgets.delete(widgetID);
   dropTargets.delete(widgetID);
+}
+
+async function removeWidgetLocal(widgetID, keepChildren) {
+  function getWidgetsToRemove(widgetID) {
+    const children = [];
+    if(!keepChildren)
+      for(const [ childWidgetID, childWidget ] of widgets)
+        if(!childWidget.inRemovalQueue && (childWidget.get('parent') == widgetID || childWidget.get('deck') == widgetID))
+          children.push(...getWidgetsToRemove(childWidgetID));
+    widgets.get(widgetID).inRemovalQueue = true;
+    children.push(widgets.get(widgetID));
+    return children;
+  }
+
+  if(widgets.get(widgetID).inRemovalQueue)
+    return;
+
+  for(const w of getWidgetsToRemove(widgetID)) {
+    w.isBeingRemoved = true;
+    // don't actually set deck and parent to null (only pretend to) because when "receiving" the delta, the applyRemove has to find the parent
+    await w.onPropertyChange('deck', w.get('deck'), null);
+    await w.onPropertyChange('parent', w.get('parent'), null);
+    sendPropertyUpdate(w.id, null);
+  }
 }
 
 function sendDelta() {

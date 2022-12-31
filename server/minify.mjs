@@ -20,10 +20,6 @@ export default function minifyRoom() {
       input: [
         'client/css/layout.css',
 
-        'client/css/editmode.css',
-        'client/css/jsonedit.css',
-        'client/css/tracing.css',
-
         'client/css/overlays/misc.css',
         'client/css/overlays/players.css',
         'client/css/overlays/states.css',
@@ -56,12 +52,9 @@ export default function minifyRoom() {
           'client/js/domhelpers.js',
           'client/js/connection.js',
           'client/js/serverstate.js',
-          'client/js/editmode.js',
           'client/js/geometry.js',
-          'client/js/jsonedit.js',
           'client/js/compute.js',
           'client/js/mousehandling.js',
-          'client/js/tracing.js',
           'client/js/statemanaged.js',
 
           'client/js/overlays/players.js',

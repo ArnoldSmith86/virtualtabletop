@@ -9,7 +9,11 @@ let muted = false;
 let unmuteVol = 30;
 let optionsHidden = true;
 
-var vmEditOverlay;
+let edit = false;
+let jeEnabled = null;
+let jeRoutineLogging = false;
+let vmEditOverlay;
+let tracingEnabled = false;
 
 let urlProperties = {};
 
@@ -99,7 +103,6 @@ export function showOverlay(id, forced) {
     }
     toServer('mouse',{inactive:true})
   } else {
-    vmEditOverlay.selectedWidget = {};
     overlayActive = false;
   }
 }
@@ -141,7 +144,6 @@ function checkURLproperties(connected) {
       on('#askIDoverlay button', 'click', function() {
         roomID = urlProperties.askID + $('#enteredID').value;
         toServer('room', { playerName, roomID });
-        $('#legacy-link').href += `#${roomID}`;
         showOverlay();
       });
       showOverlay('askIDoverlay');
