@@ -520,8 +520,9 @@ export default class Room {
                   allVariantsFromPL = false;
               if(allVariantsFromPL && compareNameAndImage(state, targetState)) {
                 Logging.log(`migrating ${target} in room ${this.id}`);
+                if(!this.state._meta.starred[targetState.publicLibrary])
+                  Statistics.toggleStateStar(targetState.publicLibrary, true);
                 this.state._meta.starred[targetState.publicLibrary] = true;
-                Statistics.toggleStateStar(targetState.publicLibrary, true);
                 this.removeState(undefined, id);
                 migratedToTargetState = true;
                 break;
