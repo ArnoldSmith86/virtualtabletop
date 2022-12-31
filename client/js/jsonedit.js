@@ -1,4 +1,3 @@
-let jeEnabled = null;
 let jeZoomOut = false;
 let jeMode = null;
 let jeWidget = null;
@@ -1908,7 +1907,6 @@ function jeInsert(context, key, value) {
 
 // START routine logging
 
-let jeRoutineLogging = false;
 let jeRoutineResetOnNextLog = true;
 let jeRoutineResult = '';
 let jeLoggingHTML = '';

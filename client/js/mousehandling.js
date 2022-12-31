@@ -11,7 +11,7 @@ function eventCoords(name, e) {
     coords = e;
   let x = (coords.clientX - roomRectangle.left) / scale;
   let y = (coords.clientY - roomRectangle.top) / scale;
-  if(!jeZoomOut) {
+  if(typeof jeZoomOut !== 'boolean' || !jeZoomOut) {
     x = Math.max(0, Math.min(1600, x));
     y = Math.max(0, Math.min(1000, y));
   }
@@ -22,7 +22,7 @@ async function inputHandler(name, e) {
   if(overlayActive || e.target.id == 'jeText' || e.target.id == 'jeCommands')
     return;
 
-  const editMovable = edit || typeof jeEnabled == 'boolean' && jeEnabled && e.ctrlKey;
+  const editMovable = edit || jeEnabled && e.ctrlKey;
 
   if(!mouseTarget && [ 'TEXTAREA', 'INPUT', 'BUTTON', 'OPTION', 'LABEL', 'SELECT' ].indexOf(e.target.tagName) != -1)
     if(!editMovable || !e.target.parentNode || !e.target.parentNode.className.match(/label/))
@@ -85,7 +85,7 @@ async function inputHandler(name, e) {
       if(ms.status != 'initial' && ms.moveTarget)
         await ms.moveTarget.moveEnd(ms.coords, ms.localAnchor);
       if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
-        if(typeof jeEnabled == 'boolean' && jeEnabled)
+        if(jeEnabled)
           await jeClick(widget, e);
         else if(edit)
           editClick(widget);

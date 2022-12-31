@@ -1,34 +1,3 @@
-let edit = false;
-
-function generateUniqueWidgetID() {
-  let id;
-  do {
-    id = Math.random().toString(36).substring(3, 7);
-  } while (widgets.has(id));
-  return id;
-}
-
-async function addWidgetLocal(widget) {
-  if (!widget.id)
-    widget.id = generateUniqueWidgetID();
-
-  if(widget.parent && !widgets.has(widget.parent)) {
-    console.error(`Refusing to add widget ${widget.id} with invalid parent ${widget.parent}.`);
-    return null;
-  }
-
-  const isNewWidget = !widgets.has(widget.id);
-  if(isNewWidget)
-    addWidget(widget);
-  sendPropertyUpdate(widget.id, widget);
-  sendDelta();
-  batchStart();
-  if(isNewWidget)
-    for(const [ w, routine ] of StateManaged.globalUpdateListeners['id'] || [])
-      await w.evaluateRoutine(routine, { widgetID: widget.id, oldValue: null, value: widget.id }, { widget: [ widgets.get(widget.id) ] });
-  batchEnd();
-  return widget.id;
-}
 //This section holds the edit overlays for each widget
 //basic widget functions
 function populateEditOptionsBasic(widget) {
@@ -421,8 +390,10 @@ function editClick(widget) {
 
   const typeSpecific = $(`#editOverlay > .${type}Edit`);
 
-  if(!typeSpecific)
+  if(!typeSpecific) {
+    $('#legacy-link').href += `#${roomID}`;
     return showOverlay('editJSONoverlay');
+  }
 
   typeSpecific.style.display = 'block';
 
@@ -792,30 +763,6 @@ function populateAddWidgetOverlay() {
 }
 // end of JSON generators
 
-async function removeWidgetLocal(widgetID, keepChildren) {
-  function getWidgetsToRemove(widgetID) {
-    const children = [];
-    if(!keepChildren)
-      for(const [ childWidgetID, childWidget ] of widgets)
-        if(!childWidget.inRemovalQueue && (childWidget.get('parent') == widgetID || childWidget.get('deck') == widgetID))
-          children.push(...getWidgetsToRemove(childWidgetID));
-    widgets.get(widgetID).inRemovalQueue = true;
-    children.push(widgets.get(widgetID));
-    return children;
-  }
-
-  if(widgets.get(widgetID).inRemovalQueue)
-    return;
-
-  for(const w of getWidgetsToRemove(widgetID)) {
-    w.isBeingRemoved = true;
-    // don't actually set deck and parent to null (only pretend to) because when "receiving" the delta, the applyRemove has to find the parent
-    await w.onPropertyChange('deck', w.get('deck'), null);
-    await w.onPropertyChange('parent', w.get('parent'), null);
-    sendPropertyUpdate(w.id, null);
-  }
-}
-
 function uploadWidget(preset) {
   uploadAsset().then(async function(asset) {
     let id;
@@ -1013,6 +960,7 @@ async function onClickRemoveWidget() {
 }
 
 function onClickManualEditWidget() {
+  $('#legacy-link').href += `#${roomID}`;
   showOverlay('editJSONoverlay')
 }
 
