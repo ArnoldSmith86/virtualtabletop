@@ -1,0 +1,1954 @@
+{
+  "hand": {
+    "id": "hand",
+    "y": 350,
+    "z": 10367,
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "inheritChildZ": true,
+    "childrenPerOwner": true,
+    "width": 68,
+    "height": 258,
+    "x": 1524,
+    "css": "background: #ffffff80",
+    "layer": 15,
+    "dropOffsetY": 2,
+    "stackOffsetY": 60
+  },
+  "bnd1": {
+    "type": "card",
+    "cardType": "Circle Blue 1",
+    "id": "bnd1",
+    "z": 17081,
+    "deck": "tittleDeck",
+    "activeFace": 1,
+    "x": 1160,
+    "y": 560,
+    "parent": "floor"
+  },
+  "d7v5": {
+    "type": "card",
+    "cardType": "Circle Green 1",
+    "id": "d7v5",
+    "z": 17087,
+    "deck": "tittleDeck",
+    "x": 1160,
+    "y": 740,
+    "activeFace": 1,
+    "parent": "floor"
+  },
+  "92fu": {
+    "type": "card",
+    "cardType": "Circle Red 1",
+    "id": "92fu",
+    "z": 17083,
+    "deck": "tittleDeck",
+    "x": 1160,
+    "y": 620,
+    "activeFace": 1,
+    "parent": "floor"
+  },
+  "vy6b": {
+    "type": "card",
+    "cardType": "Circle Yellow 1",
+    "id": "vy6b",
+    "z": 17085,
+    "deck": "tittleDeck",
+    "x": 1160,
+    "y": 680,
+    "activeFace": 1,
+    "parent": "floor"
+  },
+  "qprm": {
+    "type": "card",
+    "cardType": "Cross Blue 1",
+    "id": "qprm",
+    "z": 17055,
+    "deck": "tittleDeck",
+    "x": 800,
+    "y": 560,
+    "activeFace": 1,
+    "parent": "floor"
+  },
+  "jyp8": {
+    "type": "card",
+    "cardType": "Cross Green 1",
+    "id": "jyp8",
+    "z": 17063,
+    "deck": "tittleDeck",
+    "activeFace": 1,
+    "x": 800,
+    "y": 740,
+    "parent": "floor"
+  },
+  "bb90": {
+    "type": "card",
+    "cardType": "Cross Red 1",
+    "id": "bb90",
+    "z": 17057,
+    "deck": "tittleDeck",
+    "x": 800,
+    "y": 620,
+    "activeFace": 1,
+    "parent": "floor"
+  },
+  "afmi": {
+    "type": "card",
+    "cardType": "Cross Yellow 1",
+    "id": "afmi",
+    "z": 17059,
+    "deck": "tittleDeck",
+    "activeFace": 1,
+    "parent": "floor",
+    "x": 800,
+    "y": 680
+  },
+  "vnbj": {
+    "type": "card",
+    "cardType": "Square Blue 1",
+    "id": "vnbj",
+    "z": 17073,
+    "deck": "tittleDeck",
+    "x": 1040,
+    "y": 560,
+    "activeFace": 1,
+    "parent": "floor"
+  },
+  "vaga": {
+    "type": "card",
+    "cardType": "Square Green 1",
+    "id": "vaga",
+    "z": 17079,
+    "deck": "tittleDeck",
+    "x": 1040,
+    "y": 740,
+    "activeFace": 1,
+    "parent": "floor"
+  },
+  "yfur": {
+    "type": "card",
+    "cardType": "Square Yellow 1",
+    "id": "yfur",
+    "z": 17077,
+    "deck": "tittleDeck",
+    "activeFace": 1,
+    "x": 1040,
+    "y": 680,
+    "parent": "floor"
+  },
+  "gph6": {
+    "type": "card",
+    "cardType": "Square Red 1",
+    "id": "gph6",
+    "z": 17075,
+    "deck": "tittleDeck",
+    "x": 1040,
+    "y": 620,
+    "activeFace": 1,
+    "parent": "floor"
+  },
+  "1tmz": {
+    "type": "card",
+    "cardType": "Triangle Blue 1",
+    "id": "1tmz",
+    "z": 17065,
+    "deck": "tittleDeck",
+    "x": 920,
+    "y": 560,
+    "activeFace": 1,
+    "parent": "floor"
+  },
+  "m322": {
+    "type": "card",
+    "cardType": "Triangle Green 1",
+    "id": "m322",
+    "z": 17071,
+    "deck": "tittleDeck",
+    "x": 920,
+    "y": 740,
+    "activeFace": 1,
+    "parent": "floor"
+  },
+  "c6z8": {
+    "type": "card",
+    "cardType": "Triangle Red 1",
+    "id": "c6z8",
+    "z": 17067,
+    "deck": "tittleDeck",
+    "activeFace": 1,
+    "x": 920,
+    "y": 620,
+    "parent": "floor"
+  },
+  "rjgy": {
+    "type": "card",
+    "cardType": "Triangle Yellow 1",
+    "id": "rjgy",
+    "z": 17069,
+    "deck": "tittleDeck",
+    "x": 920,
+    "y": 680,
+    "activeFace": 1,
+    "parent": "floor"
+  },
+  "h3nc": {
+    "type": "card",
+    "cardType": "Wild Card",
+    "id": "h3nc",
+    "z": 17217,
+    "deck": "tittleDeck",
+    "activeFace": 1,
+    "x": 1280,
+    "y": 920,
+    "parent": "floor"
+  },
+  "tittleDeck": {
+    "type": "deck",
+    "id": "tittleDeck",
+    "x": 4,
+    "y": 4,
+    "z": 16779,
+    "cardTypes": {
+      "Circle Blue 1": {
+        "image": "/assets/-1069094621_382",
+        "cardValue": "1"
+      },
+      "Circle Green 1": {
+        "image": "/assets/2017378147_382",
+        "cardValue": "1"
+      },
+      "Circle Red 1": {
+        "image": "/assets/-1947469753_382",
+        "cardValue": "1"
+      },
+      "Circle Yellow 1": {
+        "image": "/assets/-1464275780_382",
+        "cardValue": "1"
+      },
+      "Cross Blue 1": {
+        "image": "/assets/-1443227368_341",
+        "cardValue": "1"
+      },
+      "Cross Green 1": {
+        "image": "/assets/636175176_341",
+        "cardValue": "1"
+      },
+      "Cross Red 1": {
+        "image": "/assets/1938702977_341",
+        "cardValue": "1"
+      },
+      "Cross Yellow 1": {
+        "image": "/assets/1111548579_341",
+        "cardValue": "1"
+      },
+      "Square Blue 1": {
+        "image": "/assets/1583348792_306",
+        "cardValue": "1"
+      },
+      "Square Green 1": {
+        "image": "/assets/-174008565_306",
+        "cardValue": "1"
+      },
+      "Square Yellow 1": {
+        "image": "/assets/-1657637438_306",
+        "cardValue": "1"
+      },
+      "Square Red 1": {
+        "image": "/assets/-1392412935_306",
+        "cardValue": "1"
+      },
+      "Triangle Blue 1": {
+        "image": "/assets/-1433603109_304",
+        "cardValue": "1"
+      },
+      "Triangle Green 1": {
+        "image": "/assets/149642662_304",
+        "cardValue": "1"
+      },
+      "Triangle Red 1": {
+        "image": "/assets/-383195435_304",
+        "cardValue": "1"
+      },
+      "Triangle Yellow 1": {
+        "image": "/assets/-970400507_304",
+        "cardValue": "1"
+      },
+      "Circle Blue 2": {
+        "image": "/assets/-1069094621_382",
+        "cardValue": "2"
+      },
+      "Circle Green 2": {
+        "image": "/assets/2017378147_382",
+        "cardValue": "2"
+      },
+      "Circle Red 2": {
+        "image": "/assets/-1947469753_382",
+        "cardValue": "2"
+      },
+      "Circle Yellow 2": {
+        "image": "/assets/-1464275780_382",
+        "cardValue": "2"
+      },
+      "Cross Blue 2": {
+        "image": "/assets/-1443227368_341",
+        "cardValue": "2"
+      },
+      "Cross Green 2": {
+        "image": "/assets/636175176_341",
+        "cardValue": "2"
+      },
+      "Cross Red 2": {
+        "image": "/assets/1938702977_341",
+        "cardValue": "2"
+      },
+      "Square Green 2": {
+        "image": "/assets/-174008565_306",
+        "cardValue": "2"
+      },
+      "Square Red 2": {
+        "image": "/assets/-1392412935_306",
+        "cardValue": "2"
+      },
+      "Cross Yellow 2": {
+        "image": "/assets/1111548579_341",
+        "cardValue": "2"
+      },
+      "Square Blue 2": {
+        "image": "/assets/1583348792_306",
+        "cardValue": "2"
+      },
+      "Square Yellow 2": {
+        "image": "/assets/-1657637438_306",
+        "cardValue": "2"
+      },
+      "Triangle Blue 2": {
+        "image": "/assets/-1433603109_304",
+        "cardValue": "2"
+      },
+      "Triangle Green 2": {
+        "image": "/assets/149642662_304",
+        "cardValue": "2"
+      },
+      "Triangle Red 2": {
+        "image": "/assets/-383195435_304",
+        "cardValue": "2"
+      },
+      "Triangle Yellow 2": {
+        "image": "/assets/-970400507_304",
+        "cardValue": "2"
+      },
+      "Circle Blue 3": {
+        "image": "/assets/-1069094621_382",
+        "cardValue": "3"
+      },
+      "Circle Green 3": {
+        "image": "/assets/2017378147_382",
+        "cardValue": "3"
+      },
+      "Circle Red 3": {
+        "image": "/assets/-1947469753_382",
+        "cardValue": "3"
+      },
+      "Cross Blue 3": {
+        "image": "/assets/-1443227368_341",
+        "cardValue": "3"
+      },
+      "Circle Yellow 3": {
+        "image": "/assets/-1464275780_382",
+        "cardValue": "3"
+      },
+      "Cross Red 3": {
+        "image": "/assets/1938702977_341",
+        "cardValue": "3"
+      },
+      "Cross Green 3": {
+        "image": "/assets/636175176_341",
+        "cardValue": "3"
+      },
+      "Square Red 3": {
+        "image": "/assets/-1392412935_306",
+        "cardValue": "3"
+      },
+      "Cross Yellow 3": {
+        "image": "/assets/1111548579_341",
+        "cardValue": "3"
+      },
+      "Square Blue 3": {
+        "image": "/assets/1583348792_306",
+        "cardValue": "3"
+      },
+      "Square Green 3": {
+        "image": "/assets/-174008565_306",
+        "cardValue": "3"
+      },
+      "Square Yellow 3": {
+        "image": "/assets/-1657637438_306",
+        "cardValue": "3"
+      },
+      "Triangle Blue 3": {
+        "image": "/assets/-1433603109_304",
+        "cardValue": "3"
+      },
+      "Triangle Green 3": {
+        "image": "/assets/149642662_304",
+        "cardValue": "3"
+      },
+      "Triangle Red 3": {
+        "image": "/assets/-383195435_304",
+        "cardValue": "3"
+      },
+      "Triangle Yellow 3": {
+        "image": "/assets/-970400507_304",
+        "cardValue": "3"
+      },
+      "Circle Blue 4": {
+        "image": "/assets/-1069094621_382",
+        "cardValue": "4"
+      },
+      "Circle Green 4": {
+        "image": "/assets/2017378147_382",
+        "cardValue": "4"
+      },
+      "Circle Red 4": {
+        "image": "/assets/-1947469753_382",
+        "cardValue": "4"
+      },
+      "Circle Yellow 4": {
+        "image": "/assets/-1464275780_382",
+        "cardValue": "4"
+      },
+      "Cross Blue 4": {
+        "image": "/assets/-1443227368_341",
+        "cardValue": "4"
+      },
+      "Cross Green 4": {
+        "image": "/assets/636175176_341",
+        "cardValue": "4"
+      },
+      "Cross Red 4": {
+        "image": "/assets/1938702977_341",
+        "cardValue": "4"
+      },
+      "Cross Yellow 4": {
+        "image": "/assets/1111548579_341",
+        "cardValue": "4"
+      },
+      "Square Blue 4": {
+        "image": "/assets/1583348792_306",
+        "cardValue": "4"
+      },
+      "Square Green 4": {
+        "image": "/assets/-174008565_306",
+        "cardValue": "4"
+      },
+      "Square Red 4": {
+        "image": "/assets/-1392412935_306",
+        "cardValue": "4"
+      },
+      "Triangle Red 4": {
+        "image": "/assets/-383195435_304",
+        "cardValue": "4"
+      },
+      "Triangle Yellow 4": {
+        "image": "/assets/-970400507_304",
+        "cardValue": "4"
+      },
+      "Square Yellow 4": {
+        "image": "/assets/-1657637438_306",
+        "cardValue": "4"
+      },
+      "Triangle Blue 4": {
+        "image": "/assets/-1433603109_304",
+        "cardValue": "4"
+      },
+      "Triangle Green 4": {
+        "image": "/assets/149642662_304",
+        "cardValue": "4"
+      },
+      "Wild Card": {
+        "image": "/assets/-2117787764_20438",
+        "cardValue": ""
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "grey",
+            "value": "",
+            "width": 60,
+            "height": 60
+          }
+        ],
+        "border": false,
+        "radius": 1
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "black",
+            "width": 60,
+            "height": 60,
+            "css": "border: 3px solid white",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 10,
+            "fontSize": 35,
+            "color": "white",
+            "textAlign": "center",
+            "width": 60,
+            "height": 60,
+            "dynamicProperties": {
+              "value": "cardValue"
+            }
+          }
+        ],
+        "border": false,
+        "radius": false
+      }
+    ],
+    "cardDefaults": {
+      "pilesWith": {
+        "type": "card"
+      },
+      "width": 60,
+      "height": 60,
+      "shift": true,
+      "overlap": false,
+      "ignoreOnLeave": true,
+      "grid": [
+        {
+          "x": 60,
+          "y": 60,
+          "offsetX": -30,
+          "offsetY": -30
+        }
+      ],
+      "parentChangeRoutine": [
+        {
+          "func": "SELECT",
+          "property": "type",
+          "value": "pile",
+          "type": "pile"
+        },
+        {
+          "func": "SET",
+          "property": "movable",
+          "value": false
+        }
+      ]
+    },
+    "parent": "cardHolder"
+  },
+  "cardHolder": {
+    "type": "holder",
+    "id": "cardHolder",
+    "x": 1524,
+    "y": 275,
+    "width": 68,
+    "height": 68,
+    "layer": 15,
+    "z": 10369,
+    "inheritChildZ": true,
+    "css": "background: #ffffff80"
+  },
+  "aqyw": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Circle Blue 2",
+    "id": "aqyw",
+    "z": 17419,
+    "x": 1760,
+    "y": 560,
+    "activeFace": 1,
+    "parent": "floor"
+  },
+  "qf8h": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Circle Green 2",
+    "id": "qf8h",
+    "z": 17417,
+    "activeFace": 1,
+    "x": 1760,
+    "y": 740,
+    "parent": "floor"
+  },
+  "yb1x": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Circle Red 2",
+    "id": "yb1x",
+    "z": 17336,
+    "activeFace": 1,
+    "x": 1760,
+    "y": 620,
+    "parent": "floor"
+  },
+  "kym1": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Circle Yellow 2",
+    "id": "kym1",
+    "z": 17413,
+    "activeFace": 1,
+    "parent": "floor",
+    "x": 1760,
+    "y": 680
+  },
+  "xebe": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Cross Blue 2",
+    "id": "xebe",
+    "z": 17089,
+    "activeFace": 1,
+    "x": 1400,
+    "y": 560,
+    "parent": "floor"
+  },
+  "godp": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Cross Green 2",
+    "id": "godp",
+    "z": 17095,
+    "activeFace": 1,
+    "x": 1400,
+    "y": 740,
+    "parent": "floor"
+  },
+  "b9jn": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Cross Red 2",
+    "id": "b9jn",
+    "z": 17091,
+    "activeFace": 1,
+    "x": 1400,
+    "y": 620,
+    "parent": "floor"
+  },
+  "bqfz": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Square Green 2",
+    "id": "bqfz",
+    "z": 17400,
+    "x": 1640,
+    "y": 740,
+    "activeFace": 1,
+    "parent": "floor"
+  },
+  "c233": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Square Red 2",
+    "id": "c233",
+    "z": 17109,
+    "activeFace": 1,
+    "x": 1640,
+    "y": 620,
+    "parent": "floor"
+  },
+  "xig7": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Cross Yellow 2",
+    "id": "xig7",
+    "z": 17093,
+    "activeFace": 1,
+    "x": 1400,
+    "y": 680,
+    "parent": "floor"
+  },
+  "07q3": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Square Blue 2",
+    "id": "07q3",
+    "z": 17107,
+    "x": 1640,
+    "y": 560,
+    "activeFace": 1,
+    "parent": "floor"
+  },
+  "djf3": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Square Yellow 2",
+    "id": "djf3",
+    "z": 17111,
+    "x": 1640,
+    "y": 680,
+    "activeFace": 1,
+    "parent": "floor"
+  },
+  "iqyl": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Triangle Blue 2",
+    "id": "iqyl",
+    "z": 17097,
+    "activeFace": 1,
+    "x": 1520,
+    "y": 560,
+    "parent": "floor"
+  },
+  "lorb": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Triangle Green 2",
+    "id": "lorb",
+    "z": 17103,
+    "activeFace": 1,
+    "x": 1520,
+    "y": 740,
+    "parent": "floor"
+  },
+  "bn4x": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Triangle Red 2",
+    "id": "bn4x",
+    "z": 17099,
+    "activeFace": 1,
+    "x": 1520,
+    "y": 620,
+    "parent": "floor"
+  },
+  "luc2": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Triangle Yellow 2",
+    "id": "luc2",
+    "z": 17101,
+    "x": 1520,
+    "y": 680,
+    "activeFace": 1,
+    "parent": "floor"
+  },
+  "cs1a": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Circle Blue 3",
+    "id": "cs1a",
+    "z": 17151,
+    "activeFace": 1,
+    "x": 1160,
+    "y": 1220,
+    "parent": "floor"
+  },
+  "k8xa": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Circle Green 3",
+    "id": "k8xa",
+    "z": 17157,
+    "activeFace": 1,
+    "x": 1160,
+    "y": 1400,
+    "parent": "floor"
+  },
+  "1cf9": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Circle Red 3",
+    "id": "1cf9",
+    "z": 17153,
+    "activeFace": 1,
+    "x": 1160,
+    "y": 1280,
+    "parent": "floor"
+  },
+  "96mw": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Cross Blue 3",
+    "id": "96mw",
+    "z": 17127,
+    "activeFace": 1,
+    "x": 800,
+    "y": 1220,
+    "parent": "floor"
+  },
+  "qi8e": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Circle Yellow 3",
+    "id": "qi8e",
+    "z": 17155,
+    "activeFace": 1,
+    "x": 1160,
+    "y": 1340,
+    "parent": "floor"
+  },
+  "1jc2": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Cross Red 3",
+    "id": "1jc2",
+    "z": 17129,
+    "activeFace": 1,
+    "x": 800,
+    "y": 1280,
+    "parent": "floor"
+  },
+  "rfhw": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Cross Green 3",
+    "id": "rfhw",
+    "z": 17133,
+    "activeFace": 1,
+    "x": 800,
+    "y": 1400,
+    "parent": "floor"
+  },
+  "ucmd": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Square Red 3",
+    "id": "ucmd",
+    "z": 17145,
+    "activeFace": 1,
+    "x": 1040,
+    "y": 1280,
+    "parent": "floor"
+  },
+  "eiud": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Cross Yellow 3",
+    "id": "eiud",
+    "z": 17131,
+    "activeFace": 1,
+    "x": 800,
+    "y": 1340,
+    "parent": "floor"
+  },
+  "k9ht": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Square Blue 3",
+    "id": "k9ht",
+    "z": 17143,
+    "activeFace": 1,
+    "x": 1040,
+    "y": 1220,
+    "parent": "floor"
+  },
+  "y8ko": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Square Green 3",
+    "id": "y8ko",
+    "z": 17149,
+    "activeFace": 1,
+    "x": 1040,
+    "y": 1400,
+    "parent": "floor"
+  },
+  "jksj": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Square Yellow 3",
+    "id": "jksj",
+    "z": 17147,
+    "activeFace": 1,
+    "x": 1040,
+    "y": 1340,
+    "parent": "floor"
+  },
+  "ntzv": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Triangle Blue 3",
+    "id": "ntzv",
+    "z": 17135,
+    "activeFace": 1,
+    "x": 920,
+    "y": 1220,
+    "parent": "floor"
+  },
+  "gsrg": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Triangle Green 3",
+    "id": "gsrg",
+    "z": 17141,
+    "activeFace": 1,
+    "x": 920,
+    "y": 1400,
+    "parent": "floor"
+  },
+  "p3sa": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Triangle Red 3",
+    "id": "p3sa",
+    "z": 17137,
+    "x": 920,
+    "y": 1280,
+    "activeFace": 1,
+    "parent": "floor"
+  },
+  "ap0m": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Triangle Yellow 3",
+    "id": "ap0m",
+    "z": 17139,
+    "x": 920,
+    "y": 1340,
+    "activeFace": 1,
+    "parent": "floor"
+  },
+  "fm4k": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Circle Blue 4",
+    "id": "fm4k",
+    "z": 17183,
+    "activeFace": 1,
+    "x": 1760,
+    "y": 1220,
+    "parent": "floor"
+  },
+  "zlph": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Circle Green 4",
+    "id": "zlph",
+    "z": 17189,
+    "activeFace": 1,
+    "x": 1760,
+    "y": 1400,
+    "parent": "floor"
+  },
+  "952p": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Circle Red 4",
+    "id": "952p",
+    "z": 17185,
+    "x": 1760,
+    "y": 1280,
+    "activeFace": 1,
+    "parent": "floor"
+  },
+  "cn5c": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Circle Yellow 4",
+    "id": "cn5c",
+    "z": 17187,
+    "activeFace": 1,
+    "x": 1760,
+    "y": 1340,
+    "parent": "floor"
+  },
+  "674t": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Cross Blue 4",
+    "id": "674t",
+    "z": 17159,
+    "activeFace": 1,
+    "x": 1400,
+    "y": 1220,
+    "parent": "floor"
+  },
+  "24ke": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Cross Green 4",
+    "id": "24ke",
+    "z": 17165,
+    "activeFace": 1,
+    "x": 1400,
+    "y": 1400,
+    "parent": "floor"
+  },
+  "2xl4": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Cross Red 4",
+    "id": "2xl4",
+    "z": 17161,
+    "activeFace": 1,
+    "x": 1400,
+    "y": 1280,
+    "parent": "floor"
+  },
+  "7rkj": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Cross Yellow 4",
+    "id": "7rkj",
+    "z": 17163,
+    "activeFace": 1,
+    "x": 1400,
+    "y": 1340,
+    "parent": "floor"
+  },
+  "ans1": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Square Blue 4",
+    "id": "ans1",
+    "z": 17175,
+    "activeFace": 1,
+    "x": 1640,
+    "y": 1220,
+    "parent": "floor"
+  },
+  "syjk": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Square Green 4",
+    "id": "syjk",
+    "z": 17181,
+    "activeFace": 1,
+    "x": 1640,
+    "y": 1400,
+    "parent": "floor"
+  },
+  "3w4f": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Square Red 4",
+    "id": "3w4f",
+    "z": 17177,
+    "activeFace": 1,
+    "x": 1640,
+    "y": 1280,
+    "parent": "floor"
+  },
+  "a5kx": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Triangle Red 4",
+    "id": "a5kx",
+    "z": 17169,
+    "x": 1520,
+    "y": 1280,
+    "activeFace": 1,
+    "parent": "floor"
+  },
+  "4try": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Triangle Yellow 4",
+    "id": "4try",
+    "z": 17171,
+    "x": 1520,
+    "y": 1340,
+    "activeFace": 1,
+    "parent": "floor"
+  },
+  "nrpr": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Square Yellow 4",
+    "id": "nrpr",
+    "z": 17179,
+    "x": 1640,
+    "y": 1340,
+    "activeFace": 1,
+    "parent": "floor"
+  },
+  "3btg": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Triangle Blue 4",
+    "id": "3btg",
+    "z": 17167,
+    "x": 1520,
+    "y": 1220,
+    "activeFace": 1,
+    "parent": "floor"
+  },
+  "met9": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Triangle Green 4",
+    "id": "met9",
+    "z": 17173,
+    "x": 1520,
+    "y": 1400,
+    "activeFace": 1,
+    "parent": "floor"
+  },
+  "0ydf": {
+    "deck": "tittleDeck",
+    "type": "card",
+    "cardType": "Wild Card",
+    "id": "0ydf",
+    "z": 17125,
+    "activeFace": 1,
+    "parent": "floor",
+    "x": 1280,
+    "y": 1040
+  },
+  "ligz": {
+    "deck": "Marker Cards",
+    "type": "card",
+    "cardType": "AC",
+    "z": 16828,
+    "clonedFrom": "1io6",
+    "x": 4,
+    "y": 4,
+    "id": "ligz"
+  },
+  "l4pk": {
+    "deck": "Marker Cards",
+    "type": "card",
+    "cardType": "AC",
+    "z": 16829,
+    "clonedFrom": "1io6",
+    "x": 4,
+    "y": 4,
+    "id": "l4pk"
+  },
+  "markerHolder": {
+    "type": "holder",
+    "id": "markerHolder",
+    "x": 1524,
+    "y": 617,
+    "width": 68,
+    "height": 68,
+    "layer": 15,
+    "z": 10370,
+    "css": "background: #ffffff80",
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "SELECT",
+        "property": "marker",
+        "value": true,
+        "source": "DEFAULT"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": 1,
+        "relation": "<",
+        "operand2": "${COUNT}",
+        "thenRoutine": [
+          {
+            "func": "DELETE",
+            "collection": "child"
+          }
+        ]
+      }
+    ],
+    "dropTarget": {
+      "marker": true
+    },
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "SELECT",
+        "property": "marker",
+        "value": true,
+        "source": "DEFAULT"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": 0,
+        "relation": "==",
+        "operand2": "${COUNT}",
+        "thenRoutine": [
+          {
+            "func": "CLONE",
+            "source": "child"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "${thisID}"
+          },
+          {
+            "func": "MOVE",
+            "from": "${thisID}",
+            "to": "${thisID}"
+          }
+        ]
+      }
+    ]
+  },
+  "background": {
+    "id": "background",
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/-753447363_159340"
+  },
+  "p2ScoreMinus": {
+    "type": "button",
+    "id": "p2ScoreMinus",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "layer": 15,
+    "movableInEdit": false,
+    "backgroundColor": "#00a2e8",
+    "backgroundColorOH": "#96BFE1",
+    "borderColor": "black",
+    "borderColorOH": "white",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "p1Score",
+        "mode": "inc",
+        "value": -1
+      }
+    ],
+    "text": "-",
+    "parent": "p1Score"
+  },
+  "p2ScorePlus": {
+    "type": "button",
+    "id": "p2ScorePlus",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "layer": 15,
+    "movableInEdit": false,
+    "backgroundColor": "#00a2e8",
+    "backgroundColorOH": "#96BFE1",
+    "borderColor": "black",
+    "borderColorOH": "white",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "p1Score",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "text": "+",
+    "parent": "p1Score"
+  },
+  "p1ScoreMinus": {
+    "type": "button",
+    "id": "p1ScoreMinus",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "layer": 15,
+    "movableInEdit": false,
+    "backgroundColor": "#ed1c24",
+    "backgroundColorOH": "#F7C8C8",
+    "borderColor": "black",
+    "borderColorOH": "white",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "p2Score",
+        "mode": "inc",
+        "value": -1
+      }
+    ],
+    "text": "-",
+    "parent": "p2Score"
+  },
+  "p1ScorePlus": {
+    "type": "button",
+    "id": "p1ScorePlus",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "layer": 15,
+    "movableInEdit": false,
+    "backgroundColor": "#ed1c24",
+    "backgroundColorOH": "#F7C8C8",
+    "borderColor": "black",
+    "borderColorOH": "white",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "p2Score",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "text": "+",
+    "parent": "p2Score"
+  },
+  "p3Score": {
+    "type": "label",
+    "id": "p3Score",
+    "x": 10,
+    "y": 950,
+    "width": 140,
+    "height": 44,
+    "layer": 15,
+    "z": 2481,
+    "css": "font-size: 30px",
+    "editable": true,
+    "text": 0,
+    "linkedToSeat": "seat4"
+  },
+  "p3ScoreMinus": {
+    "type": "button",
+    "id": "p3ScoreMinus",
+    "parent": "p3Score",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "layer": 15,
+    "movableInEdit": false,
+    "backgroundColor": "#22b14c",
+    "backgroundColorOH": "#CEFBD8",
+    "borderColor": "black",
+    "borderColorOH": "white",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "p3Score",
+        "mode": "inc",
+        "value": -1
+      }
+    ],
+    "text": "-"
+  },
+  "p3ScorePlus": {
+    "type": "button",
+    "id": "p3ScorePlus",
+    "parent": "p3Score",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "layer": 15,
+    "movableInEdit": false,
+    "backgroundColor": "#22b14c",
+    "backgroundColorOH": "#CEFBD8",
+    "borderColor": "black",
+    "borderColorOH": "white",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "p3Score",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "text": "+"
+  },
+  "p4Score": {
+    "type": "label",
+    "id": "p4Score",
+    "x": 10,
+    "y": 815,
+    "width": 140,
+    "height": 44,
+    "layer": 15,
+    "z": 2494,
+    "css": "font-size: 30px",
+    "editable": true,
+    "text": 0,
+    "linkedToSeat": "seat3"
+  },
+  "p4ScoreMinus": {
+    "type": "button",
+    "id": "p4ScoreMinus",
+    "parent": "p4Score",
+    "x": 4,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "layer": 15,
+    "movableInEdit": false,
+    "backgroundColor": "#ffc90e",
+    "backgroundColorOH": "#FBFBCE",
+    "borderColor": "black",
+    "borderColorOH": "white",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "p4Score",
+        "mode": "inc",
+        "value": -1
+      }
+    ],
+    "text": "-"
+  },
+  "p4ScorePlus": {
+    "type": "button",
+    "id": "p4ScorePlus",
+    "parent": "p4Score",
+    "x": 100,
+    "y": -2,
+    "width": 36,
+    "height": 36,
+    "layer": 15,
+    "movableInEdit": false,
+    "backgroundColor": "#ffc90e",
+    "backgroundColorOH": "#FBFBCE",
+    "borderColor": "black",
+    "borderColorOH": "white",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "p4Score",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "text": "+"
+  },
+  "l2jq": {
+    "type": "label",
+    "z": 1,
+    "id": "l2jq",
+    "text": "Dead Ends",
+    "css": "color: black; ",
+    "parent": "markerHolder",
+    "y": 70,
+    "x": -15
+  },
+  "floor": {
+    "type": "holder",
+    "id": "floor",
+    "x": -500,
+    "y": -500,
+    "width": 2600,
+    "height": 2000,
+    "z": 5,
+    "movableInEdit": false,
+    "alignChildren": false,
+    "classes": "transparent",
+    "css": "border: 0px !important",
+    "dropTarget": {
+      "shift": true
+    }
+  },
+  "restart": {
+    "type": "button",
+    "id": "restart",
+    "width": 50,
+    "height": 50,
+    "layer": 15,
+    "z": 10375,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Recalling cards...",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to recall all cards and reset the scores. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "cardHolder"
+      },
+      {
+        "func": "FLIP",
+        "holder": "cardHolder",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "cardHolder"
+      },
+      {
+        "func": "SELECT",
+        "property": "marker",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "markerHolder"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": 4
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": 4
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "shiftcenter"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "p1Score",
+          "p2Score",
+          "p3Score",
+          "p4Score"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": 0
+      }
+    ],
+    "color": "white",
+    "css": "font-size: 40px; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
+    "x": 1545,
+    "classes": "symbols",
+    "text": "restart",
+    "startUpRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "cardHolder"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "RECALL",
+            "holder": "cardHolder"
+          },
+          {
+            "func": "FLIP",
+            "holder": "cardHolder",
+            "face": 0
+          },
+          {
+            "func": "SHUFFLE",
+            "holder": "cardHolder"
+          }
+        ]
+      }
+    ]
+  },
+  "_meta": {
+    "version": 6,
+    "info": {
+      "name": "Tittle",
+      "image": "/assets/371528430_9397",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/119632/iota",
+      "year": "2012",
+      "mode": "vs",
+      "time": "30",
+      "players": "2-4",
+      "language": "en-US",
+      "variant": "",
+      "attribution": "The game layout and images (including the library image) were done by LawDawg and are released to the Public Domain under CC0.\n\nThe background picture is by Dawn Hudson (cropped and colors modified) and released to the public domain under the CC0 license at https://publicdomainpictures.net/en/view-image.php?image=71643&picture=colourful-flame-background.",
+      "similarName": "IOTA",
+      "description": "Place cards in tile pattern on board matching 4 shapes and 4 colors.  Player with most points wins.",
+      "showName": true,
+      "helpText": "Players take seats. Move 4 cards to hand on right of screen using +4 button. Play cards and keep score manually. Replace cards using +1 button. The black \"dead end\" squares are optional. You can use them to indicate a line that is impossible to complete because a card has already been played elsewhere.",
+      "lastUpdate": 1659321088000
+    }
+  },
+  "plus7": {
+    "type": "button",
+    "id": "plus7",
+    "x": 1547,
+    "y": 161,
+    "width": 50,
+    "height": 50,
+    "z": 2081,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "cardHolder",
+        "to": "hand",
+        "count": 4
+      }
+    ],
+    "css": "background-size: 80%; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black; font-size: 25px",
+    "text": "+4"
+  },
+  "plus1": {
+    "type": "button",
+    "id": "plus1",
+    "x": 1547,
+    "y": 217,
+    "width": 50,
+    "height": 50,
+    "z": 2082,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "cardHolder",
+        "to": "hand",
+        "count": 1
+      }
+    ],
+    "css": "background-size: 80%; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black; font-size: 25px",
+    "text": "+1"
+  },
+  "oj9g": {
+    "width": 55,
+    "height": 55,
+    "css": "background:black; border: 3px solid white",
+    "x": 4,
+    "y": 4,
+    "z": 30,
+    "grid": [
+      {
+        "x": 60,
+        "y": 60,
+        "offsetX": -30,
+        "offsetY": -30
+      }
+    ],
+    "marker": true,
+    "shift": true,
+    "clonedFrom": "masterMarker",
+    "id": "oj9g",
+    "parent": "markerHolder"
+  },
+  "shiftup": {
+    "id": "shiftup",
+    "x": 1514,
+    "y": 875,
+    "width": 50,
+    "height": 50,
+    "layer": 2,
+    "z": 613,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "relation": "-",
+        "value": 50
+      }
+    ],
+    "css": {
+      "default": {
+        "font-size": "50px"
+      },
+      ":hover": {
+        "color": "grey"
+      }
+    },
+    "text": "arrow_up"
+  },
+  "shiftcenter": {
+    "id": "shiftcenter",
+    "x": 1519,
+    "y": 920,
+    "width": 40,
+    "height": 40,
+    "layer": 2,
+    "z": 615,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": -500
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": -500
+      }
+    ],
+    "css": {
+      "default": {
+        "font-size": "40px"
+      },
+      ":hover": {
+        "color": "grey"
+      }
+    },
+    "text": "visibility"
+  },
+  "shiftright": {
+    "id": "shiftright",
+    "x": 1558,
+    "y": 915,
+    "width": 50,
+    "height": 50,
+    "layer": 2,
+    "z": 612,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "+",
+        "value": 50
+      }
+    ],
+    "css": {
+      "default": {
+        "font-size": "50px"
+      },
+      ":hover": {
+        "color": "grey"
+      }
+    },
+    "text": "arrow_right"
+  },
+  "shiftdown": {
+    "id": "shiftdown",
+    "x": 1514,
+    "y": 955,
+    "width": 50,
+    "height": 50,
+    "layer": 2,
+    "z": 611,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "relation": "+",
+        "value": 50
+      }
+    ],
+    "css": {
+      "default": {
+        "font-size": "50px"
+      },
+      ":hover": {
+        "color": "grey"
+      }
+    },
+    "text": "arrow_down"
+  },
+  "shiftleft": {
+    "id": "shiftleft",
+    "x": 1470,
+    "y": 915,
+    "width": 50,
+    "height": 50,
+    "layer": 2,
+    "z": 614,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "floor"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "relation": "-",
+        "value": 50
+      }
+    ],
+    "css": {
+      "default": {
+        "font-size": "50px"
+      },
+      ":hover": {
+        "color": "grey"
+      }
+    },
+    "text": "arrow_left"
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "z": 2083,
+    "movableInEdit": false,
+    "y": 5,
+    "hideWhenUnused": true,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "restart",
+        "routine": "startUpRoutine"
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ]
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "y": 140,
+    "z": 2083,
+    "movableInEdit": false,
+    "hideWhenUnused": true,
+    "index": 2,
+    "turn": true,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "restart",
+        "routine": "startUpRoutine"
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ]
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "y": 750,
+    "z": 2083,
+    "movableInEdit": false,
+    "hideWhenUnused": true,
+    "index": 3,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "restart",
+        "routine": "startUpRoutine"
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ]
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "y": 890,
+    "z": 2083,
+    "movableInEdit": false,
+    "index": 4,
+    "hideWhenUnused": true,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "restart",
+        "routine": "startUpRoutine"
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ]
+  },
+  "p2Score": {
+    "type": "label",
+    "id": "p2Score",
+    "x": 10,
+    "y": 200,
+    "width": 140,
+    "height": 44,
+    "layer": 15,
+    "z": 10365,
+    "css": "font-size: 30px",
+    "editable": true,
+    "text": 0,
+    "linkedToSeat": "seat2"
+  },
+  "p1Score": {
+    "type": "label",
+    "id": "p1Score",
+    "x": 10,
+    "y": 65,
+    "width": 140,
+    "height": 44,
+    "layer": 15,
+    "z": 2474,
+    "css": "font-size: 30px",
+    "editable": true,
+    "text": 0,
+    "linkedToSeat": "seat1"
+  },
+  "next": {
+    "type": "button",
+    "id": "next",
+    "x": 1514,
+    "y": 777,
+    "z": 2097,
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ],
+    "text": "Next Player",
+    "movableInEdit": false
+  }
+}
