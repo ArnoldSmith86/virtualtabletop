@@ -1,0 +1,1429 @@
+{
+  "A1": {
+    "id": "A1",
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {},
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "css": "background: #888",
+    "width": 100,
+    "height": 100,
+    "y": 800,
+    "x": 400,
+    "enterRoutine": [
+      "// TAKE",
+      {
+        "func": "SELECT",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "child",
+        "loopRoutine": [
+          "var color = ${widgetID} substr 0 5",
+          "var childID = ${widgetID}"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${color}",
+        "operand2": "Black",
+        "thenRoutine": [
+          "var opponent = 'White'"
+        ],
+        "elseRoutine": [
+          "var opponent = 'Black'"
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${widgetID}",
+            "operand2": "${childID}",
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "value": "${opponent} Captures"
+              }
+            ]
+          }
+        ]
+      },
+      "// TURN",
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "==",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "turn",
+        "value": false
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SET",
+        "property": "turn",
+        "value": true
+      },
+      "// HIGHLIGHT",
+      {
+        "func": "SELECT",
+        "property": "highlight",
+        "relation": "!="
+      },
+      {
+        "func": "SET",
+        "property": "highlight"
+      },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "highlight",
+        "value": 1
+      }
+    ],
+    "borderRadius": 0
+  },
+  "A2": {
+    "id": "A2",
+    "type": "holder",
+    "y": 700,
+    "x": 400,
+    "inheritFrom": "B1"
+  },
+  "A3": {
+    "id": "A3",
+    "type": "holder",
+    "y": 600,
+    "inheritFrom": "A1"
+  },
+  "A4": {
+    "id": "A4",
+    "type": "holder",
+    "y": 500,
+    "inheritFrom": "A2"
+  },
+  "A5": {
+    "id": "A5",
+    "type": "holder",
+    "y": 400,
+    "inheritFrom": "A1"
+  },
+  "A6": {
+    "id": "A6",
+    "type": "holder",
+    "y": 300,
+    "inheritFrom": "A2"
+  },
+  "A7": {
+    "id": "A7",
+    "type": "holder",
+    "y": 200,
+    "inheritFrom": "A1"
+  },
+  "A8": {
+    "id": "A8",
+    "type": "holder",
+    "y": 100,
+    "inheritFrom": "A2"
+  },
+  "B1": {
+    "id": "B1",
+    "type": "holder",
+    "css": "background:#ccc",
+    "x": 500,
+    "inheritFrom": "A1"
+  },
+  "B2": {
+    "id": "B2",
+    "type": "holder",
+    "y": 700,
+    "x": 500,
+    "inheritFrom": "A1"
+  },
+  "B3": {
+    "id": "B3",
+    "type": "holder",
+    "y": 600,
+    "inheritFrom": "B1"
+  },
+  "B4": {
+    "id": "B4",
+    "type": "holder",
+    "y": 500,
+    "inheritFrom": "B2"
+  },
+  "B5": {
+    "id": "B5",
+    "type": "holder",
+    "y": 400,
+    "inheritFrom": "B1"
+  },
+  "B6": {
+    "id": "B6",
+    "type": "holder",
+    "y": 300,
+    "inheritFrom": "B2"
+  },
+  "B7": {
+    "id": "B7",
+    "type": "holder",
+    "y": 200,
+    "inheritFrom": "B1"
+  },
+  "B8": {
+    "id": "B8",
+    "type": "holder",
+    "y": 100,
+    "inheritFrom": "B2"
+  },
+  "C1": {
+    "id": "C1",
+    "type": "holder",
+    "x": 600,
+    "inheritFrom": "A1"
+  },
+  "C2": {
+    "id": "C2",
+    "type": "holder",
+    "x": 600,
+    "inheritFrom": "A2"
+  },
+  "C3": {
+    "id": "C3",
+    "type": "holder",
+    "x": 600,
+    "inheritFrom": "A3"
+  },
+  "C4": {
+    "id": "C4",
+    "type": "holder",
+    "x": 600,
+    "inheritFrom": "A4"
+  },
+  "C5": {
+    "id": "C5",
+    "type": "holder",
+    "x": 600,
+    "inheritFrom": "A5"
+  },
+  "C6": {
+    "id": "C6",
+    "type": "holder",
+    "x": 600,
+    "inheritFrom": "A6"
+  },
+  "C7": {
+    "id": "C7",
+    "type": "holder",
+    "x": 600,
+    "inheritFrom": "A7"
+  },
+  "C8": {
+    "id": "C8",
+    "type": "holder",
+    "x": 600,
+    "inheritFrom": "A8"
+  },
+  "D1": {
+    "id": "D1",
+    "type": "holder",
+    "x": 700,
+    "inheritFrom": "B1"
+  },
+  "D2": {
+    "id": "D2",
+    "type": "holder",
+    "x": 700,
+    "inheritFrom": "B2"
+  },
+  "D3": {
+    "id": "D3",
+    "type": "holder",
+    "x": 700,
+    "inheritFrom": "B3"
+  },
+  "D4": {
+    "id": "D4",
+    "type": "holder",
+    "x": 700,
+    "inheritFrom": "B4"
+  },
+  "D5": {
+    "id": "D5",
+    "type": "holder",
+    "x": 700,
+    "inheritFrom": "B5"
+  },
+  "D6": {
+    "id": "D6",
+    "type": "holder",
+    "x": 700,
+    "inheritFrom": "B6"
+  },
+  "D7": {
+    "id": "D7",
+    "type": "holder",
+    "x": 700,
+    "inheritFrom": "B7"
+  },
+  "D8": {
+    "id": "D8",
+    "type": "holder",
+    "x": 700,
+    "inheritFrom": "B8"
+  },
+  "E1": {
+    "id": "E1",
+    "type": "holder",
+    "x": 800,
+    "inheritFrom": "A1"
+  },
+  "E2": {
+    "id": "E2",
+    "type": "holder",
+    "x": 800,
+    "inheritFrom": "A2"
+  },
+  "E3": {
+    "id": "E3",
+    "type": "holder",
+    "x": 800,
+    "inheritFrom": "A3"
+  },
+  "E4": {
+    "id": "E4",
+    "type": "holder",
+    "x": 800,
+    "inheritFrom": "A4"
+  },
+  "E5": {
+    "id": "E5",
+    "type": "holder",
+    "x": 800,
+    "inheritFrom": "A5"
+  },
+  "E6": {
+    "id": "E6",
+    "type": "holder",
+    "x": 800,
+    "inheritFrom": "A6"
+  },
+  "E7": {
+    "id": "E7",
+    "type": "holder",
+    "x": 800,
+    "inheritFrom": "A7"
+  },
+  "E8": {
+    "id": "E8",
+    "type": "holder",
+    "x": 800,
+    "inheritFrom": "A8"
+  },
+  "F1": {
+    "id": "F1",
+    "type": "holder",
+    "x": 900,
+    "inheritFrom": "B1"
+  },
+  "F2": {
+    "id": "F2",
+    "type": "holder",
+    "x": 900,
+    "inheritFrom": "B2"
+  },
+  "F3": {
+    "id": "F3",
+    "type": "holder",
+    "x": 900,
+    "inheritFrom": "B3"
+  },
+  "F4": {
+    "id": "F4",
+    "type": "holder",
+    "x": 900,
+    "inheritFrom": "B4"
+  },
+  "F5": {
+    "id": "F5",
+    "type": "holder",
+    "x": 900,
+    "inheritFrom": "B5"
+  },
+  "F6": {
+    "id": "F6",
+    "type": "holder",
+    "x": 900,
+    "inheritFrom": "B6"
+  },
+  "F7": {
+    "id": "F7",
+    "type": "holder",
+    "x": 900,
+    "inheritFrom": "B7"
+  },
+  "F8": {
+    "id": "F8",
+    "type": "holder",
+    "x": 900,
+    "inheritFrom": "B8"
+  },
+  "G1": {
+    "id": "G1",
+    "type": "holder",
+    "x": 1000,
+    "inheritFrom": "A1"
+  },
+  "G2": {
+    "id": "G2",
+    "type": "holder",
+    "x": 1000,
+    "inheritFrom": "A2"
+  },
+  "G3": {
+    "id": "G3",
+    "type": "holder",
+    "x": 1000,
+    "inheritFrom": "A3"
+  },
+  "G4": {
+    "id": "G4",
+    "type": "holder",
+    "x": 1000,
+    "inheritFrom": "A4"
+  },
+  "G5": {
+    "id": "G5",
+    "type": "holder",
+    "x": 1000,
+    "inheritFrom": "A5"
+  },
+  "G6": {
+    "id": "G6",
+    "type": "holder",
+    "x": 1000,
+    "inheritFrom": "A6"
+  },
+  "G7": {
+    "id": "G7",
+    "type": "holder",
+    "x": 1000,
+    "inheritFrom": "A7"
+  },
+  "G8": {
+    "id": "G8",
+    "type": "holder",
+    "x": 1000,
+    "inheritFrom": "A8"
+  },
+  "H1": {
+    "id": "H1",
+    "type": "holder",
+    "x": 1100,
+    "inheritFrom": "B1"
+  },
+  "H2": {
+    "id": "H2",
+    "type": "holder",
+    "x": 1100,
+    "inheritFrom": "B2"
+  },
+  "H3": {
+    "id": "H3",
+    "type": "holder",
+    "x": 1100,
+    "inheritFrom": "B3"
+  },
+  "H4": {
+    "id": "H4",
+    "type": "holder",
+    "x": 1100,
+    "inheritFrom": "B4"
+  },
+  "H5": {
+    "id": "H5",
+    "type": "holder",
+    "x": 1100,
+    "inheritFrom": "B5"
+  },
+  "H6": {
+    "id": "H6",
+    "type": "holder",
+    "x": 1100,
+    "inheritFrom": "B6"
+  },
+  "H7": {
+    "id": "H7",
+    "type": "holder",
+    "x": 1100,
+    "inheritFrom": "B7"
+  },
+  "H8": {
+    "id": "H8",
+    "type": "holder",
+    "x": 1100,
+    "inheritFrom": "B8"
+  },
+  "White Pawn A": {
+    "id": "White Pawn A",
+    "text": "♙︎",
+    "home": "A2",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 1,
+    "x": 0,
+    "y": 0,
+    "z": 11,
+    "activeFace": 0,
+    "parent": "A2"
+  },
+  "White Pawn B": {
+    "id": "White Pawn B",
+    "text": "♙︎",
+    "z": 10,
+    "parent": "B2",
+    "home": "B2",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 1,
+    "x": 0,
+    "y": 0
+  },
+  "White Pawn C": {
+    "id": "White Pawn C",
+    "text": "♙︎",
+    "z": 8,
+    "home": "C2",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 1,
+    "x": 0,
+    "y": 0,
+    "parent": "C2"
+  },
+  "White Pawn D": {
+    "id": "White Pawn D",
+    "text": "♙︎",
+    "z": 9,
+    "home": "D2",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 1,
+    "x": 0,
+    "y": 0,
+    "activeFace": 0,
+    "parent": "D2"
+  },
+  "White Pawn E": {
+    "id": "White Pawn E",
+    "text": "♙︎",
+    "z": 7,
+    "home": "E2",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 1,
+    "x": 0,
+    "y": 0,
+    "parent": "E2"
+  },
+  "White Pawn F": {
+    "id": "White Pawn F",
+    "text": "♙︎",
+    "z": 1,
+    "home": "F2",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "x": 0,
+    "y": 0,
+    "value": 1,
+    "parent": "F2"
+  },
+  "White Pawn G": {
+    "id": "White Pawn G",
+    "text": "♙︎",
+    "z": 600,
+    "home": "G2",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 1,
+    "x": 0,
+    "y": 0,
+    "parent": "G2"
+  },
+  "White Pawn H": {
+    "id": "White Pawn H",
+    "text": "♙︎",
+    "z": 699,
+    "home": "H2",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 1,
+    "x": 0,
+    "y": 0,
+    "parent": "H2"
+  },
+  "White Rook A": {
+    "id": "White Rook A",
+    "text": "♖",
+    "z": 720,
+    "home": "A1",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 5,
+    "x": 0,
+    "y": 0,
+    "parent": "A1"
+  },
+  "White Knight B": {
+    "id": "White Knight B",
+    "text": "♘",
+    "z": 6,
+    "home": "B1",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 3,
+    "x": 0,
+    "y": 0,
+    "activeFace": 0,
+    "parent": "B1"
+  },
+  "White Bishop C": {
+    "id": "White Bishop C",
+    "text": "♗",
+    "z": 3,
+    "home": "C1",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 3.1,
+    "x": 0,
+    "y": 0,
+    "parent": "C1"
+  },
+  "White Queen": {
+    "id": "White Queen",
+    "text": "♕",
+    "z": 1,
+    "home": "D1",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 9,
+    "x": 0,
+    "y": 0,
+    "activeFace": 0,
+    "parent": "D1"
+  },
+  "White King": {
+    "id": "White King",
+    "text": "♔",
+    "css": {
+      "font-size": "100px",
+      "color": "black",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "text-align": "center",
+      "text-shadow": "#fa0 ${PROPERTY highlight}px 0 10px"
+    },
+    "z": 722,
+    "home": "E1",
+    "value": 10,
+    "parent": "E1"
+  },
+  "White Bishop F": {
+    "id": "White Bishop F",
+    "text": "♗",
+    "z": 4,
+    "home": "F1",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 3.1,
+    "x": 0,
+    "y": 0,
+    "activeFace": 0,
+    "parent": "F1"
+  },
+  "White Knight G": {
+    "id": "White Knight G",
+    "text": "♘",
+    "z": 5,
+    "home": "G1",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 3,
+    "x": 0,
+    "y": 0,
+    "parent": "G1"
+  },
+  "White Rook H": {
+    "id": "White Rook H",
+    "text": "♖",
+    "z": 2,
+    "home": "H1",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 5,
+    "x": 0,
+    "y": 0,
+    "parent": "H1"
+  },
+  "Black Pawn A": {
+    "id": "Black Pawn A",
+    "text": "♟︎",
+    "z": 9,
+    "home": "A7",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 1,
+    "x": 0,
+    "y": 0,
+    "parent": "A7"
+  },
+  "Black Pawn B": {
+    "id": "Black Pawn B",
+    "text": "♟︎",
+    "z": 736,
+    "home": "B7",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 1,
+    "x": 0,
+    "y": 0,
+    "parent": "B7"
+  },
+  "Black Pawn C": {
+    "id": "Black Pawn C",
+    "text": "♟︎",
+    "z": 721,
+    "home": "C7",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 1,
+    "x": 0,
+    "y": 0,
+    "parent": "C7"
+  },
+  "Black Pawn D": {
+    "id": "Black Pawn D",
+    "text": "♟︎",
+    "z": 737,
+    "home": "D7",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 1,
+    "x": 0,
+    "y": 0,
+    "parent": "D7"
+  },
+  "Black Pawn E": {
+    "id": "Black Pawn E",
+    "text": "♟︎",
+    "z": 666,
+    "home": "E7",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 1,
+    "x": 0,
+    "y": 0,
+    "parent": "E7",
+    "activeFace": 0
+  },
+  "Black Pawn F": {
+    "id": "Black Pawn F",
+    "text": "♟︎",
+    "z": 8,
+    "home": "F7",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "x": 0,
+    "y": 0,
+    "value": 1,
+    "parent": "F7"
+  },
+  "Black Pawn G": {
+    "id": "Black Pawn G",
+    "text": "♟︎",
+    "z": 707,
+    "home": "G7",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 1,
+    "x": 0,
+    "y": 0,
+    "parent": "G7"
+  },
+  "Black Pawn H": {
+    "id": "Black Pawn H",
+    "text": "♟︎",
+    "z": 704,
+    "home": "H7",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 1,
+    "x": 0,
+    "y": 0,
+    "parent": "H7"
+  },
+  "Black Rook A": {
+    "id": "Black Rook A",
+    "text": "♜",
+    "z": 730,
+    "home": "A8",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 5,
+    "x": 0,
+    "y": 0,
+    "parent": "A8"
+  },
+  "Black Knight B": {
+    "id": "Black Knight B",
+    "text": "♞",
+    "z": 6,
+    "home": "B8",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 3,
+    "x": 0,
+    "y": 0,
+    "parent": "B8"
+  },
+  "Black Bishop C": {
+    "id": "Black Bishop C",
+    "text": "♝",
+    "z": 3,
+    "home": "C8",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 3.1,
+    "x": 0,
+    "y": 0,
+    "parent": "C8",
+    "activeFace": 0
+  },
+  "Black Queen": {
+    "id": "Black Queen",
+    "text": "♛",
+    "z": 1,
+    "home": "D8",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 9,
+    "x": 0,
+    "y": 0,
+    "activeFace": 0,
+    "parent": "D8"
+  },
+  "Black King": {
+    "id": "Black King",
+    "text": "♚",
+    "z": 719,
+    "home": "E8",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 10,
+    "x": 0,
+    "y": 0,
+    "parent": "E8"
+  },
+  "Black Bishop F": {
+    "id": "Black Bishop F",
+    "text": "♝",
+    "z": 4,
+    "home": "F8",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 3.1,
+    "x": 0,
+    "y": 0,
+    "parent": "F8"
+  },
+  "Black Knight G": {
+    "id": "Black Knight G",
+    "text": "♞",
+    "z": 5,
+    "home": "G8",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 3,
+    "x": 0,
+    "y": 0,
+    "activeFace": 0,
+    "parent": "G8"
+  },
+  "Black Rook H": {
+    "id": "Black Rook H",
+    "text": "♜",
+    "z": 2,
+    "home": "H8",
+    "inheritFrom": {
+      "White King": [
+        "css"
+      ]
+    },
+    "value": 5,
+    "x": 0,
+    "y": 0,
+    "parent": "H8"
+  },
+  "Black Seat": {
+    "type": "seat",
+    "id": "Black Seat",
+    "x": 1318,
+    "y": 123,
+    "z": 5,
+    "css": {
+      "box-sizing": "border-box"
+    },
+    "width": 164,
+    "height": 54
+  },
+  "White Seat": {
+    "type": "seat",
+    "id": "White Seat",
+    "index": 2,
+    "x": 1318,
+    "y": 823,
+    "z": 4,
+    "width": 164,
+    "height": 54,
+    "css": {
+      "box-sizing": "border-box"
+    },
+    "turn": true
+  },
+  "Black Captures": {
+    "type": "holder",
+    "id": "Black Captures",
+    "inheritFrom": "White Captures",
+    "y": 0
+  },
+  "White Captures": {
+    "type": "holder",
+    "id": "White Captures",
+    "y": 900,
+    "width": 1600,
+    "height": 100,
+    "z": 5,
+    "classes": "transparent",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {},
+    "stackOffsetX": 100,
+    "css": {
+      "background": "#ddd"
+    },
+    "enterRoutine": [
+      {
+        "func": "SORT",
+        "holder": "${PROPERTY id}",
+        "key": "value",
+        "reverse": true
+      }
+    ],
+    "borderRadius": 0
+  },
+  "Reset Button": {
+    "type": "button",
+    "id": "Reset Button",
+    "x": 160,
+    "y": 260,
+    "z": 10,
+    "text": "Next\nGame",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Resetting board ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Are you sure you want to reset the board and swap colors?"
+          },
+          {
+            "type": "checkbox",
+            "label": "Delete pieces that were manually added?",
+            "value": "${PROPERTY keep}",
+            "variable": "keep"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "keep",
+        "value": "${keep}"
+      },
+      "// SWAP PLAYERS",
+      "var whitePlayer = ${PROPERTY player OF White Seat}",
+      "var whiteColor = ${PROPERTY color OF White Seat}",
+      "var whiteScore = ${PROPERTY text OF White Score}",
+      {
+        "func": "SET",
+        "property": "player",
+        "value": "${PROPERTY player OF Black Seat}",
+        "collection": [
+          "White Seat"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${PROPERTY color OF Black Seat}",
+        "collection": [
+          "White Seat"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "turn",
+        "value": true,
+        "collection": [
+          "White Seat"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${PROPERTY text OF Black Score}",
+        "collection": [
+          "White Score"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "player",
+        "value": "${whitePlayer}",
+        "collection": [
+          "Black Seat"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${whiteColor}",
+        "collection": [
+          "Black Seat"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "turn",
+        "value": false,
+        "collection": [
+          "Black Seat"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${whiteScore}",
+        "collection": [
+          "Black Score"
+        ]
+      },
+      "// PIECES",
+      {
+        "func": "SELECT",
+        "property": "home",
+        "relation": "!="
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "${PROPERTY home OF $widgetID}"
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${keep}",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "clonedFrom",
+            "relation": "!=",
+            "value": null
+          },
+          {
+            "func": "DELETE"
+          }
+        ]
+      },
+      "// HIGHLIGHT",
+      {
+        "func": "SELECT",
+        "property": "highlight",
+        "relation": "!="
+      },
+      {
+        "func": "SET",
+        "property": "highlight"
+      }
+    ],
+    "css": {
+      "--wcMain": "#ccc",
+      "--wcBorder": "#888",
+      "color": "#000"
+    },
+    "keep": true
+  },
+  "White Score": {
+    "type": "label",
+    "id": "White Score",
+    "x": 1367.5,
+    "y": 768,
+    "width": 65,
+    "height": 40,
+    "z": 1,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0
+  },
+  "White Score Down": {
+    "type": "button",
+    "id": "White Score Down",
+    "parent": "White Score",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 0.5
+      }
+    ],
+    "movable": false,
+    "inheritFrom": {
+      "Reset Button": "css"
+    }
+  },
+  "White Score Up": {
+    "type": "button",
+    "id": "White Score Up",
+    "parent": "White Score",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 0.5
+      }
+    ],
+    "movable": false,
+    "inheritFrom": {
+      "Reset Button": "css"
+    }
+  },
+  "Black Score": {
+    "type": "label",
+    "id": "Black Score",
+    "x": 1367.5,
+    "y": 192,
+    "width": 65,
+    "height": 40,
+    "z": 2,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0
+  },
+  "Black Score Down": {
+    "type": "button",
+    "id": "Black Score Down",
+    "parent": "Black Score",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 0.5
+      }
+    ],
+    "movable": false,
+    "inheritFrom": {
+      "Reset Button": "css"
+    }
+  },
+  "Black Score Up": {
+    "type": "button",
+    "id": "Black Score Up",
+    "parent": "Black Score",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 0.5
+      }
+    ],
+    "movable": false,
+    "inheritFrom": {
+      "Reset Button": "css"
+    }
+  },
+  "Reset Button1": {
+    "inheritFrom": {
+      "Reset Button": "css"
+    },
+    "type": "button",
+    "id": "Reset Button1",
+    "x": 160,
+    "y": 660,
+    "z": 9,
+    "text": "Add\nPiece",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "select",
+            "options": [
+              {
+                "text": "White",
+                "value": "White"
+              },
+              {
+                "text": "Black",
+                "value": "Black"
+              }
+            ],
+            "label": "Color",
+            "variable": "color"
+          },
+          {
+            "type": "select",
+            "options": [
+              {
+                "value": "Pawn A",
+                "text": "Pawn"
+              },
+              {
+                "value": "Knight B",
+                "text": "Knight"
+              },
+              {
+                "value": "Bishop C",
+                "text": "Bishop"
+              },
+              {
+                "value": "Rook A",
+                "text": "Rook"
+              },
+              {
+                "value": "Queen",
+                "text": "Queen"
+              },
+              {
+                "value": "King",
+                "text": "King"
+              }
+            ],
+            "label": "Piece",
+            "variable": "piece"
+          },
+          {
+            "type": "select",
+            "label": "Orientation",
+            "variable": "rotation",
+            "options": [
+              {
+                "value": "0",
+                "text": "Up"
+              },
+              {
+                "value": "90",
+                "text": "Right"
+              },
+              {
+                "value": "180",
+                "text": "Down"
+              },
+              {
+                "value": "270",
+                "text": "Left"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CLONE",
+        "source": [
+          "${color} ${piece}"
+        ],
+        "properties": {
+          "x": 150,
+          "y": 450,
+          "parent": null,
+          "home": null,
+          "rotation": "${rotation}"
+        }
+      }
+    ]
+  },
+  "_meta": {
+    "version": 8,
+    "info": {
+      "name": "Chess",
+      "image": "/assets/206546051_6734",
+      "rules": "https://www.officialgamerules.org/chess",
+      "bgg": "https://boardgamegeek.com/boardgame/171/chess",
+      "year": "1475",
+      "mode": "vs",
+      "time": "60",
+      "type": "file",
+      "attribution": "Library image is CC0 Public Domain:\nhttps://www.publicdomainpictures.net/en/view-image.php?image=44722&amp;picture=chess-king\n\nThe game file itself was created by ArnoldSmith86 and is hereby released to the public domain by CC0.",
+      "lastUpdate": 1671813976118,
+      "showName": true,
+      "skill": "",
+      "description": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
+    }
+  }
+}

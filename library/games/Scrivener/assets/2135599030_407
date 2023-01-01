@@ -1,0 +1,8 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 81 81" width="81" height="81">
+	<title>Ink bottle</title>
+	<style>
+		.s0 { fill: currentColor;stroke: currentColor;stroke-linecap: round;stroke-linejoin: round;stroke-width: 5 }
+	</style>
+	<path id="Lid" class="s0" d="m14.6 16.9v-5l50.4 0.2v5l-45-0.1z"/>
+	<path id="Bottle" class="s0" d="m59 18v6l21 16-15 35h-50l-14-35 20-16v-6z"/>
+</svg>

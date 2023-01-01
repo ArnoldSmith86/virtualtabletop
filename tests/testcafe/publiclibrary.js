@@ -15,17 +15,16 @@ async function removeGame(t, index) {
 }
 
 function publicLibraryTest(game, variant, md5, tests) {
-  test.after(async t => {
-    await removeGame(t);
-    await t.expect(Selector('#statesOverlay').visible).ok();
-  })(`Public library: ${game} (variant ${variant})`, async t => {
+  test(`Public library: ${game} (variant ${variant})`, async t => {
     await ClientFunction(prepareClient)();
+    await ClientFunction(_=>Math.random())(); // game library overhaul removed the Math.random call for generating a new state ID
     await t
       .pressKey('esc')
       .click('#statesButton')
-      .click(Selector('td.name').withExactText(game).prevSibling().child())
-      .hover('.roomState')
-      .click(Selector('button.play').nth(variant));
+      .click('#filterByType')
+      .click('#filterByType > option:nth-child(1)')
+      .click(Selector('.roomState h3').withExactText(game).parent().parent())
+      .click(Selector(`.variantsList > div:nth-child(${variant+1}) > button`));
     await setName(t);
     await tests(t);
     await compareState(t, md5);

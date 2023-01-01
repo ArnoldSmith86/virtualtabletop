@@ -32,7 +32,7 @@ export async function setName(t, name, color) {
     .click('.myPlayerEntry > input[type=color]')
     .typeText('.myPlayerEntry > input[type=color]', color || '#7F007F', { replace: true })
     .typeText('.myPlayerEntry > .playerName', name || 'TestCafe', { replace: true })
-    .click('#playersButton');
+    .click('#activeGameButton');
 }
 
 export async function setRoomState(state) {
