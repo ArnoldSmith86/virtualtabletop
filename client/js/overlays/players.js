@@ -37,7 +37,7 @@ function fillPlayerList(players, active) {
     $('.teamColor', entry).value = players[player];
     $('.playerName', entry).value = player;
     $('.teamColor', entry).addEventListener('change', function(e) {
-      toServer('playerColor', { player, color: e.target.value });
+      toServer('playerColor', { player, color: toHex(e.target.value) });
     });
     $('.playerName', entry).addEventListener('change', function(e) {
       toServer('rename', { oldName: player, newName: e.target.value });

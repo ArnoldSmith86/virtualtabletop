@@ -317,7 +317,7 @@ function applyEditOptionsSeat(widget) {
     delete widget.color;
   } else {
     if(widget.player) {
-      toServer('playerColor', { player: widget.player, color: $('#seatPlayerColor').value });
+      toServer('playerColor', { player: widget.player, color: toHex($('#seatPlayerColor').value) });
       toServer('rename', { oldName: widget.player, newName: $('#seatPlayerName').value });
     }
     widget.player = $('#seatPlayerName').value;
