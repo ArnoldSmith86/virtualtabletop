@@ -9,9 +9,8 @@
       "year": "400",
       "mode": "vs",
       "time": "20",
-      "attribution": "",
+      "attribution": "Board layout and library image by ArnoldSmith86. Released to public domain under CC0.",
       "lastUpdate": 1672530778829,
-      "id": "llm5",
       "showName": true,
       "skill": "strategy",
       "description": "One player tries to escape to a corner. The other player tries to surround.",
@@ -20,10 +19,10 @@
       "similarAwards": "",
       "ruleText": "<ul><li>Black begins.<br></li><li>All pieces move like Chess rooks.</li><li>White wins when the king is on a corner square.</li><li>Black wins if the king is surrounded by 4 white pawns.</li><li>Enemy pawns are captured by having a pawn left and right of it or on the top and bottom.<br></li></ul>",
       "helpText": "Drag pieces to different squares. Do everything manually.<br>",
-      "players": "2",
-      "language": "",
+      "variantImage": "",
       "variant": "",
-      "variantImage": ""
+      "language": "",
+      "players": "2"
     }
   },
   "A1": {
