@@ -372,7 +372,7 @@ export default class Room {
             for(const file of fs.readdirSync(gameDir)) {
               if(file.match(/json$/)) {
                 const gameFile = JSON.parse(fs.readFileSync(gameDir + '/' + file));
-                const id = 'PL:' + subLibrary.toLowerCase() + ':' + gameFile._meta.info.name
+                const id = 'PL:' + subLibrary.toLowerCase() + ':' + gameFile._meta.info.name;
                 if(!Room.publicLibrary[id]) {
                   Room.publicLibrary[id] = gameFile._meta.info;
                   Room.publicLibrary[id].publicLibrary = subLibrary.toLowerCase() + '/' + dir;
@@ -482,11 +482,25 @@ export default class Room {
     function plTarget(match) {
       if(!match)
         return null;
+      if(match[2] == 'JSON User Guide')
+        return `tutorials/JSON Editor User Guide`;
+
+      let target = `games/${match[2]}`;
       if(match[1] == 'Tutorial')
-        return `PL:tutorials:${match[2]}`;
+        target = `tutorials/${match[2]}`;
       if(match[1] == 'Assets')
-        return `PL:assets:${match[2]}`;
-      return `PL:games:${match[2]}`;
+        target = `assets/${match[2]}`;
+      return decodeURI(target);
+    }
+
+    const comparisonMap = {
+      'JSON Editor User Guide': 'JSON User Guide',
+      '/assets/1479011481_9212': '/assets/1368104302_9195'
+    };
+    for(const [ from, to ] of Object.entries(comparisonMap))
+      comparisonMap[to] = from;
+    function compareNameAndImage(a, b) {
+      return (a.name == b.name || a.name == comparisonMap[b.name]) && (a.image == b.image || a.image == comparisonMap[b.image]);
     }
 
     if(!this.state._meta.metaVersion) {
@@ -494,34 +508,53 @@ export default class Room {
         this.state._meta.starred = {};
       for(const [ id, state ] of Object.entries(this.state._meta.states)) {
         const target = plTarget(state.link && state.link.match(/\/library\/(?:(Tutorial|Assets) - )?(.*)\.vtt/))
-        if(target && this.state._meta.states[target]) {
-          const targetState = this.state._meta.states[target];
-          let allVariantsFromPL = true;
-          for(const [ vID, variant ] of Object.entries(state.variants))
-            if((variant.link && variant.link.indexOf(state.link)) !== 0)
-              allVariantsFromPL = false;
-          if(allVariantsFromPL && state.name == targetState.name && state.image == targetState.image) {
-            Logging.log(`migrating ${target} in room ${this.id}`);
-            this.state._meta.starred[targetState.publicLibrary] = true;
-            Statistics.toggleStateStar(targetState.publicLibrary, true);
-            this.removeState(undefined, id);
-            continue;
+        if(target) {
+          let foundTargetState = false;
+          let migratedToTargetState = false;
+          for(const [ targetID, targetState ] of Object.entries(this.state._meta.states)) {
+            if(targetState.publicLibrary == target) {
+              foundTargetState = true;
+              let allVariantsFromPL = true;
+              for(const [ vID, variant ] of Object.entries(state.variants))
+                if((variant.link && variant.link.indexOf(state.link)) !== 0)
+                  allVariantsFromPL = false;
+              if(allVariantsFromPL && compareNameAndImage(state, targetState)) {
+                Logging.log(`migrating ${target} in room ${this.id}`);
+                if(!this.state._meta.starred[targetState.publicLibrary])
+                  Statistics.toggleStateStar(targetState.publicLibrary, true);
+                this.state._meta.starred[targetState.publicLibrary] = true;
+                this.removeState(undefined, id);
+                migratedToTargetState = true;
+                break;
+              }
+              delete state.link;
+            }
           }
-          delete state.link;
-        } else if(target) {
-          Logging.log(`could not migrate public library state ${target} in room ${this.id}`);
+          if(migratedToTargetState)
+            continue;
+
+          if(!foundTargetState)
+            Logging.log(`could not migrate public library state ${target} in room ${this.id}`);
         }
 
         for(const [ vID, variant ] of Object.entries(state.variants)) {
           const target = plTarget(variant.link && variant.link.match(/\/library\/(?:(Tutorial|Assets) - )?(.*)\.vtt/))
-          if(target && this.state._meta.states[target]) {
-            for(const [ targetVid, targetVariant ] of Object.entries(this.state._meta.states[target].variants)) {
-              if(targetVariant.players == variant.players && (targetVariant.language.match(variant.language) || targetVariant.language === '' && variant.language == 'UN') && targetVariant.variant == variant.variant || this.state._meta.states[target].variants.length == 1 || target == 'PL:games:Diced' && targetVid == 0) {
-                this.state._meta.states[id].variants[vID] = {
-                  plStateID: target,
-                  plVariantID: targetVid
-                };
-                Logging.log(`migrating variant to ${target}/${targetVid} in room ${this.id}`);
+          if(target) {
+            let foundTargetState = false;
+            for(const [ targetID, targetState ] of Object.entries(this.state._meta.states)) {
+              if(targetState.publicLibrary == target) {
+                for(const [ targetVid, targetVariant ] of Object.entries(targetState.variants)) {
+                  if(targetVariant.players == variant.players && (targetVariant.language.match(variant.language) || targetVariant.language === '' && variant.language == 'UN') && targetVariant.variant == variant.variant || targetState.variants.length == 1 || target == 'games/Diced' && targetVid == 0) {
+                    this.state._meta.states[id].variants[vID] = {
+                      plStateID: targetID,
+                      plVariantID: targetVid
+                    };
+                    Logging.log(`migrating variant to ${target}/${targetVid} in room ${this.id}`);
+                    foundTargetState = true;
+                    break;
+                  }
+                }
+                break;
               }
             }
           }
