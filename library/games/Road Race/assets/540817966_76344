@@ -1,0 +1,1724 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+    xmlns:cc="http://creativecommons.org/ns#"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:svg="http://www.w3.org/2000/svg"
+    xmlns:ns1="http://sozi.baierouge.fr"
+    id="svg7690"
+    sodipodi:docname="Neues Dokument 4"
+    viewBox="0 0 262.2 372.05"
+    version="1.1"
+    inkscape:version="0.48.1 "
+  >
+  <defs
+      id="defs3"
+    >
+    <linearGradient
+        id="linearGradient7252"
+        y2="416.79"
+        xlink:href="#linearGradient3792"
+        gradientUnits="userSpaceOnUse"
+        x2="479.19"
+        gradientTransform="translate(-262.46 485.84)"
+        y1="459.24"
+        x1="493.92"
+        inkscape:collect="always"
+    />
+    <linearGradient
+        id="linearGradient3792"
+        inkscape:collect="always"
+      >
+      <stop
+          id="stop3794"
+          style="stop-color:#000000"
+          offset="0"
+      />
+      <stop
+          id="stop3796"
+          style="stop-color:#000000;stop-opacity:0"
+          offset="1"
+      />
+    </linearGradient
+    >
+    <linearGradient
+        id="linearGradient7254"
+        y2="379.95"
+        xlink:href="#linearGradient3792"
+        gradientUnits="userSpaceOnUse"
+        x2="490.22"
+        gradientTransform="translate(-262.46 485.84)"
+        y1="367.23"
+        x1="483.44"
+        inkscape:collect="always"
+    />
+    <radialGradient
+        id="radialGradient7257"
+        gradientUnits="userSpaceOnUse"
+        cy="395.31"
+        cx="485.46"
+        gradientTransform="matrix(.99864 .052103 -.22625 4.3365 -172.36 -860.4)"
+        r="9.5506"
+        inkscape:collect="always"
+      >
+      <stop
+          id="stop3808"
+          style="stop-color:#4d4d4d"
+          offset="0"
+      />
+      <stop
+          id="stop3810"
+          style="stop-color:#4d4d4d;stop-opacity:0"
+          offset="1"
+      />
+    </radialGradient
+    >
+    <filter
+        id="filter3818"
+        inkscape:collect="always"
+        color-interpolation-filters="sRGB"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur3820"
+          stdDeviation="0.36921041"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter3884"
+        inkscape:collect="always"
+        color-interpolation-filters="sRGB"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur3886"
+          stdDeviation="0.035371875"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <radialGradient
+        id="radialGradient7259"
+        gradientUnits="userSpaceOnUse"
+        cy="394.22"
+        cx="492.09"
+        gradientTransform="matrix(.94703 .16363 -.52447 3.0355 -28.701 -404.62)"
+        r="11.892"
+        inkscape:collect="always"
+      >
+      <stop
+          id="stop3920"
+          style="stop-color:#999999"
+          offset="0"
+      />
+      <stop
+          id="stop3922"
+          style="stop-color:#808080;stop-opacity:0"
+          offset="1"
+      />
+    </radialGradient
+    >
+    <filter
+        id="filter3930"
+        inkscape:collect="always"
+        color-interpolation-filters="sRGB"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur3932"
+          stdDeviation="0.43827005"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <radialGradient
+        id="radialGradient7261"
+        gradientUnits="userSpaceOnUse"
+        cy="428.68"
+        cx="539.98"
+        gradientTransform="matrix(.37092 .12005 -.71819 2.219 382.51 -103.75)"
+        r="12.439"
+        inkscape:collect="always"
+      >
+      <stop
+          id="stop3938"
+          style="stop-color:#999999"
+          offset="0"
+      />
+      <stop
+          id="stop3940"
+          style="stop-color:#ffffff;stop-opacity:0"
+          offset="1"
+      />
+    </radialGradient
+    >
+    <filter
+        id="filter3980"
+        height="1.1837"
+        width="1.3462"
+        color-interpolation-filters="sRGB"
+        y="-.091837"
+        x="-.17308"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur3982"
+          stdDeviation="1.7812705"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <linearGradient
+        id="linearGradient7263"
+        y2="823.29"
+        xlink:href="#linearGradient3792"
+        gradientUnits="userSpaceOnUse"
+        x2="548.42"
+        gradientTransform="translate(-262.46 69.572)"
+        y1="823.29"
+        x1="496.82"
+        inkscape:collect="always"
+    />
+    <filter
+        id="filter4036"
+        inkscape:collect="always"
+        color-interpolation-filters="sRGB"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4038"
+          stdDeviation="0.18416763"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <linearGradient
+        id="linearGradient7265"
+        y2="820.74"
+        xlink:href="#linearGradient3792"
+        gradientUnits="userSpaceOnUse"
+        x2="513.32"
+        gradientTransform="matrix(.91716 0 0 .91716 -219.16 137.77)"
+        y1="822.23"
+        x1="546.6"
+        inkscape:collect="always"
+    />
+    <filter
+        id="filter4028"
+        inkscape:collect="always"
+        color-interpolation-filters="sRGB"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4030"
+          stdDeviation="0.17094309"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <linearGradient
+        id="linearGradient7267"
+        y2="820.74"
+        xlink:href="#linearGradient3792"
+        gradientUnits="userSpaceOnUse"
+        x2="530.7"
+        gradientTransform="matrix(.96551 0 0 .96551 -244.48 97.966)"
+        y1="822.23"
+        x1="546.6"
+        inkscape:collect="always"
+    />
+    <filter
+        id="filter4024"
+        inkscape:collect="always"
+        color-interpolation-filters="sRGB"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4026"
+          stdDeviation="0.17995442"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <radialGradient
+        id="radialGradient7269"
+        gradientUnits="userSpaceOnUse"
+        cy="408.56"
+        cx="538.1"
+        gradientTransform="matrix(2.9525 -.15204 .17291 3.3577 -1383.7 -394.73)"
+        r="13.154"
+        inkscape:collect="always"
+      >
+      <stop
+          id="stop4056"
+          style="stop-color:#000000"
+          offset="0"
+      />
+      <stop
+          id="stop4058"
+          style="stop-color:#000000;stop-opacity:0"
+          offset="1"
+      />
+    </radialGradient
+    >
+    <filter
+        id="filter4050"
+        inkscape:collect="always"
+        color-interpolation-filters="sRGB"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4052"
+          stdDeviation="0.11209544"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter4110"
+        inkscape:collect="always"
+        color-interpolation-filters="sRGB"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4112"
+          stdDeviation="0.076796625"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter4078"
+        inkscape:collect="always"
+        color-interpolation-filters="sRGB"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4080"
+          stdDeviation="0.072572775"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter4094"
+        inkscape:collect="always"
+        color-interpolation-filters="sRGB"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4096"
+          stdDeviation="0.07317615"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <linearGradient
+        id="linearGradient7271"
+        y2="714.59"
+        gradientUnits="userSpaceOnUse"
+        x2="509.69"
+        y1="716.28"
+        x1="547.56"
+        inkscape:collect="always"
+      >
+      <stop
+          id="stop4190"
+          style="stop-color:#666666"
+          offset="0"
+      />
+      <stop
+          id="stop4192"
+          style="stop-color:#666666;stop-opacity:0"
+          offset="1"
+      />
+    </linearGradient
+    >
+    <linearGradient
+        id="linearGradient7273"
+        y2="713.91"
+        gradientUnits="userSpaceOnUse"
+        x2="533"
+        y1="715.31"
+        x1="496.41"
+        inkscape:collect="always"
+      >
+      <stop
+          id="stop4202"
+          style="stop-color:#666666"
+          offset="0"
+      />
+      <stop
+          id="stop4204"
+          style="stop-color:#666666;stop-opacity:0"
+          offset="1"
+      />
+    </linearGradient
+    >
+    <linearGradient
+        id="linearGradient7275"
+        y2="436.11"
+        xlink:href="#linearGradient4210"
+        gradientUnits="userSpaceOnUse"
+        x2="522.02"
+        gradientTransform="translate(-262.46 485.84)"
+        y1="459.99"
+        x1="523.14"
+        inkscape:collect="always"
+    />
+    <linearGradient
+        id="linearGradient4210"
+        inkscape:collect="always"
+      >
+      <stop
+          id="stop4212"
+          style="stop-color:#000000"
+          offset="0"
+      />
+      <stop
+          id="stop4214"
+          style="stop-color:#333333;stop-opacity:0"
+          offset="1"
+      />
+    </linearGradient
+    >
+    <filter
+        id="filter4224"
+        inkscape:collect="always"
+        color-interpolation-filters="sRGB"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4226"
+          stdDeviation="0.34739692"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <radialGradient
+        id="radialGradient7277"
+        xlink:href="#linearGradient4210"
+        gradientUnits="userSpaceOnUse"
+        cy="463.37"
+        cx="505.8"
+        gradientTransform="matrix(1 0 0 .51214 -262.46 704.39)"
+        r="24.077"
+        inkscape:collect="always"
+    />
+    <radialGradient
+        id="radialGradient7279"
+        xlink:href="#linearGradient3792"
+        gradientUnits="userSpaceOnUse"
+        cy="906.59"
+        cx="225.46"
+        gradientTransform="matrix(.20933 -.13093 .87474 1.3985 -613.54 -296.82)"
+        r="11.695"
+        inkscape:collect="always"
+    />
+    <radialGradient
+        id="radialGradient7281"
+        xlink:href="#linearGradient3792"
+        gradientUnits="userSpaceOnUse"
+        cy="896.02"
+        cx="209.55"
+        gradientTransform="matrix(.39189 -.032578 .33762 4.0613 -175.08 -2736.3)"
+        r="11.695"
+        inkscape:collect="always"
+    />
+    <radialGradient
+        id="radialGradient7283"
+        xlink:href="#linearGradient3792"
+        gradientUnits="userSpaceOnUse"
+        cy="890.04"
+        cx="217.29"
+        gradientTransform="matrix(.31587 .065155 -.82328 3.9913 874.68 -2695.8)"
+        r="11.695"
+        inkscape:collect="always"
+    />
+    <radialGradient
+        id="radialGradient7285"
+        xlink:href="#linearGradient3792"
+        gradientUnits="userSpaceOnUse"
+        cy="903.97"
+        cx="267.83"
+        gradientTransform="matrix(.43135 -.14014 1.1525 3.5474 -940.46 -2240.3)"
+        r="11.695"
+        inkscape:collect="always"
+    />
+    <filter
+        id="filter4791"
+        color-interpolation-filters="sRGB"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4793"
+          stdDeviation="0.01463935"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter4783"
+        color-interpolation-filters="sRGB"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4785"
+          stdDeviation="0.01463935"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter4823"
+        width="2.2986"
+        y="-.066109"
+        x="-.64930"
+        height="1.1322"
+        color-interpolation-filters="sRGB"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4825"
+          stdDeviation="0.0538975"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter4855"
+        width="1.9665"
+        y="-.068506"
+        x="-.48323"
+        height="1.137"
+        color-interpolation-filters="sRGB"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4857"
+          stdDeviation="0.04011225"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter4911"
+        width="2.3651"
+        y="-.080491"
+        x="-.68253"
+        height="1.161"
+        color-interpolation-filters="sRGB"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4913"
+          stdDeviation="0.0476604"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter4931"
+        color-interpolation-filters="sRGB"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4933"
+          stdDeviation="0.0065625"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+    <filter
+        id="filter4919"
+        color-interpolation-filters="sRGB"
+        inkscape:collect="always"
+      >
+      <feGaussianBlur
+          id="feGaussianBlur4921"
+          stdDeviation="0.0033812894"
+          inkscape:collect="always"
+      />
+    </filter
+    >
+  </defs
+  >
+  <sodipodi:namedview
+      id="base"
+      bordercolor="#666666"
+      inkscape:pageshadow="2"
+      inkscape:window-y="-8"
+      pagecolor="#ffffff"
+      inkscape:window-height="1000"
+      inkscape:window-maximized="1"
+      inkscape:zoom="2.1232282"
+      inkscape:window-x="-8"
+      showgrid="false"
+      borderopacity="1.0"
+      inkscape:current-layer="layer1"
+      inkscape:cx="93.111396"
+      inkscape:cy="201.43406"
+      units="mm"
+      inkscape:window-width="1680"
+      inkscape:pageopacity="0.0"
+      inkscape:document-units="mm"
+  />
+  <g
+      id="layer1"
+      inkscape:label="Layer 1"
+      inkscape:groupmode="layer"
+      transform="translate(0 -680.31)"
+    >
+    <g
+        id="g7032"
+        inkscape:export-ydpi="300"
+        inkscape:export-xdpi="300"
+        inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\duesi18.png"
+        transform="matrix(2.08 0 0 2.08 -400.46 -1010)"
+      >
+      <path
+          id="path7034"
+          style="color:#000000;fill-opacity:.99608;fill:#34343b"
+          d="m251.29 837.75c-1.9088 0.085-3.7924 0.61062-5.625 1.1562-7.79 2.3194-16.22 4.2905-22.406 9.5625-4.7408 4.0402-7.8532 9.9653-10 15.812-3.2707 8.908-4.0282 18.698-3.9688 28.188 0.0547 8.7185 1.4637 17.14 3.9688 25.844 2.6081 9.0616 7.8024 21.593 16.125 25.406 6.4816 2.97 13.815 1.4426 20.75 1.5938 3.6417 0.0794 7.2788-0.0438 10.906-0.375 3.9503-0.36066 8.3901 0.30793 11.781-1.75 4.4338-2.6907 6.8404-7.9532 9.1562-12.594 3.0134-6.0384 4.8217-12.714 5.9062-19.375 1.3348-8.1972 1.3701-16.632 0.65625-24.906-0.58206-6.7469-1.6536-13.554-4-19.906-2.2612-6.1218-5.4446-12.006-9.5312-17.094-2.7132-3.3782-5.8607-6.6528-9.7188-8.625-4.002-2.0458-8.6627-2.8401-13.156-2.9375-0.27309-0.006-0.57106-0.0122-0.84375 0zm5.8438 24c4.5395 0.0274 8.8258 3.6359 11.531 7.2812 5.06 6.8179 6.4926 16.077 6.7812 24.562 0.26247 7.7168-0.68478 16.047-4.625 22.688-2.4812 4.1814-6.2943 9.4403-11.156 9.4062-6.5199-0.0457-10.686-3.7755-13.375-8.2812-4.6065-7.7179-6.0696-17.936-5.75-27.188 0.26481-7.6663 1.6463-16.013 6.2812-22.125 2.4376-3.2145 6.2783-6.3681 10.312-6.3438z"
+          inkscape:export-ydpi="300"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7036"
+          style="fill:url(#linearGradient7252)"
+          d="m219.15 851.59s-6.5435 13.267-8.0776 20.426c-2.1271 9.9261-2.6333 20.348-1.3886 30.423 1.2222 9.8931 3.8312 19.886 8.5931 28.644 2.6606 4.893 6.0407 9.8748 10.823 12.73 1.7863 1.0663 4.0353 1.0796 6.1038 1.302 4.2275 0.45452 12.755 0.0517 12.755 0.0517s-4.6843-2.8565-10.674-11.071c-3.9904-5.4725-5.9519-12.247-7.7893-18.766-1.9447-6.8996-3.127-14.079-3.3418-21.244-0.1988-6.6316 0.66241-13.296 1.9096-19.812 1.0745-5.6141 2.6332-11.17 4.774-16.47 1.213-3.0031 4.5353-8.5931 4.5353-8.5931z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="caaaaacsaaaacc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7038"
+          style="fill:url(#linearGradient7254)"
+          d="m219.79 852.04s-6.2647 8.0374-8.7218 19.976c-2.0464 9.943-2.6333 20.348-1.3886 30.423 1.2222 9.8931 3.8312 19.886 8.5931 28.644 2.6606 4.893 5.3376 11.765 10.823 12.73 2.236 0.39304 3.6496-3.2546 5.9168-3.3734 3.1412-0.16451 8.6411 3.7919 8.6411 3.7919s-4.5015-6.6108-6.3728-10.136c-3.2363-6.0965-6.4819-12.305-8.344-18.951-1.9103-6.8184-2.6614-13.979-2.787-21.059-0.11772-6.6335 0.66241-13.296 1.9096-19.812 1.0745-5.6141 2.6332-11.17 4.774-16.47 1.213-3.0031 4.5353-8.5931 4.5353-8.5931z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="csaaaacaaaaacc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7040"
+          style="filter:url(#filter3818);fill:url(#radialGradient7257)"
+          d="m217.42 860.79 16.386-5.9423s-2.5114 6.1676-3.4213 9.3636c-1.3764 4.8344-2.3822 9.7852-3.0612 14.766-0.73133 5.3644-1.1135 10.792-1.0804 16.206 0.014 2.2879 0.28439 4.569 0.54021 6.8426 0.2781 2.4716 1.0804 7.3828 1.0804 7.3828l-1.6206 7.3828s-6.0724 2.8158-8.4632 1.2605c-6.9942-4.5502-6.0424-15.808-6.6625-24.129-0.44488-5.9692 1.1136-11.933 2.1608-17.827 0.73358-4.1284 1.5986-8.2526 2.8811-12.245 0.33753-1.0506 1.2605-3.0612 1.2605-3.0612z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="ccaaaaccaaaac"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7042"
+          style="stroke:#000000;stroke-width:0.8;fill:none"
+          d="m222.53 851.09s-6.1892 10.943-7.923 16.926c-2.1218 7.3224-2.9547 15.065-2.8811 22.689 0.0879 9.0993 1.3184 18.303 3.9615 27.01 2.3551 7.7586 5.2906 15.709 10.444 21.968 1.6674 2.0255 6.3266 4.6818 6.3266 4.6818"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="caaaac"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7044"
+          style="stroke:#000000;stroke-width:0.8;fill:none"
+          d="m225.81 851.06s-6.1892 10.943-7.923 16.926c-2.1218 7.3224-2.907 15.065-2.8811 22.689 0.0306 9.0216 1.0691 18.164 3.5917 26.825 2.2755 7.8132 5.282 15.715 10.259 22.153 1.6212 2.0972 6.1417 5.0516 6.1417 5.0516"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="caaaac"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7046"
+          style="stroke:#000000;stroke-width:0.8;fill:none"
+          d="m228.7 850.87s-6.1716 10.694-7.923 16.557c-2.1847 7.3123-3.0065 15.057-3.066 22.689-0.0707 9.067 0.66022 18.312 3.2219 27.01 2.3215 7.8825 5.7793 15.659 10.814 22.153 1.6483 2.1263 6.1417 5.2365 6.1417 5.2365"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="caaaac"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7048"
+          style="stroke:#000000;stroke-width:0.8;fill:none"
+          d="m231.5 850.5s-6.1716 10.694-7.923 16.557c-2.1847 7.3123-2.986 15.057-3.066 22.689-0.0996 9.4953 0.4537 19.221 3.2219 28.305 2.2831 7.4916 5.941 14.728 10.814 20.859 1.6739 2.1062 6.1417 5.2365 6.1417 5.2365"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="caaaac"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7050"
+          style="stroke:#000000;stroke-width:0.8;fill:none"
+          d="m233.92 850.69s-5.6793 10.883-7.3683 16.742c-2.1696 7.5255-3.3492 15.412-3.4358 23.243-0.10111 9.1354 0.72601 18.461 3.4068 27.195 2.3707 7.7236 5.995 15.255 10.999 21.599 1.6662 2.1123 6.1417 5.2365 6.1417 5.2365"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="caaaac"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7052"
+          style="stroke:#000000;stroke-width:.5;fill:none"
+          d="m226.67 899.25c-0.009-1.0245-0.69098-2.0129-1.4334-2.7189-0.29198-0.27766-0.63138-0.61241-1.0963-0.50929-0.79424 0.17617-0.67243 2.0211-0.6524 3.0657 0.0234 1.2182 0.23132 3.2217 0.89737 3.5434 0.22218 0.10731 0.51299-0.0823 0.6985-0.24497 0.88077-0.77235 1.5961-1.9646 1.5862-3.136z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aasasaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7054"
+          style="stroke:#000000;stroke-width:.5;fill:none"
+          d="m226.5 892.51c0.0682-1.0223-0.53748-2.0592-1.2246-2.8191-0.27025-0.29886-0.58349-0.65821-1.0548-0.59038-0.80525 0.11588-0.82268 1.9648-0.88135 3.0079-0.0684 1.2165-0.0119 3.23 0.62806 3.6009 0.21347 0.12373 0.51773-0.0435 0.71496-0.19169 0.93642-0.70385 1.7395-1.8389 1.8178-3.0077z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aasasaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7056"
+          style="stroke:#000000;stroke-width:.48023;fill:none"
+          d="m226.67 885.81c0.0869-0.94172-0.49977-1.9083-1.1729-2.6208-0.26474-0.28021-0.57136-0.61693-1.0438-0.56231-0.80723 0.0933-0.85843 1.7983-0.93615 2.7594-0.0906 1.1209-0.0709 2.979 0.56216 3.3319 0.21118 0.11772 0.51844-0.0314 0.71835-0.16476 0.94912-0.6334 1.7728-1.6667 1.8724-2.7435z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aasasaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7058"
+          style="stroke:#000000;stroke-width:.43548;fill:none"
+          d="m227.07 880.09c0.16922-0.84072-0.26649-1.7689-0.80472-2.4762-0.21167-0.2782-0.45564-0.61139-0.88694-0.60773-0.73684 0.006-0.94752 1.5386-1.1103 2.3977-0.18989 1.0019-0.35137 2.6792 0.18539 3.0584 0.17904 0.12651 0.47048 0.0217 0.6636-0.0793 0.9169-0.47953 1.7593-1.3318 1.953-2.293z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aasasaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7060"
+          style="stroke:#000000;stroke-width:.39770;fill:none"
+          d="m227.7 874.57c0.17205-0.76405-0.20639-1.6206-0.68304-2.2776-0.18745-0.25841-0.40325-0.56771-0.79711-0.57338-0.67287-0.01-0.89721 1.385-1.0638 2.166-0.19429 0.91079-0.37672 2.4388 0.10543 2.7963 0.16083 0.11924 0.4291 0.0296 0.60753-0.0585 0.84715-0.41868 1.634-1.1792 1.831-2.0528z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aasasaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7062"
+          style="stroke:#000000;stroke-width:.39770;fill:none"
+          d="m229.03 869.74c0.25177-0.7416-0.0341-1.6333-0.43871-2.337-0.15911-0.27676-0.34104-0.60712-0.7321-0.65435-0.66805-0.081-1.0384 1.2825-1.2866 2.0416-0.28939 0.88519-0.63215 2.3854-0.19045 2.7918 0.14734 0.13556 0.42357 0.0747 0.61031 0.006 0.88663-0.32688 1.7494-1.0001 2.0375-1.848z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aasasaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7064"
+          style="stroke:#000000;stroke-width:.35693;fill:none"
+          d="m230.16 865.04c0.27664-0.64615 0.0826-1.4638-0.2307-2.1215-0.1232-0.25866-0.26312-0.56686-0.60976-0.63621-0.59216-0.11875-1.018 1.0757-1.2926 1.7377-0.32025 0.77202-0.73085 2.0906-0.36377 2.4849 0.12245 0.1315 0.37384 0.0961 0.54572 0.0473 0.81599-0.23109 1.6346-0.7737 1.9512-1.5124z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aasasaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7066"
+          style="stroke:#000000;stroke-width:.31782;fill:none"
+          d="m231.55 860.89c0.24633-0.57535 0.0736-1.3034-0.20543-1.8891-0.1097-0.23032-0.23429-0.50475-0.54294-0.5665-0.52728-0.10574-0.90649 0.9578-1.151 1.5473-0.28516 0.68743-0.65078 1.8616-0.32392 2.2126 0.10904 0.11709 0.33288 0.0856 0.48593 0.0421 0.72658-0.20577 1.4555-0.68893 1.7374-1.3467z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aasasaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7068"
+          style="stroke:#000000;stroke-width:.27039;fill:none"
+          d="m232.93 857.54c0.29345-0.44431 0.25923-1.08 0.11443-1.6126-0.0569-0.20944-0.11962-0.45807-0.36864-0.55656-0.42539-0.16846-0.90409 0.6644-1.1981 1.1208-0.34294 0.53225-0.82702 1.4598-0.60662 1.8032 0.0735 0.11455 0.26569 0.12213 0.40041 0.10891 0.63946-0.0621 1.323-0.35606 1.6586-0.864z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aasasaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7070"
+          style="stroke:#000000;stroke-width:0.46;fill:none"
+          d="m227.19 905.67c-0.0426-0.94161-0.70275-1.8275-1.409-2.4517-0.27775-0.2455-0.60102-0.54189-1.025-0.43149-0.72432 0.18859-0.55049 1.8807-0.49706 2.8405 0.0624 1.1192 0.32065 2.9543 0.9438 3.2277 0.20787 0.0912 0.46888-0.0929 0.63399-0.24864 0.78389-0.73961 1.4016-1.8597 1.3532-2.9364z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aasasaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7072"
+          style="stroke:#000000;stroke-width:.43219;fill:none"
+          d="m228.2 911.5c-0.13746-0.87484-0.8459-1.6335-1.5702-2.1431-0.28483-0.20041-0.61746-0.44362-1.0019-0.29653-0.65678 0.25128-0.31883 1.8133-0.16928 2.704 0.17445 1.0386 0.60607 2.7254 1.2163 2.916 0.20358 0.0635 0.42819-0.13536 0.56619-0.29797 0.65523-0.772 1.1158-1.882 0.95885-2.8824z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aasasaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7074"
+          style="stroke:#000000;stroke-width:.41142;fill:none"
+          d="m229.62 917.17c-0.19096-0.82111-0.91601-1.4924-1.6389-1.9262-0.28428-0.1706-0.6169-0.37852-0.97172-0.2123-0.60621 0.28396-0.17743 1.7437 0.0262 2.5789 0.23741 0.97406 0.76377 2.5457 1.3563 2.6845 0.19767 0.0462 0.39718-0.15811 0.51697-0.32203 0.56875-0.77825 0.92928-1.864 0.71118-2.8029z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aasasaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7076"
+          style="stroke:#000000;stroke-width:.41142;fill:none"
+          d="m231.35 922.33c-0.24713-0.80599-1.0167-1.4257-1.7678-1.8086-0.29537-0.1506-0.64153-0.33509-0.98404-0.1448-0.58519 0.32509-0.0568 1.7518 0.20395 2.571 0.30401 0.95537 0.93749 2.487 1.5382 2.5846 0.20038 0.0325 0.38533-0.18512 0.49353-0.35691 0.51374-0.81562 0.79855-1.9236 0.51623-2.8453z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aasasaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7078"
+          style="stroke:#000000;stroke-width:.35826;fill:none"
+          d="m233.05 926.77c-0.28794-0.67526-1.0112-1.1413-1.6967-1.404-0.26959-0.1033-0.58626-0.23131-0.8654-0.0351-0.47691 0.33519 0.11147 1.5221 0.41245 2.2076 0.35089 0.79939 1.0399 2.0676 1.5691 2.097 0.17649 0.01 0.31668-0.19565 0.39462-0.35433 0.37005-0.75339 0.51503-1.739 0.18603-2.5112z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aasasaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7080"
+          style="stroke:#000000;stroke-width:.34106;fill:none"
+          d="m235.14 931.32c-0.27412-0.64285-0.96269-1.0866-1.6153-1.3366-0.25666-0.0983-0.55813-0.22021-0.82387-0.0334-0.45402 0.3191 0.10612 1.4491 0.39265 2.1017 0.33405 0.76103 0.99002 1.9683 1.4938 1.9964 0.16802 0.01 0.30148-0.18626 0.37568-0.33732 0.35229-0.71723 0.49031-1.6555 0.1771-2.3907z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aasasaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7082"
+          style="filter:url(#filter3884);stroke:#666666;stroke-linecap:round;stroke-width:.5;fill:none"
+          d="m226.09 892.57s-0.31051 1.0747-0.60465 1.5418c-0.32293 0.51288-1.2395 1.3302-1.2395 1.3302"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cac"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7084"
+          style="filter:url(#filter3884);stroke:#666666;stroke-linecap:round;stroke-width:0.4;fill:none"
+          d="m226.21 899.5s-0.21595 0.9809-0.4575 1.4131c-0.29218 0.52279-1.1659 1.367-1.1659 1.367"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cac"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7086"
+          style="filter:url(#filter3884);stroke:#666666;stroke-linecap:round;stroke-width:0.3;fill:none"
+          d="m226.86 905.81s-0.1447 0.90152-0.34714 1.3027c-0.26276 0.52075-1.0924 1.367-1.0924 1.367"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cac"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7088"
+          style="filter:url(#filter3884);stroke:#666666;stroke-linecap:round;stroke-width:.2;fill:none"
+          d="m227.94 911.73s-0.005 0.89452-0.1632 1.3027c-0.20895 0.54062-1.0004 1.4222-1.0004 1.4222"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cac"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7090"
+          style="fill:#525252"
+          d="m223.49 888.15s-0.0304 0.5167-0.0383 0.77534c-0.008 0.26028-0.009 0.78116-0.009 0.78116s0.15259-0.33916 0.264-0.48607c0.10353-0.1365 0.36876-0.35803 0.36876-0.35803s-0.2371-0.17235-0.33049-0.28345c-0.107-0.12732-0.25483-0.42895-0.25483-0.42895z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cacacacc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7092"
+          style="fill:#525252"
+          d="m223.45 895.24s-0.006 0.5309-0.003 0.79633c0.003 0.25112 0.019 0.75317 0.019 0.75317s0.0896-0.36875 0.18703-0.52805c0.0756-0.12368 0.29879-0.31605 0.29879-0.31605s-0.18146-0.13292-0.26052-0.23447c-0.0841-0.15495-0.16057-0.31379-0.24098-0.47093z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cacaccc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7094"
+          style="fill:#525252"
+          d="m223.76 902.19s0.0455 0.51854 0.0792 0.77654c0.0313 0.23968 0.11396 0.71611 0.11396 0.71611s0.0976-0.34293 0.17167-0.50432c0.0589-0.12842 0.2152-0.36521 0.2152-0.36521s-0.19463-0.0896-0.2709-0.16207c-0.13409-0.12743-0.20108-0.32125-0.30878-0.46111z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cacacacc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7096"
+          style="fill:#525252"
+          d="m224.75 908.54s0.0698 0.51583 0.11563 0.77196c0.0425 0.23794 0.14751 0.70996 0.14751 0.70996s0.0814-0.34714 0.14776-0.51184c0.0528-0.13104 0.19779-0.37492 0.19779-0.37492s-0.19863-0.0804-0.27823-0.14915c-0.13993-0.12099-0.21596-0.31144-0.33012-0.44608z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cacacacc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7098"
+          style="stroke:#656565;stroke-linecap:round;stroke-width:0.4;fill:none"
+          d="m224.61 883.04s0.72633 0.40785 1.0017 0.71081c0.30099 0.33112 0.66923 1.1637 0.66923 1.1637"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cac"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7100"
+          style="stroke:#656565;stroke-linecap:round;stroke-width:0.3;fill:none"
+          d="m225.57 877.36s0.45358 0.48299 0.63414 0.75876c0.20163 0.30796 0.49343 0.98793 0.49343 0.98793"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cac"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7102"
+          style="stroke:#656565;stroke-linecap:round;stroke-width:.2;fill:none"
+          d="m226.38 872.01s0.4618 0.47778 0.63414 0.75876c0.16909 0.27568 0.38156 0.89204 0.38156 0.89204"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cac"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7104"
+          style="filter:url(#filter3930);fill:url(#radialGradient7259)"
+          d="m233.14 858.7c-3.593 5.7764-4.6212 12.448-5.493 19.655-0.78394 6.48-0.82416 13.809-0.65474 20.716 0.29243 11.921 3.0885 17.324 3.0885 17.324s2.7353-11.029 3.6163-16.635c0.9591-6.1023 0.93677-12.328 1.8082-18.443 0.55363-3.8854 0.97996-7.8323 2.1698-11.572 1.4881-4.6774 2.7716-9.8176 6.1478-13.38 1.7803-1.8787 6.871-3.6163 6.871-3.6163s-4.0618-4.1167-6.5969-3.8613c-4.8784 0.49158-8.3672 5.6503-10.957 9.8136z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="asscaaaacaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7106"
+          style="opacity:.70707;filter:url(#filter3980);fill:url(#radialGradient7261)"
+          d="m277.21 904.42c-0.83878 3.4204-1.9235 6.8818-3.8154 9.8523-2.1688 3.4054-5.0912 6.406-8.3857 8.7398-0.64463 3.4609-0.84545 5.5059 0 8.4458 5.5938-2.0935 9.7333-7.5482 12.492-12.846 2.3281-4.4712 2.1371-10.287 2.8367-14.854-2.811-21.72 1.0222-16.451-3.1274 0.66227z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="caccacc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7108"
+          style="opacity:.70707;color:#000000;filter:url(#filter4036);stroke:url(#linearGradient7263);stroke-width:0.8;fill:none"
+          d="m285.53 892.86c0.39154 12.592 1.3251 27.024-5.9256 37.327-4.2964 6.1047-12.215 11.586-19.635 10.77-7.3678-0.80968-12.827-8.3583-16.708-14.673-5.9199-9.6298-8.2192-21.538-8.4622-32.839-0.24484-11.387 1.2458-23.652 7.0963-33.424 4.0499-6.7648 10.216-14.613 18.074-15.258 6.6118-0.54302 13.208 4.8111 17.099 10.185 7.5927 10.489 8.0597 24.97 8.4622 37.912z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aaaaaaaaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7110"
+          style="opacity:.70707;color:#000000;filter:url(#filter4028);stroke:url(#linearGradient7265);stroke-width:.5;fill:none"
+          d="m285.2 891.89c0.43741 11.971-0.0825 25.568-7.1908 35.21-4.0628 5.5109-11.203 10.626-18.009 9.8781-6.7574-0.74261-11.764-7.6659-15.324-13.457-5.4295-8.8322-7.5383-19.754-7.7612-30.119-0.22456-10.444 1.1426-21.693 6.5085-30.656 3.7144-6.2045 9.3699-13.402 16.577-13.994 6.0641-0.49803 11.98 4.5124 15.682 9.3412 7.1204 9.2883 9.0899 22.1 9.5173 33.796z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aaaaaaaaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7112"
+          style="opacity:.47811;color:#000000;filter:url(#filter4024);stroke:url(#linearGradient7267);stroke-width:.52636;fill:none"
+          d="m286.47 891.84c0.46047 12.602-0.0868 26.916-7.5699 37.067-4.2769 5.8014-11.794 11.186-18.958 10.399-7.1137-0.78176-12.384-8.07-16.132-14.167-5.7157-9.2978-7.9357-20.795-8.1703-31.707-0.2364-10.994 1.2029-22.836 6.8516-32.272 3.9102-6.5315 9.8638-14.109 17.451-14.732 6.3837-0.52428 12.612 4.7502 16.509 9.8337 7.4957 9.778 9.5691 23.265 10.019 35.578z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aaaaaaaaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7114"
+          style="filter:url(#filter4050);stroke:url(#radialGradient7269);stroke-linecap:round;stroke-width:.5;fill:none"
+          d="m250.51 863.95s2.9063-1.8146 4.5515-2.1285c1.8474-0.35244 3.8881-0.36426 5.6317 0.34051 3.6084 1.4585 6.7431 4.333 8.8709 7.5918 3.7246 5.7044 5.4561 12.765 5.9212 19.562 0.43377 6.3398 0.55424 11.968-0.81621 17.72-1.0544 4.4254-2.7906 8.8636-5.587 12.452-2.1318 2.7355-4.8445 5.4461-8.1644 6.4492-1.5258 0.46102-4.7658-0.39024-4.7658-0.39024"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="caaasaaac"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7116"
+          style="filter:url(#filter4110);stroke:#1a1a1a;stroke-linecap:round;stroke-width:.5;fill:none"
+          d="m236.48 850.02 4.2466 3.6598"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7118"
+          style="filter:url(#filter4110);stroke:#1a1a1a;stroke-linecap:round;stroke-width:.5;fill:none"
+          d="m238.33 846.81 3.603 4.062"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7120"
+          style="filter:url(#filter4110);stroke:#1a1a1a;stroke-linecap:round;stroke-width:.5;fill:none"
+          d="m241.95 844.87 1.7526 2.8552"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7122"
+          style="filter:url(#filter4110);stroke:#1a1a1a;stroke-linecap:round;stroke-width:.5;fill:none"
+          d="m244.44 842.3 1.0285 3.0966"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7124"
+          style="filter:url(#filter4110);stroke:#1a1a1a;stroke-linecap:round;stroke-width:.5;fill:none"
+          d="m247.66 840.05 0.22393 3.0161"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7126"
+          style="filter:url(#filter4110);stroke:#1a1a1a;stroke-linecap:round;stroke-width:.5;fill:none"
+          d="m250.64 838.12-0.0174 3.0966"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7128"
+          style="filter:url(#filter4110);stroke:#1a1a1a;stroke-linecap:round;stroke-width:.5;fill:none"
+          d="m253.61 838.2-0.0174 1.6484"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7130"
+          style="filter:url(#filter4110);stroke:#1a1a1a;stroke-linecap:round;stroke-width:.5;fill:none"
+          d="m256.91 838.28 0.063 0.84384"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7132"
+          style="filter:url(#filter4078);stroke-width:0;fill:none"
+          d="m229.99 917.26 1.0224-0.43733"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7134"
+          style="filter:url(#filter4078);stroke:#666666;stroke-linecap:round;stroke-width:0.8;fill:none"
+          d="m226.81 893.54 5.6887-0.43733"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7136"
+          style="filter:url(#filter4078);stroke:#1a1a1a;stroke-linecap:round;stroke-width:0.8;fill:none"
+          d="m226.85 893.04 5.6887-0.43733"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7138"
+          style="filter:url(#filter4078);stroke:#666666;stroke-linecap:round;stroke-width:0.8;fill:none"
+          d="m227.14 900.1 5.4898-0.72598"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7140"
+          style="filter:url(#filter4078);stroke:#1a1a1a;stroke-linecap:round;stroke-width:0.8;fill:none"
+          d="m227.09 899.56 4.2406-0.51778"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7142"
+          style="filter:url(#filter4078);stroke:#666666;stroke-linecap:round;stroke-width:0.7;fill:none"
+          d="m227.54 906.45 5.3-1.34"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7144"
+          style="filter:url(#filter4078);stroke:#1a1a1a;stroke-linecap:round;stroke-width:0.7;fill:none"
+          d="m227.5 906 2.551-0.67869"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7146"
+          style="filter:url(#filter4078);stroke:#666666;stroke-linecap:round;stroke-width:0.6;fill:none"
+          d="m228.66 912.08 4.4644-1.5172"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7148"
+          style="filter:url(#filter4078);stroke:#1a1a1a;stroke-linecap:round;stroke-width:0.6;fill:none"
+          d="m228.62 911.71 1.4247-0.51778"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7150"
+          style="opacity:.9;filter:url(#filter4078);stroke:#666666;stroke-linecap:round;stroke-width:.5;fill:none"
+          d="m230.08 916.87 3.7982-1.5588"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7152"
+          style="opacity:.8;filter:url(#filter4078);stroke:#666666;stroke-linecap:round;stroke-width:.5;fill:none"
+          d="m231.66 922.2 2.8404-1.309"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7154"
+          style="opacity:.7;filter:url(#filter4078);stroke:#666666;stroke-linecap:round;stroke-width:.5;fill:none"
+          d="m233.62 927.07 2.0909-1.6004"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7156"
+          style="opacity:.6;filter:url(#filter4078);stroke:#666666;stroke-linecap:round;stroke-width:.5;fill:none"
+          d="m235.78 931.32 2.0076-1.5588"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7158"
+          style="filter:url(#filter4078);stroke:#656565;stroke-linecap:round;stroke-width:0.8;fill:none"
+          d="m226.94 886.69 5.6706 0.0817"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7160"
+          style="filter:url(#filter4078);stroke:#1a1a1a;stroke-linecap:round;stroke-width:0.8;fill:none"
+          d="m227.01 886.29 6.2519 0.0454"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7162"
+          style="filter:url(#filter4078);stroke:#656565;stroke-linecap:round;stroke-width:0.8;fill:none"
+          d="m227.07 880.96 6.1196 0.74091"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7164"
+          style="filter:url(#filter4078);stroke:#1a1a1a;stroke-linecap:round;stroke-width:0.8;fill:none"
+          d="m227.25 880.41 7.1369 0.84991"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7166"
+          style="filter:url(#filter4078);stroke:#666666;stroke-linecap:round;stroke-width:0.8;fill:none"
+          d="m227.86 875.48 6.5024 1.9266"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7168"
+          style="filter:url(#filter4078);stroke:#1a1a1a;stroke-linecap:round;stroke-width:0.8;fill:none"
+          d="m227.82 874.86 7.4587 2.2176"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7170"
+          style="filter:url(#filter4094);stroke:#656565;stroke-linecap:round;stroke-width:0.8;fill:none"
+          d="m229.31 870.24 5.0749 2.0209"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7172"
+          style="filter:url(#filter4094);stroke:#1a1a1a;stroke-linecap:round;stroke-width:0.8;fill:none"
+          d="m229.4 869.49 6.8212 2.9356"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7174"
+          style="filter:url(#filter4110);stroke:#656565;stroke-linecap:round;stroke-width:0.8;fill:none"
+          d="m230.4 865.41 4.5651 1.9739"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7176"
+          style="filter:url(#filter4110);stroke:#1a1a1a;stroke-linecap:round;stroke-width:0.8;fill:none"
+          d="m230.52 864.83 7.143 3.0966"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7178"
+          style="filter:url(#filter4110);stroke:#656565;stroke-linecap:round;stroke-width:0.7;fill:none"
+          d="m231.93 861.11 4.3454 1.9324"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7180"
+          style="filter:url(#filter4110);stroke:#1a1a1a;stroke-linecap:round;stroke-width:0.7;fill:none"
+          d="m232.05 860.4 6.258 3.0966"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7182"
+          style="filter:url(#filter4110);stroke:#656565;stroke-linecap:round;stroke-width:0.6;fill:none"
+          d="m233.46 857.2 4.0344 2.3816"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7184"
+          style="filter:url(#filter4110);stroke:#1a1a1a;stroke-linecap:round;stroke-width:0.6;fill:none"
+          d="m233.42 856.7 5.6144 3.3379"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7186"
+          style="filter:url(#filter4110);stroke:#656565;stroke-linecap:round;stroke-width:.5;fill:none"
+          d="m234.95 854.02 3.7369 2.5949"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7188"
+          style="filter:url(#filter4110);stroke:#1a1a1a;stroke-linecap:round;stroke-width:.5;fill:none"
+          d="m235.03 853.72 4.5685 3.177"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7190"
+          style="opacity:.47811;color:#000000;filter:url(#filter4024);stroke:url(#linearGradient7271);stroke-width:.52636;fill:none"
+          d="m548.93 714.27c0.46047 12.602-0.0868 26.916-7.5699 37.067-4.2769 5.8014-11.794 11.186-18.958 10.399-7.1137-0.78176-12.384-8.07-16.132-14.167-5.7157-9.2978-7.9357-20.795-8.1703-31.707-0.2364-10.994 1.2029-22.836 6.8516-32.272 3.9102-6.5315 9.8638-14.109 17.451-14.732 6.3837-0.52428 12.612 4.7502 16.509 9.8337 7.4957 9.778 9.5691 23.265 10.019 35.578z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aaaaaaaaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          transform="matrix(.97508 0 0 .97508 -249.42 195.4)"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7192"
+          style="opacity:.70707;color:#000000;filter:url(#filter4036);stroke:url(#linearGradient7273);stroke-width:0.8;fill:none"
+          d="m547.99 715.29c0.39154 12.592 1.3251 27.024-5.9256 37.327-4.2964 6.1047-12.215 11.586-19.635 10.77-7.3678-0.80968-12.827-8.3583-16.708-14.673-5.9199-9.6298-8.2192-21.538-8.4622-32.839-0.24484-11.387 1.2458-23.652 7.0963-33.424 4.0499-6.7648 10.216-14.613 18.074-15.258 6.6118-0.54302 13.208 4.8111 17.099 10.185 7.5927 10.489 8.0597 24.97 8.4622 37.912z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aaaaaaaaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          transform="matrix(.97001 0 0 .98564 -246.79 187.84)"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7194"
+          style="filter:url(#filter4224);fill:url(#linearGradient7275)"
+          d="m244.67 929.84c2.505 2.6367 4.3808 5.9441 7.3098 8.1 2.2781 1.6768 4.9141 3.0949 7.7049 3.5561 2.4826 0.41024 5.1104-0.0245 7.5073-0.79024 2.8089-0.89741 5.2945-2.6478 7.7049-4.3463 1.0685-0.75295 1.678-2.3308 2.9634-2.5683 0.75797-0.14001 2.5741 0.13193 2.1732 0.79024-1.5295 2.5116-3.3002 5.029-4.1488 6.1244-0.2251 0.29057-2.4948 2.2526-3.9942 2.9567-1.3422 0.63028-4.3202 1.0609-4.3202 1.0609s-6.2087 0.29857-9.3288 0.49779c-2.8437 0.18157-9.4227 0.0285-9.4227 0.0285s-0.61329-0.1195-0.89096-0.25484c-1.2799-0.62379-2.8094-1.9454-3.4554-2.511-2.8483-2.494-5.1328-5.5953-7.3098-8.6927-1.3574-1.9313-3.6292-3.7649-3.5561-6.1244 0.0662-2.1359 1.4296-5.1236 3.5561-5.3341 3.5218-0.34872 5.0698 4.9416 7.5073 7.5073z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aaaaaassacscasaaaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7196"
+          style="fill:url(#radialGradient7277)"
+          d="m244.67 929.84c2.505 2.6367 4.3808 5.9441 7.3098 8.1 2.2781 1.6768 4.9141 3.0949 7.7049 3.5561 2.4826 0.41024 5.1104-0.0245 7.5073-0.79024 2.8089-0.89741 5.2945-2.6478 7.7049-4.3463 1.0685-0.75295 1.678-2.3308 2.9634-2.5683 0.75797-0.14001 2.5741 0.13193 2.1732 0.79024-1.5295 2.5116-3.3002 5.029-4.1488 6.1244-0.2251 0.29057-2.4948 2.2526-3.9942 2.9567-1.3422 0.63028-4.3202 1.0609-4.3202 1.0609s-6.2087 0.29857-9.3288 0.49779c-2.8437 0.18157-9.4227 0.0285-9.4227 0.0285s-0.61329-0.1195-0.89096-0.25484c-1.2799-0.62379-2.8094-1.9454-3.4554-2.511-2.8483-2.494-5.1328-5.5953-7.3098-8.6927-1.3574-1.9313-3.6292-3.7649-3.5561-6.1244 0.0662-2.1359 1.4296-5.1236 3.5561-5.3341 3.5218-0.34872 5.0698 4.9416 7.5073 7.5073z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aaaaaassacscasaaaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7198"
+          style="stroke:#000000;stroke-width:0.4;fill:none"
+          d="m209.44 892.51c-0.0467-1.0223 0.36795-2.0592 0.83839-2.8191 0.18502-0.29886 0.39947-0.65821 0.72213-0.59038 0.55128 0.11588 0.5632 1.9648 0.60337 3.0079 0.0469 1.2165 0.009 3.23-0.42997 3.6009-0.14613 0.12373-0.35444-0.0435-0.48946-0.19169-0.64107-0.70385-1.1908-1.8389-1.2445-3.0077z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aasasaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7200"
+          style="stroke:#000000;stroke-width:0.4;fill:none"
+          d="m209.48 885.7c-0.0153-0.94547 0.44993-1.8691 0.96415-2.5332 0.20222-0.26119 0.43704-0.57585 0.77054-0.48862 0.56977 0.14902 0.52192 1.8535 0.52972 2.8177 0.009 1.1245-0.0968 2.9767-0.5647 3.2849-0.15608 0.10281-0.36734-0.0673-0.50299-0.21414-0.64404-0.69765-1.179-1.7856-1.1967-2.8666z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aasasaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7202"
+          style="stroke:#000000;stroke-width:0.4;fill:none"
+          d="m210.05 879.45c0.10276-0.85033 0.60836-1.5956 1.1235-2.0995 0.20262-0.19819 0.43927-0.43853 0.71005-0.301 0.46265 0.23471 0.21371 1.7545 0.10233 2.6203-0.12983 1.0097-0.44584 2.6514-0.87841 2.8445-0.14429 0.0644-0.30177-0.12564-0.39826-0.28151-0.45818-0.73998-0.77657-1.8105-0.65924-2.7828z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aasasaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7204"
+          style="stroke:#000000;stroke-width:0.4;fill:none"
+          d="m210.86 873.95c0.1395-0.76819 0.65607-1.4052 1.1698-1.8209 0.20205-0.16347 0.43849-0.36248 0.68867-0.2132 0.42748 0.25475 0.11618 1.6221-0.0323 2.4037-0.17311 0.91149-0.55397 2.3843-0.974 2.5231-0.14011 0.0463-0.28015-0.14116-0.36406-0.29194-0.39825-0.71625-0.64754-1.7224-0.4882-2.6008z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aasasaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7206"
+          style="stroke:#000000;stroke-width:0.4;fill:none"
+          d="m212.09 868.74c0.14045-0.76802 0.65782-1.4044 1.1721-1.8194 0.20226-0.16322 0.43894-0.36194 0.68894-0.21235 0.42716 0.25529 0.11416 1.6222-0.0353 2.4036-0.17425 0.91128-0.55694 2.3836-0.97715 2.5219-0.14016 0.0461-0.27997-0.14151-0.36369-0.2924-0.39736-0.71674-0.6454-1.7232-0.48496-2.6014z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aasasaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7208"
+          style="stroke:#000000;stroke-width:0.4;fill:none"
+          d="m213.75 863.71c0.27583-0.73041 0.89889-1.2638 1.4792-1.5798 0.22824-0.12433 0.49671-0.27741 0.71585-0.0854 0.37448 0.32772-0.17846 1.6164-0.46555 2.3584-0.33477 0.86529-0.97517 2.2452-1.4134 2.3059-0.14615 0.0202-0.25007-0.1894-0.30539-0.35285-0.26246-0.77635-0.32609-1.8109-0.0108-2.6462z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aasasaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7210"
+          style="stroke:#000000;stroke-width:.39952;fill:none"
+          d="m209.79 899.44c-0.11834-1.0164 0.22139-2.08 0.63612-2.8711 0.16311-0.31115 0.35125-0.68472 0.67711-0.6398 0.55674 0.0767 0.69858 1.9202 0.81189 2.9579 0.13221 1.2102 0.23604 3.2213-0.17471 3.6223-0.13672 0.13372-0.35578-0.0184-0.50056-0.15672-0.68743-0.65692-1.3143-1.7504-1.4498-2.9125z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aasasaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7212"
+          style="stroke:#000000;stroke-width:0.379;fill:none"
+          d="m210.71 906.44c-0.17896-1.0038 0.0496-2.091 0.36497-2.9127 0.12403-0.32314 0.26604-0.7105 0.56157-0.69166 0.50491 0.0321 0.76418 1.8585 0.94016 2.8839 0.20527 1.1958 0.44247 3.1923 0.10273 3.6247-0.11307 0.14418-0.32047 0.01-0.46025-0.11638-0.66371-0.60012-1.3044-1.6402-1.5092-2.7879z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aasasaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7214"
+          style="stroke:#000000;stroke-width:.35892;fill:none"
+          d="m211.82 912.68c-0.25512-0.86766-0.10086-1.8337 0.16102-2.5727 0.10301-0.29062 0.21972-0.63859 0.5223-0.64048 0.51697-0.004 0.91353 1.5795 1.1672 2.4663 0.29584 1.0341 0.68223 2.7673 0.36725 3.1669-0.10482 0.13327-0.32593 0.0287-0.47755-0.0733-0.71998-0.4841-1.4483-1.3548-1.7402-2.3468z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aasasaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7216"
+          style="stroke:#000000;stroke-width:.34613;fill:none"
+          d="m213.46 918.21c-0.25512-0.8069-0.10086-1.7053 0.16102-2.3925 0.10301-0.27027 0.21972-0.59387 0.5223-0.59563 0.51697-0.004 0.91353 1.4689 1.1672 2.2936 0.29584 0.96172 0.68223 2.5735 0.36725 2.9452-0.10482 0.12394-0.32593 0.0267-0.47755-0.0682-0.71998-0.4502-1.4483-1.2599-1.7402-2.1825z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aasasaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7218"
+          style="stroke:#000000;stroke-width:.34613;fill:none"
+          d="m214.99 923.68c-0.29796-0.79208-0.19203-1.6975 0.0327-2.3977 0.0884-0.2754 0.1876-0.60479 0.48965-0.62275 0.51601-0.0317 0.99088 1.4179 1.2883 2.2278 0.34692 0.9445 0.81907 2.5333 0.52445 2.9213-0.098 0.12938-0.32403 0.0441-0.48052-0.0425-0.74306-0.41099-1.5137-1.1806-1.8546-2.0862z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aasasaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7220"
+          style="stroke:#000000;stroke-width:.32706;fill:none"
+          d="m217.35 928.76c-0.33125-0.76709-0.31261-1.6772-0.17114-2.3918 0.0556-0.28103 0.1164-0.61667 0.38363-0.65708 0.45647-0.0701 1 1.339 1.3323 2.1239 0.38755 0.91534 0.9403 2.4634 0.71057 2.872-0.0764 0.13623-0.2846 0.0681-0.43107-0.007-0.69544-0.35415-1.4454-1.0636-1.8243-1.9406z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aasasaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7222"
+          style="stroke:#000000;stroke-width:.26538;fill:none"
+          d="m219.7 933.27c-0.3153-0.6002-0.35634-1.3377-0.28592-1.9246 0.0276-0.23079 0.0561-0.5061 0.26986-0.55528 0.365-0.0849 0.89166 1.0217 1.2089 1.6363 0.36999 0.71669 0.91266 1.9351 0.75198 2.2798-0.0534 0.11493-0.22606 0.0727-0.34923 0.0206-0.5845-0.24365-1.235-0.77139-1.5956-1.4576z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="aasasaa"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7224"
+          style="color:#000000;fill:url(#radialGradient7279)"
+          d="m223.26 848.46c-4.7408 4.0402-7.8532 9.9653-10 15.812-3.2707 8.908-4.0282 18.698-3.9688 28.188 0.0547 8.7185 1.4637 17.14 3.9688 25.844 2.6081 9.0616 7.8024 21.593 16.125 25.406 2.7759-0.058 3.4242-1.4809 3.2715-1.6482-4.148-4.5426-11.519-16.607-14.656-26.07-2.9246-8.8215-3.5931-22.563-3.5622-27.653 0.0619-10.179 6.5043-34.596 13.31-38.306 6.7476-3.6774-2.9257 0.24023-4.4885-1.5736z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cssscsassc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7226"
+          style="color:#000000;fill:url(#radialGradient7281)"
+          d="m223.26 848.46c-4.7408 4.0402-7.8532 9.9653-10 15.812-3.2707 8.908-4.0282 18.698-3.9688 28.188 0.0547 8.7185 1.4637 17.14 3.9688 25.844 2.6081 9.0616 7.8024 21.593 16.125 25.406 2.7759-0.058 3.4242-1.4809 3.2715-1.6482-4.148-4.5426-11.519-16.607-14.656-26.07-2.9246-8.8215-3.5931-22.563-3.5622-27.653 0.0619-10.179 6.5043-34.596 13.31-38.306 6.7476-3.6774-2.9257 0.24023-4.4885-1.5736z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cssscsassc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7228"
+          style="color:#000000;fill:url(#radialGradient7283)"
+          d="m223.26 848.46c-4.7408 4.0402-7.8532 9.9653-10 15.812-3.2707 8.908-4.0282 18.698-3.9688 28.188 0.0547 8.7185 1.4637 17.14 3.9688 25.844 2.6081 9.0616 7.8024 21.593 16.125 25.406 2.7759-0.058 3.4242-1.4809 3.2715-1.6482-4.148-4.5426-11.519-16.607-14.656-26.07-2.9246-8.8215-3.5931-22.563-3.5622-27.653 0.0619-10.179 6.5043-34.596 13.31-38.306 6.7476-3.6774-2.9257 0.24023-4.4885-1.5736z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cssscsassc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7230"
+          style="color:#000000;fill:url(#radialGradient7285)"
+          d="m223.26 848.46c-4.7408 4.0402-7.8532 9.9653-10 15.812-3.2707 8.908-4.0282 18.698-3.9688 28.188 0.0547 8.7185 1.4637 17.14 3.9688 25.844 2.6081 9.0616 7.8024 21.593 16.125 25.406 2.7759-0.058 3.4242-1.4809 3.2715-1.6482-4.148-4.5426-11.519-16.607-14.656-26.07-2.9246-8.8215-3.5931-22.563-3.5622-27.653 0.0619-10.179 6.5043-34.596 13.31-38.306 6.7476-3.6774-2.9257 0.24023-4.4885-1.5736z"
+          inkscape:export-ydpi="300"
+          sodipodi:nodetypes="cssscsassc"
+          inkscape:export-filename="D:\Kris Sachen\Grafik\Duesi\Duisi1.png"
+          inkscape:connector-curvature="0"
+          inkscape:export-xdpi="300"
+      />
+      <path
+          id="path7232"
+          sodipodi:nodetypes="cc"
+          style="stroke:#000000;stroke-linecap:round;stroke-width:.5;fill:none"
+          inkscape:connector-curvature="0"
+          d="m270.22 943.74 0.64034-2.2875"
+      />
+      <path
+          id="path7234"
+          sodipodi:nodetypes="cc"
+          d="m273.75 941.81 0.53006-2.3978"
+          style="filter:url(#filter4791);stroke:#000000;stroke-linecap:round;stroke-width:.5;fill:none"
+          inkscape:connector-curvature="0"
+      />
+      <path
+          id="path7236"
+          sodipodi:nodetypes="cc"
+          inkscape:connector-curvature="0"
+          style="filter:url(#filter4783);stroke:#000000;stroke-linecap:round;stroke-width:.5;fill:none"
+          d="m277.06 938.61 0.41978-2.5081"
+      />
+      <path
+          id="path7238"
+          sodipodi:nodetypes="cc"
+          d="m279.37 935.09 0.19922-1.9567"
+          style="filter:url(#filter4823);stroke:#000000;stroke-linecap:round;stroke-width:.5;fill:none"
+          inkscape:connector-curvature="0"
+      />
+      <path
+          id="path7240"
+          sodipodi:nodetypes="cc"
+          inkscape:connector-curvature="0"
+          style="opacity:.9;filter:url(#filter4855);stroke:#000000;stroke-linecap:round;stroke-width:.5;fill:none"
+          d="m281.47 930.89 0.19922-1.4053"
+      />
+      <path
+          id="path7242"
+          sodipodi:nodetypes="cc"
+          d="m283.7 926.17 0.16759-1.4211"
+          style="opacity:.8;filter:url(#filter4911);stroke:#000000;stroke-linecap:round;stroke-width:0.4;fill:none"
+          inkscape:connector-curvature="0"
+      />
+      <path
+          id="path7244"
+          style="opacity:.7;color:#000000;fill-opacity:.99608;filter:url(#filter4931);fill:#000000"
+          inkscape:connector-curvature="0"
+          d="m285.61 920.5c-0.20526 0-0.375 0.16101-0.375 0.375 0 0.20141 0.15528 0.38747 0.34375 0.40625l0.1875-0.75c-0.0445-0.0196-0.10494-0.0312-0.15625-0.0312z"
+      />
+      <path
+          id="path7246"
+          d="m286.94 915.34c-0.20519 0.006-0.37046 0.18177-0.36459 0.40904 0.006 0.21389 0.16582 0.40704 0.35474 0.42156l0.16689-0.80191c-0.0451-0.0196-0.10576-0.0301-0.15704-0.0287z"
+          style="opacity:.6;color:#000000;fill-opacity:.99608;filter:url(#filter4919);fill:#000000"
+          inkscape:connector-curvature="0"
+      />
+      <path
+          id="path7248"
+          style="opacity:.5;color:#000000;fill-opacity:.99608;fill:#000000"
+          inkscape:connector-curvature="0"
+          d="m287.99 909.59c-0.14115 0.0197-0.24502 0.18106-0.2279 0.37415 0.0164 0.18169 0.13776 0.33479 0.26887 0.33374l0.069-0.69461c-0.0322-0.0135-0.0747-0.0181-0.10994-0.0132z"
+      />
+      <path
+          id="path7250"
+          inkscape:transform-center-x="-0.071479032"
+          d="m288.55 904.73c-0.13978 0.0245-0.23501 0.15155-0.2079 0.29372 0.0258 0.13377 0.15482 0.23898 0.28556 0.22904l0.0327-0.52058c-0.0328-0.008-0.0755-0.008-0.11037-0.002z"
+          style="opacity:.4;color:#000000;fill-opacity:.99608;fill:#000000"
+          inkscape:connector-curvature="0"
+      />
+    </g
+    >
+  </g
+  >
+  <metadata
+    >
+    <rdf:RDF
+      >
+      <cc:Work
+        >
+        <dc:format
+          >image/svg+xml</dc:format
+        >
+        <dc:type
+            rdf:resource="http://purl.org/dc/dcmitype/StillImage"
+        />
+        <cc:license
+            rdf:resource="http://creativecommons.org/licenses/publicdomain/"
+        />
+        <dc:publisher
+          >
+          <cc:Agent
+              rdf:about="http://openclipart.org/"
+            >
+            <dc:title
+              >Openclipart</dc:title
+            >
+          </cc:Agent
+          >
+        </dc:publisher
+        >
+        <dc:title
+          >Duesi Tire</dc:title
+        >
+        <dc:date
+          >2011-06-22T10:48:21</dc:date
+        >
+        <dc:description
+        />
+        <dc:source
+          >https://openclipart.org/detail/146821/duesi-tire-by-rents</dc:source
+        >
+        <dc:creator
+          >
+          <cc:Agent
+            >
+            <dc:title
+              >Rents</dc:title
+            >
+          </cc:Agent
+          >
+        </dc:creator
+        >
+        <dc:subject
+          >
+          <rdf:Bag
+            >
+            <rdf:li
+              >Duesenberg</rdf:li
+            >
+            <rdf:li
+              >Reifen</rdf:li
+            >
+            <rdf:li
+              >Tire</rdf:li
+            >
+          </rdf:Bag
+          >
+        </dc:subject
+        >
+      </cc:Work
+      >
+      <cc:License
+          rdf:about="http://creativecommons.org/licenses/publicdomain/"
+        >
+        <cc:permits
+            rdf:resource="http://creativecommons.org/ns#Reproduction"
+        />
+        <cc:permits
+            rdf:resource="http://creativecommons.org/ns#Distribution"
+        />
+        <cc:permits
+            rdf:resource="http://creativecommons.org/ns#DerivativeWorks"
+        />
+      </cc:License
+      >
+    </rdf:RDF
+    >
+  </metadata
+  >
+</svg
+>

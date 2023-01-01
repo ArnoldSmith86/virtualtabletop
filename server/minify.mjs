@@ -24,6 +24,7 @@ export default function minifyRoom() {
         'client/css/jsonedit.css',
         'client/css/tracing.css',
 
+        'client/css/overlays/misc.css',
         'client/css/overlays/players.css',
         'client/css/overlays/states.css',
         'client/css/overlays/connectionlost.css',
@@ -50,6 +51,8 @@ export default function minifyRoom() {
       return minify({
         compressor: Config.get('minifyJavascript') ? uglifyES : noCompress,
         input: [
+          'node_modules/dompurify/dist/purify.js',
+
           'client/js/domhelpers.js',
           'client/js/connection.js',
           'client/js/serverstate.js',
