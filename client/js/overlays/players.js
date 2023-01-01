@@ -6,13 +6,15 @@ let playerName = localStorage.getItem('playerName') || 'Guest' + Math.floor(Math
 let playerColor = 'red';
 let activePlayers = [];
 let activeColors = [];
+let mouseCoords = [];
 localStorage.setItem('playerName', playerName);
 
 export {
   playerName,
   playerColor,
   activePlayers,
-  activeColors
+  activeColors,
+  mouseCoords
 }
 
 function addPlayerCursor(playerName, playerColor) {
