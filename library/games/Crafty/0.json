@@ -1,0 +1,4880 @@
+{
+  "fo7b": {
+    "deck": "dice",
+    "type": "card",
+    "cardType": "",
+    "id": "fo7b"
+  },
+  "1ple": {
+    "deck": "dice",
+    "type": "card",
+    "cardType": "",
+    "id": "1ple"
+  },
+  "8qfi": {
+    "deck": "dice",
+    "type": "card",
+    "cardType": "",
+    "id": "8qfi"
+  },
+  "uupe": {
+    "deck": "dice",
+    "type": "card",
+    "cardType": "",
+    "id": "uupe"
+  },
+  "hupy": {
+    "deck": "dice",
+    "type": "card",
+    "cardType": "",
+    "id": "hupy"
+  },
+  "vahq": {
+    "deck": "dice",
+    "type": "card",
+    "cardType": "white/black",
+    "id": "vahq",
+    "z": 54,
+    "x": 117,
+    "y": 143,
+    "activeFace": 1
+  },
+  "ux8y": {
+    "deck": "dice",
+    "type": "card",
+    "cardType": "white/red",
+    "id": "ux8y",
+    "z": 55,
+    "x": 231,
+    "y": 139,
+    "activeFace": 5
+  },
+  "fl8u": {
+    "deck": "dice",
+    "type": "card",
+    "cardType": "white/orange",
+    "id": "fl8u",
+    "z": 56,
+    "x": 354,
+    "y": 145,
+    "activeFace": 2
+  },
+  "cr7b": {
+    "deck": "dice",
+    "type": "card",
+    "cardType": "",
+    "id": "cr7b"
+  },
+  "nanz": {
+    "deck": "dice",
+    "type": "card",
+    "cardType": "",
+    "id": "nanz"
+  },
+  "cvdm": {
+    "deck": "dice",
+    "type": "card",
+    "cardType": "",
+    "id": "cvdm"
+  },
+  "jgla": {
+    "deck": "dice",
+    "type": "card",
+    "cardType": "white/yellow",
+    "id": "jgla",
+    "z": 57,
+    "x": 466,
+    "y": 136,
+    "activeFace": 2
+  },
+  "l039": {
+    "deck": "dice",
+    "type": "card",
+    "cardType": "white/green",
+    "id": "l039",
+    "z": 63,
+    "x": 581,
+    "y": 147,
+    "activeFace": 3
+  },
+  "6ymb": {
+    "deck": "dice",
+    "type": "card",
+    "cardType": "white/cyan",
+    "id": "6ymb",
+    "z": 59,
+    "x": 691,
+    "y": 149,
+    "activeFace": 3
+  },
+  "svge": {
+    "deck": "dice",
+    "type": "card",
+    "cardType": "white/blue",
+    "id": "svge",
+    "z": 62,
+    "x": 804,
+    "y": 155,
+    "activeFace": 1
+  },
+  "hbhz": {
+    "deck": "dice",
+    "type": "card",
+    "cardType": "white/purple",
+    "id": "hbhz",
+    "z": 61,
+    "x": 929,
+    "y": 152,
+    "activeFace": 2
+  },
+  "elf5": {
+    "deck": "dice",
+    "type": "card",
+    "cardType": "black/white",
+    "id": "elf5",
+    "z": 53,
+    "x": 108,
+    "y": 20,
+    "activeFace": 3
+  },
+  "o7sa": {
+    "deck": "dice",
+    "type": "card",
+    "cardType": "red/white",
+    "id": "o7sa",
+    "z": 45,
+    "y": 26,
+    "x": 230
+  },
+  "1i29": {
+    "deck": "dice",
+    "type": "card",
+    "cardType": "orange/white",
+    "id": "1i29",
+    "z": 46,
+    "y": 24,
+    "x": 345,
+    "activeFace": 3
+  },
+  "29c9": {
+    "deck": "dice",
+    "type": "card",
+    "cardType": "yellow/white",
+    "id": "29c9",
+    "z": 47,
+    "x": 460,
+    "y": 29,
+    "activeFace": 4
+  },
+  "lmsz": {
+    "deck": "dice",
+    "type": "card",
+    "cardType": "green/white",
+    "id": "lmsz",
+    "z": 48,
+    "x": 574,
+    "y": 33,
+    "activeFace": 2
+  },
+  "ccih": {
+    "deck": "dice",
+    "type": "card",
+    "cardType": "cyan/white",
+    "id": "ccih",
+    "z": 49,
+    "x": 686,
+    "y": 31,
+    "activeFace": 5
+  },
+  "lnhw": {
+    "deck": "dice",
+    "type": "card",
+    "cardType": "blue/white",
+    "id": "lnhw",
+    "z": 50,
+    "x": 798,
+    "y": 35
+  },
+  "3ume": {
+    "deck": "dice",
+    "type": "card",
+    "cardType": "purple/white",
+    "id": "3ume",
+    "z": 51,
+    "x": 931,
+    "y": 35,
+    "activeFace": 5
+  },
+  "grid10": {
+    "type": "holder",
+    "id": "grid10",
+    "x": 1031,
+    "y": 5,
+    "width": 20,
+    "height": 20,
+    "z": 409,
+    "movable": null,
+    "movableInEdit": null,
+    "dropTarget": {
+      "fabric": true
+    },
+    "dropOffsetX": -25,
+    "dropOffsetY": -15,
+    "classes": "transparent"
+  },
+  "grid11": {
+    "type": "holder",
+    "id": "grid11",
+    "x": 1145,
+    "y": 5,
+    "width": 20,
+    "height": 20,
+    "z": 410,
+    "movable": null,
+    "movableInEdit": null,
+    "dropTarget": {
+      "fabric": true
+    },
+    "dropOffsetX": -25,
+    "dropOffsetY": -30,
+    "classes": "transparent"
+  },
+  "grid12": {
+    "type": "holder",
+    "id": "grid12",
+    "x": 1259,
+    "y": 5,
+    "width": 20,
+    "height": 20,
+    "z": 411,
+    "movable": null,
+    "movableInEdit": null,
+    "dropTarget": {
+      "fabric": true
+    },
+    "dropOffsetX": -5,
+    "dropOffsetY": -30,
+    "classes": "transparent"
+  },
+  "grid13": {
+    "type": "holder",
+    "id": "grid13",
+    "x": 1373,
+    "y": 5,
+    "width": 20,
+    "height": 20,
+    "z": 412,
+    "movable": null,
+    "movableInEdit": null,
+    "dropTarget": {
+      "fabric": true
+    },
+    "dropOffsetX": -25,
+    "dropOffsetY": -30,
+    "classes": "transparent"
+  },
+  "grid14": {
+    "type": "holder",
+    "id": "grid14",
+    "x": 1487,
+    "y": 5,
+    "width": 20,
+    "height": 20,
+    "z": 413,
+    "movable": null,
+    "movableInEdit": null,
+    "dropTarget": {
+      "fabric": true
+    },
+    "dropOffsetX": -15,
+    "dropOffsetY": -15,
+    "classes": "transparent"
+  },
+  "grid18": {
+    "type": "holder",
+    "id": "grid18",
+    "x": 1481,
+    "y": 955,
+    "width": 20,
+    "height": 20,
+    "z": 414,
+    "dropTarget": {
+      "fabric": true
+    },
+    "dropOffsetX": -5,
+    "dropOffsetY": -130,
+    "classes": "transparent"
+  },
+  "grid19": {
+    "type": "holder",
+    "id": "grid19",
+    "x": 1358,
+    "y": 955,
+    "width": 20,
+    "height": 20,
+    "z": 411,
+    "dropTarget": {
+      "fabric": true
+    },
+    "dropOffsetX": -20,
+    "dropOffsetY": -90,
+    "classes": "transparent"
+  },
+  "grid20": {
+    "type": "holder",
+    "id": "grid20",
+    "x": 1235,
+    "y": 955,
+    "width": 20,
+    "height": 20,
+    "z": 410,
+    "dropTarget": {
+      "fabric": true
+    },
+    "dropOffsetX": -40,
+    "dropOffsetY": -90,
+    "classes": "transparent"
+  },
+  "grid21": {
+    "type": "holder",
+    "id": "grid21",
+    "x": 1112,
+    "y": 955,
+    "width": 20,
+    "height": 20,
+    "z": 409,
+    "dropTarget": {
+      "fabric": true
+    },
+    "dropOffsetX": -15,
+    "dropOffsetY": -130,
+    "classes": "transparent"
+  },
+  "grid22": {
+    "type": "holder",
+    "id": "grid22",
+    "x": 989,
+    "y": 955,
+    "width": 20,
+    "height": 20,
+    "z": 408,
+    "dropTarget": {
+      "fabric": true
+    },
+    "dropOffsetX": -45,
+    "dropOffsetY": -130,
+    "classes": "transparent"
+  },
+  "grid30": {
+    "type": "holder",
+    "id": "grid30",
+    "x": 5,
+    "y": 955,
+    "width": 20,
+    "height": 20,
+    "z": 400,
+    "dropTarget": {
+      "fabric": true
+    },
+    "dropOffsetX": -15,
+    "dropOffsetY": -130,
+    "classes": "transparent"
+  },
+  "grid29": {
+    "type": "holder",
+    "id": "grid29",
+    "x": 128,
+    "y": 955,
+    "width": 20,
+    "height": 20,
+    "z": 401,
+    "dropTarget": {
+      "fabric": true
+    },
+    "dropOffsetX": -25,
+    "dropOffsetY": -130,
+    "classes": "transparent"
+  },
+  "grid28": {
+    "type": "holder",
+    "id": "grid28",
+    "x": 251,
+    "y": 955,
+    "width": 20,
+    "height": 20,
+    "z": 402,
+    "dropTarget": {
+      "fabric": true
+    },
+    "dropOffsetX": -25,
+    "dropOffsetY": -90,
+    "classes": "transparent"
+  },
+  "grid27": {
+    "type": "holder",
+    "id": "grid27",
+    "x": 374,
+    "y": 955,
+    "width": 20,
+    "height": 20,
+    "z": 403,
+    "dropTarget": {
+      "fabric": true
+    },
+    "dropOffsetX": -25,
+    "dropOffsetY": -90,
+    "classes": "transparent"
+  },
+  "grid26": {
+    "type": "holder",
+    "id": "grid26",
+    "x": 497,
+    "y": 955,
+    "width": 20,
+    "height": 20,
+    "z": 404,
+    "dropTarget": {
+      "fabric": true
+    },
+    "dropOffsetX": -5,
+    "dropOffsetY": -130,
+    "classes": "transparent"
+  },
+  "grid25": {
+    "type": "holder",
+    "id": "grid25",
+    "x": 620,
+    "y": 955,
+    "width": 20,
+    "height": 20,
+    "z": 405,
+    "dropTarget": {
+      "fabric": true
+    },
+    "dropOffsetX": -25,
+    "dropOffsetY": -90,
+    "classes": "transparent"
+  },
+  "grid24": {
+    "type": "holder",
+    "id": "grid24",
+    "x": 743,
+    "y": 955,
+    "width": 20,
+    "height": 20,
+    "z": 406,
+    "dropTarget": {
+      "fabric": true
+    },
+    "dropOffsetX": -25,
+    "dropOffsetY": -90,
+    "classes": "transparent"
+  },
+  "grid23": {
+    "type": "holder",
+    "id": "grid23",
+    "x": 866,
+    "y": 955,
+    "width": 20,
+    "height": 20,
+    "z": 407,
+    "dropTarget": {
+      "fabric": true
+    },
+    "dropOffsetX": -20,
+    "dropOffsetY": -130,
+    "classes": "transparent"
+  },
+  "grid33": {
+    "type": "holder",
+    "id": "grid33",
+    "x": 5,
+    "y": 205,
+    "width": 20,
+    "height": 20,
+    "dropTarget": {
+      "fabric": true
+    },
+    "dropOffsetX": -5,
+    "dropOffsetY": -35,
+    "z": 1161,
+    "classes": "transparent"
+  },
+  "grid32": {
+    "type": "holder",
+    "id": "grid32",
+    "x": 5,
+    "y": 410,
+    "width": 20,
+    "height": 20,
+    "movable": null,
+    "movableInEdit": null,
+    "dropTarget": {
+      "fabric": true
+    },
+    "dropOffsetX": -15,
+    "dropOffsetY": -30,
+    "z": 1162,
+    "classes": "transparent"
+  },
+  "grid31": {
+    "type": "holder",
+    "id": "grid31",
+    "x": 5,
+    "y": 615,
+    "width": 20,
+    "height": 20,
+    "dropTarget": {
+      "fabric": true
+    },
+    "dropOffsetX": -25,
+    "dropOffsetY": -35,
+    "z": 1163,
+    "classes": "transparent"
+  },
+  "grid15": {
+    "type": "holder",
+    "x": 1575,
+    "y": 205,
+    "width": 20,
+    "height": 20,
+    "dropTarget": {
+      "fabric": true
+    },
+    "dropOffsetX": -105,
+    "dropOffsetY": -25,
+    "z": 1164,
+    "id": "grid15",
+    "classes": "transparent"
+  },
+  "grid16": {
+    "type": "holder",
+    "x": 1575,
+    "y": 410,
+    "width": 20,
+    "height": 20,
+    "dropTarget": {
+      "fabric": true
+    },
+    "z": 1162,
+    "id": "grid16",
+    "dropOffsetX": -65,
+    "dropOffsetY": -30,
+    "classes": "transparent"
+  },
+  "grid17": {
+    "type": "holder",
+    "x": 1575,
+    "y": 615,
+    "width": 20,
+    "height": 20,
+    "dropTarget": {
+      "fabric": true
+    },
+    "dropOffsetX": -25,
+    "dropOffsetY": -25,
+    "z": 1163,
+    "id": "grid17",
+    "classes": "transparent"
+  },
+  "0005": {
+    "id": "0005",
+    "height": 150,
+    "scale": 0.7,
+    "z": 80636,
+    "BdX": -40,
+    "BdY": -90,
+    "RdX": -60,
+    "RdY": -25,
+    "TdX": -25,
+    "TdY": -25,
+    "fabric": true,
+    "faces": [
+      {
+        "rotation": 0,
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 1.75,
+            "offsetY": 20.75
+          }
+        ]
+      },
+      {
+        "rotation": 90,
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 18.75,
+            "offsetY": 36.75
+          }
+        ]
+      },
+      {
+        "rotation": 180,
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 1.75,
+            "offsetY": 20.75
+          }
+        ]
+      },
+      {
+        "rotation": 270,
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 18.75,
+            "offsetY": 36.75
+          }
+        ]
+      }
+    ],
+    "image": "/assets/1551468511_92625",
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": 18.75,
+        "offsetY": 36.75
+      }
+    ],
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "0006": {
+    "id": "0006",
+    "height": 150,
+    "scale": 0.7,
+    "z": 80640,
+    "BdX": -40,
+    "BdY": -90,
+    "RdX": -60,
+    "RdY": -25,
+    "TdX": -25,
+    "TdY": -25,
+    "fabric": true,
+    "faces": [
+      {
+        "rotation": 0,
+        "image": "/assets/-1766317968_102163",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 1.75,
+            "offsetY": 20.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 66%, 50% 66%, 50% 100%, 0% 100%, 0% 33%, 50% 33%)"
+        }
+      },
+      {
+        "rotation": 90,
+        "image": "/assets/-1766317968_102163",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 18.75,
+            "offsetY": 36.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 66%, 50% 66%, 50% 100%, 0% 100%, 0% 33%, 50% 33%)"
+        }
+      },
+      {
+        "rotation": 0,
+        "image": "/assets/1165199434_102233",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 1.75,
+            "offsetY": 20.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 33%, 100% 33%, 100% 100%, 50% 100%, 50% 66%, 0% 66%)"
+        }
+      },
+      {
+        "rotation": 90,
+        "image": "/assets/1165199434_102233",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 18.75,
+            "offsetY": 36.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 33%, 100% 33%, 100% 100%, 50% 100%, 50% 66%, 0% 66%)"
+        }
+      }
+    ],
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": 1.75,
+        "offsetY": 20.75
+      }
+    ],
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "0007": {
+    "id": "0007",
+    "width": 50,
+    "height": 200,
+    "scale": 0.7,
+    "z": 80649,
+    "BdX": -5,
+    "BdY": -130,
+    "RdX": -20,
+    "RdY": -30,
+    "TdX": -5,
+    "TdY": -30,
+    "fabric": true,
+    "faces": [
+      {
+        "rotation": 0,
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 10.75,
+            "offsetY": 13.75
+          }
+        ]
+      },
+      {
+        "rotation": 90,
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 26.75,
+            "offsetY": -3.75
+          }
+        ]
+      }
+    ],
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": 10.75,
+        "offsetY": 13.75
+      }
+    ],
+    "image": "/assets/-450785542_87789",
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "0008": {
+    "id": "0008",
+    "height": 150,
+    "scale": 0.7,
+    "z": 80650,
+    "BdX": -20,
+    "BdY": -90,
+    "RdX": -60,
+    "RdY": -25,
+    "TdX": -20,
+    "TdY": -25,
+    "fabric": true,
+    "faces": [
+      {
+        "rotation": 0,
+        "image": "/assets/-1122668107_66593",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 1.75,
+            "offsetY": 20.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 66%, 100% 66%, 100% 100%, 0% 100%)"
+        }
+      },
+      {
+        "rotation": 90,
+        "image": "/assets/-1122668107_66593",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 18.75,
+            "offsetY": 36.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 66%, 100% 66%, 100% 100%, 0% 100%)"
+        }
+      },
+      {
+        "rotation": 180,
+        "image": "/assets/-1122668107_66593",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 1.75,
+            "offsetY": 20.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 66%, 100% 66%, 100% 100%, 0% 100%)"
+        }
+      },
+      {
+        "rotation": 270,
+        "image": "/assets/-1122668107_66593",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 18.75,
+            "offsetY": 36.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 66%, 100% 66%, 100% 100%, 0% 100%)"
+        }
+      },
+      {
+        "rotation": 0,
+        "image": "/assets/1919908658_65528",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 1.75,
+            "offsetY": 20.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 66%, 50% 66%)"
+        }
+      },
+      {
+        "rotation": 90,
+        "image": "/assets/1919908658_65528",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 18.75,
+            "offsetY": 36.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 66%, 50% 66%)"
+        }
+      },
+      {
+        "rotation": 180,
+        "image": "/assets/1919908658_65528",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 1.75,
+            "offsetY": 20.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 66%, 50% 66%)"
+        }
+      },
+      {
+        "rotation": 270,
+        "image": "/assets/1919908658_65528",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 18.75,
+            "offsetY": 36.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 66%, 50% 66%)"
+        }
+      }
+    ],
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": 1.75,
+        "offsetY": 20.75
+      }
+    ],
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "0009": {
+    "id": "0009",
+    "height": 150,
+    "scale": 0.7,
+    "z": 80651,
+    "BdX": -40,
+    "BdY": -90,
+    "RdX": -60,
+    "RdY": -25,
+    "TdX": -10,
+    "TdY": -25,
+    "fabric": true,
+    "faces": [
+      {
+        "rotation": 0,
+        "image": "/assets/912803160_41966",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 1.75,
+            "offsetY": 20.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 66%, 100% 66%, 100% 100%, 0% 100%)"
+        }
+      },
+      {
+        "rotation": 90,
+        "image": "/assets/912803160_41966",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 18.75,
+            "offsetY": 36.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 66%, 100% 66%, 100% 100%, 0% 100%)"
+        }
+      },
+      {
+        "rotation": 180,
+        "image": "/assets/912803160_41966",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 1.75,
+            "offsetY": 20.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 66%, 100% 66%, 100% 100%, 0% 100%)"
+        }
+      },
+      {
+        "rotation": 270,
+        "image": "/assets/912803160_41966",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 18.75,
+            "offsetY": 36.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 66%, 100% 66%, 100% 100%, 0% 100%)"
+        }
+      },
+      {
+        "rotation": 0,
+        "image": "/assets/2085229198_42534",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 1.75,
+            "offsetY": 20.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 66%, 50% 66%)"
+        }
+      },
+      {
+        "rotation": 90,
+        "image": "/assets/2085229198_42534",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 18.75,
+            "offsetY": 36.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 66%, 50% 66%)"
+        }
+      },
+      {
+        "rotation": 180,
+        "image": "/assets/2085229198_42534",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 1.75,
+            "offsetY": 20.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 66%, 50% 66%)"
+        }
+      },
+      {
+        "rotation": 270,
+        "image": "/assets/2085229198_42534",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 18.75,
+            "offsetY": 36.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 66%, 50% 66%)"
+        }
+      }
+    ],
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": 1.75,
+        "offsetY": 20.75
+      }
+    ],
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "0010": {
+    "id": "0010",
+    "scale": 0.7,
+    "z": 80633,
+    "BdX": -15,
+    "BdY": -45,
+    "RdX": -65,
+    "RdY": -15,
+    "TdX": -15,
+    "TdY": -15,
+    "fabric": true,
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": 1.75,
+        "offsetY": -5.75
+      }
+    ],
+    "image": "/assets/-1547914847_74424",
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "0011": {
+    "id": "0011",
+    "width": 150,
+    "scale": 0.7,
+    "z": 80638,
+    "BdX": -25,
+    "BdY": -50,
+    "RdX": -105,
+    "RdY": -40,
+    "TdX": -25,
+    "TdY": -20,
+    "fabric": true,
+    "faces": [
+      {
+        "rotation": 0,
+        "image": "/assets/-416221543_76271",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": -4.75,
+            "offsetY": -6.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(33% 0%, 100% 0%, 100% 50%, 66% 50%, 66% 100%, 0% 100%, 0% 50%, 33% 50%)"
+        }
+      },
+      {
+        "rotation": 90,
+        "image": "/assets/-416221543_76271",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 10.75,
+            "offsetY": 10.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(33% 0%, 100% 0%, 100% 50%, 66% 50%, 66% 100%, 0% 100%, 0% 50%, 33% 50%)"
+        }
+      },
+      {
+        "rotation": 0,
+        "image": "/assets/-1519221345_76525",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": -4.75,
+            "offsetY": -6.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(0% 0%, 66% 0%, 66% 50%, 100% 50%, 100% 100%, 33% 100%, 35% 50%, 0% 50%)"
+        }
+      },
+      {
+        "rotation": 90,
+        "image": "/assets/-1519221345_76525",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 10.75,
+            "offsetY": 10.75
+          }
+        ]
+      }
+    ],
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": -4.75,
+        "offsetY": 3.75
+      }
+    ],
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "0012": {
+    "id": "0012",
+    "width": 150,
+    "scale": 0.7,
+    "z": 80641,
+    "BdX": -25,
+    "BdY": -50,
+    "RdX": -105,
+    "RdY": -40,
+    "TdX": -25,
+    "TdY": -15,
+    "fabric": true,
+    "faces": [
+      {
+        "rotation": 0,
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": -4.75,
+            "offsetY": -6.75
+          }
+        ]
+      },
+      {
+        "rotation": 90,
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 10.75,
+            "offsetY": 10.75
+          }
+        ]
+      },
+      {
+        "rotation": 180,
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": -4.75,
+            "offsetY": -6.75
+          }
+        ]
+      },
+      {
+        "rotation": 270,
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 10.75,
+            "offsetY": 10.75
+          }
+        ]
+      }
+    ],
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": -4.75,
+        "offsetY": -6.75
+      }
+    ],
+    "image": "/assets/1869677457_92194",
+    "css": {
+      "clip-Path": "polygon(0% 0%, 33% 0%, 33% 50%, 66% 50%, 66% 0%, 100% 0%, 100% 100%, 0% 100%)"
+    },
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "0013": {
+    "id": "0013",
+    "height": 150,
+    "scale": 0.7,
+    "z": 80639,
+    "BdX": -40,
+    "BdY": -90,
+    "RdX": -60,
+    "RdY": -35,
+    "TdX": 0,
+    "TdY": -25,
+    "fabric": true,
+    "faces": [
+      {
+        "rotation": 0,
+        "image": "/assets/-1796125656_106941",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 1.75,
+            "offsetY": 20.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 33%, 100% 33%, 100% 100%, 0% 100%)"
+        }
+      },
+      {
+        "rotation": 90,
+        "image": "/assets/-1796125656_106941",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 18.75,
+            "offsetY": 36.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 33%, 100% 33%, 100% 100%, 0% 100%)"
+        }
+      },
+      {
+        "rotation": 180,
+        "image": "/assets/-1796125656_106941",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 1.75,
+            "offsetY": 20.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 33%, 100% 33%, 100% 100%, 0% 100%)"
+        }
+      },
+      {
+        "rotation": 270,
+        "image": "/assets/-1796125656_106941",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 18.75,
+            "offsetY": 36.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 33%, 100% 33%, 100% 100%, 0% 100%)"
+        }
+      },
+      {
+        "rotation": 0,
+        "image": "/assets/-993463936_108862",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 1.75,
+            "offsetY": 20.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 33%, 50% 33%)"
+        }
+      },
+      {
+        "rotation": 90,
+        "image": "/assets/-993463936_108862",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 18.75,
+            "offsetY": 36.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 33%, 50% 33%)"
+        }
+      },
+      {
+        "rotation": 180,
+        "image": "/assets/-993463936_108862",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 1.75,
+            "offsetY": 20.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 33%, 50% 33%)"
+        }
+      },
+      {
+        "rotation": 270,
+        "image": "/assets/-993463936_108862",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 18.75,
+            "offsetY": 36.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 33%, 50% 33%)"
+        }
+      }
+    ],
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": 18.75,
+        "offsetY": 36.75
+      }
+    ],
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "0014": {
+    "id": "0014",
+    "height": 200,
+    "scale": 0.7,
+    "z": 80647,
+    "BdX": -15,
+    "BdY": -130,
+    "RdX": -65,
+    "RdY": -30,
+    "TdX": -5,
+    "TdY": -30,
+    "fabric": true,
+    "faces": [
+      {
+        "rotation": 0,
+        "image": "/assets/-1809654066_140892",
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 75%, 50% 75%, 50% 100%, 0% 100%, 0% 50%, 50% 50%)"
+        }
+      },
+      {
+        "rotation": 90,
+        "image": "/assets/-1809654066_140892",
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 75%, 50% 75%, 50% 100%, 0% 100%, 0% 50%, 50% 50%)"
+        }
+      },
+      {
+        "rotation": 180,
+        "image": "/assets/-1809654066_140892",
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 75%, 50% 75%, 50% 100%, 0% 100%, 0% 50%, 50% 50%)"
+        }
+      },
+      {
+        "rotation": 270,
+        "image": "/assets/-1809654066_140892",
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 75%, 50% 75%, 50% 100%, 0% 100%, 0% 50%, 50% 50%)"
+        }
+      },
+      {
+        "rotation": 0,
+        "image": "/assets/517673613_140745",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 50%, 100% 50%, 100% 100%, 50% 100%, 50% 75%, 0% 75%)"
+        }
+      },
+      {
+        "rotation": 90,
+        "image": "/assets/517673613_140745",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 50%, 100% 50%, 100% 100%, 50% 100%, 50% 75%, 0% 75%)"
+        }
+      },
+      {
+        "rotation": 180,
+        "image": "/assets/517673613_140745",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 50%, 100% 50%, 100% 100%, 50% 100%, 50% 75%, 0% 75%)"
+        }
+      },
+      {
+        "rotation": 270,
+        "image": "/assets/517673613_140745",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 50%, 100% 50%, 100% 100%, 50% 100%, 50% 75%, 0% 75%)"
+        }
+      }
+    ],
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": 3.75,
+        "offsetY": 12.75
+      }
+    ],
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "0015": {
+    "id": "0015",
+    "height": 200,
+    "scale": 0.7,
+    "z": 80643,
+    "BdX": -5,
+    "BdY": -130,
+    "RdX": -65,
+    "RdY": -30,
+    "TdX": -5,
+    "TdY": -30,
+    "fabric": true,
+    "faces": [
+      {
+        "rotation": 0,
+        "image": "/assets/2094280443_116852",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 50%, 100% 50%, 100% 75%, 50% 75%, 50% 100%, 0% 100%)"
+        }
+      },
+      {
+        "rotation": 90,
+        "image": "/assets/2094280443_116852",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 50%, 100% 50%, 100% 75%, 50% 75%, 50% 100%, 0% 100%)"
+        }
+      },
+      {
+        "rotation": 180,
+        "image": "/assets/2094280443_116852",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 50%, 100% 50%, 100% 75%, 50% 75%, 50% 100%, 0% 100%)"
+        }
+      },
+      {
+        "rotation": 270,
+        "image": "/assets/2094280443_116852",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 50%, 100% 50%, 100% 75%, 50% 75%, 50% 100%, 0% 100%)"
+        }
+      },
+      {
+        "rotation": 0,
+        "image": "/assets/481161111_116515",
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%, 50% 75%, 0% 75%, 0% 50%, 50% 50%)"
+        }
+      },
+      {
+        "rotation": 90,
+        "image": "/assets/481161111_116515",
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%, 50% 75%, 0% 75%, 0% 50%, 50% 50%)"
+        }
+      },
+      {
+        "rotation": 180,
+        "image": "/assets/481161111_116515",
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%, 50% 75%, 0% 75%, 0% 50%, 50% 50%)"
+        }
+      },
+      {
+        "rotation": 270,
+        "image": "/assets/481161111_116515",
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%, 50% 75%, 0% 75%, 0% 50%, 50% 50%)"
+        }
+      }
+    ],
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": 3.75,
+        "offsetY": 12.75
+      }
+    ],
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "0016": {
+    "id": "0016",
+    "scale": 0.7,
+    "z": 80664,
+    "BdX": -5,
+    "BdY": -170,
+    "RdX": -35,
+    "RdY": -35,
+    "TdX": -5,
+    "TdY": -35,
+    "fabric": true,
+    "faces": [
+      {
+        "rotation": 0
+      },
+      {
+        "rotation": 90
+      }
+    ],
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": 10.75,
+        "offsetY": 5.75
+      }
+    ],
+    "image": "/assets/-109664134_108019",
+    "width": 50,
+    "height": 250,
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "0017": {
+    "id": "0017",
+    "height": 200,
+    "scale": 0.7,
+    "z": 80657,
+    "BdX": -5,
+    "BdY": -130,
+    "RdX": -65,
+    "RdY": -30,
+    "TdX": -25,
+    "TdY": -30,
+    "fabric": true,
+    "faces": [
+      {
+        "rotation": 0,
+        "image": "/assets/335896843_116491",
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 75%, 51% 75%)"
+        }
+      },
+      {
+        "rotation": 90,
+        "image": "/assets/335896843_116491",
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 75%, 51% 75%)"
+        }
+      },
+      {
+        "rotation": 180,
+        "image": "/assets/335896843_116491",
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 75%, 51% 75%)"
+        }
+      },
+      {
+        "rotation": 270,
+        "image": "/assets/335896843_116491",
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 75%, 51% 75%)"
+        }
+      },
+      {
+        "rotation": 0,
+        "image": "/assets/1986011685_117145",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 75%, 100% 75%, 100% 100%, 0% 100%)"
+        }
+      },
+      {
+        "rotation": 90,
+        "image": "/assets/1986011685_117145",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 75%, 100% 75%, 100% 100%, 0% 100%)"
+        }
+      },
+      {
+        "rotation": 180,
+        "image": "/assets/1986011685_117145",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 75%, 100% 75%, 100% 100%, 0% 100%)"
+        }
+      },
+      {
+        "rotation": 270,
+        "image": "/assets/1986011685_117145",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 75%, 100% 75%, 100% 100%, 0% 100%)"
+        }
+      }
+    ],
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": 3.75,
+        "offsetY": 12.75
+      }
+    ],
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "0018": {
+    "id": "0018",
+    "width": 150,
+    "height": 150,
+    "scale": 0.7,
+    "z": 80646,
+    "BdX": -25,
+    "BdY": -90,
+    "RdX": -105,
+    "RdY": -25,
+    "TdX": -25,
+    "TdY": -25,
+    "fabric": true,
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": -4.75,
+        "offsetY": -13.75
+      }
+    ],
+    "image": "/assets/1366732251_106016",
+    "css": {
+      "clip-Path": "polygon(0 33%, 33% 33%, 33% 0%, 66% 0%, 66% 33%, 100% 33%, 100% 66%, 66% 66%, 66% 100%, 33% 100%, 33% 66%, 0 66%)"
+    },
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "0019": {
+    "id": "0019",
+    "width": 150,
+    "height": 150,
+    "scale": 0.7,
+    "z": 80637,
+    "BdX": -25,
+    "BdY": -90,
+    "RdX": -105,
+    "RdY": -25,
+    "TdX": -25,
+    "TdY": -25,
+    "fabric": true,
+    "faces": [
+      {
+        "rotation": 0
+      },
+      {
+        "rotation": 90
+      },
+      {
+        "rotation": 180
+      },
+      {
+        "rotation": 270
+      }
+    ],
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": -4.75,
+        "offsetY": -13.75
+      }
+    ],
+    "image": "/assets/-1091408936_108382",
+    "css": {
+      "clip-Path": "polygon(33% 0%, 66% 0%, 66% 66%, 100% 66%, 100% 100%, 0% 100%, 0% 66%, 33% 66%)"
+    },
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "0020": {
+    "id": "0020",
+    "width": 150,
+    "height": 150,
+    "scale": 0.7,
+    "z": 80658,
+    "BdX": -25,
+    "BdY": -90,
+    "RdX": -105,
+    "RdY": -25,
+    "TdX": -25,
+    "TdY": -25,
+    "fabric": true,
+    "faces": [
+      {
+        "rotation": 0
+      },
+      {
+        "rotation": 90
+      },
+      {
+        "rotation": 180
+      },
+      {
+        "rotation": 270
+      }
+    ],
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": -4.75,
+        "offsetY": -13.75
+      }
+    ],
+    "image": "/assets/1522755341_102765",
+    "css": {
+      "clip-Path": "polygon(66% 0%, 100% 0%, 100% 66%, 66% 66%, 66% 100%, 0% 100%, 0% 66%, 33% 66%, 33% 33%, 66% 33%)"
+    },
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "0021": {
+    "id": "0021",
+    "width": 150,
+    "height": 200,
+    "scale": 0.7,
+    "z": 80642,
+    "BdX": -45,
+    "BdY": -130,
+    "RdX": -135,
+    "RdY": -30,
+    "TdX": -25,
+    "TdY": -30,
+    "fabric": true,
+    "faces": [
+      {
+        "rotation": 0,
+        "image": "/assets/1375992309_57728",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": -4.75,
+            "offsetY": 13.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(0% 0%, 66% 0%, 66% 75%, 100% 75%, 100% 100%, 33% 100%, 33% 25%, 0% 25%)"
+        }
+      },
+      {
+        "rotation": 90,
+        "image": "/assets/1375992309_57728",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 10.75,
+            "offsetY": -5.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(0% 0%, 66% 0%, 66% 75%, 100% 75%, 100% 100%, 33% 100%, 33% 25%, 0% 25%)"
+        }
+      },
+      {
+        "rotation": 0,
+        "image": "/assets/1357551332_57782",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": -4.75,
+            "offsetY": 13.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(33% 0%, 100% 0%, 100% 25%, 66% 25%, 66% 100%, 0% 100%, 0% 75%, 33% 75%)"
+        }
+      },
+      {
+        "rotation": 90,
+        "image": "/assets/1357551332_57782",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 10.75,
+            "offsetY": -5.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(33% 0%, 100% 0%, 100% 25%, 66% 25%, 66% 100%, 0% 100%, 0% 75%, 33% 75%)"
+        }
+      }
+    ],
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": 4.75,
+        "offsetY": 13.75
+      }
+    ],
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "0022": {
+    "id": "0022",
+    "width": 150,
+    "height": 200,
+    "scale": 0.7,
+    "z": 80653,
+    "BdX": -45,
+    "BdY": -130,
+    "RdX": -95,
+    "RdY": -30,
+    "TdX": -45,
+    "TdY": -30,
+    "fabric": true,
+    "faces": [
+      {
+        "rotation": 0,
+        "image": "/assets/1411858408_136847",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": -3.75,
+            "offsetY": 13.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(33% 0%, 66% 0%, 66% 25%, 100% 25%, 100% 50%, 66% 50%, 66% 100%, 33% 100%, 33% 75%, 0% 75%, 0% 50%, 33% 50%)"
+        }
+      },
+      {
+        "rotation": 90,
+        "image": "/assets/1411858408_136847",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 13.75,
+            "offsetY": -3.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(33% 0%, 66% 0%, 66% 25%, 100% 25%, 100% 50%, 66% 50%, 66% 100%, 33% 100%, 33% 75%, 0% 75%, 0% 50%, 33% 50%)"
+        }
+      },
+      {
+        "rotation": 0,
+        "image": "/assets/1286079963_136626",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": -3.75,
+            "offsetY": 13.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(33% 0%, 66% 0%, 66% 50%, 100% 50%, 100% 75%, 66% 75%, 66% 100%, 33% 100%, 33% 50%, 0% 50%, 0% 25%, 33% 25%)"
+        }
+      },
+      {
+        "rotation": 90,
+        "image": "/assets/1286079963_136626",
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 13.75,
+            "offsetY": -3.75
+          }
+        ],
+        "css": {
+          "clip-Path": "polygon(33% 0%, 66% 0%, 66% 50%, 100% 50%, 100% 75%, 66% 75%, 66% 100%, 33% 100%, 33% 50%, 0% 50%, 0% 25%, 33% 25%)"
+        }
+      }
+    ],
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": -3.75,
+        "offsetY": 13.75
+      }
+    ],
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "0023": {
+    "id": "0023",
+    "height": 200,
+    "scale": 0.7,
+    "z": 80635,
+    "BdX": -15,
+    "BdY": -130,
+    "RdX": -65,
+    "RdY": -30,
+    "TdX": -15,
+    "TdY": -30,
+    "fabric": true,
+    "faces": [
+      {
+        "rotation": 0,
+        "image": "/assets/554717087_128101",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 25%, 100% 25%, 100% 100%, 50% 100%, 50% 75%, 0% 75%)"
+        }
+      },
+      {
+        "rotation": 90,
+        "image": "/assets/554717087_128101",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 25%, 100% 25%, 100% 100%, 50% 100%, 50% 75%, 0% 75%)"
+        }
+      },
+      {
+        "rotation": 0,
+        "image": "/assets/-1661156896_127492",
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 75%, 50% 75%, 50% 100%, 0% 100%, 0% 0%)"
+        }
+      },
+      {
+        "rotation": 90,
+        "image": "/assets/-1661156896_127492",
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 75%, 50% 75%, 50% 100%, 0% 100%, 0% 0%)"
+        }
+      }
+    ],
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": 3.75,
+        "offsetY": 12.75
+      }
+    ],
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "0024": {
+    "id": "0024",
+    "width": 150,
+    "height": 200,
+    "scale": 0.7,
+    "z": 80644,
+    "BdX": -25,
+    "BdY": -130,
+    "RdX": -95,
+    "RdY": -30,
+    "TdX": -25,
+    "TdY": -30,
+    "fabric": true,
+    "faces": [
+      {
+        "rotation": 0,
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": -4.75,
+            "offsetY": 13.75
+          }
+        ]
+      },
+      {
+        "rotation": 90,
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 10.75,
+            "offsetY": -5.75
+          }
+        ]
+      },
+      {
+        "rotation": 180,
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": -4.75,
+            "offsetY": 13.75
+          }
+        ]
+      },
+      {
+        "rotation": 270,
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 10.75,
+            "offsetY": -5.75
+          }
+        ]
+      }
+    ],
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": 4.75,
+        "offsetY": 13.75
+      }
+    ],
+    "image": "/assets/-1887885011_99584",
+    "css": {
+      "clip-Path": "polygon(0 25%, 33% 25%, 33% 0%, 66% 0%, 66% 25%, 100% 25%, 100% 50%, 65% 50%, 66% 100%, 33% 100%, 33% 50%, 0 50%)"
+    },
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "0025": {
+    "id": "0025",
+    "height": 200,
+    "scale": 0.7,
+    "z": 80654,
+    "BdX": -20,
+    "BdY": -130,
+    "RdX": -65,
+    "RdY": -30,
+    "TdX": -20,
+    "TdY": -30,
+    "fabric": true,
+    "faces": [
+      {
+        "rotation": 0
+      },
+      {
+        "rotation": 90
+      },
+      {
+        "rotation": 180
+      },
+      {
+        "rotation": 270
+      }
+    ],
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": 3.75,
+        "offsetY": 12.75
+      }
+    ],
+    "image": "/assets/-1131840337_129347",
+    "css": {
+      "clip-Path": "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 75%, 50% 75%, 50% 25%, 0% 25%)"
+    },
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "0026": {
+    "id": "0026",
+    "width": 150,
+    "height": 150,
+    "scale": 0.7,
+    "z": 80655,
+    "BdX": -25,
+    "BdY": -90,
+    "RdX": -105,
+    "RdY": -25,
+    "TdX": -25,
+    "TdY": -25,
+    "fabric": true,
+    "faces": [
+      {
+        "rotation": 0
+      },
+      {
+        "rotation": 90
+      },
+      {
+        "rotation": 180
+      },
+      {
+        "rotation": 270
+      }
+    ],
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": -4.75,
+        "offsetY": -13.75
+      }
+    ],
+    "image": "/assets/-283209504_152987",
+    "css": {
+      "clip-Path": "polygon(33% 0%, 66% 0%, 66% 33%, 100% 33%, 100% 100%, 66% 100%, 66% 66%, 33% 66%, 33% 100%, 0% 100%, 0% 33%, 33% 33%)"
+    },
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "0027": {
+    "id": "0027",
+    "width": 150,
+    "height": 200,
+    "scale": 0.7,
+    "z": 80663,
+    "BdX": -15,
+    "BdY": -130,
+    "RdX": -95,
+    "RdY": -30,
+    "TdX": -15,
+    "TdY": -30,
+    "fabric": true,
+    "faces": [
+      {
+        "rotation": 0,
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": -4.75,
+            "offsetY": 13.75
+          }
+        ]
+      },
+      {
+        "rotation": 90,
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 10.75,
+            "offsetY": -5.75
+          }
+        ]
+      },
+      {
+        "rotation": 180,
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": -4.75,
+            "offsetY": 13.75
+          }
+        ]
+      },
+      {
+        "rotation": 270,
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 10.75,
+            "offsetY": -5.75
+          }
+        ]
+      }
+    ],
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": 10.75,
+        "offsetY": -5.75
+      }
+    ],
+    "image": "/assets/-1257396422_145875",
+    "css": {
+      "clip-Path": "polygon(33% 0%, 66% 0%, 66% 75%, 100% 75%, 100% 100%, 0% 100%, 0% 75%, 33% 75%)"
+    },
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "0028": {
+    "id": "0028",
+    "height": 200,
+    "scale": 0.7,
+    "z": 80661,
+    "BdX": -15,
+    "BdY": -130,
+    "RdX": -65,
+    "RdY": -30,
+    "TdX": -15,
+    "TdY": -30,
+    "fabric": true,
+    "faces": [
+      {
+        "rotation": 0
+      },
+      {
+        "rotation": 90
+      },
+      {
+        "rotation": 180
+      },
+      {
+        "rotation": 270
+      }
+    ],
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": 3.75,
+        "offsetY": 12.75
+      }
+    ],
+    "image": "/assets/1009370416_150152",
+    "css": {
+      "clip-Path": "polygon(0% 0%, 50% 0%, 50% 25%, 100% 25%, 100% 75%, 50% 75%, 50% 100%, 0% 100%)"
+    },
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "0029": {
+    "id": "0029",
+    "height": 200,
+    "scale": 0.7,
+    "z": 80652,
+    "BdX": -15,
+    "BdY": -130,
+    "RdX": -75,
+    "RdY": -30,
+    "TdX": -15,
+    "TdY": -30,
+    "fabric": true,
+    "faces": [
+      {
+        "rotation": 0,
+        "image": "/assets/-1686591349_97081",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 100% 0%, 100% 100%, 50% 100%, 50% 50%, 0% 50%)"
+        }
+      },
+      {
+        "rotation": 90,
+        "image": "/assets/-1686591349_97081",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 100% 0%, 100% 100%, 50% 100%, 50% 50%, 0% 50%)"
+        }
+      },
+      {
+        "rotation": 180,
+        "image": "/assets/-1686591349_97081",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 100% 0%, 100% 100%, 50% 100%, 50% 50%, 0% 50%)"
+        }
+      },
+      {
+        "rotation": 270,
+        "image": "/assets/-1686591349_97081",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 100% 0%, 100% 100%, 50% 100%, 50% 50%, 0% 50%)"
+        }
+      },
+      {
+        "rotation": 0,
+        "image": "/assets/-1128790633_99948",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 100% 0%, 100% 50%, 50% 50%, 50% 100%, 0% 100%)"
+        }
+      },
+      {
+        "rotation": 90,
+        "image": "/assets/-1128790633_99948",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 100% 0%, 100% 50%, 50% 50%, 50% 100%, 0% 100%)"
+        }
+      },
+      {
+        "rotation": 180,
+        "image": "/assets/-1128790633_99948",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 100% 0%, 100% 50%, 50% 50%, 50% 100%, 0% 100%)"
+        }
+      },
+      {
+        "rotation": 270,
+        "image": "/assets/-1128790633_99948",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 100% 0%, 100% 50%, 50% 50%, 50% 100%, 0% 100%)"
+        }
+      }
+    ],
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": 3.75,
+        "offsetY": 12.75
+      }
+    ],
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "0030": {
+    "id": "0030",
+    "width": 150,
+    "height": 150,
+    "scale": 0.7,
+    "z": 80659,
+    "BdX": -25,
+    "BdY": -90,
+    "RdX": -105,
+    "RdY": -25,
+    "TdX": -25,
+    "TdY": -25,
+    "fabric": true,
+    "faces": [
+      {
+        "rotation": 0,
+        "image": "/assets/-228480703_137901",
+        "css": {
+          "clip-Path": "polygon(33% 0%, 100% 0%, 100% 66%, 66% 66%, 66% 100%, 0% 100%, 0% 66%, 33% 66%)"
+        }
+      },
+      {
+        "rotation": 90,
+        "image": "/assets/-228480703_137901",
+        "css": {
+          "clip-Path": "polygon(33% 0%, 100% 0%, 100% 66%, 66% 66%, 66% 100%, 0% 100%, 0% 66%, 33% 66%)"
+        }
+      },
+      {
+        "rotation": 180,
+        "image": "/assets/-228480703_137901",
+        "css": {
+          "clip-Path": "polygon(33% 0%, 100% 0%, 100% 66%, 66% 66%, 66% 100%, 0% 100%, 0% 66%, 33% 66%)"
+        }
+      },
+      {
+        "rotation": 270,
+        "image": "/assets/-228480703_137901",
+        "css": {
+          "clip-Path": "polygon(33% 0%, 100% 0%, 100% 66%, 66% 66%, 66% 100%, 0% 100%, 0% 66%, 33% 66%)"
+        }
+      },
+      {
+        "rotation": 0,
+        "image": "/assets/-966287459_138020",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 66% 0%, 66% 66%, 100% 66%, 100% 100%, 33% 100%, 33% 66%, 0% 66%)"
+        }
+      },
+      {
+        "rotation": 90,
+        "image": "/assets/-966287459_138020",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 66% 0%, 66% 66%, 100% 66%, 100% 100%, 33% 100%, 33% 66%, 0% 66%)"
+        }
+      },
+      {
+        "rotation": 180,
+        "image": "/assets/-966287459_138020",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 66% 0%, 66% 66%, 100% 66%, 100% 100%, 33% 100%, 33% 66%, 0% 66%)"
+        }
+      },
+      {
+        "rotation": 270,
+        "image": "/assets/-966287459_138020",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 66% 0%, 66% 66%, 100% 66%, 100% 100%, 33% 100%, 33% 66%, 0% 66%)"
+        }
+      }
+    ],
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": -4.75,
+        "offsetY": -13.75
+      }
+    ],
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "0032": {
+    "id": "0032",
+    "width": 150,
+    "height": 250,
+    "scale": 0.7,
+    "z": 80662,
+    "BdX": -25,
+    "BdY": -170,
+    "RdX": -105,
+    "RdY": -35,
+    "TdX": -25,
+    "TdY": -35,
+    "fabric": true,
+    "faces": [
+      {
+        "rotation": 0
+      },
+      {
+        "rotation": 90
+      }
+    ],
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": -4.75,
+        "offsetY": 6.75
+      }
+    ],
+    "image": "/assets/96972380_179361",
+    "css": {
+      "clip-Path": "polygon(33% 0%, 66% 0%, 66% 40%, 100% 40%, 100% 60%, 66% 60%, 66% 100%, 33% 100%, 33% 60%, 0% 60%, 0% 40%, 33% 40%)"
+    },
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "0033": {
+    "id": "0033",
+    "width": 150,
+    "height": 200,
+    "scale": 0.7,
+    "z": 80660,
+    "BdX": -25,
+    "BdY": -130,
+    "RdX": -105,
+    "RdY": -30,
+    "TdX": -25,
+    "TdY": -30,
+    "fabric": true,
+    "faces": [
+      {
+        "rotation": 0,
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": -4.75,
+            "offsetY": 13.75
+          }
+        ]
+      },
+      {
+        "rotation": 90,
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": 10.75,
+            "offsetY": -5.75
+          }
+        ]
+      }
+    ],
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": 4.75,
+        "offsetY": 13.75
+      }
+    ],
+    "image": "/assets/-443632832_120316",
+    "css": {
+      "clip-Path": "polygon(33% 0%, 66% 0%, 66% 25%, 100% 25%, 100% 75%, 66% 75%, 66% 100%, 33% 100%, 33% 75%, 0% 75%, 0% 25%, 33% 25%)"
+    },
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "home": {
+    "type": "holder",
+    "x": -266,
+    "y": 384,
+    "width": 150,
+    "height": 200,
+    "z": 1454,
+    "id": "home",
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "fabric": true
+    }
+  },
+  "0031": {
+    "id": "0031",
+    "width": 150,
+    "height": 150,
+    "scale": 0.7,
+    "z": 80656,
+    "BdX": -25,
+    "BdY": -90,
+    "RdX": -105,
+    "RdY": -25,
+    "TdX": -25,
+    "TdY": -25,
+    "fabric": true,
+    "faces": [
+      {
+        "rotation": 0
+      },
+      {
+        "rotation": 90
+      }
+    ],
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": -4.75,
+        "offsetY": -13.75
+      }
+    ],
+    "image": "/assets/1290282878_183394",
+    "css": {
+      "clip-Path": "polygon(0% 0%, 33% 0%, 33% 33%, 66% 33%, 66% 0%, 100% 0%, 100% 100%, 66% 100%, 66% 66%, 33% 66%, 33% 100%, 0% 100%)"
+    },
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "0002": {
+    "id": "0002",
+    "z": 80645,
+    "scale": 0.7,
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": 1.75,
+        "offsetY": -5.75
+      }
+    ],
+    "faces": [
+      {
+        "rotation": 0,
+        "image": "/assets/1511797038_54519",
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 50%, 50% 50%)"
+        }
+      },
+      {
+        "rotation": 90,
+        "image": "/assets/1511797038_54519",
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 50%, 50% 50%)"
+        }
+      },
+      {
+        "rotation": 180,
+        "image": "/assets/1511797038_54519",
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 50%, 50% 50%)"
+        }
+      },
+      {
+        "rotation": 270,
+        "image": "/assets/1511797038_54519",
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 50%, 50% 50%)"
+        }
+      },
+      {
+        "rotation": 0,
+        "image": "/assets/-849749064_54514",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 50%, 100% 50%, 100% 100%, 0% 100%)"
+        }
+      },
+      {
+        "rotation": 90,
+        "image": "/assets/-849749064_54514",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 50%, 100% 50%, 100% 100%, 0% 100%)"
+        }
+      },
+      {
+        "rotation": 180,
+        "image": "/assets/-849749064_54514",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 50%, 100% 50%, 100% 100%, 0% 100%)"
+        }
+      },
+      {
+        "rotation": 270,
+        "image": "/assets/-849749064_54514",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 50%, 100% 50%, 100% 100%, 0% 100%)"
+        }
+      }
+    ],
+    "fabric": true,
+    "TdX": -15,
+    "TdY": -15,
+    "BdX": -15,
+    "BdY": -45,
+    "RdX": -65,
+    "RdY": -15,
+    "css": {
+      "clip-Path": "polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 50%, 50% 50%)"
+    },
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "0003": {
+    "image": "/assets/-1738512495_36848",
+    "id": "0003",
+    "z": 80648,
+    "width": 50,
+    "height": 150,
+    "scale": 0.7,
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": -4.75,
+        "offsetY": 20.75
+      }
+    ],
+    "fabric": true,
+    "TdX": -5,
+    "TdY": -25,
+    "BdX": -5,
+    "BdY": -90,
+    "RdX": -25,
+    "RdY": -25,
+    "faces": [
+      {
+        "rotation": 0,
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": -23.75,
+            "offsetY": 20.75
+          }
+        ]
+      },
+      {
+        "rotation": 90,
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": -24.75,
+            "offsetY": 20.75
+          }
+        ]
+      }
+    ],
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "0004": {
+    "id": "0004",
+    "z": 80634,
+    "scale": 0.7,
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": 1.75,
+        "offsetY": -5.75
+      }
+    ],
+    "faces": [
+      {
+        "rotation": 0,
+        "image": "/assets/550875565_57433",
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 50%, 50% 50%)"
+        }
+      },
+      {
+        "rotation": 90,
+        "image": "/assets/550875565_57433",
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 50%, 50% 50%)"
+        }
+      },
+      {
+        "rotation": 180,
+        "image": "/assets/550875565_57433",
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 50%, 50% 50%)"
+        }
+      },
+      {
+        "rotation": 270,
+        "image": "/assets/550875565_57433",
+        "css": {
+          "clip-Path": "polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 50%, 50% 50%)"
+        }
+      },
+      {
+        "rotation": 0,
+        "image": "/assets/427620207_56767",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 50%, 100% 50%, 100% 100%, 0% 100%)"
+        }
+      },
+      {
+        "rotation": 90,
+        "image": "/assets/427620207_56767",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 50%, 100% 50%, 100% 100%, 0% 100%)"
+        }
+      },
+      {
+        "rotation": 180,
+        "image": "/assets/427620207_56767",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 50%, 100% 50%, 100% 100%, 0% 100%)"
+        }
+      },
+      {
+        "rotation": 270,
+        "image": "/assets/427620207_56767",
+        "css": {
+          "clip-Path": "polygon(0% 0%, 50% 0%, 50% 50%, 100% 50%, 100% 100%, 0% 100%)"
+        }
+      }
+    ],
+    "fabric": true,
+    "TdX": -15,
+    "TdY": -15,
+    "BdX": -15,
+    "BdY": -45,
+    "RdX": -65,
+    "RdY": -25,
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "0001": {
+    "image": "/assets/449067595_7976",
+    "id": "0001",
+    "z": 80632,
+    "scale": 0.7,
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": -4.75,
+        "offsetY": -6.75
+      }
+    ],
+    "faces": [
+      {
+        "rotation": 0,
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": -22.75,
+            "offsetY": -6.75
+          }
+        ]
+      },
+      {
+        "rotation": 90,
+        "grid": [
+          {
+            "x": 34.75,
+            "y": 34.75,
+            "offsetX": -5.75,
+            "offsetY": 9.75
+          }
+        ]
+      }
+    ],
+    "fabric": true,
+    "TdX": -5,
+    "TdY": -15,
+    "BdX": -5,
+    "BdY": -45,
+    "RdX": -45,
+    "RdY": -15,
+    "width": 50,
+    "parentGlobalUpdateRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "css",
+        "value": null
+      }
+    ],
+    "enlarge": 1.5,
+    "parent": "home"
+  },
+  "bluep": {
+    "image": "/assets/1949440025_28802",
+    "z": 1,
+    "x": 4,
+    "y": 4,
+    "id": "bluep",
+    "layer": 8,
+    "player": true,
+    "width": 33,
+    "height": 33,
+    "parent": "move0"
+  },
+  "tanp": {
+    "image": "/assets/586625741_29891",
+    "id": "tanp",
+    "z": 2,
+    "layer": 8,
+    "player": true,
+    "x": 4,
+    "y": 44,
+    "width": 33,
+    "height": 33,
+    "parent": "move0"
+  },
+  "tanplus": {
+    "id": "tanplus",
+    "x": 68,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "tanscore",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "css": "font-size:35px;background-color:#CEBE82; color:#A39869; border: 3px solid #F3E4A8",
+    "z": 220,
+    "parent": "tanscore"
+  },
+  "tanminus": {
+    "id": "tanminus",
+    "x": -38,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "tanscore",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "css": "font-size:35px; background-color:#CEBE82; color:#A39869; border: 3px solid #F3E4A8",
+    "z": 219,
+    "y": 1,
+    "parent": "tanscore"
+  },
+  "blueplus": {
+    "id": "blueplus",
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "bluescore",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "css": "font-size:35px;background-color:#96B3C3; color:#417A95; border: 3px solid #ABD5F5",
+    "z": 223,
+    "parent": "bluescore"
+  },
+  "blueminus": {
+    "id": "blueminus",
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "bluescore",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "css": "font-size:35px;background-color:#96B3C3; color:#417A95; border: 3px solid #ABD5F5",
+    "z": 224,
+    "parent": "bluescore"
+  },
+  "7x7": {
+    "image": "/assets/-631993990_78237",
+    "id": "7x7",
+    "z": 79952,
+    "x": "745",
+    "y": "575"
+  },
+  "move10": {
+    "type": "holder",
+    "id": "move10",
+    "x": 838,
+    "y": 267,
+    "width": 38,
+    "height": 38,
+    "z": 405,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "layer": 5,
+    "player": null
+  },
+  "move11": {
+    "type": "holder",
+    "id": "move11",
+    "x": 876,
+    "y": 267,
+    "width": 38,
+    "height": 38,
+    "z": 406,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move12": {
+    "type": "holder",
+    "id": "move12",
+    "x": 914,
+    "y": 267,
+    "width": 38,
+    "height": 38,
+    "z": 407,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move13": {
+    "type": "holder",
+    "id": "move13",
+    "x": 914,
+    "y": 305,
+    "width": 38,
+    "height": 38,
+    "z": 415,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move14": {
+    "type": "holder",
+    "id": "move14",
+    "x": 914,
+    "y": 343,
+    "width": 38,
+    "height": 38,
+    "z": 423,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move15": {
+    "type": "holder",
+    "id": "move15",
+    "x": 914,
+    "y": 381,
+    "width": 38,
+    "height": 38,
+    "z": 431,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move16": {
+    "type": "holder",
+    "id": "move16",
+    "x": 914,
+    "y": 419,
+    "width": 38,
+    "height": 38,
+    "z": 439,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move17": {
+    "type": "holder",
+    "id": "move17",
+    "x": 914,
+    "y": 457,
+    "width": 38,
+    "height": 38,
+    "z": 447,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move18": {
+    "type": "holder",
+    "id": "move18",
+    "x": 914,
+    "y": 495,
+    "width": 38,
+    "height": 38,
+    "z": 455,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move19": {
+    "type": "holder",
+    "id": "move19",
+    "x": 914,
+    "y": 533,
+    "width": 38,
+    "height": 38,
+    "z": 463,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move20": {
+    "type": "holder",
+    "id": "move20",
+    "x": 838,
+    "y": 533,
+    "width": 38,
+    "height": 38,
+    "z": 461,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move21": {
+    "type": "holder",
+    "id": "move21",
+    "x": 800,
+    "y": 533,
+    "width": 38,
+    "height": 38,
+    "z": 460,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move22": {
+    "type": "holder",
+    "id": "move22",
+    "x": 762,
+    "y": 533,
+    "width": 38,
+    "height": 38,
+    "z": 459,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move23": {
+    "type": "holder",
+    "id": "move23",
+    "x": 724,
+    "y": 533,
+    "width": 38,
+    "height": 38,
+    "z": 458,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move24": {
+    "type": "holder",
+    "id": "move24",
+    "x": 686,
+    "y": 533,
+    "width": 38,
+    "height": 38,
+    "z": 457,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move25": {
+    "type": "holder",
+    "id": "move25",
+    "x": 686,
+    "y": 495,
+    "width": 38,
+    "height": 38,
+    "z": 449,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move26": {
+    "type": "holder",
+    "id": "move26",
+    "x": 686,
+    "y": 419,
+    "width": 38,
+    "height": 38,
+    "z": 433,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move27": {
+    "type": "holder",
+    "id": "move27",
+    "x": 686,
+    "y": 381,
+    "width": 38,
+    "height": 38,
+    "z": 425,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move28": {
+    "type": "holder",
+    "id": "move28",
+    "x": 686,
+    "y": 343,
+    "width": 38,
+    "height": 38,
+    "z": 417,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move29": {
+    "type": "holder",
+    "id": "move29",
+    "x": 686,
+    "y": 305,
+    "width": 38,
+    "height": 38,
+    "z": 409,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move30": {
+    "type": "holder",
+    "id": "move30",
+    "x": 724,
+    "y": 305,
+    "width": 38,
+    "height": 38,
+    "z": 410,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move31": {
+    "type": "holder",
+    "id": "move31",
+    "x": 762,
+    "y": 305,
+    "width": 38,
+    "height": 38,
+    "z": 411,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move32": {
+    "type": "holder",
+    "id": "move32",
+    "x": 838,
+    "y": 305,
+    "width": 38,
+    "height": 38,
+    "z": 413,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "layer": 5,
+    "player": null
+  },
+  "move33": {
+    "type": "holder",
+    "id": "move33",
+    "x": 876,
+    "y": 305,
+    "width": 38,
+    "height": 38,
+    "z": 414,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move34": {
+    "type": "holder",
+    "id": "move34",
+    "x": 876,
+    "y": 343,
+    "width": 38,
+    "height": 38,
+    "z": 422,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move35": {
+    "type": "holder",
+    "id": "move35",
+    "x": 876,
+    "y": 381,
+    "width": 38,
+    "height": 38,
+    "z": 430,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move36": {
+    "type": "holder",
+    "id": "move36",
+    "x": 876,
+    "y": 419,
+    "width": 38,
+    "height": 38,
+    "z": 438,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move37": {
+    "type": "holder",
+    "id": "move37",
+    "x": 876,
+    "y": 457,
+    "width": 38,
+    "height": 38,
+    "z": 446,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move38": {
+    "type": "holder",
+    "id": "move38",
+    "x": 876,
+    "y": 495,
+    "width": 38,
+    "height": 38,
+    "z": 454,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move39": {
+    "type": "holder",
+    "id": "move39",
+    "x": 838,
+    "y": 495,
+    "width": 38,
+    "height": 38,
+    "z": 453,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move40": {
+    "type": "holder",
+    "id": "move40",
+    "x": 800,
+    "y": 495,
+    "width": 38,
+    "height": 38,
+    "z": 452,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move41": {
+    "type": "holder",
+    "id": "move41",
+    "x": 762,
+    "y": 495,
+    "width": 38,
+    "height": 38,
+    "z": 451,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move42": {
+    "type": "holder",
+    "id": "move42",
+    "x": 724,
+    "y": 495,
+    "width": 38,
+    "height": 38,
+    "z": 450,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move43": {
+    "type": "holder",
+    "id": "move43",
+    "x": 724,
+    "y": 457,
+    "width": 38,
+    "height": 38,
+    "z": 442,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move44": {
+    "type": "holder",
+    "id": "move44",
+    "x": 724,
+    "y": 381,
+    "width": 38,
+    "height": 38,
+    "z": 426,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move45": {
+    "type": "holder",
+    "id": "move45",
+    "x": 724,
+    "y": 343,
+    "width": 38,
+    "height": 38,
+    "z": 418,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move46": {
+    "type": "holder",
+    "id": "move46",
+    "x": 762,
+    "y": 343,
+    "width": 38,
+    "height": 38,
+    "z": 419,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move47": {
+    "type": "holder",
+    "id": "move47",
+    "x": 800,
+    "y": 343,
+    "width": 38,
+    "height": 38,
+    "z": 420,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move48": {
+    "type": "holder",
+    "id": "move48",
+    "x": 838,
+    "y": 343,
+    "width": 38,
+    "height": 38,
+    "z": 421,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move49": {
+    "type": "holder",
+    "id": "move49",
+    "x": 838,
+    "y": 381,
+    "width": 38,
+    "height": 38,
+    "z": 429,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move50": {
+    "type": "holder",
+    "id": "move50",
+    "x": 838,
+    "y": 457,
+    "width": 38,
+    "height": 38,
+    "z": 445,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move51": {
+    "type": "holder",
+    "id": "move51",
+    "x": 800,
+    "y": 457,
+    "width": 38,
+    "height": 38,
+    "z": 444,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move52": {
+    "type": "holder",
+    "id": "move52",
+    "x": 762,
+    "y": 457,
+    "width": 38,
+    "height": 38,
+    "z": 443,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "move53": {
+    "type": "holder",
+    "id": "move53",
+    "x": 762,
+    "y": 381,
+    "width": 76,
+    "height": 76,
+    "z": 427,
+    "movable": null,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "player": null,
+    "layer": 5
+  },
+  "timeboard": {
+    "id": "timeboard",
+    "x": 575,
+    "y": 200,
+    "width": 450,
+    "height": 450,
+    "scale": 0.7,
+    "layer": -1,
+    "z": 213,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/-1449701584_410546"
+  },
+  "tanboard": {
+    "id": "tanboard",
+    "x": 175,
+    "y": 200,
+    "width": 450,
+    "height": 450,
+    "scale": 0.7,
+    "layer": -1,
+    "z": 216,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/130483103_1444"
+  },
+  "blueboard": {
+    "id": "blueboard",
+    "x": 975,
+    "y": 200,
+    "width": 450,
+    "height": 450,
+    "scale": 0.7,
+    "z": 665,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/1125206487_1444"
+  },
+  "tanscore": {
+    "type": "label",
+    "id": "tanscore",
+    "x": 365.5,
+    "y": 652.5,
+    "width": 65,
+    "height": 40,
+    "css": {
+      "font-size": "30px",
+      "color": "black"
+    },
+    "editable": true,
+    "z": 16,
+    "text": "5"
+  },
+  "bluescore": {
+    "type": "label",
+    "id": "bluescore",
+    "x": 1167.5,
+    "y": 650,
+    "width": 65,
+    "height": 40,
+    "css": {
+      "font-size": "30px",
+      "color": "black"
+    },
+    "editable": true,
+    "z": 20,
+    "text": "5"
+  },
+  "_meta": {
+    "version": 8,
+    "info": {
+      "name": "Crafty",
+      "image": "/assets/-1449701584_410546",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/163412/patchwork",
+      "year": "2014",
+      "mode": "vs",
+      "time": "30",
+      "players": "2",
+      "language": "",
+      "variant": "",
+      "attribution": "INSTRUCTIONS:\n\nPlayers sit in seats.  Press black and white reset button to begin game. Random player will be selected to start. Smallest piece will be highlighted at beginning of game for visibility and pawn will be placed next to it in the clockwise starting position. Move pieces around board as needed.  Keep track of buttons using plus and minus symbols above seat. Use turn button to indicate turn is over.\n\n\nThe game layout, playing boards, and library image were done by LawDawg96 and are released to the Public Domain under CC0.\n\nThe circle player pieces are from VTT's Public Domain assets.\n\nThe following items are available under the Pixabay License\n\n - Wood grain background:  https://pixabay.com/photos/wood-structure-fund-nature-grain-186304/\n - Green button: https://pixabay.com/vectors/button-sewing-yarn-green-glossy-153950/\n - Leather texture: \n https://pixabay.com/photos/leather-background-structure-orange-2719497/\n\nThe game piece quilt patterns are from a variety of sources on Pixabay, including:\n\nhttps://pixabay.com/photos/quilting-american-blocks-crafts-2581992/\nhttps://pixabay.com/vectors/abstract-art-background-colorful-1296712/\nhttps://pixabay.com/photos/quilt-quilting-lap-patches-textile-1574953/\nhttps://pixabay.com/photos/quilt-quilting-lap-patches-textile-1574953/\nhttps://pixabay.com/illustrations/pastel-quilt-background-texture-1487282/\nhttps://pixabay.com/nl/illustrations/prijswinnende-quilt-driehoek-ontwerp-958633/\nhttps://pixabay.com/illustrations/prize-winning-quilt-hand-made-958630/\nhttps://pixabay.com/illustrations/textile-texture-patchwork-pink-1214860/\nhttps://pixabay.com/illustrations/textile-fabric-texture-geometric-1407814/\nhttps://pixabay.com/illustrations/patchwork-material-colorful-patches-1156357/\nhttps://pixabay.com/illustrations/denim-fabric-texture-design-829475/\nhttps://pixabay.com/illustrations/fabric-blue-green-pattern-740059/\nhttps://pixabay.com/illustrations/plaid-pastel-blue-baby-textile-902424/\nhttps://pixabay.com/photos/mosaic-texture-colored-stones-tiles-1792976/\nhttps://pixabay.com/illustrations/plaid-tartan-scottish-yellow-red-2751007/\nhttps://pixabay.com/illustrations/geometric-tartan-pattern-square-760474/\nhttps://pixabay.com/illustrations/wallpaper-pattern-abstract-seamless-1859792/\nhttps://pixabay.com/illustrations/fabric-coarse-texture-rough-red-806443/\nhttps://pixabay.com/illustrations/triangle-background-pattern-2831617/",
+      "similarName": "Patchwork",
+      "description": "Placed shaped pieces on board to fill in spaces while balancing cost of pieces and token position on progress board.  Most points wins.",
+      "showName": true,
+      "lastUpdate": 1669254070000
+    }
+  },
+  "tempHolder": {
+    "type": "holder",
+    "id": "tempHolder",
+    "x": -242,
+    "y": 665,
+    "z": 1453
+  },
+  "grid1": {
+    "type": "holder",
+    "id": "grid1",
+    "x": 5,
+    "y": 5,
+    "width": 20,
+    "height": 20,
+    "z": 400,
+    "classes": "transparent",
+    "dropOffsetX": -5,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "fabric": true
+    }
+  },
+  "grid2": {
+    "type": "holder",
+    "id": "grid2",
+    "x": 119,
+    "y": 5,
+    "width": 20,
+    "height": 20,
+    "z": 401,
+    "classes": "transparent",
+    "dropOffsetX": -15,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "fabric": true
+    }
+  },
+  "grid3": {
+    "type": "holder",
+    "id": "grid3",
+    "x": 233,
+    "y": 5,
+    "width": 20,
+    "height": 20,
+    "z": 402,
+    "classes": "transparent",
+    "dropOffsetX": -15,
+    "dropOffsetY": -15,
+    "dropTarget": {
+      "fabric": true
+    }
+  },
+  "grid4": {
+    "type": "holder",
+    "id": "grid4",
+    "x": 347,
+    "y": 5,
+    "width": 20,
+    "height": 20,
+    "z": 403,
+    "classes": "transparent",
+    "dropOffsetX": -15,
+    "dropOffsetY": -30,
+    "dropTarget": {
+      "fabric": true
+    }
+  },
+  "grid5": {
+    "type": "holder",
+    "id": "grid5",
+    "x": 461,
+    "y": 5,
+    "width": 20,
+    "height": 20,
+    "z": 404,
+    "classes": "transparent",
+    "dropOffsetX": -25,
+    "dropOffsetY": -25,
+    "dropTarget": {
+      "fabric": true
+    }
+  },
+  "grid6": {
+    "type": "holder",
+    "id": "grid6",
+    "x": 575,
+    "y": 5,
+    "width": 20,
+    "height": 20,
+    "z": 405,
+    "classes": "transparent",
+    "dropOffsetX": -25,
+    "dropOffsetY": -25,
+    "dropTarget": {
+      "fabric": true
+    }
+  },
+  "grid7": {
+    "type": "holder",
+    "id": "grid7",
+    "x": 689,
+    "y": 5,
+    "width": 20,
+    "height": 20,
+    "z": 406,
+    "classes": "transparent",
+    "dropOffsetX": -25,
+    "dropOffsetY": -20,
+    "dropTarget": {
+      "fabric": true
+    }
+  },
+  "grid8": {
+    "type": "holder",
+    "id": "grid8",
+    "x": 803,
+    "y": 5,
+    "width": 20,
+    "height": 20,
+    "z": 407,
+    "classes": "transparent",
+    "dropOffsetX": 0,
+    "dropOffsetY": -25,
+    "dropTarget": {
+      "fabric": true
+    }
+  },
+  "grid9": {
+    "type": "holder",
+    "id": "grid9",
+    "x": 917,
+    "y": 5,
+    "width": 20,
+    "height": 20,
+    "z": 408,
+    "classes": "transparent",
+    "dropOffsetX": -25,
+    "dropOffsetY": -25,
+    "dropTarget": {
+      "fabric": true
+    }
+  },
+  "woodBackground": {
+    "id": "woodBackground",
+    "x": -30,
+    "width": 1700,
+    "height": 1100,
+    "layer": -6,
+    "z": 4,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/1883647394_976053"
+  },
+  "move0": {
+    "type": "holder",
+    "id": "move0",
+    "x": 648,
+    "y": 457,
+    "width": 38,
+    "height": 114,
+    "layer": 5,
+    "z": 440,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    },
+    "stackOffsetY": 40
+  },
+  "move1": {
+    "type": "holder",
+    "id": "move1",
+    "x": 648,
+    "y": 419,
+    "width": 38,
+    "height": 38,
+    "layer": 5,
+    "z": 1450,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    }
+  },
+  "move2": {
+    "type": "holder",
+    "id": "move2",
+    "x": 648,
+    "y": 381,
+    "width": 38,
+    "height": 38,
+    "layer": 5,
+    "z": 424,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    }
+  },
+  "move3": {
+    "type": "holder",
+    "id": "move3",
+    "x": 648,
+    "y": 343,
+    "width": 38,
+    "height": 38,
+    "layer": 5,
+    "z": 416,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    }
+  },
+  "move4": {
+    "type": "holder",
+    "id": "move4",
+    "x": 648,
+    "y": 305,
+    "width": 38,
+    "height": 38,
+    "layer": 5,
+    "z": 408,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    }
+  },
+  "move5": {
+    "type": "holder",
+    "id": "move5",
+    "x": 648,
+    "y": 267,
+    "width": 38,
+    "height": 38,
+    "layer": 5,
+    "z": 400,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    }
+  },
+  "move6": {
+    "type": "holder",
+    "id": "move6",
+    "x": 686,
+    "y": 267,
+    "width": 38,
+    "height": 38,
+    "layer": 5,
+    "z": 401,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    }
+  },
+  "move7": {
+    "type": "holder",
+    "id": "move7",
+    "x": 724,
+    "y": 267,
+    "width": 38,
+    "height": 38,
+    "layer": 5,
+    "z": 402,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    }
+  },
+  "move8": {
+    "type": "holder",
+    "id": "move8",
+    "x": 762,
+    "y": 267,
+    "width": 38,
+    "height": 38,
+    "layer": 5,
+    "z": 403,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    }
+  },
+  "move9": {
+    "type": "holder",
+    "id": "move9",
+    "x": 800,
+    "y": 267,
+    "width": 38,
+    "height": 38,
+    "layer": 5,
+    "z": 404,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropTarget": {
+      "player": true
+    }
+  },
+  "buttonImage1": {
+    "id": "buttonImage1",
+    "x": 348,
+    "y": 565,
+    "scale": 0.6,
+    "z": 1562,
+    "movable": false,
+    "image": "/assets/-1234432181_254974"
+  },
+  "buttonImage2": {
+    "id": "buttonImage2",
+    "x": 1150,
+    "y": 565,
+    "scale": 0.6,
+    "z": 1561,
+    "movable": false,
+    "image": "/assets/-1234432181_254974"
+  },
+  "restart": {
+    "type": "button",
+    "id": "restart",
+    "x": 770,
+    "y": 750,
+    "width": 60,
+    "height": 60,
+    "z": 29,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "background": "black",
+      "color": "white",
+      "font-size": "40px",
+      "border-color": "white"
+    },
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Resetting the board ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Are you sure you want to reset the board and start over?"
+          }
+        ]
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "SELECT",
+        "property": "fabric",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "home"
+      },
+      {
+        "//Note": "fix suffle and delete sort when done testing"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "home"
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33
+        ],
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "home",
+            "to": "tempHolder"
+          },
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "tempHolder"
+          },
+          {
+            "func": "IF",
+            "operand1": "${value}",
+            "relation": "<",
+            "operand2": 15,
+            "thenRoutine": [
+              {
+                "func": "GET",
+                "property": "TdX",
+                "variable": "TdX"
+              },
+              {
+                "func": "GET",
+                "property": "TdY",
+                "variable": "TdY"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "grid${value}"
+                ],
+                "property": "dropOffsetX",
+                "value": "${TdX}"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "grid${value}"
+                ],
+                "property": "dropOffsetY",
+                "value": "${TdY}"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${value}",
+                "relation": "<",
+                "operand2": 18,
+                "thenRoutine": [
+                  {
+                    "func": "GET",
+                    "property": "RdX",
+                    "variable": "RdX"
+                  },
+                  {
+                    "func": "GET",
+                    "property": "RdY",
+                    "variable": "RdY"
+                  },
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "grid${value}"
+                    ],
+                    "property": "dropOffsetX",
+                    "value": "${RdX}"
+                  },
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "grid${value}"
+                    ],
+                    "property": "dropOffsetY",
+                    "value": "${RdY}"
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "IF",
+                    "operand1": "${value}",
+                    "relation": "<",
+                    "operand2": 31,
+                    "thenRoutine": [
+                      {
+                        "func": "GET",
+                        "property": "BdX",
+                        "variable": "BdX"
+                      },
+                      {
+                        "func": "GET",
+                        "property": "BdY",
+                        "variable": "BdY"
+                      },
+                      {
+                        "func": "SET",
+                        "collection": [
+                          "grid${value}"
+                        ],
+                        "property": "dropOffsetX",
+                        "value": "${BdX}"
+                      },
+                      {
+                        "func": "SET",
+                        "collection": [
+                          "grid${value}"
+                        ],
+                        "property": "dropOffsetY",
+                        "value": "${BdY}"
+                      }
+                    ],
+                    "elseRoutine": [
+                      {
+                        "func": "GET",
+                        "property": "TdX",
+                        "variable": "TdX"
+                      },
+                      {
+                        "func": "GET",
+                        "property": "TdY",
+                        "variable": "TdY"
+                      },
+                      {
+                        "func": "SET",
+                        "collection": [
+                          "grid${value}"
+                        ],
+                        "property": "dropOffsetX",
+                        "value": "${TdX}"
+                      },
+                      {
+                        "func": "SET",
+                        "collection": [
+                          "grid${value}"
+                        ],
+                        "property": "dropOffsetY",
+                        "value": "${TdY}"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "grid${value}"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "lp1"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "lh1"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "lp2"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "lh2"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "lp3"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "lh3"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "lp4"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "lh4"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "lp5"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "lh5"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "pawn"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": "773"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": "655"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "7x7"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": "745"
+      },
+      {
+        "func": "SET",
+        "property": "y",
+        "value": "575"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "tanp"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "move0"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "bluep"
+      },
+      {
+        "func": "SET",
+        "property": "parent",
+        "value": "move0"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "tanscore"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "5"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "bluescore"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "5"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "0001"
+      },
+      {
+        "func": "GET",
+        "property": "parent",
+        "variable": "startGrid"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "pawn"
+        ],
+        "property": "parent",
+        "value": "${startGrid}"
+      },
+      "var gridNum = ${startGrid} replace 'grid' ''",
+      "var gridNum = ${gridNum} parseFloat",
+      {
+        "func": "IF",
+        "operand1": "${gridNum}",
+        "relation": "<=",
+        "operand2": 14,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "pawn"
+            ],
+            "property": "x",
+            "value": 50
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "pawn"
+            ],
+            "property": "y",
+            "value": 50
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${gridNum}",
+            "relation": "<=",
+            "operand2": 17,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "pawn"
+                ],
+                "property": "x",
+                "value": -100
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "pawn"
+                ],
+                "property": "y",
+                "value": 75
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${gridNum}",
+                "relation": "<=",
+                "operand2": 29,
+                "thenRoutine": [
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "pawn"
+                    ],
+                    "property": "x",
+                    "value": -50
+                  },
+                  {
+                    "func": "SET",
+                    "collection": [
+                      "pawn"
+                    ],
+                    "property": "y",
+                    "value": -125
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "IF",
+                    "operand1": "${gridNum}",
+                    "operand2": 30,
+                    "thenRoutine": [
+                      {
+                        "func": "SET",
+                        "collection": [
+                          "pawn"
+                        ],
+                        "property": "x",
+                        "value": 75
+                      },
+                      {
+                        "func": "SET",
+                        "collection": [
+                          "pawn"
+                        ],
+                        "property": "y",
+                        "value": -175
+                      }
+                    ],
+                    "elseRoutine": [
+                      {
+                        "func": "SET",
+                        "collection": [
+                          "pawn"
+                        ],
+                        "property": "x",
+                        "value": 100
+                      },
+                      {
+                        "func": "SET",
+                        "collection": [
+                          "pawn"
+                        ],
+                        "property": "y",
+                        "value": -75
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "0001"
+        ],
+        "property": "css",
+        "value": {
+          "box-shadow": "0px 0px 50px 25px yellow"
+        }
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "0001"
+        ],
+        "property": "parentGlobalUpdateRoutine",
+        "value": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "css",
+            "value": null
+          }
+        ]
+      }
+    ]
+  },
+  "lp5": {
+    "id": "lp5",
+    "x": 1,
+    "y": 1,
+    "width": 34.75,
+    "height": 34.75,
+    "z": 80231,
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": 20,
+        "offsetY": 8
+      }
+    ],
+    "image": "/assets/498822000_482154",
+    "leather": true,
+    "parent": "lh5"
+  },
+  "lp4": {
+    "id": "lp4",
+    "x": 1,
+    "y": 1,
+    "width": 34.75,
+    "height": 34.75,
+    "z": 80230,
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": 20,
+        "offsetY": 8
+      }
+    ],
+    "image": "/assets/498822000_482154",
+    "leather": true,
+    "parent": "lh4"
+  },
+  "lp3": {
+    "id": "lp3",
+    "x": 1,
+    "y": 1,
+    "width": 34.75,
+    "height": 34.75,
+    "z": 80233,
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": 20,
+        "offsetY": 8
+      }
+    ],
+    "image": "/assets/498822000_482154",
+    "leather": true,
+    "parent": "lh3"
+  },
+  "lp2": {
+    "id": "lp2",
+    "x": 1,
+    "y": 1,
+    "width": 34.75,
+    "height": 34.75,
+    "z": 80229,
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": 20,
+        "offsetY": 8
+      }
+    ],
+    "image": "/assets/498822000_482154",
+    "leather": true,
+    "parent": "lh2"
+  },
+  "lp1": {
+    "id": "lp1",
+    "x": 1,
+    "y": 1,
+    "width": 34.75,
+    "height": 34.75,
+    "z": 80369,
+    "grid": [
+      {
+        "x": 34.75,
+        "y": 34.75,
+        "offsetX": 20,
+        "offsetY": 8
+      }
+    ],
+    "image": "/assets/498822000_482154",
+    "leather": true,
+    "parent": "lh1"
+  },
+  "lh1": {
+    "type": "holder",
+    "id": "lh1",
+    "x": 881,
+    "y": 537,
+    "width": 20,
+    "height": 20,
+    "rotation": 12,
+    "layer": 5,
+    "z": 1454,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropOffsetX": 1,
+    "dropOffsetY": 1,
+    "dropTarget": {
+      "leather": true
+    }
+  },
+  "lh2": {
+    "type": "holder",
+    "id": "lh2",
+    "x": 683,
+    "y": 462,
+    "width": 20,
+    "height": 20,
+    "rotation": 12,
+    "layer": 5,
+    "z": 1452,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropOffsetX": 1,
+    "dropOffsetY": 1,
+    "dropTarget": {
+      "leather": true
+    }
+  },
+  "lh3": {
+    "type": "holder",
+    "id": "lh3",
+    "x": 804,
+    "y": 310,
+    "width": 20,
+    "height": 20,
+    "rotation": 12,
+    "layer": 5,
+    "z": 1453,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropOffsetX": 1,
+    "dropOffsetY": 1,
+    "dropTarget": {
+      "leather": true
+    }
+  },
+  "lh4": {
+    "type": "holder",
+    "id": "lh4",
+    "x": 727,
+    "y": 425,
+    "width": 20,
+    "height": 20,
+    "rotation": 12,
+    "layer": 5,
+    "z": 1456,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropOffsetX": 1,
+    "dropOffsetY": 1,
+    "dropTarget": {
+      "leather": true
+    }
+  },
+  "lh5": {
+    "type": "holder",
+    "id": "lh5",
+    "x": 841,
+    "y": 425,
+    "width": 20,
+    "height": 20,
+    "rotation": 12,
+    "layer": 5,
+    "z": 1455,
+    "movableInEdit": false,
+    "classes": "transparent",
+    "dropOffsetX": 1,
+    "dropOffsetY": 1,
+    "dropTarget": {
+      "leather": true
+    }
+  },
+  "pawn": {
+    "id": "pawn",
+    "x": "773",
+    "y": "655",
+    "width": 56,
+    "height": 84,
+    "z": 80302,
+    "classes": "classicPiece",
+    "color": "#4c5fea"
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 316,
+    "y": 706,
+    "z": 235
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "x": 1117,
+    "y": 706,
+    "z": 236,
+    "index": 2
+  },
+  "hrk8": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "TURN"
+      }
+    ],
+    "x": 775,
+    "y": 675,
+    "z": 237,
+    "id": "hrk8",
+    "text": "Turn",
+    "width": 50,
+    "height": 50
+  }
+}

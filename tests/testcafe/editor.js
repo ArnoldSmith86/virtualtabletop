@@ -21,7 +21,7 @@ test('Create game using edit mode', async t => {
     .click('#w_hand')
     .click('#transparentHolder')
     .click('#updateWidget')
-    .click('#editButton')
+    .click('#activeGameButton')
     .click('#addButton')
     .click('#add-deck_K_S')
     .click('#w_3nsjB')
@@ -44,7 +44,7 @@ test('Create game using edit mode', async t => {
     .click('#w_jyo2')
     .setNativeDialogHandler(() => true)
     .click('#removeWidget')
-    .click('#editButton')
+    .click('#activeGameButton')
     .click('#addButton')
     .click('#addSeat')
     .click('#w_es5b');

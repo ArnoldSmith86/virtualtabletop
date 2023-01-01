@@ -1,0 +1,12 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+	<title>Barn</title>
+	<style>
+		.s0 { fill: #fdbe3f;stroke: #ffffff;stroke-width: 5 }
+		.s1 { fill: #bbb09f;stroke: #ffffff;stroke-width: 5 }
+		.s2 { fill: #6a3a35;stroke: #ffffff;stroke-width: 5 }
+	</style>
+	<path id="Wheat" class="s0" d="m100 0h100v100h-100z"/>
+	<path id="Stone" class="s1" d="m0 0h100v100h-100z"/>
+	<path id="Wheat" class="s0" d="m0 100h100v100h-100z"/>
+	<path id="Wood" class="s2" d="m100 100h100v100h-100z"/>
+</svg>

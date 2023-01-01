@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://web.resource.org/cc/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:svg="http://www.w3.org/2000/svg" id="svg2220" viewBox="0 0 144.33 141.67" version="1.0">
+  <defs id="defs2222">
+    <radialGradient id="radialGradient2338" gradientUnits="userSpaceOnUse" cy="138.29" cx="137.33" gradientTransform="matrix(1.108 1.0011e-7 -3.2346e-8 1.108 -14.827 -14.931)" r="74.169">
+      <stop id="stop5280" stop-color="#fff" offset="0"/>
+      <stop id="stop5282" offset="1"/>
+    </radialGradient>
+    <radialGradient id="radialGradient2340" gradientUnits="userSpaceOnUse" cy="137.93" cx="138.04" r="48.778">
+      <stop id="stop3205" stop-color="#fff" offset="0"/>
+      <stop id="stop4205" stop-color="#fff" offset=".6463"/>
+      <stop id="stop4207" stop-color="#7d7d7d" offset=".76427"/>
+      <stop id="stop4209" stop-color="#fff" offset=".88214"/>
+      <stop id="stop3207" stop-color="#fff" offset="1"/>
+    </radialGradient>
+  </defs>
+  <g id="layer2" transform="translate(-57.901 -38.913)">
+    <g id="g2320" stroke-linejoin="round" stroke="#000">
+      <g id="g6281" transform="translate(-7.9725 -27.877)">
+        <path id="path2230" d="m210.99 138.29a73.669 73.669 0 1 1 -147.33 0 73.669 73.669 0 1 1 147.33 0z" fill="url(#radialGradient2338)" transform="matrix(.97307 0 0 .95495 4.4136 5.5624)"/>
+        <path id="path3211" d="m186.32 137.93a48.278 48.278 0 1 1 -96.558 0 48.278 48.278 0 1 1 96.558 0z" fill="url(#radialGradient2340)"/>
+      </g>
+      <path id="path4211" d="m130.07 61.766c-26.65 0-48.285 21.631-48.285 48.284 0 26.65 21.635 48.28 48.285 48.28s48.28-21.63 48.28-48.28c0-26.653-21.63-48.284-48.28-48.284zm-1.6 8.937c0.59-0.024 1.14-0.008 1.69 0.031 0 0-1.46 16.93-10.34 19.688-7.18 2.227-18.79-5.031-18.79-5.031 6.21-7.146 18.65-14.329 27.44-14.688zm15.88 2.781c9.03 4.51 19.87 15.881 21.47 24.563 0 0-16.78 2.783-21.66-5.125-3.95-6.39 0.19-19.438 0.19-19.438zm-50.753 25.125s15.753 6.421 15.753 15.721c0 7.51-10.378 16.47-10.378 16.47-5.316-8.59-8.579-23.97-5.375-32.191zm73.563 15.411c1.36 0.01 2.22 0.09 2.22 0.09-2.31 9.83-10.89 23.01-18.97 26.56 0 0-6.57-15.67 0-22.25 3.98-3.98 12.66-4.44 16.75-4.4zm-44.34 17.18c1.45-0.07 2.88 0.14 4.21 0.72 6.89 3.01 10.91 16.1 10.91 16.1-9.99 1.43-25.37-1.74-31.62-7.97 0 0 8.66-8.45 16.5-8.85z" stroke-width=".5" fill="#fff"/>
+      <g id="g7280" stroke-width=".5" transform="translate(11.076 -4.901)" fill="#fff">
+        <path id="path7276" d="m124.49 102.64a2.9406 2.9406 0 1 1 -5.89 0 2.9406 2.9406 0 1 1 5.89 0z"/>
+        <path id="path7278" d="m124.49 102.64a2.9406 2.9406 0 1 1 -5.89 0 2.9406 2.9406 0 1 1 5.89 0z" transform="matrix(.66206 0 0 .66206 41.075 34.687)"/>
+      </g>
+      <g id="g7292" stroke-width=".5" transform="translate(21.172 9.9981)" fill="#fff">
+        <path id="path7294" d="m124.49 102.64a2.9406 2.9406 0 1 1 -5.89 0 2.9406 2.9406 0 1 1 5.89 0z"/>
+        <path id="path7296" d="m124.49 102.64a2.9406 2.9406 0 1 1 -5.89 0 2.9406 2.9406 0 1 1 5.89 0z" transform="matrix(.66206 0 0 .66206 41.075 34.687)"/>
+      </g>
+      <g id="g7298" stroke-width=".5" transform="translate(5.9792 19.408)" fill="#fff">
+        <path id="path7300" d="m124.49 102.64a2.9406 2.9406 0 1 1 -5.89 0 2.9406 2.9406 0 1 1 5.89 0z"/>
+        <path id="path7302" d="m124.49 102.64a2.9406 2.9406 0 1 1 -5.89 0 2.9406 2.9406 0 1 1 5.89 0z" transform="matrix(.66206 0 0 .66206 41.075 34.687)"/>
+      </g>
+      <g id="g7304" stroke-width=".5" transform="translate(-4.0188 5.1951)" fill="#fff">
+        <path id="path7306" d="m124.49 102.64a2.9406 2.9406 0 1 1 -5.89 0 2.9406 2.9406 0 1 1 5.89 0z"/>
+        <path id="path7308" d="m124.49 102.64a2.9406 2.9406 0 1 1 -5.89 0 2.9406 2.9406 0 1 1 5.89 0z" transform="matrix(.66206 0 0 .66206 41.075 34.687)"/>
+      </g>
+    </g>
+  </g>
+  <metadata>
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+        <cc:license rdf:resource="http://creativecommons.org/licenses/publicdomain/"/>
+        <dc:publisher>
+          <cc:Agent rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title>Wheel</dc:title>
+        <dc:date>2008-07-11T09:56:08</dc:date>
+        <dc:description>a simple wheel</dc:description>
+        <dc:source>http://openclipart.org/detail/17705/wheel-by-stormcloud</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Stormcloud</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>clip art</rdf:li>
+            <rdf:li>clipart</rdf:li>
+            <rdf:li>image</rdf:li>
+            <rdf:li>media</rdf:li>
+            <rdf:li>png</rdf:li>
+            <rdf:li>public domain</rdf:li>
+            <rdf:li>svg</rdf:li>
+            <rdf:li>wheel car</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License rdf:about="http://creativecommons.org/licenses/publicdomain/">
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction"/>
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Distribution"/>
+        <cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks"/>
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>
