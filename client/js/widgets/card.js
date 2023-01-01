@@ -147,12 +147,12 @@ class Card extends Widget {
             objectDiv.setAttribute('height', object.height);
             objectDiv.setAttribute('allow', 'autoplay');
             const content = object.value.replaceAll(/\$\{PROPERTY ([A-Za-z0-9_-]+)\}/g, (m, n) => {
-              return object[n] || '';
+              return this.get(n) || '';
             });
             // Applies a template which fills available space, uses the same classes and applies
             // nested CSS style rules.
             const css = object['css'];
-            const extraStyles = typeof css == 'object' ? this.cssToStylesheet(css, true, object) : '';
+            const extraStyles = typeof css == 'object' ? this.cssToStylesheet(css, true) : '';
             const html = `<!DOCTYPE html>\n` +
                 `<html><head><link rel="stylesheet" href="fonts.css"><style>html,body {height: 100%; margin: 0;} html {font-size: 14px; font-family: 'Roboto', sans-serif;} body {overflow: hidden;}${extraStyles}` +
                 `</style></head><body class="${object.classes || ""}">${content}</body></html>`;
