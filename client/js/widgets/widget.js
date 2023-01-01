@@ -1979,6 +1979,7 @@ export class Widget extends StateManaged {
   }
 
   async showInputOverlay(o, widgets, variables, problems) {
+    $('#activeGameButton').dataset.overlay = 'buttonInputOverlay';
     return new Promise((resolve, reject) => {
       const maxRandomRotate = o.randomRotation || 0;
       const rotation = Math.floor(Math.random() * maxRandomRotate) - (maxRandomRotate / 2);
@@ -2018,11 +2019,13 @@ export class Widget extends StateManaged {
         this.evaluateInputOverlay(o, resolve, reject, true)
         $('#buttonInputGo').removeEventListener('click', goHandler);
         $('#buttonInputCancel').removeEventListener('click', cancelHandler);
+        delete $('#activeGameButton').dataset.overlay;
       };
       const cancelHandler = e=>{
         this.evaluateInputOverlay(o, resolve, reject, false)
         $('#buttonInputGo').removeEventListener('click', goHandler);
         $('#buttonInputCancel').removeEventListener('click', cancelHandler);
+        delete $('#activeGameButton').dataset.overlay;
       };
       on('#buttonInputGo', 'click', goHandler);
       on('#buttonInputCancel', 'click', cancelHandler);
