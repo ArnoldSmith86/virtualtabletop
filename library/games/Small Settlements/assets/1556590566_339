@@ -1,0 +1,8 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" width="200" height="100">
+	<title>Misc</title>
+	<style>
+		.s0 { fill: #ffffff;stroke: #000000;stroke-width: 5;stroke-dasharray: 20,10 } 
+	</style>
+	<path id="Blank" class="s0" d="m0 0h100v100h-100z"/>
+	<path id="Blank" class="s0" d="m100 0h100v100h-100z"/>
+</svg>
