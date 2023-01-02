@@ -174,12 +174,11 @@ export class Widget extends StateManaged {
       if (fromTransform) {
         // If we changed parents, we apply a transform to the previous location
         // to allow for a smooth transition animation.
-        const newTransform = this.domElement.style.transform;
         this.domElement.style.transform = fromTransform;
         // Force style recalc to commit from transform and start a transition
         // on applying the destination transform.
         this.domElement.offsetTop;
-        this.domElement.style.transform = newTransform;
+        this.domElement.style.transform = this.cssTransform();
       }
 
       if(delta.parent !== null) {
