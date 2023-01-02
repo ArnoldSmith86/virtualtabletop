@@ -1367,7 +1367,37 @@
     "x": 1430,
     "y": 485,
     "z": 4,
-    "hand": "Hand"
+    "hand": "Hand",
+    "clickRoutine": [
+      "var playerPrefix = substr ${playerName} 0 5",
+      {
+        "func": "IF",
+        "operand1": "${playerPrefix}",
+        "operand2": "Guest",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Enter your name"
+              },
+              {
+                "type": "string",
+                "label": "Name",
+                "variable": "playerName",
+                "value": "${playerName}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ]
   },
   "Player2": {
     "type": "seat",
@@ -1376,7 +1406,37 @@
     "y": 605,
     "z": 5,
     "index": 2,
-    "hand": "Hand"
+    "hand": "Hand",
+    "clickRoutine": [
+      "var playerPrefix = substr ${playerName} 0 5",
+      {
+        "func": "IF",
+        "operand1": "${playerPrefix}",
+        "operand2": "Guest",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Enter your name"
+              },
+              {
+                "type": "string",
+                "label": "Name",
+                "variable": "playerName",
+                "value": "${playerName}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ]
   },
   "yu3g": {
     "type": "label",
@@ -1448,7 +1508,37 @@
     "y": 735,
     "z": 4,
     "index": 3,
-    "hand": "Hand"
+    "hand": "Hand",
+    "clickRoutine": [
+      "var playerPrefix = substr ${playerName} 0 5",
+      {
+        "func": "IF",
+        "operand1": "${playerPrefix}",
+        "operand2": "Guest",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Enter your name"
+              },
+              {
+                "type": "string",
+                "label": "Name",
+                "variable": "playerName",
+                "value": "${playerName}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ]
   },
   "yu4g": {
     "type": "label",
@@ -1520,7 +1610,37 @@
     "y": 865,
     "z": 4,
     "index": 4,
-    "hand": "Hand"
+    "hand": "Hand",
+    "clickRoutine": [
+      "var playerPrefix = substr ${playerName} 0 5",
+      {
+        "func": "IF",
+        "operand1": "${playerPrefix}",
+        "operand2": "Guest",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Enter your name"
+              },
+              {
+                "type": "string",
+                "label": "Name",
+                "variable": "playerName",
+                "value": "${playerName}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ]
   },
   "yu5g": {
     "type": "label",
