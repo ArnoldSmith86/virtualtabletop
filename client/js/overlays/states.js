@@ -462,7 +462,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
       if(variant.plStateID)
         variant = states[variant.plStateID].variants[variant.plVariantID];
 
-      if(!publicLibraryLinksFound[`${state.id} - ${variantID}`])
+      if(!publicLibraryLinksFound[`${state.id} - ${variantID}`] || state.starred)
         hasVariants = true;
 
       validPlayers.push(...parsePlayers(variant.players));
