@@ -203,8 +203,9 @@ export class Widget extends StateManaged {
       inheriting.applyDeltaToDOM(inheritedDelta);
     }
 
-    if($('#enlarged').dataset.id == this.id && !$('#enlarged').className.match(/hidden/))
-      this.showEnlarged();
+    if($('#enlarged').dataset.id == this.id && !$('#enlarged').className.match(/hidden/)) {
+      this.showEnlarged(null, delta);
+    }
   }
 
   applyInheritedValuesToObject(inheritDefinition, sourceDelta, targetDelta, targetWidget) {
@@ -1936,17 +1937,31 @@ export class Widget extends StateManaged {
     this.domElement.classList.remove('selected');
   }
 
-  showEnlarged(event) {
+  showEnlarged(event, delta) {
     if(this.get('enlarge')) {
       const id = this.get('id');
       const e = $('#enlarged');
+      // If there is no delta passed in, we must update the enlarged widget. Otherwise,
+      // we only need to update it if the delta results in a visual change.
+      let needsContentUpdate = !delta;
+      if (delta) {
+        for (let prop in delta) {
+          if (prop != 'x' && prop != 'y' && prop != 'z' && prop != 'dragging') {
+            needsContentUpdate = true;
+            break;
+          }
+        }
+      }
       const boundBox = this.domElement.getBoundingClientRect();
       let cssText = this.domElement.style.cssText;
       cssText += `;--originalLeft:${boundBox.left}px`;
       cssText += `;--originalTop:${boundBox.top}px`;
       cssText += `;--originalRight:${boundBox.right}px`;
       cssText += `;--originalBottom:${boundBox.bottom}px`;
-      e.innerHTML = this.domElement.innerHTML;
+      // Only update the enlarged element if there is a non-position delta.
+      if (needsContentUpdate)
+        e.innerHTML = this.domElement.innerHTML;
+
       e.className = this.domElement.className;
       e.dataset.id = id;
       for(const clone of e.querySelectorAll('canvas')) {
