@@ -83,18 +83,18 @@ class Scoreboard extends Widget {
             },
             {
               type: 'number',
-              label: 'Score',
+              label: 'Value',
               variable: 'score'
             }
           ]
         });
         const seat = widgets.get(result.player);
         let scores = seat.get(scoreProperty);
-        if(Array.isArray(scores))
+        if(Array.isArray(scores)) {
           scores = [...scores];
-        else
-          scores = [];
-        scores[result.round-1] = +result.score;
+          scores[result.round-1] = +result.score;
+        } else
+          scores = +result.score;
         await seat.set(scoreProperty, scores);
       } catch(e) {}
     }
@@ -132,20 +132,45 @@ class Scoreboard extends Widget {
     return new Set([...super.readOnlyProperties(), '_totals']);
   }
 
-  // Return a modified 'seat' array or object including the seat widgets (not just the seat ids) to actually be used.
+  // Return a modified array or object, structured as with the 'seats' property,
+  // including the seat widgets (not just the seat ids) to actually be used.
+  // The returned array will be sorted as requested by the widget. For teams, players
+  // will be sorted by player name within each team, and the teams will be sorted as
+  // shown in the scoreboard (i.e., as given in the scoreboard's property).
   getIncludedSeats() {
+    const showTotals = this.get('showTotals');
+    const scoreProperty = this.get('scoreProperty');
+    let sortField = this.get('sortField');
+
     let seats = this.get('seats');
     if(typeof seats == 'string') // Allow "seats": "Seat1"
       seats = asArray(seats);
-    if(Array.isArray(seats) || seats === null) // Scoreboard just using seats
-       return [...widgetFilter(w => w.get('type') == 'seat' && (this.get('showAllSeats') || w.get('player')) && (!seats || seats.includes(w.get('id'))))]
-    else if(typeof seats == 'object') { // Scoreboard using teams
-      const newSeats = {};
+    if(Array.isArray(seats) || seats === null) { // Scoreboard just using seats
+      const seatList = [...widgetFilter(w => w.get('type') == 'seat' && (this.get('showAllSeats') || w.get('player')) && (!seats || seats.includes(w.get('id'))))];
+      // Sort player scores as requested
+      if(sortField == 'total' && !showTotals) // Use default sort if no totals
+        sortField = 'index';
+      if(sortField == 'total')
+        seatList.sort((a,b) => getTotal(a.get(scoreProperty)) - getTotal(b.get(scoreProperty)))
+      else
+        seatList.sort((a,b) => {
+          const pa = a.get(sortField);
+          const pb = b.get(sortField);
+          return pa < pb ? -1 : pa > pb ? 1 : 0; // These need not be numeric
+        });
+      if(!this.get('sortAscending'))
+        seatList.reverse();
+      return seatList;
+    } else if(typeof seats == 'object') { // Scoreboard using teams
+      const teamList = {};
       for (const team in seats) {
-        newSeats[team] = [... widgetFilter(w => w.get('type') == 'seat' && (this.get('showAllSeats') || w.get('player')) && asArray(seats[team]).includes(w.get('id')))];
+        teamList[team] = [... widgetFilter(w => w.get('type') == 'seat' && (this.get('showAllSeats') || w.get('player')) && asArray(seats[team]).includes(w.get('id')))];
+        teamList[team].sort((a,b) => a.get('index') - b.get('index'));
+        if (!this.get('sortAscending'))
+            teamList[team].reverse()
       }
-      return newSeats;
-    } else // 'seats' property is not array or object, return null so table will be cleared.
+      return teamList;
+    } else // 'seats' property is not array or object, return null to do nothing further
       return null;
   }
 
@@ -250,27 +275,9 @@ class Scoreboard extends Widget {
         pScores[i] = pScores[i].concat(Array(numRounds).fill('')).slice(0,numRounds);
         // Add totals if requested and (temporarily) seat id instead of team name for sorting.
         if(showTotals)
-          pScores[i].push(this.getTotal(score)); // Do not use pScores[i] here b/c of scalars.
-        pScores[i].unshift(seats[i].get('id')); // Temporarily use the seat id here
+          pScores[i].push(this.getTotal(score)); // Use 'score' instead of 'pScores[i]' here b/c of scalars.
+        pScores[i].unshift(seats[i].get('player') || '-');
       }
-
-      // Sort player scores as requested
-      if(sortField == 'total' && !showTotals) // Use default sort if no totals
-        sortField = 'index';
-      if(sortField == 'total')
-        pScores.sort((a,b) => a[a.length-1] - b[b.length-1])
-      else
-        pScores.sort((a,b) => {
-          const pa = seats.filter(x=> x.get('id') == a[0])[0].get(sortField);
-          const pb = seats.filter(x=> x.get('id') == b[0])[0].get(sortField);
-          return pa < pb ? -1 : pa > pb ? 1 : 0; // These need not be numeric
-        });
-      if(!this.get('sortAscending'))
-        pScores = pScores.reverse();
-
-      // Replace seat id with player name for display
-      for(let i=0; i<pScores.length; i++)
-        pScores[i][0] = widgets.get(pScores[i][0]).get('player') || '-';
 
     } else if(typeof seats == 'object') { // Display team scores
       let i = 0;
