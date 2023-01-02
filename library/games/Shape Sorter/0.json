@@ -1248,7 +1248,7 @@
       {
         "func": "SET",
         "collection": [
-          "shiftCenter"
+          "shiftParent"
         ],
         "property": "shiftX",
         "value": 0
@@ -1256,7 +1256,7 @@
       {
         "func": "SET",
         "collection": [
-          "shiftCenter"
+          "shiftParent"
         ],
         "property": "shiftY",
         "value": 0
