@@ -2055,6 +2055,8 @@
         "property": "shiftY",
         "value": 0
       }
-    ]
+    ],
+    "shiftX": 0,
+    "shiftY": 0
   }
 }
