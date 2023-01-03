@@ -46,7 +46,7 @@ function publicLibraryButtons(game, variant, md5, tests) {
   });
 }
 
-publicLibraryButtons('Blue',               0, 'c0b6df4181e1e14db376c87cef71a1c3', ["player1Seat","player2Seat","player3Seat","player4Seat",
+publicLibraryButtons('Blue',               0, '17336f122e1c676d7d61f6088f7a818c', ["player1Seat","player2Seat","player3Seat","player4Seat",
   'Deal_button', 'e36b',
   'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_incrementButton', 'd3ab9f5f-daa4-4d81-8004-50a9c90af88e_decrementButton',
   'reset_button', '#buttonInputGo', 'visibility_button'
